@@ -1,77 +1,73 @@
-From: Michael Witten <mfwitten@gmail.com>
-Subject: Re: Oldest supported Perl version
-Date: Mon, 20 Apr 2009 14:58:51 -0500
-Message-ID: <b4087cc50904201258s4da6cb90rdc84e40c698a9798@mail.gmail.com>
-References: <76718490904200759l24e1bd9exe0e1b60f7b2847a7@mail.gmail.com>
-	 <m3eivnp5p4.fsf@localhost.localdomain>
-	 <76718490904201127n5bd9836ak796792ce3cfd18a6@mail.gmail.com>
-	 <76718490904201132h3932e6dan3b1c0d841bd3cf00@mail.gmail.com>
-	 <b4087cc50904201140n1e156583w28b5c411850d7d25@mail.gmail.com>
-	 <alpine.DEB.1.00.0904202110350.6771@intel-tinevez-2-302>
+From: "John Dlugosz" <JDlugosz@TradeStation.com>
+Subject: problem with cherry picking
+Date: Mon, 20 Apr 2009 16:07:20 -0400
+Message-ID: <450196A1AAAE4B42A00A8B27A59278E70ACE0021@EXCHANGE.trad.tradestation.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Jay Soffian <jaysoffian@gmail.com>,
-	Jakub Narebski <jnareb@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Mon Apr 20 22:00:32 2009
+Content-Type: text/plain;
+	charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Apr 20 22:09:18 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LvzfJ-0007GF-D0
-	for gcvg-git-2@gmane.org; Mon, 20 Apr 2009 22:00:29 +0200
+	id 1Lvznh-0001e0-9A
+	for gcvg-git-2@gmane.org; Mon, 20 Apr 2009 22:09:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754595AbZDTT6x (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 20 Apr 2009 15:58:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753583AbZDTT6x
-	(ORCPT <rfc822;git-outgoing>); Mon, 20 Apr 2009 15:58:53 -0400
-Received: from qw-out-2122.google.com ([74.125.92.26]:28011 "EHLO
-	qw-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752244AbZDTT6w (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 Apr 2009 15:58:52 -0400
-Received: by qw-out-2122.google.com with SMTP id 5so1086401qwd.37
-        for <git@vger.kernel.org>; Mon, 20 Apr 2009 12:58:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=IdY5fwrdQuL6E9/7jhktTdoNMoxX3NDkeRlUuLYhWjM=;
-        b=UOJLWQjtHnilNXUkSRiDrInygX974zLs6tKlSMX3p8bK/+ol1Hz0ts9a46cyjMn1TV
-         lCgMOEPQWQVAMZYJD2FXrAs/F41cKaYPyDB+CRDlPdaXXh5Mrb8GAco2KDaTbKRhrri4
-         vMikputGygmKlVyyRZdQLTIdummKOrepLO8ho=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=hl7La4DCdi9Locdf23iv8moNoYmZXxsvDg8jpXWb4VnizlGr9D6lcaY8cTCGKNu/4Z
-         AYX/Bmfp733cTKsxk1LYs9LLgP1T5TrMv7uobzWslORxwOYEO+HPo3yp6R5p//EhtZUs
-         Ei1hkabGkrFk0As5pagYzILKXu124S92qzZUo=
-Received: by 10.224.60.70 with SMTP id o6mr6807316qah.105.1240257531450; Mon, 
-	20 Apr 2009 12:58:51 -0700 (PDT)
-In-Reply-To: <alpine.DEB.1.00.0904202110350.6771@intel-tinevez-2-302>
+	id S1754930AbZDTUHf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 20 Apr 2009 16:07:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754280AbZDTUHf
+	(ORCPT <rfc822;git-outgoing>); Mon, 20 Apr 2009 16:07:35 -0400
+Received: from mail2.tradestation.com ([63.99.207.80]:53196 "EHLO
+	mail2.tradestation.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752244AbZDTUHe convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 20 Apr 2009 16:07:34 -0400
+X-ASG-Debug-ID: 1240258052-4c6403cc0006-QuoKaX
+X-Barracuda-URL: http://192.168.51.31:8000/cgi-bin/mark.cgi
+Received: from mail5.tradestation.com (localhost [127.0.0.1])
+	by mail2.tradestation.com (Spam Firewall) with ESMTP id 1962C3588EE
+	for <git@vger.kernel.org>; Mon, 20 Apr 2009 16:07:33 -0400 (EDT)
+Received: from mail5.tradestation.com (tx02exchange02.trad.tradestation.com [192.168.51.76]) by mail2.tradestation.com with ESMTP id IYNXdNjKQHMz6tLg for <git@vger.kernel.org>; Mon, 20 Apr 2009 16:07:33 -0400 (EDT)
+X-Barracuda-Envelope-From: JDlugosz@TradeStation.com
+X-ASG-Whitelist: Client
+Received: from EXCHANGE.trad.tradestation.com ([10.4.0.121]) by mail5.tradestation.com with Microsoft SMTPSVC(6.0.3790.3959);
+	 Mon, 20 Apr 2009 16:07:21 -0400
+X-MimeOLE: Produced By Microsoft Exchange V6.5
+Content-class: urn:content-classes:message
+X-ASG-Orig-Subj: problem with cherry picking
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+Thread-Topic: problem with cherry picking
+Thread-Index: AcnB85x6PZ4RMkmZSHWU0/7ld8SdkQ==
+X-OriginalArrivalTime: 20 Apr 2009 20:07:21.0862 (UTC) FILETIME=[9D64EA60:01C9C1F3]
+X-Barracuda-Connect: tx02exchange02.trad.tradestation.com[192.168.51.76]
+X-Barracuda-Start-Time: 1240258053
+X-Barracuda-Virus-Scanned: by TX-Barracuda Spam Firewall 400 at tradestation.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117026>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117027>
 
-On Mon, Apr 20, 2009 at 14:11, Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
-> Hi,
->
-> On Mon, 20 Apr 2009, Michael Witten wrote:
->
->> It looks like 5.6.0 was released a DECADE ago. Drop it.
->
-> What part of "causing others a lot of pain" did you not understand,
-> exactly?
+Someone at work here jumped the gun and committed something before
+fetching an amended branch.  Typical stuff -- now his work and the
+repo's work diverged.  His change was purely new files, no big deal.  In
+gitk, reset his dev to origin/remote/dev, then cherry-pick his new
+commit.
 
-I'd say: Take your own advice.
+But it barfed all over the place.  One problem was read-only files.  But
+even after purging those, it had the same complaint, something about
+untracked file would be modified.  What's the deal here?
 
-It's very likely that requiring compatibility with a DECADE old perl
-is going to cause others a lot of pain.
+I talked him through accomplishing it another way -- reset hard back to
+his new commit, reset mixed to the proper ancestor, and re-doing the
+commit.
 
-At some point, backward compatibility is just stupid; it's meant for TRANSITION.
+But I want to understand what the issue is here.
+
+--John
+
+
+TradeStation Group, Inc. is a publicly-traded holding company (NASDAQ GS: TRAD) of three operating subsidiaries, TradeStation Securities, Inc. (Member NYSE, FINRA, SIPC and NFA), TradeStation Technologies, Inc., a trading software and subscription company, and TradeStation Europe Limited, a United Kingdom, FSA-authorized introducing brokerage firm. None of these companies provides trading or investment advice, recommendations or endorsements of any kind. The information transmitted is intended only for the person or entity to which it is addressed and may contain confidential and/or privileged material. Any review, retransmission, dissemination or other use of, or taking of any action in reliance upon, this information by persons or entities other than the intended recipient is prohibited.
+  If you received this in error, please contact the sender and delete the material from any computer.
