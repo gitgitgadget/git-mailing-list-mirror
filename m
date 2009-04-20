@@ -1,77 +1,98 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: [PATCH] clone: add test for push on an empty clone.
-Date: Mon, 20 Apr 2009 13:09:37 +0200
-Message-ID: <1240225777-31334-1-git-send-email-Matthieu.Moy@imag.fr>
-References: <7vfxg3ipib.fsf@gitster.siamese.dyndns.org>
-Cc: Matthieu Moy <Matthieu.Moy@imag.fr>
-To: gitster@pobox.com, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Apr 20 13:15:10 2009
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] BUG: git push on an empty clone segfaults.
+Date: Mon, 20 Apr 2009 04:13:35 -0700
+Message-ID: <7vhc0jh928.fsf@gitster.siamese.dyndns.org>
+References: <1240220930-24679-1-git-send-email-Matthieu.Moy@imag.fr>
+ <7vfxg3ipib.fsf@gitster.siamese.dyndns.org>
+ <alpine.DEB.1.00.0904201252120.6955@intel-tinevez-2-302>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: pasky@suse.cz, Matthieu Moy <Matthieu.Moy@imag.fr>,
+	=?utf-8?B?Tmd1?= =?utf-8?B?eeG7hW4gVGjDoWkgTmfhu41j?= Duy 
+	<pclouds@gmail.com>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Mon Apr 20 13:15:46 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LvrSv-0005Vs-Du
-	for gcvg-git-2@gmane.org; Mon, 20 Apr 2009 13:15:09 +0200
+	id 1LvrTL-0005eM-9n
+	for gcvg-git-2@gmane.org; Mon, 20 Apr 2009 13:15:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755126AbZDTLM7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 20 Apr 2009 07:12:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755120AbZDTLM7
-	(ORCPT <rfc822;git-outgoing>); Mon, 20 Apr 2009 07:12:59 -0400
-Received: from imag.imag.fr ([129.88.30.1]:40434 "EHLO imag.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754922AbZDTLM6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 Apr 2009 07:12:58 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id n3KB9kEY027609
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Mon, 20 Apr 2009 13:09:46 +0200 (CEST)
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
-	(Exim 4.50)
-	id 1LvrNd-0000Fv-61; Mon, 20 Apr 2009 13:09:41 +0200
-Received: from moy by bauges.imag.fr with local (Exim 4.63)
-	(envelope-from <moy@imag.fr>)
-	id 1LvrNd-00089v-3g; Mon, 20 Apr 2009 13:09:41 +0200
-X-Mailer: git-send-email 1.6.2.2.449.g92961.dirty
-In-Reply-To: <7vfxg3ipib.fsf@gitster.siamese.dyndns.org>
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Mon, 20 Apr 2009 13:09:46 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
+	id S1755020AbZDTLNs convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 20 Apr 2009 07:13:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754621AbZDTLNr
+	(ORCPT <rfc822;git-outgoing>); Mon, 20 Apr 2009 07:13:47 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:64289 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754507AbZDTLNq convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 20 Apr 2009 07:13:46 -0400
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 4DD81AB020;
+	Mon, 20 Apr 2009 07:13:45 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 428A6AB01F; Mon,
+ 20 Apr 2009 07:13:37 -0400 (EDT)
+In-Reply-To: <alpine.DEB.1.00.0904201252120.6955@intel-tinevez-2-302>
+ (Johannes Schindelin's message of "Mon, 20 Apr 2009 12:55:10 +0200 (CEST)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 504B2A4A-2D9C-11DE-84B2-C121C5FC92D5-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116972>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116973>
 
-Commit 55f0566 (get_local_heads(): do not return random pointer if
-there is no head, 2009-04-17) fixed a segfault for git push, this
-patch adds a test-case to avoid future regressions.
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
----
- t/t5701-clone-local.sh |   10 ++++++++++
- 1 files changed, 10 insertions(+), 0 deletions(-)
+> On Mon, 20 Apr 2009, Junio C Hamano wrote:
+>
+>> Matthieu Moy <Matthieu.Moy@imag.fr> writes:
+>>=20
+>> > Ideally, "git push" from an empty repository to another empty one
+>> > should be a no-op, or perhaps should error out cleanly. Currently,=
+ it
+>> > just segfaults.
+>>=20
+>> Didn't we see this fixed by Nguy=E1=BB=85n with 55f0566 (get_local_h=
+eads(): do not
+>> return random pointer if there is no head, 2009-04-17)?
+>
+> I fetched from repo.or.cz and tested with 'master', and it was broken=
+=2E =20
+> Apparently git://repo.or.cz/git.git is lagging behind by 5 days.  Pas=
+ky?
 
-diff --git a/t/t5701-clone-local.sh b/t/t5701-clone-local.sh
-index 3559d17..f26b511 100755
---- a/t/t5701-clone-local.sh
-+++ b/t/t5701-clone-local.sh
-@@ -132,4 +132,14 @@ test_expect_success 'clone empty repository' '
- 	 test $actual = $expected)
- '
- 
-+test_expect_success 'clone empty repository, and then push should not segfault.' '
-+	cd "$D" &&
-+	rm -fr empty/ empty-clone/ &&
-+	mkdir empty &&
-+	(cd empty && git init) &&
-+	git clone empty empty-clone &&
-+	cd empty-clone &&
-+	test_must_fail git push
-+'
-+
- test_done
--- 
-1.6.2.2.449.g92961.dirty
+Unfortunately, that repository is outside of my direct control.
+
+I push into the following four repositories:
+
+	k.org's master repository
+	git://repo.or.cz/alt-git.git/
+        git://git.sourceforge.jp/gitroot/git-core/git.git
+	git://git-core.git.sourceforge.net/gitroot/git-core
+
+The k.org's master repository is mirrored (with small lag) to:
+
+	git://git.kernel.org/pub/scm/git/git.git
+
+I suspect that Pasky mirrors that mirror (with some lag) to:
+
+        git://repo.or.cz/git.git
+
+There may be some other mirrors of mirrors I do not know about.
+
+I'd guess that people in the US are better off going to git.kernel.org,
+Europeans to git://repo.or.cz/alt-git.git, and East Asians to
+git.sourceforge.jp/.
+
+I've already written about this elsewhere [*1*], but the sourceforge on=
+es
+are partial; they only have maint and master (and tags).
+
+
+[Footnote]
+
+*1* http://gitster.livejournal.com/31668.html
