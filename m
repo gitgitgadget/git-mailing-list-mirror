@@ -1,71 +1,71 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] BUG: git push on an empty clone segfaults.
-Date: Mon, 20 Apr 2009 12:55:10 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.0904201252120.6955@intel-tinevez-2-302>
-References: <1240220930-24679-1-git-send-email-Matthieu.Moy@imag.fr> <7vfxg3ipib.fsf@gitster.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="8323329-1158155535-1240224911=:6955"
-Cc: Matthieu Moy <Matthieu.Moy@imag.fr>,
-	=?VISCII?Q?Nguy=ADn_Th=E1i_Ng=F7c_Duy?= <pclouds@gmail.com>,
-	git@vger.kernel.org
-To: pasky@suse.cz, Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Apr 20 12:57:48 2009
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH 0/4] Revisiting cache-tree
+Date: Mon, 20 Apr 2009 03:58:16 -0700
+Message-ID: <1240225100-29960-1-git-send-email-gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Apr 20 13:00:07 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LvrBA-0008Gv-FS
-	for gcvg-git-2@gmane.org; Mon, 20 Apr 2009 12:56:48 +0200
+	id 1LvrEM-0001Cx-I6
+	for gcvg-git-2@gmane.org; Mon, 20 Apr 2009 13:00:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754043AbZDTKzP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 20 Apr 2009 06:55:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753648AbZDTKzO
-	(ORCPT <rfc822;git-outgoing>); Mon, 20 Apr 2009 06:55:14 -0400
-Received: from mail.gmx.net ([213.165.64.20]:44876 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752741AbZDTKzN (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 Apr 2009 06:55:13 -0400
-Received: (qmail invoked by alias); 20 Apr 2009 10:55:11 -0000
-Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
-  by mail.gmx.net (mp040) with SMTP; 20 Apr 2009 12:55:11 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18Hm9QP+vQHQ7Ljv7oP+/q0NAO/KZSVcGuEZDbp12
-	NfQh4V2Kdu+lRJ
-X-X-Sender: schindel@intel-tinevez-2-302
-In-Reply-To: <7vfxg3ipib.fsf@gitster.siamese.dyndns.org>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.61
+	id S1754471AbZDTK6b (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 20 Apr 2009 06:58:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754488AbZDTK6a
+	(ORCPT <rfc822;git-outgoing>); Mon, 20 Apr 2009 06:58:30 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:60438 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754286AbZDTK62 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Apr 2009 06:58:28 -0400
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 94808ACEF5
+	for <git@vger.kernel.org>; Mon, 20 Apr 2009 06:58:26 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id BF9D4ACEF4 for
+ <git@vger.kernel.org>; Mon, 20 Apr 2009 06:58:24 -0400 (EDT)
+X-Mailer: git-send-email 1.6.3.rc1.18.g66996
+X-Pobox-Relay-ID: 2CA92D00-2D9A-11DE-B711-C121C5FC92D5-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116965>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116966>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+This series consists of a fix meant for maint branch, and two performance
+fix.  The second one is a refactoring of the code to support the latter.
 
---8323329-1158155535-1240224911=:6955
-Content-Type: TEXT/PLAIN; charset=utf-8
-Content-Transfer-Encoding: 8BIT
+I was doing a rather huge import as a multi-step process by doing
+something like this:
 
-Hi,
+	$ rm -f $GIT_DIR/index
+	$ git add some ;# this one is huge
+	$ git tag one $(git write-tree)
+	$ git repack -a -d
+	$ rm -f $GIT_DIR/index
+	$ git add other ;# this one is also huge
+	$ git tag two $(git write-tree)
+	$ git repack -a -d
 
-On Mon, 20 Apr 2009, Junio C Hamano wrote:
+	$ git read-tree some other
+	$ git tag both $(git write-tree)
+	$ git repack -a -d
 
-> Matthieu Moy <Matthieu.Moy@imag.fr> writes:
-> 
-> > Ideally, "git push" from an empty repository to another empty one
-> > should be a no-op, or perhaps should error out cleanly. Currently, it
-> > just segfaults.
-> 
-> Didn't we see this fixed by Nguyễn with 55f0566 (get_local_heads(): do not
-> return random pointer if there is no head, 2009-04-17)?
+The binding of two distinct subtrees is done with the read-tree but it
+wrote out an incorrect index (notice the lack of -m; with -m option the
+command correctly does a different thing) and resulted in a corrupt tree
+object.
 
-I fetched from repo.or.cz and tested with 'master', and it was broken.  
-Apparently git://repo.or.cz/git.git is lagging behind by 5 days.  Pasky?
+Junio C Hamano (4):
+  read-tree A B: do not corrupt cache-tree
+  Move prime_cache_tree() to cache-tree.c
+  read-tree -m A B: prime cache-tree from the switched-to tree
+  checkout branch: prime cache-tree fully
 
-Ciao,
-Dscho
-
---8323329-1158155535-1240224911=:6955--
+ builtin-checkout.c  |   10 +++++++++-
+ builtin-read-tree.c |   48 ++++++++----------------------------------------
+ cache-tree.c        |   34 ++++++++++++++++++++++++++++++++++
+ cache-tree.h        |    4 ++++
+ 4 files changed, 55 insertions(+), 41 deletions(-)
