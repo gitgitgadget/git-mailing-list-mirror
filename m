@@ -1,79 +1,59 @@
-From: Jay Soffian <jaysoffian@gmail.com>
-Subject: Re: Oldest supported Perl version
-Date: Mon, 20 Apr 2009 14:32:32 -0400
-Message-ID: <76718490904201132h3932e6dan3b1c0d841bd3cf00@mail.gmail.com>
-References: <76718490904200759l24e1bd9exe0e1b60f7b2847a7@mail.gmail.com>
-	 <m3eivnp5p4.fsf@localhost.localdomain>
-	 <76718490904201127n5bd9836ak796792ce3cfd18a6@mail.gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: valgrind
+Date: Mon, 20 Apr 2009 20:34:58 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.0904202033220.6771@intel-tinevez-2-302>
+References: <cover.1240249482u.git.johannes.schindelin@gmx.de> <f62793069ecb99138c435edf37533906c4aae301.1240249482u.git.johannes.schindelin@gmx.de> <872ACD6C-B99B-4BE4-BD7C-3A7B3255B3E1@petdance.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Michael Witten <mfwitten@gmail.com>, git <git@vger.kernel.org>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Apr 20 20:34:10 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: Andy Lester <andy@petdance.com>
+X-From: git-owner@vger.kernel.org Mon Apr 20 20:36:39 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LvyJk-00032P-BW
-	for gcvg-git-2@gmane.org; Mon, 20 Apr 2009 20:34:08 +0200
+	id 1LvyMA-0003uB-Hm
+	for gcvg-git-2@gmane.org; Mon, 20 Apr 2009 20:36:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754456AbZDTScf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 20 Apr 2009 14:32:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754117AbZDTSce
-	(ORCPT <rfc822;git-outgoing>); Mon, 20 Apr 2009 14:32:34 -0400
-Received: from yx-out-2324.google.com ([74.125.44.28]:12660 "EHLO
-	yx-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752308AbZDTSce (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 Apr 2009 14:32:34 -0400
-Received: by yx-out-2324.google.com with SMTP id 3so863390yxj.1
-        for <git@vger.kernel.org>; Mon, 20 Apr 2009 11:32:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=K+t7d012uBVMwyKDeVTKwXNsnOyDX9gzF4auF+GBMFY=;
-        b=NTlpQPxgbGIuXFd89fIVqNYIU35iTqGkXlQr5dcrUoB5xTQnw35FGftHZcKSIdx3hq
-         zI3JtXwyFs3iFCtwLgIxUu/LBnunrZRcVirp1nwUbnK5KZsy1OnVrYdPrnLWNNLWArAP
-         mxSKzJS/uavxkzkTNtcbeHsZ1K3g0NyKwVlH8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=ifmW9QiRS7r7L94l5bITdfRKqPqKKuIcx8cXcFQCboARxovr5DYwTXiMbSjND6pZdY
-         9xLsco6SMQxRqqMsmwmKmjOH15p0VCrPn/FVuPj8LyeMCfqtaQmTt96X0nk/77mXagun
-         pKcBT0JGKhe0EcQqu0bxn1BT4Wy7/YYrT+KO0=
-Received: by 10.151.106.4 with SMTP id i4mr1708218ybm.5.1240252352991; Mon, 20 
-	Apr 2009 11:32:32 -0700 (PDT)
-In-Reply-To: <76718490904201127n5bd9836ak796792ce3cfd18a6@mail.gmail.com>
+	id S1752906AbZDTSfF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 20 Apr 2009 14:35:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752562AbZDTSfE
+	(ORCPT <rfc822;git-outgoing>); Mon, 20 Apr 2009 14:35:04 -0400
+Received: from mail.gmx.net ([213.165.64.20]:59552 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750966AbZDTSfD (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Apr 2009 14:35:03 -0400
+Received: (qmail invoked by alias); 20 Apr 2009 18:34:59 -0000
+Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
+  by mail.gmx.net (mp042) with SMTP; 20 Apr 2009 20:34:59 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18suZB5jhYsMc6PUbkTkXKTzPyeShWL0m2zjyjkr0
+	Q1egPHC83KPArv
+X-X-Sender: schindel@intel-tinevez-2-302
+In-Reply-To: <872ACD6C-B99B-4BE4-BD7C-3A7B3255B3E1@petdance.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.65
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117016>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117017>
 
-On Mon, Apr 20, 2009 at 2:27 PM, Jay Soffian <jaysoffian@gmail.com> wrote:
-> Um, isn't that basically exactly what I said? The only difference is
-> you're clarifying gitweb to be 5.8.1 instead of 5.8.0. Fine. that's
-> why this went to the git list.
+Hi,
 
-Oh sorry, I see we differ on the *.perl scripts. You're saying 5.6 for
-those. I was suggesting 5.8 for the *.perl scripts based on:
+On Mon, 20 Apr 2009, Andy Lester wrote:
 
-http://article.gmane.org/gmane.comp.version-control.git/94523
+> On Apr 20, 2009, at 12:44 PM, Johannes Schindelin wrote:
+> 
+> >Found by valgrind.
+> 
+> How are you running valgrind?  Do you have a test suite for it?  A make 
+> target?
 
-Anyway, I see that there are basically a few categories to decide on:
+Yes, it was merged into Git:
 
-1) gitweb
-2) the *.perl scripts
-3) Git.pm
-4) the parts of the test suite that use perl
+http://repo.or.cz/w/alt-git.git?a=commitdiff;h=8a61097cde387870921e822bdf90b4ffd3792845
 
-I think there is consensus that (1) is 5.8.1 for unicode reasons. (3)
-and (4), for all practical purposes, are apparently 5.6.0. So that
-leaves (2), which is either 5.6.0 or 5.8.1 depending upon which gmane
-thread you consult.
-
-j.
+Hth,
+Dscho
