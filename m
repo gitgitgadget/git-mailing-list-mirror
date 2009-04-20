@@ -1,53 +1,60 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] BUG: git push on an empty clone segfaults.
-Date: Mon, 20 Apr 2009 03:33:00 -0700
-Message-ID: <7vfxg3ipib.fsf@gitster.siamese.dyndns.org>
-References: <1240220930-24679-1-git-send-email-Matthieu.Moy@imag.fr>
+Subject: Re: [PATCH/RESEND] gitweb: Fix snapshots requested via PATH_INFO
+Date: Mon, 20 Apr 2009 03:41:07 -0700
+Message-ID: <7v7i1fip4s.fsf@gitster.siamese.dyndns.org>
+References: <20090414104648.GA36554444@CIS.FU-Berlin.DE>
+ <7vvdp6xvv3.fsf@gitster.siamese.dyndns.org>
+ <200904151934.10253.jnareb@gmail.com> <m3iqkzps96.fsf@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-	git@vger.kernel.org
-To: Matthieu Moy <Matthieu.Moy@imag.fr>
-X-From: git-owner@vger.kernel.org Mon Apr 20 12:34:45 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>, git@vger.kernel.org,
+	Holger =?utf-8?Q?Wei=C3=9F?= <holger@zedat.fu-berlin.de>
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Apr 20 12:42:58 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lvqpo-0000cW-GM
-	for gcvg-git-2@gmane.org; Mon, 20 Apr 2009 12:34:45 +0200
+	id 1Lvqxd-0002pW-34
+	for gcvg-git-2@gmane.org; Mon, 20 Apr 2009 12:42:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754404AbZDTKdL convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 20 Apr 2009 06:33:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754148AbZDTKdJ
-	(ORCPT <rfc822;git-outgoing>); Mon, 20 Apr 2009 06:33:09 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:63767 "EHLO
+	id S1754415AbZDTKlQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 20 Apr 2009 06:41:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754008AbZDTKlQ
+	(ORCPT <rfc822;git-outgoing>); Mon, 20 Apr 2009 06:41:16 -0400
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:64512 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753590AbZDTKdJ convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 20 Apr 2009 06:33:09 -0400
+	with ESMTP id S1753989AbZDTKlP (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Apr 2009 06:41:15 -0400
 Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 74D7810979;
-	Mon, 20 Apr 2009 06:33:07 -0400 (EDT)
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id A2373109D6;
+	Mon, 20 Apr 2009 06:41:14 -0400 (EDT)
 Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id C23F910978; Mon,
- 20 Apr 2009 06:33:03 -0400 (EDT)
-In-Reply-To: <1240220930-24679-1-git-send-email-Matthieu.Moy@imag.fr>
- (Matthieu Moy's message of "Mon, 20 Apr 2009 11:48:50 +0200")
+ a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id E0B98109D5; Mon,
+ 20 Apr 2009 06:41:09 -0400 (EDT)
+In-Reply-To: <m3iqkzps96.fsf@localhost.localdomain> (Jakub Narebski's message
+ of "Mon, 20 Apr 2009 02:52:48 -0700 (PDT)")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: A33C6C60-2D96-11DE-AD34-DC76898A30C1-77302942!a-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: C59C300A-2D97-11DE-92EA-DC76898A30C1-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116962>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116963>
 
-Matthieu Moy <Matthieu.Moy@imag.fr> writes:
+Jakub Narebski <jnareb@gmail.com> writes:
 
-> Ideally, "git push" from an empty repository to another empty one
-> should be a no-op, or perhaps should error out cleanly. Currently, it
-> just segfaults.
+> Ping!  This is quite straighforward bugfix for a new feature...
+>
+>> By the way, if there was check added for full path_info snapshot URL in
+>> existing t/t9500-gitweb-standalone-no-errors.sh it would caught this
+>> bug thanks to the
+>>   "Odd number of elements in hash assignment ..."
+>> warning that Perl throws in this case. 
+>
+> ... or are you waiting for test case?
 
-Didn't we see this fixed by Nguy=E1=BB=85n with 55f0566 (get_local_head=
-s(): do not
-return random pointer if there is no head, 2009-04-17)?
+Yeah, I somehow misinterpreted that you are saying you will follow up with
+an additional test to cover this, and while I was waiting I got busy and
+forgot.
