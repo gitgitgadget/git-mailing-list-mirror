@@ -1,121 +1,95 @@
-From: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
-Subject: Re: What are branches?
-Date: Mon, 20 Apr 2009 23:04:29 +0200
-Message-ID: <20090420210429.GC17241@atjola.homenet>
-References: <alpine.DEB.1.00.0904191709220.10279@pacific.mpi-cbg.de> <20090420113216.GC25059@dpotapov.dyndns.org> <49EC6596.8060208@drmicha.warpmail.net> <20090420132414.GD25059@dpotapov.dyndns.org> <alpine.DEB.1.00.0904201621290.6771@intel-tinevez-2-302> <20090420184746.GG25059@dpotapov.dyndns.org>
+From: "H.Merijn Brand" <h.m.brand@xs4all.nl>
+Subject: Re: Oldest supported Perl version
+Date: Mon, 20 Apr 2009 23:07:07 +0200
+Message-ID: <20090420230707.48f5f82c@pc09.procura.nl>
+References: <76718490904200759l24e1bd9exe0e1b60f7b2847a7@mail.gmail.com>
+	<20090420181806.229b833e@pc09.procura.nl>
+	<alpine.DEB.1.00.0904201926531.6771@intel-tinevez-2-302>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Michael J Gruber <git@drmicha.warpmail.net>,
-	git@vger.kernel.org
-To: Dmitry Potapov <dpotapov@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Apr 20 23:06:36 2009
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: Jay Soffian <jaysoffian@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Michael Witten <mfwitten@gmail.com>, git <git@vger.kernel.org>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Mon Apr 20 23:09:30 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lw0gv-0005Nf-Jy
-	for gcvg-git-2@gmane.org; Mon, 20 Apr 2009 23:06:14 +0200
+	id 1Lw0k4-0006Ul-ED
+	for gcvg-git-2@gmane.org; Mon, 20 Apr 2009 23:09:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755254AbZDTVEj convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 20 Apr 2009 17:04:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755222AbZDTVEj
-	(ORCPT <rfc822;git-outgoing>); Mon, 20 Apr 2009 17:04:39 -0400
-Received: from mail.gmx.net ([213.165.64.20]:52044 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754985AbZDTVEi (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 Apr 2009 17:04:38 -0400
-Received: (qmail invoked by alias); 20 Apr 2009 21:04:36 -0000
-Received: from i59F55CF3.versanet.de (EHLO atjola.local) [89.245.92.243]
-  by mail.gmx.net (mp003) with SMTP; 20 Apr 2009 23:04:36 +0200
-X-Authenticated: #5039886
-X-Provags-ID: V01U2FsdGVkX19SXtAnk11S6mPCsRDtBW8ZVQhtU7QL0qDc04+uWf
-	dlHxSf6ZhGFNEp
-Content-Disposition: inline
-In-Reply-To: <20090420184746.GG25059@dpotapov.dyndns.org>
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.57
+	id S1755754AbZDTVHt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 20 Apr 2009 17:07:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754140AbZDTVHs
+	(ORCPT <rfc822;git-outgoing>); Mon, 20 Apr 2009 17:07:48 -0400
+Received: from smtp-vbr10.xs4all.nl ([194.109.24.30]:4511 "EHLO
+	smtp-vbr10.xs4all.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752595AbZDTVHs (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Apr 2009 17:07:48 -0400
+Received: from pc09.procura.nl (procura.xs4all.nl [82.95.216.29])
+	(authenticated bits=0)
+	by smtp-vbr10.xs4all.nl (8.13.8/8.13.8) with ESMTP id n3KL77xv022026
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
+	Mon, 20 Apr 2009 23:07:08 +0200 (CEST)
+	(envelope-from h.m.brand@xs4all.nl)
+In-Reply-To: <alpine.DEB.1.00.0904201926531.6771@intel-tinevez-2-302>
+X-Mailer: Claws Mail 3.7.1cvs44 (GTK+ 2.14.4; x86_64-unknown-linux-gnu)
+Face: iVBORw0KGgoAAAANSUhEUgAAADAAAAAwEAIAAACI8LKTAAAACXBIWXMAAABIAAAASABGyWs+AAAC
+ JElEQVRo3u2aMY4CMQxFczZ6RItEzRm4DBINDbRUSPRInIRbsNK6+dJfezN4kokn48IaCSjysL8d
+ e9Knoj2fr9f9/gllqQ6U9/vxWK3EdwdIEGjRIVCu18NhuxUfK46SH81+fzrdbuKPx/P5ctHQdAdI
+ TKAgpvV6s9ntBEfXEYSGgMQzIHnuFBBjkshCNJ2KtJZ04hHNAugP8bZr3NIHhbcF0AKoK0CoaHXU
+ LUWBIs1n+jV+Fl8CVqOApEXAwyMO/DSR4XVntoAYDR7eBjQupuYAYTMph8Rj21D4m7MChN02tpqs
+ NSnb/KqU2oHCXu5xDCgflj/RAgBiKBIXnICzAsSjWBsTz5K4/HeXYvb8yK5lY3VGEwPi2aONKT+5
+ AlcxrTPOwcTiraGRChgMEKJh0bVVifGVTq6qgBiNVl8QE29EsK6VE+YJAOG2wz5AvsqUS6uqgHCA
+ n4NGvBYpnJ64Jgg27sCtxtBk1CJIA4S/GhdWKh07QxUB48jWGhZ4jKamRRr/T8/M0AaEyctry6YB
+ 4dTGj9iWZNs3DahES5kPCJOu0RQbF/fQOBprsB9gaO9JtPDzII9U5ySXX7AnuIt91y54AAW7rPpT
+ LCe5gt3F+CLqr2UarGB3MXvMylWGq4+9RCx3TW1oJq1t3HPQlFs6N1fFNEB4s8dn7Ne7ACSm7TPQ
+ I5quAWmw6qBpulHM33B0Csge4Nd8JTTYG2b1XyRe3lH8x34ABJ6aePuQ2N4AAAAASUVORK5CYII=
+X-Virus-Scanned: by XS4ALL Virus Scanner
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117034>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117035>
 
-On 2009.04.20 22:47:46 +0400, Dmitry Potapov wrote:
-> On Mon, Apr 20, 2009 at 04:25:38PM +0200, Johannes Schindelin wrote:
-> >=20
-> > On Mon, 20 Apr 2009, Dmitry Potapov wrote:
-> >=20
-> > > When you create a new commit, it is always belong to _one_ branch=
- and=20
-> > > never to two or more branches.
-> >=20
-> > Certainly you forgot about detached HEADs?
->=20
-> I suppose it is a branch without any name given to it,
+On Mon, 20 Apr 2009 19:29:03 +0200 (CEST), Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
 
-Strictly, you don't give names to branches with git. But if you do, tha=
-t
-has some "interesting" consequences. Let's say you have "master" checke=
-d
-out and do:
+> Hi,
+> 
+> On Mon, 20 Apr 2009, H.Merijn Brand wrote:
+> 
+> > * defined-or is available in any version of perl 5.8.x is the binary
+> >   was built with the appropriate patch, which is available on my CPAN
+> >   directory:
+> >   ftp://download.xs4all.nl/pub/mirror/CPAN/authors/id/H/HM/HMBRAND/
+> >   These patches still include the 'err' keyword
+> 
+> Do you realize how much _pain_ you cause here?
 
-git branch foo
-git checkout -b bar
+Me? Why?
+I just couldn't line *without* defined-or after I first encountered it,
+so I backported it to 5.8.x (after some patch from someone else) and
+people thought it would be a good idea to semi-officially allow it to
+be available for all.
 
-You now have a single line of development and three names that referenc=
-e
-it. So your branch would have three names, right?
+Officially, defined-or is *NOT* available in perl-5.8.x. End of story.
 
-git commit --allow-empty -m 123
+*ALL* my production code expects defined-or to be available.
 
-Now, your previous branch only has two names left, and you have a new
-branch with a single name.
+> I just do not have the _time_ to recompile Perl 5.8 for msysGit!
 
-git reset foo
+Sorry, I can't help you there
 
-And now, you again have three names for the original branch and the new
-branch is unnamed.
+> Bah,
+> Dscho "who thinks that a lot of people would not introduce dependencies 
+> so lightly if they actually felt the pain they cause"
 
-So when you go and say that branch heads provide names for branches, yo=
-ur
-actions become pretty weird. "git branch <name>" gives new names to
-existing branches, and "git commit" is what actually creates the branch
-(this is always the case), plus it might remove a name from an existing
-branch. "git reset" removes a name from one branch and gives it to
-another branch. "git rebase" does the same, and it's in general not
-valid to think of rebase as rewriting the branch's history. For example=
-:
-
-git checkout -b for-v2 for-v1
-git rebase --onto v2 v1 for-v2
-
-That would create a new branch, add for-v2 as a name for it and remove
-the for-v2 name from the old branch (so the number of names for it is
-reduced by one, but it's still called for-v1)
-
-
-So, IMHO, if you think the whole "branches have names" scheme through,
-using the "a branch is a line of development" definition and keeping in
-mind how git actually works, using branch heads, things do get pretty
-confusing.
-
-> but it is an advanced feature. I don't think many beginners know abou=
-t
-> it, so it is something that can confuse beginners.
-
-But it should not. In my experience, telling someone how HEAD works
-often leads to some kind of epiphany. And a detached HEAD is probably
-easier to grasp than the "normal" situation where HEAD is a symbolic
-reference to some branch head. Btw, writing those emails, I can now
-understand _why_ the explanation of HEAD and how it controls which
-reference gets updated upon e.g. "git commit" might be so helpful to
-some users. It might just be the fact that they suddenly realize that
-git does not have a true directly user-accesible notion of branches, bu=
-t
-just branch heads. I can imagine how users that think in branches that
-have a start and an end might get confused.
-
-Bj=F6rn
+-- 
+H.Merijn Brand  http://tux.nl      Perl Monger  http://amsterdam.pm.org/
+using & porting perl 5.6.2, 5.8.x, 5.10.x, 5.11.x on HP-UX 10.20, 11.00,
+11.11, 11.23, and 11.31, OpenSuSE 10.3, 11.0, and 11.1, AIX 5.2 and 5.3.
+http://mirrors.develooper.com/hpux/           http://www.test-smoke.org/
+http://qa.perl.org      http://www.goldmark.org/jeff/stupid-disclaimers/
