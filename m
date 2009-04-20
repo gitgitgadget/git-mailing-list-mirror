@@ -1,70 +1,95 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 3/4] read-tree -m A B: prime cache-tree from the switched-to
- tree
-Date: Mon, 20 Apr 2009 03:58:19 -0700
-Message-ID: <1240225100-29960-4-git-send-email-gitster@pobox.com>
-References: <1240225100-29960-1-git-send-email-gitster@pobox.com>
- <1240225100-29960-2-git-send-email-gitster@pobox.com>
- <1240225100-29960-3-git-send-email-gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Apr 20 13:00:15 2009
+From: Dmitry Potapov <dpotapov@gmail.com>
+Subject: Re: [PATCH 2/2] Windows: Skip fstat/lstat optimization in
+	write_entry()
+Date: Mon, 20 Apr 2009 15:03:02 +0400
+Message-ID: <20090420110302.GB25059@dpotapov.dyndns.org>
+References: <49EC2F7C.8070209@viscovery.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Kjetil Barvik <barvik@broadpark.no>,
+	Git Mailing List <git@vger.kernel.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Mon Apr 20 13:05:53 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LvrEN-0001Cx-BU
-	for gcvg-git-2@gmane.org; Mon, 20 Apr 2009 13:00:07 +0200
+	id 1LvrJn-0002qK-Ep
+	for gcvg-git-2@gmane.org; Mon, 20 Apr 2009 13:05:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754623AbZDTK6g (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 20 Apr 2009 06:58:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754615AbZDTK6e
-	(ORCPT <rfc822;git-outgoing>); Mon, 20 Apr 2009 06:58:34 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:32798 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754488AbZDTK6c (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 Apr 2009 06:58:32 -0400
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id EE82310AD1
-	for <git@vger.kernel.org>; Mon, 20 Apr 2009 06:58:31 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 8DD1D10AD0 for
- <git@vger.kernel.org>; Mon, 20 Apr 2009 06:58:31 -0400 (EDT)
-X-Mailer: git-send-email 1.6.3.rc1.18.g66996
-In-Reply-To: <1240225100-29960-3-git-send-email-gitster@pobox.com>
-X-Pobox-Relay-ID: 2FE8951E-2D9A-11DE-BFBF-DC76898A30C1-77302942!a-sasl-quonix.pobox.com
+	id S1754768AbZDTLDh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 20 Apr 2009 07:03:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754759AbZDTLDg
+	(ORCPT <rfc822;git-outgoing>); Mon, 20 Apr 2009 07:03:36 -0400
+Received: from rv-out-0506.google.com ([209.85.198.228]:12388 "EHLO
+	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754728AbZDTLDf (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Apr 2009 07:03:35 -0400
+Received: by rv-out-0506.google.com with SMTP id f9so1843222rvb.1
+        for <git@vger.kernel.org>; Mon, 20 Apr 2009 04:03:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=c1vVXztlZIwOxcN+NktpBhhzezX8LiwUkKOkb/v8j8U=;
+        b=A8KiCOE/TAwTtTtzrtIDH9UbPimXmve8puYrgLk73ls2sa0Qhym4k1qBtQ7jwURCS+
+         nU98U5EQHr8U2+xpTpCaj/54mMFCqftKNwreWSgJlyQsv0NDnlHIAfJN6vUrD3cAeCzo
+         9VpP7WFIOZam9/zaqYcyZdK+zXR5vl5NXLvvQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=IL4Zth0rD31U+lqLaf9h10RiFyRxrRWw57I3EV/DqhfHfXTpgmKPwjLgSPJd6CF0sJ
+         qqRMiczRnO1zEg27h6bYZpCMJQDs2j4FweWkTwnMaVJwsX4hg6+Zb1AkLgO7BqQ9TeYN
+         oaVPwCN5vXF6VuD5wmmCgqvGwRuHyVnF1sZtw=
+Received: by 10.141.172.7 with SMTP id z7mr2476503rvo.128.1240225413275;
+        Mon, 20 Apr 2009 04:03:33 -0700 (PDT)
+Received: from localhost ([91.78.50.115])
+        by mx.google.com with ESMTPS id b8sm9895040rvf.10.2009.04.20.04.03.29
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 20 Apr 2009 04:03:31 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <49EC2F7C.8070209@viscovery.net>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116970>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116971>
 
-When switching to a new branch with "read-tree -m A B", the resulting
-index must match tree B and we can prime the cache tree with it.
+The cygwin version has the same problem. (In fact, it is even worse,
+because we have an optimized version for lstat/stat but not for fstat,
+and they return different values for some fields like i_no). But even
+if we used the only Cygwin functions, we would still face the problem,
+because Windows returns the wrong values for timestamps (and maybe
+even size on FAT?). So I think the following patch should be squashed
+on top.
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
+-- >8 --
+From 1f957680d9b0e0bfeda9bf0e20397b0323b45334 Mon Sep 17 00:00:00 2001
+From: Dmitry Potapov <dpotapov@gmail.com>
+Date: Mon, 20 Apr 2009 14:54:16 +0400
+Subject: [PATCH] cygwin: Skip fstat/lstat optimization in write_entry()
+
 ---
- builtin-read-tree.c |    5 +++++
- 1 files changed, 5 insertions(+), 0 deletions(-)
+ Makefile |    1 +
+ 1 files changed, 1 insertions(+), 0 deletions(-)
 
-diff --git a/builtin-read-tree.c b/builtin-read-tree.c
-index 9cd7d07..391d709 100644
---- a/builtin-read-tree.c
-+++ b/builtin-read-tree.c
-@@ -199,9 +199,14 @@ int cmd_read_tree(int argc, const char **argv, const char *unused_prefix)
- 	 * "-m ent" or "--reset ent" form), we can obtain a fully
- 	 * valid cache-tree because the index must match exactly
- 	 * what came from the tree.
-+	 *
-+	 * The same holds true if we are switching between two trees
-+	 * using read-tree -m A B.  The index must match B after that.
- 	 */
- 	if (nr_trees == 1 && !opts.prefix)
- 		prime_cache_tree(&active_cache_tree, trees[0]);
-+	else if (nr_trees == 2 && opts.merge)
-+		prime_cache_tree(&active_cache_tree, trees[1]);
- 
- 	if (write_cache(newfd, active_cache, active_nr) ||
- 	    commit_locked_index(&lock_file))
+diff --git a/Makefile b/Makefile
+index 2af0dfb..177dc15 100644
+--- a/Makefile
++++ b/Makefile
+@@ -809,6 +809,7 @@ ifeq ($(uname_S),HP-UX)
+ endif
+ ifneq (,$(findstring CYGWIN,$(uname_S)))
+ 	COMPAT_OBJS += compat/cygwin.o
++	UNRELIABLE_FSTAT = UnfortunatelyYes
+ endif
+ ifneq (,$(findstring MINGW,$(uname_S)))
+ 	NO_PREAD = YesPlease
 -- 
-1.6.3.rc1.18.g66996
+1.6.1.20.gee856
+-- >8 --
