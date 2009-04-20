@@ -1,65 +1,62 @@
-From: Michael Witten <mfwitten@gmail.com>
-Subject: Re: Oldest supported Perl version
-Date: Mon, 20 Apr 2009 17:39:34 -0500
-Message-ID: <b4087cc50904201539m7ee6feb5vfb944e8ec50b1ddc@mail.gmail.com>
-References: <76718490904200759l24e1bd9exe0e1b60f7b2847a7@mail.gmail.com>
-	 <m3eivnp5p4.fsf@localhost.localdomain>
-	 <20090420231035.683a7e0f@pc09.procura.nl>
-	 <b4087cc50904201538w6a09d9e9wfdcd103737f04507@mail.gmail.com>
+From: Marius Vollmer <marius.vollmer@gmail.com>
+Subject: Re: What are branches?
+Date: Tue, 21 Apr 2009 01:08:12 +0300
+Message-ID: <87r5znashf.fsf@gmail.com>
+References: <alpine.DEB.1.00.0904191709220.10279@pacific.mpi-cbg.de>
+	<20090420113216.GC25059@dpotapov.dyndns.org>
+	<49EC6596.8060208@drmicha.warpmail.net>
+	<20090420132414.GD25059@dpotapov.dyndns.org>
+	<49EC7E3B.9050909@drmicha.warpmail.net>
+	<20090420184048.GF25059@dpotapov.dyndns.org>
+	<7viqkzdoua.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git <git@vger.kernel.org>
-To: "H.Merijn Brand" <h.m.brand@xs4all.nl>
-X-From: git-owner@vger.kernel.org Tue Apr 21 00:41:18 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Dmitry Potapov <dpotapov@gmail.com>,
+	Michael J Gruber <git@drmicha.warpmail.net>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Apr 21 00:41:38 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lw2Av-00085a-AW
-	for gcvg-git-2@gmane.org; Tue, 21 Apr 2009 00:41:17 +0200
+	id 1Lw2BF-0008BX-9E
+	for gcvg-git-2@gmane.org; Tue, 21 Apr 2009 00:41:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757132AbZDTWjg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 20 Apr 2009 18:39:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756354AbZDTWjg
-	(ORCPT <rfc822;git-outgoing>); Mon, 20 Apr 2009 18:39:36 -0400
-Received: from qw-out-2122.google.com ([74.125.92.27]:53191 "EHLO
-	qw-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756677AbZDTWjf (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 Apr 2009 18:39:35 -0400
-Received: by qw-out-2122.google.com with SMTP id 5so1152160qwd.37
-        for <git@vger.kernel.org>; Mon, 20 Apr 2009 15:39:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=ZWRCS4g7buQP0UrcueqVXSqIS/CiHKF3j/DZW9x+Ptc=;
-        b=uvD4g3hOPSBUHO1BsnOgvCjVTHy2fs69H37rQsSNYYy9lX+k62mQWWJPbg+I+S6X39
-         PIPtraKnq3GWsxoIiZ6ng50OVM9jbTvKtfk7lSs9/ziWSTZC3QnRn/B5V0GduT+Xlwor
-         QN08VLst76961Qbp8//bGlV75MKdUaqhIpFi4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=xOWFKnX8Q6JbAKR0htp0ilPo6Ptzv1uwSIfUqKRMm8yEquP5unMflXnAwPY+w629gg
-         TDfEpE5wt1wCC6F3z5mDWSlBLHRz6XxhQqCnvURHkFx4coqGFK3IPAwHZVV/p9O1e1k6
-         wRKfnsyFtx12SjWkm5BArA/Uuo4o6GKrvi4yA=
-Received: by 10.224.54.12 with SMTP id o12mr7033618qag.127.1240267174550; Mon, 
-	20 Apr 2009 15:39:34 -0700 (PDT)
-In-Reply-To: <b4087cc50904201538w6a09d9e9wfdcd103737f04507@mail.gmail.com>
+	id S1757307AbZDTWkA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 20 Apr 2009 18:40:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757150AbZDTWj7
+	(ORCPT <rfc822;git-outgoing>); Mon, 20 Apr 2009 18:39:59 -0400
+Received: from smtp6.welho.com ([213.243.153.40]:59214 "EHLO smtp6.welho.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756484AbZDTWj7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Apr 2009 18:39:59 -0400
+X-Greylist: delayed 1905 seconds by postgrey-1.27 at vger.kernel.org; Mon, 20 Apr 2009 18:39:59 EDT
+Received: from zagadka.ping.de (cs178034.pp.htv.fi [213.243.178.34])
+	by smtp6.welho.com (Postfix) with SMTP id E3AE75BC048
+	for <git@vger.kernel.org>; Tue, 21 Apr 2009 01:08:12 +0300 (EEST)
+Received: (qmail 25313 invoked by uid 1000); 21 Apr 2009 01:08:12 +0300
+In-Reply-To: <7viqkzdoua.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's
+	message of "Mon, 20 Apr 2009 13:58:37 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.0.92 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117044>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117045>
 
-On Mon, Apr 20, 2009 at 17:38, Michael Witten <mfwitten@gmail.com> wrote:
-> On Mon, Apr 20, 2009 at 16:10, H.Merijn Brand <h.m.brand@xs4all.nl> wrote:
->> 5.8.1 is the worst distribution ever.
->
-> But then you endorse 5.6.1?
+Junio C Hamano <gitster@pobox.com> writes:
 
-That is:
+> If we made it easy for Dscho to create the merge M to record my tree as
+> the first parent, [...]
 
-But then you endorse 5.6.1 if 5.8.5 is not chosen.
+But it _is_ easy for Dscho to do that, isn't it?  He just needs to
+remember to do the merge the other way around, checking out your branch
+and merging his into it.
+
+This doesn't change much, of course, since we still can't follow a
+branch backwards in time reliably.  Would it make sense to record
+additional information in a merge commit, such as the branch name for
+each parent?  Then tools could automatically draw the history of the
+current branch as a straight line, say.
