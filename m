@@ -1,78 +1,64 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH RFC3.5 06/12] send-email: Cleanup and streamline the SMTP
-  code in send_message
-Date: Sun, 19 Apr 2009 23:43:34 -0700
-Message-ID: <7veivnlt9l.fsf@gitster.siamese.dyndns.org>
-References: <1240074128-16132-1-git-send-email-mfwitten@gmail.com>
- <1240074128-16132-2-git-send-email-mfwitten@gmail.com>
- <1240074128-16132-3-git-send-email-mfwitten@gmail.com>
- <1240074128-16132-4-git-send-email-mfwitten@gmail.com>
- <1240074128-16132-5-git-send-email-mfwitten@gmail.com>
- <1240074128-16132-6-git-send-email-mfwitten@gmail.com>
- <1240074128-16132-7-git-send-email-mfwitten@gmail.com>
- <7vskk4nlrg.fsf@gitster.siamese.dyndns.org>
- <b4087cc50904192238j744f353dtf5f6a616cada8cd8@mail.gmail.com>
+From: Stephen Boyd <bebarino@gmail.com>
+Subject: Re: [PATCH 4/5] bisect--helper: add "--next-exit" to output bisect
+ results
+Date: Mon, 20 Apr 2009 00:25:07 -0700
+Message-ID: <49EC2353.7080206@gmail.com>
+References: <20090419115607.c7089503.chriscool@tuxfamily.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Michael Witten <mfwitten@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Apr 20 08:45:27 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Christian Couder <chriscool@tuxfamily.org>
+X-From: git-owner@vger.kernel.org Mon Apr 20 09:26:50 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LvnFs-0003uQ-VI
-	for gcvg-git-2@gmane.org; Mon, 20 Apr 2009 08:45:25 +0200
+	id 1Lvntx-0004t5-Mz
+	for gcvg-git-2@gmane.org; Mon, 20 Apr 2009 09:26:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753430AbZDTGnm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 20 Apr 2009 02:43:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753125AbZDTGnm
-	(ORCPT <rfc822;git-outgoing>); Mon, 20 Apr 2009 02:43:42 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:64557 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753161AbZDTGnl (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 Apr 2009 02:43:41 -0400
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 39213AC336;
-	Mon, 20 Apr 2009 02:43:40 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 0D3A4AC335; Mon,
- 20 Apr 2009 02:43:36 -0400 (EDT)
-In-Reply-To: <b4087cc50904192238j744f353dtf5f6a616cada8cd8@mail.gmail.com>
- (Michael Witten's message of "Mon, 20 Apr 2009 00:38:50 -0500")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 954F761C-2D76-11DE-A6DA-C121C5FC92D5-77302942!a-sasl-fastnet.pobox.com
+	id S1752530AbZDTHZQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 20 Apr 2009 03:25:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751871AbZDTHZP
+	(ORCPT <rfc822;git-outgoing>); Mon, 20 Apr 2009 03:25:15 -0400
+Received: from wa-out-1112.google.com ([209.85.146.183]:4705 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751209AbZDTHZN (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Apr 2009 03:25:13 -0400
+Received: by wa-out-1112.google.com with SMTP id j5so1008966wah.21
+        for <git@vger.kernel.org>; Mon, 20 Apr 2009 00:25:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from
+         :user-agent:mime-version:to:cc:subject:references:in-reply-to
+         :content-type:content-transfer-encoding;
+        bh=Vq7gAu8W5wahVndeJPmS4WXQpW46WlprS9iO/XHG5yg=;
+        b=wKymNs+hcDI84ONGr8xOYr/dqHbD14pUcGAlBCBOELylq4kNTx0vVjjtFh+6CCiF49
+         H8qneJQy9ZSa/ggBVdOkHz0Jv7cqjvgumysd51YX9zX9wbbwmunRzXGt/oO/eutzUcAB
+         E/LTqFmxWlm7QA9wUU0Q6FAOFhL/hAq59sROQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        b=X0ffsYVGUNQ3c0LQ8Q6SMQnwHb4xEgktGAf89IkEkANiL2En00V6gU1xQrCyPXonDc
+         JwgllTK8MYNVQjSUogmElVpZrfVnpP+8Wou1sxs+P6xuKwkvk7chHOEe5JTEA/Iep4bT
+         77ATgfgzFLEluKC3JZeZcUk7K2fhhps8yEiKA=
+Received: by 10.114.137.2 with SMTP id k2mr3153009wad.146.1240212312270;
+        Mon, 20 Apr 2009 00:25:12 -0700 (PDT)
+Received: from ?192.168.1.3? ([76.89.212.195])
+        by mx.google.com with ESMTPS id k14sm7045185waf.58.2009.04.20.00.25.09
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 20 Apr 2009 00:25:11 -0700 (PDT)
+User-Agent: Thunderbird 2.0.0.21 (X11/20090321)
+In-Reply-To: <20090419115607.c7089503.chriscool@tuxfamily.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116938>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116939>
 
-Michael Witten <mfwitten@gmail.com> writes:
+Christian Couder wrote:
+> +	printf("There are only 'skip'ped commit left to test.\n"
+> +	       "The first bad commit could be any of:\n")
 
-> In any case, I also like:
->
->     condition and/or (do something);
->
-> or:
->
->     condition and/or do something;
-
-I do not have problem with (condition and/or do this).
-
-What I complained about was statement modifier that interrupts your
-thought process and forces you to read things twice.  You see "DIE", and
-you have to stop "Huh?".  You only realize that the author did not mean to
-say "always die here" after seeing the modifier that changes the meaning
-of "die" to "only under this rare condition--sorry, I did not say this
-upfront, but I am checking for errors."
-
-I just do not want to hear "sorry, I did not say this upfront" part.  IOW,
-I have much less problem with this:
-
-	do this;
-	do that;
-	condition that usually holds true
-        	or die ...
-	do some other thing;
+Should this be "There are only 'skip'ped commits left to test"?
