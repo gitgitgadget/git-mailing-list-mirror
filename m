@@ -1,98 +1,56 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: What are branches?
-Date: Mon, 20 Apr 2009 11:59:38 -0700 (PDT)
-Message-ID: <m3ab6bp2we.fsf@localhost.localdomain>
-References: <alpine.DEB.1.00.0904191709220.10279@pacific.mpi-cbg.de>
-	<20090420113216.GC25059@dpotapov.dyndns.org>
-	<49EC6596.8060208@drmicha.warpmail.net>
-	<20090420132414.GD25059@dpotapov.dyndns.org>
-	<alpine.DEB.1.00.0904201621290.6771@intel-tinevez-2-302>
-	<20090420160633.GA17241@atjola.homenet>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Oldest supported Perl version
+Date: Mon, 20 Apr 2009 21:11:14 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.0904202110350.6771@intel-tinevez-2-302>
+References: <76718490904200759l24e1bd9exe0e1b60f7b2847a7@mail.gmail.com>  <m3eivnp5p4.fsf@localhost.localdomain>  <76718490904201127n5bd9836ak796792ce3cfd18a6@mail.gmail.com>  <76718490904201132h3932e6dan3b1c0d841bd3cf00@mail.gmail.com>
+ <b4087cc50904201140n1e156583w28b5c411850d7d25@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-15
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Dmitry Potapov <dpotapov@gmail.com>,
-	Michael J Gruber <git@drmicha.warpmail.net>,
-	git@vger.kernel.org
-To: =?iso-8859-15?q?Bj=F6rn_Steinbrink?= <B.Steinbrink@gmx.de>
-X-From: git-owner@vger.kernel.org Mon Apr 20 21:01:29 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Jay Soffian <jaysoffian@gmail.com>,
+	Jakub Narebski <jnareb@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>
+To: Michael Witten <mfwitten@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Apr 20 21:13:21 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lvyk2-0004o9-Dn
-	for gcvg-git-2@gmane.org; Mon, 20 Apr 2009 21:01:18 +0200
+	id 1Lvyvd-0000R9-W2
+	for gcvg-git-2@gmane.org; Mon, 20 Apr 2009 21:13:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753225AbZDTS7n convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 20 Apr 2009 14:59:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753307AbZDTS7n
-	(ORCPT <rfc822;git-outgoing>); Mon, 20 Apr 2009 14:59:43 -0400
-Received: from ti-out-0910.google.com ([209.85.142.190]:8344 "EHLO
-	ti-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753225AbZDTS7m convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 20 Apr 2009 14:59:42 -0400
-Received: by ti-out-0910.google.com with SMTP id 11so1401969tim.23
-        for <git@vger.kernel.org>; Mon, 20 Apr 2009 11:59:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received
-         :x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type
-         :content-transfer-encoding;
-        bh=vY2zsMGW0BAGJsPv2eGhz1xRzsXZEVtBKdXYE/S5IVU=;
-        b=CZyUSzyrU+xuWSxCBWkAPnMtm4ngv10wbXoi5gaObN1Rfv7o8tOciAU9V9Ho3QIu2X
-         INkTO7S9Etu+fKnRQGw6GGdN1iroUzPuthDGptDJjhAPQGrJSui/Lu+52PAdl36ff36F
-         qrLjwQIrjzJT4hiuWe92kPHqL+Wjq2Guf/EVQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type
-         :content-transfer-encoding;
-        b=I68ngtYTxRLLakMgDjEh1mJuhEKl4hkN1gJjH4G71nlDCzs/+jWaGkkGjxee49IG8D
-         /GkdGCMLj4dfE0/cZWVPfFCVv6T4BMwa/lE+6tVIYlkkRM3hD7sgc/BR9ETw8iKB9F8A
-         9QA/pBrMgpqbCVQFARzGOJi8HX7DnGNBVhe+8=
-Received: by 10.110.16.15 with SMTP id 15mr6547670tip.26.1240253980329;
-        Mon, 20 Apr 2009 11:59:40 -0700 (PDT)
-Received: from localhost.localdomain (abwc215.neoplus.adsl.tpnet.pl [83.8.226.215])
-        by mx.google.com with ESMTPS id i9sm1744614tid.12.2009.04.20.11.59.36
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 20 Apr 2009 11:59:38 -0700 (PDT)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id n3KIxWw8008862;
-	Mon, 20 Apr 2009 20:59:32 +0200
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id n3KIxTZR008859;
-	Mon, 20 Apr 2009 20:59:29 +0200
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <20090420160633.GA17241@atjola.homenet>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+	id S1753863AbZDTTLm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 20 Apr 2009 15:11:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753602AbZDTTLm
+	(ORCPT <rfc822;git-outgoing>); Mon, 20 Apr 2009 15:11:42 -0400
+Received: from mail.gmx.net ([213.165.64.20]:37308 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753450AbZDTTLl (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Apr 2009 15:11:41 -0400
+Received: (qmail invoked by alias); 20 Apr 2009 19:11:17 -0000
+Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
+  by mail.gmx.net (mp069) with SMTP; 20 Apr 2009 21:11:17 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/rUg4MeJLrXgHcQXPz77jNiH0sznZOLMqZFPsZy6
+	cBnZb7k9kEFmFm
+X-X-Sender: schindel@intel-tinevez-2-302
+In-Reply-To: <b4087cc50904201140n1e156583w28b5c411850d7d25@mail.gmail.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.72
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117022>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117023>
 
-Bj=F6rn Steinbrink <B.Steinbrink@gmx.de> writes:
+Hi,
 
-> If you go out, and look at a tree lit-up by the evil daystar, branche=
-s
-> start at the trunk and end at their tip. The trunk isn't part of the
-> branch.  [...]
+On Mon, 20 Apr 2009, Michael Witten wrote:
 
-Well, you have to remember that the 'branch' metaphor should not be
-taken too literaly; take for example merges which do not have
-equivalent in a tree build.
+> It looks like 5.6.0 was released a DECADE ago. Drop it.
 
-But if we are talking about literal branches: take a closer loog at
-the tip of tree (plant) branch.  You can find growong tip there
-(apical meristem) where new cells grow.  In Git you have 'branches'
-(branch heads) where you create new commits...
+What part of "causing others a lot of pain" did you not understand, 
+exactly?
 
-But I agree that there isn't for example true notion of 'trunk' in
-git, and this is what allows Git to be truly distributed...
-
---=20
-Jakub Narebski
-Poland
-ShadeHawk on #git
+Ciao,
+Dscho
