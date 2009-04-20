@@ -1,7 +1,7 @@
 From: Michael Witten <mfwitten@gmail.com>
-Subject: Re: [PATCH RFC3.5 06/12] send-email: Cleanup and streamline the SMTP code in send_message
+Subject: Re: [PATCH RFC3.5 04/12] send-email: Verification for --smtp-server and --smpt-server-port
 Date: Sun, 19 Apr 2009 22:49:29 -0500
-Message-ID: <49ebf2f6.050cc00a.2e8d.ffffbde4@mx.google.com>
+Message-ID: <49ebf405.0609c00a.797d.ffffac3e@mx.google.com>
 References: <1240074128-16132-1-git-send-email-mfwitten@gmail.com>
  <1240074128-16132-2-git-send-email-mfwitten@gmail.com>
  <1240074128-16132-3-git-send-email-mfwitten@gmail.com>
@@ -10,50 +10,50 @@ References: <1240074128-16132-1-git-send-email-mfwitten@gmail.com>
  <7vzlecnlsh.fsf@gitster.siamese.dyndns.org>
 Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Apr 20 06:00:24 2009
+X-From: git-owner@vger.kernel.org Mon Apr 20 06:04:54 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LvkgB-0000Sd-UA
-	for gcvg-git-2@gmane.org; Mon, 20 Apr 2009 06:00:24 +0200
+	id 1LvkkV-0001AF-FE
+	for gcvg-git-2@gmane.org; Mon, 20 Apr 2009 06:04:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753123AbZDTD6t (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 19 Apr 2009 23:58:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752311AbZDTD6s
-	(ORCPT <rfc822;git-outgoing>); Sun, 19 Apr 2009 23:58:48 -0400
-Received: from yx-out-2324.google.com ([74.125.44.28]:34785 "EHLO
-	yx-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751479AbZDTD6s (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 19 Apr 2009 23:58:48 -0400
-Received: by yx-out-2324.google.com with SMTP id 3so677926yxj.1
-        for <git@vger.kernel.org>; Sun, 19 Apr 2009 20:58:47 -0700 (PDT)
+	id S1750860AbZDTEDU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 20 Apr 2009 00:03:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750813AbZDTEDT
+	(ORCPT <rfc822;git-outgoing>); Mon, 20 Apr 2009 00:03:19 -0400
+Received: from an-out-0708.google.com ([209.85.132.245]:39698 "EHLO
+	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750807AbZDTEDS (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Apr 2009 00:03:18 -0400
+Received: by an-out-0708.google.com with SMTP id d40so745567and.1
+        for <git@vger.kernel.org>; Sun, 19 Apr 2009 21:03:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:message-id:from:to:cc:date
          :subject:in-reply-to:references;
         bh=rlwz+YapW8/uOMWG6BGpjDJ6EeJSkgYV4QW/bEaNzBE=;
-        b=MEqhZ849ItAoPmGS1wCD4SMoldbT2EzJFzPCRBuW787hreukDftm0OeaQ0ia3S2ZUS
-         L2dgOMCZRYuavjD+Lon/utr6PoH3vhWKu5ZLAqdqEdgJq9imij7MEEIqTb1hHSOA9vL2
-         qsiSqp+W9RRwtyfAZKM9VqAiGhLHnT4kLbENw=
+        b=fQgB0eAZi6xll2Og1hi/I8WCmmKF7ObP0sudYznxUy+ay2SJzwPS2jKxOCq2rK7IY8
+         QCe04dZrroBZPocNEGrmZQiRQpEODKwJDUUOvh+u58iOfO7gkgd+g5Hz+WvZWpsNWm8a
+         Cq5A6sW6BSbC2WPOr6YrtsOQnumrMP0J9coZI=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=message-id:from:to:cc:date:subject:in-reply-to:references;
-        b=klS2FyUDRvHNmKJJBB0kNnGtFCzWKI91hO9NXTPghNVQD/S2gGED32vHzur2lsLwNC
-         MQIv+qzuWvNWFJwkgMlY4/UIE4L2mQ52/UMfrtfFVs2CSg5bHpOJFSN9q1j5TEUn6rnv
-         W5CzwGJLzuf6vfnxUoAWVUqVgH6e3xcRhxAmo=
-Received: by 10.101.70.14 with SMTP id x14mr2477368ank.85.1240199927102;
-        Sun, 19 Apr 2009 20:58:47 -0700 (PDT)
+        b=vxrwMrFdk0AF+uL6Z1XJQDu5awFXtyYdz8I8DF5/ET8MMx4YqMeZ7rpgUgIuQrCzCS
+         QlpA5nxhUwYXfLCgoZSbn6bbzgB9DoYwAb5mtQkvYrOcx2+Qji7Za4bl1oTBzTInpUqI
+         NrCMQfSVuYz6+EY4NT3skxDlGx63t92pIpRg4=
+Received: by 10.100.153.4 with SMTP id a4mr2211882ane.4.1240200197414;
+        Sun, 19 Apr 2009 21:03:17 -0700 (PDT)
 Received: from gmail.com (97-116-107-50.mpls.qwest.net [97.116.107.50])
-        by mx.google.com with ESMTPS id 5sm5532792ywl.38.2009.04.19.20.58.45
+        by mx.google.com with ESMTPS id 6sm5556574ywi.49.2009.04.19.21.03.16
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 19 Apr 2009 20:58:46 -0700 (PDT)
+        Sun, 19 Apr 2009 21:03:17 -0700 (PDT)
 In-Reply-To: <7vzlecm4lg.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116931>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116932>
 
 On Sun, Apr 19, 2009 at 20:42, Junio C Hamano <gitster@pobox.com> wrote:
 > Michael Witten <mfwitten@gmail.com> writes:
