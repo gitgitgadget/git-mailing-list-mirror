@@ -1,189 +1,85 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: [PATCH v3] fetch: Strip usernames from url's before storing them
-Date: Mon, 20 Apr 2009 09:39:40 +0200
-Message-ID: <49EC26BC.5070505@op5.se>
-References: <7vbpqxvnpl.fsf@gitster.siamese.dyndns.org> <1239956411-11195-1-git-send-email-ae@op5.se>
+From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+Subject: Re: [EGIT PATCH] Add support for writing/appending .gitignore file
+Date: Mon, 20 Apr 2009 08:32:27 +0200
+Message-ID: <200904200832.28361.robin.rosenberg.lists@dewire.com>
+References: <AFFAB806-28F7-4D48-B603-B7B96052B0F3@gmail.com> <200904192350.56348.robin.rosenberg.lists@dewire.com> <636fd28e0904191940t3476b016qc76c0e1e624f7b37@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Mon Apr 20 09:42:48 2009
+Content-Type: Text/Plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Ferry Huberts <ferry.huberts@pelagic.nl>,
+	"Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
+To: Alex Blewitt <alex.blewitt@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Apr 20 09:44:35 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lvo9P-0000OR-1A
-	for gcvg-git-2@gmane.org; Mon, 20 Apr 2009 09:42:47 +0200
+	id 1LvoB3-0000ri-CR
+	for gcvg-git-2@gmane.org; Mon, 20 Apr 2009 09:44:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752097AbZDTHjq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 20 Apr 2009 03:39:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751871AbZDTHjq
-	(ORCPT <rfc822;git-outgoing>); Mon, 20 Apr 2009 03:39:46 -0400
-Received: from fg-out-1718.google.com ([72.14.220.158]:39360 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751552AbZDTHjp (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 Apr 2009 03:39:45 -0400
-Received: by fg-out-1718.google.com with SMTP id 22so212608fge.17
-        for <git@vger.kernel.org>; Mon, 20 Apr 2009 00:39:43 -0700 (PDT)
-Received: by 10.86.61.13 with SMTP id j13mr3705405fga.68.1240213182885;
-        Mon, 20 Apr 2009 00:39:42 -0700 (PDT)
-Received: from clix.int.op5.se ([212.112.174.166])
-        by mx.google.com with ESMTPS id e20sm2589471fga.15.2009.04.20.00.39.41
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 20 Apr 2009 00:39:41 -0700 (PDT)
-User-Agent: Thunderbird 2.0.0.21 (X11/20090320)
-In-Reply-To: <1239956411-11195-1-git-send-email-ae@op5.se>
+	id S1752192AbZDTHmP convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 20 Apr 2009 03:42:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751506AbZDTHmP
+	(ORCPT <rfc822;git-outgoing>); Mon, 20 Apr 2009 03:42:15 -0400
+Received: from pne-smtpout1-sn1.fre.skanova.net ([81.228.11.98]:42997 "EHLO
+	pne-smtpout1-sn1.fre.skanova.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752189AbZDTHmO convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Apr 2009 03:42:14 -0400
+X-Greylist: delayed 4142 seconds by postgrey-1.27 at vger.kernel.org; Mon, 20 Apr 2009 03:42:14 EDT
+Received: from sleipner.localnet (90.232.93.96) by pne-smtpout1-sn1.fre.skanova.net (7.3.129)
+        id 49CCDA070031A638; Mon, 20 Apr 2009 08:32:38 +0200
+User-Agent: KMail/1.11.2 (Linux/2.6.27-14-generic; KDE/4.2.2; i686; ; )
+In-Reply-To: <636fd28e0904191940t3476b016qc76c0e1e624f7b37@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116940>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116941>
 
-We've used this patch in production the past couple of days.
-All tests pass and it works just fine. Any issues with it I
-should fix, or did it just slip through?
+m=E5ndag 20 april 2009 04:40:42 skrev Alex Blewitt <alex.blewitt@gmail.=
+com>:
+> On Sun, Apr 19, 2009 at 10:50 PM, Robin Rosenberg
+> <robin.rosenberg.lists@dewire.com> wrote:
+> >
+> > First, Ferry Huberts is also working on a solution for ignore See
+> > http://thread.gmane.org/gmane.comp.version-control.git/114825 thoug=
+h you
+> > focus on different aspects.
+>=20
+> Yup, saw the issue 32. I'll keep an eye on that and hopefully I can
+> leverage what that does when it's ready.
+>=20
+> > This patch is whitespace damaged. =C2 Pasting into gmail won't work=
+=2E Gmail
+> > has authenticated SMTP on port 25 and 465 (SSL) so git-send-email s=
+hould work that way.
+>=20
+> One advantage of attaching issues is you don't have MUA problems :-)
+> I'll try and get a patch to work via git-send-email later.
 
-Andreas Ericsson wrote:
-> When pulling from a remote, the full URL including username
-> is by default added to the commit message. Since it adds
-> very little value but could be used by malicious people to
-> glean valid usernames (with matching hostnames), we're far
-> better off just stripping the username before storing the
-> remote URL locally.
-> 
-> Note that this patch has no lasting visible effect when
-> "git pull" does not create a merge commit. It simply
-> alters what gets written to .git/FETCH_HEAD, which is used
-> by "git merge" to automagically create its messages.
-> 
-> Signed-off-by: Andreas Ericsson <ae@op5.se>
-> ---
-> 
-> I made some minor modifications to your function, Junio.
-> * use xcalloc() instead of malloc() to make sure the string
->   is nul-terminated.
-> * take strlen() of anon_part instead of calculating the whole
->   thing once, as we use that measurement twice.
-> * moved handling of !scheme_prefix && !is_bare_ssh_url(url)
->   up top, so both conditions can be seen at once on my fairly
->   cramped editor.
-> 
->  builtin-fetch.c |    7 +++++--
->  transport.c     |   48 ++++++++++++++++++++++++++++++++++++++++++++++++
->  transport.h     |    1 +
->  3 files changed, 54 insertions(+), 2 deletions(-)
-> 
-> diff --git a/builtin-fetch.c b/builtin-fetch.c
-> index 3c998ea..0bb290b 100644
-> --- a/builtin-fetch.c
-> +++ b/builtin-fetch.c
-> @@ -289,7 +289,7 @@ static int update_local_ref(struct ref *ref,
->  	}
->  }
->  
-> -static int store_updated_refs(const char *url, const char *remote_name,
-> +static int store_updated_refs(const char *raw_url, const char *remote_name,
->  		struct ref *ref_map)
->  {
->  	FILE *fp;
-> @@ -298,11 +298,13 @@ static int store_updated_refs(const char *url, const char *remote_name,
->  	char note[1024];
->  	const char *what, *kind;
->  	struct ref *rm;
-> -	char *filename = git_path("FETCH_HEAD");
-> +	char *url, *filename = git_path("FETCH_HEAD");
->  
->  	fp = fopen(filename, "a");
->  	if (!fp)
->  		return error("cannot open %s: %s\n", filename, strerror(errno));
-> +
-> +	url = transport_anonymize_url(raw_url);
->  	for (rm = ref_map; rm; rm = rm->next) {
->  		struct ref *ref = NULL;
->  
-> @@ -376,6 +378,7 @@ static int store_updated_refs(const char *url, const char *remote_name,
->  				fprintf(stderr, " %s\n", note);
->  		}
->  	}
-> +	free(url);
->  	fclose(fp);
->  	if (rc & 2)
->  		error("some local refs could not be updated; try running\n"
-> diff --git a/transport.c b/transport.c
-> index 3dfb03c..38c12e7 100644
-> --- a/transport.c
-> +++ b/transport.c
-> @@ -1083,3 +1083,51 @@ int transport_disconnect(struct transport *transport)
->  	free(transport);
->  	return ret;
->  }
-> +
-> +/*
-> + * Strip username (and password) from an url and return
-> + * it in a newly allocated string.
-> + */
-> +static char *transport_anonymize_url(const char *url)
-> +{
-> +	char *anon_url, *scheme_prefix, *anon_part;
-> +	size_t anon_len, prefix_len = 0;
-> +
-> +	anon_part = strchr(url, '@');
-> +	if (is_local(url) || !anon_part)
-> +		goto literal_copy;
-> +
-> +	anon_len = strlen(++anon_part);
-> +	scheme_prefix = strstr(url, "://");
-> +	if (!scheme_prefix) {
-> +		if (!strchr(anon_part, ':'))
-> +			/* cannot be "me@there:/path/name" */
-> +			goto literal_copy;
-> +	} else {
-> +		const char *cp;
-> +		/* make sure scheme is reasonable */
-> +		for (cp = url; cp < scheme_prefix; cp++) {
-> +			switch (*cp) {
-> +				/* RFC 1738 2.1 */
-> +			case '+': case '.': case '-':
-> +				break; /* ok */
-> +			default:
-> +				if (isalnum(*cp))
-> +					break;
-> +				/* it isn't */
-> +				goto literal_copy;
-> +			}
-> +		}
-> +		/* @ past the first slash does not count */
-> +		cp = strchr(scheme_prefix + 3, '/');
-> +		if (cp && cp < anon_part)
-> +			goto literal_copy;
-> +		prefix_len = scheme_prefix - url + 3;
-> +	}
-> +	anon_url = xcalloc(1, 1 + prefix_len + anon_len);
-> +	memcpy(anon_url, url, prefix_len);
-> +	memcpy(anon_url + prefix_len, anon_part, anon_len);
-> +	return anon_url;
-> +	literal_copy:
-> +	return xstrdup(url);
-> +}
-> diff --git a/transport.h b/transport.h
-> index b1c2252..27bfc52 100644
-> --- a/transport.h
-> +++ b/transport.h
-> @@ -74,5 +74,6 @@ const struct ref *transport_get_remote_refs(struct transport *transport);
->  int transport_fetch_refs(struct transport *transport, const struct ref *refs);
->  void transport_unlock_pack(struct transport *transport);
->  int transport_disconnect(struct transport *transport);
-> +char *transport_anonymize_url(const char *url);
->  
->  #endif
+The problem is review. With e-mail I can just hit reply and comment on =
+your
+patch. Did your try the SMTP interface to gmail? I think e-mailing inli=
+ned patches is
+a nearly perfect. Inline-attachment is ok with me. That makes it possib=
+le to
+comment on them like any email in my mail program.
 
+> I've been incrementally committing to my local git copy. Whenever I d=
+o
+> git format-patch <since> it spews out individual patchettes. How can =
+I
+> use git to generate one patch? I could git diff <since>, but that's
+> not following the SUBMITTING_PATCHES, is it?
 
--- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+Often, after a long session, you end up with a "mess" of commits, many =
+which
+don't make sense to anyone but you. For this you use rebase -i to clean=
+ up.
+It allows you to reorder, squash and edit commits. You'll end up with a=
+n entirely
+new version of your branch. Retest to make sure it's ok and submit.=20
 
-Considering the successes of the wars on alcohol, poverty, drugs and
-terror, I think we should give some serious thought to declaring war
-on peace.
+-- robin
