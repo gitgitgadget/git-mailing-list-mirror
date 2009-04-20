@@ -1,63 +1,155 @@
-From: Brian Gernhardt <benji@silverinsanity.com>
-Subject: Re: What are branches?
-Date: Mon, 20 Apr 2009 12:13:13 -0400
-Message-ID: <49C4B512-6BE0-48A6-A689-05528B9D3DDE@silverinsanity.com>
-References: <alpine.DEB.1.00.0904191709220.10279@pacific.mpi-cbg.de> <20090420113216.GC25059@dpotapov.dyndns.org> <49EC6596.8060208@drmicha.warpmail.net> <20090420132414.GD25059@dpotapov.dyndns.org>
-Mime-Version: 1.0 (Apple Message framework v930.3)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
-Content-Transfer-Encoding: 7bit
-Cc: Michael J Gruber <git@drmicha.warpmail.net>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: Dmitry Potapov <dpotapov@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Apr 20 18:15:12 2009
+From: "H.Merijn Brand" <h.m.brand@xs4all.nl>
+Subject: Re: Oldest supported Perl version
+Date: Mon, 20 Apr 2009 18:18:06 +0200
+Message-ID: <20090420181806.229b833e@pc09.procura.nl>
+References: <76718490904200759l24e1bd9exe0e1b60f7b2847a7@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Michael Witten <mfwitten@gmail.com>, git <git@vger.kernel.org>
+To: Jay Soffian <jaysoffian@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Apr 20 18:20:37 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lvw8x-0002sB-5b
-	for gcvg-git-2@gmane.org; Mon, 20 Apr 2009 18:14:51 +0200
+	id 1LvwEK-0004mz-GX
+	for gcvg-git-2@gmane.org; Mon, 20 Apr 2009 18:20:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750944AbZDTQNS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 20 Apr 2009 12:13:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750806AbZDTQNR
-	(ORCPT <rfc822;git-outgoing>); Mon, 20 Apr 2009 12:13:17 -0400
-Received: from vs072.rosehosting.com ([216.114.78.72]:43961 "EHLO
-	silverinsanity.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750743AbZDTQNR (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 Apr 2009 12:13:17 -0400
-Received: by silverinsanity.com (Postfix, from userid 5001)
-	id 996761FFC15A; Mon, 20 Apr 2009 16:13:12 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.2.5 (2008-06-10) on silverinsanity.com
-X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=4.0 tests=ALL_TRUSTED,AWL,BAYES_00
-	autolearn=ham version=3.2.5
-Received: from [192.168.1.115] (cpe-74-74-137-205.rochester.res.rr.com [74.74.137.205])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by silverinsanity.com (Postfix) with ESMTPSA id 507851FFC142;
-	Mon, 20 Apr 2009 16:13:10 +0000 (UTC)
-In-Reply-To: <20090420132414.GD25059@dpotapov.dyndns.org>
-X-Mailer: Apple Mail (2.930.3)
+	id S1751173AbZDTQSv convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 20 Apr 2009 12:18:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751076AbZDTQSu
+	(ORCPT <rfc822;git-outgoing>); Mon, 20 Apr 2009 12:18:50 -0400
+Received: from smtp-vbr1.xs4all.nl ([194.109.24.21]:1320 "EHLO
+	smtp-vbr1.xs4all.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750966AbZDTQSu convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 20 Apr 2009 12:18:50 -0400
+Received: from pc09.procura.nl (procura.xs4all.nl [82.95.216.29])
+	(authenticated bits=0)
+	by smtp-vbr1.xs4all.nl (8.13.8/8.13.8) with ESMTP id n3KGI7NR025705
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
+	Mon, 20 Apr 2009 18:18:07 +0200 (CEST)
+	(envelope-from h.m.brand@xs4all.nl)
+In-Reply-To: <76718490904200759l24e1bd9exe0e1b60f7b2847a7@mail.gmail.com>
+X-Mailer: Claws Mail 3.7.1cvs44 (GTK+ 2.14.4; x86_64-unknown-linux-gnu)
+Face: iVBORw0KGgoAAAANSUhEUgAAADAAAAAwEAIAAACI8LKTAAAACXBIWXMAAABIAAAASABGyWs+AAAC
+ JElEQVRo3u2aMY4CMQxFczZ6RItEzRm4DBINDbRUSPRInIRbsNK6+dJfezN4kokn48IaCSjysL8d
+ e9Knoj2fr9f9/gllqQ6U9/vxWK3EdwdIEGjRIVCu18NhuxUfK46SH81+fzrdbuKPx/P5ctHQdAdI
+ TKAgpvV6s9ntBEfXEYSGgMQzIHnuFBBjkshCNJ2KtJZ04hHNAugP8bZr3NIHhbcF0AKoK0CoaHXU
+ LUWBIs1n+jV+Fl8CVqOApEXAwyMO/DSR4XVntoAYDR7eBjQupuYAYTMph8Rj21D4m7MChN02tpqs
+ NSnb/KqU2oHCXu5xDCgflj/RAgBiKBIXnICzAsSjWBsTz5K4/HeXYvb8yK5lY3VGEwPi2aONKT+5
+ AlcxrTPOwcTiraGRChgMEKJh0bVVifGVTq6qgBiNVl8QE29EsK6VE+YJAOG2wz5AvsqUS6uqgHCA
+ n4NGvBYpnJ64Jgg27sCtxtBk1CJIA4S/GhdWKh07QxUB48jWGhZ4jKamRRr/T8/M0AaEyctry6YB
+ 4dTGj9iWZNs3DahES5kPCJOu0RQbF/fQOBprsB9gaO9JtPDzII9U5ySXX7AnuIt91y54AAW7rPpT
+ LCe5gt3F+CLqr2UarGB3MXvMylWGq4+9RCx3TW1oJq1t3HPQlFs6N1fFNEB4s8dn7Ne7ACSm7TPQ
+ I5quAWmw6qBpulHM33B0Csge4Nd8JTTYG2b1XyRe3lH8x34ABJ6aePuQ2N4AAAAASUVORK5CYII=
+X-Virus-Scanned: by XS4ALL Virus Scanner
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117005>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117006>
 
+On Mon, 20 Apr 2009 10:59:00 -0400, Jay Soffian <jaysoffian@gmail.com>
+wrote:
 
-On Apr 20, 2009, at 9:24 AM, Dmitry Potapov wrote:
+> On Sun, Apr 19, 2009 at 9:58 PM, Junio C Hamano <gitster@pobox.com> w=
+rote:
+> > Sorry, I should have checked myself. =C2=A0defined-or "//" is 5.8.1=
+ or later.
 
-> On Mon, Apr 20, 2009 at 02:07:50PM +0200, Michael J Gruber wrote:
->> Hg is introducing "bookmarks" now, corresponding to git branches. I
->> think this name describes the nature of git branches very well.
->
-> Honestly, the first thing that comes to my mind when I hear bookmarks
-> in relation to VCS is unannotated tags... The idea of self advancing
-> bookmarks is really weird...
+Being the maintainer of the defined-or patch for perl 5.8, I can
+short-circuit this
 
-That's because you're thinking of browser bookmarks instead of a real  
-bookmark.  A bookmark in a book would be rather pointless if I  
-couldn't advance it as I read pages.  :-D
+* defined-or (//) is officially available from perl-5.10.0 and up
+  you can be *sure* to have it there. the 'err' keyword that was the
+  low-precedence version for // is gone.
 
-~~ Brian
+* defined-or is available in any version of perl 5.8.x is the binary
+  was built with the appropriate patch, which is available on my CPAN
+  directory:
+  ftp://download.xs4all.nl/pub/mirror/CPAN/authors/id/H/HM/HMBRAND/
+  These patches still include the 'err' keyword
+
+* defined-or is definitely NOT available in 5.6.x
+
+All my perl-5.8.x builds include this patch, so all people that use my
+perl builds on HP-UX, will have it available.
+
+One major distribution also included it in their perl builds, but I do
+not remember which it is.
+
+My personal preference for the lowest usable and reliable perl version
+is 5.8.5 (FWIW)
+
+> > Now the real question was if we still support anything older, and i=
+f so
+> > what is the bottom version?
+> >
+> > I certainly can go with "5.8.1 or later", but I vaguely recall duri=
+ng the
+> > gitweb discussion we said anything without the utf-8 support is unu=
+sable
+> > for gitweb, but I think we also said that the rest of the git codeb=
+ase
+> > should support running with something older (5.6.1, perhaps).
+>=20
+> 15 minutes of research:
+>=20
+> * 2006-06-25 Junio C Hamano: "Tentatively let's say our cut-off point=
+ is
+>   somewhere around 5.6." --
+>   http://article.gmane.org/gmane.comp.version-control.git/22607
+>=20
+> * 2008-05-30 Lea Wiemann: "Gitweb relies on Unicode support (e.g. "us=
+e
+>   Encode") and will continue to be compatible with 5.8 and 5.10 only"=
+ --
+>   http://article.gmane.org/gmane.comp.version-control.git/83339
+>=20
+> * 2008-08-13 Lea Wiemann: "This makes Git.pm dependent on Perl 5.6.1.=
+ Some
+>   tests (like t3701-add-interactive.sh) seem to work with pretty much=
+ any Perl
+>   version out there, and requiring File::Spec changes this" --
+>   http://article.gmane.org/gmane.comp.version-control.git/92260
+>=20
+> * 2008-08-15 Marcus Griep: "Git.pm: Make File::Spec and File::Temp re=
+quirement
+>   lazy" -- c14c8ce
+>=20
+> * 2008-08-30 Junio C Hamano: "I agree we should say we rely on 5.6 or=
+ newer."
+>   -- http://article.gmane.org/gmane.comp.version-control.git/94399
+>=20
+> * 2008-09-01 Junio C Hamano: "I personally think it is probably Ok to=
+ declare
+>   that we do depend on 5.8" --
+>   http://article.gmane.org/gmane.comp.version-control.git/94523
+>=20
+>=20
+> So here's my take-away. For the *.perl scripts and gitweb, it's 5.8.0=
+=2E For the
+> test suite and Git.pm, all Perl versions are theoretically supported,=
+ but for
+> practical purposes, it may be 5.6.0.
+>=20
+> Whatever is decided this time, perhaps it should be burned into the t=
+ops of
+> the *.perl scripts (i.e. "require 5.008;"). It should also be added t=
+o
+> CodingGuidelines. You know, so this conversation doesn't keep recurri=
+ng. :-)
+
+--=20
+H.Merijn Brand  http://tux.nl      Perl Monger  http://amsterdam.pm.org=
+/
+using & porting perl 5.6.2, 5.8.x, 5.10.x, 5.11.x on HP-UX 10.20, 11.00=
+,
+11.11, 11.23, and 11.31, OpenSuSE 10.3, 11.0, and 11.1, AIX 5.2 and 5.3=
+=2E
+http://mirrors.develooper.com/hpux/           http://www.test-smoke.org=
+/
+http://qa.perl.org      http://www.goldmark.org/jeff/stupid-disclaimers=
+/
