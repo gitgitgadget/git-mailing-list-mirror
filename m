@@ -1,170 +1,169 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [ANNOUNCE] GIT 1.6.2.4
-Date: Sun, 19 Apr 2009 21:42:10 -0700
-Message-ID: <7v4owklyvx.fsf@gitster.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Apr 20 06:44:01 2009
+From: Michael Witten <mfwitten@gmail.com>
+Subject: Subject: Re: [PATCH RFC3.5 02/12] send-email: No longer repeatedly test if $smtp_server is a command
+Date: Sun, 19 Apr 2009 23:53:16 -0500
+Message-ID: <49ec020a.050cc00a.2a50.ffffd0e3@mx.google.com>
+References: <1240074128-16132-1-git-send-email-mfwitten@gmail.com>
+ <1240074128-16132-2-git-send-email-mfwitten@gmail.com>
+ <1240074128-16132-3-git-send-email-mfwitten@gmail.com>
+ <7veivop0dx.fsf@gitster.siamese.dyndns.org>
+ <b4087cc50904191937x55f94dc3sb6fbda27f380b105@mail.gmail.com>
+ <7viql0lzuw.fsf@gitster.siamese.dyndns.org>
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Apr 20 07:06:37 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LvlMN-0007ZY-Pi
-	for gcvg-git-2@gmane.org; Mon, 20 Apr 2009 06:44:00 +0200
+	id 1LvliB-0002Vp-6t
+	for gcvg-git-2@gmane.org; Mon, 20 Apr 2009 07:06:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753205AbZDTEmW convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 20 Apr 2009 00:42:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752643AbZDTEmV
-	(ORCPT <rfc822;git-outgoing>); Mon, 20 Apr 2009 00:42:21 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:33841 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751148AbZDTEmT convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 20 Apr 2009 00:42:19 -0400
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 9E017107E4;
-	Mon, 20 Apr 2009 00:42:18 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 8A016107E0; Mon,
- 20 Apr 2009 00:42:12 -0400 (EDT)
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: A127A3A8-2D65-11DE-848E-DC76898A30C1-77302942!a-sasl-quonix.pobox.com
+	id S1752289AbZDTFDL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 20 Apr 2009 01:03:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751923AbZDTFDJ
+	(ORCPT <rfc822;git-outgoing>); Mon, 20 Apr 2009 01:03:09 -0400
+Received: from mail-qy0-f126.google.com ([209.85.221.126]:35433 "EHLO
+	mail-qy0-f126.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751659AbZDTFDI (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Apr 2009 01:03:08 -0400
+Received: by qyk32 with SMTP id 32so1332353qyk.33
+        for <git@vger.kernel.org>; Sun, 19 Apr 2009 22:03:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:from:to:cc:date
+         :subject:in-reply-to:references;
+        bh=hQd98atM2XOIWyRQj1CTm00s9GVGwUah3uBDl1AmwOw=;
+        b=R5jnncgbIy8x9+jg5gkzlMMesM8FHcxobpHtNLG7W7C5xOoXk5l4wEAun+3EGsLw6I
+         V16dtYW5DIlm5DjCffjCYtjDiEeMslUY+CzU+Ys6QsVVLiUIkhHljHqEkPbIqqR02Jgl
+         DqTmpHoS0/CkkCLwfWQ6Gf1otnL08EJxDL5TY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:from:to:cc:date:subject:in-reply-to:references;
+        b=hHugW2U0/bXroBYRsPpL8zmUlUQITresG/hCXFcYkn3xRh4phxqYqY4igNzLsRBp5v
+         77jsvxlw8x9ybtTrmjTkfAIPYDLE2df+eSZTeILWZj78e2aDopMEbsbSzUcDote++hLI
+         mp8JrmixE5WkKbAYxs2BgfTOomnjz/py5qSjY=
+Received: by 10.220.77.18 with SMTP id e18mr5191126vck.85.1240203786813;
+        Sun, 19 Apr 2009 22:03:06 -0700 (PDT)
+Received: from gmail.com (97-116-107-50.mpls.qwest.net [97.116.107.50])
+        by mx.google.com with ESMTPS id 5sm5671975ywl.8.2009.04.19.22.03.05
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sun, 19 Apr 2009 22:03:06 -0700 (PDT)
+In-Reply-To: <7viql0lzuw.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116934>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/116935>
 
-The latest maintenance release GIT 1.6.2.4 is available at the
-usual places:
+On Sun, Apr 19, 2009 at 23:21, Junio C Hamano <gitster@pobox.com> wrote:
+> Michael Witten <mfwitten@gmail.com> writes:
+>
+>> ...
+>>> I think a genuine improvement would be something like:
+>>>
+>>> 	if (!defined $smtp_server) {
+>>> 		$smtp_server = 'localhost';
+>>> 	}
+>>
+>> You don't care to search for a possible sendmail?
+>
+> That's something you already did before setting smtp_server
+> unconditionally to localhost, right?  You do (in the above):
+>
+> 	if (user gave $smtp_server) {
+> 		use it, notice and note if it is a command;
+> 	} else {
+> 		if (standard binary avaiable) {
+> 			use it, note it is a command;
+> 		}
+> 		# otherwise it still is undef
+> 	}
+> 	if (!defined $smtp_server) {
+> 		set it to localhost;
+> 	}
+>
+> But I would probably write it this way:
+>
+> 	if (user didn't give us $smtp_server) {
+> 		if (standard binary avaiable) {
+> 			use it, note it is a command;
+> 		} else {
+> 			use localhost;
+> 		}
+> 	}
+> 	if ($smtp_server looks like a command) {
+> 		$smtp_server_is_a_command = true;
+> 	}
+>
+>
 
-  http://www.kernel.org/pub/software/scm/git/
+I suppose it's hard to tell from the patch, but it's actually
+a combination of those two:
 
-  git-1.6.2.4.tar.{gz,bz2}			(source tarball)
-  git-htmldocs-1.6.2.4.tar.{gz,bz2}		(preformatted docs)
-  git-manpages-1.6.2.4.tar.{gz,bz2}		(preformatted docs)
+	if (user gave $smtp_server) {
+		use it, notice and note if it is a command;
+	} else { # use a default:
+		if (standard binary avaiable) {
+			use it, note it is a command;
+		} else {
+			use localhost;
+			# automatically noted as a command
+			# without doing anything (this would
+			# cause warnings if $smtp_is_a_command
+			# is used in places other than the bool
+			# context, because it will be undef);
+			# thus, my choice is a bad choice in
+			# the long run, but I'm sticking to it.
+		}
+	}
 
-The RPM binary packages for a few architectures are found in:
+The actual code:
 
-  RPMS/$arch/git-*-1.6.2.4-1.fc9.$arch.rpm	(RPM)
+	if (defined $smtp_server) {
 
-This contains bunch of fixes that have already been merged to the maste=
-r
-branch in preparation for 1.6.3.
+		$smtp_server_is_a_command = ($smtp_server =~ m{^/});
 
-----------------------------------------------------------------
+	} else { # use a default:
 
-GIT v1.6.2.4 Release Notes
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D
+		foreach (qw( /usr/sbin/sendmail /usr/lib/sendmail )) {
+			if (-x $_) {
+				$smtp_server = $_;
+				$smtp_server_is_a_command = 1;
+				last;
+			}
+		}
 
-=46ixes since v1.6.2.3
---------------------
+		$smtp_server = 'localhost' # 127.0.0.1 is not compatible with IPv6
+			unless $smtp_server_is_a_command;
+	}
 
-* The configuration parser had a buffer overflow while parsing an overl=
-ong
-  value.
+(I'll remove the "127.0.0.1" comment).
 
-* pruning reflog entries that are unreachable from the tip of the ref
-  during "git reflog prune" (hence "git gc") was very inefficient.
+There's a minimum of checking and assigning; it's beautiful.
+Plus, this organization fits in well with the server/port
+verification (if I recall).
 
-* "git-add -p" lacked a way to say "q"uit to refuse staging any hunks f=
-or
-  the remaining paths.  You had to say "d" and then ^C.
+P.S.
 
-* "git-checkout <tree-ish> <submodule>" did not update the index entry =
-at
-  the named path; it now does.
+I also like:
 
-* "git-fast-export" choked when seeing a tag that does not point at com=
-mit.
+	$smtp_server_is_a_command or ($smtp_server = 'localhost');
 
-* "git init" segfaulted when given an overlong template location via
-  the --template=3D option.
+or, maybe:
 
-* "git-ls-tree" and "git-diff-tree" used a pathspec correctly when
-  deciding to descend into a subdirectory but they did not match the
-  individual paths correctly.  This caused pathspecs "abc/d ab" to matc=
-h
-  "abc/0" ("abc/d" made them decide to descend into the directory "abc/=
-",
-  and then "ab" incorrectly matched "abc/0" when it shouldn't).
+	$smtp_server_is_a_command or $smtp_server = 'localhost;
 
-* "git-merge-recursive" was broken when a submodule entry was involved =
-in
-  a criss-cross merge situation.
+However, I wasn't sure if that is acceptable to others; more
+importantly (:-D), I'm not sure that perl is smart enough to
+optimize away the unnecessary comparison of the values, so I
+figured that the modifier 'unless' is morally superior, because
+it probably has the advantage of fewer cycles than the 'or' form,
+and it has greater readability than the curly-braced conditional.
+I absolutely loathe curly braces around a body of one line:
 
-Many small documentation updates are included as well.
+	if ($you_loath_this) {
+		print "Clap Your Hands!\n";
+	}
 
-----------------------------------------------------------------
-
-Changes since v1.6.2.3 are as follows:
-
-Bj=C3=B6rn Steinbrink (1):
-      tree_entry_interesting: a pathspec only matches at directory boun=
-dary
-
-Clemens Buchacher (3):
-      add tests for merging with submodules
-      update cache for conflicting submodule entries
-      simplify output of conflicting merge
-
-Erik Faye-Lund (4):
-      test-suite: adding a test for fast-export with tag variants
-      builtin-fast-export.c: turn error into warning
-      builtin-fast-export.c: fix crash on tagged trees
-      builtin-fast-export.c: handle nested tags
-
-=46rank Lichtenheld (1):
-      init: Do not segfault on big GIT_TEMPLATE_DIR environment variabl=
-e
-
-Jeff King (2):
-      doc/gitattributes: clarify location of config text
-      add-interactive: refactor mode hunk handling
-
-Johan Herland (1):
-      Update docs on behaviour of 'core.sharedRepository' and 'git init=
- --shared'
-
-Johannes Schindelin (1):
-      Fix 'git checkout <submodule>' to update the index
-
-Johannes Sixt (1):
-      t1301-shared-repo: fix forced modes test
-
-Junio C Hamano (3):
-      match_tree_entry(): a pathspec only matches at directory boundari=
-es
-      Describe fixes since 1.6.2.3
-      GIT 1.6.2.4
-
-Junio Hamano (1):
-      Speed up reflog pruning of unreachable commits
-
-Linus Torvalds (1):
-      Clean up reflog unreachability pruning decision
-
-Markus Heidelberg (2):
-      doc/git-daemon: add missing arguments to options
-      doc/git-daemon: add missing arguments to max-connections option
-
-Matthieu Moy (2):
-      git add -p: new "quit" command at the prompt.
-      Update git-add.txt according to the new possibilities of 'git add=
- -p'.
-
-Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy (1):
-      Makefile: remove {fetch,send}-pack from PROGRAMS as they are buil=
-tins
-
-Paul Bolle (1):
-      imap-send: use correct configuration variable in documentation
-
-Thomas Jarosch (1):
-      Fix buffer overflow in config parser
-
-Ulrich Windl (1):
-      git-apply: fix option description
+If only the curly-braces weren't there. I don't know why, they
+just bug me terribly.
