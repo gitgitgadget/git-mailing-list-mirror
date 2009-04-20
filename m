@@ -1,76 +1,57 @@
-From: Markus Heidelberg <markus.heidelberg@web.de>
-Subject: [PATCH] grep: don't support "grep.color"-like config options
-Date: Tue, 21 Apr 2009 00:58:15 +0200
-Message-ID: <1240268295-10296-1-git-send-email-markus.heidelberg@web.de>
-Cc: git@vger.kernel.org, Markus Heidelberg <markus.heidelberg@web.de>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Apr 21 01:00:12 2009
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] grep: don't support "grep.color"-like config options
+Date: Tue, 21 Apr 2009 01:45:41 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.0904210145260.10279@pacific.mpi-cbg.de>
+References: <1240268295-10296-1-git-send-email-markus.heidelberg@web.de>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Markus Heidelberg <markus.heidelberg@web.de>
+X-From: git-owner@vger.kernel.org Tue Apr 21 01:45:30 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lw2TC-0004Mq-6w
-	for gcvg-git-2@gmane.org; Tue, 21 Apr 2009 01:00:10 +0200
+	id 1Lw3B1-00086N-Ro
+	for gcvg-git-2@gmane.org; Tue, 21 Apr 2009 01:45:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757204AbZDTW6P (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 20 Apr 2009 18:58:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755725AbZDTW6P
-	(ORCPT <rfc822;git-outgoing>); Mon, 20 Apr 2009 18:58:15 -0400
-Received: from fmmailgate01.web.de ([217.72.192.221]:39488 "EHLO
-	fmmailgate01.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753450AbZDTW6O (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 Apr 2009 18:58:14 -0400
-Received: from smtp06.web.de (fmsmtp06.dlan.cinetic.de [172.20.5.172])
-	by fmmailgate01.web.de (Postfix) with ESMTP id C7CF010045A0F;
-	Tue, 21 Apr 2009 00:58:12 +0200 (CEST)
-Received: from [89.59.65.183] (helo=localhost.localdomain)
-	by smtp06.web.de with asmtp (TLSv1:AES256-SHA:256)
-	(WEB.DE 4.110 #277)
-	id 1Lw2RH-0002tk-00; Tue, 21 Apr 2009 00:58:11 +0200
-X-Mailer: git-send-email 1.6.3.rc1.44.g269729
-X-Sender: markus.heidelberg@web.de
-X-Provags-ID: V01U2FsdGVkX191p+c45M+d5XSpywOwIlsW5bjF9V4pCLc4q7lY
-	AtZv1JecsNc594fTYTgh1g6yBhH19asegjEaDfZikgyskwx9wa
-	u9qovMg8B4gdK3ndMb5g==
+	id S1752793AbZDTXnx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 20 Apr 2009 19:43:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752852AbZDTXnw
+	(ORCPT <rfc822;git-outgoing>); Mon, 20 Apr 2009 19:43:52 -0400
+Received: from mail.gmx.net ([213.165.64.20]:42911 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752807AbZDTXnw (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Apr 2009 19:43:52 -0400
+Received: (qmail invoked by alias); 20 Apr 2009 23:43:50 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp060) with SMTP; 21 Apr 2009 01:43:50 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/e+oFVjfjePr/6l5hMfJfyXs77HH569yxLScNV6A
+	GFATF5Emi3X/H+
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <1240268295-10296-1-git-send-email-markus.heidelberg@web.de>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.74
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117047>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117048>
 
-color.grep and color.grep.* is the official and documented way to
-highlight grep matches. Comparable options like diff.color.* and
-status.color.* exist for backward compatibility reasons only and are not
-documented any more.
+Hi,
 
-Signed-off-by: Markus Heidelberg <markus.heidelberg@web.de>
----
- builtin-grep.c |    9 +++------
- 1 files changed, 3 insertions(+), 6 deletions(-)
+On Tue, 21 Apr 2009, Markus Heidelberg wrote:
 
-diff --git a/builtin-grep.c b/builtin-grep.c
-index 89489dd..f88a912 100644
---- a/builtin-grep.c
-+++ b/builtin-grep.c
-@@ -26,16 +26,13 @@ static int grep_config(const char *var, const char *value, void *cb)
- {
- 	struct grep_opt *opt = cb;
- 
--	if (!strcmp(var, "grep.color") || !strcmp(var, "color.grep")) {
-+	if (!strcmp(var, "color.grep")) {
- 		opt->color = git_config_colorbool(var, value, -1);
- 		return 0;
- 	}
--	if (!strcmp(var, "grep.color.external") ||
--	    !strcmp(var, "color.grep.external")) {
-+	if (!strcmp(var, "color.grep.external"))
- 		return git_config_string(&(opt->color_external), var, value);
--	}
--	if (!strcmp(var, "grep.color.match") ||
--	    !strcmp(var, "color.grep.match")) {
-+	if (!strcmp(var, "color.grep.match")) {
- 		if (!value)
- 			return config_error_nonbool(var);
- 		color_parse(value, var, opt->color_match);
--- 
-1.6.3.rc1.44.g269729
+> color.grep and color.grep.* is the official and documented way to 
+> highlight grep matches. Comparable options like diff.color.* and 
+> status.color.* exist for backward compatibility reasons only and are not 
+> documented any more.
+
+But is it really so bad that we have to possibly break existing setups?
+
+The cost of keeping them is really small IMHO.
+
+Ciao,
+Dscho
