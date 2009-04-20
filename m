@@ -1,70 +1,59 @@
-From: Andreas Ericsson <exon@op5.com>
-Subject: Re: problem with cherry picking
-Date: Tue, 21 Apr 2009 00:20:41 +0200
-Message-ID: <49ECF539.3030701@op5.com>
-References: <450196A1AAAE4B42A00A8B27A59278E70ACE0021@EXCHANGE.trad.tradestation.com>
+From: Michael Witten <mfwitten@gmail.com>
+Subject: Re: Oldest supported Perl version
+Date: Mon, 20 Apr 2009 17:38:58 -0500
+Message-ID: <b4087cc50904201538w6a09d9e9wfdcd103737f04507@mail.gmail.com>
+References: <76718490904200759l24e1bd9exe0e1b60f7b2847a7@mail.gmail.com>
+	 <m3eivnp5p4.fsf@localhost.localdomain>
+	 <20090420231035.683a7e0f@pc09.procura.nl>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: John Dlugosz <JDlugosz@TradeStation.com>
-X-From: git-owner@vger.kernel.org Tue Apr 21 00:23:50 2009
+Cc: git <git@vger.kernel.org>
+To: "H.Merijn Brand" <h.m.brand@xs4all.nl>
+X-From: git-owner@vger.kernel.org Tue Apr 21 00:40:37 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lw1te-0003CY-Ny
-	for gcvg-git-2@gmane.org; Tue, 21 Apr 2009 00:23:27 +0200
+	id 1Lw2AG-0007vI-9U
+	for gcvg-git-2@gmane.org; Tue, 21 Apr 2009 00:40:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758009AbZDTWUr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 20 Apr 2009 18:20:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758005AbZDTWUq
-	(ORCPT <rfc822;git-outgoing>); Mon, 20 Apr 2009 18:20:46 -0400
-Received: from mail-ew0-f176.google.com ([209.85.219.176]:41766 "EHLO
-	mail-ew0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758008AbZDTWUp (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 Apr 2009 18:20:45 -0400
-Received: by ewy24 with SMTP id 24so1342107ewy.37
-        for <git@vger.kernel.org>; Mon, 20 Apr 2009 15:20:43 -0700 (PDT)
-Received: by 10.210.87.14 with SMTP id k14mr4231046ebb.60.1240266043303;
-        Mon, 20 Apr 2009 15:20:43 -0700 (PDT)
-Received: from ?192.168.25.19? (90-227-179-205-no128.tbcn.telia.com [90.227.179.205])
-        by mx.google.com with ESMTPS id 24sm2706838eyx.3.2009.04.20.15.20.42
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 20 Apr 2009 15:20:42 -0700 (PDT)
-User-Agent: Thunderbird 2.0.0.21 (Windows/20090302)
-In-Reply-To: <450196A1AAAE4B42A00A8B27A59278E70ACE0021@EXCHANGE.trad.tradestation.com>
+	id S1756801AbZDTWjA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 20 Apr 2009 18:39:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757499AbZDTWjA
+	(ORCPT <rfc822;git-outgoing>); Mon, 20 Apr 2009 18:39:00 -0400
+Received: from mail-qy0-f118.google.com ([209.85.221.118]:64677 "EHLO
+	mail-qy0-f118.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755625AbZDTWi7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Apr 2009 18:38:59 -0400
+Received: by qyk16 with SMTP id 16so532618qyk.33
+        for <git@vger.kernel.org>; Mon, 20 Apr 2009 15:38:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=msi8LFC8l34uW1Ux3DXfpXN6xVxenD/FmQXYBJ6kTW8=;
+        b=Dn3JU/7nLLExTQp7Zm5wg/db1kJctjQIcEwNVH0hR3F9XOA5uwPQblF+c5dctKgXRm
+         mEWqjNF0xjwp+BZB2AlXsyNAjM0DZW0aA5c1dhoUGHLnDRNxcNAz40Jd/WaFU0T1vxNd
+         E8DQOxSu2ZPx8smJGU6tUY74wNIX8jt3unGX4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=hKje9qayBy0vq9qGGusk7Ted4VG70ePBUm5s+gBrGU7N2Uc+yoYyb+m6QgfWJ2Cl3x
+         LL8BGnmhtUlGvbuL4IPndVCISdVFFjuy30saqh0tdfaBdLRkQDqw1L2eKXrrWQA2rbIy
+         Tzn+esyGLfeSRfUEqCRNBYK3qL6LkwY72AVM4=
+Received: by 10.224.67.204 with SMTP id s12mr7032524qai.306.1240267138557; 
+	Mon, 20 Apr 2009 15:38:58 -0700 (PDT)
+In-Reply-To: <20090420231035.683a7e0f@pc09.procura.nl>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117042>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117043>
 
-John Dlugosz wrote:
-> Someone at work here jumped the gun and committed something before
-> fetching an amended branch.  Typical stuff -- now his work and the
-> repo's work diverged.  His change was purely new files, no big deal.  In
-> gitk, reset his dev to origin/remote/dev, then cherry-pick his new
-> commit.
-> 
-> But it barfed all over the place.  One problem was read-only files.  But
-> even after purging those, it had the same complaint, something about
-> untracked file would be modified.  What's the deal here?
-> 
-> I talked him through accomplishing it another way -- reset hard back to
-> his new commit, reset mixed to the proper ancestor, and re-doing the
-> commit.
-> 
-> But I want to understand what the issue is here.
-> 
+On Mon, Apr 20, 2009 at 16:10, H.Merijn Brand <h.m.brand@xs4all.nl> wrote:
+> 5.8.1 is the worst distribution ever.
 
-When he first reset back to the pre-modified state, the newly created
-files were not removed from the working directory (this happens on soft
-or mixed resets, fe, or when a branch is moved).
-
-The files were untracked by git as seen from the commit he reset to, and
-so git rightly refuses to apply another patch that introduces them, as
-that would mean overwriting files git knew nothing about (again, at the
-time of the commit he reset back to).
-
-/Andreas
+But then you endorse 5.6.1?
