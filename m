@@ -1,91 +1,74 @@
-From: Dmitry Potapov <dpotapov@gmail.com>
-Subject: Re: What are branches?
-Date: Tue, 21 Apr 2009 00:16:06 +0400
-Message-ID: <20090420201606.GH25059@dpotapov.dyndns.org>
-References: <alpine.DEB.1.00.0904191709220.10279@pacific.mpi-cbg.de> <20090420113216.GC25059@dpotapov.dyndns.org> <49EC6596.8060208@drmicha.warpmail.net> <20090420132414.GD25059@dpotapov.dyndns.org> <alpine.DEB.1.00.0904201621290.6771@intel-tinevez-2-302> <20090420184746.GG25059@dpotapov.dyndns.org> <alpine.DEB.1.00.0904202117010.6771@intel-tinevez-2-302>
+From: "John Dlugosz" <JDlugosz@TradeStation.com>
+Subject: Cryptic error messages?
+Date: Mon, 20 Apr 2009 16:18:09 -0400
+Message-ID: <450196A1AAAE4B42A00A8B27A59278E70ACE0030@EXCHANGE.trad.tradestation.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Michael J Gruber <git@drmicha.warpmail.net>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Mon Apr 20 22:18:48 2009
+Content-Type: text/plain;
+	charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Apr 20 22:21:07 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lvzww-000533-SS
-	for gcvg-git-2@gmane.org; Mon, 20 Apr 2009 22:18:43 +0200
+	id 1LvzzF-0005wZ-Tx
+	for gcvg-git-2@gmane.org; Mon, 20 Apr 2009 22:21:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757156AbZDTUQm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 20 Apr 2009 16:16:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751212AbZDTUQm
-	(ORCPT <rfc822;git-outgoing>); Mon, 20 Apr 2009 16:16:42 -0400
-Received: from ti-out-0910.google.com ([209.85.142.187]:8974 "EHLO
-	ti-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756961AbZDTUQk (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 Apr 2009 16:16:40 -0400
-Received: by ti-out-0910.google.com with SMTP id 11so1413469tim.23
-        for <git@vger.kernel.org>; Mon, 20 Apr 2009 13:16:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=8d9W1GIA/jHFq7vXYsL0Z9RXchcRPf+GFA23Bd18KRo=;
-        b=EpFbngg/rpT4SWjU++kTS+8PLFh+Mc4EH4KJTM5r7rI8F5tgW3WO4MYr5JTUVRmeb0
-         yLIyNgLYWhd/pGmgxIyOP9nf0Sny4Zun/EfIUBZhaZaxNBCgCmMoFqg7ArEloQ4tQ0NV
-         OqwDVzuwKCZhKfiMpdDSky7EV+nqXuvO42IW8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=pLvRIFGhaS0lCGeiixt7tSIjhWgr/Y/TybSi/1Zp3KKlbYm8wvUYSzhfiuNxNkoA3C
-         N2bpVHQjNlq8ayiZYzVuNzWlg/dbum5jq0nDWMAkXj9bB7AROaN9BuzRnmEJP3nwdiDr
-         W9aUpkKHmv83M5lEaxVyg/O7Hw3yGsp4gUbGE=
-Received: by 10.110.63.17 with SMTP id l17mr6596720tia.48.1240258599214;
-        Mon, 20 Apr 2009 13:16:39 -0700 (PDT)
-Received: from localhost (ppp91-78-50-115.pppoe.mtu-net.ru [91.78.50.115])
-        by mx.google.com with ESMTPS id b7sm2192284tic.33.2009.04.20.13.16.35
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 20 Apr 2009 13:16:37 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <alpine.DEB.1.00.0904202117010.6771@intel-tinevez-2-302>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+	id S1756478AbZDTUST (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 20 Apr 2009 16:18:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753814AbZDTUST
+	(ORCPT <rfc822;git-outgoing>); Mon, 20 Apr 2009 16:18:19 -0400
+Received: from mail2.tradestation.com ([63.99.207.80]:55764 "EHLO
+	mail2.tradestation.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755826AbZDTUSS convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 20 Apr 2009 16:18:18 -0400
+X-ASG-Debug-ID: 1240258692-596202980002-QuoKaX
+X-Barracuda-URL: http://192.168.51.31:8000/cgi-bin/mark.cgi
+Received: from mail5.tradestation.com (localhost [127.0.0.1])
+	by mail2.tradestation.com (Spam Firewall) with ESMTP id A2E17353903
+	for <git@vger.kernel.org>; Mon, 20 Apr 2009 16:18:13 -0400 (EDT)
+Received: from mail5.tradestation.com (tx02exchange02.trad.tradestation.com [192.168.51.76]) by mail2.tradestation.com with ESMTP id FVk8WoXS47LAvcni for <git@vger.kernel.org>; Mon, 20 Apr 2009 16:18:13 -0400 (EDT)
+X-Barracuda-Envelope-From: JDlugosz@TradeStation.com
+X-ASG-Whitelist: Client
+Received: from EXCHANGE.trad.tradestation.com ([10.4.0.121]) by mail5.tradestation.com with Microsoft SMTPSVC(6.0.3790.3959);
+	 Mon, 20 Apr 2009 16:18:13 -0400
+X-MimeOLE: Produced By Microsoft Exchange V6.5
+x-cr-hashedpuzzle: AQR8 ArPJ BCYC BQti EAqK FmHy G8h6 HSz1 Hgb5 H1gQ ISU3 IYMg I+UM Jk7d J3k/ Kd/V;1;ZwBpAHQAQAB2AGcAZQByAC4AawBlAHIAbgBlAGwALgBvAHIAZwA=;Sosha1_v1;7;{981556B4-901F-4652-A90C-35915A9F9FFE};agBkAGwAdQBnAG8AcwB6AEAAdAByAGEAZABlAHMAdABhAHQAaQBvAG4ALgBjAG8AbQA=;Mon, 20 Apr 2009 20:18:09 GMT;QwByAHkAcAB0AGkAYwAgAGUAcgByAG8AcgAgAG0AZQBzAHMAYQBnAGUAcwA/AA==
+Content-class: urn:content-classes:message
+x-cr-puzzleid: {981556B4-901F-4652-A90C-35915A9F9FFE}
+X-ASG-Orig-Subj: Cryptic error messages?
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+Thread-Topic: Cryptic error messages?
+Thread-Index: AcnB9R+dppVwhemNQEyzcb37W8AVNQ==
+X-OriginalArrivalTime: 20 Apr 2009 20:18:13.0122 (UTC) FILETIME=[21934E20:01C9C1F5]
+X-Barracuda-Connect: tx02exchange02.trad.tradestation.com[192.168.51.76]
+X-Barracuda-Start-Time: 1240258693
+X-Barracuda-Virus-Scanned: by TX-Barracuda Spam Firewall 400 at tradestation.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117028>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117029>
 
-On Mon, Apr 20, 2009 at 09:19:10PM +0200, Johannes Schindelin wrote:
-> 
-> The purpose of my message was to make Git old-timers _aware_ of the 
-> problems newbies have with our notion of branches.  And a wish to come up 
-> with less confusing documentation.
-
-Thank you for your attempt bringing attention to this problem, but I
-think anyone who remember their first steps with Git or have observed
-other people starting to use Git recently have noticed that already.
-
-I will try quickly summarize my view of it:
-
-- branches in Git are not fundamentally different than in other VCSes,
-  and clearly correspond commonly used definition of this term.
-  Obviously, every VCS has some difference in the way how it manages
-  branches (which makes use of branches in some VCS much easier than in
-  others).
-
-- obviously, all newcomers have some ideas about branches based on their
-  previous experience (whether it was another VCS or some books), but
-  often they do not give much thought to branches before, because they
-  rarely used them except two or three branches (like maint and master),
-  and many have never merged branches.
-
-- the graph shown by gitk may be very confusing for beginners, because
-  they cannot see the branch line, in particular, of the master branch.
-
-- I don't find documentation to be confusing, but it doesn't mean that it
-  cannot be improved. Yet, based on my observation, most confusion are
-  among those users who has shown less propensity to read documentation.
+$ git push
+Counting objects: 9, done.
+Compressing objects: 100% (8/8), done.
+Writing objects: 100% (8/8), 3.62 KiB, done.
+Total 8 (delta 4), reused 0 (delta 0)
+Unpacking objects: 100% (8/8), done.
+fatal: unresolved deltas left after unpacking
+error: unpack failed: unpacker exited with error code
+To //tx01fs01/sys/dev/git/repositories/aardvark.git
+ ! [remote rejected] dev -> dev (n/a (unpacker error))
+error: failed to push some refs to
+'//tx01fs01/sys/dev/git/repositories/aardvark
+.git'
 
 
-Dmitry
+
+Huh?  I'm having trouble defending git's reputation.
+
+TradeStation Group, Inc. is a publicly-traded holding company (NASDAQ GS: TRAD) of three operating subsidiaries, TradeStation Securities, Inc. (Member NYSE, FINRA, SIPC and NFA), TradeStation Technologies, Inc., a trading software and subscription company, and TradeStation Europe Limited, a United Kingdom, FSA-authorized introducing brokerage firm. None of these companies provides trading or investment advice, recommendations or endorsements of any kind. The information transmitted is intended only for the person or entity to which it is addressed and may contain confidential and/or privileged material. Any review, retransmission, dissemination or other use of, or taking of any action in reliance upon, this information by persons or entities other than the intended recipient is prohibited.
+  If you received this in error, please contact the sender and delete the material from any computer.
