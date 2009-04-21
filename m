@@ -1,60 +1,213 @@
-From: "John Dlugosz" <JDlugosz@TradeStation.com>
-Subject: dangling commits and blobs: is this normal?
-Date: Tue, 21 Apr 2009 17:46:16 -0400
-Message-ID: <450196A1AAAE4B42A00A8B27A59278E70ACE0502@EXCHANGE.trad.tradestation.com>
-Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
-To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Apr 21 23:48:04 2009
+From: Markus Heidelberg <markus.heidelberg@web.de>
+Subject: [PATCH] show-branch: color the commit status signs
+Date: Tue, 21 Apr 2009 23:52:59 +0200
+Message-ID: <1240350779-9686-1-git-send-email-markus.heidelberg@web.de>
+Cc: git@vger.kernel.org, Markus Heidelberg <markus.heidelberg@web.de>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Apr 21 23:55:59 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LwNon-0000SZ-Fp
-	for gcvg-git-2@gmane.org; Tue, 21 Apr 2009 23:47:53 +0200
+	id 1LwNv0-0002gp-UE
+	for gcvg-git-2@gmane.org; Tue, 21 Apr 2009 23:54:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754666AbZDUVqT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 21 Apr 2009 17:46:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753844AbZDUVqT
-	(ORCPT <rfc822;git-outgoing>); Tue, 21 Apr 2009 17:46:19 -0400
-Received: from mail2.tradestation.com ([63.99.207.80]:49796 "EHLO
-	mail2.tradestation.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753032AbZDUVqT convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 21 Apr 2009 17:46:19 -0400
-X-ASG-Debug-ID: 1240350378-1b4e01660000-QuoKaX
-X-Barracuda-URL: http://192.168.51.31:8000/cgi-bin/mark.cgi
-Received: from mail5.tradestation.com (localhost [127.0.0.1])
-	by mail2.tradestation.com (Spam & Virus Firewall) with ESMTP id 47958368113
-	for <git@vger.kernel.org>; Tue, 21 Apr 2009 17:46:18 -0400 (EDT)
-Received: from mail5.tradestation.com (tx02exchange02.trad.tradestation.com [192.168.51.76]) by mail2.tradestation.com with ESMTP id GF5wgwCex1bPPPha for <git@vger.kernel.org>; Tue, 21 Apr 2009 17:46:18 -0400 (EDT)
-X-Barracuda-Envelope-From: JDlugosz@TradeStation.com
-X-ASG-Whitelist: Client
-Received: from EXCHANGE.trad.tradestation.com ([10.4.0.121]) by mail5.tradestation.com with Microsoft SMTPSVC(6.0.3790.3959);
-	 Tue, 21 Apr 2009 17:46:17 -0400
-X-MimeOLE: Produced By Microsoft Exchange V6.5
-Content-class: urn:content-classes:message
-X-ASG-Orig-Subj: dangling commits and blobs: is this normal?
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-Thread-Topic: dangling commits and blobs: is this normal?
-Thread-Index: AcnCypllTnbJ/E3CSPWidcj1Iuk7BQ==
-X-OriginalArrivalTime: 21 Apr 2009 21:46:17.0555 (UTC) FILETIME=[99C18A30:01C9C2CA]
-X-Barracuda-Connect: tx02exchange02.trad.tradestation.com[192.168.51.76]
-X-Barracuda-Start-Time: 1240350378
-X-Barracuda-Virus-Scanned: by TX-Barracuda Spam Firewall 400 at tradestation.com
+	id S1751161AbZDUVwh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 21 Apr 2009 17:52:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751144AbZDUVwh
+	(ORCPT <rfc822;git-outgoing>); Tue, 21 Apr 2009 17:52:37 -0400
+Received: from fmmailgate02.web.de ([217.72.192.227]:47173 "EHLO
+	fmmailgate02.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751056AbZDUVwg (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 21 Apr 2009 17:52:36 -0400
+Received: from smtp08.web.de (fmsmtp08.dlan.cinetic.de [172.20.5.216])
+	by fmmailgate02.web.de (Postfix) with ESMTP id D6547FD67FD9;
+	Tue, 21 Apr 2009 23:52:32 +0200 (CEST)
+Received: from [89.59.89.253] (helo=localhost.localdomain)
+	by smtp08.web.de with asmtp (TLSv1:AES256-SHA:256)
+	(WEB.DE 4.110 #277)
+	id 1LwNtI-0003hk-00; Tue, 21 Apr 2009 23:52:32 +0200
+X-Mailer: git-send-email 1.6.3.rc1.61.ge6ab3
+X-Sender: markus.heidelberg@web.de
+X-Provags-ID: V01U2FsdGVkX18xGRlYMmNHi5cxdYviP6+qHAfdJGzUd4WQg6+B
+	/VI3lJ+atNT0REDrFNrTWEmKU1pJymDcyNUtzYHVDyCIGoiWPA
+	ARJr2IhhYiUsNMtOfghQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117160>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117161>
 
-Immediately after doing a git gc, a git fsck --full reports dangling
-objects.  Is this normal?  What does dangling mean, if not those things
-that gc finds?
+Make it possible to color the status character ('*' '!' '+' '-') of
+commits. Each branch uses a single color. This makes it easier to follow
+a particular branch, especially when there are gaps in the output.
 
---John
+Add the config option color.showbranch and the command line options
+ --color and --no-color to control the colored output.
 
-TradeStation Group, Inc. is a publicly-traded holding company (NASDAQ GS: TRAD) of three operating subsidiaries, TradeStation Securities, Inc. (Member NYSE, FINRA, SIPC and NFA), TradeStation Technologies, Inc., a trading software and subscription company, and TradeStation Europe Limited, a United Kingdom, FSA-authorized introducing brokerage firm. None of these companies provides trading or investment advice, recommendations or endorsements of any kind. The information transmitted is intended only for the person or entity to which it is addressed and may contain confidential and/or privileged material. Any review, retransmission, dissemination or other use of, or taking of any action in reliance upon, this information by persons or entities other than the intended recipient is prohibited.
-  If you received this in error, please contact the sender and delete the material from any computer.
+Signed-off-by: Markus Heidelberg <markus.heidelberg@web.de>
+---
+
+    I will send a patch for bash completion of --[no-]color and
+    color.showbranch, when this patch is accepted.
+
+ Documentation/config.txt          |    6 ++++
+ Documentation/git-show-branch.txt |    8 ++++++
+ builtin-show-branch.c             |   51 ++++++++++++++++++++++++++++++++++---
+ 3 files changed, 61 insertions(+), 4 deletions(-)
+
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 35056e1..1383a29 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -595,6 +595,12 @@ color.pager::
+ 	A boolean to enable/disable colored output when the pager is in
+ 	use (default is true).
+ 
++color.showbranch::
++	A boolean to enable/disable color in the output of
++	linkgit:git-show-branch[1]. May be set to `always`,
++	`false` (or `never`) or `auto` (or `true`), in which case colors are used
++	only when the output is to a terminal. Defaults to false.
++
+ color.status::
+ 	A boolean to enable/disable color in the output of
+ 	linkgit:git-status[1]. May be set to `always`,
+diff --git a/Documentation/git-show-branch.txt b/Documentation/git-show-branch.txt
+index 7e9ff37..1ec3601 100644
+--- a/Documentation/git-show-branch.txt
++++ b/Documentation/git-show-branch.txt
+@@ -10,6 +10,7 @@ SYNOPSIS
+ [verse]
+ 'git show-branch' [--all] [--remotes] [--topo-order] [--current]
+ 		[--more=<n> | --list | --independent | --merge-base]
++		[--color | --no-color]
+ 		[--no-name | --sha1-name] [--topics] [<rev> | <glob>]...
+ 'git show-branch' (-g|--reflog)[=<n>[,<base>]] [--list] [<ref>]
+ 
+@@ -107,6 +108,13 @@ OPTIONS
+ 	When no explicit <ref> parameter is given, it defaults to the
+ 	current branch (or `HEAD` if it is detached).
+ 
++--color::
++	Color the status sign of the commits. Each branch uses a single color.
++
++--no-color::
++	Turn off colored output, even when the configuration file gives the
++	default to color output.
++
+ Note that --more, --list, --independent and --merge-base options
+ are mutually exclusive.
+ 
+diff --git a/builtin-show-branch.c b/builtin-show-branch.c
+index 828e6f8..fc38f5e 100644
+--- a/builtin-show-branch.c
++++ b/builtin-show-branch.c
+@@ -2,12 +2,25 @@
+ #include "commit.h"
+ #include "refs.h"
+ #include "builtin.h"
++#include "color.h"
+ 
+ static const char show_branch_usage[] =
+ "git show-branch [--sparse] [--current] [--all] [--remotes] [--topo-order] [--more=count | --list | --independent | --merge-base ] [--topics] [<refs>...] | --reflog[=n[,b]] <branch>";
+ static const char show_branch_usage_reflog[] =
+ "--reflog is incompatible with --all, --remotes, --independent or --merge-base";
+ 
++static int showbranch_use_color = -1;
++static char column_colors[][COLOR_MAXLEN] = {
++	GIT_COLOR_RED,
++	GIT_COLOR_GREEN,
++	GIT_COLOR_YELLOW,
++	GIT_COLOR_BLUE,
++	GIT_COLOR_MAGENTA,
++	GIT_COLOR_CYAN,
++};
++
++#define COLUMN_COLORS_MAX (ARRAY_SIZE(column_colors))
++
+ static int default_num;
+ static int default_alloc;
+ static const char **default_arg;
+@@ -19,6 +32,20 @@ static const char **default_arg;
+ 
+ #define DEFAULT_REFLOG	4
+ 
++static const char *get_color_code(int idx)
++{
++	if (showbranch_use_color)
++		return column_colors[idx];
++	return "";
++}
++
++static const char *get_color_reset_code(void)
++{
++	if (showbranch_use_color)
++		return GIT_COLOR_RESET;
++	return "";
++}
++
+ static struct commit *interesting(struct commit_list *list)
+ {
+ 	while (list) {
+@@ -545,7 +572,12 @@ static int git_show_branch_config(const char *var, const char *value, void *cb)
+ 		return 0;
+ 	}
+ 
+-	return git_default_config(var, value, cb);
++	if (!strcmp(var, "color.showbranch")) {
++		showbranch_use_color = git_config_colorbool(var, value, -1);
++		return 0;
++	}
++
++	return git_color_default_config(var, value, cb);
+ }
+ 
+ static int omit_in_dense(struct commit *commit, struct commit **rev, int n)
+@@ -611,6 +643,9 @@ int cmd_show_branch(int ac, const char **av, const char *prefix)
+ 
+ 	git_config(git_show_branch_config, NULL);
+ 
++	if (showbranch_use_color == -1)
++		showbranch_use_color = git_use_color_default;
++
+ 	/* If nothing is specified, try the default first */
+ 	if (ac == 1 && default_num) {
+ 		ac = default_num + 1;
+@@ -658,6 +693,10 @@ int cmd_show_branch(int ac, const char **av, const char *prefix)
+ 			parse_reflog_param(arg + 9, &reflog, &reflog_base);
+ 		else if (!prefixcmp(arg, "-g="))
+ 			parse_reflog_param(arg + 3, &reflog, &reflog_base);
++		else if (!strcmp(arg, "--color"))
++			showbranch_use_color = 1;
++		else if (!strcmp(arg, "--no-color"))
++			showbranch_use_color = 0;
+ 		else
+ 			usage(show_branch_usage);
+ 		ac--; av++;
+@@ -843,8 +882,10 @@ int cmd_show_branch(int ac, const char **av, const char *prefix)
+ 			else {
+ 				for (j = 0; j < i; j++)
+ 					putchar(' ');
+-				printf("%c [%s] ",
+-				       is_head ? '*' : '!', ref_name[i]);
++				printf("%s%c%s [%s] ",
++				       get_color_code(i % COLUMN_COLORS_MAX),
++				       is_head ? '*' : '!',
++				       get_color_reset_code(), ref_name[i]);
+ 			}
+ 
+ 			if (!reflog) {
+@@ -903,7 +944,9 @@ int cmd_show_branch(int ac, const char **av, const char *prefix)
+ 					mark = '*';
+ 				else
+ 					mark = '+';
+-				putchar(mark);
++				printf("%s%c%s",
++				       get_color_code(i % COLUMN_COLORS_MAX),
++				       mark, get_color_reset_code());
+ 			}
+ 			putchar(' ');
+ 		}
+-- 
+1.6.3.rc1.61.ge6ab3
