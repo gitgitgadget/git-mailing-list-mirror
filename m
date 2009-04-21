@@ -1,213 +1,127 @@
-From: Markus Heidelberg <markus.heidelberg@web.de>
-Subject: [PATCH] show-branch: color the commit status signs
-Date: Tue, 21 Apr 2009 23:52:59 +0200
-Message-ID: <1240350779-9686-1-git-send-email-markus.heidelberg@web.de>
-Cc: git@vger.kernel.org, Markus Heidelberg <markus.heidelberg@web.de>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Apr 21 23:55:59 2009
+From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+Subject: Re: [JGIT PATCH 10/10] BROKEN TEST: ObjectLoader stays valid across repacks
+Date: Wed, 22 Apr 2009 01:16:50 +0200
+Message-ID: <200904220116.51076.robin.rosenberg.lists@dewire.com>
+References: <1240276872-17893-1-git-send-email-spearce@spearce.org> <1240276872-17893-10-git-send-email-spearce@spearce.org> <1240276872-17893-11-git-send-email-spearce@spearce.org>
+Mime-Version: 1.0
+Content-Type: Text/Plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Wed Apr 22 01:19:04 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LwNv0-0002gp-UE
-	for gcvg-git-2@gmane.org; Tue, 21 Apr 2009 23:54:19 +0200
+	id 1LwPF1-0003PN-Bc
+	for gcvg-git-2@gmane.org; Wed, 22 Apr 2009 01:19:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751161AbZDUVwh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 21 Apr 2009 17:52:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751144AbZDUVwh
-	(ORCPT <rfc822;git-outgoing>); Tue, 21 Apr 2009 17:52:37 -0400
-Received: from fmmailgate02.web.de ([217.72.192.227]:47173 "EHLO
-	fmmailgate02.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751056AbZDUVwg (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 21 Apr 2009 17:52:36 -0400
-Received: from smtp08.web.de (fmsmtp08.dlan.cinetic.de [172.20.5.216])
-	by fmmailgate02.web.de (Postfix) with ESMTP id D6547FD67FD9;
-	Tue, 21 Apr 2009 23:52:32 +0200 (CEST)
-Received: from [89.59.89.253] (helo=localhost.localdomain)
-	by smtp08.web.de with asmtp (TLSv1:AES256-SHA:256)
-	(WEB.DE 4.110 #277)
-	id 1LwNtI-0003hk-00; Tue, 21 Apr 2009 23:52:32 +0200
-X-Mailer: git-send-email 1.6.3.rc1.61.ge6ab3
-X-Sender: markus.heidelberg@web.de
-X-Provags-ID: V01U2FsdGVkX18xGRlYMmNHi5cxdYviP6+qHAfdJGzUd4WQg6+B
-	/VI3lJ+atNT0REDrFNrTWEmKU1pJymDcyNUtzYHVDyCIGoiWPA
-	ARJr2IhhYiUsNMtOfghQ==
+	id S1752517AbZDUXRE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 21 Apr 2009 19:17:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751932AbZDUXRC
+	(ORCPT <rfc822;git-outgoing>); Tue, 21 Apr 2009 19:17:02 -0400
+Received: from mail.dewire.com ([83.140.172.130]:17235 "EHLO dewire.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751644AbZDUXRA (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 21 Apr 2009 19:17:00 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by dewire.com (Postfix) with ESMTP id E2A13149165C;
+	Wed, 22 Apr 2009 01:16:53 +0200 (CEST)
+X-Virus-Scanned: by amavisd-new at dewire.com
+Received: from dewire.com ([127.0.0.1])
+	by localhost (torino.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id vL6fiH24fKWH; Wed, 22 Apr 2009 01:16:52 +0200 (CEST)
+Received: from sleipner.localnet (unknown [10.9.0.3])
+	by dewire.com (Postfix) with ESMTP id 756CE14915D9;
+	Wed, 22 Apr 2009 01:16:52 +0200 (CEST)
+User-Agent: KMail/1.11.2 (Linux/2.6.27-14-generic; KDE/4.2.2; i686; ; )
+In-Reply-To: <1240276872-17893-11-git-send-email-spearce@spearce.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117161>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117162>
 
-Make it possible to color the status character ('*' '!' '+' '-') of
-commits. Each branch uses a single color. This makes it easier to follow
-a particular branch, especially when there are gaps in the output.
+tisdag 21 april 2009 03:21:12 skrev "Shawn O. Pearce" <spearce@spearce.org>:
+> This doesn't doesn't work.
+> 
+> What we are trying to verify is that an ObjectLoader remains valid
+> if the underlying storage for the object has moved, such as when a
+> repository is repacked, the old pack was deleted, and the object is
+> now in the new pack.
 
-Add the config option color.showbranch and the command line options
- --color and --no-color to control the colored output.
+So, I had an idea and started hacking and suddenly the supposedly ok cases
+started crashing like this.
 
-Signed-off-by: Markus Heidelberg <markus.heidelberg@web.de>
----
+org.spearce.jgit.errors.MissingObjectException: Missing unknown 4a75554761c96be80602c05145d1ef41c77e1b72
+	at org.spearce.jgit.revwalk.RevWalk.parseAny(RevWalk.java:704)
+	at org.spearce.jgit.lib.ConcurrentRepackTest.parse(ConcurrentRepackTest.java:189)
+	at org.spearce.jgit.lib.ConcurrentRepackTest.testObjectMovedWithinPack(ConcurrentRepackTest.java:129)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)
+	at java.lang.reflect.Method.invoke(Method.java:597)
+	at junit.framework.TestCase.runTest(TestCase.java:164)
+	at junit.framework.TestCase.runBare(TestCase.java:130)
+	at junit.framework.TestResult$1.protect(TestResult.java:106)
+	at junit.framework.TestResult.runProtected(TestResult.java:124)
+	at junit.framework.TestResult.run(TestResult.java:109)
+	at junit.framework.TestCase.run(TestCase.java:120)
+	at org.eclipse.jdt.internal.junit.runner.junit3.JUnit3TestReference.run(JUnit3TestReference.java:130)
+	at org.eclipse.jdt.internal.junit.runner.TestExecution.run(TestExecution.java:38)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:460)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:673)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.run(RemoteTestRunner.java:386)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.main(RemoteTestRunner.java:196)
 
-    I will send a patch for bash completion of --[no-]color and
-    color.showbranch, when this patch is accepted.
+After pruning the other changes, it still crashes , even with mvn clean test
 
- Documentation/config.txt          |    6 ++++
- Documentation/git-show-branch.txt |    8 ++++++
- builtin-show-branch.c             |   51 ++++++++++++++++++++++++++++++++++---
- 3 files changed, 61 insertions(+), 4 deletions(-)
+HashCode /home/me/SW/EGIT.contrib/org.spearce.jgit.test/trash/trash1240354367548.0/.git/objects/pack/pack-34be9032ac282b11fa9babdc2b2a93ca996c9c2f.pack = 327983069
+HashCode /home/me/SW/EGIT.contrib/org.spearce.jgit.test/trash/trash1240354367548.0/.git/objects/pack/pack-df2982f284bbabb6bdb59ee3fcc6eb0983e20371.pack = 458811222
+HashCode /home/me/SW/EGIT.contrib/org.spearce.jgit.test/trash/trash1240354367548.0/.git/objects/pack/pack-9fb5b411fe6dfa89cc2e6b89d2bd8e5de02b5745.pack = 331392325
+HashCode /home/me/SW/EGIT.contrib/org.spearce.jgit.test/trash/trash1240354367548.0/.git/objects/pack/pack-546ff360fe3488adb20860ce3436a2d6373d2796.pack = 547821429
+HashCode /home/me/SW/EGIT.contrib/org.spearce.jgit.test/trash/trash1240354367548.0/.git/objects/pack/pack-e6d07037cbcf13376308a0a995d1fa48f8f76aaa.pack = 536578194
+HashCode /home/me/SW/EGIT.contrib/org.spearce.jgit.test/trash/trash1240354367548.0/.git/objects/pack/pack-3280af9c07ee18a87705ef50b0cc4cd20266cf12.pack = 885722359
+HashCode /home/me/SW/EGIT.contrib/org.spearce.jgit.test/trash/trash1240354367548.0/.git/objects/pack/pack-146aac1f6a11aed8e06af7d9f5cc1b4b8beedb36.pack = 830203467
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 35056e1..1383a29 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -595,6 +595,12 @@ color.pager::
- 	A boolean to enable/disable colored output when the pager is in
- 	use (default is true).
+The hash codes printed are the same everytime it crashes, removing the invalid flags will create these codes and the test succeeds.
+
+HashCode /home/me/SW/EGIT.contrib/org.spearce.jgit.test/trash/trash1240354568171.0/.git/objects/pack/pack-34be9032ac282b11fa9babdc2b2a93ca996c9c2f.pack = 327983069
+HashCode /home/me/SW/EGIT.contrib/org.spearce.jgit.test/trash/trash1240354568171.0/.git/objects/pack/pack-df2982f284bbabb6bdb59ee3fcc6eb0983e20371.pack = 458811222
+HashCode /home/me/SW/EGIT.contrib/org.spearce.jgit.test/trash/trash1240354568171.0/.git/objects/pack/pack-9fb5b411fe6dfa89cc2e6b89d2bd8e5de02b5745.pack = 331392325
+HashCode /home/me/SW/EGIT.contrib/org.spearce.jgit.test/trash/trash1240354568171.0/.git/objects/pack/pack-546ff360fe3488adb20860ce3436a2d6373d2796.pack = 547821429
+HashCode /home/me/SW/EGIT.contrib/org.spearce.jgit.test/trash/trash1240354568171.0/.git/objects/pack/pack-e6d07037cbcf13376308a0a995d1fa48f8f76aaa.pack = 536578194
+HashCode /home/me/SW/EGIT.contrib/org.spearce.jgit.test/trash/trash1240354568171.0/.git/objects/pack/pack-3280af9c07ee18a87705ef50b0cc4cd20266cf12.pack = 885722359
+HashCode /home/me/SW/EGIT.contrib/org.spearce.jgit.test/trash/trash1240354568171.0/.git/objects/pack/pack-146aac1f6a11aed8e06af7d9f5cc1b4b8beedb36.pack = 830203467
+
+One cannot obviously assume they are the same, but the numbers might be a lead to why it crashes here. Looks
+like as hash collision and a failure of the "equals" part to distinguish different WindowedFile's.
+
+-- robin
+
+diff --git a/org.spearce.jgit/src/org/spearce/jgit/lib/WindowedFile.java b/org.spearce.jgit/src/org/spearce/jgit/lib/WindowedFile.java
+index 9293eb9..f9e1991 100644
+--- a/org.spearce.jgit/src/org/spearce/jgit/lib/WindowedFile.java
++++ b/org.spearce.jgit/src/org/spearce/jgit/lib/WindowedFile.java
+@@ -80,6 +80,8 @@
+ 	/** Total number of windows actively in the associated cache. */
+ 	int openCount;
  
-+color.showbranch::
-+	A boolean to enable/disable color in the output of
-+	linkgit:git-show-branch[1]. May be set to `always`,
-+	`false` (or `never`) or `auto` (or `true`), in which case colors are used
-+	only when the output is to a terminal. Defaults to false.
++	boolean invalid;
 +
- color.status::
- 	A boolean to enable/disable color in the output of
- 	linkgit:git-status[1]. May be set to `always`,
-diff --git a/Documentation/git-show-branch.txt b/Documentation/git-show-branch.txt
-index 7e9ff37..1ec3601 100644
---- a/Documentation/git-show-branch.txt
-+++ b/Documentation/git-show-branch.txt
-@@ -10,6 +10,7 @@ SYNOPSIS
- [verse]
- 'git show-branch' [--all] [--remotes] [--topo-order] [--current]
- 		[--more=<n> | --list | --independent | --merge-base]
-+		[--color | --no-color]
- 		[--no-name | --sha1-name] [--topics] [<rev> | <glob>]...
- 'git show-branch' (-g|--reflog)[=<n>[,<base>]] [--list] [<ref>]
- 
-@@ -107,6 +108,13 @@ OPTIONS
- 	When no explicit <ref> parameter is given, it defaults to the
- 	current branch (or `HEAD` if it is detached).
- 
-+--color::
-+	Color the status sign of the commits. Each branch uses a single color.
-+
-+--no-color::
-+	Turn off colored output, even when the configuration file gives the
-+	default to color output.
-+
- Note that --more, --list, --independent and --merge-base options
- are mutually exclusive.
- 
-diff --git a/builtin-show-branch.c b/builtin-show-branch.c
-index 828e6f8..fc38f5e 100644
---- a/builtin-show-branch.c
-+++ b/builtin-show-branch.c
-@@ -2,12 +2,25 @@
- #include "commit.h"
- #include "refs.h"
- #include "builtin.h"
-+#include "color.h"
- 
- static const char show_branch_usage[] =
- "git show-branch [--sparse] [--current] [--all] [--remotes] [--topo-order] [--more=count | --list | --independent | --merge-base ] [--topics] [<refs>...] | --reflog[=n[,b]] <branch>";
- static const char show_branch_usage_reflog[] =
- "--reflog is incompatible with --all, --remotes, --independent or --merge-base";
- 
-+static int showbranch_use_color = -1;
-+static char column_colors[][COLOR_MAXLEN] = {
-+	GIT_COLOR_RED,
-+	GIT_COLOR_GREEN,
-+	GIT_COLOR_YELLOW,
-+	GIT_COLOR_BLUE,
-+	GIT_COLOR_MAGENTA,
-+	GIT_COLOR_CYAN,
-+};
-+
-+#define COLUMN_COLORS_MAX (ARRAY_SIZE(column_colors))
-+
- static int default_num;
- static int default_alloc;
- static const char **default_arg;
-@@ -19,6 +32,20 @@ static const char **default_arg;
- 
- #define DEFAULT_REFLOG	4
- 
-+static const char *get_color_code(int idx)
-+{
-+	if (showbranch_use_color)
-+		return column_colors[idx];
-+	return "";
-+}
-+
-+static const char *get_color_reset_code(void)
-+{
-+	if (showbranch_use_color)
-+		return GIT_COLOR_RESET;
-+	return "";
-+}
-+
- static struct commit *interesting(struct commit_list *list)
- {
- 	while (list) {
-@@ -545,7 +572,12 @@ static int git_show_branch_config(const char *var, const char *value, void *cb)
- 		return 0;
+ 	/**
+ 	 * Open a file for reading through window caching.
+ 	 * 
+@@ -93,6 +95,10 @@ public WindowedFile(final File file) {
+ 		// value in WindowCache.hash(), without doing the multiply there.
+ 		//
+ 		hash = System.identityHashCode(this) * 31;
++		System.out.print("HashCode ");
++		System.out.print(file.getPath());
++		System.out.print(" = ");
++		System.out.println(hash);
+ 		length = Long.MAX_VALUE;
  	}
  
--	return git_default_config(var, value, cb);
-+	if (!strcmp(var, "color.showbranch")) {
-+		showbranch_use_color = git_config_colorbool(var, value, -1);
-+		return 0;
-+	}
-+
-+	return git_color_default_config(var, value, cb);
- }
- 
- static int omit_in_dense(struct commit *commit, struct commit **rev, int n)
-@@ -611,6 +643,9 @@ int cmd_show_branch(int ac, const char **av, const char *prefix)
- 
- 	git_config(git_show_branch_config, NULL);
- 
-+	if (showbranch_use_color == -1)
-+		showbranch_use_color = git_use_color_default;
-+
- 	/* If nothing is specified, try the default first */
- 	if (ac == 1 && default_num) {
- 		ac = default_num + 1;
-@@ -658,6 +693,10 @@ int cmd_show_branch(int ac, const char **av, const char *prefix)
- 			parse_reflog_param(arg + 9, &reflog, &reflog_base);
- 		else if (!prefixcmp(arg, "-g="))
- 			parse_reflog_param(arg + 3, &reflog, &reflog_base);
-+		else if (!strcmp(arg, "--color"))
-+			showbranch_use_color = 1;
-+		else if (!strcmp(arg, "--no-color"))
-+			showbranch_use_color = 0;
- 		else
- 			usage(show_branch_usage);
- 		ac--; av++;
-@@ -843,8 +882,10 @@ int cmd_show_branch(int ac, const char **av, const char *prefix)
- 			else {
- 				for (j = 0; j < i; j++)
- 					putchar(' ');
--				printf("%c [%s] ",
--				       is_head ? '*' : '!', ref_name[i]);
-+				printf("%s%c%s [%s] ",
-+				       get_color_code(i % COLUMN_COLORS_MAX),
-+				       is_head ? '*' : '!',
-+				       get_color_reset_code(), ref_name[i]);
- 			}
- 
- 			if (!reflog) {
-@@ -903,7 +944,9 @@ int cmd_show_branch(int ac, const char **av, const char *prefix)
- 					mark = '*';
- 				else
- 					mark = '+';
--				putchar(mark);
-+				printf("%s%c%s",
-+				       get_color_code(i % COLUMN_COLORS_MAX),
-+				       mark, get_color_reset_code());
- 			}
- 			putchar(' ');
- 		}
--- 
-1.6.3.rc1.61.ge6ab3
