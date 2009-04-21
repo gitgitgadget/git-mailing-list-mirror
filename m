@@ -1,227 +1,270 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: [JGIT PATCH 07/10] Rescan packs if a pack is modified in-place (part 1)
-Date: Mon, 20 Apr 2009 18:21:09 -0700
-Message-ID: <1240276872-17893-8-git-send-email-spearce@spearce.org>
-References: <1240276872-17893-1-git-send-email-spearce@spearce.org>
- <1240276872-17893-2-git-send-email-spearce@spearce.org>
- <1240276872-17893-3-git-send-email-spearce@spearce.org>
- <1240276872-17893-4-git-send-email-spearce@spearce.org>
- <1240276872-17893-5-git-send-email-spearce@spearce.org>
- <1240276872-17893-6-git-send-email-spearce@spearce.org>
- <1240276872-17893-7-git-send-email-spearce@spearce.org>
+From: Johan Herland <johan@herland.net>
+Subject: [PATCH v2 2/2] Teach "-m <msg>" and "-F <file>" to "git notes edit"
+Date: Tue, 21 Apr 2009 03:26:22 +0200
+Message-ID: <200904210326.22864.johan@herland.net>
+References: <200904210239.21974.johan@herland.net>
+ <200904210242.16050.johan@herland.net>
+ <alpine.DEB.1.00.0904210251220.10279@pacific.mpi-cbg.de>
+Mime-Version: 1.0
+Content-Type: Text/Plain; charset=iso-8859-1
+Content-Transfer-Encoding: 7BIT
 Cc: git@vger.kernel.org
-To: Robin Rosenberg <robin.rosenberg@dewire.com>
-X-From: git-owner@vger.kernel.org Tue Apr 21 03:24:27 2009
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Apr 21 03:28:05 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lw4io-0002M1-Df
-	for gcvg-git-2@gmane.org; Tue, 21 Apr 2009 03:24:27 +0200
+	id 1Lw4mJ-00031i-4s
+	for gcvg-git-2@gmane.org; Tue, 21 Apr 2009 03:28:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756747AbZDUBVn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 20 Apr 2009 21:21:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757311AbZDUBVl
-	(ORCPT <rfc822;git-outgoing>); Mon, 20 Apr 2009 21:21:41 -0400
-Received: from george.spearce.org ([209.20.77.23]:33025 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757603AbZDUBVT (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 Apr 2009 21:21:19 -0400
-Received: by george.spearce.org (Postfix, from userid 1000)
-	id 1286E3821F; Tue, 21 Apr 2009 01:21:19 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.2.4 (2008-01-01) on george.spearce.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-4.4 required=4.0 tests=ALL_TRUSTED,BAYES_00
-	autolearn=ham version=3.2.4
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by george.spearce.org (Postfix) with ESMTP id D68A138221;
-	Tue, 21 Apr 2009 01:21:15 +0000 (UTC)
-X-Mailer: git-send-email 1.6.3.rc1.188.ga02b
-In-Reply-To: <1240276872-17893-7-git-send-email-spearce@spearce.org>
+	id S1751699AbZDUB03 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 20 Apr 2009 21:26:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751281AbZDUB03
+	(ORCPT <rfc822;git-outgoing>); Mon, 20 Apr 2009 21:26:29 -0400
+Received: from mx.getmail.no ([84.208.15.66]:63934 "EHLO
+	get-mta-out02.get.basefarm.net" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1751170AbZDUB01 (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 20 Apr 2009 21:26:27 -0400
+Content-disposition: inline
+Received: from mx.getmail.no ([10.5.16.4]) by get-mta-out02.get.basefarm.net
+ (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
+ with ESMTP id <0KIF00E8PG027V30@get-mta-out02.get.basefarm.net> for
+ git@vger.kernel.org; Tue, 21 Apr 2009 03:26:26 +0200 (MEST)
+Received: from alpha.localnet ([84.215.102.95])
+ by get-mta-in01.get.basefarm.net
+ (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
+ with ESMTP id <0KIF0054EFZZKXB0@get-mta-in01.get.basefarm.net> for
+ git@vger.kernel.org; Tue, 21 Apr 2009 03:26:26 +0200 (MEST)
+X-PMX-Version: 5.5.3.366731, Antispam-Engine: 2.7.0.366912,
+ Antispam-Data: 2009.4.21.11621
+User-Agent: KMail/1.11.2 (Linux/2.6.29-ARCH; KDE/4.2.2; x86_64; ; )
+In-reply-to: <alpine.DEB.1.00.0904210251220.10279@pacific.mpi-cbg.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117070>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117071>
 
-If a pack file is modified in place it usually means that some other
-process has repacked this repository, but the contents of this one
-pack remained the same, but the object offsets may be different due
-to different pack creation settings.  In such cases we can no longer
-use the existing PacKFile or PackIndex instances and instead we need
-to create new ones.
+The "-m" and "-F" options are already the established method
+(in both git-commit and git-tag) to specify a commit/tag message
+without invoking the editor. This patch teaches "git notes edit"
+to respect the same options for specifying a notes message without
+invoking the editor.
 
-This isn't a full solution to the problem.  It is possible for an
-application to obtain a PackedObjectLoader, see the PackFile get
-closed due to pressure on the WindowCache, then fail when the pack
-is reopened due to the pack being recreated on disk.  PackWriter
-is very susceptible to this, as it caches PackedObjectLoaders for
-a long time before it uses them to copy data out of an existing
-pack file.
+Multiple "-m" and/or "-F" options are concatenated as separate
+paragraphs.
 
-This particular solution only catches the failure where we had
-opened the index a long time ago, closed the pack, and are now
-opening it again in order to construct a PackedObjectLoader for
-the caller.
+The patch also updates the "git notes" documentation and adds
+selftests for the new functionality.
 
-Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
+Signed-off-by: Johan Herland <johan@herland.net>
 ---
- .../src/org/spearce/jgit/lib/ObjectDirectory.java  |   66 +++++++++++++------
- .../src/org/spearce/jgit/lib/PackFile.java         |   20 +++++-
- 2 files changed, 63 insertions(+), 23 deletions(-)
 
-diff --git a/org.spearce.jgit/src/org/spearce/jgit/lib/ObjectDirectory.java b/org.spearce.jgit/src/org/spearce/jgit/lib/ObjectDirectory.java
-index e7156c4..36f221e 100644
---- a/org.spearce.jgit/src/org/spearce/jgit/lib/ObjectDirectory.java
-+++ b/org.spearce.jgit/src/org/spearce/jgit/lib/ObjectDirectory.java
-@@ -51,6 +51,7 @@
- import java.util.Map;
- import java.util.concurrent.atomic.AtomicReference;
+On Tuesday 21 April 2009, Johannes Schindelin wrote:
+> Well, either you forbid multiple -F/-m options, or you merge the
+> messages, right?  AFAIR 'git commit -m A -m B' combines 'A' and 'B'...
+
+Here's a second version that merges the messages.
+
+> > +	if [ -n "$MESSAGE" ]; then
+> Here's a chance for me to learn: I was under the impression that "! -z"
+> is more portable than "-n".  Am I completely off the track?
+
+No, I haven't checked this at all, so you're probably right. This second
+version of the patch does not use "-n".
+
+Note that I changed the selftest to test the -m/-F merge behaviour.
+This causes the expected output to have a couple of lines with 4 trailing
+spaces. I know that trailing spaces is frowned upon on this list, but I'm
+hoping these'll make it through, as the test needs them...
+
+
+Have fun! :)
+
+...Johan
+
+ Documentation/git-notes.txt |   16 ++++++++++-
+ git-notes.sh                |   64 +++++++++++++++++++++++++++++++++++++-----
+ t/t3301-notes.sh            |   35 +++++++++++++++++++++++
+ 3 files changed, 106 insertions(+), 9 deletions(-)
+
+diff --git a/Documentation/git-notes.txt b/Documentation/git-notes.txt
+index 7136016..94cceb1 100644
+--- a/Documentation/git-notes.txt
++++ b/Documentation/git-notes.txt
+@@ -8,7 +8,7 @@ git-notes - Add/inspect commit notes
+ SYNOPSIS
+ --------
+ [verse]
+-'git-notes' (edit | show) [commit]
++'git-notes' (edit [-F <file> | -m <msg>] | show) [commit]
  
-+import org.spearce.jgit.errors.PackMismatchException;
- import org.spearce.jgit.util.FS;
+ DESCRIPTION
+ -----------
+@@ -33,6 +33,20 @@ show::
+ 	Show the notes for a given commit (defaults to HEAD).
  
- /**
-@@ -190,38 +191,53 @@ protected boolean hasObject1(final AnyObjectId objectId) {
- 	@Override
- 	protected ObjectLoader openObject1(final WindowCursor curs,
- 			final AnyObjectId objectId) throws IOException {
--		for (final PackFile p : packs()) {
--			try {
--				final ObjectLoader ldr = p.get(curs, objectId);
--				if (ldr != null) {
--					return ldr;
-+		PackFile[] pList = packs();
-+		SEARCH: for (;;) {
-+			for (final PackFile p : pList) {
-+				try {
-+					final ObjectLoader ldr = p.get(curs, objectId);
-+					if (ldr != null) {
-+						return ldr;
-+					}
-+				} catch (PackMismatchException e) {
-+					// Pack was modified; refresh the entire pack list.
-+					//
-+					pList = scanPacks(pList);
-+					continue SEARCH;
-+				} catch (IOException e) {
-+					// Assume the pack is corrupted.
-+					//
-+					removePack(p);
- 				}
--			} catch (IOException e) {
--				// Assume the pack is corrupted.
--				//
--				removePack(p);
--				continue;
- 			}
-+			return null;
- 		}
--		return null;
- 	}
  
- 	@Override
- 	void openObjectInAllPacks1(final Collection<PackedObjectLoader> out,
- 			final WindowCursor curs, final AnyObjectId objectId)
- 			throws IOException {
--		for (final PackFile p : packs()) {
--			try {
--				final PackedObjectLoader ldr = p.get(curs, objectId);
--				if (ldr != null) {
--					out.add(ldr);
-+		PackFile[] pList = packs();
-+		SEARCH: for (;;) {
-+			for (final PackFile p : pList) {
-+				try {
-+					final PackedObjectLoader ldr = p.get(curs, objectId);
-+					if (ldr != null) {
-+						out.add(ldr);
-+					}
-+				} catch (PackMismatchException e) {
-+					// Pack was modified; refresh the entire pack list.
-+					//
-+					pList = scanPacks(pList);
-+					continue SEARCH;
-+				} catch (IOException e) {
-+					// Assume the pack is corrupted.
-+					//
-+					removePack(p);
- 				}
--			} catch (IOException e) {
--				// Assume the pack is corrupted.
--				//
--				removePack(p);
--				continue;
- 			}
-+			break SEARCH;
- 		}
- 	}
- 
-@@ -350,6 +366,14 @@ synchronized (packList) {
- 	private static Map<String, PackFile> reuseMap(final PackFile[] old) {
- 		final Map<String, PackFile> forReuse = new HashMap<String, PackFile>();
- 		for (final PackFile p : old) {
-+			if (p.invalid()) {
-+				// The pack instance is corrupted, and cannot be safely used
-+				// again. Do not include it in our reuse map.
-+				//
-+				p.close();
-+				continue;
-+			}
++OPTIONS
++-------
++-m <msg>::
++	Use the given note message (instead of prompting).
++	If multiple `-m` (or `-F`) options are given, their
++	values are concatenated as separate paragraphs.
 +
- 			final PackFile prior = forReuse.put(p.getPackFile().getName(), p);
- 			if (prior != null) {
- 				// This should never occur. It should be impossible for us
-diff --git a/org.spearce.jgit/src/org/spearce/jgit/lib/PackFile.java b/org.spearce.jgit/src/org/spearce/jgit/lib/PackFile.java
-index bda4843..74ffef8 100644
---- a/org.spearce.jgit/src/org/spearce/jgit/lib/PackFile.java
-+++ b/org.spearce.jgit/src/org/spearce/jgit/lib/PackFile.java
-@@ -73,6 +73,8 @@ public int compare(final PackFile a, final PackFile b) {
- 
- 	private int packLastModified;
- 
-+	private volatile boolean invalid;
++-F <file>::
++	Take the note message from the given file.  Use '-' to
++	read the note message from the standard input.
++	If multiple `-F` (or `-m`) options are given, their
++	values are concatenated as separate paragraphs.
 +
- 	private PackIndex loadedIdx;
- 
- 	private PackReverseIndex reverseIdx;
-@@ -91,14 +93,24 @@ public PackFile(final File idxFile, final File packFile) {
- 		pack = new WindowedFile(packFile) {
- 			@Override
- 			protected void onOpen() throws IOException {
--				onOpenPack();
-+				try {
-+					onOpenPack();
-+				} catch (IOException e) {
-+					invalid = true;
-+					throw e;
-+				}
- 			}
- 		};
- 	}
- 
- 	private synchronized PackIndex idx() throws IOException {
- 		if (loadedIdx == null) {
--			loadedIdx = PackIndex.open(idxFile);
-+			try {
-+				loadedIdx = PackIndex.open(idxFile);
-+			} catch (IOException e) {
-+				invalid = true;
-+				throw e;
-+			}
- 		}
- 		return loadedIdx;
- 	}
-@@ -267,6 +279,10 @@ boolean supportsFastCopyRawData() throws IOException {
- 		return idx().hasCRC32Support();
- 	}
- 
-+	boolean invalid() {
-+		return invalid;
-+	}
 +
- 	private void onOpenPack() throws IOException {
- 		final PackIndex idx = idx();
- 		final WindowCursor curs = new WindowCursor();
+ Author
+ ------
+ Written by Johannes Schindelin <johannes.schindelin@gmx.de>
+diff --git a/git-notes.sh b/git-notes.sh
+index 7c3b8b9..5ff82f2 100755
+--- a/git-notes.sh
++++ b/git-notes.sh
+@@ -1,16 +1,59 @@
+ #!/bin/sh
+ 
+-USAGE="(edit | show) [commit]"
++USAGE="(edit [-F <file> | -m <msg>] | show) [commit]"
+ . git-sh-setup
+ 
+-test -n "$3" && usage
+-
+ test -z "$1" && usage
+ ACTION="$1"; shift
+ 
+ test -z "$GIT_NOTES_REF" && GIT_NOTES_REF="$(git config core.notesref)"
+ test -z "$GIT_NOTES_REF" && GIT_NOTES_REF="refs/notes/commits"
+ 
++MESSAGE=
++while test $# != 0
++do
++	case "$1" in
++	-m)
++		test "$ACTION" = "edit" || usage
++		shift
++		if test "$#" = "0"; then
++			die "error: option -m needs an argument"
++		else
++			if [ -z "$MESSAGE" ]; then
++				MESSAGE="$1"
++			else
++				MESSAGE="$MESSAGE
++
++$1"
++			fi
++			shift
++		fi
++		;;
++	-F)
++		test "$ACTION" = "edit" || usage
++		shift
++		if test "$#" = "0"; then
++			die "error: option -F needs an argument"
++		else
++			if [ -z "$MESSAGE" ]; then
++				MESSAGE="$(cat "$1")"
++			else
++				MESSAGE="$MESSAGE
++
++$(cat "$1")"
++			fi
++			shift
++		fi
++		;;
++	-*)
++		usage
++		;;
++	*)
++		break
++		;;
++	esac
++done
++
+ COMMIT=$(git rev-parse --verify --default HEAD "$@") ||
+ die "Invalid commit: $@"
+ 
+@@ -29,19 +72,24 @@ edit)
+ 		test -f "$GIT_INDEX_FILE" && rm "$GIT_INDEX_FILE"
+ 	' 0
+ 
+-	git log -1 $COMMIT | sed "s/^/#/" > "$MSG_FILE"
+-
+ 	CURRENT_HEAD=$(git show-ref "$GIT_NOTES_REF" | cut -f 1 -d ' ')
+ 	if [ -z "$CURRENT_HEAD" ]; then
+ 		PARENT=
+ 	else
+ 		PARENT="-p $CURRENT_HEAD"
+ 		git read-tree "$GIT_NOTES_REF" || die "Could not read index"
+-		git cat-file blob :$COMMIT >> "$MSG_FILE" 2> /dev/null
+ 	fi
+ 
+-	core_editor="$(git config core.editor)"
+-	${GIT_EDITOR:-${core_editor:-${VISUAL:-${EDITOR:-vi}}}} "$MSG_FILE"
++	if [ -z "$MESSAGE" ]; then
++		git log -1 $COMMIT | sed "s/^/#/" > "$MSG_FILE"
++		if [ ! -z "$CURRENT_HEAD" ]; then
++			git cat-file blob :$COMMIT >> "$MSG_FILE" 2> /dev/null
++		fi
++		core_editor="$(git config core.editor)"
++		${GIT_EDITOR:-${core_editor:-${VISUAL:-${EDITOR:-vi}}}} "$MSG_FILE"
++	else
++		echo "$MESSAGE" > "$MSG_FILE"
++	fi
+ 
+ 	grep -v ^# < "$MSG_FILE" | git stripspace > "$MSG_FILE".processed
+ 	mv "$MSG_FILE".processed "$MSG_FILE"
+diff --git a/t/t3301-notes.sh b/t/t3301-notes.sh
+index 73e53be..9eaa338 100755
+--- a/t/t3301-notes.sh
++++ b/t/t3301-notes.sh
+@@ -110,5 +110,40 @@ test_expect_success 'show multi-line notes' '
+ 	git log -2 > output &&
+ 	test_cmp expect-multiline output
+ '
++test_expect_success 'create -m and -F notes (setup)' '
++	: > a4 &&
++	git add a4 &&
++	test_tick &&
++	git commit -m 4th &&
++	echo "xyzzy" > note5 &&
++	git notes edit -m spam -F note5 -m "foo
++bar
++baz"
++'
++
++cat > expect-m-and-F << EOF
++commit 15023535574ded8b1a89052b32673f84cf9582b8
++Author: A U Thor <author@example.com>
++Date:   Thu Apr 7 15:16:13 2005 -0700
++
++    4th
++
++Notes:
++    spam
++    
++    xyzzy
++    
++    foo
++    bar
++    baz
++EOF
++
++printf "\n" >> expect-m-and-F
++cat expect-multiline >> expect-m-and-F
++
++test_expect_success 'show -m and -F notes' '
++	git log -3 > output &&
++	test_cmp expect-m-and-F output
++'
+ 
+ test_done
 -- 
-1.6.3.rc1.188.ga02b
+1.6.3.rc0.1.gf800
