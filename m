@@ -1,79 +1,95 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [RFC/PATCH] graph API: Use horizontal lines for more compact
- graphs
-Date: Tue, 21 Apr 2009 02:56:42 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.0904210255280.10279@pacific.mpi-cbg.de>
-References: <20090421004027.GA12330@linux.vnet>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: [JGIT PATCH 00/10] Object access improvements
+Date: Mon, 20 Apr 2009 18:21:02 -0700
+Message-ID: <1240276872-17893-1-git-send-email-spearce@spearce.org>
 Cc: git@vger.kernel.org
-To: Allan Caffee <allan.caffee@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Apr 21 02:56:30 2009
+To: Robin Rosenberg <robin.rosenberg@dewire.com>
+X-From: git-owner@vger.kernel.org Tue Apr 21 03:23:05 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lw4Hj-0005Eo-SR
-	for gcvg-git-2@gmane.org; Tue, 21 Apr 2009 02:56:28 +0200
+	id 1Lw4hQ-00021g-7W
+	for gcvg-git-2@gmane.org; Tue, 21 Apr 2009 03:23:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754759AbZDUAyz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 20 Apr 2009 20:54:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754394AbZDUAyy
-	(ORCPT <rfc822;git-outgoing>); Mon, 20 Apr 2009 20:54:54 -0400
-Received: from mail.gmx.net ([213.165.64.20]:43572 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754217AbZDUAyy (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 Apr 2009 20:54:54 -0400
-Received: (qmail invoked by alias); 21 Apr 2009 00:54:52 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp027) with SMTP; 21 Apr 2009 02:54:52 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18yUG4N66UybF3sW1dDqJmumbKQSwlxqCurz9amIy
-	f2B19nB0CIng7t
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <20090421004027.GA12330@linux.vnet>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.55
+	id S1756594AbZDUBVR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 20 Apr 2009 21:21:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754627AbZDUBVQ
+	(ORCPT <rfc822;git-outgoing>); Mon, 20 Apr 2009 21:21:16 -0400
+Received: from george.spearce.org ([209.20.77.23]:33009 "EHLO
+	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757563AbZDUBVO (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Apr 2009 21:21:14 -0400
+Received: by george.spearce.org (Postfix, from userid 1000)
+	id 297D0381CE; Tue, 21 Apr 2009 01:21:14 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.2.4 (2008-01-01) on george.spearce.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-4.4 required=4.0 tests=ALL_TRUSTED,BAYES_00
+	autolearn=ham version=3.2.4
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by george.spearce.org (Postfix) with ESMTP id 5A0E3381CE;
+	Tue, 21 Apr 2009 01:21:13 +0000 (UTC)
+X-Mailer: git-send-email 1.6.3.rc1.188.ga02b
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117059>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117060>
 
-Hi,
+This series tries to address issue 79[1] and GERRIT-81[2] by
+detecting when packs have been overwritten on disk, or when
+new packs have appeared and old packs have disappeared.
 
-On Mon, 20 Apr 2009, Allan Caffee wrote:
+The first 5 patches are quite trivial and are just things I
+found while working on the real issue.
 
-> diff --git a/graph.c b/graph.c
-> index d4571cf..597e545 100644
-> --- a/graph.c
-> +++ b/graph.c
-> @@ -47,20 +47,6 @@ static void graph_show_strbuf(struct git_graph *graph, struct strbuf const *sb);
->   * - Limit the number of columns, similar to the way gitk does.
->   *   If we reach more than a specified number of columns, omit
->   *   sections of some columns.
-> - *
-> - * - The output during the GRAPH_PRE_COMMIT and GRAPH_COLLAPSING states
-> - *   could be made more compact by printing horizontal lines, instead of
-> - *   long diagonal lines.  For example, during collapsing, something like
-> - *   this:          instead of this:
-> - *   | | | | |      | | | | |
-> - *   | |_|_|/       | | | |/
-> - *   |/| | |        | | |/|
-> - *   | | | |        | |/| |
-> - *                  |/| | |
-> - *                  | | | |
-> - *
-> - *   If there are several parallel diagonal lines, they will need to be
-> - *   replaced with horizontal lines on subsequent rows.
+Patch 6 is rather intrusive.  It starts a refactoring I have
+always wanted to do, which is to split the object database out
+of the Repository class, and also start to divorce it from the
+local filesystem.  The library is in the same state after patch
+5 as it was before patch 5; that is issue 79 is still an issue,
+but everything else is fine.
 
-I like it!
+Patch 7 and 8 fix issue 79.
 
-> +				for (j = (target * 2)+3; j < (i - 2); j += 2)
+Patch 9 is a rewritten version of your 1/3 posted Sun 19 Apr,
+providing test cases for issue 79 / GERRIT-81.
 
-This (target*2)+3 is a bit too magical for me to understand.  But maybe I 
-am just too tired?
+Patch 10 is a broken test case.  Basically as I explain in the
+commit message of 7, PackWriter can still crash randomly.
 
-Ciao,
-Dscho
+With 1-9 applied, issue 79 can be marked fixed, but GERRIT-81 is
+still a problem, as any concurrent PackWriter thread may randomly
+crash during a repack.
+
+[1] http://code.google.com/p/egit/issues/detail?id=79
+[2] http://jira.source.android.com/jira/browse/GERRIT-81
+
+Shawn O. Pearce (10):
+  Safely handle closing an already closed WindowedFile
+  Change empty tree test case to use a temporary repository
+  Replace hand-coded read fully loop with NB.readFully
+  Clear the reverse index when closing a PackFile
+  Introduce a new exception type for an in-place pack modification
+  Refactor object database access with new abstraction
+  Rescan packs if a pack is modified in-place (part 1)
+  Scan for new packs if GIT_DIR/objects/pack has been modified
+  Add test cases for loading new (or replaced) pack files
+  BROKEN TEST: ObjectLoader stays valid across repacks
+
+ .../org/spearce/jgit/lib/ConcurrentRepackTest.java |  252 +++++++++++
+ .../org/spearce/jgit/lib/RepositoryTestCase.java   |    2 -
+ .../tst/org/spearce/jgit/lib/T0003_Basic.java      |   11 +-
+ .../tst/org/spearce/jgit/lib/T0004_PackReader.java |    1 -
+ .../spearce/jgit/errors/PackMismatchException.java |   55 +++
+ .../src/org/spearce/jgit/lib/ObjectDatabase.java   |  367 ++++++++++++++++
+ .../src/org/spearce/jgit/lib/ObjectDirectory.java  |  438 ++++++++++++++++++++
+ .../src/org/spearce/jgit/lib/PackFile.java         |   36 ++-
+ .../src/org/spearce/jgit/lib/Repository.java       |  174 +--------
+ .../org/spearce/jgit/lib/UnpackedObjectLoader.java |   34 +-
+ .../src/org/spearce/jgit/lib/WindowedFile.java     |   16 +-
+ 11 files changed, 1183 insertions(+), 203 deletions(-)
+ create mode 100644 org.spearce.jgit.test/tst/org/spearce/jgit/lib/ConcurrentRepackTest.java
+ create mode 100644 org.spearce.jgit/src/org/spearce/jgit/errors/PackMismatchException.java
+ create mode 100644 org.spearce.jgit/src/org/spearce/jgit/lib/ObjectDatabase.java
+ create mode 100644 org.spearce.jgit/src/org/spearce/jgit/lib/ObjectDirectory.java
