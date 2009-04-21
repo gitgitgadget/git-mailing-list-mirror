@@ -1,68 +1,118 @@
-From: "David E. Wheeler" <david@kineticode.com>
-Subject: Re: Again with git-svn: File was not found in commit
-Date: Tue, 21 Apr 2009 11:16:37 -0700
-Message-ID: <8EDD65AC-9C25-4281-86F6-E52A41331B00@kineticode.com>
-References: <747CFDA3-AC27-44EB-A69C-BF9C29B05A31@kineticode.com> <20090421180231.GB16642@dcvr.yhbt.net>
-Mime-Version: 1.0 (Apple Message framework v930.3)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
-Content-Transfer-Encoding: 7bit
+From: Allan Caffee <allan.caffee@gmail.com>
+Subject: [PATCH] graph API: fix extra space during pre_commit_line state
+Date: Tue, 21 Apr 2009 14:34:12 -0400
+Message-ID: <20090421183412.GA8499@linux.vnet>
+References: <87zlea9lit.fsf_-_@iki.fi>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Eric Wong <normalperson@yhbt.net>
-X-From: git-owner@vger.kernel.org Tue Apr 21 20:19:34 2009
+To: Teemu Likonen <tlikonen@iki.fi>
+X-From: git-owner@vger.kernel.org Tue Apr 21 20:36:24 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LwKYm-0002Ic-Gp
-	for gcvg-git-2@gmane.org; Tue, 21 Apr 2009 20:19:08 +0200
+	id 1LwKpG-0008W5-Li
+	for gcvg-git-2@gmane.org; Tue, 21 Apr 2009 20:36:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755511AbZDUSQm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 21 Apr 2009 14:16:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753968AbZDUSQm
-	(ORCPT <rfc822;git-outgoing>); Tue, 21 Apr 2009 14:16:42 -0400
-Received: from host-201.commandprompt.net ([207.173.203.201]:55289 "EHLO
-	smtp.kineticode.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753844AbZDUSQl (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 21 Apr 2009 14:16:41 -0400
-Received: from [192.168.1.120] (c-76-105-135-51.hsd1.or.comcast.net [76.105.135.51])
-	by smtp.kineticode.com (Postfix) with ESMTPSA id D735550805D;
-	Tue, 21 Apr 2009 11:15:45 -0700 (PDT)
-In-Reply-To: <20090421180231.GB16642@dcvr.yhbt.net>
-X-Mailer: Apple Mail (2.930.3)
+	id S1755620AbZDUSeW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 21 Apr 2009 14:34:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752064AbZDUSeV
+	(ORCPT <rfc822;git-outgoing>); Tue, 21 Apr 2009 14:34:21 -0400
+Received: from rv-out-0506.google.com ([209.85.198.232]:9537 "EHLO
+	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751559AbZDUSeV (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 21 Apr 2009 14:34:21 -0400
+Received: by rv-out-0506.google.com with SMTP id f9so2545585rvb.1
+        for <git@vger.kernel.org>; Tue, 21 Apr 2009 11:34:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:mail-followup-to:references:mime-version:content-type
+         :content-disposition:in-reply-to:user-agent;
+        bh=40mZsdUZcYURQW8Up9yurkMXdyV7aBPW0jpIJesTxPQ=;
+        b=QAld9cPPjE1TWAJHmF7LryOvs8IC9xucOdmvxS7tbZriKJNdYuKsrbfTXA1gupafMQ
+         KKHxNiOlkpLB9rREl7MSzaGEpaCnVrBacPXvoUgYLBmcCyMqf42a9Zae1V/musskIpmQ
+         m/PVLUkDG/sWeMkZsyWhT6LcimzpeLmsRz5WI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:mail-followup-to:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        b=SG33t3md789EPrRmVxTjNs3Za73hKoYAkmIpbcmTrBvQkofhZcPWC35zdtDv9sSWgB
+         z3OCZUDOXapr0Gv0gE6OloivM9gOXa8P3vTry5yLv6xAVzh1d4Cze/1jtdLpfr5oBi8K
+         XMbsI9qDIAYIRCsJWknukSM11cMsK2UdYMDlM=
+Received: by 10.142.217.17 with SMTP id p17mr1398148wfg.161.1240338859843;
+        Tue, 21 Apr 2009 11:34:19 -0700 (PDT)
+Received: from linux.vnet (n1-13-232.dhcp.drexel.edu [129.25.13.232])
+        by mx.google.com with ESMTPS id 22sm2958898wfg.23.2009.04.21.11.34.15
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Tue, 21 Apr 2009 11:34:17 -0700 (PDT)
+Mail-Followup-To: Teemu Likonen <tlikonen@iki.fi>, git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <87zlea9lit.fsf_-_@iki.fi>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117146>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117147>
 
-On Apr 21, 2009, at 11:02 AM, Eric Wong wrote:
+An extra space is being inserted between the "commit" column and all of
+the successive edges.  Remove this space.  This regression was
+introduced by 427fc5b.
 
->>    bricolage/branches/rev_1_8/lib/Bric/App/ApacheConfig.pm was not
->> found in commit
->>    e5145931069a511e98a087d4cb1a8bb75f43f899 (r5256)
->>
->> This seemed strange to me, so I had a look at SVN:
->>
->>    svn list -r5256 http://svn.bricolage.cc/bricolage/branches/rev_1_8/lib/Bric/App/ApacheConfig.pm
->>    ApacheConfig.pm
->>
->> So the file *is* there in that revision. I had been running  
->> 1.6.1.2, so I
->> upgraded to 1.6.2.2 and ran `git svn fetch` again to see if it  
->> would pick
->> up where it left off, but it returned the same error (please don't  
->> tell
->> me I have to start over!).
->
-> Interesting.  I finally managed to reproduce it over the weekend.   
-> I'll
-> try to look into it later tonight.
+Signed-off-by: Allan Caffee <allan.caffee@gmail.com>
+---
+ graph.c |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
 
-Thanks, appreciate it. I've gotten around it by going back to the old  
-CVS repository on SourceForge and migrating that, and then migrating  
-the SVN repo only from after we moved to SVN. Then I'll just have to  
-stitch the CVS and SVN migrations together and I'll be done.
+On Tue, 21 Apr 2009, Teemu Likonen wrote:
+> The colored log graph implementation (commit 427fc5b) introduces an
+> alignment bug which looks like this:
+> 
+> | | * | edf2e37 git-apply: work from subdirectory.
+> | | * | 4ca0660 working from subdirectory: preparation
+> | |  | |        
+> | |   \ \       
+> | |    \ \      
+> | |     \ \     
+> | |      \ \    
+> | |       \ \   
+> | *-----. \ \   5401f30 Merge branches 'jc/apply', 'lt/ls-tree', [...]
+> | |\ \ \ \ \ \  
+> | | | | | * | | 0501c24 Tutorial: adjust merge example to recursive [...]
+> 
+> 
+> In other words, the diagonal lines after this octopus merge are aligned
+> wrong. To see it yourself type
+> 
+>     git log --graph --oneline a957207
+> 
+> in the Git repository and scroll the output down a bit. Note that the
+> bug exists with both --color _and_ --no-color.
 
-Best,
+It's actually the lines before the merge that are shifted to the right
+by one.  This patch should fix that.
 
-David
+This issue exposes a gap in the existing test coverage, which doesn't
+exercise the pre_commit_line code.  Maybe another patch is in order to
+extend t4202-log to cover pre-commit lines and octopus merges.
+
+diff --git a/graph.c b/graph.c
+index d4571cf..31e09eb 100644
+--- a/graph.c
++++ b/graph.c
+@@ -727,8 +727,8 @@ static void graph_output_pre_commit_line(struct git_graph *graph,
+ 		if (col->commit == graph->commit) {
+ 			seen_this = 1;
+ 			strbuf_write_column(sb, col, '|');
+-			strbuf_addf(sb, " %*s", graph->expansion_row, "");
+-			chars_written += 2 + graph->expansion_row;
++			strbuf_addf(sb, "%*s", graph->expansion_row, "");
++			chars_written += 1 + graph->expansion_row;
+ 		} else if (seen_this && (graph->expansion_row == 0)) {
+ 			/*
+ 			 * This is the first line of the pre-commit output.
+-- 
+1.5.6.3
