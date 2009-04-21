@@ -1,87 +1,268 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] tests: test applying criss-cross rename patch
-Date: Tue, 21 Apr 2009 00:08:01 -0700
-Message-ID: <7viqkya3hq.fsf@gitster.siamese.dyndns.org>
-References: <alpine.LFD.2.00.0904091147290.4583@localhost.localdomain>
- <1239463584-1427-1-git-send-email-michal.kiedrowicz@gmail.com>
- <81b0412b0904200711p66ea2500s7cc5894aba71f641@mail.gmail.com>
+From: Peter Hutterer <peter.hutterer@who-t.net>
+Subject: Re: [PATCH/RESEND] git-submodule: add support for --rebase.
+Date: Tue, 21 Apr 2009 17:45:41 +1000
+Message-ID: <20090421074540.GA7885@dingo.redhat.com>
+References: <20090419233051.GA17946@dingo.bne.redhat.com> <alpine.DEB.1.00.0904201152360.6955@intel-tinevez-2-302>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?utf-8?Q?Micha=C5=82?= Kiedrowicz <michal.kiedrowicz@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Alex Riesen <raa.lkml@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Apr 21 09:09:50 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: gitster@pobox.com, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Apr 21 09:48:39 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LwA73-000555-0F
-	for gcvg-git-2@gmane.org; Tue, 21 Apr 2009 09:09:49 +0200
+	id 1LwAiY-0007Sb-Mj
+	for gcvg-git-2@gmane.org; Tue, 21 Apr 2009 09:48:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751419AbZDUHIO convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 21 Apr 2009 03:08:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751380AbZDUHIO
-	(ORCPT <rfc822;git-outgoing>); Tue, 21 Apr 2009 03:08:14 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:42856 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750956AbZDUHIO convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 21 Apr 2009 03:08:14 -0400
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id AB159ACD6C;
-	Tue, 21 Apr 2009 03:08:12 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 4F51FACD6A; Tue,
- 21 Apr 2009 03:08:07 -0400 (EDT)
-In-Reply-To: <81b0412b0904200711p66ea2500s7cc5894aba71f641@mail.gmail.com>
- (Alex Riesen's message of "Mon, 20 Apr 2009 16:11:01 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 2D61ECBA-2E43-11DE-8E85-C121C5FC92D5-77302942!a-sasl-fastnet.pobox.com
+	id S1753554AbZDUHqW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 21 Apr 2009 03:46:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752413AbZDUHqW
+	(ORCPT <rfc822;git-outgoing>); Tue, 21 Apr 2009 03:46:22 -0400
+Received: from ipx-119-252-190-80.ipxserver.de ([80.190.252.119]:36575 "EHLO
+	ipx10616.ipxserver.de" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1753093AbZDUHqV (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 21 Apr 2009 03:46:21 -0400
+Received: from whot by ipx10616.ipxserver.de with local (Exim 4.63)
+	(envelope-from <peter.hutterer@who-t.net>)
+	id 1LwAgI-0007zg-5S; Tue, 21 Apr 2009 09:46:15 +0200
+Content-Disposition: inline
+In-Reply-To: <alpine.DEB.1.00.0904201152360.6955@intel-tinevez-2-302>
+User-Agent: Mutt/1.5.19 (2009-01-05)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117098>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117099>
 
-Alex Riesen <raa.lkml@gmail.com> writes:
+On Mon, Apr 20, 2009 at 11:55:54AM +0200, Johannes Schindelin wrote:
+> On Mon, 20 Apr 2009, Peter Hutterer wrote:
+> 
+> > 'git submodule update --rebase' rebases your local branch on top of what would
+> 
+> This line is so long that it got wrapped in my mail program.  But it is 
+> even worse: we would like to show this in an 80-column display with a 
+> 4-space indent, so it would be nice if you could rewrap to 76 columns (I 
+> even use 72 columns, because it looks nicer).
 
-> 2009/4/11 Micha=C5=82 Kiedrowicz <michal.kiedrowicz@gmail.com>:
->> +test_expect_success 'criss-cross rename' '
->> + =C2=A0 =C2=A0 =C2=A0 mv file1 tmp &&
->> + =C2=A0 =C2=A0 =C2=A0 mv file2 file1 &&
->> + =C2=A0 =C2=A0 =C2=A0 mv tmp file2
->> +'
->> +
->> +test_expect_success 'diff -M -B' '
->> + =C2=A0 =C2=A0 =C2=A0 git diff -M -B > diff &&
->> + =C2=A0 =C2=A0 =C2=A0 git reset --hard
->> +
->> +'
->
-> This cannot work on systems where ctime is not trusted:
-> git diff will produce no data, as there are no changes in
-> metadata (the files are of the same size). Either make
-> the file sizes different or add a "touch file1 file2".
+amended to 72 cols, see below.
 
-You seem to be saying that we still have a racy-git bug somewhere.  Is
-your statement from an actual experience or a speculation?  If the form=
-er
-we have a bug to kill, not a workaround to avoid the issue in this test=
-=2E
+> > I'm still unsure about whether to change the wording (it currently uses 
+> > the same terms as git-rebase and the rest of the git-submodule man 
+> > page). Please let me know what to do to get this patch done.
+> 
+> AFAIR I gave an alternative wording, am I wrong?
 
->
-> diff --git a/t/t4130-apply-criss-cross-rename.sh
-> b/t/t4130-apply-criss-cross-rename.sh
-> index 8623dbe..1ff049a 100755
-> --- a/t/t4130-apply-criss-cross-rename.sh
-> +++ b/t/t4130-apply-criss-cross-rename.sh
-> @@ -14,7 +14,7 @@ create_file() {
->
->  test_expect_success 'setup' '
->  	create_file file1 "File1 contents" &&
-> -	create_file file2 "File2 contents" &&
-> +	create_file file2 "Contents of File2" &&
->  	git add file1 file2 &&
->  	git commit -m 1
->  '
+yes, but tbh. I found it a bit confusing. Your suggestion was
+
+       "Instead of detaching the HEAD to the revision committed in the
+        superproject, rebase the current branch onto that revision."
+
+How about this one, basically the same but split up in two sentences:
+
++--rebase::
++	This option is only valid for the update command.
++	Rebase the current branch onto the commit recorded in the
++	superproject. If this option is given, the submodule's HEAD will not
++	be detached. If a a merge failure prevents this process, you will have
++	to resolve these failures with linkgit:git-rebase[1].
++
+
+Cheers,
+  Peter
+
+
+>From f5664840db1193311054eb38c91ec762846cd00c Mon Sep 17 00:00:00 2001
+From: Peter Hutterer <peter.hutterer@who-t.net>
+Date: Fri, 27 Mar 2009 13:42:42 +1000
+Subject: [PATCH] git-submodule: add support for --rebase.
+
+'git submodule update --rebase' rebases your local branch on top of what
+would have been checked out to a detached HEAD otherwise.
+
+In some cases, detaching the HEAD when updating a submodule complicates
+the workflow to commit to this submodule (checkout master, rebase, then
+commit).  For submodules that require frequent updates but infrequent
+(if any) commits, a rebase can be executed directly by the git-submodule
+command, ensuring that the submodules stay on their respective branches.
+
+Signed-off-by: Peter Hutterer <peter.hutterer@who-t.net>
+---
+ Documentation/git-submodule.txt |   12 +++++-
+ git-submodule.sh                |   22 +++++++++--
+ t/t7404-submodule-update.sh     |   79 +++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 107 insertions(+), 6 deletions(-)
+ create mode 100755 t/t7404-submodule-update.sh
+
+diff --git a/Documentation/git-submodule.txt b/Documentation/git-submodule.txt
+index 3b8df44..2935cb8 100644
+--- a/Documentation/git-submodule.txt
++++ b/Documentation/git-submodule.txt
+@@ -12,7 +12,7 @@ SYNOPSIS
+ 'git submodule' [--quiet] add [-b branch] [--] <repository> <path>
+ 'git submodule' [--quiet] status [--cached] [--] [<path>...]
+ 'git submodule' [--quiet] init [--] [<path>...]
+-'git submodule' [--quiet] update [--init] [-N|--no-fetch] [--] [<path>...]
++'git submodule' [--quiet] update [--init] [-N|--no-fetch] [--rebase] [--] [<path>...]
+ 'git submodule' [--quiet] summary [--summary-limit <n>] [commit] [--] [<path>...]
+ 'git submodule' [--quiet] foreach <command>
+ 'git submodule' [--quiet] sync [--] [<path>...]
+@@ -113,7 +113,8 @@ init::
+ update::
+ 	Update the registered submodules, i.e. clone missing submodules and
+ 	checkout the commit specified in the index of the containing repository.
+-	This will make the submodules HEAD be detached.
++	This will make the submodules HEAD be detached unless '--rebase' is
++	specified.
+ +
+ If the submodule is not yet initialized, and you just want to use the
+ setting as stored in .gitmodules, you can automatically initialize the
+@@ -177,6 +178,13 @@ OPTIONS
+ 	This option is only valid for the update command.
+ 	Don't fetch new objects from the remote site.
+ 
++--rebase::
++	This option is only valid for the update command.
++	Rebase the current branch onto the commit recorded in the
++	superproject. If this option is given, the submodule's HEAD will not
++	be detached. If a a merge failure prevents this process, you will have
++	to resolve these failures with linkgit:git-rebase[1].
++
+ <path>...::
+ 	Paths to submodule(s). When specified this will restrict the command
+ 	to only operate on the submodules found at the specified paths.
+diff --git a/git-submodule.sh b/git-submodule.sh
+index 7c2e060..e2d40ee 100755
+--- a/git-submodule.sh
++++ b/git-submodule.sh
+@@ -17,6 +17,7 @@ branch=
+ quiet=
+ cached=
+ nofetch=
++rebase=
+ 
+ #
+ # print stuff on stdout unless -q was specified
+@@ -314,6 +315,10 @@ cmd_update()
+ 			shift
+ 			nofetch=1
+ 			;;
++		-r|--rebase)
++			shift
++			rebase=1
++			;;
+ 		--)
+ 			shift
+ 			break
+@@ -367,11 +372,20 @@ cmd_update()
+ 				die "Unable to fetch in submodule path '$path'"
+ 			fi
+ 
+-			(unset GIT_DIR; cd "$path" &&
+-				  git-checkout $force -q "$sha1") ||
+-			die "Unable to checkout '$sha1' in submodule path '$path'"
++			if test -z "$rebase"
++			then
++				command="git-checkout $force -q"
++				action="checkout"
++				msg="checked out"
++			else
++				command="git-rebase"
++				action="rebase"
++				msg="rebased onto"
++			fi
+ 
+-			say "Submodule path '$path': checked out '$sha1'"
++			(unset GIT_DIR; cd "$path" && $command "$sha1") ||
++			die "Unable to $action '$sha1' in submodule path '$path'"
++			say "Submodule path '$path': $msg '$sha1'"
+ 		fi
+ 	done
+ }
+diff --git a/t/t7404-submodule-update.sh b/t/t7404-submodule-update.sh
+new file mode 100755
+index 0000000..20cc093
+--- /dev/null
++++ b/t/t7404-submodule-update.sh
+@@ -0,0 +1,79 @@
++#!/bin/sh
++#
++# Copyright (c) 2009 Red Hat, Inc.
++#
++
++test_description='Test updating submodules
++
++This test verifies that "git submodule update" detaches the HEAD of the
++submodule and "git submodule update --rebase" does not detach the HEAD.
++'
++
++. ./test-lib.sh
++
++
++compare_head()
++{
++    sha_master=`git-rev-list --max-count=1 master`
++    sha_head=`git-rev-list --max-count=1 HEAD`
++
++    test "$sha_master" = "$sha_head"
++}
++
++
++test_expect_success 'setup a submodule tree' '
++	echo file > file &&
++	git add file &&
++	test_tick &&
++	git commit -m upstream
++	git clone . super &&
++	git clone super submodule &&
++	(cd super &&
++	 git submodule add ../submodule submodule &&
++	 test_tick &&
++	 git commit -m "submodule" &&
++	 git submodule init submodule
++	) &&
++	(cd submodule &&
++	echo "line2" > file &&
++	git add file &&
++	git commit -m "Commit 2"
++	) &&
++	(cd super &&
++	 (cd submodule &&
++	  git pull --rebase origin
++	 ) &&
++	 git add submodule &&
++	 git commit -m "submodule update"
++	)
++'
++
++test_expect_success 'submodule update detaching the HEAD ' '
++	(cd super/submodule &&
++	 git reset --hard HEAD~1
++	) &&
++	(cd super &&
++	 (cd submodule &&
++	  compare_head
++	 ) &&
++	 git submodule update submodule &&
++	 cd submodule &&
++	 ! compare_head
++	)
++'
++
++test_expect_success 'submodule update --rebase staying on master' '
++	(cd super/submodule &&
++	  git checkout master
++	) &&
++	(cd super &&
++	 (cd submodule &&
++	  compare_head
++	 ) &&
++	 git submodule update --rebase submodule &&
++	 cd submodule &&
++	 compare_head
++	)
++'
++
++test_done
+-- 
+1.6.2.2.447.g4afa7
