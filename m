@@ -1,90 +1,87 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: Howto request: going home in the middle of something? v2009
-Date: Tue, 21 Apr 2009 13:05:15 -0400 (EDT)
-Message-ID: <alpine.LNX.1.00.0904211232550.10753@iabervon.org>
-References: <e2a1d0aa0904210639t2ca73364pff26c85a0224182e@mail.gmail.com>
+From: martin f krafft <madduck@madduck.net>
+Subject: switching a git-svn clone to a different URL (was: reviving a
+	git-svn clone)
+Date: Tue, 21 Apr 2009 19:06:33 +0200
+Message-ID: <20090421170633.GB16665@piper.oerlikon.madduck.net>
+References: <20090420104316.GA11433@lapse.rw.madduck.net> <1240296712.3424.8.camel@maia.lan> <86d4c5e00904210209v3f1b8fd3t6a991fe44455941@mail.gmail.com> <20090421115815.GC7967@piper.oerlikon.madduck.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git <git@vger.kernel.org>
-To: Patrick Doyle <wpdster@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Apr 21 19:09:40 2009
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="oC1+HKm2/end4ao3"
+To: git discussion list <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Apr 21 19:10:14 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LwJQr-0005U6-GQ
-	for gcvg-git-2@gmane.org; Tue, 21 Apr 2009 19:06:53 +0200
+	id 1LwJSF-00061a-RL
+	for gcvg-git-2@gmane.org; Tue, 21 Apr 2009 19:08:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752773AbZDURFS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 21 Apr 2009 13:05:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751932AbZDURFR
-	(ORCPT <rfc822;git-outgoing>); Tue, 21 Apr 2009 13:05:17 -0400
-Received: from iabervon.org ([66.92.72.58]:35042 "EHLO iabervon.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751498AbZDURFQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 21 Apr 2009 13:05:16 -0400
-Received: (qmail 1967 invoked by uid 1000); 21 Apr 2009 17:05:15 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 21 Apr 2009 17:05:15 -0000
-In-Reply-To: <e2a1d0aa0904210639t2ca73364pff26c85a0224182e@mail.gmail.com>
-User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
+	id S1752306AbZDURGo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 21 Apr 2009 13:06:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751841AbZDURGo
+	(ORCPT <rfc822;git-outgoing>); Tue, 21 Apr 2009 13:06:44 -0400
+Received: from clegg.madduck.net ([193.242.105.96]:34629 "EHLO
+	clegg.madduck.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751941AbZDURGn (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 21 Apr 2009 13:06:43 -0400
+Received: from piper.oerlikon.madduck.net (piper.oerlikon.madduck.net [IPv6:2001:41e0:ff12:0:211:2fff:fe6b:c869])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "piper.oerlikon.madduck.net", Issuer "CAcert Class 3 Root" (verified OK))
+	by clegg.madduck.net (postfix) with ESMTPS id 2DCAE1D409B
+	for <git@vger.kernel.org>; Tue, 21 Apr 2009 19:06:36 +0200 (CEST)
+Received: by piper.oerlikon.madduck.net (Postfix, from userid 1000)
+	id 2541544A0; Tue, 21 Apr 2009 19:06:33 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <20090421115815.GC7967@piper.oerlikon.madduck.net>
+X-Motto: Keep the good times rollin'
+X-OS: Debian GNU/Linux squeeze/sid kernel 2.6.29-1-amd64 x86_64
+X-Spamtrap: madduck.bogus@madduck.net
+X-Subliminal-Message: debian/rules!
+User-Agent: Mutt/1.5.18 (2008-05-17)
+X-Virus-Scanned: ClamAV 0.94.2/9268/Tue Apr 21 17:10:12 2009 on clegg.madduck.net
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117136>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117137>
 
-On Tue, 21 Apr 2009, Patrick Doyle wrote:
 
-> Hello,
-> I've developed a work habit of keeping my source code repository on a
-> USB stick and carrying that back and forth with me between work and
-> home.  (I typically have small, branchless, single-developer
-> projects.)  When I arrive at the other machine, I do
-> 
-> $ git pull
-> (code, commit, code, commit, etc...)
-> $ git push
-> 
-> Occasionally at the end of the day (if I'm at work) or at the end of
-> the night (if I'm at home), I'm in the middle of something that I want
-> to continue, and I end up making a "work-in-progress" commit
-> 
-> $ git commit -a "WIP"
-> 
-> just so I can pull that in the next day/evening and continue where I
-> left off.  But that leaves a bunch of "WIP" commits in my history.
+--oC1+HKm2/end4ao3
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-In general, it can be useful to make a sequence of WIP commits which you 
-don't share with anyone else, and, when you've completed something, make 
-a sequence of nice clean commits.
+also sprach martin f krafft <madduck@madduck.net> [2009.04.21.1358 +0200]:
+> Now I can turn to changing the URL, since upstream wants to drop
+> svn.suspend2.net in favour of svn.tuxonice.net. This does not seem
+> to be as straight-forward as it should be. I hate SVN!
 
-One way to do that:
+Turns out using the --rewrite-root option to 'git svn init' and
+swapping the URLs later, as described on the wiki [0], is exactly
+what I needed.
 
-$ git checkout -b wip # have a separate branch for the WIP
-$ git commit -m "junk" # this commit is total junk, but good hints
-$ git commit -m "stuff" # corrected a few things
-$ git commit -m "going home" # need to commit to have sometime to pull
-$ git commit -m "finally working!" # this is the first good state
-$ git checkout master # back on the real branch
-$ git diff master wip | git apply # get the good directory state
-$ git add -i # add only those changes that are a good first step
-$ git checkout . # get the working directory to match the first step
-$ make test # did you do it right?
-$ git commit # first production-quality commit
-$ git diff master wip | git apply # now get more changes
-...
-$ git diff master wip | git apply # get remaining changes
-$ git add -i # notice that the remainder are noise, debugging, etc.
-$ git branch -D wip # throw out the bad changes
+0. http://git.or.cz/gitwiki/GitSvnSwitch
 
-In general, it's helpful to be able to commit any time you're about to 
-make a change to something you've already changed (because your second 
-change might not be as good as your first change), but then you want the 
-public history to come from a later pass where you already know what 
-you're doing and only make correct changes, so far as you can tell from 
-having a working final result. It's like a painter doing a study before 
-starting to paint the real painting.
+--=20
+martin | http://madduck.net/ | http://two.sentenc.es/
+=20
+"alas, i am dying beyond my means."
+                                                        -- oscar wilde
+=20
+spamtraps: madduck.bogus@madduck.net
 
-	-Daniel
-*This .sig left intentionally blank*
+--oC1+HKm2/end4ao3
+Content-Type: application/pgp-signature; name="digital_signature_gpg.asc"
+Content-Description: Digital signature (see http://martin-krafft.net/gpg/)
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
+
+iEYEARECAAYFAknt/RMACgkQIgvIgzMMSnXSrwCcCVNYzW+9mp8uVILf6Q+yPPB3
+jkwAoLZE3tl+JDbKT0wVzbagBWfr8HU+
+=UPly
+-----END PGP SIGNATURE-----
+
+--oC1+HKm2/end4ao3--
