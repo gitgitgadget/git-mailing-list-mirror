@@ -1,149 +1,88 @@
-From: martin f krafft <madduck@madduck.net>
-Subject: Re: reviving a git-svn clone
-Date: Tue, 21 Apr 2009 13:58:15 +0200
-Message-ID: <20090421115815.GC7967@piper.oerlikon.madduck.net>
-References: <20090420104316.GA11433@lapse.rw.madduck.net> <1240296712.3424.8.camel@maia.lan> <86d4c5e00904210209v3f1b8fd3t6a991fe44455941@mail.gmail.com>
+From: Dmitry Potapov <dpotapov@gmail.com>
+Subject: Re: Cryptic error messages?
+Date: Tue, 21 Apr 2009 16:08:14 +0400
+Message-ID: <20090421120814.GL25059@dpotapov.dyndns.org>
+References: <450196A1AAAE4B42A00A8B27A59278E70ACE0030@EXCHANGE.trad.tradestation.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="RIYY1s2vRbPFwWeW"
-To: Deskin Miller <deskinm@gmail.com>, Sam Vilain <sam@vilain.net>,
-	git discussion list <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Apr 21 14:00:29 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: John Dlugosz <JDlugosz@TradeStation.com>
+X-From: git-owner@vger.kernel.org Tue Apr 21 14:10:29 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LwEe6-00036l-46
-	for gcvg-git-2@gmane.org; Tue, 21 Apr 2009 14:00:14 +0200
+	id 1LwEnq-0006Vz-OV
+	for gcvg-git-2@gmane.org; Tue, 21 Apr 2009 14:10:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754413AbZDUL6g (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 21 Apr 2009 07:58:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754308AbZDUL6g
-	(ORCPT <rfc822;git-outgoing>); Tue, 21 Apr 2009 07:58:36 -0400
-Received: from clegg.madduck.net ([193.242.105.96]:43968 "EHLO
-	clegg.madduck.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754022AbZDUL6f (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 21 Apr 2009 07:58:35 -0400
-Received: from piper.oerlikon.madduck.net (piper.oerlikon.madduck.net [IPv6:2001:41e0:ff12:0:211:2fff:fe6b:c869])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "piper.oerlikon.madduck.net", Issuer "CAcert Class 3 Root" (verified OK))
-	by clegg.madduck.net (postfix) with ESMTPS id A0CD21D409B;
-	Tue, 21 Apr 2009 13:58:16 +0200 (CEST)
-Received: by piper.oerlikon.madduck.net (Postfix, from userid 1000)
-	id F182C43F3; Tue, 21 Apr 2009 13:58:15 +0200 (CEST)
+	id S1753711AbZDUMIp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 21 Apr 2009 08:08:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753119AbZDUMIp
+	(ORCPT <rfc822;git-outgoing>); Tue, 21 Apr 2009 08:08:45 -0400
+Received: from wa-out-1112.google.com ([209.85.146.180]:46238 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752777AbZDUMIo (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 21 Apr 2009 08:08:44 -0400
+Received: by wa-out-1112.google.com with SMTP id j5so1318691wah.21
+        for <git@vger.kernel.org>; Tue, 21 Apr 2009 05:08:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=Ox5Ny6phRlgJ8SieCuXAfNujT/1+WMvM7wDv9VQflUs=;
+        b=HgRooLbVNdkyjA5v0EfbR1apOspCHS96i7wWp0776tXa7tZm6r5Fk9xGU/+jagYwZO
+         G5HTTTB9W1lK3fNz+wI+o3qdxrkt6FFUFxB8BztehpIneHzkIpZy4iugi1BoLNevd+FN
+         LDlm31q0ir2aLtKUHRsdNaOQQJn7Ufq+3Jeqg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=IkincnZXC+GQW6pe0NvB7kWF4kJzFSXHcKQC6aB67pe7RhieHEHrGxdUxIHVNdAzH/
+         YGSCSUYdQvPRMW5dNPrQanLzr2QE2lPxo7s5tzaDUYANZn+Avu9M2BRpHxKD2xDTl9Rh
+         9Pznfnue9fdzCmYOnnphh3A/xybwXncVAaL/A=
+Received: by 10.114.202.15 with SMTP id z15mr3933955waf.67.1240315724087;
+        Tue, 21 Apr 2009 05:08:44 -0700 (PDT)
+Received: from localhost (ppp91-78-51-18.pppoe.mtu-net.ru [91.78.51.18])
+        by mx.google.com with ESMTPS id m28sm26388708poh.11.2009.04.21.05.08.41
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Tue, 21 Apr 2009 05:08:43 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <86d4c5e00904210209v3f1b8fd3t6a991fe44455941@mail.gmail.com>
-X-Motto: Keep the good times rollin'
-X-OS: Debian GNU/Linux squeeze/sid kernel 2.6.29-1-amd64 x86_64
-X-Spamtrap: madduck.bogus@madduck.net
-X-Subliminal-Message: debian/rules!
+In-Reply-To: <450196A1AAAE4B42A00A8B27A59278E70ACE0030@EXCHANGE.trad.tradestation.com>
 User-Agent: Mutt/1.5.18 (2008-05-17)
-X-Virus-Scanned: ClamAV 0.94.2/9266/Tue Apr 21 12:05:25 2009 on clegg.madduck.net
-X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117124>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117125>
+
+On Mon, Apr 20, 2009 at 04:18:09PM -0400, John Dlugosz wrote:
+> $ git push
+> Counting objects: 9, done.
+> Compressing objects: 100% (8/8), done.
+> Writing objects: 100% (8/8), 3.62 KiB, done.
+> Total 8 (delta 4), reused 0 (delta 0)
+> Unpacking objects: 100% (8/8), done.
+> fatal: unresolved deltas left after unpacking
+
+I think that is the key message...
+
+> error: unpack failed: unpacker exited with error code
+> To //tx01fs01/sys/dev/git/repositories/aardvark.git
+>  ! [remote rejected] dev -> dev (n/a (unpacker error))
+> error: failed to push some refs to
+> '//tx01fs01/sys/dev/git/repositories/aardvark
+> .git'
+> 
+> 
+> 
+> Huh?  I'm having trouble defending git's reputation.
+
+I don't think that information is very helpful. It would be far more
+useful to know what version of Git on client and server sides are
+running. Also, running "git fsck --full" may be helpful.
+
+I suspect you have a very old Git version on the server side.
 
 
---RIYY1s2vRbPFwWeW
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-also sprach Deskin Miller <deskinm@gmail.com> [2009.04.21.1109 +0200]:
-> If you have access to the svn remote, you should be able to avoid
-> hacking config and .metadata entirely by entering
->=20
-> $ git svn init --stdlayout --prefix=3Dupstream/
-> svn+ssh://svn.suspend2.net/svn/hibernate-script
-
-This worked nicely, so thanks to you, Sam, and Thomas Rast (who
-helped on IRC). Here is what I ended up doing:
-
-alioth:~|master|% git clone /git/collab-maint/hibernate.git hibernate-svnsy=
-nc
-Initialized empty Git repository in /srv/alioth.debian.org/chroot/home/user=
-s/madduck/hibernate-svnsync/.git/
-alioth:~|master|% cd hibernate-svnsync=20
-total 204
-drwx------ 2  4096 20090421.1013 admin
-drwx------ 3  4096 20090421.1013 debian
-drwx------ 2  4096 20090421.1013 init.d
-drwx------ 2  4096 20090421.1013 scriptlets.d
--rw------- 1 21417 20090421.1013 CHANGELOG
--rw------- 1 17992 20090421.1013 COPYING
--rw------- 1  6902 20090421.1013 README
--rw------- 1  1470 20090421.1013 README.xfs
--rw------- 1  6891 20090421.1013 SCRIPTLET-API
--rw------- 1  2020 20090421.1013 blacklisted-modules
--rw------- 1  4004 20090421.1013 common.conf
--rw------- 1   310 20090421.1013 disk.conf
--rw------- 1  7047 20090421.1013 gen-manpages.sh
--rw------- 1   518 20090421.1013 hibernate.conf
--rw------- 1 26637 20090421.1013 hibernate.sh
--rw------- 1  4165 20090421.1013 hibernate.spec
--rw------- 1 13822 20090421.1013 hibernate.vim
--rwx------ 1  4664 20090421.1013 install.sh
--rw------- 1    79 20090421.1013 logrotate.d-hibernate-script
--rwx------ 1   608 20090421.1013 mktarball.sh
--rw------- 1   837 20090421.1013 ram.conf
--rw------- 1  1288 20090421.1013 suspend2.conf
--rw------- 1   345 20090421.1013 sysfs-disk.conf
--rw------- 1   289 20090421.1013 sysfs-ram.conf
--rw------- 1     8 20090421.1013 tuxonice-binary-signature.bin
--rw------- 1   509 20090421.1013 ususpend-both.conf
--rw------- 1   501 20090421.1013 ususpend-disk.conf
--rw------- 1  1324 20090421.1013 ususpend-ram.conf
-alioth:~/hibernate-svnsync|master|% git svn init --stdlayout --prefix=3Dups=
-tream/ svn+ssh://svn.suspend2.net/svn/hibernate-script                     =
-                                                              alioth:~/hibe=
-rnate-svnsync|master|% git update-ref refs/remotes/upstream/trunk refs/remo=
-tes/origin/upstream
-alioth:~/hibernate-svnsync|master|% git show-ref refs/remotes/upstream/trun=
-k refs/remotes/origin/upstream
-1784ac6d733527ea65c2e9515df30c7a77d8f90b refs/remotes/origin/upstream
-1784ac6d733527ea65c2e9515df30c7a77d8f90b refs/remotes/upstream/trunk
-alioth:~/hibernate-svnsync|master|% git checkout -b upstream upstream/trunk
-Switched to a new branch "upstream"
-alioth:..bernate-svnsync|upstream|% git svn info
-Rebuilding .git/svn/upstream/trunk/.rev_map.c12ee44c-9ede-0310-94ea-d4716f4=
-f7118 ...
-r840 =3D 56b969c867a8480521c25e7f943634a865d4ac33
-[=E2=80=A6]
-r1195 =3D 1784ac6d733527ea65c2e9515df30c7a77d8f90b
-Done rebuilding .git/svn/upstream/trunk/.rev_map.c12ee44c-9ede-0310-94ea-d4=
-716f4f7118
-Use of uninitialized value within @_ in localtime at /usr/bin/git-svn line =
-4277.
-No such file or directory at /usr/bin/git-svn line 897.
-
-
-
-Now I can turn to changing the URL, since upstream wants to drop
-svn.suspend2.net in favour of svn.tuxonice.net. This does not seem
-to be as straight-forward as it should be. I hate SVN!
-
---=20
-martin | http://madduck.net/ | http://two.sentenc.es/
-=20
-god is real, unless declared integer.
-                                          (dedicated to gabriel g=C3=B3mez)
-=20
-spamtraps: madduck.bogus@madduck.net
-
---RIYY1s2vRbPFwWeW
-Content-Type: application/pgp-signature; name="digital_signature_gpg.asc"
-Content-Description: Digital signature (see http://martin-krafft.net/gpg/)
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
-
-iEYEARECAAYFAknttNcACgkQIgvIgzMMSnVw+ACgph9v+YHFJ+DTFGqUOGDewzuf
-UikAnjiA/MuHtSyhCMwq7f1GiMnRbIJc
-=i6ZJ
------END PGP SIGNATURE-----
-
---RIYY1s2vRbPFwWeW--
+Dmitry
