@@ -1,148 +1,220 @@
-From: =?UTF-8?B?TWljaGHFgg==?= Kiedrowicz <michal.kiedrowicz@gmail.com>
-Subject: Re: correct git merge behavior or corner case?
-Date: Tue, 21 Apr 2009 19:54:34 +0200
-Message-ID: <20090421195434.3a01676d@gmail.com>
-References: <4ac8254d0904191540j68246cd8qa36a034209d4c800@mail.gmail.com>
-	<alpine.DEB.1.00.0904201148150.6955@intel-tinevez-2-302>
-	<41354.bFoQE3daRhY=.1240222235.squirrel@webmail.hotelhot.dk>
-	<20090421024433.GC14479@coredump.intra.peff.net>
-	<7vskk2bt3x.fsf@gitster.siamese.dyndns.org>
-	<fabb9a1e0904210148w4c6b869l396122baef1c0ee3@mail.gmail.com>
-	<alpine.DEB.1.00.0904211055160.10279@pacific.mpi-cbg.de>
-	<alpine.DEB.1.00.0904211100350.10279@pacific.mpi-cbg.de>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: [PATCH] git-svn: teach to create and operate on bare
+	repositories
+Date: Tue, 21 Apr 2009 11:01:01 -0700
+Message-ID: <20090421180101.GA16642@dcvr.yhbt.net>
+References: <lGoUDENjg0Z+sDE9v/txzTLyfk8@7qgLKkvX/1U6eu9avhKQpU/1pEI>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: Sverre Rabbelier <srabbelier@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Jeff King <peff@peff.net>,
-	Anders Melchiorsen <mail@cup.kalibalik.dk>,
-	Tuncer Ayaz <tuncer.ayaz@gmail.com>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Apr 21 19:58:06 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Eygene Ryabinkin <rea-git@codelabs.ru>
+X-From: git-owner@vger.kernel.org Tue Apr 21 20:05:17 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LwKCf-0000HQ-0F
-	for gcvg-git-2@gmane.org; Tue, 21 Apr 2009 19:56:17 +0200
+	id 1LwKJA-0003fN-K2
+	for gcvg-git-2@gmane.org; Tue, 21 Apr 2009 20:03:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752275AbZDURyl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 21 Apr 2009 13:54:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751673AbZDURyl
-	(ORCPT <rfc822;git-outgoing>); Tue, 21 Apr 2009 13:54:41 -0400
-Received: from mail-fx0-f158.google.com ([209.85.220.158]:41015 "EHLO
-	mail-fx0-f158.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751392AbZDURyk (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 21 Apr 2009 13:54:40 -0400
-Received: by fxm2 with SMTP id 2so2660585fxm.37
-        for <git@vger.kernel.org>; Tue, 21 Apr 2009 10:54:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:in-reply-to:references:x-mailer:mime-version
-         :content-type:content-transfer-encoding;
-        bh=SQ45w1AAldq9BhtCwvkPgRXSuT/OTs5WKxoWPP74YOs=;
-        b=KYv+WdQ8DUDvvSlYBkicT5EeMdqylXGl7G7TwPwmzyWHntjyXHHG9nevHA1Dz9P08J
-         33BUcIQY5wBQaFmuMPcB7JXM61G2bQ4cje8Ai13jB9lDrCXusawtNQBLdT2v3hdCDx15
-         3H0znqgBmlftN9I4wxHErsM54twdkeDg7eNks=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:in-reply-to:references:x-mailer
-         :mime-version:content-type:content-transfer-encoding;
-        b=K0g21Twl8jNIE0qIocn+/0EckdmhKHT7uLqnWrfCgModOXHwem380xU0AOz8dBIMJf
-         XGlRYfNTn7J4pesd2rYS61reh37kHDNxfhYGFielSqSdrJe6TBEp201HRJb/5eBSt5Xq
-         NhB+BXoxgeyDXZALsRvahXJwFMAQeMQhMBdc8=
-Received: by 10.86.68.1 with SMTP id q1mr2011236fga.10.1240336478659;
-        Tue, 21 Apr 2009 10:54:38 -0700 (PDT)
-Received: from localhost (77-253-150-63.adsl.inetia.pl [77.253.150.63])
-        by mx.google.com with ESMTPS id e11sm4217238fga.24.2009.04.21.10.54.37
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 21 Apr 2009 10:54:38 -0700 (PDT)
-In-Reply-To: <alpine.DEB.1.00.0904211100350.10279@pacific.mpi-cbg.de>
-X-Mailer: Claws Mail 3.7.1 (GTK+ 2.14.7; x86_64-pc-linux-gnu)
+	id S1757073AbZDUSBG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 21 Apr 2009 14:01:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756055AbZDUSBF
+	(ORCPT <rfc822;git-outgoing>); Tue, 21 Apr 2009 14:01:05 -0400
+Received: from dcvr.yhbt.net ([64.71.152.64]:57191 "EHLO dcvr.yhbt.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757075AbZDUSBD (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 21 Apr 2009 14:01:03 -0400
+Received: from localhost (unknown [127.0.2.5])
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5E70C1F799;
+	Tue, 21 Apr 2009 18:01:01 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <lGoUDENjg0Z+sDE9v/txzTLyfk8@7qgLKkvX/1U6eu9avhKQpU/1pEI>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117141>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117142>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+Eygene Ryabinkin <rea-git@codelabs.ru> wrote:
+> This mode is useful when we're mirrorring one-to-one Subversion and Git
+> repositories and then using Git as the repository to base other work on.
+> 
+> Bare mode is currently restricted only to init, clone, fetch, log,
+> find-rev, show-ignore, show-externals, create-ignore, propget, proplist
+> and info commands.  Others won't work at all and error message will
+> be produced.
 
-> Hi,
-> 
-> On Tue, 21 Apr 2009, Johannes Schindelin wrote:
-> 
-> > I actually agree with Junio, though, that we want this special
-> > handling of empty files only in merge-recursive.
-> 
-> And this _might_ be enough (not even compile-tested due to lack of
-> time; the OP did not provide the test as a proper patch):
-> 
-> ---
-> 
->  merge-recursive.c |    2 +-
->  1 files changed, 1 insertions(+), 1 deletions(-)
-> 
-> diff --git a/merge-recursive.c b/merge-recursive.c
-> index 774bacd..b7ea3cd 100644
-> --- a/merge-recursive.c
-> +++ b/merge-recursive.c
-> @@ -343,7 +343,7 @@ static struct string_list *get_renames(struct
-> merge_options *o, struct string_list_item *item;
->  		struct rename *re;
->  		struct diff_filepair *pair =
-> diff_queued_diff.queue[i];
-> -		if (pair->status != 'R') {
-> +		if (pair->status != 'R' || !re->pair->one->size) {
->  			diff_free_filepair(pair);
->  			continue;
+Hi Eygene,
+
+This definitely seems useful.  I'd like a basic test to ensure it
+continues working in the future.
+
+More comments inline.
+
+> Signed-off-by: Eygene Ryabinkin <rea-git@codelabs.ru>
+
+> index c5965c9..4756abf 100755
+> --- a/git-svn.perl
+> +++ b/git-svn.perl
+> @@ -63,13 +63,14 @@ $sha1 = qr/[a-f\d]{40}/;
+>  $sha1_short = qr/[a-f\d]{4,40}/;
+>  my ($_stdin, $_help, $_edit,
+>  	$_message, $_file,
+> -	$_template, $_shared,
+> +	$_template, $_shared, $_bare,
+>  	$_version, $_fetch_all, $_no_rebase, $_fetch_parent,
+>  	$_merge, $_strategy, $_dry_run, $_local,
+>  	$_prefix, $_no_checkout, $_url, $_verbose,
+>  	$_git_format, $_commit_url, $_tag);
+>  $Git::SVN::_follow_parent = 1;
+>  $_q ||= 0;
+> +$_bare = 0;
+>  my %remote_opts = ( 'username=s' => \$Git::SVN::Prompt::_username,
+>                      'config-dir=s' => \$Git::SVN::Ra::config_dir,
+>                      'no-auth-cache' => \$Git::SVN::Prompt::_no_auth_cache,
+
+>  }
+>  
+>  sub do_git_init_db {
+> -	unless (-d $ENV{GIT_DIR}) {
+> +	unless (-d $ENV{GIT_DIR} && !$_bare) {
+>  		my @init_db = ('init');
+>  		push @init_db, "--template=$_template" if defined $_template;
+>  		if (defined $_shared) {
+> @@ -325,8 +327,15 @@ sub do_git_init_db {
+>  				push @init_db, "--shared";
+>  			}
 >  		}
-> --
+> +		push @init_db, "--bare" if $_bare;
+>  		command_noisy(@init_db);
+> -		$_repository = Git->repository(Repository => ".git");
+> +		if ($_bare && -d $ENV{GIT_DIR}) {
+> +			$_repository =
+> +			    Git->repository(Repository => $ENV{GIT_DIR});
+> +		} else {
+> +			$_repository =
+> +			    Git->repository(Repository => ".git");
+> +		}
+>  	}
+>  	command_noisy('config', 'core.autocrlf', 'false');
+>  	my $set;
+> @@ -344,9 +353,20 @@ sub do_git_init_db {
+>  
+>  sub init_subdir {
+>  	my $repo_path = shift or return;
+> +	my $full_path;
+> +	if ($repo_path =~ /^\//) {
+> +		$full_path = $repo_path;
+> +	} else {
+> +		use POSIX qw(getcwd);
+> +		$full_path = POSIX::getcwd() . "/" . $repo_path;
+> +	}
+>  	mkpath([$repo_path]) unless -d $repo_path;
+>  	chdir $repo_path or die "Couldn't chdir to $repo_path: $!\n";
+> -	$ENV{GIT_DIR} = '.git';
+> +	if (!$_bare) {
+> +		$ENV{GIT_DIR} = $full_path . '/.git';
+> +	} else {
+> +		$ENV{GIT_DIR} = $full_path;
+> +	}
+>  	$_repository = Git->repository(Repository => $ENV{GIT_DIR});
+>  }
+>  
+> @@ -389,6 +409,7 @@ sub cmd_fetch {
+>  	if (@_ > 1) {
+>  		die "Usage: $0 fetch [--all] [--parent] [svn-remote]\n";
+>  	}
+> +	get_bareness();
+>  	if ($_fetch_parent) {
+>  		my ($url, $rev, $uuid, $gs) = working_head_info('HEAD');
+>  		unless ($gs) {
+> @@ -408,6 +429,12 @@ sub cmd_fetch {
+>  
+>  sub cmd_set_tree {
+>  	my (@commits) = @_;
+> +
+> +	get_bareness();
+> +	if ($_bare) {
+> +		fatal("'set-tree' isn't supported for bare repositories.");
+> +	}
+> +
 
-And here is a test case:
+This repetition with get_bareness() and then checking for $_bare all
+over the place bothers me a bit.  I'd rather just have something like
+this:
 
----
+	fatal_if_bare('set-tree');
 
- t/t6035-merge-suspected-rename.sh |   33 +++++++++++++++++++++++++++++++++
- 1 files changed, 33 insertions(+), 0 deletions(-)
+Or even:
 
-diff --git a/t/t6035-merge-suspected-rename.sh b/t/t6035-merge-suspected-rename.sh
-new file mode 100755
-index 0000000..81615fd
---- /dev/null
-+++ b/t/t6035-merge-suspected-rename.sh
-@@ -0,0 +1,33 @@
-+#!/bin/sh
-+
-+test_description='Merge-recursive merging suspected rename'
-+. ./test-lib.sh
-+
-+test_expect_success 'setup' '
-+	echo "hello" > date &&
-+	git add date &&
-+	git commit -m initial &&
-+
-+	git branch parallel &&
-+
-+	echo "hello" > LICENSE &&
-+	cp LICENSE LICENSE-copy &&
-+	git add LICENSE &&
-+	git commit -m LICENSE &&
-+
-+	git rm date &&
-+	git commit -m removed &&
-+
-+	git checkout parallel &&
-+	date > date &&
-+	git add date &&
-+	git commit -m date
-+'
-+
-+test_expect_success 'merge' '
-+	git checkout master &&
-+	test_must_fail git merge parallel &&
-+	test_cmp LICENSE LICENSE-copy
-+'
-+
-+test_done
+	fatal_if_bare($cmd);
+
+> +# Initialize bareness flag for an existing repository
+> +sub get_bareness {
+> +	return unless -d $ENV{GIT_DIR};
+> +	my $result = Git::config_bool('core.bare');
+> +	$result = 0 unless defined($result);
+> +	$_bare = $result;
+> +}
+
+Perhaps this function can go into Git.pm since core.bare affects all
+of git, not just git-svn.  I'd also like to just use something like
+
+	if (Git::config_bare()) { ... }
+
+...rather than having to check/initialize a variable every time.
+
+Of course, we can have config caching for platforms that really need
+it done via Sam's Git::Config module when it gets merged.
+
+>  sub extract_metadata {
+>  	my $id = shift or return (undef, undef, undef);
+>  	my ($url, $rev, $uuid) = ($id =~ /^\s*git-svn-id:\s+(.*)\@(\d+)
+> @@ -1527,6 +1588,51 @@ sub parse_revision_argument {
+>  	die "revision argument: $::_revision not understood by git-svn\n";
+>  }
+>  
+> +#
+> +# While we are fetching to bare repositories, we should update branch
+> +# heads manually, because it is not possible to do merges within bare
+> +# repositories.
+> +#
+> +# Arguments:
+> +# - name of remote branch, for example 'refs/remotes/git-svn';
+> +# - name of the corresponding local head, for example 'refs/heads/master'.
+> +#
+> +sub fast_forward_bare_fetch {
+> +	return unless defined($_bare);
+> +	return unless defined($_[0]);
+> +	return unless defined($_[1]);
+
+Checking for arguments here seems unnecessarily defensive.
+
+> +	my $remote = $_[0];
+> +	my $localhead = $_[1];
+
+The general git-svn style is this:
+
+	my ($remote, $localhead) = @_;
+
+> +	# Update (fast-forward) heads for bare repository.
+> +	if (defined($_bare)) {
+> +		foreach my $gs (@gs) {
+> +			my $remote = 'refs/remotes/' . $gs->{ref_id};
+> +			my $localhead = 'refs/heads/master';
+> +			if (open(FH, "<", "HEAD")) {
+> +				chomp(my $head = <FH>);
+> +				close FH;
+> +				if ($head =~ /^ref: (.*)$/) {
+> +					$localhead = $1;
+> +				}
+> +			}
+
+"git rev-parse --symbolic-full-name HEAD" should work better
+than parsing HEAD ourselves.
+
+Thanks!
+
+-- 
+Eric Wong
