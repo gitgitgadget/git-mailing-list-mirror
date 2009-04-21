@@ -1,208 +1,101 @@
-From: Constantine Plotnikov <constantine.plotnikov@gmail.com>
-Subject: [JGIT PATCH/RFC] Removed possibility to change stderr for ssh 
-	sessions
-Date: Tue, 21 Apr 2009 22:49:56 +0400
-Message-ID: <85647ef50904211149lc4a4902h554c973017d87adb@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: correct git merge behavior or corner case?
+Date: Tue, 21 Apr 2009 15:11:26 -0400
+Message-ID: <20090421191126.GA7632@coredump.intra.peff.net>
+References: <alpine.DEB.1.00.0904201148150.6955@intel-tinevez-2-302> <41354.bFoQE3daRhY=.1240222235.squirrel@webmail.hotelhot.dk> <20090421024433.GC14479@coredump.intra.peff.net> <7vskk2bt3x.fsf@gitster.siamese.dyndns.org> <fabb9a1e0904210148w4c6b869l396122baef1c0ee3@mail.gmail.com> <alpine.DEB.1.00.0904211055160.10279@pacific.mpi-cbg.de> <alpine.DEB.1.00.0904211100350.10279@pacific.mpi-cbg.de> <20090421195434.3a01676d@gmail.com> <20090421180529.GA7583@coredump.intra.peff.net> <20090421204701.1e0115c0@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Apr 21 20:52:02 2009
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Anders Melchiorsen <mail@cup.kalibalik.dk>,
+	Tuncer Ayaz <tuncer.ayaz@gmail.com>, git@vger.kernel.org
+To: =?utf-8?Q?Micha=C5=82?= Kiedrowicz <michal.kiedrowicz@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Apr 21 21:13:46 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LwL4U-0005ga-8U
-	for gcvg-git-2@gmane.org; Tue, 21 Apr 2009 20:51:54 +0200
+	id 1LwLPU-0005S8-2L
+	for gcvg-git-2@gmane.org; Tue, 21 Apr 2009 21:13:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758189AbZDUSuG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 21 Apr 2009 14:50:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757864AbZDUSuA
-	(ORCPT <rfc822;git-outgoing>); Tue, 21 Apr 2009 14:50:00 -0400
-Received: from mail-fx0-f158.google.com ([209.85.220.158]:61456 "EHLO
-	mail-fx0-f158.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758759AbZDUSt6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 21 Apr 2009 14:49:58 -0400
-Received: by fxm2 with SMTP id 2so2686981fxm.37
-        for <git@vger.kernel.org>; Tue, 21 Apr 2009 11:49:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:date:message-id:subject
-         :from:to:content-type:content-transfer-encoding;
-        bh=P9XJdT2WZNiExemSLV4p/yODKlPkZhwt1UNP64I5E/4=;
-        b=TtCnH3nELHGogAsvgcu59H2hk2Dc3Hr8rJ9yc9lUgM0d8G/47mFMVpLEOVcZz1upOP
-         1Z+0nJvcknLSUhBEB3ugVN0wE7iZHTxEfTQaa6qdPDTawTAyxnY8o3dlCvub7se1faKb
-         Bh+7UQB216RXUvaYuuqXRmDY4Hn1a/8DRrFa4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type
-         :content-transfer-encoding;
-        b=a9kwiv8RVjMfSTiOAE6hTOWmNRwOZ5gm0QfbuM3gtX3hCRY6+XGma3F84iVzbvD5iF
-         2GkJKm/NF7VU3v6Vg8jbphbD9BdSrFhHoVZmIbivnKyczmb/gZnTTqIJ83p7iTHfcsqC
-         nZAsjiwvZxYswQy3OqBofbkW/g4yuZYbPy3zo=
-Received: by 10.204.59.18 with SMTP id j18mr6752841bkh.206.1240339796581; Tue, 
-	21 Apr 2009 11:49:56 -0700 (PDT)
+	id S1758174AbZDUTLb convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 21 Apr 2009 15:11:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756597AbZDUTLb
+	(ORCPT <rfc822;git-outgoing>); Tue, 21 Apr 2009 15:11:31 -0400
+Received: from peff.net ([208.65.91.99]:45524 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751161AbZDUTLa (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 21 Apr 2009 15:11:30 -0400
+Received: (qmail 10969 invoked by uid 107); 21 Apr 2009 19:11:37 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Tue, 21 Apr 2009 15:11:37 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 21 Apr 2009 15:11:26 -0400
+Content-Disposition: inline
+In-Reply-To: <20090421204701.1e0115c0@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117149>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117150>
 
-The current implementation allowed to change stderr for the
-ssh sessions. However this functionality is broken. It is used
-only by GitSshTransport and that class expects a very specific
-behavior from this class. For example toString() method should
-return the entire content of the stream. So only implementation
-from SshConfigSessionFactory would have worked anyway. Returning
-System.err (as was suggested by javadoc) comment would have broken
-existing functionality. This patch makes this functionality
-explicitly private.
+On Tue, Apr 21, 2009 at 08:47:01PM +0200, Micha=C5=82 Kiedrowicz wrote:
 
-If this functionality is to be reopened, this additional behavior
-should be documented and there should be additional lifecycle
-control, since the user streams will be interested to know when
-stream will be no more used in order to release resoources.
+> > I thought the point was about _empty_ renames. This is a small but
+> > non-zero rename.
+>=20
+> Yes, you are right. But change these echos to touch and you'll see th=
+at
+> this bug happens if date and LICENSE are the same, not necessary empt=
+y.
 
-Signed-off-by: Constantine Plotnikov <constantine.plotnikov@gmail.com>
----
- .../jgit/transport/SshConfigSessionFactory.java    |   34 -----------------
- .../spearce/jgit/transport/SshSessionFactory.java  |    8 +++--
- .../spearce/jgit/transport/TransportGitSsh.java    |   38 +++++++++++++++++++-
- 3 files changed, 42 insertions(+), 38 deletions(-)
+Right, because it is not exactly a bug, as I explained here:
 
-diff --git a/org.spearce.jgit/src/org/spearce/jgit/transport/SshConfigSessionFactory.java
-b/org.spearce.jgit/src/org/spearce/jgit/transport/SshConfigSessionFactory.java
-index 4d29829..a87e149 100644
---- a/org.spearce.jgit/src/org/spearce/jgit/transport/SshConfigSessionFactory.java
-+++ b/org.spearce.jgit/src/org/spearce/jgit/transport/SshConfigSessionFactory.java
-@@ -43,7 +43,6 @@
- import java.io.FileInputStream;
- import java.io.FileNotFoundException;
- import java.io.IOException;
--import java.io.OutputStream;
- import java.util.HashMap;
- import java.util.Map;
+  http://article.gmane.org/gmane.comp.version-control.git/117078
 
-@@ -225,37 +224,4 @@ private static void loadIdentity(final JSch sch,
-final File priv) {
- 			}
- 		}
- 	}
--
--	@Override
--	public OutputStream getErrorStream() {
--		return new OutputStream() {
--			private StringBuilder all = new StringBuilder();
--
--			private StringBuilder sb = new StringBuilder();
--
--			public String toString() {
--				String r = all.toString();
--				while (r.endsWith("\n"))
--					r = r.substring(0, r.length() - 1);
--				return r;
--			}
--
--			@Override
--			public void write(final int b) throws IOException {
--				if (b == '\r') {
--					System.err.print('\r');
--					return;
--				}
--
--				sb.append((char) b);
--
--				if (b == '\n') {
--					final String line = sb.toString();
--					System.err.print(line);
--					all.append(line);
--					sb = new StringBuilder();
--				}
--			}
--		};
--	}
- }
-diff --git a/org.spearce.jgit/src/org/spearce/jgit/transport/SshSessionFactory.java
-b/org.spearce.jgit/src/org/spearce/jgit/transport/SshSessionFactory.java
-index f03e80c..bd24d2f 100644
---- a/org.spearce.jgit/src/org/spearce/jgit/transport/SshSessionFactory.java
-+++ b/org.spearce.jgit/src/org/spearce/jgit/transport/SshSessionFactory.java
-@@ -125,10 +125,12 @@ public void releaseSession(final Session session) {
- 	}
+I say "not exactly a bug", because it is working as intended by the
+software authors, but because the intended behavior is to make a
+heuristic guess (some content moved from one filename to another, so we
+guess that a patch against the original content should actually go
+against the new location), the guess may not follow the user's
+expectations.
 
- 	/**
--	 * Find or create an OutputStream for Ssh to use. For a command line client
--	 * this is probably System.err.
-+	 * The method does not have to be implemented and will be removed in
-future versions.
- 	 *
- 	 * @return an OutputStream to receive the SSH error stream.
- 	 */
--	public abstract OutputStream getErrorStream();
-+	@Deprecated
-+	public OutputStream getErrorStream() {
-+		throw new UnsupportedOperationException("This method should not be called.");
-+	}
- }
-diff --git a/org.spearce.jgit/src/org/spearce/jgit/transport/TransportGitSsh.java
-b/org.spearce.jgit/src/org/spearce/jgit/transport/TransportGitSsh.java
-index a24878a..bfe0259 100644
---- a/org.spearce.jgit/src/org/spearce/jgit/transport/TransportGitSsh.java
-+++ b/org.spearce.jgit/src/org/spearce/jgit/transport/TransportGitSsh.java
-@@ -137,7 +137,7 @@ ChannelExec exec(final String exe) throws
-TransportException {
- 			cmd.append(' ');
- 			sqAlways(cmd, path);
- 			channel.setCommand(cmd.toString());
--			errStream = SshSessionFactory.getInstance().getErrorStream();
-+			errStream = createErrorStream();
- 			channel.setErrStream(errStream, true);
- 			channel.connect();
- 			return channel;
-@@ -146,6 +146,42 @@ ChannelExec exec(final String exe) throws
-TransportException {
- 		}
- 	}
+It is easy to see how the heuristic can be fooled in a toy example. But
+what we really care about is whether and how the heuristic is fooled in
+the real world.  In the real world, there seems to be some non-trivial
+probability of removing an empty file, adding a new one elsewhere, and
+then merging with somebody who touched the empty file. So it may be
+worth improving the heuristic for this special case, especially because
+the harm done in a false negative is relatively small.
 
-+	/**
-+	 * @return the error stream for the channel, the stream is used to
-detect specific
-+	 *   error reasons for exceptions.
-+	 */
-+	private static OutputStream createErrorStream() {
-+		return new OutputStream() {
-+			private StringBuilder all = new StringBuilder();
-+
-+			private StringBuilder sb = new StringBuilder();
-+
-+			public String toString() {
-+				String r = all.toString();
-+				while (r.endsWith("\n"))
-+					r = r.substring(0, r.length() - 1);
-+				return r;
-+			}
-+
-+			@Override
-+			public void write(final int b) throws IOException {
-+				if (b == '\r') {
-+					System.err.print('\r');
-+					return;
-+				}
-+
-+				sb.append((char) b);
-+
-+				if (b == '\n') {
-+					final String line = sb.toString();
-+					System.err.print(line);
-+					all.append(line);
-+					sb = new StringBuilder();
-+				}
-+			}
-+		};
-+	}
-+
- 	NoRemoteRepositoryException cleanNotFound(NoRemoteRepositoryException nf) {
- 		String why = errStream.toString();
- 		if (why == null || why.length() == 0)
--- 
-1.6.0.2.1172.ga5ed0
+But what is the probability of doing the same thing to a file that has
+non-trivial contents? I would guess it is much less likely, and by
+special-casing it as a conflict, you have a much higher chance of
+bothering users who were relying on actual rename detection for their
+non-trivial case[1]. Of course, I don't have actual numbers, so I'm jus=
+t
+guessing.
+
+So my point is that while both are perhaps a failing of the heuristic,
+only one is going to be worth tweaking the heuristic for. So that is th=
+e
+one that should be included in the test case, since it is how somebody
+implementing a proposed tweak can test their tweak.
+
+-Peff
+
+[1] On a side note, this got me thinking about how git handles rename
+detection during merging. One of the things I like about git is that it
+tries to be very stupid: if something is questionable during a merge, i=
+t
+calls attention to it and makes it _easy_ for the user to access the
+versions and resolve (and I love mergetool for this). But renames are
+not like this: either they happen during auto-conflict-resolution, or
+they don't. I wonder if it might be a better strategy to barf on
+conflicts due removed files that could be resolved by questionable
+renames, but have a post-merge "renametool" that shows the user
+potential renames and lets them interactively specify the resolution.
+But maybe that would just be annoying, since 99% of the time, the renam=
+e
+detection gets it right.
