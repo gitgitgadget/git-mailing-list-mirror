@@ -1,112 +1,88 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] grep: don't support "grep.color"-like config options
-Date: Mon, 20 Apr 2009 22:55:34 -0700
-Message-ID: <7vy6tua6uh.fsf@gitster.siamese.dyndns.org>
-References: <1240268295-10296-1-git-send-email-markus.heidelberg@web.de>
- <alpine.DEB.1.00.0904210145260.10279@pacific.mpi-cbg.de>
+From: Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [PATCH 4/5] bisect--helper: add "--next-exit" to output bisect results
+Date: Tue, 21 Apr 2009 07:57:55 +0200
+Message-ID: <200904210757.55162.chriscool@tuxfamily.org>
+References: <20090419115607.c7089503.chriscool@tuxfamily.org> <7vprf7k93h.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Markus Heidelberg <markus.heidelberg@web.de>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Apr 21 07:57:19 2009
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Apr 21 08:00:45 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lw8ys-0003GN-1f
-	for gcvg-git-2@gmane.org; Tue, 21 Apr 2009 07:57:18 +0200
+	id 1Lw92C-00043q-Sx
+	for gcvg-git-2@gmane.org; Tue, 21 Apr 2009 08:00:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752789AbZDUFzq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 21 Apr 2009 01:55:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752484AbZDUFzp
-	(ORCPT <rfc822;git-outgoing>); Tue, 21 Apr 2009 01:55:45 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:58488 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752574AbZDUFzm (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 21 Apr 2009 01:55:42 -0400
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 87290AC996;
-	Tue, 21 Apr 2009 01:55:40 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 09DBCAC993; Tue,
- 21 Apr 2009 01:55:35 -0400 (EDT)
-In-Reply-To: <alpine.DEB.1.00.0904210145260.10279@pacific.mpi-cbg.de>
- (Johannes Schindelin's message of "Tue, 21 Apr 2009 01:45:41 +0200 (CEST)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 0B4D0C7C-2E39-11DE-B3A5-C121C5FC92D5-77302942!a-sasl-fastnet.pobox.com
+	id S1751861AbZDUF7M convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 21 Apr 2009 01:59:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751554AbZDUF7M
+	(ORCPT <rfc822;git-outgoing>); Tue, 21 Apr 2009 01:59:12 -0400
+Received: from smtp1-g21.free.fr ([212.27.42.1]:35530 "EHLO smtp1-g21.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751126AbZDUF7L convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 21 Apr 2009 01:59:11 -0400
+Received: from smtp1-g21.free.fr (localhost [127.0.0.1])
+	by smtp1-g21.free.fr (Postfix) with ESMTP id F0AB59400CC;
+	Tue, 21 Apr 2009 07:59:04 +0200 (CEST)
+Received: from bureau.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
+	by smtp1-g21.free.fr (Postfix) with ESMTP id 1055A940067;
+	Tue, 21 Apr 2009 07:59:02 +0200 (CEST)
+User-Agent: KMail/1.9.9
+In-Reply-To: <7vprf7k93h.fsf@gitster.siamese.dyndns.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117094>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117095>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-
-> On Tue, 21 Apr 2009, Markus Heidelberg wrote:
+Le lundi 20 avril 2009, Junio C Hamano a =E9crit :
+> Christian Couder <chriscool@tuxfamily.org> writes:
+> > The goal of this patch is to port more shell code from the
+> > "bisect_next" function in "git-bisect.sh" to C code in
+> > "builtin-bisect--helper.c".
+> >
+> > So we port the code that interprets the bisection result and stops =
+or
+> > continues (by checking out the next revision) the bisection process=
+=2E
+> >
+> > Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 >
->> color.grep and color.grep.* is the official and documented way to 
->> highlight grep matches. Comparable options like diff.color.* and 
->> status.color.* exist for backward compatibility reasons only and are not 
->> documented any more.
+> Just to make sure I understand correctly, with this and patch 5/5, we=
+ can
+> then drop the --next-vars helper command, right?
+
+Yes, that's right. I just sent two patches to remove useless code.
+
+> > @@ -16,6 +17,12 @@ static const char **rev_argv;
+> >  static int rev_argv_nr;
+> >  static int rev_argv_alloc;
+> >
+> > +static const unsigned char *current_bad_sha1;
+> > +
+> > +static const char *argv_diff_tree[] =3D {"diff-tree", "--pretty", =
+NULL,
+> > NULL}; +static const char *argv_checkout[] =3D {"checkout", "-q", N=
+ULL,
+> > "--", NULL}; +static const char *argv_show_branch[] =3D {"show-bran=
+ch",
+> > NULL, NULL};
 >
-> But is it really so bad that we have to possibly break existing setups?
+> I do appreciate that you kept this step in "rewrite in C" theme a
+> straight rewrite to still call out the executables.  We can turn thes=
+e
+> into internal calls in future steps, but that is a separate issue.
 >
-> The cost of keeping them is really small IMHO.
+> I suspect that the show-branch call outlived its usefulness with this
+> patch; it will now be a low hanging fruit to call format_commit_messa=
+ge()
+> internally to reduce one fork+exec.
 
-While I do not think these lines themselves will cost us a lot of
-maintenance effort, people tend to mimick existing code, and these
-patterns can proliferate if unchecked, and *that* would add to
-maintenance.  As the feature has aleady been in master for 6 weeks or so,
-Markus's patch is now-or-never, and I'd rather say we take it before the
-1.6.3 final.
+I will have a look at that.
 
-An alternative would be to:
-
- (1) Keep them undocumented;
-
- (2) add code comments about their deprecated status to discourage people
-     from copying the style; and
-
- (3) possibly deprecate it in some future.
-
-but I do not know if the last step is worth it.
-
-In any case, I think perhaps we should squash this in.
-
- diff.c      |    5 +++++
- wt-status.c |    5 +++++
- 2 files changed, 10 insertions(+), 0 deletions(-)
-
-diff --git a/diff.c b/diff.c
-index 3ac7168..f2432de 100644
---- a/diff.c
-+++ b/diff.c
-@@ -79,6 +79,11 @@ static int git_config_rename(const char *var, const char *value)
-  */
- int git_diff_ui_config(const char *var, const char *value, void *cb)
- {
-+	/*
-+	 * Note: cmdname.color style of configuration variables are
-+	 * deprecated; do not copy this pattern but accept only
-+	 * color.cmdname in new code.
-+	 */
- 	if (!strcmp(var, "diff.color") || !strcmp(var, "color.diff")) {
- 		diff_use_color_default = git_config_colorbool(var, value, -1);
- 		return 0;
-diff --git a/wt-status.c b/wt-status.c
-index 929b00f..9726e0b 100644
---- a/wt-status.c
-+++ b/wt-status.c
-@@ -381,6 +381,11 @@ int git_status_config(const char *k, const char *v, void *cb)
- 			wt_status_submodule_summary = -1;
- 		return 0;
- 	}
-+	/*
-+	 * Note: cmdname.color style of configuration variables are
-+	 * deprecated; do not copy this pattern but accept only
-+	 * color.cmdname in new code.
-+	 */
- 	if (!strcmp(k, "status.color") || !strcmp(k, "color.status")) {
- 		wt_status_use_color = git_config_colorbool(k, v, -1);
- 		return 0;
+Thanks,
+Christian.
