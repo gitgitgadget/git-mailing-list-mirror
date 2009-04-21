@@ -1,122 +1,73 @@
-From: Allan Caffee <allan.caffee@gmail.com>
-Subject: Re: [RFC/PATCH] graph API: Use horizontal lines for more compact 
-	graphs
-Date: Mon, 20 Apr 2009 22:23:20 -0400
-Message-ID: <b2e43f8f0904201923hd97f3e3v66addf59daa3956f@mail.gmail.com>
-References: <20090421004027.GA12330@linux.vnet>
-	 <alpine.DEB.1.00.0904210255280.10279@pacific.mpi-cbg.de>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH RFC3.5.1 08/12] send-email: Simplify --compose subject
+	sanitation
+Date: Mon, 20 Apr 2009 22:34:23 -0400
+Message-ID: <20090421023423.GB14479@coredump.intra.peff.net>
+References: <1240074128-16132-5-git-send-email-mfwitten@gmail.com> <1240074128-16132-6-git-send-email-mfwitten@gmail.com> <1240074128-16132-7-git-send-email-mfwitten@gmail.com> <1240074128-16132-8-git-send-email-mfwitten@gmail.com> <1240074128-16132-9-git-send-email-mfwitten@gmail.com> <76718490904181854o380fe118y9f3a52c926bd1f6d@mail.gmail.com> <b4087cc50904181937q38ef45fm7409e020ecf40792@mail.gmail.com> <76718490904190713l3d6b5abcmf54544512de87413@mail.gmail.com> <b4087cc50904190739u54a9a9d7p6f011ab2b47c1d05@mail.gmail.com> <1240159421-5643-1-git-send-email-mfwitten@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=utf-8
 Cc: git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Apr 21 04:24:57 2009
+To: Michael Witten <mfwitten@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Apr 21 04:36:05 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lw5fM-00054f-Mm
-	for gcvg-git-2@gmane.org; Tue, 21 Apr 2009 04:24:57 +0200
+	id 1Lw5q7-00070A-Mu
+	for gcvg-git-2@gmane.org; Tue, 21 Apr 2009 04:36:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751073AbZDUCXX convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 20 Apr 2009 22:23:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752147AbZDUCXW
-	(ORCPT <rfc822;git-outgoing>); Mon, 20 Apr 2009 22:23:22 -0400
-Received: from mail-qy0-f118.google.com ([209.85.221.118]:40467 "EHLO
-	mail-qy0-f118.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751056AbZDUCXV convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 20 Apr 2009 22:23:21 -0400
-Received: by qyk16 with SMTP id 16so684043qyk.33
-        for <git@vger.kernel.org>; Mon, 20 Apr 2009 19:23:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=nvMwuNge0q3GSQf2QYg+HHqEKTQ6jNYKnKOCxHvDZFU=;
-        b=BxR4qWYEoVDz98NSrT3tJdNHyaHKV4ILgekAYul/OJUUYu9g37pRawUmv3NuCRT0Jn
-         wip4scKaQkWqe0WmIxAscj6ogfGWE4RtLp3GmhCgn7HCQluaRlNG8ZjTrJzIpRcR6UmO
-         RsWSeWcHLehUlOq8Sg0D64qo/MBW/JcvvEheA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=fIqV6MId02sOxyW/nh9vWIDV08JwB0wyyYivDE1A4HU7bUrFr1oXgAkTJVNjqZsVq4
-         5BWLIdaBk2gIH53gEa/r0SKdF4DzRoKM28yVd/IW6llfL5RyQMmqFj2/t/YUF2/CtDTf
-         XUOVhJidkLbFTO3Gik2GFhP3wBj7LULTwoImw=
-Received: by 10.220.45.205 with SMTP id g13mr7320165vcf.64.1240280600642; Mon, 
-	20 Apr 2009 19:23:20 -0700 (PDT)
-In-Reply-To: <alpine.DEB.1.00.0904210255280.10279@pacific.mpi-cbg.de>
+	id S1752908AbZDUCe3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 20 Apr 2009 22:34:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752314AbZDUCe3
+	(ORCPT <rfc822;git-outgoing>); Mon, 20 Apr 2009 22:34:29 -0400
+Received: from peff.net ([208.65.91.99]:59467 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751056AbZDUCe2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Apr 2009 22:34:28 -0400
+Received: (qmail 6062 invoked by uid 107); 21 Apr 2009 02:34:36 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Mon, 20 Apr 2009 22:34:36 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Mon, 20 Apr 2009 22:34:23 -0400
+Content-Disposition: inline
+In-Reply-To: <1240159421-5643-1-git-send-email-mfwitten@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117076>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117077>
 
-On Mon, Apr 20, 2009 at 8:56 PM, Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
-> Hi,
->
-> On Mon, 20 Apr 2009, Allan Caffee wrote:
->
->> diff --git a/graph.c b/graph.c
->> index d4571cf..597e545 100644
->> --- a/graph.c
->> +++ b/graph.c
->> @@ -47,20 +47,6 @@ static void graph_show_strbuf(struct git_graph *g=
-raph, struct strbuf const *sb);
->> =A0 * - Limit the number of columns, similar to the way gitk does.
->> =A0 * =A0 If we reach more than a specified number of columns, omit
->> =A0 * =A0 sections of some columns.
->> - *
->> - * - The output during the GRAPH_PRE_COMMIT and GRAPH_COLLAPSING st=
-ates
->> - * =A0 could be made more compact by printing horizontal lines, ins=
-tead of
->> - * =A0 long diagonal lines. =A0For example, during collapsing, some=
-thing like
->> - * =A0 this: =A0 =A0 =A0 =A0 =A0instead of this:
->> - * =A0 | | | | | =A0 =A0 =A0| | | | |
->> - * =A0 | |_|_|/ =A0 =A0 =A0 | | | |/
->> - * =A0 |/| | | =A0 =A0 =A0 =A0| | |/|
->> - * =A0 | | | | =A0 =A0 =A0 =A0| |/| |
->> - * =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0|/| | |
->> - * =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0| | | |
->> - *
->> - * =A0 If there are several parallel diagonal lines, they will need=
- to be
->> - * =A0 replaced with horizontal lines on subsequent rows.
->
-> I like it!
+On Sun, Apr 19, 2009 at 11:43:41AM -0500, Michael Witten wrote:
 
-:) Good!
+>  		} elsif (/^Subject:\s*(.+)\s*$/i) {
+> -			$initial_subject = $1;
+> -			my $subject = $initial_subject;
+> -			$_ = "Subject: " .
+> -				($subject =~ /[^[:ascii:]]/ ?
+> -				 quote_rfc2047($subject) :
+> -				 $subject) .
+> -				"\n";
+> +			$initial_subject = $need_8bit_cte ? quote_rfc2047($1) : $1;
+> +			next;
 
->> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 for (j =3D=
- (target * 2)+3; j < (i - 2); j +=3D 2)
->
-> This (target*2)+3 is a bit too magical for me to understand. =A0But m=
-aybe I
-> am just too tired?
+I don't think this is a good idea. need_8bit_cte is about the _whole_
+message, including all headers, and this is just about the subject.
+Which means that we end up rfc2047-encoding the subject unnecessarily
+quite a bit (since at least in git itself, most of the time the
+non-ascii bits are in people's names).
 
-It is a little magical.  Here target is an index into
-graph->new_columns so we double that to get the actual location of the
-edge in the string for this line.  So if we take the example that was
-in the original TODO:
+This makes the subject unnecessarily ugly for readers which don't do
+rfc2047 decoding. And while I expect that most real MUAs these days
+handle the decoding, it also makes life harder for people looking
+directly at message, or doing "grep -i ^subject: foo.mbox". Yes, I know
+that doesn't even remotely follow the standards (e.g., it won't handle
+line-wrapped headers), but I don't see any need to make it worse.
 
-t(c)
-|  t(c) + 3 (i.e. the first horizontal edge)
-|  |
-v..v    c
-| | | | |
-| |_|_|/
-|/| | |
-| | | |
+All of that being said, even if we decided that it _is_ OK to quote
+even when it wasn't unnecessary, your patch still isn't right.
+need_8bit_cte is not "does this message need an 8-bit cte at all?" but
+rather "does _we_ need to add an 8-bit cte?". A few lines above the ones
+you changed, notice that when we see the message already has a
+MIME-Version header, we turn set $need_8bit_cte to 0. But in that case,
+we still may need to encode the subject if it has non-ascii characters.
 
-Where c is the "horizontal_edge", t(c) is the target of the
-"horizontal_edge" and t(c) + 3 is the location of the first horizontal
-segment.  And then of course the +=3D 2 is because we don't want to
-change the mappings of the existing vertical edges.  This could really
-probably use a comment (suggestions welcome).
-
-Hope that clears things up,
-~Allan
+-Peff
