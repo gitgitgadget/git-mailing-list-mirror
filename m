@@ -1,122 +1,61 @@
-From: Mikael Magnusson <mikachu@gmail.com>
+From: Michael Witten <mfwitten@gmail.com>
 Subject: Re: Howto request: going home in the middle of something? v2009
-Date: Tue, 21 Apr 2009 15:43:32 +0200
-Message-ID: <237967ef0904210643m2b99dccapbfd10386128c478b@mail.gmail.com>
+Date: Tue, 21 Apr 2009 08:47:37 -0500
+Message-ID: <b4087cc50904210647k7bcc1ecbob20ccf7b56047790@mail.gmail.com>
 References: <e2a1d0aa0904210639t2ca73364pff26c85a0224182e@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
 Cc: git <git@vger.kernel.org>
 To: Patrick Doyle <wpdster@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Apr 21 15:45:16 2009
+X-From: git-owner@vger.kernel.org Tue Apr 21 15:49:26 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LwGHb-0008JC-Vs
-	for gcvg-git-2@gmane.org; Tue, 21 Apr 2009 15:45:08 +0200
+	id 1LwGLf-0001Op-Fk
+	for gcvg-git-2@gmane.org; Tue, 21 Apr 2009 15:49:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750893AbZDUNnf convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 21 Apr 2009 09:43:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751932AbZDUNne
-	(ORCPT <rfc822;git-outgoing>); Tue, 21 Apr 2009 09:43:34 -0400
-Received: from mail-ew0-f176.google.com ([209.85.219.176]:32972 "EHLO
-	mail-ew0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751144AbZDUNnd convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 21 Apr 2009 09:43:33 -0400
-Received: by ewy24 with SMTP id 24so1594712ewy.37
-        for <git@vger.kernel.org>; Tue, 21 Apr 2009 06:43:32 -0700 (PDT)
+	id S1753471AbZDUNrl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 21 Apr 2009 09:47:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752913AbZDUNrk
+	(ORCPT <rfc822;git-outgoing>); Tue, 21 Apr 2009 09:47:40 -0400
+Received: from qw-out-2122.google.com ([74.125.92.26]:17154 "EHLO
+	qw-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751370AbZDUNrk (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 21 Apr 2009 09:47:40 -0400
+Received: by qw-out-2122.google.com with SMTP id 5so1394633qwd.37
+        for <git@vger.kernel.org>; Tue, 21 Apr 2009 06:47:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:mime-version:received:in-reply-to:references
          :date:message-id:subject:from:to:cc:content-type
          :content-transfer-encoding;
-        bh=eTpwJCkmopDfVq7vh3CU06LmJ1h0ewlfQwh3IGLOyJc=;
-        b=dsyKvdvjEi5ezWQtmuozAYMZSnrXYMueZL++rLI8EkYXS6R602jtxPQoONGiuGKWYY
-         LgjSR+8utvzjgB+wA8VXdlKAmIRvUP5bumRJ880tQvEouEeIE3VdDNg8F+6GkXGQg7kZ
-         0eRrrp8OZdrrIq3bZGQ0f+T/f+qnflGX78nPU=
+        bh=GFjjDoaseXgnF4jlOhhmuH+oafMJchlMnbmEtXmV09g=;
+        b=auE4/DvdcxCv8UCfN+s/0Dfy8XtUmSd6z81f8ZaYkbkcH9bE9jReWDCos1yX4AhL8b
+         A69MzkKai1zUb4HQpSxVz/7WyT9klgyUsUuIWiuvl3bMA/Mday21pwR/bdpZbNP1YL7W
+         0uVXMu348wZqwNo77bgIwGk9JaBecKnJml1fQ=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type:content-transfer-encoding;
-        b=lQYFsImNanJJYwEQIuDo/jHy1cOm9fcpU4mzbLhQHFbeS1cGc4LDLu4j7TzKIibobr
-         5K/a8CpuCAzi9YMgqorhsNll3KB4JLS78Z5B5mrueBrxOGrYbsJb5h0VKC7muJmvAeDy
-         EgsOoQkXC3iWmBtERDNTbgDKUFo4jlLBqdkkA=
-Received: by 10.210.66.1 with SMTP id o1mr6088661eba.77.1240321412086; Tue, 21 
-	Apr 2009 06:43:32 -0700 (PDT)
+        b=FisBqNWobtzjHLgIId7VVaMXq6wERhQQoPuJcuw3KWlJvrglz/5eRvWISN/vi8JoWd
+         hz0WiySNAz7DOz51ffB/nSXPomQHfvtnZt6ia/fe96SfcwQ7fsL09gdKBmAs5GsOK/hv
+         KcakiJjuk2zKTw1g7IZhDXCrRR9ioau8+dqok=
+Received: by 10.224.67.206 with SMTP id s14mr7652782qai.289.1240321657342; 
+	Tue, 21 Apr 2009 06:47:37 -0700 (PDT)
 In-Reply-To: <e2a1d0aa0904210639t2ca73364pff26c85a0224182e@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117132>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117133>
 
-2009/4/21 Patrick Doyle <wpdster@gmail.com>:
-> Hello,
-> I've developed a work habit of keeping my source code repository on a
-> USB stick and carrying that back and forth with me between work and
-> home. =C2=A0(I typically have small, branchless, single-developer
-> projects.) =C2=A0When I arrive at the other machine, I do
->
-> $ git pull
-> (code, commit, code, commit, etc...)
-> $ git push
->
-> Occasionally at the end of the day (if I'm at work) or at the end of
-> the night (if I'm at home), I'm in the middle of something that I wan=
-t
-> to continue, and I end up making a "work-in-progress" commit
->
-> $ git commit -a "WIP"
->
-> just so I can pull that in the next day/evening and continue where I
-> left off. =C2=A0But that leaves a bunch of "WIP" commits in my histor=
-y. =C2=A0I
-> started looking around for a better way to do this, and came across a
-> 2007 discussion (at
-> http://kerneltrap.org/index.php?q=3Dmailarchive/git/2007/10/18/347020=
-/thread)
-> where the OP really wanted (as do I) do be able to do something like
-> this:
->
-> $ git stash
-> $ git push
-> $ git stash-push
-> (travel to other site)
-> $ git pull
-> $ git stash-pull
-> $ git stash apply
-> (continue coding and committing as before)
->
-> There were a number of different suggestions, such as:
->
-> $ git commit -b temp -a -m "Hold for transport home"
->
-> Then when I get home I do this:
->
-> $ git fetch work
-> $ git merge work/temp
-> $ git reset HEAD^
-> =C2=A0# code code code
-> $ git commit -b temp -a -m "Hold for transport to work"
->
-> When I'm finished at home and want to carry on at work:
->
-> $ git fetch --force home
-> $ git merge home/temp
-> $ git reset HEAD^
-> =C2=A0# start coding for the day
->
-> ... or using git-bundle
->
-> That discussion dates back to 2007. =C2=A0Is there a new, improved, 2=
-009
-> way of accomplishing this?
->
-> --wpd
+On Tue, Apr 21, 2009 at 08:39, Patrick Doyle <wpdster@gmail.com> wrote:
+> But that leaves a bunch of "WIP" commits in my history.
 
-man git-stash? or you can just git reset --soft HEAD^ away your wip com=
-mit.
+Take a look at git-rebase command, particularly the interactive
+option, -i; this allows you to rewrite the history by removing
+commits, rearranging commits, and editing/amending commits.
 
---=20
-Mikael Magnusson
+Also, it seems like you're not branching enough.
