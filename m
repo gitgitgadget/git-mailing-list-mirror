@@ -1,78 +1,62 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: Beginner problem with .gitignore
-Date: Tue, 21 Apr 2009 10:51:32 +0200
-Message-ID: <49ED8914.9090808@drmicha.warpmail.net>
-References: <gsid27$p1$1@ger.gmane.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: correct git merge behavior or corner case?
+Date: Tue, 21 Apr 2009 10:56:27 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.0904211055160.10279@pacific.mpi-cbg.de>
+References: <4ac8254d0904191540j68246cd8qa36a034209d4c800@mail.gmail.com>  <alpine.DEB.1.00.0904201148150.6955@intel-tinevez-2-302> <41354.bFoQE3daRhY=.1240222235.squirrel@webmail.hotelhot.dk>  <20090421024433.GC14479@coredump.intra.peff.net>
+ <7vskk2bt3x.fsf@gitster.siamese.dyndns.org> <fabb9a1e0904210148w4c6b869l396122baef1c0ee3@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Kai Schlamp <schlamp@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Apr 21 10:53:27 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+	Anders Melchiorsen <mail@cup.kalibalik.dk>,
+	Tuncer Ayaz <tuncer.ayaz@gmail.com>, git@vger.kernel.org
+To: Sverre Rabbelier <srabbelier@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Apr 21 10:56:49 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LwBjJ-00028g-9o
-	for gcvg-git-2@gmane.org; Tue, 21 Apr 2009 10:53:25 +0200
+	id 1LwBmX-0003Cm-G2
+	for gcvg-git-2@gmane.org; Tue, 21 Apr 2009 10:56:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755017AbZDUIvm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 21 Apr 2009 04:51:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752266AbZDUIvm
-	(ORCPT <rfc822;git-outgoing>); Tue, 21 Apr 2009 04:51:42 -0400
-Received: from out1.smtp.messagingengine.com ([66.111.4.25]:40804 "EHLO
-	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751397AbZDUIvl (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 21 Apr 2009 04:51:41 -0400
-Received: from compute1.internal (compute1.internal [10.202.2.41])
-	by out1.messagingengine.com (Postfix) with ESMTP id 4932131DC0F;
-	Tue, 21 Apr 2009 04:51:40 -0400 (EDT)
-Received: from heartbeat2.messagingengine.com ([10.202.2.161])
-  by compute1.internal (MEProxy); Tue, 21 Apr 2009 04:51:40 -0400
-X-Sasl-enc: nsmn6UeZFuqa4b9AVokIvYEqg1qxSF8rTsWqjUVrzZRL 1240303899
-Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.12])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id A885148D6C;
-	Tue, 21 Apr 2009 04:51:39 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1b4pre) Gecko/20090420 Lightning/1.0pre Shredder/3.0b3pre
-In-Reply-To: <gsid27$p1$1@ger.gmane.org>
+	id S1753124AbZDUIyy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 21 Apr 2009 04:54:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751992AbZDUIyy
+	(ORCPT <rfc822;git-outgoing>); Tue, 21 Apr 2009 04:54:54 -0400
+Received: from mail.gmx.net ([213.165.64.20]:55670 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751083AbZDUIyx (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 21 Apr 2009 04:54:53 -0400
+Received: (qmail invoked by alias); 21 Apr 2009 08:54:51 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp063) with SMTP; 21 Apr 2009 10:54:51 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18iNWdItnMiLQ17s09+62zi3vJlrhUBuIPtHKdMVn
+	ZtU1Bs0KCHj7ml
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <fabb9a1e0904210148w4c6b869l396122baef1c0ee3@mail.gmail.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.71
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117106>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117107>
 
-Kai Schlamp venit, vidit, dixit 20.04.2009 19:57:
-> Hello.
-> 
-> I have a file called TitleAreaDialog.java in the folder
-> my_path\org.eclipse.jface\src\org\eclipse\jface\dialogs
-> 
-> .git and .gitignore is in the my_path\ folder (using Git Cygwin on Windows).
-> 
-> Now I everything is ignored from org.eclipse.jface, but not that 
-> TitleAreaDialog.java
-> 
-> So I specified the following in .gitignore:
-> /org.eclipse.*
-> !TitleAreaDialog.java
-> 
-> I also tried it with:
-> !Title*, 
-> !/org.eclipse.jface/src/org/eclipse/jface/dialogs/TitleAreaDialog.java
-> 
-> but the TitleAreaDialog is always ignored as well.
+Hi,
 
-By "is ignored", do you mean that git status doesn't show it? git status
-does not recurse into subdirectories by default unless there is at least
-one tracked file inside.
+On Tue, 21 Apr 2009, Sverre Rabbelier wrote:
 
+> On Tue, Apr 21, 2009 at 05:09, Junio C Hamano <gitster@pobox.com> wrote:
+> > and sane projects would not have an empty file tracked anyway, so...
 > 
-> What do I have to do to not ignore this file specifically?
+> Except python projects that are full of empty __init__.py files.... no?
 
-Have you ever added that file?
+But they would be a good example why we do _not_ want rename detection 
+there.
 
-If you only want to track a few files it's easiest to ignore everything
-and git add those files. Once added they will be tracked no matter what
-the ignore patterns say.
+I actually agree with Junio, though, that we want this special handling of 
+empty files only in merge-recursive.
 
-Michael
+Ciao,
+Dscho
