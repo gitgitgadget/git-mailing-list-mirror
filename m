@@ -1,81 +1,83 @@
-From: Nicolas Pitre <nico@cam.org>
+From: "Shawn O. Pearce" <spearce@spearce.org>
 Subject: Re: Performance issue: initial git clone causes massive repack
-Date: Wed, 22 Apr 2009 10:14:48 -0400 (EDT)
-Message-ID: <alpine.LFD.2.00.0904221011340.6741@xanadu.home>
-References: <alpine.LFD.2.00.0904070903020.6741@xanadu.home>
- <20090407142147.GA4413@atjola.homenet>
- <alpine.LFD.2.00.0904071321520.6741@xanadu.home>
- <20090407181259.GB4413@atjola.homenet>
- <alpine.LFD.2.00.0904071454250.6741@xanadu.home>
- <20090407202725.GC4413@atjola.homenet>
- <alpine.LFD.2.00.0904080041240.6741@xanadu.home>
- <20090410T203405Z@curie.orbis-terrarum.net>
- <alpine.DEB.1.00.0904141749330.10279@pacific.mpi-cbg.de>
- <alpine.LFD.2.00.0904141542161.6741@xanadu.home>
- <20090414T202206Z@curie.orbis-terrarum.net>
- <1240362948.22240.76.camel@maia.lan>
+Date: Wed, 22 Apr 2009 07:35:03 -0700
+Message-ID: <20090422143503.GG23604@spearce.org>
+References: <alpine.LFD.2.00.0904071454250.6741@xanadu.home> <20090407202725.GC4413@atjola.homenet> <alpine.LFD.2.00.0904080041240.6741@xanadu.home> <20090410T203405Z@curie.orbis-terrarum.net> <alpine.DEB.1.00.0904141749330.10279@pacific.mpi-cbg.de> <alpine.LFD.2.00.0904141542161.6741@xanadu.home> <20090414T202206Z@curie.orbis-terrarum.net> <1240362948.22240.76.camel@maia.lan> <e2b179460904220255v58986bd5q7c22eb3ab8486157@mail.gmail.com> <alpine.DEB.1.00.0904221516250.14221@intel-tinevez-2-302>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: "Robin H. Johnson" <robbat2@gentoo.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Git Mailing List <git@vger.kernel.org>
-To: Sam Vilain <sam@vilain.net>
-X-From: git-owner@vger.kernel.org Wed Apr 22 16:17:14 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Mike Ralphson <mike.ralphson@gmail.com>,
+	Sam Vilain <sam@vilain.net>,
+	"Robin H. Johnson" <robbat2@gentoo.org>,
+	Nicolas Pitre <nico@cam.org>,
+	Git Mailing List <git@vger.kernel.org>,
+	Matt Enright <awickedshimmy@gmail.com>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Apr 22 16:44:07 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LwdFz-00028t-W0
-	for gcvg-git-2@gmane.org; Wed, 22 Apr 2009 16:17:00 +0200
+	id 1LwdZ2-0002l9-VG
+	for gcvg-git-2@gmane.org; Wed, 22 Apr 2009 16:36:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752192AbZDVOPV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 22 Apr 2009 10:15:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752097AbZDVOPV
-	(ORCPT <rfc822;git-outgoing>); Wed, 22 Apr 2009 10:15:21 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:29156 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751073AbZDVOPU (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 22 Apr 2009 10:15:20 -0400
-Received: from xanadu.home ([66.131.194.97]) by VL-MH-MR001.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
- with ESMTP id <0KII0069DA8OK3H0@VL-MH-MR001.ip.videotron.ca> for
- git@vger.kernel.org; Wed, 22 Apr 2009 10:14:49 -0400 (EDT)
-X-X-Sender: nico@xanadu.home
-In-reply-to: <1240362948.22240.76.camel@maia.lan>
-User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
+	id S1752289AbZDVOfG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 22 Apr 2009 10:35:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751841AbZDVOfF
+	(ORCPT <rfc822;git-outgoing>); Wed, 22 Apr 2009 10:35:05 -0400
+Received: from george.spearce.org ([209.20.77.23]:34915 "EHLO
+	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751432AbZDVOfD (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 Apr 2009 10:35:03 -0400
+Received: by george.spearce.org (Postfix, from userid 1001)
+	id 0DDB83821F; Wed, 22 Apr 2009 14:35:03 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <alpine.DEB.1.00.0904221516250.14221@intel-tinevez-2-302>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117199>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117200>
 
-On Wed, 22 Apr 2009, Sam Vilain wrote:
-
-> On Tue, 2009-04-14 at 13:27 -0700, Robin H. Johnson wrote:
-> > On Tue, Apr 14, 2009 at 04:17:55PM -0400, Nicolas Pitre wrote:
-> > > WRT the HTTP protocol, I was questioning git's ability to resume the 
-> > > transfer of a pack in the middle if such transfer is interrupted without 
-> > > redownloading it all. And Mike Hommey says this is actually the case.
-> > With rsync:// it was helpful to split the pack, and resume there worked
-> > reasonably (see my other mail about the segfault that turns up
-> > sometimes).
+Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> On Wed, 22 Apr 2009, Mike Ralphson wrote:
+> 
+> > 2009/4/22 Sam Vilain <sam@vilain.net>
+> > > Now that the GSoC projects have been announced I can give you the good
+> > > news that one of our two projects...
 > > 
-> > More recent discussions raised the possibility of using git-bundle to
-> > provide a more ideal initial download that they CAN resume easily, as
-> > well as being able to move on from it.
+> > It's sort of three, really...
+> > 
+> > http://socghop.appspot.com/student_project/show/google/gsoc2009/mono/t124022708105
 > 
-> Hey Robin,
-> 
-> Now that the GSoC projects have been announced I can give you the good
-> news that one of our two projects is to optimise this stage in
-> git-daemon; I'm hoping we can get it down to being almost as cheap as
-> the workaround you described in your post.  I'll certainly be using your
-> repository as a test case :-)
+> OMG!  That's the third time they are wasting Google's money: AFAICT they 
+> haven't learnt from the past two years' failures.  At least I am not aware 
+> of any of them Mono guys trying to collaborate with us.
 
-Please keep me in the loop as much as possible.  I'd prefer we're not in 
-disagreement over the implementation only after final patches are posted 
-to the list.
+Yikes!
 
+Wearing my Google hat, I have to cry a little.  I think its such
+a waste.  But we don't tell the orgs what projects they should or
+should not do, its at each org's individual discretion.  Clearly the
+Mono folks feel they should "spend" a *fourth* slot on this project.
+That or, Mono was granted one too many slots in the program.  *sigh*
 
-Nicolas
+Wearing my JGit maintainer hat, I have to cry a little.  The mentor
+for this project should realize... we've spent over 3 years now
+on JGit (it turned 3 on Mar 6 2009) and it *still* doesn't provide
+a full replacement for git.git.
+
+I'd like to think that I'm not a moron, and that it really does
+take 3 years of R&D work to find a suitable implementation of Git
+in a sandboxed language like Java.  Or, maybe I am a moron.  Linus,
+Junio and crew had git.git implemented in less time.
+ 
+> Oh well, maybe I should drop them a mail that they may get valuable input 
+> here _iff_ they just ask.
+
+I've tried that in the past two years.  I've given up.  The JGit
+code is available.  Its license is quite liberal.  They can look
+at it if they want.  My guess is, they won't.
+
+-- 
+Shawn.
