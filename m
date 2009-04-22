@@ -1,73 +1,61 @@
-From: Sam Vilain <sam@vilain.net>
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
 Subject: Re: git-svn init/fetch: wow that's slow
-Date: Wed, 22 Apr 2009 23:05:52 +1200
-Message-ID: <1240398352.20236.26.camel@maia.lan>
+Date: Wed, 22 Apr 2009 13:16:04 +0200
+Message-ID: <vpqmya9rlaj.fsf@bauges.imag.fr>
 References: <E26B8975-74D3-4F01-A9D9-DAAB96C8FC85@gmail.com>
-	 <fabb9a1e0904220255w55c8fee1uf534aad07cefa818@mail.gmail.com>
+	<fabb9a1e0904220255w55c8fee1uf534aad07cefa818@mail.gmail.com>
+	<1240398352.20236.26.camel@maia.lan>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: Lachlan Deck <lachlan.deck@gmail.com>, git@vger.kernel.org
-To: Sverre Rabbelier <srabbelier@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Apr 22 13:07:52 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Sverre Rabbelier <srabbelier@gmail.com>,
+	Lachlan Deck <lachlan.deck@gmail.com>, git@vger.kernel.org
+To: Sam Vilain <sam@vilain.net>
+X-From: git-owner@vger.kernel.org Wed Apr 22 13:21:00 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LwaIe-0005Xv-4P
-	for gcvg-git-2@gmane.org; Wed, 22 Apr 2009 13:07:32 +0200
+	id 1LwaVa-0001WI-Sn
+	for gcvg-git-2@gmane.org; Wed, 22 Apr 2009 13:20:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752420AbZDVLF6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 22 Apr 2009 07:05:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752437AbZDVLF5
-	(ORCPT <rfc822;git-outgoing>); Wed, 22 Apr 2009 07:05:57 -0400
-Received: from watts.utsl.gen.nz ([202.78.240.73]:42419 "EHLO mail.utsl.gen.nz"
+	id S1752806AbZDVLTK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 22 Apr 2009 07:19:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752203AbZDVLTJ
+	(ORCPT <rfc822;git-outgoing>); Wed, 22 Apr 2009 07:19:09 -0400
+Received: from imag.imag.fr ([129.88.30.1]:54382 "EHLO imag.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752284AbZDVLF4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 22 Apr 2009 07:05:56 -0400
-Received: by mail.utsl.gen.nz (Postfix, from userid 1004)
-	id D237C21C324; Wed, 22 Apr 2009 23:05:47 +1200 (NZST)
-X-Spam-Checker-Version: SpamAssassin 3.2.5 (2008-06-10) on
-	mail.musashi.utsl.gen.nz
-X-Spam-Level: 
-X-Spam-Status: No, score=-4.4 required=5.0 tests=ALL_TRUSTED,AWL,BAYES_00
-	autolearn=ham version=3.2.5
-Received: from [192.168.69.182] (203-97-235-49.cable.telstraclear.net [203.97.235.49])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by mail.utsl.gen.nz (Postfix) with ESMTPSA id 1278421C15A;
-	Wed, 22 Apr 2009 23:05:43 +1200 (NZST)
-In-Reply-To: <fabb9a1e0904220255w55c8fee1uf534aad07cefa818@mail.gmail.com>
-X-Mailer: Evolution 2.24.1 
+	id S1752031AbZDVLTG (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 Apr 2009 07:19:06 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id n3MBG8jB021083
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Wed, 22 Apr 2009 13:16:08 +0200 (CEST)
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
+	(Exim 4.50)
+	id 1LwaQu-0007Yg-CM; Wed, 22 Apr 2009 13:16:04 +0200
+Received: from moy by bauges.imag.fr with local (Exim 4.63)
+	(envelope-from <moy@imag.fr>)
+	id 1LwaQu-0000Rq-9v; Wed, 22 Apr 2009 13:16:04 +0200
+In-Reply-To: <1240398352.20236.26.camel@maia.lan> (Sam Vilain's message of "Wed\, 22 Apr 2009 23\:05\:52 +1200")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.0.91 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Wed, 22 Apr 2009 13:16:09 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117191>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117192>
 
-On Wed, 2009-04-22 at 11:55 +0200, Sverre Rabbelier wrote:
-> Heya,
-> 
-> On Wed, Apr 22, 2009 at 09:40, Lachlan Deck <lachlan.deck@gmail.com> wrote:
-> > Okay, so I'm using git 1.6.2. I assume this is all a 'known issue'. Has
-> > there been any work / plans towards improving this?
-> 
-> This can be improved by using svn 1.5's delta feature, however, Eric
-> (the author of git-svn) does not have the time to do this, and no-one
-> has stepped up to do this.
-> A workaround is to not clone from r1 but instead start at a more
-> recent revision.
+Sam Vilain <sam@vilain.net> writes:
 
-Fetching over plain svn:// is IME much faster.  But let's face it, SVN
-is no race-horse and was never designed for the case where people like
-to look at their history much.  Developing with a trunk was so painful,
-people would rather just forget... 
+> One workaround is to use SVK to do the initial mirroring, 
 
-One workaround is to use SVK to do the initial mirroring, and the
---use-svm-mirror flag to convert your SVK mirror path to git.  See
-http://utsl.gen.nz/talks/git-svn/intro.html for a guide for the second
-part of that.  SVK has implemented some of the harder parts of the SVN
-API to get right, such as request pipelining - see
-http://code.bestpractical.com/svk/trunk/lib/SVK/Mirror/Backend/SVNRaPipe.pm for how the SVN API "supports" this.  As a result of this dedication to the cause, SVK does this part very quickly.
+Probably svnsync can help here too. Dunno whether it's gonna be
+faster ...
 
-Sam
+-- 
+Matthieu
