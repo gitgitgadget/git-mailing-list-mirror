@@ -1,72 +1,65 @@
-From: Johannes Sixt <j6t@kdbg.org>
-Subject: Unexpected messages by git rebase -m
-Date: Wed, 22 Apr 2009 21:55:54 +0200
-Message-ID: <200904222155.54422.j6t@kdbg.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: bad object
+Date: Wed, 22 Apr 2009 12:58:42 -0700
+Message-ID: <7vbpqo31fx.fsf@gitster.siamese.dyndns.org>
+References: <20090422184842.GC9541@fieldses.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Apr 22 21:57:41 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: "J. Bruce Fields" <bfields@fieldses.org>
+X-From: git-owner@vger.kernel.org Wed Apr 22 22:00:32 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LwiZY-0002Q4-WB
-	for gcvg-git-2@gmane.org; Wed, 22 Apr 2009 21:57:33 +0200
+	id 1LwicK-0003QP-I5
+	for gcvg-git-2@gmane.org; Wed, 22 Apr 2009 22:00:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754241AbZDVTz7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 22 Apr 2009 15:55:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753770AbZDVTz7
-	(ORCPT <rfc822;git-outgoing>); Wed, 22 Apr 2009 15:55:59 -0400
-Received: from bsmtp.bon.at ([213.33.87.14]:59202 "EHLO bsmtp.bon.at"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753968AbZDVTz6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 22 Apr 2009 15:55:58 -0400
-Received: from dx.sixt.local (unknown [93.83.142.38])
-	by bsmtp.bon.at (Postfix) with ESMTP id BD210CDF8A
-	for <git@vger.kernel.org>; Wed, 22 Apr 2009 21:55:55 +0200 (CEST)
-Received: from localhost (localhost [IPv6:::1])
-	by dx.sixt.local (Postfix) with ESMTP id 65ED43BE01
-	for <git@vger.kernel.org>; Wed, 22 Apr 2009 21:55:55 +0200 (CEST)
-User-Agent: KMail/1.9.9
-Content-Disposition: inline
+	id S1754118AbZDVT6t (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 22 Apr 2009 15:58:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752987AbZDVT6t
+	(ORCPT <rfc822;git-outgoing>); Wed, 22 Apr 2009 15:58:49 -0400
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:59667 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752876AbZDVT6t (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 Apr 2009 15:58:49 -0400
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 2D0141157F;
+	Wed, 22 Apr 2009 15:58:46 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 96CCC1157C; Wed,
+ 22 Apr 2009 15:58:43 -0400 (EDT)
+In-Reply-To: <20090422184842.GC9541@fieldses.org> (J. Bruce Fields's message
+ of "Wed, 22 Apr 2009 14:48:42 -0400")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: FD1B8FF8-2F77-11DE-8103-D766E3C8547C-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117244>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117245>
 
-I did the usual fix-up-the-second-commit procedure, this time with 'git 
-rebase -m'. The result is OK, but rebase writes something unexpected:
+"J. Bruce Fields" <bfields@fieldses.org> writes:
 
-git init
-echo a > x && git add x && git commit -m A
-echo b > x && git add x && git commit -m B
-echo c > x && git add x && git commit -m C
-git checkout HEAD^
-echo b1 > x && git add x && git commit --amend -m B1
+> Just today operations started warning:
+>
+> 	error: Could not read 4e69489a0ac11a9b62a25923975bfc370a30eae5
+>
+> This is Documentation/networking/baycom.txt from
+> 518e6540831c69422faecceee8f964bd439ac9d0 (pre-2.6.13), which is easy
+> enough to find from another repository and fix the problem.
+>
+> But I'm curious--how do I find out what pack file that object should be
+> in, and what the corruption looks like?
 
-Here we have this history:
+The former you should be able to read from either "verify-pack -v" or
+"show-index" output.  After finding the offset for the object data in the
+pack, a bit of "dd seek=" would be needed to extract the data.
 
-  A--B--C  <- master
-   \
-    B1  <- detached HEAD
-
-git rebase -m HEAD master
-git rebase --skip	# B is in conflict; we don't need it
-git checkout master x	# resolve another conflict
-
-Now look what rebase has to say:
-
-$ git rebase --continue 
-[detached HEAD 90c7916] C
- 1 files changed, 1 insertions(+), 1 deletions(-)
-Committed: 0001 C
-Already applied: 0002 C
-All done.
-
-Notice "Committed: 0001 C" followed by "Already applied: 0002 C". I'd expect 
-only "Committed: 0002 C". What's up?
-
--- Hannes
+>
+> This is the third time I've found corruption in a repository on this
+> laptop, so I'm a little suspicious of the hardware.  (The second time I
+> reported here: http://marc.info/?l=git&m=121968278319668&w=2.)
+>
+> --b.
