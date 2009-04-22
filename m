@@ -1,75 +1,84 @@
-From: Jeff King <peff@peff.net>
+From: Nicolas Pitre <nico@cam.org>
 Subject: Re: dangling commits and blobs: is this normal?
-Date: Wed, 22 Apr 2009 15:58:54 -0400
-Message-ID: <20090422195854.GA14146@coredump.intra.peff.net>
-References: <450196A1AAAE4B42A00A8B27A59278E70ACE0502@EXCHANGE.trad.tradestation.com> <20090422152719.GA12881@coredump.intra.peff.net> <W0cjdA0pSHr_AbT2c-k5hDf7LyNvwkc38qIIhTtJJRwFnGBxaBsEiw@cipher.nrlssc.navy.mil> <alpine.LFD.2.00.0904221331450.6741@xanadu.home> <vpqws9cd06b.fsf@bauges.imag.fr> <20090422190856.GB13424@coredump.intra.peff.net> <I5p8gPPuE_qW2RDhwiqxCWDuMtnuvvgtSkeTkxby6rlj_FKtpERaBA@cipher.nrlssc.navy.mil>
+Date: Wed, 22 Apr 2009 16:00:06 -0400 (EDT)
+Message-ID: <alpine.LFD.2.00.0904221548310.6741@xanadu.home>
+References: <450196A1AAAE4B42A00A8B27A59278E70ACE0502@EXCHANGE.trad.tradestation.com>
+ <20090422152719.GA12881@coredump.intra.peff.net>
+ <W0cjdA0pSHr_AbT2c-k5hDf7LyNvwkc38qIIhTtJJRwFnGBxaBsEiw@cipher.nrlssc.navy.mil>
+ <alpine.LFD.2.00.0904221331450.6741@xanadu.home>
+ <FcecxnoVg4H8G3MKjZgl2T6zCGDer4yYyScIgaweFTNgDCKG65Xiig@cipher.nrlssc.navy.mil>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Matthieu Moy <Matthieu.Moy@imag.fr>, Nicolas Pitre <nico@cam.org>,
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Jeff King <peff@peff.net>,
 	John Dlugosz <JDlugosz@TradeStation.com>, git@vger.kernel.org
 To: Brandon Casey <casey@nrlssc.navy.mil>
-X-From: git-owner@vger.kernel.org Wed Apr 22 22:00:54 2009
+X-From: git-owner@vger.kernel.org Wed Apr 22 22:02:55 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lwich-0003Zf-RB
-	for gcvg-git-2@gmane.org; Wed, 22 Apr 2009 22:00:48 +0200
+	id 1Lwieg-0004Fw-Rp
+	for gcvg-git-2@gmane.org; Wed, 22 Apr 2009 22:02:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754955AbZDVT7G (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 22 Apr 2009 15:59:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754721AbZDVT7F
-	(ORCPT <rfc822;git-outgoing>); Wed, 22 Apr 2009 15:59:05 -0400
-Received: from peff.net ([208.65.91.99]:43882 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754641AbZDVT7C (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 22 Apr 2009 15:59:02 -0400
-Received: (qmail 17856 invoked by uid 107); 22 Apr 2009 19:59:07 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Wed, 22 Apr 2009 15:59:07 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 22 Apr 2009 15:58:54 -0400
-Content-Disposition: inline
-In-Reply-To: <I5p8gPPuE_qW2RDhwiqxCWDuMtnuvvgtSkeTkxby6rlj_FKtpERaBA@cipher.nrlssc.navy.mil>
+	id S1756518AbZDVUAZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 22 Apr 2009 16:00:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753685AbZDVUAY
+	(ORCPT <rfc822;git-outgoing>); Wed, 22 Apr 2009 16:00:24 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:57730 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756394AbZDVUAV (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 Apr 2009 16:00:21 -0400
+Received: from xanadu.home ([66.131.194.97]) by VL-MH-MR002.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
+ with ESMTP id <0KII00BZ2Q86JLB1@VL-MH-MR002.ip.videotron.ca> for
+ git@vger.kernel.org; Wed, 22 Apr 2009 16:00:07 -0400 (EDT)
+X-X-Sender: nico@xanadu.home
+In-reply-to: <FcecxnoVg4H8G3MKjZgl2T6zCGDer4yYyScIgaweFTNgDCKG65Xiig@cipher.nrlssc.navy.mil>
+User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117246>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117247>
 
-On Wed, Apr 22, 2009 at 02:45:29PM -0500, Brandon Casey wrote:
+On Wed, 22 Apr 2009, Brandon Casey wrote:
 
-> > Yes, it's a bit more work for you, but having "git gc" optimize by
-> > default for git's performance seems to be the only sensible course.
-> > Your idea of what is "big enough" above is somewhat outside the realm of
-> > git, so you have to pay the price to specify it by tweaking the
-> > keep-files.
+> Nicolas Pitre wrote:
+> > On Wed, 22 Apr 2009, Brandon Casey wrote:
 > 
-> But isn't git-gc supposed to be the "high-level" command that just does
-> the right thing?  It doesn't seem to me to be outside the scope of this
-> command to make a decision about trading off speed/io for optimal repo
-> layout.  In fact, it does do this already.  The default window, depth and
-> compression settings are chosen to be "good enough", not to produce the
-> absolute optimum repo.
+> >> I've often wondered whether a plain 'git gc' should adopt the behavior
+> >> of --auto with respect to the number of packs.  If there were few packs,
+> >> then 'git gc' would do an incremental repack, rather than a 'repack -A -d -l'.
+> > 
+> > Why so?  Having fewer packs is always a good thing.  Having only one 
+> > pack is of course the optimal situation.  The --auto version doesn't do 
+> > it in the hope of being lightter and less noticeable by the user.
 > 
-> I'm just pointing out that everything is a trade off.  So I think saying
-> something like "gc must optimize for git's performance" is not entirely
-> accurate.  We make tradeoffs now.  Other tradeoffs may be helpful.
+> The only reason for avoiding packing all packs into one would be speed in
+> this case also.  I recall reading complaints or surprise about gc
+> repacking all packs into one, so I'm only trying to think about how to
+> match program behavior with user expectations.
 
-Sure, but my point was that git doesn't even know _how_ to make that
-tradeoff. It doesn't know what you consider a reasonable size of backup
-for your incremental backups, how often you might want to rollover your
-keep files, how often you expect to commit and how big the commits will
-be, etc.
+It's user's expectations that need adjusting then.  Making a single pack 
+is indeed the job of an explicit gc invocation.
 
-So it does the most reasonable thing, which is to optimize for git
-itself based on what it does know. If there is any improvement to be
-made, it is probably to make a simpler way for the user to specify that
-external knowledge to git (because tweaking .keep files really is
-unnecessarily complex for Matthieu's scenario). And maybe that is just
-adding a config variable analagous to "gc.autopacklimit" to be used for
-regular gc, but that would default to 0 (i.e., default to the current
-behavior of always repacking).
+> gc does a lot already, and even Jeff wasn't sure what to expect from 
+> 'git gc' with respect to packs.  Possibly an acceptable trade off 
+> between speed and optimal packing would be to adopt the --auto 
+> behavior for deciding when to use '-A' with repack.
 
-But I don't think it makes sense to change the default.
+And what would be the point of manually running 'git gc' then, given 
+that 'git gc --auto' is already invoked automatically after most commit 
+creating commands?
 
--Peff
+I mean, if you consider explicit 'git gc' too long, then simply wait 
+until you can spare the time, if at all.  This is not like a non gc'd 
+repository suddently becomes non functional.
+
+WRT trade offs, the current behavior is already a pretty good compromize 
+between speed and optimal packing, the later implying -f to 'git 
+repack' which is far far slower.
+
+
+Nicolas
