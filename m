@@ -1,55 +1,68 @@
-From: Pieter de Bie <pdebie@ai.rug.nl>
-Subject: Re: First round of UGFWIINI results
-Date: Wed, 22 Apr 2009 11:52:57 +0100
-Message-ID: <8DB3C26C-ADAC-4734-B9D5-1B59488AD132@ai.rug.nl>
-References: <alpine.DEB.1.00.0902171745320.6185@intel-tinevez-2-302>
-Mime-Version: 1.0 (Apple Message framework v930.3)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Apr 22 12:54:47 2009
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: [PATCH] Wait for git diff to finish in git difftool
+Date: Wed, 22 Apr 2009 13:04:42 +0200
+Message-ID: <81b0412b0904220404o30ce1413kcc4dcea1fa822841@mail.gmail.com>
+References: <81b0412b0904220027t7afd1ed7xc57c479ef8cdb6b9@mail.gmail.com>
+	 <20090422082652.GA32698@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: gitster@poxbox.com, git@vger.kernel.org, charles@hashpling.org,
+	markus.heidelberg@web.de
+To: David Aguilar <davvid@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Apr 22 13:07:14 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lwa6F-0001s5-El
-	for gcvg-git-2@gmane.org; Wed, 22 Apr 2009 12:54:43 +0200
+	id 1LwaHz-0005Cc-Et
+	for gcvg-git-2@gmane.org; Wed, 22 Apr 2009 13:06:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753243AbZDVKxK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 22 Apr 2009 06:53:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752683AbZDVKxJ
-	(ORCPT <rfc822;git-outgoing>); Wed, 22 Apr 2009 06:53:09 -0400
-Received: from frim.nl ([87.230.85.232]:38506 "EHLO
-	lvps87-230-85-232.dedicated.hosteurope.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752169AbZDVKxI (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 22 Apr 2009 06:53:08 -0400
-Received: from 82-41-227-224.cable.ubr11.sgyl.blueyonder.co.uk ([82.41.227.224] helo=[192.168.50.100])
-	by lvps87-230-85-232.dedicated.hosteurope.de with esmtpsa (TLS-1.0:RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.63)
-	(envelope-from <pdebie@ai.rug.nl>)
-	id 1Lwa4f-0003di-Nv; Wed, 22 Apr 2009 11:53:05 +0100
-In-Reply-To: <alpine.DEB.1.00.0902171745320.6185@intel-tinevez-2-302>
-X-Mailer: Apple Mail (2.930.3)
+	id S1752795AbZDVLEo convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 22 Apr 2009 07:04:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751479AbZDVLEo
+	(ORCPT <rfc822;git-outgoing>); Wed, 22 Apr 2009 07:04:44 -0400
+Received: from yw-out-2324.google.com ([74.125.46.28]:53977 "EHLO
+	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752795AbZDVLEn convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 22 Apr 2009 07:04:43 -0400
+Received: by yw-out-2324.google.com with SMTP id 5so1937048ywb.1
+        for <git@vger.kernel.org>; Wed, 22 Apr 2009 04:04:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=JzQUDigk9HcF8cj+pYmm+MZX/fkubEQEZk3rjK9VPLI=;
+        b=JldBxvyHyyf8Kx9WrixENCGuq5tj5uem4joPnKW9GWhx4qk7F9odHcdptMfB6gfrzN
+         wU7gOHhYcl5qWWd5DxXWIHiPri2IfW5ovCWT+TOLeZ6fp5B/ETJZYsQvaYU0gcyxycjL
+         XkzfohUEAORJu9XHx1G4fxGQey1xZYkBYPsd0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=SHMxvfPp4qqLvo8REZC8OJtNXV4lPDfRC0EEGOnv6IPMpqPRlNcbxWeM857VV8tncF
+         E3atV7HCP7a0w7EoFdFs4OlqvjqxXDM+ub8Y4riRdrTk7gLB6LGlGyjunnHM6nai4CPR
+         rpitCiDGc4Aive30KVKJ/erfiHAodaGTjxBuQ=
+Received: by 10.150.139.15 with SMTP id m15mr12598589ybd.22.1240398282692; 
+	Wed, 22 Apr 2009 04:04:42 -0700 (PDT)
+In-Reply-To: <20090422082652.GA32698@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117189>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117190>
 
+2009/4/22 David Aguilar <davvid@gmail.com>:
+> On =C2=A00, Alex Riesen <raa.lkml@gmail.com> wrote:
 
-On 17 feb 2009, at 16:47, Johannes Schindelin wrote:
+I wasn't born on 0th.
 
-> Dear fans of Git,
 >
-> a while ago I announced the UGFWIINI contest, a glorious battle of  
-> ideas
-> how to
+> For whatever it's worth,
 >
-> 	Use Git For What It Is Not Indended
+> Acked-by: David Aguilar <davvid@gmail.com>
 
-I would like to submit
-
-	http://www.ordecon.com/2009/04/22/is-git-more-than-just-a-version-control-system/
-
-for the next round :)
+Yes, FWIW. I intentionally stopped signing off patches for
+Windows, ActiveState Perl and Cygwin: they usually harm the
+rest of the world, while just allowing Windows users limp along.
