@@ -1,44 +1,62 @@
-From: Andy Lester <andy@petdance.com>
-Subject: Removing duplicated code between builtin-send-pack.c and transport.c
-Date: Wed, 22 Apr 2009 12:01:16 -0500
-Message-ID: <09511913-0ED3-41C0-A4F0-9F2D452C00D7@petdance.com>
-Mime-Version: 1.0 (Apple Message framework v930.3)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 22 19:03:08 2009
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Performance issue: initial git clone causes massive repack
+Date: Wed, 22 Apr 2009 19:06:27 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.0904221905560.7282@intel-tinevez-2-302>
+References: <alpine.LFD.2.00.0904071454250.6741@xanadu.home> <20090407202725.GC4413@atjola.homenet> <alpine.LFD.2.00.0904080041240.6741@xanadu.home> <20090410T203405Z@curie.orbis-terrarum.net> <alpine.DEB.1.00.0904141749330.10279@pacific.mpi-cbg.de>
+ <alpine.LFD.2.00.0904141542161.6741@xanadu.home> <20090414T202206Z@curie.orbis-terrarum.net> <1240362948.22240.76.camel@maia.lan> <e2b179460904220255v58986bd5q7c22eb3ab8486157@mail.gmail.com> <alpine.DEB.1.00.0904221516250.14221@intel-tinevez-2-302>
+ <20090422143503.GG23604@spearce.org> <49EF4867.8060002@op5.se>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: "Shawn O. Pearce" <spearce@spearce.org>,
+	Mike Ralphson <mike.ralphson@gmail.com>,
+	Sam Vilain <sam@vilain.net>,
+	"Robin H. Johnson" <robbat2@gentoo.org>,
+	Nicolas Pitre <nico@cam.org>,
+	Git Mailing List <git@vger.kernel.org>,
+	Matt Enright <awickedshimmy@gmail.com>
+To: Andreas Ericsson <ae@op5.se>
+X-From: git-owner@vger.kernel.org Wed Apr 22 19:08:37 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LwfqV-0002Ay-JS
-	for gcvg-git-2@gmane.org; Wed, 22 Apr 2009 19:02:52 +0200
+	id 1Lwfva-00043i-4o
+	for gcvg-git-2@gmane.org; Wed, 22 Apr 2009 19:08:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753175AbZDVRBS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 22 Apr 2009 13:01:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752992AbZDVRBR
-	(ORCPT <rfc822;git-outgoing>); Wed, 22 Apr 2009 13:01:17 -0400
-Received: from huggy.petdance.com ([72.14.176.61]:34094 "EHLO
-	huggy.petdance.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752317AbZDVRBR (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 22 Apr 2009 13:01:17 -0400
-Received: from alester.flr.follett.com (host3130.follett.com [12.47.12.130])
-	by huggy.petdance.com (Postfix) with ESMTP id C956522DE74
-	for <git@vger.kernel.org>; Wed, 22 Apr 2009 13:01:16 -0400 (EDT)
-X-Mailer: Apple Mail (2.930.3)
+	id S1751543AbZDVRGb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 22 Apr 2009 13:06:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751366AbZDVRGb
+	(ORCPT <rfc822;git-outgoing>); Wed, 22 Apr 2009 13:06:31 -0400
+Received: from mail.gmx.net ([213.165.64.20]:40207 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750878AbZDVRGa (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 Apr 2009 13:06:30 -0400
+Received: (qmail invoked by alias); 22 Apr 2009 17:06:28 -0000
+Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
+  by mail.gmx.net (mp010) with SMTP; 22 Apr 2009 19:06:28 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18vwdd0g2YvCRAdzTBsq9PntGCcR4dcU5EcR7XBfU
+	c1PuVx0gLj9Me9
+X-X-Sender: schindel@intel-tinevez-2-302
+In-Reply-To: <49EF4867.8060002@op5.se>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.75
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117218>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117219>
 
-There's a ton of code duplicated between transport.c and builtin-send- 
-pack.c, from print_push_status() and its static helpers.
+Hi,
 
-Is there a reason NOT to refactor it out of the builtin and use the  
-transport?
+On Wed, 22 Apr 2009, Andreas Ericsson wrote:
 
-xoa
+> Ah well. I'll join mono-develop mailing list again and see what I can do 
+> to help.
 
---
-Andy Lester => andy@petdance.com => www.theworkinggeek.com => AIM:petdance
+Thanks.  I think these guys are in serious need of help, not only in terms 
+of Git, but also in managing GSoC.
+
+Ciao,
+Dscho
