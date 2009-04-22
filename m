@@ -1,75 +1,85 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: dangling commits and blobs: is this normal?
-Date: Wed, 22 Apr 2009 16:11:44 -0400 (EDT)
-Message-ID: <alpine.LFD.2.00.0904221609250.6741@xanadu.home>
-References: <450196A1AAAE4B42A00A8B27A59278E70ACE0502@EXCHANGE.trad.tradestation.com>
- <20090422152719.GA12881@coredump.intra.peff.net>
- <W0cjdA0pSHr_AbT2c-k5hDf7LyNvwkc38qIIhTtJJRwFnGBxaBsEiw@cipher.nrlssc.navy.mil>
- <alpine.LFD.2.00.0904221331450.6741@xanadu.home>
- <FcecxnoVg4H8G3MKjZgl2T6zCGDer4yYyScIgaweFTNgDCKG65Xiig@cipher.nrlssc.navy.mil>
- <alpine.LFD.2.00.0904221548310.6741@xanadu.home>
- <20090422200502.GA14304@coredump.intra.peff.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: How to merge from newer branch to older branches?
+Date: Wed, 22 Apr 2009 16:15:41 -0400
+Message-ID: <20090422201541.GC14146@coredump.intra.peff.net>
+References: <2729632a0904211224x6e2621caxf6c169d90b760530@mail.gmail.com> <20090421193615.GB7832@coredump.intra.peff.net> <7vmya946fg.fsf@gitster.siamese.dyndns.org> <2729632a0904221044q20e6cabau7dd06b3020a8ce49@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Brandon Casey <casey@nrlssc.navy.mil>,
-	John Dlugosz <JDlugosz@TradeStation.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Apr 22 22:14:22 2009
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: skillzero@gmail.com
+X-From: git-owner@vger.kernel.org Wed Apr 22 22:17:29 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LwipV-0008VQ-AU
-	for gcvg-git-2@gmane.org; Wed, 22 Apr 2009 22:14:01 +0200
+	id 1Lwish-0001U5-Lw
+	for gcvg-git-2@gmane.org; Wed, 22 Apr 2009 22:17:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753087AbZDVULw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 22 Apr 2009 16:11:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753462AbZDVULw
-	(ORCPT <rfc822;git-outgoing>); Wed, 22 Apr 2009 16:11:52 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:23902 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752516AbZDVULv (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 22 Apr 2009 16:11:51 -0400
-Received: from xanadu.home ([66.131.194.97]) by VL-MH-MR001.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
- with ESMTP id <0KII004L4QRKK990@VL-MH-MR001.ip.videotron.ca> for
- git@vger.kernel.org; Wed, 22 Apr 2009 16:11:45 -0400 (EDT)
-X-X-Sender: nico@xanadu.home
-In-reply-to: <20090422200502.GA14304@coredump.intra.peff.net>
-User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
+	id S1753295AbZDVUPq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 22 Apr 2009 16:15:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752876AbZDVUPq
+	(ORCPT <rfc822;git-outgoing>); Wed, 22 Apr 2009 16:15:46 -0400
+Received: from peff.net ([208.65.91.99]:53449 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751096AbZDVUPp (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 Apr 2009 16:15:45 -0400
+Received: (qmail 18061 invoked by uid 107); 22 Apr 2009 20:15:54 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Wed, 22 Apr 2009 16:15:54 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 22 Apr 2009 16:15:41 -0400
+Content-Disposition: inline
+In-Reply-To: <2729632a0904221044q20e6cabau7dd06b3020a8ce49@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117250>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117251>
 
-On Wed, 22 Apr 2009, Jeff King wrote:
+On Wed, Apr 22, 2009 at 10:44:06AM -0700, skillzero@gmail.com wrote:
 
-> On Wed, Apr 22, 2009 at 04:00:06PM -0400, Nicolas Pitre wrote:
+> Then I rebased feature:
 > 
-> > And what would be the point of manually running 'git gc' then, given 
-> > that 'git gc --auto' is already invoked automatically after most commit 
-> > creating commands?
-> > 
-> > I mean, if you consider explicit 'git gc' too long, then simply wait 
-> > until you can spare the time, if at all.  This is not like a non gc'd 
-> > repository suddently becomes non functional.
+> git rebase --onto merge-base-of-1.1-and-master feature-before-first feature
+>
+> [...]
 > 
-> The other tradeoff, mentioned by Matthieu, is not about speed, but about
-> rollover of files on disk. I think he would be in favor of a less
-> optimal pack setup if it meant rewriting the largest packfile less
-> frequently.
-> 
-> However, it may be reasonable to suggest that he just not manually "gc"
-> then. If he is not generating enough commits to warrant an auto-gc, then
-> he is probably not losing much by having loose objects. And if he is,
-> then auto-gc is already taking care of it.
+> I can merge 'feature' into 1.1, 1.2, etc. then theoretically, I should
+> be able to apply bug fixes to 'feature' later and re-merge into 1.1,
+> 1.2, etc. to pick up just the bug fixes, right?
 
-My point exactly.
+Exactly.
 
-And those people savvy enough to automate 'git gc' nightly should be 
-able to cope with .keep files as well.
+> It seems like this merge conflict is going to cause problems if I try
+> to re-merge to pick up a bug fix to 'feature' in the future. Looking
+> at the documentation, it sounds like 'git rerere' can help by
+> re-applying the manual conflict resolution I did?
 
+It shouldn't. Remember that your merges into 1.1, 1.2, etc, created a
+new merge base. So when you have bug fixes to make to this topic, you
+don't put them on the "feature" branch, but onto this topic branch. Then
+you re-merge the topic branch into 1.1., 1.2, feature, etc, and it will
+look only at the new bugfix.
 
-Nicolas
+> BTW...Is there a way to find the first commit of a branch? I had to
+> just look at the log manually to see what I remembered to be the first
+> commit.
+
+Sort of. Branches in git are really just refs pointing to the tip of the
+branch. So once the tip advances, the ref no longer remembers "oh, this
+is where I branched from". If there are other commits along the thing
+you branched off of, you can calculate the merge-base of the thing you
+branched from, and your branch.
+
+However, the first entry in the reflog for that branch ref should
+indicate branch creation (unless it is so old that it has expired).
+Something like:
+
+  $ git branch foo origin/master
+  $ git reflog show foo
+  0be9bc0 foo@{0}: branch: Created from origin/master
+
+So 0be9bc0 would be the creation point in this case. But you might have
+totally rewritten the branch after that point, so 0be9bc0 might not be a
+useful value anymore.
+
+-Peff
