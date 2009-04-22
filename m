@@ -1,109 +1,75 @@
-From: Jon Seymour <jon.seymour@gmail.com>
-Subject: A system administration use case for git
-Date: Wed, 22 Apr 2009 19:22:09 +1000
-Message-ID: <2cfc40320904220222ub9b95f8o35afcddb0390fe1b@mail.gmail.com>
-References: <2cfc40320904220133l5ab567f3q46608793b93f0e1f@mail.gmail.com>
-	 <46a038f90904220148i23f1a75n7036d9726870d5f5@mail.gmail.com>
-	 <2cfc40320904220208g5acc2200w6144668ba2da5a09@mail.gmail.com>
+From: Mike Ralphson <mike.ralphson@gmail.com>
+Subject: Re: Performance issue: initial git clone causes massive repack
+Date: Wed, 22 Apr 2009 10:55:45 +0100
+Message-ID: <e2b179460904220255v58986bd5q7c22eb3ab8486157@mail.gmail.com>
+References: <alpine.LFD.2.00.0904070903020.6741@xanadu.home>
+	 <20090407181259.GB4413@atjola.homenet>
+	 <alpine.LFD.2.00.0904071454250.6741@xanadu.home>
+	 <20090407202725.GC4413@atjola.homenet>
+	 <alpine.LFD.2.00.0904080041240.6741@xanadu.home>
+	 <20090410T203405Z@curie.orbis-terrarum.net>
+	 <alpine.DEB.1.00.0904141749330.10279@pacific.mpi-cbg.de>
+	 <alpine.LFD.2.00.0904141542161.6741@xanadu.home>
+	 <20090414T202206Z@curie.orbis-terrarum.net>
+	 <1240362948.22240.76.camel@maia.lan>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Apr 22 11:24:01 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: "Robin H. Johnson" <robbat2@gentoo.org>,
+	Nicolas Pitre <nico@cam.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Git Mailing List <git@vger.kernel.org>,
+	Matt Enright <awickedshimmy@gmail.com>
+To: Sam Vilain <sam@vilain.net>
+X-From: git-owner@vger.kernel.org Wed Apr 22 11:57:25 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LwYgF-0005h4-Lx
-	for gcvg-git-2@gmane.org; Wed, 22 Apr 2009 11:23:48 +0200
+	id 1LwZCk-0007wV-O2
+	for gcvg-git-2@gmane.org; Wed, 22 Apr 2009 11:57:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753731AbZDVJWM convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 22 Apr 2009 05:22:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753669AbZDVJWL
-	(ORCPT <rfc822;git-outgoing>); Wed, 22 Apr 2009 05:22:11 -0400
-Received: from yw-out-2324.google.com ([74.125.46.31]:33370 "EHLO
+	id S1753380AbZDVJzs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 22 Apr 2009 05:55:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752786AbZDVJzs
+	(ORCPT <rfc822;git-outgoing>); Wed, 22 Apr 2009 05:55:48 -0400
+Received: from yw-out-2324.google.com ([74.125.46.31]:41108 "EHLO
 	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753581AbZDVJWK convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 22 Apr 2009 05:22:10 -0400
-Received: by yw-out-2324.google.com with SMTP id 5so1921266ywb.1
-        for <git@vger.kernel.org>; Wed, 22 Apr 2009 02:22:09 -0700 (PDT)
+	with ESMTP id S1752408AbZDVJzr (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 Apr 2009 05:55:47 -0400
+Received: by yw-out-2324.google.com with SMTP id 5so1926193ywb.1
+        for <git@vger.kernel.org>; Wed, 22 Apr 2009 02:55:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:content-type
+         :date:message-id:subject:from:to:cc:content-type
          :content-transfer-encoding;
-        bh=9Vx7dV6iLDjPI64KetZjkIE8O4cb5b1+bcJ/olXZhz8=;
-        b=v7Kjc9e7WFm4wWfD6OG/Ra4zhKlFRonYI7OM0plnaD4jJ6tgF4XmTkd2A0+v3aoSiJ
-         RMvmdtbTRjod96OxSwRAzLy+YI0j+TjKt3bhOcSxVrPSL9pDLE91h3alenPCajwumVqp
-         64PM0zenApFy5A9w0KjDmtCn3evNSFdLeTe+Y=
+        bh=I15cAxKMYUqSPfRwPwsMM9E9fE6bNvYmXjYEBqEEuik=;
+        b=IHt6OBv+VeFz55Y7pSjvhexxJvW+BlsD2mrSUoWgz72lZWVuqbPg+dKLLMgDeMCI7s
+         6P6EporRqalMePzf25Mi624HH5Q8gpb0K5cknMcQnYLX3rE0EP4i7sG+mQKywb2RnhHD
+         qx/tTNUVnTyMehawJA6nhXtrIgGr185Ml5Mi0=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :content-type:content-transfer-encoding;
-        b=DrENQ4FsU1/m4S2z6FU/dIeuKlQ8nP3C9PrQwQzEzcCCaDHpzIqd9by17Ppmek5/ah
-         brbca0hkMg3YdkNI5H7mmUaqyoCfdv/6SFD1Q8JxR0XLVdQdZTSu2jiJ9/uGu8cytp3m
-         7UMTda0TGnGeUXCqxXC0hsNDPVCHBd7s1/8o8=
-Received: by 10.151.48.15 with SMTP id a15mr10259904ybk.230.1240392129069; 
-	Wed, 22 Apr 2009 02:22:09 -0700 (PDT)
-In-Reply-To: <2cfc40320904220208g5acc2200w6144668ba2da5a09@mail.gmail.com>
+         :cc:content-type:content-transfer-encoding;
+        b=dxXiWplxSlcwXGNZSTua5PQ+yTSHzOyDnslgjoo1Jhb43IQBxL7z0VwTDAtk/S0OEC
+         LRDOK7ffPC2dAsLkoJCMYrtU2cLqTuA4MnLoTDoV3IY7H/iQRC/3FCtayp5SH6c65Tf8
+         rFW5OF3py0Wn9GGot/qX3vv99zB19d1NM2fUM=
+Received: by 10.151.6.2 with SMTP id j2mr10274789ybi.88.1240394145821; Wed, 22 
+	Apr 2009 02:55:45 -0700 (PDT)
+In-Reply-To: <1240362948.22240.76.camel@maia.lan>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117184>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117185>
 
-Martin,
+2009/4/22 Sam Vilain <sam@vilain.net>
+> Now that the GSoC projects have been announced I can give you the good
+> news that one of our two projects...
 
-One disadvantage of that approach is if the file system is very large
-and only has a few deltas, then I effectively have to have two copies
-of the reference file system - one in the GIT repo and one that I can
-damage on a regular basis with rsync for the purposes calculating the
-git deltas. =A0 I know I can then use git to repair the damage, but the=
-n
-the reference has to be protected from concurrent access.
+It's sort of three, really...
 
-I'd prefer not to have to maintain a copy of the tree that has to be
-"damaged" on a regular basis and also if I didn't have to maintain a
-copy of the git objects for identical files.
+http://socghop.appspot.com/student_project/show/google/gsoc2009/mono/t124022708105
 
-In an ideal world, storage requirements at the other place would be
-those of the reference file system + those of the various deltas, but
-no more.
-
-jon seymour
-
-On Wed, Apr 22, 2009 at 6:48 PM, Martin Langhoff
-<martin.langhoff@gmail.com> wrote:
-> On Wed, Apr 22, 2009 at 10:33 AM, Jon Seymour <jon.seymour@gmail.com>=
- wrote:
->> Hello all, it's been quite a while.
->> It'd be nice to do this on arbitrary (non-git-controlled) file syste=
-m tree:
->>
->> * calculate the git hashes of the tree (without making copies of the
->> files in the tree)
->> * archive the tree hashes
->> * rsync the tree hashes to another place
->> * work out which files aren't available in the other place's git rep=
-o
->> * rsync those files the the other place
->
-> Steps:
->
-> 1 - rsync to the "other place"
-> 2 - use the git repo in that "other place"
-> 3 - if the tree hashes are needed "here", copy them from the "other
-> place" git to here.
->
-> rsync + git =3D awesomenesssssss
->
->
->
->
-> --
-> =A0martin.langhoff@gmail.com
-> =A0martin@laptop.org -- School Server Architect
-> =A0- ask interesting questions
-> =A0- don't get distracted with shiny stuff =A0- working code first
-> =A0- http://wiki.laptop.org/go/User:Martinlanghoff
->
+Mike
