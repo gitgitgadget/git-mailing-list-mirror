@@ -1,63 +1,72 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] bisect: remove Perl use by implementing "git
- bisect--helper --sq-quote"
-Date: Tue, 21 Apr 2009 23:03:16 -0700
-Message-ID: <7veivl444b.fsf@gitster.siamese.dyndns.org>
-References: <20090422045524.3606.81842.chriscool@tuxfamily.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Christian Couder <chriscool@tuxfamily.org>
-X-From: git-owner@vger.kernel.org Wed Apr 22 08:04:59 2009
+From: andy@petdance.com
+Subject: [PATCH 1/2] Localizing temporary variables
+Date: Wed, 22 Apr 2009 01:00:36 -0500
+Message-ID: <1240380037-24785-1-git-send-email-andy@petdance.com>
+Cc: gitster@pobox.com, Andy Lester <andy@petdance.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Apr 22 08:30:32 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LwVZp-0002cv-LX
-	for gcvg-git-2@gmane.org; Wed, 22 Apr 2009 08:04:58 +0200
+	id 1LwVyY-0000GY-G0
+	for gcvg-git-2@gmane.org; Wed, 22 Apr 2009 08:30:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751869AbZDVGDY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 22 Apr 2009 02:03:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751798AbZDVGDX
-	(ORCPT <rfc822;git-outgoing>); Wed, 22 Apr 2009 02:03:23 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:45256 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750870AbZDVGDX (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 22 Apr 2009 02:03:23 -0400
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 3A550ACBF1;
-	Wed, 22 Apr 2009 02:03:22 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 2F11FACBF0; Wed,
- 22 Apr 2009 02:03:18 -0400 (EDT)
-In-Reply-To: <20090422045524.3606.81842.chriscool@tuxfamily.org> (Christian
- Couder's message of "Wed, 22 Apr 2009 06:55:23 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 48E50AB0-2F03-11DE-AE39-C121C5FC92D5-77302942!a-sasl-fastnet.pobox.com
+	id S1751563AbZDVG25 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 22 Apr 2009 02:28:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752038AbZDVG2z
+	(ORCPT <rfc822;git-outgoing>); Wed, 22 Apr 2009 02:28:55 -0400
+Received: from uniqua.petdance.com ([64.81.227.163]:51498 "EHLO
+	uniqua.petdance.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751479AbZDVG2y (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 Apr 2009 02:28:54 -0400
+Received: by uniqua.petdance.com (Postfix, from userid 500)
+	id D954C5CD0112; Wed, 22 Apr 2009 01:00:37 -0500 (CDT)
+X-Mailer: git-send-email 1.6.2.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117175>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117176>
 
-Christian Couder <chriscool@tuxfamily.org> writes:
+From: Andy Lester <andy@petdance.com>
 
-> The sq() function in "git-bisect.sh" was the only place where Perl
-> was needed. This patch remove this use of Perl by implementing
-> a new "--sq-quote" option in "builtin-bisect--helper.c".
+---
+ builtin-show-ref.c |    5 +++--
+ 1 files changed, 3 insertions(+), 2 deletions(-)
 
-Isn't it because only git-bisect.sh for whatever reason reimplements sq
-using Perl while original implementation in am used sed for more
-portability?
-
-I would suspect, if it were 3 years ago, that any serious porcelain
-writers would have very much appreciated such a feature that gives shell
-programmers an easy access to a quoting function that allows a safe eval,
-and I would have strongly suggested that the feature to be implemented in
-a more permanent place rather than in bisect--helper; perhaps a better
-place would be the kitchen-sink "rev-parse".
-
-But given that nobody seems competent enough to do serious programming in
-shell these days, I am not sure if the choice between bisect--helper and
-rev-parse makes much of a difference ;-).
+diff --git a/builtin-show-ref.c b/builtin-show-ref.c
+index dc76c50..3dc8fe2 100644
+--- a/builtin-show-ref.c
++++ b/builtin-show-ref.c
+@@ -22,8 +22,6 @@ static void show_one(const char *refname, const unsigned char *sha1)
+ 
+ static int show_ref(const char *refname, const unsigned char *sha1, int flag, void *cbdata)
+ {
+-	struct object *obj;
+-	const char *hex;
+ 	unsigned char peeled[20];
+ 
+ 	if (tags_only || heads_only) {
+@@ -75,16 +73,19 @@ match:
+ 
+ 	if ((flag & REF_ISPACKED) && !peel_ref(refname, peeled)) {
+ 		if (!is_null_sha1(peeled)) {
++			const char *hex;
+ 			hex = find_unique_abbrev(peeled, abbrev);
+ 			printf("%s %s^{}\n", hex, refname);
+ 		}
+ 	}
+ 	else {
++		struct object *obj;
+ 		obj = parse_object(sha1);
+ 		if (!obj)
+ 			die("git show-ref: bad ref %s (%s)", refname,
+ 			    sha1_to_hex(sha1));
+ 		if (obj->type == OBJ_TAG) {
++			const char *hex;
+ 			obj = deref_tag(obj, refname, 0);
+ 			if (!obj)
+ 				die("git show-ref: bad tag at ref %s (%s)", refname,
+-- 
+1.6.2.4
