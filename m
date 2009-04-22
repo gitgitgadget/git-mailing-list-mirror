@@ -1,69 +1,72 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Performance issue: initial git clone causes massive repack
-Date: Wed, 22 Apr 2009 15:19:32 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.0904221516250.14221@intel-tinevez-2-302>
-References: <alpine.LFD.2.00.0904070903020.6741@xanadu.home>  <20090407181259.GB4413@atjola.homenet>  <alpine.LFD.2.00.0904071454250.6741@xanadu.home>  <20090407202725.GC4413@atjola.homenet>  <alpine.LFD.2.00.0904080041240.6741@xanadu.home> 
- <20090410T203405Z@curie.orbis-terrarum.net>  <alpine.DEB.1.00.0904141749330.10279@pacific.mpi-cbg.de>  <alpine.LFD.2.00.0904141542161.6741@xanadu.home>  <20090414T202206Z@curie.orbis-terrarum.net>  <1240362948.22240.76.camel@maia.lan>
- <e2b179460904220255v58986bd5q7c22eb3ab8486157@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: How to merge from newer branch to older branches?
+Date: Wed, 22 Apr 2009 09:34:35 -0400
+Message-ID: <20090422133434.GA11530@coredump.intra.peff.net>
+References: <2729632a0904211224x6e2621caxf6c169d90b760530@mail.gmail.com> <20090421193615.GB7832@coredump.intra.peff.net> <7vmya946fg.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Sam Vilain <sam@vilain.net>,
-	"Robin H. Johnson" <robbat2@gentoo.org>,
-	Nicolas Pitre <nico@cam.org>,
-	Git Mailing List <git@vger.kernel.org>,
-	Matt Enright <awickedshimmy@gmail.com>
-To: Mike Ralphson <mike.ralphson@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Apr 22 15:21:23 2009
+Content-Type: text/plain; charset=utf-8
+Cc: skillzero@gmail.com, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Apr 22 15:36:26 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LwcNy-0004XH-Uy
-	for gcvg-git-2@gmane.org; Wed, 22 Apr 2009 15:21:11 +0200
+	id 1LwccX-00029q-QO
+	for gcvg-git-2@gmane.org; Wed, 22 Apr 2009 15:36:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753552AbZDVNTg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 22 Apr 2009 09:19:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753112AbZDVNTg
-	(ORCPT <rfc822;git-outgoing>); Wed, 22 Apr 2009 09:19:36 -0400
-Received: from mail.gmx.net ([213.165.64.20]:44542 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752365AbZDVNTf (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 22 Apr 2009 09:19:35 -0400
-Received: (qmail invoked by alias); 22 Apr 2009 13:19:33 -0000
-Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
-  by mail.gmx.net (mp011) with SMTP; 22 Apr 2009 15:19:33 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18IeoBaSEgIajzM5NKF//O+aLjyAJDKQXcbV//LbX
-	at+R2FO5WQRfJz
-X-X-Sender: schindel@intel-tinevez-2-302
-In-Reply-To: <e2b179460904220255v58986bd5q7c22eb3ab8486157@mail.gmail.com>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.63
+	id S1753566AbZDVNej (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 22 Apr 2009 09:34:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751646AbZDVNej
+	(ORCPT <rfc822;git-outgoing>); Wed, 22 Apr 2009 09:34:39 -0400
+Received: from peff.net ([208.65.91.99]:35474 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753485AbZDVNei (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 Apr 2009 09:34:38 -0400
+Received: (qmail 15352 invoked by uid 107); 22 Apr 2009 13:34:46 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Wed, 22 Apr 2009 09:34:46 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 22 Apr 2009 09:34:35 -0400
+Content-Disposition: inline
+In-Reply-To: <7vmya946fg.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117196>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117197>
 
-Hi,
+On Tue, Apr 21, 2009 at 10:13:23PM -0700, Junio C Hamano wrote:
 
-On Wed, 22 Apr 2009, Mike Ralphson wrote:
-
-> 2009/4/22 Sam Vilain <sam@vilain.net>
-> > Now that the GSoC projects have been announced I can give you the good
-> > news that one of our two projects...
+> > Right. Junio branches all topics in git from "master", but then merges
+> > promising ones into "next". When the topic is ready for master, he can
+> > then just merge the topic branch, pulling in that topic but not the rest
+> > of next.
 > 
-> It's sort of three, really...
+> No, I don't.
 > 
-> http://socghop.appspot.com/student_project/show/google/gsoc2009/mono/t124022708105
+> I often branch from somewhere older than 'master', often tip from 'maint'
+> sometimes even older.  And that is not necessarily because I am better
+> than other people in planning ahead.  There are branches that forked from
+> older series (like 1.6.0.X) that are merged to next and then master,
+> without ever getting merged to produce 1.6.0.(X+1).
 
-OMG!  That's the third time they are wasting Google's money: AFAICT they 
-haven't learnt from the past two years' failures.  At least I am not aware 
-of any of them Mono guys trying to collaborate with us.
+Sure, but I assumed a new topic that came in would get branched from
+'master', since that is presumably what the person developing it based
+it on. Is that not true?
 
-Oh well, maybe I should drop them a mail that they may get valuable input 
-here _iff_ they just ask.
+That is also what is in Documentation/howto/maintain-git.txt:
 
-Ciao,
-Dscho
+   - Anything unobvious that is applicable to 'master' (in other
+     words, does not depend on anything that is still in 'next'
+     and not in 'master') is applied to a new topic branch that
+     is forked from the tip of 'master'.  This includes both
+     enhancements and unobvious fixes to 'master'.  A topic
+     branch is named as ai/topic where "ai" is typically
+     author's initial and "topic" is a descriptive name of the
+     topic (in other words, "what's the series is about").
+
+   - An unobvious fix meant for 'maint' is applied to a new
+     topic branch that is forked from the tip of 'maint'.  The
+     topic is named as ai/maint-topic.
+
+-Peff
