@@ -1,83 +1,59 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Removing duplicated code between builtin-send-pack.c and
-	transport.c
-Date: Wed, 22 Apr 2009 15:03:37 -0400
-Message-ID: <20090422190337.GA13424@coredump.intra.peff.net>
-References: <09511913-0ED3-41C0-A4F0-9F2D452C00D7@petdance.com> <alpine.LNX.1.00.0904221407160.10753@iabervon.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Andy Lester <andy@petdance.com>, git@vger.kernel.org
-To: Daniel Barkalow <barkalow@iabervon.org>
-X-From: git-owner@vger.kernel.org Wed Apr 22 21:05:57 2009
+From: Andy Lester <andy@petdance.com>
+Subject: Re: Removing duplicated code between builtin-send-pack.c and transport.c
+Date: Wed, 22 Apr 2009 14:06:22 -0500
+Message-ID: <FF499E4E-B2F1-4795-B9F9-AD73CDDE417A@petdance.com>
+References: <09511913-0ED3-41C0-A4F0-9F2D452C00D7@petdance.com> <alpine.LNX.1.00.0904221407160.10753@iabervon.org> <20090422190337.GA13424@coredump.intra.peff.net>
+Mime-Version: 1.0 (Apple Message framework v930.3)
+Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
+Content-Transfer-Encoding: 7bit
+Cc: Daniel Barkalow <barkalow@iabervon.org>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Apr 22 21:08:14 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lwhkx-0006X1-TF
-	for gcvg-git-2@gmane.org; Wed, 22 Apr 2009 21:05:53 +0200
+	id 1Lwhnd-0007eb-F1
+	for gcvg-git-2@gmane.org; Wed, 22 Apr 2009 21:08:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752265AbZDVTDm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 22 Apr 2009 15:03:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751809AbZDVTDl
-	(ORCPT <rfc822;git-outgoing>); Wed, 22 Apr 2009 15:03:41 -0400
-Received: from peff.net ([208.65.91.99]:55324 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751790AbZDVTDl (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 22 Apr 2009 15:03:41 -0400
-Received: (qmail 17250 invoked by uid 107); 22 Apr 2009 19:03:50 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Wed, 22 Apr 2009 15:03:50 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 22 Apr 2009 15:03:37 -0400
-Content-Disposition: inline
-In-Reply-To: <alpine.LNX.1.00.0904221407160.10753@iabervon.org>
+	id S1756437AbZDVTG0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 22 Apr 2009 15:06:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756761AbZDVTGY
+	(ORCPT <rfc822;git-outgoing>); Wed, 22 Apr 2009 15:06:24 -0400
+Received: from huggy.petdance.com ([72.14.176.61]:56542 "EHLO
+	huggy.petdance.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756105AbZDVTGY (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 Apr 2009 15:06:24 -0400
+Received: from alester.flr.follett.com (host3130.follett.com [12.47.12.130])
+	by huggy.petdance.com (Postfix) with ESMTP id 56FEB22DE74;
+	Wed, 22 Apr 2009 15:06:23 -0400 (EDT)
+In-Reply-To: <20090422190337.GA13424@coredump.intra.peff.net>
+X-Mailer: Apple Mail (2.930.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117229>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117230>
 
-On Wed, Apr 22, 2009 at 02:24:07PM -0400, Daniel Barkalow wrote:
 
-> On Wed, 22 Apr 2009, Andy Lester wrote:
-> 
-> > There's a ton of code duplicated between transport.c and builtin-send-pack.c,
-> > from print_push_status() and its static helpers.
-> > 
-> > Is there a reason NOT to refactor it out of the builtin and use the 
-> > transport? 
-> 
-> I think the builtin should actually just be deprecated and eventually 
-> removed. As far as I know, nothing actually runs "git send-pack" rather 
-> than calling send_pack(), but I left the builtin entry point, along with 
-> its helpers, just in case.
-> 
-> If you're interested in reorganizing things there, I think it would be 
-> best to move send_pack() to a new send-pack.c, such that 
-> builtin-send-pack.c can go away entirely.
+On Apr 22, 2009, at 2:03 PM, Jeff King wrote:
 
-I think there are actually three issues here:
+> I think Andy was referring to (2), and I think that should be cleaned
+> up, as the different versions have a tendency to diverge. Probably
+> addressing (1) by moving send_pack() to transport.c makes sense as  
+> part
+> of the same cleanup.
 
-  1. send_pack() is a library-ish function used by transport.c (which in
-     turn is called by push), and it is in builtin-send-pack.c. This is
-     generally against git policy.
 
-  2. There are several static functions duplicated in transport.c and
-     builtin-send-pack.c, which can be refactored to exist only once.
-     In fact, I really don't see why your 64fcef2 didn't do that in the
-     first place. It looks like they were cut and paste into
-     transport.c; I don't see why you didn't just make them non-static
-     and delete the original versions.
+Yes, exactly.  I was applying const to function parameters in builtin- 
+send-pack.c, and discovered the duplication.  I sure don't want to  
+patch twice if we don't need to.
 
-  3. Nobody really uses "git send-pack" anymore, so it can perhaps be
-     deprecated and eventually dropped.
+So it sounds like what I'll do is start a send-pack.c and hoist out  
+the common functions from builtin-send-pack.c and transport.c.
 
-I think Andy was referring to (2), and I think that should be cleaned
-up, as the different versions have a tendency to diverge. Probably
-addressing (1) by moving send_pack() to transport.c makes sense as part
-of the same cleanup.
+xoxo,
+Andy
 
-I don't know that (3) really buys us much. Sure, it is probably useless,
-but we would need to keep it for historical compatibility for quite some
-time, anyway.
-
--Peff
+--
+Andy Lester => andy@petdance.com => www.theworkinggeek.com => AIM:petdance
