@@ -1,81 +1,105 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: dangling commits and blobs: is this normal?
-Date: Wed, 22 Apr 2009 13:39:21 -0400 (EDT)
-Message-ID: <alpine.LFD.2.00.0904221331450.6741@xanadu.home>
-References: <450196A1AAAE4B42A00A8B27A59278E70ACE0502@EXCHANGE.trad.tradestation.com>
- <20090422152719.GA12881@coredump.intra.peff.net>
- <W0cjdA0pSHr_AbT2c-k5hDf7LyNvwkc38qIIhTtJJRwFnGBxaBsEiw@cipher.nrlssc.navy.mil>
+From: skillzero@gmail.com
+Subject: Re: How to merge from newer branch to older branches?
+Date: Wed, 22 Apr 2009 10:44:06 -0700
+Message-ID: <2729632a0904221044q20e6cabau7dd06b3020a8ce49@mail.gmail.com>
+References: <2729632a0904211224x6e2621caxf6c169d90b760530@mail.gmail.com>
+	 <20090421193615.GB7832@coredump.intra.peff.net>
+	 <7vmya946fg.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Jeff King <peff@peff.net>,
-	John Dlugosz <JDlugosz@TradeStation.com>, git@vger.kernel.org
-To: Brandon Casey <casey@nrlssc.navy.mil>
-X-From: git-owner@vger.kernel.org Wed Apr 22 19:41:19 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Apr 22 19:45:51 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LwgRf-0000B6-IU
-	for gcvg-git-2@gmane.org; Wed, 22 Apr 2009 19:41:16 +0200
+	id 1LwgW5-0001vQ-CC
+	for gcvg-git-2@gmane.org; Wed, 22 Apr 2009 19:45:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752575AbZDVRj2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 22 Apr 2009 13:39:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752433AbZDVRj2
-	(ORCPT <rfc822;git-outgoing>); Wed, 22 Apr 2009 13:39:28 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:54138 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752317AbZDVRj1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 22 Apr 2009 13:39:27 -0400
-Received: from xanadu.home ([66.131.194.97]) by VL-MH-MR001.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
- with ESMTP id <0KII00G2WJPLPLP0@VL-MH-MR001.ip.videotron.ca> for
- git@vger.kernel.org; Wed, 22 Apr 2009 13:39:21 -0400 (EDT)
-X-X-Sender: nico@xanadu.home
-In-reply-to: <W0cjdA0pSHr_AbT2c-k5hDf7LyNvwkc38qIIhTtJJRwFnGBxaBsEiw@cipher.nrlssc.navy.mil>
-User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
+	id S1753290AbZDVRoM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 22 Apr 2009 13:44:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751603AbZDVRoJ
+	(ORCPT <rfc822;git-outgoing>); Wed, 22 Apr 2009 13:44:09 -0400
+Received: from mail-qy0-f118.google.com ([209.85.221.118]:36439 "EHLO
+	mail-qy0-f118.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751576AbZDVRoI (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 Apr 2009 13:44:08 -0400
+Received: by qyk16 with SMTP id 16so188668qyk.33
+        for <git@vger.kernel.org>; Wed, 22 Apr 2009 10:44:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=JIRt+sP2sGE7AbnS2K/CktjmCqVVFTr9hVGEKhkvwLQ=;
+        b=lvAfZ9deq0aJ7/663qUFjbgoRjSOErZIMS0YDkpciv76iL2D8CXZORpI9DBPp/L/+5
+         13ZiOipRAqn2q8mQWfE34mruvNyLzYQ7Xei1RjlslJCzI3RR4J3r8U0VFPgAPgHR7pMl
+         oPXGkNZtNdcXJFYT2tBmtVbvGuoaMKnvgZ0JQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=g1Ck8fiiGSynxt/T0tr1HUEwEIszSLqP2Facjio/VfOnF/j6mxy826M/UStq7xVGLU
+         kpyYAwNXnUDYUE2SRB/NJu9fMu96dovXwpmQ3wPvNpPiVJE9gzijYw4aCv/L4CfAgWSV
+         AQd3z1vN88ln4MfV9znxlEq5ntQH+WqcQ7Cnw=
+Received: by 10.224.37.74 with SMTP id w10mr86545qad.14.1240422246939; Wed, 22 
+	Apr 2009 10:44:06 -0700 (PDT)
+In-Reply-To: <7vmya946fg.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117221>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117222>
 
-On Wed, 22 Apr 2009, Brandon Casey wrote:
+Based on the help from this discussion and the rebase documenation,
+what I ended up doing that seemed to require the fewest conflicts is
+to use git merge-base to find the merge-base of master and 1.1 (the
+oldest branch I wanted the feature) then I found the commit
+immediately before the first commit on the feature branch (feature~3
+in this case or commit a^). Then I rebased feature:
 
-> Jeff King wrote:
-> > On Tue, Apr 21, 2009 at 05:46:16PM -0400, John Dlugosz wrote:
-> > 
-> >> Immediately after doing a git gc, a git fsck --full reports dangling
-> >> objects.  Is this normal?  What does dangling mean, if not those things
-> >> that gc finds?
-> > 
-> > gc will leave dangling loose objects for a set expiration time
-> > (defaulting to two weeks). This makes it safe to run even if there are
-> > operations in progress that want those dangling objects, but haven't yet
-> > added a reference to them (as long as said operation takes less than two
-> > weeks).
-> > 
-> > You can also end up with dangling objects in packs. When that pack is
-> > repacked, those objects will be loosened, and then eventually expired
-> > under the rule mentioned above. However, I believe gc will not always
-> > repack old packs; it will make new packs until you have a lot of packs,
-> > and then combine them all (at least that is what "gc --auto" will do; I
-> > don't recall whether just "git gc" follows the same rule).
-> 
-> 'git gc' (without --auto) always creates one new pack.
-> 
-> I've often wondered whether a plain 'git gc' should adopt the behavior
-> of --auto with respect to the number of packs.  If there were few packs,
-> then 'git gc' would do an incremental repack, rather than a 'repack -A -d -l'.
+git rebase --onto merge-base-of-1.1-and-master feature-before-first feature
 
-Why so?  Having fewer packs is always a good thing.  Having only one 
-pack is of course the optimal situation.  The --auto version doesn't do 
-it in the hope of being lightter and less noticeable by the user.  
-However the user manually invoking gc should be expecting some work is 
-actually happening.  If you don't want the whole repo read from one pack 
-just to be written in another pack (say the repo is huge and waiting 
-after the IO is not worth it) then just mark such a pack with a .keep 
-file.
+Turning this (hopefully not mangled by gmail):
 
+future o-o-o-o-o-o-o
+        \   \       \
+1.2      \   o-o-o   \
+          \           \
+1.1        o-o-o       \
+                        \
+feature                  o-o-o
+                         a b c
 
-Nicolas
+into this:
+
+future  o-o-o-o-o-o-o
+        |\   \
+1.2     | \   o-o-o
+        |  \
+1.1     |   o-o-o
+         \
+feature   o-o-o
+          a b c
+
+I can merge 'feature' into 1.1, 1.2, etc. then theoretically, I should
+be able to apply bug fixes to 'feature' later and re-merge into 1.1,
+1.2, etc. to pick up just the bug fixes, right?
+
+When I merged 'feature' into 'v1.1', it resulted in the same conflicts
+I originally ran into when cherry-picking, but when I looked at it, I
+realized this was because I had manually integrated some changes into
+1.1 from master (I'm trying to move our tree from CVS to git so I had
+to manually move in some stuff from CVS instead of doing a proper git
+merge).
+
+It seems like this merge conflict is going to cause problems if I try
+to re-merge to pick up a bug fix to 'feature' in the future. Looking
+at the documentation, it sounds like 'git rerere' can help by
+re-applying the manual conflict resolution I did?
+
+BTW...Is there a way to find the first commit of a branch? I had to
+just look at the log manually to see what I remembered to be the first
+commit.
