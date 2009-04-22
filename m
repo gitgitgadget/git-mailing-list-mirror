@@ -1,96 +1,104 @@
-From: "John Dlugosz" <JDlugosz@TradeStation.com>
-Subject: RE: Strange, can't push
-Date: Wed, 22 Apr 2009 16:30:22 -0400
-Message-ID: <450196A1AAAE4B42A00A8B27A59278E70ACE0806@EXCHANGE.trad.tradestation.com>
-References: <450196A1AAAE4B42A00A8B27A59278E70ACE04E4@EXCHANGE.trad.tradestation.com> <20090422153951.GB12881@coredump.intra.peff.net> <450196A1AAAE4B42A00A8B27A59278E70ACE06F5@EXCHANGE.trad.tradestation.com> <20090422200657.GB14146@coredump.intra.peff.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: Cryptic error messages?
+Date: Wed, 22 Apr 2009 16:32:51 -0400
+Message-ID: <20090422203251.GD14146@coredump.intra.peff.net>
+References: <450196A1AAAE4B42A00A8B27A59278E70ACE0030@EXCHANGE.trad.tradestation.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="UTF-8"
-Content-Transfer-Encoding: base64
-Cc: <git@vger.kernel.org>
-To: "Jeff King" <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Apr 22 22:32:15 2009
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: John Dlugosz <JDlugosz@TradeStation.com>
+X-From: git-owner@vger.kernel.org Wed Apr 22 22:35:03 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lwj6u-00070x-OD
-	for gcvg-git-2@gmane.org; Wed, 22 Apr 2009 22:32:01 +0200
+	id 1Lwj9n-000820-Dn
+	for gcvg-git-2@gmane.org; Wed, 22 Apr 2009 22:34:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753563AbZDVUa0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 22 Apr 2009 16:30:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753333AbZDVUa0
-	(ORCPT <rfc822;git-outgoing>); Wed, 22 Apr 2009 16:30:26 -0400
-Received: from mail2.tradestation.com ([63.99.207.80]:37021 "EHLO
-	mail2.tradestation.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751688AbZDVUaZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 22 Apr 2009 16:30:25 -0400
-X-ASG-Debug-ID: 1240432224-13c100380000-QuoKaX
-X-Barracuda-URL: http://192.168.51.31:8000/cgi-bin/mark.cgi
-Received: from mail5.tradestation.com (localhost [127.0.0.1])
-	by mail2.tradestation.com (Spam & Virus Firewall) with ESMTP
-	id A0DE33736E9; Wed, 22 Apr 2009 16:30:24 -0400 (EDT)
-Received: from mail5.tradestation.com (tx02exchange02.trad.tradestation.com [192.168.51.76]) by mail2.tradestation.com with ESMTP id fvsnY2BrQjJrI4DW; Wed, 22 Apr 2009 16:30:24 -0400 (EDT)
-X-Barracuda-Envelope-From: JDlugosz@TradeStation.com
-X-ASG-Whitelist: Client
-Received: from EXCHANGE.trad.tradestation.com ([10.4.0.121]) by mail5.tradestation.com with Microsoft SMTPSVC(6.0.3790.3959);
-	 Wed, 22 Apr 2009 16:30:24 -0400
-X-MimeOLE: Produced By Microsoft Exchange V6.5
-Content-class: urn:content-classes:message
-X-ASG-Orig-Subj: RE: Strange, can't push
-In-Reply-To: <20090422200657.GB14146@coredump.intra.peff.net>
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-Thread-Topic: Strange, can't push
-Thread-Index: AcnDhfe2eBj+nSRdSwWZ8+DkluNJEgAArthA
-X-OriginalArrivalTime: 22 Apr 2009 20:30:24.0251 (UTC) FILETIME=[2A303CB0:01C9C389]
-X-Barracuda-Connect: tx02exchange02.trad.tradestation.com[192.168.51.76]
-X-Barracuda-Start-Time: 1240432224
-X-Barracuda-Virus-Scanned: by TX-Barracuda Spam Firewall 400 at tradestation.com
+	id S1754469AbZDVUc4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 22 Apr 2009 16:32:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753895AbZDVUc4
+	(ORCPT <rfc822;git-outgoing>); Wed, 22 Apr 2009 16:32:56 -0400
+Received: from peff.net ([208.65.91.99]:47552 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753393AbZDVUcz (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 Apr 2009 16:32:55 -0400
+Received: (qmail 18199 invoked by uid 107); 22 Apr 2009 20:33:04 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Wed, 22 Apr 2009 16:33:04 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 22 Apr 2009 16:32:51 -0400
+Content-Disposition: inline
+In-Reply-To: <450196A1AAAE4B42A00A8B27A59278E70ACE0030@EXCHANGE.trad.tradestation.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117253>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117254>
 
-PiBGcm9tOiBKZWZmIEtpbmcgW21haWx0bzpwZWZmQHBlZmYubmV0XQ0KPiBT
-ZW50OiBXZWRuZXNkYXksIEFwcmlsIDIyLCAyMDA5IDM6MDcgUE0NCj4gVG86
-IEpvaG4gRGx1Z29zeg0KPiBTdWJqZWN0OiBSZTogU3RyYW5nZSwgY2FuJ3Qg
-cHVzaA0KPiANCj4gSWYgdGhhdCBpcyB0aGUgY2FzZSwgaXQgaXMgYSBzZXJp
-b3VzIHByb2JsZW0gdGhhdCB3ZSBhcmUgZmFpbGluZyB0bw0KPiByZWNvcmQg
-YSByZWYgdXBkYXRlIGJ1dCBub3QgcmVwb3J0aW5nIHRoZSBlcnJvci4gQ2Fu
-IHlvdSByZXByb2R1Y2UgaXQ/DQo+IElmIHNvLCB3b3VsZCB5b3UgbWluZCBp
-bnN0cnVtZW50aW5nIHlvdXIgYnVpbGQgd2l0aCBhIGZldyBzdG9wcGluZw0K
-PiBwb2ludHMgdG8gc2VlIHdoZXJlIGl0IG1pZ2h0IGJlIGdvaW5nIHdyb25n
-IChJIHdvdWxkIGFzayB5b3UgdG8gc3RyYWNlLA0KPiBidXQgSSBzb21laG93
-IGRvdWJ0IHRoYXQgaXMgYW4gb3B0aW9uIG9uIFdpbmRvd3MpPw0KPiANCj4g
-LVBlZmYNCg0KTm8sIGJ1dCBhZnRlciB0d28gZnVubnkgdGhpbmdzLCBJJ3Zl
-IGRlY2lkZWQgdGhhdCB0aGUgZmlyc3QgdGhpbmcgdG8gZG8gaXMgYmFjayB1
-cCB0aGUgZGlyZWN0b3J5LCBzbyBJIGNhbiBzdHVkeSBpdCBsYXRlci4gIFNv
-IG5leHQgdGltZSBzb21ldGhpbmcgZnVubnkgaGFwcGVucywgSSdsbCBiZSBi
-ZXR0ZXIgYWJsZSB0byByZXByb2R1Y2UgaXQgYWZ0ZXIgcHV0dGluZyBlZmZv
-cnQgaW50byBtYWtpbmcgaXQgZ28gYXdheS4NCg0KSSBoYXZlIHlldCB0byBy
-ZWJ1aWxkIG1zeXNnaXQgbXlzZWxmLiAgRXZlbiBzbywgaXQncyBub3QgbXkg
-bm9ybWFsIHdvcmtpbmcgZW52aXJvbm1lbnQgYW5kIEkgaGF2ZSBubyBpZGVh
-IGhvdyB0byBmaXJlIHVwIGEgZGVidWdnZXIgd2l0aCBpdC4NCg0KLS1Kb2hu
-DQoKVHJhZGVTdGF0aW9uIEdyb3VwLCBJbmMuIGlzIGEgcHVibGljbHktdHJh
-ZGVkIGhvbGRpbmcgY29tcGFueSAoTkFTREFRIEdTOiBUUkFEKSBvZiB0aHJl
-ZSBvcGVyYXRpbmcgc3Vic2lkaWFyaWVzLCBUcmFkZVN0YXRpb24gU2VjdXJp
-dGllcywgSW5jLiAoTWVtYmVyIE5ZU0UsIEZJTlJBLCBTSVBDIGFuZCBORkEp
-LCBUcmFkZVN0YXRpb24gVGVjaG5vbG9naWVzLCBJbmMuLCBhIHRyYWRpbmcg
-c29mdHdhcmUgYW5kIHN1YnNjcmlwdGlvbiBjb21wYW55LCBhbmQgVHJhZGVT
-dGF0aW9uIEV1cm9wZSBMaW1pdGVkLCBhIFVuaXRlZCBLaW5nZG9tLCBGU0Et
-YXV0aG9yaXplZCBpbnRyb2R1Y2luZyBicm9rZXJhZ2UgZmlybS4gTm9uZSBv
-ZiB0aGVzZSBjb21wYW5pZXMgcHJvdmlkZXMgdHJhZGluZyBvciBpbnZlc3Rt
-ZW50IGFkdmljZSwgcmVjb21tZW5kYXRpb25zIG9yIGVuZG9yc2VtZW50cyBv
-ZiBhbnkga2luZC4gVGhlIGluZm9ybWF0aW9uIHRyYW5zbWl0dGVkIGlzIGlu
-dGVuZGVkIG9ubHkgZm9yIHRoZSBwZXJzb24gb3IgZW50aXR5IHRvIHdoaWNo
-IGl0IGlzIGFkZHJlc3NlZCBhbmQgbWF5IGNvbnRhaW4gY29uZmlkZW50aWFs
-IGFuZC9vciBwcml2aWxlZ2VkIG1hdGVyaWFsLiBBbnkgcmV2aWV3LCByZXRy
-YW5zbWlzc2lvbiwgZGlzc2VtaW5hdGlvbiBvciBvdGhlciB1c2Ugb2YsIG9y
-IHRha2luZyBvZiBhbnkgYWN0aW9uIGluIHJlbGlhbmNlIHVwb24sIHRoaXMg
-aW5mb3JtYXRpb24gYnkgcGVyc29ucyBvciBlbnRpdGllcyBvdGhlciB0aGFu
-IHRoZSBpbnRlbmRlZCByZWNpcGllbnQgaXMgcHJvaGliaXRlZC4gSWYgeW91
-IHJlY2VpdmVkIHRoaXMgaW4gZXJyb3IsIHBsZWFzZSBjb250YWN0IHRoZSBz
-ZW5kZXIgYW5kIGRlbGV0ZSB0aGUgbWF0ZXJpYWwgZnJvbSBhbnkgY29tcHV0
-ZXIuCg==
+On Mon, Apr 20, 2009 at 04:18:09PM -0400, John Dlugosz wrote:
+
+> $ git push
+> Counting objects: 9, done.
+> Compressing objects: 100% (8/8), done.
+> Writing objects: 100% (8/8), 3.62 KiB, done.
+> Total 8 (delta 4), reused 0 (delta 0)
+> Unpacking objects: 100% (8/8), done.
+> fatal: unresolved deltas left after unpacking
+> error: unpack failed: unpacker exited with error code
+> To //tx01fs01/sys/dev/git/repositories/aardvark.git
+>  ! [remote rejected] dev -> dev (n/a (unpacker error))
+> error: failed to push some refs to
+> '//tx01fs01/sys/dev/git/repositories/aardvark
+> .git'
+> 
+> Huh?  I'm having trouble defending git's reputation.
+
+Yeah, that is horribly cryptic. What is happening is:
+
+  1. send-pack on the local system spawns receive-pack on the
+     remote, which in turn spawns unpack-objects as a helper
+
+  2. unpack-objects barfs with
+
+       fatal: unresolved deltas left after unpacking
+
+     to stderr which is the actual useful bit.
+
+  3. receive-pack notices that the unpacker failed, and spews
+
+       error: unpack failed: unpacker exited with error code
+
+     to stderr, in case unpack-objects didn't say anything.
+
+  4. receive-pack also marks the "status" passed back to send-pack
+     as "n/a (unpacker error)"
+
+  5. send-pack gives you the usual nice status table with the ugly
+     status from receive-pack marked in it, and then says "OK, I failed
+     to push".
+
+So making it better is not quite as simple as you might hope, since
+there are three processes involved, and none knows that the other has
+spewed to stderr already. But I think there is some low-hanging fruit:
+
+  1. There is no point in receive-pack saying anything to stderr about
+     the unpacker failing; in most cases, the unpacker already said
+     something, and even if it didn't, we are reporting the problem to
+     send-pack in the status field.
+
+  2. "n/a (unpacker error)" is unnecessarily cryptic. Yes, the specifics
+     of the message are "not available" (which is presumably what the
+     n/a stands for), but the user doesn't care. I think something like
+     "failed to unpack objects" would be better.
+
+That leaves only the fact that the _specific_ reason the unpacker failed
+is not part of the usual status table. Fixing that is actually a little
+tricky because of the multiple processes involved (which do not already
+have a string-based communications channel between them).
+
+And of course, it's still a bit cryptic to get "unresolved deltas after
+unpacking". However, that is one of those messages that _should_ never
+come up, unless the sender is pushing a bogus pack. I wouldn't be
+surprised if it an msysgit bug.
+
+-Peff
