@@ -1,68 +1,142 @@
-From: Sam Vilain <sam@vilain.net>
-Subject: Re: Performance issue: initial git clone causes massive repack
-Date: Thu, 23 Apr 2009 10:01:46 +1200
-Message-ID: <49EF93CA.20207@vilain.net>
-References: <alpine.LFD.2.00.0904070903020.6741@xanadu.home> <20090407142147.GA4413@atjola.homenet> <alpine.LFD.2.00.0904071321520.6741@xanadu.home> <20090407181259.GB4413@atjola.homenet> <alpine.LFD.2.00.0904071454250.6741@xanadu.home> <20090407202725.GC4413@atjola.homenet> <alpine.LFD.2.00.0904080041240.6741@xanadu.home> <20090410T203405Z@curie.orbis-terrarum.net> <alpine.DEB.1.00.0904141749330.10279@pacific.mpi-cbg.de> <alpine.LFD.2.00.0904141542161.6741@xanadu.home> <20090414T202206Z@curie.orbis-terrarum.net> <1240362948.22240.76.camel@maia.lan> <alpine.LFD.2.00.0904221011340.6741@xanadu.home>
+From: "John Dlugosz" <JDlugosz@TradeStation.com>
+Subject: RE: Cryptic error messages?
+Date: Wed, 22 Apr 2009 18:07:35 -0400
+Message-ID: <450196A1AAAE4B42A00A8B27A59278E70ACE0882@EXCHANGE.trad.tradestation.com>
+References: <450196A1AAAE4B42A00A8B27A59278E70ACE0030@EXCHANGE.trad.tradestation.com> <20090422203251.GD14146@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: "Robin H. Johnson" <robbat2@gentoo.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Git Mailing List <git@vger.kernel.org>,
-	Nick Edelen <sirnot@gmail.com>
-To: Nicolas Pitre <nico@cam.org>
-X-From: git-owner@vger.kernel.org Thu Apr 23 00:03:51 2009
+Content-Type: text/plain;
+	charset="UTF-8"
+Content-Transfer-Encoding: base64
+Cc: <git@vger.kernel.org>
+To: "Jeff King" <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Apr 23 00:09:15 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LwkXe-0006C7-OP
-	for gcvg-git-2@gmane.org; Thu, 23 Apr 2009 00:03:43 +0200
+	id 1Lwkcz-0007yO-Pn
+	for gcvg-git-2@gmane.org; Thu, 23 Apr 2009 00:09:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754157AbZDVWCE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 22 Apr 2009 18:02:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753912AbZDVWCB
-	(ORCPT <rfc822;git-outgoing>); Wed, 22 Apr 2009 18:02:01 -0400
-Received: from watts.utsl.gen.nz ([202.78.240.73]:53905 "EHLO mail.utsl.gen.nz"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752306AbZDVWCA (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 22 Apr 2009 18:02:00 -0400
-Received: by mail.utsl.gen.nz (Postfix, from userid 1004)
-	id 897B521C5C0; Thu, 23 Apr 2009 10:01:55 +1200 (NZST)
-X-Spam-Checker-Version: SpamAssassin 3.2.5 (2008-06-10) on
-	mail.musashi.utsl.gen.nz
-X-Spam-Level: 
-X-Spam-Status: No, score=-4.4 required=5.0 tests=ALL_TRUSTED,AWL,BAYES_00
-	autolearn=ham version=3.2.5
-Received: from [192.168.2.22] (leibniz.catalyst.net.nz [202.78.240.7])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by mail.utsl.gen.nz (Postfix) with ESMTPSA id E563521C46D;
-	Thu, 23 Apr 2009 10:01:49 +1200 (NZST)
-User-Agent: Icedove 1.5.0.12 (X11/20070606)
-In-Reply-To: <alpine.LFD.2.00.0904221011340.6741@xanadu.home>
-X-Enigmail-Version: 0.94.2.0
+	id S1754857AbZDVWHl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 22 Apr 2009 18:07:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754122AbZDVWHk
+	(ORCPT <rfc822;git-outgoing>); Wed, 22 Apr 2009 18:07:40 -0400
+Received: from mail2.tradestation.com ([63.99.207.80]:49979 "EHLO
+	mail2.tradestation.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752107AbZDVWHj (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 Apr 2009 18:07:39 -0400
+X-ASG-Debug-ID: 1240438057-6ff4002c0000-QuoKaX
+X-Barracuda-URL: http://192.168.51.31:8000/cgi-bin/mark.cgi
+Received: from mail5.tradestation.com (localhost [127.0.0.1])
+	by mail2.tradestation.com (Spam & Virus Firewall) with ESMTP
+	id E192037506C; Wed, 22 Apr 2009 18:07:37 -0400 (EDT)
+Received: from mail5.tradestation.com (tx02exchange02.trad.tradestation.com [192.168.51.76]) by mail2.tradestation.com with ESMTP id XJFTF0oJdIJAClgZ; Wed, 22 Apr 2009 18:07:37 -0400 (EDT)
+X-Barracuda-Envelope-From: JDlugosz@TradeStation.com
+X-ASG-Whitelist: Client
+Received: from EXCHANGE.trad.tradestation.com ([10.4.0.121]) by mail5.tradestation.com with Microsoft SMTPSVC(6.0.3790.3959);
+	 Wed, 22 Apr 2009 18:07:37 -0400
+X-MimeOLE: Produced By Microsoft Exchange V6.5
+Content-class: urn:content-classes:message
+X-ASG-Orig-Subj: RE: Cryptic error messages?
+In-Reply-To: <20090422203251.GD14146@coredump.intra.peff.net>
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+Thread-Topic: Cryptic error messages?
+Thread-Index: AcnDiYS2NUWg7HRFQzyNOx3A6XJg7gACxKmw
+X-OriginalArrivalTime: 22 Apr 2009 22:07:37.0117 (UTC) FILETIME=[BED8F4D0:01C9C396]
+X-Barracuda-Connect: tx02exchange02.trad.tradestation.com[192.168.51.76]
+X-Barracuda-Start-Time: 1240438057
+X-Barracuda-Virus-Scanned: by TX-Barracuda Spam Firewall 400 at tradestation.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117273>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117274>
 
-Nicolas Pitre wrote:
->> Now that the GSoC projects have been announced I can give you the good
->> news that one of our two projects is to optimise this stage in
->> git-daemon; I'm hoping we can get it down to being almost as cheap as
->> the workaround you described in your post. I'll certainly be using your
->> repository as a test case :-)
->
-> Please keep me in the loop as much as possible. I'd prefer we're not in
-> disagreement over the implementation only after final patches are posted
-> to the list.
-
-Thanks Nico, given your close working knowledge of the pack-objects
-code this will be very much appreciated. Perhaps you can first help
-out by telling me what you have to say about moving object enumeration
-from upload-pack to pack-objects?
-
-Cheers!
-Sam.
+DQoNCj4gWWVhaCwgdGhhdCBpcyBob3JyaWJseSBjcnlwdGljLiBXaGF0IGlz
+IGhhcHBlbmluZyBpczoNCj4gLi4uDQoNClRoYW5rcyBmb3IgdGhlIGRldGFp
+bGVkIGFuYWx5c2lzLiAgSXQgbWFrZXMgbWUgcmVhbGl6ZSBub3cgdGhhdCBJ
+J20gbG9va2luZyBhdCBhIGxvZywgbm90IGEgVUktYXBwcm92ZWQgaW5kaWNh
+dG9yLiAgTG9ncyBhcmUgZ3JlYXQgd2hlbiB5b3UgYXJlIHRyeWluZyB0byBm
+aWd1cmUgc29tZXRoaW5nIG91dCwgc28gdGhhdCBzdXJlIGJlYXRzIG5vdCBo
+YXZpbmcgdGhhdCBpbmZvcm1hdGlvbiB3aGVuIGl0IGlzIHdhbnRlZC4NCg0K
+PiBTbyBtYWtpbmcgaXQgYmV0dGVyIGlzIG5vdCBxdWl0ZSBhcyBzaW1wbGUg
+YXMgeW91IG1pZ2h0IGhvcGUsIHNpbmNlDQo+IHRoZXJlIGFyZSB0aHJlZSBw
+cm9jZXNzZXMgaW52b2x2ZWQsIGFuZCBub25lIGtub3dzIHRoYXQgdGhlIG90
+aGVyIGhhcw0KPiBzcGV3ZWQgdG8gc3RkZXJyIGFscmVhZHkuDQoNCkkgc2Vl
+LiAgVGhhdCBtYWtlcyBtZSByZWFsaXplIHRoYXQgYSAibGliIiBhcHByb2Fj
+aCByYXRoZXIgdGhhbiBwaXBpbmcgY29tbWFuZHMgaGFzIGRpc3RpbmN0IGFk
+dmFudGFnZXMuICBJbiBpbXBsZW1lbnRpbmcgc29tZXRoaW5nIGhpZ2gtbGV2
+ZWwgdGhhdCBjYWxscyBsb3ctbGV2ZWwgZmVhdHVyZXMsIG15IGNvZGUgaGFz
+IGEgc2VwYXJhdGUgZXJyb3IgY2hhbm5lbCBiYWNrIChlLmcuIGV4Y2VwdGlv
+bnMpLCBub3QganVzdCB0aGUgcmV0dXJuIHZhbHVlLiAgSXQgY2FuIGFycmFu
+Z2UgdGhlIHN1Y2Nlc3NpdmUgbGV2ZWxzIG9mIGRldGFpbCBpbiB0aGUgb3Bw
+b3NpdGUgb3JkZXIsIGFsbG93aW5nIHRoZSB1c2VyIHRvIGRyaWxsIGRvd24g
+dG8gdGhlIGxldmVsIG9mICJ0ZWxsIG1lIHNvbWV0aGluZyBJIGRvbid0IGtu
+b3ciLiAgSXQgY2FuIGV4dHJhY3QgaW5mb3JtYXRpb24gZnJvbSB0aGUgZXJy
+b3IgYW5kIHJlZm9ybXVsYXRlIGl0cyBvd24gZXJyb3Igb3IgdGFrZSBkaWZm
+ZXJlbnQgYWN0aW9ucy4NCg0KV2hhdCB3ZSBhcmUgc2VlaW5nIGhlcmUgaXMg
+YW4gZXJyb3IgbG9nLCBub3QgYW4gZXhjZXB0aW9uLg0KDQoNCg0KDQogQnV0
+IEkgdGhpbmsgdGhlcmUgaXMgc29tZSBsb3ctaGFuZ2luZyBmcnVpdDoNCj4g
+DQo+ICAgMS4gVGhlcmUgaXMgbm8gcG9pbnQgaW4gcmVjZWl2ZS1wYWNrIHNh
+eWluZyBhbnl0aGluZyB0byBzdGRlcnIgYWJvdXQNCj4gICAgICB0aGUgdW5w
+YWNrZXIgZmFpbGluZzsgaW4gbW9zdCBjYXNlcywgdGhlIHVucGFja2VyIGFs
+cmVhZHkgc2FpZA0KPiAgICAgIHNvbWV0aGluZywgYW5kIGV2ZW4gaWYgaXQg
+ZGlkbid0LCB3ZSBhcmUgcmVwb3J0aW5nIHRoZSBwcm9ibGVtIHRvDQo+ICAg
+ICAgc2VuZC1wYWNrIGluIHRoZSBzdGF0dXMgZmllbGQuDQo+IA0KPiAgIDIu
+ICJuL2EgKHVucGFja2VyIGVycm9yKSIgaXMgdW5uZWNlc3NhcmlseSBjcnlw
+dGljLiBZZXMsIHRoZQ0KPiBzcGVjaWZpY3MNCj4gICAgICBvZiB0aGUgbWVz
+c2FnZSBhcmUgIm5vdCBhdmFpbGFibGUiICh3aGljaCBpcyBwcmVzdW1hYmx5
+IHdoYXQgdGhlDQo+ICAgICAgbi9hIHN0YW5kcyBmb3IpLCBidXQgdGhlIHVz
+ZXIgZG9lc24ndCBjYXJlLiBJIHRoaW5rIHNvbWV0aGluZyBsaWtlDQo+ICAg
+ICAgImZhaWxlZCB0byB1bnBhY2sgb2JqZWN0cyIgd291bGQgYmUgYmV0dGVy
+Lg0KDQoNClNvIHlvdSB3b3VsZCB3aW5kIHVwIHdpdGggc29tZXRoaW5nIGxp
+a2U6DQo+ICQgZ2l0IHB1c2gNCj4gQ291bnRpbmcgb2JqZWN0czogOSwgZG9u
+ZS4NCj4gQ29tcHJlc3Npbmcgb2JqZWN0czogMTAwJSAoOC84KSwgZG9uZS4N
+Cj4gV3JpdGluZyBvYmplY3RzOiAxMDAlICg4LzgpLCAzLjYyIEtpQiwgZG9u
+ZS4NCj4gVG90YWwgOCAoZGVsdGEgNCksIHJldXNlZCAwIChkZWx0YSAwKQ0K
+PiBVbnBhY2tpbmcgb2JqZWN0czogMTAwJSAoOC84KSwgZG9uZS4NCj4gICEg
+W3JlbW90ZSByZWplY3RlZF0gZGV2IC0+IGRldiAoZmFpbGVkIHRvIHVucGFj
+ayBvYmplY3RzKQ0KDQpDb25zaWRlcmluZyB0aGF0IHRoZSBmaW5hbCByZWNh
+cCBpcyB1bm5lY2Vzc2FyeSB0b28uDQoNCj4gVGhhdCBsZWF2ZXMgb25seSB0
+aGUgZmFjdCB0aGF0IHRoZSBfc3BlY2lmaWNfIHJlYXNvbiB0aGUgdW5wYWNr
+ZXINCj4gZmFpbGVkDQo+IGlzIG5vdCBwYXJ0IG9mIHRoZSB1c3VhbCBzdGF0
+dXMgdGFibGUuIEZpeGluZyB0aGF0IGlzIGFjdHVhbGx5IGEgbGl0dGxlDQo+
+IHRyaWNreSBiZWNhdXNlIG9mIHRoZSBtdWx0aXBsZSBwcm9jZXNzZXMgaW52
+b2x2ZWQgKHdoaWNoIGRvIG5vdCBhbHJlYWR5DQo+IGhhdmUgYSBzdHJpbmct
+YmFzZWQgY29tbXVuaWNhdGlvbnMgY2hhbm5lbCBiZXR3ZWVuIHRoZW0pLg0K
+DQpTbyBpZiB0aGUgc3RyaW5nIGNvdWxkIGJlIHBhc3NlZCBiYWNrLCByYXRo
+ZXIgdGhhbiBhbiAib3RoZXIiIGVycm9yIGNvZGUsIHRoZSBjYWxsZXIgY291
+bGQgZm9ybWF0IGl0IGludG8gYSBuaWNlciBzdHJpbmcuICBFdmVuIHdpdGgg
+YW4gZXhpc3RpbmcgZXJyb3IgY29kZSBmaWVsZCwgeW91IGNvdWxkIHN0aWxs
+IGdldCByaWQgb2YgYWxsIHVzZXMgb2YgYSBzaW5nbGUgIm90aGVyIiBjb2Rl
+IHdpdGggdW5pcXVlIG51bWJlcnMgYW5kIGhhdmUgYSBzZXBhcmF0ZSBzdHJp
+bmcgdGFibGUgdGhhdCB0aGUgY2FsbGVyIGNhbiBhY2Nlc3MuICBEb2N1bWVu
+dCB0aG9zZSBhcyAiaW1wbGVtZW50YXRpb24gc3BlY2lmaWMsIHVzZSB0aGUg
+bWF0Y2hpbmcgc3RyaW5nIHRhYmxlIi4NCg0KPiBBbmQgb2YgY291cnNlLCBp
+dCdzIHN0aWxsIGEgYml0IGNyeXB0aWMgdG8gZ2V0ICJ1bnJlc29sdmVkIGRl
+bHRhcyBhZnRlcg0KPiB1bnBhY2tpbmciLiBIb3dldmVyLCB0aGF0IGlzIG9u
+ZSBvZiB0aG9zZSBtZXNzYWdlcyB0aGF0IF9zaG91bGRfIG5ldmVyDQo+IGNv
+bWUgdXAsIHVubGVzcyB0aGUgc2VuZGVyIGlzIHB1c2hpbmcgYSBib2d1cyBw
+YWNrLiBJIHdvdWxkbid0IGJlDQo+IHN1cnByaXNlZCBpZiBpdCBhbiBtc3lz
+Z2l0IGJ1Zy4NCj4gDQo+IC1QZWZmDQoKVHJhZGVTdGF0aW9uIEdyb3VwLCBJ
+bmMuIGlzIGEgcHVibGljbHktdHJhZGVkIGhvbGRpbmcgY29tcGFueSAoTkFT
+REFRIEdTOiBUUkFEKSBvZiB0aHJlZSBvcGVyYXRpbmcgc3Vic2lkaWFyaWVz
+LCBUcmFkZVN0YXRpb24gU2VjdXJpdGllcywgSW5jLiAoTWVtYmVyIE5ZU0Us
+IEZJTlJBLCBTSVBDIGFuZCBORkEpLCBUcmFkZVN0YXRpb24gVGVjaG5vbG9n
+aWVzLCBJbmMuLCBhIHRyYWRpbmcgc29mdHdhcmUgYW5kIHN1YnNjcmlwdGlv
+biBjb21wYW55LCBhbmQgVHJhZGVTdGF0aW9uIEV1cm9wZSBMaW1pdGVkLCBh
+IFVuaXRlZCBLaW5nZG9tLCBGU0EtYXV0aG9yaXplZCBpbnRyb2R1Y2luZyBi
+cm9rZXJhZ2UgZmlybS4gTm9uZSBvZiB0aGVzZSBjb21wYW5pZXMgcHJvdmlk
+ZXMgdHJhZGluZyBvciBpbnZlc3RtZW50IGFkdmljZSwgcmVjb21tZW5kYXRp
+b25zIG9yIGVuZG9yc2VtZW50cyBvZiBhbnkga2luZC4gVGhlIGluZm9ybWF0
+aW9uIHRyYW5zbWl0dGVkIGlzIGludGVuZGVkIG9ubHkgZm9yIHRoZSBwZXJz
+b24gb3IgZW50aXR5IHRvIHdoaWNoIGl0IGlzIGFkZHJlc3NlZCBhbmQgbWF5
+IGNvbnRhaW4gY29uZmlkZW50aWFsIGFuZC9vciBwcml2aWxlZ2VkIG1hdGVy
+aWFsLiBBbnkgcmV2aWV3LCByZXRyYW5zbWlzc2lvbiwgZGlzc2VtaW5hdGlv
+biBvciBvdGhlciB1c2Ugb2YsIG9yIHRha2luZyBvZiBhbnkgYWN0aW9uIGlu
+IHJlbGlhbmNlIHVwb24sIHRoaXMgaW5mb3JtYXRpb24gYnkgcGVyc29ucyBv
+ciBlbnRpdGllcyBvdGhlciB0aGFuIHRoZSBpbnRlbmRlZCByZWNpcGllbnQg
+aXMgcHJvaGliaXRlZC4gSWYgeW91IHJlY2VpdmVkIHRoaXMgaW4gZXJyb3Is
+IHBsZWFzZSBjb250YWN0IHRoZSBzZW5kZXIgYW5kIGRlbGV0ZSB0aGUgbWF0
+ZXJpYWwgZnJvbSBhbnkgY29tcHV0ZXIuCg==
