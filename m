@@ -1,59 +1,77 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Strange, can't push
-Date: Wed, 22 Apr 2009 11:39:51 -0400
-Message-ID: <20090422153951.GB12881@coredump.intra.peff.net>
-References: <450196A1AAAE4B42A00A8B27A59278E70ACE04E4@EXCHANGE.trad.tradestation.com>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: [JGIT PATCH/RFC] Removed possibility to change stderr for ssh
+	sessions
+Date: Wed, 22 Apr 2009 08:46:57 -0700
+Message-ID: <20090422154657.GK23604@spearce.org>
+References: <85647ef50904211149lc4a4902h554c973017d87adb@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: John Dlugosz <JDlugosz@TradeStation.com>
-X-From: git-owner@vger.kernel.org Wed Apr 22 17:41:49 2009
+To: Constantine Plotnikov <constantine.plotnikov@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Apr 22 17:48:51 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LweZq-0006zR-9B
-	for gcvg-git-2@gmane.org; Wed, 22 Apr 2009 17:41:34 +0200
+	id 1Lwegd-0001oT-8Z
+	for gcvg-git-2@gmane.org; Wed, 22 Apr 2009 17:48:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753182AbZDVPj4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 22 Apr 2009 11:39:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753123AbZDVPj4
-	(ORCPT <rfc822;git-outgoing>); Wed, 22 Apr 2009 11:39:56 -0400
-Received: from peff.net ([208.65.91.99]:50795 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752800AbZDVPjz (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 22 Apr 2009 11:39:55 -0400
-Received: (qmail 16125 invoked by uid 107); 22 Apr 2009 15:40:03 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Wed, 22 Apr 2009 11:40:03 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 22 Apr 2009 11:39:51 -0400
+	id S1753968AbZDVPq6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 22 Apr 2009 11:46:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752174AbZDVPq6
+	(ORCPT <rfc822;git-outgoing>); Wed, 22 Apr 2009 11:46:58 -0400
+Received: from george.spearce.org ([209.20.77.23]:52606 "EHLO
+	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751933AbZDVPq6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 Apr 2009 11:46:58 -0400
+Received: by george.spearce.org (Postfix, from userid 1001)
+	id 26FEE38211; Wed, 22 Apr 2009 15:46:57 +0000 (UTC)
 Content-Disposition: inline
-In-Reply-To: <450196A1AAAE4B42A00A8B27A59278E70ACE04E4@EXCHANGE.trad.tradestation.com>
+In-Reply-To: <85647ef50904211149lc4a4902h554c973017d87adb@mail.gmail.com>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117207>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117208>
 
-On Tue, Apr 21, 2009 at 05:21:15PM -0400, John Dlugosz wrote:
+Constantine Plotnikov <constantine.plotnikov@gmail.com> wrote:
+> The current implementation allowed to change stderr for the
+> ssh sessions. However this functionality is broken.
 
-> Locally, the view in gitk, after fetching, is that branch B is one
-> commit ahead of remotes/pub/B.  But doing a push doesn't advance it.
-> Pushing to another label did get it there, under that name.
+Good catch.
 
-It's possible that the remote _is_ up-to-date, and your tracking refs
-are simply behind.  Did you try fetching? If so, are you sure your fetch
-refspec will update the tracking ref appropriately?
+I applied this, but two comments.
 
-Through what protocol are you pushing? Only the git protocol will
-update local tracking refs on push; http will not.
+One, your patch was line wrapped, I had to manually unwrap it
+to apply.  So your MUA is still not able to send patches right.
+Thought you'd like to know.
 
-How are you invoking push? Are you using the remote name, so that it can
-find the tracking ref (pushing directly to the URL, even if you have a
-remote matching that URL, will not update tracking refs).
+Two,
 
-Finally, what version of git are you using? Recent versions of send-pack
-will update tracking refs for pushed _and_ up-to-date refs, but versions
-prior to 1.6.0.4 would only do so for things that actually got pushed.
+> +	 * The method does not have to be implemented and will be removed in
+> future versions.
+>  	 *
+>  	 * @return an OutputStream to receive the SSH error stream.
+>  	 */
+> -	public abstract OutputStream getErrorStream();
+> +	@Deprecated
+> +	public OutputStream getErrorStream() {
+> +		throw new UnsupportedOperationException("This method should not be called.");
+> +	}
+>  }
 
--Peff
+I think deprecation here is silly.  I just deleted the method.
+
+Nobody should be calling this except TransportGitSsh, as you
+discovered.
+
+If they are, getting UnsupportedOperationException at runtime is
+as bad as NoSuchMethodError at runtime, and either is a lot less
+friendly than a no such method error at compile time.
+
+Given the method is being broken, I'd rather just remove it outright.
+So I removed it from your patch when I applied it.
+
+-- 
+Shawn.
