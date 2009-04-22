@@ -1,66 +1,106 @@
-From: "Wesley J. Landaker" <wjl@icecavern.net>
-Subject: [PATCH v2 2/2] Documentation: git-svn: fix a grammatical error without awkwardness
-Date: Wed, 22 Apr 2009 09:48:58 -0600
-Message-ID: <1240415338-18076-2-git-send-email-wjl@icecavern.net>
-References: <20090422151515.GA12370@coredump.intra.peff.net>
-Cc: "Wesley J. Landaker" <wjl@icecavern.net>
-To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Eric Wong <normalperson@yhbt.net>, Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Apr 22 17:51:05 2009
+From: Constantine Plotnikov <constantine.plotnikov@gmail.com>
+Subject: Re: [JGIT PATCH/RFC] Removed possibility to change stderr for ssh 
+	sessions
+Date: Wed, 22 Apr 2009 19:55:50 +0400
+Message-ID: <85647ef50904220855g62890de0r4fee4ea8503aa348@mail.gmail.com>
+References: <85647ef50904211149lc4a4902h554c973017d87adb@mail.gmail.com>
+	 <20090422154657.GK23604@spearce.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Wed Apr 22 17:57:35 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lweio-0002lk-ML
-	for gcvg-git-2@gmane.org; Wed, 22 Apr 2009 17:50:51 +0200
+	id 1LwepD-0005dW-V8
+	for gcvg-git-2@gmane.org; Wed, 22 Apr 2009 17:57:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755463AbZDVPtN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 22 Apr 2009 11:49:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755552AbZDVPtL
-	(ORCPT <rfc822;git-outgoing>); Wed, 22 Apr 2009 11:49:11 -0400
-Received: from rinoa.icecavern.net ([92.243.7.152]:45011 "EHLO icecavern.net"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1755498AbZDVPtJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 22 Apr 2009 11:49:09 -0400
-Received: from jenova.icecavern.net (c-76-113-110-228.hsd1.nm.comcast.net [76.113.110.228])
-	by icecavern.net (Postfix) with ESMTPSA id D5D5C365E1;
-	Wed, 22 Apr 2009 09:49:00 -0600 (MDT)
-Received: from tonberry.icecavern.net (tonberry.icecavern.net [10.0.0.9])
-	by jenova.icecavern.net (Postfix) with ESMTP id CFBE374C004;
-	Wed, 22 Apr 2009 09:48:58 -0600 (MDT)
-Received: by tonberry.icecavern.net (Postfix, from userid 1000)
-	id CA9372FDD1; Wed, 22 Apr 2009 09:48:58 -0600 (MDT)
-X-Mailer: git-send-email 1.6.2.3
-In-Reply-To: <20090422151515.GA12370@coredump.intra.peff.net>
+	id S1754283AbZDVPzx convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 22 Apr 2009 11:55:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754112AbZDVPzx
+	(ORCPT <rfc822;git-outgoing>); Wed, 22 Apr 2009 11:55:53 -0400
+Received: from mail-bw0-f163.google.com ([209.85.218.163]:56306 "EHLO
+	mail-bw0-f163.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753553AbZDVPzw convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 22 Apr 2009 11:55:52 -0400
+Received: by bwz7 with SMTP id 7so37129bwz.37
+        for <git@vger.kernel.org>; Wed, 22 Apr 2009 08:55:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=m/iuhOpjhMl8Sg5sfDuNd/W6Z56iwPp/fzROZ3WrAHw=;
+        b=jFJZMDvdjXReG9ECItFjlC+Wl5xz/ZklPDd0NxRXicVzc302tBrlRY2zx55RJUSxaU
+         2WsREqfnGNLaOnXWwLlbjKzgUHnupgAndJcrdqCbFP6NIFuZeTLWFl+HEa7XzYZnXv+S
+         JiScEL3snweVF8vD2eruN0iFArrm6JIj2oWDo=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=T1/nq27UpPkmfLpB49M9MnisNy5UkPBYlsxpLlcIkzmjRsXEAIUjcolVr516mF8oJB
+         VjTFfae7+jsblPp0BvUdMWOw1ziFsionDJJrlJxQF6fSVqA7z9X59XIq/H5djGiN61/X
+         24Lcx8aBIcBBoP100H8jKBgUlHqCO8DhOKopQ=
+Received: by 10.204.53.72 with SMTP id l8mr7781624bkg.171.1240415750208; Wed, 
+	22 Apr 2009 08:55:50 -0700 (PDT)
+In-Reply-To: <20090422154657.GK23604@spearce.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117210>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117211>
 
-The way the sentence is currently written, there needs to be an "its",
-but this leads to: "however the remote wildcard may be anywhere as long
-as it's its own" which is awkward to read.
+On Wed, Apr 22, 2009 at 7:46 PM, Shawn O. Pearce <spearce@spearce.org> =
+wrote:
+> Constantine Plotnikov <constantine.plotnikov@gmail.com> wrote:
+>> The current implementation allowed to change stderr for the
+>> ssh sessions. However this functionality is broken.
+>
+> Good catch.
+>
+> I applied this, but two comments.
+>
+> One, your patch was line wrapped, I had to manually unwrap it
+> to apply. =A0So your MUA is still not able to send patches right.
+> Thought you'd like to know.
+>
+It looks like both gmail and thunderbird both have a problem. I will
+look how opera works next time.
 
-Instead, this patch fixes he grammar in a simpler way.
+> Two,
+>
+>> + =A0 =A0 =A0* The method does not have to be implemented and will b=
+e removed in
+>> future versions.
+>> =A0 =A0 =A0 =A0*
+>> =A0 =A0 =A0 =A0* @return an OutputStream to receive the SSH error st=
+ream.
+>> =A0 =A0 =A0 =A0*/
+>> - =A0 =A0 public abstract OutputStream getErrorStream();
+>> + =A0 =A0 @Deprecated
+>> + =A0 =A0 public OutputStream getErrorStream() {
+>> + =A0 =A0 =A0 =A0 =A0 =A0 throw new UnsupportedOperationException("T=
+his method should not be called.");
+>> + =A0 =A0 }
+>> =A0}
+>
+> I think deprecation here is silly. =A0I just deleted the method.
+>
+> Nobody should be calling this except TransportGitSsh, as you
+> discovered.
+>
+> If they are, getting UnsupportedOperationException at runtime is
+> as bad as NoSuchMethodError at runtime, and either is a lot less
+> friendly than a no such method error at compile time.
+>
+> Given the method is being broken, I'd rather just remove it outright.
+> So I removed it from your patch when I applied it.
+>
+No problem with it. I have left it for the the case if someone
+overrides it with @Override annotation. Deprecation would have given a
+warning rather then an error on annotation.
 
-Signed-off-by: Wesley J. Landaker <wjl@icecavern.net>
----
- Documentation/git-svn.txt |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
-
-diff --git a/Documentation/git-svn.txt b/Documentation/git-svn.txt
-index 3e22e40..1c40894 100644
---- a/Documentation/git-svn.txt
-+++ b/Documentation/git-svn.txt
-@@ -695,7 +695,7 @@ listed below are allowed:
- 
- Keep in mind that the '\*' (asterisk) wildcard of the local ref
- (right of the ':') *must* be the farthest right path component;
--however the remote wildcard may be anywhere as long as it's own
-+however the remote wildcard may be anywhere as long as it's an
- independent path component (surrounded by '/' or EOL).   This
- type of configuration is not automatically created by 'init' and
- should be manually entered with a text-editor or using 'git-config'.
--- 
-1.6.2.3
+Constantine
