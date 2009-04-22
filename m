@@ -1,142 +1,83 @@
 From: "John Dlugosz" <JDlugosz@TradeStation.com>
-Subject: RE: Cryptic error messages?
-Date: Wed, 22 Apr 2009 18:07:35 -0400
-Message-ID: <450196A1AAAE4B42A00A8B27A59278E70ACE0882@EXCHANGE.trad.tradestation.com>
-References: <450196A1AAAE4B42A00A8B27A59278E70ACE0030@EXCHANGE.trad.tradestation.com> <20090422203251.GD14146@coredump.intra.peff.net>
+Subject: RE: Strange, can't push
+Date: Wed, 22 Apr 2009 18:11:22 -0400
+Message-ID: <450196A1AAAE4B42A00A8B27A59278E70ACE0885@EXCHANGE.trad.tradestation.com>
+References: <450196A1AAAE4B42A00A8B27A59278E70ACE04E4@EXCHANGE.trad.tradestation.com> <20090422153951.GB12881@coredump.intra.peff.net> <450196A1AAAE4B42A00A8B27A59278E70ACE06F5@EXCHANGE.trad.tradestation.com> <20090422200657.GB14146@coredump.intra.peff.net> <450196A1AAAE4B42A00A8B27A59278E70ACE0806@EXCHANGE.trad.tradestation.com> <63BEA5E623E09F4D92233FB12A9F7943031172A7@emailmn.mqsoftware.com>
 Mime-Version: 1.0
 Content-Type: text/plain;
 	charset="UTF-8"
 Content-Transfer-Encoding: base64
 Cc: <git@vger.kernel.org>
-To: "Jeff King" <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Apr 23 00:09:15 2009
+To: "Kelly F. Hickel" <kfh@mqsoftware.com>, "Jeff King" <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Apr 23 00:13:02 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lwkcz-0007yO-Pn
-	for gcvg-git-2@gmane.org; Thu, 23 Apr 2009 00:09:14 +0200
+	id 1Lwkgd-0000hp-V1
+	for gcvg-git-2@gmane.org; Thu, 23 Apr 2009 00:13:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754857AbZDVWHl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 22 Apr 2009 18:07:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754122AbZDVWHk
-	(ORCPT <rfc822;git-outgoing>); Wed, 22 Apr 2009 18:07:40 -0400
-Received: from mail2.tradestation.com ([63.99.207.80]:49979 "EHLO
+	id S1755657AbZDVWLZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 22 Apr 2009 18:11:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755044AbZDVWLZ
+	(ORCPT <rfc822;git-outgoing>); Wed, 22 Apr 2009 18:11:25 -0400
+Received: from mail2.tradestation.com ([63.99.207.80]:50573 "EHLO
 	mail2.tradestation.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752107AbZDVWHj (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 22 Apr 2009 18:07:39 -0400
-X-ASG-Debug-ID: 1240438057-6ff4002c0000-QuoKaX
+	with ESMTP id S1754458AbZDVWLY (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 Apr 2009 18:11:24 -0400
+X-ASG-Debug-ID: 1240438283-6fe100410000-QuoKaX
 X-Barracuda-URL: http://192.168.51.31:8000/cgi-bin/mark.cgi
 Received: from mail5.tradestation.com (localhost [127.0.0.1])
 	by mail2.tradestation.com (Spam & Virus Firewall) with ESMTP
-	id E192037506C; Wed, 22 Apr 2009 18:07:37 -0400 (EDT)
-Received: from mail5.tradestation.com (tx02exchange02.trad.tradestation.com [192.168.51.76]) by mail2.tradestation.com with ESMTP id XJFTF0oJdIJAClgZ; Wed, 22 Apr 2009 18:07:37 -0400 (EDT)
+	id 34B84374666; Wed, 22 Apr 2009 18:11:24 -0400 (EDT)
+Received: from mail5.tradestation.com (tx02exchange02.trad.tradestation.com [192.168.51.76]) by mail2.tradestation.com with ESMTP id r2sfj8kEsVNIfTkL; Wed, 22 Apr 2009 18:11:24 -0400 (EDT)
 X-Barracuda-Envelope-From: JDlugosz@TradeStation.com
 X-ASG-Whitelist: Client
 Received: from EXCHANGE.trad.tradestation.com ([10.4.0.121]) by mail5.tradestation.com with Microsoft SMTPSVC(6.0.3790.3959);
-	 Wed, 22 Apr 2009 18:07:37 -0400
+	 Wed, 22 Apr 2009 18:11:23 -0400
 X-MimeOLE: Produced By Microsoft Exchange V6.5
 Content-class: urn:content-classes:message
-X-ASG-Orig-Subj: RE: Cryptic error messages?
-In-Reply-To: <20090422203251.GD14146@coredump.intra.peff.net>
+X-ASG-Orig-Subj: RE: Strange, can't push
+In-Reply-To: <63BEA5E623E09F4D92233FB12A9F7943031172A7@emailmn.mqsoftware.com>
 X-MS-Has-Attach: 
 X-MS-TNEF-Correlator: 
-Thread-Topic: Cryptic error messages?
-Thread-Index: AcnDiYS2NUWg7HRFQzyNOx3A6XJg7gACxKmw
-X-OriginalArrivalTime: 22 Apr 2009 22:07:37.0117 (UTC) FILETIME=[BED8F4D0:01C9C396]
+Thread-Topic: Strange, can't push
+Thread-Index: AcnDhfe2eBj+nSRdSwWZ8+DkluNJEgAArthAAACiKgAAAudbEA==
+X-OriginalArrivalTime: 22 Apr 2009 22:11:23.0430 (UTC) FILETIME=[45BD9460:01C9C397]
 X-Barracuda-Connect: tx02exchange02.trad.tradestation.com[192.168.51.76]
-X-Barracuda-Start-Time: 1240438057
+X-Barracuda-Start-Time: 1240438284
 X-Barracuda-Virus-Scanned: by TX-Barracuda Spam Firewall 400 at tradestation.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117274>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117275>
 
-DQoNCj4gWWVhaCwgdGhhdCBpcyBob3JyaWJseSBjcnlwdGljLiBXaGF0IGlz
-IGhhcHBlbmluZyBpczoNCj4gLi4uDQoNClRoYW5rcyBmb3IgdGhlIGRldGFp
-bGVkIGFuYWx5c2lzLiAgSXQgbWFrZXMgbWUgcmVhbGl6ZSBub3cgdGhhdCBJ
-J20gbG9va2luZyBhdCBhIGxvZywgbm90IGEgVUktYXBwcm92ZWQgaW5kaWNh
-dG9yLiAgTG9ncyBhcmUgZ3JlYXQgd2hlbiB5b3UgYXJlIHRyeWluZyB0byBm
-aWd1cmUgc29tZXRoaW5nIG91dCwgc28gdGhhdCBzdXJlIGJlYXRzIG5vdCBo
-YXZpbmcgdGhhdCBpbmZvcm1hdGlvbiB3aGVuIGl0IGlzIHdhbnRlZC4NCg0K
-PiBTbyBtYWtpbmcgaXQgYmV0dGVyIGlzIG5vdCBxdWl0ZSBhcyBzaW1wbGUg
-YXMgeW91IG1pZ2h0IGhvcGUsIHNpbmNlDQo+IHRoZXJlIGFyZSB0aHJlZSBw
-cm9jZXNzZXMgaW52b2x2ZWQsIGFuZCBub25lIGtub3dzIHRoYXQgdGhlIG90
-aGVyIGhhcw0KPiBzcGV3ZWQgdG8gc3RkZXJyIGFscmVhZHkuDQoNCkkgc2Vl
-LiAgVGhhdCBtYWtlcyBtZSByZWFsaXplIHRoYXQgYSAibGliIiBhcHByb2Fj
-aCByYXRoZXIgdGhhbiBwaXBpbmcgY29tbWFuZHMgaGFzIGRpc3RpbmN0IGFk
-dmFudGFnZXMuICBJbiBpbXBsZW1lbnRpbmcgc29tZXRoaW5nIGhpZ2gtbGV2
-ZWwgdGhhdCBjYWxscyBsb3ctbGV2ZWwgZmVhdHVyZXMsIG15IGNvZGUgaGFz
-IGEgc2VwYXJhdGUgZXJyb3IgY2hhbm5lbCBiYWNrIChlLmcuIGV4Y2VwdGlv
-bnMpLCBub3QganVzdCB0aGUgcmV0dXJuIHZhbHVlLiAgSXQgY2FuIGFycmFu
-Z2UgdGhlIHN1Y2Nlc3NpdmUgbGV2ZWxzIG9mIGRldGFpbCBpbiB0aGUgb3Bw
-b3NpdGUgb3JkZXIsIGFsbG93aW5nIHRoZSB1c2VyIHRvIGRyaWxsIGRvd24g
-dG8gdGhlIGxldmVsIG9mICJ0ZWxsIG1lIHNvbWV0aGluZyBJIGRvbid0IGtu
-b3ciLiAgSXQgY2FuIGV4dHJhY3QgaW5mb3JtYXRpb24gZnJvbSB0aGUgZXJy
-b3IgYW5kIHJlZm9ybXVsYXRlIGl0cyBvd24gZXJyb3Igb3IgdGFrZSBkaWZm
-ZXJlbnQgYWN0aW9ucy4NCg0KV2hhdCB3ZSBhcmUgc2VlaW5nIGhlcmUgaXMg
-YW4gZXJyb3IgbG9nLCBub3QgYW4gZXhjZXB0aW9uLg0KDQoNCg0KDQogQnV0
-IEkgdGhpbmsgdGhlcmUgaXMgc29tZSBsb3ctaGFuZ2luZyBmcnVpdDoNCj4g
-DQo+ICAgMS4gVGhlcmUgaXMgbm8gcG9pbnQgaW4gcmVjZWl2ZS1wYWNrIHNh
-eWluZyBhbnl0aGluZyB0byBzdGRlcnIgYWJvdXQNCj4gICAgICB0aGUgdW5w
-YWNrZXIgZmFpbGluZzsgaW4gbW9zdCBjYXNlcywgdGhlIHVucGFja2VyIGFs
-cmVhZHkgc2FpZA0KPiAgICAgIHNvbWV0aGluZywgYW5kIGV2ZW4gaWYgaXQg
-ZGlkbid0LCB3ZSBhcmUgcmVwb3J0aW5nIHRoZSBwcm9ibGVtIHRvDQo+ICAg
-ICAgc2VuZC1wYWNrIGluIHRoZSBzdGF0dXMgZmllbGQuDQo+IA0KPiAgIDIu
-ICJuL2EgKHVucGFja2VyIGVycm9yKSIgaXMgdW5uZWNlc3NhcmlseSBjcnlw
-dGljLiBZZXMsIHRoZQ0KPiBzcGVjaWZpY3MNCj4gICAgICBvZiB0aGUgbWVz
-c2FnZSBhcmUgIm5vdCBhdmFpbGFibGUiICh3aGljaCBpcyBwcmVzdW1hYmx5
-IHdoYXQgdGhlDQo+ICAgICAgbi9hIHN0YW5kcyBmb3IpLCBidXQgdGhlIHVz
-ZXIgZG9lc24ndCBjYXJlLiBJIHRoaW5rIHNvbWV0aGluZyBsaWtlDQo+ICAg
-ICAgImZhaWxlZCB0byB1bnBhY2sgb2JqZWN0cyIgd291bGQgYmUgYmV0dGVy
-Lg0KDQoNClNvIHlvdSB3b3VsZCB3aW5kIHVwIHdpdGggc29tZXRoaW5nIGxp
-a2U6DQo+ICQgZ2l0IHB1c2gNCj4gQ291bnRpbmcgb2JqZWN0czogOSwgZG9u
-ZS4NCj4gQ29tcHJlc3Npbmcgb2JqZWN0czogMTAwJSAoOC84KSwgZG9uZS4N
-Cj4gV3JpdGluZyBvYmplY3RzOiAxMDAlICg4LzgpLCAzLjYyIEtpQiwgZG9u
-ZS4NCj4gVG90YWwgOCAoZGVsdGEgNCksIHJldXNlZCAwIChkZWx0YSAwKQ0K
-PiBVbnBhY2tpbmcgb2JqZWN0czogMTAwJSAoOC84KSwgZG9uZS4NCj4gICEg
-W3JlbW90ZSByZWplY3RlZF0gZGV2IC0+IGRldiAoZmFpbGVkIHRvIHVucGFj
-ayBvYmplY3RzKQ0KDQpDb25zaWRlcmluZyB0aGF0IHRoZSBmaW5hbCByZWNh
-cCBpcyB1bm5lY2Vzc2FyeSB0b28uDQoNCj4gVGhhdCBsZWF2ZXMgb25seSB0
-aGUgZmFjdCB0aGF0IHRoZSBfc3BlY2lmaWNfIHJlYXNvbiB0aGUgdW5wYWNr
-ZXINCj4gZmFpbGVkDQo+IGlzIG5vdCBwYXJ0IG9mIHRoZSB1c3VhbCBzdGF0
-dXMgdGFibGUuIEZpeGluZyB0aGF0IGlzIGFjdHVhbGx5IGEgbGl0dGxlDQo+
-IHRyaWNreSBiZWNhdXNlIG9mIHRoZSBtdWx0aXBsZSBwcm9jZXNzZXMgaW52
-b2x2ZWQgKHdoaWNoIGRvIG5vdCBhbHJlYWR5DQo+IGhhdmUgYSBzdHJpbmct
-YmFzZWQgY29tbXVuaWNhdGlvbnMgY2hhbm5lbCBiZXR3ZWVuIHRoZW0pLg0K
-DQpTbyBpZiB0aGUgc3RyaW5nIGNvdWxkIGJlIHBhc3NlZCBiYWNrLCByYXRo
-ZXIgdGhhbiBhbiAib3RoZXIiIGVycm9yIGNvZGUsIHRoZSBjYWxsZXIgY291
-bGQgZm9ybWF0IGl0IGludG8gYSBuaWNlciBzdHJpbmcuICBFdmVuIHdpdGgg
-YW4gZXhpc3RpbmcgZXJyb3IgY29kZSBmaWVsZCwgeW91IGNvdWxkIHN0aWxs
-IGdldCByaWQgb2YgYWxsIHVzZXMgb2YgYSBzaW5nbGUgIm90aGVyIiBjb2Rl
-IHdpdGggdW5pcXVlIG51bWJlcnMgYW5kIGhhdmUgYSBzZXBhcmF0ZSBzdHJp
-bmcgdGFibGUgdGhhdCB0aGUgY2FsbGVyIGNhbiBhY2Nlc3MuICBEb2N1bWVu
-dCB0aG9zZSBhcyAiaW1wbGVtZW50YXRpb24gc3BlY2lmaWMsIHVzZSB0aGUg
-bWF0Y2hpbmcgc3RyaW5nIHRhYmxlIi4NCg0KPiBBbmQgb2YgY291cnNlLCBp
-dCdzIHN0aWxsIGEgYml0IGNyeXB0aWMgdG8gZ2V0ICJ1bnJlc29sdmVkIGRl
-bHRhcyBhZnRlcg0KPiB1bnBhY2tpbmciLiBIb3dldmVyLCB0aGF0IGlzIG9u
-ZSBvZiB0aG9zZSBtZXNzYWdlcyB0aGF0IF9zaG91bGRfIG5ldmVyDQo+IGNv
-bWUgdXAsIHVubGVzcyB0aGUgc2VuZGVyIGlzIHB1c2hpbmcgYSBib2d1cyBw
-YWNrLiBJIHdvdWxkbid0IGJlDQo+IHN1cnByaXNlZCBpZiBpdCBhbiBtc3lz
-Z2l0IGJ1Zy4NCj4gDQo+IC1QZWZmDQoKVHJhZGVTdGF0aW9uIEdyb3VwLCBJ
-bmMuIGlzIGEgcHVibGljbHktdHJhZGVkIGhvbGRpbmcgY29tcGFueSAoTkFT
-REFRIEdTOiBUUkFEKSBvZiB0aHJlZSBvcGVyYXRpbmcgc3Vic2lkaWFyaWVz
-LCBUcmFkZVN0YXRpb24gU2VjdXJpdGllcywgSW5jLiAoTWVtYmVyIE5ZU0Us
-IEZJTlJBLCBTSVBDIGFuZCBORkEpLCBUcmFkZVN0YXRpb24gVGVjaG5vbG9n
-aWVzLCBJbmMuLCBhIHRyYWRpbmcgc29mdHdhcmUgYW5kIHN1YnNjcmlwdGlv
-biBjb21wYW55LCBhbmQgVHJhZGVTdGF0aW9uIEV1cm9wZSBMaW1pdGVkLCBh
-IFVuaXRlZCBLaW5nZG9tLCBGU0EtYXV0aG9yaXplZCBpbnRyb2R1Y2luZyBi
-cm9rZXJhZ2UgZmlybS4gTm9uZSBvZiB0aGVzZSBjb21wYW5pZXMgcHJvdmlk
-ZXMgdHJhZGluZyBvciBpbnZlc3RtZW50IGFkdmljZSwgcmVjb21tZW5kYXRp
-b25zIG9yIGVuZG9yc2VtZW50cyBvZiBhbnkga2luZC4gVGhlIGluZm9ybWF0
-aW9uIHRyYW5zbWl0dGVkIGlzIGludGVuZGVkIG9ubHkgZm9yIHRoZSBwZXJz
-b24gb3IgZW50aXR5IHRvIHdoaWNoIGl0IGlzIGFkZHJlc3NlZCBhbmQgbWF5
-IGNvbnRhaW4gY29uZmlkZW50aWFsIGFuZC9vciBwcml2aWxlZ2VkIG1hdGVy
-aWFsLiBBbnkgcmV2aWV3LCByZXRyYW5zbWlzc2lvbiwgZGlzc2VtaW5hdGlv
-biBvciBvdGhlciB1c2Ugb2YsIG9yIHRha2luZyBvZiBhbnkgYWN0aW9uIGlu
-IHJlbGlhbmNlIHVwb24sIHRoaXMgaW5mb3JtYXRpb24gYnkgcGVyc29ucyBv
-ciBlbnRpdGllcyBvdGhlciB0aGFuIHRoZSBpbnRlbmRlZCByZWNpcGllbnQg
-aXMgcHJvaGliaXRlZC4gSWYgeW91IHJlY2VpdmVkIHRoaXMgaW4gZXJyb3Is
-IHBsZWFzZSBjb250YWN0IHRoZSBzZW5kZXIgYW5kIGRlbGV0ZSB0aGUgbWF0
-ZXJpYWwgZnJvbSBhbnkgY29tcHV0ZXIuCg==
+IA0KPiBGWUksIEkndmUgaGFkIGZhaXJseSBnb29kIGx1Y2sgdXNpbmcgc3Ry
+YWNlIHdpdGggY3lnd2luIGV4ZWN1dGFibGVzIG9uDQo+IHdpbmRvd3MuDQo+
+IE5vIGlkZWEgaWYgaXQgd29ya3Mgd2l0aCBtc3lzZ2l0IHRob3VnaC4uLi4N
+Cj4gDQoNCjwtLShsb29raW5nIHVwIHN0cmFjZSBpbiBXaWtpcGVkaWEpDQpJ
+IHRoaW5rIHRoZSBXaW5kb3dzJyB0b29sIGZyb20gU3lzaW50ZXJuYWxzIGNh
+bGxlZCAiUHJvY2VzcyBNb25pdG9yIiB3b3VsZCBkbyB0aGF0Lg0KPGh0dHA6
+Ly90ZWNobmV0Lm1pY3Jvc29mdC5jb20vZW4tdXMvc3lzaW50ZXJuYWxzL2Ji
+ODk2NjQ1LmFzcHg+Lg0KClRyYWRlU3RhdGlvbiBHcm91cCwgSW5jLiBpcyBh
+IHB1YmxpY2x5LXRyYWRlZCBob2xkaW5nIGNvbXBhbnkgKE5BU0RBUSBHUzog
+VFJBRCkgb2YgdGhyZWUgb3BlcmF0aW5nIHN1YnNpZGlhcmllcywgVHJhZGVT
+dGF0aW9uIFNlY3VyaXRpZXMsIEluYy4gKE1lbWJlciBOWVNFLCBGSU5SQSwg
+U0lQQyBhbmQgTkZBKSwgVHJhZGVTdGF0aW9uIFRlY2hub2xvZ2llcywgSW5j
+LiwgYSB0cmFkaW5nIHNvZnR3YXJlIGFuZCBzdWJzY3JpcHRpb24gY29tcGFu
+eSwgYW5kIFRyYWRlU3RhdGlvbiBFdXJvcGUgTGltaXRlZCwgYSBVbml0ZWQg
+S2luZ2RvbSwgRlNBLWF1dGhvcml6ZWQgaW50cm9kdWNpbmcgYnJva2VyYWdl
+IGZpcm0uIE5vbmUgb2YgdGhlc2UgY29tcGFuaWVzIHByb3ZpZGVzIHRyYWRp
+bmcgb3IgaW52ZXN0bWVudCBhZHZpY2UsIHJlY29tbWVuZGF0aW9ucyBvciBl
+bmRvcnNlbWVudHMgb2YgYW55IGtpbmQuIFRoZSBpbmZvcm1hdGlvbiB0cmFu
+c21pdHRlZCBpcyBpbnRlbmRlZCBvbmx5IGZvciB0aGUgcGVyc29uIG9yIGVu
+dGl0eSB0byB3aGljaCBpdCBpcyBhZGRyZXNzZWQgYW5kIG1heSBjb250YWlu
+IGNvbmZpZGVudGlhbCBhbmQvb3IgcHJpdmlsZWdlZCBtYXRlcmlhbC4gQW55
+IHJldmlldywgcmV0cmFuc21pc3Npb24sIGRpc3NlbWluYXRpb24gb3Igb3Ro
+ZXIgdXNlIG9mLCBvciB0YWtpbmcgb2YgYW55IGFjdGlvbiBpbiByZWxpYW5j
+ZSB1cG9uLCB0aGlzIGluZm9ybWF0aW9uIGJ5IHBlcnNvbnMgb3IgZW50aXRp
+ZXMgb3RoZXIgdGhhbiB0aGUgaW50ZW5kZWQgcmVjaXBpZW50IGlzIHByb2hp
+Yml0ZWQuIElmIHlvdSByZWNlaXZlZCB0aGlzIGluIGVycm9yLCBwbGVhc2Ug
+Y29udGFjdCB0aGUgc2VuZGVyIGFuZCBkZWxldGUgdGhlIG1hdGVyaWFsIGZy
+b20gYW55IGNvbXB1dGVyLgo=
