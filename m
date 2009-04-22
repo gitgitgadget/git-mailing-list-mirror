@@ -1,450 +1,218 @@
-From: Eygene Ryabinkin <rea-git@codelabs.ru>
-Subject: Re: [PATCH] git-svn: teach to create and operate on bare
-	repositories
-Date: Thu, 23 Apr 2009 01:36:28 +0400
-Message-ID: <qxrtBtZrSZuDTP4eMtsCu+KmGTY@urRFFPz6LpPjhjTBiIOEhMtLGGg>
-References: <lGoUDENjg0Z+sDE9v/txzTLyfk8@7qgLKkvX/1U6eu9avhKQpU/1pEI> <20090421180101.GA16642@dcvr.yhbt.net>
-Reply-To: rea-git@codelabs.ru
-Mime-Version: 1.0
-Content-Type: multipart/mixed; boundary="IiVenqGWf+H9Y6IX"
-Cc: git@vger.kernel.org
-To: Eric Wong <normalperson@yhbt.net>
-X-From: git-owner@vger.kernel.org Wed Apr 22 23:38:18 2009
+From: Markus Heidelberg <markus.heidelberg@web.de>
+Subject: [PATCH v2] show-branch: color the commit status signs
+Date: Wed, 22 Apr 2009 23:41:25 +0200
+Message-ID: <1240436485-30518-1-git-send-email-markus.heidelberg@web.de>
+References: <7vskk01j9y.fsf@gitster.siamese.dyndns.org>
+Cc: git@vger.kernel.org, Stephen Boyd <bebarino@gmail.com>,
+	Markus Heidelberg <markus.heidelberg@web.de>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Apr 22 23:42:46 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lwk8w-0005vq-RH
-	for gcvg-git-2@gmane.org; Wed, 22 Apr 2009 23:38:11 +0200
+	id 1LwkDF-0007V2-DL
+	for gcvg-git-2@gmane.org; Wed, 22 Apr 2009 23:42:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754977AbZDVVgg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 22 Apr 2009 17:36:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754570AbZDVVgf
-	(ORCPT <rfc822;git-outgoing>); Wed, 22 Apr 2009 17:36:35 -0400
-Received: from 0.mx.codelabs.ru ([144.206.177.45]:53172 "EHLO 0.mx.codelabs.ru"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753959AbZDVVge (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 22 Apr 2009 17:36:34 -0400
-DomainKey-Signature: a=rsa-sha1; q=dns; c=simple; s=one; d=codelabs.ru;
-	h=Received:Date:From:To:Cc:Subject:Message-ID:Reply-To:References:MIME-Version:Content-Type:Content-Disposition:In-Reply-To:Sender;
-	b=jXmA5WKOE1Hx5iUBxPpWWIUwKK/EGnf0xLAAdVRfSqMhC5mhpf5AANhOKUxr9zV0mUHJqojgiESDGUvGphWOqxZEskfm/fztHkB3u+WCI9AIi3PqTbfrwsID56drG0MByvYDV81+hQWopfCEV4oCV+ns/kkUQ0UDu3nI+6PsX6o=;
-Received: from amnesiac.at.no.dns (ppp91-77-11-103.pppoe.mtu-net.ru [91.77.11.103])
-	by 0.mx.codelabs.ru with esmtpsa (TLSv1:AES256-SHA:256)
-	id 1Lwk7L-0005pM-E5; Thu, 23 Apr 2009 01:36:32 +0400
-Content-Disposition: inline
-In-Reply-To: <20090421180101.GA16642@dcvr.yhbt.net>
+	id S1755540AbZDVVk4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 22 Apr 2009 17:40:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754837AbZDVVk4
+	(ORCPT <rfc822;git-outgoing>); Wed, 22 Apr 2009 17:40:56 -0400
+Received: from fmmailgate03.web.de ([217.72.192.234]:49025 "EHLO
+	fmmailgate03.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753427AbZDVVkz (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 Apr 2009 17:40:55 -0400
+Received: from smtp05.web.de (fmsmtp05.dlan.cinetic.de [172.20.4.166])
+	by fmmailgate03.web.de (Postfix) with ESMTP id 5B61BFAF41F8;
+	Wed, 22 Apr 2009 23:40:54 +0200 (CEST)
+Received: from [89.59.119.90] (helo=localhost.localdomain)
+	by smtp05.web.de with asmtp (TLSv1:AES256-SHA:256)
+	(WEB.DE 4.110 #277)
+	id 1LwkBa-00007O-00; Wed, 22 Apr 2009 23:40:54 +0200
+X-Mailer: git-send-email 1.6.3.rc1.61.ge6ab3
+In-Reply-To: <7vskk01j9y.fsf@gitster.siamese.dyndns.org>
+X-Sender: markus.heidelberg@web.de
+X-Provags-ID: V01U2FsdGVkX1/O6LAMvhq20Fxw7UOPHbhiutD7wrWc8w5DDnRw
+	GziiP4CmZUhYpFneU8m/1Qzgli6KHThKnF8d4RdJe9hUyxHJFz
+	20bntKqCh56I2mVokJ7g==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117271>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117272>
 
+Make it possible to color the status character ('*' '!' '+' '-') of each
+commit corresponding to the branch it's in. This makes it easier to
+follow a particular branch, especially if there are larger gaps in the
+output.
 
---IiVenqGWf+H9Y6IX
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+Add the config option color.showbranch and the command line options
+ --color and --no-color to control the colored output.
 
-Eric, good day.
-
-Tue, Apr 21, 2009 at 11:01:01AM -0700, Eric Wong wrote:
-> This definitely seems useful.  I'd like a basic test to ensure it
-> continues working in the future.
-
-No problems, answers inline ;))
-
-> >  sub cmd_set_tree {
-> >  	my (@commits) = @_;
-> > +
-> > +	get_bareness();
-> > +	if ($_bare) {
-> > +		fatal("'set-tree' isn't supported for bare repositories.");
-> > +	}
-> > +
-> 
-> This repetition with get_bareness() and then checking for $_bare all
-> over the place bothers me a bit.  I'd rather just have something like
-> this:
-> 
-> 	fatal_if_bare('set-tree');
-> 
-> Or even:
-> 
-> 	fatal_if_bare($cmd);
-
-Done.
-
-> > +# Initialize bareness flag for an existing repository
-> > +sub get_bareness {
-> > +	return unless -d $ENV{GIT_DIR};
-> > +	my $result = Git::config_bool('core.bare');
-> > +	$result = 0 unless defined($result);
-> > +	$_bare = $result;
-> > +}
-> 
-> Perhaps this function can go into Git.pm since core.bare affects all
-> of git, not just git-svn.  I'd also like to just use something like
-> 
-> 	if (Git::config_bare()) { ... }
-> 
-> ...rather than having to check/initialize a variable every time.
-> 
-> Of course, we can have config caching for platforms that really need
-> it done via Sam's Git::Config module when it gets merged.
-
-Hmm, for my needs the bare "Git::config_bool('core.bare')" is sufficient,
-so I implanted it everywhere.
-
-> >  sub extract_metadata {
-> >  	my $id = shift or return (undef, undef, undef);
-> >  	my ($url, $rev, $uuid) = ($id =~ /^\s*git-svn-id:\s+(.*)\@(\d+)
-> > @@ -1527,6 +1588,51 @@ sub parse_revision_argument {
-> >  	die "revision argument: $::_revision not understood by git-svn\n";
-> >  }
-> >  
-> > +#
-> > +# While we are fetching to bare repositories, we should update branch
-> > +# heads manually, because it is not possible to do merges within bare
-> > +# repositories.
-> > +#
-> > +# Arguments:
-> > +# - name of remote branch, for example 'refs/remotes/git-svn';
-> > +# - name of the corresponding local head, for example 'refs/heads/master'.
-> > +#
-> > +sub fast_forward_bare_fetch {
-> > +	return unless defined($_bare);
-> > +	return unless defined($_[0]);
-> > +	return unless defined($_[1]);
-> 
-> Checking for arguments here seems unnecessarily defensive.
-
-I used to this style, but OK, it was eliminated.
-
-> 
-> > +	my $remote = $_[0];
-> > +	my $localhead = $_[1];
-> 
-> The general git-svn style is this:
-> 
-> 	my ($remote, $localhead) = @_;
-
-Fixed.
-
-> > +	# Update (fast-forward) heads for bare repository.
-> > +	if (defined($_bare)) {
-> > +		foreach my $gs (@gs) {
-> > +			my $remote = 'refs/remotes/' . $gs->{ref_id};
-> > +			my $localhead = 'refs/heads/master';
-> > +			if (open(FH, "<", "HEAD")) {
-> > +				chomp(my $head = <FH>);
-> > +				close FH;
-> > +				if ($head =~ /^ref: (.*)$/) {
-> > +					$localhead = $1;
-> > +				}
-> > +			}
-> 
-> "git rev-parse --symbolic-full-name HEAD" should work better
-> than parsing HEAD ourselves.
-
-Used it.  The resulting patch is attached.
-
-I have one question: as you can see from the above hunk, I am using HEAD
-as the tip of all local branches to be fast-forwarded.  It works with
-only one upstream branch, but what if there will be multiple
-(disconnected) remotes we are tracking?  I had seen the words that it it
-possible (in the git-svn man page), but hadn't managed to create such
-repository and figure out how can I deduce the name of the local head
-for the remote one.  Could you, please, enlighten me?
-
-Thanks!
--- 
-Eygene
-
---IiVenqGWf+H9Y6IX
-Content-Type: text/x-diff; charset=us-ascii
-Content-Disposition: attachment; filename="git-svn-teach-to-create-and-operate-on-bare-repos.diff"
-Content-Transfer-Encoding: quoted-printable
-
-=46rom cc509782cfa3c17dc830015891cde2a11275a2c4 Mon Sep 17 00:00:00 2001
-=46rom: Eygene Ryabinkin <rea@codelabs.ru>
-Date: Thu, 16 Apr 2009 02:27:24 +0400
-Subject: [PATCH] git-svn: teach to create and operate on bare repositories
-
-This mode is useful when we're mirrorring one-to-one Subversion and Git
-repositories and then using Git as the repository to base other work on.
-
-Bare mode is currently restricted only to init, clone, fetch, log,
-find-rev, show-ignore, show-externals, create-ignore, propget, proplist
-and info commands.  Others won't work at all and error message will
-be produced.
-
-Signed-off-by: Eygene Ryabinkin <rea-git@codelabs.ru>
+Signed-off-by: Markus Heidelberg <markus.heidelberg@web.de>
 ---
- Documentation/git-svn.txt |   23 +++++++++
- git-svn.perl              |  110 +++++++++++++++++++++++++++++++++++++++++=
-++--
- 2 files changed, 129 insertions(+), 4 deletions(-)
 
-diff --git a/Documentation/git-svn.txt b/Documentation/git-svn.txt
-index 9229d45..4749676 100644
---- a/Documentation/git-svn.txt
-+++ b/Documentation/git-svn.txt
-@@ -104,6 +104,10 @@ COMMANDS
- --parent;;
- 	Fetch only from the SVN parent of the current HEAD.
-=20
-+--bare;;
-+	Creates bare repository without checked-out copy.  See section
-+	BARE REPOSITORIES for details.
+    Clarify the --color description based on the suggestion from
+    Stephen Boyd.
+
+ Documentation/config.txt          |    6 ++++
+ Documentation/git-show-branch.txt |    9 ++++++
+ builtin-show-branch.c             |   51 ++++++++++++++++++++++++++++++++++---
+ 3 files changed, 62 insertions(+), 4 deletions(-)
+
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 35056e1..1383a29 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -595,6 +595,12 @@ color.pager::
+ 	A boolean to enable/disable colored output when the pager is in
+ 	use (default is true).
+ 
++color.showbranch::
++	A boolean to enable/disable color in the output of
++	linkgit:git-show-branch[1]. May be set to `always`,
++	`false` (or `never`) or `auto` (or `true`), in which case colors are used
++	only when the output is to a terminal. Defaults to false.
 +
- This doesn't interfere with interoperating with the Subversion
- repository you cloned from, but if you wish for your local Git
- repository to be able to interoperate with someone else's local Git
-@@ -537,6 +541,25 @@ and these settings should never be changed once they a=
-re set.
- Additionally, only one of these four options can be used per-svn-remote
- section because they affect the 'git-svn-id:' metadata line.
-=20
-+BARE REPOSITORIES
-+-----------------
+ color.status::
+ 	A boolean to enable/disable color in the output of
+ 	linkgit:git-status[1]. May be set to `always`,
+diff --git a/Documentation/git-show-branch.txt b/Documentation/git-show-branch.txt
+index 7e9ff37..05868b6 100644
+--- a/Documentation/git-show-branch.txt
++++ b/Documentation/git-show-branch.txt
+@@ -10,6 +10,7 @@ SYNOPSIS
+ [verse]
+ 'git show-branch' [--all] [--remotes] [--topo-order] [--current]
+ 		[--more=<n> | --list | --independent | --merge-base]
++		[--color | --no-color]
+ 		[--no-name | --sha1-name] [--topics] [<rev> | <glob>]...
+ 'git show-branch' (-g|--reflog)[=<n>[,<base>]] [--list] [<ref>]
+ 
+@@ -107,6 +108,14 @@ OPTIONS
+ 	When no explicit <ref> parameter is given, it defaults to the
+ 	current branch (or `HEAD` if it is detached).
+ 
++--color::
++	Color the status sign (one of these: `*` `!` `+` `-`) of each commit
++	corresponding to the branch it's in.
 +
-+Bare repositories are most suitable for serving them via 'git-daemon',
-+so they can be used when one wants to convert Subversion repository to
-+Git and base the work on the created Git repository.  This was the
-+initial idea of adding support for such repositories: repository is
-+thought to be read-only for Git clients, but could be updated via 'git
-+svn fetch' to catch changes in Subversion repository.
++--no-color::
++	Turn off colored output, even when the configuration file gives the
++	default to color output.
 +
-+Only subset of all 'git svn' commands are available for bare
-+repositories: init, clone, fetch, log, find-rev, show-ignore,
-+show-externals, create-ignore, propget, proplist and info.
+ Note that --more, --list, --independent and --merge-base options
+ are mutually exclusive.
+ 
+diff --git a/builtin-show-branch.c b/builtin-show-branch.c
+index 828e6f8..fc38f5e 100644
+--- a/builtin-show-branch.c
++++ b/builtin-show-branch.c
+@@ -2,12 +2,25 @@
+ #include "commit.h"
+ #include "refs.h"
+ #include "builtin.h"
++#include "color.h"
+ 
+ static const char show_branch_usage[] =
+ "git show-branch [--sparse] [--current] [--all] [--remotes] [--topo-order] [--more=count | --list | --independent | --merge-base ] [--topics] [<refs>...] | --reflog[=n[,b]] <branch>";
+ static const char show_branch_usage_reflog[] =
+ "--reflog is incompatible with --all, --remotes, --independent or --merge-base";
+ 
++static int showbranch_use_color = -1;
++static char column_colors[][COLOR_MAXLEN] = {
++	GIT_COLOR_RED,
++	GIT_COLOR_GREEN,
++	GIT_COLOR_YELLOW,
++	GIT_COLOR_BLUE,
++	GIT_COLOR_MAGENTA,
++	GIT_COLOR_CYAN,
++};
 +
-+One certainly could push to bare repository that is maintained by
-+'git-svn', but merges are not supported on the bare repositories, so it
-+could be hard to recover from such push.  The bottom line: currently
-+supported mode is read-only for all Git clients and only this mode is
-+now tested and supported.  Git wizards are, of course, free for all.
-=20
- BASIC EXAMPLES
- --------------
-diff --git a/git-svn.perl b/git-svn.perl
-index c5965c9..db6037f 100755
---- a/git-svn.perl
-+++ b/git-svn.perl
-@@ -63,13 +63,14 @@ $sha1 =3D qr/[a-f\d]{40}/;
- $sha1_short =3D qr/[a-f\d]{4,40}/;
- my ($_stdin, $_help, $_edit,
- 	$_message, $_file,
--	$_template, $_shared,
-+	$_template, $_shared, $_bare,
- 	$_version, $_fetch_all, $_no_rebase, $_fetch_parent,
- 	$_merge, $_strategy, $_dry_run, $_local,
- 	$_prefix, $_no_checkout, $_url, $_verbose,
- 	$_git_format, $_commit_url, $_tag);
- $Git::SVN::_follow_parent =3D 1;
- $_q ||=3D 0;
-+$_bare =3D 0;
- my %remote_opts =3D ( 'username=3Ds' =3D> \$Git::SVN::Prompt::_username,
-                     'config-dir=3Ds' =3D> \$Git::SVN::Ra::config_dir,
-                     'no-auth-cache' =3D> \$Git::SVN::Prompt::_no_auth_cach=
-e,
-@@ -96,6 +97,7 @@ my %init_opts =3D ( 'template=3Ds' =3D> \$_template, 'sha=
-red:s' =3D> \$_shared,
-                   'trunk|T=3Ds' =3D> \$_trunk, 'tags|t=3Ds' =3D> \$_tags,
-                   'branches|b=3Ds' =3D> \$_branches, 'prefix=3Ds' =3D> \$_=
-prefix,
-                   'stdlayout|s' =3D> \$_stdlayout,
-+                  'bare' =3D> \$_bare,
-                   'minimize-url|m' =3D> \$Git::SVN::_minimize_url,
- 		  'no-metadata' =3D> sub { $icv{noMetadata} =3D 1 },
- 		  'use-svm-props' =3D> sub { $icv{useSvmProps} =3D 1 },
-@@ -315,7 +317,7 @@ sub version {
++#define COLUMN_COLORS_MAX (ARRAY_SIZE(column_colors))
++
+ static int default_num;
+ static int default_alloc;
+ static const char **default_arg;
+@@ -19,6 +32,20 @@ static const char **default_arg;
+ 
+ #define DEFAULT_REFLOG	4
+ 
++static const char *get_color_code(int idx)
++{
++	if (showbranch_use_color)
++		return column_colors[idx];
++	return "";
++}
++
++static const char *get_color_reset_code(void)
++{
++	if (showbranch_use_color)
++		return GIT_COLOR_RESET;
++	return "";
++}
++
+ static struct commit *interesting(struct commit_list *list)
+ {
+ 	while (list) {
+@@ -545,7 +572,12 @@ static int git_show_branch_config(const char *var, const char *value, void *cb)
+ 		return 0;
+ 	}
+ 
+-	return git_default_config(var, value, cb);
++	if (!strcmp(var, "color.showbranch")) {
++		showbranch_use_color = git_config_colorbool(var, value, -1);
++		return 0;
++	}
++
++	return git_color_default_config(var, value, cb);
  }
-=20
- sub do_git_init_db {
--	unless (-d $ENV{GIT_DIR}) {
-+	unless (-d $ENV{GIT_DIR} && !$_bare) {
- 		my @init_db =3D ('init');
- 		push @init_db, "--template=3D$_template" if defined $_template;
- 		if (defined $_shared) {
-@@ -325,8 +327,15 @@ sub do_git_init_db {
- 				push @init_db, "--shared";
+ 
+ static int omit_in_dense(struct commit *commit, struct commit **rev, int n)
+@@ -611,6 +643,9 @@ int cmd_show_branch(int ac, const char **av, const char *prefix)
+ 
+ 	git_config(git_show_branch_config, NULL);
+ 
++	if (showbranch_use_color == -1)
++		showbranch_use_color = git_use_color_default;
++
+ 	/* If nothing is specified, try the default first */
+ 	if (ac == 1 && default_num) {
+ 		ac = default_num + 1;
+@@ -658,6 +693,10 @@ int cmd_show_branch(int ac, const char **av, const char *prefix)
+ 			parse_reflog_param(arg + 9, &reflog, &reflog_base);
+ 		else if (!prefixcmp(arg, "-g="))
+ 			parse_reflog_param(arg + 3, &reflog, &reflog_base);
++		else if (!strcmp(arg, "--color"))
++			showbranch_use_color = 1;
++		else if (!strcmp(arg, "--no-color"))
++			showbranch_use_color = 0;
+ 		else
+ 			usage(show_branch_usage);
+ 		ac--; av++;
+@@ -843,8 +882,10 @@ int cmd_show_branch(int ac, const char **av, const char *prefix)
+ 			else {
+ 				for (j = 0; j < i; j++)
+ 					putchar(' ');
+-				printf("%c [%s] ",
+-				       is_head ? '*' : '!', ref_name[i]);
++				printf("%s%c%s [%s] ",
++				       get_color_code(i % COLUMN_COLORS_MAX),
++				       is_head ? '*' : '!',
++				       get_color_reset_code(), ref_name[i]);
  			}
+ 
+ 			if (!reflog) {
+@@ -903,7 +944,9 @@ int cmd_show_branch(int ac, const char **av, const char *prefix)
+ 					mark = '*';
+ 				else
+ 					mark = '+';
+-				putchar(mark);
++				printf("%s%c%s",
++				       get_color_code(i % COLUMN_COLORS_MAX),
++				       mark, get_color_reset_code());
+ 			}
+ 			putchar(' ');
  		}
-+		push @init_db, "--bare" if $_bare;
- 		command_noisy(@init_db);
--		$_repository =3D Git->repository(Repository =3D> ".git");
-+		if ($_bare && -d $ENV{GIT_DIR}) {
-+			$_repository =3D
-+			    Git->repository(Repository =3D> $ENV{GIT_DIR});
-+		} else {
-+			$_repository =3D
-+			    Git->repository(Repository =3D> ".git");
-+		}
- 	}
- 	command_noisy('config', 'core.autocrlf', 'false');
- 	my $set;
-@@ -344,9 +353,20 @@ sub do_git_init_db {
-=20
- sub init_subdir {
- 	my $repo_path =3D shift or return;
-+	my $full_path;
-+	if ($repo_path =3D~ /^\//) {
-+		$full_path =3D $repo_path;
-+	} else {
-+		use POSIX qw(getcwd);
-+		$full_path =3D POSIX::getcwd() . "/" . $repo_path;
-+	}
- 	mkpath([$repo_path]) unless -d $repo_path;
- 	chdir $repo_path or die "Couldn't chdir to $repo_path: $!\n";
--	$ENV{GIT_DIR} =3D '.git';
-+	if (!$_bare) {
-+		$ENV{GIT_DIR} =3D $full_path . '/.git';
-+	} else {
-+		$ENV{GIT_DIR} =3D $full_path;
-+	}
- 	$_repository =3D Git->repository(Repository =3D> $ENV{GIT_DIR});
- }
-=20
-@@ -408,6 +428,9 @@ sub cmd_fetch {
-=20
- sub cmd_set_tree {
- 	my (@commits) =3D @_;
-+
-+	fatal_if_bare($cmd);
-+
- 	if ($_stdin || !@commits) {
- 		print "Reading from stdin...\n";
- 		@commits =3D ();
-@@ -444,6 +467,9 @@ sub cmd_set_tree {
-=20
- sub cmd_dcommit {
- 	my $head =3D shift;
-+
-+	fatal_if_bare($cmd);
-+
- 	git_cmd_try { command_oneline(qw/diff-index --quiet HEAD/) }
- 		'Cannot dcommit with a dirty index.  Commit your changes first, '
- 		. "or stash them with `git stash'.\n";
-@@ -579,6 +605,8 @@ sub cmd_dcommit {
- sub cmd_branch {
- 	my ($branch_name, $head) =3D @_;
-=20
-+	fatal_if_bare($cmd);
-+
- 	unless (defined $branch_name && length $branch_name) {
- 		die(($_tag ? "tag" : "branch") . " name required\n");
- 	}
-@@ -635,6 +663,8 @@ sub cmd_find_rev {
- }
-=20
- sub cmd_rebase {
-+	fatal_if_bare($cmd);
-+
- 	command_noisy(qw/update-index --refresh/);
- 	my ($url, $rev, $uuid, $gs) =3D working_head_info('HEAD');
- 	unless ($gs) {
-@@ -793,6 +823,8 @@ sub cmd_proplist {
- }
-=20
- sub cmd_multi_init {
-+	fatal_if_bare($cmd);
-+
- 	my $url =3D shift;
- 	unless (defined $_trunk || defined $_branches || defined $_tags) {
- 		usage(1);
-@@ -836,6 +868,8 @@ sub cmd_multi_fetch {
-=20
- # this command is special because it requires no metadata
- sub cmd_commit_diff {
-+	fatal_if_bare($cmd);
-+
- 	my ($ta, $tb, $url) =3D @_;
- 	my $usage =3D "Usage: $0 commit-diff -r<revision> ".
- 	            "<tree-ish> <tree-ish> [<URL>]";
-@@ -1527,6 +1561,57 @@ sub parse_revision_argument {
- 	die "revision argument: $::_revision not understood by git-svn\n";
- }
-=20
-+#
-+# While we are fetching to bare repositories, we should update branch
-+# heads manually, because it is not possible to do merges within bare
-+# repositories.
-+#
-+# Arguments:
-+# - name of remote branch, for example 'refs/remotes/git-svn';
-+# - name of the corresponding local head, for example 'refs/heads/master'.
-+#
-+sub fast_forward_bare_fetch {
-+	return unless Git::config_bool('core.bare');
-+	my ($remote, $localhead) =3D @_;
-+
-+	# Gather current SHA1 codes for both objects.
-+	my $new_sha1ref =3D eval {
-+		command_oneline(qw/show-ref --hash/, $remote)
-+	};
-+	return unless length($new_sha1ref);
-+	my $current_sha1ref =3D eval {
-+		command_oneline(qw/show-ref --hash/, $localhead)
-+	};
-+	return unless length($current_sha1ref);
-+
-+	# Same?  Nothing to do.
-+	return if $new_sha1ref eq $current_sha1ref;
-+
-+	# Update SHA1 for local head and verify new value.
-+	command_noisy('update-ref', $localhead, $new_sha1ref);
-+	$current_sha1ref =3D eval {
-+		command_oneline(qw/show-ref --hash/, $localhead)
-+	};
-+	if ($current_sha1ref eq $new_sha1ref) {
-+		unless ($::_q > 1) {
-+			printf "Fast-forwarded %s to %s.\n",
-+			  $localhead, $new_sha1ref;
-+		}
-+	} else {
-+		printf "Error fast forwarding %s to %s.\n",
-+		  $localhead, $new_sha1ref;
-+	}
-+}
-+
-+sub fatal_if_bare {
-+	my ($cmd) =3D @_;
-+
-+	if (!Git::config_bool('core.bare')) {
-+		fatal(sprintf("'%s' isn't supported for bare repositories.",
-+		  $cmd));
-+	}
-+}
-+
- sub fetch_all {
- 	my ($repo_id, $remotes) =3D @_;
- 	if (ref $repo_id) {
-@@ -1571,6 +1656,23 @@ sub fetch_all {
-=20
- 	($base, $head) =3D parse_revision_argument($base, $head);
- 	$ra->gs_fetch_loop_common($base, $head, \@gs, \@globs);
-+
-+	# Update (fast-forward) heads for bare repository.
-+	if (Git::config_bool('core.bare')) {
-+		foreach my $gs (@gs) {
-+			my $remote =3D 'refs/remotes/' . $gs->{ref_id};
-+			my $localhead =3D eval {
-+			  command_oneline(qw/rev-parse
-+			  --symbolic-full-name HEAD/)
-+			};
-+			if (length($localhead) =3D=3D 0 ||
-+			    $localhead eq "HEAD") {
-+				die(sprintf("Unable to dereference HEAD " .
-+				  "for %s"), $remote);
-+			}
-+			fast_forward_bare_fetch($remote, $localhead);
-+		}
-+	}
- }
-=20
- sub read_all_remotes {
---=20
-1.6.2.4
-
-
---IiVenqGWf+H9Y6IX--
+-- 
+1.6.3.rc1.61.ge6ab3
