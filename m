@@ -1,72 +1,81 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: How to merge from newer branch to older branches?
-Date: Wed, 22 Apr 2009 09:34:35 -0400
-Message-ID: <20090422133434.GA11530@coredump.intra.peff.net>
-References: <2729632a0904211224x6e2621caxf6c169d90b760530@mail.gmail.com> <20090421193615.GB7832@coredump.intra.peff.net> <7vmya946fg.fsf@gitster.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: skillzero@gmail.com, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Apr 22 15:36:26 2009
+From: Bill Pemberton <wfp5p@virginia.edu>
+Subject: [PATCH] Add parsing of elm aliases to git-send-email
+Date: Wed, 22 Apr 2009 09:41:29 -0400
+Message-ID: <1240407689-19500-1-git-send-email-wfp5p@virginia.edu>
+Cc: gitster@pobox.com, Bill Pemberton <wfp5p@virginia.edu>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Apr 22 15:53:13 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LwccX-00029q-QO
-	for gcvg-git-2@gmane.org; Wed, 22 Apr 2009 15:36:14 +0200
+	id 1Lwcsj-0000kn-PD
+	for gcvg-git-2@gmane.org; Wed, 22 Apr 2009 15:52:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753566AbZDVNej (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 22 Apr 2009 09:34:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751646AbZDVNej
-	(ORCPT <rfc822;git-outgoing>); Wed, 22 Apr 2009 09:34:39 -0400
-Received: from peff.net ([208.65.91.99]:35474 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753485AbZDVNei (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 22 Apr 2009 09:34:38 -0400
-Received: (qmail 15352 invoked by uid 107); 22 Apr 2009 13:34:46 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Wed, 22 Apr 2009 09:34:46 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 22 Apr 2009 09:34:35 -0400
-Content-Disposition: inline
-In-Reply-To: <7vmya946fg.fsf@gitster.siamese.dyndns.org>
+	id S1752874AbZDVNvX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 22 Apr 2009 09:51:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752647AbZDVNvX
+	(ORCPT <rfc822;git-outgoing>); Wed, 22 Apr 2009 09:51:23 -0400
+Received: from viridian.itc.Virginia.EDU ([128.143.12.139]:60802 "EHLO
+	viridian.itc.Virginia.EDU" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752327AbZDVNvW (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 Apr 2009 09:51:22 -0400
+X-Greylist: delayed 581 seconds by postgrey-1.27 at vger.kernel.org; Wed, 22 Apr 2009 09:51:22 EDT
+Received: by viridian.itc.Virginia.EDU (Postfix, from userid 1249)
+	id 8E2415703B; Wed, 22 Apr 2009 09:41:39 -0400 (EDT)
+X-Mailer: git-send-email 1.6.0.6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117197>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117198>
 
-On Tue, Apr 21, 2009 at 10:13:23PM -0700, Junio C Hamano wrote:
+elm stores a text file version of the aliases that is
+<alias> = <comment> = <email address>
 
-> > Right. Junio branches all topics in git from "master", but then merges
-> > promising ones into "next". When the topic is ready for master, he can
-> > then just merge the topic branch, pulling in that topic but not the rest
-> > of next.
-> 
-> No, I don't.
-> 
-> I often branch from somewhere older than 'master', often tip from 'maint'
-> sometimes even older.  And that is not necessarily because I am better
-> than other people in planning ahead.  There are branches that forked from
-> older series (like 1.6.0.X) that are merged to next and then master,
-> without ever getting merged to produce 1.6.0.(X+1).
+This adds the parsing of this file to git-send-email
 
-Sure, but I assumed a new topic that came in would get branched from
-'master', since that is presumably what the person developing it based
-it on. Is that not true?
+Signed-off-by: Bill Pemberton <wfp5p@virginia.edu>
+---
 
-That is also what is in Documentation/howto/maintain-git.txt:
+I'm probably the only one that still uses elm, but hey, it's an easy 
+parser to add.
 
-   - Anything unobvious that is applicable to 'master' (in other
-     words, does not depend on anything that is still in 'next'
-     and not in 'master') is applied to a new topic branch that
-     is forked from the tip of 'master'.  This includes both
-     enhancements and unobvious fixes to 'master'.  A topic
-     branch is named as ai/topic where "ai" is typically
-     author's initial and "topic" is a descriptive name of the
-     topic (in other words, "what's the series is about").
+ Documentation/git-send-email.txt |    2 +-
+ git-send-email.perl              |    8 ++++++++
+ 2 files changed, 9 insertions(+), 1 deletions(-)
 
-   - An unobvious fix meant for 'maint' is applied to a new
-     topic branch that is forked from the tip of 'maint'.  The
-     topic is named as ai/maint-topic.
-
--Peff
+diff --git a/Documentation/git-send-email.txt b/Documentation/git-send-email.txt
+index 0b1f183..794224b 100644
+--- a/Documentation/git-send-email.txt
++++ b/Documentation/git-send-email.txt
+@@ -262,7 +262,7 @@ sendemail.aliasesfile::
+ 
+ sendemail.aliasfiletype::
+ 	Format of the file(s) specified in sendemail.aliasesfile. Must be
+-	one of 'mutt', 'mailrc', 'pine', or 'gnus'.
++	one of 'mutt', 'mailrc', 'pine', 'elm', or 'gnus'.
+ 
+ sendemail.multiedit::
+ 	If true (default), a single editor instance will be spawned to edit
+diff --git a/git-send-email.perl b/git-send-email.perl
+index 172b53c..c08d40c 100755
+--- a/git-send-email.perl
++++ b/git-send-email.perl
+@@ -418,6 +418,14 @@ my %parse_alias = (
+ 			$x =~ /^(\S+)$f\t\(?([^\t]+?)\)?(:?$f){0,2}$/ or next;
+ 			$aliases{$1} = [ split_addrs($2) ];
+ 		}},
++        elm => sub  { my $fh = shift;
++	              while (<$fh>) {
++			  if (/^(\S+)\s+=\s+[^=]+=\s(\S+)/) {
++			      my ($alias, $addr) = ($1, $2);
++			       $aliases{$alias} = [ split_addrs($addr) ];
++			  }
++		      } },
++
+ 	gnus => sub { my $fh = shift; while (<$fh>) {
+ 		if (/\(define-mail-alias\s+"(\S+?)"\s+"(\S+?)"\)/) {
+ 			$aliases{$1} = [ $2 ];
+-- 
+1.6.0.6
