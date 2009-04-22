@@ -1,66 +1,75 @@
-From: Eric Hanchrow <Erich@cozi.com>
-Subject: [PATCH] Describe how to generate .mailmap automatically using "git
- log"
-Date: Wed, 22 Apr 2009 10:40:40 -0700
-Message-ID: <70F0BA8D5F15094CBC8B7F2E4BBCD9B52772BF72@corp-mail-1>
+From: "R.D." <kidcastle@mail.cyccatv.net.tw>
+Subject: hello-geld lening?
+Date: Wed, 22 Apr 2009 06:05:59 +0200
+Message-ID: <20090422040815.77625DEF3DB@mail.cyccatv.net.tw>
+Reply-To: <russell8davies@netscape.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
-To: "git@vger.kernel.org" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Apr 22 19:47:32 2009
+Content-Type: text/plain;
+	charset="Windows-1251"
+Content-Transfer-Encoding: 7bit
+To: undisclosed-recipients:;
+X-From: git-owner@vger.kernel.org Wed Apr 22 20:15:11 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LwgXj-0002av-5l
-	for gcvg-git-2@gmane.org; Wed, 22 Apr 2009 19:47:31 +0200
+	id 1LwgyS-0004CB-90
+	for gcvg-git-2@gmane.org; Wed, 22 Apr 2009 20:15:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753140AbZDVRp6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 22 Apr 2009 13:45:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751914AbZDVRp5
-	(ORCPT <rfc822;git-outgoing>); Wed, 22 Apr 2009 13:45:57 -0400
-Received: from mx.cozi.com ([208.115.116.228]:12197 "EHLO mx.cozi.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751773AbZDVRp5 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 22 Apr 2009 13:45:57 -0400
-X-Greylist: delayed 314 seconds by postgrey-1.27 at vger.kernel.org; Wed, 22 Apr 2009 13:45:57 EDT
-Received: from CORP-MAIL-1.corp.cozi.com ([10.98.100.11]) by corp-mail-1
- ([10.98.100.11]) with mapi; Wed, 22 Apr 2009 10:40:42 -0700
-Thread-Topic: [PATCH] Describe how to generate .mailmap automatically using
- "git log"
-Thread-Index: AcnDcXQyNfW15nbYS4+6ao1UxSKp5A==
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-acceptlanguage: en-US
+	id S1753281AbZDVSNc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 22 Apr 2009 14:13:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753127AbZDVSNb
+	(ORCPT <rfc822;git-outgoing>); Wed, 22 Apr 2009 14:13:31 -0400
+Received: from mail.cyccatv.net.tw ([61.58.31.253]:64037 "EHLO
+	mail.cyccatv.net.tw" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752265AbZDVSNb (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 Apr 2009 14:13:31 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by mail.cyccatv.net.tw (Postfix) with ESMTP id 081DDDEF3E4;
+	Wed, 22 Apr 2009 12:08:24 +0800 (CST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=cyccatv.net.tw; h=reply-to
+	:from:subject:date:mime-version:content-type
+	:content-transfer-encoding:message-id:to; s=mail; bh=Jxlcib071bQ
+	niH/Y/M/EaBPAPP0=; b=KQV6DRrsdhNnDyq/Bod7Ckz+M0Mep6+QPQ3YtjGfdA9
+	8N5iiDJm0xBDlmNKv9tMtzClTmD5Sc7zIQU7s2Gl8mwfN9kZD+xp+dndKCy4lCdm
+	ZL++0DkM/ILpwO+OOuUCJGRxly+ae1j5wChku6aXOSGBhmqVnz0p9c8kJ4Z//3HI
+	=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=cyccatv.net.tw; h=reply-to
+	:from:subject:date:mime-version:content-type
+	:content-transfer-encoding:message-id:to; q=dns; s=mail; b=VKRH6
+	T2MXIWBRn6MUbKrRrjhXyx7UBX352txuWbHt/47QgLAVv/QwIRBjLpU+NLQ1NbMa
+	7+UpUrgIGqtX3IBkaxpOu0vX3c//e3IhG+FkYkNJHmizvXmaLBlvDnY3czsOSF45
+	xNOdaCA6rzjPaVoEKDA/VDk9aTfbQ1dC/Lt0Tw=
+X-Virus-Scanned: amavisd-new at cyccatv.net.tw
+Received: from mail.cyccatv.net.tw ([127.0.0.1])
+	by localhost (mail.cyccatv.net.tw [127.0.0.1]) (amavisd-new, port 10026)
+	with ESMTP id o3pkoFAWVK7D; Wed, 22 Apr 2009 12:08:20 +0800 (CST)
+Received: from User (unknown [62.140.137.157])
+	by mail.cyccatv.net.tw (Postfix) with ESMTPA id 77625DEF3DB;
+	Wed, 22 Apr 2009 12:08:14 +0800 (CST)
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2600.0000
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2600.0000
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117223>
+X-Spam-Report: 13.6 points;
+ *  1.4 SUB_HELLO Subject starts with "Hello"
+ *  1.4 UNDISC_RECIPS Valid-looking To "undisclosed-recipients"
+ *  0.8 DEAR_SOMETHING BODY: Contains 'Dear (something)'
+ *  3.0 RCVD_IN_BL_SPAMCOP_NET RBL: Received via a relay in bl.spamcop.net
+ *      [Blocked - see <http://www.spamcop.net/bl.shtml?62.140.137.157>]
+ *  4.0 RCVD_IN_SBL RBL: Received via a relay in Spamhaus SBL
+ *      [62.140.137.157 listed in sbl-xbl.spamhaus.org]
+ *  3.0 FORGED_MUA_OUTLOOK Forged mail pretending to be from MS Outlook
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117224>
 
----
- Documentation/mailmap.txt |   10 ++++++++++
- 1 files changed, 10 insertions(+), 0 deletions(-)
+dear sir/madam,
 
-diff --git a/Documentation/mailmap.txt b/Documentation/mailmap.txt
-index 288f04e..ae62669 100644
---- a/Documentation/mailmap.txt
-+++ b/Documentation/mailmap.txt
-@@ -72,3 +72,13 @@ Santa Claus <santa.claus@northpole.xx> <me@company.xx>
+geld lening? (money lending?)
 
- Use hash '#' for comments that are either on their own line, or after
- the email address.
-+
-+If most of your commits lack proper author names (as will be the case
-+if your repository was generated by linkgit:git-svn[1]), you can
-+generate most of a correct `.mailmap` automatically like this:
-+
-+------------
-+git log "--pretty=%an <%ae>" | sort | uniq > .mailmap
-+------------
-+
-+You will then have to edit the file to add the proper author names.
---
-1.6.3.rc0.146.gd07d5
+kontact russell davies
+
+russell8davies@netscape.net
