@@ -1,52 +1,82 @@
-From: Sam Vilain <sam@vilain.net>
-Subject: topgit infinite loop
-Date: Wed, 22 Apr 2009 23:57:49 +1200
-Message-ID: <1240401469.3889.2.camel@maia.lan>
+From: Allan Caffee <allan.caffee@gmail.com>
+Subject: [RFC/PATCH] autoconf: Do not build "http-push" without expat
+	headers
+Date: Wed, 22 Apr 2009 07:58:01 -0400
+Message-ID: <20090422115801.GA23065@linux.vnet>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Petr Baudis <pasky@suse.cz>
-X-From: git-owner@vger.kernel.org Wed Apr 22 13:59:38 2009
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Apr 22 13:59:40 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lwb73-00068j-IR
+	id 1Lwb74-00068j-97
 	for gcvg-git-2@gmane.org; Wed, 22 Apr 2009 13:59:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752135AbZDVL6E (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 22 Apr 2009 07:58:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752047AbZDVL6D
-	(ORCPT <rfc822;git-outgoing>); Wed, 22 Apr 2009 07:58:03 -0400
-Received: from watts.utsl.gen.nz ([202.78.240.73]:60116 "EHLO mail.utsl.gen.nz"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751673AbZDVL6B (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 22 Apr 2009 07:58:01 -0400
-Received: by mail.utsl.gen.nz (Postfix, from userid 1004)
-	id E3AEA21C406; Wed, 22 Apr 2009 23:57:43 +1200 (NZST)
-X-Spam-Checker-Version: SpamAssassin 3.2.5 (2008-06-10) on
-	mail.musashi.utsl.gen.nz
-X-Spam-Level: 
-X-Spam-Status: No, score=-4.4 required=5.0 tests=ALL_TRUSTED,AWL,BAYES_00
-	autolearn=ham version=3.2.5
-Received: from [192.168.69.182] (203-97-235-49.cable.telstraclear.net [203.97.235.49])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by mail.utsl.gen.nz (Postfix) with ESMTPSA id 3841821C2F1;
-	Wed, 22 Apr 2009 23:57:39 +1200 (NZST)
-X-Mailer: Evolution 2.24.1 
+	id S1752231AbZDVL6J (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 22 Apr 2009 07:58:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752174AbZDVL6I
+	(ORCPT <rfc822;git-outgoing>); Wed, 22 Apr 2009 07:58:08 -0400
+Received: from wf-out-1314.google.com ([209.85.200.174]:17552 "EHLO
+	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752047AbZDVL6H (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 Apr 2009 07:58:07 -0400
+Received: by wf-out-1314.google.com with SMTP id 26so225756wfd.4
+        for <git@vger.kernel.org>; Wed, 22 Apr 2009 04:58:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:subject
+         :message-id:mail-followup-to:mime-version:content-type
+         :content-disposition:user-agent;
+        bh=4Yf8v6OI9wAYQWgIDI1h2DxcJhbrEJ103r86odCM0MQ=;
+        b=gS/L2Lpeci1JqLlqnG6BM3O+agRyTLxjrixz0iCv/tJ0dF6LN1XgZjjRcwMXG1om3h
+         1gjQes0TESeEDxMCETB/BbDkOdR+MBsRewEpZHCJmsfQvmdTxZkDqDpiwBE98Lz75MjX
+         zt3xjz2RWwtym5paIT87Bc0O4nO1dD/0acWhU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:subject:message-id:mail-followup-to:mime-version
+         :content-type:content-disposition:user-agent;
+        b=BhSpVq24SJgpIo04lPCucGhOGk0S8J5upTkoqtFt2Q3qLVtNik1x1+OWsCz9SiePWG
+         twUzCNHJRg1utcXLJuFwZNgq4BxA2dPbDOdcOQXAxAtmZoh1+0Yi7jn8Yx1Bh0qg+YJF
+         CyCeX9E3PM8zu+pSppHdtK8CDiAD0nYHGgl/0=
+Received: by 10.143.13.17 with SMTP id q17mr5139704wfi.222.1240401486841;
+        Wed, 22 Apr 2009 04:58:06 -0700 (PDT)
+Received: from linux.vnet (pool-71-185-49-127.phlapa.fios.verizon.net [71.185.49.127])
+        by mx.google.com with ESMTPS id 22sm5659003wfg.3.2009.04.22.04.58.05
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 22 Apr 2009 04:58:06 -0700 (PDT)
+Mail-Followup-To: git@vger.kernel.org
+Content-Disposition: inline
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117194>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117195>
 
-Using the current topgit master, I did a 'tg depends add' and somehow
-seem to have found an infinite loop; see http://gist.github.com/99752
+Simply linking against expat does not guarantee successful compilation.
+Check for development headers before attempting to compile the dependant
+binaries.
 
-I've pushed all my t/* branches to github.com/samv/git - the t/*
-branches.  Any obvious idea what went wrong?
+Signed-off-by: Allan Caffee <allan.caffee@gmail.com>
+---
+ configure.ac |    3 +++
+ 1 files changed, 3 insertions(+), 0 deletions(-)
 
-Thanks for writing tg!
-Sam.
+diff --git a/configure.ac b/configure.ac
+index 4e728bc..3de0ae7 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -375,6 +375,9 @@ GIT_STASH_FLAGS($EXPATDIR)
+ AC_CHECK_LIB([expat], [XML_ParserCreate],
+ [NO_EXPAT=],
+ [NO_EXPAT=YesPlease])
++AC_CHECK_HEADER([expat.h],
++[NO_EXPAT=],
++[NO_EXPAT=YesPlease])
+ 
+ GIT_UNSTASH_FLAGS($EXPATDIR)
+ 
+-- 
+1.5.6.3
