@@ -1,77 +1,68 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [JGIT PATCH/RFC] Removed possibility to change stderr for ssh
-	sessions
-Date: Wed, 22 Apr 2009 08:46:57 -0700
-Message-ID: <20090422154657.GK23604@spearce.org>
-References: <85647ef50904211149lc4a4902h554c973017d87adb@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Constantine Plotnikov <constantine.plotnikov@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Apr 22 17:48:51 2009
+From: "Wesley J. Landaker" <wjl@icecavern.net>
+Subject: [PATCH v2 1/2] Documentation: git-svn: fix spurious bolding that mangles the output
+Date: Wed, 22 Apr 2009 09:48:57 -0600
+Message-ID: <1240415338-18076-1-git-send-email-wjl@icecavern.net>
+References: <20090422151515.GA12370@coredump.intra.peff.net>
+Cc: "Wesley J. Landaker" <wjl@icecavern.net>
+To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Eric Wong <normalperson@yhbt.net>, Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Apr 22 17:50:50 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lwegd-0001oT-8Z
-	for gcvg-git-2@gmane.org; Wed, 22 Apr 2009 17:48:35 +0200
+	id 1Lwein-0002lk-VW
+	for gcvg-git-2@gmane.org; Wed, 22 Apr 2009 17:50:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753968AbZDVPq6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 22 Apr 2009 11:46:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752174AbZDVPq6
-	(ORCPT <rfc822;git-outgoing>); Wed, 22 Apr 2009 11:46:58 -0400
-Received: from george.spearce.org ([209.20.77.23]:52606 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751933AbZDVPq6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 22 Apr 2009 11:46:58 -0400
-Received: by george.spearce.org (Postfix, from userid 1001)
-	id 26FEE38211; Wed, 22 Apr 2009 15:46:57 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <85647ef50904211149lc4a4902h554c973017d87adb@mail.gmail.com>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1754691AbZDVPtK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 22 Apr 2009 11:49:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755517AbZDVPtJ
+	(ORCPT <rfc822;git-outgoing>); Wed, 22 Apr 2009 11:49:09 -0400
+Received: from rinoa.icecavern.net ([92.243.7.152]:45007 "EHLO icecavern.net"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1754842AbZDVPtH (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 Apr 2009 11:49:07 -0400
+Received: from jenova.icecavern.net (c-76-113-110-228.hsd1.nm.comcast.net [76.113.110.228])
+	by icecavern.net (Postfix) with ESMTPSA id D5D96365E3;
+	Wed, 22 Apr 2009 09:49:00 -0600 (MDT)
+Received: from tonberry.icecavern.net (tonberry.icecavern.net [10.0.0.9])
+	by jenova.icecavern.net (Postfix) with ESMTP id C283274C002;
+	Wed, 22 Apr 2009 09:48:58 -0600 (MDT)
+Received: by tonberry.icecavern.net (Postfix, from userid 1000)
+	id B773F2FDD1; Wed, 22 Apr 2009 09:48:58 -0600 (MDT)
+X-Mailer: git-send-email 1.6.2.3
+In-Reply-To: <20090422151515.GA12370@coredump.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117208>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117209>
 
-Constantine Plotnikov <constantine.plotnikov@gmail.com> wrote:
-> The current implementation allowed to change stderr for the
-> ssh sessions. However this functionality is broken.
+Without this fix, the output looks like:
 
-Good catch.
+"Keep in mind that the  (asterisk) wildcard of the local ref (right of
+the :) *must be the ..." -- with half the sentence spuriously bold.
 
-I applied this, but two comments.
+This fixes the problem by simply escaping asciidoc syntax as suggested
+by Jeff King <peff@peff.net>.
 
-One, your patch was line wrapped, I had to manually unwrap it
-to apply.  So your MUA is still not able to send patches right.
-Thought you'd like to know.
+Signed-off-by: Wesley J. Landaker <wjl@icecavern.net>
+---
+ Documentation/git-svn.txt |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-Two,
-
-> +	 * The method does not have to be implemented and will be removed in
-> future versions.
->  	 *
->  	 * @return an OutputStream to receive the SSH error stream.
->  	 */
-> -	public abstract OutputStream getErrorStream();
-> +	@Deprecated
-> +	public OutputStream getErrorStream() {
-> +		throw new UnsupportedOperationException("This method should not be called.");
-> +	}
->  }
-
-I think deprecation here is silly.  I just deleted the method.
-
-Nobody should be calling this except TransportGitSsh, as you
-discovered.
-
-If they are, getting UnsupportedOperationException at runtime is
-as bad as NoSuchMethodError at runtime, and either is a lot less
-friendly than a no such method error at compile time.
-
-Given the method is being broken, I'd rather just remove it outright.
-So I removed it from your patch when I applied it.
-
+diff --git a/Documentation/git-svn.txt b/Documentation/git-svn.txt
+index 9229d45..3e22e40 100644
+--- a/Documentation/git-svn.txt
++++ b/Documentation/git-svn.txt
+@@ -693,7 +693,7 @@ listed below are allowed:
+ 	tags = tags/*/project-a:refs/remotes/project-a/tags/*
+ ------------------------------------------------------------------------
+ 
+-Keep in mind that the '*' (asterisk) wildcard of the local ref
++Keep in mind that the '\*' (asterisk) wildcard of the local ref
+ (right of the ':') *must* be the farthest right path component;
+ however the remote wildcard may be anywhere as long as it's own
+ independent path component (surrounded by '/' or EOL).   This
 -- 
-Shawn.
+1.6.2.3
