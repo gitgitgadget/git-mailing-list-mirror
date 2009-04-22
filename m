@@ -1,63 +1,93 @@
-From: Brandon Casey <casey@nrlssc.navy.mil>
-Subject: Re: What's going on here?  Bad repo, no error locally?
-Date: Wed, 22 Apr 2009 11:30:55 -0500
-Message-ID: <E0D2gLN_Jf9hLR8B78bVz8eX4lf5i3HBnK3k4LcAakE@cipher.nrlssc.navy.mil>
-References: <450196A1AAAE4B42A00A8B27A59278E70ACE053E@EXCHANGE.trad.tradestation.com> <7vws9d46q9.fsf@gitster.siamese.dyndns.org> <450196A1AAAE4B42A00A8B27A59278E70ACE06C1@EXCHANGE.trad.tradestation.com>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: [JGIT PATCH 10/10] BROKEN TEST: ObjectLoader stays valid
+	across repacks
+Date: Wed, 22 Apr 2009 09:33:50 -0700
+Message-ID: <20090422163349.GN23604@spearce.org>
+References: <1240276872-17893-1-git-send-email-spearce@spearce.org> <1240276872-17893-10-git-send-email-spearce@spearce.org> <1240276872-17893-11-git-send-email-spearce@spearce.org> <200904220116.51076.robin.rosenberg.lists@dewire.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: John Dlugosz <JDlugosz@TradeStation.com>
-X-From: git-owner@vger.kernel.org Wed Apr 22 18:33:23 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+X-From: git-owner@vger.kernel.org Wed Apr 22 18:35:35 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LwfNy-0005Wi-NV
-	for gcvg-git-2@gmane.org; Wed, 22 Apr 2009 18:33:23 +0200
+	id 1LwfPz-0006Lo-GO
+	for gcvg-git-2@gmane.org; Wed, 22 Apr 2009 18:35:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752284AbZDVQbG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 22 Apr 2009 12:31:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751690AbZDVQbE
-	(ORCPT <rfc822;git-outgoing>); Wed, 22 Apr 2009 12:31:04 -0400
-Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:38572 "EHLO
-	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752786AbZDVQbD (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 22 Apr 2009 12:31:03 -0400
-Received: by mail.nrlssc.navy.mil id n3MGUvl0020670; Wed, 22 Apr 2009 11:30:58 -0500
-In-Reply-To: <450196A1AAAE4B42A00A8B27A59278E70ACE06C1@EXCHANGE.trad.tradestation.com>
-X-OriginalArrivalTime: 22 Apr 2009 16:30:55.0881 (UTC) FILETIME=[B5F8F790:01C9C367]
+	id S1752317AbZDVQdv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 22 Apr 2009 12:33:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751760AbZDVQdv
+	(ORCPT <rfc822;git-outgoing>); Wed, 22 Apr 2009 12:33:51 -0400
+Received: from george.spearce.org ([209.20.77.23]:45485 "EHLO
+	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751464AbZDVQdu (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 Apr 2009 12:33:50 -0400
+Received: by george.spearce.org (Postfix, from userid 1001)
+	id 0A41338211; Wed, 22 Apr 2009 16:33:50 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <200904220116.51076.robin.rosenberg.lists@dewire.com>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117214>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117215>
 
-John Dlugosz wrote:
->> The dangling objects can happen if you push over dumb transport and
->> interrupt in the middle, or you force a push of a rewound branch, so
-> it
->> does not necessarily indicate any errors, but a missing object is
->> always an error.
+Robin Rosenberg <robin.rosenberg.lists@dewire.com> wrote:
+> So, I had an idea and started hacking and suddenly the supposedly ok cases
+> started crashing like this.
 > 
-> 
-> Thanks.
-> 
-> That's what I thought danglings were.  But why doesn't gc get rid of
-> them?
+> org.spearce.jgit.errors.MissingObjectException: Missing unknown 4a75554761c96be80602c05145d1ef41c77e1b72
 
-Jeff already explained why in his email to you about "dangling commits ...".
+You broke it!  :-)
 
-What you may not realize (and Jeff hinted at) is that unreferenced objects
-are created often.  This is because the object must be created _before_
-the reference to the object is created.  The existence of a reference to an
-object is what differentiates a dangling,unreferenced object from one that is
-not dangling,unreferenced.  Usually, an unreferenced object exists in the
-repository for a very short time before becoming referenced by the creation
-of a commit which references it.  But, there is always some period of time
-that an object exists in the repository as a dangling,unreferenced object.
-That is why gc does not delete all dangling,unreferenced objects that it
-encounters immediately.  As Jeff pointed out, it only deletes those that are
-two weeks old by default.
+> The hash codes printed are the same everytime it crashes, removing
+> the invalid flags will create these codes and the test succeeds.
 
--brandon
+I am not surprised.  The hash codes are derived from the system
+identity hash code for the object, which are assigned using a rather
+deterministic algorithm.  Given the same sequence of tests through
+the JVM and the same heap state, you are likely going to have the
+same hash code for the same objects every run.
+
+Actually, I think you missed it, but the two sets of hash codes
+you printed here in the email are identical.
+ 
+> One cannot obviously assume they are the same, but the numbers might be a lead to why it crashes here. Looks
+> like as hash collision and a failure of the "equals" part to distinguish different WindowedFile's.
+
+Nope, that's not it.  We never use .equals() on WindowedFile,
+and we never use that hash field you were printing as any part
+of an equality computation.  That hash field is mixed with the
+offset of a window to hash it into the WindowCache.  We *always*
+use reference equality ("foo.wp == wp") to test a WindowedFile.
+
+> diff --git a/org.spearce.jgit/src/org/spearce/jgit/lib/WindowedFile.java b/org.spearce.jgit/src/org/spearce/jgit/lib/WindowedFile.java
+> index 9293eb9..f9e1991 100644
+> --- a/org.spearce.jgit/src/org/spearce/jgit/lib/WindowedFile.java
+> +++ b/org.spearce.jgit/src/org/spearce/jgit/lib/WindowedFile.java
+> @@ -80,6 +80,8 @@
+>  	/** Total number of windows actively in the associated cache. */
+>  	int openCount;
+>  
+> +	boolean invalid;
+
+This shadowed the "invalid" field in PackFile, causing the anonymous
+inner class on l.93-103 that subclasses WindowedFile to write to
+this new field, while PackFile still read from its own field.
+
+If you had called this "invalid2", or marked it private, you
+wouldn't have seen the test failure.
+
+
+FWIW, I've decided to merge PackFile and WindowedFile together.
+There is no point in keeping them separate anymore.  We used to
+use WindowedFile for both the .pack and the .idx, but long ago
+you showed it was faster to load the entire .idx into memory in
+the PackIndex structure.  And this split is causing confusion,
+like the one you just stepped in.
+
+-- 
+Shawn.
