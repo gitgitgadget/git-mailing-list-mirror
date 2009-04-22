@@ -1,87 +1,73 @@
-From: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
-Subject: Re: Performance issue: initial git clone causes massive repack
-Date: Thu, 23 Apr 2009 00:50:19 +0200
-Message-ID: <20090422225019.GA17039@atjola.homenet>
-References: <alpine.LFD.2.00.0904071454250.6741@xanadu.home> <20090407202725.GC4413@atjola.homenet> <alpine.LFD.2.00.0904080041240.6741@xanadu.home> <20090410T203405Z@curie.orbis-terrarum.net> <alpine.DEB.1.00.0904141749330.10279@pacific.mpi-cbg.de> <alpine.LFD.2.00.0904141542161.6741@xanadu.home> <20090414T202206Z@curie.orbis-terrarum.net> <1240362948.22240.76.camel@maia.lan> <alpine.LFD.2.00.0904221011340.6741@xanadu.home> <49EF93CA.20207@vilain.net>
+From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+Subject: Re: [JGIT PATCH] Combine WindowedFile into PackFile to simplify the internals
+Date: Thu, 23 Apr 2009 00:56:04 +0200
+Message-ID: <200904230056.05424.robin.rosenberg.lists@dewire.com>
+References: <1240421616-14662-1-git-send-email-spearce@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Nicolas Pitre <nico@cam.org>,
-	"Robin H. Johnson" <robbat2@gentoo.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Git Mailing List <git@vger.kernel.org>,
-	Nick Edelen <sirnot@gmail.com>
-To: Sam Vilain <sam@vilain.net>
-X-From: git-owner@vger.kernel.org Thu Apr 23 00:52:06 2009
+Content-Type: Text/Plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Thu Apr 23 00:58:10 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LwlIT-0002yi-Cv
-	for gcvg-git-2@gmane.org; Thu, 23 Apr 2009 00:52:05 +0200
+	id 1LwlOD-0004VB-IX
+	for gcvg-git-2@gmane.org; Thu, 23 Apr 2009 00:58:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751291AbZDVWub convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 22 Apr 2009 18:50:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750960AbZDVWub
-	(ORCPT <rfc822;git-outgoing>); Wed, 22 Apr 2009 18:50:31 -0400
-Received: from mail.gmx.net ([213.165.64.20]:47515 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750825AbZDVWua (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 22 Apr 2009 18:50:30 -0400
-Received: (qmail invoked by alias); 22 Apr 2009 22:50:28 -0000
-Received: from i59F5A8F4.versanet.de (EHLO atjola.local) [89.245.168.244]
-  by mail.gmx.net (mp068) with SMTP; 23 Apr 2009 00:50:28 +0200
-X-Authenticated: #5039886
-X-Provags-ID: V01U2FsdGVkX1+9Rg88o+e9otixH1wMj96LUkHmYaOSfThfLJxAiE
-	A8GSnqyBFJ1g89
+	id S1752805AbZDVW4P (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 22 Apr 2009 18:56:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751832AbZDVW4O
+	(ORCPT <rfc822;git-outgoing>); Wed, 22 Apr 2009 18:56:14 -0400
+Received: from mail.dewire.com ([83.140.172.130]:5593 "EHLO dewire.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751764AbZDVW4N (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 Apr 2009 18:56:13 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by dewire.com (Postfix) with ESMTP id 4CA4614927D2;
+	Thu, 23 Apr 2009 00:56:08 +0200 (CEST)
+X-Virus-Scanned: by amavisd-new at dewire.com
+Received: from dewire.com ([127.0.0.1])
+	by localhost (torino.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id qn9vlV6-s87t; Thu, 23 Apr 2009 00:56:07 +0200 (CEST)
+Received: from sleipner.localnet (unknown [10.9.0.14])
+	by dewire.com (Postfix) with ESMTP id 2865E14927C0;
+	Thu, 23 Apr 2009 00:56:07 +0200 (CEST)
+User-Agent: KMail/1.11.2 (Linux/2.6.27-14-generic; KDE/4.2.2; i686; ; )
+In-Reply-To: <1240421616-14662-1-git-send-email-spearce@spearce.org>
 Content-Disposition: inline
-In-Reply-To: <49EF93CA.20207@vilain.net>
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.58
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117277>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117278>
 
-On 2009.04.23 10:01:46 +1200, Sam Vilain wrote:
-> Nicolas Pitre wrote:
-> >> Now that the GSoC projects have been announced I can give you the =
-good
-> >> news that one of our two projects is to optimise this stage in
-> >> git-daemon; I'm hoping we can get it down to being almost as cheap=
- as
-> >> the workaround you described in your post. I'll certainly be using=
- your
-> >> repository as a test case :-)
-> >
-> > Please keep me in the loop as much as possible. I'd prefer we're no=
-t in
-> > disagreement over the implementation only after final patches are p=
-osted
-> > to the list.
->=20
-> Thanks Nico, given your close working knowledge of the pack-objects
-> code this will be very much appreciated. Perhaps you can first help
-> out by telling me what you have to say about moving object enumeratio=
-n
-> from upload-pack to pack-objects?
+onsdag 22 april 2009 19:33:36 skrev "Shawn O. Pearce" <spearce@spearce.org>:
+> The only user of WindowedFile is PackFile, and it did so by making
+> an anonymous inner subclass within its constructor.  This is simply
+> too confusing to work with.  The two classes are tightly integrated
+> and work together to implement pack access.  Half of WindowedFile
+> is just exposing accessors for PackFile to call through.
+Thanks for clearing that out.
 
-Here's a bit about that:
-http://article.gmane.org/gmane.comp.version-control.git/116032
+Nested classes are E-V-I-L. For UI-code you cannot sanely get away,
+without them, where they are typically used more like an approximation
+of closures and anonymous functions so the yield is high. In most
+places they just confuse.
 
-Note that my RSS measurement should be invalid by now. Linus's
-patches(*) should have improved the memory usage for that scenario by
-quite a bit, since we used to keep a lot of the stuff that the revision
-enumeration required in memory, even after that processed finished,
-which should no longer be the case IIRC. And the peak memory usage for
-that process was also improved on its own, as the whole buffering is
-gone.
+> Long ago both PackFile and PackIndex used WindowedFile to read
+> data on demand, so having the WindowedFile class made some degree
+> of sense.  But in 667a84b6997e9048e0771168c98d2ffbca791937 (almost 2
+> years ago) Robin changed the pack index data to be read in one shot,
+> as that performed better than paging in the index on demand.
 
-Bj=F6rn
+The really real reason was that on Windows the index was locked when
+mapped until the Great Collector kicks in, with no way of forcing unlock. 
+Faster or not, using memory mapping was simply not possible for the
+index or any file that must be rewritten from time to time. That it was
+faster is perhaps not so strange since a few big I/O's presumably takes
+less time than many small.
 
-(*) These commits:
-8d2dfc49b1     process_{tree,blob}: show objects without buffering
-cf2ab916af     show_object(): push path_name() call further down
-213152688c     process_{tree,blob}: Remove useless xstrdup calls
+-- robin
