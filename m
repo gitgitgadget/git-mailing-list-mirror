@@ -1,91 +1,101 @@
-From: Kjetil Barvik <barvik@broadpark.no>
-Subject: Re: Bug(let): status reports 'can fast-forward' when not true
-Date: Wed, 22 Apr 2009 10:07:42 +0200
-Organization: private
-Message-ID: <86d4b5i01d.fsf@broadpark.no>
-References: <20090421205352.GA29125@hashpling.org>
- <20090421210233.GB13151@coredump.intra.peff.net>
- <7veivl60yt.fsf@gitster.siamese.dyndns.org>
+From: David Aguilar <davvid@gmail.com>
+Subject: Re: [PATCH] Wait for git diff to finish in git difftool
+Date: Wed, 22 Apr 2009 01:26:54 -0700
+Message-ID: <20090422082652.GA32698@gmail.com>
+References: <81b0412b0904220027t7afd1ed7xc57c479ef8cdb6b9@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7BIT
-Cc: Jeff King <peff@peff.net>, Charles Bailey <charles@hashpling.org>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Apr 22 10:09:42 2009
+Cc: git@vger.kernel.org, charles@hashpling.org,
+	markus.heidelberg@web.de
+To: Alex Riesen <raa.lkml@gmail.com>, gitster@poxbox.com
+X-From: git-owner@vger.kernel.org Wed Apr 22 10:29:43 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LwXWX-00044e-3r
-	for gcvg-git-2@gmane.org; Wed, 22 Apr 2009 10:09:41 +0200
+	id 1LwXpt-0001ww-8w
+	for gcvg-git-2@gmane.org; Wed, 22 Apr 2009 10:29:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753040AbZDVIIG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 22 Apr 2009 04:08:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752528AbZDVIIG
-	(ORCPT <rfc822;git-outgoing>); Wed, 22 Apr 2009 04:08:06 -0400
-Received: from osl1smout1.broadpark.no ([80.202.4.58]:48555 "EHLO
-	osl1smout1.broadpark.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752464AbZDVIIF (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 22 Apr 2009 04:08:05 -0400
-Received: from osl1sminn1.broadpark.no ([80.202.4.59])
- by osl1smout1.broadpark.no
- (Sun Java(tm) System Messaging Server 6.3-3.01 (built Jul 12 2007; 32bit))
- with ESMTP id <0KIH00FK7T9DZ5D0@osl1smout1.broadpark.no> for
- git@vger.kernel.org; Wed, 22 Apr 2009 10:08:01 +0200 (CEST)
-Received: from localhost ([84.48.79.162]) by osl1sminn1.broadpark.no
- (Sun Java(tm) System Messaging Server 6.3-3.01 (built Jul 12 2007; 32bit))
- with ESMTP id <0KIH00CV6T9C5NC0@osl1sminn1.broadpark.no> for
- git@vger.kernel.org; Wed, 22 Apr 2009 10:08:01 +0200 (CEST)
-In-reply-to: <7veivl60yt.fsf@gitster.siamese.dyndns.org>
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.3 (gnu/linux)
+	id S1755748AbZDVI1G (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 22 Apr 2009 04:27:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755732AbZDVI1G
+	(ORCPT <rfc822;git-outgoing>); Wed, 22 Apr 2009 04:27:06 -0400
+Received: from rv-out-0506.google.com ([209.85.198.229]:53994 "EHLO
+	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755615AbZDVI1D (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 Apr 2009 04:27:03 -0400
+Received: by rv-out-0506.google.com with SMTP id f9so2801173rvb.1
+        for <git@vger.kernel.org>; Wed, 22 Apr 2009 01:27:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=C9QeBqx6SM1gJdYmzv4XGaN1OZK9ebMouURbIAYEGf4=;
+        b=TwkL/Koa3gtJtWtFA0qfKKypYlQi7wh4VVvBvflVwt+nxdJ7XYe4CZrdu4vJONMSCK
+         9H1ZqD7FzqUxENwAkf4G3O3BwniGrX1Ewzsk+lIXVFB2uGs8ls/BgBExCeHWmKXlGwvx
+         O9faR39iFj3/ihOCsLqj1V9EzuosH2gICmUXY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=G+BjJWw9zMGxu7uvQKWAg0wex43KSzCOYy502+b1lkNOx7RE0kvKwThBvtoMgk3+GQ
+         efGe29Gt9crdi6BMO9iWUeUlVD5dItb+Xpul5/FBC1kAgVBY2IeA09V3rujfO1Oxv9EA
+         2RZtboXdELAPg1x7oyzfkc8CI3f8BEwzSlxe0=
+Received: by 10.114.195.19 with SMTP id s19mr4478919waf.10.1240388821873;
+        Wed, 22 Apr 2009 01:27:01 -0700 (PDT)
+Received: from gmail.com (208-106-56-2.static.dsltransport.net [208.106.56.2])
+        by mx.google.com with ESMTPS id v25sm10586857wah.16.2009.04.22.01.26.59
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 22 Apr 2009 01:27:00 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <81b0412b0904220027t7afd1ed7xc57c479ef8cdb6b9@mail.gmail.com>
+User-Agent: Mutt/1.5.19 (2009-01-05)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117180>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117181>
 
-Junio C Hamano <gitster@pobox.com> writes:
+On  0, Alex Riesen <raa.lkml@gmail.com> wrote:
+> In ActivetState Perl, exec does not wait for the started program. This
+> breaks difftool tests and may cause unexpected behaviour: git difftool
+> has returned, but the rest of code (diff and possibly the interactive
+> program are still running in the background.
 
-> Jeff King <peff@peff.net> writes:
->
->> [cc'ing Kjetil, as this is a fallout of 19de5d6]
->>
->> On Tue, Apr 21, 2009 at 09:53:52PM +0100, Charles Bailey wrote:
->>
->>> I was not really thinking when I get fetched, and ran git status on my
->>> pu branch. I was told that pu was behind origin/pu by 104 commits and
->>> could be fast-forwarded, so I git merged origin/pu and was mildly
->>> surprised when git merge made a commit for me.
->>> 
->>> A quick investigation revealed that pu had (of course) been rewound,
->>> but the only commits that it had that the new pu didn't, were merge
->>> commits.
->>
->> I think this is an unintended consequence of 19de5d6
->> (stat_tracking_info(): only count real commits, 2009-03-04). It is
->> perhaps more useful when seeing the actual numbers to see only the count
->> of real commits, but it makes statements like "can be fast-forwarded" no
->> longer true.
->>
->> So I think we need to either:
->>
->>   1. reword the "can be fast-forwarded" text to something else
->>
->>   2. revert 19de5d6, since merge commits _can_ be interesting
->>
->>   3. refactor stat_tracking_info to return "real" and "merge" counts,
->>      and change the text for the case of "real == 0 && merge > 0".
->>
->> -Peff
->
-> Let's revert it for now and then try #3 after 1.6.3 final.
+Thanks for keeping an eye on portability.
 
-  OK.  
+There's a tiny typo in the commit message (Active't'State) that
+maybe you can tweak before applying?  ('you' being Junio)
 
-  Then I have some time thinking about a solution.  Maybe:
+For whatever it's worth,
 
-  4. Introduce an argument "--no-merges", and then only show real
-     commits when used.
+Acked-by: David Aguilar <davvid@gmail.com>
 
-  -- kjetil
+
+> I usually don't care for exit code in a pure UI tool, so the kill signal
+> is just ORed together with the real exit code just to provide indication
+> of error.
+
+This seems reasonable.  The exit code isn't very important in
+the common 'show-me-the-diff' read-only scenario, and I wouldn't
+expect anyone to rely on difftool being exactly exit-code
+equivalent to git-diff.
+
+
+> diff --git a/git-difftool.perl b/git-difftool.perl
+> index 948ff7f..bd828c2 100755
+> --- a/git-difftool.perl
+> +++ b/git-difftool.perl
+> @@ -82,4 +82,5 @@ sub generate_command
+>  }
+> 
+>  setup_environment();
+> -exec(generate_command());
+> +my $rc = system(generate_command());
+> +exit($rc | ($rc >> 8));
+> -- 
+> 1.6.3.rc0.45.g63634
+
+-- 
+		David
