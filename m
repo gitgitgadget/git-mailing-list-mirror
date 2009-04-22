@@ -1,75 +1,69 @@
-From: Mike Ralphson <mike.ralphson@gmail.com>
-Subject: Re: Performance issue: initial git clone causes massive repack
-Date: Wed, 22 Apr 2009 10:55:45 +0100
-Message-ID: <e2b179460904220255v58986bd5q7c22eb3ab8486157@mail.gmail.com>
-References: <alpine.LFD.2.00.0904070903020.6741@xanadu.home>
-	 <20090407181259.GB4413@atjola.homenet>
-	 <alpine.LFD.2.00.0904071454250.6741@xanadu.home>
-	 <20090407202725.GC4413@atjola.homenet>
-	 <alpine.LFD.2.00.0904080041240.6741@xanadu.home>
-	 <20090410T203405Z@curie.orbis-terrarum.net>
-	 <alpine.DEB.1.00.0904141749330.10279@pacific.mpi-cbg.de>
-	 <alpine.LFD.2.00.0904141542161.6741@xanadu.home>
-	 <20090414T202206Z@curie.orbis-terrarum.net>
-	 <1240362948.22240.76.camel@maia.lan>
+From: Sverre Rabbelier <srabbelier@gmail.com>
+Subject: Re: git-svn init/fetch: wow that's slow
+Date: Wed, 22 Apr 2009 11:55:46 +0200
+Message-ID: <fabb9a1e0904220255w55c8fee1uf534aad07cefa818@mail.gmail.com>
+References: <E26B8975-74D3-4F01-A9D9-DAAB96C8FC85@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: "Robin H. Johnson" <robbat2@gentoo.org>,
-	Nicolas Pitre <nico@cam.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Git Mailing List <git@vger.kernel.org>,
-	Matt Enright <awickedshimmy@gmail.com>
-To: Sam Vilain <sam@vilain.net>
-X-From: git-owner@vger.kernel.org Wed Apr 22 11:57:25 2009
+Cc: git@vger.kernel.org
+To: Lachlan Deck <lachlan.deck@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Apr 22 11:58:25 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LwZCk-0007wV-O2
-	for gcvg-git-2@gmane.org; Wed, 22 Apr 2009 11:57:23 +0200
+	id 1LwZD7-00083W-Oi
+	for gcvg-git-2@gmane.org; Wed, 22 Apr 2009 11:57:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753380AbZDVJzs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 22 Apr 2009 05:55:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752786AbZDVJzs
-	(ORCPT <rfc822;git-outgoing>); Wed, 22 Apr 2009 05:55:48 -0400
-Received: from yw-out-2324.google.com ([74.125.46.31]:41108 "EHLO
-	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752408AbZDVJzr (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 22 Apr 2009 05:55:47 -0400
-Received: by yw-out-2324.google.com with SMTP id 5so1926193ywb.1
-        for <git@vger.kernel.org>; Wed, 22 Apr 2009 02:55:46 -0700 (PDT)
+	id S1754125AbZDVJ4H (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 22 Apr 2009 05:56:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753954AbZDVJ4G
+	(ORCPT <rfc822;git-outgoing>); Wed, 22 Apr 2009 05:56:06 -0400
+Received: from mail-bw0-f163.google.com ([209.85.218.163]:54591 "EHLO
+	mail-bw0-f163.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752786AbZDVJ4D (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 Apr 2009 05:56:03 -0400
+Received: by bwz7 with SMTP id 7so2235119bwz.37
+        for <git@vger.kernel.org>; Wed, 22 Apr 2009 02:56:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
+         :from:date:message-id:subject:to:cc:content-type
          :content-transfer-encoding;
-        bh=I15cAxKMYUqSPfRwPwsMM9E9fE6bNvYmXjYEBqEEuik=;
-        b=IHt6OBv+VeFz55Y7pSjvhexxJvW+BlsD2mrSUoWgz72lZWVuqbPg+dKLLMgDeMCI7s
-         6P6EporRqalMePzf25Mi624HH5Q8gpb0K5cknMcQnYLX3rE0EP4i7sG+mQKywb2RnhHD
-         qx/tTNUVnTyMehawJA6nhXtrIgGr185Ml5Mi0=
+        bh=YqOEhGKV2zJfc04AHGiPAaw7oed8xUOwO0TYWuWzous=;
+        b=QZkQKb0VDKzMqmlkuEO0QpxfeHp1P+xVn4p8rHF+iy0BRkjXccyx0Q09urC6OGCfoN
+         3w5J4sUNocPzD32C7yaAEWkZ/7eVMvfOEB+bopph6jvx4Uv/pzCaq1JBEpNRBXpV7jqc
+         6PpTZL4OrWveTu1T9lv6KnIcnZaaI/tAawcUU=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc:content-type:content-transfer-encoding;
-        b=dxXiWplxSlcwXGNZSTua5PQ+yTSHzOyDnslgjoo1Jhb43IQBxL7z0VwTDAtk/S0OEC
-         LRDOK7ffPC2dAsLkoJCMYrtU2cLqTuA4MnLoTDoV3IY7H/iQRC/3FCtayp5SH6c65Tf8
-         rFW5OF3py0Wn9GGot/qX3vv99zB19d1NM2fUM=
-Received: by 10.151.6.2 with SMTP id j2mr10274789ybi.88.1240394145821; Wed, 22 
-	Apr 2009 02:55:45 -0700 (PDT)
-In-Reply-To: <1240362948.22240.76.camel@maia.lan>
+        b=dM0GJS9nDisAEN8kH8ypQ4kbFVdb4ZThqBz+YQ4UoBILM+gLULh7xseYOJSRZXdD01
+         1KbfFrsRlAPPF0NFgwdNnhbUU9kVPf3nT63OZCgViAtLLWuvlV0bGxsiX0+FE6/kgtZt
+         y2R0It4OVkL/S09YPDx5l72JQtkVWZQBykPsI=
+Received: by 10.103.214.8 with SMTP id r8mr4419742muq.6.1240394161120; Wed, 22 
+	Apr 2009 02:56:01 -0700 (PDT)
+In-Reply-To: <E26B8975-74D3-4F01-A9D9-DAAB96C8FC85@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117185>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117186>
 
-2009/4/22 Sam Vilain <sam@vilain.net>
-> Now that the GSoC projects have been announced I can give you the good
-> news that one of our two projects...
+Heya,
 
-It's sort of three, really...
+On Wed, Apr 22, 2009 at 09:40, Lachlan Deck <lachlan.deck@gmail.com> wrote:
+> Okay, so I'm using git 1.6.2. I assume this is all a 'known issue'. Has
+> there been any work / plans towards improving this?
 
-http://socghop.appspot.com/student_project/show/google/gsoc2009/mono/t124022708105
+This can be improved by using svn 1.5's delta feature, however, Eric
+(the author of git-svn) does not have the time to do this, and no-one
+has stepped up to do this.
+A workaround is to not clone from r1 but instead start at a more
+recent revision.
 
-Mike
+-- 
+Cheers,
+
+Sverre Rabbelier
