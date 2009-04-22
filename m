@@ -1,83 +1,96 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: Performance issue: initial git clone causes massive repack
-Date: Wed, 22 Apr 2009 07:35:03 -0700
-Message-ID: <20090422143503.GG23604@spearce.org>
-References: <alpine.LFD.2.00.0904071454250.6741@xanadu.home> <20090407202725.GC4413@atjola.homenet> <alpine.LFD.2.00.0904080041240.6741@xanadu.home> <20090410T203405Z@curie.orbis-terrarum.net> <alpine.DEB.1.00.0904141749330.10279@pacific.mpi-cbg.de> <alpine.LFD.2.00.0904141542161.6741@xanadu.home> <20090414T202206Z@curie.orbis-terrarum.net> <1240362948.22240.76.camel@maia.lan> <e2b179460904220255v58986bd5q7c22eb3ab8486157@mail.gmail.com> <alpine.DEB.1.00.0904221516250.14221@intel-tinevez-2-302>
+From: James Cloos <cloos@jhcloos.com>
+Subject: Re: [PATCH 1/1] Improve progress display in kB range.
+Date: Wed, 22 Apr 2009 10:33:19 -0400
+Message-ID: <m34owgoj08.fsf@lugabout.jhcloos.org>
+References: <cover.1240115957.git.cloos@jhcloos.com>
+	<d03620ac4d99f3280df31708032a072a4a6cd96e.1240115957.git.cloos@jhcloos.com>
+	<alpine.LFD.2.00.0904210054190.6741@xanadu.home>
+	<m3skk2szgv.fsf@lugabout.jhcloos.org>
+	<alpine.LFD.2.00.0904211319570.6741@xanadu.home>
+	<m3d4b5oj76.fsf@lugabout.jhcloos.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Mike Ralphson <mike.ralphson@gmail.com>,
-	Sam Vilain <sam@vilain.net>,
-	"Robin H. Johnson" <robbat2@gentoo.org>,
-	Nicolas Pitre <nico@cam.org>,
-	Git Mailing List <git@vger.kernel.org>,
-	Matt Enright <awickedshimmy@gmail.com>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Apr 22 16:44:07 2009
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Nicolas Pitre <nico@cam.org>
+X-From: git-owner@vger.kernel.org Wed Apr 22 16:44:25 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LwdZ2-0002l9-VG
-	for gcvg-git-2@gmane.org; Wed, 22 Apr 2009 16:36:41 +0200
+	id 1LwdZS-0002yA-QN
+	for gcvg-git-2@gmane.org; Wed, 22 Apr 2009 16:37:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752289AbZDVOfG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 22 Apr 2009 10:35:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751841AbZDVOfF
-	(ORCPT <rfc822;git-outgoing>); Wed, 22 Apr 2009 10:35:05 -0400
-Received: from george.spearce.org ([209.20.77.23]:34915 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751432AbZDVOfD (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 22 Apr 2009 10:35:03 -0400
-Received: by george.spearce.org (Postfix, from userid 1001)
-	id 0DDB83821F; Wed, 22 Apr 2009 14:35:03 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <alpine.DEB.1.00.0904221516250.14221@intel-tinevez-2-302>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1752521AbZDVOf2 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 22 Apr 2009 10:35:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751634AbZDVOf1
+	(ORCPT <rfc822;git-outgoing>); Wed, 22 Apr 2009 10:35:27 -0400
+Received: from eagle.jhcloos.com ([207.210.242.212]:1529 "EHLO
+	eagle.jhcloos.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751433AbZDVOf0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 Apr 2009 10:35:26 -0400
+Received: by eagle.jhcloos.com (Postfix, from userid 10)
+	id 9475540281; Wed, 22 Apr 2009 14:35:01 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jhcloos.com;
+	s=eagle; t=1240410925;
+	bh=TauKL+7bKrklyr9D3477nHicl3JTcNsjHkbQaAoH8Xw=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	b=hrf9NJqAHt5hvne3F/MpzAzaFN9Svp6wcv6GZMHS2+8KZy47G1lWNzZjAoLe0ZVYN
+	 WfF5BPWw3G1OK635LuQ7vIZvP1zM46mAi/NOZcl703kkxlhPW2FZb5CLpJAEbNnDPr
+	 9K9nu84da9O96M6hFeRLpL/+7gtMZmYxrJNrz2U0=
+Received: by lugabout.jhcloos.org (Postfix, from userid 500)
+	id 6BF9B8CDC2; Wed, 22 Apr 2009 14:33:44 +0000 (UTC)
+In-Reply-To: <m3d4b5oj76.fsf@lugabout.jhcloos.org> (James Cloos's message of
+	"Tue, 21 Apr 2009 16:16:53 -0400")
+User-Agent: Gnus/5.110011 (No Gnus v0.11) Emacs/23.0.92 (gnu/linux)
+Face: iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABHNCSVQICAgIfAhkiAAAAI1J
+ REFUOE+lU9ESgCAIg64P1y+ngUdxhl5H8wFbbM0OmUiEhKkCYaZThXCo6KE5sCbA1DDX3genvO4d
+ eBQgEMaM5qy6uWk4SfBYfdu9jvBN9nSVDOKRtwb+I3epboOsOX5pZbJNsBJFvmQQ05YMfieIBnYX
+ FK2N6dOawd97r/e8RjkTLzmMsiVgrAoEugtviCM3v2WzjgAAAABJRU5ErkJggg==
+Copyright: Copyright 2009 James Cloos
+OpenPGP: ED7DAEA6; url=http://jhcloos.com/public_key/0xED7DAEA6.asc
+OpenPGP-Fingerprint: E9E9 F828 61A4 6EA9 0F2B  63E7 997A 9F17 ED7D AEA6
+X-Hashcash: 1:29:090422:nico@cam.org::PPT1h3UHXY236tQ1:0000HJcmf
+X-Hashcash: 1:29:090422:git@vger.kernel.org::wam2tUTVctGxVlaS:00000000000000000000000000000000000000000CIrdC
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117200>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117201>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> On Wed, 22 Apr 2009, Mike Ralphson wrote:
-> 
-> > 2009/4/22 Sam Vilain <sam@vilain.net>
-> > > Now that the GSoC projects have been announced I can give you the good
-> > > news that one of our two projects...
-> > 
-> > It's sort of three, really...
-> > 
-> > http://socghop.appspot.com/student_project/show/google/gsoc2009/mono/t124022708105
-> 
-> OMG!  That's the third time they are wasting Google's money: AFAICT they 
-> haven't learnt from the past two years' failures.  At least I am not aware 
-> of any of them Mono guys trying to collaborate with us.
+|> Therefore, in practice =E2=80=94 and as I have witnessed several tho=
+usand times
+|> without ever having seen a contrary example =E2=80=94 display_throug=
+hput() is
+|> called *durring* a download only when total & 0xFFF =3D=3D 0xFFF.
 
-Yikes!
+Another possibility is an off-by-one error.  The relevant part of fill(=
+)
+looks like:
 
-Wearing my Google hat, I have to cry a little.  I think its such
-a waste.  But we don't tell the orgs what projects they should or
-should not do, its at each org's individual discretion.  Clearly the
-Mono folks feel they should "spend" a *fourth* slot on this project.
-That or, Mono was granted one too many slots in the program.  *sigh*
+,----< excerpt from index-pack.c:fill() >
+|   do {
+|     ssize_t ret =3D xread(input_fd, input_buffer + input_len,
+|                         sizeof(input_buffer) - input_len);
+|     if (ret <=3D 0) {
+|       if (!ret)
+|         die("early EOF");
+|       die("read error on input: %s", strerror(errno));
+|     }
+|     input_len +=3D ret;
+|     if (from_stdin)
+|       display_throughput(progress, consumed_bytes + input_len);
+|   } while (input_len < min);
+|   return input_buffer;
+| }
+`----
 
-Wearing my JGit maintainer hat, I have to cry a little.  The mentor
-for this project should realize... we've spent over 3 years now
-on JGit (it turned 3 on Mar 6 2009) and it *still* doesn't provide
-a full replacement for git.git.
+if *(input_buffer + ret) is the last read octet rather than the next
+empty octet, that would also explain what I see.
 
-I'd like to think that I'm not a moron, and that it really does
-take 3 years of R&D work to find a suitable implementation of Git
-in a sandboxed language like Java.  Or, maybe I am a moron.  Linus,
-Junio and crew had git.git implemented in less time.
- 
-> Oh well, maybe I should drop them a mail that they may get valuable input 
-> here _iff_ they just ask.
+Perhaps that call to display_throughput() should have an extra +1?
 
-I've tried that in the past two years.  I've given up.  The JGit
-code is available.  Its license is quite liberal.  They can look
-at it if they want.  My guess is, they won't.
-
--- 
-Shawn.
+-JimC
+--=20
+James Cloos <cloos@jhcloos.com>         OpenPGP: 1024D/ED7DAEA6
