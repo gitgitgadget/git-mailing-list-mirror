@@ -1,397 +1,310 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: [JGIT RFC PATCH 5/5] Teach PackWriter to recover from removed/replaced packs
-Date: Wed, 22 Apr 2009 20:36:23 -0700
-Message-ID: <1240457783-21434-6-git-send-email-spearce@spearce.org>
-References: <1240457783-21434-1-git-send-email-spearce@spearce.org>
- <1240457783-21434-2-git-send-email-spearce@spearce.org>
- <1240457783-21434-3-git-send-email-spearce@spearce.org>
- <1240457783-21434-4-git-send-email-spearce@spearce.org>
- <1240457783-21434-5-git-send-email-spearce@spearce.org>
-Cc: git@vger.kernel.org
-To: Robin Rosenberg <robin.rosenberg@dewire.com>
-X-From: git-owner@vger.kernel.org Thu Apr 23 05:38:25 2009
+From: Peter Hutterer <peter.hutterer@who-t.net>
+Subject: Re: [PATCH/RESEND] git-submodule: add support for --rebase.
+Date: Thu, 23 Apr 2009 13:47:11 +1000
+Message-ID: <20090423034709.GA22244@dingo.bne.redhat.com>
+References: <20090419233051.GA17946@dingo.bne.redhat.com> <alpine.DEB.1.00.0904201152360.6955@intel-tinevez-2-302> <20090421074540.GA7885@dingo.redhat.com> <alpine.DEB.1.00.0904211047311.10279@pacific.mpi-cbg.de>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: gitster@pobox.com, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Thu Apr 23 05:50:13 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LwplV-0005xI-DH
-	for gcvg-git-2@gmane.org; Thu, 23 Apr 2009 05:38:21 +0200
+	id 1Lwpwx-00083u-UT
+	for gcvg-git-2@gmane.org; Thu, 23 Apr 2009 05:50:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754097AbZDWDgf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 22 Apr 2009 23:36:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753775AbZDWDgd
-	(ORCPT <rfc822;git-outgoing>); Wed, 22 Apr 2009 23:36:33 -0400
-Received: from george.spearce.org ([209.20.77.23]:47549 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753500AbZDWDg2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 22 Apr 2009 23:36:28 -0400
-Received: by george.spearce.org (Postfix, from userid 1000)
-	id B447738211; Thu, 23 Apr 2009 03:36:27 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.2.4 (2008-01-01) on george.spearce.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-4.4 required=4.0 tests=ALL_TRUSTED,BAYES_00
-	autolearn=ham version=3.2.4
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by george.spearce.org (Postfix) with ESMTP id A607C38222;
-	Thu, 23 Apr 2009 03:36:25 +0000 (UTC)
-X-Mailer: git-send-email 1.6.3.rc1.205.g37f8
-In-Reply-To: <1240457783-21434-5-git-send-email-spearce@spearce.org>
+	id S1752757AbZDWDry (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 22 Apr 2009 23:47:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750860AbZDWDry
+	(ORCPT <rfc822;git-outgoing>); Wed, 22 Apr 2009 23:47:54 -0400
+Received: from ipx-119-252-190-80.ipxserver.de ([80.190.252.119]:37812 "EHLO
+	ipx10616.ipxserver.de" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752655AbZDWDrx (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 Apr 2009 23:47:53 -0400
+Received: from whot by ipx10616.ipxserver.de with local (Exim 4.63)
+	(envelope-from <peter.hutterer@who-t.net>)
+	id 1Lwpua-0003Ar-QC; Thu, 23 Apr 2009 05:47:45 +0200
+Content-Disposition: inline
+In-Reply-To: <alpine.DEB.1.00.0904211047311.10279@pacific.mpi-cbg.de>
+User-Agent: Mutt/1.5.19 (2009-01-05)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117290>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117291>
 
-A concurrently running "git gc" in the same repository could cause a
-PackFile that was previously identified for object reuse to disappear
-(or be rewritten) between the time that a segment was selected to
-be reused, and when we actually need to copy the raw data from the
-pack to the output stream.
+'git submodule update --rebase' rebases your local branch on top of what
+would have been checked out to a detached HEAD otherwise.
 
-We now peg the pack file open during the reuse period, ensuring
-that the underlying file descriptor cannot be closed while we are
-copying data, even if memory pressure gets high and windows are
-evicted from the WindowCache.
+In some cases, detaching the HEAD when updating a submodule complicates
+the workflow to commit to this submodule (checkout master, rebase, then
+commit).  For submodules that require frequent updates but infrequent
+(if any) commits, a rebase can be executed directly by the git-submodule
+command, ensuring that the submodules stay on their respective branches.
 
-If the pack file is gone (or has been rewritten) since we originally
-picked it for reuse we throw away that reuse decision and make
-it again.  This is a relative waste of CPU and disk IO, as we have
-to do work twice, but it should be fairly infrequent as repositories
-are not repacked that often.  If we do have to recompute one object,
-it is likely that we may need to recompute all reuse decisions for
-the remainder of this pack output stream, but doing a bit more work
-and succeeding is better than failing outright with an obtuse error.
+git-config key: submodule.$name.rebase (bool)
 
-The way we handle the recovery is subject to livelock.  We could
-pick a new reuse location, see it disappear before we can get a pin,
-and need to select another one.  Livelock however is not likely
-here, as the situation can only happen when the selected pack
-file has been deleted or overwritten.  Repacking takes some time
-on any repository, typically longer than a single PackWriter may
-need to stream to a network client.  It is highly improbable that
-the repository administator is running "while true; git gc; done",
-as that would suck up all system resources and generally make the
-host unresponsive anyway.  So, long story short, we should be OK
-against livelock if the repository administrator isn't hellbent
-on otherwise sucking up CPU usage through repeat git gc attempts.
-And if they are, we'll just help them out by falling for the obvious
-livelock case.
-
-Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
+Signed-off-by: Peter Hutterer <peter.hutterer@who-t.net>
 ---
 
- As I said in the cover letter of this series; this one is still
- iffy.  I think its sound as-is, but I'm not convinced that this
- patch is sufficient to cover everything that can happen.
+I figured if we're waiting for 1.6.3 anyway I might as well add support
+for gitconfig to make this feature "complete".
+Test cases are updated as well.
 
- .../src/org/spearce/jgit/lib/PackWriter.java       |  118 +++++++++++++-------
- .../org/spearce/jgit/lib/PackedObjectLoader.java   |   30 +++++
- .../src/org/spearce/jgit/lib/WindowCache.java      |   59 +++++++----
- 3 files changed, 145 insertions(+), 62 deletions(-)
+Cheers,
+  Peter
 
-diff --git a/org.spearce.jgit/src/org/spearce/jgit/lib/PackWriter.java b/org.spearce.jgit/src/org/spearce/jgit/lib/PackWriter.java
-index e1397fd..2da8bbc 100644
---- a/org.spearce.jgit/src/org/spearce/jgit/lib/PackWriter.java
-+++ b/org.spearce.jgit/src/org/spearce/jgit/lib/PackWriter.java
-@@ -606,14 +606,7 @@ private void searchForReuse() throws IOException {
- 					throw new IOException(
- 							"Packing cancelled during objects writing");
- 				reuseLoaders.clear();
--				db.openObjectInAllPacks(otp, reuseLoaders, windowCursor);
--				if (reuseDeltas) {
--					selectDeltaReuseForObject(otp, reuseLoaders);
--				}
--				// delta reuse is preferred over object reuse
--				if (reuseObjects && !otp.hasReuseLoader()) {
--					selectObjectReuseForObject(otp, reuseLoaders);
--				}
-+				searchForReuse(reuseLoaders, otp);
- 				initMonitor.update(1);
- 			}
- 		}
-@@ -621,6 +614,19 @@ private void searchForReuse() throws IOException {
- 		initMonitor.endTask();
- 	}
+
+ Documentation/git-submodule.txt |   14 ++++-
+ git-submodule.sh                |   28 +++++++-
+ t/t7404-submodule-update.sh     |  130 +++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 166 insertions(+), 6 deletions(-)
+ create mode 100755 t/t7404-submodule-update.sh
+
+diff --git a/Documentation/git-submodule.txt b/Documentation/git-submodule.txt
+index 3b8df44..0286409 100644
+--- a/Documentation/git-submodule.txt
++++ b/Documentation/git-submodule.txt
+@@ -12,7 +12,7 @@ SYNOPSIS
+ 'git submodule' [--quiet] add [-b branch] [--] <repository> <path>
+ 'git submodule' [--quiet] status [--cached] [--] [<path>...]
+ 'git submodule' [--quiet] init [--] [<path>...]
+-'git submodule' [--quiet] update [--init] [-N|--no-fetch] [--] [<path>...]
++'git submodule' [--quiet] update [--init] [-N|--no-fetch] [--rebase] [--] [<path>...]
+ 'git submodule' [--quiet] summary [--summary-limit <n>] [commit] [--] [<path>...]
+ 'git submodule' [--quiet] foreach <command>
+ 'git submodule' [--quiet] sync [--] [<path>...]
+@@ -113,7 +113,8 @@ init::
+ update::
+ 	Update the registered submodules, i.e. clone missing submodules and
+ 	checkout the commit specified in the index of the containing repository.
+-	This will make the submodules HEAD be detached.
++	This will make the submodules HEAD be detached unless '--rebase' is
++	specified or the key `submodule.$name.rebase` is set to `true`.
+ +
+ If the submodule is not yet initialized, and you just want to use the
+ setting as stored in .gitmodules, you can automatically initialize the
+@@ -177,6 +178,15 @@ OPTIONS
+ 	This option is only valid for the update command.
+ 	Don't fetch new objects from the remote site.
  
-+	private void searchForReuse(
-+			final Collection<PackedObjectLoader> reuseLoaders,
-+			final ObjectToPack otp) throws IOException {
-+		db.openObjectInAllPacks(otp, reuseLoaders, windowCursor);
-+		if (reuseDeltas) {
-+			selectDeltaReuseForObject(otp, reuseLoaders);
-+		}
-+		// delta reuse is preferred over object reuse
-+		if (reuseObjects && !otp.hasReuseLoader()) {
-+			selectObjectReuseForObject(otp, reuseLoaders);
-+		}
-+	}
++--rebase::
++	This option is only valid for the update command.
++	Rebase the current branch onto the commit recorded in the
++	superproject. If this option is given, the submodule's HEAD will not
++	be detached. If a a merge failure prevents this process, you will have
++	to resolve these failures with linkgit:git-rebase[1].
++	If the key `submodule.$name.rebase` is set to `true`, this option is
++	implicit.
 +
- 	private void selectDeltaReuseForObject(final ObjectToPack otp,
- 			final Collection<PackedObjectLoader> loaders) throws IOException {
- 		PackedObjectLoader bestLoader = null;
-@@ -707,40 +713,69 @@ private void writeObject(final ObjectToPack otp) throws IOException {
+ <path>...::
+ 	Paths to submodule(s). When specified this will restrict the command
+ 	to only operate on the submodules found at the specified paths.
+diff --git a/git-submodule.sh b/git-submodule.sh
+index 7c2e060..c4ba19a 100755
+--- a/git-submodule.sh
++++ b/git-submodule.sh
+@@ -17,6 +17,7 @@ branch=
+ quiet=
+ cached=
+ nofetch=
++rebase=
  
- 		out.resetCRC32();
- 		otp.setOffset(out.length());
--		if (otp.isDeltaRepresentation())
--			writeDeltaObject(otp);
--		else
--			writeWholeObject(otp);
-+		
-+		final PackedObjectLoader reuse = open(otp);
-+		if (reuse != null) {
-+			try {
-+				if (otp.isDeltaRepresentation()) {
-+					writeDeltaObjectReuse(otp, reuse);
-+				} else {
-+					writeObjectHeader(otp.getType(), reuse.getSize());
-+					reuse.copyRawData(out, buf, windowCursor);
-+				}
-+			} finally {
-+				reuse.endCopyRawData();
-+			}
-+		} else if (otp.isDeltaRepresentation()) {
-+			throw new IOException("creating deltas is not implemented");
-+		} else {
-+			writeWholeObjectDeflate(otp);
-+		}
- 		otp.setCRC(out.getCRC32());
+ #
+ # print stuff on stdout unless -q was specified
+@@ -314,6 +315,10 @@ cmd_update()
+ 			shift
+ 			nofetch=1
+ 			;;
++		-r|--rebase)
++			shift
++			rebase=true
++			;;
+ 		--)
+ 			shift
+ 			break
+@@ -332,6 +337,7 @@ cmd_update()
+ 	do
+ 		name=$(module_name "$path") || exit
+ 		url=$(git config submodule."$name".url)
++		rebase_module=$(git config submodule."$name".rebase)
+ 		if test -z "$url"
+ 		then
+ 			# Only mention uninitialized submodules when its
+@@ -352,6 +358,11 @@ cmd_update()
+ 			die "Unable to find current revision in submodule path '$path'"
+ 		fi
  
- 		writeMonitor.update(1);
- 	}
- 
--	private void writeWholeObject(final ObjectToPack otp) throws IOException {
--		if (otp.hasReuseLoader()) {
--			final PackedObjectLoader loader = otp.getReuseLoader();
--			writeObjectHeader(otp.getType(), loader.getSize());
--			loader.copyRawData(out, buf, windowCursor);
--			otp.disposeLoader();
--		} else {
--			final ObjectLoader loader = db.openObject(windowCursor, otp);
--			final byte[] data = loader.getCachedBytes();
--			writeObjectHeader(otp.getType(), data.length);
--			deflater.reset();
--			deflater.setInput(data, 0, data.length);
--			deflater.finish();
--			do {
--				final int n = deflater.deflate(buf, 0, buf.length);
--				if (n > 0)
--					out.write(buf, 0, n);
--			} while (!deflater.finished());
--		}
--	}
--
--	private void writeDeltaObject(final ObjectToPack otp) throws IOException {
--		final PackedObjectLoader loader = otp.getReuseLoader();
-+	private PackedObjectLoader open(final ObjectToPack otp) throws IOException {
-+		for (;;) {
-+			PackedObjectLoader reuse = otp.useLoader();
-+			if (reuse == null) {
-+				return null;
-+			}
++		if test true = "$rebase"
++		then
++			rebase_module=true
++		fi
 +
-+			try {
-+				reuse.beginCopyRawData();
-+				return reuse;
-+			} catch (IOException err) {
-+				// The pack we found the object in originally is gone, or
-+				// it has been overwritten with a different layout.
-+				//
-+				otp.clearDeltaBase();
-+				searchForReuse(new ArrayList<PackedObjectLoader>(), otp);
-+				continue;
-+			}
-+		}
-+	}
+ 		if test "$subsha1" != "$sha1"
+ 		then
+ 			force=
+@@ -367,11 +378,20 @@ cmd_update()
+ 				die "Unable to fetch in submodule path '$path'"
+ 			fi
+ 
+-			(unset GIT_DIR; cd "$path" &&
+-				  git-checkout $force -q "$sha1") ||
+-			die "Unable to checkout '$sha1' in submodule path '$path'"
++			if test true = "$rebase_module"
++			then
++				command="git-rebase"
++				action="rebase"
++				msg="rebased onto"
++			else
++				command="git-checkout $force -q"
++				action="checkout"
++				msg="checked out"
++			fi
+ 
+-			say "Submodule path '$path': checked out '$sha1'"
++			(unset GIT_DIR; cd "$path" && $command "$sha1") ||
++			die "Unable to $action '$sha1' in submodule path '$path'"
++			say "Submodule path '$path': $msg '$sha1'"
+ 		fi
+ 	done
+ }
+diff --git a/t/t7404-submodule-update.sh b/t/t7404-submodule-update.sh
+new file mode 100755
+index 0000000..d70bae1
+--- /dev/null
++++ b/t/t7404-submodule-update.sh
+@@ -0,0 +1,130 @@
++#!/bin/sh
++#
++# Copyright (c) 2009 Red Hat, Inc.
++#
 +
-+	private void writeWholeObjectDeflate(final ObjectToPack otp)
-+			throws IOException {
-+		final ObjectLoader loader = db.openObject(windowCursor, otp);
-+		final byte[] data = loader.getCachedBytes();
-+		writeObjectHeader(otp.getType(), data.length);
-+		deflater.reset();
-+		deflater.setInput(data, 0, data.length);
-+		deflater.finish();
-+		do {
-+			final int n = deflater.deflate(buf, 0, buf.length);
-+			if (n > 0)
-+				out.write(buf, 0, n);
-+		} while (!deflater.finished());
-+	}
++test_description='Test updating submodules
 +
-+	private void writeDeltaObjectReuse(final ObjectToPack otp,
-+			final PackedObjectLoader reuse) throws IOException {
- 		if (deltaBaseAsOffset && otp.getDeltaBase() != null) {
--			writeObjectHeader(Constants.OBJ_OFS_DELTA, loader.getRawSize());
-+			writeObjectHeader(Constants.OBJ_OFS_DELTA, reuse.getRawSize());
- 
- 			final ObjectToPack deltaBase = otp.getDeltaBase();
- 			long offsetDiff = otp.getOffset() - deltaBase.getOffset();
-@@ -752,12 +787,11 @@ private void writeDeltaObject(final ObjectToPack otp) throws IOException {
- 
- 			out.write(buf, pos, buf.length - pos);
- 		} else {
--			writeObjectHeader(Constants.OBJ_REF_DELTA, loader.getRawSize());
-+			writeObjectHeader(Constants.OBJ_REF_DELTA, reuse.getRawSize());
- 			otp.getDeltaBaseId().copyRawTo(buf, 0);
- 			out.write(buf, 0, Constants.OBJECT_ID_LENGTH);
- 		}
--		loader.copyRawData(out, buf, windowCursor);
--		otp.disposeLoader();
-+		reuse.copyRawData(out, buf, windowCursor);
- 	}
- 
- 	private void writeObjectHeader(final int objectType, long dataLength)
-@@ -955,8 +989,10 @@ boolean isWritten() {
- 			return getOffset() != 0;
- 		}
- 
--		PackedObjectLoader getReuseLoader() {
--			return reuseLoader;
-+		PackedObjectLoader useLoader() {
-+			final PackedObjectLoader r = reuseLoader;
-+			reuseLoader = null;
-+			return r;
- 		}
- 
- 		boolean hasReuseLoader() {
-diff --git a/org.spearce.jgit/src/org/spearce/jgit/lib/PackedObjectLoader.java b/org.spearce.jgit/src/org/spearce/jgit/lib/PackedObjectLoader.java
-index 60333e7..6066ba1 100644
---- a/org.spearce.jgit/src/org/spearce/jgit/lib/PackedObjectLoader.java
-+++ b/org.spearce.jgit/src/org/spearce/jgit/lib/PackedObjectLoader.java
-@@ -106,6 +106,30 @@ public final long getDataOffset() {
- 	}
- 
- 	/**
-+	 * Peg the pack file open to support data copying.
-+	 * <p>
-+	 * Applications trying to copy raw pack data should ensure the pack stays
-+	 * open and available throughout the entire copy. To do that use:
-+	 * 
-+	 * <pre>
-+	 * loader.beginCopyRawData();
-+	 * try {
-+	 * 	loader.copyRawData(out, tmpbuf, curs);
-+	 * } finally {
-+	 * 	loader.endCopyRawData();
-+	 * }
-+	 * </pre>
-+	 * 
-+	 * @throws IOException
-+	 *             this loader contains stale information and cannot be used.
-+	 *             The most likely cause is the underlying pack file has been
-+	 *             deleted, and the object has moved to another pack file.
-+	 */
-+	public void beginCopyRawData() throws IOException {
-+		WindowCache.pin(pack);
-+	}
++This test verifies that "git submodule update" detaches the HEAD of the
++submodule and "git submodule update --rebase" does not detach the HEAD.
++'
 +
-+	/**
- 	 * Copy raw object representation from storage to provided output stream.
- 	 * <p>
- 	 * Copied data doesn't include object header. User must provide temporary
-@@ -121,12 +145,18 @@ public final long getDataOffset() {
- 	 *            temporary thread storage during data access.
- 	 * @throws IOException
- 	 *             when the object cannot be read.
-+	 * @see #beginCopyRawData()
- 	 */
- 	public void copyRawData(OutputStream out, byte buf[], WindowCursor curs)
- 			throws IOException {
- 		pack.copyRawData(this, out, buf, curs);
- 	}
- 
-+	/** Release resources after {@link #beginCopyRawData()}. */
-+	public void endCopyRawData() {
-+		WindowCache.unpin(pack);
-+	}
++. ./test-lib.sh
 +
- 	/**
- 	 * @return true if this loader is capable of fast raw-data copying basing on
- 	 *         compressed data checksum; false if raw-data copying needs
-diff --git a/org.spearce.jgit/src/org/spearce/jgit/lib/WindowCache.java b/org.spearce.jgit/src/org/spearce/jgit/lib/WindowCache.java
-index 03e531a..51d149c 100644
---- a/org.spearce.jgit/src/org/spearce/jgit/lib/WindowCache.java
-+++ b/org.spearce.jgit/src/org/spearce/jgit/lib/WindowCache.java
-@@ -223,6 +223,19 @@ public static final void get(final WindowCursor curs, final PackFile wp,
- 		curs.window.ensureLoaded(curs.handle);
- 	}
- 
-+	static synchronized final void pin(final PackFile wp) throws IOException {
-+		if (++wp.openCount == 1) {
-+			openFile(wp);
-+		}
-+	}
 +
-+	static synchronized final void unpin(final PackFile wp) {
-+		if (--wp.openCount == 0) {
-+			openFileCount--;
-+			wp.cacheClose();
-+		}
-+	}
++compare_head()
++{
++    sha_master=`git-rev-list --max-count=1 master`
++    sha_head=`git-rev-list --max-count=1 HEAD`
 +
- 	private static synchronized final void getImpl(final WindowCursor curs,
- 			final PackFile wp, final long position) throws IOException {
- 		final int id = (int) (position >> windowSizeShift);
-@@ -241,27 +254,7 @@ private static synchronized final void getImpl(final WindowCursor curs,
- 		}
- 
- 		if (wp.openCount == 0) {
--			try {
--				openFileCount++;
--				releaseMemory();
--				runClearedWindowQueue();
--				wp.openCount = 1;
--				wp.cacheOpen();
--			} catch (IOException ioe) {
--				openFileCount--;
--				wp.openCount = 0;
--				throw ioe;
--			} catch (RuntimeException ioe) {
--				openFileCount--;
--				wp.openCount = 0;
--				throw ioe;
--			} catch (Error ioe) {
--				openFileCount--;
--				wp.openCount = 0;
--				throw ioe;
--			} finally {
--				wp.openCount--;
--			}
-+			openFile(wp);
- 
- 			// The cacheOpen may have mapped the window we are trying to
- 			// map ourselves. Retrying the search ensures that does not
-@@ -294,6 +287,30 @@ private static synchronized final void getImpl(final WindowCursor curs,
- 		insertLRU(e);
- 	}
- 
-+	private static void openFile(final PackFile wp) throws IOException {
-+		try {
-+			openFileCount++;
-+			releaseMemory();
-+			runClearedWindowQueue();
-+			wp.openCount = 1;
-+			wp.cacheOpen();
-+		} catch (IOException ioe) {
-+			openFileCount--;
-+			wp.openCount = 0;
-+			throw ioe;
-+		} catch (RuntimeException ioe) {
-+			openFileCount--;
-+			wp.openCount = 0;
-+			throw ioe;
-+		} catch (Error ioe) {
-+			openFileCount--;
-+			wp.openCount = 0;
-+			throw ioe;
-+		} finally {
-+			wp.openCount--;
-+		}
-+	}
++    test "$sha_master" = "$sha_head"
++}
 +
- 	static synchronized void markLoaded(final ByteWindow w) {
- 		if (--w.provider.openCount == 0) {
- 			openFileCount--;
++
++test_expect_success 'setup a submodule tree' '
++	echo file > file &&
++	git add file &&
++	test_tick &&
++	git commit -m upstream
++	git clone . super &&
++	git clone super submodule &&
++	(cd super &&
++	 git submodule add ../submodule submodule &&
++	 test_tick &&
++	 git commit -m "submodule" &&
++	 git submodule init submodule
++	) &&
++	(cd submodule &&
++	echo "line2" > file &&
++	git add file &&
++	git commit -m "Commit 2"
++	) &&
++	(cd super &&
++	 (cd submodule &&
++	  git pull --rebase origin
++	 ) &&
++	 git add submodule &&
++	 git commit -m "submodule update"
++	)
++'
++
++test_expect_success 'submodule update detaching the HEAD ' '
++	(cd super/submodule &&
++	 git reset --hard HEAD~1
++	) &&
++	(cd super &&
++	 (cd submodule &&
++	  compare_head
++	 ) &&
++	 git submodule update submodule &&
++	 cd submodule &&
++	 ! compare_head
++	)
++'
++
++test_expect_success 'submodule update --rebase staying on master' '
++	(cd super/submodule &&
++	  git checkout master
++	) &&
++	(cd super &&
++	 (cd submodule &&
++	  compare_head
++	 ) &&
++	 git submodule update --rebase submodule &&
++	 cd submodule &&
++	 compare_head
++	)
++'
++
++test_expect_success 'submodule update - rebase true in .git/config' '
++	(cd super &&
++	 git config submodule.submodule.rebase true
++	) &&
++	(cd super/submodule &&
++	  git reset --hard HEAD~1
++	) &&
++	(cd super &&
++	 (cd submodule &&
++	  compare_head
++	 ) &&
++	 git submodule update submodule &&
++	 cd submodule &&
++	 compare_head
++	)
++'
++
++test_expect_success 'submodule update - rebase false in .git/config but --rebase given' '
++	(cd super &&
++	 git config submodule.submodule.rebase false
++	) &&
++	(cd super/submodule &&
++	  git reset --hard HEAD~1
++	) &&
++	(cd super &&
++	 (cd submodule &&
++	  compare_head
++	 ) &&
++	 git submodule update --rebase submodule &&
++	 cd submodule &&
++	 compare_head
++	)
++'
++
++test_expect_success 'submodule update - rebase false in .git/config' '
++	(cd super &&
++	 git config submodule.submodule.rebase false
++	) &&
++	(cd super/submodule &&
++	  git reset --hard HEAD^
++	) &&
++	(cd super &&
++	 (cd submodule &&
++	  compare_head
++	 ) &&
++	 git submodule update submodule &&
++	 cd submodule &&
++	 ! compare_head
++	)
++'
++
++test_done
 -- 
-1.6.3.rc1.205.g37f8
+1.6.3.rc1.2.gfa66a
