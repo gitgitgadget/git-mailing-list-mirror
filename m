@@ -1,64 +1,61 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [doc] User Manual Suggestion
-Date: Thu, 23 Apr 2009 16:16:36 -0400
-Message-ID: <20090423201636.GD3056@coredump.intra.peff.net>
-References: <m24owgqy0j.fsf@boostpro.com> <20090423175717.GA30198@fieldses.org> <b4087cc50904231137g67b4b84eu3b61bf174ba37d7f@mail.gmail.com>
+From: "Ferry Huberts (Pelagic)" <ferry.huberts@pelagic.nl>
+Subject: Re: [EGit PATCH] IgnoreAction to add to .gitignore files
+Date: Thu, 23 Apr 2009 22:17:56 +0200
+Message-ID: <49F0CCF4.20808@pelagic.nl>
+References: <20090423115042.743E6D9CDC@apple.int.bandlem.com> <200904231427.29832.fge@one2team.com> <0A94BEDB-37A1-44D2-BE54-D05F0C3124EE@bandlem.com> <200904232119.36707.robin.rosenberg@dewire.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: "J. Bruce Fields" <bfields@fieldses.org>,
-	David Abrahams <dave@boostpro.com>, git@vger.kernel.org
-To: Michael Witten <mfwitten@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Apr 23 22:18:21 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Alex Blewitt <alex@bandlem.com>,
+	Francis Galiegue <fge@one2team.com>, git@vger.kernel.org,
+	spearce@spearce.org
+To: Robin Rosenberg <robin.rosenberg@dewire.com>
+X-From: git-owner@vger.kernel.org Thu Apr 23 22:19:40 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lx5N9-0004ur-AE
-	for gcvg-git-2@gmane.org; Thu, 23 Apr 2009 22:18:15 +0200
+	id 1Lx5OU-0005Hd-7S
+	for gcvg-git-2@gmane.org; Thu, 23 Apr 2009 22:19:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752578AbZDWUQk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 23 Apr 2009 16:16:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752151AbZDWUQk
-	(ORCPT <rfc822;git-outgoing>); Thu, 23 Apr 2009 16:16:40 -0400
-Received: from peff.net ([208.65.91.99]:52576 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752094AbZDWUQj (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 23 Apr 2009 16:16:39 -0400
-Received: (qmail 24735 invoked by uid 107); 23 Apr 2009 20:16:49 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Thu, 23 Apr 2009 16:16:49 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Thu, 23 Apr 2009 16:16:36 -0400
-Content-Disposition: inline
-In-Reply-To: <b4087cc50904231137g67b4b84eu3b61bf174ba37d7f@mail.gmail.com>
+	id S1752793AbZDWUSG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 23 Apr 2009 16:18:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752393AbZDWUSD
+	(ORCPT <rfc822;git-outgoing>); Thu, 23 Apr 2009 16:18:03 -0400
+Received: from hupie.xs4all.nl ([82.95.241.251]:58287 "EHLO
+	Lighthouse.internal.Hupie.com" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1752553AbZDWUSB (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 23 Apr 2009 16:18:01 -0400
+Received: from [192.168.0.51] (unknown [192.168.0.51])
+	by Lighthouse.internal.Hupie.com (Postfix) with ESMTP id BFB2358BD9F;
+	Thu, 23 Apr 2009 22:17:56 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.21 (X11/20090320)
+In-Reply-To: <200904232119.36707.robin.rosenberg@dewire.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117379>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117380>
 
-On Thu, Apr 23, 2009 at 01:37:05PM -0500, Michael Witten wrote:
-
-> Everyone talks about "before one has the conceptual foundation
-> necessary to understand". Well, here's an idea: The git documentation
-> should start with the concepts!
+Robin Rosenberg wrote:
+> torsdag 23 april 2009 14:32:46 skrev Alex Blewitt <alex@bandlem.com>:
+>> Actually, that's pretty much exactly the format that Eclipse users  
+>> will be expecting.
+>>
+>> CVS: Add to .cvsignore
+>> SVN: Add to svn:ignore
+>>
+>> I suggest that we go with that style of format for the menu items, in  
+>> order to achieve consistency with the way that the other team  
+>> providers work.
 > 
-> Why don't the docs start out defining blobs and trees and the object
-> database and references into that database? The reason everything is
-> so confusing is that the understanding is brushed under the tutorial
-> rug. People need to learn how to think before they can effectively
-> learn to start doing.
-
-I agree with you, but not everyone does (and you can find prior debates
-in the list archives). The user-manual is pretty "top down". There are
-some "bottom-up" resources available, but I haven't seen one pointed to
-as "definitive". I think it might actually be nice for there to be a
-parallel to the user manual that follows the bottom-up approach, and
-people could read the one that appeals most to them (or if they have a
-lot of time on their hands, read both and hopefully it makes sense in
-the middle ;) ).
-
-But we would need somebody to volunteer to write it. I would be happy to
-help out, but I'm too short on time at the moment to be the driving
-force.
-
--Peff
+> Ouch, top posting....
+> 
+> Anyway, I agree  with Alex. My motivation is that there are more
+> than one way to specify ignore. There's .gitignore, .git/info/excludedes
+> and the Team ignore settings themselves. This option specifically
+> messes with .gitignore. 
+> 
+while we're on the subject...
+how about also adding the reverse: when a file is ignored then add it to
+the .gitignore file for 'un-ignoring' (the '!' pattern)
