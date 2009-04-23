@@ -1,92 +1,80 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Wait for git diff to finish in git difftool
-Date: Thu, 23 Apr 2009 07:51:28 -0700
-Message-ID: <7vhc0fv2xb.fsf@gitster.siamese.dyndns.org>
-References: <81b0412b0904220027t7afd1ed7xc57c479ef8cdb6b9@mail.gmail.com>
- <20090422082652.GA32698@gmail.com>
- <81b0412b0904220404o30ce1413kcc4dcea1fa822841@mail.gmail.com>
- <7vr5zk346d.fsf@gitster.siamese.dyndns.org>
- <81b0412b0904221340o6b2f1474oed2ad12e4f68cff3@mail.gmail.com>
- <7v4owgyp8x.fsf@gitster.siamese.dyndns.org>
- <81b0412b0904230033n35f1117fmea4432a2f2140d25@mail.gmail.com>
- <7vtz4fwzaz.fsf@gitster.siamese.dyndns.org>
- <81b0412b0904230252k3e8197d3y8798d5b797a49c39@mail.gmail.com>
+From: Jean-Baptiste Quenot <jbq@caraldi.com>
+Subject: Re: [tig] Feeding specific revisions to tig
+Date: Thu, 23 Apr 2009 16:55:06 +0200
+Message-ID: <ae63f8b50904230755p12170753qf3fc273b48afe4d4@mail.gmail.com>
+References: <ae63f8b50806041152v11a2997y9411c5ea3ebc9598@mail.gmail.com>
+	 <20080604192916.GB17327@sigill.intra.peff.net>
+	 <ae63f8b50806041304i20de789ej492681f4b9306934@mail.gmail.com>
+	 <20080604230858.GA27136@sigill.intra.peff.net>
+	 <2c6b72b30808060406u10d7b332g22ea28fe5470ddb1@mail.gmail.com>
+	 <20080808211916.GA30583@sigill.intra.peff.net>
+	 <2c6b72b30808100216j2c719bf2yb7dfba651db901e3@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: David Aguilar <davvid@gmail.com>, git@vger.kernel.org,
-	charles@hashpling.org, markus.heidelberg@web.de
-To: Alex Riesen <raa.lkml@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Apr 23 16:53:35 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Apr 23 16:56:59 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lx0Ij-0000BZ-2g
-	for gcvg-git-2@gmane.org; Thu, 23 Apr 2009 16:53:21 +0200
+	id 1Lx0M4-0001Tp-R6
+	for gcvg-git-2@gmane.org; Thu, 23 Apr 2009 16:56:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755975AbZDWOvk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 23 Apr 2009 10:51:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755913AbZDWOvk
-	(ORCPT <rfc822;git-outgoing>); Thu, 23 Apr 2009 10:51:40 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:59857 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755026AbZDWOvj (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 23 Apr 2009 10:51:39 -0400
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 15AB4AC06A;
-	Thu, 23 Apr 2009 10:51:38 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id E66FFAC069; Thu,
- 23 Apr 2009 10:51:29 -0400 (EDT)
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 3F82F9E6-3016-11DE-8C66-C121C5FC92D5-77302942!a-sasl-fastnet.pobox.com
+	id S1758533AbZDWOzL convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 23 Apr 2009 10:55:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753543AbZDWOzK
+	(ORCPT <rfc822;git-outgoing>); Thu, 23 Apr 2009 10:55:10 -0400
+Received: from gv-out-0910.google.com ([216.239.58.189]:36309 "EHLO
+	gv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757953AbZDWOzI convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 23 Apr 2009 10:55:08 -0400
+Received: by gv-out-0910.google.com with SMTP id p33so383gvf.37
+        for <git@vger.kernel.org>; Thu, 23 Apr 2009 07:55:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:sender:received:in-reply-to
+         :references:date:x-google-sender-auth:message-id:subject:from:to
+         :content-type:content-transfer-encoding;
+        bh=Nf0Aw7S+WjUd8t9IDIswu9CNC6GDWSzi5U/P+2qF8xM=;
+        b=qoIKIOeUUwfZYDhFXiVdjTR0PpGkACbbcwrPeURc2xnhzN470Kykn0jkTUzyN2ANxb
+         jsDeyJhJciGykG35GGN113NscxtKfJul/rWpZXPX5U0m/mofRZxZOq8sLJt680QtExtp
+         3Ttg+fdj4hPSxVffN8+r5nF8HFkMPwQLi4pd0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:sender:in-reply-to:references:date
+         :x-google-sender-auth:message-id:subject:from:to:content-type
+         :content-transfer-encoding;
+        b=dsqCxrby4HxgyNxYtHzx7UfR5qRmqJp5fOTOuxFvJ2YtpXZihR5PZmc8HmYrGNYy8J
+         hSaIN6UUgbG/XV9twldJDK25f3El/HeTx/oZARz6a9sCSyZZ/GymyKnD4xMSXu2lQLuM
+         I//HfsbOxuOXeBruJVEgQmC5W80N6GgaRaO/s=
+Received: by 10.239.162.17 with SMTP id j17mr50386hbd.123.1240498506283; Thu, 
+	23 Apr 2009 07:55:06 -0700 (PDT)
+In-Reply-To: <2c6b72b30808100216j2c719bf2yb7dfba651db901e3@mail.gmail.com>
+X-Google-Sender-Auth: b1c8a325fe20d394
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117342>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117343>
 
-Alex Riesen <raa.lkml@gmail.com> writes:
-
->>> In plain words: please don't apply MY patches with words "Windows"
->>> or "Cygwin" in message body, unless I beg you to (and even then,
->>> consider me heavily drugged).
+2008/8/10 Jonas Fonseca <jonas.fonseca@gmail.com>:
+>> So here is my cut-and-pastable version:
 >>
->> Hmm, what's the point then for me to spend time looking at them posted on
->> the list?
+>> =A0tignowalk() {
+>> =A0 =A0tmp=3D$(mktemp)
+>> =A0 =A0cat >"$tmp"
+>> =A0 =A0TIG_MAIN_CMD=3D"git rev-list --pretty=3Draw --no-walk --stdin=
+ <$tmp" \
+>> =A0 =A0 =A0tig </dev/tty
+>> =A0 =A0rm "$tmp"
+>> =A0}
 >
-> None. But it still would be nice if you look at them when you're addressed
-> directly. Please understand, maybe I'm abusing the list a little, but it looks
-> like the best place to _archive_ the workarounds for this obscure platform.
-> The code is of little use to general public, but in case one finds himself
-> in the same situation as I am in, at least Google can help out. I think it
-> happens too rare to justify your looking at them, and especially including
-> them in the mainline, but hiding the code on my laptop isn't of any use
-> to anyone (including me: I don't always have that laptop).
+> Thanks for the fixed up version.
 
-Actually, I think I probably should have phrased it more positively.
-
-Do you think you are in a so minority situation that your "workarounds"
-are valuable for nobody else?  Apparently you see value in letting them
-finding your patches in the archive, so you do not expect them to be
-"nobody else" but rather "a small minority".
-
-People on minority platforms have smaller number of people in similar
-situation to ask help from than people on mainstream platforms, and they
-suffer from the minority status of their platforms not only with git but
-about many other things.  Worse, their chance of finding solution by
-digging the archive is smaller, and they would need to spend a lot more
-time, than the people on other platforms.  And you know this a lot better
-than I do ;-).
-
-Even though the suffering of these people as a whole may not be much, only
-because there are small number of them, as individuals they may suffer a
-lot.  If we can help them without having to bend over backwards too much,
-it would be a good thing.  I think we should at least try.
-
-For example, I do not think conversion from Perl exec() to Perl system()
-is worsening the code in any way in difftool.  Sure, it won't *improve*
-things for general majority of people, but as long as it does not hurt
-people (that includes me and others who pay maintenance cost), I do not
-think we should just bury the patch in archive or in your laptop.
+Restarting this old thread again.  Starting from 0.13 the
+*tignowalk()* hack does not work anymore.  What's the preferred way to
+feed specific revisions using stdin now?
+--=20
+Jean-Baptiste Quenot
+http://jbq.caraldi.com/
