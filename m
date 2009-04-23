@@ -1,101 +1,180 @@
-From: Alex Blewitt <alex@bandlem.com>
-Subject: Re: [EGit PATCH] IgnoreAction to add to .gitignore files
-Date: Thu, 23 Apr 2009 13:32:46 +0100
-Message-ID: <0A94BEDB-37A1-44D2-BE54-D05F0C3124EE@bandlem.com>
-References: <20090423115042.743E6D9CDC@apple.int.bandlem.com> <200904231427.29832.fge@one2team.com>
-Mime-Version: 1.0 (Apple Message framework v930.3)
-Content-Type: text/plain; charset=ISO-8859-1;
-	format=flowed	delsp=yes
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, robin.rosenberg@dewire.com,
-	spearce@spearce.org
-To: Francis Galiegue <fge@one2team.com>
-X-From: git-owner@vger.kernel.org Thu Apr 23 14:34:27 2009
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: [PATCH] Add an option not to use link(src, dest) && unlink(src) when
+ that is unreliable
+Date: Thu, 23 Apr 2009 12:53:37 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.0904231252080.10279@pacific.mpi-cbg.de>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+To: git@vger.kernel.org, gitster@pobox.com, j6t@kdbg.org
+X-From: git-owner@vger.kernel.org Thu Apr 23 15:36:34 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lwy8I-0001BA-Bl
-	for gcvg-git-2@gmane.org; Thu, 23 Apr 2009 14:34:26 +0200
+	id 1Lwz6B-0007ZX-2p
+	for gcvg-git-2@gmane.org; Thu, 23 Apr 2009 15:36:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756936AbZDWMcw convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 23 Apr 2009 08:32:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757165AbZDWMcw
-	(ORCPT <rfc822;git-outgoing>); Thu, 23 Apr 2009 08:32:52 -0400
-Received: from mail-ew0-f176.google.com ([209.85.219.176]:50923 "EHLO
-	mail-ew0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754935AbZDWMcv convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 23 Apr 2009 08:32:51 -0400
-Received: by ewy24 with SMTP id 24so475064ewy.37
-        for <git@vger.kernel.org>; Thu, 23 Apr 2009 05:32:49 -0700 (PDT)
-Received: by 10.210.12.13 with SMTP id 13mr5361305ebl.90.1240489969402;
-        Thu, 23 Apr 2009 05:32:49 -0700 (PDT)
-Received: from apple.int.bandlem.com (server.bandlem.com [217.155.97.60])
-        by mx.google.com with ESMTPS id 24sm288eyx.13.2009.04.23.05.32.47
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 23 Apr 2009 05:32:48 -0700 (PDT)
-In-Reply-To: <200904231427.29832.fge@one2team.com>
-X-Mailer: Apple Mail (2.930.3)
+	id S1755111AbZDWNeL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 23 Apr 2009 09:34:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754871AbZDWNeI
+	(ORCPT <rfc822;git-outgoing>); Thu, 23 Apr 2009 09:34:08 -0400
+Received: from mail.gmx.net ([213.165.64.20]:35982 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1754631AbZDWNeH (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 23 Apr 2009 09:34:07 -0400
+Received: (qmail invoked by alias); 23 Apr 2009 10:53:27 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp065) with SMTP; 23 Apr 2009 12:53:27 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/NMMsZ8inNXGdB2SZtXEEXYPend17GPy3t/ZWcyx
+	JHpmVdK+QEIC03
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.41
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117337>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117338>
 
-Actually, that's pretty much exactly the format that Eclipse users =20
-will be expecting.
 
-CVS: Add to .cvsignore
-SVN: Add to svn:ignore
+It seems that accessing NTFS partitions with ufsd (at least on my EeePC)
+has an unnerving bug: if you link() a file and unlink() it right away,
+the target of the link() will have the correct size, but consist of NULs.
 
-I suggest that we go with that style of format for the menu items, in =20
-order to achieve consistency with the way that the other team =20
-providers work.
+It seems as if the calls are simply not serialized correctly, as single-stepping
+through the function move_temp_to_file() works flawlessly.
 
-Note also that the tooltip is usually much shorter than that ... it's =20
-not a full help description, it explains what it does.
+As ufsd is "Commertial software", I cannot fix it, and have to work
+around it in Git.
 
-Alex
+At the same time, it seems that this fixes msysGit issues 222 and 229 to
+assume that Windows cannot handle link() && unlink().
 
-On 23 Apr 2009, at 13:27, Francis Galiegue wrote:
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
 
-> Le jeudi 23 avril 2009, Alex Blewitt a =E9crit :
->> diff --git a/org.spearce.egit.ui/plugin.properties
-> b/org.spearce.egit.ui/plugin.properties
->> index 523a959..be3b40c 100644
->> --- a/org.spearce.egit.ui/plugin.properties
->> +++ b/org.spearce.egit.ui/plugin.properties
->> @@ -52,10 +52,12 @@ FetchAction_tooltip=3DFetch from another reposit=
-ory
->> PushAction_label=3D&Push To...
->> PushAction_tooltip=3DPush to another repository
->>
->> +IgnoreAction_label=3DAdd to .git&ignore...
->> +IgnoreAction_tooltip=3DIgnore the selected resources
->> +
->> GitActions_label=3DGit
->> GitMenu_label=3D&Git
->>
->
-> The label and tooltip are too "git-specific", IMHO. I'd rather see:
->
-> IgnoreAction_label=3D&Ignore file(s) for commits...
-> IgnoreAction_tooltip=3DThe selected file(s) will not be included by =20
-> default in
-> your commits. However, you may force the include of these files in a =
-=20
-> commit
-> by explicitly adding them via "Team->Add" [or whatever the label is].
-> \n\nSelecting files to ignore by this mechanism will automatically =20
-> add one or
-> more files named .gitignore in your next commit.
->
-> --=20
-> Francis Galiegue
-> ONE2TEAM
-> Ing=E9nieur syst=E8me
-> Mob : +33 (0) 683 877 875
-> Tel : +33 (0) 178 945 552
-> fge@one2team.com
-> 40 avenue Raymond Poincar=E9
-> 75116 Paris
+	I know this is pretty late in the -rc1 cycle, but this is 
+	something I need to apply for msysGit anyway.
+
+	And it does not really seem too unobvious a fix, does it?
+
+ Documentation/config.txt |    5 +++++
+ Makefile                 |    8 ++++++++
+ cache.h                  |    2 ++
+ config.c                 |    5 +++++
+ environment.c            |    4 ++++
+ sha1_file.c              |    4 +++-
+ 6 files changed, 27 insertions(+), 1 deletions(-)
+
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 35056e1..62cd903 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -429,6 +429,11 @@ relatively high IO latencies.  With this set to 'true', git will do the
+ index comparison to the filesystem data in parallel, allowing
+ overlapping IO's.
+ 
++core.unreliableHardlinks::
++	Some filesystem drivers cannot properly handle hardlinking a file
++	and deleting the source right away.  In such a case, you need to
++	set this config variable to 'true'.
++
+ alias.*::
+ 	Command aliases for the linkgit:git[1] command wrapper - e.g.
+ 	after defining "alias.last = cat-file commit HEAD", the invocation
+diff --git a/Makefile b/Makefile
+index 49f36f5..e3979e0 100644
+--- a/Makefile
++++ b/Makefile
+@@ -171,6 +171,10 @@ all::
+ # Define UNRELIABLE_FSTAT if your system's fstat does not return the same
+ # information on a not yet closed file that lstat would return for the same
+ # file after it was closed.
++#
++# Define UNRELIABLE_HARDLINKS if your operating systems has problems when
++# hardlinking a file to another name and unlinking the original file right
++# away (some NTFS drivers seem to zero the contents in that scenario).
+ 
+ GIT-VERSION-FILE: .FORCE-GIT-VERSION-FILE
+ 	@$(SHELL_PATH) ./GIT-VERSION-GEN
+@@ -835,6 +839,7 @@ ifneq (,$(findstring MINGW,$(uname_S)))
+ 	NO_NSEC = YesPlease
+ 	USE_WIN32_MMAP = YesPlease
+ 	UNRELIABLE_FSTAT = UnfortunatelyYes
++	UNRELIABLE_HARDLINKS = UnfortunatelySometimes
+ 	COMPAT_CFLAGS += -D__USE_MINGW_ACCESS -DNOGDI -Icompat -Icompat/regex -Icompat/fnmatch
+ 	COMPAT_CFLAGS += -DSNPRINTF_SIZE_CORR=1
+ 	COMPAT_CFLAGS += -DSTRIP_EXTENSION=\".exe\"
+@@ -1018,6 +1023,9 @@ else
+ 		COMPAT_OBJS += compat/win32mmap.o
+ 	endif
+ endif
++ifdef UNRELIABLE_HARDLINKS
++	COMPAT_CFLAGS += -DUNRELIABLE_HARDLINKS=1
++endif
+ ifdef NO_PREAD
+ 	COMPAT_CFLAGS += -DNO_PREAD
+ 	COMPAT_OBJS += compat/pread.o
+diff --git a/cache.h b/cache.h
+index ab1294d..ff9e145 100644
+--- a/cache.h
++++ b/cache.h
+@@ -554,6 +554,8 @@ extern enum branch_track git_branch_track;
+ extern enum rebase_setup_type autorebase;
+ extern enum push_default_type push_default;
+ 
++extern int unreliable_hardlinks;
++
+ #define GIT_REPO_VERSION 0
+ extern int repository_format_version;
+ extern int check_repository_format(void);
+diff --git a/config.c b/config.c
+index 8c1ae59..1750cfb 100644
+--- a/config.c
++++ b/config.c
+@@ -495,6 +495,11 @@ static int git_default_core_config(const char *var, const char *value)
+ 		return 0;
+ 	}
+ 
++	if (!strcmp(var, "core.unreliablehardlinks")) {
++		unreliable_hardlinks = git_config_bool(var, value);
++		return 0;
++	}
++
+ 	/* Add other config variables here and to Documentation/config.txt. */
+ 	return 0;
+ }
+diff --git a/environment.c b/environment.c
+index 4696885..10578d2 100644
+--- a/environment.c
++++ b/environment.c
+@@ -43,6 +43,10 @@ unsigned whitespace_rule_cfg = WS_DEFAULT_RULE;
+ enum branch_track git_branch_track = BRANCH_TRACK_REMOTE;
+ enum rebase_setup_type autorebase = AUTOREBASE_NEVER;
+ enum push_default_type push_default = PUSH_DEFAULT_UNSPECIFIED;
++#ifndef UNRELIABLE_HARDLINKS
++#define UNRELIABLE_HARDLINKS 0
++#endif
++int unreliable_hardlinks = UNRELIABLE_HARDLINKS;
+ 
+ /* Parallel index stat data preload? */
+ int core_preload_index = 0;
+diff --git a/sha1_file.c b/sha1_file.c
+index 8fe135d..f5a7970 100644
+--- a/sha1_file.c
++++ b/sha1_file.c
+@@ -2225,7 +2225,9 @@ int move_temp_to_file(const char *tmpfile, const char *filename)
+ {
+ 	int ret = 0;
+ 
+-	if (link(tmpfile, filename))
++	if (unreliable_hardlinks)
++		ret = ~EEXIST;
++	else if (link(tmpfile, filename))
+ 		ret = errno;
+ 
+ 	/*
+-- 
+1.6.2.1.613.g25746
