@@ -1,60 +1,69 @@
-From: Geert Bosch <bosch@adacore.com>
-Subject: Re: dangling commits and blobs: is this normal?
-Date: Thu, 23 Apr 2009 14:10:56 -0400
-Message-ID: <0F4B0DFB-A0A3-45FA-9BB7-801FFD2E8862@adacore.com>
-References: <450196A1AAAE4B42A00A8B27A59278E70ACE0502@EXCHANGE.trad.tradestation.com> <20090422152719.GA12881@coredump.intra.peff.net> <W0cjdA0pSHr_AbT2c-k5hDf7LyNvwkc38qIIhTtJJRwFnGBxaBsEiw@cipher.nrlssc.navy.mil> <alpine.LFD.2.00.0904221331450.6741@xanadu.home> <FcecxnoVg4H8G3MKjZgl2T6zCGDer4yYyScIgaweFTNgDCKG65Xiig@cipher.nrlssc.navy.mil> <alpine.LFD.2.00.0904221548310.6741@xanadu.home> <20090422200502.GA14304@coredump.intra.peff.net> <064C9132-2E72-4665-A44D-A2F4194DAC2B@adacore.com> <20090423175612.GV23604@spearce.org>
-Mime-Version: 1.0 (Apple Message framework v930.3)
-Content-Type: text/plain; charset=US-ASCII; format=flowed
+From: "Matthias Andree" <matthias.andree@gmx.de>
+Subject: Re: Git-SVN on Cygwin: svn+ssh good, https awkward
+Date: Thu, 23 Apr 2009 20:16:00 +0200
+Message-ID: <op.usuqcyp81e62zd@balu.cs.uni-paderborn.de>
+References: <op.usulh7a71e62zd@balu.cs.uni-paderborn.de>
+ <loom.20090423T175124-165@post.gmane.org>
+Mime-Version: 1.0
+Content-Type: text/plain; format=flowed; delsp=yes; charset=iso-8859-15
 Content-Transfer-Encoding: 7bit
-Cc: Jeff King <peff@peff.net>, Nicolas Pitre <nico@cam.org>,
-	Brandon Casey <casey@nrlssc.navy.mil>,
-	John Dlugosz <JDlugosz@TradeStation.com>, git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Thu Apr 23 20:13:16 2009
+To: "Eric Blake" <ebb9@byu.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Apr 23 20:18:46 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lx3PY-0000TE-DN
-	for gcvg-git-2@gmane.org; Thu, 23 Apr 2009 20:12:36 +0200
+	id 1Lx3UR-0003MN-7u
+	for gcvg-git-2@gmane.org; Thu, 23 Apr 2009 20:17:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756886AbZDWSLA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 23 Apr 2009 14:11:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756372AbZDWSK7
-	(ORCPT <rfc822;git-outgoing>); Thu, 23 Apr 2009 14:10:59 -0400
-Received: from rock.gnat.com ([205.232.38.15]:57059 "EHLO rock.gnat.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754354AbZDWSK6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 23 Apr 2009 14:10:58 -0400
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by filtered-rock.gnat.com (Postfix) with ESMTP id DF8B82BAAF4;
-	Thu, 23 Apr 2009 14:10:57 -0400 (EDT)
-Received: from rock.gnat.com ([127.0.0.1])
-	by localhost (rock.gnat.com [127.0.0.1]) (amavisd-new, port 10024)
-	with LMTP id 3Fq7HnD3VOci; Thu, 23 Apr 2009 14:10:57 -0400 (EDT)
-Received: from [172.16.1.95] (sdsl-216-220-103-157.dsl.bway.net [216.220.103.157])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by rock.gnat.com (Postfix) with ESMTPSA id 77A1F2BAAC9;
-	Thu, 23 Apr 2009 14:10:57 -0400 (EDT)
-In-Reply-To: <20090423175612.GV23604@spearce.org>
-X-Mailer: Apple Mail (2.930.3)
+	id S1754831AbZDWSQG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 23 Apr 2009 14:16:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756320AbZDWSQE
+	(ORCPT <rfc822;git-outgoing>); Thu, 23 Apr 2009 14:16:04 -0400
+Received: from mail.gmx.net ([213.165.64.20]:58871 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1755463AbZDWSQD (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 23 Apr 2009 14:16:03 -0400
+Received: (qmail invoked by alias); 23 Apr 2009 18:16:01 -0000
+Received: from balu.cs.uni-paderborn.de (EHLO balu.cs.uni-paderborn.de) [131.234.21.37]
+  by mail.gmx.net (mp001) with SMTP; 23 Apr 2009 20:16:01 +0200
+X-Authenticated: #428038
+X-Provags-ID: V01U2FsdGVkX18VQ+RTdBgVT4/Jeo960NpBnujzs25YAOuV+h1dGJ
+	y+/LEAEVBGQ1py
+In-Reply-To: <loom.20090423T175124-165@post.gmane.org>
+User-Agent: Opera Mail/9.64 (Win32)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.62
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117354>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117355>
 
+Am 23.04.2009, 19:58 Uhr, schrieb Eric Blake <ebb9@byu.net>:
 
-On Apr 23, 2009, at 13:56, Shawn O. Pearce wrote:
+>> Can we use unique tempfile names (timestamps, counter, random number
+>> generator) instead of the hardcoded "tempfile.tmp"? This is probably a
+>> good idea anyways to evade symlink attacks.
+>
+> Although newer cygwin may fix your particular problem, this is not a bad
+> suggestion for msysgit, so I suspect someone may be bothered enough by  
+> this to write a patch.  I, however, will not be the one doing it.
 
-> If your favorite import tool (*cough* git-svn *cough*) can't use
-> fast-import, and you are importing a large enough repository that
-> this matters to you, use another importer that can use fast-import.
+Hi Eric,
 
-How did you guess? :) You're right of course, except that I can't
-use fast-import AFAIK. The issue is also more general, as the
-same scenario of adding new objects and repacking occurs
-outside the context of git-svn.
+thanks for the hints and pointers to Cygwin 1.7 beta, however I'd suggest  
+to make such changes upstream (i. e. in git.git) for the benefit of  
+everybody else.
 
-   -Geert
+It also looks to me as though minor changes in the actual baseline Git  
+code may be sufficient to get git-svn working on Cygwin 1.5 (stable)  
+already. I'd prefer such a minor intrusion to hacking away on forks. :-)
+
+Otherwise I'd start looking at how git-svn handles https:// and svn+ssh://  
+methods differently from each other next week or so.
+
+Looking forward to further insights.
+
+-- 
+Matthias Andree
