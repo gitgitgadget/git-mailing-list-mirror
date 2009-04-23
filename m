@@ -1,48 +1,75 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] Makefile: ignore perl/ subdirectory under NO_PERL
-Date: Thu, 23 Apr 2009 07:17:42 -0400
-Message-ID: <20090423111738.GA3670@sigill.intra.peff.net>
-References: <7v3ac0x6wr.fsf@gitster.siamese.dyndns.org>
+From: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
+	<u.kleine-koenig@pengutronix.de>
+Subject: Re: A system administration use case for git
+Date: Thu, 23 Apr 2009 13:39:24 +0200
+Message-ID: <20090423113924.GA22915@pengutronix.de>
+References: <2cfc40320904220133l5ab567f3q46608793b93f0e1f@mail.gmail.com> <20090423095533.GE13989@pengutronix.de> <49F04511.3070601@viscovery.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, "Robin H. Johnson" <robbat2@gentoo.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Apr 23 13:19:28 2009
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jon Seymour <jon.seymour@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Thu Apr 23 13:41:24 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lwwxc-0000wh-GQ
-	for gcvg-git-2@gmane.org; Thu, 23 Apr 2009 13:19:20 +0200
+	id 1LwxIm-0000AC-F6
+	for gcvg-git-2@gmane.org; Thu, 23 Apr 2009 13:41:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755410AbZDWLRq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 23 Apr 2009 07:17:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752915AbZDWLRp
-	(ORCPT <rfc822;git-outgoing>); Thu, 23 Apr 2009 07:17:45 -0400
-Received: from peff.net ([208.65.91.99]:40893 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751798AbZDWLRp (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 23 Apr 2009 07:17:45 -0400
-Received: (qmail 22074 invoked by uid 107); 23 Apr 2009 11:17:54 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.40) with ESMTPA; Thu, 23 Apr 2009 07:17:54 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 23 Apr 2009 07:17:42 -0400
+	id S1756652AbZDWLjd convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 23 Apr 2009 07:39:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756609AbZDWLjd
+	(ORCPT <rfc822;git-outgoing>); Thu, 23 Apr 2009 07:39:33 -0400
+Received: from metis.ext.pengutronix.de ([92.198.50.35]:56077 "EHLO
+	metis.ext.pengutronix.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756394AbZDWLjc (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 23 Apr 2009 07:39:32 -0400
+Received: from octopus.hi.pengutronix.de ([2001:6f8:1178:2:215:17ff:fe12:23b0])
+	by metis.ext.pengutronix.de with esmtp (Exim 4.63)
+	(envelope-from <ukl@pengutronix.de>)
+	id 1LwxH4-0004Zn-IS; Thu, 23 Apr 2009 13:39:26 +0200
+Received: from ukl by octopus.hi.pengutronix.de with local (Exim 4.69)
+	(envelope-from <ukl@pengutronix.de>)
+	id 1LwxH2-0003AC-2p; Thu, 23 Apr 2009 13:39:24 +0200
 Content-Disposition: inline
-In-Reply-To: <7v3ac0x6wr.fsf@gitster.siamese.dyndns.org>
+In-Reply-To: <49F04511.3070601@viscovery.net>
+User-Agent: Mutt/1.5.18 (2008-05-17)
+X-SA-Exim-Connect-IP: 2001:6f8:1178:2:215:17ff:fe12:23b0
+X-SA-Exim-Mail-From: ukl@pengutronix.de
+X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
+X-PTX-Original-Recipient: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117330>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117331>
 
-On Wed, Apr 22, 2009 at 10:42:28PM -0700, Junio C Hamano wrote:
+Hi Hannes,
 
-> The install target still descends into perl subdirectory when NO_PERL is
-> requested.  Fix this.
+On Thu, Apr 23, 2009 at 12:38:09PM +0200, Johannes Sixt wrote:
+> Uwe Kleine-K=F6nig schrieb:
+> > There is a practical problem though:  The filelist has to be sorted=
+ in a
+> > way that is not provided by ls, so:
+> >=20
+> > 	ukleinek@cepheus:~/gsrc/linux-2.6/usr$ for f in $(ls -A); do print=
+f "100644 %s\x00" $f; git hash-object $f | perl -n -e 'chomp; for $c (s=
+plit(/(.{2})/)) { printf("%c", hex($c)) if $c }'; done | git hash-objec=
+t -t tree -w --stdin
+> > 	a0a6efb3f1de956badc7607c7d372cc325a18846
+>=20
+> Does ... $(LANG=3DC ls -A) ... make a difference for you?
+oh, up to now I thought that C and en_US.UTF-8 use the same sorting.  S=
+o
+yes, it does it right then.
 
-Oops, good catch.
+Best regards and thanks
+Uwe
 
-Acked-by: Jeff King <peff@peff.net>
-
--Peff
+--=20
+Pengutronix e.K.                              | Uwe Kleine-K=F6nig     =
+       |
+Industrial Linux Solutions                    | http://www.pengutronix.=
+de/  |
