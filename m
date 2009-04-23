@@ -1,59 +1,69 @@
-From: ask4thunder <ask4thunder@gmail.com>
-Subject: Is there a way to lock branches in GIT?
-Date: Thu, 23 Apr 2009 14:43:00 -0700 (PDT)
-Message-ID: <23204641.post@talk.nabble.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Add an option not to use link(src, dest) && unlink(src)
+  when that is unreliable
+Date: Thu, 23 Apr 2009 23:59:44 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.0904232358520.10279@pacific.mpi-cbg.de>
+References: <alpine.DEB.1.00.0904231252080.10279@pacific.mpi-cbg.de> <81b0412b0904231239qf317c02xbfa548d0011a0302@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Apr 23 23:44:44 2009
+Content-Type: MULTIPART/MIXED; BOUNDARY="8323328-884190836-1240523985=:10279"
+Cc: git@vger.kernel.org, gitster@pobox.com, j6t@kdbg.org
+To: Alex Riesen <raa.lkml@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Apr 24 00:01:18 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lx6il-0008D5-Sd
-	for gcvg-git-2@gmane.org; Thu, 23 Apr 2009 23:44:40 +0200
+	id 1Lx6yp-0004ue-3p
+	for gcvg-git-2@gmane.org; Fri, 24 Apr 2009 00:01:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754323AbZDWVnG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 23 Apr 2009 17:43:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753374AbZDWVnE
-	(ORCPT <rfc822;git-outgoing>); Thu, 23 Apr 2009 17:43:04 -0400
-Received: from kuber.nabble.com ([216.139.236.158]:44774 "EHLO
-	kuber.nabble.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751829AbZDWVnD (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 23 Apr 2009 17:43:03 -0400
-Received: from isper.nabble.com ([192.168.236.156])
-	by kuber.nabble.com with esmtp (Exim 4.63)
-	(envelope-from <lists@nabble.com>)
-	id 1Lx6hA-0002gt-Uz
-	for git@vger.kernel.org; Thu, 23 Apr 2009 14:43:00 -0700
-X-Nabble-From: ask4thunder@gmail.com
+	id S1755424AbZDWV7k (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 23 Apr 2009 17:59:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754186AbZDWV7k
+	(ORCPT <rfc822;git-outgoing>); Thu, 23 Apr 2009 17:59:40 -0400
+Received: from mail.gmx.net ([213.165.64.20]:35093 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752698AbZDWV7k (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 23 Apr 2009 17:59:40 -0400
+Received: (qmail invoked by alias); 23 Apr 2009 21:59:37 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp058) with SMTP; 23 Apr 2009 23:59:37 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19+8Mlb/IV+DNzOXL2mP+FviMutYszSsVtLCxuVpO
+	xjAo6VvYlhSN3C
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <81b0412b0904231239qf317c02xbfa548d0011a0302@mail.gmail.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.64
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117390>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117391>
 
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-Hi GIT Gurus,
+--8323328-884190836-1240523985=:10279
+Content-Type: TEXT/PLAIN; charset=UTF-8
+Content-Transfer-Encoding: 8BIT
 
-1. If there are 2 user are working and having their own clone and branches
-(not master, other branches). and there is another parent clone with a
-branch (not master). Can these 2 users merge to the parent clone branch at
-the same time? or only one user will be able to merge first and then the
-other. in other words, will the target branch be checkedout to that user
-alone and other user cant checkout that branch or use the checked out
-branch. 
+Hi,
 
-2. Is there a way to lock branches, so that if a user want to merge his
-changes to a parent branch of another clone, it can be unlocked for him
-alone? Hope you can help me on this. 
+On Thu, 23 Apr 2009, Alex Riesen wrote:
 
+> 2009/4/23 Johannes Schindelin <Johannes.Schindelin@gmx.de>:
+> > -       if (link(tmpfile, filename))
+> > +       if (unreliable_hardlinks)
+> > +               ret = ~EEXIST;
+> 
+> It is more like "broken_hardlinks" or even "no_hardlinks"!
 
-Thanks 
-ask4thunder
+Wrong.  As I wrote, single-stepping (i.e. leaving enough time between 
+link() and unlink()) works as expected.  So it is not even that the 
+hardlinks are broken.  Just the serialization between the operations.
 
+Ciao,
+Dscho
 
--- 
-View this message in context: http://www.nabble.com/Is-there-a-way-to-lock-branches-in-GIT--tp23204641p23204641.html
-Sent from the git mailing list archive at Nabble.com.
+--8323328-884190836-1240523985=:10279--
