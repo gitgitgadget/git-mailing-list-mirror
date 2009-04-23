@@ -1,69 +1,98 @@
-From: Alex Blewitt <alex@bandlem.com>
-Subject: Re: [EGit PATCH] IgnoreAction to add to .gitignore files
-Date: Thu, 23 Apr 2009 21:36:49 +0100
-Message-ID: <480EAB35-0032-42E9-B6C1-6712A7EB7ED1@bandlem.com>
-References: <20090423115042.743E6D9CDC@apple.int.bandlem.com> <200904232119.36707.robin.rosenberg@dewire.com> <49F0CCF4.20808@pelagic.nl> <200904232226.22240.robin.rosenberg@dewire.com>
-Mime-Version: 1.0 (Apple Message framework v930.3)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
+From: Michael Witten <mfwitten@gmail.com>
+Subject: Re: [doc] User Manual Suggestion
+Date: Thu, 23 Apr 2009 15:45:46 -0500
+Message-ID: <b4087cc50904231345x2613308eh640e50f4a2680890@mail.gmail.com>
+References: <m24owgqy0j.fsf@boostpro.com> <20090423175717.GA30198@fieldses.org>
+	 <b4087cc50904231137g67b4b84eu3b61bf174ba37d7f@mail.gmail.com>
+	 <20090423201636.GD3056@coredump.intra.peff.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: "Ferry Huberts (Pelagic)" <ferry.huberts@pelagic.nl>,
-	Francis Galiegue <fge@one2team.com>, git@vger.kernel.org,
-	spearce@spearce.org
-To: Robin Rosenberg <robin.rosenberg@dewire.com>
-X-From: git-owner@vger.kernel.org Thu Apr 23 22:38:45 2009
+Cc: "J. Bruce Fields" <bfields@fieldses.org>,
+	David Abrahams <dave@boostpro.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Apr 23 22:47:41 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lx5gx-0003AE-Nc
-	for gcvg-git-2@gmane.org; Thu, 23 Apr 2009 22:38:44 +0200
+	id 1Lx5pZ-0005z8-BJ
+	for gcvg-git-2@gmane.org; Thu, 23 Apr 2009 22:47:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753383AbZDWUg5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 23 Apr 2009 16:36:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752157AbZDWUg4
-	(ORCPT <rfc822;git-outgoing>); Thu, 23 Apr 2009 16:36:56 -0400
-Received: from mail-ew0-f176.google.com ([209.85.219.176]:52547 "EHLO
-	mail-ew0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751110AbZDWUgz (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 23 Apr 2009 16:36:55 -0400
-Received: by ewy24 with SMTP id 24so745641ewy.37
-        for <git@vger.kernel.org>; Thu, 23 Apr 2009 13:36:54 -0700 (PDT)
-Received: by 10.210.51.18 with SMTP id y18mr1406011eby.97.1240519014232;
-        Thu, 23 Apr 2009 13:36:54 -0700 (PDT)
-Received: from apple.int.bandlem.com (server.bandlem.com [217.155.97.60])
-        by mx.google.com with ESMTPS id 7sm603103eyg.7.2009.04.23.13.36.52
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 23 Apr 2009 13:36:53 -0700 (PDT)
-In-Reply-To: <200904232226.22240.robin.rosenberg@dewire.com>
-X-Mailer: Apple Mail (2.930.3)
+	id S1758024AbZDWUpu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 23 Apr 2009 16:45:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757701AbZDWUpt
+	(ORCPT <rfc822;git-outgoing>); Thu, 23 Apr 2009 16:45:49 -0400
+Received: from mail-qy0-f118.google.com ([209.85.221.118]:45467 "EHLO
+	mail-qy0-f118.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758008AbZDWUpr (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 23 Apr 2009 16:45:47 -0400
+Received: by qyk16 with SMTP id 16so1542703qyk.33
+        for <git@vger.kernel.org>; Thu, 23 Apr 2009 13:45:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=7iy3z8wFmn2LGwGKaFu2ALhNlwrOtL37dit3seR/l1Q=;
+        b=yFjw3x0ED+5IF6rVU54w/FnOLIoluecRBTgoo3ZvxvNinUWs213Vc9LR8/lOXuG4R6
+         Wx+ul+pj+2ukaeiJjEnAd+a3HlU43IbxxQwobpHuGaqzJw7fHC2WlsEDL+wYfcndjOfz
+         8lfu3l5+oFvXDmSOqY2jq9AW+X5XfYfDwsKDw=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=VFGQsJDU+XnvMcBogyT08YW+mJvEtP4X+9Nm8wBccSuxmRyObvCJaEaqZPgEK0Sets
+         ZQR91fXlVFxSMqeujLfDltQisk9Vw5WhHAiiRTwydeWmshdeNVgdm5f7qOmrMP9JljI+
+         7riOTan4ZAfGzAboXDpCdNyCiGg/U0NdooMjY=
+Received: by 10.224.2.212 with SMTP id 20mr1918376qak.343.1240519546894; Thu, 
+	23 Apr 2009 13:45:46 -0700 (PDT)
+In-Reply-To: <20090423201636.GD3056@coredump.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117382>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117383>
 
-On 23 Apr 2009, at 21:26, Robin Rosenberg wrote:
-
-> torsdag 23 april 2009 22:17:56 skrev "Ferry Huberts (Pelagic)" <ferry.huberts@pelagic.nl 
-> >:
->> while we're on the subject...
->> how about also adding the reverse: when a file is ignored then add  
->> it to
->> the .gitignore file for 'un-ignoring' (the '!' pattern)
+On Thu, Apr 23, 2009 at 15:16, Jeff King <peff@peff.net> wrote:
+> On Thu, Apr 23, 2009 at 01:37:05PM -0500, Michael Witten wrote:
 >
-> I'm not convinced each and everything should have a menu entry.  
-> Advanced
-> use of .gitignore should have a .gitignore editor. When we have that  
-> the
-> option could perhaps launch the editor automatically if it  
-> recognized no-trivial ignore rules. For trivial cases it would just  
-> append to the file.
+>> Everyone talks about "before one has the conceptual foundation
+>> necessary to understand". Well, here's an idea: The git documentation
+>> should start with the concepts!
+>>
+>> Why don't the docs start out defining blobs and trees and the object
+>> database and references into that database? The reason everything is
+>> so confusing is that the understanding is brushed under the tutorial
+>> rug. People need to learn how to think before they can effectively
+>> learn to start doing.
+>
+> I agree with you, but not everyone does (and you can find prior debates
+> in the list archives). The user-manual is pretty "top down". There are
+> some "bottom-up" resources available, but I haven't seen one pointed to
+> as "definitive".I think it might actually be nice for there to be a
+> parallel to the user manual that follows the bottom-up approach, and
+> people could read the one that appeals most to them (or if they have a
+> lot of time on their hands, read both and hopefully it makes sense in
+> the middle ;) ).
 
-I don't know of any other SCM that allows you to un-ignore files in  
-the way that Git does; my guess is that most people wouldn't miss it  
-if it weren't there. A .gitignore customised editor is probably  
-overkill too - after all, you can just open it up in a text editor and  
-make changes yourself. I've amended a few .cvsignore files in my time  
-manually, but I wouldn't want to overcomplicate the menu for that.
+I think the main problem, then, is that the tools have a UI that is
+somewhere in the middle.
 
-Alex
+However, a discussion of blobs, trees, commits, objects, and
+references isn't necessarily low-level. It seems to me that it is a
+high-level understanding of the git world. Without those
+*definitions*, people are left to their own wrong, inconsistent
+thoughts.
+
+The low-level stuff is HOW those concepts have been used in the
+implementation of git: Where certain files are stored, how certain
+bytes are organized in memory, what are the underlying porcelain
+tools, etc. That what's low-level.
+
+> But we would need somebody to volunteer to write it. I would be happy to
+> help out, but I'm too short on time at the moment to be the driving
+> force.
+
+Maybe I'll try to write something, but it won't take place quickly,
+either. I'd want to read ALL of the existing documentation first.
