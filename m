@@ -1,86 +1,163 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: Re: dangling commits and blobs: is this normal?
-Date: Thu, 23 Apr 2009 13:51:23 +0200
-Message-ID: <vpq8wlr4mh0.fsf@bauges.imag.fr>
-References: <450196A1AAAE4B42A00A8B27A59278E70ACE0502@EXCHANGE.trad.tradestation.com>
-	<20090422152719.GA12881@coredump.intra.peff.net>
-	<W0cjdA0pSHr_AbT2c-k5hDf7LyNvwkc38qIIhTtJJRwFnGBxaBsEiw@cipher.nrlssc.navy.mil>
-	<alpine.LFD.2.00.0904221331450.6741@xanadu.home>
-	<vpqws9cd06b.fsf@bauges.imag.fr>
-	<20090422190856.GB13424@coredump.intra.peff.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Nicolas Pitre <nico@cam.org>,
-	Brandon Casey <casey@nrlssc.navy.mil>,
-	John Dlugosz <JDlugosz@TradeStation.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Apr 23 13:57:08 2009
+From: alex@bandlem.com (Alex Blewitt)
+Subject: [EGit PATCH] IgnoreAction to add to .gitignore files
+Date: Thu, 23 Apr 2009 12:50:42 +0100 (BST)
+Message-ID: <20090423115042.743E6D9CDC@apple.int.bandlem.com>
+To: alex.blewitt@gmail.com, git@vger.kernel.org,
+	robin.rosenberg@dewire.com, spearce@spearce.org
+X-From: git-owner@vger.kernel.org Thu Apr 23 14:01:20 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LwxY9-00056e-0U
-	for gcvg-git-2@gmane.org; Thu, 23 Apr 2009 13:57:05 +0200
+	id 1LwxcD-0006R8-KM
+	for gcvg-git-2@gmane.org; Thu, 23 Apr 2009 14:01:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752199AbZDWLz0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 23 Apr 2009 07:55:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751543AbZDWLz0
-	(ORCPT <rfc822;git-outgoing>); Thu, 23 Apr 2009 07:55:26 -0400
-Received: from imag.imag.fr ([129.88.30.1]:59258 "EHLO imag.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751240AbZDWLzZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 23 Apr 2009 07:55:25 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id n3NBpTWp017529
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Thu, 23 Apr 2009 13:51:29 +0200 (CEST)
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
-	(Exim 4.50)
-	id 1LwxSe-0003EP-0A; Thu, 23 Apr 2009 13:51:24 +0200
-Received: from moy by bauges.imag.fr with local (Exim 4.63)
-	(envelope-from <moy@imag.fr>)
-	id 1LwxSd-0001zS-VU; Thu, 23 Apr 2009 13:51:23 +0200
-In-Reply-To: <20090422190856.GB13424@coredump.intra.peff.net> (Jeff King's message of "Wed\, 22 Apr 2009 15\:08\:56 -0400")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.0.91 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Thu, 23 Apr 2009 13:51:32 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
+	id S1753276AbZDWL7o (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 23 Apr 2009 07:59:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752805AbZDWL7n
+	(ORCPT <rfc822;git-outgoing>); Thu, 23 Apr 2009 07:59:43 -0400
+Received: from server.bandlem.com ([217.155.97.60]:48752 "EHLO
+	apple.int.bandlem.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751812AbZDWL7m (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 23 Apr 2009 07:59:42 -0400
+X-Greylist: delayed 537 seconds by postgrey-1.27 at vger.kernel.org; Thu, 23 Apr 2009 07:59:41 EDT
+Received: by apple.int.bandlem.com (Postfix, from userid 1000)
+	id 743E6D9CDC; Thu, 23 Apr 2009 12:50:42 +0100 (BST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117332>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117333>
 
-Jeff King <peff@peff.net> writes:
-
-> On Wed, Apr 22, 2009 at 08:15:56PM +0200, Matthieu Moy wrote:
->
->> Nicolas Pitre <nico@cam.org> writes:
->> 
->> > Why so?  Having fewer packs is always a good thing.  Having only one 
->> > pack is of course the optimal situation. 
->> 
->> Good and optimal wrt Git, but not wrt an incremental backup system for
->> example. I have a "git gc" running daily in a cron job in each of my
->> repositories, but to be nice with my sysadmin, I don't want to rewrite
->> tens of megabytes of data each night just because I commited a 2 lines
->> patch somewhere.
->
-> You can mark your "big" pack with a .keep, then do your nightly gc as
-> usual. You'll have a smaller pack being rewritten each night. When it
-> gets big enough, drop the .keep, gc, and then .keep the new pack.
-
-(thanks, I wasn't aware of this .keep thing before reading this
-thread)
-
-> Yes, it's a bit more work for you, but having "git gc" optimize by
-> default for git's performance seems to be the only sensible course.
-
-Sure. Sorry if my message read as "git gc does the wrong thing", I was
-just mentionning that it's not optimal with respect to everything.
-
--- 
-Matthieu
+diff --git a/org.spearce.egit.ui/plugin.properties b/org.spearce.egit.ui/plugin.properties
+index 523a959..be3b40c 100644
+--- a/org.spearce.egit.ui/plugin.properties
++++ b/org.spearce.egit.ui/plugin.properties
+@@ -52,10 +52,12 @@ FetchAction_tooltip=Fetch from another repository
+ PushAction_label=&Push To...
+ PushAction_tooltip=Push to another repository
+ 
++IgnoreAction_label=Add to .git&ignore...
++IgnoreAction_tooltip=Ignore the selected resources
++
+ GitActions_label=Git
+ GitMenu_label=&Git
+ 
+-
+ Theme_label=Git
+ Theme_CommitGraphNormalFont_label=Commit graph normal font
+ Theme_CommitGraphNormalFont_description=This font is used to draw the revision history.
+diff --git a/org.spearce.egit.ui/plugin.xml b/org.spearce.egit.ui/plugin.xml
+index a94c8bc..1f62292 100644
+--- a/org.spearce.egit.ui/plugin.xml
++++ b/org.spearce.egit.ui/plugin.xml
+@@ -115,6 +115,12 @@
+ 	       menubarPath="compareWithMenu/gitCompareWithGroup"
+ 	       tooltip="&amp;CompareWithIndexAction_tooltip">
+ 	 </action>
++         <action
++               class="org.spearce.egit.ui.internal.actions.IgnoreAction"
++               id="org.spearce.egit.ui.internal.actions.IgnoreAction"
++               label="%IgnoreAction_label"
++               menubarPath="team.main/group1"
++               tooltip="%IgnoreAction_tooltip"/>
+ 	  </objectContribution>
+ 	  <objectContribution
+          id="org.spearce.egit.ui.resetto"
+diff --git a/org.spearce.egit.ui/src/org/spearce/egit/ui/internal/actions/IgnoreAction.java b/org.spearce.egit.ui/src/org/spearce/egit/ui/internal/actions/IgnoreAction.java
+new file mode 100644
+index 0000000..501443e
+--- /dev/null
++++ b/org.spearce.egit.ui/src/org/spearce/egit/ui/internal/actions/IgnoreAction.java
+@@ -0,0 +1,91 @@
++/*******************************************************************************
++ * Copyright (C) 2009, Alex Blewitt <alex.blewitt@gmail.com>
++ *
++ * All rights reserved. This program and the accompanying materials
++ * are made available under the terms of the Eclipse Public License v1.0
++ * See LICENSE for the full license text, also available.
++ *******************************************************************************/
++package org.spearce.egit.ui.internal.actions;
++
++import java.io.ByteArrayInputStream;
++import java.io.ByteArrayOutputStream;
++
++import org.eclipse.core.resources.IContainer;
++import org.eclipse.core.resources.IFile;
++import org.eclipse.core.resources.IResource;
++import org.eclipse.core.resources.WorkspaceJob;
++import org.eclipse.core.runtime.CoreException;
++import org.eclipse.core.runtime.IProgressMonitor;
++import org.eclipse.core.runtime.IStatus;
++import org.eclipse.core.runtime.Path;
++import org.eclipse.core.runtime.Status;
++import org.eclipse.jface.action.IAction;
++import org.eclipse.team.core.Team;
++import org.spearce.jgit.lib.Constants;
++
++/**
++ * Action for ignoring files via .gitignore
++ *
++ */
++public class IgnoreAction extends RepositoryAction {
++	
++	private static final String GITIGNORE = ".gitignore";
++
++	@SuppressWarnings("restriction")
++	@Override
++	public void run(IAction action) {
++		final IResource[] resources = getSelectedResources();
++		if (resources.length == 0)
++			return;
++		
++		WorkspaceJob job = new WorkspaceJob("Ignore Git resources") { //$NON-NLS-1$
++			public IStatus runInWorkspace(IProgressMonitor monitor) throws CoreException {
++				monitor.beginTask("Ignoring Git resources", resources.length); //$NON-NLS-1$
++				try {
++					for (IResource resource : resources) {
++						// TODO This is pretty inefficient; multiple ignores in the same directory cause multiple writes.
++						// NB This does the same thing in DecoratableResourceAdapter, but neither currently consult .gitignore
++						if (!Team.isIgnoredHint(resource)) {
++							IContainer container = resource.getParent();
++							IFile gitignore = container.getFile(new Path(GITIGNORE));
++							String entry = "/" + resource.getName() + "\n"; //$NON-NLS-1$  //$NON-NLS-2$
++							// TODO What is the character set and new-line convention?
++							if(gitignore.exists()) {
++								// This is ugly. CVS uses an internal representation of the .gitignore to re-write/overwrite each time.
++								ByteArrayOutputStream out = new ByteArrayOutputStream(2048);
++								out.write(entry.getBytes(Constants.CHARACTER_ENCODING)); // TODO Default encoding?
++								gitignore.appendContents(new ByteArrayInputStream(out.toByteArray()),true,true,monitor);
++							} else {
++								ByteArrayInputStream bais = new ByteArrayInputStream( entry.getBytes(Constants.CHARACTER_ENCODING) ); 
++								gitignore.create( bais,true,monitor);					
++							}
++						}
++						monitor.worked(1);
++					}
++					monitor.done();
++				} catch (CoreException e) {
++					throw e;
++				} catch (Exception e) {
++					throw new CoreException(new Status(IStatus.ERROR, "org.spearce.egit.ui", "Unable to ignore resources", e)); //$NON-NLS-1$
++				}
++				return Status.OK_STATUS;			
++			}
++		};
++		job.schedule();		
++	}
++
++	@SuppressWarnings("restriction")
++	@Override
++	public boolean isEnabled() {
++		if (getProjectsInRepositoryOfSelectedResources().length == 0)
++			return false;
++
++		IResource[] resources = getSelectedResources();
++		for (IResource resource : resources) {
++			// NB This does the same thing in DecoratableResourceAdapter, but neither currently consult .gitignore
++			if (!Team.isIgnoredHint(resource))
++				return true;
++		}
++		return false;
++	}
++}
