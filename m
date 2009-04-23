@@ -1,121 +1,93 @@
-From: Robin Rosenberg <robin.rosenberg@dewire.com>
-Subject: Re: [EGit PATCH] IgnoreAction to add to .gitignore files
-Date: Thu, 23 Apr 2009 21:19:36 +0200
-Message-ID: <200904232119.36707.robin.rosenberg@dewire.com>
-References: <20090423115042.743E6D9CDC@apple.int.bandlem.com> <200904231427.29832.fge@one2team.com> <0A94BEDB-37A1-44D2-BE54-D05F0C3124EE@bandlem.com>
+From: Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [PATCH] bisect: remove Perl use by implementing "git bisect--helper --sq-quote"
+Date: Thu, 23 Apr 2009 21:20:01 +0200
+Message-ID: <200904232120.01300.chriscool@tuxfamily.org>
+References: <20090422045524.3606.81842.chriscool@tuxfamily.org> <7veivl444b.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: Text/Plain; charset=iso-8859-1
+Content-Type: text/plain; charset=iso-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Francis Galiegue <fge@one2team.com>, git@vger.kernel.org,
-	spearce@spearce.org
-To: Alex Blewitt <alex@bandlem.com>
-X-From: git-owner@vger.kernel.org Thu Apr 23 21:21:35 2009
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Apr 23 21:23:15 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lx4U2-0001lt-Hi
-	for gcvg-git-2@gmane.org; Thu, 23 Apr 2009 21:21:18 +0200
+	id 1Lx4Vk-0002V4-Pg
+	for gcvg-git-2@gmane.org; Thu, 23 Apr 2009 21:23:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760170AbZDWTTr convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 23 Apr 2009 15:19:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760186AbZDWTTq
-	(ORCPT <rfc822;git-outgoing>); Thu, 23 Apr 2009 15:19:46 -0400
-Received: from mail.dewire.com ([83.140.172.130]:20722 "EHLO dewire.com"
+	id S1753668AbZDWTVX convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 23 Apr 2009 15:21:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752884AbZDWTVW
+	(ORCPT <rfc822;git-outgoing>); Thu, 23 Apr 2009 15:21:22 -0400
+Received: from smtp5-g21.free.fr ([212.27.42.5]:44153 "EHLO smtp5-g21.free.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1760164AbZDWTTp convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 23 Apr 2009 15:19:45 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by dewire.com (Postfix) with ESMTP id EB8CB14927D6;
-	Thu, 23 Apr 2009 21:19:39 +0200 (CEST)
-X-Virus-Scanned: by amavisd-new at dewire.com
-Received: from dewire.com ([127.0.0.1])
-	by localhost (torino.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id DsKoZyoPPeUp; Thu, 23 Apr 2009 21:19:37 +0200 (CEST)
-Received: from sleipner.localnet (unknown [10.9.0.2])
-	by dewire.com (Postfix) with ESMTP id 99BC814927C9;
-	Thu, 23 Apr 2009 21:19:37 +0200 (CEST)
-User-Agent: KMail/1.11.2 (Linux/2.6.27-14-generic; KDE/4.2.2; i686; ; )
-In-Reply-To: <0A94BEDB-37A1-44D2-BE54-D05F0C3124EE@bandlem.com>
+	id S1752242AbZDWTVW convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 23 Apr 2009 15:21:22 -0400
+Received: from smtp5-g21.free.fr (localhost [127.0.0.1])
+	by smtp5-g21.free.fr (Postfix) with ESMTP id AC361D4812E;
+	Thu, 23 Apr 2009 21:21:14 +0200 (CEST)
+Received: from bureau.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
+	by smtp5-g21.free.fr (Postfix) with ESMTP id B0DB8D480ED;
+	Thu, 23 Apr 2009 21:21:11 +0200 (CEST)
+User-Agent: KMail/1.9.9
+In-Reply-To: <7veivl444b.fsf@gitster.siamese.dyndns.org>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117369>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117370>
 
-torsdag 23 april 2009 14:32:46 skrev Alex Blewitt <alex@bandlem.com>:
-> Actually, that's pretty much exactly the format that Eclipse users =20
-> will be expecting.
->=20
-> CVS: Add to .cvsignore
-> SVN: Add to svn:ignore
->=20
-> I suggest that we go with that style of format for the menu items, in=
- =20
-> order to achieve consistency with the way that the other team =20
-> providers work.
+Le mercredi 22 avril 2009, Junio C Hamano a =E9crit :
+> Christian Couder <chriscool@tuxfamily.org> writes:
+> > The sq() function in "git-bisect.sh" was the only place where Perl
+> > was needed. This patch remove this use of Perl by implementing
+> > a new "--sq-quote" option in "builtin-bisect--helper.c".
+>
+> Isn't it because only git-bisect.sh for whatever reason reimplements =
+sq
+> using Perl while original implementation in am used sed for more
+> portability?
 
-Ouch, top posting....
+Well I saw that there was some work going to remove perl dependencies, =
+so I=20
+thought that I might help by removing the Perl dependency from=20
+git-bisect.sh.
 
-Anyway, I agree  with Alex. My motivation is that there are more
-than one way to specify ignore. There's .gitignore, .git/info/excludede=
-s
-and the Team ignore settings themselves. This option specifically
-messes with .gitignore.=20
-
--- robin
-
-> Note also that the tooltip is usually much shorter than that ... it's=
- =20
-> not a full help description, it explains what it does.
->=20
-> Alex
->=20
-> On 23 Apr 2009, at 13:27, Francis Galiegue wrote:
->=20
-> > Le jeudi 23 avril 2009, Alex Blewitt a =E9crit :
-> >> diff --git a/org.spearce.egit.ui/plugin.properties
-> > b/org.spearce.egit.ui/plugin.properties
-> >> index 523a959..be3b40c 100644
-> >> --- a/org.spearce.egit.ui/plugin.properties
-> >> +++ b/org.spearce.egit.ui/plugin.properties
-> >> @@ -52,10 +52,12 @@ FetchAction_tooltip=3DFetch from another repos=
-itory
-> >> PushAction_label=3D&Push To...
-> >> PushAction_tooltip=3DPush to another repository
-> >>
-> >> +IgnoreAction_label=3DAdd to .git&ignore...
-> >> +IgnoreAction_tooltip=3DIgnore the selected resources
-> >> +
-> >> GitActions_label=3DGit
-> >> GitMenu_label=3D&Git
-> >>
-> >
-> > The label and tooltip are too "git-specific", IMHO. I'd rather see:
-> >
-> > IgnoreAction_label=3D&Ignore file(s) for commits...
-> > IgnoreAction_tooltip=3DThe selected file(s) will not be included by=
- =20
-> > default in
-> > your commits. However, you may force the include of these files in =
-a =20
-> > commit
-> > by explicitly adding them via "Team->Add" [or whatever the label is=
-].
-> > \n\nSelecting files to ignore by this mechanism will automatically =
+I didn't look at other places where sq is implemented otherwise. I just=
 =20
-> > add one or
-> > more files named .gitignore in your next commit.
-> >
-> > --=20
-> > Francis Galiegue
-> > ONE2TEAM
-> > Ing=E9nieur syst=E8me
-> > Mob : +33 (0) 683 877 875
-> > Tel : +33 (0) 178 945 552
-> > fge@one2team.com
-> > 40 avenue Raymond Poincar=E9
-> > 75116 Paris
->=20
->=20
+checked other shell scripts where there is @@PERL@@.
+
+> I would suspect, if it were 3 years ago, that any serious porcelain
+> writers would have very much appreciated such a feature that gives sh=
+ell
+> programmers an easy access to a quoting function that allows a safe e=
+val,
+> and I would have strongly suggested that the feature to be implemente=
+d in
+> a more permanent place rather than in bisect--helper; perhaps a bette=
+r
+> place would be the kitchen-sink "rev-parse".
+
+I did it in bisect--helper because I was working on it, and I wanted to=
+ do=20
+it in C because I am porting bisect stuff to C.
+
+But now that you pointed that sq is also implemented in git-am.sh, I ag=
+ree=20
+that it would be perhaps better if it was implemented in something=20
+like "rev-parse". And then it could be used both in "git-bisect.sh" and=
+=20
+in "git-am.sh".
+
+> But given that nobody seems competent enough to do serious programmin=
+g in
+> shell these days, I am not sure if the choice between bisect--helper =
+and
+> rev-parse makes much of a difference ;-).
+
+We never know, it might become trendy again ;-)
+
+Best regards,
+Christian.
