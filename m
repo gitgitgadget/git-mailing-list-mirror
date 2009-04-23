@@ -1,69 +1,82 @@
-From: Alex Blewitt <alex@bandlem.com>
-Subject: Re: [EGit PATCH] IgnoreAction to add to .gitignore files
-Date: Thu, 23 Apr 2009 22:12:40 +0100
-Message-ID: <C4403889-A699-4138-9AD5-EE04915657B7@bandlem.com>
-References: <20090423115042.743E6D9CDC@apple.int.bandlem.com> <200904232226.22240.robin.rosenberg@dewire.com> <480EAB35-0032-42E9-B6C1-6712A7EB7ED1@bandlem.com> <200904232309.28680.robin.rosenberg@dewire.com>
-Mime-Version: 1.0 (Apple Message framework v930.3)
+From: David Abrahams <dave@boostpro.com>
+Subject: Re: [doc] User Manual Suggestion
+Date: Thu, 23 Apr 2009 17:26:34 -0400
+Message-ID: <D912CAB9-E437-4733-8A87-97EE47E3FBBB@boostpro.com>
+References: <m24owgqy0j.fsf@boostpro.com> <20090423175717.GA30198@fieldses.org> <b4087cc50904231137g67b4b84eu3b61bf174ba37d7f@mail.gmail.com> <20090423201636.GD3056@coredump.intra.peff.net>
+Mime-Version: 1.0 (Apple Message framework v930.4)
 Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
 Content-Transfer-Encoding: 7bit
-Cc: "Ferry Huberts (Pelagic)" <ferry.huberts@pelagic.nl>,
-	Francis Galiegue <fge@one2team.com>, git@vger.kernel.org,
-	spearce@spearce.org
-To: Robin Rosenberg <robin.rosenberg@dewire.com>
-X-From: git-owner@vger.kernel.org Thu Apr 23 23:14:28 2009
+Cc: Michael Witten <mfwitten@gmail.com>,
+	"J. Bruce Fields" <bfields@fieldses.org>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Apr 23 23:28:12 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lx6FV-0006kp-Lw
-	for gcvg-git-2@gmane.org; Thu, 23 Apr 2009 23:14:26 +0200
+	id 1Lx6Sp-0002ln-57
+	for gcvg-git-2@gmane.org; Thu, 23 Apr 2009 23:28:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757554AbZDWVMw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 23 Apr 2009 17:12:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755652AbZDWVMv
-	(ORCPT <rfc822;git-outgoing>); Thu, 23 Apr 2009 17:12:51 -0400
-Received: from fg-out-1718.google.com ([72.14.220.155]:41507 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759098AbZDWVMu (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 23 Apr 2009 17:12:50 -0400
-Received: by fg-out-1718.google.com with SMTP id d23so69167fga.17
-        for <git@vger.kernel.org>; Thu, 23 Apr 2009 14:12:48 -0700 (PDT)
-Received: by 10.86.33.10 with SMTP id g10mr443662fgg.57.1240521168786;
-        Thu, 23 Apr 2009 14:12:48 -0700 (PDT)
-Received: from apple.int.bandlem.com (server.bandlem.com [217.155.97.60])
-        by mx.google.com with ESMTPS id 4sm484356fgg.23.2009.04.23.14.12.43
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 23 Apr 2009 14:12:46 -0700 (PDT)
-In-Reply-To: <200904232309.28680.robin.rosenberg@dewire.com>
-X-Mailer: Apple Mail (2.930.3)
+	id S1756692AbZDWV0h (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 23 Apr 2009 17:26:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756493AbZDWV0h
+	(ORCPT <rfc822;git-outgoing>); Thu, 23 Apr 2009 17:26:37 -0400
+Received: from boost-consulting.com ([206.71.190.141]:61328 "EHLO
+	boost-consulting.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755697AbZDWV0g (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 23 Apr 2009 17:26:36 -0400
+Received: from [192.168.188.134] (207-172-223-249.c3-0.smr-ubr3.sbo-smr.ma.static.cable.rcn.com [207.172.223.249])
+	(Authenticated sender: dave)
+	by boost-consulting.com (Postfix) with ESMTPSA id 0E7431CC23;
+	Thu, 23 Apr 2009 14:24:06 -0700 (PDT)
+In-Reply-To: <20090423201636.GD3056@coredump.intra.peff.net>
+X-Mailer: Apple Mail (2.930.4)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117387>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117388>
 
 
-On 23 Apr 2009, at 22:09, Robin Rosenberg wrote:
+On Apr 23, 2009, at 4:16 PM, Jeff King wrote:
 
-> torsdag 23 april 2009 22:36:49 skrev Alex Blewitt <alex@bandlem.com>:
->> I don't know of any other SCM that allows you to un-ignore files in
->> the way that Git does; my guess is that most people wouldn't miss it
->> if it weren't there. A .gitignore customised editor is probably
->> overkill too - after all, you can just open it up in a text editor  
->> and
->> make changes yourself. I've amended a few .cvsignore files in my time
->> manually, but I wouldn't want to overcomplicate the menu for that.
+> On Thu, Apr 23, 2009 at 01:37:05PM -0500, Michael Witten wrote:
 >
-> Why do we want a plugin for git? We have the command line.
+>> Everyone talks about "before one has the conceptual foundation
+>> necessary to understand". Well, here's an idea: The git documentation
+>> should start with the concepts!
+>>
+>> Why don't the docs start out defining blobs and trees and the object
+>> database and references into that database? The reason everything is
+>> so confusing is that the understanding is brushed under the tutorial
+>> rug. People need to learn how to think before they can effectively
+>> learn to start doing.
+>
+> I agree with you, but not everyone does (and you can find prior  
+> debates
+> in the list archives). The user-manual is pretty "top down".
 
-I mean, it's trivial to open up the .gitignore file in Eclipse as a  
-text file. I was doing that to check the implementation worked whilst  
-adding entries to the .gitignore.
+And that's a problem because so many things are badly named.  It also  
+leaves out lots of top
 
-I've seen all manner of bad UIs in applications created because the  
-developer wanted 'total flexibility' and exposed everything via the  
-UI. For something as simple as ignoring a file, which is already a  
-pretty standardised operation across SCMs, I don't see any benefit in  
-making it more complicated than it needs to be.
+> There are
+> some "bottom-up" resources available, but I haven't seen one pointed  
+> to
+> as "definitive".
 
-Alex
+I've been pointed at:
+
+1. http://eagain.net/articles/git-for-computer-scientists
+2. http://www.newartisans.com/2008/04/git-from-the-bottom-up.html
+
+which, IMO, should be read in that order.  I've just sent John Wiegley  
+a huge pile of editorial commentary on #2, which I think could improve  
+things.
+
+But that said, "laying conceptual foundation" doesn't imply bottom- 
+up!  In fact, I don't think the first one is particularly bottom-up
+
+--
+David Abrahams
+BoostPro Computing
+http://boostpro.com
