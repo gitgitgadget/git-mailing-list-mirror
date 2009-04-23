@@ -1,174 +1,74 @@
-From: Marc Weber <marco-oweber@gmx.de>
-Subject: tg-update rewrite proposal
-Date: Fri, 24 Apr 2009 01:11:24 +0200
-Message-ID: <20090423231124.GC17647@gmx.de>
-References: <20090420205023.GB2005@gmx.de> <20090421090413.GA5718@pengutronix.de>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: [PATCH] tests: remove xargs in favor of --stdin where possible
+Date: Fri, 24 Apr 2009 09:22:10 +1000
+Message-ID: <fcaeb9bf0904231622x721483f2v9f009784509676b@mail.gmail.com>
+References: <1240468281-23815-1-git-send-email-pclouds@gmail.com> 
+	<7vfxfzwytx.fsf@gitster.siamese.dyndns.org> <fcaeb9bf0904230307h2d4ee691y412e9cf31e4e90c3@mail.gmail.com> 
+	<7v8wlrwtt3.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: u.kleine-koenig@pengutronix.de
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Apr 24 01:13:20 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Apr 24 01:24:27 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lx86S-0006Ir-Ac
-	for gcvg-git-2@gmane.org; Fri, 24 Apr 2009 01:13:12 +0200
+	id 1Lx8HH-0000gd-VM
+	for gcvg-git-2@gmane.org; Fri, 24 Apr 2009 01:24:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754978AbZDWXL2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 23 Apr 2009 19:11:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752409AbZDWXL2
-	(ORCPT <rfc822;git-outgoing>); Thu, 23 Apr 2009 19:11:28 -0400
-Received: from mail.gmx.net ([213.165.64.20]:38746 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751291AbZDWXL1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 23 Apr 2009 19:11:27 -0400
-Received: (qmail invoked by alias); 23 Apr 2009 23:11:24 -0000
-Received: from pD9E0BB90.dip.t-dialin.net (EHLO mail.gmx.net) [217.224.187.144]
-  by mail.gmx.net (mp011) with SMTP; 24 Apr 2009 01:11:24 +0200
-X-Authenticated: #9006135
-X-Provags-ID: V01U2FsdGVkX1/so2ARK1/szxNL7ZB8KH8XGWJquJSDcf2DdyNBHC
-	NnwdhSC5YgiI+c
-Received: by mail.gmx.net (sSMTP sendmail emulation); Fri, 24 Apr 2009 01:11:24 +0200
-Mail-Followup-To: Marc Weber <marco-oweber@gmx.de>, git@vger.kernel.org,
-	u.kleine-koenig@pengutronix.de
-Content-Disposition: inline
-In-Reply-To: <20090421090413.GA5718@pengutronix.de>
-User-Agent: Mutt/1.5.16 (2007-06-09)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.5600000000000001
+	id S1754913AbZDWXW2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 23 Apr 2009 19:22:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757196AbZDWXW1
+	(ORCPT <rfc822;git-outgoing>); Thu, 23 Apr 2009 19:22:27 -0400
+Received: from yw-out-2324.google.com ([74.125.46.31]:36035 "EHLO
+	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754089AbZDWXW0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 23 Apr 2009 19:22:26 -0400
+Received: by yw-out-2324.google.com with SMTP id 5so497115ywb.1
+        for <git@vger.kernel.org>; Thu, 23 Apr 2009 16:22:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=W2d9oRXyeiw269L2yO5JGyONoCGQYjRWchihgv52MXg=;
+        b=iap8V/UF4d1yzHPPhM0FdCUMqXknNV6qUuW6snx22rH27IXI50gZn86LGSq7Yzi59I
+         a0yd21lu7GIbpFbI4PzrVUZmYGtfnjcLwtbvAP07oeqiGolQjTIQNHQRFeKCkeQbnHT0
+         k4kwEoWXwdvNvoqqN1+TtwGjA7W2f6OZ+csMM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=v/o97GbtC4gfgP488vvI0naluLGyDKneBLx/0W0807pqnFWqSgTN+IyGfH4pNKKYQh
+         j/FvsGSwsd70yBdzzBE6qt2hZ1eELlEqHmxKPsr0wBrdhS9jGSfbQVj7uAkESzEP95yH
+         05Rz9JWczmjWj6sWvptHkpgop8djEpLABhBxc=
+Received: by 10.100.151.14 with SMTP id y14mr2082510and.117.1240528945195; 
+	Thu, 23 Apr 2009 16:22:25 -0700 (PDT)
+In-Reply-To: <7v8wlrwtt3.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117396>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117397>
 
-Hi Uwe,
+On Thu, Apr 23, 2009 at 8:25 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Nguyen Thai Ngoc Duy <pclouds@gmail.com> writes:
+>
+>>> The tests may not break with your change because none of them may use
+>>> problematic characters (especially "\n" and '"'), but update-index --stdin
+>>> without -z is not suitable for reading from output from "find" without -0
+>>> option (on the other hand, "update-index -z --stdin" is good for reading
+>>> output from "find -0"; but for portability we avoid GNUism "find -0").
+>>
+>> It can't be as safe as find -0| update-index -z, but it would be
+>> equivalent to find|xargs, isn't it? Both separate arguments by \n.
+>
+> Have you worked with pathnames with high-bit set and without
+> core.quotepath set to false?
 
-I came up with this proposal for a rewrite for tg-update.sh now:
-I hope this fits your ideas about tg update as well..
-
-Note that second "for each dependency [1]" below allowing handling updates
-against multiple remote repos.
-
-I hope that its easy to understand this short documentation draft.
-
-Sincerly
-Marc Weber
-
-# documentation:
-
-# Uwe Klein Koenig suggests keeping updating with remote branches
-# which corresponds to "git pull" in default git separate from
-# updating branches with deps (normal branhces and/or tg branches)
-# 
-# Because of [3] my implementation of tg update starts at the bottom going up
-# first updating with remotes then with deps by default.
-# However you can choose to only update with remotes
-# or with deps only using --remotes-only or --local-only
-# I hope this satisfies everyone.
-
-# Providing a subshellless update experience can only be done by saving
-# some state the way git-rebase does. STATE_DIR will be used to save this state
-#
-# What's saved in STATE_DIR ?
-#
-# $STATE_DIR/$BRANCHES_VISITING_ORDER is a list of dependency names [1] which is generated
-# by traversing the dependency tree of branches form bottom up
-#
-#  Example:
-#     A    B  C   D
-#      \  /    \ /
-#       t/1   t/2
-#         \   /
-#       t/working
-#
-#  will result in
-#
-#     A
-#     B
-#     t/1
-#     C
-#     D
-#     t/2
-#     t/working
-
-# Then the first line is picked and the specified branch is updated.
-# updating is done in this order [3]:
-#
-#   first:
-#   if not --local-only
-#      foreach remote location:
-#        - merge base with remote tg branch (thereby also including the remote base)
-#          update the base ref [2]
-#        - update tg [*]
-#    
-#   then:
-#   if not --remote-only
-#      for each dependency [1]
-#         - merge base with dep [2]
-#      - update tg [*]
-#    
-#     [*]: merge new base with topgit branch updating the topgit ref.
-#          After this step the base is always contained in the current branch
-#
-# Similar to $STATE_DIR/BRANCHES_VISITING_ORDER a file $STATE_DIR/$BRANCH_UPDATE_TASKS is
-# created containing the subtasks of a branch update.
-# 
-# Example file with additional comment lines, two remote locations:
-#
-#   # first:
-#   merge_base_with: $REMOTE_HASH
-#   update_tg
-#   merge_base_with: $REMOTE_HASH2
-#   update_tg
-#
-#   # then:
-#   merge_base_with: $DEP1_HASH
-#   update_tg
-#   merge_base_with: $DEP2_HASH
-#   update_tg
-#   merge_base_with: $DEP3_HASH
-#   update_tg
-
-
-
-# So the overall implementation is easy and looks like this:
-#
-# if !exists $STATE_DIR/BRANCHES_VISITING_ORDER
-#   then create file, goto else
-#   else pop_or_continue
-#
-# pop_or_continue:
-# if !exists $STATE_DIR/$BRANCH_UPDATE_TASKS
-#   then create file, goto else
-#   else pop_or_continue_subtask
-#
-#  pop_or_continue_subtask:
-#  ...
-
-# [1] note for users who knew the old code: not including remotes
-#
-# [2] This means creating a commit to the topic branch changing the .topbase file only
-#
-# [3] I think the following statements make sense:
-#     *) You want to update against remote first. Or you want to have a way to do so.
-#        Why? The remote may already have done some of the dirty merge work for you.
-#        If you resolving the same conflicts first by updating with deps and then merge
-#        with remote -> hell!
-#     *) You don't want to run tg update multiple times. Thus the update strategy has
-#        to start at the bottom and go up to the current branch
-
-
-
-# state dir and filenames:
-STATE_DIR=.git/tg-update-in-progress 
-BRANCHES_VISITING_ORDER=branches-visiting-order
-BRANCH_UPDATE_TASKS=branch-update-tasks
-
-## Parse options
-
-if [ -n "$1" ]; then
-        echo "Usage: tg [--local-only] [--remote-only] update" >&2
-        exit 1
-fi
+OK I see. There are some fancy unquoting going on inside. I'd take the
+patch back.
+-- 
+Duy
