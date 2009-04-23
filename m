@@ -1,94 +1,65 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Add an option not to use link(src, dest) && unlink(src)
- when that is unreliable
-Date: Thu, 23 Apr 2009 21:33:53 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.0904232132380.10279@pacific.mpi-cbg.de>
-References: <alpine.DEB.1.00.0904231252080.10279@pacific.mpi-cbg.de> <200904232116.10769.j6t@kdbg.org>
+From: Pascal Obry <pascal@obry.net>
+Subject: Re: [GIT-SVN] master follows not trunk
+Date: Thu, 23 Apr 2009 21:38:15 +0200
+Organization: Home - http://www.obry.net
+Message-ID: <49F0C3A7.7070400@obry.net>
+References: <36ca99e90904220821u3dae67d7jcb6366d7a95dfbd1@mail.gmail.com> <20090423183705.GB17467@dcvr.yhbt.net>
+Reply-To: pascal@obry.net
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: Johannes Sixt <j6t@kdbg.org>
-X-From: git-owner@vger.kernel.org Thu Apr 23 21:35:29 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Bert Wesarg <bert.wesarg@googlemail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Eric Wong <normalperson@yhbt.net>
+X-From: git-owner@vger.kernel.org Thu Apr 23 21:39:53 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lx4hf-0006xn-DS
-	for gcvg-git-2@gmane.org; Thu, 23 Apr 2009 21:35:23 +0200
+	id 1Lx4lz-0008PP-QN
+	for gcvg-git-2@gmane.org; Thu, 23 Apr 2009 21:39:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752900AbZDWTdu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 23 Apr 2009 15:33:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752242AbZDWTdt
-	(ORCPT <rfc822;git-outgoing>); Thu, 23 Apr 2009 15:33:49 -0400
-Received: from mail.gmx.net ([213.165.64.20]:57193 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751841AbZDWTds (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 23 Apr 2009 15:33:48 -0400
-Received: (qmail invoked by alias); 23 Apr 2009 19:33:46 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp032) with SMTP; 23 Apr 2009 21:33:46 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19Ygpg+wdZYwt2PiOJiqc6NLUBqwhK1V09D7qoaSn
-	YtmqtOS3PYNMuy
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <200904232116.10769.j6t@kdbg.org>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.5
+	id S1753934AbZDWTiS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 23 Apr 2009 15:38:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752583AbZDWTiS
+	(ORCPT <rfc822;git-outgoing>); Thu, 23 Apr 2009 15:38:18 -0400
+Received: from mail-ew0-f176.google.com ([209.85.219.176]:58962 "EHLO
+	mail-ew0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753395AbZDWTiR (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 23 Apr 2009 15:38:17 -0400
+Received: by ewy24 with SMTP id 24so721397ewy.37
+        for <git@vger.kernel.org>; Thu, 23 Apr 2009 12:38:15 -0700 (PDT)
+Received: by 10.210.20.17 with SMTP id 17mr1449426ebt.2.1240515495749;
+        Thu, 23 Apr 2009 12:38:15 -0700 (PDT)
+Received: from ?192.168.1.11? (ARouen-256-1-98-176.w92-132.abo.wanadoo.fr [92.132.65.176])
+        by mx.google.com with ESMTPS id 28sm529774eyg.48.2009.04.23.12.38.14
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Thu, 23 Apr 2009 12:38:15 -0700 (PDT)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 6.0; fr-FR; rv:1.8.1.21) Gecko/20090302 Thunderbird/2.0.0.21 Mnenhy/0.7.5.0
+In-Reply-To: <20090423183705.GB17467@dcvr.yhbt.net>
+X-Enigmail-Version: 0.95.7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117372>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117373>
 
-Hi,
+Eric,
 
-On Thu, 23 Apr 2009, Johannes Sixt wrote:
-
-> On Donnerstag, 23. April 2009, Johannes Schindelin wrote:
-> > It seems that accessing NTFS partitions with ufsd (at least on my EeePC)
-> > has an unnerving bug: if you link() a file and unlink() it right away,
-> > the target of the link() will have the correct size, but consist of NULs.
-> >
-> > It seems as if the calls are simply not serialized correctly, as
-> > single-stepping through the function move_temp_to_file() works flawlessly.
-> >
-> > As ufsd is "Commertial software", I cannot fix it, and have to work
+> However, this issue has come up many times now so maybe setting
+> master==trunk if trunk exists (sometimes it does not)...
 > 
-> "commercial software"
+> Any objections?
 
-I just quoted the license string of that wonderfully high-quality kernel 
-module.
+I think it is a good idea as this would be just right in most cases.
 
-Maybe I should have added the beloved "[sic!]".
+-- 
 
-> > At the same time, it seems that this fixes msysGit issues 222 and 229 to
-> > assume that Windows cannot handle link() && unlink().
-> >
-> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> ...
-> > @@ -2225,7 +2225,9 @@ int move_temp_to_file(const char *tmpfile, const char
-> > *filename) {
-> >  	int ret = 0;
-> >
-> > -	if (link(tmpfile, filename))
-> > +	if (unreliable_hardlinks)
-> > +		ret = ~EEXIST;
-> 
-> It took me a while to see why we need a tilde here, but it's ok. Perhaps this 
-> helps others:
-> 
-> +		ret = ~EEXIST;	/* anything but EEXIST */
-
-Will do.
-
-> Nevertheless:
-> 
-> Acked-by: Johannes Sixt <j6t@kdbg.org>
-
-Thanks.
-
-But it will have to wait for Saturday.
-
-Ciao,
-Dscho
+--|------------------------------------------------------
+--| Pascal Obry                           Team-Ada Member
+--| 45, rue Gabriel Peri - 78114 Magny Les Hameaux FRANCE
+--|------------------------------------------------------
+--|    http://www.obry.net  -  http://v2p.fr.eu.org
+--| "The best way to travel is by means of imagination"
+--|
+--| gpg --keyserver keys.gnupg.net --recv-key F949BD3B
