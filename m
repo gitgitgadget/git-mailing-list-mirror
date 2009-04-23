@@ -1,51 +1,59 @@
-From: "Ferry Huberts (Pelagic)" <ferry.huberts@pelagic.nl>
-Subject: Re: git init permissions?
-Date: Thu, 23 Apr 2009 22:50:13 +0200
-Message-ID: <49F0D485.6050607@pelagic.nl>
-References: <49E4D16E.9050500@pelagic.nl> <200904142047.21810.johan@herland.net> <49E4E598.6050505@pelagic.nl> <20090415010252.GD13966@inocybe.teonanacatl.org>
+From: Robin Rosenberg <robin.rosenberg@dewire.com>
+Subject: Re: [EGit PATCH] IgnoreAction to add to .gitignore files
+Date: Thu, 23 Apr 2009 23:09:28 +0200
+Message-ID: <200904232309.28680.robin.rosenberg@dewire.com>
+References: <20090423115042.743E6D9CDC@apple.int.bandlem.com> <200904232226.22240.robin.rosenberg@dewire.com> <480EAB35-0032-42E9-B6C1-6712A7EB7ED1@bandlem.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: Text/Plain;
+  charset="iso-8859-1"
 Content-Transfer-Encoding: 7bit
-Cc: Johan Herland <johan@herland.net>, git@vger.kernel.org, jk@jk.gs
-To: Todd Zullinger <tmz@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Apr 23 22:51:55 2009
+Cc: "Ferry Huberts (Pelagic)" <ferry.huberts@pelagic.nl>,
+	Francis Galiegue <fge@one2team.com>, git@vger.kernel.org,
+	spearce@spearce.org
+To: Alex Blewitt <alex@bandlem.com>
+X-From: git-owner@vger.kernel.org Thu Apr 23 23:11:05 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lx5tf-0007WW-SA
-	for gcvg-git-2@gmane.org; Thu, 23 Apr 2009 22:51:52 +0200
+	id 1Lx6CG-0005d7-OZ
+	for gcvg-git-2@gmane.org; Thu, 23 Apr 2009 23:11:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756209AbZDWUuR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 23 Apr 2009 16:50:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755525AbZDWUuP
-	(ORCPT <rfc822;git-outgoing>); Thu, 23 Apr 2009 16:50:15 -0400
-Received: from hupie.xs4all.nl ([82.95.241.251]:40194 "EHLO
-	Lighthouse.internal.Hupie.com" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1754863AbZDWUuO (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 23 Apr 2009 16:50:14 -0400
-Received: from [192.168.0.51] (unknown [192.168.0.51])
-	by Lighthouse.internal.Hupie.com (Postfix) with ESMTP id AA79558BD9F;
-	Thu, 23 Apr 2009 22:50:13 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.21 (X11/20090320)
-In-Reply-To: <20090415010252.GD13966@inocybe.teonanacatl.org>
+	id S1757428AbZDWVJd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 23 Apr 2009 17:09:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757452AbZDWVJd
+	(ORCPT <rfc822;git-outgoing>); Thu, 23 Apr 2009 17:09:33 -0400
+Received: from mail.dewire.com ([83.140.172.130]:23237 "EHLO dewire.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753340AbZDWVJc (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 23 Apr 2009 17:09:32 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by dewire.com (Postfix) with ESMTP id A7A9114927D6;
+	Thu, 23 Apr 2009 23:09:30 +0200 (CEST)
+X-Virus-Scanned: by amavisd-new at dewire.com
+Received: from dewire.com ([127.0.0.1])
+	by localhost (torino.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id Pzkop1cykkUd; Thu, 23 Apr 2009 23:09:30 +0200 (CEST)
+Received: from sleipner.localnet (unknown [10.9.0.2])
+	by dewire.com (Postfix) with ESMTP id 352F38030D6;
+	Thu, 23 Apr 2009 23:09:30 +0200 (CEST)
+User-Agent: KMail/1.11.2 (Linux/2.6.27-14-generic; KDE/4.2.2; i686; ; )
+In-Reply-To: <480EAB35-0032-42E9-B6C1-6712A7EB7ED1@bandlem.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117385>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117386>
 
-Todd Zullinger wrote:
-> Ferry Huberts (Pelagic) wrote:
->> Johan Herland wrote:
->>> This has been fixed (along with other --shared issues) in v1.6.2.3.
->>> Please upgrade, if possible.
->> unfortunately that's not possible since I'm on RHEL.
-> 
-> Out of curiosity, why not?  I'm not aware of any official git-1.6.0.6
-> builds for RHEL, so you must already be using git from a third-party
-> repository.
-> 
+torsdag 23 april 2009 22:36:49 skrev Alex Blewitt <alex@bandlem.com>:
+> I don't know of any other SCM that allows you to un-ignore files in  
+> the way that Git does; my guess is that most people wouldn't miss it  
+> if it weren't there. A .gitignore customised editor is probably  
+> overkill too - after all, you can just open it up in a text editor and  
+> make changes yourself. I've amended a few .cvsignore files in my time  
+> manually, but I wouldn't want to overcomplicate the menu for that.
 
-I did the test on my fedora system. the git version on rhel is even
-older than 1606
+Why do we want a plugin for git? We have the command line.
+
+-- robin
