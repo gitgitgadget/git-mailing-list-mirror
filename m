@@ -1,109 +1,97 @@
-From: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
-	<u.kleine-koenig@pengutronix.de>
-Subject: Re: A system administration use case for git
-Date: Thu, 23 Apr 2009 11:55:33 +0200
-Message-ID: <20090423095533.GE13989@pengutronix.de>
-References: <2cfc40320904220133l5ab567f3q46608793b93f0e1f@mail.gmail.com>
+From: Simon Braunschmidt <sb@emlix.com>
+Subject: tracking branch on a tag
+Date: Thu, 23 Apr 2009 11:52:52 +0200
+Organization: emlix gmbh, Goettingen, Germany
+Message-ID: <49F03A74.5080805@emlix.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Jon Seymour <jon.seymour@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Apr 23 11:59:43 2009
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Apr 23 12:00:05 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LwvgJ-0007IS-Uz
-	for gcvg-git-2@gmane.org; Thu, 23 Apr 2009 11:57:24 +0200
+	id 1LwvdW-00068s-4z
+	for gcvg-git-2@gmane.org; Thu, 23 Apr 2009 11:54:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754316AbZDWJzi convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 23 Apr 2009 05:55:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752942AbZDWJzi
-	(ORCPT <rfc822;git-outgoing>); Thu, 23 Apr 2009 05:55:38 -0400
-Received: from metis.ext.pengutronix.de ([92.198.50.35]:34622 "EHLO
-	metis.ext.pengutronix.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751543AbZDWJzh (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 23 Apr 2009 05:55:37 -0400
-Received: from octopus.hi.pengutronix.de ([2001:6f8:1178:2:215:17ff:fe12:23b0])
-	by metis.ext.pengutronix.de with esmtp (Exim 4.63)
-	(envelope-from <ukl@pengutronix.de>)
-	id 1LwveZ-0008AO-Gl; Thu, 23 Apr 2009 11:55:35 +0200
-Received: from ukl by octopus.hi.pengutronix.de with local (Exim 4.69)
-	(envelope-from <ukl@pengutronix.de>)
-	id 1LwveX-0006bj-Mn; Thu, 23 Apr 2009 11:55:33 +0200
-Content-Disposition: inline
-In-Reply-To: <2cfc40320904220133l5ab567f3q46608793b93f0e1f@mail.gmail.com>
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-SA-Exim-Connect-IP: 2001:6f8:1178:2:215:17ff:fe12:23b0
-X-SA-Exim-Mail-From: ukl@pengutronix.de
-X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
-X-PTX-Original-Recipient: git@vger.kernel.org
+	id S1754100AbZDWJw5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 23 Apr 2009 05:52:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753527AbZDWJw4
+	(ORCPT <rfc822;git-outgoing>); Thu, 23 Apr 2009 05:52:56 -0400
+Received: from mx1.emlix.com ([193.175.82.87]:46531 "EHLO mx1.emlix.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752856AbZDWJwz (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 23 Apr 2009 05:52:55 -0400
+Received: from gate.emlix.com ([193.175.27.217]:44908 helo=mailer.emlix.com)
+	by mx1.emlix.com with esmtp (Exim 4.63)
+	(envelope-from <sb@emlix.com>)
+	id 1Lwvbx-0002kL-VR
+	for git@vger.kernel.org; Thu, 23 Apr 2009 11:52:54 +0200
+Received: by mailer.emlix.com
+	id 1Lwvby-0003Eg-S8; Thu, 23 Apr 2009 11:52:54 +0200
+User-Agent: Thunderbird 2.0.0.21 (X11/20090318)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117325>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117326>
 
-Hello Jon,
+Hi
 
-On Wed, Apr 22, 2009 at 06:33:12PM +1000, Jon Seymour wrote:
-> * calculate the git hashes of the tree (without making copies of the
-> files in the tree)
-You can hand-craft a tree object:
-
-	for f in $filelist; do
-		printf "100644 %s\x00" $f;
-
-		git hash-object $f |
-			perl -n -e 'chomp; for $c (split(/(.{2})/)) { printf("%c", hex($c)) =
-if $c }';
-	done |
-		git hash-object -t tree --stdin
+So i set up a tracking branch on an annotated signed tag like:
 
 
-You get some extra points for directories that include subdirs :-)
+$git branch --track foobranch v2.6.26
+ >Branch foobranch set up to track local ref refs/tags/v2.6.26.
 
-There is a problem though, I think it has to do with the order of the
-files in the tree object.  Here is a real-life example from the Linux
-kernel (I choosed the usr subdirectory, because it's small and doesn't
-contain subdirs):
+Check it out, get an error
 
-	ukleinek@cepheus:~/gsrc/linux-2.6/usr$ for f in .gitignore Kconfig Mak=
-efile gen_init_cpio.c initramfs_data.S initramfs_data.bz2.S initramfs_d=
-ata.gz.S initramfs_data.lzma.S; do printf "100644 %s\x00" $f; git hash-=
-object $f | perl -n -e 'chomp; for $c (split(/(.{2})/)) { printf("%c", =
-hex($c)) if $c }'; done | git hash-object -t tree --stdin
-	64f2ca854bc19fd29479b198be11beba56a26b1e
+$git checkout foobranch
+ >Switched to branch 'foobranch'
+ >error: Object 14650d6ec137e70b6c1918cdef235027c5156020 is a commit, 
+not a tag
+ >fatal: Invalid symmetric difference expression 
+bce7f793daec3e65ec5c5705d2457b81fe7b5725...14650d6ec137e70b6c1918cdef235027c5156020
 
-	ukleinek@cepheus:~/gsrc/linux-2.6/usr$ git rev-parse HEAD:usr
-	64f2ca854bc19fd29479b198be11beba56a26b1e
+Inspect the relevant object
 
-There is a practical problem though:  The filelist has to be sorted in =
-a
-way that is not provided by ls, so:
+$git-cat-file -p bce7f793daec3e65ec5c5705d2457b81fe7b5725
+ >tree 05bc81f9b27a1ab60ea4e506357f0c7f2ece4eda
+ >parent ec229e830060091b9be63c8f873c1b2407a82821
+ >author Linus Torvalds <torvalds@linux-foundation.org> 1215985889 -0700
+ >committer Linus Torvalds <torvalds@linux-foundation.org> 1215985889 -0700
 
-	ukleinek@cepheus:~/gsrc/linux-2.6/usr$ for f in $(ls -A); do printf "1=
-00644 %s\x00" $f; git hash-object $f | perl -n -e 'chomp; for $c (split=
-(/(.{2})/)) { printf("%c", hex($c)) if $c }'; done | git hash-object -t=
- tree -w --stdin
-	a0a6efb3f1de956badc7607c7d372cc325a18846
+ >Linux 2.6.26
 
-	ukleinek@cepheus:~/gsrc/linux-2.6/usr$ git ls-tree a0a6efb3f1de956badc=
-7607c7d372cc325a18846 | wc -l
-	0
+$git-cat-file -p 14650d6ec137e70b6c1918cdef235027c5156020
+ >object bce7f793daec3e65ec5c5705d2457b81fe7b5725
+ >type commit
+ >tag v2.6.26
+ >tagger Linus Torvalds <torvalds@linux-foundation.org> Sun Jul 13 
+ >14:51:38 2008 -0700
+ >
+ >Linux 2.6.26
+ >-----BEGIN PGP SIGNATURE-----
+ >Version: GnuPG v1.4.9 (GNU/Linux)
+ >
+ >iEYEABECAAYFAkh6ePIACgkQF3YsRnbiHLuJcACgpHzd21qAY25V2VQWBCYPW8bB
+ >Z8MAoJ9qfiwuRt27cdrmAU2aJq+YFrYs
+ >=aHK8
+ >-----END PGP SIGNATURE-----
 
-doesn't work :-/
+I get this errors only on annotated/signed tags, not on lightweight 
+tags. Admittedly it doesnt make much sense to track a tag, yet this 
+error message makes even less sense:
 
-This would make a nice plumbing:
+error: Object 14650d6ec137e70b6c1918cdef235027c5156020 is a commit, not 
+a tag
 
-	git hash-tree $directory
+with 14650d being a tag.
 
-Best regards
-Uwe
+Is this error message serious, as fatal sound quite harsh? Can it be 
+avoided, by guiding the user on  branch creation or by simply not 
+showing it in this situation?
 
---=20
-Pengutronix e.K.                              | Uwe Kleine-K=F6nig     =
-       |
-Industrial Linux Solutions                    | http://www.pengutronix.=
-de/  |
+Gruessle
+Simon
