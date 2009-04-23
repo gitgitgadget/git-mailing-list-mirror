@@ -1,54 +1,55 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: dangling commits and blobs: is this normal?
-Date: Thu, 23 Apr 2009 10:56:13 -0700
-Message-ID: <20090423175612.GV23604@spearce.org>
-References: <450196A1AAAE4B42A00A8B27A59278E70ACE0502@EXCHANGE.trad.tradestation.com> <20090422152719.GA12881@coredump.intra.peff.net> <W0cjdA0pSHr_AbT2c-k5hDf7LyNvwkc38qIIhTtJJRwFnGBxaBsEiw@cipher.nrlssc.navy.mil> <alpine.LFD.2.00.0904221331450.6741@xanadu.home> <FcecxnoVg4H8G3MKjZgl2T6zCGDer4yYyScIgaweFTNgDCKG65Xiig@cipher.nrlssc.navy.mil> <alpine.LFD.2.00.0904221548310.6741@xanadu.home> <20090422200502.GA14304@coredump.intra.peff.net> <064C9132-2E72-4665-A44D-A2F4194DAC2B@adacore.com>
+From: "J. Bruce Fields" <bfields@fieldses.org>
+Subject: Re: [doc] User Manual Suggestion
+Date: Thu, 23 Apr 2009 13:57:17 -0400
+Message-ID: <20090423175717.GA30198@fieldses.org>
+References: <m24owgqy0j.fsf@boostpro.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, Nicolas Pitre <nico@cam.org>,
-	Brandon Casey <casey@nrlssc.navy.mil>,
-	John Dlugosz <JDlugosz@TradeStation.com>, git@vger.kernel.org
-To: Geert Bosch <bosch@adacore.com>
-X-From: git-owner@vger.kernel.org Thu Apr 23 19:57:52 2009
+Cc: git@vger.kernel.org
+To: David Abrahams <dave@boostpro.com>
+X-From: git-owner@vger.kernel.org Thu Apr 23 19:58:56 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lx3BE-0003GI-LG
-	for gcvg-git-2@gmane.org; Thu, 23 Apr 2009 19:57:49 +0200
+	id 1Lx3CG-0003ar-G7
+	for gcvg-git-2@gmane.org; Thu, 23 Apr 2009 19:58:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753301AbZDWR4O (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 23 Apr 2009 13:56:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753005AbZDWR4O
-	(ORCPT <rfc822;git-outgoing>); Thu, 23 Apr 2009 13:56:14 -0400
-Received: from george.spearce.org ([209.20.77.23]:33537 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752812AbZDWR4O (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 23 Apr 2009 13:56:14 -0400
-Received: by george.spearce.org (Postfix, from userid 1001)
-	id 6268138211; Thu, 23 Apr 2009 17:56:13 +0000 (UTC)
+	id S1752812AbZDWR5T (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 23 Apr 2009 13:57:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752581AbZDWR5T
+	(ORCPT <rfc822;git-outgoing>); Thu, 23 Apr 2009 13:57:19 -0400
+Received: from mail.fieldses.org ([141.211.133.115]:52085 "EHLO
+	pickle.fieldses.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751212AbZDWR5S (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 23 Apr 2009 13:57:18 -0400
+Received: from bfields by pickle.fieldses.org with local (Exim 4.69)
+	(envelope-from <bfields@fieldses.org>)
+	id 1Lx3Aj-00082j-KV; Thu, 23 Apr 2009 13:57:17 -0400
 Content-Disposition: inline
-In-Reply-To: <064C9132-2E72-4665-A44D-A2F4194DAC2B@adacore.com>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+In-Reply-To: <m24owgqy0j.fsf@boostpro.com>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117351>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117352>
 
-Geert Bosch <bosch@adacore.com> wrote:
-> significant
-> speedups, especially during large imports that currently require  
-> frequent
-> repacking of the entire repository.
+On Wed, Apr 22, 2009 at 03:38:52PM -0400, David Abrahams wrote:
+> 
+> http://www.kernel.org/pub/software/scm/git/docs/user-manual.html#how-to-check-out
+> covers "git reset" way too early, IMO, before one has the conceptual
+> foundation necessary to understand what it means to "modify the current
+> branch to point at v2.6.17".  If this operation must be covered this
+> early in the manual, it should probably not be until
+> http://www.kernel.org/pub/software/scm/git/docs/user-manual.html#manipulating-branches
 
-Large imports should be using fast-import, and then issue a single
-massive `git repack -f --window=250 --depth=50` or some such repack
-command after the entire import is complete.
+I agree; we should suggest just a git-checkout (to a detached HEAD)
+instead, though that needs a little explanation so people aren't scared
+by the warning message it gives.
 
-If your favorite import tool (*cough* git-svn *cough*) can't use
-fast-import, and you are importing a large enough repository that
-this matters to you, use another importer that can use fast-import.
+I also have a longstanding todo to experiment with rewriting the
+beginning to use detached heads more and defer branch management till
+later.
 
--- 
-Shawn.
+--b.
