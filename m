@@ -1,74 +1,76 @@
 From: Stephen Boyd <bebarino@gmail.com>
-Subject: [PATCH 0/8] Doc updates to config, format-patch, show-branch
-Date: Thu, 23 Apr 2009 02:37:54 -0700
-Message-ID: <1240479482-31366-1-git-send-email-bebarino@gmail.com>
+Subject: [PATCH 1/8] config.txt: remove pointer to SubmittingPatches
+Date: Thu, 23 Apr 2009 02:37:55 -0700
+Message-ID: <1240479482-31366-2-git-send-email-bebarino@gmail.com>
+References: <1240479482-31366-1-git-send-email-bebarino@gmail.com>
 Cc: Junio C Hamano <gitster@pobox.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Apr 23 11:39:57 2009
+X-From: git-owner@vger.kernel.org Thu Apr 23 11:39:58 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LwvPI-0000xq-SY
+	id 1LwvPJ-0000xq-Hb
 	for gcvg-git-2@gmane.org; Thu, 23 Apr 2009 11:39:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753570AbZDWJiJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 23 Apr 2009 05:38:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753387AbZDWJiI
-	(ORCPT <rfc822;git-outgoing>); Thu, 23 Apr 2009 05:38:08 -0400
+	id S1753698AbZDWJiM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 23 Apr 2009 05:38:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753543AbZDWJiL
+	(ORCPT <rfc822;git-outgoing>); Thu, 23 Apr 2009 05:38:11 -0400
 Received: from rv-out-0506.google.com ([209.85.198.236]:7604 "EHLO
 	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753496AbZDWJiG (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 23 Apr 2009 05:38:06 -0400
+	with ESMTP id S1753658AbZDWJiK (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 23 Apr 2009 05:38:10 -0400
 Received: by rv-out-0506.google.com with SMTP id f9so392313rvb.1
-        for <git@vger.kernel.org>; Thu, 23 Apr 2009 02:38:06 -0700 (PDT)
+        for <git@vger.kernel.org>; Thu, 23 Apr 2009 02:38:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:received:from:to:cc:subject
-         :date:message-id:x-mailer;
-        bh=3aajRYPb6ZI25w4jMeqRjZ0Rp4C766wG8NOkpFNrmBs=;
-        b=cCFI33M4o75XbRAzSgNBcaG9fiqv1r9FURC3wEp8WYt3gk0Ls7XdK25gSH2aSKOOvf
-         3h7yXRNwNSxddyZwV/ZvquSo3an3xnT+6Wz/Ua7d3GT+3xfU2FV5hvAuVMSNA8HbvUnR
-         74Nnd5jVP0pW+opZwS1lhfXd2Q9+U8RCgyOzE=
+         :date:message-id:x-mailer:in-reply-to:references;
+        bh=Mt9rmHckZc6D7lfRrXBpIpe3Tobe0NB1xExNMg6Wh1A=;
+        b=oNlKmde9EJqB+vABvwa+m/fd/MW9JckKHM59cdJg/hGwAfp2mFhZP3oiPCbdaY2eKT
+         5uOzdgnu+jRmX9LNkYd6cU5hVQNAqXAJYw1D2+Z6+w/ZHl0DwSpte+xY5TAxBLubx8R8
+         AwcdsJDuiqUG/ypHzQ+aGev7ORnPk9ektl8YQ=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        b=G4coYxdf4SxOAMwtT1Y80fIRWvMIe/DKYILvXSeyxwmn29rCAmphJGfKxg5bTlgYdu
-         AECmzjC/BVj28Bh8/G7lcZjdwlwIg5H70uOBkfjZEbDap7rywiiKHhPzZlaQUjCqH0di
-         j5jQHxJPW1XmRlEZNO8n87eBQbQvDWIqeCcCE=
-Received: by 10.141.37.8 with SMTP id p8mr265875rvj.35.1240479485951;
-        Thu, 23 Apr 2009 02:38:05 -0700 (PDT)
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        b=DToG0CEh/LfvCkKr436h5wOqPcCkzQpzW4b1r7qIvWF54vHDNLDte6dqGHGxT4h/A5
+         b/Ohx32ASNJglnfQzTRU4qzrgvrHsP+8tTFLnywrvuQFtFsIYHzgQoVpPmjEWHiIc3Ol
+         sbBbKlGYl9VVJASgzbSnbmQraq9g5JRpq8YPw=
+Received: by 10.141.114.15 with SMTP id r15mr265828rvm.42.1240479489827;
+        Thu, 23 Apr 2009 02:38:09 -0700 (PDT)
 Received: from earth ([76.89.212.195])
-        by mx.google.com with ESMTPS id g31sm2921351rvb.19.2009.04.23.02.38.03
+        by mx.google.com with ESMTPS id b8sm3556985rvf.28.2009.04.23.02.38.07
         (version=SSLv3 cipher=RC4-MD5);
-        Thu, 23 Apr 2009 02:38:05 -0700 (PDT)
-Received: by earth (sSMTP sendmail emulation); Thu, 23 Apr 2009 02:38:02 -0700
+        Thu, 23 Apr 2009 02:38:09 -0700 (PDT)
+Received: by earth (sSMTP sendmail emulation); Thu, 23 Apr 2009 02:38:06 -0700
 X-Mailer: git-send-email 1.6.2.3
+In-Reply-To: <1240479482-31366-1-git-send-email-bebarino@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117315>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117316>
 
-I've tried to order these from least to most controversial.
+SubmittingPatches exists in the git source documentation for developers
+of git and is not included in the man/html page distributions.
 
-The first 3 are small fixups. The fourth patch is a quoting fixup. The
-fifth patch is a patch I sent a few weeks ago which flew under the radar.
-The last 3 patches are some updates to the config.txt documentation.
-I've split them up into seperate patches so they can easily be left out
-if not wanted.
+Signed-off-by: Stephen Boyd <bebarino@gmail.com>
+---
+ Documentation/config.txt |    1 -
+ 1 files changed, 0 insertions(+), 1 deletions(-)
 
-Stephen Boyd (8):
-  config.txt: remove pointer to SubmittingPatches
-  config.txt: add missing format.{subjectprefix,cc,attach} variables
-  Documentation: use lowercase for shallow and deep threading
-  git-show-branch.txt: cleanup example description
-  git-format-patch.txt: general rewordings and cleanups
-  config.txt: add missing 'the's and make words plural
-  config.txt: clarify sentences in the configuration and syntax sections
-  config.txt: Make configuration paragraph more consistent
-
- Documentation/config.txt           |   68 +++++++++++++++++++++--------------
- Documentation/git-format-patch.txt |   42 +++++++++++-----------
- Documentation/git-show-branch.txt  |    7 ++--
- 3 files changed, 66 insertions(+), 51 deletions(-)
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 35056e1..fb7adfa 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -743,7 +743,6 @@ format.signoff::
+     format-patch by default. *Note:* Adding the Signed-off-by: line to a
+     patch should be a conscious act and means that you certify you have
+     the rights to submit this work under the same open source license.
+-    Please see the 'SubmittingPatches' document for further discussion.
+ 
+ gc.aggressiveWindow::
+ 	The window size parameter used in the delta compression
+-- 
+1.6.2.3
