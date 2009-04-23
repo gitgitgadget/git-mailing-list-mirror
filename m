@@ -1,69 +1,76 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Add an option not to use link(src, dest) && unlink(src)
-  when that is unreliable
-Date: Thu, 23 Apr 2009 23:59:44 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.0904232358520.10279@pacific.mpi-cbg.de>
-References: <alpine.DEB.1.00.0904231252080.10279@pacific.mpi-cbg.de> <81b0412b0904231239qf317c02xbfa548d0011a0302@mail.gmail.com>
+From: Johan Herland <johan@herland.net>
+Subject: Re: [doc] User Manual Suggestion
+Date: Fri, 24 Apr 2009 00:51:46 +0200
+Message-ID: <200904240051.46233.johan@herland.net>
+References: <m24owgqy0j.fsf@boostpro.com>
+ <20090423201636.GD3056@coredump.intra.peff.net>
+ <D912CAB9-E437-4733-8A87-97EE47E3FBBB@boostpro.com>
 Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="8323328-884190836-1240523985=:10279"
-Cc: git@vger.kernel.org, gitster@pobox.com, j6t@kdbg.org
-To: Alex Riesen <raa.lkml@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Apr 24 00:01:18 2009
+Content-Type: Text/Plain; charset=iso-8859-1
+Content-Transfer-Encoding: 7BIT
+Cc: David Abrahams <dave@boostpro.com>, Jeff King <peff@peff.net>,
+	Michael Witten <mfwitten@gmail.com>,
+	"J. Bruce Fields" <bfields@fieldses.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Apr 24 00:53:50 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lx6yp-0004ue-3p
-	for gcvg-git-2@gmane.org; Fri, 24 Apr 2009 00:01:15 +0200
+	id 1Lx7nh-0001d6-Vi
+	for gcvg-git-2@gmane.org; Fri, 24 Apr 2009 00:53:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755424AbZDWV7k (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 23 Apr 2009 17:59:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754186AbZDWV7k
-	(ORCPT <rfc822;git-outgoing>); Thu, 23 Apr 2009 17:59:40 -0400
-Received: from mail.gmx.net ([213.165.64.20]:35093 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752698AbZDWV7k (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 23 Apr 2009 17:59:40 -0400
-Received: (qmail invoked by alias); 23 Apr 2009 21:59:37 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp058) with SMTP; 23 Apr 2009 23:59:37 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19+8Mlb/IV+DNzOXL2mP+FviMutYszSsVtLCxuVpO
-	xjAo6VvYlhSN3C
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <81b0412b0904231239qf317c02xbfa548d0011a0302@mail.gmail.com>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.64
+	id S1754517AbZDWWwM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 23 Apr 2009 18:52:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753590AbZDWWwM
+	(ORCPT <rfc822;git-outgoing>); Thu, 23 Apr 2009 18:52:12 -0400
+Received: from mx.getmail.no ([84.208.15.66]:57573 "EHLO
+	get-mta-out01.get.basefarm.net" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1752713AbZDWWwL (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 23 Apr 2009 18:52:11 -0400
+Content-disposition: inline
+Received: from mx.getmail.no ([10.5.16.4]) by get-mta-out01.get.basefarm.net
+ (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
+ with ESMTP id <0KIK00EF8SUURSA0@get-mta-out01.get.basefarm.net> for
+ git@vger.kernel.org; Fri, 24 Apr 2009 00:52:06 +0200 (MEST)
+Received: from alpha.localnet ([84.215.102.95])
+ by get-mta-in01.get.basefarm.net
+ (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
+ with ESMTP id <0KIK00C40SUKU4A0@get-mta-in01.get.basefarm.net> for
+ git@vger.kernel.org; Fri, 24 Apr 2009 00:52:06 +0200 (MEST)
+X-PMX-Version: 5.5.3.366731, Antispam-Engine: 2.7.0.366912,
+ Antispam-Data: 2009.4.23.221933
+User-Agent: KMail/1.11.2 (Linux/2.6.29-ARCH; KDE/4.2.2; x86_64; ; )
+In-reply-to: <D912CAB9-E437-4733-8A87-97EE47E3FBBB@boostpro.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117391>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117392>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+On Thursday 23 April 2009, David Abrahams wrote:
+> On Apr 23, 2009, at 4:16 PM, Jeff King wrote:
+> > There are some "bottom-up" resources available, but I haven't seen one
+> > pointed to as "definitive".
+> I've been pointed at:
+>
+> 1. http://eagain.net/articles/git-for-computer-scientists
+> 2. http://www.newartisans.com/2008/04/git-from-the-bottom-up.html
 
---8323328-884190836-1240523985=:10279
-Content-Type: TEXT/PLAIN; charset=UTF-8
-Content-Transfer-Encoding: 8BIT
+There's also http://www.eecs.harvard.edu/~cduan/technical/git/ which I think 
+is a great bottom-up introduction:
+- not too heavy on the concepts
+- shows how the concepts relates to common git commands
+- short enough to be covered in just 1-2 sessions.
 
-Hi,
+In fact, I'm loosely planning a presentation on Git (for $dayjob), and I'm 
+probably going to base it on this introduction.
 
-On Thu, 23 Apr 2009, Alex Riesen wrote:
 
-> 2009/4/23 Johannes Schindelin <Johannes.Schindelin@gmx.de>:
-> > -       if (link(tmpfile, filename))
-> > +       if (unreliable_hardlinks)
-> > +               ret = ~EEXIST;
-> 
-> It is more like "broken_hardlinks" or even "no_hardlinks"!
+Have fun! :)
 
-Wrong.  As I wrote, single-stepping (i.e. leaving enough time between 
-link() and unlink()) works as expected.  So it is not even that the 
-hardlinks are broken.  Just the serialization between the operations.
+...Johan
 
-Ciao,
-Dscho
-
---8323328-884190836-1240523985=:10279--
+-- 
+Johan Herland, <johan@herland.net>
+www.herland.net
