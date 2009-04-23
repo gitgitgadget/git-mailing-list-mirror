@@ -1,60 +1,74 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH] tests: remove xargs in favor of --stdin where possible
-Date: Thu, 23 Apr 2009 11:22:20 +0200
-Message-ID: <49F0334C.6000004@viscovery.net>
-References: <1240468281-23815-1-git-send-email-pclouds@gmail.com> <7vfxfzwytx.fsf@gitster.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-	<pclouds@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Apr 23 11:24:06 2009
+From: Stephen Boyd <bebarino@gmail.com>
+Subject: [PATCH 0/8] Doc updates to config, format-patch, show-branch
+Date: Thu, 23 Apr 2009 02:37:54 -0700
+Message-ID: <1240479482-31366-1-git-send-email-bebarino@gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Apr 23 11:39:57 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LwvA1-0004Lr-2m
-	for gcvg-git-2@gmane.org; Thu, 23 Apr 2009 11:24:01 +0200
+	id 1LwvPI-0000xq-SY
+	for gcvg-git-2@gmane.org; Thu, 23 Apr 2009 11:39:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753358AbZDWJW1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 23 Apr 2009 05:22:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752284AbZDWJW1
-	(ORCPT <rfc822;git-outgoing>); Thu, 23 Apr 2009 05:22:27 -0400
-Received: from lilzmailso02.liwest.at ([212.33.55.13]:61166 "EHLO
-	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751125AbZDWJW1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 23 Apr 2009 05:22:27 -0400
-Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
-	by lilzmailso02.liwest.at with esmtpa (Exim 4.69)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1Lwv8O-0004kg-Ud; Thu, 23 Apr 2009 11:22:21 +0200
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.96])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id 74FFC4E9; Thu, 23 Apr 2009 11:22:20 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.21 (Windows/20090302)
-In-Reply-To: <7vfxfzwytx.fsf@gitster.siamese.dyndns.org>
-X-Spam-Score: -1.4 (-)
+	id S1753570AbZDWJiJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 23 Apr 2009 05:38:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753387AbZDWJiI
+	(ORCPT <rfc822;git-outgoing>); Thu, 23 Apr 2009 05:38:08 -0400
+Received: from rv-out-0506.google.com ([209.85.198.236]:7604 "EHLO
+	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753496AbZDWJiG (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 23 Apr 2009 05:38:06 -0400
+Received: by rv-out-0506.google.com with SMTP id f9so392313rvb.1
+        for <git@vger.kernel.org>; Thu, 23 Apr 2009 02:38:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:from:to:cc:subject
+         :date:message-id:x-mailer;
+        bh=3aajRYPb6ZI25w4jMeqRjZ0Rp4C766wG8NOkpFNrmBs=;
+        b=cCFI33M4o75XbRAzSgNBcaG9fiqv1r9FURC3wEp8WYt3gk0Ls7XdK25gSH2aSKOOvf
+         3h7yXRNwNSxddyZwV/ZvquSo3an3xnT+6Wz/Ua7d3GT+3xfU2FV5hvAuVMSNA8HbvUnR
+         74Nnd5jVP0pW+opZwS1lhfXd2Q9+U8RCgyOzE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=G4coYxdf4SxOAMwtT1Y80fIRWvMIe/DKYILvXSeyxwmn29rCAmphJGfKxg5bTlgYdu
+         AECmzjC/BVj28Bh8/G7lcZjdwlwIg5H70uOBkfjZEbDap7rywiiKHhPzZlaQUjCqH0di
+         j5jQHxJPW1XmRlEZNO8n87eBQbQvDWIqeCcCE=
+Received: by 10.141.37.8 with SMTP id p8mr265875rvj.35.1240479485951;
+        Thu, 23 Apr 2009 02:38:05 -0700 (PDT)
+Received: from earth ([76.89.212.195])
+        by mx.google.com with ESMTPS id g31sm2921351rvb.19.2009.04.23.02.38.03
+        (version=SSLv3 cipher=RC4-MD5);
+        Thu, 23 Apr 2009 02:38:05 -0700 (PDT)
+Received: by earth (sSMTP sendmail emulation); Thu, 23 Apr 2009 02:38:02 -0700
+X-Mailer: git-send-email 1.6.2.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117314>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117315>
 
-Junio C Hamano schrieb:
-> The tests may not break with your change because none of them may use
-> problematic characters (especially "\n" and '"'), but update-index --stdin
-> without -z is not suitable for reading from output from "find" without -0
-> option
+I've tried to order these from least to most controversial.
 
-Why should this be so? I thought I need -0/-z only if there are "\n" in
-file names (and I specifially talk about a find | update-index pipeline).
+The first 3 are small fixups. The fourth patch is a quoting fixup. The
+fifth patch is a patch I sent a few weeks ago which flew under the radar.
+The last 3 patches are some updates to the config.txt documentation.
+I've split them up into seperate patches so they can easily be left out
+if not wanted.
 
-> (on the other hand, "update-index -z --stdin" is good for reading
-> output from "find -0"; but for portability we avoid GNUism "find -0").
+Stephen Boyd (8):
+  config.txt: remove pointer to SubmittingPatches
+  config.txt: add missing format.{subjectprefix,cc,attach} variables
+  Documentation: use lowercase for shallow and deep threading
+  git-show-branch.txt: cleanup example description
+  git-format-patch.txt: general rewordings and cleanups
+  config.txt: add missing 'the's and make words plural
+  config.txt: clarify sentences in the configuration and syntax sections
+  config.txt: Make configuration paragraph more consistent
 
-Sure, -0/-z is safer and to be used in scripts. But for an ad-hoc command
-that I type on the command line, why should I use -0/-z if I know that I
-don't have any "\n" in my file names?
-
--- Hannes
+ Documentation/config.txt           |   68 +++++++++++++++++++++--------------
+ Documentation/git-format-patch.txt |   42 +++++++++++-----------
+ Documentation/git-show-branch.txt  |    7 ++--
+ 3 files changed, 66 insertions(+), 51 deletions(-)
