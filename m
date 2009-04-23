@@ -1,85 +1,65 @@
-From: Deskin Miller <deskinm@gmail.com>
-Subject: Re: [GIT-SVN] master follows not trunk
-Date: Wed, 22 Apr 2009 22:56:27 -0700
-Message-ID: <86d4c5e00904222256r157ca34ex8c56c671991e663c@mail.gmail.com>
-References: <36ca99e90904220821u3dae67d7jcb6366d7a95dfbd1@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+From: Lachlan Deck <lachlan.deck@gmail.com>
+Subject: svn cp (local paths) equivalent
+Date: Thu, 23 Apr 2009 16:03:32 +1000
+Message-ID: <CDE4E2DB-9017-4BDD-869C-E470FFDA9CAC@gmail.com>
+Mime-Version: 1.0 (Apple Message framework v930.3)
+Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
 Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Eric Wong <normalperson@yhbt.net>
-To: Bert Wesarg <bert.wesarg@googlemail.com>
-X-From: git-owner@vger.kernel.org Thu Apr 23 07:58:44 2009
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Apr 23 08:06:08 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LwrxM-000079-5J
-	for gcvg-git-2@gmane.org; Thu, 23 Apr 2009 07:58:44 +0200
+	id 1Lws46-0001mV-3c
+	for gcvg-git-2@gmane.org; Thu, 23 Apr 2009 08:05:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751146AbZDWF43 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 23 Apr 2009 01:56:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752680AbZDWF43
-	(ORCPT <rfc822;git-outgoing>); Thu, 23 Apr 2009 01:56:29 -0400
-Received: from yw-out-2324.google.com ([74.125.46.31]:31642 "EHLO
-	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752040AbZDWF42 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 23 Apr 2009 01:56:28 -0400
-Received: by yw-out-2324.google.com with SMTP id 5so245449ywb.1
-        for <git@vger.kernel.org>; Wed, 22 Apr 2009 22:56:27 -0700 (PDT)
+	id S1753387AbZDWGDl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 23 Apr 2009 02:03:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753457AbZDWGDk
+	(ORCPT <rfc822;git-outgoing>); Thu, 23 Apr 2009 02:03:40 -0400
+Received: from wf-out-1314.google.com ([209.85.200.172]:18988 "EHLO
+	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753039AbZDWGDj (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 23 Apr 2009 02:03:39 -0400
+Received: by wf-out-1314.google.com with SMTP id 26so319975wfd.4
+        for <git@vger.kernel.org>; Wed, 22 Apr 2009 23:03:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=IhhbrjIG5LS0vZccAmDSF16IeZoN5ZAZNy6XURuzAmY=;
-        b=mrf4wLbHLDTC2QFBs+W5PUqdi0Ms+AcSmGcxR2qTQPRJuAikRcLiSS2+RQI3qM1Eph
-         sEsNhdbOPzAm0GQ2+CTq892pKkdRYMdonpgfbmYVBveQMeLp64awcin9UeFJWm4I3sQ0
-         0Zy1Ukw7AJ+kKbDq904pHMzvlv7phU48RR7Z4=
+        h=domainkey-signature:received:received:message-id:from:to
+         :content-type:content-transfer-encoding:mime-version:subject:date
+         :x-mailer;
+        bh=3HXgeSv7BwhgcUohnbMxTtIoXpCcHjIg2PwN+5DUPLA=;
+        b=sdgdTsxlpBGjstIQzBbvSjMlbrI8ti2b0AUPw7RtBaFKOMUY4jCr5RS9vrdtGVsH63
+         4691dGVJNxoIY6iuR0UFqzxG9NJ9b7IZdJcgADbrosL+aMdSuBL2OHLg7rmdaIcnSoLP
+         djJD7EwJ1tx4aBE0r8B9c+8KRGyWwe4IfjCHw=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=wKMUENYgpF4mxpru5YEwPbFGPxpceLfafrEXv7MXeGbTO8xjCU1D8B09T9uSF5Iizv
-         4ZNGOSI0T7zrOeYH/17X1+SAz2qR2/3loQSrcSLaETnj7lhAZfI+P7pB6I+i03JUGJHG
-         FyfVWG8j0QrdJnGvpumAXII9WTOh6ASyCiNj0=
-Received: by 10.151.125.8 with SMTP id c8mr9643ybn.171.1240466187286; Wed, 22 
-	Apr 2009 22:56:27 -0700 (PDT)
-In-Reply-To: <36ca99e90904220821u3dae67d7jcb6366d7a95dfbd1@mail.gmail.com>
+        h=message-id:from:to:content-type:content-transfer-encoding
+         :mime-version:subject:date:x-mailer;
+        b=Gom6pZGny7T6nDxRWV1KPGIMD774YH35V7q/3OqmoggfdlY83SItvdmBJGVVrXx3kA
+         jRXRqzbgHOUncDUQNZOa3X/fRFVcudeAIybXeeMgeCaOmo5xdgFhEZVjFwYKN28/BSRI
+         C4D7er/lWz19tiSRP2BRT585HQfPQ9ZoTR/C4=
+Received: by 10.142.212.21 with SMTP id k21mr227340wfg.21.1240466618839;
+        Wed, 22 Apr 2009 23:03:38 -0700 (PDT)
+Received: from ?10.0.1.200? (208.198.233.220.exetel.com.au [220.233.198.208])
+        by mx.google.com with ESMTPS id 22sm2253626wfg.23.2009.04.22.23.03.36
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 22 Apr 2009 23:03:37 -0700 (PDT)
+X-Mailer: Apple Mail (2.930.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117299>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117300>
 
-On Wed, Apr 22, 2009 at 08:21, Bert Wesarg <bert.wesarg@googlemail.com> wrote:
-> Hi,
->
-> it seams so, that git-svn sets the master branch to that svn branch
-> which has the highest revision!
->
-> I cloned a svn repo today where exactly this happend. I.e. master
-> pointed not to the trunk but to the branch with the highest revision.
-> After trunk moved forward, a git svn rebase told me that master is up
-> to date.
->
-> A second clean clone of this repo and master pointed to trunk.
->
-> Is this indented?
+Hi there,
 
-It's well-known, at any rate, and it's somewhat conceptually
-consistent with git, which will use the remote's HEAD for its
-currently-checked-out branch upon clone.
+just a quick question: in svn you can cp a file or dir within your  
+checkout. Is there an equivalent in git?
+Thanks.
 
-Consider also that although your svn repository is well-formed and has
-trunk/ tags/ branches/, not all do; or, perhaps someone is interested
-in only one branch, or put multiple svn-remote.svn.fetch lines in
-.git/config before fetching.  Which svn branch should become master
-then?
+with regards,
+--
 
-With that said, you're not the first person to be surprised by this;
-I'm sure you could patch git svn to tell you which svn branch it was
-checking out.  It'd probably be a pretty simple tweak, but
-unfortunately I'm not in a position to do it currently.
-
-Deskin Miller
+Lachlan Deck
