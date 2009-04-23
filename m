@@ -1,79 +1,60 @@
-From: Eric Blake <ebb9@byu.net>
-Subject: Re: Git-SVN on Cygwin: svn+ssh good, https awkward
-Date: Thu, 23 Apr 2009 17:58:24 +0000 (UTC)
-Message-ID: <loom.20090423T175124-165@post.gmane.org>
-References: <op.usulh7a71e62zd@balu.cs.uni-paderborn.de>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+From: Geert Bosch <bosch@adacore.com>
+Subject: Re: dangling commits and blobs: is this normal?
+Date: Thu, 23 Apr 2009 14:10:56 -0400
+Message-ID: <0F4B0DFB-A0A3-45FA-9BB7-801FFD2E8862@adacore.com>
+References: <450196A1AAAE4B42A00A8B27A59278E70ACE0502@EXCHANGE.trad.tradestation.com> <20090422152719.GA12881@coredump.intra.peff.net> <W0cjdA0pSHr_AbT2c-k5hDf7LyNvwkc38qIIhTtJJRwFnGBxaBsEiw@cipher.nrlssc.navy.mil> <alpine.LFD.2.00.0904221331450.6741@xanadu.home> <FcecxnoVg4H8G3MKjZgl2T6zCGDer4yYyScIgaweFTNgDCKG65Xiig@cipher.nrlssc.navy.mil> <alpine.LFD.2.00.0904221548310.6741@xanadu.home> <20090422200502.GA14304@coredump.intra.peff.net> <064C9132-2E72-4665-A44D-A2F4194DAC2B@adacore.com> <20090423175612.GV23604@spearce.org>
+Mime-Version: 1.0 (Apple Message framework v930.3)
+Content-Type: text/plain; charset=US-ASCII; format=flowed
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Apr 23 20:00:16 2009
+Cc: Jeff King <peff@peff.net>, Nicolas Pitre <nico@cam.org>,
+	Brandon Casey <casey@nrlssc.navy.mil>,
+	John Dlugosz <JDlugosz@TradeStation.com>, git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Thu Apr 23 20:13:16 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lx3Db-00044I-Or
-	for gcvg-git-2@gmane.org; Thu, 23 Apr 2009 20:00:16 +0200
+	id 1Lx3PY-0000TE-DN
+	for gcvg-git-2@gmane.org; Thu, 23 Apr 2009 20:12:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752983AbZDWR6m (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 23 Apr 2009 13:58:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752581AbZDWR6m
-	(ORCPT <rfc822;git-outgoing>); Thu, 23 Apr 2009 13:58:42 -0400
-Received: from main.gmane.org ([80.91.229.2]:54172 "EHLO ciao.gmane.org"
+	id S1756886AbZDWSLA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 23 Apr 2009 14:11:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756372AbZDWSK7
+	(ORCPT <rfc822;git-outgoing>); Thu, 23 Apr 2009 14:10:59 -0400
+Received: from rock.gnat.com ([205.232.38.15]:57059 "EHLO rock.gnat.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752446AbZDWR6k (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 23 Apr 2009 13:58:40 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1Lx3C3-0008O6-S8
-	for git@vger.kernel.org; Thu, 23 Apr 2009 17:58:40 +0000
-Received: from l3-128-170-36-124.l-3com.com ([128.170.36.124])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 23 Apr 2009 17:58:39 +0000
-Received: from ebb9 by l3-128-170-36-124.l-3com.com with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 23 Apr 2009 17:58:39 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: main.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 128.170.36.124 (Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; SV1; .NET CLR 1.1.4322; .NET CLR 2.0.50727; .NET CLR 3.0.04506.30; .NET CLR 3.0.04506.648; InfoPath.2))
+	id S1754354AbZDWSK6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 23 Apr 2009 14:10:58 -0400
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by filtered-rock.gnat.com (Postfix) with ESMTP id DF8B82BAAF4;
+	Thu, 23 Apr 2009 14:10:57 -0400 (EDT)
+Received: from rock.gnat.com ([127.0.0.1])
+	by localhost (rock.gnat.com [127.0.0.1]) (amavisd-new, port 10024)
+	with LMTP id 3Fq7HnD3VOci; Thu, 23 Apr 2009 14:10:57 -0400 (EDT)
+Received: from [172.16.1.95] (sdsl-216-220-103-157.dsl.bway.net [216.220.103.157])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by rock.gnat.com (Postfix) with ESMTPSA id 77A1F2BAAC9;
+	Thu, 23 Apr 2009 14:10:57 -0400 (EDT)
+In-Reply-To: <20090423175612.GV23604@spearce.org>
+X-Mailer: Apple Mail (2.930.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117353>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117354>
 
-Matthias Andree <matthias.andree <at> gmx.de> writes:
 
-> 3. UNDERLYING CYGWIN LIMITATIONS
-> 
-> * unlink a file and subsequent creation of a new file in the same location  
-> is not supported.
-> 
-> * "delete on close" (unlinking an open file) is supported.
+On Apr 23, 2009, at 13:56, Shawn O. Pearce wrote:
 
-These last two points are old information.  I would first recommend that you 
-try running the new cygwin 1.7 (still in beta), where unlink() semantics have 
-been greatly improved (you can actually unlink() an in-use file and recreate a 
-new file by the same name while the old handle is still open).
+> If your favorite import tool (*cough* git-svn *cough*) can't use
+> fast-import, and you are importing a large enough repository that
+> this matters to you, use another importer that can use fast-import.
 
-http://cygwin.com/#beta-test
+How did you guess? :) You're right of course, except that I can't
+use fast-import AFAIK. The issue is also more general, as the
+same scenario of adding new objects and repacking occurs
+outside the context of git-svn.
 
-> 4. FIX SUGGESTIONS AND QUESTIONS
-> 
-> Can we defer unlink()ing the tempfile until all handles to it are closed?
-> 
-> Can we let complete and wait for all processes that hold handles to the  
-> tempfile.tmp file before attempting to create a new copy?
-> 
-> Can we use unique tempfile names (timestamps, counter, random number  
-> generator) instead of the hardcoded "tempfile.tmp"? This is probably a  
-> good idea anyways to evade symlink attacks.
-
-Although newer cygwin may fix your particular problem, this is not a bad 
-suggestion for msysgit, so I suspect someone may be bothered enough by this to 
-write a patch.  I, however, will not be the one doing it.
-
--- 
-Eric Blake
+   -Geert
