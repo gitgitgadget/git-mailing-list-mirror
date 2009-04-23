@@ -1,89 +1,121 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: [PATCH] Explain seemingly pointless use of system in difftool
-Date: Thu, 23 Apr 2009 21:18:09 +0200
-Message-ID: <20090423191809.GC8433@blimp.localdomain>
-References: <81b0412b0904220404o30ce1413kcc4dcea1fa822841@mail.gmail.com> <7vr5zk346d.fsf@gitster.siamese.dyndns.org> <81b0412b0904221340o6b2f1474oed2ad12e4f68cff3@mail.gmail.com> <7v4owgyp8x.fsf@gitster.siamese.dyndns.org> <81b0412b0904230033n35f1117fmea4432a2f2140d25@mail.gmail.com> <7vtz4fwzaz.fsf@gitster.siamese.dyndns.org> <81b0412b0904230252k3e8197d3y8798d5b797a49c39@mail.gmail.com> <7vhc0fv2xb.fsf@gitster.siamese.dyndns.org> <20090423185732.GA8433@blimp.localdomain> <20090423190835.GB8433@blimp.localdomain>
-Reply-To: Alex Riesen <raa.lkml@gmail.com>
+From: Robin Rosenberg <robin.rosenberg@dewire.com>
+Subject: Re: [EGit PATCH] IgnoreAction to add to .gitignore files
+Date: Thu, 23 Apr 2009 21:19:36 +0200
+Message-ID: <200904232119.36707.robin.rosenberg@dewire.com>
+References: <20090423115042.743E6D9CDC@apple.int.bandlem.com> <200904231427.29832.fge@one2team.com> <0A94BEDB-37A1-44D2-BE54-D05F0C3124EE@bandlem.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: David Aguilar <davvid@gmail.com>, git@vger.kernel.org,
-	charles@hashpling.org, markus.heidelberg@web.de
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Apr 23 21:20:04 2009
+Content-Type: Text/Plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Francis Galiegue <fge@one2team.com>, git@vger.kernel.org,
+	spearce@spearce.org
+To: Alex Blewitt <alex@bandlem.com>
+X-From: git-owner@vger.kernel.org Thu Apr 23 21:21:35 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lx4Sl-0001EZ-6d
-	for gcvg-git-2@gmane.org; Thu, 23 Apr 2009 21:19:59 +0200
+	id 1Lx4U2-0001lt-Hi
+	for gcvg-git-2@gmane.org; Thu, 23 Apr 2009 21:21:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757814AbZDWTST (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 23 Apr 2009 15:18:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757454AbZDWTSS
-	(ORCPT <rfc822;git-outgoing>); Thu, 23 Apr 2009 15:18:18 -0400
-Received: from mout5.freenet.de ([195.4.92.95]:57297 "EHLO mout5.freenet.de"
+	id S1760170AbZDWTTr convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 23 Apr 2009 15:19:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760186AbZDWTTq
+	(ORCPT <rfc822;git-outgoing>); Thu, 23 Apr 2009 15:19:46 -0400
+Received: from mail.dewire.com ([83.140.172.130]:20722 "EHLO dewire.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757386AbZDWTSR (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 23 Apr 2009 15:18:17 -0400
-Received: from [195.4.92.11] (helo=1.mx.freenet.de)
-	by mout5.freenet.de with esmtpa (ID alexander.riesen@freenet.de) (port 25) (Exim 4.69 #89)
-	id 1Lx4R4-0004De-77; Thu, 23 Apr 2009 21:18:14 +0200
-Received: from x6383.x.pppool.de ([89.59.99.131]:54864 helo=tigra.home)
-	by 1.mx.freenet.de with esmtpsa (ID alexander.riesen@freenet.de) (TLSv1:AES256-SHA:256) (port 587) (Exim 4.69 #79)
-	id 1Lx4R4-0006AR-15; Thu, 23 Apr 2009 21:18:14 +0200
-Received: from blimp.localdomain (ubuntu.home [192.168.1.28])
-	by tigra.home (Postfix) with ESMTP id 92323277D8;
-	Thu, 23 Apr 2009 21:18:09 +0200 (CEST)
-Received: by blimp.localdomain (Postfix, from userid 1000)
-	id 4FA1336D28; Thu, 23 Apr 2009 21:18:09 +0200 (CEST)
+	id S1760164AbZDWTTp convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 23 Apr 2009 15:19:45 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by dewire.com (Postfix) with ESMTP id EB8CB14927D6;
+	Thu, 23 Apr 2009 21:19:39 +0200 (CEST)
+X-Virus-Scanned: by amavisd-new at dewire.com
+Received: from dewire.com ([127.0.0.1])
+	by localhost (torino.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id DsKoZyoPPeUp; Thu, 23 Apr 2009 21:19:37 +0200 (CEST)
+Received: from sleipner.localnet (unknown [10.9.0.2])
+	by dewire.com (Postfix) with ESMTP id 99BC814927C9;
+	Thu, 23 Apr 2009 21:19:37 +0200 (CEST)
+User-Agent: KMail/1.11.2 (Linux/2.6.27-14-generic; KDE/4.2.2; i686; ; )
+In-Reply-To: <0A94BEDB-37A1-44D2-BE54-D05F0C3124EE@bandlem.com>
 Content-Disposition: inline
-In-Reply-To: <20090423190835.GB8433@blimp.localdomain>
-User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117368>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117369>
 
-Portability reasons.
+torsdag 23 april 2009 14:32:46 skrev Alex Blewitt <alex@bandlem.com>:
+> Actually, that's pretty much exactly the format that Eclipse users =20
+> will be expecting.
+>=20
+> CVS: Add to .cvsignore
+> SVN: Add to svn:ignore
+>=20
+> I suggest that we go with that style of format for the menu items, in=
+ =20
+> order to achieve consistency with the way that the other team =20
+> providers work.
 
-Signed-off-by: Alex Riesen <raa.lkml@gmail.com>
----
+Ouch, top posting....
 
-Alex Riesen, Thu, Apr 23, 2009 21:08:35 +0200:
-> Alex Riesen, Thu, Apr 23, 2009 20:57:32 +0200:
-> > I'll add this comment regarding use of system in the case where exec
-> > is right choice on all accounts and resend the patch:
-> > 
-> >     # ActiveState Perl for Win32 does not implement POSIX semantics of
-> >     # exec* system call. It just spawns the given executable and finishes
-> >     # the starting program, exiting with code 0.
-> >     # system will at least catch the errors in returned by git diff,
-> >     # allowing the caller of git difftool better handling of failures.
-> 
-> Oh... I'm too late...
-> 
+Anyway, I agree  with Alex. My motivation is that there are more
+than one way to specify ignore. There's .gitignore, .git/info/excludede=
+s
+and the Team ignore settings themselves. This option specifically
+messes with .gitignore.=20
 
-There.
+-- robin
 
- git-difftool.perl |    6 ++++++
- 1 files changed, 6 insertions(+), 0 deletions(-)
-
-diff --git a/git-difftool.perl b/git-difftool.perl
-index bd828c2..9255d23 100755
---- a/git-difftool.perl
-+++ b/git-difftool.perl
-@@ -82,5 +82,11 @@ sub generate_command
- }
- 
- setup_environment();
-+
-+# ActiveState Perl for Win32 does not implement POSIX semantics of
-+# exec* system call. It just spawns the given executable and finishes
-+# the starting program, exiting with code 0.
-+# system will at least catch the errors returned by git diff,
-+# allowing the caller of git difftool better handling of failures.
- my $rc = system(generate_command());
- exit($rc | ($rc >> 8));
--- 
-1.6.3.rc1.74.g42ff
+> Note also that the tooltip is usually much shorter than that ... it's=
+ =20
+> not a full help description, it explains what it does.
+>=20
+> Alex
+>=20
+> On 23 Apr 2009, at 13:27, Francis Galiegue wrote:
+>=20
+> > Le jeudi 23 avril 2009, Alex Blewitt a =E9crit :
+> >> diff --git a/org.spearce.egit.ui/plugin.properties
+> > b/org.spearce.egit.ui/plugin.properties
+> >> index 523a959..be3b40c 100644
+> >> --- a/org.spearce.egit.ui/plugin.properties
+> >> +++ b/org.spearce.egit.ui/plugin.properties
+> >> @@ -52,10 +52,12 @@ FetchAction_tooltip=3DFetch from another repos=
+itory
+> >> PushAction_label=3D&Push To...
+> >> PushAction_tooltip=3DPush to another repository
+> >>
+> >> +IgnoreAction_label=3DAdd to .git&ignore...
+> >> +IgnoreAction_tooltip=3DIgnore the selected resources
+> >> +
+> >> GitActions_label=3DGit
+> >> GitMenu_label=3D&Git
+> >>
+> >
+> > The label and tooltip are too "git-specific", IMHO. I'd rather see:
+> >
+> > IgnoreAction_label=3D&Ignore file(s) for commits...
+> > IgnoreAction_tooltip=3DThe selected file(s) will not be included by=
+ =20
+> > default in
+> > your commits. However, you may force the include of these files in =
+a =20
+> > commit
+> > by explicitly adding them via "Team->Add" [or whatever the label is=
+].
+> > \n\nSelecting files to ignore by this mechanism will automatically =
+=20
+> > add one or
+> > more files named .gitignore in your next commit.
+> >
+> > --=20
+> > Francis Galiegue
+> > ONE2TEAM
+> > Ing=E9nieur syst=E8me
+> > Mob : +33 (0) 683 877 875
+> > Tel : +33 (0) 178 945 552
+> > fge@one2team.com
+> > 40 avenue Raymond Poincar=E9
+> > 75116 Paris
+>=20
+>=20
