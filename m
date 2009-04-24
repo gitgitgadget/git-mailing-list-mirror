@@ -1,111 +1,131 @@
 From: Markus Heidelberg <markus.heidelberg@web.de>
-Subject: [PATCH 1/2] diff: do not color --stat output like patch context
-Date: Sat, 25 Apr 2009 00:06:47 +0200
-Message-ID: <1240610808-7285-1-git-send-email-markus.heidelberg@web.de>
+Subject: [PATCH 2/2] diff: color statistics (stat, shortstat, numstat)
+Date: Sat, 25 Apr 2009 00:06:48 +0200
+Message-ID: <1240610808-7285-2-git-send-email-markus.heidelberg@web.de>
 References: <200904222313.50081.markus.heidelberg@web.de>
 Cc: git@vger.kernel.org, Markus Heidelberg <markus.heidelberg@web.de>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Apr 25 00:08:01 2009
+X-From: git-owner@vger.kernel.org Sat Apr 25 00:08:06 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LxTYv-000761-2S
-	for gcvg-git-2@gmane.org; Sat, 25 Apr 2009 00:08:01 +0200
+	id 1LxTYv-000761-Mg
+	for gcvg-git-2@gmane.org; Sat, 25 Apr 2009 00:08:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754931AbZDXWG1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 24 Apr 2009 18:06:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754834AbZDXWG0
-	(ORCPT <rfc822;git-outgoing>); Fri, 24 Apr 2009 18:06:26 -0400
-Received: from fmmailgate01.web.de ([217.72.192.221]:46710 "EHLO
-	fmmailgate01.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754397AbZDXWG0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 24 Apr 2009 18:06:26 -0400
+	id S1755602AbZDXWGa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 24 Apr 2009 18:06:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755559AbZDXWG3
+	(ORCPT <rfc822;git-outgoing>); Fri, 24 Apr 2009 18:06:29 -0400
+Received: from fmmailgate02.web.de ([217.72.192.227]:59180 "EHLO
+	fmmailgate02.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754834AbZDXWG3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 24 Apr 2009 18:06:29 -0400
 Received: from smtp05.web.de (fmsmtp05.dlan.cinetic.de [172.20.4.166])
-	by fmmailgate01.web.de (Postfix) with ESMTP id 19E5A1009DDA0;
-	Sat, 25 Apr 2009 00:06:25 +0200 (CEST)
+	by fmmailgate02.web.de (Postfix) with ESMTP id 7D5CFFDA6E94;
+	Sat, 25 Apr 2009 00:06:27 +0200 (CEST)
 Received: from [89.59.109.160] (helo=localhost.localdomain)
 	by smtp05.web.de with asmtp (TLSv1:AES256-SHA:256)
 	(WEB.DE 4.110 #277)
-	id 1LxTXM-0008K9-00; Sat, 25 Apr 2009 00:06:24 +0200
+	id 1LxTXP-0008K9-00; Sat, 25 Apr 2009 00:06:27 +0200
 X-Mailer: git-send-email 1.6.3.rc1.84.g1036b
 In-Reply-To: <200904222313.50081.markus.heidelberg@web.de>
 X-Sender: markus.heidelberg@web.de
-X-Provags-ID: V01U2FsdGVkX19IsE/iXVVtxI+U3D3ToeE7E+a86afFpknWBN3j
-	uqT2rEHITzoYgf9T+kkXH3D2I/LJchzcbPr1tu222SGMYC9jIP
-	XjbYMdol+vd5u77Rc1hA==
+X-Provags-ID: V01U2FsdGVkX195Hq0lVUkspWYfUIqz7yNZvR1gOOTZGymEH8ej
+	BIoYzuJHUGzvVFckGMQMswZ3P5a9lg+9+1ld12rbmACdLk+5hF
+	0VVAofNhRKGf4CDTYRCg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117497>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117498>
 
-The diffstat used the color.diff.plain slot (context text) for coloring
-filenames and the whole summary line. This didn't look nice and the
-affected text isn't patch context at all.
+stat/shortstat:
+Color added and removed lines and the corresponding signs ('+' and '-')
+in the summary.
+
+numstat:
+Color added and removed lines per file.
 
 Signed-off-by: Markus Heidelberg <markus.heidelberg@web.de>
 ---
 
-    Maybe it's easier to begin with a patch :)
+    I didn't consider --summary and --name-status. Also in --stat it
+    would be possible to color filenames in renames and copies and the
+    mode in mode changes. Not sure if it would be nice or distracting.
+    At least it wouldn't look so consistent, I think.
 
- diff.c |   15 +++++++--------
- 1 files changed, 7 insertions(+), 8 deletions(-)
+ diff.c |   26 ++++++++++++++++++++------
+ 1 files changed, 20 insertions(+), 6 deletions(-)
 
 diff --git a/diff.c b/diff.c
-index 3ac7168..d581d4d 100644
+index d581d4d..bc8377d 100644
 --- a/diff.c
 +++ b/diff.c
-@@ -839,10 +839,9 @@ static int scale_linear(int it, int width, int max_change)
- }
- 
- static void show_name(FILE *file,
--		      const char *prefix, const char *name, int len,
--		      const char *reset, const char *set)
-+		      const char *prefix, const char *name, int len)
- {
--	fprintf(file, " %s%s%-*s%s |", set, prefix, len, name, reset);
-+	fprintf(file, " %s%-*s |", prefix, len, name);
- }
- 
- static void show_graph(FILE *file, char ch, int cnt, const char *set, const char *reset)
-@@ -956,7 +955,7 @@ static void show_stats(struct diffstat_t* data, struct diff_options *options)
- 		}
- 
- 		if (data->files[i]->is_binary) {
--			show_name(options->file, prefix, name, len, reset, set);
-+			show_name(options->file, prefix, name, len);
- 			fprintf(options->file, "  Bin ");
- 			fprintf(options->file, "%s%d%s", del_c, deleted, reset);
- 			fprintf(options->file, " -> ");
-@@ -966,7 +965,7 @@ static void show_stats(struct diffstat_t* data, struct diff_options *options)
- 			continue;
- 		}
- 		else if (data->files[i]->is_unmerged) {
--			show_name(options->file, prefix, name, len, reset, set);
-+			show_name(options->file, prefix, name, len);
- 			fprintf(options->file, "  Unmerged\n");
- 			continue;
- 		}
-@@ -988,7 +987,7 @@ static void show_stats(struct diffstat_t* data, struct diff_options *options)
- 			add = scale_linear(add, width, max_change);
- 			del = scale_linear(del, width, max_change);
- 		}
--		show_name(options->file, prefix, name, len, reset, set);
-+		show_name(options->file, prefix, name, len);
- 		fprintf(options->file, "%5d%s", added + deleted,
- 				added + deleted ? " " : "");
- 		show_graph(options->file, '+', add, add_c, reset);
-@@ -996,8 +995,8 @@ static void show_stats(struct diffstat_t* data, struct diff_options *options)
+@@ -994,18 +994,24 @@ static void show_stats(struct diffstat_t* data, struct diff_options *options)
+ 		show_graph(options->file, '-', del, del_c, reset);
  		fprintf(options->file, "\n");
  	}
- 	fprintf(options->file,
--	       "%s %d files changed, %d insertions(+), %d deletions(-)%s\n",
--	       set, total_files, adds, dels, reset);
-+	       " %d files changed, %d insertions(+), %d deletions(-)\n",
-+	       total_files, adds, dels);
+-	fprintf(options->file,
+-	       " %d files changed, %d insertions(+), %d deletions(-)\n",
+-	       total_files, adds, dels);
++	fprintf(options->file, " %d files changed, %s%d%s insertions(%s+%s), "
++						  "%s%d%s deletions(%s-%s)\n",
++				total_files, add_c, adds, reset, add_c, reset,
++					     del_c, dels, reset, del_c, reset);
  }
  
  static void show_shortstats(struct diffstat_t* data, struct diff_options *options)
+ {
+ 	int i, adds = 0, dels = 0, total_files = data->nr;
++	const char *reset, *add_c, *del_c;
+ 
+ 	if (data->nr == 0)
+ 		return;
+ 
++	reset = diff_get_color_opt(options, DIFF_RESET);
++	add_c = diff_get_color_opt(options, DIFF_FILE_NEW);
++	del_c = diff_get_color_opt(options, DIFF_FILE_OLD);
++
+ 	for (i = 0; i < data->nr; i++) {
+ 		if (!data->files[i]->is_binary &&
+ 		    !data->files[i]->is_unmerged) {
+@@ -1020,17 +1026,24 @@ static void show_shortstats(struct diffstat_t* data, struct diff_options *option
+ 			}
+ 		}
+ 	}
+-	fprintf(options->file, " %d files changed, %d insertions(+), %d deletions(-)\n",
+-	       total_files, adds, dels);
++	fprintf(options->file, " %d files changed, %s%d%s insertions(%s+%s), "
++						  "%s%d%s deletions(%s-%s)\n",
++				total_files, add_c, adds, reset, add_c, reset,
++					     del_c, dels, reset, del_c, reset);
+ }
+ 
+ static void show_numstat(struct diffstat_t* data, struct diff_options *options)
+ {
+ 	int i;
++	const char *reset, *add_c, *del_c;
+ 
+ 	if (data->nr == 0)
+ 		return;
+ 
++	reset = diff_get_color_opt(options, DIFF_RESET);
++	add_c = diff_get_color_opt(options, DIFF_FILE_NEW);
++	del_c = diff_get_color_opt(options, DIFF_FILE_OLD);
++
+ 	for (i = 0; i < data->nr; i++) {
+ 		struct diffstat_file *file = data->files[i];
+ 
+@@ -1038,7 +1051,8 @@ static void show_numstat(struct diffstat_t* data, struct diff_options *options)
+ 			fprintf(options->file, "-\t-\t");
+ 		else
+ 			fprintf(options->file,
+-				"%d\t%d\t", file->added, file->deleted);
++				"%s%d%s\t%s%d%s\t", add_c, file->added, reset,
++						    del_c, file->deleted, reset);
+ 		if (options->line_termination) {
+ 			fill_print_name(file);
+ 			if (!file->is_renamed)
 -- 
 1.6.3.rc1.84.g1036b
