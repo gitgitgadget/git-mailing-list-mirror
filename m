@@ -1,65 +1,60 @@
-From: Scott Chacon <schacon@gmail.com>
-Subject: Extra metadata in the commit?
-Date: Fri, 24 Apr 2009 15:47:55 -0700
-Message-ID: <d411cc4a0904241547p64c0af2bycae20cd4b26e43f6@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/2] diff: color statistics (stat, shortstat, numstat)
+Date: Fri, 24 Apr 2009 16:01:36 -0700
+Message-ID: <7vbpqlac6n.fsf@gitster.siamese.dyndns.org>
+References: <200904222313.50081.markus.heidelberg@web.de>
+ <1240610808-7285-2-git-send-email-markus.heidelberg@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-To: git list <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Apr 25 00:49:40 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Markus Heidelberg <markus.heidelberg@web.de>
+X-From: git-owner@vger.kernel.org Sat Apr 25 01:03:21 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LxUD4-0000dT-CN
-	for gcvg-git-2@gmane.org; Sat, 25 Apr 2009 00:49:30 +0200
+	id 1LxUQP-0003yl-U9
+	for gcvg-git-2@gmane.org; Sat, 25 Apr 2009 01:03:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754754AbZDXWr5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 24 Apr 2009 18:47:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752969AbZDXWr4
-	(ORCPT <rfc822;git-outgoing>); Fri, 24 Apr 2009 18:47:56 -0400
-Received: from yw-out-2324.google.com ([74.125.46.28]:40703 "EHLO
-	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752598AbZDXWr4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 24 Apr 2009 18:47:56 -0400
-Received: by yw-out-2324.google.com with SMTP id 5so815958ywb.1
-        for <git@vger.kernel.org>; Fri, 24 Apr 2009 15:47:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:date:message-id:subject
-         :from:to:content-type:content-transfer-encoding;
-        bh=/bokU13nN9Icv0uP9Xj1gfCBycrQwkFfa699I6sU5T0=;
-        b=DHtfyv6CtvXBzrx3Ufqr6i+UF0ta/bLejxYTQABa6TBCJwbqbmREXGjpqFc2Xe1SoJ
-         9pPM8FNKRV/hZL8a4ooo3hip3+RlSnLYQpvRiCzkyF1wJd2eAfKtLWX3rte8tJJBZ6Fo
-         Ua3DCj2L6Sd0W0eY/k+Koy5+T4fPl0Bi52i0w=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type
-         :content-transfer-encoding;
-        b=dN+SojLatsO7Stk3sqdpgu9J88xVvNcaLAR6myi47Vx1uUJymFBaXBlcW+USXcTk0c
-         FUhbXk4JYJzlcwojS97zPmK3M1PNWho525n03ic5xRlXx795GUfzhuYe+mcw4GOOHME8
-         mb0FNt9iUT3oxULYC8y+2IQLLc3zC6moND1LY=
-Received: by 10.90.65.5 with SMTP id n5mr3226415aga.111.1240613275222; Fri, 24 
-	Apr 2009 15:47:55 -0700 (PDT)
+	id S1753951AbZDXXBn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 24 Apr 2009 19:01:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753427AbZDXXBm
+	(ORCPT <rfc822;git-outgoing>); Fri, 24 Apr 2009 19:01:42 -0400
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:43414 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752601AbZDXXBm (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 24 Apr 2009 19:01:42 -0400
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id AFFD911477;
+	Fri, 24 Apr 2009 19:01:40 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 136D711476; Fri,
+ 24 Apr 2009 19:01:37 -0400 (EDT)
+In-Reply-To: <1240610808-7285-2-git-send-email-markus.heidelberg@web.de>
+ (Markus Heidelberg's message of "Sat, 25 Apr 2009 00:06:48 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: DF4458AE-3123-11DE-87D3-D766E3C8547C-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117508>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117509>
 
-Hey all,
+Markus Heidelberg <markus.heidelberg@web.de> writes:
 
-I'm working on a hg<->git bidirectional tool using Git as the
-communication protocol, so there is a bunch of Hg metadata that I need
-to keep in Git to ensure I can convert commits created in Hg back into
-the exact same objects after they upload to the Git db and then come
-back down.  This means storing explicit rename info, branch names, etc
-somewhere without messing up Git clients that want to work on the same
-repo.  So, I can keep this data in the commit message, but I thought
-it would be cleaner to keep it as extra fields in the commit object
-before the "\n\n" separator.  Before I go too far down this road, is
-there anything horrible that might happen in any of the core Git tools
-if extra data is there?
+> stat/shortstat:
+> Color added and removed lines and the corresponding signs ('+' and '-')
+> in the summary.
+>
+> numstat:
+> Color added and removed lines per file.
 
-Thanks,
-Scott
+I find this extremely unreadable.  Also numstat being for porcelain use, I
+do not see the point.
+
+I think [1/2] that removes the (plain)coloring of the stat summary text is
+Ok.  The code is painting the stat summary in the same color as the
+filenames in the stat graph, and the default "plain" color happens to be
+"do not color--just use the terminal default", so it probably does not
+have any practical difference.
