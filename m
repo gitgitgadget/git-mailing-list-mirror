@@ -1,56 +1,58 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] Removed redundant static functions such as
-	update_tracking_ref() and verify_remote_names() from
-	builtin-send-pack.c, and made the ones in transport.c not be static
-	so they can be used instead.
-Date: Fri, 24 Apr 2009 17:23:14 -0400
-Message-ID: <20090424212313.GA14435@coredump.intra.peff.net>
-References: <1240546432-26212-1-git-send-email-andy@petdance.com> <20090424210418.GC13561@coredump.intra.peff.net> <99B4BF12-01B9-4A68-B2E0-EF5DF2595FF0@petdance.com>
+Subject: Re: [PATCH 1/2] Documentation: replace sha1 by SHA-1
+Date: Fri, 24 Apr 2009 17:28:56 -0400
+Message-ID: <20090424212856.GB14435@coredump.intra.peff.net>
+References: <1240584575-5702-1-git-send-email-git@drmicha.warpmail.net> <1240584575-5702-2-git-send-email-git@drmicha.warpmail.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: Andy Lester <andy@petdance.com>
-X-From: git-owner@vger.kernel.org Fri Apr 24 23:25:00 2009
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Fri Apr 24 23:30:46 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LxStD-0003tK-F5
-	for gcvg-git-2@gmane.org; Fri, 24 Apr 2009 23:24:55 +0200
+	id 1LxSyo-0005LU-C9
+	for gcvg-git-2@gmane.org; Fri, 24 Apr 2009 23:30:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758250AbZDXVXZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 24 Apr 2009 17:23:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758062AbZDXVXZ
-	(ORCPT <rfc822;git-outgoing>); Fri, 24 Apr 2009 17:23:25 -0400
-Received: from peff.net ([208.65.91.99]:42355 "EHLO peff.net"
+	id S1756917AbZDXV3J (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 24 Apr 2009 17:29:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756153AbZDXV3I
+	(ORCPT <rfc822;git-outgoing>); Fri, 24 Apr 2009 17:29:08 -0400
+Received: from peff.net ([208.65.91.99]:59695 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757676AbZDXVXY (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 24 Apr 2009 17:23:24 -0400
-Received: (qmail 31563 invoked by uid 107); 24 Apr 2009 21:23:33 -0000
+	id S1755517AbZDXV3H (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 24 Apr 2009 17:29:07 -0400
+Received: (qmail 31595 invoked by uid 107); 24 Apr 2009 21:29:15 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Fri, 24 Apr 2009 17:23:33 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Fri, 24 Apr 2009 17:23:14 -0400
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Fri, 24 Apr 2009 17:29:15 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Fri, 24 Apr 2009 17:28:56 -0400
 Content-Disposition: inline
-In-Reply-To: <99B4BF12-01B9-4A68-B2E0-EF5DF2595FF0@petdance.com>
+In-Reply-To: <1240584575-5702-2-git-send-email-git@drmicha.warpmail.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117490>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117491>
 
-On Fri, Apr 24, 2009 at 04:13:14PM -0500, Andy Lester wrote:
+On Fri, Apr 24, 2009 at 04:49:34PM +0200, Michael J Gruber wrote:
 
-> This was what I was looking for.  I think what I'll do is fold your  
-> message into Documentation/SubmittingPatches and submit that as a patch 
-> first.
+> --- a/Documentation/git-cat-file.txt
+> +++ b/Documentation/git-cat-file.txt
+> @@ -76,7 +76,7 @@ If '--batch' is specified, output of the following form is printed for each
+>  object specified on stdin:
+>  
+>  ------------
+> -<sha1> SP <type> SP <size> LF
+> +<SHA-1> SP <type> SP <size> LF
+>  <contents> LF
+>  ------------
 
-That probably makes sense.
+Maybe it is just me, but I find the original for this one easier to
+read. Perhaps because <sha1> is really a variable name here (but for a
+human reader to interpret instead of a compiler), so I find the
+punctuation and capitalization distracting.
 
-I keep thinking about writing a separate "how to write a good commit
-message" document that would be more universal than just "here's how you
-submit a patch to git". And some of what I wrote to you could probably
-go in such a document. But I don't know if it makes sense to start a new
-document just with what I said there; it might be a bit sparse (OTOH,
-maybe people would then be encouraged to add their tips to it).
+I wonder if all <sha1> should simply be left as-is.
 
 -Peff
