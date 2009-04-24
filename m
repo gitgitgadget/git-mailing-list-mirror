@@ -1,73 +1,81 @@
-From: "J. Bruce Fields" <bfields@fieldses.org>
+From: Michael Witten <mfwitten@gmail.com>
 Subject: Re: [doc] User Manual Suggestion
-Date: Fri, 24 Apr 2009 10:20:58 -0400
-Message-ID: <20090424142058.GF15038@fieldses.org>
-References: <m24owgqy0j.fsf@boostpro.com> <20090423175717.GA30198@fieldses.org> <b4087cc50904231137g67b4b84eu3b61bf174ba37d7f@mail.gmail.com> <20090423201636.GD3056@coredump.intra.peff.net> <b4087cc50904231345x2613308eh640e50f4a2680890@mail.gmail.com> <B873CD38-2CFE-4138-8A77-8957FA3DB81C@boostpro.com> <20090424141847.GD10761@coredump.intra.peff.net>
+Date: Fri, 24 Apr 2009 09:30:20 -0500
+Message-ID: <b4087cc50904240730n42e605e1od37d88d43e00f142@mail.gmail.com>
+References: <m24owgqy0j.fsf@boostpro.com> <20090423175717.GA30198@fieldses.org>
+	 <b4087cc50904231137g67b4b84eu3b61bf174ba37d7f@mail.gmail.com>
+	 <20090423201636.GD3056@coredump.intra.peff.net>
+	 <b4087cc50904231345x2613308eh640e50f4a2680890@mail.gmail.com>
+	 <20090424141139.GC10761@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: David Abrahams <dave@boostpro.com>,
-	Michael Witten <mfwitten@gmail.com>, git@vger.kernel.org
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "J. Bruce Fields" <bfields@fieldses.org>,
+	David Abrahams <dave@boostpro.com>, git@vger.kernel.org
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Apr 24 16:22:56 2009
+X-From: git-owner@vger.kernel.org Fri Apr 24 16:31:59 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LxMIb-00021O-3q
-	for gcvg-git-2@gmane.org; Fri, 24 Apr 2009 16:22:41 +0200
+	id 1LxMRa-0005fA-4X
+	for gcvg-git-2@gmane.org; Fri, 24 Apr 2009 16:31:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756969AbZDXOVG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 24 Apr 2009 10:21:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753833AbZDXOVE
-	(ORCPT <rfc822;git-outgoing>); Fri, 24 Apr 2009 10:21:04 -0400
-Received: from mail.fieldses.org ([141.211.133.115]:56786 "EHLO
-	pickle.fieldses.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755911AbZDXOVD (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 24 Apr 2009 10:21:03 -0400
-Received: from bfields by pickle.fieldses.org with local (Exim 4.69)
-	(envelope-from <bfields@fieldses.org>)
-	id 1LxMGw-0004BO-Vx; Fri, 24 Apr 2009 10:20:58 -0400
-Content-Disposition: inline
-In-Reply-To: <20090424141847.GD10761@coredump.intra.peff.net>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+	id S1754382AbZDXOaX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 24 Apr 2009 10:30:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753432AbZDXOaW
+	(ORCPT <rfc822;git-outgoing>); Fri, 24 Apr 2009 10:30:22 -0400
+Received: from qw-out-2122.google.com ([74.125.92.27]:31200 "EHLO
+	qw-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752327AbZDXOaV (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 24 Apr 2009 10:30:21 -0400
+Received: by qw-out-2122.google.com with SMTP id 5so935227qwd.37
+        for <git@vger.kernel.org>; Fri, 24 Apr 2009 07:30:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=vVP2AubDl3+/a1tadgLJCDKbLrCC8dfpiT2uS+OMphM=;
+        b=FYd8PvVNi8tzZ/fdWZ+wkPM/tvX3MJAvAWE7eQsMf+giQ75j5y5TiA5upSp6SqxQlf
+         piY4LUVPHgxkMeZ7kVCakJpbs81UTUSrl1PQnbtuq1zwwxeNvIEPZ0OGzOCNTSywQEfN
+         KYFrg95QsY5gKGg2oSTaNZnRbZwSnwJG/h768=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=Lt7M8DI27xAAc+AgP/6LYLV+sVU6xdOQuQgcZJTsp+MSjzlmd0gAG+cvrq6Xx5ECmo
+         Z8t0CikQZ+FwJDtPtrmsTSTMUcrTCIFdf/PDav/DQNYiSX3G9DY4QMjJqO9d8LVjoygo
+         C02il06TdQi9n1XnMejC9qWFuY2aV1GeLsJ70=
+Received: by 10.224.37.19 with SMTP id v19mr2835687qad.70.1240583420584; Fri, 
+	24 Apr 2009 07:30:20 -0700 (PDT)
+In-Reply-To: <20090424141139.GC10761@coredump.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117442>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117443>
 
-On Fri, Apr 24, 2009 at 10:18:47AM -0400, Jeff King wrote:
-> On Thu, Apr 23, 2009 at 05:31:13PM -0400, David Abrahams wrote:
-> 
-> >> I think the main problem, then, is that the tools have a UI that is
-> >> somewhere in the middle.
-> >
-> > Well, "the UI" (how many do we really have for Git?) is spread across the 
-> > spectrum.  The git command-line alone lets you do incredibly low-level 
-> > things that "nobody should ever do" and some really high-level things that 
-> > are everyone's bread-and-butter.  There's no obvious distinction.
-> 
-> I think this is a bit better than it used to be. Plumbing commands are
-> mostly hidden outside of the user's PATH. Unfortunately there are still
-> some warts, like the fact that users may be referred to "git help
-> rev-parse" to learn about how revisions are specified. But they have to
-> wade through the information on the "rev-parse" command, which is
-> something that most users will never need to know or care about.
-> 
-> A lot of that is historical baggage. The original git was not a VCS but
-> rather a _toolkit_ for building a VCS. So the natural place for talking
-> about parsing revisions was rev-parse, because that was the only way to
-> access the revision parsing code. :)
-> 
-> I think a lot of documentation like the "specifying revisions" section
-> of rev-parse might benefit from being split into its own "concept"
-> section, like gitrevisions(7). And commands which allow specifying
-> revisions (at least the major ones, like log, diff, etc) should
-> reference it (but not include it directly, as we do with some
-> documentation snippets -- the point is to make the user aware that they
-> are learning a separate concept that can be applied in multiple places,
-> and to give that concept a name).
+On Fri, Apr 24, 2009 at 09:11, Jeff King <peff@peff.net> wrote:
+> I think I wasn't clear in my original message. I didn't mean teaching
+> low-level stuff like plumbing or file layouts. By "bottom-up" I really
+> meant teaching concepts (like objects, their types, and references),
+> from which user operations and workflows can be explained (or often
+> deduced by the user). Whereas a top-down approach would _start_ with
+> workflows and say "To accomplish X, do Y".
 
-I'd be in favor of that.
+I knew you would make exactly this rebuttle ;-D
 
---b.
+However, notice that you can't reasonably be expected to understand
+"accomplish X" without having concepts like objects and references.
+The reason most people get by is that git's operation can be
+compatible with a number of other theories people might have already
+picked up from using computers. The trouble starts when their existing
+theories don't mesh well with the underlying git theory, leading the
+user to develop the equivalent of epicycles in order to explain to
+himself whats going on.
+
+Basically, the problem is that the documentation is currently catering
+for people, who just want to download source files (as Bruce basically
+said); a quick shell synopsis for this is fine, but there needs to be
+documentation solely devoted to understanding git fully and precisely.
