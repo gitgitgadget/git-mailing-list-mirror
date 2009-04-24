@@ -1,740 +1,651 @@
 From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: [PATCH 2/2] Documentation: replace SHA1 by SHA-1
-Date: Fri, 24 Apr 2009 16:49:35 +0200
-Message-ID: <1240584575-5702-3-git-send-email-git@drmicha.warpmail.net>
+Subject: [PATCH 1/2] Documentation: replace sha1 by SHA-1
+Date: Fri, 24 Apr 2009 16:49:34 +0200
+Message-ID: <1240584575-5702-2-git-send-email-git@drmicha.warpmail.net>
 References: <1240584575-5702-1-git-send-email-git@drmicha.warpmail.net>
- <1240584575-5702-2-git-send-email-git@drmicha.warpmail.net>
 Cc: Junio C Hamano <gitster@pobox.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Apr 24 16:52:39 2009
+X-From: git-owner@vger.kernel.org Fri Apr 24 16:52:41 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LxMlW-0005Ku-96
+	id 1LxMlV-0005Ku-7g
 	for gcvg-git-2@gmane.org; Fri, 24 Apr 2009 16:52:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757737AbZDXOt4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 24 Apr 2009 10:49:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757325AbZDXOtz
-	(ORCPT <rfc822;git-outgoing>); Fri, 24 Apr 2009 10:49:55 -0400
-Received: from out2.smtp.messagingengine.com ([66.111.4.26]:50966 "EHLO
+	id S1757390AbZDXOtv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 24 Apr 2009 10:49:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756659AbZDXOtv
+	(ORCPT <rfc822;git-outgoing>); Fri, 24 Apr 2009 10:49:51 -0400
+Received: from out2.smtp.messagingengine.com ([66.111.4.26]:39030 "EHLO
 	out2.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1757008AbZDXOts (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 24 Apr 2009 10:49:48 -0400
+	by vger.kernel.org with ESMTP id S1756525AbZDXOtq (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 24 Apr 2009 10:49:46 -0400
 Received: from compute1.internal (compute1.internal [10.202.2.41])
-	by out1.messagingengine.com (Postfix) with ESMTP id 1294B322885;
-	Fri, 24 Apr 2009 10:49:48 -0400 (EDT)
-Received: from heartbeat1.messagingengine.com ([10.202.2.160])
-  by compute1.internal (MEProxy); Fri, 24 Apr 2009 10:49:48 -0400
-X-Sasl-enc: pHmGqc2i5azLcpShp9FoWhdIPkGpYsvGdiXbvdGJoNMy 1240584587
+	by out1.messagingengine.com (Postfix) with ESMTP id A305C3228A0;
+	Fri, 24 Apr 2009 10:49:45 -0400 (EDT)
+Received: from heartbeat2.messagingengine.com ([10.202.2.161])
+  by compute1.internal (MEProxy); Fri, 24 Apr 2009 10:49:45 -0400
+X-Sasl-enc: O3pEPrE1kAjiwyb3CmN/1dg82mzBWd6qqPvm6LDDsnK0 1240584584
 Received: from localhost (whitehead.math.tu-clausthal.de [139.174.44.12])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 04FA339103;
-	Fri, 24 Apr 2009 10:49:46 -0400 (EDT)
+	by mail.messagingengine.com (Postfix) with ESMTPSA id B18D13CE9E;
+	Fri, 24 Apr 2009 10:49:44 -0400 (EDT)
 X-Mailer: git-send-email 1.6.3.rc1.51.gea0b7
-In-Reply-To: <1240584575-5702-2-git-send-email-git@drmicha.warpmail.net>
+In-Reply-To: <1240584575-5702-1-git-send-email-git@drmicha.warpmail.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117445>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117446>
 
-Replace SHA1 by SHA-1 with the following exceptions:
+Replace sha1 by SHA-1 with the following exceptions:
 
-* asciidoc anchor definitions
+* code samples
 * irc conversations contained as documentation
   (Documentation/technical/pack-heuristics.txt)
 
 Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
 ---
- Documentation/config.txt                           |    2 +-
- Documentation/git-cat-file.txt                     |    6 +++---
- Documentation/git-describe.txt                     |    2 +-
- Documentation/git-fsck.txt                         |    4 ++--
- Documentation/git-index-pack.txt                   |    2 +-
- Documentation/git-ls-files.txt                     |    2 +-
- Documentation/git-merge-index.txt                  |    2 +-
- Documentation/git-pack-objects.txt                 |    2 +-
- Documentation/git-patch-id.txt                     |    2 +-
- Documentation/git-rev-parse.txt                    |    8 ++++----
- Documentation/git-show-branch.txt                  |    4 ++--
- Documentation/git-show-index.txt                   |    2 +-
- Documentation/git-show-ref.txt                     |    4 ++--
- Documentation/git-tag.txt                          |    2 +-
- Documentation/git-update-index.txt                 |    2 +-
- Documentation/git-verify-pack.txt                  |    4 ++--
- Documentation/git-verify-tag.txt                   |    2 +-
- Documentation/git.txt                              |   10 +++++-----
- Documentation/gitcore-tutorial.txt                 |    8 ++++----
- Documentation/gitdiffcore.txt                      |    2 +-
- Documentation/githooks.txt                         |    2 +-
- Documentation/gittutorial-2.txt                    |   16 ++++++++--------
- Documentation/glossary-content.txt                 |    8 ++++----
- .../howto/recover-corrupted-blob-object.txt        |    6 +++---
- Documentation/pretty-formats.txt                   |    2 +-
- Documentation/technical/pack-format.txt            |   14 +++++++-------
- Documentation/technical/pack-protocol.txt          |   20 ++++++++++----------
- Documentation/technical/shallow.txt                |    4 ++--
- 28 files changed, 72 insertions(+), 72 deletions(-)
+ Documentation/diff-format.txt               |    8 +++---
+ Documentation/git-blame.txt                 |    4 +-
+ Documentation/git-branch.txt                |    8 +++---
+ Documentation/git-cat-file.txt              |    4 +-
+ Documentation/git-cherry.txt                |    4 +-
+ Documentation/git-cvsexportcommit.txt       |    4 +-
+ Documentation/git-diff-index.txt            |    8 +++---
+ Documentation/git-filter-branch.txt         |    6 ++--
+ Documentation/git-fsck.txt                  |    8 +++---
+ Documentation/git-init.txt                  |    2 +-
+ Documentation/git-mktag.txt                 |    2 +-
+ Documentation/git-name-rev.txt              |    2 +-
+ Documentation/git-receive-pack.txt          |   32 +++++++++++++-------------
+ Documentation/git-reflog.txt                |    4 +-
+ Documentation/git-svn.txt                   |    4 +-
+ Documentation/git-unpack-file.txt           |    2 +-
+ Documentation/git-update-index.txt          |   12 +++++-----
+ Documentation/git-update-ref.txt            |    8 +++---
+ Documentation/git.txt                       |    2 +-
+ Documentation/howto/update-hook-example.txt |    6 ++--
+ Documentation/pretty-formats.txt            |   14 ++++++------
+ 21 files changed, 72 insertions(+), 72 deletions(-)
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index f3ebd2f..4deac24 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -271,7 +271,7 @@ core.worktree::
- core.logAllRefUpdates::
- 	Enable the reflog. Updates to a ref <ref> is logged to the file
- 	"$GIT_DIR/logs/<ref>", by appending the new and old
--	SHA1, the date/time and the reason of the update, but
-+	SHA-1, the date/time and the reason of the update, but
- 	only when the file exists.  If this configuration
- 	variable is set to true, missing "$GIT_DIR/logs/<ref>"
- 	file is automatically created for branch heads.
+diff --git a/Documentation/diff-format.txt b/Documentation/diff-format.txt
+index 1eeb1c7..53da361 100644
+--- a/Documentation/diff-format.txt
++++ b/Documentation/diff-format.txt
+@@ -35,9 +35,9 @@ That is, from the left to the right:
+ . a space.
+ . mode for "dst"; 000000 if deletion or unmerged.
+ . a space.
+-. sha1 for "src"; 0\{40\} if creation or unmerged.
++. SHA-1 for "src"; 0\{40\} if creation or unmerged.
+ . a space.
+-. sha1 for "dst"; 0\{40\} if creation, unmerged or "look at work tree".
++. SHA-1 for "dst"; 0\{40\} if creation, unmerged or "look at work tree".
+ . a space.
+ . status, followed by optional "score" number.
+ . a tab or a NUL when '-z' option is used.
+@@ -62,7 +62,7 @@ Status letters C and R are always followed by a score (denoting the
+ percentage of similarity between the source and target of the move or
+ copy), and are the only ones to be so.
+ 
+-<sha1> is shown as all 0's if a file is new on the filesystem
++<SHA-1> is shown as all 0's if a file is new on the filesystem
+ and it is out of sync with the index.
+ 
+ Example:
+@@ -84,7 +84,7 @@ to generate diff output also for merge commits.  The output differs
+ from the format described above in the following way:
+ 
+ . there is a colon for each parent
+-. there are more "src" modes and "src" sha1
++. there are more "src" modes and "src" SHA-1
+ . status is concatenated status characters for each parent
+ . no optional "score" number
+ . single path, only for "dst"
+diff --git a/Documentation/git-blame.txt b/Documentation/git-blame.txt
+index 8c7b7b0..139a05f 100644
+--- a/Documentation/git-blame.txt
++++ b/Documentation/git-blame.txt
+@@ -158,7 +158,7 @@ annotated.
+ 
+ . Each blame entry always starts with a line of:
+ 
+-	<40-byte hex sha1> <sourceline> <resultline> <num_lines>
++	<40-byte hex SHA-1> <sourceline> <resultline> <num_lines>
+ +
+ Line numbers count from 1.
+ 
+@@ -177,7 +177,7 @@ parser (which should be quite natural for most scripting languages).
+ +
+ [NOTE]
+ For people who do parsing: to make it more robust, just ignore any
+-lines between the first and last one ("<sha1>" and "filename" lines)
++lines between the first and last one ("<SHA-1>" and "filename" lines)
+ where you do not recognize the tag words (or care about that particular
+ one) at the beginning of the "extended information" lines. That way, if
+ there is ever added information (like the commit encoding or extended
+diff --git a/Documentation/git-branch.txt b/Documentation/git-branch.txt
+index cbd4275..15650c8 100644
+--- a/Documentation/git-branch.txt
++++ b/Documentation/git-branch.txt
+@@ -73,7 +73,7 @@ OPTIONS
+ -l::
+ 	Create the branch's reflog.  This activates recording of
+ 	all changes made to the branch ref, enabling use of date
+-	based sha1 expressions such as "<branchname>@\{yesterday}".
++	based SHA-1 expressions such as "<branchname>@\{yesterday}".
+ 
+ -f::
+ 	Reset <branchname> to <startpoint> if <branchname> exists
+@@ -100,16 +100,16 @@ OPTIONS
+ 
+ -v::
+ --verbose::
+-	Show sha1 and commit subject line for each head, along with
++	Show SHA-1 and commit subject line for each head, along with
+ 	relationship to upstream branch (if any). If given twice, print
+ 	the name of the upstream branch, as well.
+ 
+ --abbrev=<length>::
+-	Alter the sha1's minimum display length in the output listing.
++	Alter the SHA-1's minimum display length in the output listing.
+ 	The default value is 7.
+ 
+ --no-abbrev::
+-	Display the full sha1s in the output listing rather than abbreviating them.
++	Display the full SHA-1s in the output listing rather than abbreviating them.
+ 
+ --track::
+ 	When creating a new branch, set up configuration to mark the
 diff --git a/Documentation/git-cat-file.txt b/Documentation/git-cat-file.txt
-index db56d6e..c9385f7 100644
+index b191276..db56d6e 100644
 --- a/Documentation/git-cat-file.txt
 +++ b/Documentation/git-cat-file.txt
-@@ -19,7 +19,7 @@ the repository. The type is required unless '-t' or '-p' is used to find the
- object type, or '-s' is used to find the object size.
+@@ -76,7 +76,7 @@ If '--batch' is specified, output of the following form is printed for each
+ object specified on stdin:
  
- In the second form, a list of objects (separated by linefeeds) is provided on
--stdin, and the SHA1, type, and size of each object is printed on stdout.
-+stdin, and the SHA-1, type, and size of each object is printed on stdout.
- 
- OPTIONS
- -------
-@@ -52,11 +52,11 @@ OPTIONS
- 	points at it.
- 
- --batch::
--	Print the SHA1, type, size, and contents of each object provided on
-+	Print the SHA-1, type, size, and contents of each object provided on
- 	stdin. May not be combined with any other options or arguments.
- 
- --batch-check::
--	Print the SHA1, type, and size of each object provided on stdin. May not
-+	Print the SHA-1, type, and size of each object provided on stdin. May not
- 	be combined with any other options or arguments.
- 
- OUTPUT
-diff --git a/Documentation/git-describe.txt b/Documentation/git-describe.txt
-index b231dbb..c051b5c 100644
---- a/Documentation/git-describe.txt
-+++ b/Documentation/git-describe.txt
-@@ -129,7 +129,7 @@ is found, its name will be output and searching will stop.
- If an exact match was not found, 'git-describe' will walk back
- through the commit history to locate an ancestor commit which
- has been tagged.  The ancestor's tag will be output along with an
--abbreviation of the input committish's SHA1.
-+abbreviation of the input committish's SHA-1.
- 
- If multiple tags were found during the walk then the tag which
- has the fewest commits different from the input committish will be
-diff --git a/Documentation/git-fsck.txt b/Documentation/git-fsck.txt
-index 73e1dc4..88d12fc 100644
---- a/Documentation/git-fsck.txt
-+++ b/Documentation/git-fsck.txt
-@@ -22,7 +22,7 @@ OPTIONS
- 	An object to treat as the head of an unreachability trace.
- +
- If no objects are given, 'git-fsck' defaults to using the
--index file, all SHA1 references in .git/refs/*, and all reflogs (unless
-+index file, all SHA-1 references in .git/refs/*, and all reflogs (unless
- --no-reflogs is given) as heads.
- 
- --unreachable::
-@@ -71,7 +71,7 @@ index file, all SHA1 references in .git/refs/*, and all reflogs (unless
- 	a blob, the contents are written into the file, rather than
- 	its object name.
- 
--It tests SHA1 and general object sanity, and it does full tracking of
-+It tests SHA-1 and general object sanity, and it does full tracking of
- the resulting reachability and everything else. It prints out any
- corruption it finds (missing or bad objects), and if you use the
- '--unreachable' flag it will also print out objects that exist but
-diff --git a/Documentation/git-index-pack.txt b/Documentation/git-index-pack.txt
-index 4b5c743..3f499a2 100644
---- a/Documentation/git-index-pack.txt
-+++ b/Documentation/git-index-pack.txt
-@@ -83,7 +83,7 @@ Note
- ----
- 
- Once the index has been created, the list of object names is sorted
--and the SHA1 hash of that list is printed to stdout. If --stdin was
-+and the SHA-1 hash of that list is printed to stdout. If --stdin was
- also used then this is prefixed by either "pack\t", or "keep\t" if a
- new .keep file was successfully created. This is useful to remove a
- .keep file used as a lock to prevent the race with 'git-repack'
-diff --git a/Documentation/git-ls-files.txt b/Documentation/git-ls-files.txt
-index 057a021..1f1ce15 100644
---- a/Documentation/git-ls-files.txt
-+++ b/Documentation/git-ls-files.txt
-@@ -146,7 +146,7 @@ which case it outputs:
- 'git-ls-files --unmerged' and 'git-ls-files --stage' can be used to examine
- detailed information on unmerged paths.
- 
--For an unmerged path, instead of recording a single mode/SHA1 pair,
-+For an unmerged path, instead of recording a single mode/SHA-1 pair,
- the index records up to three such pairs; one from tree O in stage
- 1, A in stage 2, and B in stage 3.  This information can be used by
- the user (or the porcelain) to see what should eventually be recorded at the
-diff --git a/Documentation/git-merge-index.txt b/Documentation/git-merge-index.txt
-index 123e6d0..d7262ff 100644
---- a/Documentation/git-merge-index.txt
-+++ b/Documentation/git-merge-index.txt
-@@ -13,7 +13,7 @@ SYNOPSIS
- DESCRIPTION
- -----------
- This looks up the <file>(s) in the index and, if there are any merge
--entries, passes the SHA1 hash for those files as arguments 1, 2, 3 (empty
-+entries, passes the SHA-1 hash for those files as arguments 1, 2, 3 (empty
- argument if no file), and <file> as argument 4.  File modes for the three
- files are passed as arguments 5, 6 and 7.
- 
-diff --git a/Documentation/git-pack-objects.txt b/Documentation/git-pack-objects.txt
-index 7d4c1a7..fbbea99 100644
---- a/Documentation/git-pack-objects.txt
-+++ b/Documentation/git-pack-objects.txt
-@@ -47,7 +47,7 @@ base-name::
- 	Write into a pair of files (.pack and .idx), using
- 	<base-name> to determine the name of the created file.
- 	When this option is used, the two files are written in
--	<base-name>-<SHA1>.{pack,idx} files.  <SHA1> is a hash
-+	<base-name>-<SHA-1>.{pack,idx} files.  <SHA-1> is a hash
- 	of the sorted object names to make the resulting filename
- 	based on the pack content, and written to the standard
- 	output of the command.
-diff --git a/Documentation/git-patch-id.txt b/Documentation/git-patch-id.txt
-index 253fc0f..e37c815 100644
---- a/Documentation/git-patch-id.txt
-+++ b/Documentation/git-patch-id.txt
-@@ -11,7 +11,7 @@ SYNOPSIS
- 
- DESCRIPTION
- -----------
--A "patch ID" is nothing but a SHA1 of the diff associated with a patch, with
-+A "patch ID" is nothing but a SHA-1 of the diff associated with a patch, with
- whitespace and line numbers ignored.  As such, it's "reasonably stable", but at
- the same time also reasonably unique, i.e., two patches that have the same "patch
- ID" are almost guaranteed to be the same thing.
-diff --git a/Documentation/git-rev-parse.txt b/Documentation/git-rev-parse.txt
-index 5ed2bc8..9fa0622 100644
---- a/Documentation/git-rev-parse.txt
-+++ b/Documentation/git-rev-parse.txt
-@@ -72,7 +72,7 @@ OPTIONS
- 	one.
- 
- --symbolic::
--	Usually the object names are output in SHA1 form (with
-+	Usually the object names are output in SHA-1 form (with
- 	possible '{caret}' prefix); this option makes them output in a
- 	form as close to the original input as possible.
- 
-@@ -122,7 +122,7 @@ OPTIONS
- 
- --short::
- --short=number::
--	Instead of outputting the full SHA1 values of object names try to
-+	Instead of outputting the full SHA-1 values of object names try to
- 	abbreviate them to a shorter unique name. When no length is specified
- 	7 is used. The minimum length is 4.
- 
-@@ -144,12 +144,12 @@ SPECIFYING REVISIONS
- --------------------
- 
- A revision parameter typically, but not necessarily, names a
--commit object.  They use what is called an 'extended SHA1'
-+commit object.  They use what is called an 'extended SHA-1'
- syntax.  Here are various ways to spell object names.  The
- ones listed near the end of this list are to name trees and
- blobs contained in a commit.
- 
--* The full SHA1 object name (40-byte hexadecimal string), or
-+* The full SHA-1 object name (40-byte hexadecimal string), or
-   a substring of such that is unique within the repository.
-   E.g. dae86e1950b1277e545cee180551750029cfe735 and dae86e both
-   name the same commit object if there are no other object in
-diff --git a/Documentation/git-show-branch.txt b/Documentation/git-show-branch.txt
-index 7e9ff37..1259058 100644
---- a/Documentation/git-show-branch.txt
-+++ b/Documentation/git-show-branch.txt
-@@ -29,7 +29,7 @@ no <rev> nor <glob> is given on the command line.
- OPTIONS
- -------
- <rev>::
--	Arbitrary extended SHA1 expression (see linkgit:git-rev-parse[1])
-+	Arbitrary extended SHA-1 expression (see linkgit:git-rev-parse[1])
- 	that typically names a branch head or a tag.
- 
- <glob>::
-@@ -123,7 +123,7 @@ displayed, indented N places.  If a commit is on the I-th
- branch, the I-th indentation character shows a `+` sign;
- otherwise it shows a space.  Merge commits are denoted by
- a `-` sign.  Each commit shows a short name that
--can be used as an extended SHA1 to name that commit.
-+can be used as an extended SHA-1 to name that commit.
- 
- The following example shows three branches, "master", "fixes"
- and "mhf":
-diff --git a/Documentation/git-show-index.txt b/Documentation/git-show-index.txt
-index e3285aa..d30dd25 100644
---- a/Documentation/git-show-index.txt
-+++ b/Documentation/git-show-index.txt
-@@ -18,7 +18,7 @@ Reads given idx file for packed git archive created with
- 
- The information it outputs is subset of what you can get from
- 'git-verify-pack -v'; this command only shows the packfile
--offset and SHA1 of each object.
-+offset and SHA-1 of each object.
- 
- 
- Author
-diff --git a/Documentation/git-show-ref.txt b/Documentation/git-show-ref.txt
-index 2f173ff..5dedffb 100644
---- a/Documentation/git-show-ref.txt
-+++ b/Documentation/git-show-ref.txt
-@@ -50,8 +50,8 @@ OPTIONS
- -s::
- --hash::
- 
--	Only show the SHA1 hash, not the reference name. When also using
--	--dereference the dereferenced tag will still be shown after the SHA1.
-+	Only show the SHA-1 hash, not the reference name. When also using
-+	--dereference the dereferenced tag will still be shown after the SHA-1.
- 
- --verify::
- 
-diff --git a/Documentation/git-tag.txt b/Documentation/git-tag.txt
-index fa73321..b93248c 100644
---- a/Documentation/git-tag.txt
-+++ b/Documentation/git-tag.txt
-@@ -30,7 +30,7 @@ in the tag message.
- If `-m <msg>` or `-F <file>` is given and `-a`, `-s`, and `-u <key-id>`
- are absent, `-a` is implied.
- 
--Otherwise just the SHA1 object name of the commit object is
-+Otherwise just the SHA-1 object name of the commit object is
- written (i.e. a lightweight tag).
- 
- A GnuPG signed tag object will be created when `-s` or `-u
-diff --git a/Documentation/git-update-index.txt b/Documentation/git-update-index.txt
-index ab98949..b946b02 100644
---- a/Documentation/git-update-index.txt
-+++ b/Documentation/git-update-index.txt
-@@ -225,7 +225,7 @@ $ git update-index --index-info
+ ------------
+-<sha1> SP <type> SP <size> LF
++<SHA-1> SP <type> SP <size> LF
+ <contents> LF
  ------------
  
- The first line of the input feeds 0 as the mode to remove the
--path; the SHA1 does not matter as long as it is well formatted.
-+path; the SHA-1 does not matter as long as it is well formatted.
- Then the second and third line feeds stage 1 and stage 2 entries
- for that path.  After the above, we would end up with this:
+@@ -84,7 +84,7 @@ If '--batch-check' is specified, output of the following form is printed for
+ each object specified on stdin:
  
-diff --git a/Documentation/git-verify-pack.txt b/Documentation/git-verify-pack.txt
-index c861163..1942cd0 100644
---- a/Documentation/git-verify-pack.txt
-+++ b/Documentation/git-verify-pack.txt
-@@ -32,11 +32,11 @@ OUTPUT FORMAT
- -------------
- When specifying the -v option the format used is:
+ ------------
+-<sha1> SP <type> SP <size> LF
++<SHA-1> SP <type> SP <size> LF
+ ------------
  
--	SHA1 type size size-in-pack-file offset-in-packfile
-+	SHA-1 type size size-in-pack-file offset-in-packfile
+ For both '--batch' and '--batch-check', output of the following form is printed
+diff --git a/Documentation/git-cherry.txt b/Documentation/git-cherry.txt
+index 7deefda..b6fd758 100644
+--- a/Documentation/git-cherry.txt
++++ b/Documentation/git-cherry.txt
+@@ -17,7 +17,7 @@ The commits are compared with their 'patch id', obtained from
+ the 'git-patch-id' program.
  
- for objects that are not deltified in the pack, and
+ Every commit that doesn't exist in the <upstream> branch
+-has its id (sha1) reported, prefixed by a symbol.  The ones that have
++has its id (SHA-1) reported, prefixed by a symbol.  The ones that have
+ equivalent change already
+ in the <upstream> branch are prefixed with a minus (-) sign, and those
+ that only exist in the <head> branch are prefixed with a plus (+) symbol:
+@@ -38,7 +38,7 @@ to and including <limit> are not reported:
  
--	SHA1 type size size-in-packfile offset-in-packfile depth base-SHA1
-+	SHA-1 type size size-in-packfile offset-in-packfile depth base-SHA-1
  
- for objects that are deltified.
+ Because 'git-cherry' compares the changeset rather than the commit id
+-(sha1), you can use 'git-cherry' to find out if a commit you made locally
++(SHA-1), you can use 'git-cherry' to find out if a commit you made locally
+ has been applied <upstream> under a different commit id.  For example,
+ this will happen if you're feeding patches <upstream> via email rather
+ than pushing or pulling commits directly.
+diff --git a/Documentation/git-cvsexportcommit.txt b/Documentation/git-cvsexportcommit.txt
+index 2da8588..01d69bf 100644
+--- a/Documentation/git-cvsexportcommit.txt
++++ b/Documentation/git-cvsexportcommit.txt
+@@ -90,14 +90,14 @@ Merge one patch into CVS::
+ ------------
+ $ export GIT_DIR=~/project/.git
+ $ cd ~/project_cvs_checkout
+-$ git cvsexportcommit -v <commit-sha1>
++$ git cvsexportcommit -v <commit-SHA-1>
+ $ cvs commit -F .msg <files>
+ ------------
  
-diff --git a/Documentation/git-verify-tag.txt b/Documentation/git-verify-tag.txt
-index 84e70a0..fa92728 100644
---- a/Documentation/git-verify-tag.txt
-+++ b/Documentation/git-verify-tag.txt
-@@ -16,7 +16,7 @@ Validates the gpg signature created by 'git-tag'.
- OPTIONS
- -------
- <tag>...::
--	SHA1 identifiers of git tag objects.
-+	SHA-1 identifiers of git tag objects.
+ Merge one patch into CVS (-c and -w options). The working directory is within the Git Repo::
+ +
+ ------------
+-	$ git cvsexportcommit -v -c -w ~/project_cvs_checkout <commit-sha1>
++	$ git cvsexportcommit -v -c -w ~/project_cvs_checkout <commit-SHA-1>
+ ------------
+ 
+ Merge pending patches into CVS automatically -- only if you really know what you are doing::
+diff --git a/Documentation/git-diff-index.txt b/Documentation/git-diff-index.txt
+index 26920d4..cc34cb8 100644
+--- a/Documentation/git-diff-index.txt
++++ b/Documentation/git-diff-index.txt
+@@ -93,7 +93,7 @@ you *could* commit. Again, the output matches the 'git-diff-tree -r'
+ output to a tee, but with a twist.
+ 
+ The twist is that if some file doesn't match the index, we don't have
+-a backing store thing for it, and we use the magic "all-zero" sha1 to
++a backing store thing for it, and we use the magic "all-zero" SHA-1 to
+ show that. So let's say that you have edited `kernel/sched.c`, but
+ have not actually done a 'git-update-index' on it yet - there is no
+ "object" associated with the new state, and you get:
+@@ -102,7 +102,7 @@ have not actually done a 'git-update-index' on it yet - there is no
+   *100644->100664 blob    7476bb......->000000......      kernel/sched.c
+ 
+ i.e., it shows that the tree has changed, and that `kernel/sched.c` has is
+-not up-to-date and may contain new stuff. The all-zero sha1 means that to
++not up-to-date and may contain new stuff. The all-zero SHA-1 means that to
+ get the real diff, you need to look at the object in the working directory
+ directly rather than do an object-to-object diff.
+ 
+@@ -115,8 +115,8 @@ touched it. In either case, it's a note that you need to
+ NOTE: You can have a mixture of files show up as "has been updated"
+ and "is still dirty in the working directory" together. You can always
+ tell which file is in which state, since the "has been updated" ones
+-show a valid sha1, and the "not in sync with the index" ones will
+-always have the special all-zero sha1.
++show a valid SHA-1, and the "not in sync with the index" ones will
++always have the special all-zero SHA-1.
+ 
  
  Author
- ------
+diff --git a/Documentation/git-filter-branch.txt b/Documentation/git-filter-branch.txt
+index ab527b5..e8ffe2f 100644
+--- a/Documentation/git-filter-branch.txt
++++ b/Documentation/git-filter-branch.txt
+@@ -66,9 +66,9 @@ of these variables after the filters have run, are used for the new commit.
+ If any evaluation of <command> returns a non-zero exit status, the whole
+ operation will be aborted.
+ 
+-A 'map' function is available that takes an "original sha1 id" argument
+-and outputs a "rewritten sha1 id" if the commit has been already
+-rewritten, and "original sha1 id" otherwise; the 'map' function can
++A 'map' function is available that takes an "original SHA-1 id" argument
++and outputs a "rewritten SHA-1 id" if the commit has been already
++rewritten, and "original SHA-1 id" otherwise; the 'map' function can
+ return several ids on separate lines if your commit filter emitted
+ multiple commits.
+ 
+diff --git a/Documentation/git-fsck.txt b/Documentation/git-fsck.txt
+index 287c4fc..73e1dc4 100644
+--- a/Documentation/git-fsck.txt
++++ b/Documentation/git-fsck.txt
+@@ -103,8 +103,8 @@ expect dangling commits - potential heads - due to lack of head information::
+ 	possible to differentiate between un-parented commits and
+ 	root nodes.
+ 
+-missing sha1 directory '<dir>'::
+-	The directory holding the sha1 objects is missing.
++missing SHA-1 directory '<dir>'::
++	The directory holding the SHA-1 objects is missing.
+ 
+ unreachable <type> <object>::
+ 	The <type> object <object>, isn't actually referred to directly
+@@ -125,8 +125,8 @@ dangling <type> <object>::
+ warning: git-fsck: tree <tree> has full pathnames in it::
+ 	And it shouldn't...
+ 
+-sha1 mismatch <object>::
+-	The database has an object who's sha1 doesn't match the
++SHA-1 mismatch <object>::
++	The database has an object who's SHA-1 doesn't match the
+ 	database value.
+ 	This indicates a serious data integrity problem.
+ 
+diff --git a/Documentation/git-init.txt b/Documentation/git-init.txt
+index 71749c0..fb19bea 100644
+--- a/Documentation/git-init.txt
++++ b/Documentation/git-init.txt
+@@ -83,7 +83,7 @@ If the `$GIT_DIR` environment variable is set then it specifies a path
+ to use instead of `./.git` for the base of the repository.
+ 
+ If the object storage directory is specified via the `$GIT_OBJECT_DIRECTORY`
+-environment variable then the sha1 directories are created underneath -
++environment variable then the SHA-1 directories are created underneath -
+ otherwise the default `$GIT_DIR/objects` directory is used.
+ 
+ Running 'git-init' in an existing repository is safe. It will not overwrite
+diff --git a/Documentation/git-mktag.txt b/Documentation/git-mktag.txt
+index 8bcc114..570dc26 100644
+--- a/Documentation/git-mktag.txt
++++ b/Documentation/git-mktag.txt
+@@ -21,7 +21,7 @@ Tag Format
+ ----------
+ A tag signature file has a very simple fixed format: four lines of
+ 
+-  object <sha1>
++  object <SHA-1>
+   type <typename>
+   tag <tagname>
+   tagger <tagger>
+diff --git a/Documentation/git-name-rev.txt b/Documentation/git-name-rev.txt
+index 7ca8a7b..519d6a9 100644
+--- a/Documentation/git-name-rev.txt
++++ b/Documentation/git-name-rev.txt
+@@ -31,7 +31,7 @@ OPTIONS
+ 	List all commits reachable from all refs
+ 
+ --stdin::
+-	Read from stdin, append "(<rev_name>)" to all sha1's of nameable
++	Read from stdin, append "(<rev_name>)" to all SHA-1s of nameable
+ 	commits, and pass to stdout
+ 
+ --name-only::
+diff --git a/Documentation/git-receive-pack.txt b/Documentation/git-receive-pack.txt
+index 514f03c..d357024 100644
+--- a/Documentation/git-receive-pack.txt
++++ b/Documentation/git-receive-pack.txt
+@@ -20,7 +20,7 @@ The UI for the protocol is on the 'git-send-pack' side, and the
+ program pair is meant to be used to push updates to remote
+ repository.  For pull operations, see linkgit:git-fetch-pack[1].
+ 
+-The command allows for creation and fast forwarding of sha1 refs
++The command allows for creation and fast forwarding of SHA-1 refs
+ (heads/tags) on the remote end (strictly speaking, it is the
+ local end 'git-receive-pack' runs, but to the user who is sitting at
+ the send-pack end, it is updating the remote.  Confused?)
+@@ -43,14 +43,14 @@ Before any ref is updated, if $GIT_DIR/hooks/pre-receive file exists
+ and is executable, it will be invoked once with no parameters.  The
+ standard input of the hook will be one line per ref to be updated:
+ 
+-       sha1-old SP sha1-new SP refname LF
++       SHA-1-old SP SHA-1-new SP refname LF
+ 
+ The refname value is relative to $GIT_DIR; e.g. for the master
+-head this is "refs/heads/master".  The two sha1 values before
++head this is "refs/heads/master".  The two SHA-1 values before
+ each refname are the object names for the refname before and after
+-the update.  Refs to be created will have sha1-old equal to 0\{40},
+-while refs to be deleted will have sha1-new equal to 0\{40}, otherwise
+-sha1-old and sha1-new should be valid objects in the repository.
++the update.  Refs to be created will have SHA-1-old equal to 0\{40},
++while refs to be deleted will have SHA-1-new equal to 0\{40}, otherwise
++SHA-1-old and SHA-1-new should be valid objects in the repository.
+ 
+ This hook is called before any refname is updated and before any
+ fast-forward checks are performed.
+@@ -65,13 +65,13 @@ update Hook
+ Before each ref is updated, if $GIT_DIR/hooks/update file exists
+ and is executable, it is invoked once per ref, with three parameters:
+ 
+-       $GIT_DIR/hooks/update refname sha1-old sha1-new
++       $GIT_DIR/hooks/update refname SHA-1-old SHA-1-new
+ 
+ The refname parameter is relative to $GIT_DIR; e.g. for the master
+-head this is "refs/heads/master".  The two sha1 arguments are
++head this is "refs/heads/master".  The two SHA-1 arguments are
+ the object names for the refname before and after the update.
+ Note that the hook is called before the refname is updated,
+-so either sha1-old is 0\{40} (meaning there is no such ref yet),
++so either SHA-1-old is 0\{40} (meaning there is no such ref yet),
+ or it should match what is recorded in refname.
+ 
+ The hook should exit with non-zero status if it wants to disallow
+@@ -90,14 +90,14 @@ file exists and is executable, it will be invoked once with no
+ parameters.  The standard input of the hook will be one line
+ for each successfully updated ref:
+ 
+-       sha1-old SP sha1-new SP refname LF
++       SHA-1-old SP SHA-1-new SP refname LF
+ 
+ The refname value is relative to $GIT_DIR; e.g. for the master
+-head this is "refs/heads/master".  The two sha1 values before
++head this is "refs/heads/master".  The two SHA-1 values before
+ each refname are the object names for the refname before and after
+-the update.  Refs that were created will have sha1-old equal to
+-0\{40}, while refs that were deleted will have sha1-new equal to
+-0\{40}, otherwise sha1-old and sha1-new should be valid objects in
++the update.  Refs that were created will have SHA-1-old equal to
++0\{40}, while refs that were deleted will have SHA-1-new equal to
++0\{40}, otherwise SHA-1-old and SHA-1-new should be valid objects in
+ the repository.
+ 
+ Using this hook, it is easy to generate mails describing the updates
+@@ -123,10 +123,10 @@ ref listing the commits pushed to the repository:
+ The exit code from this hook invocation is ignored, however a
+ non-zero exit code will generate an error message.
+ 
+-Note that it is possible for refname to not have sha1-new when this
++Note that it is possible for refname to not have SHA-1-new when this
+ hook runs.  This can easily occur if another user modifies the ref
+ after it was updated by 'git-receive-pack', but before the hook was able
+-to evaluate it.  It is recommended that hooks rely on sha1-new
++to evaluate it.  It is recommended that hooks rely on SHA-1-new
+ rather than the current value of refname.
+ 
+ post-update Hook
+diff --git a/Documentation/git-reflog.txt b/Documentation/git-reflog.txt
+index 7f7a544..8d3d2e2 100644
+--- a/Documentation/git-reflog.txt
++++ b/Documentation/git-reflog.txt
+@@ -81,12 +81,12 @@ them.
+ 	Instead of listing <refs> explicitly, prune all refs.
+ 
+ --updateref::
+-	Update the ref with the sha1 of the top reflog entry (i.e.
++	Update the ref with the SHA-1 of the top reflog entry (i.e.
+ 	<ref>@\{0\}) after expiring or deleting.
+ 
+ --rewrite::
+ 	While expiring or deleting, adjust each reflog entry to ensure
+-	that the `old` sha1 field points to the `new` sha1 field of the
++	that the `old` SHA-1 field points to the `new` SHA-1 field of the
+ 	previous entry.
+ 
+ --verbose::
+diff --git a/Documentation/git-svn.txt b/Documentation/git-svn.txt
+index 9229d45..f5be417 100644
+--- a/Documentation/git-svn.txt
++++ b/Documentation/git-svn.txt
+@@ -232,7 +232,7 @@ New features:
+ +
+ --
+ --show-commit;;
+-	shows the git commit sha1, as well
++	shows the git commit SHA-1, as well
+ --oneline;;
+ 	our version of --pretty=oneline
+ --
+@@ -343,7 +343,7 @@ and lost.
+ Only used with the 'set-tree' command.
+ 
+ Read a list of commits from stdin and commit them in reverse
+-order.  Only the leading sha1 is read from each line, so
++order.  Only the leading SHA-1 is read from each line, so
+ 'git-rev-list --pretty=oneline' output can be used.
+ 
+ --rmdir::
+diff --git a/Documentation/git-unpack-file.txt b/Documentation/git-unpack-file.txt
+index 995db9f..799e5b4 100644
+--- a/Documentation/git-unpack-file.txt
++++ b/Documentation/git-unpack-file.txt
+@@ -13,7 +13,7 @@ SYNOPSIS
+ 
+ DESCRIPTION
+ -----------
+-Creates a file holding the contents of the blob specified by sha1. It
++Creates a file holding the contents of the blob specified by SHA-1. It
+ returns the name of the temporary file in the following format:
+ 	.merge_file_XXXXX
+ 
+diff --git a/Documentation/git-update-index.txt b/Documentation/git-update-index.txt
+index 25e0bbe..ab98949 100644
+--- a/Documentation/git-update-index.txt
++++ b/Documentation/git-update-index.txt
+@@ -149,7 +149,7 @@ you will need to handle the situation manually.
+ 
+ Using --refresh
+ ---------------
+-'--refresh' does not calculate a new sha1 file or bring the index
++'--refresh' does not calculate a new SHA-1 file or bring the index
+ up-to-date for mode/content changes. But what it *does* do is to
+ "re-match" the stat information of a file with the index, so that you
+ can refresh the index for a file that hasn't been changed but where
+@@ -164,10 +164,10 @@ Using --cacheinfo or --info-only
+ current working directory.  This is useful for minimum-checkout
+ merging.
+ 
+-To pretend you have a file with mode and sha1 at path, say:
++To pretend you have a file with mode and SHA-1 at path, say:
+ 
+ ----------------
+-$ git update-index --cacheinfo mode sha1 path
++$ git update-index --cacheinfo mode SHA-1 path
+ ----------------
+ 
+ '--info-only' is used to register files without placing them in the object
+@@ -187,19 +187,19 @@ Using --index-info
+ multiple entry definitions from the standard input, and designed
+ specifically for scripts.  It can take inputs of three formats:
+ 
+-    . mode         SP sha1          TAB path
++    . mode         SP SHA-1          TAB path
+ +
+ The first format is what "git-apply --index-info"
+ reports, and used to reconstruct a partial tree
+ that is used for phony merge base tree when falling
+ back on 3-way merge.
+ 
+-    . mode SP type SP sha1          TAB path
++    . mode SP type SP SHA-1          TAB path
+ +
+ The second format is to stuff 'git-ls-tree' output
+ into the index file.
+ 
+-    . mode         SP sha1 SP stage TAB path
++    . mode         SP SHA-1 SP stage TAB path
+ +
+ This format is to put higher order stages into the
+ index file and matches 'git-ls-files --stage' output.
+diff --git a/Documentation/git-update-ref.txt b/Documentation/git-update-ref.txt
+index 9639f70..7b7492a 100644
+--- a/Documentation/git-update-ref.txt
++++ b/Documentation/git-update-ref.txt
+@@ -66,16 +66,16 @@ a line to the log file "$GIT_DIR/logs/<ref>" (dereferencing all
+ symbolic refs before creating the log name) describing the change
+ in ref value.  Log lines are formatted as:
+ 
+-    . oldsha1 SP newsha1 SP committer LF
++    . SHA-1-old SP SHA-1-new SP committer LF
+ +
+-Where "oldsha1" is the 40 character hexadecimal value previously
+-stored in <ref>, "newsha1" is the 40 character hexadecimal value of
++Where "SHA-1-old" is the 40 character hexadecimal value previously
++stored in <ref>, "SHA-1-new" is the 40 character hexadecimal value of
+ <newvalue> and "committer" is the committer's name, email address
+ and date in the standard GIT committer ident format.
+ 
+ Optionally with -m:
+ 
+-    . oldsha1 SP newsha1 SP committer TAB message LF
++    . SHA-1-old SP SHA-1-new SP committer TAB message LF
+ +
+ Where all fields are as described above and "message" is the
+ value supplied to the -m option.
 diff --git a/Documentation/git.txt b/Documentation/git.txt
-index 5d2d5b7..af12570 100644
+index 470fdc5..5d2d5b7 100644
 --- a/Documentation/git.txt
 +++ b/Documentation/git.txt
-@@ -505,7 +505,7 @@ where:
+@@ -443,7 +443,7 @@ git so take care if using Cogito etc.
  
- 	<old|new>-file:: are files GIT_EXTERNAL_DIFF can use to read the
-                          contents of <old|new>,
--	<old|new>-hex:: are the 40-hexdigit SHA1 hashes,
-+	<old|new>-hex:: are the 40-hexdigit SHA-1 hashes,
- 	<old|new>-mode:: are the octal representation of the file modes.
+ 'GIT_OBJECT_DIRECTORY'::
+ 	If the object storage directory is specified via this
+-	environment variable then the sha1 directories are created
++	environment variable then the SHA-1 directories are created
+ 	underneath - otherwise the default `$GIT_DIR/objects`
+ 	directory is used.
  
- +
-@@ -595,7 +595,7 @@ The commit, equivalent to what other systems call a "changeset" or
- represents an immediately preceding step.  Commits with more than one
- parent represent merges of independent lines of development.
+diff --git a/Documentation/howto/update-hook-example.txt b/Documentation/howto/update-hook-example.txt
+index 697d918..baa6484 100644
+--- a/Documentation/howto/update-hook-example.txt
++++ b/Documentation/howto/update-hook-example.txt
+@@ -14,13 +14,13 @@ section of the documentation:
+     Before each ref is updated, if $GIT_DIR/hooks/update file exists
+     and executable, it is called with three parameters:
  
--All objects are named by the SHA1 hash of their contents, normally
-+All objects are named by the SHA-1 hash of their contents, normally
- written as a string of 40 hex digits.  Such names are globally unique.
- The entire history leading up to a commit can be vouched for by signing
- just that commit.  A fourth object type, the tag, is provided for this
-@@ -605,9 +605,9 @@ When first created, objects are stored in individual files, but for
- efficiency may later be compressed together into "pack files".
+-           $GIT_DIR/hooks/update refname sha1-old sha1-new
++           $GIT_DIR/hooks/update refname SHA-1-old SHA-1-new
  
- Named pointers called refs mark interesting points in history.  A ref
--may contain the SHA1 name of an object or the name of another ref.  Refs
--with names beginning `ref/head/` contain the SHA1 name of the most
--recent commit (or "head") of a branch under development.  SHA1 names of
-+may contain the SHA-1 name of an object or the name of another ref.  Refs
-+with names beginning `ref/head/` contain the SHA-1 name of the most
-+recent commit (or "head") of a branch under development.  SHA-1 names of
- tags of interest are stored under `ref/tags/`.  A special ref named
- `HEAD` contains the name of the currently checked-out branch.
+     The refname parameter is relative to $GIT_DIR; e.g. for the
+-    master head this is "refs/heads/master".  Two sha1 are the
++    master head this is "refs/heads/master".  Two SHA-1 are the
+     object names for the refname before and after the update.  Note
+     that the hook is called before the refname is updated, so either
+-    sha1-old is 0{40} (meaning there is no such ref yet), or it
++    SHA-1-old is 0{40} (meaning there is no such ref yet), or it
+     should match what is recorded in refname.
  
-diff --git a/Documentation/gitcore-tutorial.txt b/Documentation/gitcore-tutorial.txt
-index 7ba5e58..a204fdf 100644
---- a/Documentation/gitcore-tutorial.txt
-+++ b/Documentation/gitcore-tutorial.txt
-@@ -98,9 +98,9 @@ branch. A number of the git tools will assume that `.git/HEAD` is
- valid, though.
- 
- [NOTE]
--An 'object' is identified by its 160-bit SHA1 hash, aka 'object name',
-+An 'object' is identified by its 160-bit SHA-1 hash, aka 'object name',
- and a reference to an object is always the 40-byte hex
--representation of that SHA1 name. The files in the `refs`
-+representation of that SHA-1 name. The files in the `refs`
- subdirectory are expected to contain these hex references
- (usually with a final `\'\n\'` at the end), and you should thus
- expect to see a number of 41-byte files containing these
-@@ -755,7 +755,7 @@ already discussed, the `HEAD` branch is nothing but a symlink to one of
- these object pointers.
- 
- You can at any time create a new branch by just picking an arbitrary
--point in the project history, and just writing the SHA1 name of that
-+point in the project history, and just writing the SHA-1 name of that
- object into a file under `.git/refs/heads/`. You can use any filename you
- want (and indeed, subdirectories), but the convention is that the
- "normal" branch is called `master`. That's just a convention, though,
-@@ -1226,7 +1226,7 @@ file (the first tree goes to stage 1, the second to stage 2,
- etc.).  After reading three trees into three stages, the paths
- that are the same in all three stages are 'collapsed' into stage
- 0.  Also paths that are the same in two of three stages are
--collapsed into stage 0, taking the SHA1 from either stage 2 or
-+collapsed into stage 0, taking the SHA-1 from either stage 2 or
- stage 3, whichever is different from stage 1 (i.e. only one side
- changed from the common ancestor).
- 
-diff --git a/Documentation/gitdiffcore.txt b/Documentation/gitdiffcore.txt
-index e8041bc..a36e8d8 100644
---- a/Documentation/gitdiffcore.txt
-+++ b/Documentation/gitdiffcore.txt
-@@ -107,7 +107,7 @@ it changes it to:
- For the purpose of breaking a filepair, diffcore-break examines
- the extent of changes between the contents of the files before
- and after modification (i.e. the contents that have "bcd1234..."
--and "0123456..." as their SHA1 content ID, in the above
-+and "0123456..." as their SHA-1 content ID, in the above
- example).  The amount of deletion of original contents and
- insertion of new material are added together, and if it exceeds
- the "break score", the filepair is broken into two.  The break
-diff --git a/Documentation/githooks.txt b/Documentation/githooks.txt
-index 1c73673..4862044 100644
---- a/Documentation/githooks.txt
-+++ b/Documentation/githooks.txt
-@@ -96,7 +96,7 @@ given); `template` (if a `-t` option was given or the
- configuration option `commit.template` is set); `merge` (if the
- commit is a merge or a `.git/MERGE_MSG` file exists); `squash`
- (if a `.git/SQUASH_MSG` file exists); or `commit`, followed by
--a commit SHA1 (if a `-c`, `-C` or `\--amend` option was given).
-+a commit SHA-1 (if a `-c`, `-C` or `\--amend` option was given).
- 
- If the exit status is non-zero, 'git-commit' will abort.
- 
-diff --git a/Documentation/gittutorial-2.txt b/Documentation/gittutorial-2.txt
-index dc8fc3a..4fb0275 100644
---- a/Documentation/gittutorial-2.txt
-+++ b/Documentation/gittutorial-2.txt
-@@ -45,9 +45,9 @@ What are the 7 digits of hex that git responded to the commit with?
- 
- We saw in part one of the tutorial that commits have names like this.
- It turns out that every object in the git history is stored under
--a 40-digit hex name.  That name is the SHA1 hash of the object's
-+a 40-digit hex name.  That name is the SHA-1 hash of the object's
- contents; among other things, this ensures that git will never store
--the same data twice (since identical data is given an identical SHA1
-+the same data twice (since identical data is given an identical SHA-1
- name), and that the contents of a git object will never change (since
- that would change the object's name as well). The 7 char hex strings
- here are simply the abbreviation of such 40 character long strings.
-@@ -55,7 +55,7 @@ Abbreviations can be used everywhere where the 40 character strings
- can be used, so long as they are unambiguous.
- 
- It is expected that the content of the commit object you created while
--following the example above generates a different SHA1 hash than
-+following the example above generates a different SHA-1 hash than
- the one shown above because the commit object records the time when
- it was created and the name of the person performing the commit.
- 
-@@ -79,14 +79,14 @@ A tree can refer to one or more "blob" objects, each corresponding to
- a file.  In addition, a tree can also refer to other tree objects,
- thus creating a directory hierarchy.  You can examine the contents of
- any tree using ls-tree (remember that a long enough initial portion
--of the SHA1 will also work):
-+of the SHA-1 will also work):
- 
- ------------------------------------------------
- $ git ls-tree 92b8b694
- 100644 blob 3b18e512dba79e4c8300dd08aeb37f8e728b8dad    file.txt
- ------------------------------------------------
- 
--Thus we see that this tree has one file in it.  The SHA1 hash is a
-+Thus we see that this tree has one file in it.  The SHA-1 hash is a
- reference to that file's data:
- 
- ------------------------------------------------
-@@ -105,7 +105,7 @@ Note that this is the old file data; so the object that git named in
- its response to the initial tree was a tree with a snapshot of the
- directory state that was recorded by the first commit.
- 
--All of these objects are stored under their SHA1 names inside the git
-+All of these objects are stored under their SHA-1 names inside the git
- directory:
- 
- ------------------------------------------------
-@@ -141,7 +141,7 @@ ref: refs/heads/master
- 
- As you can see, this tells us which branch we're currently on, and it
- tells us this by naming a file under the .git directory, which itself
--contains a SHA1 name referring to a commit object, which we can
-+contains a SHA-1 name referring to a commit object, which we can
- examine with cat-file:
- 
- ------------------------------------------------
-@@ -207,7 +207,7 @@ project's history:
- 
- Note, by the way, that lots of commands take a tree as an argument.
- But as we can see above, a tree can be referred to in many different
--ways--by the SHA1 name for that tree, by the name of a commit that
-+ways--by the SHA-1 name for that tree, by the name of a commit that
- refers to the tree, by the name of a branch whose head refers to that
- tree, etc.--and most such commands can accept any of these names.
- 
-diff --git a/Documentation/glossary-content.txt b/Documentation/glossary-content.txt
-index 572374f..558107f 100644
---- a/Documentation/glossary-content.txt
-+++ b/Documentation/glossary-content.txt
-@@ -229,7 +229,7 @@ This commit is referred to as a "merge commit", or sometimes just a
- 
- [[def_object]]object::
- 	The unit of storage in git. It is uniquely identified by the
--	<<def_SHA1,SHA1>> of its contents. Consequently, an
-+	<<def_SHA1,SHA-1>> of its contents. Consequently, an
- 	object can not be changed.
- 
- [[def_object_database]]object database::
-@@ -326,7 +326,7 @@ This commit is referred to as a "merge commit", or sometimes just a
- 	to the result.
- 
- [[def_ref]]ref::
--	A 40-byte hex representation of a <<def_SHA1,SHA1>> or a name that
-+	A 40-byte hex representation of a <<def_SHA1,SHA-1>> or a name that
- 	denotes a particular <<def_object,object>>. These may be stored in
- 	`$GIT_DIR/refs/`.
- 
-@@ -373,7 +373,7 @@ This commit is referred to as a "merge commit", or sometimes just a
- [[def_SCM]]SCM::
- 	Source code management (tool).
- 
--[[def_SHA1]]SHA1::
-+[[def_SHA1]]SHA-1::
- 	Synonym for <<def_object_name,object name>>.
- 
- [[def_shallow_repository]]shallow repository::
-@@ -388,7 +388,7 @@ This commit is referred to as a "merge commit", or sometimes just a
- 	its history can be later deepened with linkgit:git-fetch[1].
- 
- [[def_symref]]symref::
--	Symbolic reference: instead of containing the <<def_SHA1,SHA1>>
-+	Symbolic reference: instead of containing the <<def_SHA1,SHA-1>>
- 	id itself, it is of the format 'ref: refs/some/thing' and when
- 	referenced, it recursively dereferences to this reference.
- 	'<<def_HEAD,HEAD>>' is a prime example of a symref. Symbolic
-diff --git a/Documentation/howto/recover-corrupted-blob-object.txt b/Documentation/howto/recover-corrupted-blob-object.txt
-index 323b513..0fc7013 100644
---- a/Documentation/howto/recover-corrupted-blob-object.txt
-+++ b/Documentation/howto/recover-corrupted-blob-object.txt
-@@ -9,7 +9,7 @@ On Fri, 9 Nov 2007, Yossi Leybovich wrote:
- > Did not help still the repository look for this object?
- > Any one know how can I track this object and understand which file is it
- 
--So exactly *because* the SHA1 hash is cryptographically secure, the hash
-+So exactly *because* the SHA-1 hash is cryptographically secure, the hash
- itself doesn't actually tell you anything, in order to fix a corrupt
- object you basically have to find the "original source" for it.
- 
-@@ -36,7 +36,7 @@ So:
- > ib]$ mv .git/objects/4b/9458b3786228369c63936db65827de3cc06200 ../
- 
- This is the right thing to do, although it's usually best to save it under
--it's full SHA1 name (you just dropped the "4b" from the result ;).
-+it's full SHA-1 name (you just dropped the "4b" from the result ;).
- 
- Let's see what that tells us:
- 
-@@ -79,7 +79,7 @@ working tree, in which case fixing this problem is really simple, just do
- 
- 	git hash-object -w my-magic-file
- 
--again, and if it outputs the missing SHA1 (4b945..) you're now all done!
-+again, and if it outputs the missing SHA-1 (4b945..) you're now all done!
- 
- But that's the really lucky case, so let's assume that it was some older
- version that was broken. How do you tell which version it was?
+ So if your policy is (1) always require fast-forward push
 diff --git a/Documentation/pretty-formats.txt b/Documentation/pretty-formats.txt
-index fac8ebd..a480ea8 100644
+index 2a845b1..fac8ebd 100644
 --- a/Documentation/pretty-formats.txt
 +++ b/Documentation/pretty-formats.txt
-@@ -70,7 +70,7 @@ This is designed to be as compact as possible.
- * 'raw'
+@@ -4,7 +4,7 @@ PRETTY FORMATS
+ If the commit is a merge, and if the pretty-format
+ is not 'oneline', 'email' or 'raw', an additional line is
+ inserted before the 'Author:' line.  This line begins with
+-"Merge: " and the sha1s of ancestral commits are printed,
++"Merge: " and the SHA-1s of ancestral commits are printed,
+ separated by spaces.  Note that the listed commits may not
+ necessarily be the list of the *direct* parent commits if you
+ have limited your view of history: for example, if you are
+@@ -15,20 +15,20 @@ Here are some additional details for each format:
+ 
+ * 'oneline'
+ 
+-	  <sha1> <title line>
++	  <SHA-1> <title line>
  +
- The 'raw' format shows the entire commit exactly as
--stored in the commit object.  Notably, the SHA1s are
-+stored in the commit object.  Notably, the SHA-1s are
- displayed in full, regardless of whether --abbrev or
- --no-abbrev are used, and 'parents' information show the
- true parent commits, without taking grafts nor history
-diff --git a/Documentation/technical/pack-format.txt b/Documentation/technical/pack-format.txt
-index 1803e64..4ce3534 100644
---- a/Documentation/technical/pack-format.txt
-+++ b/Documentation/technical/pack-format.txt
-@@ -32,7 +32,7 @@ GIT pack format
-      Observation: length of each object is encoded in a variable
-      length format and is not constrained to 32-bit or anything.
+ This is designed to be as compact as possible.
  
--  - The trailer records 20-byte SHA1 checksum of all of the above.
-+  - The trailer records 20-byte SHA-1 checksum of all of the above.
+ * 'short'
  
- = Original (version 1) pack-*.idx files have the following format:
+-	  commit <sha1>
++	  commit <SHA-1>
+ 	  Author: <author>
  
-@@ -53,10 +53,10 @@ GIT pack format
+ 	      <title line>
  
-   - The file is concluded with a trailer:
+ * 'medium'
  
--    A copy of the 20-byte SHA1 checksum at the end of
-+    A copy of the 20-byte SHA-1 checksum at the end of
-     corresponding packfile.
+-	  commit <sha1>
++	  commit <SHA-1>
+ 	  Author: <author>
+ 	  Date:   <author date>
  
--    20-byte SHA1-checksum of all of the above.
-+    20-byte SHA-1-checksum of all of the above.
+@@ -38,7 +38,7 @@ This is designed to be as compact as possible.
  
- Pack Idx file:
+ * 'full'
  
-@@ -104,7 +104,7 @@ Pack file entry: <+
-         If it is not DELTA, then deflated bytes (the size above
- 		is the size before compression).
- 	If it is REF_DELTA, then
--	  20-byte base object name SHA1 (the size above is the
-+	  20-byte base object name SHA-1 (the size above is the
- 		size of the delta data that follows).
-           delta data, deflated.
- 	If it is OFS_DELTA, then
-@@ -133,7 +133,7 @@ Pack file entry: <+
+-	  commit <sha1>
++	  commit <SHA-1>
+ 	  Author: <author>
+ 	  Commit: <committer>
  
-   - A 256-entry fan-out table just like v1.
+@@ -48,7 +48,7 @@ This is designed to be as compact as possible.
  
--  - A table of sorted 20-byte SHA1 object names.  These are
-+  - A table of sorted 20-byte SHA-1 object names.  These are
-     packed together without offset values to reduce the cache
-     footprint of the binary search for a specific object name.
+ * 'fuller'
  
-@@ -154,7 +154,7 @@ Pack file entry: <+
+-	  commit <sha1>
++	  commit <SHA-1>
+ 	  Author:     <author>
+ 	  AuthorDate: <author date>
+ 	  Commit:     <committer>
+@@ -60,7 +60,7 @@ This is designed to be as compact as possible.
  
-   - The same trailer as a v1 pack file:
+ * 'email'
  
--    A copy of the 20-byte SHA1 checksum at the end of
-+    A copy of the 20-byte SHA-1 checksum at the end of
-     corresponding packfile.
- 
--    20-byte SHA1-checksum of all of the above.
-+    20-byte SHA-1-checksum of all of the above.
-diff --git a/Documentation/technical/pack-protocol.txt b/Documentation/technical/pack-protocol.txt
-index 9cd48b4..9df76e3 100644
---- a/Documentation/technical/pack-protocol.txt
-+++ b/Documentation/technical/pack-protocol.txt
-@@ -6,22 +6,22 @@ There are two Pack push-pull protocols.
- upload-pack (S) | fetch/clone-pack (C) protocol:
- 
- 	# Tell the puller what commits we have and what their names are
--	S: SHA1 name
-+	S: SHA-1 name
- 	S: ...
--	S: SHA1 name
-+	S: SHA-1 name
- 	S: # flush -- it's your turn
- 	# Tell the pusher what commits we want, and what we have
- 	C: want name
- 	C: ..
- 	C: want name
--	C: have SHA1
--	C: have SHA1
-+	C: have SHA-1
-+	C: have SHA-1
- 	C: ...
- 	C: # flush -- occasionally ask "had enough?"
- 	S: NAK
--	C: have SHA1
-+	C: have SHA-1
- 	C: ...
--	C: have SHA1
-+	C: have SHA-1
- 	S: ACK
- 	C: done
- 	S: XXXXXXX -- packfile contents.
-@@ -29,13 +29,13 @@ upload-pack (S) | fetch/clone-pack (C) protocol:
- send-pack | receive-pack protocol.
- 
- 	# Tell the pusher what commits we have and what their names are
--	C: SHA1 name
-+	C: SHA-1 name
- 	C: ...
--	C: SHA1 name
-+	C: SHA-1 name
- 	C: # flush -- it's your turn
- 	# Tell the puller what the pusher has
--	S: old-SHA1 new-SHA1 name
--	S: old-SHA1 new-SHA1 name
-+	S: old-SHA-1 new-SHA-1 name
-+	S: old-SHA-1 new-SHA-1 name
- 	S: ...
- 	S: # flush -- done with the list
- 	S: XXXXXXX --- packfile contents.
-diff --git a/Documentation/technical/shallow.txt b/Documentation/technical/shallow.txt
-index 559263a..73214c3 100644
---- a/Documentation/technical/shallow.txt
-+++ b/Documentation/technical/shallow.txt
-@@ -2,7 +2,7 @@ Def.: Shallow commits do have parents, but not in the shallow
- repo, and therefore grafts are introduced pretending that
- these commits have no parents.
- 
--The basic idea is to write the SHA1s of shallow commits into
-+The basic idea is to write the SHA-1s of shallow commits into
- $GIT_DIR/shallow, and handle its contents like the contents
- of $GIT_DIR/info/grafts (with the difference that shallow
- cannot contain parent information).
-@@ -12,7 +12,7 @@ even the config, since the user should not touch that file
- at all (even throughout development of the shallow clone, it
- was never manually edited!).
- 
--Each line contains exactly one SHA1. When read, a commit_graft
-+Each line contains exactly one SHA-1. When read, a commit_graft
- will be constructed, which has nr_parent < 0 to make it easier
- to discern from user provided grafts.
- 
+-	  From <sha1> <date>
++	  From <SHA-1> <date>
+ 	  From: <author>
+ 	  Date: <author date>
+ 	  Subject: [PATCH] <title line>
 -- 
 1.6.3.rc1.51.gea0b7
