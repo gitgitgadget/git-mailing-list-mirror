@@ -1,58 +1,52 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: On "git status"
-Date: Fri, 24 Apr 2009 13:40:12 +0200
-Message-ID: <49F1A51C.40704@drmicha.warpmail.net>
-References: <49F1BD85.16747.5FBF6DC@Ulrich.Windl.rkdvmks1.ngate.uni-regensburg.de>
+From: Charles O'Farrell <charleso@charleso.org>
+Subject: Re: How to sync changes in GIT to ClearCase or How to get the list of files changed in GIT for a specific branch
+Date: Fri, 24 Apr 2009 12:10:58 +0000 (UTC)
+Message-ID: <loom.20090424T120653-407@post.gmane.org>
+References: <23197522.post@talk.nabble.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Ulrich Windl <ulrich.windl@rz.uni-regensburg.de>
-X-From: git-owner@vger.kernel.org Fri Apr 24 13:42:00 2009
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Apr 24 14:16:57 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LxJn0-0006Ko-8m
-	for gcvg-git-2@gmane.org; Fri, 24 Apr 2009 13:41:54 +0200
+	id 1LxKKr-0001RS-Hg
+	for gcvg-git-2@gmane.org; Fri, 24 Apr 2009 14:16:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750741AbZDXLkZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 24 Apr 2009 07:40:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751960AbZDXLkX
-	(ORCPT <rfc822;git-outgoing>); Fri, 24 Apr 2009 07:40:23 -0400
-Received: from out2.smtp.messagingengine.com ([66.111.4.26]:46726 "EHLO
-	out2.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751732AbZDXLkV (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 24 Apr 2009 07:40:21 -0400
-Received: from compute1.internal (compute1.internal [10.202.2.41])
-	by out1.messagingengine.com (Postfix) with ESMTP id B7DA631EC48;
-	Fri, 24 Apr 2009 07:40:20 -0400 (EDT)
-Received: from heartbeat1.messagingengine.com ([10.202.2.160])
-  by compute1.internal (MEProxy); Fri, 24 Apr 2009 07:40:20 -0400
-X-Sasl-enc: 7T6rt/KaLtRT8o4HQA2362LNe080IuMiPHlNRFIz/nIt 1240573219
-Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.12])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 6ABBB38F89;
-	Fri, 24 Apr 2009 07:40:19 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1b4pre) Gecko/20090420 Lightning/1.0pre Shredder/3.0b3pre
-In-Reply-To: <49F1BD85.16747.5FBF6DC@Ulrich.Windl.rkdvmks1.ngate.uni-regensburg.de>
+	id S1753315AbZDXMPI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 24 Apr 2009 08:15:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753338AbZDXMPH
+	(ORCPT <rfc822;git-outgoing>); Fri, 24 Apr 2009 08:15:07 -0400
+Received: from main.gmane.org ([80.91.229.2]:41164 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753045AbZDXMPF (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 24 Apr 2009 08:15:05 -0400
+Received: from root by ciao.gmane.org with local (Exim 4.43)
+	id 1LxKJ4-0000ku-QE
+	for git@vger.kernel.org; Fri, 24 Apr 2009 12:15:03 +0000
+Received: from ppp118-208-25-197.lns2.bne1.internode.on.net ([118.208.25.197])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 24 Apr 2009 12:15:02 +0000
+Received: from charleso by ppp118-208-25-197.lns2.bne1.internode.on.net with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 24 Apr 2009 12:15:02 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: main.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 118.208.25.197 (Mozilla/5.0 (Windows; U; Windows NT 6.0; en-US; rv:1.9.0.9) Gecko/2009040821 Firefox/3.0.9)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117427>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117429>
 
-Ulrich Windl venit, vidit, dixit 24.04.2009 13:24:
-> Hi,
-> 
-> I'm unsure it exists already, but "git status" doesn't display the tracked files. 
-> Would it make sense to have those reported with a "git status -v" (for verbose)?
-> (You know: I'm thinking about "cvs status"...)
+A Clearcase/Git bridge I wrote for my current job. It also pulls in history as
+best it can.
 
-"git status" is basically "git commit --dry-run", which is different
-from "cvs/svn/hg status".
+http://github.com/charleso/git-cc/tree/master
 
-"git diff --name-status" gives output similar to those.
-
-"git ls-files" allows to list all tracked files.
-
-Michael
+Charles
