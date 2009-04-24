@@ -1,87 +1,114 @@
-From: Pat Notz <patnotz@gmail.com>
-Subject: Re: [PATCH] Add a post-tag hook
-Date: Fri, 24 Apr 2009 10:41:47 -0600
-Message-ID: <1cd1989b0904240941o3d80bdbby19fb02093c887af@mail.gmail.com>
-References: <cd3664ac0904171515u1e2fce41ubd34f60ec43fcafd@mail.gmail.com>
-	 <20090417221944.GS23604@spearce.org>
-	 <cd3664ac0904171528p3ed55071p4e098f5181fb0b27@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
-To: Ammon Riley <ammon.riley@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Apr 24 18:44:30 2009
+From: David Abrahams <dave@boostpro.com>
+Subject: Re: [doc] User Manual Suggestion
+Date: Fri, 24 Apr 2009 13:28:35 -0400
+Message-ID: <91225E09-505A-4CD6-AC8E-FBB500A95984@boostpro.com>
+References: <m24owgqy0j.fsf@boostpro.com> <20090423175717.GA30198@fieldses.org> <b4087cc50904231137g67b4b84eu3b61bf174ba37d7f@mail.gmail.com> <20090423201636.GD3056@coredump.intra.peff.net> <b4087cc50904231345x2613308eh640e50f4a2680890@mail.gmail.com> <B873CD38-2CFE-4138-8A77-8957FA3DB81C@boostpro.com> <20090424141847.GD10761@coredump.intra.peff.net>
+Mime-Version: 1.0 (Apple Message framework v930.4)
+Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
+Content-Transfer-Encoding: 7bit
+Cc: Michael Witten <mfwitten@gmail.com>,
+	"J. Bruce Fields" <bfields@fieldses.org>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Apr 24 19:30:22 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LxOUo-0002CJ-Or
-	for gcvg-git-2@gmane.org; Fri, 24 Apr 2009 18:43:27 +0200
+	id 1LxPE6-0006Id-Oh
+	for gcvg-git-2@gmane.org; Fri, 24 Apr 2009 19:30:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757274AbZDXQlu convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 24 Apr 2009 12:41:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758755AbZDXQlt
-	(ORCPT <rfc822;git-outgoing>); Fri, 24 Apr 2009 12:41:49 -0400
-Received: from qw-out-2122.google.com ([74.125.92.27]:62860 "EHLO
-	qw-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758013AbZDXQls convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 24 Apr 2009 12:41:48 -0400
-Received: by qw-out-2122.google.com with SMTP id 5so994730qwd.37
-        for <git@vger.kernel.org>; Fri, 24 Apr 2009 09:41:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=vp/j/Wgt3y4zttrJklFhENPdBlNS+j5DtZvihWt0b1k=;
-        b=KH0EMsEsvo1z3Ufj92DAbJbjWkeSOsyRL75EThxS6NpL5s3mrRIFpVSQA6eHhBw4JO
-         FObVE68Xt+4yugyaa5rgNSLg6Rr4f2AoIdWuHSfjVxFzZj+NhVelUHyj7zYetuKSkCXO
-         ZJzUp9clNYMStu4uU76yNwuqhR3ocF2d9gLYw=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=Qv9hSpX2HcisG1ttumtp/blR7aY4fNGss+B6pdTpJ6m8+GHeCi7S8eE8lKDYla3joG
-         /XB7hy0ZmIJ9EiCApJ16sdIy/Exp10gEKLjjHdXqWkDV7hPQ0+6D6OYPfK1/PE0JwLvY
-         OCD33/1zFuYgRJUQ96gM8K3cm0lZY0XRrqGNw=
-Received: by 10.229.110.21 with SMTP id l21mr1556478qcp.26.1240591307200; Fri, 
-	24 Apr 2009 09:41:47 -0700 (PDT)
-In-Reply-To: <cd3664ac0904171528p3ed55071p4e098f5181fb0b27@mail.gmail.com>
+	id S1759345AbZDXR2i (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 24 Apr 2009 13:28:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757603AbZDXR2i
+	(ORCPT <rfc822;git-outgoing>); Fri, 24 Apr 2009 13:28:38 -0400
+Received: from boost-consulting.com ([206.71.190.141]:52418 "EHLO
+	boost-consulting.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756754AbZDXR2h (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 24 Apr 2009 13:28:37 -0400
+Received: from [192.168.188.150] (207-172-223-249.c3-0.smr-ubr3.sbo-smr.ma.static.cable.rcn.com [207.172.223.249])
+	(Authenticated sender: dave)
+	by boost-consulting.com (Postfix) with ESMTPSA id E618B1CC23;
+	Fri, 24 Apr 2009 10:26:05 -0700 (PDT)
+In-Reply-To: <20090424141847.GD10761@coredump.intra.peff.net>
+X-Mailer: Apple Mail (2.930.4)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117470>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117471>
 
-On Fri, Apr 17, 2009 at 4:28 PM, Ammon Riley <ammon.riley@gmail.com> wr=
-ote:
->
-> On Fri, Apr 17, 2009 at 3:19 PM, Shawn O. Pearce <spearce@spearce.org=
-> wrote:
-> > Ammon Riley <ammon.riley@gmail.com> wrote:
-> >> Add a post-tag hook, to allow notifications when a tag is created.
-> >> The hook is given the name of the newly created tag.
-> >
-> > Why would you want to send notifications upon creating a tag in
-> > your local repository?
-> >
-> > Usually a tag is only interesting when it has been sent to a shared
-> > public repository, which is by git push, and thus is caught by a
-> > git receive-pack hook like post-update or post-receive.
->
-> On the particular project I'm working on, we're not really using git
-> in the most distributed fashion -- it's completely internal to the
-> company. In our case, the tags are being created directly on
-> the shared repository, rather than on a local repository and being
-> pushed.
 
-Today, this same situation came up in my organization.  It seem like a
-natural partner of the post-commit hook.
+On Apr 24, 2009, at 10:18 AM, Jeff King wrote:
 
+> On Thu, Apr 23, 2009 at 05:31:13PM -0400, David Abrahams wrote:
 >
-> Cheers,
-> Ammon
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at =A0http://vger.kernel.org/majordomo-info.html
+>>> I think the main problem, then, is that the tools have a UI that is
+>>> somewhere in the middle.
+>>
+>> Well, "the UI" (how many do we really have for Git?) is spread  
+>> across the
+>> spectrum.  The git command-line alone lets you do incredibly low- 
+>> level
+>> things that "nobody should ever do" and some really high-level  
+>> things that
+>> are everyone's bread-and-butter.  There's no obvious distinction.
+>
+> I think this is a bit better than it used to be. Plumbing commands are
+> mostly hidden outside of the user's PATH.
+
+Huh?
+
+git hash-object
+git cat-file -t ...
+git ls-tree
+git rev-parse
+git write-tree
+git commit-tree
+
+   ...
+
+These are just some of the ones I learned about by reading John  
+Wiegley's "Git From the Bottom Up."
+
+Maybe I'm wrong about rev-parse, but for the most part, having all  
+these low-level commands available through the same executable that's  
+used for "git add," "git merge," "git commit," et. al. makes the whole  
+shebang hard to approach.  It would be better for users if the low- 
+level stuff was accessed some other way.
+
+> A lot of that is historical baggage. The original git was not a VCS  
+> but
+> rather a _toolkit_ for building a VCS. So the natural place for  
+> talking
+> about parsing revisions was rev-parse, because that was the only way  
+> to
+> access the revision parsing code. :)
+
+I understand that, but it doesn't change the present reality.
+
+> I think a lot of documentation like the "specifying revisions" section
+> of rev-parse might benefit from being split into its own "concept"
+> section, like gitrevisions(7).
+
+Yes, please.
+
+
+[excuse me, but what the #@&*! is "porcelainish" supposed to mean? (http://www.kernel.org/pub/software/scm/git/docs/git-rev-parse.html 
+)]
+
+> And commands which allow specifying
+> revisions (at least the major ones, like log, diff, etc) should
+> reference it (but not include it directly, as we do with some
+> documentation snippets -- the point is to make the user aware that  
+> they
+> are learning a separate concept that can be applied in multiple  
+> places,
+> and to give that concept a name).
+
+
+Very nice.
+
+--
+David Abrahams
+BoostPro Computing
+http://boostpro.com
