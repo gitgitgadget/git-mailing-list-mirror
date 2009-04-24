@@ -1,56 +1,67 @@
-From: "Ulrich Windl" <ulrich.windl@rz.uni-regensburg.de>
-Subject: On "git status"
-Date: Fri, 24 Apr 2009 13:24:18 +0200
-Organization: Universitaetsklinikum Regensburg
-Message-ID: <49F1BD85.16747.5FBF6DC@Ulrich.Windl.rkdvmks1.ngate.uni-regensburg.de>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: Manual pages (from archive): no hyphenation
+Date: Fri, 24 Apr 2009 13:36:42 +0200
+Message-ID: <49F1A44A.1080008@drmicha.warpmail.net>
+References: <49F1BD06.32347.5FA078F@Ulrich.Windl.rkdvmks1.ngate.uni-regensburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Apr 24 13:26:18 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Ulrich Windl <ulrich.windl@rz.uni-regensburg.de>
+X-From: git-owner@vger.kernel.org Fri Apr 24 13:38:30 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LxJXr-0001HT-H2
-	for gcvg-git-2@gmane.org; Fri, 24 Apr 2009 13:26:15 +0200
+	id 1LxJjf-0005Cx-1w
+	for gcvg-git-2@gmane.org; Fri, 24 Apr 2009 13:38:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752215AbZDXLYn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 24 Apr 2009 07:24:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751419AbZDXLYm
-	(ORCPT <rfc822;git-outgoing>); Fri, 24 Apr 2009 07:24:42 -0400
-Received: from rrzmta1.rz.uni-regensburg.de ([194.94.155.51]:20682 "EHLO
-	rrzmta1.rz.uni-regensburg.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751230AbZDXLYl (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 24 Apr 2009 07:24:41 -0400
-Received: from rrzmta1.rz.uni-regensburg.de (localhost [127.0.0.1])
-	by localhost (Postfix) with SMTP id DEF6CABDAC
-	for <git@vger.kernel.org>; Fri, 24 Apr 2009 13:24:43 +0200 (CEST)
-Received: from kgate1.dvm.klinik.uni-regensburg.de (kgate1.klinik.uni-regensburg.de [132.199.176.18])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client did not present a certificate)
-	by rrzmta1.rz.uni-regensburg.de (Postfix) with ESMTP id D677BABD84
-	for <git@vger.kernel.org>; Fri, 24 Apr 2009 13:24:43 +0200 (CEST)
-Received: from rkdvmks1.ngate.uni-regensburg.de (rkdvmks1.dvm.klinik.uni-regensburg.de [132.199.176.1])
-	by kgate1.dvm.klinik.uni-regensburg.de (8.13.6/8.13.6/20070831MT-1) with ESMTP id n3OBOXUf005638
-	for <git@vger.kernel.org>; Fri, 24 Apr 2009 13:24:33 +0200
-Received: from RKDVMKS1/SpoolDir by rkdvmks1.ngate.uni-regensburg.de (Mercury 1.48);
-    24 Apr 09 13:24:30 +0100
-Received: from SpoolDir by RKDVMKS1 (Mercury 1.48); 24 Apr 09 13:24:18 +0100
-X-mailer: Pegasus Mail for Windows (4.41)
-Content-description: Mail message body
-X-Content-Conformance: HerringScan-0.29/Sophos-P=4.37.0+V=4.37+U=2.07.219+R=05 January 2009+T=590375@20090424.112108Z
+	id S1751917AbZDXLgx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 24 Apr 2009 07:36:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751813AbZDXLgx
+	(ORCPT <rfc822;git-outgoing>); Fri, 24 Apr 2009 07:36:53 -0400
+Received: from out2.smtp.messagingengine.com ([66.111.4.26]:49238 "EHLO
+	out2.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751750AbZDXLgx (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 24 Apr 2009 07:36:53 -0400
+Received: from compute1.internal (compute1.internal [10.202.2.41])
+	by out1.messagingengine.com (Postfix) with ESMTP id 45CBB31F419;
+	Fri, 24 Apr 2009 07:36:52 -0400 (EDT)
+Received: from heartbeat2.messagingengine.com ([10.202.2.161])
+  by compute1.internal (MEProxy); Fri, 24 Apr 2009 07:36:52 -0400
+X-Sasl-enc: oTmCXg9/GjvLrBaIqv3F8LZprXOlNIkOrFgw70Ztm6tE 1240573011
+Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.12])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 35A3D4DF5C;
+	Fri, 24 Apr 2009 07:36:51 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1b4pre) Gecko/20090420 Lightning/1.0pre Shredder/3.0b3pre
+In-Reply-To: <49F1BD06.32347.5FA078F@Ulrich.Windl.rkdvmks1.ngate.uni-regensburg.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117425>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117426>
 
-Hi,
+Ulrich Windl venit, vidit, dixit 24.04.2009 13:22:
+> Hello!
+> 
+> When using the manual pages that are shipped as archive, I noticed that some of 
+> them look a bit ugly, mostly because of the lack of hyphenation. If that wasn't 
+> intentional, could the proper commandy be added to the manual pages?
 
-I'm unsure it exists already, but "git status" doesn't display the tracked files. 
-Would it make sense to have those reported with a "git status -v" (for verbose)?
-(You know: I'm thinking about "cvs status"...)
+Do you mean line wrap by any chance ("Zeilenumbruch")? None of the
+manual pages use hyphenation ("Silbentrennung").
 
-Regards,
-Ulrich
+> 
+> Also I've noticed that a signle quote is displayed (on my UTF-8 system) as "Z with 
+> an inverted roof" (i.e. a 'Z' with a vertically mirrored circumflex on top). That 
+> slooks somewhat strange.
+
+Which "archive" do you use? Where do you see the quote (if your system
+displays a cech z)?
+
+> 
+> Furthermose  In oticed that there is no manual page for git-status in the archive.
+
+Which...
+
+Michael
