@@ -1,114 +1,139 @@
-From: David Abrahams <dave@boostpro.com>
-Subject: Re: [doc] User Manual Suggestion
-Date: Fri, 24 Apr 2009 13:28:35 -0400
-Message-ID: <91225E09-505A-4CD6-AC8E-FBB500A95984@boostpro.com>
-References: <m24owgqy0j.fsf@boostpro.com> <20090423175717.GA30198@fieldses.org> <b4087cc50904231137g67b4b84eu3b61bf174ba37d7f@mail.gmail.com> <20090423201636.GD3056@coredump.intra.peff.net> <b4087cc50904231345x2613308eh640e50f4a2680890@mail.gmail.com> <B873CD38-2CFE-4138-8A77-8957FA3DB81C@boostpro.com> <20090424141847.GD10761@coredump.intra.peff.net>
-Mime-Version: 1.0 (Apple Message framework v930.4)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
+From: "Matthias Andree" <matthias.andree@gmx.de>
+Subject: Re: Git-SVN on Cygwin: svn+ssh good, https awkward
+Date: Fri, 24 Apr 2009 19:31:25 +0200
+Message-ID: <op.uswiynhl1e62zd@balu.cs.uni-paderborn.de>
+References: <op.usulh7a71e62zd@balu.cs.uni-paderborn.de>
+ <20090423190308.GA10437@dcvr.yhbt.net>
+Mime-Version: 1.0
+Content-Type: text/plain; format=flowed; delsp=yes; charset=iso-8859-15
 Content-Transfer-Encoding: 7bit
-Cc: Michael Witten <mfwitten@gmail.com>,
-	"J. Bruce Fields" <bfields@fieldses.org>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Apr 24 19:30:22 2009
+Cc: "Marcus Griep" <marcus@griep.us>, git@vger.kernel.org
+To: "Eric Wong" <normalperson@yhbt.net>
+X-From: git-owner@vger.kernel.org Fri Apr 24 19:33:06 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LxPE6-0006Id-Oh
-	for gcvg-git-2@gmane.org; Fri, 24 Apr 2009 19:30:15 +0200
+	id 1LxPGq-0007P8-TD
+	for gcvg-git-2@gmane.org; Fri, 24 Apr 2009 19:33:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759345AbZDXR2i (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 24 Apr 2009 13:28:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757603AbZDXR2i
-	(ORCPT <rfc822;git-outgoing>); Fri, 24 Apr 2009 13:28:38 -0400
-Received: from boost-consulting.com ([206.71.190.141]:52418 "EHLO
-	boost-consulting.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756754AbZDXR2h (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 24 Apr 2009 13:28:37 -0400
-Received: from [192.168.188.150] (207-172-223-249.c3-0.smr-ubr3.sbo-smr.ma.static.cable.rcn.com [207.172.223.249])
-	(Authenticated sender: dave)
-	by boost-consulting.com (Postfix) with ESMTPSA id E618B1CC23;
-	Fri, 24 Apr 2009 10:26:05 -0700 (PDT)
-In-Reply-To: <20090424141847.GD10761@coredump.intra.peff.net>
-X-Mailer: Apple Mail (2.930.4)
+	id S1757267AbZDXRbb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 24 Apr 2009 13:31:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755993AbZDXRbb
+	(ORCPT <rfc822;git-outgoing>); Fri, 24 Apr 2009 13:31:31 -0400
+Received: from mail.gmx.net ([213.165.64.20]:47129 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752354AbZDXRba (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 24 Apr 2009 13:31:30 -0400
+Received: (qmail invoked by alias); 24 Apr 2009 17:31:27 -0000
+Received: from balu.cs.uni-paderborn.de (EHLO balu.cs.uni-paderborn.de) [131.234.21.37]
+  by mail.gmx.net (mp004) with SMTP; 24 Apr 2009 19:31:27 +0200
+X-Authenticated: #428038
+X-Provags-ID: V01U2FsdGVkX18AxkREWp0A8lI58WLlrZmcFm1f+WFs8S6uoBbZ0W
+	lwqFMvUyNvQzUF
+In-Reply-To: <20090423190308.GA10437@dcvr.yhbt.net>
+User-Agent: Opera Mail/9.64 (Win32)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.44
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117471>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117472>
 
+Am 23.04.2009, 21:03 Uhr, schrieb Eric Wong <normalperson@yhbt.net>:
 
-On Apr 24, 2009, at 10:18 AM, Jeff King wrote:
-
-> On Thu, Apr 23, 2009 at 05:31:13PM -0400, David Abrahams wrote:
->
->>> I think the main problem, then, is that the tools have a UI that is
->>> somewhere in the middle.
+> Matthias Andree <matthias.andree@gmx.de> wrote:
+>> Hi Eric,
 >>
->> Well, "the UI" (how many do we really have for Git?) is spread  
->> across the
->> spectrum.  The git command-line alone lets you do incredibly low- 
->> level
->> things that "nobody should ever do" and some really high-level  
->> things that
->> are everyone's bread-and-butter.  There's no obvious distinction.
+>> === Short story ===
+>>
+>> git-svn on Cygwin works well with svn+ssh://, but needs some fixes  
+>> around
+>> tempfile and/or subprocess handling for https:// - please help.
 >
-> I think this is a bit better than it used to be. Plumbing commands are
-> mostly hidden outside of the user's PATH.
+> Hi Matthias,
+>
+> Marcus Griep did a lot of work for more efficiently handling of
+> tempfiles in Git.pm a few months ago, so maybe he has more insight into
+> how things work...
+>
+> git-svn used to use IO::File->new_tmpfile() which was much simpler and
+> probably less prone to portability problems, but cycled through inodes
+> too quickly for Marcus (and probably some other people).
 
-Huh?
+I debugged this a bit further, and the damage (i. e. removal of the  
+tempfile) apparently happens
+in $pool->clear; in line 4355. I single-stepped it, and the  
+apr_pool_clear(...) is the culprit, it unlinks() the tempfile, making this  
+location unusable.
 
-git hash-object
-git cat-file -t ...
-git ls-tree
-git rev-parse
-git write-tree
-git commit-tree
+The temp file is generated when the Reporter object is created through  
+$self->do_update in line 4336.
 
-   ...
+It remains unclear to me who generates the non-unique filename (it's  
+...\Temp\tempfile.tmp for me), I've not found the code that generates the  
+file names.
 
-These are just some of the ones I learned about by reading John  
-Wiegley's "Git From the Bottom Up."
+Questions:
 
-Maybe I'm wrong about rev-parse, but for the most part, having all  
-these low-level commands available through the same executable that's  
-used for "git add," "git merge," "git commit," et. al. makes the whole  
-shebang hard to approach.  It would be better for users if the low- 
-level stuff was accessed some other way.
+- How can I either make sure that the temporary file name for the reporter  
+gets either a unique name (near line 4336, through SVN::Ra...)
 
-> A lot of that is historical baggage. The original git was not a VCS  
-> but
-> rather a _toolkit_ for building a VCS. So the natural place for  
-> talking
-> about parsing revisions was rev-parse, because that was the only way  
-> to
-> access the revision parsing code. :)
+- or is that the temp file truncated, rather than deleted, near line 4355  
+(through SVN::Pool::clear)?
 
-I understand that, but it doesn't change the present reality.
+- Is there any way to influence how the SVN::Ra::Reporter obtains  
+temporary files?
+I seem to be unable to trace this down to the actual functions, but then  
+again, my perlboot is rather holey...
 
-> I think a lot of documentation like the "specifying revisions" section
-> of rev-parse might benefit from being split into its own "concept"
-> section, like gitrevisions(7).
-
-Yes, please.
-
-
-[excuse me, but what the #@&*! is "porcelainish" supposed to mean? (http://www.kernel.org/pub/software/scm/git/docs/git-rev-parse.html 
-)]
-
-> And commands which allow specifying
-> revisions (at least the major ones, like log, diff, etc) should
-> reference it (but not include it directly, as we do with some
-> documentation snippets -- the point is to make the user aware that  
-> they
-> are learning a separate concept that can be applied in multiple  
-> places,
-> and to give that concept a name).
+Any help?
 
 
-Very nice.
+   4132  package Git::SVN::Ra;
+   4133  use vars qw/@ISA $config_dir $_log_window_size/;
+   4134  use strict;
+   4135  use warnings;
+   4136  my ($ra_invalid, $can_do_switch, %ignored_err, $RA);
+   4137
+   ....
+   4324  sub gs_do_update {
+   4325          my ($self, $rev_a, $rev_b, $gs, $editor) = @_;
+   4326          my $new = ($rev_a == $rev_b);
+   4327          my $path = $gs->{path};
+   4328
+   4329          if ($new && -e $gs->{index}) {
+   4330                  unlink $gs->{index} or die
+   4331                    "Couldn't unlink index: $gs->{index}: $!\n";
+   4332          }
+   4333          my $pool = SVN::Pool->new;
+   4334          $editor->set_path_strip($path);
+   4335          my (@pc) = split m#/#, $path;
+: 4336          my $reporter = $self->do_update($rev_b, (@pc ? shift @pc :  
+''),
+   4337                                          1, $editor, $pool);
+   4338          my @lock = $SVN::Core::VERSION ge '1.2.0' ? (undef) : ();
+   4339
+   4340          # Since we can't rely on svn_ra_reparent being available,  
+we'll
+   4341          # just have to do some magic with set_path to make it so
+   4342          # we only want a partial path.
+   4343          my $sp = '';
+   4344          my $final = join('/', @pc);
+   4345          while (@pc) {
+   4346                  $reporter->set_path($sp, $rev_b, 0, @lock, $pool);
+   4347                  $sp .= '/' if length $sp;
+   4348                  $sp .= shift @pc;
+   4349          }
+   4350          die "BUG: '$sp' != '$final'\n" if ($sp ne $final);
+   4351
+   4352          $reporter->set_path($sp, $rev_a, $new, @lock, $pool);
+   4353
+   4354          $reporter->finish_report($pool);
+: 4355          $pool->clear;
+   4356          $editor->{git_commit_ok};
+   4357  }
 
---
-David Abrahams
-BoostPro Computing
-http://boostpro.com
+-- 
+Matthias Andree
