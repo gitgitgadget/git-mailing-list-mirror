@@ -1,70 +1,74 @@
-From: Michael Witten <mfwitten@gmail.com>
-Subject: Re: [doc] User Manual Suggestion
-Date: Thu, 23 Apr 2009 21:34:56 -0500
-Message-ID: <b4087cc50904231934h17a090d4ie2a091843457eced@mail.gmail.com>
-References: <m24owgqy0j.fsf@boostpro.com> <20090423175717.GA30198@fieldses.org>
-	 <b4087cc50904231137g67b4b84eu3b61bf174ba37d7f@mail.gmail.com>
-	 <20090424022900.GB6321@fieldses.org>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: Is there a way to lock branches in GIT?
+Date: Thu, 23 Apr 2009 23:23:22 -0400 (EDT)
+Message-ID: <alpine.LNX.2.00.0904232300360.2147@iabervon.org>
+References: <23204641.post@talk.nabble.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: David Abrahams <dave@boostpro.com>, git@vger.kernel.org
-To: "J. Bruce Fields" <bfields@fieldses.org>
-X-From: git-owner@vger.kernel.org Fri Apr 24 04:37:16 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: ask4thunder <ask4thunder@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Apr 24 05:25:42 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LxBHw-0000WK-8i
-	for gcvg-git-2@gmane.org; Fri, 24 Apr 2009 04:37:16 +0200
+	id 1LxC2h-0001Mh-Rt
+	for gcvg-git-2@gmane.org; Fri, 24 Apr 2009 05:25:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755054AbZDXCe6 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 23 Apr 2009 22:34:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754675AbZDXCe5
-	(ORCPT <rfc822;git-outgoing>); Thu, 23 Apr 2009 22:34:57 -0400
-Received: from qw-out-2122.google.com ([74.125.92.27]:47046 "EHLO
-	qw-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752915AbZDXCe5 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 23 Apr 2009 22:34:57 -0400
-Received: by qw-out-2122.google.com with SMTP id 5so743008qwd.37
-        for <git@vger.kernel.org>; Thu, 23 Apr 2009 19:34:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=3lkgyh4fcBkb8zAZ9ko3rGTc4WRATMd/j6pIRyiPG84=;
-        b=u080ASCIWA/RAFPWVGRYOxq1mAthhicyAnuMJNgVHcVI7SvfMWzlKWJp9s1Lurp7bt
-         +SNUvB5h56Xso1Dlkaki4v8ys8lXDLO8DaL8BS+YaEb2tC67EZ4g1AqMTmt/js1vcemc
-         Fj+NjA1wnuLhuy/E/TPyYO7iBuhvdJQ96INfQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=fvmzYZ5ntrY6G4Mn87fsoFSRpqM+5svWrdZfhzQ0gbJhCkE0X2hQoSkiuCU1RDskgC
-         j66I4j6XlP+E0rYbgd82EEEEZ98iTigBYau9AWNJHKM7p8QwpKEQi6JvAvNnrzLw1PZQ
-         J8RolAF+tyHb9qcdBZj5PEdD6wvoC7/mseUcg=
-Received: by 10.224.11.136 with SMTP id t8mr2261914qat.73.1240540496253; Thu, 
-	23 Apr 2009 19:34:56 -0700 (PDT)
-In-Reply-To: <20090424022900.GB6321@fieldses.org>
+	id S1752492AbZDXDXY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 23 Apr 2009 23:23:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751722AbZDXDXY
+	(ORCPT <rfc822;git-outgoing>); Thu, 23 Apr 2009 23:23:24 -0400
+Received: from iabervon.org ([66.92.72.58]:39435 "EHLO iabervon.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750832AbZDXDXX (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 23 Apr 2009 23:23:23 -0400
+Received: (qmail 25227 invoked by uid 1000); 24 Apr 2009 03:23:22 -0000
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 24 Apr 2009 03:23:22 -0000
+In-Reply-To: <23204641.post@talk.nabble.com>
+User-Agent: Alpine 2.00 (LNX 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117403>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117404>
 
-On Thu, Apr 23, 2009 at 21:29, J. Bruce Fields <bfields@fieldses.org> w=
-rote:
-> OK, but let's not over-generalize: the person that just wants to figu=
-re
-> out whether the driver for their network card was fixed in today's
-> network devel tree shouldn't have to sit through a discussion of the
-> object database. =A0And even among readers that are in it for the lon=
-g
-> haul, I think many people will react better to something that gives t=
-hem
-> at least a little concrete how-to information up front.
+On Thu, 23 Apr 2009, ask4thunder wrote:
 
-A quick shell synopsis is probably what you want then. Beyond that,
-casual users should be ignored; quick instructions are usually
-provided by each project anyway.
+> 1. If there are 2 user are working and having their own clone and branches
+> (not master, other branches). and there is another parent clone with a
+> branch (not master). Can these 2 users merge to the parent clone branch at
+> the same time? or only one user will be able to merge first and then the
+> other. in other words, will the target branch be checkedout to that user
+> alone and other user cant checkout that branch or use the checked out
+> branch. 
+
+You can't merge into a remote repository; you can only move the remote 
+repository forward. That is, when you "push" to the remote repository, you 
+replace what it currently there with a commit you supply that's based on 
+the commit that's there.
+
+Two people can't both push to the same remote repository at the same time, 
+because each of them will be sending something that the other hasn't based 
+their commit on. Whoever's second will be refused, and will have to fetch 
+the other commit and make a merge commit, which is based on both the 
+commits. Git makes sure, in updating the remote repository, to do the 
+necessary locking to have one side or the other lose the race cleanly.
+
+> 2. Is there a way to lock branches, so that if a user want to merge his
+> changes to a parent branch of another clone, it can be unlocked for him
+> alone? Hope you can help me on this. 
+
+Not with git program support. Of course, you can use Unix permissions to 
+get exclusive write access to the branch and prevent another else from 
+updating it. And, of course, you can have a branch that's always your own 
+(Linux kernel development works primarily by every developer having one or 
+many private branches, and it's rare for multiple people to have write 
+access to the same branch). But there turns out not to be much benefit to 
+branches that people can sometimes but not always write to, in a system 
+where everybody has local branches they can always write to regardless of 
+what other people do.
+
+	-Daniel
+*This .sig left intentionally blank*
