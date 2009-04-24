@@ -1,78 +1,67 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: [PATCH] Document --no-signoff option of git commit
-Date: Fri, 24 Apr 2009 10:31:00 +0200
-Message-ID: <1240561860-4762-1-git-send-email-git@drmicha.warpmail.net>
-Cc: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Apr 24 10:33:47 2009
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: [PATCH 1/3] rev-parse: add --sq-quote to shell quote arguments
+Date: Fri, 24 Apr 2009 10:33:09 +0200
+Message-ID: <49F17945.8000004@viscovery.net>
+References: <20090424062902.3705.44704.chriscool@tuxfamily.org> <7v8wlqii2y.fsf@gitster.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Christian Couder <chriscool@tuxfamily.org>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Apr 24 10:35:09 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LxGqa-00042I-8n
-	for gcvg-git-2@gmane.org; Fri, 24 Apr 2009 10:33:24 +0200
+	id 1LxGsG-0004Yn-U6
+	for gcvg-git-2@gmane.org; Fri, 24 Apr 2009 10:35:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752670AbZDXIbM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 24 Apr 2009 04:31:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752047AbZDXIbL
-	(ORCPT <rfc822;git-outgoing>); Fri, 24 Apr 2009 04:31:11 -0400
-Received: from out2.smtp.messagingengine.com ([66.111.4.26]:52986 "EHLO
-	out2.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751962AbZDXIbJ (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 24 Apr 2009 04:31:09 -0400
-Received: from compute1.internal (compute1.internal [10.202.2.41])
-	by out1.messagingengine.com (Postfix) with ESMTP id 549A0321888;
-	Fri, 24 Apr 2009 04:31:08 -0400 (EDT)
-Received: from heartbeat1.messagingengine.com ([10.202.2.160])
-  by compute1.internal (MEProxy); Fri, 24 Apr 2009 04:31:08 -0400
-X-Sasl-enc: D1Z+xsw77D01mWXFoXjxXV7xncDNn3wnfz3cbtYgIXBB 1240561867
-Received: from localhost (whitehead.math.tu-clausthal.de [139.174.44.12])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id B362A39076;
-	Fri, 24 Apr 2009 04:31:07 -0400 (EDT)
-X-Mailer: git-send-email 1.6.3.rc1.51.gea0b7
+	id S1759146AbZDXIdY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 24 Apr 2009 04:33:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758946AbZDXIdY
+	(ORCPT <rfc822;git-outgoing>); Fri, 24 Apr 2009 04:33:24 -0400
+Received: from lilzmailso02.liwest.at ([212.33.55.13]:37489 "EHLO
+	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758792AbZDXIdW (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 24 Apr 2009 04:33:22 -0400
+Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
+	by lilzmailso02.liwest.at with esmtpa (Exim 4.69)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1LxGqL-0002Hx-W9; Fri, 24 Apr 2009 10:33:17 +0200
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.96])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id B727C6C4; Fri, 24 Apr 2009 10:33:09 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.21 (Windows/20090302)
+In-Reply-To: <7v8wlqii2y.fsf@gitster.siamese.dyndns.org>
+X-Spam-Score: -1.4 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117421>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117422>
 
---no-signoff can be used to override --signoff and -s. This is useful
-for overriding options set in git aliases.
+Junio C Hamano schrieb:
+> Not very readable.  A better example might be to demonstrate something
+> like this:
+> 
+> 	$ cat >your-git-script.sh <<\EOF
+> 	#!/bin/sh
+> 	# quote user-supplied arguments
+> 	args=$(git rev-parse --sq-quote "$@")
+>         # and use it inside a handcrafted command line
+>         command="git frotz -n24 $args"
+>         eval "$command"
+> 	EOF
+> 
+> 	$ sh your-git-script.sh "a b'c"
+> 
+> i.e, put stress on how to use it, not on how it works internally.
 
-Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
----
-Patch is against 09cff06 (Documentation: Clarify '--signoff' for git-commit, 2008-10-19).
+Hmm, that makes me wonder why we special-case shell-quoting and implement
+it in an executable. Why don't we have perl-quoting, C-quoting,
+PHP-quoting, $language-of-your-choice quoting, etc, too?
 
-It is "obvious" that one can override boolean options by prepending
-"no-" for all commands which use the appropriate option parser. But I
-don't think it's obvious to most users.
+I think we should simply move sq() from git-am to git-sh-setup and use
+that in git-bisect.
 
-On the other hand, having an alias like ci="commit -s" is useful and
-appropriate depending on a project's policy and a user's discipline. But
-still one may want to do a few commits without s-o-b. E.g., merge
-commits (without conflicts) don't get s-o-b lines, but amending them
-would add a s-o-b line with teh above alias.
-
-Maybe there is a better place to discuss general option parsing? But
-it's not the same for all commands yet, I think.
-
-Michael
-
- Documentation/git-commit.txt |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
-
-diff --git a/Documentation/git-commit.txt b/Documentation/git-commit.txt
-index b5d81be..ef20ba6 100644
---- a/Documentation/git-commit.txt
-+++ b/Documentation/git-commit.txt
-@@ -96,7 +96,7 @@ OPTIONS
- -s::
- --signoff::
- 	Add Signed-off-by line by the committer at the end of the commit
--	log message.
-+	log message. This can be overriden with `--no-signoff`.
- 
- -n::
- --no-verify::
--- 
-1.6.3.rc1.51.gea0b7
+-- Hannes
