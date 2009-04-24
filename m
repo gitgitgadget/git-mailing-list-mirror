@@ -1,67 +1,132 @@
-From: Michael Witten <mfwitten@gmail.com>
-Subject: Re: git send-email: How to modify subject prefix?
-Date: Fri, 24 Apr 2009 10:34:55 -0500
-Message-ID: <b4087cc50904240834q34200ee1qd9081b8c4480c83a@mail.gmail.com>
-References: <85647ef50904240818s41fffc2eh798083a24ab53750@mail.gmail.com>
-	 <b4087cc50904240820r567020d7gaa7cecaa0f3b78fa@mail.gmail.com>
-	 <85647ef50904240828i76cf5f0en14a9fd2dc496a89d@mail.gmail.com>
-	 <b4087cc50904240832u6d0a17b2gaad406a0176da883@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Constantine Plotnikov <constantine.plotnikov@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Apr 24 17:37:02 2009
+From: Constantine Plotnikov <constantine.plotnikov@gmail.com>
+Subject: [JGIT PATCH] Added support for creating bare repositories
+Date: Fri, 24 Apr 2009 19:36:57 +0400
+Message-ID: <1240587417-3732-1-git-send-email-constantine.plotnikov@gmail.com>
+Cc: Constantine Plotnikov <constantine.plotnikov@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Apr 24 17:45:25 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LxNSJ-0006gB-8a
-	for gcvg-git-2@gmane.org; Fri, 24 Apr 2009 17:36:47 +0200
+	id 1LxNaX-0001kG-8z
+	for gcvg-git-2@gmane.org; Fri, 24 Apr 2009 17:45:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756428AbZDXPfA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 24 Apr 2009 11:35:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755977AbZDXPe6
-	(ORCPT <rfc822;git-outgoing>); Fri, 24 Apr 2009 11:34:58 -0400
-Received: from mail-qy0-f118.google.com ([209.85.221.118]:58895 "EHLO
-	mail-qy0-f118.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755941AbZDXPe6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 24 Apr 2009 11:34:58 -0400
-Received: by qyk16 with SMTP id 16so2325398qyk.33
-        for <git@vger.kernel.org>; Fri, 24 Apr 2009 08:34:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=VgVfEP76vJwljSArKXVx8lD1PptGioTzuE3zabelLks=;
-        b=cNoy7ggukuEXNU/otVXYsQK/1vi1AL990OAb8pj4Sfzo5waqxH3yZwbYsfnkq6UVXP
-         bHzgypEox5eM2Y0OV4oFhvsFFaNEMQadm/zgLR6NvObZTBtb2p3E6UYWVZ/dkytyfZ+3
-         APPBy2BxH/XsAmt5SvOEbNQBiXI0RgwOZZ6zY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=TTdBC9TI1vVQ1tLMwbpeV7pUlwyqEHBqWVZFp6iq6SFhk0clH/Bz13jbNuuF+Rtvw/
-         UDFLI/2clUifsZ3rJQcXudpbqhmwcuxVD0+U/z+dsqCiZWXO6jqpXp9k/vx4Xqr03RwL
-         f+ewD37D3sGvAtEBPtfnffuRXGkfPqWbz/9Sc=
-Received: by 10.224.32.146 with SMTP id c18mr2954217qad.58.1240587295580; Fri, 
-	24 Apr 2009 08:34:55 -0700 (PDT)
-In-Reply-To: <b4087cc50904240832u6d0a17b2gaad406a0176da883@mail.gmail.com>
+	id S1751188AbZDXPnn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 24 Apr 2009 11:43:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751099AbZDXPnn
+	(ORCPT <rfc822;git-outgoing>); Fri, 24 Apr 2009 11:43:43 -0400
+Received: from mail.intellij.net ([213.182.181.98]:51219 "EHLO
+	mail.intellij.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750890AbZDXPnm (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 24 Apr 2009 11:43:42 -0400
+X-Greylist: delayed 401 seconds by postgrey-1.27 at vger.kernel.org; Fri, 24 Apr 2009 11:43:41 EDT
+Received: (qmail 8533 invoked by uid 89); 24 Apr 2009 15:36:58 -0000
+Received: by simscan 1.1.0 ppid: 8487, pid: 8525, t: 0.0100s
+         scanners: regex: 1.1.0
+Received: from unknown (HELO localhost.localdomain) (Constantine.Plotnikov@jetbrains.com@172.26.240.76)
+  by mail.intellij.net with ESMTPA; 24 Apr 2009 15:36:58 -0000
+X-Mailer: git-send-email 1.6.1.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117460>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117461>
 
-On Fri, Apr 24, 2009 at 10:32, Michael Witten <mfwitten@gmail.com> wrote:
-> The option --subject-prefix is documented in format-patch's man page
-> (it is an option of format-patch, after all :-D).
->
-> However, using '--' with send-email to pass along arguments to a call
-> to format-patch is not documented in send-email's man page, and it
-> should be.
+Now it is possible to create bare repositories.
+The difference from normal repository creation is
+that directory where repository is created might
+exists and that core.bare property is set to true.
 
-I should add that I don't really like it though; it seems that it
-makes the relationship to format-patch a little to close and implicit.
-I would think that --format-patch-args would be better.
+Signed-off-by: Constantine Plotnikov <constantine.plotnikov@gmail.com>
+---
+ .../src/org/spearce/jgit/pgm/Init.java             |    8 ++++-
+ .../src/org/spearce/jgit/lib/Repository.java       |   28 ++++++++++++++++---
+ 2 files changed, 29 insertions(+), 7 deletions(-)
+
+diff --git a/org.spearce.jgit.pgm/src/org/spearce/jgit/pgm/Init.java b/org.spearce.jgit.pgm/src/org/spearce/jgit/pgm/Init.java
+index 197864d..3ab1599 100644
+--- a/org.spearce.jgit.pgm/src/org/spearce/jgit/pgm/Init.java
++++ b/org.spearce.jgit.pgm/src/org/spearce/jgit/pgm/Init.java
+@@ -39,10 +39,14 @@
+ 
+ import java.io.File;
+ 
++import org.kohsuke.args4j.Option;
+ import org.spearce.jgit.lib.Repository;
+ 
+ @Command(common = true, usage = "Create an empty git repository")
+ class Init extends TextBuiltin {
++	@Option(name = "--bare", usage = "Create a bare repository")
++	private boolean bare;
++
+ 	@Override
+ 	protected final boolean requiresRepository() {
+ 		return false;
+@@ -51,9 +55,9 @@ protected final boolean requiresRepository() {
+ 	@Override
+ 	protected void run() throws Exception {
+ 		if (gitdir == null)
+-			gitdir = new File(".git");
++			gitdir = new File(bare ? "." : ".git");
+ 		db = new Repository(gitdir);
+-		db.create();
++		db.create(bare);
+ 		out.println("Initialized empty Git repository in "
+ 				+ gitdir.getAbsolutePath());
+ 	}
+diff --git a/org.spearce.jgit/src/org/spearce/jgit/lib/Repository.java b/org.spearce.jgit/src/org/spearce/jgit/lib/Repository.java
+index cfd92b8..f2b0b3f 100644
+--- a/org.spearce.jgit/src/org/spearce/jgit/lib/Repository.java
++++ b/org.spearce.jgit/src/org/spearce/jgit/lib/Repository.java
+@@ -161,16 +161,30 @@ public Repository(final File d) throws IOException {
+ 
+ 	/**
+ 	 * Create a new Git repository initializing the necessary files and
+-	 * directories.
++	 * directories. Repository with working tree is created using this method.
+ 	 *
+ 	 * @throws IOException
++	 * @see #create(boolean)
+ 	 */
+ 	public synchronized void create() throws IOException {
+-		if (gitDir.exists()) {
++		create(false);
++	}
++
++	/**
++	 * Create a new Git repository initializing the necessary files and
++	 * directories.
++	 * 
++	 * @param bare
++	 *            if true, a bare repository is created.
++	 * 
++	 * @throws IOException
++	 *             in case of IO problem
++	 */
++	public void create(boolean bare) throws IOException {
++		if ((bare ? new File(gitDir, "config") : gitDir).exists()) {
+ 			throw new IllegalStateException("Repository already exists: "
+ 					+ gitDir);
+ 		}
+-
+ 		gitDir.mkdirs();
+ 		refs.create();
+ 
+@@ -183,8 +197,12 @@ public synchronized void create() throws IOException {
+ 		final String master = Constants.R_HEADS + Constants.MASTER;
+ 		refs.link(Constants.HEAD, master);
+ 
+-		getConfig().create();
+-		getConfig().save();
++		RepositoryConfig cfg = getConfig();
++		cfg.create();
++		if (bare) {
++			cfg.setString("core", null, "bare", "true");
++		}
++		cfg.save();
+ 	}
+ 
+ 	private synchronized File[] objectsDirs(){
+-- 
+1.6.1.2
