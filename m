@@ -1,112 +1,81 @@
-From: Michael Witten <mfwitten@gmail.com>
-Subject: Re: [doc] User Manual Suggestion
-Date: Fri, 24 Apr 2009 17:18:44 -0500
-Message-ID: <b4087cc50904241518w625a9890vecdd36bb937e76d5@mail.gmail.com>
-References: <m24owgqy0j.fsf@boostpro.com>
-	 <200904240051.46233.johan@herland.net>
-	 <b4087cc50904231730i1e8a005cpaf1921e23df11da6@mail.gmail.com>
-	 <200904242230.13239.johan@herland.net>
-	 <alpine.LNX.2.00.0904241655090.2147@iabervon.org>
-	 <20090424213848.GA14493@coredump.intra.peff.net>
+From: James Cloos <cloos@jhcloos.com>
+Subject: Re: [PATCH 1/1] Improve progress display in kB range.
+Date: Fri, 24 Apr 2009 18:20:45 -0400
+Message-ID: <m3tz4dhewa.fsf@lugabout.jhcloos.org>
+References: <cover.1240115957.git.cloos@jhcloos.com>
+	<d03620ac4d99f3280df31708032a072a4a6cd96e.1240115957.git.cloos@jhcloos.com>
+	<alpine.LFD.2.00.0904210054190.6741@xanadu.home>
+	<m3skk2szgv.fsf@lugabout.jhcloos.org>
+	<alpine.LFD.2.00.0904211319570.6741@xanadu.home>
+	<m3d4b5oj76.fsf@lugabout.jhcloos.org>
+	<m34owgoj08.fsf@lugabout.jhcloos.org>
+	<7vljps324a.fsf@gitster.siamese.dyndns.org>
+	<m3ab68mi3q.fsf@lugabout.jhcloos.org>
+	<m3zle5hkpa.fsf@lugabout.jhcloos.org>
+	<alpine.LFD.2.00.0904241722220.6741@xanadu.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Daniel Barkalow <barkalow@iabervon.org>,
-	Johan Herland <johan@herland.net>, git@vger.kernel.org,
-	David Abrahams <dave@boostpro.com>,
-	"J. Bruce Fields" <bfields@fieldses.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sat Apr 25 00:20:23 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Nicolas Pitre <nico@cam.org>
+X-From: git-owner@vger.kernel.org Sat Apr 25 00:25:55 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LxTkr-0002Cm-VC
-	for gcvg-git-2@gmane.org; Sat, 25 Apr 2009 00:20:22 +0200
+	id 1LxTqF-0003bY-8h
+	for gcvg-git-2@gmane.org; Sat, 25 Apr 2009 00:25:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757676AbZDXWSr convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 24 Apr 2009 18:18:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757829AbZDXWSq
-	(ORCPT <rfc822;git-outgoing>); Fri, 24 Apr 2009 18:18:46 -0400
-Received: from mail-qy0-f118.google.com ([209.85.221.118]:34017 "EHLO
-	mail-qy0-f118.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756952AbZDXWSq convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 24 Apr 2009 18:18:46 -0400
-Received: by qyk16 with SMTP id 16so2699308qyk.33
-        for <git@vger.kernel.org>; Fri, 24 Apr 2009 15:18:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=cSJA+AJP/uCARAIXWHAkD8auyGfr9m/DzoUBK2DgUiw=;
-        b=jtn9iCXlowcSKYGeOpEA6bf3R3m1MRu2CZaSutGIocdadhi3L7e4DzdpftFU5c9MTt
-         jqC6m/hLJ2F5q7iVdnocZQPzTbsTP74X6Ks/z+F6BJ9eJStI7TRoMfepP2jXqd70OgzC
-         pSU2nZ3btyatBx9pWB5KcPwNeL8UfmFNurSBo=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=lqGRg6t4J5aNQz2P8bSjPK/OzH3rMN6yN3FAA+hFOoNvO2OBZQZIhHqpA1k5yy/m6P
-         P9tpcdRBAYMEm52/68oo9u8CiDaeixoSxrSKAkJf7Fx5V4yr9xy5Cy8A9utBNxeslUQP
-         SB1+PDiYLKACA/7piqqMceh0cNXiGvdsutEVU=
-Received: by 10.224.6.136 with SMTP id 8mr3572490qaz.234.1240611524912; Fri, 
-	24 Apr 2009 15:18:44 -0700 (PDT)
-In-Reply-To: <20090424213848.GA14493@coredump.intra.peff.net>
+	id S1753837AbZDXWYX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 24 Apr 2009 18:24:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753662AbZDXWYV
+	(ORCPT <rfc822;git-outgoing>); Fri, 24 Apr 2009 18:24:21 -0400
+Received: from eagle.jhcloos.com ([207.210.242.212]:4862 "EHLO
+	eagle.jhcloos.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753023AbZDXWYV (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 24 Apr 2009 18:24:21 -0400
+Received: by eagle.jhcloos.com (Postfix, from userid 10)
+	id 72168401C3; Fri, 24 Apr 2009 22:23:56 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jhcloos.com;
+	s=eagle; t=1240611860;
+	bh=OobdjvJsP7eX0l3pl8r6XqEBBnALs6VJMP/GkaR0xXg=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type;
+	b=rfVk1ENHm+/6I/XAFaFz0B0U4P8beO1BfWsQXNrY0F4vYCvrTuALnx9xzAx4a5aZl
+	 glQp/NXTd/8hFKVwrGNevJVn7AtBA3UqLJtYnXhPoelfEWhZjW4MhkhaLHr6J1Q+Dk
+	 hus9HMZXaR9j2MZjIVAn03nUoDh2nn2yhfzo9FyY=
+Received: by lugabout.jhcloos.org (Postfix, from userid 500)
+	id B276246147; Fri, 24 Apr 2009 22:21:11 +0000 (UTC)
+In-Reply-To: <alpine.LFD.2.00.0904241722220.6741@xanadu.home> (Nicolas Pitre's
+	message of "Fri, 24 Apr 2009 17:46:15 -0400 (EDT)")
+User-Agent: Gnus/5.110011 (No Gnus v0.11) Emacs/23.0.92 (gnu/linux)
+Face: iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABHNCSVQICAgIfAhkiAAAAI1J
+ REFUOE+lU9ESgCAIg64P1y+ngUdxhl5H8wFbbM0OmUiEhKkCYaZThXCo6KE5sCbA1DDX3genvO4d
+ eBQgEMaM5qy6uWk4SfBYfdu9jvBN9nSVDOKRtwb+I3epboOsOX5pZbJNsBJFvmQQ05YMfieIBnYX
+ FK2N6dOawd97r/e8RjkTLzmMsiVgrAoEugtviCM3v2WzjgAAAABJRU5ErkJggg==
+Copyright: Copyright 2009 James Cloos
+OpenPGP: ED7DAEA6; url=http://jhcloos.com/public_key/0xED7DAEA6.asc
+OpenPGP-Fingerprint: E9E9 F828 61A4 6EA9 0F2B  63E7 997A 9F17 ED7D AEA6
+X-Hashcash: 1:29:090424:nico@cam.org::jXOtKmUVclKQPTZ9:0000iz5aC
+X-Hashcash: 1:29:090424:git@vger.kernel.org::gGaZoOFvJMrjP2ig:00000000000000000000000000000000000000000L1ifw
+X-Hashcash: 1:29:090424:gitster@pobox.com::Tn/qLe3CbDf6+Lf0:00000000000000000000000000000000000000000006SF62
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117500>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117501>
 
-On Fri, Apr 24, 2009 at 16:38, Jeff King <peff@peff.net> wrote:
-> On Fri, Apr 24, 2009 at 05:34:00PM -0400, Daniel Barkalow wrote:
->
->> I'd say that blobs and trees are an implementation detail of "the fu=
-ll
->> content of a version of the project", not something conceptually
->> important. Likewise, the date representation used in commits isn't
-> ...
-> No, that isn't critical for understanding how _commit_ operations wor=
-k,
-> but I think that is exactly the sort of conceptual knowledge that let
-> people use git more fully.
+>>>>> "Nicolas" == Nicolas Pitre <nico@cam.org> writes:
 
-I think the key conlusion here is that the main concepts are *objects*
-and references to those objects. One type of object is not necessarily
-more low-level or high-level than another type of object; each type of
-object is the most important type of object for a particular task in
-or view of the git world.
+>> Will a patch which does round-to-nearest (instead of the current
+>> round-to-zero) be accepted?
 
-> I disagree. I think it's important to note that trees and blobs have =
-a
-> name, and you can refer to them. Once you know that, the fact that yo=
-u
-> can do:
->
-> =A0git show master
-> =A0git show master:Documentation
-> =A0git show master:Makefile
->
-> just makes sense. You are always just specifying an object, but the t=
-ype
-> is different for each (and show "does the right thing" based on objec=
-t
-> type).
+Nicolas> Sure.  What about this (untested):
 
-In fact, I think it's important to note that the notation:
+Nicolas> +		int x = total + 5243;  /* for rounding */
+Nicolas> +		int x = total + 5;  /* for rounding */
 
-    git show master:Makefile
+That looks correct.
 
-actually involves a translation from a Unix filesystem address to a
-git object address that is then used to find the relevant data.
-
-In fact, I think masking this kind of thing with a catch-all word
-'reference' is a bad idea. Rather than being hidden, it should be
-exposed: I think it would be beneficial to use the word 'address'
-rather than 'reference' when talking about the SHA-1 names. Then HEAD
-could be called a pointer variable, etc.
-
-So, a pointer variable's value is an object address that is the
-location of an object in git 'memory'. I think using this approach
-would make things significantly more transparent.
+-JimC
+-- 
+James Cloos <cloos@jhcloos.com>         OpenPGP: 1024D/ED7DAEA6
