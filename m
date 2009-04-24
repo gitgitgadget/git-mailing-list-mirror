@@ -1,74 +1,106 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: Is there a way to lock branches in GIT?
-Date: Thu, 23 Apr 2009 23:23:22 -0400 (EDT)
-Message-ID: <alpine.LNX.2.00.0904232300360.2147@iabervon.org>
-References: <23204641.post@talk.nabble.com>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: ask4thunder <ask4thunder@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Apr 24 05:25:42 2009
+From: David Abrahams <dave@boostpro.com>
+Subject: Re: [doc] User Manual Suggestion
+Date: Fri, 24 Apr 2009 00:06:12 -0400
+Message-ID: <C30426B2-CF6F-48D0-A7D3-F96D4D153057@boostpro.com>
+References: <m24owgqy0j.fsf@boostpro.com> <20090423175717.GA30198@fieldses.org> <b4087cc50904231137g67b4b84eu3b61bf174ba37d7f@mail.gmail.com> <20090424022900.GB6321@fieldses.org>
+Mime-Version: 1.0 (Apple Message framework v930.4)
+Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
+Content-Transfer-Encoding: 7bit
+Cc: Michael Witten <mfwitten@gmail.com>, git@vger.kernel.org
+To: "J. Bruce Fields" <bfields@fieldses.org>
+X-From: git-owner@vger.kernel.org Fri Apr 24 06:08:03 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LxC2h-0001Mh-Rt
-	for gcvg-git-2@gmane.org; Fri, 24 Apr 2009 05:25:36 +0200
+	id 1LxChj-0000kJ-OD
+	for gcvg-git-2@gmane.org; Fri, 24 Apr 2009 06:08:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752492AbZDXDXY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 23 Apr 2009 23:23:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751722AbZDXDXY
-	(ORCPT <rfc822;git-outgoing>); Thu, 23 Apr 2009 23:23:24 -0400
-Received: from iabervon.org ([66.92.72.58]:39435 "EHLO iabervon.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750832AbZDXDXX (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 23 Apr 2009 23:23:23 -0400
-Received: (qmail 25227 invoked by uid 1000); 24 Apr 2009 03:23:22 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 24 Apr 2009 03:23:22 -0000
-In-Reply-To: <23204641.post@talk.nabble.com>
-User-Agent: Alpine 2.00 (LNX 1167 2008-08-23)
+	id S1750895AbZDXEG0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 24 Apr 2009 00:06:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750787AbZDXEGZ
+	(ORCPT <rfc822;git-outgoing>); Fri, 24 Apr 2009 00:06:25 -0400
+Received: from boost-consulting.com ([206.71.190.141]:58289 "EHLO
+	boost-consulting.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750733AbZDXEGZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 24 Apr 2009 00:06:25 -0400
+Received: from [192.168.188.150] (207-172-223-249.c3-0.smr-ubr3.sbo-smr.ma.static.cable.rcn.com [207.172.223.249])
+	(Authenticated sender: dave)
+	by boost-consulting.com (Postfix) with ESMTPSA id DFA891CC22;
+	Thu, 23 Apr 2009 21:03:49 -0700 (PDT)
+In-Reply-To: <20090424022900.GB6321@fieldses.org>
+X-Mailer: Apple Mail (2.930.4)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117404>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117405>
 
-On Thu, 23 Apr 2009, ask4thunder wrote:
 
-> 1. If there are 2 user are working and having their own clone and branches
-> (not master, other branches). and there is another parent clone with a
-> branch (not master). Can these 2 users merge to the parent clone branch at
-> the same time? or only one user will be able to merge first and then the
-> other. in other words, will the target branch be checkedout to that user
-> alone and other user cant checkout that branch or use the checked out
-> branch. 
+On Apr 23, 2009, at 10:29 PM, J. Bruce Fields wrote:
 
-You can't merge into a remote repository; you can only move the remote 
-repository forward. That is, when you "push" to the remote repository, you 
-replace what it currently there with a commit you supply that's based on 
-the commit that's there.
+> On Thu, Apr 23, 2009 at 01:37:05PM -0500, Michael Witten wrote:
+>> On Thu, Apr 23, 2009 at 12:57, J. Bruce Fields  
+>> <bfields@fieldses.org> wrote:
+>>> On Wed, Apr 22, 2009 at 03:38:52PM -0400, David Abrahams wrote:
+>>>>
+>>>> http://www.kernel.org/pub/software/scm/git/docs/user-manual.html#how-to-check-out
+>>>> covers "git reset" way too early, IMO, before one has the  
+>>>> conceptual
+>>>> foundation necessary to understand what it means to "modify the  
+>>>> current
+>>>> branch to point at v2.6.17".  If this operation must be covered  
+>>>> this
+>>>> early in the manual, it should probably not be until
+>>>> http://www.kernel.org/pub/software/scm/git/docs/user-manual.html#manipulating-branches
+>>>
+>>> I agree; we should suggest just a git-checkout (to a detached HEAD)
+>>> instead, though that needs a little explanation so people aren't  
+>>> scared
+>>> by the warning message it gives.
+>>
+>> Everyone talks about "before one has the conceptual foundation
+>> necessary to understand". Well, here's an idea: The git documentation
+>> should start with the concepts!
+>>
+>> Why don't the docs start out defining blobs and trees and the object
+>> database and references into that database? The reason everything is
+>> so confusing is that the understanding is brushed under the tutorial
+>> rug. People need to learn how to think before they can effectively
+>> learn to start doing.
+>
+> OK, but let's not over-generalize: the person that just wants to  
+> figure
+> out whether the driver for their network card was fixed in today's
+> network devel tree shouldn't have to sit through a discussion of the
+> object database.
 
-Two people can't both push to the same remote repository at the same time, 
-because each of them will be sending something that the other hasn't based 
-their commit on. Whoever's second will be refused, and will have to fetch 
-the other commit and make a merge commit, which is based on both the 
-commits. Git makes sure, in updating the remote repository, to do the 
-necessary locking to have one side or the other lose the race cleanly.
+Those people don't need a VCS.  They should download a snapshot or use  
+a web interface.  Seriously.  There's no way you can make even the  
+best-designed VCS simple enough to justify the time it takes to learn  
+enough just to use it for that.
 
-> 2. Is there a way to lock branches, so that if a user want to merge his
-> changes to a parent branch of another clone, it can be unlocked for him
-> alone? Hope you can help me on this. 
+> And even among readers that are in it for the long
+> haul, I think many people will react better to something that gives  
+> them
+> at least a little concrete how-to information up front.
 
-Not with git program support. Of course, you can use Unix permissions to 
-get exclusive write access to the branch and prevent another else from 
-updating it. And, of course, you can have a branch that's always your own 
-(Linux kernel development works primarily by every developer having one or 
-many private branches, and it's rare for multiple people to have write 
-access to the same branch). But there turns out not to be much benefit to 
-branches that people can sometimes but not always write to, in a system 
-where everybody has local branches they can always write to regardless of 
-what other people do.
+People (well, people like me) should get a brief "hello, world" demo  
+up front, to give them a feel for the flavor of the system, but  
+[important:] it shouldn't attempt to be instructive.  Fundamental  
+concepts are next.  How-to information can come after that, or after  
+the reference information.
 
-	-Daniel
-*This .sig left intentionally blank*
+> So the goal was always to find a tutorial route through the material
+> that would allow us to introduce the concepts as we go along.
+
+Maybe that will work for some people, but it *really* won't work for  
+me.  You can't start throwing around terms of art without defining  
+them unless you want to raise more questions than you're answering.  I  
+would be surprised if it wasn't the same for many tech people.
+
+
+--
+David Abrahams
+BoostPro Computing
+http://boostpro.com
