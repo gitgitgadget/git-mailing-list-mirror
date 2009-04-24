@@ -1,91 +1,70 @@
-From: "J. Bruce Fields" <bfields@fieldses.org>
+From: Michael Witten <mfwitten@gmail.com>
 Subject: Re: [doc] User Manual Suggestion
-Date: Thu, 23 Apr 2009 22:29:00 -0400
-Message-ID: <20090424022900.GB6321@fieldses.org>
-References: <m24owgqy0j.fsf@boostpro.com> <20090423175717.GA30198@fieldses.org> <b4087cc50904231137g67b4b84eu3b61bf174ba37d7f@mail.gmail.com>
+Date: Thu, 23 Apr 2009 21:34:56 -0500
+Message-ID: <b4087cc50904231934h17a090d4ie2a091843457eced@mail.gmail.com>
+References: <m24owgqy0j.fsf@boostpro.com> <20090423175717.GA30198@fieldses.org>
+	 <b4087cc50904231137g67b4b84eu3b61bf174ba37d7f@mail.gmail.com>
+	 <20090424022900.GB6321@fieldses.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: David Abrahams <dave@boostpro.com>, git@vger.kernel.org
-To: Michael Witten <mfwitten@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Apr 24 04:31:06 2009
+To: "J. Bruce Fields" <bfields@fieldses.org>
+X-From: git-owner@vger.kernel.org Fri Apr 24 04:37:16 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LxBBx-0007fb-8W
-	for gcvg-git-2@gmane.org; Fri, 24 Apr 2009 04:31:05 +0200
+	id 1LxBHw-0000WK-8i
+	for gcvg-git-2@gmane.org; Fri, 24 Apr 2009 04:37:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755222AbZDXC3G convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 23 Apr 2009 22:29:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754605AbZDXC3E
-	(ORCPT <rfc822;git-outgoing>); Thu, 23 Apr 2009 22:29:04 -0400
-Received: from mail.fieldses.org ([141.211.133.115]:50235 "EHLO
-	pickle.fieldses.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754434AbZDXC3D (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 23 Apr 2009 22:29:03 -0400
-Received: from bfields by pickle.fieldses.org with local (Exim 4.69)
-	(envelope-from <bfields@fieldses.org>)
-	id 1LxB9w-0001h1-HG; Thu, 23 Apr 2009 22:29:00 -0400
-Content-Disposition: inline
-In-Reply-To: <b4087cc50904231137g67b4b84eu3b61bf174ba37d7f@mail.gmail.com>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+	id S1755054AbZDXCe6 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 23 Apr 2009 22:34:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754675AbZDXCe5
+	(ORCPT <rfc822;git-outgoing>); Thu, 23 Apr 2009 22:34:57 -0400
+Received: from qw-out-2122.google.com ([74.125.92.27]:47046 "EHLO
+	qw-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752915AbZDXCe5 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 23 Apr 2009 22:34:57 -0400
+Received: by qw-out-2122.google.com with SMTP id 5so743008qwd.37
+        for <git@vger.kernel.org>; Thu, 23 Apr 2009 19:34:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=3lkgyh4fcBkb8zAZ9ko3rGTc4WRATMd/j6pIRyiPG84=;
+        b=u080ASCIWA/RAFPWVGRYOxq1mAthhicyAnuMJNgVHcVI7SvfMWzlKWJp9s1Lurp7bt
+         +SNUvB5h56Xso1Dlkaki4v8ys8lXDLO8DaL8BS+YaEb2tC67EZ4g1AqMTmt/js1vcemc
+         Fj+NjA1wnuLhuy/E/TPyYO7iBuhvdJQ96INfQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=fvmzYZ5ntrY6G4Mn87fsoFSRpqM+5svWrdZfhzQ0gbJhCkE0X2hQoSkiuCU1RDskgC
+         j66I4j6XlP+E0rYbgd82EEEEZ98iTigBYau9AWNJHKM7p8QwpKEQi6JvAvNnrzLw1PZQ
+         J8RolAF+tyHb9qcdBZj5PEdD6wvoC7/mseUcg=
+Received: by 10.224.11.136 with SMTP id t8mr2261914qat.73.1240540496253; Thu, 
+	23 Apr 2009 19:34:56 -0700 (PDT)
+In-Reply-To: <20090424022900.GB6321@fieldses.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117402>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117403>
 
-On Thu, Apr 23, 2009 at 01:37:05PM -0500, Michael Witten wrote:
-> On Thu, Apr 23, 2009 at 12:57, J. Bruce Fields <bfields@fieldses.org>=
- wrote:
-> > On Wed, Apr 22, 2009 at 03:38:52PM -0400, David Abrahams wrote:
-> >>
-> >> http://www.kernel.org/pub/software/scm/git/docs/user-manual.html#h=
-ow-to-check-out
-> >> covers "git reset" way too early, IMO, before one has the conceptu=
-al
-> >> foundation necessary to understand what it means to "modify the cu=
-rrent
-> >> branch to point at v2.6.17". =C2=A0If this operation must be cover=
-ed this
-> >> early in the manual, it should probably not be until
-> >> http://www.kernel.org/pub/software/scm/git/docs/user-manual.html#m=
-anipulating-branches
-> >
-> > I agree; we should suggest just a git-checkout (to a detached HEAD)
-> > instead, though that needs a little explanation so people aren't sc=
-ared
-> > by the warning message it gives.
->=20
-> Everyone talks about "before one has the conceptual foundation
-> necessary to understand". Well, here's an idea: The git documentation
-> should start with the concepts!
->=20
-> Why don't the docs start out defining blobs and trees and the object
-> database and references into that database? The reason everything is
-> so confusing is that the understanding is brushed under the tutorial
-> rug. People need to learn how to think before they can effectively
-> learn to start doing.
+On Thu, Apr 23, 2009 at 21:29, J. Bruce Fields <bfields@fieldses.org> w=
+rote:
+> OK, but let's not over-generalize: the person that just wants to figu=
+re
+> out whether the driver for their network card was fixed in today's
+> network devel tree shouldn't have to sit through a discussion of the
+> object database. =A0And even among readers that are in it for the lon=
+g
+> haul, I think many people will react better to something that gives t=
+hem
+> at least a little concrete how-to information up front.
 
-OK, but let's not over-generalize: the person that just wants to figure
-out whether the driver for their network card was fixed in today's
-network devel tree shouldn't have to sit through a discussion of the
-object database.  And even among readers that are in it for the long
-haul, I think many people will react better to something that gives the=
-m
-at least a little concrete how-to information up front.
-
-So the goal was always to find a tutorial route through the material
-that would allow us to introduce the concepts as we go along.
-
-And I agree that I haven't succeeded at that--patches welcomed,
-including patches that, say, move more of the current chapter 7 to an
-earlier place.  (But this has to be done carefully, and I'd still rathe=
-r
-it not be the *very* first thing.)
-
-I've unfortunately had a lot less time to work on this, but am happy to
-at least help review patches.
-
---b.
+A quick shell synopsis is probably what you want then. Beyond that,
+casual users should be ignored; quick instructions are usually
+provided by each project anyway.
