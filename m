@@ -1,109 +1,82 @@
-From: Josef Wolf <jw@raven.inka.de>
-Subject: How to manage this workflow? (reloaded)
-Date: Fri, 24 Apr 2009 09:59:15 +0200
-Message-ID: <20090424075915.GB15420@raven.wolf.lan>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/3] rev-parse: add --sq-quote to shell quote arguments
+Date: Fri, 24 Apr 2009 01:14:45 -0700
+Message-ID: <7v8wlqii2y.fsf@gitster.siamese.dyndns.org>
+References: <20090424062902.3705.44704.chriscool@tuxfamily.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Apr 24 10:03:07 2009
+Cc: git@vger.kernel.org
+To: Christian Couder <chriscool@tuxfamily.org>
+X-From: git-owner@vger.kernel.org Fri Apr 24 10:16:43 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LxGN0-0002dR-5s
-	for gcvg-git-2@gmane.org; Fri, 24 Apr 2009 10:02:50 +0200
+	id 1LxGaQ-00071A-EC
+	for gcvg-git-2@gmane.org; Fri, 24 Apr 2009 10:16:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753114AbZDXIBO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 24 Apr 2009 04:01:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752676AbZDXIBN
-	(ORCPT <rfc822;git-outgoing>); Fri, 24 Apr 2009 04:01:13 -0400
-Received: from quechua.inka.de ([193.197.184.2]:45580 "EHLO mail.inka.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752109AbZDXIBM (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 24 Apr 2009 04:01:12 -0400
-Received: from raven.inka.de (uucp@[127.0.0.1])
-	by mail.inka.de with uucp (rmailwrap 0.5) 
-	id 1LxGLO-0003ct-05; Fri, 24 Apr 2009 10:01:10 +0200
-Received: by raven.inka.de (Postfix, from userid 1000)
-	id 38CA62CC66; Fri, 24 Apr 2009 09:59:15 +0200 (CEST)
-Mail-Followup-To: Josef Wolf <jw@raven.inka.de>, git@vger.kernel.org
-Content-Disposition: inline
-User-Agent: Mutt/1.5.17 (2007-11-01)
+	id S1758683AbZDXIPF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 24 Apr 2009 04:15:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758660AbZDXIPD
+	(ORCPT <rfc822;git-outgoing>); Fri, 24 Apr 2009 04:15:03 -0400
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:62343 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758669AbZDXIOz (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 24 Apr 2009 04:14:55 -0400
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id EB2AF1102B;
+	Fri, 24 Apr 2009 04:14:50 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 480301102A; Fri,
+ 24 Apr 2009 04:14:47 -0400 (EDT)
+In-Reply-To: <20090424062902.3705.44704.chriscool@tuxfamily.org> (Christian
+ Couder's message of "Fri, 24 Apr 2009 08:28:59 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: FBC49916-30A7-11DE-9110-D766E3C8547C-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117419>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117420>
 
-Hello,
+Christian Couder <chriscool@tuxfamily.org> writes:
 
-I have two subversion repositories which I would like to synchronize via
-git-svn.  For this, I have set up a git repository and configured two
-branches to track the subversion repositories via git-svn:
+> @@ -30,6 +30,9 @@ OPTIONS
+>  	Only meaningful in `--parseopt` mode. Tells the option parser to echo
+>  	out the first `--` met instead of skipping it.
+>  
+> +--sq-quote::
+> +	Use 'git-rev-parse' in shell quoting mode (see SQ-QUOTE section below).
+> +
 
-    mkdir test-sync
-    cd    test-sync
-    git svn init --stdlayout file://$REPOSDIR/svn-first
+Hmph, I wonder how this interacts with the existing --sq option to the
+same command in the mental model of end users.
 
-    for repos in svn-first svn-second; do
-        git config svn-remote.$repos.url      file://$REPOSDIR/$repos
-        git config svn-remote.$repos.fetch    trunk:refs/remotes/$repos/trunk
-        git config svn-remote.$repos.branches branches/*:refs/remotes/$repos/*
-        git config svn-remote.$repos.tags     tags/*:refs/remotes/$repos/tags/*
-        git svn fetch -R $repos
-        git checkout -b $repos $repos/trunk
-    done
-    git gc
+> +Example
+> +~~~~~~~
+> +
+> +------------
+> +$ git rev-parse --sq-quote "'''" '"""' "arg with space"
+> + ''\'''\'''\''' '"""' 'arg with space'
+> +------------
 
-This gives me two remote and two local branches:
+Yuck --- does asciidoc formats this correctly?
 
-    master
-    svn-first
-  * svn-second
-    svn-first/trunk
-    svn-second/trunk
+    ... goes and tries ...
 
-As a first step, I tried to "mirror" the manual "merges" that were done
-between the subversion repositories in the past:
+Not very readable.  A better example might be to demonstrate something
+like this:
 
-    git checkout svn-first
-    git cherry-pick svn-second-sha1 .... # repeat as needed
+	$ cat >your-git-script.sh <<\EOF
+	#!/bin/sh
+	# quote user-supplied arguments
+	args=$(git rev-parse --sq-quote "$@")
+        # and use it inside a handcrafted command line
+        command="git frotz -n24 $args"
+        eval "$command"
+	EOF
 
-    git checkout svn-second
-    git cherry-pick svn-first-sha1 .... # repeat as needed
+	$ sh your-git-script.sh "a b'c"
 
-So I've spent almost 4 weeks to cherry-pick and resolve all the conflicts.
-Looks good so far, since
-
-    git diff svn-first svn-second
-    git diff svn-first/trunk svn-first/trunk
-    git diff svn-second/trunk svn-second/trunk
-
-give me the desired outputs.  Now I do
-
-    git checkout svn-first
-    git merge -s ours svn-second
-    git checkout svn-second
-    git merge -s ours svn-first
-
-to tell git that the branches are in sync.
-
-But now, when I try to
-
-    git checkout svn-second
-    git svn rebase
-
-I get lots of conflicts.  When I inspect the .git/rebase-apply directory
-and the conflicts, it looks like "git svn rebase" tries to re-apply all
-the commits from svn-first.  When I omit the "git merge -s ours svn-first"
-command, it does not re-apply those commits.  So it looks like the
-"git merge -s ours" wipes some information that git-svn needs to know
-what was already merged.
-
-What am I missing?  I thought the "ours" strategy is meant to tell git
-that everything from that branch was merged, either manually or by
-cherry-pick.
-
-Any hints how to track this down?
-
-BTW: this is git version 1.6.0.2
+i.e, put stress on how to use it, not on how it works internally.
