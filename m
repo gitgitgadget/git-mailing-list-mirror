@@ -1,157 +1,239 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] Removed redundant static functions such as
-	update_tracking_ref() and verify_remote_names() from
-	builtin-send-pack.c, and made the ones in transport.c not be static
-	so they can be used instead.
-Date: Fri, 24 Apr 2009 17:04:18 -0400
-Message-ID: <20090424210418.GC13561@coredump.intra.peff.net>
-References: <1240546432-26212-1-git-send-email-andy@petdance.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: andy@petdance.com
-X-From: git-owner@vger.kernel.org Fri Apr 24 23:06:23 2009
+From: David Abrahams <dave@boostpro.com>
+Subject: Re: [doc] User Manual Suggestion
+Date: Fri, 24 Apr 2009 17:06:27 -0400
+Message-ID: <2B5084A3-9BDB-4463-8530-3C8AB2E09A1F@boostpro.com>
+References: <m24owgqy0j.fsf@boostpro.com> <20090423175717.GA30198@fieldses.org> <b4087cc50904231137g67b4b84eu3b61bf174ba37d7f@mail.gmail.com> <20090423201636.GD3056@coredump.intra.peff.net> <b4087cc50904231345x2613308eh640e50f4a2680890@mail.gmail.com> <B873CD38-2CFE-4138-8A77-8957FA3DB81C@boostpro.com> <20090424141847.GD10761@coredump.intra.peff.net> <91225E09-505A-4CD6-AC8E-FBB500A95984@boostpro.com> <20090424181539.GB11360@coredump.intra.peff.net> <0FC64949-689C-43A4-B656-9618E808962B@boostpro.com> <20090424202403.GB13561@coredump.intra.peff.net>
+Mime-Version: 1.0 (Apple Message framework v930.4)
+Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
+Content-Transfer-Encoding: 7bit
+Cc: Michael Witten <mfwitten@gmail.com>,
+	"J. Bruce Fields" <bfields@fieldses.org>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Apr 24 23:08:07 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LxSax-0006gf-MB
-	for gcvg-git-2@gmane.org; Fri, 24 Apr 2009 23:06:04 +0200
+	id 1LxScu-0007Lc-AV
+	for gcvg-git-2@gmane.org; Fri, 24 Apr 2009 23:08:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754961AbZDXVEa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 24 Apr 2009 17:04:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754595AbZDXVE3
-	(ORCPT <rfc822;git-outgoing>); Fri, 24 Apr 2009 17:04:29 -0400
-Received: from peff.net ([208.65.91.99]:51805 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754186AbZDXVE3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 24 Apr 2009 17:04:29 -0400
-Received: (qmail 31423 invoked by uid 107); 24 Apr 2009 21:04:37 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Fri, 24 Apr 2009 17:04:37 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Fri, 24 Apr 2009 17:04:18 -0400
-Content-Disposition: inline
-In-Reply-To: <1240546432-26212-1-git-send-email-andy@petdance.com>
+	id S1756087AbZDXVGa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 24 Apr 2009 17:06:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753867AbZDXVGa
+	(ORCPT <rfc822;git-outgoing>); Fri, 24 Apr 2009 17:06:30 -0400
+Received: from boost-consulting.com ([206.71.190.141]:49817 "EHLO
+	boost-consulting.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753308AbZDXVG3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 24 Apr 2009 17:06:29 -0400
+Received: from [192.168.188.150] (207-172-223-249.c3-0.smr-ubr3.sbo-smr.ma.static.cable.rcn.com [207.172.223.249])
+	(Authenticated sender: dave)
+	by boost-consulting.com (Postfix) with ESMTPSA id 35FE71CC1F;
+	Fri, 24 Apr 2009 14:03:58 -0700 (PDT)
+In-Reply-To: <20090424202403.GB13561@coredump.intra.peff.net>
+X-Mailer: Apple Mail (2.930.4)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117487>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117488>
 
-Great, I think this is something that needs to be done, and it is always
-nice to see a diffstat like:
 
->  6 files changed, 23 insertions(+), 198 deletions(-)
+On Apr 24, 2009, at 4:24 PM, Jeff King wrote:
 
-that shows massive cleanup. But your patch is a little hard to review,
-so let me try to constructively critique your commit message for a
-moment.
+> On Fri, Apr 24, 2009 at 03:00:19PM -0400, David Abrahams wrote:
+>
+>>> How did you find out about them?
+>>
+>> The first time?
+>>
+>> $ man git
+>>
+>> [...]
+>>
+>> which makes no distinction [between porcelain and plumbing].
+>
+> Really? The command list in my version is divided into "HIGH-LEVEL
+> COMMANDS (PORCELAIN)" and "LOW-LEVEL COMMANDS (PLUMBING)", with the
+> commands you mentioned falling into the latter. And skimming "git log
+> Documentation/git.txt", it looks like it has been that way for some
+> time.
 
-First off, it really seems like there are two things happening here:
-removing the functions mentioned in the subject, and:
+Sorry, you are totally right.
 
-> Added const to some function parameters.
+The list is just so crazy-long; I may have skimmed it.
 
-I don't think those are related, so it makes sense to split them into
-two patches in a series. This has a few advantages:
+>> Huh?  `which git` works.  ls-tree is an argument to git as far as I  
+>> know.
+>
+> Yes, but shell completion will never present you with the text
+> "ls-tree". You have to have found out about it somewhere else (and
+> completion used to show, because git-ls-tree was in the PATH).
+>
+>>  $ xxx [--]help
+>>
+>> is usually OK if I already know xxx pretty well and just want a
+>> refresher.  If know I'll need a little more than that, I use man  
+>> straight
+>> away.
+>
+> git --help shows a list of common commands, but otherwise "git help
+> foo" and "git foo --help" _do_ show the manpage. It may be that "man
+> git" could use some cleanup; specific suggestions are welcome.
+>
+>> What is "porcelain," please?  This is one among many examples of  
+>> jargon
+>> used only (or encountered by me for the first time) in the Git  
+>> community.
+>
+> I think I ended up explaining it later in my email, but let me know if
+> you are still confused.
 
-  - when reviewers read the patch, they know to which topic each change
-    belongs (and yes, we can figure it out by reading the change
-    carefully, but it is a lot easier when you start reading a diff to
-    say "OK, I know approximately what this is going to do from the
-    commit message" and then confirm that it does what you thought)
+Nope; I'm fine now.  It's not a great analogy, because everyone who  
+uses a sink ends up dealing with spigots and valves, but I get it.
 
-  - if one of the topics is controversial but the other is not, the
-    non-controversial changes are not held hostage while the
-    controversial ones are discussed or re-done
+>>> The idea was to give a uniform calling convention without
+>>> unnecessarily confusing users by presenting a large number of
+>>> infrequently-used commands.
+>>
+>> It's not working, I'm sorry to say.
+>
+> Right, that's why I'm trying to figure out why you are hung up on the
+> low-level commands. The idea was that you wouldn't need to be  
+> exposed to
+> them at all, but obviously you were (or if you were exposed, it  
+> would be
+> in a list that was clearly marked as "this is low-level stuff that you
+> don't really need to worry about". So I'm trying to figure out where  
+> it
+> went wrong.
 
-Moving on to the message itself, it is very top-heavy:
+I'm sorry that I can't be much help in that department.  If I really  
+knew how I ended up with that wrong impression, I probably would have  
+corrected it already.  It's weird; git is composed of ideas that are  
+all very familiar to me (reference-counted management of immutable  
+data, hashing, etc.) yet for me, getting to know it has been really  
+tough.  By contrast, for example, subversion was instantly  
+understandable when I pawed through the SVN book.
 
-> Subject: Re: [PATCH] Removed redundant static functions such as
->	update_tracking_ref() and verify_remote_names() from
->	builtin-send-pack.c, and made the ones in transport.c not be static
->	so they can be used instead.
+>>> At any rate, it is too late to change the calling convention for
+>>> plumbing.
+>>
+>> I disagree.  You can leave the old functionality there in a  
+>> "deprecated"
+>> state and change the way you advertise it.
+>
+> But does that really help? It means that "git hash-object" is still
+> there, which I thought was the problem you had. You can argue that it
+> wouldn't be advertised to users, and so wouldn't be a problem, but  
+> that
+> is _already_ the strategy we are using. So either that strategy is  
+> fine,
+> in which case we are on the right track but may still have some work  
+> to
+> do in properly implementing it. Or it's not, in which case your  
+> proposal
+> is no better.
 
-The first line of the message is really supposed to be a one-liner, like
-the subject of an email, to give people a general sense of what is going
-on. Then you can go into more detail in a follow-on paragraph. That
-makes things like "gitk" and "git log --oneline" more useful.
+You've got me stumped there, I have to admit.
 
-And as a grammatical nit, in git itself we usually use the imperative
-mood in commit mesages. So "remove" and "add" instead of "removed and
-added".
+>> It would even help a lot if the plumbing were all spelled "git-xxx"
+>> and the high level stuff were "git xxx."
+>
+> Differentating calling conventions like that was proposed when dashed
+> forms were deprecated and removed from the PATH. But if we had dashed
+> forms for plumbing (i.e., not forwarding them via the "git" wrapper),
+> then you have to do one of:
+>
+>  - put them in the user's PATH. Now tab completion or looking in your
+>    PATH means you see _just_ the plumbing commands, and none of the
+>    high level ones. Which is one of the reasons they were removed from
+>    the PATH in the first place (due to numerous user complaints).
+>
+>  - put them elsewhere, and force plumbing users to add $GIT_EXEC_PATH
+>    to their PATH. That becomes very annoying for casual plumbing  
+> users.
+>    If you come to the mailing list with a problem, I would have to  
+> jump
+>    through extra hoops to ask you to show me the output of "git
+>    ls-files".
 
-As far as the details itself, usually you want to talk about _why_ to
-make this change. In this case, removing redundant code is a pretty
-obvious reason, but I am left wondering another why: why is this OK to
-do? In other words, where did the duplication come from, why was it
-duplicated instead of refactored in the first place (simple oversight,
-or some assumption that was true then, etc), and why are things
-different now (correcting an oversight, that assumption no longer holds,
-etc). From our prior discussion, the code came from 64fcef2. But I'm not
-sure if the duplicated code is completely identical. I.e., was it
-tweaked when it was copied to transport.c? If not, then say so, because
-that is a question every reviewer should have. If so, then why is it OK
-for send-pack to start using the tweaked version?
+I see your point.
 
-I have some guesses about the answers to those from our prior
-discussions. But part of making the patch would be looking into those
-things. And keep in mind that Junio probably didn't read our prior
-discussion, nor will somebody reading the commit message two years from
-now.
+   llgit xxx
 
-So I think the commmit message you want would be something like:
+?
 
-  remove duplicate functions from builtin-send-pack.c
+> Not to mention that the git wrapper does other useful things besides
+> simply exec'ing. For example, it supports --git-dir, --bare, etc.
+> So the problem is that the low-level commands _are_ still useful, and
+> many people still want to call them, just like regular git commands.
+> It's just that they are numerous and low-level, which makes them
+> daunting for new users.
+>
+> And it has become obvious over several years of the git mailing list
+> that users, once they see mention of a command, must start  
+> investigating
+> it to find out if and how it is useful. And I am not saying that is a
+> failing of users; on the contrary, I think it is quite a healthy
+> behavior on a unix-ish system. But it means that if we want not to
+> advertise low-level commands, we have to be very careful about the  
+> ways
+> in which we mention them.
+>
+> Perhaps it would make sense for each plumbing command's man page to
+> start with something like "this is a low-level command used for
+> scripting git or investigating its internals. For high-level use, you
+> may be more interested in $X", where $X may be "git commit" for
+> write-tree, commit-tree, etc. And that would at least help intercept
+> users before they get too confused.
 
-  These functions are helpers for handling tracking refs, printing
-  output, etc. They were originally used only by send-pack, but commit
-  64fcef2 copied them to transport.c so that they could be used by all
-  transports.
+Sounds like a great idea to me.
 
-  As the versions in transport.c and builtin-send-pack.c are identical
-  [or whatever you find out when you investigate], there is no reason 
-  for there to be two copies. Copying instead of moving in 64fcef2
-  appears to have simply been an oversight [even better, get
-  confirmation from Daniel on why he did it that way].
+>>>> [excuse me, but what the #@&*! is "porcelainish" supposed to mean?
+>>>> (http://www.kernel.org/pub/software/scm/git/docs/git-rev- 
+>>>> parse.html)]
+>>>
+>>> Heh. That one is particularly egregious, because it rests on several
+>>> layers of git jargon. The low-level tools are plumbing, like pipes  
+>>> and
+>>> valves.
+>>
+>> ? I use the valves on my kitchen sink all the time.
+>
+> Sorry, I meant the ones under the sink, that you would use if you were
+> replacing the faucet. I would call the ones above "taps". But  
+> hopefully
+> you get a sense of the distinction between plumbing and porcelain.
 
-  This patch just removes the versions in builtin-send-pack.c, and
-  makes the ones in transport.c available as library functions.
 
-As for the patch itself, there are a few spots I noticed in my cursory
-look:
+I know, but the point is, they're not porcelain.  They're "plumbing  
+fixtures."
 
-> --- a/remote.c
-> +++ b/remote.c
-> @@ -769,9 +769,9 @@ static int match_name_with_pattern(const char *key, const char *name,
-> [...]
-> +int remote_find_tracking(const struct remote *remote, struct refspec *refspec)
->  {
-> -	int find_src = refspec->src == NULL;
-> +	const int find_src = (refspec->src == NULL);
+I think UI/API works way better than porcelain/plumbing.  We are,  
+after all, programmers.  It would also be good to link to a definition  
+any time you use a term of art in the docs.  I would even do that in  
+the case of UI/API since the distinction could appear to be subtle.
 
-I don't think we usually worry about const-ing local variables like
-this, but instead just focus on const-ing parameters. The compiler can
-generally already detect constness of find_src here, because it can see
-all of the places it is used (whereas crossing a function boundary,
-anything can happen to a non-const parameter).
+I should also say, most of the docs and interfaces I see in Git (and  
+its wrappers, web interfaces, etc.) give the SHA1 hashes way too much  
+exposure.  The times when it's actually more convenient to use a hash  
+instead of one of the other notations are rare, and if hashes weren't  
+so exposed I bet most interfaces would make those other names more  
+available.  One reason I think hashes retain their prominent exposure  
+is that you have no other reasonably stable way of referring to  
+commits, since branch~NN counts backward from HEAD.  Adding such a  
+thing would help.
 
-> -static const char *status_abbrev(unsigned char sha1[20])
-> +static const char *status_abbrev(const unsigned char *sha1)
+Oh, one other specific issue: the rev-parse manpage uses $GIT_DIR  
+without saying what it is.  I *think* that means the root of the  
+working copy and has nothing to do with environment variables, but  
+it's hard to be sure, and if I'm right about that, it's misleading  
+notation.
 
-Is there a good reason to drop this from an array to a pointer?
+Someone needs to get gitiseasy.org/gitiseasy.net and then provide  
+content that lives up to the name :^)
 
-> +void update_tracking_ref(const struct remote *remote, struct ref *ref, int verbose);
-> +void print_push_status(const char *dest, const struct ref *refs, int verbose);
-> +int refs_pushed(const struct ref *ref);
-> +void verify_remote_names(int nr_heads, const char **heads);
-
-This might need to be given more descriptive names if they will have
-global linkage.
-
-I do wonder, though...if http and other transports are using these via
-transport.c, then why is the git transport not doing the same thing? In
-other words, should they actually be statics, and the calls ripped out
-of send_pack()? Or send_pack() just moved into transport.c?
-
--Peff
+--
+David Abrahams
+BoostPro Computing
+http://boostpro.com
