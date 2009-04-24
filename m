@@ -1,118 +1,66 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: What are branches?
-Date: Fri, 24 Apr 2009 15:08:05 +0200
-Message-ID: <200904241508.08569.jnareb@gmail.com>
-References: <alpine.DEB.1.00.0904191709220.10279@pacific.mpi-cbg.de> <m3ab6bp2we.fsf@localhost.localdomain> <20090420202329.GB17241@atjola.homenet>
+From: Michael Witten <mfwitten@gmail.com>
+Subject: Re: "SHA1" or "SHA-1"
+Date: Fri, 24 Apr 2009 08:53:04 -0500
+Message-ID: <b4087cc50904240653n2e297231u21ab728e1de134cd@mail.gmail.com>
+References: <49F1D1C6.9238.64B16D7@Ulrich.Windl.rkdvmks1.ngate.uni-regensburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Dmitry Potapov <dpotapov@gmail.com>,
-	Michael J Gruber <git@drmicha.warpmail.net>,
-	git@vger.kernel.org
-To: =?iso-8859-1?q?Bj=F6rn_Steinbrink?= <B.Steinbrink@gmx.de>
-X-From: git-owner@vger.kernel.org Fri Apr 24 15:09:57 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Ulrich Windl <ulrich.windl@rz.uni-regensburg.de>
+X-From: git-owner@vger.kernel.org Fri Apr 24 15:54:50 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LxLAD-0004KB-6R
-	for gcvg-git-2@gmane.org; Fri, 24 Apr 2009 15:09:57 +0200
+	id 1LxLrb-0004zF-FK
+	for gcvg-git-2@gmane.org; Fri, 24 Apr 2009 15:54:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756480AbZDXNIU convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 24 Apr 2009 09:08:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756015AbZDXNIU
-	(ORCPT <rfc822;git-outgoing>); Fri, 24 Apr 2009 09:08:20 -0400
-Received: from wf-out-1314.google.com ([209.85.200.170]:14269 "EHLO
-	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754325AbZDXNIT (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 24 Apr 2009 09:08:19 -0400
-Received: by wf-out-1314.google.com with SMTP id 26so987632wfd.4
-        for <git@vger.kernel.org>; Fri, 24 Apr 2009 06:08:17 -0700 (PDT)
+	id S1757551AbZDXNxM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 24 Apr 2009 09:53:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756830AbZDXNxL
+	(ORCPT <rfc822;git-outgoing>); Fri, 24 Apr 2009 09:53:11 -0400
+Received: from mail-qy0-f118.google.com ([209.85.221.118]:52423 "EHLO
+	mail-qy0-f118.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756571AbZDXNxK (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 24 Apr 2009 09:53:10 -0400
+Received: by qyk16 with SMTP id 16so2215806qyk.33
+        for <git@vger.kernel.org>; Fri, 24 Apr 2009 06:53:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=PGrpITpOABPTPkVOzDX6+xCgSi/l1M2HYbzFei/fC4k=;
-        b=JB/CH7cxCElpNostkM6QyfdJgrPH2rqTn74nsbHdZnVQLI5Ow1SdsJByfLaoyTXorl
-         q6AEwxuFhFOIIx3BUnI9LTZv3V5W4LS4LcE9p/dvoSMz0sSvxFmP+va/xkhhD3UOKXNR
-         UZj+1xWqAsnvbFbKITN0pBiYJy5ls0k6zI630=
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=WcAFxyZ+rHgQLvCIDKW4lwKQihTG61WCJbFQIjcwUTE=;
+        b=ECr3EdQIkCaUpP5Fjb95wIJkuzO7Zyec1NXvLw3SY7nl4CEquxSHiaQsyarB/MAqYf
+         HrY1fXw1ngJG6ZGme2NqMqVmQSBzw8HThY7w7fZQLqlO4yIqPTbVt0d7L6TBsjw2+R8f
+         wTyBitC3joBQdPeh9ch6t505FZnA/gft1GseU=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=H8XKLIRKmyDIDnibwYL+ze1564wwkE51Vw+xo5SP+kiKJTBtuzKNny3VwtqKZIftXO
-         iqVWpzaskm1nU5/GCR6FxCjuARdWwxN29mNVkldgcBWMCdXunc00fvvK8NBuOBe3wwXC
-         HZ+iRqTupf/0PdCtQhRDArPUBHovZ4AxxkcTg=
-Received: by 10.142.157.9 with SMTP id f9mr748680wfe.59.1240578497674;
-        Fri, 24 Apr 2009 06:08:17 -0700 (PDT)
-Received: from ?192.168.1.13? (abuz38.neoplus.adsl.tpnet.pl [83.8.197.38])
-        by mx.google.com with ESMTPS id 22sm729285wfi.12.2009.04.24.06.08.14
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 24 Apr 2009 06:08:16 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <20090420202329.GB17241@atjola.homenet>
-Content-Disposition: inline
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=jSL2TfQx4U4pgWH28pgDcrZZ4BcGnrgGM2FG5qERpEQi8h87y7Xc3qwitsnhnagKMe
+         7GCDgLhzy8+h4n7+Kv7W+IXc+acoXqIqfCf1EQIHA58cWLfZPV0Sj2sgUFxDjyJf5ULr
+         RAGWtBvLI82Y/rOpi7D2NX6AiWVIQODaHr6rE=
+Received: by 10.224.32.146 with SMTP id c18mr2769454qad.58.1240581184244; Fri, 
+	24 Apr 2009 06:53:04 -0700 (PDT)
+In-Reply-To: <49F1D1C6.9238.64B16D7@Ulrich.Windl.rkdvmks1.ngate.uni-regensburg.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117435>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117436>
 
-On Mon, 20 April 2009, Bj=F6rn Steinbrink wrote:
-> On 2009.04.20 11:59:38 -0700, Jakub Narebski wrote:
-> > Bj=F6rn Steinbrink <B.Steinbrink@gmx.de> writes:
-> >=20
-> > > If you go out, and look at a tree lit-up by the evil daystar, bra=
-nches
-> > > start at the trunk and end at their tip. The trunk isn't part of =
-the
-> > > branch.  [...]
-> >=20
-> > Well, you have to remember that the 'branch' metaphor should not be
-> > taken too literaly; take for example merges which do not have
-> > equivalent in a tree build.
->=20
-> True, but that just happened to fit the task-oriented branch view so
-> well, and I wanted the reference to the evil daystar (obviously ;-)).
+On Fri, Apr 24, 2009 at 07:50, Ulrich Windl
+<ulrich.windl@rz.uni-regensburg.de> wrote:
+> I always thought, the official notation for "Secure Hash Algorithm #1" [FIPS-180-
+> 1] was "SHA-1", and not "SHA1". However in the documentation I found many
+> occurrencies of "SHA1". If someone is working on spelling errors, could that be
+> changed?
 
-Also in (botanical) trees you can usually distinguish between trunk
-and side branches, and I think in most cases also which branch forked
-from which one.  Making one of branches (trunk) special might make
-sense for centralized version control systems like CVS (1.2 vs 1.2.2.4
-version numbers) or Subversion (<project>/trunk for trunk (main branch)
-vs <project>/branches/<branchname>; although this is only convention
-and is not enforced by the tool), but in my opinion contradicts
-distributed nature of distributed SCM such like Git (and Mercurial).
+I too believe it is SHA-1; I endorse changing all occurences of SHA1 to SHA-1.
 
-> > But if we are talking about literal branches: take a closer loog at
-> > the tip of tree (plant) branch.  You can find growong tip there
-> > (apical meristem) where new cells grow.  In Git you have 'branches'
-> > (branch heads) where you create new commits...
->=20
-> Yeah, see the end of my mail, where I said that git has a mechanism t=
-o
-> control where branches grow. Seems to fit :-)
+> Unfortunately RFC 3174 talks about "SHA-1" all the time, with the exception of the
+> title that says: "US Secure Hash Algorithm 1 (SHA1)"...
 
-The difference is that you can (usually) see which branch was first.
-It is not the case for Git (and it wouldn't make sense, as for DSCM
-there is no sense of 'first' wrt. time).
-
-> > But I agree that there isn't for example true notion of 'trunk' in
-> > git, and this is what allows Git to be truly distributed...
->=20
-> Hm, not just no trunk, but also no branches that have a starting poin=
-t
-> and an end point. In general, you can't say "My branch starts _here_"
-> unless you use the root commit(s) as the starting point, or you apply
-> "extra" knowledge (you know from which other branch this branch forke=
-d).
-
-Well, you can use reflog... if it is not expired.  Or the tracking info
-in a config.
-
---=20
-Jakub Narebski
-Poland
+Sigh... Such is the world of "standards".
