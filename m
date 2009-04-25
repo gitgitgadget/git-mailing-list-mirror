@@ -1,85 +1,131 @@
-From: Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH 1/3] rev-parse: add --sq-quote to shell quote arguments
-Date: Sat, 25 Apr 2009 07:06:40 +0200
-Message-ID: <200904250706.40533.chriscool@tuxfamily.org>
-References: <20090424062902.3705.44704.chriscool@tuxfamily.org> <7v8wlqii2y.fsf@gitster.siamese.dyndns.org> <49F17945.8000004@viscovery.net>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH] gitweb: filter escapes from longer commit titles that break firefox
+Date: Sat, 25 Apr 2009 11:04:42 +0200
+Message-ID: <200904251104.45236.jnareb@gmail.com>
+References: <1239985473-666-1-git-send-email-paul.gortmaker@windriver.com> <20090424194822.GA15846@windriver.com> <200904250010.46299.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Sat Apr 25 07:09:37 2009
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Paul Gortmaker <paul.gortmaker@windriver.com>
+X-From: git-owner@vger.kernel.org Sat Apr 25 11:07:09 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lxa8t-0001xr-RO
-	for gcvg-git-2@gmane.org; Sat, 25 Apr 2009 07:09:36 +0200
+	id 1Lxdqa-00008q-HN
+	for gcvg-git-2@gmane.org; Sat, 25 Apr 2009 11:06:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751594AbZDYFIB convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 25 Apr 2009 01:08:01 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751458AbZDYFIA
-	(ORCPT <rfc822;git-outgoing>); Sat, 25 Apr 2009 01:08:00 -0400
-Received: from smtp4-g21.free.fr ([212.27.42.4]:59115 "EHLO smtp4-g21.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751278AbZDYFIA convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 25 Apr 2009 01:08:00 -0400
-Received: from smtp4-g21.free.fr (localhost [127.0.0.1])
-	by smtp4-g21.free.fr (Postfix) with ESMTP id 2D05B4C805B;
-	Sat, 25 Apr 2009 07:07:52 +0200 (CEST)
-Received: from bureau.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
-	by smtp4-g21.free.fr (Postfix) with ESMTP id 30A204C803D;
-	Sat, 25 Apr 2009 07:07:50 +0200 (CEST)
-User-Agent: KMail/1.9.9
-In-Reply-To: <49F17945.8000004@viscovery.net>
+	id S1752211AbZDYJEz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 25 Apr 2009 05:04:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751967AbZDYJEy
+	(ORCPT <rfc822;git-outgoing>); Sat, 25 Apr 2009 05:04:54 -0400
+Received: from fg-out-1718.google.com ([72.14.220.153]:34319 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751787AbZDYJEx (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 25 Apr 2009 05:04:53 -0400
+Received: by fg-out-1718.google.com with SMTP id 16so301048fgg.17
+        for <git@vger.kernel.org>; Sat, 25 Apr 2009 02:04:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=ARc6wJ3agneTm720O1gqA48MJBorUNImRx7M+B+lUcc=;
+        b=GifNEtY09lhsezSUKCfdsJ53NLZyiQMEFs1CNVG2onRSSY/CkUB4De0pfR+DjVhJbW
+         dtZqXvdbZl9YmJ5g0wTbIAcC6M+eYqPmGEgGiTKUCNxGBGDKdFYL0E3CZIDSNmMGnfpB
+         KU1sECG0boHGSiK6khPqL8HnF8M2rn6ka7t+A=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=YpZgQRdWSejYi3t6PWspAv5bmUCqfyM6TPcxO5/lO80QekeQE2Gh4fshYBkn6bnO4o
+         qp9ygmrWhIxtIuqix1WcaCzva7DoI72QGa/YrkHjps9NAYm5ACvGRcifWOAcCwdzfZ1E
+         3LKU8reTt0vZ9okuJSI/Qvgsv2JrdEwaDRb/M=
+Received: by 10.86.36.17 with SMTP id j17mr1496079fgj.40.1240650291609;
+        Sat, 25 Apr 2009 02:04:51 -0700 (PDT)
+Received: from ?192.168.1.13? (abrz154.neoplus.adsl.tpnet.pl [83.8.119.154])
+        by mx.google.com with ESMTPS id d6sm2458225fga.2.2009.04.25.02.04.49
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sat, 25 Apr 2009 02:04:50 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <200904250010.46299.jnareb@gmail.com>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117538>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117539>
 
-Le vendredi 24 avril 2009, Johannes Sixt a =E9crit :
-> Junio C Hamano schrieb:
-> > Not very readable.  A better example might be to demonstrate someth=
-ing
-> > like this:
-> >
-> > 	$ cat >your-git-script.sh <<\EOF
-> > 	#!/bin/sh
-> > 	# quote user-supplied arguments
-> > 	args=3D$(git rev-parse --sq-quote "$@")
-> >         # and use it inside a handcrafted command line
-> >         command=3D"git frotz -n24 $args"
-> >         eval "$command"
-> > 	EOF
-> >
-> > 	$ sh your-git-script.sh "a b'c"
-> >
-> > i.e, put stress on how to use it, not on how it works internally.
->
-> Hmm, that makes me wonder why we special-case shell-quoting and imple=
-ment
-> it in an executable. Why don't we have perl-quoting, C-quoting,
-> PHP-quoting, $language-of-your-choice quoting, etc, too?
+On Sat, 25 April 2009, Jakub Narebski wrote:
 
-Because there are a lot of shell scripts in the Git source code and it'=
-s an=20
-important problem for shell scripts to properly handle arguments.
+> So it is not that simple...
 
-> I think we should simply move sq() from git-am to git-sh-setup and us=
-e
-> that in git-bisect.
+That said, here is simple patch which should fix the bug you found.
+It always creates sensible short and long values, contrary to your patch
+(take a look at gitweb output after your patch, including tooltips on
+mouseover).
 
-We already have an implementation of shell quoting in C, why not use it=
-=20
-everywhere instead of having 2 implementations?
+But it is NOT TESTED if it works correctly, and if it covers all
+occurrences.  And it might be not necessary in all its complication:
+we could simply replace control characters by '?' like in
+chop_and_escape_str subroutine (which would also make gitweb more
+consistent).  It also lacks commit message.
 
-And what happens if someone want to port to C a shell script that uses =
-sq()?
-The implementation used will have to be the one in C, so why not use it=
-=20
-right now?
+Nevertheless it might be good bandaid for your problem:
 
-Regards,
-Christian.
+-- >8 --
+diff --git c/gitweb/gitweb.perl w/gitweb/gitweb.perl
+index 3f99361..8575d5f 100755
+--- c/gitweb/gitweb.perl
++++ w/gitweb/gitweb.perl
+@@ -1035,6 +1035,24 @@ sub esc_url {
+ 	return $str;
+ }
+ 
++# quote and escape tag attribute values; autoEscape has to be turned off
++sub esc_attr {
++	my $str = shift;
++	return $str unless defined $str;
++
++	my %ent = ( # named HTML entities
++		'"' => '&quot;',
++		'&' => '&amp;',
++		'<' => '&lt;',
++		'>' => '&gt;',
++	);
++	$str = to_utf8($str);
++	$str =~ s|([\"&<>])|$ent{$1}|eg;
++	$str =~ s|([[:cntrl:]])|(($1 ne "\t") ? quot_upr($1) : $1)|eg;
++
++	return $str;
++}
++
+ # replace invalid utf8 character with SUBSTITUTION sequence
+ sub esc_html ($;%) {
+ 	my $str = shift;
+@@ -1457,14 +1475,19 @@ sub format_subject_html {
+ 	my ($long, $short, $href, $extra) = @_;
+ 	$extra = '' unless defined($extra);
+ 
++	my $ret = '';
+ 	if (length($short) < length($long)) {
+-		return $cgi->a({-href => $href, -class => "list subject",
+-		                -title => to_utf8($long)},
++		my $autoescape = $cgi->autoEscape(undef);
++		# or just replace s/([[:cntrl:]])/?/g in -title
++		$ret = $cgi->a({-href => $href, -class => "list subject",
++		                -title => esc_attr($long)},
+ 		       esc_html($short) . $extra);
++		$cgi->autoEscape($autoescape); # restore original value
+ 	} else {
+-		return $cgi->a({-href => $href, -class => "list subject"},
++		$ret = $cgi->a({-href => $href, -class => "list subject"},
+ 		       esc_html($long)  . $extra);
+ 	}
++	return $ret;
+ }
+ 
+ # format git diff header line, i.e. "diff --(git|combined|cc) ..."
