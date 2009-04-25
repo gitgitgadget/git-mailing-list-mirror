@@ -1,62 +1,69 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: [PATCH v2] Add an option not to use link(src, dest) && unlink(src)
- when that is unreliable
-Date: Sat, 25 Apr 2009 11:43:10 -0700 (PDT)
-Message-ID: <alpine.LFD.2.00.0904251142150.3101@localhost.localdomain>
-References: <alpine.DEB.1.00.0904231252080.10279@pacific.mpi-cbg.de> <200904232116.10769.j6t@kdbg.org> <alpine.DEB.1.00.0904251155130.10279@pacific.mpi-cbg.de> <7vbpqkznjs.fsf@gitster.siamese.dyndns.org> <alpine.LFD.2.00.0904251039460.3101@localhost.localdomain>
- <49F3588A.4000707@gmx.net>
+From: Johannes Sixt <j6t@kdbg.org>
+Subject: Re: [PATCH v2] Add an option not to use link(src, dest) && unlink(src) when that is unreliable
+Date: Sat, 25 Apr 2009 20:50:10 +0200
+Message-ID: <200904252050.10306.j6t@kdbg.org>
+References: <alpine.DEB.1.00.0904231252080.10279@pacific.mpi-cbg.de> <alpine.DEB.1.00.0904251155130.10279@pacific.mpi-cbg.de> <7vbpqkznjs.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Johannes Sixt <j6t@kdbg.org>, git@vger.kernel.org
-To: Michael Gaber <Michael.Gaber@gmx.net>
-X-From: git-owner@vger.kernel.org Sat Apr 25 20:49:17 2009
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Apr 25 20:51:52 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lxmw8-000459-LZ
-	for gcvg-git-2@gmane.org; Sat, 25 Apr 2009 20:49:17 +0200
+	id 1Lxmyb-0004kg-Oe
+	for gcvg-git-2@gmane.org; Sat, 25 Apr 2009 20:51:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753720AbZDYSqW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 25 Apr 2009 14:46:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753177AbZDYSqW
-	(ORCPT <rfc822;git-outgoing>); Sat, 25 Apr 2009 14:46:22 -0400
-Received: from smtp1.linux-foundation.org ([140.211.169.13]:60667 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751432AbZDYSqV (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 25 Apr 2009 14:46:21 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
-	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id n3PIhBbQ011337
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Sat, 25 Apr 2009 11:43:47 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id n3PIhAfw007097;
-	Sat, 25 Apr 2009 11:43:10 -0700
-X-X-Sender: torvalds@localhost.localdomain
-In-Reply-To: <49F3588A.4000707@gmx.net>
-User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
-X-Spam-Status: No, hits=-3.956 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED
-X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
+	id S1753242AbZDYSuP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 25 Apr 2009 14:50:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752364AbZDYSuP
+	(ORCPT <rfc822;git-outgoing>); Sat, 25 Apr 2009 14:50:15 -0400
+Received: from bsmtp.bon.at ([213.33.87.14]:34215 "EHLO bsmtp.bon.at"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751721AbZDYSuO (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 25 Apr 2009 14:50:14 -0400
+Received: from dx.sixt.local (unknown [93.83.142.38])
+	by bsmtp.bon.at (Postfix) with ESMTP id C66E22C4009;
+	Sat, 25 Apr 2009 20:50:10 +0200 (CEST)
+Received: from localhost (localhost [IPv6:::1])
+	by dx.sixt.local (Postfix) with ESMTP id 8BF424259F;
+	Sat, 25 Apr 2009 20:50:10 +0200 (CEST)
+User-Agent: KMail/1.9.9
+In-Reply-To: <7vbpqkznjs.fsf@gitster.siamese.dyndns.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117569>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117570>
 
+On Samstag, 25. April 2009, Junio C Hamano wrote:
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> > It seems that accessing NTFS partitions with ufsd (at least on my EeePC)
+> > has an unnerving bug: if you link() a file and unlink() it right away,
+> > the target of the link() will have the correct size, but consist of NULs.
+> >
+> > It seems as if the calls are simply not serialized correctly, as
+> > single-stepping through the function move_temp_to_file() works
+> > flawlessly.
+> >
+> > As ufsd is "Commertial software" (sic!), I cannot fix it, and have to
+> > work around it in Git.
+> >
+> > At the same time, it seems that this fixes msysGit issues 222 and 229 to
+> > assume that Windows cannot handle link() && unlink().
+> >
+> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> > Acked-by: Johannes Sixt <j6t@kdbg.org>
+>
+> Hannes, are you ok with this?
 
+Yes. We have been using rename() instead of link() on Windows until recently 
+anyway (until link() was implemented, 7be401e06, 2009-01-24). There is no 
+regression to be expected from this side.
 
-On Sat, 25 Apr 2009, Michael Gaber wrote:
-> 
-> http://www.cs.utexas.edu/users/EWD/ewd02xx/EWD215.PDF
-
-Yeah, and people thought "pascal" was a good language because it didn't 
-contain "break" statements to break out of loops, or "return" statements 
-to break out of functions early.
-
-Too bad. They were wrong.
-
-			Linus
+-- Hannes
