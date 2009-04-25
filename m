@@ -1,79 +1,65 @@
-From: Sitaram Chamarty <sitaramc@gmail.com>
-Subject: [PATCH] Remove obsolete bug warning in man git-update-server-info
-Date: Sat, 25 Apr 2009 16:26:52 +0530
-Message-ID: <20090425105652.GA16297@atcmail.atc.tcs.com>
+From: Gregory Petrosyan <gregory.petrosyan@gmail.com>
+Subject: Re: Git-SVN on Cygwin: svn+ssh good, https awkward
+Date: Sat, 25 Apr 2009 16:04:29 +0400
+Message-ID: <20090425120429.GA417@home>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-To: gitster@pobox.com, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Apr 25 13:50:03 2009
+Cc: git@vger.kernel.org
+To: Matthias Andree <matthias.andree@gmx.de>
+X-From: git-owner@vger.kernel.org Sat Apr 25 14:09:50 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LxgOM-0003Gd-13
-	for gcvg-git-2@gmane.org; Sat, 25 Apr 2009 13:49:58 +0200
+	id 1LxghV-0000Hx-Dd
+	for gcvg-git-2@gmane.org; Sat, 25 Apr 2009 14:09:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752073AbZDYLsM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 25 Apr 2009 07:48:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751714AbZDYLsM
-	(ORCPT <rfc822;git-outgoing>); Sat, 25 Apr 2009 07:48:12 -0400
-Received: from atcmail.atc.tcs.co.in ([203.200.212.145]:46313 "EHLO
-	atcmail.atc.tcs.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751146AbZDYLsL (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 25 Apr 2009 07:48:11 -0400
-X-Greylist: delayed 3062 seconds by postgrey-1.27 at vger.kernel.org; Sat, 25 Apr 2009 07:48:11 EDT
-Received: from atcmail.atc.tcs.com (atcmail.atc.tcs.com [127.0.0.1])
-	by atcmail.atc.tcs.com (8.14.2/8.14.2) with ESMTP id n3PAutkG016357;
-	Sat, 25 Apr 2009 16:26:55 +0530
-Received: (from sitaram@localhost)
-	by atcmail.atc.tcs.com (8.14.2/8.14.2/Submit) id n3PAuqBB016356;
-	Sat, 25 Apr 2009 16:26:52 +0530
+	id S1752366AbZDYMEf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 25 Apr 2009 08:04:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751714AbZDYMEe
+	(ORCPT <rfc822;git-outgoing>); Sat, 25 Apr 2009 08:04:34 -0400
+Received: from mail-bw0-f163.google.com ([209.85.218.163]:42709 "EHLO
+	mail-bw0-f163.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751615AbZDYMEe (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 25 Apr 2009 08:04:34 -0400
+Received: by bwz7 with SMTP id 7so1494419bwz.37
+        for <git@vger.kernel.org>; Sat, 25 Apr 2009 05:04:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:mail-followup-to:mime-version:content-type
+         :content-disposition:user-agent;
+        bh=9zeyrZPVHqANJTD+JQosgIxUR0WeSAkRGHQTISQCRsc=;
+        b=GnUfYtSDivGqU2YkATTWgQIFnEQ5+NkyB97FCUo+ID5iaZGZu6PSszJrB0L2TVD6GV
+         pOspBnaTlND6gYe5l1ldnCtTL5f8mrwCdrLYRHh3FmiAFK/phKQpgY8qZKTfkJteCBut
+         wZLb5avZnY3jKUSV38VRi45t8PSx6H1OF3KpM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:mail-followup-to:mime-version
+         :content-type:content-disposition:user-agent;
+        b=TsMl895UAyqLtqynyJDTVyxkEewQpeHHFkgD7MhSybpCDDuxz4wVccanZak5R0zHEw
+         bgondqEQcd4uNCKB2HSdHqN79CfbDkFlhMhCHFmu+un/Ok43vMKh3Rq0AjISNQxEvnme
+         z9nSGsKwdfrFoPJnZPlvGgpXNGNbtbvMag6OU=
+Received: by 10.103.105.1 with SMTP id h1mr1905856mum.13.1240661072551;
+        Sat, 25 Apr 2009 05:04:32 -0700 (PDT)
+Received: from home ([78.111.87.108])
+        by mx.google.com with ESMTPS id y37sm4911349mug.19.2009.04.25.05.04.31
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sat, 25 Apr 2009 05:04:32 -0700 (PDT)
+Mail-Followup-To: Matthias Andree <matthias.andree@gmx.de>,
+	git@vger.kernel.org
 Content-Disposition: inline
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-Virus-Scanned: ClamAV 0.94.2/9286/Fri Apr 24 21:33:12 2009 on atcmail.atc.tcs.com
-X-Virus-Status: Clean
-X-Spam-Status: No, score=-4.4 required=5.0 tests=ALL_TRUSTED,BAYES_00
-	autolearn=ham version=3.2.5
-X-Spam-Checker-Version: SpamAssassin 3.2.5 (2008-06-10) on atcmail.atc.tcs.com
+User-Agent: Mutt/1.5.19 (2009-04-07)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117550>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117551>
 
-The bug referred to was fixed in 60d0526
+> git-svn on Cygwin works well with svn+ssh://, but needs some fixes
+> around tempfile and/or subprocess handling for https:// - please help.
 
-Signed-off-by: Sitaram Chamarty <sitaramc@gmail.com>
----
+This problem is triggered by updating Cygwin's SVN to 1.6. Downgrading
+it back to 1.5 make git-svn work for me again.
 
-It was fixed in September 2005 [thanks to drizzd on irc for
-pointing this out].
-
-I'd also make a plea for someone who groks this better than
-I do to document what --force does and under what conditions
-it may be needed; the code looks to me like parse_pack_def
-should take care of the problem, but clearly it was needed
-for some reason that I'm not expert enough to understand.
-
- Documentation/git-update-server-info.txt |    6 ------
- 1 files changed, 0 insertions(+), 6 deletions(-)
-
-diff --git a/Documentation/git-update-server-info.txt b/Documentation/git-update-server-info.txt
-index 35d27b0..035cc30 100644
---- a/Documentation/git-update-server-info.txt
-+++ b/Documentation/git-update-server-info.txt
-@@ -39,12 +39,6 @@ what they are for:
- * info/refs
- 
- 
--BUGS
------
--When you remove an existing ref, the command fails to update
--info/refs file unless `--force` flag is given.
--
--
- Author
- ------
- Written by Junio C Hamano <gitster@pobox.com>
--- 
-1.6.2
+	Gregory
