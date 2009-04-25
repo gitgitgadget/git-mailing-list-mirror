@@ -1,79 +1,54 @@
-From: David Abrahams <dave@boostpro.com>
-Subject: Re: [doc] User Manual Suggestion
-Date: Fri, 24 Apr 2009 20:53:37 -0400
-Message-ID: <1A9F6DB0-983F-4A5B-B3B7-33227C11F36A@boostpro.com>
-References: <m24owgqy0j.fsf@boostpro.com> <200904240051.46233.johan@herland.net> <b4087cc50904231730i1e8a005cpaf1921e23df11da6@mail.gmail.com> <200904242230.13239.johan@herland.net> <alpine.LNX.2.00.0904241655090.2147@iabervon.org> <20090424213848.GA14493@coredump.intra.peff.net> <4E155CC5-B20A-4B79-8CBF-9D1E0E36920F@boostpro.com> <20090425003531.GA18125@coredump.intra.peff.net>
-Mime-Version: 1.0 (Apple Message framework v930.4)
+From: Andy Lester <andy@petdance.com>
+Subject: Re: [PATCH] Removed redundant static functions such as update_tracking_ref() and verify_remote_names() from builtin-send-pack.c, and made the ones in transport.c not be static so they can be used instead.
+Date: Fri, 24 Apr 2009 23:15:07 -0500
+Message-ID: <4B2541E8-7A27-45D5-B77D-AE93C0430EA8@petdance.com>
+References: <1240546432-26212-1-git-send-email-andy@petdance.com> <20090424210418.GC13561@coredump.intra.peff.net> <99B4BF12-01B9-4A68-B2E0-EF5DF2595FF0@petdance.com> <alpine.DEB.1.00.0904250206250.10279@pacific.mpi-cbg.de>
+Mime-Version: 1.0 (Apple Message framework v930.3)
 Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
 Content-Transfer-Encoding: 7bit
-Cc: Daniel Barkalow <barkalow@iabervon.org>,
-	Johan Herland <johan@herland.net>,
-	Michael Witten <mfwitten@gmail.com>, git@vger.kernel.org,
-	"J. Bruce Fields" <bfields@fieldses.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sat Apr 25 02:55:14 2009
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org, gitster@pobox.com
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Sat Apr 25 06:19:14 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LxWAj-0001z1-A2
-	for gcvg-git-2@gmane.org; Sat, 25 Apr 2009 02:55:13 +0200
+	id 1LxZM7-0001R6-Jn
+	for gcvg-git-2@gmane.org; Sat, 25 Apr 2009 06:19:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752140AbZDYAxk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 24 Apr 2009 20:53:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751744AbZDYAxk
-	(ORCPT <rfc822;git-outgoing>); Fri, 24 Apr 2009 20:53:40 -0400
-Received: from boost-consulting.com ([206.71.190.141]:57785 "EHLO
-	boost-consulting.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750890AbZDYAxj (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 24 Apr 2009 20:53:39 -0400
-Received: from [192.168.188.150] (207-172-223-249.c3-0.smr-ubr3.sbo-smr.ma.static.cable.rcn.com [207.172.223.249])
-	(Authenticated sender: dave)
-	by boost-consulting.com (Postfix) with ESMTPSA id 11C001CC1F;
-	Fri, 24 Apr 2009 17:51:07 -0700 (PDT)
-In-Reply-To: <20090425003531.GA18125@coredump.intra.peff.net>
-X-Mailer: Apple Mail (2.930.4)
+	id S1750945AbZDYEPL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 25 Apr 2009 00:15:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750831AbZDYEPK
+	(ORCPT <rfc822;git-outgoing>); Sat, 25 Apr 2009 00:15:10 -0400
+Received: from huggy.petdance.com ([72.14.176.61]:44454 "EHLO
+	huggy.petdance.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750820AbZDYEPJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 25 Apr 2009 00:15:09 -0400
+Received: from mel.petdance.com (uniqua.petdance.com [64.81.227.163])
+	by huggy.petdance.com (Postfix) with ESMTP id A0AA31BEC46;
+	Sat, 25 Apr 2009 00:15:07 -0400 (EDT)
+In-Reply-To: <alpine.DEB.1.00.0904250206250.10279@pacific.mpi-cbg.de>
+X-Mailer: Apple Mail (2.930.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117534>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117535>
 
 
-On Apr 24, 2009, at 8:35 PM, Jeff King wrote:
+On Apr 24, 2009, at 7:07 PM, Johannes Schindelin wrote:
 
-> On Fri, Apr 24, 2009 at 08:19:18PM -0400, David Abrahams wrote:
+> I dunno.  The most important part of CodingGuidelines is this:
 >
->>> git show master
->>> git show master:Documentation
->>> git show master:Makefile
->>>
->> I don't believe you need to know about trees and blobs to make  
->> sense of
->> that.  Those are just directories and files.  The whole idea that  
->> trees
->> are a more-general thing that could be used to represent something  
->> other
->> than directory structure and blobs could be used to represent  
->> something
->> other than file contents is way below most peoples' need-to-know
->> threshold.
+> 	As for more concrete guidelines, just imitate the existing code
+> 	(this is a good guideline, no matter which project you are
+> 	contributing to).
 >
-> Actually, it is not the generally of trees that I think is interesting
-> there, but the generality of _objects_. That is, each of those  
-> things is
-> a first-class object, and has a unique name by which it can be  
-> referred.
+> (And of course, this holds for the style of commit messages, too.)
 
 
-I'm sorry, but I think most people would find that so unremarkable  
-that making a big deal about it would lead to "what am I missing here"  
-confusion.  Maybe a person who's exclusively used CVS (or older)  
-technologies before coming to Git would be happy to know that, but  
-it's sort of obvious.  In CVS the lack of first-class directories  
-sticks out like a sore thumb.
+Would you rather I not bother?  Far be it from me to try to force  
+myself on any project.
 
 --
-David Abrahams
-BoostPro Computing
-http://boostpro.com
+Andy Lester => andy@petdance.com => www.petdance.com => AIM:petdance
