@@ -1,84 +1,79 @@
-From: Markus Heidelberg <markus.heidelberg@web.de>
-Subject: [PATCH] bash completion: show-branch color support
-Date: Sat, 25 Apr 2009 13:46:14 +0200
-Message-ID: <1240659974-12161-1-git-send-email-markus.heidelberg@web.de>
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Markus Heidelberg <markus.heidelberg@web.de>
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Sat Apr 25 13:48:17 2009
+From: Sitaram Chamarty <sitaramc@gmail.com>
+Subject: [PATCH] Remove obsolete bug warning in man git-update-server-info
+Date: Sat, 25 Apr 2009 16:26:52 +0530
+Message-ID: <20090425105652.GA16297@atcmail.atc.tcs.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+To: gitster@pobox.com, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Apr 25 13:50:03 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LxgMj-0002mY-16
-	for gcvg-git-2@gmane.org; Sat, 25 Apr 2009 13:48:17 +0200
+	id 1LxgOM-0003Gd-13
+	for gcvg-git-2@gmane.org; Sat, 25 Apr 2009 13:49:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751555AbZDYLqZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 25 Apr 2009 07:46:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751395AbZDYLqZ
-	(ORCPT <rfc822;git-outgoing>); Sat, 25 Apr 2009 07:46:25 -0400
-Received: from fmmailgate02.web.de ([217.72.192.227]:48604 "EHLO
-	fmmailgate02.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751146AbZDYLqY (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 25 Apr 2009 07:46:24 -0400
-Received: from smtp05.web.de (fmsmtp05.dlan.cinetic.de [172.20.4.166])
-	by fmmailgate02.web.de (Postfix) with ESMTP id AECC8FDB0F1F;
-	Sat, 25 Apr 2009 13:46:23 +0200 (CEST)
-Received: from [89.59.73.176] (helo=localhost.localdomain)
-	by smtp05.web.de with asmtp (TLSv1:AES256-SHA:256)
-	(WEB.DE 4.110 #277)
-	id 1LxgKt-0000oA-00; Sat, 25 Apr 2009 13:46:23 +0200
-X-Mailer: git-send-email 1.6.3.rc1.84.g1036b
-X-Sender: markus.heidelberg@web.de
-X-Provags-ID: V01U2FsdGVkX1+AQETGpGGpdKNXZBClXYUu8abUSY9HfY9z67XY
-	VXzV+dn73l1lT8kM/vi8AFccBYj9PACvJeNnDJUUQpTUYMYUjU
-	xS/d0fWhcjU4XWRH5/zA==
+	id S1752073AbZDYLsM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 25 Apr 2009 07:48:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751714AbZDYLsM
+	(ORCPT <rfc822;git-outgoing>); Sat, 25 Apr 2009 07:48:12 -0400
+Received: from atcmail.atc.tcs.co.in ([203.200.212.145]:46313 "EHLO
+	atcmail.atc.tcs.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751146AbZDYLsL (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 25 Apr 2009 07:48:11 -0400
+X-Greylist: delayed 3062 seconds by postgrey-1.27 at vger.kernel.org; Sat, 25 Apr 2009 07:48:11 EDT
+Received: from atcmail.atc.tcs.com (atcmail.atc.tcs.com [127.0.0.1])
+	by atcmail.atc.tcs.com (8.14.2/8.14.2) with ESMTP id n3PAutkG016357;
+	Sat, 25 Apr 2009 16:26:55 +0530
+Received: (from sitaram@localhost)
+	by atcmail.atc.tcs.com (8.14.2/8.14.2/Submit) id n3PAuqBB016356;
+	Sat, 25 Apr 2009 16:26:52 +0530
+Content-Disposition: inline
+User-Agent: Mutt/1.5.18 (2008-05-17)
+X-Virus-Scanned: ClamAV 0.94.2/9286/Fri Apr 24 21:33:12 2009 on atcmail.atc.tcs.com
+X-Virus-Status: Clean
+X-Spam-Status: No, score=-4.4 required=5.0 tests=ALL_TRUSTED,BAYES_00
+	autolearn=ham version=3.2.5
+X-Spam-Checker-Version: SpamAssassin 3.2.5 (2008-06-10) on atcmail.atc.tcs.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117549>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117550>
 
-This implements completion of --color and --no-color for "git
-show-branch" and color.showbranch for "git config".
+The bug referred to was fixed in 60d0526
 
-Signed-off-by: Markus Heidelberg <markus.heidelberg@web.de>
+Signed-off-by: Sitaram Chamarty <sitaramc@gmail.com>
 ---
 
-   This goes on top of mh/show-branch-color which is currently in pu.
+It was fixed in September 2005 [thanks to drizzd on irc for
+pointing this out].
 
- contrib/completion/git-completion.bash |    5 ++++-
- 1 files changed, 4 insertions(+), 1 deletions(-)
+I'd also make a plea for someone who groks this better than
+I do to document what --force does and under what conditions
+it may be needed; the code looks to me like parse_pack_def
+should take care of the problem, but clearly it was needed
+for some reason that I'm not expert enough to understand.
 
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index 1a90cb8..b588387 100755
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -1333,7 +1333,8 @@ _git_config ()
- 		__gitcomp "$(__git_merge_strategies)"
- 		return
- 		;;
--	color.branch|color.diff|color.interactive|color.status|color.ui)
-+	color.branch|color.diff|color.interactive|\
-+	color.showbranch|color.status|color.ui)
- 		__gitcomp "always never auto"
- 		return
- 		;;
-@@ -1415,6 +1416,7 @@ _git_config ()
- 		color.interactive.help
- 		color.interactive.prompt
- 		color.pager
-+		color.showbranch
- 		color.status
- 		color.status.added
- 		color.status.changed
-@@ -1676,6 +1678,7 @@ _git_show_branch ()
- 		__gitcomp "
- 			--all --remotes --topo-order --current --more=
- 			--list --independent --merge-base --no-name
-+			--color --no-color
- 			--sha1-name --topics --reflog
- 			"
- 		return
+ Documentation/git-update-server-info.txt |    6 ------
+ 1 files changed, 0 insertions(+), 6 deletions(-)
+
+diff --git a/Documentation/git-update-server-info.txt b/Documentation/git-update-server-info.txt
+index 35d27b0..035cc30 100644
+--- a/Documentation/git-update-server-info.txt
++++ b/Documentation/git-update-server-info.txt
+@@ -39,12 +39,6 @@ what they are for:
+ * info/refs
+ 
+ 
+-BUGS
+-----
+-When you remove an existing ref, the command fails to update
+-info/refs file unless `--force` flag is given.
+-
+-
+ Author
+ ------
+ Written by Junio C Hamano <gitster@pobox.com>
 -- 
-1.6.3.rc1.84.g1036b
+1.6.2
