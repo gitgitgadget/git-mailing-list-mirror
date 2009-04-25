@@ -1,67 +1,84 @@
-From: Tay Ray Chuan <rctay89@gmail.com>
-Subject: Re: cygwin - clone on repo fails
-Date: Sat, 25 Apr 2009 19:18:23 +0800
-Message-ID: <be6fef0d0904250418h43749727t8979e9298187b47d@mail.gmail.com>
-References: <81bfc67a0904231636l53d3970cycd1ff1dc70c8568c@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Caleb Cushing <xenoterracide@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Apr 25 13:20:43 2009
+From: Markus Heidelberg <markus.heidelberg@web.de>
+Subject: [PATCH] bash completion: show-branch color support
+Date: Sat, 25 Apr 2009 13:46:14 +0200
+Message-ID: <1240659974-12161-1-git-send-email-markus.heidelberg@web.de>
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Markus Heidelberg <markus.heidelberg@web.de>
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Sat Apr 25 13:48:17 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lxfw0-00041C-6r
-	for gcvg-git-2@gmane.org; Sat, 25 Apr 2009 13:20:40 +0200
+	id 1LxgMj-0002mY-16
+	for gcvg-git-2@gmane.org; Sat, 25 Apr 2009 13:48:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752850AbZDYLSZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 25 Apr 2009 07:18:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752847AbZDYLSZ
-	(ORCPT <rfc822;git-outgoing>); Sat, 25 Apr 2009 07:18:25 -0400
-Received: from wa-out-1112.google.com ([209.85.146.180]:51799 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752386AbZDYLSY (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 25 Apr 2009 07:18:24 -0400
-Received: by wa-out-1112.google.com with SMTP id j5so789210wah.21
-        for <git@vger.kernel.org>; Sat, 25 Apr 2009 04:18:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=rEExKWXyewZ3oqQ9OoNnIEmjt41TpCiPHuEHONaTVjU=;
-        b=MxjMT2LyxjvNfoqK5SO1djzDrlv+1QFX03iPN5B/yDg44gVY9cZTdVIZVpx6k/buyl
-         tLSOXFglvywXQBWhzrwgZW5KERDMBq41/BMKJCA2biUIjHi0DvEguC1HfR5dAqG67W97
-         wZWDcBhP10C6A9eNwTmPtmudnAHuVnHnZwNRw=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=ZHeU8R3OzCa66jvJJhJkMQhjSbTH8iDTCShEZ6zHphdrk6TCm3kEWIzp9zIYSMBlLf
-         mmwolvXCXxwg+IxaUa7xR7AB7gzZvTUIxGP5Lb83q8b6hMYvk8kcsmI8BROyWv4MFxfe
-         UL69Ldj3e94dODZHzM6Ho+QkLuzNBQOEHkIGI=
-Received: by 10.115.48.12 with SMTP id a12mr1844829wak.167.1240658303040; Sat, 
-	25 Apr 2009 04:18:23 -0700 (PDT)
-In-Reply-To: <81bfc67a0904231636l53d3970cycd1ff1dc70c8568c@mail.gmail.com>
+	id S1751555AbZDYLqZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 25 Apr 2009 07:46:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751395AbZDYLqZ
+	(ORCPT <rfc822;git-outgoing>); Sat, 25 Apr 2009 07:46:25 -0400
+Received: from fmmailgate02.web.de ([217.72.192.227]:48604 "EHLO
+	fmmailgate02.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751146AbZDYLqY (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 25 Apr 2009 07:46:24 -0400
+Received: from smtp05.web.de (fmsmtp05.dlan.cinetic.de [172.20.4.166])
+	by fmmailgate02.web.de (Postfix) with ESMTP id AECC8FDB0F1F;
+	Sat, 25 Apr 2009 13:46:23 +0200 (CEST)
+Received: from [89.59.73.176] (helo=localhost.localdomain)
+	by smtp05.web.de with asmtp (TLSv1:AES256-SHA:256)
+	(WEB.DE 4.110 #277)
+	id 1LxgKt-0000oA-00; Sat, 25 Apr 2009 13:46:23 +0200
+X-Mailer: git-send-email 1.6.3.rc1.84.g1036b
+X-Sender: markus.heidelberg@web.de
+X-Provags-ID: V01U2FsdGVkX1+AQETGpGGpdKNXZBClXYUu8abUSY9HfY9z67XY
+	VXzV+dn73l1lT8kM/vi8AFccBYj9PACvJeNnDJUUQpTUYMYUjU
+	xS/d0fWhcjU4XWRH5/zA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117548>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117549>
 
-Hi,
+This implements completion of --color and --no-color for "git
+show-branch" and color.showbranch for "git config".
 
-On Fri, Apr 24, 2009 at 7:36 AM, Caleb Cushing <xenoterracide@gmail.com> wrote:
-> repo works fine cloning to my linux system
+Signed-off-by: Markus Heidelberg <markus.heidelberg@web.de>
+---
 
-that's a pretty hefty repo.
+   This goes on top of mh/show-branch-color which is currently in pu.
 
-Could you check what version of git you have on cygwin (git --version)?
+ contrib/completion/git-completion.bash |    5 ++++-
+ 1 files changed, 4 insertions(+), 1 deletions(-)
 
-You could also try cloning the repo over http:// instead of git://.
-
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index 1a90cb8..b588387 100755
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -1333,7 +1333,8 @@ _git_config ()
+ 		__gitcomp "$(__git_merge_strategies)"
+ 		return
+ 		;;
+-	color.branch|color.diff|color.interactive|color.status|color.ui)
++	color.branch|color.diff|color.interactive|\
++	color.showbranch|color.status|color.ui)
+ 		__gitcomp "always never auto"
+ 		return
+ 		;;
+@@ -1415,6 +1416,7 @@ _git_config ()
+ 		color.interactive.help
+ 		color.interactive.prompt
+ 		color.pager
++		color.showbranch
+ 		color.status
+ 		color.status.added
+ 		color.status.changed
+@@ -1676,6 +1678,7 @@ _git_show_branch ()
+ 		__gitcomp "
+ 			--all --remotes --topo-order --current --more=
+ 			--list --independent --merge-base --no-name
++			--color --no-color
+ 			--sha1-name --topics --reflog
+ 			"
+ 		return
 -- 
-Cheers,
-Ray Chuan
+1.6.3.rc1.84.g1036b
