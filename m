@@ -1,188 +1,88 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH v2] Add an option not to use link(src, dest) && unlink(src)
- when that is unreliable
-Date: Sat, 25 Apr 2009 11:57:14 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.0904251155130.10279@pacific.mpi-cbg.de>
-References: <alpine.DEB.1.00.0904231252080.10279@pacific.mpi-cbg.de> <200904232116.10769.j6t@kdbg.org>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [doc] User Manual Suggestion
+Date: Sat, 25 Apr 2009 13:18:01 +0300
+Message-ID: <94a0d4530904250318w7f368ea6hb5d59558aedc5c4f@mail.gmail.com>
+References: <m24owgqy0j.fsf@boostpro.com>
+	 <200904240051.46233.johan@herland.net>
+	 <b4087cc50904231730i1e8a005cpaf1921e23df11da6@mail.gmail.com>
+	 <200904242230.13239.johan@herland.net>
+	 <alpine.LNX.2.00.0904241655090.2147@iabervon.org>
+	 <20090424213848.GA14493@coredump.intra.peff.net>
+	 <b4087cc50904241518w625a9890vecdd36bb937e76d5@mail.gmail.com>
+	 <b4087cc50904241525w7de597bfq7be89796947a14cc@mail.gmail.com>
+	 <alpine.LNX.2.00.0904241852500.2147@iabervon.org>
+	 <20090424231436.GA15058@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: Johannes Sixt <j6t@kdbg.org>
-X-From: git-owner@vger.kernel.org Sat Apr 25 12:03:01 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Daniel Barkalow <barkalow@iabervon.org>,
+	Michael Witten <mfwitten@gmail.com>,
+	Johan Herland <johan@herland.net>, git@vger.kernel.org,
+	David Abrahams <dave@boostpro.com>,
+	"J. Bruce Fields" <bfields@fieldses.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sat Apr 25 12:19:43 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lxeiq-0005GG-FP
-	for gcvg-git-2@gmane.org; Sat, 25 Apr 2009 12:03:00 +0200
+	id 1Lxez0-0001ML-BB
+	for gcvg-git-2@gmane.org; Sat, 25 Apr 2009 12:19:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752662AbZDYJ5J (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 25 Apr 2009 05:57:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751605AbZDYJ5I
-	(ORCPT <rfc822;git-outgoing>); Sat, 25 Apr 2009 05:57:08 -0400
-Received: from mail.gmx.net ([213.165.64.20]:48203 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752186AbZDYJ5G (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 25 Apr 2009 05:57:06 -0400
-Received: (qmail invoked by alias); 25 Apr 2009 09:57:04 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp011) with SMTP; 25 Apr 2009 11:57:04 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/Fo/RsD63F50CJJObJ08eOH+/MLYZVzfPrWow1mg
-	u/EK6F8/gQqfKD
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <200904232116.10769.j6t@kdbg.org>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.4
+	id S1752161AbZDYKSH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 25 Apr 2009 06:18:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751855AbZDYKSF
+	(ORCPT <rfc822;git-outgoing>); Sat, 25 Apr 2009 06:18:05 -0400
+Received: from fg-out-1718.google.com ([72.14.220.152]:55413 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751165AbZDYKSC (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 25 Apr 2009 06:18:02 -0400
+Received: by fg-out-1718.google.com with SMTP id 16so306831fgg.17
+        for <git@vger.kernel.org>; Sat, 25 Apr 2009 03:18:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=wYXlcFDwOBFw309VRjrmRzki4RcPN1w8+ctTG5By6U4=;
+        b=bDkz/ju4w81ifznGrKbTaTQL40tE5Zz7bHUMWZmoPpQARG2GhsVdE/z+ZHHeqGAsME
+         mH7ykV/9EJPuBJKR8Mb8S6MZpUiVTwoHZ1VGeLpllbR4J6MQxW+LNgFD375Hk21t7jYz
+         Ek5F62cs2higo6q7ZuscuMwKf7jEof2gU7P0I=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=kDkCtoWhEHMbtvX+ffM2+9/cspppMEocD7OmkVr/IGOhRrHWzkMzQksrACxFA7oNh/
+         uoIzRKF70vsgoDugqyRTVATtSpRn06xK91hRwW65N2yiCHDaQSh7O6AMha4jqSUtZ3ao
+         KDVLEe2FBKlhDtUT6wwoJKyQY+gg1EYrYooiY=
+Received: by 10.86.59.18 with SMTP id h18mr1555037fga.44.1240654681361; Sat, 
+	25 Apr 2009 03:18:01 -0700 (PDT)
+In-Reply-To: <20090424231436.GA15058@coredump.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117542>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117543>
 
+On Sat, Apr 25, 2009 at 2:14 AM, Jeff King <peff@peff.net> wrote:
+> On Fri, Apr 24, 2009 at 07:11:40PM -0400, Daniel Barkalow wrote:
+>
+>> > Let's start a reformation of the git terminology to use analogies that
+>> > have been around since the dawn of computing: 'memory', 'address', and
+>> > 'pointer'.
+>>
+>> I actually think calling them "sha1s" is better, simply because this bit
+>> of jargon doesn't mean anything else (git deals with email, so "address"
+>> is overloaded). And the term is already in use for this particular case,
+>> and it doesn't mean anything else at all (since, of course, the crypto
+>> thing is "SHA-1", not "sha1"), and it's short (which is important for
+>> making it easy to look at usage help).
+>
+> Junio suggested "object name" in another thread, which I think is nicely
+> descriptive.
 
-It seems that accessing NTFS partitions with ufsd (at least on my EeePC)
-has an unnerving bug: if you link() a file and unlink() it right away,
-the target of the link() will have the correct size, but consist of NULs.
+It's not a name, it's an identification, so how about "id"? You have
+tree ids, commit ids, blob ids, and so on.
 
-It seems as if the calls are simply not serialized correctly, as single-stepping
-through the function move_temp_to_file() works flawlessly.
-
-As ufsd is "Commertial software" (sic!), I cannot fix it, and have to work
-around it in Git.
-
-At the same time, it seems that this fixes msysGit issues 222 and 229 to
-assume that Windows cannot handle link() && unlink().
-
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-Acked-by: Johannes Sixt <j6t@kdbg.org>
----
-
-	On Thu, 23 Apr 2009, Johannes Sixt wrote:
-
-	> +		ret = ~EEXIST;	/* anything but EEXIST */
-
-	In addition to this, I also added the "(sic!)" for the "Commertial 
-	software" tyop.  So I still dared to add your
-
-	> Acked-by: Johannes Sixt <j6t@kdbg.org>
-
- Documentation/config.txt |    5 +++++
- Makefile                 |    8 ++++++++
- cache.h                  |    2 ++
- config.c                 |    5 +++++
- environment.c            |    4 ++++
- sha1_file.c              |    4 +++-
- 6 files changed, 27 insertions(+), 1 deletions(-)
-
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 3188569..d31adb6 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -429,6 +429,11 @@ relatively high IO latencies.  With this set to 'true', git will do the
- index comparison to the filesystem data in parallel, allowing
- overlapping IO's.
- 
-+core.unreliableHardlinks::
-+	Some filesystem drivers cannot properly handle hardlinking a file
-+	and deleting the source right away.  In such a case, you need to
-+	set this config variable to 'true'.
-+
- alias.*::
- 	Command aliases for the linkgit:git[1] command wrapper - e.g.
- 	after defining "alias.last = cat-file commit HEAD", the invocation
-diff --git a/Makefile b/Makefile
-index 6f602c7..5c8e83a 100644
---- a/Makefile
-+++ b/Makefile
-@@ -171,6 +171,10 @@ all::
- # Define UNRELIABLE_FSTAT if your system's fstat does not return the same
- # information on a not yet closed file that lstat would return for the same
- # file after it was closed.
-+#
-+# Define UNRELIABLE_HARDLINKS if your operating systems has problems when
-+# hardlinking a file to another name and unlinking the original file right
-+# away (some NTFS drivers seem to zero the contents in that scenario).
- 
- GIT-VERSION-FILE: .FORCE-GIT-VERSION-FILE
- 	@$(SHELL_PATH) ./GIT-VERSION-GEN
-@@ -835,6 +839,7 @@ ifneq (,$(findstring MINGW,$(uname_S)))
- 	NO_NSEC = YesPlease
- 	USE_WIN32_MMAP = YesPlease
- 	UNRELIABLE_FSTAT = UnfortunatelyYes
-+	UNRELIABLE_HARDLINKS = UnfortunatelySometimes
- 	COMPAT_CFLAGS += -D__USE_MINGW_ACCESS -DNOGDI -Icompat -Icompat/regex -Icompat/fnmatch
- 	COMPAT_CFLAGS += -DSNPRINTF_SIZE_CORR=1
- 	COMPAT_CFLAGS += -DSTRIP_EXTENSION=\".exe\"
-@@ -1018,6 +1023,9 @@ else
- 		COMPAT_OBJS += compat/win32mmap.o
- 	endif
- endif
-+ifdef UNRELIABLE_HARDLINKS
-+	COMPAT_CFLAGS += -DUNRELIABLE_HARDLINKS=1
-+endif
- ifdef NO_PREAD
- 	COMPAT_CFLAGS += -DNO_PREAD
- 	COMPAT_OBJS += compat/pread.o
-diff --git a/cache.h b/cache.h
-index ab1294d..ff9e145 100644
---- a/cache.h
-+++ b/cache.h
-@@ -554,6 +554,8 @@ extern enum branch_track git_branch_track;
- extern enum rebase_setup_type autorebase;
- extern enum push_default_type push_default;
- 
-+extern int unreliable_hardlinks;
-+
- #define GIT_REPO_VERSION 0
- extern int repository_format_version;
- extern int check_repository_format(void);
-diff --git a/config.c b/config.c
-index 8c1ae59..1750cfb 100644
---- a/config.c
-+++ b/config.c
-@@ -495,6 +495,11 @@ static int git_default_core_config(const char *var, const char *value)
- 		return 0;
- 	}
- 
-+	if (!strcmp(var, "core.unreliablehardlinks")) {
-+		unreliable_hardlinks = git_config_bool(var, value);
-+		return 0;
-+	}
-+
- 	/* Add other config variables here and to Documentation/config.txt. */
- 	return 0;
- }
-diff --git a/environment.c b/environment.c
-index 4696885..10578d2 100644
---- a/environment.c
-+++ b/environment.c
-@@ -43,6 +43,10 @@ unsigned whitespace_rule_cfg = WS_DEFAULT_RULE;
- enum branch_track git_branch_track = BRANCH_TRACK_REMOTE;
- enum rebase_setup_type autorebase = AUTOREBASE_NEVER;
- enum push_default_type push_default = PUSH_DEFAULT_UNSPECIFIED;
-+#ifndef UNRELIABLE_HARDLINKS
-+#define UNRELIABLE_HARDLINKS 0
-+#endif
-+int unreliable_hardlinks = UNRELIABLE_HARDLINKS;
- 
- /* Parallel index stat data preload? */
- int core_preload_index = 0;
-diff --git a/sha1_file.c b/sha1_file.c
-index 8fe135d..bb6eecf 100644
---- a/sha1_file.c
-+++ b/sha1_file.c
-@@ -2225,7 +2225,9 @@ int move_temp_to_file(const char *tmpfile, const char *filename)
- {
- 	int ret = 0;
- 
--	if (link(tmpfile, filename))
-+	if (unreliable_hardlinks)
-+		ret = ~EEXIST; /* anything but EEXIST */
-+	else if (link(tmpfile, filename))
- 		ret = errno;
- 
- 	/*
 -- 
-1.6.2.1.613.g25746
+Felipe Contreras
