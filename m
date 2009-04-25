@@ -1,100 +1,173 @@
-From: Dmitry Potapov <dpotapov@gmail.com>
-Subject: Re: [PATCH 1/2] Documentation: replace sha1 by SHA-1
-Date: Sat, 25 Apr 2009 16:13:07 +0400
-Message-ID: <20090425121307.GA20459@dpotapov.dyndns.org>
-References: <1240584575-5702-1-git-send-email-git@drmicha.warpmail.net> <1240584575-5702-2-git-send-email-git@drmicha.warpmail.net>
+From: Marc Weber <marco-oweber@gmx.de>
+Subject: [PATCH] topgit  tg push feature
+Date: Sat, 25 Apr 2009 18:13:00 +0200
+Message-ID: <20090425161300.GD19142@gmx.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Sat Apr 25 14:15:11 2009
+Content-Type: text/plain; charset=utf-8
+Cc: u.kleine-koenig@pengutronix.de
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Apr 25 16:15:19 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lxgmj-0001mu-9K
-	for gcvg-git-2@gmane.org; Sat, 25 Apr 2009 14:15:09 +0200
+	id 1Lxiez-00038C-To
+	for gcvg-git-2@gmane.org; Sat, 25 Apr 2009 16:15:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752948AbZDYMNg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 25 Apr 2009 08:13:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752847AbZDYMNf
-	(ORCPT <rfc822;git-outgoing>); Sat, 25 Apr 2009 08:13:35 -0400
-Received: from fg-out-1718.google.com ([72.14.220.156]:7214 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752366AbZDYMNe (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 25 Apr 2009 08:13:34 -0400
-Received: by fg-out-1718.google.com with SMTP id 16so316782fgg.17
-        for <git@vger.kernel.org>; Sat, 25 Apr 2009 05:13:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=NNel6FU+g16CLz/B2tDt2gq3F0uSNql0HVQovoWQZ18=;
-        b=gkQemGRXcSLd8PfW2Xbp1JxIhMPaH4fdzsmwhmhaYm4+Zn10QpVrxTxUAR6mWOLH+i
-         D8VGS4hCPQDKVklai6y0pESt9rIy3FgUVZM4zDH/ptJvd5IchCfzJVdCThxAABMIL7x/
-         9EDPnFHuVtsH49Ovq15HK5esItZyPce1JLZqg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=jAbs8cR3LFXrpjKyJihqApZ3JHSVewypGp3TJWSjgap1Ycj99nuSPxSIo6jwOyrnep
-         obhhAhSQ6f037K1ByrlQyr9LEI14I8DWrAvjLBvXXBjH+LYjz/S+eyCl9qc8HN/fSXzo
-         /UeMvJJ2jiud0rIniWoLB/BzkKDgL2hAjiBEY=
-Received: by 10.86.82.6 with SMTP id f6mr1595062fgb.79.1240661613351;
-        Sat, 25 Apr 2009 05:13:33 -0700 (PDT)
-Received: from localhost (ppp91-77-224-226.pppoe.mtu-net.ru [91.77.224.226])
-        by mx.google.com with ESMTPS id d6sm2617691fga.17.2009.04.25.05.13.32
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sat, 25 Apr 2009 05:13:32 -0700 (PDT)
+	id S1753502AbZDYONM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 25 Apr 2009 10:13:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752409AbZDYONK
+	(ORCPT <rfc822;git-outgoing>); Sat, 25 Apr 2009 10:13:10 -0400
+Received: from mail.gmx.net ([213.165.64.20]:57551 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752557AbZDYONJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 25 Apr 2009 10:13:09 -0400
+Received: (qmail invoked by alias); 25 Apr 2009 14:13:04 -0000
+Received: from pD9507C22.dip.t-dialin.net (EHLO mail.gmx.net) [217.80.124.34]
+  by mail.gmx.net (mp046) with SMTP; 25 Apr 2009 16:13:04 +0200
+X-Authenticated: #9006135
+X-Provags-ID: V01U2FsdGVkX18AZAUTDxkAYLlUkpnuG0Fety62ZudqDAV5H0LAMR
+	+fBxj1OKatyCD5
+Received: by mail.gmx.net (sSMTP sendmail emulation); Sat, 25 Apr 2009 18:13:00 +0200
+Mail-Followup-To: Marc Weber <marco-oweber@gmx.de>, git@vger.kernel.org,
+	u.kleine-koenig@pengutronix.de
 Content-Disposition: inline
-In-Reply-To: <1240584575-5702-2-git-send-email-git@drmicha.warpmail.net>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+User-Agent: Mutt/1.5.16 (2007-06-09)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.46
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117553>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117554>
 
-On Fri, Apr 24, 2009 at 04:49:34PM +0200, Michael J Gruber wrote:
-> Replace sha1 by SHA-1 with the following exceptions:
+The patch should apply cleanly on 9f685cd79.
+Or fetch it from branch t/tg-push at git://mawercer.de/topGit
 
-I seriously doubt that mentioning any particular hash algorithm (which
-is implementation detail) in so many places make much sense.  IMHO, it
-would be much better to use some general name as hash-id or something.
+Until now you've had two choices:
 
-Besides, mentioning SHA-1 may lead to confusion. Take a look at the
-following text:
+git push --all # pushing all top-bases and all other branches
+or run
+git push t/foo top-bases/foo # + all deps manually
 
-> @@ -164,10 +164,10 @@ Using --cacheinfo or --info-only
->  current working directory.  This is useful for minimum-checkout
->  merging.
->  
-> -To pretend you have a file with mode and sha1 at path, say:
-> +To pretend you have a file with mode and SHA-1 at path, say:
->  
->  ----------------
-> -$ git update-index --cacheinfo mode sha1 path
-> +$ git update-index --cacheinfo mode SHA-1 path
->  ----------------
+tg push allows you to
+a) push branch and its base, the branch you're on is used
+b) push branch its deps and their bases (adding -r)
 
-This is incorrect, and here is why:
+using tg push remoteA remoteB you can push to multiple remote locations.
 
-$ touch empty
-$ git hash-object empty
-e69de29bb2d1d6434b8b29ae775ad8c2e48c5391
-$ sha1sum empty
-da39a3ee5e6b4b0d3255bfef95601890afd80709  empty
+Marc Weber
 
-What should be given to git update-index is the hash produced by git
-hash-object and NOT SHA-1 of the file. (Yes, git hash-object does use
-SHA-1, but I seriously doubt that any Git user needs to know how git
-hash-object calculates the hash.)
+commit 2db369ff6dcfe9d5c4a9bab3eaf33c2a9b742f3d
+Author: Marc Weber <marco-oweber@gmx.de>
+Date:   Sat Apr 25 17:52:44 2009 +0200
 
-So, I hardly see how a mechanical replacement of sha1 with SHA-1 can be
-any improvement. While, at least, sha1 can be interpreted as SHA-1 based
-hash value returned by git-hash-object, your patch only enforces the
-misconception that we are dealing with SHA-1 of the file here.
+    add tg-push [-r] pushing the branch and its base
+    
+    -r: also push tgish dependencies
+    
+    Signed-off-by: Marc Weber <marco-oweber@gmx.de>
 
+diff --git a/.gitignore b/.gitignore
+index eb56446..2f6d991 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -21,6 +21,8 @@
+ /tg-import.txt
+ /tg-remote
+ /tg-remote.txt
++/tg-push
++/tg-push.txt
+ /tg
+ .*.swp
+ 
+diff --git a/README b/README
+index d2f095d..f90a7b3 100644
+--- a/README
++++ b/README
+@@ -480,6 +480,13 @@ tg update
+ 
+ 	TODO: tg update -a for updating all topic branches
+ 
++tg push
++~~~~~~~
++	git push remote branch doesn't push the base.
++        git push remote pushes all branches (and bases)
++        You use tg push [-r] to push only the current branch [ and deps] with
++        its base to a remote location.
++
+ TODO: tg rename
+ 
+ 
+diff --git a/tg-push.sh b/tg-push.sh
+new file mode 100644
+index 0000000..0f8c964
+--- /dev/null
++++ b/tg-push.sh
+@@ -0,0 +1,57 @@
++#!/bin/sh
++# TopGit - A different patch queue manager
++# GPLv2
++
++recurse=
++remotes=
++
++
++## Parse options
++
++while [ -n "$1" ]; do
++	arg="$1"; shift
++	case "$arg" in
++	-r)
++		recurse=1;;
++	*)
++		remotes="$remotes $arg";;
++	esac
++done
++
++if [ -z "$remotes" ]; then
++	remotes="$(git config topgit.remote 2>/dev/null)"
++fi
++
++if [ -z "$remotes" ]; then
++	die "no remote location given. Either add a remote as additional argument or set topgit.remote"
++fi
++
++name="$(git symbolic-ref HEAD | sed 's#^refs/heads/##')"
++ref_exists "$name" || die "detached HEAD? Can't push that"
++
++push_branch(){
 
-Dmitry
++	echo "$_dep" >> "$to_be_pushed"
++	base="top-bases/$_dep"
++	if ref_exists "$base"; then
++		echo "top-bases/$_dep" >> "$to_be_pushed"
++	else
++		echo "warning, no base found $base"
++	fi
++}
++
++to_be_pushed="$(mktemp -t tg-depsfile.XXXXXX)"
++trap 'rm -rf "$to_be_pushed"' EXIT
++
++for remote in $remotes; do
++	: > $to_be_pushed # empty file
++
++	if [ -n "$recurse" ]; then
++		recurse_deps push_branch "$name"
++	fi
++	_dep="$name"
++	_dep_is_tgish=1
++	push_branch
++	echo git push $remote `cat $to_be_pushed`
++	git push $remote `cat $to_be_pushed`
++done
+diff --git a/tg-push.txt b/tg-push.txt
+new file mode 100644
+index 0000000..de9b259
+--- /dev/null
++++ b/tg-push.txt
+@@ -0,0 +1,3 @@
++	push branch and base. If you also use -r all tgish dependencies
++        will be pushed as well.
++        Use tg push remoteA remoteB to push to remoteA and remoteB locations
