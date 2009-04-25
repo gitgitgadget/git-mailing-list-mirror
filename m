@@ -1,89 +1,95 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: [PATCH] Add an option not to use link(src, dest) && unlink(src)
- when that is unreliable
-Date: Sat, 25 Apr 2009 10:56:01 -0700 (PDT)
-Message-ID: <alpine.LFD.2.00.0904251042490.3101@localhost.localdomain>
-References: <alpine.DEB.1.00.0904231252080.10279@pacific.mpi-cbg.de>
+From: Stephen Boyd <bebarino@gmail.com>
+Subject: Re: [PATCH 2/2] Documentation: git-clean: make description more readable
+Date: Sat, 25 Apr 2009 11:36:35 -0700
+Message-ID: <49F35833.5070005@gmail.com>
+References: <1240672421-10309-1-git-send-email-wjl@icecavern.net> <1240672421-10309-3-git-send-email-wjl@icecavern.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org, gitster@pobox.com, j6t@kdbg.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Sat Apr 25 20:00:11 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: "Wesley J. Landaker" <wjl@icecavern.net>
+X-From: git-owner@vger.kernel.org Sat Apr 25 20:46:14 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LxmAX-000443-L1
-	for gcvg-git-2@gmane.org; Sat, 25 Apr 2009 20:00:06 +0200
+	id 1LxmtA-0003DJ-Fl
+	for gcvg-git-2@gmane.org; Sat, 25 Apr 2009 20:46:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753472AbZDYR6c (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 25 Apr 2009 13:58:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753302AbZDYR6c
-	(ORCPT <rfc822;git-outgoing>); Sat, 25 Apr 2009 13:58:32 -0400
-Received: from smtp1.linux-foundation.org ([140.211.169.13]:55307 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753177AbZDYR6b (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 25 Apr 2009 13:58:31 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
-	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id n3PHu2hb007978
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Sat, 25 Apr 2009 10:56:36 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id n3PHu1CJ015913;
-	Sat, 25 Apr 2009 10:56:01 -0700
-X-X-Sender: torvalds@localhost.localdomain
-In-Reply-To: <alpine.DEB.1.00.0904231252080.10279@pacific.mpi-cbg.de>
-User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
-X-Spam-Status: No, hits=-5.456 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED,PATCH_SUBJECT_OSDL
-X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
+	id S1753242AbZDYSgm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 25 Apr 2009 14:36:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751865AbZDYSgl
+	(ORCPT <rfc822;git-outgoing>); Sat, 25 Apr 2009 14:36:41 -0400
+Received: from rv-out-0506.google.com ([209.85.198.237]:48298 "EHLO
+	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751499AbZDYSgl (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 25 Apr 2009 14:36:41 -0400
+Received: by rv-out-0506.google.com with SMTP id f9so1390410rvb.1
+        for <git@vger.kernel.org>; Sat, 25 Apr 2009 11:36:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from
+         :user-agent:mime-version:to:cc:subject:references:in-reply-to
+         :content-type:content-transfer-encoding;
+        bh=R3vw4xayQBilT+/ydFALW5VznbfXR5Pn53ULjHE83mk=;
+        b=YWgeunncVh685lGgy93zcgw7ADYvFOGApjzXUAvceBHC0qd0b/adQs3fynd1BeBrpJ
+         DmlUQfEcII5myZuXkTKTuVqod704mF8hEvqlhGpe0w89hpRdOZs8RYyLhXr7iD5qS8OC
+         T8GyP0fK+ZV2j/x8ZGKBPVpFTaZab9NJfJbks=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        b=cJ/eRUFRvEdqA/o54dNJIgGugr2zsU/b0AGpbG48wq85kDFrx3KRCv4tPjzlshuLtl
+         JMv+Oq9jB4p/dKPAW7Pgz2nQB6vbAe2aqD4LhJKSuvzH+qDCm9FeeM9FjibEDOvhD27N
+         mbT+v7wjGmJIlTLaEdxqwDQDbGKQciF3PEfKw=
+Received: by 10.141.50.11 with SMTP id c11mr1130088rvk.45.1240684598822;
+        Sat, 25 Apr 2009 11:36:38 -0700 (PDT)
+Received: from ?192.168.1.3? ([76.89.212.195])
+        by mx.google.com with ESMTPS id f42sm3383336rvb.11.2009.04.25.11.36.36
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sat, 25 Apr 2009 11:36:37 -0700 (PDT)
+User-Agent: Thunderbird 2.0.0.21 (X11/20090321)
+In-Reply-To: <1240672421-10309-3-git-send-email-wjl@icecavern.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117566>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117567>
 
+Wesley J. Landaker wrote:
+>  DESCRIPTION
+>  -----------
+> -Removes files unknown to git.  This allows cleaning the working tree
+> -of files that are not under version control.  If the '-x' option is
+> -specified, ignored files are also removed, allowing the removal of all
+> -build products.
+> +
+> +This allows cleaning the working tree by removing files that are not
+> +under version control.
+> +
 
+Why is the "Removes files unknown to git" part lost? Maybe it should be
+replaced with a copy of the Name section, similar to log and diff. For
+example:
 
-On Thu, 23 Apr 2009, Johannes Schindelin wrote:
-> 
-> It seems that accessing NTFS partitions with ufsd (at least on my EeePC)
-> has an unnerving bug: if you link() a file and unlink() it right away,
-> the target of the link() will have the correct size, but consist of NULs.
+DESCRIPTION
+-----------
+Removes untracked files from the working tree. This allows cleaning the
+working tree by removing files that are not under version control.
 
-So I assume that the way ufsd works is that it implements a user-level 
-NTFS driver and then exposes it as a NFS mount over local networking (and
-perhaps also remotely?)
+But then the second sentence becomes redundant.
 
-> It seems as if the calls are simply not serialized correctly, as single-stepping
-> through the function move_temp_to_file() works flawlessly.
+> +Normally, only files unknown to git are removed, but if the '-x'
+> +option is specified, ignored files are also removed. This can, for
+> +example, be useful to remove all build products.
 
-So presumably there is some cached writes somewhere (a NFS client _should_ 
-not cache writes past a 'close()', but maybe there is a bug there and/or 
-buffering inside ufsd itself that means that the writes are still queued 
-up). And when the unlink() happens, it loses the writes to the original 
-file, and thus to the new one too.
+This seems overly wordy. Maybe:
 
-If you _don't_ do this patch, does 
+Specifying the '-x' option will also remove ignored files. This is
+useful to remove generated files.
 
-	[core]
-		fsyncobjectfiles = true
+Better?
 
-hide the bug? 
-
-I don't disagree with your patch (apart from the error number games), but 
-I'd like to understand what's going on. I also wonder if we should make 
-that fsync thign be the default.
-
-[ That said, I think the http walker and possibly others may be using 
-  'move_temp_to_file()' without going through any of the paths that know 
-  about fsync, so 'fsyncobjectfiles' wouldn't fix all cases anyway. ]
-
-Hmm. I hate how we have problems with that "link/unlink" sequence, and 
-"rename()" would be much better, but I'd hate overwriting existing objects 
-even _more_, and the normal POSIX rename() behavior is to overwrite any 
-old object. So link/unlink is supposed to be a lot safer, but it's clearly 
-problematic.
-
-		Linus
+On a side note, why is -x getting special treatment here but not -X or
+-d? You might want to just describe the general usefulness of the
+command and let the reader move onto the options to learn more.
