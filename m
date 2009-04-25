@@ -1,111 +1,96 @@
 From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [doc] User Manual Suggestion
-Date: Sat, 25 Apr 2009 13:35:38 +0300
-Message-ID: <94a0d4530904250335w7a88c4d6lafd12a8ce6f98127@mail.gmail.com>
-References: <20090423175717.GA30198@fieldses.org>
-	 <20090423201636.GD3056@coredump.intra.peff.net>
-	 <b4087cc50904231345x2613308eh640e50f4a2680890@mail.gmail.com>
-	 <20090424141139.GC10761@coredump.intra.peff.net>
-	 <b4087cc50904240730n42e605e1od37d88d43e00f142@mail.gmail.com>
-	 <20090424150442.GA11245@coredump.intra.peff.net>
-	 <b4087cc50904240818w45bd1cfaq8bbc83e10a6e3781@mail.gmail.com>
-	 <20090424173852.GF17365@fieldses.org>
-	 <34BD51FF-0908-48A8-BBBC-E27B0EFB32E5@boostpro.com>
-	 <20090424185208.GM17365@fieldses.org>
+Subject: Re: [PATCH 1/2] Documentation: replace sha1 by SHA-1
+Date: Sat, 25 Apr 2009 13:47:42 +0300
+Message-ID: <94a0d4530904250347s55a66f47gbaaf5ea42d0c4eac@mail.gmail.com>
+References: <1240584575-5702-1-git-send-email-git@drmicha.warpmail.net>
+	 <1240584575-5702-2-git-send-email-git@drmicha.warpmail.net>
+	 <20090424212856.GB14435@coredump.intra.peff.net>
+	 <7vzle5ad8n.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: David Abrahams <dave@boostpro.com>,
-	Michael Witten <mfwitten@gmail.com>, Jeff King <peff@peff.net>,
+Cc: Jeff King <peff@peff.net>,
+	Michael J Gruber <git@drmicha.warpmail.net>,
 	git@vger.kernel.org
-To: "J. Bruce Fields" <bfields@fieldses.org>
-X-From: git-owner@vger.kernel.org Sat Apr 25 12:40:06 2009
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Apr 25 12:49:20 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LxfG0-0006Qs-IY
-	for gcvg-git-2@gmane.org; Sat, 25 Apr 2009 12:37:16 +0200
+	id 1LxfRe-0002HJ-Ng
+	for gcvg-git-2@gmane.org; Sat, 25 Apr 2009 12:49:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752850AbZDYKfl convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 25 Apr 2009 06:35:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752161AbZDYKfl
-	(ORCPT <rfc822;git-outgoing>); Sat, 25 Apr 2009 06:35:41 -0400
-Received: from fg-out-1718.google.com ([72.14.220.157]:45386 "EHLO
+	id S1752850AbZDYKrp convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 25 Apr 2009 06:47:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752683AbZDYKrp
+	(ORCPT <rfc822;git-outgoing>); Sat, 25 Apr 2009 06:47:45 -0400
+Received: from fg-out-1718.google.com ([72.14.220.155]:41505 "EHLO
 	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751562AbZDYKfk convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 25 Apr 2009 06:35:40 -0400
-Received: by fg-out-1718.google.com with SMTP id d23so306556fga.17
-        for <git@vger.kernel.org>; Sat, 25 Apr 2009 03:35:38 -0700 (PDT)
+	with ESMTP id S1752412AbZDYKro convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 25 Apr 2009 06:47:44 -0400
+Received: by fg-out-1718.google.com with SMTP id d23so307679fga.17
+        for <git@vger.kernel.org>; Sat, 25 Apr 2009 03:47:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:mime-version:received:in-reply-to:references
          :date:message-id:subject:from:to:cc:content-type
          :content-transfer-encoding;
-        bh=+MS0+96WrGxyO68SfZ5LamQSa8iSzOT9dITsyGjwu6E=;
-        b=YKDtIsvSx0m6NgkI6rYfkZpmIleXMKwgtB5uWqkT9Oyzq+ZtLZAQOsZZRrfvznoV1B
-         A2BYdnpw3EKbpgyaeeredz/rMHCgfWxQSjO744PnbKoMrcTF420WCBCEi2d34qkWuuXK
-         JJ4esGQQSnnUScds5dqxP64ohxl6v3u++tQLI=
+        bh=EGJ5pqZOp+6+f39G+dQVJ9dMRmJDexmv2BfDbpruDz8=;
+        b=h6vz92ZYmTan1z6FWW0OaBYvojCh+gCqWR6HxX5ZFVf+9BvKSrNQYVog45YZWlLBXt
+         fb+RvFABRe1K6HT6jIor8cD4INcVE65SXNoQT35z8y1/bqivGaBmFib0IpYRbkCHdVvj
+         xKl8eumZV99UpnG5uFUOv4M4oUe30BWhqQ+FQ=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type:content-transfer-encoding;
-        b=V6Dnepv+RHQMiWcS0BeOJNGGNcG7GUMNLi7hmD2R79keTd9Z0zsk8v5jdCj9UbEJ25
-         c/r/VQK386HqVYjAwWEeyMAplHPYYXd+qlUsHbxd2I8OBjyadkpqGM2NI2rUg9mk4Nfl
-         m35cyIqqDNxXuqCU5LAT14tuQqPl0iCMMj9yI=
-Received: by 10.86.33.10 with SMTP id g10mr1545890fgg.21.1240655738594; Sat, 
-	25 Apr 2009 03:35:38 -0700 (PDT)
-In-Reply-To: <20090424185208.GM17365@fieldses.org>
+        b=LIMYjROSLxUHB2Mfu4cpyKDbCIXx7kFWq0Jr+dF5Jj/Xj5L6v02AljriaH6TeaI4EC
+         9ioBAs6TYyAp4UWhI8Y3PKTvEgIELRisnQb1SiVGYasaion6KWvvFQLqWl4FGBZb3C06
+         KBIM4LVWqIKo6EsreoqWr+gmKFe5LpiQsTA9g=
+Received: by 10.86.59.18 with SMTP id h18mr1570731fga.44.1240656462365; Sat, 
+	25 Apr 2009 03:47:42 -0700 (PDT)
+In-Reply-To: <7vzle5ad8n.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117544>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117545>
 
-On Fri, Apr 24, 2009 at 9:52 PM, J. Bruce Fields <bfields@fieldses.org>=
- wrote:
-> That would be great, thanks. =C2=A0Several people have gone off and p=
-osted
-> their own tutorials someplace, and that's fine, but it would be
-> especially helpful if you could contribute to the actual Documentatio=
-n/
-> directory. =C2=A0That may mean arguing with people and making comprom=
-ises.
-> But it also means the results will be distributed with git, will be
-> integrated with other git documentation, and will get first-class
-> technical review.
+On Sat, Apr 25, 2009 at 1:38 AM, Junio C Hamano <gitster@pobox.com> wro=
+te:
+> Jeff King <peff@peff.net> writes:
 >
-> I'd also encourage incrementally improving existing documentation whe=
-re
-> possible instead of starting over from scratch. =C2=A0But having brok=
-en that
-> rule myself a couple times I'm hardly in a position to insist. =C2=A0=
-If you
-> must start over, at least think about how to replace or fit it in wit=
-h
-> existing documentation.
+>> On Fri, Apr 24, 2009 at 04:49:34PM +0200, Michael J Gruber wrote:
+>>
+>>> --- a/Documentation/git-cat-file.txt
+>>> +++ b/Documentation/git-cat-file.txt
+>>> @@ -76,7 +76,7 @@ If '--batch' is specified, output of the followin=
+g form is printed for each
+>>> =C2=A0object specified on stdin:
+>>>
+>>> =C2=A0------------
+>>> -<sha1> SP <type> SP <size> LF
+>>> +<SHA-1> SP <type> SP <size> LF
+>>> =C2=A0<contents> LF
+>>> =C2=A0------------
+>>
+>> Maybe it is just me, but I find the original for this one easier to
+>> read. Perhaps because <sha1> is really a variable name here (but for=
+ a
+>> human reader to interpret instead of a compiler), so I find the
+>> punctuation and capitalization distracting.
+>>
+>> I wonder if all <sha1> should simply be left as-is.
+>
+> Or spell them using their official terminology "object name".
 
-People will continue to write git documentation from scratch because
-there is a huge gap from the top-bottom approach to a point where you
-actually "get git", and people are trying to find short-cuts so that
-other people can really get it too.
+Why is the "official" terminology "object name", wouldn't "id" work bet=
+ter?
 
-I spent years using git simply repeating the templates I had seen in
-multiple places until I stumbled upon "git from the bottom up" and
-then I finally understood the beauty and simplicity of git's design.
-=46rom that point I understood why many command didn't do what I
-expected.
-
-Note that "bottom" doesn't mean plumbing, the "plumbing" is usually
-referred to the git.git tools, but you can work with git low-level
-objects through your own implementation as people like Scott Chacon
-have indeed done (git-ruby). "bottom" then means git basic building
-blocks: blobs, trees, commits, refs.
-
-Ideally the UI should expose the basic concepts of git, but instead
-its is hiding them, so no wonder people *need* special documentation
-to 'understand git conceptually', or learn 'git from the bottom up',
-etc.
+SHA-1 is simply one hash function, what git has been referring to
+"sha1" is actually the SHA-1 digest. This digest has been used as a
+checksum (or hash sum) but also as a unique identifier, therefore "id"
+would work just fine.
 
 --=20
 =46elipe Contreras
