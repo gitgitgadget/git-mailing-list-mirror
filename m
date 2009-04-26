@@ -1,124 +1,113 @@
-From: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
-Subject: Re: [doc] User Manual Suggestion
-Date: Sun, 26 Apr 2009 20:12:44 +0200
-Message-ID: <20090426181244.GB4942@atjola.homenet>
-References: <b4087cc50904241518w625a9890vecdd36bb937e76d5@mail.gmail.com> <b4087cc50904241525w7de597bfq7be89796947a14cc@mail.gmail.com> <alpine.LNX.2.00.0904241852500.2147@iabervon.org> <b4087cc50904241626h166c6b3bqa4ec714d4cb5662a@mail.gmail.com> <alpine.LNX.2.00.0904251445030.2147@iabervon.org> <b4087cc50904251216p617e347bmdc70e109298fa9b2@mail.gmail.com> <94a0d4530904251224g6b228448q276436f17f7e5cc3@mail.gmail.com> <E85677CA-FA7E-4777-97DF-9B295E89B83A@boostpro.com> <20090426112802.GC10155@atjola.homenet> <b4087cc50904260936t4aa05c92ldab3b8ce8c9bd33a@mail.gmail.com>
+From: A Large Angry SCM <gitzilla@gmail.com>
+Subject: Re: Google Code: Support for Mercurial and Analysis of Git and Mercurial
+Date: Sun, 26 Apr 2009 14:00:24 -0400
+Message-ID: <49F4A138.6040808@gmail.com>
+References: <200904260703.31243.chriscool@tuxfamily.org> <m363grq13i.fsf@localhost.localdomain> <49F475B8.20903@gmail.com> <alpine.DEB.1.00.0904261854460.10279@pacific.mpi-cbg.de> <49F49AF0.1020301@gmail.com> <alpine.DEB.1.00.0904261943070.10279@pacific.mpi-cbg.de>
+Reply-To: gitzilla@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: David Abrahams <dave@boostpro.com>,
-	Felipe Contreras <felipe.contreras@gmail.com>,
-	Daniel Barkalow <barkalow@iabervon.org>,
-	Jeff King <peff@peff.net>, Johan Herland <johan@herland.net>,
-	git@vger.kernel.org, "J. Bruce Fields" <bfields@fieldses.org>
-To: Michael Witten <mfwitten@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Apr 27 11:31:11 2009
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Jakub Narebski <jnareb@gmail.com>,
+	Christian Couder <chriscool@tuxfamily.org>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Mon Apr 27 11:37:28 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ly8s7-0001wu-EU
-	for gcvg-git-2@gmane.org; Sun, 26 Apr 2009 20:14:35 +0200
+	id 1Ly8fy-0001O4-6R
+	for gcvg-git-2@gmane.org; Sun, 26 Apr 2009 20:02:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754629AbZDZSNB convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 26 Apr 2009 14:13:01 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754543AbZDZSNA
-	(ORCPT <rfc822;git-outgoing>); Sun, 26 Apr 2009 14:13:00 -0400
-Received: from mail.gmx.net ([213.165.64.20]:55472 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754186AbZDZSM7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 26 Apr 2009 14:12:59 -0400
-Received: (qmail invoked by alias); 26 Apr 2009 18:12:57 -0000
-Received: from i59F5A916.versanet.de (EHLO atjola.local) [89.245.169.22]
-  by mail.gmx.net (mp046) with SMTP; 26 Apr 2009 20:12:57 +0200
-X-Authenticated: #5039886
-X-Provags-ID: V01U2FsdGVkX1+PmU9+3FSPQS20AGCGSN67DzOq63eXu2fFywPsPy
-	HITTIzAeQaBmW2
-Content-Disposition: inline
-In-Reply-To: <b4087cc50904260936t4aa05c92ldab3b8ce8c9bd33a@mail.gmail.com>
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.66
+	id S1754629AbZDZSA2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 26 Apr 2009 14:00:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753472AbZDZSA1
+	(ORCPT <rfc822;git-outgoing>); Sun, 26 Apr 2009 14:00:27 -0400
+Received: from mail-gx0-f166.google.com ([209.85.217.166]:41604 "EHLO
+	mail-gx0-f166.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752029AbZDZSA1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 26 Apr 2009 14:00:27 -0400
+Received: by gxk10 with SMTP id 10so4016238gxk.13
+        for <git@vger.kernel.org>; Sun, 26 Apr 2009 11:00:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id
+         :disposition-notification-to:date:from:reply-to:user-agent
+         :mime-version:to:cc:subject:references:in-reply-to:content-type
+         :content-transfer-encoding;
+        bh=POzNzB24WRcnWT7bABV01D8QOmDY3XJrGOjhr6RUhCY=;
+        b=qMN5ir7I4tG25Q5mOzfa6uKDDA04w53SdfQD8kRrpSEICiovYU/909eSz3yDweb7QO
+         AnDUyfitupNnITD1up0gZDWyplaEFph/yne2yygjPPSE5WaTDtz5Jng5x+gYuannwwTS
+         nVLHqe5CV0YFjgu+EuteolazqROhpKI4k1XH0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:disposition-notification-to:date:from:reply-to
+         :user-agent:mime-version:to:cc:subject:references:in-reply-to
+         :content-type:content-transfer-encoding;
+        b=dm8N3sPbsUaWKNmJvGCMKUOG4G2Sw2KjVGgz1ZHcZt48qbTGkQadaAnbw4TKCFbtNR
+         Exveb/c88pyaU0kYmSrKz//dvmcg6dAGHPDMjBjAjrMfpceRs+qepvOF7WQrLc1YOHRR
+         XH96dg0ZKAVGDuCjPvJQ9Y5vBBZJf/VGThdbA=
+Received: by 10.90.65.14 with SMTP id n14mr5901581aga.29.1240768826133;
+        Sun, 26 Apr 2009 11:00:26 -0700 (PDT)
+Received: from ?10.0.0.6? (c-66-177-19-100.hsd1.fl.comcast.net [66.177.19.100])
+        by mx.google.com with ESMTPS id 32sm7648180aga.44.2009.04.26.11.00.25
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sun, 26 Apr 2009 11:00:25 -0700 (PDT)
+User-Agent: Thunderbird 1.5.0.10 (X11/20060911)
+In-Reply-To: <alpine.DEB.1.00.0904261943070.10279@pacific.mpi-cbg.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117627>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117628>
 
-On 2009.04.26 11:36:04 -0500, Michael Witten wrote:
-> 2009/4/26 Bj=F6rn Steinbrink <B.Steinbrink@gmx.de>:
-> > On 2009.04.25 15:36:24 -0400, David Abrahams wrote:
-> >> Where it's relevant when the user notices that two distinct files =
-have
-> >> the same id (because they happen to have the same contents) and wo=
-nders
-> >> what's up.
-> >...
-> > And why would your implementation save the same object twice, in tw=
-o
-> > distinct files?
->=20
-> This question makes me think that you don't understand the parent's
-> point. He's not talking about implementation details; in fact, there'=
-s
-> no reason to mix the git world and the file system world at all in
-> this discussion.
->=20
-> David is pointing out that a user might notice that two different
-> trees list the same blob. This can be startling if you have incomplet=
-e
-> picture about what's going on.
+Johannes Schindelin wrote:
+> Hi,
+> 
+> On Sun, 26 Apr 2009, A Large Angry SCM wrote:
+> 
+>> Johannes Schindelin wrote:
+>>
+>>> On Sun, 26 Apr 2009, A Large Angry SCM wrote:
+>>>
+>>>> Another important criteria was which, both or neither of Git and Hg 
+>>>> would actually work and perform well on top of Google Code's 
+>>>> underling storage system and except to mention they would be using 
+>>>> Bigtable, the report did not discuss this. Git on top of Bigtable 
+>>>> will not perform well.
+>>> Actually, did we not arrive at the conclusion that it could perform 
+>>> well at least with the filesystem layer on top of big table, but even 
+>>> better if the big tables stored certain chunks (not really all that 
+>>> different from the chunks needed for mirror-sync!)?
+>>>
+>>> Back when I discussed this with a Googler, it was all too obvious that 
+>>> they are not interested (and in the meantime I understand why, see my 
+>>> other mail).
+>> I don't remember the mirror-sync discussion. But I do remember that when 
+>> the discussion turned to implementing a filesystem on top of Bigtable 
+>> that would not cause performance problems for Git, my response was that 
+>> you'd still be much better off going to GFS directly instead of faking a 
+>> filesystem on top of Bigtable without all of the Bigtable limitations.
+> 
+> Umm, GFS is built on top of Bigtable, no?
 
-David said that the user encounters two distinct files with the same id=
-=2E
-The ids are properties of the objects. So he must have meant object
-files, or he attributed the id to the wrong thing. I assumed that he
-didn't mix those things up and really meant the object files, thus my
-reply.
+Other way around.
 
-> >From a practical point of view, you might argue that not too many
-> people are looking at trees and blobs;
+>> Bigtable _is_ appealing to implement the Git object store on. It's too 
+>> bad the latency in Bigtable would make it horribly slow.
+> 
+> If you store one object per Bigtable, yes.  If you store a few undelta'd 
+> objects there, and then use the pack run to optimize those tables, I think 
+> it would not be horribly slow.  Of course, you'd need to do exactly the 
+> same optimizations necessary for mirror-sync, but I might have mentioned 
+> that already ;-)
 
-Heh, I'd rather argue that too _few_ people have looked at commits and
-trees at least once, whether it's an actual object or a graph like in
-git for computer scientists.
+But now you have to find where you stored those "few undelta'd objects" 
+and then go get the object you're interested in. The only way you can 
+win with that scheme is if you can find groups of objects that are 
+(almost) always accessed together, for all objects (and still not get 
+tripped up by the other limitations of Bigtable).
 
-> however, it seems to me that most people are afraid to use any of
-> git's most useful features precisely because they don't understand th=
-e
-> git model and they don't understand that nothing is ever lost unless
-> you explicitly clean up unreferenced objects---they don't see how eas=
-y
-> it is manipulate their repos. I argue that if they are given the full
-> knowledge of git's concepts, then they will be able to reason about
-> their repo actions with confidence, even if they only work with
-> commits.
-
-Agreed.
-
-> I think the key is to stress in the documentation the idea that there
-> are 2 separate worlds (the git object world and the working
-> directory's file system world) and that the git tools provide an
-> interface between them; this seems like a small and unnecessarily
-> academic point, but I believe that it's important to working with
-> confidence.
-
-Agreed. That's also why I asked David why the user would look at the
-object files in the repo (the .git dir). To some degree those are also
-an implementation detail. The user works with the working tree and uses
-the git tools to modify the repo.
-
-> > It's an identity relation: same name/id =3D> same object. Unlike e.=
-g. a
-> > hash-table where you are expected to deal with collisions, and havi=
-ng
-> > the same hash doesn't mean that you have identical data.
->=20
-> However, having the same *cryptographic* hash does mean that you have
-> identical data.
-
-That's the _assumption_ that git makes. Hash collisions are always
-possible, just hard to create intentionally when the hash function has
-not yet been broken.
-
-Bj=F6rn
+One method would be to group all of the commit objects into one BT entry 
+and then create a BT entry for each commit that contains all the trees 
+and blobs. This may be fast enough for some operations but would cause 
+the storage requirements to explode.
