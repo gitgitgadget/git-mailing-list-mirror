@@ -1,87 +1,78 @@
-From: Robin Rosenberg <robin.rosenberg@dewire.com>
-Subject: [PATCH 1/2] Silence diffs due to use by non-C code.
-Date: Sun, 26 Apr 2009 14:06:19 +0200
-Message-ID: <1240747579-13843-1-git-send-email-robin.rosenberg@dewire.com>
-References: <200904261306.15448.robin.rosenberg.lists@dewire.com>
-Cc: git@vger.kernel.org, spearce@spearce.org,
-	Robin Rosenberg <robin.rosenberg@dewire.com>
-To: junkio@cox.net
-X-From: git-owner@vger.kernel.org Mon Apr 27 12:34:43 2009
+From: Alex Blewitt <Alex.Blewitt@gmail.com>
+Subject: Re: Google Code: Support for Mercurial and Analysis of Git and  Mercurial
+Date: Sun, 26 Apr 2009 12:02:28 +0000 (UTC)
+Message-ID: <loom.20090426T120010-583@post.gmane.org>
+References: <200904260703.31243.chriscool@tuxfamily.org>  <m363grq13i.fsf@localhost.localdomain> <4d8e3fd30904260123r35b6a348uab3ad22fde9daa3f@mail.gmail.com> <alpine.DEB.1.00.0904261206170.10279@pacific.mpi-cbg.de> <alpine.DEB.1.00.0904261217510.10279@pacific.mpi-cbg.de>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Apr 27 12:34:54 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ly39H-0006Z6-R3
-	for gcvg-git-2@gmane.org; Sun, 26 Apr 2009 14:07:56 +0200
+	id 1Ly385-0006XN-MH
+	for gcvg-git-2@gmane.org; Sun, 26 Apr 2009 14:06:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752753AbZDZMGW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 26 Apr 2009 08:06:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752252AbZDZMGW
-	(ORCPT <rfc822;git-outgoing>); Sun, 26 Apr 2009 08:06:22 -0400
-Received: from mail.dewire.com ([83.140.172.130]:14074 "EHLO dewire.com"
+	id S1752305AbZDZMFI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 26 Apr 2009 08:05:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751099AbZDZMFH
+	(ORCPT <rfc822;git-outgoing>); Sun, 26 Apr 2009 08:05:07 -0400
+Received: from main.gmane.org ([80.91.229.2]:52008 "EHLO ciao.gmane.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753010AbZDZMGW (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 26 Apr 2009 08:06:22 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by dewire.com (Postfix) with ESMTP id 1DB6B8030D6;
-	Sun, 26 Apr 2009 14:06:21 +0200 (CEST)
-X-Virus-Scanned: by amavisd-new at dewire.com
-Received: from dewire.com ([127.0.0.1])
-	by localhost (torino.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id AcubagyYySzl; Sun, 26 Apr 2009 14:06:20 +0200 (CEST)
-Received: from localhost.localdomain (unknown [10.9.0.5])
-	by dewire.com (Postfix) with ESMTP id 78676800253;
-	Sun, 26 Apr 2009 14:06:20 +0200 (CEST)
-X-Mailer: git-send-email 1.6.3.rc2.1.g4f9e8.dirty
-In-Reply-To: <200904261306.15448.robin.rosenberg.lists@dewire.com>
+	id S1751739AbZDZMFG (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 26 Apr 2009 08:05:06 -0400
+Received: from root by ciao.gmane.org with local (Exim 4.43)
+	id 1Ly36V-000884-6v
+	for git@vger.kernel.org; Sun, 26 Apr 2009 12:05:03 +0000
+Received: from server.bandlem.com ([217.155.97.60])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sun, 26 Apr 2009 12:05:03 +0000
+Received: from Alex.Blewitt by server.bandlem.com with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sun, 26 Apr 2009 12:05:03 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: main.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 217.155.97.60 (Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_5_6; en-us) AppleWebKit/525.27.1 (KHTML, like Gecko) Version/3.2.1 Safari/525.27.1)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117644>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117645>
 
-In particular, some of the stat info, is not available to Java programs.
-JGit sets the uid, gid, dev and ino to all ones to indicate this. Recognose
-this special value and ignore changes in those values when the on-disk
-value has all bits set.
----
- read-cache.c |    8 ++++----
- 1 files changed, 4 insertions(+), 4 deletions(-)
+Johannes Schindelin <Johannes.Schindelin <at> gmx.de> writes:
 
-This patch is needed for previous one to apply. This approach to silencing
-index stats diff when JGit has been used does not require special options and
-one could perhaps argue that any other language without portable access to
-these fields should set the fields just like JGit does.
+> 
+> Hi,
+> 
+> On Sun, 26 Apr 2009, Johannes Schindelin wrote:
+> 
+> > On Sun, 26 Apr 2009, Paolo Ciarrocchi wrote:
+> > 
+> > > On 4/26/09, Jakub Narebski <jnareb <at> gmail.com> wrote:
+> > > 
+> > > > Perhaps it is time to restart work on _"smart" HTTP protocol_?
+> > > >
+> > > 
+> > > 
+> > > wasn't Shawn working on it?
+> > 
+> > GIVE HIM A BREAK!
+> 
+> Sorry.  While it reflects exactly what I felt reading your mail, I should 
+> have phrased it like this:
+> 
+> 	Don't ask what Shawn can do for you.  Ask what you can do for 
+> 	Shawn.
 
-The the flag approach is selected, then these patches should be squashed
-together.
+It's something I raised a while ago with the eclipse.egit discussion; I'm happy
+to step forward and see  what I can do to improve the HTTP access, since I 
+think that's critical for adoption in organizations  who, through no fault of 
+the end user, are either not directly connected to the internet or have to go 
+via HTTP proxies due to firewall limitations.
 
-diff --git a/read-cache.c b/read-cache.c
-index 3f58711..45083ab 100644
---- a/read-cache.c
-+++ b/read-cache.c
-@@ -210,10 +210,10 @@ static int ce_match_stat_basic(struct cache_entry *ce, struct stat *st)
- 		changed |= CTIME_CHANGED;
- #endif
- 
--	if (ce->ce_uid != (unsigned int) st->st_uid ||
--	    ce->ce_gid != (unsigned int) st->st_gid)
-+	if ((ce->ce_uid != ~0u && ce->ce_uid != (unsigned int) st->st_uid) ||
-+	    (ce->ce_gid != ~0u && ce->ce_gid != (unsigned int) st->st_gid))
- 		changed |= OWNER_CHANGED;
--	if (ce->ce_ino != (unsigned int) st->st_ino)
-+	if (ce->ce_ino != ~0u && ce->ce_ino != (unsigned int) st->st_ino)
- 		changed |= INODE_CHANGED;
- 
- #ifdef USE_STDEV
-@@ -222,7 +222,7 @@ static int ce_match_stat_basic(struct cache_entry *ce, struct stat *st)
- 	 * clients will have different views of what "device"
- 	 * the filesystem is on
- 	 */
--	if (ce->ce_dev != (unsigned int) st->st_dev)
-+	if (ce->ce_dev != ~0u && ce->ce_dev != (unsigned int) st->st_dev)
- 		changed |= INODE_CHANGED;
- #endif
- 
--- 
-1.6.3.rc2.1.g4f9e8.dirty
+Alex
