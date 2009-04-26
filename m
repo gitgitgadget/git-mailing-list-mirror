@@ -1,95 +1,75 @@
-From: Paolo Ciarrocchi <paolo.ciarrocchi@gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Subject: Re: Google Code: Support for Mercurial and Analysis of Git and 
-	Mercurial
-Date: Sun, 26 Apr 2009 10:51:02 +0030
-Message-ID: <4d8e3fd30904260321u46a4b177xe7c96c13836f3490@mail.gmail.com>
-References: <200904260703.31243.chriscool@tuxfamily.org>
-	 <m363grq13i.fsf@localhost.localdomain>
-	 <4d8e3fd30904260123r35b6a348uab3ad22fde9daa3f@mail.gmail.com>
-	 <alpine.DEB.1.00.0904261206170.10279@pacific.mpi-cbg.de>
+ Mercurial
+Date: Sun, 26 Apr 2009 12:18:41 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.0904261217510.10279@pacific.mpi-cbg.de>
+References: <200904260703.31243.chriscool@tuxfamily.org>  <m363grq13i.fsf@localhost.localdomain> <4d8e3fd30904260123r35b6a348uab3ad22fde9daa3f@mail.gmail.com> <alpine.DEB.1.00.0904261206170.10279@pacific.mpi-cbg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: Jakub Narebski <jnareb@gmail.com>,
 	Christian Couder <chriscool@tuxfamily.org>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Sun Apr 26 13:09:39 2009
+To: Paolo Ciarrocchi <paolo.ciarrocchi@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Apr 26 13:20:32 2009
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ly1VO-0003G1-HQ
-	for gcvg-git-2@gmane.org; Sun, 26 Apr 2009 12:22:39 +0200
+	id 1Ly1Sx-0003Bz-DN
+	for gcvg-git-2@gmane.org; Sun, 26 Apr 2009 12:20:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752029AbZDZKVF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 26 Apr 2009 06:21:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750898AbZDZKVE
-	(ORCPT <rfc822;git-outgoing>); Sun, 26 Apr 2009 06:21:04 -0400
-Received: from fg-out-1718.google.com ([72.14.220.156]:62375 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751012AbZDZKVD (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 26 Apr 2009 06:21:03 -0400
-Received: by fg-out-1718.google.com with SMTP id 16so409310fgg.17
-        for <git@vger.kernel.org>; Sun, 26 Apr 2009 03:21:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=gKsDa05GGeHvcZW/BP+yi0+QiyhJzEKEfvfZ+v1kLN0=;
-        b=hfDoWN8oaibLEfYHVSOV9jNCSSViwGyvuWuH3/hE+A3YJieYTuytLlT19a0R1hZMMg
-         m45fwITDoFPRN6R0CxH/qqSmgSY75GfKi276ILvf3BZOPeQNJ/Y4nXgcCpJ/h1cF1Xgo
-         e7iyI4VWsV3spNzUiKxQjJHunTuR4H9uEoISw=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=MVUkJCuoJyvlZ5zE2rSJfG7GcbEWufrwar/xxk6WIYWuO6+0P1htdMls81L5OxzEHM
-         lgcEuRkIWd1vKgjP0z8IDih9nFoL/ZSYKNwL5D3SQzfxzQzs64dIa7ZFBbchRtzXjnOA
-         TaCIMKgpZHzUYcO+FfUCQ88LM6+JzG+IXXyp8=
-Received: by 10.86.74.4 with SMTP id w4mr2253956fga.60.1240741262518; Sun, 26 
-	Apr 2009 03:21:02 -0700 (PDT)
+	id S1752130AbZDZKSe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 26 Apr 2009 06:18:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751663AbZDZKSe
+	(ORCPT <rfc822;git-outgoing>); Sun, 26 Apr 2009 06:18:34 -0400
+Received: from mail.gmx.net ([213.165.64.20]:44822 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751461AbZDZKSd (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 26 Apr 2009 06:18:33 -0400
+Received: (qmail invoked by alias); 26 Apr 2009 10:18:32 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp061) with SMTP; 26 Apr 2009 12:18:32 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+rTOdON7urJFtz4874Ys0fByr+t/yjqFr3LMKf77
+	SgUTdBWYjGQiHz
+X-X-Sender: schindelin@pacific.mpi-cbg.de
 In-Reply-To: <alpine.DEB.1.00.0904261206170.10279@pacific.mpi-cbg.de>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.59
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117585>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117586>
 
-On 4/26/09, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> Hi,
->
+Hi,
+
+On Sun, 26 Apr 2009, Johannes Schindelin wrote:
+
 > On Sun, 26 Apr 2009, Paolo Ciarrocchi wrote:
->
->> On 4/26/09, Jakub Narebski <jnareb@gmail.com> wrote:
->>
->> > The deciding feature (well, one of deciding features) was the fact
->> > that Mercurial has better HTTP support... I guess (it was not obvious
->> > from the analysis, but it was hinted at) that Mercurial uses its
->> > custom protocol over HTTP, as opposed to "dumb" HTTP protocol support
->> > in Git.
->> >
->> > Perhaps it is time to restart work on _"smart" HTTP protocol_?
->> >
->>
->>
->> wasn't Shawn working on it?
->
+> 
+> > On 4/26/09, Jakub Narebski <jnareb@gmail.com> wrote:
+> > 
+> > > The deciding feature (well, one of deciding features) was the fact
+> > > that Mercurial has better HTTP support... I guess (it was not obvious
+> > > from the analysis, but it was hinted at) that Mercurial uses its
+> > > custom protocol over HTTP, as opposed to "dumb" HTTP protocol support
+> > > in Git.
+> > >
+> > > Perhaps it is time to restart work on _"smart" HTTP protocol_?
+> > >
+> > 
+> > 
+> > wasn't Shawn working on it?
+> 
 > GIVE HIM A BREAK!
 
-it was just a question.
+Sorry.  While it reflects exactly what I felt reading your mail, I should 
+have phrased it like this:
 
-> Isn't Shawn doing enough for Git?  No need to offload the stuff on him
-> _that you could very well tackle yourself_.
+	Don't ask what Shawn can do for you.  Ask what you can do for 
+	Shawn.
 
-
-shawn is a stellar developer and with my message i didn't want to
-imply that he should do more than what is already doing.
-It was just a question to better understand the issue.
-
-ciao.
--- 
-Paolo
-http://paolo.ciarrocchi.googlepages.com/
-http://mypage.vodafone.it/
+Ciao,
+Dscho
