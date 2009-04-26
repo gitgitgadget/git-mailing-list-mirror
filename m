@@ -1,120 +1,85 @@
-From: "Matthias Andree" <matthias.andree@gmx.de>
-Subject: Re: Google Code: Support for Mercurial and Analysis of Git and
- Mercurial
-Date: Sun, 26 Apr 2009 13:47:03 +0200
-Message-ID: <op.uszscpuf1e62zd@merlin.emma.line.org>
-References: <200904260703.31243.chriscool@tuxfamily.org>
- <m363grq13i.fsf@localhost.localdomain>
- <op.uszlmeoo1e62zd@merlin.emma.line.org> <200904261209.08108.jnareb@gmail.com>
+From: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
+Subject: Re: [doc] User Manual Suggestion
+Date: Sun, 26 Apr 2009 13:28:02 +0200
+Message-ID: <20090426112802.GC10155@atjola.homenet>
+References: <alpine.LNX.2.00.0904241655090.2147@iabervon.org> <20090424213848.GA14493@coredump.intra.peff.net> <b4087cc50904241518w625a9890vecdd36bb937e76d5@mail.gmail.com> <b4087cc50904241525w7de597bfq7be89796947a14cc@mail.gmail.com> <alpine.LNX.2.00.0904241852500.2147@iabervon.org> <b4087cc50904241626h166c6b3bqa4ec714d4cb5662a@mail.gmail.com> <alpine.LNX.2.00.0904251445030.2147@iabervon.org> <b4087cc50904251216p617e347bmdc70e109298fa9b2@mail.gmail.com> <94a0d4530904251224g6b228448q276436f17f7e5cc3@mail.gmail.com> <E85677CA-FA7E-4777-97DF-9B295E89B83A@boostpro.com>
 Mime-Version: 1.0
-Content-Type: text/plain; format=flowed; delsp=yes; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Cc: "git.vger.kernel.org" <git@vger.kernel.org>
-To: "Jakub Narebski" <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Apr 27 12:37:10 2009
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Felipe Contreras <felipe.contreras@gmail.com>,
+	Michael Witten <mfwitten@gmail.com>,
+	Daniel Barkalow <barkalow@iabervon.org>,
+	Jeff King <peff@peff.net>, Johan Herland <johan@herland.net>,
+	git@vger.kernel.org, "J. Bruce Fields" <bfields@fieldses.org>
+To: David Abrahams <dave@boostpro.com>
+X-From: git-owner@vger.kernel.org Mon Apr 27 12:39:32 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ly2r3-00061p-Qr
-	for gcvg-git-2@gmane.org; Sun, 26 Apr 2009 13:49:06 +0200
+	id 1Ly2YY-0005ST-G1
+	for gcvg-git-2@gmane.org; Sun, 26 Apr 2009 13:29:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752974AbZDZLrK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 26 Apr 2009 07:47:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752675AbZDZLrJ
-	(ORCPT <rfc822;git-outgoing>); Sun, 26 Apr 2009 07:47:09 -0400
-Received: from mail.gmx.net ([213.165.64.20]:33140 "HELO mail.gmx.net"
+	id S1753601AbZDZL2S convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 26 Apr 2009 07:28:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753232AbZDZL2S
+	(ORCPT <rfc822;git-outgoing>); Sun, 26 Apr 2009 07:28:18 -0400
+Received: from mail.gmx.net ([213.165.64.20]:38667 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750710AbZDZLrH (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 26 Apr 2009 07:47:07 -0400
-Received: (qmail invoked by alias); 26 Apr 2009 11:47:05 -0000
-Received: from g226233177.adsl.alicedsl.de (EHLO mandree.no-ip.org) [92.226.233.177]
-  by mail.gmx.net (mp006) with SMTP; 26 Apr 2009 13:47:05 +0200
-X-Authenticated: #428038
-X-Provags-ID: V01U2FsdGVkX1815vkYrCM11rIvrlGTWywgKkKUZ6CesXfqtKkRos
-	IKyy60dEhv4Cb/
-Received: from merlin.emma.line.org (localhost [127.0.0.1])
-	by merlin.emma.line.org (Postfix) with ESMTP id 1243F940DF;
-	Sun, 26 Apr 2009 13:47:03 +0200 (CEST)
-In-Reply-To: <200904261209.08108.jnareb@gmail.com>
-User-Agent: Opera Mail/9.64 (Linux)
+	id S1752675AbZDZL2R (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 26 Apr 2009 07:28:17 -0400
+Received: (qmail invoked by alias); 26 Apr 2009 11:28:15 -0000
+Received: from i59F554DA.versanet.de (EHLO atjola.local) [89.245.84.218]
+  by mail.gmx.net (mp021) with SMTP; 26 Apr 2009 13:28:15 +0200
+X-Authenticated: #5039886
+X-Provags-ID: V01U2FsdGVkX18y85JDuiwyq6pJIM2hvUch24Y9Xr2+9lh2F1lpq1
+	l0jwsw6twrPQfj
+Content-Disposition: inline
+In-Reply-To: <E85677CA-FA7E-4777-97DF-9B295E89B83A@boostpro.com>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.52
+X-FuHaFi: 0.66
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117647>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117648>
 
-Am 26.04.2009, 12:09 Uhr, schrieb Jakub Narebski <jnareb@gmail.com>:
+On 2009.04.25 15:36:24 -0400, David Abrahams wrote:
+> Where it's relevant when the user notices that two distinct files hav=
+e =20
+> the same id (because they happen to have the same contents) and wonde=
+rs=20
+> what's up.
 
-> On Sun, 26 April 2009, Matthias Andree wrote:
->> Am 26.04.2009, 10:16 Uhr, schrieb Jakub Narebski <jnareb@gmail.com>:
->>
->> > I can't comment on MS Windows support, but AFAIK Mercurial has better
->> > support here than Git.
->>
->> I have some experience here, and with exception to the SVN 1.6 breaks
->> git-svn for https:// (probably due to misbehaviour of APR or SVN stuff  
->> on
->> Cygwin), it works flawless on Cygwin 1.5. (SVN 1.5 on Cygwin 1.5 or SVN
->> 1.6 on Cygwin 1.7 seem to work).
->>
->> I wonder why people are always pissed at Cygwin - it's quite easy to  
->> setup and works.
->
-> Well, but you have to install Cygwin (or use MsysGit, which isn't there
-> yet).  On the other hand you need to install Python for Mercurial...
-> but perhaps it is bundled in Windows install package for Mercurial.
+Why would the user have to care about the object files in the repo? And
+why would your implementation save the same object twice, in two
+distinct files? The SHA-1 hash is created from the object, that means
+the its type, size and data. It's not an id of a file in the working
+tree, but of an object.
 
-AFAIR Mercurial is compiled through py2exe, but I'd have to look again  
-what that actually means WRT Python installations.
+> It's not a foregone conclusion that objects with the same value have =
+=20
+> identical ids, but it's immediately apparent if the id is known to be=
+ a=20
+> hash.
 
-> Beside it isn't only about being easy to install and use (and have
-> decent enough performance) given SCM on MS Windows, but also about
-> tools such like TortoiseHg and VisualHg (as Windows users are usually
-> not used to using CLI alone).  Although also this improves for Git,
-> with TortoiseGit, Git Extensions and git-cheetah.  And I think it was
-> much worse (for Git vs Mercurial) at the time the analysis in question
-> was conducted.
+You can't have two objects with the same contents to begin with, same
+content =3D> same object.  You can just have that one object stored
+multiple times in different places (for sane implementations this likel=
+y
+means that you have more than one repo to look at, and each has its own
+copy of that object, but that's nothing you as an user should have to
+care about).
 
-I wonder why people always talk about "not being used to console" or  
-whatever. These captive GUIs serialize work and tend to get in the way. It  
-may be different for beasts like Eclipse, but I haven't tried the latter.
+It's an identity relation: same name/id =3D> same object. Unlike e.g. a
+hash-table where you are expected to deal with collisions, and having
+the same hash doesn't mean that you have identical data. But that's not
+true of git, it expects an identity relation, which is IMHO better
+expressed through "object name" or "object id". You can still say that
+the name/id is generated by using a hash function, but the important
+part is that the name/id is used to _uniquely_ identify an object, whic=
+h
+isn't apparent when you call it a hash.
 
-I have yet to see any TortoiseCrap that does not smell. Judging from  
-Tortoise{CVS,SVN,Hg}, they are feature-limited, cumbersome-to-use  
-frontends where a command line client would be much faster. However you  
-can't mix Unix versions of SCM exes and Tortoise-compiled exes easily due  
-to differing [CR-]LF conventions.
-
-I've done away with all that TortoiseCrap and use SCM from the command  
-line.
-
-I acknowledge that code browsing as in gitk or git-gui is more concise  
-than a shell at times, but that doesn't warrant Tortoise* Explorer  
-extension stuff which only wraps the trivial operations anyhow.
-
-My opinion is that if people can't be bothered to learn the few SCM  
-commands, they won't fully understand what Tortoises creep to do, and then  
-they shouldn't be let anywhere near any kind of shell - graphical or text  
-console - anyways.
-
-> As you can find in mailing list archives the design part of "tunelling"
-> pack protocol over HTTP, using git-aware server (for example some CGI
-> script, or simple HTTP server like Mercurial's hg-serve), is done.  Even
-> taking into account the fact that HTTP protocol by itself is stateless.
-> Unfortunately development itself of "smart" HTTP server for Git got
-> stalled... if it was present, the conclusion of mentioned analysis might
-> have been different.  OTOH perhaps it would be not, as it is my  
-> impression that Google Code stuff is either Python or Java...
-
-I don't care much about Google anything, to be frank.
-
-> P.S. I wonder what happened to GMane interface... seems stalled.
-
-What's so difficult about mailing "subscribe git MY@ADDRE.SS.example" to  
-majordomo at vger dot kernel dot org?
-
--- 
-Matthias Andree
+Bj=F6rn
