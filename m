@@ -1,85 +1,85 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Again with git-svn: File was not found in commit
-Date: Sun, 26 Apr 2009 01:17:28 -0700 (PDT)
-Message-ID: <m31vrfq11w.fsf@localhost.localdomain>
-References: <747CFDA3-AC27-44EB-A69C-BF9C29B05A31@kineticode.com>
-	<20090421180231.GB16642@dcvr.yhbt.net>
-	<8EDD65AC-9C25-4281-86F6-E52A41331B00@kineticode.com>
-	<20090426015300.GA17212@dcvr.yhbt.net>
-	<81EFD289-5E46-4B27-8DA4-C2039915CE2D@kineticode.com>
+From: Stephen Boyd <bebarino@gmail.com>
+Subject: Re: [PATCH 2/2] Documentation: git-clean: make description more readable
+Date: Sun, 26 Apr 2009 01:04:16 -0700
+Message-ID: <49F41580.3080004@gmail.com>
+References: <1240672421-10309-1-git-send-email-wjl@icecavern.net> <1240672421-10309-3-git-send-email-wjl@icecavern.net> <49F35833.5070005@gmail.com> <200904251923.46448.wjl@icecavern.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Eric Wong <normalperson@yhbt.net>, git@vger.kernel.org
-To: "David E. Wheeler" <david@kineticode.com>
-X-From: git-owner@vger.kernel.org Sun Apr 26 22:44:31 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: "Wesley J. Landaker" <wjl@icecavern.net>
+X-From: git-owner@vger.kernel.org Sun Apr 26 23:01:47 2009
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LxzZt-00087o-6L
-	for gcvg-git-2@gmane.org; Sun, 26 Apr 2009 10:19:09 +0200
+	id 1LxzVr-000819-Eq
+	for gcvg-git-2@gmane.org; Sun, 26 Apr 2009 10:14:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753057AbZDZIRf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 26 Apr 2009 04:17:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752757AbZDZIRe
-	(ORCPT <rfc822;git-outgoing>); Sun, 26 Apr 2009 04:17:34 -0400
-Received: from fg-out-1718.google.com ([72.14.220.157]:6931 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752484AbZDZIRc (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 26 Apr 2009 04:17:32 -0400
-Received: by fg-out-1718.google.com with SMTP id d23so397946fga.17
-        for <git@vger.kernel.org>; Sun, 26 Apr 2009 01:17:29 -0700 (PDT)
+	id S1751917AbZDZIEY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 26 Apr 2009 04:04:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751615AbZDZIEW
+	(ORCPT <rfc822;git-outgoing>); Sun, 26 Apr 2009 04:04:22 -0400
+Received: from wa-out-1112.google.com ([209.85.146.178]:57349 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751450AbZDZIEU (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 26 Apr 2009 04:04:20 -0400
+Received: by wa-out-1112.google.com with SMTP id j5so976356wah.21
+        for <git@vger.kernel.org>; Sun, 26 Apr 2009 01:04:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received
-         :x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        bh=7it5h4CsabgEJcvcVFYWox3jRQk2htcwm+nVggzIcac=;
-        b=M6eu/uW2bHYlMATcGhbQkIYocEpqqDlqsiRJQXPxX4vwQJfrDgZU3+0uxGlLlwGzol
-         ATDP9kH8pLD7v7g0MSj0wi5dHb0gx4/HBXh4/q4PBE4l2ZU4UGbJxt/4YBLhUpUAp9G2
-         ViThN0S8y/PJrPpJ40J4y/3DJ+vNLsYN4VIHU=
+        h=domainkey-signature:received:received:message-id:date:from
+         :user-agent:mime-version:to:cc:subject:references:in-reply-to
+         :content-type:content-transfer-encoding;
+        bh=rC/bnZOWJqAx3yzI68u1p24S9cLdI+Vt7kLLzSzKikU=;
+        b=u9nJsvPo8VatcorG2kwKFO206Ugw4JzBiykRCKfWYYCWJw1arxTYB4FTK+96t5J/oE
+         NQDL16EvwMhp+ntGtNfTQUHhBOSm92Iu29lwXDIqQwse/W44P9ZgcZBZLFDmelZF9Emn
+         LomtpDiSeTrOMzAmw2ffsKxv/v0G6ckBjZtfw=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        b=Qn1p0oym3paB+akBcfg+Jsh98+VrMTMT7mwMkOftVHWne093bteN8FuIibsSFD1x/b
-         CB766Yj3JrrEkB1ton7jLjkHgiTCr5wSMXSHwOPZXBZMgumj+GKhCIoAoPITwtC3vrs2
-         Q2UQtUioxvmwr0lM2QXIVLv3W8a4hHtW2LL/Q=
-Received: by 10.86.36.11 with SMTP id j11mr2228419fgj.56.1240733848937;
-        Sun, 26 Apr 2009 01:17:28 -0700 (PDT)
-Received: from localhost.localdomain (abwp56.neoplus.adsl.tpnet.pl [83.8.239.56])
-        by mx.google.com with ESMTPS id d4sm3757688fga.9.2009.04.26.01.17.28
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        b=FVHUeyo89bzCZCr8kTj5pFi2cViP/WKJlTw7ZTCSe0Xhv/1nIiW6UPgoSKIjCKH6Xy
+         aJ0y06pjExZPdaCswbc1CRAUfqxwwa1GFtt5Lv3INcxRny+aDdcmCM0n4XsyN7+wnM4s
+         JAatonZvnQblXkJwkc4DsmHKJ+d1GF+Cg/CP8=
+Received: by 10.114.159.16 with SMTP id h16mr2059930wae.35.1240733059888;
+        Sun, 26 Apr 2009 01:04:19 -0700 (PDT)
+Received: from ?192.168.1.3? ([76.89.212.195])
+        by mx.google.com with ESMTPS id l31sm190598rvb.3.2009.04.26.01.04.18
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 26 Apr 2009 01:17:28 -0700 (PDT)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id n3Q8KMUF025130;
-	Sun, 26 Apr 2009 10:20:33 +0200
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id n3Q8JtNC025114;
-	Sun, 26 Apr 2009 10:19:55 +0200
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <81EFD289-5E46-4B27-8DA4-C2039915CE2D@kineticode.com>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+        Sun, 26 Apr 2009 01:04:19 -0700 (PDT)
+User-Agent: Thunderbird 2.0.0.21 (X11/20090321)
+In-Reply-To: <200904251923.46448.wjl@icecavern.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117592>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117593>
 
-"David E. Wheeler" <david@kineticode.com> writes:
+Wesley J. Landaker wrote:
+> The main reason I took that out in my patch was because I think the second 
+> sentence more says the same thing, except more clearly, and the exact 
+> semantics of "files unknown to git" versus "ignored files", etc seem to not have 
+> good definitions anyway, so I left that for the second paragraph that talks 
+> about how '-x' changes things.
+If you want to keep it, maybe change it to be more active. Something like:
 
-> On Apr 25, 2009, at 6:53 PM, Eric Wong wrote:
-> 
-> > Hopefully the workaround is working out for you.
-> 
-> [Finally], yes.
-> 
-> [Finally]: http://justatheory.com/computers/vcs/git/bricolage-to-git.html
+    Cleans the working tree by removing files that are not under version
+control.
 
-Thank you for posting this detailed analysis.
+> So I might edit yours to say:
+>
+> Specifying the '-x' option will also remove ignored files. This is useful to 
+> remove, for example, generated files that are normally ignored.
 
--- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+The "for example" just comes sticking out again. Could you put it at the
+beginning of the sentence?
+
+> I left the part about '-x' there mostly because it was already in there, so I 
+> figured someone at some point thought it was special enough. I didn't want to 
+> undo any good decisions that had already been made. =) That said, both -x and 
+> -X are somewhat special because they change the behavior a LOT compared to, 
+> say, -d.
+
+So maybe -X should be described as well?
