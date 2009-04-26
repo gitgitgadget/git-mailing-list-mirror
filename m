@@ -1,98 +1,136 @@
-From: Dmitry Potapov <dpotapov@gmail.com>
-Subject: Re: [PATCH] Add Russian translation to gitk
-Date: Mon, 27 Apr 2009 12:39:53 +0400
-Message-ID: <20090427083953.GB15723@dpotapov.dyndns.org>
-References: <20090426132452.GB30825@blimp.localdomain>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=koi8-r
+From: David Abrahams <dave@boostpro.com>
+Subject: Re: [doc] User Manual Suggestion
+Date: Sun, 26 Apr 2009 09:55:34 -0400
+Message-ID: <FA5C0FFA-2DCD-4DF1-9A94-C2A26A9DCAE9@boostpro.com>
+References: <alpine.LNX.2.00.0904241655090.2147@iabervon.org> <20090424213848.GA14493@coredump.intra.peff.net> <b4087cc50904241518w625a9890vecdd36bb937e76d5@mail.gmail.com> <b4087cc50904241525w7de597bfq7be89796947a14cc@mail.gmail.com> <alpine.LNX.2.00.0904241852500.2147@iabervon.org> <b4087cc50904241626h166c6b3bqa4ec714d4cb5662a@mail.gmail.com> <alpine.LNX.2.00.0904251445030.2147@iabervon.org> <b4087cc50904251216p617e347bmdc70e109298fa9b2@mail.gmail.com> <94a0d4530904251224g6b228448q276436f17f7e5cc3@mail.gmail.com> <E85677CA-FA7E-4777-97DF-9B295E89B83A@boostpro.com> <20090426112802.GC10155@atjola.homenet>
+Mime-Version: 1.0 (Apple Message framework v930.4)
+Content-Type: text/plain; charset=ISO-8859-1;
+	format=flowed	delsp=yes
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Paul Mackerras <paulus@samba.org>
-To: Alex Riesen <raa.lkml@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Apr 27 12:17:00 2009
+Cc: Felipe Contreras <felipe.contreras@gmail.com>,
+	Michael Witten <mfwitten@gmail.com>,
+	Daniel Barkalow <barkalow@iabervon.org>,
+	Jeff King <peff@peff.net>, Johan Herland <johan@herland.net>,
+	git@vger.kernel.org, "J. Bruce Fields" <bfields@fieldses.org>
+To: =?ISO-8859-1?Q?Bj=F6rn_Steinbrink?= <B.Steinbrink@gmx.de>
+X-From: git-owner@vger.kernel.org Mon Apr 27 12:19:34 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LyMOd-0004Zk-OP
-	for gcvg-git-2@gmane.org; Mon, 27 Apr 2009 10:41:04 +0200
+	id 1Ly4r2-0001Q3-Vq
+	for gcvg-git-2@gmane.org; Sun, 26 Apr 2009 15:57:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753510AbZD0IkX convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 27 Apr 2009 04:40:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752675AbZD0IkX
-	(ORCPT <rfc822;git-outgoing>); Mon, 27 Apr 2009 04:40:23 -0400
-Received: from mail-qy0-f112.google.com ([209.85.221.112]:60081 "EHLO
-	mail-qy0-f112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752999AbZD0IkW (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 27 Apr 2009 04:40:22 -0400
-Received: by qyk10 with SMTP id 10so1325373qyk.33
-        for <git@vger.kernel.org>; Mon, 27 Apr 2009 01:40:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=dUNPvxPSPC/wcTRKcC0LFmo+t0aeC+4gw095NqgXrew=;
-        b=ZinopGroQh1vgIdENUqLPDbunGW/YBxjRUxfsnp0vb43R3HhY4Xe2lhV8/ZMrywsN4
-         AH5a3nlaYGh9r/f/UcyNcNMlG4H0WYP1uxzyWgb0kaQ8f+EyTXkVZ+0CW8Tfj08YpSP3
-         CDjgzWDP/5fRj+XQR/AzlYCCdJpvp7xU30SyM=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=Hoq3Sn9JaIHusdf3I86jNLVmcV7emRGhcrXg1SvfpiunWLRnIcKw5rhi4GzF9hYPqh
-         pMG6EP2B/2kYLAbwgfBDcj8lT497s6QL0+hGSVWOkW8v3NdHGkVNa9y2Lguy1bgMidgI
-         z70W39SqR1bWNG6WbH0TtWur3zkmbLnmMQtAE=
-Received: by 10.224.6.131 with SMTP id 3mr5369556qaz.366.1240821621348;
-        Mon, 27 Apr 2009 01:40:21 -0700 (PDT)
-Received: from localhost ([91.78.48.223])
-        by mx.google.com with ESMTPS id 2sm6316916qwi.3.2009.04.27.01.40.19
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 27 Apr 2009 01:40:20 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <20090426132452.GB30825@blimp.localdomain>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+	id S1752713AbZDZNzh convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 26 Apr 2009 09:55:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752673AbZDZNzh
+	(ORCPT <rfc822;git-outgoing>); Sun, 26 Apr 2009 09:55:37 -0400
+Received: from boost-consulting.com ([206.71.190.141]:49347 "EHLO
+	boost-consulting.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750900AbZDZNzh convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 26 Apr 2009 09:55:37 -0400
+Received: from [192.168.188.150] (207-172-223-249.c3-0.smr-ubr3.sbo-smr.ma.static.cable.rcn.com [207.172.223.249])
+	(Authenticated sender: dave)
+	by boost-consulting.com (Postfix) with ESMTPSA id 87E321CC1E;
+	Sun, 26 Apr 2009 06:53:01 -0700 (PDT)
+In-Reply-To: <20090426112802.GC10155@atjola.homenet>
+X-Mailer: Apple Mail (2.930.4)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117641>
-
-On Sun, Apr 26, 2009 at 03:24:52PM +0200, Alex Riesen wrote:
-> Signed-off-by: Alex Riesen <raa.lkml@gmail.com>
-> ---
->=20
-> As with the git-gui translation, if someone understanding russian see=
-s
-> this, could you please take a look and drop me a note if you find
-> something "strange"?
-
-The translation uses a single Russian verb "=F0=C5=D2=C5=CA=D4=C9" in d=
-ifferent
-meanings (where the original English phrase had "check out", "move",
-"go to", "focus) and that creates some ambiguity. For example:
-
-> +#: gitk:2347
-> +msgid "Check out this branch"
-> +msgstr "=F0=C5=D2=C5=CA=D4=C9 =CE=C1 =DC=D4=D5 =D7=C5=D4=D7=D8"
-
-> +#: gitk:2644
-> +msgid "<Home>\t\tMove to first commit"
-> +msgstr "<Home>\t\t=F0=C5=D2=C5=CA=D4=C9 =CB =D0=C5=D2=D7=CF=CD=D5 =D3=
-=CF=D3=D4=CF=D1=CE=C9=C0"
-
-How one is supposed to know that when we speak about branch, "=F0=C5=D2=
-=C5=CA=D4=C9"
-means "check out" but when about some commit then it is "move"? Only
-because gitk does not allow to check out arbitrary commit _yet_?
-
-IMHO, it is very very confusing.
-
-I think "Check out this branch" should be translated as "=F0=C5=D2=C5=CB=
-=CC=C0=DE=C9=D4=D8
-=D2=C1=C2=CF=DE=C9=CA =CB=C1=D4=C1=CC=CF=C7 =CE=C1 =DC=D4=D5 =D7=C5=D4=D7=
-=D8" (which literally means: Switch worktree
-to this branch).
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117642>
 
 
-Dmitry
+On Apr 26, 2009, at 7:28 AM, Bj=F6rn Steinbrink wrote:
+
+> On 2009.04.25 15:36:24 -0400, David Abrahams wrote:
+>> Where it's relevant when the user notices that two distinct files =20
+>> have
+>> the same id (because they happen to have the same contents) and =20
+>> wonders
+>> what's up.
+>
+> Why would the user have to care about the object files in the repo?
+
+What a strange question.  I have no idea how to answer.  It seems self-=
+=20
+evident to me that users of a VCS care that their files are stored in =20
+it.
+
+> And
+> why would your implementation save the same object twice, in two
+> distinct files?
+
+One could easily have the expectation that contents can be duplicated =20
+because there are numerous precedents in everyone's experience of =20
+computing, for example in filesystems and in any programming language =20
+that is not pure-functional.
+
+> The SHA-1 hash is created from the object, that means
+> the its type, size and data. It's not an id of a file in the working
+> tree, but of an object
+
+All true.  All somewhat subtle distinctions that are not nearly as =20
+apparent unless you actually use the word "hash" as I have been =20
+advocating.
+
+>> It's not a foregone conclusion that objects with the same value have
+>> identical ids, but it's immediately apparent if the id is known to =20
+>> be a
+>> hash.
+>
+> You can't have two objects with the same contents to begin with, same
+> content =3D> same object.
+
+In the Git world, I agree.  In general, I disagree.  The fact that is =20
+so in the Git world is reinforced by the notion that the id of an =20
+object is a hash of its contents.
+
+> You can just have that one object stored
+> multiple times in different places (for sane implementations this =20
+> likely
+> means that you have more than one repo to look at, and each has its =20
+> own
+> copy of that object, but that's nothing you as an user should have to
+> care about).
+
+> It's an identity relation: same name/id =3D> same object. Unlike e.g.=
+ a
+> hash-table where you are expected to deal with collisions, and having
+> the same hash doesn't mean that you have identical data.  But that's =
+=20
+> not
+> true of git, it expects an identity relation, which is IMHO better
+> expressed through "object name" or "object id".
+
+Yes, that's true in the Git world (though not necessarily elsewhere), =20
+or at least you hope it is.  In fact, there's no guarantee that SHA1 =20
+collisions won't occur; it's just exremely unlikely.  In fact, if you =20
+google it you can find some interesting papers about SHA1 collision.
+
+Another way to express what you wrote above:
+
+    same same id =3D> same hash ?=3D> same contents =3D> same object
+
+where ?=3D> means "almost certainly implies."  What you left out was th=
+e =20
+implication in the other direction, which is a true guarantee at all =20
+steps, and "hash" is well-understood to mean
+
+    same contents =3D> same hash
+
+> You can still say that
+> the name/id is generated by using a hash function, but the important
+> part is that the name/id is used to _uniquely_ identify an object, =20
+> which
+> isn't apparent when you call it a hash.
+
+
+I think the implication is important in both directions.  Neither one =20
+is self-evident to a new user.  Maybe the right answer is 'hash id'.
+
+--
+David Abrahams
+BoostPro Computing
+http://boostpro.com
