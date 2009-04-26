@@ -1,100 +1,90 @@
-From: James Cloos <cloos@jhcloos.com>
-Subject: Re: Google Code: Support for Mercurial and Analysis of Git and Mercurial
-Date: Sun, 26 Apr 2009 14:59:27 -0400
-Message-ID: <m3mya3b5qw.fsf@lugabout.jhcloos.org>
-References: <200904260703.31243.chriscool@tuxfamily.org>
-	<m363grq13i.fsf@localhost.localdomain>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Add core.trustlowlevelstat for diffs in dev,ino,uid and
+ gid
+Date: Sun, 26 Apr 2009 11:38:08 -0700
+Message-ID: <7vocujjm5r.fsf@gitster.siamese.dyndns.org>
+References: <1240743317-10117-1-git-send-email-robin.rosenberg@dewire.com>
+ <200904261306.15448.robin.rosenberg.lists@dewire.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Christian Couder <chriscool@tuxfamily.org>,
-	Jakub Narebski <jnareb@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Apr 27 11:21:14 2009
+Cc: git@vger.kernel.org, spearce@spearce.org
+To: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+X-From: git-owner@vger.kernel.org Mon Apr 27 11:26:00 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ly9er-0003cq-Jw
-	for gcvg-git-2@gmane.org; Sun, 26 Apr 2009 21:04:58 +0200
+	id 1Ly9Gd-0002mn-D0
+	for gcvg-git-2@gmane.org; Sun, 26 Apr 2009 20:39:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754270AbZDZTCw convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 26 Apr 2009 15:02:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754089AbZDZTCw
-	(ORCPT <rfc822;git-outgoing>); Sun, 26 Apr 2009 15:02:52 -0400
-Received: from eagle.jhcloos.com ([207.210.242.212]:4767 "EHLO
-	eagle.jhcloos.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752423AbZDZTCv (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 26 Apr 2009 15:02:51 -0400
-Received: by eagle.jhcloos.com (Postfix, from userid 10)
-	id 93B70402E5; Sun, 26 Apr 2009 19:02:26 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jhcloos.com;
-	s=eagle; t=1240772570;
-	bh=mqCDVWcxUUg8nKAxflQaOMErLhi/g7L/dFLmYVCgzBo=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	b=VzBszwqg+1sft/bkGbWKLLqG5eDN0GNzg2NIdeUUpQbJACgrSSkWlMHeKzrbuYs5F
-	 oTUlleQhH1vclANkEr0uOUJ2bZXVNwmZ4C22OEza9kmwhfZixScfNqMC1o3Ibqr9TW
-	 VMNVfl7AAmE8h/6n233HuVal1RbLaBVdxYrRJtH4=
-Received: by lugabout.jhcloos.org (Postfix, from userid 500)
-	id 9469549944; Sun, 26 Apr 2009 18:59:51 +0000 (UTC)
-In-Reply-To: <m363grq13i.fsf@localhost.localdomain> (Jakub Narebski's message
-	of "Sun, 26 Apr 2009 01:16:16 -0700 (PDT)")
-User-Agent: Gnus/5.110011 (No Gnus v0.11) Emacs/23.0.92 (gnu/linux)
-Face: iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABHNCSVQICAgIfAhkiAAAAI1J
- REFUOE+lU9ESgCAIg64P1y+ngUdxhl5H8wFbbM0OmUiEhKkCYaZThXCo6KE5sCbA1DDX3genvO4d
- eBQgEMaM5qy6uWk4SfBYfdu9jvBN9nSVDOKRtwb+I3epboOsOX5pZbJNsBJFvmQQ05YMfieIBnYX
- FK2N6dOawd97r/e8RjkTLzmMsiVgrAoEugtviCM3v2WzjgAAAABJRU5ErkJggg==
-Copyright: Copyright 2009 James Cloos
-OpenPGP: ED7DAEA6; url=http://jhcloos.com/public_key/0xED7DAEA6.asc
-OpenPGP-Fingerprint: E9E9 F828 61A4 6EA9 0F2B  63E7 997A 9F17 ED7D AEA6
-X-Hashcash: 1:29:090426:git@vger.kernel.org::NbLfDkB3mzf/m/HW:000000000000000000000000000000000000000008BTvV
-X-Hashcash: 1:29:090426:chriscool@tuxfamily.org::J7xIpkljhSliYO+D:0000000000000000000000000000000000000vlCmL
-X-Hashcash: 1:29:090426:jnareb@gmail.com::Zb3VyhLSvKMvwGFh:2M8Ak
+	id S1753193AbZDZSiV convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 26 Apr 2009 14:38:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752538AbZDZSiU
+	(ORCPT <rfc822;git-outgoing>); Sun, 26 Apr 2009 14:38:20 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:37756 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752520AbZDZSiU convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 26 Apr 2009 14:38:20 -0400
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 33C4DADB1F;
+	Sun, 26 Apr 2009 14:38:15 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id DBDEBADB1E; Sun,
+ 26 Apr 2009 14:38:10 -0400 (EDT)
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 67449624-3291-11DE-AEDB-C121C5FC92D5-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117624>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117625>
 
->>>>> "Jakub" =3D=3D Jakub Narebski <jnareb@gmail.com> writes:
+Robin Rosenberg <robin.rosenberg.lists@dewire.com> writes:
 
-Jakub> Perhaps it is time to restart work on _"smart" HTTP protocol_?
+> s=C3=B6ndag 26 april 2009 12:55:17 skrev Robin Rosenberg:
+>> This reason we may want to ignore these fields is that the Java impl=
+ementation=20
+>> of Git cannot set these fields properly. To mark this JGit sets thes=
+e fields
+>> to to UINT_MAX (all bits set).
+>
+> Oopps, you won't be able to apply this one,...
 
-I had put together some ideas for how that could work, but didn=E2=80=99=
-t post
-them because it looked like smarter http transport was fait accompli.
+Yeah, I noticed your ~0u hack, but it is clear what is going on in the
+patch.
 
-The general idea was to use an http server as a proxy for git-daemon.
-Sites running git-daemon could put up such a proxy which will only
-accept proxy attempts to their own daemon, and sites or users behind
-restrictive firewalls (or http proxies) could set up such a proxy which
-requires http-level authentication but then will proxy for any git-daem=
-on.
-
-IIRC, I intended to suggest the name post_proxy for the config files.
-One could add a post_proxy to a repo (for the former style) or in their
-global config (for the latter style).  Either way, an http_proxy could
-still be used, if necessary, to access the post_proxy.
-
-Any stream the client would send to a remote git-daemon would be
-encapsulted and sent via an HTTP POST to the post_proxy, which would
-use the git protocol to send it to the specified git-daemon.  Any
-reply back from the git-daemon would be sent to the client as the reply
-to the POST.
-
-The proxy can be readilly written as a CGI, as a mod_lang extension (fo=
+I had a similar patch that disables inum checking in my private tree fo=
 r
-one=E2=80=99s favourite lang), as a standalone server, or as an extensi=
-on to
-projects such as gitweb or cgit.
+different reasons of my own; the set of fields your patch ignores is a
+compatible superset of, and I think makes more sense than, what I was
+planning to do, so no objections from me on this _optional_ feature.
 
-I never got past the rough design phase because, when I was preparing t=
-o
-post the idea, it looked like alternate code was already written....
+It might be easier (with proper re-indentation, which I omitted from th=
+is
+patch with "diff -w") and more efficient to do this, though...
 
-Is there any interest in this?
-
--JimC
---=20
-James Cloos <cloos@jhcloos.com>         OpenPGP: 1024D/ED7DAEA6
+diff --git a/read-cache.c b/read-cache.c
+index 3f58711..03ecd11 100644
+--- a/read-cache.c
++++ b/read-cache.c
+@@ -210,6 +210,8 @@ static int ce_match_stat_basic(struct cache_entry *=
+ce, struct stat *st)
+ 		changed |=3D CTIME_CHANGED;
+ #endif
+=20
++	if (trust_lowlevel_stat) {
++
+ 	if (ce->ce_uid !=3D (unsigned int) st->st_uid ||
+ 	    ce->ce_gid !=3D (unsigned int) st->st_gid)
+ 		changed |=3D OWNER_CHANGED;
+@@ -226,6 +228,7 @@ static int ce_match_stat_basic(struct cache_entry *=
+ce, struct stat *st)
+ 		changed |=3D INODE_CHANGED;
+ #endif
+=20
++	}
+ 	if (ce->ce_size !=3D (unsigned int) st->st_size)
+ 		changed |=3D DATA_CHANGED;
+=20
