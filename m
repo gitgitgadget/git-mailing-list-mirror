@@ -1,65 +1,110 @@
-From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
-Subject: Re: [PATCH] Add core.trustlowlevelstat for diffs in dev,ino,uid and gid
-Date: Mon, 27 Apr 2009 00:02:42 +0200
-Message-ID: <200904270002.42489.robin.rosenberg.lists@dewire.com>
-References: <1240743317-10117-1-git-send-email-robin.rosenberg@dewire.com> <7vocujjm5r.fsf@gitster.siamese.dyndns.org> <alpine.LFD.2.00.0904261159190.7331@localhost.localdomain>
-Mime-Version: 1.0
-Content-Type: Text/Plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>, spearce@spearce.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Mon Apr 27 10:42:49 2009
+From: alex@bandlem.com (Alex Blewitt)
+Subject: [EGIT PATCH] Removal of dead code
+Date: Sun, 26 Apr 2009 21:55:06 +0100 (BST)
+Message-ID: <20090426205506.BC46ADBF31@apple.int.bandlem.com>
+To: alex.blewitt@gmail.com, git@vger.kernel.org,
+	robin.rosenberg@dewire.com, spearce@spearce.org
+X-From: git-owner@vger.kernel.org Mon Apr 27 10:59:00 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LyCTI-000137-7M
-	for gcvg-git-2@gmane.org; Mon, 27 Apr 2009 00:05:18 +0200
+	id 1LyBPf-0007HP-1S
+	for gcvg-git-2@gmane.org; Sun, 26 Apr 2009 22:57:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752006AbZDZWCx convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 26 Apr 2009 18:02:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751882AbZDZWCx
-	(ORCPT <rfc822;git-outgoing>); Sun, 26 Apr 2009 18:02:53 -0400
-Received: from mail.dewire.com ([83.140.172.130]:21208 "EHLO dewire.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751296AbZDZWCw convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 26 Apr 2009 18:02:52 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by dewire.com (Postfix) with ESMTP id EDBDB14A8B34;
-	Mon, 27 Apr 2009 00:02:44 +0200 (CEST)
-X-Virus-Scanned: by amavisd-new at dewire.com
-Received: from dewire.com ([127.0.0.1])
-	by localhost (torino.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id gCmSVl-ZcB3T; Mon, 27 Apr 2009 00:02:44 +0200 (CEST)
-Received: from sleipner.localnet (unknown [10.9.0.3])
-	by dewire.com (Postfix) with ESMTP id 5886514A8B33;
-	Mon, 27 Apr 2009 00:02:44 +0200 (CEST)
-User-Agent: KMail/1.11.2 (Linux/2.6.28-11-generic; KDE/4.2.2; i686; ; )
-In-Reply-To: <alpine.LFD.2.00.0904261159190.7331@localhost.localdomain>
-Content-Disposition: inline
+	id S1752191AbZDZUzO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 26 Apr 2009 16:55:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752994AbZDZUzM
+	(ORCPT <rfc822;git-outgoing>); Sun, 26 Apr 2009 16:55:12 -0400
+Received: from server.bandlem.com ([217.155.97.60]:34688 "EHLO
+	apple.int.bandlem.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752191AbZDZUzL (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 26 Apr 2009 16:55:11 -0400
+Received: by apple.int.bandlem.com (Postfix, from userid 1000)
+	id BC46ADBF31; Sun, 26 Apr 2009 21:55:06 +0100 (BST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117614>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117615>
 
-s=F6ndag 26 april 2009 21:25:13 skrev Linus Torvalds <torvalds@linux-fo=
-undation.org>:
->=20
-> On Sun, 26 Apr 2009, Junio C Hamano wrote:
-> >=20
-> > I had a similar patch that disables inum checking in my private tre=
-e for
-> > different reasons of my own; the set of fields your patch ignores i=
-s a
-> > compatible superset of, and I think makes more sense than, what I w=
-as
-> > planning to do, so no objections from me on this _optional_ feature=
-=2E
->=20
-> Maybe we should just remove those checks entirely?
+>From ee933d31d2ca4a4270aa9f4be6e60beec388e8af Mon Sep 17 00:00:00 2001
+From: Alex Blewitt <alex.blewitt@gmail.com>
+Date: Sun, 26 Apr 2009 21:51:17 +0100
+Subject: [PATCH] Removed dead code
 
-Blessed-by: Robin Rosenberg <robin.rosenberg@dewire.com>
+---
+ .../preferences/GitDecoratorPreferencePage.java    |   32 --------------------
+ 1 files changed, 0 insertions(+), 32 deletions(-)
 
--- robin
+diff --git a/org.spearce.egit.ui/src/org/spearce/egit/ui/internal/preferences/GitDecoratorPreferencePage.java b/org.spearce.egit.ui/src/org/spearce/egit/ui/internal/preferences/GitDecoratorPreferencePage.java
+index eca2277..185f242 100644
+--- a/org.spearce.egit.ui/src/org/spearce/egit/ui/internal/preferences/GitDecoratorPreferencePage.java
++++ b/org.spearce.egit.ui/src/org/spearce/egit/ui/internal/preferences/GitDecoratorPreferencePage.java
+@@ -727,18 +727,6 @@ public void inputChanged(Viewer viewer, Object oldInput, Object newInput) {
+ 			// No-op
+ 		}
+ 
+-		public Color getBackground(Object element) {
+-			return getDecoration(element).getBackgroundColor();
+-		}
+-
+-		public Color getForeground(Object element) {
+-			return getDecoration(element).getForegroundColor();
+-		}
+-
+-		public Font getFont(Object element) {
+-			return getDecoration(element).getFont();
+-		}
+-
+ 		public String getText(Object element) {
+ 			final PreviewDecoration decoration = getDecoration(element);
+ 			final StringBuffer buffer = new StringBuffer();
+@@ -869,12 +857,6 @@ public boolean isAssumeValid() {
+ 
+ 		private ImageDescriptor overlay = null;
+ 
+-		private Font font;
+-
+-		private Color backgroundColor;
+-
+-		private Color foregroundColor;
+-
+ 		/**
+ 		 * Adds an icon overlay to the decoration
+ 		 * <p>
+@@ -903,15 +885,12 @@ public IDecorationContext getDecorationContext() {
+ 		}
+ 
+ 		public void setBackgroundColor(Color color) {
+-			backgroundColor = color;
+ 		}
+ 
+ 		public void setForegroundColor(Color color) {
+-			foregroundColor = color;
+ 		}
+ 
+ 		public void setFont(Font font) {
+-			this.font = font;
+ 		}
+ 
+ 		public ImageDescriptor getOverlay() {
+@@ -934,16 +913,5 @@ public String getSuffix() {
+ 			return sb.toString();
+ 		}
+ 
+-		public Font getFont() {
+-			return font;
+-		}
+-
+-		public Color getBackgroundColor() {
+-			return backgroundColor;
+-		}
+-
+-		public Color getForegroundColor() {
+-			return foregroundColor;
+-		}
+ 	}
+ }
+-- 
+1.6.2.2
