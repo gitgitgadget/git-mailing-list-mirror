@@ -1,75 +1,61 @@
-From: Paolo Ciarrocchi <paolo.ciarrocchi@gmail.com>
+From: Michael Witten <mfwitten@gmail.com>
 Subject: Re: Google Code: Support for Mercurial and Analysis of Git and 
 	Mercurial
-Date: Sun, 26 Apr 2009 08:53:54 +0030
-Message-ID: <4d8e3fd30904260123r35b6a348uab3ad22fde9daa3f@mail.gmail.com>
+Date: Sun, 26 Apr 2009 02:12:15 -0500
+Message-ID: <b4087cc50904260012y6620718dqf59766463f9d519@mail.gmail.com>
 References: <200904260703.31243.chriscool@tuxfamily.org>
-	 <m363grq13i.fsf@localhost.localdomain>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: Christian Couder <chriscool@tuxfamily.org>, git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Apr 27 03:23:36 2009
+Cc: git@vger.kernel.org
+To: Christian Couder <chriscool@tuxfamily.org>
+X-From: git-owner@vger.kernel.org Mon Apr 27 03:28:21 2009
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LxzgS-0008KO-Jj
-	for gcvg-git-2@gmane.org; Sun, 26 Apr 2009 10:25:57 +0200
+	id 1LxyYg-0006O6-5Y
+	for gcvg-git-2@gmane.org; Sun, 26 Apr 2009 09:13:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755073AbZDZIX5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 26 Apr 2009 04:23:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751929AbZDZIX5
-	(ORCPT <rfc822;git-outgoing>); Sun, 26 Apr 2009 04:23:57 -0400
-Received: from mail-fx0-f158.google.com ([209.85.220.158]:52478 "EHLO
-	mail-fx0-f158.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753200AbZDZIXz (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 26 Apr 2009 04:23:55 -0400
-Received: by fxm2 with SMTP id 2so1767763fxm.37
-        for <git@vger.kernel.org>; Sun, 26 Apr 2009 01:23:54 -0700 (PDT)
+	id S1753042AbZDZHMR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 26 Apr 2009 03:12:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752219AbZDZHMQ
+	(ORCPT <rfc822;git-outgoing>); Sun, 26 Apr 2009 03:12:16 -0400
+Received: from qw-out-2122.google.com ([74.125.92.25]:49764 "EHLO
+	qw-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751288AbZDZHMQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 26 Apr 2009 03:12:16 -0400
+Received: by qw-out-2122.google.com with SMTP id 5so1525099qwd.37
+        for <git@vger.kernel.org>; Sun, 26 Apr 2009 00:12:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:mime-version:received:in-reply-to:references
          :date:message-id:subject:from:to:cc:content-type
          :content-transfer-encoding;
-        bh=hcuVnz0ubXreHkUwMfscLZ5hG+tSrK0/2KFtO5BYCts=;
-        b=wTwdZYUv9rSdhXYhGBm7sw10a8QGUtiYOI3G/IZlaLovLy+wMmNu+1KQnnY2drcu/r
-         bllYpGAvMt3XD0UR29YzJSy5tPJtVxsD3UdjKMXvL7EO/njSvyBaqjNGx08MgvPD4Hhl
-         CYbMFEexCVmya1Wvcq6n7xEOBZfB1qsNdqfeE=
+        bh=8PyXUVIgJmVrjgYIbIxYAPgEi89zi1yjyWU9Mem0mjc=;
+        b=rz/4OaOILI/MWL73LNS/KPYSbmE4/3CGBC1W+XzXwIAt7tPitr5yRnld8nS3oge40/
+         zG0uauByFIXoOCzZw+nHs9HaUxEjPCGliYrZnArmjxwnnabdTikzT4Ehe7yxskJzULYJ
+         OqsrrhXesratVO14saahaFN+x5AfkgBcrqsls=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type:content-transfer-encoding;
-        b=B4aBdFXsGWaFM10eH9rLavxW9iNo3+/m2EFNfrIqmk4uqIeHKwMLh/XAm6dCMOYikA
-         M7Y9f53uY14utZPIrQPQ5u9e7RM2nvDaokP4tnrxILYWIjzSVBOYJy+hZNfSSUMi9asM
-         N58+yYwOI3ny5XtbOvWUDwTWLSyWJOhw+ekSY=
-Received: by 10.86.86.10 with SMTP id j10mr2212461fgb.37.1240734234857; Sun, 
-	26 Apr 2009 01:23:54 -0700 (PDT)
-In-Reply-To: <m363grq13i.fsf@localhost.localdomain>
+        b=MxnYlDp/0sxRlyfRZpdHJ0XK6LVbsf52mDegfQthVFIhynpbix8Pgq2K2ZYIVNn0L5
+         UsVnKU39s/+zqzpUDY/wKlgv3CEZeExN0StnkxBsdSSshEC4edor05b2GA9ZHfmflxbK
+         Ff3jkUeOlnExeChwN1YwoW5tzYq8R1gGgYPTI=
+Received: by 10.224.6.136 with SMTP id 8mr4530247qaz.234.1240729935245; Sun, 
+	26 Apr 2009 00:12:15 -0700 (PDT)
+In-Reply-To: <200904260703.31243.chriscool@tuxfamily.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117594>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117595>
 
-On 4/26/09, Jakub Narebski <jnareb@gmail.com> wrote:
-
-> The deciding feature (well, one of deciding features) was the fact
-> that Mercurial has better HTTP support... I guess (it was not obvious
-> from the analysis, but it was hinted at) that Mercurial uses its
-> custom protocol over HTTP, as opposed to "dumb" HTTP protocol support
-> in Git.
+On Sun, Apr 26, 2009 at 00:03, Christian Couder <chriscool@tuxfamily.org> wrote:
+> Hi,
 >
-> Perhaps it is time to restart work on _"smart" HTTP protocol_?
->
+> For information, now Google Code supports Mercurial [and not git] for project hosting:
 
-
-wasn't Shawn working on it?
-
-ciao,
--- 
-Paolo
-http://paolo.ciarrocchi.googlepages.com/
-http://mypage.vodafone.it/
+>From an 'advocacy' viewpoint, I think this is a major blow to git.
