@@ -1,275 +1,65 @@
-From: Avery Pennarun <apenwarr@gmail.com>
-Subject: [PATCH/RFC 2/2] Automated test script for 'git subtree'.
-Date: Sun, 26 Apr 2009 18:29:43 -0400
-Message-ID: <1240784983-1477-2-git-send-email-apenwarr@gmail.com>
-References: <1240784983-1477-1-git-send-email-apenwarr@gmail.com>
-Cc: Avery Pennarun <apenwarr@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Apr 27 10:38:48 2009
+From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+Subject: Re: [PATCH] Add core.trustlowlevelstat for diffs in dev,ino,uid and gid
+Date: Mon, 27 Apr 2009 00:02:42 +0200
+Message-ID: <200904270002.42489.robin.rosenberg.lists@dewire.com>
+References: <1240743317-10117-1-git-send-email-robin.rosenberg@dewire.com> <7vocujjm5r.fsf@gitster.siamese.dyndns.org> <alpine.LFD.2.00.0904261159190.7331@localhost.localdomain>
+Mime-Version: 1.0
+Content-Type: Text/Plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>, spearce@spearce.org
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Mon Apr 27 10:42:49 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LyCvG-0001ub-R2
-	for gcvg-git-2@gmane.org; Mon, 27 Apr 2009 00:34:07 +0200
+	id 1LyCTI-000137-7M
+	for gcvg-git-2@gmane.org; Mon, 27 Apr 2009 00:05:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752703AbZDZWcU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 26 Apr 2009 18:32:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752683AbZDZWcT
-	(ORCPT <rfc822;git-outgoing>); Sun, 26 Apr 2009 18:32:19 -0400
-Received: from mail-bw0-f163.google.com ([209.85.218.163]:37133 "EHLO
-	mail-bw0-f163.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752399AbZDZWcS (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 26 Apr 2009 18:32:18 -0400
-Received: by bwz7 with SMTP id 7so1984107bwz.37
-        for <git@vger.kernel.org>; Sun, 26 Apr 2009 15:32:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:from:to:cc:subject
-         :date:message-id:x-mailer:in-reply-to:references;
-        bh=6aP5GK401LxR/3c05+SD1oKSbKX9hZYoMQHzh34URiU=;
-        b=WpvKXF5pgMAPELtt+kUaD4mZMZdz6OM2sXybQwr1EAWucIYcG+4MkafHfOEr9aYDNi
-         wFJfLjNSaDoi6B4fy3Fqr5n+ascLu8lF8qd2b3gyWoUGH2qRvRE1E0JndYw4QDOTWZpD
-         F6fzF5BTmbgkYnpHVC1WV4G44SMZGxy/i6NAk=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=GAb9YXBpv/uxPbp/UxPW1bd6j6gDsP6Q/BJp7zCMywlSyI9JriuDUxE+rvBrxfoiV1
-         mizBSkBo263CvO5CxtW/IV3X86s9uhjpTbd2qiWVcOadFunhUbmFQ0JKqXLDvuEW0bIl
-         sKj0LeGZPeRBbtKP+ie22PvesH1bGMnmacx9s=
-Received: by 10.103.105.1 with SMTP id h1mr2741434mum.13.1240785136355;
-        Sun, 26 Apr 2009 15:32:16 -0700 (PDT)
-Received: from afterlife.apenwarr.local (CPE001c10b0d47a-CM00195efb67e8.cpe.net.cable.rogers.com [99.249.243.14])
-        by mx.google.com with ESMTPS id 25sm10472648mul.27.2009.04.26.15.32.12
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 26 Apr 2009 15:32:15 -0700 (PDT)
-Received: by afterlife.apenwarr.local (sSMTP sendmail emulation); Sun, 26 Apr 2009 18:30:13 -0400
-X-Mailer: git-send-email 1.6.3.rc2.8.gbe66.dirty
-In-Reply-To: <1240784983-1477-1-git-send-email-apenwarr@gmail.com>
+	id S1752006AbZDZWCx convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 26 Apr 2009 18:02:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751882AbZDZWCx
+	(ORCPT <rfc822;git-outgoing>); Sun, 26 Apr 2009 18:02:53 -0400
+Received: from mail.dewire.com ([83.140.172.130]:21208 "EHLO dewire.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751296AbZDZWCw convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 26 Apr 2009 18:02:52 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by dewire.com (Postfix) with ESMTP id EDBDB14A8B34;
+	Mon, 27 Apr 2009 00:02:44 +0200 (CEST)
+X-Virus-Scanned: by amavisd-new at dewire.com
+Received: from dewire.com ([127.0.0.1])
+	by localhost (torino.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id gCmSVl-ZcB3T; Mon, 27 Apr 2009 00:02:44 +0200 (CEST)
+Received: from sleipner.localnet (unknown [10.9.0.3])
+	by dewire.com (Postfix) with ESMTP id 5886514A8B33;
+	Mon, 27 Apr 2009 00:02:44 +0200 (CEST)
+User-Agent: KMail/1.11.2 (Linux/2.6.28-11-generic; KDE/4.2.2; i686; ; )
+In-Reply-To: <alpine.LFD.2.00.0904261159190.7331@localhost.localdomain>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117613>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117614>
 
-TEMPORARY: this script hasn't yet been integrated into the main git unit
-tests; it runs standalone for the moment.
----
- subtree-test.sh |  206 +++++++++++++++++++++++++++++++++++++++++++++++++++++++
- 1 files changed, 206 insertions(+), 0 deletions(-)
- create mode 100755 subtree-test.sh
+s=F6ndag 26 april 2009 21:25:13 skrev Linus Torvalds <torvalds@linux-fo=
+undation.org>:
+>=20
+> On Sun, 26 Apr 2009, Junio C Hamano wrote:
+> >=20
+> > I had a similar patch that disables inum checking in my private tre=
+e for
+> > different reasons of my own; the set of fields your patch ignores i=
+s a
+> > compatible superset of, and I think makes more sense than, what I w=
+as
+> > planning to do, so no objections from me on this _optional_ feature=
+=2E
+>=20
+> Maybe we should just remove those checks entirely?
 
-diff --git a/subtree-test.sh b/subtree-test.sh
-new file mode 100755
-index 0000000..38dff7a
---- /dev/null
-+++ b/subtree-test.sh
-@@ -0,0 +1,206 @@
-+#!/bin/bash
-+. shellopts.sh
-+set -e
-+
-+create()
-+{
-+	echo "$1" >"$1"
-+	git add "$1"
-+}
-+
-+check()
-+{
-+	echo
-+	echo "check:" "$@"
-+	if "$@"; then
-+		echo ok
-+		return 0
-+	else
-+		echo FAILED
-+		exit 1
-+	fi
-+}
-+
-+check_equal()
-+{
-+	echo
-+	echo "check a:" "{$1}"
-+	echo "      b:" "{$2}"
-+	if [ "$1" = "$2" ]; then
-+		return 0
-+	else
-+		echo FAILED
-+		exit 1
-+	fi
-+}
-+
-+fixnl()
-+{	
-+	t=""
-+	while read x; do
-+		t="$t$x "
-+	done
-+	echo $t
-+}
-+
-+multiline()
-+{
-+	while read x; do
-+		set -- $x
-+		for d in "$@"; do
-+			echo "$d"
-+		done
-+	done
-+}
-+
-+rm -rf mainline subproj
-+mkdir mainline subproj
-+
-+cd subproj
-+git init
-+
-+create sub1
-+git commit -m 'sub1'
-+git branch sub1
-+git branch -m master subproj
-+check true
-+
-+create sub2
-+git commit -m 'sub2'
-+git branch sub2
-+
-+create sub3
-+git commit -m 'sub3'
-+git branch sub3
-+
-+cd ../mainline
-+git init
-+create main4
-+git commit -m 'main4'
-+git branch -m master mainline
-+
-+git fetch ../subproj sub1
-+git branch sub1 FETCH_HEAD
-+git subtree add --prefix=subdir FETCH_HEAD
-+
-+# this shouldn't actually do anything, since FETCH_HEAD is already a parent
-+git merge -m 'merge -s -ours' -s ours FETCH_HEAD
-+
-+create subdir/main-sub5
-+git commit -m 'main-sub5'
-+
-+create main6
-+git commit -m 'main6 boring'
-+
-+create subdir/main-sub7
-+git commit -m 'main-sub7'
-+
-+git fetch ../subproj sub2
-+git branch sub2 FETCH_HEAD
-+git subtree merge --prefix=subdir FETCH_HEAD
-+git branch pre-split
-+
-+spl1=$(git subtree split --annotate='*' \
-+		--prefix subdir --onto FETCH_HEAD --rejoin)
-+echo "spl1={$spl1}"
-+git branch spl1 "$spl1"
-+
-+create subdir/main-sub8
-+git commit -m 'main-sub8'
-+
-+cd ../subproj
-+git fetch ../mainline spl1
-+git branch spl1 FETCH_HEAD
-+git merge FETCH_HEAD
-+
-+create sub9
-+git commit -m 'sub9'
-+
-+cd ../mainline
-+split2=$(git subtree split --annotate='*' --prefix subdir --rejoin)
-+git branch split2 "$split2"
-+
-+create subdir/main-sub10
-+git commit -m 'main-sub10'
-+
-+spl3=$(git subtree split --annotate='*' --prefix subdir --rejoin)
-+git branch spl3 "$spl3"
-+
-+cd ../subproj
-+git fetch ../mainline spl3
-+git branch spl3 FETCH_HEAD
-+git merge FETCH_HEAD
-+git branch subproj-merge-spl3
-+
-+chkm="main4 main6"
-+chkms="main-sub10 main-sub5 main-sub7 main-sub8"
-+chkms_sub=$(echo $chkms | multiline | sed 's,^,subdir/,' | fixnl)
-+chks="sub1 sub2 sub3 sub9"
-+chks_sub=$(echo $chks | multiline | sed 's,^,subdir/,' | fixnl)
-+
-+# make sure exactly the right set of files ends up in the subproj
-+subfiles=$(git ls-files | fixnl)
-+check_equal "$subfiles" "$chkms $chks"
-+
-+# make sure the subproj history *only* contains commits that affect the subdir.
-+allchanges=$(git log --name-only --pretty=format:'' | sort | fixnl)
-+check_equal "$allchanges" "$chkms $chks"
-+
-+cd ../mainline
-+git fetch ../subproj subproj-merge-spl3
-+git branch subproj-merge-spl3 FETCH_HEAD
-+git subtree pull --prefix=subdir ../subproj subproj-merge-spl3
-+
-+# make sure exactly the right set of files ends up in the mainline
-+mainfiles=$(git ls-files | fixnl)
-+check_equal "$mainfiles" "$chkm $chkms_sub $chks_sub"
-+
-+# make sure each filename changed exactly once in the entire history.
-+# 'main-sub??' and '/subdir/main-sub??' both change, because those are the
-+# changes that were split into their own history.  And 'subdir/sub??' never
-+# change, since they were *only* changed in the subtree branch.
-+allchanges=$(git log --name-only --pretty=format:'' | sort | fixnl)
-+check_equal "$allchanges" "$chkm $chkms $chks $chkms_sub"
-+
-+# make sure the --rejoin commits never make it into subproj
-+check_equal "$(git log --pretty=format:'%s' HEAD^2 | grep -i split)" ""
-+
-+# make sure no 'git subtree' tagged commits make it into subproj. (They're
-+# meaningless to subproj since one side of the merge refers to the mainline)
-+check_equal "$(git log --pretty=format:'%s%n%b' HEAD^2 | grep 'git-subtree.*:')" ""
-+
-+# make sure no patch changes more than one file.  The original set of commits
-+# changed only one file each.  A multi-file change would imply that we pruned
-+# commits too aggressively.
-+joincommits()
-+{
-+	commit=
-+	all=
-+	while read x y; do
-+		echo "{$x}" >&2
-+		if [ -z "$x" ]; then
-+			continue
-+		elif [ "$x" = "commit:" ]; then
-+			if [ -n "$commit" ]; then
-+				echo "$commit $all"
-+				all=
-+			fi
-+			commit="$y"
-+		else
-+			all="$all $y"
-+		fi
-+	done
-+	echo "$commit $all"
-+}
-+x=
-+git log --pretty=format:'commit: %H' | joincommits |
-+(	while read commit a b; do
-+		echo "Verifying commit $commit"
-+		check_equal "$b" ""
-+		x=1
-+	done
-+	check_equal "$x" 1
-+) || exit 1
-+
-+echo
-+echo 'ok'
--- 
-1.6.3.rc2.8.gbe66.dirty
+Blessed-by: Robin Rosenberg <robin.rosenberg@dewire.com>
+
+-- robin
