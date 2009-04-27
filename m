@@ -1,109 +1,69 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Google Code: Support for Mercurial and Analysis of Git and Mercurial
-Date: Sun, 26 Apr 2009 01:16:16 -0700 (PDT)
-Message-ID: <m363grq13i.fsf@localhost.localdomain>
-References: <200904260703.31243.chriscool@tuxfamily.org>
+From: Jay Soffian <jaysoffian@gmail.com>
+Subject: Re: [PATCH v2] Add an option not to use link(src, dest) && 
+	unlink(src) when that is unreliable
+Date: Sun, 26 Apr 2009 23:37:53 -0400
+Message-ID: <76718490904262037r5dc39225k2adb500cd855b4f2@mail.gmail.com>
+References: <alpine.DEB.1.00.0904231252080.10279@pacific.mpi-cbg.de>
+	 <200904232116.10769.j6t@kdbg.org>
+	 <alpine.DEB.1.00.0904251155130.10279@pacific.mpi-cbg.de>
+	 <7vbpqkznjs.fsf@gitster.siamese.dyndns.org>
+	 <alpine.LFD.2.00.0904251039460.3101@localhost.localdomain>
+	 <49F3588A.4000707@gmx.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Christian Couder <chriscool@tuxfamily.org>
-X-From: git-owner@vger.kernel.org Mon Apr 27 05:42:55 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Johannes Sixt <j6t@kdbg.org>, git@vger.kernel.org
+To: Michael Gaber <Michael.Gaber@gmx.net>
+X-From: git-owner@vger.kernel.org Mon Apr 27 09:10:26 2009
 connect(): Connection refused
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LxzYm-00086M-1K
-	for gcvg-git-2@gmane.org; Sun, 26 Apr 2009 10:18:00 +0200
+	id 1LyHhF-0002R8-08
+	for gcvg-git-2@gmane.org; Mon, 27 Apr 2009 05:39:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752854AbZDZIQW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 26 Apr 2009 04:16:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752517AbZDZIQV
-	(ORCPT <rfc822;git-outgoing>); Sun, 26 Apr 2009 04:16:21 -0400
-Received: from mail-fx0-f158.google.com ([209.85.220.158]:47238 "EHLO
-	mail-fx0-f158.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752484AbZDZIQT (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 26 Apr 2009 04:16:19 -0400
-Received: by fxm2 with SMTP id 2so1766083fxm.37
-        for <git@vger.kernel.org>; Sun, 26 Apr 2009 01:16:17 -0700 (PDT)
+	id S1752420AbZD0Dhz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 26 Apr 2009 23:37:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752148AbZD0Dhz
+	(ORCPT <rfc822;git-outgoing>); Sun, 26 Apr 2009 23:37:55 -0400
+Received: from yx-out-2324.google.com ([74.125.44.30]:12196 "EHLO
+	yx-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751781AbZD0Dhy (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 26 Apr 2009 23:37:54 -0400
+Received: by yx-out-2324.google.com with SMTP id 3so1256476yxj.1
+        for <git@vger.kernel.org>; Sun, 26 Apr 2009 20:37:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received
-         :x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        bh=DF/iJYvK0J9b31MUlSfKSDA2sFa346WO27kaj1qUOH0=;
-        b=HdXq4S52rTFrKK8lHrIzXNMIEzDdkcjSKUQEFh1LQZJ28ng5b+y0Nuz9VpdwwC/k9g
-         LPto/CdCy0SoCDggO5O4L0UptzJs7SAX9E8cRaD8EtXsv9LerWr5otfq2OJNiA+iTgQj
-         B593drq2EBMLtOJI9vBaKNl5w/1JG24TPTxsw=
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=rZqAjTU4c2e0qnhNlfa82ivTZrhjVgOFnvToVxb21To=;
+        b=ShbJw175/MhyM5L64s2IqnQh//Q+oqxxHEC+mAKZ3PUW1xR0xND/YyrdbnBuyJqTdY
+         ngPR2tc7FMH8IjFTmi9HvIx7uXUjMvKVb0oKg4H9ybwaF2c+PICO2qIaJufZkQbrCFzb
+         FqZo+/kFDuugFYvi+GOLDKhMwx/X70OKUYw+o=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        b=goaOpLRNTqukXRD5HU6hDqd/+Fpl4Qax25GxAluMc2U+tW5g2Eou1kGOmFRkqRmRLN
-         dvGJ/rN63QNajACCzSmaiknSvReeL/36NbHyuA33Qyxo+tolEPb03pgz2xtlOoxqs8/s
-         cJNRJT49NhQV6j+P6qqiq/qUoNHPWgkuQR8iY=
-Received: by 10.103.173.5 with SMTP id a5mr2414173mup.57.1240733777262;
-        Sun, 26 Apr 2009 01:16:17 -0700 (PDT)
-Received: from localhost.localdomain (abwp56.neoplus.adsl.tpnet.pl [83.8.239.56])
-        by mx.google.com with ESMTPS id 12sm8752333muq.21.2009.04.26.01.16.15
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 26 Apr 2009 01:16:16 -0700 (PDT)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id n3Q8JEmO025108;
-	Sun, 26 Apr 2009 10:19:24 +0200
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id n3Q8Iw7T025101;
-	Sun, 26 Apr 2009 10:18:58 +0200
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <200904260703.31243.chriscool@tuxfamily.org>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=vu3ug0QACO3fdH0+7BSMM29J3UkB1x1elNlRpOos7AasRBtBZxrvH5D27yEZbmWd9v
+         q/KyOHHnhg6rxWulhlLFwrX7f1lYpTiXYj1DJe+JdRGB7QGDeW3bx35a+PD14t7xC+Ab
+         jmEcGnNs0Tv5eu03iQVB0tyLcEWChqhjZmxUo=
+Received: by 10.151.68.6 with SMTP id v6mr8056924ybk.149.1240803473611; Sun, 
+	26 Apr 2009 20:37:53 -0700 (PDT)
+In-Reply-To: <49F3588A.4000707@gmx.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117597>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117598>
 
-Christian Couder <chriscool@tuxfamily.org> writes:
+On Sat, Apr 25, 2009 at 2:38 PM, Michael Gaber <Michael.Gaber@gmx.net> wrote:
+> http://www.cs.utexas.edu/users/EWD/ewd02xx/EWD215.PDF
 
-> For information, now Google Code supports Mercurial for project hosting:
-> 
-> http://google-code-updates.blogspot.com/2009/04/mercurial-support-for-project-hosting.html
-> 
-> Mercurial was choosen over Git because of this (one year old) analysis:
-> 
-> http://code.google.com/p/support/wiki/DVCSAnalysis
-> 
-> There is this article on LWN about the analysis:
-> 
-> http://lwn.net/Articles/330138/
+http://www.bartleby.com/59/3/foolishconsi.html
 
-It is a pity that the choice was based on year old analysis.  One year
-for actively developed and fast moving targets such like Git and
-Mercurial is ages in terms of development history.  But I guess this
-is unavoidable.
-
-For example periodic "maintenance" (garbage collecting) is nowadays
-quite automatic in git, with fetching into pack, periodic repacking if
-number of loose objects is above tthreshold, and "git gc --auto".
-
-Whether Mercurial or Git has better UI and better documentation is
-IMHO a matter of debate.  Git documentation is much better that it
-was, with "Git User's Manual" and "Git Community Book"; UI also is
-being improved.
-
-I can't comment on MS Windows support, but AFAIK Mercurial has better
-support here than Git.
-
-
-The deciding feature (well, one of deciding features) was the fact
-that Mercurial has better HTTP support... I guess (it was not obvious
-from the analysis, but it was hinted at) that Mercurial uses its
-custom protocol over HTTP, as opposed to "dumb" HTTP protocol support
-in Git.
-
-Perhaps it is time to restart work on _"smart" HTTP protocol_?
-
--- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+j.
