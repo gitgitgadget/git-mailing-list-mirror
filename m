@@ -1,94 +1,52 @@
 From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: [JGIT PATCH] Fix more computation of integer average overflows
-Date: Mon, 27 Apr 2009 16:14:30 -0700
-Message-ID: <1240874070-10562-1-git-send-email-spearce@spearce.org>
-Cc: Matthias Sohn <matthias.sohn@sap.com>, git@vger.kernel.org
-To: Robin Rosenberg <robin.rosenberg@dewire.com>
-X-From: git-owner@vger.kernel.org Tue Apr 28 01:14:43 2009
+Subject: Re: [PATCH JGIT] Method invokes inefficient Number constructor;
+	use static valueOf instead
+Date: Mon, 27 Apr 2009 16:15:50 -0700
+Message-ID: <20090427231550.GK23604@spearce.org>
+References: <366BBB1215D0AB4B8A153AF047A2878002FCE7E7@dewdfe18.wdf.sap.corp> <366BBB1215D0AB4B8A153AF047A2878002FCE7E8@dewdfe18.wdf.sap.corp> <366BBB1215D0AB4B8A153AF047A2878002FCE7E9@dewdfe18.wdf.sap.corp>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Robin Rosenberg <robin.rosenberg@dewire.com>, git@vger.kernel.org
+To: "Sohn, Matthias" <matthias.sohn@sap.com>
+X-From: git-owner@vger.kernel.org Tue Apr 28 01:16:38 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lya26-0006WE-Rw
-	for gcvg-git-2@gmane.org; Tue, 28 Apr 2009 01:14:43 +0200
+	id 1Lya3x-00076J-Bf
+	for gcvg-git-2@gmane.org; Tue, 28 Apr 2009 01:16:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754954AbZD0XOc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 27 Apr 2009 19:14:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753322AbZD0XOc
-	(ORCPT <rfc822;git-outgoing>); Mon, 27 Apr 2009 19:14:32 -0400
-Received: from george.spearce.org ([209.20.77.23]:55554 "EHLO
+	id S1758754AbZD0XPv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 27 Apr 2009 19:15:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758233AbZD0XPv
+	(ORCPT <rfc822;git-outgoing>); Mon, 27 Apr 2009 19:15:51 -0400
+Received: from george.spearce.org ([209.20.77.23]:55558 "EHLO
 	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752420AbZD0XOb (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 27 Apr 2009 19:14:31 -0400
-Received: by george.spearce.org (Postfix, from userid 1000)
-	id 928D338221; Mon, 27 Apr 2009 23:14:31 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.2.4 (2008-01-01) on george.spearce.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-4.4 required=4.0 tests=ALL_TRUSTED,BAYES_00
-	autolearn=ham version=3.2.4
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by george.spearce.org (Postfix) with ESMTP id 0D49538211;
-	Mon, 27 Apr 2009 23:14:31 +0000 (UTC)
-X-Mailer: git-send-email 1.6.3.rc1.205.g37f8
+	with ESMTP id S1753728AbZD0XPu (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 27 Apr 2009 19:15:50 -0400
+Received: by george.spearce.org (Postfix, from userid 1001)
+	id 932DC38215; Mon, 27 Apr 2009 23:15:50 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <366BBB1215D0AB4B8A153AF047A2878002FCE7E9@dewdfe18.wdf.sap.corp>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117732>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117733>
 
-In 1d99aaab8e364c6ad722437e43c77fd54e13b071 Matthias Sohn pointed
-out that (low+high)/2 can overflow, so (low+high)>>>1 is a better
-choice when the result will be used as an array index.
+"Sohn, Matthias" <matthias.sohn@sap.com> wrote:
+> Using new Integer(int) is guaranteed to always result in a new object
+> whereas Integer.valueOf(int) allows caching of values
+> to be done by the compiler, class library, or JVM. Using of cached
+> values avoids object allocation and the code will be faster.
 
-Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
----
+NAK.
 
- I guess we need this too then, eh?
+This thread came up about 5 weeks ago.  Please see my reply here:
 
- .../src/org/spearce/jgit/lib/PackIndexV1.java      |    2 +-
- .../src/org/spearce/jgit/lib/PackIndexV2.java      |    6 +++---
- 2 files changed, 4 insertions(+), 4 deletions(-)
+  http://thread.gmane.org/gmane.comp.version-control.git/113738/focus=113785
 
-diff --git a/org.spearce.jgit/src/org/spearce/jgit/lib/PackIndexV1.java b/org.spearce.jgit/src/org/spearce/jgit/lib/PackIndexV1.java
-index fdaa094..0ad29e1 100644
---- a/org.spearce.jgit/src/org/spearce/jgit/lib/PackIndexV1.java
-+++ b/org.spearce.jgit/src/org/spearce/jgit/lib/PackIndexV1.java
-@@ -129,7 +129,7 @@ long findOffset(final AnyObjectId objId) {
- 		int high = data.length / (4 + Constants.OBJECT_ID_LENGTH);
- 		int low = 0;
- 		do {
--			final int mid = (low + high) / 2;
-+			final int mid = (low + high) >>> 1;
- 			final int pos = ((4 + Constants.OBJECT_ID_LENGTH) * mid) + 4;
- 			final int cmp = objId.compareTo(data, pos);
- 			if (cmp < 0)
-diff --git a/org.spearce.jgit/src/org/spearce/jgit/lib/PackIndexV2.java b/org.spearce.jgit/src/org/spearce/jgit/lib/PackIndexV2.java
-index eb56ed9..b539547 100644
---- a/org.spearce.jgit/src/org/spearce/jgit/lib/PackIndexV2.java
-+++ b/org.spearce.jgit/src/org/spearce/jgit/lib/PackIndexV2.java
-@@ -108,7 +108,7 @@ PackIndexV2(final InputStream fd) throws IOException {
- 
- 			final int intNameLen = (int) nameLen;
- 			final byte[] raw = new byte[intNameLen];
--			final int[] bin = new int[intNameLen >> 2];
-+			final int[] bin = new int[intNameLen >>> 2];
- 			NB.readFully(fd, raw, 0, raw.length);
- 			for (int i = 0; i < bin.length; i++)
- 				bin[i] = NB.decodeInt32(raw, i << 2);
-@@ -212,12 +212,12 @@ boolean hasCRC32Support() {
- 
- 	private int binarySearchLevelTwo(final AnyObjectId objId, final int levelOne) {
- 		final int[] data = names[levelOne];
--		int high = offset32[levelOne].length >> 2;
-+		int high = offset32[levelOne].length >>> 2;
- 		if (high == 0)
- 			return -1;
- 		int low = 0;
- 		do {
--			final int mid = (low + high) >> 1;
-+			final int mid = (low + high) >>> 1;
- 			final int mid4 = mid << 2;
- 			final int cmp;
  
 -- 
-1.6.3.rc1.205.g37f8
+Shawn.
