@@ -1,117 +1,82 @@
-From: "Sohn, Matthias" <matthias.sohn@sap.com>
-Subject: [PATCH JGIT] Method ignores results of InputStream.skip()
-Date: Tue, 28 Apr 2009 01:10:35 +0200
-Message-ID: <366BBB1215D0AB4B8A153AF047A2878002FCE7EA@dewdfe18.wdf.sap.corp>
-References: <366BBB1215D0AB4B8A153AF047A2878002FCE7E7@dewdfe18.wdf.sap.corp> <366BBB1215D0AB4B8A153AF047A2878002FCE7E8@dewdfe18.wdf.sap.corp> <366BBB1215D0AB4B8A153AF047A2878002FCE7E9@dewdfe18.wdf.sap.corp>
+From: "John Dlugosz" <JDlugosz@TradeStation.com>
+Subject: RE: How is git used as other than the project's version control?
+Date: Mon, 27 Apr 2009 19:10:06 -0400
+Message-ID: <450196A1AAAE4B42A00A8B27A59278E70AE3EC4B@EXCHANGE.trad.tradestation.com>
+References: <450196A1AAAE4B42A00A8B27A59278E70AE3EC48@EXCHANGE.trad.tradestation.com> <18071eea0904271606t4757a01di40e7b0cf6c558bea@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain;
-	charset="US-ASCII"
+	charset="us-ascii"
 Content-Transfer-Encoding: 8BIT
 Cc: <git@vger.kernel.org>
-To: "Shawn O. Pearce" <spearce@spearce.org>,
-	"Robin Rosenberg" <robin.rosenberg@dewire.com>
-X-From: git-owner@vger.kernel.org Tue Apr 28 01:10:49 2009
+To: "Thomas Adam" <thomas.adam22@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Apr 28 01:11:13 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LyZyL-0005Be-0z
-	for gcvg-git-2@gmane.org; Tue, 28 Apr 2009 01:10:49 +0200
+	id 1LyZyh-0005K7-Ok
+	for gcvg-git-2@gmane.org; Tue, 28 Apr 2009 01:11:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751696AbZD0XKk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 27 Apr 2009 19:10:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751260AbZD0XKk
-	(ORCPT <rfc822;git-outgoing>); Mon, 27 Apr 2009 19:10:40 -0400
-Received: from smtpde03.sap-ag.de ([155.56.68.140]:33097 "EHLO
-	smtpde03.sap-ag.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751389AbZD0XKj convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 27 Apr 2009 19:10:39 -0400
-Received: from mail.sap.corp
-	by smtpde03.sap-ag.de (26) with ESMTP id n3RNAac7015588
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Tue, 28 Apr 2009 01:10:36 +0200 (MEST)
+	id S1752266AbZD0XK7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 27 Apr 2009 19:10:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752111AbZD0XK7
+	(ORCPT <rfc822;git-outgoing>); Mon, 27 Apr 2009 19:10:59 -0400
+Received: from mail2.tradestation.com ([63.99.207.80]:39587 "EHLO
+	mail2.tradestation.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752073AbZD0XK6 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 27 Apr 2009 19:10:58 -0400
+X-ASG-Debug-ID: 1240873857-029303620000-QuoKaX
+X-Barracuda-URL: http://192.168.51.31:8000/cgi-bin/mark.cgi
+Received: from mail5.tradestation.com (localhost [127.0.0.1])
+	by mail2.tradestation.com (Spam & Virus Firewall) with ESMTP
+	id 8793C3A433C; Mon, 27 Apr 2009 19:10:57 -0400 (EDT)
+Received: from mail5.tradestation.com (tx02exchange02.trad.tradestation.com [192.168.51.76]) by mail2.tradestation.com with ESMTP id ccUB0yvvVPsYS2Oh; Mon, 27 Apr 2009 19:10:57 -0400 (EDT)
+X-Barracuda-Envelope-From: JDlugosz@TradeStation.com
+X-ASG-Whitelist: Client
+Received: from EXCHANGE.trad.tradestation.com ([10.4.0.121]) by mail5.tradestation.com with Microsoft SMTPSVC(6.0.3790.3959);
+	 Mon, 27 Apr 2009 19:10:07 -0400
 X-MimeOLE: Produced By Microsoft Exchange V6.5
 Content-class: urn:content-classes:message
-In-Reply-To: <366BBB1215D0AB4B8A153AF047A2878002FCE7E9@dewdfe18.wdf.sap.corp>
+X-ASG-Orig-Subj: RE: How is git used as other than the project's version control?
+In-Reply-To: <18071eea0904271606t4757a01di40e7b0cf6c558bea@mail.gmail.com>
 X-MS-Has-Attach: 
 X-MS-TNEF-Correlator: 
-Thread-Topic: [PATCH JGIT] Method ignores results of InputStream.skip()
-Thread-Index: AcnHjEysWP+qTjB1Tm2zGBLNNuNqlAAAC8hQAAAVRmAAABVskA==
-X-OriginalArrivalTime: 27 Apr 2009 23:10:36.0022 (UTC) FILETIME=[5F50D960:01C9C78D]
-X-Scanner: Virus Scanner virwal04
-X-SAP: out
+Thread-Topic: How is git used as other than the project's version control?
+Thread-Index: AcnHjMp9ibRU896xS6yB4moMKinSsAAABKFg
+X-OriginalArrivalTime: 27 Apr 2009 23:10:07.0799 (UTC) FILETIME=[4E7E5C70:01C9C78D]
+X-Barracuda-Connect: tx02exchange02.trad.tradestation.com[192.168.51.76]
+X-Barracuda-Start-Time: 1240873857
+X-Barracuda-Virus-Scanned: by TX-Barracuda Spam Firewall 400 at tradestation.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117730>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117731>
 
-This method ignores the return value of java.io.InputStream.skip() which
-can skip multiple bytes.  If the return value is not
-checked, the caller will not be able to correctly handle the case where
-fewer bytes were skipped than the caller requested.
-This is a particularly insidious kind of bug, because in many programs,
-skips from input streams usually do skip the full amount
-of data requested, causing the program to fail only sporadically. With
-Buffered streams, however, skip() will only skip data
-in the buffer, and will routinely fail to skip the requested number of
-bytes.
+> What is it you're really asking here?  
 
-Signed-off-by: Matthias Sohn <matthias.sohn@sap.com>
----
- .../jgit/transport/BundleFetchConnection.java      |   16
-++++++++++++++--
- 1 files changed, 14 insertions(+), 2 deletions(-)
+When putting together a presentation on git, I created a simple-looking
+slide claiming that "developers will use git anyway" as a
+general-purpose tool.  I find lots of web chatter about using it as a
+lighter-weight front-end to an Enterprise VCS, or as part of a technique
+for working away from your desk in such a system.  But it got me
+thinking about how it might be more like a text editor in the sense if
+being more generally useful than just that specific thing it's "for".
+But I don't have any concrete examples, just a vague notion.
 
-diff --git
-a/org.spearce.jgit/src/org/spearce/jgit/transport/BundleFetchConnection.
-java
-b/org.spearce.jgit/src/org/spearce/jgit/transport/BundleFetchConnection.
-java
-index 40bf7db..642c984 100644
----
-a/org.spearce.jgit/src/org/spearce/jgit/transport/BundleFetchConnection.
-java
-+++
-b/org.spearce.jgit/src/org/spearce/jgit/transport/BundleFetchConnection.
-java
-@@ -39,6 +39,7 @@
- package org.spearce.jgit.transport;
- 
- import java.io.BufferedInputStream;
-+import java.io.EOFException;
- import java.io.IOException;
- import java.io.InputStream;
- import java.util.ArrayList;
-@@ -139,12 +140,23 @@ private String readLine(final byte[] hdrbuf)
-throws IOException {
- 		while (lf < cnt && hdrbuf[lf] != '\n')
- 			lf++;
- 		bin.reset();
--		bin.skip(lf);
-+		skipFully(bin, lf);
- 		if (lf < cnt && hdrbuf[lf] == '\n')
--			bin.skip(1);
-+			skipFully(bin, 1);
- 		return RawParseUtils.decode(Constants.CHARSET, hdrbuf,
-0, lf);
- 	}
- 
-+	// skip given number of bytes on InputStream respecting return
-value of InputStream.skip()
-+	static private void skipFully(InputStream in, long nBytes)
-throws IOException {
-+		long remaining = nBytes;
-+		while (remaining != 0) {
-+			long skipped = in.skip(remaining);
-+			if (skipped == 0) // EOF
-+				throw new EOFException();
-+			remaining -= skipped;
-+		}
-+	}
-+	
- 	public boolean didFetchTestConnectivity() {
- 		return false;
- 	}
--- 
-1.6.2.2.1669.g7eaf8
+
+> I use "git diff" all the time
+> outside of $GIT_DIR for instance -- invaluable, and was designed
+> deliberately that way.
+> 
+> -- Thomas Adam
+
+
+
+
+
+
+== beware, monster footer ahead==
+
+TradeStation Group, Inc. is a publicly-traded holding company (NASDAQ GS: TRAD) of three operating subsidiaries, TradeStation Securities, Inc. (Member NYSE, FINRA, SIPC and NFA), TradeStation Technologies, Inc., a trading software and subscription company, and TradeStation Europe Limited, a United Kingdom, FSA-authorized introducing brokerage firm. None of these companies provides trading or investment advice, recommendations or endorsements of any kind. The information transmitted is intended only for the person or entity to which it is addressed and may contain confidential and/or privileged material. Any review, retransmission, dissemination or other use of, or taking of any action in reliance upon, this information by persons or entities other than the intended recipient is prohibited.
+  If you received this in error, please contact the sender and delete the material from any computer.
