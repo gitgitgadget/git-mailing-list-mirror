@@ -1,150 +1,200 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: Lets avoid the SHA-1 term (was [doc] User Manual Suggestion)
-Date: Mon, 27 Apr 2009 14:06:25 +0200
-Message-ID: <49F59FC1.5020708@drmicha.warpmail.net>
-References: <94a0d4530904261638o6cbda368p4f3aa641505a6768@mail.gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: [PATCH v3] Add an option not to use link(src, dest) && unlink(src)
+ when that is unreliable
+Date: Mon, 27 Apr 2009 14:00:56 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.0904271400180.10279@pacific.mpi-cbg.de>
+References: <alpine.DEB.1.00.0904231252080.10279@pacific.mpi-cbg.de> <alpine.LFD.2.00.0904251042490.3101@localhost.localdomain> <200904252052.10327.j6t@kdbg.org> <7vhc0cw6w8.fsf@gitster.siamese.dyndns.org>
+ <alpine.DEB.1.00.0904261940170.10279@pacific.mpi-cbg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?B?QmrDtnJuIFN0ZWluYnJpbms=?= <B.Steinbrink@gmx.de>,
-	David Abrahams <dave@boostpro.com>,
-	Michael Witten <mfwitten@gmail.com>, Jeff King <peff@peff.net>,
-	Daniel Barkalow <barkalow@iabervon.org>,
-	Johan Herland <johan@herland.net>, git@vger.kernel.org,
-	"J. Bruce Fields" <bfields@fieldses.org>,
-	Johannes Sixt <j.sixt@viscovery.net>,
-	Wincent Colaiuta <win@wincent.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Dmitry Potapov <dpotapov@gmail.com>
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Apr 27 14:19:02 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Johannes Sixt <j6t@kdbg.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Apr 27 14:20:05 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LyPbm-00005F-Cp
-	for gcvg-git-2@gmane.org; Mon, 27 Apr 2009 14:06:50 +0200
+	id 1LyPW2-0003fi-73
+	for gcvg-git-2@gmane.org; Mon, 27 Apr 2009 14:00:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753325AbZD0MGn convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 27 Apr 2009 08:06:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753117AbZD0MGm
-	(ORCPT <rfc822;git-outgoing>); Mon, 27 Apr 2009 08:06:42 -0400
-Received: from out3.smtp.messagingengine.com ([66.111.4.27]:58993 "EHLO
-	out3.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752999AbZD0MGl (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 27 Apr 2009 08:06:41 -0400
-Received: from compute1.internal (compute1.internal [10.202.2.41])
-	by out1.messagingengine.com (Postfix) with ESMTP id CBE8E321F42;
-	Mon, 27 Apr 2009 08:06:40 -0400 (EDT)
-Received: from heartbeat1.messagingengine.com ([10.202.2.160])
-  by compute1.internal (MEProxy); Mon, 27 Apr 2009 08:06:40 -0400
-X-Sasl-enc: 3yb1p30i2VUanJwDJpSAasw1uR/DQZiuBR2OtXp0Z5oU 1240834000
-Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.12])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 9FE80A296;
-	Mon, 27 Apr 2009 08:06:38 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1b4pre) Gecko/20090420 Lightning/1.0pre Shredder/3.0b3pre
-In-Reply-To: <94a0d4530904261638o6cbda368p4f3aa641505a6768@mail.gmail.com>
+	id S1752849AbZD0MAr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 27 Apr 2009 08:00:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752675AbZD0MAp
+	(ORCPT <rfc822;git-outgoing>); Mon, 27 Apr 2009 08:00:45 -0400
+Received: from mail.gmx.net ([213.165.64.20]:42705 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752740AbZD0MAo (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 27 Apr 2009 08:00:44 -0400
+Received: (qmail invoked by alias); 27 Apr 2009 12:00:43 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp008) with SMTP; 27 Apr 2009 14:00:43 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19CcLJZhr1CLKLUTu5bBoethxopterQqJlUXpYtEz
+	zeZM8GyK2LrjlA
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <alpine.DEB.1.00.0904261940170.10279@pacific.mpi-cbg.de>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.42
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117666>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117667>
 
-=46elipe Contreras venit, vidit, dixit 27.04.2009 01:38:
-> 2009/4/27 Bj=C3=B6rn Steinbrink <B.Steinbrink@gmx.de>:
->> On 2009.04.24 20:48:57 -0400, David Abrahams wrote:
->>>
->>> On Apr 24, 2009, at 8:01 PM, Michael Witten wrote:
->>>
->>>>> What's wrong with just calling the object name "object name"?
->>>>
->>>> What's wrong with calling the object address "object address"?
->>>
->>> Neither captures the connection to the object's contents.  I think
->>> "value ID" would be closer, but it's probably too horrible.
->>
->> I think I asked this in another mail, but I'm quite tired, so just t=
-o
->> make sure: What do you mean by "value"? I might be weird (I'm not a
->> native speaker, so I probably make funny and wrong connotations from
->> time to time), but while I can accept "content" to include the type =
-and
->> size of the object, the term "value" makes me want to exclude those
->> pieces of meta data. So "value" somehow feels wrong to me, as the ha=
-sh
->> covers those two fields.
->=20
-> Just to summarize.
->=20
-> Do you agree that SHA-1 is not the proper term to choose?
->=20
-> Do you agree that either 'id' or 'hash' would work fine?
->=20
-> Personally I think there's an advantage of choosing 'hash'; if we pic=
-k
-> 'id' then the user might think that he can change the contents of the
-> object while keeping the same id, if we pick 'hash' then it's obvious
-> the 'id' is tied to the content and why.
->=20
 
-Apparently a branch of that thread touched the "[PATCH 0/2] Unify use o=
-f
-[sha,SHA][,-]1", so I'll do a cc merge, feeling entitled to summarize
-the latter:
+It seems that accessing NTFS partitions with ufsd (at least on my EeePC)
+has an unnerving bug: if you link() a file and unlink() it right away,
+the target of the link() will have the correct size, but consist of
+NULs.
 
-- There are two SHA-1ish things we talk about: the SHA-1 hash
-algorithm/function on the one hand and git object names on the other ha=
-nd.
+It seems as if the calls are simply not serialized correctly, as
+single-stepping through the function move_temp_to_file() works
+flawlessly.
 
-- The object name of a file is not the SHA-1 checksum of its contents:
-That's more or less obvious because there are no files in git, only
-objects. The object name is the SHA-1 of a representation of an object
-(which, for blobs, consists of header + content).
+On Linux, this issue can be fixed by setting core.fsyncobjects to true
+(thanks Linus), but the same is not true on Windows.
 
-- There seemed to be an implicit claim that the Doc uses SHA-1 for the
-algorithm and sha1/SHA1 for the object name. That's not founded by fact=
-s
-(see below) and is not practical.
+So, force the use of rename() instead of the link() && unlink()
+incantation on Windows, and for good measure, add a
+core.unreliableHardlinks option to optionally force it on other
+platforms, too.
 
-- The glossary defines SHA1 to be equivalent to the object name and doe=
-s
-not mention any other spelling.
+This fixes msysGit issues 222 and 229.
 
-The stats (line counts for simplicity) and facts for Documentation/ are=
-:
+It was substantially improved by the help of Junio.
 
-SHA-1: 56
-Used exclusively for the object name.
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+[TENTATIVE] Acked-by: Johannes Sixt <j6t@kdbg.org>
+---
 
-SHA1: 73
-Used mostly for the object name, but also for the patch-id (SHA-1
-checksum of patch), in the tutorial, and pack-format, i.e. in places
-where the actual hash algorithm/function is mentioned.
+	Hannes, is it okay to remove the [TENTATIVE]?
 
-sha1: 102
-Used all over the place, mostly for the object name and when quoting
-from the source. I don't think it's used for the hash algorithm/functio=
-n.
+	Junio, do you want me to remove the config variable?
 
-sha-1: 0
+ Documentation/config.txt |    5 +++++
+ Makefile                 |    8 ++++++++
+ cache.h                  |    2 ++
+ config.c                 |    5 +++++
+ environment.c            |    4 ++++
+ sha1_file.c              |    3 +++
+ 6 files changed, 27 insertions(+), 0 deletions(-)
 
-So, the current confusion is mostly due to the fact that 3 different
-names are used for the same thing (object name) and to a much lesser
-degree to the fact that the same name (SHA1) is used for 2 different
-things (hash algorithm/function vs. object name).
-
-My patch tried to lessen the confusion by naming one thing by 1 name
-only (SHA-1). It continued the tradition of identifying the object name
-with the hash algorithm which is used in forming that name. I don't
-think it matters much (confusion-wise) which one we choose from those 3=
-,
-it would be easy to rewrite the patch to use SHA1 or sha1 instead of
-SHA-1 (and I'd be willing to), but consistently so.
-
-An alternative patch would substitute most occurrences of the above by
-X, X being the future term for "object name" to be agreed upon, and go
-for say SHA-1 at the very few places where the actual algorithm is
-mentioned. I just don't want to bet on that agreement and patch happeni=
-ng.
-
-Michael
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 3188569..d31adb6 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -429,6 +429,11 @@ relatively high IO latencies.  With this set to 'true', git will do the
+ index comparison to the filesystem data in parallel, allowing
+ overlapping IO's.
+ 
++core.unreliableHardlinks::
++	Some filesystem drivers cannot properly handle hardlinking a file
++	and deleting the source right away.  In such a case, you need to
++	set this config variable to 'true'.
++
+ alias.*::
+ 	Command aliases for the linkgit:git[1] command wrapper - e.g.
+ 	after defining "alias.last = cat-file commit HEAD", the invocation
+diff --git a/Makefile b/Makefile
+index 6f602c7..5c8e83a 100644
+--- a/Makefile
++++ b/Makefile
+@@ -171,6 +171,10 @@ all::
+ # Define UNRELIABLE_FSTAT if your system's fstat does not return the same
+ # information on a not yet closed file that lstat would return for the same
+ # file after it was closed.
++#
++# Define UNRELIABLE_HARDLINKS if your operating systems has problems when
++# hardlinking a file to another name and unlinking the original file right
++# away (some NTFS drivers seem to zero the contents in that scenario).
+ 
+ GIT-VERSION-FILE: .FORCE-GIT-VERSION-FILE
+ 	@$(SHELL_PATH) ./GIT-VERSION-GEN
+@@ -835,6 +839,7 @@ ifneq (,$(findstring MINGW,$(uname_S)))
+ 	NO_NSEC = YesPlease
+ 	USE_WIN32_MMAP = YesPlease
+ 	UNRELIABLE_FSTAT = UnfortunatelyYes
++	UNRELIABLE_HARDLINKS = UnfortunatelySometimes
+ 	COMPAT_CFLAGS += -D__USE_MINGW_ACCESS -DNOGDI -Icompat -Icompat/regex -Icompat/fnmatch
+ 	COMPAT_CFLAGS += -DSNPRINTF_SIZE_CORR=1
+ 	COMPAT_CFLAGS += -DSTRIP_EXTENSION=\".exe\"
+@@ -1018,6 +1023,9 @@ else
+ 		COMPAT_OBJS += compat/win32mmap.o
+ 	endif
+ endif
++ifdef UNRELIABLE_HARDLINKS
++	COMPAT_CFLAGS += -DUNRELIABLE_HARDLINKS=1
++endif
+ ifdef NO_PREAD
+ 	COMPAT_CFLAGS += -DNO_PREAD
+ 	COMPAT_OBJS += compat/pread.o
+diff --git a/cache.h b/cache.h
+index ab1294d..ff9e145 100644
+--- a/cache.h
++++ b/cache.h
+@@ -554,6 +554,8 @@ extern enum branch_track git_branch_track;
+ extern enum rebase_setup_type autorebase;
+ extern enum push_default_type push_default;
+ 
++extern int unreliable_hardlinks;
++
+ #define GIT_REPO_VERSION 0
+ extern int repository_format_version;
+ extern int check_repository_format(void);
+diff --git a/config.c b/config.c
+index 8c1ae59..1750cfb 100644
+--- a/config.c
++++ b/config.c
+@@ -495,6 +495,11 @@ static int git_default_core_config(const char *var, const char *value)
+ 		return 0;
+ 	}
+ 
++	if (!strcmp(var, "core.unreliablehardlinks")) {
++		unreliable_hardlinks = git_config_bool(var, value);
++		return 0;
++	}
++
+ 	/* Add other config variables here and to Documentation/config.txt. */
+ 	return 0;
+ }
+diff --git a/environment.c b/environment.c
+index 4696885..10578d2 100644
+--- a/environment.c
++++ b/environment.c
+@@ -43,6 +43,10 @@ unsigned whitespace_rule_cfg = WS_DEFAULT_RULE;
+ enum branch_track git_branch_track = BRANCH_TRACK_REMOTE;
+ enum rebase_setup_type autorebase = AUTOREBASE_NEVER;
+ enum push_default_type push_default = PUSH_DEFAULT_UNSPECIFIED;
++#ifndef UNRELIABLE_HARDLINKS
++#define UNRELIABLE_HARDLINKS 0
++#endif
++int unreliable_hardlinks = UNRELIABLE_HARDLINKS;
+ 
+ /* Parallel index stat data preload? */
+ int core_preload_index = 0;
+diff --git a/sha1_file.c b/sha1_file.c
+index 8fe135d..0d289f4 100644
+--- a/sha1_file.c
++++ b/sha1_file.c
+@@ -2225,6 +2225,8 @@ int move_temp_to_file(const char *tmpfile, const char *filename)
+ {
+ 	int ret = 0;
+ 
++	if (unreliable_hardlinks)
++		goto try_rename;
+ 	if (link(tmpfile, filename))
+ 		ret = errno;
+ 
+@@ -2240,6 +2242,7 @@ int move_temp_to_file(const char *tmpfile, const char *filename)
+ 	 * left to unlink.
+ 	 */
+ 	if (ret && ret != EEXIST) {
++try_rename:
+ 		if (!rename(tmpfile, filename))
+ 			goto out;
+ 		ret = errno;
+-- 
+1.6.2.1.613.g25746
