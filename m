@@ -1,95 +1,922 @@
-From: =?UTF-8?B?TWljaGHFgg==?= Kiedrowicz <michal.kiedrowicz@gmail.com>
-Subject: Re: git grep '(' = segfault
-Date: Mon, 27 Apr 2009 20:15:13 +0200
-Message-ID: <20090427201513.5d598e3c@gmail.com>
-References: <37fcd2780904271046r7740ed42t3c9438e7aa93374@mail.gmail.com>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: [PATCH] Update Russian translation of git gui
+Date: Mon, 27 Apr 2009 19:54:14 +0200
+Message-ID: <20090427175413.GA16202@blimp.localdomain>
+References: <20090426132139.GA30825@blimp.localdomain> <20090427091047.GC15723@dpotapov.dyndns.org> <81b0412b0904270225m1762dd1l2ef60253e556b8c9@mail.gmail.com>
+Reply-To: Alex Riesen <raa.lkml@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>
 To: Dmitry Potapov <dpotapov@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Apr 27 20:15:29 2009
+X-From: git-owner@vger.kernel.org Mon Apr 27 20:29:05 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LyVMX-0005DA-2p
-	for gcvg-git-2@gmane.org; Mon, 27 Apr 2009 20:15:29 +0200
+	id 1LyVZe-0002py-6n
+	for gcvg-git-2@gmane.org; Mon, 27 Apr 2009 20:29:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757071AbZD0SPV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 27 Apr 2009 14:15:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753070AbZD0SPU
-	(ORCPT <rfc822;git-outgoing>); Mon, 27 Apr 2009 14:15:20 -0400
-Received: from mail-bw0-f163.google.com ([209.85.218.163]:60010 "EHLO
-	mail-bw0-f163.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752802AbZD0SPS (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 27 Apr 2009 14:15:18 -0400
-Received: by bwz7 with SMTP id 7so72370bwz.37
-        for <git@vger.kernel.org>; Mon, 27 Apr 2009 11:15:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:in-reply-to:references:x-mailer:mime-version
-         :content-type:content-transfer-encoding;
-        bh=4cb8DuW5d8QChPzGeME3dxsbOsqHKnpwBEI04tgdUJk=;
-        b=DUDmW06pCOmckPp0gIc7dV2T8JzUSTlb5zz9K6zTYYxCvgvMPcTA/YYQBps0iwf4W7
-         ABSZgtPBlBotXY9N1/xKvQxhIxvBrJqCa4/lPHBDXo/G3BJm5C2C3KQOVkM+Cl2C3ALr
-         fTMEzIsAoI3MS3Hh1rwP6Wo9J4GSOG2yM99nM=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:in-reply-to:references:x-mailer
-         :mime-version:content-type:content-transfer-encoding;
-        b=jR7vhM0zlXcTfmLIUxrMSNBstm37cWpc3BB5I/7WDzvUQc/Xa72d+iELtraGXueeiJ
-         M5CmFRR/HEMwRniWjHKtgmYZbNLQOqo1tXIvzHk3YyAXgncSJf7it6xvwURxJFrSrdKj
-         axV+WxBkIDfkv4MmHh1zX+admp65k+07tqyYM=
-Received: by 10.86.51.10 with SMTP id y10mr3505066fgy.51.1240856117023;
-        Mon, 27 Apr 2009 11:15:17 -0700 (PDT)
-Received: from localhost (77-254-94-173.adsl.inetia.pl [77.254.94.173])
-        by mx.google.com with ESMTPS id 4sm4811384fge.23.2009.04.27.11.15.16
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 27 Apr 2009 11:15:16 -0700 (PDT)
-In-Reply-To: <37fcd2780904271046r7740ed42t3c9438e7aa93374@mail.gmail.com>
-X-Mailer: Claws Mail 3.7.1 (GTK+ 2.14.7; x86_64-pc-linux-gnu)
+	id S1756711AbZD0S2o convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 27 Apr 2009 14:28:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756108AbZD0S2m
+	(ORCPT <rfc822;git-outgoing>); Mon, 27 Apr 2009 14:28:42 -0400
+Received: from mout3.freenet.de ([195.4.92.93]:55003 "EHLO mout3.freenet.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754327AbZD0S2l convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 27 Apr 2009 14:28:41 -0400
+Received: from [195.4.92.20] (helo=10.mx.freenet.de)
+	by mout3.freenet.de with esmtpa (ID alexander.riesen@freenet.de) (port 25) (Exim 4.69 #88)
+	id 1LyVZE-0003mi-UI; Mon, 27 Apr 2009 20:28:37 +0200
+Received: from x6c89.x.pppool.de ([89.59.108.137]:51909 helo=tigra.home)
+	by 10.mx.freenet.de with esmtpsa (ID alexander.riesen@freenet.de) (TLSv1:AES256-SHA:256) (port 587) (Exim 4.69 #79)
+	id 1LyVZB-00054c-Vb; Mon, 27 Apr 2009 20:28:36 +0200
+Received: from blimp.localdomain (blimp.home [192.168.0.8])
+	by tigra.home (Postfix) with ESMTP id AE5C9277D8;
+	Mon, 27 Apr 2009 20:28:30 +0200 (CEST)
+Received: by blimp.localdomain (Postfix, from userid 1000)
+	id 4C57D36D28; Mon, 27 Apr 2009 19:54:14 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <81b0412b0904270225m1762dd1l2ef60253e556b8c9@mail.gmail.com>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117699>
-
-Dmitry Potapov <dpotapov@gmail.com> wrote:
-
-> Hi,
-> 
-> I have tried a few version of Git and got "Segmentation fault" when
-> run:
-> 
-> $ git grep '('
-> 
-> I am not very familiar with grep code and don't have time to dig
-> into it right now. So, maybe someone else can take a look at it.
-> 
-> Thanks,
-> Dmitry
-> --
-
-Try this patch, however I'm not sure if it is correct.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117700>
 
 ---
+Alex Riesen, Mon, Apr 27, 2009 11:25:18 +0200:
+> 2009/4/27 Dmitry Potapov <dpotapov@gmail.com>:
+> > On Sun, Apr 26, 2009 at 03:21:40PM +0200, Alex Riesen wrote:
+> >> -#: git-gui.sh:2064
+> >> +#: git-gui.sh:2518
+> >> =C2=A0msgid "Local Merge..."
+> >> =C2=A0msgstr "=D0=9B=D0=BE=D0=BA=D0=B0=D0=BB=D1=8C=D0=BD=D0=BE=D0=B5=
+ =D0=BE=D0=B1=D1=8A=D0=B5=D0=B4=D0=B8=D0=BD=D0=B5=D0=BD=D0=B8=D0=B5..."
+> >
+> > "=D1=81=D0=BB=D0=B8=D1=8F=D0=BD=D0=B8=D0=B5" is a more common term =
+for "merge" in Russian computer
+> > literature though "=D0=BE=D0=B1=D1=8A=D0=B5=D0=B4=D0=B8=D0=BD=D0=B5=
+=D0=BD=D0=B8=D0=B5" is probably okay...
+> >
+>=20
+> Ah, that's how it's called. Frankly, I just didn't know.
+> Will change.
+>=20
+> Thank you very much for proofreading!
 
-diff --git a/grep.c b/grep.c
-index f3a27d7..5748355 100644
---- a/grep.c
-+++ b/grep.c
-@@ -84,10 +84,10 @@ static struct grep_expr *compile_pattern_atom(struct grep_pat **list)
- 	case GREP_OPEN_PAREN:
- 		*list = p->next;
- 		x = compile_pattern_or(list);
--		if (!x)
--			return NULL;
- 		if (!*list || (*list)->token != GREP_CLOSE_PAREN)
- 			die("unmatched parenthesis");
-+		if (!x)
-+			return NULL;
- 		*list = (*list)->next;
- 		return x;
- 	default:
+This is on top of the previous patch, just so it is simplier
+to review the changes. I'll resend the whole update as a separate
+patch, so Shawn, please DON'T APPLY this one.
+
+I also reread and retranslated "Tools" submenu. "=D0=92=D1=81=D0=BF=D0=BE=
+=D0=BC=D0=BE=D0=B3=D0=B0=D1=82=D0=B5=D0=BB=D1=8C=D0=BD=D1=8B=D0=B5
+=D0=BE=D0=BF=D0=B5=D1=80=D0=B0=D1=86=D0=B8=D0=B8" sounds and fits bette=
+r, I think.
+
+ po/ru.po |  130 +++++++++++++++++++++++++++++++-----------------------=
+--------
+ 1 files changed, 65 insertions(+), 65 deletions(-)
+
+diff --git a/po/ru.po b/po/ru.po
+index 75dfc81..50a2b11 100644
+--- a/po/ru.po
++++ b/po/ru.po
+@@ -70,7 +70,7 @@ msgstr "=D0=9D=D0=B5=D0=B2=D0=BE=D0=B7=D0=BC=D0=BE=D0=
+=B6=D0=BD=D0=BE =D0=BF=D0=B5=D1=80=D0=B5=D0=B9=D1=82=D0=B8 =D0=BA =D0=BA=
+=D0=BE=D1=80=D0=BD=D1=8E =D1=80=D0=B0=D0=B1=D0=BE=D1=87=D0=B5=D0=B3=D0=BE=
+ =D0=BA=D0=B0
+=20
+ #: git-gui.sh:1076
+ msgid "Cannot use funny .git directory:"
+-msgstr "=D0=9A=D0=B0=D1=82=D0=B0=D0=BB=D0=BE=D0=B3.git =D0=B8=D1=81=D0=
+=BF=D0=BE=D1=80=D1=87=D0=B5=D0=BD: "
++msgstr "=D0=9A=D0=B0=D1=82=D0=B0=D0=BB=D0=BE=D0=B3 .git =D0=B8=D1=81=D0=
+=BF=D0=BE=D1=80=D1=87=D0=B5=D0=BD: "
+=20
+ #: git-gui.sh:1081
+ msgid "No working directory"
+@@ -143,11 +143,11 @@ msgstr "=D0=9F=D0=BE=D0=B4=D0=B3=D0=BE=D1=82=D0=BE=
+=D0=B2=D0=BB=D0=B5=D0=BD=D0=BE =D0=B4=D0=BB=D1=8F =D1=83=D0=B4=D0=B0=D0=
+=BB=D0=B5=D0=BD=D0=B8=D1=8F, =D0=B5=D1=89=D0=B5 =D0=BD=D0=B5 =D1=83=D0=B4=
+=D0=B0=D0=BB=D0=B5
+ #: git-gui.sh:1838 git-gui.sh:1839 git-gui.sh:1840 git-gui.sh:1841
+ #: git-gui.sh:1842 git-gui.sh:1843
+ msgid "Requires merge resolution"
+-msgstr "=D0=A2=D1=80=D0=B5=D0=B1=D1=83=D0=B5=D1=82=D1=81=D1=8F =D1=80=D0=
+=B0=D0=B7=D1=80=D0=B5=D1=88=D0=B5=D0=BD=D0=B8=D0=B5 =D0=BA=D0=BE=D0=BD=D1=
+=84=D0=BB=D0=B8=D0=BA=D1=82=D0=B0 =D0=BF=D1=80=D0=B8 =D0=BE=D0=B1=D1=8A=
+=D0=B5=D0=B4=D0=B8=D0=BD=D0=B5=D0=BD=D0=B8=D0=B8"
++msgstr "=D0=A2=D1=80=D0=B5=D0=B1=D1=83=D0=B5=D1=82=D1=81=D1=8F =D1=80=D0=
+=B0=D0=B7=D1=80=D0=B5=D1=88=D0=B5=D0=BD=D0=B8=D0=B5 =D0=BA=D0=BE=D0=BD=D1=
+=84=D0=BB=D0=B8=D0=BA=D1=82=D0=B0 =D0=BF=D1=80=D0=B8 =D1=81=D0=BB=D0=B8=
+=D1=8F=D0=BD=D0=B8=D0=B8"
+=20
+ #: git-gui.sh:1878
+ msgid "Starting gitk... please wait..."
+-msgstr "=D0=97=D0=B0=D0=BF=D1=83=D1=81=D0=BA=D0=B0=D0=B5=D1=82=D1=81=D1=
+=8F gitk... =D0=BF=D0=BE=D0=B6=D0=B0=D0=BB=D1=83=D0=B9=D1=81=D1=82=D0=B0=
+, =D0=B6=D0=B4=D0=B8=D1=82=D0=B5..."
++msgstr "=D0=97=D0=B0=D0=BF=D1=83=D1=81=D0=BA=D0=B0=D0=B5=D1=82=D1=81=D1=
+=8F gitk... =D0=9F=D0=BE=D0=B4=D0=BE=D0=B6=D0=B4=D0=B8=D1=82=D0=B5, =D0=
+=BF=D0=BE=D0=B6=D0=B0=D0=BB=D1=83=D0=B9=D1=81=D1=82=D0=B0..."
+=20
+ #: git-gui.sh:1887
+ msgid "Couldn't find gitk in PATH"
+@@ -171,7 +171,7 @@ msgstr "=D0=A1=D0=BE=D1=81=D1=82=D0=BE=D1=8F=D0=BD=D0=
+=B8=D0=B5"
+=20
+ #: git-gui.sh:2289 lib/merge.tcl:121 lib/merge.tcl:150 lib/merge.tcl:1=
+68
+ msgid "Merge"
+-msgstr "=D0=9E=D0=B1=D1=8A=D0=B5=D0=B4=D0=B8=D0=BD=D0=B8=D1=82=D1=8C"
++msgstr "=D0=A1=D0=BB=D0=B8=D1=8F=D0=BD=D0=B8=D0=B5"
+=20
+ #: git-gui.sh:2290 lib/choose_rev.tcl:557
+ msgid "Remote"
+@@ -179,7 +179,7 @@ msgstr "=D0=92=D0=BD=D0=B5=D1=88=D0=BD=D0=B8=D0=B5 =
+=D1=80=D0=B5=D0=BF=D0=BE=D0=B7=D0=B8=D1=82=D0=BE=D1=80=D0=B8=D0=B8"
+=20
+ #: git-gui.sh:2293
+ msgid "Tools"
+-msgstr "=D0=92=D1=81=D0=BF=D0=BE=D0=BC=D0=BE=D0=B3=D0=B0=D1=82=D0=B5=D0=
+=BB=D1=8C=D0=BD=D1=8B=D0=B5 =D0=BF=D1=80=D0=BE=D0=B3=D1=80=D0=B0=D0=BC=D0=
+=BC=D1=8B"
++msgstr "=D0=92=D1=81=D0=BF=D0=BE=D0=BC=D0=BE=D0=B3=D0=B0=D1=82=D0=B5=D0=
+=BB=D1=8C=D0=BD=D1=8B=D0=B5 =D0=BE=D0=BF=D0=B5=D1=80=D0=B0=D1=86=D0=B8=D0=
+=B8"
+=20
+ #: git-gui.sh:2302
+ msgid "Explore Working Copy"
+@@ -195,11 +195,11 @@ msgstr "=D0=9F=D0=BE=D0=BA=D0=B0=D0=B7=D0=B0=D1=82=
+=D1=8C =D1=84=D0=B0=D0=B9=D0=BB=D1=8B =D0=B2=D0=B5=D1=82=D0=B2=D0=B8...=
+"
+=20
+ #: git-gui.sh:2316
+ msgid "Visualize Current Branch's History"
+-msgstr "=D0=98=D1=81=D1=82=D0=BE=D1=80=D0=B8=D1=8F =D1=82=D0=B5=D0=BA=D1=
+=83=D1=89=D0=B5=D0=B9 =D0=B2=D0=B5=D1=82=D0=B2=D0=B8 =D0=BD=D0=B0=D0=B3=
+=D0=BB=D1=8F=D0=B4=D0=BD=D0=BE"
++msgstr "=D0=9F=D0=BE=D0=BA=D0=B0=D0=B7=D0=B0=D1=82=D1=8C =D0=B8=D1=81=D1=
+=82=D0=BE=D1=80=D0=B8=D1=8E =D1=82=D0=B5=D0=BA=D1=83=D1=89=D0=B5=D0=B9 =
+=D0=B2=D0=B5=D1=82=D0=B2=D0=B8"
+=20
+ #: git-gui.sh:2320
+ msgid "Visualize All Branch History"
+-msgstr "=D0=98=D1=81=D1=82=D0=BE=D1=80=D0=B8=D1=8F =D0=B2=D1=81=D0=B5=D1=
+=85 =D0=B2=D0=B5=D1=82=D0=B2=D0=B5=D0=B9 =D0=BD=D0=B0=D0=B3=D0=BB=D1=8F=
+=D0=B4=D0=BD=D0=BE"
++msgstr "=D0=9F=D0=BE=D0=BA=D0=B0=D0=B7=D0=B0=D1=82=D1=8C =D0=B8=D1=81=D1=
+=82=D0=BE=D1=80=D0=B8=D1=8E =D0=B2=D1=81=D0=B5=D1=85 =D0=B2=D0=B5=D1=82=
+=D0=B2=D0=B5=D0=B9"
+=20
+ #: git-gui.sh:2327
+ #, tcl-format
+@@ -209,7 +209,7 @@ msgstr "=D0=9F=D0=BE=D0=BA=D0=B0=D0=B7=D0=B0=D1=82=D1=
+=8C =D1=84=D0=B0=D0=B9=D0=BB=D1=8B =D0=B2=D0=B5=D1=82=D0=B2=D0=B8 %s"
+ #: git-gui.sh:2329
+ #, tcl-format
+ msgid "Visualize %s's History"
+-msgstr "=D0=98=D1=81=D1=82=D0=BE=D1=80=D0=B8=D1=8F =D0=B2=D0=B5=D1=82=D0=
+=B2=D0=B8 %s =D0=BD=D0=B0=D0=B3=D0=BB=D1=8F=D0=B4=D0=BD=D0=BE"
++msgstr "=D0=9F=D0=BE=D0=BA=D0=B0=D0=B7=D0=B0=D1=82=D1=8C =D0=B8=D1=81=D1=
+=82=D0=BE=D1=80=D0=B8=D1=8E =D0=B2=D0=B5=D1=82=D0=B2=D0=B8 %s"
+=20
+ #: git-gui.sh:2334 lib/database.tcl:27 lib/database.tcl:67
+ msgid "Database Statistics"
+@@ -284,7 +284,7 @@ msgstr "=D0=A1=D0=B1=D1=80=D0=BE=D1=81=D0=B8=D1=82=D1=
+=8C..."
+=20
+ #: git-gui.sh:2432
+ msgid "Done"
+-msgstr "=D0=97=D0=B2=D0=B5=D1=80=D1=88=D0=B5=D0=BD=D0=BE"
++msgstr "=D0=97=D0=B0=D0=B2=D0=B5=D1=80=D1=88=D0=B5=D0=BD=D0=BE"
+=20
+ #: git-gui.sh:2434
+ msgid "Commit@@verb"
+@@ -332,11 +332,11 @@ msgstr "=D0=92=D1=81=D1=82=D0=B0=D0=B2=D0=B8=D1=82=
+=D1=8C Signed-off-by"
+=20
+ #: git-gui.sh:2518
+ msgid "Local Merge..."
+-msgstr "=D0=9B=D0=BE=D0=BA=D0=B0=D0=BB=D1=8C=D0=BD=D0=BE=D0=B5 =D0=BE=D0=
+=B1=D1=8A=D0=B5=D0=B4=D0=B8=D0=BD=D0=B5=D0=BD=D0=B8=D0=B5..."
++msgstr "=D0=9B=D0=BE=D0=BA=D0=B0=D0=BB=D1=8C=D0=BD=D0=BE=D0=B5 =D1=81=D0=
+=BB=D0=B8=D1=8F=D0=BD=D0=B8=D0=B5..."
+=20
+ #: git-gui.sh:2523
+ msgid "Abort Merge..."
+-msgstr "=D0=9F=D1=80=D0=B5=D1=80=D0=B2=D0=B0=D1=82=D1=8C =D0=BE=D0=B1=D1=
+=8A=D0=B5=D0=B4=D0=B8=D0=BD=D0=B5=D0=BD=D0=B8=D0=B5..."
++msgstr "=D0=9F=D1=80=D0=B5=D1=80=D0=B2=D0=B0=D1=82=D1=8C =D1=81=D0=BB=D0=
+=B8=D1=8F=D0=BD=D0=B8=D0=B5..."
+=20
+ #: git-gui.sh:2535 git-gui.sh:2575
+ msgid "Add..."
+@@ -419,11 +419,11 @@ msgstr "=D0=9A=D0=BE=D0=BC=D0=BC=D0=B5=D0=BD=D1=82=
+=D0=B0=D1=80=D0=B8=D0=B9 =D0=BA =D0=B8=D1=81=D0=BF=D1=80=D0=B0=D0=B2=D0=
+=BB=D0=B5=D0=BD=D0=BD=D0=BE=D0=BC=D1=83 =D0=BF=D0=B5=D1=80=D0=B2=D0=BE=D0=
+=BD=D0=B0=D1=87=D0=B0
+=20
+ #: git-gui.sh:2902
+ msgid "Amended Merge Commit Message:"
+-msgstr "=D0=9A=D0=BE=D0=BC=D0=BC=D0=B5=D0=BD=D1=82=D0=B0=D1=80=D0=B8=D0=
+=B9 =D0=BA =D0=B8=D1=81=D0=BF=D1=80=D0=B0=D0=B2=D0=BB=D0=B5=D0=BD=D0=BD=
+=D0=BE=D0=BC=D1=83 =D0=BE=D0=B1=D1=8A=D0=B5=D0=B4=D0=B8=D0=BD=D0=B5=D0=BD=
+=D0=B8=D1=8E:"
++msgstr "=D0=9A=D0=BE=D0=BC=D0=BC=D0=B5=D0=BD=D1=82=D0=B0=D1=80=D0=B8=D0=
+=B9 =D0=BA =D0=B8=D1=81=D0=BF=D1=80=D0=B0=D0=B2=D0=BB=D0=B5=D0=BD=D0=BD=
+=D0=BE=D0=BC=D1=83 =D1=81=D0=BB=D0=B8=D1=8F=D0=BD=D0=B8=D1=8E:"
+=20
+ #: git-gui.sh:2903
+ msgid "Merge Commit Message:"
+-msgstr "=D0=9A=D0=BE=D0=BC=D0=BC=D0=B5=D0=BD=D1=82=D0=B0=D1=80=D0=B8=D0=
+=B9 =D0=BA =D0=BE=D0=B1=D1=8A=D0=B5=D0=B4=D0=B8=D0=BD=D0=B5=D0=BD=D0=B8=
+=D1=8E:"
++msgstr "=D0=9A=D0=BE=D0=BC=D0=BC=D0=B5=D0=BD=D1=82=D0=B0=D1=80=D0=B8=D0=
+=B9 =D0=BA =D1=81=D0=BB=D0=B8=D1=8F=D0=BD=D0=B8=D1=8E:"
+=20
+ #: git-gui.sh:2904
+ msgid "Commit Message:"
+@@ -463,7 +463,7 @@ msgstr "=D0=9F=D1=80=D0=B8=D0=BC=D0=B5=D0=BD=D0=B8=D1=
+=82=D1=8C/=D0=A3=D0=B1=D1=80=D0=B0=D1=82=D1=8C =D1=81=D1=82=D1=80=D0=BE=
+=D0=BA=D1=83"
+=20
+ #: git-gui.sh:3151
+ msgid "Run Merge Tool"
+-msgstr "=D0=97=D0=B0=D0=BF=D1=83=D1=81=D1=82=D0=B8=D1=82=D1=8C =D0=BF=D1=
+=80=D0=BE=D0=B3=D1=80=D0=B0=D0=BC=D0=BC=D1=83 =D0=BE=D0=B1=D1=8A=D0=B5=D0=
+=B4=D0=B8=D0=BD=D0=B5=D0=BD=D0=B8=D1=8F"
++msgstr "=D0=97=D0=B0=D0=BF=D1=83=D1=81=D1=82=D0=B8=D1=82=D1=8C =D0=BF=D1=
+=80=D0=BE=D0=B3=D1=80=D0=B0=D0=BC=D0=BC=D1=83 =D1=81=D0=BB=D0=B8=D1=8F=D0=
+=BD=D0=B8=D1=8F"
+=20
+ #: git-gui.sh:3156
+ msgid "Use Remote Version"
+@@ -763,16 +763,16 @@ msgstr "=D0=9B=D0=BE=D0=BA=D0=B0=D0=BB=D1=8C=D0=BD=
+=D1=8B=D0=B5 =D0=B2=D0=B5=D1=82=D0=B2=D0=B8"
+=20
+ #: lib/branch_delete.tcl:52
+ msgid "Delete Only If Merged Into"
+-msgstr "=D0=A3=D0=B4=D0=B0=D0=BB=D0=B8=D1=82=D1=8C =D1=82=D0=BE=D0=BB=D1=
+=8C=D0=BA=D0=BE =D0=B2 =D1=81=D0=BB=D1=83=D1=87=D0=B0=D0=B5, =D0=B5=D1=81=
+=D0=BB=D0=B8 =D0=B1=D1=8B=D0=BB=D0=BE =D0=BE=D0=B1=D1=8A=D0=B5=D0=B4=D0=
+=B8=D0=BD=D0=B5=D0=BD=D0=B8=D0=B5 =D1=81"
++msgstr "=D0=A3=D0=B4=D0=B0=D0=BB=D0=B8=D1=82=D1=8C =D1=82=D0=BE=D0=BB=D1=
+=8C=D0=BA=D0=BE =D0=B2 =D1=81=D0=BB=D1=83=D1=87=D0=B0=D0=B5, =D0=B5=D1=81=
+=D0=BB=D0=B8 =D0=B1=D1=8B=D0=BB=D0=BE =D1=81=D0=BB=D0=B8=D1=8F=D0=BD=D0=
+=B8=D0=B5 =D1=81"
+=20
+ #: lib/branch_delete.tcl:54
+ msgid "Always (Do not perform merge test.)"
+-msgstr "=D0=92=D1=81=D0=B5=D0=B3=D0=B4=D0=B0 (=D0=BD=D0=B5 =D0=B2=D1=8B=
+=D0=BF=D0=BE=D0=BB=D0=BD=D1=8F=D1=82=D1=8C =D0=BF=D1=80=D0=BE=D0=B2=D0=B5=
+=D1=80=D0=BA=D1=83 =D0=BD=D0=B0 =D0=BE=D0=B1=D1=8A=D0=B5=D0=B4=D0=B8=D0=
+=BD=D0=B5=D0=BD=D0=B8=D0=B5)"
++msgstr "=D0=92=D1=81=D0=B5=D0=B3=D0=B4=D0=B0 (=D0=BD=D0=B5 =D0=B2=D1=8B=
+=D0=BF=D0=BE=D0=BB=D0=BD=D1=8F=D1=82=D1=8C =D0=BF=D1=80=D0=BE=D0=B2=D0=B5=
+=D1=80=D0=BA=D1=83 =D0=BD=D0=B0 =D1=81=D0=BB=D0=B8=D1=8F=D0=BD=D0=B8=D0=
+=B5)"
+=20
+ #: lib/branch_delete.tcl:103
+ #, tcl-format
+ msgid "The following branches are not completely merged into %s:"
+-msgstr "=D0=A1=D0=BB=D0=B5=D0=B4=D1=83=D1=8E=D1=89=D0=B8=D0=B5 =D0=B2=D0=
+=B5=D1=82=D0=B2=D0=B8 =D0=BE=D0=B1=D1=8A=D0=B5=D0=B4=D0=B8=D0=BD=D0=B5=D0=
+=BD=D1=8B =D1=81 %s =D0=BD=D0=B5 =D0=BF=D0=BE=D0=BB=D0=BD=D0=BE=D1=81=D1=
+=82=D1=8C=D1=8E:"
++msgstr "=D0=92=D0=B5=D1=82=D0=B2=D0=B8, =D0=BA=D0=BE=D1=82=D0=BE=D1=80=
+=D1=8B=D0=B5 =D0=BD=D0=B5 =D0=BF=D0=BE=D0=BB=D0=BD=D0=BE=D1=81=D1=82=D1=
+=8C=D1=8E =D1=81=D0=BB=D0=B8=D0=B2=D0=B0=D1=8E=D1=82=D1=81=D1=8F =D1=81=
+ %s:"
+=20
+ #: lib/branch_delete.tcl:141
+ #, tcl-format
+@@ -876,12 +876,12 @@ msgstr ""
+ "=D0=92=D0=B5=D1=82=D0=B2=D1=8C '%s' =D1=83=D0=B6=D0=B5 =D1=81=D1=83=D1=
+=89=D0=B5=D1=81=D1=82=D0=B2=D1=83=D0=B5=D1=82.\n"
+ "\n"
+ "=D0=9E=D0=BD=D0=B0 =D0=BD=D0=B5 =D0=BC=D0=BE=D0=B6=D0=B5=D1=82 =D0=B1=
+=D1=8B=D1=82=D1=8C =D0=BF=D1=80=D0=BE=D0=BA=D1=80=D1=83=D1=87=D0=B5=D0=BD=
+=D0=B0(fast-forward) =D0=BA %s.\n"
+-"=D0=A2=D1=80=D0=B5=D0=B1=D1=83=D0=B5=D1=82=D1=81=D1=8F =D0=BE=D0=B1=D1=
+=8A=D0=B5=D0=B4=D0=B8=D0=BD=D0=B5=D0=BD=D0=B8=D0=B5."
++"=D0=A2=D1=80=D0=B5=D0=B1=D1=83=D0=B5=D1=82=D1=81=D1=8F =D1=81=D0=BB=D0=
+=B8=D1=8F=D0=BD=D0=B8=D0=B5."
+=20
+ #: lib/checkout_op.tcl:242
+ #, tcl-format
+ msgid "Merge strategy '%s' not supported."
+-msgstr "=D0=A1=D1=82=D1=80=D0=B0=D1=82=D0=B5=D0=B3=D0=B8=D1=8F =D0=BE=D0=
+=B1=D1=8A=D0=B5=D0=B4=D0=B8=D0=BD=D0=B5=D0=BD=D0=B8=D1=8F '%s' =D0=BD=D0=
+=B5 =D0=BF=D0=BE=D0=B4=D0=B4=D0=B5=D1=80=D0=B6=D0=B8=D0=B2=D0=B0=D0=B5=D1=
+=82=D1=81=D1=8F."
++msgstr "=D0=9D=D0=B5=D0=B8=D0=B7=D0=B2=D0=B5=D1=81=D1=82=D0=BD=D0=B0=D1=
+=8F =D1=81=D1=82=D1=80=D0=B0=D1=82=D0=B5=D0=B3=D0=B8=D1=8F =D1=81=D0=BB=
+=D0=B8=D1=8F=D0=BD=D0=B8=D1=8F: '%s'."
+=20
+ #: lib/checkout_op.tcl:261
+ #, tcl-format
+@@ -920,11 +920,11 @@ msgstr "=D1=84=D0=B0=D0=B9=D0=BB=D1=8B =D0=B8=D0=B7=
+=D0=B2=D0=BB=D0=B5=D1=87=D0=B5=D0=BD=D1=8B"
+ #: lib/checkout_op.tcl:375
+ #, tcl-format
+ msgid "Aborted checkout of '%s' (file level merging is required)."
+-msgstr "=D0=9F=D1=80=D0=B5=D1=80=D0=B2=D0=B0=D0=BD =D0=BF=D0=B5=D1=80=D0=
+=B5=D1=85=D0=BE=D0=B4 =D0=BD=D0=B0 '%s' (=D1=82=D1=80=D0=B5=D0=B1=D1=83=
+=D0=B5=D1=82=D1=81=D1=8F =D0=BE=D0=B1=D1=8A=D0=B5=D0=B4=D0=B8=D0=BD=D0=B5=
+=D0=BD=D0=B8=D0=B5 =D0=BD=D0=B0 =D1=83=D1=80=D0=BE=D0=B2=D0=BD=D0=B5 =D1=
+=84=D0=B0=D0=B9=D0=BB=D0=BE=D0=B2)"
++msgstr "=D0=9F=D1=80=D0=B5=D1=80=D0=B2=D0=B0=D0=BD =D0=BF=D0=B5=D1=80=D0=
+=B5=D1=85=D0=BE=D0=B4 =D0=BD=D0=B0 '%s' (=D1=82=D1=80=D0=B5=D0=B1=D1=83=
+=D0=B5=D1=82=D1=81=D1=8F =D1=81=D0=BB=D0=B8=D1=8F=D0=BD=D0=B8=D0=B5 =D1=
+=81=D0=BE=D0=B4=D0=B5=D1=80=D0=B6=D0=B0=D0=BD=D0=B8=D1=8F =D1=84=D0=B0=D0=
+=B9=D0=BB=D0=BE=D0=B2)"
+=20
+ #: lib/checkout_op.tcl:376
+ msgid "File level merge required."
+-msgstr "=D0=A2=D1=80=D0=B5=D0=B1=D1=83=D0=B5=D1=82=D1=81=D1=8F =D0=BE=D0=
+=B1=D1=8A=D0=B5=D0=B4=D0=B8=D0=BD=D0=B5=D0=BD=D0=B8=D0=B5 =D0=BD=D0=B0 =
+=D1=83=D1=80=D0=BE=D0=B2=D0=BD=D0=B5 =D1=84=D0=B0=D0=B9=D0=BB=D0=BE=D0=B2=
+=2E"
++msgstr "=D0=A2=D1=80=D0=B5=D0=B1=D1=83=D0=B5=D1=82=D1=81=D1=8F =D1=81=D0=
+=BB=D0=B8=D1=8F=D0=BD=D0=B8=D0=B5 =D1=81=D0=BE=D0=B4=D0=B5=D1=80=D0=B6=D0=
+=B0=D0=BD=D0=B8=D1=8F =D1=84=D0=B0=D0=B9=D0=BB=D0=BE=D0=B2."
+=20
+ #: lib/checkout_op.tcl:380
+ #, tcl-format
+@@ -1295,10 +1295,10 @@ msgid ""
+ "completed.  You cannot amend the prior commit unless you first abort =
+the "
+ "current merge activity.\n"
+ msgstr ""
+-"=D0=9D=D0=B5=D0=B2=D0=BE=D0=B7=D0=BC=D0=BE=D0=B6=D0=BD=D0=BE =D0=B8=D1=
+=81=D0=BF=D1=80=D0=B0=D0=B2=D0=B8=D1=82=D1=8C =D1=81=D0=BE=D1=81=D1=82=D0=
+=BE=D1=8F=D0=BD=D0=B8=D0=B5 =D0=B2=D0=BE =D0=B2=D1=80=D0=B5=D0=BC=D1=8F=
+ =D0=BE=D0=B1=D1=8A=D0=B5=D0=B4=D0=B8=D0=BD=D0=B5=D0=BD=D0=B8=D1=8F.\n"
++"=D0=9D=D0=B5=D0=B2=D0=BE=D0=B7=D0=BC=D0=BE=D0=B6=D0=BD=D0=BE =D0=B8=D1=
+=81=D0=BF=D1=80=D0=B0=D0=B2=D0=B8=D1=82=D1=8C =D1=81=D0=BE=D1=81=D1=82=D0=
+=BE=D1=8F=D0=BD=D0=B8=D0=B5 =D0=B2=D0=BE =D0=B2=D1=80=D0=B5=D0=BC=D1=8F=
+ =D0=BE=D0=BF=D0=B5=D1=80=D0=B0=D1=86=D0=B8=D0=B8 =D1=81=D0=BB=D0=B8=D1=
+=8F=D0=BD=D0=B8=D1=8F.\n"
+ "\n"
+-"=D0=A2=D0=B5=D0=BA=D1=83=D1=89=D0=B5=D0=B5 =D0=BE=D0=B1=D1=8A=D0=B5=D0=
+=B4=D0=B8=D0=BD=D0=B5=D0=BD=D0=B8=D0=B5 =D0=BD=D0=B5 =D0=B7=D0=B0=D0=B2=
+=D0=B5=D1=80=D1=88=D0=B5=D0=BD=D0=BE. =D0=9D=D0=B5=D0=B2=D0=BE=D0=B7=D0=
+=BC=D0=BE=D0=B6=D0=BD=D0=BE =D0=B8=D1=81=D0=BF=D1=80=D0=B0=D0=B2=D0=B8=D1=
+=82=D1=8C =D0=BF=D1=80=D0=B5=D0=B4=D1=8B=D0=B4=D1=83=D1=89=D0=B5=D0=B5 =
+"
+-"=D1=81=D0=BE=D1=85=D1=80=D0=B0=D0=BD=D0=B5=D0=BD=D0=BD=D0=BE=D0=B5 =D1=
+=81=D0=BE=D1=81=D1=82=D0=BE=D1=8F=D0=BD=D0=B8=D0=B5 =D0=BD=D0=B5 =D0=BF=
+=D1=80=D0=B5=D1=80=D1=8B=D0=B2=D0=B0=D1=8F =D1=82=D0=B5=D0=BA=D1=83=D1=89=
+=D0=B5=D0=B5 =D0=BE=D0=B1=D1=8A=D0=B5=D0=B4=D0=B8=D0=BD=D0=B5=D0=BD=D0=B8=
+=D0=B5.\n"
++"=D0=A2=D0=B5=D0=BA=D1=83=D1=89=D0=B5=D0=B5 =D1=81=D0=BB=D0=B8=D1=8F=D0=
+=BD=D0=B8=D0=B5 =D0=BD=D0=B5 =D0=B7=D0=B0=D0=B2=D0=B5=D1=80=D1=88=D0=B5=
+=D0=BD=D0=BE. =D0=9D=D0=B5=D0=B2=D0=BE=D0=B7=D0=BC=D0=BE=D0=B6=D0=BD=D0=
+=BE =D0=B8=D1=81=D0=BF=D1=80=D0=B0=D0=B2=D0=B8=D1=82=D1=8C =D0=BF=D1=80=
+=D0=B5=D0=B4=D1=8B=D0=B4=D1=83=D1=89=D0=B5=D0=B5 "
++"=D1=81=D0=BE=D1=85=D1=80=D0=B0=D0=BD=D0=B5=D0=BD=D0=BD=D0=BE=D0=B5 =D1=
+=81=D0=BE=D1=81=D1=82=D0=BE=D1=8F=D0=BD=D0=B8=D0=B5, =D0=BD=D0=B5 =D0=BF=
+=D1=80=D0=B5=D1=80=D1=8B=D0=B2=D0=B0=D1=8F =D1=8D=D1=82=D1=83 =D0=BE=D0=
+=BF=D0=B5=D1=80=D0=B0=D1=86=D0=B8=D1=8E.\n"
+=20
+ #: lib/commit.tcl:48
+ msgid "Error loading commit data for amend:"
+@@ -1336,9 +1336,9 @@ msgid ""
+ "File %s has merge conflicts.  You must resolve them and stage the fil=
+e "
+ "before committing.\n"
+ msgstr ""
+-"=D0=9D=D0=B5=D0=BB=D1=8C=D0=B7=D1=8F =D1=81=D0=BE=D1=85=D1=80=D0=B0=D0=
+=BD=D0=B8=D1=82=D1=8C =D0=BD=D0=B5=D0=BE=D0=B1=D1=8A=D0=B5=D0=B4=D0=B8=D0=
+=BD=D0=B5=D0=BD=D0=BD=D1=8B=D0=B5 =D1=84=D0=B0=D0=B9=D0=BB=D1=8B.\n"
++"=D0=9D=D0=B5=D0=BB=D1=8C=D0=B7=D1=8F =D1=81=D0=BE=D1=85=D1=80=D0=B0=D0=
+=BD=D0=B8=D1=82=D1=8C =D1=84=D0=B0=D0=B9=D0=BB=D1=8B =D1=81 =D0=BD=D0=B5=
+=D0=B7=D0=B0=D0=B2=D0=B5=D1=80=D1=88=D1=91=D0=BD=D0=BD=D0=BE=D0=B9 =D0=BE=
+=D0=BF=D0=B5=D1=80=D0=B0=D1=86=D0=B5=D0=B9 =D1=81=D0=BB=D0=B8=D1=8F=D0=BD=
+=D0=B8=D1=8F.\n"
+ "\n"
+-"=D0=94=D0=BB=D1=8F =D1=84=D0=B0=D0=B9=D0=BB=D0=B0 %s =D0=B2=D0=BE=D0=B7=
+=D0=BD=D0=B8=D0=BA =D0=BA=D0=BE=D0=BD=D1=84=D0=BB=D0=B8=D0=BA=D1=82 =D0=
+=BE=D0=B1=D1=8A=D0=B5=D0=B4=D0=B8=D0=BD=D0=B5=D0=BD=D0=B8=D1=8F. =D0=A0=
+=D0=B0=D0=B7=D1=80=D0=B5=D1=88=D0=B8=D1=82=D0=B5 =D0=BA=D0=BE=D0=BD=D1=84=
+=D0=BB=D0=B8=D0=BA=D1=82 =D0=B8 =D0=B4=D0=BE=D0=B1=D0=B0=D0=B2=D1=8C=D1=
+=82=D0=B5 =D0=BA "
++"=D0=94=D0=BB=D1=8F =D1=84=D0=B0=D0=B9=D0=BB=D0=B0 %s =D0=B2=D0=BE=D0=B7=
+=D0=BD=D0=B8=D0=BA =D0=BA=D0=BE=D0=BD=D1=84=D0=BB=D0=B8=D0=BA=D1=82 =D1=
+=81=D0=BB=D0=B8=D1=8F=D0=BD=D0=B8=D1=8F. =D0=A0=D0=B0=D0=B7=D1=80=D0=B5=
+=D1=88=D0=B8=D1=82=D0=B5 =D0=BA=D0=BE=D0=BD=D1=84=D0=BB=D0=B8=D0=BA=D1=82=
+ =D0=B8 =D0=B4=D0=BE=D0=B1=D0=B0=D0=B2=D1=8C=D1=82=D0=B5 =D0=BA "
+ "=D0=BF=D0=BE=D0=B4=D0=B3=D0=BE=D1=82=D0=BE=D0=B2=D0=BB=D0=B5=D0=BD=D0=
+=BD=D1=8B=D0=BC =D1=84=D0=B0=D0=B9=D0=BB=D0=B0=D0=BC =D0=BF=D0=B5=D1=80=
+=D0=B5=D0=B4 =D1=81=D0=BE=D1=85=D1=80=D0=B0=D0=BD=D0=B5=D0=BD=D0=B8=D0=B5=
+=D0=BC.\n"
+=20
+ #: lib/commit.tcl:163
+@@ -1428,7 +1428,7 @@ msgid ""
+ msgstr ""
+ "=D0=9E=D1=82=D1=81=D1=83=D1=82=D1=81=D1=82=D0=B2=D1=83=D1=8E=D1=82 =D0=
+=B8=D0=B7=D0=BC=D0=B5=D0=BD=D0=B5=D0=BD=D0=B8=D1=8F =D0=B4=D0=BB=D1=8F =
+=D1=81=D0=BE=D1=85=D1=80=D0=B0=D0=BD=D0=B5=D0=BD=D0=B8=D1=8F.\n"
+ "\n"
+-"=D0=9D=D0=B8 =D0=BE=D0=B4=D0=B8=D0=BD =D1=84=D0=B0=D0=B9=D0=BB =D0=BD=
+=D0=B5 =D0=B1=D1=8B=D0=BB =D0=B8=D0=B7=D0=BC=D0=B5=D0=BD=D0=B5=D0=BD =D0=
+=B8 =D0=BD=D0=B5 =D0=B1=D1=8B=D0=BB=D0=BE =D0=BE=D0=B1=D1=8A=D0=B5=D0=B4=
+=D0=B8=D0=BD=D0=B5=D0=BD=D0=B8=D1=8F.\n"
++"=D0=9D=D0=B8 =D0=BE=D0=B4=D0=B8=D0=BD =D1=84=D0=B0=D0=B9=D0=BB =D0=BD=
+=D0=B5 =D0=B1=D1=8B=D0=BB =D0=B8=D0=B7=D0=BC=D0=B5=D0=BD=D0=B5=D0=BD =D0=
+=B8 =D0=BD=D0=B5 =D0=B1=D1=8B=D0=BB=D0=BE =D1=81=D0=BB=D0=B8=D1=8F=D0=BD=
+=D0=B8=D1=8F.\n"
+ "\n"
+ "=D0=A1=D0=B5=D0=B9=D1=87=D0=B0=D1=81 =D0=B0=D0=B2=D1=82=D0=BE=D0=BC=D0=
+=B0=D1=82=D0=B8=D1=87=D0=B5=D1=81=D0=BA=D0=B8 =D0=B7=D0=B0=D0=BF=D1=83=D1=
+=81=D1=82=D0=B8=D1=82=D1=81=D1=8F =D0=BF=D0=B5=D1=80=D0=B5=D1=87=D0=B8=D1=
+=82=D1=8B=D0=B2=D0=B0=D0=BD=D0=B8=D0=B5 =D1=80=D0=B5=D0=BF=D0=BE=D0=B7=D0=
+=B8=D1=82=D0=BE=D1=80=D0=B8=D1=8F.\n"
+=20
+@@ -1721,10 +1721,10 @@ msgid ""
+ "\n"
+ "You must finish amending this commit before starting any type of merg=
+e.\n"
+ msgstr ""
+-"=D0=9D=D0=B5=D0=B2=D0=BE=D0=B7=D0=BC=D0=BE=D0=B6=D0=BD=D0=BE =D0=B2=D1=
+=8B=D0=BF=D0=BE=D0=BB=D0=BD=D0=B8=D1=82=D1=8C =D0=BE=D0=B1=D1=8A=D0=B5=D0=
+=B4=D0=B8=D0=BD=D0=B5=D0=BD=D0=B8=D0=B5 =D0=B2=D0=BE =D0=B2=D1=80=D0=B5=
+=D0=BC=D1=8F =D0=B8=D1=81=D0=BF=D1=80=D0=B0=D0=B2=D0=BB=D0=B5=D0=BD=D0=B8=
+=D1=8F.\n"
++"=D0=9D=D0=B5=D0=B2=D0=BE=D0=B7=D0=BC=D0=BE=D0=B6=D0=BD=D0=BE =D0=B2=D1=
+=8B=D0=BF=D0=BE=D0=BB=D0=BD=D0=B8=D1=82=D1=8C =D1=81=D0=BB=D0=B8=D1=8F=D0=
+=BD=D0=B8=D0=B5 =D0=B2=D0=BE =D0=B2=D1=80=D0=B5=D0=BC=D1=8F =D0=B8=D1=81=
+=D0=BF=D1=80=D0=B0=D0=B2=D0=BB=D0=B5=D0=BD=D0=B8=D1=8F.\n"
+ "\n"
+ "=D0=97=D0=B0=D0=B2=D0=B5=D1=80=D1=88=D0=B8=D1=82=D0=B5 =D0=B8=D1=81=D0=
+=BF=D1=80=D0=B0=D0=B2=D0=BB=D0=B5=D0=BD=D0=B8=D0=B5 =D0=B4=D0=B0=D0=BD=D0=
+=BD=D0=BE=D0=B3=D0=BE =D1=81=D0=BE=D1=81=D1=82=D0=BE=D1=8F=D0=BD=D0=B8=D1=
+=8F =D0=BF=D0=B5=D1=80=D0=B5=D0=B4 =D0=B2=D1=8B=D0=BF=D0=BE=D0=BB=D0=BD=
+=D0=B5=D0=BD=D0=B8=D0=B5=D0=BC =D0=BE=D0=BF=D0=B5=D1=80=D0=B0=D1=86=D0=B8=
+=D0=B8 "
+-"=D0=BE=D0=B1=D1=8A=D0=B5=D0=B4=D0=B8=D0=BD=D0=B5=D0=BD=D0=B8=D1=8F.\n=
+"
++"=D1=81=D0=BB=D0=B8=D1=8F=D0=BD=D0=B8=D1=8F.\n"
+=20
+ #: lib/merge.tcl:27
+ msgid ""
+@@ -1752,12 +1752,12 @@ msgid ""
+ "You must resolve them, stage the file, and commit to complete the cur=
+rent "
+ "merge.  Only then can you begin another merge.\n"
+ msgstr ""
+-"=D0=9F=D1=80=D0=B5=D0=B4=D1=8B=D0=B4=D1=83=D1=89=D0=B5=D0=B5 =D0=BE=D0=
+=B1=D1=8A=D0=B5=D0=B4=D0=B8=D0=BD=D0=B5=D0=BD=D0=B8=D0=B5 =D0=BD=D0=B5 =
+=D0=B7=D0=B0=D0=B2=D0=B5=D1=80=D1=88=D0=B5=D0=BD=D0=BE =D0=B8=D0=B7-=D0=
+=B7=D0=B0 =D0=BA=D0=BE=D0=BD=D1=84=D0=BB=D0=B8=D0=BA=D1=82=D0=B0.\n"
++"=D0=9F=D1=80=D0=B5=D0=B4=D1=8B=D0=B4=D1=83=D1=89=D0=B5=D0=B5 =D1=81=D0=
+=BB=D0=B8=D1=8F=D0=BD=D0=B8=D0=B5 =D0=BD=D0=B5 =D0=B7=D0=B0=D0=B2=D0=B5=
+=D1=80=D1=88=D0=B5=D0=BD=D0=BE =D0=B8=D0=B7-=D0=B7=D0=B0 =D0=BA=D0=BE=D0=
+=BD=D1=84=D0=BB=D0=B8=D0=BA=D1=82=D0=B0.\n"
+ "\n"
+-"=D0=94=D0=BB=D1=8F =D1=84=D0=B0=D0=B9=D0=BB=D0=B0 %s =D0=B2=D0=BE=D0=B7=
+=D0=BD=D0=B8=D0=BA =D0=BA=D0=BE=D0=BD=D1=84=D0=BB=D0=B8=D0=BA=D1=82 =D0=
+=BE=D0=B1=D1=8A=D0=B5=D0=B4=D0=B8=D0=BD=D0=B5=D0=BD=D0=B8=D1=8F.\n"
++"=D0=94=D0=BB=D1=8F =D1=84=D0=B0=D0=B9=D0=BB=D0=B0 %s =D0=B2=D0=BE=D0=B7=
+=D0=BD=D0=B8=D0=BA =D0=BA=D0=BE=D0=BD=D1=84=D0=BB=D0=B8=D0=BA=D1=82 =D1=
+=81=D0=BB=D0=B8=D1=8F=D0=BD=D0=B8=D1=8F.\n"
+ "\n"
+ "=D0=A0=D0=B0=D0=B7=D1=80=D0=B5=D1=88=D0=B8=D1=82=D0=B5 =D0=BA=D0=BE=D0=
+=BD=D1=84=D0=BB=D0=B8=D0=BA=D1=82, =D0=BF=D0=BE=D0=B4=D0=B3=D0=BE=D1=82=
+=D0=BE=D0=B2=D1=8C=D1=82=D0=B5 =D1=84=D0=B0=D0=B9=D0=BB =D0=B8 =D1=81=D0=
+=BE=D1=85=D1=80=D0=B0=D0=BD=D0=B8=D1=82=D0=B5. =D0=A2=D0=BE=D0=BB=D1=8C=
+=D0=BA=D0=BE =D0=BF=D0=BE=D1=81=D0=BB=D0=B5 =D1=8D=D1=82=D0=BE=D0=B3=D0=
+=BE =D0=BC=D0=BE=D0=B6=D0=BD=D0=BE "
+-"=D0=BD=D0=B0=D1=87=D0=B0=D1=82=D1=8C =D1=81=D0=BB=D0=B5=D0=B4=D1=83=D1=
+=8E=D1=89=D0=B5=D0=B5 =D0=BE=D0=B1=D1=8A=D0=B5=D0=B4=D0=B8=D0=BD=D0=B5=D0=
+=BD=D0=B8=D0=B5.\n"
++"=D0=BD=D0=B0=D1=87=D0=B0=D1=82=D1=8C =D1=81=D0=BB=D0=B5=D0=B4=D1=83=D1=
+=8E=D1=89=D0=B5=D0=B5 =D1=81=D0=BB=D0=B8=D1=8F=D0=BD=D0=B8=D0=B5.\n"
+=20
+ #: lib/merge.tcl:55
+ #, tcl-format
+@@ -1773,8 +1773,8 @@ msgstr ""
+ "\n"
+ "=D0=A4=D0=B0=D0=B9=D0=BB %s =D0=B8=D0=B7=D0=BC=D0=B5=D0=BD=D0=B5=D0=BD=
+=2E\n"
+ "\n"
+-"=D0=9F=D0=BE=D0=B4=D0=B3=D0=BE=D1=82=D0=BE=D0=B2=D1=8C=D1=82=D0=B5 =D0=
+=B8 =D1=81=D0=BE=D1=85=D1=80=D0=B0=D0=BD=D0=B8=D1=82=D0=B5 =D0=B8=D0=B7=
+=D0=BC=D0=B5=D0=BD=D0=B8=D1=8F =D0=BF=D0=B5=D1=80=D0=B5=D0=B4 =D0=BD=D0=
+=B0=D1=87=D0=B0=D0=BB=D0=BE=D0=BC =D0=BE=D0=B1=D1=8A=D0=B5=D0=B4=D0=B8=D0=
+=BD=D0=B5=D0=BD=D0=B8=D1=8F. =D0=92 =D1=81=D0=BB=D1=83=D1=87=D0=B0=D0=B5=
+ "
+-"=D0=BD=D0=B5=D0=BE=D0=B1=D1=85=D0=BE=D0=B4=D0=B8=D0=BC=D0=BE=D1=81=D1=
+=82=D0=B8 =D1=8D=D1=82=D0=BE =D0=BF=D0=BE=D0=B7=D0=B2=D0=BE=D0=BB=D0=B8=
+=D1=82 =D0=BF=D1=80=D0=B5=D1=80=D0=B2=D0=B0=D1=82=D1=8C =D0=BE=D0=BF=D0=
+=B5=D1=80=D0=B0=D1=86=D0=B8=D1=8E =D0=BE=D0=B1=D1=8A=D0=B5=D0=B4=D0=B8=D0=
+=BD=D0=B5=D0=BD=D0=B8=D1=8F.\n"
++"=D0=9F=D0=BE=D0=B4=D0=B3=D0=BE=D1=82=D0=BE=D0=B2=D1=8C=D1=82=D0=B5 =D0=
+=B8 =D1=81=D0=BE=D1=85=D1=80=D0=B0=D0=BD=D0=B8=D1=82=D0=B5 =D0=B8=D0=B7=
+=D0=BC=D0=B5=D0=BD=D0=B8=D1=8F =D0=BF=D0=B5=D1=80=D0=B5=D0=B4 =D0=BD=D0=
+=B0=D1=87=D0=B0=D0=BB=D0=BE=D0=BC =D1=81=D0=BB=D0=B8=D1=8F=D0=BD=D0=B8=D1=
+=8F. =D0=92 =D1=81=D0=BB=D1=83=D1=87=D0=B0=D0=B5 "
++"=D0=BD=D0=B5=D0=BE=D0=B1=D1=85=D0=BE=D0=B4=D0=B8=D0=BC=D0=BE=D1=81=D1=
+=82=D0=B8 =D1=8D=D1=82=D0=BE =D0=BF=D0=BE=D0=B7=D0=B2=D0=BE=D0=BB=D0=B8=
+=D1=82 =D0=BF=D1=80=D0=B5=D1=80=D0=B2=D0=B0=D1=82=D1=8C =D0=BE=D0=BF=D0=
+=B5=D1=80=D0=B0=D1=86=D0=B8=D1=8E =D1=81=D0=BB=D0=B8=D1=8F=D0=BD=D0=B8=D1=
+=8F.\n"
+=20
+ #: lib/merge.tcl:107
+ #, tcl-format
+@@ -1784,24 +1784,24 @@ msgstr "%s =D0=B8=D0=B7 %s"
+ #: lib/merge.tcl:120
+ #, tcl-format
+ msgid "Merging %s and %s..."
+-msgstr "=D0=9E=D0=B1=D1=8A=D0=B5=D0=B4=D0=B8=D0=BD=D0=B5=D0=BD=D0=B8=D0=
+=B5 %s =D0=B8 %s..."
++msgstr "=D0=A1=D0=BB=D0=B8=D1=8F=D0=BD=D0=B8=D0=B5 %s =D0=B8 %s..."
+=20
+ #: lib/merge.tcl:131
+ msgid "Merge completed successfully."
+-msgstr "=D0=9E=D0=B1=D1=8A=D0=B5=D0=B4=D0=B8=D0=BD=D0=B5=D0=BD=D0=B8=D0=
+=B5 =D1=83=D1=81=D0=BF=D0=B5=D1=88=D0=BD=D0=BE =D0=B7=D0=B0=D0=B2=D0=B5=
+=D1=80=D1=88=D0=B5=D0=BD=D0=BE."
++msgstr "=D0=A1=D0=BB=D0=B8=D1=8F=D0=BD=D0=B8=D0=B5 =D1=83=D1=81=D0=BF=D0=
+=B5=D1=88=D0=BD=D0=BE =D0=B7=D0=B0=D0=B2=D0=B5=D1=80=D1=88=D0=B5=D0=BD=D0=
+=BE."
+=20
+ #: lib/merge.tcl:133
+ msgid "Merge failed.  Conflict resolution is required."
+-msgstr "=D0=9D=D0=B5 =D1=83=D0=B4=D0=B0=D0=BB=D0=BE=D1=81=D1=8C =D0=B7=
+=D0=B0=D0=B2=D0=B5=D1=80=D1=88=D0=B8=D1=82=D1=8C =D0=BE=D0=B1=D1=8A=D0=B5=
+=D0=B4=D0=B8=D0=BD=D0=B5=D0=BD=D0=B8=D0=B5. =D0=A2=D1=80=D0=B5=D0=B1=D1=
+=83=D0=B5=D1=82=D1=81=D1=8F =D1=80=D0=B0=D0=B7=D1=80=D0=B5=D1=88=D0=B5=D0=
+=BD=D0=B8=D0=B5 =D0=BA=D0=BE=D0=BD=D1=84=D0=BB=D0=B8=D0=BA=D1=82=D0=B0.=
+"
++msgstr "=D0=9D=D0=B5 =D1=83=D0=B4=D0=B0=D0=BB=D0=BE=D1=81=D1=8C =D0=B7=
+=D0=B0=D0=B2=D0=B5=D1=80=D1=88=D0=B8=D1=82=D1=8C =D1=81=D0=BB=D0=B8=D1=8F=
+=D0=BD=D0=B8=D0=B5. =D0=A2=D1=80=D0=B5=D0=B1=D1=83=D0=B5=D1=82=D1=81=D1=
+=8F =D1=80=D0=B0=D0=B7=D1=80=D0=B5=D1=88=D0=B5=D0=BD=D0=B8=D0=B5 =D0=BA=
+=D0=BE=D0=BD=D1=84=D0=BB=D0=B8=D0=BA=D1=82=D0=B0."
+=20
+ #: lib/merge.tcl:158
+ #, tcl-format
+ msgid "Merge Into %s"
+-msgstr "=D0=9E=D0=B1=D1=8A=D0=B5=D0=B4=D0=B8=D0=BD=D0=B8=D1=82=D1=8C =D1=
+=81 %s"
++msgstr "=D0=A1=D0=BB=D0=B8=D1=8F=D0=BD=D0=B8=D0=B5 =D1=81 %s"
+=20
+ #: lib/merge.tcl:177
+ msgid "Revision To Merge"
+-msgstr "=D0=92=D0=B5=D1=80=D1=81=D0=B8=D1=8F =D0=B4=D0=BB=D1=8F =D0=BE=
+=D0=B1=D1=8A=D0=B5=D0=B4=D0=B8=D0=BD=D0=B5=D0=BD=D0=B8=D1=8F"
++msgstr "=D0=92=D0=B5=D1=80=D1=81=D0=B8=D1=8F, =D1=81 =D0=BA=D0=BE=D1=82=
+=D0=BE=D1=80=D0=BE=D0=B9 =D0=BF=D1=80=D0=BE=D0=B2=D0=B5=D1=81=D1=82=D0=B8=
+ =D1=81=D0=BB=D0=B8=D1=8F=D0=BD=D0=B8=D0=B5"
+=20
+ #: lib/merge.tcl:212
+ msgid ""
+@@ -1821,9 +1821,9 @@ msgid ""
+ "\n"
+ "Continue with aborting the current merge?"
+ msgstr ""
+-"=D0=9F=D1=80=D0=B5=D1=80=D0=B2=D0=B0=D1=82=D1=8C =D0=BE=D0=B1=D1=8A=D0=
+=B5=D0=B4=D0=B8=D0=BD=D0=B5=D0=BD=D0=B8=D0=B5?\n"
++"=D0=9F=D1=80=D0=B5=D1=80=D0=B2=D0=B0=D1=82=D1=8C =D0=BE=D0=BF=D0=B5=D1=
+=80=D0=B0=D1=86=D0=B8=D1=8E =D1=81=D0=BB=D0=B8=D1=8F=D0=BD=D0=B8=D1=8F?=
+\n"
+ "\n"
+-"=D0=9F=D1=80=D0=B5=D1=80=D1=8B=D0=B2=D0=B0=D0=BD=D0=B8=D0=B5 =D0=BE=D0=
+=B1=D1=8A=D0=B5=D0=B4=D0=B8=D0=BD=D0=B5=D0=BD=D0=B8=D1=8F =D0=BF=D1=80=D0=
+=B8=D0=B2=D0=B5=D0=B4=D0=B5=D1=82 =D0=BA =D0=BF=D0=BE=D1=82=D0=B5=D1=80=
+=D0=B5 *=D0=92=D0=A1=D0=95=D0=A5* =D0=BD=D0=B5=D1=81=D0=BE=D1=85=D1=80=D0=
+=B0=D0=BD=D0=B5=D0=BD=D0=BD=D1=8B=D1=85 =D0=B8=D0=B7=D0=BC=D0=B5=D0=BD=D0=
+=B5=D0=BD=D0=B8=D0=B9.\n"
++"=D0=9F=D1=80=D0=B5=D1=80=D1=8B=D0=B2=D0=B0=D0=BD=D0=B8=D0=B5 =D1=8D=D1=
+=82=D0=BE=D0=B9 =D0=BE=D0=BF=D0=B5=D1=80=D0=B0=D1=86=D0=B8=D0=B8 =D0=BF=
+=D1=80=D0=B8=D0=B2=D0=B5=D0=B4=D0=B5=D1=82 =D0=BA =D0=BF=D0=BE=D1=82=D0=
+=B5=D1=80=D0=B5 *=D0=92=D0=A1=D0=95=D0=A5* =D0=BD=D0=B5=D1=81=D0=BE=D1=85=
+=D1=80=D0=B0=D0=BD=D0=B5=D0=BD=D0=BD=D1=8B=D1=85 =D0=B8=D0=B7=D0=BC=D0=B5=
+=D0=BD=D0=B5=D0=BD=D0=B8=D0=B9.\n"
+ "\n"
+ "=D0=9F=D1=80=D0=BE=D0=B4=D0=BE=D0=BB=D0=B6=D0=B8=D1=82=D1=8C?"
+=20
+@@ -1835,9 +1835,9 @@ msgid ""
+ "\n"
+ "Continue with resetting the current changes?"
+ msgstr ""
+-"=D0=9F=D1=80=D0=B5=D1=80=D0=B2=D0=B0=D1=82=D1=8C =D0=BE=D0=B1=D1=8A=D0=
+=B5=D0=B4=D0=B8=D0=BD=D0=B5=D0=BD=D0=B8=D0=B5?\n"
++"=D0=9F=D1=80=D0=B5=D1=80=D0=B2=D0=B0=D1=82=D1=8C =D0=BE=D0=BF=D0=B5=D1=
+=80=D0=B0=D1=86=D0=B8=D1=8E =D1=81=D0=BB=D0=B8=D1=8F=D0=BD=D0=B8=D1=8F?=
+\n"
+ "\n"
+-"=D0=9F=D1=80=D0=B5=D1=80=D1=8B=D0=B2=D0=B0=D0=BD=D0=B8=D0=B5 =D0=BE=D0=
+=B1=D1=8A=D0=B5=D0=B4=D0=B8=D0=BD=D0=B5=D0=BD=D0=B8=D1=8F =D0=BF=D1=80=D0=
+=B8=D0=B2=D0=B5=D0=B4=D0=B5=D1=82 =D0=BA =D0=BF=D0=BE=D1=82=D0=B5=D1=80=
+=D0=B5 *=D0=92=D0=A1=D0=95=D0=A5* =D0=BD=D0=B5=D1=81=D0=BE=D1=85=D1=80=D0=
+=B0=D0=BD=D0=B5=D0=BD=D0=BD=D1=8B=D1=85 =D0=B8=D0=B7=D0=BC=D0=B5=D0=BD=D0=
+=B5=D0=BD=D0=B8=D0=B9.\n"
++"=D0=9F=D1=80=D0=B5=D1=80=D1=8B=D0=B2=D0=B0=D0=BD=D0=B8=D0=B5 =D1=8D=D1=
+=82=D0=BE=D0=B9 =D0=BE=D0=BF=D0=B5=D1=80=D0=B0=D1=86=D0=B8=D0=B8 =D0=BF=
+=D1=80=D0=B8=D0=B2=D0=B5=D0=B4=D0=B5=D1=82 =D0=BA =D0=BF=D0=BE=D1=82=D0=
+=B5=D1=80=D0=B5 *=D0=92=D0=A1=D0=95=D0=A5* =D0=BD=D0=B5=D1=81=D0=BE=D1=85=
+=D1=80=D0=B0=D0=BD=D0=B5=D0=BD=D0=BD=D1=8B=D1=85 =D0=B8=D0=B7=D0=BC=D0=B5=
+=D0=BD=D0=B5=D0=BD=D0=B8=D0=B9.\n"
+ "\n"
+ "=D0=9F=D1=80=D0=BE=D0=B4=D0=BE=D0=BB=D0=B6=D0=B8=D1=82=D1=8C?"
+=20
+@@ -1882,7 +1882,7 @@ msgstr ""
+ "\n"
+ "%s =D0=B1=D1=83=D0=B4=D0=B5=D1=82 =D0=BF=D0=B5=D1=80=D0=B5=D0=BF=D0=B8=
+=D1=81=D0=B0=D0=BD.\n"
+ "\n"
+-"=D0=A0=D0=B5=D0=B7=D1=83=D0=BB=D1=8C=D1=82=D0=B0=D1=82 =D0=BC=D0=BE=D0=
+=B6=D0=B5=D1=82 =D0=B1=D1=8B=D1=82=D1=8C =D0=B8=D0=B7=D0=BC=D0=B5=D0=BD=
+=D1=91=D0=BD =D1=82=D0=BE=D0=BB=D1=8C=D0=BA=D0=BE =D0=BF=D0=B5=D1=80=D0=
+=B5=D0=B7=D0=B0=D0=BF=D1=83=D1=81=D0=BA=D0=BE=D0=BC =D0=BE=D0=BF=D0=B5=D1=
+=80=D0=B0=D1=86=D0=B8=D0=B8 =D0=BE=D0=B1=D1=8A=D0=B5=D0=B4=D0=B8=D0=BD=D0=
+=B5=D0=BD=D0=B8=D1=8F."
++"=D0=A0=D0=B5=D0=B7=D1=83=D0=BB=D1=8C=D1=82=D0=B0=D1=82 =D0=BC=D0=BE=D0=
+=B6=D0=B5=D1=82 =D0=B1=D1=8B=D1=82=D1=8C =D0=B8=D0=B7=D0=BC=D0=B5=D0=BD=
+=D1=91=D0=BD =D1=82=D0=BE=D0=BB=D1=8C=D0=BA=D0=BE =D0=BF=D0=B5=D1=80=D0=
+=B5=D0=B7=D0=B0=D0=BF=D1=83=D1=81=D0=BA=D0=BE=D0=BC =D0=BE=D0=BF=D0=B5=D1=
+=80=D0=B0=D1=86=D0=B8=D0=B8 =D1=81=D0=BB=D0=B8=D1=8F=D0=BD=D0=B8=D1=8F.=
+"
+=20
+ #: lib/mergetool.tcl:45
+ #, tcl-format
+@@ -1908,16 +1908,16 @@ msgstr "=D0=9A=D0=BE=D0=BD=D1=84=D0=BB=D0=B8=D0=
+=BA=D1=82=D1=83=D1=8E=D1=89=D0=B8=D0=B9 =D1=84=D0=B0=D0=B9=D0=BB =D0=BD=
+=D0=B5 =D1=81=D1=83=D1=89=D0=B5=D1=81=D1=82=D0=B2=D1=83=D0=B5=D1=82"
+ #: lib/mergetool.tcl:264
+ #, tcl-format
+ msgid "Not a GUI merge tool: '%s'"
+-msgstr "'%s' =D0=BD=D0=B5 =D1=8F=D0=B2=D0=BB=D1=8F=D0=B5=D1=82=D1=81=D1=
+=8F =D0=BF=D1=80=D0=BE=D0=B3=D1=80=D0=B0=D0=BC=D0=BC=D0=BE=D0=B9 =D0=BE=
+=D0=B1=D1=8A=D0=B5=D0=B4=D0=B8=D0=BD=D0=B5=D0=BD=D0=B8=D1=8F"
++msgstr "'%s' =D0=BD=D0=B5 =D1=8F=D0=B2=D0=BB=D1=8F=D0=B5=D1=82=D1=81=D1=
+=8F =D0=BF=D1=80=D0=BE=D0=B3=D1=80=D0=B0=D0=BC=D0=BC=D0=BE=D0=B9 =D1=81=
+=D0=BB=D0=B8=D1=8F=D0=BD=D0=B8=D1=8F"
+=20
+ #: lib/mergetool.tcl:268
+ #, tcl-format
+ msgid "Unsupported merge tool '%s'"
+-msgstr "=D0=9D=D0=B5=D0=B8=D0=B7=D0=B2=D0=B5=D1=81=D1=82=D0=BD=D0=B0=D1=
+=8F =D0=BF=D1=80=D0=BE=D0=B3=D1=80=D0=B0=D0=BC=D0=BC=D0=B0 =D0=BE=D0=B1=
+=D1=8A=D0=B5=D0=B4=D0=B8=D0=BD=D0=B5=D0=BD=D0=B8=D1=8F '%s'"
++msgstr "=D0=9D=D0=B5=D0=B8=D0=B7=D0=B2=D0=B5=D1=81=D1=82=D0=BD=D0=B0=D1=
+=8F =D0=BF=D1=80=D0=BE=D0=B3=D1=80=D0=B0=D0=BC=D0=BC=D0=B0 =D1=81=D0=BB=
+=D0=B8=D1=8F=D0=BD=D0=B8=D1=8F '%s'"
+=20
+ #: lib/mergetool.tcl:303
+ msgid "Merge tool is already running, terminate it?"
+-msgstr "=D0=9F=D1=80=D0=BE=D0=B3=D1=80=D0=B0=D0=BC=D0=BC=D0=B0 =D0=BE=D0=
+=B1=D1=8A=D0=B5=D0=B4=D0=B8=D0=BD=D0=B5=D0=BD=D0=B8=D1=8F =D1=83=D0=B6=D0=
+=B5 =D1=80=D0=B0=D0=B1=D0=BE=D1=82=D0=B0=D0=B5=D1=82. =D0=9F=D1=80=D0=B5=
+=D1=80=D0=B2=D0=B0=D1=82=D1=8C?"
++msgstr "=D0=9F=D1=80=D0=BE=D0=B3=D1=80=D0=B0=D0=BC=D0=BC=D0=B0 =D1=81=D0=
+=BB=D0=B8=D1=8F=D0=BD=D0=B8=D1=8F =D1=83=D0=B6=D0=B5 =D1=80=D0=B0=D0=B1=
+=D0=BE=D1=82=D0=B0=D0=B5=D1=82. =D0=9F=D1=80=D0=B5=D1=80=D0=B2=D0=B0=D1=
+=82=D1=8C?"
+=20
+ #: lib/mergetool.tcl:323
+ #, tcl-format
+@@ -1935,17 +1935,17 @@ msgid ""
+ "\n"
+ "%s"
+ msgstr ""
+-"=D0=9E=D1=88=D0=B8=D0=B1=D0=BA=D0=B0 =D0=B7=D0=B0=D0=BF=D1=83=D1=81=D0=
+=BA=D0=B0 =D0=BF=D1=80=D0=BE=D0=B3=D1=80=D0=B0=D0=BC=D0=BC=D1=8B =D0=BE=
+=D0=B1=D1=8A=D0=B5=D0=B4=D0=B8=D0=BD=D0=B5=D0=BD=D0=B8=D1=8F:\n"
++"=D0=9E=D1=88=D0=B8=D0=B1=D0=BA=D0=B0 =D0=B7=D0=B0=D0=BF=D1=83=D1=81=D0=
+=BA=D0=B0 =D0=BF=D1=80=D0=BE=D0=B3=D1=80=D0=B0=D0=BC=D0=BC=D1=8B =D1=81=
+=D0=BB=D0=B8=D1=8F=D0=BD=D0=B8=D1=8F:\n"
+ "\n"
+ "%s"
+=20
+ #: lib/mergetool.tcl:347
+ msgid "Running merge tool..."
+-msgstr "=D0=97=D0=B0=D0=BF=D1=83=D1=81=D0=BA =D0=BF=D1=80=D0=BE=D0=B3=D1=
+=80=D0=B0=D0=BC=D0=BC=D1=8B =D0=BE=D0=B1=D1=8A=D0=B5=D0=B4=D0=B8=D0=BD=D0=
+=B5=D0=BD=D0=B8=D1=8F..."
++msgstr "=D0=97=D0=B0=D0=BF=D1=83=D1=81=D0=BA =D0=BF=D1=80=D0=BE=D0=B3=D1=
+=80=D0=B0=D0=BC=D0=BC=D1=8B =D1=81=D0=BB=D0=B8=D1=8F=D0=BD=D0=B8=D1=8F.=
+=2E."
+=20
+ #: lib/mergetool.tcl:375 lib/mergetool.tcl:383
+ msgid "Merge tool failed."
+-msgstr "=D0=9E=D1=88=D0=B8=D0=B1=D0=BA=D0=B0 =D0=B2=D1=8B=D0=BF=D0=BE=D0=
+=BB=D0=BD=D0=B5=D0=BD=D0=B8=D1=8F =D0=BF=D1=80=D0=BE=D0=B3=D1=80=D0=B0=D0=
+=BC=D0=BC=D1=8B =D0=BE=D0=B1=D1=8A=D0=B5=D0=B4=D0=B8=D0=BD=D0=B5=D0=BD=D0=
+=B8=D1=8F."
++msgstr "=D0=9E=D1=88=D0=B8=D0=B1=D0=BA=D0=B0 =D0=B2=D1=8B=D0=BF=D0=BE=D0=
+=BB=D0=BD=D0=B5=D0=BD=D0=B8=D1=8F =D0=BF=D1=80=D0=BE=D0=B3=D1=80=D0=B0=D0=
+=BC=D0=BC=D1=8B =D1=81=D0=BB=D0=B8=D1=8F=D0=BD=D0=B8=D1=8F."
+=20
+ #: lib/option.tcl:11
+ #, tcl-format
+@@ -1984,19 +1984,19 @@ msgstr "=D0=90=D0=B4=D1=80=D0=B5=D1=81 =D1=8D=D0=
+=BB=D0=B5=D0=BA=D1=82=D1=80=D0=BE=D0=BD=D0=BD=D0=BE=D0=B9 =D0=BF=D0=BE=D1=
+=87=D1=82=D1=8B"
+=20
+ #: lib/option.tcl:141
+ msgid "Summarize Merge Commits"
+-msgstr "=D0=A1=D1=83=D0=BC=D0=BC=D0=B0=D1=80=D0=BD=D1=8B=D0=B9 =D0=BA=D0=
+=BE=D0=BC=D0=BC=D0=B5=D0=BD=D1=82=D0=B0=D1=80=D0=B8=D0=B9 =D0=BF=D1=80=D0=
+=B8 =D0=BE=D0=B1=D1=8A=D0=B5=D0=B4=D0=B8=D0=BD=D0=B5=D0=BD=D0=B8=D0=B8"
++msgstr "=D0=A1=D1=83=D0=BC=D0=BC=D0=B0=D1=80=D0=BD=D1=8B=D0=B9 =D0=BA=D0=
+=BE=D0=BC=D0=BC=D0=B5=D0=BD=D1=82=D0=B0=D1=80=D0=B8=D0=B9 =D0=BF=D1=80=D0=
+=B8 =D1=81=D0=BB=D0=B8=D1=8F=D0=BD=D0=B8=D0=B8"
+=20
+ #: lib/option.tcl:142
+ msgid "Merge Verbosity"
+-msgstr "=D0=A3=D1=80=D0=BE=D0=B2=D0=B5=D0=BD=D1=8C =D0=B4=D0=B5=D1=82=D0=
+=B0=D0=BB=D1=8C=D0=BD=D0=BE=D1=81=D1=82=D0=B8 =D1=81=D0=BE=D0=BE=D0=B1=D1=
+=89=D0=B5=D0=BD=D0=B8=D0=B9 =D0=BF=D1=80=D0=B8 =D0=BE=D0=B1=D1=8A=D0=B5=
+=D0=B4=D0=B8=D0=BD=D0=B5=D0=BD=D0=B8=D0=B8"
++msgstr "=D0=A3=D1=80=D0=BE=D0=B2=D0=B5=D0=BD=D1=8C =D0=B4=D0=B5=D1=82=D0=
+=B0=D0=BB=D1=8C=D0=BD=D0=BE=D1=81=D1=82=D0=B8 =D1=81=D0=BE=D0=BE=D0=B1=D1=
+=89=D0=B5=D0=BD=D0=B8=D0=B9 =D0=BF=D1=80=D0=B8 =D1=81=D0=BB=D0=B8=D1=8F=
+=D0=BD=D0=B8=D0=B8"
+=20
+ #: lib/option.tcl:143
+ msgid "Show Diffstat After Merge"
+-msgstr "=D0=9F=D0=BE=D0=BA=D0=B0=D0=B7=D0=B0=D1=82=D1=8C =D0=BE=D1=82=D1=
+=87=D0=B5=D1=82 =D0=BE=D0=B1 =D0=B8=D0=B7=D0=BC=D0=B5=D0=BD=D0=B5=D0=BD=
+=D0=B8=D1=8F=D1=85 =D0=BF=D0=BE=D1=81=D0=BB=D0=B5 =D0=BE=D0=B1=D1=8A=D0=
+=B5=D0=B4=D0=B8=D0=BD=D0=B5=D0=BD=D0=B8=D1=8F"
++msgstr "=D0=9F=D0=BE=D0=BA=D0=B0=D0=B7=D0=B0=D1=82=D1=8C =D0=BE=D1=82=D1=
+=87=D0=B5=D1=82 =D0=BE=D0=B1 =D0=B8=D0=B7=D0=BC=D0=B5=D0=BD=D0=B5=D0=BD=
+=D0=B8=D1=8F=D1=85 =D0=BF=D0=BE=D1=81=D0=BB=D0=B5 =D1=81=D0=BB=D0=B8=D1=
+=8F=D0=BD=D0=B8=D1=8F"
+=20
+ #: lib/option.tcl:144
+ msgid "Use Merge Tool"
+-msgstr "=D0=98=D1=81=D0=BF=D0=BE=D0=BB=D1=8C=D0=B7=D0=BE=D0=B2=D0=B0=D1=
+=82=D1=8C =D0=B4=D0=BB=D1=8F =D0=BE=D0=B1=D1=8A=D0=B5=D0=B4=D0=B8=D0=BD=
+=D0=B5=D0=BD=D0=B8=D1=8F =D0=BF=D1=80=D0=BE=D0=B3=D1=80=D0=B0=D0=BC=D0=BC=
+=D1=83"
++msgstr "=D0=98=D1=81=D0=BF=D0=BE=D0=BB=D1=8C=D0=B7=D0=BE=D0=B2=D0=B0=D1=
+=82=D1=8C =D0=B4=D0=BB=D1=8F =D1=81=D0=BB=D0=B8=D1=8F=D0=BD=D0=B8=D1=8F=
+ =D0=BF=D1=80=D0=BE=D0=B3=D1=80=D0=B0=D0=BC=D0=BC=D1=83"
+=20
+ #: lib/option.tcl:146
+ msgid "Trust File Modification Timestamps"
+@@ -2186,15 +2186,15 @@ msgstr "=D0=A3=D0=B4=D0=B0=D0=BB=D0=B8=D1=82=D1=
+=8C =D1=82=D0=BE=D0=BB=D1=8C=D0=BA=D0=BE =D0=B2 =D1=81=D0=BB=D1=83=D1=87=
+=D0=B0=D0=B5, =D0=B5=D1=81=D0=BB=D0=B8"
+=20
+ #: lib/remote_branch_delete.tcl:111
+ msgid "Merged Into:"
+-msgstr "=D0=9E=D0=B1=D1=8A=D0=B5=D0=B4=D0=B8=D0=BD=D0=B5=D0=BD=D0=BE =D1=
+=81:"
++msgstr "=D0=A1=D0=BB=D0=B8=D1=8F=D0=BD=D0=B8=D0=B5 =D1=81:"
+=20
+ #: lib/remote_branch_delete.tcl:119
+ msgid "Always (Do not perform merge checks)"
+-msgstr "=D0=92=D1=81=D0=B5=D0=B3=D0=B4=D0=B0 (=D0=BD=D0=B5 =D0=B2=D1=8B=
+=D0=BF=D0=BE=D0=BB=D0=BD=D1=8F=D1=82=D1=8C =D0=BF=D1=80=D0=BE=D0=B2=D0=B5=
+=D1=80=D0=BA=D1=83 =D0=BE=D0=B1=D1=8A=D0=B5=D0=B4=D0=B8=D0=BD=D0=B5=D0=BD=
+=D0=B8=D0=B9)"
++msgstr "=D0=92=D1=81=D0=B5=D0=B3=D0=B4=D0=B0 (=D0=BD=D0=B5 =D0=B2=D1=8B=
+=D0=BF=D0=BE=D0=BB=D0=BD=D1=8F=D1=82=D1=8C =D0=BF=D1=80=D0=BE=D0=B2=D0=B5=
+=D1=80=D0=BA=D1=83 =D0=BD=D0=B0 =D1=81=D0=BB=D0=B8=D1=8F=D0=BD=D0=B8=D0=
+=B5)"
+=20
+ #: lib/remote_branch_delete.tcl:152
+ msgid "A branch is required for 'Merged Into'."
+-msgstr "=D0=94=D0=BB=D1=8F =D0=BE=D0=BF=D1=86=D0=B8=D0=B8 '=D0=9E=D0=B1=
+=D1=8A=D0=B5=D0=B4=D0=B8=D0=BD=D0=B5=D0=BD=D0=BE =D1=81' =D1=82=D1=80=D0=
+=B5=D0=B1=D1=83=D0=B5=D1=82=D1=81=D1=8F =D1=83=D0=BA=D0=B0=D0=B7=D0=B0=D1=
+=82=D1=8C =D0=B2=D0=B5=D1=82=D0=B2=D1=8C."
++msgstr "=D0=94=D0=BB=D1=8F =D0=BE=D0=BF=D1=86=D0=B8=D0=B8 '=D0=A1=D0=BB=
+=D0=B8=D1=8F=D0=BD=D0=B8=D0=B5 =D1=81' =D1=82=D1=80=D0=B5=D0=B1=D1=83=D0=
+=B5=D1=82=D1=81=D1=8F =D1=83=D0=BA=D0=B0=D0=B7=D0=B0=D1=82=D1=8C =D0=B2=
+=D0=B5=D1=82=D0=B2=D1=8C."
+=20
+ #: lib/remote_branch_delete.tcl:184
+ #, tcl-format
+@@ -2203,7 +2203,7 @@ msgid ""
+ "\n"
+ " - %s"
+ msgstr ""
+-"=D0=A1=D0=BB=D0=B5=D0=B4=D1=83=D1=8E=D1=89=D0=B8=D0=B5 =D0=B2=D0=B5=D1=
+=82=D0=B2=D0=B8 =D0=BE=D0=B1=D1=8A=D0=B5=D0=B4=D0=B8=D0=BD=D0=B5=D0=BD=D1=
+=8B =D1=81 %s =D0=BD=D0=B5 =D0=BF=D0=BE=D0=BB=D0=BD=D0=BE=D1=81=D1=82=D1=
+=8C=D1=8E:\n"
++"=D0=A1=D0=BB=D0=B5=D0=B4=D1=83=D1=8E=D1=89=D0=B8=D0=B5 =D0=B2=D0=B5=D1=
+=82=D0=B2=D0=B8 =D0=BC=D0=BE=D0=B3=D1=83=D1=82 =D0=B1=D1=8B=D1=82=D1=8C=
+ =D0=BE=D0=B1=D1=8A=D0=B5=D0=B4=D0=B8=D0=BD=D0=B5=D0=BD=D1=8B =D1=81 %s=
+ =D0=BF=D1=80=D0=B8 =D0=BF=D0=BE=D0=BC=D0=BE=D1=89=D0=B8 =D0=BE=D0=BF=D0=
+=B5=D1=80=D0=B0=D1=86=D0=B8=D0=B8 =D1=81=D0=BB=D0=B8=D1=8F=D0=BD=D0=B8=D1=
+=8F:\n"
+ "\n"
+ " - %s"
+=20
+@@ -2213,7 +2213,7 @@ msgid ""
+ "One or more of the merge tests failed because you have not fetched th=
+e "
+ "necessary commits.  Try fetching from %s first."
+ msgstr ""
+-"=D0=9E=D0=B4=D0=B8=D0=BD =D0=B8=D0=BB=D0=B8 =D0=BD=D0=B5=D1=81=D0=BA=D0=
+=BE=D0=BB=D1=8C=D0=BA=D0=BE =D1=82=D0=B5=D1=81=D1=82=D0=BE=D0=B2 =D0=BD=
+=D0=B0 =D0=BE=D0=B1=D1=8A=D0=B5=D0=B4=D0=B8=D0=BD=D0=B5=D0=BD=D0=B8=D0=B5=
+ =D0=BD=D0=B5 =D0=BF=D1=80=D0=BE=D1=88=D0=BB=D0=B8, =D0=BF=D0=BE=D1=82=D0=
+=BE=D0=BC=D1=83 =D1=87=D1=82=D0=BE =D0=92=D1=8B =D0=BD=D0=B5 "
++"=D0=9D=D0=B5=D0=BA=D0=BE=D1=82=D0=BE=D1=80=D1=8B=D0=B5 =D1=82=D0=B5=D1=
+=81=D1=82=D1=8B =D0=BD=D0=B0 =D1=81=D0=BB=D0=B8=D1=8F=D0=BD=D0=B8=D0=B5=
+ =D0=BD=D0=B5 =D0=BF=D1=80=D0=BE=D1=88=D0=BB=D0=B8, =D0=BF=D0=BE=D1=82=D0=
+=BE=D0=BC=D1=83 =D1=87=D1=82=D0=BE =D0=92=D1=8B =D0=BD=D0=B5 "
+ "=D0=BF=D0=BE=D0=BB=D1=83=D1=87=D0=B8=D0=BB=D0=B8 =D0=BD=D0=B5=D0=BE=D0=
+=B1=D1=85=D0=BE=D0=B4=D0=B8=D0=BC=D1=8B=D0=B5 =D1=81=D0=BE=D1=81=D1=82=D0=
+=BE=D1=8F=D0=BD=D0=B8=D1=8F. =D0=9F=D0=BE=D0=BF=D1=8B=D1=82=D0=B0=D0=B9=
+=D1=82=D0=B5=D1=81=D1=8C =D0=BF=D0=BE=D0=BB=D1=83=D1=87=D0=B8=D1=82=D1=8C=
+ =D0=B8=D1=85 =D0=B8=D0=B7 %s."
+=20
+ #: lib/remote_branch_delete.tcl:207
+@@ -2372,7 +2372,7 @@ msgstr "=D0=94=D0=B5=D0=B9=D1=81=D1=82=D0=B2=D0=B8=
+=D1=82=D0=B5=D0=BB=D1=8C=D0=BD=D0=BE =D0=B7=D0=B0=D0=BF=D1=83=D1=81=D1=82=
+=D0=B8=D1=82=D1=8C %s?"
+ #: lib/tools.tcl:110
+ #, tcl-format
+ msgid "Tool: %s"
+-msgstr "=D0=92=D1=81=D0=BF=D0=BE=D0=BC=D0=BE=D0=B3=D0=B0=D1=82=D0=B5=D0=
+=BB=D1=8C=D0=BD=D0=B0=D1=8F =D0=BF=D1=80=D0=BE=D0=B3=D1=80=D0=B0=D0=BC=D0=
+=BC=D0=B0: %s"
++msgstr "=D0=92=D1=81=D0=BF=D0=BE=D0=BC=D0=BE=D0=B3=D0=B0=D1=82=D0=B5=D0=
+=BB=D1=8C=D0=BD=D0=B0=D1=8F =D0=BE=D0=BF=D0=B5=D1=80=D0=B0=D1=86=D0=B8=D1=
+=8F: %s"
+=20
+ #: lib/tools.tcl:111
+ #, tcl-format
+@@ -2391,11 +2391,11 @@ msgstr "=D0=9E=D1=88=D0=B8=D0=B1=D0=BA=D0=B0 =D0=
+=B2=D1=8B=D0=BF=D0=BE=D0=BB=D0=BD=D0=B5=D0=BD=D0=B8=D1=8F =D0=BF=D1=80=D0=
+=BE=D0=B3=D1=80=D0=B0=D0=BC=D0=BC=D1=8B: %s"
+=20
+ #: lib/tools_dlg.tcl:22
+ msgid "Add Tool"
+-msgstr "=D0=94=D0=BE=D0=B1=D0=B0=D0=B2=D0=B8=D1=82=D1=8C =D0=B2=D1=81=D0=
+=BF=D0=BE=D0=BC=D0=BE=D0=B3=D0=B0=D1=82=D0=B5=D0=BB=D1=8C=D0=BD=D1=83=D1=
+=8E =D0=BF=D1=80=D0=BE=D0=B3=D1=80=D0=B0=D0=BC=D0=BC=D1=83"
++msgstr "=D0=94=D0=BE=D0=B1=D0=B0=D0=B2=D0=B8=D1=82=D1=8C =D0=B2=D1=81=D0=
+=BF=D0=BE=D0=BC=D0=BE=D0=B3=D0=B0=D1=82=D0=B5=D0=BB=D1=8C=D0=BD=D1=83=D1=
+=8E =D0=BE=D0=BF=D0=B5=D1=80=D0=B0=D1=86=D0=B8=D1=8E"
+=20
+ #: lib/tools_dlg.tcl:28
+ msgid "Add New Tool Command"
+-msgstr "=D0=94=D0=BE=D0=B1=D0=B0=D0=B2=D0=B8=D1=82=D1=8C =D0=BD=D0=BE=D0=
+=B2=D1=83=D1=8E =D0=B2=D1=81=D0=BF=D0=BE=D0=BC=D0=BE=D0=B3=D0=B0=D1=82=D0=
+=B5=D0=BB=D1=8C=D0=BD=D1=83=D1=8E =D0=BA=D0=BE=D0=BC=D0=B0=D0=BD=D0=B4=D1=
+=83"
++msgstr "=D0=9D=D0=BE=D0=B2=D0=B0=D1=8F =D0=B2=D1=81=D0=BF=D0=BE=D0=BC=D0=
+=BE=D0=B3=D0=B0=D1=82=D0=B5=D0=BB=D1=8C=D0=BD=D0=B0=D1=8F =D0=BE=D0=BF=D0=
+=B5=D1=80=D0=B0=D1=86=D0=B8=D1=8F"
+=20
+ #: lib/tools_dlg.tcl:33
+ msgid "Add globally"
+@@ -2403,7 +2403,7 @@ msgstr "=D0=94=D0=BE=D0=B1=D0=B0=D0=B2=D0=B8=D1=82=
+=D1=8C =D0=B4=D0=BB=D1=8F =D0=B2=D1=81=D0=B5=D1=85 =D1=80=D0=B5=D0=BF=D0=
+=BE=D0=B7=D0=B8=D1=82=D0=BE=D1=80=D0=B8=D0=B5=D0=B2"
+=20
+ #: lib/tools_dlg.tcl:45
+ msgid "Tool Details"
+-msgstr "=D0=94=D0=B5=D1=82=D0=B0=D0=BB=D0=B8 =D0=B2=D1=81=D0=BF=D0=BE=D0=
+=BC=D0=BE=D0=B3=D0=B0=D1=82=D0=B5=D0=BB=D1=8C=D0=BD=D0=BE=D0=B9 =D0=BF=D1=
+=80=D0=BE=D0=B3=D1=80=D0=B0=D0=BC=D0=BC=D1=8B"
++msgstr "=D0=9E=D0=BF=D0=B8=D1=81=D0=B0=D0=BD=D0=B8=D0=B5 =D0=B2=D1=81=D0=
+=BF=D0=BE=D0=BC=D0=BE=D0=B3=D0=B0=D1=82=D0=B5=D0=BB=D1=8C=D0=BD=D0=BE=D0=
+=B9 =D0=BE=D0=BF=D0=B5=D1=80=D0=B0=D1=86=D0=B8=D0=B8"
+=20
+ #: lib/tools_dlg.tcl:48
+ msgid "Use '/' separators to create a submenu tree:"
+@@ -2435,12 +2435,12 @@ msgstr "=D0=97=D0=B0=D0=BF=D1=83=D1=81=D0=BA =D1=
+=82=D0=BE=D0=BB=D1=8C=D0=BA=D0=BE =D0=B5=D1=81=D0=BB=D0=B8 =D0=BF=D0=BE=
+=D0=BA=D0=B0=D0=B7=D0=B0=D0=BD =D1=81=D0=BF=D0=B8=D1=81=D0=BE=D0=BA =D0=
+=B8=D0=B7=D0=BC=D0=B5
+=20
+ #: lib/tools_dlg.tcl:121
+ msgid "Please supply a name for the tool."
+-msgstr "=D0=A3=D0=BA=D0=B0=D0=B6=D0=B8=D1=82=D0=B5 =D0=BD=D0=B0=D0=B7=D0=
+=B2=D0=B0=D0=BD=D0=B8=D0=B5 =D0=B2=D1=81=D0=BF=D0=BE=D0=BC=D0=BE=D0=B3=D0=
+=B0=D1=82=D0=B5=D0=BB=D1=8C=D0=BD=D0=BE=D0=B9 =D0=BF=D1=80=D0=BE=D0=B3=D1=
+=80=D0=B0=D0=BC=D0=BC=D1=8B."
++msgstr "=D0=A3=D0=BA=D0=B0=D0=B6=D0=B8=D1=82=D0=B5 =D0=BD=D0=B0=D0=B7=D0=
+=B2=D0=B0=D0=BD=D0=B8=D0=B5 =D0=B2=D1=81=D0=BF=D0=BE=D0=BC=D0=BE=D0=B3=D0=
+=B0=D1=82=D0=B5=D0=BB=D1=8C=D0=BD=D0=BE=D0=B9 =D0=BE=D0=BF=D0=B5=D1=80=D0=
+=B0=D1=86=D0=B8=D0=B8."
+=20
+ #: lib/tools_dlg.tcl:129
+ #, tcl-format
+ msgid "Tool '%s' already exists."
+-msgstr "=D0=9F=D1=80=D0=BE=D0=B3=D1=80=D0=B0=D0=BC=D0=BC=D0=B0 '%s' =D1=
+=83=D0=B6=D0=B5 =D1=81=D1=83=D1=89=D0=B5=D1=81=D1=82=D0=B2=D1=83=D0=B5=D1=
+=82."
++msgstr "=D0=92=D1=81=D0=BF=D0=BE=D0=BC=D0=BE=D0=B3=D0=B0=D1=82=D0=B5=D0=
+=BB=D1=8C=D0=BD=D0=B0=D1=8F =D0=BE=D0=BF=D0=B5=D1=80=D0=B0=D1=86=D0=B8=D1=
+=8F '%s' =D1=83=D0=B6=D0=B5 =D1=81=D1=83=D1=89=D0=B5=D1=81=D1=82=D0=B2=D1=
+=83=D0=B5=D1=82."
+=20
+ #: lib/tools_dlg.tcl:151
+ #, tcl-format
+--=20
+1.6.3.rc2.35.g00d75
