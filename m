@@ -1,60 +1,117 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: [PATCH v3] Add an option not to use link(src, dest) && unlink(src)
- when that is unreliable
-Date: Mon, 27 Apr 2009 16:06:46 -0700 (PDT)
-Message-ID: <alpine.LFD.2.00.0904271605250.22156@localhost.localdomain>
-References: <alpine.DEB.1.00.0904231252080.10279@pacific.mpi-cbg.de> <alpine.LFD.2.00.0904251042490.3101@localhost.localdomain> <200904252052.10327.j6t@kdbg.org> <7vhc0cw6w8.fsf@gitster.siamese.dyndns.org> <alpine.DEB.1.00.0904261940170.10279@pacific.mpi-cbg.de>
- <alpine.DEB.1.00.0904271400180.10279@pacific.mpi-cbg.de> <alpine.LFD.2.00.0904270806130.22156@localhost.localdomain> <7vljpl3m8i.fsf@gitster.siamese.dyndns.org> <alpine.LFD.2.00.0904271314130.22156@localhost.localdomain> <7vvdopwxxa.fsf@gitster.siamese.dyndns.org>
- <alpine.DEB.1.00.0904280027540.10279@pacific.mpi-cbg.de>
+From: "Sohn, Matthias" <matthias.sohn@sap.com>
+Subject: [PATCH JGIT] Method ignores results of InputStream.skip()
+Date: Tue, 28 Apr 2009 01:10:35 +0200
+Message-ID: <366BBB1215D0AB4B8A153AF047A2878002FCE7EA@dewdfe18.wdf.sap.corp>
+References: <366BBB1215D0AB4B8A153AF047A2878002FCE7E7@dewdfe18.wdf.sap.corp> <366BBB1215D0AB4B8A153AF047A2878002FCE7E8@dewdfe18.wdf.sap.corp> <366BBB1215D0AB4B8A153AF047A2878002FCE7E9@dewdfe18.wdf.sap.corp>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>, Johannes Sixt <j6t@kdbg.org>,
-	git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Apr 28 01:09:17 2009
+Content-Type: text/plain;
+	charset="US-ASCII"
+Content-Transfer-Encoding: 8BIT
+Cc: <git@vger.kernel.org>
+To: "Shawn O. Pearce" <spearce@spearce.org>,
+	"Robin Rosenberg" <robin.rosenberg@dewire.com>
+X-From: git-owner@vger.kernel.org Tue Apr 28 01:10:49 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LyZwq-0004j8-Sz
-	for gcvg-git-2@gmane.org; Tue, 28 Apr 2009 01:09:17 +0200
+	id 1LyZyL-0005Be-0z
+	for gcvg-git-2@gmane.org; Tue, 28 Apr 2009 01:10:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757391AbZD0XJF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 27 Apr 2009 19:09:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756953AbZD0XJE
-	(ORCPT <rfc822;git-outgoing>); Mon, 27 Apr 2009 19:09:04 -0400
-Received: from smtp1.linux-foundation.org ([140.211.169.13]:41997 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1756806AbZD0XJD (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 27 Apr 2009 19:09:03 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
-	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id n3RN6lQN032171
+	id S1751696AbZD0XKk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 27 Apr 2009 19:10:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751260AbZD0XKk
+	(ORCPT <rfc822;git-outgoing>); Mon, 27 Apr 2009 19:10:40 -0400
+Received: from smtpde03.sap-ag.de ([155.56.68.140]:33097 "EHLO
+	smtpde03.sap-ag.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751389AbZD0XKj convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 27 Apr 2009 19:10:39 -0400
+Received: from mail.sap.corp
+	by smtpde03.sap-ag.de (26) with ESMTP id n3RNAac7015588
 	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Mon, 27 Apr 2009 16:07:18 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id n3RN6kKP032353;
-	Mon, 27 Apr 2009 16:06:47 -0700
-X-X-Sender: torvalds@localhost.localdomain
-In-Reply-To: <alpine.DEB.1.00.0904280027540.10279@pacific.mpi-cbg.de>
-User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
-X-Spam-Status: No, hits=-3.957 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED
-X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
+	Tue, 28 Apr 2009 01:10:36 +0200 (MEST)
+X-MimeOLE: Produced By Microsoft Exchange V6.5
+Content-class: urn:content-classes:message
+In-Reply-To: <366BBB1215D0AB4B8A153AF047A2878002FCE7E9@dewdfe18.wdf.sap.corp>
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+Thread-Topic: [PATCH JGIT] Method ignores results of InputStream.skip()
+Thread-Index: AcnHjEysWP+qTjB1Tm2zGBLNNuNqlAAAC8hQAAAVRmAAABVskA==
+X-OriginalArrivalTime: 27 Apr 2009 23:10:36.0022 (UTC) FILETIME=[5F50D960:01C9C78D]
+X-Scanner: Virus Scanner virwal04
+X-SAP: out
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117729>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117730>
 
+This method ignores the return value of java.io.InputStream.skip() which
+can skip multiple bytes.  If the return value is not
+checked, the caller will not be able to correctly handle the case where
+fewer bytes were skipped than the caller requested.
+This is a particularly insidious kind of bug, because in many programs,
+skips from input streams usually do skip the full amount
+of data requested, causing the program to fail only sporadically. With
+Buffered streams, however, skip() will only skip data
+in the buffer, and will routinely fail to skip the requested number of
+bytes.
 
+Signed-off-by: Matthias Sohn <matthias.sohn@sap.com>
+---
+ .../jgit/transport/BundleFetchConnection.java      |   16
+++++++++++++++--
+ 1 files changed, 14 insertions(+), 2 deletions(-)
 
-On Tue, 28 Apr 2009, Johannes Schindelin wrote:
->
-> As I said, this is highly unlikely, as certain people made sure that the 
-> Google Code people do not like Git.
-
-There are actually lots of sane and educated people inside google. Many of 
-them freely acknowledge what a horrid thing SVN is.
-
-			Linus
+diff --git
+a/org.spearce.jgit/src/org/spearce/jgit/transport/BundleFetchConnection.
+java
+b/org.spearce.jgit/src/org/spearce/jgit/transport/BundleFetchConnection.
+java
+index 40bf7db..642c984 100644
+---
+a/org.spearce.jgit/src/org/spearce/jgit/transport/BundleFetchConnection.
+java
++++
+b/org.spearce.jgit/src/org/spearce/jgit/transport/BundleFetchConnection.
+java
+@@ -39,6 +39,7 @@
+ package org.spearce.jgit.transport;
+ 
+ import java.io.BufferedInputStream;
++import java.io.EOFException;
+ import java.io.IOException;
+ import java.io.InputStream;
+ import java.util.ArrayList;
+@@ -139,12 +140,23 @@ private String readLine(final byte[] hdrbuf)
+throws IOException {
+ 		while (lf < cnt && hdrbuf[lf] != '\n')
+ 			lf++;
+ 		bin.reset();
+-		bin.skip(lf);
++		skipFully(bin, lf);
+ 		if (lf < cnt && hdrbuf[lf] == '\n')
+-			bin.skip(1);
++			skipFully(bin, 1);
+ 		return RawParseUtils.decode(Constants.CHARSET, hdrbuf,
+0, lf);
+ 	}
+ 
++	// skip given number of bytes on InputStream respecting return
+value of InputStream.skip()
++	static private void skipFully(InputStream in, long nBytes)
+throws IOException {
++		long remaining = nBytes;
++		while (remaining != 0) {
++			long skipped = in.skip(remaining);
++			if (skipped == 0) // EOF
++				throw new EOFException();
++			remaining -= skipped;
++		}
++	}
++	
+ 	public boolean didFetchTestConnectivity() {
+ 		return false;
+ 	}
+-- 
+1.6.2.2.1669.g7eaf8
