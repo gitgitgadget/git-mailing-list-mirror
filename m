@@ -1,47 +1,87 @@
-From: "Isabella Gillespie" <baridbar@normasnbr.com.br>
-Subject: Do not play with your fortune, keep some blue colored-tabs with you!
-Date: Tue, 28 Apr 2009 00:30:20 +0200
-Message-ID: <20090428003020.9000300@normasnbr.com.br>
+From: "John Dlugosz" <JDlugosz@TradeStation.com>
+Subject: RE: how to arrange source control?
+Date: Mon, 27 Apr 2009 18:08:02 -0400
+Message-ID: <450196A1AAAE4B42A00A8B27A59278E70AE3EC2C@EXCHANGE.trad.tradestation.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Apr 28 00:07:01 2009
+Content-Type: text/plain;
+	charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
+Cc: <bob@hindbrain.net>
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Apr 28 00:09:00 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LyYya-0006ds-ST
-	for gcvg-git-2@gmane.org; Tue, 28 Apr 2009 00:07:01 +0200
+	id 1LyZ0J-0007dB-RV
+	for gcvg-git-2@gmane.org; Tue, 28 Apr 2009 00:08:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753361AbZD0WGu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 27 Apr 2009 18:06:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751629AbZD0WGu
-	(ORCPT <rfc822;git-outgoing>); Mon, 27 Apr 2009 18:06:50 -0400
-Received: from s-79-110-128-223.under.net.ua ([79.110.128.223]:4319 "HELO
-	s-79-110-128-223.under.net.ua" rhost-flags-OK-FAIL-OK-FAIL)
-	by vger.kernel.org with SMTP id S1750835AbZD0WGt (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 27 Apr 2009 18:06:49 -0400
-Received: from tgkslp ([218.69.220.231])
-	by s-79-110-128-223.under.net.ua (8.13.3/8.13.3) with SMTP id 200904280033072857;
-	Tue, 28 Apr 2009 00:33:30 +0200
-User-Agent: Thunderbird 2.0.0.9 (Windows/20071031)
+	id S1756827AbZD0WIb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 27 Apr 2009 18:08:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755795AbZD0WIa
+	(ORCPT <rfc822;git-outgoing>); Mon, 27 Apr 2009 18:08:30 -0400
+Received: from mail2.tradestation.com ([63.99.207.80]:59398 "EHLO
+	mail2.tradestation.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755425AbZD0WIa convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 27 Apr 2009 18:08:30 -0400
+X-ASG-Debug-ID: 1240870083-6d8b01040000-QuoKaX
+X-Barracuda-URL: http://192.168.51.31:8000/cgi-bin/mark.cgi
+Received: from mail5.tradestation.com (localhost [127.0.0.1])
+	by mail2.tradestation.com (Spam & Virus Firewall) with ESMTP
+	id 6FC803A3C13; Mon, 27 Apr 2009 18:08:03 -0400 (EDT)
+Received: from mail5.tradestation.com (tx02exchange02.trad.tradestation.com [192.168.51.76]) by mail2.tradestation.com with ESMTP id ZnHrTPh2auOpWesQ; Mon, 27 Apr 2009 18:08:03 -0400 (EDT)
+X-Barracuda-Envelope-From: JDlugosz@TradeStation.com
+X-ASG-Whitelist: Client
+Received: from EXCHANGE.trad.tradestation.com ([10.4.0.121]) by mail5.tradestation.com with Microsoft SMTPSVC(6.0.3790.3959);
+	 Mon, 27 Apr 2009 18:08:03 -0400
+X-MimeOLE: Produced By Microsoft Exchange V6.5
+Content-class: urn:content-classes:message
+X-ASG-Orig-Subj: RE: how to arrange source control?
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+Thread-Topic: RE: how to arrange source control?
+Thread-Index: AcnHhKG/LXUY1Ce+RP+yj5mZTZZnWQ==
+X-OriginalArrivalTime: 27 Apr 2009 22:08:03.0082 (UTC) FILETIME=[A263A6A0:01C9C784]
+X-Barracuda-Connect: tx02exchange02.trad.tradestation.com[192.168.51.76]
+X-Barracuda-Start-Time: 1240870083
+X-Barracuda-Virus-Scanned: by TX-Barracuda Spam Firewall 400 at tradestation.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-X-Spam-Report: 12.5 points;
- *  3.0 RAZOR2_CF_RANGE_51_100 BODY: Razor2 gives confidence level above 50%
- *      [cf: 100]
- *  1.0 RAZOR2_CHECK Listed in Razor2 (http://razor.sf.net/)
- *  2.0 URIBL_AB_SURBL Contains an URL listed in the AB SURBL blocklist
- *      [URIs: grandawake.com]
- *  0.5 URIBL_WS_SURBL Contains an URL listed in the WS SURBL blocklist
- *      [URIs: grandawake.com]
- *  2.0 URIBL_OB_SURBL Contains an URL listed in the OB SURBL blocklist
- *      [URIs: grandawake.com]
- *  4.0 URIBL_SC_SURBL Contains an URL listed in the SC SURBL blocklist
- *      [URIs: grandawake.com]
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117718>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117719>
 
-How please knocking-out hottie http://ggid.grandawake.com/
+>> what is the best way to use git? Should I run "git add ." in
+'rootdir' or run it in each 
+>> application and library?
+>> These libraries are used by all of the applications.
+
+I had a similar issue I discussed on this mailing list a few weeks ago.
+
+If the apps really are separate apps, from a development perspective,
+you will want each in a separate repository.  That way you are not
+always being bothered by totally irrelevant changes by others.
+
+But, git doesn't like the libraries arranged that way.  If you make each
+library a git submodule, they will all be in a subdirectory under each
+app, not a peer with them.  This does have the advantage that each app
+could be using a different version of the libs.  If they are meant to be
+released as a suite, you will still find that handy during development,
+while waiting for the ripple effect to catch up to the top level after
+something changes in a lib.
+
+I've not taken it to its logical conclusion of libs that use other libs
+which are also used directly by the app.
+
+If you keep your existing directory structure, you can certainly make
+each lib its own repository, and not rely on git to track specific
+library versions for you.  But I think that will bite you when you need
+to check out something old, such as to make a patch for an existing
+version or compare behavior against an older version.
+
+--John
+(please forgive the footer; it's not my idea or my choice)
+
+
+TradeStation Group, Inc. is a publicly-traded holding company (NASDAQ GS: TRAD) of three operating subsidiaries, TradeStation Securities, Inc. (Member NYSE, FINRA, SIPC and NFA), TradeStation Technologies, Inc., a trading software and subscription company, and TradeStation Europe Limited, a United Kingdom, FSA-authorized introducing brokerage firm. None of these companies provides trading or investment advice, recommendations or endorsements of any kind. The information transmitted is intended only for the person or entity to which it is addressed and may contain confidential and/or privileged material. Any review, retransmission, dissemination or other use of, or taking of any action in reliance upon, this information by persons or entities other than the intended recipient is prohibited.
+  If you received this in error, please contact the sender and delete the material from any computer.
