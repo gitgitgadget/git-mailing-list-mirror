@@ -1,87 +1,98 @@
-From: Erik Faye-Lund <kusmabite@googlemail.com>
-Subject: Re: git grep '(' = segfault
-Date: Mon, 27 Apr 2009 21:02:31 +0200
-Message-ID: <40aa078e0904271202ye89ebf2wf417c623d8fe5689@mail.gmail.com>
-References: <37fcd2780904271046r7740ed42t3c9438e7aa93374@mail.gmail.com>
-	 <alpine.LFD.2.00.0904271059060.22156@localhost.localdomain>
-	 <40aa078e0904271142u71d7ba97w9df80667c0d9b955@mail.gmail.com>
-	 <vpqfxfund0m.fsf@bauges.imag.fr>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v3] Add an option not to use link(src, dest) &&
+ unlink(src) when that is unreliable
+Date: Mon, 27 Apr 2009 12:55:25 -0700
+Message-ID: <7vljpl3m8i.fsf@gitster.siamese.dyndns.org>
+References: <alpine.DEB.1.00.0904231252080.10279@pacific.mpi-cbg.de>
+ <alpine.LFD.2.00.0904251042490.3101@localhost.localdomain>
+ <200904252052.10327.j6t@kdbg.org> <7vhc0cw6w8.fsf@gitster.siamese.dyndns.org>
+ <alpine.DEB.1.00.0904261940170.10279@pacific.mpi-cbg.de>
+ <alpine.DEB.1.00.0904271400180.10279@pacific.mpi-cbg.de>
+ <alpine.LFD.2.00.0904270806130.22156@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	Dmitry Potapov <dpotapov@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Matthieu Moy <Matthieu.Moy@imag.fr>
-X-From: git-owner@vger.kernel.org Mon Apr 27 21:02:44 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Johannes Sixt <j6t@kdbg.org>, git@vger.kernel.org
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Mon Apr 27 21:55:55 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LyW6F-0002DL-7n
-	for gcvg-git-2@gmane.org; Mon, 27 Apr 2009 21:02:43 +0200
+	id 1LyWva-0003Ua-PU
+	for gcvg-git-2@gmane.org; Mon, 27 Apr 2009 21:55:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756025AbZD0TCd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 27 Apr 2009 15:02:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754554AbZD0TCd
-	(ORCPT <rfc822;git-outgoing>); Mon, 27 Apr 2009 15:02:33 -0400
-Received: from mail-fx0-f158.google.com ([209.85.220.158]:46296 "EHLO
-	mail-fx0-f158.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754525AbZD0TCd (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 27 Apr 2009 15:02:33 -0400
-Received: by fxm2 with SMTP id 2so99279fxm.37
-        for <git@vger.kernel.org>; Mon, 27 Apr 2009 12:02:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=fS+8z9kw5e33kDkmrCyPcnauAWIAfqDvTwR6ZG8ibPw=;
-        b=OxrYnTOd/+brKM9E8bmFNvyEPZTPCfBRr9TiPmvlgyGvl+9U9436iapBLHIoEp4cPq
-         lGxYQYJKuTV2B3N1BrwPtVWxzHme7EtkOE6mHSwZBptVpgXYzOr1rcnTuafYnrG9kV5V
-         PvJJ8f6VpdZltKENu2KHPCK9Xmoq8M7R7QIyI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=h+HtcodrZTDOlpo1DKM1/G8h07AQ9t34Y6KdXkpucb/KrFcGgJ/bDk8RQi2svGBS3+
-         lOx96a3/AhPAcVjeQU58xkZVMlZMO9owzsnBiv7VUqQJwN57WxyKhNC2J274+NTKg3xI
-         9b/QvLp5DEpRkv0azf9SAHVxSdzNfoOWsA/94=
-Received: by 10.223.108.140 with SMTP id f12mr2054117fap.69.1240858951728; 
-	Mon, 27 Apr 2009 12:02:31 -0700 (PDT)
-In-Reply-To: <vpqfxfund0m.fsf@bauges.imag.fr>
+	id S1756934AbZD0Tzf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 27 Apr 2009 15:55:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756850AbZD0Tzf
+	(ORCPT <rfc822;git-outgoing>); Mon, 27 Apr 2009 15:55:35 -0400
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:54572 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752897AbZD0Tze (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 27 Apr 2009 15:55:34 -0400
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 7E19A12E61;
+	Mon, 27 Apr 2009 15:55:32 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 8E71412E60; Mon,
+ 27 Apr 2009 15:55:27 -0400 (EDT)
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 5DBCEC3A-3365-11DE-B0C7-D766E3C8547C-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117708>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117709>
 
-Yeah, thanks for explaining. But isn't this functionality kind of
-redundant since we have the -E switch?
-As far as I can see, "git grep -E "(bar|boz)" should do the same thing
-as "git grep -e foo --and '(' -e bar --or -e boz ')'"...
+Linus Torvalds <torvalds@linux-foundation.org> writes:
 
-On Mon, Apr 27, 2009 at 8:54 PM, Matthieu Moy <Matthieu.Moy@imag.fr> wrote:
-> Erik Faye-Lund <kusmabite@googlemail.com> writes:
+>> 	Junio, do you want me to remove the config variable?
 >
->> $ git grep '('
->> fatal: unmatched parenthesis
+> I'd keep it. But I'd suggest that the naming is odd. Why talk about 
+> "unreliable hardlinks", when that's just a particular symptom. Why not 
+> just talk about whether hardlinks should be used or not?
 >
-> try this: git grep -e '('
+> And to avoid double negative, make it
 >
-> The idea is that you can do things like
+> 	[core]
+> 		usehardlinks = true/false
 >
-> git grep -e foo --and '(' -e bar --or -e boz ')'
->
-> to build a boolean expression of expressions.
->
-> --
-> Matthieu
->
+> and then default it to 'true' for Unix.
 
+I am a bit worried about this name, too.  It may lead people to a
+misunderstanding that we would do something magical when they do this with
+the configuration set:
 
+	wget http://some.where/huge-file.mpg 1.mpg
+        ln 1.mpg 2.mpg
+        git add 1.mpg 2.mpg
+        rm -f 1.mpg 2.mpg
+        git checkout-index -a
+	ls -i ?.mpg
 
--- 
-Erik "kusma" Faye-Lund
-kusmabite@gmail.com
-(+47) 986 59 656
+> The thing is, maybe people would prefer to use 'rename' over the
+> link/unlink games even on some unixes, and not because of 'reliability'
+> issues, but because they may have some filesystems that don't do
+> hardlinks, and they'd just rather speed things up by avoiding the
+> 'link()' system call that will just error out.
+
+> So naming matters. Calling it 'unreliablehardlinks' in that case would be 
+> odd. They're not unreliable - you just don't want to try to use them.
+
+This part I agree with.
+
+> I also do wonder if we could/should make this one of those options that 
+> get set automatically at 'git init' time, rather than silently hardcoded 
+> as a compile option. I thought hardlinks at least sometimes worked fine on 
+> Windows too, don't they? 
+>
+> I do detest _hidden_ default values for config options, unless those 
+> hidden defaults are "obviously always correct" as a default. This one 
+> smells a bit uncertain, and as a result I think it's ok to default to not 
+> using hardlinks, but doing it with .gitconfig would be nicer.
+
+The coda hack comment in move_temp_to_file() shows what we can do to
+autodetect (i.e. try cross directory hardlink), but I somehow thought that
+we changed the code enough to ensure that we create the tmpfiles in the
+same directory as their final destination?
