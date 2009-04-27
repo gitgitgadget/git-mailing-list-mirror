@@ -1,93 +1,117 @@
-From: Kjetil Barvik <barvik@broadpark.no>
-Subject: Re: [PATCH] Add core.trustlowlevelstat for diffs in dev,ino,uid and gid
-Date: Mon, 27 Apr 2009 17:58:17 +0200
-Organization: private
-Message-ID: <86skjudr6u.fsf@broadpark.no>
-References: <1240743317-10117-1-git-send-email-robin.rosenberg@dewire.com>
- <200904261306.15448.robin.rosenberg.lists@dewire.com>
- <7vocujjm5r.fsf@gitster.siamese.dyndns.org>
- <alpine.LFD.2.00.0904261159190.7331@localhost.localdomain>
- <7vab628u23.fsf@gitster.siamese.dyndns.org>
- <alpine.LFD.2.00.0904270757410.22156@localhost.localdomain>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH v3] Add an option not to use link(src, dest) && unlink(src)
+ when that is unreliable
+Date: Mon, 27 Apr 2009 18:11:50 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.0904271800360.7741@intel-tinevez-2-302>
+References: <alpine.DEB.1.00.0904231252080.10279@pacific.mpi-cbg.de> <alpine.LFD.2.00.0904251042490.3101@localhost.localdomain> <200904252052.10327.j6t@kdbg.org> <7vhc0cw6w8.fsf@gitster.siamese.dyndns.org> <alpine.DEB.1.00.0904261940170.10279@pacific.mpi-cbg.de>
+ <alpine.DEB.1.00.0904271400180.10279@pacific.mpi-cbg.de> <alpine.LFD.2.00.0904270806130.22156@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7BIT
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Robin Rosenberg <robin.rosenberg.lists@dewire.com>,
-	Git Mailing List <git@vger.kernel.org>, spearce@spearce.org
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <gitster@pobox.com>, Johannes Sixt <j6t@kdbg.org>,
+	git@vger.kernel.org
 To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Mon Apr 27 17:59:10 2009
+X-From: git-owner@vger.kernel.org Mon Apr 27 18:12:03 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LyTEF-0004QH-3y
-	for gcvg-git-2@gmane.org; Mon, 27 Apr 2009 17:58:47 +0200
+	id 1LyTR5-00035j-7o
+	for gcvg-git-2@gmane.org; Mon, 27 Apr 2009 18:12:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754592AbZD0P6h (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 27 Apr 2009 11:58:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753639AbZD0P6g
-	(ORCPT <rfc822;git-outgoing>); Mon, 27 Apr 2009 11:58:36 -0400
-Received: from osl1smout1.broadpark.no ([80.202.4.58]:53439 "EHLO
-	osl1smout1.broadpark.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753339AbZD0P6g (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 27 Apr 2009 11:58:36 -0400
-Received: from osl1sminn1.broadpark.no ([80.202.4.59])
- by osl1smout1.broadpark.no
- (Sun Java(tm) System Messaging Server 6.3-3.01 (built Jul 12 2007; 32bit))
- with ESMTP id <0KIR00C6NODMGT20@osl1smout1.broadpark.no> for
- git@vger.kernel.org; Mon, 27 Apr 2009 17:58:34 +0200 (CEST)
-Received: from localhost ([80.203.106.123]) by osl1sminn1.broadpark.no
- (Sun Java(tm) System Messaging Server 6.3-3.01 (built Jul 12 2007; 32bit))
- with ESMTP id <0KIR00KQCODLAJ10@osl1sminn1.broadpark.no> for
- git@vger.kernel.org; Mon, 27 Apr 2009 17:58:34 +0200 (CEST)
-In-reply-to: <alpine.LFD.2.00.0904270757410.22156@localhost.localdomain>
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.3 (gnu/linux)
+	id S1754643AbZD0QLy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 27 Apr 2009 12:11:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752906AbZD0QLx
+	(ORCPT <rfc822;git-outgoing>); Mon, 27 Apr 2009 12:11:53 -0400
+Received: from mail.gmx.net ([213.165.64.20]:50883 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751763AbZD0QLx (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 27 Apr 2009 12:11:53 -0400
+Received: (qmail invoked by alias); 27 Apr 2009 16:11:51 -0000
+Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
+  by mail.gmx.net (mp035) with SMTP; 27 Apr 2009 18:11:51 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18RUb0cEusRFZFetNBw/NEqGaRJILzLCQtF0cBnb9
+	EgeNVeDuN/XVWN
+X-X-Sender: schindel@intel-tinevez-2-302
+In-Reply-To: <alpine.LFD.2.00.0904270806130.22156@localhost.localdomain>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.54
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117682>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117683>
 
-Linus Torvalds <torvalds@linux-foundation.org> writes:
+Hi,
 
-> On Sun, 26 Apr 2009, Junio C Hamano wrote:
->> I like the end result.
->> 
->> But I am not sure about dropping the nanosecond resolution timestamps.
->> The area was extended recently in preparation for ext4; we can take
->> advantage of it to reduce the chance the racy-git avoidance codepath
->> triggers if we keep it.
->> 
->>     fba2f38 (make USE_NSEC work as expected, 2009-02-19)
->> 
->>     c06ff49 (Record ns-timestamps if possible, but do not use it without
->>     USE_NSEC, 2009-03-04)
->
-> Hey, we can leave the NSEC support in. Admittedly removing that was about 
-> half the patch, but even with it left in, it would be a cleanup.
+On Mon, 27 Apr 2009, Linus Torvalds wrote:
 
-  I think we should have the NSEC support, as it is a performance
-  impromvent, at least on my laptop.  OK, not a huge improvment, but
-  still.
+> On Mon, 27 Apr 2009, Johannes Schindelin wrote:
+> > 
+> > So, force the use of rename() instead of the link() && unlink() 
+> > incantation on Windows, and for good measure, add a 
+> > core.unreliableHardlinks option to optionally force it on other 
+> > platforms, too.
+> 
+> Ok, so:
+> 
+> 	Acked-by: Linus Torvalds <torvalds@linux-foundation.org>
+> 
+> but I do think it could be improved. See below..
 
-  For git version 1.6.3.rc3 I made a litle test, and the difference was
-  the following for the 'git checkout my-v2.6.25' (from my-v2.6.27):
+Sorry, I missed the fact that Junio already applied and pushed it to 
+'next'.
 
-                 for git compiled with    for git compiled without
-                 'make USE_NSEC=1 ...':   the 'USE_NSEC=1' part:
+> > 	Junio, do you want me to remove the config variable?
+> 
+> I'd keep it. But I'd suggest that the naming is odd. Why talk about 
+> "unreliable hardlinks", when that's just a particular symptom. Why not 
+> just talk about whether hardlinks should be used or not?
+> 
+> And to avoid double negative, make it
+> 
+> 	[core]
+> 		usehardlinks = true/false
+> 
+> and then default it to 'true' for Unix.
 
-   OK open calls:       13872                   14386
-   OK close calls:      13872                   14386
-   OK mmap2 calls:        102                     649
-   OK munmap calls:        61                     608
+Or maybe core.preferRenameOverLink?  Then we have no negation either.
 
-  so, an improvment of 514 open() and close() calls, and 547 mmap2() and
-  munmap() calls, for this particular test on my particular slow laptop
-  disk.
+> The thing is, maybe people would prefer to use 'rename' over the 
+> link/unlink games even on some unixes, and not because of 'reliability' 
+> issues, but because they may have some filesystems that don't do 
+> hardlinks, and they'd just rather speed things up by avoiding the 'link()' 
+> system call that will just error out.
 
-  As I wrote in fba2f38 I would guess that the improvment is larger for
-  a faster disk, and a SSD disk should be able to see a larger
-  improvment that I did above.
+We already fall back to renaming when another error than EEXIST is 
+returned from link(), so I think this case is covered.
 
-  -- kjetil
+> So naming matters. Calling it 'unreliablehardlinks' in that case would 
+> be odd. They're not unreliable - you just don't want to try to use them.
+> 
+> I also do wonder if we could/should make this one of those options that 
+> get set automatically at 'git init' time, rather than silently hardcoded 
+> as a compile option. I thought hardlinks at least sometimes worked fine on 
+> Windows too, don't they? 
+
+I thought about that long and hard, and I decided against it.  Take my 
+NTFS-formatted portable hard drive (for convenience with Windows users 
+@work) for example: the ufsd driver is totally broken, but because it is a 
+major investment of time to get my EeePC to work with a sane Linux 
+distribution, I'd rather keep using the ufsd driver.  Yet, when I use 
+ntfs-3g from the other laptop, it works fine.
+
+See?  It is not a file system specific error, but a fs/os combo problem.
+
+> I do detest _hidden_ default values for config options, unless those 
+> hidden defaults are "obviously always correct" as a default. This one 
+> smells a bit uncertain, and as a result I think it's ok to default to 
+> not using hardlinks, but doing it with .gitconfig would be nicer.
+
+I fully agree on hidden default values, albeit in this case, it is 
+necessary: the hard links work just fine on Windows XP here, but that 
+might just be a matter of not upgrading to a newer service pack.
+
+Ciao,
+Dscho
