@@ -1,71 +1,150 @@
-From: Ingo Molnar <mingo@elte.hu>
-Subject: [spurious parallel build bug] make -j fails with: "mv: mv: cannot
-	stat `perl.mak': No such file or directory"
-Date: Mon, 27 Apr 2009 11:48:43 +0200
-Message-ID: <20090427094843.GA5849@elte.hu>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: Lets avoid the SHA-1 term (was [doc] User Manual Suggestion)
+Date: Mon, 27 Apr 2009 14:06:25 +0200
+Message-ID: <49F59FC1.5020708@drmicha.warpmail.net>
+References: <94a0d4530904261638o6cbda368p4f3aa641505a6768@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Apr 27 14:01:28 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?UTF-8?B?QmrDtnJuIFN0ZWluYnJpbms=?= <B.Steinbrink@gmx.de>,
+	David Abrahams <dave@boostpro.com>,
+	Michael Witten <mfwitten@gmail.com>, Jeff King <peff@peff.net>,
+	Daniel Barkalow <barkalow@iabervon.org>,
+	Johan Herland <johan@herland.net>, git@vger.kernel.org,
+	"J. Bruce Fields" <bfields@fieldses.org>,
+	Johannes Sixt <j.sixt@viscovery.net>,
+	Wincent Colaiuta <win@wincent.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Dmitry Potapov <dpotapov@gmail.com>
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Apr 27 14:19:02 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LyNSy-0007xf-Fk
-	for gcvg-git-2@gmane.org; Mon, 27 Apr 2009 11:49:36 +0200
+	id 1LyPbm-00005F-Cp
+	for gcvg-git-2@gmane.org; Mon, 27 Apr 2009 14:06:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755009AbZD0Js5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 27 Apr 2009 05:48:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754927AbZD0Js4
-	(ORCPT <rfc822;git-outgoing>); Mon, 27 Apr 2009 05:48:56 -0400
-Received: from mx3.mail.elte.hu ([157.181.1.138]:51833 "EHLO mx3.mail.elte.hu"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755097AbZD0Jsz (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 27 Apr 2009 05:48:55 -0400
-Received: from elvis.elte.hu ([157.181.1.14])
-	by mx3.mail.elte.hu with esmtp (Exim)
-	id 1LyNSB-0006nM-1C
-	from <mingo@elte.hu>
-	for <git@vger.kernel.org>; Mon, 27 Apr 2009 11:48:54 +0200
-Received: by elvis.elte.hu (Postfix, from userid 1004)
-	id E56533E2138; Mon, 27 Apr 2009 11:48:40 +0200 (CEST)
-Content-Disposition: inline
-User-Agent: Mutt/1.5.18 (2008-05-17)
-Received-SPF: neutral (mx3: 157.181.1.14 is neither permitted nor denied by domain of elte.hu) client-ip=157.181.1.14; envelope-from=mingo@elte.hu; helo=elvis.elte.hu;
-X-ELTE-VirusStatus: clean
-X-ELTE-SpamScore: -1.5
-X-ELTE-SpamLevel: 
-X-ELTE-SpamCheck: no
-X-ELTE-SpamVersion: ELTE 2.0 
-X-ELTE-SpamCheck-Details: score=-1.5 required=5.9 tests=BAYES_00 autolearn=no SpamAssassin version=3.2.3
-	-1.5 BAYES_00               BODY: Bayesian spam probability is 0 to 1%
-	[score: 0.0000]
+	id S1753325AbZD0MGn convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 27 Apr 2009 08:06:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753117AbZD0MGm
+	(ORCPT <rfc822;git-outgoing>); Mon, 27 Apr 2009 08:06:42 -0400
+Received: from out3.smtp.messagingengine.com ([66.111.4.27]:58993 "EHLO
+	out3.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752999AbZD0MGl (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 27 Apr 2009 08:06:41 -0400
+Received: from compute1.internal (compute1.internal [10.202.2.41])
+	by out1.messagingengine.com (Postfix) with ESMTP id CBE8E321F42;
+	Mon, 27 Apr 2009 08:06:40 -0400 (EDT)
+Received: from heartbeat1.messagingengine.com ([10.202.2.160])
+  by compute1.internal (MEProxy); Mon, 27 Apr 2009 08:06:40 -0400
+X-Sasl-enc: 3yb1p30i2VUanJwDJpSAasw1uR/DQZiuBR2OtXp0Z5oU 1240834000
+Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.12])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 9FE80A296;
+	Mon, 27 Apr 2009 08:06:38 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1b4pre) Gecko/20090420 Lightning/1.0pre Shredder/3.0b3pre
+In-Reply-To: <94a0d4530904261638o6cbda368p4f3aa641505a6768@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117665>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117666>
 
+=46elipe Contreras venit, vidit, dixit 27.04.2009 01:38:
+> 2009/4/27 Bj=C3=B6rn Steinbrink <B.Steinbrink@gmx.de>:
+>> On 2009.04.24 20:48:57 -0400, David Abrahams wrote:
+>>>
+>>> On Apr 24, 2009, at 8:01 PM, Michael Witten wrote:
+>>>
+>>>>> What's wrong with just calling the object name "object name"?
+>>>>
+>>>> What's wrong with calling the object address "object address"?
+>>>
+>>> Neither captures the connection to the object's contents.  I think
+>>> "value ID" would be closer, but it's probably too horrible.
+>>
+>> I think I asked this in another mail, but I'm quite tired, so just t=
+o
+>> make sure: What do you mean by "value"? I might be weird (I'm not a
+>> native speaker, so I probably make funny and wrong connotations from
+>> time to time), but while I can accept "content" to include the type =
+and
+>> size of the object, the term "value" makes me want to exclude those
+>> pieces of meta data. So "value" somehow feels wrong to me, as the ha=
+sh
+>> covers those two fields.
+>=20
+> Just to summarize.
+>=20
+> Do you agree that SHA-1 is not the proper term to choose?
+>=20
+> Do you agree that either 'id' or 'hash' would work fine?
+>=20
+> Personally I think there's an advantage of choosing 'hash'; if we pic=
+k
+> 'id' then the user might think that he can change the contents of the
+> object while keeping the same id, if we pick 'hash' then it's obvious
+> the 'id' is tied to the content and why.
+>=20
 
-I got this when i built v1.6.3-rc3 for the first time:
+Apparently a branch of that thread touched the "[PATCH 0/2] Unify use o=
+f
+[sha,SHA][,-]1", so I'll do a cc merge, feeling entitled to summarize
+the latter:
 
-$ make -j
-[...]
-    CC builtin-annotate.o
-    CC builtin-apply.o
-    CC builtin-archive.o
-    CC builtin-bisect--helper.o
-mv: mv: cannot stat `perl.mak': No such file or directory
-mv: cannot stat `perl.mak': No such file or directory
-    CC builtin-blame.o
-mv: cannot stat `perl.mak': No such file or directory
-mv: cannot stat `perl.mak': No such file or directory
-cannot stat `perl.mak': No such file or directory
+- There are two SHA-1ish things we talk about: the SHA-1 hash
+algorithm/function on the one hand and git object names on the other ha=
+nd.
 
-a plain 'make' worked.
+- The object name of a file is not the SHA-1 checksum of its contents:
+That's more or less obvious because there are no files in git, only
+objects. The object name is the SHA-1 of a representation of an object
+(which, for blobs, consists of header + content).
 
-Interestingly, a second attempt to reproduce it after a 'make clean' 
-failed to trigger the bug. So it's either timing sensitive or 
-there's some other weirdness that caused this.
+- There seemed to be an implicit claim that the Doc uses SHA-1 for the
+algorithm and sha1/SHA1 for the object name. That's not founded by fact=
+s
+(see below) and is not practical.
 
-	Ingo
+- The glossary defines SHA1 to be equivalent to the object name and doe=
+s
+not mention any other spelling.
+
+The stats (line counts for simplicity) and facts for Documentation/ are=
+:
+
+SHA-1: 56
+Used exclusively for the object name.
+
+SHA1: 73
+Used mostly for the object name, but also for the patch-id (SHA-1
+checksum of patch), in the tutorial, and pack-format, i.e. in places
+where the actual hash algorithm/function is mentioned.
+
+sha1: 102
+Used all over the place, mostly for the object name and when quoting
+from the source. I don't think it's used for the hash algorithm/functio=
+n.
+
+sha-1: 0
+
+So, the current confusion is mostly due to the fact that 3 different
+names are used for the same thing (object name) and to a much lesser
+degree to the fact that the same name (SHA1) is used for 2 different
+things (hash algorithm/function vs. object name).
+
+My patch tried to lessen the confusion by naming one thing by 1 name
+only (SHA-1). It continued the tradition of identifying the object name
+with the hash algorithm which is used in forming that name. I don't
+think it matters much (confusion-wise) which one we choose from those 3=
+,
+it would be easy to rewrite the patch to use SHA1 or sha1 instead of
+SHA-1 (and I'd be willing to), but consistently so.
+
+An alternative patch would substitute most occurrences of the above by
+X, X being the future term for "object name" to be agreed upon, and go
+for say SHA-1 at the very few places where the actual algorithm is
+mentioned. I just don't want to bet on that agreement and patch happeni=
+ng.
+
+Michael
