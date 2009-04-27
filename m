@@ -1,87 +1,74 @@
-From: Israel =?utf-8?q?Buitr=C3=B3n_D=C3=A1maso?= 
-	<proyectoscript@gmail.com>
-Subject: Translate "Git - SVN Crash Course"
-Date: Fri, 17 Apr 2009 15:12:16 -0500
-Message-ID: <200904171512.17025.proyectoscript@gmail.com>
+From: Sitaram Chamarty <sitaramc@gmail.com>
+Subject: [PATCH] mention mergetool in gittutorial
+Date: Mon, 27 Apr 2009 19:46:16 +0530
+Message-ID: <20090427141616.GA10750@atc.tcs.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Apr 27 16:00:23 2009
+Content-Type: text/plain; charset=us-ascii
+To: gitster@pobox.com, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Apr 27 16:16:45 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LyRNe-0003k6-Uq
-	for gcvg-git-2@gmane.org; Mon, 27 Apr 2009 16:00:23 +0200
+	id 1LyRdT-0003Vf-Kd
+	for gcvg-git-2@gmane.org; Mon, 27 Apr 2009 16:16:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754215AbZD0OAK convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 27 Apr 2009 10:00:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754163AbZD0OAJ
-	(ORCPT <rfc822;git-outgoing>); Mon, 27 Apr 2009 10:00:09 -0400
-Received: from mail-qy0-f112.google.com ([209.85.221.112]:48037 "EHLO
-	mail-qy0-f112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754044AbZD0OAH convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 27 Apr 2009 10:00:07 -0400
-Received: by qyk10 with SMTP id 10so1577457qyk.33
-        for <git@vger.kernel.org>; Mon, 27 Apr 2009 07:00:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:disposition-notification-to:x-priority:priority
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        bh=XiYCuZLtAlQIRHwzsOul0qI00s5TCTrMFlV7a2NJmng=;
-        b=FUnXMqxYM9vaEAyEJvcsRW23axR6pENfDnyWBb2rwORsTCFhYONEPov2137JjjnmGu
-         +hSJsDS1er/jnNfLRDuaa4rI+4xcsiIlnKcKKIO6sV/Tlyb6vDoeRfR4xNFbcZVyExh3
-         KiZyN/wF24LXulvML2rB/S8myhVZgI+bPn2hg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:disposition-notification-to
-         :x-priority:priority:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        b=cFRFYfOk3xkmjydILlJOpf82GVcXs/INDBDk1Dn3jIe55T+CjeFoqOOGKucUYapdp5
-         sR49LVkd21HRKzQYfcsIBJR5S/8hGU/UbIzXndt18azYjZZQ/+Eo+qkeTTrP/sPD2AMh
-         cou4BLLK+2IMRroye9mA5KLMIYXh4+otPYaiU=
-Received: by 10.229.84.196 with SMTP id k4mr2344095qcl.86.1240840806251;
-        Mon, 27 Apr 2009 07:00:06 -0700 (PDT)
-Received: from neobalam ([189.135.238.145])
-        by mx.google.com with ESMTPS id 8sm12270204ywg.13.2009.04.27.07.00.04
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 27 Apr 2009 07:00:05 -0700 (PDT)
-User-Agent: KMail/1.9.9
-X-PRIORITY: 2 (High)
+	id S1755161AbZD0OQc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 27 Apr 2009 10:16:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755080AbZD0OQb
+	(ORCPT <rfc822;git-outgoing>); Mon, 27 Apr 2009 10:16:31 -0400
+Received: from atcmail.atc.tcs.co.in ([203.200.212.145]:47299 "EHLO
+	atcmail.atc.tcs.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754985AbZD0OQa (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 27 Apr 2009 10:16:30 -0400
+Received: from atcmail.atc.tcs.com (atcmail.atc.tcs.com [127.0.0.1])
+	by atcmail.atc.tcs.com (8.14.2/8.14.2) with ESMTP id n3REGIjH011001;
+	Mon, 27 Apr 2009 19:46:18 +0530
+Received: (from sitaram@localhost)
+	by atcmail.atc.tcs.com (8.14.2/8.14.2/Submit) id n3REGGId010997;
+	Mon, 27 Apr 2009 19:46:16 +0530
 Content-Disposition: inline
+User-Agent: Mutt/1.5.18 (2008-05-17)
+X-Virus-Scanned: ClamAV 0.94.2/9291/Sun Apr 26 12:14:09 2009 on atcmail.atc.tcs.com
+X-Virus-Status: Clean
+X-Spam-Status: No, score=-4.4 required=5.0 tests=ALL_TRUSTED,BAYES_00
+	autolearn=ham version=3.2.5
+X-Spam-Checker-Version: SpamAssassin 3.2.5 (2008-06-10) on atcmail.atc.tcs.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117671>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117672>
 
-Hi!
+---
 
-I want to translate you documentation to spanish.
-Do you have it on GitHub or some this like this?
+This came up in IRC in some context, and pasky suggested it
+might be useful to talk about mergetool in the tutorial.
 
-Greetings
+ Documentation/gittutorial.txt |   11 +++++++++--
+ 1 files changed, 9 insertions(+), 2 deletions(-)
 
---=20
-Linux User: 419708 (since 20060623)
-Web: http://proyectoscript.blogspot.com
-
-
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-Raza...
-Saca al azteca que traes dentro, al maya, al lacand=C3=B3n,=20
-al tzotzil, al huichol.
-Saca la energ=C3=ADa, el DNA y toda tu historia que esta corriendo=20
-por tus venas y cambia el curso del universo,=20
-cambia el curso de este pa=C3=ADs...
-cambia tu vida.
-                      Sa=C3=BAl "Chato" Alfonso Hern=C3=A1ndez Estrada
-                      Concierto "Voces con Causa"
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+diff --git a/Documentation/gittutorial.txt b/Documentation/gittutorial.txt
+index c5d5596..0d2e75d 100644
+--- a/Documentation/gittutorial.txt
++++ b/Documentation/gittutorial.txt
+@@ -239,8 +239,15 @@ markers will be left in the problematic files showing the conflict;
+ $ git diff
+ ------------------------------------------------
+ 
+-will show this.  Once you've edited the files to resolve the
+-conflicts,
++will show this.  You can use your normal text editor to resolve the conflicts,
++or you can use linkgit:git-mergetool[1] to invoke any of a range of popular
++tools to help you do this.  For example:
++
++------------------------------------------------
++$ git mergetool --tool=meld
++------------------------------------------------
++
++Once you've edited the files to resolve the conflicts,
+ 
+ ------------------------------------------------
+ $ git commit -a
+-- 
+1.6.2.4
