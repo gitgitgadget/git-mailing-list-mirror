@@ -1,87 +1,70 @@
-From: "John Dlugosz" <JDlugosz@TradeStation.com>
-Subject: RE: how to arrange source control?
-Date: Mon, 27 Apr 2009 18:08:02 -0400
-Message-ID: <450196A1AAAE4B42A00A8B27A59278E70AE3EC2C@EXCHANGE.trad.tradestation.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v3] Add an option not to use link(src, dest) &&
+ unlink(src) when that is unreliable
+Date: Mon, 27 Apr 2009 15:10:09 -0700
+Message-ID: <7vvdopwxxa.fsf@gitster.siamese.dyndns.org>
+References: <alpine.DEB.1.00.0904231252080.10279@pacific.mpi-cbg.de>
+ <alpine.LFD.2.00.0904251042490.3101@localhost.localdomain>
+ <200904252052.10327.j6t@kdbg.org> <7vhc0cw6w8.fsf@gitster.siamese.dyndns.org>
+ <alpine.DEB.1.00.0904261940170.10279@pacific.mpi-cbg.de>
+ <alpine.DEB.1.00.0904271400180.10279@pacific.mpi-cbg.de>
+ <alpine.LFD.2.00.0904270806130.22156@localhost.localdomain>
+ <7vljpl3m8i.fsf@gitster.siamese.dyndns.org>
+ <alpine.LFD.2.00.0904271314130.22156@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
-Cc: <bob@hindbrain.net>
-To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Apr 28 00:09:00 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Johannes Sixt <j6t@kdbg.org>, git@vger.kernel.org
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Tue Apr 28 00:10:30 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LyZ0J-0007dB-RV
-	for gcvg-git-2@gmane.org; Tue, 28 Apr 2009 00:08:48 +0200
+	id 1LyZ1x-00007M-6i
+	for gcvg-git-2@gmane.org; Tue, 28 Apr 2009 00:10:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756827AbZD0WIb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 27 Apr 2009 18:08:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755795AbZD0WIa
-	(ORCPT <rfc822;git-outgoing>); Mon, 27 Apr 2009 18:08:30 -0400
-Received: from mail2.tradestation.com ([63.99.207.80]:59398 "EHLO
-	mail2.tradestation.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755425AbZD0WIa convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 27 Apr 2009 18:08:30 -0400
-X-ASG-Debug-ID: 1240870083-6d8b01040000-QuoKaX
-X-Barracuda-URL: http://192.168.51.31:8000/cgi-bin/mark.cgi
-Received: from mail5.tradestation.com (localhost [127.0.0.1])
-	by mail2.tradestation.com (Spam & Virus Firewall) with ESMTP
-	id 6FC803A3C13; Mon, 27 Apr 2009 18:08:03 -0400 (EDT)
-Received: from mail5.tradestation.com (tx02exchange02.trad.tradestation.com [192.168.51.76]) by mail2.tradestation.com with ESMTP id ZnHrTPh2auOpWesQ; Mon, 27 Apr 2009 18:08:03 -0400 (EDT)
-X-Barracuda-Envelope-From: JDlugosz@TradeStation.com
-X-ASG-Whitelist: Client
-Received: from EXCHANGE.trad.tradestation.com ([10.4.0.121]) by mail5.tradestation.com with Microsoft SMTPSVC(6.0.3790.3959);
-	 Mon, 27 Apr 2009 18:08:03 -0400
-X-MimeOLE: Produced By Microsoft Exchange V6.5
-Content-class: urn:content-classes:message
-X-ASG-Orig-Subj: RE: how to arrange source control?
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-Thread-Topic: RE: how to arrange source control?
-Thread-Index: AcnHhKG/LXUY1Ce+RP+yj5mZTZZnWQ==
-X-OriginalArrivalTime: 27 Apr 2009 22:08:03.0082 (UTC) FILETIME=[A263A6A0:01C9C784]
-X-Barracuda-Connect: tx02exchange02.trad.tradestation.com[192.168.51.76]
-X-Barracuda-Start-Time: 1240870083
-X-Barracuda-Virus-Scanned: by TX-Barracuda Spam Firewall 400 at tradestation.com
+	id S1756480AbZD0WKU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 27 Apr 2009 18:10:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755969AbZD0WKU
+	(ORCPT <rfc822;git-outgoing>); Mon, 27 Apr 2009 18:10:20 -0400
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:36250 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755161AbZD0WKT (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 27 Apr 2009 18:10:19 -0400
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 58E3512AA3;
+	Mon, 27 Apr 2009 18:10:16 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 8266E12AA1; Mon,
+ 27 Apr 2009 18:10:11 -0400 (EDT)
+In-Reply-To: <alpine.LFD.2.00.0904271314130.22156@localhost.localdomain>
+ (Linus Torvalds's message of "Mon, 27 Apr 2009 13:18:19 -0700 (PDT)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 301617B2-3378-11DE-95F0-D766E3C8547C-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117719>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117720>
 
->> what is the best way to use git? Should I run "git add ." in
-'rootdir' or run it in each 
->> application and library?
->> These libraries are used by all of the applications.
+Linus Torvalds <torvalds@linux-foundation.org> writes:
 
-I had a similar issue I discussed on this mailing list a few weeks ago.
+> Maybe the config option shouldn't be a boolean, but a "how to instantiate 
+> objects". IOW, we could do
+>
+> 	[core]
+> 		createobject = {link|rename}
+>
+> instead. Maybe we some day could allow "inplace", for some totally broken 
+> system that supports neither renames nor links, and just wants the object 
+> to be created with the final name to start with.
+>
+> (Ok, that sounds unlikely, but I mention it because it's an example of the 
+> concept. Maybe somebody likes crazy databases, and would like to have a 
+> "createobject = mysql" for some DB-backed loose object crap).
+>
+> 		Linus
 
-If the apps really are separate apps, from a development perspective,
-you will want each in a separate repository.  That way you are not
-always being bothered by totally irrelevant changes by others.
-
-But, git doesn't like the libraries arranged that way.  If you make each
-library a git submodule, they will all be in a subdirectory under each
-app, not a peer with them.  This does have the advantage that each app
-could be using a different version of the libs.  If they are meant to be
-released as a suite, you will still find that handy during development,
-while waiting for the ripple effect to catch up to the top level after
-something changes in a lib.
-
-I've not taken it to its logical conclusion of libs that use other libs
-which are also used directly by the app.
-
-If you keep your existing directory structure, you can certainly make
-each lib its own repository, and not rely on git to track specific
-library versions for you.  But I think that will bite you when you need
-to check out something old, such as to make a patch for an existing
-version or compare behavior against an older version.
-
---John
-(please forgive the footer; it's not my idea or my choice)
-
-
-TradeStation Group, Inc. is a publicly-traded holding company (NASDAQ GS: TRAD) of three operating subsidiaries, TradeStation Securities, Inc. (Member NYSE, FINRA, SIPC and NFA), TradeStation Technologies, Inc., a trading software and subscription company, and TradeStation Europe Limited, a United Kingdom, FSA-authorized introducing brokerage firm. None of these companies provides trading or investment advice, recommendations or endorsements of any kind. The information transmitted is intended only for the person or entity to which it is addressed and may contain confidential and/or privileged material. Any review, retransmission, dissemination or other use of, or taking of any action in reliance upon, this information by persons or entities other than the intended recipient is prohibited.
-  If you received this in error, please contact the sender and delete the material from any computer.
+More likely is "bigtable", I guess ;-)
