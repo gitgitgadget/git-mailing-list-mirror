@@ -1,98 +1,72 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: [PATCH v3] Add an option not to use link(src, dest) && unlink(src)
- when that is unreliable
-Date: Mon, 27 Apr 2009 08:15:10 -0700 (PDT)
-Message-ID: <alpine.LFD.2.00.0904270806130.22156@localhost.localdomain>
-References: <alpine.DEB.1.00.0904231252080.10279@pacific.mpi-cbg.de> <alpine.LFD.2.00.0904251042490.3101@localhost.localdomain> <200904252052.10327.j6t@kdbg.org> <7vhc0cw6w8.fsf@gitster.siamese.dyndns.org> <alpine.DEB.1.00.0904261940170.10279@pacific.mpi-cbg.de>
- <alpine.DEB.1.00.0904271400180.10279@pacific.mpi-cbg.de>
+From: Allan Caffee <allan.caffee@gmail.com>
+Subject: Re: [PATCH] builtin-merge: fix a typo in an error message
+Date: Mon, 27 Apr 2009 11:41:51 -0400
+Message-ID: <20090427154151.GA9380@linux.vnet>
+References: <20090413181008.GA8273@linux.vnet> <20090413231250.GA16990@genesis.frugalware.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>, Johannes Sixt <j6t@kdbg.org>,
-	git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Mon Apr 27 17:18:32 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Miklos Vajna <vmiklos@frugalware.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Apr 27 17:42:27 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LySbC-00010P-0A
-	for gcvg-git-2@gmane.org; Mon, 27 Apr 2009 17:18:26 +0200
+	id 1LySyJ-00044H-QB
+	for gcvg-git-2@gmane.org; Mon, 27 Apr 2009 17:42:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756908AbZD0PRq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 27 Apr 2009 11:17:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756058AbZD0PRp
-	(ORCPT <rfc822;git-outgoing>); Mon, 27 Apr 2009 11:17:45 -0400
-Received: from smtp1.linux-foundation.org ([140.211.169.13]:42549 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755933AbZD0PRp (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 27 Apr 2009 11:17:45 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
-	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id n3RFFBpe023107
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Mon, 27 Apr 2009 08:15:47 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id n3RFFAkd011393;
-	Mon, 27 Apr 2009 08:15:10 -0700
-X-X-Sender: torvalds@localhost.localdomain
-In-Reply-To: <alpine.DEB.1.00.0904271400180.10279@pacific.mpi-cbg.de>
-User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
-X-Spam-Status: No, hits=-3.956 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED
-X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
+	id S1757132AbZD0PmB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 27 Apr 2009 11:42:01 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757299AbZD0PmA
+	(ORCPT <rfc822;git-outgoing>); Mon, 27 Apr 2009 11:42:00 -0400
+Received: from wf-out-1314.google.com ([209.85.200.175]:26223 "EHLO
+	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757657AbZD0Pl7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 27 Apr 2009 11:41:59 -0400
+Received: by wf-out-1314.google.com with SMTP id 26so1834710wfd.4
+        for <git@vger.kernel.org>; Mon, 27 Apr 2009 08:41:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:mail-followup-to:references:mime-version:content-type
+         :content-disposition:in-reply-to:user-agent;
+        bh=CkOtccTqYBUNfO3YLnB7qo9ZbW5vFTR3so8WC4zwiFs=;
+        b=RMBarkLaB4LpDkus7GMI1SP+IGZ4S6103iAFf6J4Yu9qcIjFGfqQxR8gvwIWjLhYdm
+         GaTHF4IZpLRlfIqbjkFVVrtX7m0279ARDTRm2uIxvTIo+mEjOGI+sipXEDmJcwi7wYCV
+         MK0miBe8PWMsy0a2ppblLDlwe887BHgQLoqwk=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:mail-followup-to:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        b=unnQex3ThmaX1ZuwQ/HAOEdRKoYDoduS6fpR7R9RLMFahmn1JwxRzJ8KEVHrOIJg8m
+         QPoy0IhVbJxWVMJjuBDWkse6YhPjqmZukH36WrFJ8bOjfrYSnHUQ8yzmK/dP9DOrvuMp
+         +z4hvfko5xGIhK0pmpK4XWRfHo+W4LBNDybLI=
+Received: by 10.142.142.16 with SMTP id p16mr1144661wfd.231.1240846918343;
+        Mon, 27 Apr 2009 08:41:58 -0700 (PDT)
+Received: from linux.vnet (n2-51-168.dhcp.drexel.edu [144.118.51.168])
+        by mx.google.com with ESMTPS id 30sm50353wfa.35.2009.04.27.08.41.56
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 27 Apr 2009 08:41:57 -0700 (PDT)
+Mail-Followup-To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Miklos Vajna <vmiklos@frugalware.org>
+Content-Disposition: inline
+In-Reply-To: <20090413231250.GA16990@genesis.frugalware.org>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117677>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117678>
 
+Hello Junio,
 
+On Tue, 14 Apr 2009, Miklos Vajna wrote:
 
-On Mon, 27 Apr 2009, Johannes Schindelin wrote:
+> On Mon, Apr 13, 2009 at 02:10:08PM -0400, Allan Caffee <allan.caffee@gmail.com> wrote:
+> > -		die("Could open %s for writing", git_path("MERGE_MSG"));
+> > +		die("Could not open %s for writing", git_path("MERGE_MSG"));
 > 
-> So, force the use of rename() instead of the link() && unlink()
-> incantation on Windows, and for good measure, add a
-> core.unreliableHardlinks option to optionally force it on other
-> platforms, too.
+> Acked-by: Miklos Vajna <vmiklos@frugalware.org>
 
-Ok, so:
-
-	Acked-by: Linus Torvalds <torvalds@linux-foundation.org>
-
-but I do think it could be improved. See below..
-
-> 	Junio, do you want me to remove the config variable?
-
-I'd keep it. But I'd suggest that the naming is odd. Why talk about 
-"unreliable hardlinks", when that's just a particular symptom. Why not 
-just talk about whether hardlinks should be used or not?
-
-And to avoid double negative, make it
-
-	[core]
-		usehardlinks = true/false
-
-and then default it to 'true' for Unix.
-
-The thing is, maybe people would prefer to use 'rename' over the 
-link/unlink games even on some unixes, and not because of 'reliability' 
-issues, but because they may have some filesystems that don't do 
-hardlinks, and they'd just rather speed things up by avoiding the 'link()' 
-system call that will just error out.
-
-So naming matters. Calling it 'unreliablehardlinks' in that case would be 
-odd. They're not unreliable - you just don't want to try to use them.
-
-I also do wonder if we could/should make this one of those options that 
-get set automatically at 'git init' time, rather than silently hardcoded 
-as a compile option. I thought hardlinks at least sometimes worked fine on 
-Windows too, don't they? 
-
-I do detest _hidden_ default values for config options, unless those 
-hidden defaults are "obviously always correct" as a default. This one 
-smells a bit uncertain, and as a result I think it's ok to default to not 
-using hardlinks, but doing it with .gitconfig would be nicer.
-
-Hmm?
-
-		Linus
+Is this one ready for maint?  (The issue dates back to 1c7b76be.)
