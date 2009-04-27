@@ -1,91 +1,71 @@
-From: Jonas Fonseca <jonas.fonseca@gmail.com>
-Subject: Re: [tig] Feeding specific revisions to tig
-Date: Mon, 27 Apr 2009 12:21:05 +0200
-Message-ID: <2c6b72b30904270321t3d73e2c5o5e3ac8d4b627e5ab@mail.gmail.com>
-References: <ae63f8b50806041152v11a2997y9411c5ea3ebc9598@mail.gmail.com> 
-	<20080604192916.GB17327@sigill.intra.peff.net> <ae63f8b50806041304i20de789ej492681f4b9306934@mail.gmail.com> 
-	<20080604230858.GA27136@sigill.intra.peff.net> <2c6b72b30808060406u10d7b332g22ea28fe5470ddb1@mail.gmail.com> 
-	<20080808211916.GA30583@sigill.intra.peff.net> <2c6b72b30808100216j2c719bf2yb7dfba651db901e3@mail.gmail.com> 
-	<ae63f8b50904230755p12170753qf3fc273b48afe4d4@mail.gmail.com>
+From: Ingo Molnar <mingo@elte.hu>
+Subject: [spurious parallel build bug] make -j fails with: "mv: mv: cannot
+	stat `perl.mak': No such file or directory"
+Date: Mon, 27 Apr 2009 11:48:43 +0200
+Message-ID: <20090427094843.GA5849@elte.hu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Jean-Baptiste Quenot <jbq@caraldi.com>
-X-From: git-owner@vger.kernel.org Mon Apr 27 13:51:19 2009
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Apr 27 14:01:28 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LyNxv-0000c1-Gk
-	for gcvg-git-2@gmane.org; Mon, 27 Apr 2009 12:21:35 +0200
+	id 1LyNSy-0007xf-Fk
+	for gcvg-git-2@gmane.org; Mon, 27 Apr 2009 11:49:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753976AbZD0KVX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 27 Apr 2009 06:21:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752297AbZD0KVX
-	(ORCPT <rfc822;git-outgoing>); Mon, 27 Apr 2009 06:21:23 -0400
-Received: from mail-fx0-f158.google.com ([209.85.220.158]:52280 "EHLO
-	mail-fx0-f158.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750997AbZD0KVW (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 27 Apr 2009 06:21:22 -0400
-Received: by fxm2 with SMTP id 2so2202037fxm.37
-        for <git@vger.kernel.org>; Mon, 27 Apr 2009 03:21:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=KtCa4MqkAJNt6zA8uTRMPtDQ0NxP+XAYPG9J3EJsreI=;
-        b=wuic9o3mUv2XLnRQHQLeEVH6gT4IyyTy8bFlV4tP5rNSs2RB7WJvUzJp59nJELnkiI
-         8cVODM8fxuRVIY+yaNJkhIyuT22hbxyNBnbKke8ojXA1DtgVoWvVtzm8o7yx2SdpsW6j
-         r0X7h1SuCoux3T2FauIaElqMUJHYxZkwReaXc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=YoeILbLrLNOojuKeQxCFjaDKgznvQoeHvIThTsNK2cO8OfuPRh8FW/wet4BcwAjsX3
-         DhAROyLOGSXXFP3Vf5mrmLF7F1fr1y+ZyzTapE2EZOtZm6lJlQp11QoRUCdBob3rMWtq
-         86JP/ZDgD0M1Gd6oiRAGYY1ldUPclMWm541xI=
-Received: by 10.103.244.4 with SMTP id w4mr3103296mur.90.1240827680208; Mon, 
-	27 Apr 2009 03:21:20 -0700 (PDT)
-In-Reply-To: <ae63f8b50904230755p12170753qf3fc273b48afe4d4@mail.gmail.com>
+	id S1755009AbZD0Js5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 27 Apr 2009 05:48:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754927AbZD0Js4
+	(ORCPT <rfc822;git-outgoing>); Mon, 27 Apr 2009 05:48:56 -0400
+Received: from mx3.mail.elte.hu ([157.181.1.138]:51833 "EHLO mx3.mail.elte.hu"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755097AbZD0Jsz (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 27 Apr 2009 05:48:55 -0400
+Received: from elvis.elte.hu ([157.181.1.14])
+	by mx3.mail.elte.hu with esmtp (Exim)
+	id 1LyNSB-0006nM-1C
+	from <mingo@elte.hu>
+	for <git@vger.kernel.org>; Mon, 27 Apr 2009 11:48:54 +0200
+Received: by elvis.elte.hu (Postfix, from userid 1004)
+	id E56533E2138; Mon, 27 Apr 2009 11:48:40 +0200 (CEST)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.18 (2008-05-17)
+Received-SPF: neutral (mx3: 157.181.1.14 is neither permitted nor denied by domain of elte.hu) client-ip=157.181.1.14; envelope-from=mingo@elte.hu; helo=elvis.elte.hu;
+X-ELTE-VirusStatus: clean
+X-ELTE-SpamScore: -1.5
+X-ELTE-SpamLevel: 
+X-ELTE-SpamCheck: no
+X-ELTE-SpamVersion: ELTE 2.0 
+X-ELTE-SpamCheck-Details: score=-1.5 required=5.9 tests=BAYES_00 autolearn=no SpamAssassin version=3.2.3
+	-1.5 BAYES_00               BODY: Bayesian spam probability is 0 to 1%
+	[score: 0.0000]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117664>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117665>
 
-Sorry for the slow reply ...
 
-On Thu, Apr 23, 2009 at 16:55, Jean-Baptiste Quenot <jbq@caraldi.com> wrote:
-> 2008/8/10 Jonas Fonseca <jonas.fonseca@gmail.com>:
->>> So here is my cut-and-pastable version:
->>>
->>>  tignowalk() {
->>>    tmp=$(mktemp)
->>>    cat >"$tmp"
->>>    TIG_MAIN_CMD="git rev-list --pretty=raw --no-walk --stdin <$tmp" \
->>>      tig </dev/tty
->>>    rm "$tmp"
->>>  }
->>
->> Thanks for the fixed up version.
->
-> Restarting this old thread again.  Starting from 0.13 the
-> *tignowalk()* hack does not work anymore.  What's the preferred way to
-> feed specific revisions using stdin now?
+I got this when i built v1.6.3-rc3 for the first time:
 
-I don't know if it is preferred, but it works. First add a git alias:
+$ make -j
+[...]
+    CC builtin-annotate.o
+    CC builtin-apply.o
+    CC builtin-archive.o
+    CC builtin-bisect--helper.o
+mv: mv: cannot stat `perl.mak': No such file or directory
+mv: cannot stat `perl.mak': No such file or directory
+    CC builtin-blame.o
+mv: cannot stat `perl.mak': No such file or directory
+mv: cannot stat `perl.mak': No such file or directory
+cannot stat `perl.mak': No such file or directory
 
-[alias]
-        tignowalk-helper = !git rev-list --pretty=raw --no-walk --stdin<
+a plain 'make' worked.
 
-Then modify tignowalk by replacing the line calling tig to say:
+Interestingly, a second attempt to reproduce it after a 'make clean' 
+failed to trigger the bug. So it's either timing sensitive or 
+there's some other weirdness that caused this.
 
-TIG_MAIN_CMD="git tignowalk-helper $tmp" tig </dev/tty
-
-... and it should work. Maybe more git alias functionality can
-simplify the hack.
-
--- 
-Jonas Fonseca
+	Ingo
