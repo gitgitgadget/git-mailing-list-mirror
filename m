@@ -1,97 +1,104 @@
-From: David Abrahams <dave@boostpro.com>
-Subject: Re: [doc] User Manual Suggestion
-Date: Sun, 26 Apr 2009 21:41:23 -0400
-Message-ID: <m2ab62g9fg.fsf@boostpro.com>
-References: <alpine.LNX.2.00.0904241852500.2147@iabervon.org>
-	<b4087cc50904241626h166c6b3bqa4ec714d4cb5662a@mail.gmail.com>
-	<alpine.LNX.2.00.0904251445030.2147@iabervon.org>
-	<b4087cc50904251216p617e347bmdc70e109298fa9b2@mail.gmail.com>
-	<94a0d4530904251224g6b228448q276436f17f7e5cc3@mail.gmail.com>
-	<E85677CA-FA7E-4777-97DF-9B295E89B83A@boostpro.com>
-	<20090426112802.GC10155@atjola.homenet>
-	<FA5C0FFA-2DCD-4DF1-9A94-C2A26A9DCAE9@boostpro.com>
-	<20090426175613.GA4942@atjola.homenet>
-	<F2B2D447-57B4-459C-8A0D-A94C12AE791C@boostpro.com>
-	<20090426222532.GA12338@atjola.homenet>
+From: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
+Subject: Re: Lets avoid the SHA-1 term (was [doc] User Manual Suggestion)
+Date: Mon, 27 Apr 2009 02:28:38 +0200
+Message-ID: <20090427002838.GF12338@atjola.homenet>
+References: <94a0d4530904261638o6cbda368p4f3aa641505a6768@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=iso-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Felipe Contreras <felipe.contreras@gmail.com>,
-	Michael Witten <mfwitten@gmail.com>,
+Cc: David Abrahams <dave@boostpro.com>,
+	Michael Witten <mfwitten@gmail.com>, Jeff King <peff@peff.net>,
 	Daniel Barkalow <barkalow@iabervon.org>,
-	Jeff King <peff@peff.net>, Johan Herland <johan@herland.net>,
-	git@vger.kernel.org, "J. Bruce Fields" <bfields@fieldses.org>
-To: =?utf-8?Q?Bj=C3=B6rn?= Steinbrink <B.Steinbrink@gmx.de>
-X-From: git-owner@vger.kernel.org Mon Apr 27 10:16:38 2009
+	Johan Herland <johan@herland.net>, git@vger.kernel.org,
+	"J. Bruce Fields" <bfields@fieldses.org>
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Apr 27 10:25:48 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LyG3E-0007l6-8T
-	for gcvg-git-2@gmane.org; Mon, 27 Apr 2009 03:54:32 +0200
+	id 1LyElR-0005IM-GS
+	for gcvg-git-2@gmane.org; Mon, 27 Apr 2009 02:32:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752740AbZD0Bvt convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 26 Apr 2009 21:51:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752615AbZD0Bvs
-	(ORCPT <rfc822;git-outgoing>); Sun, 26 Apr 2009 21:51:48 -0400
-Received: from smtp02.lnh.mail.rcn.net ([207.172.157.102]:11546 "EHLO
-	smtp02.lnh.mail.rcn.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751527AbZD0Bvs convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 26 Apr 2009 21:51:48 -0400
-X-Greylist: delayed 570 seconds by postgrey-1.27 at vger.kernel.org; Sun, 26 Apr 2009 21:51:47 EDT
-Received: from mr08.lnh.mail.rcn.net ([207.172.157.28])
-  by smtp02.lnh.mail.rcn.net with ESMTP; 26 Apr 2009 21:42:15 -0400
-Received: from smtp01.lnh.mail.rcn.net (smtp01.lnh.mail.rcn.net [207.172.4.11])
-	by mr08.lnh.mail.rcn.net (MOS 3.10.4-GA)
-	with ESMTP id KUV71178;
-	Sun, 26 Apr 2009 21:41:25 -0400 (EDT)
-Received: from 207-172-223-249.c3-0.smr-ubr3.sbo-smr.ma.static.cable.rcn.com (HELO zreba.local) ([207.172.223.249])
-  by smtp01.lnh.mail.rcn.net with ESMTP; 26 Apr 2009 21:41:25 -0400
-Received: by zreba.local (Postfix, from userid 501)
-	id 998DB49E482; Sun, 26 Apr 2009 21:41:23 -0400 (EDT)
-In-Reply-To: <20090426222532.GA12338@atjola.homenet> (=?utf-8?Q?=22Bj?=
- =?utf-8?Q?=C3=B6rn?= Steinbrink"'s
-	message of "Mon, 27 Apr 2009 00:25:32 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.0.92 (darwin)
+	id S1752423AbZD0A2y convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 26 Apr 2009 20:28:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752090AbZD0A2y
+	(ORCPT <rfc822;git-outgoing>); Sun, 26 Apr 2009 20:28:54 -0400
+Received: from mail.gmx.net ([213.165.64.20]:34714 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752029AbZD0A2x (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 26 Apr 2009 20:28:53 -0400
+Received: (qmail invoked by alias); 27 Apr 2009 00:28:51 -0000
+Received: from i59F5A916.versanet.de (EHLO atjola.local) [89.245.169.22]
+  by mail.gmx.net (mp022) with SMTP; 27 Apr 2009 02:28:51 +0200
+X-Authenticated: #5039886
+X-Provags-ID: V01U2FsdGVkX18y9+UPPrcyh6+8fx7Fe8wL/c/bMHJc4u6tqcNtmj
+	aGqX4y5hD3IBhY
+Content-Disposition: inline
+In-Reply-To: <94a0d4530904261638o6cbda368p4f3aa641505a6768@mail.gmail.com>
+User-Agent: Mutt/1.5.18 (2008-05-17)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.57
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117604>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117605>
 
-
-on Sun Apr 26 2009, Bj=C3=B6rn Steinbrink <B.Steinbrink-AT-gmx.de> wrot=
-e:
-
->> I think this is why Git remains more opaque than it should be.  You
->> can't assume that people will naturally develop the smartest possibl=
-e
->> mental model of a VCS, even with faced with some hints in the form o=
-f
->> a partial understanding of Git.
->
-> I don't think I understand what you mean here. If users don't underst=
-and
-> the data model, that's caused by missing/bad documentation or because
-> the user doesn't want to read the existing documentation. (I'll make =
-no
-> assumptions here, it's been some time since I had a close look at the
-> docs). But I've been talking about how the given implementation store=
-s
-> data in the repository. Could you explain?
-
-You don't have to "not want to read the documentation" to have an
-incomplete mental model.  The mental model development doesn't happen
-upon finishing the documentation; it happens while the person is
-learning.  Halfway through the docs, I have an incomplete mental model.
-If you make it hard enough for me, maybe I never finish and I retain
-that incomplete model forever.  The more you can help people avoid
-incorrect assumptions as they read along, the easier it will be for the=
+On 2009.04.27 02:38:40 +0300, Felipe Contreras wrote:
+> 2009/4/27 Bj=F6rn Steinbrink <B.Steinbrink@gmx.de>:
+> > On 2009.04.24 20:48:57 -0400, David Abrahams wrote:
+> >>
+> >> On Apr 24, 2009, at 8:01 PM, Michael Witten wrote:
+> >>
+> >>>> What's wrong with just calling the object name "object name"?
+> >>>
+> >>> What's wrong with calling the object address "object address"?
+> >>
+> >> Neither captures the connection to the object's contents. =A0I thi=
+nk
+> >> "value ID" would be closer, but it's probably too horrible.
+> >
+> > I think I asked this in another mail, but I'm quite tired, so just =
+to
+> > make sure: What do you mean by "value"? I might be weird (I'm not a
+> > native speaker, so I probably make funny and wrong connotations fro=
 m
-to grok the next bit they are reading, and the less likely they are to
-become discouraged.
+> > time to time), but while I can accept "content" to include the type=
+ and
+> > size of the object, the term "value" makes me want to exclude those
+> > pieces of meta data. So "value" somehow feels wrong to me, as the h=
+ash
+> > covers those two fields.
+>=20
+> Just to summarize.
+>=20
+> Do you agree that SHA-1 is not the proper term to choose?
 
---=20
-Dave Abrahams
-BoostPro Computing
-http://www.boostpro.com
+Yes, IMHO that's too strongly tied to the implementation. But a quick
+grep run tells me that the "object name" area is probably not where you
+need to get rid of that. The "object name" term is already used a lot.
+If you want to ban SHA-1 then the rev-parse man page, describing the
+"extended SHA1 syntax" would probably be a better place to start (unles=
+s
+you want to "fix" everything at once).
+
+> Do you agree that either 'id' or 'hash' would work fine?
+
+"object id" would work for me, but I'm fine with the existing "object
+name" as well. I don't like "object hash" (or "object hash id"), becaus=
+e
+it IMHO doesn't express that well that it's used to identify an object.
+
+> Personally I think there's an advantage of choosing 'hash'; if we pic=
+k
+> 'id' then the user might think that he can change the contents of the
+> object while keeping the same id, if we pick 'hash' then it's obvious
+> the 'id' is tied to the content and why.
+
+Heh, if you use "hash", there's no "id" tied to the content, there's
+just the hash. SCNR ;-) See my other mails why I think that "hash" isn'=
+t
+that advantageous.
+
+Bj=F6rn
