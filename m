@@ -1,78 +1,91 @@
-From: Dmitry Potapov <dpotapov@gmail.com>
-Subject: Re: [PATCH] Add Russian translation to gitk
-Date: Mon, 27 Apr 2009 13:32:34 +0400
-Message-ID: <20090427093234.GD15723@dpotapov.dyndns.org>
-References: <20090426132452.GB30825@blimp.localdomain> <20090427083953.GB15723@dpotapov.dyndns.org> <81b0412b0904270220h598fa451vb3ff30f23dd5eab3@mail.gmail.com>
+From: Jonas Fonseca <jonas.fonseca@gmail.com>
+Subject: Re: [tig] Feeding specific revisions to tig
+Date: Mon, 27 Apr 2009 12:21:05 +0200
+Message-ID: <2c6b72b30904270321t3d73e2c5o5e3ac8d4b627e5ab@mail.gmail.com>
+References: <ae63f8b50806041152v11a2997y9411c5ea3ebc9598@mail.gmail.com> 
+	<20080604192916.GB17327@sigill.intra.peff.net> <ae63f8b50806041304i20de789ej492681f4b9306934@mail.gmail.com> 
+	<20080604230858.GA27136@sigill.intra.peff.net> <2c6b72b30808060406u10d7b332g22ea28fe5470ddb1@mail.gmail.com> 
+	<20080808211916.GA30583@sigill.intra.peff.net> <2c6b72b30808100216j2c719bf2yb7dfba651db901e3@mail.gmail.com> 
+	<ae63f8b50904230755p12170753qf3fc273b48afe4d4@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=koi8-r
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Paul Mackerras <paulus@samba.org>
-To: Alex Riesen <raa.lkml@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Apr 27 13:39:59 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Jean-Baptiste Quenot <jbq@caraldi.com>
+X-From: git-owner@vger.kernel.org Mon Apr 27 13:51:19 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LyNED-0007PI-2L
-	for gcvg-git-2@gmane.org; Mon, 27 Apr 2009 11:34:21 +0200
+	id 1LyNxv-0000c1-Gk
+	for gcvg-git-2@gmane.org; Mon, 27 Apr 2009 12:21:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752319AbZD0JdJ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 27 Apr 2009 05:33:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752155AbZD0JdG
-	(ORCPT <rfc822;git-outgoing>); Mon, 27 Apr 2009 05:33:06 -0400
-Received: from mail-qy0-f112.google.com ([209.85.221.112]:58264 "EHLO
-	mail-qy0-f112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751741AbZD0JdD (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 27 Apr 2009 05:33:03 -0400
-Received: by qyk10 with SMTP id 10so1357155qyk.33
-        for <git@vger.kernel.org>; Mon, 27 Apr 2009 02:33:02 -0700 (PDT)
+	id S1753976AbZD0KVX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 27 Apr 2009 06:21:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752297AbZD0KVX
+	(ORCPT <rfc822;git-outgoing>); Mon, 27 Apr 2009 06:21:23 -0400
+Received: from mail-fx0-f158.google.com ([209.85.220.158]:52280 "EHLO
+	mail-fx0-f158.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750997AbZD0KVW (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 27 Apr 2009 06:21:22 -0400
+Received: by fxm2 with SMTP id 2so2202037fxm.37
+        for <git@vger.kernel.org>; Mon, 27 Apr 2009 03:21:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=bTTZfAYoNIekPByWDNoEDaQXxx/WX+hlCkZrbAaJ+l8=;
-        b=AW6kpbMonzBUkPex8ByEk9/ZTNrefUX7PgHVw4uHOHZvfVtPsdvf+9/LK0tmT3d1Kl
-         xAQVeWVQZGugeDYu1bfUUmSLambVGnO4rm8N+sVNIRsZj3rYZnwUcp2qEss5o3zdzO9A
-         H8qHB0lodpMcn6wohZnD2O4btOYy0qsA9/uE0=
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=KtCa4MqkAJNt6zA8uTRMPtDQ0NxP+XAYPG9J3EJsreI=;
+        b=wuic9o3mUv2XLnRQHQLeEVH6gT4IyyTy8bFlV4tP5rNSs2RB7WJvUzJp59nJELnkiI
+         8cVODM8fxuRVIY+yaNJkhIyuT22hbxyNBnbKke8ojXA1DtgVoWvVtzm8o7yx2SdpsW6j
+         r0X7h1SuCoux3T2FauIaElqMUJHYxZkwReaXc=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=aQ0gjZrwVHK9q4driU3YcpnQ73qMs7KOQWabqPeV7s0G9MWpyz+fR+g7lihn5JYo3l
-         1aoTQtVTXpZIbvFkHSgZGFlFuSvVjVcceypE7rZvcZpRFd0wBLThTkZCV4+6N3Rxy2ME
-         IypxGm13Pw44g+lPZNDElJ5oifqnakYoIPPTQ=
-Received: by 10.224.60.207 with SMTP id q15mr5500549qah.193.1240824782694;
-        Mon, 27 Apr 2009 02:33:02 -0700 (PDT)
-Received: from localhost ([91.78.48.223])
-        by mx.google.com with ESMTPS id 7sm6356376qwf.5.2009.04.27.02.33.01
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 27 Apr 2009 02:33:01 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <81b0412b0904270220h598fa451vb3ff30f23dd5eab3@mail.gmail.com>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=YoeILbLrLNOojuKeQxCFjaDKgznvQoeHvIThTsNK2cO8OfuPRh8FW/wet4BcwAjsX3
+         DhAROyLOGSXXFP3Vf5mrmLF7F1fr1y+ZyzTapE2EZOtZm6lJlQp11QoRUCdBob3rMWtq
+         86JP/ZDgD0M1Gd6oiRAGYY1ldUPclMWm541xI=
+Received: by 10.103.244.4 with SMTP id w4mr3103296mur.90.1240827680208; Mon, 
+	27 Apr 2009 03:21:20 -0700 (PDT)
+In-Reply-To: <ae63f8b50904230755p12170753qf3fc273b48afe4d4@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117663>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117664>
 
-On Mon, Apr 27, 2009 at 11:20:37AM +0200, Alex Riesen wrote:
-> 2009/4/27 Dmitry Potapov <dpotapov@gmail.com>:
-> >
-> > I think "Check out this branch" should be translated as "=F0=C5=D2=C5=
-=CB=CC=C0=DE=C9=D4=D8
-> > =D2=C1=C2=CF=DE=C9=CA =CB=C1=D4=C1=CC=CF=C7 =CE=C1 =DC=D4=D5 =D7=C5=
-=D4=D7=D8" (which literally means: Switch worktree
-> > to this branch).
->=20
-> That looks too long (in a drop-down menu). How about
-> "=F0=C5=D2=C5=CB=CC=C0=DE=C9=D4=D8=D3=D1 =CE=C1 =DC=D4=D5 =D7=C5=D4=D7=
-=D8"? IOW, drop the "worktree".
+Sorry for the slow reply ...
 
-It is fine.
+On Thu, Apr 23, 2009 at 16:55, Jean-Baptiste Quenot <jbq@caraldi.com> wrote:
+> 2008/8/10 Jonas Fonseca <jonas.fonseca@gmail.com>:
+>>> So here is my cut-and-pastable version:
+>>>
+>>>  tignowalk() {
+>>>    tmp=$(mktemp)
+>>>    cat >"$tmp"
+>>>    TIG_MAIN_CMD="git rev-list --pretty=raw --no-walk --stdin <$tmp" \
+>>>      tig </dev/tty
+>>>    rm "$tmp"
+>>>  }
+>>
+>> Thanks for the fixed up version.
+>
+> Restarting this old thread again.  Starting from 0.13 the
+> *tignowalk()* hack does not work anymore.  What's the preferred way to
+> feed specific revisions using stdin now?
 
+I don't know if it is preferred, but it works. First add a git alias:
 
-Thanks,
-Dmitry
+[alias]
+        tignowalk-helper = !git rev-list --pretty=raw --no-walk --stdin<
+
+Then modify tignowalk by replacing the line calling tig to say:
+
+TIG_MAIN_CMD="git tignowalk-helper $tmp" tig </dev/tty
+
+... and it should work. Maybe more git alias functionality can
+simplify the hack.
+
+-- 
+Jonas Fonseca
