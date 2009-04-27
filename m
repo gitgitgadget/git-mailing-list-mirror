@@ -1,81 +1,122 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: [PATCH] Fix behavior with non-committish upstream references
-Date: Mon, 27 Apr 2009 18:26:43 +0200
-Message-ID: <1240849603-26127-1-git-send-email-git@drmicha.warpmail.net>
-References: <49F03A74.5080805@emlix.com>
-Cc: Simon Braunschmidt <sb@emlix.com>,
-	Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Apr 27 18:27:10 2009
+From: Mike Ralphson <mike.ralphson@gmail.com>
+Subject: Re: t3702-add-edit.sh failure in next
+Date: Mon, 27 Apr 2009 17:30:25 +0100
+Message-ID: <e2b179460904270930m3c292bd8l5067447fff330fef@mail.gmail.com>
+References: <e2b179460904270812t3fa159f1ja3b06905d9effebe@mail.gmail.com>
+	 <alpine.DEB.1.00.0904271812180.7741@intel-tinevez-2-302>
+Mime-Version: 1.0
+Content-Type: multipart/mixed; boundary=0016364d243916b53604688bdd98
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Mon Apr 27 18:30:53 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LyTfb-0002OP-QQ
-	for gcvg-git-2@gmane.org; Mon, 27 Apr 2009 18:27:04 +0200
+	id 1LyTjI-00049g-IK
+	for gcvg-git-2@gmane.org; Mon, 27 Apr 2009 18:30:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755899AbZD0Q0z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 27 Apr 2009 12:26:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755831AbZD0Q0y
-	(ORCPT <rfc822;git-outgoing>); Mon, 27 Apr 2009 12:26:54 -0400
-Received: from out3.smtp.messagingengine.com ([66.111.4.27]:56002 "EHLO
-	out3.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755768AbZD0Q0y (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 27 Apr 2009 12:26:54 -0400
-Received: from compute2.internal (compute2.internal [10.202.2.42])
-	by out1.messagingengine.com (Postfix) with ESMTP id 14D8C322453;
-	Mon, 27 Apr 2009 12:26:53 -0400 (EDT)
-Received: from heartbeat1.messagingengine.com ([10.202.2.160])
-  by compute2.internal (MEProxy); Mon, 27 Apr 2009 12:26:53 -0400
-X-Sasl-enc: aJkM4WpZyQGCtgAKWH5uTG4hmXt0mukLMZHaSEjCLibU 1240849612
-Received: from localhost (whitehead.math.tu-clausthal.de [139.174.44.12])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 646A533251;
-	Mon, 27 Apr 2009 12:26:52 -0400 (EDT)
-X-Mailer: git-send-email 1.6.3.rc3
-In-Reply-To: <49F03A74.5080805@emlix.com>
+	id S1756166AbZD0Qa3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 27 Apr 2009 12:30:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755874AbZD0Qa2
+	(ORCPT <rfc822;git-outgoing>); Mon, 27 Apr 2009 12:30:28 -0400
+Received: from mail-ew0-f176.google.com ([209.85.219.176]:58774 "EHLO
+	mail-ew0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755714AbZD0Qa1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 27 Apr 2009 12:30:27 -0400
+Received: by ewy24 with SMTP id 24so13326ewy.37
+        for <git@vger.kernel.org>; Mon, 27 Apr 2009 09:30:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type;
+        bh=zgXm/ANQ+VxN32auMhLaUfeWtY1YwZg0h6CGBNXVtSM=;
+        b=H76ilKlWQHbCbeGK6YXv0w9eYG4YcgF58Ilu+CheU+tHhytW3iaWVT55ClM0bDNLbo
+         jqTqFeLwItwxf2n29i1kLp4ijZa4hfC/vDiBAQD24CEZDAnrVwVjonaAJCDyEEMIlChQ
+         J9ZBD2DujHHW5Df7CL++pJZhcR8Q7ZEnHriy4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=qVOAupbvyRkmWD65H5uDlnFbyEv+QqRgY/VAzQx7Kp0phhKDM+LOzhAOHyWszFVNZF
+         cIa3lhKedz0AUpJelx6RtiVMl7ct5jY6uQWhUu+NbWJL09g1jhMtj2KUFgP/g9H1y7RO
+         C3pdFLk29Dbi/d60/SjWeXzL8eYkKBIp81PS8=
+Received: by 10.216.16.212 with SMTP id h62mr561754weh.201.1240849825838; Mon, 
+	27 Apr 2009 09:30:25 -0700 (PDT)
+In-Reply-To: <alpine.DEB.1.00.0904271812180.7741@intel-tinevez-2-302>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117686>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117687>
 
-stat_tracking_info() assumes that upstream references (as specified by
---track or set up automatically) are commits. By calling lookup_commit()
-on them, create_objects() creates objects for them with type commit no
-matter what their real type is; this disturbs lookup_tag() later on the
-call sequence, leading to git status, git branch -v  and git checkout
-erroring out.
+--0016364d243916b53604688bdd98
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-Fix this by using lookup_commit_reference() instead so that (annotated)
-tags can be used as upstream references.
+2009/4/27 Johannes Schindelin <Johannes.Schindelin@gmx.de>:
+> On Mon, 27 Apr 2009, Mike Ralphson wrote:
+>> I'm seeing a reproducible failure in t3702 on AIX 5.3, shell set to
+>> bash (v2.05b)
+>>
+>> The 'test_cmp orig-patch expected-patch' is seeing this diff:
+>>
+>> 2c2
+>> < index b9834b5..52aff4c 100644
+>> ---
+>> > index b9834b5..0b8f197 100644
+>
+> Could you send me the output of
+>
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0cd t/trash\ directory.t3702* &&
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0git show 0b8f197 > file.txt
 
-Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
----
-I'm sorry I won't be able to write a test any more today. Please let me
-whether it's okay without a test.
+Well I would, but there isn't any. It's an unknown revision. git fsck
+-v doesn't show it anywhere. I have:
 
- remote.c |    4 ++--
- 1 files changed, 2 insertions(+), 2 deletions(-)
+Checking HEAD link
+Checking object directory
+Checking directory .git/objects/91
+Checking directory .git/objects/b9
+Checking directory .git/objects/e0
+Checking directory .git/objects/ef
+Checking tree 911cd8fe32ce30bdaee8753cd526394a5c878cc0
+Checking blob b9834b51dd31af09b373c39cae5c5fce38ee1034
+Checking commit e055285ca8312c5bd9f369a5762fb5871ad110e8
+Checking blob ef6e94c5794cbad5c1dc41bec85640ca54a46a55
+Checking reflog
+0000000000000000000000000000000000000000->e055285ca8312c5bd9f369a5762fb5871=
+ad110e8
+Checking reflog
+0000000000000000000000000000000000000000->e055285ca8312c5bd9f369a5762fb5871=
+ad110e8
+Checking connectivity (32 objects)
+Checking ef6e94c5794cbad5c1dc41bec85640ca54a46a55
+Checking b9834b51dd31af09b373c39cae5c5fce38ee1034
+Checking e055285ca8312c5bd9f369a5762fb5871ad110e8
+Checking 911cd8fe32ce30bdaee8753cd526394a5c878cc0
 
-diff --git a/remote.c b/remote.c
-index d66e2f3..2c3e905 100644
---- a/remote.c
-+++ b/remote.c
-@@ -1399,13 +1399,13 @@ int stat_tracking_info(struct branch *branch, int *num_ours, int *num_theirs)
- 	base = branch->merge[0]->dst;
- 	if (!resolve_ref(base, sha1, 1, NULL))
- 		return 0;
--	theirs = lookup_commit(sha1);
-+	theirs = lookup_commit_reference(sha1);
- 	if (!theirs)
- 		return 0;
- 
- 	if (!resolve_ref(branch->refname, sha1, 1, NULL))
- 		return 0;
--	ours = lookup_commit(sha1);
-+	ours = lookup_commit_reference(sha1);
- 	if (!ours)
- 		return 0;
- 
--- 
-1.6.3.rc3
+blob, tree and commit of 'initial' I believe plus the new blob of the
+expected content in ef6e94c (attached).
+
+I've just tried building without INTERNAL_QSORT just in case, and it
+doesn't seem to be that.
+
+Mike
+
+--0016364d243916b53604688bdd98
+Content-Type: text/plain; charset=US-ASCII; name="ef6e94c5.txt"
+Content-Disposition: attachment; filename="ef6e94c5.txt"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: f_fu1dswor0
+
+TE8sIHByYWlzZSBvZiB0aGUgcHJvd2VzcyBvZiBwZW9wbGUta2luZ3MKb2Ygc3BlYXItYXJtZWQg
+RGFuZXMsIGluIGRheXMgbG9uZyBzcGVkLAp3ZSBoYXZlIGhlYXJkLCBhbmQgd2hhdCBob25vciB0
+aGUgYXRoZWxpbmdzIHdvbiEKCk9mdCBTY3lsZCB0aGUgU2NlZmluZyBmcm9tIHNxdWFkcm9uZWQg
+Zm9lcywKZnJvbSBtYW55IGEgdHJpYmUsIHRoZSBtZWFkLWJlbmNoIHRvcmUsCmF3aW5nIHRoZSBl
+YXJscy4gU2luY2UgZXJzdCBoZSBsYXkKZnJpZW5kbGVzcywgYSBmb3VuZGxpbmcsIGZhdGUgcmVw
+YWlkIGhpbToKCmZvciBoZSB3YXhlZCB1bmRlciB3ZWxraW4sIGluIHdlYWx0aCBoZSB0aHJvdmUs
+CnRpbGwgYmVmb3JlIGhpbSB0aGUgZm9saywgYm90aCBmYXIgYW5kIG5lYXIsCndobyBob3VzZSBi
+eSB0aGUgd2hhbGUtcGF0aCwgaGVhcmQgaGlzIG1hbmRhdGUsCmdhdmUgaGltIGdpZnRzOiAgYSBn
+b29kIGtpbmcgaGUhCg==
+--0016364d243916b53604688bdd98--
