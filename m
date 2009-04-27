@@ -1,136 +1,68 @@
 From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [EGIT PATCH] Skip unnecessary test in ObjectChecker
-Date: Mon, 27 Apr 2009 14:30:19 -0700
-Message-ID: <20090427213019.GJ23604@spearce.org>
-References: <1240756575-24113-1-git-send-email-robin.rosenberg@dewire.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Subject: [JGIT PATCH] Fix performance problem recently introduced to DeltaPackedObjectLoader
+Date: Mon, 27 Apr 2009 14:44:57 -0700
+Message-ID: <1240868697-30971-1-git-send-email-spearce@spearce.org>
 Cc: git@vger.kernel.org
 To: Robin Rosenberg <robin.rosenberg@dewire.com>
-X-From: git-owner@vger.kernel.org Mon Apr 27 23:33:23 2009
+X-From: git-owner@vger.kernel.org Mon Apr 27 23:45:11 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LyYPS-0005u2-Rx
-	for gcvg-git-2@gmane.org; Mon, 27 Apr 2009 23:30:43 +0200
+	id 1LyYdR-0005rP-1t
+	for gcvg-git-2@gmane.org; Mon, 27 Apr 2009 23:45:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754532AbZD0VaU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 27 Apr 2009 17:30:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752414AbZD0VaU
-	(ORCPT <rfc822;git-outgoing>); Mon, 27 Apr 2009 17:30:20 -0400
-Received: from george.spearce.org ([209.20.77.23]:34491 "EHLO
+	id S1752895AbZD0Vo7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 27 Apr 2009 17:44:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752378AbZD0Vo7
+	(ORCPT <rfc822;git-outgoing>); Mon, 27 Apr 2009 17:44:59 -0400
+Received: from george.spearce.org ([209.20.77.23]:39840 "EHLO
 	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750835AbZD0VaT (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 27 Apr 2009 17:30:19 -0400
-Received: by george.spearce.org (Postfix, from userid 1001)
-	id 985EB38215; Mon, 27 Apr 2009 21:30:19 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <1240756575-24113-1-git-send-email-robin.rosenberg@dewire.com>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	with ESMTP id S1751012AbZD0Vo6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 27 Apr 2009 17:44:58 -0400
+Received: by george.spearce.org (Postfix, from userid 1000)
+	id 58B8A38221; Mon, 27 Apr 2009 21:44:58 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.2.4 (2008-01-01) on george.spearce.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-4.4 required=4.0 tests=ALL_TRUSTED,BAYES_00
+	autolearn=ham version=3.2.4
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by george.spearce.org (Postfix) with ESMTP id D672038211;
+	Mon, 27 Apr 2009 21:44:57 +0000 (UTC)
+X-Mailer: git-send-email 1.6.3.rc1.205.g37f8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117716>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117717>
 
-Robin Rosenberg <robin.rosenberg@dewire.com> wrote:
-> The check for duplicate names unnecessarily checks for end of buffer.
-> Previous tests took care of that.
+In fe6c8248e1ed6bd9db76a8314103081a02d55393 ("Fully materialize an
+ObjectLoader before returning it from ObjectDatabase") I missed a
+crucial return call here in DeltaPackedObjectLoadeder.  That one
+missing line caused cache hits in the UnpackedObjectCache to then
+fall through and unpack the delta base, and apply the delta onto
+it, ignoring the fact that we had a successful cache hit.
 
-NAK.
+When packing and serving e.g. the Linux kernel repository this
+resulted in a 10x increase in the number of WindowCache.get()
+invocations we saw, as the UnpackedObjectCache was useless.
 
-We call duplicateName once per path in the tree.  Its purpose is
-to do a look-ahead into the tree to see if there is another tree
-entry whose name is the same name as this one.  Typically we only
-have to do 1 entry look ahead, as then we break out at l.269 if
-pathCompare returned that the current entry is < the next entry.
+Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
+---
+ .../spearce/jgit/lib/DeltaPackedObjectLoader.java  |    1 +
+ 1 files changed, 1 insertions(+), 0 deletions(-)
 
-A bad tree sorting would cause this test to incorrectly pass,
-but would in fact fail later inside checkTree on l.332-336.
-
-I had these bounds checks here in duplicateName because we are
-scanning forward in the tree, against tree entries that the
-caller checkTree has not yet examined.  If a later tree entry is
-in fact malformed, I didn't want duplicateName to throw with an
-ArrayIndexOutOfBoundsException, but instead wanted to let it be
-handled with a more detailed description inside of checkTree.
-
-Thus, duplicateName returns false when it encounters some sort of
-oddity in the tree entry (like unexpected end of buffer) and permits
-the caller to move forward, and then the caller will (eventually)
-identify the same problem and throw a proper message.
-
-We could change this by wrapping the duplicateName call on l.328
-with a try-catch-ArrayIndexOutOfBoundsException, but that felt dirty
-to me when I wrote this code.  In practice, we should never run out
-of buffer except in the corner case where we are looking at the last
-entry in the tree.  Any other time an ArrayIndexOutOfBoundsException
-inside of the duplicateName function indicates tree corruption,
-but we can't say what *kind* until we let checkTree move forward
-to that invalid portion.
-
-So, I counter with this patch, but it makes me feel horrible even
-proposing it, as a catch of ArrayIndexOutOfBoundsException could
-mask a programming problem inside of duplicateName:
-
---8<--
-Remove duplicate bound tests in ObjectChecker.checkTree
-
-Status: likely a very, very, very bad idea
-Not-signed-off-by: me <me@example.com>
-
-diff --git a/org.spearce.jgit/src/org/spearce/jgit/lib/ObjectChecker.java b/org.spearce.jgit/src/org/spearce/jgit/lib/ObjectChecker.java
-index 75e3c77..df27cfa 100644
---- a/org.spearce.jgit/src/org/spearce/jgit/lib/ObjectChecker.java
-+++ b/org.spearce.jgit/src/org/spearce/jgit/lib/ObjectChecker.java
-@@ -242,9 +242,9 @@ private static boolean duplicateName(final byte[] raw,
- 		int nextPtr = thisNameEnd + 1 + Constants.OBJECT_ID_LENGTH;
- 		for (;;) {
- 			int nextMode = 0;
-+			if (nextPtr >= sz)
-+				return false;
- 			for (;;) {
--				if (nextPtr >= sz)
--					return false;
- 				final byte c = raw[nextPtr++];
- 				if (' ' == c)
- 					break;
-@@ -254,14 +254,10 @@ private static boolean duplicateName(final byte[] raw,
- 
- 			final int nextNamePos = nextPtr;
- 			for (;;) {
--				if (nextPtr == sz)
--					return false;
- 				final byte c = raw[nextPtr++];
- 				if (c == 0)
- 					break;
+diff --git a/org.spearce.jgit/src/org/spearce/jgit/lib/DeltaPackedObjectLoader.java b/org.spearce.jgit/src/org/spearce/jgit/lib/DeltaPackedObjectLoader.java
+index 8194d94..7d3f30d 100644
+--- a/org.spearce.jgit/src/org/spearce/jgit/lib/DeltaPackedObjectLoader.java
++++ b/org.spearce.jgit/src/org/spearce/jgit/lib/DeltaPackedObjectLoader.java
+@@ -69,6 +69,7 @@ public void materialize(final WindowCursor curs) throws IOException {
+ 				objectType = cache.type;
+ 				objectSize = cache.data.length;
+ 				cachedBytes = cache.data;
++				return;
  			}
--			if (nextNamePos + 1 == nextPtr)
--				return false;
+ 		}
  
- 			final int cmp = pathCompare(raw, thisNamePos, thisNameEnd,
- 					FileMode.TREE.getBits(), nextNamePos, nextPtr - 1, nextMode);
-@@ -325,8 +321,17 @@ public void checkTree(final byte[] raw) throws CorruptObjectException {
- 				if (nameLen == 2 && raw[thisNameB + 1] == '.')
- 					throw new CorruptObjectException("invalid name '..'");
- 			}
--			if (duplicateName(raw, thisNameB, ptr - 1))
--				throw new CorruptObjectException("duplicate entry names");
-+
-+			try {
-+				if (duplicateName(raw, thisNameB, ptr - 1))
-+					throw new CorruptObjectException("duplicate entry names");
-+			} catch (ArrayIndexOutOfBoundsException e) {
-+				// Fall through.  This tree is somehow corrupt in a later
-+				// entry we have not yet processed.  Consider that there
-+				// are no duplicates for this name, and allow scanning to
-+				// continue so we can later find and report upon that bad
-+				// entry that caused us to throw here.
-+			}
- 
- 			if (lastNameB != 0) {
- 				final int cmp = pathCompare(raw, lastNameB, lastNameE,
-
 -- 
-Shawn.
+1.6.3.rc1.205.g37f8
