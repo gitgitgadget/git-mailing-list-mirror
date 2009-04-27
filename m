@@ -1,82 +1,94 @@
-From: "John Dlugosz" <JDlugosz@TradeStation.com>
-Subject: RE: How is git used as other than the project's version control?
-Date: Mon, 27 Apr 2009 19:10:06 -0400
-Message-ID: <450196A1AAAE4B42A00A8B27A59278E70AE3EC4B@EXCHANGE.trad.tradestation.com>
-References: <450196A1AAAE4B42A00A8B27A59278E70AE3EC48@EXCHANGE.trad.tradestation.com> <18071eea0904271606t4757a01di40e7b0cf6c558bea@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
-Cc: <git@vger.kernel.org>
-To: "Thomas Adam" <thomas.adam22@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Apr 28 01:11:13 2009
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: [JGIT PATCH] Fix more computation of integer average overflows
+Date: Mon, 27 Apr 2009 16:14:30 -0700
+Message-ID: <1240874070-10562-1-git-send-email-spearce@spearce.org>
+Cc: Matthias Sohn <matthias.sohn@sap.com>, git@vger.kernel.org
+To: Robin Rosenberg <robin.rosenberg@dewire.com>
+X-From: git-owner@vger.kernel.org Tue Apr 28 01:14:43 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LyZyh-0005K7-Ok
-	for gcvg-git-2@gmane.org; Tue, 28 Apr 2009 01:11:12 +0200
+	id 1Lya26-0006WE-Rw
+	for gcvg-git-2@gmane.org; Tue, 28 Apr 2009 01:14:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752266AbZD0XK7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 27 Apr 2009 19:10:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752111AbZD0XK7
-	(ORCPT <rfc822;git-outgoing>); Mon, 27 Apr 2009 19:10:59 -0400
-Received: from mail2.tradestation.com ([63.99.207.80]:39587 "EHLO
-	mail2.tradestation.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752073AbZD0XK6 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 27 Apr 2009 19:10:58 -0400
-X-ASG-Debug-ID: 1240873857-029303620000-QuoKaX
-X-Barracuda-URL: http://192.168.51.31:8000/cgi-bin/mark.cgi
-Received: from mail5.tradestation.com (localhost [127.0.0.1])
-	by mail2.tradestation.com (Spam & Virus Firewall) with ESMTP
-	id 8793C3A433C; Mon, 27 Apr 2009 19:10:57 -0400 (EDT)
-Received: from mail5.tradestation.com (tx02exchange02.trad.tradestation.com [192.168.51.76]) by mail2.tradestation.com with ESMTP id ccUB0yvvVPsYS2Oh; Mon, 27 Apr 2009 19:10:57 -0400 (EDT)
-X-Barracuda-Envelope-From: JDlugosz@TradeStation.com
-X-ASG-Whitelist: Client
-Received: from EXCHANGE.trad.tradestation.com ([10.4.0.121]) by mail5.tradestation.com with Microsoft SMTPSVC(6.0.3790.3959);
-	 Mon, 27 Apr 2009 19:10:07 -0400
-X-MimeOLE: Produced By Microsoft Exchange V6.5
-Content-class: urn:content-classes:message
-X-ASG-Orig-Subj: RE: How is git used as other than the project's version control?
-In-Reply-To: <18071eea0904271606t4757a01di40e7b0cf6c558bea@mail.gmail.com>
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-Thread-Topic: How is git used as other than the project's version control?
-Thread-Index: AcnHjMp9ibRU896xS6yB4moMKinSsAAABKFg
-X-OriginalArrivalTime: 27 Apr 2009 23:10:07.0799 (UTC) FILETIME=[4E7E5C70:01C9C78D]
-X-Barracuda-Connect: tx02exchange02.trad.tradestation.com[192.168.51.76]
-X-Barracuda-Start-Time: 1240873857
-X-Barracuda-Virus-Scanned: by TX-Barracuda Spam Firewall 400 at tradestation.com
+	id S1754954AbZD0XOc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 27 Apr 2009 19:14:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753322AbZD0XOc
+	(ORCPT <rfc822;git-outgoing>); Mon, 27 Apr 2009 19:14:32 -0400
+Received: from george.spearce.org ([209.20.77.23]:55554 "EHLO
+	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752420AbZD0XOb (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 27 Apr 2009 19:14:31 -0400
+Received: by george.spearce.org (Postfix, from userid 1000)
+	id 928D338221; Mon, 27 Apr 2009 23:14:31 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.2.4 (2008-01-01) on george.spearce.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-4.4 required=4.0 tests=ALL_TRUSTED,BAYES_00
+	autolearn=ham version=3.2.4
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by george.spearce.org (Postfix) with ESMTP id 0D49538211;
+	Mon, 27 Apr 2009 23:14:31 +0000 (UTC)
+X-Mailer: git-send-email 1.6.3.rc1.205.g37f8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117731>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117732>
 
-> What is it you're really asking here?  
+In 1d99aaab8e364c6ad722437e43c77fd54e13b071 Matthias Sohn pointed
+out that (low+high)/2 can overflow, so (low+high)>>>1 is a better
+choice when the result will be used as an array index.
 
-When putting together a presentation on git, I created a simple-looking
-slide claiming that "developers will use git anyway" as a
-general-purpose tool.  I find lots of web chatter about using it as a
-lighter-weight front-end to an Enterprise VCS, or as part of a technique
-for working away from your desk in such a system.  But it got me
-thinking about how it might be more like a text editor in the sense if
-being more generally useful than just that specific thing it's "for".
-But I don't have any concrete examples, just a vague notion.
+Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
+---
 
+ I guess we need this too then, eh?
 
-> I use "git diff" all the time
-> outside of $GIT_DIR for instance -- invaluable, and was designed
-> deliberately that way.
-> 
-> -- Thomas Adam
+ .../src/org/spearce/jgit/lib/PackIndexV1.java      |    2 +-
+ .../src/org/spearce/jgit/lib/PackIndexV2.java      |    6 +++---
+ 2 files changed, 4 insertions(+), 4 deletions(-)
 
-
-
-
-
-
-== beware, monster footer ahead==
-
-TradeStation Group, Inc. is a publicly-traded holding company (NASDAQ GS: TRAD) of three operating subsidiaries, TradeStation Securities, Inc. (Member NYSE, FINRA, SIPC and NFA), TradeStation Technologies, Inc., a trading software and subscription company, and TradeStation Europe Limited, a United Kingdom, FSA-authorized introducing brokerage firm. None of these companies provides trading or investment advice, recommendations or endorsements of any kind. The information transmitted is intended only for the person or entity to which it is addressed and may contain confidential and/or privileged material. Any review, retransmission, dissemination or other use of, or taking of any action in reliance upon, this information by persons or entities other than the intended recipient is prohibited.
-  If you received this in error, please contact the sender and delete the material from any computer.
+diff --git a/org.spearce.jgit/src/org/spearce/jgit/lib/PackIndexV1.java b/org.spearce.jgit/src/org/spearce/jgit/lib/PackIndexV1.java
+index fdaa094..0ad29e1 100644
+--- a/org.spearce.jgit/src/org/spearce/jgit/lib/PackIndexV1.java
++++ b/org.spearce.jgit/src/org/spearce/jgit/lib/PackIndexV1.java
+@@ -129,7 +129,7 @@ long findOffset(final AnyObjectId objId) {
+ 		int high = data.length / (4 + Constants.OBJECT_ID_LENGTH);
+ 		int low = 0;
+ 		do {
+-			final int mid = (low + high) / 2;
++			final int mid = (low + high) >>> 1;
+ 			final int pos = ((4 + Constants.OBJECT_ID_LENGTH) * mid) + 4;
+ 			final int cmp = objId.compareTo(data, pos);
+ 			if (cmp < 0)
+diff --git a/org.spearce.jgit/src/org/spearce/jgit/lib/PackIndexV2.java b/org.spearce.jgit/src/org/spearce/jgit/lib/PackIndexV2.java
+index eb56ed9..b539547 100644
+--- a/org.spearce.jgit/src/org/spearce/jgit/lib/PackIndexV2.java
++++ b/org.spearce.jgit/src/org/spearce/jgit/lib/PackIndexV2.java
+@@ -108,7 +108,7 @@ PackIndexV2(final InputStream fd) throws IOException {
+ 
+ 			final int intNameLen = (int) nameLen;
+ 			final byte[] raw = new byte[intNameLen];
+-			final int[] bin = new int[intNameLen >> 2];
++			final int[] bin = new int[intNameLen >>> 2];
+ 			NB.readFully(fd, raw, 0, raw.length);
+ 			for (int i = 0; i < bin.length; i++)
+ 				bin[i] = NB.decodeInt32(raw, i << 2);
+@@ -212,12 +212,12 @@ boolean hasCRC32Support() {
+ 
+ 	private int binarySearchLevelTwo(final AnyObjectId objId, final int levelOne) {
+ 		final int[] data = names[levelOne];
+-		int high = offset32[levelOne].length >> 2;
++		int high = offset32[levelOne].length >>> 2;
+ 		if (high == 0)
+ 			return -1;
+ 		int low = 0;
+ 		do {
+-			final int mid = (low + high) >> 1;
++			final int mid = (low + high) >>> 1;
+ 			final int mid4 = mid << 2;
+ 			final int cmp;
+ 
+-- 
+1.6.3.rc1.205.g37f8
