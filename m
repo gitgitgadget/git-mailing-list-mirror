@@ -1,50 +1,83 @@
-From: "David E. Wheeler" <david@kineticode.com>
-Subject: Re: Again with git-svn: File was not found in commit
-Date: Sun, 26 Apr 2009 17:27:05 -0700
-Message-ID: <30DE35DA-2D44-43C9-B6B9-E4DEDC3D8F6C@kineticode.com>
-References: <747CFDA3-AC27-44EB-A69C-BF9C29B05A31@kineticode.com> <20090421180231.GB16642@dcvr.yhbt.net> <8EDD65AC-9C25-4281-86F6-E52A41331B00@kineticode.com> <20090426015300.GA17212@dcvr.yhbt.net> <81EFD289-5E46-4B27-8DA4-C2039915CE2D@kineticode.com> <m31vrfq11w.fsf@localhost.localdomain>
-Mime-Version: 1.0 (Apple Message framework v930.3)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
-Content-Transfer-Encoding: 7bit
-Cc: Eric Wong <normalperson@yhbt.net>, git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Apr 27 10:25:50 2009
+From: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
+Subject: Re: [doc] User Manual Suggestion
+Date: Mon, 27 Apr 2009 02:00:07 +0200
+Message-ID: <20090427000007.GE12338@atjola.homenet>
+References: <m24owgqy0j.fsf@boostpro.com> <200904240051.46233.johan@herland.net> <b4087cc50904231730i1e8a005cpaf1921e23df11da6@mail.gmail.com> <200904242230.13239.johan@herland.net> <alpine.LNX.2.00.0904241655090.2147@iabervon.org> <20090424213848.GA14493@coredump.intra.peff.net> <alpine.LNX.2.00.0904241911590.2147@iabervon.org> <b4087cc50904241629u76454b1chc6e84e95066a9100@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Daniel Barkalow <barkalow@iabervon.org>, Jeff King <peff@peff.net>,
+	Johan Herland <johan@herland.net>, git@vger.kernel.org,
+	David Abrahams <dave@boostpro.com>,
+	"J. Bruce Fields" <bfields@fieldses.org>
+To: Michael Witten <mfwitten@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Apr 27 10:29:38 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LyElQ-0005IM-P5
-	for gcvg-git-2@gmane.org; Mon, 27 Apr 2009 02:32:05 +0200
+	id 1LyEIu-0004SW-QS
+	for gcvg-git-2@gmane.org; Mon, 27 Apr 2009 02:02:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751643AbZD0A1X (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 26 Apr 2009 20:27:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751511AbZD0A1W
-	(ORCPT <rfc822;git-outgoing>); Sun, 26 Apr 2009 20:27:22 -0400
-Received: from host-201.commandprompt.net ([207.173.203.201]:55487 "EHLO
-	smtp.kineticode.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750900AbZD0A1W (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 26 Apr 2009 20:27:22 -0400
-Received: from [192.168.1.100] (c-76-105-135-51.hsd1.or.comcast.net [76.105.135.51])
-	by smtp.kineticode.com (Postfix) with ESMTPSA id 8C57450805E;
-	Sun, 26 Apr 2009 17:26:14 -0700 (PDT)
-In-Reply-To: <m31vrfq11w.fsf@localhost.localdomain>
-X-Mailer: Apple Mail (2.930.3)
+	id S1751536AbZD0AAW convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 26 Apr 2009 20:00:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751511AbZD0AAW
+	(ORCPT <rfc822;git-outgoing>); Sun, 26 Apr 2009 20:00:22 -0400
+Received: from mail.gmx.net ([213.165.64.20]:57042 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750920AbZD0AAV (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 26 Apr 2009 20:00:21 -0400
+Received: (qmail invoked by alias); 27 Apr 2009 00:00:20 -0000
+Received: from i59F5A916.versanet.de (EHLO atjola.local) [89.245.169.22]
+  by mail.gmx.net (mp021) with SMTP; 27 Apr 2009 02:00:20 +0200
+X-Authenticated: #5039886
+X-Provags-ID: V01U2FsdGVkX1/S3nJJg3nSvsSWnoTTTgnuDpucRPTE9wqPpWnRkR
+	2l7jgBS1KvthkE
+Content-Disposition: inline
+In-Reply-To: <b4087cc50904241629u76454b1chc6e84e95066a9100@mail.gmail.com>
+User-Agent: Mutt/1.5.18 (2008-05-17)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117606>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117607>
 
-On Apr 26, 2009, at 1:17 AM, Jakub Narebski wrote:
+On 2009.04.24 18:29:22 -0500, Michael Witten wrote:
+> On Fri, Apr 24, 2009 at 18:21, Daniel Barkalow <barkalow@iabervon.org=
+> wrote:
+> > "git blame 1a2b3c:Makefile" worked despite this technically being
+> > incoherent.
+>=20
+> It seems to work on my end, and it's perfectly coherent if you
+> consider git-blame to be overloaded to handle both pointers and
+> addresses (or references and object names, if you prefer).
 
->> [Finally]: http://justatheory.com/computers/vcs/git/bricolage-to-git.html
->
-> Thank you for posting this detailed analysis.
+=46ails for me. And it's technically incoherent in that it makes no sen=
+se
+to use blame with a blob object. 1a2b3c:Makefile identifies "just" a
+blob object. And that has no parents and no history, just contents. Onl=
+y
+the commit objects have the references that connect them to form a
+history.
 
-My pleasure; hopefully someone will get something out of it to help  
-with *their* migration. I'll likely publish some final notes and the  
-scripts I wrote sometime this week.
+=46or example, you could have a history like this:
 
-Best,
+A---B---C---D---E
 
-David
+And a file "foo" that has the same contents for A and E. Then "A:foo"
+and "E:foo" lead to the same blob object, and you can't uniquely go fro=
+m
+that blob object to any commit object. So technically, you can't tell i=
+f
+"git blame E:foo" means "git blame E foo" or "git blame A foo" (and you
+can add a bunch of complexity by having, for example, a second file
+with a different name that had the same content at some point).
+
+To make that coherent, you must change the definition of the
+<tree-ish>:<path> syntax so that the context in which the path is
+resolved is kept, it must no longer just identify an object, but
+something more complex.
+
+Bj=F6rn
