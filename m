@@ -1,65 +1,58 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: t3702-add-edit.sh failure in next
-Date: Mon, 27 Apr 2009 18:13:07 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.0904271812180.7741@intel-tinevez-2-302>
-References: <e2b179460904270812t3fa159f1ja3b06905d9effebe@mail.gmail.com>
+From: elupus <elupus@ecce.se>
+Subject: git 1.5.4.3 push incorrectly honors grafts file
+Date: Mon, 27 Apr 2009 17:51:05 +0200
+Message-ID: <d5uvsf40ln1i.fbvskgg1w9e6$.dlg@40tude.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Mike Ralphson <mike.ralphson@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Apr 27 18:13:27 2009
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Apr 27 18:25:17 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LyTSN-0003j3-Fz
-	for gcvg-git-2@gmane.org; Mon, 27 Apr 2009 18:13:23 +0200
+	id 1LyTdt-0001Qr-8I
+	for gcvg-git-2@gmane.org; Mon, 27 Apr 2009 18:25:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755169AbZD0QNO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 27 Apr 2009 12:13:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755073AbZD0QNO
-	(ORCPT <rfc822;git-outgoing>); Mon, 27 Apr 2009 12:13:14 -0400
-Received: from mail.gmx.net ([213.165.64.20]:34747 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754918AbZD0QNO (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 27 Apr 2009 12:13:14 -0400
-Received: (qmail invoked by alias); 27 Apr 2009 16:13:08 -0000
-Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
-  by mail.gmx.net (mp007) with SMTP; 27 Apr 2009 18:13:08 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/j9ggng63jukzCIbyrllQDZ/IJZtOBmvS5+9bO0C
-	hOOiXl/Ne/CgRU
-X-X-Sender: schindel@intel-tinevez-2-302
-In-Reply-To: <e2b179460904270812t3fa159f1ja3b06905d9effebe@mail.gmail.com>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.59
+	id S1755419AbZD0QZH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 27 Apr 2009 12:25:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755161AbZD0QZH
+	(ORCPT <rfc822;git-outgoing>); Mon, 27 Apr 2009 12:25:07 -0400
+Received: from main.gmane.org ([80.91.229.2]:36337 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753197AbZD0QZG (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 27 Apr 2009 12:25:06 -0400
+Received: from root by ciao.gmane.org with local (Exim 4.43)
+	id 1LyTdg-0001I1-Rm
+	for git@vger.kernel.org; Mon, 27 Apr 2009 16:25:04 +0000
+Received: from c83-254-4-118.bredband.comhem.se ([83.254.4.118])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 27 Apr 2009 16:25:04 +0000
+Received: from elupus by c83-254-4-118.bredband.comhem.se with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 27 Apr 2009 16:25:04 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: c83-254-4-118.bredband.comhem.se
+User-Agent: 40tude_Dialog/2.0.15.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117684>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117685>
 
-Hi,
+Hi, 
 
-On Mon, 27 Apr 2009, Mike Ralphson wrote:
+I recently had a problem with git push honoring the grafts file. It caused
+it not to push all data required for a branch to the remote repository,
+rendering it impossible to clone the remote repository (missing blobs)
 
-> I'm seeing a reproducible failure in t3702 on AIX 5.3, shell set to
-> bash (v2.05b)
-> 
-> The 'test_cmp orig-patch expected-patch' is seeing this diff:
-> 
-> 2c2
-> < index b9834b5..52aff4c 100644
-> ---
-> > index b9834b5..0b8f197 100644
+This was with an not so fresh git version of 1.5.4.3 (ubuntu hardy).
 
-Could you send me the output of
+Has this issue been fixed in later git version? I saw a thread talking
+about it a long time ago (long before my release in question) on this
+mailing list, but nothing was mentioned about if it was actually solved.
 
-	cd t/trash\ directory.t3702* &&
-	git show 0b8f197 > file.txt
-
-?
-
-Thanks,
-Dscho
+Regards
+Joakim Plate
