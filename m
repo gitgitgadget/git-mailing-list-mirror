@@ -1,89 +1,98 @@
-From: Patrick Welche <prlw1@cam.ac.uk>
-Subject: compiling on netbsd
-Date: Sun, 26 Apr 2009 14:49:00 +0100
-Message-ID: <20090426134900.GB454@quartz.inf.phy.cam.ac.uk>
+From: Dmitry Potapov <dpotapov@gmail.com>
+Subject: Re: [PATCH] Add Russian translation to gitk
+Date: Mon, 27 Apr 2009 12:39:53 +0400
+Message-ID: <20090427083953.GB15723@dpotapov.dyndns.org>
+References: <20090426132452.GB30825@blimp.localdomain>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; boundary="oyUTqETQ0mS9luUI"
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Apr 27 12:16:41 2009
+Content-Type: text/plain; charset=koi8-r
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Paul Mackerras <paulus@samba.org>
+To: Alex Riesen <raa.lkml@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Apr 27 12:17:00 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ly5A0-000245-6p
-	for gcvg-git-2@gmane.org; Sun, 26 Apr 2009 16:16:48 +0200
+	id 1LyMOd-0004Zk-OP
+	for gcvg-git-2@gmane.org; Mon, 27 Apr 2009 10:41:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756007AbZDZOOl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 26 Apr 2009 10:14:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755546AbZDZOOl
-	(ORCPT <rfc822;git-outgoing>); Sun, 26 Apr 2009 10:14:41 -0400
-Received: from ppsw-1.csi.cam.ac.uk ([131.111.8.131]:60498 "EHLO
-	ppsw-1.csi.cam.ac.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755968AbZDZOOk (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 26 Apr 2009 10:14:40 -0400
-X-Greylist: delayed 1537 seconds by postgrey-1.27 at vger.kernel.org; Sun, 26 Apr 2009 10:14:40 EDT
-X-Cam-AntiVirus: no malware found
-X-Cam-SpamDetails: not scanned
-X-Cam-ScannerInfo: http://www.cam.ac.uk/cs/email/scanner/
-Received: from skye.inf.phy.cam.ac.uk ([131.111.79.113]:34303)
-	by ppsw-1.csi.cam.ac.uk (ppsw.cam.ac.uk [131.111.8.131]:25)
-	with esmtp id 1Ly4j6-0006TE-4o (Exim 4.70) for git@vger.kernel.org
-	(return-path <prlw1@inf.phy.cam.ac.uk>); Sun, 26 Apr 2009 14:49:00 +0100
-Received: from quartz.inf.phy.cam.ac.uk ([131.111.79.101])
-	by skye.inf.phy.cam.ac.uk with esmtp (Exim 3.36 #1)
-	id 1Ly4j6-0000Mj-00
-	for git@vger.kernel.org; Sun, 26 Apr 2009 14:49:00 +0100
-Received: from prlw1 by quartz.inf.phy.cam.ac.uk with local (Exim 4.66)
-	(envelope-from <prlw1@inf.phy.cam.ac.uk>)
-	id 1Ly4j6-0000Bu-Dc
-	for git@vger.kernel.org; Sun, 26 Apr 2009 14:49:00 +0100
+	id S1753510AbZD0IkX convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 27 Apr 2009 04:40:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752675AbZD0IkX
+	(ORCPT <rfc822;git-outgoing>); Mon, 27 Apr 2009 04:40:23 -0400
+Received: from mail-qy0-f112.google.com ([209.85.221.112]:60081 "EHLO
+	mail-qy0-f112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752999AbZD0IkW (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 27 Apr 2009 04:40:22 -0400
+Received: by qyk10 with SMTP id 10so1325373qyk.33
+        for <git@vger.kernel.org>; Mon, 27 Apr 2009 01:40:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=dUNPvxPSPC/wcTRKcC0LFmo+t0aeC+4gw095NqgXrew=;
+        b=ZinopGroQh1vgIdENUqLPDbunGW/YBxjRUxfsnp0vb43R3HhY4Xe2lhV8/ZMrywsN4
+         AH5a3nlaYGh9r/f/UcyNcNMlG4H0WYP1uxzyWgb0kaQ8f+EyTXkVZ+0CW8Tfj08YpSP3
+         CDjgzWDP/5fRj+XQR/AzlYCCdJpvp7xU30SyM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        b=Hoq3Sn9JaIHusdf3I86jNLVmcV7emRGhcrXg1SvfpiunWLRnIcKw5rhi4GzF9hYPqh
+         pMG6EP2B/2kYLAbwgfBDcj8lT497s6QL0+hGSVWOkW8v3NdHGkVNa9y2Lguy1bgMidgI
+         z70W39SqR1bWNG6WbH0TtWur3zkmbLnmMQtAE=
+Received: by 10.224.6.131 with SMTP id 3mr5369556qaz.366.1240821621348;
+        Mon, 27 Apr 2009 01:40:21 -0700 (PDT)
+Received: from localhost ([91.78.48.223])
+        by mx.google.com with ESMTPS id 2sm6316916qwi.3.2009.04.27.01.40.19
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 27 Apr 2009 01:40:20 -0700 (PDT)
 Content-Disposition: inline
-User-Agent: Mutt/1.5.19 (2009-04-07)
+In-Reply-To: <20090426132452.GB30825@blimp.localdomain>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117640>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117641>
+
+On Sun, Apr 26, 2009 at 03:24:52PM +0200, Alex Riesen wrote:
+> Signed-off-by: Alex Riesen <raa.lkml@gmail.com>
+> ---
+>=20
+> As with the git-gui translation, if someone understanding russian see=
+s
+> this, could you please take a look and drop me a note if you find
+> something "strange"?
+
+The translation uses a single Russian verb "=F0=C5=D2=C5=CA=D4=C9" in d=
+ifferent
+meanings (where the original English phrase had "check out", "move",
+"go to", "focus) and that creates some ambiguity. For example:
+
+> +#: gitk:2347
+> +msgid "Check out this branch"
+> +msgstr "=F0=C5=D2=C5=CA=D4=C9 =CE=C1 =DC=D4=D5 =D7=C5=D4=D7=D8"
+
+> +#: gitk:2644
+> +msgid "<Home>\t\tMove to first commit"
+> +msgstr "<Home>\t\t=F0=C5=D2=C5=CA=D4=C9 =CB =D0=C5=D2=D7=CF=CD=D5 =D3=
+=CF=D3=D4=CF=D1=CE=C9=C0"
+
+How one is supposed to know that when we speak about branch, "=F0=C5=D2=
+=C5=CA=D4=C9"
+means "check out" but when about some commit then it is "move"? Only
+because gitk does not allow to check out arbitrary commit _yet_?
+
+IMHO, it is very very confusing.
+
+I think "Check out this branch" should be translated as "=F0=C5=D2=C5=CB=
+=CC=C0=DE=C9=D4=D8
+=D2=C1=C2=CF=DE=C9=CA =CB=C1=D4=C1=CC=CF=C7 =CE=C1 =DC=D4=D5 =D7=C5=D4=D7=
+=D8" (which literally means: Switch worktree
+to this branch).
 
 
---oyUTqETQ0mS9luUI
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-
-I found I needed to add the following patch in order to compile today's
-git source under NetBSD-current (5.99.11)
-
-Cheers,
-
-Patrick
-
---oyUTqETQ0mS9luUI
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: attachment; filename="git.patch"
-
-diff --git a/Makefile b/Makefile
-index 5c8e83a..25d2b9c 100644
---- a/Makefile
-+++ b/Makefile
-@@ -764,6 +764,7 @@ ifeq ($(uname_S),NetBSD)
- 	BASIC_CFLAGS += -I/usr/pkg/include
- 	BASIC_LDFLAGS += -L/usr/pkg/lib $(CC_LD_DYNPATH)/usr/pkg/lib
- 	THREADED_DELTA_SEARCH = YesPlease
-+	USE_ST_TIMESPEC = YesPlease
- endif
- ifeq ($(uname_S),AIX)
- 	NO_STRCASESTR=YesPlease
-diff --git a/git-compat-util.h b/git-compat-util.h
-index 785aa31..1ac16bd 100644
---- a/git-compat-util.h
-+++ b/git-compat-util.h
-@@ -46,6 +46,7 @@
- #define _ALL_SOURCE 1
- #define _GNU_SOURCE 1
- #define _BSD_SOURCE 1
-+#define _NETBSD_SOURCE 1
- 
- #include <unistd.h>
- #include <stdio.h>
-
---oyUTqETQ0mS9luUI--
+Dmitry
