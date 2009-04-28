@@ -1,51 +1,100 @@
-From: "David E. Wheeler" <david@kineticode.com>
-Subject: Re: Again with git-svn: File was not found in commit
-Date: Tue, 28 Apr 2009 09:15:38 -0700
-Message-ID: <2A4DD157-32A4-4515-BC4D-0790714A512A@kineticode.com>
-References: <747CFDA3-AC27-44EB-A69C-BF9C29B05A31@kineticode.com> <20090421180231.GB16642@dcvr.yhbt.net> <8EDD65AC-9C25-4281-86F6-E52A41331B00@kineticode.com> <20090426015300.GA17212@dcvr.yhbt.net> <81EFD289-5E46-4B27-8DA4-C2039915CE2D@kineticode.com> <m31vrfq11w.fsf@localhost.localdomain> <30DE35DA-2D44-43C9-B6B9-E4DEDC3D8F6C@kineticode.com> <m3ws95nml5.fsf@localhost.localdomain>
-Mime-Version: 1.0 (Apple Message framework v930.3)
-Content-Type: text/plain; charset=ISO-8859-1;
-	format=flowed	delsp=yes
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Eric Wong <normalperson@yhbt.net>, git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Apr 28 18:23:27 2009
+From: "John Dlugosz" <JDlugosz@TradeStation.com>
+Subject: RE: how to arrange source control?
+Date: Tue, 28 Apr 2009 12:42:51 -0400
+Message-ID: <450196A1AAAE4B42A00A8B27A59278E70AE3EEB1@EXCHANGE.trad.tradestation.com>
+References: <450196A1AAAE4B42A00A8B27A59278E70AE3EC2C@EXCHANGE.trad.tradestation.com> <20090428112423.GA28151@ralph>
+Mime-Version: 1.0
+Content-Type: text/plain;
+	charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
+Cc: <git@vger.kernel.org>
+To: "Bob Dobbs" <bob@hindbrain.net>
+X-From: git-owner@vger.kernel.org Tue Apr 28 18:43:51 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lyq5e-0004CM-0b
-	for gcvg-git-2@gmane.org; Tue, 28 Apr 2009 18:23:26 +0200
+	id 1LyqPN-00066x-I9
+	for gcvg-git-2@gmane.org; Tue, 28 Apr 2009 18:43:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757500AbZD1QXP convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 28 Apr 2009 12:23:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754121AbZD1QXP
-	(ORCPT <rfc822;git-outgoing>); Tue, 28 Apr 2009 12:23:15 -0400
-Received: from host-201.commandprompt.net ([207.173.203.201]:48380 "EHLO
-	smtp.kineticode.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753083AbZD1QXO convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 28 Apr 2009 12:23:14 -0400
-Received: from [192.168.1.100] (c-76-105-135-51.hsd1.or.comcast.net [76.105.135.51])
-	by smtp.kineticode.com (Postfix) with ESMTPSA id A6AC7508060;
-	Tue, 28 Apr 2009 09:22:01 -0700 (PDT)
-In-Reply-To: <m3ws95nml5.fsf@localhost.localdomain>
-X-Mailer: Apple Mail (2.930.3)
+	id S1759469AbZD1Qne (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 28 Apr 2009 12:43:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759369AbZD1Qnd
+	(ORCPT <rfc822;git-outgoing>); Tue, 28 Apr 2009 12:43:33 -0400
+Received: from mail2.tradestation.com ([63.99.207.80]:42865 "EHLO
+	mail2.tradestation.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759343AbZD1Qnc convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 28 Apr 2009 12:43:32 -0400
+X-ASG-Debug-ID: 1240937011-19f500f00000-QuoKaX
+X-Barracuda-URL: http://192.168.51.31:8000/cgi-bin/mark.cgi
+Received: from mail5.tradestation.com (localhost [127.0.0.1])
+	by mail2.tradestation.com (Spam & Virus Firewall) with ESMTP
+	id F166A3AF2F3; Tue, 28 Apr 2009 12:43:31 -0400 (EDT)
+Received: from mail5.tradestation.com (tx02exchange02.trad.tradestation.com [192.168.51.76]) by mail2.tradestation.com with ESMTP id KdeCsYdpGE8WmRdm; Tue, 28 Apr 2009 12:43:31 -0400 (EDT)
+X-Barracuda-Envelope-From: JDlugosz@TradeStation.com
+X-ASG-Whitelist: Client
+Received: from EXCHANGE.trad.tradestation.com ([10.4.0.121]) by mail5.tradestation.com with Microsoft SMTPSVC(6.0.3790.3959);
+	 Tue, 28 Apr 2009 12:43:31 -0400
+X-MimeOLE: Produced By Microsoft Exchange V6.5
+Content-class: urn:content-classes:message
+X-ASG-Orig-Subj: RE: how to arrange source control?
+In-Reply-To: <20090428112423.GA28151@ralph>
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+Thread-Topic: how to arrange source control?
+Thread-Index: AcnH8+JdohGlgUu0QZO2ELkUEMFi9wAK6/fA
+X-OriginalArrivalTime: 28 Apr 2009 16:43:31.0279 (UTC) FILETIME=[76B40DF0:01C9C820]
+X-Barracuda-Connect: tx02exchange02.trad.tradestation.com[192.168.51.76]
+X-Barracuda-Start-Time: 1240937011
+X-Barracuda-Virus-Scanned: by TX-Barracuda Spam Firewall 400 at tradestation.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117797>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117798>
 
-On Apr 28, 2009, at 2:40 AM, Jakub Narebski wrote:
+(back on the list so others can correct what I said)
 
-> BTW the above story was mentioned in "Perlbuzz news roundup =20
-> 2009-04-27"
-> http://perlbuzz.com/2009/04/perlbuzz-news-roundup-2009-04-27.html
->
-> P.S. Any relation to David A. Wheeler (http://www.dwheeler.com/blog)?
+> So, if you make libraries submodules within an app, does git make a
+new
+> copy of the library source
+> and put it under the app, or does it just store a different kind of
+> object representing the current
+> state of the library source under the app?
 
-No, just my doppelg=E4nger. :-)
+It looks like copies of the source.  Obviously they are, if the versions
+differ!  But git supposedly does some hard linking under the hood, so it
+doesn't waste disk space.  I don't know if that applies to the working
+directory files too, or just to the internal repository implementation
+files.
 
-Best,
+> Is there a way to later automatically merge library changes done in
+> different apps?
 
-David
+No, it's like any other change.  That library will have its own git repo
+in that subdirectory.  You need to check out a branch, change it, then
+push.  The other apps, even on the same machine, will not use the new
+stuff until you tell it to.  That's a feature -- it will keep pinned to
+what it was building against until you are ready to upgrade.
+
+> > I've not taken it to its logical conclusion of libs that use other
+> libs
+> > which are also used directly by the app.
+> 
+> Yes, some of my libs use other libs, all of which are used by certain
+> apps.
+> 
+> I've never used version control before. I always made a 'snapshot' of
+> code a a milestone, but I'm hoping
+> there is a better way.
+
+Another way I thought about, that might be just the ticket for you, is
+to make all the apps and libs in your current directory structure into
+submodules of a single master suite repository, which doesn't have
+anything in it other than those submodules.
+
+--John
+(mind the footer... here it comes!)
+
+TradeStation Group, Inc. is a publicly-traded holding company (NASDAQ GS: TRAD) of three operating subsidiaries, TradeStation Securities, Inc. (Member NYSE, FINRA, SIPC and NFA), TradeStation Technologies, Inc., a trading software and subscription company, and TradeStation Europe Limited, a United Kingdom, FSA-authorized introducing brokerage firm. None of these companies provides trading or investment advice, recommendations or endorsements of any kind. The information transmitted is intended only for the person or entity to which it is addressed and may contain confidential and/or privileged material. Any review, retransmission, dissemination or other use of, or taking of any action in reliance upon, this information by persons or entities other than the intended recipient is prohibited.
+  If you received this in error, please contact the sender and delete the material from any computer.
