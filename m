@@ -1,59 +1,64 @@
-From: Peter Simons <simons@cryp.to>
-Subject: gitweb sets incorrect <base> header
-Date: Tue, 28 Apr 2009 14:41:11 +0200
-Organization: private
-Message-ID: <877i15uf14.fsf@write-only.cryp.to>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: [PATCH] Add --reference option to git submodule
+Date: Tue, 28 Apr 2009 15:12:40 +0200
+Message-ID: <49F700C8.10200@drmicha.warpmail.net>
+References: <20090428065237.GA5972@redhat.com> <49F6E419.1020308@drmicha.warpmail.net> <20090428112519.GB27513@redhat.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Apr 28 14:41:39 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: "Michael S. Tsirkin" <mst@redhat.com>
+X-From: git-owner@vger.kernel.org Tue Apr 28 15:12:59 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lymcx-0001RB-3O
-	for gcvg-git-2@gmane.org; Tue, 28 Apr 2009 14:41:35 +0200
+	id 1Lyn7J-0000uZ-HZ
+	for gcvg-git-2@gmane.org; Tue, 28 Apr 2009 15:12:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753955AbZD1Ml1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 28 Apr 2009 08:41:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753633AbZD1Ml0
-	(ORCPT <rfc822;git-outgoing>); Tue, 28 Apr 2009 08:41:26 -0400
-Received: from main.gmane.org ([80.91.229.2]:38118 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751720AbZD1Ml0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 28 Apr 2009 08:41:26 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1Lymcn-0001Ev-80
-	for git@vger.kernel.org; Tue, 28 Apr 2009 12:41:25 +0000
-Received: from p54bd255c.dip0.t-ipconnect.de ([84.189.37.92])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 28 Apr 2009 12:41:25 +0000
-Received: from simons by p54bd255c.dip0.t-ipconnect.de with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 28 Apr 2009 12:41:25 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: p54bd255c.dip0.t-ipconnect.de
-Cancel-Lock: sha1:FBJapG/8wq03rtM5lkQ7gxrX/A8=
+	id S1754351AbZD1NMt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 28 Apr 2009 09:12:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753937AbZD1NMt
+	(ORCPT <rfc822;git-outgoing>); Tue, 28 Apr 2009 09:12:49 -0400
+Received: from out3.smtp.messagingengine.com ([66.111.4.27]:59017 "EHLO
+	out3.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753243AbZD1NMt (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 28 Apr 2009 09:12:49 -0400
+Received: from compute2.internal (compute2.internal [10.202.2.42])
+	by out1.messagingengine.com (Postfix) with ESMTP id 237F032873C;
+	Tue, 28 Apr 2009 09:12:48 -0400 (EDT)
+Received: from heartbeat1.messagingengine.com ([10.202.2.160])
+  by compute2.internal (MEProxy); Tue, 28 Apr 2009 09:12:48 -0400
+X-Sasl-enc: aRf+mt+DPow22ppPBjMoPDs7mLC2VKYhLeO8x2wHaF7b 1240924367
+Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.12])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 5E661173B3;
+	Tue, 28 Apr 2009 09:12:47 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1b5pre) Gecko/20090427 Lightning/1.0pre Shredder/3.0b3pre
+In-Reply-To: <20090428112519.GB27513@redhat.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117770>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117772>
 
-Hi,
+Michael S. Tsirkin venit, vidit, dixit 28.04.2009 13:25:
+> On Tue, Apr 28, 2009 at 01:10:17PM +0200, Michael J Gruber wrote:
+>>> +
+>>>  <path>...::
+>>>  	Paths to submodule(s). When specified this will restrict the command
+>>
+>> Either "Path(s) to submodule(s)" or "Paths to submodules". I prefer the
+>> latter.
+>>
+>>>  	to only operate on the submodules found at the specified paths.
+>>
+>> ..to operate on... paths only.
+>>
+> 
+> I didn't touch these lines, so ... patch?
+> 
 
-after a recent gitweb update to revision v1.6.3-rc3-12-gb79376c, the CGI now
-generates an incorrect <base> header. For example, the first "patch" on the
-page
+You're right, they were only context (I got hyperactive it seems). It's
+better to leave that for an overall style spring clean.
 
-  http://git.cryp.to/fastcgi/commitdiff/9ad9965b3fa293c458df14391f181f2f8f1197cd
-
-erroneously refer to http://git.cryp.to/cgi-bin/gitweb.cgi#patch1, but that
-page doesn't exist. It appears that $base_url is not determined correctly.
-
-Does anyone have a clue how that problem can be fixed?
-
-Take care,
-Peter
+Michael
