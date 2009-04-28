@@ -1,177 +1,82 @@
-From: "Michael S. Tsirkin" <mst@redhat.com>
-Subject: [PATCHv2] Add --reference option to git submodule.
-Date: Tue, 28 Apr 2009 15:30:33 +0300
-Message-ID: <20090428123033.GA6839@redhat.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Tue Apr 28 14:32:08 2009
+From: Eric Blake <ebb9@byu.net>
+Subject: [PATCH 2/2] doc: consistently use ASCIIDOC_EXTRA
+Date: Tue, 28 Apr 2009 06:28:32 -0600
+Message-ID: <1240921712-3100-3-git-send-email-ebb9@byu.net>
+References: <1240921712-3100-1-git-send-email-ebb9@byu.net>
+ <1240921712-3100-2-git-send-email-ebb9@byu.net>
+Cc: Eric Blake <ebb9@byu.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Apr 28 14:34:46 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LymTe-00052a-Hq
-	for gcvg-git-2@gmane.org; Tue, 28 Apr 2009 14:31:59 +0200
+	id 1LymWI-0006QG-Tu
+	for gcvg-git-2@gmane.org; Tue, 28 Apr 2009 14:34:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755936AbZD1Mbl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 28 Apr 2009 08:31:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755873AbZD1Mbk
-	(ORCPT <rfc822;git-outgoing>); Tue, 28 Apr 2009 08:31:40 -0400
-Received: from mx2.redhat.com ([66.187.237.31]:50167 "EHLO mx2.redhat.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752444AbZD1Mbk (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 28 Apr 2009 08:31:40 -0400
-Received: from int-mx2.corp.redhat.com (int-mx2.corp.redhat.com [172.16.27.26])
-	by mx2.redhat.com (8.13.8/8.13.8) with ESMTP id n3SCVZOR012277;
-	Tue, 28 Apr 2009 08:31:35 -0400
-Received: from ns3.rdu.redhat.com (ns3.rdu.redhat.com [10.11.255.199])
-	by int-mx2.corp.redhat.com (8.13.1/8.13.1) with ESMTP id n3SCVYdf029711;
-	Tue, 28 Apr 2009 08:31:35 -0400
-Received: from redhat.com (vpn-10-13.str.redhat.com [10.32.10.13])
-	by ns3.rdu.redhat.com (8.13.8/8.13.8) with ESMTP id n3SCVWPA015185;
-	Tue, 28 Apr 2009 08:31:33 -0400
-Content-Disposition: inline
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-Scanned-By: MIMEDefang 2.58 on 172.16.27.26
+	id S1754779AbZD1Mee (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 28 Apr 2009 08:34:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754677AbZD1Mee
+	(ORCPT <rfc822;git-outgoing>); Tue, 28 Apr 2009 08:34:34 -0400
+Received: from qmta14.emeryville.ca.mail.comcast.net ([76.96.27.212]:35588
+	"EHLO QMTA14.emeryville.ca.mail.comcast.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753633AbZD1Mee (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 28 Apr 2009 08:34:34 -0400
+X-Greylist: delayed 344 seconds by postgrey-1.27 at vger.kernel.org; Tue, 28 Apr 2009 08:34:33 EDT
+Received: from OMTA08.emeryville.ca.mail.comcast.net ([76.96.30.12])
+	by QMTA14.emeryville.ca.mail.comcast.net with comcast
+	id kz6z1b0010FhH24AE0UqKH; Tue, 28 Apr 2009 12:28:50 +0000
+Received: from localhost.localdomain ([24.10.247.15])
+	by OMTA08.emeryville.ca.mail.comcast.net with comcast
+	id l0UP1b0060Lg2Gw8U0Upmo; Tue, 28 Apr 2009 12:28:49 +0000
+X-Mailer: git-send-email 1.6.3.rc3.2.g4b51
+In-Reply-To: <1240921712-3100-2-git-send-email-ebb9@byu.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117768>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117769>
 
-This adds --reference option to git submodule add and
-git submodule update commands, which is passed on to git clone.
+For all uses of $(ASCIIDOC) in Documentation/Makefile, supply the same
+options via $(ASCIIDOC_EXTRA).
 
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Signed-off-by: Eric Blake <ebb9@byu.net>
 ---
 
-Here's v2. Ack?
+I was using asciidoc 8.4.3, and surprised when some, but not all, of the
+asciidoc invocations used -a asciidoc7compatible.
 
-Changes from v1: fixes in documentation, fix test usage and
-make it portable.
+ Documentation/Makefile |    6 +++---
+ 1 files changed, 3 insertions(+), 3 deletions(-)
 
- Documentation/git-submodule.txt |   14 ++++++++++++--
- git-submodule.sh                |   31 ++++++++++++++++++++++++++++---
- 2 files changed, 40 insertions(+), 5 deletions(-)
+diff --git a/Documentation/Makefile b/Documentation/Makefile
+index e18242a..7a8037f 100644
+--- a/Documentation/Makefile
++++ b/Documentation/Makefile
+@@ -240,7 +240,7 @@ $(MAN_HTML): %.html : %.txt
+ 	mv $@+ $@
 
-diff --git a/Documentation/git-submodule.txt b/Documentation/git-submodule.txt
-index 3b8df44..14256c6 100644
---- a/Documentation/git-submodule.txt
-+++ b/Documentation/git-submodule.txt
-@@ -9,10 +9,12 @@ git-submodule - Initialize, update or inspect submodules
- SYNOPSIS
- --------
- [verse]
--'git submodule' [--quiet] add [-b branch] [--] <repository> <path>
-+'git submodule' [--quiet] add [-b branch]
-+	      [--reference <repository>] [--] <repository> <path>
- 'git submodule' [--quiet] status [--cached] [--] [<path>...]
- 'git submodule' [--quiet] init [--] [<path>...]
--'git submodule' [--quiet] update [--init] [-N|--no-fetch] [--] [<path>...]
-+'git submodule' [--quiet] update [--init] [-N|--no-fetch]
-+	      [--reference <repository>] [--] [<path>...]
- 'git submodule' [--quiet] summary [--summary-limit <n>] [commit] [--] [<path>...]
- 'git submodule' [--quiet] foreach <command>
- 'git submodule' [--quiet] sync [--] [<path>...]
-@@ -177,6 +179,14 @@ OPTIONS
- 	This option is only valid for the update command.
- 	Don't fetch new objects from the remote site.
- 
-+--reference <repository>::
-+	This option is only valid for add and update commands.  These
-+	commands sometimes need to clone a remote repository. In this case,
-+	this option will be passed to the linkgit:git-clone[1] command.
-++
-+*NOTE*: Do *not* use this option unless you have read the note
-+for linkgit:git-clone[1]'s --reference and --shared options carefully.
-+
- <path>...::
- 	Paths to submodule(s). When specified this will restrict the command
- 	to only operate on the submodules found at the specified paths.
-diff --git a/git-submodule.sh b/git-submodule.sh
-index 8e234a4..4989d86 100755
---- a/git-submodule.sh
-+++ b/git-submodule.sh
-@@ -15,6 +15,7 @@ require_work_tree
- command=
- branch=
- quiet=
-+reference=
- cached=
- nofetch=
- 
-@@ -91,6 +92,7 @@ module_clone()
- {
- 	path=$1
- 	url=$2
-+	reference="$3"
- 
- 	# If there already is a directory at the submodule path,
- 	# expect it to be empty (since that is the default checkout
-@@ -106,7 +108,12 @@ module_clone()
- 	test -e "$path" &&
- 	die "A file already exist at path '$path'"
- 
--	git-clone -n "$url" "$path" ||
-+	if test -n "$reference"
-+	then
-+		git-clone "$reference" -n "$url" "$path"
-+	else
-+		git-clone -n "$url" "$path"
-+	fi ||
- 	die "Clone of '$url' into submodule path '$path' failed"
- }
- 
-@@ -131,6 +138,15 @@ cmd_add()
- 		-q|--quiet)
- 			quiet=1
- 			;;
-+		--reference)
-+			case "$2" in '') usage ;; esac
-+			reference="--reference=$2"
-+			shift
-+			;;
-+		--reference=*)
-+			reference="$1"
-+			shift
-+			;;
- 		--)
- 			shift
- 			break
-@@ -203,7 +219,7 @@ cmd_add()
- 		git config submodule."$path".url "$url"
- 	else
- 
--		module_clone "$path" "$realrepo" || exit
-+		module_clone "$path" "$realrepo" "$reference" || exit
- 		(
- 			unset GIT_DIR
- 			cd "$path" &&
-@@ -321,6 +337,15 @@ cmd_update()
- 			shift
- 			nofetch=1
- 			;;
-+		--reference)
-+			case "$2" in '') usage ;; esac
-+			reference="$2"
-+			shift 2
-+			;;
-+		--reference=*)
-+			reference="$1"
-+			shift
-+			;;
- 		--)
- 			shift
- 			break
-@@ -351,7 +376,7 @@ cmd_update()
- 
- 		if ! test -d "$path"/.git -o -f "$path"/.git
- 		then
--			module_clone "$path" "$url" || exit
-+			module_clone "$path" "$url" "$reference"|| exit
- 			subsha1=
- 		else
- 			subsha1=$(unset GIT_DIR; cd "$path" &&
+ user-manual.xml: user-manual.txt user-manual.conf
+-	$(QUIET_ASCIIDOC)$(ASCIIDOC) -b docbook -d book $<
++	$(QUIET_ASCIIDOC)$(ASCIIDOC) $(ASCIIDOC_EXTRA) -b docbook -d book $<
+
+ technical/api-index.txt: technical/api-index-skel.txt \
+ 	technical/api-index.sh $(patsubst %,%.txt,$(API_DOCS))
+@@ -293,13 +293,13 @@ howto-index.txt: howto-index.sh $(wildcard howto/*.txt)
+ 	mv $@+ $@
+
+ $(patsubst %,%.html,$(ARTICLES)) : %.html : %.txt
+-	$(QUIET_ASCIIDOC)$(ASCIIDOC) -b xhtml11 $*.txt
++	$(QUIET_ASCIIDOC)$(ASCIIDOC) $(ASCIIDOC_EXTRA) -b xhtml11 $*.txt
+
+ WEBDOC_DEST = /pub/software/scm/git/docs
+
+ $(patsubst %.txt,%.html,$(wildcard howto/*.txt)): %.html : %.txt
+ 	$(QUIET_ASCIIDOC)$(RM) $@+ $@ && \
+-	sed -e '1,/^$$/d' $< | $(ASCIIDOC) -b xhtml11 - >$@+ && \
++	sed -e '1,/^$$/d' $< | $(ASCIIDOC) $(ASCIIDOC_EXTRA) -b xhtml11 - >$@+ && \
+ 	mv $@+ $@
+
+ install-webdoc : html
 -- 
-1.6.3.rc3.dirty
+1.6.3.rc3.2.g4b51
