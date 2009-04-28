@@ -1,137 +1,72 @@
-From: Josef Wolf <jw@raven.inka.de>
-Subject: Re: Trying to sync two svn repositories with git-svn (repost)
-Date: Wed, 29 Apr 2009 00:37:28 +0200
-Message-ID: <20090428223728.GE15420@raven.wolf.lan>
-References: <20090427201251.GC15420@raven.wolf.lan> <32541b130904281353k572fed5la468de65f73ccd19@mail.gmail.com>
+From: "John Dlugosz" <JDlugosz@TradeStation.com>
+Subject: Windows Server?
+Date: Tue, 28 Apr 2009 18:41:51 -0400
+Message-ID: <450196A1AAAE4B42A00A8B27A59278E70AE3F0A6@EXCHANGE.trad.tradestation.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 29 00:40:23 2009
+Content-Type: text/plain;
+	charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Apr 29 00:43:02 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LyvyQ-00038j-Dy
-	for gcvg-git-2@gmane.org; Wed, 29 Apr 2009 00:40:22 +0200
+	id 1Lyw0z-0004F1-C2
+	for gcvg-git-2@gmane.org; Wed, 29 Apr 2009 00:43:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753358AbZD1WkN convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 28 Apr 2009 18:40:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752662AbZD1WkN
-	(ORCPT <rfc822;git-outgoing>); Tue, 28 Apr 2009 18:40:13 -0400
-Received: from quechua.inka.de ([193.197.184.2]:33351 "EHLO mail.inka.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752268AbZD1WkM (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 28 Apr 2009 18:40:12 -0400
-Received: from raven.inka.de (uucp@[127.0.0.1])
-	by mail.inka.de with uucp (rmailwrap 0.5) 
-	id 1LyvyE-0002cI-S9; Wed, 29 Apr 2009 00:40:10 +0200
-Received: by raven.inka.de (Postfix, from userid 1000)
-	id D55182CC7A; Wed, 29 Apr 2009 00:37:28 +0200 (CEST)
-Mail-Followup-To: Josef Wolf <jw@raven.inka.de>, git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <32541b130904281353k572fed5la468de65f73ccd19@mail.gmail.com>
-User-Agent: Mutt/1.5.17 (2007-11-01)
+	id S1754129AbZD1Wmv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 28 Apr 2009 18:42:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753104AbZD1Wmu
+	(ORCPT <rfc822;git-outgoing>); Tue, 28 Apr 2009 18:42:50 -0400
+Received: from mail2.tradestation.com ([63.99.207.80]:58105 "EHLO
+	mail2.tradestation.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753090AbZD1Wmt convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 28 Apr 2009 18:42:49 -0400
+X-ASG-Debug-ID: 1240958568-779502ca000a-QuoKaX
+X-Barracuda-URL: http://192.168.51.31:8000/cgi-bin/mark.cgi
+Received: from mail5.tradestation.com (localhost [127.0.0.1])
+	by mail2.tradestation.com (Spam & Virus Firewall) with ESMTP id AAD953B8830
+	for <git@vger.kernel.org>; Tue, 28 Apr 2009 18:42:48 -0400 (EDT)
+Received: from mail5.tradestation.com (tx02exchange02.trad.tradestation.com [192.168.51.76]) by mail2.tradestation.com with ESMTP id Njl1zFmrDFHkyfG9 for <git@vger.kernel.org>; Tue, 28 Apr 2009 18:42:48 -0400 (EDT)
+X-Barracuda-Envelope-From: JDlugosz@TradeStation.com
+X-ASG-Whitelist: Client
+Received: from EXCHANGE.trad.tradestation.com ([10.4.0.121]) by mail5.tradestation.com with Microsoft SMTPSVC(6.0.3790.3959);
+	 Tue, 28 Apr 2009 18:41:57 -0400
+X-MimeOLE: Produced By Microsoft Exchange V6.5
+Content-class: urn:content-classes:message
+X-ASG-Orig-Subj: Windows Server?
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+Thread-Topic: Windows Server?
+Thread-Index: AcnIUoXsAI98pzaNTqKLHcv2UoHNjA==
+X-OriginalArrivalTime: 28 Apr 2009 22:41:57.0494 (UTC) FILETIME=[89680960:01C9C852]
+X-Barracuda-Connect: tx02exchange02.trad.tradestation.com[192.168.51.76]
+X-Barracuda-Start-Time: 1240958568
+X-Barracuda-Virus-Scanned: by TX-Barracuda Spam Firewall 400 at tradestation.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117824>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117825>
 
-Thanks for your answer, Avery!
+We are a Windows' shop, writing software that runs on Windows.
+Naturally, the network location I.T. provided for the repository is on a
+Windows server.  I'm concerned with using file:// access once everyone
+starts using it in earnest, especially over a cross-continent VPN.
 
-On Tue, Apr 28, 2009 at 04:53:52PM -0400, Avery Pennarun wrote:
-> On Mon, Apr 27, 2009 at 4:12 PM, Josef Wolf <jw@raven.inka.de> wrote:
-> > I have two subversion repositories which I would like to synchroniz=
-e via
-> > git-svn. =A0[...]
->=20
-> What you're attempting is rather complicated.  I guess I'd suggest we
-> back up a step: why do you want to do this?  In what way does a "pure
-> svn" tool like svnsync
-> (http://svnbook.red-bean.com/en/1.5/svn.ref.svnsync.html) not do what
-> you want?
+I suppose that git-daemon isn't available as a Windows service.  I
+posted a short time ago asking about it, and the news did not seem good.
+So, is ssh a good second?  That is, the manipulations of the central
+repo is being done by the machine that owns that disk, and the protocol
+talks between the two copies of git?
 
-The explanation to that git somewhat longish, sorry for that.
+Is there anything that needs to be done on the server machine, other
+than having a SSH server, and formulating the path the way the disk
+really is on that machine (as opposed to the network share structure)?
 
-The project is about configuring networks.  If you think about cfengine=
-,
-you get pretty close to what it is about.  It started out as a single
-repository.  But since configuring networks requires lots of
-"localization", it was soon split into two parts: One part are the
-"mechanics": generic libraries/scripts.  The other part is the
-"policy": the configuration that specifies how the mechanics should
-do their task.  The reason for the split was to allow multiple
-policies (for independent administrations) to share one common set of
-mechanics (as svn:externals).  For security reasons, the mechanics were
-imported back into the (multiple) policies later on.
+--John
+(watch out for the footer...)
 
-Currently, there exist multiple independent repositories (for security
-reasons).  In the past, the repositories were "synchronized" manually.
-So technically, the repositories have no common history (at least not
-in svn's metadata).  But the contents are actually rather "similar",
-since they were synchronized multiple times in the past.
-
-In the long term, I'd like to move everything completely to git.  That
-would make it much easier to move changes from one repos to the other
-while keeping the (intended) differences in the policy.
-
-So my first goal is to bring the contents into sync.  The next step wou=
-ld
-be to create a "reference" (the official) git repository, which can be
-cloned by the administrations to create their localized repositories.
-
-In the meantime, I need a way to synchronize the contents from time to
-time.  I guess it will take some time to create the official repos and
-get used to the work flow.
-
-> Are you making changes to *both* svn repositories
-
-Yes.
-
-> and then want to synchronize their histories?
-
-Since synchronization was done manually in the past, I do not (yet) car=
-e
-about the history very much.  My first goal was to get the contents int=
-o
-a sane state: I've done lots of criss-cross cherry-picking.  Now that t=
-he
-contents are in sync (within git branches), I'd like to do two things:
-
- - Set "markers" to indicate which commits are already synchronized, so
-   the next synchronization will be easier.  I thought "git-merge -s ou=
-rs"
-   would be the correct way to do that.  But as I already wrote: this
-   causes the next "git-svn rebase" to apply all the commits of the oth=
-er
-   branch (which I already cherry-picked)
-
- - Feed the cherry-picked commits back to the svn repositories.  I've n=
-ot
-   tried that yet, since I think I should "git-svn rebase" first.
-
-> This is basically impossible, since svn only has a linear history.
-> If you add commit A to one repo, and
-> commit B to the other, you will never make the histories identical in
-> both repos;
-
-Yeah, I see.  But I don't really care about that, as long as the relati=
-ve
-order of the commits is kept when they are moved to the other repos.
-Since the svn repositories will die once the migration is done, this
-is not a big deal.
-
-> one will necessarily have A and then B, and the other will
-> have B and then A.  That's not really desirable, since one of those
-> two histories is a lie.
-
-The current situation is an even bigger lie.
-
-> So, what is it you're *really* trying to do?
-
-I hope my explanation was not too boring...
-
-> Have fun,
-
-Yeah, I am having _lots_ of fun =3D8)
+TradeStation Group, Inc. is a publicly-traded holding company (NASDAQ GS: TRAD) of three operating subsidiaries, TradeStation Securities, Inc. (Member NYSE, FINRA, SIPC and NFA), TradeStation Technologies, Inc., a trading software and subscription company, and TradeStation Europe Limited, a United Kingdom, FSA-authorized introducing brokerage firm. None of these companies provides trading or investment advice, recommendations or endorsements of any kind. The information transmitted is intended only for the person or entity to which it is addressed and may contain confidential and/or privileged material. Any review, retransmission, dissemination or other use of, or taking of any action in reliance upon, this information by persons or entities other than the intended recipient is prohibited.
+  If you received this in error, please contact the sender and delete the material from any computer.
