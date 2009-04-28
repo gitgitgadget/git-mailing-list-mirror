@@ -1,86 +1,121 @@
-From: martin f krafft <madduck@madduck.net>
-Subject: Re: (topgit question) deleting a dependency
-Date: Tue, 28 Apr 2009 17:07:53 +0200
-Message-ID: <20090428150753.GB30582@piper.oerlikon.madduck.net>
-References: <slrngvdgo4.kr7.sitaramc@sitaramc.homelinux.net> <20090428094138.GB9415@piper.oerlikon.madduck.net> <slrngve3mf.f45.sitaramc@sitaramc.homelinux.net>
+From: Catalin Marinas <catalin.marinas@arm.com>
+Subject: [StGit PATCH 4/9] Convert 'clone' to the use stgit.lib
+Date: Tue, 28 Apr 2009 16:09:57 +0100
+Message-ID: <20090428150957.27261.83658.stgit@pc1117.cambridge.arm.com>
+References: <20090428150742.27261.19620.stgit@pc1117.cambridge.arm.com>
+Reply-To: Catalin Marinas <catalin.marinas@gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="OwLcNYc0lM97+oe1"
-To: git@vger.kernel.org, Sitaram Chamarty <sitaramc@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Apr 28 17:09:01 2009
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org,
+	Karl =?utf-8?q?Hasselstr=C3=B6m?= <kha@treskal.com>
+X-From: git-owner@vger.kernel.org Tue Apr 28 17:13:39 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LyovX-0000Um-Ih
-	for gcvg-git-2@gmane.org; Tue, 28 Apr 2009 17:08:56 +0200
+	id 1Lyp04-0002lt-1x
+	for gcvg-git-2@gmane.org; Tue, 28 Apr 2009 17:13:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761897AbZD1PII (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 28 Apr 2009 11:08:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761854AbZD1PIG
-	(ORCPT <rfc822;git-outgoing>); Tue, 28 Apr 2009 11:08:06 -0400
-Received: from clegg.madduck.net ([193.242.105.96]:58522 "EHLO
-	clegg.madduck.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1760971AbZD1PIF (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 28 Apr 2009 11:08:05 -0400
-Received: from piper.oerlikon.madduck.net (piper.oerlikon.madduck.net [IPv6:2001:41e0:ff12:0:211:2fff:fe6b:c869])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "piper.oerlikon.madduck.net", Issuer "CAcert Class 3 Root" (verified OK))
-	by clegg.madduck.net (postfix) with ESMTPS id BF5F11D409B;
-	Tue, 28 Apr 2009 17:07:53 +0200 (CEST)
-Received: by piper.oerlikon.madduck.net (Postfix, from userid 1000)
-	id 408B5C154B; Tue, 28 Apr 2009 17:07:53 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <slrngve3mf.f45.sitaramc@sitaramc.homelinux.net>
-X-Motto: Keep the good times rollin'
-X-OS: Debian GNU/Linux squeeze/sid kernel 2.6.29-1-amd64 x86_64
-X-Spamtrap: madduck.bogus@madduck.net
-X-Subliminal-Message: debian/rules!
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-Virus-Scanned: ClamAV 0.94.2/9298/Tue Apr 28 13:47:45 2009 on clegg.madduck.net
-X-Virus-Status: Clean
+	id S932391AbZD1PKv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 28 Apr 2009 11:10:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932381AbZD1PKu
+	(ORCPT <rfc822;git-outgoing>); Tue, 28 Apr 2009 11:10:50 -0400
+Received: from cam-admin0.cambridge.arm.com ([193.131.176.58]:48953 "EHLO
+	cam-admin0.cambridge.arm.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S932368AbZD1PKs (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 28 Apr 2009 11:10:48 -0400
+Received: from cam-owa2.Emea.Arm.com (cam-owa2.emea.arm.com [10.1.105.18])
+	by cam-admin0.cambridge.arm.com (8.12.6/8.12.6) with ESMTP id n3SF6qZm027040;
+	Tue, 28 Apr 2009 16:06:52 +0100 (BST)
+Received: from pc1117.cambridge.arm.com ([10.1.255.212]) by cam-owa2.Emea.Arm.com with Microsoft SMTPSVC(6.0.3790.3959);
+	 Tue, 28 Apr 2009 16:10:44 +0100
+In-Reply-To: <20090428150742.27261.19620.stgit@pc1117.cambridge.arm.com>
+User-Agent: StGit/0.14.3.375.g65f9.dirty
+X-OriginalArrivalTime: 28 Apr 2009 15:10:44.0033 (UTC) FILETIME=[805DBB10:01C9C813]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117779>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117780>
 
+The patch also adds the stgit.lib.git.clone() function.
 
---OwLcNYc0lM97+oe1
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Signed-off-by: Catalin Marinas <catalin.marinas@gmail.com>
+---
+ stgit/commands/clone.py |   30 +++++++++++++-----------------
+ stgit/lib/git.py        |    4 ++++
+ 2 files changed, 17 insertions(+), 17 deletions(-)
 
-also sprach Sitaram Chamarty <sitaramc@gmail.com> [2009.04.28.1612 +0200]:
-> When one branch is deemed to be cooked, a "tg export" takes
-> that code to master, and I intend to delete t/all and create
-> it afresh with the rest of the dependencies (the old set
-> minus the one that finished cooking).
-
-Are any of the t/* branches ever used by anyone else but you? Are
-they published?
-
---=20
-martin | http://madduck.net/ | http://two.sentenc.es/
-=20
-"the search for the perfect martini is a fraud. the perfect martini
- is a belt of gin from the bottle; anything else is the decadent
- trappings of civilization."
-                                                            -- t. k.
-=20
-spamtraps: madduck.bogus@madduck.net
-
---OwLcNYc0lM97+oe1
-Content-Type: application/pgp-signature; name="digital_signature_gpg.asc"
-Content-Description: Digital signature (see http://martin-krafft.net/gpg/)
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
-
-iEYEARECAAYFAkn3G8gACgkQIgvIgzMMSnXWxQCgwV75KOMgR7qY1elStZjgI/u4
-KXAAoNwZQDd9qj8SuuwpFs52zmKN4P1D
-=QWTm
------END PGP SIGNATURE-----
-
---OwLcNYc0lM97+oe1--
+diff --git a/stgit/commands/clone.py b/stgit/commands/clone.py
+index 7fe9c35..369c8a9 100644
+--- a/stgit/commands/clone.py
++++ b/stgit/commands/clone.py
+@@ -1,5 +1,5 @@
+ __copyright__ = """
+-Copyright (C) 2005, Catalin Marinas <catalin.marinas@gmail.com>
++Copyright (C) 2009, Catalin Marinas <catalin.marinas@gmail.com>
+ 
+ This program is free software; you can redistribute it and/or modify
+ it under the terms of the GNU General Public License version 2 as
+@@ -15,10 +15,11 @@ along with this program; if not, write to the Free Software
+ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ """
+ 
+-import sys, os
+-from stgit.commands.common import *
+-from stgit.utils import *
+-from stgit import argparse, stack, git
++import os
++from stgit.commands import common
++from stgit.lib import git, stack
++from stgit import argparse
++from stgit.out import out
+ 
+ help = 'Make a local clone of a remote repository'
+ kind = 'repo'
+@@ -38,7 +39,7 @@ not already exist."""
+ args = [argparse.repo, argparse.dir]
+ options = []
+ 
+-directory = DirectoryAnywhere(needs_current_series = False, log = False)
++directory = common.DirectoryAnywhere(needs_current_series = False, log = False)
+ 
+ def func(parser, options, args):
+     """Clone the <repository> into the local <dir> and initialises the
+@@ -51,17 +52,12 @@ def func(parser, options, args):
+     local_dir = args[1]
+ 
+     if os.path.exists(local_dir):
+-        raise CmdException, '"%s" exists. Remove it first' % local_dir
+-
+-    print 'Cloning "%s" into "%s"...' % (repository, local_dir)
++        raise common.CmdException, '"%s" exists. Remove it first' % local_dir
+ 
++    out.start('Cloning "%s" into "%s"' % (repository, local_dir))
+     git.clone(repository, local_dir)
+     os.chdir(local_dir)
+-    git.checkout(tree_id = 'HEAD')
+-
+-    # be sure to forget any cached value for .git, since we're going
+-    # to work on a brand new repository
+-    basedir.clear_cache()
+-    stack.Series().init()
+-
+-    print 'done'
++    directory = common.DirectoryHasRepositoryLib()
++    directory.setup()
++    stack.Stack.initialise(directory.repository)
++    out.done()
+diff --git a/stgit/lib/git.py b/stgit/lib/git.py
+index 9c530c7..6f2c977 100644
+--- a/stgit/lib/git.py
++++ b/stgit/lib/git.py
+@@ -933,3 +933,7 @@ def diffstat(diff):
+     """Return the diffstat of the supplied diff."""
+     return run.Run('git', 'apply', '--stat', '--summary'
+                    ).raw_input(diff).raw_output()
++
++def clone(remote, local):
++    """Clone a remote repository using 'git clone'."""
++    run.Run('git', 'clone', remote, local).run()
