@@ -1,71 +1,177 @@
-From: Eric Blake <ebb9@byu.net>
-Subject: [PATCH 1/2] Makefile: installing git in cygwin 1.7.0
-Date: Tue, 28 Apr 2009 06:28:31 -0600
-Message-ID: <1240921712-3100-2-git-send-email-ebb9@byu.net>
-References: <1240921712-3100-1-git-send-email-ebb9@byu.net>
-Cc: Eric Blake <ebb9@byu.net>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Apr 28 14:28:57 2009
+From: "Michael S. Tsirkin" <mst@redhat.com>
+Subject: [PATCHv2] Add --reference option to git submodule.
+Date: Tue, 28 Apr 2009 15:30:33 +0300
+Message-ID: <20090428123033.GA6839@redhat.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Tue Apr 28 14:32:08 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LymQi-0003Tk-DU
-	for gcvg-git-2@gmane.org; Tue, 28 Apr 2009 14:28:56 +0200
+	id 1LymTe-00052a-Hq
+	for gcvg-git-2@gmane.org; Tue, 28 Apr 2009 14:31:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755244AbZD1M2j (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 28 Apr 2009 08:28:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755214AbZD1M2j
-	(ORCPT <rfc822;git-outgoing>); Tue, 28 Apr 2009 08:28:39 -0400
-Received: from qmta03.emeryville.ca.mail.comcast.net ([76.96.30.32]:35440 "EHLO
-	QMTA03.emeryville.ca.mail.comcast.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755109AbZD1M2j (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 28 Apr 2009 08:28:39 -0400
-Received: from OMTA08.emeryville.ca.mail.comcast.net ([76.96.30.12])
-	by QMTA03.emeryville.ca.mail.comcast.net with comcast
-	id l02U1b0040FhH24A30Uf88; Tue, 28 Apr 2009 12:28:39 +0000
-Received: from localhost.localdomain ([24.10.247.15])
-	by OMTA08.emeryville.ca.mail.comcast.net with comcast
-	id l0UP1b0060Lg2Gw8U0Uek9; Tue, 28 Apr 2009 12:28:39 +0000
-X-Mailer: git-send-email 1.6.3.rc3.2.g4b51
-In-Reply-To: <1240921712-3100-1-git-send-email-ebb9@byu.net>
+	id S1755936AbZD1Mbl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 28 Apr 2009 08:31:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755873AbZD1Mbk
+	(ORCPT <rfc822;git-outgoing>); Tue, 28 Apr 2009 08:31:40 -0400
+Received: from mx2.redhat.com ([66.187.237.31]:50167 "EHLO mx2.redhat.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752444AbZD1Mbk (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 28 Apr 2009 08:31:40 -0400
+Received: from int-mx2.corp.redhat.com (int-mx2.corp.redhat.com [172.16.27.26])
+	by mx2.redhat.com (8.13.8/8.13.8) with ESMTP id n3SCVZOR012277;
+	Tue, 28 Apr 2009 08:31:35 -0400
+Received: from ns3.rdu.redhat.com (ns3.rdu.redhat.com [10.11.255.199])
+	by int-mx2.corp.redhat.com (8.13.1/8.13.1) with ESMTP id n3SCVYdf029711;
+	Tue, 28 Apr 2009 08:31:35 -0400
+Received: from redhat.com (vpn-10-13.str.redhat.com [10.32.10.13])
+	by ns3.rdu.redhat.com (8.13.8/8.13.8) with ESMTP id n3SCVWPA015185;
+	Tue, 28 Apr 2009 08:31:33 -0400
+Content-Disposition: inline
+User-Agent: Mutt/1.5.18 (2008-05-17)
+X-Scanned-By: MIMEDefang 2.58 on 172.16.27.26
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117767>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117768>
 
-On platforms with $X, make removes any leftover scripts 'a' from
-earlier builds if a new binary 'a.exe' is now built.  However, on
-cygwin 1.7.0, 'git' and 'git.exe' now consistently name the same file.
-Test for file equality before attempting a remove, in order to avoid
-nuking just-built binaries.
+This adds --reference option to git submodule add and
+git submodule update commands, which is passed on to git clone.
 
-This repeats commit 0d768f7 for the installation destdir.
-
-Signed-off-by: Eric Blake <ebb9@byu.net>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
 
-This should be a trivial approval, seeing as how it finishes the
-job of a previous patch (but this time for the installation dir,
-as opposed to the build dir).  Without it, programs like git-var
-get nuked during 'make install', giving a broken installation.
+Here's v2. Ack?
 
- Makefile |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+Changes from v1: fixes in documentation, fix test usage and
+make it portable.
 
-diff --git a/Makefile b/Makefile
-index 5c8e83a..93ca0db 100644
---- a/Makefile
-+++ b/Makefile
-@@ -1545,7 +1545,7 @@ ifndef NO_TCLTK
- 	$(MAKE) -C git-gui gitexecdir='$(gitexec_instdir_SQ)' install
- endif
- ifneq (,$X)
--	$(foreach p,$(patsubst %$X,%,$(filter %$X,$(ALL_PROGRAMS) $(BUILT_INS) git$X)), $(RM) '$(DESTDIR_SQ)$(gitexec_instdir_SQ)/$p';)
-+	$(foreach p,$(patsubst %$X,%,$(filter %$X,$(ALL_PROGRAMS) $(BUILT_INS) git$X)), test '$(DESTDIR_SQ)$(gitexec_instdir_SQ)/$p' -ef '$(DESTDIR_SQ)$(gitexec_instdir_SQ)/$p$X' || $(RM) '$(DESTDIR_SQ)$(gitexec_instdir_SQ)/$p';)
- endif
- 	bindir=$$(cd '$(DESTDIR_SQ)$(bindir_SQ)' && pwd) && \
- 	execdir=$$(cd '$(DESTDIR_SQ)$(gitexec_instdir_SQ)' && pwd) && \
+ Documentation/git-submodule.txt |   14 ++++++++++++--
+ git-submodule.sh                |   31 ++++++++++++++++++++++++++++---
+ 2 files changed, 40 insertions(+), 5 deletions(-)
+
+diff --git a/Documentation/git-submodule.txt b/Documentation/git-submodule.txt
+index 3b8df44..14256c6 100644
+--- a/Documentation/git-submodule.txt
++++ b/Documentation/git-submodule.txt
+@@ -9,10 +9,12 @@ git-submodule - Initialize, update or inspect submodules
+ SYNOPSIS
+ --------
+ [verse]
+-'git submodule' [--quiet] add [-b branch] [--] <repository> <path>
++'git submodule' [--quiet] add [-b branch]
++	      [--reference <repository>] [--] <repository> <path>
+ 'git submodule' [--quiet] status [--cached] [--] [<path>...]
+ 'git submodule' [--quiet] init [--] [<path>...]
+-'git submodule' [--quiet] update [--init] [-N|--no-fetch] [--] [<path>...]
++'git submodule' [--quiet] update [--init] [-N|--no-fetch]
++	      [--reference <repository>] [--] [<path>...]
+ 'git submodule' [--quiet] summary [--summary-limit <n>] [commit] [--] [<path>...]
+ 'git submodule' [--quiet] foreach <command>
+ 'git submodule' [--quiet] sync [--] [<path>...]
+@@ -177,6 +179,14 @@ OPTIONS
+ 	This option is only valid for the update command.
+ 	Don't fetch new objects from the remote site.
+ 
++--reference <repository>::
++	This option is only valid for add and update commands.  These
++	commands sometimes need to clone a remote repository. In this case,
++	this option will be passed to the linkgit:git-clone[1] command.
+++
++*NOTE*: Do *not* use this option unless you have read the note
++for linkgit:git-clone[1]'s --reference and --shared options carefully.
++
+ <path>...::
+ 	Paths to submodule(s). When specified this will restrict the command
+ 	to only operate on the submodules found at the specified paths.
+diff --git a/git-submodule.sh b/git-submodule.sh
+index 8e234a4..4989d86 100755
+--- a/git-submodule.sh
++++ b/git-submodule.sh
+@@ -15,6 +15,7 @@ require_work_tree
+ command=
+ branch=
+ quiet=
++reference=
+ cached=
+ nofetch=
+ 
+@@ -91,6 +92,7 @@ module_clone()
+ {
+ 	path=$1
+ 	url=$2
++	reference="$3"
+ 
+ 	# If there already is a directory at the submodule path,
+ 	# expect it to be empty (since that is the default checkout
+@@ -106,7 +108,12 @@ module_clone()
+ 	test -e "$path" &&
+ 	die "A file already exist at path '$path'"
+ 
+-	git-clone -n "$url" "$path" ||
++	if test -n "$reference"
++	then
++		git-clone "$reference" -n "$url" "$path"
++	else
++		git-clone -n "$url" "$path"
++	fi ||
+ 	die "Clone of '$url' into submodule path '$path' failed"
+ }
+ 
+@@ -131,6 +138,15 @@ cmd_add()
+ 		-q|--quiet)
+ 			quiet=1
+ 			;;
++		--reference)
++			case "$2" in '') usage ;; esac
++			reference="--reference=$2"
++			shift
++			;;
++		--reference=*)
++			reference="$1"
++			shift
++			;;
+ 		--)
+ 			shift
+ 			break
+@@ -203,7 +219,7 @@ cmd_add()
+ 		git config submodule."$path".url "$url"
+ 	else
+ 
+-		module_clone "$path" "$realrepo" || exit
++		module_clone "$path" "$realrepo" "$reference" || exit
+ 		(
+ 			unset GIT_DIR
+ 			cd "$path" &&
+@@ -321,6 +337,15 @@ cmd_update()
+ 			shift
+ 			nofetch=1
+ 			;;
++		--reference)
++			case "$2" in '') usage ;; esac
++			reference="$2"
++			shift 2
++			;;
++		--reference=*)
++			reference="$1"
++			shift
++			;;
+ 		--)
+ 			shift
+ 			break
+@@ -351,7 +376,7 @@ cmd_update()
+ 
+ 		if ! test -d "$path"/.git -o -f "$path"/.git
+ 		then
+-			module_clone "$path" "$url" || exit
++			module_clone "$path" "$url" "$reference"|| exit
+ 			subsha1=
+ 		else
+ 			subsha1=$(unset GIT_DIR; cd "$path" &&
 -- 
-1.6.3.rc3.2.g4b51
+1.6.3.rc3.dirty
