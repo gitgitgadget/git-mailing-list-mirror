@@ -1,108 +1,140 @@
-From: "Sohn, Matthias" <matthias.sohn@sap.com>
-Subject: [PATCH JGIT] Computation of average could overflow
-Date: Tue, 28 Apr 2009 01:02:55 +0200
-Message-ID: <366BBB1215D0AB4B8A153AF047A2878002FCE7E7@dewdfe18.wdf.sap.corp>
-Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="US-ASCII"
-Content-Transfer-Encoding: 8BIT
-Cc: <git@vger.kernel.org>
-To: "Shawn O. Pearce" <spearce@spearce.org>,
-	"Robin Rosenberg" <robin.rosenberg@dewire.com>
-X-From: git-owner@vger.kernel.org Tue Apr 28 04:06:18 2009
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: [JGIT PATCH 1/2] Don't use ByteWindows when checking pack file headers/footers
+Date: Mon, 27 Apr 2009 19:26:11 -0700
+Message-ID: <1240885572-1755-1-git-send-email-spearce@spearce.org>
+Cc: git@vger.kernel.org
+To: Robin Rosenberg <robin.rosenberg@dewire.com>
+X-From: git-owner@vger.kernel.org Tue Apr 28 04:26:23 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lyci9-00037L-SM
-	for gcvg-git-2@gmane.org; Tue, 28 Apr 2009 04:06:18 +0200
+	id 1Lyd1a-000871-HN
+	for gcvg-git-2@gmane.org; Tue, 28 Apr 2009 04:26:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757299AbZD1CGK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 27 Apr 2009 22:06:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756964AbZD1CGI
-	(ORCPT <rfc822;git-outgoing>); Mon, 27 Apr 2009 22:06:08 -0400
-Received: from smtpde01.sap-ag.de ([155.56.68.171]:39394 "EHLO
-	smtpde01.sap-ag.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756595AbZD1CGH convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 27 Apr 2009 22:06:07 -0400
-Received: from mail.sap.corp
-	by smtpde01.sap-ag.de (26) with ESMTP id n3RN2vSC013399
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Tue, 28 Apr 2009 01:02:57 +0200 (MEST)
-Received: from dewdfe1i3.wdf.sap.corp (dewdfe1i3.wdf.sap.corp [10.17.149.41])
-	by mail.sap.corp (mail03-25) with ESMTP id n3RN2oZK023049;
-	Tue, 28 Apr 2009 01:02:57 +0200 (MEST)
-Received: from dewdfe18.wdf.sap.corp ([10.21.20.140]) by dewdfe1i3.wdf.sap.corp with Microsoft SMTPSVC(6.0.3790.3959);
-	 Tue, 28 Apr 2009 01:02:56 +0200
-X-MimeOLE: Produced By Microsoft Exchange V6.5
-Content-class: urn:content-classes:message
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-Thread-Topic: [PATCH JGIT] Computation of average could overflow
-Thread-Index: AcnHjEysWP+qTjB1Tm2zGBLNNuNqlA==
-X-OriginalArrivalTime: 27 Apr 2009 23:02:56.0635 (UTC) FILETIME=[4D7FF4B0:01C9C78C]
-X-Scanner: Virus Scanner virwal08
-X-SAP: out
+	id S1754954AbZD1C0Q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 27 Apr 2009 22:26:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754695AbZD1C0P
+	(ORCPT <rfc822;git-outgoing>); Mon, 27 Apr 2009 22:26:15 -0400
+Received: from george.spearce.org ([209.20.77.23]:45130 "EHLO
+	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751389AbZD1C0O (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 27 Apr 2009 22:26:14 -0400
+Received: by george.spearce.org (Postfix, from userid 1000)
+	id 136C03819D; Tue, 28 Apr 2009 02:26:14 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.2.4 (2008-01-01) on george.spearce.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-4.4 required=4.0 tests=ALL_TRUSTED,BAYES_00
+	autolearn=ham version=3.2.4
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by george.spearce.org (Postfix) with ESMTP id 406EB3819D;
+	Tue, 28 Apr 2009 02:26:13 +0000 (UTC)
+X-Mailer: git-send-email 1.6.3.rc1.205.g37f8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117741>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117742>
 
-The code computes the average of two integers using either division or
-signed right shift, and then uses the result as the
-index of an array. If the values being averaged are very large, this can
-overflow (resulting in the computation of a negative
-average). Assuming that the result is intended to be nonnegative, you
-can use an unsigned right shift instead. In other
-words, rather that using (low+high)/2, use (low+high) >>> 1
+Its highly unlikely we need the 8 KiB surrounding the pack file header
+or footer immediately after opening the pack file.  Reading those as
+full blocks and registering them in the WindowCache is probably just
+churning garbage through the cache.  Instead, read the header with a
+single 12 byte read, and the footer with a single 20 byte read, and
+bypass the cache altogether.
 
-This bug exists in many earlier implementations of binary search and
-merge sort. Martin Buchholz found and fixed it
-(http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=6412541) in the JDK
-libraries, and Joshua Bloch widely publicized
-the bug pattern
-(http://googleresearch.blogspot.com/2006/06/extra-extra-read-all-about-i
-t-nearly.html).
+This nicely removes a deadlock condition we had previously where the
+WindowCache was recursively calling itself during the pack file open,
+and got stuck on its own locks.
 
-Signed-off-by: Matthias Sohn <matthias.sohn@sap.com>
+Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
 ---
- .../src/org/spearce/jgit/dircache/DirCache.java    |    2 +-
- .../src/org/spearce/jgit/lib/Tree.java             |    2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git
-a/org.spearce.jgit/src/org/spearce/jgit/dircache/DirCache.java
-b/org.spearce.jgit/src/org/spearce/jgit/dircache/DirCache.java
-index 58da014..fa906fa 100644
---- a/org.spearce.jgit/src/org/spearce/jgit/dircache/DirCache.java
-+++ b/org.spearce.jgit/src/org/spearce/jgit/dircache/DirCache.java
-@@ -593,7 +593,7 @@ int findEntry(final byte[] p, final int pLen) {
- 		int low = 0;
- 		int high = entryCnt;
- 		do {
--			int mid = (low + high) >> 1;
-+			int mid = (low + high) >>> 1;
- 			final int cmp = cmp(p, pLen,
-sortedEntries[mid]);
- 			if (cmp < 0)
- 				high = mid;
-diff --git a/org.spearce.jgit/src/org/spearce/jgit/lib/Tree.java
-b/org.spearce.jgit/src/org/spearce/jgit/lib/Tree.java
-index 0ecd04d..ff9e666 100644
---- a/org.spearce.jgit/src/org/spearce/jgit/lib/Tree.java
-+++ b/org.spearce.jgit/src/org/spearce/jgit/lib/Tree.java
-@@ -136,7 +136,7 @@ private static final int binarySearch(final
-TreeEntry[] entries,
- 		int high = entries.length;
- 		int low = 0;
- 		do {
--			final int mid = (low + high) / 2;
-+			final int mid = (low + high) >>> 1;
- 			final int cmp =
-compareNames(entries[mid].getNameUTF8(), nameUTF8,
- 					nameStart, nameEnd,
-TreeEntry.lastChar(entries[mid]), nameUTF8last);
- 			if (cmp < 0)
+ This I think can be applied as-is.
+
+ We could quibble about whether or not caching the header and footer
+ window is worthwhile during the pack open event.  But really I
+ wrote this to remove a deadlock in the next patch.  Its just soooo
+ much simpler to not make PackFile rely on WindowCache.
+
+ .../src/org/spearce/jgit/lib/PackFile.java         |    5 +--
+ org.spearce.jgit/src/org/spearce/jgit/util/NB.java |   32 ++++++++++++++++++++
+ 2 files changed, 34 insertions(+), 3 deletions(-)
+
+diff --git a/org.spearce.jgit/src/org/spearce/jgit/lib/PackFile.java b/org.spearce.jgit/src/org/spearce/jgit/lib/PackFile.java
+index 813ebc7..360442f 100644
+--- a/org.spearce.jgit/src/org/spearce/jgit/lib/PackFile.java
++++ b/org.spearce.jgit/src/org/spearce/jgit/lib/PackFile.java
+@@ -389,10 +389,9 @@ void allocWindow(final WindowCursor curs, final int windowId,
+ 
+ 	private void onOpenPack() throws IOException {
+ 		final PackIndex idx = idx();
+-		final WindowCursor curs = new WindowCursor();
+ 		final byte[] buf = new byte[20];
+ 
+-		readFully(0, buf, 0, 12, curs);
++		NB.readFully(fd.getChannel(), 0, buf, 0, 12);
+ 		if (RawParseUtils.match(buf, 0, Constants.PACK_SIGNATURE) != 4)
+ 			throw new IOException("Not a PACK file.");
+ 		final long vers = NB.decodeUInt32(buf, 4);
+@@ -406,7 +405,7 @@ private void onOpenPack() throws IOException {
+ 					+ " index " + idx.getObjectCount()
+ 					+ ": " + getPackFile());
+ 
+-		readFully(length - 20, buf, 0, 20, curs);
++		NB.readFully(fd.getChannel(), length - 20, buf, 0, 20);
+ 		if (!Arrays.equals(buf, idx.packChecksum))
+ 			throw new PackMismatchException("Pack checksum mismatch:"
+ 					+ " pack " + ObjectId.fromRaw(buf).name()
+diff --git a/org.spearce.jgit/src/org/spearce/jgit/util/NB.java b/org.spearce.jgit/src/org/spearce/jgit/util/NB.java
+index c65c6fa..4a9c9b9 100644
+--- a/org.spearce.jgit/src/org/spearce/jgit/util/NB.java
++++ b/org.spearce.jgit/src/org/spearce/jgit/util/NB.java
+@@ -40,6 +40,8 @@
+ import java.io.EOFException;
+ import java.io.IOException;
+ import java.io.InputStream;
++import java.nio.ByteBuffer;
++import java.nio.channels.FileChannel;
+ 
+ /** Conversion utilities for network byte order handling. */
+ public final class NB {
+@@ -71,6 +73,36 @@ public static void readFully(final InputStream fd, final byte[] dst,
+ 	}
+ 
+ 	/**
++	 * Read the entire byte array into memory, or throw an exception.
++	 * 
++	 * @param fd
++	 *            file to read the data from.
++	 * @param pos
++	 *            position to read from the file at.
++	 * @param dst
++	 *            buffer that must be fully populated, [off, off+len).
++	 * @param off
++	 *            position within the buffer to start writing to.
++	 * @param len
++	 *            number of bytes that must be read.
++	 * @throws EOFException
++	 *             the stream ended before dst was fully populated.
++	 * @throws IOException
++	 *             there was an error reading from the stream.
++	 */
++	public static void readFully(final FileChannel fd, long pos,
++			final byte[] dst, int off, int len) throws IOException {
++		while (len > 0) {
++			final int r = fd.read(ByteBuffer.wrap(dst, off, len), pos);
++			if (r <= 0)
++				throw new EOFException("Short read of block.");
++			pos += r;
++			off += r;
++			len -= r;
++		}
++	}
++
++	/**
+ 	 * Skip an entire region of an input stream.
+ 	 * <p>
+ 	 * The input stream's position is moved forward by the number of requested
 -- 
-1.6.2.2.1669.g7eaf8
+1.6.3.rc1.205.g37f8
