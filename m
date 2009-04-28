@@ -1,98 +1,76 @@
-From: Catalin Marinas <catalin.marinas@arm.com>
-Subject: [StGit PATCH 3/9] Do not sleep after the last patch sent by e-mail
-Date: Tue, 28 Apr 2009 16:09:52 +0100
-Message-ID: <20090428150952.27261.5637.stgit@pc1117.cambridge.arm.com>
-References: <20090428150742.27261.19620.stgit@pc1117.cambridge.arm.com>
-Reply-To: Catalin Marinas <catalin.marinas@gmail.com>
+From: Sitaram Chamarty <sitaramc@gmail.com>
+Subject: [PATCH] allow -t abbreviation for --track in git branch
+Date: Tue, 28 Apr 2009 20:51:20 +0530
+Message-ID: <20090428152119.GA18935@atc.tcs.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org,
-	Karl =?utf-8?q?Hasselstr=C3=B6m?= <kha@treskal.com>
-X-From: git-owner@vger.kernel.org Tue Apr 28 17:13:48 2009
+Content-Type: text/plain; charset=us-ascii
+To: gitster@pobox.com, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Apr 28 17:24:31 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lyp03-0002lt-7t
-	for gcvg-git-2@gmane.org; Tue, 28 Apr 2009 17:13:35 +0200
+	id 1LypAb-0008Tf-Vt
+	for gcvg-git-2@gmane.org; Tue, 28 Apr 2009 17:24:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932364AbZD1PKr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 28 Apr 2009 11:10:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932324AbZD1PKq
-	(ORCPT <rfc822;git-outgoing>); Tue, 28 Apr 2009 11:10:46 -0400
-Received: from cam-admin0.cambridge.arm.com ([193.131.176.58]:48928 "EHLO
-	cam-admin0.cambridge.arm.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S932223AbZD1PKl (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 28 Apr 2009 11:10:41 -0400
-Received: from cam-owa2.Emea.Arm.com (cam-owa2.emea.arm.com [10.1.105.18])
-	by cam-admin0.cambridge.arm.com (8.12.6/8.12.6) with ESMTP id n3SF6kZm027030;
-	Tue, 28 Apr 2009 16:06:46 +0100 (BST)
-Received: from pc1117.cambridge.arm.com ([10.1.255.212]) by cam-owa2.Emea.Arm.com with Microsoft SMTPSVC(6.0.3790.3959);
-	 Tue, 28 Apr 2009 16:10:38 +0100
-In-Reply-To: <20090428150742.27261.19620.stgit@pc1117.cambridge.arm.com>
-User-Agent: StGit/0.14.3.375.g65f9.dirty
-X-OriginalArrivalTime: 28 Apr 2009 15:10:38.0424 (UTC) FILETIME=[7D05DD80:01C9C813]
+	id S1761773AbZD1PWR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 28 Apr 2009 11:22:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932398AbZD1PWP
+	(ORCPT <rfc822;git-outgoing>); Tue, 28 Apr 2009 11:22:15 -0400
+Received: from atcmail.atc.tcs.co.in ([203.200.212.145]:58219 "EHLO
+	atcmail.atc.tcs.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1762013AbZD1PWO (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 28 Apr 2009 11:22:14 -0400
+Received: from atcmail.atc.tcs.com (atcmail.atc.tcs.com [127.0.0.1])
+	by atcmail.atc.tcs.com (8.14.2/8.14.2) with ESMTP id n3SFLLT7019009;
+	Tue, 28 Apr 2009 20:51:21 +0530
+Received: (from sitaram@localhost)
+	by atcmail.atc.tcs.com (8.14.2/8.14.2/Submit) id n3SFLKru019005;
+	Tue, 28 Apr 2009 20:51:20 +0530
+Content-Disposition: inline
+User-Agent: Mutt/1.5.18 (2008-05-17)
+X-Virus-Scanned: ClamAV 0.94.2/9297/Tue Apr 28 02:00:26 2009 on atcmail.atc.tcs.com
+X-Virus-Status: Clean
+X-Spam-Status: No, score=-4.4 required=5.0 tests=ALL_TRUSTED,BAYES_00
+	autolearn=ham version=3.2.5
+X-Spam-Checker-Version: SpamAssassin 3.2.5 (2008-06-10) on atcmail.atc.tcs.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117789>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117790>
 
-Signed-off-by: Catalin Marinas <catalin.marinas@gmail.com>
+also makes it consistent with git-checkout
+
 ---
- stgit/commands/mail.py |   15 +++++++++------
- 1 files changed, 9 insertions(+), 6 deletions(-)
+ Documentation/git-branch.txt |    1 +
+ builtin-branch.c             |    2 +-
+ 2 files changed, 2 insertions(+), 1 deletions(-)
 
-diff --git a/stgit/commands/mail.py b/stgit/commands/mail.py
-index 46e4b55..69b19fa 100644
---- a/stgit/commands/mail.py
-+++ b/stgit/commands/mail.py
-@@ -219,7 +219,7 @@ def __send_message_smtp(smtpserver, from_addr, to_addr_list, msg,
-     s.quit()
+diff --git a/Documentation/git-branch.txt b/Documentation/git-branch.txt
+index cbd4275..ae201de 100644
+--- a/Documentation/git-branch.txt
++++ b/Documentation/git-branch.txt
+@@ -111,6 +111,7 @@ OPTIONS
+ --no-abbrev::
+ 	Display the full sha1s in the output listing rather than abbreviating them.
  
- def __send_message(smtpserver, from_addr, to_addr_list, msg,
--                   sleep, smtpuser, smtppassword, use_tls):
-+                   smtpuser, smtppassword, use_tls):
-     """Message sending dispatcher.
-     """
-     if smtpserver.startswith('/'):
-@@ -229,8 +229,6 @@ def __send_message(smtpserver, from_addr, to_addr_list, msg,
-         # Use the SMTP server (we have host and port information)
-         __send_message_smtp(smtpserver, from_addr, to_addr_list, msg,
-                             smtpuser, smtppassword, use_tls)
--    # give recipients a chance of receiving patches in the correct order
--    time.sleep(sleep)
- 
- def __build_address_headers(msg, options, extra_cc = []):
-     """Build the address headers and check existing headers in the
-@@ -619,7 +617,8 @@ def func(parser, options, args):
-         else:
-             out.start('Sending the cover message')
-             __send_message(smtpserver, from_addr, to_addr_list, msg_string,
--                           sleep, smtpuser, smtppassword, smtpusetls)
-+                           smtpuser, smtppassword, smtpusetls)
-+            time.sleep(sleep)
-             out.done()
- 
-     # send the patches
-@@ -633,7 +632,7 @@ def func(parser, options, args):
-         if not tmpl:
-             raise CmdException, 'No e-mail template file found'
- 
--    for (p, patch_nr) in zip(patches, range(1, len(patches) + 1)):
-+    for (p, patch_nr) in zip(patches, range(1, total_nr + 1)):
-         msg_id = email.Utils.make_msgid('stgit')
-         msg = __build_message(tmpl, p, patch_nr, total_nr, msg_id, ref_id,
-                               options)
-@@ -650,5 +649,9 @@ def func(parser, options, args):
-         else:
-             out.start('Sending patch "%s"' % p)
-             __send_message(smtpserver, from_addr, to_addr_list, msg_string,
--                           sleep, smtpuser, smtppassword, smtpusetls)
-+                           smtpuser, smtppassword, smtpusetls)
-+            # give recipients a chance of receiving related patches in the
-+            # correct order.
-+            if patch_nr < total_nr:
-+                time.sleep(sleep)
-             out.done()
++-t::
+ --track::
+ 	When creating a new branch, set up configuration to mark the
+ 	start-point branch as "upstream" from the new branch. This
+diff --git a/builtin-branch.c b/builtin-branch.c
+index 91098ca..6aaa708 100644
+--- a/builtin-branch.c
++++ b/builtin-branch.c
+@@ -547,7 +547,7 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
+ 	struct option options[] = {
+ 		OPT_GROUP("Generic options"),
+ 		OPT__VERBOSE(&verbose),
+-		OPT_SET_INT( 0 , "track",  &track, "set up tracking mode (see git-pull(1))",
++		OPT_SET_INT('t', "track",  &track, "set up tracking mode (see git-pull(1))",
+ 			BRANCH_TRACK_EXPLICIT),
+ 		OPT_BOOLEAN( 0 , "color",  &branch_use_color, "use colored output"),
+ 		OPT_SET_INT('r', NULL,     &kinds, "act on remote-tracking branches",
+-- 
+1.6.2.4
