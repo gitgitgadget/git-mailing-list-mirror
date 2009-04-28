@@ -1,89 +1,58 @@
-From: martin f krafft <madduck@madduck.net>
-Subject: Re: (topgit question) deleting a dependency
-Date: Tue, 28 Apr 2009 11:41:38 +0200
-Message-ID: <20090428094138.GB9415@piper.oerlikon.madduck.net>
-References: <slrngvdgo4.kr7.sitaramc@sitaramc.homelinux.net>
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: Re: How is git used as other than the project's version control?
+Date: Tue, 28 Apr 2009 12:53:56 +0200
+Message-ID: <vpq7i15f3qz.fsf@bauges.imag.fr>
+References: <450196A1AAAE4B42A00A8B27A59278E70AE3EC48@EXCHANGE.trad.tradestation.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="GRPZ8SYKNexpdSJ7"
-To: git@vger.kernel.org, Sitaram Chamarty <sitaramc@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Apr 28 11:42:23 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: <git@vger.kernel.org>
+To: "John Dlugosz" <JDlugosz@TradeStation.com>
+X-From: git-owner@vger.kernel.org Tue Apr 28 12:58:21 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LyjpW-0007uN-Ck
-	for gcvg-git-2@gmane.org; Tue, 28 Apr 2009 11:42:22 +0200
+	id 1Lyl0p-0006HJ-N4
+	for gcvg-git-2@gmane.org; Tue, 28 Apr 2009 12:58:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756424AbZD1Jlz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 28 Apr 2009 05:41:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756252AbZD1Jlx
-	(ORCPT <rfc822;git-outgoing>); Tue, 28 Apr 2009 05:41:53 -0400
-Received: from clegg.madduck.net ([193.242.105.96]:54029 "EHLO
-	clegg.madduck.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755559AbZD1Jlw (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 28 Apr 2009 05:41:52 -0400
-Received: from piper.oerlikon.madduck.net (piper.oerlikon.madduck.net [IPv6:2001:41e0:ff12:0:211:2fff:fe6b:c869])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "piper.oerlikon.madduck.net", Issuer "CAcert Class 3 Root" (verified OK))
-	by clegg.madduck.net (postfix) with ESMTPS id D64441D409B;
-	Tue, 28 Apr 2009 11:41:38 +0200 (CEST)
-Received: by piper.oerlikon.madduck.net (Postfix, from userid 1000)
-	id 3DFE7C156F; Tue, 28 Apr 2009 11:41:38 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <slrngvdgo4.kr7.sitaramc@sitaramc.homelinux.net>
-X-Motto: Keep the good times rollin'
-X-OS: Debian GNU/Linux squeeze/sid kernel 2.6.29-1-amd64 x86_64
-X-Spamtrap: madduck.bogus@madduck.net
-X-Subliminal-Message: debian/rules!
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-Virus-Scanned: ClamAV 0.94.2/9297/Mon Apr 27 22:30:26 2009 on clegg.madduck.net
-X-Virus-Status: Clean
+	id S1755669AbZD1K54 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 28 Apr 2009 06:57:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754281AbZD1K5y
+	(ORCPT <rfc822;git-outgoing>); Tue, 28 Apr 2009 06:57:54 -0400
+Received: from harmonie.imag.fr ([147.171.130.40]:47952 "EHLO harmonie.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752748AbZD1K5x (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 28 Apr 2009 06:57:53 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by harmonie.imag.fr (8.13.8/8.13.8) with ESMTP id n3SArxUI010759;
+	Tue, 28 Apr 2009 12:54:08 +0200 (CEST)
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
+	(Exim 4.50)
+	id 1Lykwm-0006J8-W8; Tue, 28 Apr 2009 12:53:57 +0200
+Received: from moy by bauges.imag.fr with local (Exim 4.63)
+	(envelope-from <moy@imag.fr>)
+	id 1Lykwm-000306-Up; Tue, 28 Apr 2009 12:53:56 +0200
+In-Reply-To: <450196A1AAAE4B42A00A8B27A59278E70AE3EC48@EXCHANGE.trad.tradestation.com> (John Dlugosz's message of "Mon\, 27 Apr 2009 18\:55\:38 -0400")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.0.91 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (harmonie.imag.fr [147.171.130.40]); Tue, 28 Apr 2009 12:54:08 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117760>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117761>
 
+"John Dlugosz" <JDlugosz@TradeStation.com> writes:
 
---GRPZ8SYKNexpdSJ7
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> I'm interested in finding out how people use git "on the side", when it
+> is not the project's actual version control system.
 
-also sprach Sitaram Chamarty <sitaramc@gmail.com> [2009.04.28.1049 +0200]:
-> [Apologies if this is not the right place to ask; please let
-> me know if so...]
+2008-01-31: Git is the next Unix
+http://www.advogato.org/person/apenwarr/diary/371.html
 
-It is...
-
-> I know "tg depend" only has the "add" subcommand right now,
-> but is there a manual way of getting the effect of a
-> hypothetical "tg depend remove"?
-
-No, not yet, see http://bugs.debian.org/505303 for further
-discussion on the issue.
-
---=20
-martin | http://madduck.net/ | http://two.sentenc.es/
-=20
-"perfection is achieved, not when there is nothing more to add, but
- when there is nothing left to take away."
-                                         -- antoine de saint-exup=E9ry
-=20
-spamtraps: madduck.bogus@madduck.net
-
---GRPZ8SYKNexpdSJ7
-Content-Type: application/pgp-signature; name="digital_signature_gpg.asc"
-Content-Description: Digital signature (see http://martin-krafft.net/gpg/)
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
-
-iEYEARECAAYFAkn2z1EACgkQIgvIgzMMSnXlMwCeIAk6ksPYX4hdhE+xjhmal/FY
-4goAn3uquSUg8r9I3CelK0Yc/8SDH6d0
-=5zwC
------END PGP SIGNATURE-----
-
---GRPZ8SYKNexpdSJ7--
+-- 
+Matthieu
