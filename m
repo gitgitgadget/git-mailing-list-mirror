@@ -1,69 +1,72 @@
-From: =?utf-8?q?Uwe=20Kleine-K=C3=B6nig?= 
-	<u.kleine-koenig@pengutronix.de>
-Subject: [PATCH 2/2] parseopt: fix documentation for --keep-dashdash
-Date: Tue, 28 Apr 2009 22:29:24 +0200
-Message-ID: <1240950564-15124-2-git-send-email-u.kleine-koenig@pengutronix.de>
-References: <1240950564-15124-1-git-send-email-u.kleine-koenig@pengutronix.de>
+From: Josef Wolf <jw@raven.inka.de>
+Subject: Re: Trying to sync two svn repositories with git-svn (repost)
+Date: Tue, 28 Apr 2009 22:30:40 +0200
+Message-ID: <20090428203040.GD15420@raven.wolf.lan>
+References: <20090427201251.GC15420@raven.wolf.lan>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=us-ascii
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Apr 28 22:30:18 2009
+X-From: git-owner@vger.kernel.org Tue Apr 28 22:40:25 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LytwU-0000eP-GN
-	for gcvg-git-2@gmane.org; Tue, 28 Apr 2009 22:30:14 +0200
+	id 1Lyu6J-0005T4-Sl
+	for gcvg-git-2@gmane.org; Tue, 28 Apr 2009 22:40:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753765AbZD1U3g convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 28 Apr 2009 16:29:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753201AbZD1U3f
-	(ORCPT <rfc822;git-outgoing>); Tue, 28 Apr 2009 16:29:35 -0400
-Received: from metis.ext.pengutronix.de ([92.198.50.35]:43725 "EHLO
-	metis.ext.pengutronix.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753417AbZD1U3f (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 28 Apr 2009 16:29:35 -0400
-Received: from ukl by metis.ext.pengutronix.de with local (Exim 4.63)
-	(envelope-from <ukl@pengutronix.de>)
-	id 1Lytvn-0000Av-56; Tue, 28 Apr 2009 22:29:34 +0200
-X-Mailer: git-send-email 1.6.2.4
-In-Reply-To: <1240950564-15124-1-git-send-email-u.kleine-koenig@pengutronix.de>
-X-SA-Exim-Connect-IP: <locally generated>
-X-SA-Exim-Mail-From: ukl@pengutronix.de
-X-Spam-Checker-Version: SpamAssassin 3.2.4 (2008-01-01) on
-	metis.extern.pengutronix.de
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.6 required=4.5 tests=BAYES_00,NO_RELAYS
-	shortcircuit=no autolearn=ham version=3.2.4
-X-SA-Exim-Version: 4.2.1 (built Tue, 09 Jan 2007 17:23:22 +0000)
-X-SA-Exim-Scanned: Yes (on metis.ext.pengutronix.de)
-X-PTX-Original-Recipient: git@vger.kernel.org
+	id S1752355AbZD1UkN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 28 Apr 2009 16:40:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751749AbZD1UkN
+	(ORCPT <rfc822;git-outgoing>); Tue, 28 Apr 2009 16:40:13 -0400
+Received: from quechua.inka.de ([193.197.184.2]:57438 "EHLO mail.inka.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751326AbZD1UkM (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 28 Apr 2009 16:40:12 -0400
+Received: from raven.inka.de (uucp@[127.0.0.1])
+	by mail.inka.de with uucp (rmailwrap 0.5) 
+	id 1Lyu65-0002Ii-KU; Tue, 28 Apr 2009 22:40:10 +0200
+Received: by raven.inka.de (Postfix, from userid 1000)
+	id 7E6C02CC7C; Tue, 28 Apr 2009 22:30:40 +0200 (CEST)
+Mail-Followup-To: Josef Wolf <jw@raven.inka.de>, git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <20090427201251.GC15420@raven.wolf.lan>
+User-Agent: Mutt/1.5.17 (2007-11-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117807>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117808>
 
-Signed-off-by: Uwe Kleine-K=C3=B6nig <u.kleine-koenig@pengutronix.de>
----
- Documentation/git-rev-parse.txt |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+On Mon, Apr 27, 2009 at 10:12:51PM +0200, Josef Wolf wrote:
 
-diff --git a/Documentation/git-rev-parse.txt b/Documentation/git-rev-pa=
-rse.txt
-index 8d3ba14..0e4746f 100644
---- a/Documentation/git-rev-parse.txt
-+++ b/Documentation/git-rev-parse.txt
-@@ -26,7 +26,7 @@ OPTIONS
- --parseopt::
- 	Use 'git-rev-parse' in option parsing mode (see PARSEOPT section belo=
-w).
-=20
----keep-dash-dash::
-+--keep-dashdash::
- 	Only meaningful in `--parseopt` mode. Tells the option parser to echo
- 	out the first `--` met instead of skipping it.
-=20
---=20
-1.6.2.4
+[ ... ]
+> give me the desired outputs.  Now I do
+> 
+>     git checkout svn-first
+>     git merge -s ours svn-second
+>     git checkout svn-second
+>     git merge -s ours svn-first
+> 
+> to tell git that the branches are in sync.
+> 
+> But now, when I try to
+> 
+>     git checkout svn-second
+>     git svn rebase
+> 
+> I get lots of conflicts.  When I inspect the .git/rebase-apply directory
+> and the conflicts, it looks like "git svn rebase" tries to re-apply all
+> the commits from svn-first.  When I omit the "git merge -s ours svn-first"
+> command, it does not re-apply those commits.  So it looks like the
+> "git merge -s ours" wipes some information that git-svn needs to know
+> what was already merged.
+> 
+> What am I missing?  I thought the "ours" strategy is meant to tell git
+> that everything from that branch was merged, either manually or by
+> cherry-pick.
+
+After lots of RTFM, I get the impression, that cherry-pick is the only
+operation I can do to sync a git-svn branch with other (git or git-svn)
+branches.  merge/pull should be avoided.
+
+But then, how do I mark cherry-picked commits as "already synched"?
