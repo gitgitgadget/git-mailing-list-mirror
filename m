@@ -1,92 +1,74 @@
-From: Jean-Baptiste Quenot <jbq@caraldi.com>
-Subject: Re: [tig] Feeding specific revisions to tig
-Date: Tue, 28 Apr 2009 10:15:32 +0200
-Message-ID: <ae63f8b50904280115y14ceef49x81ae6d61fb92e429@mail.gmail.com>
-References: <ae63f8b50806041152v11a2997y9411c5ea3ebc9598@mail.gmail.com>
-	 <20080604192916.GB17327@sigill.intra.peff.net>
-	 <ae63f8b50806041304i20de789ej492681f4b9306934@mail.gmail.com>
-	 <20080604230858.GA27136@sigill.intra.peff.net>
-	 <2c6b72b30808060406u10d7b332g22ea28fe5470ddb1@mail.gmail.com>
-	 <20080808211916.GA30583@sigill.intra.peff.net>
-	 <2c6b72b30808100216j2c719bf2yb7dfba651db901e3@mail.gmail.com>
-	 <ae63f8b50904230755p12170753qf3fc273b48afe4d4@mail.gmail.com>
-	 <2c6b72b30904270321t3d73e2c5o5e3ac8d4b627e5ab@mail.gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Rename core.unreliableHardlinks to core.createObject
+Date: Tue, 28 Apr 2009 10:23:08 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.0904281022070.10279@pacific.mpi-cbg.de>
+References: <alpine.DEB.1.00.0904231252080.10279@pacific.mpi-cbg.de> <alpine.LFD.2.00.0904251042490.3101@localhost.localdomain> <200904252052.10327.j6t@kdbg.org> <7vhc0cw6w8.fsf@gitster.siamese.dyndns.org> <alpine.DEB.1.00.0904261940170.10279@pacific.mpi-cbg.de>
+ <alpine.DEB.1.00.0904271400180.10279@pacific.mpi-cbg.de> <alpine.LFD.2.00.0904270806130.22156@localhost.localdomain> <7vljpl3m8i.fsf@gitster.siamese.dyndns.org> <alpine.LFD.2.00.0904271314130.22156@localhost.localdomain> <alpine.DEB.1.00.0904280031100.10279@pacific.mpi-cbg.de>
+ <7vws95vete.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Jonas Fonseca <jonas.fonseca@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Apr 28 10:16:09 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	Johannes Sixt <j6t@kdbg.org>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Apr 28 10:23:07 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LyiU1-0004WZ-J7
-	for gcvg-git-2@gmane.org; Tue, 28 Apr 2009 10:16:06 +0200
+	id 1Lyiam-0007k7-IF
+	for gcvg-git-2@gmane.org; Tue, 28 Apr 2009 10:23:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760231AbZD1IPh convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 28 Apr 2009 04:15:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755136AbZD1IPg
-	(ORCPT <rfc822;git-outgoing>); Tue, 28 Apr 2009 04:15:36 -0400
-Received: from mail-fx0-f158.google.com ([209.85.220.158]:49143 "EHLO
-	mail-fx0-f158.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753531AbZD1IPd convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 28 Apr 2009 04:15:33 -0400
-Received: by fxm2 with SMTP id 2so378301fxm.37
-        for <git@vger.kernel.org>; Tue, 28 Apr 2009 01:15:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:sender:received:in-reply-to
-         :references:date:x-google-sender-auth:message-id:subject:from:to:cc
-         :content-type:content-transfer-encoding;
-        bh=f3SDyehDxakPE80j6AVYJDgCobZ6qVpH9AxJsCI/Dkk=;
-        b=H7A9vf2kyVAvWhTayQZA7irb1bhgUD/TaOLauJ9LHqdzD3NQ37EOvdK8dpm4mBP4cr
-         NN+ljQhETAcVCPUf12RSb5ejL2AsBUfVsa0+cc1FVSP3Iye1aGxNJkVXdP/BS1VChyM+
-         0eXa7cIaMbTJ0gTrF9qU08JCKBn/CDNv31ICg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:sender:in-reply-to:references:date
-         :x-google-sender-auth:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        b=wH726sKZ3ZFVcmOzbgeEAFJBMIm9ZbYuQS67W6ymTmLhUt5+vPOGbjkDzRW2lbLX+8
-         n2nf6YGjJix8R1oZnNG85Z7D/X7MADm+rRuuuB/oYyFvpdhaCPUoOIMKbELihe8rMtZo
-         jN223Sf6+UIAAIq+Cu3ZYcvhNeMH32YHXOE8Y=
-Received: by 10.239.179.13 with SMTP id b13mr355837hbg.81.1240906532156; Tue, 
-	28 Apr 2009 01:15:32 -0700 (PDT)
-In-Reply-To: <2c6b72b30904270321t3d73e2c5o5e3ac8d4b627e5ab@mail.gmail.com>
-X-Google-Sender-Auth: 262baf922c26fb93
+	id S932104AbZD1IW5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 28 Apr 2009 04:22:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759794AbZD1IW4
+	(ORCPT <rfc822;git-outgoing>); Tue, 28 Apr 2009 04:22:56 -0400
+Received: from mail.gmx.net ([213.165.64.20]:56684 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1759661AbZD1IWz (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 28 Apr 2009 04:22:55 -0400
+Received: (qmail invoked by alias); 28 Apr 2009 08:22:53 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp047) with SMTP; 28 Apr 2009 10:22:53 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18SGXY4IPwS3d8VD0mfCAjb8eL3C1AQTtR5fvmBWA
+	tcZgOLIQuUGfyL
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <7vws95vete.fsf@gitster.siamese.dyndns.org>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.59
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117753>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117754>
 
-2009/4/27 Jonas Fonseca <jonas.fonseca@gmail.com>:
+Hi,
 
-> On Thu, Apr 23, 2009 at 16:55, Jean-Baptiste Quenot <jbq@caraldi.com>=
- wrote:
+On Mon, 27 Apr 2009, Junio C Hamano wrote:
 
->> Restarting this old thread again. =A0Starting from 0.13 the
->> *tignowalk()* hack does not work anymore. =A0What's the preferred wa=
-y to
->> feed specific revisions using stdin now?
->
-> I don't know if it is preferred, but it works. First add a git alias:
->
-> [alias]
-> =A0 =A0 =A0 =A0tignowalk-helper =3D !git rev-list --pretty=3Draw --no=
--walk --stdin<
->
-> Then modify tignowalk by replacing the line calling tig to say:
->
-> TIG_MAIN_CMD=3D"git tignowalk-helper $tmp" tig </dev/tty
->
-> ... and it should work. Maybe more git alias functionality can
-> simplify the hack.
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> 
+> > diff --git a/Makefile b/Makefile
+> > index 5c8e83a..9ca1826 100644
+> > --- a/Makefile
+> > +++ b/Makefile
+> > @@ -172,8 +172,8 @@ all::
+> >  # information on a not yet closed file that lstat would return for the same
+> >  # file after it was closed.
+> >  #
+> > -# Define UNRELIABLE_HARDLINKS if your operating systems has problems when
+> > -# hardlinking a file to another name and unlinking the original file right
+> > +# Define OBJECT_CREATION_USES_RENAMES if your operating systems has problems
+> > +# when hardlinking a file to another name and unlinking the original file right
+> 
+> With the configuration variable for this relatively obscure feature in 
+> place, I wonder if we can simply get rid of the hardcoded compilation 
+> preference.
 
-Works a treat, thanks!
+I'd rather not, for Windows.  Remember, it fixes issues 222 and 229.  And 
+from the comments in those issues I understand that more than 2 persons 
+had problems due to these issues.
 
-I wonder how you managed to invent this trick though :-)
---=20
-Jean-Baptiste Quenot
-http://jbq.caraldi.com/
+Ciao,
+Dscho
