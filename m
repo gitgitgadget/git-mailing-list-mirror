@@ -1,176 +1,76 @@
-From: "Michael S. Tsirkin" <mst@redhat.com>
-Subject: [PATCH] Add --reference option to git submodule
-Date: Tue, 28 Apr 2009 09:52:37 +0300
-Message-ID: <20090428065237.GA5972@redhat.com>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: How is git used as other than the project's version control?
+Date: Tue, 28 Apr 2009 09:02:12 +0200
+Message-ID: <49F6A9F4.8040408@op5.se>
+References: <450196A1AAAE4B42A00A8B27A59278E70AE3EC48@EXCHANGE.trad.tradestation.com> <20090428014434.GA6462@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Apr 28 08:53:52 2009
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: John Dlugosz <JDlugosz@TradeStation.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Apr 28 09:02:27 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LyhCR-0005Pp-OM
-	for gcvg-git-2@gmane.org; Tue, 28 Apr 2009 08:53:52 +0200
+	id 1LyhKj-0008OF-NI
+	for gcvg-git-2@gmane.org; Tue, 28 Apr 2009 09:02:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759850AbZD1Gxm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 28 Apr 2009 02:53:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759694AbZD1Gxl
-	(ORCPT <rfc822;git-outgoing>); Tue, 28 Apr 2009 02:53:41 -0400
-Received: from mx2.redhat.com ([66.187.237.31]:48653 "EHLO mx2.redhat.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1759838AbZD1Gxk (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 28 Apr 2009 02:53:40 -0400
-Received: from int-mx2.corp.redhat.com (int-mx2.corp.redhat.com [172.16.27.26])
-	by mx2.redhat.com (8.13.8/8.13.8) with ESMTP id n3S6rdV5023316;
-	Tue, 28 Apr 2009 02:53:39 -0400
-Received: from ns3.rdu.redhat.com (ns3.rdu.redhat.com [10.11.255.199])
-	by int-mx2.corp.redhat.com (8.13.1/8.13.1) with ESMTP id n3S6rcth016845;
-	Tue, 28 Apr 2009 02:53:39 -0400
-Received: from redhat.com (vpn-10-64.str.redhat.com [10.32.10.64])
-	by ns3.rdu.redhat.com (8.13.8/8.13.8) with ESMTP id n3S6ra4c030488;
-	Tue, 28 Apr 2009 02:53:37 -0400
-Content-Disposition: inline
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-Scanned-By: MIMEDefang 2.58 on 172.16.27.26
+	id S1757649AbZD1HCQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 28 Apr 2009 03:02:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757345AbZD1HCQ
+	(ORCPT <rfc822;git-outgoing>); Tue, 28 Apr 2009 03:02:16 -0400
+Received: from fg-out-1718.google.com ([72.14.220.152]:33922 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757297AbZD1HCP (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 28 Apr 2009 03:02:15 -0400
+Received: by fg-out-1718.google.com with SMTP id d23so702298fga.17
+        for <git@vger.kernel.org>; Tue, 28 Apr 2009 00:02:13 -0700 (PDT)
+Received: by 10.86.91.3 with SMTP id o3mr4080282fgb.20.1240902133534;
+        Tue, 28 Apr 2009 00:02:13 -0700 (PDT)
+Received: from clix.int.op5.se ([212.112.174.166])
+        by mx.google.com with ESMTPS id l19sm2535956fgb.12.2009.04.28.00.02.12
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Tue, 28 Apr 2009 00:02:13 -0700 (PDT)
+User-Agent: Thunderbird 2.0.0.21 (X11/20090320)
+In-Reply-To: <20090428014434.GA6462@coredump.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117747>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117748>
 
-This adds --reference option to 'git submodule add' and
-'git submodule update' commands, which is passed on to git clone.
-This option is useful when the submodule is large, such as linux kernel.
+Jeff King wrote:
+> On Mon, Apr 27, 2009 at 06:55:38PM -0400, John Dlugosz wrote:
+> 
+>> I'm interested in finding out how people use git "on the side", when it
+>> is not the project's actual version control system.
+> 
+> One of the nice things about git (and other distributed VCS's) is that
+> creating a repo is very lightweight. If I am going to write a patch for
+> some other software, the first thing I'll do after untarring it is "git
+> init; git add .; git commit -m import". So it kind of blurs the concept
+> of "what is the project's actual version control system" as you wrote
+> above. If you consider the project to be my patch, it _is_ the VCS. Even
+> though upstream may not be using it.
+> 
 
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
----
+This...
 
-I noticed that there's no easy way to specify a reference
-for submodule repositories. Here's a patch to add this option.
+> And of course, if I am going to do multiple patches, then I may convert
+> and track upstream's history via git.
+> 
 
- Documentation/git-submodule.txt |   14 ++++++++++++--
- git-submodule.sh                |   31 ++++++++++++++++++++++++++++---
- 2 files changed, 40 insertions(+), 5 deletions(-)
+... although I usually *always* do this, even if it's only one patch.
 
-diff --git a/Documentation/git-submodule.txt b/Documentation/git-submodule.txt
-index 3b8df44..0584cb7 100644
---- a/Documentation/git-submodule.txt
-+++ b/Documentation/git-submodule.txt
-@@ -9,10 +9,12 @@ git-submodule - Initialize, update or inspect submodules
- SYNOPSIS
- --------
- [verse]
--'git submodule' [--quiet] add [-b branch] [--] <repository> <path>
-+'git submodule' [--quiet] add [-b branch]
-+	      [--reference <repository>] [--] <repository> <path>
- 'git submodule' [--quiet] status [--cached] [--] [<path>...]
- 'git submodule' [--quiet] init [--] [<path>...]
--'git submodule' [--quiet] update [--init] [-N|--no-fetch] [--] [<path>...]
-+'git submodule' [--quiet] update [--init] [-N|--no-fetch]
-+	      [--reference <repository>] [--] [<path>...]
- 'git submodule' [--quiet] summary [--summary-limit <n>] [commit] [--] [<path>...]
- 'git submodule' [--quiet] foreach <command>
- 'git submodule' [--quiet] sync [--] [<path>...]
-@@ -177,6 +179,14 @@ OPTIONS
- 	This option is only valid for the update command.
- 	Don't fetch new objects from the remote site.
- 
-+--reference <repository>::
-+	This option is only valid for add and update commands.  These
-+	commands sometimes need to clone a remote repository. In this case,
-+	this option will be passed to linkgit:git-clone[1] command.
-++
-+*NOTE*: Do *not* use this option unless you have read the note
-+for linkgit:git-clone[1] --reference and --shared options carefully.
-+
- <path>...::
- 	Paths to submodule(s). When specified this will restrict the command
- 	to only operate on the submodules found at the specified paths.
-diff --git a/git-submodule.sh b/git-submodule.sh
-index 8e234a4..32be246 100755
---- a/git-submodule.sh
-+++ b/git-submodule.sh
-@@ -15,6 +15,7 @@ require_work_tree
- command=
- branch=
- quiet=
-+reference=
- cached=
- nofetch=
- 
-@@ -91,6 +92,7 @@ module_clone()
- {
- 	path=$1
- 	url=$2
-+	reference="$3"
- 
- 	# If there already is a directory at the submodule path,
- 	# expect it to be empty (since that is the default checkout
-@@ -106,7 +108,12 @@ module_clone()
- 	test -e "$path" &&
- 	die "A file already exist at path '$path'"
- 
--	git-clone -n "$url" "$path" ||
-+	if test "reference"
-+	then
-+		git-clone "$reference" -n "$url" "$path"
-+	else
-+		git-clone -n "$url" "$path"
-+	fi ||
- 	die "Clone of '$url' into submodule path '$path' failed"
- }
- 
-@@ -131,6 +138,15 @@ cmd_add()
- 		-q|--quiet)
- 			quiet=1
- 			;;
-+		--reference)
-+			case "$2" in '') usage ;; esac
-+			reference="--reference=$2"
-+			shift
-+			;;
-+		--reference=*)
-+			reference="$1"
-+			shift
-+			;;
- 		--)
- 			shift
- 			break
-@@ -203,7 +219,7 @@ cmd_add()
- 		git config submodule."$path".url "$url"
- 	else
- 
--		module_clone "$path" "$realrepo" || exit
-+		module_clone "$path" "$realrepo" "$reference" || exit
- 		(
- 			unset GIT_DIR
- 			cd "$path" &&
-@@ -321,6 +337,15 @@ cmd_update()
- 			shift
- 			nofetch=1
- 			;;
-+		--reference)
-+			case "$2" in '') usage ;; esac
-+			reference="$2"
-+			shift 2
-+			;;
-+		--reference=*)
-+			reference="$1"
-+			shift
-+			;;
- 		--)
- 			shift
- 			break
-@@ -351,7 +376,7 @@ cmd_update()
- 
- 		if ! test -d "$path"/.git -o -f "$path"/.git
- 		then
--			module_clone "$path" "$url" || exit
-+			module_clone "$path" "$url" "$reference"|| exit
- 			subsha1=
- 		else
- 			subsha1=$(unset GIT_DIR; cd "$path" &&
 -- 
-1.6.3.rc3.dirty
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
+
+Register now for Nordic Meet on Nagios, June 3-4 in Stockholm
+ http://nordicmeetonnagios.op5.org/
+
+Considering the successes of the wars on alcohol, poverty, drugs and
+terror, I think we should give some serious thought to declaring war
+on peace.
