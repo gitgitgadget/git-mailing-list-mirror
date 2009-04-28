@@ -1,74 +1,75 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Rename core.unreliableHardlinks to core.createObject
-Date: Tue, 28 Apr 2009 10:23:08 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.0904281022070.10279@pacific.mpi-cbg.de>
-References: <alpine.DEB.1.00.0904231252080.10279@pacific.mpi-cbg.de> <alpine.LFD.2.00.0904251042490.3101@localhost.localdomain> <200904252052.10327.j6t@kdbg.org> <7vhc0cw6w8.fsf@gitster.siamese.dyndns.org> <alpine.DEB.1.00.0904261940170.10279@pacific.mpi-cbg.de>
- <alpine.DEB.1.00.0904271400180.10279@pacific.mpi-cbg.de> <alpine.LFD.2.00.0904270806130.22156@localhost.localdomain> <7vljpl3m8i.fsf@gitster.siamese.dyndns.org> <alpine.LFD.2.00.0904271314130.22156@localhost.localdomain> <alpine.DEB.1.00.0904280031100.10279@pacific.mpi-cbg.de>
- <7vws95vete.fsf@gitster.siamese.dyndns.org>
+From: Mike Ralphson <mike.ralphson@gmail.com>
+Subject: Re: How is git used as other than the project's version control?
+Date: Tue, 28 Apr 2009 09:31:24 +0100
+Message-ID: <e2b179460904280131x1797862eq501797af2132f2c9@mail.gmail.com>
+References: <450196A1AAAE4B42A00A8B27A59278E70AE3EC48@EXCHANGE.trad.tradestation.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	Johannes Sixt <j6t@kdbg.org>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Apr 28 10:23:07 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: John Dlugosz <JDlugosz@tradestation.com>
+X-From: git-owner@vger.kernel.org Tue Apr 28 10:31:36 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lyiam-0007k7-IF
-	for gcvg-git-2@gmane.org; Tue, 28 Apr 2009 10:23:05 +0200
+	id 1Lyij2-0002xN-CZ
+	for gcvg-git-2@gmane.org; Tue, 28 Apr 2009 10:31:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932104AbZD1IW5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 28 Apr 2009 04:22:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759794AbZD1IW4
-	(ORCPT <rfc822;git-outgoing>); Tue, 28 Apr 2009 04:22:56 -0400
-Received: from mail.gmx.net ([213.165.64.20]:56684 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1759661AbZD1IWz (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 28 Apr 2009 04:22:55 -0400
-Received: (qmail invoked by alias); 28 Apr 2009 08:22:53 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp047) with SMTP; 28 Apr 2009 10:22:53 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18SGXY4IPwS3d8VD0mfCAjb8eL3C1AQTtR5fvmBWA
-	tcZgOLIQuUGfyL
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <7vws95vete.fsf@gitster.siamese.dyndns.org>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.59
+	id S1752055AbZD1Ib0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 28 Apr 2009 04:31:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751465AbZD1Ib0
+	(ORCPT <rfc822;git-outgoing>); Tue, 28 Apr 2009 04:31:26 -0400
+Received: from mail-fx0-f158.google.com ([209.85.220.158]:63659 "EHLO
+	mail-fx0-f158.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751150AbZD1IbZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 28 Apr 2009 04:31:25 -0400
+Received: by fxm2 with SMTP id 2so385853fxm.37
+        for <git@vger.kernel.org>; Tue, 28 Apr 2009 01:31:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=XoFMuw0gymJlUDKw581ECt8O4SD4nt1XdwwlDe1s/20=;
+        b=wBXVXh9g6VjDxMoavpWfzY97WLJW8wJewCDtZl1hIw2Rp2Yg1kcAlHqYTiLlT4Lavs
+         ELU5ryQjNFZQWIAeK3H+Lk92ckaNV5Vo8WWMrpWy7KSgrrKRsNBXcw8Zz1qJ1I7MEcmm
+         FGTGSzECZUWFgs43zo69HYJrtHZRCTjHTI7xs=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=OxGFvGcNXqXuoU95iq4n/fZK6hK7vMxjouXuNhHfqtgv3l6mp/USLCFK4JUm0z5SVb
+         SeMPgMuAQUsOjF+8msrwF6xXc3zKvZMiYVHK4qRjf9vCcmI+EBG3c3jvqs/2AjIEs1bF
+         zTHyZAs0V+GhL0qI1uJ+2tKEyRTsOnwJvOnD4=
+Received: by 10.223.115.80 with SMTP id h16mr2225844faq.94.1240907484300; Tue, 
+	28 Apr 2009 01:31:24 -0700 (PDT)
+In-Reply-To: <450196A1AAAE4B42A00A8B27A59278E70AE3EC48@EXCHANGE.trad.tradestation.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117754>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117755>
 
-Hi,
+2009/4/27 John Dlugosz <JDlugosz@tradestation.com>:
+> I'm interested in finding out how people use git "on the side", when it
+> is not the project's actual version control system.
 
-On Mon, 27 Apr 2009, Junio C Hamano wrote:
+We have historically used a very simple pessimistic locking strategy
+with our legacy platform source. Individual files or groups of files
+are checked out to developers' home directories and they override
+what's in the live area when that dev compiles and tests for
+themselves.
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> 
-> > diff --git a/Makefile b/Makefile
-> > index 5c8e83a..9ca1826 100644
-> > --- a/Makefile
-> > +++ b/Makefile
-> > @@ -172,8 +172,8 @@ all::
-> >  # information on a not yet closed file that lstat would return for the same
-> >  # file after it was closed.
-> >  #
-> > -# Define UNRELIABLE_HARDLINKS if your operating systems has problems when
-> > -# hardlinking a file to another name and unlinking the original file right
-> > +# Define OBJECT_CREATION_USES_RENAMES if your operating systems has problems
-> > +# when hardlinking a file to another name and unlinking the original file right
-> 
-> With the configuration variable for this relatively obscure feature in 
-> place, I wonder if we can simply get rid of the hardcoded compilation 
-> preference.
+I basically inserted git under this mechanism, thus allowing the
+optional use of merge and integrate (lockless development),
+topic-branches, tags etc. Git also functions as our tripwire solution
+to ensure changes to that master shared repo have all been made
+traceably.
 
-I'd rather not, for Windows.  Remember, it fixes issues 222 and 229.  And 
-from the comments in those issues I understand that more than 2 persons 
-had problems due to these issues.
+Git effectively is the VCS now, as what was there before was only
+barely acceptable when it came to accessing old versions etc, but if
+you don't want to interact with git, you don't have to even know it's
+there. Until it saves your arse.
 
-Ciao,
-Dscho
+Mike
