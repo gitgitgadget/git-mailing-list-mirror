@@ -1,105 +1,83 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Rename core.unreliableHardlinks to core.createObject
-Date: Wed, 29 Apr 2009 00:07:08 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.0904290005010.10279@pacific.mpi-cbg.de>
-References: <alpine.DEB.1.00.0904231252080.10279@pacific.mpi-cbg.de> <alpine.LFD.2.00.0904251042490.3101@localhost.localdomain> <200904252052.10327.j6t@kdbg.org> <7vhc0cw6w8.fsf@gitster.siamese.dyndns.org> <alpine.DEB.1.00.0904261940170.10279@pacific.mpi-cbg.de>
- <alpine.DEB.1.00.0904271400180.10279@pacific.mpi-cbg.de> <alpine.LFD.2.00.0904270806130.22156@localhost.localdomain> <7vljpl3m8i.fsf@gitster.siamese.dyndns.org> <alpine.LFD.2.00.0904271314130.22156@localhost.localdomain> <alpine.DEB.1.00.0904280031100.10279@pacific.mpi-cbg.de>
- <7vws95vete.fsf@gitster.siamese.dyndns.org> <alpine.DEB.1.00.0904281022070.10279@pacific.mpi-cbg.de> <7v1vrdqi9i.fsf@gitster.siamese.dyndns.org> <alpine.DEB.1.00.0904281647350.10279@pacific.mpi-cbg.de> <7vk554jxzm.fsf@gitster.siamese.dyndns.org>
+From: "Sohn, Matthias" <matthias.sohn@sap.com>
+Subject: [PATCH JGIT] Method ignores results of InputStream.skip()
+Date: Wed, 29 Apr 2009 00:26:15 +0200
+Message-ID: <366BBB1215D0AB4B8A153AF047A287800302A241@dewdfe18.wdf.sap.corp>
+References: <366BBB1215D0AB4B8A153AF047A2878002FCE7E7@dewdfe18.wdf.sap.corp> <366BBB1215D0AB4B8A153AF047A2878002FCE7E8@dewdfe18.wdf.sap.corp> <366BBB1215D0AB4B8A153AF047A2878002FCE7E9@dewdfe18.wdf.sap.corp> <366BBB1215D0AB4B8A153AF047A2878002FCE7EA@dewdfe18.wdf.sap.corp>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	Johannes Sixt <j6t@kdbg.org>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Apr 29 00:07:03 2009
+Content-Type: text/plain;
+	charset="Windows-1252"
+Content-Transfer-Encoding: 8BIT
+Cc: <git@vger.kernel.org>
+To: "Shawn O. Pearce" <spearce@spearce.org>,
+	"Robin Rosenberg" <robin.rosenberg@dewire.com>
+X-From: git-owner@vger.kernel.org Wed Apr 29 00:26:29 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LyvS6-0005g6-3p
-	for gcvg-git-2@gmane.org; Wed, 29 Apr 2009 00:06:58 +0200
+	id 1Lyvkt-0005vd-FC
+	for gcvg-git-2@gmane.org; Wed, 29 Apr 2009 00:26:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755031AbZD1WGz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 28 Apr 2009 18:06:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754717AbZD1WGx
-	(ORCPT <rfc822;git-outgoing>); Tue, 28 Apr 2009 18:06:53 -0400
-Received: from mail.gmx.net ([213.165.64.20]:46509 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753471AbZD1WGx (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 28 Apr 2009 18:06:53 -0400
-Received: (qmail invoked by alias); 28 Apr 2009 22:06:51 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp025) with SMTP; 29 Apr 2009 00:06:51 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18T91seVo4Tt23Tw0tAtWRKoOMHyHcx8gHQjzVPvv
-	lYOox5mnFWJHk2
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <7vk554jxzm.fsf@gitster.siamese.dyndns.org>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.62
+	id S1753532AbZD1W0P (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 28 Apr 2009 18:26:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753360AbZD1W0P
+	(ORCPT <rfc822;git-outgoing>); Tue, 28 Apr 2009 18:26:15 -0400
+Received: from smtpde01.sap-ag.de ([155.56.68.171]:51304 "EHLO
+	smtpde01.sap-ag.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752862AbZD1W0O convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 28 Apr 2009 18:26:14 -0400
+Received: from mail.sap.corp
+	by smtpde01.sap-ag.de (26) with ESMTP id n3SMQAgV001662
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Wed, 29 Apr 2009 00:26:10 +0200 (MEST)
+X-MimeOLE: Produced By Microsoft Exchange V6.5
+Content-class: urn:content-classes:message
+In-Reply-To: <366BBB1215D0AB4B8A153AF047A2878002FCE7EA@dewdfe18.wdf.sap.corp>
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+Thread-Topic: [PATCH JGIT] Method ignores results of InputStream.skip()
+Thread-Index: AcnHjEysWP+qTjB1Tm2zGBLNNuNqlAAAC8hQAAAVRmAAABVskAAwuh9w
+X-OriginalArrivalTime: 28 Apr 2009 22:26:10.0179 (UTC) FILETIME=[54C33D30:01C9C850]
+X-Scanner: Virus Scanner virwal05
+X-SAP: out
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117822>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117823>
 
-Hi,
+This method ignores the return value of java.io.InputStream.skip() which can skip multiple bytes.  If the return value is not checked, the caller will not be able to correctly handle the case where fewer bytes were skipped than the caller requested. This is a particularly insidious kind of bug, because in many programs, skips from input streams usually do skip the full amount of data requested, causing the program to fail only sporadically. With buffered streams, however, skip() will only skip data in the buffer, and will routinely fail to skip the requested number of bytes.
 
-On Tue, 28 Apr 2009, Junio C Hamano wrote:
+Signed-off-by: Matthias Sohn <matthias.sohn@sap.com>
+---
+hopefully this time Exchange server doesn't mangle the patch
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> 
-> >> Wait a bit. Wasn't this about you accessing NTFS on your EeePC via 
-> >> unfs from the Linux side?
-> >
-> > Both.  I realized that there was a problem with the ufsd driver of the 
-> > Xandros Linux on my EeePC, accessing NTFS partitions.  (This is the 
-> > issue that made me add a config variable, but which was solved by 
-> > Linus' core.fsyncobjects suggestion.)
-> >
-> > Later I had a hunch that the issues 222 and 229 of msysGit might have 
-> > exactly the same reason, let the reporters test, and indeed, the 
-> > problems went away.
-> >
-> > But come to think of it, we can _easily_ just set 
-> > core.createObject=rename in msysGit, so I agree that there is no 
-> > longer a need for the Makefile variable.
-> >
-> > Want me to resend?
-> 
-> If it helps msys, I think we should allow compiling things in, but this 
-> "compiled in default for the platform, and possible per-repository 
-> override" made me a bit confused:
-> 
->  (1) in your "This is Linux and on sane filesystems I do not weaken it 
->      to rename but on this one filesystem I do" case can be handled by 
->      adding .git/config in that repository;
-> 
->  (2) problems with msysgit can be handled by compiled-in defaults as 
->      long as the user does not have .git/config entry to say "link";
-> 
->  (3) if you use the same repository from both sides with (1), presumably
->      by dual-booting, so having .git/config that says "rename" happens 
->      to work;
-> 
->  (4) if somebody has a dual-boot setup and shares a repository hosted
->      natively on the Linux side by mounting it on the Windows side (Ext2 
->      IFS?), I wonder what should happen.  While you are using the 
->      repository from the Linux side, you may not want to weaken it to 
->      use "rename" (so you do not add .git/config that says "rename").  
->      When you are accessing it over Ext2 IFS, perhaps you would want to 
->      use "rename" (I do not know about the details of #222 and #229, so 
->      it may not applicable, though).
-> 
-> So,... as long as you do not have a triple-boot setup, third system 
-> among which wants to use "link" on a repository where both Linux and 
-> Windows side want to use "rename", I think you are Ok.
+ .../jgit/transport/BundleFetchConnection.java      |    5 +++--
+ 1 files changed, 3 insertions(+), 2 deletions(-)
 
-Well, my idea was to "weaken" the repository by using rename() always, 
-even if the fs/OS combo happens to handle the case gracefully.
-
-But actually, what I will use is core.fsyncObjects, as suggested by Linus, 
-which should not hurt sane fs/OS combos either.
-
-Ciao,
-Dscho
+diff --git a/org.spearce.jgit/src/org/spearce/jgit/transport/BundleFetchConnection.java b/org.spearce.jgit/src/org/spearce/jgit/transport/BundleFetchConnection.java
+index 40bf7db..2e2977e 100644
+--- a/org.spearce.jgit/src/org/spearce/jgit/transport/BundleFetchConnection.java
++++ b/org.spearce.jgit/src/org/spearce/jgit/transport/BundleFetchConnection.java
+@@ -60,6 +60,7 @@
+ import org.spearce.jgit.revwalk.RevFlag;
+ import org.spearce.jgit.revwalk.RevObject;
+ import org.spearce.jgit.revwalk.RevWalk;
++import org.spearce.jgit.util.NB;
+ import org.spearce.jgit.util.RawParseUtils;
+ 
+ /**
+@@ -139,9 +140,9 @@ private String readLine(final byte[] hdrbuf) throws IOException {
+ 		while (lf < cnt && hdrbuf[lf] != '\n')
+ 			lf++;
+ 		bin.reset();
+-		bin.skip(lf);
++		NB.skipFully(bin, lf);
+ 		if (lf < cnt && hdrbuf[lf] == '\n')
+-			bin.skip(1);
++			NB.skipFully(bin, 1);
+ 		return RawParseUtils.decode(Constants.CHARSET, hdrbuf, 0, lf);
+ 	}
+ 
+-- 
+1.6.2.2.1669.g7eaf8
