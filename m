@@ -1,68 +1,101 @@
-From: Robin Rosenberg <robin.rosenberg@dewire.com>
-Subject: [JGIT PATCH] Fix spelling of Junit option jgit.junit.usemmap
-Date: Wed, 29 Apr 2009 00:50:18 +0200
-Message-ID: <1240959018-2388-1-git-send-email-robin.rosenberg@dewire.com>
-Cc: git@vger.kernel.org, Robin Rosenberg <robin.rosenberg@dewire.com>
-To: spearce@spearce.org
-X-From: git-owner@vger.kernel.org Wed Apr 29 00:50:37 2009
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Rename core.unreliableHardlinks to core.createObject
+Date: Tue, 28 Apr 2009 13:59:25 -0700
+Message-ID: <7vk554jxzm.fsf@gitster.siamese.dyndns.org>
+References: <alpine.DEB.1.00.0904231252080.10279@pacific.mpi-cbg.de>
+ <alpine.LFD.2.00.0904251042490.3101@localhost.localdomain>
+ <200904252052.10327.j6t@kdbg.org> <7vhc0cw6w8.fsf@gitster.siamese.dyndns.org>
+ <alpine.DEB.1.00.0904261940170.10279@pacific.mpi-cbg.de>
+ <alpine.DEB.1.00.0904271400180.10279@pacific.mpi-cbg.de>
+ <alpine.LFD.2.00.0904270806130.22156@localhost.localdomain>
+ <7vljpl3m8i.fsf@gitster.siamese.dyndns.org>
+ <alpine.LFD.2.00.0904271314130.22156@localhost.localdomain>
+ <alpine.DEB.1.00.0904280031100.10279@pacific.mpi-cbg.de>
+ <7vws95vete.fsf@gitster.siamese.dyndns.org>
+ <alpine.DEB.1.00.0904281022070.10279@pacific.mpi-cbg.de>
+ <7v1vrdqi9i.fsf@gitster.siamese.dyndns.org>
+ <alpine.DEB.1.00.0904281647350.10279@pacific.mpi-cbg.de>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	Johannes Sixt <j6t@kdbg.org>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Apr 28 23:03:02 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lyw8K-0007D7-Dq
-	for gcvg-git-2@gmane.org; Wed, 29 Apr 2009 00:50:36 +0200
+	id 1LyuPs-00078b-4N
+	for gcvg-git-2@gmane.org; Tue, 28 Apr 2009 23:00:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754623AbZD1Wu1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 28 Apr 2009 18:50:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753446AbZD1Wu1
-	(ORCPT <rfc822;git-outgoing>); Tue, 28 Apr 2009 18:50:27 -0400
-Received: from mail.dewire.com ([83.140.172.130]:16321 "EHLO dewire.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752612AbZD1Wu0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 28 Apr 2009 18:50:26 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by dewire.com (Postfix) with ESMTP id 317C91023428;
-	Wed, 29 Apr 2009 00:50:21 +0200 (CEST)
-X-Virus-Scanned: by amavisd-new at dewire.com
-Received: from dewire.com ([127.0.0.1])
-	by localhost (torino.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id JrI8ad3z9w1J; Wed, 29 Apr 2009 00:50:20 +0200 (CEST)
-Received: from localhost.localdomain (unknown [10.9.0.8])
-	by dewire.com (Postfix) with ESMTP id 66BB310233F2;
-	Wed, 29 Apr 2009 00:50:20 +0200 (CEST)
-X-Mailer: git-send-email 1.6.3.rc2.1.g868b6
+	id S1756578AbZD1U7g (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 28 Apr 2009 16:59:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754152AbZD1U7g
+	(ORCPT <rfc822;git-outgoing>); Tue, 28 Apr 2009 16:59:36 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:39109 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753188AbZD1U7f (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 28 Apr 2009 16:59:35 -0400
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 851C9AE1CE;
+	Tue, 28 Apr 2009 16:59:33 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id A5D4AAE1C8; Tue,
+ 28 Apr 2009 16:59:27 -0400 (EDT)
+In-Reply-To: <alpine.DEB.1.00.0904281647350.10279@pacific.mpi-cbg.de>
+ (Johannes Schindelin's message of "Tue, 28 Apr 2009 16:50:01 +0200 (CEST)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 79930E94-3437-11DE-BCEF-CABC03BA4B0C-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117828>
 
-Signed-off-by: Robin Rosenberg <robin.rosenberg@dewire.com>
----
- .../org/spearce/jgit/lib/RepositoryTestCase.java   |    4 ++--
- 1 files changed, 2 insertions(+), 2 deletions(-)
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-diff --git a/org.spearce.jgit.test/tst/org/spearce/jgit/lib/RepositoryTestCase.java b/org.spearce.jgit.test/tst/org/spearce/jgit/lib/RepositoryTestCase.java
-index b85d3eb..3b03ac1 100644
---- a/org.spearce.jgit.test/tst/org/spearce/jgit/lib/RepositoryTestCase.java
-+++ b/org.spearce.jgit.test/tst/org/spearce/jgit/lib/RepositoryTestCase.java
-@@ -61,7 +61,7 @@
-  * Sets up a predefined test repository and has support for creating additional
-  * repositories and destroying them when the tests are finished.
-  *
-- * A system property <em>jgit.junit.usemmmap</em> defines whether memory mapping
-+ * A system property <em>jgit.junit.usemmap</em> defines whether memory mapping
-  * is used. Memory mapping has an effect on the file system, in that memory
-  * mapped files in java cannot be deleted as long as they mapped arrays have not
-  * been reclaimed by the garbage collector. The programmer cannot control this
-@@ -123,7 +123,7 @@ protected void configure() {
- 		final WindowCacheConfig c = new WindowCacheConfig();
- 		c.setPackedGitLimit(128 * WindowCacheConfig.KB);
- 		c.setPackedGitWindowSize(8 * WindowCacheConfig.KB);
--		c.setPackedGitMMAP("true".equals(System.getProperty("jgit.junit.usemmmap")));
-+		c.setPackedGitMMAP("true".equals(System.getProperty("jgit.junit.usemmap")));
- 		c.setDeltaBaseCacheLimit(8 * WindowCacheConfig.KB);
- 		WindowCache.reconfigure(c);
- 	}
--- 
-1.6.3.rc2.1.g868b6
+>> Wait a bit. Wasn't this about you accessing NTFS on your EeePC via unfs 
+>> from the Linux side?
+>
+> Both.  I realized that there was a problem with the ufsd driver of the 
+> Xandros Linux on my EeePC, accessing NTFS partitions.  (This is the issue 
+> that made me add a config variable, but which was solved by Linus' 
+> core.fsyncobjects suggestion.)
+>
+> Later I had a hunch that the issues 222 and 229 of msysGit might have 
+> exactly the same reason, let the reporters test, and indeed, the problems 
+> went away.
+>
+> But come to think of it, we can _easily_ just set core.createObject=rename 
+> in msysGit, so I agree that there is no longer a need for the Makefile 
+> variable.
+>
+> Want me to resend?
+
+If it helps msys, I think we should allow compiling things in, but this
+"compiled in default for the platform, and possible per-repository
+override" made me a bit confused:
+
+ (1) in your "This is Linux and on sane filesystems I do not weaken it to
+     rename but on this one filesystem I do" case can be handled by adding
+     .git/config in that repository;
+
+ (2) problems with msysgit can be handled by compiled-in defaults as long
+     as the user does not have .git/config entry to say "link";
+
+ (3) if you use the same repository from both sides with (1), presumably
+     by dual-booting, so having .git/config that says "rename" happens to
+     work;
+
+ (4) if somebody has a dual-boot setup and shares a repository hosted
+     natively on the Linux side by mounting it on the Windows side (Ext2
+     IFS?), I wonder what should happen.  While you are using the
+     repository from the Linux side, you may not want to weaken it to use
+     "rename" (so you do not add .git/config that says "rename").  When
+     you are accessing it over Ext2 IFS, perhaps you would want to use
+     "rename" (I do not know about the details of #222 and #229, so it may
+     not applicable, though).
+
+So,... as long as you do not have a triple-boot setup, third system among
+which wants to use "link" on a repository where both Linux and Windows
+side want to use "rename", I think you are Ok.
