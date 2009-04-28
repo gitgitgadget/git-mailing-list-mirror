@@ -1,75 +1,63 @@
-From: Mike Ralphson <mike.ralphson@gmail.com>
-Subject: Re: How is git used as other than the project's version control?
-Date: Tue, 28 Apr 2009 09:31:24 +0100
-Message-ID: <e2b179460904280131x1797862eq501797af2132f2c9@mail.gmail.com>
-References: <450196A1AAAE4B42A00A8B27A59278E70AE3EC48@EXCHANGE.trad.tradestation.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Rename core.unreliableHardlinks to core.createObject
+Date: Tue, 28 Apr 2009 01:44:57 -0700
+Message-ID: <7v1vrdqi9i.fsf@gitster.siamese.dyndns.org>
+References: <alpine.DEB.1.00.0904231252080.10279@pacific.mpi-cbg.de>
+ <alpine.LFD.2.00.0904251042490.3101@localhost.localdomain>
+ <200904252052.10327.j6t@kdbg.org> <7vhc0cw6w8.fsf@gitster.siamese.dyndns.org>
+ <alpine.DEB.1.00.0904261940170.10279@pacific.mpi-cbg.de>
+ <alpine.DEB.1.00.0904271400180.10279@pacific.mpi-cbg.de>
+ <alpine.LFD.2.00.0904270806130.22156@localhost.localdomain>
+ <7vljpl3m8i.fsf@gitster.siamese.dyndns.org>
+ <alpine.LFD.2.00.0904271314130.22156@localhost.localdomain>
+ <alpine.DEB.1.00.0904280031100.10279@pacific.mpi-cbg.de>
+ <7vws95vete.fsf@gitster.siamese.dyndns.org>
+ <alpine.DEB.1.00.0904281022070.10279@pacific.mpi-cbg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: John Dlugosz <JDlugosz@tradestation.com>
-X-From: git-owner@vger.kernel.org Tue Apr 28 10:31:36 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	Johannes Sixt <j6t@kdbg.org>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Apr 28 10:46:31 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lyij2-0002xN-CZ
-	for gcvg-git-2@gmane.org; Tue, 28 Apr 2009 10:31:36 +0200
+	id 1LyixS-0000qv-Ki
+	for gcvg-git-2@gmane.org; Tue, 28 Apr 2009 10:46:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752055AbZD1Ib0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 28 Apr 2009 04:31:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751465AbZD1Ib0
-	(ORCPT <rfc822;git-outgoing>); Tue, 28 Apr 2009 04:31:26 -0400
-Received: from mail-fx0-f158.google.com ([209.85.220.158]:63659 "EHLO
-	mail-fx0-f158.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751150AbZD1IbZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 28 Apr 2009 04:31:25 -0400
-Received: by fxm2 with SMTP id 2so385853fxm.37
-        for <git@vger.kernel.org>; Tue, 28 Apr 2009 01:31:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=XoFMuw0gymJlUDKw581ECt8O4SD4nt1XdwwlDe1s/20=;
-        b=wBXVXh9g6VjDxMoavpWfzY97WLJW8wJewCDtZl1hIw2Rp2Yg1kcAlHqYTiLlT4Lavs
-         ELU5ryQjNFZQWIAeK3H+Lk92ckaNV5Vo8WWMrpWy7KSgrrKRsNBXcw8Zz1qJ1I7MEcmm
-         FGTGSzECZUWFgs43zo69HYJrtHZRCTjHTI7xs=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=OxGFvGcNXqXuoU95iq4n/fZK6hK7vMxjouXuNhHfqtgv3l6mp/USLCFK4JUm0z5SVb
-         SeMPgMuAQUsOjF+8msrwF6xXc3zKvZMiYVHK4qRjf9vCcmI+EBG3c3jvqs/2AjIEs1bF
-         zTHyZAs0V+GhL0qI1uJ+2tKEyRTsOnwJvOnD4=
-Received: by 10.223.115.80 with SMTP id h16mr2225844faq.94.1240907484300; Tue, 
-	28 Apr 2009 01:31:24 -0700 (PDT)
-In-Reply-To: <450196A1AAAE4B42A00A8B27A59278E70AE3EC48@EXCHANGE.trad.tradestation.com>
+	id S1753679AbZD1IpO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 28 Apr 2009 04:45:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752130AbZD1IpM
+	(ORCPT <rfc822;git-outgoing>); Tue, 28 Apr 2009 04:45:12 -0400
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:51569 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754975AbZD1IpG (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 28 Apr 2009 04:45:06 -0400
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 265671104C;
+	Tue, 28 Apr 2009 04:45:04 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 57D4B1104A; Tue,
+ 28 Apr 2009 04:44:59 -0400 (EDT)
+In-Reply-To: <alpine.DEB.1.00.0904281022070.10279@pacific.mpi-cbg.de>
+ (Johannes Schindelin's message of "Tue, 28 Apr 2009 10:23:08 +0200 (CEST)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: DE2E290E-33D0-11DE-B4AF-D766E3C8547C-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117755>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117756>
 
-2009/4/27 John Dlugosz <JDlugosz@tradestation.com>:
-> I'm interested in finding out how people use git "on the side", when it
-> is not the project's actual version control system.
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-We have historically used a very simple pessimistic locking strategy
-with our legacy platform source. Individual files or groups of files
-are checked out to developers' home directories and they override
-what's in the live area when that dev compiles and tests for
-themselves.
+>> With the configuration variable for this relatively obscure feature in 
+>> place, I wonder if we can simply get rid of the hardcoded compilation 
+>> preference.
+>
+> I'd rather not, for Windows.  Remember, it fixes issues 222 and 229.
 
-I basically inserted git under this mechanism, thus allowing the
-optional use of merge and integrate (lockless development),
-topic-branches, tags etc. Git also functions as our tripwire solution
-to ensure changes to that master shared repo have all been made
-traceably.
-
-Git effectively is the VCS now, as what was there before was only
-barely acceptable when it came to accessing old versions etc, but if
-you don't want to interact with git, you don't have to even know it's
-there. Until it saves your arse.
-
-Mike
+Wait a bit. Wasn't this about you accessing NTFS on your EeePC via unfs
+from the Linux side?
