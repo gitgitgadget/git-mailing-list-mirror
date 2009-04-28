@@ -1,72 +1,87 @@
-From: "John Dlugosz" <JDlugosz@TradeStation.com>
-Subject: Windows Server?
-Date: Tue, 28 Apr 2009 18:41:51 -0400
-Message-ID: <450196A1AAAE4B42A00A8B27A59278E70AE3F0A6@EXCHANGE.trad.tradestation.com>
+From: Thomas Adam <thomas.adam22@gmail.com>
+Subject: Re: Windows Server?
+Date: Tue, 28 Apr 2009 23:46:00 +0100
+Message-ID: <18071eea0904281546u52423fe3saf7abaa486bfa0ec@mail.gmail.com>
+References: <450196A1AAAE4B42A00A8B27A59278E70AE3F0A6@EXCHANGE.trad.tradestation.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
-To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Apr 29 00:43:02 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: John Dlugosz <JDlugosz@tradestation.com>
+X-From: git-owner@vger.kernel.org Wed Apr 29 00:46:12 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lyw0z-0004F1-C2
-	for gcvg-git-2@gmane.org; Wed, 29 Apr 2009 00:43:01 +0200
+	id 1Lyw44-0005VO-1v
+	for gcvg-git-2@gmane.org; Wed, 29 Apr 2009 00:46:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754129AbZD1Wmv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 28 Apr 2009 18:42:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753104AbZD1Wmu
-	(ORCPT <rfc822;git-outgoing>); Tue, 28 Apr 2009 18:42:50 -0400
-Received: from mail2.tradestation.com ([63.99.207.80]:58105 "EHLO
-	mail2.tradestation.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753090AbZD1Wmt convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 28 Apr 2009 18:42:49 -0400
-X-ASG-Debug-ID: 1240958568-779502ca000a-QuoKaX
-X-Barracuda-URL: http://192.168.51.31:8000/cgi-bin/mark.cgi
-Received: from mail5.tradestation.com (localhost [127.0.0.1])
-	by mail2.tradestation.com (Spam & Virus Firewall) with ESMTP id AAD953B8830
-	for <git@vger.kernel.org>; Tue, 28 Apr 2009 18:42:48 -0400 (EDT)
-Received: from mail5.tradestation.com (tx02exchange02.trad.tradestation.com [192.168.51.76]) by mail2.tradestation.com with ESMTP id Njl1zFmrDFHkyfG9 for <git@vger.kernel.org>; Tue, 28 Apr 2009 18:42:48 -0400 (EDT)
-X-Barracuda-Envelope-From: JDlugosz@TradeStation.com
-X-ASG-Whitelist: Client
-Received: from EXCHANGE.trad.tradestation.com ([10.4.0.121]) by mail5.tradestation.com with Microsoft SMTPSVC(6.0.3790.3959);
-	 Tue, 28 Apr 2009 18:41:57 -0400
-X-MimeOLE: Produced By Microsoft Exchange V6.5
-Content-class: urn:content-classes:message
-X-ASG-Orig-Subj: Windows Server?
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-Thread-Topic: Windows Server?
-Thread-Index: AcnIUoXsAI98pzaNTqKLHcv2UoHNjA==
-X-OriginalArrivalTime: 28 Apr 2009 22:41:57.0494 (UTC) FILETIME=[89680960:01C9C852]
-X-Barracuda-Connect: tx02exchange02.trad.tradestation.com[192.168.51.76]
-X-Barracuda-Start-Time: 1240958568
-X-Barracuda-Virus-Scanned: by TX-Barracuda Spam Firewall 400 at tradestation.com
+	id S1753172AbZD1WqE convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 28 Apr 2009 18:46:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752718AbZD1WqD
+	(ORCPT <rfc822;git-outgoing>); Tue, 28 Apr 2009 18:46:03 -0400
+Received: from mail-ew0-f176.google.com ([209.85.219.176]:34297 "EHLO
+	mail-ew0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752347AbZD1WqB convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 28 Apr 2009 18:46:01 -0400
+Received: by ewy24 with SMTP id 24so913063ewy.37
+        for <git@vger.kernel.org>; Tue, 28 Apr 2009 15:46:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=O99E7TauJiSr7UanHQA0xzC1PAknnYHcCqPM5NO6MZc=;
+        b=IJ/pSuKeqn1+6ZTVSS60L3bP6kvnMpv+xLMFclAq4pw+9nJ73ZhgOaoXk4RAs8b+xt
+         KxqhRRgnQ0Wz4ZiCI6N09fl0kJ6v1Xn+lMTF6zu1odcbIcdAaubHaApHUcW3NkjikrgB
+         FgEavdimkx1DgWiEZElS47A5l3yyqrtWWBXXU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=E1GctI7d7G6fsTWdjTVR9Cm1OcmmkRFSzIKOcsG1LY41pMzBaomlD8iibHd+JWbG9D
+         gs/YkbHrb/c9LS8EuiyQ+EX38nR23mHQEkQiCsvSSblWLJtOnmtBUfe5jWNxegkY2aBj
+         +RcCz3CkhuWAq8cqZ4TEumEK/Q0oYNItxNbOQ=
+Received: by 10.210.130.14 with SMTP id c14mr6300222ebd.26.1240958760411; Tue, 
+	28 Apr 2009 15:46:00 -0700 (PDT)
+In-Reply-To: <450196A1AAAE4B42A00A8B27A59278E70AE3F0A6@EXCHANGE.trad.tradestation.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117825>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117826>
 
-We are a Windows' shop, writing software that runs on Windows.
-Naturally, the network location I.T. provided for the repository is on a
-Windows server.  I'm concerned with using file:// access once everyone
-starts using it in earnest, especially over a cross-continent VPN.
+2009/4/28 John Dlugosz <JDlugosz@tradestation.com>:
+> We are a Windows' shop, writing software that runs on Windows.
+> Naturally, the network location I.T. provided for the repository is o=
+n a
+> Windows server. =A0I'm concerned with using file:// access once every=
+one
+> starts using it in earnest, especially over a cross-continent VPN.
+>
+> I suppose that git-daemon isn't available as a Windows service. =A0I
+> posted a short time ago asking about it, and the news did not seem go=
+od.
 
-I suppose that git-daemon isn't available as a Windows service.  I
-posted a short time ago asking about it, and the news did not seem good.
-So, is ssh a good second?  That is, the manipulations of the central
-repo is being done by the machine that owns that disk, and the protocol
-talks between the two copies of git?
+Well, git-daemon speaks the git:// protocol which generally is for
+pull only.  If you're wanting push and pull access, using something
+like ssh is the way to go.
 
-Is there anything that needs to be done on the server machine, other
-than having a SSH server, and formulating the path the way the disk
-really is on that machine (as opposed to the network share structure)?
+> So, is ssh a good second? =A0That is, the manipulations of the centra=
+l
+> repo is being done by the machine that owns that disk, and the protoc=
+ol
+> talks between the two copies of git?
 
---John
-(watch out for the footer...)
+Yes, using ssh is fine.
 
-TradeStation Group, Inc. is a publicly-traded holding company (NASDAQ GS: TRAD) of three operating subsidiaries, TradeStation Securities, Inc. (Member NYSE, FINRA, SIPC and NFA), TradeStation Technologies, Inc., a trading software and subscription company, and TradeStation Europe Limited, a United Kingdom, FSA-authorized introducing brokerage firm. None of these companies provides trading or investment advice, recommendations or endorsements of any kind. The information transmitted is intended only for the person or entity to which it is addressed and may contain confidential and/or privileged material. Any review, retransmission, dissemination or other use of, or taking of any action in reliance upon, this information by persons or entities other than the intended recipient is prohibited.
-  If you received this in error, please contact the sender and delete the material from any computer.
+> Is there anything that needs to be done on the server machine, other
+> than having a SSH server, and formulating the path the way the disk
+> really is on that machine (as opposed to the network share structure)=
+?
+
+Nope -- a running ssh server is all that's needed.  The clients then
+would need an ssh-client to contact the server over ssh, of course.
+Not knowing anything about WIndows, would putty provide this?
+
+-- Thomas Adam
