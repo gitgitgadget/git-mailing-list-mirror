@@ -1,67 +1,68 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: Windows Server?
-Date: Tue, 28 Apr 2009 15:46:53 -0700
-Message-ID: <20090428224653.GT23604@spearce.org>
-References: <450196A1AAAE4B42A00A8B27A59278E70AE3F0A6@EXCHANGE.trad.tradestation.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: John Dlugosz <JDlugosz@TradeStation.com>
-X-From: git-owner@vger.kernel.org Wed Apr 29 00:47:03 2009
+From: Robin Rosenberg <robin.rosenberg@dewire.com>
+Subject: [JGIT PATCH] Fix spelling of Junit option jgit.junit.usemmap
+Date: Wed, 29 Apr 2009 00:50:18 +0200
+Message-ID: <1240959018-2388-1-git-send-email-robin.rosenberg@dewire.com>
+Cc: git@vger.kernel.org, Robin Rosenberg <robin.rosenberg@dewire.com>
+To: spearce@spearce.org
+X-From: git-owner@vger.kernel.org Wed Apr 29 00:50:37 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lyw4r-0005qC-F9
-	for gcvg-git-2@gmane.org; Wed, 29 Apr 2009 00:47:01 +0200
+	id 1Lyw8K-0007D7-Dq
+	for gcvg-git-2@gmane.org; Wed, 29 Apr 2009 00:50:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753482AbZD1Wqy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 28 Apr 2009 18:46:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753373AbZD1Wqx
-	(ORCPT <rfc822;git-outgoing>); Tue, 28 Apr 2009 18:46:53 -0400
-Received: from george.spearce.org ([209.20.77.23]:55511 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753353AbZD1Wqx (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 28 Apr 2009 18:46:53 -0400
-Received: by george.spearce.org (Postfix, from userid 1001)
-	id 6486B38221; Tue, 28 Apr 2009 22:46:53 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <450196A1AAAE4B42A00A8B27A59278E70AE3F0A6@EXCHANGE.trad.tradestation.com>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1754623AbZD1Wu1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 28 Apr 2009 18:50:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753446AbZD1Wu1
+	(ORCPT <rfc822;git-outgoing>); Tue, 28 Apr 2009 18:50:27 -0400
+Received: from mail.dewire.com ([83.140.172.130]:16321 "EHLO dewire.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752612AbZD1Wu0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 28 Apr 2009 18:50:26 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by dewire.com (Postfix) with ESMTP id 317C91023428;
+	Wed, 29 Apr 2009 00:50:21 +0200 (CEST)
+X-Virus-Scanned: by amavisd-new at dewire.com
+Received: from dewire.com ([127.0.0.1])
+	by localhost (torino.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id JrI8ad3z9w1J; Wed, 29 Apr 2009 00:50:20 +0200 (CEST)
+Received: from localhost.localdomain (unknown [10.9.0.8])
+	by dewire.com (Postfix) with ESMTP id 66BB310233F2;
+	Wed, 29 Apr 2009 00:50:20 +0200 (CEST)
+X-Mailer: git-send-email 1.6.3.rc2.1.g868b6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117827>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117828>
 
-John Dlugosz <JDlugosz@TradeStation.com> wrote:
-> We are a Windows' shop, writing software that runs on Windows.
-> Naturally, the network location I.T. provided for the repository is on a
-> Windows server.  I'm concerned with using file:// access once everyone
-> starts using it in earnest, especially over a cross-continent VPN.
+Signed-off-by: Robin Rosenberg <robin.rosenberg@dewire.com>
+---
+ .../org/spearce/jgit/lib/RepositoryTestCase.java   |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
 
-Yea, really, you want a Git server of some kind on that host.
-file:// over SMB over VPN isn't pretty.
- 
-> I suppose that git-daemon isn't available as a Windows service.
-
-Nope.  You could try JGit and its "jgit daemon".  Its a pure
-Java server.
-
-> I
-> posted a short time ago asking about it, and the news did not seem good.
-> So, is ssh a good second?
-
-How are you going to run SSH on the server?  Cygwin SSH?
-
-But yes, the SSH protocol is the git:// protocol, tunneled through SSH,
-and will be much more efficient over the VPN than SMB.
-
-> Is there anything that needs to be done on the server machine, other
-> than having a SSH server, and formulating the path the way the disk
-> really is on that machine (as opposed to the network share structure)?
-
-Nope, not really.
- 
+diff --git a/org.spearce.jgit.test/tst/org/spearce/jgit/lib/RepositoryTestCase.java b/org.spearce.jgit.test/tst/org/spearce/jgit/lib/RepositoryTestCase.java
+index b85d3eb..3b03ac1 100644
+--- a/org.spearce.jgit.test/tst/org/spearce/jgit/lib/RepositoryTestCase.java
++++ b/org.spearce.jgit.test/tst/org/spearce/jgit/lib/RepositoryTestCase.java
+@@ -61,7 +61,7 @@
+  * Sets up a predefined test repository and has support for creating additional
+  * repositories and destroying them when the tests are finished.
+  *
+- * A system property <em>jgit.junit.usemmmap</em> defines whether memory mapping
++ * A system property <em>jgit.junit.usemmap</em> defines whether memory mapping
+  * is used. Memory mapping has an effect on the file system, in that memory
+  * mapped files in java cannot be deleted as long as they mapped arrays have not
+  * been reclaimed by the garbage collector. The programmer cannot control this
+@@ -123,7 +123,7 @@ protected void configure() {
+ 		final WindowCacheConfig c = new WindowCacheConfig();
+ 		c.setPackedGitLimit(128 * WindowCacheConfig.KB);
+ 		c.setPackedGitWindowSize(8 * WindowCacheConfig.KB);
+-		c.setPackedGitMMAP("true".equals(System.getProperty("jgit.junit.usemmmap")));
++		c.setPackedGitMMAP("true".equals(System.getProperty("jgit.junit.usemmap")));
+ 		c.setDeltaBaseCacheLimit(8 * WindowCacheConfig.KB);
+ 		WindowCache.reconfigure(c);
+ 	}
 -- 
-Shawn.
+1.6.3.rc2.1.g868b6
