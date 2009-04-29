@@ -1,81 +1,90 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: [PATCH v2] diff -c -p: do not die on submodules
-Date: Wed, 29 Apr 2009 23:50:20 +0200
-Message-ID: <81b0412b0904291450w3d292ed5i3b2ab5164c0ae0f4@mail.gmail.com>
-References: <gt7err$3m4$1@ger.gmane.org>
-	 <7v4ow8my1u.fsf@gitster.siamese.dyndns.org>
-	 <20090428211257.GA31191@pvv.org> <20090429084209.GA24064@localhost>
-	 <7v8wljcmvk.fsf_-_@gitster.siamese.dyndns.org>
-	 <7vy6tj8aur.fsf_-_@gitster.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Clemens Buchacher <drizzd@aon.at>,
-	Finn Arne Gangstad <finnag@pvv.org>,
-	Tim Olsen <tim@brooklynpenguin.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Apr 29 23:51:16 2009
+From: Augie Fackler <durin42@gmail.com>
+Subject: [PATCH] Workaround for ai_canonname sometimes coming back as null
+Date: Wed, 29 Apr 2009 16:48:57 -0500
+Message-ID: <9C355DCC-0240-4B9E-83CA-083B51C2E34C@gmail.com>
+Mime-Version: 1.0 (Apple Message framework v930.3)
+Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Apr 29 23:51:21 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LzHgR-0001m8-OA
-	for gcvg-git-2@gmane.org; Wed, 29 Apr 2009 23:51:16 +0200
+	id 1LzHgT-0001m8-6Y
+	for gcvg-git-2@gmane.org; Wed, 29 Apr 2009 23:51:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753090AbZD2VuZ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 29 Apr 2009 17:50:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752867AbZD2VuX
-	(ORCPT <rfc822;git-outgoing>); Wed, 29 Apr 2009 17:50:23 -0400
-Received: from mail-bw0-f163.google.com ([209.85.218.163]:58908 "EHLO
-	mail-bw0-f163.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752668AbZD2VuW convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 29 Apr 2009 17:50:22 -0400
-Received: by bwz7 with SMTP id 7so1453792bwz.37
-        for <git@vger.kernel.org>; Wed, 29 Apr 2009 14:50:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=IuAqIVH7Gd6xntgxYucJKkvxRXREBbz/tNDuSnyxqDY=;
-        b=R5ofBaC2J3HOuH5oKFVydi0tmP7o0mvDXf0638E+v1ArwHhtp9MQy347pWVXlisa1x
-         ISUilrkF0FJvHDeVEr1crMZkZ8FkpRpE1U0TDO6xmpn8WnNC18iBUkwEpkcujanAU3wi
-         +7PmPHGo88w+iugb3Z3l4oL8K88xB1SrW+t+M=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=UwJk3C30quZh4aUPOtLfx1vlGlLJolQLRtS8hpMwa5AULQtqM6uAV6OYd6Z79H1xtD
-         BVN+ADl/TWHFhsZph0lg/ytOr4PGfuzWzzRvIREgN+gVftW+SrhG/Wq8p6wIOx+GHMJS
-         6lRn4qhIRxlIFaF7CKOSFVSpHljEeq6SmE9Jw=
-Received: by 10.204.118.66 with SMTP id u2mr733610bkq.132.1241041820757; Wed, 
-	29 Apr 2009 14:50:20 -0700 (PDT)
-In-Reply-To: <7vy6tj8aur.fsf_-_@gitster.siamese.dyndns.org>
+	id S1753651AbZD2Vue (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 29 Apr 2009 17:50:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752219AbZD2Vue
+	(ORCPT <rfc822;git-outgoing>); Wed, 29 Apr 2009 17:50:34 -0400
+Received: from hapkido.dreamhost.com ([66.33.216.122]:40211 "EHLO
+	hapkido.dreamhost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750834AbZD2Vud (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 Apr 2009 17:50:33 -0400
+Received: from spunkymail-a17.g.dreamhost.com (caiajhbdcbef.dreamhost.com [208.97.132.145])
+	by hapkido.dreamhost.com (Postfix) with ESMTP id 38E5918580A
+	for <git@vger.kernel.org>; Wed, 29 Apr 2009 14:50:33 -0700 (PDT)
+Received: from [192.168.50.170] (unknown [12.116.117.150])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by spunkymail-a17.g.dreamhost.com (Postfix) with ESMTP id 7410E7361F
+	for <git@vger.kernel.org>; Wed, 29 Apr 2009 14:49:27 -0700 (PDT)
+X-Mailer: Apple Mail (2.930.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117956>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117957>
 
-2009/4/29 Junio C Hamano <gitster@pobox.com>:
-> +
-> + =C2=A0 =C2=A0 =C2=A0 if (S_ISGITLINK(mode)) {
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 blob =3D xmalloc(1=
-00);
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 *size =3D snprintf=
-(blob, 100,
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0"Subproject commit %s\n", sha=
-1_to_hex(sha1));
+Fix a weird bug where git-daemon was segfaulting when started by sh(1)
+because ai_canonname was null.
 
-snprintf returns a signed value. It also has a bad record of returning
-negative values for obscure reasons (on obscure platforms, admittedly).
+---
+I'm not really sure why being started by sh has any measurable impact.
+git-daemon works fine if I start it manually from an interactive prompt.
 
-=46or this particular case,
+Easy reproduction script (the git clone command will fail reliably for  
+me without this patch):
 
-  strcpy(blob, "Subproject commit ");
-  strcat(blob, sha1_to_hex(sha1));
-  strcat(blob, "\n");
-  *size =3D strlen(blob); /* that's a constant */
+#!/bin/sh
+mkdir temp
+cd temp
+mkdir narf
+cd narf
+git init
+echo a > a
+git add a
+git commit -am 'hi'
+cd ..
+git daemon --base-path="$(pwd)"\
+  --listen=127.0.0.1\
+  --export-all\
+  --pid-file=gitdaemon.pid \
+  --detach --reuseaddr
+git clone git://127.0.0.1/narf bla
+kill `cat gitdaemon.pid`
 
-could be considered.
+
+  daemon.c |    5 ++++-
+  1 files changed, 4 insertions(+), 1 deletions(-)
+
+diff --git a/daemon.c b/daemon.c
+index 13401f1..b1fede0 100644
+--- a/daemon.c
++++ b/daemon.c
+@@ -459,7 +459,10 @@ static void parse_extra_args(char *extra_args,  
+int buflen)
+  				inet_ntop(AF_INET, &sin_addr->sin_addr,
+  					  addrbuf, sizeof(addrbuf));
+  				free(canon_hostname);
+-				canon_hostname = xstrdup(ai->ai_canonname);
++				if (ai->ai_canonname)
++					canon_hostname = xstrdup(ai->ai_canonname);
++				else
++					canon_hostname = "unknown";
+  				free(ip_address);
+  				ip_address = xstrdup(addrbuf);
+  				break;
+-- 
+1.6.3.rc3.12.gb7937
