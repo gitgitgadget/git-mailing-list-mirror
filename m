@@ -1,79 +1,68 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [JGIT PATCH 09/13] Replace inefficient new String(String)
-	constructor to silence FindBugs
-Date: Wed, 29 Apr 2009 13:22:42 -0700
-Message-ID: <20090429202242.GI23604@spearce.org>
-References: <1240953146-12878-1-git-send-email-spearce@spearce.org> <1240953146-12878-9-git-send-email-spearce@spearce.org> <1240953146-12878-10-git-send-email-spearce@spearce.org> <200904292210.49627.robin.rosenberg.lists@dewire.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 0/6] cleanups for git-send-email
+Date: Wed, 29 Apr 2009 13:23:53 -0700
+Message-ID: <7v4ow79pk6.fsf@gitster.siamese.dyndns.org>
+References: <20090429194852.0976257034@viridian.itc.Virginia.EDU>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Yann Simon <yann.simon.fr@gmail.com>,
-	Matthias Sohn <matthias.sohn@sap.com>
-To: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
-X-From: git-owner@vger.kernel.org Wed Apr 29 22:23:12 2009
+Cc: gitster@pobox.com (Junio C Hamano), git@vger.kernel.org
+To: wfp5p@viridian.itc.Virginia.EDU (Bill Pemberton)
+X-From: git-owner@vger.kernel.org Wed Apr 29 22:24:50 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LzGJC-0000EK-1Y
-	for gcvg-git-2@gmane.org; Wed, 29 Apr 2009 22:23:10 +0200
+	id 1LzGKl-0000zi-PR
+	for gcvg-git-2@gmane.org; Wed, 29 Apr 2009 22:24:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758994AbZD2UWo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 29 Apr 2009 16:22:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752347AbZD2UWn
-	(ORCPT <rfc822;git-outgoing>); Wed, 29 Apr 2009 16:22:43 -0400
-Received: from george.spearce.org ([209.20.77.23]:48734 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755370AbZD2UWm (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 Apr 2009 16:22:42 -0400
-Received: by george.spearce.org (Postfix, from userid 1001)
-	id 3867438069; Wed, 29 Apr 2009 20:22:42 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <200904292210.49627.robin.rosenberg.lists@dewire.com>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1758699AbZD2UYB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 29 Apr 2009 16:24:01 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756351AbZD2UYB
+	(ORCPT <rfc822;git-outgoing>); Wed, 29 Apr 2009 16:24:01 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:53198 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755465AbZD2UYA (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 Apr 2009 16:24:00 -0400
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 69659AE8FC;
+	Wed, 29 Apr 2009 16:23:59 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 11BB8AE8FB; Wed,
+ 29 Apr 2009 16:23:54 -0400 (EDT)
+In-Reply-To: <20090429194852.0976257034@viridian.itc.Virginia.EDU> (Bill
+ Pemberton's message of "Wed, 29 Apr 2009 15:48:51 -0400 (EDT)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: ABF4BE54-34FB-11DE-ACF6-CABC03BA4B0C-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117939>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117940>
 
-Robin Rosenberg <robin.rosenberg.lists@dewire.com> wrote:
-> tisdag 28 april 2009 23:12:22 skrev "Shawn O. Pearce" <spearce@spearce.org>:
-> > FindBugs keeps reporting that our usage of new String(String)
-> > is not the most efficient way to construct a string.
-> 
-> I think we should find better ways of silencing FindBugs,, than addiing obscure
-> coding patterns that are worse than what FindBugs warns against. 
+wfp5p@viridian.itc.Virginia.EDU (Bill Pemberton) writes:
 
-Heh.  Yea, well...  I also wasn't too happy with FindBugs for
-this one.
+> My changes come directly from the book "Perl Best Practices".  Just as
+> ...
+> Again, it prevents bugs.  People use "and" vs "&&" as the same thing,
+> when they are not.  The have different precedence in perl.
+>
+> For example, 
+>
+> next if not $finished || $x < 5;
+> next if !$finished || $x < 5;
+>
+> do not mean the same thing.
+> ...
+> Again, it prevents potential bugs down the road....
 
-As far as I can tell there isn't anything in the documentation that
-suggests that new String(String) behaves the way I want it to here.
+Earlier I did guide the community not to use "more advanced" (aka
+"obscure") Perl features so that people not so familiar with Perl can
+still tweak scripts without breaking them; the tricks in your patches that
+"prevent potential bugs" are in line with that, and that is why I said my
+personal taste more or less agrees with your patch already.
 
-It seems a JRE may be free to reuse the same internal char[] as
-the source string, and just produce a new String wrapper.  What I
-really want is a deep copy of that char[] to shed what I know is
-garbage around the interesting part.
-
-The use of StringBuilder makes this sort of anti-optimization
-more difficult, as most JRE implementations would likely
-assume they should alloc the internal char[] at the size
-given in the constructor, and will deep-copy the chars during
-append(String,int,int) because they would expect to see more
-characters appended after this append call.
-
-Perhaps the only way to really enforce the behavior I want here is
-to convert the String segment to a char[], and then convert that
-char[] into a String.  Ick, that's two copies.
-
-Maybe we just stick a comment here.  Two different people have
-come up with the same FindBugs issue, trying to get them to share
-configuration files sounds hard.
- 
-> Options are: 
-> 	Add a comment 
-> 	Customize findbugs rules
-> 	Findbugs specific annotations
-
--- 
-Shawn.
+But the line between "more advanced and tricky" and "if you are coding in
+Perl you should know your language" is not so black and white as you seem
+to think.  I'd rather defer that decision to whoever is taking send-email
+over.
