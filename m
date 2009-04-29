@@ -1,210 +1,192 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2] diff -c -p: do not die on submodules
-Date: Wed, 29 Apr 2009 13:26:52 -0700
-Message-ID: <7vy6tj8aur.fsf_-_@gitster.siamese.dyndns.org>
-References: <gt7err$3m4$1@ger.gmane.org>
- <7v4ow8my1u.fsf@gitster.siamese.dyndns.org> <20090428211257.GA31191@pvv.org>
- <20090429084209.GA24064@localhost>
- <7v8wljcmvk.fsf_-_@gitster.siamese.dyndns.org>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: [PATCH 12/11] Add a test for LongMap, IndexPack's helper class
+Date: Wed, 29 Apr 2009 13:42:35 -0700
+Message-ID: <20090429204235.GJ23604@spearce.org>
+References: <1240953146-12878-1-git-send-email-spearce@spearce.org> <1240953146-12878-10-git-send-email-spearce@spearce.org> <1240953146-12878-11-git-send-email-spearce@spearce.org> <200904292145.34462.robin.rosenberg@dewire.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Finn Arne Gangstad <finnag@pvv.org>,
-	Tim Olsen <tim@brooklynpenguin.com>, git@vger.kernel.org
-To: Clemens Buchacher <drizzd@aon.at>
-X-From: git-owner@vger.kernel.org Wed Apr 29 22:27:13 2009
+Cc: git@vger.kernel.org, Yann Simon <yann.simon.fr@gmail.com>,
+	Matthias Sohn <matthias.sohn@sap.com>
+To: Robin Rosenberg <robin.rosenberg@dewire.com>
+X-From: git-owner@vger.kernel.org Wed Apr 29 22:43:31 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LzGN4-0002Ls-MI
-	for gcvg-git-2@gmane.org; Wed, 29 Apr 2009 22:27:11 +0200
+	id 1LzGcr-000294-8P
+	for gcvg-git-2@gmane.org; Wed, 29 Apr 2009 22:43:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756958AbZD2U1B (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 29 Apr 2009 16:27:01 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754932AbZD2U1B
-	(ORCPT <rfc822;git-outgoing>); Wed, 29 Apr 2009 16:27:01 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:55190 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753969AbZD2U1A (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 Apr 2009 16:27:00 -0400
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 74C1313E20;
-	Wed, 29 Apr 2009 16:26:59 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 2A42113E1B; Wed,
- 29 Apr 2009 16:26:53 -0400 (EDT)
-In-Reply-To: <7v8wljcmvk.fsf_-_@gitster.siamese.dyndns.org> (Junio C.
- Hamano's message of "Wed, 29 Apr 2009 11:53:35 -0700")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 1747D1E6-34FC-11DE-9C43-D766E3C8547C-77302942!a-sasl-quonix.pobox.com
+	id S1756264AbZD2Umg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 29 Apr 2009 16:42:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752523AbZD2Umg
+	(ORCPT <rfc822;git-outgoing>); Wed, 29 Apr 2009 16:42:36 -0400
+Received: from george.spearce.org ([209.20.77.23]:54135 "EHLO
+	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752280AbZD2Umf (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 Apr 2009 16:42:35 -0400
+Received: by george.spearce.org (Postfix, from userid 1001)
+	id 60F0A38064; Wed, 29 Apr 2009 20:42:35 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <200904292145.34462.robin.rosenberg@dewire.com>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117942>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117943>
 
-The combine diff logic knew only about blobs (and their checked-out form
-in the work tree, either regular files or symlinks), and barfed when fed
-submodules.  This "externalizes" gitlinks in the same way as the normal
-patch generation codepath does (i.e. "Subproject commit Xxx\n") to fix the
-issue.
-
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
+Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
 ---
 
- This is a re-roll of the earlier "[PATCH] Teach gitlinks to combine-diff",
- meant to apply to maint-1.6.0 and later.
+ Robin Rosenberg <robin.rosenberg@dewire.com> wrote:
+ > tisdag 28 april 2009 23:12:23 skrev "Shawn O. Pearce" <spearce@spearce.org>:
+ > > We now use a custom Map implementation which supports primitive long
+ > > as the hash key, rather than requiring boxing for java.util.HashMap.
+ > > This removes the issue FindBugs was identifying.
+ > 
+ > No unit test for LongMap?
 
- combine-diff.c            |   38 ++++++++++++++++++++++++++------------
- t/t4027-diff-submodule.sh |   39 +++++++++++++++++++++++++++++++++++++++
- 2 files changed, 65 insertions(+), 12 deletions(-)
+ .../org/spearce/jgit/transport/LongMapTest.java    |  132 ++++++++++++++++++++
+ 1 files changed, 132 insertions(+), 0 deletions(-)
+ create mode 100644 org.spearce.jgit.test/tst/org/spearce/jgit/transport/LongMapTest.java
 
-diff --git a/combine-diff.c b/combine-diff.c
-index aa9d79e..f617e9d 100644
---- a/combine-diff.c
-+++ b/combine-diff.c
-@@ -6,6 +6,7 @@
- #include "quote.h"
- #include "xdiff-interface.h"
- #include "log-tree.h"
-+#include "refs.h"
- 
- static struct combine_diff_path *intersect_paths(struct combine_diff_path *curr, int n, int num_parent)
- {
-@@ -90,18 +91,24 @@ struct sline {
- 	unsigned long *p_lno;
- };
- 
--static char *grab_blob(const unsigned char *sha1, unsigned long *size)
-+static char *grab_blob(const unsigned char *sha1, unsigned int mode, unsigned long *size)
- {
- 	char *blob;
- 	enum object_type type;
--	if (is_null_sha1(sha1)) {
+diff --git a/org.spearce.jgit.test/tst/org/spearce/jgit/transport/LongMapTest.java b/org.spearce.jgit.test/tst/org/spearce/jgit/transport/LongMapTest.java
+new file mode 100644
+index 0000000..c59fd1f
+--- /dev/null
++++ b/org.spearce.jgit.test/tst/org/spearce/jgit/transport/LongMapTest.java
+@@ -0,0 +1,132 @@
++/*
++ * Copyright (C) 2009, Google Inc.
++ *
++ * All rights reserved.
++ *
++ * Redistribution and use in source and binary forms, with or
++ * without modification, are permitted provided that the following
++ * conditions are met:
++ *
++ * - Redistributions of source code must retain the above copyright
++ *   notice, this list of conditions and the following disclaimer.
++ *
++ * - Redistributions in binary form must reproduce the above
++ *   copyright notice, this list of conditions and the following
++ *   disclaimer in the documentation and/or other materials provided
++ *   with the distribution.
++ *
++ * - Neither the name of the Git Development Community nor the
++ *   names of its contributors may be used to endorse or promote
++ *   products derived from this software without specific prior
++ *   written permission.
++ *
++ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND
++ * CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES,
++ * INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
++ * OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
++ * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
++ * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
++ * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
++ * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
++ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
++ * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
++ * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
++ * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
++ * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
++ */
 +
-+	if (S_ISGITLINK(mode)) {
-+		blob = xmalloc(100);
-+		*size = snprintf(blob, 100,
-+				 "Subproject commit %s\n", sha1_to_hex(sha1));
-+	} else if (is_null_sha1(sha1)) {
- 		/* deleted blob */
- 		*size = 0;
- 		return xcalloc(1, 1);
-+	} else {
-+		blob = read_sha1_file(sha1, &type, size);
-+		if (type != OBJ_BLOB)
-+			die("object '%s' is not a blob!", sha1_to_hex(sha1));
- 	}
--	blob = read_sha1_file(sha1, &type, size);
--	if (type != OBJ_BLOB)
--		die("object '%s' is not a blob!", sha1_to_hex(sha1));
- 	return blob;
- }
- 
-@@ -197,7 +204,8 @@ static void consume_line(void *state_, char *line, unsigned long len)
- 	}
- }
- 
--static void combine_diff(const unsigned char *parent, mmfile_t *result_file,
-+static void combine_diff(const unsigned char *parent, unsigned int mode,
-+			 mmfile_t *result_file,
- 			 struct sline *sline, unsigned int cnt, int n,
- 			 int num_parent)
- {
-@@ -213,7 +221,7 @@ static void combine_diff(const unsigned char *parent, mmfile_t *result_file,
- 	if (!cnt)
- 		return; /* result deleted */
- 
--	parent_file.ptr = grab_blob(parent, &sz);
-+	parent_file.ptr = grab_blob(parent, mode, &sz);
- 	parent_file.size = sz;
- 	xpp.flags = XDF_NEED_MINIMAL;
- 	memset(&xecfg, 0, sizeof(xecfg));
-@@ -692,7 +700,7 @@ static void show_patch_diff(struct combine_diff_path *elem, int num_parent,
- 	context = opt->context;
- 	/* Read the result of merge first */
- 	if (!working_tree_file)
--		result = grab_blob(elem->sha1, &result_size);
-+		result = grab_blob(elem->sha1, elem->mode, &result_size);
- 	else {
- 		/* Used by diff-tree to read from the working tree */
- 		struct stat st;
-@@ -712,9 +720,13 @@ static void show_patch_diff(struct combine_diff_path *elem, int num_parent,
- 			}
- 			result[len] = 0;
- 			elem->mode = canon_mode(st.st_mode);
--		}
--		else if (0 <= (fd = open(elem->path, O_RDONLY)) &&
--			 !fstat(fd, &st)) {
-+		} else if (S_ISDIR(st.st_mode)) {
-+			unsigned char sha1[20];
-+			if (resolve_gitlink_ref(elem->path, "HEAD", sha1) < 0)
-+				result = grab_blob(elem->sha1, elem->mode, &result_size);
-+			else
-+				result = grab_blob(sha1, elem->mode, &result_size);
-+		} else if (0 <= (fd = open(elem->path, O_RDONLY))) {
- 			size_t len = xsize_t(st.st_size);
- 			ssize_t done;
- 			int is_file, i;
-@@ -807,7 +819,9 @@ static void show_patch_diff(struct combine_diff_path *elem, int num_parent,
- 			}
- 		}
- 		if (i <= j)
--			combine_diff(elem->parent[i].sha1, &result_file, sline,
-+			combine_diff(elem->parent[i].sha1,
-+				     elem->parent[i].mode,
-+				     &result_file, sline,
- 				     cnt, i, num_parent);
- 		if (elem->parent[i].mode != elem->mode)
- 			mode_differs = 1;
-diff --git a/t/t4027-diff-submodule.sh b/t/t4027-diff-submodule.sh
-index ba6679c..718efe8 100755
---- a/t/t4027-diff-submodule.sh
-+++ b/t/t4027-diff-submodule.sh
-@@ -57,4 +57,43 @@ test_expect_success 'git diff (empty submodule dir)' '
- 	test_cmp empty actual.empty
- '
- 
-+test_expect_success 'conflicted submodule setup' '
++package org.spearce.jgit.transport;
 +
-+	# 39 efs
-+	c=fffffffffffffffffffffffffffffffffffffff
-+	(
-+		echo "000000 $_z40 0	sub"
-+		echo "160000 1$c 1	sub"
-+		echo "160000 2$c 2	sub"
-+		echo "160000 3$c 3	sub"
-+	) | git update-index --index-info &&
-+	echo >expect.nosub '\''diff --cc sub
-+index 2ffffff,3ffffff..0000000
-+--- a/sub
-++++ b/sub
-+@@@ -1,1 -1,1 +1,1 @@@
-+- Subproject commit 2fffffffffffffffffffffffffffffffffffffff
-+ -Subproject commit 3fffffffffffffffffffffffffffffffffffffff
-+++Subproject commit 0000000000000000000000000000000000000000'\'' &&
++import junit.framework.TestCase;
 +
-+	hh=$(git rev-parse HEAD) &&
-+	sed -e "s/$_z40/$hh/" expect.nosub >expect.withsub
++public class LongMapTest extends TestCase {
++	private LongMap<Long> map;
 +
-+'
++	protected void setUp() throws Exception {
++		super.setUp();
++		map = new LongMap<Long>();
++	}
 +
-+test_expect_success 'combined (empty submodule)' '
-+	rm -fr sub && mkdir sub &&
-+	git diff >actual &&
-+	test_cmp expect.nosub actual
-+'
++	public void testEmptyMap() {
++		assertFalse(map.containsKey(0));
++		assertFalse(map.containsKey(1));
 +
-+test_expect_success 'combined (with submodule)' '
-+	rm -fr sub &&
-+	git clone --no-checkout . sub &&
-+	git diff >actual &&
-+	test_cmp expect.withsub actual
-+'
++		assertNull(map.get(0));
++		assertNull(map.get(1));
 +
++		assertNull(map.remove(0));
++		assertNull(map.remove(1));
++	}
 +
++	public void testInsertMinValue() {
++		final Long min = Long.valueOf(Long.MIN_VALUE);
++		assertNull(map.put(Long.MIN_VALUE, min));
++		assertTrue(map.containsKey(Long.MIN_VALUE));
++		assertSame(min, map.get(Long.MIN_VALUE));
++		assertFalse(map.containsKey(Integer.MIN_VALUE));
++	}
 +
- test_done
++	public void testReplaceMaxValue() {
++		final Long min = Long.valueOf(Long.MAX_VALUE);
++		final Long one = Long.valueOf(1);
++		assertNull(map.put(Long.MAX_VALUE, min));
++		assertSame(min, map.get(Long.MAX_VALUE));
++		assertSame(min, map.put(Long.MAX_VALUE, one));
++		assertSame(one, map.get(Long.MAX_VALUE));
++	}
++
++	public void testRemoveOne() {
++		final long start = 1;
++		assertNull(map.put(start, Long.valueOf(start)));
++		assertEquals(Long.valueOf(start), map.remove(start));
++		assertFalse(map.containsKey(start));
++	}
++
++	public void testRemoveCollision1() {
++		// This test relies upon the fact that we always >>> 1 the value
++		// to derive an unsigned hash code. Thus, 0 and 1 fall into the
++		// same hash bucket. Further it relies on the fact that we add
++		// the 2nd put at the top of the chain, so removing the 1st will
++		// cause a different code path.
++		//
++		assertNull(map.put(0, Long.valueOf(0)));
++		assertNull(map.put(1, Long.valueOf(1)));
++		assertEquals(Long.valueOf(0), map.remove(0));
++
++		assertFalse(map.containsKey(0));
++		assertTrue(map.containsKey(1));
++	}
++
++	public void testRemoveCollision2() {
++		// This test relies upon the fact that we always >>> 1 the value
++		// to derive an unsigned hash code. Thus, 0 and 1 fall into the
++		// same hash bucket. Further it relies on the fact that we add
++		// the 2nd put at the top of the chain, so removing the 2nd will
++		// cause a different code path.
++		//
++		assertNull(map.put(0, Long.valueOf(0)));
++		assertNull(map.put(1, Long.valueOf(1)));
++		assertEquals(Long.valueOf(1), map.remove(1));
++
++		assertTrue(map.containsKey(0));
++		assertFalse(map.containsKey(1));
++	}
++
++	public void testSmallMap() {
++		final long start = 12;
++		final long n = 8;
++		for (long i = start; i < start + n; i++)
++			assertNull(map.put(i, Long.valueOf(i)));
++		for (long i = start; i < start + n; i++)
++			assertEquals(Long.valueOf(i), map.get(i));
++	}
++
++	public void testLargeMap() {
++		final long start = Integer.MAX_VALUE;
++		final long n = 100000;
++		for (long i = start; i < start + n; i++)
++			assertNull(map.put(i, Long.valueOf(i)));
++		for (long i = start; i < start + n; i++)
++			assertEquals(Long.valueOf(i), map.get(i));
++	}
++}
 -- 
-1.6.3.rc3.16.gb37759
+1.6.3.rc3.199.g24398
