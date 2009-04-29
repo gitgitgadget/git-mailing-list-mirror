@@ -1,108 +1,70 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: [PATCH v2] diff -c -p: do not die on submodules
-Date: Thu, 30 Apr 2009 00:19:58 +0200
-Message-ID: <81b0412b0904291519m41035200n408b6ab409eed127@mail.gmail.com>
-References: <gt7err$3m4$1@ger.gmane.org>
-	 <7v4ow8my1u.fsf@gitster.siamese.dyndns.org>
-	 <20090428211257.GA31191@pvv.org> <20090429084209.GA24064@localhost>
-	 <7v8wljcmvk.fsf_-_@gitster.siamese.dyndns.org>
-	 <7vy6tj8aur.fsf_-_@gitster.siamese.dyndns.org>
-	 <81b0412b0904291450w3d292ed5i3b2ab5164c0ae0f4@mail.gmail.com>
-	 <alpine.DEB.1.00.0904300011140.10279@pacific.mpi-cbg.de>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: "git config --edit" outside a Git repository
+Date: Thu, 30 Apr 2009 01:24:08 +0300
+Message-ID: <94a0d4530904291524n473e790ct22494132cf844299@mail.gmail.com>
+References: <7v1vrptpn3.fsf@gitster.siamese.dyndns.org> <87fxg3ffv5.fsf@iki.fi>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Clemens Buchacher <drizzd@aon.at>,
-	Finn Arne Gangstad <finnag@pvv.org>,
-	Tim Olsen <tim@brooklynpenguin.com>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Apr 30 00:20:13 2009
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Teemu Likonen <tlikonen@iki.fi>
+X-From: git-owner@vger.kernel.org Thu Apr 30 00:25:43 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LzI8R-0000BC-KM
-	for gcvg-git-2@gmane.org; Thu, 30 Apr 2009 00:20:12 +0200
+	id 1LzIDl-0002wZ-Pq
+	for gcvg-git-2@gmane.org; Thu, 30 Apr 2009 00:25:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752922AbZD2WUD convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 29 Apr 2009 18:20:03 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753198AbZD2WUB
-	(ORCPT <rfc822;git-outgoing>); Wed, 29 Apr 2009 18:20:01 -0400
-Received: from mail-bw0-f163.google.com ([209.85.218.163]:55484 "EHLO
-	mail-bw0-f163.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752725AbZD2WUA convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 29 Apr 2009 18:20:00 -0400
-Received: by bwz7 with SMTP id 7so1466345bwz.37
-        for <git@vger.kernel.org>; Wed, 29 Apr 2009 15:19:59 -0700 (PDT)
+	id S1761524AbZD2WYM convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 29 Apr 2009 18:24:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761384AbZD2WYL
+	(ORCPT <rfc822;git-outgoing>); Wed, 29 Apr 2009 18:24:11 -0400
+Received: from mail-fx0-f158.google.com ([209.85.220.158]:38146 "EHLO
+	mail-fx0-f158.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753808AbZD2WYK convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 29 Apr 2009 18:24:10 -0400
+Received: by fxm2 with SMTP id 2so1478488fxm.37
+        for <git@vger.kernel.org>; Wed, 29 Apr 2009 15:24:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:mime-version:received:in-reply-to:references
          :date:message-id:subject:from:to:cc:content-type
          :content-transfer-encoding;
-        bh=Ha9zIZHtmspnLfsFcZgyTCNyN4FQOioJUXttyrOuSwQ=;
-        b=UWed1csDkc7Z0ehbUaXBuxhxxzKIrIlKRnX5NaoEulvkfkxr139w8kCNBYd6Np9Xzp
-         CObvv/K9xWXC5OptUTSal4ubESg7+wqswKYpcP7zjCBnRVrGc4kCkfFuMTjF4KdNjKA+
-         KyeQ6MCnzadX0lRj7cfb3iv8CkY509naslwqE=
+        bh=fegdVtwghW/MlcSAceQBKS43eMP1HEcc8xOvQmu+s/k=;
+        b=OqxKVffpNAd4mfLtI5eRKwPDuF6VniiX9jjT81hptSOP6mevAuYhiIgpmTmdEPCZLK
+         Urbwaw1KgMiVLNKehk3yAJcjZIrJIv/IegF6ylow7JQqQxFpkpIYR9BjvaO3Q1EX/YPq
+         ULrWWK0vN+H5PuwXRCdsJ9GmT+WY4jqGdRC2A=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type:content-transfer-encoding;
-        b=D8yr7jurDL4loSKb9UzoGJXroYQPfFo0NfvCfAfDRrWVP2/ql4J65Pphkw0XavuEUg
-         ZDkBm6emHTMOmy/sBaKKzP+L5oem5vNrWrVwwIrdhlYcevFOWICpu9zsX4E6y1OgcaQT
-         Lrw7Hsph3+ahD7Rc2AkpE7K9ffdOX7urL/rIw=
-Received: by 10.204.120.70 with SMTP id c6mr752684bkr.144.1241043598911; Wed, 
-	29 Apr 2009 15:19:58 -0700 (PDT)
-In-Reply-To: <alpine.DEB.1.00.0904300011140.10279@pacific.mpi-cbg.de>
+        b=OVLZWXizmClbrsqVCZZfWA7ChHKx4CsMNcWWDlICXbGL0K9g7UFw7ZCqF8gYeMonYH
+         bIDbtR+mJI8Yexsoj9KWFXf2LqpSC98ERnuJKStfv2mKyB/8sOTOinDZtu7EnLcF4jUQ
+         nMezE5aaJRKX2SIGI0rz5kESUNMABDjT5HCzg=
+Received: by 10.86.51.2 with SMTP id y2mr1194937fgy.3.1241043848772; Wed, 29 
+	Apr 2009 15:24:08 -0700 (PDT)
+In-Reply-To: <87fxg3ffv5.fsf@iki.fi>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117965>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117966>
 
-2009/4/30 Johannes Schindelin <Johannes.Schindelin@gmx.de>:
-> Hi,
+On Mon, Apr 20, 2009 at 7:29 PM, Teemu Likonen <tlikonen@iki.fi> wrote:
+> On 2009-04-18 18:10 (-0700), Junio C Hamano wrote:
 >
-> On Wed, 29 Apr 2009, Alex Riesen wrote:
+>> * git-config learned -e option to open an editor to edit the config
+>> =C2=A0 file directly.
 >
->> 2009/4/29 Junio C Hamano <gitster@pobox.com>:
->> > +
->> > + =C2=A0 =C2=A0 =C2=A0 if (S_ISGITLINK(mode)) {
->> > + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 blob =3D xmallo=
-c(100);
->> > + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 *size =3D snpri=
-ntf(blob, 100,
->> > + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0"Subproject commit %s\n", =
-sha1_to_hex(sha1));
->>
->> snprintf returns a signed value. It also has a bad record of returni=
-ng
->> negative values for obscure reasons (on obscure platforms, admittedl=
-y).
->>
->> For this particular case,
->>
->> =C2=A0 strcpy(blob, "Subproject commit ");
->> =C2=A0 strcat(blob, sha1_to_hex(sha1));
->> =C2=A0 strcat(blob, "\n");
->> =C2=A0 *size =3D strlen(blob); /* that's a constant */
->>
->> could be considered.
->
-> Actually, we know _exactly_ the size of the thing. =C2=A0It is 18+40+=
-1. =C2=A0But I
-> think that *size wants to have the size, not the length. =C2=A0So add=
- 1.
->
-> In any case, I don't think that we have to jump through hoops here:
-> snprintf() is _most_ unlikely to return something negative here. =C2=A0=
-So I'd
-> say that readability trumps paranoia here.
->
+> There's a small flaw in this feature when "git config --edit" is run
+> outside a Git repository. It launches $EDITOR but complains on saving
+> that the file does not exist (tried with emacsclient and vim). I thin=
+k
+> it should check before if there's a repository around. "git config
+> --global --edit" works.
 
-http://www.google.com/search?q=3Dsnprintf+negative+return+value
+Thanks, I just sent a patch that fixes that.
 
-=46irst link: http://bytes.com/groups/c/590845-snprintf-return-value
-
-Look for "(Windows, mingw)"
+--=20
+=46elipe Contreras
