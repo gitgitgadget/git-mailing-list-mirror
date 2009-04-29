@@ -1,96 +1,90 @@
-From: wfp5p@viridian.itc.Virginia.EDU (Bill Pemberton)
-Subject: Re: [PATCH 0/6] cleanups for git-send-email
-Date: Wed, 29 Apr 2009 15:48:51 -0400 (EDT)
-Message-ID: <20090429194852.0976257034@viridian.itc.Virginia.EDU>
-References: <7vws939skl.fsf@gitster.siamese.dyndns.org>
+From: Marcin Zalewski <marcin.zalewski@gmail.com>
+Subject: Re: Diftool problems
+Date: Wed, 29 Apr 2009 15:55:42 -0400
+Message-ID: <7c0fdf4f0904291255i4076df8cubb26fdb2d51826d4@mail.gmail.com>
+References: <7c0fdf4f0904290915i56f58981i70e7093e9bf87d8b@mail.gmail.com> 
+	<200904292142.59471.markus.heidelberg@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: gitster@pobox.com (Junio C Hamano)
-X-From: git-owner@vger.kernel.org Wed Apr 29 21:51:58 2009
+To: markus.heidelberg@web.de
+X-From: git-owner@vger.kernel.org Wed Apr 29 21:56:39 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LzFmz-0007Zq-MQ
-	for gcvg-git-2@gmane.org; Wed, 29 Apr 2009 21:49:54 +0200
+	id 1LzFtW-0003lc-5U
+	for gcvg-git-2@gmane.org; Wed, 29 Apr 2009 21:56:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760862AbZD2Tsz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 29 Apr 2009 15:48:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756146AbZD2Tsz
-	(ORCPT <rfc822;git-outgoing>); Wed, 29 Apr 2009 15:48:55 -0400
-Received: from viridian.itc.Virginia.EDU ([128.143.12.139]:34102 "EHLO
-	viridian.itc.Virginia.EDU" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755954AbZD2Tsy (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 Apr 2009 15:48:54 -0400
-Received: by viridian.itc.Virginia.EDU (Postfix, from userid 1249)
-	id 0976257034; Wed, 29 Apr 2009 15:48:51 -0400 (EDT)
-In-Reply-To: <7vws939skl.fsf@gitster.siamese.dyndns.org>
-X-Mailer: ELM [version 2.5 PL8]
+	id S1754256AbZD2T4G (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 29 Apr 2009 15:56:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752668AbZD2T4G
+	(ORCPT <rfc822;git-outgoing>); Wed, 29 Apr 2009 15:56:06 -0400
+Received: from mail-fx0-f158.google.com ([209.85.220.158]:43869 "EHLO
+	mail-fx0-f158.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751083AbZD2T4E (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 Apr 2009 15:56:04 -0400
+Received: by fxm2 with SMTP id 2so1405425fxm.37
+        for <git@vger.kernel.org>; Wed, 29 Apr 2009 12:56:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=dDnwmr1ntD28zZ7fcKKuy0tu2vOAsWJNH+xxSSIc9q4=;
+        b=ggCPKIqdo5pgDLZhLeoZl+I1BT8tpglM75rFT5zp/NWI2wG58SDx9y5zC+6vdnBkkY
+         Cz9ZRRvyPVy8qVfRFv4QtMzvKF6q7riwYn3FRZcg5bVz8qDZbAXJtQ0a62rGJ5RcMr8O
+         zlyTHpa5Crd6UJ3vxanDi8UnNuDA+RanDb8eg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=B+e0Q5PpfoiO4JNuoamnGSjNH3W8gMut6efEG6YXa7HU3YmW8fBCfra1oRuIhULpte
+         kHIH/NSpxAFgcaVah9I39s9geV/xqKkVSnKot0AqWSWE3q7ivrGArrQmLYIfjAYNim4C
+         9xcQO/KSWabqg+19V7WqS0cyn5Okk8FUa2Ix0=
+Received: by 10.103.52.13 with SMTP id e13mr468848muk.74.1241034962116; Wed, 
+	29 Apr 2009 12:56:02 -0700 (PDT)
+In-Reply-To: <200904292142.59471.markus.heidelberg@web.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117931>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117932>
 
-> Perl styles are highly personal.
-> 
+> The real fix would be to adjust the ediff snippet for difftool support.
 
-So are C styles, but the kernel and git doesn't allow all sorts of
-mixed styles.  My changes are also not just coding style, they have
-actual meaning in perl.
+The emas snippet was meant to work with mergetool and it does (I
+think). Changing the emacs code could indeed help with difftool but it
+would break mergetool.
 
-My changes come directly from the book "Perl Best Practices".  Just as
-you do things like "don't allow assignment in conditionals" in C, even
-though it's legal.  There are good reasons to do these things in perl
-to prevent bugs down the road.
+> As you said yourself, git-difftool is not meant for merging files, so
+> there is no reason to open more than 2 files at all.
 
-> 
-> *1* ...except for the "and/or vs &&/||" bits, even though I prefer the
-> latter myself solely because I am old fashioned.
-> 
+I agree, but the current implementation of difftool uses mergetool
+library. That may be the reason why difftool is trying to come up with
+the third file. Here is the snippet of code from mergetool library
+that executes emerge in case of non-merge-mode:
 
-Again, it prevents bugs.  People use "and" vs "&&" as the same thing,
-when they are not.  The have different precedence in perl.
+"$merge_tool_path" -f emerge-files-command \
+				"$LOCAL" "$REMOTE" "$(basename "$MERGED")"
 
-For example, 
+> The built-in difftools 'emerge' and 'ecmerge' still seem to open LOCAL,
+> REMOTE and MERGED. This should be fixed, so that they don't open MERGED
+> any more, but I don't have emacs installed, so I shouldn't try it
+> myself.
 
-next if not $finished || $x < 5;
-next if !$finished || $x < 5;
+Again, I agree. This could be one of the possible solutions, but it
+would require that mergetool library is changed or rewriting pieces of
+mergetool in difftool. Correct me if I am wrong.
 
-do not mean the same thing.
+> Oh, and LOCAL shouldn't be copied to a temporary file in the first
+> place, because people don't use git-difftool in read-only mode only.
 
+I think that merge result could be a temporary file, like in
+mergetool. In a situation where I use git to track an SVN repository,
+difftool can be actually used to merge my uncommitted changes with a
+commit from someone else after doing svn rebase. On the other hand, I
+am no git expert so there may be a better way to handle this case.
 
-> I think it is simply silly to say "precedence of ! and and/or does not
-> mix".  "!" and "&&" have different precedence and rewriting (A and !B)
-> into (A && !B) would not make things any better nor worse.  After all,
-> nobody would have problems with "$a + $b * $c" even though + and * have
-> different precedence.
-> 
-
-It's not that ! and && have different precedence.  It's that "not" and
-! have different precedence.  Using your math example, it would be
-like having an operator named plus that had a higher precedence than
-"*".  Now if you wrote "$a plus $b * $c" it would have different
-result than "$a + $b * $c".
-
-
-> Oh, I also do not agree with "always explicitly return".  If the change
-> and explanation were limited to the subs whose return values are _used_, I
-> would agree with the change, though.
-> 
-
-Again, it prevents potential bugs down the road.  Currently those
-functions return something.  While they are not used, the something
-they return can be interpreted by developers as an intentional return
-value and that property may get used.  If some other developer changes
-the original function in some way that the implicit return becomes
-something else, it'll create a bug.  If a subroutine isn't supposed to
-return a meaningful value, it should do it explicitly.
-
-
--- 
-Bill Pemberton                                 wfp5p@virginia.edu
-ITC/Unix Systems                               flash@virginia.edu
-University of Virginia                    
+-m
