@@ -1,88 +1,71 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: git svn errors out with git-cat-file "usage" message
-Date: Wed, 29 Apr 2009 23:05:43 +0200
-Message-ID: <49F8C127.4000400@drmicha.warpmail.net>
-References: <46a038f90904290811p33332bd5h1d397734907ba9c2@mail.gmail.com>	 <32541b130904291150k75a0433fnb29ea59f654a17f7@mail.gmail.com>	 <49F8B7D1.2090903@drmicha.warpmail.net> <46a038f90904291347i2ed158aaya7505e1bd11cd392@mail.gmail.com>
+From: "John Dlugosz" <JDlugosz@TradeStation.com>
+Subject: RE: Question on merge and mergetool settings
+Date: Wed, 29 Apr 2009 17:17:07 -0400
+Message-ID: <450196A1AAAE4B42A00A8B27A59278E70B002E12@EXCHANGE.trad.tradestation.com>
+References: <450196A1AAAE4B42A00A8B27A59278E70AE3F2FE@EXCHANGE.trad.tradestation.com> <200904292200.11373.markus.heidelberg@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Avery Pennarun <apenwarr@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Mihai Sucan <mihai.sucan@gmail.com>
-To: Martin Langhoff <martin.langhoff@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Apr 29 23:06:07 2009
+Content-Type: text/plain;
+	charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
+Cc: <git@vger.kernel.org>
+To: <markus.heidelberg@web.de>
+X-From: git-owner@vger.kernel.org Wed Apr 29 23:20:53 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LzGyk-0004gr-Ir
-	for gcvg-git-2@gmane.org; Wed, 29 Apr 2009 23:06:07 +0200
+	id 1LzHD1-0003My-0R
+	for gcvg-git-2@gmane.org; Wed, 29 Apr 2009 23:20:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755490AbZD2VFv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 29 Apr 2009 17:05:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756296AbZD2VFu
-	(ORCPT <rfc822;git-outgoing>); Wed, 29 Apr 2009 17:05:50 -0400
-Received: from out1.smtp.messagingengine.com ([66.111.4.25]:44005 "EHLO
-	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1758875AbZD2VFt (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 29 Apr 2009 17:05:49 -0400
-Received: from compute1.internal (compute1.internal [10.202.2.41])
-	by out1.messagingengine.com (Postfix) with ESMTP id 27055336A4B;
-	Wed, 29 Apr 2009 17:05:49 -0400 (EDT)
-Received: from heartbeat1.messagingengine.com ([10.202.2.160])
-  by compute1.internal (MEProxy); Wed, 29 Apr 2009 17:05:49 -0400
-X-Sasl-enc: zy5GoSDlC95dBi85LuJ5Mjd48mvYy4LPU5psR1nbod4U 1241039148
-Received: from localhost.localdomain (p5DCC1814.dip0.t-ipconnect.de [93.204.24.20])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 2CC382D1B4;
-	Wed, 29 Apr 2009 17:05:48 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1b5pre) Gecko/20090427 Lightning/1.0pre Shredder/3.0b3pre
-In-Reply-To: <46a038f90904291347i2ed158aaya7505e1bd11cd392@mail.gmail.com>
+	id S1753140AbZD2VSy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 29 Apr 2009 17:18:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752684AbZD2VSx
+	(ORCPT <rfc822;git-outgoing>); Wed, 29 Apr 2009 17:18:53 -0400
+Received: from mail2.tradestation.com ([63.99.207.80]:52327 "EHLO
+	mail2.tradestation.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750963AbZD2VSx convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 29 Apr 2009 17:18:53 -0400
+X-ASG-Debug-ID: 1241039930-679503770004-QuoKaX
+X-Barracuda-URL: http://192.168.51.31:8000/cgi-bin/mark.cgi
+Received: from mail5.tradestation.com (localhost [127.0.0.1])
+	by mail2.tradestation.com (Spam & Virus Firewall) with ESMTP
+	id B037A3CB26A; Wed, 29 Apr 2009 17:18:50 -0400 (EDT)
+Received: from mail5.tradestation.com (tx02exchange02.trad.tradestation.com [192.168.51.76]) by mail2.tradestation.com with ESMTP id vknr8NiCW1PnEEt0; Wed, 29 Apr 2009 17:18:50 -0400 (EDT)
+X-Barracuda-Envelope-From: JDlugosz@TradeStation.com
+X-ASG-Whitelist: Client
+Received: from EXCHANGE.trad.tradestation.com ([10.4.0.121]) by mail5.tradestation.com with Microsoft SMTPSVC(6.0.3790.3959);
+	 Wed, 29 Apr 2009 17:17:50 -0400
+X-MimeOLE: Produced By Microsoft Exchange V6.5
+Content-class: urn:content-classes:message
+X-ASG-Orig-Subj: RE: Question on merge and mergetool settings
+In-Reply-To: <200904292200.11373.markus.heidelberg@web.de>
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+Thread-Topic: Question on merge and mergetool settings
+Thread-Index: AcnJBWbPflFduBxBTw2QJzC0uI6hUwACj0Iw
+X-OriginalArrivalTime: 29 Apr 2009 21:17:50.0329 (UTC) FILETIME=[F3798690:01C9C90F]
+X-Barracuda-Connect: tx02exchange02.trad.tradestation.com[192.168.51.76]
+X-Barracuda-Start-Time: 1241039930
+X-Barracuda-Virus-Scanned: by TX-Barracuda Spam Firewall 400 at tradestation.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117946>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117947>
 
-Martin Langhoff venit, vidit, dixit 29.04.2009 22:47:
-> On Wed, Apr 29, 2009 at 10:25 PM, Michael J Gruber
-> <git@drmicha.warpmail.net> wrote:
->> Given the versions that fail for Martin and work for Avery and me I
->> would think it's not a git issue but rather a matter of the svn version
->> resp. the svn perl bindingds.
+> No.
 > 
-> Good point. The machine where this is failing is an Ubuntu Intrepid box...
+> There is remote.<name>.url, mergetool.<name>.path
+> There is no merge.url, merge.path, mergetool.<name>.url
 > 
-> $ dpkg -l libsvn* | grep '^i'
-> ii  libsvn-perl                                1.5.1dfsg1-1ubuntu2
->                 Perl bindings for Subversion
-> ii  libsvn1                                    1.5.1dfsg1-1ubuntu2
->                 Shared libraries used by Subversion
-> ii  libsvncpp1                                 0.9.6-1
->                 Subversion C++ shared library
-> dpkg -l subversion* | grep '^i'
-> ii  subversion                                 1.5.1dfsg1-1ubuntu2
->                 Advanced version control system
-> 
-> On the F9 box where things succeed...
-> 
-> $rpm -qa subversion*
-> subversion-perl-1.4.6-7.i386
-> subversion-1.4.6-7.i386
-> $ rpm -qa *svn*
-> git-svn-1.6.0.6-3.fc9.i386
-> 
-> What are the versions in that F-10 box? Could it be an incompatibility
-> with svn-1.5.x?
 
-1.5.4
+Can the git-config document be relied on to be complete and up to date?
+Any tool can simply claim any variables it likes.  I tried sifting
+through the source code, but it's not easy to identify a complete set.
 
-But I just re-read your original report, and there's some inconsistency:
+--John
 
-git-svn triggers cat-file's usage message which says "git-cat-file ...".
-The dash indicates that it is a git cat-file before v1.6.0.1-13-g34baebc
-(where the dash was removed), so it's definitely not the current maint
-you think you are using.
 
-Do you have older ubuntu git packages installed in $PATH?
 
-Michael
+TradeStation Group, Inc. is a publicly-traded holding company (NASDAQ GS: TRAD) of three operating subsidiaries, TradeStation Securities, Inc. (Member NYSE, FINRA, SIPC and NFA), TradeStation Technologies, Inc., a trading software and subscription company, and TradeStation Europe Limited, a United Kingdom, FSA-authorized introducing brokerage firm. None of these companies provides trading or investment advice, recommendations or endorsements of any kind. The information transmitted is intended only for the person or entity to which it is addressed and may contain confidential and/or privileged material. Any review, retransmission, dissemination or other use of, or taking of any action in reliance upon, this information by persons or entities other than the intended recipient is prohibited.
+  If you received this in error, please contact the sender and delete the material from any computer.
