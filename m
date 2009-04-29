@@ -1,67 +1,49 @@
-From: Nanako Shiraishi <nanako3@lavabit.com>
-Subject: Re: git-ls-files --added?
-Date: Sat, 30 May 2009 07:01:11 +0900
-Message-ID: <20090530070111.6117@nanako3.lavabit.com>
-References: <2cfc40320905240054j2c08da8bt4df95c6f1bc9e254@mail.gmail.com>
-	<m3fxeudhho.fsf@localhost.localdomain>
-	<2cfc40320905240212jc111b1xfeb39b1851c606d3@mail.gmail.com>
-	<7vmy921i3j.fsf@alter.siamese.dyndns.org>
-	<7vws85y9n7.fsf@alter.siamese.dyndns.org>
-	<2cfc40320905251756t32e092fdqda769e21669f5d86@mail.gmail.com>
-	<20090529212634.GA86167@gmail.com>
+From: "Olive Thompson" <bronson@air2.com>
+Subject: No more suffers caused by "jelly" manhood at night.
+Date: Thu, 30 Apr 2009 01:08:18 +0300
+Message-ID: <20090430010818.8060306@air2.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Cc: Jon Seymour <jon.seymour@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Jakub Narebski <jnareb@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: David Aguilar <davvid@gmail.com>
-X-From: git-owner@vger.kernel.org Sat May 30 00:02:15 2009
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat May 30 00:20:49 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MAA9U-0000GP-Ca
-	for gcvg-git-2@gmane.org; Sat, 30 May 2009 00:02:12 +0200
+	id 1MAART-0005vk-EJ
+	for gcvg-git-2@gmane.org; Sat, 30 May 2009 00:20:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753559AbZE2WCB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 29 May 2009 18:02:01 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752853AbZE2WCA
-	(ORCPT <rfc822;git-outgoing>); Fri, 29 May 2009 18:02:00 -0400
-Received: from karen.lavabit.com ([72.249.41.33]:55106 "EHLO karen.lavabit.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752684AbZE2WCA (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 May 2009 18:02:00 -0400
-Received: from b.earth.lavabit.com (b.earth.lavabit.com [192.168.111.11])
-	by karen.lavabit.com (Postfix) with ESMTP id 90AC411B7CA;
-	Fri, 29 May 2009 17:02:01 -0500 (CDT)
-Received: from 3759.lavabit.com (212.62.97.20)
-	by lavabit.com with ESMTP id 4TAOFFDOW3T5; Fri, 29 May 2009 17:02:01 -0500
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws; s=lavabit; d=lavabit.com;
-  b=PVUqvxiYBg9CY0gQjMrC72b2NrNMdfmXwnjSUdl6ZZr/lVUso91xE7Wsl2GceRjYfqvpbvC22zrvduD/fpU+nYVL9cY09CmyQ5D/r/vUImRp0T9udajCrGD3CF5phZHswuHpw+DnptMOqZHP7WNbrhZzNXC9tgFD/BVsM9VT8gI=;
-  h=From:To:Cc:Subject:In-Reply-To:References:Date:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id;
-In-Reply-To: <20090529212634.GA86167@gmail.com>
+	id S1753559AbZE2WUh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 29 May 2009 18:20:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753031AbZE2WUg
+	(ORCPT <rfc822;git-outgoing>); Fri, 29 May 2009 18:20:36 -0400
+Received: from [82.207.37.109] ([82.207.37.109]:57472 "HELO wergvan"
+	rhost-flags-FAIL-FAIL-OK-FAIL) by vger.kernel.org with SMTP
+	id S1752142AbZE2WUg (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 May 2009 18:20:36 -0400
+Received: from fhtg ([83.211.24.38])
+	by wergvan (8.13.4/8.13.4) with SMTP id 200904300112011773;
+	Thu, 30 Apr 2009 01:12:34 +0300
+User-Agent: Thunderbird 2.0.0.9 (Windows/20071031)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120321>
+X-Spam-Report: 15.6 points;
+ *  3.0 RAZOR2_CF_RANGE_51_100 BODY: Razor2 gives confidence level above 50%
+ *      [cf: 100]
+ *  1.0 RAZOR2_CHECK Listed in Razor2 (http://razor.sf.net/)
+ *  1.0 RCVD_IN_NJABL_PROXY RBL: NJABL: sender is an open proxy
+ *      [82.207.37.109 listed in combined.njabl.org]
+ *  4.0 RCVD_IN_XBL RBL: Received via a relay in Spamhaus XBL
+ *      [82.207.37.109 listed in sbl-xbl.spamhaus.org]
+ *  2.0 URIBL_AB_SURBL Contains an URL listed in the AB SURBL blocklist
+ *      [URIs: xobferap.cn]
+ *  0.5 URIBL_WS_SURBL Contains an URL listed in the WS SURBL blocklist
+ *      [URIs: xobferap.cn]
+ *  4.0 URIBL_SC_SURBL Contains an URL listed in the SC SURBL blocklist
+ *      [URIs: xobferap.cn]
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120322>
 
-Quoting David Aguilar <davvid@gmail.com> writes:
-
-> On Tue, May 26, 2009 at 10:56:52AM +1000, Jon Seymour wrote:
->> Thanks for your answer's Junio.
->> 
->> I am indeed writing some porcelain. I currently have some bash tooling
->
-> I know that for the purposes of writing scripts it would be
-> really great if we had a plumbing command that gave us exactly
-> what git-status tells us, but in a machine-parseable
-> and stable output format.
-
-Perhaps you weren't following the thread closely, but I think the patch in the thread quoted by Junio (http://thread.gmane.org/gmane.comp.version-control.git/97830/focus=99134) does exactly that.
-
--- 
-Nanako Shiraishi
-http://ivory.ap.teacup.com/nanako3/
+Hey dude, try our amazing male enhancer! http://tka.xobferap.cn/
