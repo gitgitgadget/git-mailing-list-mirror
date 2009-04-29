@@ -1,86 +1,88 @@
 From: Jeff King <peff@peff.net>
 Subject: Re: error: Unable to append to
 	.git/logs/refs/remotes/origin/master: Permission denied
-Date: Tue, 28 Apr 2009 23:29:43 -0400
-Message-ID: <20090429032943.GB8826@coredump.intra.peff.net>
-References: <20090428073138.GA9094@elte.hu>
+Date: Wed, 29 Apr 2009 00:07:20 -0400
+Message-ID: <20090429040719.GA14912@coredump.intra.peff.net>
+References: <20090428073138.GA9094@elte.hu> <20090429032943.GB8826@coredump.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Cc: git@vger.kernel.org
 To: Ingo Molnar <mingo@elte.hu>
-X-From: git-owner@vger.kernel.org Wed Apr 29 05:29:54 2009
+X-From: git-owner@vger.kernel.org Wed Apr 29 06:07:33 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lz0Ub-00015m-Bq
-	for gcvg-git-2@gmane.org; Wed, 29 Apr 2009 05:29:53 +0200
+	id 1Lz151-0002Gr-It
+	for gcvg-git-2@gmane.org; Wed, 29 Apr 2009 06:07:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751962AbZD2D3q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 28 Apr 2009 23:29:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751790AbZD2D3q
-	(ORCPT <rfc822;git-outgoing>); Tue, 28 Apr 2009 23:29:46 -0400
-Received: from peff.net ([208.65.91.99]:59009 "EHLO peff.net"
+	id S1751234AbZD2EHX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 29 Apr 2009 00:07:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750869AbZD2EHX
+	(ORCPT <rfc822;git-outgoing>); Wed, 29 Apr 2009 00:07:23 -0400
+Received: from peff.net ([208.65.91.99]:60404 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751403AbZD2D3p (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 28 Apr 2009 23:29:45 -0400
-Received: (qmail 2497 invoked by uid 107); 29 Apr 2009 03:29:58 -0000
+	id S1750696AbZD2EHW (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 Apr 2009 00:07:22 -0400
+Received: (qmail 2575 invoked by uid 107); 29 Apr 2009 04:07:34 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Tue, 28 Apr 2009 23:29:58 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 28 Apr 2009 23:29:43 -0400
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Wed, 29 Apr 2009 00:07:34 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 29 Apr 2009 00:07:20 -0400
 Content-Disposition: inline
-In-Reply-To: <20090428073138.GA9094@elte.hu>
+In-Reply-To: <20090429032943.GB8826@coredump.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117843>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117844>
 
-On Tue, Apr 28, 2009 at 09:31:38AM +0200, Ingo Molnar wrote:
+On Tue, Apr 28, 2009 at 11:29:43PM -0400, Jeff King wrote:
 
->  aldebaran:~/git> git pull
->  error: Unable to append to .git/logs/refs/remotes/origin/master: Permission denied
->  From e2:git
->   ! 66996ec..95110d7  master     -> origin/master  (unable to update local ref)
->   * [new tag]         v1.6.3-rc2 -> v1.6.3-rc2
->  error: some local refs could not be updated; try running
->   'git remote prune origin' to remove any old, conflicting branches
-> 
-> Obviousy Git cannot update the ref there so the failure is OK, but 
-> the git-remote advice it gives is confusing IMHO: the 'git remote 
-> prune origin' cannot fix anything. (and it is clear from the fetch 
-> permission failure that there's no chance to fix anything here.)
-> 
-> I suspect there are other, more typical failure modes where that 
-> advice is useful - just wanted to point out that it's confusing 
-> here.
+> Note the repeated use of "hopefully". :) Maybe the earlier message is
+> too hidden to rely on. We might be able to get by with checking "errno"
+> for ENOTDIR after trying to lock the ref and using a different message,
+> but I don't know how portable that will be.
 
-Yeah, I knew that when I wrote it:
+Hmm, that actually doesn't work. errno is properly EACCESS in your
+example, but the D/F problem doesn't actually set errno, since it is git
+itself, and not a failed syscall, that determines that "foo/bar" is not
+available because "foo" exists (and git must do it, because "foo" may be
+a packed ref).
 
-  $ git log -1 --format=%s%n%b f3cb169
-  fetch: give a hint to the user when local refs fail to update
-  There are basically two categories of update failures for
-  local refs:
+So I think we would need to simulate the errno setting, like the patch
+below. That should generate the hint only when it would actually be
+useful.
 
-    1. problems outside of git, like disk full, bad
-       permissions, etc.
-
-    2. D/F conflicts on tracking branch ref names
-
-  In either case, there should already have been an error
-  message. In case '1', hopefully enough information has
-  already been given that the user can fix it. In the case of
-  '2', we can hint that the user can clean up their tracking
-  branch area by using 'git remote prune'.
-
-  Note that we don't actually know _which_ case we have, so
-  the user will receive the hint in case 1, as well. In this
-  case the suggestion won't do any good, but hopefully the
-  user is smart enough to figure out that it's just a hint.
-
-Note the repeated use of "hopefully". :) Maybe the earlier message is
-too hidden to rely on. We might be able to get by with checking "errno"
-for ENOTDIR after trying to lock the ref and using a different message,
-but I don't know how portable that will be.
-
--Peff
+---
+diff --git a/builtin-fetch.c b/builtin-fetch.c
+index 0bb290b..ad00bd2 100644
+--- a/builtin-fetch.c
++++ b/builtin-fetch.c
+@@ -181,9 +181,9 @@ static int s_update_ref(const char *action,
+ 	lock = lock_any_ref_for_update(ref->name,
+ 				       check_old ? ref->old_sha1 : NULL, 0);
+ 	if (!lock)
+-		return 2;
++		return errno == ENOTDIR ? 2 : 1;
+ 	if (write_ref_sha1(lock, ref->new_sha1, msg) < 0)
+-		return 2;
++		return errno == ENOTDIR ? 2 : 1;
+ 	return 0;
+ }
+ 
+diff --git a/refs.c b/refs.c
+index e65a3b4..79795d0 100644
+--- a/refs.c
++++ b/refs.c
+@@ -893,8 +893,10 @@ static struct ref_lock *lock_ref_sha1_basic(const char *ref, const unsigned char
+ 	 * name is a proper prefix of our refname.
+ 	 */
+ 	if (missing &&
+-            !is_refname_available(ref, NULL, get_packed_refs(), 0))
++            !is_refname_available(ref, NULL, get_packed_refs(), 0)) {
++		last_errno = ENOTDIR;
+ 		goto error_return;
++	}
+ 
+ 	lock->lk = xcalloc(1, sizeof(struct lock_file));
+ 
