@@ -1,74 +1,62 @@
-From: Mike Ralphson <mike.ralphson@gmail.com>
-Subject: Re: adding arbitary folders to the git index, from outside of the 
-	repository
-Date: Wed, 29 Apr 2009 08:44:50 +0100
-Message-ID: <e2b179460904290044q2f55ff90x4a8f3b9cab18006b@mail.gmail.com>
-References: <8ABE87D6-F70D-4A86-8307-88B95FAF350F@patchprint.co.nz>
-	 <200904290206.31153.robin.rosenberg.lists@dewire.com>
+From: Sitaram Chamarty <sitaramc@gmail.com>
+Subject: Re: Eric Sink's blog - notes on git, dscms and a "whole product"
+ approach
+Date: Wed, 29 Apr 2009 07:54:50 +0000 (UTC)
+Organization: disorganised!
+Message-ID: <slrngvg1u9.65c.sitaramc@sitaramc.homelinux.net>
+References: <46a038f90904270155i6c802fceoffc73eb5ab57130e@mail.gmail.com>
+ <m3ocugod96.fsf@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Andrew Bush <andrew@patchprint.co.nz>,
-	Robin Rosenberg <robin.rosenberg.lists@dewire.com>
-X-From: git-owner@vger.kernel.org Wed Apr 29 09:45:03 2009
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Apr 29 09:59:05 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lz4TV-0001iv-Qn
-	for gcvg-git-2@gmane.org; Wed, 29 Apr 2009 09:45:02 +0200
+	id 1Lz4dX-00078O-Ft
+	for gcvg-git-2@gmane.org; Wed, 29 Apr 2009 09:55:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752437AbZD2How (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 29 Apr 2009 03:44:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752042AbZD2How
-	(ORCPT <rfc822;git-outgoing>); Wed, 29 Apr 2009 03:44:52 -0400
-Received: from mail-fx0-f158.google.com ([209.85.220.158]:38855 "EHLO
-	mail-fx0-f158.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751288AbZD2Hov (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 Apr 2009 03:44:51 -0400
-Received: by fxm2 with SMTP id 2so1000530fxm.37
-        for <git@vger.kernel.org>; Wed, 29 Apr 2009 00:44:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=Ml12JOD6OV9GDVIjR6F0/a/9Vvxu+B9m51Bw+Z6Chow=;
-        b=vprVR/nO46yzn76Y+CsUY0R5CQsL+jk6r1O9cdPz6aT2C9CIVQ8Fnd81+uteGYcikS
-         TcCP55Bt4Ey9cfVDizfwASECAjIJ2LVSZWOvnYS9yOgbgiK9jlBXtOghcbh9bIDeUrpO
-         lbeqkkQUHASFED9yV8vIy5V72qF/pUHk4sU2s=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=Iti5FG7raPRJWUiWkt5arSyL5c0EE2yAhC3mzo3TRL9SEk5W2QMeoQJ1McZA8pwfSO
-         SaEFoC5YySXpEkOeZOrSgQ1LfocW+T/57IUlmSGIHNN0GSjzd2zyidXxI1Vb9MoymilY
-         yHbQuqCKqnJ76ayPqQ8VIG6Q87TYiGxOxC9/o=
-Received: by 10.223.123.129 with SMTP id p1mr11991far.29.1240991090542; Wed, 
-	29 Apr 2009 00:44:50 -0700 (PDT)
-In-Reply-To: <200904290206.31153.robin.rosenberg.lists@dewire.com>
+	id S1750804AbZD2HzJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 29 Apr 2009 03:55:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750892AbZD2HzI
+	(ORCPT <rfc822;git-outgoing>); Wed, 29 Apr 2009 03:55:08 -0400
+Received: from main.gmane.org ([80.91.229.2]:35413 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750804AbZD2HzG (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 Apr 2009 03:55:06 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1Lz4dC-0007cl-Is
+	for git@vger.kernel.org; Wed, 29 Apr 2009 07:55:02 +0000
+Received: from atcmail.atc.tcs.co.in ([203.200.212.145])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 29 Apr 2009 07:55:02 +0000
+Received: from sitaramc by atcmail.atc.tcs.co.in with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 29 Apr 2009 07:55:02 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: atcmail.atc.tcs.co.in
+User-Agent: slrn/0.9.9 (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117862>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117863>
 
-2009/4/29 Robin Rosenberg <robin.rosenberg.lists@dewire.com>:
-> onsdag 29 april 2009 00:54:54 skrev Andrew Bush:
->> I have a desire to have a single git repository that tracks the
->> content of an array of folders located in various places across my
->> file system.
+On 2009-04-28, Jakub Narebski <jnareb@gmail.com> wrote:
 
-> What I do sometimes is set GIT_DIR and then add paths relative to
-> / and adding excludes for some paths. That way I can cover /etc and
-> selected parts of /var and other interesting areas. You cannot
-> however have different roots for your trees, unless you make
-> the tree using e.g symbolic links to the different directories.
+> ES> * The one where I lament that I want to like Darcs but I can't
+>
+> where Eric talks about difference between parentage in merge commit
+> (which is needed for good merging) and "parentage"/weak link in
+> cherry-picked commit; Git uses weak link = no link.
 
-You can also support having different roots for your trees if you
-commit them to distinct branches. You would need to remember which
-root applies to each branch, but you could name the branches var, etc,
-usr/local/etc, home/andrew etc.
+Well the patch-id is a sort of "compute on demand" link, so
+it would qualify as a weak link, especially because git
+manages to use it during a rebase.
 
-Mike
+I wanted to point that out but I didn't see a link to post
+comments so I didn't bother.
