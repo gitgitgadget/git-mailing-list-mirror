@@ -1,60 +1,75 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: error: Unable to append to
-	.git/logs/refs/remotes/origin/master: Permission denied
-Date: Wed, 29 Apr 2009 04:06:50 -0400
-Message-ID: <20090429080650.GA25227@coredump.intra.peff.net>
-References: <20090428073138.GA9094@elte.hu> <20090429032943.GB8826@coredump.intra.peff.net> <20090429040719.GA14912@coredump.intra.peff.net> <20090429073256.GB22129@elte.hu>
+From: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
+	<u.kleine-koenig@pengutronix.de>
+Subject: Re: [PATCH 1/2] parse-opt: make PARSE_OPT_STOP_AT_NON_OPTION
+	available to git rev-parse
+Date: Wed, 29 Apr 2009 10:10:22 +0200
+Message-ID: <20090429081022.GA18521@pengutronix.de>
+References: <1240950564-15124-1-git-send-email-u.kleine-koenig@pengutronix.de> <20090429040804.GB14912@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: Ingo Molnar <mingo@elte.hu>
-X-From: git-owner@vger.kernel.org Wed Apr 29 10:07:09 2009
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Apr 29 10:10:36 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lz4or-0006Yo-AN
-	for gcvg-git-2@gmane.org; Wed, 29 Apr 2009 10:07:05 +0200
+	id 1Lz4sF-00088c-Lt
+	for gcvg-git-2@gmane.org; Wed, 29 Apr 2009 10:10:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757086AbZD2IG4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 29 Apr 2009 04:06:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753831AbZD2IG4
-	(ORCPT <rfc822;git-outgoing>); Wed, 29 Apr 2009 04:06:56 -0400
-Received: from peff.net ([208.65.91.99]:44387 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757330AbZD2IGx (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 Apr 2009 04:06:53 -0400
-Received: (qmail 3458 invoked by uid 107); 29 Apr 2009 08:07:06 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Wed, 29 Apr 2009 04:07:06 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 29 Apr 2009 04:06:50 -0400
+	id S1755691AbZD2IK1 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 29 Apr 2009 04:10:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751545AbZD2IK0
+	(ORCPT <rfc822;git-outgoing>); Wed, 29 Apr 2009 04:10:26 -0400
+Received: from metis.ext.pengutronix.de ([92.198.50.35]:48950 "EHLO
+	metis.ext.pengutronix.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751508AbZD2IKY (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 Apr 2009 04:10:24 -0400
+Received: from octopus.hi.pengutronix.de ([2001:6f8:1178:2:215:17ff:fe12:23b0])
+	by metis.ext.pengutronix.de with esmtp (Exim 4.63)
+	(envelope-from <ukl@pengutronix.de>)
+	id 1Lz4s3-0007n3-Cp; Wed, 29 Apr 2009 10:10:23 +0200
+Received: from ukl by octopus.hi.pengutronix.de with local (Exim 4.69)
+	(envelope-from <ukl@pengutronix.de>)
+	id 1Lz4s3-0004pz-0B; Wed, 29 Apr 2009 10:10:23 +0200
 Content-Disposition: inline
-In-Reply-To: <20090429073256.GB22129@elte.hu>
+In-Reply-To: <20090429040804.GB14912@coredump.intra.peff.net>
+User-Agent: Mutt/1.5.18 (2008-05-17)
+X-SA-Exim-Connect-IP: 2001:6f8:1178:2:215:17ff:fe12:23b0
+X-SA-Exim-Mail-From: ukl@pengutronix.de
+X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
+X-PTX-Original-Recipient: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117865>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117866>
 
-On Wed, Apr 29, 2009 at 09:32:56AM +0200, Ingo Molnar wrote:
+Hi Jeff,
 
-> > So I think we would need to simulate the errno setting, like the 
-> > patch below. That should generate the hint only when it would 
-> > actually be useful.
-> 
-> it wasnt hard to figure out what's going on. So this was more of a 
-> FYI, not really a bug report. Maybe if someone tries to pull into a 
-> read-only repo the same could happen? My particular breakage (of a 
-> single ref being root-owned - the rest was mingo owned) is atypical 
-> enough to be ignored.
+On Wed, Apr 29, 2009 at 12:08:04AM -0400, Jeff King wrote:
+> On Tue, Apr 28, 2009 at 10:29:23PM +0200, Uwe Kleine-K=F6nig wrote:
+>=20
+> > Signed-off-by: Uwe Kleine-K=F6nig <u.kleine-koenig@pengutronix.de>
+> > ---
+> >  Documentation/git-rev-parse.txt |    5 +++++
+> >  builtin-rev-parse.c             |    8 ++++++--
+> >  2 files changed, 11 insertions(+), 2 deletions(-)
+>=20
+> I expected there to be a shell caller here or in patch 2/2, but there
+> isn't. Is this for topgit?
+Yes, I had topgit in mind when adding that option.  Assuming it will
+make it into git.git, I won't use it for some time though to not depend
+on bleeding edge for topgit, though.
 
-Actually, it is a little bit tough to get your breakage. A pure
-read-only repo would error out much earlier (permission denied on
-FETCH_HEAD or writing to object db). But if yours was just "accidentally
-fetched once as root", then that doesn't seem too uncommon.
+It wasn't intentionally that I sent the two patches in a series.
 
-> If there's no easy/clean solution then please ignore my report.
+Best regards
+Uwe
 
-I think the patch I posted isn't too bad. We'll see what others say.
-
--Peff
+--=20
+Pengutronix e.K.                              | Uwe Kleine-K=F6nig     =
+       |
+Industrial Linux Solutions                    | http://www.pengutronix.=
+de/  |
