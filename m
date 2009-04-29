@@ -1,78 +1,81 @@
-From: "J.H." <warthog19@eaglescrag.net>
-Subject: Re: [PATCH] gitweb: escape searchtext and parameters for replay
-Date: Wed, 29 Apr 2009 16:11:48 -0700
-Message-ID: <49F8DEB4.40909@eaglescrag.net>
-References: <337ECD47-D343-40F2-9E41-9E7D8531C5DF@aepfle.de> <0626233F-50D5-4F7E-9009-506FEA77571D@aepfle.de> <200904291514.11331.jnareb@gmail.com> <200904292136.36987.jnareb@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Don't crash if ai_canonname comes back as null
+Date: Wed, 29 Apr 2009 16:21:27 -0700
+Message-ID: <7v63gn59mw.fsf@gitster.siamese.dyndns.org>
+References: <9C355DCC-0240-4B9E-83CA-083B51C2E34C@gmail.com>
+ <81b0412b0904291455n47f83e9ftcbdec0ff1c0ea03@mail.gmail.com>
+ <6B7EA51D-8412-4E6A-BA7B-156FD5B755E8@gmail.com>
+ <81b0412b0904291504k3261df5fl692d09c6c761887e@mail.gmail.com>
+ <C2AC0D7A-3E11-4A3A-8447-5D7582547B13@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Olaf Hering <olaf@aepfle.de>,
-	Michael J Gruber <git@drmicha.warpmail.net>,
-	git@vger.kernel.org,
-	"John 'Warthog9' Hawley" <warthog9@eaglescrag.net>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Apr 30 01:20:25 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Alex Riesen <raa.lkml@gmail.com>, git@vger.kernel.org,
+	Benjamin Kramer <benny.kra@googlemail.com>,
+	Jon Loeliger <jdl@jdl.com>
+To: Augie Fackler <durin42@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Apr 30 01:21:47 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LzJ4i-0000tS-GL
-	for gcvg-git-2@gmane.org; Thu, 30 Apr 2009 01:20:24 +0200
+	id 1LzJ5z-0001VG-26
+	for gcvg-git-2@gmane.org; Thu, 30 Apr 2009 01:21:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753930AbZD2XUP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 29 Apr 2009 19:20:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752922AbZD2XUO
-	(ORCPT <rfc822;git-outgoing>); Wed, 29 Apr 2009 19:20:14 -0400
-Received: from shards.monkeyblade.net ([198.137.202.13]:43852 "EHLO
-	shards.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752647AbZD2XUN (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 Apr 2009 19:20:13 -0400
-X-Greylist: delayed 447 seconds by postgrey-1.27 at vger.kernel.org; Wed, 29 Apr 2009 19:20:13 EDT
-Received: from [172.19.0.11] (c-67-164-31-53.hsd1.ca.comcast.net [67.164.31.53])
-	(authenticated bits=0)
-	by shards.monkeyblade.net (8.14.1/8.14.1) with ESMTP id n3TNBolV010991
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Wed, 29 Apr 2009 16:11:50 -0700
-User-Agent: Thunderbird 2.0.0.21 (Windows/20090302)
-In-Reply-To: <200904292136.36987.jnareb@gmail.com>
-X-Virus-Scanned: ClamAV 0.88.7/9305/Wed Apr 29 06:43:01 2009 on shards.monkeyblade.net
-X-Virus-Status: Clean
-X-Greylist: Sender succeeded SMTP AUTH, not delayed by milter-greylist-4.1.1 (shards.monkeyblade.net [198.137.202.13]); Wed, 29 Apr 2009 16:11:51 -0700 (PDT)
+	id S1753341AbZD2XVg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 29 Apr 2009 19:21:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753187AbZD2XVf
+	(ORCPT <rfc822;git-outgoing>); Wed, 29 Apr 2009 19:21:35 -0400
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:37502 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752347AbZD2XVf (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 Apr 2009 19:21:35 -0400
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id DF9B9138C1;
+	Wed, 29 Apr 2009 19:21:34 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id B33A4138BB; Wed,
+ 29 Apr 2009 19:21:28 -0400 (EDT)
+In-Reply-To: <C2AC0D7A-3E11-4A3A-8447-5D7582547B13@gmail.com> (Augie
+ Fackler's message of "Wed, 29 Apr 2009 18:04:42 -0500")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 7B1D70AA-3514-11DE-826C-D766E3C8547C-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117976>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117977>
 
-Jakub Narebski wrote:
-> On Wed, 29 Apr 2009, Jakub Narebski wrote:
->> On Wed, 29 Apr 2009, Olaf Hering wrote:
->>> Am 29.04.2009 um 14:28 schrieb Jakub Narebski: 
->>>> On Wed, 29 April 2009, Michael J Gruber wrote:
->>>>>> It should be s=torvalds%40linux instead of s=torvalds\@linux
->>>> If you by hand edit URL changing '\@' to simply '@', does changed
->>>> gitweb URL works correctly?
->>> I tried akpm@osdl.org, and @ and . was escaped with a backslash.
->>> Removing both, and using the plain mail address worked.
->> This problem was fixed in 7e431ef (gitweb: Separate search regexp from 
->> search text), but this fix is present in git 1.5.2 and later,
-> 
-> I have just checked that current gitweb (1.6.2.rc1.20.g8c5b)
-> does not have this bug...
-> 
->> and kernel.org gitweb is a fork (adding caching mechanism) of
->> 1.4.5-rc0 (according to info in git.kernel.org HTML source), and
->> it does not have this fix.
->>
->>   http://git.kernel.org/?p=git/warthog9/gitweb.git;a=summary
->>
->> I have CC-ed J.H. on this.
-> 
-> ... so J.H., or Lea Wiemann, or whoever manages gitweb on kernel.org
-> should backport this fix to kernel.org's fork of gitweb sources.
+Augie Fackler <durin42@gmail.com> writes:
 
-Patches, as always, are welcome - I've got a few queued up already, but 
-if I have to do it I won't be getting back around to it for a bit (there 
-are other things on my priority list right now).
+> Fixes a weird bug where git-daemon was segfaulting
+> when started by sh(1) because ai_canonname was null.
+> ---
+> Fixed based on feedback.
 
-- John "Warthog9" Hawley
+Hmm.
+
+I've been waiting for feedback to a patch proposed earlier in the same
+area, which is <49F5BA55.3060606@googlemail.com> ($gmane/117670).  How
+does this new one relate to it?
+
+>  daemon.c |    2 +-
+>  1 files changed, 1 insertions(+), 1 deletions(-)
+>
+> diff --git a/daemon.c b/daemon.c
+> index 13401f1..ae21d92 100644
+> --- a/daemon.c
+> +++ b/daemon.c
+> @@ -459,7 +459,7 @@ static void parse_extra_args(char *extra_args, int
+> buflen)
+>  				inet_ntop(AF_INET, &sin_addr->sin_addr,
+>  					  addrbuf, sizeof(addrbuf));
+>  				free(canon_hostname);
+> -				canon_hostname = xstrdup(ai->ai_canonname);
+> +				canon_hostname = ai->ai_canonname ?
+> xstrdup(ai->ai_canonname) : NULL;
+>  				free(ip_address);
+>  				ip_address = xstrdup(addrbuf);
+>  				break;
+> --
+> 1.6.2.GIT
