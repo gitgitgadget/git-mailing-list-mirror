@@ -1,103 +1,97 @@
-From: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
-	<u.kleine-koenig@pengutronix.de>
-Subject: Re: (topgit question) deleting a dependency
-Date: Wed, 29 Apr 2009 10:24:10 +0200
-Message-ID: <20090429082410.GB18521@pengutronix.de>
-References: <slrngvdgo4.kr7.sitaramc@sitaramc.homelinux.net> <20090428094138.GB9415@piper.oerlikon.madduck.net> <20090428204018.GA17722@pengutronix.de> <slrngvf976.65c.sitaramc@sitaramc.homelinux.net>
+From: Martin Langhoff <martin.langhoff@gmail.com>
+Subject: Re: Cross-Platform Version Control
+Date: Wed, 29 Apr 2009 10:25:56 +0200
+Message-ID: <46a038f90904290125n11476cf3icbacab4f6d8a5f5a@mail.gmail.com>
+References: <46a038f90904270155i6c802fceoffc73eb5ab57130e@mail.gmail.com>
+	 <m3r5zdnhqu.fsf@localhost.localdomain>
+	 <46a038f90904282355g43bf0cv909905f6028f054f@mail.gmail.com>
+	 <200904290952.17789.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Sitaram Chamarty <sitaramc@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Apr 29 10:24:51 2009
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Apr 29 10:26:12 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lz55o-0006Ug-UG
-	for gcvg-git-2@gmane.org; Wed, 29 Apr 2009 10:24:37 +0200
+	id 1Lz57J-0007Ny-GG
+	for gcvg-git-2@gmane.org; Wed, 29 Apr 2009 10:26:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752277AbZD2IYO convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 29 Apr 2009 04:24:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751294AbZD2IYN
-	(ORCPT <rfc822;git-outgoing>); Wed, 29 Apr 2009 04:24:13 -0400
-Received: from metis.ext.pengutronix.de ([92.198.50.35]:51181 "EHLO
-	metis.ext.pengutronix.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752237AbZD2IYL (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 Apr 2009 04:24:11 -0400
-Received: from octopus.hi.pengutronix.de ([2001:6f8:1178:2:215:17ff:fe12:23b0])
-	by metis.ext.pengutronix.de with esmtp (Exim 4.63)
-	(envelope-from <ukl@pengutronix.de>)
-	id 1Lz55O-00080n-M5; Wed, 29 Apr 2009 10:24:10 +0200
-Received: from ukl by octopus.hi.pengutronix.de with local (Exim 4.69)
-	(envelope-from <ukl@pengutronix.de>)
-	id 1Lz55O-0004so-Fn; Wed, 29 Apr 2009 10:24:10 +0200
-Content-Disposition: inline
-In-Reply-To: <slrngvf976.65c.sitaramc@sitaramc.homelinux.net>
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-SA-Exim-Connect-IP: 2001:6f8:1178:2:215:17ff:fe12:23b0
-X-SA-Exim-Mail-From: ukl@pengutronix.de
-X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
-X-PTX-Original-Recipient: git@vger.kernel.org
+	id S1753957AbZD2I0A convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 29 Apr 2009 04:26:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753756AbZD2IZ7
+	(ORCPT <rfc822;git-outgoing>); Wed, 29 Apr 2009 04:25:59 -0400
+Received: from mail-bw0-f163.google.com ([209.85.218.163]:63488 "EHLO
+	mail-bw0-f163.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753369AbZD2IZ6 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 29 Apr 2009 04:25:58 -0400
+Received: by bwz7 with SMTP id 7so1013646bwz.37
+        for <git@vger.kernel.org>; Wed, 29 Apr 2009 01:25:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=zZRWLXNROsizUZYvV9U/SlsYc2GfiOlSelIy3jhRsJs=;
+        b=q6gWtrgjHXG7NzkmxriNmoikVreNomD+LQiU6emD9HxRswcfwHm48wEybjCp1JV4Sp
+         /EdFLBvNIVpeV0gGXqTCYWkgwMO7fw3E8ZxeL5dcY8Y2a8NJUeiPNXZUZP40G8Wc633F
+         xqSVcxycdMgWnf324YlB34uMkkYyy0DvY0gRs=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=Dx+97Ad59t24NUlkks2vUMYuQ8VD18Ll4MUXLVg0H6aKS27qYpwcTKnqLwfb39bkZh
+         RiEPi9fKzcod1kiVbF4V+VwhSXMXW79fCDGgIk1Z05pNszHccW43tkSTp8YmIWVlzcwv
+         vKGSVTSjGKLKoHrEObb2Ez2gv18ko1EfGJSO4=
+Received: by 10.223.115.193 with SMTP id j1mr21921faq.98.1240993556858; Wed, 
+	29 Apr 2009 01:25:56 -0700 (PDT)
+In-Reply-To: <200904290952.17789.jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117867>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117868>
 
-Hello Sitaram,
+On Wed, Apr 29, 2009 at 9:52 AM, Jakub Narebski <jnareb@gmail.com> wrot=
+e:
+>> > =A0 DON'T DO THAT.
+>
+> What could be proper solution to that, if you do not accept social
+> rather than technical restriction?
 
-[mmh, your mail didn't have me in the addressees, wonder why.]
+Let's say strong checks for case sensitivity clashes, leading/trailing
+dots, utf-8 encoding maladies, etc switched on by default. And note
+that to be user-friendly you want most of those checks at 'add' time.
 
-On Wed, Apr 29, 2009 at 12:52:54AM +0000, Sitaram Chamarty wrote:
-> On 2009-04-28, Uwe Kleine-K=F6nig <u.kleine-koenig@pengutronix.de> wr=
-ote:
->=20
-> > On Tue, Apr 28, 2009 at 11:41:38AM +0200, martin f krafft wrote:
-> >> also sprach Sitaram Chamarty <sitaramc@gmail.com> [2009.04.28.1049=
- +0200]:
-> >> [...]
-> >> > I know "tg depend" only has the "add" subcommand right now,
-> >> > but is there a manual way of getting the effect of a
-> >> > hypothetical "tg depend remove"?
-> >>=20
-> >> No, not yet, see http://bugs.debian.org/505303 for further
-> >> discussion on the issue.
-> > But note that you might get some problems after doing that.  See
-> >
-> > 	http://thread.gmane.org/gmane.comp.version-control.git/116193/focu=
-s=3D116205
->=20
-> Hello Uwe,
->=20
-> This is a little beyond my comprehension :(  However, this
-> is also why I am limiting myself to
->=20
->   - a single level of dependencies in tg, (master -->
->     multiple t/something --> t/all), and
->=20
->   - no changes of its own in t/all
->=20
-> When any of the t/something graduates to master, t/all will
-> be blown away (safe, since it has no changes of its own) and
-What makes you think it will "be blown away"?  Or alternatively, what d=
-o
-you mean saying that?  I often use the same approach and I never had th=
-e
-feeling anything is blown away.  If upstream uses your t/something patc=
-h
-it just merges into t/something making it empty without changing the
-corresponding tree (assuming master contains no other changes).  Then
-when t/something is merged into t/all nothing happens, because
-t/something's tree didn't change.
+ If we don't like a particular FS, or we think it is messing up our
+utf-8 filenames, say it up-front, at clone and checkout time. For
+example, if the checkout has files with interesting utf-8 names, it'd
+be reasonable to check for filename mangling.
 
-So the only thing is that t/all depends on an empty tg-branch.
+Some things are hard or impossible to prevent - the utf-8 encoding
+maladies of OSX for example. But it may be detectable on checkout.
 
-Best regards
-Uwe
+In short, play on the defensive, for the benefit of users who are not
+kernel developers.
 
+It will piss off kernel & git developers and slow some operations
+somewhat. It will piss off oldtimers like me. But I'll say git config
+--global core.trainingwheels no and life will be good.
+
+It may be - as Jeff King points out - a matter of a polished git
+porcelain. We've seen lots of porcelains, but no smooth user-targetted
+porcelain yet.
+
+cheers,
+
+
+
+m
 --=20
-Pengutronix e.K.                              | Uwe Kleine-K=F6nig     =
-       |
-Industrial Linux Solutions                    | http://www.pengutronix.=
-de/  |
+ martin.langhoff@gmail.com
+ martin@laptop.org -- School Server Architect
+ - ask interesting questions
+ - don't get distracted with shiny stuff  - working code first
+ - http://wiki.laptop.org/go/User:Martinlanghoff
