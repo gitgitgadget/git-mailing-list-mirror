@@ -1,89 +1,90 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: [PATCH] Clarify kind of conflict in merge-one-file helper
-Date: Wed, 29 Apr 2009 23:40:50 +0200
-Message-ID: <20090429214050.GA13794@blimp.localdomain>
+From: "Sohn, Matthias" <matthias.sohn@sap.com>
+Subject: [PATCH JGIT] Equals method should not assume anything about the type of its argument
+Date: Wed, 29 Apr 2009 23:47:29 +0200
+Message-ID: <366BBB1215D0AB4B8A153AF047A287800302A82C@dewdfe18.wdf.sap.corp>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 29 23:41:19 2009
+Content-Type: text/plain;
+	charset="Windows-1252"
+Content-Transfer-Encoding: 8BIT
+Cc: <git@vger.kernel.org>
+To: "Shawn O. Pearce" <spearce@spearce.org>,
+	"Robin Rosenberg" <robin.rosenberg@dewire.com>
+X-From: git-owner@vger.kernel.org Wed Apr 29 23:48:20 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LzHWj-0005HQ-8d
-	for gcvg-git-2@gmane.org; Wed, 29 Apr 2009 23:41:13 +0200
+	id 1LzHdb-0000Ji-8j
+	for gcvg-git-2@gmane.org; Wed, 29 Apr 2009 23:48:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753840AbZD2VlE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 29 Apr 2009 17:41:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754379AbZD2VlB
-	(ORCPT <rfc822;git-outgoing>); Wed, 29 Apr 2009 17:41:01 -0400
-Received: from mout4.freenet.de ([195.4.92.94]:34154 "EHLO mout4.freenet.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753637AbZD2VlA (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 Apr 2009 17:41:00 -0400
-Received: from [195.4.92.21] (helo=11.mx.freenet.de)
-	by mout4.freenet.de with esmtpa (ID alexander.riesen@freenet.de) (port 25) (Exim 4.69 #91)
-	id 1LzHWS-00045U-ML; Wed, 29 Apr 2009 23:40:56 +0200
-Received: from x6432.x.pppool.de ([89.59.100.50]:49195 helo=tigra.home)
-	by 11.mx.freenet.de with esmtpsa (ID alexander.riesen@freenet.de) (TLSv1:AES256-SHA:256) (port 587) (Exim 4.69 #79)
-	id 1LzHWS-0006tz-1M; Wed, 29 Apr 2009 23:40:56 +0200
-Received: from blimp.localdomain (blimp.home [192.168.0.8])
-	by tigra.home (Postfix) with ESMTP id EF8AC277D8;
-	Wed, 29 Apr 2009 23:40:50 +0200 (CEST)
-Received: by blimp.localdomain (Postfix, from userid 1000)
-	id B4FB336D28; Wed, 29 Apr 2009 23:40:50 +0200 (CEST)
-Content-Disposition: inline
-User-Agent: Mutt/1.5.18 (2008-05-17)
+	id S1752072AbZD2VsM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 29 Apr 2009 17:48:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752010AbZD2VsL
+	(ORCPT <rfc822;git-outgoing>); Wed, 29 Apr 2009 17:48:11 -0400
+Received: from smtpde03.sap-ag.de ([155.56.68.140]:53706 "EHLO
+	smtpde03.sap-ag.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751545AbZD2VsK convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 29 Apr 2009 17:48:10 -0400
+Received: from mail.sap.corp
+	by smtpde03.sap-ag.de (26) with ESMTP id n3TLm56i006541
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Wed, 29 Apr 2009 23:48:05 +0200 (MEST)
+X-MimeOLE: Produced By Microsoft Exchange V6.5
+x-cr-puzzleid: {9F120F2C-CB13-4AAA-80F8-06E1B9101F51}
+x-cr-hashedpuzzle: BenB CC8B DMTa FGBY FO2a F6cv Mewp P1Gt RG2X Vszr YcQt bbwb cYx5 e2VW fPhb h5HR;3;ZwBpAHQAQAB2AGcAZQByAC4AawBlAHIAbgBlAGwALgBvAHIAZwA7AHIAbwBiAGkAbgAuAHIAbwBzAGUAbgBiAGUAcgBnAEAAZABlAHcAaQByAGUALgBjAG8AbQA7AHMAcABlAGEAcgBjAGUAQABzAHAAZQBhAHIAYwBlAC4AbwByAGcA;Sosha1_v1;7;{9F120F2C-CB13-4AAA-80F8-06E1B9101F51};bQBhAHQAdABoAGkAYQBzAC4AcwBvAGgAbgBAAHMAYQBwAC4AYwBvAG0A;Wed, 29 Apr 2009 21:47:30 GMT;WwBQAEEAVABDAEgAIABKAEcASQBUAF0AIABFAHEAdQBhAGwAcwAgAG0AZQB0AGgAbwBkACAAcwBoAG8AdQBsAGQAIABuAG8AdAAgAGEAcwBzAHUAbQBlACAAYQBuAHkAdABoAGkAbgBnACAAYQBiAG8AdQB0ACAAdABoAGUAIAB0AHkAcABlACAAbwBmACAAaQB0AHMAIABhAHIAZwB1AG0AZQBuAHQA
+Content-class: urn:content-classes:message
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+Thread-Topic: [PATCH JGIT] Equals method should not assume anything about the type of its argument
+Thread-Index: AcnHjEysWP+qTjB1Tm2zGBLNNuNqlABTQvvQAA5wL+A=
+X-OriginalArrivalTime: 29 Apr 2009 21:48:04.0450 (UTC) FILETIME=[2CC66C20:01C9C914]
+X-Scanner: Virus Scanner virwal05
+X-SAP: out
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117954>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117955>
 
-Not as verbose as the recursive merge driver, but better still.
+From: Matthias Sohn <matthias.sohn@sap.com>
+The equals(Object o) method shouldn't make any assumptions about the
+type of o. It should simply return false if o is not the same type as
+this.
 
-Signed-off-by: Alex Riesen <raa.lkml@gmail.com>
+Signed-off-by: Matthias Sohn <matthias.sohn@sap.com>
 ---
+Shawn Pearce <spearce@spearce.org> wrote:
+> FWIW, your From header in the emails comes out "Sohn, Matthias"
+> while your Signed-off-By is as above.  This means that when I slam
+> your patch through git-am I get an author name of "Sohn, Matthias",
+> which looks damn funny.  I have to remember to edit the patch after
+> the fact to make it come out correct.
+>
+> Any change you can get your MUA to behave better?  Or is this
+> Exchange enforcing a nice uniform standard... *sigh*
 
- git-merge-one-file.sh |   11 +++++++++--
- 1 files changed, 9 insertions(+), 2 deletions(-)
+Didn't find a way to get around our Exchange server mangling the from header, 
+hence trying to give From: in mail body. If this doesn't help I will issue a 
+ticket for our Exchange administration to get this solved.
 
-diff --git a/git-merge-one-file.sh b/git-merge-one-file.sh
-index e1eb963..9c2c1b7 100755
---- a/git-merge-one-file.sh
-+++ b/git-merge-one-file.sh
-@@ -113,6 +113,10 @@ case "${1:-.}${2:-.}${3:-.}" in
- 	src1=`git-unpack-file $2`
- 	git merge-file "$src1" "$orig" "$src2"
- 	ret=$?
-+	msg=
-+	if [ $ret -ne 0 ]; then
-+		msg='content conflict'
-+	fi
+.../src/org/spearce/jgit/lib/AnyObjectId.java      |    5 ++++-
+ 1 files changed, 4 insertions(+), 1 deletions(-)
+
+diff --git a/org.spearce.jgit/src/org/spearce/jgit/lib/AnyObjectId.java b/org.spearce.jgit/src/org/spearce/jgit/lib/AnyObjectId.java
+index 2e3a43e..acb3cb5 100644
+--- a/org.spearce.jgit/src/org/spearce/jgit/lib/AnyObjectId.java
++++ b/org.spearce.jgit/src/org/spearce/jgit/lib/AnyObjectId.java
+@@ -253,7 +253,10 @@ public boolean equals(final AnyObjectId other) {
+ 	}
  
- 	# Create the working tree file, using "our tree" version from the
- 	# index, and then store the result of the merge.
-@@ -120,7 +124,10 @@ case "${1:-.}${2:-.}${3:-.}" in
- 	rm -f -- "$orig" "$src1" "$src2"
+ 	public boolean equals(final Object o) {
+-		return equals((AnyObjectId) o);
++		if (o instanceof AnyObjectId)
++			return equals((AnyObjectId) o);
++		else
++			return false;
+ 	}
  
- 	if [ "$6" != "$7" ]; then
--		echo "ERROR: Permissions conflict: $5->$6,$7."
-+		if [ -n "$msg" ]; then
-+			msg="$msg, "
-+		fi
-+		msg="${msg}permissions conflict: $5->$6,$7"
- 		ret=1
- 	fi
- 	if [ "$1" = '' ]; then
-@@ -128,7 +135,7 @@ case "${1:-.}${2:-.}${3:-.}" in
- 	fi
- 
- 	if [ $ret -ne 0 ]; then
--		echo "ERROR: Merge conflict in $4"
-+		echo "ERROR: $msg in $4"
- 		exit 1
- 	fi
- 	exec git update-index -- "$4"
+ 	/**
 -- 
-1.6.3.rc3.39.g49fd5
+1.6.2.2.1669.g7eaf8
