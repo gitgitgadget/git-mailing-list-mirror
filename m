@@ -1,74 +1,62 @@
-From: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-Subject: Re: gitweb sets incorrect <base> header
-Date: Wed, 29 Apr 2009 11:22:13 +0200
-Message-ID: <gt9685$l9g$1@ger.gmane.org>
-References: <877i15uf14.fsf@write-only.cryp.to>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
+From: Olaf Hering <olaf@aepfle.de>
+Subject: Invalid search parameter in webinterface
+Date: Wed, 29 Apr 2009 11:12:54 +0200
+Message-ID: <337ECD47-D343-40F2-9E41-9E7D8531C5DF@aepfle.de>
+Mime-Version: 1.0 (Apple Message framework v930.3)
+Content-Type: text/plain; charset=US-ASCII; format=flowed
+Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 29 11:24:54 2009
+X-From: git-owner@vger.kernel.org Wed Apr 29 11:24:58 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lz628-0003iE-Su
-	for gcvg-git-2@gmane.org; Wed, 29 Apr 2009 11:24:53 +0200
+	id 1Lz62D-0003iE-3t
+	for gcvg-git-2@gmane.org; Wed, 29 Apr 2009 11:24:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758323AbZD2JWd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 29 Apr 2009 05:22:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758303AbZD2JWc
-	(ORCPT <rfc822;git-outgoing>); Wed, 29 Apr 2009 05:22:32 -0400
-Received: from main.gmane.org ([80.91.229.2]:45542 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758260AbZD2JWb (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 Apr 2009 05:22:31 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1Lz5zp-0003Vy-4F
-	for git@vger.kernel.org; Wed, 29 Apr 2009 09:22:29 +0000
-Received: from nat.ct.ingv.it ([193.206.223.100])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 29 Apr 2009 09:22:29 +0000
-Received: from giuseppe.bilotta by nat.ct.ingv.it with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 29 Apr 2009 09:22:29 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: nat.ct.ingv.it
-User-Agent: KNode/0.10.9
-X-Face: ::w9}R^l{WGM\{y)C0QF@4^U,',W3Mk^X0HP)=:bKM^Z]A9+6bY6fe3}O*]fH{l<j1/9RTp  `KR0idy]Im#9^%}P5Dga'>AViT_'?&>&ufo2_X5Vs3C^tPO@drZRuu&6iK}x}~9`F\-dNZ>(p|V7`4
+	id S1758811AbZD2JYQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 29 Apr 2009 05:24:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758287AbZD2JYP
+	(ORCPT <rfc822;git-outgoing>); Wed, 29 Apr 2009 05:24:15 -0400
+Received: from mo-p05-ob.rzone.de ([81.169.146.180]:18319 "EHLO
+	mo-p05-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758760AbZD2JYO (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 Apr 2009 05:24:14 -0400
+X-Greylist: delayed 678 seconds by postgrey-1.27 at vger.kernel.org; Wed, 29 Apr 2009 05:24:14 EDT
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; t=1240997049; l=414;
+	s=domk; d=aepfle.de;
+	h=Date:Subject:Mime-Version:Content-Transfer-Encoding:Content-Type:To:
+	From:X-RZG-CLASS-ID:X-RZG-AUTH;
+	bh=Xb63iTXe4z/mYZkaWIvR8q93UWs=;
+	b=J3nxnw9kndhjpFz0jqPf7RoT0+jNjJ0/mSj5FRa5PXfXbB+5iFpXbqLGFAAxZFbjeEY
+	uZPLCZU1OsawAd9D2eYUQEtaG4EddJyI2ClFTnJyi9F43qDbFrZIwZt9W7BCG5qUzxDCo
+	RqmHOvOUHxF5XadBZQn2uULKC5ukjkZZebQ=
+X-RZG-AUTH: :P2EQZQWpfu9jTztxfPzuU9A5K3T2AgG4vCx9L62AnOp4JNgVHIVt
+X-RZG-CLASS-ID: mo05
+Received: from [192.168.2.100]
+	(dslb-084-057-095-146.pools.arcor-ip.net [84.57.95.146])
+	by post.strato.de (mrclete mo45) (RZmta 18.31)
+	with AES128-SHA encrypted ESMTP id 6000f7l3T83VoO
+	for <git@vger.kernel.org>; Wed, 29 Apr 2009 11:12:54 +0200 (MEST)
+X-Mailer: Apple Mail (2.930.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117871>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117872>
 
-On Tuesday 28 April 2009 14:41, Peter Simons wrote:
-> after a recent gitweb update to revision v1.6.3-rc3-12-gb79376c, the CGI now
-> generates an incorrect <base> header. For example, the first "patch" on the
-> page
-> 
->   http://git.cryp.to/fastcgi/commitdiff/9ad9965b3fa293c458df14391f181f2f8f1197cd
-> 
-> erroneously refer to http://git.cryp.to/cgi-bin/gitweb.cgi#patch1, but that
 
-Both in Konqueror and Opera the patch link on that page refers to 
+Hello.
 
-http://git.cryp.to/fastcgi/patch/9ad9965b3fa293c458df14391f181f2f8f1197cd
+An 'author' search string like "torvalds@linux" at
+http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git
+generates a 'next' link due to the huge number of commits.
 
-which is quite correct.
+This link has an incorrect escaping for the @ sign.
+The backslash does not work, it generates an error:
 
-> page doesn't exist. It appears that $base_url is not determined correctly.
-> 
-> Does anyone have a clue how that problem can be fixed?
+403 Forbidden - Invalid search parameter
 
-OTOH by looking at the source I see
+It should be s=torvalds%40linux instead of s=torvalds\@linux
 
-<base href="http://git.cryp.to/cgi-bin/gitweb.cgi" />
-
-which doesn't seem correct at all. Do you have something in the gitweb config
-that may be hard-coding the base url?
-
--- 
-Giuseppe "Oblomov" Bilotta
+Olaf
