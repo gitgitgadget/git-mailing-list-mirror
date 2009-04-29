@@ -1,83 +1,62 @@
-From: Marcin Zalewski <marcin.zalewski@gmail.com>
-Subject: Diftool problems
-Date: Wed, 29 Apr 2009 12:15:49 -0400
-Message-ID: <7c0fdf4f0904290915i56f58981i70e7093e9bf87d8b@mail.gmail.com>
+From: "John Dlugosz" <JDlugosz@TradeStation.com>
+Subject: Question on merge and mergetool settings
+Date: Wed, 29 Apr 2009 12:25:48 -0400
+Message-ID: <450196A1AAAE4B42A00A8B27A59278E70AE3F2FE@EXCHANGE.trad.tradestation.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 29 18:16:36 2009
+Content-Type: text/plain;
+	charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Apr 29 18:27:58 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LzCSX-0007uA-Ox
-	for gcvg-git-2@gmane.org; Wed, 29 Apr 2009 18:16:34 +0200
+	id 1LzCdX-0006L1-HJ
+	for gcvg-git-2@gmane.org; Wed, 29 Apr 2009 18:27:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755970AbZD2QQM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 29 Apr 2009 12:16:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754410AbZD2QQL
-	(ORCPT <rfc822;git-outgoing>); Wed, 29 Apr 2009 12:16:11 -0400
-Received: from mu-out-0910.google.com ([209.85.134.184]:62554 "EHLO
-	mu-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754129AbZD2QQK (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 Apr 2009 12:16:10 -0400
-Received: by mu-out-0910.google.com with SMTP id i2so462804mue.1
-        for <git@vger.kernel.org>; Wed, 29 Apr 2009 09:16:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:from:date:message-id
-         :subject:to:content-type:content-transfer-encoding;
-        bh=44/pIDM8qX5pLJL3HpAFg/nDph+xm2/SrcMQa/XxTtc=;
-        b=Ws8BkYDrDcafQO6RvYb59H8NKLCUMKhuSIL36wL68OV8RfK7MCr1XCJxKm6oDL/O/z
-         0gfPDgltgfBpzm2PLJkNh5qvfu70F/1z+qpkiThGo1LlOgxRZgrSUDboDOQwgh5vsPZY
-         0LtERQNcyN2z5B8Hy3mVtAKJRZ+eOczzpK/Cg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:from:date:message-id:subject:to:content-type
-         :content-transfer-encoding;
-        b=PdOBeLBxcUi1NBxQPxPh089WF/17zdtLK+dd9Qomjyy5K/kAaa6nDZS2FSHSIb6b0U
-         djSzLd52lIbVLJqWE2gfjDA+4bzEVjbAS+9FQOuZFA4C+gJY0KmBbG54msTGIp1/UKEs
-         f2MNSLSjGegQzsMmWHYISIRjX7um8A76GlHXc=
-Received: by 10.102.228.10 with SMTP id a10mr338834muh.26.1241021769182; Wed, 
-	29 Apr 2009 09:16:09 -0700 (PDT)
+	id S1755365AbZD2Q1e (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 29 Apr 2009 12:27:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753741AbZD2Q1e
+	(ORCPT <rfc822;git-outgoing>); Wed, 29 Apr 2009 12:27:34 -0400
+Received: from mail2.tradestation.com ([63.99.207.80]:48087 "EHLO
+	mail2.tradestation.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754727AbZD2Q1d convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 29 Apr 2009 12:27:33 -0400
+X-ASG-Debug-ID: 1241022446-395b012b0008-QuoKaX
+X-Barracuda-URL: http://192.168.51.31:8000/cgi-bin/mark.cgi
+Received: from mail5.tradestation.com (localhost [127.0.0.1])
+	by mail2.tradestation.com (Spam & Virus Firewall) with ESMTP id 4C4FB3C6000
+	for <git@vger.kernel.org>; Wed, 29 Apr 2009 12:27:27 -0400 (EDT)
+Received: from mail5.tradestation.com (tx02exchange02.trad.tradestation.com [192.168.51.76]) by mail2.tradestation.com with ESMTP id SXU9a6LCuVRp5DKR for <git@vger.kernel.org>; Wed, 29 Apr 2009 12:27:27 -0400 (EDT)
+X-Barracuda-Envelope-From: JDlugosz@TradeStation.com
+X-ASG-Whitelist: Client
+Received: from EXCHANGE.trad.tradestation.com ([10.4.0.121]) by mail5.tradestation.com with Microsoft SMTPSVC(6.0.3790.3959);
+	 Wed, 29 Apr 2009 12:26:21 -0400
+X-MimeOLE: Produced By Microsoft Exchange V6.5
+Content-class: urn:content-classes:message
+X-ASG-Orig-Subj: Question on merge and mergetool settings
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+Thread-Topic: Question on merge and mergetool settings
+Thread-Index: AcnI5yfEEWjOvipUQzOWEXjLf+7mEQ==
+X-OriginalArrivalTime: 29 Apr 2009 16:26:21.0294 (UTC) FILETIME=[3B3290E0:01C9C8E7]
+X-Barracuda-Connect: tx02exchange02.trad.tradestation.com[192.168.51.76]
+X-Barracuda-Start-Time: 1241022447
+X-Barracuda-Virus-Scanned: by TX-Barracuda Spam Firewall 400 at tradestation.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117903>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117904>
 
-Hi,
+In my config files which I inherited from someone else, there is an
+entry for "url" as well as for "path" under [merge] et al.
 
-When git-difftool calls a diff tool, it uses file names given to it by
-git-diff. This is a problem because often one of the files to be
-compared is the same as the file to be merged into. What I mean is
-that, in the following fragment of the git-difftool--helper file, $1
-and $2 (I think) may end up being the same:
+I can't find that mentioned in the git-config manual.  Is that really
+used?
 
-launch_merge_tool () {
-	# Merged is the filename as it appears in the work tree
-	# Local is the contents of a/filename
-	# Remote is the contents of b/filename
-	# Custom merge tool commands might use $BASE so we provide it
-	MERGED="$1"
-	LOCAL="$2"
-	REMOTE="$3"
-	BASE="$1"
+--John
 
-Git-mergetool creates a temporary file for merging, but git-difftool
-does not. Since git-diff tools is not meant for merging anything, it
-may seem that there is no problem. However, some merge tools (such as
-ediff) do not like when the merge target is the same as one of the
-files to be compared. I use the following emacs snippet by Theodore
-Tso:
-
-http://kerneltrap.org/mailarchive/git/2007/7/2/250505
-
-With that emacs code, ediff refuses to do a diff with the way that
-difftool is done now. I do not have a patch, but it seems that a
-simple fix would be to copy the code that creates temporary files from
-mergetool.
-
-Cheers,
-Marcin Zalewski
+TradeStation Group, Inc. is a publicly-traded holding company (NASDAQ GS: TRAD) of three operating subsidiaries, TradeStation Securities, Inc. (Member NYSE, FINRA, SIPC and NFA), TradeStation Technologies, Inc., a trading software and subscription company, and TradeStation Europe Limited, a United Kingdom, FSA-authorized introducing brokerage firm. None of these companies provides trading or investment advice, recommendations or endorsements of any kind. The information transmitted is intended only for the person or entity to which it is addressed and may contain confidential and/or privileged material. Any review, retransmission, dissemination or other use of, or taking of any action in reliance upon, this information by persons or entities other than the intended recipient is prohibited.
+  If you received this in error, please contact the sender and delete the material from any computer.
