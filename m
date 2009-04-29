@@ -1,90 +1,54 @@
-From: Augie Fackler <durin42@gmail.com>
-Subject: [PATCH] Workaround for ai_canonname sometimes coming back as null
-Date: Wed, 29 Apr 2009 16:48:57 -0500
-Message-ID: <9C355DCC-0240-4B9E-83CA-083B51C2E34C@gmail.com>
-Mime-Version: 1.0 (Apple Message framework v930.3)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 29 23:51:21 2009
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: [PATCH JGIT] Equals method should not assume anything about
+	the type of its argument
+Date: Wed, 29 Apr 2009 14:51:49 -0700
+Message-ID: <20090429215149.GK23604@spearce.org>
+References: <366BBB1215D0AB4B8A153AF047A287800302A82C@dewdfe18.wdf.sap.corp>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Robin Rosenberg <robin.rosenberg@dewire.com>, git@vger.kernel.org
+To: "Sohn, Matthias" <matthias.sohn@sap.com>
+X-From: git-owner@vger.kernel.org Wed Apr 29 23:52:01 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LzHgT-0001m8-6Y
-	for gcvg-git-2@gmane.org; Wed, 29 Apr 2009 23:51:17 +0200
+	id 1LzHhA-00027m-9y
+	for gcvg-git-2@gmane.org; Wed, 29 Apr 2009 23:52:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753651AbZD2Vue (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 29 Apr 2009 17:50:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752219AbZD2Vue
-	(ORCPT <rfc822;git-outgoing>); Wed, 29 Apr 2009 17:50:34 -0400
-Received: from hapkido.dreamhost.com ([66.33.216.122]:40211 "EHLO
-	hapkido.dreamhost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750834AbZD2Vud (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 Apr 2009 17:50:33 -0400
-Received: from spunkymail-a17.g.dreamhost.com (caiajhbdcbef.dreamhost.com [208.97.132.145])
-	by hapkido.dreamhost.com (Postfix) with ESMTP id 38E5918580A
-	for <git@vger.kernel.org>; Wed, 29 Apr 2009 14:50:33 -0700 (PDT)
-Received: from [192.168.50.170] (unknown [12.116.117.150])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by spunkymail-a17.g.dreamhost.com (Postfix) with ESMTP id 7410E7361F
-	for <git@vger.kernel.org>; Wed, 29 Apr 2009 14:49:27 -0700 (PDT)
-X-Mailer: Apple Mail (2.930.3)
+	id S1752664AbZD2Vvu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 29 Apr 2009 17:51:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752072AbZD2Vvu
+	(ORCPT <rfc822;git-outgoing>); Wed, 29 Apr 2009 17:51:50 -0400
+Received: from george.spearce.org ([209.20.77.23]:49346 "EHLO
+	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752010AbZD2Vvt (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 Apr 2009 17:51:49 -0400
+Received: by george.spearce.org (Postfix, from userid 1001)
+	id BE57738064; Wed, 29 Apr 2009 21:51:49 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <366BBB1215D0AB4B8A153AF047A287800302A82C@dewdfe18.wdf.sap.corp>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117957>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117958>
 
-Fix a weird bug where git-daemon was segfaulting when started by sh(1)
-because ai_canonname was null.
+"Sohn, Matthias" <matthias.sohn@sap.com> wrote:
+> From: Matthias Sohn <matthias.sohn@sap.com>
+...
+> Signed-off-by: Matthias Sohn <matthias.sohn@sap.com>
+> Shawn Pearce <spearce@spearce.org> wrote:
+> > FWIW, your From header in the emails comes out "Sohn, Matthias"
+...
+> Didn't find a way to get around our Exchange server mangling the from header, 
+> hence trying to give From: in mail body. If this doesn't help I will issue a 
+> ticket for our Exchange administration to get this solved.
 
----
-I'm not really sure why being started by sh has any measurable impact.
-git-daemon works fine if I start it manually from an interactive prompt.
+Oh, yea, doing that works.  :-)
 
-Easy reproduction script (the git clone command will fail reliably for  
-me without this patch):
+Thanks.
 
-#!/bin/sh
-mkdir temp
-cd temp
-mkdir narf
-cd narf
-git init
-echo a > a
-git add a
-git commit -am 'hi'
-cd ..
-git daemon --base-path="$(pwd)"\
-  --listen=127.0.0.1\
-  --export-all\
-  --pid-file=gitdaemon.pid \
-  --detach --reuseaddr
-git clone git://127.0.0.1/narf bla
-kill `cat gitdaemon.pid`
-
-
-  daemon.c |    5 ++++-
-  1 files changed, 4 insertions(+), 1 deletions(-)
-
-diff --git a/daemon.c b/daemon.c
-index 13401f1..b1fede0 100644
---- a/daemon.c
-+++ b/daemon.c
-@@ -459,7 +459,10 @@ static void parse_extra_args(char *extra_args,  
-int buflen)
-  				inet_ntop(AF_INET, &sin_addr->sin_addr,
-  					  addrbuf, sizeof(addrbuf));
-  				free(canon_hostname);
--				canon_hostname = xstrdup(ai->ai_canonname);
-+				if (ai->ai_canonname)
-+					canon_hostname = xstrdup(ai->ai_canonname);
-+				else
-+					canon_hostname = "unknown";
-  				free(ip_address);
-  				ip_address = xstrdup(addrbuf);
-  				break;
 -- 
-1.6.3.rc3.12.gb7937
+Shawn.
