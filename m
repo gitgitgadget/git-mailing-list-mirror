@@ -1,71 +1,94 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Cross-Platform Version Control (was: Eric Sink's blog - notes
-	on git, dscms and a "whole product" approach)
-Date: Wed, 29 Apr 2009 03:21:05 -0400
-Message-ID: <20090429072105.GD22593@coredump.intra.peff.net>
-References: <46a038f90904270155i6c802fceoffc73eb5ab57130e@mail.gmail.com> <m3r5zdnhqu.fsf@localhost.localdomain> <46a038f90904282355g43bf0cv909905f6028f054f@mail.gmail.com>
+From: Dmitry Potapov <dpotapov@gmail.com>
+Subject: Re: [PATCH] Another update of Russian translation
+Date: Wed, 29 Apr 2009 11:20:20 +0400
+Message-ID: <20090429072020.GC11076@dpotapov.dyndns.org>
+References: <20090426132139.GA30825@blimp.localdomain> <20090427091047.GC15723@dpotapov.dyndns.org> <20090427175828.GB16202@blimp.localdomain> <bb6f213e0904280222m23cb28ddn56f7d633c98df639@mail.gmail.com> <20090428160448.GA11875@blimp.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Jakub Narebski <jnareb@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Martin Langhoff <martin.langhoff@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Apr 29 09:21:43 2009
+Content-Type: text/plain; charset=koi8-r
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Alexander Gavrilov <angavrilov@gmail.com>, git@vger.kernel.org,
+	"Shawn O. Pearce" <spearce@spearce.org>
+To: Alex Riesen <raa.lkml@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Apr 29 09:26:46 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lz46x-0007ip-8p
-	for gcvg-git-2@gmane.org; Wed, 29 Apr 2009 09:21:43 +0200
+	id 1Lz4Bp-0001X5-29
+	for gcvg-git-2@gmane.org; Wed, 29 Apr 2009 09:26:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752090AbZD2HVK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 29 Apr 2009 03:21:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752219AbZD2HVJ
-	(ORCPT <rfc822;git-outgoing>); Wed, 29 Apr 2009 03:21:09 -0400
-Received: from peff.net ([208.65.91.99]:60960 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750724AbZD2HVI (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 Apr 2009 03:21:08 -0400
-Received: (qmail 3251 invoked by uid 107); 29 Apr 2009 07:21:20 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Wed, 29 Apr 2009 03:21:20 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 29 Apr 2009 03:21:05 -0400
+	id S1751667AbZD2H0h convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 29 Apr 2009 03:26:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751104AbZD2H0h
+	(ORCPT <rfc822;git-outgoing>); Wed, 29 Apr 2009 03:26:37 -0400
+Received: from qw-out-2122.google.com ([74.125.92.24]:40600 "EHLO
+	qw-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750724AbZD2H0g (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 Apr 2009 03:26:36 -0400
+Received: by qw-out-2122.google.com with SMTP id 5so902237qwd.37
+        for <git@vger.kernel.org>; Wed, 29 Apr 2009 00:26:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=bxBBy99JBuuUWnYWbMx0wcg6w+gv53MyIlZWDqPaw6o=;
+        b=j+eLEah79VUSyAedZUuOtaUq2txhtFjBCkZy6rlCN2HtvC1LsQjT0XatMC1g/fRWyW
+         mWUokD1o7S7Ymfy9DtMqoB9z8fsvN0DirvmTFC4HFhjPa7rvFXZf44nKd2PAuJo4NVsb
+         MGYGVjedyD8u4lmr0EOJ9camu1enJ7flwIXHA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        b=i/81rE1LVspipl5Ugq7uKjIaxde7yBY222TWCANSvcXy3gISdaPP+LrwN432lRKlht
+         l/euPbrJs32a12lT4aRwfKIkGxZrU0uc8APgW7gA1dByC/UOuLcBBP1eNNLyN4dZoChZ
+         9uH7OMFhUSjqEepXhSlo+GWKnNbR43Z5dg0cU=
+Received: by 10.224.6.149 with SMTP id 21mr10704qaz.77.1240989649097;
+        Wed, 29 Apr 2009 00:20:49 -0700 (PDT)
+Received: from localhost (ppp91-78-49-102.pppoe.mtu-net.ru [91.78.49.102])
+        by mx.google.com with ESMTPS id 4sm1208866qwe.37.2009.04.29.00.20.47
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 29 Apr 2009 00:20:48 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <46a038f90904282355g43bf0cv909905f6028f054f@mail.gmail.com>
+In-Reply-To: <20090428160448.GA11875@blimp.localdomain>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117859>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117860>
 
-On Wed, Apr 29, 2009 at 08:55:29AM +0200, Martin Langhoff wrote:
+On Tue, Apr 28, 2009 at 06:04:48PM +0200, Alex Riesen wrote:
+> Alexander Gavrilov, Tue, Apr 28, 2009 11:22:36 +0200:
+> > 2009/4/27 Alex Riesen <raa.lkml@gmail.com>:
+> > > +#: lib/tools_dlg.tcl:236
+> > > +msgid "(Blue denotes repository-local tools)"
+> > > +msgstr "(=F3=C9=CE=C9=CA =D5=CB=C1=DA=D9=D7=C1=C5=D4 =CE=C1 =D0=D2=
+=CF=C7=D2=C1=CD=CD=D9 =D4=CF=CC=D8=CB=CF =D2=C5=D0=CF=DA=C9=D4=CF=D2=C9=
+=D1)"
+> >=20
+> > =F3=C9=CE=C9=CD =D7=D9=C4=C5=CC=C5=CE=D9 =D0=D2=CF=C7=D2=C1=CD=CD=D9=
+ =CC=CF=CB=C1=CC=D8=CE=D9=C5 =D2=C5=D0=CF=DA=C9=D4=CF=D2=C9=C0
+>=20
+> "=CC=CF=CB=C1=CC=D8=CE=D9=C5 =D2=C5=D0=CF=DA=C9=D4=CF=D2=C9=C0"? Hmmm=
+=2E.. Do people write that?
 
-> So from Eric's perspective, it is worthwhile to work on all those
-> issues, and get the right for the end user -- support things we don't
-> like, offer foolproof catches and warnings that prevent the user from
-> shooting their lovely toes off to mars, etc.
+It sounds a bit odd to me... Perhaps, "=CC=CF=CB=C1=CC=D8=CE=D9=C5 =CB =
+=D2=C5=D0=CF=DA=C9=D4=CF=D2=C9=C0" is a bit
+better, but still it does not sound very well. And there is one more
+thing -- I believe it is better to translate "tools" as "=CB=CF=CD=C1=CE=
+=C4=D9" here.
+So, I would say:
 
-I read a few of his blog postings. He kept complaining about the
-features of git that I like the most. :)
+"=F3=C9=CE=C9=CD =D7=D9=C4=C5=CC=C5=CE=D9 =CB=CF=CD=C1=CE=C4=D9 =CF=D0=D2=
+=C5=C4=C5=CC=C5=CE=A3=CE=CE=D9=C5 =C4=CC=D1 =D4=C5=CB=D5=DD=C5=C7=CF =D2=
+=C5=D0=CF=DA=C9=D4=CF=D2=C9=D1"
 
-So one thing I took away from it is that there probably isn't _one_
-interface that works for everybody. I can see his arguments about how
-"add -p" can be dangerous, and how history rewriting can be dangerous.
-So for some users, blocking those features makes sense.
+or shortening this phrase a bit:
 
-But for other users (myself included), those are critical features that
-make me _way_ more productive. And I manage the risk that comes from
-using them as part of my workflow, and it isn't a problem in practice.
+"=F3=C9=CE=C9=CD =D7=D9=C4=C5=CC=C5=CE=D9 =CB=CF=CD=C1=CE=C4=D9 =D4=C5=CB=
+=D5=DD=C5=C7=CF =D2=C5=D0=CF=DA=C9=D4=CF=D2=C9=D1"
 
-While part of me is happy that cogito is now dead (not because I didn't
-think it was good, but because having two sets of tools just seemed to
-create maintenance and staleness headaches), I do sometimes wonder if we
-would be better off with several "from scratch" git interfaces based
-around the plumbing (or even a C library). And I don't just mean simple
-wrappers around git commands, but whole new interfaces which make
-decisions like "no history rewriting at all", and try to provide a safer
-interface based on that.
 
-Of course, _I_ wouldn't want to use such an interface. But in theory I
-could seamlessly interoperate with people who did.
-
--Peff
+Dmitry
