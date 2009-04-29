@@ -1,77 +1,87 @@
-From: John Bito <jwbito@gmail.com>
-Subject: EGIT: problems using eclipse project below root of working tree
-Date: Wed, 29 Apr 2009 11:28:22 -0700
-Message-ID: <3ae83b000904291128j27ad6c1ah3422f091c956533@mail.gmail.com>
+From: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
+	<u.kleine-koenig@pengutronix.de>
+Subject: Re: (topgit question) deleting a dependency
+Date: Wed, 29 Apr 2009 20:48:51 +0200
+Message-ID: <20090429184851.GA17286@pengutronix.de>
+References: <slrngvdgo4.kr7.sitaramc@sitaramc.homelinux.net> <20090428094138.GB9415@piper.oerlikon.madduck.net> <20090428204018.GA17722@pengutronix.de> <slrngvf976.65c.sitaramc@sitaramc.homelinux.net> <20090429082410.GB18521@pengutronix.de> <slrngvgh7m.isk.sitaramc@sitaramc.homelinux.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Apr 29 20:28:33 2009
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Sitaram Chamarty <sitaramc@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Apr 29 20:49:05 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LzEWH-0004LE-6p
-	for gcvg-git-2@gmane.org; Wed, 29 Apr 2009 20:28:33 +0200
+	id 1LzEq8-000899-Ie
+	for gcvg-git-2@gmane.org; Wed, 29 Apr 2009 20:49:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752135AbZD2S2Y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 29 Apr 2009 14:28:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751050AbZD2S2Y
-	(ORCPT <rfc822;git-outgoing>); Wed, 29 Apr 2009 14:28:24 -0400
-Received: from yx-out-2324.google.com ([74.125.44.30]:14449 "EHLO
-	yx-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751450AbZD2S2X (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 Apr 2009 14:28:23 -0400
-Received: by yx-out-2324.google.com with SMTP id 3so774597yxj.1
-        for <git@vger.kernel.org>; Wed, 29 Apr 2009 11:28:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:date:message-id:subject
-         :from:to:content-type:content-transfer-encoding;
-        bh=DvGGns0C7GovJ6iNi4FAU+5aSpFxRXJbzHh/JGJGFV8=;
-        b=VTfC0q6CO0YOGp7RMDFcI+tTJ65D8Ja3//azDrfReNf50SywdYBYPNb1OaIJ4gqB6+
-         On47yxmlEgQyEO1UjfL3MO7xmRUyGs9xWsGm+tZ66Pxm6R8OsInQPaKjyVKtkysOKENs
-         aZCZCe8KTIEkZhO62AHXibgAtLW663rLjFuW8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type
-         :content-transfer-encoding;
-        b=PGGX/yIOwdN8RvzV2DVPsf1XDUCTDjBe/cpjIfXcGdTgYITqjvpwb3RfU61t0DHcpi
-         IQECIMktwxXIcKpvP/u8d+JNEr11ZV9WAiapYupk+gEo2JOyIAGL7vBjewubheDpbWMy
-         vEvsQieqP4OHugZJHmPpZUCgGA/wzGogwGp5w=
-Received: by 10.100.10.15 with SMTP id 15mr1292869anj.8.1241029702332; Wed, 29 
-	Apr 2009 11:28:22 -0700 (PDT)
+	id S1753969AbZD2Ssx convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 29 Apr 2009 14:48:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752248AbZD2Ssx
+	(ORCPT <rfc822;git-outgoing>); Wed, 29 Apr 2009 14:48:53 -0400
+Received: from metis.ext.pengutronix.de ([92.198.50.35]:47961 "EHLO
+	metis.ext.pengutronix.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752693AbZD2Ssw (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 Apr 2009 14:48:52 -0400
+Received: from octopus.hi.pengutronix.de ([2001:6f8:1178:2:215:17ff:fe12:23b0])
+	by metis.ext.pengutronix.de with esmtp (Exim 4.63)
+	(envelope-from <ukl@pengutronix.de>)
+	id 1LzEpw-00076r-9N; Wed, 29 Apr 2009 20:48:52 +0200
+Received: from ukl by octopus.hi.pengutronix.de with local (Exim 4.69)
+	(envelope-from <ukl@pengutronix.de>)
+	id 1LzEpv-0004VE-5k; Wed, 29 Apr 2009 20:48:51 +0200
+Content-Disposition: inline
+In-Reply-To: <slrngvgh7m.isk.sitaramc@sitaramc.homelinux.net>
+User-Agent: Mutt/1.5.18 (2008-05-17)
+X-SA-Exim-Connect-IP: 2001:6f8:1178:2:215:17ff:fe12:23b0
+X-SA-Exim-Mail-From: ukl@pengutronix.de
+X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
+X-PTX-Original-Recipient: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117909>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117910>
 
-My Java project is part of a larger repository, so the Eclipse project
-I'm opening is rooted one level below the directory containing .git/.
+Hello,
 
-When I open only the subproject (the root project shows as closed in
-the project explorer), all the members of the working directory of the
-subproject show in the Project Explorer as if they were untracked
-files (query icon).  If I open the subproject after opening the root
-project, the members correctly appear as committed (can icon).
-Opening the root project after opening the subproject seems to produce
-an error in references to jars in the subproject - not obviously
-related to EGIT.
+> >> This is a little beyond my comprehension :(  However, this
+> >> is also why I am limiting myself to
+> >>=20
+> >>   - a single level of dependencies in tg, (master -->
+> >>     multiple t/something --> t/all), and
+> >>=20
+> >>   - no changes of its own in t/all
+> >>=20
+> >> When any of the t/something graduates to master, t/all will
+> >> be blown away (safe, since it has no changes of its own) and
+>=20
+> > What makes you think it will "be blown away"?  Or alternatively, wh=
+at do
+>=20
+> My mistake.  I meant that I will blow it away myself, and
+> create a new one with the same name except it's list of deps
+> will exclude the one that graduated.
+>=20
+> > you mean saying that?  I often use the same approach and I never ha=
+d the
+> > feeling anything is blown away.  If upstream uses your t/something =
+patch
+> > it just merges into t/something making it empty without changing th=
+e
+>=20
+> How?  When I update master from upstream and then tg update
+> on t/all?
+yes.  I think it's even save to just remove empty dependencies (and add
+the dependencies of the patch branch to be deleted) from .topdeps.
 
-If the root project is open, changes made in the subproject are listed
-twice in the Commit dialog (once prefixed by root-project-name: and
-once prefixed by subproject-name:).  If the root project is closed,
-the Commit dialog lists the changes once (prefixed by
-subproject-name).
+Best regards
+Uwe
 
-I think the commit dialog gives me the correct status, but I'd have
-more confidence if the icons in the Project Explorer were consistent.
-I don't want to work with the root project open because it's MUCH
-bigger than the Java code I'm working on and Eclipse seems faster with
-only the subproject open.  I'm also concerned that if I let it commit
-with both the root and subproject instances of the changes checked,
-I'll cause a problem that'll take some time to unwind (not interested
-in experimenting with that at the moment).
-
-Should I add this as a bug?
+--=20
+Pengutronix e.K.                              | Uwe Kleine-K=F6nig     =
+       |
+Industrial Linux Solutions                    | http://www.pengutronix.=
+de/  |
