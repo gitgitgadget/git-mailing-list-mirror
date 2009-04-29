@@ -1,98 +1,133 @@
-From: Martin Langhoff <martin.langhoff@gmail.com>
-Subject: Re: git svn errors out with git-cat-file "usage" message
-Date: Wed, 29 Apr 2009 22:47:00 +0200
-Message-ID: <46a038f90904291347i2ed158aaya7505e1bd11cd392@mail.gmail.com>
-References: <46a038f90904290811p33332bd5h1d397734907ba9c2@mail.gmail.com>
-	 <32541b130904291150k75a0433fnb29ea59f654a17f7@mail.gmail.com>
-	 <49F8B7D1.2090903@drmicha.warpmail.net>
+From: Markus Heidelberg <markus.heidelberg@web.de>
+Subject: Re: Diftool problems
+Date: Wed, 29 Apr 2009 22:48:05 +0200
+Message-ID: <200904292248.06107.markus.heidelberg@web.de>
+References: <7c0fdf4f0904290915i56f58981i70e7093e9bf87d8b@mail.gmail.com> <200904292142.59471.markus.heidelberg@web.de> <7c0fdf4f0904291255i4076df8cubb26fdb2d51826d4@mail.gmail.com>
+Reply-To: markus.heidelberg@web.de
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain;
+  charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Cc: Avery Pennarun <apenwarr@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Mihai Sucan <mihai.sucan@gmail.com>
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Wed Apr 29 22:48:05 2009
+Cc: git@vger.kernel.org
+To: Marcin Zalewski <marcin.zalewski@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Apr 29 22:49:04 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LzGhJ-0004Pf-14
-	for gcvg-git-2@gmane.org; Wed, 29 Apr 2009 22:48:05 +0200
+	id 1LzGiE-0004t0-Sh
+	for gcvg-git-2@gmane.org; Wed, 29 Apr 2009 22:49:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751223AbZD2UrF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 29 Apr 2009 16:47:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754951AbZD2UrE
-	(ORCPT <rfc822;git-outgoing>); Wed, 29 Apr 2009 16:47:04 -0400
-Received: from mail-fx0-f158.google.com ([209.85.220.158]:52381 "EHLO
-	mail-fx0-f158.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754548AbZD2UrB (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 Apr 2009 16:47:01 -0400
-Received: by fxm2 with SMTP id 2so1432898fxm.37
-        for <git@vger.kernel.org>; Wed, 29 Apr 2009 13:47:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=/Q0vwGWHYKFWd+VBHf8+BNxGLsYre54IcGOIxMswUqg=;
-        b=oj/8LhqH7rV9VjVkfCDW9yEV9Q5agv+u+4+iOmtDMEhtET2pnjQSBBP8NriHz/G2W+
-         fdgPqgaahzD7d+rFlQ+pOiyFFc0PabKpIU0wEvyGlo2Li1TuUHPUPiy6k/p88cNK+KZX
-         5NhETiHaeb5238xldraWJV9SDntFPGVpyh22o=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=cOE4NYPqPemyBm0oyj5+kGiKcgH7Yon3lmN4TxVMFLJ/s8QOc3wJPrW9PjiO4JGMhg
-         TPsRU5u3rCMJ/Nmz2wpVNUZM7FsT6jW0yxU+VPSxURboh78zQalK+466/Xzz+7WnP1jw
-         D37w65O6oCAfPllYfO++EOkyjz1tO2qPyYeWw=
-Received: by 10.223.114.68 with SMTP id d4mr444715faq.86.1241038020210; Wed, 
-	29 Apr 2009 13:47:00 -0700 (PDT)
-In-Reply-To: <49F8B7D1.2090903@drmicha.warpmail.net>
+	id S1757735AbZD2Ush (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 29 Apr 2009 16:48:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754932AbZD2Ush
+	(ORCPT <rfc822;git-outgoing>); Wed, 29 Apr 2009 16:48:37 -0400
+Received: from fmmailgate01.web.de ([217.72.192.221]:39589 "EHLO
+	fmmailgate01.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756769AbZD2Usg (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 Apr 2009 16:48:36 -0400
+Received: from smtp05.web.de (fmsmtp05.dlan.cinetic.de [172.20.4.166])
+	by fmmailgate01.web.de (Postfix) with ESMTP id 4DA15100EDA14;
+	Wed, 29 Apr 2009 22:48:08 +0200 (CEST)
+Received: from [89.59.108.55] (helo=.)
+	by smtp05.web.de with asmtp (TLSv1:AES256-SHA:256)
+	(WEB.DE 4.110 #277)
+	id 1LzGhK-0003MG-00; Wed, 29 Apr 2009 22:48:06 +0200
+User-Agent: KMail/1.9.9
+In-Reply-To: <7c0fdf4f0904291255i4076df8cubb26fdb2d51826d4@mail.gmail.com>
+Jabber-ID: markus.heidelberg@web.de
+Content-Disposition: inline
+X-Sender: markus.heidelberg@web.de
+X-Provags-ID: V01U2FsdGVkX1/c+zhYnzZPqFwkIV8FHedZKumH7CdLfsAC6m0u
+	hpJ6Rh2XSBLWFf41HJioNMZwSKX4A64Efdvahr3UswYmImqYOO
+	ixk1cgXGg+7/GBx9t5jg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117944>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117945>
 
-On Wed, Apr 29, 2009 at 10:25 PM, Michael J Gruber
-<git@drmicha.warpmail.net> wrote:
-> Given the versions that fail for Martin and work for Avery and me I
-> would think it's not a git issue but rather a matter of the svn version
-> resp. the svn perl bindingds.
+Marcin Zalewski, 29.04.2009:
+> > The real fix would be to adjust the ediff snippet for difftool support.
+> 
+> The emas snippet was meant to work with mergetool and it does (I
+> think). Changing the emacs code could indeed help with difftool but it
+> would break mergetool.
 
-Good point. The machine where this is failing is an Ubuntu Intrepid box...
+I'm sure the emacs snippet can be adjusted to work with both. If it is
+called with 2 files, then it's for difftool, else for mergetool.
 
-$ dpkg -l libsvn* | grep '^i'
-ii  libsvn-perl                                1.5.1dfsg1-1ubuntu2
-                Perl bindings for Subversion
-ii  libsvn1                                    1.5.1dfsg1-1ubuntu2
-                Shared libraries used by Subversion
-ii  libsvncpp1                                 0.9.6-1
-                Subversion C++ shared library
-dpkg -l subversion* | grep '^i'
-ii  subversion                                 1.5.1dfsg1-1ubuntu2
-                Advanced version control system
+> > As you said yourself, git-difftool is not meant for merging files, so
+> > there is no reason to open more than 2 files at all.
+> 
+> I agree, but the current implementation of difftool uses mergetool
+> library.
 
-On the F9 box where things succeed...
+The file is called git-mergetool--lib, but more exactly it should be
+called git-mergetool-difftool--lib, but who wants this? Difftool was
+originally based on mergetool, but the recent refactoring introduced the
+lib, which is shared by both, without belonging to one of them more than
+to the other.
 
-$rpm -qa subversion*
-subversion-perl-1.4.6-7.i386
-subversion-1.4.6-7.i386
-$ rpm -qa *svn*
-git-svn-1.6.0.6-3.fc9.i386
+> That may be the reason why difftool is trying to come up with
+> the third file.
 
-What are the versions in that F-10 box? Could it be an incompatibility
-with svn-1.5.x?
+Difftool isn't forcing a third file on you.
 
-cheers,
+> Here is the snippet of code from mergetool library
+> that executes emerge in case of non-merge-mode:
+> 
+> "$merge_tool_path" -f emerge-files-command \
+> 				"$LOCAL" "$REMOTE" "$(basename "$MERGED")"
 
+As said, this command shouldn't open the 3rd MERGED file, this should be
+fixed. This part of the lib is not responsible for difftool.
 
+> > The built-in difftools 'emerge' and 'ecmerge' still seem to open LOCAL,
+> > REMOTE and MERGED. This should be fixed, so that they don't open MERGED
+> > any more, but I don't have emacs installed, so I shouldn't try it
+> > myself.
+> 
+> Again, I agree. This could be one of the possible solutions,
 
-m
--- 
- martin.langhoff@gmail.com
- martin@laptop.org -- School Server Architect
- - ask interesting questions
- - don't get distracted with shiny stuff  - working code first
- - http://wiki.laptop.org/go/User:Martinlanghoff
+No, that doesn't solve your problem with ediff.
+Or do you set merge.tool=emerge and ediff is called due to the snippet
+in your ~/.emacs? If yes, then I got it now... Sure, I just read the
+post from Ted Tso again, use-ediff-instead.el, aha.
+
+I guess it would be cleaner to do this in ~/.gitconfig:
+
+[diff]
+	tool = ediff
+[difftool "ediff"]
+	cmd = emacs --options "$LOCAL" "$REMOTE"
+
+Which is annoying, of course.
+
+But now that I got it (see above) I think you should leave
+merge.tool=emerge, since the snippet somehow seems to rely on it.
+
+> but it
+> would require that mergetool library is changed
+
+What's wrong with that?
+If this solves the 'ediff' problem and also makes 'emerge' to work right
+as difftool, then everyone would benefit from.
+
+> or rewriting pieces of
+> mergetool in difftool. Correct me if I am wrong.
+> 
+> > Oh, and LOCAL shouldn't be copied to a temporary file in the first
+> > place, because people don't use git-difftool in read-only mode only.
+> 
+> I think that merge result could be a temporary file, like in
+> mergetool. In a situation where I use git to track an SVN repository,
+> difftool can be actually used to merge my uncommitted changes with a
+> commit from someone else after doing svn rebase.
+
+Above you want your ediff mergetool snippet to work with difftool. And
+here you want to use difftool as a mergetool. I'm confused :)
+
+BTW, difftool doesn't work with files in unmerged state.
+
+Markus
