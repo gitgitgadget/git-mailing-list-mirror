@@ -1,96 +1,96 @@
-From: Markus Heidelberg <markus.heidelberg@web.de>
-Subject: Re: Diftool problems
-Date: Wed, 29 Apr 2009 21:42:59 +0200
-Message-ID: <200904292142.59471.markus.heidelberg@web.de>
-References: <7c0fdf4f0904290915i56f58981i70e7093e9bf87d8b@mail.gmail.com>
-Reply-To: markus.heidelberg@web.de
+From: wfp5p@viridian.itc.Virginia.EDU (Bill Pemberton)
+Subject: Re: [PATCH 0/6] cleanups for git-send-email
+Date: Wed, 29 Apr 2009 15:48:51 -0400 (EDT)
+Message-ID: <20090429194852.0976257034@viridian.itc.Virginia.EDU>
+References: <7vws939skl.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="utf-8"
+Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Marcin Zalewski <marcin.zalewski@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Apr 29 21:43:49 2009
+To: gitster@pobox.com (Junio C Hamano)
+X-From: git-owner@vger.kernel.org Wed Apr 29 21:51:58 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LzFh5-0003qN-HD
-	for gcvg-git-2@gmane.org; Wed, 29 Apr 2009 21:43:48 +0200
+	id 1LzFmz-0007Zq-MQ
+	for gcvg-git-2@gmane.org; Wed, 29 Apr 2009 21:49:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756745AbZD2TnG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 29 Apr 2009 15:43:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756169AbZD2TnD
-	(ORCPT <rfc822;git-outgoing>); Wed, 29 Apr 2009 15:43:03 -0400
-Received: from fmmailgate02.web.de ([217.72.192.227]:55071 "EHLO
-	fmmailgate02.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752347AbZD2TnB (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 Apr 2009 15:43:01 -0400
-Received: from smtp05.web.de (fmsmtp05.dlan.cinetic.de [172.20.4.166])
-	by fmmailgate02.web.de (Postfix) with ESMTP id 4A398FDFCBD6;
-	Wed, 29 Apr 2009 21:43:00 +0200 (CEST)
-Received: from [89.59.108.55] (helo=.)
-	by smtp05.web.de with asmtp (TLSv1:AES256-SHA:256)
-	(WEB.DE 4.110 #277)
-	id 1LzFgK-0007e6-00; Wed, 29 Apr 2009 21:43:00 +0200
-User-Agent: KMail/1.9.9
-In-Reply-To: <7c0fdf4f0904290915i56f58981i70e7093e9bf87d8b@mail.gmail.com>
-Jabber-ID: markus.heidelberg@web.de
-Content-Disposition: inline
-X-Sender: markus.heidelberg@web.de
-X-Provags-ID: V01U2FsdGVkX1/M9TRx/T1xfNpGJ7jeiM+d2wmfRDxvv8Bs7ftg
-	I5M8ixjVAPoPc1RUXdchy3cPrblVQSIrwvnV6WLdhxTGsUBjlR
-	vnLmCkTGdwcKd9CxWUsg==
+	id S1760862AbZD2Tsz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 29 Apr 2009 15:48:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756146AbZD2Tsz
+	(ORCPT <rfc822;git-outgoing>); Wed, 29 Apr 2009 15:48:55 -0400
+Received: from viridian.itc.Virginia.EDU ([128.143.12.139]:34102 "EHLO
+	viridian.itc.Virginia.EDU" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755954AbZD2Tsy (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 Apr 2009 15:48:54 -0400
+Received: by viridian.itc.Virginia.EDU (Postfix, from userid 1249)
+	id 0976257034; Wed, 29 Apr 2009 15:48:51 -0400 (EDT)
+In-Reply-To: <7vws939skl.fsf@gitster.siamese.dyndns.org>
+X-Mailer: ELM [version 2.5 PL8]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117930>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117931>
 
-Marcin Zalewski, 29.04.2009:
-> Hi,
+> Perl styles are highly personal.
 > 
-> When git-difftool calls a diff tool, it uses file names given to it by
-> git-diff. This is a problem because often one of the files to be
-> compared is the same as the file to be merged into. What I mean is
-> that, in the following fragment of the git-difftool--helper file, $1
-> and $2 (I think) may end up being the same:
+
+So are C styles, but the kernel and git doesn't allow all sorts of
+mixed styles.  My changes are also not just coding style, they have
+actual meaning in perl.
+
+My changes come directly from the book "Perl Best Practices".  Just as
+you do things like "don't allow assignment in conditionals" in C, even
+though it's legal.  There are good reasons to do these things in perl
+to prevent bugs down the road.
+
 > 
-> launch_merge_tool () {
-> 	# Merged is the filename as it appears in the work tree
-> 	# Local is the contents of a/filename
-> 	# Remote is the contents of b/filename
-> 	# Custom merge tool commands might use $BASE so we provide it
-> 	MERGED="$1"
-> 	LOCAL="$2"
-> 	REMOTE="$3"
-> 	BASE="$1"
+> *1* ...except for the "and/or vs &&/||" bits, even though I prefer the
+> latter myself solely because I am old fashioned.
 > 
-> Git-mergetool creates a temporary file for merging, but git-difftool
-> does not. Since git-diff tools is not meant for merging anything, it
-> may seem that there is no problem. However, some merge tools (such as
-> ediff) do not like when the merge target is the same as one of the
-> files to be compared. I use the following emacs snippet by Theodore
-> Tso:
+
+Again, it prevents bugs.  People use "and" vs "&&" as the same thing,
+when they are not.  The have different precedence in perl.
+
+For example, 
+
+next if not $finished || $x < 5;
+next if !$finished || $x < 5;
+
+do not mean the same thing.
+
+
+> I think it is simply silly to say "precedence of ! and and/or does not
+> mix".  "!" and "&&" have different precedence and rewriting (A and !B)
+> into (A && !B) would not make things any better nor worse.  After all,
+> nobody would have problems with "$a + $b * $c" even though + and * have
+> different precedence.
 > 
-> http://kerneltrap.org/mailarchive/git/2007/7/2/250505
+
+It's not that ! and && have different precedence.  It's that "not" and
+! have different precedence.  Using your math example, it would be
+like having an operator named plus that had a higher precedence than
+"*".  Now if you wrote "$a plus $b * $c" it would have different
+result than "$a + $b * $c".
+
+
+> Oh, I also do not agree with "always explicitly return".  If the change
+> and explanation were limited to the subs whose return values are _used_, I
+> would agree with the change, though.
 > 
-> With that emacs code, ediff refuses to do a diff with the way that
-> difftool is done now. I do not have a patch, but it seems that a
-> simple fix would be to copy the code that creates temporary files from
-> mergetool.
 
-The real fix would be to adjust the ediff snippet for difftool support.
+Again, it prevents potential bugs down the road.  Currently those
+functions return something.  While they are not used, the something
+they return can be interpreted by developers as an intentional return
+value and that property may get used.  If some other developer changes
+the original function in some way that the implicit return becomes
+something else, it'll create a bug.  If a subroutine isn't supposed to
+return a meaningful value, it should do it explicitly.
 
-As you said yourself, git-difftool is not meant for merging files, so
-there is no reason to open more than 2 files at all.
 
-The built-in difftools 'emerge' and 'ecmerge' still seem to open LOCAL,
-REMOTE and MERGED. This should be fixed, so that they don't open MERGED
-any more, but I don't have emacs installed, so I shouldn't try it
-myself.
-
-Oh, and LOCAL shouldn't be copied to a temporary file in the first
-place, because people don't use git-difftool in read-only mode only.
-
-Markus
+-- 
+Bill Pemberton                                 wfp5p@virginia.edu
+ITC/Unix Systems                               flash@virginia.edu
+University of Virginia                    
