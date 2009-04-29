@@ -1,71 +1,56 @@
-From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
-Subject: Re: adding arbitary folders to the git index, from outside of the repository
-Date: Wed, 29 Apr 2009 02:06:30 +0200
-Message-ID: <200904290206.31153.robin.rosenberg.lists@dewire.com>
-References: <8ABE87D6-F70D-4A86-8307-88B95FAF350F@patchprint.co.nz>
+From: Jason Brice <jason@sbh.co.nz>
+Subject: Project Setup Problem
+Date: Wed, 29 Apr 2009 00:22:56 +0000 (UTC)
+Message-ID: <loom.20090429T001456-24@post.gmane.org>
 Mime-Version: 1.0
-Content-Type: Text/Plain;
-  charset="iso-8859-1"
+Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Andrew Bush <andrew@patchprint.co.nz>
-X-From: git-owner@vger.kernel.org Wed Apr 29 02:06:50 2009
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Apr 29 02:30:39 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LyxK4-0003Pm-QE
-	for gcvg-git-2@gmane.org; Wed, 29 Apr 2009 02:06:49 +0200
+	id 1Lyxh9-00032a-As
+	for gcvg-git-2@gmane.org; Wed, 29 Apr 2009 02:30:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756427AbZD2AGh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 28 Apr 2009 20:06:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754021AbZD2AGg
-	(ORCPT <rfc822;git-outgoing>); Tue, 28 Apr 2009 20:06:36 -0400
-Received: from mail.dewire.com ([83.140.172.130]:17398 "EHLO dewire.com"
+	id S1755347AbZD2AaJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 28 Apr 2009 20:30:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754148AbZD2AaI
+	(ORCPT <rfc822;git-outgoing>); Tue, 28 Apr 2009 20:30:08 -0400
+Received: from main.gmane.org ([80.91.229.2]:51570 "EHLO ciao.gmane.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754660AbZD2AGg (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 28 Apr 2009 20:06:36 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by dewire.com (Postfix) with ESMTP id 538F210233FA;
-	Wed, 29 Apr 2009 02:06:34 +0200 (CEST)
-X-Virus-Scanned: by amavisd-new at dewire.com
-Received: from dewire.com ([127.0.0.1])
-	by localhost (torino.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id qWuBlV4deAw3; Wed, 29 Apr 2009 02:06:33 +0200 (CEST)
-Received: from sleipner.localnet (unknown [10.9.0.8])
-	by dewire.com (Postfix) with ESMTP id 884DF10233F8;
-	Wed, 29 Apr 2009 02:06:33 +0200 (CEST)
-User-Agent: KMail/1.11.2 (Linux/2.6.28-11-generic; KDE/4.2.2; i686; ; )
-In-Reply-To: <8ABE87D6-F70D-4A86-8307-88B95FAF350F@patchprint.co.nz>
-Content-Disposition: inline
+	id S1754677AbZD2AaH (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 28 Apr 2009 20:30:07 -0400
+Received: from root by ciao.gmane.org with local (Exim 4.43)
+	id 1LyxgZ-00080a-A2
+	for git@vger.kernel.org; Wed, 29 Apr 2009 00:30:05 +0000
+Received: from 121.90.202.59 ([121.90.202.59])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 29 Apr 2009 00:30:03 +0000
+Received: from jason by 121.90.202.59 with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 29 Apr 2009 00:30:03 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: main.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 121.90.202.59 (Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1; .NET CLR 1.1.4322; .NET CLR 2.0.50727; .NET CLR 3.0.04506.30; .NET CLR 3.0.04506.648; .NET CLR 3.5.21022))
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117838>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117839>
 
-onsdag 29 april 2009 00:54:54 skrev Andrew Bush:
-> Hi all,
-> 
-> I have a desire to have a single git repository that tracks the  
-> content of an array of folders located in various places across my  
-> file system.
-> 
-> this doesn't *appear* to be supported in any way, I found some stuff  
-> about using shortcuts but that was apparently removed in version 1.6  
-> because of the problem of deciding when to follow them and when to  
-> index them.
-> 
-> 
-> Ideally what I would like is a way to specify in the git config file  
-> for a repository an arbitary list of folders that it should index,  
-> instead of only having the choice of indexing the folder the  
-> repository is stored in.
+Hi,
 
-What I do sometimes is set GIT_DIR and then add paths relative to
-/ and adding excludes for some paths. That way I can cover /etc and
-selected parts of /var and other interesting areas. You cannot
-however have different roots for your trees, unless you make
-the tree using e.g symbolic links to the different directories.
+I am very new to git and I am trying to create my first project. After running:
+"git init", I ran "git add ." but I get the following error message:
+fatal: pathspec '' did not match any files
 
--- robin
+I am running on CentOS 4.7 on a CPanel/WHM server. The git install is in a 
+user's account space.
+
+Thanks,
+Jason
