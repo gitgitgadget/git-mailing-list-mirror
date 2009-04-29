@@ -1,157 +1,117 @@
-From: Avery Pennarun <apenwarr@gmail.com>
-Subject: Re: Trying to sync two svn repositories with git-svn (repost)
-Date: Tue, 28 Apr 2009 23:19:51 -0400
-Message-ID: <32541b130904282019n4b930f80g1ed22b2dde22510a@mail.gmail.com>
-References: <20090427201251.GC15420@raven.wolf.lan>
-	 <32541b130904281353k572fed5la468de65f73ccd19@mail.gmail.com>
-	 <20090428223728.GE15420@raven.wolf.lan>
+From: Jeff King <peff@peff.net>
+Subject: Re: Project Setup Problem
+Date: Tue, 28 Apr 2009 23:21:01 -0400
+Message-ID: <20090429032101.GA8826@coredump.intra.peff.net>
+References: <loom.20090429T001456-24@post.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: Josef Wolf <jw@raven.inka.de>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 29 05:20:46 2009
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Jason Brice <jason@sbh.co.nz>
+X-From: git-owner@vger.kernel.org Wed Apr 29 05:21:53 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lz0Lk-0006mN-E2
-	for gcvg-git-2@gmane.org; Wed, 29 Apr 2009 05:20:44 +0200
+	id 1Lz0MG-00070z-GV
+	for gcvg-git-2@gmane.org; Wed, 29 Apr 2009 05:21:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753872AbZD2DTx convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 28 Apr 2009 23:19:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753181AbZD2DTx
-	(ORCPT <rfc822;git-outgoing>); Tue, 28 Apr 2009 23:19:53 -0400
-Received: from yx-out-2324.google.com ([74.125.44.28]:31299 "EHLO
-	yx-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751847AbZD2DTw convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 28 Apr 2009 23:19:52 -0400
-Received: by yx-out-2324.google.com with SMTP id 3so556266yxj.1
-        for <git@vger.kernel.org>; Tue, 28 Apr 2009 20:19:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:content-type
-         :content-transfer-encoding;
-        bh=/7nx7CdBX/fe6bQcbYm5M4pxa0KzjeEkLIpX3CjNfA4=;
-        b=asAWf2bvYNo8aIqP4WUL1unWExRQuq7woZF6+bJKvFBeolPaVD+r5wkhnoocCEgnnT
-         TZnjFFGxv6gAt3GtK3ZwPlPVQUjFFGRh0F2UDULyI8gcSQDjPUXP5wqX49J+okmQveeO
-         QyPT5WKgOWT6aq/6yd+uq7QwAqdFj+MIGAbRs=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :content-type:content-transfer-encoding;
-        b=pK72rhofVjgAVYHIjWhFIZIkVdBsoOc7iSBtaUzItLq1NUrHjTRoWIZmHTYvn0MeiX
-         EZ14S4LLx/7DNHHtRmHL13MJe297N5Ij5Mhk5fsKS0af6ggh0GRnDKYcll6WMTPWNgeW
-         Ez8atFeNHITBkXmOWkuH+LOFTJ9jEiAChN/xQ=
-Received: by 10.151.122.3 with SMTP id z3mr474890ybm.231.1240975191479; Tue, 
-	28 Apr 2009 20:19:51 -0700 (PDT)
-In-Reply-To: <20090428223728.GE15420@raven.wolf.lan>
+	id S1753698AbZD2DVH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 28 Apr 2009 23:21:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753317AbZD2DVG
+	(ORCPT <rfc822;git-outgoing>); Tue, 28 Apr 2009 23:21:06 -0400
+Received: from peff.net ([208.65.91.99]:47691 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753181AbZD2DVF (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 28 Apr 2009 23:21:05 -0400
+Received: (qmail 2466 invoked by uid 107); 29 Apr 2009 03:21:16 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Tue, 28 Apr 2009 23:21:16 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 28 Apr 2009 23:21:01 -0400
+Content-Disposition: inline
+In-Reply-To: <loom.20090429T001456-24@post.gmane.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117841>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117842>
 
-On Tue, Apr 28, 2009 at 6:37 PM, Josef Wolf <jw@raven.inka.de> wrote:
-> Currently, there exist multiple independent repositories (for securit=
-y
-> reasons). =A0In the past, the repositories were "synchronized" manual=
-ly.
-> So technically, the repositories have no common history (at least not
-> in svn's metadata). =A0But the contents are actually rather "similar"=
-,
-> since they were synchronized multiple times in the past.
->
-> In the long term, I'd like to move everything completely to git. =A0T=
-hat
-> would make it much easier to move changes from one repos to the other
-> while keeping the (intended) differences in the policy.
->
-> So my first goal is to bring the contents into sync. =A0The next step=
- would
-> be to create a "reference" (the official) git repository, which can b=
-e
-> cloned by the administrations to create their localized repositories.
->
-> In the meantime, I need a way to synchronize the contents from time t=
-o
-> time. =A0I guess it will take some time to create the official repos =
-and
-> get used to the work flow.
+On Wed, Apr 29, 2009 at 12:22:56AM +0000, Jason Brice wrote:
 
-Okay, I think I'm following you.  And I think the difficulty of your
-solution will depend on how important it is to cherry-pick each
-individual commit from each repo vs. just merging everything as a
-batch.
+> I am very new to git and I am trying to create my first project. After running:
+> "git init", I ran "git add ." but I get the following error message:
+> fatal: pathspec '' did not match any files
 
-At Versabanq, we're using git for a bunch of stuff including our
-autobuilder (http://github.com/apenwarr/gitbuilder) and my own
-branching/merging.  However, for historical reasons, everything needs
-to also go into an svn repository, which some people use.
+Probably because you don't have any files, thus there was nothing to
+match. You can't add or commit in git until there is something to add or
+commit.
 
-Yes, it is possible to rebase everything from git onto an svn branch,
-and then git svn dcommit it.  However, in my experience, this is
-fairly nasty (and it also tries to linearize non-linear history, which
-is just messy).  What we've been doing lately is just merging all
-changes from git into the svn branch as a single commit:
+If you do have files and you got that message, then that is a problem
+(and let us know).
 
-   git checkout git-svn
-   git merge --no-ff mybranch   # --no-ff prevents git-svn from
-crazily linearizing things
-   git svn dcommit
+All that being said, the error message is not especially helpful. In
+particular, showing '' when the user asked for '.' can look like a bug
+(when in fact it is an artifact of how git translates the pathspecs
+internally).
 
-   git checkout mybranch
-   git merge git-svn
+The point of that message is to warn the user of typos or other
+mistakes (see f259339). But pointing to an existing but empty directory
+probably shouldn't generate a warning. And in fact, neither "mkdir foo
+&& cd foo && git add ." nor "mkdir foo && git add foo" generates a
+warning. It is really just that the empty pathspec for the root doesn't
+work (because it fools our lstat() call).
 
-As long as you "git config merge.summary true" (to make the merge
-commit list all the commits it's merging) and you merge frequently
-enough, this is reasonably painless.  You end up with a lot of merge
-commits, but the git history is recording everything fully, so if you
-want to throw away svn someday, you can just go ahead.
+I suspect, but didn't carefully investigate, that this is actually a
+regression introduced by my ancient e96980e (builtin-add: simplify (and
+increase accuracy of) exclude handling, 2007-06-12) which reorganized
+that section of code a bit. I did a quick check, which contains f259339
+but not e96980e, and it treats "git add ." in an empty project root as a
+no-op.
 
-Now, your problem is a little more complex, because it sounds like
-people are checking in two types of things on both sides: private
-things and public things.  So if you want *only* the private things,
-you're going to have to cherry-pick, and cherry-picking is going to
-confuse your merging.
+Junio, I think we should apply the patch below. It is a bugfix, but
+obviously this is not a critical bug (the impact is small, and it has
+been around for 2 years already), and given that we are so late in the
+release cycle, it is probably fine to wait for post-1.6.3.
 
-If you could convince the people using svn to use two branches: one
-for private stuff and one for public stuff, then your life would be
-easier.  You could just merge the public stuff in git, and ignore the
-private stuff.
+-- >8 --
+Subject: [PATCH] add: don't complain when adding empty project root
 
-If that's not an option, you *can* combine cherry-pick with -s ours as
-you suggest, though it's kind of nasty.  The trick is to merge -s ours
-in *both* directions at the right time, so you can avoid conflicts.
+We try to warn the user if one of their pathspecs caused no
+matches, as it may have been a typo. However, we disable the
+warning if the pathspec points to an existing file, since
+that means it is not a typo but simply an empty directory.
 
-    git checkout git-svn
-    git merge mybranch
+Unfortunately, the file_exists() test was broken for one
+special case: the pathspec of the project root is just "".
+This patch detects this special case and acts as if the file
+exists (which it must, since it is the project root).
 
-    git checkout mybranch
-    [git cherry-pick or git merge *everything* you're missing from git-=
-svn...]
-    git merge -s ours --no-ff git-svn
-      # future merges from git-svn will ignore everything in mybranch u=
-p to now
+The user-visible effect is that this:
 
-    git checkout git-svn
-      # we know git-svn is already up to date, because of the first mer=
-ge above
-    git merge -s ours --no-ff mybranch
-      # future merges from mybranch will ignore everything in git-svn u=
-p to now
-    git svn dcommit
+  $ mkdir repo && cd repo && git init && git add .
 
-After these steps (WARNING: I didn't actually run them, so I might
-have made a mistake), you should have both branches in sync, and you
-*should* be able to merge in both directions whenever you want (make
-sure you use --no-ff), until the next time someone commits something
-private and screws you over again.
+used to complain like:
 
-If you have more than one svn server, the above method should be
-extensible; just use another svn branch in place of 'mybranch' or keep
-cross-merging across all the branches.
+  fatal: pathspec '' did not match any files
 
-Good luck :)
+but now is a silent no-op.
 
-Avery
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ builtin-add.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/builtin-add.c b/builtin-add.c
+index 314380e..bee45f0 100644
+--- a/builtin-add.c
++++ b/builtin-add.c
+@@ -63,7 +63,7 @@ static void prune_directory(struct dir_struct *dir, const char **pathspec, int p
+ 	fill_pathspec_matches(pathspec, seen, specs);
+ 
+ 	for (i = 0; i < specs; i++) {
+-		if (!seen[i] && !file_exists(pathspec[i]))
++		if (!seen[i] && pathspec[i][0] && !file_exists(pathspec[i]))
+ 			die("pathspec '%s' did not match any files",
+ 					pathspec[i]);
+ 	}
+-- 
+1.6.3.rc3.188.g92147.dirty
