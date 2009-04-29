@@ -1,84 +1,61 @@
-From: Augie Fackler <durin42@gmail.com>
-Subject: Re: [PATCH] Don't crash if ai_canonname comes back as null
-Date: Wed, 29 Apr 2009 18:32:02 -0500
-Message-ID: <A85E96CC-CF0B-40F9-9960-00485285E6ED@gmail.com>
-References: <9C355DCC-0240-4B9E-83CA-083B51C2E34C@gmail.com> <81b0412b0904291455n47f83e9ftcbdec0ff1c0ea03@mail.gmail.com> <6B7EA51D-8412-4E6A-BA7B-156FD5B755E8@gmail.com> <81b0412b0904291504k3261df5fl692d09c6c761887e@mail.gmail.com> <C2AC0D7A-3E11-4A3A-8447-5D7582547B13@gmail.com> <7v63gn59mw.fsf@gitster.siamese.dyndns.org>
-Mime-Version: 1.0 (Apple Message framework v930.3)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
+From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+Subject: Re: [JGIT PATCH v2 00/11] WindowCache rewrite... with tests
+Date: Thu, 30 Apr 2009 01:46:30 +0200
+Message-ID: <200904300146.31062.robin.rosenberg.lists@dewire.com>
+References: <1241031288-23437-1-git-send-email-spearce@spearce.org>
+Mime-Version: 1.0
+Content-Type: Text/Plain;
+  charset="iso-8859-1"
 Content-Transfer-Encoding: 7bit
-Cc: Alex Riesen <raa.lkml@gmail.com>, git@vger.kernel.org,
-	Benjamin Kramer <benny.kra@googlemail.com>,
-	Jon Loeliger <jdl@jdl.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Apr 30 01:32:18 2009
+Cc: git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Thu Apr 30 01:46:45 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LzJGD-0005X7-8x
-	for gcvg-git-2@gmane.org; Thu, 30 Apr 2009 01:32:17 +0200
+	id 1LzJUC-0001pB-QM
+	for gcvg-git-2@gmane.org; Thu, 30 Apr 2009 01:46:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754012AbZD2XcK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 29 Apr 2009 19:32:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753808AbZD2XcI
-	(ORCPT <rfc822;git-outgoing>); Wed, 29 Apr 2009 19:32:08 -0400
-Received: from caiajhbdccah.dreamhost.com ([208.97.132.207]:35845 "EHLO
-	spunkymail-a14.g.dreamhost.com" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1753650AbZD2XcH (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 29 Apr 2009 19:32:07 -0400
-Received: from [172.16.17.71] (adsl-99-147-234-187.dsl.chcgil.sbcglobal.net [99.147.234.187])
-	by spunkymail-a14.g.dreamhost.com (Postfix) with ESMTP id 565C5190E2D;
-	Wed, 29 Apr 2009 16:32:03 -0700 (PDT)
-In-Reply-To: <7v63gn59mw.fsf@gitster.siamese.dyndns.org>
-X-Mailer: Apple Mail (2.930.3)
+	id S1752280AbZD2Xqg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 29 Apr 2009 19:46:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751713AbZD2Xqg
+	(ORCPT <rfc822;git-outgoing>); Wed, 29 Apr 2009 19:46:36 -0400
+Received: from mail.dewire.com ([83.140.172.130]:12519 "EHLO dewire.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751104AbZD2Xqf (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 Apr 2009 19:46:35 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by dewire.com (Postfix) with ESMTP id 9BFEF1023426;
+	Thu, 30 Apr 2009 01:46:34 +0200 (CEST)
+X-Virus-Scanned: by amavisd-new at dewire.com
+Received: from dewire.com ([127.0.0.1])
+	by localhost (torino.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id xuuM5kY7wRlZ; Thu, 30 Apr 2009 01:46:32 +0200 (CEST)
+Received: from sleipner.localnet (unknown [10.9.0.3])
+	by dewire.com (Postfix) with ESMTP id 0A8531023260;
+	Thu, 30 Apr 2009 01:46:31 +0200 (CEST)
+User-Agent: KMail/1.11.2 (Linux/2.6.28-11-generic; KDE/4.2.2; i686; ; )
+In-Reply-To: <1241031288-23437-1-git-send-email-spearce@spearce.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117979>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117980>
 
+onsdag 29 april 2009 20:54:37 skrev "Shawn O. Pearce" <spearce@spearce.org>:
+> 9-11 is the rewrite of WindowCache, with new unit tests to get higher
+> levels of coverage in this section of the code.  Actually doing
+> better is really hard, as we'd need to cause thread race conditions
+> deep within critical sections.  The only way I can think to do that
+> is to add injection points where we can insert "evil other thread"
+> logic during the unit test, and rely on the JIT to compile them
+> out in normal application usage.  Ick.  Its also quite fragile.
 
-On Apr 29, 2009, at 6:21 PM, Junio C Hamano wrote:
+Testing *is* hard. No news here. There are various techniques for 
+injecting code using AOP (AspjectJ) that may be useful for testing,
+since we could inject failures that way without the overhead of
+injection points in normal execution. 
 
-> Augie Fackler <durin42@gmail.com> writes:
->
->> Fixes a weird bug where git-daemon was segfaulting
->> when started by sh(1) because ai_canonname was null.
->> ---
->> Fixed based on feedback.
->
-> Hmm.
->
-> I've been waiting for feedback to a patch proposed earlier in the same
-> area, which is <49F5BA55.3060606@googlemail.com> ($gmane/117670).  How
-> does this new one relate to it?
-
-I can't comment much on the correctness of the code - my patch was the  
-minimal change to have it not crash.
-
-The other patch also works for me to prevent the crash, and looks like  
-it might be a little more correct in terms of having a meaningful  
-hostname.
-
->> daemon.c |    2 +-
->> 1 files changed, 1 insertions(+), 1 deletions(-)
->>
->> diff --git a/daemon.c b/daemon.c
->> index 13401f1..ae21d92 100644
->> --- a/daemon.c
->> +++ b/daemon.c
->> @@ -459,7 +459,7 @@ static void parse_extra_args(char *extra_args,  
->> int
->> buflen)
->> 				inet_ntop(AF_INET, &sin_addr->sin_addr,
->> 					  addrbuf, sizeof(addrbuf));
->> 				free(canon_hostname);
->> -				canon_hostname = xstrdup(ai->ai_canonname);
->> +				canon_hostname = ai->ai_canonname ?
->> xstrdup(ai->ai_canonname) : NULL;
->> 				free(ip_address);
->> 				ip_address = xstrdup(addrbuf);
->> 				break;
->> --
->> 1.6.2.GIT
->
+-- robin
