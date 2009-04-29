@@ -1,84 +1,153 @@
-From: Avery Pennarun <apenwarr@gmail.com>
-Subject: Re: git svn errors out with git-cat-file "usage" message
-Date: Wed, 29 Apr 2009 14:50:51 -0400
-Message-ID: <32541b130904291150k75a0433fnb29ea59f654a17f7@mail.gmail.com>
-References: <46a038f90904290811p33332bd5h1d397734907ba9c2@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH] Teach gitlinks to combine-diff
+Date: Wed, 29 Apr 2009 11:53:35 -0700
+Message-ID: <7v8wljcmvk.fsf_-_@gitster.siamese.dyndns.org>
+References: <gt7err$3m4$1@ger.gmane.org>
+ <7v4ow8my1u.fsf@gitster.siamese.dyndns.org> <20090428211257.GA31191@pvv.org>
+ <20090429084209.GA24064@localhost>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Mihai Sucan <mihai.sucan@gmail.com>
-To: Martin Langhoff <martin.langhoff@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Apr 29 20:51:05 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Finn Arne Gangstad <finnag@pvv.org>,
+	Tim Olsen <tim@brooklynpenguin.com>, git@vger.kernel.org
+To: Clemens Buchacher <drizzd@aon.at>
+X-From: git-owner@vger.kernel.org Wed Apr 29 20:53:54 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LzEs3-0000m9-KD
-	for gcvg-git-2@gmane.org; Wed, 29 Apr 2009 20:51:04 +0200
+	id 1LzEuo-0002Jn-3m
+	for gcvg-git-2@gmane.org; Wed, 29 Apr 2009 20:53:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752522AbZD2Su4 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 29 Apr 2009 14:50:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752325AbZD2Suz
-	(ORCPT <rfc822;git-outgoing>); Wed, 29 Apr 2009 14:50:55 -0400
-Received: from mail-gx0-f166.google.com ([209.85.217.166]:62950 "EHLO
-	mail-gx0-f166.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752219AbZD2Suy convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 29 Apr 2009 14:50:54 -0400
-Received: by gxk10 with SMTP id 10so2819866gxk.13
-        for <git@vger.kernel.org>; Wed, 29 Apr 2009 11:50:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=sVbXLzlXVHTN7/85e65XAfmd6r7/3QD5l2mk/YMvMTM=;
-        b=T1fOLZ2aSoXtztNbQVFoqYCYp2xYU+Eg3yfKvl4YdYGDRpFnMAWFyrhzlElCAcpQS9
-         uUqZwvXLteEs4xYnJxQ+8ExMjQpOCoQJ29au6xPqY7jjuHiGEYPRsf7c+Phid6I7ctSF
-         j3RaCWwSoNaCyforERtqTsT6YQzlGF7WgoE30=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=nNwh85qcuaLowal56VFJDBy3zPOqXcS7e55yfLrqhdbYer28QZvwy4jA14AxyQj0jF
-         ylgmoM75WNem3+znGBIknYiyTgVSLpb+XHzoLVd63zQboXZG/UbuiUBBdV1c9caTfe20
-         bQJepMs4uq3nkUhTA6guMvep5J1ZRs2jH78hk=
-Received: by 10.151.122.3 with SMTP id z3mr1860712ybm.231.1241031051842; Wed, 
-	29 Apr 2009 11:50:51 -0700 (PDT)
-In-Reply-To: <46a038f90904290811p33332bd5h1d397734907ba9c2@mail.gmail.com>
+	id S1752684AbZD2Sxr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 29 Apr 2009 14:53:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751545AbZD2Sxq
+	(ORCPT <rfc822;git-outgoing>); Wed, 29 Apr 2009 14:53:46 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:63447 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751104AbZD2Sxq (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 Apr 2009 14:53:46 -0400
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 1CD67AEF2D;
+	Wed, 29 Apr 2009 14:53:44 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 34633AEF2C; Wed,
+ 29 Apr 2009 14:53:36 -0400 (EDT)
+In-Reply-To: <20090429084209.GA24064@localhost> (Clemens Buchacher's message
+ of "Wed, 29 Apr 2009 10:42:09 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 102D6D6A-34EF-11DE-A4F8-CABC03BA4B0C-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117911>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117912>
 
-On Wed, Apr 29, 2009 at 11:11 AM, Martin Langhoff
-<martin.langhoff@gmail.com> wrote:
-> Steps to repro, and error message:
->
-> $ =A0git svn clone -T trunk --ignore-paths releases
-> http://paintweb.googlecode.com/svn paintweb.git
-> r3 =3D 30548c9192aefcde23337f70542ab59e193a1b9e (trunk)
-> usage: git-cat-file [-t|-s|-e|-p|<type>] <sha1>
-> fatal: unable to run 'git-svn'
-> $ git version
-> git version 1.6.2.4.10.g2254d <=3D=3D this is maint as of right now
->
-> The same problem exists with master as of right now (v1.6.3-rc3-12-gb=
-79376c)
+The combine diff logic knew only about blobs (and their checked-out form
+in the work tree, either regular files or symlinks), and barfed when fed
+submodules.  This "externalizes" gitlinks in the same way as the normal
+patch generation codepath does (i.e. "Subproject commit Xxx\n") to fix the
+issue.
 
-I just tried this (commit 2254d) and was unable to reproduce; it
-worked fine for me (Debian etch).
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
 
-  git svn clone -T trunk --ignore-paths releases
-http://paintweb.googlecode.com/svn paintweb.git
-  ...
-  r6 =3D 8561205fe08e0bcefb592710f4e34db91f3099df (trunk)
-  Checked out HEAD:
-    http://paintweb.googlecode.com/svn/trunk r6
+ I think we should share the implementation betweeen grab_blob() and
+ diff.c::diff_populate_gitlink() to keep their submodule representation
+ the same, but I am doing this as a "fix" patch and I am lazy...
 
-Maybe you can try 'git bisect' to narrow it down.
+ combine-diff.c |   31 +++++++++++++++++++++++--------
+ 1 files changed, 23 insertions(+), 8 deletions(-)
 
-Have fun,
-
-Avery
+diff --git a/combine-diff.c b/combine-diff.c
+index 066ce84..0f192e1 100644
+--- a/combine-diff.c
++++ b/combine-diff.c
+@@ -6,6 +6,7 @@
+ #include "quote.h"
+ #include "xdiff-interface.h"
+ #include "log-tree.h"
++#include "refs.h"
+ 
+ static struct combine_diff_path *intersect_paths(struct combine_diff_path *curr, int n, int num_parent)
+ {
+@@ -90,7 +91,7 @@ struct sline {
+ 	unsigned long *p_lno;
+ };
+ 
+-static char *grab_blob(const unsigned char *sha1, unsigned long *size)
++static char *grab_blob(const unsigned char *sha1, unsigned int mode, unsigned long *size)
+ {
+ 	char *blob;
+ 	enum object_type type;
+@@ -98,10 +99,15 @@ static char *grab_blob(const unsigned char *sha1, unsigned long *size)
+ 		/* deleted blob */
+ 		*size = 0;
+ 		return xcalloc(1, 1);
++	} else if (S_ISGITLINK(mode)) {
++		blob = xmalloc(100);
++		*size = snprintf(blob, 100,
++				 "Subproject commit %s\n", sha1_to_hex(sha1));
++	} else {
++		blob = read_sha1_file(sha1, &type, size);
++		if (type != OBJ_BLOB)
++			die("object '%s' is not a blob!", sha1_to_hex(sha1));
+ 	}
+-	blob = read_sha1_file(sha1, &type, size);
+-	if (type != OBJ_BLOB)
+-		die("object '%s' is not a blob!", sha1_to_hex(sha1));
+ 	return blob;
+ }
+ 
+@@ -195,7 +201,8 @@ static void consume_line(void *state_, char *line, unsigned long len)
+ 	}
+ }
+ 
+-static void combine_diff(const unsigned char *parent, mmfile_t *result_file,
++static void combine_diff(const unsigned char *parent, unsigned int mode,
++			 mmfile_t *result_file,
+ 			 struct sline *sline, unsigned int cnt, int n,
+ 			 int num_parent)
+ {
+@@ -211,7 +218,7 @@ static void combine_diff(const unsigned char *parent, mmfile_t *result_file,
+ 	if (!cnt)
+ 		return; /* result deleted */
+ 
+-	parent_file.ptr = grab_blob(parent, &sz);
++	parent_file.ptr = grab_blob(parent, mode, &sz);
+ 	parent_file.size = sz;
+ 	memset(&xpp, 0, sizeof(xpp));
+ 	xpp.flags = XDF_NEED_MINIMAL;
+@@ -692,7 +699,7 @@ static void show_patch_diff(struct combine_diff_path *elem, int num_parent,
+ 
+ 	/* Read the result of merge first */
+ 	if (!working_tree_file)
+-		result = grab_blob(elem->sha1, &result_size);
++		result = grab_blob(elem->sha1, elem->mode, &result_size);
+ 	else {
+ 		/* Used by diff-tree to read from the working tree */
+ 		struct stat st;
+@@ -712,6 +719,12 @@ static void show_patch_diff(struct combine_diff_path *elem, int num_parent,
+ 			result_size = buf.len;
+ 			result = strbuf_detach(&buf, NULL);
+ 			elem->mode = canon_mode(st.st_mode);
++		} else if (S_ISDIR(st.st_mode)) {
++			unsigned char sha1[20];
++			if (resolve_gitlink_ref(elem->path, "HEAD", sha1) < 0)
++				result = grab_blob(elem->sha1, elem->mode, &result_size);
++			else
++				result = grab_blob(sha1, elem->mode, &result_size);
+ 		} else if (0 <= (fd = open(elem->path, O_RDONLY))) {
+ 			size_t len = xsize_t(st.st_size);
+ 			ssize_t done;
+@@ -804,7 +817,9 @@ static void show_patch_diff(struct combine_diff_path *elem, int num_parent,
+ 			}
+ 		}
+ 		if (i <= j)
+-			combine_diff(elem->parent[i].sha1, &result_file, sline,
++			combine_diff(elem->parent[i].sha1,
++				     elem->parent[i].mode,
++				     &result_file, sline,
+ 				     cnt, i, num_parent);
+ 		if (elem->parent[i].mode != elem->mode)
+ 			mode_differs = 1;
