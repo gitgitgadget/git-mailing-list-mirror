@@ -1,97 +1,81 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Why Git is so fast
-Date: Thu, 30 Apr 2009 21:33:59 +0200
-Message-ID: <200904302134.00569.jnareb@gmail.com>
-References: <46a038f90904270155i6c802fceoffc73eb5ab57130e@mail.gmail.com> <m3fxfqnxn5.fsf_-_@localhost.localdomain> <alpine.LFD.2.00.0904301401120.6741@xanadu.home>
+From: David Srbecky <dsrbecky@gmail.com>
+Subject: Why is the name of a blob SHA1("$type $size\0$data") and not SHA1("$data")?
+Date: Thu, 30 Apr 2009 20:55:00 +0100
+Message-ID: <49FA0214.70009@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: Martin Langhoff <martin.langhoff@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Nicolas Pitre <nico@cam.org>
-X-From: git-owner@vger.kernel.org Thu Apr 30 21:34:15 2009
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Apr 30 21:55:14 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lzc1P-0003DF-3g
-	for gcvg-git-2@gmane.org; Thu, 30 Apr 2009 21:34:15 +0200
+	id 1LzcLi-0003nv-1e
+	for gcvg-git-2@gmane.org; Thu, 30 Apr 2009 21:55:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751280AbZD3TeI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 30 Apr 2009 15:34:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751022AbZD3TeG
-	(ORCPT <rfc822;git-outgoing>); Thu, 30 Apr 2009 15:34:06 -0400
-Received: from mail-fx0-f158.google.com ([209.85.220.158]:46583 "EHLO
-	mail-fx0-f158.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750756AbZD3TeD (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 30 Apr 2009 15:34:03 -0400
-Received: by fxm2 with SMTP id 2so2015909fxm.37
-        for <git@vger.kernel.org>; Thu, 30 Apr 2009 12:34:02 -0700 (PDT)
+	id S1752280AbZD3TzE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 30 Apr 2009 15:55:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751943AbZD3TzE
+	(ORCPT <rfc822;git-outgoing>); Thu, 30 Apr 2009 15:55:04 -0400
+Received: from ey-out-2122.google.com ([74.125.78.25]:56441 "EHLO
+	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751898AbZD3TzD (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 30 Apr 2009 15:55:03 -0400
+Received: by ey-out-2122.google.com with SMTP id 9so519226eyd.37
+        for <git@vger.kernel.org>; Thu, 30 Apr 2009 12:55:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=M2kjEJtXF+IpLhGx++DXkEse+ZS4lU6WdVEPCrvlGzk=;
-        b=DvZ9H7M/5FuVpRoHMMwyEonky/TVKbb0x9DmeCObDtSJajcDUkhZm7bF/wsqJYRfFc
-         Z6gP0yW5pxkAdeIVsVa76Of5VOkpcrpS5QgMl4ouKcpb5lNb5g5fT6hX6gST4BV0/ZWG
-         pcIS86zqQul2qGAh7nVzVcg5UHOOlu+iAdvg4=
+        h=domainkey-signature:received:received:message-id:date:from
+         :user-agent:mime-version:to:subject:content-type
+         :content-transfer-encoding;
+        bh=BA8h2aRowTpVkBGjbJ8j2BHFVeVBrgUtSBSuRabpxm0=;
+        b=lqNt+0V7Yf38uVkZEPbykfRMKmU31ooF2ppeGAfTWmFryX4Nd+8cUO1HD9t859+H6t
+         G33cvPomYkqbM51cLSwrM3xFw2EApduFzY/qe5WUgSOIlhLCxrY0gKMXgUenC1Ko+RlA
+         BvyTX+RLxefLbhk3VJY2sM52z+BS2pkUlclhw=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=IjVo7Rtr706YwHo4OIsg+tzU6yvJNhlX6y1/C5yhhJ0lgS5EKzqDTUnF/6CI05d5JH
-         zHmyl7hiZUXoVeIPsoKZ6DnWb4x9LWD8T0VE+d/wxclifCe21cp6e0xxDnFt5vp3/dwq
-         t7faxx4pZx4dEBisEFjc3cDDcefb1J/1P8UVk=
-Received: by 10.86.36.11 with SMTP id j11mr2201608fgj.22.1241120042173;
-        Thu, 30 Apr 2009 12:34:02 -0700 (PDT)
-Received: from ?192.168.1.13? (abwf75.neoplus.adsl.tpnet.pl [83.8.229.75])
-        by mx.google.com with ESMTPS id 4sm4180348fgg.18.2009.04.30.12.34.01
+        h=message-id:date:from:user-agent:mime-version:to:subject
+         :content-type:content-transfer-encoding;
+        b=mUpyE3w3W+5Eeptg3MyqqQZL1GRyngEvsX6wD6uz3uicCmT6HDzD/kxpYIWypnALoR
+         W3t5CAdRc8tdzU9OCSblfsLoAAcG70LT4pGxpNaCtypFHeZmXVbGPY6QMQhimLVmQNoF
+         yXrgsaraquMIvc7qq2nAnY1liZ2aSNaydfsWU=
+Received: by 10.210.10.8 with SMTP id 8mr2147243ebj.13.1241121302236;
+        Thu, 30 Apr 2009 12:55:02 -0700 (PDT)
+Received: from ?172.31.60.173? (zone-7.jesus.cam.ac.uk [131.111.243.37])
+        by mx.google.com with ESMTPS id 7sm4649301eyg.57.2009.04.30.12.54.59
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 30 Apr 2009 12:34:01 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <alpine.LFD.2.00.0904301401120.6741@xanadu.home>
-Content-Disposition: inline
+        Thu, 30 Apr 2009 12:55:00 -0700 (PDT)
+User-Agent: Thunderbird 2.0.0.21 (Windows/20090302)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118041>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118042>
 
-On Thu, 30 Apr 2009, Nicolas Pitre wrote:
-> On Thu, 30 Apr 2009, Jakub Narebski wrote:
-> > Jakub Narebski <jnareb@gmail.com> writes:
+Hi,
 
-> > es> Maybe Git is fast because every time they faced one of these "buy
-> > es> vs. build" choices, they decided to just write it themselves.
-> > 
-> > I don't think so.  Rather the opposite is true.  Git uses libcurl for
-> > HTTP transport.  Git uses zlib for compression.  Git uses SHA-1 from
-> > OpenSSL or from Mozilla.  Git uses (modified, internal) LibXDiff for
-> > (binary) deltaifying, for diffs and for merges.
-> 
-> Well, I think he's right on this point as well.  [...]
-> The fact that libxdiff was made internal is indeed to have a better 
-> impedance matching with the core code, otherwise it could have remained 
-> fully external just like zlib.  And the binary delta code is not 
-> libxdiff anymore but a much smaller, straight forward, and optimized to 
-> death version to achieve speed over versatility (no need to be versatile 
-> when strictly dealing with Git's needs only).
 
-Hrmmmm... I have thought that LibXDiff was internalized mainly for ease
-of modification, as my impression is that LibXDiff is single developer
-effort, while Git from beginning have many contributors (and submodules
-didn't exist then).  If I remember correctly the rcsmerge/diff3 algorithm
-was added first in internalized git's xdiff... was it added to LibXDiff
-proper, anyway?
+First of all, congratulations on makeing such a great version control 
+system.  I love the storage model - in comparison with other systems, it 
+is just birantly simple and ingenious.
 
-BTW. I wonder what other F/OSS version control systems: Bazaar,
-Mercurial, Darcs, Monotone use for binary deltas, for diff engine,
-and for textual three-way merge engine.  Hmmm... perhaps I'll ask
-on #revctrl
 
--- 
-Jakub Narebski
-Poland
+I started digging into the details and there is one thing that is really 
+bugging me - why is the name of a blob SHA1("$type $size\0$data") and 
+not SHA1("$data")?  I mean, wouldn't it be beautiful if the name of the 
+blob would really just be the SHA1 of the uncompressed file content? :-)
+
+
+Furthermore, is the header really necessary?  Wouldn't it be 
+eqvivalently effective to put the blobs into own subdirectory? For 
+example:  .git\objects\blob\22\22a3d28c5b2fca0eae83be1a2ed619e357f6a1e6
+So the blob would contatin just be the compressed content and nothing 
+else - beautiful :-)
+
+
+I would really appriciate some comments on the design decisions so that 
+I can sleep well at night :-)
+
+
+David
