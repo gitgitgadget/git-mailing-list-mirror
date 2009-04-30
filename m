@@ -1,77 +1,87 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: git svn errors out with git-cat-file "usage" message
-Date: Thu, 30 Apr 2009 18:49:30 +0200
-Message-ID: <49F9D69A.9080204@drmicha.warpmail.net>
-References: <46a038f90904290811p33332bd5h1d397734907ba9c2@mail.gmail.com>	 <32541b130904291150k75a0433fnb29ea59f654a17f7@mail.gmail.com>	 <49F8B7D1.2090903@drmicha.warpmail.net>	 <46a038f90904291347i2ed158aaya7505e1bd11cd392@mail.gmail.com>	 <49F8C127.4000400@drmicha.warpmail.net>	 <46a038f90904300018u7101943blef084dc907a04c8d@mail.gmail.com>	 <46a038f90904300153v22aa3e9fo407ff5084b58b5fc@mail.gmail.com>	 <32541b130904300741p325012b7g28dabbd33576ceae@mail.gmail.com>	 <46a038f90904300803h555f02b3n76d03c93d99f7506@mail.gmail.com>	 <32541b130904300926x472d6d14p2896d3ade7566684@mail.gmail.com> <46a038f90904300931l4460a085pce97fcb5cdf32dc3@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Don't crash if ai_canonname comes back as null
+Date: Thu, 30 Apr 2009 09:57:03 -0700
+Message-ID: <7viqkm5bc0.fsf@gitster.siamese.dyndns.org>
+References: <9C355DCC-0240-4B9E-83CA-083B51C2E34C@gmail.com>
+ <81b0412b0904291455n47f83e9ftcbdec0ff1c0ea03@mail.gmail.com>
+ <6B7EA51D-8412-4E6A-BA7B-156FD5B755E8@gmail.com>
+ <81b0412b0904291504k3261df5fl692d09c6c761887e@mail.gmail.com>
+ <C2AC0D7A-3E11-4A3A-8447-5D7582547B13@gmail.com>
+ <7v63gn59mw.fsf@gitster.siamese.dyndns.org>
+ <A85E96CC-CF0B-40F9-9960-00485285E6ED@gmail.com> <E1LzX1N-0003sw-2y@jdl.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Avery Pennarun <apenwarr@gmail.com>,
-	Michael J Gruber <git@drmicha.warpmail.net>,
-	Git Mailing List <git@vger.kernel.org>,
-	Mihai Sucan <mihai.sucan@gmail.com>
-To: Martin Langhoff <martin.langhoff@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Apr 30 18:50:28 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Augie Fackler <durin42@gmail.com>,
+	Alex Riesen <raa.lkml@gmail.com>, git@vger.kernel.org,
+	Benjamin Kramer <benny.kra@googlemail.com>
+To: Jon Loeliger <jdl@jdl.com>
+X-From: git-owner@vger.kernel.org Thu Apr 30 18:57:33 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LzZSr-0008Rf-U7
-	for gcvg-git-2@gmane.org; Thu, 30 Apr 2009 18:50:26 +0200
+	id 1LzZZk-0003ZL-2V
+	for gcvg-git-2@gmane.org; Thu, 30 Apr 2009 18:57:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932197AbZD3Qtl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 30 Apr 2009 12:49:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1763326AbZD3Qtl
-	(ORCPT <rfc822;git-outgoing>); Thu, 30 Apr 2009 12:49:41 -0400
-Received: from out1.smtp.messagingengine.com ([66.111.4.25]:43696 "EHLO
-	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1762267AbZD3Qtk (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 30 Apr 2009 12:49:40 -0400
-Received: from compute1.internal (compute1.internal [10.202.2.41])
-	by out1.messagingengine.com (Postfix) with ESMTP id 14745335483;
-	Thu, 30 Apr 2009 12:49:40 -0400 (EDT)
-Received: from heartbeat2.messagingengine.com ([10.202.2.161])
-  by compute1.internal (MEProxy); Thu, 30 Apr 2009 12:49:40 -0400
-X-Sasl-enc: 6/LX5nT2n6naLcxKpneRsuJaYFYvN1JA7h2SmVSAi8Dj 1241110179
-Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.12])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id DF0964EEB4;
-	Thu, 30 Apr 2009 12:49:38 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1b5pre) Gecko/20090427 Lightning/1.0pre Shredder/3.0b3pre
-In-Reply-To: <46a038f90904300931l4460a085pce97fcb5cdf32dc3@mail.gmail.com>
+	id S1763561AbZD3Q5N (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 30 Apr 2009 12:57:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760416AbZD3Q5N
+	(ORCPT <rfc822;git-outgoing>); Thu, 30 Apr 2009 12:57:13 -0400
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:64482 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1762687AbZD3Q5M (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 30 Apr 2009 12:57:12 -0400
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 2F2EE1351E;
+	Thu, 30 Apr 2009 12:57:11 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 069DF13515; Thu,
+ 30 Apr 2009 12:57:04 -0400 (EDT)
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: F27DBB62-35A7-11DE-BD40-D766E3C8547C-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118032>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118033>
 
-Martin Langhoff venit, vidit, dixit 30.04.2009 18:31:
-> On Thu, Apr 30, 2009 at 6:26 PM, Avery Pennarun <apenwarr@gmail.com> wrote:
->> And do the contents of these files match the ones in your git source
->> directory?  What are their md5sums?
->>
->> /home/martin/libexec/git-core/git-svn
->> /home/martin/share/perl/5.10.0/Git.pm
-> 
-> They match alright -
-> 
-> sha1sum /home/martin/share/perl/5.10.0/*
-> e5ceeaa91bfe878ac45a5e5daad4fa1d50b6ff4a
-> /home/martin/share/perl/5.10.0/Error.pm
-> d752abdebc8e40801d891859e6764631c2f1e8ff  /home/martin/share/perl/5.10.0/Git.pm
-> 
-> ~/src/git$ sha1sum perl/blib/lib/*pm
-> e5ceeaa91bfe878ac45a5e5daad4fa1d50b6ff4a  perl/blib/lib/Error.pm
-> d752abdebc8e40801d891859e6764631c2f1e8ff  perl/blib/lib/Git.pm
-> 
-> ~/src/git$ sha1sum /home/martin/libexec/git-core/git-svn git-svn
-> 37cae8b77552f0bbdd54e060318bbc6a269a7577  /home/martin/libexec/git-core/git-svn
-> 37cae8b77552f0bbdd54e060318bbc6a269a7577  git-svn
-> 
-> it's really weird.
+Jon Loeliger <jdl@jdl.com> writes:
 
-Have you ever checked the usage strings which your instances of
-"git-cat-file" output, as I suggested?
+>> > I've been waiting for feedback to a patch proposed earlier in the same
+>> > area, which is <49F5BA55.3060606@googlemail.com> ($gmane/117670).  How
+>> > does this new one relate to it?
+>> ... 
+> So, I wasn't CC'ed on the referenced patch ($gmane/117670), but it
 
-BTW: Does make test work for you?
+You did got CC'ed, but I got a bounce from your freescale address, so this
+time I tried another address of yours I knew about.
 
-Michael
+> seems to me that there might be value in actually looping over the
+> whole list of addrinfo results exactly in the case that it does
+> return a null canonical name for one of its addresses?
+
+That is what I speculated when commenting on ($gmane/117670), but I think
+the original loop was not doing any check, and instead always exited early
+during its first iteration.  Perhaps we can re-add a loop that does
+something useful, but I do not know what it would be offhand.
+
+> Perhaps an
+> inverse call to getnameinfo() is warranted too?
+
+In this case the name being looked up is _ours_; it is not like "the
+client claims to be frotz---does frotz reverse map to him correctly?"
+situation, so reverse lookup might not be so interesting.
+
+There is one thing that could potentially be useful when the daemon runs
+on a multi-homed host; git.jdl.com may have eth1 facing public and eth0
+facing internal networks.  Depending on which address you got the request
+to, you may want to serve different contents, and if you got request to
+"hostname" that is not you as far as getaddrinfo() is concerned, you may
+want to do yet another thing that is different from the two name-addr
+mapping returned by getaddrinfo().
+
+I do not see enough information to do that kind of thing is passed to the
+parse_extra_args() function in the current callchain, though.  We do have
+a call to getpeername() but we do not seem to do getsockname() to learn
+about our end of the connection.
