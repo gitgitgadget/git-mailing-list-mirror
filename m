@@ -1,87 +1,139 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Don't crash if ai_canonname comes back as null
-Date: Thu, 30 Apr 2009 09:57:03 -0700
-Message-ID: <7viqkm5bc0.fsf@gitster.siamese.dyndns.org>
-References: <9C355DCC-0240-4B9E-83CA-083B51C2E34C@gmail.com>
- <81b0412b0904291455n47f83e9ftcbdec0ff1c0ea03@mail.gmail.com>
- <6B7EA51D-8412-4E6A-BA7B-156FD5B755E8@gmail.com>
- <81b0412b0904291504k3261df5fl692d09c6c761887e@mail.gmail.com>
- <C2AC0D7A-3E11-4A3A-8447-5D7582547B13@gmail.com>
- <7v63gn59mw.fsf@gitster.siamese.dyndns.org>
- <A85E96CC-CF0B-40F9-9960-00485285E6ED@gmail.com> <E1LzX1N-0003sw-2y@jdl.com>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: Why Git is so fast (was: Re: Eric Sink's blog - notes on git,
+	dscms and a "whole product" approach)
+Date: Thu, 30 Apr 2009 11:43:19 -0700
+Message-ID: <20090430184319.GP23604@spearce.org>
+References: <46a038f90904270155i6c802fceoffc73eb5ab57130e@mail.gmail.com> <m3ocugod96.fsf@localhost.localdomain> <m3fxfqnxn5.fsf_-_@localhost.localdomain> <b4087cc50904300556s359c91dfu444fa40ea85bd66e@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Augie Fackler <durin42@gmail.com>,
-	Alex Riesen <raa.lkml@gmail.com>, git@vger.kernel.org,
-	Benjamin Kramer <benny.kra@googlemail.com>
-To: Jon Loeliger <jdl@jdl.com>
-X-From: git-owner@vger.kernel.org Thu Apr 30 18:57:33 2009
+Cc: Jakub Narebski <jnareb@gmail.com>,
+	Martin Langhoff <martin.langhoff@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Michael Witten <mfwitten@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Apr 30 20:44:18 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LzZZk-0003ZL-2V
-	for gcvg-git-2@gmane.org; Thu, 30 Apr 2009 18:57:32 +0200
+	id 1LzbEH-0002H5-2G
+	for gcvg-git-2@gmane.org; Thu, 30 Apr 2009 20:43:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1763561AbZD3Q5N (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 30 Apr 2009 12:57:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760416AbZD3Q5N
-	(ORCPT <rfc822;git-outgoing>); Thu, 30 Apr 2009 12:57:13 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:64482 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1762687AbZD3Q5M (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 30 Apr 2009 12:57:12 -0400
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 2F2EE1351E;
-	Thu, 30 Apr 2009 12:57:11 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 069DF13515; Thu,
- 30 Apr 2009 12:57:04 -0400 (EDT)
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: F27DBB62-35A7-11DE-BD40-D766E3C8547C-77302942!a-sasl-quonix.pobox.com
+	id S1762279AbZD3SnU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 30 Apr 2009 14:43:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752004AbZD3SnU
+	(ORCPT <rfc822;git-outgoing>); Thu, 30 Apr 2009 14:43:20 -0400
+Received: from george.spearce.org ([209.20.77.23]:60534 "EHLO
+	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754507AbZD3SnT (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 30 Apr 2009 14:43:19 -0400
+Received: by george.spearce.org (Postfix, from userid 1001)
+	id 90FC33806F; Thu, 30 Apr 2009 18:43:19 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <b4087cc50904300556s359c91dfu444fa40ea85bd66e@mail.gmail.com>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118033>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118034>
 
-Jon Loeliger <jdl@jdl.com> writes:
+Michael Witten <mfwitten@gmail.com> wrote:
+> On Thu, Apr 30, 2009 at 07:17, Jakub Narebski <jnareb@gmail.com> wrote:
+> > I hope that JGit developers can
+> > tell us whether using higher level language affects performance, how
+> > much, and what features of higher-level language are causing decrease
+> > in performance.
+> 
+> Java is definitely higher than C, but you can do some pretty low-level
+> operations on bits and bytes and the like, not to mention the presence
+> of a JIT.
 
->> > I've been waiting for feedback to a patch proposed earlier in the same
->> > area, which is <49F5BA55.3060606@googlemail.com> ($gmane/117670).  How
->> > does this new one relate to it?
->> ... 
-> So, I wasn't CC'ed on the referenced patch ($gmane/117670), but it
+But its still costly compared to C.
+ 
+> My point: I don't think that Java can tell us anything special in this regard.
 
-You did got CC'ed, but I got a bounce from your freescale address, so this
-time I tried another address of yours I knew about.
+Sure it can.
 
-> seems to me that there might be value in actually looping over the
-> whole list of addrinfo results exactly in the case that it does
-> return a null canonical name for one of its addresses?
+Peff I think made a good point here, that we rely on a lot of small
+tweaks in the C git code to get *really* good performance.  5% here,
+10% there, and suddenly you are 60% faster than you were before.
+Nico, Linus, Junio, they have all spent some time over the past
+3 or 4 years trying to tune various parts of Git to just flat out
+run fast.
 
-That is what I speculated when commenting on ($gmane/117670), but I think
-the original loop was not doing any check, and instead always exited early
-during its first iteration.  Perhaps we can re-add a loop that does
-something useful, but I do not know what it would be offhand.
+Higher level languages hide enough of the machine that we can't
+make all of these optimizations.
 
-> Perhaps an
-> inverse call to getnameinfo() is warranted too?
+JGit struggles with not having mmap(), or when you do use Java NIO
+MappedByteBuffer, we still have to copy to a temporary byte[] in
+order to do any real processing.  C Git avoids that copy.  Sure,
+other higher level langauges may offer a better mmap facility,
+but they also tend to offer garbage collection and most try to tie
+the mmap management into the GC "for safety and ease of use".
 
-In this case the name being looked up is _ours_; it is not like "the
-client claims to be frotz---does frotz reverse map to him correctly?"
-situation, so reverse lookup might not be so interesting.
+JGit struggles with not having unsigned types in Java.  There are
+many locations in JGit where we really need "unsigned int32_t" or
+"unsigned long" (largest machine word available) or "unsigned char"
+but these types just don't exist in Java.  Converting a byte up to
+an int just to treat it as an unsigned requires an extra " & 0xFF"
+operation to remove the sign extension.
 
-There is one thing that could potentially be useful when the daemon runs
-on a multi-homed host; git.jdl.com may have eth1 facing public and eth0
-facing internal networks.  Depending on which address you got the request
-to, you may want to serve different contents, and if you got request to
-"hostname" that is not you as far as getaddrinfo() is concerned, you may
-want to do yet another thing that is different from the two name-addr
-mapping returned by getaddrinfo().
+JGit struggles with not having an efficient way to represent a SHA-1.
+C can just say "unsigned char[20]" and have it inline into the
+container's memory allocation.  A byte[20] in Java will cost an
+*additional* 16 bytes of memory, and be slower to access because
+the bytes themselves are in a different area of memory from the
+container object.  We try to work around it by converting from a
+byte[20] to 5 ints, but that costs us machine instructions.
 
-I do not see enough information to do that kind of thing is passed to the
-parse_extra_args() function in the current callchain, though.  We do have
-a call to getpeername() but we do not seem to do getsockname() to learn
-about our end of the connection.
+C Git takes for granted that memcpy(a, b, 20) is dirt cheap when
+doing a copy from an inflated tree into a struct object.  JGit has
+to pay a huge penalty to copy that 20 byte region out into 5 ints,
+because later on, those 5 ints are cheaper.
+
+Other higher level languages also lack the ability to mark a
+type unsigned.  Or face similiar penalties with storing a 20 byte
+binary region.
+
+Native Java collection types have been a snare for us in JGit.
+We've used java.util.* types when they seem to be handy and already
+solve the data structure problem at hand, but they tend to preform
+a lot worse than writing a specialized data structure.
+
+For example, we have ObjectIdSubclassMap for what should be
+Map<ObjectId,Object>.  Only it requires that the Object type you
+use as the "value" entry in the map extend from ObjectId, as the
+instance serves as both key *and* value.  But it screams when
+compared to HashMap<ObjectId,Object>.  (For those who don't know,
+ObjectId is JGit's "unsigned char[20]" for a SHA-1.)
+
+Just a day or so ago I wrote LongMap, a faster HashMap<Long,Object>,
+for hashing objects by indexes in a pack file.  Again, the boxing
+costs in Java to convert a "long" (largest integer type) into an
+Object that the standard HashMap type would accept was rather high.
+
+Right now, JGit is still paying dearly when it comes to ripping
+apart a commit or a tree object to follow the object links.  Or when
+invoking inflate().  We spend a lot more time doing this sort of work
+than C git does, and yet we're trying to be as close to the machine
+as we can go by using byte[] whenever possible, by avoiding copying
+whenever possible, and avoiding memory allocation when possible.
+
+Notably, `rev-list --objects --all` takes about 2x as long in
+JGit as it does in C Git on a project like the linux kernel, and
+`index-pack` for the full ~270M pack file takes about 2x as long.
+
+Both parts of JGit are about as good as I know how to make them,
+but we're really at the mercy of the JIT, and changes in the JIT
+can cause us to perform worse (or better) than before.  Unlike in
+C Git where Linus has done assembler dumps of sections of code and
+tried to determine better approaches.  :-)
+
+So. Yes, its practical to build Git in a higher level language, but
+you just can't get the same performance, or tight memory utilization,
+that C Git gets.  That's what that higher level language abstraction
+costs you.  But, JGit performs reasonably well; well enough that
+we use internally at Google as a git server.
+
+-- 
+Shawn.
