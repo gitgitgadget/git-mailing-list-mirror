@@ -1,93 +1,79 @@
-From: Finn Arne Gangstad <finnag@pvv.org>
-Subject: Re: [PATCH/RFC 1/2] Add 'git subtree' command for tracking history
-	of subtrees separately.
-Date: Thu, 30 Apr 2009 10:58:53 +0200
-Message-ID: <20090430085853.GA21880@pvv.org>
-References: <1240784983-1477-1-git-send-email-apenwarr@gmail.com> <32541b130904291927m33908bacg2dbafcf64877b88f@mail.gmail.com>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [PATCH] git config: error when editing a repo config and not 
+	being in one
+Date: Thu, 30 Apr 2009 12:11:57 +0300
+Message-ID: <94a0d4530904300211j57903a3ei782b4e3e2f967c8a@mail.gmail.com>
+References: <alpine.DEB.1.00.0904300043030.10279@pacific.mpi-cbg.de>
+	 <1241045387-30181-1-git-send-email-felipe.contreras@gmail.com>
+	 <alpine.DEB.1.00.0904301036380.6621@intel-tinevez-2-302>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Avery Pennarun <apenwarr@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Apr 30 10:59:07 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Teemu Likonen <tlikonen@iki.fi>,
+	Junio C Hamano <gitster@pobox.com>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Thu Apr 30 11:12:24 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LzS6j-0001NS-Ka
-	for gcvg-git-2@gmane.org; Thu, 30 Apr 2009 10:59:06 +0200
+	id 1LzSJb-0007M0-Lk
+	for gcvg-git-2@gmane.org; Thu, 30 Apr 2009 11:12:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753640AbZD3I64 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 30 Apr 2009 04:58:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751329AbZD3I6z
-	(ORCPT <rfc822;git-outgoing>); Thu, 30 Apr 2009 04:58:55 -0400
-Received: from decibel.pvv.ntnu.no ([129.241.210.179]:46077 "EHLO
-	decibel.pvv.ntnu.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751280AbZD3I6y (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 30 Apr 2009 04:58:54 -0400
-Received: from finnag by decibel.pvv.ntnu.no with local (Exim 4.69)
-	(envelope-from <finnag@pvv.ntnu.no>)
-	id 1LzS6Y-0000PH-0R; Thu, 30 Apr 2009 10:58:54 +0200
-Content-Disposition: inline
-In-Reply-To: <32541b130904291927m33908bacg2dbafcf64877b88f@mail.gmail.com>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1759434AbZD3JMA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 30 Apr 2009 05:12:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754170AbZD3JL7
+	(ORCPT <rfc822;git-outgoing>); Thu, 30 Apr 2009 05:11:59 -0400
+Received: from fg-out-1718.google.com ([72.14.220.156]:48275 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753904AbZD3JL7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 30 Apr 2009 05:11:59 -0400
+Received: by fg-out-1718.google.com with SMTP id 16so537585fgg.17
+        for <git@vger.kernel.org>; Thu, 30 Apr 2009 02:11:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=ORFrtmV8FSk8r5upB8T3WWNEoztTx0FW3TMSjnc52wE=;
+        b=hcQWQuBgjgrTCMDO8rJaIVIGphIv/zxruW3u4r46guXmioSecdhbY53euLIUxJxbXV
+         DMwR355ZxRruDd1F+qHSjz0R/ui5ZqtapX5nqPCI/beksfLhRQqFhm/cluwiOGnu7GCK
+         gtmilJJwxQG8Qpe6GSfamYEQUv3N5tmdwSjeQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=XwvrztuS0klY96OK7yE4zBPJmgVvlq8KTQ2z558Mvc2xEO4hPWRmJbRWFA+TEhcANT
+         OYAFnv7PUfKHikhv+SQfHs9zt31HD0IAgqf9cRmgg3UT1QMeEFD9NlPx4Flep+bWLW+r
+         UHkyUwCgjaow3llCJxO3fetL0WOeVK/2RKdYU=
+Received: by 10.86.49.13 with SMTP id w13mr1621786fgw.38.1241082718013; Thu, 
+	30 Apr 2009 02:11:58 -0700 (PDT)
+In-Reply-To: <alpine.DEB.1.00.0904301036380.6621@intel-tinevez-2-302>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118005>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118006>
 
-On Wed, Apr 29, 2009 at 10:27:44PM -0400, Avery Pennarun wrote:
-> Many projects are made of a combination of several subprojects/librar=
-ies and
-> some application-specific code. =A0In some cases, particularly when t=
-he
-> subprojects are all maintained independently, 'git submodule' is the =
-best
-> way to deal with this situation. =A0But if you frequently change the
-> subprojects as part of developing your application, use multiple bran=
-ches,
-> and sometimes want to push your subproject changes upstream, the over=
-head of
-> manually managing submodules can be excessive.
->=20
-> 'git subtree' provides an alternative mechanism, based around the
-> 'git merge -s subtree' merge strategy. =A0Instead of tracking a submo=
-dule
-> separately, you merge its history into your main project, and occasio=
-nally
-> extract a new "virtual history" from your mainline that can be easily=
- merged
-> back into the upstream project. =A0The virtual history can be increme=
-ntally
-> expanded as you make more changes to the superproject.
+On Thu, Apr 30, 2009 at 11:37 AM, Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+> Hi,
+>
+> On Thu, 30 Apr 2009, Felipe Contreras wrote:
+>
+>> Let's throw an error on this specific case. If the user specifies the
+>> config file, he must know what he is doing.
+>>
+>> Teemu Likonen pointed this out.
+>>
+>> Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
+>
+> I would have Acked it, but Junio already applied it ;-)
 
-We have the exact same situation. I wanted to attack this from the
-other end though, make submodules useable also in this scenario. The
-subtree solution seems to be much easier to do in git, so maybe this
-is a better approach!
+:)
 
-Let's say you have three different projects that all use some shared
-modules, The following operations should all be easy and fully
-supported:
+Just for the record, where is people supposed to learn about 'nongit'?
+Apparently it's not mentioned in the documentation.
 
-a) Modify project + some shared modules (in your project) with single c=
-ommit
-b) Push project + shared modules (for your project)
-c) Push modifications to shared modules
-d) Merge upstream version of shared modules into your project.
-
-My quick analysis:
-Your subtrees: a & b are easy, c & d are painful
-Current submodules: a & b are painful, c & d are tolerable (somewhat te=
-dious
-with many shared modules, easy with one)
-
-Subtrees also have the advantage that all the existing local tools
-will be a lot more useful without any modifications (gitk, git gui,
-git diff/patch/am/log/...)
-
-To make subtrees realy useful, it would be good if you could improve c
-& d, syncing with the shared modules!
-
-- Finn Arne
+-- 
+Felipe Contreras
