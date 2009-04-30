@@ -1,116 +1,93 @@
-From: Martin Langhoff <martin.langhoff@gmail.com>
-Subject: Re: git svn errors out with git-cat-file "usage" message
-Date: Thu, 30 Apr 2009 10:53:08 +0200
-Message-ID: <46a038f90904300153v22aa3e9fo407ff5084b58b5fc@mail.gmail.com>
-References: <46a038f90904290811p33332bd5h1d397734907ba9c2@mail.gmail.com>
-	 <32541b130904291150k75a0433fnb29ea59f654a17f7@mail.gmail.com>
-	 <49F8B7D1.2090903@drmicha.warpmail.net>
-	 <46a038f90904291347i2ed158aaya7505e1bd11cd392@mail.gmail.com>
-	 <49F8C127.4000400@drmicha.warpmail.net>
-	 <46a038f90904300018u7101943blef084dc907a04c8d@mail.gmail.com>
+From: Finn Arne Gangstad <finnag@pvv.org>
+Subject: Re: [PATCH/RFC 1/2] Add 'git subtree' command for tracking history
+	of subtrees separately.
+Date: Thu, 30 Apr 2009 10:58:53 +0200
+Message-ID: <20090430085853.GA21880@pvv.org>
+References: <1240784983-1477-1-git-send-email-apenwarr@gmail.com> <32541b130904291927m33908bacg2dbafcf64877b88f@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Avery Pennarun <apenwarr@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Mihai Sucan <mihai.sucan@gmail.com>
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Thu Apr 30 10:53:32 2009
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Avery Pennarun <apenwarr@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Apr 30 10:59:07 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LzS1K-0007JN-4S
-	for gcvg-git-2@gmane.org; Thu, 30 Apr 2009 10:53:30 +0200
+	id 1LzS6j-0001NS-Ka
+	for gcvg-git-2@gmane.org; Thu, 30 Apr 2009 10:59:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752219AbZD3IxM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 30 Apr 2009 04:53:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751323AbZD3IxL
-	(ORCPT <rfc822;git-outgoing>); Thu, 30 Apr 2009 04:53:11 -0400
-Received: from mail-fx0-f158.google.com ([209.85.220.158]:39036 "EHLO
-	mail-fx0-f158.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751115AbZD3IxK (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 30 Apr 2009 04:53:10 -0400
-Received: by fxm2 with SMTP id 2so1674327fxm.37
-        for <git@vger.kernel.org>; Thu, 30 Apr 2009 01:53:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=b2Acq6ZaDnZ6Mq7VkJsGC9gp2AkvFrdM5k7d9tArquo=;
-        b=SSImWtGWoukax2LtUk31cMGGFTkhkDd66uypSfO5JA9zRUMahSlbutQZLVkOgOERtJ
-         7732jrsT9lXDs40/b2FsxT4HCclPZLXZSxMFI/4W99Vmo2ulfos4g0Z6+UvpF3YbuOkU
-         PuJRoA2j05dH6y8npNwjW3cZTLGdFKMsvvvs8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=gKowZBCIBKEcELsPX151E5jEgY5AOLSHjEbNi5cbTB1ytOS9Ffs27rSAqpPeN0dHY9
-         bKkxnMflxRwrMHzr0KWzPEh5RSkXmrciS22XqIm5DXxi9XgM9grmf4lDYTrc8Yo2lzuG
-         Z1Mu5vhZHrt8hW3qZkOB+eRFur3kor5Oh4/L0=
-Received: by 10.204.116.8 with SMTP id k8mr1234268bkq.110.1241081588336; Thu, 
-	30 Apr 2009 01:53:08 -0700 (PDT)
-In-Reply-To: <46a038f90904300018u7101943blef084dc907a04c8d@mail.gmail.com>
+	id S1753640AbZD3I64 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 30 Apr 2009 04:58:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751329AbZD3I6z
+	(ORCPT <rfc822;git-outgoing>); Thu, 30 Apr 2009 04:58:55 -0400
+Received: from decibel.pvv.ntnu.no ([129.241.210.179]:46077 "EHLO
+	decibel.pvv.ntnu.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751280AbZD3I6y (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 30 Apr 2009 04:58:54 -0400
+Received: from finnag by decibel.pvv.ntnu.no with local (Exim 4.69)
+	(envelope-from <finnag@pvv.ntnu.no>)
+	id 1LzS6Y-0000PH-0R; Thu, 30 Apr 2009 10:58:54 +0200
+Content-Disposition: inline
+In-Reply-To: <32541b130904291927m33908bacg2dbafcf64877b88f@mail.gmail.com>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118004>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118005>
 
-On Thu, Apr 30, 2009 at 9:18 AM, Martin Langhoff
-<martin.langhoff@gmail.com> wrote:
-> Bingo! Yes,
->
-> ~$ which git-cat-file
-> /usr/bin/git-cat-file
-> ~$ /usr/bin/git version
-> git version 1.5.6.3
+On Wed, Apr 29, 2009 at 10:27:44PM -0400, Avery Pennarun wrote:
+> Many projects are made of a combination of several subprojects/librar=
+ies and
+> some application-specific code. =A0In some cases, particularly when t=
+he
+> subprojects are all maintained independently, 'git submodule' is the =
+best
+> way to deal with this situation. =A0But if you frequently change the
+> subprojects as part of developing your application, use multiple bran=
+ches,
+> and sometimes want to push your subproject changes upstream, the over=
+head of
+> manually managing submodules can be excessive.
+>=20
+> 'git subtree' provides an alternative mechanism, based around the
+> 'git merge -s subtree' merge strategy. =A0Instead of tracking a submo=
+dule
+> separately, you merge its history into your main project, and occasio=
+nally
+> extract a new "virtual history" from your mainline that can be easily=
+ merged
+> back into the upstream project. =A0The virtual history can be increme=
+ntally
+> expanded as you make more changes to the superproject.
 
-Actually, after removing the git-core package and all its dependencies...
+We have the exact same situation. I wanted to attack this from the
+other end though, make submodules useable also in this scenario. The
+subtree solution seems to be much easier to do in git, so maybe this
+is a better approach!
 
-# same git version that succeeds on Fedora 9, here says:
-$ git svn  clone  -T trunk  http://paintweb.googlecode.com/svn paintweb.git
-usage: git-cat-file [-t|-s|-e|-p|<type>] <sha1>
-error closing pipe: Broken pipe at
-/home/martin/libexec/git-core/git-svn line 3252
-cat-file --batch: command returned error: 129
+Let's say you have three different projects that all use some shared
+modules, The following operations should all be easy and fully
+supported:
 
-error closing pipe: Bad file descriptor at
-/home/martin/libexec/git-core/git-svn line 0
-error closing pipe: Bad file descriptor at
-/home/martin/libexec/git-core/git-svn line 0
-$ git version
-git version 1.6.0.6
+a) Modify project + some shared modules (in your project) with single c=
+ommit
+b) Push project + shared modules (for your project)
+c) Push modifications to shared modules
+d) Merge upstream version of shared modules into your project.
 
-# a newer git says...
-$ git svn clone -T trunk --ignore-paths releases
-http://paintweb.googlecode.com/svn paintweb.git
-usage: git-cat-file [-t|-s|-e|-p|<type>] <sha1>
-Unexpected result returned from git cat-file at
-/home/martin/libexec/git-core/git-svn line 3526
-Failed to read object 4b90eef95225bb9e34000e050d0cac8b84ab36f6 at
-/home/martin/libexec/git-core/git-svn line 3527.
+My quick analysis:
+Your subtrees: a & b are easy, c & d are painful
+Current submodules: a & b are painful, c & d are tolerable (somewhat te=
+dious
+with many shared modules, easy with one)
 
-$ git version
-git version 1.6.2.4.10.g2254d
+Subtrees also have the advantage that all the existing local tools
+will be a lot more useful without any modifications (gitk, git gui,
+git diff/patch/am/log/...)
 
-... the plot thickens...
+To make subtrees realy useful, it would be good if you could improve c
+& d, syncing with the shared modules!
 
-There is nothing in my env that would confuse git -- and my PATH has
-~/bin as the first entry, trumping everything else. So perhaps the
-debian package had nothing to do with this?
-
-Perl SVN bindings? How do I debug that side of things?
-
-cheers,
-
-
-
-m
--- 
- martin.langhoff@gmail.com
- martin@laptop.org -- School Server Architect
- - ask interesting questions
- - don't get distracted with shiny stuff  - working code first
- - http://wiki.laptop.org/go/User:Martinlanghoff
+- Finn Arne
