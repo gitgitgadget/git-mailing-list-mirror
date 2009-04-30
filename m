@@ -1,82 +1,94 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Why Git is so fast
-Date: Thu, 30 Apr 2009 17:28:04 +0200
-Message-ID: <200904301728.06989.jnareb@gmail.com>
-References: <46a038f90904270155i6c802fceoffc73eb5ab57130e@mail.gmail.com> <m3fxfqnxn5.fsf_-_@localhost.localdomain> <b4087cc50904300556s359c91dfu444fa40ea85bd66e@mail.gmail.com>
+From: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
+Subject: Re: question about a merge result
+Date: Thu, 30 Apr 2009 17:39:17 +0200
+Message-ID: <20090430153917.GB18940@atjola.homenet>
+References: <38b2ab8a0904300521m9e31867j7848135acfae0faa@mail.gmail.com> <49F99AE3.5090406@gmx.net> <20090430142635.GB23550@coredump.intra.peff.net> <38b2ab8a0904300805j5ce19617mdda3254c37d06d38@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: Martin Langhoff <martin.langhoff@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Michael Witten <mfwitten@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Apr 30 17:28:23 2009
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jeff King <peff@peff.net>, Michael Gaber <Michael.Gaber@gmx.net>,
+	git@vger.kernel.org
+To: Francis Moreau <francis.moro@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Apr 30 17:39:44 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LzYBS-0005VH-IA
-	for gcvg-git-2@gmane.org; Thu, 30 Apr 2009 17:28:23 +0200
+	id 1LzYMM-0003MW-V9
+	for gcvg-git-2@gmane.org; Thu, 30 Apr 2009 17:39:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761492AbZD3P2N (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 30 Apr 2009 11:28:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758345AbZD3P2N
-	(ORCPT <rfc822;git-outgoing>); Thu, 30 Apr 2009 11:28:13 -0400
-Received: from mail-ew0-f176.google.com ([209.85.219.176]:61515 "EHLO
-	mail-ew0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756559AbZD3P2M (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 30 Apr 2009 11:28:12 -0400
-Received: by ewy24 with SMTP id 24so1974925ewy.37
-        for <git@vger.kernel.org>; Thu, 30 Apr 2009 08:28:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=Z7tpp64XUtZba96OVatYlUBl3ysIgQjbKpEUecg4ZUY=;
-        b=IhjBZMrrQJUVh2FoBSonuvC/S5Gx7oAcCCLC7w1hgnwEvmBBCRvI6zqcBPvwL60wh+
-         qAzcyUlkaZGZnrSjDhzZ+AGHOhQTAoGcv5Qfr1lkZhvKOD723cw2snQ9MgtsRFRnElWN
-         mh4cGUMRwwkiTSOAX6q3fLW6X83WNo3Pi2S4g=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=kLJfjvuaBONgxrEmyKC6egl+bh66CNt0MwkKtfuIK8MdFdDRpzxiXWkzg4Bi15xkbP
-         MYC6NN7z4eabC3Exh8fFw/R5p1TcSh4/+pSZ5ALqpe/8GW3wHQOsuAVrkD4/9yjQ6P63
-         TyPNgTmDwfh9R3PE0gWyDziBtat8yNUxBUvGQ=
-Received: by 10.216.19.212 with SMTP id n62mr540739wen.66.1241105291149;
-        Thu, 30 Apr 2009 08:28:11 -0700 (PDT)
-Received: from ?192.168.1.13? (abwf75.neoplus.adsl.tpnet.pl [83.8.229.75])
-        by mx.google.com with ESMTPS id j8sm5949394gvb.11.2009.04.30.08.28.10
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 30 Apr 2009 08:28:10 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <b4087cc50904300556s359c91dfu444fa40ea85bd66e@mail.gmail.com>
+	id S932230AbZD3PjW convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 30 Apr 2009 11:39:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756649AbZD3PjV
+	(ORCPT <rfc822;git-outgoing>); Thu, 30 Apr 2009 11:39:21 -0400
+Received: from mail.gmx.net ([213.165.64.20]:48536 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1754063AbZD3PjV (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 30 Apr 2009 11:39:21 -0400
+Received: (qmail invoked by alias); 30 Apr 2009 15:39:18 -0000
+Received: from i59F5732C.versanet.de (EHLO atjola.local) [89.245.115.44]
+  by mail.gmx.net (mp061) with SMTP; 30 Apr 2009 17:39:18 +0200
+X-Authenticated: #5039886
+X-Provags-ID: V01U2FsdGVkX1+vNtIRvSivIiOTKgavJXrDPVdIdZcNqCieO6fyYy
+	Bl5IlLoiK8pqLn
 Content-Disposition: inline
+In-Reply-To: <38b2ab8a0904300805j5ce19617mdda3254c37d06d38@mail.gmail.com>
+User-Agent: Mutt/1.5.18 (2008-05-17)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.57
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118025>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118026>
 
-On Thu, 30 Apr 2009, Michael Witten wrote:
-> On Thu, Apr 30, 2009 at 07:17, Jakub Narebski <jnareb@gmail.com> wrote:
+On 2009.04.30 17:05:19 +0200, Francis Moreau wrote:
+> On Thu, Apr 30, 2009 at 4:26 PM, Jeff King <peff@peff.net> wrote:
+> > On Thu, Apr 30, 2009 at 02:34:43PM +0200, Michael Gaber wrote:
+> >
+> >> > So merging 'b1' into master removed the B file even if in branch=
+ 'b1'
+> >> > I restored it.
+> >> >
+> >> > Could anybody explain me why this is the correct behaviour and w=
+hy not
+> >> > file 'B' is not restored as it was done in branch 'b1' ?
+> >>
+> >> well, I'd say the thing is, that in b1 there is no change at all t=
+o the
+> >> tree anymore, so when applied to master (without B) there is no b =
+restored
+> >
+> > That is exactly it. Git's 3-way merge doesn't look at the interveni=
+ng
+> > history at all. It looks _only_ at the two endpoints and their
+> > merge-base (well, that is a bit of a simplification, as there may b=
+e
+> > multiple merge-bases, but it is what is happening here).
+> >
+>=20
+> Well, obviously it's how git works since it's what I got.
+>=20
+> But the question was more about if the cortectness of the end result:
+> should 'B' removed after the merge.
+>=20
+> IOW if someone works on its own branch remove B file and thought it
+> was a bad idea and restore it whereas another person remove B file bu=
+t
+> miss the fact that it was a bad idea, does the merge should silently
+> remove B file ?
 
-> > I hope that JGit developers can
-> > tell us whether using higher level language affects performance, how
-> > much, and what features of higher-level language are causing decrease
-> > in performance.
-> 
-> Java is definitely higher than C, but you can do some pretty low-level
-> operations on bits and bytes and the like, not to mention the presence
-> of a JIT.
-> 
-> My point: I don't think that Java can tell us anything special in this regard.
+You can also have that in the opposite direction. You make a bugfix in
+your "master" branch, then cherry-pick that to "maint", but later
+realize that you actually can't backport it like and and revert the
+cherry-pick.  Then, later, you go to merge "maint" to "master" (to get
+other bugfixes that were done directly on "maint"): Should the bugfix b=
+e
+reverted on "master"? Obviously not.
 
-Let's rephrase question a bit then: what low-level operation were needed
-for good performance in JGit? 
+git takes an approach that's easy to understand: Look at the changes
+that the branch made compared to the common ancestor and apply those.
+And for a "do it and then revert it" case, the answer is: There are no
+changes.
 
--- 
-Jakub Narebski
-Poland
+Bj=F6rn
