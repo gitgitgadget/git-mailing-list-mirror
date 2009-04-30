@@ -1,318 +1,309 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: What's in git.git (Apr 2009, #02; Wed, 29)
-Date: Wed, 29 Apr 2009 22:33:25 -0700
-Message-ID: <7v4ow6wvru.fsf@gitster.siamese.dyndns.org>
+Subject: What's cooking in git.git (Apr 2009, #04; Wed, 29)
+Date: Wed, 29 Apr 2009 22:33:29 -0700
+Message-ID: <7vy6tivh7a.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=us-ascii
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Apr 30 07:33:46 2009
+X-From: git-owner@vger.kernel.org Thu Apr 30 07:33:50 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LzOu1-0005tK-Bu
-	for gcvg-git-2@gmane.org; Thu, 30 Apr 2009 07:33:46 +0200
+	id 1LzOu2-0005tK-AU
+	for gcvg-git-2@gmane.org; Thu, 30 Apr 2009 07:33:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751544AbZD3Fdb convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 30 Apr 2009 01:33:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751306AbZD3Fdb
-	(ORCPT <rfc822;git-outgoing>); Thu, 30 Apr 2009 01:33:31 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:36452 "EHLO
+	id S1751329AbZD3Fdg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 30 Apr 2009 01:33:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751758AbZD3Fdf
+	(ORCPT <rfc822;git-outgoing>); Thu, 30 Apr 2009 01:33:35 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:36470 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751140AbZD3Fda convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 30 Apr 2009 01:33:30 -0400
+	with ESMTP id S1751729AbZD3Fde (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 30 Apr 2009 01:33:34 -0400
 Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 44578AF686;
-	Thu, 30 Apr 2009 01:33:29 -0400 (EDT)
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 04FAFAF689;
+	Thu, 30 Apr 2009 01:33:34 -0400 (EDT)
 Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 0F878AF684; Thu,
- 30 Apr 2009 01:33:26 -0400 (EDT)
-X-maint-at: a2dc04ba159def766ee17db00c60bdbda477955d
+ a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id D504DAF688; Thu,
+ 30 Apr 2009 01:33:31 -0400 (EDT)
 X-master-at: 6ffd567bec439e7809ee0966556bd5e72fb78de4
+X-next-at: 8c6980a6544dcc03e45b1d63d624544f3bfa1b94
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 6F847250-3548-11DE-A69D-CABC03BA4B0C-77302942!a-sasl-fastnet.pobox.com
+X-Pobox-Relay-ID: 7257BE6A-3548-11DE-ADB9-CABC03BA4B0C-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117989>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117990>
 
-It's been a while since I sent the "What's in" report.  Hopefully we ca=
-n
-do an -rc4 this weekend and then 1.6.3 final next week.
+Here are the topics that have been cooking.  Commits prefixed with '-' are
+only in 'pu' while commits prefixed with '+' are in 'next'.  The ones
+marked with '.' do not appear in any of the branches, but I am still
+holding onto them.
 
-* The 'maint' branch has these fixes since 1.6.2.3
+The topics list the commits in reverse chronological order.  The topics
+meant to be merged to the maintenance series have "maint-" in their names.
 
-Allan Caffee (2):
-  builtin-merge: fix a typo in an error message
-  Documentation: fix a grammatical error in api-builtin.txt
+----------------------------------------------------------------
+[New Topics]
 
-Bj=C3=B6rn Steinbrink (1):
-  tree_entry_interesting: a pathspec only matches at directory boundary
+* cc/bisect (Fri Apr 24 08:29:01 2009 +0200) 10 commits
+ - am: simplify "sq" function by using "git rev-parse --sq-quote"
+ - bisect: use "git rev-parse --sq-quote" instead of a custom "sq"
+   function
+ - rev-parse: add --sq-quote to shell quote arguments
+ - rev-list: remove stringed output flag from "show_bisect_vars"
+ - bisect--helper: remove "--next-vars" option as it is now useless
+ - bisect: use "git bisect--helper --next-exit" in "git-bisect.sh"
+ - bisect--helper: add "--next-exit" to output bisect results
+ - bisect: move common bisect functionality to "bisect_common"
+ - rev-list: refactor printing bisect vars
+ - rev-list: make "estimate_bisect_steps" non static
 
-Clemens Buchacher (3):
-  add tests for merging with submodules
-  update cache for conflicting submodule entries
-  simplify output of conflicting merge
+* mh/show-branch-color (Sat Apr 25 13:46:14 2009 +0200) 2 commits
+ + bash completion: show-branch color support
+ + show-branch: color the commit status signs
 
-Erik Faye-Lund (4):
-  test-suite: adding a test for fast-export with tag variants
-  builtin-fast-export.c: turn error into warning
-  builtin-fast-export.c: fix crash on tagged trees
-  builtin-fast-export.c: handle nested tags
+* ac/graph-horizontal-line (Tue Apr 21 08:47:01 2009 -0400) 1 commit
+ + graph API: Use horizontal lines for more compact graphs
 
-=46rank Lichtenheld (2):
-  init: Do not segfault on big GIT_TEMPLATE_DIR environment variable
-  gitcvs-migration: Link to git-cvsimport documentation
+* ar/merge-one-file-diag (Wed Apr 29 23:40:50 2009 +0200) 1 commit
+ - Clarify kind of conflict in merge-one-file helper
 
-Jeff King (2):
-  doc/gitattributes: clarify location of config text
-  add-interactive: refactor mode hunk handling
+* mh/diff-stat-color (Sat Apr 25 00:06:47 2009 +0200) 1 commit
+ - diff: do not color --stat output like patch context
 
-Johan Herland (1):
-  Update docs on behaviour of 'core.sharedRepository' and 'git init
-    --shared'
+* rc/http-push (Sat Apr 25 00:35:57 2009 +0800) 3 commits
+ . http-push: send out fetch requests on queue
+ . t5540-http-push: test fetching of packed objects
+ . t5540-http-push: test fetching of loose objects
 
-Johannes Schindelin (2):
-  Fix 'git checkout <submodule>' to update the index
-  Fix off-by-one in read_tree_recursive
+Breaks build in a trivial way; which I haven't got around fixing it up.
 
-Johannes Sixt (1):
-  t1301-shared-repo: fix forced modes test
+* ae/anon-fetch-info (Fri Apr 17 10:20:11 2009 +0200) 1 commit
+ + fetch: Strip usernames from url's before storing them
 
-Junio C Hamano (4):
-  match_tree_entry(): a pathspec only matches at directory boundaries
-  Describe fixes since 1.6.2.3
-  GIT 1.6.2.4
-  diff -c -p: do not die on submodules
+* ar/unlink-err (Wed Apr 29 23:24:52 2009 +0200) 3 commits
+ - print unlink(2) errno in copy_or_link_directory
+ - replace direct calls to unlink(2) with unlink_or_warn
+ - Introduce an unlink(2) wrapper which gives warning if unlink
+   failed
 
-Junio Hamano (1):
-  Speed up reflog pruning of unreachable commits
+* ph/submodule-rebase (Fri Apr 24 09:06:38 2009 +1000) 1 commit
+ - git-submodule: add support for --rebase.
 
-Linus Torvalds (2):
-  Clean up reflog unreachability pruning decision
-  grep: fix segfault when "git grep '('" is given
+----------------------------------------------------------------
+[Graduated to "master"]
 
-Markus Heidelberg (2):
-  doc/git-daemon: add missing arguments to options
-  doc/git-daemon: add missing arguments to max-connections option
+It's been a while since I sent "What's cooking" out, and some of the
+topics below have fixes on top directly applied since they graduated.
 
-Matthieu Moy (2):
-  git add -p: new "quit" command at the prompt.
-  Update git-add.txt according to the new possibilities of 'git add -p'=
-=2E
+* ac/color-graph (Mon Apr 13 15:53:41 2009 -0400) 1 commit
+ + graph API: Added logic for colored edges
 
-Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy (1):
-  Makefile: remove {fetch,send}-pack from PROGRAMS as they are builtins
+* jk/cobdoc (Mon Apr 13 07:21:04 2009 -0400) 5 commits
+ + docs/checkout: clarify what "non-branch" means
+ + doc/checkout: split checkout and branch creation in synopsis
+ + doc/checkout: refer to git-branch(1) as appropriate
+ + doc: refer to tracking configuration as "upstream"
+ + doc: clarify --no-track option
 
-Paul Bolle (1):
-  imap-send: use correct configuration variable in documentation
+* mk/apply-swap (Sat Apr 11 21:31:00 2009 +0200) 2 commits
+ + builtin-apply: keep information about files to be deleted
+ + tests: test applying criss-cross rename patch
 
-Stephen Boyd (1):
-  test-genrandom: Add newline to usage string
+Perhaps needs to be cherry-picked to 1.6.2.X series as well.
 
-Thomas Jarosch (1):
-  Fix buffer overflow in config parser
+* mm/add-p-quit (Fri Apr 10 16:57:01 2009 +0200) 1 commit
+ + git add -p: new "quit" command at the prompt.
 
-Ulrich Windl (1):
-  git-apply: fix option description
+* eb/upload-archive-from-git-shell (Thu Apr 9 21:58:52 2009 +0200) 1 commit
+ + git-shell: Add 'git-upload-archive' to allowed commands.
 
+* jc/shared-literally (Sun Apr 12 17:55:18 2009 -0700) 2 commits
+ + Mark t1301 permission test to depend on POSIXPERM
+ + t1301-shared-repo: fix forced modes test
 
-* The 'master' branch has these since 1.6.3-rc0
-  in addition to the above.
+* jc/maint-shared-literally (Sun Apr 12 21:22:02 2009 +0200) 1 commit
+ + t1301-shared-repo: fix forced modes test
 
-Alex Riesen (3):
-  Wait for git diff to finish in git difftool
-  Explain seemingly pointless use of system in difftool
-  improve error message in config.c
+* ns/am-to-empty (Fri Apr 10 09:34:42 2009 +0900) 1 commit
+ + git-am: teach git-am to apply a patch to an unborn branch
 
-Allan Caffee (4):
-  graph API: Added logic for colored edges
-  t4202-log: extend test coverage of graphing
-  graph API: fix extra space during pre_commit_line state
-  graph API: fix a bug in the rendering of octopus merges
+* bw/short-ref-strict (Mon Apr 13 13:20:26 2009 +0200) 3 commits
+ + rev-parse: --abbrev-ref option to shorten ref name
+ + for-each-ref: utilize core.warnAmbiguousRefs for :short-format
+ + shorten_unambiguous_ref(): add strict mode
 
-Ben Jackson (1):
-  Work around ash "alternate value" expansion bug
+* da/difftool (Sat Apr 11 20:41:56 2009 -0700) 16 commits
+ + mergetool--lib: simplify API usage by removing more global
+   variables
+ + Fix misspelled mergetool.keepBackup
+ + difftool/mergetool: refactor commands to use git-mergetool--lib
+ + mergetool: use $( ... ) instead of `backticks`
+ + bash completion: add git-difftool
+ + difftool: add support for a difftool.prompt config variable
+ + difftool: add various git-difftool tests
+ + difftool: move 'git-difftool' out of contrib
+ + difftool/mergetool: add diffuse as merge and diff tool
+ + difftool: add a -y shortcut for --no-prompt
+ + difftool: use perl built-ins when testing for msys
+ + difftool: remove the backup file feature
+ + difftool: remove merge options for opendiff, tkdiff, kdiff3 and
+   xxdiff
+ + git-mergetool: add new merge tool TortoiseMerge
+ + git-mergetool/difftool: make (g)vimdiff workable under Windows
+ + doc/merge-config: list ecmerge as a built-in merge tool
 
-Benjamin Kramer (2):
-  connect: replace inet_ntop with getnameinfo
-  daemon.c: fix segfault on OS X
+* lt/bool-on-off (Thu Apr 9 12:40:39 2009 -0700) 1 commit
+ + Allow users to un-configure rename detection
 
-Bert Wesarg (3):
-  shorten_unambiguous_ref(): add strict mode
-  for-each-ref: utilize core.warnAmbiguousRefs for :short-format
-  rev-parse: --abbrev-ref option to shorten ref name
+* lt/pack-object-memuse (Fri Apr 10 18:15:26 2009 -0700) 2 commits
+ + show_object(): push path_name() call further down
+ + process_{tree,blob}: show objects without buffering
 
-Bill Pemberton (1):
-  Add parsing of elm aliases to git-send-email
+* nd/archive-attribute (Mon Apr 13 14:18:39 2009 +0200) 5 commits
+ + archive test: test new --fix-attributes feature
+ + archive: do not read .gitattributes in working directory
+ + unpack-trees: do not muck with attributes when we are not checking
+   out
+ + attr: add GIT_ATTR_INDEX "direction"
+ + archive tests: do not use .gitattributes in working directory
 
-Brandon Casey (2):
-  t9001: use older Getopt::Long boolean prefix '--no' rather than '--no=
--'
-  t7700-repack: repack -a now works properly, expect success from test
+----------------------------------------------------------------
+[Stalled and may need help and prodding to go forward]
 
-Dan Loewenherz (1):
-  Convert to use quiet option when available
+* ps/blame (Thu Mar 12 21:30:03 2009 +1100) 1 commit
+ - blame.c: start libifying the blame infrastructure
 
-David Aguilar (11):
-  difftool: remove merge options for opendiff, tkdiff, kdiff3 and xxdif=
-f
-  difftool: remove the backup file feature
-  difftool: use perl built-ins when testing for msys
-  difftool: add a -y shortcut for --no-prompt
-  difftool: move 'git-difftool' out of contrib
-  difftool: add various git-difftool tests
-  difftool: add support for a difftool.prompt config variable
-  bash completion: add git-difftool
-  mergetool: use $( ... ) instead of `backticks`
-  difftool/mergetool: refactor commands to use git-mergetool--lib
-  mergetool--lib: simplify API usage by removing more global variables
+A few minor point remains in this initial one.  I hate to do these minor
+fix-ups myself, but I may end up doing so...
 
-Eric Blake (2):
-  Makefile: installing git in cygwin 1.7.0
-  doc: consistently use ASCIIDOC_EXTRA
+* jc/log-tz (Tue Mar 3 00:45:37 2009 -0800) 1 commit
+ - Allow --date=local --date=other-format to work as expected
 
-Erik Broes (1):
-  git-shell: Add 'git-upload-archive' to allowed commands.
+The one I posted had a few corner-case bugs that was caught with the test
+suite; this one has them fixed.  People did not like the UI so it is kept
+out of 'next'
 
-=46elipe Contreras (1):
-  git config: error when editing a repo config and not being in one
+* jc/merge-convert (Mon Jan 26 16:45:01 2009 -0800) 1 commit
+ - git-merge-file: allow converting the results for the work tree
 
-=46erry Huberts (1):
-  Fix misspelled mergetool.keepBackup
+This is a feature waiting for a user.
 
-Holger Wei=C3=9F (1):
-  gitweb: Fix snapshots requested via PATH_INFO
+We did not give scripted Porcelains a way to say "this temporary file I am
+using for merging is for this path, so use the core.autocrlf and attributes
+rules for that final path".  Instead, merge-file simply wrote out the
+data in the canonical repository representation.
 
-Jeff King (8):
-  doc: clarify --no-track option
-  doc: refer to tracking configuration as "upstream"
-  doc/checkout: refer to git-branch(1) as appropriate
-  doc/checkout: split checkout and branch creation in synopsis
-  docs/checkout: clarify what "non-branch" means
-  add-interactive: refactor mode hunk handling
-  t7800: respect NO_PERL
-  Makefile: fix NO_PERL bug with gitweb
+rerere has the same issue, but it is a lot worse.  It reads the three
+files (preimage, postimage and thisimage) from the work tree in the work
+tree representation, merges them without converting them to the canonical
+representation first but inserts the conflict markers with the canonical
+representation and writes the resulting mess out.  It needs to be fixed to
+read with convert_to_git(), merge them while they are still in the
+canonical representation and possibly add conflict markers, and then write
+the results out after convert_to_working_tree().  It also needs to write
+in binary mode as well.
 
-Johannes Schindelin (3):
-  Add an option not to use link(src, dest) && unlink(src) when that is
-    unreliable
-  t5701: do not get stuck in empty-push/
-  Rename core.unreliableHardlinks to core.createObject
+* db/foreign-scm (Tue Mar 24 23:04:12 2009 -0400) 3 commits
+ - Add option for using a foreign VCS
+ - Document details of transport function APIs
+ - Allow late reporting of fetched hashes
 
-Johannes Sixt (5):
-  Windows: Work around intermittent failures in mingw_rename
-  Windows: Skip fstat/lstat optimization in write_entry()
-  builtin-help: silently tolerate unknown keys
-  remote.c: do not trigger remote.<name>.<var> codepath for two-level n=
-ames
-  prune-packed: advanced progress even for non-existing fan-out directo=
-ries
+* js/notes (Tue Apr 14 00:03:36 2009 +0200) 15 commits
+ - Documentation: fix 'linkgit' macro in "git-notes.txt"
+ - tests: fix "export var=val"
+ - notes: refuse to edit notes outside refs/notes/
+ - t3301: use test_must_fail instead of !
+ - t3301: fix confusing quoting in test for valid notes ref
+ - notes: use GIT_EDITOR and core.editor over VISUAL/EDITOR
+ - notes: only clean up message file when editing
+ - handle empty notes gracefully
+ - git notes show: test empty notes
+ - git-notes: fix printing of multi-line notes
+ - notes: fix core.notesRef documentation
+ - Add an expensive test for git-notes
+ - Speed up git notes lookup
+ - Add a script to edit/inspect notes
+ - Introduce commit notes
 
-Junio C Hamano (11):
-  gitignore git-bisect--helper
-  unpack-trees: do not muck with attributes when we are not checking ou=
-t
-  Update draft release notes to 1.6.3
-  read-tree A B: do not corrupt cache-tree
-  Move prime_cache_tree() to cache-tree.c
-  read-tree -m A B: prime cache-tree from the switched-to tree
-  checkout branch: prime cache-tree fully
-  Revert "stat_tracking_info(): only count real commits"
-  Makefile: ignore perl/ subdirectory under NO_PERL
-  GIT 1.6.3-rc2
-  merge-recursive: do not die on a conflicting submodule
+* hv/cvsps-tests (Sun Apr 5 01:40:50 2009 -0700) 8 commits
+ - t/t9600: remove exit after test_done
+ - cvsimport: extend testcase about patchset order to contain
+   branches
+ - cvsimport: add test illustrating a bug in cvsps
+ + Add a test of "git cvsimport"'s handling of tags and branches
+ + Add some tests of git-cvsimport's handling of vendor branches
+ + Test contents of entire cvsimported "master" tree contents
+ + Use CVS's -f option if available (ignore user's ~/.cvsrc file)
+ + Start a library for cvsimport-related tests
 
-Linus Torvalds (4):
-  Allow users to un-configure rename detection
-  process_{tree,blob}: show objects without buffering
-  show_object(): push path_name() call further down
-  t4202: fix typo
+Two cvsimport test topics were rewound from 'next' and merged into this
+one.  I'll keep this in 'pu' so that people can polish their cvsps skilz
+to resolve issues these tests identify.
 
-Mark Drago (1):
-  Add semicolon to curly brace group in main Makefile
+----------------------------------------------------------------
+[Actively cooking]
 
-Markus Heidelberg (4):
-  doc/merge-config: list ecmerge as a built-in merge tool
-  git-mergetool/difftool: make (g)vimdiff workable under Windows
-  git-mergetool: add new merge tool TortoiseMerge
-  grep: don't support "grep.color"-like config options
+* mw/send-email (Mon Apr 13 13:23:52 2009 -0500) 6 commits
+ - send-email: Remove superfluous `my $editor = ...'
+ - send-email: 'References:' should only reference what is sent
+ - send-email: Handle "GIT:" rather than "GIT: " during --compose
+ - Docs: send-email: --smtp-server-port can take symbolic ports
+ - Docs: send-email: Refer to CONFIGURATION section for
+   sendemail.multiedit
+ - Docs: send-email: Put options back into alphabetical order
 
-Matthieu Moy (3):
-  git add -p: new "quit" command at the prompt.
-  Update git-add.txt according to the new possibilities of 'git add -p'=
-=2E
-  clone: add test for push on an empty clone.
+Only partially queued, but this is not 1.6.3 material and we are not in a
+hurry.
 
-Michael J Gruber (3):
-  remote.c: use shorten_unambiguous_ref
-  test-lib.sh: Help test_create_repo() find the templates dir
-  Fix more typos/spelling in comments
+* js/add-edit (Mon Apr 27 19:51:42 2009 +0200) 2 commits
+ + t3702: fix reliance on SHELL_PATH being '/bin/sh'
+ + git-add: introduce --edit (to edit the diff vs. the index)
 
-Micha=C5=82 Kiedrowicz (6):
-  tests: test applying criss-cross rename patch
-  builtin-apply: keep information about files to be deleted
-  Documentation: boolean value may be given by on/off
-  tests: test applying criss-cross rename patch
-  builtin-apply: keep information about files to be deleted
-  tests: make test-apply-criss-cross-rename more robust
+* cc/replace (Tue Apr 14 00:36:59 2009 +0200) 13 commits
+ - Documentation: add documentation for "git replace"
+ - Add git-replace to .gitignore
+ - builtin-replace: use "usage_msg_opt" to give better error messages
+ - parse-options: add new function "usage_msg_opt"
+ - builtin-replace: teach "git replace" to actually replace
+ - Add new "git replace" command
+ - environment: add global variable to disable replacement
+ - mktag: call "check_sha1_signature" with the replacement sha1
+ - replace_object: add a test case
+ - object: call "check_sha1_signature" with the replacement sha1
+ - sha1_file: add a "read_sha1_file_repl" function
+ - replace_object: add mechanism to replace objects found in
+   "refs/replace/"
+ - refs: add a "for_each_replace_ref" function
 
-Mike Ralphson (3):
-  builtin-remote: fix typo in option description
-  Documentation: fix typos / spelling mistakes
-  Fix typos / spelling in comments
+I suspect an attempt to replace an object that is directly listed on the
+command line would not work very well with this series.
 
-Nanako Shiraishi (1):
-  git-am: teach git-am to apply a patch to an unborn branch
+----------------------------------------------------------------
+[Reverted]
 
-Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy (3):
-  get_local_heads(): do not return random pointer if there is no head
-  attr: add GIT_ATTR_INDEX "direction"
-  archive: do not read .gitattributes in working directory
+* mh/cvsimport-tests (Mon Feb 23 06:08:14 2009 +0100) 5 commits
+ + Add a test of "git cvsimport"'s handling of tags and branches
+ + Add some tests of git-cvsimport's handling of vendor branches
+ + Test contents of entire cvsimported "master" tree contents
+ + Use CVS's -f option if available (ignore user's ~/.cvsrc file)
+ + Start a library for cvsimport-related tests
 
-Nicolas Pitre (1):
-  progress bar: round to the nearest instead of truncating down
+This has been reverted out of 'next' for some time now.
 
-Patrick Welche (1):
-  NetBSD compilation fix
+----------------------------------------------------------------
+[On Hold]
 
-Pierre Habouzit (1):
-  hook/update: example of how to prevent branch creation
+* jc/deny-delete-current-1.7.0 (Mon Feb 9 00:19:46 2009 -0800) 1 commit
+ - receive-pack: default receive.denyDeleteCurrent to refuse
 
-Ren=C3=A9 Scharfe (2):
-  archive tests: do not use .gitattributes in working directory
-  archive test: attributes
+* jc/refuse-push-to-current-1.7.0 (Wed Feb 11 02:28:03 2009 -0800) 1 commit
+ - Refuse updating the current branch in a non-bare repository via
+   push
 
-Sam Vilain (1):
-  SubmittingPatches: itemize and reflect upon well written changes
-
-Sebastian Pipping (1):
-  difftool/mergetool: add diffuse as merge and diff tool
-
-Sitaram Chamarty (1):
-  Remove obsolete bug warning in man git-update-server-info
-
-Stephen Boyd (7):
-  config.txt: add missing format.{subjectprefix,cc,attach} variables
-  Documentation: use lowercase for shallow and deep threading
-  git-show-branch.txt: cleanup example description
-  git-format-patch.txt: general rewordings and cleanups
-  config.txt: add missing 'the's and make words plural
-  config.txt: clarify sentences in the configuration and syntax section=
-s
-  config.txt: Make configuration paragraph more consistent
-
-Uwe Kleine-K=C3=B6nig (1):
-  parseopt: fix documentation for --keep-dashdash
-
-Wesley J. Landaker (4):
-  Documentation: git-svn: fix spurious bolding that mangles the output
-  Documentation: git-svn: fix a grammatical error without awkwardness
-  Documentation: git-clean: fix minor grammatical errors
-  Documentation: git-clean: make description more readable
-
-Wincent Colaiuta (1):
-  git add -p: add missing "q" to patch prompt
+These are for 1.7.0, but the messages when they trigger together may need
+to be rethought.
