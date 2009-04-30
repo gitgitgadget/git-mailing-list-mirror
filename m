@@ -1,7 +1,7 @@
-From: Avery Pennarun <apenwarr@gmail.com>
+From: Martin Langhoff <martin.langhoff@gmail.com>
 Subject: Re: git svn errors out with git-cat-file "usage" message
-Date: Thu, 30 Apr 2009 12:26:46 -0400
-Message-ID: <32541b130904300926x472d6d14p2896d3ade7566684@mail.gmail.com>
+Date: Thu, 30 Apr 2009 18:31:22 +0200
+Message-ID: <46a038f90904300931l4460a085pce97fcb5cdf32dc3@mail.gmail.com>
 References: <46a038f90904290811p33332bd5h1d397734907ba9c2@mail.gmail.com>
 	 <32541b130904291150k75a0433fnb29ea59f654a17f7@mail.gmail.com>
 	 <49F8B7D1.2090903@drmicha.warpmail.net>
@@ -11,97 +11,90 @@ References: <46a038f90904290811p33332bd5h1d397734907ba9c2@mail.gmail.com>
 	 <46a038f90904300153v22aa3e9fo407ff5084b58b5fc@mail.gmail.com>
 	 <32541b130904300741p325012b7g28dabbd33576ceae@mail.gmail.com>
 	 <46a038f90904300803h555f02b3n76d03c93d99f7506@mail.gmail.com>
+	 <32541b130904300926x472d6d14p2896d3ade7566684@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Michael J Gruber <git@drmicha.warpmail.net>,
 	Git Mailing List <git@vger.kernel.org>,
 	Mihai Sucan <mihai.sucan@gmail.com>
-To: Martin Langhoff <martin.langhoff@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Apr 30 18:27:13 2009
+To: Avery Pennarun <apenwarr@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Apr 30 18:32:07 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LzZ6G-0004hz-JO
-	for gcvg-git-2@gmane.org; Thu, 30 Apr 2009 18:27:05 +0200
+	id 1LzZB6-0007D9-4W
+	for gcvg-git-2@gmane.org; Thu, 30 Apr 2009 18:32:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1763004AbZD3Q0r convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 30 Apr 2009 12:26:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756649AbZD3Q0r
-	(ORCPT <rfc822;git-outgoing>); Thu, 30 Apr 2009 12:26:47 -0400
-Received: from yw-out-2324.google.com ([74.125.46.30]:14299 "EHLO
-	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754341AbZD3Q0q convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 30 Apr 2009 12:26:46 -0400
-Received: by yw-out-2324.google.com with SMTP id 5so1095739ywb.1
-        for <git@vger.kernel.org>; Thu, 30 Apr 2009 09:26:46 -0700 (PDT)
+	id S1758997AbZD3QbZ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 30 Apr 2009 12:31:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755653AbZD3QbY
+	(ORCPT <rfc822;git-outgoing>); Thu, 30 Apr 2009 12:31:24 -0400
+Received: from mail-fx0-f158.google.com ([209.85.220.158]:45346 "EHLO
+	mail-fx0-f158.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754095AbZD3QbX convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 30 Apr 2009 12:31:23 -0400
+Received: by fxm2 with SMTP id 2so1924186fxm.37
+        for <git@vger.kernel.org>; Thu, 30 Apr 2009 09:31:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:mime-version:received:in-reply-to:references
          :date:message-id:subject:from:to:cc:content-type
          :content-transfer-encoding;
-        bh=8eUACf9x6tLle3J5pFZl6ZGdunr/ny13vzuaASCP2Ys=;
-        b=BmwsrUe7p0B+9Yz03GGLwsp7pyi6bcfFF/8NdKszxsZbQZKFJxGxMFeUUXzPhyJZ57
-         8sQ6W5JhfzP1J3Lkj+tyEAsg2AVpwQujzGpTSYiFyrM7ApQTtSCdve9USFr06/TwNbVV
-         HFRXS0fKcBya161l2ioBCxRz6ZK65jHtgCmrM=
+        bh=XF+gper0vNkZ42M7rSG87hJrls6SRIYz+5/J1CW1XPc=;
+        b=Mo5QZF53hXbcv9K1izJ2F691LBc0DnCL68NUI8AD7DGtwfMIIBoyw5wXqyngL9dlB5
+         tswC4op6/pDUf2cqnQkfYrP9FybWJsXwnn+Sw3f1pRHkkvTKvdp7b4+F4QlakuN5Ga72
+         iJhhpGjWYibwKlsneXhMvULvC03Q18luGnGxk=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type:content-transfer-encoding;
-        b=UMvb2hwGFQx+1KS4pdLRLSGY07Kez8GY2HAogr2XgO8J04gyzcp3XiMGBxlRWBRDMM
-         078zOQFz2PxmLqcBue4Z7jmv+KAcfrnAKAs0ASNcmm7GDvTuC9dascAX0aBQsG3SgGXK
-         2DGtcScJQ93MVsPGSPEUjtq02v/S15nFsySQ8=
-Received: by 10.151.74.2 with SMTP id b2mr3824321ybl.174.1241108806193; Thu, 
-	30 Apr 2009 09:26:46 -0700 (PDT)
-In-Reply-To: <46a038f90904300803h555f02b3n76d03c93d99f7506@mail.gmail.com>
+        b=SBLRPKX/pm+5rg6a/uwZy21Kx+MwxkPFHKYS7iU048Bv01StPpHMspyS+VZr2+rkm/
+         t4HxqnUMhPLf0JmM30PI56t1sRImoKI49Rmkkf4D76wJBJdARcPUUd7C1DLgxMtlrQEx
+         IxlgNjcKtLYBWqu2hjQ/XuMMlIzCIHb8LbilI=
+Received: by 10.223.115.146 with SMTP id i18mr857736faq.6.1241109082250; Thu, 
+	30 Apr 2009 09:31:22 -0700 (PDT)
+In-Reply-To: <32541b130904300926x472d6d14p2896d3ade7566684@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118030>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118031>
 
-On Thu, Apr 30, 2009 at 11:03 AM, Martin Langhoff
-<martin.langhoff@gmail.com> wrote:
-> On Thu, Apr 30, 2009 at 4:41 PM, Avery Pennarun <apenwarr@gmail.com> =
-wrote:
->> Try this:
->>
->> =A0strace -fF git svn =A0clone =A0-T trunk
->> http://paintweb.googlecode.com/svn paintweb.git 2>&1 | egrep -i
->> 'git.pm|git-svn'
->>
->> If you wade through the output, it should tell you which git.pm and
->> git-svn you're *really* getting.
+On Thu, Apr 30, 2009 at 6:26 PM, Avery Pennarun <apenwarr@gmail.com> wr=
+ote:
+> And do the contents of these files match the ones in your git source
+> directory? =A0What are their md5sums?
 >
-> The output looks reasonable:
->
-> $ strace -fF git svn =A0clone =A0-T trunk | http://paintweb.googlecod=
-e.com/svn paintweb.git 2>&1 | egrep -i 'git.pm|git-svn'
-> execve("/home/martin/libexec/git-core/git-svn", ["git-svn", "clone",
-> "-T", "trunk", "http://paintweb.googlecode.com/s"..., "paintweb.git"]=
-,
-> [/* 44 vars */]) =3D 0
-> open("/home/martin/libexec/git-core/git-svn", O_RDONLY|O_LARGEFILE) =3D=
- 3
-> stat64("/home/martin/share/perl/5.10.0/Git.pmc", 0xbffa451c) =3D -1
-> ENOENT (No such file or directory)
-> stat64("/home/martin/share/perl/5.10.0/Git.pm", {st_mode=3DS_IFREG|04=
-44,
-> st_size=3D35479, ...}) =3D 0
-> open("/home/martin/share/perl/5.10.0/Git.pm", O_RDONLY|O_LARGEFILE) =3D=
- 4
-> [pid 23322] write(2, "Unexpected result returned from "...,
-> 96Unexpected result returned from git cat-file at
-> /home/martin/libexec/git-core/git-svn line 3252
-> write(2, "Failed to read object 4b90eef952"..., 116Failed to read
-> object 4b90eef95225bb9e34000e050d0cac8b84ab36f6 at
-> /home/martin/libexec/git-core/git-svn line 3253.
+> /home/martin/libexec/git-core/git-svn
+> /home/martin/share/perl/5.10.0/Git.pm
 
-And do the contents of these files match the ones in your git source
-directory?  What are their md5sums?
+They match alright -
 
-/home/martin/libexec/git-core/git-svn
-/home/martin/share/perl/5.10.0/Git.pm
+sha1sum /home/martin/share/perl/5.10.0/*
+e5ceeaa91bfe878ac45a5e5daad4fa1d50b6ff4a
+/home/martin/share/perl/5.10.0/Error.pm
+d752abdebc8e40801d891859e6764631c2f1e8ff  /home/martin/share/perl/5.10.=
+0/Git.pm
 
-Avery
+~/src/git$ sha1sum perl/blib/lib/*pm
+e5ceeaa91bfe878ac45a5e5daad4fa1d50b6ff4a  perl/blib/lib/Error.pm
+d752abdebc8e40801d891859e6764631c2f1e8ff  perl/blib/lib/Git.pm
+
+~/src/git$ sha1sum /home/martin/libexec/git-core/git-svn git-svn
+37cae8b77552f0bbdd54e060318bbc6a269a7577  /home/martin/libexec/git-core=
+/git-svn
+37cae8b77552f0bbdd54e060318bbc6a269a7577  git-svn
+
+it's really weird.
+
+
+
+m
+--=20
+ martin.langhoff@gmail.com
+ martin@laptop.org -- School Server Architect
+ - ask interesting questions
+ - don't get distracted with shiny stuff  - working code first
+ - http://wiki.laptop.org/go/User:Martinlanghoff
