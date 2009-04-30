@@ -1,99 +1,79 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: git svn errors out with git-cat-file "usage" message
-Date: Thu, 30 Apr 2009 10:26:13 +0200
-Message-ID: <49F960A5.5090801@op5.se>
-References: <46a038f90904290811p33332bd5h1d397734907ba9c2@mail.gmail.com>	 <32541b130904291150k75a0433fnb29ea59f654a17f7@mail.gmail.com>	 <49F8B7D1.2090903@drmicha.warpmail.net>	 <46a038f90904291347i2ed158aaya7505e1bd11cd392@mail.gmail.com>	 <49F8C127.4000400@drmicha.warpmail.net> <46a038f90904300018u7101943blef084dc907a04c8d@mail.gmail.com>
+From: Christoph Duelli <duelli@melosgmbh.de>
+Subject: Re: finding the commit that deleted a file
+Date: Thu, 30 Apr 2009 10:33:37 +0200
+Message-ID: <49F96261.3060104@melosgmbh.de>
+References: <49F953BC.7070303@melosgmbh.de>	 <81b0412b0904300041m2ac646cgdaffd4e2dadb9125@mail.gmail.com> <2faad3050904300125r6cc6bc1fs6eb0e099dadcbf77@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: Michael J Gruber <git@drmicha.warpmail.net>,
-	Avery Pennarun <apenwarr@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Mihai Sucan <mihai.sucan@gmail.com>
-To: Martin Langhoff <martin.langhoff@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Apr 30 10:26:46 2009
+Cc: Alex Riesen <raa.lkml@gmail.com>, git@vger.kernel.org
+To: Baz <brian.ewins@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Apr 30 10:36:25 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LzRbR-0004o2-89
-	for gcvg-git-2@gmane.org; Thu, 30 Apr 2009 10:26:45 +0200
+	id 1LzRkk-0000JU-Gm
+	for gcvg-git-2@gmane.org; Thu, 30 Apr 2009 10:36:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758127AbZD3I0V (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 30 Apr 2009 04:26:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761047AbZD3I0U
-	(ORCPT <rfc822;git-outgoing>); Thu, 30 Apr 2009 04:26:20 -0400
-Received: from fg-out-1718.google.com ([72.14.220.158]:60820 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1760129AbZD3I0P (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 30 Apr 2009 04:26:15 -0400
-Received: by fg-out-1718.google.com with SMTP id 16so531064fgg.17
-        for <git@vger.kernel.org>; Thu, 30 Apr 2009 01:26:14 -0700 (PDT)
-Received: by 10.86.1.1 with SMTP id 1mr1605959fga.0.1241079974622;
-        Thu, 30 Apr 2009 01:26:14 -0700 (PDT)
-Received: from clix.int.op5.se ([212.112.174.166])
-        by mx.google.com with ESMTPS id 4sm3073066fgg.28.2009.04.30.01.26.13
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 30 Apr 2009 01:26:14 -0700 (PDT)
-User-Agent: Thunderbird 2.0.0.21 (X11/20090320)
-In-Reply-To: <46a038f90904300018u7101943blef084dc907a04c8d@mail.gmail.com>
+	id S1754234AbZD3IgK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 30 Apr 2009 04:36:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754088AbZD3IgJ
+	(ORCPT <rfc822;git-outgoing>); Thu, 30 Apr 2009 04:36:09 -0400
+Received: from mo-p00-ob.rzone.de ([81.169.146.161]:44549 "EHLO
+	mo-p00-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753447AbZD3IgH (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 30 Apr 2009 04:36:07 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; t=1241080566; l=744;
+	s=domk; d=melosgmbh.de;
+	h=Content-Transfer-Encoding:Content-Type:In-Reply-To:References:
+	Subject:CC:To:MIME-Version:From:Date:X-RZG-CLASS-ID:X-RZG-AUTH;
+	bh=cfniqmiOGLSFdlp6/qSLKASFwqk=;
+	b=Xa6RMewTri+m0ADtST+MXvFbAGRgG/1bXmjEsRpKYTYvoKsmnhhoR6JqYVqth2QUnSQ
+	zM3RWA2rzLUXlEyaU5U0EZiM6XpY6v0JUmDkzHo8AahaVOSMHgnvI2vuIDnJjemLRffJB
+	8mqdbjTr5JAoMXgDHOtolVenJ6UxbOGypAE=
+X-RZG-AUTH: :P2kWY0mrft+7PRqjQVQfkgnIveo2zsFMc4bua7BlzFdpPx7kEk2N74DOz34elah7
+X-RZG-CLASS-ID: mo00
+Received: from mail.melosgmbh.de
+	(186.146.179.213-static.augustakom.net [213.179.146.186])
+	by post.strato.de (klopstock mo11) (RZmta 18.31)
+	with ESMTP id 0036ddl3U7b1Fy ; Thu, 30 Apr 2009 10:36:06 +0200 (MEST)
+X-Spam-Status: No, hits=0.0 required=4.0
+	tests=AWL: 0.036,BAYES_00: -1.665,TOTAL_SCORE: -1.629
+X-Spam-Level: 
+Received: from [172.27.1.229] ([172.27.1.229])
+	(authenticated user duelli@melosgmbh.de)
+	by mail.melosgmbh.de (Kerio MailServer 6.6.2);
+	Thu, 30 Apr 2009 10:37:36 +0200
+User-Agent: Thunderbird 2.0.0.21 (X11/20090302)
+In-Reply-To: <2faad3050904300125r6cc6bc1fs6eb0e099dadcbf77@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118000>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118001>
 
-Martin Langhoff wrote:
-> On Wed, Apr 29, 2009 at 11:05 PM, Michael J Gruber
-> <git@drmicha.warpmail.net> wrote:
->> But I just re-read your original report, and there's some inconsistency:
->>
->> git-svn triggers cat-file's usage message which says "git-cat-file ...".
->> The dash indicates that it is a git cat-file before v1.6.0.1-13-g34baebc
->> (where the dash was removed), so it's definitely not the current maint
->> you think you are using.
->>
->> Do you have older ubuntu git packages installed in $PATH?
+Baz schrieb:
+> 2009/4/30 Alex Riesen <raa.lkml@gmail.com>:
+>> 2009/4/30 Christoph Duelli <duelli@melosgmbh.de>:
+>>> Following scenario:
+>>> Some file x was deleted (or renamed, but the --follow option does not
+>>> succeed) some 100 commits ago.
+>>> Now, I would like to check the 'lost' contents for some reason.
+>>>
+>>> Is it possible to find out when a given file (path) was deleted?
 > 
-> Bingo! Yes,
+> For completeness, the answer to the first part of the question:
 > 
-> ~$ which git-cat-file
-> /usr/bin/git-cat-file
-> ~$ /usr/bin/git version
-> git version 1.5.6.3
+> git log --diff-filter=D -- the/name/of/deleted/file
 > 
-> now that's really weird. git from ~/bin is using git-cat-file from
-> /usr/bin instead of ~/libexec/git-core ... how is the libexec path set
-> in the PATH during the execution of the script?
-> 
+>>> (And then, with the obtained SHA1, use gitk or some such tool to inspect
+>>>  this file.)
+>> "gitk -- the/name/of/deleted/file" :)
+>> --
+Great, thanks.
+Both of these work!
 
-If you're executing "git-svn", the "git-svn" found first in your $PATH
-will be used. Same with "git" really, so if you have a $PATH like this:
-
-  PATH=/usr/bin:$(HOME)/bin
-
-you will always use the git from /usr/bin (naturally).
-
-> the funny thing is that Ubuntu wants to have git-core in place if
-> you're rebuilding kernel packages. I don't need to rebuild my kernel
-> anymore but I am sure this is an issue for others. What's the trick?
-> Add the libexec/git-core to the PATH before /usr/bin? Should git
-> internally append libexec/git-core earlier in the search path?
-> 
-
-The possibly easiest solution to your particular problem is to just
-remove the files installed by the git-core package and then log out
-and back in (to clear any persistent shell cache). You may need to
-mark git-core as not updateable in your apt config.
-
+Bes regards
 -- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
-
-Register now for Nordic Meet on Nagios, June 3-4 in Stockholm
- http://nordicmeetonnagios.op5.org/
-
-Considering the successes of the wars on alcohol, poverty, drugs and
-terror, I think we should give some serious thought to declaring war
-on peace.
+Christoph Duelli
