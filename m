@@ -1,97 +1,108 @@
-From: "Daniel Cheng (aka SDiZ)" <j16sdiz+freenet@gmail.com>
-Subject: [PATCH EGIT] Fix NPE on missing git data
-Date: Thu, 30 Apr 2009 22:59:22 +0800
-Message-ID: <1241103562-6658-1-git-send-email-git@sdiz.net>
-Cc: git@vger.kernel.org, "Daniel Cheng (aka SDiZ)" <git@sdiz.net>
-To: "Shawn O. Pearce" <spearce@spearce.org>,
-	Robin Rosenberg <robin.rosenberg@dewire.com>
-X-From: git-owner@vger.kernel.org Thu Apr 30 16:59:47 2009
+From: Martin Langhoff <martin.langhoff@gmail.com>
+Subject: Re: git svn errors out with git-cat-file "usage" message
+Date: Thu, 30 Apr 2009 17:03:35 +0200
+Message-ID: <46a038f90904300803h555f02b3n76d03c93d99f7506@mail.gmail.com>
+References: <46a038f90904290811p33332bd5h1d397734907ba9c2@mail.gmail.com>
+	 <32541b130904291150k75a0433fnb29ea59f654a17f7@mail.gmail.com>
+	 <49F8B7D1.2090903@drmicha.warpmail.net>
+	 <46a038f90904291347i2ed158aaya7505e1bd11cd392@mail.gmail.com>
+	 <49F8C127.4000400@drmicha.warpmail.net>
+	 <46a038f90904300018u7101943blef084dc907a04c8d@mail.gmail.com>
+	 <46a038f90904300153v22aa3e9fo407ff5084b58b5fc@mail.gmail.com>
+	 <32541b130904300741p325012b7g28dabbd33576ceae@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Michael J Gruber <git@drmicha.warpmail.net>,
+	Git Mailing List <git@vger.kernel.org>,
+	Mihai Sucan <mihai.sucan@gmail.com>
+To: Avery Pennarun <apenwarr@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Apr 30 17:04:47 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LzXjY-0005w7-Pz
-	for gcvg-git-2@gmane.org; Thu, 30 Apr 2009 16:59:33 +0200
+	id 1LzXoW-0000YQ-HX
+	for gcvg-git-2@gmane.org; Thu, 30 Apr 2009 17:04:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1762323AbZD3O73 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 30 Apr 2009 10:59:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762247AbZD3O72
-	(ORCPT <rfc822;git-outgoing>); Thu, 30 Apr 2009 10:59:28 -0400
-Received: from rv-out-0506.google.com ([209.85.198.231]:51042 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753117AbZD3O71 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 30 Apr 2009 10:59:27 -0400
-Received: by rv-out-0506.google.com with SMTP id f9so1475746rvb.1
-        for <git@vger.kernel.org>; Thu, 30 Apr 2009 07:59:27 -0700 (PDT)
+	id S1762953AbZD3PDi convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 30 Apr 2009 11:03:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762696AbZD3PDi
+	(ORCPT <rfc822;git-outgoing>); Thu, 30 Apr 2009 11:03:38 -0400
+Received: from mail-fx0-f158.google.com ([209.85.220.158]:57633 "EHLO
+	mail-fx0-f158.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757388AbZD3PDh convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 30 Apr 2009 11:03:37 -0400
+Received: by fxm2 with SMTP id 2so1871845fxm.37
+        for <git@vger.kernel.org>; Thu, 30 Apr 2009 08:03:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:sender:from:to:cc:subject
-         :date:message-id:x-mailer;
-        bh=TPwDW5I/gECG3+sv9xFoNiKCIfcuzIPrbr1/LV2xiyc=;
-        b=kGkEtGYL0Dbq5y5MsehVF/Dclp6MV58eHfcGBXjpWZ09LLsvydOZEuMDqojxb87wgA
-         MVGuKXRbrdRIygZ0r/2tGxuJs+/xfb/s2RQGcsnTADv62xPeJ5syXXtKJjzFRVZ1E8XK
-         jc+NL11AwIY94XXFIJRpIP9oY/pTDtJLSU8sE=
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=KHRz+CU8JO7xexvQazis9ARLDNropQ1VldFNqTnpMG0=;
+        b=Xq7FQkS35RHBgPjp81UObrHxWfxfWHxmLgTQ25sEKiDkuT5MM/WPdVD86/aaaFKMSw
+         yxaHr6PasRHXzE6FfE+jtk1L6Kt5mrIzKb7zRGqu9pLLEEtUlDrpSut8Yt51tne6eenT
+         Ty450428DdMgi4osf2I1ZHXjrXZDlxqs4ybnM=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=sender:from:to:cc:subject:date:message-id:x-mailer;
-        b=gv2ApKj9RtsWHPnJ3Y0cYj6F1szddVWAigrb87ztE8TR+Px0zTOL/i9edtwJSBCRE4
-         W5iCZXCtCmxrEaChBMMbRRhBJ0awgShep3rVY5U0jNXjSQVktln2p/qNhauYW/TU9E2h
-         BjyJ2KiZ/Bl8vvA+Ud01SYNt4D8H3CWq+shWg=
-Received: by 10.142.218.4 with SMTP id q4mr494164wfg.76.1241103567104;
-        Thu, 30 Apr 2009 07:59:27 -0700 (PDT)
-Received: from localhost.localdomain (n1164956087.netvigator.com [116.49.56.87])
-        by mx.google.com with ESMTPS id 29sm5906759wfg.28.2009.04.30.07.59.24
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 30 Apr 2009 07:59:26 -0700 (PDT)
-X-Mailer: git-send-email 1.6.2.1
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=LaVCii5f8ez+mFO2JWFRKZKjOcGQGg8qKThMoLfAudsgDcvwiDZi2zs+w89pvjsipe
+         BmHQibSz4Fm92XQMDLHuMAoNYNNBmxjOnNQ17lA+pcTLdxW8dG+JH8hdS6Y4pTdXQ5NH
+         uVqqRtnsX/8FkB+yso+q3Za90t2IULMNkfGp8=
+Received: by 10.223.108.15 with SMTP id d15mr824117fap.62.1241103815941; Thu, 
+	30 Apr 2009 08:03:35 -0700 (PDT)
+In-Reply-To: <32541b130904300741p325012b7g28dabbd33576ceae@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118022>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118023>
 
-Fix the following NPE:
-!ENTRY org.eclipse.core.resources 4 2 2009-04-30 22:52:47.117
-!MESSAGE Problems occurred when invoking code from plug-in: "org.eclipse.core.resources".
-!STACK 0
-java.lang.NullPointerException
-    at org.spearce.egit.core.project.RepositoryMapping.getMapping(RepositoryMapping.java:235)
-    at org.spearce.egit.ui.internal.decorators.GitLightweightDecorator$2.visit(GitLightweightDecorator.java:492)
-    at org.eclipse.core.internal.events.ResourceDelta.accept(ResourceDelta.java:68)
-    at org.eclipse.core.internal.events.ResourceDelta.accept(ResourceDelta.java:79)
-    at org.eclipse.core.internal.events.ResourceDelta.accept(ResourceDelta.java:79)
-    at org.eclipse.core.internal.events.ResourceDelta.accept(ResourceDelta.java:79)
-    at org.eclipse.core.internal.events.ResourceDelta.accept(ResourceDelta.java:79)
-    at org.eclipse.core.internal.events.ResourceDelta.accept(ResourceDelta.java:79)
-    at org.eclipse.core.internal.events.ResourceDelta.accept(ResourceDelta.java:55)
-    at org.spearce.egit.ui.internal.decorators.GitLightweightDecorator.resourceChanged(GitLightweightDecorator.java:477)
-    at org.eclipse.core.internal.events.NotificationManager$2.run(NotificationManager.java:288)
-    at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:37)
-    at org.eclipse.core.internal.events.NotificationManager.notify(NotificationManager.java:282)
-    at org.eclipse.core.internal.events.NotificationManager.broadcastChanges(NotificationManager.java:148)
-    at org.eclipse.core.internal.resources.Workspace.broadcastPostChange(Workspace.java:313)
-    at org.eclipse.core.internal.resources.Workspace.endOperation(Workspace.java:1022)
-    at org.eclipse.core.internal.resources.InternalWorkspaceJob.run(InternalWorkspaceJob.java:45)
-    at org.eclipse.core.internal.jobs.Worker.run(Worker.java:55)
+On Thu, Apr 30, 2009 at 4:41 PM, Avery Pennarun <apenwarr@gmail.com> wr=
+ote:
+> Try this:
+>
+> =A0strace -fF git svn =A0clone =A0-T trunk
+> http://paintweb.googlecode.com/svn paintweb.git 2>&1 | egrep -i
+> 'git.pm|git-svn'
+>
+> If you wade through the output, it should tell you which git.pm and
+> git-svn you're *really* getting.
 
-Signed-off-by: Daniel Cheng (aka SDiZ) <git@sdiz.net>
----
- .../egit/core/project/RepositoryMapping.java       |    3 +++
- 1 files changed, 3 insertions(+), 0 deletions(-)
+The output looks reasonable:
 
-diff --git a/org.spearce.egit.core/src/org/spearce/egit/core/project/RepositoryMapping.java b/org.spearce.egit.core/src/org/spearce/egit/core/project/RepositoryMapping.java
-index b49f380..029c56a 100644
---- a/org.spearce.egit.core/src/org/spearce/egit/core/project/RepositoryMapping.java
-+++ b/org.spearce.egit.core/src/org/spearce/egit/core/project/RepositoryMapping.java
-@@ -232,6 +232,9 @@ public static RepositoryMapping getMapping(final IResource resource) {
- 		if (!(rp instanceof GitProvider))
- 			return null;
- 
-+		if (((GitProvider)rp).getData() == null)
-+			return null;
-+
- 		return ((GitProvider)rp).getData().getRepositoryMapping(resource);
- 	}
- 
--- 
-1.6.2.1
+$ strace -fF git svn  clone  -T trunk
+http://paintweb.googlecode.com/svn paintweb.git 2>&1 | egrep -i
+'git.pm|git-svn'
+execve("/home/martin/libexec/git-core/git-svn", ["git-svn", "clone",
+"-T", "trunk", "http://paintweb.googlecode.com/s"..., "paintweb.git"],
+[/* 44 vars */]) =3D 0
+open("/home/martin/libexec/git-core/git-svn", O_RDONLY|O_LARGEFILE) =3D=
+ 3
+stat64("/home/martin/share/perl/5.10.0/Git.pmc", 0xbffa451c) =3D -1
+ENOENT (No such file or directory)
+stat64("/home/martin/share/perl/5.10.0/Git.pm", {st_mode=3DS_IFREG|0444=
+,
+st_size=3D35479, ...}) =3D 0
+open("/home/martin/share/perl/5.10.0/Git.pm", O_RDONLY|O_LARGEFILE) =3D=
+ 4
+[pid 23322] write(2, "Unexpected result returned from "...,
+96Unexpected result returned from git cat-file at
+/home/martin/libexec/git-core/git-svn line 3252
+write(2, "Failed to read object 4b90eef952"..., 116Failed to read
+object 4b90eef95225bb9e34000e050d0cac8b84ab36f6 at
+/home/martin/libexec/git-core/git-svn line 3253.
+
+cheers,
+
+
+martin
+
+--=20
+ martin.langhoff@gmail.com
+ martin@laptop.org -- School Server Architect
+ - ask interesting questions
+ - don't get distracted with shiny stuff  - working code first
+ - http://wiki.laptop.org/go/User:Martinlanghoff
