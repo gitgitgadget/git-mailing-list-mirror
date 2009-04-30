@@ -1,85 +1,68 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Weird growth in packfile during initial push
-Date: Wed, 29 Apr 2009 16:57:37 -0700
-Message-ID: <7vy6tj109a.fsf@gitster.siamese.dyndns.org>
-References: <20090415182754.GF23644@curie-int>
- <alpine.LFD.2.00.0904151443030.6741@xanadu.home>
+From: Mark Lodato <lodatom@gmail.com>
+Subject: Re: Google Code: Support for Mercurial and Analysis of Git and 
+	Mercurial
+Date: Wed, 29 Apr 2009 20:00:56 -0400
+Message-ID: <ca433830904291700q608f6192i66a83bca9b88b739@mail.gmail.com>
+References: <200904260703.31243.chriscool@tuxfamily.org>
+	 <alpine.DEB.1.00.0904261208000.10279@pacific.mpi-cbg.de>
+	 <20090427211502.GI23604@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Robin H. Johnson" <robbat2@gentoo.org>, git@vger.kernel.org
-To: Nicolas Pitre <nico@cam.org>
-X-From: git-owner@vger.kernel.org Thu Apr 30 01:57:54 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Apr 30 02:01:09 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LzJf0-0005K1-05
-	for gcvg-git-2@gmane.org; Thu, 30 Apr 2009 01:57:54 +0200
+	id 1LzJi7-0006RK-AE
+	for gcvg-git-2@gmane.org; Thu, 30 Apr 2009 02:01:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753849AbZD2X5p (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 29 Apr 2009 19:57:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753198AbZD2X5p
-	(ORCPT <rfc822;git-outgoing>); Wed, 29 Apr 2009 19:57:45 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:41267 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751465AbZD2X5o (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 Apr 2009 19:57:44 -0400
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 4D9A413B12;
-	Wed, 29 Apr 2009 19:57:43 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 7195B13B0F; Wed,
- 29 Apr 2009 19:57:39 -0400 (EDT)
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 8798B290-3519-11DE-BA52-D766E3C8547C-77302942!a-sasl-quonix.pobox.com
+	id S1753609AbZD3ABA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 29 Apr 2009 20:01:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753246AbZD3AA6
+	(ORCPT <rfc822;git-outgoing>); Wed, 29 Apr 2009 20:00:58 -0400
+Received: from mail-fx0-f158.google.com ([209.85.220.158]:51703 "EHLO
+	mail-fx0-f158.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753229AbZD3AA6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 Apr 2009 20:00:58 -0400
+Received: by fxm2 with SMTP id 2so1511001fxm.37
+        for <git@vger.kernel.org>; Wed, 29 Apr 2009 17:00:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:content-type
+         :content-transfer-encoding;
+        bh=ne3dsjFv367q5/KdmDZguBr2/iYx/zUAI1qCfM7Hayw=;
+        b=PWlMeXPfwmWy+dwGx5qK5y5gxiAl0agOKQCKnRwcEhcuFdSz1ua2yuAd020ZYCdeZP
+         GGEjT1/SfVnUELYGtM7IaR0q/lWWUxz9XDx46kTgxDlv4vUllntmFwbxBHEGCPBs+i0v
+         Kc9LhhqHEV4eXs0/mBAKsy5Hn80rMk3bytFfM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :content-type:content-transfer-encoding;
+        b=JB76LgqPqYuf6QiksFTJ9QT6U919OBTLVp5CdLFVMI/WPFMUvolLgvvVvw7TLAcMDZ
+         tZESb780NIEEk4QC3YGXrP7Tzqx4d2WsEhgezOAmHIp76xDcWSIJTgZRn9zm1UejUrqj
+         +cklL2rsKtjKM4YEb5lK/Ue9QdEIE+NuhBzNc=
+Received: by 10.223.117.14 with SMTP id o14mr496696faq.21.1241049657040; Wed, 
+	29 Apr 2009 17:00:57 -0700 (PDT)
+In-Reply-To: <20090427211502.GI23604@spearce.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117981>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/117982>
 
-Nicolas Pitre <nico@cam.org> writes:
+On Mon, Apr 27, 2009 at 5:15 PM, Shawn O. Pearce <spearce@spearce.org> wrote:
+> IOW, if Git wants to expand into these user communities where the
+> individual is stuck behind a corporate proxy that only permits HTTP
+> "for security reasons" (but blindly winds up passing through whatever
+> it gets), we need to support a more efficient HTTP protocol.
 
->> $ git push origin master:master
->> Initialized empty Git repository in /var/gitroot/exp/gentoo-x86.git/
->> Counting objects: 4969800, done.
->> Delta compression using up to 8 threads.
->> Compressing objects: 100% (1217809/1217809), done.
->> Writing objects: 100% (4969800/4969800), 810.56 MiB | 21608 KiB/s, done.
->> Total 4969800 (delta 3735812), reused 4969800 (delta 3735812)
->
-> Here we know for sure that all objects were directly reused, so no 
-> attempt at recompressing them was done.  The only thing that 
-> pack-objects might do in this case in addition to directly streaming the 
-> existing pack is to convert delta object headers from OFS_DELTA to 
-> REF_DELTA.
->
->> $ ls -la /var/gitroot/exp/gentoo-x86.git/objects/pack
->> total 966876
->> drwxr-xr-x 2 git git      4096 Apr 14 08:43 .
->> drwxr-xr-x 4 git git      4096 Apr 14 08:35 ..
->> -r--r--r-- 1 git git 139155472 Apr 14 08:43 pack-f805bb448f864becfeac9c7f8a8ac2ef90c26787.idx
->> -r--r--r-- 1 git git 849936308 Apr 14 08:43 pack-f805bb448f864becfeac9c7f8a8ac2ef90c26787.pack
->
-> Let's see if my theory stands:
->
-> 	849936308 - 786336481 = 63599827
-> 	63599827 / 3735812 = 17.02
->
-> Hence an average difference of 17 bytes per delta.  Given that REF_DELTA 
-> objects have a 20-byte SHA1 base reference which is replaced with a 
-> variable length encoding of a pack offset in the OFS_DELTA case, we're 
-> talking about 2.98 bytes for that offset encoding which feels about 
-> right.
->
-> [...]
->
-> And the code matches this theory as well.  Can you try this patch if you 
-> have a chance?
+Another advantage of supporting HTTP is allowing HTTPS.  SSL can take
+advantage of an existing PKI infrastructure, either the Internet's
+existing server-side certificate system, or a corporate server- and
+possibly client-side PKI infrastructure.
 
-Is there any progress on this?
-
-I think you did a veryclear analysis.  8% size reduction is not only
-unignorable but use of delta offset should also help runtime efficiency,
-right?
+--
+Mark
