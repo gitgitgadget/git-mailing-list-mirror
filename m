@@ -1,91 +1,97 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
+From: Linus Torvalds <torvalds@linux-foundation.org>
 Subject: Re: Why Git is so fast (was: Re: Eric Sink's blog - notes on git,
  dscms and a "whole product" approach)
-Date: Fri, 1 May 2009 17:17:31 -0400 (EDT)
-Message-ID: <alpine.LNX.2.00.0905011618370.2147@iabervon.org>
+Date: Fri, 1 May 2009 14:37:28 -0700 (PDT)
+Message-ID: <alpine.LFD.2.00.0905011420580.5379@localhost.localdomain>
 References: <46a038f90904270155i6c802fceoffc73eb5ab57130e@mail.gmail.com> <m3ocugod96.fsf@localhost.localdomain> <m3fxfqnxn5.fsf_-_@localhost.localdomain> <20090430142244.GA23550@coredump.intra.peff.net> <alpine.LFD.2.00.0905011431460.5379@localhost.localdomain>
  <20090501190854.GA13770@coredump.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	Jakub Narebski <jnareb@gmail.com>,
+Cc: Jakub Narebski <jnareb@gmail.com>,
 	Martin Langhoff <martin.langhoff@gmail.com>,
 	Git Mailing List <git@vger.kernel.org>
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri May 01 23:17:42 2009
+X-From: git-owner@vger.kernel.org Fri May 01 23:40:05 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M0073-0002F0-1z
-	for gcvg-git-2@gmane.org; Fri, 01 May 2009 23:17:41 +0200
+	id 1M00Si-0002oH-Hf
+	for gcvg-git-2@gmane.org; Fri, 01 May 2009 23:40:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754977AbZEAVRc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 1 May 2009 17:17:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754670AbZEAVRc
-	(ORCPT <rfc822;git-outgoing>); Fri, 1 May 2009 17:17:32 -0400
-Received: from iabervon.org ([66.92.72.58]:58977 "EHLO iabervon.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754270AbZEAVRc (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 1 May 2009 17:17:32 -0400
-Received: (qmail 24551 invoked by uid 1000); 1 May 2009 21:17:31 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 1 May 2009 21:17:31 -0000
+	id S1754709AbZEAVjz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 1 May 2009 17:39:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754601AbZEAVjz
+	(ORCPT <rfc822;git-outgoing>); Fri, 1 May 2009 17:39:55 -0400
+Received: from smtp1.linux-foundation.org ([140.211.169.13]:54003 "EHLO
+	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751907AbZEAVjy (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 1 May 2009 17:39:54 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
+	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id n41LbT46009688
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Fri, 1 May 2009 14:38:03 -0700
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id n41LbS4I009190;
+	Fri, 1 May 2009 14:37:28 -0700
+X-X-Sender: torvalds@localhost.localdomain
 In-Reply-To: <20090501190854.GA13770@coredump.intra.peff.net>
-User-Agent: Alpine 2.00 (LNX 1167 2008-08-23)
+User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
+X-Spam-Status: No, hits=-3.462 required=5 tests=AWL,BAYES_00
+X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118097>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118098>
+
+
 
 On Fri, 1 May 2009, Jeff King wrote:
-
-> On Fri, May 01, 2009 at 02:43:49PM -0400, Linus Torvalds wrote:
-> 
-> > > Like all generalizations, this is only mostly true. Fast network servers
-> > > with big caches can outperform disks for some loads.
-> > [...]
-> > In contrast, a workstation with local filesystems and enough memory to 
-> > cache it well will just be a lot nicer.
-> > [...]
-> > > I have never used perforce, but I get the impression that it is more 
-> > > optimized for such a situation.
-> > 
-> > I doubt it. I suspect git will outperform pretty much anything else in 
-> > that kind of situation too.
 > 
 > Thanks for the analysis; what you said makes sense to me. However, there
 > is at least one case of somebody complaining that git doesn't scale as
 > well as perforce for their load:
-> 
->   http://gandolf.homelinux.org/blog/index.php?id=50
-> 
-> Part of his issue is with git-p4 sucking, which it probably does. But
-> part of it sounds like he has a gigantic workload (the description of
-> which sounds silly to me, but I respect the fact that he is probably
-> describing standard practice among some companies), and that workload is
-> just a little too gigantic for the workstations to handle. I.e., by
-> throwing resources at the central server they can avoid throwing as many
-> at each workstation.
 
-I think his problem is that he's trying to replace his p4 repository with 
-a git repository, which is a bit like trying to download github, rather 
-than a project from github. Perforce is good at dealing with the case 
-where people check in a vast quantity of junk that you don't check out.
+So we definitely do have scaling issues, there's no question about that. I 
+just don't think they are about enterprise network servers vs the more 
+workstation-oriented OSS world..
 
-That is, you can back up your workstation into Perforce, and it won't 
-affect anyone's performance if you use a path that's not in the range that 
-anybody else checks out. And people actually do that. And Perforce doesn't 
-make a distinction between different projects and different branches of 
-the same project and different subdirectories of a branch of the same 
-project, so it's impossible to tease apart except by company policy.
+I think they're likely about the whole git mentality of looking at the big 
+picture, and then getting swamped by just how _huge_ that picture can be 
+if somebody just put the whole world in a single repository..
 
-Git doesn't scale in that it can't do the extremely narrow checkouts you 
-need if your repository root directory contains thousands of complete 
-unrelated projects with each branch of each project getting a 
-subdirectory. On the other hand, it does a great job when the data is 
-already partitioned into useful repositories.
+With perforce, repository maintenance is such a central issue that the 
+whole p4 mentality seems to _encourage_ everybody to put everything into 
+basically one single p4 repository. And afaik, p4 basically works mostly 
+like CVS, ie it really ends up being pretty much oriented to a "one file 
+at a time" model.
 
-	-Daniel
-*This .sig left intentionally blank*
+Which is nice in that you can have a million files, and then only check 
+out a few of them - you'll never even _see_ the impact of the other 
+999,995 files.
+
+And git obviously doesn't have that kind of model at all. Git 
+fundamnetally never really looks at less than the whole repo. Even if you 
+limit things a bit (ie check out just a portion, or have the history go 
+back just a bit), git ends up still always caring about the whole thing, 
+and carrying the knowledge around.
+
+So git scales really badly if you force it to look at everything as one 
+_huge_ repository. I don't think that part is really fixable, although we 
+can probably improve on it.
+
+And yes, then there's the "big file" issues. I really don't know what to 
+do about huge files. We suck at them, I know. There are work-arounds (like 
+not deltaing big objects at all), but they aren't necessarily that great 
+either.
+
+I bet we could probably improve git large-file behavior for many common 
+cases. Do we have a good test-case of some particular suckiness that is 
+actually relevant enough that people might decide to look at it (and by 
+"people", I do mean myself too - but I'd need to be somewhat motivated by 
+it. A usage case that we suck at and that is available and relevant).
+
+			Linus
