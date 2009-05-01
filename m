@@ -1,97 +1,139 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: Why Git is so fast (was: Re: Eric Sink's blog - notes on git,
- dscms and a "whole product" approach)
-Date: Fri, 1 May 2009 14:37:28 -0700 (PDT)
-Message-ID: <alpine.LFD.2.00.0905011420580.5379@localhost.localdomain>
-References: <46a038f90904270155i6c802fceoffc73eb5ab57130e@mail.gmail.com> <m3ocugod96.fsf@localhost.localdomain> <m3fxfqnxn5.fsf_-_@localhost.localdomain> <20090430142244.GA23550@coredump.intra.peff.net> <alpine.LFD.2.00.0905011431460.5379@localhost.localdomain>
- <20090501190854.GA13770@coredump.intra.peff.net>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Jakub Narebski <jnareb@gmail.com>,
-	Martin Langhoff <martin.langhoff@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri May 01 23:40:05 2009
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: [JGIT PATCH] Enable ofs-delta during send-pack/receive-pack protocol
+Date: Fri,  1 May 2009 14:56:08 -0700
+Message-ID: <1241214968-28743-1-git-send-email-spearce@spearce.org>
+Cc: git@vger.kernel.org
+To: Robin Rosenberg <robin.rosenberg@dewire.com>
+X-From: git-owner@vger.kernel.org Fri May 01 23:56:20 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M00Si-0002oH-Hf
-	for gcvg-git-2@gmane.org; Fri, 01 May 2009 23:40:05 +0200
+	id 1M00iS-0000xr-0c
+	for gcvg-git-2@gmane.org; Fri, 01 May 2009 23:56:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754709AbZEAVjz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 1 May 2009 17:39:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754601AbZEAVjz
-	(ORCPT <rfc822;git-outgoing>); Fri, 1 May 2009 17:39:55 -0400
-Received: from smtp1.linux-foundation.org ([140.211.169.13]:54003 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751907AbZEAVjy (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 1 May 2009 17:39:54 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
-	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id n41LbT46009688
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Fri, 1 May 2009 14:38:03 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id n41LbS4I009190;
-	Fri, 1 May 2009 14:37:28 -0700
-X-X-Sender: torvalds@localhost.localdomain
-In-Reply-To: <20090501190854.GA13770@coredump.intra.peff.net>
-User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
-X-Spam-Status: No, hits=-3.462 required=5 tests=AWL,BAYES_00
-X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
+	id S1755542AbZEAV4M (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 1 May 2009 17:56:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753875AbZEAV4K
+	(ORCPT <rfc822;git-outgoing>); Fri, 1 May 2009 17:56:10 -0400
+Received: from george.spearce.org ([209.20.77.23]:58610 "EHLO
+	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751913AbZEAV4J (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 1 May 2009 17:56:09 -0400
+Received: by george.spearce.org (Postfix, from userid 1000)
+	id 6D2E23807E; Fri,  1 May 2009 21:56:09 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.2.4 (2008-01-01) on george.spearce.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-4.4 required=4.0 tests=ALL_TRUSTED,BAYES_00
+	autolearn=ham version=3.2.4
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by george.spearce.org (Postfix) with ESMTP id 861263807B;
+	Fri,  1 May 2009 21:56:08 +0000 (UTC)
+X-Mailer: git-send-email 1.6.3.rc3.212.g8c698
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118098>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118099>
 
+In "allow OFS_DELTA objects during a push" Nicolas Pitre taught C
+git how to enable OBJ_OFS_DELTA usage in a pack file created on a
+client, to be processed by receive-pack on the server side.
 
+This creates a smaller pack file during transfer, as the OFS_DELTA
+format uses less per-delta header space than the classical REF_DELTA.
+If the receiving peer is going to just store the pack to disk,
+this would also produce a smaller on-disk pack file.
 
-On Fri, 1 May 2009, Jeff King wrote:
-> 
-> Thanks for the analysis; what you said makes sense to me. However, there
-> is at least one case of somebody complaining that git doesn't scale as
-> well as perforce for their load:
+In his change, Nico tied the server side enablement of the capability
+to the server's repack.usedeltabaseoffset setting, which can be
+set to false in a repository that needs to service direct access
+clients that are old to understand OFS_DELTA.  We do the same here
+in JGit to match semantics.
 
-So we definitely do have scaling issues, there's no question about that. I 
-just don't think they are about enterprise network servers vs the more 
-workstation-oriented OSS world..
+Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
+---
+ .../jgit/transport/BasePackPushConnection.java     |    6 ++++++
+ .../org/spearce/jgit/transport/ReceivePack.java    |    9 +++++++++
+ 2 files changed, 15 insertions(+), 0 deletions(-)
 
-I think they're likely about the whole git mentality of looking at the big 
-picture, and then getting swamped by just how _huge_ that picture can be 
-if somebody just put the whole world in a single repository..
-
-With perforce, repository maintenance is such a central issue that the 
-whole p4 mentality seems to _encourage_ everybody to put everything into 
-basically one single p4 repository. And afaik, p4 basically works mostly 
-like CVS, ie it really ends up being pretty much oriented to a "one file 
-at a time" model.
-
-Which is nice in that you can have a million files, and then only check 
-out a few of them - you'll never even _see_ the impact of the other 
-999,995 files.
-
-And git obviously doesn't have that kind of model at all. Git 
-fundamnetally never really looks at less than the whole repo. Even if you 
-limit things a bit (ie check out just a portion, or have the history go 
-back just a bit), git ends up still always caring about the whole thing, 
-and carrying the knowledge around.
-
-So git scales really badly if you force it to look at everything as one 
-_huge_ repository. I don't think that part is really fixable, although we 
-can probably improve on it.
-
-And yes, then there's the "big file" issues. I really don't know what to 
-do about huge files. We suck at them, I know. There are work-arounds (like 
-not deltaing big objects at all), but they aren't necessarily that great 
-either.
-
-I bet we could probably improve git large-file behavior for many common 
-cases. Do we have a good test-case of some particular suckiness that is 
-actually relevant enough that people might decide to look at it (and by 
-"people", I do mean myself too - but I'd need to be somewhat motivated by 
-it. A usage case that we suck at and that is available and relevant).
-
-			Linus
+diff --git a/org.spearce.jgit/src/org/spearce/jgit/transport/BasePackPushConnection.java b/org.spearce.jgit/src/org/spearce/jgit/transport/BasePackPushConnection.java
+index 07e8cb9..1117109 100644
+--- a/org.spearce.jgit/src/org/spearce/jgit/transport/BasePackPushConnection.java
++++ b/org.spearce.jgit/src/org/spearce/jgit/transport/BasePackPushConnection.java
+@@ -78,12 +78,16 @@
+ 
+ 	static final String CAPABILITY_DELETE_REFS = "delete-refs";
+ 
++	static final String CAPABILITY_OFS_DELTA = "ofs-delta";
++
+ 	private final boolean thinPack;
+ 
+ 	private boolean capableDeleteRefs;
+ 
+ 	private boolean capableReport;
+ 
++	private boolean capableOfsDelta;
++
+ 	private boolean sentCommand;
+ 
+ 	private boolean writePack;
+@@ -180,6 +184,7 @@ private String enableCapabilities() {
+ 		final StringBuilder line = new StringBuilder();
+ 		capableReport = wantCapability(line, CAPABILITY_REPORT_STATUS);
+ 		capableDeleteRefs = wantCapability(line, CAPABILITY_DELETE_REFS);
++		capableOfsDelta = wantCapability(line, CAPABILITY_OFS_DELTA);
+ 		if (line.length() > 0)
+ 			line.setCharAt(0, '\0');
+ 		return line.toString();
+@@ -202,6 +207,7 @@ private void writePack(final Map<String, RemoteRefUpdate> refUpdates,
+ 		}
+ 
+ 		writer.setThin(thinPack);
++		writer.setDeltaBaseAsOffset(capableOfsDelta);
+ 		writer.preparePack(newObjects, remoteObjects);
+ 		writer.writePack(out);
+ 	}
+diff --git a/org.spearce.jgit/src/org/spearce/jgit/transport/ReceivePack.java b/org.spearce.jgit/src/org/spearce/jgit/transport/ReceivePack.java
+index 89ddafe..f75a01a 100644
+--- a/org.spearce.jgit/src/org/spearce/jgit/transport/ReceivePack.java
++++ b/org.spearce.jgit/src/org/spearce/jgit/transport/ReceivePack.java
+@@ -77,6 +77,8 @@
+ 
+ 	static final String CAPABILITY_DELETE_REFS = BasePackPushConnection.CAPABILITY_DELETE_REFS;
+ 
++	static final String CAPABILITY_OFS_DELTA = BasePackPushConnection.CAPABILITY_OFS_DELTA;
++
+ 	/** Database we write the stored objects into. */
+ 	private final Repository db;
+ 
+@@ -95,6 +97,8 @@
+ 	/** Should an incoming transfer permit non-fast-forward requests? */
+ 	private boolean allowNonFastForwards;
+ 
++	private boolean allowOfsDelta;
++
+ 	/** Identity to record action as within the reflog. */
+ 	private PersonIdent refLogIdent;
+ 
+@@ -145,6 +149,7 @@ public ReceivePack(final Repository into) {
+ 		allowDeletes = !cfg.getBoolean("receive", "denydeletes", false);
+ 		allowNonFastForwards = !cfg.getBoolean("receive",
+ 				"denynonfastforwards", false);
++		allowOfsDelta = cfg.getBoolean("repack", "usedeltabaseoffset", true);
+ 		preReceive = PreReceiveHook.NULL;
+ 		postReceive = PostReceiveHook.NULL;
+ 	}
+@@ -455,6 +460,10 @@ private void sendAdvertisedRefs() throws IOException {
+ 			m.append(CAPABILITY_DELETE_REFS);
+ 			m.append(' ');
+ 			m.append(CAPABILITY_REPORT_STATUS);
++			if (allowOfsDelta) {
++				m.append(' ');
++				m.append(CAPABILITY_OFS_DELTA);
++			}
+ 			m.append(' ');
+ 			writeAdvertisedRef(m);
+ 		}
+-- 
+1.6.3.rc3.212.g8c698
