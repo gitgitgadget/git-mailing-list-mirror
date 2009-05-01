@@ -1,76 +1,72 @@
-From: "Robin H. Johnson" <robbat2@gentoo.org>
-Subject: Re: Weird growth in packfile during initial push
-Date: Thu, 30 Apr 2009 23:17:57 -0700
-Message-ID: <robbat2.20090501T061700.886743377Z@orbis-terrarum.net>
-References: <20090415182754.GF23644@curie-int> <alpine.LFD.2.00.0904151443030.6741@xanadu.home> <7vy6tj109a.fsf@gitster.siamese.dyndns.org>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [PATCH 5/7] user-manual: use SHA-1 instead of SHA1 or sha1
+Date: Fri, 1 May 2009 11:26:03 +0300
+Message-ID: <94a0d4530905010126w524fd014t9a0752297b6d48fa@mail.gmail.com>
+References: <1238837909-3060-1-git-send-email-felipe.contreras@gmail.com>
+	 <1238837909-3060-2-git-send-email-felipe.contreras@gmail.com>
+	 <1238837909-3060-3-git-send-email-felipe.contreras@gmail.com>
+	 <1238837909-3060-4-git-send-email-felipe.contreras@gmail.com>
+	 <1238837909-3060-5-git-send-email-felipe.contreras@gmail.com>
+	 <1238837909-3060-6-git-send-email-felipe.contreras@gmail.com>
+	 <7v3acm9p1v.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="vtzGhvizbBRQ85DL"
-Cc: Nicolas Pitre <nico@cam.org>,
-	"Robin H. Johnson" <robbat2@gentoo.org>
-To: Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri May 01 08:18:45 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri May 01 10:26:56 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lzm56-00054P-7r
-	for gcvg-git-2@gmane.org; Fri, 01 May 2009 08:18:44 +0200
+	id 1Lzo59-00057Z-1p
+	for gcvg-git-2@gmane.org; Fri, 01 May 2009 10:26:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752115AbZEAGSK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 1 May 2009 02:18:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751804AbZEAGSH
-	(ORCPT <rfc822;git-outgoing>); Fri, 1 May 2009 02:18:07 -0400
-Received: from b01.ext.isohunt.com ([208.71.112.51]:48631 "EHLO
-	mail.isohunt.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751675AbZEAGSG (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 1 May 2009 02:18:06 -0400
-Received: (qmail 29273 invoked from network); 1 May 2009 06:18:00 -0000
-Received: from tsi-static.orbis-terrarum.net (HELO curie.orbis-terrarum.net) (76.10.188.108)
-  (smtp-auth username robbat2@isohunt.com, mechanism login)
-  by mail.isohunt.com (qpsmtpd/0.33-dev on beta01) with (AES256-SHA encrypted) ESMTPSA; Fri, 01 May 2009 06:18:00 +0000
-Received: (qmail 21863 invoked by uid 10000); 30 Apr 2009 23:17:57 -0700
-Content-Disposition: inline
-In-Reply-To: <7vy6tj109a.fsf@gitster.siamese.dyndns.org>
-User-Agent: Mutt/1.5.16 (2007-06-09)
+	id S1751443AbZEAI0I convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 1 May 2009 04:26:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750734AbZEAI0H
+	(ORCPT <rfc822;git-outgoing>); Fri, 1 May 2009 04:26:07 -0400
+Received: from mail-fx0-f158.google.com ([209.85.220.158]:47950 "EHLO
+	mail-fx0-f158.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750727AbZEAI0E convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 1 May 2009 04:26:04 -0400
+Received: by fxm2 with SMTP id 2so2225959fxm.37
+        for <git@vger.kernel.org>; Fri, 01 May 2009 01:26:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=3ijbv4uI8OCNs+9Mh++P4+hkJn0haTK9Rc9OXJ2yLtg=;
+        b=B4Lhtw5wJE0f/O1jtsgCggxqJohe+kkNZVz2kN6odRNbrHhw1HedtBd+/NozEQGUNW
+         YCXgyGPgFY2zhqDHf4Cll+LLqE1uKTIuDxm+32sSBovo7yf6PsnV0/P+AW2Y2HrgC0V8
+         aXRx79d+obNImjBVLqkMxcXq4+5igOK9NYRHk=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=Erz3mAbFUVOob5ZOkjFF74y7E4vhe8Ime+gR8wpTUQgpQKGWhSOPVTHUhnoepstfxu
+         fczNnbrZneG5kZTkttbonC4KnAWJyq6ekn96OTrSP3DYKsFBFzbgY0nbHCyV9iz3ueq/
+         65Bxf9hDb1srgdEYIaqzXnJnDvG0bsKlFS0+4=
+Received: by 10.86.49.13 with SMTP id w13mr2677664fgw.38.1241166363661; Fri, 
+	01 May 2009 01:26:03 -0700 (PDT)
+In-Reply-To: <7v3acm9p1v.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118058>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118059>
 
+On Mon, Apr 6, 2009 at 11:14 AM, Junio C Hamano <gitster@pobox.com> wro=
+te:
+> Thanks.
+>
+> This also seems to depend on the missing 3/7 but I've managed. =C2=A0=
+I retitled
+> it to "user-manual: the name of the hash function is SHA-1, not sha1"=
+=2E
 
---vtzGhvizbBRQ85DL
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-On Wed, Apr 29, 2009 at 04:57:37PM -0700, Junio C Hamano wrote:
-> > And the code matches this theory as well.  Can you try this patch if yo=
-u=20
-> > have a chance?
-> Is there any progress on this?
-Sorry, I was just away for 2 weeks, only got back late yesterday. I'll
-try to get to it in the next few days unless Nicolas beats me to it.
+You missed one in the Trust section. I'll send a patch.
 
 --=20
-Robin Hugh Johnson
-Gentoo Linux Developer & Infra Guy
-E-Mail     : robbat2@gentoo.org
-GnuPG FP   : 11AC BA4F 4778 E3F6 E4ED  F38E B27B 944E 3488 4E85
-
---vtzGhvizbBRQ85DL
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.10 (GNU/Linux)
-Comment: Robbat2 @ Orbis-Terrarum Networks - The text below is a digital signature. If it doesn't make any sense to you, ignore it.
-
-iEYEARECAAYFAkn6lBUACgkQPpIsIjIzwiznnQCghSZTZHmuzAntzc7iHwinuvYv
-Y2EAn0GhBxzAHM3oVQJtPqGfjzqeqt7h
-=cNzw
------END PGP SIGNATURE-----
-
---vtzGhvizbBRQ85DL--
+=46elipe Contreras
