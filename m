@@ -1,82 +1,76 @@
-From: Dmitry Potapov <dpotapov@gmail.com>
-Subject: Re: Why Git is so fast
-Date: Fri, 1 May 2009 09:24:34 +0400
-Message-ID: <20090501052434.GA4750@dpotapov.dyndns.org>
-References: <46a038f90904270155i6c802fceoffc73eb5ab57130e@mail.gmail.com> <m3fxfqnxn5.fsf_-_@localhost.localdomain> <b4087cc50904300556s359c91dfu444fa40ea85bd66e@mail.gmail.com> <200904301728.06989.jnareb@gmail.com> <20090430185244.GR23604@spearce.org> <86iqkllw0c.fsf@broadpark.no>
+From: "Robin H. Johnson" <robbat2@gentoo.org>
+Subject: Re: Weird growth in packfile during initial push
+Date: Thu, 30 Apr 2009 23:17:57 -0700
+Message-ID: <robbat2.20090501T061700.886743377Z@orbis-terrarum.net>
+References: <20090415182754.GF23644@curie-int> <alpine.LFD.2.00.0904151443030.6741@xanadu.home> <7vy6tj109a.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
-To: Kjetil Barvik <barvik@broadpark.no>
-X-From: git-owner@vger.kernel.org Fri May 01 07:25:22 2009
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="vtzGhvizbBRQ85DL"
+Cc: Nicolas Pitre <nico@cam.org>,
+	"Robin H. Johnson" <robbat2@gentoo.org>
+To: Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri May 01 08:18:45 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LzlFP-0005tF-7Z
-	for gcvg-git-2@gmane.org; Fri, 01 May 2009 07:25:19 +0200
+	id 1Lzm56-00054P-7r
+	for gcvg-git-2@gmane.org; Fri, 01 May 2009 08:18:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751306AbZEAFZL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 1 May 2009 01:25:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751282AbZEAFZK
-	(ORCPT <rfc822;git-outgoing>); Fri, 1 May 2009 01:25:10 -0400
-Received: from fg-out-1718.google.com ([72.14.220.154]:2367 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751193AbZEAFZI (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 1 May 2009 01:25:08 -0400
-Received: by fg-out-1718.google.com with SMTP id 16so700225fgg.17
-        for <git@vger.kernel.org>; Thu, 30 Apr 2009 22:25:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=pdOY02zjsoFJJU2fqcD9Gtr7Aj0gnJ0JXoHyyGS60M4=;
-        b=P4YIuDYGs0HxwU4Jyrf4BpZ/Xm6BuGSIW0qaBGllOMABXYnll3M2u63yZ+ZYRswwGo
-         HJU/7ZTSRhf/02AjGFdy49S8ezwxqVfoX7e9q+YbQb/3kdgCGp3MM9NUrjoZ55Agy1Ng
-         JJ57KYD/mQD6X/9gesXDHROULFFg07QVdf+LE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=XviIza3IHwE8cZZdEapQrWXnFcB3oZTdA0JgE6IDYq1XnHj0XZYoUC0gkOuRvDlPFX
-         ZVOc4tBp0S/cLJ8rfFxX7SVgbs3SazJ7Kagd1JTUuSVU0U/EJh5PTzlYauhQh9GTyoaF
-         N/Uu4+66UdhXEq3Z47kpzpKmeg3blZricYbVk=
-Received: by 10.86.59.18 with SMTP id h18mr2559794fga.71.1241155505821;
-        Thu, 30 Apr 2009 22:25:05 -0700 (PDT)
-Received: from localhost (ppp91-77-226-31.pppoe.mtu-net.ru [91.77.226.31])
-        by mx.google.com with ESMTPS id e20sm201483fga.5.2009.04.30.22.25.05
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 30 Apr 2009 22:25:05 -0700 (PDT)
+	id S1752115AbZEAGSK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 1 May 2009 02:18:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751804AbZEAGSH
+	(ORCPT <rfc822;git-outgoing>); Fri, 1 May 2009 02:18:07 -0400
+Received: from b01.ext.isohunt.com ([208.71.112.51]:48631 "EHLO
+	mail.isohunt.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751675AbZEAGSG (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 1 May 2009 02:18:06 -0400
+Received: (qmail 29273 invoked from network); 1 May 2009 06:18:00 -0000
+Received: from tsi-static.orbis-terrarum.net (HELO curie.orbis-terrarum.net) (76.10.188.108)
+  (smtp-auth username robbat2@isohunt.com, mechanism login)
+  by mail.isohunt.com (qpsmtpd/0.33-dev on beta01) with (AES256-SHA encrypted) ESMTPSA; Fri, 01 May 2009 06:18:00 +0000
+Received: (qmail 21863 invoked by uid 10000); 30 Apr 2009 23:17:57 -0700
 Content-Disposition: inline
-In-Reply-To: <86iqkllw0c.fsf@broadpark.no>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+In-Reply-To: <7vy6tj109a.fsf@gitster.siamese.dyndns.org>
+User-Agent: Mutt/1.5.16 (2007-06-09)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118057>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118058>
 
-On Thu, Apr 30, 2009 at 10:36:03PM +0200, Kjetil Barvik wrote:
->      4) The "static inline void hashcpy(....)" in cache.h could then
->         maybe be written like this:
-> 
->   static inline void hashcpy(unsigned long sha_dst[5], const unsigned long sha_src[5])
->   {
->        sha_dst[0] = sha_src[0];
->        sha_dst[1] = sha_src[1];
->        sha_dst[2] = sha_src[2];
->        sha_dst[3] = sha_src[3];
->        sha_dst[4] = sha_src[4];
->   }
-> 
->         And hopefully will be compiled to just 5 store/more
->         instructions, or at least hopefully be faster than the currently
->         memcpy() call. But mabye we get more compiled instructions compared
->         to a single call to memcpy()?
 
-Good compilers can inline memcpy and should produce more efficient code
-for the target architecture, which can be faster than manually written.
-On x86_64, memcpy() requires only 3 load/store operations to copy SHA-1
-while the above code requires 5 operations.
+--vtzGhvizbBRQ85DL
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Dmitry
+On Wed, Apr 29, 2009 at 04:57:37PM -0700, Junio C Hamano wrote:
+> > And the code matches this theory as well.  Can you try this patch if yo=
+u=20
+> > have a chance?
+> Is there any progress on this?
+Sorry, I was just away for 2 weeks, only got back late yesterday. I'll
+try to get to it in the next few days unless Nicolas beats me to it.
+
+--=20
+Robin Hugh Johnson
+Gentoo Linux Developer & Infra Guy
+E-Mail     : robbat2@gentoo.org
+GnuPG FP   : 11AC BA4F 4778 E3F6 E4ED  F38E B27B 944E 3488 4E85
+
+--vtzGhvizbBRQ85DL
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.10 (GNU/Linux)
+Comment: Robbat2 @ Orbis-Terrarum Networks - The text below is a digital signature. If it doesn't make any sense to you, ignore it.
+
+iEYEARECAAYFAkn6lBUACgkQPpIsIjIzwiznnQCghSZTZHmuzAntzc7iHwinuvYv
+Y2EAn0GhBxzAHM3oVQJtPqGfjzqeqt7h
+=cNzw
+-----END PGP SIGNATURE-----
+
+--vtzGhvizbBRQ85DL--
