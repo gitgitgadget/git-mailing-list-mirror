@@ -1,73 +1,67 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Why Git is so fast (was: Re: Eric Sink's blog - notes on git,
-	dscms and a "whole product" approach)
-Date: Fri, 1 May 2009 15:08:54 -0400
-Message-ID: <20090501190854.GA13770@coredump.intra.peff.net>
-References: <46a038f90904270155i6c802fceoffc73eb5ab57130e@mail.gmail.com> <m3ocugod96.fsf@localhost.localdomain> <m3fxfqnxn5.fsf_-_@localhost.localdomain> <20090430142244.GA23550@coredump.intra.peff.net> <alpine.LFD.2.00.0905011431460.5379@localhost.localdomain>
+From: Eygene Ryabinkin <rea-git@codelabs.ru>
+Subject: Re: [PATCH] git-svn testsuite: use standard configuration for
+	Subversion tools
+Date: Fri, 1 May 2009 23:10:07 +0400
+Message-ID: <Z0zFdWIzyQzuBQjCf+Jk/nJtvIw@BjOYljNjUB0FD+/Fw7pzaXMw/Hc>
+References: <BfKhGHDBpSzjNF/dt4ZDx88u9wI@BjOYljNjUB0FD+/Fw7pzaXMw/Hc> <7vfxfowugm.fsf@gitster.siamese.dyndns.org>
+Reply-To: rea-git@codelabs.ru
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Jakub Narebski <jnareb@gmail.com>,
-	Martin Langhoff <martin.langhoff@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Fri May 01 21:09:31 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: normaperson@yhbt.net, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri May 01 21:10:58 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Lzy6x-0003bL-9o
-	for gcvg-git-2@gmane.org; Fri, 01 May 2009 21:09:27 +0200
+	id 1Lzy8O-0004H6-GN
+	for gcvg-git-2@gmane.org; Fri, 01 May 2009 21:10:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754941AbZEATI6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 1 May 2009 15:08:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754635AbZEATI6
-	(ORCPT <rfc822;git-outgoing>); Fri, 1 May 2009 15:08:58 -0400
-Received: from peff.net ([208.65.91.99]:45232 "EHLO peff.net"
+	id S1757010AbZEATKP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 1 May 2009 15:10:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756982AbZEATKP
+	(ORCPT <rfc822;git-outgoing>); Fri, 1 May 2009 15:10:15 -0400
+Received: from 0.mx.codelabs.ru ([144.206.177.45]:58261 "EHLO 0.mx.codelabs.ru"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753645AbZEATI5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 1 May 2009 15:08:57 -0400
-Received: (qmail 26408 invoked by uid 107); 1 May 2009 19:09:10 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Fri, 01 May 2009 15:09:10 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Fri, 01 May 2009 15:08:54 -0400
+	id S1756252AbZEATKO (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 1 May 2009 15:10:14 -0400
+DomainKey-Signature: a=rsa-sha1; q=dns; c=simple; s=one; d=codelabs.ru;
+	h=Received:Date:From:To:Cc:Subject:Message-ID:Reply-To:References:MIME-Version:Content-Type:Content-Disposition:In-Reply-To:Sender;
+	b=Tz1p+I6loYb9W5d8WVTooAcjZ2q45d7/KhvuTW2Clu8JGoVbSjQwOKtJND9y+pNzshS9saj2y81MjqtiE87uBhG6J/KjcBL+ae3N+juc372u9ze0zqNHDSfd3+jg1DPqPF1zM+s1stbGqob/4ssEWK1rJSR657f+oK1jmxf+qEs=;
+Received: from amnesiac.at.no.dns (ppp83-237-107-194.pppoe.mtu-net.ru [83.237.107.194])
+	by 0.mx.codelabs.ru with esmtpsa (TLSv1:AES256-SHA:256)
+	id 1Lzy7d-0000jR-CD; Fri, 01 May 2009 23:10:09 +0400
 Content-Disposition: inline
-In-Reply-To: <alpine.LFD.2.00.0905011431460.5379@localhost.localdomain>
+In-Reply-To: <7vfxfowugm.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118088>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118089>
 
-On Fri, May 01, 2009 at 02:43:49PM -0400, Linus Torvalds wrote:
+Junio, good day.
 
-> > Like all generalizations, this is only mostly true. Fast network servers
-> > with big caches can outperform disks for some loads.
-> [...]
-> In contrast, a workstation with local filesystems and enough memory to 
-> cache it well will just be a lot nicer.
-> [...]
-> > I have never used perforce, but I get the impression that it is more 
-> > optimized for such a situation.
+Fri, May 01, 2009 at 11:26:17AM -0700, Junio C Hamano wrote:
+> Eygene Ryabinkin <rea-git@codelabs.ru> writes:
 > 
-> I doubt it. I suspect git will outperform pretty much anything else in 
-> that kind of situation too.
+> > @@ -54,6 +56,20 @@ poke() {
+> >  	test-chmtime +1 "$1"
+> >  }
+> >  
+> > +# We need this, because we should pass empty configuration directory to
+> > +# the 'svn commit' to avoid automated property changes and other stuff
+> > +# that could be set from user's configuration files in ~/.subversion.
+> > +svn_cmd () {
+> > +	local cmd
+> 
+> Does this work without your /bin/sh being bash?
 
-Thanks for the analysis; what you said makes sense to me. However, there
-is at least one case of somebody complaining that git doesn't scale as
-well as perforce for their load:
+Yes.
 
-  http://gandolf.homelinux.org/blog/index.php?id=50
+Naturally speaking, my /bin/sh isn't bash, but I had substituted it with
+the binary of bash 4.0.10(2) and it works.  Moreover, I had just run
+t/t9100-*.sh on the RHEL 4.x -- works too.
 
-Part of his issue is with git-p4 sucking, which it probably does. But
-part of it sounds like he has a gigantic workload (the description of
-which sounds silly to me, but I respect the fact that he is probably
-describing standard practice among some companies), and that workload is
-just a little too gigantic for the workstations to handle. I.e., by
-throwing resources at the central server they can avoid throwing as many
-at each workstation.
-
-But there are so few details it's hard to say whether he's doing
-something else wrong or suboptimally. He does mention Windows, which
-IIRC has horrific stat performance.
-
--Peff
+What are your concerns, 'local'?
+-- 
+Eygene
