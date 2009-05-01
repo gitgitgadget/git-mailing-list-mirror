@@ -1,91 +1,103 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: [JGIT PATCH 2/1] Honor repack.usedeltabaseoffset when fetching packs
-Date: Fri,  1 May 2009 15:00:24 -0700
-Message-ID: <1241215224-29374-1-git-send-email-spearce@spearce.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 6/7] user-manual: add global config section
+Date: Fri, 01 May 2009 15:08:08 -0700
+Message-ID: <7v3abowk6v.fsf@gitster.siamese.dyndns.org>
+References: <1238837909-3060-1-git-send-email-felipe.contreras@gmail.com>
+ <1238837909-3060-2-git-send-email-felipe.contreras@gmail.com>
+ <1238837909-3060-3-git-send-email-felipe.contreras@gmail.com>
+ <1238837909-3060-4-git-send-email-felipe.contreras@gmail.com>
+ <1238837909-3060-5-git-send-email-felipe.contreras@gmail.com>
+ <1238837909-3060-6-git-send-email-felipe.contreras@gmail.com>
+ <1238837909-3060-7-git-send-email-felipe.contreras@gmail.com>
+ <7v7i1zv3cg.fsf@gitster.siamese.dyndns.org>
+ <94a0d4530905010137h772b53f1q8af0d30400a05043@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Robin Rosenberg <robin.rosenberg@dewire.com>
-X-From: git-owner@vger.kernel.org Sat May 02 00:01:02 2009
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Sat May 02 00:08:24 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M00mx-0002nk-NX
-	for gcvg-git-2@gmane.org; Sat, 02 May 2009 00:01:00 +0200
+	id 1M00u7-0005e5-2H
+	for gcvg-git-2@gmane.org; Sat, 02 May 2009 00:08:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758160AbZEAWA0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 1 May 2009 18:00:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757279AbZEAWA0
-	(ORCPT <rfc822;git-outgoing>); Fri, 1 May 2009 18:00:26 -0400
-Received: from george.spearce.org ([209.20.77.23]:58617 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755444AbZEAWAZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 1 May 2009 18:00:25 -0400
-Received: by george.spearce.org (Postfix, from userid 1000)
-	id 3AB033807E; Fri,  1 May 2009 22:00:25 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.2.4 (2008-01-01) on george.spearce.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-4.4 required=4.0 tests=ALL_TRUSTED,BAYES_00
-	autolearn=ham version=3.2.4
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by george.spearce.org (Postfix) with ESMTP id 85D7E3807B;
-	Fri,  1 May 2009 22:00:24 +0000 (UTC)
-X-Mailer: git-send-email 1.6.3.rc3.212.g8c698
+	id S1754608AbZEAWIQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 1 May 2009 18:08:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753336AbZEAWIP
+	(ORCPT <rfc822;git-outgoing>); Fri, 1 May 2009 18:08:15 -0400
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:47189 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752158AbZEAWIP (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 1 May 2009 18:08:15 -0400
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 8C6FA13B43;
+	Fri,  1 May 2009 18:08:13 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id A7BB713B42; Fri, 
+ 1 May 2009 18:08:10 -0400 (EDT)
+In-Reply-To: <94a0d4530905010137h772b53f1q8af0d30400a05043@mail.gmail.com>
+ (Felipe Contreras's message of "Fri, 1 May 2009 11:37:37 +0300")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 908CEE3C-369C-11DE-B5FD-D766E3C8547C-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118100>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118101>
 
-If the local receiving repository has disabled the use of delta base
-offset, for example to retain compatibility with older versions of
-Git that predate OFS_DELTA, we shouldn't ask for ofs-delta support
-when we obtain a pack from the remote server.
+Felipe Contreras <felipe.contreras@gmail.com> writes:
 
-Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
----
+>> For that "introductory" purpose, however, I'd suggest showing how they
+>> appear in the actual .git/config file first in the editor and then show a
+>> way to use the "git config" command as an alternative.
+>
+> I disagree. Opening ~/.gitconfig will just open an empty file for the
+> new users, afterwards they'll just scratch their heads wondering, now
+> what?
 
- I just realized we don't honor this during fetch, and we should.
+Why on earth would anybody start introducing ~/.gitconfig before talking
+about .git/config?
 
- .../jgit/transport/BasePackFetchConnection.java    |    9 ++++++++-
- 1 files changed, 8 insertions(+), 1 deletions(-)
+A good sequence would be:
 
-diff --git a/org.spearce.jgit/src/org/spearce/jgit/transport/BasePackFetchConnection.java b/org.spearce.jgit/src/org/spearce/jgit/transport/BasePackFetchConnection.java
-index b75e0ef..b51ce23 100644
---- a/org.spearce.jgit/src/org/spearce/jgit/transport/BasePackFetchConnection.java
-+++ b/org.spearce.jgit/src/org/spearce/jgit/transport/BasePackFetchConnection.java
-@@ -49,6 +49,7 @@
- import org.spearce.jgit.lib.ObjectId;
- import org.spearce.jgit.lib.ProgressMonitor;
- import org.spearce.jgit.lib.Ref;
-+import org.spearce.jgit.lib.RepositoryConfig;
- import org.spearce.jgit.revwalk.RevCommit;
- import org.spearce.jgit.revwalk.RevCommitList;
- import org.spearce.jgit.revwalk.RevFlag;
-@@ -126,10 +127,15 @@
- 
- 	private boolean includeTags;
- 
-+	private boolean allowOfsDelta;
-+
- 	BasePackFetchConnection(final PackTransport packTransport) {
- 		super(packTransport);
-+
-+		final RepositoryConfig cfg = local.getConfig();
- 		includeTags = transport.getTagOpt() != TagOpt.NO_TAGS;
- 		thinPack = transport.isFetchThin();
-+		allowOfsDelta = cfg.getBoolean("repack", "usedeltabaseoffset", true);
- 
- 		walk = new RevWalk(local);
- 		reachableCommits = new RevCommitList<RevCommit>();
-@@ -282,7 +288,8 @@ private String enableCapabilities() {
- 		final StringBuilder line = new StringBuilder();
- 		if (includeTags)
- 			includeTags = wantCapability(line, OPTION_INCLUDE_TAG);
--		wantCapability(line, OPTION_OFS_DELTA);
-+		if (allowOfsDelta)
-+			wantCapability(line, OPTION_OFS_DELTA);
- 		multiAck = wantCapability(line, OPTION_MULTI_ACK);
- 		if (thinPack)
- 			thinPack = wantCapability(line, OPTION_THIN_PACK);
--- 
-1.6.3.rc3.212.g8c698
+	To start working on a tarball extract (or your uncontrolled
+	project) with git, first do:
+
+	$ git init
+
+	Whoa.  That was fast.  Did it do anything?  Yes, it created a
+	subdirectory .git that is going to store your history and other
+	control information.  Right now you do not have any history (nor
+	the current state for that matter) recorded in it, but it already
+	has some control information.  One of the more important one is
+	the per-repository configuration file.  Take a look:
+
+	$ git config --edit
+
+	It would show something like:
+
+	[core]
+        	...
+
+	... explain a bit on how simple the configuration syntax is ...
+
+        While you have it open, it would be a good idea to add this to
+        introduce yourself to git:
+
+	[user]
+        	email = clueful@git.us.er
+                name = My Self
+
+	If you work in multiple projects under the same identity, you
+	do not have to add user.email and user.name to each and every
+	repository this way.  Instead, you can do that to your per-user
+	configuration file, like:
+
+	$ git config --global --edit
+
+	but if you work in different projects using different mail address
+	(e.g. work vs hobby projects), you would want to have this
+	information per-repository.
