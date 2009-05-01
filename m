@@ -1,63 +1,56 @@
-From: Tony Finch <dot@dotat.at>
-Subject: Re: Why Git is so fast
-Date: Fri, 1 May 2009 18:42:38 +0100
-Message-ID: <alpine.LSU.2.00.0905011840260.28199@hermes-2.csi.cam.ac.uk>
-References: <46a038f90904270155i6c802fceoffc73eb5ab57130e@mail.gmail.com> <m3fxfqnxn5.fsf_-_@localhost.localdomain> <b4087cc50904300556s359c91dfu444fa40ea85bd66e@mail.gmail.com> <200904301728.06989.jnareb@gmail.com> <20090430185244.GR23604@spearce.org>
- <86iqkllw0c.fsf@broadpark.no> <20090430204033.GV23604@spearce.org> <8663gllt88.fsf@broadpark.no>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] git-svn testsuite: use standard configuration for
+ Subversion tools
+Date: Fri, 01 May 2009 11:26:17 -0700
+Message-ID: <7vfxfowugm.fsf@gitster.siamese.dyndns.org>
+References: <BfKhGHDBpSzjNF/dt4ZDx88u9wI@BjOYljNjUB0FD+/Fw7pzaXMw/Hc>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
-To: Kjetil Barvik <barvik@broadpark.no>
-X-From: git-owner@vger.kernel.org Fri May 01 20:10:35 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: normaperson@yhbt.net, git@vger.kernel.org
+To: Eygene Ryabinkin <rea-git@codelabs.ru>
+X-From: git-owner@vger.kernel.org Fri May 01 20:26:35 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1LzxBy-00026H-Fu
-	for gcvg-git-2@gmane.org; Fri, 01 May 2009 20:10:34 +0200
+	id 1LzxRR-0001F2-Gw
+	for gcvg-git-2@gmane.org; Fri, 01 May 2009 20:26:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755602AbZEASKI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 1 May 2009 14:10:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759743AbZEASKH
-	(ORCPT <rfc822;git-outgoing>); Fri, 1 May 2009 14:10:07 -0400
-Received: from ppsw-1.csi.cam.ac.uk ([131.111.8.131]:60926 "EHLO
-	ppsw-1.csi.cam.ac.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756028AbZEASKF (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 1 May 2009 14:10:05 -0400
-X-Greylist: delayed 1645 seconds by postgrey-1.27 at vger.kernel.org; Fri, 01 May 2009 14:10:05 EDT
-X-Cam-AntiVirus: no malware found
-X-Cam-SpamDetails: not scanned
-X-Cam-ScannerInfo: http://www.cam.ac.uk/cs/email/scanner/
-Received: from hermes-2.csi.cam.ac.uk ([131.111.8.54]:42729)
-	by ppsw-1.csi.cam.ac.uk (smtp.hermes.cam.ac.uk [131.111.8.151]:25)
-	with esmtpa (EXTERNAL:fanf2) id 1Lzwkw-0001SA-5b (Exim 4.70)
-	(return-path <fanf2@hermes.cam.ac.uk>); Fri, 01 May 2009 18:42:38 +0100
-Received: from fanf2 (helo=localhost) by hermes-2.csi.cam.ac.uk (hermes.cam.ac.uk)
-	with local-esmtp id 1Lzwkw-0001Id-NO (Exim 4.67)
-	(return-path <fanf2@hermes.cam.ac.uk>); Fri, 01 May 2009 18:42:38 +0100
-X-X-Sender: fanf2@hermes-2.csi.cam.ac.uk
-In-Reply-To: <8663gllt88.fsf@broadpark.no>
-User-Agent: Alpine 2.00 (LSU 1167 2008-08-23)
+	id S1754641AbZEAS0Z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 1 May 2009 14:26:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754109AbZEAS0Z
+	(ORCPT <rfc822;git-outgoing>); Fri, 1 May 2009 14:26:25 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:51774 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753895AbZEAS0Y (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 1 May 2009 14:26:24 -0400
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 5DF93AF742;
+	Fri,  1 May 2009 14:26:23 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 1067CAF740; Fri,
+  1 May 2009 14:26:18 -0400 (EDT)
+In-Reply-To: <BfKhGHDBpSzjNF/dt4ZDx88u9wI@BjOYljNjUB0FD+/Fw7pzaXMw/Hc>
+ (Eygene Ryabinkin's message of "Fri, 1 May 2009 15:46:56 +0400")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-Pobox-Relay-ID: 930D1FB6-367D-11DE-AB7A-CABC03BA4B0C-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118084>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118086>
 
-On Thu, 30 Apr 2009, Kjetil Barvik wrote:
->
->   I admit that I am not particular familar with intel machine
->   instructions, but I guess that the above 10 mov instructions is the
->   result for the compiled inline hashcpy() in the write_sha1_file()
->   function in sha1_file.c
->
->   Question: would it be possible for the compiler to compile it down to
->   just 5 mov instructions if we had used unsigned 32 bits type?
+Eygene Ryabinkin <rea-git@codelabs.ru> writes:
 
-No, because the x86 can't do direct memory-to-memory moves.
+> @@ -54,6 +56,20 @@ poke() {
+>  	test-chmtime +1 "$1"
+>  }
+>  
+> +# We need this, because we should pass empty configuration directory to
+> +# the 'svn commit' to avoid automated property changes and other stuff
+> +# that could be set from user's configuration files in ~/.subversion.
+> +svn_cmd () {
+> +	local cmd
 
-Tony.
--- 
-f.anthony.n.finch  <dot@dotat.at>  http://dotat.at/
-GERMAN BIGHT HUMBER: SOUTHWEST 5 TO 7. MODERATE OR ROUGH. SQUALLY SHOWERS.
-MODERATE OR GOOD.
+Does this work without your /bin/sh being bash?
