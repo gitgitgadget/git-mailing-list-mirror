@@ -1,287 +1,115 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: [JGIT PATCH 5/6] Teach FileHeader, HunkHeader how to create an EditList
-Date: Fri,  1 May 2009 19:08:46 -0700
-Message-ID: <1241230127-28279-6-git-send-email-spearce@spearce.org>
-References: <1241230127-28279-1-git-send-email-spearce@spearce.org>
- <1241230127-28279-2-git-send-email-spearce@spearce.org>
- <1241230127-28279-3-git-send-email-spearce@spearce.org>
- <1241230127-28279-4-git-send-email-spearce@spearce.org>
- <1241230127-28279-5-git-send-email-spearce@spearce.org>
-Cc: git@vger.kernel.org
-To: Robin Rosenberg <robin.rosenberg@dewire.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Sat May 02 04:10:00 2009
+From: David Aguilar <davvid@gmail.com>
+Subject: [PATCH] mergetool--lib: specialize diff options for emerge and ecmerge
+Date: Sat,  2 May 2009 01:57:21 -0700
+Message-ID: <1241254641-54338-1-git-send-email-davvid@gmail.com>
+Cc: charles@hashpling.org, git@vger.kernel.org,
+	David Aguilar <davvid@gmail.com>
+To: gitster@pobox.com, markus.heidelberg@web.de,
+	marcin.zalewski@gmail.com
+X-From: git-owner@vger.kernel.org Sat May 02 10:57:53 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M04fv-0003zI-TT
-	for gcvg-git-2@gmane.org; Sat, 02 May 2009 04:10:00 +0200
+	id 1M0B2f-0007QK-9s
+	for gcvg-git-2@gmane.org; Sat, 02 May 2009 10:57:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751608AbZEBCJa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 1 May 2009 22:09:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752354AbZEBCJ2
-	(ORCPT <rfc822;git-outgoing>); Fri, 1 May 2009 22:09:28 -0400
-Received: from george.spearce.org ([209.20.77.23]:48677 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751608AbZEBCJN (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 1 May 2009 22:09:13 -0400
-Received: by george.spearce.org (Postfix, from userid 1000)
-	id E739F3807D; Sat,  2 May 2009 02:09:12 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.2.4 (2008-01-01) on george.spearce.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-4.4 required=4.0 tests=ALL_TRUSTED,BAYES_00
-	autolearn=ham version=3.2.4
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by george.spearce.org (Postfix) with ESMTP id 4AE0C38081;
-	Sat,  2 May 2009 02:08:49 +0000 (UTC)
-X-Mailer: git-send-email 1.6.3.rc3.212.g8c698
-In-Reply-To: <1241230127-28279-5-git-send-email-spearce@spearce.org>
+	id S1751541AbZEBI5o (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 2 May 2009 04:57:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751463AbZEBI5o
+	(ORCPT <rfc822;git-outgoing>); Sat, 2 May 2009 04:57:44 -0400
+Received: from wa-out-1112.google.com ([209.85.146.180]:10893 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751221AbZEBI5m (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 2 May 2009 04:57:42 -0400
+Received: by wa-out-1112.google.com with SMTP id j5so1496957wah.21
+        for <git@vger.kernel.org>; Sat, 02 May 2009 01:57:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer;
+        bh=m/Y3vZ0CJ2mixbpgHuF/K/B9IKySAvilw4umzTpb7vk=;
+        b=BxvIplBpA5RgY6VacZLyqytM3JSO8lT540lbYTksH8Q4rdB/GbT5gV4xnON4G+pB+M
+         prfPudcfH3BIJxZYSfdXc+xWQp5GoV7/xUDY3i0Z65pjbpVKCo9jPaThERVm7IOtXgIS
+         rD+mYiV+bzM2hwXoffBTu2HBbMhlQRvfTx4gg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=xqAOnIzYzYMfALe/UStLrNp4SlOGw+8rwgitfOpq/IPni4G9x1MB7FS+sppNkFc1DK
+         9zTLhjM95m41b8edUx6yTkU18cfEznC67rS9OeIjpLHtKe3L3D+HOD/NOFrpaU97FrnO
+         owT/EvnkBm+VXfU5yN/j8vV1xQSIpeI08YOuI=
+Received: by 10.114.192.17 with SMTP id p17mr2687225waf.196.1241254661820;
+        Sat, 02 May 2009 01:57:41 -0700 (PDT)
+Received: from localhost (208-106-56-2.static.dsltransport.net [208.106.56.2])
+        by mx.google.com with ESMTPS id n9sm5398189wag.34.2009.05.02.01.57.39
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sat, 02 May 2009 01:57:41 -0700 (PDT)
+X-Mailer: git-send-email 1.6.3.rc3.40.g75b44
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118124>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118125>
 
-The EditList type along with its member Edit instances can be very
-useful when mining a patch for information about the change it is
-trying to represent to the content.  This can be useful to create a
-modified version of the patch, such as with larger or smaller number
-of context lines.
+The ecmerge documentation mentions the following form:
 
-Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
+	ecmerge --mode=diff2 $1 $2
+
+Since git-difftool is about diffing, we should use that
+instead of --mode=merge2.  Likewise, this drops the
+$MERGED argument to emerge, as discussed on the git list
+($gmane/117930).
+
+Signed-off-by: David Aguilar <davvid@gmail.com>
 ---
- .../spearce/jgit/patch/testEditList_Types.patch    |   24 +++++
- .../tst/org/spearce/jgit/patch/EditListTest.java   |   95 ++++++++++++++++++++
- .../src/org/spearce/jgit/patch/FileHeader.java     |    9 ++
- .../src/org/spearce/jgit/patch/HunkHeader.java     |   48 ++++++++++
- 4 files changed, 176 insertions(+), 0 deletions(-)
- create mode 100644 org.spearce.jgit.test/tst-rsrc/org/spearce/jgit/patch/testEditList_Types.patch
- create mode 100644 org.spearce.jgit.test/tst/org/spearce/jgit/patch/EditListTest.java
 
-diff --git a/org.spearce.jgit.test/tst-rsrc/org/spearce/jgit/patch/testEditList_Types.patch b/org.spearce.jgit.test/tst-rsrc/org/spearce/jgit/patch/testEditList_Types.patch
-new file mode 100644
-index 0000000..e5363eb
---- /dev/null
-+++ b/org.spearce.jgit.test/tst-rsrc/org/spearce/jgit/patch/testEditList_Types.patch
-@@ -0,0 +1,24 @@
-+diff --git a/X b/X
-+index a3648a1..2d44096 100644
-+--- a/X
-++++ b/X
-+@@ -2,2 +2,3 @@ a
-+ b
-++c
-+ d
-+@@ -16,4 +17,2 @@ p
-+ q
-+-r
-+-s
-+ t
-+@@ -22,4 +21,8 @@ v
-+ w
-+-x
-+-y
-++0
-++1
-++2
-++3
-++4
-++5
-+ z
-diff --git a/org.spearce.jgit.test/tst/org/spearce/jgit/patch/EditListTest.java b/org.spearce.jgit.test/tst/org/spearce/jgit/patch/EditListTest.java
-new file mode 100644
-index 0000000..452f661
---- /dev/null
-+++ b/org.spearce.jgit.test/tst/org/spearce/jgit/patch/EditListTest.java
-@@ -0,0 +1,95 @@
-+/*
-+ * Copyright (C) 2009, Google Inc.
-+ *
-+ * All rights reserved.
-+ *
-+ * Redistribution and use in source and binary forms, with or
-+ * without modification, are permitted provided that the following
-+ * conditions are met:
-+ *
-+ * - Redistributions of source code must retain the above copyright
-+ *   notice, this list of conditions and the following disclaimer.
-+ *
-+ * - Redistributions in binary form must reproduce the above
-+ *   copyright notice, this list of conditions and the following
-+ *   disclaimer in the documentation and/or other materials provided
-+ *   with the distribution.
-+ *
-+ * - Neither the name of the Git Development Community nor the
-+ *   names of its contributors may be used to endorse or promote
-+ *   products derived from this software without specific prior
-+ *   written permission.
-+ *
-+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND
-+ * CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES,
-+ * INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
-+ * OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
-+ * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
-+ * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-+ * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
-+ * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
-+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
-+ * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
-+ * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
-+ * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
-+ * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-+ */
-+
-+package org.spearce.jgit.patch;
-+
-+import java.io.IOException;
-+import java.io.InputStream;
-+
-+import junit.framework.TestCase;
-+
-+import org.spearce.jgit.diff.Edit;
-+import org.spearce.jgit.diff.EditList;
-+
-+public class EditListTest extends TestCase {
-+	public void testHunkHeader() throws IOException {
-+		final Patch p = parseTestPatchFile("testGetText_BothISO88591.patch");
-+		final FileHeader fh = p.getFiles().get(0);
-+
-+		final EditList list0 = fh.getHunks().get(0).toEditList();
-+		assertEquals(1, list0.size());
-+		assertEquals(new Edit(4 - 1, 5 - 1, 4 - 1, 5 - 1), list0.get(0));
-+
-+		final EditList list1 = fh.getHunks().get(1).toEditList();
-+		assertEquals(1, list1.size());
-+		assertEquals(new Edit(16 - 1, 17 - 1, 16 - 1, 17 - 1), list1.get(0));
-+	}
-+
-+	public void testFileHeader() throws IOException {
-+		final Patch p = parseTestPatchFile("testGetText_BothISO88591.patch");
-+		final FileHeader fh = p.getFiles().get(0);
-+		final EditList e = fh.toEditList();
-+		assertEquals(2, e.size());
-+		assertEquals(new Edit(4 - 1, 5 - 1, 4 - 1, 5 - 1), e.get(0));
-+		assertEquals(new Edit(16 - 1, 17 - 1, 16 - 1, 17 - 1), e.get(1));
-+	}
-+
-+	public void testTypes() throws IOException {
-+		final Patch p = parseTestPatchFile("testEditList_Types.patch");
-+		final FileHeader fh = p.getFiles().get(0);
-+		final EditList e = fh.toEditList();
-+		assertEquals(3, e.size());
-+		assertEquals(new Edit(3 - 1, 3 - 1, 3 - 1, 4 - 1), e.get(0));
-+		assertEquals(new Edit(17 - 1, 19 - 1, 18 - 1, 18 - 1), e.get(1));
-+		assertEquals(new Edit(23 - 1, 25 - 1, 22 - 1, 28 - 1), e.get(2));
-+	}
-+
-+	private Patch parseTestPatchFile(final String patchFile) throws IOException {
-+		final InputStream in = getClass().getResourceAsStream(patchFile);
-+		if (in == null) {
-+			fail("No " + patchFile + " test vector");
-+			return null; // Never happens
-+		}
-+		try {
-+			final Patch p = new Patch();
-+			p.parse(in);
-+			return p;
-+		} finally {
-+			in.close();
-+		}
-+	}
-+}
-diff --git a/org.spearce.jgit/src/org/spearce/jgit/patch/FileHeader.java b/org.spearce.jgit/src/org/spearce/jgit/patch/FileHeader.java
-index 7d341d8..c64f742 100644
---- a/org.spearce.jgit/src/org/spearce/jgit/patch/FileHeader.java
-+++ b/org.spearce.jgit/src/org/spearce/jgit/patch/FileHeader.java
-@@ -52,6 +52,7 @@
- import java.util.Collections;
- import java.util.List;
- 
-+import org.spearce.jgit.diff.EditList;
- import org.spearce.jgit.lib.AbbreviatedObjectId;
- import org.spearce.jgit.lib.Constants;
- import org.spearce.jgit.lib.FileMode;
-@@ -423,6 +424,14 @@ public BinaryHunk getReverseBinaryHunk() {
- 		return reverseBinaryHunk;
- 	}
- 
-+	/** @return a list describing the content edits performed on this file. */
-+	public EditList toEditList() {
-+		final EditList r = new EditList();
-+		for (final HunkHeader hunk : hunks)
-+			r.addAll(hunk.toEditList());
-+		return r;
-+	}
-+
- 	/**
- 	 * Parse a "diff --git" or "diff --cc" line.
- 	 *
-diff --git a/org.spearce.jgit/src/org/spearce/jgit/patch/HunkHeader.java b/org.spearce.jgit/src/org/spearce/jgit/patch/HunkHeader.java
-index e9c55e3..af128ab 100644
---- a/org.spearce.jgit/src/org/spearce/jgit/patch/HunkHeader.java
-+++ b/org.spearce.jgit/src/org/spearce/jgit/patch/HunkHeader.java
-@@ -44,6 +44,8 @@
- import java.io.IOException;
- import java.io.OutputStream;
- 
-+import org.spearce.jgit.diff.Edit;
-+import org.spearce.jgit.diff.EditList;
- import org.spearce.jgit.lib.AbbreviatedObjectId;
- import org.spearce.jgit.util.MutableInteger;
- 
-@@ -161,6 +163,52 @@ public int getLinesContext() {
- 		return nContext;
- 	}
- 
-+	/** @return a list describing the content edits performed within the hunk. */
-+	public EditList toEditList() {
-+		final EditList r = new EditList();
-+		final byte[] buf = file.buf;
-+		int c = nextLF(buf, startOffset);
-+		int oLine = old.startLine;
-+		int nLine = newStartLine;
-+		Edit in = null;
-+
-+		SCAN: for (; c < endOffset; c = nextLF(buf, c)) {
-+			switch (buf[c]) {
-+			case ' ':
-+			case '\n':
-+				in = null;
-+				oLine++;
-+				nLine++;
-+				continue;
-+
-+			case '-':
-+				if (in == null) {
-+					in = new Edit(oLine - 1, nLine - 1);
-+					r.add(in);
-+				}
-+				oLine++;
-+				in.extendA();
-+				continue;
-+
-+			case '+':
-+				if (in == null) {
-+					in = new Edit(oLine - 1, nLine - 1);
-+					r.add(in);
-+				}
-+				nLine++;
-+				in.extendB();
-+				continue;
-+
-+			case '\\': // Matches "\ No newline at end of file"
-+				continue;
-+
-+			default:
-+				break SCAN;
-+			}
-+		}
-+		return r;
-+	}
-+
- 	void parseHeader() {
- 		// Parse "@@ -236,9 +236,9 @@ protected boolean"
- 		//
+I tested the emacs (emerge) bit, but I'm not an emacs
+user and I didn't really see any difference with or
+without the patch.  Dropping $MERGED seems like the
+right thing to do nonetheless.
+
+In emerge/emacs mode, we still end up seeing the
+merge pane.  My emacs-fu is not sophisticated
+enough to know how to inhibit the merge pane
+(if that's even something we'd want to do).
+
+
+Regarding ecmerge:  I found the --mode=diff2
+flag by reading their documenation:
+
+http://www.elliecomputing.com/OnlineDoc/ecmerge_EN/52335623.asp
+
+I don't have ecmerge installed at all, so I'm just
+going by the book on this one.  It *looks* correct,
+and probably is, but let it be known that I
+haven't tested the ecmerge snippet myself.
+
+ git-mergetool--lib.sh |    6 +++---
+ 1 files changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/git-mergetool--lib.sh b/git-mergetool--lib.sh
+index a16a279..8b5e6a8 100644
+--- a/git-mergetool--lib.sh
++++ b/git-mergetool--lib.sh
+@@ -228,8 +228,8 @@ run_merge_tool () {
+ 			fi
+ 			check_unchanged
+ 		else
+-			"$merge_tool_path" "$LOCAL" "$REMOTE" \
+-				--default --mode=merge2 --to="$MERGED"
++			"$merge_tool_path" --default --mode=diff2 \
++				"$LOCAL" "$REMOTE"
+ 		fi
+ 		;;
+ 	emerge)
+@@ -248,7 +248,7 @@ run_merge_tool () {
+ 			status=$?
+ 		else
+ 			"$merge_tool_path" -f emerge-files-command \
+-				"$LOCAL" "$REMOTE" "$(basename "$MERGED")"
++				"$LOCAL" "$REMOTE"
+ 		fi
+ 		;;
+ 	tortoisemerge)
 -- 
-1.6.3.rc3.212.g8c698
+1.6.3.rc3.40.g75b44
