@@ -1,64 +1,111 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] git-svn testsuite: use standard configuration for Subversion tools
-Date: Sat, 02 May 2009 04:56:28 -0700
-Message-ID: <7vtz437m6r.fsf@alter.siamese.dyndns.org>
-References: <BfKhGHDBpSzjNF/dt4ZDx88u9wI@BjOYljNjUB0FD+/Fw7pzaXMw/Hc>
-	<7vfxfowugm.fsf@gitster.siamese.dyndns.org>
-	<Z0zFdWIzyQzuBQjCf+Jk/nJtvIw@BjOYljNjUB0FD+/Fw7pzaXMw/Hc>
-	<7viqkkv43t.fsf@gitster.siamese.dyndns.org>
-	<GzXVCxlG1vigUEGxhNBLVXNYljM@AnOk+mYbmYVORDu5SWQWxomMUcc>
+From: "Ferry Huberts (Pelagic)" <ferry.huberts@pelagic.nl>
+Subject: Re: AW: [EGIT] [PATCH RFC v1 5/5] Use the ignore patterns cache to
+ determine ignores
+Date: Sat, 02 May 2009 14:44:10 +0200
+Message-ID: <49FC401A.1030701@pelagic.nl>
+References: <947431.4782.qm@web27806.mail.ukl.yahoo.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, normaperson@yhbt.net,
-	git@vger.kernel.org
-To: rea-git@codelabs.ru
-X-From: git-owner@vger.kernel.org Sat May 02 13:56:36 2009
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>,
+	Robin Rosenberg <robin.rosenberg@dewire.com>
+To: Mark Struberg <struberg@yahoo.de>
+X-From: git-owner@vger.kernel.org Sat May 02 14:44:49 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M0Dpb-0000xA-CT
-	for gcvg-git-2@gmane.org; Sat, 02 May 2009 13:56:35 +0200
+	id 1M0EaF-0003UY-1e
+	for gcvg-git-2@gmane.org; Sat, 02 May 2009 14:44:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754724AbZEBL43 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 2 May 2009 07:56:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753921AbZEBL42
-	(ORCPT <rfc822;git-outgoing>); Sat, 2 May 2009 07:56:28 -0400
-Received: from fed1rmmtao106.cox.net ([68.230.241.40]:44924 "EHLO
-	fed1rmmtao106.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753842AbZEBL41 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 2 May 2009 07:56:27 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao106.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20090502115627.CPGB25927.fed1rmmtao106.cox.net@fed1rmimpo01.cox.net>;
-          Sat, 2 May 2009 07:56:27 -0400
-Received: from localhost ([68.225.240.211])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id mbwT1b0024aMwMQ03bwT3t; Sat, 02 May 2009 07:56:27 -0400
-X-Authority-Analysis: v=1.0 c=1 a=2hLPIl38GrsA:10 a=9iCuYjaEHQQA:10
- a=hJJxPVmbRO_wGLc7inIA:9 a=--XhfhuTJAaTRzGaznQA:7
- a=H8g4XNYlrh__XwLU8lXf1TQKRGYA:4
-X-CM-Score: 0.00
-In-Reply-To: <GzXVCxlG1vigUEGxhNBLVXNYljM@AnOk+mYbmYVORDu5SWQWxomMUcc> (Eygene Ryabinkin's message of "Sat\, 2 May 2009 14\:36\:29 +0400")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+	id S1753006AbZEBMoP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 2 May 2009 08:44:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752593AbZEBMoO
+	(ORCPT <rfc822;git-outgoing>); Sat, 2 May 2009 08:44:14 -0400
+Received: from hupie.xs4all.nl ([82.95.241.251]:34982 "EHLO
+	Lighthouse.internal.Hupie.com" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1751776AbZEBMoN (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 2 May 2009 08:44:13 -0400
+Received: from [192.168.0.50] (Paul.internal.Hupie.com [192.168.0.50])
+	by Lighthouse.internal.Hupie.com (Postfix) with ESMTP id 30E2758BD9F;
+	Sat,  2 May 2009 14:44:11 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.21 (X11/20090320)
+In-Reply-To: <947431.4782.qm@web27806.mail.ukl.yahoo.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118132>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118133>
 
-Eygene Ryabinkin <rea-git@codelabs.ru> writes:
+Mark Struberg wrote:
+> Ferry,
+> 
+> I was just quickly hacking a rudimentary IgnoreRules class in jgit-core
+> [1] mainly for the purpose of not forgetting about handling ignores
+> finally ;)
+> 
 
->> > What are your concerns, 'local'?
->> 
->> Exactly.
->
-> It exists in Bash and in *BSD /bin/sh.  It does not exist in Korn shell
-> (at least, I am failing to find one).  I can just remove 'local' from
-> the function, since it plays no big role, but generally I don't like to
-> pollute parent namespace by local variables.  Certainly, if 'local' will
-> break some known shell -- I'll refrain from using it in this script.
+I think there is no need to do that, I have that in my code already 
+(although in a different form). My implementation reflects what C git does.
 
-Yup, please.  This is "it is not even in POSIX, so let's not use it"
-category.
+> I now saw you worked on introducing gitignore to EGIT, but wasn't able
+> to find any repo with your code but only a few old patches.
+> 
+
+it's in my local repo. I have no public repo
+
+> Do you see a way we can move your work into jgit-core? I've seen you
+> have a lot of Eclipse specific stuff in your code, so we'd obviously
+> have to cut those things in slices.
+
+I've been asking Shawn about input a few times but did not receive any 
+yet. he wants it moved into a treewalk but I'm way too unfamiliar with 
+that code to do it properly (and easily)
+
+the reason that I have a lot of eclipse specific stuff in there is because 
+I just started implementing the handling in the egit plugin since that was 
+the easiest point to plug it into.
+
+I have been thinking a lot about getting rid of the eclipse specific stuff 
+and I think that's not hard. it requires a bit of reworking of the code 
+but what I have in mind is actually a lot cleaner that what I sent out 
+earlier.
+
+> 
+> One possible strategy would be to make the IgnoreRules stuff in
+> jgit-core contain only the 'readonly' evaluation code, thus no
+
+that would be easy
+
+> addIgnore(File) and addIgnore(String rule). Eclipse (or others, e.g.
+> editor) could then manipulate the .gitignore files, and all the other
+> ignore options and afterwards tells the IgnoreRules to re-initialise.
+
+I think it would be easier to let eclipse manipulate the ignore file and 
+then just re-read it into the 'ignore cache'
+
+> 
+> A second thing: Not looked at your code close enough, but I noticed
+> that quite a few Eclipse plugins look at the subclipse when it comes to
+> ignore handling, and try to 'hide' the ignore files from the user. I
+> personally don't like that because the propset based ignore handling is
+> a highly SVN specific thing. I prefer the way it's handled with the CVS
+> plugin: show the .gitignore files to the user and even let him edit
+> those files with an editor. As soon as we detect a change (even after a
+> refresh if someone edited it with vi), we simply re-init our
+> IgnoreRules.
+> 1
+> WDYT?
+
+see remark above. exactly what I had in mind. git does ignore handling 
+like cvs.
+
+> 
+> Btw: Do you have a github account already? We could create an 'ignore'
+> branch and I'm sure Jason can give you push rights to it.
+> 
+
+no account yet.
+would be nice to work on this with other people.
+
+Ferry
