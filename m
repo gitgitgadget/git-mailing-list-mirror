@@ -1,132 +1,62 @@
-From: Markus Heidelberg <markus.heidelberg@web.de>
-Subject: [PATCH 2/2] git-gui: add menu item to select a branch to visualize with gitk
-Date: Sat,  2 May 2009 11:20:54 +0200
-Message-ID: <1241256054-14117-2-git-send-email-markus.heidelberg@web.de>
-References: <1241256054-14117-1-git-send-email-markus.heidelberg@web.de>
-Cc: git@vger.kernel.org, Markus Heidelberg <markus.heidelberg@web.de>
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Sat May 02 11:23:38 2009
+From: Eygene Ryabinkin <rea-git@codelabs.ru>
+Subject: Re: [PATCH] git-svn testsuite: use standard configuration for
+	Subversion tools
+Date: Sat, 2 May 2009 14:36:29 +0400
+Message-ID: <GzXVCxlG1vigUEGxhNBLVXNYljM@AnOk+mYbmYVORDu5SWQWxomMUcc>
+References: <BfKhGHDBpSzjNF/dt4ZDx88u9wI@BjOYljNjUB0FD+/Fw7pzaXMw/Hc> <7vfxfowugm.fsf@gitster.siamese.dyndns.org> <Z0zFdWIzyQzuBQjCf+Jk/nJtvIw@BjOYljNjUB0FD+/Fw7pzaXMw/Hc> <7viqkkv43t.fsf@gitster.siamese.dyndns.org>
+Reply-To: rea-git@codelabs.ru
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: normaperson@yhbt.net, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat May 02 12:36:45 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M0BRY-0006Dm-Jn
-	for gcvg-git-2@gmane.org; Sat, 02 May 2009 11:23:37 +0200
+	id 1M0CaK-0000QC-Rj
+	for gcvg-git-2@gmane.org; Sat, 02 May 2009 12:36:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753561AbZEBJWq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 2 May 2009 05:22:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753378AbZEBJWo
-	(ORCPT <rfc822;git-outgoing>); Sat, 2 May 2009 05:22:44 -0400
-Received: from fmmailgate01.web.de ([217.72.192.221]:53953 "EHLO
-	fmmailgate01.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752340AbZEBJWm (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 2 May 2009 05:22:42 -0400
-Received: from smtp08.web.de (fmsmtp08.dlan.cinetic.de [172.20.5.216])
-	by fmmailgate01.web.de (Postfix) with ESMTP id 994671012E1F6;
-	Sat,  2 May 2009 11:21:39 +0200 (CEST)
-Received: from [89.59.107.122] (helo=localhost.localdomain)
-	by smtp08.web.de with asmtp (TLSv1:AES256-SHA:256)
-	(WEB.DE 4.110 #277)
-	id 1M0BPf-0002rf-01; Sat, 02 May 2009 11:21:39 +0200
-X-Mailer: git-send-email 1.6.3.rc3.79.g777c
-In-Reply-To: <1241256054-14117-1-git-send-email-markus.heidelberg@web.de>
-X-Sender: markus.heidelberg@web.de
-X-Provags-ID: V01U2FsdGVkX18xo0q59KI6GHxFqHkcC0+kctCV2U1kIPpBvX1v
-	AoL6NQeuMNra3R25JdUZ9d0Z7UuxTW7rKirEba6WEzWuJFdbPY
-	KkWzQYnub6mViRbm+mmg==
+	id S1753281AbZEBKgh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 2 May 2009 06:36:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752628AbZEBKgg
+	(ORCPT <rfc822;git-outgoing>); Sat, 2 May 2009 06:36:36 -0400
+Received: from 0.mx.codelabs.ru ([144.206.177.45]:52843 "EHLO 0.mx.codelabs.ru"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751995AbZEBKgg (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 2 May 2009 06:36:36 -0400
+DomainKey-Signature: a=rsa-sha1; q=dns; c=simple; s=one; d=codelabs.ru;
+	h=Received:Date:From:To:Cc:Subject:Message-ID:Reply-To:References:MIME-Version:Content-Type:Content-Disposition:In-Reply-To:Sender;
+	b=oCbwyorCner0X8rt3SzgWCI/EzzgOyNqF3cFZGq6PGvSU5BdYdKKf2tWJwXo6rmBACHaGwAfzcQZfy0a+MMi/kUuTZeBkKxGF1/3YH86XL6SbZlKeMedifjVb5LkTa8QHjl9yN2+mgSyj29WLw5S8J/N8K6UZ9h7XY8rm/M3aE0=;
+Received: from amnesiac.at.no.dns (ppp83-237-107-194.pppoe.mtu-net.ru [83.237.107.194])
+	by 0.mx.codelabs.ru with esmtpsa (TLSv1:AES256-SHA:256)
+	id 1M0Ca9-0002WR-0W; Sat, 02 May 2009 14:36:33 +0400
+Content-Disposition: inline
+In-Reply-To: <7viqkkv43t.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118128>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118129>
 
-Previously it was only possible to either visualize the history of the
-current branch or of all branches. This new menu item "Visualize Branch
-History..." is similar to the existing "Browse Branch Files..." item.
+Junio,
 
-The gitk_open class was straight copied from the browser_open class with
-merely adjusting the UI text and the command to execute.
+Fri, May 01, 2009 at 03:40:54PM -0700, Junio C Hamano wrote:
+> Eygene Ryabinkin <rea-git@codelabs.ru> writes:
+> 
+> > What are your concerns, 'local'?
+> 
+> Exactly.
 
-Signed-off-by: Markus Heidelberg <markus.heidelberg@web.de>
----
- git-gui.sh   |    3 +++
- lib/gitk.tcl |   53 +++++++++++++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 56 insertions(+), 0 deletions(-)
+It exists in Bash and in *BSD /bin/sh.  It does not exist in Korn shell
+(at least, I am failing to find one).  I can just remove 'local' from
+the function, since it plays no big role, but generally I don't like to
+pollute parent namespace by local variables.  Certainly, if 'local' will
+break some known shell -- I'll refrain from using it in this script.
 
-diff --git a/git-gui.sh b/git-gui.sh
-index 6ff04c4..9ceaf6f 100755
---- a/git-gui.sh
-+++ b/git-gui.sh
-@@ -2310,6 +2310,9 @@ set ui_browse_current [.mbar.repository index last]
- 	-command {do_gitk $current_branch}
- set ui_visualize_current [.mbar.repository index last]
- .mbar.repository add command \
-+	-label [mc "Visualize Branch History..."] \
-+	-command gitk_open::dialog
-+.mbar.repository add command \
- 	-label [mc "Visualize All Branch History"] \
- 	-command {do_gitk --all}
- .mbar.repository add separator
-diff --git a/lib/gitk.tcl b/lib/gitk.tcl
-index fcbb73d..251ab45 100644
---- a/lib/gitk.tcl
-+++ b/lib/gitk.tcl
-@@ -39,3 +39,56 @@ proc do_gitk {revs} {
- 		}
- 	}
- }
-+
-+class gitk_open {
-+
-+field w              ; # widget path
-+field w_rev          ; # mega-widget to pick the initial revision
-+
-+constructor dialog {} {
-+	make_toplevel top w
-+	wm title $top [append "[appname] ([reponame]): " [mc "Visualize Branch History"]]
-+	if {$top ne {.}} {
-+		wm geometry $top "+[winfo rootx .]+[winfo rooty .]"
-+	}
-+
-+	label $w.header \
-+		-text [mc "Visualize Branch History"] \
-+		-font font_uibold
-+	pack $w.header -side top -fill x
-+
-+	frame $w.buttons
-+	button $w.buttons.browse -text [mc Visualize] \
-+		-default active \
-+		-command [cb _open]
-+	pack $w.buttons.browse -side right
-+	button $w.buttons.cancel -text [mc Cancel] \
-+		-command [list destroy $w]
-+	pack $w.buttons.cancel -side right -padx 5
-+	pack $w.buttons -side bottom -fill x -pady 10 -padx 10
-+
-+	set w_rev [::choose_rev::new $w.rev [mc Revision]]
-+	$w_rev bind_listbox <Double-Button-1> [cb _open]
-+	pack $w.rev -anchor nw -fill both -expand 1 -pady 5 -padx 5
-+
-+	bind $w <Visibility> [cb _visible]
-+	bind $w <Key-Escape> [list destroy $w]
-+	bind $w <Key-Return> [cb _open]\;break
-+	tkwait window $w
-+}
-+
-+method _open {} {
-+	if {[catch {$w_rev commit_or_die} err]} {
-+		return
-+	}
-+	set name [$w_rev get]
-+	destroy $w
-+	do_gitk $name
-+}
-+
-+method _visible {} {
-+	grab $w
-+	$w_rev focus_filter
-+}
-+
-+}
+Do you know an example of shell that is used by Git (thus being /bin/sh
+in the system) and that lacks 'local' builtin?
+
+Thanks!
 -- 
-1.6.3.rc3.79.g777c
+Eygene
