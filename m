@@ -1,174 +1,83 @@
-From: Josef Wolf <jw@raven.inka.de>
-Subject: Re: Trying to sync two svn repositories with git-svn (repost)
-Date: Sat, 2 May 2009 23:58:52 +0200
-Message-ID: <20090502215852.GJ15420@raven.wolf.lan>
-References: <20090428223728.GE15420@raven.wolf.lan> <32541b130904282019n4b930f80g1ed22b2dde22510a@mail.gmail.com> <20090429160129.GF15420@raven.wolf.lan> <32541b130904291113p6f99a82ft824cd3c482447117@mail.gmail.com> <20090429223747.GG15420@raven.wolf.lan> <32541b130904291907q4003ad86v4728c5b2ba0aacb7@mail.gmail.com> <20090430222808.GH15420@raven.wolf.lan> <32541b130904301559w329bdd4bo6f2736a505b7235f@mail.gmail.com> <20090501142811.GI15420@raven.wolf.lan> <32541b130905011217x7f339d41x696fedee7298e3a4@mail.gmail.com>
+From: Michael Witten <mfwitten@gmail.com>
+Subject: Re: [doc] User Manual Suggestion
+Date: Sat, 2 May 2009 18:13:24 -0500
+Message-ID: <b4087cc50905021613j1d269757g8c599b484208c188@mail.gmail.com>
+References: <200904240051.46233.johan@herland.net>
+	 <200904242230.13239.johan@herland.net>
+	 <alpine.LNX.2.00.0904241655090.2147@iabervon.org>
+	 <20090424213848.GA14493@coredump.intra.peff.net>
+	 <b4087cc50904241518w625a9890vecdd36bb937e76d5@mail.gmail.com>
+	 <20090424231632.GB10155@atjola.homenet>
+	 <b4087cc50904241701jb78ce50m122fef475b0f1de7@mail.gmail.com>
+	 <20090502155348.GB6135@atjola.homenet>
+	 <b4087cc50905021136l5209777bs2209bab385deeef6@mail.gmail.com>
+	 <20090502211110.GC6135@atjola.homenet>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Avery Pennarun <apenwarr@gmail.com>
-X-From: git-owner@vger.kernel.org Sun May 03 00:03:23 2009
+Cc: Jeff King <peff@peff.net>, Daniel Barkalow <barkalow@iabervon.org>,
+	Johan Herland <johan@herland.net>, git@vger.kernel.org,
+	David Abrahams <dave@boostpro.com>,
+	"J. Bruce Fields" <bfields@fieldses.org>
+To: =?ISO-8859-1?Q?Bj=F6rn_Steinbrink?= <B.Steinbrink@gmx.de>
+X-From: git-owner@vger.kernel.org Sun May 03 01:13:39 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M0NIo-00011A-0o
-	for gcvg-git-2@gmane.org; Sun, 03 May 2009 00:03:22 +0200
+	id 1M0OOn-0001SK-Oh
+	for gcvg-git-2@gmane.org; Sun, 03 May 2009 01:13:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757285AbZEBWDO convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 2 May 2009 18:03:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756358AbZEBWDO
-	(ORCPT <rfc822;git-outgoing>); Sat, 2 May 2009 18:03:14 -0400
-Received: from quechua.inka.de ([193.197.184.2]:37977 "EHLO mail.inka.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754895AbZEBWDN (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 2 May 2009 18:03:13 -0400
-Received: from raven.inka.de (uucp@[127.0.0.1])
-	by mail.inka.de with uucp (rmailwrap 0.5) 
-	id 1M0NIZ-0006SR-H6; Sun, 03 May 2009 00:03:08 +0200
-Received: by raven.inka.de (Postfix, from userid 1000)
-	id 41C5F2CCA5; Sat,  2 May 2009 23:58:52 +0200 (CEST)
-Mail-Followup-To: Josef Wolf <jw@raven.inka.de>,
-	Avery Pennarun <apenwarr@gmail.com>, git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <32541b130905011217x7f339d41x696fedee7298e3a4@mail.gmail.com>
-User-Agent: Mutt/1.5.17 (2007-11-01)
+	id S1752601AbZEBXNZ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 2 May 2009 19:13:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752577AbZEBXNZ
+	(ORCPT <rfc822;git-outgoing>); Sat, 2 May 2009 19:13:25 -0400
+Received: from mail-qy0-f196.google.com ([209.85.221.196]:45650 "EHLO
+	mail-qy0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752423AbZEBXNY convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 2 May 2009 19:13:24 -0400
+Received: by qyk34 with SMTP id 34so4478891qyk.33
+        for <git@vger.kernel.org>; Sat, 02 May 2009 16:13:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=mD1qooasdlf/R9esh0QqCt1KN9MXD7bcrS7p/LspS3c=;
+        b=r+F68Tvm58pFp+7R9rY6urMeXXDjRx6GRrQhUi+3IhZGPGa6c8/MWU2ab40JumaSP8
+         Xs3DH9Ykb/RBxxKuRr7RszMaHISME5t4vxcFOScfovMbnNL97BBtN/fAmkEhua3X0qcP
+         gg/9IZm743r+zfQ5KozQ2WrUS9wdjeYmEXBEM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=RHF5R1p6gW5kjiKkKflFDYA0pDp/x1iIs7F9/5DTd0gf2tJjZ6mX+SET1BLMvq4v0w
+         GvjhY0HYKatpNgqYrfoSpixAoE01LkhPpEzI/z9biexQQhFC2muFBjyeODF5xkp5pULF
+         f2WR3G2I6TTAGT7hb2hisQ4xIBiFGshziFAS8=
+Received: by 10.224.60.148 with SMTP id p20mr4509848qah.55.1241306004670; Sat, 
+	02 May 2009 16:13:24 -0700 (PDT)
+In-Reply-To: <20090502211110.GC6135@atjola.homenet>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118146>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118147>
 
-On Fri, May 01, 2009 at 03:17:14PM -0400, Avery Pennarun wrote:
-> On Fri, May 1, 2009 at 10:28 AM, Josef Wolf <jw@raven.inka.de> wrote:
-> > On Thu, Apr 30, 2009 at 06:59:50PM -0400, Avery Pennarun wrote:
-> >> "git log -1 first-svn" would give you the first cherry-pick. =A0Bu=
-t
-> >> remember, it's a completely different branch.
-> >
-> > I can see why this happens, but I still find it confusing. =A0Maybe=
- I
-> > should help with the -m option?
->=20
-> I don't know what -m does.  Maybe try looking at the graph with gitk;
-> that might give some clues.
+2009/5/2 Bj=F6rn Steinbrink <B.Steinbrink@gmx.de>:
+>> In any case, I *think* my point is that it's important to understand
+>> that git uses content addressing; at first I was emphatic about the
+>> idea of 'addressing', so I went with pointer terminology (which work=
+s
+>> quite well, in my opinion). However, I think the 'content' part is
+>> more important, which is why 'object hash' is loads better than
+>> 'object name' or 'object id'. Also, at least the documentation could
+>> say that 'objects are addressed by their hashes', which says a whole
+>> lot in one quick sentence about how git works.
+>
+> Hm, like chapter 7 "Git concepts"?
 
-Option -m lets me set the log message explicitly :)
+That's exactly the problem. It should be in chapter 0.
 
-> >> Okay, if you want to end up with two different remote branches, it
-> >> makes sense to have two different local branches.
-> >
-> > Well, I _have_ two different remotes because I have two svn reposit=
-ories.
->=20
-> Right.  I was just wondering whether you wanted the two branches'
-> contents to be *different* or identical.  I guess different.
-
-They have to stay different, because they are localized.
-
-> > Then I have to keep both local branches. =A0But I still wonder why =
-you
-> > suggested to go with _one_ local branch.
->=20
-> For my own purposes, I try not to create a 1:1 mapping between local
-> branches and remote branches; this just ends up being confusing,
-> because I can have commits in my local branch that aren't in the
-> remote one, and vice versa.  So it's not very useful to create a loca=
-l
-> branch *just* because I have a corresponding remote branch.
->=20
-> In your case, you might want to have just a single local branch for
-> your "public" stuff.  You would then merge changes from the two svn
-> remote branches into your local branch, and you'd also merge from you=
-r
-> local branch into your remote branches (using a disconnected HEAD and
-> svn dcommit).
-
-But I am working not only on the "public" stuff.  Additionally, I am
-working on _multiple_ localized stuff.  Thus, I have multiple remote
-repositories.
-
-Somehow, I still can't get it work.  This is what I do:
-
-  # create the repos
-  #
-  git svn init --stdlayout file:///var/tmp/builds/git-sync/svn/svn-1
-  git config merge.stat true
-
-  # add configuration for svn-1 repos
-  #
-  git config svn-remote.svn-1.url      file:///var/tmp/builds/git-sync/=
-svn/svn-1
-  git config svn-remote.svn-1.fetch    trunk:refs/remotes/svn-1/trunk
-  git config svn-remote.svn-1.branches branches/*:refs/remotes/svn-1/*
-  git config svn-remote.svn-1.tags   tags/*:refs/remotes/svn-1/tags/*
-
-  # add configuration for svn-2 repos
-  #
-  git config svn-remote.svn-2.url      file:///var/tmp/builds/git-sync/=
-svn/svn-2
-  git config svn-remote.svn-2.fetch    trunk:refs/remotes/svn-2/trunk
-  git config svn-remote.svn-2.branches branches/*:refs/remotes/svn-2/*
-  git config svn-remote.svn-2.tags   tags/*:refs/remotes/svn-2/tags/*
-
-  # fetch the commits from svn repositories
-  #
-  git svn fetch -R svn-1
-  git svn fetch -R svn-2
-
-  # create local tracking branches
-  #
-  git checkout -b svn-1 svn-1/trunk
-  git checkout -b svn-2 svn-2/trunk
-
-  # just to see what we've done
-  #
-  git tag svn-1-orig svn-1
-  git tag svn-2-orig svn-2
-
-  # move stuff from svn-2 to svn-1
-  #
-  git svn fetch svn-2
-  git checkout svn-1
-  git cherry-pick 05b964
-  [  continue cherry-picking ]
-  git merge --no-ff -s ours svn-1
-
-  # check what I have done
-  #
-  git diff svn-1-orig svn-1/trunk # shows what I expect
-
-  # move the result to svn-1
-  #
-  git checkout svn-1/trunk
-  git merge --no-ff svn-1
-  git svn dcommit
-
-  # move stuff from svn-1 to svn-2
-  #
-  git svn fetch svn-1
-  git checkout svn-2
-  git cherry-pick -n c9dae
-  [ continue cherry-picking ]
-  git merge --no-ff -s ours svn-2
-
-  # check what I have done
-  #
-  git diff svn-2-orig svn-2/trunk # shows what I expect
-
-  # move the result to svn-2
-  #
-  git checkout svn-2/trunk
-  git merge --no-ff svn-2
-  git svn dcommit
-
-At this point, we should be synchronized.
-
-  git checkout svn-2/trunk
-  git svn fetch svn-1
-  git merge --no-ff svn-1
-
-BOOM.  Although no new commits were fetched, we get a lot of conflicts
-here.  So git is not fully aware about the fact that we are synchronize=
-d.
+I also dislike the use of 'name' rather than 'hash'; a name is
+something provided by the user, but a hash is something computed. The
+use of sha[-]1 is even more egregious.
