@@ -1,155 +1,111 @@
-From: Michael Witten <mfwitten@gmail.com>
-Subject: Re: [doc] User Manual Suggestion
-Date: Sat, 2 May 2009 13:36:35 -0500
-Message-ID: <b4087cc50905021136l5209777bs2209bab385deeef6@mail.gmail.com>
-References: <m24owgqy0j.fsf@boostpro.com>
-	 <200904240051.46233.johan@herland.net>
-	 <b4087cc50904231730i1e8a005cpaf1921e23df11da6@mail.gmail.com>
-	 <200904242230.13239.johan@herland.net>
-	 <alpine.LNX.2.00.0904241655090.2147@iabervon.org>
-	 <20090424213848.GA14493@coredump.intra.peff.net>
-	 <b4087cc50904241518w625a9890vecdd36bb937e76d5@mail.gmail.com>
-	 <20090424231632.GB10155@atjola.homenet>
-	 <b4087cc50904241701jb78ce50m122fef475b0f1de7@mail.gmail.com>
-	 <20090502155348.GB6135@atjola.homenet>
+From: David Aguilar <davvid@gmail.com>
+Subject: Re: [PATCH] mergetool--lib: specialize diff options for emerge and
+	ecmerge
+Date: Sat, 2 May 2009 12:46:37 -0700
+Message-ID: <20090502194636.GA599@gmail.com>
+References: <1241254641-54338-1-git-send-email-davvid@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jeff King <peff@peff.net>, Daniel Barkalow <barkalow@iabervon.org>,
-	Johan Herland <johan@herland.net>, git@vger.kernel.org,
-	David Abrahams <dave@boostpro.com>,
-	"J. Bruce Fields" <bfields@fieldses.org>
-To: =?ISO-8859-1?Q?Bj=F6rn_Steinbrink?= <B.Steinbrink@gmx.de>
-X-From: git-owner@vger.kernel.org Sat May 02 20:37:06 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: charles@hashpling.org, git@vger.kernel.org
+To: gitster@pobox.com, markus.heidelberg@web.de,
+	marcin.zalewski@gmail.com
+X-From: git-owner@vger.kernel.org Sat May 02 21:46:55 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M0K5A-00014k-Ab
-	for gcvg-git-2@gmane.org; Sat, 02 May 2009 20:37:04 +0200
+	id 1M0LAk-0002Nr-NN
+	for gcvg-git-2@gmane.org; Sat, 02 May 2009 21:46:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754405AbZEBSgh convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 2 May 2009 14:36:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754292AbZEBSgg
-	(ORCPT <rfc822;git-outgoing>); Sat, 2 May 2009 14:36:36 -0400
-Received: from mail-qy0-f196.google.com ([209.85.221.196]:50624 "EHLO
-	mail-qy0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753023AbZEBSgf convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 2 May 2009 14:36:35 -0400
-Received: by qyk34 with SMTP id 34so4352553qyk.33
-        for <git@vger.kernel.org>; Sat, 02 May 2009 11:36:35 -0700 (PDT)
+	id S1756343AbZEBTqr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 2 May 2009 15:46:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756016AbZEBTqq
+	(ORCPT <rfc822;git-outgoing>); Sat, 2 May 2009 15:46:46 -0400
+Received: from rv-out-0506.google.com ([209.85.198.226]:29972 "EHLO
+	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755989AbZEBTqp (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 2 May 2009 15:46:45 -0400
+Received: by rv-out-0506.google.com with SMTP id f6so675845rvb.5
+        for <git@vger.kernel.org>; Sat, 02 May 2009 12:46:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=BgQcYCSiAy4r8XvEnmfngtCiaFh+H6fZVpEnqRnM12A=;
-        b=V2TDlomzET49QUXQxtT6qohP082ZnCiaIrQkruAC0tIVSkFh+Vvht9XKh35Mb5vJeZ
-         NwMf62f1aQkSJoXM7MKaTFnRIcJxOuNN5boB6IY8pwDrNAkOudXgW1IrB9vN9nQtE78R
-         O9/qY3NFnLB1IRI31AoQoi/QaD1MTpb7/qgVk=
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=6jBs0THw09DieuTy3RLSLsxb9hq/rKry/Dfx5lIs5lE=;
+        b=DpSYcyAxdpmY0f+4mj0UT+8xhNESLS+T+FfDcbl4y3cuknI70TWhzyKa2kM7smZdR3
+         5q3LKRzvp0Whw2n2ro4B7vcKCFwux6aOLmtLFCWDaFbps6Dy9y4nR/77ZFYBc2sXrdSR
+         V14JWbl6k93nhSiVegr+BbG2qJ1UvP3lbGhHg=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=XwjS7OLCA1DXbhsoTb3okQFq/Eg+GHh8quLKSUPMyq6bWzzMh7EFMVZ56MFI2KDkxs
-         0TAvYIMsVnlUqFvn6zTNenlMsPbfi872kkeWoAfk+V8LL/FzzSrY1G3AgK3/F7nXzEOs
-         TgDUXiEwfRgcFKF0/P8GMSTVtlXe/4bRQwIjw=
-Received: by 10.224.60.138 with SMTP id p10mr4357279qah.236.1241289395444; 
-	Sat, 02 May 2009 11:36:35 -0700 (PDT)
-In-Reply-To: <20090502155348.GB6135@atjola.homenet>
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=Z4jKHDXJtXGV+S30Ay9gY2hbtkhGjHs0Yz0YXLmsgxMyHPFzYtlzVY6BOIQeV0PSVE
+         cEZRYjyhXLADHCQw5vRNX9eRve/ZwKj6sFqcyMDCaIZuPfQKri3vIuk3kJ4qwfbGlV7d
+         q3jkbAkH1vW9HjBNtAsMVXLmLHP1qyz/CKLgY=
+Received: by 10.115.110.15 with SMTP id n15mr3040229wam.144.1241293604808;
+        Sat, 02 May 2009 12:46:44 -0700 (PDT)
+Received: from gmail.com (208-106-56-2.static.dsltransport.net [208.106.56.2])
+        by mx.google.com with ESMTPS id n30sm6928642wag.28.2009.05.02.12.46.43
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sat, 02 May 2009 12:46:44 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <1241254641-54338-1-git-send-email-davvid@gmail.com>
+User-Agent: Mutt/1.5.19 (2009-01-05)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118141>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118142>
 
-2009/5/2 Bj=F6rn Steinbrink <B.Steinbrink@gmx.de>:
->> As I've stated: "address", "pointer", and "handle" are an analogy to
->> terminology that has been around for ages. In fact, another name for
->> "pointer" is "reference".
->
-> AFAIK a pointer is just one kind of reference. C++ references are
-> another kind...
+On  0, David Aguilar <davvid@gmail.com> wrote:
+> 
+> Regarding ecmerge:  I found the --mode=diff2
+> flag by reading their documenation:
+> 
+> http://www.elliecomputing.com/OnlineDoc/ecmerge_EN/52335623.asp
+> 
+> I don't have ecmerge installed at all, so I'm just
+> going by the book on this one.  It *looks* correct,
+> and probably is, but let it be known that I
+> haven't tested the ecmerge snippet myself.
 
-Actually, a C++ reference is a pointer with restrictions (AFAIK).
 
-> A reference is one piece of data that lets me access a different
-> piece of data.
+I installed ecmerge on a mac today and gave this a try.
+ecmerge is indeed better with this patch.
 
-The key word there is 'access', which implies some kind of storage (or =
-memory).
+After configuring the path it all "just works":
 
->
-> And there are probably plenty of examples where you could apply that
-> analogy, yet nobody (I know) does. Arrays, database tables, ...
+$ git config --global mergetool.ecmerge.path \
+	/Applications/ECMerge.app/Contents/MacOS/guimerge
 
-Well, this terminology is certainly used with arrays in C, because
-array elements can be accessed with pointers.
+We now get a simple side-by-side diff without the
+merge pane at the bottom of the screen.  Nice.
 
-Also, databases use a much different scheme for addressing information
-than does memory.
 
-However, you're probably correct that pointer terminology doesn't
-exist much outside of C/C++ and older languages (Ada?).
+If an emacs user could comment on the emerge snippet
+below (or perhaps suggest a better one ;)) then that
+would make me happy.  As is, I have tested the
+emacs emerge snippet and it works, but I'm not
+sure if that's enough to resolve the issue reported
+by Marcin.  Marcin?
 
->
-> And "memory" usually means "RAM" to me, not "WORM"-memory (well,
-> actually, you can also delete and then rewrite, but not modify).
+Here's the original thread:
+http://article.gmane.org/gmane.comp.version-control.git/117930
 
-Well, I don't see how Random Access Memory really conflicts. One
-certainly can access objects in the object memory/store randomly. The
-main difference is that the computer store is addressed by location,
-wheras the git store is addressed by content.
 
-Also, I would say that conceptually deletion is an implementation
-detail. Because git's object store is content addressable, one could
-think of it as already containing all possible objects (of course, I'm
-assuming that the 160-bit hash is also an implementation detail; an
-infinite number of objects implies infinitely large addresses, though
-the nonsignificant zeros could be disregarded as with real numbers or
-something. I don't know, I'm making this up as I go :-D). That the git
-tools ever complain no such object exists is an implementation detail
-resulting from our finite storage in reality.
+> diff --git a/git-mergetool--lib.sh b/git-mergetool--lib.sh
+> index a16a279..8b5e6a8 100644
+> --- a/git-mergetool--lib.sh
+> +++ b/git-mergetool--lib.sh
+> @@ -248,7 +248,7 @@ run_merge_tool () {
+>  			status=$?
+>  		else
+>  			"$merge_tool_path" -f emerge-files-command \
+> -				"$LOCAL" "$REMOTE" "$(basename "$MERGED")"
+> +				"$LOCAL" "$REMOTE"
+>  		fi
+>  		;;
 
-> So the
-> analogy would even hurt my mental model (just like the "commit --amen=
-d"
-> command might be consider harmful, because it actually creates a new
-> commit, but some users actually think the original commit is modified=
-).
-
-Actually, this is why it's so important to have the underlying
-concepts at hand. Understanding that objects are simply addressed by
-content (that is, objects are immutable) completely extirpates this
-kind of confusion.
-
->> >> So, a pointer variable's value is an object address that is the
->> >> location of an object in git 'memory'. I think using this approac=
-h
->> >> would make things significantly more transparent.
->> >
->> > But then HEAD would be a pointer pointer variable (symbolic ref), =
-unless
->> > you have a detached HEAD.
->>
->> We call those handles.
->
-> Isn't a handle basically an opaque/abstract reference, at least in
-> "modern" usage? Symvolic references aren't. The user is free to creat=
-e
-> and manipulate them, and gets full access to the things referenced by
-> them. And saying that HEAD is a reference, that might be symbolic is
-> IMHO by far easier to understand than saying that HEAD might be a
-> pointer or a handle.
-
-=46air enough. Call them symbolic pointers; however, I don't really see
-the problem with pointer pointers.
-
-In any case, I *think* my point is that it's important to understand
-that git uses content addressing; at first I was emphatic about the
-idea of 'addressing', so I went with pointer terminology (which works
-quite well, in my opinion). However, I think the 'content' part is
-more important, which is why 'object hash' is loads better than
-'object name' or 'object id'. Also, at least the documentation could
-say that 'objects are addressed by their hashes', which says a whole
-lot in one quick sentence about how git works.
+-- 
+		David
