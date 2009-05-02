@@ -1,111 +1,106 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 6/7] user-manual: add global config section
-Date: Fri, 01 May 2009 17:16:18 -0700
-Message-ID: <7vfxfotl4d.fsf@gitster.siamese.dyndns.org>
-References: <1238837909-3060-1-git-send-email-felipe.contreras@gmail.com>
- <1238837909-3060-2-git-send-email-felipe.contreras@gmail.com>
- <1238837909-3060-3-git-send-email-felipe.contreras@gmail.com>
- <1238837909-3060-4-git-send-email-felipe.contreras@gmail.com>
- <1238837909-3060-5-git-send-email-felipe.contreras@gmail.com>
- <1238837909-3060-6-git-send-email-felipe.contreras@gmail.com>
- <1238837909-3060-7-git-send-email-felipe.contreras@gmail.com>
- <7v7i1zv3cg.fsf@gitster.siamese.dyndns.org>
- <94a0d4530905010137h772b53f1q8af0d30400a05043@mail.gmail.com>
- <7v3abowk6v.fsf@gitster.siamese.dyndns.org>
- <94a0d4530905011551r635a4ebfrba86707419e13cc4@mail.gmail.com>
+From: Nicolas Pitre <nico@cam.org>
+Subject: [PATCH] honor repack.usedeltabaseoffset when fetching packs
+Date: Fri, 01 May 2009 20:18:02 -0400 (EDT)
+Message-ID: <alpine.LFD.2.00.0905012012380.6741@xanadu.home>
+References: <1241215224-29374-1-git-send-email-spearce@spearce.org>
+ <alpine.LFD.2.00.0905011916130.6741@xanadu.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Sat May 02 02:16:56 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat May 02 02:18:20 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M02uV-0006sb-Gw
-	for gcvg-git-2@gmane.org; Sat, 02 May 2009 02:16:55 +0200
+	id 1M02vr-0007Iy-1y
+	for gcvg-git-2@gmane.org; Sat, 02 May 2009 02:18:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754394AbZEBAQ2 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 1 May 2009 20:16:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752992AbZEBAQ1
-	(ORCPT <rfc822;git-outgoing>); Fri, 1 May 2009 20:16:27 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:62536 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752110AbZEBAQ1 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 1 May 2009 20:16:27 -0400
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id F0773AF2BF;
-	Fri,  1 May 2009 20:16:24 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id B4E35AF2BE; Fri,
-  1 May 2009 20:16:21 -0400 (EDT)
-In-Reply-To: <94a0d4530905011551r635a4ebfrba86707419e13cc4@mail.gmail.com>
- (Felipe Contreras's message of "Sat, 2 May 2009 01:51:37 +0300")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-Pobox-Relay-ID: 78F8EFDE-36AE-11DE-843F-CABC03BA4B0C-77302942!a-sasl-fastnet.pobox.com
+	id S1755018AbZEBASL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 1 May 2009 20:18:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754702AbZEBASJ
+	(ORCPT <rfc822;git-outgoing>); Fri, 1 May 2009 20:18:09 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:29874 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754301AbZEBASI (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 1 May 2009 20:18:08 -0400
+Received: from xanadu.home ([66.131.194.97]) by VL-MH-MR001.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
+ with ESMTP id <0KIZ00MA8Q62TA50@VL-MH-MR001.ip.videotron.ca> for
+ git@vger.kernel.org; Fri, 01 May 2009 20:18:03 -0400 (EDT)
+X-X-Sender: nico@xanadu.home
+In-reply-to: <alpine.LFD.2.00.0905011916130.6741@xanadu.home>
+User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118110>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118111>
 
-=46elipe Contreras <felipe.contreras@gmail.com> writes:
+If the local receiving repository has disabled the use of delta base
+offset, for example to retain compatibility with older versions of
+Git that predate OFS_DELTA, we shouldn't ask for ofs-delta support
+when we obtain a pack from the remote server.
 
->> A good sequence would be:
->>
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0To start working on a tarball extract (or=
- your uncontrolled
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0project) with git, first do:
->>
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0$ git init
->>
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0Whoa. =C2=A0That was fast. =C2=A0Did it d=
-o anything? =C2=A0Yes, it created a
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0subdirectory .git that is going to store =
-your history and other
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0control information. =C2=A0Right now you =
-do not have any history (nor
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0the current state for that matter) record=
-ed in it, but it already
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0has some control information. =C2=A0One o=
-f the more important one is
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0the per-repository configuration file. =C2=
-=A0Take a look:
-> ...
-> Most people don't start with 'git init' they start with 'git clone'
+[ issue noticed by Shawn Pearce ]
 
-That does not just not change the issue but even strengthens my point.
-After clone, you have a working per-repository .git/config file that is=
- a
-good demonstration of how easy and simple the syntax is.  You of course
-need to adjust the prose to guide the user to the configuration file if
-you use clone instead of init, but that goes without saying.
+Signed-off-by: Nicolas Pitre <nico@cam.org>
+---
 
+On Fri, 1 May 2009, Nicolas Pitre wrote:
 
-By the way, I think you lacked 1/4 in your last round and this time it =
-is
-missing too.
+> Good point.  I doubt it actually matters in practice or we would have 
+> heard about some complaints by now.  But for consistency sake I should 
+> produce a similar patch for C git as well.
 
-[  17: Felipe Contreras  ] [PATCH v2 0/4] user-manual: general impro
-[  74: Felipe Contreras  ] [PATCH v2 2/4] user-manual: use 'fast-for
- [  51: Felipe Contreras  ] [PATCH v2 3/4] user-manual: add global c
-  [  38: Felipe Contreras  ] [PATCH v2 4/4] user-manual: simplify th
+Here it is, with commit log stolen from Shawn's JGit patch.
 
-The description in 0/4 makes it sound like 1/4 is a general clean-up
-improvement, and so is 2/4.  Can we apply these two first (and we
-obviously need to find that missing 1/4 --- is there some git-send-emai=
-l
-bug hiding or something)?
+ builtin-fetch-pack.c |   13 ++++++++++++-
+ 1 files changed, 12 insertions(+), 1 deletions(-)
 
-The two patches 3/4 and 4/4 are not "general" improvement; it is to
-advocate the use of "git config" more instead of showing the file in th=
-e
-editor, and while you obviously think it is an improvement, I do not th=
-ink
-there is a "general" consensus that it is an improvement.
-
-More importantly, I do not think that is integral part of the "general
-clean-up", and by making it a separate topic, we can shrink the size of
-the patches in flight.
+diff --git a/builtin-fetch-pack.c b/builtin-fetch-pack.c
+index 5d134be..012d044 100644
+--- a/builtin-fetch-pack.c
++++ b/builtin-fetch-pack.c
+@@ -13,6 +13,7 @@
+ static int transfer_unpack_limit = -1;
+ static int fetch_unpack_limit = -1;
+ static int unpack_limit = 100;
++static int prefer_ofs_delta = 1;
+ static struct fetch_pack_args args = {
+ 	/* .uploadpack = */ "git-upload-pack",
+ };
+@@ -200,7 +201,7 @@ static int find_common(int fd[2], unsigned char *result_sha1,
+ 				     (args.use_thin_pack ? " thin-pack" : ""),
+ 				     (args.no_progress ? " no-progress" : ""),
+ 				     (args.include_tag ? " include-tag" : ""),
+-				     " ofs-delta");
++				     (prefer_ofs_delta ? " ofs-delta" : ""));
+ 		else
+ 			packet_write(fd[1], "want %s\n", sha1_to_hex(remote));
+ 		fetching++;
+@@ -596,6 +597,11 @@ static struct ref *do_fetch_pack(int fd[2],
+ 			fprintf(stderr, "Server supports side-band\n");
+ 		use_sideband = 1;
+ 	}
++	if (server_supports("ofs-delta")) {
++		if (args.verbose)
++			fprintf(stderr, "Server supports ofs-delta\n");
++	} else
++		prefer_ofs_delta = 0;
+ 	if (everything_local(&ref, nr_match, match)) {
+ 		packet_flush(fd[1]);
+ 		goto all_done;
+@@ -648,6 +654,11 @@ static int fetch_pack_config(const char *var, const char *value, void *cb)
+ 		return 0;
+ 	}
+ 
++	if (strcmp(var, "repack.usedeltabaseoffset") == 0) {
++		prefer_ofs_delta = git_config_bool(var, value);
++		return 0;
++	}
++
+ 	return git_default_config(var, value, cb);
+ }
+ 
