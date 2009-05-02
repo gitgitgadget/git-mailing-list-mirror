@@ -1,72 +1,100 @@
 From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: [JGIT PATCH 4/6] Add diff.RawText to index a file content for later compares
-Date: Fri,  1 May 2009 19:08:45 -0700
-Message-ID: <1241230127-28279-5-git-send-email-spearce@spearce.org>
+Subject: [JGIT PATCH 5/6] Teach FileHeader, HunkHeader how to create an EditList
+Date: Fri,  1 May 2009 19:08:46 -0700
+Message-ID: <1241230127-28279-6-git-send-email-spearce@spearce.org>
 References: <1241230127-28279-1-git-send-email-spearce@spearce.org>
  <1241230127-28279-2-git-send-email-spearce@spearce.org>
  <1241230127-28279-3-git-send-email-spearce@spearce.org>
  <1241230127-28279-4-git-send-email-spearce@spearce.org>
-Cc: git@vger.kernel.org,
-	"Johannes E. Schindelin" <johannes.schindelin@gmx.de>
+ <1241230127-28279-5-git-send-email-spearce@spearce.org>
+Cc: git@vger.kernel.org
 To: Robin Rosenberg <robin.rosenberg@dewire.com>,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Sat May 02 04:09:59 2009
+X-From: git-owner@vger.kernel.org Sat May 02 04:10:00 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M04fu-0003zI-NV
-	for gcvg-git-2@gmane.org; Sat, 02 May 2009 04:09:59 +0200
+	id 1M04fv-0003zI-TT
+	for gcvg-git-2@gmane.org; Sat, 02 May 2009 04:10:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752278AbZEBCJX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 1 May 2009 22:09:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750877AbZEBCJV
-	(ORCPT <rfc822;git-outgoing>); Fri, 1 May 2009 22:09:21 -0400
-Received: from george.spearce.org ([209.20.77.23]:48674 "EHLO
+	id S1751608AbZEBCJa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 1 May 2009 22:09:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752354AbZEBCJ2
+	(ORCPT <rfc822;git-outgoing>); Fri, 1 May 2009 22:09:28 -0400
+Received: from george.spearce.org ([209.20.77.23]:48677 "EHLO
 	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751221AbZEBCJN (ORCPT <rfc822;git@vger.kernel.org>);
+	with ESMTP id S1751608AbZEBCJN (ORCPT <rfc822;git@vger.kernel.org>);
 	Fri, 1 May 2009 22:09:13 -0400
 Received: by george.spearce.org (Postfix, from userid 1000)
-	id 2809E3807F; Sat,  2 May 2009 02:09:12 +0000 (UTC)
+	id E739F3807D; Sat,  2 May 2009 02:09:12 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.2.4 (2008-01-01) on george.spearce.org
 X-Spam-Level: 
 X-Spam-Status: No, score=-4.4 required=4.0 tests=ALL_TRUSTED,BAYES_00
 	autolearn=ham version=3.2.4
 Received: from localhost.localdomain (localhost [127.0.0.1])
-	by george.spearce.org (Postfix) with ESMTP id D524B38080;
-	Sat,  2 May 2009 02:08:48 +0000 (UTC)
+	by george.spearce.org (Postfix) with ESMTP id 4AE0C38081;
+	Sat,  2 May 2009 02:08:49 +0000 (UTC)
 X-Mailer: git-send-email 1.6.3.rc3.212.g8c698
-In-Reply-To: <1241230127-28279-4-git-send-email-spearce@spearce.org>
+In-Reply-To: <1241230127-28279-5-git-send-email-spearce@spearce.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118123>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118124>
 
-From: Johannes E. Schindelin <johannes.schindelin@gmx.de>
-
-The RawText class converts a byte[] into an indexed map of file
-lines, assuming the source content is a UNIX formatted text file.
-This fits in line with Git's usage of libxdiff, where typically
-the file content is treated as a UNIX formatted text file, unless
-binary content was previously detected in the file stream.
+The EditList type along with its member Edit instances can be very
+useful when mining a patch for information about the change it is
+trying to represent to the content.  This can be useful to create a
+modified version of the patch, such as with larger or smaller number
+of context lines.
 
 Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
 ---
- .../tst/org/spearce/jgit/diff/RawTextTest.java     |   93 +++++++++++
- .../src/org/spearce/jgit/diff/RawText.java         |  172 ++++++++++++++++++++
- .../src/org/spearce/jgit/diff/Sequence.java        |   78 +++++++++
- 3 files changed, 343 insertions(+), 0 deletions(-)
- create mode 100644 org.spearce.jgit.test/tst/org/spearce/jgit/diff/RawTextTest.java
- create mode 100644 org.spearce.jgit/src/org/spearce/jgit/diff/RawText.java
- create mode 100644 org.spearce.jgit/src/org/spearce/jgit/diff/Sequence.java
+ .../spearce/jgit/patch/testEditList_Types.patch    |   24 +++++
+ .../tst/org/spearce/jgit/patch/EditListTest.java   |   95 ++++++++++++++++++++
+ .../src/org/spearce/jgit/patch/FileHeader.java     |    9 ++
+ .../src/org/spearce/jgit/patch/HunkHeader.java     |   48 ++++++++++
+ 4 files changed, 176 insertions(+), 0 deletions(-)
+ create mode 100644 org.spearce.jgit.test/tst-rsrc/org/spearce/jgit/patch/testEditList_Types.patch
+ create mode 100644 org.spearce.jgit.test/tst/org/spearce/jgit/patch/EditListTest.java
 
-diff --git a/org.spearce.jgit.test/tst/org/spearce/jgit/diff/RawTextTest.java b/org.spearce.jgit.test/tst/org/spearce/jgit/diff/RawTextTest.java
+diff --git a/org.spearce.jgit.test/tst-rsrc/org/spearce/jgit/patch/testEditList_Types.patch b/org.spearce.jgit.test/tst-rsrc/org/spearce/jgit/patch/testEditList_Types.patch
 new file mode 100644
-index 0000000..a7c621e
+index 0000000..e5363eb
 --- /dev/null
-+++ b/org.spearce.jgit.test/tst/org/spearce/jgit/diff/RawTextTest.java
-@@ -0,0 +1,93 @@
++++ b/org.spearce.jgit.test/tst-rsrc/org/spearce/jgit/patch/testEditList_Types.patch
+@@ -0,0 +1,24 @@
++diff --git a/X b/X
++index a3648a1..2d44096 100644
++--- a/X
+++++ b/X
++@@ -2,2 +2,3 @@ a
++ b
+++c
++ d
++@@ -16,4 +17,2 @@ p
++ q
++-r
++-s
++ t
++@@ -22,4 +21,8 @@ v
++ w
++-x
++-y
+++0
+++1
+++2
+++3
+++4
+++5
++ z
+diff --git a/org.spearce.jgit.test/tst/org/spearce/jgit/patch/EditListTest.java b/org.spearce.jgit.test/tst/org/spearce/jgit/patch/EditListTest.java
+new file mode 100644
+index 0000000..452f661
+--- /dev/null
++++ b/org.spearce.jgit.test/tst/org/spearce/jgit/patch/EditListTest.java
+@@ -0,0 +1,95 @@
 +/*
 + * Copyright (C) 2009, Google Inc.
 + *
@@ -104,325 +132,156 @@ index 0000000..a7c621e
 + * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 + */
 +
-+package org.spearce.jgit.diff;
++package org.spearce.jgit.patch;
 +
-+import java.io.ByteArrayOutputStream;
 +import java.io.IOException;
++import java.io.InputStream;
 +
 +import junit.framework.TestCase;
 +
-+import org.spearce.jgit.lib.Constants;
-+import org.spearce.jgit.util.RawParseUtils;
++import org.spearce.jgit.diff.Edit;
++import org.spearce.jgit.diff.EditList;
 +
-+public class RawTextTest extends TestCase {
-+	public void testEmpty() {
-+		final RawText r = new RawText(new byte[0]);
-+		assertEquals(0, r.size());
++public class EditListTest extends TestCase {
++	public void testHunkHeader() throws IOException {
++		final Patch p = parseTestPatchFile("testGetText_BothISO88591.patch");
++		final FileHeader fh = p.getFiles().get(0);
++
++		final EditList list0 = fh.getHunks().get(0).toEditList();
++		assertEquals(1, list0.size());
++		assertEquals(new Edit(4 - 1, 5 - 1, 4 - 1, 5 - 1), list0.get(0));
++
++		final EditList list1 = fh.getHunks().get(1).toEditList();
++		assertEquals(1, list1.size());
++		assertEquals(new Edit(16 - 1, 17 - 1, 16 - 1, 17 - 1), list1.get(0));
 +	}
 +
-+	public void testEquals() {
-+		final RawText a = new RawText(Constants.encodeASCII("foo-a\nfoo-b\n"));
-+		final RawText b = new RawText(Constants.encodeASCII("foo-b\nfoo-c\n"));
-+
-+		assertEquals(2, a.size());
-+		assertEquals(2, b.size());
-+
-+		// foo-a != foo-b
-+		assertFalse(a.equals(0, b, 0));
-+		assertFalse(b.equals(0, a, 0));
-+
-+		// foo-b == foo-b
-+		assertTrue(a.equals(1, b, 0));
-+		assertTrue(b.equals(0, a, 1));
++	public void testFileHeader() throws IOException {
++		final Patch p = parseTestPatchFile("testGetText_BothISO88591.patch");
++		final FileHeader fh = p.getFiles().get(0);
++		final EditList e = fh.toEditList();
++		assertEquals(2, e.size());
++		assertEquals(new Edit(4 - 1, 5 - 1, 4 - 1, 5 - 1), e.get(0));
++		assertEquals(new Edit(16 - 1, 17 - 1, 16 - 1, 17 - 1), e.get(1));
 +	}
 +
-+	public void testWriteLine1() throws IOException {
-+		final RawText a = new RawText(Constants.encodeASCII("foo-a\nfoo-b\n"));
-+		final ByteArrayOutputStream o = new ByteArrayOutputStream();
-+		a.writeLine(o, 0);
-+		final byte[] r = o.toByteArray();
-+		assertEquals("foo-a", RawParseUtils.decode(r));
++	public void testTypes() throws IOException {
++		final Patch p = parseTestPatchFile("testEditList_Types.patch");
++		final FileHeader fh = p.getFiles().get(0);
++		final EditList e = fh.toEditList();
++		assertEquals(3, e.size());
++		assertEquals(new Edit(3 - 1, 3 - 1, 3 - 1, 4 - 1), e.get(0));
++		assertEquals(new Edit(17 - 1, 19 - 1, 18 - 1, 18 - 1), e.get(1));
++		assertEquals(new Edit(23 - 1, 25 - 1, 22 - 1, 28 - 1), e.get(2));
 +	}
 +
-+	public void testWriteLine2() throws IOException {
-+		final RawText a = new RawText(Constants.encodeASCII("foo-a\nfoo-b"));
-+		final ByteArrayOutputStream o = new ByteArrayOutputStream();
-+		a.writeLine(o, 1);
-+		final byte[] r = o.toByteArray();
-+		assertEquals("foo-b", RawParseUtils.decode(r));
-+	}
-+
-+	public void testWriteLine3() throws IOException {
-+		final RawText a = new RawText(Constants.encodeASCII("a\n\nb\n"));
-+		final ByteArrayOutputStream o = new ByteArrayOutputStream();
-+		a.writeLine(o, 1);
-+		final byte[] r = o.toByteArray();
-+		assertEquals("", RawParseUtils.decode(r));
++	private Patch parseTestPatchFile(final String patchFile) throws IOException {
++		final InputStream in = getClass().getResourceAsStream(patchFile);
++		if (in == null) {
++			fail("No " + patchFile + " test vector");
++			return null; // Never happens
++		}
++		try {
++			final Patch p = new Patch();
++			p.parse(in);
++			return p;
++		} finally {
++			in.close();
++		}
 +	}
 +}
-diff --git a/org.spearce.jgit/src/org/spearce/jgit/diff/RawText.java b/org.spearce.jgit/src/org/spearce/jgit/diff/RawText.java
-new file mode 100644
-index 0000000..1d10082
---- /dev/null
-+++ b/org.spearce.jgit/src/org/spearce/jgit/diff/RawText.java
-@@ -0,0 +1,172 @@
-+/*
-+ * Copyright (C) 2008, Johannes E. Schindelin <johannes.schindelin@gmx.de>
-+ * Copyright (C) 2009, Google Inc.
-+ *
-+ * All rights reserved.
-+ *
-+ * Redistribution and use in source and binary forms, with or
-+ * without modification, are permitted provided that the following
-+ * conditions are met:
-+ *
-+ * - Redistributions of source code must retain the above copyright
-+ *   notice, this list of conditions and the following disclaimer.
-+ *
-+ * - Redistributions in binary form must reproduce the above
-+ *   copyright notice, this list of conditions and the following
-+ *   disclaimer in the documentation and/or other materials provided
-+ *   with the distribution.
-+ *
-+ * - Neither the name of the Git Development Community nor the
-+ *   names of its contributors may be used to endorse or promote
-+ *   products derived from this software without specific prior
-+ *   written permission.
-+ *
-+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND
-+ * CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES,
-+ * INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
-+ * OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
-+ * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
-+ * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-+ * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
-+ * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
-+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
-+ * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
-+ * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
-+ * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
-+ * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-+ */
-+
-+package org.spearce.jgit.diff;
-+
-+import java.io.IOException;
-+import java.io.OutputStream;
-+
-+import org.spearce.jgit.util.IntList;
-+import org.spearce.jgit.util.RawParseUtils;
-+
-+/**
-+ * A Sequence supporting UNIX formatted text in byte[] format.
-+ * <p>
-+ * Elements of the sequence are the lines of the file, as delimited by the UNIX
-+ * newline character ('\n'). The file content is treated as 8 bit binary text,
-+ * with no assumptions or requirements on character encoding.
-+ * <p>
-+ * Note that the first line of the file is element 0, as defined by the Sequence
-+ * interface API. Traditionally in a text editor a patch file the first line is
-+ * line number 1. Callers may need to subtract 1 prior to invoking methods if
-+ * they are converting from "line number" to "element index".
-+ */
-+public class RawText implements Sequence {
-+	/** The file content for this sequence. */
-+	protected final byte[] content;
-+
-+	/** Map of line number to starting position within {@link #content}. */
-+	protected final IntList lines;
-+
-+	/** Hash code for each line, for fast equality elimination. */
-+	protected final IntList hashes;
-+
-+	/**
-+	 * Create a new sequence from an existing content byte array.
-+	 * <p>
-+	 * The entire array (indexes 0 through length-1) is used as the content.
-+	 * 
-+	 * @param input
-+	 *            the content array. The array is never modified, so passing
-+	 *            through cached arrays is safe.
-+	 */
-+	public RawText(final byte[] input) {
-+		content = input;
-+		lines = RawParseUtils.lineMap(content, 0, content.length);
-+		hashes = computeHashes();
-+	}
-+
-+	public int size() {
-+		// The line map is always 2 entries larger than the number of lines in
-+		// the file. Index 0 is padded out/unused. The last index is the total
-+		// length of the buffer, and acts as a sentinel.
-+		//
-+		return lines.size() - 2;
-+	}
-+
-+	public boolean equals(final int i, final Sequence other, final int j) {
-+		return equals(this, i + 1, (RawText) other, j + 1);
-+	}
-+
-+	private static boolean equals(final RawText a, final int ai,
-+			final RawText b, final int bi) {
-+		if (a.hashes.get(ai) != b.hashes.get(bi))
-+			return false;
-+
-+		int as = a.lines.get(ai);
-+		int bs = b.lines.get(bi);
-+		final int ae = a.lines.get(ai + 1);
-+		final int be = b.lines.get(bi + 1);
-+
-+		if (ae - as != be - bs)
-+			return false;
-+
-+		while (as < ae) {
-+			if (a.content[as++] != b.content[bs++])
-+				return false;
-+		}
-+		return true;
-+	}
-+
-+	/**
-+	 * Write a specific line to the output stream, without its trailing LF.
-+	 * <p>
-+	 * The specified line is copied as-is, with no character encoding
-+	 * translation performed.
-+	 * <p>
-+	 * If the specified line ends with an LF ('\n'), the LF is <b>not</b>
-+	 * copied. It is up to the caller to write the LF, if desired, between
-+	 * output lines.
-+	 * 
-+	 * @param out
-+	 *            stream to copy the line data onto.
-+	 * @param i
-+	 *            index of the line to extract. Note this is 0-based, so line
-+	 *            number 1 is actually index 0.
-+	 * @throws IOException
-+	 *             the stream write operation failed.
-+	 */
-+	public void writeLine(final OutputStream out, final int i)
-+			throws IOException {
-+		final int start = lines.get(i + 1);
-+		int end = lines.get(i + 2);
-+		if (content[end - 1] == '\n')
-+			end--;
-+		out.write(content, start, end - start);
-+	}
-+
-+	private IntList computeHashes() {
-+		final IntList r = new IntList(lines.size());
-+		r.add(0);
-+		for (int lno = 1; lno < lines.size() - 1; lno++) {
-+			final int ptr = lines.get(lno);
-+			final int end = lines.get(lno + 1);
-+			r.add(hashLine(content, ptr, end));
-+		}
-+		r.add(0);
+diff --git a/org.spearce.jgit/src/org/spearce/jgit/patch/FileHeader.java b/org.spearce.jgit/src/org/spearce/jgit/patch/FileHeader.java
+index 7d341d8..c64f742 100644
+--- a/org.spearce.jgit/src/org/spearce/jgit/patch/FileHeader.java
++++ b/org.spearce.jgit/src/org/spearce/jgit/patch/FileHeader.java
+@@ -52,6 +52,7 @@
+ import java.util.Collections;
+ import java.util.List;
+ 
++import org.spearce.jgit.diff.EditList;
+ import org.spearce.jgit.lib.AbbreviatedObjectId;
+ import org.spearce.jgit.lib.Constants;
+ import org.spearce.jgit.lib.FileMode;
+@@ -423,6 +424,14 @@ public BinaryHunk getReverseBinaryHunk() {
+ 		return reverseBinaryHunk;
+ 	}
+ 
++	/** @return a list describing the content edits performed on this file. */
++	public EditList toEditList() {
++		final EditList r = new EditList();
++		for (final HunkHeader hunk : hunks)
++			r.addAll(hunk.toEditList());
 +		return r;
 +	}
 +
-+	/**
-+	 * Compute a hash code for a single line.
-+	 * 
-+	 * @param raw
-+	 *            the raw file content.
-+	 * @param ptr
-+	 *            first byte of the content line to hash.
-+	 * @param end
-+	 *            1 past the last byte of the content line.
-+	 * @return hash code for the region <code>[ptr, end)</code> of raw.
-+	 */
-+	protected int hashLine(final byte[] raw, int ptr, final int end) {
-+		int hash = 5381;
-+		for (; ptr < end; ptr++)
-+			hash = (hash << 5) ^ (raw[ptr] & 0xff);
-+		return hash;
+ 	/**
+ 	 * Parse a "diff --git" or "diff --cc" line.
+ 	 *
+diff --git a/org.spearce.jgit/src/org/spearce/jgit/patch/HunkHeader.java b/org.spearce.jgit/src/org/spearce/jgit/patch/HunkHeader.java
+index e9c55e3..af128ab 100644
+--- a/org.spearce.jgit/src/org/spearce/jgit/patch/HunkHeader.java
++++ b/org.spearce.jgit/src/org/spearce/jgit/patch/HunkHeader.java
+@@ -44,6 +44,8 @@
+ import java.io.IOException;
+ import java.io.OutputStream;
+ 
++import org.spearce.jgit.diff.Edit;
++import org.spearce.jgit.diff.EditList;
+ import org.spearce.jgit.lib.AbbreviatedObjectId;
+ import org.spearce.jgit.util.MutableInteger;
+ 
+@@ -161,6 +163,52 @@ public int getLinesContext() {
+ 		return nContext;
+ 	}
+ 
++	/** @return a list describing the content edits performed within the hunk. */
++	public EditList toEditList() {
++		final EditList r = new EditList();
++		final byte[] buf = file.buf;
++		int c = nextLF(buf, startOffset);
++		int oLine = old.startLine;
++		int nLine = newStartLine;
++		Edit in = null;
++
++		SCAN: for (; c < endOffset; c = nextLF(buf, c)) {
++			switch (buf[c]) {
++			case ' ':
++			case '\n':
++				in = null;
++				oLine++;
++				nLine++;
++				continue;
++
++			case '-':
++				if (in == null) {
++					in = new Edit(oLine - 1, nLine - 1);
++					r.add(in);
++				}
++				oLine++;
++				in.extendA();
++				continue;
++
++			case '+':
++				if (in == null) {
++					in = new Edit(oLine - 1, nLine - 1);
++					r.add(in);
++				}
++				nLine++;
++				in.extendB();
++				continue;
++
++			case '\\': // Matches "\ No newline at end of file"
++				continue;
++
++			default:
++				break SCAN;
++			}
++		}
++		return r;
 +	}
-+}
-\ No newline at end of file
-diff --git a/org.spearce.jgit/src/org/spearce/jgit/diff/Sequence.java b/org.spearce.jgit/src/org/spearce/jgit/diff/Sequence.java
-new file mode 100644
-index 0000000..8e754e0
---- /dev/null
-+++ b/org.spearce.jgit/src/org/spearce/jgit/diff/Sequence.java
-@@ -0,0 +1,78 @@
-+/*
-+ * Copyright (C) 2008, Johannes E. Schindelin <johannes.schindelin@gmx.de>
-+ *
-+ * All rights reserved.
-+ *
-+ * Redistribution and use in source and binary forms, with or
-+ * without modification, are permitted provided that the following
-+ * conditions are met:
-+ *
-+ * - Redistributions of source code must retain the above copyright
-+ *   notice, this list of conditions and the following disclaimer.
-+ *
-+ * - Redistributions in binary form must reproduce the above
-+ *   copyright notice, this list of conditions and the following
-+ *   disclaimer in the documentation and/or other materials provided
-+ *   with the distribution.
-+ *
-+ * - Neither the name of the Git Development Community nor the
-+ *   names of its contributors may be used to endorse or promote
-+ *   products derived from this software without specific prior
-+ *   written permission.
-+ *
-+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND
-+ * CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES,
-+ * INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
-+ * OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
-+ * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
-+ * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-+ * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
-+ * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
-+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
-+ * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
-+ * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
-+ * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
-+ * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-+ */
 +
-+package org.spearce.jgit.diff;
-+
-+/**
-+ * Arbitrary sequence of elements with fast comparison support.
-+ * <p>
-+ * A sequence of elements is defined to contain elements in the index range
-+ * <code>[0, {@link #size()})</code>, like a standard Java List implementation.
-+ * Unlike a List, the members of the sequence are not directly obtainable, but
-+ * element equality can be tested if two Sequences are the same implementation.
-+ * <p>
-+ * An implementation may chose to implement the equals semantic as necessary,
-+ * including fuzzy matching rules such as ignoring insignificant sub-elements,
-+ * e.g. ignoring whitespace differences in text.
-+ * <p>
-+ * Implementations of Sequence are primarily intended for use in content
-+ * difference detection algorithms, to produce an {@link EditList} of
-+ * {@link Edit} instances describing how two Sequence instances differ.
-+ */
-+public interface Sequence {
-+	/** @return total number of items in the sequence. */
-+	public int size();
-+
-+	/**
-+	 * Determine if the i-th member is equal to the j-th member.
-+	 * <p>
-+	 * Implementations must ensure <code>equals(thisIdx,other,otherIdx)</code>
-+	 * returns the same as <code>other.equals(otherIdx,this,thisIdx)</code>.
-+	 * 
-+	 * @param thisIdx
-+	 *            index within <code>this</code> sequence; must be in the range
-+	 *            <code>[ 0, this.size() )</code>.
-+	 * @param other
-+	 *            another sequence; must be the same implementation class, that
-+	 *            is <code>this.getClass() == other.getClass()</code>.
-+	 * @param otherIdx
-+	 *            index within <code>other</code> sequence; must be in the range
-+	 *            <code>[ 0, other.size() )</code>.
-+	 * @return true if the elements are equal; false if they are not equal.
-+	 */
-+	public boolean equals(int thisIdx, Sequence other, int otherIdx);
-+}
-\ No newline at end of file
+ 	void parseHeader() {
+ 		// Parse "@@ -236,9 +236,9 @@ protected boolean"
+ 		//
 -- 
 1.6.3.rc3.212.g8c698
