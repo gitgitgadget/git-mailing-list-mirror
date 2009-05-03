@@ -1,77 +1,99 @@
-From: Nicolas Sebrecht <nicolas.s.dev@gmail.com>
-Subject: [gitosis] unexpected error for a warning msg
-Date: Mon, 4 May 2009 01:23:00 +0200
-Message-ID: <20090503232300.GA20066@vidovic>
+From: "Robin H. Johnson" <robbat2@gentoo.org>
+Subject: Re: [gitosis] unexpected error for a warning msg
+Date: Sun, 3 May 2009 16:54:02 -0700
+Message-ID: <20090503235402.GA10702@curie-int>
+References: <20090503232300.GA20066@vidovic>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: nicolas.s.dev@gmail.com
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon May 04 01:23:18 2009
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="AqsLC8rIMeq19msA"
+To: Git Mailing List <git@vger.kernel.org>, nicolas.s.dev@gmail.com
+X-From: git-owner@vger.kernel.org Mon May 04 01:55:20 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M0l1i-0003LL-0U
-	for gcvg-git-2@gmane.org; Mon, 04 May 2009 01:23:18 +0200
+	id 1M0lWh-0003Dt-S1
+	for gcvg-git-2@gmane.org; Mon, 04 May 2009 01:55:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755197AbZECXXJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 3 May 2009 19:23:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753686AbZECXXI
-	(ORCPT <rfc822;git-outgoing>); Sun, 3 May 2009 19:23:08 -0400
-Received: from mail-ew0-f224.google.com ([209.85.219.224]:62235 "EHLO
-	mail-ew0-f224.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753420AbZECXXH (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 3 May 2009 19:23:07 -0400
-Received: by ewy24 with SMTP id 24so3525610ewy.37
-        for <git@vger.kernel.org>; Sun, 03 May 2009 16:23:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:sender:date:from:to:cc
-         :subject:message-id:mime-version:content-type:content-disposition
-         :user-agent;
-        bh=hfbesEyf9uEs11AnW5OirG+VmfuG83JntnyfvQ+i5wk=;
-        b=ocWszmx16RwC0/8qEkZBChKbQvd0iw9smvXcRajNxkzRn/tevbdLjcqTvx0kGL1tK5
-         /PfAYCMW0OhSiDKZOMXYa7c5xWjSrr+0k7iN0le5MzZT+i2wjaCragm8hQEodNrYqA3y
-         abQE+B+l5DvkptO5tT1je/MJRV6oJw7RJA+sc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=sender:date:from:to:cc:subject:message-id:mime-version:content-type
-         :content-disposition:user-agent;
-        b=DCV84wj4R0jg2rew0VFG4/IhTAwEzU+qqxRicJqUggGp4bzWUKgSdMeUIR4t29XiVj
-         jZOhMswhRm3mpP0NUxRW+AivIHPPNlbPw9AoRaRBd9OogMIVsPWqxcS/m3ZY+5PmqnKW
-         a3v4DEzb2oJ8eFuXU8iypq5z51+nF0EPvWoR0=
-Received: by 10.210.20.6 with SMTP id 6mr2060895ebt.72.1241392984572;
-        Sun, 03 May 2009 16:23:04 -0700 (PDT)
-Received: from @ (91-164-143-25.rev.libertysurf.net [91.164.143.25])
-        by mx.google.com with ESMTPS id 24sm9781301eyx.33.2009.05.03.16.23.02
-        (version=SSLv3 cipher=RC4-MD5);
-        Sun, 03 May 2009 16:23:04 -0700 (PDT)
+	id S1754657AbZECXyL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 3 May 2009 19:54:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753420AbZECXyK
+	(ORCPT <rfc822;git-outgoing>); Sun, 3 May 2009 19:54:10 -0400
+Received: from b01.ext.isohunt.com ([208.71.112.51]:39641 "EHLO
+	mail.isohunt.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1753145AbZECXyJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 3 May 2009 19:54:09 -0400
+Received: (qmail 12780 invoked from network); 3 May 2009 23:54:05 -0000
+Received: from tsi-static.orbis-terrarum.net (HELO curie.orbis-terrarum.net) (76.10.188.108)
+  (smtp-auth username robbat2@isohunt.com, mechanism login)
+  by mail.isohunt.com (qpsmtpd/0.33-dev on beta01) with (AES256-SHA encrypted) ESMTPSA; Sun, 03 May 2009 23:54:05 +0000
+Received: (qmail 4587 invoked by uid 10000); 3 May 2009 16:54:02 -0700
 Content-Disposition: inline
-User-Agent: Mutt/1.5.18 (2008-05-17)
+In-Reply-To: <20090503232300.GA20066@vidovic>
+User-Agent: Mutt/1.5.16 (2007-06-09)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118196>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118197>
 
-Hi,
 
-I had the following issue using gitosis today:
-http://colabti.org/irclogger/irclogger_log/git?date=2009-05-03#l2233
+--AqsLC8rIMeq19msA
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-The name of the key file was 'keydir/Jacques@BLACK_ANTEC.pub' which gave
-the warning (when pushing): 
-WARNING:gitosis.ssh:Unsafe SSH username in keyfile: Jacques@BLACK_ANTEC.pub
+On Mon, May 04, 2009 at 01:23:00AM +0200, Nicolas Sebrecht wrote:
+> I had the following issue using gitosis today:
+> http://colabti.org/irclogger/irclogger_log/git?date=3D2009-05-03#l2233
+>=20
+> The name of the key file was 'keydir/Jacques@BLACK_ANTEC.pub' which gave
+> the warning (when pushing):=20
+> WARNING:gitosis.ssh:Unsafe SSH username in keyfile: Jacques@BLACK_ANTEC.p=
+ub
+>=20
+> Changing the filename into Jacques.pub solved the issue.
+>=20
+> I was expecting an error message instead (not a warning) as it seems to
+> _not_ permit such a filename.
+>=20
+> Why the initial filename is fobidden?
+> Could the warning be substituted by an error?
+They are meant to be valid usernames, which don't include the @ symbol.
 
-Changing the filename into Jacques.pub solved the issue.
+For the git.overlays.gentoo.org site, where we use gitosis, we had some
+issues that were best solved by fixing Gitosis itself (like being able
+to pass SSH key options, eg "from=3D" to restrict hosts). Another one that
+bugged me was that the string at the end of an ssh key is NOT a
+username, it's a freeform (well, no newline) text field.
 
-I was expecting an error message instead (not a warning) as it seems to
-_not_ permit such a filename.
+I've tried to send the patches to upstream on several occasions, but
+never gotten any response.=20
 
-Why the initial filename is fobidden?
-Could the warning be substituted by an error?
+I didn't disable the warning you're complaining about, as I wanted it
+still, but I do agree it's probably better to upgrade to an error.
 
-Thanks,
+You can find the Gentoo fork here:
+http://git.overlays.gentoo.org/gitweb/?p=3Dproj/gitosis-gentoo.git;a=3Dsumm=
+ary
 
--- 
-Nicolas Sebrecht
+--=20
+Robin Hugh Johnson
+Gentoo Linux Developer & Infra Guy
+E-Mail     : robbat2@gentoo.org
+GnuPG FP   : 11AC BA4F 4778 E3F6 E4ED  F38E B27B 944E 3488 4E85
+
+--AqsLC8rIMeq19msA
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.10 (GNU/Linux)
+Comment: Robbat2 @ Orbis-Terrarum Networks - The text below is a digital signature. If it doesn't make any sense to you, ignore it.
+
+iEYEARECAAYFAkn+LpoACgkQPpIsIjIzwixMmwCeMTtHi2zvPTjCyInf8s1nKRVf
+RJcAoMC5MXFDKRH15AxAS3XIa2ML7N/G
+=/w0w
+-----END PGP SIGNATURE-----
+
+--AqsLC8rIMeq19msA--
