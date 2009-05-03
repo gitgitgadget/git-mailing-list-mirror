@@ -1,88 +1,186 @@
-From: Michael Witten <mfwitten@gmail.com>
-Subject: Re: [doc] User Manual Suggestion
-Date: Sat, 2 May 2009 20:10:14 -0500
-Message-ID: <b4087cc50905021810y28ab2019ob99857670383ba46@mail.gmail.com>
-References: <200904242230.13239.johan@herland.net>
-	 <20090424213848.GA14493@coredump.intra.peff.net>
-	 <b4087cc50904241518w625a9890vecdd36bb937e76d5@mail.gmail.com>
-	 <20090424231632.GB10155@atjola.homenet>
-	 <b4087cc50904241701jb78ce50m122fef475b0f1de7@mail.gmail.com>
-	 <20090502155348.GB6135@atjola.homenet>
-	 <b4087cc50905021136l5209777bs2209bab385deeef6@mail.gmail.com>
-	 <20090502211110.GC6135@atjola.homenet>
-	 <b4087cc50905021613j1d269757g8c599b484208c188@mail.gmail.com>
-	 <20090502233232.GD6135@atjola.homenet>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jeff King <peff@peff.net>, Daniel Barkalow <barkalow@iabervon.org>,
-	Johan Herland <johan@herland.net>, git@vger.kernel.org,
-	David Abrahams <dave@boostpro.com>,
-	"J. Bruce Fields" <bfields@fieldses.org>
-To: =?ISO-8859-1?Q?Bj=F6rn_Steinbrink?= <B.Steinbrink@gmx.de>
-X-From: git-owner@vger.kernel.org Sun May 03 03:10:56 2009
+From: David Aguilar <davvid@gmail.com>
+Subject: [PATCH] mergetool--lib: add support for araxis merge
+Date: Sat,  2 May 2009 18:18:01 -0700
+Message-ID: <1241313481-17923-1-git-send-email-davvid@gmail.com>
+Cc: spearce@spearce.org, markus.heidelberg@web.de,
+	Johannes.Schindelin@gmx.de, git@vger.kernel.org,
+	charles@hashpling.org, David Aguilar <davvid@gmail.com>
+To: gitster@pobox.com, snowcoder@gmail.com
+X-From: git-owner@vger.kernel.org Sun May 03 03:18:26 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M0QEG-0004hw-Sm
-	for gcvg-git-2@gmane.org; Sun, 03 May 2009 03:10:53 +0200
+	id 1M0QLX-0006TG-EX
+	for gcvg-git-2@gmane.org; Sun, 03 May 2009 03:18:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753367AbZECBKS convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 2 May 2009 21:10:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753035AbZECBKR
-	(ORCPT <rfc822;git-outgoing>); Sat, 2 May 2009 21:10:17 -0400
-Received: from mail-qy0-f196.google.com ([209.85.221.196]:63285 "EHLO
-	mail-qy0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752833AbZECBKP convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 2 May 2009 21:10:15 -0400
-Received: by qyk34 with SMTP id 34so4526384qyk.33
-        for <git@vger.kernel.org>; Sat, 02 May 2009 18:10:14 -0700 (PDT)
+	id S1753101AbZECBSR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 2 May 2009 21:18:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753039AbZECBSQ
+	(ORCPT <rfc822;git-outgoing>); Sat, 2 May 2009 21:18:16 -0400
+Received: from wa-out-1112.google.com ([209.85.146.180]:9734 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752000AbZECBSP (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 2 May 2009 21:18:15 -0400
+Received: by wa-out-1112.google.com with SMTP id j5so1666942wah.21
+        for <git@vger.kernel.org>; Sat, 02 May 2009 18:18:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=tl6BVbBd3hpxPCe6phq2KkoaRQfVG0ocCwddZIJ+ZrA=;
-        b=WyjxkDQK0Kt6FWgd09KeIb1pj2Vd8LyVCOTnC0oo44682dmjni59XPrbOErCV5Sd9V
-         NmH7pIXjvyyCWQE6ZYdc00YhzYlBqcQd80Wbv5SsfAKmirpOYXhClec32LxIFVTPZ5Se
-         QUQnW7lhkhdx7V2pFohHKMsVkdahy3O1M6cpo=
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer;
+        bh=991ykIktH5iKQh5mzbI7F8BA01SMTdsvhfCfxh34V4s=;
+        b=AUWPqpmXzXHsq1NoZY/zD3T8gwkO4a3yTjnE3w4nlbbZCcXHoZIHNpvRPSAX+sj93v
+         CF7kW+xLOzang0oYuvy9eGwCnKuKrO3trMczJ1tiCbAE3vFwpUd6x0eSk9xbpWtIrWrz
+         4NiGTqqbGkqOAmNBhXo2ePX6PBd+B/WU44gm8=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=vI7O/cfmY6ioTwn0ORHXKJOPvQLEojhcYb5c69dbmX1ICruXCxQDOt7DqTxpVwcqqO
-         n3ot3kU7Xk2KXJF9Zx4IeThLCcSs8DSy8rmUbT64dZvdmkjpiK0y5JGwEaUI5f3goFEY
-         yfwKhxfGVsQs2gR3YdOsiaUMhl+lVzumXpfgE=
-Received: by 10.224.60.148 with SMTP id p20mr4556147qah.55.1241313014432; Sat, 
-	02 May 2009 18:10:14 -0700 (PDT)
-In-Reply-To: <20090502233232.GD6135@atjola.homenet>
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=MZB/EpZf7/Hyz/KRJ489uQXh6rjHsCD7N6+Ngyo2A5kspD7MNCxTC7ELgSzjlK2Kq+
+         w9oRZMb3mx+Qc2+0p7UbGrR2poXAXvMxl8sRgmhXIG8f+z79E54QDO9BNT6kjgn5iqXd
+         3Dqi684oDoxx5VIG15jJ66ojbTDMdY0GKdzJw=
+Received: by 10.114.159.5 with SMTP id h5mr3121329wae.190.1241313494617;
+        Sat, 02 May 2009 18:18:14 -0700 (PDT)
+Received: from localhost (208-106-56-2.static.dsltransport.net [208.106.56.2])
+        by mx.google.com with ESMTPS id j39sm7434504waf.10.2009.05.02.18.18.13
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sat, 02 May 2009 18:18:14 -0700 (PDT)
+X-Mailer: git-send-email 1.6.3.rc4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118157>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118158>
 
-2009/5/2 Bj=F6rn Steinbrink <B.Steinbrink@gmx.de>:
->> > Hm, like chapter 7 "Git concepts"?
->>
->> That's exactly the problem. It should be in chapter 0.
->
-> I'm not opposed to re-ordering stuff. Though I often think that havin=
-g
-> commands and concepts "together" is better. =A0Maybe we just need tha=
-t
-> twice? Once the plain data model, and once a "hands on" version where
-> the effects of the commands are described in terms of the data model.
->
-> The former "sucks" for those that want to just "dive in" (but might
-> still be happy to get told what their actions do), the latter sucks w=
-hen
-> you just want to look something up.
+Araxis merge is now a built-in diff/merge tool.
+This adds araxis to git-completion and updates
+the documentation as well.
 
-Indeed. I think the key is to split up the documentation for these 2 pa=
-ths.
+Signed-off-by: David Aguilar <davvid@gmail.com>
+---
 
-    http://marc.info/?l=3Dgit&m=3D124058631814726&w=3D2
+This patch is a result of the discussion on the msysgit list:
 
-The mixing of the 2 is what makes everyone unhappy.
+http://groups.google.com/group/msysgit/browse_thread/thread/fa353fa2240594d7
+
+'compare' is the command-line utility that is provided
+on MacOS.  Users on other platforms may have to manually
+set their mergetool.araxis.path.
+
+
+ Documentation/git-difftool.txt         |    2 +-
+ Documentation/git-mergetool.txt        |    2 +-
+ Documentation/merge-config.txt         |    2 +-
+ contrib/completion/git-completion.bash |    2 +-
+ git-mergetool--lib.sh                  |   24 ++++++++++++++++++++++--
+ 5 files changed, 26 insertions(+), 6 deletions(-)
+
+diff --git a/Documentation/git-difftool.txt b/Documentation/git-difftool.txt
+index 15b247b..96a6c51 100644
+--- a/Documentation/git-difftool.txt
++++ b/Documentation/git-difftool.txt
+@@ -31,7 +31,7 @@ OPTIONS
+ 	Use the diff tool specified by <tool>.
+ 	Valid merge tools are:
+ 	kdiff3, kompare, tkdiff, meld, xxdiff, emerge, vimdiff, gvimdiff,
+-	ecmerge, diffuse and opendiff
++	ecmerge, diffuse, opendiff and araxis.
+ +
+ If a diff tool is not specified, 'git-difftool'
+ will use the configuration variable `diff.tool`.  If the
+diff --git a/Documentation/git-mergetool.txt b/Documentation/git-mergetool.txt
+index ff9700d..68ed6c0 100644
+--- a/Documentation/git-mergetool.txt
++++ b/Documentation/git-mergetool.txt
+@@ -27,7 +27,7 @@ OPTIONS
+ 	Use the merge resolution program specified by <tool>.
+ 	Valid merge tools are:
+ 	kdiff3, tkdiff, meld, xxdiff, emerge, vimdiff, gvimdiff, ecmerge,
+-	diffuse, tortoisemerge and opendiff
++	diffuse, tortoisemerge, opendiff and araxis.
+ +
+ If a merge resolution program is not specified, 'git-mergetool'
+ will use the configuration variable `merge.tool`.  If the
+diff --git a/Documentation/merge-config.txt b/Documentation/merge-config.txt
+index 4832bc7..c0f96e7 100644
+--- a/Documentation/merge-config.txt
++++ b/Documentation/merge-config.txt
+@@ -23,7 +23,7 @@ merge.tool::
+ 	Controls which merge resolution program is used by
+ 	linkgit:git-mergetool[1].  Valid built-in values are: "kdiff3",
+ 	"tkdiff", "meld", "xxdiff", "emerge", "vimdiff", "gvimdiff",
+-	"diffuse", "ecmerge", "tortoisemerge", and
++	"diffuse", "ecmerge", "tortoisemerge", "araxis", and
+ 	"opendiff".  Any other value is treated is custom merge tool
+ 	and there must be a corresponding mergetool.<tool>.cmd option.
+ 
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index 1a90cb8..dfd128b 100755
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -911,7 +911,7 @@ _git_diff ()
+ }
+ 
+ __git_mergetools_common="diffuse ecmerge emerge kdiff3 meld opendiff
+-			tkdiff vimdiff gvimdiff xxdiff
++			tkdiff vimdiff gvimdiff xxdiff araxis
+ "
+ 
+ _git_difftool ()
+diff --git a/git-mergetool--lib.sh b/git-mergetool--lib.sh
+index a16a279..f3c63ef 100644
+--- a/git-mergetool--lib.sh
++++ b/git-mergetool--lib.sh
+@@ -18,6 +18,9 @@ translate_merge_tool_path () {
+ 	emerge)
+ 		echo emacs
+ 		;;
++	araxis)
++		echo compare
++		;;
+ 	*)
+ 		echo "$1"
+ 		;;
+@@ -43,7 +46,7 @@ check_unchanged () {
+ valid_tool () {
+ 	case "$1" in
+ 	kdiff3 | tkdiff | xxdiff | meld | opendiff | \
+-	emerge | vimdiff | gvimdiff | ecmerge | diffuse)
++	emerge | vimdiff | gvimdiff | ecmerge | diffuse | araxis)
+ 		;; # happy
+ 	tortoisemerge)
+ 		if ! merge_mode; then
+@@ -263,6 +266,23 @@ run_merge_tool () {
+ 			status=1
+ 		fi
+ 		;;
++	araxis)
++		if merge_mode; then
++			if $base_present; then
++				"$merge_tool_path" -wait -merge -3 -a1 \
++					"$BASE" "$LOCAL" "$REMOTE" "$MERGED" \
++					>/dev/null 2>&1
++			else
++				"$merge_tool_path" -wait -2 \
++					"$LOCAL" "$REMOTE" "$MERGED" \
++					>/dev/null 2>&1
++			fi
++			check_unchanged
++		else
++			"$merge_tool_path" -wait -2 "$LOCAL" "$REMOTE" \
++				>/dev/null 2>&1
++		fi
++		;;
+ 	*)
+ 		merge_tool_cmd="$(get_merge_tool_cmd "$1")"
+ 		if test -z "$merge_tool_cmd"; then
+@@ -302,7 +322,7 @@ guess_merge_tool () {
+ 		else
+ 			tools="opendiff kdiff3 tkdiff xxdiff meld $tools"
+ 		fi
+-		tools="$tools gvimdiff diffuse ecmerge"
++		tools="$tools gvimdiff diffuse ecmerge araxis"
+ 	fi
+ 	if echo "${VISUAL:-$EDITOR}" | grep emacs > /dev/null 2>&1; then
+ 		# $EDITOR is emacs so add emerge as a candidate
+-- 
+1.6.3.rc4
