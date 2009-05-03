@@ -1,98 +1,79 @@
-From: David Aguilar <davvid@gmail.com>
-Subject: Re: [PATCH] mergetool--lib: specialize diff options for emerge and
-	ecmerge
-Date: Sun, 3 May 2009 13:34:27 -0700
-Message-ID: <20090503203427.GA22440@gmail.com>
-References: <1241254641-54338-1-git-send-email-davvid@gmail.com> <200905030827.56932.markus.heidelberg@web.de> <20090503182137.GC50640@gmail.com> <200905032112.31156.markus.heidelberg@web.de>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 6/6] Remove bareword filehandles in git-send-email.perl
+Date: Sun, 3 May 2009 16:58:26 -0400
+Message-ID: <20090503205826.GF20468@coredump.intra.peff.net>
+References: <1241010743-7020-1-git-send-email-wfp5p@virginia.edu> <1241010743-7020-2-git-send-email-wfp5p@virginia.edu> <1241010743-7020-3-git-send-email-wfp5p@virginia.edu> <1241010743-7020-4-git-send-email-wfp5p@virginia.edu> <1241010743-7020-5-git-send-email-wfp5p@virginia.edu> <1241010743-7020-6-git-send-email-wfp5p@virginia.edu> <1241010743-7020-7-git-send-email-wfp5p@virginia.edu>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: gitster@pobox.com, marcin.zalewski@gmail.com,
-	charles@hashpling.org, git@vger.kernel.org
-To: Markus Heidelberg <markus.heidelberg@web.de>
-X-From: git-owner@vger.kernel.org Sun May 03 22:34:49 2009
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: Bill Pemberton <wfp5p@virginia.edu>
+X-From: git-owner@vger.kernel.org Sun May 03 22:58:40 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M0iOe-0007Q2-PP
-	for gcvg-git-2@gmane.org; Sun, 03 May 2009 22:34:49 +0200
+	id 1M0ili-0007kH-SE
+	for gcvg-git-2@gmane.org; Sun, 03 May 2009 22:58:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755862AbZECUel (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 3 May 2009 16:34:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754932AbZECUel
-	(ORCPT <rfc822;git-outgoing>); Sun, 3 May 2009 16:34:41 -0400
-Received: from wa-out-1112.google.com ([209.85.146.183]:24951 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754186AbZECUek (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 3 May 2009 16:34:40 -0400
-Received: by wa-out-1112.google.com with SMTP id j5so1879379wah.21
-        for <git@vger.kernel.org>; Sun, 03 May 2009 13:34:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=ATEwPfXJS4ayV8ZUpbPQSBVGPejQM7XNX3i7TxZoitM=;
-        b=uPt6nfNQeGrDuVv1NP+X6Mv2ia3JuIMBAlM0Az+8mgdfhmE03tXIOA5FWoFZzUH+be
-         LpXhv5PYx+2yDSI9I4duRpcQ3NiMGIsFFumcsmnkJdpxIoSpyzlAGHSIihKc9LMqXjih
-         +6hyjbEd/wBMEqRqe8TKSEoCFs372a4TpASLA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=bnRUTfGmIof9as/QWL2NQFGwvlGzSm3LG4ftTfW1wwg8TxtfHjVJ+ghSwXy/5gjHYo
-         T6j0mWgmv4n27HuafvjoM5HQo0rT9iDx8sfguRjP2X1KqXf8bxQ6FlajwtZzEjnTy4e2
-         6sqn92RTsaAzHpfJV/aYlveUic9okjA+iCB1c=
-Received: by 10.114.67.17 with SMTP id p17mr3764292waa.49.1241382880415;
-        Sun, 03 May 2009 13:34:40 -0700 (PDT)
-Received: from gmail.com (208-106-56-2.static.dsltransport.net [208.106.56.2])
-        by mx.google.com with ESMTPS id k14sm1432035waf.65.2009.05.03.13.34.39
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 03 May 2009 13:34:39 -0700 (PDT)
+	id S1755444AbZECU62 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 3 May 2009 16:58:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754164AbZECU62
+	(ORCPT <rfc822;git-outgoing>); Sun, 3 May 2009 16:58:28 -0400
+Received: from peff.net ([208.65.91.99]:49838 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753815AbZECU61 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 3 May 2009 16:58:27 -0400
+Received: (qmail 14475 invoked by uid 107); 3 May 2009 20:58:43 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Sun, 03 May 2009 16:58:43 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sun, 03 May 2009 16:58:26 -0400
 Content-Disposition: inline
-In-Reply-To: <200905032112.31156.markus.heidelberg@web.de>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+In-Reply-To: <1241010743-7020-7-git-send-email-wfp5p@virginia.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118191>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118192>
 
-Markus Heidelberg <markus.heidelberg@web.de> wrote:
-> > 
-> > On Linux, ecmerge is "ecmerge".
-> > Macs are weird.  Windows--even worse.
-> 
-> And the ecmerge developers are even more worse or is there a reason to
-> have different names for the binaries?
+On Wed, Apr 29, 2009 at 09:12:23AM -0400, Bill Pemberton wrote:
 
-But of course :)
+> The script was using bareword filehandles.  This is considered a bad
+> practice so they have been changed to indirect filehandles.
 
+I think this is a real improvement; using indirect filehandles mean they
+get scoped properly, which can avoid errors (especially forgetting to
+close() them, which happens automagically when they go out of scope).
+Assuming, of course, that the scoping added by your change is correct,
+and doesn't close a handle during a loop that we may have wanted to keep
+open (I didn't check carefully).
 
-> > The user-friendly thing is actually
-> > "/Applications/...lots.of.stuff.../guimerge", and that's a lot more
-> > platform-specific than just "guimerge".
-> 
-> Why is the whole path more user friendly, because of guimerge not being
-> in PATH? Is the /Applications/... directory always the same for ecmerge
+But in the patch itself:
 
-Yup.
+> -	open(C,">",$compose_filename)
+> +	open my $C,'>',$compose_filename
 
+There are actually two things happening here:
 
-> for each Mac user? But we don't care in other diff/merge tools about the
-> exact location and I think we shouldn't begin it here.
+  1. s/C/my $C/, which I think is good
 
-Ditto.
+  2. losing the parentheses around open(). This is a style issue, but I
+     think we usually prefer the parenthesized form of most perl
+     builtins (and certainly in the absence of other information, it
+     should be left as-is).
 
+And the style thing that probably _should_ be changed is the spacing: we
+typically have a space between function arguments. So:
 
-> > What do you think?
-> 
-> Not sure, leaving it as is is still an option.
+  open(my $C, '>', $compose_file)
 
-I agree.  So the original patch for ecmerge + emerge should be
-good then. I still need to reroll the araxis patch after my bike
-ride later.
+> -	print C <<EOT;
+> +	print {$C} <<EOT;
 
--- 
+Are the braces really necessary here? Is there a version of perl on
+which
 
-	David
+  print $C <<EOT;
+
+will not work?
+
+-Peff
