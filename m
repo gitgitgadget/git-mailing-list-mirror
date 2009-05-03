@@ -1,70 +1,85 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] mergetool--lib: add support for araxis merge
-Date: Sun, 3 May 2009 16:30:30 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.0905031629290.18521@pacific.mpi-cbg.de>
-References: <1241313481-17923-1-git-send-email-davvid@gmail.com>
+From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+Subject: Re: jgit standalone client on OpenVMS works (somewhat)
+Date: Sun, 3 May 2009 17:15:21 +0200
+Message-ID: <200905031715.22085.robin.rosenberg.lists@dewire.com>
+References: <3f1ae6620904300839n48e88143y2ae1694472f712a4@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: gitster@pobox.com, snowcoder@gmail.com, spearce@spearce.org,
-	markus.heidelberg@web.de, git@vger.kernel.org,
-	charles@hashpling.org
-To: David Aguilar <davvid@gmail.com>
-X-From: git-owner@vger.kernel.org Sun May 03 16:30:15 2009
+Content-Type: Text/Plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Ben Armstrong <BArmstrong@dymaxion.ca>
+X-From: git-owner@vger.kernel.org Sun May 03 17:15:38 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M0chq-0004i9-Gu
-	for gcvg-git-2@gmane.org; Sun, 03 May 2009 16:30:14 +0200
+	id 1M0dPl-0002Pr-VH
+	for gcvg-git-2@gmane.org; Sun, 03 May 2009 17:15:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754087AbZECOaH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 3 May 2009 10:30:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753894AbZECOaG
-	(ORCPT <rfc822;git-outgoing>); Sun, 3 May 2009 10:30:06 -0400
-Received: from mail.gmx.net ([213.165.64.20]:51162 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753145AbZECOaF (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 3 May 2009 10:30:05 -0400
-Received: (qmail invoked by alias); 03 May 2009 14:30:04 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp030) with SMTP; 03 May 2009 16:30:04 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19AD2dnO/ZAdymF6XxM78X6EwPD1KRoLu/waLG0dt
-	R/ZaXsJVDk9wXC
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <1241313481-17923-1-git-send-email-davvid@gmail.com>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.64
+	id S1756051AbZECPPa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 3 May 2009 11:15:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756046AbZECPPa
+	(ORCPT <rfc822;git-outgoing>); Sun, 3 May 2009 11:15:30 -0400
+Received: from mail.dewire.com ([83.140.172.130]:8015 "EHLO dewire.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755988AbZECPPa (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 3 May 2009 11:15:30 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by dewire.com (Postfix) with ESMTP id CC9D680027D;
+	Sun,  3 May 2009 17:15:24 +0200 (CEST)
+X-Virus-Scanned: by amavisd-new at dewire.com
+Received: from dewire.com ([127.0.0.1])
+	by localhost (torino.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id kDtEMJXXhw7t; Sun,  3 May 2009 17:15:24 +0200 (CEST)
+Received: from sleipner.localnet (unknown [10.9.0.6])
+	by dewire.com (Postfix) with ESMTP id 004A6800277;
+	Sun,  3 May 2009 17:15:23 +0200 (CEST)
+User-Agent: KMail/1.11.2 (Linux/2.6.28-11-generic; KDE/4.2.2; i686; ; )
+In-Reply-To: <3f1ae6620904300839n48e88143y2ae1694472f712a4@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118177>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118178>
 
-Hi,
+torsdag 30 april 2009 17:39:36 skrev Ben Armstrong <BArmstrong@dymaxion.ca>:
+> I am happy to report that the jgit standalone client works (somewhat) on
+> OpenVMS/Alpha, a non-POSIX platform for which no C git port exists.  I
+> understand that not all functionality of the C client is supported yet, but
+> for limited use, and supplemented by using the C client on a PC, I may be
+> able to get away with this.  At least being able to do a 'git clone' is
+> encouraging.
 
-On Sat, 2 May 2009, David Aguilar wrote:
+	O_o
 
-> Araxis merge is now a built-in diff/merge tool.
-> This adds araxis to git-completion and updates
-> the documentation as well.
+Not sure what to say here.. cool. I never even thought of VMS as a Java platform.
+
+> The only problem I have found so far is that if a tag has dots in it and the
+> last dotted expression looks like a VMS file version number, it is
+> interpreted as such instead of part of the filepath used to represent it
+> under .git/refs/tags
+
+
+> 3. On VMS, set up the jgit command environment appropriately:
 > 
-> Signed-off-by: David Aguilar <davvid@gmail.com>
-> ---
-> 
-> This patch is a result of the discussion on the msysgit list:
-> 
-> http://groups.google.com/group/msysgit/browse_thread/thread/fa353fa2240594d7
-> 
-> 'compare' is the command-line utility that is provided
-> on MacOS.  Users on other platforms may have to manually
-> set their mergetool.araxis.path.
+> $ define jgit_home dsa0:[dymax.jgit]
+> $ jgit==java+" -cp /jgit_home/jgit ""org.spearce.jgit.pgm.Main"""
+> $ git=="pipe define/user JAVA$FILENAME_CONTROLS 8 ; "+-
+>    "define/user DECC$ARGV_PARSE_STYLE ENABLE ; "+-
+>    "define/user DECC$EFS_CASE_PRESERVE ENABLE ; "+-
+>    "define/user DECC$EFS_CHARSET ENABLE ; jgit"
 
-The only reason I did not merge that patch sent to msysgit@googlegroups 
-was that I did not have _any_ confirmation that it works.
+After googling a little, I think you got JAVA$FILENAME_CONTROLS wrong.
+8 is for basic unix filenames. But you also need %x00200000 (or possibly
+%x00100000) as well. See
+http://h18012.www1.hp.com/java/documentation/1.5.0/ivms/docs/user_guide.html#unix_style
 
-Do you have any?  As Araxis is not free software, I refuse to touch it.
+That's my guess....  I wouldn't dare to tell you how to get the exact syntax right, My VMS 
+skillz are not what they once were.
 
-Ciao,
-Dscho
+Come to think of it, the first VMS machine I used was named "Linus", named
+after a widely known character (in a comic strip called Snoopy). </anecdotes>
+
+-- robin
