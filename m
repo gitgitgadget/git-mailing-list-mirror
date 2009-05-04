@@ -1,97 +1,71 @@
-From: Shinya Kuribayashi <skuribay@ruby.dti.ne.jp>
-Subject: Re: [StGit PATCH 9/9] Use the default git colouring scheme rather
- than specific scripts
-Date: Mon, 04 May 2009 21:48:31 +0900
-Message-ID: <49FEE41F.4010006@ruby.dti.ne.jp>
-References: <20090428150742.27261.19620.stgit@pc1117.cambridge.arm.com> <20090428151025.27261.15964.stgit@pc1117.cambridge.arm.com>
+From: Jon Smirl <jonsmirl@gmail.com>
+Subject: Wrong conflicts on file splits
+Date: Mon, 4 May 2009 08:53:11 -0400
+Message-ID: <9e4733910905040553u377ab11n1609d980021be498@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org,
-	=?UTF-8?B?S2FybCBIYXNzZWxzdHLDtm0=?= <kha@treskal.com>
-To: Catalin Marinas <catalin.marinas@gmail.com>
-X-From: git-owner@vger.kernel.org Mon May 04 14:57:43 2009
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon May 04 14:59:24 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M0xjq-000266-Pq
-	for gcvg-git-2@gmane.org; Mon, 04 May 2009 14:57:43 +0200
+	id 1M0xlR-0002n1-TW
+	for gcvg-git-2@gmane.org; Mon, 04 May 2009 14:59:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753954AbZEDM50 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 4 May 2009 08:57:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753769AbZEDM5Z
-	(ORCPT <rfc822;git-outgoing>); Mon, 4 May 2009 08:57:25 -0400
-Received: from smtp14.dti.ne.jp ([202.216.231.189]:61335 "EHLO
-	smtp14.dti.ne.jp" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753610AbZEDM5Z (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 4 May 2009 08:57:25 -0400
-X-Greylist: delayed 524 seconds by postgrey-1.27 at vger.kernel.org; Mon, 04 May 2009 08:57:24 EDT
-Received: from shinya-kuribayashis-macbook.local (PPPax2584.tokyo-ip.dti.ne.jp [210.170.234.84]) by smtp14.dti.ne.jp (3.11s) with ESMTP AUTH id n44CmWuu023782;Mon, 4 May 2009 21:48:32 +0900 (JST)
-User-Agent: Thunderbird 2.0.0.21 (Macintosh/20090302)
-In-Reply-To: <20090428151025.27261.15964.stgit@pc1117.cambridge.arm.com>
+	id S1754507AbZEDM7N (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 4 May 2009 08:59:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754008AbZEDM7N
+	(ORCPT <rfc822;git-outgoing>); Mon, 4 May 2009 08:59:13 -0400
+Received: from mail-qy0-f133.google.com ([209.85.221.133]:32995 "EHLO
+	mail-qy0-f133.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754002AbZEDM7M (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 4 May 2009 08:59:12 -0400
+X-Greylist: delayed 361 seconds by postgrey-1.27 at vger.kernel.org; Mon, 04 May 2009 08:59:12 EDT
+Received: by qyk39 with SMTP id 39so27258qyk.33
+        for <git@vger.kernel.org>; Mon, 04 May 2009 05:59:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:date:message-id:subject
+         :from:to:content-type:content-transfer-encoding;
+        bh=v4D+QqTpJXAeFA1AfrdEUnveGP2+NZS5o5qOU6Wszik=;
+        b=u7Kb5d62domdLGFJtZMb7Ph2mpPGR/nxl7kdjbUC//KwnwUrQB52RD5kjFsejMDzQM
+         fNLek+318PZD+fB3oawatK24Qk3FwIl5BWAZbRbnRMGZbvRDvbdni2daW3qlWdHGJfdu
+         TpEMzsW29KjE8MB70ukX1/SFT6zjbear1bNCg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:date:message-id:subject:from:to:content-type
+         :content-transfer-encoding;
+        b=GNQxgVc0+uJuTkY2t8I7nz//yre0D5KE2hkWFBd0amyLccJeEQo6vNaj9G+ZBtIDzq
+         D/OSaRBOmGjOtgsx2c97MabSdA9oj/x89jXVtTkZdnKaqS21L7Sg5w1DkknlklLPdoAu
+         g7/PqzMxsgQdzgku3dmDMCB3t+YyShzW4okQo=
+Received: by 10.220.74.81 with SMTP id t17mr9140381vcj.56.1241441591290; Mon, 
+	04 May 2009 05:53:11 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118229>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118230>
 
-Hi,
+I keep running into this problem, is there anything I can do to make
+it better? I'm using stgit but this is a problem in git itself.
 
-Catalin Marinas wrote:
-> This patch adds the mechanism to check if the output is tty for the
-> diff and show commands and passes the --color option to git if the
-> color.diff config option is set auto or true. The patch also changes the
-> default pager to 'less -FRSX' from the diffcol.sh script.
-> 
-> Signed-off-by: Catalin Marinas <catalin.marinas@gmail.com>
+I have a patch that splits file A into two files, A and B.
+Now I merge with another tree and bring in a one line fix to A.
+The fix touches the pre-split file A in a section that is going to end up in B.
+Next I re-apply the patch that splits A into A and B.
 
-Cool.
+This results in a large conflict in the post split file A.
+And no patch being applied to file B which is where the fix belongs.
 
-> diff --git a/stgit/commands/common.py b/stgit/commands/common.py
-> index 6bb3685..e46412e 100644
-> --- a/stgit/commands/common.py
-> +++ b/stgit/commands/common.py
-> @@ -83,6 +83,14 @@ def git_commit(name, repository, branch_name = None):
->      except libgit.RepositoryException:
->          raise CmdException('%s: Unknown patch or revision name' % name)
->  
-> +def color_diff_flags():
-> +    """Return the git flags for coloured diff output if the configuration and
-> +    stdout allows."""
-> +    if sys.stdout.isatty() and config.get('color.diff') in ['true', 'auto']:
-> +        return ['--color']
-> +    else:
-> +        return []
-> +
->  def check_local_changes():
->      if git.local_changes():
->          raise CmdException('local changes in the tree. Use "refresh" or'
+Repeat this process with a multi-line fix and the whole automated
+merge process breaks down and I have to carefully figure everything
+out by hand.
 
-Junio introduces `color.ui=auto' as one of base settings in his recent
-Japanese article for Git newbies:
+The merge process seems to be unaware of the newly created file B. No
+patches or conflict ever end up in it.
 
-http://gitster.livejournal.com/2009/04/24/
-
-Is color.ui worth supporting in color_diff_flags()?, or simply having 
-additional color.diff would be better?
-
-> diff --git a/stgit/config.py b/stgit/config.py
-> index efce097..4f16978 100644
-> --- a/stgit/config.py
-> +++ b/stgit/config.py
-> @@ -37,7 +37,8 @@ class GitConfig:
->          'stgit.autoimerge':	'no',
->          'stgit.keepoptimized':	'no',
->          'stgit.extensions':	'.ancestor .current .patched',
-> -        'stgit.shortnr':	 '5'
-> +        'stgit.shortnr': '5',
-> +        'stgit.pager':  'less -FRSX'
->          }
->  
->      __cache={}
-
-Wrong indentation? :-)
-
-
-Shinya
+-- 
+Jon Smirl
+jonsmirl@gmail.com
