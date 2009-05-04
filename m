@@ -1,108 +1,89 @@
-From: Josef Wolf <jw@raven.inka.de>
-Subject: Re: Trying to sync two svn repositories with git-svn (repost)
-Date: Mon, 4 May 2009 23:14:23 +0200
-Message-ID: <20090504211423.GK15420@raven.wolf.lan>
-References: <20090429160129.GF15420@raven.wolf.lan> <32541b130904291113p6f99a82ft824cd3c482447117@mail.gmail.com> <20090429223747.GG15420@raven.wolf.lan> <32541b130904291907q4003ad86v4728c5b2ba0aacb7@mail.gmail.com> <20090430222808.GH15420@raven.wolf.lan> <32541b130904301559w329bdd4bo6f2736a505b7235f@mail.gmail.com> <20090501142811.GI15420@raven.wolf.lan> <32541b130905011217x7f339d41x696fedee7298e3a4@mail.gmail.com> <20090502215852.GJ15420@raven.wolf.lan> <32541b130905040858v2a0b7a6br5b056a365fcb6855@mail.gmail.com>
+From: "Sohn, Matthias" <matthias.sohn@sap.com>
+Subject: RE: [JGIT PATCH v3] Replace inefficient new String(String) constructor to silence FindBugs
+Date: Mon, 4 May 2009 23:23:51 +0200
+Message-ID: <366BBB1215D0AB4B8A153AF047A2878003073DC3@dewdfe18.wdf.sap.corp>
+References: <1241193272-20247-1-git-send-email-spearce@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon May 04 23:16:48 2009
+Content-Type: text/plain;
+	charset="Windows-1252"
+Content-Transfer-Encoding: 8BIT
+Cc: <git@vger.kernel.org>, "Yann Simon" <yann.simon.fr@gmail.com>,
+	"Robin Rosenberg" <robin.rosenberg@dewire.com>
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Mon May 04 23:24:30 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M15Wo-0000mz-Sw
-	for gcvg-git-2@gmane.org; Mon, 04 May 2009 23:16:47 +0200
+	id 1M15eG-00040D-Mi
+	for gcvg-git-2@gmane.org; Mon, 04 May 2009 23:24:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752628AbZEDVQc convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 4 May 2009 17:16:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752436AbZEDVQc
-	(ORCPT <rfc822;git-outgoing>); Mon, 4 May 2009 17:16:32 -0400
-Received: from quechua.inka.de ([193.197.184.2]:35036 "EHLO mail.inka.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751286AbZEDVQc (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 4 May 2009 17:16:32 -0400
-Received: from raven.inka.de (uucp@[127.0.0.1])
-	by mail.inka.de with uucp (rmailwrap 0.5) 
-	id 1M15WZ-0003tb-68; Mon, 04 May 2009 23:16:31 +0200
-Received: by raven.inka.de (Postfix, from userid 1000)
-	id 4A7792CCA6; Mon,  4 May 2009 23:14:23 +0200 (CEST)
-Mail-Followup-To: Josef Wolf <jw@raven.inka.de>, git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <32541b130905040858v2a0b7a6br5b056a365fcb6855@mail.gmail.com>
-User-Agent: Mutt/1.5.17 (2007-11-01)
+	id S1755573AbZEDVYB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 4 May 2009 17:24:01 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753570AbZEDVYA
+	(ORCPT <rfc822;git-outgoing>); Mon, 4 May 2009 17:24:00 -0400
+Received: from smtpde03.sap-ag.de ([155.56.68.140]:53425 "EHLO
+	smtpde03.sap-ag.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753379AbZEDVX7 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 4 May 2009 17:23:59 -0400
+Received: from mail.sap.corp
+	by smtpde03.sap-ag.de (26) with ESMTP id n44LNs9s011269
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Mon, 4 May 2009 23:23:54 +0200 (MEST)
+X-MimeOLE: Produced By Microsoft Exchange V6.5
+Content-class: urn:content-classes:message
+In-Reply-To: <1241193272-20247-1-git-send-email-spearce@spearce.org>
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+Thread-Topic: [JGIT PATCH v3] Replace inefficient new String(String) constructor to silence FindBugs
+Thread-Index: AcnKdSTdGl4VY3fVSCeMv3DsgnmI2ACiLCxQ
+X-OriginalArrivalTime: 04 May 2009 21:23:53.0585 (UTC) FILETIME=[A00EBE10:01C9CCFE]
+X-Scanner: Virus Scanner virwal04
+X-SAP: out
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118263>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118264>
 
-On Mon, May 04, 2009 at 11:58:20AM -0400, Avery Pennarun wrote:
-> On Sat, May 2, 2009 at 5:58 PM, Josef Wolf <jw@raven.inka.de> wrote:
-> > Somehow, I still can't get it work. =A0This is what I do:
-> [...]
-> > =A0# move stuff from svn-2 to svn-1
-> > =A0#
-> > =A0git svn fetch svn-2
-> > =A0git checkout svn-1
-> > =A0git cherry-pick 05b964
-> > =A0[ =A0continue cherry-picking ]
-> > =A0git merge --no-ff -s ours svn-1
->=20
-> Note that you probably should be merging '-s ours svn-2' here, not
-> svn-1.  svn-1 already contains svn-1 (of course) so that merge didn't
-> do anything.  It most especially doesn't mark svn-1 as being
-> up-to-date with svn-2, and that's probably going to make trouble
-> later.
+Shawn O. Pearce [mailto:spearce@spearce.org] wrote :
+ 
+> FindBugs keeps reporting that our usage of new String(String)
+> is not the most efficient way to construct a string.
+> 
+> http://thread.gmane.org/gmane.comp.version-
+> control.git/113739/focus=113787
+> > I had a specific reason for forcing a new String object here.
+> >
+> > The line in question, p, is from the packed-refs file and
+> > contains the entire SHA-1 in hex form at the beginning of it.
+> > We've converted that into binary as an ObjectId, it uses 1/4 the
+> > space of the string portion.
+> >
+> > The Ref object, its ObjectId, and its name string, are going to be
+> > cached in a Map, probably long-term.  We're better off shedding the
+> > 80 bytes of memory used to hold the hex SHA-1 then risk substring()
+> > deciding its "faster" to reuse the char[] then to make a copy of it.
+> 
+> Another way to force this new unique String instance with its own
+> private char[] is to use a StringBuilder and append onto it the
+> ref name.  This shouldn't be a warning for FindBugs, but it would
+> accomplish the same goal of producing 1 clean copy, with no extra
+> transient temporary array.
+> 
+> Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
+> CC: Yann Simon <yann.simon.fr@gmail.com>
+> CC: Matthias Sohn <matthias.sohn@sap.com>
+> ---
+> 
+>  A less ugly version ?
 
-Yeah, you're right.  That was a typo.
+I agree, this looks better than the previous proposal but still a simple
+String copy constructor looks even simpler.
 
-=46ixing this, the "getting started" seems to work now: the cherry-pick=
-ed
-commits end up in the svn repositories.  But the synchronization after
-the "getting started" does not seem to work yet.  Here's what I've done=
-:
+I tried the alternative approach Robin proposed using FindBugs filter 
+mechanisms to suppress the undesired warning. I will post that in my 
+next mail.
 
- git tag svn-1-orig svn-1
- git tag svn-2-orig svn-2
-
- # move cherries to svn-2
- #
- git svn fetch svn-1
- git checkout svn-2
- git cherry-pick c9da
- [ ... ]
- git merge --no-ff -s ours svn-1
- git checkout svn-2/trunk
- git merge --no-ff svn-2
- git svn dcommit
- git diff svn-2-orig svn-2/trunk   # check what I've done
-
- # move cherries to svn-1
- #
- git svn fetch svn-2
- git checkout svn-1
- git cherry-pick 05b9
- [ ... ]
- git merge --no-ff -s ours svn-2
- git checkout svn-1/trunk
- git merge --no-ff svn-1
- git svn dcommit
- git diff svn-1-orig svn-1/trunk   # check what I've done
-
- git diff svn-1/trunk svn-2/trunk  # shows the diffs I want to keep
-
- # now try a synchronization
- #
- git checkout svn-2/trunk
- git svn fetch svn-1      # nothing new was checked in yet
- git merge --no-ff svn-1
- git svn dcommit
-
-Since no new commits were made in svn, those four commands should be
-almost a no-op.
-
-But Instead of merging only the changes that were done after the last
-synchronization, the last dcommit makes svn-2/trunk identical to svn-1.
-This effectively wipes all the differences which I would like to keep.
+--
+Matthias
