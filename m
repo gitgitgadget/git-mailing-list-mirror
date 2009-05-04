@@ -1,64 +1,79 @@
-From: "Michael S. Tsirkin" <mst@redhat.com>
-Subject: Re: [PATCHv2] Add --reference option to git submodule.
-Date: Mon, 4 May 2009 20:57:57 +0300
-Message-ID: <20090504175757.GA1144@redhat.com>
-References: <20090428123033.GA6839@redhat.com> <49F702C0.8030206@drmicha.warpmail.net> <7vskjslig6.fsf@gitster.siamese.dyndns.org>
+From: Stephen Boyd <bebarino@gmail.com>
+Subject: Re: [PATCH v2 2/4] Add format.coverauto boolean
+Date: Mon, 4 May 2009 11:39:53 -0700
+Message-ID: <780e0a6b0905041139x3a764768ocbbd8d9353ea568f@mail.gmail.com>
+References: <7v8wlxx18c.fsf@gitster.siamese.dyndns.org> <1241431142-8444-3-git-send-email-ft@bewatermyfriend.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Michael J Gruber <git@drmicha.warpmail.net>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon May 04 20:00:23 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Jeff King <peff@peff.net>
+To: Frank Terbeck <ft@bewatermyfriend.org>
+X-From: git-owner@vger.kernel.org Mon May 04 20:40:27 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M12Sk-0000aM-91
-	for gcvg-git-2@gmane.org; Mon, 04 May 2009 20:00:22 +0200
+	id 1M135V-0003Ng-JE
+	for gcvg-git-2@gmane.org; Mon, 04 May 2009 20:40:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757483AbZEDSAE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 4 May 2009 14:00:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758775AbZEDSAB
-	(ORCPT <rfc822;git-outgoing>); Mon, 4 May 2009 14:00:01 -0400
-Received: from mx2.redhat.com ([66.187.237.31]:60703 "EHLO mx2.redhat.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758771AbZEDSAA (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 4 May 2009 14:00:00 -0400
-Received: from int-mx2.corp.redhat.com (int-mx2.corp.redhat.com [172.16.27.26])
-	by mx2.redhat.com (8.13.8/8.13.8) with ESMTP id n44Hx0nN001393;
-	Mon, 4 May 2009 13:59:01 -0400
-Received: from ns3.rdu.redhat.com (ns3.rdu.redhat.com [10.11.255.199])
-	by int-mx2.corp.redhat.com (8.13.1/8.13.1) with ESMTP id n44HwwZA016807;
-	Mon, 4 May 2009 13:58:59 -0400
-Received: from redhat.com (vpn-10-18.str.redhat.com [10.32.10.18])
-	by ns3.rdu.redhat.com (8.13.8/8.13.8) with ESMTP id n44HwsnK030688;
-	Mon, 4 May 2009 13:58:57 -0400
-Content-Disposition: inline
-In-Reply-To: <7vskjslig6.fsf@gitster.siamese.dyndns.org>
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-Scanned-By: MIMEDefang 2.58 on 172.16.27.26
+	id S1754021AbZEDSkQ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 4 May 2009 14:40:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753045AbZEDSkO
+	(ORCPT <rfc822;git-outgoing>); Mon, 4 May 2009 14:40:14 -0400
+Received: from yx-out-2324.google.com ([74.125.44.28]:16085 "EHLO
+	yx-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753715AbZEDSkN convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 4 May 2009 14:40:13 -0400
+Received: by yx-out-2324.google.com with SMTP id 3so2321020yxj.1
+        for <git@vger.kernel.org>; Mon, 04 May 2009 11:40:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=vB/WpHYLMmhlqppA8L6GbIh7WmQ76JXNz50O9M8s/OY=;
+        b=MQ71EYNynpK4UVoGDqrAC+wGaQHrjVw89JFrTldxlzoEwXryY5Fly5qfAasv/EULTn
+         YT0vgo6xwqNg7Ch8GE5ShvzVVwOuoKcuGZw7H9MUwbmIwlEC5amPSGKWYfUirzqkKf1E
+         IOw2Ea5meIk9s5Kk8Zp17z7wGdZHqRnjXWHwQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=s3lXOui7DFUPRkdurF/Aqd0WqjzdiyfGregZ530K6JncwlRWx04/oLEF2Lct7I4uKd
+         3Gnsk39NG5gVRhDEnx3pdn/3CEDTqP4/wt8b+6mLqAvqInTqMr12GGIK5avXm1tTwslB
+         XQtsVSLauIvE1XeATbullJLzoKwJDdmuuEFlA=
+Received: by 10.100.6.13 with SMTP id 13mr13726960anf.98.1241462413229; Mon, 
+	04 May 2009 11:40:13 -0700 (PDT)
+In-Reply-To: <1241431142-8444-3-git-send-email-ft@bewatermyfriend.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118254>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118255>
 
-On Tue, Apr 28, 2009 at 11:52:09AM -0700, Junio C Hamano wrote:
-> Michael J Gruber <git@drmicha.warpmail.net> writes:
-> 
-> > Michael S. Tsirkin venit, vidit, dixit 28.04.2009 14:30:
-> >> This adds --reference option to git submodule add and
-> >> git submodule update commands, which is passed on to git clone.
-> >> 
-> >> Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-> >> ---
-> >> 
-> >> Here's v2. Ack?
-> >
-> > I don't think it's up to me to Ack but you addressed my remarks.
-> 
-> You can certainly say "Reviewed-by: me" and/or "Tested-by: me".
+On Mon, May 4, 2009 at 2:59 AM, Frank Terbeck <ft@bewatermyfriend.org> =
+wrote:
+> An exception is if it is called using the --stdout option,
+> which disables format.coverauto, because users of --stdout
+> (like git-rebase.sh) usually are not interested in
+> cover letters at all.
+>
 
-So ... Junio, what do you think about the patch?
+Would it make more sense to just have git-rebase.sh use
+--cover-letter=3Dnever? I thought configuration variables were defaults
+which have to be overridden.
 
--- 
-MST
+Also, why does this variable even exist? I think Jeff's suggestion is
+best, where you can set format.coverletter to always, never, or some
+number.
+
+> + =C2=A0 =C2=A0 =C2=A0 if (!strcmp(var, "format.coverauto")) {
+> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 cover_letter =3D g=
+it_config_bool(var, value);;
+> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return 0;
+> + =C2=A0 =C2=A0 =C2=A0 }
+
+Double semi-colon?
+
+=46inally, this option is very useful, so keep up the good work.
