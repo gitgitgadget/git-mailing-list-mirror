@@ -1,199 +1,288 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: [JGIT PATCH v2 1/2] Ensure that a PackFile instance stays invalid
-	when overwritten
-Date: Mon, 4 May 2009 12:30:45 -0700
-Message-ID: <20090504193045.GA23604@spearce.org>
-References: <1241296230-19342-1-git-send-email-spearce@spearce.org> <200905031005.57638.robin.rosenberg.lists@dewire.com>
+From: "Michael S. Tsirkin" <mst@redhat.com>
+Subject: [PATCHv3] Add --reference option to git submodule.
+Date: Mon, 4 May 2009 22:30:01 +0300
+Message-ID: <20090504193001.GA13719@redhat.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
-X-From: git-owner@vger.kernel.org Mon May 04 21:31:00 2009
+To: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Mon May 04 21:33:26 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M13sO-0002iC-5k
-	for gcvg-git-2@gmane.org; Mon, 04 May 2009 21:30:56 +0200
+	id 1M13uh-0003uy-VX
+	for gcvg-git-2@gmane.org; Mon, 04 May 2009 21:33:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753878AbZEDTar (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 4 May 2009 15:30:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753844AbZEDTaq
-	(ORCPT <rfc822;git-outgoing>); Mon, 4 May 2009 15:30:46 -0400
-Received: from george.spearce.org ([209.20.77.23]:54654 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752515AbZEDTap (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 4 May 2009 15:30:45 -0400
-Received: by george.spearce.org (Postfix, from userid 1001)
-	id B77E438196; Mon,  4 May 2009 19:30:45 +0000 (UTC)
+	id S1752619AbZEDTdL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 4 May 2009 15:33:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751797AbZEDTdL
+	(ORCPT <rfc822;git-outgoing>); Mon, 4 May 2009 15:33:11 -0400
+Received: from mx2.redhat.com ([66.187.237.31]:44157 "EHLO mx2.redhat.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751448AbZEDTdJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 4 May 2009 15:33:09 -0400
+Received: from int-mx2.corp.redhat.com (int-mx2.corp.redhat.com [172.16.27.26])
+	by mx2.redhat.com (8.13.8/8.13.8) with ESMTP id n44JV3Js024890;
+	Mon, 4 May 2009 15:31:03 -0400
+Received: from ns3.rdu.redhat.com (ns3.rdu.redhat.com [10.11.255.199])
+	by int-mx2.corp.redhat.com (8.13.1/8.13.1) with ESMTP id n44JV2K5011946;
+	Mon, 4 May 2009 15:31:02 -0400
+Received: from redhat.com (vpn-10-18.str.redhat.com [10.32.10.18])
+	by ns3.rdu.redhat.com (8.13.8/8.13.8) with ESMTP id n44JUvbd021014;
+	Mon, 4 May 2009 15:30:59 -0400
 Content-Disposition: inline
-In-Reply-To: <200905031005.57638.robin.rosenberg.lists@dewire.com>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+User-Agent: Mutt/1.5.18 (2008-05-17)
+X-Scanned-By: MIMEDefang 2.58 on 172.16.27.26
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118257>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118258>
 
-If a PackFile gets overwritten after we read its pack-*.idx we
-throw a PackMismatchException and then close the PackFile, which
-discards the index.  At this point the PackFile instance is dead
-and must be discarded by the GC, as it is used as part of the key
-in the WindowCache and the UnpackedObjectCache.
+This adds --reference option to git submodule add and
+git submodule update commands, which is passed to git clone.
 
-There is however a subtle race condition here.  If the PackFile is
-opened again after the PackMismatchException is thrown we load the
-new index file into memory, possibly seeing the footer in the index
-match the footer in the pack, and believing that the file is valid.
-This can mean that stale windows that haven't yet expired out of the
-WindowCache suddenly become valid again, even though they contain
-data from the old version of the pack.
-
-By caching the pack signature the very first time we open it we
-can more reliably detect this overwrite race condition and keep
-the PackFile instance invalid.
-
-Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
-  Robin Rosenberg <robin.rosenberg.lists@dewire.com> wrote:
-  > > @@ -339,6 +351,8 @@ synchronized boolean endWindowCache() {
-  > >  
-  > >  	private void doOpen() throws IOException {
-  > >  		try {
-  > > +			if (invalid)
-  > > +				throw new PackMismatchException("Pack checksum mismatch");
-  >
-  > That /may/ be the case. We no longer know why the index failed to open. One way
-  > is to save the reason, the other is not to be so d** sure and use a less specific
-  > message.
 
-  Good point.  v2 fixes that by using a new special exception type.
+I think it's ready now :) Comments?
 
- .../spearce/jgit/errors/PackInvalidException.java  |   56 ++++++++++++++++++++
- .../src/org/spearce/jgit/lib/PackFile.java         |   19 ++++++-
- 2 files changed, 73 insertions(+), 2 deletions(-)
- create mode 100644 org.spearce.jgit/src/org/spearce/jgit/errors/PackInvalidException.java
+Changes from v2: added test script, fixed update --reference with --init.
 
-diff --git a/org.spearce.jgit/src/org/spearce/jgit/errors/PackInvalidException.java b/org.spearce.jgit/src/org/spearce/jgit/errors/PackInvalidException.java
-new file mode 100644
-index 0000000..2e5485f
+Changes from v1: fixes in documentation, fix test usage and
+make it portable.
+
+ Documentation/git-submodule.txt |   14 ++++++-
+ git-submodule.sh                |   38 ++++++++++++++++--
+ t/t7406-submodule-reference.sh  |   81 +++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 127 insertions(+), 6 deletions(-)
+ create mode 100755 t/t7406-submodule-reference.sh
+
+diff --git a/Documentation/git-submodule.txt b/Documentation/git-submodule.txt
+index 3b8df44..14256c6 100644
+--- a/Documentation/git-submodule.txt
++++ b/Documentation/git-submodule.txt
+@@ -9,10 +9,12 @@ git-submodule - Initialize, update or inspect submodules
+ SYNOPSIS
+ --------
+ [verse]
+-'git submodule' [--quiet] add [-b branch] [--] <repository> <path>
++'git submodule' [--quiet] add [-b branch]
++	      [--reference <repository>] [--] <repository> <path>
+ 'git submodule' [--quiet] status [--cached] [--] [<path>...]
+ 'git submodule' [--quiet] init [--] [<path>...]
+-'git submodule' [--quiet] update [--init] [-N|--no-fetch] [--] [<path>...]
++'git submodule' [--quiet] update [--init] [-N|--no-fetch]
++	      [--reference <repository>] [--] [<path>...]
+ 'git submodule' [--quiet] summary [--summary-limit <n>] [commit] [--] [<path>...]
+ 'git submodule' [--quiet] foreach <command>
+ 'git submodule' [--quiet] sync [--] [<path>...]
+@@ -177,6 +179,14 @@ OPTIONS
+ 	This option is only valid for the update command.
+ 	Don't fetch new objects from the remote site.
+ 
++--reference <repository>::
++	This option is only valid for add and update commands.  These
++	commands sometimes need to clone a remote repository. In this case,
++	this option will be passed to the linkgit:git-clone[1] command.
+++
++*NOTE*: Do *not* use this option unless you have read the note
++for linkgit:git-clone[1]'s --reference and --shared options carefully.
++
+ <path>...::
+ 	Paths to submodule(s). When specified this will restrict the command
+ 	to only operate on the submodules found at the specified paths.
+diff --git a/git-submodule.sh b/git-submodule.sh
+index 8e234a4..ab1ed02 100755
+--- a/git-submodule.sh
++++ b/git-submodule.sh
+@@ -15,6 +15,7 @@ require_work_tree
+ command=
+ branch=
+ quiet=
++reference=
+ cached=
+ nofetch=
+ 
+@@ -91,6 +92,7 @@ module_clone()
+ {
+ 	path=$1
+ 	url=$2
++	reference="$3"
+ 
+ 	# If there already is a directory at the submodule path,
+ 	# expect it to be empty (since that is the default checkout
+@@ -106,7 +108,12 @@ module_clone()
+ 	test -e "$path" &&
+ 	die "A file already exist at path '$path'"
+ 
+-	git-clone -n "$url" "$path" ||
++	if test -n "$reference"
++	then
++		git-clone "$reference" -n "$url" "$path"
++	else
++		git-clone -n "$url" "$path"
++	fi ||
+ 	die "Clone of '$url' into submodule path '$path' failed"
+ }
+ 
+@@ -131,6 +138,15 @@ cmd_add()
+ 		-q|--quiet)
+ 			quiet=1
+ 			;;
++		--reference)
++			case "$2" in '') usage ;; esac
++			reference="--reference=$2"
++			shift
++			;;
++		--reference=*)
++			reference="$1"
++			shift
++			;;
+ 		--)
+ 			shift
+ 			break
+@@ -203,7 +219,7 @@ cmd_add()
+ 		git config submodule."$path".url "$url"
+ 	else
+ 
+-		module_clone "$path" "$realrepo" || exit
++		module_clone "$path" "$realrepo" "$reference" || exit
+ 		(
+ 			unset GIT_DIR
+ 			cd "$path" &&
+@@ -314,13 +330,22 @@ cmd_update()
+ 			quiet=1
+ 			;;
+ 		-i|--init)
++			init=1
+ 			shift
+-			cmd_init "$@" || return
+ 			;;
+ 		-N|--no-fetch)
+ 			shift
+ 			nofetch=1
+ 			;;
++		--reference)
++			case "$2" in '') usage ;; esac
++			reference="--reference=$2"
++			shift 2
++			;;
++		--reference=*)
++			reference="$1"
++			shift
++			;;
+ 		--)
+ 			shift
+ 			break
+@@ -334,6 +359,11 @@ cmd_update()
+ 		esac
+ 	done
+ 
++	if test -n "$init"
++	then
++		cmd_init "--" "$@" || return
++	fi
++
+ 	module_list "$@" |
+ 	while read mode sha1 stage path
+ 	do
+@@ -351,7 +381,7 @@ cmd_update()
+ 
+ 		if ! test -d "$path"/.git -o -f "$path"/.git
+ 		then
+-			module_clone "$path" "$url" || exit
++			module_clone "$path" "$url" "$reference"|| exit
+ 			subsha1=
+ 		else
+ 			subsha1=$(unset GIT_DIR; cd "$path" &&
+diff --git a/t/t7406-submodule-reference.sh b/t/t7406-submodule-reference.sh
+new file mode 100755
+index 0000000..cc16d3f
 --- /dev/null
-+++ b/org.spearce.jgit/src/org/spearce/jgit/errors/PackInvalidException.java
-@@ -0,0 +1,56 @@
-+/*
-+ * Copyright (C) 2009, Google Inc.
-+ *
-+ * All rights reserved.
-+ *
-+ * Redistribution and use in source and binary forms, with or
-+ * without modification, are permitted provided that the following
-+ * conditions are met:
-+ *
-+ * - Redistributions of source code must retain the above copyright
-+ *   notice, this list of conditions and the following disclaimer.
-+ *
-+ * - Redistributions in binary form must reproduce the above
-+ *   copyright notice, this list of conditions and the following
-+ *   disclaimer in the documentation and/or other materials provided
-+ *   with the distribution.
-+ *
-+ * - Neither the name of the Git Development Community nor the
-+ *   names of its contributors may be used to endorse or promote
-+ *   products derived from this software without specific prior
-+ *   written permission.
-+ *
-+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND
-+ * CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES,
-+ * INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
-+ * OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
-+ * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
-+ * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-+ * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
-+ * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
-+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
-+ * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
-+ * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
-+ * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
-+ * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-+ */
++++ b/t/t7406-submodule-reference.sh
+@@ -0,0 +1,81 @@
++#!/bin/sh
++#
++# Copyright (c) 2009, Red Hat Inc, Author: Michael S. Tsirkin (mst@redhat.com)
++#
 +
-+package org.spearce.jgit.errors;
++test_description='test clone --reference'
++. ./test-lib.sh
 +
-+import java.io.File;
-+import java.io.IOException;
++base_dir=`pwd`
 +
-+/** Thrown when a PackFile previously failed and is known to be unusable */
-+public class PackInvalidException extends IOException {
-+	private static final long serialVersionUID = 1L;
++U=$base_dir/UPLOAD_LOG
 +
-+	/**
-+	 * Construct a pack invalid error.
-+	 *
-+	 * @param path
-+	 *            path of the invalid pack file.
-+	 */
-+	public PackInvalidException(final File path) {
-+		super("Pack file invalid: " + path.getAbsolutePath());
-+	}
-+}
-diff --git a/org.spearce.jgit/src/org/spearce/jgit/lib/PackFile.java b/org.spearce.jgit/src/org/spearce/jgit/lib/PackFile.java
-index b107dfe..7e17613 100644
---- a/org.spearce.jgit/src/org/spearce/jgit/lib/PackFile.java
-+++ b/org.spearce.jgit/src/org/spearce/jgit/lib/PackFile.java
-@@ -54,6 +54,7 @@
- import java.util.zip.DataFormatException;
- 
- import org.spearce.jgit.errors.CorruptObjectException;
-+import org.spearce.jgit.errors.PackInvalidException;
- import org.spearce.jgit.errors.PackMismatchException;
- import org.spearce.jgit.util.NB;
- import org.spearce.jgit.util.RawParseUtils;
-@@ -89,6 +90,8 @@ public int compare(final PackFile a, final PackFile b) {
- 
- 	private volatile boolean invalid;
- 
-+	private byte[] packChecksum;
++test_expect_success 'preparing first repository' \
++'test_create_repo A && cd A &&
++echo first > file1 &&
++git add file1 &&
++git commit -m A-initial'
 +
- 	private PackIndex loadedIdx;
- 
- 	private PackReverseIndex reverseIdx;
-@@ -115,8 +118,18 @@ public PackFile(final File idxFile, final File packFile) {
- 
- 	private synchronized PackIndex idx() throws IOException {
- 		if (loadedIdx == null) {
-+			if (invalid)
-+				throw new PackInvalidException(packFile);
++cd "$base_dir"
 +
- 			try {
--				loadedIdx = PackIndex.open(idxFile);
-+				final PackIndex idx = PackIndex.open(idxFile);
++test_expect_success 'preparing second repository' \
++'git clone A B && cd B &&
++echo second > file2 &&
++git add file2 &&
++git commit -m B-addition &&
++git repack -a -d &&
++git prune'
 +
-+				if (packChecksum == null)
-+					packChecksum = idx.packChecksum;
-+				else if (!Arrays.equals(packChecksum, idx.packChecksum))
-+					throw new PackMismatchException("Pack checksum mismatch");
++cd "$base_dir"
 +
-+				loadedIdx = idx;
- 			} catch (IOException e) {
- 				invalid = true;
- 				throw e;
-@@ -339,6 +352,8 @@ synchronized boolean endWindowCache() {
- 
- 	private void doOpen() throws IOException {
- 		try {
-+			if (invalid)
-+				throw new PackInvalidException(packFile);
- 			fd = new RandomAccessFile(packFile, "r");
- 			length = fd.length();
- 			onOpenPack();
-@@ -423,7 +438,7 @@ private void onOpenPack() throws IOException {
- 					+ ": " + getPackFile());
- 
- 		NB.readFully(fd.getChannel(), length - 20, buf, 0, 20);
--		if (!Arrays.equals(buf, idx.packChecksum))
-+		if (!Arrays.equals(buf, packChecksum))
- 			throw new PackMismatchException("Pack checksum mismatch:"
- 					+ " pack " + ObjectId.fromRaw(buf).name()
- 					+ " index " + ObjectId.fromRaw(idx.packChecksum).name()
++test_expect_success 'preparing supermodule' \
++'test_create_repo super && cd super &&
++echo file > file &&
++git add file &&
++git commit -m B-super-initial'
++
++cd "$base_dir"
++
++test_expect_success 'submodule add --reference' \
++'cd super && git submodule add --reference ../B "file://$base_dir/A" sub &&
++git commit -m B-super-added'
++
++cd "$base_dir"
++
++test_expect_success 'after add: existence of info/alternates' \
++'test `wc -l <super/sub/.git/objects/info/alternates` = 1'
++
++cd "$base_dir"
++
++test_expect_success 'that reference gets used with add' \
++'cd super/sub &&
++echo "0 objects, 0 kilobytes" > expected &&
++git count-objects > current &&
++diff expected current'
++
++cd "$base_dir"
++
++test_expect_success 'cloning supermodule' \
++'git clone super super-clone'
++
++cd "$base_dir"
++
++test_expect_success 'update with reference' \
++'cd super-clone && git submodule update --init --reference ../B'
++
++cd "$base_dir"
++
++test_expect_success 'after update: existence of info/alternates' \
++'test `wc -l <super-clone/sub/.git/objects/info/alternates` = 1'
++
++cd "$base_dir"
++
++test_expect_success 'that reference gets used with update' \
++'cd super-clone/sub &&
++echo "0 objects, 0 kilobytes" > expected &&
++git count-objects > current &&
++diff expected current'
++
++cd "$base_dir"
++
++test_done
 -- 
-1.6.3.rc4.206.g03e16
+1.6.3.rc3.1.g830204
