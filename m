@@ -1,56 +1,66 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 2/4] Add format.coverauto boolean
-Date: Mon, 04 May 2009 16:20:47 -0700
-Message-ID: <7v8wlc4fqo.fsf@alter.siamese.dyndns.org>
-References: <7v8wlxx18c.fsf@gitster.siamese.dyndns.org>
-	<1241431142-8444-3-git-send-email-ft@bewatermyfriend.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Jeff King <peff@peff.net>
-To: Frank Terbeck <ft@bewatermyfriend.org>
-X-From: git-owner@vger.kernel.org Tue May 05 01:20:59 2009
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: [JGIT PATCH 2/7] Silence FindBugs "dubious use of GC" in PackFile.mmap
+Date: Mon,  4 May 2009 16:30:43 -0700
+Message-ID: <1241479848-20687-2-git-send-email-spearce@spearce.org>
+References: <1241479848-20687-1-git-send-email-spearce@spearce.org>
+Cc: git@vger.kernel.org
+To: Robin Rosenberg <robin.rosenberg@dewire.com>,
+	Matthias Sohn <matthias.sohn@sap.com>
+X-From: git-owner@vger.kernel.org Tue May 05 01:31:01 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M17T0-000243-TZ
-	for gcvg-git-2@gmane.org; Tue, 05 May 2009 01:20:59 +0200
+	id 1M17ci-0005qi-Qc
+	for gcvg-git-2@gmane.org; Tue, 05 May 2009 01:31:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755511AbZEDXUt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 4 May 2009 19:20:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754068AbZEDXUs
-	(ORCPT <rfc822;git-outgoing>); Mon, 4 May 2009 19:20:48 -0400
-Received: from fed1rmmtao104.cox.net ([68.230.241.42]:44580 "EHLO
-	fed1rmmtao104.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751491AbZEDXUs (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 4 May 2009 19:20:48 -0400
-Received: from fed1rmimpo03.cox.net ([70.169.32.75])
-          by fed1rmmtao104.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20090504232046.CVTA17135.fed1rmmtao104.cox.net@fed1rmimpo03.cox.net>;
-          Mon, 4 May 2009 19:20:46 -0400
-Received: from localhost ([68.225.240.211])
-	by fed1rmimpo03.cox.net with bizsmtp
-	id nbLn1b00H4aMwMQ04bLnnj; Mon, 04 May 2009 19:20:47 -0400
-X-Authority-Analysis: v=1.0 c=1 a=hvk-ZFxnSJEA:10 a=cJbXrRuCTcsA:10
- a=02rWKl3eAAAA:8 a=oS-Udu8FqCnmW1e70lAA:9 a=U16LDNXahbY8eFPUL1ucYxndmSEA:4
- a=iVFYgQKhOj0A:10
-X-CM-Score: 0.00
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+	id S1754021AbZEDXav (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 4 May 2009 19:30:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754066AbZEDXau
+	(ORCPT <rfc822;git-outgoing>); Mon, 4 May 2009 19:30:50 -0400
+Received: from george.spearce.org ([209.20.77.23]:52543 "EHLO
+	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751491AbZEDXat (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 4 May 2009 19:30:49 -0400
+Received: by george.spearce.org (Postfix, from userid 1000)
+	id A0AE23819E; Mon,  4 May 2009 23:30:49 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.2.4 (2008-01-01) on george.spearce.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-4.4 required=4.0 tests=ALL_TRUSTED,BAYES_00
+	autolearn=ham version=3.2.4
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by george.spearce.org (Postfix) with ESMTP id 1ED8E38195;
+	Mon,  4 May 2009 23:30:49 +0000 (UTC)
+X-Mailer: git-send-email 1.6.3.rc4.206.g03e16
+In-Reply-To: <1241479848-20687-1-git-send-email-spearce@spearce.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118269>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118270>
 
-Frank Terbeck <ft@bewatermyfriend.org> writes:
+Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
+---
+ .../findBugs/FindBugsExcludeFilter.xml             |    9 +++++++++
+ 1 files changed, 9 insertions(+), 0 deletions(-)
 
-> If set to true, format-patch behaves like it had been started
-> using the --cover-letter option.
-
-I thought "If this is set, you can run format-patch without giving an
-explicit --cover-letter=foo from the command line" was already done with
-the earlier format.coverletter configuration variable.  Why do you need a
-separate variable?  It does not make any sense to me, unless I am missing
-something.
+diff --git a/org.spearce.jgit/findBugs/FindBugsExcludeFilter.xml b/org.spearce.jgit/findBugs/FindBugsExcludeFilter.xml
+index 526eb01..2af9348 100644
+--- a/org.spearce.jgit/findBugs/FindBugsExcludeFilter.xml
++++ b/org.spearce.jgit/findBugs/FindBugsExcludeFilter.xml
+@@ -6,4 +6,13 @@
+        <Method name="refreshPackedRefs" />
+        <Bug pattern="DM_STRING_CTOR" />
+      </Match>
++
++     <!-- Silence PackFile.mmap calls GC, we need to force it to remove stale
++          memory mapped segments if the JVM heap is out of address space.
++       -->
++     <Match>
++       <Class name="org.spearce.jgit.lib.PackFile" />
++       <Method name="mmap" />
++       <Bug pattern="DM_GC" />
++     </Match>
+ </FindBugsFilter>
+-- 
+1.6.3.rc4.206.g03e16
