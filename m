@@ -1,100 +1,62 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: Wrong conflicts on file splits
-Date: Mon, 04 May 2009 16:54:34 +0200
-Message-ID: <49FF01AA.9010301@drmicha.warpmail.net>
-References: <9e4733910905040553u377ab11n1609d980021be498@mail.gmail.com>	 <49FEED2C.8010501@drmicha.warpmail.net>	 <9e4733910905040642h5932e80ds5c467db90e03f40d@mail.gmail.com>	 <49FEF25A.3090305@drmicha.warpmail.net> <9e4733910905040652s60f0a229qef18b36d386905ee@mail.gmail.com>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: [JGIT PATCH 1/6] Add set to IntList
+Date: Mon, 4 May 2009 07:55:06 -0700
+Message-ID: <20090504145506.GV23604@spearce.org>
+References: <1241230127-28279-1-git-send-email-spearce@spearce.org> <1241230127-28279-2-git-send-email-spearce@spearce.org> <200905030907.02287.robin.rosenberg.lists@dewire.com> <20090504142231.GS23604@spearce.org> <alpine.DEB.1.00.0905041649570.5553@intel-tinevez-2-302>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Jon Smirl <jonsmirl@gmail.com>
-X-From: git-owner@vger.kernel.org Mon May 04 16:54:54 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Robin Rosenberg <robin.rosenberg.lists@dewire.com>,
+	git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Mon May 04 16:55:21 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M0zZF-0006NK-AW
-	for gcvg-git-2@gmane.org; Mon, 04 May 2009 16:54:53 +0200
+	id 1M0zZe-0006Z5-Jw
+	for gcvg-git-2@gmane.org; Mon, 04 May 2009 16:55:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754885AbZEDOyp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 4 May 2009 10:54:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754591AbZEDOyo
-	(ORCPT <rfc822;git-outgoing>); Mon, 4 May 2009 10:54:44 -0400
-Received: from out1.smtp.messagingengine.com ([66.111.4.25]:34093 "EHLO
-	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754269AbZEDOyo (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 4 May 2009 10:54:44 -0400
-Received: from compute2.internal (compute2.internal [10.202.2.42])
-	by out1.messagingengine.com (Postfix) with ESMTP id 1CBD1336F95;
-	Mon,  4 May 2009 10:54:44 -0400 (EDT)
-Received: from heartbeat1.messagingengine.com ([10.202.2.160])
-  by compute2.internal (MEProxy); Mon, 04 May 2009 10:54:44 -0400
-X-Sasl-enc: U4kKiSz6JI70y+LRYx0q/Us3GoJFAJsOag6V8PUBu6/3 1241448883
-Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.12])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 4AC891BCA4;
-	Mon,  4 May 2009 10:54:43 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1b5pre) Gecko/20090504 Lightning/1.0pre Shredder/3.0b3pre
-In-Reply-To: <9e4733910905040652s60f0a229qef18b36d386905ee@mail.gmail.com>
+	id S1756526AbZEDOzI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 4 May 2009 10:55:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757193AbZEDOzH
+	(ORCPT <rfc822;git-outgoing>); Mon, 4 May 2009 10:55:07 -0400
+Received: from george.spearce.org ([209.20.77.23]:41865 "EHLO
+	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756815AbZEDOzG (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 4 May 2009 10:55:06 -0400
+Received: by george.spearce.org (Postfix, from userid 1001)
+	id 7C4F738195; Mon,  4 May 2009 14:55:06 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <alpine.DEB.1.00.0905041649570.5553@intel-tinevez-2-302>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118245>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118246>
 
-Jon Smirl venit, vidit, dixit 04.05.2009 15:52:
-> On Mon, May 4, 2009 at 9:49 AM, Michael J Gruber
-> <git@drmicha.warpmail.net> wrote:
->> Jon Smirl venit, vidit, dixit 04.05.2009 15:42:
->>> On Mon, May 4, 2009 at 9:27 AM, Michael J Gruber
->>> <git@drmicha.warpmail.net> wrote:
->>>> Jon Smirl venit, vidit, dixit 04.05.2009 14:53:
->>>>> I keep running into this problem, is there anything I can do to make
->>>>> it better? I'm using stgit but this is a problem in git itself.
->>>>>
->>>>> I have a patch that splits file A into two files, A and B.
->>>>> Now I merge with another tree and bring in a one line fix to A.
->>>>> The fix touches the pre-split file A in a section that is going to end up in B.
->>>>> Next I re-apply the patch that splits A into A and B.
->>>>>
->>>>> This results in a large conflict in the post split file A.
->>>>> And no patch being applied to file B which is where the fix belongs.
->>>>>
->>>>> Repeat this process with a multi-line fix and the whole automated
->>>>> merge process breaks down and I have to carefully figure everything
->>>>> out by hand.
->>>>>
->>>>> The merge process seems to be unaware of the newly created file B. No
->>>>> patches or conflict ever end up in it.
->>>>>
->>>>
->>>> Can you provide a test case or at least a list of commands which you are
->>>> issuing? You complain about "merge", but you say you are "applying a
->>>> patch". Are you merging that patch from another branch, or are you
->>>> really applying it as a patch (git-apply/cherry-pick/rebase/what-not)?
->>>
->>> What git command does stgit use internally on push/pop?
->>>
->>> It's the stg push of a patch creating a split on top of a change to
->>> the section that is going to end up in file B that causes the problem.
->>
->> I see. So it's really rebasing/applying here rather then merging. I
->> don't think they have the necessary info in order to do content-based
->> patching across file boundaries.
+Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> On Mon, 4 May 2009, Shawn O. Pearce wrote:
 > 
-> Are there git commands that can do this properly? stgit is just a
-> bunch of Python executing git commands, they can change which commands
-> are getting called.
+> > Robin Rosenberg <robin.rosenberg.lists@dewire.com> wrote:
+> > > l?rdag 02 maj 2009 04:08:42 skrev "Shawn O. Pearce" <spearce@spearce.org>:
+> > > > Some applications may wish to modify an int list.
+> > 
+> > OK, as it turns out, this is used by code which Dscho wrote but I 
+> > haven't packaged up as patches yet.  And I don't think that even uses 
+> > the weird set(size(), ...) expands the list rules I implemented. So drop 
+> > this patch for now from the series and I'll respin it at a later date.
+> 
+> Indeed, my code only needs add(int i), which should expand the array on 
+> demand (i.e. after a clear(), it should _not_ blindly resize the array).
 
-OK, I checked the source, and in fact stgit uses git's merge strategies.
+Really?  When I was starting to bring your code in and moved from
+IntArray to IntList I had compile errors on set calls, so I added
+it to IntList.
 
-I also checked a simple example (splitting `seq 1 20`) in two. It seems
-that git's rename detection does not detect that to be a rename/copy
-(split). As a consequence, the merge strategy performs only a file based
-merge between the versions of A. One would need to teach git about "a
-better split detection" in order to cope with such a situation.
+Huh.  Well, add(int) is already there, and clear() resets the size
+to 0 but doesn't resize the internal array, so future adds up to
+the prior capacity are free.
 
-On the other hand, if you know the split, can't you redo that manually?
-I mean, checkout the new version (with the multi-line fixes), split it,
-git-add and git-commit to resolve.
-
-Michael
+-- 
+Shawn.
