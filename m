@@ -1,100 +1,144 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: Why Git is so fast
-Date: Mon, 04 May 2009 10:01:57 +0200
-Message-ID: <49FEA0F5.2050800@op5.se>
-References: <46a038f90904270155i6c802fceoffc73eb5ab57130e@mail.gmail.com>	 <m3ocugod96.fsf@localhost.localdomain>	 <m3fxfqnxn5.fsf_-_@localhost.localdomain>	 <alpine.LFD.2.00.0904301401120.6741@xanadu.home> <81b0412b0904301216j7ef73870y775cf6d89b5aa71e@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Nicolas Pitre <nico@cam.org>, Jakub Narebski <jnareb@gmail.com>,
-	Martin Langhoff <martin.langhoff@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Alex Riesen <raa.lkml@gmail.com>
-X-From: git-owner@vger.kernel.org Mon May 04 10:02:19 2009
+From: Frank Terbeck <ft@bewatermyfriend.org>
+Subject: [PATCH v2 3/4] Add tests for coverauto, coverletter and --cover-letter
+Date: Mon,  4 May 2009 11:59:01 +0200
+Message-ID: <1241431142-8444-4-git-send-email-ft@bewatermyfriend.org>
+References: <7v8wlxx18c.fsf@gitster.siamese.dyndns.org>
+Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+	Frank Terbeck <ft@bewatermyfriend.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon May 04 11:59:45 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M0t7y-0005rf-Q1
-	for gcvg-git-2@gmane.org; Mon, 04 May 2009 10:02:19 +0200
+	id 1M0uxd-0007gz-5V
+	for gcvg-git-2@gmane.org; Mon, 04 May 2009 11:59:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753788AbZEDICE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 4 May 2009 04:02:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753020AbZEDICD
-	(ORCPT <rfc822;git-outgoing>); Mon, 4 May 2009 04:02:03 -0400
-Received: from fg-out-1718.google.com ([72.14.220.156]:30312 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752863AbZEDICB (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 4 May 2009 04:02:01 -0400
-Received: by fg-out-1718.google.com with SMTP id 16so1122967fgg.17
-        for <git@vger.kernel.org>; Mon, 04 May 2009 01:01:59 -0700 (PDT)
-Received: by 10.86.29.8 with SMTP id c8mr5469061fgc.7.1241424119272;
-        Mon, 04 May 2009 01:01:59 -0700 (PDT)
-Received: from clix.int.op5.se ([212.112.174.166])
-        by mx.google.com with ESMTPS id l19sm5619376fgb.12.2009.05.04.01.01.58
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 04 May 2009 01:01:58 -0700 (PDT)
-User-Agent: Thunderbird 2.0.0.21 (X11/20090320)
-In-Reply-To: <81b0412b0904301216j7ef73870y775cf6d89b5aa71e@mail.gmail.com>
+	id S1753639AbZEDJ7d (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 4 May 2009 05:59:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751706AbZEDJ7c
+	(ORCPT <rfc822;git-outgoing>); Mon, 4 May 2009 05:59:32 -0400
+Received: from smtprelay09.ispgateway.de ([80.67.29.23]:34060 "EHLO
+	smtprelay09.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751323AbZEDJ7a (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 4 May 2009 05:59:30 -0400
+Received: from [212.117.84.176] (helo=fsst.voodoo.lan)
+	by smtprelay09.ispgateway.de with esmtpsa (TLSv1:AES256-SHA:256)
+	(Exim 4.68)
+	(envelope-from <ft@bewatermyfriend.org>)
+	id 1M0uxL-0000Hz-2e; Mon, 04 May 2009 11:59:27 +0200
+Received: from hawk by fsst.voodoo.lan with local (Exim 4.69)
+	(envelope-from <ft@bewatermyfriend.org>)
+	id 1M0uwy-0002Cs-91; Mon, 04 May 2009 11:59:04 +0200
+X-Mailer: git-send-email 1.6.2.2.446.gfbdc0
+In-Reply-To: <7v8wlxx18c.fsf@gitster.siamese.dyndns.org>
+X-Df-Sender: 430444
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118220>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118221>
 
-Alex Riesen wrote:
-> 2009/4/30 Nicolas Pitre <nico@cam.org>:
->> Yet, this point is misleading because when people gives to Git the
->> reputation of being faster, this is certainly from comparison of
->> operations performed on the same source tree.  Who cares about scenarios
->> for which the tool was not designed?  Those "enterprise configuration
->> management repositories" are not what Git was designed for indeed, but
-> 
-> Especially when no sane developer will put in his repository the toolchain
-> (pre-compiled. For all supported platforms!), all the supporting tools
-> (like grep,
-> find, etc.Pre-compiled _and_ source), the in-house framework (pre-compiled
-> and source, again), firmware (pre-compiled and put in the repository weekly),
-> and operating system code (pre-compiled, with firmware-specific drivers,
-> updated, you guessed it, weekly), and well, there is the project itself (Java or
-> C++, and documentation in .doc and .xls)...
+Very much based on Jeff King's suggestion from
+<20090421033213.GA14881@coredump.intra.peff.net>
 
-Well, git could actually handle that just fine if the toolchain was in a
-submodule or even in a separate repository that developers never had to
-worry about. Then you'd design a little tool that said "re-create build 8149"
-and it would pull the tools used to do that, and the code and the artwork,
-and then set to work. It'd be an overnight (or over-weekend) job, but no
-man-hours would be spent on it. That's how I'd do it anyways, probably
-with the "build" repository as a master repo with "tools", "code" and
-"artwork" as submodules to it.
+This change also makes sure that one major user of --stdout
+(git-rebase.sh) works with format.coverauto set to true.
 
-> Now, what kind of self-hating idiot will design a system for that kind of abuse?
+Signed-off-by: Frank Terbeck <ft@bewatermyfriend.org>
+---
+ t/t3400-rebase.sh       |    1 +
+ t/t4014-format-patch.sh |   58 +++++++++++++++++++++++++++++++++++++++++++++-
+ 2 files changed, 57 insertions(+), 2 deletions(-)
 
-Noone, naturally, but one might design a system where each folder
-in the repository root is considered a repository in its own right,
-and then get that more or less for free.
-
-The problem with git for such scenarios is that you have to think
-*before* creating the repository, or play silly buggers when importing
-which makes it hard to see how the pieces fit together afterwards.
-
-A tool that could take a repository from a different scm, create a
-master repository and several submodule repositories from it would
-probably solve many of the issues gaming companies have if they want
-to switch to using git. Not least because it would open their eyes
-to how that sort of separation can be done in git, and why it's
-useful. The binary repos can then turn off delta-compression (and
-zlib compression) for all its blobs using a .gitattributes file,
-and things would be several orders of magnitudes faster.
-
+diff --git a/t/t3400-rebase.sh b/t/t3400-rebase.sh
+index 6e391a3..48d8360 100755
+--- a/t/t3400-rebase.sh
++++ b/t/t3400-rebase.sh
+@@ -15,6 +15,7 @@ export GIT_AUTHOR_EMAIL
+ test_expect_success \
+     'prepare repository with topic branches' \
+     'git config core.logAllRefUpdates true &&
++     git config format.coverauto true &&
+      echo First > A &&
+      git update-index --add A &&
+      git commit -m "Add A." &&
+diff --git a/t/t4014-format-patch.sh b/t/t4014-format-patch.sh
+index 11061dd..3f431ff 100755
+--- a/t/t4014-format-patch.sh
++++ b/t/t4014-format-patch.sh
+@@ -151,6 +151,60 @@ test_expect_success 'multiple files' '
+ 	ls patches/0001-Side-changes-1.patch patches/0002-Side-changes-2.patch patches/0003-Side-changes-3-with-n-backslash-n-in-it.patch
+ '
+ 
++test_expect_success '--cover-letter generates cover letter' '
++
++	rm -rf patches &&
++	git config format.coverletter 1
++	git format-patch --cover-letter -o patches/ master &&
++	test -f patches/0000-cover-letter.patch
++'
++
++test_expect_success 'format.coverletter=number > 1 generates cover letter' '
++
++	rm -rf patches &&
++	git config format.coverletter 3 &&
++	git format-patch --cover-letter -o patches/ master &&
++	test -f patches/0000-cover-letter.patch
++'
++
++test_expect_success 'format.coverletter respects minimum patchset size' '
++
++	rm -rf patches &&
++	git config format.coverletter 4 &&
++	git format-patch --cover-letter -o patches/ master &&
++	! test -f patches/0000-cover-letter.patch
++'
++
++test_expect_success '--cover-letter=never disables cover letters' '
++
++	rm -rf patches &&
++	git config format.coverletter 2 &&
++	git format-patch --cover-letter=never -o patches/ master &&
++	! test -f patches/0000-cover-letter.patch
++'
++
++test_expect_success '--cover-letter=always forces cover letters' '
++
++	rm -rf patches &&
++	git format-patch --cover-letter=always -o patches/ master &&
++	test -f patches/0000-cover-letter.patch
++'
++
++test_expect_success 'format.coverauto works (1)' '
++
++	rm -rf patches &&
++	git config format.coverauto true &&
++	git format-patch -1 -o patches/ master &&
++	! test -f patches/0000-cover-letter.patch
++'
++
++test_expect_success 'format.coverauto works (2)' '
++
++	rm -rf patches &&
++	git format-patch -2 -o patches/ master &&
++	test -f patches/0000-cover-letter.patch
++'
++
+ check_threading () {
+ 	expect="$1" &&
+ 	shift &&
+@@ -405,9 +459,9 @@ test_expect_success 'cover-letter inherits diff options' '
+ 
+ 	git mv file foo &&
+ 	git commit -m foo &&
+-	git format-patch --cover-letter -1 &&
++	git format-patch --cover-letter=always -1 &&
+ 	! grep "file => foo .* 0 *$" 0000-cover-letter.patch &&
+-	git format-patch --cover-letter -1 -M &&
++	git format-patch --cover-letter=always -1 -M &&
+ 	grep "file => foo .* 0 *$" 0000-cover-letter.patch
+ 
+ '
 -- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
-
-Register now for Nordic Meet on Nagios, June 3-4 in Stockholm
- http://nordicmeetonnagios.op5.org/
-
-Considering the successes of the wars on alcohol, poverty, drugs and
-terror, I think we should give some serious thought to declaring war
-on peace.
+1.6.2.2.446.gfbdc0
