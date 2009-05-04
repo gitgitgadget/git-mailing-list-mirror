@@ -1,84 +1,76 @@
-From: Allan Caffee <allan.caffee@gmail.com>
-Subject: [PATCH] dir.c: Fix two minor grammatical errors in comments
-Date: Mon, 4 May 2009 13:37:30 -0400
-Message-ID: <20090504173730.GA3940@linux.vnet>
+From: elupus <elupus@ecce.se>
+Subject: Re: git 1.5.4.3 push incorrectly honors grafts file
+Date: Mon, 4 May 2009 19:54:25 +0200
+Message-ID: <yj2z78echiy8$.1mp64tzd3njkz.dlg@40tude.net>
+References: <d5uvsf40ln1i.fbvskgg1w9e6$.dlg@40tude.net> <atsddmx5kuva.1fyy780hhh9t2$.dlg@40tude.net> <49FF2507.6070602@kdbg.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon May 04 19:38:03 2009
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon May 04 19:55:09 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M1277-0004vU-MM
-	for gcvg-git-2@gmane.org; Mon, 04 May 2009 19:38:02 +0200
+	id 1M12NX-0006Cw-E1
+	for gcvg-git-2@gmane.org; Mon, 04 May 2009 19:54:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757619AbZEDRhm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 4 May 2009 13:37:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755388AbZEDRhm
-	(ORCPT <rfc822;git-outgoing>); Mon, 4 May 2009 13:37:42 -0400
-Received: from ey-out-2122.google.com ([74.125.78.26]:56480 "EHLO
-	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756674AbZEDRhk (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 4 May 2009 13:37:40 -0400
-Received: by ey-out-2122.google.com with SMTP id 9so1027377eyd.37
-        for <git@vger.kernel.org>; Mon, 04 May 2009 10:37:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:mime-version:content-type:content-disposition:user-agent;
-        bh=VfJVe0quPbhX7aXas835+CDPYL7WTt2lZxniy71T1Ps=;
-        b=EIsMYPYZbBcl7w4qA1NeWaBzFxToCBNI3iF9dZUchyKbUDSX9Qim/R4sGIYCulHr0d
-         YA/sDB/3yPp2OgNSxiEB5UZyyTaSWMhIjtB750t7qMtlE1i0V6+j5IQ2tb1uRLAR2vbX
-         8GM0sO7jOtU+BkpdrtaL8riQCdPz6OWREuhvg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:mime-version:content-type
-         :content-disposition:user-agent;
-        b=an3Yp/aXg2diJZOgFoUzYLCOwkCqNE3IdY3mfI9VFKpIJP3IGX8hTy1LgLbESK+6XM
-         zSAS+tXv5o97hM07DCLwjBJHEkA3q43hw40p+GbbvrDDXxvoGF10NzBUVDBUR0e3qrCt
-         2gtySoueGeVnnseQSOCpuh2PHOoNS4lBegy3w=
-Received: by 10.142.231.7 with SMTP id d7mr2156545wfh.285.1241458659062;
-        Mon, 04 May 2009 10:37:39 -0700 (PDT)
-Received: from linux.vnet (n2-59-35.dhcp.drexel.edu [144.118.59.35])
-        by mx.google.com with ESMTPS id 30sm1648653wff.9.2009.05.04.10.37.36
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 04 May 2009 10:37:38 -0700 (PDT)
-Content-Disposition: inline
-User-Agent: Mutt/1.5.18 (2008-05-17)
+	id S1758621AbZEDRye (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 4 May 2009 13:54:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758608AbZEDRye
+	(ORCPT <rfc822;git-outgoing>); Mon, 4 May 2009 13:54:34 -0400
+Received: from main.gmane.org ([80.91.229.2]:41174 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1758331AbZEDRyc (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 4 May 2009 13:54:32 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1M12N4-0000De-JB
+	for git@vger.kernel.org; Mon, 04 May 2009 17:54:30 +0000
+Received: from ua-83-227-158-203.cust.bredbandsbolaget.se ([83.227.158.203])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 04 May 2009 17:54:30 +0000
+Received: from elupus by ua-83-227-158-203.cust.bredbandsbolaget.se with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 04 May 2009 17:54:30 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: ua-83-227-158-203.cust.bredbandsbolaget.se
+User-Agent: 40tude_Dialog/2.0.15.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118252>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118253>
 
-Signed-off-by: Allan Caffee <allan.caffee@gmail.com>
----
- dir.c |    4 ++--
- 1 files changed, 2 insertions(+), 2 deletions(-)
+On Mon, 04 May 2009 19:25:27 +0200, Johannes Sixt wrote:
 
-diff --git a/dir.c b/dir.c
-index 15677da..6aae09a 100644
---- a/dir.c
-+++ b/dir.c
-@@ -53,7 +53,7 @@ int common_prefix(const char **pathspec)
- }
- 
- /*
-- * Does 'match' matches the given name?
-+ * Does 'match' match the given name?
-  * A match is found if
-  *
-  * (1) the 'match' string is leading directory of 'name', or
-@@ -290,7 +290,7 @@ static void prep_exclude(struct dir_struct *dir, const char *base, int baselen)
- 	dir->basebuf[baselen] = '\0';
- }
- 
--/* Scan the list and let the last match determines the fate.
-+/* Scan the list and let the last match determine the fate.
-  * Return 1 for exclude, 0 for include and -1 for undecided.
-  */
- static int excluded_1(const char *pathname,
--- 
-1.6.3.rc3.12.gb7937
+> elupus schrieb:
+>> [26 quoted lines suppressed]
+> 
+> Right.
+> 
+> It's a know issue. But it was nobody's itch, yet, perhaps because too few 
+> people use grafts. There is a topic, cc/replace, in Junio's pu branch that 
+> introduces "replacement objects"; these are a generalization of grafts. If 
+> effort is invested, then it's best to nurse this topic.
+> 
+> -- Hannes
+
+Ah okey. Atleast then i know to thread carfully. 
+
+The ugglies thing about this was that git gc had actually pruned a commit
+from my repo due to an invalid graft's file. That push/pull didn't work
+wasn't soo bad, but that my repo got corrupted due to an invalid graft file
+is abit scary. 
+
+Luckily in my case it was a git svn repo, and I even think i found a way to
+just rebuild that branch where it occured.
+
+It's quite probable that the problem's I had with the push/pull was due to
+this missing commit. Since all my grafts (part from the wrong one) are only
+additions of parents to commits. A cloned repo should still be okey even if
+it does honor the grafts file (i think without knowning too much about the
+inards of git).
+
+Joakim
