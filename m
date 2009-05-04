@@ -1,52 +1,62 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [PATCH 5/5] completion: complete values for send-email
-Date: Mon, 4 May 2009 07:29:28 -0700
-Message-ID: <20090504142928.GT23604@spearce.org>
-References: <1241418335-18474-1-git-send-email-bebarino@gmail.com> <1241418335-18474-2-git-send-email-bebarino@gmail.com> <1241418335-18474-3-git-send-email-bebarino@gmail.com> <1241418335-18474-4-git-send-email-bebarino@gmail.com> <1241418335-18474-5-git-send-email-bebarino@gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] 64-bit fix for date.c.
+Date: Mon, 4 May 2009 10:31:12 -0400
+Message-ID: <20090504143112.GA14214@coredump.intra.peff.net>
+References: <20090406172637.GA17437@jenna.bytemine.net> <20090406190657.GC28120@coredump.intra.peff.net> <20090504142614.GE8658@jenna.bytemine.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Stephen Boyd <bebarino@gmail.com>
-X-From: git-owner@vger.kernel.org Mon May 04 16:29:37 2009
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Bernd Ahlers <bernd@ba-net.org>
+X-From: git-owner@vger.kernel.org Mon May 04 16:31:33 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M0zAm-0002C1-5m
-	for gcvg-git-2@gmane.org; Mon, 04 May 2009 16:29:36 +0200
+	id 1M0zCZ-0003A4-Qa
+	for gcvg-git-2@gmane.org; Mon, 04 May 2009 16:31:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756252AbZEDO33 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 4 May 2009 10:29:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756326AbZEDO32
-	(ORCPT <rfc822;git-outgoing>); Mon, 4 May 2009 10:29:28 -0400
-Received: from george.spearce.org ([209.20.77.23]:48222 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755659AbZEDO32 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 4 May 2009 10:29:28 -0400
-Received: by george.spearce.org (Postfix, from userid 1001)
-	id 6747438195; Mon,  4 May 2009 14:29:28 +0000 (UTC)
+	id S1756745AbZEDObO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 4 May 2009 10:31:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755650AbZEDObO
+	(ORCPT <rfc822;git-outgoing>); Mon, 4 May 2009 10:31:14 -0400
+Received: from peff.net ([208.65.91.99]:43062 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755498AbZEDObN (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 4 May 2009 10:31:13 -0400
+Received: (qmail 18246 invoked by uid 107); 4 May 2009 14:31:29 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Mon, 04 May 2009 10:31:29 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Mon, 04 May 2009 10:31:12 -0400
 Content-Disposition: inline
-In-Reply-To: <1241418335-18474-5-git-send-email-bebarino@gmail.com>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+In-Reply-To: <20090504142614.GE8658@jenna.bytemine.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118242>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118243>
 
-Stephen Boyd <bebarino@gmail.com> wrote:
-> Add completion for --confirm, --suppress-cc, and --smtp-encryption
-> command line arguments. Add completion for aliasfiletype and confirm
-> configuration variables.
-> 
-> Since --smtp-ssl is deprecated, replace it with --smtp-encryption and
-> the two options ssl and tls.
-> 
-> Signed-off-by: Stephen Boyd <bebarino@gmail.com>
+On Mon, May 04, 2009 at 04:26:14PM +0200, Bernd Ahlers wrote:
 
-For all 5 patches in this series: nicely written, thanks.
+> Jeff King [Mon, Apr 06, 2009 at 03:06:58PM -0400] wrote:
+> >On Mon, Apr 06, 2009 at 07:26:37PM +0200, Bernd Ahlers wrote:
+> >
+> >> @@ -871,13 +871,15 @@ unsigned long approxidate(const char *date)
+> >>  	struct timeval tv;
+> >> +	time_t time_sec;
+> >> [...]
+> >>  	gettimeofday(&tv, NULL);
+> >> -	localtime_r(&tv.tv_sec, &tm);
+> >> +	time_sec = tv.tv_sec;
+> >> +	localtime_r(&time_sec, &tm);
+> >
+> >Hmph. According to POSIX, tv_sec _is_ a time_t. But I see on FreeBSD,
+> >also, it is actually a "long". So I think this fix makes sense.
+> >
+> Okay. So what's the next step to get this committed? :)
 
-Acked-by: Shawn O. Pearce <spearce@spearce.or>
+Looks like Junio missed it the first time around, so re-send it to him,
+cc'ing the list. And you can add my
 
--- 
-Shawn.
+  Acked-by: Jeff King <peff@peff.net>
+
+-Peff
