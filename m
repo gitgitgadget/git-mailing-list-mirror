@@ -1,109 +1,136 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: Re: [PATCH] Documentation: Clarify which paths git-clean will affect
-Date: Tue, 5 May 2009 14:26:14 +0200
-Message-ID: <200905051426.18814.trast@student.ethz.ch>
-References: <20090505091302.GB27900@frsk.net> <200905051155.28985.trast@student.ethz.ch> <20090505100506.GF27900@frsk.net>
+From: "Kana Natsuno" <kana@whileimautomaton.net>
+Subject: Two problems on alias of git
+Date: Tue, 05 May 2009 21:42:04 +0900
+Message-ID: <op.utgiv92f6f2obg@i220-99-253-139.s27.a098.ap.plala.or.jp>
 Mime-Version: 1.0
-Content-Type: multipart/signed;
-  boundary="nextPart2444048.DyZQzmiR5q";
-  protocol="application/pgp-signature";
-  micalg=pgp-sha1
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Nicolas Sebrecht <nicolas.s.dev@gmx.fr>
-To: Fredrik Skolmli <fredrik@frsk.net>
-X-From: git-owner@vger.kernel.org Tue May 05 14:27:18 2009
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue May 05 14:42:22 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M1Jjx-0007l5-CX
-	for gcvg-git-2@gmane.org; Tue, 05 May 2009 14:27:17 +0200
+	id 1M1JyW-00060W-BE
+	for gcvg-git-2@gmane.org; Tue, 05 May 2009 14:42:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753531AbZEEM1J (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 5 May 2009 08:27:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753069AbZEEM1I
-	(ORCPT <rfc822;git-outgoing>); Tue, 5 May 2009 08:27:08 -0400
-Received: from xsmtp0.ethz.ch ([82.130.70.14]:17414 "EHLO XSMTP0.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752015AbZEEM1G (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 5 May 2009 08:27:06 -0400
-Received: from xfe0.d.ethz.ch ([82.130.124.40]) by XSMTP0.ethz.ch with Microsoft SMTPSVC(6.0.3790.3959);
-	 Tue, 5 May 2009 14:27:04 +0200
-Received: from thomas.localnet ([129.132.153.233]) by xfe0.d.ethz.ch over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
-	 Tue, 5 May 2009 14:27:03 +0200
-User-Agent: KMail/1.11.2 (Linux/2.6.27.21-0.1-default; KDE/4.2.2; x86_64; ; )
-In-Reply-To: <20090505100506.GF27900@frsk.net>
-X-OriginalArrivalTime: 05 May 2009 12:27:03.0849 (UTC) FILETIME=[CBF8D190:01C9CD7C]
+	id S1753563AbZEEMmN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 5 May 2009 08:42:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753345AbZEEMmN
+	(ORCPT <rfc822;git-outgoing>); Tue, 5 May 2009 08:42:13 -0400
+Received: from rv-out-0506.google.com ([209.85.198.235]:34698 "EHLO
+	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752970AbZEEMmL (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 5 May 2009 08:42:11 -0400
+Received: by rv-out-0506.google.com with SMTP id f6so2046685rvb.5
+        for <git@vger.kernel.org>; Tue, 05 May 2009 05:42:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:sender:date:to:subject:from
+         :content-type:mime-version:content-transfer-encoding:message-id
+         :user-agent;
+        bh=Lh/TCjpAHaO+iCoZi6k96CMqEOSyqjBpTJTPR++Iz+I=;
+        b=nOfU2ldFj6lTPW4ZC7f0wESLq9sBBPRyaolvkhGsmRvn2kPyWZwRj1O0/YGBWU/b3n
+         hATeV8C7fkAQ+5/lVp6O4JwRj5b7TtiwOrQ4MiaKc0yPBzMovbTO6jf7jzlJIAwngkvu
+         CXmlBN6amY2kyDVM60Pr1UHWRwHRqDnjQHAXQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=sender:date:to:subject:from:content-type:mime-version
+         :content-transfer-encoding:message-id:user-agent;
+        b=cngzUSpcadmvBRodtpecmvT2MJ7kooQDro8Crsifx+0HPAKEQmJSsvwBo2vUbDlWjL
+         /Xzq7hux5qQNX6OShWRSwdr6E28qHTXR7jx4N3arqKPpu12jh5hT+VqOC7eHrn6cu/BX
+         KF06j0U2y72nSyM5jyjFAI2Ss1utdho22pqdw=
+Received: by 10.141.12.15 with SMTP id p15mr5797rvi.170.1241527331198;
+        Tue, 05 May 2009 05:42:11 -0700 (PDT)
+Received: from i220-99-253-139.s27.a098.ap.plala.or.jp (i220-99-253-139.s27.a098.ap.plala.or.jp [220.99.253.139])
+        by mx.google.com with ESMTPS id l31sm4840274rvb.59.2009.05.05.05.42.09
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Tue, 05 May 2009 05:42:10 -0700 (PDT)
+User-Agent: Opera Mail/9.63 (MacIntel)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118292>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118293>
 
---nextPart2444048.DyZQzmiR5q
-Content-Type: text/plain;
-  charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
-Content-Disposition: inline
+Hello.  I found 2 problems on alias of git.
 
-=46redrik Skolmli wrote:
-> On Tue, May 05, 2009 at 11:55:17AM +0200, Thomas Rast wrote:
-> > That makes it sound as if the <path> case was not recursive, but it
-> > is!
->=20
-> Auch, good point. Any suggestions on how to formulate it?
 
-I'm not entirely happy with it, but if we're going to change it, I'd
-put the "recursive" near the top to make it more visible.  Maybe like
-so:
+The first one is that git crashes with the following situation.
+Without GIT_TRACE, everthing works well.  But with GIT_TRACE=1,
+git crashes every time.
 
-=2D- 8< --
-diff --git i/Documentation/git-clean.txt w/Documentation/git-clean.txt
-index 43b2de7..3550fc0 100644
-=2D-- i/Documentation/git-clean.txt
-+++ w/Documentation/git-clean.txt
-@@ -13,15 +13,15 @@ SYNOPSIS
- DESCRIPTION
- -----------
-=20
-=2DThis allows cleaning the working tree by removing files that are not
-+Cleans the working tree by recursively removing files that are not
- under version control.
-=20
- Normally, only files unknown to git are removed, but if the '-x'
- option is specified, ignored files are also removed. This can, for
- example, be useful to remove all build products.
-=20
-=2DIf any optional `<path>...` arguments are given, only those paths
-=2Dare affected.
-+If any optional `<path>...` arguments are given, those paths are
-+affected.  Otherwise, the cleaning starts at the current directory.
-=20
- OPTIONS
- -------
-=2D- >8 --
+---- 8< ---- 8< ---- 8< ---- 8< ---- 8< ----
+$ git remote show origin
+* remote origin
+  URL: git://repo.or.cz/git.git
+  Remote branch merged with 'git pull' while on branch master
+    master
+  Tracked remote branches
+    html
+    maint
+    man
+    master
+    next
+    pu
+    todo
 
-As a side note, a random survey among a few other manpages did not
-give any conclusive advice on the formulation of the first sentence.
-I originally wanted to make it imperative ("clean the working
-tree..."), but my perception may be skewed by the commit message
-guidelines.
+$ git --version
+git version 1.6.2.rc0.90.g0753
 
-=2D-=20
-Thomas Rast
-trast@{inf,student}.ethz.ch
+$ git show HEAD | grep commit
+commit 3536ae331014c68a25c80b3fb530a19c8dee0f11
 
---nextPart2444048.DyZQzmiR5q
-Content-Type: application/pgp-signature; name=signature.asc 
-Content-Description: This is a digitally signed message part.
+$ uname -a                   
+Darwin foobarbaz 9.6.1 Darwin Kernel Version 9.6.1: Sun Dec 21 19:45:33 PST 2008; root:xnu-1228.9.75~4/RELEASE_I386 i386 i386 MacBook5,2 Darwin
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.9 (GNU/Linux)
+$ git config --get alias.l1
+log --pretty=oneline
 
-iEYEABECAAYFAkoAMGoACgkQqUud07tmzP0nMwCfQN/qpG5uJXfW+BRY3CzNLcCm
-nz0AnRHgEW468r+d60xIDBCsGqt+2aP3
-=2lzo
------END PGP SIGNATURE-----
+$ GIT_TRACE=1 git l1         
+trace: exec: 'git-l1'
+trace: run_command: 'git-l1'
+trace: exec 'git-l1' failed: No such file or directory
+[1]    41772 segmentation fault  GIT_TRACE=1 git l1
+---- >8 ---- >8 ---- >8 ---- >8 ---- >8 ----
 
---nextPart2444048.DyZQzmiR5q--
+
+The second one is that git doesn't expand a kind of aliases
+properly, especially with double quotation marks (").  I used the
+following alias recently to list the last 10 commits on HEAD:
+
+[alias]
+        lr = !git l1 | head | tac
+
+Then I want to extend this alias to list the last N commits on
+a branch with "git lr 20", "git lr master", "git lr master 20",
+etc.  So that I wrote the following definition (note that the
+actual definition is written in a single line, though the quoted
+definition is folded in multiple lines for readability):
+
+[alias]
+        lr = !$SHELL -c '
+                n=10;
+                1="${1:-$n}";
+                if ! [ "${1##[0-9]*}" = "" ]; then
+                  t="$1";
+                  1="${2:-$n}";
+                  2="$t";
+                fi;
+                git --no-pager l1 --reverse -"$1" "${2:-HEAD}"
+              ' __dummy__
+
+But it doesn't work because git expands as follows:
+
+$ git config --get alias.lr
+!$SHELL -c '1=${1:-10}
+
+Double quotation marks (") are removed and the aliased string is
+cut at a random position.  I expect that the aliased string is
+passed to system() as-is, but git doesn't so.  Why does git behave
+so?  Is it a bug or an intentional behavior?
+
+
+-- 
+To Vim, or not to Vim.
+http://whileimautomaton.net/
