@@ -1,53 +1,77 @@
-From: Eygene Ryabinkin <rea-git@codelabs.ru>
-Subject: Re: Sources for 1.6.2.5 aren't there
-Date: Tue, 5 May 2009 11:16:01 +0400
-Message-ID: <CzvbxxO1ArHRfutKqbanf/1RKPM@AbNt2aYVonA6XSQc9As8EVwIk24>
-References: <s7h1NkayGnsqY3n+ZvR1HpkOdkw@psUvbB26hX94GoQd3C5ThNBxOp8>
-Reply-To: rea-git@codelabs.ru
+From: Frank Terbeck <ft@bewatermyfriend.org>
+Subject: Re: [PATCH v2 2/4] Add format.coverauto boolean
+Date: Tue, 5 May 2009 10:49:16 +0200
+Message-ID: <20090505084916.GB26208@fsst.voodoo.lan>
+References: <7v8wlxx18c.fsf@gitster.siamese.dyndns.org> <1241431142-8444-3-git-send-email-ft@bewatermyfriend.org> <7v8wlc4fqo.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue May 05 09:16:15 2009
+Content-Type: text/plain; charset=iso-8859-1
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue May 05 10:49:38 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M1Esw-000830-KG
-	for gcvg-git-2@gmane.org; Tue, 05 May 2009 09:16:15 +0200
+	id 1M1GLK-00046V-6X
+	for gcvg-git-2@gmane.org; Tue, 05 May 2009 10:49:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754546AbZEEHQH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 5 May 2009 03:16:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754021AbZEEHQF
-	(ORCPT <rfc822;git-outgoing>); Tue, 5 May 2009 03:16:05 -0400
-Received: from 0.mx.codelabs.ru ([144.206.177.45]:58594 "EHLO 0.mx.codelabs.ru"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753177AbZEEHQE (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 5 May 2009 03:16:04 -0400
-DomainKey-Signature: a=rsa-sha1; q=dns; c=simple; s=one; d=codelabs.ru;
-	h=Received:Date:From:To:Subject:Message-ID:Reply-To:References:MIME-Version:Content-Type:Content-Disposition:In-Reply-To:Sender;
-	b=S5PdXwIy15VVMOQYeS6DVshoBmUXYqkUtfOl/NusQZixwvrHPuuVDlAGsuPc0+Q7KpVDHKJToHgwSBKHXa6tG/lJolEYwV+QGYXjXbSjm3EQH8i60s7L/XKXRfMllNymzTLAoaOOboLQ+hurOkG6EDC3cqflQXdZHAtr1ewSXKs=;
-Received: from amnesiac.at.no.dns (ppp91-78-251-101.pppoe.mtu-net.ru [91.78.251.101])
-	by 0.mx.codelabs.ru with esmtpsa (TLSv1:AES256-SHA:256)
-	id 1M1Esk-000AH3-JO for git@vger.kernel.org; Tue, 05 May 2009 11:16:02 +0400
+	id S1754021AbZEEIta (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 5 May 2009 04:49:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752159AbZEEIta
+	(ORCPT <rfc822;git-outgoing>); Tue, 5 May 2009 04:49:30 -0400
+Received: from smtprelay11.ispgateway.de ([80.67.29.28]:48543 "EHLO
+	smtprelay11.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752050AbZEEIt3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 5 May 2009 04:49:29 -0400
+Received: from [212.117.84.253] (helo=fsst.voodoo.lan)
+	by smtprelay11.ispgateway.de with esmtpsa (TLSv1:AES256-SHA:256)
+	(Exim 4.68)
+	(envelope-from <ft@bewatermyfriend.org>)
+	id 1M1GL9-0002el-Jm; Tue, 05 May 2009 10:49:27 +0200
+Received: from hawk by fsst.voodoo.lan with local (Exim 4.69)
+	(envelope-from <ft@bewatermyfriend.org>)
+	id 1M1GKz-0000wK-Aj; Tue, 05 May 2009 10:49:17 +0200
 Content-Disposition: inline
-In-Reply-To: <s7h1NkayGnsqY3n+ZvR1HpkOdkw@psUvbB26hX94GoQd3C5ThNBxOp8>
+In-Reply-To: <7v8wlc4fqo.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.19 (2009-01-05)
+X-Df-Sender: 430444
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118282>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118283>
 
-Good day.
+Junio C Hamano <gitster@pobox.com>:
+> Frank Terbeck <ft@bewatermyfriend.org> writes:
+> 
+> > If set to true, format-patch behaves like it had been started
+> > using the --cover-letter option.
+> 
+> I thought "If this is set, you can run format-patch without giving an
+> explicit --cover-letter=foo from the command line" was already done with
+> the earlier format.coverletter configuration variable.  Why do you need a
+> separate variable?  It does not make any sense to me, unless I am missing
+> something.
 
-Mon, May 04, 2009 at 05:11:55PM +0400, Eygene Ryabinkin wrote:
-> Am I the only person who isn't capable of downloading 1.6.2.5 from
->   http://kernel.org/pub/software/scm/git/git-1.6.2.5.tar.bz2
-> due to the error 404?
+Well, the two can certainly by merged. That could potentially break
+people's existing scripts - either by new default behaviour or by the
+setting of format.coverletter of an individual user. That could still
+happen when using coverauto, so maybe my reasoning was flawed - given
+that Stephen raised the same question.
 
-Now sources are available, thanks for whoever did it.  Was it just
-mirror lag or other error?  I am interested mainly because if it is
-regular mirror lag, I like to know it.
+So, I should create one option 'coverletter'. If it's set to zero,
+never create cover letters; if one, always create cover letters; if
+any other positive integer, create cover letters automatically if a
+patch series is at least that long. And do that without requiring the
+user to supply --cover-letter; only provide that option to explicitly
+overwrite the configured behaviour. Right?
 
-Thanks!
+If so, do you want coverletter to default to zero (which wouldn't
+change the default behaviour) or do you want it to default to two?
+
+Regards, Frank
+
 -- 
-Eygene
+In protocol design, perfection has been reached not when there is
+nothing left to add, but when there is nothing left to take away.
+                                                  -- RFC 1925
