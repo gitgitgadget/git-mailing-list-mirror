@@ -1,60 +1,70 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: EGit is moving to eclipse.org
-Date: Wed, 6 May 2009 00:57:22 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.0905060055420.18521@pacific.mpi-cbg.de>
-References: <20090505182112.GF30527@spearce.org> <200905060005.33721.robin.rosenberg.lists@dewire.com>
+From: "Sohn, Matthias" <matthias.sohn@sap.com>
+Subject: RE: EGit is moving to eclipse.org
+Date: Wed, 6 May 2009 01:04:56 +0200
+Message-ID: <366BBB1215D0AB4B8A153AF047A28780030744C1@dewdfe18.wdf.sap.corp>
+References: <20090505182112.GF30527@spearce.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
-To: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
-X-From: git-owner@vger.kernel.org Wed May 06 00:57:03 2009
+Content-Type: text/plain;
+	charset="Windows-1252"
+Content-Transfer-Encoding: 8BIT
+Cc: <git@vger.kernel.org>
+To: "Shawn O. Pearce" <spearce@spearce.org>,
+	"Robin Rosenberg" <robin.rosenberg@dewire.com>
+X-From: git-owner@vger.kernel.org Wed May 06 01:05:19 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M1TZO-0003xp-LP
-	for gcvg-git-2@gmane.org; Wed, 06 May 2009 00:57:03 +0200
+	id 1M1ThP-0006wI-Em
+	for gcvg-git-2@gmane.org; Wed, 06 May 2009 01:05:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752700AbZEEW4x (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 5 May 2009 18:56:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752579AbZEEW4x
-	(ORCPT <rfc822;git-outgoing>); Tue, 5 May 2009 18:56:53 -0400
-Received: from mail.gmx.net ([213.165.64.20]:36345 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752100AbZEEW4x (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 5 May 2009 18:56:53 -0400
-Received: (qmail invoked by alias); 05 May 2009 22:56:51 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp069) with SMTP; 06 May 2009 00:56:51 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+L5tkI7lOL1kRgVcw4k7ECrQo6jsIEGMmKCUup9f
-	f1piZJOvSjMC0t
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <200905060005.33721.robin.rosenberg.lists@dewire.com>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.64
+	id S1752700AbZEEXFD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 5 May 2009 19:05:03 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752100AbZEEXFB
+	(ORCPT <rfc822;git-outgoing>); Tue, 5 May 2009 19:05:01 -0400
+Received: from smtpde01.sap-ag.de ([155.56.68.171]:39583 "EHLO
+	smtpde01.sap-ag.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752012AbZEEXFA convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 5 May 2009 19:05:00 -0400
+Received: from mail.sap.corp
+	by smtpde01.sap-ag.de (26) with ESMTP id n45N4uPn011176
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Wed, 6 May 2009 01:04:56 +0200 (MEST)
+X-MimeOLE: Produced By Microsoft Exchange V6.5
+Content-class: urn:content-classes:message
+In-Reply-To: <20090505182112.GF30527@spearce.org>
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+Thread-Topic: EGit is moving to eclipse.org
+Thread-Index: AcnNrljwo+zipygpSSyQxS/Cj7AVFAAJ1O/A
+X-OriginalArrivalTime: 05 May 2009 23:04:56.0184 (UTC) FILETIME=[E80FAF80:01C9CDD5]
+X-Scanner: Virus Scanner virwal03
+X-SAP: out
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118318>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118319>
 
-Hi,
-
-On Wed, 6 May 2009, Robin Rosenberg wrote:
-
-> tisdag 05 maj 2009 20:21:12 skrev "Shawn O. Pearce" <spearce@spearce.org>:
+> The EGit project has applied to join the Eclipse Foundation,
+> and recently obtained approval[1] to become a subproject of the
+> Technology top-level project.
 > 
-> > Thanks to Robin for doing the bulk of the initial drafts on the 
-> > project proposal, without his effort we wouldn't have gotten this far.
+> Consequently, in the near-ish future, we'll be moving at least some
+> aspects of the EGit project onto eclipse.org.  This is a first step
+> towards making the EGit team provider available as part of the base
+> platform downloads, like the CVS team provider is today.
 > 
-> Philippe Ombredanne helped out a lot
+> We're still trying to sort out everything, because eclipse.org only
+> offers CVS and SVN code repositories... and we have a 1,601 commit
+> history in Git that we'd like to preserve.  But we're starting
+> to move.
+> 
+> Thanks to Robin for doing the bulk of the initial drafts on the
+> project proposal, without his effort we wouldn't have gotten
+> this far.
 
-Thanks from me, too!  And yes, Philippe seemed to be _very_ interested in 
-Git (already at the GSoC summit 2007).  Another good demonstration how 
-good a thing it is when enthusiastic people from different Open Source 
-projects meet in person.
+Thanks to Shawn and Robin
 
-Ciao,
-Dscho
+--
+Matthias
