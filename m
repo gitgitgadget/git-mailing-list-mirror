@@ -1,88 +1,79 @@
-From: Frank Terbeck <ft@bewatermyfriend.org>
-Subject: Re: [PATCH v2 2/4] Add format.coverauto boolean
-Date: Tue, 5 May 2009 15:29:24 +0200
-Message-ID: <20090505132923.GC26208@fsst.voodoo.lan>
-References: <7v8wlxx18c.fsf@gitster.siamese.dyndns.org> <1241431142-8444-3-git-send-email-ft@bewatermyfriend.org> <7v8wlc4fqo.fsf@alter.siamese.dyndns.org> <20090505084916.GB26208@fsst.voodoo.lan> <7vvdof25oe.fsf@alter.siamese.dyndns.org>
+From: Anner van Hardenbroek <dwlnetnl@users.sourceforge.net>
+Subject: Re: Question about rewrite commits
+Date: Tue, 5 May 2009 15:27:19 +0200
+Message-ID: <15aa6cf30905050627i5c8f4a8ftb33444f0a292ac6f@mail.gmail.com>
+References: <15aa6cf30905050445k21f8317bt7be65857604cc101@mail.gmail.com>
+	 <4A003677.3040802@pelagic.nl>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue May 05 15:29:58 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>
+To: "Ferry Huberts (Pelagic)" <ferry.huberts@pelagic.nl>
+X-From: git-owner@vger.kernel.org Tue May 05 15:36:43 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M1KiW-0003dO-OO
-	for gcvg-git-2@gmane.org; Tue, 05 May 2009 15:29:53 +0200
+	id 1M1Kp8-0007Ff-UO
+	for gcvg-git-2@gmane.org; Tue, 05 May 2009 15:36:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751913AbZEEN3o (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 5 May 2009 09:29:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751887AbZEEN3n
-	(ORCPT <rfc822;git-outgoing>); Tue, 5 May 2009 09:29:43 -0400
-Received: from smtprelay10.ispgateway.de ([80.67.29.24]:37644 "EHLO
-	smtprelay10.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751569AbZEEN3n (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 5 May 2009 09:29:43 -0400
-Received: from [212.117.84.18] (helo=fsst.voodoo.lan)
-	by smtprelay10.ispgateway.de with esmtpsa (TLSv1:AES256-SHA:256)
-	(Exim 4.68)
-	(envelope-from <ft@bewatermyfriend.org>)
-	id 1M1KiI-0006XJ-Ef; Tue, 05 May 2009 15:29:38 +0200
-Received: from hawk by fsst.voodoo.lan with local (Exim 4.69)
-	(envelope-from <ft@bewatermyfriend.org>)
-	id 1M1Ki4-0003id-Gy; Tue, 05 May 2009 15:29:24 +0200
-Content-Disposition: inline
-In-Reply-To: <7vvdof25oe.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.19 (2009-01-05)
-X-Df-Sender: 430444
+	id S1753878AbZEENfh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 5 May 2009 09:35:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752912AbZEENfg
+	(ORCPT <rfc822;git-outgoing>); Tue, 5 May 2009 09:35:36 -0400
+Received: from yw-out-2324.google.com ([74.125.46.31]:16267 "EHLO
+	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753531AbZEENff (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 5 May 2009 09:35:35 -0400
+Received: by yw-out-2324.google.com with SMTP id 5so2632761ywb.1
+        for <git@vger.kernel.org>; Tue, 05 May 2009 06:35:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:sender:received:in-reply-to
+         :references:date:x-google-sender-auth:message-id:subject:from:to:cc
+         :content-type:content-transfer-encoding;
+        bh=m8X9R9LW7TDI1ijp7hMGybrPKDPXmnDf//m9HlU4x/Y=;
+        b=WSW/UeL+VWI4QpDs8ycVl23R03HC3GqRNAthsWL7AIgnxD800mm0vwvTHoAEwkvuRD
+         Mbol/X4EsNkl1Jw0kVMFyGeHcKtJKPWbf0Ndj9FD6yRN7TuM7ODad9tSol1PIvU0sDTL
+         y1UFRYSvXGTgpI/unQfnSJlnoPGiK8K3hQ70g=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:sender:in-reply-to:references:date
+         :x-google-sender-auth:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        b=ReC/ado+kQGOumF1NhUXb/e6ydDWqb+8MY/tmyCNUio4WRCuuomaahFCdfmeeA+4Qx
+         hcl9JuRsFQNHQH9jo0gtRx2yN363/oXZoKfNFhpgt8I5W1UvRSvUyIEWWqfL70rcPs9z
+         VMrswdwoeG7Qr93olgeBEfLUWC1VCrbj5msrI=
+Received: by 10.151.137.5 with SMTP id p5mr193656ybn.223.1241530039528; Tue, 
+	05 May 2009 06:27:19 -0700 (PDT)
+In-Reply-To: <4A003677.3040802@pelagic.nl>
+X-Google-Sender-Auth: 502be79eb23b3c5f
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118296>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118297>
 
-Junio C Hamano <gitster@pobox.com>:
-[...]
-> For one thing, I do not see a huge need for this configuration variable.
-> Why is "--cover" too cumbersome to type, when you are already willing to
-> type "format-patch"?  You can alias the whole thing away to make it even
-> shorter.  For another, we do not simply break people's scripts knowingly.
-> 
-> For this feature to go forward, somebody has to find a way not to break
-> people's scripts even when the user uses it.  One possibility is to find a
-> nicer verb X and introduce "git X" command that does what "format-patch"
-> does but with a better default (and syntax --- people get confused by the
-> oldest form "git format-patch $commit", which does not behave like "git
-> log $commit" simply because the syntax predates the modern "revision
-> range" notation the "log" family supports, such as A..B).
+Yeah, okay but I'd like it visually.
 
-Yes, this whole compatibility issue is exactly the reason why I said
-earlier, that we could only take format.coverletter (the way it's
-currently implemented in the latest series) and forget about
-format.coverauto (and its implications) altogether:
+On Tue, May 5, 2009 at 2:52 PM, Ferry Huberts (Pelagic)
+<ferry.huberts@pelagic.nl> wrote:
+>
+> Anner van Hardenbroek wrote:
+> > Hi!
+> >
+> > I've a question about rewriting commits. I'd like to change the
+> > branches so that "Introduced BTRmxSoapArgument, second fase + code
+> > cleanup." is right below (a straight vertical line) "No HTML errors
+> > because we have nice ones!".
+>
+> it already is :-)
+>
+> or did you mean that you want to get rid of the merge? that's an
+> entirely different question
 
-<1241431142-8444-1-git-send-email-ft@bewatermyfriend.org>:
-} Now that I think of it again, two weeks after writing this mail
-} originally, I guess it would be possible to drop format.coverauto
-} altogether and tell users to use:
-} 
-}  % git config --global alias.fp format-patch --cover-letter
-} 
-} I don't know which solution would be preferred. If it's the user-should-
-} use-an-alias approach, I'll create a series that gets rid of
-} format.coverauto changes.
 
-I obviously was missing quotes around the alias's value but then,
-'git fp' would do exactly what I'm after with this series. You could
-just set format.coverletter to 2 and use 'git fp'. You always get a
-cover letter for patch series longer than one patch.
 
-The other approach, to create yet another subcommand just for this
-would be too much IMHO. There are enough of them already.
-
-Regards, Frank
-
--- 
-In protocol design, perfection has been reached not when there is
-nothing left to add, but when there is nothing left to take away.
-                                                  -- RFC 1925
+--
+Anner van Hardenbroek,
+dwlnetnl@users.sourceforge.net
