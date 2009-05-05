@@ -1,120 +1,64 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Two problems on alias of git
-Date: Tue, 05 May 2009 07:03:49 -0700 (PDT)
-Message-ID: <m3bpq7oddw.fsf@localhost.localdomain>
-References: <op.utgiv92f6f2obg@i220-99-253-139.s27.a098.ap.plala.or.jp>
+From: Tim Olsen <tim@brooklynpenguin.com>
+Subject: Re: still getting 'It is a submodule!" in 1.6.2.5
+Date: Tue, 05 May 2009 10:23:06 -0400
+Message-ID: <4A004BCA.5070709@brooklynpenguin.com>
+References: <gtnjq8$317$1@ger.gmane.org> <7vy6tc2gnt.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: "Kana Natsuno" <kana@whileimautomaton.net>
-X-From: git-owner@vger.kernel.org Tue May 05 16:04:01 2009
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue May 05 16:23:32 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M1LFY-0003RO-PG
-	for gcvg-git-2@gmane.org; Tue, 05 May 2009 16:04:01 +0200
+	id 1M1LYR-0004mk-UL
+	for gcvg-git-2@gmane.org; Tue, 05 May 2009 16:23:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751887AbZEEODw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 5 May 2009 10:03:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751569AbZEEODv
-	(ORCPT <rfc822;git-outgoing>); Tue, 5 May 2009 10:03:51 -0400
-Received: from rv-out-0506.google.com ([209.85.198.225]:44808 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751539AbZEEODu (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 5 May 2009 10:03:50 -0400
-Received: by rv-out-0506.google.com with SMTP id f9so3498656rvb.1
-        for <git@vger.kernel.org>; Tue, 05 May 2009 07:03:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received
-         :x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        bh=wyDJNrTLKJ7or/cswUi4PuD5Em1nOG2+F5rR0g5zCMw=;
-        b=lRSBFmNkIVEdcA7R3ZCPX45S8EE5pFVgi2Gc025HLgrWSfeFBFiX5AVmhe6f32YXY0
-         KWicpk6kCWBV1hGCeh4x+Uvdkffsn7OoR60TiDzC9J1l7Q/bH8ob5GIp2bWNVkhNh2Ha
-         uzW0ZqcC14b0Xii54qpcK+SoIEa6Bm8m8jelM=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        b=NTtkPMF+0CtuCQr366EIM8ClzM0yB/nci8CwLN92T77iYlgsqkJv+rHD8Iu86b+ne+
-         6mS7d89GefppLqotl0HZbEKoMzxa6QCQxkY8HYcmi35ADPWabcHcgsXXHDE2/C+7H83v
-         19EYhM7xfrdHZE5aCq1TF+GZv0vkgVvgijY/o=
-Received: by 10.114.102.20 with SMTP id z20mr63452wab.53.1241532230467;
-        Tue, 05 May 2009 07:03:50 -0700 (PDT)
-Received: from localhost.localdomain (abwk74.neoplus.adsl.tpnet.pl [83.8.234.74])
-        by mx.google.com with ESMTPS id y11sm33696531pod.18.2009.05.05.07.03.47
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 05 May 2009 07:03:49 -0700 (PDT)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id n45E3i46025767;
-	Tue, 5 May 2009 16:03:45 +0200
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id n45E3ggS025763;
-	Tue, 5 May 2009 16:03:43 +0200
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <op.utgiv92f6f2obg@i220-99-253-139.s27.a098.ap.plala.or.jp>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+	id S1755222AbZEEOXT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 5 May 2009 10:23:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754976AbZEEOXT
+	(ORCPT <rfc822;git-outgoing>); Tue, 5 May 2009 10:23:19 -0400
+Received: from main.gmane.org ([80.91.229.2]:60188 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754691AbZEEOXS (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 5 May 2009 10:23:18 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1M1LYE-0002Qt-50
+	for git@vger.kernel.org; Tue, 05 May 2009 14:23:18 +0000
+Received: from cyrus.limewire.com ([76.8.67.2])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 05 May 2009 14:23:18 +0000
+Received: from tim by cyrus.limewire.com with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 05 May 2009 14:23:18 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: cyrus.limewire.com
+User-Agent: Mozilla-Thunderbird 2.0.0.19 (X11/20090103)
+In-Reply-To: <7vy6tc2gnt.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118298>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118299>
 
-"Kana Natsuno" <kana@whileimautomaton.net> writes:
-
-> Hello.  I found 2 problems on alias of git.
-
-[...]
-> The second one is that git doesn't expand a kind of aliases
-> properly, especially with double quotation marks (").  I used the
-> following alias recently to list the last 10 commits on HEAD:
+Junio C Hamano wrote:
+> But that is not the one you want.  7dae8b2 (diff -c -p: do not die on
+> submodules, 2009-04-29) is to allow viewing of such a merge correctly; To
+> make the merge automatically, you'd need 0c44c94 (merge-recursive: do not
+> die on a conflicting submodule, 2009-04-29), which is on 'master', but not
+> on 1.6.2.X (and likely will never be).
 > 
-> [alias]
->         lr = !git l1 | head | tac
-> 
-> Then I want to extend this alias to list the last N commits on
-> a branch with "git lr 20", "git lr master", "git lr master 20",
-> etc.  So that I wrote the following definition (note that the
-> actual definition is written in a single line, though the quoted
-> definition is folded in multiple lines for readability):
-> 
-> [alias]
->         lr = !$SHELL -c '
->                 n=10;
->                 1="${1:-$n}";
->                 if ! [ "${1##[0-9]*}" = "" ]; then
->                   t="$1";
->                   1="${2:-$n}";
->                   2="$t";
->                 fi;
->                 git --no-pager l1 --reverse -"$1" "${2:-HEAD}"
->               ' __dummy__
-> 
-> But it doesn't work because git expands as follows:
-> 
-> $ git config --get alias.lr
-> !$SHELL -c '1=${1:-10}
-> 
-> Double quotation marks (") are removed and the aliased string is
-> cut at a random position.  I expect that the aliased string is
-> passed to system() as-is, but git doesn't so.  Why does git behave
-> so?  Is it a bug or an intentional behavior?
+> Could you be running 1.6.3-rcX instead of 1.6.2.X?  In general, the tip of
+> the 'master' is always as stable as any released version, if not more.
 
-I don't know if it is a bug or a feature, but git-config supports
-quoted strings (required if you want to have value which has trailing
-or leading whitespace, or which contains '#' which is beginning of
-comment character).  Inside quoted string you need to escape '"':
+Thanks Junio for your reply.  We have made a copy of the offending
+branch by hand and have managed to merge that instead for now.  I can
+wait until 1.6.3 is released.
 
-   [string]
-        quotes = "quoted \" string ' with # character"
+Thanks again for your help!
 
-expands as intended.  Perhaps stripping of double quotes
-inside string are artifact of that feature.  Try escaping or
-double escaping quotes: \" or \\\".
-
--- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+Tim
