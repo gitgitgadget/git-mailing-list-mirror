@@ -1,67 +1,99 @@
-From: Brandon Casey <casey@nrlssc.navy.mil>
-Subject: Re: [PATCH 4/4] t4200: avoid passing a non-newline terminated file
- to sed
-Date: Wed, 06 May 2009 16:12:25 -0500
-Message-ID: <RsLiW_EIDQ01u5uSMUrIIMzSbMhkfwGJBEGppONH79Im4WyT76bS5A@cipher.nrlssc.navy.mil>
-References: <-ElxRhvpfY_jx1Ps8nJ42rHdrKbR03T1y96WpGK19gM@cipher.nrlssc.navy.mil> <IHOAO7NDkb8K9nkprnkd2cQW6duDZ3aYmQzpqboBi5HibQoO83nGG2Z4562gIb22HVW3ho6Z250@cipher.nrlssc.navy.mil> <IHOAO7NDkb8K9nkprnkd2TGjPUHc5N7wdnoXRYKelDZEem1S0tynQeYlVheR46_5TDmYxS1O9i4@cipher.nrlssc.navy.mil> <IHOAO7NDkb8K9nkprnkd2QibZp-GnWBSpcJ8fxO9NTUsmXbuv4_2x5S6YNLzUogav4gLkrx9ClI@cipher.nrlssc.navy.mil> <IHOAO7NDkb8K9nkprnkd2ZsdySdVG_ssYL84wqJwNHZYBqMWRKBIa_Ni6jJRHumlZvrQcXOEMhQ@cipher.nrlssc.navy.mil> <IHOAO7NDkb8K9nkprnkd2ep5vFgQr-bAuDGJW-OdtSbS6WmpSHl041GRSXpP3OcDP4_PsYKsQDU@cipher.nrlssc.navy.mil> <7vhbzyukyi.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+From: Alex Blewitt <alex.blewitt@gmail.com>
+Subject: git rebase failing when using ZFS partition on Mac OS X
+Date: Wed, 6 May 2009 22:14:11 +0100
+Message-ID: <1FF266A7-CD80-4471-A837-D64007EE530A@gmail.com>
+Mime-Version: 1.0 (Apple Message framework v930.3)
+Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
 Content-Transfer-Encoding: 7bit
-Cc: pclouds@gmail.com, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed May 06 23:12:46 2009
+Cc: "Shawn O. Pearce" <spearce@spearce.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed May 06 23:14:33 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M1oPw-0005oD-Jo
-	for gcvg-git-2@gmane.org; Wed, 06 May 2009 23:12:41 +0200
+	id 1M1oRc-0006kq-W6
+	for gcvg-git-2@gmane.org; Wed, 06 May 2009 23:14:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755917AbZEFVMa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 6 May 2009 17:12:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755357AbZEFVM3
-	(ORCPT <rfc822;git-outgoing>); Wed, 6 May 2009 17:12:29 -0400
-Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:58501 "EHLO
-	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753121AbZEFVM3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 6 May 2009 17:12:29 -0400
-Received: by mail.nrlssc.navy.mil id n46LCPuV004342; Wed, 6 May 2009 16:12:25 -0500
-In-Reply-To: <7vhbzyukyi.fsf@alter.siamese.dyndns.org>
-X-OriginalArrivalTime: 06 May 2009 21:12:25.0611 (UTC) FILETIME=[5AD1BDB0:01C9CE8F]
+	id S1756081AbZEFVOP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 6 May 2009 17:14:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755910AbZEFVOO
+	(ORCPT <rfc822;git-outgoing>); Wed, 6 May 2009 17:14:14 -0400
+Received: from mail-ew0-f176.google.com ([209.85.219.176]:61978 "EHLO
+	mail-ew0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755357AbZEFVOO (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 May 2009 17:14:14 -0400
+Received: by ewy24 with SMTP id 24so583571ewy.37
+        for <git@vger.kernel.org>; Wed, 06 May 2009 14:14:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:from:to
+         :content-type:content-transfer-encoding:mime-version:subject:date:cc
+         :x-mailer;
+        bh=OzbEPdJUJm/fk65Pe0RTz0sZ5zZXBXGL5HfkiO6vA04=;
+        b=aOZ6dOSb1Eo6XBVI71Bmglz8TCIEX1mk7HaEsR/xoU9o71r0MoVE0G4aFQX3ImHKdp
+         bDCABmaGQP5RUrDYNQdwaRtZMNjll6ym+2IDM0JXMNGrlGqf0wP5kqN3+VhTHPINkTya
+         cuu3jBbhmGxVqaW/zYVPz3pXG3tgwn+VbPFig=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:from:to:content-type:content-transfer-encoding
+         :mime-version:subject:date:cc:x-mailer;
+        b=ezzyAbQ66oqhtEKGyONIu+h8mpQ1OiU0nc2MKhNto7+WvrHsRM/pqI+sQCFgVS3d6c
+         3FHisYdVXecscBwl9J1aF0MTCS/G1GKU2Ni603ipC8nJyBeQxgUlxkx8JsxMSbo6/alw
+         ZJV/xoxp2p+dTK6x1rQaPG3pyhDCpxjPblGOI=
+Received: by 10.210.134.6 with SMTP id h6mr6567260ebd.47.1241644453289;
+        Wed, 06 May 2009 14:14:13 -0700 (PDT)
+Received: from apple.int.bandlem.com (server.bandlem.com [217.155.97.60])
+        by mx.google.com with ESMTPS id 24sm4789815eyx.43.2009.05.06.14.14.12
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 06 May 2009 14:14:12 -0700 (PDT)
+X-Mailer: Apple Mail (2.930.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118391>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118392>
 
-Junio C Hamano wrote:
-> Brandon Casey <casey@nrlssc.navy.mil> writes:
-> 
->> Some versions of sed exit non-zero if the file they are supplied is not
->> newline terminated.  Solaris's /usr/xpg4/bin/sed is one such sed.  So
->> rework this test to avoid doing so.
-> 
-> I think up to your 3/4 is reasonable, but this is not enough for POSIX
-> conformance (it is Ok if it is just aiming to fix "Solaris quirk").  POSIX
-> sed is only required to work on text files, but .git/MERGE_RR is not a
-> text file (it is a sequence of NUL terminated records).
-> 
-> I think something like this may work better.  Can somebody test?
-> 
->> -	sha1=$(sed -e "s/	.*//" .git/MERGE_RR) &&
->> +	sha1=$({ cat .git/MERGE_RR; echo; } | sed -e "s/	.*//") &&
-> 
-> 	sha1=$(tr "\\000" "\\012" <./git/MERGE_RR | sed -e "s/	.*//") &&
+I've found out why git rebase wasn't working for me. It appears to be  
+something to do with the fact that the filesystem is running on ZFS  
+(and frankly, could well be a ZFS bug). I'd be loathe to move away  
+from ZFS generally but it would be good to find out why it's  
+complaining.
 
-I was about to reply that this fix works fine (actually, I was about to
-reply over an hour ago but was interrupted).
+apple:egit alex$ git status
+# On branch master
+# Your branch is ahead of 'origin/master' by 3 commits.
+#
+nothing to commit (working directory clean)
+apple:egit alex$ git rebase -i HEAD~1
+Working tree is dirty
 
-But, while testing it I noticed that you had a typo in your version that
-_did_not_ cause the test to fail.  You have an extra slash in the path
-to '.git/MERGE_RR' which would have caused sha1 to be unset.
+Here's what running a stat on TODO (an arbitrary file at the head of  
+the project) gives on a ZFS mounted file:
 
-The 'sha1' variable that is set here on line 193 is used on the next line
-to set 'rr', but 'rr' is never used again.  Unless I'm missing something,
-it appears these two lines can be deleted.
+apple:egit alex$ stat -r TODO
+754974724 135333 0100644 1 1000 100 0 2179 1241639236 1241034917  
+1241639236 1241034917 2560 5 0 TODO
+apple:egit alex$ stat TODO
+754974724 135333 -rw-r--r-- 1 alex bandlem 0 2179 "May  6 20:47:16  
+2009" "Apr 29 20:55:17 2009" "May  6 20:47:16 2009" "Apr 29 20:55:17  
+2009" 2560 5 0 TODO
 
--brandon
+Here's what running a stat on the same file on an HFS partition gives:
+
+apple:egit alex$ stat -r TODO
+234881026 930759 0100644 1 1000 0 0 2179 1241643695 1241034917  
+1241643690 1241034917 4096 8 0 TODO
+apple:egit alex$ stat TODO
+234881026 930759 -rw-r--r-- 1 alex wheel 0 2179 "May  6 22:01:35 2009"  
+"Apr 29 20:55:17 2009" "May  6 22:01:30 2009" "Apr 29 20:55:17 2009"  
+4096 8 0 TODO
+
+These are repeatable; if I re-run this periodically, it doesn't seem  
+to change. However, I wonder if there's any dependency on an 'inode'  
+or similar, which doesn't really have a comparable concept in ZFS.
+
+Is there any more information that I can provide to assist with  
+finding out what's going on?
+
+Alex
