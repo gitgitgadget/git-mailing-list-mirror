@@ -1,61 +1,104 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 4/4] t4200: avoid passing a non-newline terminated file to sed
-Date: Wed, 06 May 2009 14:49:15 -0700
-Message-ID: <7vpreluckk.fsf@alter.siamese.dyndns.org>
-References: <-ElxRhvpfY_jx1Ps8nJ42rHdrKbR03T1y96WpGK19gM@cipher.nrlssc.navy.mil>
-	<IHOAO7NDkb8K9nkprnkd2cQW6duDZ3aYmQzpqboBi5HibQoO83nGG2Z4562gIb22HVW3ho6Z250@cipher.nrlssc.navy.mil>
-	<IHOAO7NDkb8K9nkprnkd2TGjPUHc5N7wdnoXRYKelDZEem1S0tynQeYlVheR46_5TDmYxS1O9i4@cipher.nrlssc.navy.mil>
-	<IHOAO7NDkb8K9nkprnkd2QibZp-GnWBSpcJ8fxO9NTUsmXbuv4_2x5S6YNLzUogav4gLkrx9ClI@cipher.nrlssc.navy.mil>
-	<IHOAO7NDkb8K9nkprnkd2ZsdySdVG_ssYL84wqJwNHZYBqMWRKBIa_Ni6jJRHumlZvrQcXOEMhQ@cipher.nrlssc.navy.mil>
-	<IHOAO7NDkb8K9nkprnkd2ep5vFgQr-bAuDGJW-OdtSbS6WmpSHl041GRSXpP3OcDP4_PsYKsQDU@cipher.nrlssc.navy.mil>
-	<7vhbzyukyi.fsf@alter.siamese.dyndns.org>
-	<RsLiW_EIDQ01u5uSMUrIIMzSbMhkfwGJBEGppONH79Im4WyT76bS5A@cipher.nrlssc.navy.mil>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, pclouds@gmail.com,
-	git@vger.kernel.org
-To: Brandon Casey <casey@nrlssc.navy.mil>
-X-From: git-owner@vger.kernel.org Thu May 07 00:18:44 2009
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: [RFC/PATCH] Prettify log decorations even more
+Date: Thu,  7 May 2009 01:45:48 +0300
+Message-ID: <1241649948-11765-1-git-send-email-felipe.contreras@gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Felipe Contreras <felipe.contreras@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu May 07 00:46:06 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M1pRq-0000oO-IA
-	for gcvg-git-2@gmane.org; Thu, 07 May 2009 00:18:42 +0200
+	id 1M1psK-0002aL-RC
+	for gcvg-git-2@gmane.org; Thu, 07 May 2009 00:46:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1763531AbZEFWSY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 6 May 2009 18:18:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1763552AbZEFWSY
-	(ORCPT <rfc822;git-outgoing>); Wed, 6 May 2009 18:18:24 -0400
-Received: from fed1rmmtai104.cox.net ([68.230.241.56]:40615 "EHLO
-	fed1rmmtai104.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1761458AbZEFWSW (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 6 May 2009 18:18:22 -0400
-Received: from fed1rmimpo03.cox.net ([70.169.32.75])
-          by fed1rmmtao103.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20090506214916.TBEM2915.fed1rmmtao103.cox.net@fed1rmimpo03.cox.net>;
-          Wed, 6 May 2009 17:49:16 -0400
-Received: from localhost ([68.225.240.211])
-	by fed1rmimpo03.cox.net with bizsmtp
-	id oMpF1b00C4aMwMQ04MpFZ1; Wed, 06 May 2009 17:49:15 -0400
-X-Authority-Analysis: v=1.0 c=1 a=1ZMnSAeqFEcA:10 a=KrguOZ7mv_8A:10
- a=mWJME7gpGU2PeVGGze0A:9 a=qgJ2LRurZjNURVqYaSI88A2lI2EA:4
-X-CM-Score: 0.00
-In-Reply-To: <RsLiW_EIDQ01u5uSMUrIIMzSbMhkfwGJBEGppONH79Im4WyT76bS5A@cipher.nrlssc.navy.mil> (Brandon Casey's message of "Wed\, 06 May 2009 16\:12\:25 -0500")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+	id S1751242AbZEFWp4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 6 May 2009 18:45:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751054AbZEFWp4
+	(ORCPT <rfc822;git-outgoing>); Wed, 6 May 2009 18:45:56 -0400
+Received: from fg-out-1718.google.com ([72.14.220.156]:3386 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750977AbZEFWpz (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 May 2009 18:45:55 -0400
+Received: by fg-out-1718.google.com with SMTP id d23so1166027fga.17
+        for <git@vger.kernel.org>; Wed, 06 May 2009 15:45:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer;
+        bh=1uK/DyPVgTXvOAMuE3BKTRdYxKR9ynbElGQxS+Ic7AU=;
+        b=bZchrYysAY6Mtqtt5VaB0KunShN3mTZq3+fenyGmgD7YhgLEW/4cXMD1v0lVnq9shf
+         sqyPWlC+IZamsy4w9syBjXRrdDIDZM29+LmAwasu+Q11kY7UAF1X0I01HK0jw32k3+mK
+         hnvok0V/EkXTXu5sriNaP5Lo/Ixn2q96KHbkM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=SZTXjqG102BUsdZSaNhZrMITxdxq8p5zBvVRjmOtznKaoo0vqYRoPVP42dhOmxPYGh
+         ik2N7wERxRnb+Idch42mA2q7l7n8xhkQQOnCuyDGMLWvMuvNVIMuEi8BZeNauKpK/saH
+         0DosX0rYBrKnPx9WiJ5Gbtjnc7gut+Qc+d5Pc=
+Received: by 10.86.90.2 with SMTP id n2mr1817252fgb.61.1241649954199;
+        Wed, 06 May 2009 15:45:54 -0700 (PDT)
+Received: from localhost (a91-153-253-80.elisa-laajakaista.fi [91.153.253.80])
+        by mx.google.com with ESMTPS id 3sm785610fge.4.2009.05.06.15.45.53
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 06 May 2009 15:45:53 -0700 (PDT)
+X-Mailer: git-send-email 1.6.3.rc4.14.g96da.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118395>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118396>
 
-Brandon Casey <casey@nrlssc.navy.mil> writes:
+"tag: v1.6.2.5" looks much better than "tag: refs/tags/v1.6.2.5".
 
-> The 'sha1' variable that is set here on line 193 is used on the next line
-> to set 'rr', but 'rr' is never used again.  Unless I'm missing something,
-> it appears these two lines can be deleted.
+Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
+---
+ log-tree.c |    1 +
+ refs.c     |    3 +--
+ refs.h     |    3 ++-
+ 3 files changed, 4 insertions(+), 3 deletions(-)
 
-Yeah, it looks like this is a mindless cut&paste; I do not see the point
-of setting rr there unless it is used to make sure that a corresponding
-rerere cache is created, or something.
+diff --git a/log-tree.c b/log-tree.c
+index 5bd29e6..59d63eb 100644
+--- a/log-tree.c
++++ b/log-tree.c
+@@ -25,6 +25,7 @@ static int add_ref_decoration(const char *refname, const unsigned char *sha1, in
+ 	struct object *obj = parse_object(sha1);
+ 	if (!obj)
+ 		return 0;
++	refname = prettify_refname(refname);
+ 	add_name_decoration("", refname, obj);
+ 	while (obj->type == OBJ_TAG) {
+ 		obj = ((struct tag *)obj)->tagged;
+diff --git a/refs.c b/refs.c
+index e65a3b4..e74461e 100644
+--- a/refs.c
++++ b/refs.c
+@@ -750,9 +750,8 @@ int check_ref_format(const char *ref)
+ 	}
+ }
+ 
+-const char *prettify_ref(const struct ref *ref)
++const char *prettify_refname(const char *name)
+ {
+-	const char *name = ref->name;
+ 	return name + (
+ 		!prefixcmp(name, "refs/heads/") ? 11 :
+ 		!prefixcmp(name, "refs/tags/") ? 10 :
+diff --git a/refs.h b/refs.h
+index 29d17a4..3de5e1c 100644
+--- a/refs.h
++++ b/refs.h
+@@ -80,7 +80,8 @@ extern int for_each_reflog(each_ref_fn, void *);
+ #define CHECK_REF_FORMAT_WILDCARD (-3)
+ extern int check_ref_format(const char *target);
+ 
+-extern const char *prettify_ref(const struct ref *ref);
++extern const char *prettify_refname(const char *refname);
++#define prettify_ref(ref) prettify_refname((ref)->name)
+ extern char *shorten_unambiguous_ref(const char *ref, int strict);
+ 
+ /** rename ref, return 0 on success **/
+-- 
+1.6.3.rc4.14.g96da.dirty
