@@ -1,57 +1,82 @@
-From: Brandon Casey <casey@nrlssc.navy.mil>
-Subject: [PATCH 1/2] t4200: remove two unnecessary lines
-Date: Wed,  6 May 2009 17:56:17 -0500
-Message-ID: <Lle9L7vlL2vfnqjU75q2MR6WXGGP9aOKv8J97cnRHcQgyJeGbOMDDB2xJugZ0LoonfCRYmzXx9E@cipher.nrlssc.navy.mil>
-References: <7vpreluckk.fsf@alter.siamese.dyndns.org>
-Cc: pclouds@gmail.com, git@vger.kernel.org
-To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Thu May 07 00:56:44 2009
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: [RESEND/PATCH] git config: improve documentation
+Date: Thu,  7 May 2009 01:57:08 +0300
+Message-ID: <1241650628-12503-1-git-send-email-felipe.contreras@gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Felipe Contreras <felipe.contreras@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu May 07 00:57:31 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M1q2c-0006J8-OX
-	for gcvg-git-2@gmane.org; Thu, 07 May 2009 00:56:43 +0200
+	id 1M1q3J-0006XG-Sx
+	for gcvg-git-2@gmane.org; Thu, 07 May 2009 00:57:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752542AbZEFW4c (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 6 May 2009 18:56:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751595AbZEFW4a
-	(ORCPT <rfc822;git-outgoing>); Wed, 6 May 2009 18:56:30 -0400
-Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:52941 "EHLO
-	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751670AbZEFW42 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 6 May 2009 18:56:28 -0400
-Received: by mail.nrlssc.navy.mil id n46MuQXA030239; Wed, 6 May 2009 17:56:26 -0500
-In-Reply-To: <7vpreluckk.fsf@alter.siamese.dyndns.org>
-X-OriginalArrivalTime: 06 May 2009 22:56:25.0757 (UTC) FILETIME=[E23C74D0:01C9CE9D]
+	id S1753884AbZEFW5N (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 6 May 2009 18:57:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753318AbZEFW5N
+	(ORCPT <rfc822;git-outgoing>); Wed, 6 May 2009 18:57:13 -0400
+Received: from fg-out-1718.google.com ([72.14.220.158]:21647 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751595AbZEFW5M (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 May 2009 18:57:12 -0400
+Received: by fg-out-1718.google.com with SMTP id d23so1167599fga.17
+        for <git@vger.kernel.org>; Wed, 06 May 2009 15:57:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer;
+        bh=l+wFfu8DjUU5SfMVH150D0hyLnhMTvqWzOOF22Ets74=;
+        b=IsI48viUo4/GZ6tibi0hYim9zOPFTiOnx4Tmmm9+Xui1YEO/XnZ32TvZZ1JKMCdRKJ
+         6TuhIop4aVUI0bZ3rIk9uivVIEZBuaAmau27jHx43AtBoXXLxVqd11wiTFeBiMlzWjs2
+         EvqLJOs60oVLXWf2Tixu0BuArEv0DaSueZYWc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=q1LzUEcTgKhRApcwKnOlD7pac01gpy0ld05/gckZ/M+hq5aQqn+rjCqqCcvNpr+4us
+         FKj2jE2oyhLto2W/JIq4Vpd6ZVqDvVRQA2VegxrXQHZMEACupxoOzsZdznSXwt1M4Vkr
+         3WKkNszBr6n8kmkDFT86szJpzdL7saYMFPW3Y=
+Received: by 10.86.59.2 with SMTP id h2mr1826570fga.30.1241650631561;
+        Wed, 06 May 2009 15:57:11 -0700 (PDT)
+Received: from localhost (a91-153-253-80.elisa-laajakaista.fi [91.153.253.80])
+        by mx.google.com with ESMTPS id e11sm11492247fga.11.2009.05.06.15.57.10
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 06 May 2009 15:57:11 -0700 (PDT)
+X-Mailer: git-send-email 1.6.3.rc4.14.g96da.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118401>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118402>
 
-These two lines appear to be unnecessary.  They set variables which are not
-used afterwards.  The primary motivation to remove them is that the sed
-invocation exits non-zero for seds which require newline termination of
-input files.
-
-Signed-off-by: Brandon Casey <casey@nrlssc.navy.mil>
+Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
 ---
- t/t4200-rerere.sh |    2 --
- 1 files changed, 0 insertions(+), 2 deletions(-)
+ Documentation/git-config.txt |    5 +++--
+ 1 files changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/t/t4200-rerere.sh b/t/t4200-rerere.sh
-index b68ab11..504802c 100755
---- a/t/t4200-rerere.sh
-+++ b/t/t4200-rerere.sh
-@@ -190,8 +190,6 @@ test_expect_success 'file2 added differently in two branches' '
- 	git add file2 &&
- 	git commit -m version2 &&
- 	test_must_fail git merge fourth &&
--	sha1=$(sed -e "s/	.*//" .git/MERGE_RR) &&
--	rr=.git/rr-cache/$sha1 &&
- 	echo Cello > file2 &&
- 	git add file2 &&
- 	git commit -m resolution
+diff --git a/Documentation/git-config.txt b/Documentation/git-config.txt
+index 7131ee3..f68b198 100644
+--- a/Documentation/git-config.txt
++++ b/Documentation/git-config.txt
+@@ -69,7 +69,8 @@ OPTIONS
+ 
+ --add::
+ 	Adds a new line to the option without altering any existing
+-	values.  This is the same as providing '^$' as the value_regex.
++	values.  This is the same as providing '^$' as the value_regex
++	in `--replace-all`.
+ 
+ --get::
+ 	Get the value for a given key (optionally filtered by a regex
+@@ -155,7 +156,7 @@ See also <<FILES>>.
+ 	When the color setting for `name` is undefined, the command uses
+ 	`color.ui` as fallback.
+ 
+---get-color name default::
++--get-color name [default]::
+ 
+ 	Find the color configured for `name` (e.g. `color.diff.new`) and
+ 	output it as the ANSI color escape sequence to the standard
 -- 
-1.6.2.4.24.gde59d2
+1.6.3.rc4.14.g96da.dirty
