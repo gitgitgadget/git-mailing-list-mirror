@@ -1,60 +1,80 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH v3 0/2] user-manual: general improvements
-Date: Thu,  7 May 2009 01:53:34 +0300
-Message-ID: <1241650416-12224-1-git-send-email-felipe.contreras@gmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Felipe Contreras <felipe.contreras@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu May 07 00:54:27 2009
+From: Brandon Casey <casey@nrlssc.navy.mil>
+Subject: [PATCH 2/2] t4200: convert sed expression which operates on non-text file to perl
+Date: Wed,  6 May 2009 17:56:18 -0500
+Message-ID: <Lle9L7vlL2vfnqjU75q2MW9kwH-igiKVkmBrtmLzQmOXU0OyvCI2tl4UD8Kdhyg0x_gCHDJIHDM@cipher.nrlssc.navy.mil>
+References: <7vpreluckk.fsf@alter.siamese.dyndns.org> <Lle9L7vlL2vfnqjU75q2MR6WXGGP9aOKv8J97cnRHcQgyJeGbOMDDB2xJugZ0LoonfCRYmzXx9E@cipher.nrlssc.navy.mil>
+Cc: pclouds@gmail.com, git@vger.kernel.org
+To: gitster@pobox.com
+X-From: git-owner@vger.kernel.org Thu May 07 00:56:42 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M1q0M-0005VM-Vi
-	for gcvg-git-2@gmane.org; Thu, 07 May 2009 00:54:23 +0200
+	id 1M1q2c-0006J8-50
+	for gcvg-git-2@gmane.org; Thu, 07 May 2009 00:56:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753130AbZEFWxm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 6 May 2009 18:53:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752765AbZEFWxm
-	(ORCPT <rfc822;git-outgoing>); Wed, 6 May 2009 18:53:42 -0400
-Received: from fg-out-1718.google.com ([72.14.220.153]:7397 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751541AbZEFWxl (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 6 May 2009 18:53:41 -0400
-Received: by fg-out-1718.google.com with SMTP id d23so1167071fga.17
-        for <git@vger.kernel.org>; Wed, 06 May 2009 15:53:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer;
-        bh=oYpwQDe5WEIjkSxcSq4GZJOJP8C+4RqClRmb/TV93zQ=;
-        b=b6t63WE4YguS8dXWP/9SduWJRZPD+K5Nv6DT8+MCRT5bXS0N0s3tGhfLKoPeUc8yZ7
-         36ItmEzVaNd/c0pY71fLFWZGlJ3shJeitj+u6A3J+PsQyzHQQPGG3KIsRwqrXjW5zb00
-         6ONUSLN8wwLG/73+Wb9DPDbOaZbjqSFt/wotQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        b=iqTSdm3n1wTG4fr6rPLKSZFXk69bRcvl1ggVsekZir3WfMdcjqmbPDHVpw4KjeZmGY
-         9bN6vLO/NC2E0EejJwgodXIt+kz/znKIUn6WF1KktKYdZHBMOBcCv3+AW4RI/z0dYXJl
-         Szs8UYvo/Nn7HGHyGY6PGBd0PQQ6FilZS1EKg=
-Received: by 10.86.59.18 with SMTP id h18mr1869833fga.14.1241650420758;
-        Wed, 06 May 2009 15:53:40 -0700 (PDT)
-Received: from localhost (a91-153-253-80.elisa-laajakaista.fi [91.153.253.80])
-        by mx.google.com with ESMTPS id l12sm12338867fgb.11.2009.05.06.15.53.40
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 06 May 2009 15:53:40 -0700 (PDT)
-X-Mailer: git-send-email 1.6.3.rc4.14.g96da.dirty
+	id S1752018AbZEFW4a (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 6 May 2009 18:56:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752408AbZEFW43
+	(ORCPT <rfc822;git-outgoing>); Wed, 6 May 2009 18:56:29 -0400
+Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:52942 "EHLO
+	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751595AbZEFW42 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 May 2009 18:56:28 -0400
+Received: by mail.nrlssc.navy.mil id n46MuQXC030239; Wed, 6 May 2009 17:56:26 -0500
+In-Reply-To: <Lle9L7vlL2vfnqjU75q2MR6WXGGP9aOKv8J97cnRHcQgyJeGbOMDDB2xJugZ0LoonfCRYmzXx9E@cipher.nrlssc.navy.mil>
+X-OriginalArrivalTime: 06 May 2009 22:56:26.0038 (UTC) FILETIME=[E2675560:01C9CE9D]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118399>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118400>
 
-I split the previous patch series, now only trivial changes are included.
+POSIX only requires sed to work on text files and MERGE_RR is not a text
+file.  Some versions of sed complain that this file is not newline
+terminated, and exit non-zero.  Use perl instead which does not have a
+problem with it.
 
-Felipe Contreras (2):
-  user-manual: general quoting improvements
-  user-manual: use 'fast-forward' instead of 'fast forward'
+Signed-off-by: Brandon Casey <casey@nrlssc.navy.mil>
+---
 
- Documentation/user-manual.txt |  890 ++++++++++++++++++++--------------------
- 1 files changed, 445 insertions(+), 445 deletions(-)
+
+Initially, I changed this to use the tr workaround Junio suggested, so it
+looked like this:
+
+   sha1=$(tr '\000' '\012' <.git/MERGE_RR | sed -e 's/	.*//')
+
+Then I noticed Jeff King's commit e85fe4d8 which changed uses of tr to perl
+for portability's sake.  So the line became:
+
+   sha1=$(perl -pe 'y/\000/\012/' .git/MERGE_RR | sed -e 's/	.*//')
+
+Then I thought, "Why call sed?  I already started up perl, let _it_ do the
+substitution.", so it became:
+
+   sha1=$(perl -pe 'y/\000/\012/; s/	.*//' .git/MERGE_RR)
+
+And then I thought, "Why do I need the transliteration?".  So we end up
+with this simple patch.
+
+-brandon
+
+
+ t/t4200-rerere.sh |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/t/t4200-rerere.sh b/t/t4200-rerere.sh
+index 504802c..5a1721d 100755
+--- a/t/t4200-rerere.sh
++++ b/t/t4200-rerere.sh
+@@ -57,7 +57,7 @@ test_expect_success 'conflicting merge' '
+ 	test_must_fail git merge first
+ '
+ 
+-sha1=$(sed -e 's/	.*//' .git/MERGE_RR)
++sha1=$(perl -pe 's/	.*//' .git/MERGE_RR)
+ rr=.git/rr-cache/$sha1
+ test_expect_success 'recorded preimage' "grep ^=======$ $rr/preimage"
+ 
+-- 
+1.6.2.4.24.gde59d2
