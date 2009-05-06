@@ -1,155 +1,108 @@
-From: Josef Wolf <jw@raven.inka.de>
-Subject: Re: Trying to sync two svn repositories with git-svn (repost)
-Date: Thu, 7 May 2009 00:50:42 +0200
-Message-ID: <20090506225042.GN15420@raven.wolf.lan>
-References: <32541b130904291907q4003ad86v4728c5b2ba0aacb7@mail.gmail.com> <20090430222808.GH15420@raven.wolf.lan> <32541b130904301559w329bdd4bo6f2736a505b7235f@mail.gmail.com> <20090501142811.GI15420@raven.wolf.lan> <32541b130905011217x7f339d41x696fedee7298e3a4@mail.gmail.com> <20090502215852.GJ15420@raven.wolf.lan> <32541b130905040858v2a0b7a6br5b056a365fcb6855@mail.gmail.com> <20090504211423.GK15420@raven.wolf.lan> <20090506185224.GM15420@raven.wolf.lan> <32541b130905061223h7efddeecvcc52a369093a6b50@mail.gmail.com>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [PATCH] git config: clarify bool types
+Date: Thu, 7 May 2009 02:07:10 +0300
+Message-ID: <94a0d4530905061607s14c700e5t4b87166772c75622@mail.gmail.com>
+References: <1237331631-29822-1-git-send-email-felipe.contreras@gmail.com>
+	 <7vk56nocpg.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu May 07 01:01:04 2009
+Cc: git@vger.kernel.org,
+	Johannes Schindelin <johannes.schindelin@gmx.de>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu May 07 01:07:25 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M1q6o-0007to-RC
-	for gcvg-git-2@gmane.org; Thu, 07 May 2009 01:01:03 +0200
+	id 1M1qCy-0001fz-Mn
+	for gcvg-git-2@gmane.org; Thu, 07 May 2009 01:07:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754439AbZEFXAM convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 6 May 2009 19:00:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754040AbZEFXAM
-	(ORCPT <rfc822;git-outgoing>); Wed, 6 May 2009 19:00:12 -0400
-Received: from quechua.inka.de ([193.197.184.2]:44300 "EHLO mail.inka.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753928AbZEFXAK (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 6 May 2009 19:00:10 -0400
-Received: from raven.inka.de (uucp@[127.0.0.1])
-	by mail.inka.de with uucp (rmailwrap 0.5) 
-	id 1M1q5y-00047s-7R; Thu, 07 May 2009 01:00:10 +0200
-Received: by raven.inka.de (Postfix, from userid 1000)
-	id C592E2CCC1; Thu,  7 May 2009 00:50:42 +0200 (CEST)
-Mail-Followup-To: Josef Wolf <jw@raven.inka.de>, git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <32541b130905061223h7efddeecvcc52a369093a6b50@mail.gmail.com>
-User-Agent: Mutt/1.5.17 (2007-11-01)
+	id S1755430AbZEFXHN convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 6 May 2009 19:07:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755366AbZEFXHN
+	(ORCPT <rfc822;git-outgoing>); Wed, 6 May 2009 19:07:13 -0400
+Received: from fg-out-1718.google.com ([72.14.220.152]:10997 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754292AbZEFXHL convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 6 May 2009 19:07:11 -0400
+Received: by fg-out-1718.google.com with SMTP id 16so155098fgg.17
+        for <git@vger.kernel.org>; Wed, 06 May 2009 16:07:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=gGfmZG1yBD6QRs1tEuWA4D2++guuXpmq+tPYAMwbFWA=;
+        b=VphtqwsRvwFwcBx3D7kLWaveUSYNrVIkYHa7tARcA4mvOs0RniWWQKICQMxJdOm2g9
+         l9zInw8AcP5luerP8AkAYIxSa42Jh/1W928Ge20uqT8WFBRUY/fss4K7Xsr0NY+q84bc
+         wo1Ga4FuW4PJMipuElQk3Z7VAkACv3QxSs3D8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=mQ9rKPpFW1P1i96O1ufiLGNj83MCgLJwmvQlEk6Ptw7G14BglytlzwXmzBuc/1C7OK
+         rgiVC9eFQ1+12PXkfO94/5tVQ5GvVh3KdQ2n0tmJwf1LS4lu0yQAhlh6djgBfLLxvVaT
+         WR/f5+Dvgyvfcs4tJLuJMid1jdSKs5lIkimRs=
+Received: by 10.86.1.1 with SMTP id 1mr1850493fga.0.1241651230546; Wed, 06 May 
+	2009 16:07:10 -0700 (PDT)
+In-Reply-To: <7vk56nocpg.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118403>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118404>
 
-On Wed, May 06, 2009 at 03:23:40PM -0400, Avery Pennarun wrote:
-> On Wed, May 6, 2009 at 2:52 PM, Josef Wolf <jw@raven.inka.de> wrote:
-> > Here's what I have at this point:
-> >
-> > =A0 =A0 =A0 =A0 =A0 =A0 ------------------S1TRUNK
-> > =A0 =A0 =A0 =A0 =A0 =A0/ =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 /
-> > =A0 --hs1--O1--c2...c2-------S1
-> > =A0 =A0 =A0 =A0 =A0 =A0\ =A0 =A0 =A0 =A0 =A0 =A0 =A0/
-> > =A0 =A0 =A0 =A0 =A0 =A0 `+++++++. =A0 =A0/
-> > =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0\ =A0/
-> > =A0 --hs2--O2--c1...c1--S2
-> > =A0 =A0 =A0 =A0 =A0 =A0\ =A0 =A0 =A0 =A0 =A0 =A0\
-> > =A0 =A0 =A0 =A0 =A0 =A0 -------------S2TRUNK
-> >
-> > =A0 hs1, hs2: =A0 =A0 =A0 =A0 history imported from svn-1 and svn2,=
- respectively
-> > =A0 O1, O2: =A0 =A0 =A0 =A0 =A0 the svn-1-orig and svn-2-orig tags
-> > =A0 c1, c2: =A0 =A0 =A0 =A0 =A0 cherries picked from hs1 and hs2, r=
-espectively
-> > =A0 S1, S2: =A0 =A0 =A0 =A0 =A0 svn-1 and svn-2, the local tracking=
- branches
-> > =A0 S1TRUNK, S2TRUNK: the remotes/svn-X/trunk branches
-> >
-> > I would have expected a symmetrical diagram. =A0But it turns out th=
-at the
-> > connection marked with plusses is still at O1 instead of S1. =A0So =
-it takes
-> > no wonder that the c2 cherries get re-applied to the s2 branch on t=
-he
-> > next merge.
->=20
-> That's a well-drawn diagram, but unfortunately I'm still confused.
-> What is the "connection marked with plusses" and does it have a name?
+On Wed, Mar 18, 2009 at 4:13 AM, Junio C Hamano <gitster@pobox.com> wro=
+te:
+> Felipe Contreras <felipe.contreras@gmail.com> writes:
+>
+>> The value is what it is, the --bool and --bool-or-int options don't
+>> specify the value type, just how it is interpreted. For example: a v=
+alue
+>> of '1' can be interpreted as 'true'.
+>>
+>> Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
+>> ---
+>>
+>> This applies on top of the 'next' branch.
+>>
+>> =C2=A0builtin-config.c | =C2=A0 =C2=A04 ++--
+>> =C2=A01 files changed, 2 insertions(+), 2 deletions(-)
+>>
+>> diff --git a/builtin-config.c b/builtin-config.c
+>> index 1a3baa1..c3a0176 100644
+>> --- a/builtin-config.c
+>> +++ b/builtin-config.c
+>> @@ -66,9 +66,9 @@ static struct option builtin_config_options[] =3D =
+{
+>> =C2=A0 =C2=A0 =C2=A0 OPT_STRING(0, "get-color", &get_color_slot, "sl=
+ot", "find the color configured: [default]"),
+>> =C2=A0 =C2=A0 =C2=A0 OPT_STRING(0, "get-colorbool", &get_colorbool_s=
+lot, "slot", "find the color setting: [stdout-is-tty]"),
+>> =C2=A0 =C2=A0 =C2=A0 OPT_GROUP("Type"),
+>> - =C2=A0 =C2=A0 OPT_BIT(0, "bool", &types, "value is \"true\" or \"f=
+alse\"", TYPE_BOOL),
+>> + =C2=A0 =C2=A0 OPT_BIT(0, "bool", &types, "value is intepreted as b=
+ool (\"true\" or \"false\")", TYPE_BOOL),
+>
+> I'd rater see it say something like:
+>
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0Output the value as boolean (true or false=
+)
+>
+> so that it is consistent with others you can see in the context.
+> E.g. get-color explains it to order the command to "find the color".
+>
+> "Interpret" is fine too. =C2=A0The point is not about the choice of v=
+erb but
+> use of imperative mood.
 
-Well, the whole history (including this connection) was created by the
-commands I posted.  The only exception are hs1 and hs2, which were
-imported from the svn repositories (but they are linear).
+-bool is not only used to output values, it's also used to set them,
+so it's not related to an action, it's an action modifier, so I don't
+think it must be imperative.
 
-AFAICS, this connection was created by the very first merge after the
-cherry-picking from hs1 (the cherries marked as c1..c1).  After importi=
-ng
-the svn repositories, I've done this:
+I'm going to resend this patch as is.
 
-  git checkout svn-2                # S2 in the diagram above, but used
-                                    #    to be identical to O2 at that =
-time
-  [ cherry-picking c1...c1 ]        # S2 now moved to its place in diag=
-ram
-  git merge --no-ff -s ours svn-1   # S1 in the diagram above, but used
-                                    #    to be identical to O1 at the
-                                    #    time of that merge, This merge
-                                    #    creates the mystical
-                                    #    "connection marked with plusse=
-s"
-
-Then we've done the "detached head" merge, that created the S2TRUNK
-
-  git checkout svn-2/trunk    # S2TRUNK was at O2 at that time
-  git merge --no-ff svn-2
-  git svn dcommit             # moves S2TRUNK to the place in the diagr=
-am
-
-Now take care of the other direction:
-
-  git checkout svn-1                # S1 in the diagram above, but stil=
-l
-                                    #    identical to O1 at that time
-  [ cherry-picking c2...c2 ]        # S1 now moved to its place in diag=
-ram
-  git merge --no-ff -s ours svn-2   # S2 in the diagram above.  Unlike =
-S1,
-                                    #    S2 already _is_ at the place w=
-here
-                                    #    it is drawn in the diagram.  S=
-o
-                                    #    this merge creates the connect=
-ion
-                                    #    S2->S1
-
-Now we do the "detached head" merge, that creates the S1TRUNK
-
-  git checkout svn-1/trunk    # S1TRUNK was at O1 at that time
-  git merge --no-ff svn-1
-  git svn dcommit             # moves S1TRUNK to the place in the diagr=
-am
-
-So the "connection marked with plusses" is basically the counterpart of
-the "S2->S1" connection.  But while "S2->S1" got its proper position at
-the time it was created, the plus-connection was created before the c2
-cherries.  And it was never adjusted.  AFAICS, those two connections
-should be symmetrical: "S1->S2" and "S2->S1".
-
-> It *looks* to me like both S1TRUNK and S2TRUNK should be okay, but
-> it's hard to tell what has actually happened here.
-
-Yes, the trunks (and the svn repositories) look pretty good at _that_
-point in time.  But the next merge on S2TRUNK moves all the modificatio=
-ns
-done by the c2 cherries down to S2TRUNK.
-
-> If you could post a screenshot of 'gitk --all' it might help.
-
-IMHO, Screenshots are not of much help here.  That's why I posted
-
-  http://www.spinics.net/lists/git/msg102609.html
-
-The svn histories are about 1250 commits each.  The cherry-pickings are
-about 350 commits each.  This gives histories running in parallel for
-long distances.  Add to this gitk's tendency to change lanes at every
-occasion:  There's no chance to get multiple screen shots (the interest=
-ing
-branch/merge-points, as I described in the thread referenced above) in
-sync.  There's many opportunities to get confused.  At least for me, as=
- a
-newbie to git.
+--=20
+=46elipe Contreras
