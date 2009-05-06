@@ -1,83 +1,93 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: [PATCH 2/2] t4200: convert sed expression which operates on 
-	non-text file to perl
-Date: Thu, 7 May 2009 09:24:37 +1000
-Message-ID: <fcaeb9bf0905061624s515d9b13i188b27f4c5472eba@mail.gmail.com>
-References: <7vpreluckk.fsf@alter.siamese.dyndns.org> <Lle9L7vlL2vfnqjU75q2MR6WXGGP9aOKv8J97cnRHcQgyJeGbOMDDB2xJugZ0LoonfCRYmzXx9E@cipher.nrlssc.navy.mil> 
-	<Lle9L7vlL2vfnqjU75q2MW9kwH-igiKVkmBrtmLzQmOXU0OyvCI2tl4UD8Kdhyg0x_gCHDJIHDM@cipher.nrlssc.navy.mil>
+From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+Subject: Re: git rebase failing when using ZFS partition on Mac OS X
+Date: Thu, 7 May 2009 01:26:43 +0200
+Message-ID: <200905070126.43651.robin.rosenberg.lists@dewire.com>
+References: <1FF266A7-CD80-4471-A837-D64007EE530A@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: gitster@pobox.com, git@vger.kernel.org
-To: Brandon Casey <casey@nrlssc.navy.mil>
-X-From: git-owner@vger.kernel.org Thu May 07 01:25:11 2009
+Content-Type: Text/Plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>
+To: Alex Blewitt <alex.blewitt@gmail.com>
+X-From: git-owner@vger.kernel.org Thu May 07 01:27:25 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M1qUA-0007wd-KI
-	for gcvg-git-2@gmane.org; Thu, 07 May 2009 01:25:11 +0200
+	id 1M1qWK-0000L6-EO
+	for gcvg-git-2@gmane.org; Thu, 07 May 2009 01:27:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752018AbZEFXZA convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 6 May 2009 19:25:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751741AbZEFXZA
-	(ORCPT <rfc822;git-outgoing>); Wed, 6 May 2009 19:25:00 -0400
-Received: from an-out-0708.google.com ([209.85.132.245]:26039 "EHLO
-	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751595AbZEFXY7 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 6 May 2009 19:24:59 -0400
-Received: by an-out-0708.google.com with SMTP id d40so1104373and.1
-        for <git@vger.kernel.org>; Wed, 06 May 2009 16:24:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=extZnd/3D76OIgQ8ScVane5/pTouHSE3b3SptgcxHeE=;
-        b=tMlDDBcC1CbiBaMRtcRf0A9JHZeuznz6diMFgttfRCeGkSozZEannTfIXyQjOm1xro
-         7L8geSweGm7Gqe0LmrcYwIUvyu6sEezi0ff+39dWlA1IxRcqYWnd0+LUsnRUzWPD4jhE
-         1QAwmVFkOlzObo/rlZFVsCovLrfQ87GkU7Ukw=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=X9gRDBkcKajyXawr3lORmbtFitjOhTkDpOwCkC8zKfEzypvCkufGRgZaopgqrsKq5a
-         gP9rgCgVY18dLuK0gJ6tkNUBy4cRJJkoTEaUt4eClBRi5s2IhjbfdY77itBE7UF4Tacu
-         Mn2txumIq9YVygzgG5TPHHYeuMp9Foii93dZ0=
-Received: by 10.100.132.4 with SMTP id f4mr3845548and.127.1241652297431; Wed, 
-	06 May 2009 16:24:57 -0700 (PDT)
-In-Reply-To: <Lle9L7vlL2vfnqjU75q2MW9kwH-igiKVkmBrtmLzQmOXU0OyvCI2tl4UD8Kdhyg0x_gCHDJIHDM@cipher.nrlssc.navy.mil>
+	id S1753353AbZEFX0u (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 6 May 2009 19:26:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753023AbZEFX0t
+	(ORCPT <rfc822;git-outgoing>); Wed, 6 May 2009 19:26:49 -0400
+Received: from mail.dewire.com ([83.140.172.130]:27409 "EHLO dewire.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751741AbZEFX0s (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 May 2009 19:26:48 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by dewire.com (Postfix) with ESMTP id 0737414A8B5B;
+	Thu,  7 May 2009 01:26:46 +0200 (CEST)
+X-Virus-Scanned: by amavisd-new at dewire.com
+Received: from dewire.com ([127.0.0.1])
+	by localhost (torino.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 2-jiWb4CP4U7; Thu,  7 May 2009 01:26:45 +0200 (CEST)
+Received: from sleipner.localnet (unknown [10.9.0.7])
+	by dewire.com (Postfix) with ESMTP id 0E4C914A8B5A;
+	Thu,  7 May 2009 01:26:44 +0200 (CEST)
+User-Agent: KMail/1.11.2 (Linux/2.6.28-11-generic; KDE/4.2.2; i686; ; )
+In-Reply-To: <1FF266A7-CD80-4471-A837-D64007EE530A@gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118408>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118409>
 
-On Thu, May 7, 2009 at 8:56 AM, Brandon Casey <casey@nrlssc.navy.mil> w=
-rote:
-> diff --git a/t/t4200-rerere.sh b/t/t4200-rerere.sh
-> index 504802c..5a1721d 100755
-> --- a/t/t4200-rerere.sh
-> +++ b/t/t4200-rerere.sh
-> @@ -57,7 +57,7 @@ test_expect_success 'conflicting merge' '
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0test_must_fail git merge first
-> =C2=A0'
->
-> -sha1=3D$(sed -e 's/ =C2=A0 =C2=A0 =C2=A0.*//' .git/MERGE_RR)
-> +sha1=3D$(perl -pe 's/ =C2=A0 =C2=A0.*//' .git/MERGE_RR)
+onsdag 06 maj 2009 23:14:11 skrev Alex Blewitt <alex.blewitt@gmail.com>:
+> I've found out why git rebase wasn't working for me. It appears to be  
+> something to do with the fact that the filesystem is running on ZFS  
+> (and frankly, could well be a ZFS bug). I'd be loathe to move away  
+> from ZFS generally but it would be good to find out why it's  
+> complaining.
+> 
+> apple:egit alex$ git status
+> # On branch master
+> # Your branch is ahead of 'origin/master' by 3 commits.
+> #
+> nothing to commit (working directory clean)
+> apple:egit alex$ git rebase -i HEAD~1
+> Working tree is dirty
+> 
+> Here's what running a stat on TODO (an arbitrary file at the head of  
+> the project) gives on a ZFS mounted file:
+> 
+> apple:egit alex$ stat -r TODO
+> 754974724 135333 0100644 1 1000 100 0 2179 1241639236 1241034917  
+> 1241639236 1241034917 2560 5 0 TODO
+> apple:egit alex$ stat TODO
+> 754974724 135333 -rw-r--r-- 1 alex bandlem 0 2179 "May  6 20:47:16  
+> 2009" "Apr 29 20:55:17 2009" "May  6 20:47:16 2009" "Apr 29 20:55:17  
+> 2009" 2560 5 0 TODO
+> 
+> Here's what running a stat on the same file on an HFS partition gives:
+> 
+> apple:egit alex$ stat -r TODO
+> 234881026 930759 0100644 1 1000 0 0 2179 1241643695 1241034917  
+> 1241643690 1241034917 4096 8 0 TODO
+> apple:egit alex$ stat TODO
+> 234881026 930759 -rw-r--r-- 1 alex wheel 0 2179 "May  6 22:01:35 2009"  
+> "Apr 29 20:55:17 2009" "May  6 22:01:30 2009" "Apr 29 20:55:17 2009"  
+> 4096 8 0 TODO
+> 
+> These are repeatable; if I re-run this periodically, it doesn't seem  
+> to change. However, I wonder if there's any dependency on an 'inode'  
+> or similar, which doesn't really have a comparable concept in ZFS.
+> 
+> Is there any more information that I can provide to assist with  
+> finding out what's going on?
 
-Can we have a wrapper for this please? This is correction solution.
-But my work to make git work on windows without msys/cygwin also means
-that I don't have perl. Maybe something like this? I know perl regex
-and sed one is not completely compatible, but it should work for
-simple regex used here and elsewhere.
+Try mine or Linus patch at http://thread.gmane.org/gmane.comp.version-control.git/117649/
+and so what that gives.
 
-sed_wrapper() {
-  if test_have_prereq PERL; then
-    perl -pe "$@"
-  else
-    sed -e "$@"
-  fi
-}
---=20
-Duy
+-- robin
