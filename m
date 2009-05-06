@@ -1,59 +1,61 @@
-From: skillzero@gmail.com
-Subject: git svn master pointing to commit for older svn tag?
-Date: Wed, 6 May 2009 14:59:46 -0700
-Message-ID: <2729632a0905061459v6c257b3ay60e1f454e8f2bb4a@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 4/4] t4200: avoid passing a non-newline terminated file to sed
+Date: Wed, 06 May 2009 14:49:15 -0700
+Message-ID: <7vpreluckk.fsf@alter.siamese.dyndns.org>
+References: <-ElxRhvpfY_jx1Ps8nJ42rHdrKbR03T1y96WpGK19gM@cipher.nrlssc.navy.mil>
+	<IHOAO7NDkb8K9nkprnkd2cQW6duDZ3aYmQzpqboBi5HibQoO83nGG2Z4562gIb22HVW3ho6Z250@cipher.nrlssc.navy.mil>
+	<IHOAO7NDkb8K9nkprnkd2TGjPUHc5N7wdnoXRYKelDZEem1S0tynQeYlVheR46_5TDmYxS1O9i4@cipher.nrlssc.navy.mil>
+	<IHOAO7NDkb8K9nkprnkd2QibZp-GnWBSpcJ8fxO9NTUsmXbuv4_2x5S6YNLzUogav4gLkrx9ClI@cipher.nrlssc.navy.mil>
+	<IHOAO7NDkb8K9nkprnkd2ZsdySdVG_ssYL84wqJwNHZYBqMWRKBIa_Ni6jJRHumlZvrQcXOEMhQ@cipher.nrlssc.navy.mil>
+	<IHOAO7NDkb8K9nkprnkd2ep5vFgQr-bAuDGJW-OdtSbS6WmpSHl041GRSXpP3OcDP4_PsYKsQDU@cipher.nrlssc.navy.mil>
+	<7vhbzyukyi.fsf@alter.siamese.dyndns.org>
+	<RsLiW_EIDQ01u5uSMUrIIMzSbMhkfwGJBEGppONH79Im4WyT76bS5A@cipher.nrlssc.navy.mil>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu May 07 00:01:34 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>, pclouds@gmail.com,
+	git@vger.kernel.org
+To: Brandon Casey <casey@nrlssc.navy.mil>
+X-From: git-owner@vger.kernel.org Thu May 07 00:18:44 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M1pBE-0002Q9-1y
-	for gcvg-git-2@gmane.org; Thu, 07 May 2009 00:01:32 +0200
+	id 1M1pRq-0000oO-IA
+	for gcvg-git-2@gmane.org; Thu, 07 May 2009 00:18:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1762016AbZEFV7t (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 6 May 2009 17:59:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762168AbZEFV7r
-	(ORCPT <rfc822;git-outgoing>); Wed, 6 May 2009 17:59:47 -0400
-Received: from rv-out-0506.google.com ([209.85.198.230]:55776 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1762133AbZEFV7q (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 6 May 2009 17:59:46 -0400
-Received: by rv-out-0506.google.com with SMTP id f6so2951354rvb.5
-        for <git@vger.kernel.org>; Wed, 06 May 2009 14:59:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:date:message-id:subject
-         :from:to:content-type:content-transfer-encoding;
-        bh=v4Cx3ML5a5zHyzVJJBk91BZQ9Pi2fcdIjc6bmvQxy6Q=;
-        b=Lav4f5wCw3NuXcUVeyKYrQmAk5hPOGxd0sHAx63/VWzQgmPf7bKx2z2sTuQTCTNikF
-         HXdoABopost9Kay0ohigq0jyDBxYPsl2cnGKm33+Hwg27rwoUDbYfPIlbzfdetiy4eHR
-         tUp4q+GxdU24ugHT+7xHksx1RzpGrNgCl6ww0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type
-         :content-transfer-encoding;
-        b=d9NLEX5S/R/mzKjiuOHXIXyuZ85IqNAHNxQdS8FU32bPa/fSwp+CQ7AF/4ayUqHqZ3
-         w6RMO/SsW9MH0A4a8HusaqW3d2cx3AeFLmp2uoqeYpMuBQ3vZrKqrhqKrVe9swY4EbU+
-         lH4PZ7bPUaGixnumzmJSeJSsGX/YcJJbpl4FA=
-Received: by 10.114.133.1 with SMTP id g1mr1687407wad.162.1241647186805; Wed, 
-	06 May 2009 14:59:46 -0700 (PDT)
+	id S1763531AbZEFWSY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 6 May 2009 18:18:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1763552AbZEFWSY
+	(ORCPT <rfc822;git-outgoing>); Wed, 6 May 2009 18:18:24 -0400
+Received: from fed1rmmtai104.cox.net ([68.230.241.56]:40615 "EHLO
+	fed1rmmtai104.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1761458AbZEFWSW (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 May 2009 18:18:22 -0400
+Received: from fed1rmimpo03.cox.net ([70.169.32.75])
+          by fed1rmmtao103.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20090506214916.TBEM2915.fed1rmmtao103.cox.net@fed1rmimpo03.cox.net>;
+          Wed, 6 May 2009 17:49:16 -0400
+Received: from localhost ([68.225.240.211])
+	by fed1rmimpo03.cox.net with bizsmtp
+	id oMpF1b00C4aMwMQ04MpFZ1; Wed, 06 May 2009 17:49:15 -0400
+X-Authority-Analysis: v=1.0 c=1 a=1ZMnSAeqFEcA:10 a=KrguOZ7mv_8A:10
+ a=mWJME7gpGU2PeVGGze0A:9 a=qgJ2LRurZjNURVqYaSI88A2lI2EA:4
+X-CM-Score: 0.00
+In-Reply-To: <RsLiW_EIDQ01u5uSMUrIIMzSbMhkfwGJBEGppONH79Im4WyT76bS5A@cipher.nrlssc.navy.mil> (Brandon Casey's message of "Wed\, 06 May 2009 16\:12\:25 -0500")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118394>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118395>
 
-I'm using git svn to sync to a Subversion repository and it generally
-works, but somehow, it seems to have gotten into a state where master
-is pointing to the commit for an old svn tag rather than to the svn
-trunk so 'git svn rebase' never does anything.
+Brandon Casey <casey@nrlssc.navy.mil> writes:
 
-If I look in .git/info/refs, I see that refs/heads/master is pointing
-to the commit for a specific tag and I can change to point to
-something else, but I'm wondering how it got into this state and if
-there's a better way to tell git svn to go back to using the svn trunk
-so future rebases work correctly?
+> The 'sha1' variable that is set here on line 193 is used on the next line
+> to set 'rr', but 'rr' is never used again.  Unless I'm missing something,
+> it appears these two lines can be deleted.
+
+Yeah, it looks like this is a mindless cut&paste; I do not see the point
+of setting rr there unless it is used to make sure that a corresponding
+rerere cache is created, or something.
