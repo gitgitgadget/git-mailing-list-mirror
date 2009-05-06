@@ -1,94 +1,98 @@
-From: Avery Pennarun <apenwarr@gmail.com>
-Subject: Re: Trying to sync two svn repositories with git-svn (repost)
-Date: Wed, 6 May 2009 15:23:40 -0400
-Message-ID: <32541b130905061223h7efddeecvcc52a369093a6b50@mail.gmail.com>
-References: <32541b130904291113p6f99a82ft824cd3c482447117@mail.gmail.com> 
-	<32541b130904291907q4003ad86v4728c5b2ba0aacb7@mail.gmail.com> 
-	<20090430222808.GH15420@raven.wolf.lan> <32541b130904301559w329bdd4bo6f2736a505b7235f@mail.gmail.com> 
-	<20090501142811.GI15420@raven.wolf.lan> <32541b130905011217x7f339d41x696fedee7298e3a4@mail.gmail.com> 
-	<20090502215852.GJ15420@raven.wolf.lan> <32541b130905040858v2a0b7a6br5b056a365fcb6855@mail.gmail.com> 
-	<20090504211423.GK15420@raven.wolf.lan> <20090506185224.GM15420@raven.wolf.lan>
+From: Don Slutz <Don.Slutz@SierraAtlantic.com>
+Subject: Re: Tests in Cygwin
+Date: Wed, 06 May 2009 15:34:36 -0400
+Message-ID: <4A01E64C.7050703@SierraAtlantic.com>
+References: <83prfbhasp.fsf@kalahari.s2.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: Josef Wolf <jw@raven.inka.de>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 06 21:24:11 2009
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Hannu Koivisto <azure@iki.fi>
+X-From: git-owner@vger.kernel.org Wed May 06 21:35:00 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M1miw-0006Xe-GI
-	for gcvg-git-2@gmane.org; Wed, 06 May 2009 21:24:10 +0200
+	id 1M1mtL-0004n3-HH
+	for gcvg-git-2@gmane.org; Wed, 06 May 2009 21:34:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754573AbZEFTYC convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 6 May 2009 15:24:02 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753778AbZEFTYA
-	(ORCPT <rfc822;git-outgoing>); Wed, 6 May 2009 15:24:00 -0400
-Received: from yx-out-2324.google.com ([74.125.44.28]:60999 "EHLO
-	yx-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751486AbZEFTYA convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 6 May 2009 15:24:00 -0400
-Received: by yx-out-2324.google.com with SMTP id 3so172313yxj.1
-        for <git@vger.kernel.org>; Wed, 06 May 2009 12:24:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:content-type
-         :content-transfer-encoding;
-        bh=5z09t/jySKSC0Nt/UrErU5fENZKRs/iKwnyGkvnr1W8=;
-        b=CUgPei+L/l6OP7a5tpy/msBePyCdzMfIypASb8HmtKu39MhR8J8d9vqyDeW8+OTKao
-         UKZDLtp5Arja7fJA6QCtpYrFTunrdv0bGA2UB0WzqK5wLGkrx+yUYfuM75mXDym4NYUt
-         T359IB0KaCUZaWj5YjR1edGJKT07jl1uluhac=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :content-type:content-transfer-encoding;
-        b=h8K8kkIajmvMScaK4G6bS0POlSsT7IH7bJJ15w2+JFb6wcZtQcOl7Lutem4H/myqBt
-         LF3fStQGyl7YxHegRHbQV5AX7G/v99YCxSwi2SwI10cn1kZQ55MZP+759KfXLEYXx9IY
-         m85AEfuJAjH0Lmtyxmr3/AnDShG7KdCrLaYuM=
-Received: by 10.151.73.1 with SMTP id a1mr2872414ybl.203.1241637840164; Wed, 
-	06 May 2009 12:24:00 -0700 (PDT)
-In-Reply-To: <20090506185224.GM15420@raven.wolf.lan>
+	id S1754685AbZEFTer (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 6 May 2009 15:34:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754459AbZEFTer
+	(ORCPT <rfc822;git-outgoing>); Wed, 6 May 2009 15:34:47 -0400
+Received: from mail51.messagelabs.com ([216.82.241.99]:63006 "HELO
+	mail51.messagelabs.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with SMTP id S1752999AbZEFTeq (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 May 2009 15:34:46 -0400
+X-VirusChecked: Checked
+X-Env-Sender: Don.Slutz@SierraAtlantic.com
+X-Msg-Ref: server-3.tower-51.messagelabs.com!1241638485!32600836!2
+X-StarScan-Version: 6.0.0; banners=sierraatlantic.com,-,-
+X-Originating-IP: [206.86.29.5]
+Received: (qmail 31174 invoked from network); 6 May 2009 19:34:47 -0000
+Received: from seng.sierraatl.com (HELO USFREEX1.us.corp.sa) (206.86.29.5)
+  by server-3.tower-51.messagelabs.com with SMTP; 6 May 2009 19:34:47 -0000
+Received: from usbosex1.us.corp.sa ([192.168.17.34]) by USFREEX1.us.corp.sa with Microsoft SMTPSVC(6.0.3790.1830);
+	 Wed, 6 May 2009 12:34:41 -0700
+Received: from [127.0.0.1] ([208.37.241.146]) by usbosex1.us.corp.sa with Microsoft SMTPSVC(6.0.3790.1830);
+	 Wed, 6 May 2009 15:34:39 -0400
+User-Agent: Thunderbird 2.0.0.21 (Windows/20090302)
+In-Reply-To: <83prfbhasp.fsf@kalahari.s2.org>
+X-OriginalArrivalTime: 06 May 2009 19:34:39.0535 (UTC) FILETIME=[B25D93F0:01C9CE81]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118374>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118375>
 
-On Wed, May 6, 2009 at 2:52 PM, Josef Wolf <jw@raven.inka.de> wrote:
-> Here's what I have at this point:
+A lot of these failures are do to running as root (member of 
+Administrators).  Using v1.6.3-rc4 (503f464...) I get:
+
+make -i test
+...
+make aggregate-results
+make[3]: Entering directory `/home/udslutz/BinMode/git/t'
+'/bin/sh' ./aggregate-results.sh test-results/t*-*
+fixed   3
+success 4211
+failed  5
+broken  5
+total   4272
+make[3]: Leaving directory `/home/udslutz/BinMode/git/t'
+...
+
+  -Don Slutz
+
+
+
+-------- Original Message --------
+Subject: Tests in Cygwin
+From: Hannu Koivisto <azure@iki.fi>
+To: git@vger.kernel.org
+Date: 4/17/2009 5:47 AM
+> Greetings,
 >
-> =A0 =A0 =A0 =A0 =A0 =A0 ------------------S1TRUNK
-> =A0 =A0 =A0 =A0 =A0 =A0/ =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 /
-> =A0 --hs1--O1--c2...c2-------S1
-> =A0 =A0 =A0 =A0 =A0 =A0\ =A0 =A0 =A0 =A0 =A0 =A0 =A0/
-> =A0 =A0 =A0 =A0 =A0 =A0 `+++++++. =A0 =A0/
-> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0\ =A0/
-> =A0 --hs2--O2--c1...c1--S2
-> =A0 =A0 =A0 =A0 =A0 =A0\ =A0 =A0 =A0 =A0 =A0 =A0\
-> =A0 =A0 =A0 =A0 =A0 =A0 -------------S2TRUNK
+> I upgraded to the latest git.git as of yesterday
+> (f800b65bea1504299747e7be03ee279508a74e1f) in Cygwin to see if it
+> still has the rebase and bogus modified files problem(s) (reported
+> earlier http://osdir.com/ml/git/2009-04/msg00619.html).  It does;
+> I'll try to bisect it if I manage to make the test case automatic.
 >
-> =A0 hs1, hs2: =A0 =A0 =A0 =A0 history imported from svn-1 and svn2, r=
-espectively
-> =A0 O1, O2: =A0 =A0 =A0 =A0 =A0 the svn-1-orig and svn-2-orig tags
-> =A0 c1, c2: =A0 =A0 =A0 =A0 =A0 cherries picked from hs1 and hs2, res=
-pectively
-> =A0 S1, S2: =A0 =A0 =A0 =A0 =A0 svn-1 and svn-2, the local tracking b=
-ranches
-> =A0 S1TRUNK, S2TRUNK: the remotes/svn-X/trunk branches
+> I also thought I'd run all the tests just for the heck of it.  The
+> result is about 240 failures which are available here (lines
+> indicating passed tests removed):
 >
-> I would have expected a symmetrical diagram. =A0But it turns out that=
- the
-> connection marked with plusses is still at O1 instead of S1. =A0So it=
- takes
-> no wonder that the c2 cherries get re-applied to the s2 branch on the
-> next merge.
+> http://www.iki.fi/azure/tmp/git-test-results-cygwin-f800b65bea1504299747e7be03ee279508a74e1f.txt
+>
+> I wonder, since there seems to be some sort of mechanism to mark
+> failures "known" (at least I got a couple of "still broken ..."
+> lines), are all these unexpected, new problems, or is there perhaps
+> some separate list of known failures on Cygwin?
+>
+>   
 
-That's a well-drawn diagram, but unfortunately I'm still confused.
-What is the "connection marked with plusses" and does it have a name?
-It *looks* to me like both S1TRUNK and S2TRUNK should be okay, but
-it's hard to tell what has actually happened here.
 
-If you could post a screenshot of 'gitk --all' it might help.
 
-Avery
+__________________________________________________________________________________________________________________
+DISCLAIMER:"The information contained in this message and the attachments (if any) may be privileged and confidential and protected from disclosure. You are hereby notified that any unauthorized use, dissemination, distribution or copying of this communication, review, retransmission, or taking of any action based upon this information, by persons or entities other than the intended recipient, is strictly prohibited. If you are not the intended recipient or an employee or agent responsible for delivering this message, and have received this communication in error, please notify us immediately by replying to the message and kindly delete the original message, attachments, if any, and all its copies from your computer system. Thank you for your cooperation." 
+________________________________________________________________________________________________________________
