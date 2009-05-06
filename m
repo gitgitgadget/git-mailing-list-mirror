@@ -1,87 +1,83 @@
-From: Alex Vandiver <alexmv@MIT.EDU>
-Subject: [PATCH 1/2] git-svn: Fix for svn paths removed > log-window-size revisions ago
-Date: Wed,  6 May 2009 16:18:52 -0400
-Message-ID: <1241641133-6974-1-git-send-email-alexmv@mit.edu>
-Cc: Alex Vandiver <alexmv@MIT.EDU>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 06 22:36:17 2009
+From: Alex Blewitt <alex.blewitt@gmail.com>
+Subject: [PATCH 2/2] Use NullProgressMonitor.INSTANCE and indent for loop
+Date: Wed,  6 May 2009 21:37:04 +0100
+Message-ID: <1241642224-6914-2-git-send-email-alex.blewitt@gmail.com>
+References: <1241642224-6914-1-git-send-email-alex.blewitt@gmail.com>
+Cc: git@vger.kernel.org, Alex Blewitt <alex.blewitt@gmail.com>
+To: spearce@spearce.org, robin.rosenberg@dewire.com
+X-From: git-owner@vger.kernel.org Wed May 06 22:37:51 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M1nqf-0004fl-TJ
-	for gcvg-git-2@gmane.org; Wed, 06 May 2009 22:36:14 +0200
+	id 1M1nsE-0005T9-1C
+	for gcvg-git-2@gmane.org; Wed, 06 May 2009 22:37:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753629AbZEFUgF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 6 May 2009 16:36:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751678AbZEFUgE
-	(ORCPT <rfc822;git-outgoing>); Wed, 6 May 2009 16:36:04 -0400
-Received: from SOUTH-STATION-ANNEX.MIT.EDU ([18.72.1.2]:61248 "EHLO
-	south-station-annex.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751171AbZEFUgD (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 6 May 2009 16:36:03 -0400
-Received: from grand-central-station.mit.edu (GRAND-CENTRAL-STATION.MIT.EDU [18.7.21.82])
-	by south-station-annex.mit.edu (8.13.6/8.9.2) with ESMTP id n46KJILQ025356;
-	Wed, 6 May 2009 16:19:19 -0400 (EDT)
-Received: from outgoing-legacy.mit.edu (OUTGOING-LEGACY.MIT.EDU [18.7.22.104])
-	by grand-central-station.mit.edu (8.13.6/8.9.2) with ESMTP id n46KJ3lW018855;
-	Wed, 6 May 2009 16:19:04 -0400 (EDT)
-Received: from localhost.localdomain (75-147-59-54-NewEngland.hfc.comcastbusiness.net [75.147.59.54])
-	)
-	by outgoing-legacy.mit.edu (8.13.6/8.12.4) with ESMTP id n46KJ10u003118;
-	Wed, 6 May 2009 16:19:03 -0400 (EDT)
-X-Mailer: git-send-email 1.6.3.rc4.225.g060aa4
-X-Scanned-By: MIMEDefang 2.42
-X-Spam-Score: -2.464
-X-Spam-Flag: NO
+	id S1752975AbZEFUhI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 6 May 2009 16:37:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754362AbZEFUhG
+	(ORCPT <rfc822;git-outgoing>); Wed, 6 May 2009 16:37:06 -0400
+Received: from server.bandlem.com ([217.155.97.60]:37067 "EHLO
+	apple.int.bandlem.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1756777AbZEFUhF (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 May 2009 16:37:05 -0400
+Received: by apple.int.bandlem.com (Postfix, from userid 1000)
+	id 57AAAE25E4; Wed,  6 May 2009 21:37:04 +0100 (BST)
+X-Mailer: git-send-email 1.6.2.2
+In-Reply-To: <1241642224-6914-1-git-send-email-alex.blewitt@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118380>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118381>
 
-Instead of trying to find the end of the commit history only in the
-last window, track if we have seen commits yet, and use that to judge
-if we need to backtrack and look for a tail.  Otherwise, conversion
-can silently lose up to 100 revisions of a branch if it was deleted
->100 revisions ago.
-
-Signed-off-by: Alex Vandiver <alexmv@mit.edu>
 ---
- git-svn.perl |    6 +++++-
- 1 files changed, 5 insertions(+), 1 deletions(-)
+ .../src/org/spearce/jgit/lib/PackWriter.java       |   25 ++++++++++---------
+ 1 files changed, 13 insertions(+), 12 deletions(-)
 
-diff --git a/git-svn.perl b/git-svn.perl
-index ef1d30d..5836dde 100755
---- a/git-svn.perl
-+++ b/git-svn.perl
-@@ -4438,6 +4438,7 @@ sub gs_fetch_loop_common {
- 	my ($min, $max) = ($base, $head < $base + $inc ? $head : $base + $inc);
- 	my $longest_path = longest_common_path($gsv, $globs);
- 	my $ra_url = $self->{url};
-+	my $find_trailing_edge;
- 	while (1) {
- 		my %revs;
- 		my $err;
-@@ -4455,8 +4456,10 @@ sub gs_fetch_loop_common {
- 		               sub { $revs{$_[1]} = _cb(@_) });
- 		if ($err) {
- 			print "Checked through r$max\r";
-+		} else {
-+			$find_trailing_edge = 1;
+diff --git a/org.spearce.jgit/src/org/spearce/jgit/lib/PackWriter.java b/org.spearce.jgit/src/org/spearce/jgit/lib/PackWriter.java
+index 3d7004d..a35f61d 100644
+--- a/org.spearce.jgit/src/org/spearce/jgit/lib/PackWriter.java
++++ b/org.spearce.jgit/src/org/spearce/jgit/lib/PackWriter.java
+@@ -230,8 +230,8 @@ public PackWriter(final Repository repo, final ProgressMonitor monitor) {
+ 	public PackWriter(final Repository repo, final ProgressMonitor imonitor,
+ 			final ProgressMonitor wmonitor) {
+ 		this.db = repo;
+-		initMonitor = (imonitor == null ? new NullProgressMonitor() : imonitor);
+-		writeMonitor = (wmonitor == null ? new NullProgressMonitor() : wmonitor);
++		initMonitor = imonitor == null ? NullProgressMonitor.INSTANCE : imonitor;
++		writeMonitor = wmonitor == null ? NullProgressMonitor.INSTANCE : wmonitor;
+ 		this.deflater = new Deflater(db.getConfig().getCore().getCompression());
+ 		outputVersion = repo.getConfig().getCore().getPackIndexVersion();
+ 	}
+@@ -829,17 +829,18 @@ private ObjectWalk setUpWalker(
+ 			RevObject o = walker.parseAny(id);
+ 			walker.markStart(o);
  		}
--		if ($err && $max >= $head) {
-+		if ($err and $find_trailing_edge) {
- 			print STDERR "Path '$longest_path' ",
- 				     "was probably deleted:\n",
- 				     $err->expanded_message,
-@@ -4475,6 +4478,7 @@ sub gs_fetch_loop_common {
- 					last;
- 				}
+-		if (uninterestingObjects != null)
+-		for (ObjectId id : uninterestingObjects) {
+-			final RevObject o;
+-			try {
+-				o = walker.parseAny(id);
+-			} catch (MissingObjectException x) {
+-				if (ignoreMissingUninteresting)
+-					continue;
+-				throw x;
++		if (uninterestingObjects != null) {
++			for (ObjectId id : uninterestingObjects) {
++				final RevObject o;
++				try {
++					o = walker.parseAny(id);
++				} catch (MissingObjectException x) {
++					if (ignoreMissingUninteresting)
++						continue;
++					throw x;
++				}
++				walker.markUninteresting(o);
  			}
-+			$find_trailing_edge = 0;
+-			walker.markUninteresting(o);
  		}
- 		$SVN::Error::handler = $err_handler;
- 
+ 		return walker;
+ 	}
 -- 
-1.6.3.rc4.225.g060aa4
+1.6.2.2
