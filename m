@@ -1,105 +1,97 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: How to restrict gitk to show only branch/merge commits?
-Date: Wed, 06 May 2009 00:51:16 -0700 (PDT)
-Message-ID: <m37i0uoej7.fsf@localhost.localdomain>
-References: <20090506072053.GL15420@raven.wolf.lan>
+From: Ralf Wildenhues <Ralf.Wildenhues@gmx.de>
+Subject: Re: shell compatibility issues with SunOS 5.10
+Date: Wed, 6 May 2009 09:19:06 +0000 (UTC)
+Message-ID: <loom.20090506T091628-717@post.gmane.org>
+References: <20090506055913.GA9701@dektop> <4A01320A.2050600@viscovery.net> <fcaeb9bf0905052357v6773cbf5i12795c1866a80783@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Josef Wolf <jw@raven.inka.de>
-X-From: git-owner@vger.kernel.org Wed May 06 09:51:25 2009
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed May 06 11:19:32 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M1buX-0006CN-Dn
-	for gcvg-git-2@gmane.org; Wed, 06 May 2009 09:51:25 +0200
+	id 1M1dHo-0005LG-2h
+	for gcvg-git-2@gmane.org; Wed, 06 May 2009 11:19:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753614AbZEFHvT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 6 May 2009 03:51:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752856AbZEFHvS
-	(ORCPT <rfc822;git-outgoing>); Wed, 6 May 2009 03:51:18 -0400
-Received: from mail-gx0-f166.google.com ([209.85.217.166]:54311 "EHLO
-	mail-gx0-f166.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752671AbZEFHvR (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 6 May 2009 03:51:17 -0400
-Received: by gxk10 with SMTP id 10so10278719gxk.13
-        for <git@vger.kernel.org>; Wed, 06 May 2009 00:51:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received
-         :x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        bh=dSgrKsjyfBfJ4VEZEQ449StXzne4h+o+FFZtCWGnmpQ=;
-        b=lEDG0XX2AUXTRU58O28i5ySQSJ7lRBDv4OGx3lUemIt2520NqmXhNgT/WMe/6/NP2Z
-         lMkxziM48pfAbQm+TApygf1VvSYPXrC4VmJbzG3cUt4LK+FnIQ4VTZEQrxEh0K9145Wk
-         jp+4EU8mn2j93l0QqflMHSYHOz1HfptgP4I3c=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        b=M8997G7RsoWhswqD9PM2M8BnY82JU568145BbDFwDO45G7xC27FnwyCrlf/ktLfzXO
-         VPd+UgNMUKKuIwK8yIzG3z9tRuSvchFtvcje3VRxnrDllTtM4BqU/aKK+NaFr30XVlKS
-         Zqx/TIq53731ZVqjV2sYH3DEXV9UgSjFsZ0uU=
-Received: by 10.90.105.17 with SMTP id d17mr830051agc.68.1241596277244;
-        Wed, 06 May 2009 00:51:17 -0700 (PDT)
-Received: from localhost.localdomain (abwa249.neoplus.adsl.tpnet.pl [83.8.224.249])
-        by mx.google.com with ESMTPS id 39sm1182908agb.71.2009.05.06.00.51.15
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 06 May 2009 00:51:16 -0700 (PDT)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id n467pAdA005156;
-	Wed, 6 May 2009 09:51:10 +0200
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id n467p86r005153;
-	Wed, 6 May 2009 09:51:08 +0200
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <20090506072053.GL15420@raven.wolf.lan>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+	id S1753502AbZEFJTY convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 6 May 2009 05:19:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753357AbZEFJTY
+	(ORCPT <rfc822;git-outgoing>); Wed, 6 May 2009 05:19:24 -0400
+Received: from main.gmane.org ([80.91.229.2]:38890 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753331AbZEFJTX (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 May 2009 05:19:23 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1M1dHe-0002rZ-EX
+	for git@vger.kernel.org; Wed, 06 May 2009 09:19:22 +0000
+Received: from gibraltar.ins.uni-bonn.de ([131.220.223.4])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 06 May 2009 09:19:22 +0000
+Received: from Ralf.Wildenhues by gibraltar.ins.uni-bonn.de with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 06 May 2009 09:19:22 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: main.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 131.220.223.4 (Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.0.6) Gecko/2009020911 Ubuntu/8.04 (hardy) Firefox/3.0.6)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118332>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118333>
 
-Josef Wolf <jw@raven.inka.de> writes:
+Nguyen Thai Ngoc Duy writes:
+> On Wed, May 6, 2009 at 4:45 PM, Johannes Sixt wrote:
+> > Nguyen Thai Ngoc Duy schrieb:
+> >> =C2=A0 =C2=A0 =C2=A0 # normalize path:
+> >> =C2=A0 =C2=A0 =C2=A0 # multiple //; leading ./; /./; /../; trailin=
+g /
+> >> =C2=A0 =C2=A0 =C2=A0 path=3D$(printf '%s/\n' "$path" |
+> >> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 sed -e '
+> >> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 s|//*|/|g
+> >> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 s|^\(\./\)*||
+> >> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 s|/\./|/|g
+> >> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 :start
+> >> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 s|\([^/]*\)/\.\./||
+> >> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 tstart
+> >> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 s|/*$||
+> >> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 ')
 
-> I would like gitk to show me only the heads, branch-points and
-> merge-points of branches.
-> 
-> For example, given a history like this:
-> 
->                    d...e--F--g...h--H
->                   /        \
->  a1--a2...an--b--C          N--o...p--P
->                   \        /
->                    i...j--K--l...m--M
-> 
-> I would like to see only
-> 
->  - a1     because it has no parent
->  - C,F,K  because they are reachable from multiple heads
->  - N      because it has multiple parents
->  - H,M,P  because they are heads
-> 
-> Ideally, there would be a possibility to add some "context" to the
-> list of commits to be shown: with $context==1, all the commits shown
-> in the above history would be shown, but the commits indicated by
-> the triple-dots would be omitted.
-> 
-> The reason is that I have some repositories with several really long
-> linear history.  It is hard to get a global overview about the branch
-> history if you have to scroll constantly.
-> 
-> Is something like that possible with gitk?
+> It says nothing. The result of "printf '%s\n' ./foo/bar | sed -e blah=
+"
+> is just wrong, (i.e. "./" remains). I stripped down to "sed -e
+> 's|^\(\./\)*||'", does not work. Probably due to \( \) pair. Skimmed
+> through sed manpage, seems no mention of bracket grouping.
 
-I am not sure if it would give you exactly what you want, but if I
-understand correctly gitk accepts arguments for git-log (and you can
-set them somewhere in options, too).  Take a look at section "History
-Simplification" in git-log/git-rev-list manpage, in particular at
-option '--simplify-by-decoration' there.
+Quoting 'info Autoconf "Limitation of Usual Tools"':
 
--- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+     Some `sed' implementations, e.g., Solaris, restrict the special
+     role of the asterisk to one-character regular expressions.  This
+     may lead to unexpected behavior:
+
+          $ echo '1*23*4' | /usr/bin/sed 's/\(.\)*/x/g'
+          x2x4
+          $ echo '1*23*4' | /usr/xpg4/bin/sed 's/\(.\)*/x/g'
+          x
+
+You can work around it in this case with
+  :again
+  s|^\./||
+  t again
+
+BTW, you should put a space between t and the label (but not between
+: and label), POSIX requires that and some sed versions expect it.
+
+Cheers,
+Ralf
