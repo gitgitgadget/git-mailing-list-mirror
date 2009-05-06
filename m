@@ -1,97 +1,64 @@
-From: Ralf Wildenhues <Ralf.Wildenhues@gmx.de>
-Subject: Re: shell compatibility issues with SunOS 5.10
-Date: Wed, 6 May 2009 09:19:06 +0000 (UTC)
-Message-ID: <loom.20090506T091628-717@post.gmane.org>
-References: <20090506055913.GA9701@dektop> <4A01320A.2050600@viscovery.net> <fcaeb9bf0905052357v6773cbf5i12795c1866a80783@mail.gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Tracking the untracked
+Date: Wed, 6 May 2009 11:36:17 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.0905061130340.14230@intel-tinevez-2-302>
+References: <93c3eada0905051819l92dc7ey331d69f009cc9c8b@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 06 11:19:32 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Geoff Russell <geoffrey.russell@gmail.com>
+X-From: git-owner@vger.kernel.org Wed May 06 11:36:35 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M1dHo-0005LG-2h
-	for gcvg-git-2@gmane.org; Wed, 06 May 2009 11:19:32 +0200
+	id 1M1dYH-0003UW-Bt
+	for gcvg-git-2@gmane.org; Wed, 06 May 2009 11:36:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753502AbZEFJTY convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 6 May 2009 05:19:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753357AbZEFJTY
-	(ORCPT <rfc822;git-outgoing>); Wed, 6 May 2009 05:19:24 -0400
-Received: from main.gmane.org ([80.91.229.2]:38890 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753331AbZEFJTX (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 6 May 2009 05:19:23 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1M1dHe-0002rZ-EX
-	for git@vger.kernel.org; Wed, 06 May 2009 09:19:22 +0000
-Received: from gibraltar.ins.uni-bonn.de ([131.220.223.4])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 06 May 2009 09:19:22 +0000
-Received: from Ralf.Wildenhues by gibraltar.ins.uni-bonn.de with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 06 May 2009 09:19:22 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: main.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 131.220.223.4 (Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.0.6) Gecko/2009020911 Ubuntu/8.04 (hardy) Firefox/3.0.6)
+	id S1754237AbZEFJgZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 6 May 2009 05:36:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752032AbZEFJgY
+	(ORCPT <rfc822;git-outgoing>); Wed, 6 May 2009 05:36:24 -0400
+Received: from mail.gmx.net ([213.165.64.20]:35972 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752813AbZEFJgY (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 May 2009 05:36:24 -0400
+Received: (qmail invoked by alias); 06 May 2009 09:36:23 -0000
+Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
+  by mail.gmx.net (mp012) with SMTP; 06 May 2009 11:36:23 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19cpQwNIr5cdUkA8ltwmHUq3UKph06PnHVcKj3SGI
+	a0QIepwA4liXoq
+X-X-Sender: schindel@intel-tinevez-2-302
+In-Reply-To: <93c3eada0905051819l92dc7ey331d69f009cc9c8b@mail.gmail.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118333>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118334>
 
-Nguyen Thai Ngoc Duy writes:
-> On Wed, May 6, 2009 at 4:45 PM, Johannes Sixt wrote:
-> > Nguyen Thai Ngoc Duy schrieb:
-> >> =C2=A0 =C2=A0 =C2=A0 # normalize path:
-> >> =C2=A0 =C2=A0 =C2=A0 # multiple //; leading ./; /./; /../; trailin=
-g /
-> >> =C2=A0 =C2=A0 =C2=A0 path=3D$(printf '%s/\n' "$path" |
-> >> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 sed -e '
-> >> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 s|//*|/|g
-> >> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 s|^\(\./\)*||
-> >> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 s|/\./|/|g
-> >> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 :start
-> >> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 s|\([^/]*\)/\.\./||
-> >> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 tstart
-> >> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 s|/*$||
-> >> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 ')
+Hi,
 
-> It says nothing. The result of "printf '%s\n' ./foo/bar | sed -e blah=
-"
-> is just wrong, (i.e. "./" remains). I stripped down to "sed -e
-> 's|^\(\./\)*||'", does not work. Probably due to \( \) pair. Skimmed
-> through sed manpage, seems no mention of bracket grouping.
+On Wed, 6 May 2009, Geoff Russell wrote:
 
-Quoting 'info Autoconf "Limitation of Usual Tools"':
+> Bug or feature? I don't know.
+> 
+> On the master branch I have some untracked files e.g., object modules,
+> executables.
+> 
+> I create a branch B1 and add+commit the untracked files.
+> 
+> When I switch back to the master (git checkout master), the untracked
+> files are no longer where I left them.
 
-     Some `sed' implementations, e.g., Solaris, restrict the special
-     role of the asterisk to one-character regular expressions.  This
-     may lead to unexpected behavior:
+This is exactly what Git is supposed to do.  You were on branch B1, which 
+has the files tracked, and you do not have the files tracked in master, so 
+when switching to master, they should be removed.
 
-          $ echo '1*23*4' | /usr/bin/sed 's/\(.\)*/x/g'
-          x2x4
-          $ echo '1*23*4' | /usr/xpg4/bin/sed 's/\(.\)*/x/g'
-          x
+Probably you have to rethink what you are trying to do.
 
-You can work around it in this case with
-  :again
-  s|^\./||
-  t again
-
-BTW, you should put a space between t and the label (but not between
-: and label), POSIX requires that and some sed versions expect it.
-
-Cheers,
-Ralf
+Ciao,
+Dscho
