@@ -1,76 +1,63 @@
-From: "Robin H. Johnson" <robbat2@gentoo.org>
-Subject: Re: [PATCH] Fix sloppy Getopt::Long.
-Date: Wed, 6 May 2009 09:13:09 -0700
-Message-ID: <20090506161309.GC10702@curie-int>
-References: <1241547374-6737-1-git-send-email-robbat2@gentoo.org> <7vljpazuyg.fsf@alter.siamese.dyndns.org> <20090506064949.GB29479@dcvr.yhbt.net>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: [PATCH] git-remote: make remote name optional for prune operation
+Date: Wed, 06 May 2009 18:15:35 +0200
+Message-ID: <4A01B7A7.9020308@drmicha.warpmail.net>
+References: <1241620621-12188-1-git-send-email-julien@danjou.info> 	<200905061649.25351.fge@one2team.com> <20090506153212.GF10701@abydos.adm.naquadah.org> <8c9a060905060846o1a7b26b0m78ff0cbe48648873@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8BIT
-Cc: Junio C Hamano <gitster@pobox.com>,
-	"Robin H. Johnson" <robbat2@gentoo.org>, git@vger.kernel.org
-To: Eric Wong <normalperson@yhbt.net>
-X-From: git-owner@vger.kernel.org Wed May 06 18:13:52 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Julien Danjou <julien@danjou.info>,
+	Francis Galiegue <fge@one2team.com>, git@vger.kernel.org,
+	gitster@pobox.com
+To: Jacob Helwig <jacob.helwig@gmail.com>
+X-From: git-owner@vger.kernel.org Wed May 06 18:16:24 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M1jkl-0001O6-0N
-	for gcvg-git-2@gmane.org; Wed, 06 May 2009 18:13:51 +0200
+	id 1M1jnC-0002nG-32
+	for gcvg-git-2@gmane.org; Wed, 06 May 2009 18:16:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759893AbZEFQNS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 6 May 2009 12:13:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759759AbZEFQNS
-	(ORCPT <rfc822;git-outgoing>); Wed, 6 May 2009 12:13:18 -0400
-Received: from b01.ext.isohunt.com ([208.71.112.51]:57211 "EHLO
-	mail.isohunt.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1755442AbZEFQNR convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 6 May 2009 12:13:17 -0400
-Received: (qmail 23461 invoked from network); 6 May 2009 16:13:12 -0000
-Received: from tsi-static.orbis-terrarum.net (HELO curie.orbis-terrarum.net) (76.10.188.108)
-  (smtp-auth username robbat2@isohunt.com, mechanism login)
-  by mail.isohunt.com (qpsmtpd/0.33-dev on beta01) with (AES256-SHA encrypted) ESMTPSA; Wed, 06 May 2009 16:13:12 +0000
-Received: (qmail 5342 invoked by uid 10000); 6 May 2009 09:13:09 -0700
-Content-Disposition: inline
-In-Reply-To: <20090506064949.GB29479@dcvr.yhbt.net>
-User-Agent: Mutt/1.5.16 (2007-06-09)
+	id S1759942AbZEFQPq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 6 May 2009 12:15:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759900AbZEFQPq
+	(ORCPT <rfc822;git-outgoing>); Wed, 6 May 2009 12:15:46 -0400
+Received: from out2.smtp.messagingengine.com ([66.111.4.26]:57134 "EHLO
+	out2.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1759334AbZEFQPp (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 6 May 2009 12:15:45 -0400
+Received: from compute1.internal (compute1.internal [10.202.2.41])
+	by out1.messagingengine.com (Postfix) with ESMTP id D170633AFF4;
+	Wed,  6 May 2009 12:15:44 -0400 (EDT)
+Received: from heartbeat1.messagingengine.com ([10.202.2.160])
+  by compute1.internal (MEProxy); Wed, 06 May 2009 12:15:44 -0400
+X-Sasl-enc: oSdtq+fqIOt24rUoiU94KuwF5UsEMPJWP/LLEQplHBx5 1241626544
+Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.12])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id DCA721E626;
+	Wed,  6 May 2009 12:15:43 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1b5pre) Gecko/20090504 Lightning/1.0pre Shredder/3.0b3pre
+In-Reply-To: <8c9a060905060846o1a7b26b0m78ff0cbe48648873@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118352>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118353>
 
-On Tue, May 05, 2009 at 11:49:49PM -0700, Eric Wong wrote:
-> Junio C Hamano <gitster@pobox.com> wrote:
-> > "Robin H. Johnson" <robbat2@gentoo.org> writes:
-> > 
-> > > Getopt-Long v2.38 is much stricter about sloppy getopt usage. The
-> > > trailing pipe causes git-svn testcases to fail for all of the --stdin
-> > > argument calls.
-> > >
-> > > Signed-off-by: Robin H. Johnson <robbat2@gentoo.org>
-> > 
-> > Eric, I'll take this directly to my tree.  Ok?
+Jacob Helwig venit, vidit, dixit 06.05.2009 17:46:
+> On Wed, May 6, 2009 at 08:32, Julien Danjou <julien@danjou.info> wrote:
+>> At 1241621365 time_t, Francis Galiegue wrote:
+>>> Didn't you forget a little something in your patch?
+>>
+>> If so, I really can't see what.
+>>
+>> Cheers,
+>> --
+>> Julien Danjou
 > 
-> The empty "" after the "|" was intended for the set-tree command to take
-> a lone "-" as a parameter to also mean "--stdin".
-> 
-> The following should work, too, but I don't have time to test right now:
-> 
-> +			{ '' => \$_stdin, 'stdin' => \$_stdin,
-> +			  %cmt_opts, %fc_opts, } ],
-I confirm that it does correctly set the $_stdin variable (tested
-briefly).
+> I'm guessing, but perhaps Francis means a test for this behavior?
 
-Testcase:
-=====
-use Getopt::Long qw/:config gnu_getopt no_ignore_case auto_abbrev/;
-my $_stdin;
-my $rc = GetOptions( 'stdin' => \$_stdin, '' => \$_stdin);
-printf "rc:%s s:%s\n",$rc,$_stdin;
-=====
+Documentation (besides changing <> to []), test.
+Also, it looks as if a get_one_entry() declaration is added without a
+definition. But the definition is there already.
 
--- 
-Robin Hugh Johnson
-Gentoo Linux Developer & Infra Guy
-E-Mail     : robbat2@gentoo.org
-GnuPG FP   : 11AC BA4F 4778 E3F6 E4ED  F38E B27B 944E 3488 4E85
+Michael
