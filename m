@@ -1,80 +1,66 @@
-From: Brandon Casey <casey@nrlssc.navy.mil>
-Subject: [PATCH] t8005: use egrep when extended regular expressions are required
-Date: Wed,  6 May 2009 13:31:42 -0500
-Message-ID: <oO0aWq8IlAMsKZ9ZA1BW41Q2yED3E3Gy0etERczi2cjwFaZDei2brNq_BxSt-DnUld4xgNrFZ64@cipher.nrlssc.navy.mil>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 4/4] t4200: avoid passing a non-newline terminated file to sed
+Date: Wed, 06 May 2009 11:48:05 -0700
+Message-ID: <7vhbzyukyi.fsf@alter.siamese.dyndns.org>
+References: <-ElxRhvpfY_jx1Ps8nJ42rHdrKbR03T1y96WpGK19gM@cipher.nrlssc.navy.mil>
+	<IHOAO7NDkb8K9nkprnkd2cQW6duDZ3aYmQzpqboBi5HibQoO83nGG2Z4562gIb22HVW3ho6Z250@cipher.nrlssc.navy.mil>
+	<IHOAO7NDkb8K9nkprnkd2TGjPUHc5N7wdnoXRYKelDZEem1S0tynQeYlVheR46_5TDmYxS1O9i4@cipher.nrlssc.navy.mil>
+	<IHOAO7NDkb8K9nkprnkd2QibZp-GnWBSpcJ8fxO9NTUsmXbuv4_2x5S6YNLzUogav4gLkrx9ClI@cipher.nrlssc.navy.mil>
+	<IHOAO7NDkb8K9nkprnkd2ZsdySdVG_ssYL84wqJwNHZYBqMWRKBIa_Ni6jJRHumlZvrQcXOEMhQ@cipher.nrlssc.navy.mil>
+	<IHOAO7NDkb8K9nkprnkd2ep5vFgQr-bAuDGJW-OdtSbS6WmpSHl041GRSXpP3OcDP4_PsYKsQDU@cipher.nrlssc.navy.mil>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
 Cc: pclouds@gmail.com, git@vger.kernel.org
-To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Wed May 06 20:35:54 2009
+To: Brandon Casey <casey@nrlssc.navy.mil>
+X-From: git-owner@vger.kernel.org Wed May 06 20:48:33 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M1ly9-00074p-UH
-	for gcvg-git-2@gmane.org; Wed, 06 May 2009 20:35:50 +0200
+	id 1M1mAR-0004fA-IA
+	for gcvg-git-2@gmane.org; Wed, 06 May 2009 20:48:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760728AbZEFSfj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 6 May 2009 14:35:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759265AbZEFSfi
-	(ORCPT <rfc822;git-outgoing>); Wed, 6 May 2009 14:35:38 -0400
-Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:51261 "EHLO
-	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1760396AbZEFSfi (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 6 May 2009 14:35:38 -0400
-Received: by mail.nrlssc.navy.mil id n46IVpEi020104; Wed, 6 May 2009 13:31:51 -0500
-X-OriginalArrivalTime: 06 May 2009 18:31:50.0973 (UTC) FILETIME=[EC20A6D0:01C9CE78]
+	id S1754159AbZEFSsJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 6 May 2009 14:48:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757260AbZEFSsI
+	(ORCPT <rfc822;git-outgoing>); Wed, 6 May 2009 14:48:08 -0400
+Received: from fed1rmmtao105.cox.net ([68.230.241.41]:42020 "EHLO
+	fed1rmmtao105.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756437AbZEFSsH (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 May 2009 14:48:07 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao105.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20090506184806.GSLY20430.fed1rmmtao105.cox.net@fed1rmimpo02.cox.net>;
+          Wed, 6 May 2009 14:48:06 -0400
+Received: from localhost ([68.225.240.211])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id oJo51b00D4aMwMQ04Jo5SR; Wed, 06 May 2009 14:48:05 -0400
+X-Authority-Analysis: v=1.0 c=1 a=1ZMnSAeqFEcA:10 a=KrguOZ7mv_8A:10
+ a=X5B8e6ANxa0BHea_Ps0A:9 a=WER4Mle0IzJXsumjdJNG2WNbaYgA:4
+X-CM-Score: 0.00
+In-Reply-To: <IHOAO7NDkb8K9nkprnkd2ep5vFgQr-bAuDGJW-OdtSbS6WmpSHl041GRSXpP3OcDP4_PsYKsQDU@cipher.nrlssc.navy.mil> (Brandon Casey's message of "Wed\,  6 May 2009 13\:29\:17 -0500")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118369>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118370>
 
-Not all versions of grep understand backslashed extended regular
-expressions.  Possibly only gnu grep does.
+Brandon Casey <casey@nrlssc.navy.mil> writes:
 
-Signed-off-by: Brandon Casey <casey@nrlssc.navy.mil>
----
- t/t8005-blame-i18n.sh |    8 ++++----
- 1 files changed, 4 insertions(+), 4 deletions(-)
+> Some versions of sed exit non-zero if the file they are supplied is not
+> newline terminated.  Solaris's /usr/xpg4/bin/sed is one such sed.  So
+> rework this test to avoid doing so.
 
-diff --git a/t/t8005-blame-i18n.sh b/t/t8005-blame-i18n.sh
-index 4470a92..fcd5c26 100755
---- a/t/t8005-blame-i18n.sh
-+++ b/t/t8005-blame-i18n.sh
-@@ -36,7 +36,7 @@ EOF
- test_expect_success \
- 	'blame respects i18n.commitencoding' '
- 	git blame --incremental file | \
--		grep "^\(author\|summary\) " > actual &&
-+		egrep "^(author|summary) " > actual &&
- 	test_cmp actual expected
- '
- 
-@@ -53,7 +53,7 @@ test_expect_success \
- 	'blame respects i18n.logoutputencoding' '
- 	git config i18n.logoutputencoding cp1251 &&
- 	git blame --incremental file | \
--		grep "^\(author\|summary\) " > actual &&
-+		egrep "^(author|summary) " > actual &&
- 	test_cmp actual expected
- '
- 
-@@ -69,7 +69,7 @@ EOF
- test_expect_success \
- 	'blame respects --encoding=utf-8' '
- 	git blame --incremental --encoding=utf-8 file | \
--		grep "^\(author\|summary\) " > actual &&
-+		egrep "^(author|summary) " > actual &&
- 	test_cmp actual expected
- '
- 
-@@ -85,7 +85,7 @@ EOF
- test_expect_success \
- 	'blame respects --encoding=none' '
- 	git blame --incremental --encoding=none file | \
--		grep "^\(author\|summary\) " > actual &&
-+		egrep "^(author|summary) " > actual &&
- 	test_cmp actual expected
- '
- 
--- 
-1.6.2.4.24.gde59d2
+I think up to your 3/4 is reasonable, but this is not enough for POSIX
+conformance (it is Ok if it is just aiming to fix "Solaris quirk").  POSIX
+sed is only required to work on text files, but .git/MERGE_RR is not a
+text file (it is a sequence of NUL terminated records).
+
+I think something like this may work better.  Can somebody test?
+
+> -	sha1=$(sed -e "s/	.*//" .git/MERGE_RR) &&
+> +	sha1=$({ cat .git/MERGE_RR; echo; } | sed -e "s/	.*//") &&
+
+	sha1=$(tr "\\000" "\\012" <./git/MERGE_RR | sed -e "s/	.*//") &&
