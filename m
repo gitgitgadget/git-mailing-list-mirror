@@ -1,92 +1,66 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Documentation: Clarify which paths git-clean will affect
-Date: Wed, 06 May 2009 10:57:54 -0700
-Message-ID: <7vljpauna5.fsf@alter.siamese.dyndns.org>
-References: <20090505091302.GB27900@frsk.net>
-	<200905051426.18814.trast@student.ethz.ch>
-	<7vk54v1py6.fsf@alter.siamese.dyndns.org>
-	<200905061524.52186.trast@student.ethz.ch>
-	<20090506163145.GF4452@frsk.net>
+From: Erik Faye-Lund <kusmabite@googlemail.com>
+Subject: Re: [BUG] git config: cygwin git version 1.6.1.2 does not deletes 
+	empty sections
+Date: Wed, 6 May 2009 20:08:06 +0200
+Message-ID: <40aa078e0905061108o21830f07xfb9d5c185c93fda6@mail.gmail.com>
+References: <85647ef50905060850t2e6c2051jfa6d3596b680cc74@mail.gmail.com>
+	 <85647ef50905060904w49879c57r4a5773a487f09c85@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Thomas Rast <trast@student.ethz.ch>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Nicolas Sebrecht <nicolas.s.dev@gmx.fr>
-To: Fredrik Skolmli <fredrik@frsk.net>
-X-From: git-owner@vger.kernel.org Wed May 06 19:58:35 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Constantine Plotnikov <constantine.plotnikov@gmail.com>
+X-From: git-owner@vger.kernel.org Wed May 06 20:08:22 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M1lO7-0005UO-1F
-	for gcvg-git-2@gmane.org; Wed, 06 May 2009 19:58:35 +0200
+	id 1M1lXW-0001rf-KU
+	for gcvg-git-2@gmane.org; Wed, 06 May 2009 20:08:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756543AbZEFR5z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 6 May 2009 13:57:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756027AbZEFR5z
-	(ORCPT <rfc822;git-outgoing>); Wed, 6 May 2009 13:57:55 -0400
-Received: from fed1rmmtao105.cox.net ([68.230.241.41]:46053 "EHLO
-	fed1rmmtao105.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755856AbZEFR5y (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 6 May 2009 13:57:54 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao105.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20090506175754.EPDE20430.fed1rmmtao105.cox.net@fed1rmimpo01.cox.net>;
-          Wed, 6 May 2009 13:57:54 -0400
-Received: from localhost ([68.225.240.211])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id oHxu1b00B4aMwMQ03HxuqT; Wed, 06 May 2009 13:57:54 -0400
-X-Authority-Analysis: v=1.0 c=1 a=jW5P4C6t7I8A:10 a=-ca1oWsSjK8A:10
- a=EjjfHCv3AAAA:8 a=ybZZDoGAAAAA:8 a=8dF8dL1V9nH1AGxSgHAA:9
- a=VikH19sV6UTBtUPCw_YA:7 a=Z1e9gegn6zzFz5uqpprkZHdVdeAA:4 a=_QZ2ba7fPqkA:10
- a=qIVjreYYsbEA:10
-X-CM-Score: 0.00
-In-Reply-To: <20090506163145.GF4452@frsk.net> (Fredrik Skolmli's message of "Wed\, 6 May 2009 18\:31\:45 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+	id S1756543AbZEFSIK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 6 May 2009 14:08:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754015AbZEFSII
+	(ORCPT <rfc822;git-outgoing>); Wed, 6 May 2009 14:08:08 -0400
+Received: from mail-fx0-f158.google.com ([209.85.220.158]:59333 "EHLO
+	mail-fx0-f158.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753628AbZEFSIH (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 May 2009 14:08:07 -0400
+Received: by fxm2 with SMTP id 2so304438fxm.37
+        for <git@vger.kernel.org>; Wed, 06 May 2009 11:08:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=wXh3gST1qWBU/5tp3wpuNQJGd9RTehf16fufbsGlIqs=;
+        b=nfyJiNaU0Ad4aHg8fXXzkuBK0zs+Gxkxt1IoQc3PwsqV2w9PzOZMoo9E161gT7W9mZ
+         vC2ZbjIAej948gPPGcrABvp4WHLFft3RN3moMl3//qHDXkILOwFWeaePYjqxb4aT/8N+
+         IzeGQErpmLSqfUB6Kt57jGgNRakgV60VydNcA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlemail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=sTbthwjO9pb1JYyN2HMFaiHPCkJBD0rpKOyEOeZxaTn21EscGyFJklTvtCH+MXjWBH
+         aE2UY8ocU0jRP+f+nj+jiF9wnEcCDF2odSchfMcIyYtqEMBP0WYoJaI4NjlkB0bLLjyB
+         3zMf2daLVs0XOvs5UqyuwO0lyKLHxc2p2pJOA=
+Received: by 10.204.53.143 with SMTP id m15mr1440365bkg.119.1241633286933; 
+	Wed, 06 May 2009 11:08:06 -0700 (PDT)
+In-Reply-To: <85647ef50905060904w49879c57r4a5773a487f09c85@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118361>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118362>
 
-Fredrik Skolmli <fredrik@frsk.net> writes:
+On Wed, May 6, 2009 at 6:04 PM, Constantine Plotnikov
+<constantine.plotnikov@gmail.com> wrote:
+> The bug is also confirmed on MSYS git version 1.6.2.2.1669.g7eaf8.
 
-> On Wed, May 06, 2009 at 03:24:47PM +0200, Thomas Rast wrote:
->
->> Indeed, yours is better.
->
-> And I agree, it does looks better. Junio, would you like me to produce a
-> patch v2, or would you like do the honor? (After all, you came up with the
-> final suggestion)
+The same issue is present in git 1.6.2.1 on Linux. Not that I'm too
+sure it's really a bug, though ;)
 
-Ok, I'll queue this one.
-
--- >8 -- 
-Date: Wed, 6 May 2009 10:48:26 -0700
-Subject: [PATCH] git-clean doc: the command only affects paths under $(cwd)
-
-Fredrik Skolmli and Thomas Rast noticed that it was left unstated that
-"git clean" ran from a subdirectory will not affect anything outside it,
-with or without path limiters.
-
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- Documentation/git-clean.txt |    4 ++--
- 1 files changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/Documentation/git-clean.txt b/Documentation/git-clean.txt
-index 43b2de7..be894af 100644
---- a/Documentation/git-clean.txt
-+++ b/Documentation/git-clean.txt
-@@ -13,8 +13,8 @@ SYNOPSIS
- DESCRIPTION
- -----------
- 
--This allows cleaning the working tree by removing files that are not
--under version control.
-+Cleans the working tree by recursively removing files that are not
-+under version control, starting from the current directory.
- 
- Normally, only files unknown to git are removed, but if the '-x'
- option is specified, ignored files are also removed. This can, for
+-- 
+Erik "kusma" Faye-Lund
+kusmabite@gmail.com
+(+47) 986 59 656
