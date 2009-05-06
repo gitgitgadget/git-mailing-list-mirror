@@ -1,79 +1,56 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: [PATCH] Link to the Sun JVM bug mentioned in OffsetCache
-Date: Wed, 6 May 2009 07:15:26 -0700
-Message-ID: <20090506141526.GA28164@spearce.org>
-References: <1240885572-1755-1-git-send-email-spearce@spearce.org> <1240885572-1755-2-git-send-email-spearce@spearce.org> <200904290120.00039.robin.rosenberg.lists@dewire.com> <20090429171659.GF23604@spearce.org>
+From: Tony Finch <dot@dotat.at>
+Subject: Re: [PATCH] 64-bit fix for date.c.
+Date: Wed, 6 May 2009 15:26:36 +0100
+Message-ID: <alpine.LSU.2.00.0905061523300.28199@hermes-2.csi.cam.ac.uk>
+References: <20090406172637.GA17437@jenna.bytemine.net> <20090406190657.GC28120@coredump.intra.peff.net> <20090504142614.GE8658@jenna.bytemine.net> <20090504143112.GA14214@coredump.intra.peff.net> <7vvdoeye1c.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org
-To: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
-X-From: git-owner@vger.kernel.org Wed May 06 16:15:39 2009
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed May 06 16:26:51 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M1huJ-0008T5-Lp
-	for gcvg-git-2@gmane.org; Wed, 06 May 2009 16:15:36 +0200
+	id 1M1i5B-0005xR-Q7
+	for gcvg-git-2@gmane.org; Wed, 06 May 2009 16:26:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756027AbZEFOP1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 6 May 2009 10:15:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753778AbZEFOP0
-	(ORCPT <rfc822;git-outgoing>); Wed, 6 May 2009 10:15:26 -0400
-Received: from george.spearce.org ([209.20.77.23]:49068 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752856AbZEFOP0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 6 May 2009 10:15:26 -0400
-Received: by george.spearce.org (Postfix, from userid 1001)
-	id BE450381CE; Wed,  6 May 2009 14:15:26 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <20090429171659.GF23604@spearce.org>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1753780AbZEFO0i (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 6 May 2009 10:26:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752567AbZEFO0h
+	(ORCPT <rfc822;git-outgoing>); Wed, 6 May 2009 10:26:37 -0400
+Received: from ppsw-1.csi.cam.ac.uk ([131.111.8.131]:57296 "EHLO
+	ppsw-1.csi.cam.ac.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753184AbZEFO0h (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 May 2009 10:26:37 -0400
+X-Cam-AntiVirus: no malware found
+X-Cam-SpamDetails: not scanned
+X-Cam-ScannerInfo: http://www.cam.ac.uk/cs/email/scanner/
+Received: from hermes-2.csi.cam.ac.uk ([131.111.8.54]:33517)
+	by ppsw-1.csi.cam.ac.uk (smtp.hermes.cam.ac.uk [131.111.8.151]:25)
+	with esmtpa (EXTERNAL:fanf2) id 1M1i4y-0003Xz-5X (Exim 4.70)
+	(return-path <fanf2@hermes.cam.ac.uk>); Wed, 06 May 2009 15:26:36 +0100
+Received: from fanf2 (helo=localhost) by hermes-2.csi.cam.ac.uk (hermes.cam.ac.uk)
+	with local-esmtp id 1M1i4y-0004ea-Ml (Exim 4.67)
+	(return-path <fanf2@hermes.cam.ac.uk>); Wed, 06 May 2009 15:26:36 +0100
+X-X-Sender: fanf2@hermes-2.csi.cam.ac.uk
+In-Reply-To: <7vvdoeye1c.fsf@alter.siamese.dyndns.org>
+User-Agent: Alpine 2.00 (LSU 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118342>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118343>
 
-This bug has now been published by Sun.  We should link to the
-database entry so we can find more detail later.
+Jeff King [Mon, Apr 06, 2009 at 03:06:58PM -0400] wrote:
+>
+>Hmph. According to POSIX, tv_sec _is_ a time_t. But I see on FreeBSD,
+>also, it is actually a "long". So I think this fix makes sense.
 
-Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
----
-  "Shawn O. Pearce" <spearce@spearce.org> wrote:
-  > Robin Rosenberg <robin.rosenberg.lists@dewire.com> wrote:
-  > > > diff --git a/org.spearce.jgit/src/org/spearce/jgit/lib/OffsetCache.java b/org.spearce.jgit/src/org/spearce/jgit/lib/OffsetCache.java
-  > > > +	private void gc() {
-  > > > +		R r;
-  > > > +		while ((r = (R) queue.poll()) != null) {
-  > > > +			// Sun's Java 5 and 6 implementation have a bug where a Reference
-  > > > +			// can be enqueued and dequeued twice on the same reference queue
-  > > > +			// due to a race condition within ReferenceQueue.enqueue(Reference).
-  > > 
-  > > Reference to the official Sun bug? Might help if someone wants to
-  > > implement a flag to avoid this (if necessary...)
-  > 
-  > Actually, this is a new bug.  I tried looking through BugParade
-  > but nobody has mentioned or discovered this before.
-  > 
-  > I submitted a bug report yesterday, but they have yet to publish it.
+FreeBSD-7 has time_t tv_sec.
 
-  And here it is.
-
- .../src/org/spearce/jgit/lib/OffsetCache.java      |    2 ++
- 1 files changed, 2 insertions(+), 0 deletions(-)
-
-diff --git a/org.spearce.jgit/src/org/spearce/jgit/lib/OffsetCache.java b/org.spearce.jgit/src/org/spearce/jgit/lib/OffsetCache.java
-index a1cd4be..b81c7e0 100644
---- a/org.spearce.jgit/src/org/spearce/jgit/lib/OffsetCache.java
-+++ b/org.spearce.jgit/src/org/spearce/jgit/lib/OffsetCache.java
-@@ -414,6 +414,8 @@ private void gc() {
- 			// can be enqueued and dequeued twice on the same reference queue
- 			// due to a race condition within ReferenceQueue.enqueue(Reference).
- 			//
-+			// http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=6837858
-+			//
- 			// We CANNOT permit a Reference to come through us twice, as it will
- 			// skew the resource counters we maintain. Our canClear() check here
- 			// provides a way to skip the redundant dequeues, if any.
+Tony.
 -- 
-1.6.3.rc4.206.g03e16
+f.anthony.n.finch  <dot@dotat.at>  http://dotat.at/
+GERMAN BIGHT HUMBER: SOUTHWEST 5 TO 7. MODERATE OR ROUGH. SQUALLY SHOWERS.
+MODERATE OR GOOD.
