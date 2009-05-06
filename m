@@ -1,84 +1,92 @@
-From: Finn Arne Gangstad <finnag@pvv.org>
-Subject: Re: [PATCH] git-remote: make remote name optional for prune
-	operation
-Date: Wed, 6 May 2009 19:55:00 +0200
-Message-ID: <20090506175500.GA19976@pvv.org>
-References: <1241620621-12188-1-git-send-email-julien@danjou.info> <7vab5qw3nr.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Documentation: Clarify which paths git-clean will affect
+Date: Wed, 06 May 2009 10:57:54 -0700
+Message-ID: <7vljpauna5.fsf@alter.siamese.dyndns.org>
+References: <20090505091302.GB27900@frsk.net>
+	<200905051426.18814.trast@student.ethz.ch>
+	<7vk54v1py6.fsf@alter.siamese.dyndns.org>
+	<200905061524.52186.trast@student.ethz.ch>
+	<20090506163145.GF4452@frsk.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Julien Danjou <julien@danjou.info>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed May 06 19:55:16 2009
+Cc: Thomas Rast <trast@student.ethz.ch>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Nicolas Sebrecht <nicolas.s.dev@gmx.fr>
+To: Fredrik Skolmli <fredrik@frsk.net>
+X-From: git-owner@vger.kernel.org Wed May 06 19:58:35 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M1lKt-0003qi-M1
-	for gcvg-git-2@gmane.org; Wed, 06 May 2009 19:55:16 +0200
+	id 1M1lO7-0005UO-1F
+	for gcvg-git-2@gmane.org; Wed, 06 May 2009 19:58:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755420AbZEFRzH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 6 May 2009 13:55:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754666AbZEFRzG
-	(ORCPT <rfc822;git-outgoing>); Wed, 6 May 2009 13:55:06 -0400
-Received: from decibel.pvv.ntnu.no ([129.241.210.179]:45850 "EHLO
-	decibel.pvv.ntnu.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753628AbZEFRzF (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 6 May 2009 13:55:05 -0400
-Received: from finnag by decibel.pvv.ntnu.no with local (Exim 4.69)
-	(envelope-from <finnag@pvv.ntnu.no>)
-	id 1M1lKe-0003wE-3D; Wed, 06 May 2009 19:55:00 +0200
-Content-Disposition: inline
-In-Reply-To: <7vab5qw3nr.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1756543AbZEFR5z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 6 May 2009 13:57:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756027AbZEFR5z
+	(ORCPT <rfc822;git-outgoing>); Wed, 6 May 2009 13:57:55 -0400
+Received: from fed1rmmtao105.cox.net ([68.230.241.41]:46053 "EHLO
+	fed1rmmtao105.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755856AbZEFR5y (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 May 2009 13:57:54 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao105.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20090506175754.EPDE20430.fed1rmmtao105.cox.net@fed1rmimpo01.cox.net>;
+          Wed, 6 May 2009 13:57:54 -0400
+Received: from localhost ([68.225.240.211])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id oHxu1b00B4aMwMQ03HxuqT; Wed, 06 May 2009 13:57:54 -0400
+X-Authority-Analysis: v=1.0 c=1 a=jW5P4C6t7I8A:10 a=-ca1oWsSjK8A:10
+ a=EjjfHCv3AAAA:8 a=ybZZDoGAAAAA:8 a=8dF8dL1V9nH1AGxSgHAA:9
+ a=VikH19sV6UTBtUPCw_YA:7 a=Z1e9gegn6zzFz5uqpprkZHdVdeAA:4 a=_QZ2ba7fPqkA:10
+ a=qIVjreYYsbEA:10
+X-CM-Score: 0.00
+In-Reply-To: <20090506163145.GF4452@frsk.net> (Fredrik Skolmli's message of "Wed\, 6 May 2009 18\:31\:45 +0200")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118360>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118361>
 
-On Wed, May 06, 2009 at 10:18:48AM -0700, Junio C Hamano wrote:
-> Julien Danjou <julien@danjou.info> writes:
-> 
-> > We consider that if `git remote prune` is called without a name, we
-> > actually want to prune all remotes.
-> 
-> I think we try to make an opearation that discards information from many
-> things at once by mistake, and it feels that this patch goes against it.
-> 
-> In what situation does this new short-cut make things convenient, and how
-> often does such a situation come up?  The only one I can think of is when
-> you are interacting with many volatile remotes that create and delete
-> branches all the time, and when you are trying to repack/pack-ref your
-> local repository with as much cruft removed, but in such a set-up, next
-> time you interact with your remotes, you will get their "branch of the
-> day" in your remote tracking namespace that will disappear shortly, and it
-> does not sound like it is such a big deal if you did not run "remote
-> prune" to all of them at once anyway.
-> 
-> Having said all that...
-> 
-> > diff --git a/Documentation/git-remote.txt b/Documentation/git-remote.txt
-> > index 9e2b4ea..c566061 100644
-> > --- a/Documentation/git-remote.txt
-> > +++ b/Documentation/git-remote.txt
-> > @@ -15,7 +15,7 @@ SYNOPSIS
-> >  'git remote rm' <name>
-> >  'git remote set-head' <name> [-a | -d | <branch>]
-> >  'git remote show' [-n] <name>
-> > -'git remote prune' [-n | --dry-run] <name>
-> > +'git remote prune' [-n | --dry-run] [name]
-> >  'git remote update' [-p | --prune] [group | remote]...
-> 
-> I think you would want to say [<name>] here, but looking at this list, I
-> wonder if it would be more appropriate to allow "remote group" to be given
-> to "prune" (and perhaps "show").
+Fredrik Skolmli <fredrik@frsk.net> writes:
 
-I also think that if we want to change prune, we should change it to
-interpret its parameters identically to update. This means that no
-argument will not expand to "all remotes", but rather to the possibly
-configured "default" group.
+> On Wed, May 06, 2009 at 03:24:47PM +0200, Thomas Rast wrote:
+>
+>> Indeed, yours is better.
+>
+> And I agree, it does looks better. Junio, would you like me to produce a
+> patch v2, or would you like do the honor? (After all, you came up with the
+> final suggestion)
 
-In other words: I think "git remote update -p" and "git remote prune"
-should prune the same remotes (both with and without additional arguments).
+Ok, I'll queue this one.
 
-- Finn Arne
+-- >8 -- 
+Date: Wed, 6 May 2009 10:48:26 -0700
+Subject: [PATCH] git-clean doc: the command only affects paths under $(cwd)
+
+Fredrik Skolmli and Thomas Rast noticed that it was left unstated that
+"git clean" ran from a subdirectory will not affect anything outside it,
+with or without path limiters.
+
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ Documentation/git-clean.txt |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/Documentation/git-clean.txt b/Documentation/git-clean.txt
+index 43b2de7..be894af 100644
+--- a/Documentation/git-clean.txt
++++ b/Documentation/git-clean.txt
+@@ -13,8 +13,8 @@ SYNOPSIS
+ DESCRIPTION
+ -----------
+ 
+-This allows cleaning the working tree by removing files that are not
+-under version control.
++Cleans the working tree by recursively removing files that are not
++under version control, starting from the current directory.
+ 
+ Normally, only files unknown to git are removed, but if the '-x'
+ option is specified, ignored files are also removed. This can, for
