@@ -1,104 +1,119 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [RFC/PATCH] Prettify log decorations even more
-Date: Thu,  7 May 2009 01:45:48 +0300
-Message-ID: <1241649948-11765-1-git-send-email-felipe.contreras@gmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Felipe Contreras <felipe.contreras@gmail.com>
+From: Jacob Beard <jbeard4@cs.mcgill.ca>
+Subject: git svn import missing tags
+Date: Wed, 6 May 2009 18:46:32 -0400
+Message-ID: <8e648abd0905061546s52dcd36fu94b46bf72cc991d1@mail.gmail.com>
+Reply-To: jbeard4@cs.mcgill.ca
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu May 07 00:46:06 2009
+X-From: git-owner@vger.kernel.org Thu May 07 00:47:07 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M1psK-0002aL-RC
-	for gcvg-git-2@gmane.org; Thu, 07 May 2009 00:46:05 +0200
+	id 1M1ptG-0002vB-FR
+	for gcvg-git-2@gmane.org; Thu, 07 May 2009 00:47:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751242AbZEFWp4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 6 May 2009 18:45:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751054AbZEFWp4
-	(ORCPT <rfc822;git-outgoing>); Wed, 6 May 2009 18:45:56 -0400
-Received: from fg-out-1718.google.com ([72.14.220.156]:3386 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750977AbZEFWpz (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 6 May 2009 18:45:55 -0400
-Received: by fg-out-1718.google.com with SMTP id d23so1166027fga.17
-        for <git@vger.kernel.org>; Wed, 06 May 2009 15:45:54 -0700 (PDT)
+	id S1751167AbZEFWqx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 6 May 2009 18:46:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751139AbZEFWqx
+	(ORCPT <rfc822;git-outgoing>); Wed, 6 May 2009 18:46:53 -0400
+Received: from mail-qy0-f125.google.com ([209.85.221.125]:58118 "EHLO
+	mail-qy0-f125.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751041AbZEFWqw (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 May 2009 18:46:52 -0400
+Received: by qyk31 with SMTP id 31so742352qyk.33
+        for <git@vger.kernel.org>; Wed, 06 May 2009 15:46:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer;
-        bh=1uK/DyPVgTXvOAMuE3BKTRdYxKR9ynbElGQxS+Ic7AU=;
-        b=bZchrYysAY6Mtqtt5VaB0KunShN3mTZq3+fenyGmgD7YhgLEW/4cXMD1v0lVnq9shf
-         sqyPWlC+IZamsy4w9syBjXRrdDIDZM29+LmAwasu+Q11kY7UAF1X0I01HK0jw32k3+mK
-         hnvok0V/EkXTXu5sriNaP5Lo/Ixn2q96KHbkM=
+        h=domainkey-signature:mime-version:sender:reply-to:received:from:date
+         :x-google-sender-auth:message-id:subject:to:content-type
+         :content-transfer-encoding;
+        bh=3HLqtmuiADiSKvZqh0MO5OLkiwSf75wWS4/oEU1vThk=;
+        b=qm1WyiEysfyjJ42YqYx8IzIZapdEuu3BunQAUdpYVqiOl5CfdRmCha5MfeYIkqAmOW
+         sq/LH0tUlnhdRlqGMKQiVprpbTOTMX74CV9EFyuCvOwDcDpGCiWL+jo1not3SjDetULd
+         wPMF63NpCxxPJabjURcQBbUll+gSyTvO+kFII=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        b=SZTXjqG102BUsdZSaNhZrMITxdxq8p5zBvVRjmOtznKaoo0vqYRoPVP42dhOmxPYGh
-         ik2N7wERxRnb+Idch42mA2q7l7n8xhkQQOnCuyDGMLWvMuvNVIMuEi8BZeNauKpK/saH
-         0DosX0rYBrKnPx9WiJ5Gbtjnc7gut+Qc+d5Pc=
-Received: by 10.86.90.2 with SMTP id n2mr1817252fgb.61.1241649954199;
-        Wed, 06 May 2009 15:45:54 -0700 (PDT)
-Received: from localhost (a91-153-253-80.elisa-laajakaista.fi [91.153.253.80])
-        by mx.google.com with ESMTPS id 3sm785610fge.4.2009.05.06.15.45.53
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 06 May 2009 15:45:53 -0700 (PDT)
-X-Mailer: git-send-email 1.6.3.rc4.14.g96da.dirty
+        h=mime-version:sender:reply-to:from:date:x-google-sender-auth
+         :message-id:subject:to:content-type:content-transfer-encoding;
+        b=Z32ZeYd8dPDJg0ZIH2Y95NuhvlNROg9DkKrnA1cz6IqfQ6ayL/UjhzRwj7KhlyS6BR
+         6mSNxFX/3EtDa6foJxeCrhVz9ivdqAwnZN1j3JIKFbQtUTxVlCfwzchUTY0A34pJ/ys6
+         S4vzIkYSkJIRWN9S33X4HQgzl/qhkDwIMGM+8=
+Received: by 10.229.86.196 with SMTP id t4mr1670676qcl.39.1241650012124; Wed, 
+	06 May 2009 15:46:52 -0700 (PDT)
+X-Google-Sender-Auth: 7fcfeede1864aaaf
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118396>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118397>
 
-"tag: v1.6.2.5" looks much better than "tag: refs/tags/v1.6.2.5".
+Hi all,
 
-Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
----
- log-tree.c |    1 +
- refs.c     |    3 +--
- refs.h     |    3 ++-
- 3 files changed, 4 insertions(+), 3 deletions(-)
+I just tried using git-svn clone to import the GWT SVN repo, located at:
 
-diff --git a/log-tree.c b/log-tree.c
-index 5bd29e6..59d63eb 100644
---- a/log-tree.c
-+++ b/log-tree.c
-@@ -25,6 +25,7 @@ static int add_ref_decoration(const char *refname, const unsigned char *sha1, in
- 	struct object *obj = parse_object(sha1);
- 	if (!obj)
- 		return 0;
-+	refname = prettify_refname(refname);
- 	add_name_decoration("", refname, obj);
- 	while (obj->type == OBJ_TAG) {
- 		obj = ((struct tag *)obj)->tagged;
-diff --git a/refs.c b/refs.c
-index e65a3b4..e74461e 100644
---- a/refs.c
-+++ b/refs.c
-@@ -750,9 +750,8 @@ int check_ref_format(const char *ref)
- 	}
- }
- 
--const char *prettify_ref(const struct ref *ref)
-+const char *prettify_refname(const char *name)
- {
--	const char *name = ref->name;
- 	return name + (
- 		!prefixcmp(name, "refs/heads/") ? 11 :
- 		!prefixcmp(name, "refs/tags/") ? 10 :
-diff --git a/refs.h b/refs.h
-index 29d17a4..3de5e1c 100644
---- a/refs.h
-+++ b/refs.h
-@@ -80,7 +80,8 @@ extern int for_each_reflog(each_ref_fn, void *);
- #define CHECK_REF_FORMAT_WILDCARD (-3)
- extern int check_ref_format(const char *target);
- 
--extern const char *prettify_ref(const struct ref *ref);
-+extern const char *prettify_refname(const char *refname);
-+#define prettify_ref(ref) prettify_refname((ref)->name)
- extern char *shorten_unambiguous_ref(const char *ref, int strict);
- 
- /** rename ref, return 0 on success **/
--- 
-1.6.3.rc4.14.g96da.dirty
+http://google-web-toolkit.googlecode.com/svn/
+
+GWT has a standard SVN structure, and so I imported it using:
+
+git-svn clone --stdlayout http://google-web-toolkit.googlecode.com/svn/
+
+You can see here, that GWT has the following tags:
+
+http://code.google.com/p/google-web-toolkit/source/browse/#svn/tags
+
+# 1.3.1
+# 1.3.3
+# 1.4.10
+# 1.4.59
+# 1.4.60
+# 1.4.61
+# 1.4.62
+# 1.5.0
+# 1.5.1
+# 1.5.2
+# 1.5.3
+# 1.6.0
+# 1.6.1
+# 1.6.2
+# 1.6.3
+# 1.6.4
+
+Unfortunately, these are the branches that I get after using git's svn import:
+
+jacob@jacob-laptop:~/workspace-gsoc/gwt/svn/user/super/com/google/gwt/emul/java$
+git branch -a
+  oophm
+  opt_imgs_and_startup
+  tags/1.3.1
+  tags/1.3.3
+  tags/1.3.3@288
+  tags/1.4.10
+  tags/1.4.59
+  tags/1.4.60
+  tags/1.4.60@1399
+  tags/1.4.61
+  tags/1.4.61@1504
+  tags/1.4.62
+  tags/1.4.62@2104
+  tags/1.5.0
+  tags/1.5.0@2941
+  tags/1.5.1
+  tags/1.5.1@3391
+  tags/1.5.2
+  tags/1.5.2@3587
+  trunk
+
+It is missing all of the tags after 1.5.2
+
+I am using git version 1.5.4.3, from the Ubuntu 8.04 repo.
+
+I'm a git newb, so I expect I'm forgetting to pass in an extra flag or
+something, but I'd appreciate it if someone could point me in the
+right direction.
+
+Thanks,
+
+Jake
