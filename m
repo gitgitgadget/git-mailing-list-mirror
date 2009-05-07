@@ -1,82 +1,106 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: RE:
-Date: Thu, 7 May 2009 11:56:05 -0700 (PDT)
-Message-ID: <alpine.LFD.2.01.0905071148500.4983@localhost.localdomain>
-References: <454B76988CBF42F5BCACA5061125D263@caottdt504> <81b0412b0905071013y241f7eas8417127e51ff52fa@mail.gmail.com> <D75C0FA80F7041FFAAC50B314788AD6F@caottdt504>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: "'Alex Riesen'" <raa.lkml@gmail.com>, git@vger.kernel.org
-To: Bevan Watkiss <bevan.watkiss@cloakware.com>
-X-From: git-owner@vger.kernel.org Thu May 07 20:58:38 2009
+From: Frank Lichtenheld <frank@lichtenheld.de>
+Subject: [PATCH RESEND] Git.pm: Set GIT_WORK_TREE if we set GIT_DIR
+Date: Thu,  7 May 2009 15:41:27 +0200
+Message-ID: <1241703688-6892-1-git-send-email-frank@lichtenheld.de>
+Cc: Petr Baudis <pasky@suse.cz>, git@vger.kernel.org
+To: gitster@pobox.com
+X-From: git-owner@vger.kernel.org Thu May 07 21:29:34 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M28ni-00054S-LU
-	for gcvg-git-2@gmane.org; Thu, 07 May 2009 20:58:35 +0200
+	id 1M29HU-0003LZ-0H
+	for gcvg-git-2@gmane.org; Thu, 07 May 2009 21:29:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1762648AbZEGS62 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 7 May 2009 14:58:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762692AbZEGS60
-	(ORCPT <rfc822;git-outgoing>); Thu, 7 May 2009 14:58:26 -0400
-Received: from smtp1.linux-foundation.org ([140.211.169.13]:48545 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1757285AbZEGS6Y (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 7 May 2009 14:58:24 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
-	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id n47Iu588012893
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Thu, 7 May 2009 11:56:41 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id n47Iu5DN007337;
-	Thu, 7 May 2009 11:56:05 -0700
-X-X-Sender: torvalds@localhost.localdomain
-In-Reply-To: <D75C0FA80F7041FFAAC50B314788AD6F@caottdt504>
-User-Agent: Alpine 2.01 (LFD 1184 2008-12-16)
-X-Spam-Status: No, hits=-3.462 required=5 tests=AWL,BAYES_00
-X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
+	id S1753920AbZEGT2F (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 7 May 2009 15:28:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761511AbZEGT2D
+	(ORCPT <rfc822;git-outgoing>); Thu, 7 May 2009 15:28:03 -0400
+Received: from aiolos.lenk.info ([85.214.124.154]:60323 "EHLO aiolos.lenk.info"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1761360AbZEGT2A (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 May 2009 15:28:00 -0400
+Received: from mail.lenk.info ([78.47.143.197] ident=Debian-exim)
+	by mx.lenk.info with esmtpsa 
+	(Cipher TLS-1.0:RSA_AES_256_CBC_SHA1:32) (Exim 4.63 1)
+	id 1M29GB-0002Po-GX; Thu, 07 May 2009 21:27:59 +0200
+Received: from p57b25cad.dip.t-dialin.net ([87.178.92.173] helo=penrose.djpig.de)
+	by mail.lenk.info with esmtpsa 
+	(Cipher TLS-1.0:RSA_AES_256_CBC_SHA1:32) (Exim 4.63 1)
+	id 1M29GA-0004gN-0r; Thu, 07 May 2009 21:27:58 +0200
+Received: from flichtenheld by penrose.djpig.de with local (Exim 4.69)
+	(envelope-from <flichtenheld@astaro.com>)
+	id 1M23qq-0001nc-WC; Thu, 07 May 2009 15:41:29 +0200
+X-Mailer: git-send-email 1.6.2.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118505>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118506>
 
+From: Frank Lichtenheld <flichtenheld@astaro.com>
 
+Otherwise git will use the current directory as work tree which will
+lead to unexpected results if we operate in sub directory of the
+work tree.
 
-On Thu, 7 May 2009, Bevan Watkiss wrote:
-> 
-> Basically I have a copy of my tree where only git can write to it, so I know
-> the files are right.  The NAS box I have the tree on is slow, so reading the
-> tree adds about 10 minutes to the process when I only want to update a few
-> files.
+Signed-off-by: Frank Lichtenheld <flichtenheld@astaro.com>
+---
+ perl/Git.pm         |    2 ++
+ t/t9700-perl-git.sh |    4 ++++
+ t/t9700/test.pl     |   13 +++++++++++++
+ 3 files changed, 19 insertions(+), 0 deletions(-)
 
-Ouch.
+No comments and doesn't seem to have been applied, so resent unchanged.
 
-You could try doing
-
-	[core]
-		preloadindex = true
-
-and see if that helps some of your loads. It does limit even the parallel 
-tree stat to 20 or so, but if most of your cost is in just doing the 
-lstat() over the files to see that they haven't changed, you might be 
-getting a factor-of-20 speedup for at least _some_ of what you do.
-
-If you can, it might also be interesting to see system call trace patterns 
-(with times!) to see if there is something obviously horribly bad going 
-on. If you're running under Linux, and don't think the data contains 
-anything very private, send me the output of "strace -f -T" of the most 
-problematic operations, and maybe I can see if I can come up with anything 
-interesting.
-
-I have long refused to use networked filesystems because I used to find 
-them -so- painful when working with CVS, so none of my performance work 
-has ever really directly concentrated on long-latency filesystems. Even 
-the index preload was all done "blind" with other people reporting issues 
-(and happily I could see some of the effects with local filesystems and 
-multiple CPU's ;).
-
-			Linus
-	
+diff --git a/perl/Git.pm b/perl/Git.pm
+index 291ff5b..4313db7 100644
+--- a/perl/Git.pm
++++ b/perl/Git.pm
+@@ -1280,6 +1280,8 @@ sub _cmd_exec {
+ 	my ($self, @args) = @_;
+ 	if ($self) {
+ 		$self->repo_path() and $ENV{'GIT_DIR'} = $self->repo_path();
++		$self->repo_path() and $self->wc_path()
++			and $ENV{'GIT_WORK_TREE'} = $self->wc_path();
+ 		$self->wc_path() and chdir($self->wc_path());
+ 		$self->wc_subdir() and chdir($self->wc_subdir());
+ 	}
+diff --git a/t/t9700-perl-git.sh b/t/t9700-perl-git.sh
+index b4ca244..4eb7d3f 100755
+--- a/t/t9700-perl-git.sh
++++ b/t/t9700-perl-git.sh
+@@ -29,6 +29,10 @@ test_expect_success \
+      git add . &&
+      git commit -m "first commit" &&
+ 
++     echo "new file in subdir 2" > directory2/file2 &&
++     git add . &&
++     git commit -m "commit in directory2" &&
++
+      echo "changed file 1" > file1 &&
+      git commit -a -m "second commit" &&
+ 
+diff --git a/t/t9700/test.pl b/t/t9700/test.pl
+index 697daf3..d9b29ea 100755
+--- a/t/t9700/test.pl
++++ b/t/t9700/test.pl
+@@ -98,3 +98,16 @@ TODO: {
+ 	todo_skip 'config after wc_chdir', 1;
+ 	is($r->config("color.string"), "value", "config after wc_chdir");
+ }
++
++# Object generation in sub directory
++chdir("directory2");
++my $r2 = Git->repository();
++is($r2->repo_path, $abs_repo_dir . "/.git", "repo_path (2)");
++is($r2->wc_path, $abs_repo_dir . "/", "wc_path (2)");
++is($r2->wc_subdir, "directory2/", "wc_subdir initial (2)");
++
++# commands in sub directory
++my $last_commit = $r2->command_oneline(qw(rev-parse --verify HEAD));
++like($last_commit, qr/^[0-9a-fA-F]{40}$/, 'rev-parse returned hash');
++my $dir_commit = $r2->command_oneline('log', '-n1', '--pretty=format:%H', '.');
++isnt($last_commit, $dir_commit, 'log . does not show last commit');
+-- 
+1.6.2.1
