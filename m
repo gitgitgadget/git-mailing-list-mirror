@@ -1,7 +1,7 @@
 From: =?ISO-8859-1?Q?Ren=E9?= Scharfe <rene.scharfe@lsrfire.ath.cx>
-Subject: [PATCH 1/5] parseopt: add OPT_NEGBIT
-Date: Thu, 07 May 2009 21:44:17 +0200
-Message-ID: <1241725457.4772.7.camel@ubuntu.ubuntu-domain>
+Subject: [PATCH 2/5] parseopt: add OPT_NUMBER_CALLBACK
+Date: Thu, 07 May 2009 21:45:08 +0200
+Message-ID: <1241725508.4772.8.camel@ubuntu.ubuntu-domain>
 References: <1241725380.4772.6.camel@ubuntu.ubuntu-domain>
 Mime-Version: 1.0
 Content-Type: text/plain
@@ -9,137 +9,161 @@ Content-Transfer-Encoding: 7bit
 Cc: Pierre Habouzit <madcoder@debian.org>,
 	Junio C Hamano <gitster@pobox.com>
 To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu May 07 21:44:26 2009
+X-From: git-owner@vger.kernel.org Thu May 07 21:45:17 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M29W6-0002DM-59
-	for gcvg-git-2@gmane.org; Thu, 07 May 2009 21:44:26 +0200
+	id 1M29Wv-0002bE-9o
+	for gcvg-git-2@gmane.org; Thu, 07 May 2009 21:45:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752590AbZEGToT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 7 May 2009 15:44:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751970AbZEGToT
-	(ORCPT <rfc822;git-outgoing>); Thu, 7 May 2009 15:44:19 -0400
-Received: from india601.server4you.de ([85.25.151.105]:37363 "EHLO
+	id S1754130AbZEGTpM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 7 May 2009 15:45:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754112AbZEGTpL
+	(ORCPT <rfc822;git-outgoing>); Thu, 7 May 2009 15:45:11 -0400
+Received: from india601.server4you.de ([85.25.151.105]:37367 "EHLO
 	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751770AbZEGToS (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 May 2009 15:44:18 -0400
+	with ESMTP id S1752591AbZEGTpJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 May 2009 15:45:09 -0400
 Received: from [10.0.1.101] (p57B7C554.dip.t-dialin.net [87.183.197.84])
-	by india601.server4you.de (Postfix) with ESMTPSA id D77662F8003;
-	Thu,  7 May 2009 21:44:17 +0200 (CEST)
+	by india601.server4you.de (Postfix) with ESMTPSA id 3E1722F8003;
+	Thu,  7 May 2009 21:45:09 +0200 (CEST)
 In-Reply-To: <1241725380.4772.6.camel@ubuntu.ubuntu-domain>
 X-Mailer: Evolution 2.26.1 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118512>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118513>
 
-Add OPTION_NEGBIT and OPT_NEGBIT, mirroring OPTION_BIT and OPT_BIT.
-OPT_NEGBIT can be used together with OPT_BIT to define two options
-that cancel each other out.
-
-Note: this patch removes the reminder from the test script because
-it adds a test for --no-or4 and there already was one for --or4.
+Add a way to recognize numerical options.  The number is passed to
+a callback function as a string.
 
 Signed-off-by: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
 ---
- Documentation/technical/api-parse-options.txt |    4 +++
- parse-options.c                               |    8 ++++++
- parse-options.h                               |    2 +
- t/t0040-parse-options.sh                      |   31 +++++++++++++++++++++++-
- test-parse-options.c                          |    1 +
- 5 files changed, 44 insertions(+), 2 deletions(-)
+ Documentation/technical/api-parse-options.txt |    8 +++++++
+ parse-options.c                               |   26 ++++++++++++++++++++++++-
+ parse-options.h                               |    4 +++
+ t/t0040-parse-options.sh                      |   18 +++++++++++++++++
+ test-parse-options.c                          |    8 +++++++
+ 5 files changed, 63 insertions(+), 1 deletions(-)
 
 diff --git a/Documentation/technical/api-parse-options.txt b/Documentation/technical/api-parse-options.txt
-index e66ca9f..794194b 100644
+index 794194b..beca98d 100644
 --- a/Documentation/technical/api-parse-options.txt
 +++ b/Documentation/technical/api-parse-options.txt
-@@ -137,6 +137,10 @@ There are some macros to easily define options:
- 	Introduce a boolean option.
- 	If used, `int_var` is bitwise-ored with `mask`.
+@@ -170,6 +170,14 @@ There are some macros to easily define options:
+ `OPT_ARGUMENT(long, description)`::
+ 	Introduce a long-option argument that will be kept in `argv[]`.
  
-+`OPT_NEGBIT(short, long, &int_var, description, mask)`::
-+	Introduce a boolean option.
-+	If used, `int_var` is bitwise-anded with the inverted `mask`.
++`OPT_NUMBER_CALLBACK(&var, description, func_ptr)`::
++	Recognize numerical options like -123 and feed the integer as
++	if it was an argument to the function given by `func_ptr`.
++	The result will be put into `var`.  There can be only one such
++	option definition.  It cannot be negated and it takes no
++	arguments.  Short options that happen to be digits take
++	precedence over it.
 +
- `OPT_SET_INT(short, long, &int_var, description, integer)`::
- 	Introduce a boolean option.
- 	If used, set `int_var` to `integer`.
+ 
+ The last element of the array must be `OPT_END()`.
+ 
 diff --git a/parse-options.c b/parse-options.c
-index cf71bcf..a8c05e3 100644
+index a8c05e3..aaa218d 100644
 --- a/parse-options.c
 +++ b/parse-options.c
-@@ -50,6 +50,7 @@ static int get_value(struct parse_opt_ctx_t *p,
- 			/* FALLTHROUGH */
- 		case OPTION_BOOLEAN:
- 		case OPTION_BIT:
-+		case OPTION_NEGBIT:
- 		case OPTION_SET_INT:
- 		case OPTION_SET_PTR:
- 			return opterror(opt, "takes no value", flags);
-@@ -66,6 +67,13 @@ static int get_value(struct parse_opt_ctx_t *p,
- 			*(int *)opt->value |= opt->defval;
- 		return 0;
+@@ -129,11 +129,33 @@ static int get_value(struct parse_opt_ctx_t *p,
  
-+	case OPTION_NEGBIT:
-+		if (unset)
-+			*(int *)opt->value |= opt->defval;
-+		else
-+			*(int *)opt->value &= ~opt->defval;
-+		return 0;
+ static int parse_short_opt(struct parse_opt_ctx_t *p, const struct option *options)
+ {
++	const struct option *numopt = NULL;
 +
- 	case OPTION_BOOLEAN:
- 		*(int *)opt->value = unset ? 0 : *(int *)opt->value + 1;
- 		return 0;
+ 	for (; options->type != OPTION_END; options++) {
+ 		if (options->short_name == *p->opt) {
+ 			p->opt = p->opt[1] ? p->opt + 1 : NULL;
+ 			return get_value(p, options, OPT_SHORT);
+ 		}
++
++		/*
++		 * Handle the numerical option later, explicit one-digit
++		 * options take precedence over it.
++		 */
++		if (options->type == OPTION_NUMBER)
++			numopt = options;
++	}
++	if (numopt && isdigit(*p->opt)) {
++		size_t len = 1;
++		char *arg;
++		int rc;
++
++		while (isdigit(p->opt[len]))
++			len++;
++		arg = xmemdupz(p->opt, len);
++		p->opt = p->opt[len] ? p->opt + len : NULL;
++		rc = (*numopt->callback)(numopt, arg, 0) ? (-1) : 0;
++		free(arg);
++		return rc;
+ 	}
+ 	return -2;
+ }
+@@ -411,6 +433,8 @@ int usage_with_options_internal(const char * const *usagestr,
+ 			pos += fprintf(stderr, ", ");
+ 		if (opts->long_name)
+ 			pos += fprintf(stderr, "--%s", opts->long_name);
++		if (opts->type == OPTION_NUMBER)
++			pos += fprintf(stderr, "-NUM");
+ 
+ 		switch (opts->type) {
+ 		case OPTION_ARGUMENT:
+@@ -447,7 +471,7 @@ int usage_with_options_internal(const char * const *usagestr,
+ 					pos += fprintf(stderr, " ...");
+ 			}
+ 			break;
+-		default: /* OPTION_{BIT,BOOLEAN,SET_INT,SET_PTR} */
++		default: /* OPTION_{BIT,BOOLEAN,NUMBER,SET_INT,SET_PTR} */
+ 			break;
+ 		}
+ 
 diff --git a/parse-options.h b/parse-options.h
-index b54eec1..f1e2452 100644
+index f1e2452..77919a7 100644
 --- a/parse-options.h
 +++ b/parse-options.h
-@@ -8,6 +8,7 @@ enum parse_opt_type {
+@@ -6,6 +6,7 @@ enum parse_opt_type {
+ 	OPTION_END,
+ 	OPTION_ARGUMENT,
  	OPTION_GROUP,
++	OPTION_NUMBER,
  	/* options with no arguments */
  	OPTION_BIT,
-+	OPTION_NEGBIT,
- 	OPTION_BOOLEAN, /* _INCR would have been a better name */
- 	OPTION_SET_INT,
- 	OPTION_SET_PTR,
-@@ -93,6 +94,7 @@ struct option {
- #define OPT_ARGUMENT(l, h)          { OPTION_ARGUMENT, 0, (l), NULL, NULL, (h) }
- #define OPT_GROUP(h)                { OPTION_GROUP, 0, NULL, NULL, NULL, (h) }
- #define OPT_BIT(s, l, v, h, b)      { OPTION_BIT, (s), (l), (v), NULL, (h), 0, NULL, (b) }
-+#define OPT_NEGBIT(s, l, v, h, b)   { OPTION_NEGBIT, (s), (l), (v), NULL, (h), 0, NULL, (b) }
- #define OPT_BOOLEAN(s, l, v, h)     { OPTION_BOOLEAN, (s), (l), (v), NULL, (h) }
- #define OPT_SET_INT(s, l, v, h, i)  { OPTION_SET_INT, (s), (l), (v), NULL, (h), 0, NULL, (i) }
- #define OPT_SET_PTR(s, l, v, h, p)  { OPTION_SET_PTR, (s), (l), (v), NULL, (h), 0, NULL, (p) }
+ 	OPTION_NEGBIT,
+@@ -105,6 +106,9 @@ struct option {
+ 	  parse_opt_approxidate_cb }
+ #define OPT_CALLBACK(s, l, v, a, h, f) \
+ 	{ OPTION_CALLBACK, (s), (l), (v), (a), (h), 0, (f) }
++#define OPT_NUMBER_CALLBACK(v, h, f) \
++	{ OPTION_NUMBER, 0, NULL, (v), NULL, (h), \
++	  PARSE_OPT_NOARG | PARSE_OPT_NONEG, (f) }
+ 
+ /* parse_options() will filter out the processed options and leave the
+  * non-option arguments in argv[].
 diff --git a/t/t0040-parse-options.sh b/t/t0040-parse-options.sh
-index e38241c..9054ed6 100755
+index 9054ed6..8ca62ef 100755
 --- a/t/t0040-parse-options.sh
 +++ b/t/t0040-parse-options.sh
-@@ -12,6 +12,7 @@ usage: test-parse-options <options>
+@@ -30,6 +30,7 @@ String options
  
-     -b, --boolean         get a boolean
-     -4, --or4             bitwise-or boolean with ...0100
-+    --neg-or4             same as --no-or4
+ Magic arguments
+     --quux                means --quux
++    -NUM                  set integer to NUM
  
-     -i, --integer <n>     get a integer
-     -j <n>                get a integer, too
-@@ -245,7 +246,33 @@ test_expect_success 'OPT_BIT() and OPT_SET_INT() work' '
+ Standard options
+     --abbrev[=<n>]        use <n> digits to display SHA-1s
+@@ -275,4 +276,21 @@ test_expect_success 'OPT_NEGBIT() works' '
  	test_cmp expect output
  '
  
--# --or4
--# --no-or4
-+test_expect_success 'OPT_NEGBIT() and OPT_SET_INT() work' '
-+	test-parse-options --set23 -bbbbb --neg-or4 > output 2> output.err &&
-+	test ! -s output.err &&
-+	test_cmp expect output
-+'
-+
 +cat > expect <<EOF
-+boolean: 6
-+integer: 0
++boolean: 0
++integer: 12345
 +timestamp: 0
 +string: (not set)
 +abbrev: 7
@@ -148,30 +172,38 @@ index e38241c..9054ed6 100755
 +dry run: no
 +EOF
 +
-+test_expect_success 'OPT_BIT() works' '
-+	test-parse-options -bb --or4 > output 2> output.err &&
++test_expect_success 'OPT_NUMBER_CALLBACK() works' '
++	test-parse-options -12345 > output 2> output.err &&
 +	test ! -s output.err &&
 +	test_cmp expect output
 +'
 +
-+test_expect_success 'OPT_NEGBIT() works' '
-+	test-parse-options -bb --no-neg-or4 > output 2> output.err &&
-+	test ! -s output.err &&
-+	test_cmp expect output
-+'
- 
  test_done
 diff --git a/test-parse-options.c b/test-parse-options.c
-index 61d2c39..eddc026 100644
+index eddc026..d46eac2 100644
 --- a/test-parse-options.c
 +++ b/test-parse-options.c
-@@ -29,6 +29,7 @@ int main(int argc, const char **argv)
- 		OPT_BOOLEAN('b', "boolean", &boolean, "get a boolean"),
- 		OPT_BIT('4', "or4", &boolean,
- 			"bitwise-or boolean with ...0100", 4),
-+		OPT_NEGBIT(0, "neg-or4", &boolean, "same as --no-or4", 4),
- 		OPT_GROUP(""),
- 		OPT_INTEGER('i', "integer", &integer, "get a integer"),
- 		OPT_INTEGER('j', NULL, &integer, "get a integer, too"),
+@@ -19,6 +19,12 @@ int length_callback(const struct option *opt, const char *arg, int unset)
+ 	return 0;
+ }
+ 
++int number_callback(const struct option *opt, const char *arg, int unset)
++{
++	*(int *)opt->value = strtol(arg, NULL, 10);
++	return 0;
++}
++
+ int main(int argc, const char **argv)
+ {
+ 	const char *usage[] = {
+@@ -46,6 +52,8 @@ int main(int argc, const char **argv)
+ 			"set string to default", (unsigned long)"default"),
+ 		OPT_GROUP("Magic arguments"),
+ 		OPT_ARGUMENT("quux", "means --quux"),
++		OPT_NUMBER_CALLBACK(&integer, "set integer to NUM",
++			number_callback),
+ 		OPT_GROUP("Standard options"),
+ 		OPT__ABBREV(&abbrev),
+ 		OPT__VERBOSE(&verbose),
 -- 
 1.6.3
