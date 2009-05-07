@@ -1,91 +1,58 @@
-From: "Bevan Watkiss" <bevan.watkiss@cloakware.com>
-Subject: RE:
-Date: Thu, 7 May 2009 14:48:20 -0400
-Message-ID: <D47BEC5B0D55467894A05B6219127126@caottdt504>
-References: <454B76988CBF42F5BCACA5061125D263@caottdt504> <81b0412b0905071013y241f7eas8417127e51ff52fa@mail.gmail.com> <D75C0FA80F7041FFAAC50B314788AD6F@caottdt504> <81b0412b0905071118q46eb98b0k20f148e6a179a81f@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: <git@vger.kernel.org>
-To: "'Alex Riesen'" <raa.lkml@gmail.com>
-X-From: git-owner@vger.kernel.org Thu May 07 20:51:44 2009
+From: Dirk Suesserott <newsletter@dirk.my1.cc>
+Subject: [PATCH] gitk: Added option 'Simple history' to the options menu
+Date: Thu,  7 May 2009 20:50:59 +0200
+Message-ID: <12417222593716-git-send-email-newsletter@dirk.my1.cc>
+Cc: Dirk Suesserott <newsletter@dirk.my1.cc>
+To: git@vger.kernel.org, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Thu May 07 20:57:25 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M28gd-0001DM-RQ
-	for gcvg-git-2@gmane.org; Thu, 07 May 2009 20:51:16 +0200
+	id 1M28mY-0004PN-FE
+	for gcvg-git-2@gmane.org; Thu, 07 May 2009 20:57:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752232AbZEGSvF convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 7 May 2009 14:51:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751540AbZEGSvD
-	(ORCPT <rfc822;git-outgoing>); Thu, 7 May 2009 14:51:03 -0400
-Received: from mail.cloakware.com ([142.46.212.116]:33751 "EHLO
-	mail.cloakware.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752232AbZEGSvB convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 7 May 2009 14:51:01 -0400
-Received: from caottdt504 (bwatkiss-desk.cloakware.com [172.20.201.170])
-	(authenticated bits=0)
-	by mail.cloakware.com (8.13.1/8.13.1) with ESMTP id n47Ip0Bf026000;
-	Thu, 7 May 2009 14:51:00 -0400
-X-Mailer: Microsoft Office Outlook 11
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.3790.4325
-Thread-Index: AcnPQCkHH3eUtJmnT8mII5LseKbbCwAA0jtQ
-In-Reply-To: <81b0412b0905071118q46eb98b0k20f148e6a179a81f@mail.gmail.com>
+	id S1756346AbZEGS5O (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 7 May 2009 14:57:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755741AbZEGS5N
+	(ORCPT <rfc822;git-outgoing>); Thu, 7 May 2009 14:57:13 -0400
+Received: from smtprelay11.ispgateway.de ([80.67.31.45]:58152 "EHLO
+	smtprelay11.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753837AbZEGS5M (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 May 2009 14:57:12 -0400
+X-Greylist: delayed 367 seconds by postgrey-1.27 at vger.kernel.org; Thu, 07 May 2009 14:57:12 EDT
+Received: from [84.176.104.76] (helo=wurst.suesserott.de)
+	by smtprelay11.ispgateway.de with esmtpa (Exim 4.68)
+	(envelope-from <newsletter@dirk.my1.cc>)
+	id 1M28gR-000304-6F; Thu, 07 May 2009 20:51:03 +0200
+X-Mailer: git-send-email 1.5.3.mingw.1.142.g63611
+X-Df-Sender: 757646
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118503>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118504>
 
-Still took 11 minutes.
+When clicked, the option --simplify-by-decoration is added to gitk/git log.
+This yields to a simplified history where only decorated commits are shown,
+i.e. those with a yellow tag or a green branch flag.
 
-The idea I've come up with today is something along the lines of
-git fetch origin/master
-git log --name-only ..<hash> | xargs git checkout -f --
+Signed-off-by: Dirk Suesserott <newsletter@dirk.my1.cc>
+---
+ gitk-git/gitk |    1 +
+ 1 files changed, 1 insertions(+), 0 deletions(-)
 
-This should work to quickly keep my files upto date, and I can then
-periodically pull properly to move the HEAD.
-
-Thanks for the info
-
-Bevan
-
------Original Message-----
-=46rom: Alex Riesen [mailto:raa.lkml@gmail.com]=20
-Sent: May 7, 2009 2:18 PM
-To: Bevan Watkiss
-Cc: git@vger.kernel.org
-Subject: Re:
-
-2009/5/7 Bevan Watkiss <bevan.watkiss@cloakware.com>:
-> It's the looking for local changes I'm trying to avoid. =A0Doing a re=
-set
-still
-> goes over the tree, which isn't helpful.
-
-The stat(2) is slow? Then try setting core.ignoreStat (see manpage
-of git config) to true: git config core.ignorestat true
-and read below.
-
-> Basically I have a copy of my tree where only git can write to it, so=
- I
-know
-> the files are right. =A0The NAS box I have the tree on is slow, so re=
-ading
-the
-> tree adds about 10 minutes to the process when I only want to update =
-a few
-> files.
-
-Try "git checkout origin/master". It uses index and shouldn't checkout =
-files
-which are uptodate with the index. And actually, git merge should
-fast-forward,
-in your case and will update just the changed files...
-
-Of course, you can always compare HEAD and origin/master, and resolve
-the changes yourself (see git diff -z --name-status), but it is unlikel=
-y to
-be
-any faster.
+diff --git a/gitk-git/gitk b/gitk-git/gitk
+index 1a7887b..f65cf2c 100644
+--- a/gitk-git/gitk
++++ b/gitk-git/gitk
+@@ -3676,6 +3676,7 @@ set known_view_options {
+     {all     b    * "--all"          {mc "Use all refs"}}
+     {dorder  b    . {"--date-order" "-d"}      {mc "Strictly sort by date"}}
+     {lright  b    . "--left-right"   {mc "Mark branch sides"}}
++    {smplhst b    . "--simplify-by-decoration"   {mc "Simple history"}}
+     {since   t15  + {"--since=*" "--after=*"}  {mc "Since date:"}}
+     {until   t15  . {"--until=*" "--before=*"} {mc "Until date:"}}
+     {limit   t10  + "--max-count=*"  {mc "Max count:"}}
+-- 
+1.6.1.9.g97c34
