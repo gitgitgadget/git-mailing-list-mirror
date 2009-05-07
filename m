@@ -1,101 +1,125 @@
-From: Benjamin Kramer <benny.kra@googlemail.com>
-Subject: [PATCH/RFC] daemon.c: replace inet_ntop with getnameinfo
-Date: Thu, 07 May 2009 14:22:32 +0200
-Message-ID: <4A02D288.6040804@googlemail.com>
+From: kanagesh radhakrishnan <rkanagesh@gmail.com>
+Subject: Error cloning from Git Repository
+Date: Thu, 7 May 2009 17:55:41 +0530
+Message-ID: <ece1079f0905070525r636bf145tc9741de0ad90988@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, jdl@jdl.com
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu May 07 14:22:47 2009
+X-From: git-owner@vger.kernel.org Thu May 07 14:25:55 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M22cg-0007GR-EJ
-	for gcvg-git-2@gmane.org; Thu, 07 May 2009 14:22:46 +0200
+	id 1M22fg-0000Bq-Ut
+	for gcvg-git-2@gmane.org; Thu, 07 May 2009 14:25:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756490AbZEGMWh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 7 May 2009 08:22:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755007AbZEGMWg
-	(ORCPT <rfc822;git-outgoing>); Thu, 7 May 2009 08:22:36 -0400
-Received: from mail-fx0-f158.google.com ([209.85.220.158]:40547 "EHLO
-	mail-fx0-f158.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753028AbZEGMWf (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 May 2009 08:22:35 -0400
-Received: by fxm2 with SMTP id 2so746385fxm.37
-        for <git@vger.kernel.org>; Thu, 07 May 2009 05:22:34 -0700 (PDT)
+	id S1755866AbZEGMZp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 7 May 2009 08:25:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756682AbZEGMZn
+	(ORCPT <rfc822;git-outgoing>); Thu, 7 May 2009 08:25:43 -0400
+Received: from yx-out-2324.google.com ([74.125.44.28]:65491 "EHLO
+	yx-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1762197AbZEGMZl (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 May 2009 08:25:41 -0400
+Received: by yx-out-2324.google.com with SMTP id 3so430998yxj.1
+        for <git@vger.kernel.org>; Thu, 07 May 2009 05:25:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from
-         :user-agent:mime-version:to:cc:subject:content-type
-         :content-transfer-encoding;
-        bh=+3h1A2qTWRn62sz8gveK00i1zyBNU6oNrb8nkybk4Ns=;
-        b=oocvYV6OUPnW5bpKjbehPOC0RL4hLS6AbGZY9stT6VmVtdeS0LDUWyN3rNouBrmtBD
-         uCZ8QiYLMmbxYLuQqY8aljKVXRwKa9gz/y6u99eQHRmF3UEyM/fOMT4T54/d9ElLojR2
-         YkyVSLc6kdTj2cJKhO0QY4dThFVwueXFxzQS4=
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:date:message-id:subject
+         :from:to:content-type:content-transfer-encoding;
+        bh=TCiITLAq4Z1MYLy7nGlBbmueWUAvzm1394452L1+ejQ=;
+        b=i5hGf1s3d5C//79sMyZL04OsxzIyKJn09tZzrByzUutZMAdEmdCHSyiOBCVAqb7S1E
+         KP5JlnbrjLdOzTsxKSfVJzK+oBX/Ha2+7NhrjSfz41TDjvY9YfwGKpoCvMm7gRjaTgY8
+         OR+AejT4c3hV4/Ea8fIVq4HtYERYfdMGMgpUs=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :content-type:content-transfer-encoding;
-        b=e+qoFQrVsn8rOGODtZm83aFJq+7PcRy49k4HM/xHyHyVLwOs8VQ/rM7sVoXqJY0IuA
-         UFKHawNpAEQS9CRO8Dtulq0RaVvvBPFfJ4eCi1BxeQ3nCwLK+sYw4j5gy2b5RUnkAQXA
-         88Sp1ILO5FAEB3DaS43dcB+RT1mQPft4k/m5Q=
-Received: by 10.103.193.13 with SMTP id v13mr1606223mup.1.1241698954891;
-        Thu, 07 May 2009 05:22:34 -0700 (PDT)
-Received: from golden.local (p5B01CB42.dip.t-dialin.net [91.1.203.66])
-        by mx.google.com with ESMTPS id s10sm2839609mue.38.2009.05.07.05.22.33
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 07 May 2009 05:22:34 -0700 (PDT)
-User-Agent: Thunderbird 2.0.0.21 (Macintosh/20090302)
+        d=gmail.com; s=gamma;
+        h=mime-version:date:message-id:subject:from:to:content-type
+         :content-transfer-encoding;
+        b=MQ4ktHOsl6AuMayHaaS4Qm3aRHCga/BtsbXays/Cr3Dm+VG6yUtig9JZbgR5IbJMVr
+         tkCHD+OctiB5JnC3BqwZlfO7rpMxP5lUshh6tlZAhoti6rmlqrm1U1buQTvunuo5CBDq
+         NKBE/t1Z6BUHo3CLpWVTnwaxNmGu8Zl4u23yg=
+Received: by 10.90.115.17 with SMTP id n17mr2030521agc.104.1241699141970; Thu, 
+	07 May 2009 05:25:41 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118469>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118470>
 
-git daemon's interpolated paths didn't support IPv6.
-Every IPv6 address was being converted to `0.0.0.0'.
+Hello All,
 
-Fix this by replacing inet_ntop(3) with the protocol
-agnostic getnameinfo(3) API.
+I am trying to setup a git repository and then publish it using
+git-daemon and inetd for other developers in the network to access the
+sources.
 
-Signed-off-by: Benjamin Kramer <benny.kra@googlemail.com>
----
+Server Setup
+-------------------
+Host system running on Fedora Core 8
+Git version 1.5.4.3
 
-With this patch we'll have colons in the per-IP directories
-for IPv6 addresses. Creating files with a : in the name fails
-on some OSes (e.g. Windows).
+A summary of what I have done to setup the Git server is as follows:
+$ mkdir /home/kanagesh/test-repo
+$ cd test-repo
+$ vi test.c <insert text, save, quit>
+$ git-init-db
+$ git-config user.name kanagesh
+$ git-config user.email rkanagesh@gmail.com
+$ git-add test.c
+$ git-commit -a -m"Initial Commit"
 
-Is this OK for git or do we need to special case IPv6 addresses?
+# mkdir -p /var/cache/git
+# ln -s /home/kanagesh/test-repo/.git test-repo
+# ls -l
+    test-repo -> /home/kanagesh/test-repo/.git
 
- daemon.c |    8 +++-----
- 1 files changed, 3 insertions(+), 5 deletions(-)
+xinetd has been setup to listen for git requests on port 9418 and
+spawn git-daemon.  This has been done by placing a config file named
+'git' under /etc/xinetd.d.  The contents of the config file is as
+follows:
 
-diff --git a/daemon.c b/daemon.c
-index daa4c8e..339d7ab 100644
---- a/daemon.c
-+++ b/daemon.c
-@@ -446,17 +446,15 @@ static void parse_extra_args(char *extra_args, int buflen)
- 		struct addrinfo hints;
- 		struct addrinfo *ai;
- 		int gai;
--		static char addrbuf[HOST_NAME_MAX + 1];
-+		static char addrbuf[NI_MAXHOST];
- 
- 		memset(&hints, 0, sizeof(hints));
- 		hints.ai_flags = AI_CANONNAME;
- 
- 		gai = getaddrinfo(hostname, 0, &hints, &ai);
- 		if (!gai) {
--			struct sockaddr_in *sin_addr = (void *)ai->ai_addr;
--
--			inet_ntop(AF_INET, &sin_addr->sin_addr,
--				  addrbuf, sizeof(addrbuf));
-+			getnameinfo(ai->ai_addr, ai->ai_addrlen, addrbuf,
-+				    sizeof(addrbuf), NULL, 0, NI_NUMERICHOST);
- 			free(ip_address);
- 			ip_address = xstrdup(addrbuf);
- 
--- 
-1.6.3.1.g882bf
+service git
+{
+        disable        = no
+        type            = UNLISTED
+        port             = 9418
+        socket_type = stream
+        wait             = no
+        user            = nobody
+        server          = /usr/local/bin/git-daemon
+        server_args     = --inetd --export-all
+--base-path=/var/cache/git --syslog --verbose
+        log_on_failure  += USERID
+}
+
+
+Clone from the Server
+-------------------------------
+When I attempt to clone the source from the Git server, I end up with
+the following error:
+
+[kanagesh@localhost test]$ git-clone git://192.168.13.171/test-repo
+Initialized empty Git repository in /home/kanagesh/work/test/test-repo/.git/
+fatal: The remote end hung up unexpectedly
+fetch-pack from 'git://192.168.13.171/test-repo' failed.
+
+On checking the log messages in /var/log/messages, I see the following:
+
+May  7 17:29:19 localhost xinetd[17108]: START: git pid=17128
+from=::ffff:192.168.13.171
+May  7 17:29:19 localhost git-daemon: [17128] Connection from
+192.168.13.171:42360
+May  7 17:29:19 localhost git-daemon: [17128] Extended attributes (21
+bytes) exist <host=192.168.13.171>
+May  7 17:29:19 localhost git-daemon: [17128] Request upload-pack for
+'/test-repo'
+May  7 17:29:19 localhost xinetd[17108]: EXIT: git status=255
+pid=17128 duration=0(sec)
+
+Can anyone tell me what I am doing incorrectly?  Any pointers on how
+to get a more verbose log from git-daemon would also be very helpful.
+
+Thanks in advance.
+
+Regards,
+Kanagesh
