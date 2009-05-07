@@ -1,51 +1,70 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: Johannes Sixt <j.sixt@viscovery.net>
 Subject: Re: [PATCH] To make GIT-VERSION-FILE, search for git more widely
-Date: Thu, 07 May 2009 01:33:34 -0700
-Message-ID: <7vws8te2ht.fsf@alter.siamese.dyndns.org>
+Date: Thu, 07 May 2009 10:35:15 +0200
+Message-ID: <4A029D43.4030604@viscovery.net>
 References: <1241684666-18956-1-git-send-email-matthias.andree@gmx.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, "Junio C. Hamano" <gitster@pobox.com>
 To: Matthias Andree <matthias.andree@gmx.de>
-X-From: git-owner@vger.kernel.org Thu May 07 10:33:48 2009
+X-From: git-owner@vger.kernel.org Thu May 07 10:35:42 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M1z32-0001bg-Lu
-	for gcvg-git-2@gmane.org; Thu, 07 May 2009 10:33:45 +0200
+	id 1M1z4w-0002NW-FJ
+	for gcvg-git-2@gmane.org; Thu, 07 May 2009 10:35:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755449AbZEGIdf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 7 May 2009 04:33:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753722AbZEGIdf
-	(ORCPT <rfc822;git-outgoing>); Thu, 7 May 2009 04:33:35 -0400
-Received: from fed1rmmtao107.cox.net ([68.230.241.39]:55315 "EHLO
-	fed1rmmtao107.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751570AbZEGIde (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 May 2009 04:33:34 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao107.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20090507083334.QDHE18948.fed1rmmtao107.cox.net@fed1rmimpo01.cox.net>;
-          Thu, 7 May 2009 04:33:34 -0400
-Received: from localhost ([68.225.240.211])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id oYZa1b00E4aMwMQ03YZaxB; Thu, 07 May 2009 04:33:34 -0400
-X-Authority-Analysis: v=1.0 c=1 a=Ui9-g4_88esA:10 a=p71bCc7y6QQA:10
- a=gbm7fzhtnAq9hdqYFn8A:9 a=wPxEyXQomos5qff8P4KHRl3XynwA:4 a=_RhRFcbxBZMA:10
-X-CM-Score: 0.00
-In-Reply-To: <1241684666-18956-1-git-send-email-matthias.andree@gmx.de> (Matthias Andree's message of "Thu\,  7 May 2009 10\:24\:26 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+	id S1754406AbZEGIfT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 7 May 2009 04:35:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754057AbZEGIfS
+	(ORCPT <rfc822;git-outgoing>); Thu, 7 May 2009 04:35:18 -0400
+Received: from lilzmailso02.liwest.at ([212.33.55.13]:35539 "EHLO
+	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750981AbZEGIfQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 May 2009 04:35:16 -0400
+Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
+	by lilzmailso02.liwest.at with esmtpa (Exim 4.69)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1M1z4V-0008Ei-GS; Thu, 07 May 2009 10:35:15 +0200
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.96])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id 461F354D; Thu,  7 May 2009 10:35:15 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.21 (Windows/20090302)
+In-Reply-To: <1241684666-18956-1-git-send-email-matthias.andree@gmx.de>
+X-Enigmail-Version: 0.95.5
+X-Spam-Score: -1.4 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118442>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118443>
 
-Matthias Andree <matthias.andree@gmx.de> writes:
+(sorry for the previous message; fingers were too fast)
 
-> Problem: when git is installed into /usr/local/bin, running 'sudo make
-> install' won't find git in $PATH (because sudo strips PATH, for instance
-> on openSUSE 11.1, and doesn't include /usr/local/whatever).
+Matthias Andree schrieb:
+> +	VN=$(${GIT} describe --abbrev=4 HEAD 2>/dev/null) &&
 
-That sounds like a bug/misfeature in sudo (which I do not use) to me.
+> +		${GIT} update-index -q --refresh
+> +		test -z "$(${GIT} diff-index --name-only HEAD --)" ||
+
+Use "$GIT" in all those cases
+
+>  GIT-VERSION-FILE: .FORCE-GIT-VERSION-FILE
+> -	@$(SHELL_PATH) ./GIT-VERSION-GEN
+> +	@{ GIT=./git$X ; type $$GIT >/dev/null 2>&1 ; } \
+
++	@{ GIT=./git$X ; type "$$GIT" >/dev/null 2>&1 ; } \
+
+> +	    || { GIT=$(prefix)/bin/git$X ; type $$GIT >/dev/null 2>&1 ; }\
+
++	    || { GIT='$(prefix_SQ)/bin/git$X' ; type "$$GIT" >/dev/null 2>&1 ; }\
+
+BTW, isn't `test -x "$GIT"` better in some way than `type "$GIT"`?
+
+> +	    || GIT=git ; \
+> +	    export GIT ; \
+> +	    $(SHELL_PATH) ./GIT-VERSION-GEN
+
+-- Hannes
