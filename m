@@ -1,72 +1,79 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: [PATCH] To make GIT-VERSION-FILE, search for git more widely
-Date: Thu, 07 May 2009 11:02:18 +0200
-Message-ID: <4A02A39A.3000407@drmicha.warpmail.net>
-References: <1241684666-18956-1-git-send-email-matthias.andree@gmx.de> <7vws8te2ht.fsf@alter.siamese.dyndns.org> <4A02A008.30800@viscovery.net>
+From: Nicolas Sebrecht <nicolas.s.dev@gmx.fr>
+Subject: [PATCH] Re: To make GIT-VERSION-FILE, search for git more widely
+Date: Thu, 7 May 2009 11:02:58 +0200
+Message-ID: <20090507090258.GC13123@vidovic>
+References: <1241684666-18956-1-git-send-email-matthias.andree@gmx.de> <7vws8te2ht.fsf@alter.siamese.dyndns.org> <op.utjw1pa71e62zd@merlin.emma.line.org> <20090507085419.GB13123@vidovic> <op.utjxrofj1e62zd@merlin.emma.line.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Matthias Andree <matthias.andree@gmx.de>, git@vger.kernel.org
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Thu May 07 11:02:36 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Nicolas Sebrecht <nicolas.s.dev@gmx.fr>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Matthias Andree <matthias.andree@gmx.de>
+X-From: git-owner@vger.kernel.org Thu May 07 11:03:16 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M1zUw-0005Mn-C9
-	for gcvg-git-2@gmane.org; Thu, 07 May 2009 11:02:34 +0200
+	id 1M1zVb-0005cj-Ab
+	for gcvg-git-2@gmane.org; Thu, 07 May 2009 11:03:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754916AbZEGJC2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 7 May 2009 05:02:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754412AbZEGJC2
-	(ORCPT <rfc822;git-outgoing>); Thu, 7 May 2009 05:02:28 -0400
-Received: from out3.smtp.messagingengine.com ([66.111.4.27]:40069 "EHLO
-	out3.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751966AbZEGJC1 (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 7 May 2009 05:02:27 -0400
-Received: from compute2.internal (compute2.internal [10.202.2.42])
-	by out1.messagingengine.com (Postfix) with ESMTP id 450E43409F8;
-	Thu,  7 May 2009 05:02:27 -0400 (EDT)
-Received: from heartbeat2.messagingengine.com ([10.202.2.161])
-  by compute2.internal (MEProxy); Thu, 07 May 2009 05:02:27 -0400
-X-Sasl-enc: j1e2LDj0GPXN36qSSHbut/H7/BkKTcOlFBzuAH10c72r 1241686946
-Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.12])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 423A23BB38;
-	Thu,  7 May 2009 05:02:26 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1b5pre) Gecko/20090506 Lightning/1.0pre Shredder/3.0b3pre
-In-Reply-To: <4A02A008.30800@viscovery.net>
+	id S1755400AbZEGJDH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 7 May 2009 05:03:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755372AbZEGJDF
+	(ORCPT <rfc822;git-outgoing>); Thu, 7 May 2009 05:03:05 -0400
+Received: from mail-ew0-f176.google.com ([209.85.219.176]:57823 "EHLO
+	mail-ew0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752193AbZEGJDD (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 May 2009 05:03:03 -0400
+Received: by ewy24 with SMTP id 24so875846ewy.37
+        for <git@vger.kernel.org>; Thu, 07 May 2009 02:03:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:sender:date:from:to:cc
+         :subject:message-id:references:mime-version:content-type
+         :content-disposition:in-reply-to:user-agent;
+        bh=RuqX2Ojw5Jh0S+7KrYUtvhv/G1Fp5Ya+9kqIe40doaQ=;
+        b=JeBwrJM4VYf8o16K6uQOLDJk+ctfXDJII0OfGBFyxnKs0XUIG8ywo4Ep7vyQZs27BC
+         5p93SY7cwGorVS9ilxl4Zb6JbBaCngWL6IUO2RyC/PsEJiCQBS+4QIDY0ohIoKuil9wE
+         45wy+2HT+G6Gdk3EmqKWuhuk6NRUmGVvi0rwk=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=sender:date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=DhOwIMo+D/0DBhk9SfVCigIXhPSUjmOhtY2Q5KH6FFLvNI9PYq6EV7VjznKagUm1uT
+         vuyvamjOeTbZ2uMZP2hT4qDHYD12xKsvtmtsfpgdRuwjjQ7NJm8oqEQPuQj9XhAvJKqJ
+         OXBtxdmH+rn48vPb8pFXriGsdVYdcmiJw5Fmw=
+Received: by 10.216.1.81 with SMTP id 59mr1075550wec.155.1241686982411;
+        Thu, 07 May 2009 02:03:02 -0700 (PDT)
+Received: from @ (88-121-119-92.rev.libertysurf.net [88.121.119.92])
+        by mx.google.com with ESMTPS id t2sm5998057gve.12.2009.05.07.02.03.00
+        (version=SSLv3 cipher=RC4-MD5);
+        Thu, 07 May 2009 02:03:01 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <op.utjxrofj1e62zd@merlin.emma.line.org>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118452>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118453>
 
-Johannes Sixt venit, vidit, dixit 07.05.2009 10:47:
-> Junio C Hamano schrieb:
->> Matthias Andree <matthias.andree@gmx.de> writes:
->>
->>> Problem: when git is installed into /usr/local/bin, running 'sudo make
->>> install' won't find git in $PATH (because sudo strips PATH, for instance
->>> on openSUSE 11.1, and doesn't include /usr/local/whatever).
->>
->> That sounds like a bug/misfeature in sudo (which I do not use) to me.
-> 
-> sudo resets the environment, in particular also PATH. Why would this be a bug?
-> 
-> Current distros set env_reset in /etc/soduers for a reason. Not that I
-> know the reason in detail, but I won't claim that I'm more clever with
-> regards to security issues than distro packagers; so I trust that if they
-> do it, then it makes sense.
-> 
-> -- Hannes
+The 07/05/09, Matthias Andree wrote:
+> Am 07.05.2009, 10:54 Uhr, schrieb Nicolas Sebrecht <nicolas.s.dev@gmx.fr>:
+>
+> > This is a configuration option that the sysadmin has to set (see
+> > env_keep in man sudoers (5) or http://linux.die.net/man/5/sudoers).
+>
+> Salut Nicolas,
+>
+> I'm aware of that.
+>
+> > I don't see any good reason to bypass this behaviour since it is what
+> > sysadmins expect.
+>
+> Are you agreeing or objecting?
 
-sudo's behaviour is fine, but the OP's is not: doing "sudo make install"
-amounts to building git as root, unless you have done a make as non-root
-before. If you have done that make then GIT-VERSION-FILE will be
-up-to-date, and GIT-VERSION-GEN will not even be called by "make install".
+Objecting. By "this behaviour" I meant "the fact that sudo strips
+environment variables".
 
-So I think the proposed patch would encourage wrong behaviour. (also,
-the commit message mixes up ...-GEN and ...-FILE)
-
-Michael
+-- 
+Nicolas Sebrecht
