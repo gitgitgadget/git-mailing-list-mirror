@@ -1,74 +1,65 @@
-From: Nicolas Sebrecht <nicolas.s.dev@gmx.fr>
-Subject: [PATCH] Re: To make GIT-VERSION-FILE, search for git more widely
-Date: Thu, 7 May 2009 10:54:19 +0200
-Message-ID: <20090507085419.GB13123@vidovic>
-References: <1241684666-18956-1-git-send-email-matthias.andree@gmx.de> <7vws8te2ht.fsf@alter.siamese.dyndns.org> <op.utjw1pa71e62zd@merlin.emma.line.org>
+From: "Matthias Andree" <matthias.andree@gmx.de>
+Subject: Re: [PATCH] Re: To make GIT-VERSION-FILE, search for git more widely
+Date: Thu, 07 May 2009 10:56:02 +0200
+Message-ID: <op.utjxrofj1e62zd@merlin.emma.line.org>
+References: <1241684666-18956-1-git-send-email-matthias.andree@gmx.de>
+ <7vws8te2ht.fsf@alter.siamese.dyndns.org>
+ <op.utjw1pa71e62zd@merlin.emma.line.org> <20090507085419.GB13123@vidovic>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Matthias Andree <matthias.andree@gmx.de>
-X-From: git-owner@vger.kernel.org Thu May 07 10:54:40 2009
+Content-Type: text/plain; format=flowed; delsp=yes; charset=utf-8
+Content-Transfer-Encoding: 7bit
+Cc: "Junio C Hamano" <gitster@pobox.com>, git@vger.kernel.org
+To: "Nicolas Sebrecht" <nicolas.s.dev@gmx.fr>
+X-From: git-owner@vger.kernel.org Thu May 07 10:56:15 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M1zNH-000287-5a
-	for gcvg-git-2@gmane.org; Thu, 07 May 2009 10:54:39 +0200
+	id 1M1zOo-0002m5-Ez
+	for gcvg-git-2@gmane.org; Thu, 07 May 2009 10:56:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754608AbZEGIy3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 7 May 2009 04:54:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753245AbZEGIy3
-	(ORCPT <rfc822;git-outgoing>); Thu, 7 May 2009 04:54:29 -0400
-Received: from mail-qy0-f125.google.com ([209.85.221.125]:48997 "EHLO
-	mail-qy0-f125.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754318AbZEGIy1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 May 2009 04:54:27 -0400
-Received: by qyk31 with SMTP id 31so1130851qyk.33
-        for <git@vger.kernel.org>; Thu, 07 May 2009 01:54:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:sender:date:from:to:cc
-         :subject:message-id:references:mime-version:content-type
-         :content-disposition:in-reply-to:user-agent;
-        bh=5sqiObf82ll6QlE56zi0Urau59V3BPOlh5bvhm07tFQ=;
-        b=mOOcEm3zl5lPbDvBNBxiIdrQRtxxQ9OTFvw0LYcuLV/tVA6c8PtE1bTIfEVdls6tG1
-         99CQEMkDDE1HbIjpqBcxY76B8LxElzf0bnA+p2kb20Btm8qJIN8u3mUp/W4cyxUu62sz
-         ITaESnKs5b6SfNQMww9o010iPwvSH+DWkb5Kg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=sender:date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=T/iPSryb6oo+o6PEbKhJEPwQYFHFp9q17XFe4xmbcgvHg25uSadx7vyQUxFQFf/us8
-         wQuolI4PuMey7Z9/DglHMkonic53Rzc84tSiD+J7W47lFAjCTsqBi6SkbU/x6SES4pIx
-         NnkEPeaANsLE9/duXaTNh+pzLuMLjUINd6kQc=
-Received: by 10.220.76.149 with SMTP id c21mr4877467vck.66.1241686464835;
-        Thu, 07 May 2009 01:54:24 -0700 (PDT)
-Received: from @ (88-121-119-92.rev.libertysurf.net [88.121.119.92])
-        by mx.google.com with ESMTPS id 7sm370981ywo.56.2009.05.07.01.54.22
-        (version=SSLv3 cipher=RC4-MD5);
-        Thu, 07 May 2009 01:54:23 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <op.utjw1pa71e62zd@merlin.emma.line.org>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+	id S1755005AbZEGI4H (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 7 May 2009 04:56:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754845AbZEGI4G
+	(ORCPT <rfc822;git-outgoing>); Thu, 7 May 2009 04:56:06 -0400
+Received: from mail.gmx.net ([213.165.64.20]:58772 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753005AbZEGI4F (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 May 2009 04:56:05 -0400
+Received: (qmail invoked by alias); 07 May 2009 08:56:04 -0000
+Received: from g226231102.adsl.alicedsl.de (EHLO mandree.no-ip.org) [92.226.231.102]
+  by mail.gmx.net (mp028) with SMTP; 07 May 2009 10:56:04 +0200
+X-Authenticated: #428038
+X-Provags-ID: V01U2FsdGVkX1+HCe1FUzuHFfRT+n+g8J/4JOYhF2DipOo8jdLWIV
+	ZombErN3VvnEN1
+Received: from merlin.emma.line.org (localhost [127.0.0.1])
+	by merlin.emma.line.org (Postfix) with ESMTP id 12F0519402E;
+	Thu,  7 May 2009 10:56:02 +0200 (CEST)
+In-Reply-To: <20090507085419.GB13123@vidovic>
+User-Agent: Opera Mail/9.64 (Linux)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.6899999999999999
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118448>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118449>
 
-The 07/05/09, Matthias Andree wrote:
+Am 07.05.2009, 10:54 Uhr, schrieb Nicolas Sebrecht <nicolas.s.dev@gmx.fr>:
 
-> Some points:
->
-> 1. sudo is the default sysadmin setup on Ubuntu (more so than on openSUSE)
->
-> 2. sudo strips the environment by default for security reasons
+> This is a configuration option that the sysadmin has to set (see
+> env_keep in man sudoers (5) or http://linux.die.net/man/5/sudoers).
 
-This is a configuration option that the sysadmin has to set (see
-env_keep in man sudoers (5) or http://linux.die.net/man/5/sudoers).
+Salut Nicolas,
 
-I don't see any good reason to bypass this behaviour since it is what
-sysadmins expect.
+I'm aware of that.
+
+> I don't see any good reason to bypass this behaviour since it is what
+> sysadmins expect.
+
+Are you agreeing or objecting?
+
+Best regards
 
 -- 
-Nicolas Sebrecht
+Matthias Andree
