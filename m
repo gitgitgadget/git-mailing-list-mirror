@@ -1,74 +1,100 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: [PATCH RESEND] Git.pm: Set GIT_WORK_TREE if we set GIT_DIR
-Date: Thu, 7 May 2009 21:40:47 +0200
-Message-ID: <20090507194047.GA17989@machine.or.cz>
-References: <1241703688-6892-1-git-send-email-frank@lichtenheld.de>
+From: "Bevan Watkiss" <bevan.watkiss@cloakware.com>
+Subject: RE:
+Date: Thu, 7 May 2009 15:37:59 -0400
+Message-ID: <A07C3E66E84D46ACB37EDC7D396CCA62@caottdt504>
+References: <454B76988CBF42F5BCACA5061125D263@caottdt504> <81b0412b0905071013y241f7eas8417127e51ff52fa@mail.gmail.com> <D75C0FA80F7041FFAAC50B314788AD6F@caottdt504> <alpine.LFD.2.01.0905071148500.4983@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: gitster@pobox.com, git@vger.kernel.org
-To: Frank Lichtenheld <frank@lichtenheld.de>
-X-From: git-owner@vger.kernel.org Thu May 07 21:41:05 2009
+Content-Type: text/plain;
+	charset="US-ASCII"
+Content-Transfer-Encoding: 7bit
+Cc: "'Alex Riesen'" <raa.lkml@gmail.com>, <git@vger.kernel.org>
+To: "'Linus Torvalds'" <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Thu May 07 21:41:32 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M29Sq-0000eK-L1
-	for gcvg-git-2@gmane.org; Thu, 07 May 2009 21:41:05 +0200
+	id 1M29TI-0000sQ-9J
+	for gcvg-git-2@gmane.org; Thu, 07 May 2009 21:41:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752649AbZEGTkx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 7 May 2009 15:40:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752591AbZEGTkx
-	(ORCPT <rfc822;git-outgoing>); Thu, 7 May 2009 15:40:53 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:40443 "EHLO machine.or.cz"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752404AbZEGTkx (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 May 2009 15:40:53 -0400
-Received: by machine.or.cz (Postfix, from userid 2001)
-	id F055A862007; Thu,  7 May 2009 21:40:47 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <1241703688-6892-1-git-send-email-frank@lichtenheld.de>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+	id S1753046AbZEGTlU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 7 May 2009 15:41:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753160AbZEGTlT
+	(ORCPT <rfc822;git-outgoing>); Thu, 7 May 2009 15:41:19 -0400
+Received: from mail.cloakware.com ([142.46.212.116]:52484 "EHLO
+	mail.cloakware.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752988AbZEGTlT (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 May 2009 15:41:19 -0400
+Received: from caottdt504 (bwatkiss-desk.cloakware.com [172.20.201.170])
+	(authenticated bits=0)
+	by mail.cloakware.com (8.13.1/8.13.1) with ESMTP id n47JedPs001253;
+	Thu, 7 May 2009 15:40:39 -0400
+X-Mailer: Microsoft Office Outlook 11
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.3790.4325
+Thread-Index: AcnPRcwPISoSB2SKQxi+V+XonmKnVgAAnW/Q
+In-Reply-To: <alpine.LFD.2.01.0905071148500.4983@localhost.localdomain>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118509>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118510>
 
-On Thu, May 07, 2009 at 03:41:27PM +0200, Frank Lichtenheld wrote:
-> From: Frank Lichtenheld <flichtenheld@astaro.com>
+Looking at the trace it does appear that most of this is the lstat.  It's
+the problem of having many tiny files on a network drive, and trying to use
+git for something it's not meant.
+
+The log has 265430 lines of lstat and 10887 other lines.  If you still want
+the log file I'll strip out the directory names and send it off.
+
+It would be nice to have an option that you can pull only the files that
+changed in the changesets you are updating and ignore the state of the other
+files.
+
+Bevan
+
+-----Original Message-----
+From: Linus Torvalds [mailto:torvalds@linux-foundation.org] 
+Sent: May 7, 2009 2:56 PM
+To: Bevan Watkiss
+Cc: 'Alex Riesen'; git@vger.kernel.org
+Subject: RE: 
+
+
+
+On Thu, 7 May 2009, Bevan Watkiss wrote:
 > 
-> Otherwise git will use the current directory as work tree which will
-> lead to unexpected results if we operate in sub directory of the
-> work tree.
-> 
-> Signed-off-by: Frank Lichtenheld <flichtenheld@astaro.com>
-> ---
->  perl/Git.pm         |    2 ++
->  t/t9700-perl-git.sh |    4 ++++
->  t/t9700/test.pl     |   13 +++++++++++++
->  3 files changed, 19 insertions(+), 0 deletions(-)
-> 
-> No comments and doesn't seem to have been applied, so resent unchanged.
-> 
-> diff --git a/perl/Git.pm b/perl/Git.pm
-> index 291ff5b..4313db7 100644
-> --- a/perl/Git.pm
-> +++ b/perl/Git.pm
-> @@ -1280,6 +1280,8 @@ sub _cmd_exec {
->  	my ($self, @args) = @_;
->  	if ($self) {
->  		$self->repo_path() and $ENV{'GIT_DIR'} = $self->repo_path();
-> +		$self->repo_path() and $self->wc_path()
-> +			and $ENV{'GIT_WORK_TREE'} = $self->wc_path();
->  		$self->wc_path() and chdir($self->wc_path());
->  		$self->wc_subdir() and chdir($self->wc_subdir());
->  	}
+> Basically I have a copy of my tree where only git can write to it, so I
+know
+> the files are right.  The NAS box I have the tree on is slow, so reading
+the
+> tree adds about 10 minutes to the process when I only want to update a few
+> files.
 
-This looks obviously correct?
+Ouch.
 
-You could even skip the first chdir and use $self->wc_path() .
-$self->wc_subdir() in the second one to save a syscall, I guess. ;-)
+You could try doing
 
-I've really forgot most of the code already so it's not worth much, but
+	[core]
+		preloadindex = true
 
-Acked-by: Petr Baudis <pasky@suse.cz>
+and see if that helps some of your loads. It does limit even the parallel 
+tree stat to 20 or so, but if most of your cost is in just doing the 
+lstat() over the files to see that they haven't changed, you might be 
+getting a factor-of-20 speedup for at least _some_ of what you do.
+
+If you can, it might also be interesting to see system call trace patterns 
+(with times!) to see if there is something obviously horribly bad going 
+on. If you're running under Linux, and don't think the data contains 
+anything very private, send me the output of "strace -f -T" of the most 
+problematic operations, and maybe I can see if I can come up with anything 
+interesting.
+
+I have long refused to use networked filesystems because I used to find 
+them -so- painful when working with CVS, so none of my performance work 
+has ever really directly concentrated on long-latency filesystems. Even 
+the index preload was all done "blind" with other people reporting issues 
+(and happily I could see some of the effects with local filesystems and 
+multiple CPU's ;).
+
+			Linus
+	
