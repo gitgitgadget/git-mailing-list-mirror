@@ -1,79 +1,138 @@
-From: =?utf-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-Subject: [PATCH] t4029: use sh instead of bash
-Date: Thu,  7 May 2009 00:33:34 +1000
-Message-ID: <1241620414-31317-1-git-send-email-pclouds@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: shell compatibility issues with SunOS 5.10
+Date: Wed, 06 May 2009 18:14:46 -0700
+Message-ID: <7vab5pu321.fsf@alter.siamese.dyndns.org>
+References: <20090506055913.GA9701@dektop>
+	<-ElxRhvpfY_jx1Ps8nJ42rHdrKbR03T1y96WpGK19gM@cipher.nrlssc.navy.mil>
+	<fcaeb9bf0905061615v2c1b1b4fmc6ade674aabf9586@mail.gmail.com>
+	<vmGwFm-7sqyeL1D7WrJ-qBXW02LwMMHQ7rLy7XbfdUutAtORXrswbw@cipher.nrlssc.navy.mil>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?utf-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu May 07 02:49:02 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Nguyen Thai Ngoc Duy <pclouds@gmail.com>, git@vger.kernel.org
+To: Brandon Casey <casey@nrlssc.navy.mil>
+X-From: git-owner@vger.kernel.org Thu May 07 03:14:58 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M1rnK-0002e0-6S
-	for gcvg-git-2@gmane.org; Thu, 07 May 2009 02:49:02 +0200
+	id 1M1sCP-0001jE-L2
+	for gcvg-git-2@gmane.org; Thu, 07 May 2009 03:14:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757501AbZEGAsJ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 6 May 2009 20:48:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757388AbZEGAsH
-	(ORCPT <rfc822;git-outgoing>); Wed, 6 May 2009 20:48:07 -0400
-Received: from wf-out-1314.google.com ([209.85.200.174]:12972 "EHLO
-	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753795AbZEGAsF (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 6 May 2009 20:48:05 -0400
-Received: by wf-out-1314.google.com with SMTP id 26so415537wfd.4
-        for <git@vger.kernel.org>; Wed, 06 May 2009 17:48:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:from:to:cc:subject
-         :date:message-id:x-mailer:mime-version:content-type
-         :content-transfer-encoding;
-        bh=cYIDgVcFLhJjUx3i/tV7ZZ5oKEl/bx1JxV/4nqEDSns=;
-        b=tU7ErYE4qIZHSw1OyXMKE7rQctKF9lg/2XdsVvU0ge+CfuomEyUFsY5Y46dGGWRvlQ
-         x2M/sSypzNoZGKFM6o3DmqyAymG7WGgep6YjvWs9wcbR+2bvM06MujXG9vIx1TCDLahl
-         mg0aQWaSdW7fWkVx5+DJ4a9oFH0RKrDY4mQXI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:mime-version
-         :content-type:content-transfer-encoding;
-        b=o2tir/Ugze/NxKjkCFmAFV7ZunLex/1B1eRZiQiVbwFLelEx42X7gW913yfVYDx1lp
-         8v+1CYm+VxH3E+NnLjRvIw//GJhM+Ru3YYEuJgwJvGSStPrSVOuhzwlyAp1O1dOXV6an
-         352uabrjRM91c/e2AGa2l4Qn3sPzviIb7DMVI=
-Received: by 10.142.51.4 with SMTP id y4mr731150wfy.303.1241657285019;
-        Wed, 06 May 2009 17:48:05 -0700 (PDT)
-Received: from dektop (dektec.lnk.telstra.net [203.45.32.221])
-        by mx.google.com with ESMTPS id 22sm2104895wfd.39.2009.05.06.17.48.02
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 06 May 2009 17:48:04 -0700 (PDT)
-Received: by dektop (sSMTP sendmail emulation); Thu,  7 May 2009 00:33:39 +1000
-X-Mailer: git-send-email test
+	id S1755457AbZEGBOr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 6 May 2009 21:14:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754773AbZEGBOr
+	(ORCPT <rfc822;git-outgoing>); Wed, 6 May 2009 21:14:47 -0400
+Received: from fed1rmmtao104.cox.net ([68.230.241.42]:34313 "EHLO
+	fed1rmmtao104.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753386AbZEGBOq (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 May 2009 21:14:46 -0400
+Received: from fed1rmimpo03.cox.net ([70.169.32.75])
+          by fed1rmmtao104.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20090507011447.UDKI17135.fed1rmmtao104.cox.net@fed1rmimpo03.cox.net>;
+          Wed, 6 May 2009 21:14:47 -0400
+Received: from localhost ([68.225.240.211])
+	by fed1rmimpo03.cox.net with bizsmtp
+	id oREm1b00S4aMwMQ04REmtr; Wed, 06 May 2009 21:14:47 -0400
+X-Authority-Analysis: v=1.0 c=1 a=1YscXhk2imAA:10 a=4gGF0mQB7hoA:10
+ a=UZKBXp5JM6Qvm_vOxRIA:9 a=XRZrNSzn_K1u-9OPukIA:7
+ a=KXEf6l20DVzjyJblFULEjYBvobsA:4
+X-CM-Score: 0.00
+In-Reply-To: <vmGwFm-7sqyeL1D7WrJ-qBXW02LwMMHQ7rLy7XbfdUutAtORXrswbw@cipher.nrlssc.navy.mil> (Brandon Casey's message of "Wed\, 06 May 2009 19\:22\:08 -0500")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118416>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118417>
 
+Brandon Casey <casey@nrlssc.navy.mil> writes:
 
-Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-=2Ecom>
----
- t/t4029-diff-trailing-space.sh |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+> /usr/xpg*/bin is where Sun puts the POSIX compliant versions of standard
+> system utilities.
+>
+> The binaries in /bin/ retain their historical Solaris behavior.
+>
+> Check out the XPG4 man page on a sun.
+>
+> Not sure about the best route to take here.  /usr/xpg4/bin should probably
+> be in the user's PATH when git is executed too.
 
-diff --git a/t/t4029-diff-trailing-space.sh b/t/t4029-diff-trailing-spa=
-ce.sh
-index 9ddbbcd..3ccc237 100755
---- a/t/t4029-diff-trailing-space.sh
-+++ b/t/t4029-diff-trailing-space.sh
-@@ -1,4 +1,4 @@
--#!/bin/bash
-+#!/bin/sh
+I doubt it is limited to git.
+
+My experience from the days I had to do things on Solaris boxes several
+years ago was that it was the only way to have a workable environment to
+have /usr/xpg*/bin on my PATH.
+
+If the contents of the stock /usr/bin has been frozen at the historical
+state while the outside world made progress, I would imagine that the
+situation has gotten worse for people who still use tools from /usr/bin
+and expect their scripts to be portable with anybody else.
+
+On Solaris, I expect everybody to build git with SHELL_PATH set to
+something other than /bin/sh, and binary packaged one (I do not know
+Solaris have such a packaging system, though) would also be set to avoid
+the broken /bin/sh.  I suspect you could do something like this...
+
+ Makefile        |   13 +++++++++++++
+ git-sh-setup.sh |    2 ++
+ 2 files changed, 15 insertions(+), 0 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index 6e21643..081f06a 100644
+--- a/Makefile
++++ b/Makefile
+@@ -3,6 +3,11 @@ all::
+ 
+ # Define V=1 to have a more verbose compile.
  #
- # Copyright (c) Jim Meyering
- #
---=20
-test
++# Define SHELL_PATH to a POSIX shell if your /bin/sh is broken.
++#
++# Define SANE_TOOL_PATH to a colon-separated list of paths to prepend
++# to PATH if your tools in /usr/bin are broken.
++#
+ # Define SNPRINTF_RETURNS_BOGUS if your are on a system which snprintf()
+ # or vsnprintf() return -1 instead of number of characters which would
+ # have been written to the final string if enough space had been available.
+@@ -694,6 +699,7 @@ ifeq ($(uname_S),SunOS)
+ 	NEEDS_SOCKET = YesPlease
+ 	NEEDS_NSL = YesPlease
+ 	SHELL_PATH = /bin/bash
++	SANE_TOOL_PATH = /usr/xpg5/bin:/usr/xpg4/bin
+ 	NO_STRCASESTR = YesPlease
+ 	NO_MEMMEM = YesPlease
+ 	NO_HSTRERROR = YesPlease
+@@ -852,6 +858,12 @@ endif
+ -include config.mak.autogen
+ -include config.mak
+ 
++ifdef SANE_TOOL_PATH
++BROKEN_PATH_FIX = s|^. @@PATH@@|PATH=$(SANE_TOOL_PATH)|
++else
++BROKEN_PATH_FIX = d
++endif
++
+ ifeq ($(uname_S),Darwin)
+ 	ifndef NO_FINK
+ 		ifeq ($(shell test -d /sw/lib && echo y),y)
+@@ -1251,6 +1263,7 @@ $(patsubst %.sh,%,$(SCRIPT_SH)) : % : %.sh
+ 	    -e 's|@@PERL@@|$(PERL_PATH_SQ)|g' \
+ 	    -e 's/@@GIT_VERSION@@/$(GIT_VERSION)/g' \
+ 	    -e 's/@@NO_CURL@@/$(NO_CURL)/g' \
++	    -e '/^# @@PATH@@/$(BROKEN_PATH_FIX)' \
+ 	    $@.sh >$@+ && \
+ 	chmod +x $@+ && \
+ 	mv $@+ $@
+diff --git a/git-sh-setup.sh b/git-sh-setup.sh
+index 8382339..7802581 100755
+--- a/git-sh-setup.sh
++++ b/git-sh-setup.sh
+@@ -11,6 +11,8 @@
+ # exporting it.
+ unset CDPATH
+ 
++# @@PATH@@:$PATH
++
+ die() {
+ 	echo >&2 "$@"
+ 	exit 1
