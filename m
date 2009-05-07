@@ -1,66 +1,96 @@
-From: Miles Bader <miles@gnu.org>
-Subject: Re: git repack with a --reference
-Date: Thu, 07 May 2009 14:57:17 +0900
-Message-ID: <87bpq5bgle.fsf@catnip.gol.com>
-References: <4A0261D8.8040105@catalyst.net.nz>
-Reply-To: Miles Bader <miles@gnu.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+From: Stephen Boyd <bebarino@gmail.com>
+Subject: [PATCH 1/3] completion: complete config variables for --get/getall/unset/unset-all
+Date: Wed,  6 May 2009 23:15:04 -0700
+Message-ID: <1241676906-29783-1-git-send-email-bebarino@gmail.com>
 Cc: git@vger.kernel.org
-To: Jonathan Harker <jonathan@catalyst.net.nz>
-X-From: git-owner@vger.kernel.org Thu May 07 07:57:36 2009
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Thu May 07 08:15:39 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M1wbv-0000Hs-3D
-	for gcvg-git-2@gmane.org; Thu, 07 May 2009 07:57:35 +0200
+	id 1M1wtL-00065U-Sk
+	for gcvg-git-2@gmane.org; Thu, 07 May 2009 08:15:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751805AbZEGF51 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 7 May 2009 01:57:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751734AbZEGF51
-	(ORCPT <rfc822;git-outgoing>); Thu, 7 May 2009 01:57:27 -0400
-Received: from smtp12.dentaku.gol.com ([203.216.5.74]:59178 "EHLO
-	smtp12.dentaku.gol.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751581AbZEGF50 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 May 2009 01:57:26 -0400
-Received: from 218.231.212.123.eo.eaccess.ne.jp ([218.231.212.123] helo=catnip.gol.com)
-	by smtp12.dentaku.gol.com with esmtpa (Dentaku)
-	id 1M1wbe-0005DN-Dm; Thu, 07 May 2009 14:57:18 +0900
-Received: by catnip.gol.com (Postfix, from userid 1000)
-	id 92F46DFA9; Thu,  7 May 2009 14:57:17 +0900 (JST)
-System-Type: x86_64-unknown-linux-gnu
-In-Reply-To: <4A0261D8.8040105@catalyst.net.nz> (Jonathan Harker's message of
-	"Thu, 07 May 2009 16:21:44 +1200")
-X-Virus-Scanned: ClamAV GOL (outbound)
-X-Abuse-Complaints: abuse@gol.com
+	id S1752528AbZEGGP0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 7 May 2009 02:15:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751994AbZEGGPZ
+	(ORCPT <rfc822;git-outgoing>); Thu, 7 May 2009 02:15:25 -0400
+Received: from rv-out-0506.google.com ([209.85.198.231]:12138 "EHLO
+	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750896AbZEGGPY (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 May 2009 02:15:24 -0400
+Received: by rv-out-0506.google.com with SMTP id f9so452637rvb.1
+        for <git@vger.kernel.org>; Wed, 06 May 2009 23:15:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:from:to:cc:subject
+         :date:message-id:x-mailer;
+        bh=/b+ipl0TNR5c51SyRjbRLCMSY1w2oY4+j8Cf+8Uy7wg=;
+        b=tarEpWr1CfECo3UANgZ4OSeh/7aXQE0mZQourdX2hPDzObLJXgTYs+WujaEe1NqeOT
+         yLDLxYoHgpppTEp/n/1wkRr13Ku+Cdz7qaZbRVBNQanvnf1ewEfVP+kJ2ETLiXw2ixgc
+         IkAs5FzdR6n06ipHTHDxC36XbGCG48LrxyDxU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=Qq8VaahpNXBUTIMbUliRMxdMNqKEWXUuBHUY5kUXpkcFEvqmNTO1wq5oqB3+NG5asJ
+         BlUA3zFym9/dOzA7PVfMZhaays/LZqR3NK0zE4/OkloFnc3ETTclxwW6TvbIOLr3gxNL
+         yVeWpTBdom/XaOZ2j2yQ1Zdnux8LdE3xlNFqk=
+Received: by 10.115.32.8 with SMTP id k8mr2052514waj.54.1241676924525;
+        Wed, 06 May 2009 23:15:24 -0700 (PDT)
+Received: from earth ([76.89.212.195])
+        by mx.google.com with ESMTPS id m28sm14313514waf.2.2009.05.06.23.15.08
+        (version=SSLv3 cipher=RC4-MD5);
+        Wed, 06 May 2009 23:15:12 -0700 (PDT)
+Received: by earth (sSMTP sendmail emulation); Wed, 06 May 2009 23:15:06 -0700
+X-Mailer: git-send-email 1.6.3.rc4.29.g8146
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118427>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118428>
 
-Jonathan Harker <jonathan@catalyst.net.nz> writes:
-> Hi - hope this isn't too noobish but I'm trying to get an existing git
-> checkout to repack/prune/gc itself such that it would be like I had
-> cloned it with --reference /path/to/local/repo (i.e. I've added
-> /path/to/local/repo to .git/objects/info/alternatives, and I'd like it
-> to reduce its objects from 200 MB to 5 MB). Is this
->
-> a. possible,
-> b. desirable, and
-> c. not insane?
+This should make it easier for users to get and unset their
+configuration variables without having to open documentation or dig
+through their configuration file.
 
-I've done this in the past (using "git gc", but same difference I
-guess), and it worked as you'd hope, reducing .git to something very
-small.
+Signed-off-by: Stephen Boyd <bebarino@gmail.com>
+---
+ contrib/completion/git-completion.bash |   15 +++++++++++++++
+ 1 files changed, 15 insertions(+), 0 deletions(-)
 
-I don't recall any real problems, but you might need to manually
-remove any pack ".keep" files first though (I seem to recall something
-like that, anyway).
-
--Miles
-
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index 1683e6d..72a16a1 100755
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -1322,6 +1322,17 @@ _git_send_email ()
+ 	COMPREPLY=()
+ }
+ 
++__git_config_get_set_variables ()
++{
++	for i in $(git --git-dir="$(__gitdir)" config --list); do
++		case "$i" in
++		*.*)
++			echo "${i/=*/}"
++			;;
++		esac
++	done
++}
++
+ _git_config ()
+ {
+ 	local cur="${COMP_WORDS[COMP_CWORD]}"
+@@ -1388,6 +1399,10 @@ _git_config ()
+ 		__gitcomp "$__git_send_email_suppresscc_options"
+ 		return
+ 		;;
++	--get|--get-all|--unset|--unset-all)
++		__gitcomp "$(__git_config_get_set_variables)"
++		return
++		;;
+ 	*.*)
+ 		COMPREPLY=()
+ 		return
 -- 
-Friendship, n. A ship big enough to carry two in fair weather, but only one
-in foul.
+1.6.3.rc4.29.g8146
