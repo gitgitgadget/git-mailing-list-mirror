@@ -1,180 +1,91 @@
-From: Don Slutz <Don.Slutz@SierraAtlantic.com>
-Subject: Re: Tests in Cygwin
-Date: Thu, 07 May 2009 14:29:34 -0400
-Message-ID: <4A03288E.7010405@SierraAtlantic.com>
-References: <83prfbhasp.fsf@kalahari.s2.org>	<4A01E64C.7050703@SierraAtlantic.com> <7vvdoet13g.fsf@alter.siamese.dyndns.org> <4A028A0A.5070003@viscovery.net> <4A030277.2000708@SierraAtlantic.com>
+From: "Bevan Watkiss" <bevan.watkiss@cloakware.com>
+Subject: RE:
+Date: Thu, 7 May 2009 14:48:20 -0400
+Message-ID: <D47BEC5B0D55467894A05B6219127126@caottdt504>
+References: <454B76988CBF42F5BCACA5061125D263@caottdt504> <81b0412b0905071013y241f7eas8417127e51ff52fa@mail.gmail.com> <D75C0FA80F7041FFAAC50B314788AD6F@caottdt504> <81b0412b0905071118q46eb98b0k20f148e6a179a81f@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Johannes Sixt <j.sixt@viscovery.net>,
-	Junio C Hamano <gitster@pobox.com>,
-	Hannu Koivisto <azure@iki.fi>, git@vger.kernel.org
-To: Don Slutz <Don.Slutz@sierraatlantic.com>
-X-From: git-owner@vger.kernel.org Thu May 07 20:29:50 2009
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: <git@vger.kernel.org>
+To: "'Alex Riesen'" <raa.lkml@gmail.com>
+X-From: git-owner@vger.kernel.org Thu May 07 20:51:44 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M28Lr-0007qF-TT
-	for gcvg-git-2@gmane.org; Thu, 07 May 2009 20:29:48 +0200
+	id 1M28gd-0001DM-RQ
+	for gcvg-git-2@gmane.org; Thu, 07 May 2009 20:51:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752498AbZEGS3j (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 7 May 2009 14:29:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751684AbZEGS3j
-	(ORCPT <rfc822;git-outgoing>); Thu, 7 May 2009 14:29:39 -0400
-Received: from mail201.messagelabs.com ([216.82.254.211]:30451 "HELO
-	mail201.messagelabs.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with SMTP id S1751251AbZEGS3j (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 May 2009 14:29:39 -0400
-X-VirusChecked: Checked
-X-Env-Sender: Don.Slutz@SierraAtlantic.com
-X-Msg-Ref: server-5.tower-201.messagelabs.com!1241720979!33907834!1
-X-StarScan-Version: 6.0.0; banners=sierraatlantic.com,-,-
-X-Originating-IP: [206.86.29.5]
-Received: (qmail 13621 invoked from network); 7 May 2009 18:29:39 -0000
-Received: from seng.sierraatl.com (HELO USFREEX1.us.corp.sa) (206.86.29.5)
-  by server-5.tower-201.messagelabs.com with SMTP; 7 May 2009 18:29:39 -0000
-Received: from usbosex1.us.corp.sa ([192.168.17.34]) by USFREEX1.us.corp.sa with Microsoft SMTPSVC(6.0.3790.1830);
-	 Thu, 7 May 2009 11:29:39 -0700
-Received: from [127.0.0.1] ([208.37.241.146]) by usbosex1.us.corp.sa with Microsoft SMTPSVC(6.0.3790.1830);
-	 Thu, 7 May 2009 14:29:37 -0400
-User-Agent: Thunderbird 2.0.0.21 (Windows/20090302)
-In-Reply-To: <4A030277.2000708@SierraAtlantic.com>
-X-OriginalArrivalTime: 07 May 2009 18:29:37.0491 (UTC) FILETIME=[C6FAAA30:01C9CF41]
+	id S1752232AbZEGSvF convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 7 May 2009 14:51:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751540AbZEGSvD
+	(ORCPT <rfc822;git-outgoing>); Thu, 7 May 2009 14:51:03 -0400
+Received: from mail.cloakware.com ([142.46.212.116]:33751 "EHLO
+	mail.cloakware.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752232AbZEGSvB convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 7 May 2009 14:51:01 -0400
+Received: from caottdt504 (bwatkiss-desk.cloakware.com [172.20.201.170])
+	(authenticated bits=0)
+	by mail.cloakware.com (8.13.1/8.13.1) with ESMTP id n47Ip0Bf026000;
+	Thu, 7 May 2009 14:51:00 -0400
+X-Mailer: Microsoft Office Outlook 11
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.3790.4325
+Thread-Index: AcnPQCkHH3eUtJmnT8mII5LseKbbCwAA0jtQ
+In-Reply-To: <81b0412b0905071118q46eb98b0k20f148e6a179a81f@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118502>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118503>
 
-Before these patches, I get:
+Still took 11 minutes.
 
-make aggregate-results
-make[3]: Entering directory `/home/adslutz/BinMode/git/t'
-'/bin/sh' ./aggregate-results.sh test-results/t*-*
-fixed   3
-success 4201
-failed  15
-broken  5
-total   4272
-make[3]: Leaving directory `/home/adslutz/BinMode/git/t'
+The idea I've come up with today is something along the lines of
+git fetch origin/master
+git log --name-only ..<hash> | xargs git checkout -f --
 
-After:
+This should work to quickly keep my files upto date, and I can then
+periodically pull properly to move the HEAD.
 
-make aggregate-results
-make[2]: Entering directory `/home/adslutz/BinMode/git/t'
-'/bin/sh' ./aggregate-results.sh test-results/t*-*
-fixed   3
-success 4181
-failed  6
-broken  5
-total   4274
-make[2]: Leaving directory `/home/adslutz/BinMode/git/t'
+Thanks for the info
 
-   -Don
+Bevan
 
--------- Original Message --------
-Subject: Re: Tests in Cygwin
-From: Don Slutz <Don.Slutz@sierraatlantic.com>
-To: Johannes Sixt <j.sixt@viscovery.net>
-CC: Junio C Hamano <gitster@pobox.com>, Hannu Koivisto <azure@iki.fi>, 
-git@vger.kernel.org
-Date: 5/7/2009 11:47 AM
-> Here is a change back to using spaces.  It also includes a change
-> to test for the code working.  Squash on top.
->
-> Signed-off-by: Don Slutz <Don.Slutz@SierraAtlantic.com>
-> ---
-> t/README                    |    4 ++--
-> t/t0000-basic.sh            |   13 ++++++++++++-
-> t/t1004-read-tree-m-u-wf.sh |    2 +-
-> t/test-lib.sh               |    7 +------
-> 4 files changed, 16 insertions(+), 10 deletions(-)
->
-> diff --git a/t/README b/t/README
-> index 49c3a51..c61e1d4 100644
-> --- a/t/README
-> +++ b/t/README
-> @@ -200,9 +200,9 @@ library for your script to use.
->    <script>.  If it yields success, test is considered
->    successful.  <message> should state what it is testing.
->
-> -   An optional parameter <prereq> is a '+' separated list of 
-> prerequisite
-> +   An optional parameter <prereq> is a space separated list of 
-> prerequisite
->    tokens.  The test will be skipped if the test environment lacks any of
-> -   the prerequiste feature listed (see below for commonly used
-> +   the prerequisite feature listed (see below for commonly used
->    prerequisites).
->
->    Example:
-> diff --git a/t/t0000-basic.sh b/t/t0000-basic.sh
-> index f4ca4fc..58bac69 100755
-> --- a/t/t0000-basic.sh
-> +++ b/t/t0000-basic.sh
-> @@ -67,7 +67,18 @@ donthaveit=yes
-> test_expect_success DONTHAVEIT 'unmet prerequisite causes test to be 
-> skipped' '
->     donthaveit=no
-> '
-> -if test $haveit$donthaveit != yesyes
-> +test_set_prereq HAVEBOTH
-> +haveboth1=no
-> +test_expect_success 'HAVEBOTH HAVEIT' 'test runs if both 
-> prerequisites are satisfied' '
-> +    test_have_prereq "HAVEIT HAVEBOTH" &&
-> +    haveboth1=yes
-> +'
-> +haveboth2=no
-> +test_expect_success 'HAVEIT HAVEBOTH' 'test passes if both 
-> prerequisites are satisfied' '
-> +    test_have_prereq "HAVEBOTH HAVEIT" &&
-> +    haveboth2=yes
-> +'
-> +if test $haveit$donthaveit$haveboth1$haveboth2 != yesyesyesyes
-> then
->        say "bug in test framework: prerequisite tags do not work 
-> reliably"
->        exit 1
-> diff --git a/t/t1004-read-tree-m-u-wf.sh b/t/t1004-read-tree-m-u-wf.sh
-> index 8683189..eb60f80 100755
-> --- a/t/t1004-read-tree-m-u-wf.sh
-> +++ b/t/t1004-read-tree-m-u-wf.sh
-> @@ -177,7 +177,7 @@ test_expect_success SYMLINKS 'funny symlink in 
-> work tree' '
->
-> '
->
-> -test_expect_success SYMLINKS+SANITY 'funny symlink in work tree, 
-> un-unlink-able' '
-> +test_expect_success 'SYMLINKS SANITY' 'funny symlink in work tree, 
-> un-unlink-able' '
->
->        rm -fr a b &&
->        git reset --hard &&
-> diff --git a/t/test-lib.sh b/t/test-lib.sh
-> index 2d12799..dd3b8d7 100644
-> --- a/t/test-lib.sh
-> +++ b/t/test-lib.sh
-> @@ -263,13 +263,8 @@ test_set_prereq () {
-> }
-> satisfied=" "
->
-> -# prerequisites can be concatenated with '+'
-> test_have_prereq () {
-> -       save_IFS=$IFS
-> -       IFS=+
-> -       set -- $*
-> -       IFS=$save_IFS
-> -       for prerequisite
-> +       for prerequisite in $(echo $*)
->        do
->                case $satisfied in
->                *" $prerequisite "*)
+-----Original Message-----
+=46rom: Alex Riesen [mailto:raa.lkml@gmail.com]=20
+Sent: May 7, 2009 2:18 PM
+To: Bevan Watkiss
+Cc: git@vger.kernel.org
+Subject: Re:
 
+2009/5/7 Bevan Watkiss <bevan.watkiss@cloakware.com>:
+> It's the looking for local changes I'm trying to avoid. =A0Doing a re=
+set
+still
+> goes over the tree, which isn't helpful.
 
+The stat(2) is slow? Then try setting core.ignoreStat (see manpage
+of git config) to true: git config core.ignorestat true
+and read below.
 
-__________________________________________________________________________________________________________________
-DISCLAIMER:"The information contained in this message and the attachments (if any) may be privileged and confidential and protected from disclosure. You are hereby notified that any unauthorized use, dissemination, distribution or copying of this communication, review, retransmission, or taking of any action based upon this information, by persons or entities other than the intended recipient, is strictly prohibited. If you are not the intended recipient or an employee or agent responsible for delivering this message, and have received this communication in error, please notify us immediately by replying to the message and kindly delete the original message, attachments, if any, and all its copies from your computer system. Thank you for your cooperation." 
-________________________________________________________________________________________________________________
+> Basically I have a copy of my tree where only git can write to it, so=
+ I
+know
+> the files are right. =A0The NAS box I have the tree on is slow, so re=
+ading
+the
+> tree adds about 10 minutes to the process when I only want to update =
+a few
+> files.
+
+Try "git checkout origin/master". It uses index and shouldn't checkout =
+files
+which are uptodate with the index. And actually, git merge should
+fast-forward,
+in your case and will update just the changed files...
+
+Of course, you can always compare HEAD and origin/master, and resolve
+the changes yourself (see git diff -z --name-status), but it is unlikel=
+y to
+be
+any faster.
