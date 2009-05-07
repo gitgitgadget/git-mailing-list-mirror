@@ -1,51 +1,76 @@
-From: "Yann Dirson" <ydirson@altern.org>
-Subject: gitk: showing onging merge as such ?
-Date: Thu, 7 May 2009 13:46:52 +0200 (CEST)
-Message-ID: <53018.10.0.0.1.1241696812.squirrel@intranet.linagora.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu May 07 13:57:23 2009
+From: Alexander Potashev <aspotashev@gmail.com>
+Subject: [PATCH] Documentation: cloning to empty directory is allowed
+Date: Thu,  7 May 2009 16:04:08 +0400
+Message-ID: <1241697848-9263-1-git-send-email-aspotashev@gmail.com>
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Alexander Potashev <aspotashev@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu May 07 14:03:36 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M22E7-0003LH-3c
-	for gcvg-git-2@gmane.org; Thu, 07 May 2009 13:57:23 +0200
+	id 1M22K6-0006Gr-9N
+	for gcvg-git-2@gmane.org; Thu, 07 May 2009 14:03:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754991AbZEGL5Q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 7 May 2009 07:57:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754085AbZEGL5P
-	(ORCPT <rfc822;git-outgoing>); Thu, 7 May 2009 07:57:15 -0400
-Received: from alderaan.linagora.com ([84.14.148.74]:47982 "EHLO
-	alderaan.linagora.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752193AbZEGL5O (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 May 2009 07:57:14 -0400
-X-Greylist: delayed 626 seconds by postgrey-1.27 at vger.kernel.org; Thu, 07 May 2009 07:57:14 EDT
-Received: from 10.0.0.2 (unknown [10.75.192.3])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by alderaan.linagora.com (Postfix) with ESMTPSA id 50B57429F28
-	for <git@vger.kernel.org>; Thu,  7 May 2009 13:46:46 +0200 (CEST)
-Received: from 10.0.0.1 (proxying for 10.75.161.7)
-        (SquirrelMail authenticated user ydirson)
-        by intranet.linagora.com with HTTP;
-        Thu, 7 May 2009 13:46:52 +0200 (CEST)
-User-Agent: SquirrelMail/1.4.11
-X-Priority: 3 (Normal)
-Importance: Normal
+	id S1755666AbZEGMDZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 7 May 2009 08:03:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753082AbZEGMDZ
+	(ORCPT <rfc822;git-outgoing>); Thu, 7 May 2009 08:03:25 -0400
+Received: from wa-out-1112.google.com ([209.85.146.177]:59237 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752474AbZEGMDY (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 May 2009 08:03:24 -0400
+Received: by wa-out-1112.google.com with SMTP id j5so420605wah.21
+        for <git@vger.kernel.org>; Thu, 07 May 2009 05:03:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer;
+        bh=O0FGwn7iQInsZtX8eeT23SNH3txYFZCU98r6/aUBWpg=;
+        b=DgrxetUhEChomQRpr5jpA3yYJbzpUQgQd/IKJ7hfQTXc071osFFHdgtfhH21VCAMUZ
+         fwRydSi+MLFwX0h3S6UJ1IToQPsPHrH0g1ljhhqzP8et7WuDOwYJkgDdDqvhtxVOEsiH
+         31Y6gfVMM35RwsbJlTwdU7Cdg1cI32mLnOQiE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=ZrmJbRnG4t8GhbYaHMQyL7cCVMjB7+omJp+njilAE0l48VQsSvpAZ9VKG9yK5EnCvX
+         Sjz4mNlBeu5y39fMVyCVkwf/e8FdHhfDHpwJD735BHWz2l/OZm/2DDTbfJxB7EwkbwG/
+         WnSmilX1RkrLXhKij0DqvXKVC4leoqWU8qhS0=
+Received: by 10.114.94.1 with SMTP id r1mr2231064wab.130.1241697804777;
+        Thu, 07 May 2009 05:03:24 -0700 (PDT)
+Received: from localhost.localdomain (ppp91-78-100-127.pppoe.mtu-net.ru [91.78.100.127])
+        by mx.google.com with ESMTPS id q18sm9430654pog.19.2009.05.07.05.03.21
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Thu, 07 May 2009 05:03:23 -0700 (PDT)
+X-Mailer: git-send-email 1.6.2.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118464>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118465>
 
-While resolving a conflicted merge, I wondered if there was any reason why
-gitk does not show that we are indeed doing a merge, by showing the staged
-contents as a merge commit if MERGE_HEAD is found.
+Cloning into an existing empty directory is now allowed:
+commit 55892d23981917aefdb387ad7d0429f90cbd446a
+("Allow cloning to an existing empty directory")
 
-Is there any reason why we would not do this ?
+Signed-off-by: Alexander Potashev <aspotashev@gmail.com>
+---
+ Documentation/git-clone.txt |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-I had a quick try at how this could be done, here it is.  The diff is not
-yet displayed as combined.
+diff --git a/Documentation/git-clone.txt b/Documentation/git-clone.txt
+index 4072f40..b14de6c 100644
+--- a/Documentation/git-clone.txt
++++ b/Documentation/git-clone.txt
+@@ -149,7 +149,7 @@ then the cloned repository will become corrupt.
+ 	part of the source repository is used if no directory is
+ 	explicitly given ("repo" for "/path/to/repo.git" and "foo"
+ 	for "host.xz:foo/.git").  Cloning into an existing directory
+-	is not allowed.
++	is only allowed if the directory is empty.
+ 
+ :git-clone: 1
+ include::urls.txt[]
+-- 
+1.6.2.3
