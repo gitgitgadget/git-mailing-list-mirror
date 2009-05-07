@@ -1,79 +1,74 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH/RFC] daemon.c: replace inet_ntop with getnameinfo
-Date: Thu, 07 May 2009 15:15:15 +0200
-Message-ID: <4A02DEE3.1080006@viscovery.net>
-References: <4A02D288.6040804@googlemail.com> <4A02D70B.6090305@op5.se> <EC96A79E-4D4E-467A-A10F-D905FE02E508@gmail.com>
+From: Frank Li <lznuaa@gmail.com>
+Subject: Re: TortoiseGIT: SSH-Support
+Date: Thu, 7 May 2009 21:16:46 +0800
+Message-ID: <1976ea660905070616p488adddcib24a2a1ddea69c3a@mail.gmail.com>
+References: <4A02A1E7.909@gsd-software.net>
+	 <4A02C95A.1070601@drmicha.warpmail.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Andreas Ericsson <ae@op5.se>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>, jdl@jdl.com
-To: Benjamin Kramer <benny.kra@googlemail.com>
-X-From: git-owner@vger.kernel.org Thu May 07 15:15:33 2009
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Sebastian Schnur <s.schnur@gsd-software.net>, git@vger.kernel.org
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Thu May 07 15:17:06 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M23Rh-0008LR-6H
-	for gcvg-git-2@gmane.org; Thu, 07 May 2009 15:15:29 +0200
+	id 1M23TE-0000ju-Tx
+	for gcvg-git-2@gmane.org; Thu, 07 May 2009 15:17:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753201AbZEGNPU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 7 May 2009 09:15:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753197AbZEGNPU
-	(ORCPT <rfc822;git-outgoing>); Thu, 7 May 2009 09:15:20 -0400
-Received: from lilzmailso01.liwest.at ([212.33.55.23]:33736 "EHLO
-	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753028AbZEGNPT (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 May 2009 09:15:19 -0400
-Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
-	by lilzmailso01.liwest.at with esmtpa (Exim 4.69)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1M23RT-0006zk-QB; Thu, 07 May 2009 15:15:16 +0200
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.96])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id 87CE554D; Thu,  7 May 2009 15:15:15 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.21 (Windows/20090302)
-In-Reply-To: <EC96A79E-4D4E-467A-A10F-D905FE02E508@gmail.com>
-X-Spam-Score: -1.4 (-)
+	id S1753582AbZEGNQq convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 7 May 2009 09:16:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753230AbZEGNQq
+	(ORCPT <rfc822;git-outgoing>); Thu, 7 May 2009 09:16:46 -0400
+Received: from rv-out-0506.google.com ([209.85.198.225]:50991 "EHLO
+	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753192AbZEGNQp convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 7 May 2009 09:16:45 -0400
+Received: by rv-out-0506.google.com with SMTP id f9so597330rvb.1
+        for <git@vger.kernel.org>; Thu, 07 May 2009 06:16:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=gIrrJpQJAzfHaFtlI3PPTjusnH24jD4IXGv71FEvMY0=;
+        b=e6/bUD3Qt6v3QNihxHzym0RxcgQ94rDQWJNVoPgU2NjK2gLDrZDDH4Iv5onQ/thMDS
+         20qwkztd2YD1OHC4JPMw8J3iaG7JlmF0Rr7XFqHaOr8pBaqOvRUMjse+KTHh4T576FdL
+         9UEcu0I0c9owT/VWeoO+cLZj4ArmvuqXDNIBM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=GKYjkRigSbB/CVKLSCtWw+D9MrrAT7Ddfmi6DLGoaQKRLoycOVslzK+uC2R2V+Zxib
+         nb5JAmhuunn0MBs5PGyhUY3RCDj/W+4kQNT4i6waMKzulFPMsPnzRwFM3W5isZKohN3v
+         qu6k3DM3lH828v5nu2jfkblWYm7u2wHlQM1eE=
+Received: by 10.141.71.6 with SMTP id y6mr1050512rvk.238.1241702206035; Thu, 
+	07 May 2009 06:16:46 -0700 (PDT)
+In-Reply-To: <4A02C95A.1070601@drmicha.warpmail.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118474>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118475>
 
-Benjamin Kramer schrieb:
-> git daemon has a feature called interpolated paths
-> 
-> If git daemon is started like this:
->     git daemon --interpolated-path=%IP/%D
-> (the machine has two IPs: 123.123.123.123 (v4) and 2001:db8::1 (v6))
-> and someone clones a repository:
->     git clone git://123.123.123.123/frotz
-> git daemon will look for the repository in the directory
-> `123.123.123.123/frotz'
-> 
-> But if git daemon listens on the IPv6 interface and someone clones a
-> repository:
->     git clone git://2001:db8::1/frotz
-> Then git daemon will look for the repository in `0.0.0.0/frotz'
-> 
-> My patch makes it converting IPv6 addresses properly and if you the clone
-> in my previous example it'll now look in `2001:db8::1/frotz' (with
-> colons in the
-> directory name)
+both msysgit and tortoisegit support SSH
 
-I don't particularly care about git-daemon on Windows at this time because
-we don't build it anyway. But others have already had limited success, and
-they might care since getnameinfo() is not available. If we did have IPv6
-support on Windows, we would indeed have troubles with those path names.
-
-But even on non-Windows, a directory name with colons does not look kosher
-to me. Don't they look like PATH values? Or like remote addresses? Are
-IPv6 addresses used in this way by other software?
-
-Moreover, I think that since IPv6 addresses can have at most one '::'
-abbreviation, but not in an unambiguous way, users of path-interpolation
-of IPv6 addresses are at the mercy of whether and how getnameinfo() makes
-use of '::'.
-
--- Hannes
+2009/5/7 Michael J Gruber <git@drmicha.warpmail.net>:
+> Sebastian Schnur venit, vidit, dixit 07.05.2009 10:55:
+>> Hello to everyone in this list,
+>>
+>> I've got a question about TortoiseGIT. Does it support git over SSH?=
+ I
+>> haven't got it to work with mysisgit.
+>
+> Try yourbrogit instead!
+>
+> [Sorry, couldn't resist ;) ]
+>
+> Michael
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at =A0http://vger.kernel.org/majordomo-info.html
+>
