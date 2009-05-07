@@ -1,79 +1,61 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re:
-Date: Thu, 7 May 2009 19:13:51 +0200
-Message-ID: <81b0412b0905071013y241f7eas8417127e51ff52fa@mail.gmail.com>
-References: <454B76988CBF42F5BCACA5061125D263@caottdt504>
+From: Brandon Casey <casey@nrlssc.navy.mil>
+Subject: Re: git repack with a --reference
+Date: Thu, 07 May 2009 12:14:07 -0500
+Message-ID: <y6_KSeeksmCZ_XvwgBeZd4SDdo0CcdL0TgPJ6Py336qsFto6evR0vA@cipher.nrlssc.navy.mil>
+References: <4A0261D8.8040105@catalyst.net.nz>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Bevan Watkiss <bevan.watkiss@cloakware.com>
-X-From: git-owner@vger.kernel.org Thu May 07 19:14:27 2009
+To: Jonathan Harker <jonathan@catalyst.net.nz>
+X-From: git-owner@vger.kernel.org Thu May 07 19:14:30 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M27Aw-0003WR-Ea
-	for gcvg-git-2@gmane.org; Thu, 07 May 2009 19:14:26 +0200
+	id 1M27Ax-0003WR-25
+	for gcvg-git-2@gmane.org; Thu, 07 May 2009 19:14:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760966AbZEGRNx convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 7 May 2009 13:13:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757257AbZEGRNw
-	(ORCPT <rfc822;git-outgoing>); Thu, 7 May 2009 13:13:52 -0400
-Received: from mail-fx0-f158.google.com ([209.85.220.158]:52289 "EHLO
-	mail-fx0-f158.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751251AbZEGRNw convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 7 May 2009 13:13:52 -0400
-Received: by fxm2 with SMTP id 2so922612fxm.37
-        for <git@vger.kernel.org>; Thu, 07 May 2009 10:13:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=Y6ErdGEYEnGRk3jtlYodtmDeMWL4UX94ZZmDljzWTGk=;
-        b=mbkxyLJgfe+7ivZybkCSncpF0LpMJxuyrx8oP2ui885Ky79D++O7Xbn9mt6+YcGbh/
-         15APZf4VWn9M0YYfjvqJQLjHRRYC/VNuwezfiXWh6up1EwTMmrMskSjYoWKbviJrZATn
-         5eoEigNoJkUXuArb0hsP5jPuq4BFwpWUpAZB0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=FBJk7NsRNuC6vnI+47Vu3YCIb0iI1iu4wk8lReyHaji6ju7etMAgvePYoVQKV6/P2f
-         lFEn8b252o5ri/Vm+jamUDS4+7yIlAC2oWkYNMiT8O+fK1LWpYJKIfOiUUgpzsoxuyt+
-         j7hl6mDQ1oBkcHUwb2C2Ks+oCI7R6F75j7XLs=
-Received: by 10.204.54.19 with SMTP id o19mr585553bkg.72.1241716431197; Thu, 
-	07 May 2009 10:13:51 -0700 (PDT)
-In-Reply-To: <454B76988CBF42F5BCACA5061125D263@caottdt504>
+	id S1758627AbZEGROW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 7 May 2009 13:14:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757807AbZEGROV
+	(ORCPT <rfc822;git-outgoing>); Thu, 7 May 2009 13:14:21 -0400
+Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:34887 "EHLO
+	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754919AbZEGROU (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 May 2009 13:14:20 -0400
+Received: by mail.nrlssc.navy.mil id n47HE9jC031360; Thu, 7 May 2009 12:14:10 -0500
+In-Reply-To: <4A0261D8.8040105@catalyst.net.nz>
+X-OriginalArrivalTime: 07 May 2009 17:14:09.0032 (UTC) FILETIME=[3BCEA880:01C9CF37]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118494>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118495>
 
-2009/5/7 Bevan Watkiss <bevan.watkiss@cloakware.com>:
-> I am trying to create a working tree for people to read from and have=
- it
-> update from a bare repository regularly.=C2=A0 Right now I am using g=
-it-pull to
-> fetch the changes, but it=E2=80=99s running slow due to the size of m=
-y repo and the
-> speed of the hardware as it seems to be checking the working tree for=
- any
-> changes.
->
-> Is there a way to make the pull ignore the local working tree and onl=
-y look
-> at files that are changed in the change sets being pulled?
+Jonathan Harker wrote:
+> Hi - hope this isn't too noobish but I'm trying to get an existing git
+> checkout to repack/prune/gc itself such that it would be like I had
+> cloned it with --reference /path/to/local/repo (i.e. I've added
+> /path/to/local/repo to .git/objects/info/alternatives, and I'd like it
+> to reduce its objects from 200 MB to 5 MB). Is this
+> 
+> a. possible,
+> 
+> b. desirable, and
+> 
+> c. not insane?
 
-Assuming you didn't modify that directory you pull into,
-git pull will do almost exactly what you described. Almost,
-because the operation (the merge) will involve looking for local
-changes (committed and not).
+yes,yes,yes.
 
-It should be faster to do something like this:
+The path written to .git/objects/info/alternates (also notice spelling of
+"alternates") should be the path to the objects directory, not to the
+toplevel repository.
 
-  git fetch && git reset --hard origin/master
+i.e.
 
-Again, assuming the directory supposed to be read-only.
-Otherwise, you have to merge (i.e. git pull).
+   /path/to/local/repo.git/objects
+
+It should work properly since git v1.6.2.3.
+
+-brandon
