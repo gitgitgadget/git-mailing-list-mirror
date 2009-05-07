@@ -1,102 +1,67 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH/RFC] daemon.c: replace inet_ntop with getnameinfo
-Date: Thu, 07 May 2009 06:34:10 -0700 (PDT)
-Message-ID: <m3tz3xm3zt.fsf@localhost.localdomain>
-References: <4A02D288.6040804@googlemail.com> <4A02D70B.6090305@op5.se>
-	<EC96A79E-4D4E-467A-A10F-D905FE02E508@gmail.com>
+From: Baz <brian.ewins@gmail.com>
+Subject: Re: A note from the maintainer
+Date: Thu, 7 May 2009 14:40:58 +0100
+Message-ID: <2faad3050905070640v1718794dt2f5d2da3f06b3bb6@mail.gmail.com>
+References: <7vocu5s824.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Andreas Ericsson <ae@op5.se>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>, jdl@jdl.com
-To: Benjamin Kramer <benny.kra@googlemail.com>
-X-From: git-owner@vger.kernel.org Thu May 07 15:34:23 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu May 07 15:41:52 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M23jy-0001HL-Jv
-	for gcvg-git-2@gmane.org; Thu, 07 May 2009 15:34:23 +0200
+	id 1M23rD-00051m-GB
+	for gcvg-git-2@gmane.org; Thu, 07 May 2009 15:41:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755218AbZEGNeO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 7 May 2009 09:34:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753616AbZEGNeN
-	(ORCPT <rfc822;git-outgoing>); Thu, 7 May 2009 09:34:13 -0400
-Received: from rv-out-0506.google.com ([209.85.198.236]:48843 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753353AbZEGNeL (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 May 2009 09:34:11 -0400
-Received: by rv-out-0506.google.com with SMTP id f6so3324319rvb.5
-        for <git@vger.kernel.org>; Thu, 07 May 2009 06:34:11 -0700 (PDT)
+	id S1754220AbZEGNlA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 7 May 2009 09:41:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753305AbZEGNlA
+	(ORCPT <rfc822;git-outgoing>); Thu, 7 May 2009 09:41:00 -0400
+Received: from mail-bw0-f174.google.com ([209.85.218.174]:51439 "EHLO
+	mail-bw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753192AbZEGNk7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 May 2009 09:40:59 -0400
+Received: by bwz22 with SMTP id 22so777464bwz.37
+        for <git@vger.kernel.org>; Thu, 07 May 2009 06:40:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received
-         :x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        bh=bITJ65YDfI6fnO/AnUnErAmtmU3hJYRCBIDpgPXO+NY=;
-        b=Mvfid/ximvbRzxljktekbiScdk0FJNHkL3QNS/Q38dHrUasUkQReD14Irp/NVMxmfx
-         1N8BJ+ZDBhBeUct7uNZv5Sx5ExNpOwc+b591dhkI4EeXtZ7TePrR6Q2kjyhK60n5cbFt
-         cOd5xTbljSA0L0nWu2m033OumuiBdZsCSr/Q8=
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=YGUSYNkNfkcnpFf4nXz7FK+5GsjbLF716W5KrHKG2DM=;
+        b=pOcQugWUxjfWDq3i7+nwHyc+1w/JE0Vt7BBiJfj3GCuBEShi/g3wJ3vTp5OXuse69+
+         V79Zalr15jV1uiDC1n4L/7j8tghdHib09N+LjEwQ9vFKKzAgRe59J563gq8/bxqSn4jb
+         4/gb4FC3tqiPGL1f8ydfwWgcqT6rN86LOLiCQ=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        b=BamFoc2KBR2aYLiDXwDM/PWoTOMAWofkW4HRrZFTqF5F6mnjbXE7AkWer2PICID+U4
-         JBtqpB8lwUdyyRZ9Ns0kroE4RfxJ3jCw2jqIQtsc4abq64BgaIHrdwKOBtJ8n4SR9t2D
-         r0V1HJb/ZIDkqKPZfh2nuNA1YCEaRUlq0oGdo=
-Received: by 10.114.127.1 with SMTP id z1mr2293496wac.3.1241703251738;
-        Thu, 07 May 2009 06:34:11 -0700 (PDT)
-Received: from localhost.localdomain (abwr140.neoplus.adsl.tpnet.pl [83.8.241.140])
-        by mx.google.com with ESMTPS id m27sm311466pof.16.2009.05.07.06.34.09
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 07 May 2009 06:34:10 -0700 (PDT)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id n47DY5kk003588;
-	Thu, 7 May 2009 15:34:05 +0200
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id n47DXxiR003584;
-	Thu, 7 May 2009 15:33:59 +0200
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <EC96A79E-4D4E-467A-A10F-D905FE02E508@gmail.com>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=X59pSLa3jFOLtsDMKpKo/U+ADzcqX9ngLNcWOK21qrjgnmsAp122ATIyx1p/9lGaa3
+         WMPVlbIXrqS1SJb38TBV/z0QQuXpBJd17lgGsulX7xSYjKIgTazb89vsfyT+wh63eSIO
+         mBAmmrcJfQu/RYQ4gG5DlyzV7ZyNIKjSgFAns=
+Received: by 10.223.108.15 with SMTP id d15mr1583208fap.62.1241703659008; Thu, 
+	07 May 2009 06:40:59 -0700 (PDT)
+In-Reply-To: <7vocu5s824.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118476>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118477>
 
-Benjamin Kramer <benny.kra@googlemail.com> writes:
+Apologies for not quoting the mail I'm replying to, but gmail would
+just make the character encoding issues worse.
 
-> Andreas Ericsson wrote:
-> 
-> > What per-IP directories are you talking about?
-> 
-> git daemon has a feature called interpolated paths
-> 
-> If git daemon is started like this:
->      git daemon --interpolated-path=%IP/%D
-> (the machine has two IPs: 123.123.123.123 (v4) and 2001:db8::1 (v6))
-> and someone clones a repository:
->      git clone git://123.123.123.123/frotz
-> git daemon will look for the repository in the directory
-> `123.123.123.123/frotz'
-> 
-> But if git daemon listens on the IPv6 interface and someone clones a
-> repository:
->      git clone git://2001:db8::1/frotz
-> Then git daemon will look for the repository in `0.0.0.0/frotz'
-> 
-> My patch makes it converting IPv6 addresses properly and if you the
-> clone in my previous example it'll now look in `2001:db8::1/frotz'
-> (with colons in the directory name)
+Junio, Rene Scharfe's name appears incorrectly in the MaintNotes
+message - the mail was sent as iso-2022-jp. Previous editions of this
+mail (like the one on 4th March) were in utf-8. Maybe a consequence of
+the recent change you made to your emacs setup?
 
-BTW. this is not only MS Windows that have problems with ':' in paths
-(because of it being drive letter separator), but also IIRC MacOS X,
-where ':' and not '/' is directory separator.
+http://article.gmane.org/gmane.comp.version-control.git/115746
 
-The fact that ':' is separator of paths in $PATH environmental variable
-is a bit complication, but you can always escape ':' in $PATH.
+Just mentioning it in case it causes problems with patch mails down the line.
 
--- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+Cheers,
+Baz
