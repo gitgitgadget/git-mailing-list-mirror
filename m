@@ -1,72 +1,77 @@
-From: Sitaram Chamarty <sitaramc@gmail.com>
-Subject: Re: [ANNOUNCE] GIT 1.6.3
-Date: Thu, 7 May 2009 17:39:54 +0000 (UTC)
-Organization: disorganised!
-Message-ID: <slrnh0677a.at.sitaramc@sitaramc.homelinux.net>
-References: <7vmy9ps820.fsf@alter.siamese.dyndns.org>
- <bbd12f0f0905070758q697f11fck259db4a0207d0aa7@mail.gmail.com>
+From: Brandon Casey <casey@nrlssc.navy.mil>
+Subject: Re: [JGIT PATCH 1/2] Add support for boolean config values "yes",
+ "no"
+Date: Thu, 07 May 2009 12:56:15 -0500
+Message-ID: <eOxTQ_L3wmawK8rFbXMLnksiI7lh8eiyptpquFGaI28e3RO7dN9GMw@cipher.nrlssc.navy.mil>
+References: <1241708714-20326-1-git-send-email-spearce@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu May 07 19:40:46 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Robin Rosenberg <robin.rosenberg@dewire.com>, git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Thu May 07 19:56:41 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M27aJ-0000ca-2t
-	for gcvg-git-2@gmane.org; Thu, 07 May 2009 19:40:39 +0200
+	id 1M27pl-0000C7-CZ
+	for gcvg-git-2@gmane.org; Thu, 07 May 2009 19:56:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753922AbZEGRkN convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 7 May 2009 13:40:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752469AbZEGRkN
-	(ORCPT <rfc822;git-outgoing>); Thu, 7 May 2009 13:40:13 -0400
-Received: from main.gmane.org ([80.91.229.2]:57935 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752326AbZEGRkL (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 May 2009 13:40:11 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1M27Zr-0006NW-Af
-	for git@vger.kernel.org; Thu, 07 May 2009 17:40:11 +0000
-Received: from atcmail.atc.tcs.co.in ([203.200.212.145])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 07 May 2009 17:40:11 +0000
-Received: from sitaramc by atcmail.atc.tcs.co.in with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 07 May 2009 17:40:11 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: atcmail.atc.tcs.co.in
-User-Agent: slrn/0.9.9 (Linux)
+	id S1753724AbZEGR41 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 7 May 2009 13:56:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752954AbZEGR41
+	(ORCPT <rfc822;git-outgoing>); Thu, 7 May 2009 13:56:27 -0400
+Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:55328 "EHLO
+	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751072AbZEGR40 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 May 2009 13:56:26 -0400
+Received: by mail.nrlssc.navy.mil id n47HuGjd013262; Thu, 7 May 2009 12:56:18 -0500
+In-Reply-To: <1241708714-20326-1-git-send-email-spearce@spearce.org>
+X-OriginalArrivalTime: 07 May 2009 17:56:16.0379 (UTC) FILETIME=[1E3934B0:01C9CF3D]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118498>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118499>
 
-On 2009-05-07, Jeff Brown <jeff@jeffandbetsy.net> wrote:
-> On Thu, May 7, 2009 at 2:09 AM, Junio C Hamano <gitster@pobox.com> wr=
-ote:
->>
->> With the next major release, "git push" into a branch that is
->> currently checked out will be refused by default. =A0You can choose
->> what should happen upon such a push by setting the configuration
->> variable receive.denyCurrentBranch in the receiving repository.
->>
->
-> I want to make sure I understand how this will work.  Could you
-> describe the simplest set of steps necessary to get into this
-> situation where the push would be refused?
+Shawn O. Pearce wrote:
+> In 8f8c6fafd92f (shipped in 1.6.3) Linus taught C Git how to read
+> boolean configuration values set to "yes" as true and "no" as false.
+> Add support for these values, and some test cases.
 
-Most common scenario, happens often on irc, is you clone
-repo A to repo B, make some changes, and push.  If all the
-defaults (simplest case) are used repo A has "master"
-checked out, and repo B then tries to push to that same
-(checked out) branch.
+Linus added support for "on" and "off" in that commit as it appears
+your commit is also doing. :)
 
-So:
-    mkdir A; cd A; git init; make-some-commits
-    cd ..;git clone A B;cd B; make-some-other-commits
-    # and then
-    git push    # from master on B to master on A
+I was about to point out that you are not ignoring case for "on", but
+using equalsIgnoreCase() appears to be unnecessary since above that
+you are already doing n = n.toLowerCase().
+
+-brandon
+
+
+> diff --git a/org.spearce.jgit/src/org/spearce/jgit/lib/RepositoryConfig.java b/org.spearce.jgit/src/org/spearce/jgit/lib/RepositoryConfig.java
+> index cb287ee..e3a303f 100644
+> --- a/org.spearce.jgit/src/org/spearce/jgit/lib/RepositoryConfig.java
+> +++ b/org.spearce.jgit/src/org/spearce/jgit/lib/RepositoryConfig.java
+> @@ -254,10 +254,19 @@ public boolean getBoolean(final String section, String subsection,
+>  			return defaultValue;
+>  
+>  		n = n.toLowerCase();
+> -		if (MAGIC_EMPTY_VALUE.equals(n) || "yes".equalsIgnoreCase(n) || "true".equalsIgnoreCase(n) || "1".equals(n)) {
+> +		if (MAGIC_EMPTY_VALUE.equals(n)
+> +				|| "yes".equalsIgnoreCase(n)
+> +				|| "true".equalsIgnoreCase(n)
+> +				|| "1".equals(n)
+> +				|| "on".equals(n)) {
+>  			return true;
+> -		} else if ("no".equalsIgnoreCase(n) || "false".equalsIgnoreCase(n) || "0".equalsIgnoreCase(n)) {
+> +
+> +		} else if ("no".equalsIgnoreCase(n)
+> +				|| "false".equalsIgnoreCase(n)
+> +				|| "0".equalsIgnoreCase(n)
+> +				|| "off".equalsIgnoreCase(n)) {
+>  			return false;
+> +
+>  		} else {
+>  			throw new IllegalArgumentException("Invalid boolean value: "
+>  					+ section + "." + name + "=" + n);
