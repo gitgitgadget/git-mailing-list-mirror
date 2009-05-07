@@ -1,238 +1,124 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [ANNOUNCE] GIT 1.6.3
-Date: Thu, 07 May 2009 00:09:43 -0700
-Message-ID: <7vmy9ps820.fsf@alter.siamese.dyndns.org>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: Tests in Cygwin
+Date: Thu, 07 May 2009 09:13:14 +0200
+Message-ID: <4A028A0A.5070003@viscovery.net>
+References: <83prfbhasp.fsf@kalahari.s2.org>	<4A01E64C.7050703@SierraAtlantic.com> <7vvdoet13g.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu May 07 09:10:05 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Don Slutz <Don.Slutz@SierraAtlantic.com>,
+	Hannu Koivisto <azure@iki.fi>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu May 07 09:13:31 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M1xk3-0001LQ-D2
-	for gcvg-git-2@gmane.org; Thu, 07 May 2009 09:10:03 +0200
+	id 1M1xnO-0002kM-C0
+	for gcvg-git-2@gmane.org; Thu, 07 May 2009 09:13:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751237AbZEGHJp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 7 May 2009 03:09:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750981AbZEGHJp
-	(ORCPT <rfc822;git-outgoing>); Thu, 7 May 2009 03:09:45 -0400
-Received: from fed1rmmtao107.cox.net ([68.230.241.39]:45147 "EHLO
-	fed1rmmtao107.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750826AbZEGHJn (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 May 2009 03:09:43 -0400
-Received: from fed1rmimpo03.cox.net ([70.169.32.75])
-          by fed1rmmtao107.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20090507070943.OJZX18948.fed1rmmtao107.cox.net@fed1rmimpo03.cox.net>;
-          Thu, 7 May 2009 03:09:43 -0400
-Received: from localhost ([68.225.240.211])
-	by fed1rmimpo03.cox.net with bizsmtp
-	id oX9j1b0044aMwMQ04X9jkv; Thu, 07 May 2009 03:09:43 -0400
-X-Authority-Analysis: v=1.0 c=1 a=VwQbUJbxAAAA:8 a=-AnQz9JOAAAA:8
- a=TSbVqHtbAAAA:8 a=HQEulBC94rrWVbeBwdYA:9 a=jVYZesejcFGC1m72wIgA:7
- a=-w7qPdYGPFtWsdSq64p7Uwr9cdAA:4 a=8UG4yFqJ7zwUxSzr:21 a=twM9jXJxJ6C_H9UT:21
-X-CM-Score: 0.00
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+	id S1752007AbZEGHNU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 7 May 2009 03:13:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751667AbZEGHNU
+	(ORCPT <rfc822;git-outgoing>); Thu, 7 May 2009 03:13:20 -0400
+Received: from lilzmailso02.liwest.at ([212.33.55.13]:55785 "EHLO
+	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751308AbZEGHNT (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 May 2009 03:13:19 -0400
+Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
+	by lilzmailso02.liwest.at with esmtpa (Exim 4.69)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1M1xn8-00052Y-Jd; Thu, 07 May 2009 09:13:14 +0200
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.96])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id 49C2154D; Thu,  7 May 2009 09:13:14 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.21 (Windows/20090302)
+In-Reply-To: <7vvdoet13g.fsf@alter.siamese.dyndns.org>
+X-Enigmail-Version: 0.95.5
+X-Spam-Score: -1.4 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118433>
-
-The latest feature release GIT 1.6.3 is available at the usual
-places:
-
-  http://www.kernel.org/pub/software/scm/git/
-
-  git-1.6.3.tar.{gz,bz2}			(source tarball)
-  git-htmldocs-1.6.3.tar.{gz,bz2}		(preformatted docs)
-  git-manpages-1.6.3.tar.{gz,bz2}		(preformatted docs)
-
-The RPM binary packages for a few architectures are found in:
-
-  RPMS/$arch/git-*-1.6.3-1.fc9.$arch.rpm	(RPM)
-
-----------------------------------------------------------------
-GIT v1.6.3 Release Notes
-========================
-
-With the next major release, "git push" into a branch that is
-currently checked out will be refused by default.  You can choose
-what should happen upon such a push by setting the configuration
-variable receive.denyCurrentBranch in the receiving repository.
-
-To ease the transition plan, the receiving repository of such a
-push running this release will issue a big warning when the
-configuration variable is missing.  Please refer to:
-
-  http://git.or.cz/gitwiki/GitFaq#non-bare
-  http://thread.gmane.org/gmane.comp.version-control.git/107758/focus=108007
-
-for more details on the reason why this change is needed and the
-transition plan.
-
-For a similar reason, "git push $there :$killed" to delete the branch
-$killed in a remote repository $there, if $killed branch is the current
-branch pointed at by its HEAD, gets a large warning.  You can choose what
-should happen upon such a push by setting the configuration variable
-receive.denyDeleteCurrent in the receiving repository.
-
-When the user does not tell "git push" what to push, it has always
-pushed matching refs.  For some people it is unexpected, and a new
-configuration variable push.default has been introduced to allow
-changing a different default behaviour.  To advertise the new feature,
-a big warning is issued if this is not configured and a git push without
-arguments is attempted.
-
-
-Updates since v1.6.2
---------------------
-
-(subsystems)
-
-* various git-svn updates.
-
-* git-gui updates, including an update to Russian translation, and a
-  fix to an infinite loop when showing an empty diff.
-
-* gitk updates, including an update to Russian translation and improved Windows
-  support.
-
-(performance)
-
-* many uses of lstat(2) in the codepath for "git checkout" have been
-  optimized out.
-
-(usability, bells and whistles)
-
-* Boolean configuration variable yes/no can be written as on/off.
-
-* rsync:/path/to/repo can be used to run git over rsync for local
-  repositories.  It may not be useful in practice; meant primarily for
-  testing.
-
-* http transport learned to prompt and use password when fetching from or
-  pushing to http://user@host.xz/ URL.
-
-* (msysgit) progress output that is sent over the sideband protocol can
-  be handled appropriately in Windows console.
-
-* "--pretty=<style>" option to the log family of commands can now be
-  spelled as "--format=<style>".  In addition, --format=%formatstring
-  is a short-hand for --pretty=tformat:%formatstring.
-
-* "--oneline" is a synonym for "--pretty=oneline --abbrev-commit".
-
-* "--graph" to the "git log" family can draw the commit ancestry graph
-  in colors.
-
-* If you realize that you botched the patch when you are editing hunks
-  with the 'edit' action in git-add -i/-p, you can abort the editor to
-  tell git not to apply it.
-
-* @{-1} is a new way to refer to the last branch you were on introduced in
-  1.6.2, but the initial implementation did not teach this to a few
-  commands.  Now the syntax works with "branch -m @{-1} newname".
-
-* git-archive learned --output=<file> option.
-
-* git-archive takes attributes from the tree being archived; strictly
-  speaking, this is an incompatible behaviour change, but is a good one.
-  Use --worktree-attributes option to allow it to read attributes from
-  the work tree as before (deprecated git-tar tree command always reads
-  attributes from the work tree).
-
-* git-bisect shows not just the number of remaining commits whose goodness
-  is unknown, but also shows the estimated number of remaining rounds.
-
-* You can give --date=<format> option to git-blame.
-
-* "git-branch -r" shows HEAD symref that points at a remote branch in
-  interest of each tracked remote repository.
-
-* "git-branch -v -v" is a new way to get list of names for branches and the
-  "upstream" branch for them.
-
-* git-config learned -e option to open an editor to edit the config file
-  directly.
-
-* git-clone runs post-checkout hook when run without --no-checkout.
-
-* git-difftool is now part of the officially supported command, primarily
-  maintained by David Aguilar.
-
-* git-for-each-ref learned a new "upstream" token.
-
-* git-format-patch can be told to use attachment with a new configuration,
-  format.attach.
-
-* git-format-patch can be told to produce deep or shallow message threads.
-
-* git-format-patch can be told to always add sign-off with a configuration
-  variable.
-
-* git-format-patch learned format.headers configuration to add extra
-  header fields to the output.  This behaviour is similar to the existing
-  --add-header=<header> option of the command.
-
-* git-format-patch gives human readable names to the attached files, when
-  told to send patches as attachments.
-
-* git-grep learned to highlight the found substrings in color.
-
-* git-imap-send learned to work around Thunderbird's inability to easily
-  disable format=flowed with a new configuration, imap.preformattedHTML.
-
-* git-rebase can be told to rebase the series even if your branch is a
-  descendant of the commit you are rebasing onto with --force-rebase
-  option.
-
-* git-rebase can be told to report diffstat with the --stat option.
-
-* Output from git-remote command has been vastly improved.
-
-* "git remote update --prune $remote" updates from the named remote and
-  then prunes stale tracking branches.
-
-* git-send-email learned --confirm option to review the Cc: list before
-  sending the messages out.
-
-(developers)
-
-* Test scripts can be run under valgrind.
-
-* Test scripts can be run with installed git.
-
-* Makefile learned 'coverage' option to run the test suites with
-  coverage tracking enabled.
-
-* Building the manpages with docbook-xsl between 1.69.1 and 1.71.1 now
-  requires setting DOCBOOK_SUPPRESS_SP to work around a docbook-xsl bug.
-  This workaround used to be enabled by default, but causes problems
-  with newer versions of docbook-xsl.  In addition, there are a few more
-  knobs you can tweak to work around issues with various versions of the
-  docbook-xsl package.  See comments in Documentation/Makefile for details.
-
-* Support for building and testing a subset of git on a system without a
-  working perl has been improved.
-
-
-Fixes since v1.6.2
-------------------
-
-All of the fixes in v1.6.2.X maintenance series are included in this
-release, unless otherwise noted.
-
-Here are fixes that this release has, but have not been backported to
-v1.6.2.X series.
-
-* "git-apply" rejected a patch that swaps two files (i.e. renames A to B
-  and B to A at the same time).  May need to be backported by cherry
-  picking d8c81df and then 7fac0ee).
-
-* The initial checkout did not read the attributes from the .gitattribute
-  file that is being checked out.
-
-* git-gc spent excessive amount of time to decide if an object appears
-  in a locally existing pack (if needed, backport by merging 69e020a).
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118434>
+
+Junio C Hamano schrieb:
+> Don Slutz <Don.Slutz@SierraAtlantic.com> writes:
+> 
+>> A lot of these failures are do to running as root (member of
+>> Administrators)....
+> 
+> Perhaps we can do this to reduce the noise level.
+
+Thank you for this patch. Unfortunately, it does not work as intended
+because the call to test_have_prereq in test_skip does not split
+the prereq tokens so that tests with space-separated prerequisite tokens
+are always skipped.
+
+My first attempt to solve that is to remove the quotes from the
+test_have_prereq call in test_skip; but I think that this simple
+solution is rather unintuitive, and will look like a bug if you inspect
+the code again in two months.
+
+You could squash in the patch below, where I chose to concatenate
+tokens with '+' because I dislike the extra quoting that is otherwise
+necessary at the call site. The downside is that it plays games with
+IFS, which you might find too ugly and not worth it. It's your call.
+
+BTW, I didn't dare test this as root on my production system; I'll do
+that later today elsewhere.
+
+
+diff --git a/t/README b/t/README
+index a532c32..49c3a51 100644
+--- a/t/README
++++ b/t/README
+@@ -200,7 +200,7 @@ library for your script to use.
+    <script>.  If it yields success, test is considered
+    successful.  <message> should state what it is testing.
+
+-   An optional parameter <prereq> is a space separated list of prerequisite
++   An optional parameter <prereq> is a '+' separated list of prerequisite
+    tokens.  The test will be skipped if the test environment lacks any of
+    the prerequiste feature listed (see below for commonly used
+    prerequisites).
+@@ -260,7 +260,8 @@ Prerequisites
+ -------------
+
+  POSIXPERM	The filesystem supports POSIX style permission bits
+- BSLASHPSPEC	???
++ BSLASHPSPEC	Backslashes in pathspec are not directory separators
++                (i.e. they are not converted to forward-slash)
+  EXECKEEPSPID	The process retains the same pid across exec(2)
+
+  SANITY		Test is not run by root user, and an attempt to an
+diff --git a/t/t1004-read-tree-m-u-wf.sh b/t/t1004-read-tree-m-u-wf.sh
+index eb60f80..8683189 100755
+--- a/t/t1004-read-tree-m-u-wf.sh
++++ b/t/t1004-read-tree-m-u-wf.sh
+@@ -177,7 +177,7 @@ test_expect_success SYMLINKS 'funny symlink in work tree' '
+
+ '
+
+-test_expect_success 'SYMLINKS SANITY' 'funny symlink in work tree, un-unlink-able' '
++test_expect_success SYMLINKS+SANITY 'funny symlink in work tree, un-unlink-able' '
+
+ 	rm -fr a b &&
+ 	git reset --hard &&
+diff --git a/t/test-lib.sh b/t/test-lib.sh
+index 1922e0b..2d12799 100644
+--- a/t/test-lib.sh
++++ b/t/test-lib.sh
+@@ -263,7 +263,12 @@ test_set_prereq () {
+ }
+ satisfied=" "
+
++# prerequisites can be concatenated with '+'
+ test_have_prereq () {
++	save_IFS=$IFS
++	IFS=+
++	set -- $*
++	IFS=$save_IFS
+ 	for prerequisite
+ 	do
+ 		case $satisfied in
