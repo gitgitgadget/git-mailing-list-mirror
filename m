@@ -1,70 +1,130 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH 4/4] t4200: avoid passing a non-newline terminated file
- to sed
-Date: Thu, 07 May 2009 09:26:28 +0200
-Message-ID: <4A028D24.9@viscovery.net>
-References: <-ElxRhvpfY_jx1Ps8nJ42rHdrKbR03T1y96WpGK19gM@cipher.nrlssc.navy.mil> <IHOAO7NDkb8K9nkprnkd2cQW6duDZ3aYmQzpqboBi5HibQoO83nGG2Z4562gIb22HVW3ho6Z250@cipher.nrlssc.navy.mil> <IHOAO7NDkb8K9nkprnkd2TGjPUHc5N7wdnoXRYKelDZEem1S0tynQeYlVheR46_5TDmYxS1O9i4@cipher.nrlssc.navy.mil> <IHOAO7NDkb8K9nkprnkd2QibZp-GnWBSpcJ8fxO9NTUsmXbuv4_2x5S6YNLzUogav4gLkrx9ClI@cipher.nrlssc.navy.mil> <IHOAO7NDkb8K9nkprnkd2ZsdySdVG_ssYL84wqJwNHZYBqMWRKBIa_Ni6jJRHumlZvrQcXOEMhQ@cipher.nrlssc.navy.mil> <IHOAO7NDkb8K9nkprnkd2ep5vFgQr-bAuDGJW-OdtSbS6WmpSHl041GRSXpP3OcDP4_PsYKsQDU@cipher.nrlssc.navy.mil>
+From: Geoff Russell <geoffrey.russell@gmail.com>
+Subject: Re: Tracking the untracked
+Date: Thu, 7 May 2009 17:28:59 +0930
+Message-ID: <93c3eada0905070058g7f619a56jfb9b49f02bb92f9b@mail.gmail.com>
+References: <93c3eada0905051819l92dc7ey331d69f009cc9c8b@mail.gmail.com>
+	 <200905061522.56981.trast@student.ethz.ch>
+Reply-To: geoffrey.russell@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: pclouds@gmail.com, git@vger.kernel.org
-To: Brandon Casey <casey@nrlssc.navy.mil>
-X-From: git-owner@vger.kernel.org Thu May 07 09:26:44 2009
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu May 07 09:59:12 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M1y0A-00081q-RV
-	for gcvg-git-2@gmane.org; Thu, 07 May 2009 09:26:43 +0200
+	id 1M1yVZ-00040w-LS
+	for gcvg-git-2@gmane.org; Thu, 07 May 2009 09:59:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754139AbZEGH0g (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 7 May 2009 03:26:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754492AbZEGH0g
-	(ORCPT <rfc822;git-outgoing>); Thu, 7 May 2009 03:26:36 -0400
-Received: from lilzmailso02.liwest.at ([212.33.55.13]:62348 "EHLO
-	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751171AbZEGH0f (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 May 2009 03:26:35 -0400
-Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
-	by lilzmailso02.liwest.at with esmtpa (Exim 4.69)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1M1xzx-0005WU-7Q; Thu, 07 May 2009 09:26:32 +0200
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.96])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id F3B5654D; Thu,  7 May 2009 09:26:28 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.21 (Windows/20090302)
-In-Reply-To: <IHOAO7NDkb8K9nkprnkd2ep5vFgQr-bAuDGJW-OdtSbS6WmpSHl041GRSXpP3OcDP4_PsYKsQDU@cipher.nrlssc.navy.mil>
-X-Spam-Score: -1.4 (-)
+	id S1752175AbZEGH7B (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 7 May 2009 03:59:01 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753082AbZEGH7A
+	(ORCPT <rfc822;git-outgoing>); Thu, 7 May 2009 03:59:00 -0400
+Received: from mail-qy0-f125.google.com ([209.85.221.125]:38787 "EHLO
+	mail-qy0-f125.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752232AbZEGH67 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 May 2009 03:58:59 -0400
+Received: by qyk31 with SMTP id 31so1094933qyk.33
+        for <git@vger.kernel.org>; Thu, 07 May 2009 00:58:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:reply-to:in-reply-to
+         :references:date:message-id:subject:from:to:content-type
+         :content-transfer-encoding;
+        bh=0a4p6wJrqZUjiRN7NHHl46a3w9saYeA0tdc0jK7zwvw=;
+        b=bC1kzAjXT6r2HHiCtfuixEYCJVxCY166Ns3KLCKDUmSu1IwmlDHD7cdcoAFDQhhlZw
+         0mBw+wCAOI9klJl86prqHopiPhm4IRMn9cKN/gMy3VbFYCZ0Zxx2LOO70WEbrOisQqx+
+         W/NHGEByxpy09CzOX6vkJl/qSdGIOVCGIwgHc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:reply-to:in-reply-to:references:date:message-id
+         :subject:from:to:content-type:content-transfer-encoding;
+        b=lSZUX8+zjJnNkLSeSudrcomadETaCx6bG7WdNnckVhzXHPkpiZ6FlPSPdjw1sy02wn
+         34Y/fELzjgADu2jBLlhhDxlv7Gv7mXayJ1eExCazVlv7oCUHDsEa0gn+tjvGmsKiFWnN
+         EN/C18pKPQ7fTMgDV7ZHYYU90oAiWImPcc+as=
+Received: by 10.220.92.80 with SMTP id q16mr4809692vcm.58.1241683139168; Thu, 
+	07 May 2009 00:58:59 -0700 (PDT)
+In-Reply-To: <200905061522.56981.trast@student.ethz.ch>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118436>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118437>
 
-Brandon Casey schrieb:
-> Some versions of sed exit non-zero if the file they are supplied is not
-> newline terminated.  Solaris's /usr/xpg4/bin/sed is one such sed.  So
-> rework this test to avoid doing so.
-> ---
->  t/t4200-rerere.sh |    2 +-
->  1 files changed, 1 insertions(+), 1 deletions(-)
-> 
-> diff --git a/t/t4200-rerere.sh b/t/t4200-rerere.sh
-> index b68ab11..48dbd8e 100755
-> --- a/t/t4200-rerere.sh
-> +++ b/t/t4200-rerere.sh
-> @@ -190,7 +190,7 @@ test_expect_success 'file2 added differently in two branches' '
->  	git add file2 &&
->  	git commit -m version2 &&
->  	test_must_fail git merge fourth &&
-> -	sha1=$(sed -e "s/	.*//" .git/MERGE_RR) &&
-> +	sha1=$({ cat .git/MERGE_RR; echo; } | sed -e "s/	.*//") &&
+On 5/6/09, Thomas Rast <trast@student.ethz.ch> wrote:
+> Geoff Russell wrote:
+>  > Bug or feature? I don't know.
+>
+>
+> Feature.
+>
+>
+>  > On the master branch I have some untracked files e.g., object modules,
+>  > executables.
+>  >
+>  > I create a branch B1 and add+commit the untracked files.
+>  >
+>  > When I switch back to the master (git checkout master), the untracked
+>  > files are no longer where I left them.
+>
+> [...]
+>
+> > One solution would be to have a class of files that is "unversioned
+>  > but tracked".
+>
+>
+> Note that "versioned" and "tracked" mean the same thing in Git --
+>  both denote the class of files it cares about.
+>
+>  Your build products became tracked (w.r.t. the then-state of the
+>  repository, on branch B1) the second you added them to the index with
+>  'git add'.  Git then cares about them, and among many other things
+>  will look at them whenever you change branches.  Since they're not
+>  present in the target branch 'master', they are removed from the work
+>  tree.
+>
+>
+>  > Basically, I'm trying to find a way of having a huge bunch of stuff in
+>  > my repository and
+>  > tracked, but which doesn't get pushed to the central program repository .. which
+>  > has always just been source for us .. I figured I could stick it on a
+>  > branch which doesn't get pushed.
+>  > But that doesn't work for the reason mentioned.
+>
+>
+> Most people just put their build products in .gitignore so that they
+>  stop showing up under "untracked files" in 'git status'.  (They'll
+>  still be untracked!)
+>
+>  Of course this means the object files for source that actually changed
+>  between the branches have to be rebuilt.  However, Git takes great
+>  care to not touch any source files that are the same, so that the
+>  builds are usually quite fast even after a branch switch.
+>
 
-Couldn't that line become
+Ok, its clearly a policy choice.  But suppose I have an untracked
+file and I do "git some-command" then I don't expect git to touch what
+it doesn't know about. I.e., "git add x" shouldn't delete the untracked
+file y. That seems sensible. But now "git checkout branch" behaves
+quite differently in just deleting stuff that it doesn't own (i.e., is
+untracked).
 
-	sha1=$(cat .git/MERGE_RR) &&
-	sha1=%{sha1%%	*} &&
+Anyway, I'll rethink.
 
-(a literal tab before the '*')?
+Cheers,
+Geoff.
 
--- Hannes
+>
+>  --
+>  Thomas Rast
+>  trast@{inf,student}.ethz.ch
+>
+>
+
+
+-- 
+6 Fifth Ave,
+St Morris, S.A. 5068
+Australia
+Ph: 041 8805 184 / 08 8332 5069
