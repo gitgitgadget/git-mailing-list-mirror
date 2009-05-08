@@ -1,109 +1,125 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: I want "fast forward my workdir to upstream if it's safe"
-Date: Thu, 7 May 2009 22:30:28 -0400
-Message-ID: <20090508023028.GA1218@coredump.intra.peff.net>
-References: <86prekfv7z.fsf@blue.stonehenge.com>
+From: kanagesh radhakrishnan <rkanagesh@gmail.com>
+Subject: Error cloning from Git Repository
+Date: Fri, 8 May 2009 09:35:22 +0530
+Message-ID: <ece1079f0905072105k748d4debl3c899aec3539a185@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: "Randal L. Schwartz" <merlyn@stonehenge.com>
-X-From: git-owner@vger.kernel.org Fri May 08 04:30:48 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri May 08 06:06:17 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M2FrL-0007az-HX
-	for gcvg-git-2@gmane.org; Fri, 08 May 2009 04:30:47 +0200
+	id 1M2HLi-0000Oo-JU
+	for gcvg-git-2@gmane.org; Fri, 08 May 2009 06:06:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753723AbZEHCa3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 7 May 2009 22:30:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753640AbZEHCa2
-	(ORCPT <rfc822;git-outgoing>); Thu, 7 May 2009 22:30:28 -0400
-Received: from peff.net ([208.65.91.99]:55977 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753582AbZEHCa2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 May 2009 22:30:28 -0400
-Received: (qmail 15815 invoked by uid 107); 8 May 2009 02:30:46 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Thu, 07 May 2009 22:30:46 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Thu, 07 May 2009 22:30:28 -0400
-Content-Disposition: inline
-In-Reply-To: <86prekfv7z.fsf@blue.stonehenge.com>
+	id S1751001AbZEHEFY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 8 May 2009 00:05:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750922AbZEHEFY
+	(ORCPT <rfc822;git-outgoing>); Fri, 8 May 2009 00:05:24 -0400
+Received: from mail-gx0-f166.google.com ([209.85.217.166]:55907 "EHLO
+	mail-gx0-f166.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750866AbZEHEFX (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 May 2009 00:05:23 -0400
+Received: by gxk10 with SMTP id 10so2268155gxk.13
+        for <git@vger.kernel.org>; Thu, 07 May 2009 21:05:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:date:message-id:subject
+         :from:to:content-type:content-transfer-encoding;
+        bh=TCiITLAq4Z1MYLy7nGlBbmueWUAvzm1394452L1+ejQ=;
+        b=KkBEy4n2PDseaP+ewhmL3zWsRj7Jk9hiFk5Bvi7opfUKBSUc1xlw+yfzpaUiCnummv
+         TyIO4oE6eH6XzT3rIhUc5T3oosVfzkswM62cthM6LZCl7J15Tsi5z5jHQwxjzU1rY8cG
+         26aGhg2YQrYGriFcvCYTEA4Bz/WCdSEwF2a4g=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:date:message-id:subject:from:to:content-type
+         :content-transfer-encoding;
+        b=bw1xM0uJccEFeVHBEHBkBol6BaxH+c3zK+lib9lcunz0uSDonrHaIEjSsbzF8kP16n
+         Wbn/YdV+BgreLBhTuPakRVOkjoN9+jmQ2UekFq3gufC+zvYv5ulJWeSL0s/b9PEWwTKf
+         CZwWwYaHZTmQvnBq4krNci9R07v58FEXN2Kuc=
+Received: by 10.90.33.15 with SMTP id g15mr2477801agg.48.1241755523046; Thu, 
+	07 May 2009 21:05:23 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118559>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118560>
 
-On Thu, May 07, 2009 at 02:40:00PM -0700, Randal L. Schwartz wrote:
+Hello All,
 
-> So, what I need is a command, likely an option to "git merge" that says "do
-> everything that a git merge would do except abort if it would have been a
-> merge commit".  In other words, abort if the workdir is dirty or is not a
-> fast-forward update to the upstream.  Bonus if it exits non-zero if
-> something went wrong.
+I am trying to setup a git repository and then publish it using
+git-daemon and inetd for other developers in the network to access the
+sources.
 
-Can you define more clearly what you want, because you are asking for
-conflicting things. "abort if it would have been a merge commit" is
-purely about fast forward. But it sounds like you also care about "would
-merge have succeeded". So I think you are asking for:
+Server Setup
+-------------------
+Host system running on Fedora Core 8
+Git version 1.5.4.3
 
-  1. There are no local commits on the branch.
+A summary of what I have done to setup the Git server is as follows:
+$ mkdir /home/kanagesh/test-repo
+$ cd test-repo
+$ vi test.c <insert text, save, quit>
+$ git-init-db
+$ git-config user.name kanagesh
+$ git-config user.email rkanagesh@gmail.com
+$ git-add test.c
+$ git-commit -a -m"Initial Commit"
 
-and one of:
+# mkdir -p /var/cache/git
+# ln -s /home/kanagesh/test-repo/.git test-repo
+# ls -l
+   test-repo -> /home/kanagesh/test-repo/.git
 
-  2a. There are no local edits.
+xinetd has been setup to listen for git requests on port 9418 and
+spawn git-daemon.  This has been done by placing a config file named
+'git' under /etc/xinetd.d.  The contents of the config file is as
+follows:
 
-  2b. There are no local edits in the same files as those that are
-      affected by any new commits from upstream.
+service git
+{
+       disable        = no
+       type            = UNLISTED
+       port             = 9418
+       socket_type = stream
+       wait             = no
+       user            = nobody
+       server          = /usr/local/bin/git-daemon
+       server_args     = --inetd --export-all
+--base-path=/var/cache/git --syslog --verbose
+       log_on_failure  += USERID
+}
 
-  2c. Any local edits you have done would not cause a conflict if merged
-      with what's in upstream.
 
-And before I discuss those further, let me address:
+Clone from the Server
+-------------------------------
+When I attempt to clone the source from the Git server, I end up with
+the following error:
 
-> Please don't tell me "use these three commands in this script".
-> I want a *command* I can tell people in #git.
+[kanagesh@localhost test]$ git-clone git://192.168.13.171/test-repo
+Initialized empty Git repository in /home/kanagesh/work/test/test-repo/.git/
+fatal: The remote end hung up unexpectedly
+fetch-pack from 'git://192.168.13.171/test-repo' failed.
 
-by saying that I don't think there is currently a single command to
-cover both (1) and (2) (any of the (2) options). So we need to talk
-about "use these three commands in a script" for a moment to figure out
-what such a command _should_ do, and then we can talk about putting it
-into a single command (and presumably making that command part of the
-git distribution) that you can tell people about in #git.
+On checking the log messages in /var/log/messages, I see the following:
 
-Both (1) and (2) involve finding out who your upstream is. As of 1.6.3,
-this is easy to do as:
+May  7 17:29:19 localhost xinetd[17108]: START: git pid=17128
+from=::ffff:192.168.13.171
+May  7 17:29:19 localhost git-daemon: [17128] Connection from
+192.168.13.171:42360
+May  7 17:29:19 localhost git-daemon: [17128] Extended attributes (21
+bytes) exist <host=192.168.13.171>
+May  7 17:29:19 localhost git-daemon: [17128] Request upload-pack for
+'/test-repo'
+May  7 17:29:19 localhost xinetd[17108]: EXIT: git status=255
+pid=17128 duration=0(sec)
 
-  upstream=`git for-each-ref --format='%(upstream)' `git symbolic-ref HEAD`
+Can anyone tell me what I am doing incorrectly?  Any pointers on how
+to get a more verbose log from git-daemon would also be very helpful.
 
-One you have that, (1) is easy:
+Thanks in advance.
 
-  test -z "`git rev-list -1 $upstream..HEAD`"
-
-(2a) is also pretty easy:
-
-  git diff-files --quiet && git diff-index --quiet
-
-(2b) is a bit harder, but do-able:
-
-  git diff-tree --name-only HEAD $upstream | sort >them
-  (git diff-files --name-only; git diff-index --name-only) | sort >us
-  test -z "`comm -12 us them`"
-
-(2c) is the trickiest (and of course, therefore probably the one you
-want ;) ).  I'm not sure there is a simple way to do it short of hacking
-git-merge to actually try the merge and roll it back. Because you really
-have to deal not just with merging actual text file content but with
-custom merge drivers.
-
-So what is it that you're looking for?
-
--Peff
-
-PS I took your request at face value, but I actually think this question
-shows that the asker is not using git as it was intended. Unless you are
-very clueful (i.e., willing to sort out any mess caused by a failed
-merge), you should almost certainly be merging with a clean working
-tree. In other words, you should not be afraid of making a commit, and
-_then_ merging, as you might be in a non-distributed VCS.
+Regards,
+Kanagesh
