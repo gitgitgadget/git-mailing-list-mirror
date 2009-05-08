@@ -1,68 +1,60 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: Bug: 'git am --abort' can silently reset the wrong branch
-Date: Fri, 8 May 2009 10:37:39 +0200
-Message-ID: <fabb9a1e0905080137v613d6b9hccd6d17149bd049f@mail.gmail.com>
-References: <20090506191945.GG6325@blackpad> <20090508082826.GA29737@coredump.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v3] To make GIT-VERSION-FILE, search for git more widely
+Date: Fri, 08 May 2009 01:41:41 -0700
+Message-ID: <7vprek0ywq.fsf@alter.siamese.dyndns.org>
+References: <1241688129-31613-1-git-send-email-matthias.andree@gmx.de>
+	<7v7i0scvcf.fsf@alter.siamese.dyndns.org>
+	<op.utlq3vgx1e62zd@merlin.emma.line.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Eduardo Habkost <ehabkost@raisama.net>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri May 08 10:38:20 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: "Junio C Hamano" <gitster@pobox.com>, git@vger.kernel.org
+To: "Matthias Andree" <matthias.andree@gmx.de>
+X-From: git-owner@vger.kernel.org Fri May 08 10:41:54 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M2Lb0-00074i-MG
-	for gcvg-git-2@gmane.org; Fri, 08 May 2009 10:38:19 +0200
+	id 1M2LeQ-0008Vz-4k
+	for gcvg-git-2@gmane.org; Fri, 08 May 2009 10:41:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758283AbZEHIiB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 8 May 2009 04:38:01 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752567AbZEHIiA
-	(ORCPT <rfc822;git-outgoing>); Fri, 8 May 2009 04:38:00 -0400
-Received: from mail-bw0-f222.google.com ([209.85.218.222]:44032 "EHLO
-	mail-bw0-f222.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752805AbZEHIh7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 May 2009 04:37:59 -0400
-Received: by bwz22 with SMTP id 22so1221911bwz.37
-        for <git@vger.kernel.org>; Fri, 08 May 2009 01:37:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=0SlmGrcSdSqbyblV3grXUlIfhnUn/qw+I9PD8Vu5g/A=;
-        b=WbCshAyp7y+EBY3CRe20mxe8jnqrg6fqGXYl2uGq4F8NsYHE97sU0ryLQu7ZZ9SqJC
-         YdV9enh+17n+Yk4AI+mim8riTAtneaqfwg/Kiff2KdkoDUZwua+HETS1ry+H90Q6RVsV
-         n/LUnZlz6lSRGc+n++HHn9gnzBNo5k2jGXwYs=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=h9BtXSDQWp+HMpQhgrI6Yb7+FFfwITPSjBXjmUxT3tuOFEJ9eyoplNWgX+L1eWPHdU
-         nkyVSMVR2dIJqtPFv7GMhYUSfmHHadBapZcytsFjjZZXGM8kaKaUCmARGHiXg/Cxe4v5
-         mCxRSEhgOS1YIJ3MKYCZctjpUoi8UNKO4aB9Q=
-Received: by 10.103.161.16 with SMTP id n16mr2189586muo.79.1241771879077; Fri, 
-	08 May 2009 01:37:59 -0700 (PDT)
-In-Reply-To: <20090508082826.GA29737@coredump.intra.peff.net>
+	id S1751060AbZEHIlm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 8 May 2009 04:41:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750866AbZEHIlm
+	(ORCPT <rfc822;git-outgoing>); Fri, 8 May 2009 04:41:42 -0400
+Received: from fed1rmmtao101.cox.net ([68.230.241.45]:58406 "EHLO
+	fed1rmmtao101.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750833AbZEHIll (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 May 2009 04:41:41 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao101.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20090508084141.KEZZ17670.fed1rmmtao101.cox.net@fed1rmimpo02.cox.net>;
+          Fri, 8 May 2009 04:41:41 -0400
+Received: from localhost ([68.225.240.211])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id owhh1b0084aMwMQ04whhBE; Fri, 08 May 2009 04:41:41 -0400
+X-Authority-Analysis: v=1.0 c=1 a=Sb75fb6s3KMA:10 a=5qu_ZHnkUusA:10
+ a=RaOJZ6uzv1o2ujGCPZQA:9 a=oDte5ZuQESyj-LBf-TvZx9oWKHwA:4 a=_RhRFcbxBZMA:10
+X-CM-Score: 0.00
+In-Reply-To: <op.utlq3vgx1e62zd@merlin.emma.line.org> (Matthias Andree's message of "Fri\, 08 May 2009 10\:27\:21 +0200")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118587>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118588>
 
-Heya,
+"Matthias Andree" <matthias.andree@gmx.de> writes:
 
-On Fri, May 8, 2009 at 10:28, Jeff King <peff@peff.net> wrote:
-> So maybe just picking the changed-branch situation is the best we can
-> do. I'd be interested to hear comments from others.
+>> Interesting.  I wonder if you need the change to the Makefile.
+>>
+>> As long as GIT-VERSION-GEN notices that you have a freshly built git
+>> available (test -x) and uses it, falling back to whatever on the PATH, it
+>> would not have to touch GIT-VERSION-FILE, no?
+>
+> Hi Junio,
+>
+> ... Let's not introduce second-guessing into
+> the script....
 
-FWIW, I usually use 'git am' on accident (when trying to type somthing
-else :P), and I would prefer if 'git am --abort' would just clean up
-it's own mess, but leave my working dir alone. If I want to obliterate
-my data I can 'git reset --hard' myself.
-
--- 
-Cheers,
-
-Sverre Rabbelier
+Fine then.  Or you could just append "." to the $PATH ;-)
