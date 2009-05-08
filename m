@@ -1,71 +1,248 @@
-From: Mark Plaksin <happy@usg.edu>
-Subject: Syntax check via update hook?
-Date: Fri, 08 May 2009 15:43:30 -0400
-Message-ID: <wsprejtm71.fsf@usg.edu>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: [PATCH] Fix segfault in merge-recursive
+Date: Fri, 8 May 2009 22:30:32 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.0905082229520.4601@intel-tinevez-2-302>
+References: <alpine.DEB.2.00.0905070102010.30999@narbuckle.genericorp.net> <alpine.DEB.1.00.0905071144370.18521@pacific.mpi-cbg.de> <alpine.DEB.2.00.0905072131470.30999@narbuckle.genericorp.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri May 08 21:50:17 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Dave O <cxreg@pobox.com>
+X-From: git-owner@vger.kernel.org Fri May 08 22:30:47 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M2W5I-0008JW-Il
-	for gcvg-git-2@gmane.org; Fri, 08 May 2009 21:50:16 +0200
+	id 1M2WiS-0003ON-Ff
+	for gcvg-git-2@gmane.org; Fri, 08 May 2009 22:30:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756491AbZEHTuH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 8 May 2009 15:50:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755972AbZEHTuH
-	(ORCPT <rfc822;git-outgoing>); Fri, 8 May 2009 15:50:07 -0400
-Received: from main.gmane.org ([80.91.229.2]:37808 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754983AbZEHTuF (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 May 2009 15:50:05 -0400
-Received: from root by ciao.gmane.org with local (Exim 4.43)
-	id 1M2W55-0006i5-47
-	for git@vger.kernel.org; Fri, 08 May 2009 19:50:03 +0000
-Received: from stone.tss.usg.edu ([168.24.82.77])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 08 May 2009 19:50:03 +0000
-Received: from happy by stone.tss.usg.edu with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 08 May 2009 19:50:03 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: stone.tss.usg.edu
-User-Agent: Gnus/5.110011 (No Gnus v0.11) Emacs/23.0.93 (gnu/linux)
-Cancel-Lock: sha1:94frZPxY/nP475TLcoi8ssw8UvI=
+	id S1756712AbZEHUag (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 8 May 2009 16:30:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756066AbZEHUaf
+	(ORCPT <rfc822;git-outgoing>); Fri, 8 May 2009 16:30:35 -0400
+Received: from mail.gmx.net ([213.165.64.20]:55935 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1755978AbZEHUae (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 May 2009 16:30:34 -0400
+Received: (qmail invoked by alias); 08 May 2009 20:30:34 -0000
+Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
+  by mail.gmx.net (mp063) with SMTP; 08 May 2009 22:30:34 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX196NEUc0Vh6zEQ6pteoEleOpl69zNTKnIKNmJOFMN
+	Y9boLbmm5HD8Nk
+X-X-Sender: schindel@intel-tinevez-2-302
+In-Reply-To: <alpine.DEB.2.00.0905072131470.30999@narbuckle.genericorp.net>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.45
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118626>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118627>
 
-Howdy:
 
-What's the best way to make the update hook do a syntax check?
+When there is no "common" tree (for whatever reason), we must not
+throw a segmentation fault.
 
-We want to switch our Puppet [1] config repository from SVN to Git.  Our
-SVN repository has a pre-commit hook that does a syntax check.  The hook
-runs Puppet to check the syntax of the file(s) being committed and if the
-check fails, the commit fails.  With SVN that hook runs on the server so
-it's easy to have (the correct version of) the puppet binary there for
-the hook to use.
+Noticed by Dave O.
 
-Once Puppet config changes are committed to to our SVN repository they
-are automatically pushed into our production Puppet config.  We want to
-do something similar with Git--once commits are successfully pushed to
-the master repository they are automatically pulled and become our
-production Puppet config.
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
 
-Git's pre-commit hook runs wherever a person happens to have checked out
-the Git repository.  That could be a desktop, laptop...just about
-anywhere.  It's harder to make sure the correct version of Puppet is in
-all of those places.  So we'd love for the syntax check to run on the
-server.  But we can't figure it out.
+	Sorry, did not have much time, so I only fixed the segfault.  
+	Could you verify that the result is correct?
 
-Thanks for any assistance!
+ merge-recursive.c          |   23 +++++--
+ t/t3031-merge-criscross.sh |  135 ++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 151 insertions(+), 7 deletions(-)
+ create mode 100755 t/t3031-merge-criscross.sh
 
-Footnotes: 
-[1]  http://reductivelabs.com/products/puppet/
+diff --git a/merge-recursive.c b/merge-recursive.c
+index a3721ef..920ccc1 100644
+--- a/merge-recursive.c
++++ b/merge-recursive.c
+@@ -176,17 +176,26 @@ static int git_merge_trees(int index_only,
+ 		opts.index_only = 1;
+ 	else
+ 		opts.update = 1;
+-	opts.merge = 1;
+-	opts.head_idx = 2;
+ 	opts.fn = threeway_merge;
+ 	opts.src_index = &the_index;
+ 	opts.dst_index = &the_index;
+ 
+-	init_tree_desc_from_tree(t+0, common);
+-	init_tree_desc_from_tree(t+1, head);
+-	init_tree_desc_from_tree(t+2, merge);
++	if (common) {
++		opts.merge = 1;
++		opts.head_idx = 2;
++		init_tree_desc_from_tree(t+0, common);
++		init_tree_desc_from_tree(t+1, head);
++		init_tree_desc_from_tree(t+2, merge);
++		rc = unpack_trees(3, t, &opts);
++	}
++	else {
++		opts.merge = 0;
++		opts.head_idx = 1;
++		init_tree_desc_from_tree(t+0, head);
++		init_tree_desc_from_tree(t+1, merge);
++		rc = unpack_trees(2, t, &opts);
++	}
+ 
+-	rc = unpack_trees(3, t, &opts);
+ 	cache_tree_free(&active_cache_tree);
+ 	return rc;
+ }
+@@ -1152,7 +1161,7 @@ int merge_trees(struct merge_options *o,
+ 		common = shift_tree_object(head, common);
+ 	}
+ 
+-	if (sha_eq(common->object.sha1, merge->object.sha1)) {
++	if (common && sha_eq(common->object.sha1, merge->object.sha1)) {
+ 		output(o, 0, "Already uptodate!");
+ 		*result = head;
+ 		return 1;
+diff --git a/t/t3031-merge-criscross.sh b/t/t3031-merge-criscross.sh
+new file mode 100755
+index 0000000..525afea
+--- /dev/null
++++ b/t/t3031-merge-criscross.sh
+@@ -0,0 +1,135 @@
++#!/bin/sh
++
++test_description='merge-recursive backend test'
++
++. ./test-lib.sh
++
++#         A      <- create some files
++#        / \
++#       B   C    <- cause rename/delete conflicts between B and C
++#      /     \
++# ->  1       1  <- merge-bases for F and G: B1, C1
++#     |\     /|
++#     2 D   E 2
++#     | |   | |
++#     | 1   1 |  <- overload rename_limit in E1
++#     |  \ /  |
++#     |   X   |
++#     |  / \  |
++#     | /   \ |
++#     |/     \|
++#     F       G  <- merge E into B, D into C
++#      \     /
++#       \   /
++#        \ /
++#         H      <- recursive merge crashes
++#
++
++# initialize
++test_expect_success 'setup' '
++	mkdir data &&
++
++	test_debug create a bunch of files &&
++	n=1 &&
++	while test $n -le 1000
++	do
++		echo $n > data/$n &&
++		n=$(($n+1)) ||
++		break
++	done &&
++
++	test_debug check them in &&
++	git add data &&
++	git commit -m A &&
++	git branch A &&
++
++	test_debug remove some files in one branch &&
++	git checkout -b B A &&
++	git rm data/99* &&
++	git add data &&
++	git commit -m B &&
++
++	test_debug few more commits on B &&
++	echo testB > data/testB &&
++	git add data &&
++	git commit -m B1 &&
++
++	test_debug with a branch off of it &&
++	git branch D &&
++
++	echo testB2 > data/testB2 &&
++	git add data &&
++	git commit -m B2 &&
++
++	test_debug put some commits on D &&
++	git checkout D &&
++	echo testD > data/testD &&
++	git add data &&
++	git commit -m D &&
++
++	echo testD1 > data/testD1 &&
++	git add data &&
++	git commit -m D1 &&
++
++	test_debug back up to the top, create another branch and cause a rename  &&
++	test_debug conflict with the files we deleted earlier &&
++	git checkout -b C A &&
++	git rm --cached data/99* &&
++	rename "s!/9!/moved-9!" data/99* &&
++	git add data &&
++	git commit -m C &&
++
++	test_debug few more commits on C &&
++	echo testC > data/testC &&
++	git add data &&
++	git commit -m C1 &&
++
++	test_debug with a branch off of it &&
++	git branch E &&
++
++	echo testC2 > data/testC2 &&
++	git add data &&
++	git commit -m C2 &&
++
++	test_debug put a commits on E &&
++	git checkout E &&
++	echo testE > data/testE &&
++	git add data &&
++	git commit -m E &&
++
++	test_debug and now, overload add/delete &&
++	git rm data/[123456]* &&
++	n=10000 &&
++	while test $n -le 11000
++	do
++		echo $n > data/$n &&
++		n=$(($n+1)) ||
++		break
++	done &&
++	git add data &&
++	git commit -m E1 &&
++
++
++	test_debug now, merge E into B &&
++	git checkout B &&
++	test_must_fail git merge E &&
++	test_debug force-resolve? &&
++	git add data &&
++	git commit -m F &&
++	git branch F &&
++
++
++	test_debug and merge D into C &&
++	git checkout C &&
++	test_must_fail git merge D &&
++	test_debug force-resolve? &&
++	git add data &&
++	git commit -m G &&
++	git branch G
++'
++
++test_expect_failure 'now, force a recursive merge between F and G' '
++	git merge F
++'
++
++test_done
+-- 
+1.6.2.1.493.g67cf3
