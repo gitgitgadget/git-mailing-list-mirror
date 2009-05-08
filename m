@@ -1,73 +1,75 @@
-From: Johan Herland <johan@herland.net>
-Subject: Re:
-Date: Fri, 08 May 2009 01:57:15 +0200
-Message-ID: <200905080157.15605.johan@herland.net>
-References: <454B76988CBF42F5BCACA5061125D263@caottdt504>
- <alpine.LFD.2.01.0905071613130.4983@localhost.localdomain>
- <alpine.DEB.1.10.0905071629230.15782@asgard>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Tests in Cygwin
+Date: Thu, 07 May 2009 17:00:11 -0700
+Message-ID: <7vmy9ocvlg.fsf@alter.siamese.dyndns.org>
+References: <83prfbhasp.fsf@kalahari.s2.org>
+	<4A01E64C.7050703@SierraAtlantic.com>
+	<7vvdoet13g.fsf@alter.siamese.dyndns.org>
+	<4A028A0A.5070003@viscovery.net>
 Mime-Version: 1.0
-Content-Type: Text/Plain; charset=iso-8859-1
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Bevan Watkiss <bevan.watkiss@cloakware.com>,
-	'Alex Riesen' <raa.lkml@gmail.com>
-To: david@lang.hm
-X-From: git-owner@vger.kernel.org Fri May 08 01:57:29 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Don Slutz <Don.Slutz@SierraAtlantic.com>,
+	Hannu Koivisto <azure@iki.fi>, git@vger.kernel.org
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Fri May 08 02:00:21 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M2DSx-0005QF-Ob
-	for gcvg-git-2@gmane.org; Fri, 08 May 2009 01:57:28 +0200
+	id 1M2DVl-0006Fa-EY
+	for gcvg-git-2@gmane.org; Fri, 08 May 2009 02:00:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752742AbZEGX5S (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 7 May 2009 19:57:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752273AbZEGX5S
-	(ORCPT <rfc822;git-outgoing>); Thu, 7 May 2009 19:57:18 -0400
-Received: from mx.getmail.no ([84.208.15.66]:35433 "EHLO
-	get-mta-out01.get.basefarm.net" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1751298AbZEGX5S (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 7 May 2009 19:57:18 -0400
-Content-disposition: inline
-Received: from mx.getmail.no ([10.5.16.4]) by get-mta-out01.get.basefarm.net
- (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
- with ESMTP id <0KJA00JBET7G7880@get-mta-out01.get.basefarm.net> for
- git@vger.kernel.org; Fri, 08 May 2009 01:57:16 +0200 (MEST)
-Received: from alpha.localnet ([84.215.102.95])
- by get-mta-in01.get.basefarm.net
- (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
- with ESMTP id <0KJA006C1T7F14C0@get-mta-in01.get.basefarm.net> for
- git@vger.kernel.org; Fri, 08 May 2009 01:57:16 +0200 (MEST)
-X-PMX-Version: 5.5.3.366731, Antispam-Engine: 2.7.0.366912,
- Antispam-Data: 2009.5.7.234631
-User-Agent: KMail/1.11.2 (Linux/2.6.29-ARCH; KDE/4.2.2; x86_64; ; )
-In-reply-to: <alpine.DEB.1.10.0905071629230.15782@asgard>
+	id S1752867AbZEHAAO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 7 May 2009 20:00:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752863AbZEHAAN
+	(ORCPT <rfc822;git-outgoing>); Thu, 7 May 2009 20:00:13 -0400
+Received: from fed1rmmtao107.cox.net ([68.230.241.39]:54401 "EHLO
+	fed1rmmtao107.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752273AbZEHAAM (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 May 2009 20:00:12 -0400
+Received: from fed1rmimpo03.cox.net ([70.169.32.75])
+          by fed1rmmtao107.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20090508000011.TRGU18948.fed1rmmtao107.cox.net@fed1rmimpo03.cox.net>;
+          Thu, 7 May 2009 20:00:11 -0400
+Received: from localhost ([68.225.240.211])
+	by fed1rmimpo03.cox.net with bizsmtp
+	id oo0B1b0084aMwMQ04o0BkE; Thu, 07 May 2009 20:00:11 -0400
+X-Authority-Analysis: v=1.0 c=1 a=fv-XvKvnAAAA:8 a=gVtDIN_BvJ0EU6sgJhwA:9
+ a=b9bcgeQIbnSO_IiZL4jqlgDTnCwA:4 a=l9rlz7MJbUIA:10
+X-CM-Score: 0.00
+In-Reply-To: <4A028A0A.5070003@viscovery.net> (Johannes Sixt's message of "Thu\, 07 May 2009 09\:13\:14 +0200")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118543>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118544>
 
-On Friday 08 May 2009, david@lang.hm wrote:
-> removing the index and doing a checkout would be a reasonable thing to do
-> (at least conceptually), I will admit that I don't remember ever seeing a
-> command (or discussion of one) that would let me do that.
+Johannes Sixt <j.sixt@viscovery.net> writes:
 
-What about:
+> You could squash in the patch below, where I chose to concatenate
+> tokens with '+' because I dislike the extra quoting that is otherwise
+> necessary at the call site. The downside is that it plays games with
+> IFS, which you might find too ugly and not worth it. It's your call.
+>
+> BTW, I didn't dare test this as root on my production system; I'll do
+> that later today elsewhere.
 
-  rm .git/index
-  git checkout -f
+Heh, thanks.
 
-or maybe:
+I think my "how about this" weather-balloon patch with your updates should
+be split into a three-patch series:
 
-  git update-index --no-assume-unchanged --refresh
-  git checkout -f
+ (1) t/README update to cover the Prerequisite system; we should have done
+     this when we applied the feature;
 
-Hm?
+ (2) Addition of multiple-prerequisite feature (and documentation updates
+     to t/README);
 
-....Johan
+ (3) Addition of SANITY prerequisite that uses (2).
 
--- 
-Johan Herland, <johan@herland.net>
-www.herland.net
+I personally do not think "SANITY" is such a good thing to look for (I'd
+rather make the test fail saying "do not run me as root"), but that is a
+separate issue.
