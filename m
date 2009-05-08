@@ -1,118 +1,132 @@
-From: "Matthias Andree" <matthias.andree@gmx.de>
-Subject: Re: [PATCH v3] To make GIT-VERSION-FILE, search for git more widely
-Date: Fri, 08 May 2009 10:27:21 +0200
-Message-ID: <op.utlq3vgx1e62zd@merlin.emma.line.org>
-References: <1241688129-31613-1-git-send-email-matthias.andree@gmx.de>
- <7v7i0scvcf.fsf@alter.siamese.dyndns.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: Bug: 'git am --abort' can silently reset the wrong branch
+Date: Fri, 8 May 2009 04:28:26 -0400
+Message-ID: <20090508082826.GA29737@coredump.intra.peff.net>
+References: <20090506191945.GG6325@blackpad>
 Mime-Version: 1.0
-Content-Type: text/plain; format=flowed; delsp=yes; charset=utf-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
 Cc: git@vger.kernel.org
-To: "Junio C Hamano" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri May 08 10:27:47 2009
+To: Eduardo Habkost <ehabkost@raisama.net>
+X-From: git-owner@vger.kernel.org Fri May 08 10:28:37 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M2LQo-0002bh-KT
-	for gcvg-git-2@gmane.org; Fri, 08 May 2009 10:27:47 +0200
+	id 1M2LRc-0002uQ-UZ
+	for gcvg-git-2@gmane.org; Fri, 08 May 2009 10:28:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756346AbZEHI12 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 8 May 2009 04:27:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756014AbZEHI10
-	(ORCPT <rfc822;git-outgoing>); Fri, 8 May 2009 04:27:26 -0400
-Received: from mail.gmx.net ([213.165.64.20]:45022 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1755600AbZEHI1Z (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 May 2009 04:27:25 -0400
-Received: (qmail invoked by alias); 08 May 2009 08:27:24 -0000
-Received: from g226232121.adsl.alicedsl.de (EHLO mandree.no-ip.org) [92.226.232.121]
-  by mail.gmx.net (mp039) with SMTP; 08 May 2009 10:27:24 +0200
-X-Authenticated: #428038
-X-Provags-ID: V01U2FsdGVkX18DWTUGu/oDjelqBCWAn1aAIf9GuZbNn7iJl5BP3A
-	yi2uW8qJRUHYLm
-Received: from merlin.emma.line.org (localhost [127.0.0.1])
-	by merlin.emma.line.org (Postfix) with ESMTP id 426E7194008;
-	Fri,  8 May 2009 10:27:22 +0200 (CEST)
-In-Reply-To: <7v7i0scvcf.fsf@alter.siamese.dyndns.org>
-User-Agent: Opera Mail/9.64 (Linux)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.47
+	id S1757198AbZEHI22 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 8 May 2009 04:28:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756824AbZEHI21
+	(ORCPT <rfc822;git-outgoing>); Fri, 8 May 2009 04:28:27 -0400
+Received: from peff.net ([208.65.91.99]:49610 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754454AbZEHI2Z (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 May 2009 04:28:25 -0400
+Received: (qmail 17046 invoked by uid 107); 8 May 2009 08:28:44 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Fri, 08 May 2009 04:28:44 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Fri, 08 May 2009 04:28:26 -0400
+Content-Disposition: inline
+In-Reply-To: <20090506191945.GG6325@blackpad>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118585>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118586>
 
-Am 08.05.2009, 02:05 Uhr, schrieb Junio C Hamano <gitster@pobox.com>:
+On Wed, May 06, 2009 at 04:19:46PM -0300, Eduardo Habkost wrote:
 
-> Matthias Andree <matthias.andree@gmx.de> writes:
->
->> The underlying problem flow is:
->>
->> 1 - Makefile has "include GIT-VERSION-FILE", thus gmake builds
->>     GIT-VERSION-FILE early.
->>
->> 2 - GIT-VERSION-FILE depends on a .PHONY target  
->> (.FORCE-GIT-VERSION-FILE)
->> 3 - Thus, GNU make *always* executes GIT-VERSION-GEN
->> 4 - GIT-VERSION-GEN now, under the stripped $PATH, cannot find "git" and
->>     sees a different version number.
->> 5 - GIT-VERSION-GEN notes the difference in versions and regenerates
->>     GIT-VERSION-FILE, with up-to-date timestamp.
->
-> Interesting.  I wonder if you need the change to the Makefile.
->
-> As long as GIT-VERSION-GEN notices that you have a freshly built git
-> available (test -x) and uses it, falling back to whatever on the PATH, it
-> would not have to touch GIT-VERSION-FILE, no?
+> I've ben bitten by this multiple times, while maintaining a multi-branch
+> repository. 'git am --abort' can drop the whole history of a branch, if you
+> switch branches before running it. Below are the steps to reproduce the
+> problem:
 
-Hi Junio,
+Yeah, it would be nice if there was a safety valve here to cause "git am
+--abort" to realize that you had switched branches out from under it and
+not bother with resetting HEAD (but it should still blow away
+.git/rebase-apply).
 
-Makefile (+ GNU make) is the actual culprit and introduces this cycle, why  
-do we want to leave Makefile - of all things - alone?
+Below is a patch which accomplishes that. However, I'm not sure it is
+the right direction. Switching branches and clobbering some other branch
+with --abort is just _one_ thing you can do to screw yourself. You could
+also have been doing useful work on the _same_ branch, and that would
+get clobbered by --abort.  However, I'm not sure if we have a good way
+of telling the difference between "work which I did to try to get these
+patches to apply, but which should be thrown away when I abort" and
+"work which I did because I forgot I had an active git-am".
 
-Makefile also has all the info: (1) locations, for VPATH builds, (2)  
-$(prefix), (3) $X (extension), so let's have it communicate that (through  
-the $GIT variable). Let's not introduce second-guessing into the script.  
-It would be error prone and manually duplicates efforts that either are  
-already there or are automatic in Makefile. G-V-GEN is run under  
-Makefile's control, so let's steer it into the right direction.
+So maybe just picking the changed-branch situation is the best we can
+do. I'd be interested to hear comments from others.
 
-The G-V-GEN test -x is only there to fall back to a path search if the  
-variable is unset when running things directly, rather than through make.
+This patch works for git-am; we would also need to do something similar
+for rebase.
 
-HTH
-Matthias
+-- >8 --
+am: try not to clobber alternate branches on --abort
 
-> IOW, instead of this:
->
->> diff --git a/GIT-VERSION-GEN b/GIT-VERSION-GEN
->> index 39cde78..d0dfef3 100755
->> --- a/GIT-VERSION-GEN
->> +++ b/GIT-VERSION-GEN
->> @@ -2,6 +2,7 @@
->>
->>  GVF=GIT-VERSION-FILE
->>  DEF_VER=v1.6.3.GIT
->> +test -x "$GIT" || GIT=git
->
-> wouldn't it make more sense to do
->
-> 	if test -x "git"
->         then
->         	GIT=./git
-> 	elif test -x "git.exe"
->         then
->         	GIT=./git.exe
-> 	else
->         	GIT=git
-> 	fi
->
-> and use the rest of the patch to GIT-VERSION-GEN, without touching
-> Makefile at all?
+A user in the middle of a failed git-am may forget that they
+are there and begin doing other work. They may later realize
+that the "am" session is still active (when trying to rebase
+or apply another patch), at which point they are tempted to
+"git am --abort". However, this resets their HEAD back to
+ORIG_HEAD, clobbering any work they have done in the
+meantime.
 
+This patch detects the situation where the branch has
+changed and skips the reset step (which assumes the user has
+the tree in a state they like now).
 
-
--- 
-Matthias Andree
+---
+diff --git a/git-am.sh b/git-am.sh
+index 6d1848b..4d5f408 100755
+--- a/git-am.sh
++++ b/git-am.sh
+@@ -244,10 +244,13 @@ then
+ 			exec git rebase --abort
+ 		fi
+ 		git rerere clear
+-		test -f "$dotest/dirtyindex" || {
++		if ! test -f "$dotest/dirtyindex" &&
++		     test "`git symbolic-ref -q HEAD`" = \
++		          "`cat "$dotest/start-ref"`"
++		then
+ 			git read-tree --reset -u HEAD ORIG_HEAD
+ 			git reset ORIG_HEAD
+-		}
++		fi
+ 		rm -fr "$dotest"
+ 		exit ;;
+ 	esac
+@@ -304,6 +307,7 @@ else
+ 			git update-ref -d ORIG_HEAD >/dev/null 2>&1
+ 		fi
+ 	fi
++	git symbolic-ref -q HEAD >"$dotest/start-ref"
+ fi
+ 
+ case "$resolved" in
+diff --git a/t/t4151-am-abort.sh b/t/t4151-am-abort.sh
+index 2b912d7..8e62e76 100755
+--- a/t/t4151-am-abort.sh
++++ b/t/t4151-am-abort.sh
+@@ -62,4 +62,19 @@ do
+ 
+ done
+ 
++test_expect_success 'am --abort does not clobber changed branch' '
++	rm -f otherfile-* &&
++	git checkout -b other &&
++	echo content >unrelated &&
++	git add unrelated &&
++	git commit -m other &&
++	git rev-parse other >expect &&
++	git checkout master &&
++	test_must_fail git am 000[1245]-*.patch &&
++	git checkout other &&
++	git am --abort &&
++	git rev-parse other >actual &&
++	test_cmp expect actual
++'
++
+ test_done
