@@ -1,90 +1,88 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: [PATCH] Disallow '\' in ref names
-Date: Fri, 08 May 2009 09:54:57 +0200
-Message-ID: <4A03E551.8080904@drmicha.warpmail.net>
-References: <1241760757-26068-1-git-send-email-robin.rosenberg@dewire.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [JGIT PATCH 2/2] Make Repository.isValidRefName compatible with
+  Git 1.6.3
+Date: Fri, 8 May 2009 10:04:35 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.0905081003460.18521@pacific.mpi-cbg.de>
+References: <1241708714-20326-1-git-send-email-spearce@spearce.org>  <1241708714-20326-2-git-send-email-spearce@spearce.org>  <200905080102.44053.robin.rosenberg@dewire.com>  <alpine.LFD.2.01.0905071620240.4983@localhost.localdomain>  <7vprekbfik.fsf@alter.siamese.dyndns.org>
+  <20090508004741.GU30527@spearce.org> <81b0412b0905080024r211864bfhe7f70acabe0880c6@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: gitster@pobox.com, git@vger.kernel.org, spearce@spearce.org
-To: Robin Rosenberg <robin.rosenberg@dewire.com>
-X-From: git-owner@vger.kernel.org Fri May 08 09:55:19 2009
+Content-Type: MULTIPART/MIXED; BOUNDARY="8323328-479720195-1241769877=:18521"
+Cc: "Shawn O. Pearce" <spearce@spearce.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Robin Rosenberg <robin.rosenberg@dewire.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Alex Riesen <raa.lkml@gmail.com>
+X-From: git-owner@vger.kernel.org Fri May 08 10:04:16 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M2KvP-0007JZ-BS
-	for gcvg-git-2@gmane.org; Fri, 08 May 2009 09:55:19 +0200
+	id 1M2L43-0002M5-Ct
+	for gcvg-git-2@gmane.org; Fri, 08 May 2009 10:04:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756104AbZEHHzH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 8 May 2009 03:55:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757220AbZEHHzF
-	(ORCPT <rfc822;git-outgoing>); Fri, 8 May 2009 03:55:05 -0400
-Received: from out4.smtp.messagingengine.com ([66.111.4.28]:48874 "EHLO
-	out4.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752422AbZEHHzE (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 8 May 2009 03:55:04 -0400
-Received: from compute1.internal (compute1.internal [10.202.2.41])
-	by out1.messagingengine.com (Postfix) with ESMTP id 0B510342066;
-	Fri,  8 May 2009 03:55:05 -0400 (EDT)
-Received: from heartbeat1.messagingengine.com ([10.202.2.160])
-  by compute1.internal (MEProxy); Fri, 08 May 2009 03:55:05 -0400
-X-Sasl-enc: aS8Kl7sUmqKn5g5dpcM/AwmyAIjrOwA5nCaY+R/cENLP 1241769304
-Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.12])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 2C67BD5F7;
-	Fri,  8 May 2009 03:55:04 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1b5pre) Gecko/20090506 Lightning/1.0pre Shredder/3.0b3pre
-In-Reply-To: <1241760757-26068-1-git-send-email-robin.rosenberg@dewire.com>
+	id S1756633AbZEHIEK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 8 May 2009 04:04:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754582AbZEHIEH
+	(ORCPT <rfc822;git-outgoing>); Fri, 8 May 2009 04:04:07 -0400
+Received: from mail.gmx.net ([213.165.64.20]:59787 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1756134AbZEHIEE (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 May 2009 04:04:04 -0400
+Received: (qmail invoked by alias); 08 May 2009 08:04:01 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp053) with SMTP; 08 May 2009 10:04:01 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/qx0BpxMbqW+OoZLaMOVBWMlZRVbBzwF5F/Y15uN
+	7FOm4CvgGbhJtQ
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <81b0412b0905080024r211864bfhe7f70acabe0880c6@mail.gmail.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.53
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118580>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118581>
 
-Robin Rosenberg venit, vidit, dixit 08.05.2009 07:32:
-> This is asking for trouble since '\' is a directory separator in
-> Windows and thus may produce unpredictable results.
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
+
+--8323328-479720195-1241769877=:18521
+Content-Type: TEXT/PLAIN; charset=UTF-8
+Content-Transfer-Encoding: 8BIT
+
+Hi,
+
+On Fri, 8 May 2009, Alex Riesen wrote:
+
+> 2009/5/8 Shawn O. Pearce <spearce@spearce.org>:
+> > --- a/lockfile.c
+> > +++ b/lockfile.c
+> > @@ -129,11 +129,11 @@ static int lock_file(struct lock_file *lk, const char *path, int flags)
+> >        strcpy(lk->filename, path);
+> >        /*
+> >         * subtract 5 from size to make sure there's room for adding
+> > -        * ".lock" for the lock file name
+> > +        * "..lck" for the lock file name
+> >         */
+> >        if (!(flags & LOCK_NODEREF))
+> >                resolve_symlink(lk->filename, sizeof(lk->filename)-5);
+> > -       strcat(lk->filename, ".lock");
+> > +       strcat(lk->filename, "..lck");
+> >        lk->fd = open(lk->filename, O_RDWR | O_CREAT | O_EXCL, 0666);
 > 
-> Signed-off-by: Robin Rosenberg <robin.rosenberg@dewire.com>
-> ---
->  Documentation/git-check-ref-format.txt |    2 ++
->  refs.c                                 |    3 ++-
->  2 files changed, 4 insertions(+), 1 deletions(-)
-> 
-> diff --git a/Documentation/git-check-ref-format.txt b/Documentation/git-check-ref-format.txt
-> index c1ce268..4884520 100644
-> --- a/Documentation/git-check-ref-format.txt
-> +++ b/Documentation/git-check-ref-format.txt
-> @@ -38,6 +38,8 @@ imposes the following rules on how references are named:
->  
->  . They cannot contain a sequence `@{`.
->  
-> +- They cannot contain a `\\`
+> There must be at least some deprecation period during which
+> also the old .lock lockfiles are considered and created.
+> Just imagine someone modifying the ref with an older version,
+> which knows nothing about ..lck.
 
-Minor nit from the doc watch dog:
+As lock files are only supposed to be created by Git itself, and have a 
+maximum lifetime until the end of the process, I think we do not need a 
+grace period at all.
 
-+. They cannot contain a `\\`.
+Ciao,
+Dscho
 
-> +
->  These rules make it easy for shell script based tools to parse
->  reference names, pathname expansion by the shell when a reference name is used
->  unquoted (by mistake), and also avoids ambiguities in certain
-> diff --git a/refs.c b/refs.c
-> index e65a3b4..fc33bc6 100644
-> --- a/refs.c
-> +++ b/refs.c
-> @@ -682,12 +682,13 @@ int for_each_rawref(each_ref_fn fn, void *cb_data)
->   * - it has ASCII control character, "~", "^", ":" or SP, anywhere, or
->   * - it ends with a "/".
->   * - it ends with ".lock"
-> + * - it contains a "\" (backslash)
->   */
->  
->  static inline int bad_ref_char(int ch)
->  {
->  	if (((unsigned) ch) <= ' ' ||
-> -	    ch == '~' || ch == '^' || ch == ':')
-> +	    ch == '~' || ch == '^' || ch == ':' || ch == '\\')
->  		return 1;
->  	/* 2.13 Pattern Matching Notation */
->  	if (ch == '?' || ch == '[') /* Unsupported */
+--8323328-479720195-1241769877=:18521--
