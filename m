@@ -1,84 +1,124 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: 'git checkout' and unlink() calls (was: Re: )
-Date: Fri, 8 May 2009 10:57:32 -0700 (PDT)
-Message-ID: <alpine.LFD.2.01.0905081050420.4983@localhost.localdomain>
-References: <454B76988CBF42F5BCACA5061125D263@caottdt504> <81b0412b0905071013y241f7eas8417127e51ff52fa@mail.gmail.com> <D75C0FA80F7041FFAAC50B314788AD6F@caottdt504> <alpine.LFD.2.01.0905071148500.4983@localhost.localdomain> <A07C3E66E84D46ACB37EDC7D396CCA62@caottdt504>
- <alpine.LFD.2.01.0905071248250.4983@localhost.localdomain> <alpine.LFD.2.01.0905071312000.4983@localhost.localdomain> <alpine.LFD.2.01.0905071446500.4983@localhost.localdomain> <86y6t77d8t.fsf_-_@broadpark.no>
+From: Carl Mercier <cmercier@websense.com>
+Subject: Re: bug in git-p4?
+Date: Fri, 8 May 2009 14:02:26 -0400
+Message-ID: <B82F1DD2-282A-4E3A-ABAE-53F1D0386B25@websense.com>
+References: <F98DA2FE6F6C464C860149518BD861CC3B3C13440A@SSDEXCH2.websense.com> <1a6be5fa0905080443h5c696f8es55ea5acf3b3025cb@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Bevan Watkiss <bevan.watkiss@cloakware.com>,
-	"'Alex Riesen'" <raa.lkml@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Kjetil Barvik <barvik@broadpark.no>
-X-From: git-owner@vger.kernel.org Fri May 08 20:00:08 2009
+Content-Type: text/plain; charset="US-ASCII"; format=flowed; delsp=yes
+Content-Transfer-Encoding: 7bit
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Tor Arvid Lund <torarvid@gmail.com>
+X-From: git-owner@vger.kernel.org Fri May 08 20:21:39 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M2UMh-0007Vu-Eu
-	for gcvg-git-2@gmane.org; Fri, 08 May 2009 20:00:07 +0200
+	id 1M2UhL-0001JV-Ur
+	for gcvg-git-2@gmane.org; Fri, 08 May 2009 20:21:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754023AbZEHR77 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 8 May 2009 13:59:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753881AbZEHR77
-	(ORCPT <rfc822;git-outgoing>); Fri, 8 May 2009 13:59:59 -0400
-Received: from smtp1.linux-foundation.org ([140.211.169.13]:60847 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753522AbZEHR76 (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 8 May 2009 13:59:58 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
-	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id n48HvW7c030324
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Fri, 8 May 2009 10:58:08 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id n48HvW3U004271;
-	Fri, 8 May 2009 10:57:32 -0700
-X-X-Sender: torvalds@localhost.localdomain
-In-Reply-To: <86y6t77d8t.fsf_-_@broadpark.no>
-User-Agent: Alpine 2.01 (LFD 1184 2008-12-16)
-X-Spam-Status: No, hits=-3.462 required=5 tests=AWL,BAYES_00
-X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
+	id S1763575AbZEHSUM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 8 May 2009 14:20:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1763551AbZEHSUL
+	(ORCPT <rfc822;git-outgoing>); Fri, 8 May 2009 14:20:11 -0400
+Received: from cluster-g.mailcontrol.com ([208.87.233.190]:57963 "EHLO
+	cluster-g.mailcontrol.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1763568AbZEHSUI (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 May 2009 14:20:08 -0400
+Received: from rly25g.srv.mailcontrol.com (localhost.localdomain [127.0.0.1])
+	by rly25g.srv.mailcontrol.com (MailControl) with ESMTP id n48IK5rt027636
+	for <git@vger.kernel.org>; Fri, 8 May 2009 19:20:08 +0100
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by rly25g.srv.mailcontrol.com (MailControl) id n48IJGCt017977
+	for <git@vger.kernel.org>; Fri, 8 May 2009 19:19:16 +0100
+Received: from ssdexch4a.websense.com ([204.15.64.171])
+	by rly25g-eth0.srv.mailcontrol.com (envelope-sender <cmercier@websense.com>) (MIMEDefang) with ESMTP id n48IJ5MO016266; Fri, 08 May 2009 19:19:16 +0100 (BST)
+Received: from jzhaoisa632.bjtestsupport.techsupport.com (10.64.163.3) by
+ ssdexch4a.websense.com (10.64.80.130) with Microsoft SMTP Server (TLS) id
+ 8.1.358.0; Fri, 8 May 2009 11:19:15 -0700
+In-Reply-To: <1a6be5fa0905080443h5c696f8es55ea5acf3b3025cb@mail.gmail.com>
+X-Mailer: Apple Mail (2.930.3)
+X-Scanned-By: MailControl A-06-00-00 (www.mailcontrol.com) on 10.71.1.135
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118622>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118623>
+
+Thank you.
+
+What I'm trying to accomplish is a little bit different. We've been  
+using Git with a remote server for so long, we don't want to give that  
+up. (and we also can't for some reasons).  So what I was hoping to do  
+was simply keep working with out remote Git server as normal, and then  
+have another server pull from Git and submit to P4.
+
+We have many Git repos we'd like to store into P4 subdirectories.  For  
+example:
+
+website.git -> //SecTech/website
+api.git -> //SecTech/api
+
+I just can't seem to get this to work because git-p4 seems to expect a  
+brand new Git repo to work properly.
+
+What would be the correct way to accomplish this?
+
+Carl Mercier
+Director of software development
+Defensio.com, a Websense service
 
 
 
-On Fri, 8 May 2009, Kjetil Barvik wrote:
-> 
->   So, if the numbers from strace is trustable, 0.71 seconds is used on
->   41 114 calls to lstat64().  But, look at the unlink line, where each
->   call took 259 microseconds (= 0.259 milliseconds), and all 14 379
->   calls took 3.72 seconds.
+On 8-May-09, at 7:43 AM, Tor Arvid Lund wrote:
 
-The system call times from strace are not really trustworthy. The overhead 
-of tracing and in particular all the context switching back and forth 
-between the tracer and the tracee means that the numbers should be taken 
-with a large grain of salt. 
+> On Mon, May 4, 2009 at 9:20 PM, Mercier, Carl  
+> <cmercier@************> wrote:
+>> Hello all,
+>>
+>> I've been trying to use git-p4 without much success.  My setup is  
+>> very simple:
+>>
+>> - 1 existing Git repo (with data)
+>> - 1 existing P4 depot (with an empty subdirectory)
+>> - We commit and push to Git and our company requires all the code  
+>> to be stored in P4 (in the p4 empty subdir).
+>>
+>> Here's what I did:
+>>
+>> cd /root/p4-repo/SecTech
+>> git clone /home/git/repositories/web website
+>> cd website
+>> git-p4 sync //SecTech/website
+>> git branch --track p4-master p4/master
+>> git checkout p4-master
+>> git merge master
+>> git-p4 submit
+>
+> Hi. What I try to do at my job, is to consider the P4 depot to be the
+> "master" depot, since I consider it the "weaker" of the two VCSs. I
+> have not had much success doing git merges and then trying to sync
+> with P4. I instead use rebasing a lot. So what I would do in your
+> situation is something like:
+>
+> ...
+> git-p4 sync //SecTech/website
+> git rebase p4/master
+> git-p4 submit
+>
+> So.. my normal flow of work is:
+>
+> code
+> commit
+> code
+> commit
+> git p4 sync
+> git rebase p4/master
+> git p4 commit
+>
+> Don't know if this is something that might work for you, though...
+>
+> -Tor Arvid-
 
-That said, they definitely aren't totally made up, and they tend to show 
-real issues.
 
-In this particular case, what is going on is that 'lstat()' does no IO at 
-all, while 'unlink()' generally at the very least will add things to some 
-journal etc, and when the journal fills up, it will force IO.
 
-So doing 15k unlink() calls really is _much_ more expensive than doing 41k 
-lstat() calls, since the latter will never force any IO at all (ok, so 
-even doing just an lstat() may add atime updates etc to directories, but 
-even if atime is enabled, that tends to only trigger one IO per second at 
-most, and we never have to do any sync IO).
-
->   It should be noted that when switching branch the other way (from .25
->   to .27), the unlink() calls used less time (below 160 microseconds
->   each).
-
-I don't think they are really "260 us each" or "160 us each". It's rather 
-more likely that there are a few that are big due to forced IO, and most 
-are in the couple of us case.
-
-		Linus
+ Protected by Websense Hosted Email Security -- www.websense.com 
