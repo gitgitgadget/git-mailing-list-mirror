@@ -1,86 +1,83 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 1/5] parseopt: add OPT_NEGBIT
-Date: Fri, 8 May 2009 01:01:17 -0400
-Message-ID: <20090508050117.GB8909@coredump.intra.peff.net>
-References: <1241725380.4772.6.camel@ubuntu.ubuntu-domain> <1241725457.4772.7.camel@ubuntu.ubuntu-domain>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?utf-8?B?UmVuw6k=?= Scharfe <rene.scharfe@lsrfire.ath.cx>,
-	Git Mailing List <git@vger.kernel.org>,
-	Pierre Habouzit <madcoder@debian.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri May 08 07:01:37 2009
+From: Robin Rosenberg <robin.rosenberg@dewire.com>
+Subject: [PATCH] Disallow '\' in ref names
+Date: Fri,  8 May 2009 07:32:37 +0200
+Message-ID: <1241760757-26068-1-git-send-email-robin.rosenberg@dewire.com>
+Cc: git@vger.kernel.org, spearce@spearce.org,
+	Robin Rosenberg <robin.rosenberg@dewire.com>
+To: gitster@pobox.com
+X-From: git-owner@vger.kernel.org Fri May 08 07:33:07 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M2IDI-0000pS-TN
-	for gcvg-git-2@gmane.org; Fri, 08 May 2009 07:01:37 +0200
+	id 1M2Ihm-00014M-Jc
+	for gcvg-git-2@gmane.org; Fri, 08 May 2009 07:33:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752105AbZEHFBR convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 8 May 2009 01:01:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751813AbZEHFBR
-	(ORCPT <rfc822;git-outgoing>); Fri, 8 May 2009 01:01:17 -0400
-Received: from peff.net ([208.65.91.99]:36859 "EHLO peff.net"
+	id S1752052AbZEHFcs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 8 May 2009 01:32:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751977AbZEHFcs
+	(ORCPT <rfc822;git-outgoing>); Fri, 8 May 2009 01:32:48 -0400
+Received: from mail.dewire.com ([83.140.172.130]:26538 "EHLO dewire.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751553AbZEHFBR (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 May 2009 01:01:17 -0400
-Received: (qmail 16230 invoked by uid 107); 8 May 2009 05:01:35 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Fri, 08 May 2009 01:01:35 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Fri, 08 May 2009 01:01:17 -0400
-Content-Disposition: inline
-In-Reply-To: <1241725457.4772.7.camel@ubuntu.ubuntu-domain>
+	id S1751522AbZEHFcr (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 May 2009 01:32:47 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by dewire.com (Postfix) with ESMTP id 8AD311444152;
+	Fri,  8 May 2009 07:32:40 +0200 (CEST)
+X-Virus-Scanned: by amavisd-new at dewire.com
+Received: from dewire.com ([127.0.0.1])
+	by localhost (torino.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id LwFVwwB453YR; Fri,  8 May 2009 07:32:38 +0200 (CEST)
+Received: from localhost.localdomain (unknown [10.9.0.9])
+	by dewire.com (Postfix) with ESMTP id 8C49D1444151;
+	Fri,  8 May 2009 07:32:38 +0200 (CEST)
+X-Mailer: git-send-email 1.6.3.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118562>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118563>
 
-On Thu, May 07, 2009 at 09:44:17PM +0200, Ren=C3=A9 Scharfe wrote:
+This is asking for trouble since '\' is a directory separator in
+Windows and thus may produce unpredictable results.
 
-> Add OPTION_NEGBIT and OPT_NEGBIT, mirroring OPTION_BIT and OPT_BIT.
-> OPT_NEGBIT can be used together with OPT_BIT to define two options
-> that cancel each other out.
-
-Nice, this neatly fixes the problem with --no-no-empty-directory in
-"ls-files" discussed here:
-
-  http://article.gmane.org/gmane.comp.version-control.git/112607
-
-We just need this patch on top of Ren=C3=A9's 1/5:
-
--- >8 --
-Subject: [PATCH] ls-files: make --no-empty-directory properly negatable
-
-This option was specified to parseopt as an OPT_BIT; however, we
-actually want to _set_ the bit on --no-empty-directory. Thus the
-existing implementation used --no-empty-directory, and required
---no-no-empty-directory to negate it.
-
-Now that OPT_NEGBIT exists, we can properly support it as
---empty-directory and --no-empty-directory (but of course
-still defaulting to showing empty directories).
-
-Signed-off-by: Jeff King <peff@peff.net>
+Signed-off-by: Robin Rosenberg <robin.rosenberg@dewire.com>
 ---
- builtin-ls-files.c |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+ Documentation/git-check-ref-format.txt |    2 ++
+ refs.c                                 |    3 ++-
+ 2 files changed, 4 insertions(+), 1 deletions(-)
 
-diff --git a/builtin-ls-files.c b/builtin-ls-files.c
-index da2daf4..3d59b0e 100644
---- a/builtin-ls-files.c
-+++ b/builtin-ls-files.c
-@@ -454,7 +454,7 @@ int cmd_ls_files(int argc, const char **argv, const=
- char *prefix)
- 		OPT_BIT(0, "directory", &dir.flags,
- 			"show 'other' directories' name only",
- 			DIR_SHOW_OTHER_DIRECTORIES),
--		OPT_BIT(0, "no-empty-directory", &dir.flags,
-+		OPT_NEGBIT(0, "empty-directory", &dir.flags,
- 			"don't show empty directories",
- 			DIR_HIDE_EMPTY_DIRECTORIES),
- 		OPT_BOOLEAN('u', "unmerged", &show_unmerged,
---=20
-1.6.3.201.g5d2a4.dirty
+diff --git a/Documentation/git-check-ref-format.txt b/Documentation/git-check-ref-format.txt
+index c1ce268..4884520 100644
+--- a/Documentation/git-check-ref-format.txt
++++ b/Documentation/git-check-ref-format.txt
+@@ -38,6 +38,8 @@ imposes the following rules on how references are named:
+ 
+ . They cannot contain a sequence `@{`.
+ 
++- They cannot contain a `\\`
++
+ These rules make it easy for shell script based tools to parse
+ reference names, pathname expansion by the shell when a reference name is used
+ unquoted (by mistake), and also avoids ambiguities in certain
+diff --git a/refs.c b/refs.c
+index e65a3b4..fc33bc6 100644
+--- a/refs.c
++++ b/refs.c
+@@ -682,12 +682,13 @@ int for_each_rawref(each_ref_fn fn, void *cb_data)
+  * - it has ASCII control character, "~", "^", ":" or SP, anywhere, or
+  * - it ends with a "/".
+  * - it ends with ".lock"
++ * - it contains a "\" (backslash)
+  */
+ 
+ static inline int bad_ref_char(int ch)
+ {
+ 	if (((unsigned) ch) <= ' ' ||
+-	    ch == '~' || ch == '^' || ch == ':')
++	    ch == '~' || ch == '^' || ch == ':' || ch == '\\')
+ 		return 1;
+ 	/* 2.13 Pattern Matching Notation */
+ 	if (ch == '?' || ch == '[') /* Unsupported */
+-- 
+1.6.3.dirty
