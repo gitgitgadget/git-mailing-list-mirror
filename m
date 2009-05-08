@@ -1,124 +1,83 @@
-From: Carl Mercier <cmercier@websense.com>
-Subject: Re: bug in git-p4?
-Date: Fri, 8 May 2009 14:02:26 -0400
-Message-ID: <B82F1DD2-282A-4E3A-ABAE-53F1D0386B25@websense.com>
-References: <F98DA2FE6F6C464C860149518BD861CC3B3C13440A@SSDEXCH2.websense.com> <1a6be5fa0905080443h5c696f8es55ea5acf3b3025cb@mail.gmail.com>
+From: "Robin H. Johnson" <robbat2@gentoo.org>
+Subject: Re: [PATCH] Fix sloppy Getopt::Long.
+Date: Fri, 8 May 2009 11:28:14 -0700
+Message-ID: <robbat2.20090508T182516.673117391Z@orbis-terrarum.net>
+References: <1241547374-6737-1-git-send-email-robbat2@gentoo.org> <7vljpazuyg.fsf@alter.siamese.dyndns.org> <20090506064949.GB29479@dcvr.yhbt.net> <20090506161309.GC10702@curie-int> <7v63gew3dp.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="US-ASCII"; format=flowed; delsp=yes
-Content-Transfer-Encoding: 7bit
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Tor Arvid Lund <torarvid@gmail.com>
-X-From: git-owner@vger.kernel.org Fri May 08 20:21:39 2009
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="45Z9DzgjV8m4Oswq"
+Cc: "Robin H. Johnson" <robbat2@gentoo.org>,
+	Eric Wong <normalperson@yhbt.net>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri May 08 20:28:39 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M2UhL-0001JV-Ur
-	for gcvg-git-2@gmane.org; Fri, 08 May 2009 20:21:28 +0200
+	id 1M2UoI-0004fE-2j
+	for gcvg-git-2@gmane.org; Fri, 08 May 2009 20:28:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1763575AbZEHSUM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 8 May 2009 14:20:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1763551AbZEHSUL
-	(ORCPT <rfc822;git-outgoing>); Fri, 8 May 2009 14:20:11 -0400
-Received: from cluster-g.mailcontrol.com ([208.87.233.190]:57963 "EHLO
-	cluster-g.mailcontrol.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1763568AbZEHSUI (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 May 2009 14:20:08 -0400
-Received: from rly25g.srv.mailcontrol.com (localhost.localdomain [127.0.0.1])
-	by rly25g.srv.mailcontrol.com (MailControl) with ESMTP id n48IK5rt027636
-	for <git@vger.kernel.org>; Fri, 8 May 2009 19:20:08 +0100
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by rly25g.srv.mailcontrol.com (MailControl) id n48IJGCt017977
-	for <git@vger.kernel.org>; Fri, 8 May 2009 19:19:16 +0100
-Received: from ssdexch4a.websense.com ([204.15.64.171])
-	by rly25g-eth0.srv.mailcontrol.com (envelope-sender <cmercier@websense.com>) (MIMEDefang) with ESMTP id n48IJ5MO016266; Fri, 08 May 2009 19:19:16 +0100 (BST)
-Received: from jzhaoisa632.bjtestsupport.techsupport.com (10.64.163.3) by
- ssdexch4a.websense.com (10.64.80.130) with Microsoft SMTP Server (TLS) id
- 8.1.358.0; Fri, 8 May 2009 11:19:15 -0700
-In-Reply-To: <1a6be5fa0905080443h5c696f8es55ea5acf3b3025cb@mail.gmail.com>
-X-Mailer: Apple Mail (2.930.3)
-X-Scanned-By: MailControl A-06-00-00 (www.mailcontrol.com) on 10.71.1.135
+	id S1755667AbZEHS2V (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 8 May 2009 14:28:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759876AbZEHS2U
+	(ORCPT <rfc822;git-outgoing>); Fri, 8 May 2009 14:28:20 -0400
+Received: from b01.ext.isohunt.com ([208.71.112.51]:39575 "EHLO
+	mail.isohunt.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1762054AbZEHS2T (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 May 2009 14:28:19 -0400
+Received: (qmail 19522 invoked from network); 8 May 2009 18:28:17 -0000
+Received: from tsi-static.orbis-terrarum.net (HELO curie.orbis-terrarum.net) (76.10.188.108)
+  (smtp-auth username robbat2@isohunt.com, mechanism login)
+  by mail.isohunt.com (qpsmtpd/0.33-dev on beta01) with (AES256-SHA encrypted) ESMTPSA; Fri, 08 May 2009 18:28:17 +0000
+Received: (qmail 32475 invoked by uid 10000); 8 May 2009 11:28:14 -0700
+Content-Disposition: inline
+In-Reply-To: <7v63gew3dp.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.16 (2007-06-09)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118623>
-
-Thank you.
-
-What I'm trying to accomplish is a little bit different. We've been  
-using Git with a remote server for so long, we don't want to give that  
-up. (and we also can't for some reasons).  So what I was hoping to do  
-was simply keep working with out remote Git server as normal, and then  
-have another server pull from Git and submit to P4.
-
-We have many Git repos we'd like to store into P4 subdirectories.  For  
-example:
-
-website.git -> //SecTech/website
-api.git -> //SecTech/api
-
-I just can't seem to get this to work because git-p4 seems to expect a  
-brand new Git repo to work properly.
-
-What would be the correct way to accomplish this?
-
-Carl Mercier
-Director of software development
-Defensio.com, a Websense service
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118624>
 
 
+--45Z9DzgjV8m4Oswq
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-On 8-May-09, at 7:43 AM, Tor Arvid Lund wrote:
+On Wed, May 06, 2009 at 10:24:50AM -0700, Junio C Hamano wrote:
+> >> +			{ '' =3D> \$_stdin, 'stdin' =3D> \$_stdin,
+> >> +			  %cmt_opts, %fc_opts, } ],
+> > I confirm that it does correctly set the $_stdin variable (tested
+> > briefly).
+> Wait a minute.  Do you mean we would also need the above "explicit empty
+> argument sets $_stdin"?  Wasn't it your earlier analysis/claim that the
+> caller already takes care of a lone "-"?
+I'd originally considered a single '-' as an argument not an option,
+meaning stdin, not being processed within the getopt framework, but
+instead being handled later.
 
-> On Mon, May 4, 2009 at 9:20 PM, Mercier, Carl  
-> <cmercier@************> wrote:
->> Hello all,
->>
->> I've been trying to use git-p4 without much success.  My setup is  
->> very simple:
->>
->> - 1 existing Git repo (with data)
->> - 1 existing P4 depot (with an empty subdirectory)
->> - We commit and push to Git and our company requires all the code  
->> to be stored in P4 (in the p4 empty subdir).
->>
->> Here's what I did:
->>
->> cd /root/p4-repo/SecTech
->> git clone /home/git/repositories/web website
->> cd website
->> git-p4 sync //SecTech/website
->> git branch --track p4-master p4/master
->> git checkout p4-master
->> git merge master
->> git-p4 submit
->
-> Hi. What I try to do at my job, is to consider the P4 depot to be the
-> "master" depot, since I consider it the "weaker" of the two VCSs. I
-> have not had much success doing git merges and then trying to sync
-> with P4. I instead use rebasing a lot. So what I would do in your
-> situation is something like:
->
-> ...
-> git-p4 sync //SecTech/website
-> git rebase p4/master
-> git-p4 submit
->
-> So.. my normal flow of work is:
->
-> code
-> commit
-> code
-> commit
-> git p4 sync
-> git rebase p4/master
-> git p4 commit
->
-> Don't know if this is something that might work for you, though...
->
-> -Tor Arvid-
+> Or do you mean "yes it would also work but it is not necessary"?
+Using Eric's change makes it explicit what is expected: Passing
+'--stdin' is the same as passing '-'.
 
+--=20
+Robin Hugh Johnson
+Gentoo Linux Developer & Infra Guy
+E-Mail     : robbat2@gentoo.org
+GnuPG FP   : 11AC BA4F 4778 E3F6 E4ED  F38E B27B 944E 3488 4E85
 
+--45Z9DzgjV8m4Oswq
+Content-Type: application/pgp-signature
+Content-Disposition: inline
 
- Protected by Websense Hosted Email Security -- www.websense.com 
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.11 (GNU/Linux)
+Comment: Robbat2 @ Orbis-Terrarum Networks - The text below is a digital signature. If it doesn't make any sense to you, ignore it.
+
+iEYEARECAAYFAkoEeb4ACgkQPpIsIjIzwizdFwCgkCmDNfXzeukAo60Xpx9KHmgu
+pyMAoOxu6XyPLVAWv3fUJ5f8t1a4F2Ln
+=z3yO
+-----END PGP SIGNATURE-----
+
+--45Z9DzgjV8m4Oswq--
