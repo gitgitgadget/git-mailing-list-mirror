@@ -1,63 +1,109 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: Tests in Cygwin
-Date: Fri, 08 May 2009 16:28:38 +0200
-Message-ID: <4A044196.7050106@viscovery.net>
-References: <83prfbhasp.fsf@kalahari.s2.org>	 <4A01E64C.7050703@SierraAtlantic.com>	 <7vvdoet13g.fsf@alter.siamese.dyndns.org>	 <4A028A0A.5070003@viscovery.net> <4A030277.2000708@SierraAtlantic.com>	 <20090508020037.GA1264@coredump.intra.peff.net>	 <4A03CAFE.4060503@viscovery.net>	 <7v4ovwaygf.fsf@alter.siamese.dyndns.org> <81b0412b0905080228j6b114631p35395464c0c98540@mail.gmail.com> <4A043F7E.5070702@SierraAtlantic.com>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: [JGIT PATCH 2/2] Make Repository.isValidRefName compatible
+	with Git 1.6.3
+Date: Fri, 8 May 2009 07:34:36 -0700
+Message-ID: <20090508143436.GX30527@spearce.org>
+References: <1241708714-20326-2-git-send-email-spearce@spearce.org> <200905080102.44053.robin.rosenberg@dewire.com> <alpine.LFD.2.01.0905071620240.4983@localhost.localdomain> <7vprekbfik.fsf@alter.siamese.dyndns.org> <20090508004741.GU30527@spearce.org> <81b0412b0905080024r211864bfhe7f70acabe0880c6@mail.gmail.com> <alpine.DEB.1.00.0905081003460.18521@pacific.mpi-cbg.de> <7vljp80yt4.fsf@alter.siamese.dyndns.org> <alpine.DEB.1.00.0905081153050.4601@intel-tinevez-2-302> <81b0412b0905080445j6d91f05jb13169ebd0245935@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Alex Riesen <raa.lkml@gmail.com>,
+Content-Type: text/plain; charset=us-ascii
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
 	Junio C Hamano <gitster@pobox.com>,
-	Jeff King <peff@peff.net>, Hannu Koivisto <azure@iki.fi>,
-	git@vger.kernel.org
-To: Don Slutz <Don.Slutz@SierraAtlantic.com>
-X-From: git-owner@vger.kernel.org Fri May 08 16:28:52 2009
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Robin Rosenberg <robin.rosenberg@dewire.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Alex Riesen <raa.lkml@gmail.com>
+X-From: git-owner@vger.kernel.org Fri May 08 16:35:33 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M2R4D-0007gU-R7
-	for gcvg-git-2@gmane.org; Fri, 08 May 2009 16:28:50 +0200
+	id 1M2RAd-0002W4-8J
+	for gcvg-git-2@gmane.org; Fri, 08 May 2009 16:35:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752565AbZEHO2l (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 8 May 2009 10:28:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751911AbZEHO2l
-	(ORCPT <rfc822;git-outgoing>); Fri, 8 May 2009 10:28:41 -0400
-Received: from lilzmailso02.liwest.at ([212.33.55.13]:13453 "EHLO
-	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751209AbZEHO2k (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 May 2009 10:28:40 -0400
-Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
-	by lilzmailso02.liwest.at with esmtpa (Exim 4.69)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1M2R40-0007fD-RC; Fri, 08 May 2009 16:28:37 +0200
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.96])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id 2206A4E4; Fri,  8 May 2009 16:28:36 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.21 (Windows/20090302)
-In-Reply-To: <4A043F7E.5070702@SierraAtlantic.com>
-X-Enigmail-Version: 0.95.5
-X-Spam-Score: -1.4 (-)
+	id S1751702AbZEHOeh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 8 May 2009 10:34:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751481AbZEHOeh
+	(ORCPT <rfc822;git-outgoing>); Fri, 8 May 2009 10:34:37 -0400
+Received: from george.spearce.org ([209.20.77.23]:53070 "EHLO
+	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751071AbZEHOeg (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 May 2009 10:34:36 -0400
+Received: by george.spearce.org (Postfix, from userid 1001)
+	id E77DA381D1; Fri,  8 May 2009 14:34:36 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <81b0412b0905080445j6d91f05jb13169ebd0245935@mail.gmail.com>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118606>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118607>
 
-Don Slutz schrieb:
-> So which should we go with? foo2() which does the original way or foof()
-> which allows you to use ',' and '+', and spaces?
+Alex Riesen <raa.lkml@gmail.com> wrote:
+> 2009/5/8 Johannes Schindelin <Johannes.Schindelin@gmx.de>:
+> > On Fri, 8 May 2009, Junio C Hamano wrote:
+> >>
+> >> Could there be people with slightly older git and shiny new jgit (or the
+> >> other combination) working on the same repository?
 
-I'd say take Junio's original proposal (that separates with spaces), but use
+Yes, Gerrit Code Review runs a JGit daemon 24/7.  I have a lot
+of folks running Gerrit servers inside their company networks,
+and two running them on the public internet.  Gerrit runs bleeding
+edge JGit, and would most certainly pick up a "..lck" patch there
+before they upgrade their git-core package.
 
-     for prerequisite in $*      # split args at spaces
+This is one of those cases where the locking is really important,
+because you should be able to concurrently access the same git
+repository from the command line with git-core utilities while
+Gerrit's daemon process is servicing network based user requests.
 
-(including the comment!) instead of merely
+> > You mean concurrently? ??Sure, but do we have to care? ??People doing this
+> > certainly know what they are doing, and live happily even with a 0.5"
+> > hole in their foot.
 
-     for prerequisite
+Yes, dammit, we should care.
 
-I can certainly live with the quoting at the call sites of
-test_expect_success that is needed in the few cases where there is more
-than one prerequisite.
+> Of course people run git concurrently on the same repo. Even from different
+> machines.
 
--- Hannes
+Even ignoring JGit and Gerrit's daemon process entirely as "useless
+stupid projects that never should have happened", _this_ is enough
+of a reason to care.  People use Git on NFS all of the time.
+With different machines.  Accessing the same repo.  Those different
+machines most likely have different versions of Git installed.
+
+> That's _why_ we have the locking in the first place.
+
+Yes.
+
+I've actually thought about this "fix.vm.lock" being invalid for
+quite a while now, and wanted to change lockfile.c to use another
+pattern that was already an invalid ref name, like Junio's "..lck"
+proposal does.  But I've never been able to come up with a sane way
+to deal with the transition.  So I never brought the topic up before.
+
+I still don't have a sane way to deal with the transition.
+
+The only thing I can think of is:
+
+  - grab ".lock"
+  - grab "..lck"
+  - do stuff
+  - commit by link("..lck", orig)
+  - ulink ".lock"
+
+And maybe in a year we stop writing ".lock".
+
+But, here's news for you, *#@!#@@!$@!*&@! distributions are still
+shipping 1.5.0-1.5.0.3.  In particular I've spent the better part
+of this past two weeks telling new Git users to upgrade off of these
+versions due to the pread() bug introduced in [1] and fixed in [2].
+
+I've seen WAAAAY too many "fatal: cannot pread pack file:" errors.
+Enough for a lifetime.
+
+[1] http://repo.or.cz/w/git.git?a=commit;h=6d2fa7f1b489c65e677c18eda5c144dbc5d614ab
+[2] http://repo.or.cz/w/git.git?a=commit;h=a91d49cd369ac5fc8e1a17357a975d09cf6c8cb3
+
+-- 
+Shawn.
