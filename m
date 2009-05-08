@@ -1,98 +1,73 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: Two problems on alias of git
-Date: Fri, 8 May 2009 05:06:15 -0400
-Message-ID: <20090508090614.GB29737@coredump.intra.peff.net>
-References: <op.utgiv92f6f2obg@i220-99-253-139.s27.a098.ap.plala.or.jp>
+Subject: Re: Bug: 'git am --abort' can silently reset the wrong branch
+Date: Fri, 8 May 2009 05:12:18 -0400
+Message-ID: <20090508091218.GC29737@coredump.intra.peff.net>
+References: <20090506191945.GG6325@blackpad> <20090508082826.GA29737@coredump.intra.peff.net> <7v7i0s0y03.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Kana Natsuno <kana@whileimautomaton.net>
-X-From: git-owner@vger.kernel.org Fri May 08 11:06:28 2009
+Cc: Eduardo Habkost <ehabkost@raisama.net>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri May 08 11:12:32 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M2M2E-0003Gs-Rj
-	for gcvg-git-2@gmane.org; Fri, 08 May 2009 11:06:27 +0200
+	id 1M2M87-0005fR-SK
+	for gcvg-git-2@gmane.org; Fri, 08 May 2009 11:12:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753947AbZEHJGQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 8 May 2009 05:06:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751977AbZEHJGQ
-	(ORCPT <rfc822;git-outgoing>); Fri, 8 May 2009 05:06:16 -0400
-Received: from peff.net ([208.65.91.99]:49876 "EHLO peff.net"
+	id S1757365AbZEHJMT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 8 May 2009 05:12:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756255AbZEHJMS
+	(ORCPT <rfc822;git-outgoing>); Fri, 8 May 2009 05:12:18 -0400
+Received: from peff.net ([208.65.91.99]:38232 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751191AbZEHJGP (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 May 2009 05:06:15 -0400
-Received: (qmail 17240 invoked by uid 107); 8 May 2009 09:06:33 -0000
+	id S1754441AbZEHJMR (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 May 2009 05:12:17 -0400
+Received: (qmail 17274 invoked by uid 107); 8 May 2009 09:12:36 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Fri, 08 May 2009 05:06:33 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Fri, 08 May 2009 05:06:15 -0400
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Fri, 08 May 2009 05:12:36 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Fri, 08 May 2009 05:12:18 -0400
 Content-Disposition: inline
-In-Reply-To: <op.utgiv92f6f2obg@i220-99-253-139.s27.a098.ap.plala.or.jp>
+In-Reply-To: <7v7i0s0y03.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118593>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118594>
 
-On Tue, May 05, 2009 at 09:42:04PM +0900, Kana Natsuno wrote:
+On Fri, May 08, 2009 at 02:01:16AM -0700, Junio C Hamano wrote:
 
-> The first one is that git crashes with the following situation.
-> Without GIT_TRACE, everthing works well.  But with GIT_TRACE=1,
-> git crashes every time.
+> > Switching branches and clobbering some other branch
+> > with --abort is just _one_ thing you can do to screw yourself. You could
+> > also have been doing useful work on the _same_ branch, and that would
+> > get clobbered by --abort.  However, I'm not sure if we have a good way
+> > of telling the difference between "work which I did to try to get these
+> > patches to apply, but which should be thrown away when I abort" and
+> > "work which I did because I forgot I had an active git-am".
+> 
+> I think I've said this already, but honestly speaking, I think --abort
+> should not do --reset at all, but just remove the $dotest directory.  Or
+> perhaps introduce a --clear option to do so.
 
-I wasn't able to reproduce on Linux, but valgrind found it. The patch
-below should fix it.
+I assumed that people actually liked the current "reset" behavior, so I
+didn't want to propose getting rid of it.  Personally, I hate it. So I
+would be very happy to see it ripped out entirely, and then that neatly
+solves the problem (i.e., it now errs on the side of not throwing away
+work).
 
--- >8 --
-Subject: [PATCH] fix GIT_TRACE segfault with shell-quoted aliases
+> What I sometimes see to my users happen is to try applying to the oldest
+> integration branch the patch (the users think) ought to apply, see it fail
+> to apply, switch to a bit newer branch and run "am" again (trusting that
+> it will pick up the material from $dotest), repeat the above and then give
+> up with "git am --abort".  I do not think anybody can offhand explain to
+> which branch and to what state the command takes the user back to in such
+> a situation without looking at what the code actually does X-<; even
+> though I think it should take the user back to the original branch, I do
+> not think that is what the code does.
 
-The alias argv comes from the split_cmdline function, which
-splits the config text for the alias into an array of
-strings. It returns the number of elements in the array, but
-does not actually put a NULL at the end of the array.
-Later, the trace function tries to print this argv and
-assumes that it has the trailing NULL.
+No, the current code clobbers whatever is in the current HEAD with
+ORIG_HEAD. So not only might you set another random branch back to the
+originally am'd branch, but if you did a pull in between you can pick up
+some random commit.
 
-The split_cmdline function is probably at fault, since argv
-lists almost always end with a NULL signal. This patch adds
-one, in addition to the returned count; this doesn't hurt
-the other callers at all, since they were presumably using
-the count already (and will never look at the NULL).
-
-While we're there and using ALLOC_GROW, let's clean up the
-other manual grow.
-
-Signed-off-by: Jeff King <peff@peff.net>
----
- alias.c |    8 ++++----
- 1 files changed, 4 insertions(+), 4 deletions(-)
-
-diff --git a/alias.c b/alias.c
-index e687fe5..372b7d8 100644
---- a/alias.c
-+++ b/alias.c
-@@ -38,10 +38,7 @@ int split_cmdline(char *cmdline, const char ***argv)
- 			while (cmdline[++src]
- 					&& isspace(cmdline[src]))
- 				; /* skip */
--			if (count >= size) {
--				size += 16;
--				*argv = xrealloc(*argv, sizeof(char *) * size);
--			}
-+			ALLOC_GROW(*argv, count+1, size);
- 			(*argv)[count++] = cmdline + dst;
- 		} else if (!quoted && (c == '\'' || c == '"')) {
- 			quoted = c;
-@@ -72,6 +69,9 @@ int split_cmdline(char *cmdline, const char ***argv)
- 		return error("unclosed quote");
- 	}
- 
-+	ALLOC_GROW(*argv, count+1, size);
-+	(*argv)[count] = NULL;
-+
- 	return count;
- }
- 
--- 
-1.6.3.203.g7c7de.dirty
+-Peff
