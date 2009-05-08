@@ -1,99 +1,84 @@
-From: Heiko Voigt <hvoigt@hvoigt.net>
-Subject: [PATCH v2] Extend sample update hook, disable modifying of
-	existing tags
-Date: Fri, 8 May 2009 17:22:30 +0200
-Message-ID: <20090508152230.GA7802@macbook.lan>
-References: <20090507164023.GB5807@macbook.lan> <7vzldobgrm.fsf@alter.siamese.dyndns.org>
+From: Brandon Casey <casey@nrlssc.navy.mil>
+Subject: Re:
+Date: Fri, 08 May 2009 10:51:51 -0500
+Message-ID: <eFUCK0_CEtLa6Qvg6X1SqHmCgRnY3_3dy3OCJK26lGP-_kDRyWtlRA@cipher.nrlssc.navy.mil>
+References: <454B76988CBF42F5BCACA5061125D263@caottdt504>  <81b0412b0905071013y241f7eas8417127e51ff52fa@mail.gmail.com>  <D75C0FA80F7041FFAAC50B314788AD6F@caottdt504>  <alpine.LFD.2.01.0905071148500.4983@localhost.localdomain>  <A07C3E66E84D46ACB37EDC7D396CCA62@caottdt504>  <alpine.LFD.2.01.0905071248250.4983@localhost.localdomain>  <alpine.LFD.2.01.0905071312000.4983@localhost.localdomain>  <alpine.LFD.2.01.0905071446500.4983@localhost.localdomain> <81b0412b0905080117v3aad0c44o7b3bbcc7fe70d3b1@mail.gmail.com> <alpine.LFD.2.01.0905080734260.4983@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri May 08 17:22:46 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Alex Riesen <raa.lkml@gmail.com>,
+	Bevan Watkiss <bevan.watkiss@cloakware.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Fri May 08 17:53:52 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M2RuJ-0004rO-Ov
-	for gcvg-git-2@gmane.org; Fri, 08 May 2009 17:22:40 +0200
+	id 1M2SOW-00066X-F5
+	for gcvg-git-2@gmane.org; Fri, 08 May 2009 17:53:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754281AbZEHPWa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 8 May 2009 11:22:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753306AbZEHPWa
-	(ORCPT <rfc822;git-outgoing>); Fri, 8 May 2009 11:22:30 -0400
-Received: from darksea.de ([83.133.111.250]:51682 "HELO darksea.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753124AbZEHPW3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 May 2009 11:22:29 -0400
-Received: (qmail 6830 invoked from network); 8 May 2009 17:22:19 +0200
-Received: from unknown (HELO localhost) (127.0.0.1)
-  by localhost with SMTP; 8 May 2009 17:22:19 +0200
-Content-Disposition: inline
-In-Reply-To: <7vzldobgrm.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.19 (2009-01-05)
+	id S1761580AbZEHPxN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 8 May 2009 11:53:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761124AbZEHPxM
+	(ORCPT <rfc822;git-outgoing>); Fri, 8 May 2009 11:53:12 -0400
+Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:43988 "EHLO
+	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759268AbZEHPxL (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 May 2009 11:53:11 -0400
+Received: by mail.nrlssc.navy.mil id n48FpqCR024149; Fri, 8 May 2009 10:51:52 -0500
+In-Reply-To: <alpine.LFD.2.01.0905080734260.4983@localhost.localdomain>
+X-OriginalArrivalTime: 08 May 2009 15:51:52.0776 (UTC) FILETIME=[E7FB8480:01C9CFF4]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118611>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118612>
 
-Because no special rule for this existed it was allowed by default
-
-Signed-off-by: Heiko Voigt <heiko.voigt@mahr.de>
----
-On Thu, May 07, 2009 at 05:05:49PM -0700, Junio C Hamano wrote:
-> Heiko Voigt <hvoigt@hvoigt.net> writes:
+Linus Torvalds wrote:
 > 
-> > Because no special rule for this existed it was allowed by default
+> On Fri, 8 May 2009, Alex Riesen wrote:
+>> I did (cygwin). My guess, the improvement is completely dwarfed by the
+>> other overheads (like starting git and writing files).
 > 
-> I do not disagree that it is a good thing to be able to reject
-> overwriting, but I do not think it is a _fix_.  allowdeletetag is about
-> _deletion_ and it already is covered by the code, isn't it?
-> I think it would make more sense to introduce $allowmodifytag and reject
-> such pushes in the codepath you touched.
+> Oh, I meant "git checkout" as in not even switching branches, or perhaps 
+> switching branches but just changing a single file (among thousands).
+> 
+> If you actually end up re-writing all files, then yes, it will obviously 
+> be totally dominated by other things.
+> 
+> For example, in the kernel, switching between two branches that only 
+> differ in one file (Makefile) went from 0.18 seconds down to 0.14 seconds 
+> for me just because of the fewer lstat() calls.
+> 
+> Noticeable? No. But it might be more noticeable on some other OS, or with 
+> some networked filesystem.
 
-You are (as usual) right. I was actually thinking about adding another
-variable but then thought it might become to complex, but if you are
-asking for it.  Here it is ;)
+plain 'git checkout' on linux kernel over NFS.
 
-cheers Heiko
+Best time without patch: 1.20 seconds
 
- templates/hooks--update.sample |   10 ++++++++++
- 1 files changed, 10 insertions(+), 0 deletions(-)
+  0.45user 0.71system 0:01.20elapsed 96%CPU (0avgtext+0avgdata 0maxresident)k
+  0inputs+0outputs (0major+15467minor)pagefaults 0swaps
 
-diff --git a/templates/hooks--update.sample b/templates/hooks--update.sample
-index f8bf490..fd63b2d 100755
---- a/templates/hooks--update.sample
-+++ b/templates/hooks--update.sample
-@@ -13,6 +13,9 @@
- # hooks.allowdeletetag
- #   This boolean sets whether deleting tags will be allowed in the
- #   repository.  By default they won't be.
-+# hooks.allowmodifytag
-+#   This boolean sets whether a tag may be modified after creation. By default
-+#   it won't be.
- # hooks.allowdeletebranch
- #   This boolean sets whether deleting branches will be allowed in the
- #   repository.  By default they won't be.
-@@ -44,6 +47,7 @@ allowunannotated=$(git config --bool hooks.allowunannotated)
- allowdeletebranch=$(git config --bool hooks.allowdeletebranch)
- denycreatebranch=$(git config --bool hooks.denycreatebranch)
- allowdeletetag=$(git config --bool hooks.allowdeletetag)
-+allowmodifytag=$(git config --bool hooks.allowmodifytag)
- 
- # check for no description
- projectdesc=$(sed -e '1q' "$GIT_DIR/description")
-@@ -82,6 +86,12 @@ case "$refname","$newrev_type" in
- 		;;
- 	refs/tags/*,tag)
- 		# annotated tag
-+		if [ "$allowmodifytag" != "true" ] && git rev-parse $refname > /dev/null 2>&1
-+		then
-+			echo "*** Tag '$refname' already exists." >&2
-+			echo "*** Modifying a tag is not allowed in this repository." >&2
-+			exit 1
-+		fi
- 		;;
- 	refs/heads/*,commit)
- 		# branch
--- 
-1.6.2.1.423.g442d
+Best time with patch (core.preloadindex = true): 1.10 seconds
+
+  0.43user 4.00system 0:01.10elapsed 402%CPU (0avgtext+0avgdata 0maxresident)k
+  0inputs+0outputs (0major+13999minor)pagefaults 0swaps
+
+Best time with patch (core.preloadindex = false): 0.84 seconds
+
+  0.42user 0.39system 0:00.84elapsed 96%CPU (0avgtext+0avgdata 0maxresident)k
+  0inputs+0outputs (0major+13965minor)pagefaults 0swaps
+
+Best time with read_cache_preload patch only: 1.38 seconds
+
+  0.45user 4.42system 0:01.38elapsed 352%CPU (0avgtext+0avgdata 0maxresident)k
+  0inputs+0outputs (0major+13990minor)pagefaults 0swaps
+
+The read_cache_preload() changes actually slow things down for me for this
+case.
+
+Reduction in lstat's gives a nice 30% improvement.
+
+-brandon
