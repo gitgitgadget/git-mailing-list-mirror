@@ -1,117 +1,71 @@
-From: Dan Fairs <dan.fairs@gmail.com>
-Subject: Problem with local branches and git svn rebase
-Date: Fri, 8 May 2009 09:57:10 +0100
-Message-ID: <08FCF5E0-A2AA-4F23-9C23-E8F823AF2546@gmail.com>
-Mime-Version: 1.0 (Apple Message framework v930.3)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
-Content-Transfer-Encoding: 8BIT
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri May 08 10:57:25 2009
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Bug: 'git am --abort' can silently reset the wrong branch
+Date: Fri, 08 May 2009 02:01:16 -0700
+Message-ID: <7v7i0s0y03.fsf@alter.siamese.dyndns.org>
+References: <20090506191945.GG6325@blackpad>
+	<20090508082826.GA29737@coredump.intra.peff.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Eduardo Habkost <ehabkost@raisama.net>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri May 08 11:01:29 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M2LtT-00084c-9Q
-	for gcvg-git-2@gmane.org; Fri, 08 May 2009 10:57:23 +0200
+	id 1M2LxN-0001LD-Gu
+	for gcvg-git-2@gmane.org; Fri, 08 May 2009 11:01:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752725AbZEHI5Q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 8 May 2009 04:57:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752567AbZEHI5Q
-	(ORCPT <rfc822;git-outgoing>); Fri, 8 May 2009 04:57:16 -0400
-Received: from mail-ew0-f176.google.com ([209.85.219.176]:42474 "EHLO
-	mail-ew0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751702AbZEHI5O convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 8 May 2009 04:57:14 -0400
-Received: by ewy24 with SMTP id 24so1667012ewy.37
-        for <git@vger.kernel.org>; Fri, 08 May 2009 01:57:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:from:to
-         :content-type:content-transfer-encoding:mime-version:subject:date
-         :x-mailer;
-        bh=oG7IAYtdeNTWhe7D3q1Amo+Am0zAbpk5DFB2cueVpB4=;
-        b=Nfrx/n2niY5M6Tyic0lo65pkoKGAPRngktZBQDZBYmU2aWArnlAWiDytrldnwI/qlH
-         XF+7Z1kNKLSBbzmR3nm0kiKIuuVBIxT7xiA1jRjel/sxyaGoE8WXljKjNPwyT1bLrIqU
-         npogKcJ1RzkUjyw69hXB+bngxoVdtTCbzysSM=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:from:to:content-type:content-transfer-encoding
-         :mime-version:subject:date:x-mailer;
-        b=cvXPyA7TQKzRveIKWhj2GNHzCO5jNQev73zyUeH581xHuiSOBN9Mk8SmXE0iKL0UHJ
-         VMVSihBTTYJg4m3C0uKXznhqvCLPJYDY9TifID06iT1VytXZ1z3ZRXrnTQ914bDT91AQ
-         ohLOBtsuU5KvNSUj7YjG58nFx2hwiBRP0oh/k=
-Received: by 10.216.0.83 with SMTP id 61mr1454253wea.170.1241773034135;
-        Fri, 08 May 2009 01:57:14 -0700 (PDT)
-Received: from ?192.168.87.36? (bristol.offices.netsight.co.uk [213.133.64.253])
-        by mx.google.com with ESMTPS id j8sm1726889gvb.11.2009.05.08.01.57.11
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 08 May 2009 01:57:12 -0700 (PDT)
-X-Mailer: Apple Mail (2.930.3)
+	id S1752756AbZEHJBR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 8 May 2009 05:01:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752591AbZEHJBR
+	(ORCPT <rfc822;git-outgoing>); Fri, 8 May 2009 05:01:17 -0400
+Received: from fed1rmmtao106.cox.net ([68.230.241.40]:60116 "EHLO
+	fed1rmmtao106.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751394AbZEHJBQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 May 2009 05:01:16 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao106.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20090508090117.UGWO25927.fed1rmmtao106.cox.net@fed1rmimpo02.cox.net>;
+          Fri, 8 May 2009 05:01:17 -0400
+Received: from localhost ([68.225.240.211])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id ox1G1b0074aMwMQ04x1GJy; Fri, 08 May 2009 05:01:16 -0400
+X-Authority-Analysis: v=1.0 c=1 a=U5Cb-xvLp14A:10 a=v5yyCeP7a8wA:10
+ a=PKzvZo6CAAAA:8 a=4MQlGTHb121L9bl245oA:9 a=PL2dZzHV7r5YxgnGqwIA:7
+ a=Z0SKMVn3C9QcfH-kLGqxmsAgwjQA:4 a=OdWmie4EkE0A:10
+X-CM-Score: 0.00
+In-Reply-To: <20090508082826.GA29737@coredump.intra.peff.net> (Jeff King's message of "Fri\, 8 May 2009 04\:28\:26 -0400")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118591>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118592>
 
-Hi,
+Jeff King <peff@peff.net> writes:
 
-I'm experiencing a problem with local branches and the git svn rebase  
-command. I'm using git 1.5.5.1. Basically, I can no longer 'git svn  
-rebase'.
+> Switching branches and clobbering some other branch
+> with --abort is just _one_ thing you can do to screw yourself. You could
+> also have been doing useful work on the _same_ branch, and that would
+> get clobbered by --abort.  However, I'm not sure if we have a good way
+> of telling the difference between "work which I did to try to get these
+> patches to apply, but which should be thrown away when I abort" and
+> "work which I did because I forgot I had an active git-am".
 
-I've been doing all my work on a local branch 'work' which I've been  
-successfully using with a remote SVN repository successfully for  
-weeks. I yesterday needed to do some disruptive work, so I committed  
-everything on my 'work' branch, created a new branch 'onlinehacking',  
-checked it out, did some work on that, and committed. I then tried to  
-check out my original 'work' branch and run a git svn rebase to pull  
-down my colleagues' work. Here's what happens:
+I think I've said this already, but honestly speaking, I think --abort
+should not do --reset at all, but just remove the $dotest directory.  Or
+perhaps introduce a --clear option to do so.
 
-bash-3.2$ git branch
-   dan-bf-merge-lc
-   master
-* onlinehacking
-   work
-bash-3.2$ git status
-# On branch onlinehacking
-nothing to commit (working directory clean)
-bash-3.2$ git checkout work
-error: Entry 'online.cfg' not uptodate. Cannot merge.
-bash-3.2$ git checkout -m work
-Checking out files:   8% (169/2051)
-   ... snip ...
-Checking out files: 100% (2051/2051)
-Checking out files: 100% (2051/2051), done.
-M	online.cfg
-M	products/online/Formulator/CREDITS.txt
+At least your patch is an improvement.
 
-    ... snip ...
-
-M	products/online/Formulator/www/StringField.gif
-M	products/online/Formulator/www/TextAreaField.gif
-Switched to branch "work"
-bash-3.2$ git svn rebase
-Cannot rebase with uncommited changes:
-# On branch work
-nothing to commit (working directory clean)
-status: command returned error: 1
-
-bash-3.2$ git status
-# On branch work
-nothing to commit (working directory clean)
-bash-3.2$ git diff
-bash-3.2$ git diff --cached
-bash-3.2$
-
-I'm still pretty new to git, so I'm sure that I've done somthing  
-stupid, not git. I tried adding the -m option to 'git checkout work'  
-as advised by the git-checkout man page, but git diff doesn't show any  
-changes afterwards.
-
-What have I done wrong, and how can I pull latest changes from svn  
-into my work branch?
-
-Thanks,
-Dan
---
-Dan Fairs <dan.fairs@gmail.com> | http://www.fezconsulting.com/
+What I sometimes see to my users happen is to try applying to the oldest
+integration branch the patch (the users think) ought to apply, see it fail
+to apply, switch to a bit newer branch and run "am" again (trusting that
+it will pick up the material from $dotest), repeat the above and then give
+up with "git am --abort".  I do not think anybody can offhand explain to
+which branch and to what state the command takes the user back to in such
+a situation without looking at what the code actually does X-<; even
+though I think it should take the user back to the original branch, I do
+not think that is what the code does.
