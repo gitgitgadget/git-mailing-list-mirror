@@ -1,77 +1,79 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] format-patch let -k override a config-specified format.numbered
-Date: Sat, 09 May 2009 00:08:16 -0700
-Message-ID: <7vbpq2da8v.fsf@alter.siamese.dyndns.org>
-References: <8763gcri2c.fsf@meyering.net>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Fix segfault in merge-recursive
+Date: Sat, 9 May 2009 09:48:34 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.0905090947120.27348@pacific.mpi-cbg.de>
+References: <alpine.DEB.2.00.0905070102010.30999@narbuckle.genericorp.net> <alpine.DEB.1.00.0905071144370.18521@pacific.mpi-cbg.de> <alpine.DEB.2.00.0905072131470.30999@narbuckle.genericorp.net> <alpine.DEB.1.00.0905082229520.4601@intel-tinevez-2-302>
+ <7vocu3p3pr.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git list <git@vger.kernel.org>,
-	"Stephen C. Tweedie" <sct@redhat.com>
-To: Jim Meyering <meyering@redhat.com>
-X-From: git-owner@vger.kernel.org Sat May 09 09:08:30 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Dave O <cxreg@pobox.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat May 09 09:51:33 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M2gfb-0008Kp-U5
-	for gcvg-git-2@gmane.org; Sat, 09 May 2009 09:08:28 +0200
+	id 1M2hLI-0003AW-PA
+	for gcvg-git-2@gmane.org; Sat, 09 May 2009 09:51:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753936AbZEIHIS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 9 May 2009 03:08:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752274AbZEIHIR
-	(ORCPT <rfc822;git-outgoing>); Sat, 9 May 2009 03:08:17 -0400
-Received: from fed1rmmtao101.cox.net ([68.230.241.45]:47347 "EHLO
-	fed1rmmtao101.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751670AbZEIHIQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 9 May 2009 03:08:16 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao101.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20090509070817.XCPQ17670.fed1rmmtao101.cox.net@fed1rmimpo01.cox.net>;
-          Sat, 9 May 2009 03:08:17 -0400
-Received: from localhost ([68.225.240.211])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id pK8G1b0034aMwMQ03K8GqM; Sat, 09 May 2009 03:08:16 -0400
-X-Authority-Analysis: v=1.0 c=1 a=X7vzqmh8HacA:10 a=ELu1uixjCFwA:10
- a=20KFwNOVAAAA:8 a=5AeRPH9oXEQ0CQk3U3oA:9 a=aLIHcAE9_KqpvGJp7zoA:7
- a=bvNgxO1BDnwYqaE_KxsSIWA70EoA:4 a=jEp0ucaQiEUA:10
-X-CM-Score: 0.00
-In-Reply-To: <8763gcri2c.fsf@meyering.net> (Jim Meyering's message of "Thu\, 07 May 2009 18\:31\:07 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+	id S1755213AbZEIHsg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 9 May 2009 03:48:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755197AbZEIHsf
+	(ORCPT <rfc822;git-outgoing>); Sat, 9 May 2009 03:48:35 -0400
+Received: from mail.gmx.net ([213.165.64.20]:41811 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1755154AbZEIHse (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 9 May 2009 03:48:34 -0400
+Received: (qmail invoked by alias); 09 May 2009 07:48:33 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp071) with SMTP; 09 May 2009 09:48:33 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19nTMUBJFZnWCOllh1Rp8NgvF4ARBYDbouFKUxZG5
+	+s8OIO3NLkXrqU
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <7vocu3p3pr.fsf@alter.siamese.dyndns.org>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.53
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118650>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118651>
 
-Jim Meyering <meyering@redhat.com> writes:
+Hi,
 
-> Let a command-line --keep-subject (-k) override a config-specified
-> format.numbered (--numbered (-n)), rather than provoking the
-> "-n and -k are mutually exclusive" failure.
-> * t4021-format-patch-numbered.sh: Test for the above
-> ---
+On Fri, 8 May 2009, Junio C Hamano wrote:
 
-Sign-off?
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> 
+> > When there is no "common" tree (for whatever reason), we must not
+> > throw a segmentation fault.
+> 
+> You described why the old code was wrong (i.e. "init_tree_desc_from_tree 
+> is called with common == NULL"), but there is no mention why the new 
+> code is correct.  For the purpose of satisfying the above statement, you 
+> could have just exit(0) as well ;-)
 
-> Here's a quick demo of the problem:
->
->   $ git config format.numbered true
->   $ git format-patch --stdout -1 -k > /dev/null
->   fatal: -n and -k are mutually exclusive.
->
-> This started when a colleague reported that "git rebase master" was failing
-> with a "fatal: -n and -k are mutually exclusive".  Stephen Tweedie discovered
-> that it was due to the format.numbered=true setting in ~/.gitconfig
-> conflicting with the -k of the format-patch command run as part of
-> the rebase operation.  Here's a fix.
->
-> Stephen suggested an alternate patch in which rather than adding a
-> new variable, you'd use "numbered = -1" to indicate that the setting
-> originated in config.  Let me know if you'd prefer that.
+Yes, I should have marked this patch as "please test if the result is what 
+you think it should be", because I was running out of time and therefore 
+could not properly think things through.
 
-Some people might find an extra variable redundant or verbose, but I think
-your approach is easier to follow and to the point, especially with the
-in-code comment.
+> > +	else {
+> > +		opts.merge = 0;
+> > +		opts.head_idx = 1;
+> > +		init_tree_desc_from_tree(t+0, head);
+> > +		init_tree_desc_from_tree(t+1, merge);
+> > +		rc = unpack_trees(2, t, &opts);
+> > +	}
+> 
+> This looks more like a half of branch-switch from HEAD to MERGE, not a
+> merge between HEAD and MERGE as two equal histories.  Shouldn't it be
+> doing a three-way tree merge using an empty tree object as the common
+> ancestor instead, just like merge_recursive.c::merge_recursive() itself
+> does?
 
-Thanks.
+But of course!
+
+Thanks,
+Dscho
