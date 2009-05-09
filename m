@@ -1,77 +1,98 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [PATCHv2 2/2] completion: complete config variables for
-	--get/getall/unset/unset-all
-Date: Fri, 8 May 2009 20:44:38 -0700
-Message-ID: <20090509034438.GZ30527@spearce.org>
-References: <1241832213-23070-1-git-send-email-bebarino@gmail.com> <1241832213-23070-2-git-send-email-bebarino@gmail.com> <1241832213-23070-3-git-send-email-bebarino@gmail.com>
+From: Mark Lodato <lodatom@gmail.com>
+Subject: Re: [PATCH v2] git-svn: add --authors-prog option
+Date: Fri, 8 May 2009 23:48:39 -0400
+Message-ID: <ca433830905082048u6088a58ai16b1c979ef742f7@mail.gmail.com>
+References: <1241745069-2663-1-git-send-email-lodatom@gmail.com>
+	 <4A03E2A2.4050303@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Stephen Boyd <bebarino@gmail.com>
-X-From: git-owner@vger.kernel.org Sat May 09 05:44:51 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Eric Wong <normalperson@yhbt.net>,
+	Junio C Hamano <gitster@pobox.com>
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Sat May 09 05:48:49 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M2dUZ-0006KT-9p
-	for gcvg-git-2@gmane.org; Sat, 09 May 2009 05:44:51 +0200
+	id 1M2dYO-00078i-93
+	for gcvg-git-2@gmane.org; Sat, 09 May 2009 05:48:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751974AbZEIDoi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 8 May 2009 23:44:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751728AbZEIDoi
-	(ORCPT <rfc822;git-outgoing>); Fri, 8 May 2009 23:44:38 -0400
-Received: from george.spearce.org ([209.20.77.23]:34693 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751071AbZEIDoi (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 May 2009 23:44:38 -0400
-Received: by george.spearce.org (Postfix, from userid 1001)
-	id B7AFF381D1; Sat,  9 May 2009 03:44:38 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <1241832213-23070-3-git-send-email-bebarino@gmail.com>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1751956AbZEIDsl convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 8 May 2009 23:48:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751915AbZEIDsk
+	(ORCPT <rfc822;git-outgoing>); Fri, 8 May 2009 23:48:40 -0400
+Received: from mail-bw0-f174.google.com ([209.85.218.174]:62060 "EHLO
+	mail-bw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751071AbZEIDsk convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 8 May 2009 23:48:40 -0400
+Received: by bwz22 with SMTP id 22so1673894bwz.37
+        for <git@vger.kernel.org>; Fri, 08 May 2009 20:48:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=xOZDN2Qcn4eA1oombj+I7JitHuSp8tZcB2szdsz6ElI=;
+        b=juuhsOWZVN3WTi554oKwSc9We/S8H+wmUNT6+q95xg6QlkTFxVW/hXc26A005ljkq4
+         vXSTjtnVodgwV+XbHap5fZQBUpjIuIld71aEiUVA4s6Xuf7S8eN4tGwcfMBH627P9Yew
+         tkvHaER4Fmmvni5xTExwM4ySUH6xb0to6V+fE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=Jm5Q7fBHTzNlASzxbjHUULfmMT1WDE4/E54HJWanGj4KDWxud+d6RkwJevryrpqUCC
+         +Xtmz7juoOp7bIQWW8+6vUomB0cmJnZQ9O6+8fWc1Eqs50RbrVGt4lSYULqw4iOmaNUm
+         ENvazjSfmT3T/cgbizBDV6e2roxMQf7x85DFQ=
+Received: by 10.223.123.129 with SMTP id p1mr2129210far.0.1241840919524; Fri, 
+	08 May 2009 20:48:39 -0700 (PDT)
+In-Reply-To: <4A03E2A2.4050303@drmicha.warpmail.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118647>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118648>
 
-Stephen Boyd <bebarino@gmail.com> wrote:
-> This should make it easier for users to get and unset their
-> configuration variables without having to open documentation or dig
-> through their configuration file.
-> 
-> Signed-off-by: Stephen Boyd <bebarino@gmail.com>
-> ---
->  contrib/completion/git-completion.bash |    4 ++++
->  1 files changed, 4 insertions(+), 0 deletions(-)
+On Fri, May 8, 2009 at 3:43 AM, Michael J Gruber
+<git@drmicha.warpmail.net> wrote:
+> Mark Lodato venit, vidit, dixit 08.05.2009 03:11:
+>> =C2=A0config key: svn.authorsfile
+>>
+>> +--authors-prog=3D<filename>::
+>> +
+>> +If this option is specified, for each SVN committer name that does =
+not
+>> +exist in the authors file, the given file is executed with the comm=
+iter
+>
+> s/commiter/committer/
+>
+> Also, "If..., the given... for each..." may be easier to read.
+>
+>> +name as the first argument. =C2=A0The program is expected to return=
+ a single
+>> +line of the form "Name <email>", which will be logically inserted i=
+nto the
+>
+> "be treated as if included in the..."
 
-These probably could have been one patch, since the function
-is introduced only to support this one usage, and this patch
-is only 4 lines larger than the function definition anyway...
+Will do.
 
-But yea, this series is better.
+>
+> Maybe we want a config key also, just like for the authors file.
 
-Acked-by: Shawn O. Pearce <spearce@spearce.org>
+Yes, this is a very good idea.  I will figure out how to do this.
 
+> The feature itself looks useful for large user databases. For smaller
+> ones one could just as well update the authors file before each fetch=
+ by
+> dumping the whole db in there (or even conditionally on git svn fetch
+> erroring out due to encountering an unknown name).
 
-> diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-> index e73359c..ad26b7c 100755
-> --- a/contrib/completion/git-completion.bash
-> +++ b/contrib/completion/git-completion.bash
-> @@ -1417,6 +1417,10 @@ _git_config ()
->  		__gitcomp "$__git_send_email_suppresscc_options"
->  		return
->  		;;
-> +	--get|--get-all|--unset|--unset-all)
-> +		__gitcomp "$(__git_config_get_set_variables)"
-> +		return
-> +		;;
->  	*.*)
->  		COMPREPLY=()
->  		return
-> -- 
-> 1.6.3
-> 
-
--- 
-Shawn.
+Right.  This feature will most likely be useful in corporate
+environments.  In my case, it is not possible to dump the entire user
+database to a file, so this patch is the only solution.  Another
+possible use case is where SVN usernames are standardized, e.g. "jdoe"
+-> "J Doe <jdoe@example.com>".  Also, using --authors-prog solves the
+problem of keeping the authors file up-to-date, if users are regularly
+added or deleted.
