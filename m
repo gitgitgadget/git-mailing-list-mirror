@@ -1,53 +1,61 @@
-From: Marc Weber <marco-oweber@gmx.de>
-Subject: Re: [PATCH] topgit tg push feature
-Date: Sat, 9 May 2009 21:09:10 +0200
-Message-ID: <20090509190910.GA9655@gmx.de>
-References: <20090425161300.GD19142@gmx.de> <20090425163447.GE19142@gmx.de> <20090505093448.GC16524@gmx.de> <20090507045904.GA2068@gmx.de> <36ca99e90905062245w1ec78828ice5ed18161b6ec43@mail.gmail.com> <20090507084355.GA11680@pengutronix.de> <36ca99e90905070250l656f8879g87eb27c09db2cd42@mail.gmail.com> <20090509103625.GC13344@lapse.rw.madduck.net>
+From: Alexandre Julliard <julliard@winehq.org>
+Subject: Re: [PATCH 4/5] git.el: Added support for Signed-off-by.
+Date: Sat, 09 May 2009 21:57:31 +0200
+Message-ID: <87r5yycams.fsf@wine.dyndns.org>
+References: <877j7akvvy.fsf@wine.dyndns.org>
+	<1241879110.2910.89.camel@macbook.infradead.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat May 09 21:09:32 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: David Woodhouse <dwmw2@infradead.org>
+X-From: git-owner@vger.kernel.org Sat May 09 22:21:11 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M2rvP-0002Ho-Vr
-	for gcvg-git-2@gmane.org; Sat, 09 May 2009 21:09:32 +0200
+	id 1M2t2k-0006Rv-KP
+	for gcvg-git-2@gmane.org; Sat, 09 May 2009 22:21:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753476AbZEITJX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 9 May 2009 15:09:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752367AbZEITJW
-	(ORCPT <rfc822;git-outgoing>); Sat, 9 May 2009 15:09:22 -0400
-Received: from mail.gmx.net ([213.165.64.20]:59654 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752083AbZEITJW (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 9 May 2009 15:09:22 -0400
-Received: (qmail invoked by alias); 09 May 2009 19:09:18 -0000
-Received: from mawercer.at.xencon.net (EHLO mail.gmx.net) [83.246.111.127]
-  by mail.gmx.net (mp039) with SMTP; 09 May 2009 21:09:18 +0200
-X-Authenticated: #9006135
-X-Provags-ID: V01U2FsdGVkX1/cJbtQ1bDcNSu6ImAov6VluUdkjV/FnFBVMtw+SA
-	Owymv1qF9WNU5w
-Received: by mail.gmx.net (sSMTP sendmail emulation); Sat, 09 May 2009 21:09:10 +0200
-Mail-Followup-To: Marc Weber <marco-oweber@gmx.de>, git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <20090509103625.GC13344@lapse.rw.madduck.net>
-User-Agent: Mutt/1.5.16 (2007-06-09)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.64
+	id S1754741AbZEIUVB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 9 May 2009 16:21:01 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754553AbZEIUVA
+	(ORCPT <rfc822;git-outgoing>); Sat, 9 May 2009 16:21:00 -0400
+Received: from mail.codeweavers.com ([216.251.189.131]:35606 "EHLO
+	mail.codeweavers.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754346AbZEIUU7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 9 May 2009 16:20:59 -0400
+X-Greylist: delayed 1399 seconds by postgrey-1.27 at vger.kernel.org; Sat, 09 May 2009 16:20:59 EDT
+Received: from adsl-89-217-122-242.adslplus.ch ([89.217.122.242] helo=wine.dyndns.org)
+	by mail.codeweavers.com with esmtpsa (TLS-1.0:DHE_RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.63)
+	(envelope-from <julliard@winehq.org>)
+	id 1M2sfu-0008Jf-RD; Sat, 09 May 2009 14:57:40 -0500
+Received: by wine.dyndns.org (Postfix, from userid 1000)
+	id 0416B1E734A; Sat,  9 May 2009 21:57:32 +0200 (CEST)
+In-Reply-To: <1241879110.2910.89.camel@macbook.infradead.org> (David
+	Woodhouse's message of "Sat, 09 May 2009 15:25:10 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.0.93 (gnu/linux)
+X-Spam-Score: -3.9
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118679>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118680>
 
-On Sat, May 09, 2009 at 12:36:25PM +0200, martin f krafft wrote:
-> Marc, can you send an updated patch?
-Yes, I'll provide one ASAP (tonight or tomorrow). You already can apply
-the patch and use it (So do I).
-Thanks for all the feedback. I have some other work to do first, sry.
-If I'm not fast enough: the public repo is read/write. You may just
-commit as well.
+David Woodhouse <dwmw2@infradead.org> writes:
 
-cu all!
-Marc Weber
+> On Sat, 2006-03-04 at 17:38 +0100, Alexandre Julliard wrote:
+>> If `git-append-signed-off-by' is non-nil, automatically append a
+>> sign-off line to the log message when editing it.
+>
+> This doesn't seem to work when I hit C-v v to commit. I just get an
+> empty *VC-log* buffer.
+
+C-v v doesn't use git.el, it uses the standard Emacs VC mode with the
+vc-git backend. I don't think there's a clean way currently for a VC
+backend to populate the log buffer, so if you want the auto sign off you
+have to do the commit from the git-status buffer.
+
+-- 
+Alexandre Julliard
+julliard@winehq.org
