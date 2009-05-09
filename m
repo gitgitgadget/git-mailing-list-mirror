@@ -1,81 +1,107 @@
 From: Stephen Boyd <bebarino@gmail.com>
-Subject: [PATCHv2 2/2] completion: complete config variables for --get/getall/unset/unset-all
-Date: Fri,  8 May 2009 18:23:33 -0700
-Message-ID: <1241832213-23070-3-git-send-email-bebarino@gmail.com>
+Subject: [PATCHv2 1/2] completion: add __git_config_get_set_variables() to get config variables
+Date: Fri,  8 May 2009 18:23:32 -0700
+Message-ID: <1241832213-23070-2-git-send-email-bebarino@gmail.com>
 References: <1241832213-23070-1-git-send-email-bebarino@gmail.com>
- <1241832213-23070-2-git-send-email-bebarino@gmail.com>
 Cc: git@vger.kernel.org
 To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Sat May 09 03:23:54 2009
+X-From: git-owner@vger.kernel.org Sat May 09 03:23:55 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M2bI7-0007z8-9f
+	id 1M2bI6-0007z8-Kv
 	for gcvg-git-2@gmane.org; Sat, 09 May 2009 03:23:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755521AbZEIBXq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 8 May 2009 21:23:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754656AbZEIBXp
-	(ORCPT <rfc822;git-outgoing>); Fri, 8 May 2009 21:23:45 -0400
-Received: from rv-out-0506.google.com ([209.85.198.231]:25134 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752423AbZEIBXm (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 May 2009 21:23:42 -0400
-Received: by rv-out-0506.google.com with SMTP id f9so1394673rvb.1
-        for <git@vger.kernel.org>; Fri, 08 May 2009 18:23:42 -0700 (PDT)
+	id S1754597AbZEIBXl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 8 May 2009 21:23:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753739AbZEIBXk
+	(ORCPT <rfc822;git-outgoing>); Fri, 8 May 2009 21:23:40 -0400
+Received: from wf-out-1314.google.com ([209.85.200.171]:28172 "EHLO
+	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754394AbZEIBXj (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 May 2009 21:23:39 -0400
+Received: by wf-out-1314.google.com with SMTP id 26so1570775wfd.4
+        for <git@vger.kernel.org>; Fri, 08 May 2009 18:23:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:received:from:to:cc:subject
          :date:message-id:x-mailer:in-reply-to:references;
-        bh=ueetQpjQD8Sh6Ty9VkTmken4jJK1NlI6QMngPE7c430=;
-        b=VXQ1sU4fWbNjiMXMpyRD//MLyIHbEJf5w0/SnBvPjpTG9Tk1TZ9GwbDJpG+nA7M3+Z
-         Y20CVzE+BW5jgUcAVv3TMc98cgaodUQHN2PC+MYqXTs3Gm+9ZyXAugHupmrewtOhF03X
-         sDip2tv+xd8hWwlwXrknxnP/B33xzN1OLkQ14=
+        bh=NWcbL6des4Bj+pD309lA39r4l2ulAo6h8rj/RAAClLI=;
+        b=fHmgCgiASfo8yiPpnLGFME7tTROEavblsEK1CxFFUnfA89QzZGLMJFOST9C7S3P/jA
+         TviV6kCnWHbCRK/GUHwgJLiDpWdo3WXxsA8/n2MCZbAmPlGqWVE0o192b5Qccbo2Gong
+         4umRedX7W8zxiFAJAe1O0t7h2UjkYmXGAMNPU=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=YjVHalWyzDkYn/7xkMYumvhI3Vq7iCaV5akgEClibn/chqQJsX7ANGM+4WsdN+4C9Z
-         ttSGNEtbU0ECtRMA9zGcCscpAIdqLiTclOJEnqPn8o5TYJUu0Hx1L56mmTWjtcsCSghH
-         s/I8bMoZNjnVRKLnCI3Bx2nPAyLwEqagQwCxg=
-Received: by 10.140.126.19 with SMTP id y19mr1280095rvc.115.1241832222917;
-        Fri, 08 May 2009 18:23:42 -0700 (PDT)
+        b=j9n0WvsVLHj2CWsPn/9zQxLY44vCL6cujvrjM6cowCVtNe2PvQhXB5cznRgeXxNGXF
+         uzUH91QoXYJCOwDCKIdAxUYSN9jePeTetoLXi2cmyZvf7ygdNdpgEY0ooiNczCbC24Ru
+         7u522rzTWgvuzdCHnV/OT3XJNtJWpdi8tZI18=
+Received: by 10.142.87.4 with SMTP id k4mr1695369wfb.82.1241832219661;
+        Fri, 08 May 2009 18:23:39 -0700 (PDT)
 Received: from earth ([76.89.212.195])
-        by mx.google.com with ESMTPS id b8sm3772453rvf.14.2009.05.08.18.23.40
+        by mx.google.com with ESMTPS id 22sm789881wfd.39.2009.05.08.18.23.37
         (version=SSLv3 cipher=RC4-MD5);
-        Fri, 08 May 2009 18:23:42 -0700 (PDT)
-Received: by earth (sSMTP sendmail emulation); Fri, 08 May 2009 18:23:39 -0700
+        Fri, 08 May 2009 18:23:39 -0700 (PDT)
+Received: by earth (sSMTP sendmail emulation); Fri, 08 May 2009 18:23:36 -0700
 X-Mailer: git-send-email 1.6.3
-In-Reply-To: <1241832213-23070-2-git-send-email-bebarino@gmail.com>
+In-Reply-To: <1241832213-23070-1-git-send-email-bebarino@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118644>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118645>
 
-This should make it easier for users to get and unset their
-configuration variables without having to open documentation or dig
-through their configuration file.
+This function retrieves the set configuration variables from the
+appropriate configuration file. For example, if the user has previously
+specified --global only the global variables are returned. The same
+applies for --system, and --file. If no location has been specified, all
+set variables are returned.
 
 Signed-off-by: Stephen Boyd <bebarino@gmail.com>
 ---
- contrib/completion/git-completion.bash |    4 ++++
- 1 files changed, 4 insertions(+), 0 deletions(-)
+ contrib/completion/git-completion.bash |   29 +++++++++++++++++++++++++++++
+ 1 files changed, 29 insertions(+), 0 deletions(-)
 
 diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index e73359c..ad26b7c 100755
+index 1683e6d..e73359c 100755
 --- a/contrib/completion/git-completion.bash
 +++ b/contrib/completion/git-completion.bash
-@@ -1417,6 +1417,10 @@ _git_config ()
- 		__gitcomp "$__git_send_email_suppresscc_options"
- 		return
- 		;;
-+	--get|--get-all|--unset|--unset-all)
-+		__gitcomp "$(__git_config_get_set_variables)"
-+		return
-+		;;
- 	*.*)
- 		COMPREPLY=()
- 		return
+@@ -1322,6 +1322,35 @@ _git_send_email ()
+ 	COMPREPLY=()
+ }
+ 
++__git_config_get_set_variables ()
++{
++	local prevword word config_file= c=$COMP_CWORD
++	while [ $c -gt 1 ]; do
++		word="${COMP_WORDS[c]}"
++		case "$word" in
++		--global|--system|--file=*)
++			config_file="$word"
++			break
++			;;
++		-f|--file)
++			config_file="$word $prevword"
++			break
++			;;
++		esac
++		prevword=$word
++		c=$((--c))
++	done
++
++	for i in $(git --git-dir="$(__gitdir)" config $config_file --list \
++			2>/dev/null); do
++		case "$i" in
++		*.*)
++			echo "${i/=*/}"
++			;;
++		esac
++	done
++}
++
+ _git_config ()
+ {
+ 	local cur="${COMP_WORDS[COMP_CWORD]}"
 -- 
 1.6.3
