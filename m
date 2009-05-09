@@ -1,173 +1,96 @@
-From: Dave O <cxreg@pobox.com>
-Subject: [PATCH] fix for incorrect index update
-Date: Sat, 9 May 2009 14:49:59 -0700 (PDT)
-Message-ID: <alpine.DEB.2.00.0905091356070.21000@narbuckle.genericorp.net>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: [PATCH] Avoid unnecessary 'lstat()' calls in 'get_stat_data()'
+Date: Sat, 9 May 2009 15:09:54 -0700 (PDT)
+Message-ID: <alpine.LFD.2.01.0905091501460.3586@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; format=flowed; charset=US-ASCII
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat May 09 23:50:22 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+To: Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun May 10 00:13:52 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M2uR2-0001vn-9f
-	for gcvg-git-2@gmane.org; Sat, 09 May 2009 23:50:20 +0200
+	id 1M2unm-0000nq-JH
+	for gcvg-git-2@gmane.org; Sun, 10 May 2009 00:13:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753602AbZEIVuE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 9 May 2009 17:50:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753487AbZEIVuD
-	(ORCPT <rfc822;git-outgoing>); Sat, 9 May 2009 17:50:03 -0400
-Received: from 62.f9.1243.static.theplanet.com ([67.18.249.98]:37994 "EHLO
-	62.f9.1243.static.theplanet.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753263AbZEIVuC (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 9 May 2009 17:50:02 -0400
-X-Envelope-From: cxreg@pobox.com
-Received: from localhost (count@narbuckle [127.0.0.1])
-	(authenticated bits=0)
-	by 62.f9.1243.static.theplanet.com (8.13.8/8.13.8/Debian-3) with ESMTP id n49Lnxa3006227
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Sat, 9 May 2009 16:50:01 -0500
-X-X-Sender: count@narbuckle.genericorp.net
-User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
+	id S1753870AbZEIWLI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 9 May 2009 18:11:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753263AbZEIWLH
+	(ORCPT <rfc822;git-outgoing>); Sat, 9 May 2009 18:11:07 -0400
+Received: from smtp1.linux-foundation.org ([140.211.169.13]:49200 "EHLO
+	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752560AbZEIWLF (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 9 May 2009 18:11:05 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
+	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id n49M9ssi021944
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Sat, 9 May 2009 15:10:30 -0700
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id n49M9sHA007510;
+	Sat, 9 May 2009 15:09:54 -0700
+X-X-Sender: torvalds@localhost.localdomain
+User-Agent: Alpine 2.01 (LFD 1184 2008-12-16)
+X-Spam-Status: No, hits=-5.462 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED,PATCH_SUBJECT_OSDL
+X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118685>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118686>
 
-call_depth > 0 requires trees to be constructed from the files with
-conflicts, therefore the stages thusly must not be updated
 
-Signed-off-by: Dave Olszewski <cxreg@pobox.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Date: Sat, 9 May 2009 14:57:30 -0700
+
+When we ask get_stat_data() to get the mode and size of an index entry,
+we can avoid the lstat() call if we have marked the index entry as being
+uptodate due to earlier lstat() calls.
+
+This avoids a lot of unnecessary lstat() calls in eg 'git checkout',
+where the last phase shows the differences to the working tree
+(requiring a diff), but earlier phases have already verified the index.
+
+On the kernel repo (with a fast machine and everything cached), this 
+changes timings of a nul 'git checkout' from
+
+ - Before (best of ten):
+
+	0.14user 0.05system 0:00.19elapsed 100%CPU (0avgtext+0avgdata 0maxresident)k
+	0inputs+0outputs (0major+13237minor)pagefaults 0swaps
+
+ - After 
+	0.11user 0.03system 0:00.15elapsed 98%CPU (0avgtext+0avgdata 0maxresident)k
+	0inputs+0outputs (0major+13235minor)pagefaults 0swaps
+
+so it can obviously be noticeable, although equally obviously it's not a 
+show-stopper on this particular machine. The difference is likely larger 
+on slower machines, or with operating systems that don't do as good a job 
+of name caching.
+
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
 ---
-  merge-recursive.c          |   11 +++--
-  t/t3031-merge-criscross.sh |   95 ++++++++++++++++++++++++++++++++++++++++++++
-  2 files changed, 101 insertions(+), 5 deletions(-)
-  create mode 100644 t/t3031-merge-criscross.sh
+I sent this as part of the "make 'git checkout' preload the index" patch, 
+but since the preloading was of somewhat dubious value, and this part of 
+it is not, I'll just send this one-liner as an "obvious performance fix".
 
-diff --git a/merge-recursive.c b/merge-recursive.c
-index a3721ef..f5df9b9 100644
---- a/merge-recursive.c
-+++ b/merge-recursive.c
-@@ -933,11 +933,12 @@ static int process_renames(struct merge_options *o,
-  				       ren1_src, ren1_dst, branch1,
-  				       branch2);
-  				update_file(o, 0, ren1->pair->two->sha1, ren1->pair->two->mode, ren1_dst);
--				update_stages(ren1_dst, NULL,
--						branch1 == o->branch1 ?
--						ren1->pair->two : NULL,
--						branch1 == o->branch1 ?
--						NULL : ren1->pair->two, 1);
-+				if (!o->call_depth)
-+					update_stages(ren1_dst, NULL,
-+							branch1 == o->branch1 ?
-+							ren1->pair->two : NULL,
-+							branch1 == o->branch1 ?
-+							NULL : ren1->pair->two, 1);
-  			} else if (!sha_eq(dst_other.sha1, null_sha1)) {
-  				const char *new_path;
-  				clean_merge = 0;
-diff --git a/t/t3031-merge-criscross.sh b/t/t3031-merge-criscross.sh
-new file mode 100644
-index 0000000..cbfd95b
---- /dev/null
-+++ b/t/t3031-merge-criscross.sh
-@@ -0,0 +1,95 @@
-+#!/bin/sh
-+
-+test_description='merge-recursive backend test'
-+
-+. ./test-lib.sh
-+
-+#         A      <- create some files
-+#        / \
-+#       B   C    <- cause rename/delete conflicts between B and C
-+#      /     \
-+#     |\     /|
-+#     | D   E |
-+#     |  \ /  |
-+#     |   X   |
-+#     |  / \  |
-+#     | /   \ |
-+#     |/     \|
-+#     F       G  <- merge E into B, D into C
-+#      \     /
-+#       \   /
-+#        \ /
-+#         H      <- recursive merge crashes
-+#
-+
-+# initialize
-+test_expect_success 'setup repo with criss-cross history' '
-+	mkdir data &&
-+
-+	test_debug create a bunch of files &&
-+	n=1 &&
-+	while test $n -le 10
-+	do
-+		echo $n > data/$n &&
-+		n=$(($n+1)) ||
-+		break
-+	done &&
-+
-+	test_debug check them in &&
-+	git add data &&
-+	git commit -m A &&
-+	git branch A &&
-+
-+	test_debug a file in one branch &&
-+	git checkout -b B A &&
-+	git rm data/9 &&
-+	git add data &&
-+	git commit -m B &&
-+
-+	test_debug with a branch off of it &&
-+	git branch D &&
-+
-+	test_debug put some commits on D &&
-+	git checkout D &&
-+	echo testD > data/testD &&
-+	git add data &&
-+	git commit -m D &&
-+
-+	test_debug back up to the top, create another branch and cause a rename  &&
-+	test_debug conflict with the file we deleted earlier &&
-+	git checkout -b C A &&
-+	git mv data/9 data/new-9 &&
-+	git add data &&
-+	git commit -m C &&
-+
-+	test_debug with a branch off of it &&
-+	git branch E &&
-+
-+	test_debug put a commit on E &&
-+	git checkout E &&
-+	echo testE > data/testE &&
-+	git add data &&
-+	git commit -m E &&
-+
-+	test_debug now, merge E into B &&
-+	git checkout B &&
-+	test_must_fail git merge E &&
-+	test_debug force-resolve &&
-+	git add data &&
-+	git commit -m F &&
-+	git branch F &&
-+
-+	test_debug and merge D into C &&
-+	git checkout C &&
-+	test_must_fail git merge D &&
-+	test_debug force-resolve &&
-+	git add data &&
-+	git commit -m G &&
-+	git branch G
-+'
-+
-+test_expect_failure 'recursive merge between F and G, causes segfault' '
-+	git merge F
-+'
-+
-+test_done
+ diff-lib.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/diff-lib.c b/diff-lib.c
+index a310fb2..0aba6cd 100644
+--- a/diff-lib.c
++++ b/diff-lib.c
+@@ -214,7 +214,7 @@ static int get_stat_data(struct cache_entry *ce,
+ 	const unsigned char *sha1 = ce->sha1;
+ 	unsigned int mode = ce->ce_mode;
+ 
+-	if (!cached) {
++	if (!cached && !ce_uptodate(ce)) {
+ 		int changed;
+ 		struct stat st;
+ 		changed = check_removed(ce, &st);
 -- 
-1.6.2.4
+1.6.3
