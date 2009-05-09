@@ -1,156 +1,121 @@
 From: Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH 04/10] bisect: use new "struct argv_array" to prepare argv for
-	"setup_revisions"
-Date: Sat, 09 May 2009 17:55:41 +0200
-Message-ID: <20090509155548.5387.51730.chriscool@tuxfamily.org>
+Subject: [PATCH 03/10] bisect: store good revisions in a "sha1_array"
+Date: Sat, 09 May 2009 17:55:40 +0200
+Message-ID: <20090509155548.5387.1802.chriscool@tuxfamily.org>
 References: <20090509154419.5324.96204.chriscool@tuxfamily.org>
 Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat May 09 18:03:53 2009
+X-From: git-owner@vger.kernel.org Sat May 09 18:03:55 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M2p1k-00065t-TC
-	for gcvg-git-2@gmane.org; Sat, 09 May 2009 18:03:53 +0200
+	id 1M2p1m-00065t-3Y
+	for gcvg-git-2@gmane.org; Sat, 09 May 2009 18:03:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752385AbZEIQDp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 9 May 2009 12:03:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753859AbZEIQDo
-	(ORCPT <rfc822;git-outgoing>); Sat, 9 May 2009 12:03:44 -0400
-Received: from smtp1-g21.free.fr ([212.27.42.1]:36595 "EHLO smtp1-g21.free.fr"
+	id S1754132AbZEIQDt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 9 May 2009 12:03:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753859AbZEIQDr
+	(ORCPT <rfc822;git-outgoing>); Sat, 9 May 2009 12:03:47 -0400
+Received: from smtp5-g21.free.fr ([212.27.42.5]:37220 "EHLO smtp5-g21.free.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752385AbZEIQDk (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 9 May 2009 12:03:40 -0400
-Received: from smtp1-g21.free.fr (localhost [127.0.0.1])
-	by smtp1-g21.free.fr (Postfix) with ESMTP id EFC13940124;
-	Sat,  9 May 2009 18:03:34 +0200 (CEST)
+	id S1752245AbZEIQDj (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 9 May 2009 12:03:39 -0400
+Received: from smtp5-g21.free.fr (localhost [127.0.0.1])
+	by smtp5-g21.free.fr (Postfix) with ESMTP id 6D78CD48165;
+	Sat,  9 May 2009 18:03:33 +0200 (CEST)
 Received: from localhost.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
-	by smtp1-g21.free.fr (Postfix) with ESMTP id AEFD0940130;
+	by smtp5-g21.free.fr (Postfix) with ESMTP id 3A87DD48118;
 	Sat,  9 May 2009 18:03:31 +0200 (CEST)
-X-git-sha1: ff3020288ea77d24b6c65ffcde41c586ffc38524 
+X-git-sha1: e1ade4d6ae4f3a3def4760831e0a6c62bb5a4456 
 X-Mailer: git-mail-commits v0.4.0
 In-Reply-To: <20090509154419.5324.96204.chriscool@tuxfamily.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118664>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118665>
 
-Because we will use other instances of this struct.
+This will make it easier to use good revisions for checking merge
+bases later.
 
-The "rev_argv_push" function is changed into 2 functions
-"argv_array_push" and "argv_array_push_sha1" that take a "struct
-argv_array *" as first argument. And these functions are used to
-simplify "bisect_rev_setup".
+To simplify the code, a new "sha1_array_push" function is also
+introduced.
+
+And while at it we move the earlier part of the code to fill the
+argv that is passed to "setup_revisions", so that all this code is
+now completely after "read_bisect_refs".
 
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- bisect.c |   57 +++++++++++++++++++++++++++++----------------------------
- 1 files changed, 29 insertions(+), 28 deletions(-)
+ bisect.c |   26 +++++++++++++++++++-------
+ 1 files changed, 19 insertions(+), 7 deletions(-)
 
 diff --git a/bisect.c b/bisect.c
-index 7976cbf..8e34186 100644
+index f99637d..7976cbf 100644
 --- a/bisect.c
 +++ b/bisect.c
-@@ -18,12 +18,16 @@ struct sha1_array {
- static struct sha1_array good_revs;
+@@ -15,6 +15,7 @@ struct sha1_array {
+ 	int sha1_alloc;
+ };
+ 
++static struct sha1_array good_revs;
  static struct sha1_array skipped_revs;
  
--static const char **rev_argv;
--static int rev_argv_nr;
--static int rev_argv_alloc;
--
- static const unsigned char *current_bad_sha1;
- 
-+struct argv_array {
-+	const char **argv;
-+	int argv_nr;
-+	int argv_alloc;
-+};
-+
-+struct argv_array rev_argv;
-+
- static const char *argv_diff_tree[] = {"diff-tree", "--pretty", NULL, NULL};
- static const char *argv_checkout[] = {"checkout", "-q", NULL, "--", NULL};
- static const char *argv_show_branch[] = {"show-branch", NULL, NULL};
-@@ -410,13 +414,19 @@ struct commit_list *find_bisection(struct commit_list *list,
- 	return best;
+ static const char **rev_argv;
+@@ -418,18 +419,22 @@ static void rev_argv_push(const unsigned char *sha1, const char *format)
+ 	rev_argv[rev_argv_nr++] = strbuf_detach(&buf, NULL);
  }
  
--static void rev_argv_push(const unsigned char *sha1, const char *format)
-+static void argv_array_push(struct argv_array *array, const char *string)
- {
--	struct strbuf buf = STRBUF_INIT;
-+	ALLOC_GROW(array->argv, array->argv_nr + 1, array->argv_alloc);
-+	array->argv[array->argv_nr++] = string;
-+}
- 
-+static void argv_array_push_sha1(struct argv_array *array,
-+				 const unsigned char *sha1,
-+				 const char *format)
++static void sha1_array_push(struct sha1_array *array,
++			    const unsigned char *sha1)
 +{
-+	struct strbuf buf = STRBUF_INIT;
- 	strbuf_addf(&buf, format, sha1_to_hex(sha1));
--	ALLOC_GROW(rev_argv, rev_argv_nr + 1, rev_argv_alloc);
--	rev_argv[rev_argv_nr++] = strbuf_detach(&buf, NULL);
-+	argv_array_push(array, strbuf_detach(&buf, NULL));
- }
- 
- static void sha1_array_push(struct sha1_array *array,
-@@ -445,7 +455,7 @@ static int read_bisect_refs(void)
- 	return for_each_ref_in("refs/bisect/", register_ref, NULL);
- }
- 
--void read_bisect_paths(void)
-+void read_bisect_paths(struct argv_array *array)
++	ALLOC_GROW(array->sha1, array->sha1_nr + 1, array->sha1_alloc);
++	hashcpy(array->sha1[array->sha1_nr++], sha1);
++}
++
+ static int register_ref(const char *refname, const unsigned char *sha1,
+ 			int flags, void *cb_data)
  {
- 	struct strbuf str = STRBUF_INIT;
- 	const char *filename = git_path("BISECT_NAMES");
-@@ -460,8 +470,8 @@ void read_bisect_paths(void)
+ 	if (!strcmp(refname, "bad")) {
+ 		current_bad_sha1 = sha1;
+-		rev_argv_push(sha1, "%s");
+ 	} else if (!prefixcmp(refname, "good-")) {
+-		rev_argv_push(sha1, "^%s");
++		sha1_array_push(&good_revs, sha1);
+ 	} else if (!prefixcmp(refname, "skip-")) {
+-		ALLOC_GROW(skipped_revs.sha1, skipped_revs.sha1_nr + 1,
+-			   skipped_revs.sha1_alloc);
+-		hashcpy(skipped_revs.sha1[skipped_revs.sha1_nr++], sha1);
++		sha1_array_push(&skipped_revs, sha1);
+ 	}
  
- 		strbuf_trim(&str);
- 		quoted = strbuf_detach(&str, NULL);
--		res = sq_dequote_to_argv(quoted, &rev_argv,
--					 &rev_argv_nr, &rev_argv_alloc);
-+		res = sq_dequote_to_argv(quoted, &array->argv,
-+					 &array->argv_nr, &array->argv_alloc);
- 		if (res)
- 			die("Badly quoted content in file '%s': %s",
- 			    filename, quoted);
-@@ -538,25 +548,16 @@ static void bisect_rev_setup(struct rev_info *revs, const char *prefix)
- 	if (read_bisect_refs())
- 		die("reading bisect refs failed");
+ 	return 0;
+@@ -524,16 +529,23 @@ struct commit_list *filter_skipped(struct commit_list *list,
  
--	/* argv[0] will be ignored by setup_revisions */
--	ALLOC_GROW(rev_argv, rev_argv_nr + 1, rev_argv_alloc);
--	rev_argv[rev_argv_nr++] = xstrdup("bisect_rev_setup");
--
--	rev_argv_push(current_bad_sha1, "%s");
--
-+	/* rev_argv.argv[0] will be ignored by setup_revisions */
-+	argv_array_push(&rev_argv, xstrdup("bisect_rev_setup"));
-+	argv_array_push_sha1(&rev_argv, current_bad_sha1, "%s");
- 	for (i = 0; i < good_revs.sha1_nr; i++)
--		rev_argv_push(good_revs.sha1[i], "^%s");
--
--	ALLOC_GROW(rev_argv, rev_argv_nr + 1, rev_argv_alloc);
--	rev_argv[rev_argv_nr++] = xstrdup("--");
--
--	read_bisect_paths();
--
--	ALLOC_GROW(rev_argv, rev_argv_nr + 1, rev_argv_alloc);
--	rev_argv[rev_argv_nr++] = NULL;
--
--	setup_revisions(rev_argv_nr, rev_argv, revs, NULL);
-+		argv_array_push_sha1(&rev_argv, good_revs.sha1[i], "^%s");
-+	argv_array_push(&rev_argv, xstrdup("--"));
-+	read_bisect_paths(&rev_argv);
-+	argv_array_push(&rev_argv, NULL);
+ static void bisect_rev_setup(struct rev_info *revs, const char *prefix)
+ {
++	int i;
++
+ 	init_revisions(revs, prefix);
+ 	revs->abbrev = 0;
+ 	revs->commit_format = CMIT_FMT_UNSPECIFIED;
  
-+	setup_revisions(rev_argv.argv_nr, rev_argv.argv, revs, NULL);
- 	revs->limited = 1;
- }
++	if (read_bisect_refs())
++		die("reading bisect refs failed");
++
+ 	/* argv[0] will be ignored by setup_revisions */
+ 	ALLOC_GROW(rev_argv, rev_argv_nr + 1, rev_argv_alloc);
+ 	rev_argv[rev_argv_nr++] = xstrdup("bisect_rev_setup");
  
+-	if (read_bisect_refs())
+-		die("reading bisect refs failed");
++	rev_argv_push(current_bad_sha1, "%s");
++
++	for (i = 0; i < good_revs.sha1_nr; i++)
++		rev_argv_push(good_revs.sha1[i], "^%s");
+ 
+ 	ALLOC_GROW(rev_argv, rev_argv_nr + 1, rev_argv_alloc);
+ 	rev_argv[rev_argv_nr++] = xstrdup("--");
 -- 
 1.6.3.rc1.112.g17e25
