@@ -1,81 +1,77 @@
-From: Dave O <cxreg@pobox.com>
-Subject: [PATCH] Don't update index while recursing (was Re: Segfault during
- merge)
-Date: Fri, 8 May 2009 22:30:56 -0700 (PDT)
-Message-ID: <alpine.DEB.2.00.0905082224450.30999@narbuckle.genericorp.net>
-References: <alpine.DEB.2.00.0905070102010.30999@narbuckle.genericorp.net> <alpine.DEB.1.00.0905071144370.18521@pacific.mpi-cbg.de> <alpine.DEB.2.00.0905072131470.30999@narbuckle.genericorp.net> <alpine.DEB.1.00.0905082229520.4601@intel-tinevez-2-302>
- <alpine.DEB.2.00.0905081436070.30999@narbuckle.genericorp.net> <alpine.DEB.1.00.0905090012410.4601@intel-tinevez-2-302> <alpine.DEB.2.00.0905081624230.30999@narbuckle.genericorp.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] format-patch let -k override a config-specified format.numbered
+Date: Sat, 09 May 2009 00:08:16 -0700
+Message-ID: <7vbpq2da8v.fsf@alter.siamese.dyndns.org>
+References: <8763gcri2c.fsf@meyering.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat May 09 07:33:22 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git list <git@vger.kernel.org>,
+	"Stephen C. Tweedie" <sct@redhat.com>
+To: Jim Meyering <meyering@redhat.com>
+X-From: git-owner@vger.kernel.org Sat May 09 09:08:30 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M2fBa-00072F-CA
-	for gcvg-git-2@gmane.org; Sat, 09 May 2009 07:33:22 +0200
+	id 1M2gfb-0008Kp-U5
+	for gcvg-git-2@gmane.org; Sat, 09 May 2009 09:08:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751397AbZEIFa7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 9 May 2009 01:30:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751182AbZEIFa7
-	(ORCPT <rfc822;git-outgoing>); Sat, 9 May 2009 01:30:59 -0400
-Received: from 62.f9.1243.static.theplanet.com ([67.18.249.98]:49730 "EHLO
-	62.f9.1243.static.theplanet.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751118AbZEIFa6 (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 9 May 2009 01:30:58 -0400
-X-Envelope-From: cxreg@pobox.com
-Received: from localhost (count@narbuckle [127.0.0.1])
-	(authenticated bits=0)
-	by 62.f9.1243.static.theplanet.com (8.13.8/8.13.8/Debian-3) with ESMTP id n495UuVO020367
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Sat, 9 May 2009 00:30:57 -0500
-X-X-Sender: count@narbuckle.genericorp.net
-In-Reply-To: <alpine.DEB.2.00.0905081624230.30999@narbuckle.genericorp.net>
-User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
+	id S1753936AbZEIHIS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 9 May 2009 03:08:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752274AbZEIHIR
+	(ORCPT <rfc822;git-outgoing>); Sat, 9 May 2009 03:08:17 -0400
+Received: from fed1rmmtao101.cox.net ([68.230.241.45]:47347 "EHLO
+	fed1rmmtao101.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751670AbZEIHIQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 9 May 2009 03:08:16 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao101.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20090509070817.XCPQ17670.fed1rmmtao101.cox.net@fed1rmimpo01.cox.net>;
+          Sat, 9 May 2009 03:08:17 -0400
+Received: from localhost ([68.225.240.211])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id pK8G1b0034aMwMQ03K8GqM; Sat, 09 May 2009 03:08:16 -0400
+X-Authority-Analysis: v=1.0 c=1 a=X7vzqmh8HacA:10 a=ELu1uixjCFwA:10
+ a=20KFwNOVAAAA:8 a=5AeRPH9oXEQ0CQk3U3oA:9 a=aLIHcAE9_KqpvGJp7zoA:7
+ a=bvNgxO1BDnwYqaE_KxsSIWA70EoA:4 a=jEp0ucaQiEUA:10
+X-CM-Score: 0.00
+In-Reply-To: <8763gcri2c.fsf@meyering.net> (Jim Meyering's message of "Thu\, 07 May 2009 18\:31\:07 +0200")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118649>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118650>
 
-On Fri, 8 May 2009, Dave O wrote:
+Jim Meyering <meyering@redhat.com> writes:
 
-> Once again, I don't really know what the implications of the index
-> operations that are happening here are, but the update_stages() call
-> in a recursive merge must be doing surprising.
+> Let a command-line --keep-subject (-k) override a config-specified
+> format.numbered (--numbered (-n)), rather than provoking the
+> "-n and -k are mutually exclusive" failure.
+> * t4021-format-patch-numbered.sh: Test for the above
+> ---
 
-After writing this, I took another look around merge-recursive.c, and
-realized that all the calls to update_stages() except this one were
-careful only to do it when o->call_depth was 0.  This simple patch seems
-to fully rectify the problem.
+Sign-off?
 
----
-  merge-recursive.c |   11 ++++++-----
-  1 files changed, 6 insertions(+), 5 deletions(-)
+> Here's a quick demo of the problem:
+>
+>   $ git config format.numbered true
+>   $ git format-patch --stdout -1 -k > /dev/null
+>   fatal: -n and -k are mutually exclusive.
+>
+> This started when a colleague reported that "git rebase master" was failing
+> with a "fatal: -n and -k are mutually exclusive".  Stephen Tweedie discovered
+> that it was due to the format.numbered=true setting in ~/.gitconfig
+> conflicting with the -k of the format-patch command run as part of
+> the rebase operation.  Here's a fix.
+>
+> Stephen suggested an alternate patch in which rather than adding a
+> new variable, you'd use "numbered = -1" to indicate that the setting
+> originated in config.  Let me know if you'd prefer that.
 
-diff --git a/merge-recursive.c b/merge-recursive.c
-index a3721ef..f5df9b9 100644
---- a/merge-recursive.c
-+++ b/merge-recursive.c
-@@ -933,11 +933,12 @@ static int process_renames(struct merge_options *o,
-  				       ren1_src, ren1_dst, branch1,
-  				       branch2);
-  				update_file(o, 0, ren1->pair->two->sha1, ren1->pair->two->mode, ren1_dst);
--				update_stages(ren1_dst, NULL,
--						branch1 == o->branch1 ?
--						ren1->pair->two : NULL,
--						branch1 == o->branch1 ?
--						NULL : ren1->pair->two, 1);
-+				if (!o->call_depth)
-+					update_stages(ren1_dst, NULL,
-+							branch1 == o->branch1 ?
-+							ren1->pair->two : NULL,
-+							branch1 == o->branch1 ?
-+							NULL : ren1->pair->two, 1);
-  			} else if (!sha_eq(dst_other.sha1, null_sha1)) {
-  				const char *new_path;
-  				clean_merge = 0;
--- 
-1.6.3.dirty
+Some people might find an extra variable redundant or verbose, but I think
+your approach is easier to follow and to the point, especially with the
+in-code comment.
+
+Thanks.
