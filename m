@@ -1,104 +1,105 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: [PATCH] config: add --repository option
-Date: Sat,  9 May 2009 18:35:36 +0200
-Message-ID: <1241886936-18941-1-git-send-email-srabbelier@gmail.com>
-Cc: Sverre Rabbelier <srabbelier@gmail.com>
-To: "Git List" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat May 09 18:35:58 2009
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re:
+Date: Sat, 9 May 2009 09:44:28 -0700 (PDT)
+Message-ID: <alpine.LFD.2.01.0905090926300.3586@localhost.localdomain>
+References: <454B76988CBF42F5BCACA5061125D263@caottdt504> <D75C0FA80F7041FFAAC50B314788AD6F@caottdt504> <alpine.LFD.2.01.0905071148500.4983@localhost.localdomain> <A07C3E66E84D46ACB37EDC7D396CCA62@caottdt504> <alpine.LFD.2.01.0905071248250.4983@localhost.localdomain>
+ <alpine.LFD.2.01.0905071312000.4983@localhost.localdomain> <alpine.LFD.2.01.0905071446500.4983@localhost.localdomain> <81b0412b0905080117v3aad0c44o7b3bbcc7fe70d3b1@mail.gmail.com> <alpine.LFD.2.01.0905080734260.4983@localhost.localdomain>
+ <eFUCK0_CEtLa6Qvg6X1SqHmCgRnY3_3dy3OCJK26lGP-_kDRyWtlRA@cipher.nrlssc.navy.mil> <alpine.LFD.2.01.0905080857130.4983@localhost.localdomain> <Ah7lj3UWxgwxNiQs6kqiiVurulv4F00ssWrb3OzfTrXYlK8ZBCSBOQ@cipher.nrlssc.navy.mil>
+ <OWEdfN5mNBoNl1TcdOvhhNfi_nLsao-aFrHkz_rNtuX_4lqXHisfcQ@cipher.nrlssc.navy.mil> <alpine.LFD.2.01.0905081432150.4983@localhost.localdomain> <twBG1KnSrgPNk7NoVey4mgig1BeAk7e1GHOT90PSV9ZGTs-zCWYdtA@cipher.nrlssc.navy.mil>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Alex Riesen <raa.lkml@gmail.com>,
+	Bevan Watkiss <bevan.watkiss@cloakware.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Brandon Casey <casey@nrlssc.navy.mil>
+X-From: git-owner@vger.kernel.org Sat May 09 18:47:44 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M2pWm-00029g-V5
-	for gcvg-git-2@gmane.org; Sat, 09 May 2009 18:35:57 +0200
+	id 1M2piB-0006qP-5r
+	for gcvg-git-2@gmane.org; Sat, 09 May 2009 18:47:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754275AbZEIQfx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 9 May 2009 12:35:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755142AbZEIQfw
-	(ORCPT <rfc822;git-outgoing>); Sat, 9 May 2009 12:35:52 -0400
-Received: from mail-ew0-f176.google.com ([209.85.219.176]:40812 "EHLO
-	mail-ew0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754845AbZEIQfv (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 9 May 2009 12:35:51 -0400
-Received: by ewy24 with SMTP id 24so2491368ewy.37
-        for <git@vger.kernel.org>; Sat, 09 May 2009 09:35:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer;
-        bh=rtqQpXWgZN5xwEOf+95V877k9Ocjr/6QS/iRXUf7Vig=;
-        b=aGVS6gcIdgoCCDlVx0EkDs8g7y3yF8dXwNMshkRIVa31jdIHkuPum43UEUuhEU/YXE
-         QNmU2qDREYnBtLnWDJNlWwKU1UcOk4H7D5cRsWUydv2d5MAqM8CM3p7y5MdxZcXYKl8b
-         yex10Eu8+4arQ0zxXmco3owbpxdWxAPayFow8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        b=pK3aVW0AluMq4nL3gZh4dMSn65Di2C3fP3aoLs1ZAy5o75JbzAYczeoDiR4+dJx9hZ
-         7puAmVGyKVGDC08q2NB53rQzSWZssUBhJf1RnhNuTWeSimF0fyYCwnPiPp2gezYCGQ9o
-         PGa3tTCjdDKHCoMHqKPLwFk8y4KgpNPuaWv/E=
-Received: by 10.210.77.2 with SMTP id z2mr6267150eba.87.1241886948735;
-        Sat, 09 May 2009 09:35:48 -0700 (PDT)
-Received: from localhost.localdomain (ip138-114-211-87.adsl2.static.versatel.nl [87.211.114.138])
-        by mx.google.com with ESMTPS id 5sm3725840eyh.20.2009.05.09.09.35.47
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sat, 09 May 2009 09:35:48 -0700 (PDT)
-X-Mailer: git-send-email 1.6.3.1.ga0e91
+	id S1751966AbZEIQr2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 9 May 2009 12:47:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751595AbZEIQr2
+	(ORCPT <rfc822;git-outgoing>); Sat, 9 May 2009 12:47:28 -0400
+Received: from smtp1.linux-foundation.org ([140.211.169.13]:35567 "EHLO
+	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751528AbZEIQr1 (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 9 May 2009 12:47:27 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
+	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id n49GiT7Q029770
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Sat, 9 May 2009 09:45:05 -0700
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id n49GiSmV026935;
+	Sat, 9 May 2009 09:44:29 -0700
+X-X-Sender: torvalds@localhost.localdomain
+In-Reply-To: <twBG1KnSrgPNk7NoVey4mgig1BeAk7e1GHOT90PSV9ZGTs-zCWYdtA@cipher.nrlssc.navy.mil>
+User-Agent: Alpine 2.01 (LFD 1184 2008-12-16)
+X-Spam-Status: No, hits=-3.461 required=5 tests=AWL,BAYES_00
+X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118673>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118674>
 
-This is a shorthand similar to --system but instead uses
-the config file of the current repository.
 
-Signed-off-by: Sverre Rabbelier <srabbelier@gmail.com>
----
 
-	I often want to check what the local value of a config
-	entry is, hence this patch.
+On Fri, 8 May 2009, Brandon Casey wrote:
+> 
+> btw, I've since done some more testing on some centos5.3 boxes we have.
+> I get similar results (less ancient kernel 2.6.18).
 
- builtin-config.c |    7 +++++--
- 1 files changed, 5 insertions(+), 2 deletions(-)
+Yes, 2.6.18 is still much too old to matter from a locking standpoint. 
 
-diff --git a/builtin-config.c b/builtin-config.c
-index a81bc8b..1ae4f82 100644
---- a/builtin-config.c
-+++ b/builtin-config.c
-@@ -20,7 +20,7 @@ static char delim = '=';
- static char key_delim = ' ';
- static char term = '\n';
- 
--static int use_global_config, use_system_config;
-+static int use_global_config, use_system_config, use_repository_config;
- static const char *given_config_file;
- static int actions, types;
- static const char *get_color_slot, *get_colorbool_slot;
-@@ -50,6 +50,7 @@ static struct option builtin_config_options[] = {
- 	OPT_GROUP("Config file location"),
- 	OPT_BOOLEAN(0, "global", &use_global_config, "use global config file"),
- 	OPT_BOOLEAN(0, "system", &use_system_config, "use system config file"),
-+	OPT_BOOLEAN(0, "repository", &use_repository_config, "use repository config file"),
- 	OPT_STRING('f', "file", &given_config_file, "FILE", "use given config file"),
- 	OPT_GROUP("Action"),
- 	OPT_BIT(0, "get", &actions, "get value: name [value-regex]", ACTION_GET),
-@@ -319,7 +320,7 @@ int cmd_config(int argc, const char **argv, const char *unused_prefix)
- 	argc = parse_options(argc, argv, builtin_config_options, builtin_config_usage,
- 			     PARSE_OPT_STOP_AT_NON_OPTION);
- 
--	if (use_global_config + use_system_config + !!given_config_file > 1) {
-+	if (use_global_config + use_system_config + use_repository_config + !!given_config_file > 1) {
- 		error("only one config file at a time.");
- 		usage_with_options(builtin_config_usage, builtin_config_options);
- 	}
-@@ -335,6 +336,8 @@ int cmd_config(int argc, const char **argv, const char *unused_prefix)
- 	}
- 	else if (use_system_config)
- 		config_exclusive_filename = git_etc_gitconfig();
-+	else if (use_repository_config)
-+		config_exclusive_filename = git_pathdup("config");
- 	else if (given_config_file) {
- 		if (!is_absolute_path(given_config_file) && prefix)
- 			config_exclusive_filename = prefix_filename(prefix,
--- 
-1.6.3.1.ga0e91
+When people initially worried about scalability, the issues were more 
+about server side stuff and the cached cases. NFS (as a client) is 
+certainly used on the server side too, but it tends to be a somewhat 
+secondary worry where only specific parts really matter. So people worked 
+a lot more on the core kernel, and on local high-performance filesystem 
+scaling.
+
+Only lately have we been pretty aggressive about finally really getting 
+rid of the old "single big lock" (BKL) model entirely, or moving outwards 
+from the core.
+
+And while we removed the BKL from the normal NFS read/write paths long 
+long ago, all the name lookup and directory handling code still had it 
+until a year ago.
+
+That, btw, is directly explained by perceived scalability issues: NFS is 
+fairly often used as the backing store for a database and scaling thus 
+matters there. But databases tend to keep their few big files open and use 
+pread/pwrite - so pathname lookup is not nearly as significant for server 
+ops as plain read/write.
+
+(Pathname lookup is important for things like web servers etc, but they 
+rely heavily on caching for that, and the cached case scales fine).
+
+> I've also scanned through the errata announcements that RedHat has 
+> released for their kernel updates.  A few of them involve NFS.  
+> Possibly, whatever RedHat modified in the 5.X kernel was also backported 
+> to the 4.X kernel.
+
+That is very possibly the case. Expanding the BKL usage in some case could 
+easily trigger the lock getting contention - and the way lock contention 
+works, once you get a just even a small _hint_ of contention, things often 
+fall off a cliff. The contention slows locking down, which in turn causes 
+more CPU usage, which in turn causes _more_ contention.
+
+So even a small amount of extra locking - or even just slowing down some 
+code that was inside the lock - can have catastrophic behavioural changes 
+when the lock is close to being a problem. You do not get a nice gradual 
+slowdown at all - you just hit a hard wall.
+
+I guess I should really try to set up some fileserver here at home to 
+improve my test coverage. And to do better backups (or the little private 
+data I have that I can't just mirror out to the world by turning it into 
+an open-source project ;^)
+
+				Linus
