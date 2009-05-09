@@ -1,83 +1,58 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Syntax check via update hook?
-Date: Sat, 9 May 2009 10:47:12 -0400
-Message-ID: <20090509144711.GA3926@sigill.intra.peff.net>
-References: <wsprejtm71.fsf@usg.edu>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: can we allow -t abbreviation for --track in 'git branch'
+Date: Sat, 09 May 2009 08:15:52 -0700
+Message-ID: <7vab5m9ujb.fsf@alter.siamese.dyndns.org>
+References: <slrnh0agtv.4rv.sitaramc@sitaramc.homelinux.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Mark Plaksin <happy@usg.edu>
-X-From: git-owner@vger.kernel.org Sat May 09 16:47:46 2009
+To: Sitaram Chamarty <sitaramc@gmail.com>
+X-From: git-owner@vger.kernel.org Sat May 09 17:16:03 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M2nq3-0006uA-JD
-	for gcvg-git-2@gmane.org; Sat, 09 May 2009 16:47:44 +0200
+	id 1M2oHR-0000lm-MI
+	for gcvg-git-2@gmane.org; Sat, 09 May 2009 17:16:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754546AbZEIOrQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 9 May 2009 10:47:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754218AbZEIOrP
-	(ORCPT <rfc822;git-outgoing>); Sat, 9 May 2009 10:47:15 -0400
-Received: from peff.net ([208.65.91.99]:52240 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752621AbZEIOrP (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 9 May 2009 10:47:15 -0400
-Received: (qmail 3731 invoked by uid 107); 9 May 2009 14:47:33 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.40) with ESMTPA; Sat, 09 May 2009 10:47:33 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 09 May 2009 10:47:12 -0400
-Content-Disposition: inline
-In-Reply-To: <wsprejtm71.fsf@usg.edu>
+	id S1751831AbZEIPPx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 9 May 2009 11:15:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751778AbZEIPPw
+	(ORCPT <rfc822;git-outgoing>); Sat, 9 May 2009 11:15:52 -0400
+Received: from fed1rmmtao104.cox.net ([68.230.241.42]:50980 "EHLO
+	fed1rmmtao104.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751534AbZEIPPw (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 9 May 2009 11:15:52 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao104.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20090509151552.CVII17135.fed1rmmtao104.cox.net@fed1rmimpo01.cox.net>;
+          Sat, 9 May 2009 11:15:52 -0400
+Received: from localhost ([68.225.240.211])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id pTFs1b00G4aMwMQ03TFsA3; Sat, 09 May 2009 11:15:52 -0400
+X-Authority-Analysis: v=1.0 c=1 a=-Feqs4N-suwA:10 a=k1pRcjExh4sA:10
+ a=pGLkceISAAAA:8 a=PAJz7xfDAAAA:8 a=_3vE32J9SKxtd6udsuAA:9
+ a=RQebVFb5u2Ee3YJxay5GEQY_zR8A:4 a=MSl-tDqOz04A:10
+X-CM-Score: 0.00
+In-Reply-To: <slrnh0agtv.4rv.sitaramc@sitaramc.homelinux.net> (Sitaram Chamarty's message of "Sat\, 9 May 2009 08\:50\:07 +0000 \(UTC\)")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118658>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118659>
 
-On Fri, May 08, 2009 at 03:43:30PM -0400, Mark Plaksin wrote:
+Sitaram Chamarty <sitaramc@gmail.com> writes:
 
-> What's the best way to make the update hook do a syntax check?
-> 
-> We want to switch our Puppet [1] config repository from SVN to Git.  Our
-> SVN repository has a pre-commit hook that does a syntax check.  The hook
-> runs Puppet to check the syntax of the file(s) being committed and if the
-> check fails, the commit fails.  With SVN that hook runs on the server so
-> it's easy to have (the correct version of) the puppet binary there for
-> the hook to use.
-> 
-> Once Puppet config changes are committed to to our SVN repository they
-> are automatically pushed into our production Puppet config.  We want to
-> do something similar with Git--once commits are successfully pushed to
-> the master repository they are automatically pulled and become our
-> production Puppet config.
+> Would it make sense to teach "git branch" the short option
+> "-t" the same way that "git checkout" knows it, (ie., as an
+> abbreviation for "--track")?
+>
+> I use both frequently, and often forget that in "git branch"
+> the short option does not work.
+>
+> If people think it's OK I'll submit a patch (code and doc).
 
-That sounds like a reasonable goal. In the hook itself, you can do one
-of:
-
-  1. Look at the diff to the original version to make sure you're not
-     introducing anything bogus. This is sufficient for syntax issues on
-     single lines, etc, and is obviously pretty efficient. But it won't
-     cover "does this whole thing build?" types of checks, which I think
-     is what you want.
-
-  2. Check out the whole tree to a temp directory and run your full
-     syntax check there. The simplest way would be by using "git
-     archive" to generate the tree. You can make this a bit more
-     efficient by keeping the temp directory between runs and using
-     git to just update the changed files. Off the top of my head, that
-     would look something like:
-
-        $ cat <<EOF >.git/hooks/update
-        #!/bin/sh
-        GIT_INDEX_FILE=/path/to/tempdir/index; export GIT_INDEX_FILE
-        cd /path/to/tempdir/tree &&
-        mkdir -p tree &&
-        git read-tree "$3" &&
-        git checkout-index &&
-        your_syntax_check
-        EOF
-        $ chmod +x .git/hooks/update
-
--Peff
+I have <20090428152119.GA18935@atc.tcs.com> (aka $gmane/117790) in my
+inbox.
