@@ -1,64 +1,50 @@
-From: Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH 07/10] bisect: automatically sort sha1_array if needed when looking it up
-Date: Sun, 10 May 2009 06:44:14 +0200
-Message-ID: <200905100644.14786.chriscool@tuxfamily.org>
-References: <20090509154419.5324.96204.chriscool@tuxfamily.org> <20090509155548.5387.70784.chriscool@tuxfamily.org> <m3ljp6me9v.fsf@localhost.localdomain>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Sun May 10 06:48:48 2009
+From: Ryan Schmidt <git-2009b@ryandesign.com>
+Subject: 1.6.2.5 listed as latest stable on homepage; should be 1.6.3?
+Date: Sun, 10 May 2009 00:20:39 -0500
+Message-ID: <2D4A0D58-394F-4CD6-8891-9DFB89ED9725@ryandesign.com>
+Mime-Version: 1.0 (Apple Message framework v753.1)
+Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun May 10 07:28:01 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M30xh-0002Nr-Ku
-	for gcvg-git-2@gmane.org; Sun, 10 May 2009 06:48:30 +0200
+	id 1M31Zw-00044i-6r
+	for gcvg-git-2@gmane.org; Sun, 10 May 2009 07:28:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750878AbZEJEp4 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 10 May 2009 00:45:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750743AbZEJEpz
-	(ORCPT <rfc822;git-outgoing>); Sun, 10 May 2009 00:45:55 -0400
-Received: from smtp1-g21.free.fr ([212.27.42.1]:33845 "EHLO smtp1-g21.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750732AbZEJEpz convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 10 May 2009 00:45:55 -0400
-Received: from smtp1-g21.free.fr (localhost [127.0.0.1])
-	by smtp1-g21.free.fr (Postfix) with ESMTP id 8E448940051;
-	Sun, 10 May 2009 06:45:48 +0200 (CEST)
-Received: from bureau.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
-	by smtp1-g21.free.fr (Postfix) with ESMTP id 5FFCE940002;
-	Sun, 10 May 2009 06:45:46 +0200 (CEST)
-User-Agent: KMail/1.9.9
-In-Reply-To: <m3ljp6me9v.fsf@localhost.localdomain>
-Content-Disposition: inline
+	id S1751506AbZEJF1w (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 10 May 2009 01:27:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751477AbZEJF1w
+	(ORCPT <rfc822;git-outgoing>); Sun, 10 May 2009 01:27:52 -0400
+Received: from smtprelay05.ispgateway.de ([80.67.31.39]:58845 "EHLO
+	smtprelay05.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751299AbZEJF1v (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 10 May 2009 01:27:51 -0400
+X-Greylist: delayed 430 seconds by postgrey-1.27 at vger.kernel.org; Sun, 10 May 2009 01:27:51 EDT
+Received: from [70.114.129.90] (helo=[192.168.7.75])
+	by smtprelay05.ispgateway.de with esmtpsa (TLSv1:AES128-SHA:128)
+	(Exim 4.68)
+	(envelope-from <git-2009b@ryandesign.com>)
+	id 1M31Sp-0000Py-Se
+	for git@vger.kernel.org; Sun, 10 May 2009 07:20:40 +0200
+X-Mailer: Apple Mail (2.753.1)
+X-Df-Sender: 368818
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118704>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118705>
 
-Le samedi 9 mai 2009, Jakub Narebski a =E9crit :
-> Christian Couder <chriscool@tuxfamily.org> writes:
-> > This makes sha1_array easier to use, so later patches will be simpl=
-er.
->
-> Hmmm... sort on lookup array. I wonder if it would be worth
-> librarizing, and if there is any smart optimization for that (like
-> e.g. heap for fast access to smallest value and fast insertion, using
-> insertion sort for almost sorted array, etc.).
->
-> BTW. does it become unsorted anywhere?
+I see the git homepage still lists 1.6.2.5 as the latest stable version.
 
-No, it doesn't. We first read all the "refs/bisect/good-*"=20
-and "refs/bisect/skip-*" and put them in some "struct sha1_array".
-Then later we may lookup sha1 there from 2 different functions:
-"check_merge_bases" first and then "filter_skipped".
+http://git-scm.com/
 
-This patch optimizes by not sorting before we lookup, so if we don't lo=
-okup=20
-anything, we pay no sorting price.
+Shouldn't it say 1.6.3? I see a release announcement email went out  
+for 1.6.3 a few days ago.
 
-Best regards,
-Christian.
+http://marc.info/?l=linux-kernel&m=124168020423520&w=2
+
+
+Please Cc me on replies; I'm not subscribed.
