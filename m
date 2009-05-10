@@ -1,55 +1,54 @@
 From: Jakub Narebski <jnareb@gmail.com>
-Subject: [PATCH 2/5] gitweb: Do not use bareword filehandles
-Date: Sun, 10 May 2009 02:36:19 +0200
-Message-ID: <200905100236.20158.jnareb@gmail.com>
+Subject: [PATCHv2 1/5] gitweb: Remove function prototypes
+Date: Sun, 10 May 2009 02:05:23 +0200
+Message-ID: <200905100205.23733.jnareb@gmail.com>
 References: <200905100203.51744.jnareb@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain;
-  charset="iso-8859-2"
-Content-Transfer-Encoding: 7bit
-Cc: Petr Baudis <pasky@suse.cz>
+  charset="utf-8"
+Content-Transfer-Encoding: 8BIT
 To: git@vger.kernel.org
 X-From: git-owner@vger.kernel.org Sun May 10 02:42:20 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M2x7P-0005rl-9s
+	id 1M2x7O-0005rl-MV
 	for gcvg-git-2@gmane.org; Sun, 10 May 2009 02:42:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755112AbZEJAl6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 9 May 2009 20:41:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754409AbZEJAl5
-	(ORCPT <rfc822;git-outgoing>); Sat, 9 May 2009 20:41:57 -0400
-Received: from mail-ew0-f176.google.com ([209.85.219.176]:54999 "EHLO
+	id S1755320AbZEJAl5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 9 May 2009 20:41:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755112AbZEJAly
+	(ORCPT <rfc822;git-outgoing>); Sat, 9 May 2009 20:41:54 -0400
+Received: from mail-ew0-f176.google.com ([209.85.219.176]:53967 "EHLO
 	mail-ew0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754462AbZEJAly (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 9 May 2009 20:41:54 -0400
-Received: by ewy24 with SMTP id 24so2659320ewy.37
-        for <git@vger.kernel.org>; Sat, 09 May 2009 17:41:53 -0700 (PDT)
+	with ESMTP id S1754111AbZEJAlw convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 9 May 2009 20:41:52 -0400
+Received: by ewy24 with SMTP id 24so2659316ewy.37
+        for <git@vger.kernel.org>; Sat, 09 May 2009 17:41:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :user-agent:references:in-reply-to:mime-version:content-type
          :content-transfer-encoding:content-disposition:message-id;
-        bh=zd3jWUlEv80KqVR54TbTQkZ1C74s9/qaX246Ezc59GE=;
-        b=UjxYM5u1jFbw0VNUdIixe4uFqHbYQcl/ZzV0DVRpz7GcInZCGWEwczhup+D6AO2RSY
-         4LK3O6NWUlacO4aHTWR2DLSXLw/35Rn7OA9BVw5Wx8boNedF/PC7l1h2vat55VNDXBUl
-         nfYs+TrGgX2tudSzVOTXTCXSpiK9pzPPQnGco=
+        bh=kdLluO0gQHi/hC/cvIenK9MEOQyLei+QjsFvdfm/rgw=;
+        b=AwMdOSBzZqSYBRCblEYMViiecBKLDm7VTdCp+xNezCqDzNPzg6MbV5qVUv6Zm3MWCb
+         cYA0c27qMxxkIzIal4k7y2GUSUDwSPLKZvV6xVknmx+sIrRHzQVMxUUTb1DycL2gamrj
+         mmvUBMa4VxZmc/RdBw1o3WHDeLlGoyZHKS8Jg=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=luY1W9kEacW7dMdJ4XeDROOZ98AO8ILp/UMtYwGh+MAjwqcqXam/CjgcK9IJ+9KmeV
-         nIRQUNx6X8tKKn7TDs4SYnP56r8ajOwgAA2lD9fAmefou4Ncr6Zq9r+dep3qCO177GgN
-         NB2oEVmIvzsozl9f3ov3N7e6pMrA8EX9ZAHvY=
-Received: by 10.210.60.3 with SMTP id i3mr3082361eba.87.1241916113302;
-        Sat, 09 May 2009 17:41:53 -0700 (PDT)
+        h=from:to:subject:date:user-agent:references:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :message-id;
+        b=pVHtXC+kDvSTPLyebYR4r4JOexwAYnwWLev972CT70Rjuv542JKlpKAAC35FTJYu4G
+         whA5caraMc5sAn7vJCI6jHK5NLOeguKO+BTwkemY+U0y13jpAhAiReiPkGVxhBR9LM5I
+         ZNQ1OmEH8Wa4TDvM81ke40zgBV9qV4vHXyf00=
+Received: by 10.210.132.3 with SMTP id f3mr3120997ebd.62.1241916112491;
+        Sat, 09 May 2009 17:41:52 -0700 (PDT)
 Received: from ?192.168.1.13? (abvf146.neoplus.adsl.tpnet.pl [83.8.203.146])
-        by mx.google.com with ESMTPS id 7sm4827142eyb.25.2009.05.09.17.41.52
+        by mx.google.com with ESMTPS id 7sm4827142eyb.25.2009.05.09.17.41.51
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sat, 09 May 2009 17:41:53 -0700 (PDT)
+        Sat, 09 May 2009 17:41:51 -0700 (PDT)
 User-Agent: KMail/1.9.3
 In-Reply-To: <200905100203.51744.jnareb@gmail.com>
 Content-Disposition: inline
@@ -57,92 +56,104 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118694>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118695>
 
-The script was using bareword filehandles.  This is considered a bad
-practice so they have been changed to indirect filehandles.
-Changes touch git_get_project_ctags and mimetype_guess_file.
+Use of function prototypes is considered bad practice in Perl.  The
+ones used here didn't accomplish anything anyhow, so they've been
+removed.
 
-While at it rename local variable from $mime to $mimetype (in
-mimetype_guess_file) to better reflect its value (its contents).
+>From perlsub(1):
+
+  [...] the intent of this feature [prototypes] is primarily to let
+  you define subroutines that work like built-in functions [...]
+  you can generate new syntax with it [...]
+
+We don't want to have subroutines behaving exactly like built-in
+functions, we don't want to define new syntax / syntactic sugar, so
+prototypes in gitweb are not needed... and they can have unintended
+consequences.
 
 Signed-off-by: Jakub Narebski <jnareb@gmail.com>
 ---
-Perl::Critic::Policy::InputOutput::ProhibitBarewordFileHandles
+Perl::Critic::Policy::Subroutines::ProhibitSubroutinePrototypes
 
-  Write open my $fh, q{<}, $filename; instead of open FH, q{<}, $filename;.
+  Don't write 'sub my_function (@@) {}'.
 
-  Using bareword symbols to refer to file handles is particularly evil
-  because they are global, and you have no idea if that symbol already
-  points to some other file handle. You can mitigate some of that risk by
-  'local'izing the symbol first, but that's pretty ugly. Since Perl 5.6, you
-  can use an undefined scalar variable as a lexical reference to an
-  anonymous filehandle.
+  Contrary to common belief, subroutine prototypes do not enable
+  compile-time checks for proper arguments. Don't use them.
 
 See also Damian Conway's book "Perl Best Practices",
-chapter "10.1. Filehandles" (Don't use bareword filehandles.)
+chapter "9.10. Prototypes" (Don't use subroutine prototypes.)
 
 
-This follows similar patch for git-send-email.perl by Bill Pemberton
-http://permalink.gmane.org/gmane.comp.version-control.git/117886
+This follows similar patch for git-send-email.perl by Bill Pemberton.
+Also "sub S_ISGITLINK($) {" line caused `imenu` in my old cperl-mode
+(4.23) in GNU Emacs 21.4.1 to fail, sometimes.
 
-CC-ed Pasky, who is responsible for code in both cases...
+This patch was send with slightly different commit message as
+standalone patch earlier. This is the replacement patch, which differs
+only in the commit message.
 
- gitweb/gitweb.perl |   22 +++++++++++-----------
- 1 files changed, 11 insertions(+), 11 deletions(-)
+ gitweb/gitweb.perl |   12 +++++-------
+ 1 files changed, 5 insertions(+), 7 deletions(-)
 
 diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index 06e9160..a9daa1d 100755
+index 3f99361..06e9160 100755
 --- a/gitweb/gitweb.perl
 +++ b/gitweb/gitweb.perl
-@@ -2065,18 +2065,18 @@ sub git_get_project_ctags {
- 	my $ctags = {};
+@@ -838,7 +838,7 @@ exit;
+ ## ======================================================================
+ ## action links
  
- 	$git_dir = "$projectroot/$path";
--	unless (opendir D, "$git_dir/ctags") {
-+	unless (opendir my $dh, "$git_dir/ctags") {
- 		return $ctags;
- 	}
--	foreach (grep { -f $_ } map { "$git_dir/ctags/$_" } readdir(D)) {
--		open CT, $_ or next;
--		my $val = <CT>;
-+	foreach (grep { -f $_ } map { "$git_dir/ctags/$_" } readdir($dh)) {
-+		open my $ct, $_ or next;
-+		my $val = <$ct>;
- 		chomp $val;
--		close CT;
-+		close $ct;
- 		my $ctag = $_; $ctag =~ s#.*/##;
- 		$ctags->{$ctag} = $val;
- 	}
--	closedir D;
-+	closedir $dh;
- 	$ctags;
+-sub href (%) {
++sub href {
+ 	my %params = @_;
+ 	# default is to use -absolute url() i.e. $my_uri
+ 	my $href = $params{-full} ? $my_url : $my_uri;
+@@ -1036,7 +1036,7 @@ sub esc_url {
  }
  
-@@ -2804,18 +2804,18 @@ sub mimetype_guess_file {
- 	-r $mimemap or return undef;
+ # replace invalid utf8 character with SUBSTITUTION sequence
+-sub esc_html ($;%) {
++sub esc_html {
+ 	my $str = shift;
+ 	my %opts = @_;
  
- 	my %mimemap;
--	open(MIME, $mimemap) or return undef;
--	while (<MIME>) {
-+	open(my $mh, $mimemap) or return undef;
-+	while (<$mh>) {
- 		next if m/^#/; # skip comments
--		my ($mime, $exts) = split(/\t+/);
-+		my ($mimetype, $exts) = split(/\t+/);
- 		if (defined $exts) {
- 			my @exts = split(/\s+/, $exts);
- 			foreach my $ext (@exts) {
--				$mimemap{$ext} = $mime;
-+				$mimemap{$ext} = $mimetype;
- 			}
- 		}
- 	}
--	close(MIME);
-+	close($mh);
+@@ -1296,7 +1296,7 @@ use constant {
+ };
  
- 	$filename =~ /\.([^.]*)$/;
- 	return $mimemap{$1};
+ # submodule/subproject, a commit object reference
+-sub S_ISGITLINK($) {
++sub S_ISGITLINK {
+ 	my $mode = shift;
+ 
+ 	return (($mode & S_IFMT) == S_IFGITLINK)
+@@ -2615,7 +2615,7 @@ sub parsed_difftree_line {
+ }
+ 
+ # parse line of git-ls-tree output
+-sub parse_ls_tree_line ($;%) {
++sub parse_ls_tree_line {
+ 	my $line = shift;
+ 	my %opts = @_;
+ 	my %res;
+@@ -3213,7 +3213,6 @@ sub git_print_header_div {
+ 	      "\n</div>\n";
+ }
+ 
+-#sub git_print_authorship (\%) {
+ sub git_print_authorship {
+ 	my $co = shift;
+ 
+@@ -3269,8 +3268,7 @@ sub git_print_page_path {
+ 	print "<br/></div>\n";
+ }
+ 
+-# sub git_print_log (\@;%) {
+-sub git_print_log ($;%) {
++sub git_print_log {
+ 	my $log = shift;
+ 	my %opts = @_;
+ 
 -- 
 1.6.3
