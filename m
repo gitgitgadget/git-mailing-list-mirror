@@ -1,70 +1,70 @@
-From: Sitaram Chamarty <sitaramc@gmail.com>
-Subject: Re: can we allow -t abbreviation for --track in 'git branch'
-Date: Sun, 10 May 2009 04:23:27 +0000 (UTC)
-Organization: disorganised!
-Message-ID: <slrnh0cllu.juu.sitaramc@sitaramc.homelinux.net>
-References: <slrnh0agtv.4rv.sitaramc@sitaramc.homelinux.net>
- <7vab5m9ujb.fsf@alter.siamese.dyndns.org>
+From: Dave Olszewski <cxreg@pobox.com>
+Subject: Re: [PATCH] fix for incorrect index update
+Date: Sat, 9 May 2009 21:46:15 -0700 (PDT)
+Message-ID: <alpine.DEB.2.00.0905092139050.21000@narbuckle.genericorp.net>
+References: <alpine.DEB.2.00.0905091356070.21000@narbuckle.genericorp.net> <7vskjd4mfh.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun May 10 06:23:52 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun May 10 06:48:45 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M30Zr-0004Gy-CN
-	for gcvg-git-2@gmane.org; Sun, 10 May 2009 06:23:51 +0200
+	id 1M30xi-0002Nr-8F
+	for gcvg-git-2@gmane.org; Sun, 10 May 2009 06:48:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750966AbZEJEXp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 10 May 2009 00:23:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750780AbZEJEXo
-	(ORCPT <rfc822;git-outgoing>); Sun, 10 May 2009 00:23:44 -0400
-Received: from main.gmane.org ([80.91.229.2]:55537 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750743AbZEJEXo (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 10 May 2009 00:23:44 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1M30Ze-0003pJ-H8
-	for git@vger.kernel.org; Sun, 10 May 2009 04:23:38 +0000
-Received: from atcmail.atc.tcs.co.in ([203.200.212.145])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sun, 10 May 2009 04:23:38 +0000
-Received: from sitaramc by atcmail.atc.tcs.co.in with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sun, 10 May 2009 04:23:38 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: atcmail.atc.tcs.co.in
-User-Agent: slrn/0.9.9 (Linux)
+	id S1751225AbZEJEqT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 10 May 2009 00:46:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750951AbZEJEqT
+	(ORCPT <rfc822;git-outgoing>); Sun, 10 May 2009 00:46:19 -0400
+Received: from 62.f9.1243.static.theplanet.com ([67.18.249.98]:60395 "EHLO
+	62.f9.1243.static.theplanet.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751079AbZEJEqS (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 10 May 2009 00:46:18 -0400
+X-Envelope-From: cxreg@pobox.com
+Received: from localhost (count@narbuckle [127.0.0.1])
+	(authenticated bits=0)
+	by 62.f9.1243.static.theplanet.com (8.13.8/8.13.8/Debian-3) with ESMTP id n4A4kFET023930
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Sat, 9 May 2009 23:46:16 -0500
+X-X-Sender: count@narbuckle.genericorp.net
+In-Reply-To: <7vskjd4mfh.fsf@alter.siamese.dyndns.org>
+User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118702>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118703>
 
-On 2009-05-09, Junio C Hamano <gitster@pobox.com> wrote:
-> Sitaram Chamarty <sitaramc@gmail.com> writes:
+On Sat, 9 May 2009, Junio C Hamano wrote:
+
+> Thanks.  I'd add:
 >
->> Would it make sense to teach "git branch" the short option
->> "-t" the same way that "git checkout" knows it, (ie., as an
->> abbreviation for "--track")?
->>
->> I use both frequently, and often forget that in "git branch"
->> the short option does not work.
->>
->> If people think it's OK I'll submit a patch (code and doc).
+> 	From: Dave Olszewski <cxreg@pobox.com>
 >
-> I have <20090428152119.GA18935@atc.tcs.com> (aka $gmane/117790) in my
-> inbox.
+> at the beginning, so you would not be shown as "Dave O" in "git shortlog"
+> and friends.
 
-Thanks.  I posted it some days ago, but then began to wonder
-if there was more to that change than I thought, and perhaps
-I should have *asked* first.
+Ok, sounds good.  Thanks for the explanation of the issue.  Much of the
+git internals are still mysterious but that's slowly changing :-)
 
-Sitaram
+> Much nicer than Dscho's ;-)
 
-PS: And I saw http://gitster.livejournal.com/33638.html only
-just now... :-)
+Well, it was mine first, can't fault him for that!
+
+> You inherited a bug from Dscho's patch, it seems.  Have you tried running
+> the test with debug option?
+>
+> This could have been
+>
+> 	test_debug "echo create a bunch of files" &&
+>
+> but I'd say we just make them into comments.
+
+I didn't, sorry for that.  Making them comments seems ok to me.
+
+Thanks once again.
+
+     Dave Olszewski
