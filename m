@@ -1,230 +1,145 @@
-From: Josh Micich <josh.micich@gmail.com>
-Subject: Re: questions about git-mktree - [PATCH] proposed '--batch' option
-Date: Sun, 10 May 2009 18:54:25 +0000 (UTC)
-Message-ID: <loom.20090510T184606-644@post.gmane.org>
-References: <2cfc40320905100641v3e8742c4v1d0e1091a730970b@mail.gmail.com> <7v63g829pg.fsf@alter.siamese.dyndns.org> <7vvdo8zxwp.fsf@alter.siamese.dyndns.org>
+From: Yann Dirson <ydirson-whniv8GeeGkdnm+yROfE0A@public.gmane.org>
+Subject: Re: Distributed VCS with good user verification?
+Date: Sun, 10 May 2009 21:59:07 +0200
+Message-ID: <20090510195907.GA5994@nan92-1-81-57-214-146.fbx.proxad.net>
+References: <20090505212420.GC2761@lasse.mail.plastictre.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun May 10 21:02:38 2009
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@gmane.org
-Received: from vger.kernel.org ([209.132.176.167])
+Cc: git-u79uwXL29TY76Z2rM5mHXA@public.gmane.org, better-scm-discuss-0fE9KPoRgkgATYTw5x5z8w@public.gmane.org
+To: Lasse Kliemann <lasse-list-scm-discuss-2009-+PtzecH+k/46pNmcfySr8OTW4wlIGRCZ@public.gmane.org>
+X-From: better-scm-discuss-bounces-0fE9KPoRgkgATYTw5x5z8w@public.gmane.org Sun May 10 21:59:20 2009
+Return-path: <better-scm-discuss-bounces-0fE9KPoRgkgATYTw5x5z8w@public.gmane.org>
+Envelope-to: gcvd-better-scm-discuss@m.gmane.org
+Received: from bat.berlios.de ([195.37.77.135] helo=mail.berlios.de)
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M3EIH-0000p7-Eu
-	for gcvg-git-2@gmane.org; Sun, 10 May 2009 21:02:38 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751966AbZEJTAI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 10 May 2009 15:00:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751506AbZEJTAH
-	(ORCPT <rfc822;git-outgoing>); Sun, 10 May 2009 15:00:07 -0400
-Received: from main.gmane.org ([80.91.229.2]:42614 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751062AbZEJTAF (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 10 May 2009 15:00:05 -0400
-Received: from root by ciao.gmane.org with local (Exim 4.43)
-	id 1M3EFn-0004H1-7j
-	for git@vger.kernel.org; Sun, 10 May 2009 19:00:03 +0000
-Received: from 148.sub-75-211-195.myvzw.com ([75.211.195.148])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sun, 10 May 2009 19:00:03 +0000
-Received: from josh.micich by 148.sub-75-211-195.myvzw.com with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sun, 10 May 2009 19:00:03 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: main.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 75.211.195.148 (Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US) AppleWebKit/525.19 (KHTML, like Gecko) Chrome/1.0.154.65 Safari/525.19)
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118740>
+	id 1M3FB7-0006I2-Po
+	for gcvd-better-scm-discuss@m.gmane.org; Sun, 10 May 2009 21:59:17 +0200
+Received: from bat.berlios.de (localhost [127.0.0.1])
+	by mail.berlios.de (Postfix) with ESMTP id BAFD217E413;
+	Sun, 10 May 2009 21:59:16 +0200 (CEST)
+X-Original-To: better-scm-discuss-0fE9KPoRgkgATYTw5x5z8w@public.gmane.org
+Delivered-To: better-scm-discuss-0fE9KPoRgkgATYTw5x5z8w@public.gmane.org
+Received: from smtp1-g21.free.fr (smtp1-g21.free.fr [212.27.42.1])
+	by mail.berlios.de (Postfix) with ESMTP id DEAA717C2B0
+	for <better-scm-discuss-0fE9KPoRgkgATYTw5x5z8w@public.gmane.org>;
+	Sun, 10 May 2009 21:59:13 +0200 (CEST)
+Received: from smtp1-g21.free.fr (localhost [127.0.0.1])
+	by smtp1-g21.free.fr (Postfix) with ESMTP id 782A1940193;
+	Sun, 10 May 2009 21:59:09 +0200 (CEST)
+Received: from gandelf.nowhere.earth (nan92-1-81-57-214-146.fbx.proxad.net
+	[81.57.214.146])
+	by smtp1-g21.free.fr (Postfix) with ESMTP id 79BA294014A;
+	Sun, 10 May 2009 21:59:07 +0200 (CEST)
+Received: by gandelf.nowhere.earth (Postfix, from userid 1000)
+	id CE3A91F0A7; Sun, 10 May 2009 21:59:07 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <20090505212420.GC2761-KgLppkx3sYOz9XH0brcyGRf3AA1FrM/fXqFh9Ls21Oc@public.gmane.org>
+User-Agent: Mutt/1.5.18 (2008-05-17)
+X-BeenThere: better-scm-discuss-0fE9KPoRgkgATYTw5x5z8w@public.gmane.org
+X-Mailman-Version: 2.1.9
+Precedence: list
+List-Id: <better-scm-discuss.lists.berlios.de>
+List-Unsubscribe: <https://lists.berlios.de/mailman/listinfo/better-scm-discuss>, 
+	<mailto:better-scm-discuss-request-0fE9KPoRgkgATYTw5x5z8w@public.gmane.org?subject=unsubscribe>
+List-Archive: <https://lists.berlios.de/pipermail/better-scm-discuss>
+List-Post: <mailto:better-scm-discuss-0fE9KPoRgkgATYTw5x5z8w@public.gmane.org>
+List-Help: <mailto:better-scm-discuss-request-0fE9KPoRgkgATYTw5x5z8w@public.gmane.org?subject=help>
+List-Subscribe: <https://lists.berlios.de/mailman/listinfo/better-scm-discuss>, 
+	<mailto:better-scm-discuss-request-0fE9KPoRgkgATYTw5x5z8w@public.gmane.org?subject=subscribe>
+Sender: better-scm-discuss-bounces-0fE9KPoRgkgATYTw5x5z8w@public.gmane.org
+Errors-To: better-scm-discuss-bounces-0fE9KPoRgkgATYTw5x5z8w@public.gmane.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118741>
 
-Junio C Hamano <gitster <at> pobox.com> writes:
+On Tue, May 05, 2009 at 11:24:20PM +0200, Lasse Kliemann wrote:
+> This list hasn't seen any traffic for over a year, but since 
+> usually no-one unsubscribes from a list with no traffic, I hope 
+> someone will read this.
 > 
-> I'm fixing it.  You _might_ get your recursive mktree as a side effect at
-> the end of the series, but no promises 
+> 
+> I am looking for a VCS that makes it easy to see who committed 
+> which revision and to be certain that this information is 
+> correct.
+> 
+> When I look at the commit log, I want to see at a glance who 
+> committed which revision. I want to be sure that those names 
+> displayed are really meaningful. That is, it should be guaranteed 
+> that in fact that person which I associate with the displayed 
+> name has committed the respective revision.
+> 
+> In Subversion, a centralized VCS, this can be ensured by 
+> correctly setting '--tunnel-user=USER' on the server, when using 
+> SSH. Then, a user authenticates himself by his SSH key, then the 
+> SSH server picks the corresponding entry in 
+> '~/.ssh/authorized_keys', and this will cause the intended user 
+> name to be recorded as the committer.
+> 
+> In a distributed VCS, this is no option since commits happen 
+> locally. Instead, revisions must be cryptographically signed.  
+> However, signing is not everything. In addition, signatures must 
+> be verified, and the commit log should reflect which commits have 
+> valid signatures and wich not.
 
-Is it possible add a '--batch' option to git-mktree? Here is a change I made 
-locally which seems to work.  Hopefully it's not too hard to incorporate with 
-your other changes.
--josh
 
- Documentation/git-mktree.txt |   14 +++++-
- mktree.c                     |   98 +++++++++++++++++++++++++----------------
-diff --git a/Documentation/git-mktree.txt b/Documentation/git-mktree.txt
-index af19f06..1aa24b5 100644
---- a/Documentation/git-mktree.txt
-+++ b/Documentation/git-mktree.txt
-@@ -8,18 +8,25 @@ git-mktree - Build a tree-object from ls-tree formatted text
- 
- SYNOPSIS
- --------
--'git mktree' [-z]
-+'git mktree' [-z] [--batch]
- 
- DESCRIPTION
- -----------
- Reads standard input in non-recursive `ls-tree` output format,
--and creates a tree object.  The object name of the tree object
--built is written to the standard output.
-+and creates a tree object.  The order of the tree entries is 
-+normalised by mktree so pre-sorting the input is not required.
-+The object name of the tree object built is written to the
-+standard output.
- 
- OPTIONS
- -------
- -z::
- 	Read the NUL-terminated `ls-tree -z` output instead.
-+--batch::
-+	Allow building of more than one tree object before exiting.
-+	Each tree is separated by as single blank line. The final
-+	new-line is optional.  Note - if the '-z' option is used,
-+	lines are terminated with NUL.
- 
- Author
- ------
-diff --git a/mktree.c b/mktree.c
-index 137a095..2743aaa 100644
---- a/mktree.c
-+++ b/mktree.c
-@@ -62,7 +62,7 @@ static void write_tree(unsigned char *sha1)
- 	write_sha1_file(buf.buf, buf.len, tree_type, sha1);
- }
- 
--static const char mktree_usage[] = "git mktree [-z]";
-+static const char mktree_usage[] = "git mktree [-z] [--batch]";
- 
- int main(int ac, char **av)
- {
-@@ -70,6 +70,7 @@ int main(int ac, char **av)
- 	struct strbuf p_uq = STRBUF_INIT;
- 	unsigned char sha1[20];
- 	int line_termination = '\n';
-+	int is_batch_mode = 0;
- 
- 	git_extract_argv0_path(av[0]);
- 
-@@ -79,53 +80,74 @@ int main(int ac, char **av)
- 		char *arg = av[1];
- 		if (!strcmp("-z", arg))
- 			line_termination = 0;
-+		else if (!strcmp("--batch", arg))
-+			is_batch_mode = 1;
- 		else
- 			usage(mktree_usage);
- 		ac--;
- 		av++;
- 	}
- 
--	while (strbuf_getline(&sb, stdin, line_termination) != EOF) {
--		char *ptr, *ntr;
--		unsigned mode;
--		enum object_type type;
--		char *path;
--
--		ptr = sb.buf;
--		/* Input is non-recursive ls-tree output format
--		 * mode SP type SP sha1 TAB name
--		 */
--		mode = strtoul(ptr, &ntr, 8);
--		if (ptr == ntr || !ntr || *ntr != ' ')
--			die("input format error: %s", sb.buf);
--		ptr = ntr + 1; /* type */
--		ntr = strchr(ptr, ' ');
--		if (!ntr || sb.buf + sb.len <= ntr + 40 ||
--		    ntr[41] != '\t' ||
--		    get_sha1_hex(ntr + 1, sha1))
--			die("input format error: %s", sb.buf);
--		type = sha1_object_info(sha1, NULL);
--		if (type < 0)
--			die("object %s unavailable", sha1_to_hex(sha1));
--		*ntr++ = 0; /* now at the beginning of SHA1 */
--		if (type != type_from_string(ptr))
--			die("object type %s mismatch (%s)", ptr, 
-typename(type));
--
--		path = ntr + 41;  /* at the beginning of name */
--		if (line_termination && path[0] == '"') {
--			strbuf_reset(&p_uq);
--			if (unquote_c_style(&p_uq, path, NULL)) {
--				die("invalid quoting");
-+	int got_eof = 0;
-+	while (!got_eof) {
-+		while (1) {
-+			if (strbuf_getline(&sb, stdin, line_termination) == 
-EOF) {
-+				got_eof = 1;
-+				break;
-+			}
-+			if (sb.buf[0] == '\0') {
-+				// empty lines denote tree boundaries in batch 
-mode
-+				if (is_batch_mode) {
-+					break;
-+				}
-+				die("input format error: (blank line only valid 
-in batch mode)");
-+			}
-+			char *ptr, *ntr;
-+			unsigned mode;
-+			enum object_type type;
-+			char *path;
-+	
-+			ptr = sb.buf;
-+			/* Input is non-recursive ls-tree output format
-+			 * mode SP type SP sha1 TAB name
-+			 */
-+			mode = strtoul(ptr, &ntr, 8);
-+			if (ptr == ntr || !ntr || *ntr != ' ')
-+				die("input format error: %s", sb.buf);
-+			ptr = ntr + 1; /* type */
-+			ntr = strchr(ptr, ' ');
-+			if (!ntr || sb.buf + sb.len <= ntr + 40 ||
-+				ntr[41] != '\t' ||
-+				get_sha1_hex(ntr + 1, sha1))
-+				die("input format error: %s", sb.buf);
-+			type = sha1_object_info(sha1, NULL);
-+			if (type < 0)
-+				die("object %s unavailable", 
-sha1_to_hex(sha1));
-+			*ntr++ = 0; /* now at the beginning of SHA1 */
-+			if (type != type_from_string(ptr))
-+				die("object type %s mismatch (%s)", ptr, 
-typename(type));
-+
-+			path = ntr + 41;  /* at the beginning of name */
-+			if (line_termination && path[0] == '"') {
-+				strbuf_reset(&p_uq);
-+				if (unquote_c_style(&p_uq, path, NULL)) {
-+					die("invalid quoting");
-+				}
-+				path = p_uq.buf;
- 			}
--			path = p_uq.buf;
--		}
- 
--		append_to_tree(mode, sha1, path);
-+			append_to_tree(mode, sha1, path);
-+		}
-+		if (is_batch_mode && got_eof && used < 1) {
-+			// allow input to finish with a new-line (or not)
-+		} else {
-+			write_tree(sha1);
-+			puts(sha1_to_hex(sha1));
-+			fflush(stdout);
-+		}
-+		used=0; // reset tree entry buffer for re-use in batch mode
- 	}
- 	strbuf_release(&p_uq);
- 	strbuf_release(&sb);
--
--	write_tree(sha1);
--	puts(sha1_to_hex(sha1));
- 	exit(0);
- }
+If you're only relying on an ssh tunnel for svn, I suppose it should
+be OK for you as well to use this mechanism with a DSCM.  If so,
+gitosis provides the necessay infrastucture to do so comfortably on
+top of git (gitosis upstream does not seem very active, but there is
+at least one gentoo person writing patches, and I registered a mirror
+of his repository as a fork on http://repo.or.cz/w/gitosis.git.  FWIW,
+I have started to make a couple of cleanups of this code recently, and
+will push them as another fork shortly).
+
+OTOH, it does enforce a centralized verification scheme.  If you want
+something more flexible, I believe that could easily be done on top of
+commit notes (development for that feature has unfortunately stalled
+AFAIK).  I'm cc'ing the git list so others have the opportunity to
+comment.
+
+> 
+> I tested several systems in this respect without finding any 100% 
+> satisfactory solution.
+> 
+> Here is what I found:
+> 
+> - Mercurial provides an extension to explicitly sign certain 
+>   revisions. The act of signing creates a new revision by itself. 
+>   It seems like there is no way of automatically checking all 
+>   signatures or to detect revisions without signatures.
+> 
+> - Git only allows to sign tags and to verify those signatures on 
+>   demand.
+> 
+> - Monotone has mandatory signatures, which looks rather good to 
+>   me. However, the monotone server does not support encryption 
+>   and also does not seem to support SSH tunneling in a convenient 
+>   way (like most other systems, by calling 'ssh'), but only by a 
+>   "real" tunnel (opening a local port and such). So, 
+>   unfortunately, monotone is ruled out by this other criterion.
+> 
+> - Bazaar can sign revisions, and it can be told to sign each and 
+>   every revision upon commit. However, I did not find any 
+>   built-in way to check signatures. There is an option 
+>   'check_signatures' which can be set to 'required', but I could 
+>   not find out what it does actually. It is not documented.
+> 
+>   There is a plugin for Bazaar, however, with which one can get 
+>   statistics on how many revisions are signed and which 
+>   signatures cause problems. When this statistics says that 
+>   everything is signed and okay, then one can trust the user 
+>   names in the commit log.
+> 
+> Bottom line is that Bazaar is closest to my needs, but not yet 100%.
+> 
+> Suggestions?
+> 
+> Thank you!
+> Lasse
+> 
+
+
+
+> _______________________________________________
+> Better-scm-discuss mailing list
+> Better-scm-discuss-0fE9KPoRgkgATYTw5x5z8w@public.gmane.org
+> https://lists.berlios.de/mailman/listinfo/better-scm-discuss
