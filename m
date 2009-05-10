@@ -1,65 +1,86 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: [PATCH] Avoid unnecessary 'lstat()' calls in 'get_stat_data()'
-Date: Sun, 10 May 2009 19:45:47 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.0905101942250.27348@pacific.mpi-cbg.de>
-References: <alpine.LFD.2.01.0905091501460.3586@localhost.localdomain> <7v8wl5613c.fsf@alter.siamese.dyndns.org> <alpine.LFD.2.01.0905100943370.3586@localhost.localdomain>
+Date: Sun, 10 May 2009 11:40:53 -0700
+Message-ID: <7v7i0oztqi.fsf@alter.siamese.dyndns.org>
+References: <alpine.LFD.2.01.0905091501460.3586@localhost.localdomain>
+	<7v8wl5613c.fsf@alter.siamese.dyndns.org>
+	<alpine.LFD.2.01.0905100943370.3586@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>
 To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Sun May 10 19:51:29 2009
+X-From: git-owner@vger.kernel.org Sun May 10 20:41:04 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M3DBQ-0008Lk-VO
-	for gcvg-git-2@gmane.org; Sun, 10 May 2009 19:51:29 +0200
+	id 1M3DxP-0001Vs-AN
+	for gcvg-git-2@gmane.org; Sun, 10 May 2009 20:41:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753499AbZEJRpp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 10 May 2009 13:45:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752855AbZEJRpp
-	(ORCPT <rfc822;git-outgoing>); Sun, 10 May 2009 13:45:45 -0400
-Received: from mail.gmx.net ([213.165.64.20]:39292 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751480AbZEJRpo (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 10 May 2009 13:45:44 -0400
-Received: (qmail invoked by alias); 10 May 2009 17:45:44 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp045) with SMTP; 10 May 2009 19:45:44 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX193f8I2R093W22A1gkYihjyZmgfP/og5LyP5dLhD5
-	Vpx7FhAz84yVJd
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <alpine.LFD.2.01.0905100943370.3586@localhost.localdomain>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.65
+	id S1755756AbZEJSkz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 10 May 2009 14:40:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755075AbZEJSky
+	(ORCPT <rfc822;git-outgoing>); Sun, 10 May 2009 14:40:54 -0400
+Received: from fed1rmmtao104.cox.net ([68.230.241.42]:32868 "EHLO
+	fed1rmmtao104.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754051AbZEJSkx (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 10 May 2009 14:40:53 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao104.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20090510184054.URIJ17135.fed1rmmtao104.cox.net@fed1rmimpo02.cox.net>;
+          Sun, 10 May 2009 14:40:54 -0400
+Received: from localhost ([68.225.240.211])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id pugu1b0024aMwMQ04uguuy; Sun, 10 May 2009 14:40:54 -0400
+X-Authority-Analysis: v=1.0 c=1 a=FBa1IiYnV70A:10 a=_rGolq_aGIsA:10
+ a=Z4Rwk6OoAAAA:8 a=VwQbUJbxAAAA:8 a=i7_erqn0K4wXRTdKx20A:9
+ a=jRKbG0R9RUeJBZH2OfoA:7 a=ZblIstSz65YyIqJSscRUIgNAFHAA:4 a=U62fhAwekXMA:10
+ a=jbrJJM5MRmoA:10
+X-CM-Score: 0.00
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118731>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118732>
 
-Hi,
+Linus Torvalds <torvalds@linux-foundation.org> writes:
 
-On Sun, 10 May 2009, Linus Torvalds wrote:
-
-> Some of the SVN tests seem to sometimes randomly fail when done in 
-> parallel
-
-This is probably the problem that the SVN "server" is not set up 
-per-testcase, but globally.  (I am speaking from memory here, it might be 
-possible that this was fixed already.)
-
+> I've found that "make -j64 test" does fairly well, bringing the cost down 
+> to something reasonable. Some of the SVN tests seem to sometimes randomly 
+> fail when done in parallel (I've not tried to debug it, I assume it's 
+> either some SVN bug, or just the test infrastructure having some shared 
+> SVN central repo thing), but it happens rarely enough that even if you 
+> have to run it twice, it's still worth it. 
+>
 > [ Side note: the success output of "make test" makes it almost impossible 
->   to debug the error cases when you do that "make -j64" thing.
+>   to debug the error cases when you do that "make -j64" thing. Sad. It 
+>   would be good to have the tests that fail clearly say exactly what test 
+>   failed, because when you run 64 tests at the same time, having "case 9" 
+>   fail is almost totally useless information - test 9 of _which_ 
+>   testsuite? ]
+>
+> I don't generally build docs, but they should run in parallel too, and at 
+> least your fedora build on kernel.org has a nice quad-core machine with 
+> lots of memory, so "-j8" or something is reasonable.
 
-There are left-over trash directories.  (Another indicator are the files 
-in t/test-results/.)
+Thanks; unfortunately I already do all the tricks known to me, including
+running make in parallel (I happen to use -j4) and maintaining a separate
+build farm for each of the branches to avoid recompilation of programs and
+reformatting docs.  However, on a
 
-My common workflow is to "make -j50 && make -j50 -k test", and if it 
-fails, run only those tests that have left-over trash directories.
+    model name      : AMD Athlon(tm) 64 X2 Dual Core Processor 3800+
+    stepping        : 1
+    cpu MHz         : 2004.185
+    cache size      : 512 KB
 
-Ciao,
-Dscho
+with slow IDE disks, optimizing and cheating at the software level goes
+only so far...  For example, a typical cycle I just did looks like this:
+
+$ /usr/bin/time Meta/Dothem --pedantic >:all.log 2>&1; tail -n 2 :all.log
+2089.15user 1610.16system 45:56.91elapsed 134%CPU (0avgtext+0avgdata 0maxresident)k
+220088inputs+3723296outputs (696major+305868883minor)pagefaults 0swaps
+
+You have to remember that people use boxes that are a bit slower compared
+to the boxes you are used to ;-)
