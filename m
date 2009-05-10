@@ -1,69 +1,74 @@
 From: Jon Seymour <jon.seymour@gmail.com>
-Subject: questions about git-mktree
-Date: Sun, 10 May 2009 23:41:17 +1000
-Message-ID: <2cfc40320905100641v3e8742c4v1d0e1091a730970b@mail.gmail.com>
+Subject: Is there an agreed protocol for git repo locking?
+Date: Sun, 10 May 2009 23:58:02 +1000
+Message-ID: <2cfc40320905100658i4d7ef065qe01e35f2929dd2f6@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: gitster@pobox.com, Johannes Sixt <j.sixt@viscovery.net>,
-	Git Mailing List <git@vger.kernel.org>
-To: =?ISO-8859-1?Q?Uwe_Kleine=2DK=F6nig?= 
-	<u.kleine-koenig@pengutronix.de>
-X-From: git-owner@vger.kernel.org Sun May 10 15:41:28 2009
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun May 10 15:58:14 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M39HU-0006hM-0j
-	for gcvg-git-2@gmane.org; Sun, 10 May 2009 15:41:28 +0200
+	id 1M39Xh-0003TY-9R
+	for gcvg-git-2@gmane.org; Sun, 10 May 2009 15:58:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752762AbZEJNlT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 10 May 2009 09:41:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752509AbZEJNlS
-	(ORCPT <rfc822;git-outgoing>); Sun, 10 May 2009 09:41:18 -0400
-Received: from mail-gx0-f166.google.com ([209.85.217.166]:44872 "EHLO
-	mail-gx0-f166.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752335AbZEJNlS (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 10 May 2009 09:41:18 -0400
-Received: by gxk10 with SMTP id 10so1661292gxk.13
-        for <git@vger.kernel.org>; Sun, 10 May 2009 06:41:17 -0700 (PDT)
+	id S1752509AbZEJN6F (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 10 May 2009 09:58:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752315AbZEJN6E
+	(ORCPT <rfc822;git-outgoing>); Sun, 10 May 2009 09:58:04 -0400
+Received: from yx-out-2324.google.com ([74.125.44.30]:41809 "EHLO
+	yx-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751083AbZEJN6C (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 10 May 2009 09:58:02 -0400
+Received: by yx-out-2324.google.com with SMTP id 3so1388491yxj.1
+        for <git@vger.kernel.org>; Sun, 10 May 2009 06:58:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:mime-version:received:date:message-id:subject
-         :from:to:cc:content-type:content-transfer-encoding;
-        bh=JXHENIyqS1bUc6hQqfyMIUa3qd4opKi6wFk3eb5g6X4=;
-        b=OLeVAsi/c/RkxhpV8hxbNwiK1FBGZdzE7yngwDM5PRn9YKAMFctdeAOTRq0hga4BVN
-         Fe5RlYoNh78uoVmKU9x/GJNJf+Ujh63ltCyCUSeRi10LAqXjckWZG4TgbFgKaiTZNeS8
-         WH2yqaLIwx2H5PL9mrMd0U6n+VMxpupy0AOY4=
+         :from:to:content-type:content-transfer-encoding;
+        bh=3l7EpbXlpXX2/T5vePJf/n2Impt8QAbYmCD5IQ6+zP8=;
+        b=jPJ036tT7ToCIOq7Da7BqufgR/v/p11r7Pl9KMnEa/jn4pjFYwk7eXj4O9opn46ntP
+         Ve2lqgopgfm9WlS1XUIHRnb/ZxYrdgUgNCpJyVEQBb+mvdtbAZuGk0SnQb7Tyzo3wKFQ
+         tHRD9AyYUbM2gEYJ2N7F7GNJigWMn7zJFVFa0=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:cc:content-type
+        h=mime-version:date:message-id:subject:from:to:content-type
          :content-transfer-encoding;
-        b=oWZ8IN+YSy5rJy2YZU53VD1UPpvgERAK0eMITAqF6LrxZ3BflDeR57EqwfNrGQdavp
-         4XUJymouRFpwmtXvZu0EQY0o96L0ZCE+6OLdYMxnH4W/gDaUBrCfqx+p3Tk8R9sUECDX
-         YxXbRdM/DznzLQn3BuDTla5U3NkFi8hyp5I6Q=
-Received: by 10.151.135.3 with SMTP id m3mr10938461ybn.55.1241962877608; Sun, 
-	10 May 2009 06:41:17 -0700 (PDT)
+        b=kdT7+BYLtTUXAvX/plJW3aMVood5sdGcVC7YCV/z4dWNAsvujyFilP0fS8jQbK2b7R
+         RPQbYGfX5/NyS44PQyFE3yY1YK1O81dXVr6QG/5QMUZKASncoFCokpY3quKSGu2l3a9K
+         O5MC4N1jFRF09N/7Od/H4ej4hS5LQgPlXfJTQ=
+Received: by 10.151.122.5 with SMTP id z5mr10984124ybm.196.1241963882431; Sun, 
+	10 May 2009 06:58:02 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118718>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118719>
 
-Uwe,
+As I understand it, the normal use case for git is one in which a
+single user performs a number of git operations in sequence on a
+private repo.
 
-Thanks for your explanation.
+As such, locking issues don't normally arise - the user is only doing
+one thing at once.
 
-Does git-mktree normalize the sort order of the input or take it as it
-is? I can see  a case for having it do normalization, if it doesn't
-already and probably for this to be the default behaviour.
+I am working on an idea which will imply the need for concurrently
+executing processes to modify the repo, in particular refs.  I
+specifically don't want to have a repo for each process precisely
+because I don't want to incur the costs of repo creation for every
+process and, in any case, I need them to share the refs.
 
-Also, I have a need for something like git-mktree that takes a
-recursive git-lstree output as input.
+In my use case, I may need locks that span several otherwise atomic
+operations - therefore relying on atomic locks that each git tool
+might employ for safety is not sufficient.
 
-Junio:  assuming these features don't exist already, are you open to
-the idea of accepting patches that add them?
+Is there an agreed upon locking protocol for the git repo? Is there
+tool support for this locking?
 
-Regards,
+The case for adding it is that locking protocols only work if everyone
+agrees on the same protocol. The easiest way to do this would be to
+provide tools that enforce the desired locking protocol.
 
 jon.
