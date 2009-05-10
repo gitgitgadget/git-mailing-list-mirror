@@ -1,89 +1,73 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 2/2] completion: enhance "current branch" display
-Date: Sun, 10 May 2009 01:56:21 -0700
-Message-ID: <7vvdo91glm.fsf@alter.siamese.dyndns.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCHv2 1/5] gitweb: Remove function prototypes
+Date: Sun, 10 May 2009 11:05:38 +0200
+Message-ID: <200905101105.40025.jnareb@gmail.com>
+References: <200905100203.51744.jnareb@gmail.com> <200905100205.23733.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Sun May 10 10:56:29 2009
+Content-Type: text/plain;
+  charset="utf-8"
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun May 10 11:06:25 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M34pg-0006QI-Pu
-	for gcvg-git-2@gmane.org; Sun, 10 May 2009 10:56:29 +0200
+	id 1M34zG-0000rz-K3
+	for gcvg-git-2@gmane.org; Sun, 10 May 2009 11:06:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751181AbZEJI4W (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 10 May 2009 04:56:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750919AbZEJI4V
-	(ORCPT <rfc822;git-outgoing>); Sun, 10 May 2009 04:56:21 -0400
-Received: from fed1rmmtao105.cox.net ([68.230.241.41]:38341 "EHLO
-	fed1rmmtao105.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750833AbZEJI4U (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 10 May 2009 04:56:20 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao105.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20090510085621.ESRH20430.fed1rmmtao105.cox.net@fed1rmimpo01.cox.net>;
-          Sun, 10 May 2009 04:56:21 -0400
-Received: from localhost ([68.225.240.211])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id pkwM1b0014aMwMQ03kwM83; Sun, 10 May 2009 04:56:21 -0400
-X-Authority-Analysis: v=1.0 c=1 a=tUVuHfoxc8kA:10 a=7OjU3gAUHy4A:10
- a=ybZZDoGAAAAA:8 a=uJ7t26oRIgguBJa0pioA:9 a=itJXvwWzldfsXaeeUJ6TO5eaSl0A:4
- a=qIVjreYYsbEA:10
-X-CM-Score: 0.00
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+	id S1751380AbZEJJFp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 10 May 2009 05:05:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751024AbZEJJFp
+	(ORCPT <rfc822;git-outgoing>); Sun, 10 May 2009 05:05:45 -0400
+Received: from mail-ew0-f176.google.com ([209.85.219.176]:49777 "EHLO
+	mail-ew0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750833AbZEJJFo (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 10 May 2009 05:05:44 -0400
+Received: by ewy24 with SMTP id 24so2776199ewy.37
+        for <git@vger.kernel.org>; Sun, 10 May 2009 02:05:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=FeK0lShbFtAbwxFGjsHwtbc+wEHUhANIrhh/BbZLZM0=;
+        b=J1UhEEqfU9dYuf2kkwfaiuHIdkiCibxHOFPD4jUBDXok/z0jsCHtCbz3SZ4e3tz5lQ
+         0Vq1CfvTPPjVosvixRTlWuPLTL24FH6U3vbraVpcUew/UktCa8WOwUr1WMG8vadT78OL
+         HcuLQ9wLkGY4DojvhMWCp0lDRC0CL4EApQcrY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:references:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :message-id;
+        b=cuchoGD2GLk2jTQGGf8K7SLQhLt5Dr2nGsQXgfagWXKAyrwPslJ8mHBGTdiLXBqA9v
+         Ev1dR+EEX1TDZwQ3nA0O488LTW388RebU607r2YBhXz9TYNpRrwm+XBr6Up/UGwYRFp5
+         3DyjfV3Q6e//uzvc5qCtsXVQaRI++PA4bKedo=
+Received: by 10.210.18.8 with SMTP id 8mr1987028ebr.16.1241946344701;
+        Sun, 10 May 2009 02:05:44 -0700 (PDT)
+Received: from ?192.168.1.13? (abvi64.neoplus.adsl.tpnet.pl [83.8.206.64])
+        by mx.google.com with ESMTPS id 23sm5318769eya.49.2009.05.10.02.05.43
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sun, 10 May 2009 02:05:44 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <200905100205.23733.jnareb@gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118710>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118711>
 
-Introduce GIT_PS1_DESCRIBE option you can set to "contains", "branch", or
-"describe" to tweak the way how a detached HEAD is described.
+On Sun, 10 May 2009, Jakub Narebski wrote:
 
-The default behaviour is to describe only exact match with some tag
-(otherwise use the first 7 hexdigits) as before.
+> This patch was send with slightly different commit message as
+> standalone patch earlier. This is the replacement patch, which differs
+> only in the commit message.
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
+I see that v1 version of patch (send as standalone patch) was already 
+accepted.  Just skip this patch then, as it differs only in that it has 
+more wordy commit message...
 
- * I do not think the new modes based on name-rev (aka "--contains") are
-   much useful if you do your own development while on a detached HEAD,
-   but they probably are useful for tourists who sightsee.
-
- contrib/completion/git-completion.bash |   15 +++++++++++++--
- 1 files changed, 13 insertions(+), 2 deletions(-)
-
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index ccc7e0d..2490d5f 100755
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -108,10 +108,21 @@ __git_ps1 ()
- 			fi
- 
- 			b="$(git symbolic-ref HEAD 2>/dev/null)" || {
--				b="$(git describe --exact-match HEAD 2>/dev/null)" ||
-+
-+				b="$(
-+				case "${GIT_PS1_DESCRIBE_STYLE-}" in
-+				(contains)
-+					git describe --contains HEAD ;;
-+				(branch)
-+					git describe --contains --all HEAD ;;
-+				(describe)
-+					git describe HEAD ;;
-+				(* | default)
-+					git describe --exact-match HEAD ;;
-+				esac 2>/dev/null)" ||
-+
- 				b="$(cut -c1-7 "$g/HEAD" 2>/dev/null)..." ||
- 				b="unknown"
--
- 				b="($b)"
- 			}
- 		fi
 -- 
-1.6.3.9.g6345d
+Jakub Narebski
+Poland
