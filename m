@@ -1,66 +1,69 @@
-From: Marco Costalba <mcostalba@gmail.com>
-Subject: Re: [PATCH QGit] Immediately evaluate the ProgramFiles environment 
-	variable
-Date: Sun, 10 May 2009 14:09:02 +0200
-Message-ID: <e5bfff550905100509s656caf34u528307a2d629c06b@mail.gmail.com>
-References: <1241949225-10046-1-git-send-email-markus.heidelberg@web.de>
+From: Jon Seymour <jon.seymour@gmail.com>
+Subject: questions about git-mktree
+Date: Sun, 10 May 2009 23:41:17 +1000
+Message-ID: <2cfc40320905100641v3e8742c4v1d0e1091a730970b@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Markus Heidelberg <markus.heidelberg@web.de>
-X-From: git-owner@vger.kernel.org Sun May 10 14:14:18 2009
+Cc: gitster@pobox.com, Johannes Sixt <j.sixt@viscovery.net>,
+	Git Mailing List <git@vger.kernel.org>
+To: =?ISO-8859-1?Q?Uwe_Kleine=2DK=F6nig?= 
+	<u.kleine-koenig@pengutronix.de>
+X-From: git-owner@vger.kernel.org Sun May 10 15:41:28 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M37v5-0002zd-W4
-	for gcvg-git-2@gmane.org; Sun, 10 May 2009 14:14:16 +0200
+	id 1M39HU-0006hM-0j
+	for gcvg-git-2@gmane.org; Sun, 10 May 2009 15:41:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751345AbZEJMJF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 10 May 2009 08:09:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750913AbZEJMJD
-	(ORCPT <rfc822;git-outgoing>); Sun, 10 May 2009 08:09:03 -0400
-Received: from ey-out-2122.google.com ([74.125.78.24]:19340 "EHLO
-	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751083AbZEJMJD (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 10 May 2009 08:09:03 -0400
-Received: by ey-out-2122.google.com with SMTP id 9so749690eyd.37
-        for <git@vger.kernel.org>; Sun, 10 May 2009 05:09:02 -0700 (PDT)
+	id S1752762AbZEJNlT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 10 May 2009 09:41:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752509AbZEJNlS
+	(ORCPT <rfc822;git-outgoing>); Sun, 10 May 2009 09:41:18 -0400
+Received: from mail-gx0-f166.google.com ([209.85.217.166]:44872 "EHLO
+	mail-gx0-f166.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752335AbZEJNlS (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 10 May 2009 09:41:18 -0400
+Received: by gxk10 with SMTP id 10so1661292gxk.13
+        for <git@vger.kernel.org>; Sun, 10 May 2009 06:41:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=+2TjLD5ahx4DI9K6+vVz0MTCLvCSRjbiSOWb0ox9obg=;
-        b=XTNYiwquZpbHk8MqDko8+a/7Nv5BeyGRxybsBIE7UoJtQFJDC8sqq+y4znIpVnwOns
-         h27AcYmtNdxUiVOEz2QwHetASeQ7FTmiwFmAf1tJxg5Z557Riu1+0H69ZaaNrZ6TeNUd
-         BwQmYJ7z1koaSlejcWzoYou+AfpFJI3dSk2hc=
+        h=domainkey-signature:mime-version:received:date:message-id:subject
+         :from:to:cc:content-type:content-transfer-encoding;
+        bh=JXHENIyqS1bUc6hQqfyMIUa3qd4opKi6wFk3eb5g6X4=;
+        b=OLeVAsi/c/RkxhpV8hxbNwiK1FBGZdzE7yngwDM5PRn9YKAMFctdeAOTRq0hga4BVN
+         Fe5RlYoNh78uoVmKU9x/GJNJf+Ujh63ltCyCUSeRi10LAqXjckWZG4TgbFgKaiTZNeS8
+         WH2yqaLIwx2H5PL9mrMd0U6n+VMxpupy0AOY4=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=w0iW6sLQq0mDHwtvBpuPOZrZGWj7aLGeeDkeow+FKQO3tOJgqg7YRg5RP29zAWdp9l
-         ePZO9kJYQV9KHlOLqeChRGRwzeEhShCUFoy4k6lhULvv4HfEpF/Ljzay86Ys4tbRIjPv
-         ZzNF2i9mJAfwhmPaPg6q6jwAQjNUsvJpLm7xQ=
-Received: by 10.216.47.71 with SMTP id s49mr2730914web.129.1241957342570; Sun, 
-	10 May 2009 05:09:02 -0700 (PDT)
-In-Reply-To: <1241949225-10046-1-git-send-email-markus.heidelberg@web.de>
+        h=mime-version:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        b=oWZ8IN+YSy5rJy2YZU53VD1UPpvgERAK0eMITAqF6LrxZ3BflDeR57EqwfNrGQdavp
+         4XUJymouRFpwmtXvZu0EQY0o96L0ZCE+6OLdYMxnH4W/gDaUBrCfqx+p3Tk8R9sUECDX
+         YxXbRdM/DznzLQn3BuDTla5U3NkFi8hyp5I6Q=
+Received: by 10.151.135.3 with SMTP id m3mr10938461ybn.55.1241962877608; Sun, 
+	10 May 2009 06:41:17 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118717>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118718>
 
-On Sun, May 10, 2009 at 11:53, Markus Heidelberg
-<markus.heidelberg@web.de> wrote:
-> Commit 50d839b (Don't hardcode GIT_EXEC_DIR for Windows so much,
-> 2009-04-18) broke 'make install' on Windows. Somehow the current working
-> directory was prepended to the install path given with target.path, when
-> $(ProgramFiles) should be evaluated during the call of 'make'.
-> This seems to be a qmake bug with generating the Makefile.
->
-> Signed-off-by: Markus Heidelberg <markus.heidelberg@web.de>
-> ---
+Uwe,
 
-Thanks, patch applied and pushed.
+Thanks for your explanation.
+
+Does git-mktree normalize the sort order of the input or take it as it
+is? I can see  a case for having it do normalization, if it doesn't
+already and probably for this to be the default behaviour.
+
+Also, I have a need for something like git-mktree that takes a
+recursive git-lstree output as input.
+
+Junio:  assuming these features don't exist already, are you open to
+the idea of accepting patches that add them?
+
+Regards,
+
+jon.
