@@ -1,87 +1,57 @@
-From: martin f krafft <madduck@madduck.net>
-Subject: Re: [PATCH] topgit tg push feature
-Date: Mon, 11 May 2009 09:25:07 +0200
-Message-ID: <20090511072507.GA24235@lapse.rw.madduck.net>
-References: <20090425161300.GD19142@gmx.de> <20090425163447.GE19142@gmx.de> <20090505093448.GC16524@gmx.de> <20090507045904.GA2068@gmx.de> <36ca99e90905062245w1ec78828ice5ed18161b6ec43@mail.gmail.com> <20090507084355.GA11680@pengutronix.de> <36ca99e90905070250l656f8879g87eb27c09db2cd42@mail.gmail.com> <20090509103625.GC13344@lapse.rw.madduck.net> <20090509190910.GA9655@gmx.de> <20090511032813.GA15540@gmx.de>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: [PATCH] gitk: use --textconv to generate diff text
+Date: Mon, 11 May 2009 09:34:50 +0200
+Message-ID: <4A07D51A.4090409@viscovery.net>
+References: <4A07D160.9020709@viscovery.net>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-ripemd160;
-	protocol="application/pgp-signature"; boundary="HcAYCG3uE/tztfnV"
-To: Marc Weber <marco-oweber@gmx.de>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon May 11 09:27:44 2009
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Paul Mackerras <paulus@samba.org>
+X-From: git-owner@vger.kernel.org Mon May 11 09:35:06 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M3PvK-0005HE-Dx
-	for gcvg-git-2@gmane.org; Mon, 11 May 2009 09:27:42 +0200
+	id 1M3Q2T-0007zx-09
+	for gcvg-git-2@gmane.org; Mon, 11 May 2009 09:35:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752398AbZEKH1e (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 May 2009 03:27:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752081AbZEKH1e
-	(ORCPT <rfc822;git-outgoing>); Mon, 11 May 2009 03:27:34 -0400
-Received: from clegg.madduck.net ([193.242.105.96]:48804 "EHLO
-	clegg.madduck.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751801AbZEKH1d (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 May 2009 03:27:33 -0400
-Received: from lapse.rw.madduck.net (lapse.rw.madduck.net [IPv6:2001:41e0:ff3a::1])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "lapse.rw.madduck.net", Issuer "CAcert Class 3 Root" (verified OK))
-	by clegg.madduck.net (postfix) with ESMTPS id E99001D409B;
-	Mon, 11 May 2009 09:27:25 +0200 (CEST)
-Received: by lapse.rw.madduck.net (Postfix, from userid 1000)
-	id EE96A8073; Mon, 11 May 2009 09:25:07 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <20090511032813.GA15540@gmx.de>
-X-Motto: Keep the good times rollin'
-X-OS: Debian GNU/Linux squeeze/sid kernel 2.6.30-rc4-686 i686
-X-Spamtrap: madduck.bogus@madduck.net
-X-Subliminal-Message: debian/rules!
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-Virus-Scanned: ClamAV 0.94.2/9351/Mon May 11 04:59:11 2009 on clegg.madduck.net
-X-Virus-Status: Clean
+	id S1752081AbZEKHe5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 May 2009 03:34:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751378AbZEKHe5
+	(ORCPT <rfc822;git-outgoing>); Mon, 11 May 2009 03:34:57 -0400
+Received: from lilzmailso02.liwest.at ([212.33.55.13]:3584 "EHLO
+	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751106AbZEKHe4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 May 2009 03:34:56 -0400
+Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
+	by lilzmailso02.liwest.at with esmtpa (Exim 4.69)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1M3Q2J-000159-UJ; Mon, 11 May 2009 09:34:56 +0200
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.96])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id B13FEC6C1; Mon, 11 May 2009 09:34:55 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.21 (Windows/20090302)
+In-Reply-To: <4A07D160.9020709@viscovery.net>
+X-Spam-Score: -1.4 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118778>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118779>
 
+Johannes Sixt schrieb:
+> From: Johannes Sixt <j6t@kdbg.org>
+> Date: Tue, 28 Apr 2009 14:03:54 +0200
+> 
+> For the most part gitk's focus is on showing history and changes in
+> a human readable form. For this reason, it makes sense to generate
+> the patch text in the diff view using --textconv so that textconv drivers
+> are used if they are defined.
 
---HcAYCG3uE/tztfnV
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+FWIW, I keep a few Word documents in git and use catdoc as textconv
+driver. This works pretty well. Git-gui doesn't show any textual changes
+(it treats the Word files as binary, and it has to), with this patch I can
+use gitk to preview the changes in the worktree and the index.
 
-also sprach Marc Weber <marco-oweber@gmx.de> [2009.05.11.0528 +0200]:
->   >I also like the true/false style, its also useable with the current 's=
-cheme':
->   >    $tgish_deps_only && ... =20
->   great idea. true/false are sh builtins. adopted. I still prefer
->   [ foo -a bar ]; or [ foo -o bar ]; for readability.
-
-The patch looks good, I am going to test it now, I hope.
-
-Quick comment: -a and -o are not POSIX-compliant, use [ "$foo" ] ||
-[ "$bar" ] instead.
-
---=20
-martin | http://madduck.net/ | http://two.sentenc.es/
-=20
-the early bird may get the worm,
-but the second mouse gets the cheese in the trap.
-=20
-spamtraps: madduck.bogus@madduck.net
-
---HcAYCG3uE/tztfnV
-Content-Type: application/pgp-signature; name="digital_signature_gpg.asc"
-Content-Description: Digital signature (see http://martin-krafft.net/gpg/)
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
-
-iEYEAREDAAYFAkoH0tMACgkQIgvIgzMMSnXDGQCeKa7BSJwdnj48g7AINW5dPyZR
-nKkAoJkJ9GR2sZ5guVwVUGAN2qAQfCaZ
-=gt0t
------END PGP SIGNATURE-----
-
---HcAYCG3uE/tztfnV--
+-- Hannes
