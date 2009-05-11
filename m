@@ -1,80 +1,150 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: (revised) What's cooking in git.git (May 2009, #01; Sat, 09)
-Date: Mon, 11 May 2009 05:35:50 -0400
-Message-ID: <20090511093550.GB5685@coredump.intra.peff.net>
-References: <7vk54p30uu.fsf@alter.siamese.dyndns.org> <7vab5kwuoz.fsf@alter.siamese.dyndns.org>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: [PATCH] Add a reminder test case for a merge with F/D transition
+Date: Mon, 11 May 2009 11:42:17 +0200
+Message-ID: <81b0412b0905110242u3624f0eeyc0dc9b2b987bfa2b@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon May 11 11:36:04 2009
+Content-Type: multipart/mixed; boundary=001636457c723fdade04699fcb27
+Cc: Anders Melchiorsen <mail@cup.kalibalik.dk>, git@vger.kernel.org,
+	Samuel Tardieu <sam@rfc1149.net>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	=?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder@ira.uka.de>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Mon May 11 11:42:31 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M3RvX-00078d-Bu
-	for gcvg-git-2@gmane.org; Mon, 11 May 2009 11:36:03 +0200
+	id 1M3S1l-00018Y-EF
+	for gcvg-git-2@gmane.org; Mon, 11 May 2009 11:42:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754218AbZEKJfu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 May 2009 05:35:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754506AbZEKJft
-	(ORCPT <rfc822;git-outgoing>); Mon, 11 May 2009 05:35:49 -0400
-Received: from peff.net ([208.65.91.99]:43142 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753054AbZEKJft (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 May 2009 05:35:49 -0400
-Received: (qmail 25743 invoked by uid 107); 11 May 2009 09:36:09 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Mon, 11 May 2009 05:36:09 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Mon, 11 May 2009 05:35:50 -0400
-Content-Disposition: inline
-In-Reply-To: <7vab5kwuoz.fsf@alter.siamese.dyndns.org>
+	id S1755129AbZEKJmT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 May 2009 05:42:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754218AbZEKJmS
+	(ORCPT <rfc822;git-outgoing>); Mon, 11 May 2009 05:42:18 -0400
+Received: from mail-bw0-f174.google.com ([209.85.218.174]:39105 "EHLO
+	mail-bw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752951AbZEKJmS (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 May 2009 05:42:18 -0400
+Received: by bwz22 with SMTP id 22so2489613bwz.37
+        for <git@vger.kernel.org>; Mon, 11 May 2009 02:42:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=UTmxeeAfXWyc1jbTXLIUoR/bFS95aw9zN2fLSAmBS5k=;
+        b=mxOmTjGQigjQfFwy609bVzYxOrhkVmgq6zBROmcblMmXwUW0YMlWhUfCYNOlVAPNp5
+         pnoyCiEYPLc0BF5l+ptvaX0AG0sD8QWrKe3WpM15bwKMA+7rMWJo1sBI8hXsx1rDZdJX
+         iJfsz/9QWpyCCLjutbFIB0fWk1E3mtvsecl48=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:date:message-id:subject:from:to:cc:content-type;
+        b=gKycHcm0QLhxAlx8wF1gVQrUzwxXMm00mKV5PtHFYYKDHj/cKS9VOrnkwZCB9XTKW3
+         5F+uidxiq26CM4YS5rsJskBDUxOf7/ecva6EIoYdrBif+Yv0b+ZT3Z+US5UFHZ8v4oaQ
+         FELOALW+afeIfog/EtsdI5U32umSekKIP2Hk4=
+Received: by 10.204.97.204 with SMTP id m12mr6707608bkn.22.1242034937518; Mon, 
+	11 May 2009 02:42:17 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118786>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118787>
 
-On Sun, May 10, 2009 at 01:48:28PM -0700, Junio C Hamano wrote:
+--001636457c723fdade04699fcb27
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-> * jk/maint-add-empty (Tue Apr 28 23:21:01 2009 -0400) 1 commit
->  - add: don't complain when adding empty project root
-> 
-> When you say "git add ." in an empty directory, you get "No path matches
-> ''", instead of "No path matches '.'", and this "fixes" it by hiding the
-> error and making the command silently succeed.  Strictly speaking it
-> introduces inconsistency, but I think an empty directory is so
-> uninteresting special case that not signalling it as an error is Ok.
-> 
-> Will merge to 'next'.
+The problem is that if a file was replaced with a directory containing
+another file with the same content and mode, an attempt to merge it
+with a branch descended from a commit before this F->D transition will
+cause merge-recursive to break. It breaks even if there were no
+conflicting changes on that other branch.
 
-Actually, it is less invasive than that. It _already_ silently ignores
-empty directories, like "mkdir foo && git add foo". And because of the
-way we chdir to the project root, that is equivalent to "mkdir foo && cd
-foo && git add .".
+Originally reported by Anders Melchiorsen.
 
-This just extends the behavior to the project root ("mkdir foo && cd foo
-&& git init && git add ."). So arguably it is reducing inconsistency. :)
+Signed-off-by: Alex Riesen <raa.lkml@gmail.com>
+---
 
-> * jk/no-no-no-empty-directory (Fri May 8 01:01:17 2009 -0400) 2 commits
->  + parseopt: add OPT_NEGBIT
->  + parseopt: add OPT_NEGBIT
-> 
-> I somehow botched the commit log message of the top one; it is about
-> fixing "ls-files --no-empty-directory".
+2009/5/11 Johannes Schindelin <Johannes.Schindelin@gmx.de>:
+>
+> Maybe you can turn this into a patch adding a test (with
+> test_expect_failure to mark it as a bug)? =C2=A0This would make debugging=
+ a lot
+> easier, as a non-installed Git could be tested.
 
-Too bad it is not possible to rewind 'next'. ;)
+Here.
 
-> * jc/log-tz (Tue Mar 3 00:45:37 2009 -0800) 1 commit
->  - Allow --date=local --date=other-format to work as expected
-> 
-> The one I posted had a few corner-case bugs that was caught with the test
-> suite; this one has them fixed.  People did not like the UI so it is kept
-> out of 'next'
+ t/t6020-merge-df.sh |   23 +++++++++++++++++++++++
+ 1 files changed, 23 insertions(+), 0 deletions(-)
 
-This one has been sitting for a while. I was one of the complainers. If
-there is interest, I can rework it according to our previous discussion
-(but I'm beginning to wonder if anybody actually cares about this
-patch).
+diff --git a/t/t6020-merge-df.sh b/t/t6020-merge-df.sh
+index a19d49d..b62b52a 100755
+--- a/t/t6020-merge-df.sh
++++ b/t/t6020-merge-df.sh
+@@ -22,4 +22,27 @@ git commit -m "File: dir"'
 
--Peff
+ test_expect_code 1 'Merge with d/f conflicts' 'git merge "merge msg" B mas=
+ter'
+
++test_expect_failure 'F/D conflict' '
++	git reset --hard &&
++	git checkout master &&
++	rm .git/index &&
++
++	mkdir before &&
++	echo FILE >before/one &&
++	echo FILE >after &&
++	git add . &&
++	git commit -mfirst &&
++
++	rm -f after &&
++	git mv before after &&
++	git commit -mmove &&
++
++	git checkout -b para HEAD^ &&
++	echo COMPLETELY ANOTHER FILE >another &&
++	git add . &&
++	git commit -mpara &&
++
++	git merge master
++'
++
+ test_done
+--=20
+1.6.3.28.ga852b
+
+--001636457c723fdade04699fcb27
+Content-Type: text/plain; charset=US-ASCII; 
+	name="0001-Add-a-reminder-test-case-for-a-merge-with-F-D-transi.txt"
+Content-Disposition: attachment; 
+	filename="0001-Add-a-reminder-test-case-for-a-merge-with-F-D-transi.txt"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: f_fukzi57x0
+
+RnJvbSAwNTQzM2E2Zjg5NmM0MGU0YTAzOTgxNWQ4NjYxM2Q3ZTM1MWVmMGRhIE1vbiBTZXAgMTcg
+MDA6MDA6MDAgMjAwMQpGcm9tOiBBbGV4IFJpZXNlbiA8cmFhLmxrbWxAZ21haWwuY29tPgpEYXRl
+OiBNb24sIDExIE1heSAyMDA5IDExOjMxOjQyICswMjAwClN1YmplY3Q6IFtQQVRDSF0gQWRkIGEg
+cmVtaW5kZXIgdGVzdCBjYXNlIGZvciBhIG1lcmdlIHdpdGggRi9EIHRyYW5zaXRpb24KClRoZSBw
+cm9ibGVtIGlzIHRoYXQgaWYgYSBmaWxlIHdhcyByZXBsYWNlZCB3aXRoIGEgZGlyZWN0b3J5IGNv
+bnRhaW5pbmcKYW5vdGhlciBmaWxlIHdpdGggdGhlIHNhbWUgY29udGVudCBhbmQgbW9kZSwgYW4g
+YXR0ZW1wdCB0byBtZXJnZSBpdAp3aXRoIGEgYnJhbmNoIGRlc2NlbmRlZCBmcm9tIGEgY29tbWl0
+IGJlZm9yZSB0aGlzIEYtPkQgdHJhbnNpdGlvbiB3aWxsCmNhdXNlIG1lcmdlLXJlY3Vyc2l2ZSB0
+byBicmVhay4gSXQgYnJlYWtzIGV2ZW4gaWYgdGhlcmUgd2VyZSBubwpjb25mbGljdGluZyBjaGFu
+Z2VzIG9uIHRoYXQgb3RoZXIgYnJhbmNoLgoKT3JpZ2luYWxseSByZXBvcnRlZCBieSBBbmRlcnMg
+TWVsY2hpb3JzZW4uCgpTaWduZWQtb2ZmLWJ5OiBBbGV4IFJpZXNlbiA8cmFhLmxrbWxAZ21haWwu
+Y29tPgotLS0KIHQvdDYwMjAtbWVyZ2UtZGYuc2ggfCAgIDIzICsrKysrKysrKysrKysrKysrKysr
+KysrCiAxIGZpbGVzIGNoYW5nZWQsIDIzIGluc2VydGlvbnMoKyksIDAgZGVsZXRpb25zKC0pCgpk
+aWZmIC0tZ2l0IGEvdC90NjAyMC1tZXJnZS1kZi5zaCBiL3QvdDYwMjAtbWVyZ2UtZGYuc2gKaW5k
+ZXggYTE5ZDQ5ZC4uYjYyYjUyYSAxMDA3NTUKLS0tIGEvdC90NjAyMC1tZXJnZS1kZi5zaAorKysg
+Yi90L3Q2MDIwLW1lcmdlLWRmLnNoCkBAIC0yMiw0ICsyMiwyNyBAQCBnaXQgY29tbWl0IC1tICJG
+aWxlOiBkaXIiJwogCiB0ZXN0X2V4cGVjdF9jb2RlIDEgJ01lcmdlIHdpdGggZC9mIGNvbmZsaWN0
+cycgJ2dpdCBtZXJnZSAibWVyZ2UgbXNnIiBCIG1hc3RlcicKIAordGVzdF9leHBlY3RfZmFpbHVy
+ZSAnRi9EIGNvbmZsaWN0JyAnCisJZ2l0IHJlc2V0IC0taGFyZCAmJgorCWdpdCBjaGVja291dCBt
+YXN0ZXIgJiYKKwlybSAuZ2l0L2luZGV4ICYmCisKKwlta2RpciBiZWZvcmUgJiYKKwllY2hvIEZJ
+TEUgPmJlZm9yZS9vbmUgJiYKKwllY2hvIEZJTEUgPmFmdGVyICYmCisJZ2l0IGFkZCAuICYmCisJ
+Z2l0IGNvbW1pdCAtbWZpcnN0ICYmCisKKwlybSAtZiBhZnRlciAmJgorCWdpdCBtdiBiZWZvcmUg
+YWZ0ZXIgJiYKKwlnaXQgY29tbWl0IC1tbW92ZSAmJgorCisJZ2l0IGNoZWNrb3V0IC1iIHBhcmEg
+SEVBRF4gJiYKKwllY2hvIENPTVBMRVRFTFkgQU5PVEhFUiBGSUxFID5hbm90aGVyICYmCisJZ2l0
+IGFkZCAuICYmCisJZ2l0IGNvbW1pdCAtbXBhcmEgJiYKKworCWdpdCBtZXJnZSBtYXN0ZXIKKycK
+KwogdGVzdF9kb25lCi0tIAoxLjYuMy4yOC5nYTg1MmIKCg==
+--001636457c723fdade04699fcb27--
