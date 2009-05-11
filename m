@@ -1,93 +1,87 @@
 From: Jakub Narebski <jnareb@gmail.com>
-Subject: [PATCH 1/4] gitweb: Replace wrongly added tabs with spaces
-Date: Mon, 11 May 2009 19:37:28 +0200
-Message-ID: <20090511173632.15152.80943.stgit@localhost.localdomain>
+Subject: [PATCH 2/4] gitweb: Use capturing parentheses only when you intend to
+	capture
+Date: Mon, 11 May 2009 19:39:43 +0200
+Message-ID: <20090511173733.15152.83661.stgit@localhost.localdomain>
 References: <20090511173025.15152.94215.stgit@localhost.localdomain>
 Mime-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
 Cc: Jakub Narebski <jnareb@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon May 11 19:37:51 2009
+X-From: git-owner@vger.kernel.org Mon May 11 19:39:57 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M3ZRY-00055I-MR
-	for gcvg-git-2@gmane.org; Mon, 11 May 2009 19:37:37 +0200
+	id 1M3ZTn-0006Bs-PT
+	for gcvg-git-2@gmane.org; Mon, 11 May 2009 19:39:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755083AbZEKRh3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 May 2009 13:37:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754703AbZEKRh3
-	(ORCPT <rfc822;git-outgoing>); Mon, 11 May 2009 13:37:29 -0400
-Received: from mail-fx0-f158.google.com ([209.85.220.158]:47481 "EHLO
-	mail-fx0-f158.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752619AbZEKRh2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 May 2009 13:37:28 -0400
-Received: by fxm2 with SMTP id 2so2847604fxm.37
-        for <git@vger.kernel.org>; Mon, 11 May 2009 10:37:28 -0700 (PDT)
+	id S1755256AbZEKRjr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 May 2009 13:39:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754687AbZEKRjr
+	(ORCPT <rfc822;git-outgoing>); Mon, 11 May 2009 13:39:47 -0400
+Received: from fg-out-1718.google.com ([72.14.220.152]:6279 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753901AbZEKRjq (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 May 2009 13:39:46 -0400
+Received: by fg-out-1718.google.com with SMTP id d23so618632fga.17
+        for <git@vger.kernel.org>; Mon, 11 May 2009 10:39:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:received:from:subject:to:cc
          :date:message-id:in-reply-to:references:user-agent:mime-version
          :content-type:content-transfer-encoding;
-        bh=3hSRD0JGgSm5e/oMnVsaXOZM19gTb5m4TfKkuoSf9cg=;
-        b=YpOzB532wf41oq/sl3CmLcf3R0+/9e3x+TMwglRN02m46mz8XxhlTZ7QLdSh31NfIt
-         8J3OTwY4d1vKoZVXpN/RuCSC7NG+yhLtAd2R4N5dLGx+31WCcGBgRXsZmNvvLr/fJjrh
-         3/R0WdqIsAU7Je82O+mjo2qNZC39o1IuQpVFc=
+        bh=+x5W8tRigXFDiyMPkqNqh1x8fY/36Ajrhat8kxqrsrI=;
+        b=fYobKyb3PHWWyOVyuwzVJr6WIyAa84N/1S6OmOwFjiH/OmIzxgLPUtwEub8/rmaEvq
+         /WQG9/RCKHCeGNYurfr4VgEKZqIq1RhvwhtmskScCXmVHZwYof5UcDb5wDWTKpfDJ4u1
+         fzvkBvBgBm998hoALcv3RjGQgaGIQYRa4AdOE=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:subject:to:cc:date:message-id:in-reply-to:references
          :user-agent:mime-version:content-type:content-transfer-encoding;
-        b=BTKvMHLa5hrgdn7BbC8pKCSslhRRaNThV82NIPChLP0/Li+0Hf2c42JQC9wWfsRSR3
-         ShIgczhQZusi1ZnhVVBMJ4eqEHwEbTmUN8M6F9FOB+vSG0GwhxC2EV3oC061yLuoGpW+
-         VabB5OBF2f5U9s57YSegUmWimBstA7fTWvnJs=
-Received: by 10.86.70.20 with SMTP id s20mr6812399fga.1.1242063448178;
-        Mon, 11 May 2009 10:37:28 -0700 (PDT)
+        b=MOWt6Oqs2geD3xM3HL0sLQvTZDb2pncZ+R5G385kgPUWeyZg0OL40ycAuxW5QCKjIp
+         fSCkbw5OV/AGK1QF21ynYPb967ql7nGaY9X5WhzILgfQ9yNHe9xevAPl8gLeLbzRogLA
+         uDC7r0QotVFizoG40Nfs4uPHviSO7CXp6l/XI=
+Received: by 10.86.80.5 with SMTP id d5mr6738110fgb.6.1242063586448;
+        Mon, 11 May 2009 10:39:46 -0700 (PDT)
 Received: from localhost.localdomain (absh130.neoplus.adsl.tpnet.pl [83.8.127.130])
-        by mx.google.com with ESMTPS id 4sm4867225fge.28.2009.05.11.10.37.27
+        by mx.google.com with ESMTPS id e20sm4891679fga.5.2009.05.11.10.39.45
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 11 May 2009 10:37:27 -0700 (PDT)
+        Mon, 11 May 2009 10:39:45 -0700 (PDT)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id n4BHbSFO016673;
-	Mon, 11 May 2009 19:37:28 +0200
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id n4BHdhpe016715;
+	Mon, 11 May 2009 19:39:45 +0200
 In-Reply-To: <20090511173025.15152.94215.stgit@localhost.localdomain>
 User-Agent: StGIT/0.14.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118813>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118814>
 
-In two places there was hard tab character instead of space.
-Fix this.
+Non-capturing groups are useful because they have better runtime
+performance and do not copy strings to the magic global capture
+variables.
 
 Signed-off-by: Jakub Narebski <jnareb@gmail.com>
 ---
-I have not searched who was responsible for that typo...
+"Perl Best Practices", section 12.14. Capturing Parentheses (Use
+capturing parentheses only when you intend to capture.)
 
- gitweb/gitweb.perl |    4 ++--
- 1 files changed, 2 insertions(+), 2 deletions(-)
+ gitweb/gitweb.perl |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
 diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index 8c51f3e..beb79ee 100755
+index beb79ee..097bd18 100755
 --- a/gitweb/gitweb.perl
 +++ b/gitweb/gitweb.perl
-@@ -3990,7 +3990,7 @@ sub fill_project_list_info {
- 			    ($pname !~ /\/$/) &&
- 			    (-d "$projectroot/$pname")) {
- 				$pr->{'forks'} = "-d $projectroot/$pname";
--			}	else {
-+			} else {
- 				$pr->{'forks'} = 0;
- 			}
- 		}
-@@ -6282,7 +6282,7 @@ XML
- 	# end of feed
- 	if ($format eq 'rss') {
- 		print "</channel>\n</rss>\n";
--	}	elsif ($format eq 'atom') {
-+	} elsif ($format eq 'atom') {
- 		print "</feed>\n";
- 	}
+@@ -828,7 +828,7 @@ if (!defined $action) {
+ if (!defined($actions{$action})) {
+ 	die_error(400, "Unknown action");
+ }
+-if ($action !~ m/^(opml|project_list|project_index)$/ &&
++if ($action !~ m/^(?:opml|project_list|project_index)$/ &&
+     !$project) {
+ 	die_error(400, "Project needed");
  }
