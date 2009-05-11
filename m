@@ -1,78 +1,65 @@
-From: "Michael S. Tsirkin" <mst@redhat.com>
-Subject: Re: auto-merge after push?
-Date: Tue, 12 May 2009 00:13:39 +0300
-Message-ID: <20090511211339.GD21045@redhat.com>
-References: <20090511142326.GA18260@redhat.com> <alpine.DEB.1.00.0905111714250.4973@intel-tinevez-2-302> <20090511201705.GA21045@redhat.com> <alpine.DEB.1.00.0905112302130.27348@pacific.mpi-cbg.de>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] gitk: use --textconv to generate diff text
+Date: Mon, 11 May 2009 14:20:17 -0700
+Message-ID: <7vk54n9w1a.fsf@alter.siamese.dyndns.org>
+References: <4A07D160.9020709@viscovery.net>
+	<20090511091346.GA5685@coredump.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Mon May 11 23:14:58 2009
+Cc: Johannes Sixt <j.sixt@viscovery.net>,
+	Paul Mackerras <paulus@samba.org>,
+	Git Mailing List <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon May 11 23:20:43 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M3cpt-0008QB-HX
-	for gcvg-git-2@gmane.org; Mon, 11 May 2009 23:14:58 +0200
+	id 1M3cvJ-0002LB-2f
+	for gcvg-git-2@gmane.org; Mon, 11 May 2009 23:20:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757654AbZEKVOm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 May 2009 17:14:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756913AbZEKVOm
-	(ORCPT <rfc822;git-outgoing>); Mon, 11 May 2009 17:14:42 -0400
-Received: from mx2.redhat.com ([66.187.237.31]:32886 "EHLO mx2.redhat.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755314AbZEKVOl (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 May 2009 17:14:41 -0400
-Received: from int-mx2.corp.redhat.com (int-mx2.corp.redhat.com [172.16.27.26])
-	by mx2.redhat.com (8.13.8/8.13.8) with ESMTP id n4BLEe6b005364;
-	Mon, 11 May 2009 17:14:40 -0400
-Received: from ns3.rdu.redhat.com (ns3.rdu.redhat.com [10.11.255.199])
-	by int-mx2.corp.redhat.com (8.13.1/8.13.1) with ESMTP id n4BLEdXW004141;
-	Mon, 11 May 2009 17:14:39 -0400
-Received: from redhat.com (vpn-10-19.str.redhat.com [10.32.10.19])
-	by ns3.rdu.redhat.com (8.13.8/8.13.8) with ESMTP id n4BLEbpW004994;
-	Mon, 11 May 2009 17:14:37 -0400
-Content-Disposition: inline
-In-Reply-To: <alpine.DEB.1.00.0905112302130.27348@pacific.mpi-cbg.de>
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-Scanned-By: MIMEDefang 2.58 on 172.16.27.26
+	id S1759764AbZEKVUT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 May 2009 17:20:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759760AbZEKVUS
+	(ORCPT <rfc822;git-outgoing>); Mon, 11 May 2009 17:20:18 -0400
+Received: from fed1rmmtao102.cox.net ([68.230.241.44]:38070 "EHLO
+	fed1rmmtao102.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759759AbZEKVUR (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 May 2009 17:20:17 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao102.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20090511212018.NNBT20976.fed1rmmtao102.cox.net@fed1rmimpo02.cox.net>;
+          Mon, 11 May 2009 17:20:18 -0400
+Received: from localhost ([68.225.240.211])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id qMLH1b00G4aMwMQ04MLHAs; Mon, 11 May 2009 17:20:17 -0400
+X-Authority-Analysis: v=1.0 c=1 a=4bx7SMiv7XcA:10 a=e55H4uVQSdEA:10
+ a=PKzvZo6CAAAA:8 a=A9qS8gIqAAAA:8 a=J3TjgM65XiX34CC1DC8A:9
+ a=LP8VFycbTvc2JBirbcvN0eVNF_AA:4 a=OdWmie4EkE0A:10 a=Kj4G0JfAssAA:10
+X-CM-Score: 0.00
+In-Reply-To: <20090511091346.GA5685@coredump.intra.peff.net> (Jeff King's message of "Mon\, 11 May 2009 05\:13\:47 -0400")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118849>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118850>
 
-On Mon, May 11, 2009 at 11:03:27PM +0200, Johannes Schindelin wrote:
-> Hi,
-> 
-> On Mon, 11 May 2009, Michael S. Tsirkin wrote:
-> 
-> > On Mon, May 11, 2009 at 05:18:06PM +0200, Johannes Schindelin wrote:
-> > > The thing is, a merge can fail.  And then you already need direct access 
-> > > to the working directory in question.
-> > > 
-> > > If you were actually talking about fast-forward pushes (because you did 
-> > > the merge locally already), this might help you:
-> > > 
-> > > 	http://thread.gmane.org/gmane.comp.version-control.git/110251
-> > 
-> > Sounds good. But it looks like this patch is unlikely to be merged, does 
-> > it not?
-> 
-> Unlikely to be merged by Junio?  Without success stories, certainly.
-> 
-> But you can do the same as I did: run your local Git with that patch.  I 
-> am actually growing fonder and fonder of denyCurrentBranch=updateInstead.  
-> It works beautifully here.
-> 
-> Of course, I always know what I am doing.
-> 
-> Ciao,
-> Dscho
-> 
-> P.S.: :-)
+Jeff King <peff@peff.net> writes:
 
-BTW, what exactly happens on conflict?
+> On Mon, May 11, 2009 at 09:18:56AM +0200, Johannes Sixt wrote:
+>
+>> For the most part gitk's focus is on showing history and changes in
+>> a human readable form. For this reason, it makes sense to generate
+>> the patch text in the diff view using --textconv so that textconv drivers
+>> are used if they are defined.
+>> 
+>> gitk can also generate patches, but we do not use --textconv because
+>> such patches could not be applied.
+>> 
+>> Signed-off-by: Johannes Sixt <j6t@kdbg.org>
+>
+> As the original author of the textconv code, I am in favor of this.
 
--- 
-MST
+I agree; I think textconv is meant for this kind of usage.
