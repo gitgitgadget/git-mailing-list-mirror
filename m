@@ -1,69 +1,57 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 10/10] bisect: make "git bisect" use new "--next-all" bisect-helper function
-Date: Sun, 10 May 2009 17:44:02 -0700
-Message-ID: <7v8wl4tqnh.fsf@alter.siamese.dyndns.org>
-References: <20090509154419.5324.96204.chriscool@tuxfamily.org>
-	<20090509155548.5387.83292.chriscool@tuxfamily.org>
+Subject: Re: [PATCH 0/5] gitweb: Some code cleanups (up to perlcritic --stern)
+Date: Sun, 10 May 2009 17:47:20 -0700
+Message-ID: <7vy6t4sbxj.fsf@alter.siamese.dyndns.org>
+References: <200905100203.51744.jnareb@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Christian Couder <chriscool@tuxfamily.org>
-X-From: git-owner@vger.kernel.org Mon May 11 02:46:31 2009
+Cc: git@vger.kernel.org, Bill Pemberton <wfp5p@virginia.edu>
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Mon May 11 02:47:38 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M3Jf5-0001dq-05
-	for gcvg-git-2@gmane.org; Mon, 11 May 2009 02:46:31 +0200
+	id 1M3Jg8-0001vn-BJ
+	for gcvg-git-2@gmane.org; Mon, 11 May 2009 02:47:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752936AbZEKAoF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 10 May 2009 20:44:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752766AbZEKAoE
-	(ORCPT <rfc822;git-outgoing>); Sun, 10 May 2009 20:44:04 -0400
-Received: from fed1rmmtao102.cox.net ([68.230.241.44]:50679 "EHLO
-	fed1rmmtao102.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752121AbZEKAoD (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 10 May 2009 20:44:03 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao102.cox.net
+	id S1754314AbZEKArV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 10 May 2009 20:47:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753664AbZEKArU
+	(ORCPT <rfc822;git-outgoing>); Sun, 10 May 2009 20:47:20 -0400
+Received: from fed1rmmtao105.cox.net ([68.230.241.41]:57663 "EHLO
+	fed1rmmtao105.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752055AbZEKArU (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 10 May 2009 20:47:20 -0400
+Received: from fed1rmimpo03.cox.net ([70.169.32.75])
+          by fed1rmmtao105.cox.net
           (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20090511004402.EFBQ20976.fed1rmmtao102.cox.net@fed1rmimpo01.cox.net>;
-          Sun, 10 May 2009 20:44:02 -0400
+          id <20090511004720.EMCH20430.fed1rmmtao105.cox.net@fed1rmimpo03.cox.net>;
+          Sun, 10 May 2009 20:47:20 -0400
 Received: from localhost ([68.225.240.211])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id q0k21b0054aMwMQ030k2e7; Sun, 10 May 2009 20:44:02 -0400
-X-Authority-Analysis: v=1.0 c=1 a=MDXuuuku1n8A:10 a=MPbockrkyBgA:10
- a=dIu3SnmMAAAA:8 a=5_JqO3WM4SLAExXBvCoA:9 a=Eh4_wYqezawq5xKTfLtr0RcKAUAA:4
- a=Rn8qiON8_f4A:10
+	by fed1rmimpo03.cox.net with bizsmtp
+	id q0nL1b00E4aMwMQ040nL32; Sun, 10 May 2009 20:47:20 -0400
+X-Authority-Analysis: v=1.0 c=1 a=rB85IVHXe-MA:10 a=nkwkopmtsd0A:10
+ a=pGLkceISAAAA:8 a=Fkso9wCkuS-ZYaKzZWcA:9 a=mltInmLrVIMu4ZlUndzQT_OnrvYA:4
+ a=MSl-tDqOz04A:10
 X-CM-Score: 0.00
+In-Reply-To: <200905100203.51744.jnareb@gmail.com> (Jakub Narebski's message of "Sun\, 10 May 2009 02\:03\:50 +0200")
 User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118763>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118764>
 
-Christian Couder <chriscool@tuxfamily.org> writes:
+Jakub Narebski <jnareb@gmail.com> writes:
 
-> This patch replace the "--next-exit" option of "git bisect--helper"
-> with a "--next-all" option that does merge base checking using
-> the "check_good_are_ancestors_of_bad" function implemented in
-> "bisect.c" in a former patch.
->
-> The new "--next-all" option is then used in "git-bisect.sh" instead
-> of the "--next-exit" option, and all the shell functions in
-> "git-bisect.sh" that are now unused are removed.
->
-> Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
-> ---
->  bisect.c                 |    4 +-
->  bisect.h                 |    2 +-
->  builtin-bisect--helper.c |   14 +++---
->  git-bisect.sh            |  127 +---------------------------------------------
->  4 files changed, 13 insertions(+), 134 deletions(-)
+> The following series consist of some code cleanups for gitweb.perl.
+> They're based on suggestions by perlcritic (Perl::Critic).
 
 Nice.
 
-All patches looked sensible; will queue.
+But this series, when queued to 'pu', seems to break t9500; I haven't
+looked at the breakage myself yet.
 
-Thanks.
+Jakub, did you run this through the testsuite already (the problem could
+well be on my end and that is why I am asking)?
