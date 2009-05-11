@@ -1,57 +1,66 @@
-From: Heiko Voigt <hvoigt@hvoigt.net>
-Subject: Re: merging multiple commit into one?
-Date: Mon, 11 May 2009 23:29:24 +0200
-Message-ID: <20090511212923.GA19844@macbook.lan>
-References: <1de9d39c0905110621p6858bca8y8bb036a167754672@mail.gmail.com>
+From: martin f krafft <madduck@madduck.net>
+Subject: Re: [PATCH] topgit tg push feature
+Date: Mon, 11 May 2009 23:39:36 +0200
+Message-ID: <20090511213936.GB17322@piper.oerlikon.madduck.net>
+References: <20090505093448.GC16524@gmx.de> <20090507045904.GA2068@gmx.de> <36ca99e90905062245w1ec78828ice5ed18161b6ec43@mail.gmail.com> <20090507084355.GA11680@pengutronix.de> <36ca99e90905070250l656f8879g87eb27c09db2cd42@mail.gmail.com> <20090509103625.GC13344@lapse.rw.madduck.net> <20090509190910.GA9655@gmx.de> <20090511032813.GA15540@gmx.de> <20090511195532.GA28340@pengutronix.de> <20090511210614.GA6118@gmx.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git <git@vger.kernel.org>
-To: jean-luc malet <jeanluc.malet@gmail.com>
-X-From: git-owner@vger.kernel.org Mon May 11 23:29:51 2009
+To: Marc Weber <marco-oweber@gmx.de>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon May 11 23:40:28 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M3d4I-00067e-LE
-	for gcvg-git-2@gmane.org; Mon, 11 May 2009 23:29:51 +0200
+	id 1M3dEZ-0001hC-DK
+	for gcvg-git-2@gmane.org; Mon, 11 May 2009 23:40:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760044AbZEKV31 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 May 2009 17:29:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760031AbZEKV30
-	(ORCPT <rfc822;git-outgoing>); Mon, 11 May 2009 17:29:26 -0400
-Received: from darksea.de ([83.133.111.250]:39557 "HELO darksea.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1760049AbZEKV3Z (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 May 2009 17:29:25 -0400
-Received: (qmail 26093 invoked from network); 11 May 2009 23:29:11 +0200
-Received: from unknown (HELO localhost) (127.0.0.1)
-  by localhost with SMTP; 11 May 2009 23:29:11 +0200
+	id S1757799AbZEKVjo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 May 2009 17:39:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757120AbZEKVjo
+	(ORCPT <rfc822;git-outgoing>); Mon, 11 May 2009 17:39:44 -0400
+Received: from clegg.madduck.net ([193.242.105.96]:37347 "EHLO
+	clegg.madduck.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756613AbZEKVjn (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 May 2009 17:39:43 -0400
+Received: from piper.oerlikon.madduck.net (piper.oerlikon.madduck.net [IPv6:2001:41e0:ff12:0:211:2fff:fe6b:c869])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "piper.oerlikon.madduck.net", Issuer "CAcert Class 3 Root" (verified OK))
+	by clegg.madduck.net (postfix) with ESMTPS id A784F1D409B;
+	Mon, 11 May 2009 23:39:36 +0200 (CEST)
+Received: by piper.oerlikon.madduck.net (Postfix, from userid 1000)
+	id 1701244AB; Mon, 11 May 2009 23:39:36 +0200 (CEST)
 Content-Disposition: inline
-In-Reply-To: <1de9d39c0905110621p6858bca8y8bb036a167754672@mail.gmail.com>
-User-Agent: Mutt/1.5.19 (2009-01-05)
+In-Reply-To: <20090511210614.GA6118@gmx.de>
+X-Motto: Keep the good times rollin'
+X-OS: Debian GNU/Linux squeeze/sid kernel 2.6.30-rc4-amd64 x86_64
+X-Spamtrap: madduck.bogus@madduck.net
+X-Subliminal-Message: debian/rules!
+User-Agent: Mutt/1.5.18 (2008-05-17)
+X-Virus-Scanned: ClamAV 0.94.2/9353/Mon May 11 21:12:10 2009 on clegg.madduck.net
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118851>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118852>
 
-On Mon, May 11, 2009 at 03:21:27PM +0200, jean-luc malet wrote:
-> according to my knowledge of git, removing the commit and rewriting
-> the last commit log so that it better reflect the modification will do
-> the job but I'm not sure git allow it...
+also sprach Marc Weber <marco-oweber@gmx.de> [2009.05.11.2306 +0200]:
+> commit 0bfa198a3cae72d75ca1311bb7a8d495ca2b42cc
+> Author: Marc Weber <marco-oweber@gmx.de>
+> Date:   Mon May 11 23:04:20 2009 +0200
+> 
+>     add tg-push pushing the branch, its deps and their bases
+>     
+>     Signed-off-by: Marc Weber <marco-oweber@gmx.de>
 
-If you just want to get rid of the last commit
+Signed-off-by: martin f. krafft <madduck@madduck.net>
 
-  git reset HEAD^
+Thanks, Marc!
 
-will remove the commit but keep your working directory untouched. In
-such a workflow I find it easier to start the new commit from zero than
-from the stashed stuff.
-
-By the way. You might also take a look at the command
-
-  git stash
-
-which is especially crafted for saving work in progress.
-
-cheers Heiko
+-- 
+martin | http://madduck.net/ | http://two.sentenc.es/
+ 
+* Overfiend came out of the womb complaining.
+                                                    -- #debian-devel
+ 
+spamtraps: madduck.bogus@madduck.net
