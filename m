@@ -1,90 +1,60 @@
-From: "Yann Dirson" <ydirson@linagora.com>
-Subject: [BUG] reset abusive symlink removal;
-      possible submodule-add misbehaviour
-Date: Mon, 11 May 2009 10:59:19 +0200 (CEST)
-Message-ID: <46017.10.0.0.1.1242032359.squirrel@intranet.linagora.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] gitk: use --textconv to generate diff text
+Date: Mon, 11 May 2009 05:13:47 -0400
+Message-ID: <20090511091346.GA5685@coredump.intra.peff.net>
+References: <4A07D160.9020709@viscovery.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon May 11 11:08:37 2009
+Content-Type: text/plain; charset=utf-8
+Cc: Paul Mackerras <paulus@samba.org>,
+	Git Mailing List <git@vger.kernel.org>
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Mon May 11 11:14:12 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M3RUw-0003vH-RX
-	for gcvg-git-2@gmane.org; Mon, 11 May 2009 11:08:35 +0200
+	id 1M3RaL-000632-TJ
+	for gcvg-git-2@gmane.org; Mon, 11 May 2009 11:14:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756845AbZEKJHQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 May 2009 05:07:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757174AbZEKJHP
-	(ORCPT <rfc822;git-outgoing>); Mon, 11 May 2009 05:07:15 -0400
-Received: from alderaan.linagora.com ([84.14.148.74]:39208 "EHLO
-	alderaan.linagora.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757415AbZEKJHO (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 May 2009 05:07:14 -0400
-X-Greylist: delayed 480 seconds by postgrey-1.27 at vger.kernel.org; Mon, 11 May 2009 05:07:14 EDT
-Received: from 10.0.0.2 (unknown [10.75.192.3])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by alderaan.linagora.com (Postfix) with ESMTPSA id 32556429F00
-	for <git@vger.kernel.org>; Mon, 11 May 2009 10:59:13 +0200 (CEST)
-Received: from 10.0.0.1 (proxying for 194.206.158.221)
-        (SquirrelMail authenticated user ydirson)
-        by intranet.linagora.com with HTTP;
-        Mon, 11 May 2009 10:59:19 +0200 (CEST)
-User-Agent: SquirrelMail/1.4.11
-X-Priority: 3 (Normal)
-Importance: Normal
+	id S1755361AbZEKJNr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 May 2009 05:13:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754865AbZEKJNr
+	(ORCPT <rfc822;git-outgoing>); Mon, 11 May 2009 05:13:47 -0400
+Received: from peff.net ([208.65.91.99]:35423 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753180AbZEKJNq (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 May 2009 05:13:46 -0400
+Received: (qmail 25670 invoked by uid 107); 11 May 2009 09:14:06 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Mon, 11 May 2009 05:14:06 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Mon, 11 May 2009 05:13:47 -0400
+Content-Disposition: inline
+In-Reply-To: <4A07D160.9020709@viscovery.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118784>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118785>
 
-This happenned to me while playing with changing from a manual
-unversionned symlink to a submodule:
+On Mon, May 11, 2009 at 09:18:56AM +0200, Johannes Sixt wrote:
 
-~/tmp/super$ ls -la
-total 16
-drwxr-xr-x 3 yann yann 4096 mai 11 10:49 .
-drwxr-xr-x 4 yann yann 4096 mai 11 10:48 ..
-drwxr-xr-x 8 yann yann 4096 mai 11 10:49 .git
--rw-r--r-- 1 yann yann    4 mai 11 10:48 README
-lrwxrwxrwx 1 yann yann    6 mai 11 10:49 sub -> ../sub
-~/tmp/super$ git status
-# On branch master
-# Untracked files:
-#   (use "git add <file>..." to include in what will be committed)
-#
-#       sub
-nothing added to commit but untracked files present (use "git add" to track)
-~/tmp/super$ ls -la ../sub
-total 12
-drwxr-xr-x 3 yann yann 4096 mai 11 10:48 .
-drwxr-xr-x 4 yann yann 4096 mai 11 10:48 ..
-drwxr-xr-x 7 yann yann 4096 mai 11 10:48 .git
-~/tmp/super$ git submodule add git://anything sub
-Adding existing repo at 'sub' to the index
-~/tmp/super$ ls -la
-total 20
-drwxr-xr-x 3 yann yann 4096 mai 11 10:50 .
-drwxr-xr-x 4 yann yann 4096 mai 11 10:48 ..
-drwxr-xr-x 8 yann yann 4096 mai 11 10:50 .git
--rw-r--r-- 1 yann yann   52 mai 11 10:50 .gitmodules
--rw-r--r-- 1 yann yann    4 mai 11 10:48 README
-lrwxrwxrwx 1 yann yann    6 mai 11 10:49 sub -> ../sub
+> For the most part gitk's focus is on showing history and changes in
+> a human readable form. For this reason, it makes sense to generate
+> the patch text in the diff view using --textconv so that textconv drivers
+> are used if they are defined.
+> 
+> gitk can also generate patches, but we do not use --textconv because
+> such patches could not be applied.
+> 
+> Signed-off-by: Johannes Sixt <j6t@kdbg.org>
 
-Here I realise the symlink may have had unwanted effects.  But shouldn't
-it have "submodule add" failed here, since the target already exists ?
+As the original author of the textconv code, I am in favor of this. So
+much so that I even posted basically the same patch before:
 
-~/tmp/super$ git reset --hard
-HEAD is now at abb75d6 foo
-yann@cyann:~/tmp/super$ ls -la
-total 16
-drwxr-xr-x 3 yann yann 4096 mai 11 10:50 .
-drwxr-xr-x 4 yann yann 4096 mai 11 10:48 ..
-drwxr-xr-x 8 yann yann 4096 mai 11 10:50 .git
--rw-r--r-- 1 yann yann    4 mai 11 10:48 README
+  http://article.gmane.org/gmane.comp.version-control.git/102523
 
-Although not critical, this seems to qualify as data loss.
+I had trouble finding much discussion in the archive, but I think it may
+not have been taken because we were in release freeze (and textconv was
+a brand new feature in the release at the time).
+
+-Peff
