@@ -1,71 +1,44 @@
-From: Eric Blake <ebb9@byu.net>
-Subject: Re: [PATCH 0/6] Add core.autocrlf=true on cygwin by default during tests
-Date: Mon, 11 May 2009 20:04:25 +0000 (UTC)
-Message-ID: <loom.20090511T195910-370@post.gmane.org>
-References: <1242070141-2936-1-git-send-email-Don.Slutz@SierraAtlantic.com>
+From: Cedric Staniewski <cedric@gmx.ca>
+Subject: Re: [PATCH] Add NO_CROSS_DIRECTORY_HARDLINKS support to the Makefile
+Date: Mon, 11 May 2009 22:05:32 +0200
+Message-ID: <4A08850C.10502@gmx.ca>
+References: <loom.20090511T101424-212@post.gmane.org> <alpine.DEB.1.00.0905111256580.4973@intel-tinevez-2-302> <4A085280.3090501@gmx.ca> <alpine.DEB.1.00.0905112107420.27348@pacific.mpi-cbg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon May 11 22:05:19 2009
+Cc: git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Mon May 11 22:06:11 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M3bk4-0002AZ-C3
-	for gcvg-git-2@gmane.org; Mon, 11 May 2009 22:04:52 +0200
+	id 1M3bkx-0002uv-CY
+	for gcvg-git-2@gmane.org; Mon, 11 May 2009 22:05:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753526AbZEKUEn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 May 2009 16:04:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753439AbZEKUEn
-	(ORCPT <rfc822;git-outgoing>); Mon, 11 May 2009 16:04:43 -0400
-Received: from main.gmane.org ([80.91.229.2]:45516 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752300AbZEKUEm (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 May 2009 16:04:42 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1M3bju-00008g-7W
-	for git@vger.kernel.org; Mon, 11 May 2009 20:04:42 +0000
-Received: from l3-128-170-36-124.l-3com.com ([128.170.36.124])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 11 May 2009 20:04:42 +0000
-Received: from ebb9 by l3-128-170-36-124.l-3com.com with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 11 May 2009 20:04:42 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: main.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 128.170.36.124 (Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; SV1; .NET CLR 1.1.4322; .NET CLR 2.0.50727; .NET CLR 3.0.04506.30; .NET CLR 3.0.04506.648; InfoPath.2))
+	id S1756113AbZEKUFg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 May 2009 16:05:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755732AbZEKUFf
+	(ORCPT <rfc822;git-outgoing>); Mon, 11 May 2009 16:05:35 -0400
+Received: from wp165.webpack.hosteurope.de ([80.237.132.172]:49371 "EHLO
+	wp165.webpack.hosteurope.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753765AbZEKUFd (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 11 May 2009 16:05:33 -0400
+Received: from f053229164.adsl.alicedsl.de ([78.53.229.164]); authenticated
+	by wp165.webpack.hosteurope.de running ExIM  using esmtpsa (TLSv1:RC4-MD5:128)
+	id 1M3bkk-0005Af-5u; Mon, 11 May 2009 22:05:34 +0200
+User-Agent: Thunderbird 2.0.0.21 (X11/20090319)
+In-Reply-To: <alpine.DEB.1.00.0905112107420.27348@pacific.mpi-cbg.de>
+X-bounce-key: webpack.hosteurope.de;cedric@gmx.ca;1242072335;cac5dca3;
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118838>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118839>
 
-Don Slutz <Don.Slutz <at> SierraAtlantic.com> writes:
+Johannes Schindelin wrote:
+> But you did not say if you like/tested the patch or not.
 
-> 
-> This is a patch set to do the work from mail message:
-> 
-> http://kerneltrap.org/mailarchive/git/2007/8/7/254415
-> 
-> It is split into 6 parts.  This is because the tests do not work on
-> Linux if autocrlf=true.
-> 
-> 1) The change to autocrlf=true by default for cygwin
+Oh, sorry. Of course, it works as intended and I'm fine with applying it.
 
-I help maintain the cygwin packaging of git, and I don't particularly like 
-patch 1/6.  Cygwin very much recommends that users stick with binary mounts, 
-where cr's are not inserted/stripped by default, and enabling autocrlf in that 
-situation is asking for problems (namely, the same set of problems as you would 
-have on Linux with autocrlf=true).  While adding an environment variable is 
-useful for the case of a user building git on cygwin with the intent of using a 
-text-mode mount, it goes against the grain of cygwin's recommendation of not 
-using text-mode mounts in the first place.  I would rather see the default 
-remain false, even on cygwin, unless the person building git takes steps to 
-activate it themselves.
-
--- 
-Eric Blake
+Thanks for your work.
