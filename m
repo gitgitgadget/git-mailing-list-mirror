@@ -1,110 +1,151 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [JGIT PATCH 2/2] Decrease the fetch pack client buffer to the
-	lower minimum
-Date: Sun, 10 May 2009 17:55:26 -0700
-Message-ID: <20090511005526.GI30527@spearce.org>
-References: <1241995685-13260-1-git-send-email-spearce@spearce.org> <1241995685-13260-2-git-send-email-spearce@spearce.org> <7vfxfctqon.fsf@alter.siamese.dyndns.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: [PATCH v2 2/5] gitweb: Do not use bareword filehandles
+Date: Mon, 11 May 2009 03:21:06 +0200
+Message-ID: <200905110321.08109.jnareb@gmail.com>
+References: <200905100203.51744.jnareb@gmail.com> <200905100236.20158.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Robin Rosenberg <robin.rosenberg@dewire.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon May 11 02:55:36 2009
+Content-Type: text/plain;
+  charset="iso-8859-2"
+Content-Transfer-Encoding: 7bit
+Cc: Petr Baudis <pasky@suse.cz>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon May 11 03:22:33 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M3Jnr-0003pm-II
-	for gcvg-git-2@gmane.org; Mon, 11 May 2009 02:55:35 +0200
+	id 1M3KDw-0001fM-Rx
+	for gcvg-git-2@gmane.org; Mon, 11 May 2009 03:22:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757207AbZEKAz0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 10 May 2009 20:55:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756390AbZEKAz0
-	(ORCPT <rfc822;git-outgoing>); Sun, 10 May 2009 20:55:26 -0400
-Received: from george.spearce.org ([209.20.77.23]:33472 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756817AbZEKAzZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 10 May 2009 20:55:25 -0400
-Received: by george.spearce.org (Postfix, from userid 1001)
-	id 2274A381D5; Mon, 11 May 2009 00:55:26 +0000 (UTC)
+	id S1756117AbZEKBVK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 10 May 2009 21:21:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754469AbZEKBVK
+	(ORCPT <rfc822;git-outgoing>); Sun, 10 May 2009 21:21:10 -0400
+Received: from fg-out-1718.google.com ([72.14.220.154]:38039 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752631AbZEKBVJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 10 May 2009 21:21:09 -0400
+Received: by fg-out-1718.google.com with SMTP id 16so834900fgg.17
+        for <git@vger.kernel.org>; Sun, 10 May 2009 18:21:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=tZGVFiwFHtlKhxM2KfF4oLX3ygOnz4MsZU0lqHDgfeE=;
+        b=qcZSOx6jfiCDbxrH/YlBLfdX5NdgzGgK97hMrVaTTfod+O7APfzs2MAKdUhXfeMvoV
+         eW4rcefIr4O9wvRsl2Z1ceq72bLwkRz68eizfJtboEpqV0KmeTPb8an99EagOt++lcut
+         qNS26pEcqDWN5GTa/AClRd7ydC6woOBvOYwic=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=eyRcVEPJqDYjnUPK6G2I4f/JexYu23Fl1pTCYGo/Vjo6dmwHmC0H7RW3yN4nD0P4Ti
+         wWj0OMdXRUJCu78vDux2/TLdkKFA4ketDWeh6o/GBABmdUtsXlpwnYSkzOeegBeyxSO1
+         iOhjW91LoJo/ObKpsXrPwXjE9MzVfL1w4rMpI=
+Received: by 10.86.86.2 with SMTP id j2mr5894805fgb.50.1242004867100;
+        Sun, 10 May 2009 18:21:07 -0700 (PDT)
+Received: from ?192.168.1.13? (abvi64.neoplus.adsl.tpnet.pl [83.8.206.64])
+        by mx.google.com with ESMTPS id 12sm5802987fgg.25.2009.05.10.18.21.05
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sun, 10 May 2009 18:21:06 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <200905100236.20158.jnareb@gmail.com>
 Content-Disposition: inline
-In-Reply-To: <7vfxfctqon.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118765>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118766>
 
-Junio C Hamano <gitster@pobox.com> wrote:
-> "Shawn O. Pearce" <spearce@spearce.org> writes:
-> 
-> > This is the lowest buffer size we actually require to keep the
-> > client and server sides from deadlocking against each other.
-> 
-> Is this about the fetch-pack protocol where
+gitweb: Do not use bareword filehandles
 
-Yes.
+The script was using bareword filehandles.  This is considered a bad
+practice so they have been changed to indirect filehandles.
+
+Changes touch git_get_project_ctags and mimetype_guess_file;
+while at it rename local variable from $mime to $mimetype (in
+mimetype_guess_file) to better reflect its value (its contents).
+
+Signed-off-by: Jakub Narebski <jnareb@gmail.com>
+---
+I'm extremely sorry for this stupid mistake. Below there is interdiff
+(indented, as to not be mistaken for diff itself)
+
+	diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+	index a9daa1d..584644c 100755
+	--- a/gitweb/gitweb.perl
+	+++ b/gitweb/gitweb.perl
+	@@ -2065,9 +2065,8 @@ sub git_get_project_ctags {
+	        my $ctags = {};
+	 
+	        $git_dir = "$projectroot/$path";
+	-       unless (opendir my $dh, "$git_dir/ctags") {
+	-               return $ctags;
+	-       }
+	+       opendir my $dh, "$git_dir/ctags"
+	+               or return $ctags;
+	        foreach (grep { -f $_ } map { "$git_dir/ctags/$_" } readdir($dh)) {
+	                open my $ct, $_ or next;
+	                my $val = <$ct>;
+
+ gitweb/gitweb.perl |   25 ++++++++++++-------------
+ 1 files changed, 12 insertions(+), 13 deletions(-)
+
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index 06e9160..584644c 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -2065,18 +2065,17 @@ sub git_get_project_ctags {
+ 	my $ctags = {};
  
->  (1) upload-pack shows what it has; fetch-pack keeps reading until it sees
->      a flush; then
-> 
->  (2) fetch-pack shows what it wants; upload-pack keeps reading; then
-> 
->  (3) fetch-pack sends a bunch of have's, followed by a flush; upload-pack
->      keeps reading and then responds with an ACK-continue or NAK, which
->      fetch-pack reads; this step continues zero or more times; and then
->      finally
-> 
->  (4) fetch-pack sends a bunch of have's, followed by a flush; upload-pack
->      keeps reading and then responds with an ACK, fetch-pack says done.
-> 
-> Where do you need "enough buffer"?  The conversation looks very much "it's
-> my turn to talk", "now it's your turn to talk and I'll wait until I hear
-> from you", to me.  I am puzzled.
-
-In step 3 during the first round the client can send up to 2 blocks
-worth of data, with 32 haves per block.  This means the client
-writes 2952 bytes of data before it reads.
-
-C Git doesn't run into this sort of problem because a normal pipe
-would get 1 page (~4096 bytes) in the kernel for the FIFO buffer.
-
-In SSH transport, we still have 4096 between us and the ssh client
-process, plus that has its own buffering.
-
-In TCP transport, we have the kernel TX buffer on this side, and the
-kernel RX buffer on the remote side, plus network switch buffers in
-the middle.  2952 bytes nicely fits into just over 2 IP packets,
-and the TCP window is sufficiently large enough to allow these to
-be sent without blocking the writer.
-
-We need to be able to shove 2952 bytes down at the other guy before
-we start listening to him.  The upload-pack side of the system can
-(at worst) send us 64 "ACK %s continue" lines.  We must be able
-to enter into the receive mode before the upload-pack side fills
-their outgoing buffer.
-
-In the Sun JVMs a pure in-memory pipe only has room for 1024 bytes
-in the FIFO before it blocks.  Though the technique I am using to
-boost the FIFO from 1024 to 2952 bytes isn't necessarily going to
-be portable to other JVMs.  If both sides only have 1024 bytes of
-buffer available and both sides can possibly write more than that,
-we deadlock.
-
-> > +	/**
-> > +	 * Amount of data the client sends before starting to read.
-> > +	 * <p>
-> > +	 * Any output stream given to the client must be able to buffer this many
-> > +	 * bytes before the client will stop writing and start reading from the
-> > +	 * input stream. If the output stream blocks before this many bytes are in
-> > +	 * the send queue, the system will deadlock.
-> > +	 */
-> > +	protected static final int MIN_CLIENT_BUFFER = 2 * 32 * 46 + 4;
-
-And this should be + 8 here.  F@!*!
-
-Robin, can you amend?  It should be + 8 because we send to end()
-packets in that initial burst, each packet is 4 bytes in size.
-
+ 	$git_dir = "$projectroot/$path";
+-	unless (opendir D, "$git_dir/ctags") {
+-		return $ctags;
+-	}
+-	foreach (grep { -f $_ } map { "$git_dir/ctags/$_" } readdir(D)) {
+-		open CT, $_ or next;
+-		my $val = <CT>;
++	opendir my $dh, "$git_dir/ctags"
++		or return $ctags;
++	foreach (grep { -f $_ } map { "$git_dir/ctags/$_" } readdir($dh)) {
++		open my $ct, $_ or next;
++		my $val = <$ct>;
+ 		chomp $val;
+-		close CT;
++		close $ct;
+ 		my $ctag = $_; $ctag =~ s#.*/##;
+ 		$ctags->{$ctag} = $val;
+ 	}
+-	closedir D;
++	closedir $dh;
+ 	$ctags;
+ }
+ 
+@@ -2804,18 +2803,18 @@ sub mimetype_guess_file {
+ 	-r $mimemap or return undef;
+ 
+ 	my %mimemap;
+-	open(MIME, $mimemap) or return undef;
+-	while (<MIME>) {
++	open(my $mh, $mimemap) or return undef;
++	while (<$mh>) {
+ 		next if m/^#/; # skip comments
+-		my ($mime, $exts) = split(/\t+/);
++		my ($mimetype, $exts) = split(/\t+/);
+ 		if (defined $exts) {
+ 			my @exts = split(/\s+/, $exts);
+ 			foreach my $ext (@exts) {
+-				$mimemap{$ext} = $mime;
++				$mimemap{$ext} = $mimetype;
+ 			}
+ 		}
+ 	}
+-	close(MIME);
++	close($mh);
+ 
+ 	$filename =~ /\.([^.]*)$/;
+ 	return $mimemap{$1};
 -- 
-Shawn.
+1.6.3
