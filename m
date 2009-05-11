@@ -1,57 +1,64 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH] gitk: use --textconv to generate diff text
-Date: Mon, 11 May 2009 09:34:50 +0200
-Message-ID: <4A07D51A.4090409@viscovery.net>
-References: <4A07D160.9020709@viscovery.net>
+From: "Anders Melchiorsen" <mail@cup.kalibalik.dk>
+Subject: Re: [BUG] fatal error during merge
+Date: Mon, 11 May 2009 09:37:03 +0200 (CEST)
+Message-ID: <41870.bFoQE3daRhY=.1242027423.squirrel@webmail.hotelhot.dk>
+References: <20090510163336.GA27241@blimp.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Paul Mackerras <paulus@samba.org>
-X-From: git-owner@vger.kernel.org Mon May 11 09:35:06 2009
+Content-Type: text/plain;charset=utf-8
+Content-Transfer-Encoding: 8bit
+Cc: git@vger.kernel.org, "Samuel Tardieu" <sam@rfc1149.net>,
+	"Linus Torvalds" <torvalds@linux-foundation.org>,
+	"Johannes Schindelin" <johannes.schindelin@gmx.de>,
+	"Junio C Hamano" <gitster@pobox.com>,
+	=?utf-8?B?U1pFREVSIEfDoWJvcg==?= <szeder@ira.uka.de>
+To: "Alex Riesen" <raa.lkml@gmail.com>
+X-From: git-owner@vger.kernel.org Mon May 11 09:37:16 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M3Q2T-0007zx-09
-	for gcvg-git-2@gmane.org; Mon, 11 May 2009 09:35:05 +0200
+	id 1M3Q4a-0000Mo-By
+	for gcvg-git-2@gmane.org; Mon, 11 May 2009 09:37:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752081AbZEKHe5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 May 2009 03:34:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751378AbZEKHe5
-	(ORCPT <rfc822;git-outgoing>); Mon, 11 May 2009 03:34:57 -0400
-Received: from lilzmailso02.liwest.at ([212.33.55.13]:3584 "EHLO
-	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751106AbZEKHe4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 May 2009 03:34:56 -0400
-Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
-	by lilzmailso02.liwest.at with esmtpa (Exim 4.69)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1M3Q2J-000159-UJ; Mon, 11 May 2009 09:34:56 +0200
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.96])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id B13FEC6C1; Mon, 11 May 2009 09:34:55 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.21 (Windows/20090302)
-In-Reply-To: <4A07D160.9020709@viscovery.net>
-X-Spam-Score: -1.4 (-)
+	id S1752453AbZEKHhF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 May 2009 03:37:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752848AbZEKHhE
+	(ORCPT <rfc822;git-outgoing>); Mon, 11 May 2009 03:37:04 -0400
+Received: from mail.hotelhot.dk ([77.75.163.100]:57813 "EHLO mail.hotelhot.dk"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751417AbZEKHhD (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 May 2009 03:37:03 -0400
+Received: from webmail.hotelhot.dk (web.hotelhot.dk [192.168.0.170])
+	by mail.hotelhot.dk (Postfix) with ESMTP id 1A26344FD;
+	Mon, 11 May 2009 09:37:03 +0200 (CEST)
+X-Squirrel-UserHash: NQYRRTwcNktTVUlTWFZaWRRVWg==
+X-Squirrel-FromHash: bFoQE3daRhY=
+In-Reply-To: <20090510163336.GA27241@blimp.localdomain>
+User-Agent: SquirrelMail/1.4.13
+X-Priority: 3 (Normal)
+Importance: Normal
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118779>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118780>
 
-Johannes Sixt schrieb:
-> From: Johannes Sixt <j6t@kdbg.org>
-> Date: Tue, 28 Apr 2009 14:03:54 +0200
-> 
-> For the most part gitk's focus is on showing history and changes in
-> a human readable form. For this reason, it makes sense to generate
-> the patch text in the diff view using --textconv so that textconv drivers
-> are used if they are defined.
+On Sun, 10 May 2009 18:33:36 +0200, Alex Riesen <raa.lkml@gmail.com> wrote:
 
-FWIW, I keep a few Word documents in git and use catdoc as textconv
-driver. This works pretty well. Git-gui doesn't show any textual changes
-(it treats the Word files as binary, and it has to), with this patch I can
-use gitk to preview the changes in the worktree and the index.
+> I still have the patch below (rebased) in my tree.
+> Was the problem fixed somehow differently?
 
--- Hannes
+> Subject: [PATCH] Update index after refusing to rewrite files unchanged
+> during merge
+
+I tested recently, and it does not appear to be fixed yet.
+
+However, your patch was not enough to fix my test case completely,
+so I am unsure whether it makes sense to apply it as a partial fix.
+
+The test is here:
+
+   http://article.gmane.org/gmane.comp.version-control.git/116999
+
+
+Anders.
