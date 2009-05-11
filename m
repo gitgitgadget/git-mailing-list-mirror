@@ -1,92 +1,109 @@
-From: Charles Bailey <charles@hashpling.org>
-Subject: Re: [PATCH 3/6] Fix tests to work with core.autocrlf=true
-Date: Mon, 11 May 2009 23:20:11 +0100
-Message-ID: <20090511222011.GA7609@hashpling.org>
-References: <1242070141-2936-1-git-send-email-Don.Slutz@SierraAtlantic.com> <1242070141-2936-2-git-send-email-Don.Slutz@SierraAtlantic.com> <1242070141-2936-3-git-send-email-Don.Slutz@SierraAtlantic.com> <1242070141-2936-4-git-send-email-Don.Slutz@SierraAtlantic.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: merging multiple commit into one?
+Date: Tue, 12 May 2009 00:36:06 +0200
+Message-ID: <200905120036.06965.jnareb@gmail.com>
+References: <1de9d39c0905110621p6858bca8y8bb036a167754672@mail.gmail.com> <m38wl3n3zj.fsf@localhost.localdomain> <4A08A291.2060009@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Don Slutz <Don.Slutz@SierraAtlantic.com>
-X-From: git-owner@vger.kernel.org Tue May 12 00:20:26 2009
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: git <git@vger.kernel.org>
+To: MALET Jean-Luc <jeanluc.malet@gmail.com>
+X-From: git-owner@vger.kernel.org Tue May 12 00:36:26 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M3drF-0000KW-DP
-	for gcvg-git-2@gmane.org; Tue, 12 May 2009 00:20:25 +0200
+	id 1M3e6i-0006vz-GN
+	for gcvg-git-2@gmane.org; Tue, 12 May 2009 00:36:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759915AbZEKWUQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 May 2009 18:20:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759832AbZEKWUP
-	(ORCPT <rfc822;git-outgoing>); Mon, 11 May 2009 18:20:15 -0400
-Received: from relay.ptn-ipout02.plus.net ([212.159.7.36]:20324 "EHLO
-	relay.ptn-ipout02.plus.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1759607AbZEKWUN (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 11 May 2009 18:20:13 -0400
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: ApoEAOlBCErUnw4R/2dsb2JhbADMdIJCgUAF
-Received: from pih-relay04.plus.net ([212.159.14.17])
-  by relay.ptn-ipout02.plus.net with ESMTP; 11 May 2009 23:20:13 +0100
-Received: from [212.159.69.125] (helo=hashpling.plus.com)
-	 by pih-relay04.plus.net with esmtp (Exim) id 1M3dr2-0003kU-EV; Mon, 11 May 2009 23:20:12 +0100
-Received: from cayley.hashpling.org (cayley.hashpling.org [192.168.76.254])
-	by hashpling.plus.com (8.14.2/8.14.2) with ESMTP id n4BMKBQV008179
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Mon, 11 May 2009 23:20:11 +0100
-Received: (from charles@localhost)
-	by cayley.hashpling.org (8.14.2/8.14.2/Submit) id n4BMKB3C008178;
-	Mon, 11 May 2009 23:20:11 +0100
+	id S1757120AbZEKWgO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 May 2009 18:36:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756913AbZEKWgN
+	(ORCPT <rfc822;git-outgoing>); Mon, 11 May 2009 18:36:13 -0400
+Received: from fg-out-1718.google.com ([72.14.220.152]:16643 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755621AbZEKWgM (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 May 2009 18:36:12 -0400
+Received: by fg-out-1718.google.com with SMTP id 16so1025076fgg.17
+        for <git@vger.kernel.org>; Mon, 11 May 2009 15:36:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=MSnEJ1X2lMvHBwmaiUP2dCY3mw+ntDJ2kHqXEQ8wWMY=;
+        b=J7okn+9zaQBgPau//XjIuermKKa0FYmS+hS5g9NjptCEEqQ7qUGDCSvzwthJaRGwAA
+         sxpBhat2f7Bk9+kuMCYwasY8n79cmaZ3knxEROdbHxnP36k3dB1LkIRY4SLte6T7RF0T
+         zHWRd2kdbXyktoEozbl4ktb0LiEcaE3u2V8R8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=ZIp4HFtjmnyLU3xhfNFQmtPBJgd9Jdpw71Q959udFdlJOJFR3M4/Q0TvG2yC+egg4v
+         QvaLq5GvUNalDYTzhQoEzXbN9I07/mP5Jpyc+fzwcv+7S1D4t6lkXycI/iYp0p/GPgDx
+         zzkug2CvTizri2L+xkikT8RP33MnHAirKmaf8=
+Received: by 10.86.51.2 with SMTP id y2mr7043637fgy.3.1242081371223;
+        Mon, 11 May 2009 15:36:11 -0700 (PDT)
+Received: from ?192.168.1.13? (absh130.neoplus.adsl.tpnet.pl [83.8.127.130])
+        by mx.google.com with ESMTPS id d4sm7695443fga.9.2009.05.11.15.36.10
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 11 May 2009 15:36:10 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <4A08A291.2060009@gmail.com>
 Content-Disposition: inline
-In-Reply-To: <1242070141-2936-4-git-send-email-Don.Slutz@SierraAtlantic.com>
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-Plusnet-Relay: 26a660f4079351ee751e56418fe60f56
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118857>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118858>
 
-On Mon, May 11, 2009 at 03:28:58PM -0400, Don Slutz wrote:
-> diff --git a/t/t7610-mergetool.sh b/t/t7610-mergetool.sh
-> index e768c3e..bf39e45 100755
-> --- a/t/t7610-mergetool.sh
-> +++ b/t/t7610-mergetool.sh
-> @@ -45,9 +45,9 @@ test_expect_success 'custom mergetool' '
->      ( yes "" | git mergetool file1 >/dev/null 2>&1 ) &&
->      ( yes "" | git mergetool file2 >/dev/null 2>&1 ) &&
->      ( yes "" | git mergetool subdir/file3 >/dev/null 2>&1 ) &&
-> -    test "$(cat file1)" = "master updated" &&
-> -    test "$(cat file2)" = "master new" &&
-> -    test "$(cat subdir/file3)" = "master new sub" &&
-> +    test_cat_eq file1 "master updated" &&
-> +    test_cat_eq file2 "master new" &&
-> +    test_cat_eq subdir/file3 "master new sub" &&
->      git commit -m "branch1 resolved with mergetool"
->  '
+On Tue, 12 May 2009, MALET Jean-Luc wrote:
+> Jakub Narebski wrote:
+>> jean-luc malet <jeanluc.malet@gmail.com> writes:
 
-This change concerns me. At the moment, the mergetool test assumes
-that globally autocrlf is true and has further tests that attempt to
-verify its behaviour with autocrlf set to true. See the very next
-test:
+>>> I often commit "useless" code, for example before going into weekend
+>>> or for saving some state during a dev process
+>>> often thoses commit are simply useless and the commit message looks
+>>> like "COMPILE ERROR - temporary save .... "
+>>> at the end I have LOT of theses commits that are useless and I want to
+>>> save some space/time/tree complexity merge multiple sequential commits
+>>> (without branch) into one
+>>> is it possible?
+     
+>>
+>> It is possible; one solution would be to use "git rebase --interactive"
+>> and its 'squash' command...
 
-test_expect_success 'mergetool crlf' '
-    git config core.autocrlf true &&
-    git checkout -b test2 branch1
-    test_must_fail git merge master >/dev/null 2>&1 &&
-    ( yes "" | git mergetool file1 >/dev/null 2>&1 ) &&
-    ( yes "" | git mergetool file2 >/dev/null 2>&1 ) &&
-    ( yes "" | git mergetool subdir/file3 >/dev/null 2>&1 ) &&
-    test "$(printf x | cat file1 -)" = "$(printf "master updated\r\nx")" &&
-    test "$(printf x | cat file2 -)" = "$(printf "master new\r\nx")" &&
-    test "$(printf x | cat subdir/file3 -)" = "$(printf "master new sub\r\nx")" &&
-    git commit -m "branch1 resolved with mergetool - autocrlf" &&
-    git config core.autocrlf false &&
-    git reset --hard
-'
+   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   
+>>> according to my knowledge of git, removing the commit and rewriting
+>>> the last commit log so that it better reflect the modification will do
+>>> the job but I'm not sure git allow it...
+>>>     
+>>
+>> ...but you can simply pick up where you saved snapshot by using "git
+>> commit --amend" (or doing soft or mixed reset to previous commit
+>> before comitting changes).
+>>
+>>   
+> hi! thanks for your answers!
+> I didn't knew about --amend for commit, will certainly use it...
+> however it seems that I get missunderstood...
+> A-o-o-o-o-o-B-o-o-o-o-C
+>                       \-o-o-D-/
+> let say I have the above tree, o are temporary unbuildable commits, A B 
+> C D are usable versions
+> I want as posteriory remove the o to get the following tree
+> A-B---C
+>      \-D/
+> in fact I just wanna clean a little my tree since I forgot to amend ;)
+> is this possible?
+> ok I know, the best is to prevent! not to cure! so I'll amend ;)
 
-Does the resetting of core.autocrlf to false not break the subsequent
-tests?
+As I wrote above, you can use interactive rebase to clean up history.
 
 -- 
-Charles Bailey
-http://ccgi.hashpling.plus.com/blog/
+Jakub Narebski
+Poland
