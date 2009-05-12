@@ -1,84 +1,102 @@
-From: Ping Yin <pkufranky@gmail.com>
-Subject: Re: How to create a new commit with the content of some commit?
-Date: Wed, 13 May 2009 00:59:50 +0800
-Message-ID: <46dff0320905120959sc69eec9h23cd8ac6b489e5b6@mail.gmail.com>
-References: <46dff0320905120735l501dcaf4ia8197d24b7684cfe@mail.gmail.com>
-	 <20090512160749.GA29566@coredump.intra.peff.net>
-	 <46dff0320905120943j303ef104ve7bad25f1874007f@mail.gmail.com>
-	 <20090512165103.GE29566@coredump.intra.peff.net>
+From: Alexander Gladysh <agladysh@gmail.com>
+Subject: Git-SVN memory error
+Date: Tue, 12 May 2009 21:04:56 +0400
+Message-ID: <c6c947f60905121004v257e6f72m2a24de12c98dd1ba@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git mailing list <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue May 12 19:00:09 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue May 12 19:05:08 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M3vKk-0001mi-Fn
-	for gcvg-git-2@gmane.org; Tue, 12 May 2009 19:00:02 +0200
+	id 1M3vPf-00049x-Ff
+	for gcvg-git-2@gmane.org; Tue, 12 May 2009 19:05:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753278AbZELQ7u convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 12 May 2009 12:59:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753277AbZELQ7u
-	(ORCPT <rfc822;git-outgoing>); Tue, 12 May 2009 12:59:50 -0400
-Received: from yx-out-2324.google.com ([74.125.44.29]:28218 "EHLO
-	yx-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752997AbZELQ7t convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 12 May 2009 12:59:49 -0400
-Received: by yx-out-2324.google.com with SMTP id 3so51844yxj.1
-        for <git@vger.kernel.org>; Tue, 12 May 2009 09:59:50 -0700 (PDT)
+	id S1753074AbZELRE5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 May 2009 13:04:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751167AbZELRE5
+	(ORCPT <rfc822;git-outgoing>); Tue, 12 May 2009 13:04:57 -0400
+Received: from ey-out-2122.google.com ([74.125.78.27]:4426 "EHLO
+	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750825AbZELRE4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 May 2009 13:04:56 -0400
+Received: by ey-out-2122.google.com with SMTP id 9so47845eyd.37
+        for <git@vger.kernel.org>; Tue, 12 May 2009 10:04:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=nw9X/duKa5DrYde1rNcks/GYm3MyZ9sQz1IYKCp5PTc=;
-        b=W6EWz1cDOvRks75ABQ3V7P59svWDhZT9l6qXb5dvvIOtNNa60ByyGlKIXu+S4xYCXN
-         3Hv8EjK8MpNoFruXMoP33KcukZT4J/SxIuwYrCUO6CERplUVeuly57TTlym9qW61lJxR
-         owSteVial+YjykZo4XcoZk/WatdwkFtwHAB5Q=
+        h=domainkey-signature:mime-version:received:date:message-id:subject
+         :from:to:content-type:content-transfer-encoding;
+        bh=o1sxJDmXW3cgyJ+qQyZNkatHpe0Xy58wNOcOxA4a9eo=;
+        b=fH8Z17ZjDeD9Cb9oTGnU244vzi5337w0dUJXPpb+FBmCw4z/FZ/HNplLcCj8P+H4cE
+         0ohW+6/OKuze6fFyUnK+FllRF8/iixTEHMlhIoNEqzQMHXMl6LMWe0YVSN1KfM+X3E30
+         1OGCgo7KKlLtWdZ+e/Iy6o1vynr285dA/Ue10=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=AqSgvir/4aSdOmlvpD3LfsFDIQMdaNPoy90i6Yy7SrXn9XKFz8MHf1UiNqpxxmTAR5
-         NP8SpiKLFg1NOBWNZQFo2zYsm4b2Sx0/H+JEM/wC5UaYFPTUnVIqQIqikevisVo4SxJw
-         v7dxrRjgY0yA5xNGFyqZqNVUbhdxneRz0AN+c=
-Received: by 10.90.83.2 with SMTP id g2mr60715agb.105.1242147590410; Tue, 12 
-	May 2009 09:59:50 -0700 (PDT)
-In-Reply-To: <20090512165103.GE29566@coredump.intra.peff.net>
+        h=mime-version:date:message-id:subject:from:to:content-type
+         :content-transfer-encoding;
+        b=LJ9OIjLY6l0vaFbT94NiR2PtCc8JPteNZ9ov86FTYPMs6Tp7XKbInLn+kG1Rd3BcFJ
+         sJ0FxIlgKegRPnfBN89qwhSXnedYVymewPi3Y8LVRPjJfa7YKZvjCj05xL4+cdPkSWXG
+         nVIVBiCBAHTRQPk46Tx/3b8Gyn4zov0hw0wv8=
+Received: by 10.216.15.85 with SMTP id e63mr4067321wee.199.1242147896381; Tue, 
+	12 May 2009 10:04:56 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118929>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118930>
 
-On Wed, May 13, 2009 at 12:51 AM, Jeff King <peff@peff.net> wrote:
-> On Wed, May 13, 2009 at 12:43:33AM +0800, Ping Yin wrote:
->
->> > You can just munge the index directly, and skip the working tree
->> > entirely:
->> >
->> > =C2=A0rm .git/index
->> > =C2=A0git read-tree b
->> > =C2=A0git commit -m 'the copy of b'
->>
->> In a non-conflict status, "git read-tree b" will update the index to
->> full match the tree of b, so "rm .git/index" is unnecessary, right?
->
-> For some reason, I was thinking that entries in the index that were n=
-ot
-> in "b" would remain, but that is not actually the case. So yes, I thi=
-nk
-> you can do it without removing the index (and you are better off to d=
-o
-> so, since the index also contains the stat cache for your worktree, s=
-o
-> it is more efficient).
->
-> You can also add "-u" as Junio suggested to update the working tree
-> during that step, which should be more efficient.
+Hi, list!
 
-I don't want to touch the working directory, and -m will keep the stat
-cache in the index, so i think "git read-tree -m b" is the best.
+I'm importing a rather large SVN repository into Git. I'm doing it on
+a Synology DS508 NAS PPC box (don't ask me why :-) ). I'm getting an
+out of memory error when trying to import one of commits. Please help
+me to debug/workaround it.
+
+Relevant system information below.
+
+Alexander.
+
+DiskStation> uname -a
+Linux DiskStation 2.6.24 #839 Wed Mar 25 18:30:32 CST 2009 ppc GNU/Linux
+
+DiskStation> git --version
+git version 1.6.3
+
+DiskStation> sudo ipkg info git
+Package: git
+Version: 1.6.3-1
+Depends: zlib, openssl, libcurl, diffutils, rcs, expat
+Suggests: git-manpages
+Status: install user installed
+Section: net
+Architecture: powerpc
+maintainer: NSLU2 Linux <nslu2-linux@yahoogroups.com>
+MD5Sum: b92688e018f23fa7a82a504d073fe813
+Size: 5872996
+Filename: git_1.6.3-1_powerpc.ipk
+Source: http://www.kernel.org/pub/software/scm/git/git-1.6.3.tar.gz
+Description: GIT is a directory tree content manager that can be used
+for distributed revision control.
+
+DiskStation> free # That is actually AFTER git svn died.
+              total         used         free       shared      buffers
+Mem:       516172       501828        14344            0        62656
+Swap:      2586456        29508      2556948
+Total:      3102628       531336      2571292
+
+DiskStation> git svn fetch # This is the second run. First one failed
+with the same message.
+Index mismatch: ba0c6593571c2f4b6b6ceff1b1326b30d0cd9495 !=
+c633473cfe3dd92e536450e48cd1d9cb2da1cdd2
+rereading fe4935bc22756ffdb430f94cd7ce4af898750edb
+
+	A	File1.rar
+        ...
+	A	FileN.rar
+fatal: Out of memory, malloc failed
+hash-object -w --stdin-paths: command returned error: 128
+
+error closing pipe: Bad file descriptor at /opt/libexec/git-core/git-svn line 0
+error closing pipe: Bad file descriptor at /opt/libexec/git-core/git-svn line 0
