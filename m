@@ -1,88 +1,62 @@
-From: Andrew Schein <andrew@andrewschein.com>
-Subject: Re: git default behavior seems odd from a Unix command line point of 
-	view
-Date: Tue, 12 May 2009 16:05:47 -0400
-Message-ID: <4e963a650905121305s244309a5vef9eec671d1ee5e@mail.gmail.com>
-References: <4e963a650905120818m70b75892gb4e052187910b9a5@mail.gmail.com>
-	 <7vd4ae8fls.fsf@alter.siamese.dyndns.org>
-	 <4e963a650905120924j52d38c0dg577d93e913013e38@mail.gmail.com>
-	 <alpine.LNX.2.00.0905121415000.2147@iabervon.org>
+From: Markus Heidelberg <markus.heidelberg@web.de>
+Subject: Re: merging multiple commit into one?
+Date: Tue, 12 May 2009 22:37:09 +0200
+Message-ID: <200905122237.10173.markus.heidelberg@web.de>
+References: <1de9d39c0905110621p6858bca8y8bb036a167754672@mail.gmail.com> <4A08A28C.3020202@gmail.com> <20090512155301.GA21556@macbook.lan>
+Reply-To: markus.heidelberg@web.de
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain;
+  charset="iso-8859-1"
 Content-Transfer-Encoding: 7bit
-To: Daniel Barkalow <barkalow@iabervon.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue May 12 22:06:02 2009
+Cc: MALET Jean-Luc <jeanluc.malet@gmail.com>, git <git@vger.kernel.org>
+To: Heiko Voigt <hvoigt@hvoigt.net>
+X-From: git-owner@vger.kernel.org Tue May 12 22:37:14 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M3yEk-0000TQ-0h
-	for gcvg-git-2@gmane.org; Tue, 12 May 2009 22:06:02 +0200
+	id 1M3yir-0007js-SE
+	for gcvg-git-2@gmane.org; Tue, 12 May 2009 22:37:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751923AbZELUFs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 May 2009 16:05:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750939AbZELUFs
-	(ORCPT <rfc822;git-outgoing>); Tue, 12 May 2009 16:05:48 -0400
-Received: from mail-bw0-f222.google.com ([209.85.218.222]:53799 "EHLO
-	mail-bw0-f222.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751284AbZELUFr (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 May 2009 16:05:47 -0400
-Received: by bwz22 with SMTP id 22so200767bwz.37
-        for <git@vger.kernel.org>; Tue, 12 May 2009 13:05:47 -0700 (PDT)
-Received: by 10.103.248.17 with SMTP id a17mr53314mus.83.1242158747201; Tue, 
-	12 May 2009 13:05:47 -0700 (PDT)
-In-Reply-To: <alpine.LNX.2.00.0905121415000.2147@iabervon.org>
+	id S1752139AbZELUg6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 May 2009 16:36:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751923AbZELUg6
+	(ORCPT <rfc822;git-outgoing>); Tue, 12 May 2009 16:36:58 -0400
+Received: from fmmailgate03.web.de ([217.72.192.234]:52300 "EHLO
+	fmmailgate03.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751498AbZELUg5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 May 2009 16:36:57 -0400
+Received: from smtp07.web.de (fmsmtp07.dlan.cinetic.de [172.20.5.215])
+	by fmmailgate03.web.de (Postfix) with ESMTP id D5BA8FC3F9B9;
+	Tue, 12 May 2009 22:36:57 +0200 (CEST)
+Received: from [89.59.116.180] (helo=.)
+	by smtp07.web.de with asmtp (TLSv1:AES256-SHA:256)
+	(WEB.DE 4.110 #277)
+	id 1M3yif-000607-00; Tue, 12 May 2009 22:36:57 +0200
+User-Agent: KMail/1.9.9
+In-Reply-To: <20090512155301.GA21556@macbook.lan>
+Jabber-ID: markus.heidelberg@web.de
+Content-Disposition: inline
+X-Sender: markus.heidelberg@web.de
+X-Provags-ID: V01U2FsdGVkX181+JvikbDrnV2pehIF6KhOAyWIC1d0GxShN1EW
+	pW6Rf0OqRpH0ho9S/KKWVpSboTtfaipCk7PTAkc6ZtK1bxyS3N
+	6y3Hb0BWwMC3yp6C2BfA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118950>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118951>
 
-> What *is* your use case? What you're doing seems nuts to me (like, you're
-> going to send out files with this script that someone is in the middle of
-> editting), but I don't know what you're trying to do.
+Heiko Voigt, 12.05.2009:
+> On Tue, May 12, 2009 at 12:11:24AM +0200, MALET Jean-Luc wrote:
+> > As far as I know you can't push stashed  
+> > information, I'm wrong?
+> 
+> AFAIR, git stash cannot be pushed. Well you could by creating a branch
+> and pushing that but thats not native stash functionality.
 
-I am new to git... so my first instinct is to try to reproduce a work
-flow that I know works with mercurial setup.  It is possible that the
-concepts don't translate correctly.  Here goes...
+I tried "git clone --mirror" with a repo containing a stash, the clone
+had a stash entry in .git/packed-refs. "git push --mirror" didn't work,
+though. Not sure what should be intended.
 
-I have a bunch of separate project-related repositories.  There are
-very few users of the system.  Most of the time I am the only user.  I
-want a system for syncing my local repositories to a single shared
-repository.  For example some days I work on my laptop, and some days
-from my desktop.  A third "shared/public" repository "on campus"
-serves as an always available repository that anyone I collaborate
-with can pull from.  Also it is backed up, and for this reason I
-designate it the "shared" version.  So the purpose of the sync.sh
-script is to synchronize the personal laptop/desktop repository to the
-on-campus version.
-
-Something I have learned from using mercurial in industry is that when
-somebody messes up a "public repo" with conflicts they frequently
-don't clean up the mess.  This can be a sign that they have not
-learned the lessons of cleanliness rather than ill intent.  Otherwise
-(and similarly) this messiness can be caused from not noticing that
-they have left a mess.
-
-The motivation of having a sync script that is run on each user's
-local repository is to decrease the likelihood of a mess.  This is
-achieved by first pulling from the common repository and resolving
-conflicts _before_ "pushing" (note quotations) their changes to the
-common repository.  There is a possibility of a race condition that
-leaves a conflict on the shared repository, however the risk is
-diminished.
-
-Finally, I use "push" in quotes because actually the script uses only
-uses the pull command.  This prevents proliferation of branches on the
-shared repository.
-
-Is there a better way to achieve this in git than the sync.sh script I
-sent around?
-
-Thanks,
-
-Andy
-
--- 
-Andrew I. Schein
-www.andrewschein.com
+Markus
