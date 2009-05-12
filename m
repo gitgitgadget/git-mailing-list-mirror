@@ -1,51 +1,74 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: Cross-Platform Version Control
-Date: Tue, 12 May 2009 12:16:38 -0400
-Message-ID: <20090512161638.GB29566@coredump.intra.peff.net>
-References: <419AD153-53B4-4DAB-AF72-4127C17B1CA0@gmail.com> <20090512151403.GS30527@spearce.org>
+Subject: Re: git default behavior seems odd from a Unix command line point
+	of view
+Date: Tue, 12 May 2009 12:24:45 -0400
+Message-ID: <20090512162444.GC29566@coredump.intra.peff.net>
+References: <4e963a650905120818m70b75892gb4e052187910b9a5@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Esko Luontola <esko.luontola@gmail.com>, git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Tue May 12 18:17:18 2009
+Cc: git@vger.kernel.org
+To: Andrew Schein <andrew@andrewschein.com>
+X-From: git-owner@vger.kernel.org Tue May 12 18:25:01 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M3ufB-00076N-Cl
-	for gcvg-git-2@gmane.org; Tue, 12 May 2009 18:17:05 +0200
+	id 1M3ump-0002Mb-Hh
+	for gcvg-git-2@gmane.org; Tue, 12 May 2009 18:25:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757084AbZELQQo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 May 2009 12:16:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756991AbZELQQn
-	(ORCPT <rfc822;git-outgoing>); Tue, 12 May 2009 12:16:43 -0400
-Received: from peff.net ([208.65.91.99]:53572 "EHLO peff.net"
+	id S1752250AbZELQYq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 May 2009 12:24:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751075AbZELQYq
+	(ORCPT <rfc822;git-outgoing>); Tue, 12 May 2009 12:24:46 -0400
+Received: from peff.net ([208.65.91.99]:48907 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756075AbZELQQj (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 May 2009 12:16:39 -0400
-Received: (qmail 31986 invoked by uid 107); 12 May 2009 16:17:00 -0000
+	id S1750832AbZELQYp (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 May 2009 12:24:45 -0400
+Received: (qmail 32056 invoked by uid 107); 12 May 2009 16:25:06 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Tue, 12 May 2009 12:17:00 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 12 May 2009 12:16:38 -0400
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Tue, 12 May 2009 12:25:06 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 12 May 2009 12:24:45 -0400
 Content-Disposition: inline
-In-Reply-To: <20090512151403.GS30527@spearce.org>
+In-Reply-To: <4e963a650905120818m70b75892gb4e052187910b9a5@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118917>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118918>
 
-On Tue, May 12, 2009 at 08:14:03AM -0700, Shawn O. Pearce wrote:
+On Tue, May 12, 2009 at 11:18:25AM -0400, Andrew Schein wrote:
 
-> As for file names, no plans, its a sequence of bytes, but I think a
-> lot of people wind up using some subset of US-ASCII for their file
-> names, especially if their project is going to be cross platform.
+> The [1] in my prompt indicates the exit code of the git commands. What
+> I find odd is that even with the -q option, you get this verbose
+> output.  Also, you get  a non-zero exit status (which I would expect
+> only on a failure such as presence of an unresolved conflict).  My git
+> usage is to have a number of small repositories and use a shell script
+> to loop over them and perform a sync with a centralized server.
+> Having all this wordy output on a "no sync necessary" scenario seems
+> counter the desired properties of output only when work is taking
+> place or when an error occurs.
+> 
+> Have others developed git practices to sync a bunch or repositories
+> without all this verbose output on a "no change" scenario?
 
-Or they use a single encoding like utf8 so that there are no surprises.
-You can still run into normalization problems with filenames on some
-filesystems, though.  Linus's name_hash code sets up the framework to
-handle "these two names are actually equivalent", but right now I think
-there is just code for handling case-sensitivity, not utf8 normalization
-(but I just skimmed the code, so I might be wrong).
+Yes, I have such a script. I check:
+
+  git ls-files -m -o -d --exclude-standard --directory --no-empty-directory
+
+If it produces any output, then there is something to commit (either a
+change in a tracked file, or an untracked file that might need to be
+added).
+
+I also do a fetch and check to see if we have any commits that need to
+be merged:
+
+  git rev-list master..origin
+
+or any commits that we need to push:
+
+  git rev-list origin..master
+
+(actually, it is a bit more complicated, since "master" and "origin" are
+just convention; I actually parse the config to find the branch pairs).
 
 -Peff
