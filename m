@@ -1,102 +1,175 @@
-From: Alexander Gladysh <agladysh@gmail.com>
-Subject: Git-SVN memory error
-Date: Tue, 12 May 2009 21:04:56 +0400
-Message-ID: <c6c947f60905121004v257e6f72m2a24de12c98dd1ba@mail.gmail.com>
+From: Hugo Mildenberger <Hugo.Mildenberger@namir.de>
+Subject: Re: git fails with control characters in trunk directory name
+Date: Tue, 12 May 2009 18:59:58 +0200
+Message-ID: <200905121900.00625.Hugo.Mildenberger@namir.de>
+References: <200905112208.21017.Hugo.Mildenberger@namir.de> <200905121557.18542.Hugo.Mildenberger@namir.de> <81b0412b0905120759u15f1ec73k73625a7904515792@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue May 12 19:05:08 2009
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Alex Riesen <raa.lkml@gmail.com>
+X-From: git-owner@vger.kernel.org Tue May 12 19:08:36 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M3vPf-00049x-Ff
-	for gcvg-git-2@gmane.org; Tue, 12 May 2009 19:05:07 +0200
+	id 1M3vSw-0005sd-Rr
+	for gcvg-git-2@gmane.org; Tue, 12 May 2009 19:08:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753074AbZELRE5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 May 2009 13:04:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751167AbZELRE5
-	(ORCPT <rfc822;git-outgoing>); Tue, 12 May 2009 13:04:57 -0400
-Received: from ey-out-2122.google.com ([74.125.78.27]:4426 "EHLO
-	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750825AbZELRE4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 May 2009 13:04:56 -0400
-Received: by ey-out-2122.google.com with SMTP id 9so47845eyd.37
-        for <git@vger.kernel.org>; Tue, 12 May 2009 10:04:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:date:message-id:subject
-         :from:to:content-type:content-transfer-encoding;
-        bh=o1sxJDmXW3cgyJ+qQyZNkatHpe0Xy58wNOcOxA4a9eo=;
-        b=fH8Z17ZjDeD9Cb9oTGnU244vzi5337w0dUJXPpb+FBmCw4z/FZ/HNplLcCj8P+H4cE
-         0ohW+6/OKuze6fFyUnK+FllRF8/iixTEHMlhIoNEqzQMHXMl6LMWe0YVSN1KfM+X3E30
-         1OGCgo7KKlLtWdZ+e/Iy6o1vynr285dA/Ue10=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type
-         :content-transfer-encoding;
-        b=LJ9OIjLY6l0vaFbT94NiR2PtCc8JPteNZ9ov86FTYPMs6Tp7XKbInLn+kG1Rd3BcFJ
-         sJ0FxIlgKegRPnfBN89qwhSXnedYVymewPi3Y8LVRPjJfa7YKZvjCj05xL4+cdPkSWXG
-         nVIVBiCBAHTRQPk46Tx/3b8Gyn4zov0hw0wv8=
-Received: by 10.216.15.85 with SMTP id e63mr4067321wee.199.1242147896381; Tue, 
-	12 May 2009 10:04:56 -0700 (PDT)
+	id S1752445AbZELRIW convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 12 May 2009 13:08:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752208AbZELRIW
+	(ORCPT <rfc822;git-outgoing>); Tue, 12 May 2009 13:08:22 -0400
+Received: from mx01.qsc.de ([213.148.129.14]:40844 "EHLO mx01.qsc.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751167AbZELRIV convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 12 May 2009 13:08:21 -0400
+X-Greylist: delayed 445 seconds by postgrey-1.27 at vger.kernel.org; Tue, 12 May 2009 13:08:21 EDT
+Received: from localhost (port-87-234-69-58.dynamic.qsc.de [87.234.69.58])
+	by mx01.qsc.de (Postfix) with ESMTPA id 7254B3D21B;
+	Tue, 12 May 2009 19:00:56 +0200 (CEST)
+User-Agent: KMail/1.9.9
+In-Reply-To: <81b0412b0905120759u15f1ec73k73625a7904515792@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118930>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118931>
 
-Hi, list!
+> > I looked into guess_dir_name().
+>=20
+> That's not the right place. The place I meant is right below the call
+> to this function (you have to parse the names given in the command-li=
+ne
+> too).
+>=20
+> The automatically generated (that's the case with guess_dir_name)
+> directory name certainly shouldn't contain any unexpected characters.
+>=20
+> > A regex call would be easy to fit, but
+> > currently the git binary does not depend on libpcre. Is it generall=
+y
+> > considered to be acceptable to add such a dependency?
+>=20
+> No. And pcre is not the only regex lib in the world. And we prefer
+> shell patterns, if any at all.
+>=20
+> > While I like the idea to make use of a configurable regular express=
+ion, such
+> > an expression had to be a command line parameter with a reasonable =
+default
+> > value, because .git/config still would not exist when the value wou=
+ld be
+> > needed.
+>=20
+> That's where _default_ policy plays its role. "Default" like in "it i=
+s compiled
+> into the git executable and needs no configuration present".
+>=20
+> > Last not least, I managed to reproduce the problem almost exactly:
+> >
+> > 1.) hm@localhost git
+> > clone "git://git.kernel.org/pub/scm/linux/kernel/git/holtmann/bluet=
+ooth-testing.git
+> > "
+> > =C2=A0 =C2=A0 =C2=A0 =C2=A0(Note the trailing linefeed)
+>=20
+> That's all the command printed? No "Initialized empty Git repository"=
+ line?
+>=20
+> > 2.) hm@localhost ~/tmp/bluetooth-testing.git $ make
+>=20
+> Hmm... At this point the clone may have worked (at least partially).
+> It named "bluetooth-testing.git", which it shouldn't (but explainable=
+:
+> the repo url suffix is not .git anymore, but ".git\r\n"). But it look=
+s like
+> the post-clone checkout failed (silently? which would be bad):
+>=20
+> > =C2=A0 =C2=A0 =C2=A0 =C2=A0Makefile:313: /home/hm/tmp/bluetooth-tes=
+ting.git
+> > =C2=A0 =C2=A0 =C2=A0 =C2=A0/scripts/Kbuild.include: No such file or=
+ directory
+> > =C2=A0 =C2=A0 =C2=A0 =C2=A0make[1]: /home/hm/tmp/bluetooth-testing.=
+git: No such file or directory
+> > =C2=A0 =C2=A0 =C2=A0 =C2=A0make[1]: *** No rule to make target `/ho=
+me/hm/tmp/bluetooth-testing.git'.
+> > =C2=A0 =C2=A0 =C2=A0 =C2=A0Stop.
+> > =C2=A0 =C2=A0 =C2=A0 =C2=A0make: *** No rule to make target `includ=
+e/config/auto.conf', needed by
+> > =C2=A0 =C2=A0 =C2=A0 =C2=A0`include/config/kernel.release'. =C2=A0S=
+top.
+>=20
+> Assuming the files must be present, of course.
+>=20
+> > 3.) hm@localhost ~/tmp/bluetooth-testing.git $ git pull
+> > =C2=A0 =C2=A0 =C2=A0 =C2=A0fatal: Error in line 2:
+> >
+> > 4.) ".git/config" now contains
+> >
+> > url =3D
+> > git://git.kernel.org/pub/scm/linux/kernel/git/holtmann/bluetooth-te=
+sting.git\n
+> >
+> > I particulary liked the git message "fatal: Error in line 2:" ...
+> >
+>=20
+> Separate issue. Will look at it later.
+> --
 
-I'm importing a rather large SVN repository into Git. I'm doing it on
-a Synology DS508 NAS PPC box (don't ask me why :-) ). I'm getting an
-out of memory error when trying to import one of commits. Please help
-me to debug/workaround it.
+You really want to use shell patterns to match against a string from wi=
+thin a binary? Although git=20
+already makes use of regexec from glibc or compat/regex directory in nu=
+merous places?=20
 
-Relevant system information below.
+Regarding the procedure above, sorry for keeping it much too short. Her=
+e comes a=20
+complete sequence (I will put some comments within square brackets):
 
-Alexander.
+hm@localhost /var/tmp $ git --version
+git version 1.6.0.6
 
-DiskStation> uname -a
-Linux DiskStation 2.6.24 #839 Wed Mar 25 18:30:32 CST 2009 ppc GNU/Linux
+hm@localhost /var/tmp $ git clone "git://git.kernel.org/pub/scm/linux/k=
+ernel/git/holtmann/bluetooth-testing.git
+"
+Initialized empty Git repository in /mnt/hda1/tmp/bluetooth-testing.git
+/.git/
+remote: Counting objects: 1177836, done.
+remote: Compressing objects: 100% (189467/189467), done.
+remote: Total 1177836 (delta 982785), reused 1176855 (delta 981880)
+Receiving objects: 100% (1177836/1177836), 288.16 MiB | 1288 KiB/s, don=
+e.
+Resolving deltas: 100% (982785/982785), done.
+Checking out files: 100% (27842/27842), done.
 
-DiskStation> git --version
-git version 1.6.3
+hm@localhost /var/tmp $ ls
+bluetooth-testing.git?   [Note that question mark replacing \n in repos=
+itory's name]
 
-DiskStation> sudo ipkg info git
-Package: git
-Version: 1.6.3-1
-Depends: zlib, openssl, libcurl, diffutils, rcs, expat
-Suggests: git-manpages
-Status: install user installed
-Section: net
-Architecture: powerpc
-maintainer: NSLU2 Linux <nslu2-linux@yahoogroups.com>
-MD5Sum: b92688e018f23fa7a82a504d073fe813
-Size: 5872996
-Filename: git_1.6.3-1_powerpc.ipk
-Source: http://www.kernel.org/pub/software/scm/git/git-1.6.3.tar.gz
-Description: GIT is a directory tree content manager that can be used
-for distributed revision control.
+hm@localhost /var/tmp $ cd blue=09
+bluetooth-testing.git^J/ bluez-utils-2.25-r1.new/
+[I typed cd blue<TAB> here, and there is the "^J" I remembered to have =
+seen elsewhere]=20
 
-DiskStation> free # That is actually AFTER git svn died.
-              total         used         free       shared      buffers
-Mem:       516172       501828        14344            0        62656
-Swap:      2586456        29508      2556948
-Total:      3102628       531336      2571292
+hm@localhost /var/tmp $ cd 'bluetooth-testing.git
+'/ [bash puts the directory name automatically within single quotes in =
+this case]
 
-DiskStation> git svn fetch # This is the second run. First one failed
-with the same message.
-Index mismatch: ba0c6593571c2f4b6b6ceff1b1326b30d0cd9495 !=
-c633473cfe3dd92e536450e48cd1d9cb2da1cdd2
-rereading fe4935bc22756ffdb430f94cd7ce4af898750edb
+hm@localhost /var/tmp/bluetooth-testing.git $ make defconfig
+*** Default configuration is based on 'i386_defconfig'
+#
+# configuration written to .config
+#
 
-	A	File1.rar
-        ...
-	A	FileN.rar
-fatal: Out of memory, malloc failed
-hash-object -w --stdin-paths: command returned error: 128
+hm@localhost /var/tmp/bluetooth-testing.git $ make
+make[1]: /mnt/hda1/tmp/bluetooth-testing.git: No such file or directory
+make[1]: *** No rule to make target `/mnt/hda1/tmp/bluetooth-testing.gi=
+t'.  Stop.
+make: *** No rule to make target `include/config/auto.conf', needed by =
+`include/config/kernel.release'.  Stop.
+[The problem is simply the odd directory name, while make tries to use =
+the real one]
 
-error closing pipe: Bad file descriptor at /opt/libexec/git-core/git-svn line 0
-error closing pipe: Bad file descriptor at /opt/libexec/git-core/git-svn line 0
+hm@localhost /var/tmp/bluetooth-testing.git $ git pull
+fatal: Error in line 2:
