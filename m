@@ -1,83 +1,124 @@
-From: Marc Weber <marco-oweber@gmx.de>
-Subject: Re: [PATCH] topgit tg push feature
-Date: Tue, 12 May 2009 09:54:13 +0200
-Message-ID: <20090512075413.GA7764@gmx.de>
-References: <20090507045904.GA2068@gmx.de> <36ca99e90905062245w1ec78828ice5ed18161b6ec43@mail.gmail.com> <20090507084355.GA11680@pengutronix.de> <36ca99e90905070250l656f8879g87eb27c09db2cd42@mail.gmail.com> <20090509103625.GC13344@lapse.rw.madduck.net> <20090509190910.GA9655@gmx.de> <20090511032813.GA15540@gmx.de> <20090511195532.GA28340@pengutronix.de> <20090511210614.GA6118@gmx.de> <20090512051334.GA22757@pengutronix.de>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Fix type-punning issues
+Date: Tue, 12 May 2009 00:57:42 -0700
+Message-ID: <7vy6t292ix.fsf@alter.siamese.dyndns.org>
+References: <1242091058-25197-1-git-send-email-dpmcgee@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue May 12 09:54:42 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Dan McGee <dpmcgee@gmail.com>
+X-From: git-owner@vger.kernel.org Tue May 12 09:57:54 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M3moz-0005ij-4K
-	for gcvg-git-2@gmane.org; Tue, 12 May 2009 09:54:41 +0200
+	id 1M3ms5-000750-Vo
+	for gcvg-git-2@gmane.org; Tue, 12 May 2009 09:57:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754741AbZELHyc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 May 2009 03:54:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754479AbZELHyb
-	(ORCPT <rfc822;git-outgoing>); Tue, 12 May 2009 03:54:31 -0400
-Received: from mail.gmx.net ([213.165.64.20]:57524 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754163AbZELHyb (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 May 2009 03:54:31 -0400
-Received: (qmail invoked by alias); 12 May 2009 07:54:29 -0000
-Received: from mawercer.at.xencon.net (EHLO mail.gmx.net) [83.246.111.127]
-  by mail.gmx.net (mp013) with SMTP; 12 May 2009 09:54:29 +0200
-X-Authenticated: #9006135
-X-Provags-ID: V01U2FsdGVkX18bmPwQWKAbVL3g8dWmmrmh/hOf+rWxKPoziqzKOc
-	E6Hhl0hjHimeKr
-Received: by mail.gmx.net (sSMTP sendmail emulation); Tue, 12 May 2009 09:54:13 +0200
-Mail-Followup-To: Marc Weber <marco-oweber@gmx.de>, git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <20090512051334.GA22757@pengutronix.de>
-User-Agent: Mutt/1.5.16 (2007-06-09)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.63
+	id S1755499AbZELH5n (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 May 2009 03:57:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754741AbZELH5n
+	(ORCPT <rfc822;git-outgoing>); Tue, 12 May 2009 03:57:43 -0400
+Received: from fed1rmmtao105.cox.net ([68.230.241.41]:47266 "EHLO
+	fed1rmmtao105.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754682AbZELH5m (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 May 2009 03:57:42 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao105.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20090512075744.MHHL20430.fed1rmmtao105.cox.net@fed1rmimpo01.cox.net>;
+          Tue, 12 May 2009 03:57:44 -0400
+Received: from localhost ([68.225.240.211])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id qXxi1b0074aMwMQ03XxiwP; Tue, 12 May 2009 03:57:43 -0400
+X-Authority-Analysis: v=1.0 c=1 a=pGLkceISAAAA:8 a=faXARV-m5mM91K6CHcEA:9
+ a=Z2d1SgFZH3RL82DWcDUA:7 a=R0ATNZerhSF1sTPFGoFkeN-QPkgA:4 a=MSl-tDqOz04A:10
+X-CM-Score: 0.00
+In-Reply-To: <1242091058-25197-1-git-send-email-dpmcgee@gmail.com> (Dan McGee's message of "Mon\, 11 May 2009 20\:17\:38 -0500")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118878>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118879>
 
-> hhhm, this hunk is new and unused.  Intended?
-> 
-> If it's OK for you I fix these up when commiting.  I will break out the
-> change to tg.sh as shown yesterday in irc.
+Dan McGee <dpmcgee@gmail.com> writes:
 
-thank you x-times :-)
-Sure that's fine with me. I already told you.
+> In these two places we are casting part of our unsigned char sha1 array into
+> an unsigned int, which violates GCCs strict-aliasing rules (and probably
+> other compilers).
 
->That was my intention my asking for the -r option. The -r option is to
->'tg' not a tg-command. And it's still not addressed.
-Bert: You're wrong:
+Yay.
 
-tg.sh contains:
+>  static unsigned int hash_obj(const struct object *obj, unsigned int n)
+>  {
+> -	unsigned int hash = *(unsigned int *)obj->sha1;
+> +	unsigned int hash;
+> +	memcpy(&hash, obj->sha1, sizeof(unsigned int));
+>  	return hash % n;
+>  }
 
-  base_remote="$(git config topgit.remote 2>/dev/null)" || :
+I noticed this breakage when I borrowed a friend's FC11 preview (as I
+still do not have a replacement machine X-<), but didn't manage to spend
+enough time to fix it myself.  I was hoping a way to tell the compiler
+that this particular pointer usage is Ok in a less hacky way that does not
+upset older compilers, without resorting to low-level memcpy.  But your
+version to use memcpy() is a literal translation of what the code does,
+and I think it is an acceptable solution.
 
-  [...]
+> @@ -16,7 +17,7 @@ static void *insert_decoration(struct decoration *n, const struct object *base,
+>  {
+>  	int size = n->size;
+>  	struct object_decoration *hash = n->hash;
+> -	int j = hash_obj(base, size);
+> +	unsigned int j = hash_obj(base, size);
 
-  if [ "$1" = "-r" ]; then
-          shift
-          if [ -z "$1" ]; then
-                  echo "Option -r requires an argument." >&2
-                  do_help
-                  exit 1
-          fi
-          base_remote="$1"; shift
-          tg="$tg -r $base_remote"
-  fi
+These type changes should be Ok, but I would have preferred them to be a
+separate patch.  From the context, you cannot see if the function in
+places outside the patch context uses "j" for purposes other than holding
+the return value of hash_obj() that requires it to be able to hold a
+netagive value to make sure that this conversion is correct; on the other
+hand, we know n->size is a sane small value that unsigned vs signed int
+does not matter, so in that sense making this change in the same patch
+makes it not about fixing pointer aliasing warning.
 
-So base_remote is set by config first and then overwritten by the first
--r flag. my remotes is initialised with that -r flag.
+But the code here is correct (I read outside the context).
 
-Boy However its wrong again now:
+> @@ -68,7 +69,7 @@ void *add_decoration(struct decoration *n, const struct object *obj,
+>  /* Lookup a decoration pointer */
+>  void *lookup_decoration(struct decoration *n, const struct object *obj)
+>  {
+> -	int j;
+> +	unsigned int j;
 
-If you use tg push -r foo it will push to poth: the config value and
-foo. So probably its best to remove the second -r altogether and replace
-my remotes by base_remote. You still can use the undocumented -r "remote
-remote2" feature.
+Same here.
 
-Marc Weber
+> diff --git a/object.c b/object.c
+> index 7e6a92c..96ef32d 100644
+> --- a/object.c
+> +++ b/object.c
+> @@ -43,15 +43,16 @@ int type_from_string(const char *str)
+>  	die("invalid object type \"%s\"", str);
+>  }
+>  
+> -static unsigned int hash_obj(struct object *obj, unsigned int n)
+> +static unsigned int hash_char(const unsigned char *sha1, unsigned int n)
+>  {
+> -	unsigned int hash = *(unsigned int *)obj->sha1;
+> -	return hash % n;
+> +	unsigned int i;
+> +	memcpy(&i, sha1, sizeof(unsigned int));
+> +	return (int)(i % n);
+
+Huh?  The original looks the same as the one in decorate.c but why is the
+conversion different?  I am not talking about the difference between hash
+and i, but am wondering about the cast to int (and then back to unsigned
+int by the function signature).
+
+It might make more sense to have one canonical
+
+	unsigned int hash_obj(const struct object *obj, unsigned int n)
+
+here, export it to object.h, and remove the one in decorate.c.
+
+Or am I missing something?
