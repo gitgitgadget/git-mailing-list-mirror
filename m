@@ -1,74 +1,136 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: How to create a new commit with the content of some commit?
-Date: Tue, 12 May 2009 12:51:03 -0400
-Message-ID: <20090512165103.GE29566@coredump.intra.peff.net>
-References: <46dff0320905120735l501dcaf4ia8197d24b7684cfe@mail.gmail.com> <20090512160749.GA29566@coredump.intra.peff.net> <46dff0320905120943j303ef104ve7bad25f1874007f@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH] Revert "checkout branch: prime cache-tree fully"
+Date: Tue, 12 May 2009 09:56:56 -0700
+Message-ID: <7v4ovq8dk7.fsf@alter.siamese.dyndns.org>
+References: <d96d20670905120901qa4c0353xc50160f880e17a21@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git mailing list <git@vger.kernel.org>
-To: Ping Yin <pkufranky@gmail.com>
-X-From: git-owner@vger.kernel.org Tue May 12 18:51:20 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Peter MacMillan <peterm@metavera.com>
+X-From: git-owner@vger.kernel.org Tue May 12 18:57:21 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M3vCJ-0006Jn-HO
-	for gcvg-git-2@gmane.org; Tue, 12 May 2009 18:51:20 +0200
+	id 1M3vHy-0000TC-R5
+	for gcvg-git-2@gmane.org; Tue, 12 May 2009 18:57:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750825AbZELQvI convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 12 May 2009 12:51:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756937AbZELQvG
-	(ORCPT <rfc822;git-outgoing>); Tue, 12 May 2009 12:51:06 -0400
-Received: from peff.net ([208.65.91.99]:36508 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755828AbZELQvE (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 May 2009 12:51:04 -0400
-Received: (qmail 32269 invoked by uid 107); 12 May 2009 16:51:25 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Tue, 12 May 2009 12:51:25 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 12 May 2009 12:51:03 -0400
-Content-Disposition: inline
-In-Reply-To: <46dff0320905120943j303ef104ve7bad25f1874007f@mail.gmail.com>
+	id S1753483AbZELQ45 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 May 2009 12:56:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752997AbZELQ45
+	(ORCPT <rfc822;git-outgoing>); Tue, 12 May 2009 12:56:57 -0400
+Received: from fed1rmmtao106.cox.net ([68.230.241.40]:34634 "EHLO
+	fed1rmmtao106.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752581AbZELQ44 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 May 2009 12:56:56 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao106.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20090512165655.VASQ25927.fed1rmmtao106.cox.net@fed1rmimpo01.cox.net>;
+          Tue, 12 May 2009 12:56:55 -0400
+Received: from localhost ([68.225.240.211])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id qgww1b00V4aMwMQ03gwwb1; Tue, 12 May 2009 12:56:57 -0400
+X-Authority-Analysis: v=1.0 c=1 a=BTifD3LgNaoA:10 a=NuvZuKHEjYgA:10
+ a=ybZZDoGAAAAA:8 a=NZV4qimDwNJxkN53mboA:9 a=hkA891llqua9d5s89EsA:7
+ a=ZOZ051uBRp9GhL9NIMWEpsaUMJ4A:4 a=qIVjreYYsbEA:10
+X-CM-Score: 0.00
+In-Reply-To: <d96d20670905120901qa4c0353xc50160f880e17a21@mail.gmail.com> (Peter MacMillan's message of "Tue\, 12 May 2009 12\:01\:14 -0400")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118926>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118927>
 
-On Wed, May 13, 2009 at 12:43:33AM +0800, Ping Yin wrote:
+The logic in 83ae209 (checkout branch: prime cache-tree fully,
+2009-04-20) is bogus; checkout can switch branches with a dirty
+index and in such a case the tree won't match HEAD.
 
-> > You can just munge the index directly, and skip the working tree
-> > entirely:
-> >
-> > =C2=A0rm .git/index
-> > =C2=A0git read-tree b
-> > =C2=A0git commit -m 'the copy of b'
->=20
-> In a non-conflict status, "git read-tree b" will update the index to
-> full match the tree of b, so "rm .git/index" is unnecessary, right?
+Add t2014-switch to catch this breakage.
 
-=46or some reason, I was thinking that entries in the index that were n=
-ot
-in "b" would remain, but that is not actually the case. So yes, I think
-you can do it without removing the index (and you are better off to do
-so, since the index also contains the stat cache for your worktree, so
-it is more efficient).
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ builtin-checkout.c |    9 +--------
+ t/t2014-switch.sh  |   28 ++++++++++++++++++++++++++++
+ 2 files changed, 29 insertions(+), 8 deletions(-)
+ create mode 100755 t/t2014-switch.sh
 
-You can also add "-u" as Junio suggested to update the working tree
-during that step, which should be more efficient.
-
-> > =C2=A0echo 'copy of b' >message
-> > =C2=A0tree=3D`git rev-parse b^{tree}`
-> > =C2=A0commit=3D`git commit-tree $tree -p c <message`
-> > =C2=A0git update-ref c $commit
->=20
-> Maybe a -c option can be added to git-commit-tree?
-
-I doubt there is much interest in that, as commit-tree is meant to be a
-low-level building block, not a user tool. If you wanted to pull the
-message from another commit, you could just do:
-
-  git cat-file commit b | sed '1,/^$/d' | git commit-tree ...
-
--Peff
+diff --git a/builtin-checkout.c b/builtin-checkout.c
+index 15f0c32..dc4bfb5 100644
+--- a/builtin-checkout.c
++++ b/builtin-checkout.c
+@@ -365,17 +365,14 @@ static int merge_working_tree(struct checkout_opts *opts,
+ 	int ret;
+ 	struct lock_file *lock_file = xcalloc(1, sizeof(struct lock_file));
+ 	int newfd = hold_locked_index(lock_file, 1);
+-	int reprime_cache_tree = 0;
+ 
+ 	if (read_cache() < 0)
+ 		return error("corrupt index file");
+ 
+-	cache_tree_free(&active_cache_tree);
+ 	if (opts->force) {
+ 		ret = reset_tree(new->commit->tree, opts, 1);
+ 		if (ret)
+ 			return ret;
+-		reprime_cache_tree = 1;
+ 	} else {
+ 		struct tree_desc trees[2];
+ 		struct tree *tree;
+@@ -411,9 +408,7 @@ static int merge_working_tree(struct checkout_opts *opts,
+ 		init_tree_desc(&trees[1], tree->buffer, tree->size);
+ 
+ 		ret = unpack_trees(2, trees, &topts);
+-		if (ret != -1) {
+-			reprime_cache_tree = 1;
+-		} else {
++		if (ret == -1) {
+ 			/*
+ 			 * Unpack couldn't do a trivial merge; either
+ 			 * give up or do a real merge, depending on
+@@ -457,8 +452,6 @@ static int merge_working_tree(struct checkout_opts *opts,
+ 		}
+ 	}
+ 
+-	if (reprime_cache_tree)
+-		prime_cache_tree(&active_cache_tree, new->commit->tree);
+ 	if (write_cache(newfd, active_cache, active_nr) ||
+ 	    commit_locked_index(lock_file))
+ 		die("unable to write new index file");
+diff --git a/t/t2014-switch.sh b/t/t2014-switch.sh
+new file mode 100755
+index 0000000..ccfb147
+--- /dev/null
++++ b/t/t2014-switch.sh
+@@ -0,0 +1,28 @@
++#!/bin/sh
++
++test_description='Peter MacMillan'
++. ./test-lib.sh
++
++test_expect_success setup '
++	echo Hello >file &&
++	git add file &&
++	test_tick &&
++	git commit -m V1 &&
++	echo Hello world >file &&
++	git add file &&
++	git checkout -b other
++'
++
++test_expect_success 'check all changes are staged' '
++	git diff --exit-code
++'
++
++test_expect_success 'second commit' '
++	git commit -m V2
++'
++
++test_expect_success 'check' '
++	git diff --cached --exit-code
++'
++
++test_done
+-- 
+1.6.3.9.g6345d
