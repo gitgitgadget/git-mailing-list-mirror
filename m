@@ -1,53 +1,70 @@
-From: Heiko Voigt <hvoigt@hvoigt.net>
-Subject: Re: merging multiple commit into one?
-Date: Tue, 12 May 2009 17:53:15 +0200
-Message-ID: <20090512155301.GA21556@macbook.lan>
-References: <1de9d39c0905110621p6858bca8y8bb036a167754672@mail.gmail.com> <20090511212923.GA19844@macbook.lan> <4A08A28C.3020202@gmail.com>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: How to move users from SEU (AS400) to Git?
+Date: Tue, 12 May 2009 08:57:25 -0700
+Message-ID: <20090512155725.GT30527@spearce.org>
+References: <1CA7E776-B216-4AA5-BFE0-63C0B066980D@npcinternational.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git <git@vger.kernel.org>
-To: MALET Jean-Luc <jeanluc.malet@gmail.com>
-X-From: git-owner@vger.kernel.org Tue May 12 17:55:57 2009
+Cc: git@vger.kernel.org
+To: Jon Brisbin <jon.brisbin@npcinternational.com>
+X-From: git-owner@vger.kernel.org Tue May 12 17:58:07 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M3uIQ-0002uZ-Tv
-	for gcvg-git-2@gmane.org; Tue, 12 May 2009 17:53:35 +0200
+	id 1M3uMi-0005zU-Od
+	for gcvg-git-2@gmane.org; Tue, 12 May 2009 17:58:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755414AbZELPxR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 May 2009 11:53:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756137AbZELPxQ
-	(ORCPT <rfc822;git-outgoing>); Tue, 12 May 2009 11:53:16 -0400
-Received: from darksea.de ([83.133.111.250]:48748 "HELO darksea.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1757887AbZELPxP (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 May 2009 11:53:15 -0400
-Received: (qmail 30307 invoked from network); 12 May 2009 17:53:05 +0200
-Received: from unknown (HELO localhost) (127.0.0.1)
-  by localhost with SMTP; 12 May 2009 17:53:05 +0200
+	id S1759670AbZELP50 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 May 2009 11:57:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759202AbZELP5Z
+	(ORCPT <rfc822;git-outgoing>); Tue, 12 May 2009 11:57:25 -0400
+Received: from george.spearce.org ([209.20.77.23]:60528 "EHLO
+	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758697AbZELP5Y (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 May 2009 11:57:24 -0400
+Received: by george.spearce.org (Postfix, from userid 1001)
+	id 48F24381D5; Tue, 12 May 2009 15:57:25 +0000 (UTC)
 Content-Disposition: inline
-In-Reply-To: <4A08A28C.3020202@gmail.com>
-User-Agent: Mutt/1.5.19 (2009-01-05)
+In-Reply-To: <1CA7E776-B216-4AA5-BFE0-63C0B066980D@npcinternational.com>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118906>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118907>
 
-On Tue, May 12, 2009 at 12:11:24AM +0200, MALET Jean-Luc wrote:
-> hi,
-> thanks, I know about git stash, the problem is that this command don't  
-> fits well when working on multiple copies of the sources on different  
-> locations, git stash is usefull for saving states before branching  
-> elsewhere and comming back to the branch and keep going on your work....  
-> I use it in a different way since I  commit to continue work on a  
-> different pc, (so I commit, I push to some git archive, I pull from the  
-> other pc, and continue the work on the other pc, then commit push again  
-> and pull again on first pc....). As far as I know you can't push stashed  
-> information, I'm wrong?
+Jon Brisbin <jon.brisbin@npcinternational.com> wrote:
+>
+> I'm just wondering what the Git experts would say to someone wanting to 
+> transition from say, Visual SourceSafe, and expecting the predictability 
+> of having source files "locked out" while a developer is making changes 
+> to them?
 
-AFAIR, git stash cannot be pushed. Well you could by creating a branch
-and pushing that but thats not native stash functionality.
+I had a really hard time with this "locked out" mentality at my last
+employer.  They used PVCS Version Manager, and relied heavily on its
+"lock out" feature to protect files while they were being edited.
 
-cheers Heiko
+But more often than not, what happened was a guy had a file locked
+for a month at a time while doing some new feature change, he'd go
+on vacation for a week, and a production issue would crop up that
+need a fix in that file.
+
+Half of the time, developers would try to fix the code somewhere
+else.  They realized that was bad, e.g. putting in 85 if-then tests
+at every call site because a function didn't tolerate a bad input,
+but if they could lock the other 85 files, they'd do it over trying
+to break the lock held by the first guy.
+
+It took me a year to convince them that git's no-lock model is
+better.  But they finally came over.  Most of it was about the fact
+that they could now finally avoid that lock problem, and just do
+the right change, and not need to do work arounds.  One of the guys
+had trouble with that, he was OK with doing work arounds instead
+of real fixes, but once we cleaned up most of his workarounds and
+the code base practically got cut in half, he got on board.
+
+Its an uphill battle.
+
+-- 
+Shawn.
