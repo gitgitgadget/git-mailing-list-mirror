@@ -1,107 +1,118 @@
-From: Hugo Mildenberger <Hugo.Mildenberger@namir.de>
-Subject: Re: git fails with control characters in trunk directory name
-Date: Tue, 12 May 2009 15:57:17 +0200
-Message-ID: <200905121557.18542.Hugo.Mildenberger@namir.de>
-References: <200905112208.21017.Hugo.Mildenberger@namir.de> <200905121103.00432.Hugo.Mildenberger@namir.de> <81b0412b0905120354p6e1bf517y154601132f0901a3@mail.gmail.com>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: Supporting hashes other than SHA-1
+Date: Tue, 12 May 2009 15:59:36 +0200
+Message-ID: <4A0980C8.7060106@op5.se>
+References: <20090511195242.GA14756@foursquare.net>	<m3zldjl5bq.fsf@localhost.localdomain> <m3vdo6lbuy.fsf@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="utf-8"
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Alex Riesen <raa.lkml@gmail.com>
-X-From: git-owner@vger.kernel.org Tue May 12 15:58:40 2009
+Cc: Chris Frey <cdfrey@foursquare.net>, git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Tue May 12 15:59:48 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M3sV3-0001t6-Fe
-	for gcvg-git-2@gmane.org; Tue, 12 May 2009 15:58:29 +0200
+	id 1M3sWI-0002by-Kp
+	for gcvg-git-2@gmane.org; Tue, 12 May 2009 15:59:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752276AbZELN6Q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 May 2009 09:58:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752156AbZELN6P
-	(ORCPT <rfc822;git-outgoing>); Tue, 12 May 2009 09:58:15 -0400
-Received: from mx02.qsc.de ([213.148.130.14]:59902 "EHLO mx02.qsc.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751371AbZELN6O (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 May 2009 09:58:14 -0400
-Received: from localhost (port-87-234-69-58.dynamic.qsc.de [87.234.69.58])
-	by mx02.qsc.de (Postfix) with ESMTP id 77BCA16C001A;
-	Tue, 12 May 2009 15:58:14 +0200 (CEST)
-User-Agent: KMail/1.9.9
-In-Reply-To: <81b0412b0905120354p6e1bf517y154601132f0901a3@mail.gmail.com>
-Content-Disposition: inline
+	id S1752919AbZELN7m (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 May 2009 09:59:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752687AbZELN7l
+	(ORCPT <rfc822;git-outgoing>); Tue, 12 May 2009 09:59:41 -0400
+Received: from mail-bw0-f222.google.com ([209.85.218.222]:51036 "EHLO
+	mail-bw0-f222.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752007AbZELN7j (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 May 2009 09:59:39 -0400
+Received: by bwz22 with SMTP id 22so3290206bwz.37
+        for <git@vger.kernel.org>; Tue, 12 May 2009 06:59:37 -0700 (PDT)
+Received: by 10.86.25.10 with SMTP id 10mr7779875fgy.79.1242136777667;
+        Tue, 12 May 2009 06:59:37 -0700 (PDT)
+Received: from clix.int.op5.se ([212.112.174.166])
+        by mx.google.com with ESMTPS id 4sm1057078fge.3.2009.05.12.06.59.36
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Tue, 12 May 2009 06:59:37 -0700 (PDT)
+User-Agent: Thunderbird 2.0.0.21 (X11/20090320)
+In-Reply-To: <m3vdo6lbuy.fsf@localhost.localdomain>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118895>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118896>
 
-> OTOH, a warning about commonly used delimiters not fitting a name
-> context, maybe a good idea. Like "\r\n\t", backslash (came up recently
-> on this list). Such a check and associated warning may be useful for
-> repository names and branches.
->
-> Still, it's more of a policy issue and I would make it optional, even
-> if enabled by default. Maybe even by defining a regexp which the
-> repo name or branch name must (for hard error) or should (for a warning)
-> match.
->
-> For your specific case, you can take a look at builtin-clone.c,
-> just after the line containing "guess_dir_name(repo_name"...
-> --
+Jakub Narebski wrote:
+> Jakub Narebski <jnareb@gmail.com> writes:
+> 
+>> Chris Frey <cdfrey@foursquare.net> writes:
+>>
+>>> Considering the recent news regarding SHA-1's newly found weaknesses,
+>>> is there any general interest in making git flexible enough to support
+>>> other hashes in the future?
+>> First, there isn't as far as I know any 'known preimage' attack
+>> against SHA-1, and only that would truly matter for Git.
+>>
+>> Second, this issue was discussed in depth in the past; check git
+>> mailing list archives, please...
+> 
+> See also this blog entry (and comments):
+>   http://kitenet.net/~joey/blog/entry/sha-1/
+> 
 
-But at least the git versions I tried (up to 1.6.3) really do have a problem 
-when facing a trailing newline in repository names; so one should enforce a 
-convention. Although the situation here is certainly a far-flung, uncommon 
-one, it could also happen when git was called from scripts.
+It's a bit harder than that, since both pre-images have to be the same
+size. Git does this when hashing an object to the database:
 
-I looked into guess_dir_name(). A regex call would be easy to fit, but 
-currently the git binary does not depend on libpcre. Is it generally 
-considered to be acceptable to add such a dependency? 
+static void write_sha1_file_prepare(const void *buf, unsigned long len,
+                      const char *type, unsigned char *sha1,
+                      char *hdr, int *hdrlen)
+{
+    git_SHA_CTX c;
 
-While I like the idea to make use of a configurable regular expression, such 
-an expression had to be a command line parameter with a reasonable default 
-value, because .git/config still would not exist when the value would be 
-needed. 
+    /* Generate the header */
+    *hdrlen = sprintf(hdr, "%s %lu", type, len)+1;
 
-Last not least, I managed to reproduce the problem almost exactly:
+    /* Sha1.. */
+    git_SHA1_Init(&c);
+    git_SHA1_Update(&c, hdr, *hdrlen);
+    git_SHA1_Update(&c, buf, len);
+    git_SHA1_Final(sha1, &c);
+}
 
-1.) hm@localhost git 
-clone "git://git.kernel.org/pub/scm/linux/kernel/git/holtmann/bluetooth-testing.git
-"  
-	(Note the trailing linefeed)
+Iow, the type and, more importantly, *size* of the object is added to
+the hash. AFAIK, the pre-image conflict generators all rely on being
+able to manipulate the size of the content it's creating hashes for.
+I don't know how hard that would be to change, so perhaps someone else
+can enlighten me.
 
-2.) hm@localhost ~/tmp/bluetooth-testing.git $ make
-	Makefile:313: /home/hm/tmp/bluetooth-testing.git
-	/scripts/Kbuild.include: No such file or directory
-	make[1]: /home/hm/tmp/bluetooth-testing.git: No such file or directory
-	make[1]: *** No rule to make target `/home/hm/tmp/bluetooth-testing.git'.
-	Stop.
-	make: *** No rule to make target `include/config/auto.conf', needed by
-	`include/config/kernel.release'.  Stop.
+I'm not exactly overwhelmed by the attack vectors Joey describes either.
+First of all, it's rather trivial to add a check to git to make it
+decompress its own internal object when it receives a conflicting hash
+and then check the type, size and content of both objects and alert a
+user if there is a mismatch somewhere. It wouldn't even burn that much
+CPU, since conflicts are extremely rare without malevolent intervention.
+That would defeat the first scenario by alerting users rather promptly.
 
-3.) hm@localhost ~/tmp/bluetooth-testing.git $ git pull
-	fatal: Error in line 2:
+The second scenario can't really be prevented, but unless Alice is
+really a server-admin on the server hosting the repository, she will
+leave traces in the ssh-logs. It also relies on the build-server being
+utterly stupid by re-cloning the entire project.
 
-4.) ".git/config" now contains
+Neither case is exactly foolproof. Both have a high risk of exposure.
+A far better and simpler thing to do (if one were so inclined) would
+be to just add whatever malicious code one wants but make it appear as
+if it was added in a patch-series from someone else and then hope
+noone notices until it's too late. Far less risk for the same gains.
 
-url = 
-git://git.kernel.org/pub/scm/linux/kernel/git/holtmann/bluetooth-testing.git\n
+As both vectors outlined by Joey require a lot of community trust, I'm
+not particularly worried.
 
-I particulary liked the git message "fatal: Error in line 2:" ... 
+-- 
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
 
-grep says, it would stem from builtin-fmt-merge-msg.c/fmt_merge_msg():
-270         /* get a line */
-271         while (pos < in->len) {
-272                 int len;
-273                 char *newline, *p = in->buf + pos;
-274
-275                 newline = strchr(p, '\n');
-276                 len = newline ? newline - p : strlen(p);
-277                 pos += len + !!newline;
-278                 i++;
-279                 p[len] = 0;
-280                 if (handle_line(p))
-281                         die ("Error in line %d: %.*s", i, len, p);
-282         }
+Register now for Nordic Meet on Nagios, June 3-4 in Stockholm
+ http://nordicmeetonnagios.op5.org/
+
+Considering the successes of the wars on alcohol, poverty, drugs and
+terror, I think we should give some serious thought to declaring war
+on peace.
