@@ -1,78 +1,97 @@
-From: Robin Rosenberg <robin.rosenberg@dewire.com>
-Subject: [RFC 7/8] Convert symlink dest in diff
-Date: Wed, 13 May 2009 00:50:30 +0200
-Message-ID: <1242168631-30753-8-git-send-email-robin.rosenberg@dewire.com>
-References: <1242168631-30753-1-git-send-email-robin.rosenberg@dewire.com>
- <1242168631-30753-2-git-send-email-robin.rosenberg@dewire.com>
- <1242168631-30753-3-git-send-email-robin.rosenberg@dewire.com>
- <1242168631-30753-4-git-send-email-robin.rosenberg@dewire.com>
- <1242168631-30753-5-git-send-email-robin.rosenberg@dewire.com>
- <1242168631-30753-6-git-send-email-robin.rosenberg@dewire.com>
- <1242168631-30753-7-git-send-email-robin.rosenberg@dewire.com>
-Cc: Robin Rosenberg <robin.rosenberg@dewire.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 13 00:51:42 2009
+From: Trent Piepho <xyzzy@speakeasy.org>
+Subject: [PATCH v2] send-email: Add config option for sender address
+Date: Tue, 12 May 2009 15:48:56 -0700
+Message-ID: <1242168536-15057-1-git-send-email-xyzzy@speakeasy.org>
+References: <7v1vrxhu8x.fsf@gitster.siamese.dyndns.org>
+Cc: Nanako Shiraishi <nanako3@lavabit.com>, git@vger.kernel.org,
+	Trent Piepho <xyzzy@speakeasy.org>, gitster@pobox.com
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed May 13 00:56:50 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M40oz-0000ir-Ev
-	for gcvg-git-2@gmane.org; Wed, 13 May 2009 00:51:37 +0200
+	id 1M40u1-0002Tc-Np
+	for gcvg-git-2@gmane.org; Wed, 13 May 2009 00:56:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754732AbZELWvI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 May 2009 18:51:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755067AbZELWvD
-	(ORCPT <rfc822;git-outgoing>); Tue, 12 May 2009 18:51:03 -0400
-Received: from mail.dewire.com ([83.140.172.130]:19410 "EHLO dewire.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754836AbZELWux (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 May 2009 18:50:53 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by dewire.com (Postfix) with ESMTP id 19974145A58A;
-	Wed, 13 May 2009 00:50:54 +0200 (CEST)
-X-Virus-Scanned: by amavisd-new at dewire.com
-Received: from dewire.com ([127.0.0.1])
-	by localhost (torino.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 5nFhBBwTuI-o; Wed, 13 May 2009 00:50:53 +0200 (CEST)
-Received: from localhost.localdomain (unknown [10.9.0.9])
-	by dewire.com (Postfix) with ESMTP id 8311E145A593;
-	Wed, 13 May 2009 00:50:35 +0200 (CEST)
-X-Mailer: git-send-email 1.6.3.dirty
-In-Reply-To: <1242168631-30753-7-git-send-email-robin.rosenberg@dewire.com>
+	id S1752769AbZELW4k (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 May 2009 18:56:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752224AbZELW4k
+	(ORCPT <rfc822;git-outgoing>); Tue, 12 May 2009 18:56:40 -0400
+Received: from mail8.sea5.speakeasy.net ([69.17.117.10]:42907 "EHLO
+	mail8.sea5.speakeasy.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751618AbZELW4j (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 May 2009 18:56:39 -0400
+X-Greylist: delayed 400 seconds by postgrey-1.27 at vger.kernel.org; Tue, 12 May 2009 18:56:39 EDT
+Received: (qmail 22769 invoked from network); 12 May 2009 22:50:00 -0000
+Received: from 71-36-41-54.tukw.qwest.net (HELO localhost.localdomain) (xyzzy@[71.36.41.54])
+          (envelope-sender <xyzzy@speakeasy.org>)
+          by mail8.sea5.speakeasy.net (qmail-ldap-1.03) with SMTP
+          for <gitster@pobox.com>; 12 May 2009 22:50:00 -0000
+X-Mailer: git-send-email 1.5.4.1
+In-Reply-To: <7v1vrxhu8x.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118968>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118969>
 
+The sender address, as specified with the '--from' command line option,
+couldn't be set in the config file.  So add a new config option,
+'sendemail.from', which sets it.  One can use 'sendemail.<identity>.from'
+as well of course, which is likely the more useful case.
+
+The sender address would default to GIT_AUTHOR_IDENT, which is usually the
+right thing, but this doesn't allow switching based on the identity
+selected.  It's possible to switch the SMTP server and envelope sender by
+using the '--identity' option, in which case one probably wants to use a
+different from address as well, but this had to be manually specified.
+
+The documentation for 'from' is also corrected somewhat.  If '--from' is
+specified (or the new sendemail.from option is used) then the user isn't
+prompted.  The default with no '--from' option (or sendemail.from option)
+is GIT_AUTHOR_IDENT first then GIT_COMMITTER_IDENT, not just
+GIT_COMMITTER_IDENT.
+
+Signed-off-by: Trent Piepho <xyzzy@speakeasy.org>
 ---
- diff.c |   14 ++++++++++++--
- 1 files changed, 12 insertions(+), 2 deletions(-)
+v2: Updated to latest git
 
-diff --git a/diff.c b/diff.c
-index 170ec5a..c8132a4 100644
---- a/diff.c
-+++ b/diff.c
-@@ -1319,8 +1319,18 @@ int diff_populate_filespec(struct diff_filespec *s, int size_only)
- 				locate_size_cache(s->sha1, 0, s->size);
- 		}
- 		else {
--			s->data = read_sha1_file(s->sha1, type, &s->size);
--			s->should_free = 1;
-+			if (S_ISLNK(s->mode)) {
-+				int linksize;
-+			        char *linkdata = read_sha1_file(s->sha1, type, &linksize);
-+				s->size = locallen(linkdata, linksize);
-+				s->data = xmalloc(s->size + 1);
-+				localcpy(s->data, linkdata, linksize + 1);
-+				s->should_free = 1;
-+				free(linkdata);
-+			} else {
-+				s->data = read_sha1_file(s->sha1, type, &s->size);
-+				s->should_free = 1;
-+			}
- 		}
- 	}
- 	return 0;
+ Documentation/git-send-email.txt |    9 ++++++---
+ git-send-email.perl              |    1 +
+ 2 files changed, 7 insertions(+), 3 deletions(-)
+
+diff --git a/Documentation/git-send-email.txt b/Documentation/git-send-email.txt
+index 794224b..f940770 100644
+--- a/Documentation/git-send-email.txt
++++ b/Documentation/git-send-email.txt
+@@ -69,9 +69,12 @@ and In-Reply-To headers will be used unless they are removed.
+ Missing From or In-Reply-To headers will be prompted for.
+ 
+ --from=<address>::
+-	Specify the sender of the emails.  This will default to
+-	the value GIT_COMMITTER_IDENT, as returned by "git var -l".
+-	The user will still be prompted to confirm this entry.
++	Specify the sender of the emails.  If not specified on the command line,
++	the value of the 'sendemail.from' configuration option is used.  If
++	neither the command line option nor 'sendemail.from' are set, then the
++	user will be prompted for the value.  The default for the prompt will be
++	the value of GIT_AUTHOR_IDENT, or GIT_COMMITTER_IDENT if that is not
++	set, as returned by "git var -l".
+ 
+ --in-reply-to=<identifier>::
+ 	Specify the contents of the first In-Reply-To header.
+diff --git a/git-send-email.perl b/git-send-email.perl
+index cccbf45..d9c7f32 100755
+--- a/git-send-email.perl
++++ b/git-send-email.perl
+@@ -210,6 +210,7 @@ my %config_settings = (
+     "envelopesender" => \$envelope_sender,
+     "multiedit" => \$multiedit,
+     "confirm"   => \$confirm,
++    "from" => \$sender,
+ );
+ 
+ # Handle Uncouth Termination
 -- 
-1.6.3.dirty
+1.5.4.1
