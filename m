@@ -1,242 +1,312 @@
 From: Robin Rosenberg <robin.rosenberg@dewire.com>
-Subject: [RFC 2/8] Messages in locale.
-Date: Wed, 13 May 2009 00:50:25 +0200
-Message-ID: <1242168631-30753-3-git-send-email-robin.rosenberg@dewire.com>
+Subject: [RFC 8/8] UTF-8 in non-SHA1-objects
+Date: Wed, 13 May 2009 00:50:31 +0200
+Message-ID: <1242168631-30753-9-git-send-email-robin.rosenberg@dewire.com>
 References: <1242168631-30753-1-git-send-email-robin.rosenberg@dewire.com>
  <1242168631-30753-2-git-send-email-robin.rosenberg@dewire.com>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+ <1242168631-30753-3-git-send-email-robin.rosenberg@dewire.com>
+ <1242168631-30753-4-git-send-email-robin.rosenberg@dewire.com>
+ <1242168631-30753-5-git-send-email-robin.rosenberg@dewire.com>
+ <1242168631-30753-6-git-send-email-robin.rosenberg@dewire.com>
+ <1242168631-30753-7-git-send-email-robin.rosenberg@dewire.com>
+ <1242168631-30753-8-git-send-email-robin.rosenberg@dewire.com>
 Cc: Robin Rosenberg <robin.rosenberg@dewire.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 13 00:51:01 2009
+X-From: git-owner@vger.kernel.org Wed May 13 00:51:39 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M40oJ-0000Sx-69
-	for gcvg-git-2@gmane.org; Wed, 13 May 2009 00:50:55 +0200
+	id 1M40oy-0000ir-Mq
+	for gcvg-git-2@gmane.org; Wed, 13 May 2009 00:51:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754102AbZELWup (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 May 2009 18:50:45 -0400
-X-Warning: Original message contained 8-bit characters, however during
-	   the SMTP transport session the receiving system did not announce
-	   capability of receiving 8-bit SMTP (RFC 1651-1653), and as this
-	   message does not have MIME headers (RFC 2045-2049) to enable
-	   encoding change, we had very little choice.
-X-Warning: We ASSUME it is less harmful to add the MIME headers, and
-	   convert the text to Quoted-Printable, than not to do so,
-	   and to strip the message to 7-bits.. (RFC 1428 Appendix A)
-X-Warning: We don't know what character set the user used, thus we had to
-	   write these MIME-headers with our local system default value.
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753895AbZELWun
-	(ORCPT <rfc822;git-outgoing>); Tue, 12 May 2009 18:50:43 -0400
-Received: from mail.dewire.com ([83.140.172.130]:19392 "EHLO dewire.com"
+	id S1755159AbZELWvD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 May 2009 18:51:03 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754801AbZELWvB
+	(ORCPT <rfc822;git-outgoing>); Tue, 12 May 2009 18:51:01 -0400
+Received: from mail.dewire.com ([83.140.172.130]:19408 "EHLO dewire.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752687AbZELWuj (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 May 2009 18:50:39 -0400
+	id S1754587AbZELWux (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 May 2009 18:50:53 -0400
 Received: from localhost (localhost [127.0.0.1])
-	by dewire.com (Postfix) with ESMTP id 4F0AD145A58C;
-	Wed, 13 May 2009 00:50:39 +0200 (CEST)
+	by dewire.com (Postfix) with ESMTP id 4F31D145A58F;
+	Wed, 13 May 2009 00:50:53 +0200 (CEST)
 X-Virus-Scanned: by amavisd-new at dewire.com
 Received: from dewire.com ([127.0.0.1])
 	by localhost (torino.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 5cHVZE65qoCL; Wed, 13 May 2009 00:50:37 +0200 (CEST)
+	with ESMTP id ZCqlpPtbay9p; Wed, 13 May 2009 00:50:51 +0200 (CEST)
 Received: from localhost.localdomain (unknown [10.9.0.9])
-	by dewire.com (Postfix) with ESMTP id C16FF145A58D;
-	Wed, 13 May 2009 00:50:32 +0200 (CEST)
+	by dewire.com (Postfix) with ESMTP id EA580145A58A;
+	Wed, 13 May 2009 00:50:35 +0200 (CEST)
 X-Mailer: git-send-email 1.6.3.dirty
-In-Reply-To: <1242168631-30753-2-git-send-email-robin.rosenberg@dewire.com>
+In-Reply-To: <1242168631-30753-8-git-send-email-robin.rosenberg@dewire.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118965>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118966>
 
 ---
- builtin-cat-file.c    |    6 +++++-
- builtin-commit-tree.c |    9 ++++++---
- git-rebase.sh         |    1 +
- log-tree.c            |    4 +++-
- refs.c                |   11 ++++++++---
- t/t-utf-msg.sh        |   43 +++++++++++++++++++++++++++++++++++++++++=
-++
- 6 files changed, 66 insertions(+), 8 deletions(-)
- create mode 100755 t/t-utf-msg.sh
+ dir.c |   22 ++++++++++++++------
+ utf.c |   66 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-
+ 2 files changed, 80 insertions(+), 8 deletions(-)
 
-diff --git a/builtin-cat-file.c b/builtin-cat-file.c
-index 6c16bfa..ff275bf 100644
---- a/builtin-cat-file.c
-+++ b/builtin-cat-file.c
-@@ -145,6 +145,10 @@ int cmd_cat_file(int argc, const char **argv, cons=
-t char *prefix)
- 	if (!buf)
- 		die("git-cat-file %s: bad file", argv[2]);
-=20
--	write_or_die(1, buf, size);
-+	size_t localsize =3D locallen(buf,size);
-+	char *localbuf =3D xcalloc(localsize+1,1);
-+	localcpy(localbuf, buf, size+1);
-+	write_or_die(1, localbuf, localsize);
-+	free(localbuf);
- 	return 0;
- }
-diff --git a/builtin-commit-tree.c b/builtin-commit-tree.c
-index e2e690a..8d87ec7 100644
---- a/builtin-commit-tree.c
-+++ b/builtin-commit-tree.c
-@@ -23,16 +23,19 @@ static void init_buffer(char **bufp, unsigned int *=
-sizep)
- static void add_buffer(char **bufp, unsigned int *sizep, const char *f=
-mt, ...)
+diff --git a/dir.c b/dir.c
+index 96389b3..043df50 100644
+--- a/dir.c
++++ b/dir.c
+@@ -114,22 +114,26 @@ static int add_excludes_from_file_1(const char *fname,
  {
- 	char one_line[2048];
-+	char one_line_utf[2048];
- 	va_list args;
--	int len;
-+	int len,len_utf;
- 	unsigned long alloc, size, newsize;
- 	char *buf;
-=20
- 	va_start(args, fmt);
- 	len =3D vsnprintf(one_line, sizeof(one_line), fmt, args);
- 	va_end(args);
-+	utfcpy(one_line_utf, one_line, len + 1);
-+	len_utf =3D strlen(one_line_utf);
- 	size =3D *sizep;
--	newsize =3D size + len;
-+	newsize =3D size + len_utf;
- 	alloc =3D (size + 32767) & ~32767;
- 	buf =3D *bufp;
- 	if (newsize > alloc) {
-@@ -41,7 +44,7 @@ static void add_buffer(char **bufp, unsigned int *siz=
-ep, const char *fmt, ...)
- 		*bufp =3D buf;
+ 	struct stat st;
+ 	int fd, i;
+-	long size;
+-	char *buf, *entry;
++	long insize, size;
++	char *inbuf, *entry, *buf;
+ 
+ 	fd = open(fname, O_RDONLY);
+ 	if (fd < 0 || fstat(fd, &st) < 0)
+ 		goto err;
+-	size = st.st_size;
+-	if (size == 0) {
++	insize = st.st_size;
++	if (insize == 0) {
+ 		close(fd);
+ 		return 0;
  	}
- 	*sizep =3D newsize;
--	memcpy(buf + size, one_line, len);
-+	memcpy(buf + size, one_line_utf, len_utf);
- }
-=20
- static void check_valid(unsigned char *sha1, const char *expect)
-diff --git a/git-rebase.sh b/git-rebase.sh
-index 546fa44..939ac40 100755
---- a/git-rebase.sh
-+++ b/git-rebase.sh
-@@ -296,6 +296,7 @@ fi
-=20
- if test -z "$do_merge"
- then
-+	LC_CTYPE=3Dsv_SE.UTF-8 \
- 	git-format-patch -k --stdout --full-index --ignore-if-in-upstream "$u=
-pstream"..ORIG_HEAD |
- 	git am --binary -3 -k --resolvemsg=3D"$RESOLVEMSG" \
- 		--reflog-action=3Drebase
-diff --git a/log-tree.c b/log-tree.c
-index fbe1399..7c2564d 100644
---- a/log-tree.c
-+++ b/log-tree.c
-@@ -104,6 +104,7 @@ static int append_signoff(char *buf, int buf_sz, in=
-t at, const char *signoff)
- void show_log(struct rev_info *opt, const char *sep)
- {
- 	static char this_header[16384];
-+	static char this_header_local[16384];
- 	struct log_info *log =3D opt->loginfo;
- 	struct commit *commit =3D log->commit, *parent =3D log->parent;
- 	int abbrev =3D opt->diffopt.abbrev;
-@@ -217,7 +218,8 @@ void show_log(struct rev_info *opt, const char *sep=
-)
- 	if (opt->add_signoff)
- 		len =3D append_signoff(this_header, sizeof(this_header), len,
- 				     opt->add_signoff);
--	printf("%s%s%s", this_header, extra, sep);
-+	localcpy(this_header_local, this_header, len+1);
-+	printf("%s%s%s", this_header_local, extra, sep);
- }
-=20
- int log_tree_diff_flush(struct rev_info *opt)
-diff --git a/refs.c b/refs.c
-index 98327d7..cfe2704 100644
---- a/refs.c
-+++ b/refs.c
-@@ -363,8 +363,9 @@ static int log_ref_write(struct ref_lock *lock,
- 	const unsigned char *sha1, const char *msg)
- {
- 	int logfd, written, oflags =3D O_APPEND | O_WRONLY;
--	unsigned maxlen, len;
-+	unsigned maxlen, len, len_utf;
- 	char *logrec;
-+	char *logrec_utf;
- 	const char *committer;
-=20
- 	if (log_all_ref_updates) {
-@@ -400,10 +401,14 @@ static int log_ref_write(struct ref_lock *lock,
- 			sha1_to_hex(sha1),
- 			committer);
+-	buf = xmalloc(size+1);
+-	if (read(fd, buf, size) != size)
++	inbuf = xmalloc(insize+1);
++	if (read(fd, inbuf, insize) != insize)
+ 		goto err;
+ 	close(fd);
+ 
++	size = utflen(inbuf, insize+1);
++	buf = xmalloc(size);
++	utfcpy(buf, inbuf, insize+1);
++
+ 	buf[size++] = '\n';
+ 	entry = buf;
+ 	for (i = 0; i < size; i++) {
+@@ -141,9 +145,11 @@ static int add_excludes_from_file_1(const char *fname,
+ 			entry = buf + i + 1;
+ 		}
  	}
--	written =3D len <=3D maxlen ? write(logfd, logrec, len) : -1;
-+	logrec_utf =3D xmalloc(len*6);
-+	utfcpy(logrec_utf, logrec, len + 1);
-+	len_utf =3D strlen(logrec_utf);
-+	written =3D len_utf <=3D maxlen ? write(logfd, logrec_utf, len_utf) :=
- -1;
- 	free(logrec);
-+	free(logrec_utf);
- 	close(logfd);
--	if (written !=3D len)
-+	if (written !=3D len_utf)
- 		return error("Unable to append to %s", lock->log_file);
++	free(inbuf);
  	return 0;
+ 
+  err:
++	// bug: not freeing inbuf...
+ 	if (0 <= fd)
+ 		close(fd);
+ 	return -1;
+@@ -185,6 +191,7 @@ static int excluded_1(const char *pathname,
+ 		      int pathlen,
+ 		      struct exclude_list *el)
+ {
++	P(("excluded_1(\"%0.*s\") = ", pathlen, pathname));
+ 	int i;
+ 
+ 	if (el->nr) {
+@@ -202,6 +209,7 @@ static int excluded_1(const char *pathname,
+ 				/* match basename */
+ 				const char *basename = strrchr(pathname, '/');
+ 				basename = (basename) ? basename+1 : pathname;
++				P(("fnmatch(\"%s\",\"%s\")", exclude, basename));
+ 				if (fnmatch(exclude, basename, 0) == 0)
+ 					return to_exclude;
+ 			}
+@@ -218,7 +226,7 @@ static int excluded_1(const char *pathname,
+ 				    (baselen && pathname[baselen-1] != '/') ||
+ 				    strncmp(pathname, x->base, baselen))
+ 				    continue;
+-
++				P(("fnmatch(\"%s\",\"%s\")", exclude, pathname+baselen));
+ 				if (fnmatch(exclude, pathname+baselen,
+ 					    FNM_PATHNAME) == 0)
+ 					return to_exclude;
+diff --git a/utf.c b/utf.c
+index 7c44cac..cca64dc 100644
+--- a/utf.c
++++ b/utf.c
+@@ -228,9 +228,28 @@ static void zfree(void *ret)
+     free(ret);
  }
-diff --git a/t/t-utf-msg.sh b/t/t-utf-msg.sh
-new file mode 100755
-index 0000000..727d497
---- /dev/null
-+++ b/t/t-utf-msg.sh
-@@ -0,0 +1,43 @@
-+#!/bin/sh
+ 
++int isgitpath(char *path)
++{
++  char *gitdir=getenv("GIT_DIR");
++  if (!gitdir)
++    gitdir=".git";
 +
-+test_description=3D'Test charset management.
++  P(("gitdir=%s\n",gitdir));
++  if (strncmp(path, gitdir, strlen(gitdir)) == 0) {
++    P(("gitdir:YES\n"));
++    return 1;
++  } else {
++    P(("gitdir:NO\n"));
++  }
++  
++  return 0;
++}
 +
-+This assumes normal tests works fine
-+and concentrates commit messages and other
-+descriptive data.'
+ int utf_lstat(char *path, struct stat *buf)
+ {
+   P(("utf_lstat(\"%s\",buf)[",path));
++  if (isgitpath(path))
++    return lstat(path, buf);
+   char localpath[MAXPATHLEN];
+   localcpy(localpath, path, strlen(path)+1);
+   P(("\"%s\"]\n",localpath));
+@@ -248,6 +267,8 @@ int utf_lstat(char *path, struct stat *buf)
+ int utf_stat(char *path, struct stat *buf)
+ {
+   P(("utf_stat(\"%s\",buf)[",path));
++  if (isgitpath(path))
++    return stat(path, buf);
+   char localpath[MAXPATHLEN];
+   localcpy(localpath, path, strlen(path)+1);
+   P(("\"%s\"]\n",localpath));
+@@ -257,19 +278,27 @@ int utf_stat(char *path, struct stat *buf)
+ DIR *utf_opendir(char *path)
+ {
+   P(("utf_opendir(\"%s\")\n",path));
++  if (isgitpath(path)) {
++    P(("not transforming dir"));
++    return opendir(path);
++  }
+   char localpath[MAXPATHLEN];
+   DIR *ret = NULL;
+   localcpy(localpath, path, strlen(path)+1);
+   P(("\"%s\"]\n",localpath));
+   ret = opendir(localpath);
+   if (ret)
+-    put(ret, NULL);
++    put(ret, xmalloc(1));
+   return ret;
+ }
+ 
+ struct dirent* utf_readdir(DIR *dir)
+ {
+   P(("utf_readdir(\"%p\")",dir));
++  if (!get(dir)) {
++    P(("Skipping\n"));
++    return readdir(dir);
++  }
+   struct dirent *ret;
+   int len;
+   char utfpath[256];
+@@ -294,6 +323,9 @@ struct dirent* utf_readdir(DIR *dir)
+ int utf_closedir(DIR *dir)
+ {
+   P(("utf_closedir(%p)\n",dir));
++  if (!get(dir))
++    return closedir(dir);
 +
-+. ./test-lib.sh
+   zfree(getandremove(dir));
+   return closedir(dir);
+ }
+@@ -301,6 +333,9 @@ int utf_closedir(DIR *dir)
+ FILE *utf_fopen(char *path, char *mode)
+ {
+   P(("utf_fopen(\"%s\",\"%s\")[",path,mode));
++  if (isgitpath(path))
++    return fopen(path,mode);
 +
-+export GIT_AUTHOR_NAME=3D'P=E4r N=F6rdsson'
-+export GIT_COMMITTER_NAME=3D'P=E4r N=F6rdsson'
-+export GIT_AUTHOR_DATE=3D'Thu Sep 14 22:54:30 2006 +0000'
-+export GIT_COMMITTER_DATE=3D'Thu Sep 14 22:54:30 2006 +0000'
+   char localpath[MAXPATHLEN];
+   localcpy(localpath, path, strlen(path)+1);
+   P(("\"%s\"]\n",localpath));
+@@ -310,6 +345,9 @@ FILE *utf_fopen(char *path, char *mode)
+ FILE *utf_freopen(char *path, char *mode, FILE *stream)
+ {
+   P(("utf_freopen(\"%s\",\"%s\",%p)[",path,mode,stream));
++  if (isgitpath(path))
++    return utf_freopen(path, mode, stream);
 +
-+test_expect_success \
-+    'add simple text file' \
-+    'echo hej >aland.txt &&
-+    git-add aland.txt &&
-+    git-commit -a -m "=C4ndrad" &&
-+    echo test $(git-ls-files) =3D "aland.txt\"" &&
-+    LC_CTYPE=3Dsv_SE.UTF-8 echo test $(git-ls-files) =3D "aland.txt\""
-+    '
+   char localpath[MAXPATHLEN];
+   localcpy(localpath, path, strlen(path)+1);
+   P(("\"%s\"]\n",localpath));
+@@ -319,6 +357,9 @@ FILE *utf_freopen(char *path, char *mode, FILE *stream)
+ int utf_unlink(char *path)
+ {
+   P(("utf_unlink(\"%s\")[",path));
++  if (isgitpath(path))
++    return unlink(path);
 +
-+cat >>expected <<EOF
-+commit 6905219c78beda5d5efd2a5fe4fbe0a8757bb355
-+Author: P=E4r N=F6rdsson <author@example.com>
-+Date:   Thu Sep 14 22:54:30 2006 +0000
+   char localpath[MAXPATHLEN];
+   localcpy(localpath, path, strlen(path)+1);
+   P(("\"%s\"]\n",localpath));
+@@ -328,6 +369,9 @@ int utf_unlink(char *path)
+ int utf_rmdir(char *path)
+ {
+   P(("utf_rmdir(\"%s\")[",path));
++  if (isgitpath(path))
++    return rmdir(path);
 +
-+    =C4ndrad
-+EOF
+   char localpath[MAXPATHLEN];
+   localcpy(localpath, path, strlen(path)+1);
+   P(("\"%s\"]\n",localpath));
+@@ -342,6 +386,9 @@ int utf_open(char *path, int flags,...)
+   mode = va_arg(va,int);
+   va_end(va);
+   P(("utf_open(\"%s\",%d,%d)[",path,flags,mode));
++  if (isgitpath(path))
++    return open(path, flags, mode);
 +
-+test_expect_success \
-+    'log' \
-+    '
-+    git log >actual &&
-+    diff -u actual expected
-+    '
+   char localpath[MAXPATHLEN];
+   localcpy(localpath, path, strlen(path)+1);
+   P(("\"%s\"]\n",localpath));
+@@ -351,6 +398,9 @@ int utf_open(char *path, int flags,...)
+ int utf_access(char *path, int mode)
+ {
+   P(("utf_access(\"%s\",%d)[",path,mode));
++  if (isgitpath(path))
++    return access(path, mode);
 +
-+# todo: git-cat-file commit xxxxxxxxxxxxx
+   char localpath[MAXPATHLEN];
+   localcpy(localpath, path, strlen(path)+1);
+   P(("\"%s\"]\n",localpath));
+@@ -369,6 +419,11 @@ char *utf_getcwd(char *buf,int bufsize)
+ 	buf = malloc(utflen(localbuf,strlen(localbuf)) + 1);
+       }
+     }
++    if (isgitpath(localbuf)) {
++      strcpy(buf, localbuf);
++      return buf;
++    }
 +
-+test_done
+     utfcpy(buf, localbuf, strlen(localbuf) + 1);
+     return buf;
+   } else {
+@@ -379,6 +434,9 @@ char *utf_getcwd(char *buf,int bufsize)
+ int utf_creat(const char *path,int mode)
+ {
+   P(("utf_creat(\"%s\",%d)[",path,mode));
++  if (isgitpath(path))
++    return creat(path, mode);
 +
---=20
+   char localpath[MAXPATHLEN];
+   localcpy(localpath, path, strlen(path)+1);
+   P(("\"%s\"]\n",localpath));
+@@ -388,6 +446,9 @@ int utf_creat(const char *path,int mode)
+ int utf_mkdir(const char *path,int mode)
+ {
+   P(("utf_mkdir(\"%s\",%d)[",path,mode));
++  if (isgitpath(path))
++    return mkdir(path,mode);
++
+   char localpath[MAXPATHLEN];
+   localcpy(localpath, path, strlen(path)+1);
+   P(("\"%s\"]\n",localpath));
+@@ -397,6 +458,9 @@ int utf_mkdir(const char *path,int mode)
+ ssize_t utf_readlink(const char *path,char *buf,size_t bufsiz)
+ {
+   P(("utf_readlink(\"%s\",BUF,%d)[",path,bufsiz));
++  if (isgitpath(path))
++    return readlink(path, buf, bufsiz);
++
+   char localpath[MAXPATHLEN];
+   localcpy(localpath, path, strlen(path)+1);
+   P(("readlink(%s)\n", localpath));
+-- 
 1.6.3.dirty
