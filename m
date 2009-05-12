@@ -1,81 +1,46 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: git default behavior seems odd from a Unix command line point
-	of view
-Date: Tue, 12 May 2009 12:34:03 -0400
-Message-ID: <20090512163403.GD29566@coredump.intra.peff.net>
-References: <4e963a650905120818m70b75892gb4e052187910b9a5@mail.gmail.com> <7vd4ae8fls.fsf@alter.siamese.dyndns.org> <4e963a650905120924j52d38c0dg577d93e913013e38@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: stage/commit issue when checking out a branch
+Date: Tue, 12 May 2009 09:38:24 -0700
+Message-ID: <7v8wl28ef3.fsf@alter.siamese.dyndns.org>
+References: <d96d20670905120901qa4c0353xc50160f880e17a21@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Andrew Schein <andrew@andrewschein.com>
-X-From: git-owner@vger.kernel.org Tue May 12 18:34:17 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Peter MacMillan <peterm@metavera.com>
+X-From: git-owner@vger.kernel.org Tue May 12 18:38:51 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M3uvo-0006w3-Fv
-	for gcvg-git-2@gmane.org; Tue, 12 May 2009 18:34:16 +0200
+	id 1M3v0D-0000du-HM
+	for gcvg-git-2@gmane.org; Tue, 12 May 2009 18:38:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751881AbZELQeI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 May 2009 12:34:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750709AbZELQeH
-	(ORCPT <rfc822;git-outgoing>); Tue, 12 May 2009 12:34:07 -0400
-Received: from peff.net ([208.65.91.99]:50108 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751136AbZELQeG (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 May 2009 12:34:06 -0400
-Received: (qmail 32116 invoked by uid 107); 12 May 2009 16:34:24 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Tue, 12 May 2009 12:34:24 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 12 May 2009 12:34:03 -0400
-Content-Disposition: inline
-In-Reply-To: <4e963a650905120924j52d38c0dg577d93e913013e38@mail.gmail.com>
+	id S1753058AbZELQiZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 May 2009 12:38:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752404AbZELQiY
+	(ORCPT <rfc822;git-outgoing>); Tue, 12 May 2009 12:38:24 -0400
+Received: from fed1rmmtao104.cox.net ([68.230.241.42]:64767 "EHLO
+	fed1rmmtao104.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752147AbZELQiX (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 May 2009 12:38:23 -0400
+Received: from fed1rmimpo03.cox.net ([70.169.32.75])
+          by fed1rmmtao104.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20090512163824.ZUMZ17135.fed1rmmtao104.cox.net@fed1rmimpo03.cox.net>;
+          Tue, 12 May 2009 12:38:24 -0400
+Received: from localhost ([68.225.240.211])
+	by fed1rmimpo03.cox.net with bizsmtp
+	id qgeQ1b0054aMwMQ04geQi0; Tue, 12 May 2009 12:38:24 -0400
+X-Authority-Analysis: v=1.0 c=1 a=gf8Twd_tMvMA:10 a=QsmizHufYfoA:10
+ a=JrH4EILzeUE5pKkCsQwA:9 a=81k92EqqiNE1d4miPTz3b12UEuEA:4
+X-CM-Score: 0.00
+In-Reply-To: <d96d20670905120901qa4c0353xc50160f880e17a21@mail.gmail.com> (Peter MacMillan's message of "Tue\, 12 May 2009 12\:01\:14 -0400")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118920>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118921>
 
-On Tue, May 12, 2009 at 12:24:56PM -0400, Andrew Schein wrote:
-
-> # environment set up occurs before loop, I pull before "pushing" in an
-> attempt to prevent
-> # conflicts from being left on the shared repository.
-> for dir in ./* ; do
->     if [ ! -d $dir ]      ; then continue ; fi #not a directory
->     if [ ! -e $dir/.git ] ; then continue ; fi #not a git repo
->     dir=`basename $dir`
->     echo "syncing: $dir"
->     set +e # commit returns an error if there is nothing to commit.
->     (cd ./$dir ; git commit -a)
->     set -e
-
-One trick to avoid playing with "set -e" is just:
-
-  thing_whose_error_you_want_ignore || true
-
-But that aside, it might be nice _not_ to ignore the result from "commit
--a", since it could also be warning you that it failed to correctly
-commit. You probably want to do:
-
-  git diff --quiet HEAD || git commit -a
-
-That is "either there is nothing to commit, or we succeed in committing
-everything". That of course has a race condition between the two
-commands, though (i.e., if you modify files in between). If you want
-something truly atomic, I think we would need "git commit" to
-distinguish error codes between "I had nothing to commit" and "an error
-occurred" (returning "1" right now could mean either).
-
->     (cd ./$dir ; git pull $UP "$REPO/$dir" master)        #pull
->     ssh $HOST "mkdir -p $DEST_CACHE/$LOC/$dir"  # these three lines
-> handle "push"
->     rsync -rl --delete ./$dir/.git -e ssh "$DEST:$DEST_CACHE/$LOC/$dir/.git"
->     ssh $DEST "(cd $LOC/$dir ; /tools/bin/git pull
-> $DEST_CACHE/$LOC/$dir/.git master)"
-
-Pushing directly should be a lot more efficient in the case of repacking
-(git will realize that the remote already has certain objects, but if
-the filenames change, rsync will not).
-
--Peff
+Sorry; broken as of v1.6.3~60; 83ae209 (checkout branch: prime cache-tree
+fully, 2009-04-20) is the culprit.
