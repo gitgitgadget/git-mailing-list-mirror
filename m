@@ -1,87 +1,101 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Supporting hashes other than SHA-1
-Date: Tue, 12 May 2009 05:55:43 -0700 (PDT)
-Message-ID: <m3vdo6lbuy.fsf@localhost.localdomain>
-References: <20090511195242.GA14756@foursquare.net>
-	<m3zldjl5bq.fsf@localhost.localdomain>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Cherry woes
+Date: Tue, 12 May 2009 15:15:05 +0200
+Message-ID: <4A097659.4060507@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Chris Frey <cdfrey@foursquare.net>
-X-From: git-owner@vger.kernel.org Tue May 12 15:04:00 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue May 12 15:15:51 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M3reI-0007qT-Ct
-	for gcvg-git-2@gmane.org; Tue, 12 May 2009 15:03:58 +0200
+	id 1M3rph-0005Ee-NA
+	for gcvg-git-2@gmane.org; Tue, 12 May 2009 15:15:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751989AbZELNDp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 May 2009 09:03:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751956AbZELNDp
-	(ORCPT <rfc822;git-outgoing>); Tue, 12 May 2009 09:03:45 -0400
-Received: from mail-px0-f123.google.com ([209.85.216.123]:55879 "EHLO
-	mail-px0-f123.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751678AbZELNDo (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 May 2009 09:03:44 -0400
-X-Greylist: delayed 481 seconds by postgrey-1.27 at vger.kernel.org; Tue, 12 May 2009 09:03:44 EDT
-Received: by pxi29 with SMTP id 29so107483pxi.33
-        for <git@vger.kernel.org>; Tue, 12 May 2009 06:03:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received
-         :x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        bh=RWqaqQ2bQmGt+viKTQZp76jHaMfcOJ1Bl52EnIdRTNo=;
-        b=HPM3jSrpRsEWMG84mznl54ZUdYzZy8nfPDFT9qXVZ2aMf+YWOimpUVGfeJo6UapPwH
-         Mec2iVF3g50VyefhmC20j72UiBdsmpIQLgMTM2kcEP4nVmxV4yL4SdILgNU5eHVI6atC
-         qJanQIIGAjZePY5Ba5kGo8ioSX6vOIXpL2hRY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        b=fGx7olaiIFgV2JxByH4DA4maJDkiig2lHyV37aK+nLVLQ43Tv/7CaOVg+ePdNJjz2I
-         07re90ZzbjTrp63XI2he0nX59pR44eB1TUVW21RoT20efqOsTap/jQfsQ6eAoogqGvL8
-         8tgxNGapNgGYKiM4M5bnQiEvHKRPkYCKg1mic=
-Received: by 10.115.107.5 with SMTP id j5mr6550115wam.158.1242132944698;
-        Tue, 12 May 2009 05:55:44 -0700 (PDT)
-Received: from localhost.localdomain (abvp65.neoplus.adsl.tpnet.pl [83.8.213.65])
-        by mx.google.com with ESMTPS id m26sm9484575pof.0.2009.05.12.05.55.40
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 12 May 2009 05:55:43 -0700 (PDT)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id n4CCtPKs028538;
-	Tue, 12 May 2009 14:55:28 +0200
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id n4CCtH44028534;
-	Tue, 12 May 2009 14:55:17 +0200
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <m3zldjl5bq.fsf@localhost.localdomain>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+	id S1752573AbZELNPQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 May 2009 09:15:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752535AbZELNPQ
+	(ORCPT <rfc822;git-outgoing>); Tue, 12 May 2009 09:15:16 -0400
+Received: from out1.smtp.messagingengine.com ([66.111.4.25]:53177 "EHLO
+	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752229AbZELNPP (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 12 May 2009 09:15:15 -0400
+Received: from compute1.internal (compute1.internal [10.202.2.41])
+	by out1.messagingengine.com (Postfix) with ESMTP id DCE96343056
+	for <git@vger.kernel.org>; Tue, 12 May 2009 09:15:14 -0400 (EDT)
+Received: from heartbeat1.messagingengine.com ([10.202.2.160])
+  by compute1.internal (MEProxy); Tue, 12 May 2009 09:15:14 -0400
+X-Sasl-enc: ig9mhpWgPSKyLrD7hL+7UQgxxuIPaINjyJYnOPz4AkLA 1242134114
+Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.12])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 3201C1F466
+	for <git@vger.kernel.org>; Tue, 12 May 2009 09:15:14 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1b5pre) Gecko/20090511 Lightning/1.0pre Shredder/3.0b3pre
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118892>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118893>
 
-Jakub Narebski <jnareb@gmail.com> writes:
+Hi there
 
-> Chris Frey <cdfrey@foursquare.net> writes:
-> 
-> > Considering the recent news regarding SHA-1's newly found weaknesses,
-> > is there any general interest in making git flexible enough to support
-> > other hashes in the future?
-> 
-> First, there isn't as far as I know any 'known preimage' attack
-> against SHA-1, and only that would truly matter for Git.
-> 
-> Second, this issue was discussed in depth in the past; check git
-> mailing list archives, please...
+I encountered a misfeature of cherry or misuse of it by myself... Also,
+the behaviour is not quite what the doc suggests. The script below
+generates the following DAG:
 
-See also this blog entry (and comments):
-  http://kitenet.net/~joey/blog/entry/sha-1/
+*   05f4f8c (refs/heads/master) Merge branch 'upstream'
+|\
+| * 2c8fad1 (refs/heads/upstream) add a
+* | df7b5e4 Add a
+|/
+* 6bdebf5 init
 
--- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+Naively, one would say that master and upstream contain one commit each
+which differ but their patch-ids coincide (see below). That's the same
+situation before as well as after the merge.
+
+But calling "git cherry -v upstream" when on the master branch gives
+different results:
+
+Before merge:
+- df7b5e472d9a23d02943b331a7dc9ec638f44b33 Add a
+Merge made by recursive.
+After merge:
++ df7b5e472d9a23d02943b331a7dc9ec638f44b33 Add a
+
+Of course master contains both 2c8fad1 and df7b5e4, and upstream only
+the latter (Did I say "naively"?). But still upstream contains a commit
+which is patch-equivalent to 2c8fad1, and which git cherry does not find.
+
+The point is that "git cherry upstream head" looks at each commit in
+upstream..head and checks whether there is an equivalent patch in
+head..upstream. (This differs from the doc which says fork-point..head
+resp. fork-point..upstream.)
+
+In the DAG above, all is well when head is master^ (df7b5e4), i.e.
+before the merge, but head..upstream is empty after the merge.
+
+Now, adjusting the doc is easy, but I still feel that cherry does not
+give the most useful info in the situation at hand. But how would I find
+a better lower boundary for the range ..upstream? merge-base of master
+and upstream is upstream so that doesn't cut it. So I'm wondering what
+the right approach is and whether anyone cares.
+
+Michael
+
+--->%---
+#!/bin/bash
+
+rm -Rf cherrybug
+mkdir cherrybug && cd cherrybug && git init
+echo a > a && git add a && git commit -m init
+git checkout -b upstream
+echo b >> a && git add a && git commit -m "add a"
+git checkout master
+echo b >> a && git add a && git commit -m "Add a"
+echo "Before merge:"
+git cherry -v upstream
+git merge upstream
+echo "After merge:"
+git cherry -v upstream
