@@ -1,161 +1,111 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] git-send-email: parse all messages in mbox
-Date: Tue, 12 May 2009 16:27:21 -0700
-Message-ID: <7vpred7vhi.fsf@alter.siamese.dyndns.org>
-References: <873abbeoqc.wl%vmayatsk@redhat.com>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: Request for detailed documentation of git pack protocol
+Date: Tue, 12 May 2009 16:34:50 -0700
+Message-ID: <20090512233450.GY30527@spearce.org>
+References: <200905122329.15379.jnareb@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Vitaly Mayatskikh <v.mayatskih@gmail.com>
-X-From: git-owner@vger.kernel.org Wed May 13 01:29:06 2009
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Wed May 13 01:37:04 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M41PF-00062l-JG
-	for gcvg-git-2@gmane.org; Wed, 13 May 2009 01:29:06 +0200
+	id 1M41Wv-00009s-On
+	for gcvg-git-2@gmane.org; Wed, 13 May 2009 01:37:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757790AbZELX1k (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 May 2009 19:27:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755908AbZELX1i
-	(ORCPT <rfc822;git-outgoing>); Tue, 12 May 2009 19:27:38 -0400
-Received: from fed1rmmtao103.cox.net ([68.230.241.43]:53956 "EHLO
-	fed1rmmtao103.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754130AbZELX1g (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 May 2009 19:27:36 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao103.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20090512232728.WSVB2915.fed1rmmtao103.cox.net@fed1rmimpo02.cox.net>;
-          Tue, 12 May 2009 19:27:28 -0400
-Received: from localhost ([68.225.240.211])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id qnTS1b00E4aMwMQ04nTSEJ; Tue, 12 May 2009 19:27:26 -0400
-X-Authority-Analysis: v=1.0 c=1 a=wutGvft0F3MA:10 a=hzVDzittV6kA:10
- a=pGLkceISAAAA:8 a=t3VdCCvr3hf0j-X7IqAA:9 a=Fwd3xO8hV02tKk7NsTgA:7
- a=pcKqLl4YCm-PdHGKrXiJMifQynEA:4 a=MSl-tDqOz04A:10 a=ZBK95DTRNC9ASMUz:21
- a=aCE1zepKotSUmeJ_:21
-X-CM-Score: 0.00
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+	id S1759874AbZELXev (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 May 2009 19:34:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759853AbZELXev
+	(ORCPT <rfc822;git-outgoing>); Tue, 12 May 2009 19:34:51 -0400
+Received: from george.spearce.org ([209.20.77.23]:55375 "EHLO
+	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759847AbZELXeu (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 May 2009 19:34:50 -0400
+Received: by george.spearce.org (Postfix, from userid 1001)
+	id 03F94381D5; Tue, 12 May 2009 23:34:50 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <200905122329.15379.jnareb@gmail.com>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118972>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118973>
 
-Vitaly Mayatskikh <v.mayatskih@gmail.com> writes:
+Jakub Narebski <jnareb@gmail.com> wrote:
+> We have now proliferation of different (re)implementations of git:
+> JGit in Java, Dulwich in Python, Grit in Ruby; and there are other
+> planned: git# / managed git in C# (GSoC Mono project), ObjectiveGit
+> in Objective-C (for iPhone IIRC).  At some time they would reach
+> the point (or reached it already) of implementing git-daemon...
+> but currently the documentation of git protocol is lacking.
 
-> Currently git-send-email sends all mbox in one email. This seems to be wrong,
-> because mbox can contain several messages. For example,
-> `git format-patch --stdout' forms mbox file with all patches in it.
->
-> This patch allows git send-email to send several messages from one mbox
-> separately.
+Well, lets see...
 
-I suspect nobody would comment on it because with reindentation this was
-extremely painful to review.
+JGit - me and Robin, here on git ML.  JGit is the closest
+reimplementation effort to the canonical C implementation.
+JGit runs in production servers for many folks, e.g. quite
+a few Google engineers use the JGit server every day.  Its
+our main git daemon.
 
-I _think_ the gist of your change is that (1) here you stop slurping the
-body when you see a line that begins with "From "...
+Grit - GitHub folks.  They know where to find us.  And their
+business is Git.  If Grit isn't right, they'll make it right,
+or possibly suffer a loss of customers.  I'm fairly certain
+that GitHub runs Grit in production.
 
-> +		# Now parse the message body
-> +		while(<F>) {
-> +			last if /^From /; # Next message in file
+ObjectGit - Scott Chacon, again, a GitHub folk.  Though he has
+expressed interest in moving to JGit or libgit2 where/when possible.
 
-... and (2) the "last unless (<F>)" at the end of the loop where you
-attempt to see if there is any more lines to be read from the stream (and
-if so go back and continue from the header parsing).
+Dulwich - off in its own world and not even trying to match basic
+protocol rules by just watching what happens when you telnet to a
+git port.  No clue how that's going to fair.
 
-> -	# set up for the next message
-> -	if ($chain_reply_to || !defined $reply_to || length($reply_to) == 0) {
-> -		$reply_to = $message_id;
-> -		if (length $references > 0) {
-> -			$references .= "\n $message_id";
-> -		} else {
-> -			$references = "$message_id";
-> +		# set up for the next message
-> +		if ($chain_reply_to || !defined $reply_to || length($reply_to) == 0) {
-> +			$reply_to = $message_id;
-> +			if (length $references > 0) {
-> +				$references .= "\n $message_id";
-> +			} else {
-> +				$references = "$message_id";
-> +			}
->  		}
-> +		$message_id = undef;
-> +		last unless (<F>);
->  	}
-> -	$message_id = undef;
-> +	close F;
+git# - We'll see.  Mono GSoC Git projects have a really bad
+reputation of ignoring the existing git knowledge and hoping
+they can invent the wheel on their own.
 
-But I think the code structure is wrong.  When you said "last if /^From /"
-earlier, you have already read that line (and you do not unread it), and
-here with "unless (<F>)" you are reading yet another line (one line after
-the UNIX-From line) and discarding it.  The next round loses the real
-RFC2822 header line you discarded with this unless (<F>), and begins from
-the next line, and would break "First unfold multiline header fields"
-logic among other things.
+> This can lead, as you can read from recent post on git mailing, to
+> implementing details wrong (like Dulwich not using full SHA-1 where
+> it should, leading to ordinary git clients to failing to fetch from it),
+> or fail at best practices of implementation (like JGit last issue with
+> deadlocking for multi_ack extension).
 
-But this is only from reviewing a patch with reindentation noise so I
-might have missed some subtle issues.
+Dulwich is just busted.
 
-Can you make this into two patches for easier review?  One to split out
-the existing loop for a single input stream into a helper function without
-changing any behaviour (i.e. the loop reads everything to the end), and
-then as a follow-up patch introduce "when we see a UNIX-From line we are
-at the beginning of the next message so return early" logic to the helper?
+No existing developers knew that the fetch-pack/upload-pack protocol
+has this required implicit buffering consideration until JGit
+deadlocked over it.  But even then I'm still not 100% sure this
+is true, or if it is just an artifact of the JGit upload-pack side
+implementation being partially wrong.
 
-IOW, after the two-patch series, the current main-loop may look
-something like:
+> The current documentation of git protocol is very sparse; the docs
+> in Documentation/technical/pack-protocol.txt offer only a sketch of
+> exchange.  You can find more, including pkt-line format, a way sideband
+> is multiplexed, and how capabilities are negotiated between server and
+> client in design document for "smart" HTTP server, for example in
+>   Subject: Re: More on git over HTTP POST
+>   Message-ID: <20080803025602.GB27465@spearce.org>
+>   URL: http://thread.gmane.org/gmane.comp.version-control.git/91104/focus=91196
 
-	my $unread_line = undef;
-	while (1) {
-		$unread_line = handle_one_stream(\*F, $unread_line);
-                last if (!defined $unread_line);
-	}
-        close(\*F);
+Seriously?  Don't link to that.  Its a horrible version of the smart
+HTTP RFC, and worse, it doesn't describe what you say it describes.
+ 
+> It would be really nice, I think, to have RFC for git pack protocol.
+> And it would help avoid incompatibilities between different clients
+> and servers.  If the document would contain expected behaviour of
+> client and server and Best Current Practices it would help avoid
+> pitfals when implementing git-daemon in other implementation.
 
-and your new handle_one_stream() sub will look something like:
+Yea, it would be nice.  But find me someone who knows the protocol
+and who has the time to document the #!@* thing.  Maybe I'll try
+to work on this myself, but I'm strapped for time, especially over
+the next two-to-three months.
 
-	sub handle_one_stream {
-		my ($fh, $last_line) = @_;
-		local ($_);
-
-		my $author = undef;
-                my $author_encoding;
-                my $has_content_type;
-                my $body_encoding;
-                @cc = ();
-                @xh = ();
-                my $input_format = undef;
-                my @header = ();
-                $message = "";
-                $message_num++;
-
-                # First unfold multiline header fields
-                while (1) {
-			if (defined $last_line) {
-				$_ = $last_line;
-                                $last_line = undef;
-			} else {
-                        	$_ = <F>;
-			}
-                        ...
-		}
-                # Now parse the header
-                ...
-                # Now parse the message body
-                $last_line = undef;
-                while (1) {
-                	$_ = <F>;
-			if (/^From /) {
-				# This is the beginning of the
-                                # next message; unread it.
-				$last_line = $_;
-                                last;
-                        }
-                        $message .= $_;
-			...
-		}
-		return $last_line;
-	}
+And lets not even start to mention Dulwich not completing a thin
+pack before storing it on disk.  Those sorts of on disk things
+matter to other more popular Git implementations (c git, jgit).
+ 
+-- 
+Shawn.
