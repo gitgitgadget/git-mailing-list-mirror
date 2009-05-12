@@ -1,73 +1,87 @@
-From: Don Slutz <Don.Slutz@SierraAtlantic.com>
-Subject: Re:
-Date: Tue, 12 May 2009 08:45:47 -0400
-Message-ID: <4A096F7B.2080502@SierraAtlantic.com>
-References: <200905111857.n4BIvCNQ002319@krl.krl.com> <alpine.DEB.1.00.0905112247450.27348@pacific.mpi-cbg.de>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: Supporting hashes other than SHA-1
+Date: Tue, 12 May 2009 05:55:43 -0700 (PDT)
+Message-ID: <m3vdo6lbuy.fsf@localhost.localdomain>
+References: <20090511195242.GA14756@foursquare.net>
+	<m3zldjl5bq.fsf@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Don Slutz <slutz@krl.com>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue May 12 14:46:06 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Chris Frey <cdfrey@foursquare.net>
+X-From: git-owner@vger.kernel.org Tue May 12 15:04:00 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M3rMz-0007To-TO
-	for gcvg-git-2@gmane.org; Tue, 12 May 2009 14:46:06 +0200
+	id 1M3reI-0007qT-Ct
+	for gcvg-git-2@gmane.org; Tue, 12 May 2009 15:03:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751377AbZELMp4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 May 2009 08:45:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751169AbZELMp4
-	(ORCPT <rfc822;git-outgoing>); Tue, 12 May 2009 08:45:56 -0400
-Received: from mail200.messagelabs.com ([216.82.254.195]:13672 "HELO
-	mail200.messagelabs.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with SMTP id S1750813AbZELMpz (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 May 2009 08:45:55 -0400
-X-VirusChecked: Checked
-X-Env-Sender: Don.Slutz@SierraAtlantic.com
-X-Msg-Ref: server-15.tower-200.messagelabs.com!1242132356!30401725!1
-X-StarScan-Version: 6.0.0; banners=sierraatlantic.com,-,-
-X-Originating-IP: [206.86.29.5]
-Received: (qmail 17107 invoked from network); 12 May 2009 12:45:56 -0000
-Received: from seng.sierraatl.com (HELO USFREEX1.us.corp.sa) (206.86.29.5)
-  by server-15.tower-200.messagelabs.com with SMTP; 12 May 2009 12:45:56 -0000
-Received: from usbosex1.us.corp.sa ([192.168.17.34]) by USFREEX1.us.corp.sa with Microsoft SMTPSVC(6.0.3790.1830);
-	 Tue, 12 May 2009 05:45:54 -0700
-Received: from [127.0.0.1] ([208.37.241.146]) by usbosex1.us.corp.sa with Microsoft SMTPSVC(6.0.3790.1830);
-	 Tue, 12 May 2009 08:45:53 -0400
-User-Agent: Thunderbird 2.0.0.21 (Windows/20090302)
-In-Reply-To: <alpine.DEB.1.00.0905112247450.27348@pacific.mpi-cbg.de>
-X-OriginalArrivalTime: 12 May 2009 12:45:53.0183 (UTC) FILETIME=[95FFC2F0:01C9D2FF]
+	id S1751989AbZELNDp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 May 2009 09:03:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751956AbZELNDp
+	(ORCPT <rfc822;git-outgoing>); Tue, 12 May 2009 09:03:45 -0400
+Received: from mail-px0-f123.google.com ([209.85.216.123]:55879 "EHLO
+	mail-px0-f123.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751678AbZELNDo (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 May 2009 09:03:44 -0400
+X-Greylist: delayed 481 seconds by postgrey-1.27 at vger.kernel.org; Tue, 12 May 2009 09:03:44 EDT
+Received: by pxi29 with SMTP id 29so107483pxi.33
+        for <git@vger.kernel.org>; Tue, 12 May 2009 06:03:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:received
+         :x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        bh=RWqaqQ2bQmGt+viKTQZp76jHaMfcOJ1Bl52EnIdRTNo=;
+        b=HPM3jSrpRsEWMG84mznl54ZUdYzZy8nfPDFT9qXVZ2aMf+YWOimpUVGfeJo6UapPwH
+         Mec2iVF3g50VyefhmC20j72UiBdsmpIQLgMTM2kcEP4nVmxV4yL4SdILgNU5eHVI6atC
+         qJanQIIGAjZePY5Ba5kGo8ioSX6vOIXpL2hRY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        b=fGx7olaiIFgV2JxByH4DA4maJDkiig2lHyV37aK+nLVLQ43Tv/7CaOVg+ePdNJjz2I
+         07re90ZzbjTrp63XI2he0nX59pR44eB1TUVW21RoT20efqOsTap/jQfsQ6eAoogqGvL8
+         8tgxNGapNgGYKiM4M5bnQiEvHKRPkYCKg1mic=
+Received: by 10.115.107.5 with SMTP id j5mr6550115wam.158.1242132944698;
+        Tue, 12 May 2009 05:55:44 -0700 (PDT)
+Received: from localhost.localdomain (abvp65.neoplus.adsl.tpnet.pl [83.8.213.65])
+        by mx.google.com with ESMTPS id m26sm9484575pof.0.2009.05.12.05.55.40
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Tue, 12 May 2009 05:55:43 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id n4CCtPKs028538;
+	Tue, 12 May 2009 14:55:28 +0200
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id n4CCtH44028534;
+	Tue, 12 May 2009 14:55:17 +0200
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <m3zldjl5bq.fsf@localhost.localdomain>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118891>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118892>
 
-Nope.  It was a mistake.  The local try worked, but the send to the 
-maillist did not.  Sorry about this.
-   -Don
+Jakub Narebski <jnareb@gmail.com> writes:
 
--------- Original Message --------
-Subject: Re:
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Don Slutz <slutz@krl.com>
-CC: git@vger.kernel.org
-Date: 5/11/2009 4:48 PM
-> Hi,
->
-> is this the new fashion, to send mails without a subject, all of a sudden 
-> being okay only because Linus responded to one?
->
-> Ciao,
-> Dscho
->
->
->   
+> Chris Frey <cdfrey@foursquare.net> writes:
+> 
+> > Considering the recent news regarding SHA-1's newly found weaknesses,
+> > is there any general interest in making git flexible enough to support
+> > other hashes in the future?
+> 
+> First, there isn't as far as I know any 'known preimage' attack
+> against SHA-1, and only that would truly matter for Git.
+> 
+> Second, this issue was discussed in depth in the past; check git
+> mailing list archives, please...
 
+See also this blog entry (and comments):
+  http://kitenet.net/~joey/blog/entry/sha-1/
 
-
-__________________________________________________________________________________________________________________
-DISCLAIMER:"The information contained in this message and the attachments (if any) may be privileged and confidential and protected from disclosure. You are hereby notified that any unauthorized use, dissemination, distribution or copying of this communication, review, retransmission, or taking of any action based upon this information, by persons or entities other than the intended recipient, is strictly prohibited. If you are not the intended recipient or an employee or agent responsible for delivering this message, and have received this communication in error, please notify us immediately by replying to the message and kindly delete the original message, attachments, if any, and all its copies from your computer system. Thank you for your cooperation." 
-________________________________________________________________________________________________________________
+-- 
+Jakub Narebski
+Poland
+ShadeHawk on #git
