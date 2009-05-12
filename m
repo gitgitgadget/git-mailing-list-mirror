@@ -1,70 +1,67 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: How to move users from SEU (AS400) to Git?
-Date: Tue, 12 May 2009 08:57:25 -0700
-Message-ID: <20090512155725.GT30527@spearce.org>
-References: <1CA7E776-B216-4AA5-BFE0-63C0B066980D@npcinternational.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: How to create a new commit with the content of some commit?
+Date: Tue, 12 May 2009 08:59:33 -0700
+Message-ID: <7vhbzq8g7u.fsf@alter.siamese.dyndns.org>
+References: <46dff0320905120735l501dcaf4ia8197d24b7684cfe@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Jon Brisbin <jon.brisbin@npcinternational.com>
-X-From: git-owner@vger.kernel.org Tue May 12 17:58:07 2009
+Cc: git mailing list <git@vger.kernel.org>
+To: Ping Yin <pkufranky@gmail.com>
+X-From: git-owner@vger.kernel.org Tue May 12 17:59:41 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M3uMi-0005zU-Od
-	for gcvg-git-2@gmane.org; Tue, 12 May 2009 17:58:01 +0200
+	id 1M3uOJ-0006sP-CJ
+	for gcvg-git-2@gmane.org; Tue, 12 May 2009 17:59:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759670AbZELP50 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 May 2009 11:57:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759202AbZELP5Z
-	(ORCPT <rfc822;git-outgoing>); Tue, 12 May 2009 11:57:25 -0400
-Received: from george.spearce.org ([209.20.77.23]:60528 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758697AbZELP5Y (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 May 2009 11:57:24 -0400
-Received: by george.spearce.org (Postfix, from userid 1001)
-	id 48F24381D5; Tue, 12 May 2009 15:57:25 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <1CA7E776-B216-4AA5-BFE0-63C0B066980D@npcinternational.com>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1756429AbZELP7e (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 May 2009 11:59:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752921AbZELP7e
+	(ORCPT <rfc822;git-outgoing>); Tue, 12 May 2009 11:59:34 -0400
+Received: from fed1rmmtao101.cox.net ([68.230.241.45]:58019 "EHLO
+	fed1rmmtao101.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751852AbZELP7d (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 May 2009 11:59:33 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao101.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20090512155932.RVDT17670.fed1rmmtao101.cox.net@fed1rmimpo01.cox.net>;
+          Tue, 12 May 2009 11:59:32 -0400
+Received: from localhost ([68.225.240.211])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id qfzZ1b00U4aMwMQ03fzZJu; Tue, 12 May 2009 11:59:33 -0400
+X-Authority-Analysis: v=1.0 c=1 a=POAuTgP4eycA:10 a=lHWr0x0w13sA:10
+ a=pGLkceISAAAA:8 a=Bpy3ZvKqB2FE07jN2KwA:9 a=9anlp8Rd5iDR9J9cbT7BX1_epugA:4
+ a=MSl-tDqOz04A:10
+X-CM-Score: 0.00
+In-Reply-To: <46dff0320905120735l501dcaf4ia8197d24b7684cfe@mail.gmail.com> (Ping Yin's message of "Tue\, 12 May 2009 22\:35\:30 +0800")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118907>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118908>
 
-Jon Brisbin <jon.brisbin@npcinternational.com> wrote:
+Ping Yin <pkufranky@gmail.com> writes:
+
+> a----b
+>  \----c
 >
-> I'm just wondering what the Git experts would say to someone wanting to 
-> transition from say, Visual SourceSafe, and expecting the predictability 
-> of having source files "locked out" while a developer is making changes 
-> to them?
+> Given the graph above, I want to create a commit b1 on top of c, where
+> b1 and b have the same content. i.e.
+>
+> a----b
+>  \----c----b1    ( content(b) == content(b1) )
 
-I had a really hard time with this "locked out" mentality at my last
-employer.  They used PVCS Version Manager, and relied heavily on its
-"lock out" feature to protect files while they were being edited.
+On "c", you can:
 
-But more often than not, what happened was a guy had a file locked
-for a month at a time while doing some new feature change, he'd go
-on vacation for a week, and a production issue would crop up that
-need a fix in that file.
+    git read-tree -m -u b
+    git commit
 
-Half of the time, developers would try to fix the code somewhere
-else.  They realized that was bad, e.g. putting in 85 if-then tests
-at every call site because a function didn't tolerate a bad input,
-but if they could lock the other 85 files, they'd do it over trying
-to break the lock held by the first guy.
+I think with newer git you can say
 
-It took me a year to convince them that git's no-lock model is
-better.  But they finally came over.  Most of it was about the fact
-that they could now finally avoid that lock problem, and just do
-the right change, and not need to do work arounds.  One of the guys
-had trouble with that, he was OK with doing work arounds instead
-of real fixes, but once we cleaned up most of his workarounds and
-the code base practically got cut in half, he got on board.
+    git reset --merge b
+    git commit
 
-Its an uphill battle.
-
--- 
-Shawn.
+instead, to save some typing.
