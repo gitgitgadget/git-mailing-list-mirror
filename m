@@ -1,101 +1,71 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Cherry woes
-Date: Tue, 12 May 2009 15:15:05 +0200
-Message-ID: <4A097659.4060507@drmicha.warpmail.net>
+From: Constantine Plotnikov <constantine.plotnikov@gmail.com>
+Subject: Re: Git-SVN on Cygwin: svn+ssh good, https awkward
+Date: Tue, 12 May 2009 17:47:05 +0400
+Message-ID: <85647ef50905120647r564b13e3gf9cac9a5126ff0c1@mail.gmail.com>
+References: <20090425120429.GA417@home>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue May 12 15:15:51 2009
+To: Matthias Andree <matthias.andree@gmx.de>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue May 12 15:47:25 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M3rph-0005Ee-NA
-	for gcvg-git-2@gmane.org; Tue, 12 May 2009 15:15:46 +0200
+	id 1M3sKG-0004nK-Sc
+	for gcvg-git-2@gmane.org; Tue, 12 May 2009 15:47:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752573AbZELNPQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 May 2009 09:15:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752535AbZELNPQ
-	(ORCPT <rfc822;git-outgoing>); Tue, 12 May 2009 09:15:16 -0400
-Received: from out1.smtp.messagingengine.com ([66.111.4.25]:53177 "EHLO
-	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752229AbZELNPP (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 12 May 2009 09:15:15 -0400
-Received: from compute1.internal (compute1.internal [10.202.2.41])
-	by out1.messagingengine.com (Postfix) with ESMTP id DCE96343056
-	for <git@vger.kernel.org>; Tue, 12 May 2009 09:15:14 -0400 (EDT)
-Received: from heartbeat1.messagingengine.com ([10.202.2.160])
-  by compute1.internal (MEProxy); Tue, 12 May 2009 09:15:14 -0400
-X-Sasl-enc: ig9mhpWgPSKyLrD7hL+7UQgxxuIPaINjyJYnOPz4AkLA 1242134114
-Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.12])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 3201C1F466
-	for <git@vger.kernel.org>; Tue, 12 May 2009 09:15:14 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1b5pre) Gecko/20090511 Lightning/1.0pre Shredder/3.0b3pre
+	id S1752057AbZELNrL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 May 2009 09:47:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751888AbZELNrJ
+	(ORCPT <rfc822;git-outgoing>); Tue, 12 May 2009 09:47:09 -0400
+Received: from mail-bw0-f222.google.com ([209.85.218.222]:46345 "EHLO
+	mail-bw0-f222.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751274AbZELNrH (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 May 2009 09:47:07 -0400
+Received: by bwz22 with SMTP id 22so3282551bwz.37
+        for <git@vger.kernel.org>; Tue, 12 May 2009 06:47:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:content-type
+         :content-transfer-encoding;
+        bh=nVwa79rmpsiP+NAztzUNRIgunhRLaSaal/6RGJbeI5o=;
+        b=psn9GKGPBv+oeaIldMzir3tieHnbUPSqPT8+5XD6iDGeaP82c1L3mSkroR0hlVyo+d
+         kgzSUrnuNAykbY/RYuP5zdWgNiJIczmUrdf6jHsP8uwVXY4YHXCLTvAKyNkiV5uQALLC
+         gj7u1B6EefS40NssK7X/4eNHNZUWmflDkfiUc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :content-type:content-transfer-encoding;
+        b=mmsbULMkB7yjWtQl/RF0sc8tN93dK5WF4bzhZV1Jt8aN374gfEl6WfLHtAMUqjBdPr
+         3BzAfddbUM0/iZJ9MOoMyF9KpPeyYAjYlB3RdXhTjfj8igW5U/8JM6tMrBw49Skz/mHP
+         dQjlycUm4Ejq8p0iWkphSVWkxrclyTX8V8alA=
+Received: by 10.204.62.82 with SMTP id w18mr8133957bkh.129.1242136025702; Tue, 
+	12 May 2009 06:47:05 -0700 (PDT)
+In-Reply-To: <20090425120429.GA417@home>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118893>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118894>
 
-Hi there
+On Sat, Apr 25, 2009 at 4:04 PM, Gregory Petrosyan
+<gregory.petrosyan@gmail.com> wrote:
+>> git-svn on Cygwin works well with svn+ssh://, but needs some fixes
+>> around tempfile and/or subprocess handling for https:// - please help.
+>
+> This problem is triggered by updating Cygwin's SVN to 1.6. Downgrading
+> it back to 1.5 make git-svn work for me again.
+>
+1. The problem is also triggered when svn is accessed using file: protocol.
+2. Downgrading does not help completely for file protocol. Instead of
+the tempfile.tmp, there is now the same problem with report.tmp.
 
-I encountered a misfeature of cherry or misuse of it by myself... Also,
-the behaviour is not quite what the doc suggests. The script below
-generates the following DAG:
+I tend to agree with Matthias Andree that real bug is using fixed file
+names for temporary files. This could also cause interference when
+several git-svn instances the same computer for different git
+repositories.
 
-*   05f4f8c (refs/heads/master) Merge branch 'upstream'
-|\
-| * 2c8fad1 (refs/heads/upstream) add a
-* | df7b5e4 Add a
-|/
-* 6bdebf5 init
-
-Naively, one would say that master and upstream contain one commit each
-which differ but their patch-ids coincide (see below). That's the same
-situation before as well as after the merge.
-
-But calling "git cherry -v upstream" when on the master branch gives
-different results:
-
-Before merge:
-- df7b5e472d9a23d02943b331a7dc9ec638f44b33 Add a
-Merge made by recursive.
-After merge:
-+ df7b5e472d9a23d02943b331a7dc9ec638f44b33 Add a
-
-Of course master contains both 2c8fad1 and df7b5e4, and upstream only
-the latter (Did I say "naively"?). But still upstream contains a commit
-which is patch-equivalent to 2c8fad1, and which git cherry does not find.
-
-The point is that "git cherry upstream head" looks at each commit in
-upstream..head and checks whether there is an equivalent patch in
-head..upstream. (This differs from the doc which says fork-point..head
-resp. fork-point..upstream.)
-
-In the DAG above, all is well when head is master^ (df7b5e4), i.e.
-before the merge, but head..upstream is empty after the merge.
-
-Now, adjusting the doc is easy, but I still feel that cherry does not
-give the most useful info in the situation at hand. But how would I find
-a better lower boundary for the range ..upstream? merge-base of master
-and upstream is upstream so that doesn't cut it. So I'm wondering what
-the right approach is and whether anyone cares.
-
-Michael
-
---->%---
-#!/bin/bash
-
-rm -Rf cherrybug
-mkdir cherrybug && cd cherrybug && git init
-echo a > a && git add a && git commit -m init
-git checkout -b upstream
-echo b >> a && git add a && git commit -m "add a"
-git checkout master
-echo b >> a && git add a && git commit -m "Add a"
-echo "Before merge:"
-git cherry -v upstream
-git merge upstream
-echo "After merge:"
-git cherry -v upstream
+Regards,
+Constantine
