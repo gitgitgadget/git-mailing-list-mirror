@@ -1,79 +1,93 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: git fails with control characters in trunk directory name
-Date: Tue, 12 May 2009 19:41:22 +0200
-Message-ID: <20090512174122.GB32594@blimp.localdomain>
-References: <200905112208.21017.Hugo.Mildenberger@namir.de> <200905121557.18542.Hugo.Mildenberger@namir.de> <81b0412b0905120759u15f1ec73k73625a7904515792@mail.gmail.com> <200905121900.00625.Hugo.Mildenberger@namir.de>
-Reply-To: Alex Riesen <raa.lkml@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+From: Jon Brisbin <jon.brisbin@npcinternational.com>
+Subject: Re: How to move users from SEU (AS400) to Git?
+Date: Tue, 12 May 2009 12:56:42 -0500
+Message-ID: <7444645C-67E8-424E-9073-E831C8DE8656@npcinternational.com>
+References: <1CA7E776-B216-4AA5-BFE0-63C0B066980D@npcinternational.com> <e2b179460905120940u2d87a591kefbdf659e1badd0c@mail.gmail.com>
+Mime-Version: 1.0 (Apple Message framework v930.3)
+Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Hugo Mildenberger <Hugo.Mildenberger@namir.de>
-X-From: git-owner@vger.kernel.org Tue May 12 19:41:34 2009
+To: Mike Ralphson <mike.ralphson@gmail.com>
+X-From: git-owner@vger.kernel.org Tue May 12 19:56:57 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M3vyv-000597-3v
-	for gcvg-git-2@gmane.org; Tue, 12 May 2009 19:41:33 +0200
+	id 1M3wDo-000409-FD
+	for gcvg-git-2@gmane.org; Tue, 12 May 2009 19:56:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753134AbZELRlY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 May 2009 13:41:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751318AbZELRlY
-	(ORCPT <rfc822;git-outgoing>); Tue, 12 May 2009 13:41:24 -0400
-Received: from mout0.freenet.de ([195.4.92.90]:43129 "EHLO mout0.freenet.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752652AbZELRlX (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 May 2009 13:41:23 -0400
-Received: from [195.4.92.22] (helo=12.mx.freenet.de)
-	by mout0.freenet.de with esmtpa (ID alexander.riesen@freenet.de) (port 25) (Exim 4.69 #88)
-	id 1M3vyl-0002z5-PK; Tue, 12 May 2009 19:41:23 +0200
-Received: from x6446.x.pppool.de ([89.59.100.70]:44203 helo=tigra.home)
-	by 12.mx.freenet.de with esmtpsa (ID alexander.riesen@freenet.de) (TLSv1:AES256-SHA:256) (port 587) (Exim 4.69 #79)
-	id 1M3vyl-0006QK-Jf; Tue, 12 May 2009 19:41:23 +0200
-Received: from blimp.localdomain (blimp.home [192.168.0.8])
-	by tigra.home (Postfix) with ESMTP id C23D6277D8;
-	Tue, 12 May 2009 19:41:22 +0200 (CEST)
-Received: by blimp.localdomain (Postfix, from userid 1000)
-	id 6667436D28; Tue, 12 May 2009 19:41:22 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <200905121900.00625.Hugo.Mildenberger@namir.de>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+	id S1753626AbZELR4n (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 May 2009 13:56:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752925AbZELR4n
+	(ORCPT <rfc822;git-outgoing>); Tue, 12 May 2009 13:56:43 -0400
+Received: from mail.npcinternational.com ([63.76.154.140]:29452 "EHLO
+	mail1.npci.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752866AbZELR4m (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 May 2009 13:56:42 -0400
+Received: from [172.16.0.131] (mail.npcinternational.com [63.76.154.130] (may be forged))
+	by mail1.npci.com (MOS 3.10.5-GA)
+	with ESMTP id COQ34784;
+	Tue, 12 May 2009 12:56:42 -0500 (CDT)
+In-Reply-To: <e2b179460905120940u2d87a591kefbdf659e1badd0c@mail.gmail.com>
+X-Mailer: Apple Mail (2.930.3)
+X-Junkmail-Whitelist: YES (by domain whitelist at mail1.npci.com)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118934>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118935>
 
-Hugo Mildenberger, Tue, May 12, 2009 18:59:58 +0200:
-> > > I looked into guess_dir_name().
-> > 
-> > That's not the right place. The place I meant is right below the call
-> > to this function (you have to parse the names given in the command-line
-> > too).
-> > 
-> > The automatically generated (that's the case with guess_dir_name)
-> > directory name certainly shouldn't contain any unexpected characters.
-> > 
-> > > A regex call would be easy to fit, but
-> > > currently the git binary does not depend on libpcre. Is it generally
-> > > considered to be acceptable to add such a dependency?
-> > 
-> > No. And pcre is not the only regex lib in the world. And we prefer
-> > shell patterns, if any at all.
-> 
-> You really want to use shell patterns to match against a string from within a binary?
+First, thanks everyone for the cogent responses. After a big salad and  
+some chicken enchilada soup, I'm now energized to tackle this problem  
+with renewed vigor... :)
 
-Is that a problem? Especially if the matching expression is just
-something like a character class?
+On May 12, 2009, at 11:40 AM, Mike Ralphson wrote:
 
-> Although git already makes use of regexec from glibc or compat/regex
-> directory in numerous places? 
+> I'm not familiar with the AS400 or SEU but do developers currently
+> have a complete copy of the tree to themselves, or do they only check
+> out the files they're editing?
 
-You said pcre, and I wasn't able to look at the source at the time I
-answered your mail to check if git relies on POSIX regexp. I did
-(and remembered git grep), so no need for pcre and regular exceptions
-are just a line away.
+They only check out the specific files they need, unfortunately.
 
+> I'm not sure what Rational Developer is likely to want to do in terms
+> of getting the edited files back to the AS400 (assuming it supports
+> that directly). Are you planning to run (j)git on the AS400 or have
+> another step to get the code from a central git repo back to the
+> AS400(s)?
 
-P.S. Could you please quote more appropriately? Your discussion is a
-little hard to follow.
+Since I work with, but am not a part of, the AS400 group, I don't have  
+a copy of Rational to play with. I have used Websphere Studio before,  
+though (which I think is the precursor to Rational/eclipse) and it  
+used the toolbox utilities (JT400 et al) to transfer files locally,  
+allow the developer to work on the file, then put them back on the  
+server where they can be compiled. I would assume Rational works  
+similarly. This is making me wonder whether any open source scm will  
+work for this scenario. We may be tied to IBM's tools or nothing.
+
+> Is any deployment done to a test server? Is there a release process
+> you need to integrate with?
+
+We have a test/release cycle that the AS400 group calls  
+"implementation" that is basically copying stuff from a development  
+400 to the production 400. I'm not sure what role an alternative scm  
+would play in this scenario. There's also a fantastically cumbersome  
+reverse implementation process called a "refresh", which copies data  
+files from production back to development and basically clobbers  
+whatever is on development. Only developer libraries are left  
+untouched. This seems to me to be a process which could, shall we say,  
+use some improvement. :)
+
+> Our devs expect their changes to go live at midnight after they
+> 'release' them. Are there similar assumptions for you?
+
+Our deployments have to go through some SOX-compliance ring-around-the- 
+rosie, so they don't really have any assumptions as to when changes  
+are pushed to production. I could see hook scripts filling doing some  
+of the work here. But some manual intervention will be required for  
+compliance reasons.
+
+Thanks!
+
+Jon Brisbin
+Portal Webmaster
+NPC International, Inc.
