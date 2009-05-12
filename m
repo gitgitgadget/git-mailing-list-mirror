@@ -1,72 +1,83 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: How can I remove a remote branch from local repo that is removed
-   at the server side
-Date: Tue, 12 May 2009 09:32:15 +0200
-Message-ID: <4A0925FF.5030307@viscovery.net>
-References: <4A091DB3.4070509@ubicom.com>
+From: Marc Weber <marco-oweber@gmx.de>
+Subject: Re: [PATCH] topgit tg push feature
+Date: Tue, 12 May 2009 09:54:13 +0200
+Message-ID: <20090512075413.GA7764@gmx.de>
+References: <20090507045904.GA2068@gmx.de> <36ca99e90905062245w1ec78828ice5ed18161b6ec43@mail.gmail.com> <20090507084355.GA11680@pengutronix.de> <36ca99e90905070250l656f8879g87eb27c09db2cd42@mail.gmail.com> <20090509103625.GC13344@lapse.rw.madduck.net> <20090509190910.GA9655@gmx.de> <20090511032813.GA15540@gmx.de> <20090511195532.GA28340@pengutronix.de> <20090511210614.GA6118@gmx.de> <20090512051334.GA22757@pengutronix.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Yakup Akbay <yakbay@ubicom.com>
-X-From: git-owner@vger.kernel.org Tue May 12 09:32:32 2009
+Content-Type: text/plain; charset=utf-8
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue May 12 09:54:42 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M3mTT-0004h0-BY
-	for gcvg-git-2@gmane.org; Tue, 12 May 2009 09:32:27 +0200
+	id 1M3moz-0005ij-4K
+	for gcvg-git-2@gmane.org; Tue, 12 May 2009 09:54:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756379AbZELHcT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 May 2009 03:32:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756250AbZELHcS
-	(ORCPT <rfc822;git-outgoing>); Tue, 12 May 2009 03:32:18 -0400
-Received: from lilzmailso02.liwest.at ([212.33.55.13]:27905 "EHLO
-	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755499AbZELHcS (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 May 2009 03:32:18 -0400
-Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
-	by lilzmailso02.liwest.at with esmtpa (Exim 4.69)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1M3mTI-0004wP-Aw; Tue, 12 May 2009 09:32:16 +0200
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.96])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id 1149EFF4E; Tue, 12 May 2009 09:32:16 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.21 (Windows/20090302)
-In-Reply-To: <4A091DB3.4070509@ubicom.com>
-X-Spam-Score: -1.4 (-)
+	id S1754741AbZELHyc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 May 2009 03:54:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754479AbZELHyb
+	(ORCPT <rfc822;git-outgoing>); Tue, 12 May 2009 03:54:31 -0400
+Received: from mail.gmx.net ([213.165.64.20]:57524 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1754163AbZELHyb (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 May 2009 03:54:31 -0400
+Received: (qmail invoked by alias); 12 May 2009 07:54:29 -0000
+Received: from mawercer.at.xencon.net (EHLO mail.gmx.net) [83.246.111.127]
+  by mail.gmx.net (mp013) with SMTP; 12 May 2009 09:54:29 +0200
+X-Authenticated: #9006135
+X-Provags-ID: V01U2FsdGVkX18bmPwQWKAbVL3g8dWmmrmh/hOf+rWxKPoziqzKOc
+	E6Hhl0hjHimeKr
+Received: by mail.gmx.net (sSMTP sendmail emulation); Tue, 12 May 2009 09:54:13 +0200
+Mail-Followup-To: Marc Weber <marco-oweber@gmx.de>, git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <20090512051334.GA22757@pengutronix.de>
+User-Agent: Mutt/1.5.16 (2007-06-09)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.63
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118877>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118878>
 
-Yakup Akbay schrieb:
-> Hi,
+> hhhm, this hunk is new and unused.  Intended?
 > 
-> consider the following situation:
-> 
->    adg@adghp:~/myrepo$ git branch -a
->    * master
->      origin/HEAD
->      origin/master
->      origin/work
-> 
-> I want to remove origin/work from my local repository which is no more
-> existing at the origin. git fetch (or pull) does not help either.
-> However, it disappears when I remove the following line in
-> .git/packed-refs file:
-> 
->    021a032317425b136b5430c7dead94328996b9d0 refs/remotes/origin/work
-> 
-> Is there command line version to do it?
+> If it's OK for you I fix these up when commiting.  I will break out the
+> change to tg.sh as shown yesterday in irc.
 
-Two options:
+thank you x-times :-)
+Sure that's fine with me. I already told you.
 
-  git branch -D -r origin/work
-  git remote prune origin
+>That was my intention my asking for the -r option. The -r option is to
+>'tg' not a tg-command. And it's still not addressed.
+Bert: You're wrong:
 
-The second removes *all* of origin's tracking branches that are not in the
-remote anymore. Use it only if you are sure you want that to happen.
+tg.sh contains:
 
--- Hannes
+  base_remote="$(git config topgit.remote 2>/dev/null)" || :
+
+  [...]
+
+  if [ "$1" = "-r" ]; then
+          shift
+          if [ -z "$1" ]; then
+                  echo "Option -r requires an argument." >&2
+                  do_help
+                  exit 1
+          fi
+          base_remote="$1"; shift
+          tg="$tg -r $base_remote"
+  fi
+
+So base_remote is set by config first and then overwritten by the first
+-r flag. my remotes is initialised with that -r flag.
+
+Boy However its wrong again now:
+
+If you use tg push -r foo it will push to poth: the config value and
+foo. So probably its best to remove the second -r altogether and replace
+my remotes by base_remote. You still can use the undocumented -r "remote
+remote2" feature.
+
+Marc Weber
