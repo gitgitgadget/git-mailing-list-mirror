@@ -1,159 +1,92 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: git fails with control characters in trunk directory name
-Date: Tue, 12 May 2009 16:59:34 +0200
-Message-ID: <81b0412b0905120759u15f1ec73k73625a7904515792@mail.gmail.com>
-References: <200905112208.21017.Hugo.Mildenberger@namir.de>
-	 <200905121103.00432.Hugo.Mildenberger@namir.de>
-	 <81b0412b0905120354p6e1bf517y154601132f0901a3@mail.gmail.com>
-	 <200905121557.18542.Hugo.Mildenberger@namir.de>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Hugo Mildenberger <Hugo.Mildenberger@namir.de>
-X-From: git-owner@vger.kernel.org Tue May 12 17:00:24 2009
+From: Esko Luontola <esko.luontola@gmail.com>
+Subject: Re: Cross-Platform Version Control
+Date: Tue, 12 May 2009 18:06:05 +0300
+Message-ID: <419AD153-53B4-4DAB-AF72-4127C17B1CA0@gmail.com>
+Mime-Version: 1.0 (Apple Message framework v930.3)
+Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue May 12 17:07:48 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M3tSw-00019F-Jx
-	for gcvg-git-2@gmane.org; Tue, 12 May 2009 17:00:23 +0200
+	id 1M3ta7-0004wL-MQ
+	for gcvg-git-2@gmane.org; Tue, 12 May 2009 17:07:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754932AbZELO7g convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 12 May 2009 10:59:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753915AbZELO7f
-	(ORCPT <rfc822;git-outgoing>); Tue, 12 May 2009 10:59:35 -0400
-Received: from mail-bw0-f174.google.com ([209.85.218.174]:45824 "EHLO
-	mail-bw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753871AbZELO7e convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 12 May 2009 10:59:34 -0400
-Received: by bwz22 with SMTP id 22so24158bwz.37
-        for <git@vger.kernel.org>; Tue, 12 May 2009 07:59:34 -0700 (PDT)
+	id S1756123AbZELPGM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 May 2009 11:06:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755097AbZELPGK
+	(ORCPT <rfc822;git-outgoing>); Tue, 12 May 2009 11:06:10 -0400
+Received: from mu-out-0910.google.com ([209.85.134.186]:44236 "EHLO
+	mu-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756153AbZELPGJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 May 2009 11:06:09 -0400
+Received: by mu-out-0910.google.com with SMTP id i2so12908mue.1
+        for <git@vger.kernel.org>; Tue, 12 May 2009 08:06:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=ISC9YU8ZgFaIb9WpExx1lUq4QPURTPcXY1JmERfBjK8=;
-        b=qCRjj/Tj3rInNd5un+P9958OfV/8jTG1+QjuBKhsKvVkG3qhA6V8U+8aGM7HcTCGae
-         1fS7mEh7nEF6BmYFNthAV3fTV7qxJnk02jAgF7RDeR/wmmP77qn3hPtuRQJVEFFhSc0Z
-         MEX49XRZYtwJMBVT3XFoUWr1e1NKNCy9FYk08=
+        h=domainkey-signature:received:received:message-id:from:to
+         :content-type:content-transfer-encoding:mime-version:subject:date
+         :x-mailer;
+        bh=fHZgNIPzvS3JjfcKcQxeLJM4EddoHjdYaBf3L+BiY6E=;
+        b=IqMxpOC6aKqtpX2ehrHnH7X5DTIlwMPCfIxVjrYNSkUmup5SU+2Cxt0ELcgI24By8w
+         1jDZtGH3u6JElIrjAX3OoMBY3mftckiKQzJwVOHO4etMNVLQifaTqg5DfiYxZ1b27xR7
+         nVy0QedaqbLBzk3ziNJeP8LuSSkcydV7Nkjqo=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=Jj8NdLaBd5wV0CLzeH8IAfsHQOV5C/ph7gjOIVS9vmivxyndB97pQzmshbQKVCHczY
-         nf2jy2+q/L36YqJXOT6qTVkMn8/IG0TVfkxjTYnXuQdVxuiObpJsaCOB4sW1i7E/pXV9
-         44Y/zSOiWiJOGXEJK8A0z6vbHgjbRcE3pZ3Nw=
-Received: by 10.204.121.140 with SMTP id h12mr8142916bkr.70.1242140374173; 
-	Tue, 12 May 2009 07:59:34 -0700 (PDT)
-In-Reply-To: <200905121557.18542.Hugo.Mildenberger@namir.de>
+        h=message-id:from:to:content-type:content-transfer-encoding
+         :mime-version:subject:date:x-mailer;
+        b=uk82fpnyTcw6pUP0eBwpKDR0oLiwHaQzRIdcGBKv2cpKHMTt+c6U99ZeUHI/w1g+E4
+         MakUmvXaCkQHiRLuGMKClrxUkfhgpFwPcqHkrHwq/IXCgramGhTTE2WyM3qR2lhH4UC9
+         DfhcxWJZGv1W6SLKrBviDDgZ1HN8K+5YWPAPU=
+Received: by 10.103.231.16 with SMTP id i16mr5378793mur.7.1242140768652;
+        Tue, 12 May 2009 08:06:08 -0700 (PDT)
+Received: from ku-hupnet59-74.hupnet.helsinki.fi (vallila-gw.hupnet.helsinki.fi [128.214.20.122])
+        by mx.google.com with ESMTPS id u9sm2356600muf.7.2009.05.12.08.06.07
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Tue, 12 May 2009 08:06:08 -0700 (PDT)
+X-Mailer: Apple Mail (2.930.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118900>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118901>
 
-2009/5/12 Hugo Mildenberger <Hugo.Mildenberger@namir.de>:
->> OTOH, a warning about commonly used delimiters not fitting a name
->> context, maybe a good idea. Like "\r\n\t", backslash (came up recent=
-ly
->> on this list). Such a check and associated warning may be useful for
->> repository names and branches.
->>
->> Still, it's more of a policy issue and I would make it optional, eve=
-n
->> if enabled by default. Maybe even by defining a regexp which the
->> repo name or branch name must (for hard error) or should (for a warn=
-ing)
->> match.
->>
->> For your specific case, you can take a look at builtin-clone.c,
->> just after the line containing "guess_dir_name(repo_name"...
->> --
->
-> But at least the git versions I tried (up to 1.6.3) really do have a =
-problem
-> when facing a trailing newline in repository names; so one should enf=
-orce a
-> convention.
+A good start for making Git cross-platform, would be storing the text  
+encoding of every file name and commit message together with the  
+commit. Currently, because Git is oblivious to the encodings and just  
+considers them as a series of bytes, there is no way to make them  
+cross-platform. It's as http://www.joelonsoftware.com/articles/Unicode.html 
+  says, "It does not make sense to have a string without knowing what  
+encoding it uses." Without explicit encoding information, making a  
+system that works even on the three main platforms, let alone in all  
+countries and languages, is simply not possible.
 
-That's what I mean by saying: "... even if enabled by default".
-I just want to disable newbie-helping annoyances on my systems.
+On the other hand, if the encoding is explicitly stated in the  
+repository, then it is possible for platform and locale aware Git  
+clients to handle the file names and commit messages in whatever way  
+makes most sense for the platform (for example convert the file names  
+to the platform's encoding, if it differs from the committer's  
+platform encoding). Then it would also be possible to create a Mac  
+version of Git, which compensates for Mac OS X's file system's file  
+name encoding peculiarities. Also the system could then warn (on "git  
+add") if the data does not look like it has been encoded with the said  
+encoding.
 
-> I looked into guess_dir_name().
+If the platform's and the repository's encoding happen to be the same  
+(which in reality might be possible only inside a small company where  
+everybody is forced to use the same OS and is configured by a single  
+sysadmin), then no conversions need to be done. Also Git purists, who  
+think that the byte sequence representing a file name are more  
+important than the human readable version of the file name, may use  
+some configuration switch that disables all conversions - but even  
+then the current encoding should be stored together with the commit.
 
-That's not the right place. The place I meant is right below the call
-to this function (you have to parse the names given in the command-line
-too).
+Are there any plans on storing the encoding information of file names  
+and commit messages in the Git repository? How much time would  
+implementing it take? Any ideas on how to maintain backwards  
+compatibility (for old commits that do not have the encoding  
+information)?
 
-The automatically generated (that's the case with guess_dir_name)
-directory name certainly shouldn't contain any unexpected characters.
-
-> A regex call would be easy to fit, but
-> currently the git binary does not depend on libpcre. Is it generally
-> considered to be acceptable to add such a dependency?
-
-No. And pcre is not the only regex lib in the world. And we prefer
-shell patterns, if any at all.
-
-> While I like the idea to make use of a configurable regular expressio=
-n, such
-> an expression had to be a command line parameter with a reasonable de=
-fault
-> value, because .git/config still would not exist when the value would=
- be
-> needed.
-
-That's where _default_ policy plays its role. "Default" like in "it is =
-compiled
-into the git executable and needs no configuration present".
-
-> Last not least, I managed to reproduce the problem almost exactly:
->
-> 1.) hm@localhost git
-> clone "git://git.kernel.org/pub/scm/linux/kernel/git/holtmann/bluetoo=
-th-testing.git
-> "
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0(Note the trailing linefeed)
-
-That's all the command printed? No "Initialized empty Git repository" l=
-ine?
-
-> 2.) hm@localhost ~/tmp/bluetooth-testing.git $ make
-
-Hmm... At this point the clone may have worked (at least partially).
-It named "bluetooth-testing.git", which it shouldn't (but explainable:
-the repo url suffix is not .git anymore, but ".git\r\n"). But it looks =
-like
-the post-clone checkout failed (silently? which would be bad):
-
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0Makefile:313: /home/hm/tmp/bluetooth-testi=
-ng.git
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0/scripts/Kbuild.include: No such file or d=
-irectory
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0make[1]: /home/hm/tmp/bluetooth-testing.gi=
-t: No such file or directory
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0make[1]: *** No rule to make target `/home=
-/hm/tmp/bluetooth-testing.git'.
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0Stop.
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0make: *** No rule to make target `include/=
-config/auto.conf', needed by
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0`include/config/kernel.release'. =C2=A0Sto=
-p.
-
-Assuming the files must be present, of course.
-
-> 3.) hm@localhost ~/tmp/bluetooth-testing.git $ git pull
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0fatal: Error in line 2:
->
-> 4.) ".git/config" now contains
->
-> url =3D
-> git://git.kernel.org/pub/scm/linux/kernel/git/holtmann/bluetooth-test=
-ing.git\n
->
-> I particulary liked the git message "fatal: Error in line 2:" ...
->
-
-Separate issue. Will look at it later.
+- Esko
