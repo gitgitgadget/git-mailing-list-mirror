@@ -1,59 +1,79 @@
-From: Jon Brisbin <jon.brisbin@npcinternational.com>
-Subject: Re: How to move users from SEU (AS400) to Git?
-Date: Tue, 12 May 2009 13:20:58 -0500
-Message-ID: <116428E9-AFCF-4B26-AC57-9DD6DC53CB3E@npcinternational.com>
-References: <1CA7E776-B216-4AA5-BFE0-63C0B066980D@npcinternational.com> <e2b179460905120940u2d87a591kefbdf659e1badd0c@mail.gmail.com> <7444645C-67E8-424E-9073-E831C8DE8656@npcinternational.com> <20090512181303.GA26082@jeeves.jpl.local>
-Mime-Version: 1.0 (Apple Message framework v930.3)
-Content-Type: text/plain; charset=ISO-8859-1;
-	format=flowed	delsp=yes
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: =?ISO-8859-1?Q?Magnus_B=E4ck?= <baeck@swipnet.se>
-X-From: git-owner@vger.kernel.org Tue May 12 20:21:13 2009
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: git default behavior seems odd from a Unix command line point
+ of  view
+Date: Tue, 12 May 2009 14:26:48 -0400 (EDT)
+Message-ID: <alpine.LNX.2.00.0905121415000.2147@iabervon.org>
+References: <4e963a650905120818m70b75892gb4e052187910b9a5@mail.gmail.com>  <7vd4ae8fls.fsf@alter.siamese.dyndns.org> <4e963a650905120924j52d38c0dg577d93e913013e38@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Andrew Schein <andrew@andrewschein.com>
+X-From: git-owner@vger.kernel.org Tue May 12 20:27:17 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M3wbE-0006wd-Jx
-	for gcvg-git-2@gmane.org; Tue, 12 May 2009 20:21:09 +0200
+	id 1M3wh9-0001fh-RM
+	for gcvg-git-2@gmane.org; Tue, 12 May 2009 20:27:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751498AbZELSU6 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 12 May 2009 14:20:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751454AbZELSU6
-	(ORCPT <rfc822;git-outgoing>); Tue, 12 May 2009 14:20:58 -0400
-Received: from mail.npcinternational.com ([63.76.154.140]:9416 "EHLO
-	mail1.npci.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751002AbZELSU6 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 12 May 2009 14:20:58 -0400
-Received: from [172.16.0.131] (mail.npcinternational.com [63.76.154.130] (may be forged))
-	by mail1.npci.com (MOS 3.10.5-GA)
-	with ESMTP id COQ35815;
-	Tue, 12 May 2009 13:20:58 -0500 (CDT)
-In-Reply-To: <20090512181303.GA26082@jeeves.jpl.local>
-X-Mailer: Apple Mail (2.930.3)
-X-Junkmail-Whitelist: YES (by domain whitelist at mail1.npci.com)
+	id S1751845AbZELS0u (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 May 2009 14:26:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751454AbZELS0t
+	(ORCPT <rfc822;git-outgoing>); Tue, 12 May 2009 14:26:49 -0400
+Received: from iabervon.org ([66.92.72.58]:53430 "EHLO iabervon.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751002AbZELS0s (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 May 2009 14:26:48 -0400
+Received: (qmail 18202 invoked by uid 1000); 12 May 2009 18:26:48 -0000
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 12 May 2009 18:26:48 -0000
+In-Reply-To: <4e963a650905120924j52d38c0dg577d93e913013e38@mail.gmail.com>
+User-Agent: Alpine 2.00 (LNX 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118940>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118941>
 
+On Tue, 12 May 2009, Andrew Schein wrote:
 
-On May 12, 2009, at 1:13 PM, Magnus B=E4ck wrote:
+> Hi Junio -
+> 
+> Thanks for your reply giving historical context.  The command line
+> examples I gave were intended to give examples of the output rather
+> than my own usage pattern.
+> 
+> Here is my actual usage pattern... from a file called "sync.sh"
+> (would love feedback on whether this is the gitly? way to solve my use
+> case):
 
-> I hope I'm not stating the obvious here, but "Rational" is a division
-> within IBM, not a product. IBM Rational has two solutions for version
-> control, ClearCase and Team Concert. The latter does a lot more than
-> just version control though, and it seems to be shipped with Rational
-> Developer. Just to be clear, which product(s) are they considering?
+What *is* your use case? What you're doing seems nuts to me (like, you're 
+going to send out files with this script that someone is in the middle of 
+editting), but I don't know what you're trying to do.
 
-Thanks for the clarification.
+> # environment set up occurs before loop, I pull before "pushing" in an
+> attempt to prevent
+> # conflicts from being left on the shared repository.
+> for dir in ./* ; do
+>     if [ ! -d $dir ]      ; then continue ; fi #not a directory
+>     if [ ! -e $dir/.git ] ; then continue ; fi #not a git repo
+>     dir=`basename $dir`
+>     echo "syncing: $dir"
+>     set +e # commit returns an error if there is nothing to commit.
+>     (cd ./$dir ; git commit -a)
+>     set -e
+>     (cd ./$dir ; git pull $UP "$REPO/$dir" master)        #pull
+>     ssh $HOST "mkdir -p $DEST_CACHE/$LOC/$dir"  # these three lines
+> handle "push"
+>     rsync -rl --delete ./$dir/.git -e ssh "$DEST:$DEST_CACHE/$LOC/$dir/.git"
+>     ssh $DEST "(cd $LOC/$dir ; /tools/bin/git pull
+> $DEST_CACHE/$LOC/$dir/.git master)"
+> 
+> done
 
-I think they were looking at Rational Developer/Team Concert. That =20
-name sounds familiar, at least.
+What are you trying to avoid by not using "git push"? Why are you 
+committing whatever changes happen to be in working directories? Are you 
+intending to be able to handle non-trivial merges?
 
-Thanks!
-
-Jon Brisbin
-Portal Webmaster
-NPC International, Inc.
+	-Daniel
+*This .sig left intentionally blank*
