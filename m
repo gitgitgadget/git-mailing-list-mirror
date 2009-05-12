@@ -1,46 +1,85 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: stage/commit issue when checking out a branch
-Date: Tue, 12 May 2009 09:38:24 -0700
-Message-ID: <7v8wl28ef3.fsf@alter.siamese.dyndns.org>
-References: <d96d20670905120901qa4c0353xc50160f880e17a21@mail.gmail.com>
+From: Ping Yin <pkufranky@gmail.com>
+Subject: Re: How to create a new commit with the content of some commit?
+Date: Wed, 13 May 2009 00:38:02 +0800
+Message-ID: <46dff0320905120938m36018b45y780126df42ed4194@mail.gmail.com>
+References: <46dff0320905120735l501dcaf4ia8197d24b7684cfe@mail.gmail.com>
+	 <7vhbzq8g7u.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Peter MacMillan <peterm@metavera.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git mailing list <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
 X-From: git-owner@vger.kernel.org Tue May 12 18:38:51 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M3v0D-0000du-HM
+	id 1M3v0C-0000du-Qe
 	for gcvg-git-2@gmane.org; Tue, 12 May 2009 18:38:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753058AbZELQiZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 May 2009 12:38:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752404AbZELQiY
-	(ORCPT <rfc822;git-outgoing>); Tue, 12 May 2009 12:38:24 -0400
-Received: from fed1rmmtao104.cox.net ([68.230.241.42]:64767 "EHLO
-	fed1rmmtao104.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752147AbZELQiX (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 May 2009 12:38:23 -0400
-Received: from fed1rmimpo03.cox.net ([70.169.32.75])
-          by fed1rmmtao104.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20090512163824.ZUMZ17135.fed1rmmtao104.cox.net@fed1rmimpo03.cox.net>;
-          Tue, 12 May 2009 12:38:24 -0400
-Received: from localhost ([68.225.240.211])
-	by fed1rmimpo03.cox.net with bizsmtp
-	id qgeQ1b0054aMwMQ04geQi0; Tue, 12 May 2009 12:38:24 -0400
-X-Authority-Analysis: v=1.0 c=1 a=gf8Twd_tMvMA:10 a=QsmizHufYfoA:10
- a=JrH4EILzeUE5pKkCsQwA:9 a=81k92EqqiNE1d4miPTz3b12UEuEA:4
-X-CM-Score: 0.00
-In-Reply-To: <d96d20670905120901qa4c0353xc50160f880e17a21@mail.gmail.com> (Peter MacMillan's message of "Tue\, 12 May 2009 12\:01\:14 -0400")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+	id S1751710AbZELQiH convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 12 May 2009 12:38:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750825AbZELQiF
+	(ORCPT <rfc822;git-outgoing>); Tue, 12 May 2009 12:38:05 -0400
+Received: from yx-out-2324.google.com ([74.125.44.28]:18850 "EHLO
+	yx-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750832AbZELQiC convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 12 May 2009 12:38:02 -0400
+Received: by yx-out-2324.google.com with SMTP id 3so45664yxj.1
+        for <git@vger.kernel.org>; Tue, 12 May 2009 09:38:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=xdbZhJlcHsVNY7fJa4VD793ftydwMePnig+Bu8TFWoY=;
+        b=oCIOcPT7j2euX6xq7n9xn0OPSmNxyYTKVID8GyOfmgDx1z9Ww0+mlLKmzMiBWCvjg/
+         RBTxQNIuv/goqtvEegFSu9gh86vvdg4gIjz4wFgo9x/Qrlu92FYeVgE1bKd4TqaLk5sP
+         uUG/iKxhJz43Z80Jq/wDO0UvR9mrclqMcVdkg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=ngB9oi/byyGC87BtkB7voYLeC0IfYkwqv/Ydmmw3jP1lYLLo2Hp8TH1hsn5IAxoFfT
+         b8LwEi+RzLFKjmaJZ590dp0TXJuyEd0tOwnh/UXPAvv+c177lJV448ocwL/T7AUSj29h
+         1Sg45YDqK0MO/BMe+yWda6/BkPY1ELKwmevVY=
+Received: by 10.90.92.16 with SMTP id p16mr430646agb.35.1242146282740; Tue, 12 
+	May 2009 09:38:02 -0700 (PDT)
+In-Reply-To: <7vhbzq8g7u.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118921>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118922>
 
-Sorry; broken as of v1.6.3~60; 83ae209 (checkout branch: prime cache-tree
-fully, 2009-04-20) is the culprit.
+On Tue, May 12, 2009 at 11:59 PM, Junio C Hamano <gitster@pobox.com> wr=
+ote:
+> Ping Yin <pkufranky@gmail.com> writes:
+>
+>> a----b
+>> =C2=A0\----c
+>>
+>> Given the graph above, I want to create a commit b1 on top of c, whe=
+re
+>> b1 and b have the same content. i.e.
+>>
+>> a----b
+>> =C2=A0\----c----b1 =C2=A0 =C2=A0( content(b) =3D=3D content(b1) )
+>
+> On "c", you can:
+>
+> =C2=A0 =C2=A0git read-tree -m -u b
+> =C2=A0 =C2=A0git commit
+
+is -u necessary?
+
+>
+> I think with newer git you can say
+>
+> =C2=A0 =C2=A0git reset --merge b
+> =C2=A0 =C2=A0git commit
+>
+
+When the working directory is clean, it seems "reset --hard" and
+"reset --merge" behave the same. So after "git reset --merge b",  the
+HEAD is moved to b, and i have nothing to commit.
