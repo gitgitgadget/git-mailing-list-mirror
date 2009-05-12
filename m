@@ -1,71 +1,91 @@
-From: Ping Yin <pkufranky@gmail.com>
-Subject: How to create a new commit with the content of some commit?
-Date: Tue, 12 May 2009 22:35:30 +0800
-Message-ID: <46dff0320905120735l501dcaf4ia8197d24b7684cfe@mail.gmail.com>
+From: Pat Thoyts <patthoyts@users.sourceforge.net>
+Subject: [PATCH] gitk: Fix errors in the theme patch
+Date: 12 May 2009 15:45:06 +0100
+Message-ID: <87zldi9y8d.fsf@users.sourceforge.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-To: git mailing list <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue May 12 16:41:27 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Paul Mackerras <paulus@samba.org>
+X-From: git-owner@vger.kernel.org Tue May 12 16:45:28 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M3tAY-0008Sc-Ad
-	for gcvg-git-2@gmane.org; Tue, 12 May 2009 16:41:22 +0200
+	id 1M3tET-0002DS-OS
+	for gcvg-git-2@gmane.org; Tue, 12 May 2009 16:45:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751889AbZELOlN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 May 2009 10:41:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752007AbZELOlN
-	(ORCPT <rfc822;git-outgoing>); Tue, 12 May 2009 10:41:13 -0400
-Received: from yw-out-2324.google.com ([74.125.46.29]:57429 "EHLO
-	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750943AbZELOlM (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 May 2009 10:41:12 -0400
-Received: by yw-out-2324.google.com with SMTP id 5so8759ywb.1
-        for <git@vger.kernel.org>; Tue, 12 May 2009 07:41:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:date:message-id:subject
-         :from:to:content-type:content-transfer-encoding;
-        bh=yjMMbdT6PqJDpQ6DWRiruCPM4B08c6gl9Vj2RDe8/pw=;
-        b=g37Vn5b5BO/LXRWaRqYq7V+c0iawKBebCipLIAuMvKGwB7djQspbmSByhxHsNTm101
-         6BAhDjr9I7+wp8GLe8so0TwxRw4+ng/FXhUTu1WO1ALYuFhXwNiW4LSxNpwctOQ9NhHA
-         q2U85jJYWTrdFGtKi7aVSN/53u2n6inOKuAOY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type
-         :content-transfer-encoding;
-        b=O9/tXADBoywzb+3QgpTz8YxnCBAsKLdV0k9qEAQDTFnH0u+X6G+97Qj7P9kcDzDwCY
-         IJfPBeGhKH0lbRppF6gbX+ZPk8CoHc1RV5NZP6cEfMmtdBB0R7dYeQIkn3uZKiwcEY+6
-         SR99Az2Eh5PLVylDfcOU35A8r46Drd+u4F08o=
-Received: by 10.90.100.11 with SMTP id x11mr3914146agb.72.1242138931324; Tue, 
-	12 May 2009 07:35:31 -0700 (PDT)
+	id S1753209AbZELOpQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 May 2009 10:45:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752663AbZELOpQ
+	(ORCPT <rfc822;git-outgoing>); Tue, 12 May 2009 10:45:16 -0400
+Received: from smtp-out4.blueyonder.co.uk ([195.188.213.7]:51833 "EHLO
+	smtp-out4.blueyonder.co.uk" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751318AbZELOpP (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 12 May 2009 10:45:15 -0400
+Received: from [172.23.170.138] (helo=anti-virus01-09)
+	by smtp-out4.blueyonder.co.uk with smtp (Exim 4.52)
+	id 1M3tEH-0003Am-CR; Tue, 12 May 2009 15:45:13 +0100
+Received: from [92.238.221.8] (helo=badger.patthoyts.tk)
+	by asmtp-out1.blueyonder.co.uk with esmtp (Exim 4.52)
+	id 1M3tED-0005Z3-G7; Tue, 12 May 2009 15:45:09 +0100
+Received: by badger.patthoyts.tk (Postfix, from userid 1000)
+	id 7003E5183F; Tue, 12 May 2009 15:45:07 +0100 (BST)
+CC: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-Face: .`d#euqz@6H{";Ysmx2IVe_7M3vA+2w1X[QLk?ZO&QRauXQL{*L'$3getx}9+zK.-KWDx3.
+ qrlR)76MFb`6bgoGvLpLtcQKB=X~;*<JKLtwLBM(IA'?rVjs1*tq\VHn?WMNsB,3XXWF@5.)4SRFa+
+ '?a?.s#@hl7CiTo'F"O!fvbL0
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118898>
-
-a----b
- \----c
-
-Given the graph above, I want to create a commit b1 on top of c, where
-b1 and b have the same content. i.e.
-
-a----b
- \----c----b1    ( content(b) == content(b1) )
-
-If there are no untracked files in the working directory, i can do
-
-git checkout b
-git reset c
-git add .
-git commit -m "the copy of b"
-
-Is there any simpler way? And if there are untracked files in the
-working directory, how to do it?
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118899>
 
 
+  This patch fixes a typo in the commit selection combobox that
+  prevented it from working and sets the width of the widget.
+  Also fixed show_error to handle errors arising before the gui is
+  fully configured (ie: invalid command line parameters)
 
-Ping Yin
+Signed-off-by: Pat Thoyts <patthoyts@users.sourceforge.net>
+---
+ gitk |   10 ++++++++--
+ 1 files changed, 8 insertions(+), 2 deletions(-)
+
+diff --git a/gitk b/gitk
+index 4526193..082fa77 100755
+--- a/gitk
++++ b/gitk
+@@ -1798,6 +1798,7 @@ proc make_transient {window origin} {
+ 
+ proc show_error {w top msg} {
+     global NS
++    if {![info exists NS]} {set NS ""}
+     if {[wm state $top] eq "withdrawn"} { wm deiconify $top }
+     message $w.m -text $msg -justify center -aspect 400
+     pack $w.m -side top -fill x -padx 20 -pady 20
+@@ -1920,7 +1921,12 @@ proc mca {str} {
+ proc makedroplist {w varname args} {
+     global use_ttk
+     if {$use_ttk} {
+-	set gm [ttk::combobox $w -width 10 -state readonly\
++        set width 0
++        foreach label $args {
++            set cx [string length $label]
++            if {$cx > $width} {set width $cx}
++        }
++	set gm [ttk::combobox $w -width $width -state readonly\
+ 		    -textvariable $varname -values $args]
+     } else {
+ 	set gm [eval [linsert $args 0 tk_optionMenu $w $varname]]
+@@ -2141,7 +2147,7 @@ proc makewindow {} {
+     pack .tf.lbar.flabel .tf.lbar.fnext .tf.lbar.fprev .tf.lbar.flab2 \
+ 	-side left -fill y
+     set gdttype [mc "containing:"]
+-    set gm [makedroplist .tf.lbar.gdttype gdtype \
++    set gm [makedroplist .tf.lbar.gdttype gdttype \
+ 		[mc "containing:"] \
+ 		[mc "touching paths:"] \
+ 		[mc "adding/removing string:"]]
+-- 
+1.6.3.msysgit.0
