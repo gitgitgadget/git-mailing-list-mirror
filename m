@@ -1,97 +1,67 @@
-From: Trent Piepho <xyzzy@speakeasy.org>
-Subject: [PATCH v2] send-email: Add config option for sender address
-Date: Tue, 12 May 2009 15:48:56 -0700
-Message-ID: <1242168536-15057-1-git-send-email-xyzzy@speakeasy.org>
-References: <7v1vrxhu8x.fsf@gitster.siamese.dyndns.org>
-Cc: Nanako Shiraishi <nanako3@lavabit.com>, git@vger.kernel.org,
-	Trent Piepho <xyzzy@speakeasy.org>, gitster@pobox.com
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed May 13 00:56:50 2009
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Quote LF in urls git fetch saves in FETCH_HEAD
+Date: Tue, 12 May 2009 16:16:02 -0700
+Message-ID: <7vws8l7w0d.fsf@alter.siamese.dyndns.org>
+References: <200905112208.21017.Hugo.Mildenberger@namir.de>
+	<200905121557.18542.Hugo.Mildenberger@namir.de>
+	<81b0412b0905120759u15f1ec73k73625a7904515792@mail.gmail.com>
+	<200905121900.00625.Hugo.Mildenberger@namir.de>
+	<81b0412b0905121018lbccda1fvf6c4c19417cdde00@mail.gmail.com>
+	<20090512172452.GA32594@blimp.localdomain>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Daniel Barkalow <barkalow@iabervon.org>,
+	Hugo Mildenberger <Hugo.Mildenberger@namir.de>
+To: Alex Riesen <raa.lkml@gmail.com>
+X-From: git-owner@vger.kernel.org Wed May 13 01:16:14 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M40u1-0002Tc-Np
-	for gcvg-git-2@gmane.org; Wed, 13 May 2009 00:56:50 +0200
+	id 1M41Co-0000y1-05
+	for gcvg-git-2@gmane.org; Wed, 13 May 2009 01:16:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752769AbZELW4k (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 May 2009 18:56:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752224AbZELW4k
-	(ORCPT <rfc822;git-outgoing>); Tue, 12 May 2009 18:56:40 -0400
-Received: from mail8.sea5.speakeasy.net ([69.17.117.10]:42907 "EHLO
-	mail8.sea5.speakeasy.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751618AbZELW4j (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 May 2009 18:56:39 -0400
-X-Greylist: delayed 400 seconds by postgrey-1.27 at vger.kernel.org; Tue, 12 May 2009 18:56:39 EDT
-Received: (qmail 22769 invoked from network); 12 May 2009 22:50:00 -0000
-Received: from 71-36-41-54.tukw.qwest.net (HELO localhost.localdomain) (xyzzy@[71.36.41.54])
-          (envelope-sender <xyzzy@speakeasy.org>)
-          by mail8.sea5.speakeasy.net (qmail-ldap-1.03) with SMTP
-          for <gitster@pobox.com>; 12 May 2009 22:50:00 -0000
-X-Mailer: git-send-email 1.5.4.1
-In-Reply-To: <7v1vrxhu8x.fsf@gitster.siamese.dyndns.org>
+	id S1753070AbZELXQG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 May 2009 19:16:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752782AbZELXQE
+	(ORCPT <rfc822;git-outgoing>); Tue, 12 May 2009 19:16:04 -0400
+Received: from fed1rmmtao104.cox.net ([68.230.241.42]:37194 "EHLO
+	fed1rmmtao104.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752509AbZELXQB (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 May 2009 19:16:01 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao104.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20090512231603.OUWU17135.fed1rmmtao104.cox.net@fed1rmimpo01.cox.net>;
+          Tue, 12 May 2009 19:16:03 -0400
+Received: from localhost ([68.225.240.211])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id qnG21b0054aMwMQ03nG21T; Tue, 12 May 2009 19:16:02 -0400
+X-Authority-Analysis: v=1.0 c=1 a=BJd_Gdj20ywA:10 a=nM9qI384qiQA:10
+ a=pGLkceISAAAA:8 a=gq71ZiVMnDdDPZ2e1KQA:9 a=7Zfi09xfILKxtA-gtgPA_t_GgXwA:4
+ a=MSl-tDqOz04A:10
+X-CM-Score: 0.00
+In-Reply-To: <20090512172452.GA32594@blimp.localdomain> (Alex Riesen's message of "Tue\, 12 May 2009 19\:24\:52 +0200")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118969>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118970>
 
-The sender address, as specified with the '--from' command line option,
-couldn't be set in the config file.  So add a new config option,
-'sendemail.from', which sets it.  One can use 'sendemail.<identity>.from'
-as well of course, which is likely the more useful case.
+Alex Riesen <raa.lkml@gmail.com> writes:
 
-The sender address would default to GIT_AUTHOR_IDENT, which is usually the
-right thing, but this doesn't allow switching based on the identity
-selected.  It's possible to switch the SMTP server and envelope sender by
-using the '--identity' option, in which case one probably wants to use a
-different from address as well, but this had to be manually specified.
+> +		for (i = 0; i < url_len; ++i)
+> +			if ('\n' == url[i])
+> +				fputs("\\n", fp);
+> +			else
+> +				fputc(url[i], fp);
+> +		fputc('\n', fp);
 
-The documentation for 'from' is also corrected somewhat.  If '--from' is
-specified (or the new sendemail.from option is used) then the user isn't
-prompted.  The default with no '--from' option (or sendemail.from option)
-is GIT_AUTHOR_IDENT first then GIT_COMMITTER_IDENT, not just
-GIT_COMMITTER_IDENT.
+This ad-hoc quoting feels _very_ wrong.  Who is on the reading side and
+how does it unquote?  If it uses quote.c infrastructure, we should be
+quoting using the function from the same library shouldn't we?
 
-Signed-off-by: Trent Piepho <xyzzy@speakeasy.org>
----
-v2: Updated to latest git
-
- Documentation/git-send-email.txt |    9 ++++++---
- git-send-email.perl              |    1 +
- 2 files changed, 7 insertions(+), 3 deletions(-)
-
-diff --git a/Documentation/git-send-email.txt b/Documentation/git-send-email.txt
-index 794224b..f940770 100644
---- a/Documentation/git-send-email.txt
-+++ b/Documentation/git-send-email.txt
-@@ -69,9 +69,12 @@ and In-Reply-To headers will be used unless they are removed.
- Missing From or In-Reply-To headers will be prompted for.
- 
- --from=<address>::
--	Specify the sender of the emails.  This will default to
--	the value GIT_COMMITTER_IDENT, as returned by "git var -l".
--	The user will still be prompted to confirm this entry.
-+	Specify the sender of the emails.  If not specified on the command line,
-+	the value of the 'sendemail.from' configuration option is used.  If
-+	neither the command line option nor 'sendemail.from' are set, then the
-+	user will be prompted for the value.  The default for the prompt will be
-+	the value of GIT_AUTHOR_IDENT, or GIT_COMMITTER_IDENT if that is not
-+	set, as returned by "git var -l".
- 
- --in-reply-to=<identifier>::
- 	Specify the contents of the first In-Reply-To header.
-diff --git a/git-send-email.perl b/git-send-email.perl
-index cccbf45..d9c7f32 100755
---- a/git-send-email.perl
-+++ b/git-send-email.perl
-@@ -210,6 +210,7 @@ my %config_settings = (
-     "envelopesender" => \$envelope_sender,
-     "multiedit" => \$multiedit,
-     "confirm"   => \$confirm,
-+    "from" => \$sender,
- );
- 
- # Handle Uncouth Termination
--- 
-1.5.4.1
+If it is just informational use only, then it might make more sense to
+drop this ugly "quoted \n" silently.  I dunno.
