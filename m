@@ -1,74 +1,84 @@
-From: Dmitry Potapov <dpotapov@gmail.com>
+From: Martin Langhoff <martin.langhoff@gmail.com>
 Subject: Re: Cross-Platform Version Control
-Date: Tue, 12 May 2009 22:28:28 +0400
-Message-ID: <20090512182828.GA26812@dpotapov.dyndns.org>
+Date: Tue, 12 May 2009 20:40:20 +0200
+Message-ID: <46a038f90905121140n61902c61qc3cd41100efee4ae@mail.gmail.com>
 References: <419AD153-53B4-4DAB-AF72-4127C17B1CA0@gmail.com>
+	 <20090512182828.GA26812@dpotapov.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Esko Luontola <esko.luontola@gmail.com>
-X-From: git-owner@vger.kernel.org Tue May 12 20:30:31 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Esko Luontola <esko.luontola@gmail.com>, git@vger.kernel.org
+To: Dmitry Potapov <dpotapov@gmail.com>
+X-From: git-owner@vger.kernel.org Tue May 12 20:41:01 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M3wkI-0003JA-Be
-	for gcvg-git-2@gmane.org; Tue, 12 May 2009 20:30:30 +0200
+	id 1M3wty-0008Qd-NU
+	for gcvg-git-2@gmane.org; Tue, 12 May 2009 20:40:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753787AbZELS3o (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 May 2009 14:29:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753233AbZELS3o
-	(ORCPT <rfc822;git-outgoing>); Tue, 12 May 2009 14:29:44 -0400
-Received: from fg-out-1718.google.com ([72.14.220.154]:16425 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752796AbZELS3n (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 May 2009 14:29:43 -0400
-Received: by fg-out-1718.google.com with SMTP id 16so51785fgg.17
-        for <git@vger.kernel.org>; Tue, 12 May 2009 11:29:43 -0700 (PDT)
+	id S1752342AbZELSkV convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 12 May 2009 14:40:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752038AbZELSkV
+	(ORCPT <rfc822;git-outgoing>); Tue, 12 May 2009 14:40:21 -0400
+Received: from mail-fx0-f158.google.com ([209.85.220.158]:48140 "EHLO
+	mail-fx0-f158.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751955AbZELSkU convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 12 May 2009 14:40:20 -0400
+Received: by fxm2 with SMTP id 2so157527fxm.37
+        for <git@vger.kernel.org>; Tue, 12 May 2009 11:40:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=IS0BqYHjC/hnD5byERWINIl6WswB0Z8t68+M2mhv2r0=;
-        b=cb+Est+dojUnH2wfLlOUmam+r3IvSU7iDCGMO+GNgBmGR2Om/b86u/29tFIr+AvAwp
-         eVlxlA+XiALtlgT+NQ5A69GLvJUu4djpL0Cy5CaXmRMcLOVCaHOdLXbzwJuJBG46ek1R
-         dVBoOs5Y+ePTHqVcaFGkxP/niZwZ4o2IgPIoU=
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=wGchzTGJKSrPrJD97x7ftiY7/s/H3Ba8iG8ciPqmu7k=;
+        b=ftnZX1Zp22Ni9nn43h9qG2jTxJFwLBX0OqXZH03hBYBUE5ZyfCxMXZgOMt98Y1mU+f
+         nev63tyc44qGoUrazEwgea3rgbjh/2gMcYUBiOXnFLrUl3lDlRwePg3bw0K2UXsVddIl
+         qGMHapcTUUZ8sq5o5wNbc0g5omp1688RhsDBk=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=K0q8txFyDlfUDuENch911WaBwTCvVdLM+iK3bGdUprpKiHpm5u3LFcj6+0XWCJ+8j3
-         Tfpw/mx/xkWpl5ZOqWWc6OqjmfUqNnElO181sA5POKai9tqja9wpFqoLEGtXb5iNedAu
-         sGUflA2scQ9o1uyzqwGzF3HykgapyGCPCWHYo=
-Received: by 10.86.92.9 with SMTP id p9mr194143fgb.15.1242152982945;
-        Tue, 12 May 2009 11:29:42 -0700 (PDT)
-Received: from localhost (ppp91-76-16-205.pppoe.mtu-net.ru [91.76.16.205])
-        by mx.google.com with ESMTPS id d4sm326587fga.24.2009.05.12.11.29.41
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 12 May 2009 11:29:42 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <419AD153-53B4-4DAB-AF72-4127C17B1CA0@gmail.com>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=E52pMjjyb3pZfoFn/l8n5TGahssvjQ1ZvQIg3SUhkJGgD33RJWDfrgfVI+x+pATwcv
+         h/3okrR1HHyRPuCR8HMPIY8SYnEfZwVul00FxdllYbDMuDQ03pzbulMoUhTi5Eq0CKSY
+         FDJ+bHbfgGwk1aGRSoYSV+Z1RVK2idU4rxaZU=
+Received: by 10.223.104.74 with SMTP id n10mr16113fao.5.1242153620356; Tue, 12 
+	May 2009 11:40:20 -0700 (PDT)
+In-Reply-To: <20090512182828.GA26812@dpotapov.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118942>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118943>
 
-On Tue, May 12, 2009 at 06:06:05PM +0300, Esko Luontola wrote:
-> A good start for making Git cross-platform, would be storing the text  
-> encoding of every file name and commit message together with the commit. 
-> Currently, because Git is oblivious to the encodings and just considers 
-> them as a series of bytes, there is no way to make them cross-platform. 
+On Tue, May 12, 2009 at 8:28 PM, Dmitry Potapov <dpotapov@gmail.com> wr=
+ote:
+> 2. If you really want to be cross-platform portable, you should not u=
+se
+> =A0 any characters in filenames outside of [A-Za-z0-9._-] (i.e. Porta=
+ble
+> =A0 Filename Character Set)
+> =A0 http://www.opengroup.org/onlinepubs/000095399/basedefs/xbd_chap03=
+=2Ehtml#tag_03_276
 
-1. Git already stores the endcoding for all commit messages that are not
-   in UTF-8.
+Would it make sense to have warnings at 'git add' time about
 
-2. If you really want to be cross-platform portable, you should not use
-   any characters in filenames outside of [A-Za-z0-9._-] (i.e. Portable
-   Filename Character Set)
-   http://www.opengroup.org/onlinepubs/000095399/basedefs/xbd_chap03.html#tag_03_276
+ - filenames outside of that charset (as the strictest mode, perhaps
+even default)
+ - filenames that have a potential conflict wrt case-sensitivity
+ - filenames that have potential conflict in the same tree due to
+utf-8 encoding vagaries
+
+MHO is that a strict "start your project portable from day one" mode
+is best as a default. But I'd be happy with any default, actually ;-)
 
 
-Dmitry
+
+m
+--=20
+ martin.langhoff@gmail.com
+ martin@laptop.org -- School Server Architect
+ - ask interesting questions
+ - don't get distracted with shiny stuff  - working code first
+ - http://wiki.laptop.org/go/User:Martinlanghoff
