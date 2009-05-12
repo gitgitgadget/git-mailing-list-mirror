@@ -1,106 +1,74 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: git default behavior seems odd from a Unix command line point
- of  view
-Date: Tue, 12 May 2009 16:50:39 -0400 (EDT)
-Message-ID: <alpine.LNX.2.00.0905121619310.2147@iabervon.org>
-References: <4e963a650905120818m70b75892gb4e052187910b9a5@mail.gmail.com>  <7vd4ae8fls.fsf@alter.siamese.dyndns.org>  <4e963a650905120924j52d38c0dg577d93e913013e38@mail.gmail.com>  <alpine.LNX.2.00.0905121415000.2147@iabervon.org>
- <4e963a650905121305s244309a5vef9eec671d1ee5e@mail.gmail.com>
+From: Esko Luontola <esko.luontola@gmail.com>
+Subject: Re: Cross-Platform Version Control
+Date: Wed, 13 May 2009 00:16:09 +0300
+Message-ID: <4A09E719.4090205@gmail.com>
+References: <419AD153-53B4-4DAB-AF72-4127C17B1CA0@gmail.com> <20090512151403.GS30527@spearce.org> <alpine.DEB.1.00.0905121808480.4447@intel-tinevez-2-302> <D1E08DA2-8D8E-4D45-A50A-F32E3448D6E9@gmail.com> <alpine.DEB.1.00.0905122237230.27348@pacific.mpi-cbg.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Andrew Schein <andrew@andrewschein.com>
-X-From: git-owner@vger.kernel.org Tue May 12 22:50:49 2009
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	"Shawn O. Pearce" <spearce@spearce.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue May 12 23:16:31 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M3yw4-0005d0-G0
-	for gcvg-git-2@gmane.org; Tue, 12 May 2009 22:50:48 +0200
+	id 1M3zKw-00015M-3w
+	for gcvg-git-2@gmane.org; Tue, 12 May 2009 23:16:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751803AbZELUuj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 May 2009 16:50:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751625AbZELUuj
-	(ORCPT <rfc822;git-outgoing>); Tue, 12 May 2009 16:50:39 -0400
-Received: from iabervon.org ([66.92.72.58]:32930 "EHLO iabervon.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751377AbZELUuj (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 May 2009 16:50:39 -0400
-Received: (qmail 10381 invoked by uid 1000); 12 May 2009 20:50:39 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 12 May 2009 20:50:39 -0000
-In-Reply-To: <4e963a650905121305s244309a5vef9eec671d1ee5e@mail.gmail.com>
-User-Agent: Alpine 2.00 (LNX 1167 2008-08-23)
+	id S1753219AbZELVQS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 May 2009 17:16:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753004AbZELVQS
+	(ORCPT <rfc822;git-outgoing>); Tue, 12 May 2009 17:16:18 -0400
+Received: from mail-ew0-f176.google.com ([209.85.219.176]:35090 "EHLO
+	mail-ew0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752781AbZELVQR (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 May 2009 17:16:17 -0400
+Received: by ewy24 with SMTP id 24so326291ewy.37
+        for <git@vger.kernel.org>; Tue, 12 May 2009 14:16:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from
+         :user-agent:mime-version:to:cc:subject:references:in-reply-to
+         :content-type:content-transfer-encoding;
+        bh=gDiuToFRQQWTmJFzjccUrmJGkYYjP1xsHRrar61GetA=;
+        b=S3NRZTzt6OZnNjTd5LQjPb3MpoyWUexLGnXqbPVGJ310Bsfs+t67ybxbyRExBFVG5m
+         9NzqY15q0ENnkiEy4kJLJIMT5Pl5yE8Vj8Hd847v72m4XyLcg/ObjUHrQ6Or3rehaeSS
+         wh8WswltP9PJsUGoUhLSopuuH8+z2eo6Ew5ww=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        b=cxtB2pdJZrjquw+9WqNJnavaZmdCgfiWMyMP5qWS2gbtoHzFnJt6QW4CugX0CePjS2
+         +1XhdKdoESknHAQy6DBVrelJL9t4KbARkweGSEOMtAMLMbs4iYv1g9kPRjpXSybHJ6JZ
+         Y3T9BSGy0EHqeq57MJIqYAI3gb33clDu1uHZs=
+Received: by 10.210.56.7 with SMTP id e7mr211343eba.24.1242162977843;
+        Tue, 12 May 2009 14:16:17 -0700 (PDT)
+Received: from ?10.0.0.2? (dsl-hkibrasgw2-ff75c300-100.dhcp.inet.fi [88.195.117.100])
+        by mx.google.com with ESMTPS id 28sm1104672eyg.14.2009.05.12.14.16.17
+        (version=SSLv3 cipher=RC4-MD5);
+        Tue, 12 May 2009 14:16:17 -0700 (PDT)
+User-Agent: Thunderbird 2.0.0.21 (Windows/20090302)
+In-Reply-To: <alpine.DEB.1.00.0905122237230.27348@pacific.mpi-cbg.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118954>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118955>
 
-On Tue, 12 May 2009, Andrew Schein wrote:
-
-> > What *is* your use case? What you're doing seems nuts to me (like, you're
-> > going to send out files with this script that someone is in the middle of
-> > editting), but I don't know what you're trying to do.
+Johannes Schindelin wrote on 12.5.2009 23:38:
+> That is a nice analysis.  How about implementing it?
 > 
-> I am new to git... so my first instinct is to try to reproduce a work
-> flow that I know works with mercurial setup.  It is possible that the
-> concepts don't translate correctly.  Here goes...
-> 
-> I have a bunch of separate project-related repositories.  There are
-> very few users of the system.  Most of the time I am the only user.  I
-> want a system for syncing my local repositories to a single shared
-> repository.  For example some days I work on my laptop, and some days
-> from my desktop.  A third "shared/public" repository "on campus"
-> serves as an always available repository that anyone I collaborate
-> with can pull from.  Also it is backed up, and for this reason I
-> designate it the "shared" version.  So the purpose of the sync.sh
-> script is to synchronize the personal laptop/desktop repository to the
-> on-campus version.
 
-In general, you should probably not have the script run "commit", but run 
-it by hand whenever you've finished making changes (and probably done at 
-least a quick syntax test, if possible). Otherwise, you'll often get the 
-situation where you get distracted halfway through modifying a line, save 
-something by habit, and then find this state getting sent to the system 
-that other people pull from, and they'll find that they can't build your 
-latest code.
+Do we have here somebody, who knows Git's code well and is motivated to 
+implement this?
 
-> Something I have learned from using mercurial in industry is that when
-> somebody messes up a "public repo" with conflicts they frequently
-> don't clean up the mess.  This can be a sign that they have not
-> learned the lessons of cleanliness rather than ill intent.  Otherwise
-> (and similarly) this messiness can be caused from not noticing that
-> they have left a mess.
+I don't think that I would be capable, because of not having used C 
+much, being new to Git's codebase and having too little time. But I can 
+help with the requirements specification, interaction design and system 
+testing.
 
-In the normal process of pushing changes to a shared repository, there is 
-no possibility of leaving conflicts, because there's no way to get git to 
-attempt a merge on push; the push simply fails, and you then pull, resolve 
-any conflicts, commit the merge, and try again at pushing.
-
-> The motivation of having a sync script that is run on each user's
-> local repository is to decrease the likelihood of a mess.  This is
-> achieved by first pulling from the common repository and resolving
-> conflicts _before_ "pushing" (note quotations) their changes to the
-> common repository.  There is a possibility of a race condition that
-> leaves a conflict on the shared repository, however the risk is
-> diminished.
-> 
-> Finally, I use "push" in quotes because actually the script uses only
-> uses the pull command.  This prevents proliferation of branches on the
-> shared repository.
-
-It's better to configure the push refspec to do what you want, which seems 
-to be "refs/heads/master:refs/heads/master", and use the fact that git 
-push actually does what you're trying to do in a race-free and efficient 
-way.
-
-Also, the "refs/heads/*:refs/heads/*" refspec is only different in the 
-case where you use branches other than "master", and seems like it would 
-be useful for your use case; if you actually want to send everything you 
-do to the shared location, you want to have all of the branches you've 
-made. (That is, you get one branch on the shared repository per distinct 
-name of a branch that you use on a local repository, not one "master" for 
-each local repository's "master")
-
-	-Daniel
-*This .sig left intentionally blank*
+-- 
+Esko Luontola
+www.orfjackal.net
