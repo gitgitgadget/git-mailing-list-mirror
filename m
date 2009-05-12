@@ -1,94 +1,88 @@
-From: Oliver Kullmann <O.Kullmann@swansea.ac.uk>
-Subject: how to make "pull" always pulling the matching branch?
-Date: Tue, 12 May 2009 20:21:40 +0100
-Message-ID: <20090512192140.GK31826@cs-wsok.swansea.ac.uk>
+From: Andrew Schein <andrew@andrewschein.com>
+Subject: Re: git default behavior seems odd from a Unix command line point of 
+	view
+Date: Tue, 12 May 2009 16:05:47 -0400
+Message-ID: <4e963a650905121305s244309a5vef9eec671d1ee5e@mail.gmail.com>
+References: <4e963a650905120818m70b75892gb4e052187910b9a5@mail.gmail.com>
+	 <7vd4ae8fls.fsf@alter.siamese.dyndns.org>
+	 <4e963a650905120924j52d38c0dg577d93e913013e38@mail.gmail.com>
+	 <alpine.LNX.2.00.0905121415000.2147@iabervon.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue May 12 22:04:43 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: Daniel Barkalow <barkalow@iabervon.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue May 12 22:06:02 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M3yDR-0008Ey-Bn
-	for gcvg-git-2@gmane.org; Tue, 12 May 2009 22:04:41 +0200
+	id 1M3yEk-0000TQ-0h
+	for gcvg-git-2@gmane.org; Tue, 12 May 2009 22:06:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752631AbZELUEG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 May 2009 16:04:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751991AbZELUEE
-	(ORCPT <rfc822;git-outgoing>); Tue, 12 May 2009 16:04:04 -0400
-Received: from mhs.swan.ac.uk ([137.44.1.33]:52689 "EHLO mhs.swan.ac.uk"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754560AbZELUEB (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 May 2009 16:04:01 -0400
-X-Greylist: delayed 2539 seconds by postgrey-1.27 at vger.kernel.org; Tue, 12 May 2009 16:04:01 EDT
-Received: from [137.44.2.59] (helo=cs-svr1.swan.ac.uk)
-	by mhs.swan.ac.uk with esmtp (Exim 4.69)
-	(envelope-from <O.Kullmann@swansea.ac.uk>)
-	id 1M3xXp-0006JV-GL; Tue, 12 May 2009 20:21:41 +0100
-Received: from cs-wsok.swansea.ac.uk (cs-wsok [137.44.2.227])
-	by cs-svr1.swan.ac.uk (Postfix) with ESMTP id E0588DB080;
-	Tue, 12 May 2009 20:21:40 +0100 (BST)
-Received: by cs-wsok.swansea.ac.uk (Postfix, from userid 3579)
-	id C3D46741E6; Tue, 12 May 2009 20:21:40 +0100 (BST)
-Content-Disposition: inline
-User-Agent: Mutt/1.5.9i
+	id S1751923AbZELUFs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 May 2009 16:05:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750939AbZELUFs
+	(ORCPT <rfc822;git-outgoing>); Tue, 12 May 2009 16:05:48 -0400
+Received: from mail-bw0-f222.google.com ([209.85.218.222]:53799 "EHLO
+	mail-bw0-f222.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751284AbZELUFr (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 May 2009 16:05:47 -0400
+Received: by bwz22 with SMTP id 22so200767bwz.37
+        for <git@vger.kernel.org>; Tue, 12 May 2009 13:05:47 -0700 (PDT)
+Received: by 10.103.248.17 with SMTP id a17mr53314mus.83.1242158747201; Tue, 
+	12 May 2009 13:05:47 -0700 (PDT)
+In-Reply-To: <alpine.LNX.2.00.0905121415000.2147@iabervon.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118949>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118950>
 
-Hello,
+> What *is* your use case? What you're doing seems nuts to me (like, you're
+> going to send out files with this script that someone is in the middle of
+> editting), but I don't know what you're trying to do.
 
-until some time ago,
+I am new to git... so my first instinct is to try to reproduce a work
+flow that I know works with mercurial setup.  It is possible that the
+concepts don't translate correctly.  Here goes...
 
-git pull remote-repo
+I have a bunch of separate project-related repositories.  There are
+very few users of the system.  Most of the time I am the only user.  I
+want a system for syncing my local repositories to a single shared
+repository.  For example some days I work on my laptop, and some days
+from my desktop.  A third "shared/public" repository "on campus"
+serves as an always available repository that anyone I collaborate
+with can pull from.  Also it is backed up, and for this reason I
+designate it the "shared" version.  So the purpose of the sync.sh
+script is to synchronize the personal laptop/desktop repository to the
+on-campus version.
 
-worked like that; alright, at some time
-warning messages appeared, so I used
+Something I have learned from using mercurial in industry is that when
+somebody messes up a "public repo" with conflicts they frequently
+don't clean up the mess.  This can be a sign that they have not
+learned the lessons of cleanliness rather than ill intent.  Otherwise
+(and similarly) this messiness can be caused from not noticing that
+they have left a mess.
 
-git pull remote-repo master
+The motivation of having a sync script that is run on each user's
+local repository is to decrease the likelihood of a mess.  This is
+achieved by first pulling from the common repository and resolving
+conflicts _before_ "pushing" (note quotations) their changes to the
+common repository.  There is a possibility of a race condition that
+leaves a conflict on the shared repository, however the risk is
+diminished.
 
-I attempted several times to understand the
-strange message issued by pull:
---------------------
-You asked me to pull without telling me which branch you
-want to merge with, and 'branch.master.merge' in
-your configuration file does not tell me either.        Please
-specify which branch you want to merge on the command line and
-try again (e.g. 'git pull <repository> <refspec>').
-See git-pull(1) for details.
+Finally, I use "push" in quotes because actually the script uses only
+uses the pull command.  This prevents proliferation of branches on the
+shared repository.
 
-If you often merge with the same branch, you may want to
-configure the following variables in your configuration
-file:
+Is there a better way to achieve this in git than the sync.sh script I
+sent around?
 
-    branch.master.remote = <nickname>
-    branch.master.merge = <remote-ref>
-    remote.<nickname>.url = <url>
-    remote.<nickname>.fetch = <refspec>
+Thanks,
 
-See git-config(1) for details.
---------------------
-but neither do I understand what could be meant here, nor
-do I understand the details of git-pull or git-config w.r.t.
-this issue (the above doesn't give a hint about the meaning
-of the possible actions).
+Andy
 
-So well, now the same thing happened with "git push", but here
-the message actually is better and tells the reader what to do
-(nearly); so I specified "matching" for the config-variable 
-push.default, and that's fine.
-
-I was hoping that there would also be a pull.default, which I could
-set to matching, but apparently there is nothing like that? How
-do I achieve this?
-
-It seems rather sensible to me to have this as the default: just
-pull a matching branch, not more, not less --- what else could/should
-it be if nothing else is specified?
-
-Oliver
-
-P.S. I'm using version 1.6.3.
+-- 
+Andrew I. Schein
+www.andrewschein.com
