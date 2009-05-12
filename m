@@ -1,66 +1,84 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Cross-Platform Version Control
-Date: Tue, 12 May 2009 18:57:47 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.0905121856250.4447@intel-tinevez-2-302>
-References: <419AD153-53B4-4DAB-AF72-4127C17B1CA0@gmail.com> <20090512151403.GS30527@spearce.org> <20090512161638.GB29566@coredump.intra.peff.net>
+From: Ping Yin <pkufranky@gmail.com>
+Subject: Re: How to create a new commit with the content of some commit?
+Date: Wed, 13 May 2009 00:59:50 +0800
+Message-ID: <46dff0320905120959sc69eec9h23cd8ac6b489e5b6@mail.gmail.com>
+References: <46dff0320905120735l501dcaf4ia8197d24b7684cfe@mail.gmail.com>
+	 <20090512160749.GA29566@coredump.intra.peff.net>
+	 <46dff0320905120943j303ef104ve7bad25f1874007f@mail.gmail.com>
+	 <20090512165103.GE29566@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: "Shawn O. Pearce" <spearce@spearce.org>,
-	Esko Luontola <esko.luontola@gmail.com>, git@vger.kernel.org
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git mailing list <git@vger.kernel.org>
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue May 12 18:57:59 2009
+X-From: git-owner@vger.kernel.org Tue May 12 19:00:09 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M3vIl-0000qZ-Bb
-	for gcvg-git-2@gmane.org; Tue, 12 May 2009 18:57:59 +0200
+	id 1M3vKk-0001mi-Fn
+	for gcvg-git-2@gmane.org; Tue, 12 May 2009 19:00:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752917AbZELQ5u (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 May 2009 12:57:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752445AbZELQ5t
-	(ORCPT <rfc822;git-outgoing>); Tue, 12 May 2009 12:57:49 -0400
-Received: from mail.gmx.net ([213.165.64.20]:58492 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750825AbZELQ5t (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 May 2009 12:57:49 -0400
-Received: (qmail invoked by alias); 12 May 2009 16:57:48 -0000
-Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
-  by mail.gmx.net (mp065) with SMTP; 12 May 2009 18:57:48 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX190D8xF24x0Xw53Lb9+24jX0A41YIBq8RQPXR94PX
-	gZfVRCeuSBktrv
-X-X-Sender: schindel@intel-tinevez-2-302
-In-Reply-To: <20090512161638.GB29566@coredump.intra.peff.net>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.6
+	id S1753278AbZELQ7u convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 12 May 2009 12:59:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753277AbZELQ7u
+	(ORCPT <rfc822;git-outgoing>); Tue, 12 May 2009 12:59:50 -0400
+Received: from yx-out-2324.google.com ([74.125.44.29]:28218 "EHLO
+	yx-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752997AbZELQ7t convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 12 May 2009 12:59:49 -0400
+Received: by yx-out-2324.google.com with SMTP id 3so51844yxj.1
+        for <git@vger.kernel.org>; Tue, 12 May 2009 09:59:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=nw9X/duKa5DrYde1rNcks/GYm3MyZ9sQz1IYKCp5PTc=;
+        b=W6EWz1cDOvRks75ABQ3V7P59svWDhZT9l6qXb5dvvIOtNNa60ByyGlKIXu+S4xYCXN
+         3Hv8EjK8MpNoFruXMoP33KcukZT4J/SxIuwYrCUO6CERplUVeuly57TTlym9qW61lJxR
+         owSteVial+YjykZo4XcoZk/WatdwkFtwHAB5Q=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=AqSgvir/4aSdOmlvpD3LfsFDIQMdaNPoy90i6Yy7SrXn9XKFz8MHf1UiNqpxxmTAR5
+         NP8SpiKLFg1NOBWNZQFo2zYsm4b2Sx0/H+JEM/wC5UaYFPTUnVIqQIqikevisVo4SxJw
+         v7dxrRjgY0yA5xNGFyqZqNVUbhdxneRz0AN+c=
+Received: by 10.90.83.2 with SMTP id g2mr60715agb.105.1242147590410; Tue, 12 
+	May 2009 09:59:50 -0700 (PDT)
+In-Reply-To: <20090512165103.GE29566@coredump.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118928>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118929>
 
-Hi,
+On Wed, May 13, 2009 at 12:51 AM, Jeff King <peff@peff.net> wrote:
+> On Wed, May 13, 2009 at 12:43:33AM +0800, Ping Yin wrote:
+>
+>> > You can just munge the index directly, and skip the working tree
+>> > entirely:
+>> >
+>> > =C2=A0rm .git/index
+>> > =C2=A0git read-tree b
+>> > =C2=A0git commit -m 'the copy of b'
+>>
+>> In a non-conflict status, "git read-tree b" will update the index to
+>> full match the tree of b, so "rm .git/index" is unnecessary, right?
+>
+> For some reason, I was thinking that entries in the index that were n=
+ot
+> in "b" would remain, but that is not actually the case. So yes, I thi=
+nk
+> you can do it without removing the index (and you are better off to d=
+o
+> so, since the index also contains the stat cache for your worktree, s=
+o
+> it is more efficient).
+>
+> You can also add "-u" as Junio suggested to update the working tree
+> during that step, which should be more efficient.
 
-On Tue, 12 May 2009, Jeff King wrote:
-
-> On Tue, May 12, 2009 at 08:14:03AM -0700, Shawn O. Pearce wrote:
-> 
-> > As for file names, no plans, its a sequence of bytes, but I think a 
-> > lot of people wind up using some subset of US-ASCII for their file 
-> > names, especially if their project is going to be cross platform.
-> 
-> Or they use a single encoding like utf8 so that there are no surprises. 
-> You can still run into normalization problems with filenames on some 
-> filesystems, though.  Linus's name_hash code sets up the framework to 
-> handle "these two names are actually equivalent", but right now I think 
-> there is just code for handling case-sensitivity, not utf8 normalization 
-> (but I just skimmed the code, so I might be wrong).
-
-Back then I actually started on a patch to make Git capable of determining 
-UTF-8 equivalence, but at the same time somebody started such an annoying 
-mail thread that I stopped working on the issue completely.
-
-Ciao,
-Dscho
+I don't want to touch the working directory, and -m will keep the stat
+cache in the index, so i think "git read-tree -m b" is the best.
