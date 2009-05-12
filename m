@@ -1,73 +1,71 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Supporting hashes other than SHA-1
-Date: Tue, 12 May 2009 16:06:17 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.0905121604560.4447@intel-tinevez-2-302>
-References: <20090511195242.GA14756@foursquare.net> <m3zldjl5bq.fsf@localhost.localdomain> <m3vdo6lbuy.fsf@localhost.localdomain> <4A0980C8.7060106@op5.se>
+From: Ping Yin <pkufranky@gmail.com>
+Subject: How to create a new commit with the content of some commit?
+Date: Tue, 12 May 2009 22:35:30 +0800
+Message-ID: <46dff0320905120735l501dcaf4ia8197d24b7684cfe@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Jakub Narebski <jnareb@gmail.com>,
-	Chris Frey <cdfrey@foursquare.net>, git@vger.kernel.org
-To: Andreas Ericsson <ae@op5.se>
-X-From: git-owner@vger.kernel.org Tue May 12 16:07:06 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+To: git mailing list <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue May 12 16:41:27 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M3sd1-0006aQ-Q0
-	for gcvg-git-2@gmane.org; Tue, 12 May 2009 16:06:44 +0200
+	id 1M3tAY-0008Sc-Ad
+	for gcvg-git-2@gmane.org; Tue, 12 May 2009 16:41:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752327AbZELOGU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 May 2009 10:06:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752189AbZELOGT
-	(ORCPT <rfc822;git-outgoing>); Tue, 12 May 2009 10:06:19 -0400
-Received: from mail.gmx.net ([213.165.64.20]:34022 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751388AbZELOGT (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 May 2009 10:06:19 -0400
-Received: (qmail invoked by alias); 12 May 2009 14:06:18 -0000
-Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
-  by mail.gmx.net (mp059) with SMTP; 12 May 2009 16:06:18 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19pgQx2gWlpobk2rnpULWOa6Ggv4sR20VFe0ApMSf
-	GqLcRFSiO4mk2V
-X-X-Sender: schindel@intel-tinevez-2-302
-In-Reply-To: <4A0980C8.7060106@op5.se>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.61
+	id S1751889AbZELOlN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 May 2009 10:41:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752007AbZELOlN
+	(ORCPT <rfc822;git-outgoing>); Tue, 12 May 2009 10:41:13 -0400
+Received: from yw-out-2324.google.com ([74.125.46.29]:57429 "EHLO
+	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750943AbZELOlM (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 May 2009 10:41:12 -0400
+Received: by yw-out-2324.google.com with SMTP id 5so8759ywb.1
+        for <git@vger.kernel.org>; Tue, 12 May 2009 07:41:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:date:message-id:subject
+         :from:to:content-type:content-transfer-encoding;
+        bh=yjMMbdT6PqJDpQ6DWRiruCPM4B08c6gl9Vj2RDe8/pw=;
+        b=g37Vn5b5BO/LXRWaRqYq7V+c0iawKBebCipLIAuMvKGwB7djQspbmSByhxHsNTm101
+         6BAhDjr9I7+wp8GLe8so0TwxRw4+ng/FXhUTu1WO1ALYuFhXwNiW4LSxNpwctOQ9NhHA
+         q2U85jJYWTrdFGtKi7aVSN/53u2n6inOKuAOY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:date:message-id:subject:from:to:content-type
+         :content-transfer-encoding;
+        b=O9/tXADBoywzb+3QgpTz8YxnCBAsKLdV0k9qEAQDTFnH0u+X6G+97Qj7P9kcDzDwCY
+         IJfPBeGhKH0lbRppF6gbX+ZPk8CoHc1RV5NZP6cEfMmtdBB0R7dYeQIkn3uZKiwcEY+6
+         SR99Az2Eh5PLVylDfcOU35A8r46Drd+u4F08o=
+Received: by 10.90.100.11 with SMTP id x11mr3914146agb.72.1242138931324; Tue, 
+	12 May 2009 07:35:31 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118897>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118898>
 
-Hi,
+a----b
+ \----c
 
-On Tue, 12 May 2009, Andreas Ericsson wrote:
+Given the graph above, I want to create a commit b1 on top of c, where
+b1 and b have the same content. i.e.
 
-> Jakub Narebski wrote:
-> > Jakub Narebski <jnareb@gmail.com> writes:
-> > 
-> > > Chris Frey <cdfrey@foursquare.net> writes:
-> > >
-> > > > Considering the recent news regarding SHA-1's newly found weaknesses,
-> > > > is there any general interest in making git flexible enough to support
-> > > > other hashes in the future?
-> > > First, there isn't as far as I know any 'known preimage' attack
-> > > against SHA-1, and only that would truly matter for Git.
-> > >
-> > > Second, this issue was discussed in depth in the past; check git
-> > > mailing list archives, please...
-> > 
-> > See also this blog entry (and comments):
-> >   http://kitenet.net/~joey/blog/entry/sha-1/
-> > 
-> 
-> It's a bit harder than that, since both pre-images have to be the same
-> size.
+a----b
+ \----c----b1    ( content(b) == content(b1) )
 
-They don't.  The pre-images prefixed by the type identifier and the size 
-in ASCII need to have the same hash.  There is a difference.
+If there are no untracked files in the working directory, i can do
 
-Ciao,
-Dscho
+git checkout b
+git reset c
+git add .
+git commit -m "the copy of b"
+
+Is there any simpler way? And if there are untracked files in the
+working directory, how to do it?
+
+
+
+Ping Yin
