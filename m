@@ -1,68 +1,60 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: The 9th production of the msysGit Herald
-Date: Wed, 13 May 2009 12:33:59 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.0905131233260.5046@intel-tinevez-2-302>
-References: <alpine.DEB.1.00.0905130225330.27348@pacific.mpi-cbg.de> <m3my9hl9jv.fsf@localhost.localdomain>
+From: "Michael S. Tsirkin" <mst@redhat.com>
+Subject: add comments to reflog?
+Date: Wed, 13 May 2009 13:35:54 +0300
+Message-ID: <20090513103554.GC31593@redhat.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: msysgit@googlegroups.com, git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Wed May 13 12:34:13 2009
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed May 13 12:37:02 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M4Bms-0004EI-Ke
-	for gcvg-git-2@gmane.org; Wed, 13 May 2009 12:34:11 +0200
+	id 1M4Bpd-0005Vq-SQ
+	for gcvg-git-2@gmane.org; Wed, 13 May 2009 12:37:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758260AbZEMKeB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 13 May 2009 06:34:01 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755117AbZEMKeA
-	(ORCPT <rfc822;git-outgoing>); Wed, 13 May 2009 06:34:00 -0400
-Received: from mail.gmx.net ([213.165.64.20]:47653 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752932AbZEMKeA (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 May 2009 06:34:00 -0400
-Received: (qmail invoked by alias); 13 May 2009 10:33:59 -0000
-Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
-  by mail.gmx.net (mp025) with SMTP; 13 May 2009 12:33:59 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/MIEELIqbMdIUpoeEOycQjmeMSsHOqapaqfQJuaf
-	psHSgsFkAvcqiR
-X-X-Sender: schindel@intel-tinevez-2-302
-In-Reply-To: <m3my9hl9jv.fsf@localhost.localdomain>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.65
+	id S1757714AbZEMKgy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 13 May 2009 06:36:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755117AbZEMKgx
+	(ORCPT <rfc822;git-outgoing>); Wed, 13 May 2009 06:36:53 -0400
+Received: from mx2.redhat.com ([66.187.237.31]:50866 "EHLO mx2.redhat.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754135AbZEMKgx (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 May 2009 06:36:53 -0400
+Received: from int-mx2.corp.redhat.com (int-mx2.corp.redhat.com [172.16.27.26])
+	by mx2.redhat.com (8.13.8/8.13.8) with ESMTP id n4DAarKR018083
+	for <git@vger.kernel.org>; Wed, 13 May 2009 06:36:53 -0400
+Received: from ns3.rdu.redhat.com (ns3.rdu.redhat.com [10.11.255.199])
+	by int-mx2.corp.redhat.com (8.13.1/8.13.1) with ESMTP id n4DAarQo028030
+	for <git@vger.kernel.org>; Wed, 13 May 2009 06:36:53 -0400
+Received: from redhat.com (vpn-10-148.str.redhat.com [10.32.10.148])
+	by ns3.rdu.redhat.com (8.13.8/8.13.8) with ESMTP id n4DAapZE025339
+	for <git@vger.kernel.org>; Wed, 13 May 2009 06:36:52 -0400
+Content-Disposition: inline
+User-Agent: Mutt/1.5.18 (2008-05-17)
+X-Scanned-By: MIMEDefang 2.58 on 172.16.27.26
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119029>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119030>
 
-Hi,
+I noticed that I am often doing this
 
-On Wed, 13 May 2009, Jakub Narebski wrote:
+hack commit hack commit  hack commit ...
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> 
-> [...]
-> > We started recently to ship Portable Git packages, i.e. archives that 
-> > only need to be unpacked (as opposed to be installed). 
-> 
-> Is it Portable Git as in PortableApps.com ?
+git tag  -s works -m "works on xyz, must rewrite abc"
+git reset --hard HEAD~1
 
-That's the idea, although we do not install _anything_, not even 
-temporarily.
+hack ...
 
-> [...]
-> > TortoiseGit vs GitCheetah
-> > =========================
-> 
-> What about Git Extensions (http://code.google.com/p/gitextensions/)
-> project?
+I only tag just in case I want to revisit the design.
+However, after I reset, I often forget how did
+I name the tag. It would be nice if reflog would
+show tag descriptions, which it does not seem to.
 
-You really want to make me even sadder?
+Comments?
 
-Ciao,
-Dscho
+
+-- 
+MST
