@@ -1,166 +1,90 @@
-From: Michael Gaber <Michael.Gaber@gmx.net>
-Subject: Re: [git-svn] howto select a part of the tree
-Date: Wed, 13 May 2009 19:21:51 +0200
-Message-ID: <4A0B01AF.2040908@gmx.net>
-References: <4A09D4EC.6050002@gmx.net> <4A0AC23E.2040503@drmicha.warpmail.net>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: Cross-Platform Version Control
+Date: Wed, 13 May 2009 19:24:53 +0200
+Message-ID: <4A0B0265.8000100@op5.se>
+References: <419AD153-53B4-4DAB-AF72-4127C17B1CA0@gmail.com>	 <4A09E719.4090205@gmail.com>	 <alpine.DEB.1.00.0905130222460.27348@pacific.mpi-cbg.de>	 <4A0A5BDB.9030602@gmail.com>	 <alpine.DEB.1.00.0905131215010.5046@intel-tinevez-2-302>	 <43d8ce650905130340q596043d5g45b342b62fe20e8d@mail.gmail.com>	 <43d8ce650905130341g516c899fsdc6b50a45381d4c6@mail.gmail.com>	 <76718490905130642h792e9701sf2ec7fbf2e7de96a@mail.gmail.com>	 <81b0412b0905130644u7e22bde4ta97616a4ed8be1e0@mail.gmail.com>	 <76718490905130650u4d047e13pa73e0a96289c452a@mail.gmail.com> <43d8ce650905130657q2de9686q683fea84345a6651@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; protocol="application/x-pkcs7-signature"; micalg=sha1; boundary="------------ms040006080000000203080707"
-Cc: git@vger.kernel.org
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Wed May 13 19:22:06 2009
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Jay Soffian <jaysoffian@gmail.com>,
+	Alex Riesen <raa.lkml@gmail.com>, git@vger.kernel.org
+To: John Tapsell <johnflux@gmail.com>
+X-From: git-owner@vger.kernel.org Wed May 13 19:25:23 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M4I9d-0000XA-JW
-	for gcvg-git-2@gmane.org; Wed, 13 May 2009 19:22:06 +0200
+	id 1M4ICY-00024p-Um
+	for gcvg-git-2@gmane.org; Wed, 13 May 2009 19:25:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758178AbZEMRV4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 13 May 2009 13:21:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757060AbZEMRVz
-	(ORCPT <rfc822;git-outgoing>); Wed, 13 May 2009 13:21:55 -0400
-Received: from mail.gmx.net ([213.165.64.20]:47554 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754889AbZEMRVy (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 May 2009 13:21:54 -0400
-Received: (qmail invoked by alias); 13 May 2009 17:21:53 -0000
-Received: from unknown (EHLO [192.168.178.66]) [95.222.249.246]
-  by mail.gmx.net (mp042) with SMTP; 13 May 2009 19:21:53 +0200
-X-Authenticated: #1286246
-X-Provags-ID: V01U2FsdGVkX193mZURBFZ3aRed3+DvahCAObOLj7JGcpbq4v8F1R
-	DLvXZmSxuXxwew
-User-Agent: Thunderbird 2.0.0.21 (Windows/20090302)
-In-Reply-To: <4A0AC23E.2040503@drmicha.warpmail.net>
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.67
+	id S1759914AbZEMRY6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 13 May 2009 13:24:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758150AbZEMRY5
+	(ORCPT <rfc822;git-outgoing>); Wed, 13 May 2009 13:24:57 -0400
+Received: from mail-fx0-f158.google.com ([209.85.220.158]:60385 "EHLO
+	mail-fx0-f158.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757541AbZEMRY4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 May 2009 13:24:56 -0400
+Received: by fxm2 with SMTP id 2so791393fxm.37
+        for <git@vger.kernel.org>; Wed, 13 May 2009 10:24:55 -0700 (PDT)
+Received: by 10.86.98.7 with SMTP id v7mr1461305fgb.58.1242235495606;
+        Wed, 13 May 2009 10:24:55 -0700 (PDT)
+Received: from clix.int.op5.se ([212.112.174.166])
+        by mx.google.com with ESMTPS id 12sm361292fgg.20.2009.05.13.10.24.54
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 13 May 2009 10:24:55 -0700 (PDT)
+User-Agent: Thunderbird 2.0.0.21 (X11/20090320)
+In-Reply-To: <43d8ce650905130657q2de9686q683fea84345a6651@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119071>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119072>
 
-This is a cryptographically signed message in MIME format.
-
---------------ms040006080000000203080707
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
-
-Michael J Gruber schrieb:
-> Michael Gaber venit, vidit, dixit 12.05.2009 21:58:
->> Hi,
->>
->> I have the following setup and would like to know it my thought workflow 
->> would be easily doable with git-svn.
->>
->> I have a repository which contains at the moment 5 eclipse projects. two 
->> of them are directly in the svn root and i'm not interested in them. the 
->> other three are mine and I'd like to use them as separate eclipse 
->> projects as i currently do when i check them out as seperate projects 
->> into the workspace with subversive.
->>
->> is this possible or should i just forget it.
->>
->> Regards Michael
+John Tapsell wrote:
+> 2009/5/13 Jay Soffian <jaysoffian@gmail.com>:
+>> On Wed, May 13, 2009 at 9:44 AM, Alex Riesen <raa.lkml@gmail.com> wrote:
+>>> 2009/5/13 Jay Soffian <jaysoffian@gmail.com>:
+>>>> On Wed, May 13, 2009 at 6:41 AM, John Tapsell <johnflux@gmail.com> wrote:
+>>>>> I don't know why the git developers are being so hostile/dismisisve,
+>>>> Are you serious?
+>>>>
+>>> ...because we'll kill you if aren't >:-E
+>> I'm just flabbergasted by some people's expectations. Perhaps John
+>> doesn't realize the git developers are all volunteers, and that it is
+>> never appropriate to criticize a volunteer. A "thank you for all your
+>> hard work on git" would have done nicely.
 > 
-> It is possible. I you want more detailed answers we would need more
-> detailed info (structure of the svn repo).
+> I'm as much of an open source developer as anyone else here.  I spend
+> a huge amount of my time programming for KDE.  But I've never told a
+> user "well that settles it" because they won't code it themselves :-/
+> I certaintly get a huge number of bug/wishes that I can't/won't code
+> myself, but I try to be a bit more diplomatic about it.
+> But then the kernel mailing lists tend to be a lot more.. direct..
+> than the kde mailing lists, so I guess it comes from that.  Requiring
+> people to have a thick skin and all that.
 > 
-> Cheers,
-> Michael
 
-Sorry I forgot.
-Structure is as follows:
+I think much of the perceived malignancy stems from the fact that the
+git list has a high ratio of developer-to-luser mailings on it, being
+by nature a developer tool most of the time. When the unaware user
+appears on the list with demands rather than polite requests, they're
+treated that much harder. Especially by the developer who happens to
+be, as it were, the butt of the request.
 
-repo-root
-|
-|--otherstuff-1
-|
-|--otherstuff-2
-|
-|--trunk
-      |
-      |--myproj-1
-      |
-      |--myproj-2
-      |
-      |--myproj-3
-      |
-      |--myproj-4
+Personally, I've only ever found Dscho being anything but friendly on
+this list, and even then, I really didn't find it offensive. If viewed
+in a happy mood, it matches quite nicely with a swedish sketch whose
+theme is "men ja ente bitter". It's often quite funny, really :-)
 
-I hope this makes it clear.
+-- 
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
 
---------------ms040006080000000203080707
-Content-Type: application/x-pkcs7-signature; name="smime.p7s"
-Content-Transfer-Encoding: base64
-Content-Disposition: attachment; filename="smime.p7s"
-Content-Description: S/MIME Cryptographic Signature
+Register now for Nordic Meet on Nagios, June 3-4 in Stockholm
+ http://nordicmeetonnagios.op5.org/
 
-MIAGCSqGSIb3DQEHAqCAMIACAQExCzAJBgUrDgMCGgUAMIAGCSqGSIb3DQEHAQAAoIIKdjCC
-BTcwggMfoAMCAQICAwa1/DANBgkqhkiG9w0BAQUFADB5MRAwDgYDVQQKEwdSb290IENBMR4w
-HAYDVQQLExVodHRwOi8vd3d3LmNhY2VydC5vcmcxIjAgBgNVBAMTGUNBIENlcnQgU2lnbmlu
-ZyBBdXRob3JpdHkxITAfBgkqhkiG9w0BCQEWEnN1cHBvcnRAY2FjZXJ0Lm9yZzAeFw0wOTA0
-MTAxNzIzNDlaFw0xMTA0MTAxNzIzNDlaMD4xFjAUBgNVBAMTDU1pY2hhZWwgR2FiZXIxJDAi
-BgkqhkiG9w0BCQEWFU1pY2hhZWwuR2FiZXJAZ214Lm5ldDCCASIwDQYJKoZIhvcNAQEBBQAD
-ggEPADCCAQoCggEBANlvNCEKkhAhmwIpzXamq89nexUPZxbvGR05bN8NlABb/ZkrsUzq56ni
-E4uA61Uuwz3stsXXPN5SOV+oJABDWgvgUsk4fZavEMbP7Kk5iJpZf+ZYDc+z+cYEgxLcQ/v2
-I3j5r7sdT8L6KuB4mvJaQ2WLMcAzyE4J3b39IzPHjrKkTWHyNQP8UUVEJ8qIZ3oCNAYYkTar
-2nKv9uCz//ne40luTpPaEi4vrV5x3F9VKLVLWp1pjceE2xC6wSRlF9ZouOhk6aefTeJ0zMCK
-yiCxhk/4pDM5GfXePU7a05uP7NWtvFPPVt8ahIXoX4J4mRdxByijW1wIAqP2ghjL0IHWHlcC
-AwEAAaOCAQEwgf4wDAYDVR0TAQH/BAIwADBWBglghkgBhvhCAQ0ESRZHVG8gZ2V0IHlvdXIg
-b3duIGNlcnRpZmljYXRlIGZvciBGUkVFIGhlYWQgb3ZlciB0byBodHRwOi8vd3d3LkNBY2Vy
-dC5vcmcwQAYDVR0lBDkwNwYIKwYBBQUHAwQGCCsGAQUFBwMCBgorBgEEAYI3CgMEBgorBgEE
-AYI3CgMDBglghkgBhvhCBAEwMgYIKwYBBQUHAQEEJjAkMCIGCCsGAQUFBzABhhZodHRwOi8v
-b2NzcC5jYWNlcnQub3JnMCAGA1UdEQQZMBeBFU1pY2hhZWwuR2FiZXJAZ214Lm5ldDANBgkq
-hkiG9w0BAQUFAAOCAgEAZy8jWlhd7lK824fomYsYCfGMwjgvJs8iW72U1ewbrc8FAd9974aS
-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
-ChMHUm9vdCBDQTEeMBwGA1UECxMVaHR0cDovL3d3dy5jYWNlcnQub3JnMSIwIAYDVQQDExlD
-QSBDZXJ0IFNpZ25pbmcgQXV0aG9yaXR5MSEwHwYJKoZIhvcNAQkBFhJzdXBwb3J0QGNhY2Vy
-dC5vcmcCAwa1/DAJBgUrDgMCGgUAoIIB2zAYBgkqhkiG9w0BCQMxCwYJKoZIhvcNAQcBMBwG
-CSqGSIb3DQEJBTEPFw0wOTA1MTMxNzIxNTFaMCMGCSqGSIb3DQEJBDEWBBRMNGqNlbFbkYAY
-R+JKEx4p9KZNfjBSBgkqhkiG9w0BCQ8xRTBDMAoGCCqGSIb3DQMHMA4GCCqGSIb3DQMCAgIA
-gDANBggqhkiG9w0DAgIBQDAHBgUrDgMCBzANBggqhkiG9w0DAgIBKDCBkQYJKwYBBAGCNxAE
-MYGDMIGAMHkxEDAOBgNVBAoTB1Jvb3QgQ0ExHjAcBgNVBAsTFWh0dHA6Ly93d3cuY2FjZXJ0
-Lm9yZzEiMCAGA1UEAxMZQ0EgQ2VydCBTaWduaW5nIEF1dGhvcml0eTEhMB8GCSqGSIb3DQEJ
-ARYSc3VwcG9ydEBjYWNlcnQub3JnAgMGtfwwgZMGCyqGSIb3DQEJEAILMYGDoIGAMHkxEDAO
-BgNVBAoTB1Jvb3QgQ0ExHjAcBgNVBAsTFWh0dHA6Ly93d3cuY2FjZXJ0Lm9yZzEiMCAGA1UE
-AxMZQ0EgQ2VydCBTaWduaW5nIEF1dGhvcml0eTEhMB8GCSqGSIb3DQEJARYSc3VwcG9ydEBj
-YWNlcnQub3JnAgMGtfwwDQYJKoZIhvcNAQEBBQAEggEAB8ovXmDqEmK4rSiMyKvJIz1rFF4F
-wdJVgYQnISs7FYeGUG32Nu0QeEkH3G5ruB3YvrJQJoHjWENTYuiYB8sw4QmRaY7WzE89uWsV
-L1Qf6xay3BwOlD5MgPgbUxk0R4Ew/N6VUIa00vMjWahDfmTD7LWv1sr9kMe000Jxnr5bHvtO
-TUH+nGu+HN/oLohCaTW9yKlDMMRzIvQBfGT3Awj6+CihfY4olYfEsgc8brVKoL8Vba6TnaHs
-Sf5SokYbSl98WIc9GcAJCwtgIfWaI4x3UoOl2TNAZP79IGJes3QKi4zvZia26QNQ8GtZnvGo
-IufMyDj+YCHgHmX0zFINl9DyugAAAAAAAA==
---------------ms040006080000000203080707--
+Considering the successes of the wars on alcohol, poverty, drugs and
+terror, I think we should give some serious thought to declaring war
+on peace.
