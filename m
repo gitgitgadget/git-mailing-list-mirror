@@ -1,133 +1,93 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: [RFC 1/8] UTF helpers
-Date: Wed, 13 May 2009 12:02:10 +0200
-Message-ID: <4A0A9AA2.1000004@op5.se>
-References: <1242168631-30753-1-git-send-email-robin.rosenberg@dewire.com> <1242168631-30753-2-git-send-email-robin.rosenberg@dewire.com> <alpine.DEB.1.00.0905130215260.27348@pacific.mpi-cbg.de> <200905130724.44634.robin.rosenberg@dewire.com> <4A0A91CE.3080905@gmail.com>
+From: =?utf-8?q?Uwe=20Kleine-K=C3=B6nig?= 
+	<u.kleine-koenig@pengutronix.de>
+Subject: [PATCH] tg-remote: don't add push specs but warn about existing ones.
+Date: Wed, 13 May 2009 12:04:06 +0200
+Message-ID: <1242209046-9416-1-git-send-email-u.kleine-koenig@pengutronix.de>
+References: <20090512090201.GA10150@pengutronix.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Robin Rosenberg <robin.rosenberg@dewire.com>, git@vger.kernel.org
-To: Esko Luontola <esko.luontola@gmail.com>
-X-From: git-owner@vger.kernel.org Wed May 13 12:02:41 2009
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Marc Weber <marco-oweber@gmx.de>,
+	"martin f. krafft" <madduck@debian.org>, 528442@bugs.debian.org
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed May 13 12:04:22 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M4BI6-0005vZ-0E
-	for gcvg-git-2@gmane.org; Wed, 13 May 2009 12:02:22 +0200
+	id 1M4BK0-00075b-UG
+	for gcvg-git-2@gmane.org; Wed, 13 May 2009 12:04:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757922AbZEMKCN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 13 May 2009 06:02:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757828AbZEMKCN
-	(ORCPT <rfc822;git-outgoing>); Wed, 13 May 2009 06:02:13 -0400
-Received: from fg-out-1718.google.com ([72.14.220.153]:32682 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755242AbZEMKCN (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 May 2009 06:02:13 -0400
-Received: by fg-out-1718.google.com with SMTP id 16so171808fgg.17
-        for <git@vger.kernel.org>; Wed, 13 May 2009 03:02:12 -0700 (PDT)
-Received: by 10.86.63.5 with SMTP id l5mr981276fga.35.1242208932352;
-        Wed, 13 May 2009 03:02:12 -0700 (PDT)
-Received: from clix.int.op5.se ([212.112.174.166])
-        by mx.google.com with ESMTPS id l19sm2854027fgb.12.2009.05.13.03.02.11
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 13 May 2009 03:02:11 -0700 (PDT)
-User-Agent: Thunderbird 2.0.0.21 (X11/20090320)
-In-Reply-To: <4A0A91CE.3080905@gmail.com>
+	id S1758048AbZEMKEM convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 13 May 2009 06:04:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758016AbZEMKEL
+	(ORCPT <rfc822;git-outgoing>); Wed, 13 May 2009 06:04:11 -0400
+Received: from metis.ext.pengutronix.de ([92.198.50.35]:56414 "EHLO
+	metis.ext.pengutronix.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756942AbZEMKEK (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 May 2009 06:04:10 -0400
+Received: from ukl by metis.ext.pengutronix.de with local (Exim 4.63)
+	(envelope-from <ukl@pengutronix.de>)
+	id 1M4BJn-0006DP-Av; Wed, 13 May 2009 12:04:10 +0200
+X-Mailer: git-send-email 1.6.2.4
+In-Reply-To: <20090512090201.GA10150@pengutronix.de>
+X-SA-Exim-Connect-IP: <locally generated>
+X-SA-Exim-Mail-From: ukl@pengutronix.de
+X-Spam-Checker-Version: SpamAssassin 3.2.4 (2008-01-01) on
+	metis.extern.pengutronix.de
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.6 required=4.5 tests=BAYES_00,NO_RELAYS
+	shortcircuit=no autolearn=ham version=3.2.4
+X-SA-Exim-Version: 4.2.1 (built Tue, 09 Jan 2007 17:23:22 +0000)
+X-SA-Exim-Scanned: Yes (on metis.ext.pengutronix.de)
+X-PTX-Original-Recipient: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119021>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119022>
 
-Esko Luontola wrote:
-> Robin Rosenberg wrote on 13.5.2009 8:24:
->> If the conclusion is that this is a way forward, then I
->> could start working on a completely new set of much cleaner patches.,
-> 
-> That would be great!
-> 
-> I see that in those early patches you took the approach of converting 
-> the filenames from the local encoding to UTF-8 at the outer edges of 
-> Git. That obviously was the easiest way to make the changes with minimal 
-> changes to Git.
-> 
-> I've been thinking about a bit more extensive approach, which should 
-> serve the interest of all stakeholders:
-> 
-> 
-> Now the tree object contains the following information for each file: 
-> filename, mode, sha1. To that would be added one more string: filename
-> encoding. Unless the encoding is specified (such as in old commits 
-> before the encoding information was added), the default encoding is 
-> "binary", which is the same as how Git works now (it thinks filenames as 
-> series of bytes, ignoring their encoding completely).
-> 
+topgit used to add some push specs to assert that topbases are pushed,
+too.  This should now be handled by tg-push.
 
-[ long and incompatible plan removed ]
+Signed-off-by: Uwe Kleine-K=C3=B6nig <u.kleine-koenig@pengutronix.de>
+Cc: Marc Weber <marco-oweber@gmx.de>
+Cc: martin f. krafft <madduck@debian.org>
+Cc: 528442@bugs.debian.org
+---
+ tg-remote.sh |    9 +++++++--
+ 1 files changed, 7 insertions(+), 2 deletions(-)
 
-> One big question is, that will this change require a change to the 
-> repository format? Will it be possible to add the encoding field to the 
-> tree object, without breaking compatibility with older Git clients? If 
-> compatibility needs to be broken, how it can be done in a controlled 
-> fashion?
-> 
-
-Generally when one wants to change one of the basic object types in
-git, some extraordinary benefit has to be shown that is not aimed
-at just a few people. Academic benefits (ie, "non-real-worldy") do
-not fall into that category. In fact, it's so rare for someone to
-provide such enormous benefit that the only time a core object format
-in git has been incompatibly changed is when Linus decided that trees
-should be able to have subtrees. The change reduced the repository
-size for the early git-tracked Linux kernel to about 4% of its
-original size, so there was a clear, undisputable and obvious benefit
-huge enough to warrant breaking the git repository format entirely
-just to get it in (I might have gotten those details entirely wrong,
-but it was something along those lines).
-
-So unless you can change tree objects in a way that lets older git
-clients understand them while still adding this encoding cruft
-(it's cruft to me), I think your chances of getting such a change
-into the git core are about the size of the colour green.
-
-If you're *really* serious about it though, here's how to go about
-it:
-
-1. Make the changes so that newer git can always read and operate
-on trees without the encoding information, regardless of what the
-configuration says.
-2. Modify 1.4.x branch to support this new format too, at least
-for reading trees with the information in it. Otherwise some
-package maintainers will just ignore such compatibility.
-3. Modify 1.5.x branch similarly.
-5. Make it configurable, but turned off by default and with a big
-fat warning when its turned on.
-6. 2 years later, remove the warning.
-7. 2 years lter, turn it on by default.
-8. 2 years later, remove the config option and make it a new
-major release, but maintain the two codepaths forever.
-
-
-1.[45].x branches are imaginary. They represent the branch that
-gets created when a new release in that series is necessary for
-some reason.
-
-
-I haven't perused Robin's patches enough to know how they would
-interact with older git, and I'm not really interested in encoding
-issues. English being the lingua franca of internet and opensource
-development anyways, every project I've ever seen has only files
-named in a manner that would fit nicely into 7-bit ascii.
-
--- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
-
-Register now for Nordic Meet on Nagios, June 3-4 in Stockholm
- http://nordicmeetonnagios.op5.org/
-
-Considering the successes of the wars on alcohol, poverty, drugs and
-terror, I think we should give some serious thought to declaring war
-on peace.
+diff --git a/tg-remote.sh b/tg-remote.sh
+index 3a40081..86dcd9a 100644
+--- a/tg-remote.sh
++++ b/tg-remote.sh
+@@ -28,8 +28,13 @@ git config "remote.$name.url" >/dev/null || die "unk=
+nown remote '$name'"
+ ## Configure the remote
+=20
+ git config --replace-all "remote.$name.fetch" "+refs/top-bases/*:refs/=
+remotes/$name/top-bases/*" "\\+refs/top-bases/\\*:refs/remotes/$name/to=
+p-bases/\\*"
+-git config --replace-all "remote.$name.push" "+refs/top-bases/*:refs/t=
+op-bases/*" "\\+refs/top-bases/\\*:refs/top-bases/\\*"
+-git config --replace-all "remote.$name.push" "+refs/heads/*:refs/heads=
+/*" "\\+refs/heads/\\*:refs/heads/\\*"
++
++if git config --get-all "remote.$name.push" "\\+refs/top-bases/\\*:ref=
+s/top-bases/\\*" >/dev/null && test "xtrue" !=3D "x$(git config --bool =
+--get topgit.dontwarnonoldpushspecs)"; then
++	info "Probably you want to remove the push specs introduced by an old=
+ version of topgit:"
++	info '       git config --unset-all "remote.'$name'.push" "\\+refs/to=
+p-bases/\\*:refs/top-bases/\\*"'
++	info '       git config --unset-all "remote.'$name'.push" "\\+refs/he=
+ads/\\*:refs/heads/\\*"'
++	info '(or use git config --bool --add topgit.dontwarnonoldpushspecs t=
+rue to get rid of this warning)'
++fi
+=20
+ info "Remote $name can now follow TopGit topic branches."
+ if [ -z "$populate" ]; then
+--=20
+1.6.2.4
