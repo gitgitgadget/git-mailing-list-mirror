@@ -1,103 +1,89 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: [PATCH] Quote LF in urls git fetch saves in FETCH_HEAD
-Date: Wed, 13 May 2009 14:10:32 +0200
-Message-ID: <81b0412b0905130510n61d59f54rf385a89bbb43a530@mail.gmail.com>
-References: <200905112208.21017.Hugo.Mildenberger@namir.de>
-	 <7vws8l7w0d.fsf@alter.siamese.dyndns.org>
-	 <81b0412b0905122306w4ed41bdiab073a05587fab55@mail.gmail.com>
-	 <200905131340.31509.Hugo.Mildenberger@namir.de>
+From: "Matthias Andree" <matthias.andree@gmx.de>
+Subject: Re: [PATCH v3] To make GIT-VERSION-FILE, search for git more widely
+Date: Wed, 13 May 2009 14:17:09 +0200
+Message-ID: <op.utva2vxh1e62zd@balu>
+References: <1241688129-31613-1-git-send-email-matthias.andree@gmx.de>
+ <7v7i0scvcf.fsf@alter.siamese.dyndns.org>
+ <op.utlq3vgx1e62zd@merlin.emma.line.org>
+ <7vprek0ywq.fsf@alter.siamese.dyndns.org> <op.utlylkb61e62zd@balu>
+ <7vskje6wsy.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; format=flowed; delsp=yes; charset=iso-8859-15
 Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Hugo Mildenberger <Hugo.Mildenberger@namir.de>
-X-From: git-owner@vger.kernel.org Wed May 13 14:10:56 2009
+Cc: git@vger.kernel.org
+To: "Junio C Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed May 13 14:17:21 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M4DIO-0005Cc-LS
-	for gcvg-git-2@gmane.org; Wed, 13 May 2009 14:10:49 +0200
+	id 1M4DOi-0008Fv-Qg
+	for gcvg-git-2@gmane.org; Wed, 13 May 2009 14:17:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759776AbZEMMKe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 13 May 2009 08:10:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759186AbZEMMKe
-	(ORCPT <rfc822;git-outgoing>); Wed, 13 May 2009 08:10:34 -0400
-Received: from mail-bw0-f222.google.com ([209.85.218.222]:34186 "EHLO
-	mail-bw0-f222.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759627AbZEMMKd (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 May 2009 08:10:33 -0400
-Received: by bwz22 with SMTP id 22so600681bwz.37
-        for <git@vger.kernel.org>; Wed, 13 May 2009 05:10:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=HfdebyNbojJ+tBODiJxQbnMcHgsjMwtk6qXrsgz5is8=;
-        b=oJHLJu/omZz4sJMbNmswyf2Ln80XtgSNHjo8CWjvmIaaoM3BWlmxUaczp9MxTbVjyT
-         FvOvtZ6ozz8Nkh//L22dAwxQAQHPOCEdazBhyK9reLtmzYyBTir51XDC6fCEYDpbXnw1
-         5BvKxvuBYea8+CBv8mjpornzbkhL0N3O9ShsI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=rO4YWhz4+KoYiNNdM55y19pGuifgQbD83lOrxne22oTC3Qn4MNi3Z+q5GY5AwOMNIF
-         Tt1x2/oJ2GFif14xzyNWSPMNvXCKP8D4qiqkO/xxfQbHEyrbzwKfkpiALta+jdJKFa2g
-         1IDm60vIPirory8qD0KufXJlJxf2dHjhktPHs=
-Received: by 10.204.59.18 with SMTP id j18mr833287bkh.206.1242216632672; Wed, 
-	13 May 2009 05:10:32 -0700 (PDT)
-In-Reply-To: <200905131340.31509.Hugo.Mildenberger@namir.de>
+	id S1757650AbZEMMRN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 13 May 2009 08:17:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755788AbZEMMRM
+	(ORCPT <rfc822;git-outgoing>); Wed, 13 May 2009 08:17:12 -0400
+Received: from mail.gmx.net ([213.165.64.20]:60659 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1755070AbZEMMRL (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 May 2009 08:17:11 -0400
+Received: (qmail invoked by alias); 13 May 2009 12:17:11 -0000
+Received: from balu.cs.uni-paderborn.de (EHLO balu.cs.uni-paderborn.de) [131.234.21.37]
+  by mail.gmx.net (mp065) with SMTP; 13 May 2009 14:17:11 +0200
+X-Authenticated: #428038
+X-Provags-ID: V01U2FsdGVkX18R/tRTEgARViMf2UEf4nSBJ6VvUWAUqQuGFCQu6m
+	hKk+ooesVlEFtE
+Received: from [127.0.0.1] (helo=balu)
+	by balu.cs.uni-paderborn.de with esmtp (Exim 4.69)
+	(envelope-from <matthias.andree@gmx.de>)
+	id KJL0SM-0003VG-AP; Wed, 13 May 2009 14:17:10 +0200
+In-Reply-To: <7vskje6wsy.fsf@alter.siamese.dyndns.org>
+User-Agent: Opera Mail/9.64 (Win32)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.54
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119042>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119043>
 
-2009/5/13 Hugo Mildenberger <Hugo.Mildenberger@namir.de>:
-> Am Mittwoch, 13. Mai 2009 schrieb Alex Riesen <raa.lkml@gmail.com>
->>
->> That'd mean to loose the information completely. Which is just as bad
->> as putting the LF in the url in the first place.
+Am 09.05.2009, 18:55 Uhr, schrieb Junio C Hamano <gitster@pobox.com>:
+
+> "Matthias Andree" <matthias.andree@gmx.de> writes:
 >
-> This stray linefeed is not information, but pure contamination. Thus it
-> would be much better to simply strip it off.
+>>> Fine then.  Or you could just append "." to the $PATH ;-)
+>>
+>> "." in the super user's PATH? Cool stuff, and so innovative.
+>
+> I didn't mean to suggest PATH=$PATH:. *in the user's environment* ;-).
+> You do that inside GIT-VERSION-FILE, which is essentially the same thing
+> as running ./git$X from there.
 
-Not at the place where the patch changes it. In git clone, maybe (the many
-times mentioned guessing function). But then, we have to provide an option
-to leave the names alone, verbatim (which, I think, the non-quessing form
-already provides. No additional coding necessary).
+No, it is not -- the scope of the GIT variable is much narrower than doing  
+PATH=$PATH:. in the script.
 
-> And besides from the fact that git apply rejects this patch (fatal: corrupt
-> patch at line 6),
+BTW, in the earlier version, I used type(1) to take $PATH search into  
+account in case GIT=git; test -x does not do path search, unlike type.
 
-This is your local problem. Maybe you copied the patch through clipboard
-and it kept the presentation in KMail, or KMail generally corrupts
-mails, I don't
-know. Just save the mail as is and do "git am -3" on it.
+> What's innovative is whoever is running build as root.
 
-> I think it would also not handle the equally wrong repository directory name on disk,
+Yes, and that is why I found the PATH-dependent behaviour so irritating  
+and wanted to fix it. I have another approach cooking that entails  
+factoring out common code from ./git-gui/GIT-VERSION-GEN and  
+./GIT-VERSION-GEN into ./git-gui/GIT-VERSION-SUBR.
 
-You think wrong. It does handle it perfectly.
+For any approach taken, we'll have to touch both the shell and the  
+Makefile, unless we want to manually redo things in the GIT-VERSION-GEN  
+script that were already done automatically or programmatically in  
+Makefile.
 
-And it is not wrong. It is just how it is. Don't spend too much time in MacOS
-and that overgrown DOS. They'll wreck your brain.
+Please let me know if you're willing to accept a patch that touches both  
+Makefile and the GIT-VERSION-* shell scripts. If you don't, I can quit  
+here and not waste further time on submissions that are inacceptable  
+anyhow, but just keep rebasing my local patch instead.
 
-> which then possibly leads to subsequent make failures (as it actually happend in
-> the case I described earlier here.)
+Best regards
 
-The make(1) works in such directories just fine. Fix yours (thinking about
-it now - you wont find a make which does not work in such directories).
-
-> Why not just return to your original idea, which proposed testing the
-> repository name against a regular expression describing a forbidden
-> set of characters (which is "\n", currently) and then terminate with a
-> clear message?
-
-The idea was not abandoned nor followed upon. It's just I don't need that
-warning and would switch it off immediately anyway (if it was implemented).
-I just spent a minute thinking about it (that's where regexp idea came from).
-I'm not going to work on it (at least, not right now). I'm even sure you wont
-be working on it too, now when you have learned what the problem is and
-how to work around it. And that's while all you needed is to put a two-three
-lines in that guessing function...
+-- 
+Matthias Andree
