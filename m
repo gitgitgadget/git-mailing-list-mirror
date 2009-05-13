@@ -1,89 +1,82 @@
 From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: check-ref-format question
-Date: Wed, 13 May 2009 11:03:52 -0400 (EDT)
-Message-ID: <alpine.LNX.2.00.0905131051240.2147@iabervon.org>
-References: <93c3eada0905121709k73a47bddu60def6b5fbc1b15e@mail.gmail.com> <4A0AD5A2.2090103@drmicha.warpmail.net>
+Subject: Re: [PATCH] Quote LF in urls git fetch saves in FETCH_HEAD
+Date: Wed, 13 May 2009 11:18:40 -0400 (EDT)
+Message-ID: <alpine.LNX.2.00.0905131109240.2147@iabervon.org>
+References: <200905112208.21017.Hugo.Mildenberger@namir.de>  <200905121557.18542.Hugo.Mildenberger@namir.de>  <81b0412b0905120759u15f1ec73k73625a7904515792@mail.gmail.com>  <200905121900.00625.Hugo.Mildenberger@namir.de>  <81b0412b0905121018lbccda1fvf6c4c19417cdde00@mail.gmail.com>
+  <20090512172452.GA32594@blimp.localdomain>  <7vws8l7w0d.fsf@alter.siamese.dyndns.org> <81b0412b0905122306w4ed41bdiab073a05587fab55@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: geoffrey.russell@gmail.com, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Wed May 13 17:04:15 2009
+Content-Type: MULTIPART/MIXED; BOUNDARY="1547844168-1721151157-1242227920=:2147"
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Hugo Mildenberger <Hugo.Mildenberger@namir.de>
+To: Alex Riesen <raa.lkml@gmail.com>
+X-From: git-owner@vger.kernel.org Wed May 13 17:19:01 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M4G0C-0003Tc-RS
-	for gcvg-git-2@gmane.org; Wed, 13 May 2009 17:04:13 +0200
+	id 1M4GEM-0002q9-VL
+	for gcvg-git-2@gmane.org; Wed, 13 May 2009 17:18:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758344AbZEMPDw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 13 May 2009 11:03:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752307AbZEMPDw
-	(ORCPT <rfc822;git-outgoing>); Wed, 13 May 2009 11:03:52 -0400
-Received: from iabervon.org ([66.92.72.58]:42304 "EHLO iabervon.org"
+	id S1757128AbZEMPSk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 13 May 2009 11:18:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755790AbZEMPSk
+	(ORCPT <rfc822;git-outgoing>); Wed, 13 May 2009 11:18:40 -0400
+Received: from iabervon.org ([66.92.72.58]:43042 "EHLO iabervon.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751067AbZEMPDv (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 May 2009 11:03:51 -0400
-Received: (qmail 3015 invoked by uid 1000); 13 May 2009 15:03:52 -0000
+	id S1750945AbZEMPSk (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 May 2009 11:18:40 -0400
+Received: (qmail 6442 invoked by uid 1000); 13 May 2009 15:18:40 -0000
 Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 13 May 2009 15:03:52 -0000
-In-Reply-To: <4A0AD5A2.2090103@drmicha.warpmail.net>
+  by localhost with SMTP; 13 May 2009 15:18:40 -0000
+In-Reply-To: <81b0412b0905122306w4ed41bdiab073a05587fab55@mail.gmail.com>
 User-Agent: Alpine 2.00 (LNX 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119056>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119057>
 
-On Wed, 13 May 2009, Michael J Gruber wrote:
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-> Geoff Russell venit, vidit, dixit 13.05.2009 02:09:
-> > 1 $ git --version
-> > git version 1.6.2.3
-> > 2 $ git check-ref-format xxxx && echo OK
-> > 3 $ git-check-ref-format --branch xxxx && echo OK
-> > xxxx
-> > OK
-> > 4 $ git check-ref-format --branch xxxx && echo OK
-> > usage: git check-ref-format refname
-> > 
-> > 
-> > 2 seems wrong,
-> > I tried 3 after looking at  builtin-check-ref-format.c
-> > I couldn't find any test cases in the git/t directory
-> > 
-> > From the documenation, I expect "git check-ref-format xxx" to return 0 if xxx is
-> > a valid branch or ref name.  git version 1.6.3 gives the same results.
-> 
-> There are several things going on:
-> 
-> A) In 3 you use a different git than in 1,2,4. You told us the latter is
-> 1.6.2.3, and I'm telling you the former contains v1.6.2.1-310-ga31dca0
-> (which has the new --branch option).
-> This simply checks whether refs/heads/xxxx is sane. (It also resolves
-> @{-1} and such, which is what makes it useful at all.)
-> 
-> B) "master" certainly looks like a valid refname, the doc seems to imply
-> that it should pass the check.
-> 
-> C) Looking at the code, check-ref-format checks explicitly for the
-> presence of at least 2 levels: foo/bar is good, foo is bad. So, master
-> always had been bad, as well (or bad) as full sha1s!
-> 
-> The code has always behaved like C since its inception but I don't know
-> the rationale behind the 2 level requirement. Daniel, Junio?
+--1547844168-1721151157-1242227920=:2147
+Content-Type: TEXT/PLAIN; charset=UTF-8
+Content-Transfer-Encoding: 8BIT
 
-In general, it's because you use it right before trying to use git 
-update-ref $name, and you probably don't really want to change 
-refs/master. Unless you know exactly what you're going (in which case, 
-you're unlikely to check whether it's okay), you want to have a first 
-level that specifies the type of ref and one or more additional levels 
-that specify which ref of that type it is.
+On Wed, 13 May 2009, Alex Riesen wrote:
 
-I believe that, if you've got "master", and you want to do the sensible 
-thing with it (i.e., the file you care about is .git/refs/heads/master), 
-you want to use rev-parse with some option or other, not check-ref-format, 
-but I don't know the plumbing-level shell API very well.
+> 2009/5/13 Junio C Hamano <gitster@pobox.com>:
+> > Alex Riesen <raa.lkml@gmail.com> writes:
+> >
+> >> +             for (i = 0; i < url_len; ++i)
+> >> +                     if ('\n' == url[i])
+> >> +                             fputs("\\n", fp);
+> >> +                     else
+> >> +                             fputc(url[i], fp);
+> >> +             fputc('\n', fp);
+> >
+> > This ad-hoc quoting feels _very_ wrong.  Who is on the reading side and
+> > how does it unquote?
+> 
+> git fmt-merge-msg. It does not unquote. The url is purely informational here.
+> OTOH, the \n shouldn't be in url text at all, so treat it as slightly
+> less annoying
+> warning.
+> 
+> > If it is just informational use only, then it might make more sense to
+> > drop this ugly "quoted \n" silently.  I dunno.
+> 
+> That'd mean to loose the information completely. Which is just as bad
+> as putting the LF in the url in the first place.
+
+Looking back at the original message, it looks like the user included a 
+newline in an argument to clone, and the fetch must have stripped it out 
+(or ignored it in some other fashion), because data was retrieved from a 
+repository that doesn't have a newline in its name. Most likely, the 
+newline should just be prohibited in the URL in the config file in the 
+first place, and we shouldn't be able to get to the point of writing a 
+FETCH_HEAD with that value.
 
 	-Daniel
 *This .sig left intentionally blank*
+--1547844168-1721151157-1242227920=:2147--
