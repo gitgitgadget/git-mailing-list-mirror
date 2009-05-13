@@ -1,93 +1,126 @@
-From: Stephen Boyd <bebarino@gmail.com>
-Subject: Re: [PATCHv2 2/2] completion: complete config variables for 
-	--get/getall/unset/unset-all
-Date: Wed, 13 May 2009 11:50:39 -0700
-Message-ID: <780e0a6b0905131150q30e0bcacrff69cd78cd96ff34@mail.gmail.com>
-References: <1241832213-23070-1-git-send-email-bebarino@gmail.com> 
-	<1241832213-23070-2-git-send-email-bebarino@gmail.com> <1241832213-23070-3-git-send-email-bebarino@gmail.com> 
-	<20090509034438.GZ30527@spearce.org> <4A09071A.1030107@gmail.com> 
-	<7vtz3q91up.fsf@alter.siamese.dyndns.org> <780e0a6b0905121205r7a57a99as2cb0b94ead73199d@mail.gmail.com> 
-	<7vtz3o4zu2.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Showing stash state in bash prompt
+Date: Wed, 13 May 2009 12:14:18 -0700
+Message-ID: <7v4ovo4xyt.fsf@alter.siamese.dyndns.org>
+References: <20090513094448.GC2106@bug.science-computing.de>
+	<fabb9a1e0905130353u416086b8i5b685e750ec4b5a5@mail.gmail.com>
+	<20090513112535.GD2106@bug.science-computing.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed May 13 20:53:16 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, spearce@spearce.org
+To: Daniel Trstenjak <Daniel.Trstenjak@science-computing.de>
+X-From: git-owner@vger.kernel.org Wed May 13 21:14:31 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M4JXr-0007HX-NQ
-	for gcvg-git-2@gmane.org; Wed, 13 May 2009 20:51:12 +0200
+	id 1M4JuQ-0002tb-5a
+	for gcvg-git-2@gmane.org; Wed, 13 May 2009 21:14:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760381AbZEMSu7 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 13 May 2009 14:50:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760247AbZEMSu7
-	(ORCPT <rfc822;git-outgoing>); Wed, 13 May 2009 14:50:59 -0400
-Received: from an-out-0708.google.com ([209.85.132.246]:12423 "EHLO
-	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758571AbZEMSu6 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 13 May 2009 14:50:58 -0400
-Received: by an-out-0708.google.com with SMTP id d40so1371902and.1
-        for <git@vger.kernel.org>; Wed, 13 May 2009 11:50:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=qNvrrV+yeWRW0a3v31c4F5JXWY8OELV+PLwuyXisyZk=;
-        b=rtC3SHq6EOi3rJ4LnJYXoIDZN0WA8YK46MHNhZuUwMbiiS3OX4w2vmhZ624bI9QlIm
-         MyaXGxjkVuFwvD9gUKvDAbXy6yi7ybJ8c/2qz6RzEDxgVCsIgkUi5bWoFpvwpvlWcDbM
-         7Dy7CE+JG/YnDMXS7dmIWE4NKRnybKohQbqrA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=gyHkvvZCkD9wdFONWT2Z1/l8kywnwxRBeBBotSJYIi/QQqPzbvMnYh1MGXuY2Bw2NM
-         gAJuF/JEJHwAS8L5DlnY97DL+otpyMpNhp22nAlC956cfFlnValfNrKfKgQ3udXLaHrh
-         P/bqNZqQrVOIrBxbrvywBfDmIG4+seUrHRwlw=
-Received: by 10.100.128.18 with SMTP id a18mr1843854and.12.1242240659275; Wed, 
-	13 May 2009 11:50:59 -0700 (PDT)
-In-Reply-To: <7vtz3o4zu2.fsf@alter.siamese.dyndns.org>
+	id S1760511AbZEMTOT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 13 May 2009 15:14:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759944AbZEMTOT
+	(ORCPT <rfc822;git-outgoing>); Wed, 13 May 2009 15:14:19 -0400
+Received: from fed1rmmtao101.cox.net ([68.230.241.45]:55334 "EHLO
+	fed1rmmtao101.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757791AbZEMTOS (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 May 2009 15:14:18 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao101.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20090513191419.RWWQ17670.fed1rmmtao101.cox.net@fed1rmimpo02.cox.net>;
+          Wed, 13 May 2009 15:14:19 -0400
+Received: from localhost ([68.225.240.211])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id r7EJ1b00g4aMwMQ047EK3v; Wed, 13 May 2009 15:14:19 -0400
+X-Authority-Analysis: v=1.0 c=1 a=IHhOjfFVpNkA:10 a=oqDeMcJphqMA:10
+ a=vz9goz1ngCdi56dfkbAA:9 a=eyYtxUBPg7c-JdbDccbLQsFFrYQA:4 a=plMbz_m26q8A:10
+X-CM-Score: 0.00
+In-Reply-To: <20090513112535.GD2106@bug.science-computing.de> (Daniel Trstenjak's message of "Wed\, 13 May 2009 13\:25\:35 +0200")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119088>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119089>
 
-On Wed, May 13, 2009 at 11:33 AM, Junio C Hamano <gitster@pobox.com> wr=
-ote:
-> Stephen Boyd <bebarino@gmail.com> writes:
->
->>>> Subject: completion: complete config variables for
->>>> --get/getall/unset/unset-all
->>>
->>> Hmm, shouldn't this just be
->>>
->>> =C2=A0 =C2=A0Subject: completion: complete variable names for "git =
-config" command
->>>
->>> ?
->>>
->>
->> This patch adds completion for set variable names when --get,
->> --get-all, --set, or --set-all has been specified. Completion of
->> variable names for git config already exists. Maybe this would be mo=
-re
->> clear:
->>
->> Subject: completion: complete set variable names for git config
->> --get/get-all/set-set-all
->
-> Actually I was shooting for shorter description. =C2=A0It is more lik=
-e
->
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0bash: complete variable names for "git con=
-fig" with options
->
-> perhaps?
->
->
+Daniel Trstenjak <Daniel.Trstenjak@science-computing.de> writes:
 
-Heh, ok. This sounds fine.
+> Showing stash state in bash prompt.
+
+That's what you already said in the "Subject:" ;-)
+
+Here in the proposed commit message, you describe what the code after
+applying your patch does in a bit more detail, defend why such a new
+behaviour is desirable, and defend why your implementation is superior
+than possible alternative solutions to achieve that goal.
+
+Going back to the "Subject: ", we typically put the name of the affected
+area and colon to the message, and use imperative mood, as if you are
+giving an order to the code to "do this (instead of what you currently
+do)".
+
+E.g.
+
+	Subject: [PATCH] completion: show presense of stashed changes
+
+	Users often forget that there are stashed changes that want to be
+	unstashed.  Add a '$' in the prompt string to remind them.
+
+	Signed-off-by: ...
+
+Note that I do not necessarily agree with the above justification; I am
+just illustrating the established style around here.
+
+> diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+> index 1683e6d..86e39a5 100755
+> --- a/contrib/completion/git-completion.bash
+> +++ b/contrib/completion/git-completion.bash
+> @@ -117,6 +117,7 @@ __git_ps1 ()
+>  
+>  		local w
+>  		local i
+> +		local s
+>  		local c
+>  
+>  		if [ "true" = "$(git rev-parse --is-inside-git-dir 2>/dev/null)" ]; then
+
+Ok.
+
+> @@ -136,15 +137,19 @@ __git_ps1 ()
+>  					else
+>  						i="#"
+>  					fi
+> +					stash_list=`git stash list`
+
+Don't you want to localize this variable to avoid contaminating the
+namespace?
+
+> +					if [ -n "$stash_list" ]; then
+> +					        s="$"
+
+Is the presense the only thing that matters?  Notice that I reworded your
+"stash state" to "presense of" to clarify that you are giving only one bit
+of information in the counter-proposed "Subject:" above.
+
+I personally prefer your "only one bit" patch over a possible alternative
+to count the stash entries with "git stash list | wc -l" that would be way
+more costly, and if you thought about such an alternative and discarded
+it, it would save other people's time if you say so in your proposed
+commit message.  So...
+
+	Subject: [PATCH] completion: show presense of stashed changes
+
+	Users often forget that there are stashed changes that want to be
+	unstashed.  Add a '$' in the prompt string to remind them when
+	there is a stashed state.
+
+	We could count and show the number of stash entries instead, but
+        that would be more costly at runtime than it is worth.
+
+	Signed-off-by: ...
+
+and with localization of stash_list variable I think the patch becomes
+better.
+
+Thanks.
