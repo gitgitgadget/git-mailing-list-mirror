@@ -1,73 +1,112 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: [RFC 1/8] UTF helpers
-Date: Wed, 13 May 2009 13:44:22 +0200
-Message-ID: <81b0412b0905130444t3eee4c92r9e2d3d995bfccfe4@mail.gmail.com>
-References: <1242168631-30753-1-git-send-email-robin.rosenberg@dewire.com>
-	 <1242168631-30753-2-git-send-email-robin.rosenberg@dewire.com>
-	 <alpine.DEB.1.00.0905130215260.27348@pacific.mpi-cbg.de>
-	 <200905130724.44634.robin.rosenberg@dewire.com>
-	 <4A0A91CE.3080905@gmail.com> <4A0A9AA2.1000004@op5.se>
-	 <4A0A9F23.8050804@gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: The 9th production of the msysGit Herald
+Date: Wed, 13 May 2009 13:55:15 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.0905131234420.5046@intel-tinevez-2-302>
+References: <alpine.DEB.1.00.0905130225330.27348@pacific.mpi-cbg.de> <81b0412b0905130237h3bc29c80od4a8a8ad12a972a7@mail.gmail.com>
+Reply-To: Johannes.Schindelin@gmx.de
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Andreas Ericsson <ae@op5.se>,
-	Robin Rosenberg <robin.rosenberg@dewire.com>,
-	git@vger.kernel.org
-To: Esko Luontola <esko.luontola@gmail.com>
-X-From: git-owner@vger.kernel.org Wed May 13 13:44:54 2009
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@gmane.org
-Received: from vger.kernel.org ([209.132.176.167])
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: msysgit@googlegroups.com, git@vger.kernel.org
+To: Alex Riesen <raa.lkml@gmail.com>
+X-From: grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org@googlegroups.com Wed May 13 13:55:30 2009
+Return-path: <grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-qy0-f143.google.com ([209.85.221.143])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M4CtJ-0001j5-PN
-	for gcvg-git-2@gmane.org; Wed, 13 May 2009 13:44:54 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757895AbZEMLo0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 13 May 2009 07:44:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755136AbZEMLoY
-	(ORCPT <rfc822;git-outgoing>); Wed, 13 May 2009 07:44:24 -0400
-Received: from mail-bw0-f222.google.com ([209.85.218.222]:43346 "EHLO
-	mail-bw0-f222.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752806AbZEMLoW (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 May 2009 07:44:22 -0400
-Received: by bwz22 with SMTP id 22so586871bwz.37
-        for <git@vger.kernel.org>; Wed, 13 May 2009 04:44:22 -0700 (PDT)
+	id 1M4D3Y-0006Vj-Mx
+	for gcvm-msysgit@m.gmane.org; Wed, 13 May 2009 13:55:28 +0200
+Received: by qyk7 with SMTP id 7so1150157qyk.3
+        for <gcvm-msysgit@m.gmane.org>; Wed, 13 May 2009 04:55:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=B4+bN+vBfhh724+PACny6rUs/SeL4+Vw/hfrqJ+V/7k=;
-        b=Xy0G6sPAuLCkExU2glSWM+kH6kOGyr0IxOHLZKNu8iHXSQUece+9/b4wj04Ic6pXn2
-         rNcaXy6DYJT6kWK9ZXJdPegF/4TE5QiofWrn0opDYn+CGTy4OxsrabXv181vtO3jVlpL
-         ndnDeEFgPWsOK44PmiyvtsNQRPKyYw1yThyvo=
+        d=googlegroups.com; s=beta;
+        h=domainkey-signature:received:received:x-sender:x-apparently-to
+         :received:received:received-spf:authentication-results:received
+         :received:x-authenticated:x-provags-id:date:from:x-x-sender:to:cc
+         :subject:in-reply-to:message-id:references:user-agent:mime-version
+         :content-type:x-y-gmx-trusted:x-fuhafi:reply-to:sender:precedence
+         :x-google-loop:mailing-list:list-id:list-post:list-help
+         :list-unsubscribe:x-beenthere-env:x-beenthere;
+        bh=0AeTkmDgrQXUcLDqlMedjswVcP85v2qX5hLR2rq0/8A=;
+        b=jXcZOuUS1d/gpiorRz6yLfPeY0xr51e/+uXtbNN978ITFTrqrXqmvGwMajGG+Wvm2k
+         FDu0o9Pai7Mw8NR69sM2SgPfReKXHqm6oFtKq2gJdDYHSiVuZtatXExtoeAaUIBjBr+m
+         qhMcuh/5mAWRD39bLVrhIidA5zXLTJmDLx3sM=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=bSn22WNyNWVhT7a9HxvCfQMK9CKyUfBFO4Wh5o8LG+EVFFrOvms2zDqZV8gtGpNHfi
-         GABw2li9BIPeKu5FjCOnkXPMHb+2fUYGdhEgVNA0LQPSJG7oWLyLUVHMute1Ag71KR5c
-         9/Kr/vO2A+IqKY7T05vUvalcR8rMVQ0zoRRY0=
-Received: by 10.204.53.1 with SMTP id k1mr826421bkg.125.1242215062539; Wed, 13 
-	May 2009 04:44:22 -0700 (PDT)
-In-Reply-To: <4A0A9F23.8050804@gmail.com>
-Sender: git-owner@vger.kernel.org
+        d=googlegroups.com; s=beta;
+        h=x-sender:x-apparently-to:received-spf:authentication-results
+         :x-authenticated:x-provags-id:date:from:x-x-sender:to:cc:subject
+         :in-reply-to:message-id:references:user-agent:mime-version
+         :content-type:x-y-gmx-trusted:x-fuhafi:reply-to:sender:precedence
+         :x-google-loop:mailing-list:list-id:list-post:list-help
+         :list-unsubscribe:x-beenthere-env:x-beenthere;
+        b=RNEm2iEWIEV4OhUeSPCeVM1nqbkSRLBTez4bbQZ3p3+8WNcRGZPslwvHSR9+6K9/5W
+         aJ+P40+28hr79/G5t+xhKp2vMUYeHSZgRbmaf9BJW83cTbkSZmmHPmSkTpr2bjBYWbio
+         RvFbvj2U9HgZ28lo1PXJ32IJUlLK3t+4z3poI=
+Received: by 10.224.19.205 with SMTP id c13mr164060qab.14.1242215717874;
+        Wed, 13 May 2009 04:55:17 -0700 (PDT)
+Received: by 10.230.6.42 with SMTP id 42gr5225vbx.0;
+	Wed, 13 May 2009 04:55:17 -0700 (PDT)
+X-Sender: Johannes.Schindelin@gmx.de
+X-Apparently-To: msysgit@googlegroups.com
+Received: by 10.103.175.9 with SMTP id c9mr9733mup.26.1242215717020; Wed, 13 May 2009 04:55:17 -0700 (PDT)
+Received: from mail.gmx.net (mail.gmx.net [213.165.64.20]) by gmr-mx.google.com with SMTP id 16si69952fxm.6.2009.05.13.04.55.16; Wed, 13 May 2009 04:55:17 -0700 (PDT)
+Received-SPF: pass (google.com: domain of Johannes.Schindelin@gmx.de designates 213.165.64.20 as permitted sender) client-ip=213.165.64.20;
+Authentication-Results: gmr-mx.google.com; spf=pass (google.com: domain of Johannes.Schindelin@gmx.de designates 213.165.64.20 as permitted sender) smtp.mail=Johannes.Schindelin@gmx.de
+Received: (qmail invoked by alias); 13 May 2009 11:55:16 -0000
+Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5] by mail.gmx.net (mp007) with SMTP; 13 May 2009 13:55:16 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18wAIB5U6owUCkN2/w5bqndXnhXJzxdFdDz9DOzfG G7PrJRttLp+A3f
+X-X-Sender: schindel@intel-tinevez-2-302
+In-Reply-To: <81b0412b0905130237h3bc29c80od4a8a8ad12a972a7@mail.gmail.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.64
+Sender: msysgit@googlegroups.com
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119037>
+X-Google-Loop: groups
+Mailing-List: list msysgit@googlegroups.com;
+	contact msysgit+owner@googlegroups.com
+List-Id: <msysgit.googlegroups.com>
+List-Post: <mailto:msysgit@googlegroups.com>
+List-Help: <mailto:msysgit+help@googlegroups.com>
+List-Unsubscribe: <http://googlegroups.com/group/msysgit/subscribe>,
+	<mailto:msysgit+unsubscribe@googlegroups.com>
+X-BeenThere-Env: msysgit@googlegroups.com
+X-BeenThere: msysgit@googlegroups.com
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119038>
 
-2009/5/13 Esko Luontola <esko.luontola@gmail.com>:
-> Andreas Ericsson wrote on 13.5.2009 13:02:
->>
->> If you're *really* serious about it though, here's how to go about
->> it:
->
-> Thanks for the pointers. I'll have a look at what the repository format is
-> and how to create a migration path.
->
 
-While at it, think about how are you going to merge trees where filenames
-have changed their encoding (because of local configurations, you know).
-And take a look at memory use in your new encoding-per-filename format
+Hi,
+
+On Wed, 13 May 2009, Alex Riesen wrote:
+
+> 2009/5/13 Johannes Schindelin <Johannes.Schindelin@gmx.de>:
+> > I will delete comments on the Wiki that do not contribute value, I 
+> > will delete comments on the Wiki if they are just not comments but 
+> > insults (and I will even delete commants that are useful after 
+> > addressing their concerns), I will remove comments on the issue 
+> > tracker that I do not like because they are abusive or just rantings, 
+> > and I _will_ delete all mails in the Google Group that I find 
+> > offensive.
+> 
+> You can try to setup bogofilter (the spam fitler) or spamassassin on
+> the comments.
+
+I could set up such a filter notifying me of potentially abusive comments, 
+yes, but as I was pretty rigorous with deleting comments (either ignoring 
+them or addressing their valid concerns), there are only a few coming in, 
+and most of them are actually helpful.
+
+Oh, and I am notified of them already ;-)
+
+> IOW, I fully expect you to be overwhelmed with all that housekeeping one 
+> day.
+
+At the moment, it is fun...  I also see more things on the Wiki and the 
+mailing list that I like these days, so I think I can cope.
+
+What I would love, though, is having more people help with the issue 
+tracker.  That is really taking a lot of time if only one person is doing 
+most of it.
+
+Ciao,
+Dscho
