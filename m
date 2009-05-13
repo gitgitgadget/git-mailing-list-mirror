@@ -1,65 +1,69 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 0/6] Add core.autocrlf=true on cygwin by default during tests
-Date: Wed, 13 May 2009 10:41:09 -0700
-Message-ID: <7vzldg6gui.fsf@alter.siamese.dyndns.org>
-References: <1242070141-2936-1-git-send-email-Don.Slutz@SierraAtlantic.com>
-	<loom.20090511T195910-370@post.gmane.org>
-	<7viqk57vh8.fsf@alter.siamese.dyndns.org>
+From: "S. M. Ibrahim (Lavlu)" <smibrahim@gmail.com>
+Subject: hosting multiple project in single git repository
+Date: Wed, 13 May 2009 23:48:44 +0600
+Message-ID: <4997275b0905131048t1b5c1427w85a2f96964ea16b6@mail.gmail.com>
+References: <4997275b0905131031q3c572854r4b0a899ca43063be@mail.gmail.com>
+	 <4997275b0905131046s407e334ag6783a6365c89fe10@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Eric Blake <ebb9@byu.net>, git@vger.kernel.org
-To: Don Slutz <Don.Slutz@SierraAtlantic.com>
-X-From: git-owner@vger.kernel.org Wed May 13 19:41:21 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed May 13 19:48:54 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M4ISE-0001p9-HQ
-	for gcvg-git-2@gmane.org; Wed, 13 May 2009 19:41:19 +0200
+	id 1M4IZa-0005dW-Ao
+	for gcvg-git-2@gmane.org; Wed, 13 May 2009 19:48:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760015AbZEMRlL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 13 May 2009 13:41:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758753AbZEMRlK
-	(ORCPT <rfc822;git-outgoing>); Wed, 13 May 2009 13:41:10 -0400
-Received: from fed1rmmtao107.cox.net ([68.230.241.39]:56069 "EHLO
-	fed1rmmtao107.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759966AbZEMRlJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 May 2009 13:41:09 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao107.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20090513174109.NWBC18948.fed1rmmtao107.cox.net@fed1rmimpo01.cox.net>;
-          Wed, 13 May 2009 13:41:09 -0400
-Received: from localhost ([68.225.240.211])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id r5h91b00U4aMwMQ035hAyV; Wed, 13 May 2009 13:41:10 -0400
-X-Authority-Analysis: v=1.0 c=1 a=6FHiilcIfxYA:10 a=s4hJD8TZ4iwA:10
- a=ybZZDoGAAAAA:8 a=9vXuR5GGAAAA:8 a=lCxZRAyeWInJc6Q2G8UA:9
- a=KYhC8DXh_EPFgGtx0HzdIE0cFXEA:4 a=qIVjreYYsbEA:10 a=eDFNAWYWrCwA:10
- a=I6cG22Rk__k9wQ77:21 a=pKilypYNRInS2pAu:21
-X-CM-Score: 0.00
-In-Reply-To: <7viqk57vh8.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's message of "Tue\, 12 May 2009 16\:27\:31 -0700")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+	id S1759317AbZEMRsq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 13 May 2009 13:48:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759259AbZEMRsp
+	(ORCPT <rfc822;git-outgoing>); Wed, 13 May 2009 13:48:45 -0400
+Received: from mail-qy0-f133.google.com ([209.85.221.133]:43149 "EHLO
+	mail-qy0-f133.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758497AbZEMRso (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 May 2009 13:48:44 -0400
+Received: by qyk39 with SMTP id 39so1471600qyk.33
+        for <git@vger.kernel.org>; Wed, 13 May 2009 10:48:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:content-type
+         :content-transfer-encoding;
+        bh=19nKxS1AnYulvQ4fnwR8nAFxnjfNm1mezm6iz4MiNdI=;
+        b=Ou3z+T4FJoLjdAhl9wEqya1UNhFhPpG++oS3+djyGNQnhn6otsA+iJraKLRVKxkKmO
+         7zCc7FGUfWlUo8LOmLg2eMNIAil3GnI8N7X0OD19CIMtykOEZUqY/Q2u8qL0s45VMqZA
+         k7JKxNzy9l2qNrtkEKxR7VvmU6BFQ6TJuVUjo=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :content-type:content-transfer-encoding;
+        b=rvKBxmiMUtprQ71SS35N0nZJ9ArEaRL14Qd/8lfX+J4pIir1C4VE/ZkUIKHWdqpXPX
+         AxgCGXaoG6ZL2aTX6H5icIvTjI+ybiuQGHNme8IuOe9fLvN8P8s2C4tBrOklXpAnk9Es
+         T+Mg8B9IqtAUzPD4uDOIlODUgLEYlvy2wrsy4=
+Received: by 10.224.60.202 with SMTP id q10mr1551006qah.243.1242236924841; 
+	Wed, 13 May 2009 10:48:44 -0700 (PDT)
+In-Reply-To: <4997275b0905131046s407e334ag6783a6365c89fe10@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119076>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119077>
 
-Junio C Hamano <gitster@pobox.com> writes:
+hi,
 
-> Eric Blake <ebb9@byu.net> writes:
-> ...
->> I help maintain the cygwin packaging of git, and I don't particularly like 
->> patch 1/6.  Cygwin very much recommends that users stick with binary mounts, 
->> where cr's are not inserted/stripped by default, and enabling autocrlf in that 
->> situation is asking for problems...
->
-> Ok, thanks for the comments; I won't touch this for now myself, with
-> objections and concerns from people working on windows (you on Cygwin
-> side, and Dscho on msysgit side).
+in our company we are moving all our subversion repository to git.
+git-svn is working really nice. but facing a problem. we have one svn
+repository where we hosted two projects and both the projects are
+under development. project a is trunk and project b is branch/xxxx .
+and project b was copied from trunk . we have plan to merge this two
+project in future. what is the best way to maintain this two project
+in git ? should we make to different git repository .
 
-Just to make sure I do not cause misunderstanding, I did not mean I won't
-touch this ever; I obviously meant "...until the concerns raised by windows
-people are addressed to their satisfaction, as they are much better judge
-than I am on this topic."
+thanks
+
+--
+S. M. Ibrahim Lavlu
+software engineer, php
+somewhere in...
