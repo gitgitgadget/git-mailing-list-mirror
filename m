@@ -1,90 +1,102 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: Cross-Platform Version Control
-Date: Wed, 13 May 2009 19:24:53 +0200
-Message-ID: <4A0B0265.8000100@op5.se>
-References: <419AD153-53B4-4DAB-AF72-4127C17B1CA0@gmail.com>	 <4A09E719.4090205@gmail.com>	 <alpine.DEB.1.00.0905130222460.27348@pacific.mpi-cbg.de>	 <4A0A5BDB.9030602@gmail.com>	 <alpine.DEB.1.00.0905131215010.5046@intel-tinevez-2-302>	 <43d8ce650905130340q596043d5g45b342b62fe20e8d@mail.gmail.com>	 <43d8ce650905130341g516c899fsdc6b50a45381d4c6@mail.gmail.com>	 <76718490905130642h792e9701sf2ec7fbf2e7de96a@mail.gmail.com>	 <81b0412b0905130644u7e22bde4ta97616a4ed8be1e0@mail.gmail.com>	 <76718490905130650u4d047e13pa73e0a96289c452a@mail.gmail.com> <43d8ce650905130657q2de9686q683fea84345a6651@mail.gmail.com>
+From: Avery Pennarun <apenwarr@gmail.com>
+Subject: Re: Trying to sync two svn repositories with git-svn (repost)
+Date: Wed, 13 May 2009 13:28:04 -0400
+Message-ID: <32541b130905131028i5c4b1a31j7f760f8157507df6@mail.gmail.com>
+References: <20090501142811.GI15420@raven.wolf.lan> <20090502215852.GJ15420@raven.wolf.lan> 
+	<32541b130905040858v2a0b7a6br5b056a365fcb6855@mail.gmail.com> 
+	<20090504211423.GK15420@raven.wolf.lan> <20090506185224.GM15420@raven.wolf.lan> 
+	<32541b130905061223h7efddeecvcc52a369093a6b50@mail.gmail.com> 
+	<20090506225042.GN15420@raven.wolf.lan> <32541b130905081344m634a78d5l984f4903ec1515eb@mail.gmail.com> 
+	<20090508235821.GO15420@raven.wolf.lan> <20090513120922.GP15420@raven.wolf.lan>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Jay Soffian <jaysoffian@gmail.com>,
-	Alex Riesen <raa.lkml@gmail.com>, git@vger.kernel.org
-To: John Tapsell <johnflux@gmail.com>
-X-From: git-owner@vger.kernel.org Wed May 13 19:25:23 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Eric Wong <normalperson@yhbt.net>
+To: Josef Wolf <jw@raven.inka.de>, git@vger.kernel.org,
+	Avery Pennarun <apenwarr@gmail.com>
+X-From: git-owner@vger.kernel.org Wed May 13 19:28:35 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M4ICY-00024p-Um
-	for gcvg-git-2@gmane.org; Wed, 13 May 2009 19:25:07 +0200
+	id 1M4IFu-0003yY-Kj
+	for gcvg-git-2@gmane.org; Wed, 13 May 2009 19:28:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759914AbZEMRY6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 13 May 2009 13:24:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758150AbZEMRY5
-	(ORCPT <rfc822;git-outgoing>); Wed, 13 May 2009 13:24:57 -0400
-Received: from mail-fx0-f158.google.com ([209.85.220.158]:60385 "EHLO
-	mail-fx0-f158.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757541AbZEMRY4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 May 2009 13:24:56 -0400
-Received: by fxm2 with SMTP id 2so791393fxm.37
-        for <git@vger.kernel.org>; Wed, 13 May 2009 10:24:55 -0700 (PDT)
-Received: by 10.86.98.7 with SMTP id v7mr1461305fgb.58.1242235495606;
-        Wed, 13 May 2009 10:24:55 -0700 (PDT)
-Received: from clix.int.op5.se ([212.112.174.166])
-        by mx.google.com with ESMTPS id 12sm361292fgg.20.2009.05.13.10.24.54
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 13 May 2009 10:24:55 -0700 (PDT)
-User-Agent: Thunderbird 2.0.0.21 (X11/20090320)
-In-Reply-To: <43d8ce650905130657q2de9686q683fea84345a6651@mail.gmail.com>
+	id S1759844AbZEMR2Z convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 13 May 2009 13:28:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758702AbZEMR2Y
+	(ORCPT <rfc822;git-outgoing>); Wed, 13 May 2009 13:28:24 -0400
+Received: from mail-gx0-f166.google.com ([209.85.217.166]:50610 "EHLO
+	mail-gx0-f166.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753296AbZEMR2X convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 13 May 2009 13:28:23 -0400
+Received: by gxk10 with SMTP id 10so1435006gxk.13
+        for <git@vger.kernel.org>; Wed, 13 May 2009 10:28:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=iUV+2XslJm6ab6NkxLqZ/Sb8xb9InHl+GZKe+90b3Yo=;
+        b=FxUTBL9Mm0vE7U2FTaTzzQ5OirlBkm9RlT33nrzJPvtsVlClFBzj8nF40EA1DR4hRe
+         uLxn3RB5hN3+QQiZB90teX6OEmgBdadDBj0w+Ddkqa0LdgcEaQSvglg1bLsamDJbqZD7
+         B0py8MiXiOgoJaArgFUhE4JWuazbN0KHwdrIc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=SmuljuK9kbEVpkeXQRfx5dWrsi9ZeNFvOS2OqnbKkxp6hZM4uetMD2mxK7cXgnRkKu
+         ml46ltG8OdsfWQZZUiuHblsyja63FJH4WKPPFkcZtIdDe2OVIBDd3547FsLf4Zx+cZVA
+         KoDShFZgd0zmj+tLlFcCFxOJIyyyu9ja4I3iY=
+Received: by 10.150.202.11 with SMTP id z11mr1599836ybf.92.1242235704065; Wed, 
+	13 May 2009 10:28:24 -0700 (PDT)
+In-Reply-To: <20090513120922.GP15420@raven.wolf.lan>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119072>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119073>
 
-John Tapsell wrote:
-> 2009/5/13 Jay Soffian <jaysoffian@gmail.com>:
->> On Wed, May 13, 2009 at 9:44 AM, Alex Riesen <raa.lkml@gmail.com> wrote:
->>> 2009/5/13 Jay Soffian <jaysoffian@gmail.com>:
->>>> On Wed, May 13, 2009 at 6:41 AM, John Tapsell <johnflux@gmail.com> wrote:
->>>>> I don't know why the git developers are being so hostile/dismisisve,
->>>> Are you serious?
->>>>
->>> ...because we'll kill you if aren't >:-E
->> I'm just flabbergasted by some people's expectations. Perhaps John
->> doesn't realize the git developers are all volunteers, and that it is
->> never appropriate to criticize a volunteer. A "thank you for all your
->> hard work on git" would have done nicely.
-> 
-> I'm as much of an open source developer as anyone else here.  I spend
-> a huge amount of my time programming for KDE.  But I've never told a
-> user "well that settles it" because they won't code it themselves :-/
-> I certaintly get a huge number of bug/wishes that I can't/won't code
-> myself, but I try to be a bit more diplomatic about it.
-> But then the kernel mailing lists tend to be a lot more.. direct..
-> than the kde mailing lists, so I guess it comes from that.  Requiring
-> people to have a thick skin and all that.
-> 
+On Wed, May 13, 2009 at 8:09 AM, Josef Wolf <jw@raven.inka.de> wrote:
+> Now here's the problem: =A0This last dcommit does simply a reset, bec=
+ause
+> nothing has changed since the last dcommit. =A0So a5cf3..c3ff2 are _n=
+ot_
+> marked as ancestors of svn-2/trunk, causing those cherries to be reba=
+sed
+> at the next dcommit with real changes.
 
-I think much of the perceived malignancy stems from the fact that the
-git list has a high ratio of developer-to-luser mailings on it, being
-by nature a developer tool most of the time. When the unaware user
-appears on the list with demands rather than polite requests, they're
-treated that much harder. Especially by the developer who happens to
-be, as it were, the butt of the request.
+I find this a *bit* curious, since each dcommit should be adding the
+cherry-picked changes you just now picked from the opposite branch,
+right?  If you weren't going to change anything, then you wouldn't
+have needed to do the cherry picks at all; you could have just done a
+merge -s ours in both directions in the first place.
 
-Personally, I've only ever found Dscho being anything but friendly on
-this list, and even then, I really didn't find it offensive. If viewed
-in a happy mood, it matches quite nicely with a swedish sketch whose
-theme is "men ja ente bitter". It's often quite funny, really :-)
+Anyway, regardless of the above, AFAIK there's no way to force svn to
+make an empty commit, which is a problem in this case.  You can make a
+nonempty commit, though; I've done this in the past by just adding a
+newline to the end of some arbitrary file.  Basically:
 
--- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+git merge -s ours whatever
+echo >>Makefile
+git add Makefile
+git commit --amend
+git svn dcommit
 
-Register now for Nordic Meet on Nagios, June 3-4 in Stockholm
- http://nordicmeetonnagios.op5.org/
+Silly, but it works.
 
-Considering the successes of the wars on alcohol, poverty, drugs and
-terror, I think we should give some serious thought to declaring war
-on peace.
+> Unfortunately, dcommit doesn't seem to have an option to force rebase
+> instead of resetting.
+
+Well, in fact it *is* rebasing, which throws away the extra commit
+because it thinks that commit didn't do anything.  I've experienced
+this problem a few times in the past, but I knew what was happening
+and I figured my case was too rare to matter.  Perhaps not.
+
+This could be considered a bug in git-svn, so I cc:'d Eric Wong, who I
+think is the main git-svn developer.  Anyway, try the workaround
+above.
+
+Good luck,
+
+Avery
