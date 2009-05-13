@@ -1,93 +1,60 @@
-From: =?utf-8?q?Uwe=20Kleine-K=C3=B6nig?= 
-	<u.kleine-koenig@pengutronix.de>
-Subject: [PATCH] tg-remote: don't add push specs but warn about existing ones.
-Date: Wed, 13 May 2009 12:04:06 +0200
-Message-ID: <1242209046-9416-1-git-send-email-u.kleine-koenig@pengutronix.de>
-References: <20090512090201.GA10150@pengutronix.de>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [RFC 1/8] UTF helpers
+Date: Wed, 13 May 2009 12:14:02 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.0905131213310.5046@intel-tinevez-2-302>
+References: <1242168631-30753-1-git-send-email-robin.rosenberg@dewire.com> <1242168631-30753-2-git-send-email-robin.rosenberg@dewire.com> <alpine.DEB.1.00.0905130215260.27348@pacific.mpi-cbg.de> <200905130724.44634.robin.rosenberg@dewire.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Marc Weber <marco-oweber@gmx.de>,
-	"martin f. krafft" <madduck@debian.org>, 528442@bugs.debian.org
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 13 12:04:22 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Robin Rosenberg <robin.rosenberg@dewire.com>
+X-From: git-owner@vger.kernel.org Wed May 13 12:14:19 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M4BK0-00075b-UG
-	for gcvg-git-2@gmane.org; Wed, 13 May 2009 12:04:21 +0200
+	id 1M4BTc-000440-Dj
+	for gcvg-git-2@gmane.org; Wed, 13 May 2009 12:14:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758048AbZEMKEM convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 13 May 2009 06:04:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758016AbZEMKEL
-	(ORCPT <rfc822;git-outgoing>); Wed, 13 May 2009 06:04:11 -0400
-Received: from metis.ext.pengutronix.de ([92.198.50.35]:56414 "EHLO
-	metis.ext.pengutronix.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756942AbZEMKEK (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 May 2009 06:04:10 -0400
-Received: from ukl by metis.ext.pengutronix.de with local (Exim 4.63)
-	(envelope-from <ukl@pengutronix.de>)
-	id 1M4BJn-0006DP-Av; Wed, 13 May 2009 12:04:10 +0200
-X-Mailer: git-send-email 1.6.2.4
-In-Reply-To: <20090512090201.GA10150@pengutronix.de>
-X-SA-Exim-Connect-IP: <locally generated>
-X-SA-Exim-Mail-From: ukl@pengutronix.de
-X-Spam-Checker-Version: SpamAssassin 3.2.4 (2008-01-01) on
-	metis.extern.pengutronix.de
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.6 required=4.5 tests=BAYES_00,NO_RELAYS
-	shortcircuit=no autolearn=ham version=3.2.4
-X-SA-Exim-Version: 4.2.1 (built Tue, 09 Jan 2007 17:23:22 +0000)
-X-SA-Exim-Scanned: Yes (on metis.ext.pengutronix.de)
-X-PTX-Original-Recipient: git@vger.kernel.org
+	id S1758260AbZEMKOG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 13 May 2009 06:14:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758198AbZEMKOF
+	(ORCPT <rfc822;git-outgoing>); Wed, 13 May 2009 06:14:05 -0400
+Received: from mail.gmx.net ([213.165.64.20]:53323 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1754956AbZEMKOD (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 May 2009 06:14:03 -0400
+Received: (qmail invoked by alias); 13 May 2009 10:14:03 -0000
+Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
+  by mail.gmx.net (mp026) with SMTP; 13 May 2009 12:14:03 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19ffdJjhghfKfD49hYOq60Y14PrmpwNJazFroCdSO
+	D9VEayODLlIDyL
+X-X-Sender: schindel@intel-tinevez-2-302
+In-Reply-To: <200905130724.44634.robin.rosenberg@dewire.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.6899999999999999
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119022>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119023>
 
-topgit used to add some push specs to assert that topbases are pushed,
-too.  This should now be handled by tg-push.
+Hi,
 
-Signed-off-by: Uwe Kleine-K=C3=B6nig <u.kleine-koenig@pengutronix.de>
-Cc: Marc Weber <marco-oweber@gmx.de>
-Cc: martin f. krafft <madduck@debian.org>
-Cc: 528442@bugs.debian.org
----
- tg-remote.sh |    9 +++++++--
- 1 files changed, 7 insertions(+), 2 deletions(-)
+On Wed, 13 May 2009, Robin Rosenberg wrote:
 
-diff --git a/tg-remote.sh b/tg-remote.sh
-index 3a40081..86dcd9a 100644
---- a/tg-remote.sh
-+++ b/tg-remote.sh
-@@ -28,8 +28,13 @@ git config "remote.$name.url" >/dev/null || die "unk=
-nown remote '$name'"
- ## Configure the remote
-=20
- git config --replace-all "remote.$name.fetch" "+refs/top-bases/*:refs/=
-remotes/$name/top-bases/*" "\\+refs/top-bases/\\*:refs/remotes/$name/to=
-p-bases/\\*"
--git config --replace-all "remote.$name.push" "+refs/top-bases/*:refs/t=
-op-bases/*" "\\+refs/top-bases/\\*:refs/top-bases/\\*"
--git config --replace-all "remote.$name.push" "+refs/heads/*:refs/heads=
-/*" "\\+refs/heads/\\*:refs/heads/\\*"
-+
-+if git config --get-all "remote.$name.push" "\\+refs/top-bases/\\*:ref=
-s/top-bases/\\*" >/dev/null && test "xtrue" !=3D "x$(git config --bool =
---get topgit.dontwarnonoldpushspecs)"; then
-+	info "Probably you want to remove the push specs introduced by an old=
- version of topgit:"
-+	info '       git config --unset-all "remote.'$name'.push" "\\+refs/to=
-p-bases/\\*:refs/top-bases/\\*"'
-+	info '       git config --unset-all "remote.'$name'.push" "\\+refs/he=
-ads/\\*:refs/heads/\\*"'
-+	info '(or use git config --bool --add topgit.dontwarnonoldpushspecs t=
-rue to get rid of this warning)'
-+fi
-=20
- info "Remote $name can now follow TopGit topic branches."
- if [ -z "$populate" ]; then
---=20
-1.6.2.4
+> > Okay, I'll stop here.  You might want to clean up your patch series 
+> > before resending.
+> 
+> I also told you why why I stopped working on the patches. The patches 
+> are not part of a beauty contest and not meant for inclusion as such. If 
+> you cannot see through the rubble, just ignore the patches. If the 
+> conclusion is that this is a way forward, then I could start working on 
+> a completely new set of much cleaner patches.,
+
+You know, I really should have gone to bed, because I managed to mistake 
+the "RFC" for "PATCH".
+
+Very sorry for that,
+Dscho
