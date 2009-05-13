@@ -1,99 +1,108 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: Cross-Platform Version Control
-Date: Wed, 13 May 2009 09:26:19 -0700 (PDT)
-Message-ID: <alpine.LFD.2.01.0905130915540.3343@localhost.localdomain>
-References: <419AD153-53B4-4DAB-AF72-4127C17B1CA0@gmail.com> <20090512151403.GS30527@spearce.org> <20090512161638.GB29566@coredump.intra.peff.net>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: update @version in file
+Date: Wed, 13 May 2009 18:56:44 +0200
+Message-ID: <200905131856.46344.jnareb@gmail.com>
+References: <1242205190383-2879913.post@n2.nabble.com> <m3iqk5l4ps.fsf@localhost.localdomain> <20090513160415.GA4097@andros.launchmodem.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: "Shawn O. Pearce" <spearce@spearce.org>,
-	Esko Luontola <esko.luontola@gmail.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed May 13 18:29:26 2009
+Content-Type: text/plain;
+  charset="iso-8859-2"
+Content-Transfer-Encoding: 7bit
+Cc: Andreas Ericsson <ae@op5.se>, takeshin <admirau@gmail.com>,
+	git@vger.kernel.org
+To: Dan Loewenherz <dloewenherz@gmail.com>
+X-From: git-owner@vger.kernel.org Wed May 13 18:57:43 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M4HKb-0007Au-2D
-	for gcvg-git-2@gmane.org; Wed, 13 May 2009 18:29:21 +0200
+	id 1M4Hm0-0005TN-6H
+	for gcvg-git-2@gmane.org; Wed, 13 May 2009 18:57:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760597AbZEMQ3J (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 13 May 2009 12:29:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760539AbZEMQ3I
-	(ORCPT <rfc822;git-outgoing>); Wed, 13 May 2009 12:29:08 -0400
-Received: from smtp1.linux-foundation.org ([140.211.169.13]:51446 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1760498AbZEMQ3H (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 13 May 2009 12:29:07 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
-	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id n4DGQK8x014328
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Wed, 13 May 2009 09:26:51 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id n4DGQJXw030836;
-	Wed, 13 May 2009 09:26:19 -0700
-X-X-Sender: torvalds@localhost.localdomain
-In-Reply-To: <20090512161638.GB29566@coredump.intra.peff.net>
-User-Agent: Alpine 2.01 (LFD 1184 2008-12-16)
-X-Spam-Status: No, hits=-3.464 required=5 tests=AWL,BAYES_00
-X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
+	id S1760727AbZEMQ4v (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 13 May 2009 12:56:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760705AbZEMQ4u
+	(ORCPT <rfc822;git-outgoing>); Wed, 13 May 2009 12:56:50 -0400
+Received: from fg-out-1718.google.com ([72.14.220.155]:61021 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758842AbZEMQ4t (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 May 2009 12:56:49 -0400
+Received: by fg-out-1718.google.com with SMTP id 16so264673fgg.17
+        for <git@vger.kernel.org>; Wed, 13 May 2009 09:56:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=VkIsCl7OmQxhsh+8DlBNdFgFeCliKSqnSlSZ/HQJEc8=;
+        b=YviG+bB2j3qsF4WssRucwN95dXPKrWcOHe2tEhxeH074+8ggxuMaJz4ile+ONV6atv
+         vzeY//YoBeDzhcsMzOWTuEsmNMzTsipwCCyJdx1Rn60B6WGbAkFSo5iDgDjpKZT7J9HG
+         GXlyLVXlcn2vPc+lNtLezviopK60R7RQbrFOo=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=nOpFED0Piveh7laJ4fcMm2gJ1xl06qRY+LD/Ec7r+ksqH5UlMRoN8JQXjKOPs4ZQj7
+         DT7dD0Wd4NAb0u2phTN3Juv58/QwKzqVcF6VpwFp3O2m2t0Dtzna/tr76DEHCEBaMT8X
+         8WumA7CHIX07lwN/+KCopQoItbExkdnoFYpy8=
+Received: by 10.86.59.18 with SMTP id h18mr1415541fga.71.1242233809149;
+        Wed, 13 May 2009 09:56:49 -0700 (PDT)
+Received: from ?192.168.1.13? (abwb156.neoplus.adsl.tpnet.pl [83.8.225.156])
+        by mx.google.com with ESMTPS id 12sm309691fgg.25.2009.05.13.09.56.46
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 13 May 2009 09:56:47 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <20090513160415.GA4097@andros.launchmodem.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119065>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119066>
 
+On Wed, 13 May 2009, Dan Loewenherz wrote:
+> On 13/05/09 02:42 -0700, Jakub Narebski wrote:
+> > Andreas Ericsson <ae@op5.se> writes:
 
+> > > No, but see GIT-VERSION-GEN and "git help describe" for info on how to
+> > > replace such version tags using a script when you cut a release of your
+> > > project.
+> 
+> Couldn't Git be a little more friendly? 
 
-On Tue, 12 May 2009, Jeff King wrote:
->
-> Or they use a single encoding like utf8 so that there are no surprises.
-> You can still run into normalization problems with filenames on some
-> filesystems, though.  Linus's name_hash code sets up the framework to
-> handle "these two names are actually equivalent", but right now I think
-> there is just code for handling case-sensitivity, not utf8 normalization
-> (but I just skimmed the code, so I might be wrong).
+No, Git cannot have that feature.
 
-utf-8 normalization was one goal, and shouldn't be _that_ hard to do. But 
-quite frankly, the index is only part of it, and probably not the worst 
-part.
+> You can choose to ignore an uncommitted file through the `git update-index 
+> --assume-unchanged` command. But AFAIK, Git doesn't allow one to ignore 
+> uncommitted _lines_ in tracked files. If this feature were implemented, a 
+> post commit hook could write in the latest commit hash and git wouldn't care.
 
-The real pain of filename handling is all the "read tree recursively with 
-readdir()" issues. Along with just an absolute sh*t-load of issues about 
-what to do when people ended up using different versions of the "same" 
-name in different branches.
+No, I am afraid it is not possible. Let me explain
 
-There's also the issue that "cross-platform" really can be a pretty damn 
-big pain. What do you do for platforms that simply are pure shit? I 
-realize that OS X people have a hard time accepting it, but OS X 
-filesystems are generally total and utter crap - even more so than 
-Windows.
+1. Git doesn't touch files which didn't change during rewinding (going
+   back in history, perhaps to start development of maintenance branch,
+   or doing bisection of history to find commit which introduced a bug),
+   and when switching branches. If keyword expansion was about *commit*
+   information (like description/decoration e.g. 'v1.6.3-17-g35805ce',
+   or author, or change date) then when switching branches (going to
+   other commit, with other info) you would have to rewrite all files.
+   This would very badly affect performance. Also, when committing you
+   would have to rewrite all files.
 
-Yes, yes, you can tell OS X that case matters, but that's not the normal 
-case - and what do you do with projects that simply _do_ care about case. 
-The kernel is one such project.
+2. If you wanted however to have *file* version (like in CVS), then it
+   is impossible because Git doesn't store such info (well, beside
+   blob id of a contents of a file, but that is not exactly a version
+   number); moreover it doesn't make much sense to know such number.
+   It is next to useless; it is changesets that matter. CVS has it
+   because it evolved from file-based version control system, only
+   cobbled together.
+ 
+> Is this something that is worth pursuing?
 
-Sure, you can "encode" the filenames on such broken filesystems in a way 
-that they'd be different - but that won't really help the project, since 
-makefiles etc won't work anyway.
-
-So one reason I didn't bother with utf-8 is that the much more fundamental 
-issues are simply in plain old 7-bit US-ASCII. 
-
-That said, if the only issue is that you want to encode regular utf-8 in a 
-coherent way (and ignore the case issues), then we could probably do that 
-part fairly easily with a "convert_to_internal()" and 
-"convert_to_filename()" thing that acts very much like the CRLF conversion 
-(except on filenames, not data).
-
-And yes, it's probably worth doing, since we'd need that for fuller case 
-support anyway.
-
-It's just a fair amount of churn - not fundamentally _hard_, but not 
-trivial either. And it needs a _lot_ of care, and a fair amount of 
-testing that is probably hard to do on sane filesystems (ie the case where 
-the filesystem actually _changes_ the name is going to be hard to test on 
-anything sane).
-
-			Linus
+You can write your own clear/smudge filters if you are stubborn
+about having version info in files which are under version control
+(and you can ask SCM at which version you are), rather than adding
+version info on release (so the program can support --version option).
+-- 
+Jakub Narebski
+Poland
