@@ -1,98 +1,70 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: [PATCH] Quote LF in urls git fetch saves in FETCH_HEAD
-Date: Wed, 13 May 2009 18:09:42 +0200
-Message-ID: <81b0412b0905130909x2ad67407p53ad6f79966c1ea3@mail.gmail.com>
-References: <200905112208.21017.Hugo.Mildenberger@namir.de>
-	 <200905121557.18542.Hugo.Mildenberger@namir.de>
-	 <81b0412b0905120759u15f1ec73k73625a7904515792@mail.gmail.com>
-	 <200905121900.00625.Hugo.Mildenberger@namir.de>
-	 <81b0412b0905121018lbccda1fvf6c4c19417cdde00@mail.gmail.com>
-	 <20090512172452.GA32594@blimp.localdomain>
-	 <7vws8l7w0d.fsf@alter.siamese.dyndns.org>
-	 <81b0412b0905122306w4ed41bdiab073a05587fab55@mail.gmail.com>
-	 <alpine.LNX.2.00.0905131109240.2147@iabervon.org>
+From: Catalin Marinas <catalin.marinas@gmail.com>
+Subject: Re: [StGit PATCH 4/9] Convert 'clone' to the use stgit.lib
+Date: Wed, 13 May 2009 17:10:08 +0100
+Message-ID: <b0943d9e0905130910w35a5382ai3d89751d7d8b0c48@mail.gmail.com>
+References: <20090428150742.27261.19620.stgit@pc1117.cambridge.arm.com>
+	 <20090428150957.27261.83658.stgit@pc1117.cambridge.arm.com>
+	 <20090429062101.GD18483@diana.vm.bytemark.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Hugo Mildenberger <Hugo.Mildenberger@namir.de>
-To: Daniel Barkalow <barkalow@iabervon.org>
-X-From: git-owner@vger.kernel.org Wed May 13 18:09:52 2009
+Cc: git@vger.kernel.org
+To: =?ISO-8859-1?Q?Karl_Hasselstr=F6m?= <kha@treskal.com>
+X-From: git-owner@vger.kernel.org Wed May 13 18:10:23 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M4H1j-0005Ao-Bd
-	for gcvg-git-2@gmane.org; Wed, 13 May 2009 18:09:51 +0200
+	id 1M4H2D-0005Xn-Qr
+	for gcvg-git-2@gmane.org; Wed, 13 May 2009 18:10:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758359AbZEMQJo convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 13 May 2009 12:09:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758041AbZEMQJn
-	(ORCPT <rfc822;git-outgoing>); Wed, 13 May 2009 12:09:43 -0400
-Received: from mail-bw0-f222.google.com ([209.85.218.222]:42203 "EHLO
-	mail-bw0-f222.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757703AbZEMQJm convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 13 May 2009 12:09:42 -0400
-Received: by bwz22 with SMTP id 22so743256bwz.37
-        for <git@vger.kernel.org>; Wed, 13 May 2009 09:09:42 -0700 (PDT)
+	id S1758726AbZEMQKN convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 13 May 2009 12:10:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758530AbZEMQKM
+	(ORCPT <rfc822;git-outgoing>); Wed, 13 May 2009 12:10:12 -0400
+Received: from mail-ew0-f176.google.com ([209.85.219.176]:41869 "EHLO
+	mail-ew0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758136AbZEMQKK convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 13 May 2009 12:10:10 -0400
+Received: by ewy24 with SMTP id 24so901403ewy.37
+        for <git@vger.kernel.org>; Wed, 13 May 2009 09:10:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:mime-version:received:in-reply-to:references
          :date:message-id:subject:from:to:cc:content-type
          :content-transfer-encoding;
-        bh=E7p9yj+EjVx1AQX4H2IOVDdFPOQpllkJTM+NoP2UYUs=;
-        b=nKnICNMv4fYMRPOp2CmeARdyaSSsX8hP6/YTP6TmLS15JyyBMUpvRWupWuF1F8l6be
-         i1qQQ4gJ+pav/wwvWZyrCT/6q8iII2mdXwp8Myxbnvjkze8lB7q5LJ/pcfzGXRtnXtI9
-         Zo9eIHHR6ws7iNFkVMpN6+Gye1y3JqQMrvwPk=
+        bh=JjjcMU8rjbRW1Na67ExV/m3cfUA+F99H85uiZl/d6yY=;
+        b=WRuEQccnBePjttHMP+M+YkRxzQEuBCM9Omy+LMeOeN93E5ses2K6f/miXXMmTJi08e
+         GaPYNY1m4ato83cBsmo4Wr8bJHnjA6aB3yUND/ckFuRxJ+lNDSlTr9hQ1Ro4Egpj7aCU
+         52J2Hx6nnL+RQeYLJDhFNgohiCnSsh/LiIpUs=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type:content-transfer-encoding;
-        b=kBu94Nh6EzRgfduQf67xFRcxIQzeqXSTWYRu/bNo9GCjdGM7NOPADF3KaztOcAO4gy
-         l6RLFZyO96/m3ojxBa6qz0lY0n2c+9G7fATqS30aMmEya6Ht+8R90Knz3FOSLEAWkFI1
-         xH2l+KDyXoFhOzhA8BBB7KRQqtGPyZtiGK43w=
-Received: by 10.204.68.10 with SMTP id t10mr1046696bki.182.1242230982048; Wed, 
-	13 May 2009 09:09:42 -0700 (PDT)
-In-Reply-To: <alpine.LNX.2.00.0905131109240.2147@iabervon.org>
+        b=N5/r5OcAUvhxTMihtY14MtkDf+1WOqg/QJljWuh5Rh56IwHatV9USkiB7HpIoCZyQX
+         mrvVO9VuvmUonBhlYpr3JLlZws/wPvnlbL9ZjTt2RGIzgaP8Js6R86Tde1sKr3FvIMw2
+         z5ZIUzqfoVyyzgh4b6rwEedoPoMn1GCWSqdWQ=
+Received: by 10.216.3.70 with SMTP id 48mr508057weg.74.1242231008342; Wed, 13 
+	May 2009 09:10:08 -0700 (PDT)
+In-Reply-To: <20090429062101.GD18483@diana.vm.bytemark.co.uk>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119062>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119063>
 
-2009/5/13 Daniel Barkalow <barkalow@iabervon.org>:
-> On Wed, 13 May 2009, Alex Riesen wrote:
->> 2009/5/13 Junio C Hamano <gitster@pobox.com>:
->>
->> > If it is just informational use only, then it might make more sens=
-e to
->> > drop this ugly "quoted \n" silently. =C2=A0I dunno.
->>
->> That'd mean to loose the information completely. Which is just as ba=
-d
->> as putting the LF in the url in the first place.
+2009/4/29 Karl Hasselstr=F6m <kha@treskal.com>:
+> On 2009-04-28 16:09:57 +0100, Catalin Marinas wrote:
+>> +def clone(remote, local):
+>> + =A0 =A0"""Clone a remote repository using 'git clone'."""
+>> + =A0 =A0run.Run('git', 'clone', remote, local).run()
 >
-> Looking back at the original message, it looks like the user included=
- a
-> newline in an argument to clone, and the fetch must have stripped it =
-out
-> (or ignored it in some other fashion), because data was retrieved fro=
-m a
-> repository that doesn't have a newline in its name.
+> You don't capture git's output here, but just let it through. Does
+> that look good in combination with the enclosing out.start() ...
+> .done() stuff?
 
-_That_ looks like a bug to me. We should have asked exactly the name
-we were given, or notify the user about what we have used for the url
-if we have ignored user's input and decided to use something else.
-Patches follow.
+I actually dropped the out.*() entirely as git already prints enough
+information.
 
-> ... Most likely, the
-> newline should just be prohibited in the URL in the config file in th=
-e
-> first place, and we shouldn't be able to get to the point of writing =
-a
-> FETCH_HEAD with that value.
-
-What I cannot understand is what's wrong with url containing an LF?
-Especially if we can handle it, all the tools can handle it, and puttin=
-g
-LF in a filename is a long-standing UNIX tradition.
+--=20
+Catalin
