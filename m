@@ -1,87 +1,98 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
+From: Linus Torvalds <torvalds@linux-foundation.org>
 Subject: Re: Cross-Platform Version Control
-Date: Wed, 13 May 2009 17:08:31 -0400 (EDT)
-Message-ID: <alpine.LNX.2.00.0905131639580.2147@iabervon.org>
-References: <419AD153-53B4-4DAB-AF72-4127C17B1CA0@gmail.com>  <20090512151403.GS30527@spearce.org>  <20090512161638.GB29566@coredump.intra.peff.net>  <alpine.LFD.2.01.0905130915540.3343@localhost.localdomain>  <alpine.LFD.2.01.0905130951100.3343@localhost.localdomain>
-  <alpine.LFD.2.01.0905131036040.3343@localhost.localdomain> <46a038f90905131126s79e5b8e1qd0c6c100ec836127@mail.gmail.com> <alpine.LFD.2.01.0905131131240.3343@localhost.localdomain>
+Date: Wed, 13 May 2009 14:10:17 -0700 (PDT)
+Message-ID: <alpine.LFD.2.01.0905131401170.3343@localhost.localdomain>
+References: <419AD153-53B4-4DAB-AF72-4127C17B1CA0@gmail.com> <20090512151403.GS30527@spearce.org> <20090512161638.GB29566@coredump.intra.peff.net> <alpine.LFD.2.01.0905130915540.3343@localhost.localdomain> <alpine.LFD.2.01.0905130951100.3343@localhost.localdomain>
+ <op.utvy5mie1e62zd@merlin.emma.line.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Martin Langhoff <martin.langhoff@gmail.com>,
-	Jeff King <peff@peff.net>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
+Content-Type: TEXT/PLAIN; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jeff King <peff@peff.net>, "Shawn O. Pearce" <spearce@spearce.org>,
 	Esko Luontola <esko.luontola@gmail.com>, git@vger.kernel.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Wed May 13 23:08:44 2009
+To: Matthias Andree <matthias.andree@gmx.de>
+X-From: git-owner@vger.kernel.org Wed May 13 23:11:04 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M4Lgw-00007d-5K
-	for gcvg-git-2@gmane.org; Wed, 13 May 2009 23:08:42 +0200
+	id 1M4LjD-0001Ay-EO
+	for gcvg-git-2@gmane.org; Wed, 13 May 2009 23:11:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761290AbZEMVIb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 13 May 2009 17:08:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758604AbZEMVIb
-	(ORCPT <rfc822;git-outgoing>); Wed, 13 May 2009 17:08:31 -0400
-Received: from iabervon.org ([66.92.72.58]:39960 "EHLO iabervon.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753234AbZEMVIa (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 May 2009 17:08:30 -0400
-Received: (qmail 8582 invoked by uid 1000); 13 May 2009 21:08:31 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 13 May 2009 21:08:31 -0000
-In-Reply-To: <alpine.LFD.2.01.0905131131240.3343@localhost.localdomain>
-User-Agent: Alpine 2.00 (LNX 1167 2008-08-23)
+	id S1761359AbZEMVKz convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 13 May 2009 17:10:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761330AbZEMVKz
+	(ORCPT <rfc822;git-outgoing>); Wed, 13 May 2009 17:10:55 -0400
+Received: from smtp1.linux-foundation.org ([140.211.169.13]:46048 "EHLO
+	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1761188AbZEMVKy (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 13 May 2009 17:10:54 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
+	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id n4DLAHNq020351
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Wed, 13 May 2009 14:10:18 -0700
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id n4DLAHSb028103;
+	Wed, 13 May 2009 14:10:17 -0700
+X-X-Sender: torvalds@localhost.localdomain
+In-Reply-To: <op.utvy5mie1e62zd@merlin.emma.line.org>
+User-Agent: Alpine 2.01 (LFD 1184 2008-12-16)
+X-Spam-Status: No, hits=-3.463 required=5 tests=AWL,BAYES_00
+X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119105>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119106>
 
-On Wed, 13 May 2009, Linus Torvalds wrote:
 
-> On Wed, 13 May 2009, Martin Langhoff wrote:
-> > 
-> > Do we need to take the real solution to the core of git?
-> 
-> Well, I suspect that if we really want to support it, then we'd better.
-> 
-> > What I am wondering is whether we can keep this simple in git
-> > internals and catch problem filenames at git-add time.
-> 
-> I can almost guarantee that it will just cause more problems than it 
-> solves, and generate some nasty cases that just aren't solvable.
-> 
-> Because it really isn't just "git add". It's every single thing that does 
-> a lstat() on a filename inside of git.
-> 
-> Now, the simple OS X case is not a huge problem, since the lstat will 
-> succeed with the fixed-up filename too.
 
-I'm not seeing what the general case is, and how it could possibly behave.
+On Wed, 13 May 2009, Matthias Andree wrote:
 
-There's the "insensitive" behavior: if you create "foo" and look for 
-"FOO", it's there, but readdir() reports "foo".
+> Am 13.05.2009, 19:12 Uhr, schrieb Linus Torvalds
+> <torvalds@linux-foundation.org>:
+>=20
+> > Use <stringprep.h> and stringprep_utf8_nfkc_normalize() or somethin=
+g to do
+> > the actual normalization if you find characters with the high bit s=
+et. And
+> > since I know that the OS X filesystems are so buggy as to not even =
+do that
+> > whole NFD thing right, there is probably some OS-X specific "use th=
+is for
+> > filesystem names" conversion function.
+>=20
+> Sorry for interrupting, but NF_K_C? You don't want that (K for compat=
+ibility,
+> rather than canonical, normalization) for anything except normalizing
+> temporary variables inside strcasecmp(3) or similar. Probably not eve=
+n that.
+> The normalizations done are often irreversible and also surprising. Y=
+ou don't
+> want to turn 2=C2=B3.c into 23.c, do you?
 
-There's the "converting" behavior: if you create "foo", readdir() reports 
-"FOO", but lstat("foo") returns it.
+No, you're right. We want just plain NFC. I just googled for how some=20
+other projects handled this, and found the stringprep thing in a post=20
+about rsync, and didn't look any closer.
 
-The obvious general case is: if you create "foo", readdir() reports "FOO", 
-and lstat("foo") doesn't find a match. But if you create "foo" again... it 
-doesn't find "foo", so it creates a new file, which it also calls "FOO", 
-and the filesystem now has two files with identical names?
+But yes, you're absolutely right, stringprep is total crap, and nfkc is=
+=20
+horrible.
 
-It seems to me that the limits of minimally functional, non-inode-losing 
-filesystems are: lstat() might take a filename and return the data for a 
-non-byte-identical filename; open(name, O_CREAT|O_EXCL) might replace the 
-given name with a non-byte-identical filename. But surely open(name) and 
-lstat(name) (with the same name) must find the same file, even if 
-readdir() would report it with a different name.
+I have no idea of what library to use, though. For perl, there's=20
+Unicode::Normalize, but that's likely still subtly incorrect for the OS=
+-X=20
+case due to the filesystem not using _strict_ NFD.
 
-And I assume that a filesystem that rejected any non-NFD filenames or any 
-non-NFC filenames would be totally unusable, in that users will manage to 
-get unnormalized filenames into programs and find that the filesystem just 
-doesn't work.
+I have this dim memory of somebody actually pointing to the documentati=
+on=20
+of exactly which characters OS X ends up decomposing. Maybe we could ju=
+st=20
+do a git-specific inverse of that, knowing that NOBODY ELSE IN THE WHOL=
+E=20
+UNIVERSE IS SO TERMINALLY STUPID AS TO DO THAT DECOMPOSITION, and thus =
+the=20
+OS X case is the only one we need to care about?
 
-	-Daniel
-*This .sig left intentionally blank*
+			Linus
