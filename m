@@ -1,89 +1,88 @@
-From: "Matthias Andree" <matthias.andree@gmx.de>
-Subject: Re: [PATCH v3] To make GIT-VERSION-FILE, search for git more widely
-Date: Wed, 13 May 2009 14:17:09 +0200
-Message-ID: <op.utva2vxh1e62zd@balu>
-References: <1241688129-31613-1-git-send-email-matthias.andree@gmx.de>
- <7v7i0scvcf.fsf@alter.siamese.dyndns.org>
- <op.utlq3vgx1e62zd@merlin.emma.line.org>
- <7vprek0ywq.fsf@alter.siamese.dyndns.org> <op.utlylkb61e62zd@balu>
- <7vskje6wsy.fsf@alter.siamese.dyndns.org>
+From: Hugo Mildenberger <Hugo.Mildenberger@namir.de>
+Subject: Re: [PATCH] Quote LF in urls git fetch saves in FETCH_HEAD
+Date: Wed, 13 May 2009 14:39:32 +0200
+Message-ID: <200905131439.33907.Hugo.Mildenberger@namir.de>
+References: <200905112208.21017.Hugo.Mildenberger@namir.de> <7vws8l7w0d.fsf@alter.siamese.dyndns.org> <81b0412b0905122306w4ed41bdiab073a05587fab55@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; format=flowed; delsp=yes; charset=iso-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Junio C Hamano" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed May 13 14:17:21 2009
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed May 13 14:40:53 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M4DOi-0008Fv-Qg
-	for gcvg-git-2@gmane.org; Wed, 13 May 2009 14:17:21 +0200
+	id 1M4DlM-0002Sw-Jh
+	for gcvg-git-2@gmane.org; Wed, 13 May 2009 14:40:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757650AbZEMMRN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 13 May 2009 08:17:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755788AbZEMMRM
-	(ORCPT <rfc822;git-outgoing>); Wed, 13 May 2009 08:17:12 -0400
-Received: from mail.gmx.net ([213.165.64.20]:60659 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1755070AbZEMMRL (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 May 2009 08:17:11 -0400
-Received: (qmail invoked by alias); 13 May 2009 12:17:11 -0000
-Received: from balu.cs.uni-paderborn.de (EHLO balu.cs.uni-paderborn.de) [131.234.21.37]
-  by mail.gmx.net (mp065) with SMTP; 13 May 2009 14:17:11 +0200
-X-Authenticated: #428038
-X-Provags-ID: V01U2FsdGVkX18R/tRTEgARViMf2UEf4nSBJ6VvUWAUqQuGFCQu6m
-	hKk+ooesVlEFtE
-Received: from [127.0.0.1] (helo=balu)
-	by balu.cs.uni-paderborn.de with esmtp (Exim 4.69)
-	(envelope-from <matthias.andree@gmx.de>)
-	id KJL0SM-0003VG-AP; Wed, 13 May 2009 14:17:10 +0200
-In-Reply-To: <7vskje6wsy.fsf@alter.siamese.dyndns.org>
-User-Agent: Opera Mail/9.64 (Win32)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.54
+	id S1756700AbZEMMkf convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 13 May 2009 08:40:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756351AbZEMMkf
+	(ORCPT <rfc822;git-outgoing>); Wed, 13 May 2009 08:40:35 -0400
+Received: from mx02.qsc.de ([213.148.130.14]:59182 "EHLO mx02.qsc.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756018AbZEMMke convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 13 May 2009 08:40:34 -0400
+Received: from localhost (port-87-234-69-58.dynamic.qsc.de [87.234.69.58])
+	by mx02.qsc.de (Postfix) with ESMTP id 3584016C000E
+	for <git@vger.kernel.org>; Wed, 13 May 2009 14:40:33 +0200 (CEST)
+User-Agent: KMail/1.9.9
+In-Reply-To: <81b0412b0905122306w4ed41bdiab073a05587fab55@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119043>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119044>
 
-Am 09.05.2009, 18:55 Uhr, schrieb Junio C Hamano <gitster@pobox.com>:
+Am Mittwoch, 13. Mai 2009 schrieb Alex Riesen <raa.lkml@gmail.com>
+> 2009/5/13 Junio C Hamano <gitster@pobox.com>:
+> > Alex Riesen <raa.lkml@gmail.com> writes:
+> >
+> >> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 for (i =3D 0; i < url_=
+len; ++i)
+> >> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 if ('\n' =3D=3D url[i])
+> >> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 fputs("\\n", fp);
+> >> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 else
+> >> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 fputc(url[i], fp);
+> >> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 fputc('\n', fp);
+> >
+> > This ad-hoc quoting feels _very_ wrong. =C2=A0Who is on the reading=
+ side and
+> > how does it unquote?
+>=20
+> git fmt-merge-msg. It does not unquote. The url is purely information=
+al here.
+> OTOH, the \n shouldn't be in url text at all, so treat it as slightly
+> less annoying
+> warning.
+>=20
+> > If it is just informational use only, then it might make more sense=
+ to
+> > drop this ugly "quoted \n" silently. =C2=A0I dunno.
+>=20
+> That'd mean to loose the information completely. Which is just as bad
+> as putting the LF in the url in the first place.
+> --
 
-> "Matthias Andree" <matthias.andree@gmx.de> writes:
->
->>> Fine then.  Or you could just append "." to the $PATH ;-)
->>
->> "." in the super user's PATH? Cool stuff, and so innovative.
->
-> I didn't mean to suggest PATH=$PATH:. *in the user's environment* ;-).
-> You do that inside GIT-VERSION-FILE, which is essentially the same thing
-> as running ./git$X from there.
-
-No, it is not -- the scope of the GIT variable is much narrower than doing  
-PATH=$PATH:. in the script.
-
-BTW, in the earlier version, I used type(1) to take $PATH search into  
-account in case GIT=git; test -x does not do path search, unlike type.
-
-> What's innovative is whoever is running build as root.
-
-Yes, and that is why I found the PATH-dependent behaviour so irritating  
-and wanted to fix it. I have another approach cooking that entails  
-factoring out common code from ./git-gui/GIT-VERSION-GEN and  
-./GIT-VERSION-GEN into ./git-gui/GIT-VERSION-SUBR.
-
-For any approach taken, we'll have to touch both the shell and the  
-Makefile, unless we want to manually redo things in the GIT-VERSION-GEN  
-script that were already done automatically or programmatically in  
-Makefile.
-
-Please let me know if you're willing to accept a patch that touches both  
-Makefile and the GIT-VERSION-* shell scripts. If you don't, I can quit  
-here and not waste further time on submissions that are inacceptable  
-anyhow, but just keep rebasing my local patch instead.
-
-Best regards
-
--- 
-Matthias Andree
+This stray linefeed is not information, but pure contamination. Thus it=
+=20
+would be much better to simply strip it off. And besides from the fact =
+that=20
+git apply rejects this patch (fatal: corrupt patch at line 6), I think =
+it would=20
+also not handle the equally wrong repository directory name on disk, wh=
+ich=20
+then possibly leads to subsequent make failures (as it actually happend=
+ in=20
+the case I described earlier here.) Why not just return to your origina=
+l idea,=20
+which proposed testing the repository name against a regular expression=
+=20
+describing a forbidden set of characters (which is "\n", currently) and=
+ then=20
+terminate with a clear message?
