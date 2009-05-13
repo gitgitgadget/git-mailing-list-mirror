@@ -1,123 +1,74 @@
-From: Don Slutz <Don.Slutz@SierraAtlantic.com>
-Subject: [PATCH v2 4/7] Fix tests to work with core.autocrlf=true -- force false
-Date: Wed, 13 May 2009 15:35:45 -0400
-Message-ID: <1242243348-6690-5-git-send-email-Don.Slutz@SierraAtlantic.com>
-References: <1242070141-2936-1-git-send-email-Don.Slutz@SierraAtlantic.com>
- <1242243348-6690-1-git-send-email-Don.Slutz@SierraAtlantic.com>
- <1242243348-6690-2-git-send-email-Don.Slutz@SierraAtlantic.com>
- <1242243348-6690-3-git-send-email-Don.Slutz@SierraAtlantic.com>
- <1242243348-6690-4-git-send-email-Don.Slutz@SierraAtlantic.com>
-Cc: Don Slutz <Don.Slutz@SierraAtlantic.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 13 21:37:50 2009
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFC 1/8] UTF helpers
+Date: Wed, 13 May 2009 13:10:00 -0700
+Message-ID: <7vtz3o2293.fsf@alter.siamese.dyndns.org>
+References: <1242168631-30753-1-git-send-email-robin.rosenberg@dewire.com>
+	<1242168631-30753-2-git-send-email-robin.rosenberg@dewire.com>
+	<alpine.DEB.1.00.0905130215260.27348@pacific.mpi-cbg.de>
+	<200905130724.44634.robin.rosenberg@dewire.com>
+	<4A0A91CE.3080905@gmail.com> <7vljp04z6j.fsf@alter.siamese.dyndns.org>
+	<4A0B2007.70808@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Robin Rosenberg <robin.rosenberg@dewire.com>,
+	git@vger.kernel.org
+To: Esko Luontola <esko.luontola@gmail.com>
+X-From: git-owner@vger.kernel.org Wed May 13 22:10:21 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M4KGr-0006Xb-IG
-	for gcvg-git-2@gmane.org; Wed, 13 May 2009 21:37:42 +0200
+	id 1M4KmT-0006Hs-0X
+	for gcvg-git-2@gmane.org; Wed, 13 May 2009 22:10:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757532AbZEMTg1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 13 May 2009 15:36:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751331AbZEMTgZ
-	(ORCPT <rfc822;git-outgoing>); Wed, 13 May 2009 15:36:25 -0400
-Received: from krl.krl.com ([192.147.32.3]:59307 "EHLO krl.krl.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753994AbZEMTgK (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 May 2009 15:36:10 -0400
-Received: from krl.krl.com (localhost [127.0.0.1])
-	by krl.krl.com (8.13.1/8.13.1) with ESMTP id n4DJa6HS006802
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Wed, 13 May 2009 15:36:06 -0400
-Received: (from slutz@localhost)
-	by krl.krl.com (8.13.1/8.13.1/Submit) id n4DJa6IG006801;
-	Wed, 13 May 2009 15:36:06 -0400
-X-Mailer: git-send-email 1.6.3.15.g49878
-In-Reply-To: <1242243348-6690-4-git-send-email-Don.Slutz@SierraAtlantic.com>
-X-Virus-Scanned: ClamAV version 0.94.2, clamav-milter version 0.94.2 on krl
-X-Virus-Status: Clean
+	id S1755558AbZEMUKB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 13 May 2009 16:10:01 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755814AbZEMUKA
+	(ORCPT <rfc822;git-outgoing>); Wed, 13 May 2009 16:10:00 -0400
+Received: from fed1rmmtao105.cox.net ([68.230.241.41]:60358 "EHLO
+	fed1rmmtao105.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752365AbZEMUKA (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 May 2009 16:10:00 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao105.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20090513201000.DJEY20430.fed1rmmtao105.cox.net@fed1rmimpo02.cox.net>;
+          Wed, 13 May 2009 16:10:00 -0400
+Received: from localhost ([68.225.240.211])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id r8A01b00K4aMwMQ048A0wq; Wed, 13 May 2009 16:10:01 -0400
+X-Authority-Analysis: v=1.0 c=1 a=pGLkceISAAAA:8 a=LYXcwfC-SxRxe7b3zLAA:9
+ a=PJWQaUHDSlS3vJPEEaKvZnkonoEA:4 a=MSl-tDqOz04A:10
+X-CM-Score: 0.00
+In-Reply-To: <4A0B2007.70808@gmail.com> (Esko Luontola's message of "Wed\, 13 May 2009 22\:31\:19 +0300")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119099>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119100>
 
-Force core.autocrlf=false for these tests.  Most of these tests are checking
-for whitespace differences and so are not simple to fix.  The rest are not
-clear how to fix.
+Esko Luontola <esko.luontola@gmail.com> writes:
 
-Signed-off-by: Don Slutz <Don.Slutz@SierraAtlantic.com>
----
- t/t1002-read-tree-m-u-2way.sh |    3 ++-
- t/t4015-diff-whitespace.sh    |    2 ++
- t/t4019-diff-wserror.sh       |    1 +
- t/t4116-apply-reverse.sh      |    1 +
- t/t4200-rerere.sh             |    2 ++
- 5 files changed, 8 insertions(+), 1 deletions(-)
+> Junio C Hamano wrote on 13.5.2009 21:48:
+>> If you allow people to record otherwise exactly the same tree object in
+>> different encoding, like you seem to have in mind, subtree comparision
+>> based on the object name will not work and you will end up always
+>> traversing down to the tip, because you won't know if your subtrees need
+>> filename iconv until you recurse into them and actually take a look.
+>
+> Could you please educate me, that which operations depend on "doing
+> subtree comparisons based on the object name",
 
-diff --git a/t/t1002-read-tree-m-u-2way.sh b/t/t1002-read-tree-m-u-2way.sh
-index 5e40cec..acc9474 100755
---- a/t/t1002-read-tree-m-u-2way.sh
-+++ b/t/t1002-read-tree-m-u-2way.sh
-@@ -37,7 +37,8 @@ check_cache_at () {
- 
- test_expect_success \
-     setup \
--    'echo frotz >frotz &&
-+    'git config core.autocrlf false &&
-+     echo frotz >frotz &&
-      echo nitfol >nitfol &&
-      echo bozbar >bozbar &&
-      echo rezrov >rezrov &&
-diff --git a/t/t4015-diff-whitespace.sh b/t/t4015-diff-whitespace.sh
-index 6d13da3..122557e 100755
---- a/t/t4015-diff-whitespace.sh
-+++ b/t/t4015-diff-whitespace.sh
-@@ -9,6 +9,8 @@ test_description='Test special whitespace in diff engine.
- . ./test-lib.sh
- . "$TEST_DIRECTORY"/diff-lib.sh
- 
-+test_expect_success "setup" 'git config core.autocrlf false'
-+
- # Ray Lehtiniemi's example
- 
- cat << EOF > x
-diff --git a/t/t4019-diff-wserror.sh b/t/t4019-diff-wserror.sh
-index 84a1fe3..a580403 100755
---- a/t/t4019-diff-wserror.sh
-+++ b/t/t4019-diff-wserror.sh
-@@ -6,6 +6,7 @@ test_description='diff whitespace error detection'
- 
- test_expect_success setup '
- 
-+	git config core.autocrlf false &&
- 	git config diff.color.whitespace "blue reverse" &&
- 	>F &&
- 	git add F &&
-diff --git a/t/t4116-apply-reverse.sh b/t/t4116-apply-reverse.sh
-index 2298ece..a846be6 100755
---- a/t/t4116-apply-reverse.sh
-+++ b/t/t4116-apply-reverse.sh
-@@ -11,6 +11,7 @@ test_description='git apply in reverse
- 
- test_expect_success setup '
- 
-+	git config core.autocrlf false &&
- 	for i in a b c d e f g h i j k l m n; do echo $i; done >file1 &&
- 	perl -pe "y/ijk/\\000\\001\\002/" <file1 >file2 &&
- 
-diff --git a/t/t4200-rerere.sh b/t/t4200-rerere.sh
-index a6bc028..5e6cc82 100755
---- a/t/t4200-rerere.sh
-+++ b/t/t4200-rerere.sh
-@@ -8,6 +8,8 @@ test_description='git rerere
- 
- . ./test-lib.sh
- 
-+git config core.autocrlf false
-+
- cat > a1 << EOF
- Some title
- ==========
--- 
-1.6.3.15.g49878
+"diff-tree A B" looks at corresponding subtrees of A and B and does not
+recurse into the identical subdirectories; "git log -- dir" uses this fact
+to speed up the checking of differences.  When a typical commit touches
+only a handful of paths in a project with 20k paths, this really matters.
+
+> files/functions those comparisons are done? Also, do you mean by
+> "object name" the SHA1 of the object, the filename of a
+> file/directory, or something else?
+
+What is colloquially known as SHA-1 has an official terminology; see
+Documentation/glossary.txt.
