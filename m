@@ -1,90 +1,77 @@
-From: Martin Langhoff <martin.langhoff@gmail.com>
-Subject: Re: Cross-Platform Version Control
-Date: Wed, 13 May 2009 20:26:26 +0200
-Message-ID: <46a038f90905131126s79e5b8e1qd0c6c100ec836127@mail.gmail.com>
-References: <419AD153-53B4-4DAB-AF72-4127C17B1CA0@gmail.com>
-	 <20090512151403.GS30527@spearce.org>
-	 <20090512161638.GB29566@coredump.intra.peff.net>
-	 <alpine.LFD.2.01.0905130915540.3343@localhost.localdomain>
-	 <alpine.LFD.2.01.0905130951100.3343@localhost.localdomain>
-	 <alpine.LFD.2.01.0905131036040.3343@localhost.localdomain>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [ANNOUNCE] GIT 1.6.3.1
+Date: Wed, 13 May 2009 11:31:51 -0700
+Message-ID: <7vy6t04zxk.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Jeff King <peff@peff.net>, "Shawn O. Pearce" <spearce@spearce.org>,
-	Esko Luontola <esko.luontola@gmail.com>, git@vger.kernel.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Wed May 13 20:27:11 2009
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed May 13 20:32:05 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M4JAW-0001PX-Ak
-	for gcvg-git-2@gmane.org; Wed, 13 May 2009 20:27:04 +0200
+	id 1M4JFJ-0003uX-Iz
+	for gcvg-git-2@gmane.org; Wed, 13 May 2009 20:32:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759695AbZEMS02 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 13 May 2009 14:26:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758947AbZEMS02
-	(ORCPT <rfc822;git-outgoing>); Wed, 13 May 2009 14:26:28 -0400
-Received: from mail-bw0-f222.google.com ([209.85.218.222]:62457 "EHLO
-	mail-bw0-f222.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755816AbZEMS01 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 May 2009 14:26:27 -0400
-Received: by bwz22 with SMTP id 22so818745bwz.37
-        for <git@vger.kernel.org>; Wed, 13 May 2009 11:26:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=O3QKlEBa6i8VLGTdOYsWBClhQJr0BnnpchGSGesJRgw=;
-        b=eR93I15wosm6ERNpKqwGGFg/5kwdcm1ccbRxJLis3i8avtN7Vs/J2CRn64G15tSvc7
-         nE1FK53m8rNK7/ohD7HdiZpvKvxnNPzdTxRmoqninDcvpIJ4c/MiLquiVtuWLFaplpwM
-         7XpZQwbKRBf7JZoUeAMEONXi6l9DLwbl9x3i0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=oCkhd5N41uIbH5jJFmXLncS32ZeGjdPPleFMn/eL4jFIOsHFuDvjeRakpBUd9TMSoI
-         k3DU+B2lGuUacCesgMXCKrL4tzgawBLqyJ7hVGoaV6qP9BNu1WbTgyBp5fBH/Y9vdjdM
-         0BLfRzmFcnQsGPiYrXr3dCocuE+XGppICpvXE=
-Received: by 10.223.122.15 with SMTP id j15mr1096015far.74.1242239186806; Wed, 
-	13 May 2009 11:26:26 -0700 (PDT)
-In-Reply-To: <alpine.LFD.2.01.0905131036040.3343@localhost.localdomain>
+	id S1758242AbZEMSbw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 13 May 2009 14:31:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756241AbZEMSbw
+	(ORCPT <rfc822;git-outgoing>); Wed, 13 May 2009 14:31:52 -0400
+Received: from fed1rmmtao101.cox.net ([68.230.241.45]:35628 "EHLO
+	fed1rmmtao101.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753201AbZEMSbv (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 May 2009 14:31:51 -0400
+Received: from fed1rmimpo03.cox.net ([70.169.32.75])
+          by fed1rmmtao101.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20090513183152.QJKF17670.fed1rmmtao101.cox.net@fed1rmimpo03.cox.net>;
+          Wed, 13 May 2009 14:31:52 -0400
+Received: from localhost ([68.225.240.211])
+	by fed1rmimpo03.cox.net with bizsmtp
+	id r6Xr1b00E4aMwMQ046Xsh7; Wed, 13 May 2009 14:31:52 -0400
+X-Authority-Analysis: v=1.0 c=1 a=VwQbUJbxAAAA:8 a=rJ2SNjQboeCICQIKKwAA:9
+ a=cg30MBeRlxRWnfW0QQbfP5u0ZtAA:4
+X-CM-Score: 0.00
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119082>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119083>
 
-On Wed, May 13, 2009 at 7:46 PM, Linus Torvalds
-<torvalds@linux-foundation.org> wrote:
-> So I take it back. A readdir() wrapper is not a good idea. It gets us a
-> tiny bit of the way, but it would actually take us a step back from the
-> "real" solution.
+The latest maintenance release GIT 1.6.3.1 is available at the
+usual places:
 
-Do we need to take the real solution to the core of git?
+  http://www.kernel.org/pub/software/scm/git/
 
-What I am wondering is whether we can keep this simple in git
-internals and catch problem filenames at git-add time. This would
-allow git to keep treating filenames as a bag of bytes, and it does a
-better thing for users.
+  git-1.6.3.1.tar.{gz,bz2}			(source tarball)
+  git-htmldocs-1.6.3.1.tar.{gz,bz2}		(preformatted docs)
+  git-manpages-1.6.3.1.tar.{gz,bz2}		(preformatted docs)
 
-In cross platform projects, most users don't even know that there are
-problems, and even if they do, they don't know what the problems are.
+The RPM binary packages for a few architectures are found in:
 
-If git add can be told to warn & refuse to add a path with portability
-problems, then we educate our users, prevent them from committing
-filenames that will later cause trouble to others in their projects,
-etc.
+  RPMS/$arch/git-*-1.6.3.1-1.fc9.$arch.rpm	(RPM)
 
-from-the-keep-it-simple-and-informative-dept,
+Embarrasingly 1.6.3 has a rather grave regression when you switch to a new
+branch while you have some changes added to the index.  A commit you make
+from that index will record a wrong tree.  Please consider this a hotfix
+and do not use vanilla 1.6.3.
 
+----------------------------------------------------------------
 
-m
--- 
- martin.langhoff@gmail.com
- martin@laptop.org -- School Server Architect
- - ask interesting questions
- - don't get distracted with shiny stuff  - working code first
- - http://wiki.laptop.org/go/User:Martinlanghoff
+Changes since v1.6.3 are as follows:
+
+Alex Riesen (1):
+      Clarify kind of conflict in merge-one-file helper
+
+Alexander Potashev (1):
+      Documentation: cloning to empty directory is allowed
+
+Felipe Contreras (1):
+      git config: clarify --add and --get-color
+
+Junio C Hamano (4):
+      Start 1.6.3.1 maintenance series.
+      archive-tar.c: squelch a type mismatch warning
+      Revert "checkout branch: prime cache-tree fully"
+      GIT 1.6.3.1
