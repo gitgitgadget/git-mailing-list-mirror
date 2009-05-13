@@ -1,92 +1,86 @@
-From: Ittay Dror <ittay.dror@gmail.com>
-Subject: switching upstream tips
-Date: Wed, 13 May 2009 09:42:25 +0300
-Message-ID: <4A0A6BD1.7050907@gmail.com>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: Cross-Platform Version Control
+Date: Wed, 13 May 2009 08:49:58 +0200
+Message-ID: <81b0412b0905122349n729f0081j2f9b5b546da80306@mail.gmail.com>
+References: <419AD153-53B4-4DAB-AF72-4127C17B1CA0@gmail.com>
+	 <20090512151403.GS30527@spearce.org>
+	 <alpine.DEB.1.00.0905121808480.4447@intel-tinevez-2-302>
+	 <D1E08DA2-8D8E-4D45-A50A-F32E3448D6E9@gmail.com>
+	 <alpine.DEB.1.00.0905122237230.27348@pacific.mpi-cbg.de>
+	 <4A09E719.4090205@gmail.com>
+	 <alpine.DEB.1.00.0905130222460.27348@pacific.mpi-cbg.de>
+	 <4A0A5BDB.9030602@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed May 13 08:43:09 2009
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>
+To: Esko Luontola <esko.luontola@gmail.com>
+X-From: git-owner@vger.kernel.org Wed May 13 08:50:33 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M48BG-0002hF-DB
-	for gcvg-git-2@gmane.org; Wed, 13 May 2009 08:43:06 +0200
+	id 1M48IS-0005H1-3d
+	for gcvg-git-2@gmane.org; Wed, 13 May 2009 08:50:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754373AbZEMGme (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 13 May 2009 02:42:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752384AbZEMGmd
-	(ORCPT <rfc822;git-outgoing>); Wed, 13 May 2009 02:42:33 -0400
-Received: from fk-out-0910.google.com ([209.85.128.187]:54417 "EHLO
+	id S1755991AbZEMGuA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 13 May 2009 02:50:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750945AbZEMGt7
+	(ORCPT <rfc822;git-outgoing>); Wed, 13 May 2009 02:49:59 -0400
+Received: from fk-out-0910.google.com ([209.85.128.188]:49447 "EHLO
 	fk-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751636AbZEMGmd (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 May 2009 02:42:33 -0400
-Received: by fk-out-0910.google.com with SMTP id 18so216886fkq.5
-        for <git@vger.kernel.org>; Tue, 12 May 2009 23:42:33 -0700 (PDT)
+	with ESMTP id S1754483AbZEMGt6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 May 2009 02:49:58 -0400
+Received: by fk-out-0910.google.com with SMTP id 18so218455fkq.5
+        for <git@vger.kernel.org>; Tue, 12 May 2009 23:49:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from
-         :user-agent:mime-version:to:subject:content-type
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
          :content-transfer-encoding;
-        bh=NwjN4b5Tvf+olmprue6meF3H3DZezdvxL6bSOG+vD1Y=;
-        b=sDzRhcuklSc2Ps/H9hQGedAx6AyWqrd0/R/rd0lyOYjugyDSo3qhU7SSTnPJmOcdBR
-         qCKpeXeDuu7OoWAj66Yi6qwueb4DKp/c1+SaSHYJXAqLOU5T75olMgz+LnYr4LbnCjX5
-         3TIdZJUSZNMKi1GlA4KsLUm0TRxS8PrnZFzM8=
+        bh=wVV603LGhdlkUwICGMiNW2cvplphszGg8rml1j5HrXg=;
+        b=aKFAbdvkB0GgT5v97lDqM7ZQLhiAmu0tu0+Ypd+zlJg7jxWQeVeZ1zRkIYu6iIux9A
+         9/2qDFdCuY4y2vVz1g+y/ag82ndsmZPMwbWRqDpdTzbjQsvPkdnI+1mm6EfhRVnojesv
+         dUDrBfGcFAVawduUtStqv8PIafoUupRF2XvJE=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:subject
-         :content-type:content-transfer-encoding;
-        b=QKKftw3h017lI3Mvi6TYLDqtp83N+6YcOPG62u5O/Md6amQvIoWIUAEU6zKp2NR7pG
-         kPW4i/tlCK7n6styE2VOXhzeB1HCKws6sTYGKwPX052icwlycRkAVC0vwBiRhuz064V9
-         JLUIXKIMuXJyxHWLjXof/tYABHzIElb770Kh0=
-Received: by 10.103.172.9 with SMTP id z9mr391054muo.58.1242196953010;
-        Tue, 12 May 2009 23:42:33 -0700 (PDT)
-Received: from ?10.10.2.8? ([212.143.191.180])
-        by mx.google.com with ESMTPS id 7sm1896991mup.54.2009.05.12.23.42.32
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 12 May 2009 23:42:32 -0700 (PDT)
-User-Agent: Thunderbird 2.0.0.21 (X11/20090409)
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=w1g2pWFFiOiqgNt+NBBr11LFZYo9u6vfZUaPjmh4HlV2cnQi25ALgaEwsiTD/FL8Jw
+         Fjcp7p3Lqzl5kbk6kxq6t19TUVLy5oulXm50NHPEFfmXNR3AK53TVC5JI9vMVvioa3Xq
+         F+ERnVnGAX09mqGMk2HOF04BONsn8zhTzGNUA=
+Received: by 10.204.72.15 with SMTP id k15mr608050bkj.14.1242197398278; Tue, 
+	12 May 2009 23:49:58 -0700 (PDT)
+In-Reply-To: <4A0A5BDB.9030602@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118988>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118989>
 
-Hi,
+2009/5/13 Esko Luontola <esko.luontola@gmail.com>:
+> Johannes Schindelin wrote on 13.5.2009 3:23:
+>>
+>> Well, that rather settles things, no?
+>>
+>
+> There is need for the feature, but it's unfortunate that the Git developers
+> do not see its value. There are many users for whom using non-ASCII names is
+> necessary (for example all of Asia and most of Europe), but now it seems
+> that Bazaar is the only DVCS that handles encodings correctly:
+> http://stackoverflow.com/questions/829682/what-dvcs-support-unicode-filenames
 
+Many Git developers just use systems which don't care about the file names
+encoding at all and just keep the names as they were. So interoperability
+problem does not exist for them. So, they either don't need the feature,
+or can trivially avoid or workaround any problems.
 
-I'm working on a repository in github that is forked from another 
-repository. I've committed several times and pulled (merged) from the 
-upstream a few times (so the committs are interleaved). The upstream 
-repository is a clone of an SVN repository (in apache). The project has 
-switched svn repositories (moved from incubation to top level project) 
-and so created a new repository in github.
+> I see that there are some tests in the /t directory. Which command will run
+> all of them, how good coverage do the tests have, how reproducable and
+> isolated they are, how many seconds does it take to run all the tests? Is
+> there some high-level documentation for new developers?
 
-
-Now I want to start working with the new upstream repository. My problem 
-is that because of the changes in the backing SVN, the objects are 
-completely new, so when i try 'git pull new-upstream master', I get a 
-lot of add/add conflicts. Most of the conflicts show the whole file has 
-changed while actually just a few lines differ. So I'm having trouble 
-making sense of the mess.
-
-
-What I'm trying to figure out is how to do the following:
-
-* Reorder my history so that my commits are on top of the tip of the old 
-upstream repository.
-
-* Change the upstream repository reference so it points to the new 
-repository
-
-* Apply my commits on top of the new upstream repository
-
-
-Of course any other alternative which will allow me to continue to work 
-with the new upstream is also welcome.
-
-
-Thank you,
-
-Ittay
+make test. See also t/README. We like them. I always run test suite before
+deployment and sometimes run it just for fun (unless I have to run it
+on Windows).
