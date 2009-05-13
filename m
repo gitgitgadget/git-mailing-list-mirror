@@ -1,86 +1,111 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH 0/3] log: prettier decorations
-Date: Thu, 14 May 2009 00:34:41 +0300
-Message-ID: <94a0d4530905131434q17743408p5bc4b1c2fc332ea@mail.gmail.com>
-References: <1242249726-8514-1-git-send-email-felipe.contreras@gmail.com>
-	 <20090513212812.GA21268@coredump.intra.peff.net>
+From: "Matthias Andree" <matthias.andree@gmx.de>
+Subject: Re: Cross-Platform Version Control
+Date: Wed, 13 May 2009 23:47:10 +0200
+Message-ID: <op.utv1gwsi1e62zd@merlin.emma.line.org>
+References: <419AD153-53B4-4DAB-AF72-4127C17B1CA0@gmail.com>
+ <20090512151403.GS30527@spearce.org>
+ <20090512161638.GB29566@coredump.intra.peff.net>
+ <alpine.LFD.2.01.0905130915540.3343@localhost.localdomain>
+ <alpine.LFD.2.01.0905130951100.3343@localhost.localdomain>
+ <op.utvy5mie1e62zd@merlin.emma.line.org>
+ <alpine.LFD.2.01.0905131401170.3343@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8;
+	format=flowed	delsp=yes
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed May 13 23:34:55 2009
+Cc: "Jeff King" <peff@peff.net>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	"Esko Luontola" <esko.luontola@gmail.com>, git@vger.kernel.org
+To: "Linus Torvalds" <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Wed May 13 23:47:26 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M4M6E-0003PB-N2
-	for gcvg-git-2@gmane.org; Wed, 13 May 2009 23:34:51 +0200
+	id 1M4MIO-0000IG-D1
+	for gcvg-git-2@gmane.org; Wed, 13 May 2009 23:47:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756194AbZEMVen convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 13 May 2009 17:34:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754338AbZEMVem
-	(ORCPT <rfc822;git-outgoing>); Wed, 13 May 2009 17:34:42 -0400
-Received: from fg-out-1718.google.com ([72.14.220.155]:52974 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751710AbZEMVel convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 13 May 2009 17:34:41 -0400
-Received: by fg-out-1718.google.com with SMTP id d23so1104810fga.17
-        for <git@vger.kernel.org>; Wed, 13 May 2009 14:34:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=NFRK2q9gsL9pxMzl8OzBUs+fEC+S6NE8yXVmHZigNvs=;
-        b=qpzYY+96uNd4Unmirnx+32kIhyAG1T2Kvtsrze7Jd+fITI3wu8y8oR7t0k/C0GMnc/
-         lEPRzOszUQuJQn64dReq6qTrKEhb0CpJLvhuYjkmQu8H9R+GutW9LDCT0zuew6u/DIMD
-         CnlYGaRDe634KuJcTBAbgDDKQywJ9w1ig2Zxo=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=P3jpMtiiTvyMK7311oGw9RSYYQlH53bq47KUdTQZB9jXqhS8OqdIgXxlzuuvWPlHhK
-         1/2xHomSn7DxnhpYSyKMyOxNXBeoVRq87wV8ygeeTtC1CCS8AHFbTUkYM77JC21H9x1n
-         TFWwAzK4cB6+teX6q0Mx7UoLIgcJyJuNzMIGQ=
-Received: by 10.86.80.5 with SMTP id d5mr1745006fgb.59.1242250481445; Wed, 13 
-	May 2009 14:34:41 -0700 (PDT)
-In-Reply-To: <20090513212812.GA21268@coredump.intra.peff.net>
+	id S1761460AbZEMVrP convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 13 May 2009 17:47:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754338AbZEMVrO
+	(ORCPT <rfc822;git-outgoing>); Wed, 13 May 2009 17:47:14 -0400
+Received: from mail.gmx.net ([213.165.64.20]:52216 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751088AbZEMVrO (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 May 2009 17:47:14 -0400
+Received: (qmail invoked by alias); 13 May 2009 21:47:14 -0000
+Received: from g225203118.adsl.alicedsl.de (EHLO mandree.no-ip.org) [92.225.203.118]
+  by mail.gmx.net (mp056) with SMTP; 13 May 2009 23:47:14 +0200
+X-Authenticated: #428038
+X-Provags-ID: V01U2FsdGVkX188rd9wqUo8dWRA1U75O93OSXqZDlhllxisb/mZlp
+	uCiDbV9a1aF6iT
+Received: from merlin.emma.line.org (localhost [127.0.0.1])
+	by merlin.emma.line.org (Postfix) with ESMTP id 4404994385;
+	Wed, 13 May 2009 23:47:11 +0200 (CEST)
+In-Reply-To: <alpine.LFD.2.01.0905131401170.3343@localhost.localdomain>
+User-Agent: Opera Mail/9.64 (Linux)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.53
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119116>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119117>
 
-On Thu, May 14, 2009 at 12:28 AM, Jeff King <peff@peff.net> wrote:
-> On Thu, May 14, 2009 at 12:22:03AM +0300, Felipe Contreras wrote:
->
->> In order to do that I had to change prettify_ref to prettify_refname=
- because
->> add_ref_decoration doesn't have the ref object.
->
-> Thanks, this 1/3 looks fine to me.
->
-> But:
->
->> Felipe Contreras (3):
->> =C2=A0 Change prettify_ref to prettify_refname
->> =C2=A0 Prettify log decorations even more
->> =C2=A0 Fix test for new log decorate
->
-> Shouldn't 2/3 and 3/3 just be squashed together? It looks like 3/3 fi=
-xes
-> tests broken in 2/3, so you are hurting bisectability if they don't
-> happen together.
+Am 13.05.2009, 23:10 Uhr, schrieb Linus Torvalds =20
+<torvalds@linux-foundation.org>:
 
-Yeah, I thought so too. Maybe I should trust my instinct a bit more =3D=
-P
+>
+>
+> On Wed, 13 May 2009, Matthias Andree wrote:
+>
+>> Am 13.05.2009, 19:12 Uhr, schrieb Linus Torvalds
+>> <torvalds@linux-foundation.org>:
+>>
+>> > Use <stringprep.h> and stringprep_utf8_nfkc_normalize() or somethi=
+ng =20
+>> to do
+>> > the actual normalization if you find characters with the high bit =
+=20
+>> set. And
+>> > since I know that the OS X filesystems are so buggy as to not even=
+ do =20
+>> that
+>> > whole NFD thing right, there is probably some OS-X specific "use t=
+his =20
+>> for
+>> > filesystem names" conversion function.
+>>
+>> Sorry for interrupting, but NF_K_C? You don't want that (K for =20
+>> compatibility,
+>> rather than canonical, normalization) for anything except normalizin=
+g
+>> temporary variables inside strcasecmp(3) or similar. Probably not ev=
+en =20
+>> that.
+>> The normalizations done are often irreversible and also surprising. =
+You =20
+>> don't
+>> want to turn 2=C2=B3.c into 23.c, do you?
+>
+> No, you're right. We want just plain NFC. I just googled for how some
+> other projects handled this, and found the stringprep thing in a post
+> about rsync, and didn't look any closer.
+>
+> But yes, you're absolutely right, stringprep is total crap, and nfkc =
+is
+> horrible.
 
-> Other than that, I think the intent of the change and the implementat=
-ion
-> look fine.
+Crap? It's just besides the purpose and some limited form of fuzzy matc=
+h. =20
+Anyways...
 
-Cool. I squashed them and re-sent.
+> I have no idea of what library to use, though. For perl, there's
+> Unicode::Normalize, but that's likely still subtly incorrect for the =
+OS-X
+> case due to the filesystem not using _strict_ NFD.
+
+Perhaps ICU (ICU4C), from http://site.icu-project.org/
 
 --=20
-=46elipe Contreras
+Matthias Andree
