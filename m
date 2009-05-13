@@ -1,74 +1,97 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC 1/8] UTF helpers
-Date: Wed, 13 May 2009 13:10:00 -0700
-Message-ID: <7vtz3o2293.fsf@alter.siamese.dyndns.org>
-References: <1242168631-30753-1-git-send-email-robin.rosenberg@dewire.com>
-	<1242168631-30753-2-git-send-email-robin.rosenberg@dewire.com>
-	<alpine.DEB.1.00.0905130215260.27348@pacific.mpi-cbg.de>
-	<200905130724.44634.robin.rosenberg@dewire.com>
-	<4A0A91CE.3080905@gmail.com> <7vljp04z6j.fsf@alter.siamese.dyndns.org>
-	<4A0B2007.70808@gmail.com>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: [git-svn] howto select a part of the tree
+Date: Wed, 13 May 2009 22:38:03 +0200
+Message-ID: <4A0B2FAB.10801@drmicha.warpmail.net>
+References: <4A09D4EC.6050002@gmx.net> <4A0AC23E.2040503@drmicha.warpmail.net> <4A0B01AF.2040908@gmx.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Robin Rosenberg <robin.rosenberg@dewire.com>,
-	git@vger.kernel.org
-To: Esko Luontola <esko.luontola@gmail.com>
-X-From: git-owner@vger.kernel.org Wed May 13 22:10:21 2009
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Michael Gaber <Michael.Gaber@gmx.net>
+X-From: git-owner@vger.kernel.org Wed May 13 22:38:22 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M4KmT-0006Hs-0X
-	for gcvg-git-2@gmane.org; Wed, 13 May 2009 22:10:21 +0200
+	id 1M4LDZ-00035j-8D
+	for gcvg-git-2@gmane.org; Wed, 13 May 2009 22:38:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755558AbZEMUKB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 13 May 2009 16:10:01 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755814AbZEMUKA
-	(ORCPT <rfc822;git-outgoing>); Wed, 13 May 2009 16:10:00 -0400
-Received: from fed1rmmtao105.cox.net ([68.230.241.41]:60358 "EHLO
-	fed1rmmtao105.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752365AbZEMUKA (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 May 2009 16:10:00 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao105.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20090513201000.DJEY20430.fed1rmmtao105.cox.net@fed1rmimpo02.cox.net>;
-          Wed, 13 May 2009 16:10:00 -0400
-Received: from localhost ([68.225.240.211])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id r8A01b00K4aMwMQ048A0wq; Wed, 13 May 2009 16:10:01 -0400
-X-Authority-Analysis: v=1.0 c=1 a=pGLkceISAAAA:8 a=LYXcwfC-SxRxe7b3zLAA:9
- a=PJWQaUHDSlS3vJPEEaKvZnkonoEA:4 a=MSl-tDqOz04A:10
-X-CM-Score: 0.00
-In-Reply-To: <4A0B2007.70808@gmail.com> (Esko Luontola's message of "Wed\, 13 May 2009 22\:31\:19 +0300")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+	id S1754339AbZEMUiL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 13 May 2009 16:38:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754155AbZEMUiJ
+	(ORCPT <rfc822;git-outgoing>); Wed, 13 May 2009 16:38:09 -0400
+Received: from out1.smtp.messagingengine.com ([66.111.4.25]:37961 "EHLO
+	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752735AbZEMUiI (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 13 May 2009 16:38:08 -0400
+Received: from compute1.internal (compute1.internal [10.202.2.41])
+	by out1.messagingengine.com (Postfix) with ESMTP id F04913457FB;
+	Wed, 13 May 2009 16:38:08 -0400 (EDT)
+Received: from heartbeat2.messagingengine.com ([10.202.2.161])
+  by compute1.internal (MEProxy); Wed, 13 May 2009 16:38:08 -0400
+X-Sasl-enc: FPpP3tgvoelvzDnjzp6wg5WjL23kJTQ/Gs+RwVg+WdYX 1242247088
+Received: from localhost.localdomain (p54859969.dip0.t-ipconnect.de [84.133.153.105])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 37F7641A0E;
+	Wed, 13 May 2009 16:38:08 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1b5pre) Gecko/20090511 Lightning/1.0pre Shredder/3.0b3pre
+In-Reply-To: <4A0B01AF.2040908@gmx.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119100>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119101>
 
-Esko Luontola <esko.luontola@gmail.com> writes:
+Michael Gaber venit, vidit, dixit 13.05.2009 19:21:
+> Michael J Gruber schrieb:
+>> Michael Gaber venit, vidit, dixit 12.05.2009 21:58:
+>>> Hi,
+>>>
+>>> I have the following setup and would like to know it my thought workflow 
+>>> would be easily doable with git-svn.
+>>>
+>>> I have a repository which contains at the moment 5 eclipse projects. two 
+>>> of them are directly in the svn root and i'm not interested in them. the 
+>>> other three are mine and I'd like to use them as separate eclipse 
+>>> projects as i currently do when i check them out as seperate projects 
+>>> into the workspace with subversive.
+>>>
+>>> is this possible or should i just forget it.
+>>>
+>>> Regards Michael
+>>
+>> It is possible. I you want more detailed answers we would need more
+>> detailed info (structure of the svn repo).
+>>
+>> Cheers,
+>> Michael
+> 
+> Sorry I forgot.
+> Structure is as follows:
+> 
+> repo-root
+> |
+> |--otherstuff-1
+> |
+> |--otherstuff-2
+> |
+> |--trunk
+>       |
+>       |--myproj-1
+>       |
+>       |--myproj-2
+>       |
+>       |--myproj-3
+>       |
+>       |--myproj-4
+> 
+> I hope this makes it clear.
 
-> Junio C Hamano wrote on 13.5.2009 21:48:
->> If you allow people to record otherwise exactly the same tree object in
->> different encoding, like you seem to have in mind, subtree comparision
->> based on the object name will not work and you will end up always
->> traversing down to the tip, because you won't know if your subtrees need
->> filename iconv until you recurse into them and actually take a look.
->
-> Could you please educate me, that which operations depend on "doing
-> subtree comparisons based on the object name",
+No branches nor tags? In that case you can simply
 
-"diff-tree A B" looks at corresponding subtrees of A and B and does not
-recurse into the identical subdirectories; "git log -- dir" uses this fact
-to speed up the checking of differences.  When a typical commit touches
-only a handful of paths in a project with 20k paths, this really matters.
+git svn clone url-to-the-svn-repo/repo-root/trunk/myproj-1
 
-> files/functions those comparisons are done? Also, do you mean by
-> "object name" the SHA1 of the object, the filename of a
-> file/directory, or something else?
+etc. and have individual git svn repos. You can do similarly for the
+ones right below root.
 
-What is colloquially known as SHA-1 has an official terminology; see
-Documentation/glossary.txt.
+Cheers,
+Michael
