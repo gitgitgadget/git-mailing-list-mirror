@@ -1,82 +1,91 @@
-From: Esko Luontola <esko.luontola@gmail.com>
-Subject: Re: Cross-Platform Version Control
-Date: Wed, 13 May 2009 08:34:19 +0300
-Message-ID: <4A0A5BDB.9030602@gmail.com>
-References: <419AD153-53B4-4DAB-AF72-4127C17B1CA0@gmail.com> <20090512151403.GS30527@spearce.org> <alpine.DEB.1.00.0905121808480.4447@intel-tinevez-2-302> <D1E08DA2-8D8E-4D45-A50A-F32E3448D6E9@gmail.com> <alpine.DEB.1.00.0905122237230.27348@pacific.mpi-cbg.de> <4A09E719.4090205@gmail.com> <alpine.DEB.1.00.0905130222460.27348@pacific.mpi-cbg.de>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: [PATCH] Quote LF in urls git fetch saves in FETCH_HEAD
+Date: Wed, 13 May 2009 08:06:58 +0200
+Message-ID: <81b0412b0905122306w4ed41bdiab073a05587fab55@mail.gmail.com>
+References: <200905112208.21017.Hugo.Mildenberger@namir.de>
+	 <200905121557.18542.Hugo.Mildenberger@namir.de>
+	 <81b0412b0905120759u15f1ec73k73625a7904515792@mail.gmail.com>
+	 <200905121900.00625.Hugo.Mildenberger@namir.de>
+	 <81b0412b0905121018lbccda1fvf6c4c19417cdde00@mail.gmail.com>
+	 <20090512172452.GA32594@blimp.localdomain>
+	 <7vws8l7w0d.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed May 13 07:34:39 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Daniel Barkalow <barkalow@iabervon.org>,
+	Hugo Mildenberger <Hugo.Mildenberger@namir.de>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed May 13 08:07:08 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M4770-0003p2-Gn
-	for gcvg-git-2@gmane.org; Wed, 13 May 2009 07:34:38 +0200
+	id 1M47cR-00064n-9X
+	for gcvg-git-2@gmane.org; Wed, 13 May 2009 08:07:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751948AbZEMFe3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 13 May 2009 01:34:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751436AbZEMFe3
-	(ORCPT <rfc822;git-outgoing>); Wed, 13 May 2009 01:34:29 -0400
-Received: from mail-ew0-f176.google.com ([209.85.219.176]:47960 "EHLO
-	mail-ew0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751214AbZEMFe2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 May 2009 01:34:28 -0400
-Received: by ewy24 with SMTP id 24so528481ewy.37
-        for <git@vger.kernel.org>; Tue, 12 May 2009 22:34:27 -0700 (PDT)
+	id S1752817AbZEMGG7 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 13 May 2009 02:06:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752356AbZEMGG7
+	(ORCPT <rfc822;git-outgoing>); Wed, 13 May 2009 02:06:59 -0400
+Received: from fk-out-0910.google.com ([209.85.128.186]:49755 "EHLO
+	fk-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752172AbZEMGG6 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 13 May 2009 02:06:58 -0400
+Received: by fk-out-0910.google.com with SMTP id 18so210895fkq.5
+        for <git@vger.kernel.org>; Tue, 12 May 2009 23:06:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from
-         :user-agent:mime-version:to:cc:subject:references:in-reply-to
-         :content-type:content-transfer-encoding;
-        bh=7M3/mMUf3+4QniRa/9Pp+65MdrvKkjiiFfCde7oOp9s=;
-        b=rbSuG9P1rIYohDdrcTpdRekrlqnEReXzUKtzoY77+apc7ohkxwhgBt3VApq6hsxr4n
-         Mj9rVtFw24xQvppThAYLOd4dBv6a8OrDbnQgol2EnHQj5wK6xBwDjCTqgFtP8FwQvbT6
-         cHZ36E9fVbkING/KzjQHsfCyI1i2ltKhdq1QY=
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=2UNKMeILQ2Gt1MiOs4Y2DBbDdnIuzfD6Cw8Tq0oSESY=;
+        b=OCsFnBKl7sEiiUBrJWykfJtoxsTdGC6BIkvVvs/TC1fipyVLxTM0Z4TqLh3rxZB7Pp
+         96ixay8+CJc9bzu7TXSCq8Z6qCRHv7ZYOagAuX0fI5T+sq4o3X4iktCHhDHVxMswIxbO
+         hOGkErg3KDWsPcZQ674RC2OrU2jhn97Faax9w=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        b=lVLAZFm949XewNdqzkCeC35dwhsdgXwrl7wWE+Tdntz4DkR5z1jmK4efnlhrTi83fb
-         HE41ZXgj1MBskoaTypmhB5jVB1dnYBUuRB2YGquRtCYYOnbuka5Jifu1uLYBvGkZ+GoV
-         INz6nxoxceJ2Cq2LyKsAWnSBUmH/9nA1a4qyg=
-Received: by 10.210.43.11 with SMTP id q11mr144217ebq.37.1242192867824;
-        Tue, 12 May 2009 22:34:27 -0700 (PDT)
-Received: from ?10.0.0.2? ([88.195.117.100])
-        by mx.google.com with ESMTPS id 28sm748351eyg.34.2009.05.12.22.34.27
-        (version=SSLv3 cipher=RC4-MD5);
-        Tue, 12 May 2009 22:34:27 -0700 (PDT)
-User-Agent: Thunderbird 2.0.0.21 (Windows/20090302)
-In-Reply-To: <alpine.DEB.1.00.0905130222460.27348@pacific.mpi-cbg.de>
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=rNl0QZF2wZWgUBDHatnIT9cOG+smvlEUiX5yUE8mn8jfzLWSEETVfJH2uT61R53AIP
+         qBnEIvHqzx44GZ4K/HqaJOn1VfiAFTh7nzWCuf0oT2mwRDJcS5s4XoSIOP6mMajOmtW1
+         rjdW57bMotMJCqCzBI3GgFvchGlCXYIKqsJCU=
+Received: by 10.204.72.15 with SMTP id k15mr570974bkj.14.1242194818234; Tue, 
+	12 May 2009 23:06:58 -0700 (PDT)
+In-Reply-To: <7vws8l7w0d.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118983>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/118984>
 
-Johannes Schindelin wrote on 13.5.2009 3:23:
-> Well, that rather settles things, no?
-> 
+2009/5/13 Junio C Hamano <gitster@pobox.com>:
+> Alex Riesen <raa.lkml@gmail.com> writes:
+>
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 for (i =3D 0; i < url_le=
+n; ++i)
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 if ('\n' =3D=3D url[i])
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 fputs("\\n", fp);
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 else
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 fputc(url[i], fp);
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 fputc('\n', fp);
+>
+> This ad-hoc quoting feels _very_ wrong. =C2=A0Who is on the reading s=
+ide and
+> how does it unquote?
 
-There is need for the feature, but it's unfortunate that the Git 
-developers do not see its value. There are many users for whom using 
-non-ASCII names is necessary (for example all of Asia and most of 
-Europe), but now it seems that Bazaar is the only DVCS that handles 
-encodings correctly: 
-http://stackoverflow.com/questions/829682/what-dvcs-support-unicode-filenames
+git fmt-merge-msg. It does not unquote. The url is purely informational=
+ here.
+OTOH, the \n shouldn't be in url text at all, so treat it as slightly
+less annoying
+warning.
 
-Let's see if I have time later this or next year to work on it. At least 
-it would be good practise in getting acquainted with a new codebase and 
-learning C. But it would be better for someone else do it, to get it 
-done within a reasonable amount of time.
+> If it is just informational use only, then it might make more sense t=
+o
+> drop this ugly "quoted \n" silently. =C2=A0I dunno.
 
-I see that there are some tests in the /t directory. Which command will 
-run all of them, how good coverage do the tests have, how reproducable 
-and isolated they are, how many seconds does it take to run all the 
-tests? Is there some high-level documentation for new developers?
-
--- 
-Esko Luontola
-www.orfjackal.net
+That'd mean to loose the information completely. Which is just as bad
+as putting the LF in the url in the first place.
