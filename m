@@ -1,125 +1,79 @@
-From: "Matthias Andree" <matthias.andree@gmx.de>
-Subject: Re: git-tag bug? confusing git fast-export with double tag objects
-Date: Fri, 15 May 2009 00:35:45 +0200
-Message-ID: <op.utxydvnu1e62zd@merlin.emma.line.org>
-References: <op.utv93sdo1e62zd@merlin.emma.line.org>
- <op.utwdsutn1e62zd@merlin.emma.line.org>
- <7v8wl01iev.fsf@alter.siamese.dyndns.org>
- <op.utwyczlf1e62zd@merlin.emma.line.org>
- <20090514182249.GA11919@sigill.intra.peff.net>
+From: Aaron Cohen <remleduff@gmail.com>
+Subject: Re: [PATCH 3/3] read_directory(): infrastructure for pathname 
+	character set conversion
+Date: Thu, 14 May 2009 18:36:24 -0400
+Message-ID: <727e50150905141536r5f3c4c1ap615166ba71018bf3@mail.gmail.com>
+References: <alpine.LFD.2.01.0905141341470.3343@localhost.localdomain>
+	 <alpine.LFD.2.01.0905141342520.3343@localhost.localdomain>
+	 <alpine.LFD.2.01.0905141346440.3343@localhost.localdomain>
+	 <alpine.DEB.1.00.0905150018070.26154@pacific.mpi-cbg.de>
+Reply-To: aaron@assonance.org
 Mime-Version: 1.0
-Content-Type: text/plain; format=flowed; delsp=yes; charset=utf-8
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Cc: "Junio C Hamano" <gitster@pobox.com>, git@vger.kernel.org,
-	"Alex Riesen" <raa.lkml@gmail.com>,
-	"Brandon Casey" <casey@nrlssc.navy.mil>,
-	"Sverre Rabbelier" <srabbelier@gmail.com>
-To: "Jeff King" <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri May 15 00:36:00 2009
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Fri May 15 00:36:35 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M4jWw-0005vQ-ML
-	for gcvg-git-2@gmane.org; Fri, 15 May 2009 00:35:59 +0200
+	id 1M4jXV-000691-KN
+	for gcvg-git-2@gmane.org; Fri, 15 May 2009 00:36:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754500AbZENWft (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 14 May 2009 18:35:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753624AbZENWft
-	(ORCPT <rfc822;git-outgoing>); Thu, 14 May 2009 18:35:49 -0400
-Received: from mail.gmx.net ([213.165.64.20]:50564 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753565AbZENWfs (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 May 2009 18:35:48 -0400
-Received: (qmail invoked by alias); 14 May 2009 22:35:48 -0000
-Received: from e177047208.adsl.alicedsl.de (EHLO mandree.no-ip.org) [85.177.47.208]
-  by mail.gmx.net (mp020) with SMTP; 15 May 2009 00:35:48 +0200
-X-Authenticated: #428038
-X-Provags-ID: V01U2FsdGVkX1/CeKUrc+7C0IHN+e9QzKLWzk0WMqvPXq/BWR5hRD
-	xbRTenFkJMFejQ
-Received: from merlin.emma.line.org (localhost [127.0.0.1])
-	by merlin.emma.line.org (Postfix) with ESMTP id 168359447B;
-	Fri, 15 May 2009 00:35:46 +0200 (CEST)
-In-Reply-To: <20090514182249.GA11919@sigill.intra.peff.net>
-User-Agent: Opera Mail/9.64 (Linux)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.52
+	id S1754762AbZENWg0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 14 May 2009 18:36:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754721AbZENWgZ
+	(ORCPT <rfc822;git-outgoing>); Thu, 14 May 2009 18:36:25 -0400
+Received: from mail-bw0-f174.google.com ([209.85.218.174]:36653 "EHLO
+	mail-bw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754663AbZENWgZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 May 2009 18:36:25 -0400
+Received: by bwz22 with SMTP id 22so1584841bwz.37
+        for <git@vger.kernel.org>; Thu, 14 May 2009 15:36:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:reply-to:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=B+cA5TabtRDNv7nVWOhhR4V+sQPRjO9bfzMnEvgPHcg=;
+        b=WjQFgobShAeAAsnBqVm2V8Qu3CRRqpVjaOS4U+Za0fMqWc7puup9+ndz/rAc5+Jz7E
+         PpxBmSx4SxFts+8Ha9JDyf63HoQJGbJR+wc5NGuq+dNWB3hSdbUM6ykNI2HoUNhBd08k
+         c6PN/13XyiISvktNQpzRcdAqwUoa+snlrCa8I=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:reply-to:in-reply-to:references:date:message-id
+         :subject:from:to:cc:content-type:content-transfer-encoding;
+        b=oDKW3zDwse+cQbUuyFav37dZBrfAU+mryDcITRj4vkIGpTluV4WjR9jSD6K7sofyEC
+         EEP5cMDhs+JyCeAVRvZN/z3UqIHIuICpN3YNKTkr8lmbMzJabmTBAz90rDmNjnpfVNq1
+         CqEBIg1SIPHfm4XQzInmdRUeYw/dGdYT2c+dA=
+Received: by 10.204.60.133 with SMTP id p5mr2582106bkh.143.1242340584488; Thu, 
+	14 May 2009 15:36:24 -0700 (PDT)
+In-Reply-To: <alpine.DEB.1.00.0905150018070.26154@pacific.mpi-cbg.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119232>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119233>
 
-Am 14.05.2009, 20:22 Uhr, schrieb Jeff King <peff@peff.net>:
-
-> On Thu, May 14, 2009 at 11:37:37AM +0200, Matthias Andree wrote:
+On Thu, May 14, 2009 at 6:19 PM, Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+> Hi,
 >
->> HOWEVER, I see two problems here (yes, they are corner cases):
->>
->> #1: git tag -f ("replace tag") fails to "replace" a heaviweight tag if I
->> try to replace a tag by itself (or create a cycle by some other means).
->>
->> The new "foo" is unique in refs (OK), but it's *not unique* in objects
->> (FAIL), as the old "foo" is referenced by the new "foo" and bears the  
->> same
->> tag name.
->>
->> It screws the repo, breaking the uniqueness of tags. Basically, git tag  
->> -f
->> is implementing a half-baked, non-working "rebase tag objects"
->> functionality.
+> On Thu, 14 May 2009, Linus Torvalds wrote:
 >
-> Can you explain how this "screws the repo"? The refs are unique, and in
-> your examples, a tag object replaced by "git tag -f" no longer has a ref
-> pointing to it (but in your example of making a tag of a tag, then of
-> course the original is still reachable indirectly). The "unique in
-> objects" you refer to is that the tag itself says "here is the name
-> under which I was tagged". That name is purely informative and has
-> nothing to do with ref lookup or reachability.
+>> The use of "//" as the filesystem path component separator may be odd,
 >
-> In your examples, I don't see any behavior that is causing actual
-> problems.
+> Hopefully it will not bite us on Windows: "//fileserver/x" is different
+> from "/fileserver/x" there: the former tries to access the share "x" of
+> samba server "fileserver", while the latter will expand to "C:\Program
+> Files\Git\fileserver\x" (or wherever you installed Git).
+>
+> Ciao,
+> Dscho
 
-Hi Jeff,
-
-so you, Alex and Brandon say git doesn't malfunction here. Hope you don't  
-mind my insisting, and to keep this concise, I'll send only one answer to  
-several posts (the whole discussion is too verbose already).
-
-I agree that the resulting object structure is still a directed acyclic  
-graph, so I'll not criticize the object structure.
-
-The semantic meaning however is missing. Let me take a different vantage  
-and look at the same situation, leaving the object graph aside.
-
-This "git tag -f -s same same" operation gives me a signed nothing, and  
-the ref indeed no longer points to the old tag.  But what's the new  
-signature or tag good for?  I tagged & signed an object that was removed  
-in the process.  I have a tagged and signed nothing. (Yes, there is an  
-underlying object, but it takes lots of fiddling with the LL tools to get  
-at it.)
-
-> Deleting the ref makes it dangling, unless something else is referencing
-> it. In your examples, since you tag the tag, the original tag is still
-> referenced.
-
-That's what I see, yes. But again, what good is the signed nothing?
-
-> Of course the _old_ tag1 is still there. It is referenced by tag2, which
-> still has a ref. Again you are confusing the right-hand side of "git
-> rev-list --objects" with actual ref names.
-
-Indeed it's not git show-ref...
-
-> I am not ruling out the possibility that there is some piece of code
-> that will be confused by the situation you have created, but it has
-> nothing to do with graph walking. It would have to be a piece of code
-> which cares about the uniqueness of informative names inside tag
-> objects.
-
-That's true, and apparently git fast-export is one of those pieces of code.
-
-Thanks
-
--- 
-Matthias Andree
+Does this possibly allow using the magic "\\?\" prefix on windows to
+avoid file name length restrictions?
+-- Aaron
