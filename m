@@ -1,108 +1,106 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: Cross-Platform Version Control
-Date: Thu, 14 May 2009 22:21:09 +0200
-Message-ID: <4A0C7D35.7090404@op5.se>
-References: <419AD153-53B4-4DAB-AF72-4127C17B1CA0@gmail.com> <alpine.DEB.2.00.0905141441200.20117@perkele.intern.softwolves.pp.se> <4A0C77D9.5050402@gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: Request for detailed documentation of git pack protocol
+Date: Thu, 14 May 2009 22:27:07 +0200
+Message-ID: <200905142227.10669.jnareb@gmail.com>
+References: <200905122329.15379.jnareb@gmail.com> <200905141024.17525.jnareb@gmail.com> <alpine.LFD.2.00.0905141353040.6741@xanadu.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15;
-	format=flowed
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Peter Krefting <peter@softwolves.pp.se>, git@vger.kernel.org
-To: Esko Luontola <esko.luontola@gmail.com>
-X-From: git-owner@vger.kernel.org Thu May 14 22:21:26 2009
+Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org,
+	Scott Chacon <schacon@gmail.com>
+To: Nicolas Pitre <nico@cam.org>
+X-From: git-owner@vger.kernel.org Thu May 14 22:27:31 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M4hQi-0003Zz-Pw
-	for gcvg-git-2@gmane.org; Thu, 14 May 2009 22:21:25 +0200
+	id 1M4hWd-00067t-FP
+	for gcvg-git-2@gmane.org; Thu, 14 May 2009 22:27:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754076AbZENUVN convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 14 May 2009 16:21:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755132AbZENUVM
-	(ORCPT <rfc822;git-outgoing>); Thu, 14 May 2009 16:21:12 -0400
-Received: from mail-ew0-f176.google.com ([209.85.219.176]:47156 "EHLO
-	mail-ew0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754954AbZENUVL (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 May 2009 16:21:11 -0400
-Received: by ewy24 with SMTP id 24so1956753ewy.37
-        for <git@vger.kernel.org>; Thu, 14 May 2009 13:21:11 -0700 (PDT)
-Received: by 10.210.128.10 with SMTP id a10mr8869662ebd.61.1242332471169;
-        Thu, 14 May 2009 13:21:11 -0700 (PDT)
-Received: from clix.int.op5.se (90-227-179-205-no128.tbcn.telia.com [90.227.179.205])
-        by mx.google.com with ESMTPS id 5sm593655eyf.58.2009.05.14.13.21.10
+	id S1754833AbZENU1X convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 14 May 2009 16:27:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754010AbZENU1X
+	(ORCPT <rfc822;git-outgoing>); Thu, 14 May 2009 16:27:23 -0400
+Received: from mail-fx0-f158.google.com ([209.85.220.158]:57746 "EHLO
+	mail-fx0-f158.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753479AbZENU1W (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 May 2009 16:27:22 -0400
+Received: by fxm2 with SMTP id 2so1547011fxm.37
+        for <git@vger.kernel.org>; Thu, 14 May 2009 13:27:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=tlK7sb7C08KL0NRxVjK+IkJmpIWweZhxaWZg5AlS7L0=;
+        b=rE6ncQFIleuyXLQWkfnDiWcv3KVQAcluirD6ZBTZP1CBCG3iXFgD9ZaxbTKJd23vmR
+         xKMKHRfDEEPx2b1Jw1ZR95TdiCqUKzmhPVBRuGT8yaaLacPVdXAhVcHFJ3STFJ8kXyBs
+         lmL6E8R3LIkacbhA9cU+/0DHhkucS1BfpDb/M=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=IgeR9r2Oia0Aq+muTvHSO4a7bU0IiLSkKR8vSJPOxpffVTGTaAJPLxeJm2qJxipcps
+         9XbL22BN6MERDmC6NfiEb5qlBs8w5GEldHG2Juvq0sltCTiNLJdgp7SGtWx7J2XWq2X4
+         rQ9YkTFfahagdLI920XfN/mcEICC4UMNOttLw=
+Received: by 10.86.59.18 with SMTP id h18mr2926134fga.44.1242332842547;
+        Thu, 14 May 2009 13:27:22 -0700 (PDT)
+Received: from ?192.168.1.13? (abwb23.neoplus.adsl.tpnet.pl [83.8.225.23])
+        by mx.google.com with ESMTPS id l19sm6245458fgb.2.2009.05.14.13.27.20
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 14 May 2009 13:21:10 -0700 (PDT)
-User-Agent: Thunderbird 2.0.0.21 (X11/20090320)
-In-Reply-To: <4A0C77D9.5050402@gmail.com>
+        Thu, 14 May 2009 13:27:20 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <alpine.LFD.2.00.0905141353040.6741@xanadu.home>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119220>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119221>
 
-Esko Luontola wrote:
-> Peter Krefting wrote on 14.5.2009 16:48:
->> Is it really necessary to store the encoding for every single file=20
->> name, should it not be enough to just store encoding information for=
+On Thu, 14 May 2009, Nicolas Pitre wrote:
+> On Thu, 14 May 2009, Jakub Narebski wrote:
+>=20
+> > I was afraid of this: that the people who know pack protocol good
+> > enough to be able to write it down are otherwise busy. But we get
+> > detailed / updated packfile and pack index format descriptions some
+> > time ago (thanks all that contributed to it!). I hope that the same
+> > would happen with pack _protocol_ description.
+>=20
+> If someone with the wish for such a document volunteers to work on it=
 =20
->> all file names at once (i.e., for the object that contains the list =
-of=20
->> file names and their associated blobs)?
+> then I'm sure people with fuller knowledge will review and comment on=
+=20
+> the result as appropriate.
+
+Well, but still somebody with time and at least some expertise in
+the area would be required to start it.
+=20
+> > I was hoping of document in RFC format; dreaming about having it
+> > submitted to IETF as (at least) unofficial RFC like Atom Publicatio=
+n
+> > Protocol (or is it proper RFC these days?), and then accepted like
+> > HTTP protocol.
 >=20
-> What about if some disorganized project has people committing with ma=
-ny=20
-> different encodings? Should we allow it, that a directory has the nam=
-es=20
-> of some files using one encoding, and the names of other files using=20
-> another encoding? Or should we force the whole repository to use the=20
-> same encoding?
->=20
+> I think we'd have to move to a new version of the protocol for that. =
+=20
+> The current protocol, even if it does the job, is not particularly=20
+> elegant.
 
-If encodings are on a per-tree basis, we could add a special mode-flag =
-for
-it without breaking backwards incompatibility (I think, anyways). Older
-gits just won't know how to handle it and will treat it as a byte-strea=
-m.
+Are all RFC (including proposals / informational RFCs) defined protocol=
+s
+elegant? Well... perhaps they are. The quality of IETF standards is way
+higher than, say, ECMA :-)
 
->> The best way would be to define this in the Git core once and for al=
-l,=20
->> and add support to it for all the platforms in the same go, instead =
-of=20
->> trying to hack around the issue whenever it pops up on the various=20
->> platforms.
->=20
-> +1
->=20
-
-There's still the problem that noone's stepped forward to do all that
-work yet, so apparently this isn't important enough for people to put
-their patches where their mouths are. Often when issues generate long
-discussions and no code, it's of high academic interest and of little
-real-world value.
-
-I believe the "little real-world value" here comes from the fact that
-cross-platform projects often enforce 7-bit ascii compatible filenames
-from the start, because they *know* they may run into problems on other
-filesystems otherwise. Remember it's not only git that has to get
-things right. It's also build-systems and compilers that have to locate
-the correct files (the Makefile and the filesystem may use different
-encodings), so in the real world, people really do stay away from
-filenames with =E5=E4=F6 or other non-ascii chars in them.
-
-It's fun to discuss, but I won't spend any time on it. Good luck to
-those who do though. I'd quite like to see if someone could pull it
-off without breaking backwards compatibility or impacting performance
-too much.
+But I accept that having RFC to be on the list of 'official' RFCs, even
+as an "experimental" RFC is just a dream. Nevertheless I think that=20
+following RFC format, which includes using a common set of terms such=20
+as "MUST" and "NOT RECOMMENDED" (as defined by RFC 2119), Augmented=20
+Backus=E2=80=93Naur Form (ABNF) (as defined by RFC 5234) as a metalangu=
+age,
+would be a good idea for technical / protocol documentation.
 
 --=20
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
-
-Register now for Nordic Meet on Nagios, June 3-4 in Stockholm
- http://nordicmeetonnagios.op5.org/
-
-Considering the successes of the wars on alcohol, poverty, drugs and
-terror, I think we should give some serious thought to declaring war
-on peace.
+Jakub Narebski
+Poland
