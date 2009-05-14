@@ -1,74 +1,73 @@
-From: Dan Loewenherz <dloewenherz@gmail.com>
-Subject: Re: Eliminate redirection to stdout and stderr when quiet option
-	is available
-Date: Thu, 14 May 2009 03:48:37 -0400
-Message-ID: <20090514074837.GA3676@andros.launchmodem.com>
-References: <6f5a4e780905140013g75d85558tfaa3c85430f8a8a3@mail.gmail.com> <alpine.DEB.1.00.0905140934560.27348@pacific.mpi-cbg.de>
+From: Charles Bailey <charles@hashpling.org>
+Subject: Re: Random failure after "git config core.autocrlf false" then
+	"git reset --hard"
+Date: Thu, 14 May 2009 08:49:25 +0100
+Message-ID: <20090514074925.GB8713@hashpling.org>
+References: <4A0A34E3.9050801@SierraAtlantic.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Dan Loewenherz <daniel.loewenherz@yale.edu>, gitster@pobox.com,
-	git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Thu May 14 09:48:50 2009
+Cc: git@vger.kernel.org
+To: Don Slutz <Don.Slutz@SierraAtlantic.com>
+X-From: git-owner@vger.kernel.org Thu May 14 09:49:33 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M4VgQ-0003c3-3P
-	for gcvg-git-2@gmane.org; Thu, 14 May 2009 09:48:50 +0200
+	id 1M4Vh6-0003su-Js
+	for gcvg-git-2@gmane.org; Thu, 14 May 2009 09:49:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756087AbZENHsm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 14 May 2009 03:48:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755659AbZENHsl
-	(ORCPT <rfc822;git-outgoing>); Thu, 14 May 2009 03:48:41 -0400
-Received: from qw-out-2122.google.com ([74.125.92.24]:35012 "EHLO
-	qw-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755053AbZENHsk (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 May 2009 03:48:40 -0400
-Received: by qw-out-2122.google.com with SMTP id 5so901144qwd.37
-        for <git@vger.kernel.org>; Thu, 14 May 2009 00:48:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=iPM57LojdzKbpM4cW09/k7PZbvCZdA6WBu8wamG5/tc=;
-        b=bG/uFGB+fkVCiuA5wutrC3keeKdN+PfOcZI1f4hYRKLvTHnwajOefZf73QlDuAV+Ll
-         q8SwoBRlLzm+jKGxVcYjT0flU8Y9C0T12affSUCmKBndPEUjGTxt8uXJHOk+0CllaZyl
-         gCqCDtkSP4wXZ6fmqihJ9PEHq3CBHdjCQMacQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=Uxhp72TO5hk+J6FUdVsUqaO3tQBtBPJlnprfr2XZqBE2oihT92FJO9Dk0waAA/uIx5
-         86EdOnMSdkARy+D+Gr2t8Mu3c788sCXjV+qSx94AAdGgASMcxpwzzVr5lA6Jn73ljh5f
-         319GVzY6HxQ3UYNhSzVUzmTrZhPFVHWtEMK7k=
-Received: by 10.224.60.131 with SMTP id p3mr2375932qah.116.1242287321269;
-        Thu, 14 May 2009 00:48:41 -0700 (PDT)
-Received: from andros.launchmodem.com (adsl-065-006-168-015.sip.mia.bellsouth.net [65.6.168.15])
-        by mx.google.com with ESMTPS id 6sm3198840yxg.0.2009.05.14.00.48.39
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 14 May 2009 00:48:40 -0700 (PDT)
+	id S1760152AbZENHt0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 14 May 2009 03:49:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758749AbZENHt0
+	(ORCPT <rfc822;git-outgoing>); Thu, 14 May 2009 03:49:26 -0400
+Received: from relay.ptn-ipout02.plus.net ([212.159.7.36]:51360 "EHLO
+	relay.ptn-ipout02.plus.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1760454AbZENHtZ (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 14 May 2009 03:49:25 -0400
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: ApoEAFNpC0rUnw4U/2dsb2JhbADOKoQCBQ
+Received: from pih-relay08.plus.net ([212.159.14.20])
+  by relay.ptn-ipout02.plus.net with ESMTP; 14 May 2009 08:49:26 +0100
+Received: from [212.159.69.125] (helo=hashpling.plus.com)
+	 by pih-relay08.plus.net with esmtp (Exim) id 1M4Vgz-0008MR-Ip; Thu, 14 May 2009 08:49:25 +0100
+Received: from cayley.hashpling.org (cayley.hashpling.org [192.168.76.254])
+	by hashpling.plus.com (8.14.2/8.14.2) with ESMTP id n4E7nPOi009984
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Thu, 14 May 2009 08:49:25 +0100
+Received: (from charles@localhost)
+	by cayley.hashpling.org (8.14.2/8.14.2/Submit) id n4E7nPEE009983;
+	Thu, 14 May 2009 08:49:25 +0100
 Content-Disposition: inline
-In-Reply-To: <alpine.DEB.1.00.0905140934560.27348@pacific.mpi-cbg.de>
+In-Reply-To: <4A0A34E3.9050801@SierraAtlantic.com>
 User-Agent: Mutt/1.5.18 (2008-05-17)
+X-Plusnet-Relay: e079a8880e93530db547677c8b4e1479
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119166>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119167>
 
-On 14/05/09 09:35 +0200, Johannes Schindelin wrote:
-> I like this patch, but I think that
-> 
-> 	git rev-parse -q HEAD
-> 
-> _does_ output a commit name...
-> 
+On Tue, May 12, 2009 at 10:48:03PM -0400, Don Slutz wrote:
+> This both works and fails with either file2 & subdir/file3 "modified" or  
+> just subdir/file3.  I have found that "git reset --hard" looks to be the  
+> issue.  If you have autocrlf=true, and a clean work tree and then set  
+> autocrlf=false; then
+> "git reset --hard" does not change the work tree files.  However  
+> sometimes (which so far I have only been able to reproduce with this  
+> test) git diff will report the difference.
 
-Thanks for pointing this out. I probably should have checked to see that 
-the changes still gave the desired output (or lack thereof). I'll resubmit 
-the patch.
+It shouldn't be random. git reset --hard should only reset those
+working tree files for which the appropriate index entry has been
+change or which have been change on disk since checkout from the
+index. Changing the core.autocrlf setting doesn't count as in index
+change (although perhaps it should??).
 
-Best,
-Dan
+The point of git reset --hard in these tests was to throw away any
+uncommitted merge resolutions and/or conflicts, not about rechecking
+out everything. Admittedly the tests are probably a bit fast and loose
+and they should probably force a complete refresh from the index when
+the core.autocrlf setting is changed.
+
+-- 
+Charles Bailey
+http://ccgi.hashpling.plus.com/blog/
