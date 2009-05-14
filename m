@@ -1,178 +1,194 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Request for detailed documentation of git pack protocol
-Date: Thu, 14 May 2009 10:24:15 +0200
-Message-ID: <200905141024.17525.jnareb@gmail.com>
-References: <200905122329.15379.jnareb@gmail.com> <20090512233450.GY30527@spearce.org>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: [PATCH 2/2] Improve the naming of guessed target repository for 
+	git clone
+Date: Thu, 14 May 2009 10:33:02 +0200
+Message-ID: <81b0412b0905140133l78def06kae0cb4798feaa4a9@mail.gmail.com>
+References: <200905112208.21017.Hugo.Mildenberger@namir.de>
+	 <200905121557.18542.Hugo.Mildenberger@namir.de>
+	 <81b0412b0905120759u15f1ec73k73625a7904515792@mail.gmail.com>
+	 <200905121900.00625.Hugo.Mildenberger@namir.de>
+	 <81b0412b0905121018lbccda1fvf6c4c19417cdde00@mail.gmail.com>
+	 <20090512172452.GA32594@blimp.localdomain>
+	 <20090513180853.GB26288@blimp.localdomain>
+	 <20090513205333.GA21631@blimp.localdomain>
+	 <7vfxf81ppd.fsf@alter.siamese.dyndns.org>
+	 <81b0412b0905132254n5046666t24f3887f1fd4e4d9@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Thu May 14 10:25:08 2009
+Content-Type: multipart/mixed; boundary=001485f040921c3a2f0469db2d11
+Cc: git@vger.kernel.org, Daniel Barkalow <barkalow@iabervon.org>,
+	Hugo Mildenberger <Hugo.Mildenberger@namir.de>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu May 14 10:33:20 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M4WFW-0000mc-IZ
-	for gcvg-git-2@gmane.org; Thu, 14 May 2009 10:25:07 +0200
+	id 1M4WNT-0004ER-O0
+	for gcvg-git-2@gmane.org; Thu, 14 May 2009 10:33:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757188AbZENIYj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 14 May 2009 04:24:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752776AbZENIYh
-	(ORCPT <rfc822;git-outgoing>); Thu, 14 May 2009 04:24:37 -0400
-Received: from rv-out-0506.google.com ([209.85.198.239]:7109 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751990AbZENIYf (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 May 2009 04:24:35 -0400
-Received: by rv-out-0506.google.com with SMTP id f9so673926rvb.1
-        for <git@vger.kernel.org>; Thu, 14 May 2009 01:24:36 -0700 (PDT)
+	id S1753859AbZENIdI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 14 May 2009 04:33:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753362AbZENIdG
+	(ORCPT <rfc822;git-outgoing>); Thu, 14 May 2009 04:33:06 -0400
+Received: from mail-fx0-f158.google.com ([209.85.220.158]:43405 "EHLO
+	mail-fx0-f158.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752881AbZENIdC (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 May 2009 04:33:02 -0400
+Received: by fxm2 with SMTP id 2so1141214fxm.37
+        for <git@vger.kernel.org>; Thu, 14 May 2009 01:33:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=dTLud9bphK37lDCPUB6/Q/0NT9AlftG4PVKu673+Gb8=;
-        b=UJxz8y8gBZN1NfV+4OmRsJr8qM3JWiI6ZLDn73CHuj6E0RNbNBdZclKA1aA3VExnWY
-         8HHDVylWbWYacCjdOTCldFQx75ceG+suYaQelIFaNpgOZF/TYnzIjLcUgztU9scVDv0M
-         OaofQAJcbN6Mvc+jTaSsoBFonjwJK1BBf/nW4=
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type;
+        bh=K3Rhx0hnzydPCsbAy5qdxEzO0XfHYialMDJ0tdzn7zM=;
+        b=udcuN6JQKS5iKH1kZQIhfN2ViLbVVqUv0tSZ5uzhS1iHyi3T0U31RfjCfSgW96ZYuY
+         mvBFR0xTZRP5Dfc3e185pSwfguzuM4fH+itlLxLVWh5ITQZFpwtKlZyBlFw+tjZQKGx5
+         q+8Qnh/YGQtk7Vhn55iWYti+Rb5JrXlbKQGCY=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=Ij2vqVWXLucgIjD5MyZ1jkcOs54LI6s3Taz3Iju4+VD+a0ZawlL5ISvfQKVJrR3dxh
-         okY1r5fgWGUyeJquxg8886p1t59U2qHSYYiHy6s2Hjj5ckakaZsq7HZ9tXJbqu3Yjptr
-         A0KENemo9kbLcvX6ZnXpBKoDuhB4qNc3j/BGM=
-Received: by 10.141.211.5 with SMTP id n5mr685529rvq.106.1242289476267;
-        Thu, 14 May 2009 01:24:36 -0700 (PDT)
-Received: from ?192.168.1.13? (abvo12.neoplus.adsl.tpnet.pl [83.8.212.12])
-        by mx.google.com with ESMTPS id f21sm2705741rvb.15.2009.05.14.01.24.32
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 14 May 2009 01:24:34 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <20090512233450.GY30527@spearce.org>
-Content-Disposition: inline
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=WI044Npa8q6ax3ZD8XTYfHBBA5y5eGMnmrMWEGHeUcG6LyVENsPVSdJvWBkSbfL86J
+         19s29dVeRI179CL/OAqpo/ipS4mVdeYFDG5uixVKY7k+IIMtcy7K+9ncWBHmsFPsJqwM
+         vNetGDTXitxr3CGb7IRZqKP10CxcHt1MTwyV0=
+Received: by 10.204.31.78 with SMTP id x14mr1905727bkc.3.1242289982421; Thu, 
+	14 May 2009 01:33:02 -0700 (PDT)
+In-Reply-To: <81b0412b0905132254n5046666t24f3887f1fd4e4d9@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119169>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119170>
 
-On Wed, 13 May 2009 Shawn O. Pearce wrote:
-> Jakub Narebski <jnareb@gmail.com> wrote:
+--001485f040921c3a2f0469db2d11
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-> > We have now proliferation of different (re)implementations of git:
-> > JGit in Java, Dulwich in Python, Grit in Ruby; and there are other
-> > planned: git# / managed git in C# (GSoC Mono project), ObjectiveGit
-> > in Objective-C (for iPhone IIRC).  At some time they would reach
-> > the point (or reached it already) of implementing git-daemon...
-> > but currently the documentation of git protocol is lacking.
-> 
-> Well, lets see...
-> 
-> JGit - me and Robin, here on git ML.  JGit is the closest
-> reimplementation effort to the canonical C implementation.
-> JGit runs in production servers for many folks, e.g. quite
-> a few Google engineers use the JGit server every day.  Its
-> our main git daemon.
-> 
-> Grit - GitHub folks.  They know where to find us.  And their
-> business is Git.  If Grit isn't right, they'll make it right,
-> or possibly suffer a loss of customers.  I'm fairly certain
-> that GitHub runs Grit in production.
-> 
-> ObjectGit - Scott Chacon, again, a GitHub folk.  Though he has
-> expressed interest in moving to JGit or libgit2 where/when possible.
-> 
-> Dulwich - off in its own world and not even trying to match basic
-> protocol rules by just watching what happens when you telnet to a
-> git port.  No clue how that's going to fair.
-> 
-> git# - We'll see.  Mono GSoC Git projects have a really bad
-> reputation of ignoring the existing git knowledge and hoping
-> they can invent the wheel on their own.
+Strip leading and trailing spaces off guessed target directory, and
+replace sequences of whitespace and 'control' characters with one
+space character.
 
-So you are saying that even if detailed pack protocol specification
-isn't written down (Documentation/technical/pack-protocol.txt is more
-of a sketch than reference documentation), the knowledge is there,
-and it is not that hard to get (just ask on git mailing list), isn't it?
- 
-> > This can lead, as you can read from recent post on git mailing, to
-> > implementing details wrong (like Dulwich not using full SHA-1 where
-> > it should, leading to ordinary git clients to failing to fetch from it),
-> > or fail at best practices of implementation (like JGit last issue with
-> > deadlocking for multi_ack extension).
-> 
-> Dulwich is just busted.
+User still can have any name by specifying it explicitely after url.
 
-That was my impression too. Those details it got wrong aren't so
-obscure and hard to get right...
+Signed-off-by: Alex Riesen <raa.lkml@gmail.com>
+---
 
-> 
-> No existing developers knew that the fetch-pack/upload-pack protocol
-> has this required implicit buffering consideration until JGit
-> deadlocked over it.  But even then I'm still not 100% sure this
-> is true, or if it is just an artifact of the JGit upload-pack side
-> implementation being partially wrong.
+2009/5/14 Alex Riesen <raa.lkml@gmail.com>:
+> But I should complete the patch: remove heading whitespace, and replace
+> multiple spaces and control characters with one space.
 
-Well... I guess that section on Best Current Practices to avoid 
-deadlocking would not be there to avoid this issue in JGit, but
-would be added for the future later.
+Done.
 
-> 
-> > The current documentation of git protocol is very sparse; the docs
-> > in Documentation/technical/pack-protocol.txt offer only a sketch of
-> > exchange.  You can find more, including pkt-line format, a way sideband
-> > is multiplexed, and how capabilities are negotiated between server and
-> > client in design document for "smart" HTTP server, for example in
-> >   Subject: Re: More on git over HTTP POST
-> >   Message-ID: <20080803025602.GB27465@spearce.org>
-> >   URL: http://thread.gmane.org/gmane.comp.version-control.git/91104/focus=91196
-> 
-> Seriously?  Don't link to that.  Its a horrible version of the smart
-> HTTP RFC, and worse, it doesn't describe what you say it describes.
+ builtin-clone.c |   34 +++++++++++++++++++++++++++++-----
+ 1 files changed, 29 insertions(+), 5 deletions(-)
 
-Ooops, I am sorry. This was my bookmark into this thread (which is very
-interesting, and contain host of otherwise unknown to me information
-about pack protocol), but the post in this thread was quite arbitrary
-(a random post where I decided that this thread is interesting enough
-to bookmark, and long enough to not want to save all interesting posts).
+diff --git a/builtin-clone.c b/builtin-clone.c
+index 880373f..d068b7e 100644
+--- a/builtin-clone.c
++++ b/builtin-clone.c
+@@ -104,11 +104,12 @@ static char *get_repo_path(const char *repo, int
+*is_bundle)
+ static char *guess_dir_name(const char *repo, int is_bundle, int is_bare)
+ {
+ 	const char *end = repo + strlen(repo), *start;
++	char *dir;
 
->  
-> > It would be really nice, I think, to have RFC for git pack protocol.
-> > And it would help avoid incompatibilities between different clients
-> > and servers.  If the document would contain expected behaviour of
-> > client and server and Best Current Practices it would help avoid
-> > pitfals when implementing git-daemon in other implementation.
-> 
-> Yea, it would be nice.  But find me someone who knows the protocol
-> and who has the time to document the #!@* thing.  Maybe I'll try
-> to work on this myself, but I'm strapped for time, especially over
-> the next two-to-three months.
+ 	/*
+-	 * Strip trailing slashes and /.git
++	 * Strip trailing spaces, slashes and /.git
+ 	 */
+-	while (repo < end && is_dir_sep(end[-1]))
++	while (repo < end && (is_dir_sep(end[-1]) || isspace(end[-1])))
+ 		end--;
+ 	if (end - repo > 5 && is_dir_sep(end[-5]) &&
+ 	    !strncmp(end - 4, ".git", 4)) {
+@@ -140,10 +141,33 @@ static char *guess_dir_name(const char *repo,
+int is_bundle, int is_bare)
+ 	if (is_bare) {
+ 		struct strbuf result = STRBUF_INIT;
+ 		strbuf_addf(&result, "%.*s.git", (int)(end - start), start);
+-		return strbuf_detach(&result, 0);
++		dir = strbuf_detach(&result, 0);
++	} else
++		dir = xstrndup(start, end - start);
++	/*
++	 * Replace sequences of 'control' characters and whitespace
++	 * with one ascii space, remove leading and trailing spaces.
++	 */
++	if (*dir) {
++		char *out = dir;
++		int prev_space = 1 /* strip leading whitespace */;
++		for (end = dir; *end; ++end) {
++			char ch = *end;
++			if ((unsigned char)ch < '\x20')
++				ch = '\x20';
++			if (isspace(ch)) {
++				if (prev_space)
++					continue;
++				prev_space = 1;
++			} else
++				prev_space = 0;
++			*out++ = ch;
++		}
++		*out = '\0';
++		if (out > dir && prev_space)
++			out[-1] = '\0';
+ 	}
+-
+-	return xstrndup(start, end - start);
++	return dir;
+ }
 
-I was afraid of this: that the people who know pack protocol good
-enough to be able to write it down are otherwise busy. But we get
-detailed / updated packfile and pack index format descriptions some
-time ago (thanks all that contributed to it!). I hope that the same
-would happen with pack _protocol_ description.
-
-I was hoping of document in RFC format; dreaming about having it
-submitted to IETF as (at least) unofficial RFC like Atom Publication
-Protocol (or is it proper RFC these days?), and then accepted like
-HTTP protocol. But I understand that it is not the same situation;
-there wouldn't (and perhaps shouldn't) too many independent git-daemon
-implementations...
-
-> 
-> And lets not even start to mention Dulwich not completing a thin
-> pack before storing it on disk.  Those sorts of on disk things
-> matter to other more popular Git implementations (c git, jgit).
-
-Ugh! Errr... aren't thin packs send only if other side has the
-capability for it? What is then Dulwich doing announcing such 
-capability when not supporting it correctly...
-
+ static void strip_trailing_slashes(char *dir)
 -- 
-Jakub Narebski
-Poland
+1.6.3.1.37.g5d96e
+
+--001485f040921c3a2f0469db2d11
+Content-Type: application/octet-stream; 
+	name="0002-Improve-the-naming-of-guessed-target-repository-for-.patch"
+Content-Disposition: attachment; 
+	filename="0002-Improve-the-naming-of-guessed-target-repository-for-.patch"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: f_fup7dkaf0
+
+RnJvbSA2ZDYwNzUxMzBhZmJkZDM1MjYwZTNlMzNjMDk5ZjU3ZDlmYWViZTk4IE1vbiBTZXAgMTcg
+MDA6MDA6MDAgMjAwMQpGcm9tOiBBbGV4IFJpZXNlbiA8cmFhLmxrbWxAZ21haWwuY29tPgpEYXRl
+OiBXZWQsIDEzIE1heSAyMDA5IDE4OjMyOjA2ICswMjAwClN1YmplY3Q6IFtQQVRDSCAyLzJdIElt
+cHJvdmUgdGhlIG5hbWluZyBvZiBndWVzc2VkIHRhcmdldCByZXBvc2l0b3J5IGZvciBnaXQgY2xv
+bmUKClN0cmlwIGxlYWRpbmcgYW5kIHRyYWlsaW5nIHNwYWNlcyBvZmYgZ3Vlc3NlZCB0YXJnZXQg
+ZGlyZWN0b3J5LCBhbmQKcmVwbGFjZSBzZXF1ZW5jZXMgb2Ygd2hpdGVzcGFjZSBhbmQgJ2NvbnRy
+b2wnIGNoYXJhY3RlcnMgd2l0aCBvbmUKc3BhY2UgY2hhcmFjdGVyLgoKVXNlciBzdGlsbCBjYW4g
+aGF2ZSBhbnkgbmFtZSBieSBzcGVjaWZ5aW5nIGl0IGV4cGxpY2l0ZWx5IGFmdGVyIHVybC4KClNp
+Z25lZC1vZmYtYnk6IEFsZXggUmllc2VuIDxyYWEubGttbEBnbWFpbC5jb20+Ci0tLQogYnVpbHRp
+bi1jbG9uZS5jIHwgICAzNCArKysrKysrKysrKysrKysrKysrKysrKysrKysrKy0tLS0tCiAxIGZp
+bGVzIGNoYW5nZWQsIDI5IGluc2VydGlvbnMoKyksIDUgZGVsZXRpb25zKC0pCgpkaWZmIC0tZ2l0
+IGEvYnVpbHRpbi1jbG9uZS5jIGIvYnVpbHRpbi1jbG9uZS5jCmluZGV4IDg4MDM3M2YuLmQwNjhi
+N2UgMTAwNjQ0Ci0tLSBhL2J1aWx0aW4tY2xvbmUuYworKysgYi9idWlsdGluLWNsb25lLmMKQEAg
+LTEwNCwxMSArMTA0LDEyIEBAIHN0YXRpYyBjaGFyICpnZXRfcmVwb19wYXRoKGNvbnN0IGNoYXIg
+KnJlcG8sIGludCAqaXNfYnVuZGxlKQogc3RhdGljIGNoYXIgKmd1ZXNzX2Rpcl9uYW1lKGNvbnN0
+IGNoYXIgKnJlcG8sIGludCBpc19idW5kbGUsIGludCBpc19iYXJlKQogewogCWNvbnN0IGNoYXIg
+KmVuZCA9IHJlcG8gKyBzdHJsZW4ocmVwbyksICpzdGFydDsKKwljaGFyICpkaXI7CiAKIAkvKgot
+CSAqIFN0cmlwIHRyYWlsaW5nIHNsYXNoZXMgYW5kIC8uZ2l0CisJICogU3RyaXAgdHJhaWxpbmcg
+c3BhY2VzLCBzbGFzaGVzIGFuZCAvLmdpdAogCSAqLwotCXdoaWxlIChyZXBvIDwgZW5kICYmIGlz
+X2Rpcl9zZXAoZW5kWy0xXSkpCisJd2hpbGUgKHJlcG8gPCBlbmQgJiYgKGlzX2Rpcl9zZXAoZW5k
+Wy0xXSkgfHwgaXNzcGFjZShlbmRbLTFdKSkpCiAJCWVuZC0tOwogCWlmIChlbmQgLSByZXBvID4g
+NSAmJiBpc19kaXJfc2VwKGVuZFstNV0pICYmCiAJICAgICFzdHJuY21wKGVuZCAtIDQsICIuZ2l0
+IiwgNCkpIHsKQEAgLTE0MCwxMCArMTQxLDMzIEBAIHN0YXRpYyBjaGFyICpndWVzc19kaXJfbmFt
+ZShjb25zdCBjaGFyICpyZXBvLCBpbnQgaXNfYnVuZGxlLCBpbnQgaXNfYmFyZSkKIAlpZiAoaXNf
+YmFyZSkgewogCQlzdHJ1Y3Qgc3RyYnVmIHJlc3VsdCA9IFNUUkJVRl9JTklUOwogCQlzdHJidWZf
+YWRkZigmcmVzdWx0LCAiJS4qcy5naXQiLCAoaW50KShlbmQgLSBzdGFydCksIHN0YXJ0KTsKLQkJ
+cmV0dXJuIHN0cmJ1Zl9kZXRhY2goJnJlc3VsdCwgMCk7CisJCWRpciA9IHN0cmJ1Zl9kZXRhY2go
+JnJlc3VsdCwgMCk7CisJfSBlbHNlCisJCWRpciA9IHhzdHJuZHVwKHN0YXJ0LCBlbmQgLSBzdGFy
+dCk7CisJLyoKKwkgKiBSZXBsYWNlIHNlcXVlbmNlcyBvZiAnY29udHJvbCcgY2hhcmFjdGVycyBh
+bmQgd2hpdGVzcGFjZQorCSAqIHdpdGggb25lIGFzY2lpIHNwYWNlLCByZW1vdmUgbGVhZGluZyBh
+bmQgdHJhaWxpbmcgc3BhY2VzLgorCSAqLworCWlmICgqZGlyKSB7CisJCWNoYXIgKm91dCA9IGRp
+cjsKKwkJaW50IHByZXZfc3BhY2UgPSAxIC8qIHN0cmlwIGxlYWRpbmcgd2hpdGVzcGFjZSAqLzsK
+KwkJZm9yIChlbmQgPSBkaXI7ICplbmQ7ICsrZW5kKSB7CisJCQljaGFyIGNoID0gKmVuZDsKKwkJ
+CWlmICgodW5zaWduZWQgY2hhciljaCA8ICdceDIwJykKKwkJCQljaCA9ICdceDIwJzsKKwkJCWlm
+IChpc3NwYWNlKGNoKSkgeworCQkJCWlmIChwcmV2X3NwYWNlKQorCQkJCQljb250aW51ZTsKKwkJ
+CQlwcmV2X3NwYWNlID0gMTsKKwkJCX0gZWxzZQorCQkJCXByZXZfc3BhY2UgPSAwOworCQkJKm91
+dCsrID0gY2g7CisJCX0KKwkJKm91dCA9ICdcMCc7CisJCWlmIChvdXQgPiBkaXIgJiYgcHJldl9z
+cGFjZSkKKwkJCW91dFstMV0gPSAnXDAnOwogCX0KLQotCXJldHVybiB4c3RybmR1cChzdGFydCwg
+ZW5kIC0gc3RhcnQpOworCXJldHVybiBkaXI7CiB9CiAKIHN0YXRpYyB2b2lkIHN0cmlwX3RyYWls
+aW5nX3NsYXNoZXMoY2hhciAqZGlyKQotLSAKMS42LjMuMS4zNy5nNWQ5NmUKCg==
+--001485f040921c3a2f0469db2d11--
