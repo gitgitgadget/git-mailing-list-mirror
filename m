@@ -1,71 +1,108 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: git push origin error (1.6.3 new default functionality)
-Date: Thu, 14 May 2009 09:37:39 +0200
-Message-ID: <4A0BCA43.9080408@drmicha.warpmail.net>
-References: <81bfc67a0905111826y779555cer6679da11db787ab1@mail.gmail.com> <4A09594F.4040603@drmicha.warpmail.net> <81bfc67a0905122226p113e4aa5y2a3523ac63de77fc@mail.gmail.com> <20090513083203.GA25058@sigill.intra.peff.net> <4A0A8871.6080107@viscovery.net> <20090513090317.GA3421@sigill.intra.peff.net> <4A0A98CC.2090701@drmicha.warpmail.net> <20090514063157.GA10411@coredump.intra.peff.net>
+From: Charles Bailey <charles@hashpling.org>
+Subject: Re: [PATCH v2 3/7] Fix tests to work with core.autocrlf=true --
+	new functions
+Date: Thu, 14 May 2009 08:43:03 +0100
+Message-ID: <20090514074303.GA8713@hashpling.org>
+References: <1242070141-2936-1-git-send-email-Don.Slutz@SierraAtlantic.com> <1242243348-6690-1-git-send-email-Don.Slutz@SierraAtlantic.com> <1242243348-6690-2-git-send-email-Don.Slutz@SierraAtlantic.com> <1242243348-6690-3-git-send-email-Don.Slutz@SierraAtlantic.com> <1242243348-6690-4-git-send-email-Don.Slutz@SierraAtlantic.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Johannes Sixt <j.sixt@viscovery.net>,
-	Caleb Cushing <xenoterracide@gmail.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu May 14 09:37:59 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Don Slutz <Don.Slutz@SierraAtlantic.com>
+X-From: git-owner@vger.kernel.org Thu May 14 09:44:01 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M4VVu-0007mq-42
-	for gcvg-git-2@gmane.org; Thu, 14 May 2009 09:37:58 +0200
+	id 1M4Vbe-0001co-Ke
+	for gcvg-git-2@gmane.org; Thu, 14 May 2009 09:43:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753892AbZENHht (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 14 May 2009 03:37:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753362AbZENHht
-	(ORCPT <rfc822;git-outgoing>); Thu, 14 May 2009 03:37:49 -0400
-Received: from out1.smtp.messagingengine.com ([66.111.4.25]:52791 "EHLO
-	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752460AbZENHht (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 14 May 2009 03:37:49 -0400
-Received: from compute1.internal (compute1.internal [10.202.2.41])
-	by out1.messagingengine.com (Postfix) with ESMTP id 1FD1C345323;
-	Thu, 14 May 2009 03:37:50 -0400 (EDT)
-Received: from heartbeat2.messagingengine.com ([10.202.2.161])
-  by compute1.internal (MEProxy); Thu, 14 May 2009 03:37:50 -0400
-X-Sasl-enc: mGwfGtKCobBqkCUMRdkUHafYRfTOvppXnbqR2MLAWRIE 1242286669
-Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.12])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 55E9627D0F;
-	Thu, 14 May 2009 03:37:49 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1b5pre) Gecko/20090511 Lightning/1.0pre Shredder/3.0b3pre
-In-Reply-To: <20090514063157.GA10411@coredump.intra.peff.net>
+	id S1761556AbZENHnI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 14 May 2009 03:43:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761635AbZENHnG
+	(ORCPT <rfc822;git-outgoing>); Thu, 14 May 2009 03:43:06 -0400
+Received: from relay.ptn-ipout02.plus.net ([212.159.7.36]:48557 "EHLO
+	relay.ptn-ipout02.plus.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1761632AbZENHnF (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 14 May 2009 03:43:05 -0400
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: ApoEACdoC0rUnw4R/2dsb2JhbADOLoQCBQ
+Received: from pih-relay04.plus.net ([212.159.14.17])
+  by relay.ptn-ipout02.plus.net with ESMTP; 14 May 2009 08:43:05 +0100
+Received: from [212.159.69.125] (helo=hashpling.plus.com)
+	 by pih-relay04.plus.net with esmtp (Exim) id 1M4Vaq-0005Kc-Ja; Thu, 14 May 2009 08:43:05 +0100
+Received: from cayley.hashpling.org (cayley.hashpling.org [192.168.76.254])
+	by hashpling.plus.com (8.14.2/8.14.2) with ESMTP id n4E7h4dl022760
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Thu, 14 May 2009 08:43:04 +0100
+Received: (from charles@localhost)
+	by cayley.hashpling.org (8.14.2/8.14.2/Submit) id n4E7h31v022758;
+	Thu, 14 May 2009 08:43:03 +0100
+Content-Disposition: inline
+In-Reply-To: <1242243348-6690-4-git-send-email-Don.Slutz@SierraAtlantic.com>
+User-Agent: Mutt/1.5.18 (2008-05-17)
+X-Plusnet-Relay: 893e5c60da17aee9ad75ab62b8da11e6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119163>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119164>
 
-Jeff King venit, vidit, dixit 14.05.2009 08:31:
-> On Wed, May 13, 2009 at 11:54:20AM +0200, Michael J Gruber wrote:
+On Wed, May 13, 2009 at 03:35:44PM -0400, Don Slutz wrote:
+>  test_expect_success 'mergetool crlf' '
+>      git config core.autocrlf true &&
+> -    git checkout -b test2 branch1
+> +    rm -f .git/index &&
+> +    git reset --hard &&
+> +    git checkout -b test2 branch1 &&
+>      test_must_fail git merge master >/dev/null 2>&1 &&
+>      ( yes "" | git mergetool file1 >/dev/null 2>&1 ) &&
+>      ( yes "" | git mergetool file2 >/dev/null 2>&1 ) &&
+> @@ -62,16 +66,35 @@ test_expect_success 'mergetool crlf' '
+>      test "$(printf x | cat file2 -)" = "$(printf "master new\r\nx")" &&
+>      test "$(printf x | cat subdir/file3 -)" = "$(printf "master new sub\r\nx")" &&
+>      git commit -m "branch1 resolved with mergetool - autocrlf" &&
+> +    git config core.autocrlf $autocrlf &&
+> +    rm -f .git/index &&
+> +    git reset --hard
+> +'
+> +
+> +test_expect_success 'mergetool lf' '
+>      git config core.autocrlf false &&
+> +    rm -f .git/index &&
+> +    git reset --hard &&
+> +    git checkout -b test3 branch1 &&
+> +    test_must_fail git merge master >/dev/null 2>&1 &&
+> +    ( yes "" | git mergetool file1 >/dev/null 2>&1 ) &&
+> +    ( yes "" | git mergetool file2 >/dev/null 2>&1 ) &&
+> +    ( yes "" | git mergetool subdir/file3 >/dev/null 2>&1 ) &&
+> +    test "$(printf x | cat file1 -)" = "$(printf "master updated\nx")" &&
+> +    test "$(printf x | cat file2 -)" = "$(printf "master new\nx")" &&
+> +    test "$(printf x | cat subdir/file3 -)" = "$(printf "master new sub\nx")" &&
+> +    git commit -m "branch1 resolved with mergetool - autocrlf2" &&
+> +    git config core.autocrlf $autocrlf &&
+> +    rm -f .git/index &&
+>      git reset --hard
+>  '
 
-[snip snip snip]
+Have I missed some previous recent discussion about this patch series?
+I know that you referenced that long Aug 2007 thread about autocrlf,
+but is there some more recent discussion about how the test suite
+works / should work?
 
->> My main issue is the fact that we have a config variable (push.default)
->> which causes a different behaviour depending on whether it is unset or
->> set to its default (!) value. That is a completely new UI approach. We
-> 
-> Well, it depends on how you think of the default. The default could be
-> "matched-and-warn", and you are fixing it by setting it to "matched". :)
-> 
-> -Peff
+mergetool isn't the prime implementor of autocrlf, but it does have
+some checks to make sure that it works with autocrlf. My impression -
+probably incorrect - has been that autocrlf is off for the purposes of
+building and testing git on all platforms, but that some packages
+switch it on by default on install for user convenience on platforms
+where this is appropriate.
 
-So, then we have a config variable which you can set to its default
-value only by /unsetting/ it :)
+Your patch seems to be about allowing the entire test suite to run
+correctly with the autocrlf in any setting. If this is the case,
+shouldn't the correct fix be to remove tests that are testing that
+things work with different settings of autocrlf, because these tests
+are effectively run by a full test suite run with autocrlf
+alternatively set anyway?
 
-In fact, I think that approach could be valuable in general, making git
-more fool-proof for beginners while remaining efficient for the
-regulars. As a new concept, to be taken up by "deny non-ff pushes",
-"deny delation pushes", "pull without refspec" etc., I would like that.
-In order to be useful, beginners should be able to rely on it, i.e.:
-unless certain config is set, the git-gun should never go off when
-pointed at users' own feet. Might be a worthy target for 1.7 (pun
-semi-intended).
-
-Michael
+-- 
+Charles Bailey
+http://ccgi.hashpling.plus.com/blog/
