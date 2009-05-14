@@ -1,103 +1,76 @@
-From: Brandon Casey <casey@nrlssc.navy.mil>
-Subject: Re: git-tag bug? confusing git fast-export with double tag objects
-Date: Thu, 14 May 2009 14:01:40 -0500
-Message-ID: <qIGyi7O683pM7kzjmlY6QeiakFbPlBEHw9e9bG_SQhtXpvaqdek-Bw@cipher.nrlssc.navy.mil>
-References: <op.utv93sdo1e62zd@merlin.emma.line.org> <op.utwdsutn1e62zd@merlin.emma.line.org> <7v8wl01iev.fsf@alter.siamese.dyndns.org> <op.utwyczlf1e62zd@merlin.emma.line.org> <81b0412b0905140516k4bc84606scb71981936966caf@mail.gmail.com> <op.utw7buoi1e62zd@balu> <81b0412b0905140616h69ac2919j26734f02455a5f5c@mail.gmail.com> <op.utw9khqa1e62zd@balu> <fabb9a1e0905140642x26bf5e2ala604a36d0fe520a6@mail.gmail.com> <op.utxlqej91e62zd@balu>
+From: Josh Micich <josh.micich@gmail.com>
+Subject: Re: [PATCH 1/3] '--missing' option for mktree: re-added 
+	strbuf_release(&p_uq), Updated man page
+Date: Thu, 14 May 2009 12:44:10 -0700
+Message-ID: <a644352c0905141244v4c8bdef6t69318152dc02c6a@mail.gmail.com>
+References: <loom.20090514T050424-673@post.gmane.org>
+	 <loom.20090514T050742-791@post.gmane.org>
+	 <7vprecxlrw.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: Sverre Rabbelier <srabbelier@gmail.com>,
-	Alex Riesen <raa.lkml@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Erik Faye-Lund <kusmabite@gmail.com>
-To: Matthias Andree <matthias.andree@gmx.de>
-X-From: git-owner@vger.kernel.org Thu May 14 21:03:08 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Josh Micich <josh.micich@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu May 14 21:44:27 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M4gCy-0007yT-1l
-	for gcvg-git-2@gmane.org; Thu, 14 May 2009 21:03:08 +0200
+	id 1M4gqw-0003QL-FF
+	for gcvg-git-2@gmane.org; Thu, 14 May 2009 21:44:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752879AbZENTCd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 14 May 2009 15:02:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752427AbZENTCd
-	(ORCPT <rfc822;git-outgoing>); Thu, 14 May 2009 15:02:33 -0400
-Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:44532 "EHLO
-	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752164AbZENTCc (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 May 2009 15:02:32 -0400
-Received: by mail.nrlssc.navy.mil id n4EJ1gXc017570; Thu, 14 May 2009 14:01:42 -0500
-In-Reply-To: <op.utxlqej91e62zd@balu>
-X-OriginalArrivalTime: 14 May 2009 19:01:41.0064 (UTC) FILETIME=[6A68DC80:01C9D4C6]
+	id S1753087AbZENToM convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 14 May 2009 15:44:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752886AbZENToL
+	(ORCPT <rfc822;git-outgoing>); Thu, 14 May 2009 15:44:11 -0400
+Received: from an-out-0708.google.com ([209.85.132.245]:18952 "EHLO
+	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752748AbZENToJ convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 14 May 2009 15:44:09 -0400
+Received: by an-out-0708.google.com with SMTP id d40so3080292and.1
+        for <git@vger.kernel.org>; Thu, 14 May 2009 12:44:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=/Wn3Tn2Nb28dJCYiRbceIvG5gW5W2cJVfEd8aw2OLN0=;
+        b=m6aBEj86tZowdyen2AfC01OahzIfAyb9xpCsxNkgh7XsI6f/k6V94BYzQ1x3QCeetn
+         gqc0XPPbz/crzfqTomkuXA8vUtVwXdBdLwi2j7LYwO5aHgCRNgsEXWlcUCZGZvfRhLFM
+         PrnFHodpGEzCrQlT/vanYBink5TykxV3Ur+5I=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=PIPCx9bswtkXbunzrc4SnfFT6ViTV8WC0V8AMmVzYsM7AK7+ua1abxxyfoMKMQXA5Q
+         hsqIuQBhTik/uBHYWe+Jl5P54ylhslWtnt5CVLwmwXOvNTWiHcFWx/VUp06qUPh3EmqY
+         8nSz5byl536Czsv5BlC+RNHL/AqmxvmfzXv5E=
+Received: by 10.100.5.12 with SMTP id 12mr3425683ane.15.1242330250409; Thu, 14 
+	May 2009 12:44:10 -0700 (PDT)
+In-Reply-To: <7vprecxlrw.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119214>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119215>
 
-Matthias Andree wrote:
-> Am 14.05.2009, 15:42 Uhr, schrieb Sverre Rabbelier <srabbelier@gmail.com>:
-> 
->> Heya,
->>
->> On Thu, May 14, 2009 at 15:39, Matthias Andree
->> <matthias.andree@gmx.de> wrote:
->>> The bug itself (references to 'deleted' or 'replaced' tag objects remain
->>> reachable rather than becoming dangling) is still there without a
->>> suggestion
->>> to the solution, and you're uselessly the bug.
->>
->> I believe Alex is saying that this is not a bug, but intended
->> behavior, and Matthias is saying that we should change that behavior
->> so that users are at least aware that they are creating such a
->> situation, is that correct?
-> 
-> I think my statements are:
-> 
-> 1- git tag -d and git tag -f do not work as advertised for tag objects (as
-> opposed to lightweight tags); evidence in the longish mail
-
-Both of these do indeed work.
-
-In your examples 'git tag -d' worked as intended.  The tag was deleted even
-though the object still remained in the object database.  The tag subcommand
-does not remove objects.  Objects which are not used anymore are removed by
-running the 'git gc' command.  This happens automatically periodically.  If
-you want to see them disappear now, run 'git gc --prune=now'.
-
-In your examples, 'git tag -f' worked as intended.  The "object" referenced
-by the command line arguments was tagged, and the existing tag was replaced
-by a new tag with the same name.
-
-So when you do
-
-  $ git tag -f -m 'add tag foo' foo foo
-
-the second foo is dereferenced, and it's object id is what is tagged.  So it
-is equivalent to the following:
-
-  $ git tag -f -m 'add tag foo' foo 2e326d8a210536b7cd1f2bc77e3e29d7231f9ec4
-
-This object happens to be a tag object which points to a commit.
-
-Your graph:
-
-  objects:  4481a1 (commit) <- 2e326d (tag "foo") <- 72f346 (tag "foo")
-
-is perfectly correct and valid.  The middle tag object does not exist in
-the tag namespace though.  Its name is embedded in the tag object and is
-necessary for validating the tag object.
-
-> 2- I presume that the bug cannot be really fixed (signed tags created by
-> somebody else), we then have several solutions:
->  2a- warn the user and refuse
->  2b- warn the user and continue nonetheless
->  2c- warn the user and add options to force the user should at least be
-> warned that he may be doing something which doesn't work as intended, or
->  2d- give the user a possibility to force git to do stupid things.
-
-There are no 'cycles', there is no inconsistency, there is no bug, except
-perhaps in git fast-export.
-
--brandon
+On Wed, May 13, 2009 at 11:04 PM, Junio C Hamano <gitster@pobox.com> wr=
+ote:
+>> =A0 =A0 =A0 =A0 =A0 =A0 =A0 path =3D strbuf_detach(&p_uq, NULL);
+>> + =A0 =A0 =A0 =A0 =A0 =A0 append_to_tree(mode, sha1, path);
+>> + =A0 =A0 =A0 =A0 =A0 =A0 strbuf_release(&p_uq);
+>> + =A0 =A0 =A0 =A0 =A0 =A0 return;
+>> =A0 =A0 =A0 }
+>> =A0 =A0 =A0 append_to_tree(mode, sha1, path);
+>> =A0}
+>
+> Ehh, why? =A0detach already detaches the allocated buffer from strbuf=
+ and
+> there is nothing to clean up by strbuf_release().
+>
+My bad. While re-basing my work to fe0bb5, the strbuf_release() call
+went missing, but I didn't notice you had also changed:
+-                       path =3D p_uq.buf;
++               path =3D strbuf_detach(&p_uq, NULL);
+That is much nicer
