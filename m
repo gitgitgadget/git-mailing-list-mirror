@@ -1,147 +1,72 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: git-tag bug? confusing git fast-export with double tag objects
-Date: Thu, 14 May 2009 14:22:49 -0400
-Message-ID: <20090514182249.GA11919@sigill.intra.peff.net>
-References: <op.utv93sdo1e62zd@merlin.emma.line.org> <op.utwdsutn1e62zd@merlin.emma.line.org> <7v8wl01iev.fsf@alter.siamese.dyndns.org> <op.utwyczlf1e62zd@merlin.emma.line.org>
+From: Cory Sharp <cory.sharp@gmail.com>
+Subject: Re: [Q] merge squash unexpected conflicts
+Date: Thu, 14 May 2009 11:25:23 -0700
+Message-ID: <bb9d69200905141125i4a8ffaa8j6aea2a6c44de0c7d@mail.gmail.com>
+References: <bb9d69200905131706m61b0dda1xc347ca2e719ec142@mail.gmail.com>
+	 <bb9d69200905131942t7a43a29fh9638d2548e9f12dc@mail.gmail.com>
+	 <7v4ovo1iap.fsf@alter.siamese.dyndns.org>
+	 <bb9d69200905132057u60adc2f8vb9ba9a35791f72ac@mail.gmail.com>
+	 <7veiusz45w.fsf@alter.siamese.dyndns.org>
+	 <bb9d69200905132334m7a4e3a4akde3529abeab5a09@mail.gmail.com>
+	 <7v4ovoxk0n.fsf@alter.siamese.dyndns.org>
+	 <bb9d69200905132354h6b64171g24351840fb1d0893@mail.gmail.com>
+	 <20090514070129.GL8212@noris.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Erik Faye-Lund <kusmabite@gmail.com>
-To: Matthias Andree <matthias.andree@gmx.de>
-X-From: git-owner@vger.kernel.org Thu May 14 20:23:31 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Michael Radziej <mir@noris.de>
+X-From: git-owner@vger.kernel.org Thu May 14 20:25:34 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M4faa-0006Ah-Jn
-	for gcvg-git-2@gmane.org; Thu, 14 May 2009 20:23:29 +0200
+	id 1M4fcb-0007JA-13
+	for gcvg-git-2@gmane.org; Thu, 14 May 2009 20:25:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752704AbZENSWt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 14 May 2009 14:22:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752694AbZENSWt
-	(ORCPT <rfc822;git-outgoing>); Thu, 14 May 2009 14:22:49 -0400
-Received: from peff.net ([208.65.91.99]:36104 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752663AbZENSWt (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 May 2009 14:22:49 -0400
-Received: (qmail 24333 invoked by uid 107); 14 May 2009 18:22:51 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.40) with ESMTPA; Thu, 14 May 2009 14:22:51 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 14 May 2009 14:22:49 -0400
-Content-Disposition: inline
-In-Reply-To: <op.utwyczlf1e62zd@merlin.emma.line.org>
+	id S1752062AbZENSZZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 14 May 2009 14:25:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752055AbZENSZY
+	(ORCPT <rfc822;git-outgoing>); Thu, 14 May 2009 14:25:24 -0400
+Received: from qw-out-2122.google.com ([74.125.92.25]:15659 "EHLO
+	qw-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751271AbZENSZX (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 May 2009 14:25:23 -0400
+Received: by qw-out-2122.google.com with SMTP id 5so1153130qwd.37
+        for <git@vger.kernel.org>; Thu, 14 May 2009 11:25:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=NxUkdV6dzAyjf/PA2g9oBCUPVSPD8Y/msZI2YXplnc0=;
+        b=f8gOTAsSIjwaHqZFZA+ePjMXCwWzc5UNcU6wMzHjVgcVYbTEFfGzX71Ks7S+kQuyR+
+         ahgNZUaXOOWX6/bRGJkCnElUdiFrnYEImRhzPDclfQiIaxgJIZ5jqUFU/DzOzgEzTm6v
+         xwjIxHywamELG8cWB0gY5JpRJ/hgOlD5Nz/j8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=ReSItwXvFpAeBOW+NoO3z4U/JKw5TM82zcQE7El7l9fnr0UmpgNoSRho1ii6W+ErVZ
+         eJXcZQhxnm6vSK74pOQRKUexCIIRpetyKakQ+a5XxBgf+O5PPGUy+lKT1F0vb5siTS3q
+         gt4JWVB1cUgOi2M7wt8Leu/EuX0IGt9bacbBY=
+Received: by 10.229.80.18 with SMTP id r18mr1767458qck.73.1242325523799; Thu, 
+	14 May 2009 11:25:23 -0700 (PDT)
+In-Reply-To: <20090514070129.GL8212@noris.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119208>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119209>
 
-On Thu, May 14, 2009 at 11:37:37AM +0200, Matthias Andree wrote:
+On Thu, May 14, 2009 at 12:01 AM, Michael Radziej <mir@noris.de> wrote:
+> git merge --squash is not a merge at all. ...
+> It is useful only in very special circumstances.
 
-> HOWEVER, I see two problems here (yes, they are corner cases):
->
-> #1: git tag -f ("replace tag") fails to "replace" a heaviweight tag if I  
-> try to replace a tag by itself (or create a cycle by some other means).
->
-> The new "foo" is unique in refs (OK), but it's *not unique* in objects  
-> (FAIL), as the old "foo" is referenced by the new "foo" and bears the same 
-> tag name.
->
-> It screws the repo, breaking the uniqueness of tags. Basically, git tag -f 
-> is implementing a half-baked, non-working "rebase tag objects"  
-> functionality.
+You're right.  I (incorrectly) thought I had to use --squash to
+properly interface with an svn branch and trunk through git-svn.  I
+thought not using squash would trigger hundreds of commits - it
+doesn't, nice things happen with just "merge".
 
-Can you explain how this "screws the repo"? The refs are unique, and in
-your examples, a tag object replaced by "git tag -f" no longer has a ref
-pointing to it (but in your example of making a tag of a tag, then of
-course the original is still reachable indirectly). The "unique in
-objects" you refer to is that the tag itself says "here is the name
-under which I was tagged". That name is purely informative and has
-nothing to do with ref lookup or reachability.
-
-In your examples, I don't see any behavior that is causing actual
-problems.
-
-> #2: related: git tag -d cannot reliably delete tag objects
->
-> Same here: if another tag object references the tag object I'm deleting,  
-> we only delete the ref, but not the tag object. It doesn't (cannot) become 
-> dangling.
-
-Deleting the ref makes it dangling, unless something else is referencing
-it. In your examples, since you tag the tag, the original tag is still
-referenced.
-
-> $ git rev-list --objects --all
-> 4481a15d999b1b13066fe932e35ea05b8b1027a6
-> 72f3463f5a8089ac91001d458ceffb6d4e1056ee foo
-> 2e326d8a210536b7cd1f2bc77e3e29d7231f9ec4 foo
-> 995773fc9b649922936e110207e6abb904cc18e8
-> 15a9779d8f787428e57830410c7842e5449dfd33 a
-
-The right-hand side of this output is a purely informative "here is a
-name that may be useful for packing heuristics". It has nothing to do
-with the refs (for blobs, the pathname through which we reached the blob
-will be printed -- obviously this is not going to be unique, as you will
-have many versions of each file).
-
-> So what we get is (root/parents first, then children):
->
-> objects:  4481a1 (commit) <- 2e326d (tag "foo") <- 72f346 (tag "foo")
-> refs:     heads/master                             tags/foo
->
-> Whoops. "foo" is there twice, and it's referenced from a current ref.
-> We have *not* *replaced* it. *If* we did, we should have got:
->
-> objects:  4481a1 (commit) <- 72f346 (tag "foo")
-> refs:     heads/master       tags/foo
-> with a dangling tag 2e326d
-
-Right. Because you didn't ask to replace it. You asked to tag the tag.
-
-> Hu, there's a nice cycle:
->
-> 69bf (commit) <- 9756 ('old' tag1) <- 38ae (tag2) <- 8e7a (tag1)
-
-You keep calling these cycles, but they're not (at least in terms of the
-git graph). The fact that two distinct objects both contain the string
-"tag tag1" is not any more a cycle than two commit objects with the same
-commit message. They are both distinct objects with distinct hashes, and
-the hashes are how the git graph is built.
-
-> Now, more fun - watch the inconsistency:
->
-> $ git tag -d tag1
-> Deleted tag 'tag1'
-> $ git tag -d tag1
-> error: tag 'tag1' not found.
-
-OK, so you deleted the ref tag1.
-
-> Ha! As if... now watch this:
-> $ git rev-list --objects  --all | while read a b ; do echo "$a $(git  
-> cat-file -t $a) $b" ; done
-> 69bf327c5d172fc8e4f63acf4d2e01c474824ce4 commit
-> 38aea56fec319d8c259a80157dde2432d2d09b2b tag tag2
-> 9756f6fa98a5cce2aab1f6a6e7dd4de515626e19 tag tag1
-> d758baa57a7ef20d44df0535bef1a91bb3dc4f62 tree
-> d3d8863b140f43f7c07050b9f2e210d41e73edb1 blob otherfile
->
-> The tag object "tag1" is still there. WHOOPS!!!
-
-Of course the _old_ tag1 is still there. It is referenced by tag2, which
-still has a ref. Again you are confusing the right-hand side of "git
-rev-list --objects" with actual ref names.
-
-> I appreciate that this isn't trivial to solve, but I presume anything that 
-> walks the object database and uses tags can fail - including, but not  
-> limited to, git fast-export.
-
-I am not ruling out the possibility that there is some piece of code
-that will be confused by the situation you have created, but it has
-nothing to do with graph walking. It would have to be a piece of code
-which cares about the uniqueness of informative names inside tag
-objects.
-
--Peff
+Thanks everyone for helping me,
+Cory
