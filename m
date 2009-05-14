@@ -1,66 +1,100 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: Request for detailed documentation of git pack protocol
-Date: Thu, 14 May 2009 17:02:26 +0200
-Message-ID: <4A0C3282.4000101@op5.se>
-References: <200905122329.15379.jnareb@gmail.com> <20090512233450.GY30527@spearce.org> <200905141024.17525.jnareb@gmail.com> <20090514145724.GE30527@spearce.org>
+From: "Alan M. Feldstein" <alan@alanfeldstein.com>
+Subject: mergetool for Solaris
+Date: Thu, 14 May 2009 11:00:09 -0500
+Organization: Cosmic Horizon
+Message-ID: <4A0C4009.60406@alanfeldstein.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Thu May 14 17:03:15 2009
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu May 14 18:08:06 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M4cSk-0000rK-RY
-	for gcvg-git-2@gmane.org; Thu, 14 May 2009 17:03:11 +0200
+	id 1M4dT4-0001PM-EC
+	for gcvg-git-2@gmane.org; Thu, 14 May 2009 18:07:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753794AbZENPCf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 14 May 2009 11:02:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753220AbZENPCf
-	(ORCPT <rfc822;git-outgoing>); Thu, 14 May 2009 11:02:35 -0400
-Received: from fg-out-1718.google.com ([72.14.220.159]:43804 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753042AbZENPCe (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 May 2009 11:02:34 -0400
-Received: by fg-out-1718.google.com with SMTP id 16so470455fgg.17
-        for <git@vger.kernel.org>; Thu, 14 May 2009 08:02:34 -0700 (PDT)
-Received: by 10.86.51.2 with SMTP id y2mr2637092fgy.3.1242313354577;
-        Thu, 14 May 2009 08:02:34 -0700 (PDT)
-Received: from clix.int.op5.se ([212.112.174.166])
-        by mx.google.com with ESMTPS id l12sm2390018fgb.19.2009.05.14.08.02.27
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 14 May 2009 08:02:34 -0700 (PDT)
-User-Agent: Thunderbird 2.0.0.21 (X11/20090320)
-In-Reply-To: <20090514145724.GE30527@spearce.org>
+	id S1752694AbZENQHY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 14 May 2009 12:07:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752138AbZENQHY
+	(ORCPT <rfc822;git-outgoing>); Thu, 14 May 2009 12:07:24 -0400
+Received: from smtpauth20.prod.mesa1.secureserver.net ([64.202.165.36]:60698
+	"HELO smtpauth20.prod.mesa1.secureserver.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with SMTP id S1751502AbZENQHX (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 14 May 2009 12:07:23 -0400
+X-Greylist: delayed 410 seconds by postgrey-1.27 at vger.kernel.org; Thu, 14 May 2009 12:07:23 EDT
+Received: (qmail 3727 invoked from network); 14 May 2009 16:00:31 -0000
+Received: from unknown (24.206.112.173)
+  by smtpauth20.prod.mesa1.secureserver.net (64.202.165.36) with ESMTP; 14 May 2009 16:00:31 -0000
+User-Agent: Thunderbird 2.0.0.14 (X11/20080531)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119202>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119203>
 
-Shawn O. Pearce wrote:
-> 
-> In loopback mode for local file URIs, it may become an issue.  C Git
-> is just getting lucky by the pipe size I think.  Though I thought I
-> read somewhere yesterday pipe FIFOs in Linux were being allocated
-> at 512 bytes, not one system page.  Of course other systems could
-> allocate whatever size they want too, and may allocate something
-> below the 2952 minimum, and we'd most likely see a deadlock on them.
-> 
+    jesus% git mergetool
+    merge tool candidates: kdiff3 tkdiff xxdiff meld gvimdiff opendiff emerge
+    vimdiff
+    No known merge resolution program available.
+    jesus%
 
-Linux allocates one page 4096 bytes for a FIFO. 512 is the maximum
-size guaranteed by POSIX to result in an atomic write.
+
+I tried building kdiff3-0.9.95. That wasn't much fun. (If any member of the Git 
+community wants to explore that with me, I'll provide details.)
+
+Searching for a path of least resistance, I used the above merge tool candidates 
+list in comparison with the list of tool packages available from sunfreeware.com 
+and selected tkdiff. Standalone, tkdiff launches successfully. But git mergetool 
+fails to launch it:
+
+    jesus% git mergetool
+    merge tool candidates: kdiff3 tkdiff xxdiff meld gvimdiff opendiff emerge
+    vimdiff
+    Merging the files: about.html
+
+    Normal merge conflict for 'about.html':
+      {local}: modified
+      {remote}: modified
+    Hit return to start merge resolution tool (tkdiff):
+    Neither ~/.dt/sessions/current/dt.resources nor
+            ~/.dt/sessions/home/dt.resources was readable
+       Falling back to plain X
+    Error in startup script: expected integer but got "bold"
+        (processing "-font" option)
+        invoked from within
+    ".client.left.text tag configure inlinetag -background DodgerBlue -font
+    {TkFixedFont bold}"
+        ("eval" body line 1)
+        invoked from within
+    "eval "$widget tag configure $tag $opts($tag)""
+        (procedure "build-client" line 106)
+        invoked from within
+    "build-client"
+        (procedure "create-display" line 40)
+        invoked from within
+    "create-display"
+        (procedure "main" line 57)
+        invoked from within
+    "main"
+        (file "/usr/local/bin/tkdiff" line 9515)
+    merge of about.html failed
+    jesus%
+
+It seems to me inappropriate for Git to be looking for ~/.dt/ (which doesn't 
+exist), because I'm running the Java Desktop System, not CDE.
+
+Has anyone had success with mergetool on Solaris? Or can anyone help with 
+mergetool/tkdiff (that looks solvable)?
 
 -- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
-
-Register now for Nordic Meet on Nagios, June 3-4 in Stockholm
- http://nordicmeetonnagios.op5.org/
-
-Considering the successes of the wars on alcohol, poverty, drugs and
-terror, I think we should give some serious thought to declaring war
-on peace.
+*Alan Feldstein*
+Architectural Verification Engineer, Cosmic Horizon 
+<http://www.alanfeldstein.com/>
+alan@alanfeldstein.com <mailto:alan@alanfeldstein.com>
+*http://www.linkedin.com/in/feldstein*
+	
+work: +1 585 415 6682
+See who we know in common <http://www.linkedin.com/e/wwk/1301367/> 	Want 
+a signature like this? <http://www.linkedin.com/e/sig/1301367/>
