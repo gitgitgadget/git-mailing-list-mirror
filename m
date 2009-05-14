@@ -1,124 +1,77 @@
-From: "Matthias Andree" <matthias.andree@gmx.de>
-Subject: git-tag bug? confusing git fast-export with double tag objects
-Date: Thu, 14 May 2009 02:53:42 +0200
-Message-ID: <op.utv93sdo1e62zd@merlin.emma.line.org>
+From: Miles Bader <miles@gnu.org>
+Subject: Re: Cross-Platform Version Control
+Date: Thu, 14 May 2009 10:49:31 +0900
+Message-ID: <buooctwqwr8.fsf@dhlpc061.dev.necel.com>
+References: <419AD153-53B4-4DAB-AF72-4127C17B1CA0@gmail.com>
+	<4A09E719.4090205@gmail.com>
+	<alpine.DEB.1.00.0905130222460.27348@pacific.mpi-cbg.de>
+	<4A0A5BDB.9030602@gmail.com>
+	<alpine.DEB.1.00.0905131215010.5046@intel-tinevez-2-302>
+	<43d8ce650905130340q596043d5g45b342b62fe20e8d@mail.gmail.com>
+	<43d8ce650905130341g516c899fsdc6b50a45381d4c6@mail.gmail.com>
+	<76718490905130642h792e9701sf2ec7fbf2e7de96a@mail.gmail.com>
+	<81b0412b0905130644u7e22bde4ta97616a4ed8be1e0@mail.gmail.com>
+	<76718490905130650u4d047e13pa73e0a96289c452a@mail.gmail.com>
+	<43d8ce650905130657q2de9686q683fea84345a6651@mail.gmail.com>
+Reply-To: Miles Bader <miles@gnu.org>
 Mime-Version: 1.0
-Content-Type: text/plain; format=flowed; delsp=yes; charset=utf-8
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu May 14 02:53:59 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Jay Soffian <jaysoffian@gmail.com>,
+	Alex Riesen <raa.lkml@gmail.com>, git@vger.kernel.org
+To: John Tapsell <johnflux@gmail.com>
+X-From: git-owner@vger.kernel.org Thu May 14 03:49:55 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M4PCr-0000Bg-Em
-	for gcvg-git-2@gmane.org; Thu, 14 May 2009 02:53:53 +0200
+	id 1M4Q52-0008AP-KG
+	for gcvg-git-2@gmane.org; Thu, 14 May 2009 03:49:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753578AbZENAxp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 13 May 2009 20:53:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752948AbZENAxp
-	(ORCPT <rfc822;git-outgoing>); Wed, 13 May 2009 20:53:45 -0400
-Received: from mail.gmx.net ([213.165.64.20]:37175 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752455AbZENAxo (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 May 2009 20:53:44 -0400
-Received: (qmail invoked by alias); 14 May 2009 00:53:44 -0000
-Received: from g225203118.adsl.alicedsl.de (EHLO mandree.no-ip.org) [92.225.203.118]
-  by mail.gmx.net (mp055) with SMTP; 14 May 2009 02:53:44 +0200
-X-Authenticated: #428038
-X-Provags-ID: V01U2FsdGVkX19S0V0TV9pS7ZNB6yKczeGezcqXaG/OJGI+V52Avb
-	iDiPmXnjQTY8eY
-Received: from merlin.emma.line.org (localhost [127.0.0.1])
-	by merlin.emma.line.org (Postfix) with ESMTP id 208BE9464A
-	for <git@vger.kernel.org>; Thu, 14 May 2009 02:53:43 +0200 (CEST)
-User-Agent: Opera Mail/9.64 (Linux)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.5
+	id S1754015AbZENBtk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 13 May 2009 21:49:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752705AbZENBtk
+	(ORCPT <rfc822;git-outgoing>); Wed, 13 May 2009 21:49:40 -0400
+Received: from TYO201.gate.nec.co.jp ([202.32.8.193]:41742 "EHLO
+	tyo201.gate.nec.co.jp" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752498AbZENBtj (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 May 2009 21:49:39 -0400
+Received: from relay21.aps.necel.com ([10.29.19.50])
+	by tyo201.gate.nec.co.jp (8.13.8/8.13.4) with ESMTP id n4E1nWbf000120;
+	Thu, 14 May 2009 10:49:32 +0900 (JST)
+Received: from relay31.aps.necel.com ([10.29.19.16] [10.29.19.16]) by relay21.aps.necel.com with ESMTP; Thu, 14 May 2009 10:49:32 +0900
+Received: from dhlpc061 ([10.114.113.70] [10.114.113.70]) by relay31.aps.necel.com with ESMTP; Thu, 14 May 2009 10:49:32 +0900
+Received: by dhlpc061 (Postfix, from userid 31295)
+	id 9375452E258; Thu, 14 May 2009 10:49:32 +0900 (JST)
+System-Type: x86_64-unknown-linux-gnu
+Blat: Foop
+In-Reply-To: <43d8ce650905130657q2de9686q683fea84345a6651@mail.gmail.com>
+	(John Tapsell's message of "Wed, 13 May 2009 16:57:00 +0300")
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119122>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119123>
 
-Greetings,
+John Tapsell <johnflux@gmail.com> writes:
+> I'm as much of an open source developer as anyone else here.  I spend
+> a huge amount of my time programming for KDE.  But I've never told a
+> user "well that settles it" because they won't code it themselves :-/
 
-I found a way to break git fast-export accidentally. I'm looking at the  
-master branch, currently v1.6.3.1-9-g95405ba for me.
+FWIW, Johannes' use of "Well, that rather settles things, no?" in this
+thread this didn't strike me as being rude or truly dismissive (even
+though it's literally so).
 
-The short story is, I tried to regenerate signed tag objects after  
-doctoring the history in a repo to fix b0rked addresses after conversion,  
-doing something like:
+It seemed more just a timely and to the point reminder that however fun
+it is to talk about random feature X, someone's gotta do the work if
+it's going to actually be implemented, and that the direction of git
+development very much follows the whims of those doing the actual
+hacking (perhaps more so than other projects).
 
-	git tag -f -s foo foo
+[and I don't even have particularly thick skin, I think -- I'm often
+very annoyed by brusqueness one sees on many developer mailing lists...]
 
-when I should have done
-
-	git tag -f -s foo foo^{commit}
-
-Now I have  tag "foo" twice in my repo, and this screws some operations  
-royally.
-
-Here's a script to generate such a b0rked repo:
-
-#! /bin/sh
-#
-# On your marks
-set -eu
-IFS=$(printf '\n\t')
-#
-# Set
-dir=$(mktemp -d)
-cd $dir
-git init
-echo foo >bar
-git add bar
-git commit -m "add bar"
-git tag -s baz -m "tag bar as baz"
-#
-# Go - this is correct, but we'll do wrong
-#git tag -f -s baz baz^{commit} -m "regenerate tag"
-#
-# This is wrong and confuses git fast-export:
-git tag -f -s baz baz -m "regenerate tag"
-#
-# Print the result
-git show baz
-
-
-This is quite prominent in git fast-export --all --signed-tags=strip  
-output:
-
-...
-tag baz
- from :2
-tagger Matthias Andree <matthias.andree@gmx.de> 1242259705 +0200
-data 15
-tag bar as baz
-
-tag baz
- from :0
-tagger Matthias Andree <matthias.andree@gmx.de> 1242259705 +0200
-data 11
-regenerate
-
-And the "from :0" hunk kills git fast-import afterwards as the mark :0  
-isn't defined. Not sure if it could cope with a duplicate tag otherwise.  
-Probably not how git-tag should behave.
-
-Questions:
-
-1. how do I get a list of all such tags? git tag -l doesn't work. git  
-rev-list --all is a bit unspecific for my taste, and not very helpful...
-
-2. how do I trash the accidentally created 2nd "baz" tag object, i. e.  
-remove it from the (packed) object database? Of course, I can hack some  
-script (or use a text editor) to grind this git-fast-export into shape and  
-re-importing it...
-
-3. is this a shortcoming in git tag that doesn't properly resolve its 2nd  
-non-option argument to a commit?
-
-Thanks.
+-Miles
 
 -- 
-Matthias Andree
+Acquaintance, n. A person whom we know well enough to borrow from, but not
+well enough to lend to.
