@@ -1,10 +1,9 @@
 From: Alex Riesen <raa.lkml@gmail.com>
 Subject: Re: [PATCH 2/2] Improve the naming of guessed target repository for 
 	git clone
-Date: Thu, 14 May 2009 10:33:02 +0200
-Message-ID: <81b0412b0905140133l78def06kae0cb4798feaa4a9@mail.gmail.com>
+Date: Thu, 14 May 2009 10:45:11 +0200
+Message-ID: <81b0412b0905140145i4093e742x9f8c762e2bf32624@mail.gmail.com>
 References: <200905112208.21017.Hugo.Mildenberger@namir.de>
-	 <200905121557.18542.Hugo.Mildenberger@namir.de>
 	 <81b0412b0905120759u15f1ec73k73625a7904515792@mail.gmail.com>
 	 <200905121900.00625.Hugo.Mildenberger@namir.de>
 	 <81b0412b0905121018lbccda1fvf6c4c19417cdde00@mail.gmail.com>
@@ -13,182 +12,118 @@ References: <200905112208.21017.Hugo.Mildenberger@namir.de>
 	 <20090513205333.GA21631@blimp.localdomain>
 	 <7vfxf81ppd.fsf@alter.siamese.dyndns.org>
 	 <81b0412b0905132254n5046666t24f3887f1fd4e4d9@mail.gmail.com>
+	 <7v8wl0xkcu.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; boundary=001485f040921c3a2f0469db2d11
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org, Daniel Barkalow <barkalow@iabervon.org>,
 	Hugo Mildenberger <Hugo.Mildenberger@namir.de>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu May 14 10:33:20 2009
+X-From: git-owner@vger.kernel.org Thu May 14 10:45:31 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M4WNT-0004ER-O0
-	for gcvg-git-2@gmane.org; Thu, 14 May 2009 10:33:20 +0200
+	id 1M4WZF-0000mo-9E
+	for gcvg-git-2@gmane.org; Thu, 14 May 2009 10:45:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753859AbZENIdI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 14 May 2009 04:33:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753362AbZENIdG
-	(ORCPT <rfc822;git-outgoing>); Thu, 14 May 2009 04:33:06 -0400
-Received: from mail-fx0-f158.google.com ([209.85.220.158]:43405 "EHLO
-	mail-fx0-f158.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752881AbZENIdC (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 May 2009 04:33:02 -0400
-Received: by fxm2 with SMTP id 2so1141214fxm.37
-        for <git@vger.kernel.org>; Thu, 14 May 2009 01:33:02 -0700 (PDT)
+	id S1760376AbZENIpS convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 14 May 2009 04:45:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760108AbZENIpQ
+	(ORCPT <rfc822;git-outgoing>); Thu, 14 May 2009 04:45:16 -0400
+Received: from fk-out-0910.google.com ([209.85.128.191]:58396 "EHLO
+	fk-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752423AbZENIpM convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 14 May 2009 04:45:12 -0400
+Received: by fk-out-0910.google.com with SMTP id 18so563549fkq.5
+        for <git@vger.kernel.org>; Thu, 14 May 2009 01:45:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type;
-        bh=K3Rhx0hnzydPCsbAy5qdxEzO0XfHYialMDJ0tdzn7zM=;
-        b=udcuN6JQKS5iKH1kZQIhfN2ViLbVVqUv0tSZ5uzhS1iHyi3T0U31RfjCfSgW96ZYuY
-         mvBFR0xTZRP5Dfc3e185pSwfguzuM4fH+itlLxLVWh5ITQZFpwtKlZyBlFw+tjZQKGx5
-         q+8Qnh/YGQtk7Vhn55iWYti+Rb5JrXlbKQGCY=
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=NUlTaZJzUpT1onmWqj8FXIWDprNgkIr6oQ6JihAyJvA=;
+        b=cXzTuA+PWAU2zARZZYxYpl/Eo28HDdxFC1K3NF0qttCKw908KqvwPn2YnqCqabicE8
+         H9UgaSIzHkVBQcH1deSwo0qEZ7pU9jnaB/LVDIEWNRjWjJaJnC8LLDCS5JTpK29KaJ8c
+         cOfPdZiCfjM1d3wAsv19ntoEnw/qRQoxsctV0=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=WI044Npa8q6ax3ZD8XTYfHBBA5y5eGMnmrMWEGHeUcG6LyVENsPVSdJvWBkSbfL86J
-         19s29dVeRI179CL/OAqpo/ipS4mVdeYFDG5uixVKY7k+IIMtcy7K+9ncWBHmsFPsJqwM
-         vNetGDTXitxr3CGb7IRZqKP10CxcHt1MTwyV0=
-Received: by 10.204.31.78 with SMTP id x14mr1905727bkc.3.1242289982421; Thu, 
-	14 May 2009 01:33:02 -0700 (PDT)
-In-Reply-To: <81b0412b0905132254n5046666t24f3887f1fd4e4d9@mail.gmail.com>
+         :cc:content-type:content-transfer-encoding;
+        b=X4gWdwBDkZHsbAPUbOqCAgvbtxTVJC4C4dAGEJaQLeowlrAdbuEeHLC0zbjbaTHG0c
+         JauFcxdAyTaUlOUBqpF/bKWUkP+VBdCjgNBrvDfnqVGzI38JZttzd9CNd+PGhks+H0da
+         zBABnYMHb1CaukixkwGns/uxJNA1dlSwCU+Js=
+Received: by 10.204.68.10 with SMTP id t10mr1865282bki.182.1242290711705; Thu, 
+	14 May 2009 01:45:11 -0700 (PDT)
+In-Reply-To: <7v8wl0xkcu.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119170>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119171>
 
---001485f040921c3a2f0469db2d11
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+2009/5/14 Junio C Hamano <gitster@pobox.com>:
+> Alex Riesen <raa.lkml@gmail.com> writes:
+>
+>>> What's the point of this change, now that you have a fix in 1/2? =C2=
+=A0Who are
+>>> you helping with this patch?
+>>
+>> Without this the _automatically_ generated names for cloned reposito=
+ries
+>> have all the whitespace around them.
+>
+> Even if it has whitespace around its name, that's what you got from t=
+he
+> upstream (a valid source of clone), and wasn't it you who said someth=
+ing
+> about UNIX tradition of allowing LF and others in the filename?
 
-Strip leading and trailing spaces off guessed target directory, and
-replace sequences of whitespace and 'control' characters with one
-space character.
+Yes, when user explicitely asked a program about that. This here
+(clone with only URL as argument) is not the case, I think.
 
-User still can have any name by specifying it explicitely after url.
+> If clone reports "ok we created this new repository" so that the call=
+er
+> can capture it, then the whole process should be able to cope with
+> automatically generated names with or without the patch, shouldn't it=
+?
 
-Signed-off-by: Alex Riesen <raa.lkml@gmail.com>
----
+No, don't think so. You're not always able to capture the output of git=
+ clone
+(Windows again), and BTW - init-db output is not designed to be capture=
+d
+unambiguously.
 
-2009/5/14 Alex Riesen <raa.lkml@gmail.com>:
-> But I should complete the patch: remove heading whitespace, and replace
-> multiple spaces and control characters with one space.
+> Or are you trying to help a human user who gives a pathname ridden wi=
+th
+> excess whitespaces to "git clone", and that pathname _happens_ to wor=
+k as
+> a valid clone source, creating a new repository whose name is ridden =
+with
+> excess whitespaces the same way as the input pathname?
 
-Done.
+Not really. I just try to make the _generated_ output, which the user c=
+annot
+predict anyway (nor does the user care much about it) to be less
+problematic. Yes, I did say that LF-anything in UNIX filenames is a nor=
+mal
+thing. That does not mean that such names are so very convenient to use=
+=2E
+They do cause problems, even if just through scrambling terminal output=
+=2E
+They are "inconvenient". If our users don't expect precise output anywa=
+y,
+we can be a little more adhering to usual practices in choosing names.
 
- builtin-clone.c |   34 +++++++++++++++++++++++++++++-----
- 1 files changed, 29 insertions(+), 5 deletions(-)
+> ... After all, the
+> user deliberately gave them to us, and the repository we cloned from =
+had
+> these excesses in its name (iow, without the excess whitespaces the c=
+lone
+> itself wouldn't have worked). =C2=A0In such a case, is it really help=
+ing him to
+> remove these whitespaces as excesses?
 
-diff --git a/builtin-clone.c b/builtin-clone.c
-index 880373f..d068b7e 100644
---- a/builtin-clone.c
-+++ b/builtin-clone.c
-@@ -104,11 +104,12 @@ static char *get_repo_path(const char *repo, int
-*is_bundle)
- static char *guess_dir_name(const char *repo, int is_bundle, int is_bare)
- {
- 	const char *end = repo + strlen(repo), *start;
-+	char *dir;
-
- 	/*
--	 * Strip trailing slashes and /.git
-+	 * Strip trailing spaces, slashes and /.git
- 	 */
--	while (repo < end && is_dir_sep(end[-1]))
-+	while (repo < end && (is_dir_sep(end[-1]) || isspace(end[-1])))
- 		end--;
- 	if (end - repo > 5 && is_dir_sep(end[-5]) &&
- 	    !strncmp(end - 4, ".git", 4)) {
-@@ -140,10 +141,33 @@ static char *guess_dir_name(const char *repo,
-int is_bundle, int is_bare)
- 	if (is_bare) {
- 		struct strbuf result = STRBUF_INIT;
- 		strbuf_addf(&result, "%.*s.git", (int)(end - start), start);
--		return strbuf_detach(&result, 0);
-+		dir = strbuf_detach(&result, 0);
-+	} else
-+		dir = xstrndup(start, end - start);
-+	/*
-+	 * Replace sequences of 'control' characters and whitespace
-+	 * with one ascii space, remove leading and trailing spaces.
-+	 */
-+	if (*dir) {
-+		char *out = dir;
-+		int prev_space = 1 /* strip leading whitespace */;
-+		for (end = dir; *end; ++end) {
-+			char ch = *end;
-+			if ((unsigned char)ch < '\x20')
-+				ch = '\x20';
-+			if (isspace(ch)) {
-+				if (prev_space)
-+					continue;
-+				prev_space = 1;
-+			} else
-+				prev_space = 0;
-+			*out++ = ch;
-+		}
-+		*out = '\0';
-+		if (out > dir && prev_space)
-+			out[-1] = '\0';
- 	}
--
--	return xstrndup(start, end - start);
-+	return dir;
- }
-
- static void strip_trailing_slashes(char *dir)
--- 
-1.6.3.1.37.g5d96e
-
---001485f040921c3a2f0469db2d11
-Content-Type: application/octet-stream; 
-	name="0002-Improve-the-naming-of-guessed-target-repository-for-.patch"
-Content-Disposition: attachment; 
-	filename="0002-Improve-the-naming-of-guessed-target-repository-for-.patch"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: f_fup7dkaf0
-
-RnJvbSA2ZDYwNzUxMzBhZmJkZDM1MjYwZTNlMzNjMDk5ZjU3ZDlmYWViZTk4IE1vbiBTZXAgMTcg
-MDA6MDA6MDAgMjAwMQpGcm9tOiBBbGV4IFJpZXNlbiA8cmFhLmxrbWxAZ21haWwuY29tPgpEYXRl
-OiBXZWQsIDEzIE1heSAyMDA5IDE4OjMyOjA2ICswMjAwClN1YmplY3Q6IFtQQVRDSCAyLzJdIElt
-cHJvdmUgdGhlIG5hbWluZyBvZiBndWVzc2VkIHRhcmdldCByZXBvc2l0b3J5IGZvciBnaXQgY2xv
-bmUKClN0cmlwIGxlYWRpbmcgYW5kIHRyYWlsaW5nIHNwYWNlcyBvZmYgZ3Vlc3NlZCB0YXJnZXQg
-ZGlyZWN0b3J5LCBhbmQKcmVwbGFjZSBzZXF1ZW5jZXMgb2Ygd2hpdGVzcGFjZSBhbmQgJ2NvbnRy
-b2wnIGNoYXJhY3RlcnMgd2l0aCBvbmUKc3BhY2UgY2hhcmFjdGVyLgoKVXNlciBzdGlsbCBjYW4g
-aGF2ZSBhbnkgbmFtZSBieSBzcGVjaWZ5aW5nIGl0IGV4cGxpY2l0ZWx5IGFmdGVyIHVybC4KClNp
-Z25lZC1vZmYtYnk6IEFsZXggUmllc2VuIDxyYWEubGttbEBnbWFpbC5jb20+Ci0tLQogYnVpbHRp
-bi1jbG9uZS5jIHwgICAzNCArKysrKysrKysrKysrKysrKysrKysrKysrKysrKy0tLS0tCiAxIGZp
-bGVzIGNoYW5nZWQsIDI5IGluc2VydGlvbnMoKyksIDUgZGVsZXRpb25zKC0pCgpkaWZmIC0tZ2l0
-IGEvYnVpbHRpbi1jbG9uZS5jIGIvYnVpbHRpbi1jbG9uZS5jCmluZGV4IDg4MDM3M2YuLmQwNjhi
-N2UgMTAwNjQ0Ci0tLSBhL2J1aWx0aW4tY2xvbmUuYworKysgYi9idWlsdGluLWNsb25lLmMKQEAg
-LTEwNCwxMSArMTA0LDEyIEBAIHN0YXRpYyBjaGFyICpnZXRfcmVwb19wYXRoKGNvbnN0IGNoYXIg
-KnJlcG8sIGludCAqaXNfYnVuZGxlKQogc3RhdGljIGNoYXIgKmd1ZXNzX2Rpcl9uYW1lKGNvbnN0
-IGNoYXIgKnJlcG8sIGludCBpc19idW5kbGUsIGludCBpc19iYXJlKQogewogCWNvbnN0IGNoYXIg
-KmVuZCA9IHJlcG8gKyBzdHJsZW4ocmVwbyksICpzdGFydDsKKwljaGFyICpkaXI7CiAKIAkvKgot
-CSAqIFN0cmlwIHRyYWlsaW5nIHNsYXNoZXMgYW5kIC8uZ2l0CisJICogU3RyaXAgdHJhaWxpbmcg
-c3BhY2VzLCBzbGFzaGVzIGFuZCAvLmdpdAogCSAqLwotCXdoaWxlIChyZXBvIDwgZW5kICYmIGlz
-X2Rpcl9zZXAoZW5kWy0xXSkpCisJd2hpbGUgKHJlcG8gPCBlbmQgJiYgKGlzX2Rpcl9zZXAoZW5k
-Wy0xXSkgfHwgaXNzcGFjZShlbmRbLTFdKSkpCiAJCWVuZC0tOwogCWlmIChlbmQgLSByZXBvID4g
-NSAmJiBpc19kaXJfc2VwKGVuZFstNV0pICYmCiAJICAgICFzdHJuY21wKGVuZCAtIDQsICIuZ2l0
-IiwgNCkpIHsKQEAgLTE0MCwxMCArMTQxLDMzIEBAIHN0YXRpYyBjaGFyICpndWVzc19kaXJfbmFt
-ZShjb25zdCBjaGFyICpyZXBvLCBpbnQgaXNfYnVuZGxlLCBpbnQgaXNfYmFyZSkKIAlpZiAoaXNf
-YmFyZSkgewogCQlzdHJ1Y3Qgc3RyYnVmIHJlc3VsdCA9IFNUUkJVRl9JTklUOwogCQlzdHJidWZf
-YWRkZigmcmVzdWx0LCAiJS4qcy5naXQiLCAoaW50KShlbmQgLSBzdGFydCksIHN0YXJ0KTsKLQkJ
-cmV0dXJuIHN0cmJ1Zl9kZXRhY2goJnJlc3VsdCwgMCk7CisJCWRpciA9IHN0cmJ1Zl9kZXRhY2go
-JnJlc3VsdCwgMCk7CisJfSBlbHNlCisJCWRpciA9IHhzdHJuZHVwKHN0YXJ0LCBlbmQgLSBzdGFy
-dCk7CisJLyoKKwkgKiBSZXBsYWNlIHNlcXVlbmNlcyBvZiAnY29udHJvbCcgY2hhcmFjdGVycyBh
-bmQgd2hpdGVzcGFjZQorCSAqIHdpdGggb25lIGFzY2lpIHNwYWNlLCByZW1vdmUgbGVhZGluZyBh
-bmQgdHJhaWxpbmcgc3BhY2VzLgorCSAqLworCWlmICgqZGlyKSB7CisJCWNoYXIgKm91dCA9IGRp
-cjsKKwkJaW50IHByZXZfc3BhY2UgPSAxIC8qIHN0cmlwIGxlYWRpbmcgd2hpdGVzcGFjZSAqLzsK
-KwkJZm9yIChlbmQgPSBkaXI7ICplbmQ7ICsrZW5kKSB7CisJCQljaGFyIGNoID0gKmVuZDsKKwkJ
-CWlmICgodW5zaWduZWQgY2hhciljaCA8ICdceDIwJykKKwkJCQljaCA9ICdceDIwJzsKKwkJCWlm
-IChpc3NwYWNlKGNoKSkgeworCQkJCWlmIChwcmV2X3NwYWNlKQorCQkJCQljb250aW51ZTsKKwkJ
-CQlwcmV2X3NwYWNlID0gMTsKKwkJCX0gZWxzZQorCQkJCXByZXZfc3BhY2UgPSAwOworCQkJKm91
-dCsrID0gY2g7CisJCX0KKwkJKm91dCA9ICdcMCc7CisJCWlmIChvdXQgPiBkaXIgJiYgcHJldl9z
-cGFjZSkKKwkJCW91dFstMV0gPSAnXDAnOwogCX0KLQotCXJldHVybiB4c3RybmR1cChzdGFydCwg
-ZW5kIC0gc3RhcnQpOworCXJldHVybiBkaXI7CiB9CiAKIHN0YXRpYyB2b2lkIHN0cmlwX3RyYWls
-aW5nX3NsYXNoZXMoY2hhciAqZGlyKQotLSAKMS42LjMuMS4zNy5nNWQ5NmUKCg==
---001485f040921c3a2f0469db2d11--
+I think yes. Otherwise the strict form of git clone could have been use=
+d,
+which involves absolutely no guessing and mangling.
