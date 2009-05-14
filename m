@@ -1,91 +1,86 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: git push origin error (1.6.3 new default functionality)
-Date: Thu, 14 May 2009 02:31:57 -0400
-Message-ID: <20090514063157.GA10411@coredump.intra.peff.net>
-References: <81bfc67a0905111826y779555cer6679da11db787ab1@mail.gmail.com> <4A09594F.4040603@drmicha.warpmail.net> <81bfc67a0905122226p113e4aa5y2a3523ac63de77fc@mail.gmail.com> <20090513083203.GA25058@sigill.intra.peff.net> <4A0A8871.6080107@viscovery.net> <20090513090317.GA3421@sigill.intra.peff.net> <4A0A98CC.2090701@drmicha.warpmail.net>
+From: Cory Sharp <cory.sharp@gmail.com>
+Subject: Re: [Q] merge squash unexpected conflicts
+Date: Wed, 13 May 2009 23:34:24 -0700
+Message-ID: <bb9d69200905132334m7a4e3a4akde3529abeab5a09@mail.gmail.com>
+References: <bb9d69200905131706m61b0dda1xc347ca2e719ec142@mail.gmail.com>
+	 <bb9d69200905131942t7a43a29fh9638d2548e9f12dc@mail.gmail.com>
+	 <7v4ovo1iap.fsf@alter.siamese.dyndns.org>
+	 <bb9d69200905132057u60adc2f8vb9ba9a35791f72ac@mail.gmail.com>
+	 <7veiusz45w.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Johannes Sixt <j.sixt@viscovery.net>,
-	Caleb Cushing <xenoterracide@gmail.com>, git@vger.kernel.org
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Thu May 14 08:34:42 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu May 14 08:35:45 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M4UUa-0007KO-BO
-	for gcvg-git-2@gmane.org; Thu, 14 May 2009 08:32:32 +0200
+	id 1M4UWX-0000Fv-0v
+	for gcvg-git-2@gmane.org; Thu, 14 May 2009 08:34:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754790AbZENGcA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 14 May 2009 02:32:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754334AbZENGcA
-	(ORCPT <rfc822;git-outgoing>); Thu, 14 May 2009 02:32:00 -0400
-Received: from peff.net ([208.65.91.99]:32892 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752266AbZENGb7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 May 2009 02:31:59 -0400
-Received: (qmail 20238 invoked by uid 107); 14 May 2009 06:31:59 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Thu, 14 May 2009 02:31:59 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Thu, 14 May 2009 02:31:57 -0400
-Content-Disposition: inline
-In-Reply-To: <4A0A98CC.2090701@drmicha.warpmail.net>
+	id S1754935AbZENGeZ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 14 May 2009 02:34:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754873AbZENGeY
+	(ORCPT <rfc822;git-outgoing>); Thu, 14 May 2009 02:34:24 -0400
+Received: from qw-out-2122.google.com ([74.125.92.25]:6843 "EHLO
+	qw-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752372AbZENGeY convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 14 May 2009 02:34:24 -0400
+Received: by qw-out-2122.google.com with SMTP id 5so881688qwd.37
+        for <git@vger.kernel.org>; Wed, 13 May 2009 23:34:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=CyfFWawiRlki05YJKc5Nvyt76OJfBveYTlb+ZVHF0Z0=;
+        b=KPDC6IhGg1Eeh7H6Rja+nLvJq7La2Tys4VNj7wnmJEHRqFCJRbZKJHD7hgobklY59n
+         S6P0kb+MW5nD3Su8Dvm1KRbZPHB3CMgen4gDzRGJr6Swnoi0C5osFru3Hh8MMWWKn7ln
+         9GlI+zLwrgHsT1vy5IWy4R52AOoPLcKBwd4R4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=JnLJV9eAr+y2KDmQfLNOUf5S8pr51HjwSmUH+s7WIPLbiFULSSYjBh5PvnVc+DqCCq
+         PpgW3XPMdKk0vXF0WhZnJJpXK9MhI/7e8/VXWiCHskpGAyr3pk8XA9Xs3lyoX2uaGJ25
+         Er0YAuLNK+bfd5z36Z6LxrzvVKdYvVNdAmObU=
+Received: by 10.229.96.9 with SMTP id f9mr1310126qcn.78.1242282864463; Wed, 13 
+	May 2009 23:34:24 -0700 (PDT)
+In-Reply-To: <7veiusz45w.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119148>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119149>
 
-On Wed, May 13, 2009 at 11:54:20AM +0200, Michael J Gruber wrote:
+On Wed, May 13, 2009 at 9:42 PM, Junio C Hamano <gitster@pobox.com> wro=
+te:
+> What's your point?
 
-> > Regardless, my point was: the warning was introduced for a purpose
-> > (either to point out potentially confusing behavior, or to warn the user
-> > about an upcoming change in default behavior). Showing up now and saying
-> > "I don't like this warning" without addressing any of the points in the
-> > original discussion or making any sort of proposal to try to accomplish
-> > the same goals is just counterproductive.
-> 
-> I don't want to stir this up to much again - as I said, set config and
-> be done.
+I am asking for help and understanding.
 
-Junio already posted a thoughtful (if perhaps somewhat frustrated) reply
-elsewhere, and I agree with most of what he said. I did want to make one
-additional point, though, because I think what I said may have appeared
-mean. And I was really trying to be nice.
+> WIth --squash, the tree and the index state becomes the same as if a =
+real
+> merge happened. =A0But the merge history is discarded with --squash. =
+=A0It is
+> a simulation of a merge in CVS and SVN (before they added "merge trac=
+king").
+>
+> If you want support for repeated merges by merge tracking, you do not=
+ want
+> todiscard the merge history by using --squash.
 
-My initial reaction was to say "shut up and set the config variable".
-But I really don't like doing that, because I don't want somebody
-thinking that all decisions are closed, and it's not possible to come to
-the table with new points that may make people change their minds.
+Why doesn't --squash do merge tracking?  The help didn't indicate that
+it doesn't, and I don't understand why it shouldn't -- since I *could*
+track the previous merge point manually and do "git diff --binary
+PREV_MERGE..NEXT_MERGE | git apply -" to do the merge myself.
 
-When the subject was discussed before, there were people who preferred
-various behaviors. They each made arguments, and in the aftermath, Junio
-made a decision (presumably based on arguments by list members, opinions
-of other developers, and whatever he thought was best) about what to
-apply.
+But since that's me manually performing merge tracking, why doesn't
+"merge --squash" track like just "merge" does?  If I didn't want
+tracking, I would expect to use some other command than "git merge
+[options]".
 
-If somebody wants to bring up a new argument, new data, or point out
-some or changed circumstance that may affect the decision, then I am all
-for them doing so. And that is what I was trying to coax out of Caleb.
-But without that, I don't see any reason why others should waste their
-time reconsidering the decision. Let's assume that the original decision
-making process was at least roughly deterministic and would just arrive
-at the same answer.
-
-And I think simply posting a "I would have been on the side to prefer X"
-opinion isn't really new data. It pushes the tally for that preference
-up by one, but the margin of error on such tallies is already huge (I
-think we have seen in the past that there is a silent majority who are
-_not_ on the git list, and we need to try to address their interests as
-well). So while something like a well-managed survey of what git users
-would prefer is new data, I consider a single (or even several) "me too"
-messages on the list to just be noise in the data.
-
-> My main issue is the fact that we have a config variable (push.default)
-> which causes a different behaviour depending on whether it is unset or
-> set to its default (!) value. That is a completely new UI approach. We
-
-Well, it depends on how you think of the default. The default could be
-"matched-and-warn", and you are fixing it by setting it to "matched". :)
-
--Peff
+Thanks for your help,
+Cory
