@@ -1,64 +1,78 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: git push origin error (1.6.3 new default functionality)
-Date: Wed, 13 May 2009 21:44:51 -0700
-Message-ID: <7vab5gz41o.fsf@alter.siamese.dyndns.org>
-References: <81bfc67a0905111826y779555cer6679da11db787ab1@mail.gmail.com>
-	<4A09594F.4040603@drmicha.warpmail.net>
-	<7vprec4znj.fsf@alter.siamese.dyndns.org>
-	<81bfc67a0905132030g39432e63ne72ace88edf79848@mail.gmail.com>
+From: Avery Pennarun <apenwarr@gmail.com>
+Subject: Re: how to update origin/<branch> after a push to origin <branch>?
+Date: Thu, 14 May 2009 00:58:09 -0400
+Message-ID: <32541b130905132158s44cc5b19n974901c05cf025b2@mail.gmail.com>
+References: <19640.1242276135@relay.known.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Michael J Gruber <git@drmicha.warpmail.net>,
-	git@vger.kernel.org
-To: Caleb Cushing <xenoterracide@gmail.com>
-X-From: git-owner@vger.kernel.org Thu May 14 06:45:02 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: layer <layer@known.net>
+X-From: git-owner@vger.kernel.org Thu May 14 06:58:40 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M4SoX-0005Ef-6X
-	for gcvg-git-2@gmane.org; Thu, 14 May 2009 06:45:01 +0200
+	id 1M4T1i-0000JH-Fe
+	for gcvg-git-2@gmane.org; Thu, 14 May 2009 06:58:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751924AbZENEow (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 14 May 2009 00:44:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751311AbZENEov
-	(ORCPT <rfc822;git-outgoing>); Thu, 14 May 2009 00:44:51 -0400
-Received: from fed1rmmtao101.cox.net ([68.230.241.45]:51010 "EHLO
-	fed1rmmtao101.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751159AbZENEov (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 May 2009 00:44:51 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao101.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20090514044452.MHSV17670.fed1rmmtao101.cox.net@fed1rmimpo02.cox.net>;
-          Thu, 14 May 2009 00:44:52 -0400
-Received: from localhost ([68.225.240.211])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id rGkr1b00J4aMwMQ04Gkrbt; Thu, 14 May 2009 00:44:52 -0400
-X-Authority-Analysis: v=1.0 c=1 a=FUvhmXxEDlAA:10 a=J7j2KiR9MRMA:10
- a=pGLkceISAAAA:8 a=ybZZDoGAAAAA:8 a=h7ONs7IDn4YU7TW9nf0A:9
- a=LQjOQVahJQSPyQKI5KMmSNTF7cgA:4 a=MSl-tDqOz04A:10 a=qIVjreYYsbEA:10
-X-CM-Score: 0.00
-In-Reply-To: <81bfc67a0905132030g39432e63ne72ace88edf79848@mail.gmail.com> (Caleb Cushing's message of "Wed\, 13 May 2009 23\:30\:41 -0400")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+	id S1752008AbZENE63 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 14 May 2009 00:58:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751917AbZENE63
+	(ORCPT <rfc822;git-outgoing>); Thu, 14 May 2009 00:58:29 -0400
+Received: from yw-out-2324.google.com ([74.125.46.29]:45298 "EHLO
+	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751592AbZENE63 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 14 May 2009 00:58:29 -0400
+Received: by yw-out-2324.google.com with SMTP id 5so615662ywb.1
+        for <git@vger.kernel.org>; Wed, 13 May 2009 21:58:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=1kVqKQYD6k2hffP1eS8Joi1+zmCcyMDYk5zL+VXGq6c=;
+        b=UBDAPXtRK/Uc+vBsyIw1875m0N22Uxjg7Y/lkXr56gCX1edwRyWrHqoe9ocQ7A2M3r
+         9yqA6T7B10Kh6Y3LJk9FJzeFfq8DUypclPFrnsrH6MYgK1/EJMiicHMBE5EtbvKv6mrE
+         ZwlUqD0RyqE8YJxEtuNJ61tUNiWNWqXc13tsc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=jBWipsWILTM3Br2aaKcB7G+SX/1iVHUnE9NbftfOQCgSXb1qKEp9ifQKU+EXUH9c8b
+         jjl+N6xNIYbT9Vvu8nRz/J0tkRLzEVDzDW/eGjpf59lnbIJewXjT0qMahN/Dt/P/S7nQ
+         IhriiKUC9wjtTkWKewKRxVSRb9dfhUDvAjkdo=
+Received: by 10.151.123.11 with SMTP id a11mr2741920ybn.75.1242277109093; Wed, 
+	13 May 2009 21:58:29 -0700 (PDT)
+In-Reply-To: <19640.1242276135@relay.known.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119133>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119134>
 
-Caleb Cushing <xenoterracide@gmail.com> writes:
-
-> On Wed, May 13, 2009 at 2:37 PM, Junio C Hamano <gitster@pobox.com> wrote:
->> Thanks for saying this concisely, and saving me from repeating this.
+On Thu, May 14, 2009 at 12:42 AM, layer <layer@known.net> wrote:
+> after the push, I still see the names of the files I pushed because I
+> haven't updated origin/master yet, with a fetch. =A0Of course, a "git
+> pull" would do it, but I don't want to do that, because I might be
+> using something other than `origin' and I don't want anything but the
+> single branch.
 >
-> I just don't think one should have to explicitly set something to shut
-> warnings up. defaults are there for a reason. next thing you know it's
-> going to ask me if I'd like to continue, and then it will ask me to
-> press n for next.
+> So, I naively thought that
 >
-> Why even have them?
+> =A0git fetch origin master
+>
+> would do the trick, but after that command the git diff above still
+> shows the same files.
 
-Why do you waste other people's time after repeatedly told this was
-discussed to death and everything is recoded in the list archive?
+Short answer:
+
+   git fetch origin
+
+However, 'git push origin master' should update origin/master
+automatically, at least in relatively recent git versions.  It's
+rather weird if that didn't happen.
+
+Have fun,
+
+Avery
