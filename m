@@ -1,73 +1,89 @@
-From: Cory Sharp <cory.sharp@gmail.com>
-Subject: Re: [Q] merge squash unexpected conflicts
-Date: Wed, 13 May 2009 20:57:43 -0700
-Message-ID: <bb9d69200905132057u60adc2f8vb9ba9a35791f72ac@mail.gmail.com>
-References: <bb9d69200905131706m61b0dda1xc347ca2e719ec142@mail.gmail.com>
-	 <bb9d69200905131942t7a43a29fh9638d2548e9f12dc@mail.gmail.com>
-	 <7v4ovo1iap.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFC 1/8] UTF helpers
+Date: Wed, 13 May 2009 21:38:08 -0700
+Message-ID: <7viqk4z4cv.fsf@alter.siamese.dyndns.org>
+References: <1242168631-30753-1-git-send-email-robin.rosenberg@dewire.com>
+	<1242168631-30753-2-git-send-email-robin.rosenberg@dewire.com>
+	<alpine.DEB.1.00.0905130215260.27348@pacific.mpi-cbg.de>
+	<200905130724.44634.robin.rosenberg@dewire.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu May 14 05:57:53 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: Robin Rosenberg <robin.rosenberg@dewire.com>
+X-From: git-owner@vger.kernel.org Thu May 14 06:38:22 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M4S4u-0001HX-LH
-	for gcvg-git-2@gmane.org; Thu, 14 May 2009 05:57:53 +0200
+	id 1M4Si5-0003Kk-Qi
+	for gcvg-git-2@gmane.org; Thu, 14 May 2009 06:38:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1762723AbZEND5o convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 13 May 2009 23:57:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762695AbZEND5n
-	(ORCPT <rfc822;git-outgoing>); Wed, 13 May 2009 23:57:43 -0400
-Received: from an-out-0708.google.com ([209.85.132.248]:55365 "EHLO
-	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753882AbZEND5n convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 13 May 2009 23:57:43 -0400
-Received: by an-out-0708.google.com with SMTP id d40so2016139and.1
-        for <git@vger.kernel.org>; Wed, 13 May 2009 20:57:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=pw2HYdXvVo2iaYW67FzTuLMpfhRhSoGRCAf+XkEWZ1o=;
-        b=sYN8C+eTEcRo6veKWdBqteSg+jUSMw3ERboJePuxd/33oyM44fculhzPxJZqWSfV2a
-         fDSuZ1wt1ODa0X8BtDFv/o0A4Y5ls27HBR+at54NXKfuD+22NPcO3uigEcvsAzk1HPrh
-         ouEk/vQ4rE9MpE1TtEC/8A/jRrXO22YbVCOpc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=uT/qAcAiZkS774ESyHDY7l+6EwQpBAeQ5KHTnavPudjaMHqVlkxLBCw9d1wti16LBG
-         yc0xkIB80PHry+p9fTK1UXjZm2NEVXLud+ODWuZCv9HdrVohT6/YPADffRYu7XDakZlJ
-         B+kymeF7sSW4hQb/DHtumc7Pf8IfoEoclVmyU=
-Received: by 10.100.164.12 with SMTP id m12mr2471683ane.131.1242273463802; 
-	Wed, 13 May 2009 20:57:43 -0700 (PDT)
-In-Reply-To: <7v4ovo1iap.fsf@alter.siamese.dyndns.org>
+	id S1751644AbZENEiL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 14 May 2009 00:38:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751425AbZENEiJ
+	(ORCPT <rfc822;git-outgoing>); Thu, 14 May 2009 00:38:09 -0400
+Received: from fed1rmmtao102.cox.net ([68.230.241.44]:56617 "EHLO
+	fed1rmmtao102.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751220AbZENEiI (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 May 2009 00:38:08 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao102.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20090514043809.INIY20976.fed1rmmtao102.cox.net@fed1rmimpo01.cox.net>;
+          Thu, 14 May 2009 00:38:09 -0400
+Received: from localhost ([68.225.240.211])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id rGe81b00P4aMwMQ03Ge9CR; Thu, 14 May 2009 00:38:09 -0400
+X-Authority-Analysis: v=1.0 c=1 a=PG8unGKUAAAA:8 a=EhOrEaQkaT3B0ORA8WMA:9
+ a=JQWbPRQ3DkDygo37jywA:7 a=-klT1kajr2f_MmlWSAut1blnrVEA:4 a=Fv4NUtouRssA:10
+X-CM-Score: 0.00
+In-Reply-To: <200905130724.44634.robin.rosenberg@dewire.com> (Robin Rosenberg's message of "Wed\, 13 May 2009 07\:24\:44 +0200")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119129>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119130>
 
-On Wed, May 13, 2009 at 8:21 PM, Junio C Hamano <gitster@pobox.com> wro=
-te:
-> Cory Sharp <cory.sharp@gmail.com> writes:
->
->> Am I doing something a little wrong or unexpected?=A0 Is there a way
->> around this squash conflict behavior?=A0 This doesn't seem to happen
->> with plain merge without squash.
->
-> Of course. =A0That's the whole point of recording a merge as a merge.
->
+Robin Rosenberg <robin.rosenberg@dewire.com> writes:
 
-$ git help merge
+>> This is ugly.
+>
+> I told you so. No news.
+>
+>> Okay, I'll stop here.  You might want to clean up your patch series before 
+>> resending.
+>
+> I also told you why why I stopped working on the patches. The patches are not part of
+> a beauty contest and not meant for inclusion as such.
 
-  --squash
-           Produce the working tree and index state as if a real merge
-happened. ... This allows you to create a
-           single commit on top of the current branch whose effect is
-the same as merging another branch.
+It is rather sad; I suspect that the core of the series is buried in too
+much cruft deep enough to discourage many potential reviewers.  I think
+the entire series look incoherent because attacking two largely unrelated
+things at once.
+
+ (1) Normalizing pathnames internally to UTF-8 and possibly convert it
+     back to native upon use (e.g. creat(), lstat(), unlink()) and output.
+     As Linus analyzed, this shouldn't be done too early in the callchain
+     for performance reasons, but I think your patch would give us a good
+     set of starting points to follow where the result from readdir(),
+     user input and other things that are pathnames come from and go.
+
+     This part of the patch series was inspiring.  You have to worry about
+     gitignore, gitattributes and readlink() vs contents of a blob object
+     that records a symbolic link values, which I think either escaped
+     analysis people have done so far or being ignored as a small detail,
+     but they are important;
+
+ (2) Passing cat-file output through iconv to convert it.
+
+     I think this is unwarranted, even if the object given to cat-file
+     happens to be a commit or a tag object and you want to convert their
+     messages in native encoding.
+
+     I am not sure what should happen to "cat-file tree", "ls-files" and
+     "ls-tree".  The output from these plumbing does show pathnames, but I
+     tend to think it is Porcelain's job to turn them into whatever
+     encoding they want to use.  So are input to "update-index --stdin",
+     but I am still just thinking out loud.
