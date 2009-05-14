@@ -1,97 +1,115 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: [Q] merge squash unexpected conflicts
-Date: Thu, 14 May 2009 14:17:35 +0200
-Message-ID: <4A0C0BDF.9020803@drmicha.warpmail.net>
-References: <bb9d69200905131706m61b0dda1xc347ca2e719ec142@mail.gmail.com>	 <bb9d69200905131942t7a43a29fh9638d2548e9f12dc@mail.gmail.com>	 <7v4ovo1iap.fsf@alter.siamese.dyndns.org> <bb9d69200905132057u60adc2f8vb9ba9a35791f72ac@mail.gmail.com>
+From: "Matthias Andree" <matthias.andree@gmx.de>
+Subject: Re: git-tag bug? confusing git fast-export with double tag objects
+Date: Thu, 14 May 2009 14:51:20 +0200
+Message-ID: <op.utw7buoi1e62zd@balu>
+References: <op.utv93sdo1e62zd@merlin.emma.line.org>
+ <op.utwdsutn1e62zd@merlin.emma.line.org>
+ <7v8wl01iev.fsf@alter.siamese.dyndns.org>
+ <op.utwyczlf1e62zd@merlin.emma.line.org>
+ <81b0412b0905140516k4bc84606scb71981936966caf@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Cory Sharp <cory.sharp@gmail.com>
-X-From: git-owner@vger.kernel.org Thu May 14 14:17:52 2009
+Content-Type: text/plain; charset=iso-8859-15;
+	format=flowed	delsp=yes
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "Junio C Hamano" <gitster@pobox.com>, git@vger.kernel.org,
+	"Erik Faye-Lund" <kusmabite@gmail.com>
+To: "Alex Riesen" <raa.lkml@gmail.com>
+X-From: git-owner@vger.kernel.org Thu May 14 14:51:40 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M4Zsl-0003fF-U5
-	for gcvg-git-2@gmane.org; Thu, 14 May 2009 14:17:52 +0200
+	id 1M4aPT-0003vK-Im
+	for gcvg-git-2@gmane.org; Thu, 14 May 2009 14:51:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753379AbZENMRp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 14 May 2009 08:17:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753127AbZENMRo
-	(ORCPT <rfc822;git-outgoing>); Thu, 14 May 2009 08:17:44 -0400
-Received: from out1.smtp.messagingengine.com ([66.111.4.25]:41780 "EHLO
-	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752893AbZENMRn (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 14 May 2009 08:17:43 -0400
-Received: from compute2.internal (compute2.internal [10.202.2.42])
-	by out1.messagingengine.com (Postfix) with ESMTP id AA5A23450E0;
-	Thu, 14 May 2009 08:17:44 -0400 (EDT)
-Received: from heartbeat1.messagingengine.com ([10.202.2.160])
-  by compute2.internal (MEProxy); Thu, 14 May 2009 08:17:44 -0400
-X-Sasl-enc: GRO+f7sshmmqvhZ+0eJFHgFVH93nSN39siBVWRCpsVJv 1242303464
-Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.12])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 1D32813F07;
-	Thu, 14 May 2009 08:17:43 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1b5pre) Gecko/20090511 Lightning/1.0pre Shredder/3.0b3pre
-In-Reply-To: <bb9d69200905132057u60adc2f8vb9ba9a35791f72ac@mail.gmail.com>
+	id S1761370AbZENMva convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 14 May 2009 08:51:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761401AbZENMv3
+	(ORCPT <rfc822;git-outgoing>); Thu, 14 May 2009 08:51:29 -0400
+Received: from mail.gmx.net ([213.165.64.20]:58613 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1761522AbZENMv0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 May 2009 08:51:26 -0400
+Received: (qmail invoked by alias); 14 May 2009 12:51:26 -0000
+Received: from balu.cs.uni-paderborn.de (EHLO balu.cs.uni-paderborn.de) [131.234.21.37]
+  by mail.gmx.net (mp053) with SMTP; 14 May 2009 14:51:26 +0200
+X-Authenticated: #428038
+X-Provags-ID: V01U2FsdGVkX1+vWxxIhXCvi0397iG0aGQTdB7NrU7bhGGrK1rHkJ
+	+UpMKiiwsNS4OK
+Received: from [127.0.0.1] (helo=balu)
+	by balu.cs.uni-paderborn.de with esmtp (Exim 4.69)
+	(envelope-from <matthias.andree@gmx.de>)
+	id KJMX1K-000DI8-FF; Thu, 14 May 2009 14:51:20 +0200
+In-Reply-To: <81b0412b0905140516k4bc84606scb71981936966caf@mail.gmail.com>
+User-Agent: Opera Mail/9.64 (Win32)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.53
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119185>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119186>
 
-Cory Sharp venit, vidit, dixit 14.05.2009 05:57:
-> On Wed, May 13, 2009 at 8:21 PM, Junio C Hamano <gitster@pobox.com> wrote:
->> Cory Sharp <cory.sharp@gmail.com> writes:
+Am 14.05.2009, 14:16 Uhr, schrieb Alex Riesen <raa.lkml@gmail.com>:
+
+> 2009/5/14 Matthias Andree <matthias.andree@gmx.de>:
+>> Am 14.05.2009, 05:18 Uhr, schrieb Junio C Hamano <gitster@pobox.com>=
+:
+>>> No. =A0You can tag any object, and a tag is an object. =A0You can p=
+oint a
+>>> signed tag with your own signed tag to attest your own belief on th=
+at
+>>> other guy's tag, be it "it's genuine", "the tagged commit suits my =
+=20
+>>> need",
+>>> etc.
 >>
->>> Am I doing something a little wrong or unexpected?  Is there a way
->>> around this squash conflict behavior?  This doesn't seem to happen
->>> with plain merge without squash.
+>> OK, so I can tag/sign any object, fine.
 >>
->> Of course.  That's the whole point of recording a merge as a merge.
+>> HOWEVER, I see two problems here (yes, they are corner cases):
 >>
-> 
-> $ git help merge
-> 
->   --squash
->            Produce the working tree and index state as if a real merge
-> happened. ... This allows you to create a
->            single commit on top of the current branch whose effect is
-> the same as merging another branch.
+>> #1: git tag -f ("replace tag") fails to "replace" a heaviweight tag =
+if =20
+>> I try
+>> to replace a tag by itself (or create a cycle by some other means).
+>
+> It is not a "cycle" ("loop"?) The tags information is the SHA1, not
+> the tag's name.
+>
+>> The new "foo" is unique in refs (OK), but it's *not unique* in objec=
+ts
+>> (FAIL), as the old "foo" is referenced by the new "foo" and bears th=
+e =20
+>> same
+>> tag name.
+>
+> Of course it is unique. Look at tag's SHA1.
 
-The problem is simply in the "...". You cut out the vital part:
+Hi Alex,
 
+I'm sorry to say this is irrelevant. Please read my earlier message aga=
+in, =20
+and completely this time - you appear to have missed crucial parts, as =
+=20
+your next paragraph suggests:
 
-        but do not actually make a commit or
-        move the `HEAD`, nor record `$GIT_DIR/MERGE_HEAD` to
-        cause the next `git commit` command to create a merge
-        commit.
+>> #2: related: git tag -d cannot reliably delete tag objects
+>>
+>> Same here: if another tag object references the tag object I'm =20
+>> deleting, we
+>> only delete the ref, but not the tag object. It doesn't (cannot) bec=
+ome
+>> dangling.
+>
+> As soon as an object is not referenced anymore by any reference =20
+> (including references from refs/tags/), reference log or index it wil=
+l =20
+> be removed by
+> garbage collection (gc, prune) at the next opportunity.
 
-See? Tree: yes, index: yes, merge info: no.
+Irrelevant, because your assumption "not referenced anymore" is false. =
+=20
+This was clearly written in my earlier message, which please see.
 
-Git does perform a (tree) merge with --squash, but records the resulting
-tree as an ordinary non-merge commit (with a single parent).
-
-I'm not sure whether the statement about the index is completely
-correct, though. During a merge the index records info about the merge
-(stages :1: etc.) but that as missing with --squash. Only the resulting
-tree is added to the index. How about the below?
-
-Michael
-
-diff --git a/Documentation/merge-options.txt
-b/Documentation/merge-options.txt
-index 637b53f..adadf8e 100644
---- a/Documentation/merge-options.txt
-+++ b/Documentation/merge-options.txt
-@@ -39,7 +39,8 @@
-
- --squash::
-        Produce the working tree and index state as if a real
--       merge happened, but do not actually make a commit or
-+       merge happened (except for the merge information),
-+       but do not actually make a commit or
-        move the `HEAD`, nor record `$GIT_DIR/MERGE_HEAD` to
-        cause the next `git commit` command to create a merge
-        commit.  This allows you to create a single commit on
+--=20
+Matthias Andree
