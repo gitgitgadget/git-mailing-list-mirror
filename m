@@ -1,81 +1,96 @@
-From: Jay Soffian <jaysoffian@gmail.com>
-Subject: Re: [PATCH] git-send-email: parse all messages in mbox
-Date: Thu, 14 May 2009 10:48:33 -0400
-Message-ID: <76718490905140748n390d0e85t8349b69fc6debc2a@mail.gmail.com>
-References: <873abbeoqc.wl%vmayatsk@redhat.com>
+From: Peter Krefting <peter@softwolves.pp.se>
+Subject: Re: Cross-Platform Version Control
+Date: Thu, 14 May 2009 14:48:40 +0100 (CET)
+Organization: /universe/earth/europe/norway/oslo
+Message-ID: <alpine.DEB.2.00.0905141441200.20117@perkele.intern.softwolves.pp.se>
+References: <419AD153-53B4-4DAB-AF72-4127C17B1CA0@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Content-Transfer-Encoding: 7BIT
 Cc: git@vger.kernel.org
-To: Vitaly Mayatskikh <v.mayatskih@gmail.com>
-X-From: git-owner@vger.kernel.org Thu May 14 16:48:42 2009
+To: Esko Luontola <esko.luontola@gmail.com>
+X-From: git-owner@vger.kernel.org Thu May 14 16:52:52 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M4cEj-0002pE-Tt
-	for gcvg-git-2@gmane.org; Thu, 14 May 2009 16:48:42 +0200
+	id 1M4cIk-0004VJ-Gg
+	for gcvg-git-2@gmane.org; Thu, 14 May 2009 16:52:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753579AbZENOsd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 14 May 2009 10:48:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752599AbZENOsd
-	(ORCPT <rfc822;git-outgoing>); Thu, 14 May 2009 10:48:33 -0400
-Received: from yw-out-2324.google.com ([74.125.46.28]:15243 "EHLO
-	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753248AbZENOsd (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 May 2009 10:48:33 -0400
-Received: by yw-out-2324.google.com with SMTP id 5so740140ywb.1
-        for <git@vger.kernel.org>; Thu, 14 May 2009 07:48:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=/49mFkz4gWNclvuDpwt7HhypckQh5lqBvpEdzRzVuAA=;
-        b=CaRvEThyLoEKhwF+ssUffrXA/p7uZlEdfVO19iwhZpC1fhb1z/XhyJfz01IaiLTb0E
-         wdliuzrx2HWrrTUd4Q4X2WmwIcUXj5/hPgWrz/n14klGC0V7yqd0sTrw7Ys3CajP86zb
-         jpz1m60p9IKXi70/Sd5GnfOipPk2kjzp01F2s=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=X6dLGXtnx1XKJ1lNi2YiZEoxFuHm8GtwD0j+erXc6EDcOuSZ37HHjd3RFz1O1yerC6
-         NFbZoyaveYn4x8IlE5eU5tGc2LyF7E0H99fs3cnSvayMqYd/Iubl7/U0q6Yli3PKIkSL
-         b0SQGCofSUc/QjqzcUiKcjMuL85nkUz8/ScaI=
-Received: by 10.151.50.7 with SMTP id c7mr3704318ybk.110.1242312513912; Thu, 
-	14 May 2009 07:48:33 -0700 (PDT)
-In-Reply-To: <873abbeoqc.wl%vmayatsk@redhat.com>
+	id S1751510AbZENOwm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 14 May 2009 10:52:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751486AbZENOwm
+	(ORCPT <rfc822;git-outgoing>); Thu, 14 May 2009 10:52:42 -0400
+Received: from mx.getmail.no ([84.208.15.66]:56203 "EHLO
+	get-mta-out02.get.basefarm.net" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1751010AbZENOwl (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 14 May 2009 10:52:41 -0400
+X-Greylist: delayed 3603 seconds by postgrey-1.27 at vger.kernel.org; Thu, 14 May 2009 10:52:41 EDT
+Received: from mx.getmail.no ([10.5.16.4]) by get-mta-out02.get.basefarm.net
+ (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
+ with ESMTP id <0KJM003X4ZVOM910@get-mta-out02.get.basefarm.net> for
+ git@vger.kernel.org; Thu, 14 May 2009 15:52:36 +0200 (MEST)
+Received: from perkele ([84.215.142.63]) by get-mta-in02.get.basefarm.net
+ (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
+ with ESMTP id <0KJM00707ZQ7BN00@get-mta-in02.get.basefarm.net> for
+ git@vger.kernel.org; Thu, 14 May 2009 15:52:35 +0200 (MEST)
+X-PMX-Version: 5.5.3.366731, Antispam-Engine: 2.7.0.366912,
+ Antispam-Data: 2009.5.14.133150
+Received: by perkele (Postfix, from userid 501)	id D6870189AE1; Thu,
+ 14 May 2009 15:48:40 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])	by perkele (Postfix)
+ with ESMTP id D32C81A97ED; Thu, 14 May 2009 14:48:40 +0100 (CET)
+In-reply-to: <419AD153-53B4-4DAB-AF72-4127C17B1CA0@gmail.com>
+User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
+X-Warning: Junk / bulk email will be reported
+X-Rating: This message is not to be eaten by humans
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119198>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119199>
 
-On Mon, May 11, 2009 at 9:46 AM, Vitaly Mayatskikh
-<v.mayatskih@gmail.com> wrote:
-> Currently git-send-email sends all mbox in one email. This seems to be wrong,
-> because mbox can contain several messages. For example,
-> `git format-patch --stdout' forms mbox file with all patches in it.
+Esko Luontola:
 
-Just out of curiosity, what is the motivation for this patch?
+> A good start for making Git cross-platform, would be storing the text 
+> encoding of every file name and commit message together with the commit.
 
-By default, format-patch generates a file per commit, which is what
-send-email currently expects. You can also specify one or more commits
-to send-email directly, in which case it runs format-patch on your
-behalf. And, send-email cannot handle messages on stdin, so "git
-format-patch | git send-email" is not a valid workflow, even after
-this patch.
+Is it really necessary to store the encoding for every single file name, 
+should it not be enough to just store encoding information for all file 
+names at once (i.e., for the object that contains the list of file names and 
+their associated blobs)?
 
-So the only way I can see this being useful is if you're doing something like:
+I did publish, as a request for comments, the beginnings of a patch that 
+would change the Windows version of Git to expect file names to be UTF-8 
+encoded. There were some comments about it, especially that I could not just 
+assume that UTF-8 was the right thing to assume.
 
-$ git format-patch --stdout > mbox
-$ git send-email mbox
+Perhaps if we added some meta-data, maybe using the same fall-back mechanism 
+as for commit messages (i.e., assume UTF-8 unless otherwise specified), it 
+would be easier to do.
 
-Or you can combine those in bash with:
+On Windows, the file APIs allow you to use Unicode (UTF-16) to specify file 
+names, and the file systems will handle any necessary conversion to whatever 
+byte sequences are used to store the file names. UTF-16 and UTF-8 are 
+trivial to convert between, and Windows does contain APIs to convert between 
+other character encodings and UTF-16.
 
-$ git send-email <(git format-patch --stdout)
+On Mac OS X, I believe the file system APIs assume you use some kind of 
+normalized UTF-8. That should also be possible to create, possibly 
+converting back and forth between different normalization forms, if necessary.
 
-But, why? The only way this patch would make any sense to me is if it
-_also_ extended send-email to read its messages from stdin.
+On Linux and other Unixes we could just use iconv() to convert from the 
+repository file name encoding to whatever the current locale has set up. The 
+trick here is to handle file names outside the current encoding. Some kind 
+of escaping mechanism will probably need to be introduced.
 
-j.
+The best way would be to define this in the Git core once and for all, and 
+add support to it for all the platforms in the same go, instead of trying to 
+hack around the issue whenever it pops up on the various platforms.
+
+My main use-case for Git on Windows has disappeared as my $dayjob went 
+bankrupt, but I am happy to assist with whatever insight I may be able to 
+bring.
+
+-- 
+\\// Peter - http://www.softwolves.pp.se/
