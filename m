@@ -1,104 +1,103 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Announce: Git for Windows 1.6.3
-Date: Thu, 14 May 2009 21:02:40 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.0905142101450.27348@pacific.mpi-cbg.de>
-References: <alpine.DEB.1.00.0905071554070.16585@intel-tinevez-2-302> <alpine.DEB.2.00.0905141920140.10118@ds9.cixit.se>
-Reply-To: Johannes.Schindelin@gmx.de
+From: Brandon Casey <casey@nrlssc.navy.mil>
+Subject: Re: git-tag bug? confusing git fast-export with double tag objects
+Date: Thu, 14 May 2009 14:01:40 -0500
+Message-ID: <qIGyi7O683pM7kzjmlY6QeiakFbPlBEHw9e9bG_SQhtXpvaqdek-Bw@cipher.nrlssc.navy.mil>
+References: <op.utv93sdo1e62zd@merlin.emma.line.org> <op.utwdsutn1e62zd@merlin.emma.line.org> <7v8wl01iev.fsf@alter.siamese.dyndns.org> <op.utwyczlf1e62zd@merlin.emma.line.org> <81b0412b0905140516k4bc84606scb71981936966caf@mail.gmail.com> <op.utw7buoi1e62zd@balu> <81b0412b0905140616h69ac2919j26734f02455a5f5c@mail.gmail.com> <op.utw9khqa1e62zd@balu> <fabb9a1e0905140642x26bf5e2ala604a36d0fe520a6@mail.gmail.com> <op.utxlqej91e62zd@balu>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: msysgit@googlegroups.com, git@vger.kernel.org
-To: Peter Krefting <peter@softwolves.pp.se>
-X-From: grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org@googlegroups.com Thu May 14 21:02:50 2009
-Return-path: <grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-qy0-f143.google.com ([209.85.221.143])
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: Sverre Rabbelier <srabbelier@gmail.com>,
+	Alex Riesen <raa.lkml@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Erik Faye-Lund <kusmabite@gmail.com>
+To: Matthias Andree <matthias.andree@gmx.de>
+X-From: git-owner@vger.kernel.org Thu May 14 21:03:08 2009
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@gmane.org
+Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M4gCf-0007pi-2F
-	for gcvm-msysgit@m.gmane.org; Thu, 14 May 2009 21:02:49 +0200
-Received: by qyk7 with SMTP id 7so2718167qyk.3
-        for <gcvm-msysgit@m.gmane.org>; Thu, 14 May 2009 12:02:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=beta;
-        h=domainkey-signature:received:received:x-sender:x-apparently-to
-         :received:received:received-spf:authentication-results:received
-         :received:x-authenticated:x-provags-id:date:from:x-x-sender:to:cc
-         :subject:in-reply-to:message-id:references:user-agent:mime-version
-         :content-type:x-y-gmx-trusted:x-fuhafi:reply-to:sender:precedence
-         :x-google-loop:mailing-list:list-id:list-post:list-help
-         :list-unsubscribe:x-beenthere-env:x-beenthere;
-        bh=4dP6sf3kVCOMdXHUUJT551mYNBbJrD+vuTHdjqXsaG4=;
-        b=HuLmpGPgr/dTwLuR8YcYqe8lfOqwivza5s701kN8JR+Mg+4yz0AMxdvHU1MiPm9V41
-         NJ7mp4zZTH8UUP3qatBKccPcbi6eN47qp+cbtS6o0TO/wiS68KbbcE+ydpcOcOge0zOX
-         Kxndp/B2i5N9/FsEY2GO84cnFCDqF41Dktdyg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlegroups.com; s=beta;
-        h=x-sender:x-apparently-to:received-spf:authentication-results
-         :x-authenticated:x-provags-id:date:from:x-x-sender:to:cc:subject
-         :in-reply-to:message-id:references:user-agent:mime-version
-         :content-type:x-y-gmx-trusted:x-fuhafi:reply-to:sender:precedence
-         :x-google-loop:mailing-list:list-id:list-post:list-help
-         :list-unsubscribe:x-beenthere-env:x-beenthere;
-        b=woG5E46Mkq4dBkWD8SfM2nQsnX3d1u+oZmJmxdo9GrmKeYsGNGaMH5E4meyqRpZ1L4
-         ByDFltidWm84DYNDUHzag3otfKtv9V/F9NODLKgZwUQhHH3KUKMcprghwwZwtPdWXK+x
-         ilytc84Q+buGymdztZuZEMeB7c2mWB8P1KmvA=
-Received: by 10.224.37.11 with SMTP id v11mr472673qad.3.1242327754598;
-        Thu, 14 May 2009 12:02:34 -0700 (PDT)
-Received: by 10.230.2.2 with SMTP id 2gr5248vbh.0;
-	Thu, 14 May 2009 12:02:34 -0700 (PDT)
-X-Sender: Johannes.Schindelin@gmx.de
-X-Apparently-To: msysgit@googlegroups.com
-Received: by 10.223.103.83 with SMTP id j19mr34082fao.0.1242327753649; Thu, 14 May 2009 12:02:33 -0700 (PDT)
-Received: from mail.gmx.net (mail.gmx.net [213.165.64.20]) by gmr-mx.google.com with SMTP id 13si22838bwz.7.2009.05.14.12.02.33; Thu, 14 May 2009 12:02:33 -0700 (PDT)
-Received-SPF: pass (google.com: domain of Johannes.Schindelin@gmx.de designates 213.165.64.20 as permitted sender) client-ip=213.165.64.20;
-Authentication-Results: gmr-mx.google.com; spf=pass (google.com: domain of Johannes.Schindelin@gmx.de designates 213.165.64.20 as permitted sender) smtp.mail=Johannes.Schindelin@gmx.de
-Received: (qmail invoked by alias); 14 May 2009 19:02:32 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38] by mail.gmx.net (mp011) with SMTP; 14 May 2009 21:02:32 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/eAydoR4feQyRi1sjMvxbFFZfjRLbGiXj21jYYTo vY19UCizYnBGEv
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <alpine.DEB.2.00.0905141920140.10118@ds9.cixit.se>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.6
-Sender: msysgit@googlegroups.com
+	id 1M4gCy-0007yT-1l
+	for gcvg-git-2@gmane.org; Thu, 14 May 2009 21:03:08 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1752879AbZENTCd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 14 May 2009 15:02:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752427AbZENTCd
+	(ORCPT <rfc822;git-outgoing>); Thu, 14 May 2009 15:02:33 -0400
+Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:44532 "EHLO
+	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752164AbZENTCc (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 May 2009 15:02:32 -0400
+Received: by mail.nrlssc.navy.mil id n4EJ1gXc017570; Thu, 14 May 2009 14:01:42 -0500
+In-Reply-To: <op.utxlqej91e62zd@balu>
+X-OriginalArrivalTime: 14 May 2009 19:01:41.0064 (UTC) FILETIME=[6A68DC80:01C9D4C6]
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-X-Google-Loop: groups
-Mailing-List: list msysgit@googlegroups.com;
-	contact msysgit+owner@googlegroups.com
-List-Id: <msysgit.googlegroups.com>
-List-Post: <mailto:msysgit@googlegroups.com>
-List-Help: <mailto:msysgit+help@googlegroups.com>
-List-Unsubscribe: <http://googlegroups.com/group/msysgit/subscribe>,
-	<mailto:msysgit+unsubscribe@googlegroups.com>
-X-BeenThere-Env: msysgit@googlegroups.com
-X-BeenThere: msysgit@googlegroups.com
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119213>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119214>
 
-
-Hi,
-
-On Thu, 14 May 2009, Peter Krefting wrote:
-
-> Johannes Schindelin:
+Matthias Andree wrote:
+> Am 14.05.2009, 15:42 Uhr, schrieb Sverre Rabbelier <srabbelier@gmail.com>:
 > 
-> > Git Release Notes (Git-1.6.3-preview20090507)
-> > Last update: 07 May 2009
+>> Heya,
+>>
+>> On Thu, May 14, 2009 at 15:39, Matthias Andree
+>> <matthias.andree@gmx.de> wrote:
+>>> The bug itself (references to 'deleted' or 'replaced' tag objects remain
+>>> reachable rather than becoming dangling) is still there without a
+>>> suggestion
+>>> to the solution, and you're uselessly the bug.
+>>
+>> I believe Alex is saying that this is not a bug, but intended
+>> behavior, and Matthias is saying that we should change that behavior
+>> so that users are at least aware that they are creating such a
+>> situation, is that correct?
 > 
-> I installed the -2 version, but I am having problems pushing:
+> I think my statements are:
 > 
->  > git pull
->  git-upload-pack: error while loading shared libraries: libcurl.so.3: cannot
->  open shared object file: No such file or directory
->  fatal: The remote end hung up unexpectedly
-> 
-> I used the install that puts git in the PATH, and am running it from CMD in
-> this case. Any ideas on what might be wrong?
+> 1- git tag -d and git tag -f do not work as advertised for tag objects (as
+> opposed to lightweight tags); evidence in the longish mail
 
-First I scratched my head why Git for Windows would look for a .so instead 
-of a .dll file.
+Both of these do indeed work.
 
-But the puzzle is easy to solve: git-upload-pack is called on the remote 
-side.  So it is not Git for Windows having this issue.
+In your examples 'git tag -d' worked as intended.  The tag was deleted even
+though the object still remained in the object database.  The tag subcommand
+does not remove objects.  Objects which are not used anymore are removed by
+running the 'git gc' command.  This happens automatically periodically.  If
+you want to see them disappear now, run 'git gc --prune=now'.
 
-Ciao,
-Dscho
+In your examples, 'git tag -f' worked as intended.  The "object" referenced
+by the command line arguments was tagged, and the existing tag was replaced
+by a new tag with the same name.
+
+So when you do
+
+  $ git tag -f -m 'add tag foo' foo foo
+
+the second foo is dereferenced, and it's object id is what is tagged.  So it
+is equivalent to the following:
+
+  $ git tag -f -m 'add tag foo' foo 2e326d8a210536b7cd1f2bc77e3e29d7231f9ec4
+
+This object happens to be a tag object which points to a commit.
+
+Your graph:
+
+  objects:  4481a1 (commit) <- 2e326d (tag "foo") <- 72f346 (tag "foo")
+
+is perfectly correct and valid.  The middle tag object does not exist in
+the tag namespace though.  Its name is embedded in the tag object and is
+necessary for validating the tag object.
+
+> 2- I presume that the bug cannot be really fixed (signed tags created by
+> somebody else), we then have several solutions:
+>  2a- warn the user and refuse
+>  2b- warn the user and continue nonetheless
+>  2c- warn the user and add options to force the user should at least be
+> warned that he may be doing something which doesn't work as intended, or
+>  2d- give the user a possibility to force git to do stupid things.
+
+There are no 'cycles', there is no inconsistency, there is no bug, except
+perhaps in git fast-export.
+
+-brandon
