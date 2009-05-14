@@ -1,120 +1,129 @@
-From: Hugo Mildenberger <Hugo.Mildenberger@namir.de>
-Subject: Re: [PATCH 2/2] Improve the naming of guessed target repository for  git clone
-Date: Thu, 14 May 2009 14:50:10 +0200
-Message-ID: <200905141450.13057.Hugo.Mildenberger@namir.de>
-References: <200905112208.21017.Hugo.Mildenberger@namir.de> <7v8wl0xkcu.fsf@alter.siamese.dyndns.org> <81b0412b0905140145i4093e742x9f8c762e2bf32624@mail.gmail.com>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: [PATCH] Use UTF-8 instead of utf8 for backward compatibility
+Date: Thu, 14 May 2009 15:05:55 +0200
+Message-ID: <81b0412b0905140605o21143369ibc3147c6619c7845@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Daniel Barkalow <barkalow@iabervon.org>
-To: Alex Riesen <raa.lkml@gmail.com>
-X-From: git-owner@vger.kernel.org Thu May 14 14:51:41 2009
+Content-Type: multipart/mixed; boundary=001636c5c0cc0bf1400469defda8
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu May 14 15:06:36 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M4aPS-0003vK-Au
-	for gcvg-git-2@gmane.org; Thu, 14 May 2009 14:51:38 +0200
+	id 1M4adv-000315-Lg
+	for gcvg-git-2@gmane.org; Thu, 14 May 2009 15:06:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761417AbZENMvQ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 14 May 2009 08:51:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761327AbZENMvQ
-	(ORCPT <rfc822;git-outgoing>); Thu, 14 May 2009 08:51:16 -0400
-Received: from mx01.qsc.de ([213.148.129.14]:36241 "EHLO mx01.qsc.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1761376AbZENMvP convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 14 May 2009 08:51:15 -0400
-Received: from localhost (port-87-234-69-58.dynamic.qsc.de [87.234.69.58])
-	by mx01.qsc.de (Postfix) with ESMTPA id B488B3D656;
-	Thu, 14 May 2009 14:51:13 +0200 (CEST)
-User-Agent: KMail/1.9.9
-In-Reply-To: <81b0412b0905140145i4093e742x9f8c762e2bf32624@mail.gmail.com>
-Content-Disposition: inline
+	id S1760870AbZENNF7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 14 May 2009 09:05:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760413AbZENNF6
+	(ORCPT <rfc822;git-outgoing>); Thu, 14 May 2009 09:05:58 -0400
+Received: from mail-bw0-f174.google.com ([209.85.218.174]:43799 "EHLO
+	mail-bw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1760327AbZENNF5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 May 2009 09:05:57 -0400
+Received: by bwz22 with SMTP id 22so1275737bwz.37
+        for <git@vger.kernel.org>; Thu, 14 May 2009 06:05:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=fQemwgdbPlEeeobvmDOlK6xdOYi7k1TQJAxfiE9nbNw=;
+        b=ZPf94kG8BaabApzI0sWtKHhu/fkiNNeVdMu7fvghdtMJPKZMvaxJtnyK5GzBQIjVuG
+         fEmQ5MwxjWgzex2PBi4UgYvz4oDCuWatO6ePBg+NDrs+PLZb1AZ+2OoaodTiF57FBYEM
+         k9i+yDji8J6Gy5afYbUKFPg49PtLAqE5tEhvU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:date:message-id:subject:from:to:cc:content-type;
+        b=Fcb5W6dW0amUXUkrZR59PimDD0HGDVZsdMBMT127nY+nQfUr6scNn+AyPkMFGPGCfR
+         wivTajg7KO31GxjRCtiNtdI3XKatZ/fHRXsR1Ibd3Cd3sFrTOBtoB8o23KwQHcoq7oEv
+         VeRXqDu5CYvIGur8l+csZLTzO9B06k/LhjurM=
+Received: by 10.204.59.18 with SMTP id j18mr2081694bkh.206.1242306355916; Thu, 
+	14 May 2009 06:05:55 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119187>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119188>
 
-Am Donnerstag, 14. Mai 2009 schrieb Alex Riesen:
-> 2009/5/14 Junio C Hamano <gitster@pobox.com>:
-> > Alex Riesen <raa.lkml@gmail.com> writes:
-> >
-> >>> What's the point of this change, now that you have a fix in 1/2? =
-=C2=A0Who are
-> >>> you helping with this patch?
-> >>
-> >> Without this the _automatically_ generated names for cloned reposi=
-tories
-> >> have all the whitespace around them.
-> >
-> > Even if it has whitespace around its name, that's what you got from=
- the
-> > upstream (a valid source of clone), and wasn't it you who said some=
-thing
-> > about UNIX tradition of allowing LF and others in the filename?
->=20
-> Yes, when user explicitely asked a program about that. This here
-> (clone with only URL as argument) is not the case, I think.
->=20
-> > If clone reports "ok we created this new repository" so that the ca=
-ller
-> > can capture it, then the whole process should be able to cope with
-> > automatically generated names with or without the patch, shouldn't =
-it?
->=20
-> No, don't think so. You're not always able to capture the output of g=
-it clone
-> (Windows again), and BTW - init-db output is not designed to be captu=
-red
-> unambiguously.
->=20
-> > Or are you trying to help a human user who gives a pathname ridden =
-with
-> > excess whitespaces to "git clone", and that pathname _happens_ to w=
-ork as
-> > a valid clone source, creating a new repository whose name is ridde=
-n with
-> > excess whitespaces the same way as the input pathname?
->=20
-> Not really. I just try to make the _generated_ output, which the user=
- cannot
-> predict anyway (nor does the user care much about it) to be less
-> problematic. Yes, I did say that LF-anything in UNIX filenames is a n=
-ormal
-> thing. That does not mean that such names are so very convenient to u=
-se.
-> They do cause problems, even if just through scrambling terminal outp=
-ut.
-> They are "inconvenient". If our users don't expect precise output any=
-way,
-> we can be a little more adhering to usual practices in choosing names=
-=2E
->=20
-> > ... After all, the
-> > user deliberately gave them to us, and the repository we cloned fro=
-m had
-> > these excesses in its name (iow, without the excess whitespaces the=
- clone
-> > itself wouldn't have worked). =C2=A0In such a case, is it really he=
-lping him to
-> > remove these whitespaces as excesses?
->=20
-> I think yes. Otherwise the strict form of git clone could have been u=
-sed,
-> which involves absolutely no guessing and mangling.
->=20
-This discussion began with the problem I encountered during a git clone=
-=20
-operation applied to an url which accidentally included a linefeed. It =
-partly=20
-went through although the remote side did not include that character.=20
-After Alex Riesen fixed the git part by escaping linefeeds, the linefee=
-d=20
-left over in the top level directory name still caused a linux kernel=20
-make to fail (which really is not problem of git or GNU make itself).=20
-Elsewhere in this thread, Daniel Barkalow proposed to apply the HTTP=20
-RFC to the whole url. If accepted,  this would cope with the problem in=
- a=20
-standard way.=20
+--001636c5c0cc0bf1400469defda8
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+
+An old iconv (GNU libiconv 1.11) does not know about utf8, it does know
+UTF-8 though, which is also understood by all newer iconv implementations.
+
+Signed-off-by: Alex Riesen <raa.lkml@gmail.com>
+---
+
+2009/5/12 Junio C Hamano <gitster@pobox.com>:
+> --- a/t/t3900-i18n-commit.sh
+> +++ b/t/t3900-i18n-commit.sh
+> @@ -9,7 +9,15 @@ test_description=3D'commit and log output encodings'
+>
+> =C2=A0compare_with () {
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0git show -s $1 | sed -e '1,/^$/d' -e 's/^ =C2=
+=A0 =C2=A0//' >current &&
+> - =C2=A0 =C2=A0 =C2=A0 test_cmp current "$2"
+> + =C2=A0 =C2=A0 =C2=A0 case "$3" in
+> + =C2=A0 =C2=A0 =C2=A0 '')
+> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 test_cmp "$2" current =
+;;
+> + =C2=A0 =C2=A0 =C2=A0 ?*)
+> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 iconv -f "$3" -t utf8 =
+>current.utf8 <current &&
+> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 iconv -f "$3" -t utf8 =
+>expect.utf8 <"$2" &&
+
+I happen to have an old one (Cygwin):
+$ iconv --version
+iconv (GNU libiconv 1.11)
+
+ t/t3900-i18n-commit.sh |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/t/t3900-i18n-commit.sh b/t/t3900-i18n-commit.sh
+index 5dbbcb6..b4ec2b5 100755
+--- a/t/t3900-i18n-commit.sh
++++ b/t/t3900-i18n-commit.sh
+@@ -13,8 +13,8 @@ compare_with () {
+ 	'')
+ 		test_cmp "$2" current ;;
+ 	?*)
+-		iconv -f "$3" -t utf8 >current.utf8 <current &&
+-		iconv -f "$3" -t utf8 >expect.utf8 <"$2" &&
++		iconv -f "$3" -t UTF-8 >current.utf8 <current &&
++		iconv -f "$3" -t UTF-8 >expect.utf8 <"$2" &&
+ 		test_cmp expect.utf8 current.utf8
+ 		;;
+ 	esac
+--=20
+1.6.3.49.ge312c
+
+--001636c5c0cc0bf1400469defda8
+Content-Type: application/octet-stream; 
+	name="0001-Use-UTF-8-instead-of-utf8-for-backward-compatibility.diff"
+Content-Disposition: attachment; 
+	filename="0001-Use-UTF-8-instead-of-utf8-for-backward-compatibility.diff"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: f_fuph389j0
+
+RnJvbSBiYjlkZDE2MGQ5M2NiNjc1M2FiMDhkYmMyOWM2ZWU4NDBjZmQwNmJjIE1vbiBTZXAgMTcg
+MDA6MDA6MDAgMjAwMQpGcm9tOiBBbGV4IFJpZXNlbiA8cmFhLmxrbWxAZ21haWwuY29tPgpEYXRl
+OiBUaHUsIDE0IE1heSAyMDA5IDE0OjU1OjU0ICswMjAwClN1YmplY3Q6IFtQQVRDSF0gVXNlIFVU
+Ri04IGluc3RlYWQgb2YgdXRmOCBmb3IgYmFja3dhcmQgY29tcGF0aWJpbGl0eQoKQW4gb2xkIGlj
+b252IChHTlUgbGliaWNvbnYgMS4xMSkgZG9lcyBub3Qga25vdyBhYm91dCB1dGY4LCBpdCBkb2Vz
+IGtub3cKVVRGLTggdGhvdWdoLCB3aGljaCBpcyBhbHNvIHVuZGVyc3Rvb2QgYnkgYWxsIG5ld2Vy
+IGljb252IGltcGxlbWVudGF0aW9ucy4KClNpZ25lZC1vZmYtYnk6IEFsZXggUmllc2VuIDxyYWEu
+bGttbEBnbWFpbC5jb20+Ci0tLQogdC90MzkwMC1pMThuLWNvbW1pdC5zaCB8ICAgIDQgKystLQog
+MSBmaWxlcyBjaGFuZ2VkLCAyIGluc2VydGlvbnMoKyksIDIgZGVsZXRpb25zKC0pCgpkaWZmIC0t
+Z2l0IGEvdC90MzkwMC1pMThuLWNvbW1pdC5zaCBiL3QvdDM5MDAtaTE4bi1jb21taXQuc2gKaW5k
+ZXggNWRiYmNiNi4uYjRlYzJiNSAxMDA3NTUKLS0tIGEvdC90MzkwMC1pMThuLWNvbW1pdC5zaAor
+KysgYi90L3QzOTAwLWkxOG4tY29tbWl0LnNoCkBAIC0xMyw4ICsxMyw4IEBAIGNvbXBhcmVfd2l0
+aCAoKSB7CiAJJycpCiAJCXRlc3RfY21wICIkMiIgY3VycmVudCA7OwogCT8qKQotCQlpY29udiAt
+ZiAiJDMiIC10IHV0ZjggPmN1cnJlbnQudXRmOCA8Y3VycmVudCAmJgotCQlpY29udiAtZiAiJDMi
+IC10IHV0ZjggPmV4cGVjdC51dGY4IDwiJDIiICYmCisJCWljb252IC1mICIkMyIgLXQgVVRGLTgg
+PmN1cnJlbnQudXRmOCA8Y3VycmVudCAmJgorCQlpY29udiAtZiAiJDMiIC10IFVURi04ID5leHBl
+Y3QudXRmOCA8IiQyIiAmJgogCQl0ZXN0X2NtcCBleHBlY3QudXRmOCBjdXJyZW50LnV0ZjgKIAkJ
+OzsKIAllc2FjCi0tIAoxLjYuMy40OS5nZTMxMmMKCg==
+--001636c5c0cc0bf1400469defda8--
