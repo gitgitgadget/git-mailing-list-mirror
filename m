@@ -1,124 +1,107 @@
-From: Jay Soffian <jaysoffian@gmail.com>
-Subject: Re: [RFC 1/8] UTF helpers
-Date: Thu, 14 May 2009 09:57:30 -0400
-Message-ID: <76718490905140657h4f4544fdrc5b9ce15ca36c8a5@mail.gmail.com>
-References: <1242168631-30753-1-git-send-email-robin.rosenberg@dewire.com>
-	 <1242168631-30753-2-git-send-email-robin.rosenberg@dewire.com>
-	 <alpine.DEB.1.00.0905130215260.27348@pacific.mpi-cbg.de>
-	 <200905130724.44634.robin.rosenberg@dewire.com>
-	 <7viqk4z4cv.fsf@alter.siamese.dyndns.org>
+From: Don Slutz <Don.Slutz@SierraAtlantic.com>
+Subject: Re: [PATCH v2 3/7] Fix tests to work with core.autocrlf=true --	new
+ functions
+Date: Thu, 14 May 2009 10:39:41 -0400
+Message-ID: <4A0C2D2D.9080707@SierraAtlantic.com>
+References: <1242070141-2936-1-git-send-email-Don.Slutz@SierraAtlantic.com> <1242243348-6690-1-git-send-email-Don.Slutz@SierraAtlantic.com> <1242243348-6690-2-git-send-email-Don.Slutz@SierraAtlantic.com> <1242243348-6690-3-git-send-email-Don.Slutz@SierraAtlantic.com> <1242243348-6690-4-git-send-email-Don.Slutz@SierraAtlantic.com> <20090514074303.GA8713@hashpling.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Robin Rosenberg <robin.rosenberg@dewire.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu May 14 15:57:52 2009
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Charles Bailey <charles@hashpling.org>
+X-From: git-owner@vger.kernel.org Thu May 14 16:41:18 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M4bRT-00045m-Sc
-	for gcvg-git-2@gmane.org; Thu, 14 May 2009 15:57:48 +0200
+	id 1M4c7a-0007p4-CA
+	for gcvg-git-2@gmane.org; Thu, 14 May 2009 16:41:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760672AbZENN5c convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 14 May 2009 09:57:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760833AbZENN5b
-	(ORCPT <rfc822;git-outgoing>); Thu, 14 May 2009 09:57:31 -0400
-Received: from yw-out-2324.google.com ([74.125.46.31]:1913 "EHLO
-	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1760941AbZENN5a convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 14 May 2009 09:57:30 -0400
-Received: by yw-out-2324.google.com with SMTP id 5so722394ywb.1
-        for <git@vger.kernel.org>; Thu, 14 May 2009 06:57:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=kDsAKPe69rPpyq7klwsNZ+bnwINXlpVMs+0kJzAK9Mc=;
-        b=bx2/XtQ8TRPB+A9OksitJsRiuTvC7pRI7VK5lzfL1jn/cOKK3MChuwQyI7TMuDkqFL
-         U7Pb4NmjnxkSd/x+o4lJNrua3U1UZmk25am56Asgw15DXLkp066k9zULaXEyj95KtV3S
-         ZiIZ4yZV44Tb8vfwCmVAHgeUPqJR3MQpn09y8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=XVAt0ZzWWMFciYWHsD85saqP5k+uWvc0wt6GpYLiPWR6OeCulQjZBtYLrWGv4MsyqU
-         G//IUKKbVmj0kwaOECYSEbkIdDdLZ/ltiYGku3CKQQo+vq86401nBFeiITXbS9K1SWCd
-         Kujb4jXW0AY6kO+wytwJldDEccRc/Tg8wgMjs=
-Received: by 10.150.211.7 with SMTP id j7mr3612562ybg.263.1242309450892; Thu, 
-	14 May 2009 06:57:30 -0700 (PDT)
-In-Reply-To: <7viqk4z4cv.fsf@alter.siamese.dyndns.org>
+	id S1754602AbZENOkM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 14 May 2009 10:40:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756106AbZENOkL
+	(ORCPT <rfc822;git-outgoing>); Thu, 14 May 2009 10:40:11 -0400
+Received: from mail200.messagelabs.com ([216.82.254.195]:49530 "HELO
+	mail200.messagelabs.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with SMTP id S1754791AbZENOkI (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 May 2009 10:40:08 -0400
+X-VirusChecked: Checked
+X-Env-Sender: Don.Slutz@SierraAtlantic.com
+X-Msg-Ref: server-4.tower-200.messagelabs.com!1242311991!28887774!1
+X-StarScan-Version: 6.0.0; banners=sierraatlantic.com,-,-
+X-Originating-IP: [206.86.29.5]
+Received: (qmail 23253 invoked from network); 14 May 2009 14:40:02 -0000
+Received: from seng.sierraatl.com (HELO USFREEX1.us.corp.sa) (206.86.29.5)
+  by server-4.tower-200.messagelabs.com with SMTP; 14 May 2009 14:40:02 -0000
+Received: from usbosex1.us.corp.sa ([192.168.17.34]) by USFREEX1.us.corp.sa with Microsoft SMTPSVC(6.0.3790.1830);
+	 Thu, 14 May 2009 07:39:45 -0700
+Received: from [127.0.0.1] ([208.37.241.146]) by usbosex1.us.corp.sa with Microsoft SMTPSVC(6.0.3790.1830);
+	 Thu, 14 May 2009 10:39:44 -0400
+User-Agent: Thunderbird 2.0.0.21 (Windows/20090302)
+In-Reply-To: <20090514074303.GA8713@hashpling.org>
+X-OriginalArrivalTime: 14 May 2009 14:39:44.0423 (UTC) FILETIME=[D28FC370:01C9D4A1]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119194>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119195>
 
-On Thu, May 14, 2009 at 12:38 AM, Junio C Hamano <gitster@pobox.com> wr=
-ote:
-> It is rather sad; I suspect that the core of the series is buried in =
-too
-> much cruft deep enough to discourage many potential reviewers. =C2=A0=
-I think
-> the entire series look incoherent because attacking two largely unrel=
-ated
-> things at once.
->
-> =C2=A0(1) Normalizing pathnames internally to UTF-8 and possibly conv=
-ert it
-> =C2=A0 =C2=A0 back to native upon use (e.g. creat(), lstat(), unlink(=
-)) and output.
-> =C2=A0 =C2=A0 As Linus analyzed, this shouldn't be done too early in =
-the callchain
-> =C2=A0 =C2=A0 for performance reasons, but I think your patch would g=
-ive us a good
-> =C2=A0 =C2=A0 set of starting points to follow where the result from =
-readdir(),
-> =C2=A0 =C2=A0 user input and other things that are pathnames come fro=
-m and go.
->
-> =C2=A0 =C2=A0 This part of the patch series was inspiring. =C2=A0You =
-have to worry about
-> =C2=A0 =C2=A0 gitignore, gitattributes and readlink() vs contents of =
-a blob object
-> =C2=A0 =C2=A0 that records a symbolic link values, which I think eith=
-er escaped
-> =C2=A0 =C2=A0 analysis people have done so far or being ignored as a =
-small detail,
-> =C2=A0 =C2=A0 but they are important;
->
-> =C2=A0(2) Passing cat-file output through iconv to convert it.
->
-> =C2=A0 =C2=A0 I think this is unwarranted, even if the object given t=
-o cat-file
-> =C2=A0 =C2=A0 happens to be a commit or a tag object and you want to =
-convert their
-> =C2=A0 =C2=A0 messages in native encoding.
->
-> =C2=A0 =C2=A0 I am not sure what should happen to "cat-file tree", "l=
-s-files" and
-> =C2=A0 =C2=A0 "ls-tree". =C2=A0The output from these plumbing does sh=
-ow pathnames, but I
-> =C2=A0 =C2=A0 tend to think it is Porcelain's job to turn them into w=
-hatever
-> =C2=A0 =C2=A0 encoding they want to use. =C2=A0So are input to "updat=
-e-index --stdin",
-> =C2=A0 =C2=A0 but I am still just thinking out loud.
+On 5/14/2009 3:43 AM, Charles Bailey wrote,
 
-I definitely do not have the time to work on unicode/utf-8/i18n
-support for git right now, but as an OS X user, it is something that
-interests me. When this topic periodically pops up, I squirrel away
-the useful messages into my "someday" folder. So even though it may
-seem that reviewing these patches is wasted effort, comments like the
-above are helpful. I say this because I expect someday someone will
-work on this topic, even if it is not me, and hopefully they can
-locate prior discussion in the mailing list archives and as such it
-will be of some use.
+> On Wed, May 13, 2009 at 03:35:44PM -0400, Don Slutz wrote:
+>   
+>> Have I missed some previous recent discussion about this patch series?
+>> I know that you referenced that long Aug 2007 thread about autocrlf,
+>> but is there some more recent discussion about how the test suite
+>> works / should work?
+>>
+>>     
+Not that I have seen.  I did forget to send the previous reply, should 
+now be there.
+>> mergetool isn't the prime implementor of autocrlf, but it does have
+>> some checks to make sure that it works with autocrlf. My impression -
+>> probably incorrect - has been that autocrlf is off for the purposes of
+>> building and testing git on all platforms, but that some packages
+>> switch it on by default on install for user convenience on platforms
+>> where this is appropriate.
+>>
+>> Your patch seems to be about allowing the entire test suite to run
+>> correctly with the autocrlf in any setting. If this is the case,
+>> shouldn't the correct fix be to remove tests that are testing that
+>> things work with different settings of autocrlf, because these tests
+>> are effectively run by a full test suite run with autocrlf
+>> alternatively set anyway?
+>>
+>>     
+Well my take is that most of the tests do not care about autocrlf, they 
+are checking that the right file or error is happening.  For example:
 
-IOW, your comments are useful and appreciated, even if it doesn't lead
-to improved patches right away.
 
-j.
+   git commit -m "c1"
+  echo foo >file2
+  git checkout -- file2
+
+just wants to know that file2 is correctly reverted to before the 
+change.  The fact that file2 can have LF -> CRLF if autocrlf=true is not 
+what is being checked for here.  There are several tests like 
+t0020-crlf.sh that are checking that the right thing happens.
+
+I am assuming that t7610-mergetool.sh add the test for autocrlf=true 
+because of some issue (bug?) that was fixed.  However I have not done a 
+full look into way the test is there.  I was focused on getting the 
+tests to pass.
+
+Also I do expect that most people will run the tests in the default mode 
+only.  I have no plans on add the "run the tests in all possible 
+settings of autocrlf".
+
+This set seems like a subset (but still big) change on the path of 
+getting git to work and pass the tests under CYGWIN on a text mount.  
+That change is still in progress and not yet ready for the list.
+
+   -Don
+
+
+__________________________________________________________________________________________________________________
+DISCLAIMER:"The information contained in this message and the attachments (if any) may be privileged and confidential and protected from disclosure. You are hereby notified that any unauthorized use, dissemination, distribution or copying of this communication, review, retransmission, or taking of any action based upon this information, by persons or entities other than the intended recipient, is strictly prohibited. If you are not the intended recipient or an employee or agent responsible for delivering this message, and have received this communication in error, please notify us immediately by replying to the message and kindly delete the original message, attachments, if any, and all its copies from your computer system. Thank you for your cooperation." 
+________________________________________________________________________________________________________________
