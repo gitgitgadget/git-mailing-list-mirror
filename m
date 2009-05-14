@@ -1,63 +1,99 @@
 From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: how to get 'git diff' to output patch to file
-Date: Thu, 14 May 2009 14:03:59 +0200
-Message-ID: <81b0412b0905140503n527d6a3ah34f4cdb72b0ce4c@mail.gmail.com>
-References: <93C432AD0B8F4D25A19E0D67C535376A@HPLAPTOP>
+Subject: Re: git-tag bug? confusing git fast-export with double tag objects
+Date: Thu, 14 May 2009 14:16:31 +0200
+Message-ID: <81b0412b0905140516k4bc84606scb71981936966caf@mail.gmail.com>
+References: <op.utv93sdo1e62zd@merlin.emma.line.org>
+	 <op.utwdsutn1e62zd@merlin.emma.line.org>
+	 <7v8wl01iev.fsf@alter.siamese.dyndns.org>
+	 <op.utwyczlf1e62zd@merlin.emma.line.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Aaron Gray <aaronngray.lists@googlemail.com>
-X-From: git-owner@vger.kernel.org Thu May 14 14:04:13 2009
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Erik Faye-Lund <kusmabite@gmail.com>
+To: Matthias Andree <matthias.andree@gmx.de>
+X-From: git-owner@vger.kernel.org Thu May 14 14:16:45 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M4ZfY-0005dL-7e
-	for gcvg-git-2@gmane.org; Thu, 14 May 2009 14:04:12 +0200
+	id 1M4Zre-0003Aj-ER
+	for gcvg-git-2@gmane.org; Thu, 14 May 2009 14:16:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756022AbZENMEB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 14 May 2009 08:04:01 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755086AbZENMEA
-	(ORCPT <rfc822;git-outgoing>); Thu, 14 May 2009 08:04:00 -0400
-Received: from mail-fx0-f158.google.com ([209.85.220.158]:40637 "EHLO
-	mail-fx0-f158.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753892AbZENMD7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 May 2009 08:03:59 -0400
-Received: by fxm2 with SMTP id 2so1252828fxm.37
-        for <git@vger.kernel.org>; Thu, 14 May 2009 05:04:00 -0700 (PDT)
+	id S1754005AbZENMQe convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 14 May 2009 08:16:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752893AbZENMQd
+	(ORCPT <rfc822;git-outgoing>); Thu, 14 May 2009 08:16:33 -0400
+Received: from mail-bw0-f174.google.com ([209.85.218.174]:47623 "EHLO
+	mail-bw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752574AbZENMQd convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 14 May 2009 08:16:33 -0400
+Received: by bwz22 with SMTP id 22so1246159bwz.37
+        for <git@vger.kernel.org>; Thu, 14 May 2009 05:16:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:mime-version:received:in-reply-to:references
          :date:message-id:subject:from:to:cc:content-type
          :content-transfer-encoding;
-        bh=PVP+ZhS2B4/rS6qj7bJurPrP8e6vKNFiBuzB7An0WOY=;
-        b=oM5LC/RMYLB9LN4JDxhw4CUGitquuu/bMEHodBouOTO7bbecZClVVB0dV9RqUH5Dro
-         F/3zes+afStkxXKCp7EmZoYlwWkeasR9goF/GgHpsa0DLfJncofVInpIO02ZL2sXAgzk
-         YgIRyswodRgLPw4mW1pGYCa7ZPjrOluF3/0hE=
+        bh=uENaOzkhOKtCvgEHvr4aD1UNq9rQGTPJFkRLd0sYAq0=;
+        b=EIEs8qWh+6rSbbhtltm9msg53OvndlRcbFSXO4mZDwirPQwDo25+bR9JRS0SotCAy8
+         0G18/vdnxl3Y49TCjmsSdMRLC74VCrF+ARkB8ArULBnm8gDmh9nEWcJlJkj/+fUPtPjE
+         5+wdsbq6ab9Ecnu4QRyHcF0jsXHRiUjOWk/fc=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type:content-transfer-encoding;
-        b=xcI56tBLCsQtx193cEVa9jma7d9SWXAvgHbR2WtLVUBCoCdzFC2uqbjfaBnQVBxDW8
-         utTa+sevNv6L5o41mlR9mU6mVYJ+qZ+BfDy7/56nXq4M+0kanTbKLEj/6FfyywfK8QF2
-         Grzupp325SJ04lOn2cWh8CtAZkwZ8h2WDSWM4=
-Received: by 10.204.72.129 with SMTP id m1mr2076398bkj.61.1242302639812; Thu, 
-	14 May 2009 05:03:59 -0700 (PDT)
-In-Reply-To: <93C432AD0B8F4D25A19E0D67C535376A@HPLAPTOP>
+        b=at78m3q0q28vgygL8/MrYfeflXpvFpKiBoIxedGpAhuVIuj9iUhquLsEXaA6sqA3qx
+         xpuCUPOnyAmlSijjCnxIxT5te6GpSWBX5dj2VIM4uzTPBspgF1sVG61iytFCJYYAY6So
+         zkk+OBNrlJex4z4c83Aq2mMu8CWTkmQ/Pp9Tk=
+Received: by 10.204.113.12 with SMTP id y12mr2021036bkp.214.1242303391602; 
+	Thu, 14 May 2009 05:16:31 -0700 (PDT)
+In-Reply-To: <op.utwyczlf1e62zd@merlin.emma.line.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119183>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119184>
 
-2009/5/14 Aaron Gray <aaronngray.lists@googlemail.com>:
-> How do I get 'git diff -u' to output to a file or standard out instead of
-> its viewer ?
+2009/5/14 Matthias Andree <matthias.andree@gmx.de>:
+> Am 14.05.2009, 05:18 Uhr, schrieb Junio C Hamano <gitster@pobox.com>:
+>> No. =C2=A0You can tag any object, and a tag is an object. =C2=A0You =
+can point a
+>> signed tag with your own signed tag to attest your own belief on tha=
+t
+>> other guy's tag, be it "it's genuine", "the tagged commit suits my n=
+eed",
+>> etc.
 >
-  git diff -u > file
-  GIT_PAGER=: git diff -u (stdout)
+> OK, so I can tag/sign any object, fine.
+>
+> HOWEVER, I see two problems here (yes, they are corner cases):
+>
+> #1: git tag -f ("replace tag") fails to "replace" a heaviweight tag i=
+f I try
+> to replace a tag by itself (or create a cycle by some other means).
 
-or, depending on how old your Git is
+It is not a "cycle" ("loop"?) The tags information is the SHA1, not
+the tag's name.
 
-  git --no-pager diff -u
+> The new "foo" is unique in refs (OK), but it's *not unique* in object=
+s
+> (FAIL), as the old "foo" is referenced by the new "foo" and bears the=
+ same
+> tag name.
+
+Of course it is unique. Look at tag's SHA1.
+
+> #2: related: git tag -d cannot reliably delete tag objects
+>
+> Same here: if another tag object references the tag object I'm deleti=
+ng, we
+> only delete the ref, but not the tag object. It doesn't (cannot) beco=
+me
+> dangling.
+
+As soon as an object is not referenced anymore by any reference (includ=
+ing
+references from refs/tags/), reference log or index it will be removed =
+by
+garbage collection (gc, prune) at the next opportunity.
