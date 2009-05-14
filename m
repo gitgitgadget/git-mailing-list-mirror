@@ -1,106 +1,91 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Request for detailed documentation of git pack protocol
-Date: Thu, 14 May 2009 22:27:07 +0200
-Message-ID: <200905142227.10669.jnareb@gmail.com>
-References: <200905122329.15379.jnareb@gmail.com> <200905141024.17525.jnareb@gmail.com> <alpine.LFD.2.00.0905141353040.6741@xanadu.home>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: [PATCH 1/3] dir.c: clean up handling of 'path' parameter in
+ read_directory_recursive()
+Date: Thu, 14 May 2009 13:42:47 -0700 (PDT)
+Message-ID: <alpine.LFD.2.01.0905141341470.3343@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org,
-	Scott Chacon <schacon@gmail.com>
-To: Nicolas Pitre <nico@cam.org>
-X-From: git-owner@vger.kernel.org Thu May 14 22:27:31 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+To: Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu May 14 22:44:11 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M4hWd-00067t-FP
-	for gcvg-git-2@gmane.org; Thu, 14 May 2009 22:27:31 +0200
+	id 1M4hmT-0005Kf-QS
+	for gcvg-git-2@gmane.org; Thu, 14 May 2009 22:43:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754833AbZENU1X convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 14 May 2009 16:27:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754010AbZENU1X
-	(ORCPT <rfc822;git-outgoing>); Thu, 14 May 2009 16:27:23 -0400
-Received: from mail-fx0-f158.google.com ([209.85.220.158]:57746 "EHLO
-	mail-fx0-f158.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753479AbZENU1W (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 May 2009 16:27:22 -0400
-Received: by fxm2 with SMTP id 2so1547011fxm.37
-        for <git@vger.kernel.org>; Thu, 14 May 2009 13:27:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=tlK7sb7C08KL0NRxVjK+IkJmpIWweZhxaWZg5AlS7L0=;
-        b=rE6ncQFIleuyXLQWkfnDiWcv3KVQAcluirD6ZBTZP1CBCG3iXFgD9ZaxbTKJd23vmR
-         xKMKHRfDEEPx2b1Jw1ZR95TdiCqUKzmhPVBRuGT8yaaLacPVdXAhVcHFJ3STFJ8kXyBs
-         lmL6E8R3LIkacbhA9cU+/0DHhkucS1BfpDb/M=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=IgeR9r2Oia0Aq+muTvHSO4a7bU0IiLSkKR8vSJPOxpffVTGTaAJPLxeJm2qJxipcps
-         9XbL22BN6MERDmC6NfiEb5qlBs8w5GEldHG2Juvq0sltCTiNLJdgp7SGtWx7J2XWq2X4
-         rQ9YkTFfahagdLI920XfN/mcEICC4UMNOttLw=
-Received: by 10.86.59.18 with SMTP id h18mr2926134fga.44.1242332842547;
-        Thu, 14 May 2009 13:27:22 -0700 (PDT)
-Received: from ?192.168.1.13? (abwb23.neoplus.adsl.tpnet.pl [83.8.225.23])
-        by mx.google.com with ESMTPS id l19sm6245458fgb.2.2009.05.14.13.27.20
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 14 May 2009 13:27:20 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <alpine.LFD.2.00.0905141353040.6741@xanadu.home>
-Content-Disposition: inline
+	id S1753450AbZENUnp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 14 May 2009 16:43:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752468AbZENUnp
+	(ORCPT <rfc822;git-outgoing>); Thu, 14 May 2009 16:43:45 -0400
+Received: from smtp1.linux-foundation.org ([140.211.169.13]:48342 "EHLO
+	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751877AbZENUno (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 14 May 2009 16:43:44 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
+	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id n4EKgmsv030652
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Thu, 14 May 2009 13:42:49 -0700
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id n4EKglYo028020;
+	Thu, 14 May 2009 13:42:47 -0700
+X-X-Sender: torvalds@localhost.localdomain
+User-Agent: Alpine 2.01 (LFD 1184 2008-12-16)
+X-Spam-Status: No, hits=-3.962 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED
+X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119221>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119222>
 
-On Thu, 14 May 2009, Nicolas Pitre wrote:
-> On Thu, 14 May 2009, Jakub Narebski wrote:
->=20
-> > I was afraid of this: that the people who know pack protocol good
-> > enough to be able to write it down are otherwise busy. But we get
-> > detailed / updated packfile and pack index format descriptions some
-> > time ago (thanks all that contributed to it!). I hope that the same
-> > would happen with pack _protocol_ description.
->=20
-> If someone with the wish for such a document volunteers to work on it=
-=20
-> then I'm sure people with fuller knowledge will review and comment on=
-=20
-> the result as appropriate.
 
-Well, but still somebody with time and at least some expertise in
-the area would be required to start it.
-=20
-> > I was hoping of document in RFC format; dreaming about having it
-> > submitted to IETF as (at least) unofficial RFC like Atom Publicatio=
-n
-> > Protocol (or is it proper RFC these days?), and then accepted like
-> > HTTP protocol.
->=20
-> I think we'd have to move to a new version of the protocol for that. =
-=20
-> The current protocol, even if it does the job, is not particularly=20
-> elegant.
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Date: Thu, 14 May 2009 13:05:03 -0700
 
-Are all RFC (including proposals / informational RFCs) defined protocol=
-s
-elegant? Well... perhaps they are. The quality of IETF standards is way
-higher than, say, ECMA :-)
+Right now we pass two different pathnames ('path' and 'base') down to
+read_directory_recursive(), and the only real reason for that is that we
+want to allow an empty 'base' parameter, but when we do so, we need the
+pathname to "opendir()" to be "." rather than the empty string.
 
-But I accept that having RFC to be on the list of 'official' RFCs, even
-as an "experimental" RFC is just a dream. Nevertheless I think that=20
-following RFC format, which includes using a common set of terms such=20
-as "MUST" and "NOT RECOMMENDED" (as defined by RFC 2119), Augmented=20
-Backus=E2=80=93Naur Form (ABNF) (as defined by RFC 5234) as a metalangu=
-age,
-would be a good idea for technical / protocol documentation.
+And rather than handle that confusion in the caller, we can just fix
+read_directory_recursive() to handle the case of an empty path itself,
+by just passing opendir() a "." ourselves if the path is empty.
 
---=20
-Jakub Narebski
-Poland
+This would allow us to then drop one of the pathnames entirely from the
+calling convention, but rather than do that, we'll start separating them
+out as a "filesystem pathname" (the one we use for filesystem accesses)
+and a "git internal base name" (which is the name that we use for git
+internally).
+
+That will eventually allow us to do things like handle different
+encodings (eg the filesystem pathnames might be Latin1, while git itself
+would use UTF-8 for filename information).
+
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+---
+
+This is a truly trivial diff, but it's independent from the other changes 
+I have, and simplifies the next ones, so I've made it a patch of its own.
+
+ dir.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/dir.c b/dir.c
+index 6aae09a..0e6b752 100644
+--- a/dir.c
++++ b/dir.c
+@@ -576,7 +576,7 @@ static int get_dtype(struct dirent *de, const char *path)
+  */
+ static int read_directory_recursive(struct dir_struct *dir, const char *path, const char *base, int baselen, int check_only, const struct path_simplify *simplify)
+ {
+-	DIR *fdir = opendir(path);
++	DIR *fdir = opendir(*path ? path : ".");
+ 	int contents = 0;
+ 
+ 	if (fdir) {
+-- 
+1.6.3.1.11.g97114
