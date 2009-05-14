@@ -1,38 +1,38 @@
 From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: [PATCH 2/3] Add 'fill_directory()' helper function for directory
- traversal
-Date: Thu, 14 May 2009 13:46:39 -0700 (PDT)
-Message-ID: <alpine.LFD.2.01.0905141342520.3343@localhost.localdomain>
-References: <alpine.LFD.2.01.0905141341470.3343@localhost.localdomain>
+Subject: [PATCH 3/3] read_directory(): infrastructure for pathname character
+ set conversion
+Date: Thu, 14 May 2009 13:54:41 -0700 (PDT)
+Message-ID: <alpine.LFD.2.01.0905141346440.3343@localhost.localdomain>
+References: <alpine.LFD.2.01.0905141341470.3343@localhost.localdomain> <alpine.LFD.2.01.0905141342520.3343@localhost.localdomain>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
 To: Git Mailing List <git@vger.kernel.org>,
 	Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu May 14 22:47:27 2009
+X-From: git-owner@vger.kernel.org Thu May 14 22:55:03 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M4hpq-000730-1S
-	for gcvg-git-2@gmane.org; Thu, 14 May 2009 22:47:22 +0200
+	id 1M4hxE-0001vW-W5
+	for gcvg-git-2@gmane.org; Thu, 14 May 2009 22:55:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754303AbZENUrM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 14 May 2009 16:47:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753603AbZENUrK
-	(ORCPT <rfc822;git-outgoing>); Thu, 14 May 2009 16:47:10 -0400
-Received: from smtp1.linux-foundation.org ([140.211.169.13]:34281 "EHLO
+	id S1753341AbZENUyv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 14 May 2009 16:54:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753229AbZENUyu
+	(ORCPT <rfc822;git-outgoing>); Thu, 14 May 2009 16:54:50 -0400
+Received: from smtp1.linux-foundation.org ([140.211.169.13]:34302 "EHLO
 	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753006AbZENUrJ (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 14 May 2009 16:47:09 -0400
+	by vger.kernel.org with ESMTP id S1753144AbZENUyt (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 14 May 2009 16:54:49 -0400
 Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
-	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id n4EKkec4030966
+	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id n4EKsf9X031711
 	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Thu, 14 May 2009 13:46:41 -0700
+	Thu, 14 May 2009 13:54:42 -0700
 Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id n4EKkdOv030560;
-	Thu, 14 May 2009 13:46:39 -0700
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id n4EKsf88003403;
+	Thu, 14 May 2009 13:54:41 -0700
 X-X-Sender: torvalds@localhost.localdomain
-In-Reply-To: <alpine.LFD.2.01.0905141341470.3343@localhost.localdomain>
+In-Reply-To: <alpine.LFD.2.01.0905141342520.3343@localhost.localdomain>
 User-Agent: Alpine 2.01 (LFD 1184 2008-12-16)
 X-Spam-Status: No, hits=-3.962 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED
 X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
@@ -42,219 +42,249 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119223>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119224>
 
 
 From: Linus Torvalds <torvalds@linux-foundation.org>
-Date: Thu, 14 May 2009 13:22:36 -0700
+Date: Thu, 14 May 2009 13:31:59 -0700
 
-Most of the users of "read_directory()" actually want a much simpler
-interface than the whole complex (but rather powerful) one.
+This is some early first infrastructure to make it much easier for
+read_directory() to recursively traversing a filesystem directory
+structure, while at the same time doing a character set or naming
+conversion during traversal.
 
-In fact 'git add' had already largely abstracted out the core interface
-issues into a private "fill_directory()" function that was largely
-applicable almost as-is to a number of callers.  Yes, 'git add' wants to
-do some extra work of its own, specific to the add semantics, but we can
-easily split that out, and use the core as a generic function.
+In particular, this allows:
 
-This function does exactly that, and now that much simplified
-'fill_directory()' function can be shared with a number of callers,
-while also ensuring that the rather more complex calling conventions of
-read_directory() are used by fewer call-sites.
+ - the filesystem path component separator to be set to something
+   different than the normal UNIX '/' character.
+
+   Nobody may care (even windows tends to handle '/' well), but it also
+   happens to be a good way to test the feature, and this patch makes
+   the filesystem separator be "//" (_two_ slashes) just to verify that
+   the code correctly keeps the "filesystem representation" from the
+   "git internal filename representation".
+
+ - We could - for example - read filesystems that have pathnames in
+   a Latin1 encoding, and use this to convert such filesystem character
+   set details into a git format (where UTF-8 would be the default, the
+   same way we default to UTF-8 in commit messages without actually
+   _forcing_ it)
+
+ - On OS X, we can make the read_directory() conversion convert the
+   native (and odd/crazy) UTF-8 NFD representation into the more normal
+   cross-platform NFC representation.
+
+But please note that this is just preliminary, and not only doesn't
+actually have any explicit character set convrsion code, it still lacks
+some other infrastructure.
 
 Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
 ---
 
-As you can see from the diffstat, this removes more lines than it adds, 
-and generally simplifies some calling conventions.
+Ok, so this adds many more lines than I just removed, but at least several 
+of them are comments about what the difference between 'path' and 'base' 
+is, and it all works.
 
-The return value from "fill_directory()" makes little sense for any other 
-user than the builtin-add.c case, and I'm not really proud of it, but it 
-basically allows everybody to share the same general infrastructure.
+The use of "//" as the filesystem path component separator may be odd, but 
+it's a useful hack: from 'strace', you can now see how different 
+operations now use the "filesystem pathname" and others use the "native 
+git pathname", because one will have two slashes between components and 
+the other will not.
 
-Note: this depends on the previous one, in that we now use the empty 
-string ("") as the "path" argument, and now almost all users of 
-read_directory() will pass in the same thing as both "path" and "base". 
+So you can literally -visually- see the places that aren't converted, and 
+that use the git internal paths for filesystem operations. Example strace 
+output:
 
-That will eventually change, though, if we want to have different 
-encodings.
+  ...
+  open("compat//fnmatch//", O_RDONLY|O_NONBLOCK|O_DIRECTORY|O_CLOEXEC) = 6
+  getdents(6, /* 4 entries */, 32768) = 112
+  open("compat/fnmatch/.gitignore", O_RDONLY) = -1 ENOENT (No such file or directory)
+  ...
 
- builtin-add.c      |   45 ++++++++++++++-------------------------------
- builtin-clean.c    |   12 +-----------
- builtin-ls-files.c |    7 +------
- dir.c              |   21 +++++++++++++++++++++
- dir.h              |    1 +
- wt-status.c        |    2 +-
- 6 files changed, 39 insertions(+), 49 deletions(-)
+iow, here we see how the directory traversal itself uses the "filesystem 
+pathname", but then the ignore-file handling does not.
 
-diff --git a/builtin-add.c b/builtin-add.c
-index cb67d2c..ba25893 100644
---- a/builtin-add.c
-+++ b/builtin-add.c
-@@ -95,35 +95,6 @@ static void treat_gitlinks(const char **pathspec)
- 	}
- }
- 
--static void fill_directory(struct dir_struct *dir, const char **pathspec,
--		int ignored_too)
--{
--	const char *path, *base;
--	int baselen;
--
--	/* Set up the default git porcelain excludes */
--	memset(dir, 0, sizeof(*dir));
--	if (!ignored_too) {
--		dir->flags |= DIR_COLLECT_IGNORED;
--		setup_standard_excludes(dir);
--	}
--
--	/*
--	 * Calculate common prefix for the pathspec, and
--	 * use that to optimize the directory walk
--	 */
--	baselen = common_prefix(pathspec);
--	path = ".";
--	base = "";
--	if (baselen)
--		path = base = xmemdupz(*pathspec, baselen);
--
--	/* Read the directory and prune it */
--	read_directory(dir, path, base, baselen, pathspec);
--	if (pathspec)
--		prune_directory(dir, pathspec, baselen);
--}
--
- static void refresh(int verbose, const char **pathspec)
- {
- 	char *seen;
-@@ -290,9 +261,21 @@ int cmd_add(int argc, const char **argv, const char *prefix)
- 		die("index file corrupt");
- 	treat_gitlinks(pathspec);
- 
--	if (add_new_files)
-+	if (add_new_files) {
-+		int baselen;
-+
-+		/* Set up the default git porcelain excludes */
-+		memset(&dir, 0, sizeof(dir));
-+		if (!ignored_too) {
-+			dir.flags |= DIR_COLLECT_IGNORED;
-+			setup_standard_excludes(&dir);
-+		}
-+
- 		/* This picks up the paths that are not tracked */
--		fill_directory(&dir, pathspec, ignored_too);
-+		baselen = fill_directory(&dir, pathspec);
-+		if (pathspec)
-+			prune_directory(&dir, pathspec, baselen);
-+	}
- 
- 	if (refresh_only) {
- 		refresh(verbose, pathspec);
-diff --git a/builtin-clean.c b/builtin-clean.c
-index c5ad33d..febd10f 100644
---- a/builtin-clean.c
-+++ b/builtin-clean.c
-@@ -33,7 +33,6 @@ int cmd_clean(int argc, const char **argv, const char *prefix)
- 	int ignored_only = 0, baselen = 0, config_set = 0, errors = 0;
- 	struct strbuf directory = STRBUF_INIT;
- 	struct dir_struct dir;
--	const char *path, *base;
- 	static const char **pathspec;
- 	struct strbuf buf = STRBUF_INIT;
- 	const char *qname;
-@@ -77,16 +76,7 @@ int cmd_clean(int argc, const char **argv, const char *prefix)
- 	pathspec = get_pathspec(prefix, argv);
- 	read_cache();
- 
--	/*
--	 * Calculate common prefix for the pathspec, and
--	 * use that to optimize the directory walk
--	 */
--	baselen = common_prefix(pathspec);
--	path = ".";
--	base = "";
--	if (baselen)
--		path = base = xmemdupz(*pathspec, baselen);
--	read_directory(&dir, path, base, baselen, pathspec);
-+	fill_directory(&dir, pathspec);
- 
- 	if (pathspec)
- 		seen = xmalloc(argc > 0 ? argc : 1);
-diff --git a/builtin-ls-files.c b/builtin-ls-files.c
-index da2daf4..a011a42 100644
---- a/builtin-ls-files.c
-+++ b/builtin-ls-files.c
-@@ -161,12 +161,7 @@ static void show_files(struct dir_struct *dir, const char *prefix)
- 
- 	/* For cached/deleted files we don't need to even do the readdir */
- 	if (show_others || show_killed) {
--		const char *path = ".", *base = "";
--		int baselen = prefix_len;
--
--		if (baselen)
--			path = base = prefix;
--		read_directory(dir, path, base, baselen, pathspec);
-+		fill_directory(dir, pathspec);
- 		if (show_others)
- 			show_other_files(dir);
- 		if (show_killed)
+Now imagine if one of them needs to do some UTF-8 -> EUC-JP translation or 
+something like that, rather than having the (purely visual) extra '/'.
+
+So it's currently just a cheezy hack, but it was useful for testing, and I 
+think this series is worth thinking seriously about. The two first patches 
+were plain cleanups, and this one isn't _that_ complex, but adds some 
+potentially interesting infrastructure, even if it's not complete yet.
+
+ dir.c          |   80 ++++++++++++++++++++++++++++++++++++++++++++-----------
+ unpack-trees.c |    4 ++-
+ 2 files changed, 67 insertions(+), 17 deletions(-)
+
 diff --git a/dir.c b/dir.c
-index 0e6b752..c667d38 100644
+index c667d38..ae1ae61 100644
 --- a/dir.c
 +++ b/dir.c
-@@ -9,6 +9,27 @@
- #include "dir.h"
- #include "refs.h"
+@@ -22,6 +22,7 @@ int fill_directory(struct dir_struct *dir, const char **pathspec)
+ 	path = "";
+ 	base = "";
  
-+int fill_directory(struct dir_struct *dir, const char **pathspec)
++	/* FIXME! Filesystem character set vs git internal character set! */
+ 	if (baselen)
+ 		path = base = xmemdupz(*pathspec, baselen);
+ 
+@@ -586,6 +587,21 @@ static int get_dtype(struct dirent *de, const char *path)
+ 	return dtype;
+ }
+ 
++/* No actual conversion yet */
++static int convert_path_to_git(const char *path, int plen, char *result)
 +{
-+	const char *path, *base;
-+	int baselen;
-+
-+	/*
-+	 * Calculate common prefix for the pathspec, and
-+	 * use that to optimize the directory walk
-+	 */
-+	baselen = common_prefix(pathspec);
-+	path = "";
-+	base = "";
-+
-+	if (baselen)
-+		path = base = xmemdupz(*pathspec, baselen);
-+
-+	/* Read the directory and prune it */
-+	read_directory(dir, path, base, baselen, pathspec);
-+	return baselen;
++	memcpy(result, path, plen+1);
++	return plen;
 +}
 +
- struct path_simplify {
- 	int len;
- 	const char *path;
-diff --git a/dir.h b/dir.h
-index 541286a..9f7c3ba 100644
---- a/dir.h
-+++ b/dir.h
-@@ -68,6 +68,7 @@ extern int common_prefix(const char **pathspec);
- #define MATCHED_EXACTLY 3
- extern int match_pathspec(const char **pathspec, const char *name, int namelen, int prefix, char *seen);
++/*
++ * For testing!
++ *
++ * On Windows, maybe we want FS_PATH_SEP being "\\"?
++ */
++#define FS_PATH_SEP "//"
++#define FS_PATH_SEP_LEN 2
++
+ /*
+  * Read a directory tree. We currently ignore anything but
+  * directories, regular files and symlinks. That's because git
+@@ -594,37 +610,62 @@ static int get_dtype(struct dirent *de, const char *path)
+  *
+  * Also, we ignore the name ".git" (even if it is not a directory).
+  * That likely will not change.
++ *
++ * 'path' is the filesystem name of directory, in the filesystem
++ * namespace, while 'base' is the internal git path (converted
++ * into the standard git namespace).
+  */
+-static int read_directory_recursive(struct dir_struct *dir, const char *path, const char *base, int baselen, int check_only, const struct path_simplify *simplify)
++static int read_directory_recursive(struct dir_struct *dir,
++	const char *path,
++	const char *base, int baselen,
++	int check_only, const struct path_simplify *simplify)
+ {
+ 	DIR *fdir = opendir(*path ? path : ".");
+ 	int contents = 0;
  
-+extern int fill_directory(struct dir_struct *dir, const char **pathspec);
- extern int read_directory(struct dir_struct *, const char *path, const char *base, int baselen, const char **pathspec);
+ 	if (fdir) {
++		int pathlen = strlen(path);
+ 		struct dirent *de;
+-		char fullname[PATH_MAX + 1];
+-		memcpy(fullname, base, baselen);
++		char newpath[PATH_MAX + 1];
++		char newbase[PATH_MAX + 1];
++
++		memcpy(newpath, path, pathlen);
++		memcpy(newbase, base, baselen);
  
- extern int excluded(struct dir_struct *, const char *, int *);
-diff --git a/wt-status.c b/wt-status.c
-index 1b6df45..24a6abf 100644
---- a/wt-status.c
-+++ b/wt-status.c
-@@ -255,7 +255,7 @@ static void wt_status_print_untracked(struct wt_status *s)
- 			DIR_SHOW_OTHER_DIRECTORIES | DIR_HIDE_EMPTY_DIRECTORIES;
- 	setup_standard_excludes(&dir);
+ 		while ((de = readdir(fdir)) != NULL) {
+-			int len, dtype;
++			char converted[256];
++			int len, dtype, nlen;
+ 			int exclude;
  
--	read_directory(&dir, ".", "", 0, NULL);
-+	fill_directory(&dir, NULL);
- 	for(i = 0; i < dir.nr; i++) {
- 		struct dir_entry *ent = dir.entries[i];
- 		if (!cache_name_is_other(ent->name, ent->len))
+ 			if (is_dot_or_dotdot(de->d_name) ||
+ 			     !strcmp(de->d_name, ".git"))
+ 				continue;
++
+ 			len = strlen(de->d_name);
++
+ 			/* Ignore overly long pathnames! */
+-			if (len + baselen + 8 > sizeof(fullname))
++			if (len + pathlen + 8 > sizeof(newpath))
+ 				continue;
+-			memcpy(fullname + baselen, de->d_name, len+1);
+-			if (simplify_away(fullname, baselen + len, simplify))
++			memcpy(newpath + pathlen, de->d_name, len+1);
++
++			nlen = convert_path_to_git(de->d_name, len, converted);
++			if (nlen + baselen + 8 > sizeof(newbase))
+ 				continue;
++			memcpy(newbase + baselen, converted, nlen+1);
+ 
++			len = pathlen + len;
++			nlen = baselen + nlen;
++
++			/* We simplify by the git internal pathname (newbase) */
++			if (simplify_away(newbase, nlen, simplify))
++				continue;
++
++			/* Similarly, exclude rules work on the git pathname */
+ 			dtype = DTYPE(de);
+-			exclude = excluded(dir, fullname, &dtype);
++			exclude = excluded(dir, newbase, &dtype);
+ 			if (exclude && (dir->flags & DIR_COLLECT_IGNORED)
+-			    && in_pathspec(fullname, baselen + len, simplify))
+-				dir_add_ignored(dir, fullname, baselen + len);
++			    && in_pathspec(newbase, nlen, simplify))
++				dir_add_ignored(dir, newbase, nlen);
+ 
+ 			/*
+ 			 * Excluded? If we don't explicitly want to show
+@@ -633,8 +674,12 @@ static int read_directory_recursive(struct dir_struct *dir, const char *path, co
+ 			if (exclude && !(dir->flags & DIR_SHOW_IGNORED))
+ 				continue;
+ 
++			/*
++			 * The 'dtype' information comes from the filesystem,
++			 * and we use the filesystem pathname for that (newpath)
++			 */
+ 			if (dtype == DT_UNKNOWN)
+-				dtype = get_dtype(de, fullname);
++				dtype = get_dtype(de, newpath);
+ 
+ 			/*
+ 			 * Do we want to see just the ignored files?
+@@ -651,9 +696,12 @@ static int read_directory_recursive(struct dir_struct *dir, const char *path, co
+ 			default:
+ 				continue;
+ 			case DT_DIR:
+-				memcpy(fullname + baselen + len, "/", 2);
+-				len++;
+-				switch (treat_directory(dir, fullname, baselen + len, simplify)) {
++				memcpy(newpath + len, FS_PATH_SEP, FS_PATH_SEP_LEN+1);
++				len += FS_PATH_SEP_LEN;
++				memcpy(newbase + nlen, "/", 2);
++				nlen++;
++
++				switch (treat_directory(dir, newbase, nlen, simplify)) {
+ 				case show_directory:
+ 					if (exclude != !!(dir->flags
+ 							& DIR_SHOW_IGNORED))
+@@ -661,7 +709,7 @@ static int read_directory_recursive(struct dir_struct *dir, const char *path, co
+ 					break;
+ 				case recurse_into_directory:
+ 					contents += read_directory_recursive(dir,
+-						fullname, fullname, baselen + len, 0, simplify);
++						newpath, newbase, nlen, 0, simplify);
+ 					continue;
+ 				case ignore_directory:
+ 					continue;
+@@ -675,7 +723,7 @@ static int read_directory_recursive(struct dir_struct *dir, const char *path, co
+ 			if (check_only)
+ 				goto exit_early;
+ 			else
+-				dir_add_name(dir, fullname, baselen + len);
++				dir_add_name(dir, newbase, nlen);
+ 		}
+ exit_early:
+ 		closedir(fdir);
+diff --git a/unpack-trees.c b/unpack-trees.c
+index e4eb8fa..457b529 100644
+--- a/unpack-trees.c
++++ b/unpack-trees.c
+@@ -534,7 +534,9 @@ static int verify_clean_subdirectory(struct cache_entry *ce, const char *action,
+ 	memset(&d, 0, sizeof(d));
+ 	if (o->dir)
+ 		d.exclude_per_dir = o->dir->exclude_per_dir;
+-	i = read_directory(&d, ce->name, pathbuf, namelen+1, NULL);
++
++	/* FIXME! Filesystem pathname vs internal git pathname! */
++	i = read_directory(&d, pathbuf, pathbuf, namelen+1, NULL);
+ 	if (i)
+ 		return o->gently ? -1 :
+ 			error(ERRORMSG(o, not_uptodate_dir), ce->name);
 -- 
 1.6.3.1.11.g97114
