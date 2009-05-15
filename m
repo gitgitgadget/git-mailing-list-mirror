@@ -1,92 +1,72 @@
-From: Joe Perches <joe@perches.com>
-Subject: Re: [RFC PATCH] builtin-log: Add options to --coverletter
-Date: Fri, 15 May 2009 13:19:22 -0700
-Message-ID: <1242418762.3373.90.camel@Joe-Laptop.home>
-References: <1242349041.646.8.camel@Joe-Laptop.home>
-	 <7v63g2tewu.fsf@alter.siamese.dyndns.org>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: Request for detailed documentation of git pack protocol
+Date: Fri, 15 May 2009 13:29:06 -0700 (PDT)
+Message-ID: <alpine.LFD.2.01.0905151324280.3343@localhost.localdomain>
+References: <200905122329.15379.jnareb@gmail.com> <20090512233450.GY30527@spearce.org> <200905141024.17525.jnareb@gmail.com> <20090514145724.GE30527@spearce.org> <4A0C3282.4000101@op5.se>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri May 15 22:19:36 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: "Shawn O. Pearce" <spearce@spearce.org>,
+	Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
+To: Andreas Ericsson <ae@op5.se>
+X-From: git-owner@vger.kernel.org Fri May 15 22:29:22 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M53sV-0000Jm-NF
-	for gcvg-git-2@gmane.org; Fri, 15 May 2009 22:19:36 +0200
+	id 1M541x-0004Aj-2g
+	for gcvg-git-2@gmane.org; Fri, 15 May 2009 22:29:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751571AbZEOUT0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 15 May 2009 16:19:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751500AbZEOUT0
-	(ORCPT <rfc822;git-outgoing>); Fri, 15 May 2009 16:19:26 -0400
-Received: from 136-022.dsl.LABridge.com ([206.117.136.22]:2263 "EHLO
-	mail.perches.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750958AbZEOUTZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 15 May 2009 16:19:25 -0400
-Received: from [192.168.1.158] ([192.168.1.158])
-	by mail.perches.com (8.9.3/8.9.3) with ESMTP id NAA12486;
-	Fri, 15 May 2009 13:19:09 -0700
-In-Reply-To: <7v63g2tewu.fsf@alter.siamese.dyndns.org>
-X-Mailer: Evolution 2.26.1 
+	id S1751571AbZEOU3M (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 15 May 2009 16:29:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751500AbZEOU3M
+	(ORCPT <rfc822;git-outgoing>); Fri, 15 May 2009 16:29:12 -0400
+Received: from smtp1.linux-foundation.org ([140.211.169.13]:40677 "EHLO
+	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750958AbZEOU3L (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 15 May 2009 16:29:11 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
+	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id n4FKT7Q6011088
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Fri, 15 May 2009 13:29:08 -0700
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id n4FKT67c031712;
+	Fri, 15 May 2009 13:29:07 -0700
+X-X-Sender: torvalds@localhost.localdomain
+In-Reply-To: <4A0C3282.4000101@op5.se>
+User-Agent: Alpine 2.01 (LFD 1184 2008-12-16)
+X-Spam-Status: No, hits=-3.463 required=5 tests=AWL,BAYES_00
+X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119291>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119292>
 
-On Fri, 2009-05-15 at 11:11 -0700, Junio C Hamano wrote:
-> I think it makes sense to let users affect how the short-log in the cover
-> letter is generated.  I do not think overloading the --cover-letter option
-> for doing it is the ideal approach, though.
 
-OK.  How about this patch?
 
-diff --git a/builtin-log.c b/builtin-log.c
-index 5eaec5d..49fd42a 100644
---- a/builtin-log.c
-+++ b/builtin-log.c
-@@ -460,6 +460,11 @@ static void add_header(const char *value)
- static int thread = 0;
- static int do_signoff = 0;
- 
-+static int coverletter_wrap = 1;
-+static int coverletter_wrappos = 72;
-+static int coverletter_indent1 = 2;
-+static int coverletter_indent2 = 4;
-+
- static int git_format_config(const char *var, const char *value, void *cb)
- {
- 	if (!strcmp(var, "format.headers")) {
-@@ -668,10 +673,10 @@ static void make_cover_letter(struct rev_info *rev, int use_stdout,
- 	strbuf_release(&sb);
- 
- 	shortlog_init(&log);
--	log.wrap_lines = 1;
--	log.wrap = 72;
--	log.in1 = 2;
--	log.in2 = 4;
-+	log.wrap_lines = coverletter_wrap;
-+	log.wrap = coverletter_wrappos;
-+	log.in1 = coverletter_indent1;
-+	log.in2 = coverletter_indent2;
- 	for (i = 0; i < nr; i++)
- 		shortlog_add_commit(&log, list[i]);
- 
-@@ -868,6 +873,15 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
- 			fmt_patch_suffix = argv[i] + 9;
- 		else if (!strcmp(argv[i], "--cover-letter"))
- 			cover_letter = 1;
-+		else if (!prefixcmp(argv[i], "--cover-letter-wrap=")) {
-+			if (sscanf(argv[i] + 20, "%d,%d,%d",
-+				   &coverletter_wrappos,
-+				   &coverletter_indent1,
-+				   &coverletter_indent2) <= 0)
-+				die("Need options for --cover-letter-wrap=");
-+			if (coverletter_wrappos == 0)
-+				coverletter_wrap = 0;
-+			}
- 		else if (!strcmp(argv[i], "--no-binary"))
- 			no_binary_diff = 1;
- 		else if (!prefixcmp(argv[i], "--add-header="))
+On Thu, 14 May 2009, Andreas Ericsson wrote:
+
+> Shawn O. Pearce wrote:
+> > 
+> > In loopback mode for local file URIs, it may become an issue.  C Git
+> > is just getting lucky by the pipe size I think.  Though I thought I
+> > read somewhere yesterday pipe FIFOs in Linux were being allocated
+> > at 512 bytes, not one system page.  Of course other systems could
+> > allocate whatever size they want too, and may allocate something
+> > below the 2952 minimum, and we'd most likely see a deadlock on them.
+> > 
+> 
+> Linux allocates one page 4096 bytes for a FIFO. 512 is the maximum
+> size guaranteed by POSIX to result in an atomic write.
+
+Actually, modern Linux will allocate up to 16 pages (PIPE_BUFFERS), but 
+they may not all be filled - we coalesce small writes only if the end 
+result fits entirely into a page. So the maximum buffer is 16*PAGE_SIZE, 
+and the minimum buffer space (assuming regular "write()" system calls) is 
+something like 16*(PAGE_SIZE/2+1).
+
+But yeah, POSIX allows for much smaller buffers.
+
+			Linus
