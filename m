@@ -1,121 +1,76 @@
-From: Joe Perches <joe@perches.com>
-Subject: Re: [RFC PATCH] builtin-log: Add options to --coverletter
-Date: Fri, 15 May 2009 15:07:43 -0700
-Message-ID: <1242425263.31337.17.camel@Joe-Laptop.home>
-References: <1242349041.646.8.camel@Joe-Laptop.home>
-	 <7v63g2tewu.fsf@alter.siamese.dyndns.org>
-	 <1242418762.3373.90.camel@Joe-Laptop.home>
-	 <7vljoyrq4z.fsf@alter.siamese.dyndns.org>
+From: Timur Tabi <timur@freescale.com>
+Subject: Re: [PATCH] gitweb: Document that gitweb deals with bare repositories
+Date: Fri, 15 May 2009 17:21:42 -0500
+Message-ID: <ed82fe3e0905151521m64df542eifca87073c4360fbf@mail.gmail.com>
+References: <ed82fe3e0905151349k15f040aej30dbec82037e9d76@mail.gmail.com>
+	 <20090515211611.27697.82605.stgit@localhost.localdomain>
+	 <4A0DDD94.1010901@freescale.com> <200905152336.49319.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat May 16 00:08:10 2009
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Sat May 16 00:21:54 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M55Za-0005UR-45
-	for gcvg-git-2@gmane.org; Sat, 16 May 2009 00:08:10 +0200
+	id 1M55mp-0001ZX-Od
+	for gcvg-git-2@gmane.org; Sat, 16 May 2009 00:21:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754865AbZEOWIA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 15 May 2009 18:08:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753818AbZEOWIA
-	(ORCPT <rfc822;git-outgoing>); Fri, 15 May 2009 18:08:00 -0400
-Received: from 136-022.dsl.LABridge.com ([206.117.136.22]:2382 "EHLO
-	mail.perches.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753811AbZEOWH7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 15 May 2009 18:07:59 -0400
-Received: from [192.168.1.158] ([192.168.1.158])
-	by mail.perches.com (8.9.3/8.9.3) with ESMTP id PAA13078;
-	Fri, 15 May 2009 15:07:28 -0700
-In-Reply-To: <7vljoyrq4z.fsf@alter.siamese.dyndns.org>
-X-Mailer: Evolution 2.26.1 
+	id S1756084AbZEOWVm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 15 May 2009 18:21:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755118AbZEOWVm
+	(ORCPT <rfc822;git-outgoing>); Fri, 15 May 2009 18:21:42 -0400
+Received: from mail-qy0-f129.google.com ([209.85.221.129]:54021 "EHLO
+	mail-qy0-f129.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752765AbZEOWVl (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 May 2009 18:21:41 -0400
+Received: by qyk35 with SMTP id 35so575320qyk.33
+        for <git@vger.kernel.org>; Fri, 15 May 2009 15:21:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:sender:received:in-reply-to
+         :references:date:x-google-sender-auth:message-id:subject:from:to:cc
+         :content-type:content-transfer-encoding;
+        bh=myi0k68YLeGEZ/w73PUrl3BKQ6/CK8qqZY3dSBlaayE=;
+        b=dD+oBmyPpP4qtDAkGfFtOFRzOgeHLKwB1AsXeY3XPgE/cjO4IXYGOEJ+ZuQZaBsqNU
+         eBgITQpNDCvE7/3vIr2EzyBeCJXWDh2MLvTB5PHCVTtIjy1zVrXJl6+gsacPkUCuW9cP
+         ZyCZr3G2lw8f4ubHTT8cfMuVTAGTGy1XIZx20=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:sender:in-reply-to:references:date
+         :x-google-sender-auth:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        b=ec2sOvgTOx5ERhTnpMdkd89AsYfVocU7H2mPcXSTmgUgowB/YtgNQnL2ZvgczBEGeQ
+         rBXHmtz35Rs+jICG2TSyrW8lYU9oWl8bV3GlYZ7V9VJ7XF712K8FhLkhYG95qv4LecQD
+         HzszShPIEDmK3MGFumxZDhh4EhLlVGY4y9pj8=
+Received: by 10.229.96.15 with SMTP id f15mr2230801qcn.91.1242426102560; Fri, 
+	15 May 2009 15:21:42 -0700 (PDT)
+In-Reply-To: <200905152336.49319.jnareb@gmail.com>
+X-Google-Sender-Auth: da5fb9724e3e9906
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119304>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119305>
 
-On Fri, 2009-05-15 at 14:51 -0700, Junio C Hamano wrote:
-> Joe Perches <joe@perches.com> writes:
-> 
-> > On Fri, 2009-05-15 at 11:11 -0700, Junio C Hamano wrote:
-> >> I think it makes sense to let users affect how the short-log in the cover
-> >> letter is generated.  I do not think overloading the --cover-letter option
-> >> for doing it is the ideal approach, though.
-> >
-> > OK.  How about this patch?
-> 
-> I'd suggest...
-> 
-> > diff --git a/builtin-log.c b/builtin-log.c
-> > index 5eaec5d..49fd42a 100644
-> > --- a/builtin-log.c
-> > +++ b/builtin-log.c
-> > @@ -460,6 +460,11 @@ static void add_header(const char *value)
-> >  static int thread = 0;
-> >  static int do_signoff = 0;
-> >  
-> > +static int coverletter_wrap = 1;
-> 
-> Do not change the default behaviour before people agree it is a good
-> feature;
+On Fri, May 15, 2009 at 4:36 PM, Jakub Narebski <jnareb@gmail.com> wrote:
+> Gitweb can deal with non-bare repositories. It is only that because
+> gitweb is not interested in working area, it shows $GIT_DIR (path to
+> repository itself) as name/path to repository. Therefore repo/.git
+> for non-bare repositories, because it is repository itself that matters.
 
-This doesn't change the default behavior.
-The default is still wrap enabled.
+I understand that, but why does gitweb have to punish me because I
+give it more than it cares about?
 
-> 	static int coverletter_wrap;
-> 
-> > +static int coverletter_wrappos = 72;
-> > +static int coverletter_indent1 = 2;
-> > +static int coverletter_indent2 = 4;
-> > +
-> >  static int git_format_config(const char *var, const char *value, void *cb)
-> >  {
-> >  	if (!strcmp(var, "format.headers")) {
-> > @@ -668,10 +673,10 @@ static void make_cover_letter(struct rev_info *rev, int use_stdout,
-> >  	strbuf_release(&sb);
-> >  
-> >  	shortlog_init(&log);
-> > -	log.wrap_lines = 1;
-> > -	log.wrap = 72;
-> > -	log.in1 = 2;
-> > -	log.in2 = 4;
-> > +	log.wrap_lines = coverletter_wrap;
-> > +	log.wrap = coverletter_wrappos;
-> > +	log.in1 = coverletter_indent1;
-> > +	log.in2 = coverletter_indent2;
-> >  	for (i = 0; i < nr; i++)
-> >  		shortlog_add_commit(&log, list[i]);
-> >  
-> > @@ -868,6 +873,15 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
-> >  			fmt_patch_suffix = argv[i] + 9;
-> >  		else if (!strcmp(argv[i], "--cover-letter"))
-> >  			cover_letter = 1;
-> > +		else if (!prefixcmp(argv[i], "--cover-letter-wrap=")) {
-> > +			if (sscanf(argv[i] + 20, "%d,%d,%d",
-> > +				   &coverletter_wrappos,
-> > +				   &coverletter_indent1,
-> > +				   &coverletter_indent2) <= 0)
-> > +				die("Need options for --cover-letter-wrap=");
-> > +			if (coverletter_wrappos == 0)
-> > +				coverletter_wrap = 0;
-> 
-> ... lose this "if ()"; if you are asking for --cover-letter-wrap from the
-> command line explicitly, you do want the result to be wrapped.
-[]
-> In order to prepare yourself for change of default in the future (or
-> adding configurable defaults), the command line parser (the sscanf()
-> above) needs to understand something like "--cover-letter-linewrap=no", in
-> addition to the up-to-three integers it currently takes via sscanf().
-> Treating "the resulting line should be wrapped at 0 column" as "please do
-> not wrap" may work in practice but I do not think it is a good style.
+> If you provide access for others, i.e. if those repositories shown in
+> gitweb are public repositories, it is much better to use bare
+> repositories for that.
 
-Prefixing "no-" to git arguments seems widely used.
+Why?  What difference does it make if they clone directly from my
+working tree, instead of some shadow repository?
 
-Perhaps:
-  --no-cover-letter-wrap
-and
-  --cover-letter-wrap=pos[,indent1[,indent2]]
+-- 
+Timur Tabi
+Linux kernel developer at Freescale
