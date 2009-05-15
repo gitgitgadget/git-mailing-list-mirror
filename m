@@ -1,162 +1,112 @@
-From: Avery Pennarun <apenwarr@gmail.com>
-Subject: Re: Trying to sync two svn repositories with git-svn (repost)
-Date: Fri, 15 May 2009 15:05:14 -0400
-Message-ID: <32541b130905151205h6ca89d85q97e72ce23bf233ee@mail.gmail.com>
-References: <32541b130905061223h7efddeecvcc52a369093a6b50@mail.gmail.com> 
-	<32541b130905081344m634a78d5l984f4903ec1515eb@mail.gmail.com> 
-	<20090508235821.GO15420@raven.wolf.lan> <20090513120922.GP15420@raven.wolf.lan> 
-	<32541b130905131028i5c4b1a31j7f760f8157507df6@mail.gmail.com> 
-	<20090513222243.GQ15420@raven.wolf.lan> <32541b130905132335t3cbd0e7wf29577ee15ba0bac@mail.gmail.com> 
-	<20090514214120.GR15420@raven.wolf.lan> <32541b130905141457u196e1a68w8250489b88eb83c4@mail.gmail.com> 
-	<20090515175203.GS15420@raven.wolf.lan>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Funny error with git gc...
+Date: Fri, 15 May 2009 21:08:27 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.0905152105340.26154@pacific.mpi-cbg.de>
+References: <alpine.DEB.1.00.0905152000520.4449@intel-tinevez-2-302> <7vmy9etey8.fsf@alter.siamese.dyndns.org> <alpine.LFD.2.01.0905151128230.3343@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: Josef Wolf <jw@raven.inka.de>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri May 15 21:06:13 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Fri May 15 21:08:25 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M52jU-0003FG-Ib
-	for gcvg-git-2@gmane.org; Fri, 15 May 2009 21:06:12 +0200
+	id 1M52lc-0004Ck-Bk
+	for gcvg-git-2@gmane.org; Fri, 15 May 2009 21:08:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754810AbZEOTFg convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 15 May 2009 15:05:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754660AbZEOTFf
-	(ORCPT <rfc822;git-outgoing>); Fri, 15 May 2009 15:05:35 -0400
-Received: from yx-out-2324.google.com ([74.125.44.30]:38884 "EHLO
-	yx-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754376AbZEOTFe convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 15 May 2009 15:05:34 -0400
-Received: by yx-out-2324.google.com with SMTP id 3so1202609yxj.1
-        for <git@vger.kernel.org>; Fri, 15 May 2009 12:05:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:content-type
-         :content-transfer-encoding;
-        bh=fqey6GfLvB+VufFDvg+FdaaP+ozqduqQajiSReScbyw=;
-        b=FkXVFbceWuPhSvjAfqGZ+61LIc6e46CCs+HnG9+lmunhDjOE6UbyACUoEva+15Fg/y
-         9/LyWgW2aULbuthVG9OJktbM+WB+xGaXEizBc+DwdRtrV/NpkGdNQ645cbedOJ1apyKz
-         VKgbq7c0jK+XQXLfDbqZFACUcG2tInxDErh+s=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :content-type:content-transfer-encoding;
-        b=WUMCZtp6mTopDbJTOMJKGz1WJBX7X0t05eAutFFUhAiufDBG9MAerkVlgFTXXB/DEe
-         eHLHVM8E5eaf0PxZN+3ZEW44sVL1st5i5ecNtcJmANQSQbwh6I6kAWTJn0kCX7cHmNIt
-         fqIke1wuJDAlNieBCuZiVn3bwUJuWKMhQ41Ms=
-Received: by 10.151.46.11 with SMTP id y11mr6600649ybj.325.1242414334070; Fri, 
-	15 May 2009 12:05:34 -0700 (PDT)
-In-Reply-To: <20090515175203.GS15420@raven.wolf.lan>
+	id S1753436AbZEOTIQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 15 May 2009 15:08:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753244AbZEOTIQ
+	(ORCPT <rfc822;git-outgoing>); Fri, 15 May 2009 15:08:16 -0400
+Received: from mail.gmx.net ([213.165.64.20]:56750 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753087AbZEOTIP (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 May 2009 15:08:15 -0400
+Received: (qmail invoked by alias); 15 May 2009 19:08:15 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp004) with SMTP; 15 May 2009 21:08:15 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+euKB5Sv2eMHiNuVFoRjmh209neP3kCnHqnM8FOJ
+	FVyIfXiYcz7+cw
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <alpine.LFD.2.01.0905151128230.3343@localhost.localdomain>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.54
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119280>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119281>
 
-On Fri, May 15, 2009 at 1:52 PM, Josef Wolf <jw@raven.inka.de> wrote:
-> On Thu, May 14, 2009 at 05:57:00PM -0400, Avery Pennarun wrote:
->> On Thu, May 14, 2009 at 5:41 PM, Josef Wolf <jw@raven.inka.de> wrote=
-:
->> > So here's my second plan:
->> > 1. instead of doing the cherry-picking in a single repository, it =
-might
->> > =A0 be helpful to do it in separate repositories: one repository f=
-or each
->> > =A0 direction. =A0While there are still two remote svn repositorie=
-s in each
->> > =A0 svn repository, there is no need for criss-cross anymore. =A0T=
-he flow
->> > =A0 of the data is in one direction and it seems (at least at firs=
-t glance)
->> > =A0 I can use git-svn-rebase to get a linear history.
->>
->> it's still criss-crossing, it's just less obvious that way. =A0One
->> repository is exactly the same as two repositories in git; all that
->> matters is the branch histories.
->
-> Yeah, I see... =A0But this step is here _only_ to get the existing sv=
-n
-> repositories in sync again. =A0After cherry-picking and dcommitting, =
-those
-> cherry-pick repositories would be wiped. =A0They have no real history=
-=2E =A0The
-> steps I outlined in my previous mail wouldn't even create any files i=
-n
-> the .git/refs subdirectory.
+Hi,
 
-Hmm, getting them in sync the first time seems to be "easy"
-(relatively), in that you've already done it, right?  So it's a
-one-time thing, doesn't need automation, and you already figured that
-part out.  So it seems like a non-issue one way or the other.
+On Fri, 15 May 2009, Linus Torvalds wrote:
 
-> Once that is done, I can declare one of the existing repositories as
-> public and pull it via git-svn into a freshly created repos. =A0The o=
-ther
-> repos can then be recreated by cloning and applying patches. =A0No sv=
-n
-> involved anymore here.
+> On Fri, 15 May 2009, Junio C Hamano wrote:
+> 
+> > Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> > 
+> > > if you need a chuckle, like me, you might appreciate this story: in 
+> > > one of my repositories, "git gc" dies with
+> > >
+> > > 	unable to open object pack directory: ...: Too many open files
+> > >
+> > > turns out that there are a whopping 1088 packs in that repository...
+> > 
+> > Isn't it a more serious problem than a mere chuckle?  How would one 
+> > recover from such a situation (other than "mv .git/objects/pack-*; for 
+> > p in pack-*.pack; do git unpack-objects <$p; done")?
+> 
+> Well, you can probably just increase the file limits and try again. 
+> Depending on setup, you may need root to do so, though.
+> 
+> I also think you _should_ be able to avoid this by just limiting the 
+> pack size usage. IOW, with some packed_git_limit, something like
+> 
+> 	[core]
+> 		packedGitWindowSize = 16k
+> 		packedGitLimit = 1M
+> 
+> you should hopefully be able to repack (slowly) even with a low file 
+> descriptor limit, because of the total limit on the size.
 
-Yes, that works fine.  Nothing stopping you from declaring one or the
-other svn repos to be identical to "public."
+I don't think so, because the window size has nothing to do with the 
+amount of open windows, right?
 
->> I'd say that basically none of your problems have anything to do wit=
-h
->> svn's lack of merge support, and everything to do with the fact that
->> you aren't doing all your changes first on a 'public' branch and the=
-n
->> merging from there into the private branches. =A0(That's really not =
-so
->> hard to do in svn either, and would save a ton of confusion.)
->
-> The problem here is that it does not match the work flow. =A0IMHO, my=
- work
-> flow is very similar to the work flow of the kernel, so I fail to see=
- why
-> it can not work. =A0See the analogies:
->
-> kernel: Submodule maintainers are committing into private repositorie=
-s
-> me: =A0 =A0 People are committing into private repositories
->
-> kernel: Those commits are forwarded to Linus's repository
-> me: =A0 =A0 Those commits are forwarded to the public repository
->
-> kernel: Maintainers receive commits for other submodules from linus
-> me: =A0 =A0 Commits are distributed from public to private repositori=
-es
+> That said, I do agree that ulimit doesn't always work on all systems 
+> (whether due to hard system limits or due to not having permission to 
+> raise the limits), and playing games with pack limits is non-obvious. We 
+> should really try to avoid getting into such a situation. But I think git 
+> by default avoids it by the auto-gc, no? So you have to disable that 
+> explicitly to get into this bad situation.
 
-There is one critical difference here: if someone merges from Linus
-and then Linus merges back from them, then the two resulting
-repositories will be *identical* (at least, the trees will be; if the
-second merge uses --no-ff, the histories will be very slightly
-different, but not importantly so).
+No, in this case, nothing was disabled.  auto-gc did not kick in, probably 
+due to funny Git usage in hg2git.
 
-If someone has patches that they don't want to send back to Linus, and
-those patches are intermixed with ones they *do* want to send back,
-then they either have to cherry pick them over to a separate branch
-(which Linus can then pull), or equivalently they email individual
-patches to Linus, or they need to rebase a lot, or they need to just
-put their "finished" patches onto a separate branch and keep the
-unfinished ones somewhere else that Linus won't pull.
+> One solution - which I think may be the right one regardless - is to not 
+> use "mmap()" for small packs or small SHA1 files.
+> 
+> mmap is great for random-access multi-use scenarios (and to avoid some 
+> memory pressure by allowing sharing of pages), but for anything that is 
+> just a couple of pages in size, mmap() just adds big overhead with 
+> little upside.
+> 
+> So if we use malloc+read for small things, we'd probably avoid this. Now, 
+> if you have a few thousand _large_ packs, you'd still be screwed, but the 
+> most likely reason for having a thousand packfiles is that you did daily 
+> "git pull"s, and have lots and lots of packs that are pretty small.
+> 
+> Dscho? What are your pack-file statistics in this case?
 
-Rebasing is (I think) actually the most common solution to this
-problem, but it doesn't help if you're using svn.  svn has no concept
-of rebasing.  (git svn rebase uses git rebase, but it's not really for
-the same purpose.)
+Mostly around 50kB.
 
-> The only differences I can see are:
-> - size of the project (obviously)
-> - convert from multiple svn repos instead of bitkeeper
-> - private repostories have to keep local patches (but I guess maintai=
-ners
-> =A0do that also)
+But using malloc()+read() to avoid my use case sounds not 
+straight-forward; it is rather a work-around than a proper solution.
 
-That last one is the source of all your problems.  That said, the
-script I provided *does* let you do this, if you're brave.
+For performance, I agree that malloc()+read() might be a sensible thing in 
+a lot of cases.
 
-Have fun,
-
-Avery
+Ciao,
+Dscho
