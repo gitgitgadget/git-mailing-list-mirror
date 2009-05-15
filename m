@@ -1,125 +1,122 @@
-From: Avery Pennarun <apenwarr@gmail.com>
-Subject: Re: git subtree: an alternative to git submodule
-Date: Fri, 15 May 2009 12:09:20 -0400
-Message-ID: <32541b130905150909h7e596f26w7db6887e7f4267ff@mail.gmail.com>
-References: <1241822349-27470-1-git-send-email-apenwarr@gmail.com>
+From: "Matthias Andree" <matthias.andree@gmx.de>
+Subject: Re: git-tag bug? confusing git fast-export with double tag objects
+Date: Fri, 15 May 2009 18:14:07 +0200
+Message-ID: <op.utzbdtb91e62zd@merlin.emma.line.org>
+References: <op.utv93sdo1e62zd@merlin.emma.line.org>
+ <op.utwdsutn1e62zd@merlin.emma.line.org>
+ <7v8wl01iev.fsf@alter.siamese.dyndns.org>
+ <op.utwyczlf1e62zd@merlin.emma.line.org>
+ <20090514182249.GA11919@sigill.intra.peff.net>
+ <op.utxydvnu1e62zd@merlin.emma.line.org>
+ <20090515020206.GA12451@coredump.intra.peff.net> <op.uty0pjb51e62zd@balu>
+ <m34ovmlcve.fsf@localhost.localdomain> <4A0D8211.5010806@viscovery.net>
+ <81b0412b0905150851q232b3f6s95df89e72d4dc381@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=utf-8;
+	format=flowed	delsp=yes
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Avery Pennarun <apenwarr@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri May 15 18:09:50 2009
+Cc: "Jakub Narebski" <jnareb@gmail.com>, "Jeff King" <peff@peff.net>,
+	"Junio C Hamano" <gitster@pobox.com>, git@vger.kernel.org,
+	"Brandon Casey" <casey@nrlssc.navy.mil>,
+	"Sverre Rabbelier" <srabbelier@gmail.com>
+To: "Alex Riesen" <raa.lkml@gmail.com>,
+	"Johannes Sixt" <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Fri May 15 18:14:58 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M4zyo-0005y5-C3
-	for gcvg-git-2@gmane.org; Fri, 15 May 2009 18:09:50 +0200
+	id 1M503m-00004z-8I
+	for gcvg-git-2@gmane.org; Fri, 15 May 2009 18:14:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757220AbZEOQJm convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 15 May 2009 12:09:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755257AbZEOQJl
-	(ORCPT <rfc822;git-outgoing>); Fri, 15 May 2009 12:09:41 -0400
-Received: from yx-out-2324.google.com ([74.125.44.29]:33896 "EHLO
-	yx-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753229AbZEOQJk convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 15 May 2009 12:09:40 -0400
-Received: by yx-out-2324.google.com with SMTP id 3so1150052yxj.1
-        for <git@vger.kernel.org>; Fri, 15 May 2009 09:09:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=kq5C8QmzAtM0WMfRwb0PuVU1fthQ3W4bRI6ygzHoZW8=;
-        b=HNrLBBklpe3xqcpIbY5oT/MzQiAQzA/JYL+1l+llYzcld3oiKeTZTXcmJsuZGRYzVg
-         JZbOUp+cZ9mICShOTQkK/7XeKFEdQpftV7Y7YEZ4VpTcc2nQbZKsZnFrUOQf2trEgBDW
-         CmcaVBzhlHV2uJO59BG6qDM5Xp5cyrENX0Ei8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=isl/5qtMTLd+TePYKBY94KLPQFpQ/S1CkKPvmQEj4CLP7VnK9WsUNb3ozk2I5sjnzu
-         rXcPMoVc88zLFwbKl5HzuigPOdjRm6wjrTw44KguX2Y5tfQkChvbwsUAm4hYrqFu1xFf
-         zXmDuDva4VVdlqEQ4M3kRAwRO7c3nWGlqgAwY=
-Received: by 10.151.150.21 with SMTP id c21mr6257410ybo.322.1242403780707; 
-	Fri, 15 May 2009 09:09:40 -0700 (PDT)
-In-Reply-To: <1241822349-27470-1-git-send-email-apenwarr@gmail.com>
+	id S1762275AbZEOQOO convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 15 May 2009 12:14:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758621AbZEOQOO
+	(ORCPT <rfc822;git-outgoing>); Fri, 15 May 2009 12:14:14 -0400
+Received: from mail.gmx.net ([213.165.64.20]:38136 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1755841AbZEOQON (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 May 2009 12:14:13 -0400
+Received: (qmail invoked by alias); 15 May 2009 16:14:10 -0000
+Received: from e177186088.adsl.alicedsl.de (EHLO mandree.no-ip.org) [85.177.186.88]
+  by mail.gmx.net (mp045) with SMTP; 15 May 2009 18:14:10 +0200
+X-Authenticated: #428038
+X-Provags-ID: V01U2FsdGVkX19yYs94WZhypiGGJ5/HxPH7N/CQLNr5WkuTUQbW0H
+	L0LVzIHtv0kp2u
+Received: from merlin.emma.line.org (localhost [127.0.0.1])
+	by merlin.emma.line.org (Postfix) with ESMTP id B984F945D0;
+	Fri, 15 May 2009 18:14:07 +0200 (CEST)
+In-Reply-To: <81b0412b0905150851q232b3f6s95df89e72d4dc381@mail.gmail.com>
+User-Agent: Opera Mail/9.64 (Linux)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.57
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119261>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119262>
 
-On Fri, May 8, 2009 at 6:39 PM, Avery Pennarun <apenwarr@gmail.com> wro=
-te:
-> I first sent out this patch set a couple of weeks ago
-> (http://article.gmane.org/gmane.comp.version-control.git/117612) and =
-got a
-> couple of positive comments, but no negative ones, so I'm guessing pe=
-ople
-> haven't reviewed it as closely as I would have hoped :)
+Am 15.05.2009, 17:51 Uhr, schrieb Alex Riesen <raa.lkml@gmail.com>:
+
+> 2009/5/15 Johannes Sixt <j.sixt@viscovery.net>:
+>> Jakub Narebski schrieb:
+>>> "Matthias Andree" <matthias.andree@gmx.de> writes:
+>>>> =C2=A0 =C2=A0 =C2=A0commit <-- signed-by-- NIL (removed) <--signed=
+-by-- tag1.
+>>>
+>>> THIS IS A FEATURE, NOT A BUG.
+>>
+>> Please stop it. Everone agrees about this.
+>>
+>> Matthias only wants a patch like below. Matthias, if you are serious=
+ =20
+>> about it, please pick this up and turn it into a proper submission. =
+I =20
+>> don't care enough.
+>>
+> ...
+>> + =C2=A0 =C2=A0 =C2=A0 if ((tag_object =3D (struct tag *)parse_objec=
+t(object)) &&
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 tag_object->object.type =3D=3D =
+OBJ_TAG &&
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 tag_object->tag &&
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 !strcmp(tag_object->tag, tag)) =
+{
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 error("A tag cann=
+ot tag itself. If you meant to tag the =20
+>> commit");
 >
-> git subtree has these subcommands:
->
-> =A0- add: connect a given commit to a given subtree, basically using =
-the
-> =A0 occasionally-documented 'git read-tree --prefix; git commit' tric=
-k.
->
-> =A0- merge: a user-friendlier form of 'git merge -s subtree'
->
-> =A0- pull: likewise, but for git pull
->
-> =A0- split: (the magical part!) generate a new commit series from the=
- given
-> =A0 prefix, so you can submit subtree changes *back* to the upstream =
-project
-> =A0 you merged in the first place.
->
-> Does anyone have any comments on what it would take to get the git su=
-btree
-> stuff accepted into git?
+> If it ever turned into submission, I'll always patch this out. It is =
+=20
+> stupid.
 
-Hi all,
+I seem to lack intermediate messages, probably queued somewhere, yet I'=
+ll =20
+respond already.
 
-Just checking in again.  Since I originally announced git-subtree, it
-(or rather the concept) has received a bit of positive feedback out in
-the wild.  My original blog post about it:
-http://alumnit.ca/~apenwarr/log/?m=3D200904#30
+Moving a tag on top of itself is just stupid. The result of git -f does=
+n't =20
+properly match documentation IMO. There is no clear consensus if it's =20
+"gone". It's gone from the refs/ namespace, but kept in the object spac=
+e, =20
+so there's a split meaning of "replace" or "delete" here.
 
-The heroku mailing list:
-http://groups.google.com/group/heroku/browse_thread/thread/5e6807fcd257=
-2f64
+Arguably, we already need to say -f once, but nothing prevents me from =
+=20
+using git tag -d first and then tag the dangling old_tag1 object to rev=
+ive =20
+it.
 
-Ycombinator news: http://news.ycombinator.com/item?id=3D604405
-And again: http://news.ycombinator.com/item?id=3D604889
+Nobody has shown valid reasons of existence for such tags, or valid =20
+semantics, or use cases.
 
-Meanwhile, I've been keeping it in a separate git repo here:
-http://github.com/apenwarr/git-subtree/commits/master (that's a web
-link, not a git link).
+It's confusing =3D> usability problem =3D> let's put a warning there. I=
+'m not =20
+sure if "error()" is the right function to call here, since I don't hav=
+e =20
+the full patch to look at.
 
-The common thread in all these discussions is along the lines of,
-"This sounds cool!  I didn't try it though.  Maybe I should!"
-Commenters then seem to disappear into a black hole.  The black hole
-of my code!  Bwahahaha!  Sigh.
+At any rate, a policy of obstruction is as invalid as anything.
 
-I would love to hear some feedback about this, particularly for the
-question of what needs to be done to get it adopted into git's
-mainline, or if it's in fact so evil that this is unlikely to ever
-happen.  Obviously I would need to write a man page, but I've been
-hesitant to do that in case people have suggestions that need the
-whole UI to change.  Perhaps that's a chicken-and-egg problem, though,
-and I should just get on with writing it.
-
-=46lame away!
-
-Thanks,
-
-Avery
-
-P.S. Dscho is usually really good at flaming me for being stupid, but
-he has been strangely silent on this topic so far.  Don't miss this
-exciting opportunity!
+--=20
+Matthias Andree
