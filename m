@@ -1,59 +1,71 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH 3/3] improved validation of entry type in mktree
-Date: Fri, 15 May 2009 08:23:46 +0200
-Organization: At home
-Message-ID: <guj1pi$tbk$1@ger.gmane.org>
-References: <loom.20090514T050424-673@post.gmane.org> <loom.20090514T051052-920@post.gmane.org> <7vd4acxkug.fsf@alter.siamese.dyndns.org> <a644352c0905141546w4193d45aq4940e72bbb4bda1c@mail.gmail.com>
+From: John Tapsell <johnflux@gmail.com>
+Subject: Re: [PATCH] Showing stash state in bash prompt
+Date: Fri, 15 May 2009 09:39:18 +0300
+Message-ID: <43d8ce650905142339p266c2f0fye1174036d6251ed0@mail.gmail.com>
+References: <20090513094448.GC2106@bug.science-computing.de>
+	 <20090513112535.GD2106@bug.science-computing.de>
+	 <7v4ovo4xyt.fsf@alter.siamese.dyndns.org>
+	 <200905142025.02592.trast@student.ethz.ch>
+	 <buo1vqrqj2n.fsf@dhlpc061.dev.necel.com>
+	 <20090515021105.GA19241@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-2
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri May 15 08:24:07 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Miles Bader <miles@gnu.org>, Thomas Rast <trast@student.ethz.ch>,
+	Daniel Trstenjak <Daniel.Trstenjak@science-computing.de>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	spearce@spearce.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri May 15 08:40:42 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M4qpy-0003Oj-9x
-	for gcvg-git-2@gmane.org; Fri, 15 May 2009 08:24:06 +0200
+	id 1M4r61-00084S-TY
+	for gcvg-git-2@gmane.org; Fri, 15 May 2009 08:40:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754979AbZEOGX4 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 15 May 2009 02:23:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754202AbZEOGX4
-	(ORCPT <rfc822;git-outgoing>); Fri, 15 May 2009 02:23:56 -0400
-Received: from main.gmane.org ([80.91.229.2]:53426 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753985AbZEOGX4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 15 May 2009 02:23:56 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1M4qpp-0004j1-CO
-	for git@vger.kernel.org; Fri, 15 May 2009 06:23:57 +0000
-Received: from abwb23.neoplus.adsl.tpnet.pl ([83.8.225.23])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 15 May 2009 06:23:57 +0000
-Received: from jnareb by abwb23.neoplus.adsl.tpnet.pl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 15 May 2009 06:23:57 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: abwb23.neoplus.adsl.tpnet.pl
-Mail-Copies-To: Jakub Narebski <jnareb@gmail.com>
-User-Agent: KNode/0.10.2
+	id S1753057AbZEOGjS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 15 May 2009 02:39:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751271AbZEOGjS
+	(ORCPT <rfc822;git-outgoing>); Fri, 15 May 2009 02:39:18 -0400
+Received: from mail-gx0-f166.google.com ([209.85.217.166]:60502 "EHLO
+	mail-gx0-f166.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751225AbZEOGjS (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 May 2009 02:39:18 -0400
+Received: by gxk10 with SMTP id 10so3379562gxk.13
+        for <git@vger.kernel.org>; Thu, 14 May 2009 23:39:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=dlP+Z4dry3mA2DasM6pHnStp8vFupwQTpIr7oF9OxBw=;
+        b=Y86glT3Ti2BJxxvhNnDd1liH++a0olaUrgZkOFqFDpdxHndUGTNJo2FW0jqDyUmT/+
+         /FYYskJYE1pR/zMGuH2PfPf3ytDG9NIF0xXqRYLD3SpDqJp82utH+Tfr1P1exLBfT3Tr
+         wPuIslPmAxokgJY0PqdsF+xjbyShm7BgSckuE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=NonKXl7/Y+TEI9hvALoZHAIlUd5sCDTFHYXIdtsSUb213/E2QDJV8qg5AZBxD2gjBa
+         qDTc3ias79dBTOPFlwaMrLmOde0P0oKFXbgSN4fAF/tsRbqGxpJboHOSj/R0660DC+R9
+         LAcVGDgECZ8q0Ue7UTE08b1hINskFtBGLmvJs=
+Received: by 10.151.73.4 with SMTP id a4mr5357475ybl.108.1242369558582; Thu, 
+	14 May 2009 23:39:18 -0700 (PDT)
+In-Reply-To: <20090515021105.GA19241@coredump.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119247>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119248>
 
-Josh Micich wrote:
+>> I'd often end up in a situation where I'd lose track of whether I had
+>> done a stash apply or not, and the risk of inadvertently doing a drop
 
-> Furthermore even with '--missing', a tree entry like this should be r=
-ejected:
-> 160000 commit e69de29bb2d1d6434b8b29ae775ad8c2e48c5391 =A0foo
+While we're on this - would anyone else like to see a "git unstash" as
+an alias to "git stash apply" ?
+For me it seems more natural to be able to do :
 
-But with submodules you might not _have_ e69de29b in object database
-to check its type!
---=20
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+git stash
+something
+git unstash
