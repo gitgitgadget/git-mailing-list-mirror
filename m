@@ -1,76 +1,90 @@
-From: "Robin H. Johnson" <robbat2@gentoo.org>
-Subject: Re: git daemon request logging?
-Date: Fri, 15 May 2009 15:22:07 -0700
-Message-ID: <20090515222207.GA9483@curie-int>
-References: <4A0DC4E0.7020001@garzik.org>
+From: Avery Pennarun <apenwarr@gmail.com>
+Subject: Re: git svn rebase problem
+Date: Fri, 15 May 2009 19:53:31 -0400
+Message-ID: <32541b130905151653u436f3c5cwcf1d896c96148efa@mail.gmail.com>
+References: <4A0DDCC5.4010001@dlasys.net>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="osDK9TLjxFScVI/L"
-To: Jeff Garzik <jeff@garzik.org>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat May 16 00:22:20 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "David H. Lynch J.r" <ml@dlasys.net>
+X-From: git-owner@vger.kernel.org Sat May 16 01:54:03 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M55nH-0001lp-Dd
-	for gcvg-git-2@gmane.org; Sat, 16 May 2009 00:22:19 +0200
+	id 1M57E0-0003fn-K2
+	for gcvg-git-2@gmane.org; Sat, 16 May 2009 01:54:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757816AbZEOWWN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 15 May 2009 18:22:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757668AbZEOWWN
-	(ORCPT <rfc822;git-outgoing>); Fri, 15 May 2009 18:22:13 -0400
-Received: from b01.ext.isohunt.com ([208.71.112.51]:51005 "EHLO
-	mail.isohunt.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1756877AbZEOWWM (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 15 May 2009 18:22:12 -0400
-Received: (qmail 13213 invoked from network); 15 May 2009 22:22:11 -0000
-Received: from tsi-static.orbis-terrarum.net (HELO curie.orbis-terrarum.net) (76.10.188.108)
-  (smtp-auth username robbat2@isohunt.com, mechanism login)
-  by mail.isohunt.com (qpsmtpd/0.33-dev on beta01) with (AES256-SHA encrypted) ESMTPSA; Fri, 15 May 2009 22:22:11 +0000
-Received: (qmail 19206 invoked by uid 10000); 15 May 2009 15:22:07 -0700
-Content-Disposition: inline
-In-Reply-To: <4A0DC4E0.7020001@garzik.org>
-User-Agent: Mutt/1.5.16 (2007-06-09)
+	id S1753428AbZEOXxv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 15 May 2009 19:53:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753269AbZEOXxv
+	(ORCPT <rfc822;git-outgoing>); Fri, 15 May 2009 19:53:51 -0400
+Received: from yw-out-2324.google.com ([74.125.46.29]:59185 "EHLO
+	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751479AbZEOXxu (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 May 2009 19:53:50 -0400
+Received: by yw-out-2324.google.com with SMTP id 5so1266702ywb.1
+        for <git@vger.kernel.org>; Fri, 15 May 2009 16:53:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=Nh+e9QF1JwSmWm/dx2YBjkKWD6uDLzAES2qESB9Ql/8=;
+        b=ZNXduBTtD5jikq1AKV+VAR+SVYlJ3u2GQqmF8+/CwEvz8jqRlLegKQbyfF0vSFo6Xo
+         OKdaQKDcpgDu9uhB9mnhLQtMIFxpxjxXm3JvoFHMWp5Qdl3UlxY2ugSjUTQEi1lCC/in
+         Kmnj8u6J1UnoHSGHotuyvpSAyiRSaWtE/RpnI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=nCYSTuv9JUJ9CMllTb95r70YwOZ0ELTXhmpR5kdNWMHqJdNB+VJtKXuMr2kHXwpyQH
+         WnnvIQq2kZn5qok2ztduXythLqNY/v8QrrGPDM2DS8Z/OwN57QFWQr/8bx6byO9BDK81
+         Axs6g6J0lLsFN9QVtR3xcWkpvFcqebssswo0E=
+Received: by 10.151.138.7 with SMTP id q7mr7223600ybn.166.1242431631081; Fri, 
+	15 May 2009 16:53:51 -0700 (PDT)
+In-Reply-To: <4A0DDCC5.4010001@dlasys.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119306>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119307>
 
+On Fri, May 15, 2009 at 5:21 PM, David H. Lynch J.r <ml@dlasys.net> wrote:
+> A few days ago I did an
+> git svn rebase
+>
+> The rebase took a while and after it completed reported
+> fatal: bad object HEAD
+>
+> git status reports
+> root@hp-dhlii:/usr/src/pico/git# git status
+> # Not currently on any branch.
+> fatal: bad object HEAD
+>
+> and git fsck reports
+> root@hp-dhlii:/usr/src/pico/git# git fsck
+> dangling blob eb3afb4aa3aaf0003bac601a5db4fd76aafa2a87
+> dangling commit 5c496db25007c17c325f294bb8324097c9bc407d
+>
+> How can I recover without downloading the entire repository again which
+> could take days?
 
---osDK9TLjxFScVI/L
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+I don't know how this would happen; it would be great if you could
+find reproduction steps and send them in, or if you had the complete
+git rebase log, some of which probably explains the problem.
 
-On Fri, May 15, 2009 at 03:39:12PM -0400, Jeff Garzik wrote:
-> Does the git daemon do any sort of request logging?  Could it?
-You could probably get it easily from my upcoming selective-deny of
-pull/clone patch.
+You can probably recover your pre-rebased repository using 'git
+reflog'.  Look through the reflog to find the commit you want, then do
+something like
 
-I described my plans here:
-http://thread.gmane.org/gmane.comp.version-control.git/115600/focus=3D116588
+    git checkout whatever-the-commit-id-was-that-you-got-from-git-reflog
 
-Hopefully I'll have a patch out sometime next week.
+and then optionally
 
---=20
-Robin Hugh Johnson
-Gentoo Linux Developer & Infra Guy
-E-Mail     : robbat2@gentoo.org
-GnuPG FP   : 11AC BA4F 4778 E3F6 E4ED  F38E B27B 944E 3488 4E85
+    git checkout -b master
 
---osDK9TLjxFScVI/L
-Content-Type: application/pgp-signature
-Content-Disposition: inline
+Good luck.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.11 (GNU/Linux)
-Comment: Robbat2 @ Orbis-Terrarum Networks - The text below is a digital signature. If it doesn't make any sense to you, ignore it.
-
-iEYEARECAAYFAkoN6w8ACgkQPpIsIjIzwiwogACeMqaa1Rc7L6uEFzPXvP6pv9jX
-n/0AoNtRO4GWrideOICdeEyI8FtarUQ5
-=hPwW
------END PGP SIGNATURE-----
-
---osDK9TLjxFScVI/L--
+Avery
