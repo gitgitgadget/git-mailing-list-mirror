@@ -1,90 +1,72 @@
-From: Timur Tabi <timur@freescale.com>
-Subject: Removing the trailing "/.git" from gitweb display?
-Date: Fri, 15 May 2009 15:49:50 -0500
-Message-ID: <ed82fe3e0905151349k15f040aej30dbec82037e9d76@mail.gmail.com>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: git daemon request logging?
+Date: Fri, 15 May 2009 22:56:07 +0200
+Message-ID: <81b0412b0905151356t7bf613d5me39af08d37f72857@mail.gmail.com>
+References: <4A0DC4E0.7020001@garzik.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri May 15 22:50:02 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Jeff Garzik <jeff@garzik.org>
+X-From: git-owner@vger.kernel.org Fri May 15 22:56:19 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M54Ly-0003XL-8y
-	for gcvg-git-2@gmane.org; Fri, 15 May 2009 22:50:02 +0200
+	id 1M54S2-00067T-Js
+	for gcvg-git-2@gmane.org; Fri, 15 May 2009 22:56:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752886AbZEOUtx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 15 May 2009 16:49:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751602AbZEOUtx
-	(ORCPT <rfc822;git-outgoing>); Fri, 15 May 2009 16:49:53 -0400
-Received: from mail-qy0-f129.google.com ([209.85.221.129]:56353 "EHLO
-	mail-qy0-f129.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751349AbZEOUtw (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 15 May 2009 16:49:52 -0400
-Received: by qyk35 with SMTP id 35so497148qyk.33
-        for <git@vger.kernel.org>; Fri, 15 May 2009 13:49:51 -0700 (PDT)
+	id S1753376AbZEOU4K convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 15 May 2009 16:56:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753304AbZEOU4J
+	(ORCPT <rfc822;git-outgoing>); Fri, 15 May 2009 16:56:09 -0400
+Received: from mail-bw0-f174.google.com ([209.85.218.174]:48952 "EHLO
+	mail-bw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753233AbZEOU4I convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 15 May 2009 16:56:08 -0400
+Received: by bwz22 with SMTP id 22so2133618bwz.37
+        for <git@vger.kernel.org>; Fri, 15 May 2009 13:56:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:sender:received:date
-         :x-google-sender-auth:message-id:subject:from:to:content-type
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
          :content-transfer-encoding;
-        bh=A2MJafBo+ArrFlm9n0WLd84jivO7g0/op06xPwpxifE=;
-        b=TL9rX0ezZOQLlAho+Rr3F1OZpPQP84551k7E/yQuCN1IFQyjagmVdVr64k5fixfEdx
-         Io+o9eXbiqVceukuu+UT++2NgA3pX/32Gy+BUvl2bgMp1m+ZZUkhhZ13/2MIlaF+U65S
-         NZ/W5IAQxoba2WUs+S5zCM2QbMBXUrytod+q8=
+        bh=r2IRf/eFJZANqHG/fxbD4QWHh+Ny/PO0zrtYADLYcLM=;
+        b=gENfSZa+7AVJ5c5JDs51/3X+/ikHxC87yHVf+yD2zLS70+svHvxzYiHBLNdx05e6x2
+         V+hZiqQnoGEX8+U5a6e4c5FssUxRSEq5CzVuXOFLgqgDrhGN3bsQ3oxHf5OOCVBABSkD
+         xzpRRRuWGK8mt9C2CVO5QHN60A6CMq3YEzJx8=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:sender:date:x-google-sender-auth:message-id:subject
-         :from:to:content-type:content-transfer-encoding;
-        b=fDz2akZm0tp9h2MsYpnUVQxAvE1P/k6Z0ZqBWdqGjoBsDhH1gWsmHj+r7q/s7gXFpT
-         439MRqcDPQCwNywBLf0WM2lQJGqVZvrCSSufDwe8sU49yF9J/S5/d0e8IQWkIFkUYqxk
-         WSF5x8+0MGLAT9LNryGvuT8jIBlOnQcx2qg7g=
-Received: by 10.229.79.19 with SMTP id n19mr2354120qck.74.1242420590854; Fri, 
-	15 May 2009 13:49:50 -0700 (PDT)
-X-Google-Sender-Auth: 199ef9aef8613cf1
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=hW09EgeL6bDn6Wbz0QVa3nR3Kd4ohU5HJ0NlnBz5F4JQEDxSA/M9y8UIxTafYtou0k
+         Sylys75Zd6GCLK0HYB1oik+dRbbCBp9USVdN1RcHIpE0tgLEaUkw8bcJIJzw8T+6x8Gl
+         SxOniErcjbBavpR1T5oIWXxuPqX+atAdChDRg=
+Received: by 10.204.60.148 with SMTP id p20mr3676398bkh.165.1242420967920; 
+	Fri, 15 May 2009 13:56:07 -0700 (PDT)
+In-Reply-To: <4A0DC4E0.7020001@garzik.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119294>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119295>
 
-I noticed that most gitweb pages show their repositories like this:
+2009/5/15 Jeff Garzik <jeff@garzik.org>:
+> Does the git daemon do any sort of request logging? =C2=A0Could it?
+>
+> I was thinking it would be nice to see the amount of pulls/clones for=
+ each
+> git.kernel.org repository.
 
-bluetooth/bluez-gnome.git 	Bluetooth applications for ... 	Marcel Holtmann
-bluetooth/bluez-hcidump.git 	Bluetooth packet analyzer 	Marcel Holtmann
-bluetooth/bluez.git 	Bluetooth protocol stack for ... 	Marcel Holtmann
+Does this count?
 
-However, mine looks like this:
+May 15 22:54:47 tigra git[28923]: connect from 192.168.0.8 (192.168.0.8=
+)
+May 15 22:54:47 tigra git-daemon[28924]: Connection from 192.168.0.8:40=
+845
+May 15 22:54:47 tigra git-daemon[28924]: Extended attributes (11
+bytes) exist <host=3Dgate>
+May 15 22:54:47 tigra git-daemon[28924]: Request upload-pack for '~raa/=
+src/git'
 
-alsa.1862/.git	8610 audio: fabric driver uses wrong DMA channels for... 	Timur
-alsa.2598/.git	8610 audio: migrate ASoC V2 drivers to mainline	Timur
-alsa.3313/.git	Introduce spin_event_timeout()	Timur
-
-Notice how my repositories have a trailing "/.git" to them?  How do I
-get rid of that?
-
-My gitweb.conf is:
-
-$projectroot = '/home/b04825/git/';
-$site_name = "Timur Tabi's git repositories";
-$home_link = $my_uri;
-@stylesheets = ("gitweb.css");
-$favicon = "git-favicon.png";
-$logo = "git-logo.png";
-$projects_list = '/home/b04825/git/projects_list';
-$projects_list_description_width = 50;
-
-And /home/b04825/git/projects_list looks like:
-
-alsa.1862/.git Timur
-alsa.2598/.git Timur
-alsa.3313/.git Timur
-
-I presume the reason why gitweb shows the trailing "/.git" is because
-that's what my projects_list file contains.  However, if I remove the
-"/.git" from projects_list, gitweb can't find any repositories.
-
--- 
-Timur Tabi
-Linux kernel developer at Freescale
+fetch(pull)/clone are the same for daemon.
