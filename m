@@ -1,94 +1,90 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: Funny error with git gc...
-Date: Fri, 15 May 2009 16:30:01 -0400 (EDT)
-Message-ID: <alpine.LNX.2.00.0905151611541.2147@iabervon.org>
-References: <alpine.DEB.1.00.0905152000520.4449@intel-tinevez-2-302> <7vmy9etey8.fsf@alter.siamese.dyndns.org> <alpine.LFD.2.01.0905151128230.3343@localhost.localdomain> <alpine.DEB.1.00.0905152105340.26154@pacific.mpi-cbg.de>
- <alpine.LFD.2.01.0905151212160.3343@localhost.localdomain>
+From: Timur Tabi <timur@freescale.com>
+Subject: Removing the trailing "/.git" from gitweb display?
+Date: Fri, 15 May 2009 15:49:50 -0500
+Message-ID: <ed82fe3e0905151349k15f040aej30dbec82037e9d76@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Fri May 15 22:30:30 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri May 15 22:50:02 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M5433-0004cm-Ks
-	for gcvg-git-2@gmane.org; Fri, 15 May 2009 22:30:30 +0200
+	id 1M54Ly-0003XL-8y
+	for gcvg-git-2@gmane.org; Fri, 15 May 2009 22:50:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753233AbZEOUaF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 15 May 2009 16:30:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753229AbZEOUaE
-	(ORCPT <rfc822;git-outgoing>); Fri, 15 May 2009 16:30:04 -0400
-Received: from iabervon.org ([66.92.72.58]:41507 "EHLO iabervon.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751349AbZEOUaB (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 15 May 2009 16:30:01 -0400
-Received: (qmail 7973 invoked by uid 1000); 15 May 2009 20:30:01 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 15 May 2009 20:30:01 -0000
-In-Reply-To: <alpine.LFD.2.01.0905151212160.3343@localhost.localdomain>
-User-Agent: Alpine 2.00 (LNX 1167 2008-08-23)
+	id S1752886AbZEOUtx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 15 May 2009 16:49:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751602AbZEOUtx
+	(ORCPT <rfc822;git-outgoing>); Fri, 15 May 2009 16:49:53 -0400
+Received: from mail-qy0-f129.google.com ([209.85.221.129]:56353 "EHLO
+	mail-qy0-f129.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751349AbZEOUtw (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 May 2009 16:49:52 -0400
+Received: by qyk35 with SMTP id 35so497148qyk.33
+        for <git@vger.kernel.org>; Fri, 15 May 2009 13:49:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:sender:received:date
+         :x-google-sender-auth:message-id:subject:from:to:content-type
+         :content-transfer-encoding;
+        bh=A2MJafBo+ArrFlm9n0WLd84jivO7g0/op06xPwpxifE=;
+        b=TL9rX0ezZOQLlAho+Rr3F1OZpPQP84551k7E/yQuCN1IFQyjagmVdVr64k5fixfEdx
+         Io+o9eXbiqVceukuu+UT++2NgA3pX/32Gy+BUvl2bgMp1m+ZZUkhhZ13/2MIlaF+U65S
+         NZ/W5IAQxoba2WUs+S5zCM2QbMBXUrytod+q8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:sender:date:x-google-sender-auth:message-id:subject
+         :from:to:content-type:content-transfer-encoding;
+        b=fDz2akZm0tp9h2MsYpnUVQxAvE1P/k6Z0ZqBWdqGjoBsDhH1gWsmHj+r7q/s7gXFpT
+         439MRqcDPQCwNywBLf0WM2lQJGqVZvrCSSufDwe8sU49yF9J/S5/d0e8IQWkIFkUYqxk
+         WSF5x8+0MGLAT9LNryGvuT8jIBlOnQcx2qg7g=
+Received: by 10.229.79.19 with SMTP id n19mr2354120qck.74.1242420590854; Fri, 
+	15 May 2009 13:49:50 -0700 (PDT)
+X-Google-Sender-Auth: 199ef9aef8613cf1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119293>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119294>
 
-On Fri, 15 May 2009, Linus Torvalds wrote:
+I noticed that most gitweb pages show their repositories like this:
 
-> On Fri, 15 May 2009, Johannes Schindelin wrote:
-> > > 
-> > > 	[core]
-> > > 		packedGitWindowSize = 16k
-> > > 		packedGitLimit = 1M
-> > > 
-> > > you should hopefully be able to repack (slowly) even with a low file 
-> > > descriptor limit, because of the total limit on the size.
-> > 
-> > I don't think so, because the window size has nothing to do with the 
-> > amount of open windows, right?
-> 
-> No, but the packedGitLimit does.
-> 
-> So the argument is that you can't fit all that many open windows in 1M. 
-> 
-> > No, in this case, nothing was disabled.  auto-gc did not kick in, probably 
-> > due to funny Git usage in hg2git.
-> 
-> Ahh. Scripting.
-> 
-> > > Dscho? What are your pack-file statistics in this case?
-> > 
-> > Mostly around 50kB.
-> 
-> Can you give us an approximation for how many are under 16kB or so?
-> 
-> The 16kB cutoff is where it's usually just better to malloc+read (because 
-> even if you don't end up using all the 16kB, just a page-fault or two is 
-> already more expensive than just doing the memcpy implied in a 16k read() 
-> system call).
-> 
-> > But using malloc()+read() to avoid my use case sounds not 
-> > straight-forward; it is rather a work-around than a proper solution.
-> 
-> Well, it's a workaround that is correct for other reasons too. So it's 
-> likely worth doing.
-> 
-> The "proper solution" is likely to not avoid repacking. Scripted stuff 
-> that does that is buggy.
+bluetooth/bluez-gnome.git 	Bluetooth applications for ... 	Marcel Holtmann
+bluetooth/bluez-hcidump.git 	Bluetooth packet analyzer 	Marcel Holtmann
+bluetooth/bluez.git 	Bluetooth protocol stack for ... 	Marcel Holtmann
 
-I think it's going to be not-too-uncommon in fast-import scripts to want 
-to checkpoint periodically so that you don't lose your progress if 
-interacting with the foreign system starts failing partway through, and 
-you'll obviously want to repack afterwards rather than in the middle. But 
-if you have different input characteristics than the tool was optimized 
-for, you could end up with a ton of packs by the time it finishes.
+However, mine looks like this:
 
-Obviously, you don't want to avoid repacking before you actually use the 
-repository, but I think it's reasonable to wait until the end of the 
-script to repack, which might actually be too late.
+alsa.1862/.git	8610 audio: fabric driver uses wrong DMA channels for... 	Timur
+alsa.2598/.git	8610 audio: migrate ASoC V2 drivers to mainline	Timur
+alsa.3313/.git	Introduce spin_event_timeout()	Timur
 
-	-Daniel
-*This .sig left intentionally blank*
+Notice how my repositories have a trailing "/.git" to them?  How do I
+get rid of that?
+
+My gitweb.conf is:
+
+$projectroot = '/home/b04825/git/';
+$site_name = "Timur Tabi's git repositories";
+$home_link = $my_uri;
+@stylesheets = ("gitweb.css");
+$favicon = "git-favicon.png";
+$logo = "git-logo.png";
+$projects_list = '/home/b04825/git/projects_list';
+$projects_list_description_width = 50;
+
+And /home/b04825/git/projects_list looks like:
+
+alsa.1862/.git Timur
+alsa.2598/.git Timur
+alsa.3313/.git Timur
+
+I presume the reason why gitweb shows the trailing "/.git" is because
+that's what my projects_list file contains.  However, if I remove the
+"/.git" from projects_list, gitweb can't find any repositories.
+
+-- 
+Timur Tabi
+Linux kernel developer at Freescale
