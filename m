@@ -1,84 +1,109 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: git-tag bug? confusing git fast-export with double tag objects
-Date: Fri, 15 May 2009 10:40:43 -0700
-Message-ID: <7v3ab6uuw4.fsf@alter.siamese.dyndns.org>
-References: <op.utv93sdo1e62zd@merlin.emma.line.org>
-	<op.utwdsutn1e62zd@merlin.emma.line.org>
-	<7v8wl01iev.fsf@alter.siamese.dyndns.org>
-	<op.utwyczlf1e62zd@merlin.emma.line.org>
-	<20090514182249.GA11919@sigill.intra.peff.net>
-	<op.utxydvnu1e62zd@merlin.emma.line.org>
-	<20090515020206.GA12451@coredump.intra.peff.net>
-	<op.uty0pjb51e62zd@balu> <m34ovmlcve.fsf@localhost.localdomain>
-	<4A0D8211.5010806@viscovery.net>
-	<81b0412b0905150851q232b3f6s95df89e72d4dc381@mail.gmail.com>
-	<4A0D9696.1040805@op5.se>
+From: Josef Wolf <jw@raven.inka.de>
+Subject: Re: Trying to sync two svn repositories with git-svn (repost)
+Date: Fri, 15 May 2009 19:52:03 +0200
+Message-ID: <20090515175203.GS15420@raven.wolf.lan>
+References: <32541b130905061223h7efddeecvcc52a369093a6b50@mail.gmail.com> <20090506225042.GN15420@raven.wolf.lan> <32541b130905081344m634a78d5l984f4903ec1515eb@mail.gmail.com> <20090508235821.GO15420@raven.wolf.lan> <20090513120922.GP15420@raven.wolf.lan> <32541b130905131028i5c4b1a31j7f760f8157507df6@mail.gmail.com> <20090513222243.GQ15420@raven.wolf.lan> <32541b130905132335t3cbd0e7wf29577ee15ba0bac@mail.gmail.com> <20090514214120.GR15420@raven.wolf.lan> <32541b130905141457u196e1a68w8250489b88eb83c4@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Alex Riesen <raa.lkml@gmail.com>,
-	Johannes Sixt <j.sixt@viscovery.net>,
-	Jakub Narebski <jnareb@gmail.com>,
-	Matthias Andree <matthias.andree@gmx.de>,
-	Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-	git@vger.kernel.org, Brandon Casey <casey@nrlssc.navy.mil>,
-	Sverre Rabbelier <srabbelier@gmail.com>
-To: Andreas Ericsson <ae@op5.se>
-X-From: git-owner@vger.kernel.org Fri May 15 19:41:05 2009
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri May 15 20:00:54 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M51P5-0004rA-8n
-	for gcvg-git-2@gmane.org; Fri, 15 May 2009 19:41:03 +0200
+	id 1M51iE-0007mj-Ee
+	for gcvg-git-2@gmane.org; Fri, 15 May 2009 20:00:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754950AbZEORky (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 15 May 2009 13:40:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754758AbZEORky
-	(ORCPT <rfc822;git-outgoing>); Fri, 15 May 2009 13:40:54 -0400
-Received: from fed1rmmtao103.cox.net ([68.230.241.43]:58535 "EHLO
-	fed1rmmtao103.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753555AbZEORkx (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 15 May 2009 13:40:53 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao103.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20090515174053.WHZG2915.fed1rmmtao103.cox.net@fed1rmimpo02.cox.net>;
-          Fri, 15 May 2009 13:40:53 -0400
-Received: from localhost ([68.225.240.211])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id rtgj1b00L4aMwMQ04tguJs; Fri, 15 May 2009 13:40:54 -0400
-X-Authority-Analysis: v=1.0 c=1 a=lQuyK5o2kcMA:10 a=f4ZrQ2YIIQcA:10
- a=UXqJC3FAQZbhPenqoScA:9 a=F-7gL-Wif_KivU9vagIA:7
- a=CXQgHz-SHOCXq-BjPOfySU3gr10A:4
-X-CM-Score: 0.00
-In-Reply-To: <4A0D9696.1040805@op5.se> (Andreas Ericsson's message of "Fri\, 15 May 2009 18\:21\:42 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+	id S1762157AbZEOSAc convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 15 May 2009 14:00:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762080AbZEOSAa
+	(ORCPT <rfc822;git-outgoing>); Fri, 15 May 2009 14:00:30 -0400
+Received: from quechua.inka.de ([193.197.184.2]:45343 "EHLO mail.inka.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1762005AbZEOSA2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 May 2009 14:00:28 -0400
+Received: from raven.inka.de (uucp@[127.0.0.1])
+	by mail.inka.de with uucp (rmailwrap 0.5) 
+	id 1M51hs-0002yc-QA; Fri, 15 May 2009 20:00:28 +0200
+Received: by raven.inka.de (Postfix, from userid 1000)
+	id E22FC740D5; Fri, 15 May 2009 19:52:03 +0200 (CEST)
+Mail-Followup-To: Josef Wolf <jw@raven.inka.de>, git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <32541b130905141457u196e1a68w8250489b88eb83c4@mail.gmail.com>
+User-Agent: Mutt/1.5.17 (2007-11-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119266>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119267>
 
-Andreas Ericsson <ae@op5.se> writes:
+On Thu, May 14, 2009 at 05:57:00PM -0400, Avery Pennarun wrote:
+> On Thu, May 14, 2009 at 5:41 PM, Josef Wolf <jw@raven.inka.de> wrote:
+> > So here's my second plan:
+> > 1. instead of doing the cherry-picking in a single repository, it m=
+ight
+> > =A0 be helpful to do it in separate repositories: one repository fo=
+r each
+> > =A0 direction. =A0While there are still two remote svn repositories=
+ in each
+> > =A0 svn repository, there is no need for criss-cross anymore. =A0Th=
+e flow
+> > =A0 of the data is in one direction and it seems (at least at first=
+ glance)
+> > =A0 I can use git-svn-rebase to get a linear history.
+>=20
+> it's still criss-crossing, it's just less obvious that way.  One
+> repository is exactly the same as two repositories in git; all that
+> matters is the branch histories.
 
-> Is it? Does it really make sense to have a tag named "foo" point to a tag object
-> that in turn points to a tag object without a tag ref? I mean, if you're signing
-> a tag, it makes sense to want to keep the original tag around so people can
-> reference it. If you want to *replace* a tag, it doesn't make sense to create
-> this chain which, iiuc, goes something like this:
->
->   tag ref -> tag object -> tag object without ref -> something
->
-> Honestly, I can see how this turned out to be confusing, as you end up with a
-> tag object without a tag, but a new tag in its place. Not to mention that the
-> new tag won't be push-able without --force in case the old tag was pushed earlier.
+Yeah, I see...  But this step is here _only_ to get the existing svn
+repositories in sync again.  After cherry-picking and dcommitting, thos=
+e
+cherry-pick repositories would be wiped.  They have no real history.  T=
+he
+steps I outlined in my previous mail wouldn't even create any files in
+the .git/refs subdirectory.
 
-Suppose the gpg key used to sign v1.6.3 somehow gets compromised, and I
-come up with a new gpg key.  I could reassure people that the commit the
-old v1.6.3 tagged is genuine if I re-tag with the new key like this:
+Once that is done, I can declare one of the existing repositories as
+public and pull it via git-svn into a freshly created repos.  The other
+repos can then be recreated by cloning and applying patches.  No svn
+involved anymore here.
 
-	git tag -f v1.6.3 v1.6.3^{commit}
+> > 2. After the synchronization is done, I would merge the two reposit=
+ories
+> > =A0 into a third one to create the public repository. =A0Since this=
+ will be
+> > =A0 a pure git environment, I hope that the problems that are cause=
+d svn's
+> > =A0 lack of merge support will vanish.
+>=20
+> I'd say that basically none of your problems have anything to do with
+> svn's lack of merge support, and everything to do with the fact that
+> you aren't doing all your changes first on a 'public' branch and then
+> merging from there into the private branches.  (That's really not so
+> hard to do in svn either, and would save a ton of confusion.)
 
-But what should I do if I would want to reassure people that both the old
-v1.6.3 was tagged by _me_ (with the old key that later was compromised)
-and that the commit that old tag tags is genuine?
+The problem here is that it does not match the work flow.  IMHO, my wor=
+k
+flow is very similar to the work flow of the kernel, so I fail to see w=
+hy
+it can not work.  See the analogies:
+
+kernel: Submodule maintainers are committing into private repositories
+me:     People are committing into private repositories
+
+kernel: Those commits are forwarded to Linus's repository
+me:     Those commits are forwarded to the public repository
+
+kernel: Maintainers receive commits for other submodules from linus
+me:     Commits are distributed from public to private repositories
+
+I can't believe all changes spring into life in linus's repository.
+
+The only differences I can see are:
+- size of the project (obviously)
+- convert from multiple svn repos instead of bitkeeper
+- private repostories have to keep local patches (but I guess maintaine=
+rs
+  do that also)
