@@ -1,76 +1,76 @@
-From: Timur Tabi <timur@freescale.com>
-Subject: Re: [PATCH] gitweb: Document that gitweb deals with bare repositories
-Date: Fri, 15 May 2009 17:21:42 -0500
-Message-ID: <ed82fe3e0905151521m64df542eifca87073c4360fbf@mail.gmail.com>
-References: <ed82fe3e0905151349k15f040aej30dbec82037e9d76@mail.gmail.com>
-	 <20090515211611.27697.82605.stgit@localhost.localdomain>
-	 <4A0DDD94.1010901@freescale.com> <200905152336.49319.jnareb@gmail.com>
+From: "Robin H. Johnson" <robbat2@gentoo.org>
+Subject: Re: git daemon request logging?
+Date: Fri, 15 May 2009 15:22:07 -0700
+Message-ID: <20090515222207.GA9483@curie-int>
+References: <4A0DC4E0.7020001@garzik.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Sat May 16 00:21:54 2009
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="osDK9TLjxFScVI/L"
+To: Jeff Garzik <jeff@garzik.org>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat May 16 00:22:20 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M55mp-0001ZX-Od
-	for gcvg-git-2@gmane.org; Sat, 16 May 2009 00:21:52 +0200
+	id 1M55nH-0001lp-Dd
+	for gcvg-git-2@gmane.org; Sat, 16 May 2009 00:22:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756084AbZEOWVm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 15 May 2009 18:21:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755118AbZEOWVm
-	(ORCPT <rfc822;git-outgoing>); Fri, 15 May 2009 18:21:42 -0400
-Received: from mail-qy0-f129.google.com ([209.85.221.129]:54021 "EHLO
-	mail-qy0-f129.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752765AbZEOWVl (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 15 May 2009 18:21:41 -0400
-Received: by qyk35 with SMTP id 35so575320qyk.33
-        for <git@vger.kernel.org>; Fri, 15 May 2009 15:21:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:sender:received:in-reply-to
-         :references:date:x-google-sender-auth:message-id:subject:from:to:cc
-         :content-type:content-transfer-encoding;
-        bh=myi0k68YLeGEZ/w73PUrl3BKQ6/CK8qqZY3dSBlaayE=;
-        b=dD+oBmyPpP4qtDAkGfFtOFRzOgeHLKwB1AsXeY3XPgE/cjO4IXYGOEJ+ZuQZaBsqNU
-         eBgITQpNDCvE7/3vIr2EzyBeCJXWDh2MLvTB5PHCVTtIjy1zVrXJl6+gsacPkUCuW9cP
-         ZyCZr3G2lw8f4ubHTT8cfMuVTAGTGy1XIZx20=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:sender:in-reply-to:references:date
-         :x-google-sender-auth:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        b=ec2sOvgTOx5ERhTnpMdkd89AsYfVocU7H2mPcXSTmgUgowB/YtgNQnL2ZvgczBEGeQ
-         rBXHmtz35Rs+jICG2TSyrW8lYU9oWl8bV3GlYZ7V9VJ7XF712K8FhLkhYG95qv4LecQD
-         HzszShPIEDmK3MGFumxZDhh4EhLlVGY4y9pj8=
-Received: by 10.229.96.15 with SMTP id f15mr2230801qcn.91.1242426102560; Fri, 
-	15 May 2009 15:21:42 -0700 (PDT)
-In-Reply-To: <200905152336.49319.jnareb@gmail.com>
-X-Google-Sender-Auth: da5fb9724e3e9906
+	id S1757816AbZEOWWN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 15 May 2009 18:22:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757668AbZEOWWN
+	(ORCPT <rfc822;git-outgoing>); Fri, 15 May 2009 18:22:13 -0400
+Received: from b01.ext.isohunt.com ([208.71.112.51]:51005 "EHLO
+	mail.isohunt.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1756877AbZEOWWM (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 May 2009 18:22:12 -0400
+Received: (qmail 13213 invoked from network); 15 May 2009 22:22:11 -0000
+Received: from tsi-static.orbis-terrarum.net (HELO curie.orbis-terrarum.net) (76.10.188.108)
+  (smtp-auth username robbat2@isohunt.com, mechanism login)
+  by mail.isohunt.com (qpsmtpd/0.33-dev on beta01) with (AES256-SHA encrypted) ESMTPSA; Fri, 15 May 2009 22:22:11 +0000
+Received: (qmail 19206 invoked by uid 10000); 15 May 2009 15:22:07 -0700
+Content-Disposition: inline
+In-Reply-To: <4A0DC4E0.7020001@garzik.org>
+User-Agent: Mutt/1.5.16 (2007-06-09)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119305>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119306>
 
-On Fri, May 15, 2009 at 4:36 PM, Jakub Narebski <jnareb@gmail.com> wrote:
-> Gitweb can deal with non-bare repositories. It is only that because
-> gitweb is not interested in working area, it shows $GIT_DIR (path to
-> repository itself) as name/path to repository. Therefore repo/.git
-> for non-bare repositories, because it is repository itself that matters.
 
-I understand that, but why does gitweb have to punish me because I
-give it more than it cares about?
+--osDK9TLjxFScVI/L
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> If you provide access for others, i.e. if those repositories shown in
-> gitweb are public repositories, it is much better to use bare
-> repositories for that.
+On Fri, May 15, 2009 at 03:39:12PM -0400, Jeff Garzik wrote:
+> Does the git daemon do any sort of request logging?  Could it?
+You could probably get it easily from my upcoming selective-deny of
+pull/clone patch.
 
-Why?  What difference does it make if they clone directly from my
-working tree, instead of some shadow repository?
+I described my plans here:
+http://thread.gmane.org/gmane.comp.version-control.git/115600/focus=3D116588
 
--- 
-Timur Tabi
-Linux kernel developer at Freescale
+Hopefully I'll have a patch out sometime next week.
+
+--=20
+Robin Hugh Johnson
+Gentoo Linux Developer & Infra Guy
+E-Mail     : robbat2@gentoo.org
+GnuPG FP   : 11AC BA4F 4778 E3F6 E4ED  F38E B27B 944E 3488 4E85
+
+--osDK9TLjxFScVI/L
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.11 (GNU/Linux)
+Comment: Robbat2 @ Orbis-Terrarum Networks - The text below is a digital signature. If it doesn't make any sense to you, ignore it.
+
+iEYEARECAAYFAkoN6w8ACgkQPpIsIjIzwiwogACeMqaa1Rc7L6uEFzPXvP6pv9jX
+n/0AoNtRO4GWrideOICdeEyI8FtarUQ5
+=hPwW
+-----END PGP SIGNATURE-----
+
+--osDK9TLjxFScVI/L--
