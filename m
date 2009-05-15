@@ -1,258 +1,182 @@
-From: Mark Lodato <lodatom@gmail.com>
-Subject: [PATCH v3] git-svn: add --authors-prog option
-Date: Thu, 14 May 2009 21:27:15 -0400
-Message-ID: <1242350835-22684-1-git-send-email-lodatom@gmail.com>
-References: <20090510003509.GA2000@dcvr.yhbt.net>
-Cc: Eric Wong <normalperson@yhbt.net>,
-	Junio C Hamano <gitster@pobox.com>,
-	Michael J Gruber <git@drmicha.warpmail.net>,
-	Mark Lodato <lodatom@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri May 15 03:26:08 2009
+From: Jeff King <peff@peff.net>
+Subject: Re: git-tag bug? confusing git fast-export with double tag objects
+Date: Thu, 14 May 2009 22:02:06 -0400
+Message-ID: <20090515020206.GA12451@coredump.intra.peff.net>
+References: <op.utv93sdo1e62zd@merlin.emma.line.org> <op.utwdsutn1e62zd@merlin.emma.line.org> <7v8wl01iev.fsf@alter.siamese.dyndns.org> <op.utwyczlf1e62zd@merlin.emma.line.org> <20090514182249.GA11919@sigill.intra.peff.net> <op.utxydvnu1e62zd@merlin.emma.line.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Alex Riesen <raa.lkml@gmail.com>,
+	Brandon Casey <casey@nrlssc.navy.mil>,
+	Sverre Rabbelier <srabbelier@gmail.com>
+To: Matthias Andree <matthias.andree@gmx.de>
+X-From: git-owner@vger.kernel.org Fri May 15 04:02:22 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M4mBZ-0008V0-Jx
-	for gcvg-git-2@gmane.org; Fri, 15 May 2009 03:26:06 +0200
+	id 1M4mke-0001tU-KA
+	for gcvg-git-2@gmane.org; Fri, 15 May 2009 04:02:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753874AbZEOBZ4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 14 May 2009 21:25:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753336AbZEOBZz
-	(ORCPT <rfc822;git-outgoing>); Thu, 14 May 2009 21:25:55 -0400
-Received: from qw-out-2122.google.com ([74.125.92.24]:30687 "EHLO
-	qw-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753332AbZEOBZy (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 May 2009 21:25:54 -0400
-Received: by qw-out-2122.google.com with SMTP id 5so1310414qwd.37
-        for <git@vger.kernel.org>; Thu, 14 May 2009 18:25:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer:in-reply-to:references;
-        bh=61XgDwCxHrgHM39L0QwigNdV6fYQ+qImXX5CzmQQde4=;
-        b=nAuqcLRKy79HlQZuA4mPOnCfVj32+yMM7G5IAg22ab9Eb3yJvd4u6XvtiOWxPZZOj7
-         KCanHwBYQpIl5PLKLqxB1WIw2g3rF9CwKxOYHfExq5E4L6Z8qvY4Vaz8lKXttznIkjmV
-         Jp1osPDkF5oU3Ls8JLoFzDL6ceYcSpMXmvokg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=bPkRNLPDyNP4XEtd5A7by4T2h5wK2VfwrtxM2jmwPG/tj/clZttMPJfWQhdgiJHRtn
-         ZKafyTnCXX/7lmKO5y4FEi3Q+7/Ne7m7wn2uiqmEGGRql6rWDz0klyK7zayORRJzg9Gu
-         /OVdgmYSFqeWAvXvIXOfh0v1JziKrlybYN79U=
-Received: by 10.224.73.140 with SMTP id q12mr3397049qaj.188.1242350755299;
-        Thu, 14 May 2009 18:25:55 -0700 (PDT)
-Received: from localhost.localdomain (c-68-33-182-150.hsd1.dc.comcast.net [68.33.182.150])
-        by mx.google.com with ESMTPS id 26sm1092916qwa.8.2009.05.14.18.25.53
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 14 May 2009 18:25:54 -0700 (PDT)
-X-Mailer: git-send-email 1.6.3.1
-In-Reply-To: <20090510003509.GA2000@dcvr.yhbt.net>
+	id S1754948AbZEOCCK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 14 May 2009 22:02:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754642AbZEOCCJ
+	(ORCPT <rfc822;git-outgoing>); Thu, 14 May 2009 22:02:09 -0400
+Received: from peff.net ([208.65.91.99]:35877 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751180AbZEOCCI (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 May 2009 22:02:08 -0400
+Received: (qmail 30752 invoked by uid 107); 15 May 2009 02:02:08 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Thu, 14 May 2009 22:02:08 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Thu, 14 May 2009 22:02:06 -0400
+Content-Disposition: inline
+In-Reply-To: <op.utxydvnu1e62zd@merlin.emma.line.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119244>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119245>
 
-Add a new option, --authors-prog, to git-svn that allows a more flexible
-alternative (or supplement) to --authors-file.  This allows more
-advanced username operations than the authors file will allow.  For
-example, one may look up Subversion users via LDAP, or may generate the
-name and email address from the Subversion username.
+On Fri, May 15, 2009 at 12:35:45AM +0200, Matthias Andree wrote:
 
-Notes:
+> The semantic meaning however is missing. Let me take a different vantage  
+> and look at the same situation, leaving the object graph aside.
+>
+> This "git tag -f -s same same" operation gives me a signed nothing, and  
+> the ref indeed no longer points to the old tag.
 
-* If both --authors-name and --authors-prog are given, the former is
-  tried first, falling back to the later.
 
-* The program is called once per unique SVN username, and the result is
-  cached.
+It doesn't give you a signed nothing. It gives you a signed tag pointing
+to the old signed tag (which in turn could point to another tag, a
+commit, etc).
 
-* The command-line argument must be the path to a program, not a generic
-  shell command line.  The absolute path to this program is taken at
-  startup since the git-svn script changes directory during operation.
+And yes, the ref no longer points to the old tag. That has nothing to do
+with what you are pointing the tag out, but the fact that you are
+_overwriting_ the old tag. And we already have a safety valve there: you
+must specify "-f" to overwrite an existing tag.
 
-* The option is not enabled for `git svn log'.
+> But what's the new signature or tag good for?
 
-Signed-off-by: Mark Lodato <lodatom@gmail.com>
+Tagging a tag is good for saying something about the original tag, as
+opposed to saying something about the commit that the original tag
+points to.
+
+> I tagged & signed an object that was removed  in the process.  I have
+> a tagged and signed nothing. (Yes, there is an  underlying object, but
+> it takes lots of fiddling with the LL tools to get  at it.)
+
+The object wasn't removed, any more than making a new commit that
+advances a branch head removes the old history. Git objects form a DAG,
+and refs are named objects in the DAG. But we only consider objects
+"removed" when they are not reachable from any ref (and I say "removed"
+because we call this "dangling", and then actually remove them after
+they have been dangling for a period of time, assuming that nobody is
+interested in them any longer). And it is not the case here that the
+result is dangling.
+
+I wouldn't be surprised if working with tags of tags is less convenient,
+because people aren't using them as often as tags of commits, and there
+may be some unexercised corner cases. But you can certainly see them via
+"git show":
+
+  $ git init && echo content > file && git add . && git commit -m one
+  $ git tag -m two tag1
+  $ git tag -m three tag2 tag1
+  $ git show tag2
+
+should show something like:
+
+  tag tag2
+  Tagger: Jeff King <peff@peff.net>
+  Date:   Thu May 14 21:06:09 2009 -0400
+
+
+  three
+  tag tag1
+  Tagger: Jeff King <peff@peff.net>
+  Date:   Thu May 14 21:05:44 2009 -0400
+
+
+  two
+  commit 395553770322cbfc8326eb6edc9c3ab73334c541
+  Author: Jeff King <peff@peff.net>
+  Date:   Thu May 14 21:05:27 2009 -0400
+
+      one
+
+  diff...
+
+Arguably the spacing could be more readable (one less blank line between
+the tag header and its message, and an extra space between the message
+and the start of the next header), but I wouldn't call the tag
+inaccessible or removed.
+
+And you can repeat the same exercise with
+
+  $ git tag -f -m four tag2 tag2
+
+which will show you the chain of tag2 -> old_tag2 -> tag1 -> commit.
+
+>> Of course the _old_ tag1 is still there. It is referenced by tag2, which
+>> still has a ref. Again you are confusing the right-hand side of "git
+>> rev-list --objects" with actual ref names.
+>
+> Indeed it's not git show-ref...
+
+Right. No ref points to it any more. But that doesn't mean it's not
+there. Just like older commits have no ref pointing to them, and we have
+to give them names based on the refs we do have, like HEAD~5. There is
+not a shorthand syntax for saying "peel exactly N layers of this tag
+chain", but I think that is because nobody has really needed one at this
+point.
+
+>> I am not ruling out the possibility that there is some piece of code
+>> that will be confused by the situation you have created, but it has
+>> nothing to do with graph walking. It would have to be a piece of code
+>> which cares about the uniqueness of informative names inside tag
+>> objects.
+>
+> That's true, and apparently git fast-export is one of those pieces of code.
+
+Sorry, I thought from your last email ("I presume anything that walks
+the object database and uses tags can fail") that you were just
+speculating on fast-export mishandling.
+
+Going back to your original message, though, it looks like you do have a
+specific problem with fast-export. However, I think it has nothing to do
+with a _renamed_ tag, but in general of tags pointing to tags. The
+outermost tag ends up pointing to a bogus mark of ":0".
+
+I would have thought that would be dealt with by 198246, but I can
+replicate the problem even on the current 'next'. I think we just need
+to be setting a mark for tag objects. The patch below makes your
+fast-export example better, but it still looks like we end up printing
+out one of the tag objects twice.
+
 ---
-
-Third attempt at the patch.  I fixed a typo and reworded the documentation
-(thanks to Michael Gruber), and I fixed a small mistake in the commit message.
-Other than rebasing onto master, nothing else was changed.
-
- Documentation/git-svn.txt       |    8 ++++
- git-svn.perl                    |   30 +++++++++++++++--
- t/t9138-git-svn-authors-prog.sh |   69 +++++++++++++++++++++++++++++++++++++++
- 3 files changed, 104 insertions(+), 3 deletions(-)
- create mode 100755 t/t9138-git-svn-authors-prog.sh
-
-diff --git a/Documentation/git-svn.txt b/Documentation/git-svn.txt
-index 1c40894..ca3fc3d 100644
---- a/Documentation/git-svn.txt
-+++ b/Documentation/git-svn.txt
-@@ -398,6 +398,14 @@ after the authors-file is modified should continue operation.
+diff --git a/builtin-fast-export.c b/builtin-fast-export.c
+index 6731713..2349c8d 100644
+--- a/builtin-fast-export.c
++++ b/builtin-fast-export.c
+@@ -293,6 +293,9 @@ static void handle_tag(const char *name, struct tag *tag)
+ 	buf = read_sha1_file(tag->object.sha1, &type, &size);
+ 	if (!buf)
+ 		die ("Could not read tag %s", sha1_to_hex(tag->object.sha1));
++
++	mark_next_object(&tag->object);
++
+ 	message = memmem(buf, size, "\n\n", 2);
+ 	if (message) {
+ 		message += 2;
+@@ -335,8 +338,8 @@ static void handle_tag(const char *name, struct tag *tag)
  
- config key: svn.authorsfile
- 
-+--authors-prog=<filename>::
-+
-+If this option is specified, for each SVN committer name that does not
-+exist in the authors file, the given file is executed with the committer
-+name as the first argument.  The program is expected to return a single
-+line of the form "Name <email>", which will be treated as if included in
-+the authors file.
-+
- -q::
- --quiet::
- 	Make 'git-svn' less verbose. Specify a second time to make it
-diff --git a/git-svn.perl b/git-svn.perl
-index ef1d30d..f9c9567 100755
---- a/git-svn.perl
-+++ b/git-svn.perl
-@@ -5,7 +5,7 @@ use warnings;
- use strict;
- use vars qw/	$AUTHOR $VERSION
- 		$sha1 $sha1_short $_revision $_repository
--		$_q $_authors %users/;
-+		$_q $_authors $_authors_prog %users/;
- $AUTHOR = 'Eric Wong <normalperson@yhbt.net>';
- $VERSION = '@@GIT_VERSION@@';
- 
-@@ -39,6 +39,7 @@ use Digest::MD5;
- use IO::File qw//;
- use File::Basename qw/dirname basename/;
- use File::Path qw/mkpath/;
-+use File::Spec;
- use Getopt::Long qw/:config gnu_getopt no_ignore_case auto_abbrev/;
- use IPC::Open3;
- use Git;
-@@ -76,6 +77,7 @@ my %remote_opts = ( 'username=s' => \$Git::SVN::Prompt::_username,
-                     'ignore-paths=s' => \$SVN::Git::Fetcher::_ignore_regex );
- my %fc_opts = ( 'follow-parent|follow!' => \$Git::SVN::_follow_parent,
- 		'authors-file|A=s' => \$_authors,
-+		'authors-prog=s' => \$_authors_prog,
- 		'repack:i' => \$Git::SVN::_repack,
- 		'noMetadata' => \$Git::SVN::_no_metadata,
- 		'useSvmProps' => \$Git::SVN::_use_svm_props,
-@@ -263,6 +265,7 @@ usage(0) if $_help;
- version() if $_version;
- usage(1) unless defined $cmd;
- load_authors() if $_authors;
-+$_authors_prog = "'" . File::Spec->rel2abs($_authors_prog) . "'";
- 
- unless ($cmd =~ /^(?:clone|init|multi-init|commit-diff)$/) {
- 	Git::SVN::Migration::migration_check();
-@@ -2663,12 +2666,33 @@ sub other_gs {
- 	$gs
- }
- 
-+sub call_authors_prog {
-+	my ($orig_author) = @_;
-+	my $author = `$::_authors_prog $orig_author`;
-+	if ($? != 0) {
-+		die "$::_authors_prog failed with exit code $?\n"
-+	}
-+	if ($author =~ /^\s*(.+?)\s*<(.*)>\s*$/) {
-+		my ($name, $email) = ($1, $2);
-+		$email = undef if length $2 == 0;
-+		return [$name, $email];
-+	} else {
-+		die "Author: $orig_author: $::_authors_prog returned "
-+			. "invalid author format: $author\n";
-+	}
-+}
-+
- sub check_author {
- 	my ($author) = @_;
- 	if (!defined $author || length $author == 0) {
- 		$author = '(no author)';
--	} elsif (defined $::_authors && ! defined $::users{$author}) {
--		die "Author: $author not defined in $::_authors file\n";
-+	}
-+	if (!defined $::users{$author}) {
-+		if (defined $::_authors_prog) {
-+			$::users{$author} = call_authors_prog($author);
-+		} elsif (defined $::_authors) {
-+			die "Author: $author not defined in $::_authors file\n";
-+		}
- 	}
- 	$author;
- }
-diff --git a/t/t9138-git-svn-authors-prog.sh b/t/t9138-git-svn-authors-prog.sh
-new file mode 100755
-index 0000000..a4b00f2
---- /dev/null
-+++ b/t/t9138-git-svn-authors-prog.sh
-@@ -0,0 +1,69 @@
-+#!/bin/sh
-+#
-+# Copyright (c) 2009 Eric Wong, Mark Lodato
-+#
-+
-+test_description='git svn authors prog tests'
-+
-+. ./lib-git-svn.sh
-+
-+cat > svn-authors-prog <<'EOF'
-+#!/usr/bin/perl
-+$_ = shift;
-+if (s/-sub$//)  {
-+	print "$_ <$_\@sub.example.com>\n";
-+}
-+else {
-+	print "$_ <$_\@example.com>\n";
-+}
-+EOF
-+chmod +x svn-authors-prog
-+
-+cat > svn-authors <<'EOF'
-+ff = FFFFFFF FFFFFFF <fFf@other.example.com>
-+EOF
-+
-+test_expect_success 'setup svnrepo' '
-+	for i in aa bb cc-sub dd-sub ee-foo ff
-+	do
-+		svn mkdir -m $i --username $i "$svnrepo"/$i
-+	done
-+	'
-+
-+test_expect_success 'import authors with prog and file' '
-+	git svn clone --authors-prog=./svn-authors-prog \
-+	    --authors-file=svn-authors "$svnrepo" x
-+	'
-+
-+test_expect_success 'imported 6 revisions successfully' '
-+	(
-+		cd x
-+		test "`git rev-list refs/remotes/git-svn | wc -l`" -eq 6
-+	)
-+	'
-+
-+test_expect_success 'authors-prog ran correctly' '
-+	(
-+		cd x
-+		git rev-list -1 --pretty=raw refs/remotes/git-svn~1 | \
-+		  grep "^author ee-foo <ee-foo@example\.com> " &&
-+		git rev-list -1 --pretty=raw refs/remotes/git-svn~2 | \
-+		  grep "^author dd <dd@sub\.example\.com> " &&
-+		git rev-list -1 --pretty=raw refs/remotes/git-svn~3 | \
-+		  grep "^author cc <cc@sub\.example\.com> " &&
-+		git rev-list -1 --pretty=raw refs/remotes/git-svn~4 | \
-+		  grep "^author bb <bb@example\.com> " &&
-+		git rev-list -1 --pretty=raw refs/remotes/git-svn~5 | \
-+		  grep "^author aa <aa@example\.com> "
-+	)
-+	'
-+
-+test_expect_success 'authors-file overrode authors-prog' '
-+	(
-+		cd x
-+		git rev-list -1 --pretty=raw refs/remotes/git-svn | \
-+		  grep "^author FFFFFFF FFFFFFF <fFf@other\.example\.com> "
-+	)
-+	'
-+
-+test_done
--- 
-1.6.3.1
+ 	if (!prefixcmp(name, "refs/tags/"))
+ 		name += 10;
+-	printf("tag %s\nfrom :%d\n%.*s%sdata %d\n%.*s\n",
+-	       name, get_object_mark(tag->tagged),
++	printf("tag %s\nmark :%"PRIu32"\nfrom :%d\n%.*s%sdata %d\n%.*s\n",
++	       name, last_idnum, get_object_mark(tag->tagged),
+ 	       (int)(tagger_end - tagger), tagger,
+ 	       tagger == tagger_end ? "" : "\n",
+ 	       (int)message_size, (int)message_size, message ? message : "");
