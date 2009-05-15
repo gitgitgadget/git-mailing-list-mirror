@@ -1,117 +1,99 @@
-From: Avery Pennarun <apenwarr@gmail.com>
-Subject: Re: git subtree: an alternative to git submodule
-Date: Fri, 15 May 2009 14:31:54 -0400
-Message-ID: <32541b130905151131h76048ff2o418764aa41bcd13b@mail.gmail.com>
-References: <1241822349-27470-1-git-send-email-apenwarr@gmail.com> 
-	<32541b130905150909h7e596f26w7db6887e7f4267ff@mail.gmail.com> 
-	<7vzldes0ce.fsf@alter.siamese.dyndns.org>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: Funny error with git gc...
+Date: Fri, 15 May 2009 11:46:32 -0700 (PDT)
+Message-ID: <alpine.LFD.2.01.0905151128230.3343@localhost.localdomain>
+References: <alpine.DEB.1.00.0905152000520.4449@intel-tinevez-2-302> <7vmy9etey8.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri May 15 20:32:25 2009
+X-From: git-owner@vger.kernel.org Fri May 15 20:46:56 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M52Cm-0005ZK-Sr
-	for gcvg-git-2@gmane.org; Fri, 15 May 2009 20:32:25 +0200
+	id 1M52Qp-0003mZ-3T
+	for gcvg-git-2@gmane.org; Fri, 15 May 2009 20:46:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751203AbZEOScO convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 15 May 2009 14:32:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750958AbZEOScO
-	(ORCPT <rfc822;git-outgoing>); Fri, 15 May 2009 14:32:14 -0400
-Received: from yx-out-2324.google.com ([74.125.44.29]:23131 "EHLO
-	yx-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750717AbZEOScN convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 15 May 2009 14:32:13 -0400
-Received: by yx-out-2324.google.com with SMTP id 3so1193577yxj.1
-        for <git@vger.kernel.org>; Fri, 15 May 2009 11:32:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=E/wqfwIkunlRpkXAvSShLioBsr4XZtR2ETbk2Xsn/lU=;
-        b=p2eH8+DpfZXPRzxsHtTif9AuEu9r13dWJCCwWNM9822ay9mZWJhEyrBubI52Ayo5rz
-         S1cu761nZuLjivFS8AhqwgQSy3PjORkj72lasoyE5ffF2+e2GxqAcsF07OqInR0zz8v9
-         WC+LKfBy+2Krp7oE67H4pnTPu1zeF5NiAtDW8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=ZAmWWz4pXO2St0Ne33FBtfGxPC9l9BZHWDnWT8+6wCaxz0NUg/6oyb5yU51y7+dPBC
-         PPskIKQVsNerJYtKrxKtTJCIBWE3rAdXXE9XHDz6paLh6oVphayFXChGl3+khd9EG4gf
-         WqDkTb2VguIudH14T0dUG5wvDzdlcXf62HVLs=
-Received: by 10.151.139.1 with SMTP id r1mr6665725ybn.184.1242412334219; Fri, 
-	15 May 2009 11:32:14 -0700 (PDT)
-In-Reply-To: <7vzldes0ce.fsf@alter.siamese.dyndns.org>
+	id S1753332AbZEOSqp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 15 May 2009 14:46:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753234AbZEOSqo
+	(ORCPT <rfc822;git-outgoing>); Fri, 15 May 2009 14:46:44 -0400
+Received: from smtp1.linux-foundation.org ([140.211.169.13]:57694 "EHLO
+	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752746AbZEOSqo (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 15 May 2009 14:46:44 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
+	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id n4FIkXTp000543
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Fri, 15 May 2009 11:46:34 -0700
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id n4FIkWHi028793;
+	Fri, 15 May 2009 11:46:32 -0700
+X-X-Sender: torvalds@localhost.localdomain
+In-Reply-To: <7vmy9etey8.fsf@alter.siamese.dyndns.org>
+User-Agent: Alpine 2.01 (LFD 1184 2008-12-16)
+X-Spam-Status: No, hits=-3.464 required=5 tests=AWL,BAYES_00
+X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119275>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119276>
 
-On Fri, May 15, 2009 at 2:11 PM, Junio C Hamano <gitster@pobox.com> wro=
-te:
-> Avery Pennarun <apenwarr@gmail.com> writes:
->> ... =A0Obviously I would need to write a man page, but I've been
->> hesitant to do that in case people have suggestions that need the
->> whole UI to change. =A0Perhaps that's a chicken-and-egg problem, tho=
-ugh,...
->
-> If you fear that you might get into a situation that the UI _must_ ch=
-ange
-> because it does not fit people's needs or workflows, that is a sign t=
-hat
-> the UI and the workflow it was designed to support may not have been =
-well
-> thought out yet. =A0At least, you do not even _know_ if it is well th=
-ought
-> out or not. =A0It is understandable that people would say "sounds coo=
-l,
-> could potentially be good, but I'll wait and see if it is real" and l=
-eave.
 
-Well, I'm already using it myself in my own projects and I like it.
-So I'm pretty confident that it is *a* useful workflow.  Whether it's
-useful for others is a good question, and the only way to know the
-answer is to put it out there.
 
-But I'm at a bit of a loss as to why so many people (er, as compared
-to none) seem to have gotten excited about the tool, but then it
-fizzled.  This implies to me that something is missing.  Perhaps it's
-just the documentation; I'll work on that next, then.
+On Fri, 15 May 2009, Junio C Hamano wrote:
 
-> It is an easy mistake to make to consider inclusion to my tree your g=
-oal.
-> It can be one of the means to give exposure to wider audience, but it=
- does
-> not have to be your only avenue to do so.
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> 
+> > if you need a chuckle, like me, you might appreciate this story: in one of 
+> > my repositories, "git gc" dies with
+> >
+> > 	unable to open object pack directory: ...: Too many open files
+> >
+> > turns out that there are a whopping 1088 packs in that repository...
+> 
+> Isn't it a more serious problem than a mere chuckle?  How would one
+> recover from such a situation (other than "mv .git/objects/pack-*;
+> for p in pack-*.pack; do git unpack-objects <$p; done")?
 
-Thanks for pointing that out.  In fact my primary goal wasn't really
-to get it included in the tree (otherwise I *would* have written the
-documentation and even included a signed-off-by line :)) but to get
-comments on the feature.  In fact, it would be detrimental to have it
-included in your tree and then find out afterwards that it ought to be
-ripped out and replaced.
+Well, you can probably just increase the file limits and try again. 
+Depending on setup, you may need root to do so, though.
 
-> With proliferation of free hosting services, however, I think contrib=
-/
-> area for such purposes outlived its usefulness. =A0People can now for=
-k and
-> gather interested and enthused users very easily and can make *me* be=
-g to
-> merge from them to include their new, popular, and already polished
-> features.
+I also think you _should_ be able to avoid this by just limiting the pack 
+size usage. IOW, with some packed_git_limit, something like
 
-I suppose you could merge it in using git-subtree and then you
-wouldn't even have to beg :)
+	[core]
+		packedGitWindowSize = 16k
+		packedGitLimit = 1M
 
-Okay, documentation next.  At least I have somewhere to go from here.
+you should hopefully be able to repack (slowly) even with a low file 
+descriptor limit, because of the total limit on the size.
 
-Have fun,
+That said, I do agree that ulimit doesn't always work on all systems 
+(whether due to hard system limits or due to not having permission to 
+raise the limits), and playing games with pack limits is non-obvious. We 
+should really try to avoid getting into such a situation. But I think git 
+by default avoids it by the auto-gc, no? So you have to disable that 
+explicitly to get into this bad situation.
 
-Avery
+One solution - which I think may be the right one regardless - is to not 
+use "mmap()" for small packs or small SHA1 files.
+
+mmap is great for random-access multi-use scenarios (and to avoid some 
+memory pressure by allowing sharing of pages), but for anything that is 
+just a couple of pages in size, mmap() just adds big overhead with little 
+upside. 
+
+So if we use malloc+read for small things, we'd probably avoid this. Now, 
+if you have a few thousand _large_ packs, you'd still be screwed, but the 
+most likely reason for having a thousand packfiles is that you did daily 
+"git pull"s, and have lots and lots of packs that are pretty small.
+
+Dscho? What are your pack-file statistics in this case?
+
+		Linus
