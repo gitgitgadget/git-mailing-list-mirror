@@ -1,97 +1,76 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2] Extend sample pre-commit hook to check for non ascii filenames
-Date: Fri, 15 May 2009 11:11:12 -0700
-Message-ID: <7vbpputewv.fsf@alter.siamese.dyndns.org>
-References: <419AD153-53B4-4DAB-AF72-4127C17B1CA0@gmail.com>
-	<m3r5yukv6g.fsf@localhost.localdomain>
-	<20090512214250.GA22974@macbook.lan>
-	<200905122356.00659.jnareb@gmail.com>
-	<20090514175850.GA26267@macbook.lan>
+From: Avery Pennarun <apenwarr@gmail.com>
+Subject: Re: Funny error with git gc...
+Date: Fri, 15 May 2009 14:24:19 -0400
+Message-ID: <32541b130905151124l40194e3eq78411c5b94bd9598@mail.gmail.com>
+References: <alpine.DEB.1.00.0905152000520.4449@intel-tinevez-2-302> 
+	<7vmy9etey8.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jakub Narebski <jnareb@gmail.com>,
-	Martin Langhoff <martin.langhoff@gmail.com>,
-	Dmitry Potapov <dpotapov@gmail.com>,
-	Esko Luontola <esko.luontola@gmail.com>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>
-To: Heiko Voigt <hvoigt@hvoigt.net>
-X-From: git-owner@vger.kernel.org Fri May 15 20:11:28 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri May 15 20:25:00 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M51sS-0004L7-JQ
-	for gcvg-git-2@gmane.org; Fri, 15 May 2009 20:11:24 +0200
+	id 1M525S-0002By-PU
+	for gcvg-git-2@gmane.org; Fri, 15 May 2009 20:24:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756434AbZEOSLO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 15 May 2009 14:11:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756764AbZEOSLN
-	(ORCPT <rfc822;git-outgoing>); Fri, 15 May 2009 14:11:13 -0400
-Received: from fed1rmmtao105.cox.net ([68.230.241.41]:57814 "EHLO
-	fed1rmmtao105.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756572AbZEOSLM (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 15 May 2009 14:11:12 -0400
-Received: from fed1rmimpo03.cox.net ([70.169.32.75])
-          by fed1rmmtao105.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20090515181112.PNDQ20430.fed1rmmtao105.cox.net@fed1rmimpo03.cox.net>;
-          Fri, 15 May 2009 14:11:12 -0400
-Received: from localhost ([68.225.240.211])
-	by fed1rmimpo03.cox.net with bizsmtp
-	id ruBC1b00b4aMwMQ04uBDJe; Fri, 15 May 2009 14:11:13 -0400
-X-Authority-Analysis: v=1.0 c=1 a=d_odvaxKMEgA:10 a=bh4dO2YjhlsA:10
- a=Y7828TS4AAAA:8 a=IvZhBgcEoBpTsOQjL3IA:9 a=-kNK0kwFKdXsNxYN_hsA:7
- a=BgX9fmafnzdT0i4hX8LQvvKKuJ8A:4 a=IUdvcfx5MVUA:10
-X-CM-Score: 0.00
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+	id S1753001AbZEOSYl convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 15 May 2009 14:24:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752981AbZEOSYk
+	(ORCPT <rfc822;git-outgoing>); Fri, 15 May 2009 14:24:40 -0400
+Received: from yx-out-2324.google.com ([74.125.44.28]:17873 "EHLO
+	yx-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750717AbZEOSYj convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 15 May 2009 14:24:39 -0400
+Received: by yx-out-2324.google.com with SMTP id 3so1191395yxj.1
+        for <git@vger.kernel.org>; Fri, 15 May 2009 11:24:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=QGSKWXYQBiQQBfNLLVg60Wk4/tBxom6mheXOMb/YV3s=;
+        b=ggPluzyfmchRnjSZuGcWdh6Ve12HB926a4mLIp3yvTlAZwRQom5LhelyI6e7UrUABp
+         yZNhlIEyOhrKp5U2FXpObZIn3YyngxXca5VGeinDLZuvqlnnBLqiNNSyARSRAjhcjWka
+         ARt8L0/w0YLVqszmgRdJ2qGhGcEjEn1Kdhw3Y=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=jTuVNfEJl28a/wG2vCUXMsaYYg9bd6fhLMQGWcqE3nYsnxbdcDnm2FRLpecb3z9Uia
+         3oZvZ0BH7jtK6F55HR/kVopWMzvyh1HGUGIrdw+VWUpe2HGOOtmEkPLTPJ65nIwNRGgA
+         KepBsp+ZCAzYRe2gEZzUy04O/knCIQWX8RW7s=
+Received: by 10.151.150.21 with SMTP id c21mr6491292ybo.322.1242411879136; 
+	Fri, 15 May 2009 11:24:39 -0700 (PDT)
+In-Reply-To: <7vmy9etey8.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119273>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119274>
 
-Heiko Voigt <hvoigt@hvoigt.net> writes:
+On Fri, May 15, 2009 at 2:10 PM, Junio C Hamano <gitster@pobox.com> wro=
+te:
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+>> if you need a chuckle, like me, you might appreciate this story: in =
+one of
+>> my repositories, "git gc" dies with
+>>
+>> =A0 =A0 =A0 unable to open object pack directory: ...: Too many open=
+ files
+>>
+>> turns out that there are a whopping 1088 packs in that repository...
+>
+> Isn't it a more serious problem than a mere chuckle? =A0How would one
+> recover from such a situation (other than "mv .git/objects/pack-*;
+> for p in pack-*.pack; do git unpack-objects <$p; done")?
 
-> diff --git a/templates/hooks--pre-commit.sample b/templates/hooks--pre-commit.sample
-> index 0e49279..3083735 100755
-> --- a/templates/hooks--pre-commit.sample
-> +++ b/templates/hooks--pre-commit.sample
-> @@ -7,6 +7,26 @@
->  #
->  # To enable this hook, rename this file to "pre-commit".
->  
-> +# If you want to allow non-ascii filenames set this variable to true.
-> +allownonascii=$(git config hooks.allownonascii)
-> +
-> +function is_ascii () {
+I guess if you have root access, you could increase your file ulimit
+(-n) temporarily and then repack.  Of course that's not actually
+addressing the root cause of the problem.
 
-We do not say "#!/bin/bash" at the beginning (hopefully), so let's not say
-"function " here.
-
-> +    test -z "$(cat | sed -e "s/[\ -~]*//g")"
-
-Do you need "cat | "?
-
-Does this script run under LC_ALL=C?  Can an i18n'ized sed interfere with
-what you are trying to do?
-
-> +    return $?
-
-Do you need this, or does the function return the result of the last
-statment anyway?
-
-> +		echo "Non-ascii filenames are not allowed !"
-> +		echo "Please rename the file ..."
-
-Can we make this sound more like a _sample_ project policy?  It's not like
-we enforce that policy to other people's projects.
-
-> +		exit 1
-> +	fi
-> +fi
-> +
->  if git-rev-parse --verify HEAD 2>/dev/null
->  then
->  	against=HEAD
-> -- 
-> 1.6.3
+Avery
