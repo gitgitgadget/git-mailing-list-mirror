@@ -1,356 +1,1160 @@
 From: Tay Ray Chuan <rctay89@gmail.com>
-Subject: [PATCH 10/11] http*: add helper methods for fetching
- objects/info/packs
-Date: Sat, 16 May 2009 11:52:00 +0800
-Message-ID: <20090516115200.5acc21e2.rctay89@gmail.com>
+Subject: [PATCH 11/11] http*: add helper methods for fetching objects
+ (loose)
+Date: Sat, 16 May 2009 11:52:06 +0800
+Message-ID: <20090516115206.6c6a637f.rctay89@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
 To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat May 16 05:56:23 2009
+X-From: git-owner@vger.kernel.org Sat May 16 05:56:27 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M5B0W-0005js-H0
-	for gcvg-git-2@gmane.org; Sat, 16 May 2009 05:56:20 +0200
+	id 1M5B0X-0005js-46
+	for gcvg-git-2@gmane.org; Sat, 16 May 2009 05:56:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757069AbZEPDzv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 15 May 2009 23:55:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756988AbZEPDzu
-	(ORCPT <rfc822;git-outgoing>); Fri, 15 May 2009 23:55:50 -0400
-Received: from wa-out-1112.google.com ([209.85.146.177]:16840 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756778AbZEPDzt (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 15 May 2009 23:55:49 -0400
-Received: by wa-out-1112.google.com with SMTP id j5so808043wah.21
-        for <git@vger.kernel.org>; Fri, 15 May 2009 20:55:50 -0700 (PDT)
+	id S1757148AbZEPDz5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 15 May 2009 23:55:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757121AbZEPDz4
+	(ORCPT <rfc822;git-outgoing>); Fri, 15 May 2009 23:55:56 -0400
+Received: from mail-pz0-f115.google.com ([209.85.222.115]:61221 "EHLO
+	mail-pz0-f115.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756988AbZEPDzy (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 May 2009 23:55:54 -0400
+Received: by mail-pz0-f115.google.com with SMTP id 13so1344167pzk.33
+        for <git@vger.kernel.org>; Fri, 15 May 2009 20:55:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:date:from:to:subject
          :message-id:x-mailer:mime-version:content-type
          :content-transfer-encoding;
-        bh=7cxhXHG4nLArGb7Xa/LKJzDt3OpWLxQvvMH8U5MrTFA=;
-        b=xWpoVuvw35wS6eRKTEsg93D95ZHnVI8NhrZQK9kfcjaRGIqHUsJJB1dRV4hmJDazZD
-         tVPGHYLoBIPqwMFZATOtQI87gEYxR32iQMc0kmNQBn3QUbPB/0TX6PvjSLn0EHZwmHZL
-         8UvPVSRuVFtEbDHdG/gTJL1kK2ZR+0nlKcKsw=
+        bh=+sLihovCs5FxNOTeLSApJAnXr+tOGLPeIeeQel8zBm4=;
+        b=CCacSjw2ADRN0XPVBKZgv5Ij+5xobLjsOAT4tNuy6xlPWgUjRHwBLGP/JZs8AT/rh5
+         den1Bl35Q6sWRKqNVKB0TPqPZi2BLBipa2cvgAMpt8h+4+jV85yIBgcGJ4wOT6akanaj
+         SMaOCRkMQopwbGFqhvkedUgyQX7dPvY9slwR0=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=date:from:to:subject:message-id:x-mailer:mime-version:content-type
          :content-transfer-encoding;
-        b=Uvi/oZxHwiMGiGEKxrhqhFXheQVIxVpbwez1OkendejxwWzCAe/DlAgJTVOXRpTCpU
-         xkzOLIqTCgj8jfrwsWunSZgMLRJPO6JcS+A4H7yxX0lxGPYuCyrQa1VofuDxTIOBuD09
-         bmkJz/8aQx+F5iX/kuudUJSi1VjbBeLD/ZCAo=
-Received: by 10.114.133.1 with SMTP id g1mr6106042wad.162.1242446150901;
-        Fri, 15 May 2009 20:55:50 -0700 (PDT)
+        b=BmUJNfisjUCpI6e/aY8BsLZYG/881WBVl75IiSC9wFFm46J0S3XEP0anIakoRZKaRY
+         sNkbUliWvVUOqZQO2QbqZPTAu+gtz9OiS1ckC8OCl32cP4YkeW3f/RP0GoAt8hAua1Fm
+         CGsWrT3C0ER3pl3pRVIyO6C0GklVJraoUCujs=
+Received: by 10.114.167.3 with SMTP id p3mr6113104wae.142.1242446155817;
+        Fri, 15 May 2009 20:55:55 -0700 (PDT)
 Received: from your-cukc5e3z5n (cm112.zeta149.maxonline.com.sg [116.87.149.112])
-        by mx.google.com with ESMTPS id l30sm2182295waf.0.2009.05.15.20.55.49
+        by mx.google.com with ESMTPS id g25sm2168488wag.8.2009.05.15.20.55.53
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 15 May 2009 20:55:50 -0700 (PDT)
+        Fri, 15 May 2009 20:55:55 -0700 (PDT)
 X-Mailer: Sylpheed 2.6.0 (GTK+ 2.10.14; i686-pc-mingw32)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119332>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119333>
 
-The code handling the fetching of objects/info/packs in http-push.c and
+The code handling the fetching of loose objects in http-push.c and
 http-walker.c have been refactored into new methods and a new struct
-in http.c. They are not meant to be invoked elsewhere.
+(object_http_request) in http.c. They are not meant to be invoked
+elsewhere.
 
 The new methods in http.c are
- *new_http_info_packs_request
- *finish_http_info_packs_request
- *release_http_info_packs_request
+ *new_http_object_request
+ *process_http_object_request
+ *finish_http_object_request
+ *abort_http_object_request
+ *release_http_object_request
 
-and the new struct is http_info_packs_request.
+and the new struct is http_object_request.
 
-A callback function wraps the invocation of fetch_http_pack_index,
-invoked in finish_http_info_packs_request when parsing info/packs.
+RANGER_HEADER_SIZE and no_pragma_header is no longer made available
+outside of http.c, since there are no other users outside of http.c.
 
-The fetching code lives in three methods to accomodate http-walker.c's
-implementation, which involves the variable repo->got_indices.
+***http-push.c***
+Several members of the transfer_request struct have been removed,
+including filename, real_sha1 and zret, as they are used only by code
+involving the fetching of loose objects.
+
+The methods append_remote_object_url and get_remote_object_url have
+been moved to http.c. Additionally, get_remote_object_url is no longer
+defined only when USE_CURL_MULTI is on, since non-USE_CURL_MULTI code
+in http.c uses it (namely, in new_http_object_request).
+
+The logic moved out from start_fetch_loose is exactly identical to
+that in new_http_object_request.
+
+The logic moved out from finish_request is almost identical to that in
+finish_http_object_request, but behaves similarly. If the invocation
+returns 0, the rename flag is checked and the FLAG_BITS flag is set, as
+before.
+
+The closing of the file descriptor (originally local_fileno in
+transfer_request) in release_request is now done in
+finish_http_pack_request and release_http_object_request.
+
+When cleaning up, release_http_object_request is invoked separately from
+release_request.
+
+***http-walker.c***
+Several members of the transfer_request struct have been removed,
+including filename, real_sha1 and zret, as they are used only by code
+involving the fetching of loose objects.
+
+The logic moved out from start_object_fetch_request is exactly
+identical to that in new_http_object_request.
+
+The logic moved out from finish_object_request is exactly identical to
+that in finish_http_object_request.
+
+The logic moved out from process_object_request is exactly identical to
+that in process_http_object_request. Although finish_object_request
+invokes process_object_request internally later on, its invocation by
+process_object_response (to check if fetching alternates is needed) is
+safe.
+
+abort_object_request no longer closes the file descriptor and release
+the slot. This is done by abort_http_object_request, invoked separately.
 
 Signed-off-by: Tay Ray Chuan <rctay89@gmail.com>
 ---
- http-push.c   |   59 +++++++++++++++----------------------------------------
- http-walker.c |   59 ++++++++++++++++++------------------------------------
- http.c        |   61 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++
- http.h        |   18 ++++++++++++++++
- 4 files changed, 115 insertions(+), 82 deletions(-)
+ http-push.c   |  212 +++------------------------------------------
+ http-walker.c |  266 +++++++++------------------------------------------------
+ http.c        |  250 +++++++++++++++++++++++++++++++++++++++++++++++++++++-
+ http.h        |   37 +++++++-
+ 4 files changed, 336 insertions(+), 429 deletions(-)
 
 diff --git a/http-push.c b/http-push.c
-index ffd484f..2330802 100644
+index 2330802..aa48ccc 100644
 --- a/http-push.c
 +++ b/http-push.c
-@@ -890,67 +890,40 @@ static int add_send_request(struct object *obj, struct remote_lock *lock)
- 	return 1;
+@@ -115,18 +115,10 @@ struct transfer_request
+ 	struct remote_lock *lock;
+ 	struct curl_slist *headers;
+ 	struct buffer buffer;
+-	char filename[PATH_MAX];
+-	char tmpfile[PATH_MAX];
+-	int local_fileno;
+ 	enum transfer_state state;
+ 	CURLcode curl_result;
+ 	char errorstr[CURL_ERROR_SIZE];
+ 	long http_code;
+-	unsigned char real_sha1[20];
+-	git_SHA_CTX c;
+-	z_stream stream;
+-	int zret;
+-	int rename;
+ 	void *userData;
+ 	struct active_request_slot *slot;
+ 	struct transfer_request *next;
+@@ -232,15 +224,6 @@ static struct curl_slist *get_dav_token_headers(struct remote_lock *lock, enum d
+ 	return dav_headers;
  }
  
--static int fetch_indices(void)
-+static void fetch_indices_request_callback(unsigned char *sha1,
-+	void *callback_data)
+-static void append_remote_object_url(struct strbuf *buf, const char *url,
+-				     const char *hex,
+-				     int only_two_digit_prefix)
+-{
+-	strbuf_addf(buf, "%sobjects/%.*s/", url, 2, hex);
+-	if (!only_two_digit_prefix)
+-		strbuf_addf(buf, "%s", hex+2);
+-}
+-
+ static void finish_request(struct transfer_request *request);
+ static void release_request(struct transfer_request *request);
+ 
+@@ -254,169 +237,29 @@ static void process_response(void *callback_data)
+ 
+ #ifdef USE_CURL_MULTI
+ 
+-static char *get_remote_object_url(const char *url, const char *hex,
+-				   int only_two_digit_prefix)
+-{
+-	struct strbuf buf = STRBUF_INIT;
+-	append_remote_object_url(&buf, url, hex, only_two_digit_prefix);
+-	return strbuf_detach(&buf, NULL);
+-}
+-
+-static size_t fwrite_sha1_file(void *ptr, size_t eltsize, size_t nmemb,
+-			       void *data)
+-{
+-	unsigned char expn[4096];
+-	size_t size = eltsize * nmemb;
+-	int posn = 0;
+-	struct transfer_request *request = (struct transfer_request *)data;
+-	do {
+-		ssize_t retval = xwrite(request->local_fileno,
+-					(char *) ptr + posn, size - posn);
+-		if (retval < 0)
+-			return posn;
+-		posn += retval;
+-	} while (posn < size);
+-
+-	request->stream.avail_in = size;
+-	request->stream.next_in = ptr;
+-	do {
+-		request->stream.next_out = expn;
+-		request->stream.avail_out = sizeof(expn);
+-		request->zret = git_inflate(&request->stream, Z_SYNC_FLUSH);
+-		git_SHA1_Update(&request->c, expn,
+-				sizeof(expn) - request->stream.avail_out);
+-	} while (request->stream.avail_in && request->zret == Z_OK);
+-	data_received++;
+-	return size;
+-}
+-
+ static void start_fetch_loose(struct transfer_request *request)
  {
--	unsigned char sha1[20];
+-	char *hex = sha1_to_hex(request->obj->sha1);
+-	char *filename;
+-	char prevfile[PATH_MAX];
 -	char *url;
--	struct strbuf buffer = STRBUF_INIT;
--	char *data;
--	int i = 0;
-+	fetch_http_pack_index(&repo->packs, sha1, repo->url);
-+}
+-	int prevlocal;
+-	unsigned char prev_buf[PREV_BUF_SIZE];
+-	ssize_t prev_read = 0;
+-	long prev_posn = 0;
+-	char range[RANGE_HEADER_SIZE];
+-	struct curl_slist *range_header = NULL;
+ 	struct active_request_slot *slot;
++	struct http_object_request *obj_req;
  
--	struct active_request_slot *slot;
-+static int fetch_indices(void)
-+{
- 	struct slot_results results;
-+	struct http_info_packs_request *req;
- 
- 	if (push_verbosely)
- 		fprintf(stderr, "Getting pack list\n");
- 
--	url = xmalloc(strlen(repo->url) + 20);
--	sprintf(url, "%sobjects/info/packs", repo->url);
-+	req = new_http_info_packs_request(repo->url);
-+	req->slot->results = &results;
-+	req->callback_func = fetch_indices_request_callback;
- 
--	slot = get_active_slot();
--	slot->results = &results;
--	curl_easy_setopt(slot->curl, CURLOPT_FILE, &buffer);
--	curl_easy_setopt(slot->curl, CURLOPT_WRITEFUNCTION, fwrite_buffer);
--	curl_easy_setopt(slot->curl, CURLOPT_URL, url);
--	curl_easy_setopt(slot->curl, CURLOPT_HTTPHEADER, NULL);
--	if (start_active_slot(slot)) {
--		run_active_slot(slot);
-+	if (start_active_slot(req->slot)) {
-+		run_active_slot(req->slot);
- 		if (results.curl_result != CURLE_OK) {
--			strbuf_release(&buffer);
--			free(url);
-+			release_http_info_packs_request(req);
- 			if (results.http_code == 404)
- 				return 0;
- 			else
- 				return error("%s", curl_errorstr);
- 		}
- 	} else {
--		strbuf_release(&buffer);
--		free(url);
-+		release_http_info_packs_request(req);
- 		return error("Unable to start request");
- 	}
--	free(url);
- 
--	data = buffer.buf;
--	while (i < buffer.len) {
--		switch (data[i]) {
--		case 'P':
--			i++;
--			if (i + 52 < buffer.len &&
--			    !prefixcmp(data + i, " pack-") &&
--			    !prefixcmp(data + i + 46, ".pack\n")) {
--				get_sha1_hex(data + i + 6, sha1);
--				fetch_http_pack_index(&repo->packs, sha1, repo->url);
--				i += 51;
--				break;
--			}
--		default:
--			while (data[i] != '\n')
--				i++;
+-	filename = sha1_file_name(request->obj->sha1);
+-	snprintf(request->filename, sizeof(request->filename), "%s", filename);
+-	snprintf(request->tmpfile, sizeof(request->tmpfile),
+-		 "%s.temp", filename);
+-
+-	snprintf(prevfile, sizeof(prevfile), "%s.prev", request->filename);
+-	unlink(prevfile);
+-	rename(request->tmpfile, prevfile);
+-	unlink(request->tmpfile);
+-
+-	if (request->local_fileno != -1)
+-		error("fd leakage in start: %d", request->local_fileno);
+-	request->local_fileno = open(request->tmpfile,
+-				     O_WRONLY | O_CREAT | O_EXCL, 0666);
+-	/*
+-	 * This could have failed due to the "lazy directory creation";
+-	 * try to mkdir the last path component.
+-	 */
+-	if (request->local_fileno < 0 && errno == ENOENT) {
+-		char *dir = strrchr(request->tmpfile, '/');
+-		if (dir) {
+-			*dir = 0;
+-			mkdir(request->tmpfile, 0777);
+-			*dir = '/';
 -		}
--		i++;
+-		request->local_fileno = open(request->tmpfile,
+-					     O_WRONLY | O_CREAT | O_EXCL, 0666);
 -	}
-+	finish_http_info_packs_request(req);
+-
+-	if (request->local_fileno < 0) {
++	obj_req = new_http_object_request(repo->url, request->obj->sha1);
++	if (obj_req == NULL) {
+ 		request->state = ABORTED;
+-		error("Couldn't create temporary file %s for %s: %s",
+-		      request->tmpfile, request->filename, strerror(errno));
+ 		return;
+ 	}
  
--	strbuf_release(&buffer);
- 	return 0;
+-	memset(&request->stream, 0, sizeof(request->stream));
+-
+-	git_inflate_init(&request->stream);
+-
+-	git_SHA1_Init(&request->c);
+-
+-	url = get_remote_object_url(repo->url, hex, 0);
+-	request->url = xstrdup(url);
+-
+-	/*
+-	 * If a previous temp file is present, process what was already
+-	 * fetched.
+-	 */
+-	prevlocal = open(prevfile, O_RDONLY);
+-	if (prevlocal != -1) {
+-		do {
+-			prev_read = xread(prevlocal, prev_buf, PREV_BUF_SIZE);
+-			if (prev_read>0) {
+-				if (fwrite_sha1_file(prev_buf,
+-						     1,
+-						     prev_read,
+-						     request) == prev_read)
+-					prev_posn += prev_read;
+-				else
+-					prev_read = -1;
+-			}
+-		} while (prev_read > 0);
+-		close(prevlocal);
+-	}
+-	unlink(prevfile);
+-
+-	/*
+-	 * Reset inflate/SHA1 if there was an error reading the previous temp
+-	 * file; also rewind to the beginning of the local file.
+-	 */
+-	if (prev_read == -1) {
+-		memset(&request->stream, 0, sizeof(request->stream));
+-		git_inflate_init(&request->stream);
+-		git_SHA1_Init(&request->c);
+-		if (prev_posn>0) {
+-			prev_posn = 0;
+-			lseek(request->local_fileno, 0, SEEK_SET);
+-			ftruncate(request->local_fileno, 0);
+-		}
+-	}
+-
+-	slot = get_active_slot();
++	slot = obj_req->slot;
+ 	slot->callback_func = process_response;
+ 	slot->callback_data = request;
+ 	request->slot = slot;
+-
+-	curl_easy_setopt(slot->curl, CURLOPT_FILE, request);
+-	curl_easy_setopt(slot->curl, CURLOPT_WRITEFUNCTION, fwrite_sha1_file);
+-	curl_easy_setopt(slot->curl, CURLOPT_ERRORBUFFER, request->errorstr);
+-	curl_easy_setopt(slot->curl, CURLOPT_URL, url);
+-	curl_easy_setopt(slot->curl, CURLOPT_HTTPHEADER, no_pragma_header);
+-
+-	/*
+-	 * If we have successfully processed data from a previous fetch
+-	 * attempt, only fetch the data we don't already have.
+-	 */
+-	if (prev_posn>0) {
+-		if (push_verbosely)
+-			fprintf(stderr,
+-				"Resuming fetch of object %s at byte %ld\n",
+-				hex, prev_posn);
+-		sprintf(range, "Range: bytes=%ld-", prev_posn);
+-		range_header = curl_slist_append(range_header, range);
+-		curl_easy_setopt(slot->curl,
+-				 CURLOPT_HTTPHEADER, range_header);
+-	}
++	request->userData = obj_req;
+ 
+ 	/* Try to get the request started, abort the request on error */
+ 	request->state = RUN_FETCH_LOOSE;
+ 	if (!start_active_slot(slot)) {
+ 		fprintf(stderr, "Unable to start GET request\n");
+ 		repo->can_update_info_refs = 0;
++		release_http_object_request(obj_req);
+ 		release_request(request);
+ 	}
  }
+@@ -675,8 +518,6 @@ static void release_request(struct transfer_request *request)
+ 			entry->next = entry->next->next;
+ 	}
  
+-	if (request->local_fileno != -1)
+-		close(request->local_fileno);
+ 	free(request->url);
+ 	free(request);
+ }
+@@ -685,6 +526,7 @@ static void finish_request(struct transfer_request *request)
+ {
+ 	struct stat st;
+ 	struct http_pack_request *preq;
++	struct http_object_request *obj_req;
+ 
+ 	request->curl_result = request->slot->curl_result;
+ 	request->http_code = request->slot->http_code;
+@@ -739,39 +581,17 @@ static void finish_request(struct transfer_request *request)
+ 			aborted = 1;
+ 		}
+ 	} else if (request->state == RUN_FETCH_LOOSE) {
+-		close(request->local_fileno);
+-		request->local_fileno = -1;
+-
+-		if (request->curl_result != CURLE_OK &&
+-		    request->http_code != 416) {
+-			if (stat(request->tmpfile, &st) == 0) {
+-				if (st.st_size == 0)
+-					unlink(request->tmpfile);
+-			}
+-		} else {
+-			if (request->http_code == 416)
+-				warning("requested range invalid; we may already have all the data.");
+-
+-			git_inflate_end(&request->stream);
+-			git_SHA1_Final(request->real_sha1, &request->c);
+-			if (request->zret != Z_STREAM_END) {
+-				unlink(request->tmpfile);
+-			} else if (hashcmp(request->obj->sha1, request->real_sha1)) {
+-				unlink(request->tmpfile);
+-			} else {
+-				request->rename =
+-					move_temp_to_file(
+-						request->tmpfile,
+-						request->filename);
+-				if (request->rename == 0)
+-					request->obj->flags |= (LOCAL | REMOTE);
+-			}
+-		}
++		obj_req = (struct http_object_request *)request->userData;
++
++		if (finish_http_object_request(obj_req) == 0)
++			if (obj_req->rename == 0)
++				request->obj->flags |= (LOCAL | REMOTE);
+ 
+ 		/* Try fetching packed if necessary */
+-		if (request->obj->flags & LOCAL)
++		if (request->obj->flags & LOCAL) {
++			release_http_object_request(obj_req);
+ 			release_request(request);
+-		else
++		} else
+ 			start_fetch_packed(request);
+ 
+ 	} else if (request->state == RUN_FETCH_PACKED) {
+@@ -838,7 +658,6 @@ static void add_fetch_request(struct object *obj)
+ 	request->url = NULL;
+ 	request->lock = NULL;
+ 	request->headers = NULL;
+-	request->local_fileno = -1;
+ 	request->state = NEED_FETCH;
+ 	request->next = request_queue_head;
+ 	request_queue_head = request;
+@@ -877,7 +696,6 @@ static int add_send_request(struct object *obj, struct remote_lock *lock)
+ 	request->url = NULL;
+ 	request->lock = lock;
+ 	request->headers = NULL;
+-	request->local_fileno = -1;
+ 	request->state = NEED_PUSH;
+ 	request->next = request_queue_head;
+ 	request_queue_head = request;
 diff --git a/http-walker.c b/http-walker.c
-index ae140ba..aae490c 100644
+index aae490c..256c701 100644
 --- a/http-walker.c
 +++ b/http-walker.c
-@@ -563,17 +563,19 @@ static void fetch_alternates(struct walker *walker, const char *base)
- 	free(url);
- }
+@@ -3,8 +3,6 @@
+ #include "walker.h"
+ #include "http.h"
  
-+static void fetch_indices_request_callback(unsigned char *sha1,
-+	void *callback_data)
-+{
-+	struct alt_base *repo =
-+		(struct alt_base *)callback_data;
-+	fetch_http_pack_index(&repo->packs, sha1, repo->base);
-+}
-+
- static int fetch_indices(struct walker *walker, struct alt_base *repo)
- {
--	unsigned char sha1[20];
--	char *url;
--	struct strbuf buffer = STRBUF_INIT;
--	char *data;
--	int i = 0;
- 	int ret = 0;
+-#define PREV_BUF_SIZE 4096
 -
+ struct alt_base
+ {
+ 	char *base;
+@@ -25,20 +23,8 @@ struct object_request
+ 	struct walker *walker;
+ 	unsigned char sha1[20];
+ 	struct alt_base *repo;
+-	char *url;
+-	char filename[PATH_MAX];
+-	char tmpfile[PATH_MAX];
+-	int local;
+ 	enum object_request_state state;
+-	CURLcode curl_result;
+-	char errorstr[CURL_ERROR_SIZE];
+-	long http_code;
+-	unsigned char real_sha1[20];
+-	git_SHA_CTX c;
+-	z_stream stream;
+-	int zret;
+-	int rename;
 -	struct active_request_slot *slot;
- 	struct slot_results results;
-+	struct http_info_packs_request *req;
++	struct http_object_request *req;
+ 	struct object_request *next;
+ };
  
- 	if (repo->got_indices)
- 		return 0;
-@@ -581,17 +583,14 @@ static int fetch_indices(struct walker *walker, struct alt_base *repo)
- 	if (walker->get_verbosely)
- 		fprintf(stderr, "Getting pack list for %s\n", repo->base);
+@@ -59,34 +45,6 @@ struct walker_data {
  
--	url = xmalloc(strlen(repo->base) + 21);
--	sprintf(url, "%s/objects/info/packs", repo->base);
-+	req = new_http_info_packs_request(repo->base);
-+	req->slot->results = &results;
+ static struct object_request *object_queue_head;
  
--	slot = get_active_slot();
--	slot->results = &results;
--	curl_easy_setopt(slot->curl, CURLOPT_FILE, &buffer);
--	curl_easy_setopt(slot->curl, CURLOPT_WRITEFUNCTION, fwrite_buffer);
--	curl_easy_setopt(slot->curl, CURLOPT_URL, url);
--	curl_easy_setopt(slot->curl, CURLOPT_HTTPHEADER, NULL);
--	if (start_active_slot(slot)) {
--		run_active_slot(slot);
-+	req->callback_data = (void *)repo;
-+	req->callback_func = fetch_indices_request_callback;
-+
-+	if (start_active_slot(req->slot)) {
-+		run_active_slot(req->slot);
- 		if (results.curl_result != CURLE_OK) {
- 			if (missing_target(&results)) {
- 				repo->got_indices = 1;
-@@ -608,30 +607,12 @@ static int fetch_indices(struct walker *walker, struct alt_base *repo)
- 		goto cleanup;
- 	}
+-static size_t fwrite_sha1_file(void *ptr, size_t eltsize, size_t nmemb,
+-			       void *data)
+-{
+-	unsigned char expn[4096];
+-	size_t size = eltsize * nmemb;
+-	int posn = 0;
+-	struct object_request *obj_req = (struct object_request *)data;
+-	do {
+-		ssize_t retval = xwrite(obj_req->local,
+-					(char *) ptr + posn, size - posn);
+-		if (retval < 0)
+-			return posn;
+-		posn += retval;
+-	} while (posn < size);
+-
+-	obj_req->stream.avail_in = size;
+-	obj_req->stream.next_in = ptr;
+-	do {
+-		obj_req->stream.next_out = expn;
+-		obj_req->stream.avail_out = sizeof(expn);
+-		obj_req->zret = git_inflate(&obj_req->stream, Z_SYNC_FLUSH);
+-		git_SHA1_Update(&obj_req->c, expn,
+-				sizeof(expn) - obj_req->stream.avail_out);
+-	} while (obj_req->stream.avail_in && obj_req->zret == Z_OK);
+-	data_received++;
+-	return size;
+-}
+-
+ static void fetch_alternates(struct walker *walker, const char *base);
  
--	data = buffer.buf;
--	while (i < buffer.len) {
--		switch (data[i]) {
--		case 'P':
--			i++;
--			if (i + 52 <= buffer.len &&
--			    !prefixcmp(data + i, " pack-") &&
--			    !prefixcmp(data + i + 46, ".pack\n")) {
--				get_sha1_hex(data + i + 6, sha1);
--				fetch_http_pack_index(&repo->packs, sha1, repo->base);
--				i += 51;
--				break;
--			}
--		default:
--			while (i < buffer.len && data[i] != '\n')
--				i++;
+ static void process_object_response(void *callback_data);
+@@ -94,172 +52,35 @@ static void process_object_response(void *callback_data);
+ static void start_object_request(struct walker *walker,
+ 				 struct object_request *obj_req)
+ {
+-	char *hex = sha1_to_hex(obj_req->sha1);
+-	char prevfile[PATH_MAX];
+-	char *url;
+-	char *posn;
+-	int prevlocal;
+-	unsigned char prev_buf[PREV_BUF_SIZE];
+-	ssize_t prev_read = 0;
+-	long prev_posn = 0;
+-	char range[RANGE_HEADER_SIZE];
+-	struct curl_slist *range_header = NULL;
+ 	struct active_request_slot *slot;
++	struct http_object_request *req;
+ 
+-	snprintf(prevfile, sizeof(prevfile), "%s.prev", obj_req->filename);
+-	unlink(prevfile);
+-	rename(obj_req->tmpfile, prevfile);
+-	unlink(obj_req->tmpfile);
+-
+-	if (obj_req->local != -1)
+-		error("fd leakage in start: %d", obj_req->local);
+-	obj_req->local = open(obj_req->tmpfile,
+-			      O_WRONLY | O_CREAT | O_EXCL, 0666);
+-	/*
+-	 * This could have failed due to the "lazy directory creation";
+-	 * try to mkdir the last path component.
+-	 */
+-	if (obj_req->local < 0 && errno == ENOENT) {
+-		char *dir = strrchr(obj_req->tmpfile, '/');
+-		if (dir) {
+-			*dir = 0;
+-			mkdir(obj_req->tmpfile, 0777);
+-			*dir = '/';
 -		}
--		i++;
+-		obj_req->local = open(obj_req->tmpfile,
+-				      O_WRONLY | O_CREAT | O_EXCL, 0666);
 -	}
 -
-+	finish_http_info_packs_request(req);
- 	repo->got_indices = 1;
-+	return 0;
+-	if (obj_req->local < 0) {
++	req = new_http_object_request(obj_req->repo->base, obj_req->sha1);
++	if (req == NULL) {
+ 		obj_req->state = ABORTED;
+-		error("Couldn't create temporary file %s for %s: %s",
+-		      obj_req->tmpfile, obj_req->filename, strerror(errno));
+ 		return;
+ 	}
++	obj_req->req = req;
+ 
+-	memset(&obj_req->stream, 0, sizeof(obj_req->stream));
+-
+-	git_inflate_init(&obj_req->stream);
+-
+-	git_SHA1_Init(&obj_req->c);
+-
+-	url = xmalloc(strlen(obj_req->repo->base) + 51);
+-	obj_req->url = xmalloc(strlen(obj_req->repo->base) + 51);
+-	strcpy(url, obj_req->repo->base);
+-	posn = url + strlen(obj_req->repo->base);
+-	strcpy(posn, "/objects/");
+-	posn += 9;
+-	memcpy(posn, hex, 2);
+-	posn += 2;
+-	*(posn++) = '/';
+-	strcpy(posn, hex + 2);
+-	strcpy(obj_req->url, url);
+-
+-	/*
+-	 * If a previous temp file is present, process what was already
+-	 * fetched.
+-	 */
+-	prevlocal = open(prevfile, O_RDONLY);
+-	if (prevlocal != -1) {
+-		do {
+-			prev_read = xread(prevlocal, prev_buf, PREV_BUF_SIZE);
+-			if (prev_read>0) {
+-				if (fwrite_sha1_file(prev_buf,
+-						     1,
+-						     prev_read,
+-						     obj_req) == prev_read)
+-					prev_posn += prev_read;
+-				else
+-					prev_read = -1;
+-			}
+-		} while (prev_read > 0);
+-		close(prevlocal);
+-	}
+-	unlink(prevfile);
+-
+-	/*
+-	 * Reset inflate/SHA1 if there was an error reading the previous temp
+-	 * file; also rewind to the beginning of the local file.
+-	 */
+-	if (prev_read == -1) {
+-		memset(&obj_req->stream, 0, sizeof(obj_req->stream));
+-		git_inflate_init(&obj_req->stream);
+-		git_SHA1_Init(&obj_req->c);
+-		if (prev_posn>0) {
+-			prev_posn = 0;
+-			lseek(obj_req->local, 0, SEEK_SET);
+-			ftruncate(obj_req->local, 0);
+-		}
+-	}
+-
+-	slot = get_active_slot();
++	slot = req->slot;
+ 	slot->callback_func = process_object_response;
+ 	slot->callback_data = obj_req;
+-	obj_req->slot = slot;
+-
+-	curl_easy_setopt(slot->curl, CURLOPT_FILE, obj_req);
+-	curl_easy_setopt(slot->curl, CURLOPT_WRITEFUNCTION, fwrite_sha1_file);
+-	curl_easy_setopt(slot->curl, CURLOPT_ERRORBUFFER, obj_req->errorstr);
+-	curl_easy_setopt(slot->curl, CURLOPT_URL, url);
+-	curl_easy_setopt(slot->curl, CURLOPT_HTTPHEADER, no_pragma_header);
+-
+-	/*
+-	 * If we have successfully processed data from a previous fetch
+-	 * attempt, only fetch the data we don't already have.
+-	 */
+-	if (prev_posn>0) {
+-		if (walker->get_verbosely)
+-			fprintf(stderr,
+-				"Resuming fetch of object %s at byte %ld\n",
+-				hex, prev_posn);
+-		sprintf(range, "Range: bytes=%ld-", prev_posn);
+-		range_header = curl_slist_append(range_header, range);
+-		curl_easy_setopt(slot->curl,
+-				 CURLOPT_HTTPHEADER, range_header);
+-	}
+ 
+ 	/* Try to get the request started, abort the request on error */
+ 	obj_req->state = ACTIVE;
+ 	if (!start_active_slot(slot)) {
+ 		obj_req->state = ABORTED;
+-		obj_req->slot = NULL;
+-		close(obj_req->local);
+-		obj_req->local = -1;
+-		free(obj_req->url);
++		release_http_object_request(req);
+ 		return;
+ 	}
+ }
+ 
+ static void finish_object_request(struct object_request *obj_req)
+ {
+-	struct stat st;
+-
+-	close(obj_req->local);
+-	obj_req->local = -1;
+-
+-	if (obj_req->http_code == 416) {
+-		fprintf(stderr, "Warning: requested range invalid; we may already have all the data.\n");
+-	} else if (obj_req->curl_result != CURLE_OK) {
+-		if (stat(obj_req->tmpfile, &st) == 0)
+-			if (st.st_size == 0)
+-				unlink(obj_req->tmpfile);
++	if (finish_http_object_request(obj_req->req))
+ 		return;
+-	}
+-
+-	git_inflate_end(&obj_req->stream);
+-	git_SHA1_Final(obj_req->real_sha1, &obj_req->c);
+-	if (obj_req->zret != Z_STREAM_END) {
+-		unlink(obj_req->tmpfile);
+-		return;
+-	}
+-	if (hashcmp(obj_req->sha1, obj_req->real_sha1)) {
+-		unlink(obj_req->tmpfile);
+-		return;
+-	}
+-	obj_req->rename =
+-		move_temp_to_file(obj_req->tmpfile, obj_req->filename);
+ 
+-	if (obj_req->rename == 0)
++	if (obj_req->req->rename == 0)
+ 		walker_say(obj_req->walker, "got %s\n", sha1_to_hex(obj_req->sha1));
+ }
+ 
+@@ -271,19 +92,16 @@ static void process_object_response(void *callback_data)
+ 	struct walker_data *data = walker->data;
+ 	struct alt_base *alt = data->alt;
+ 
+-	obj_req->curl_result = obj_req->slot->curl_result;
+-	obj_req->http_code = obj_req->slot->http_code;
+-	obj_req->slot = NULL;
++	process_http_object_request(obj_req->req);
+ 	obj_req->state = COMPLETE;
+ 
+ 	/* Use alternates if necessary */
+-	if (missing_target(obj_req)) {
++	if (missing_target(obj_req->req)) {
+ 		fetch_alternates(walker, alt->base);
+ 		if (obj_req->repo->next != NULL) {
+ 			obj_req->repo =
+ 				obj_req->repo->next;
+-			close(obj_req->local);
+-			obj_req->local = -1;
++			release_http_object_request(obj_req->req);
+ 			start_object_request(walker, obj_req);
+ 			return;
+ 		}
+@@ -296,8 +114,8 @@ static void release_object_request(struct object_request *obj_req)
+ {
+ 	struct object_request *entry = object_queue_head;
+ 
+-	if (obj_req->local != -1)
+-		error("fd leakage in release: %d", obj_req->local);
++	if (obj_req->req !=NULL && obj_req->req->localfile != -1)
++		error("fd leakage in release: %d", obj_req->req->localfile);
+ 	if (obj_req == object_queue_head) {
+ 		object_queue_head = obj_req->next;
+ 	} else {
+@@ -307,7 +125,6 @@ static void release_object_request(struct object_request *obj_req)
+ 			entry->next = entry->next->next;
+ 	}
+ 
+-	free(obj_req->url);
+ 	free(obj_req);
+ }
+ 
+@@ -341,13 +158,8 @@ static void prefetch(struct walker *walker, unsigned char *sha1)
+ 	newreq->walker = walker;
+ 	hashcpy(newreq->sha1, sha1);
+ 	newreq->repo = data->alt;
+-	newreq->url = NULL;
+-	newreq->local = -1;
+ 	newreq->state = WAITING;
+-	snprintf(newreq->filename, sizeof(newreq->filename), "%s", filename);
+-	snprintf(newreq->tmpfile, sizeof(newreq->tmpfile),
+-		 "%s.temp", filename);
+-	newreq->slot = NULL;
++	newreq->req = NULL;
+ 	newreq->next = NULL;
+ 
+ 	http_is_verbose = walker->get_verbosely;
+@@ -667,15 +479,6 @@ abort:
+ 
+ static void abort_object_request(struct object_request *obj_req)
+ {
+-	if (obj_req->local >= 0) {
+-		close(obj_req->local);
+-		obj_req->local = -1;
+-	}
+-	unlink(obj_req->tmpfile);
+-	if (obj_req->slot) {
+-		release_active_slot(obj_req->slot);
+-		obj_req->slot = NULL;
+-	}
+ 	release_object_request(obj_req);
+ }
+ 
+@@ -684,6 +487,7 @@ static int fetch_object(struct walker *walker, struct alt_base *repo, unsigned c
+ 	char *hex = sha1_to_hex(sha1);
+ 	int ret = 0;
+ 	struct object_request *obj_req = object_queue_head;
++	struct http_object_request *req;
+ 
+ 	while (obj_req != NULL && hashcmp(obj_req->sha1, sha1))
+ 		obj_req = obj_req->next;
+@@ -691,6 +495,8 @@ static int fetch_object(struct walker *walker, struct alt_base *repo, unsigned c
+ 		return error("Couldn't find request for %s in the queue", hex);
+ 
+ 	if (has_sha1_file(obj_req->sha1)) {
++		if (obj_req->req != NULL)
++			abort_http_object_request(obj_req->req);
+ 		abort_object_request(obj_req);
+ 		return 0;
+ 	}
+@@ -702,34 +508,42 @@ static int fetch_object(struct walker *walker, struct alt_base *repo, unsigned c
+ 	start_object_request(walker, obj_req);
+ #endif
+ 
++	/*
++	 * obj_req->req might change when fetching alternates in the callback
++	 * process_object_response; therefore, the "shortcut" variable, req,
++	 * is used only after we're done with slots.
++	 */
+ 	while (obj_req->state == ACTIVE)
+-		run_active_slot(obj_req->slot);
++		run_active_slot(obj_req->req->slot);
 +
- cleanup:
--	strbuf_release(&buffer);
--	free(url);
-+	release_http_info_packs_request(req);
++	req = obj_req->req;
+ 
+-	if (obj_req->local != -1) {
+-		close(obj_req->local);
+-		obj_req->local = -1;
++	if (req->localfile != -1) {
++		close(req->localfile);
++		req->localfile = -1;
+ 	}
+ 
+ 	if (obj_req->state == ABORTED) {
+ 		ret = error("Request for %s aborted", hex);
+-	} else if (obj_req->curl_result != CURLE_OK &&
+-		   obj_req->http_code != 416) {
+-		if (missing_target(obj_req))
++	} else if (req->curl_result != CURLE_OK &&
++		   req->http_code != 416) {
++		if (missing_target(req))
+ 			ret = -1; /* Be silent, it is probably in a pack. */
+ 		else
+ 			ret = error("%s (curl_result = %d, http_code = %ld, sha1 = %s)",
+-				    obj_req->errorstr, obj_req->curl_result,
+-				    obj_req->http_code, hex);
+-	} else if (obj_req->zret != Z_STREAM_END) {
++				    req->errorstr, req->curl_result,
++				    req->http_code, hex);
++	} else if (req->zret != Z_STREAM_END) {
+ 		walker->corrupt_object_found++;
+-		ret = error("File %s (%s) corrupt", hex, obj_req->url);
+-	} else if (hashcmp(obj_req->sha1, obj_req->real_sha1)) {
++		ret = error("File %s (%s) corrupt", hex, req->url);
++	} else if (hashcmp(obj_req->sha1, req->real_sha1)) {
+ 		ret = error("File %s has bad hash", hex);
+-	} else if (obj_req->rename < 0) {
++	} else if (req->rename < 0) {
+ 		ret = error("unable to write sha1 filename %s",
+-			    obj_req->filename);
++			    req->filename);
+ 	}
+ 
++	release_http_object_request(req);
+ 	release_object_request(obj_req);
  	return ret;
  }
- 
 diff --git a/http.c b/http.c
-index b11c082..37d72f8 100644
+index 37d72f8..5923330 100644
 --- a/http.c
 +++ b/http.c
-@@ -929,3 +929,64 @@ abort:
- 	free(filename);
- 	return NULL;
+@@ -12,6 +12,10 @@ static CURLM *curlm;
+ #ifndef NO_CURL_EASY_DUPHANDLE
+ static CURL *curl_default;
+ #endif
++
++#define PREV_BUF_SIZE 4096
++#define RANGE_HEADER_SIZE 30
++
+ char curl_errorstr[CURL_ERROR_SIZE];
+ 
+ static int curl_ssl_verify = -1;
+@@ -30,8 +34,7 @@ static const char *curl_http_proxy;
+ static char *user_name, *user_pass;
+ 
+ static struct curl_slist *pragma_header;
+-
+-struct curl_slist *no_pragma_header;
++static struct curl_slist *no_pragma_header;
+ 
+ static struct active_request_slot *active_queue_head;
+ 
+@@ -666,6 +669,23 @@ static char *quote_ref_url(const char *base, const char *ref)
+ 	return strbuf_detach(&buf, NULL);
+ }
+ 
++void append_remote_object_url(struct strbuf *buf, const char *url,
++			      const char *hex,
++			      int only_two_digit_prefix)
++{
++	strbuf_addf(buf, "%s/objects/%.*s/", url, 2, hex);
++	if (!only_two_digit_prefix)
++		strbuf_addf(buf, "%s", hex+2);
++}
++
++char *get_remote_object_url(const char *url, const char *hex,
++			    int only_two_digit_prefix)
++{
++	struct strbuf buf = STRBUF_INIT;
++	append_remote_object_url(&buf, url, hex, only_two_digit_prefix);
++	return strbuf_detach(&buf, NULL);
++}
++
+ int http_fetch_ref(const char *base, struct ref *ref)
+ {
+ 	char *url;
+@@ -990,3 +1010,229 @@ struct http_info_packs_request *new_http_info_packs_request(const char *base_url
+ 
+ 	return req;
  }
 +
-+/* Helpers for fetching objects/info/packs */
-+void release_http_info_packs_request(struct http_info_packs_request *req)
++/* Helpers for fetching object */
++static size_t fwrite_sha1_file(void *ptr, size_t eltsize, size_t nmemb,
++			       void *data)
 +{
-+	strbuf_release(req->buffer);
-+	free(req->url);
++	unsigned char expn[4096];
++	size_t size = eltsize * nmemb;
++	int posn = 0;
++	struct http_object_request *freq =
++		(struct http_object_request *)data;
++	do {
++		ssize_t retval = xwrite(freq->localfile,
++					(char *) ptr + posn, size - posn);
++		if (retval < 0)
++			return posn;
++		posn += retval;
++	} while (posn < size);
++
++	freq->stream.avail_in = size;
++	freq->stream.next_in = ptr;
++	do {
++		freq->stream.next_out = expn;
++		freq->stream.avail_out = sizeof(expn);
++		freq->zret = git_inflate(&freq->stream, Z_SYNC_FLUSH);
++		git_SHA1_Update(&freq->c, expn,
++				sizeof(expn) - freq->stream.avail_out);
++	} while (freq->stream.avail_in && freq->zret == Z_OK);
++	data_received++;
++	return size;
 +}
 +
-+void finish_http_info_packs_request(struct http_info_packs_request *req)
++struct http_object_request *new_http_object_request(const char *base_url,
++	unsigned char *sha1)
 +{
-+	char *data;
-+	int i = 0;
-+	unsigned char sha1[20];
++	char *hex = sha1_to_hex(sha1);
++	char *filename;
++	char prevfile[PATH_MAX];
++	char *url;
++	int prevlocal;
++	unsigned char prev_buf[PREV_BUF_SIZE];
++	ssize_t prev_read = 0;
++	long prev_posn = 0;
++	char range[RANGE_HEADER_SIZE];
++	struct curl_slist *range_header = NULL;
++	struct http_object_request *freq;
 +
-+	data = req->buffer->buf;
-+	while (i < req->buffer->len) {
-+		switch (data[i]) {
-+		case 'P':
-+			i++;
-+			if (i + 52 <= req->buffer->len &&
-+			    !prefixcmp(data + i, " pack-") &&
-+			    !prefixcmp(data + i + 46, ".pack\n")) {
-+				get_sha1_hex(data + i + 6, sha1);
-+				req->callback_func(sha1, req->callback_data);
-+				i += 51;
-+				break;
-+			}
-+		default:
-+			while (i < req->buffer->len && data[i] != '\n')
-+				i++;
++	freq = xmalloc(sizeof(*freq));
++	hashcpy(freq->sha1, sha1);
++	freq->localfile = -1;
++
++	filename = sha1_file_name(sha1);
++	snprintf(freq->filename, sizeof(freq->filename), "%s", filename);
++	snprintf(freq->tmpfile, sizeof(freq->tmpfile),
++		 "%s.temp", filename);
++
++	snprintf(prevfile, sizeof(prevfile), "%s.prev", filename);
++	unlink(prevfile);
++	rename(freq->tmpfile, prevfile);
++	unlink(freq->tmpfile);
++
++	if (freq->localfile != -1)
++		error("fd leakage in start: %d", freq->localfile);
++	freq->localfile = open(freq->tmpfile,
++			       O_WRONLY | O_CREAT | O_EXCL, 0666);
++	/*
++	 * This could have failed due to the "lazy directory creation";
++	 * try to mkdir the last path component.
++	 */
++	if (freq->localfile < 0 && errno == ENOENT) {
++		char *dir = strrchr(freq->tmpfile, '/');
++		if (dir) {
++			*dir = 0;
++			mkdir(freq->tmpfile, 0777);
++			*dir = '/';
 +		}
-+		i++;
++		freq->localfile = open(freq->tmpfile,
++				       O_WRONLY | O_CREAT | O_EXCL, 0666);
 +	}
 +
-+	release_http_info_packs_request(req);
++	if (freq->localfile < 0) {
++		error("Couldn't create temporary file %s for %s: %s",
++		      freq->tmpfile, freq->filename, strerror(errno));
++		goto abort;
++	}
++
++	memset(&freq->stream, 0, sizeof(freq->stream));
++
++	git_inflate_init(&freq->stream);
++
++	git_SHA1_Init(&freq->c);
++
++	url = get_remote_object_url(base_url, hex, 0);
++	freq->url = xstrdup(url);
++
++	/*
++	 * If a previous temp file is present, process what was already
++	 * fetched.
++	 */
++	prevlocal = open(prevfile, O_RDONLY);
++	if (prevlocal != -1) {
++		do {
++			prev_read = xread(prevlocal, prev_buf, PREV_BUF_SIZE);
++			if (prev_read>0) {
++				if (fwrite_sha1_file(prev_buf,
++						     1,
++						     prev_read,
++						     freq) == prev_read) {
++					prev_posn += prev_read;
++				} else {
++					prev_read = -1;
++				}
++			}
++		} while (prev_read > 0);
++		close(prevlocal);
++	}
++	unlink(prevfile);
++
++	/*
++	 * Reset inflate/SHA1 if there was an error reading the previous temp
++	 * file; also rewind to the beginning of the local file.
++	 */
++	if (prev_read == -1) {
++		memset(&freq->stream, 0, sizeof(freq->stream));
++		git_inflate_init(&freq->stream);
++		git_SHA1_Init(&freq->c);
++		if (prev_posn>0) {
++			prev_posn = 0;
++			lseek(freq->localfile, 0, SEEK_SET);
++			ftruncate(freq->localfile, 0);
++		}
++	}
++
++	freq->slot = get_active_slot();
++
++	curl_easy_setopt(freq->slot->curl, CURLOPT_FILE, freq);
++	curl_easy_setopt(freq->slot->curl, CURLOPT_WRITEFUNCTION, fwrite_sha1_file);
++	curl_easy_setopt(freq->slot->curl, CURLOPT_ERRORBUFFER, freq->errorstr);
++	curl_easy_setopt(freq->slot->curl, CURLOPT_URL, url);
++	curl_easy_setopt(freq->slot->curl, CURLOPT_HTTPHEADER, no_pragma_header);
++
++	/*
++	 * If we have successfully processed data from a previous fetch
++	 * attempt, only fetch the data we don't already have.
++	 */
++	if (prev_posn>0) {
++		if (http_is_verbose)
++			fprintf(stderr,
++				"Resuming fetch of object %s at byte %ld\n",
++				hex, prev_posn);
++		sprintf(range, "Range: bytes=%ld-", prev_posn);
++		range_header = curl_slist_append(range_header, range);
++		curl_easy_setopt(freq->slot->curl,
++				 CURLOPT_HTTPHEADER, range_header);
++	}
++
++	return freq;
++
++abort:
++	free(filename);
++	free(url);
++	free(freq);
++	return NULL;
 +}
 +
-+struct http_info_packs_request *new_http_info_packs_request(const char *base_url)
++void process_http_object_request(struct http_object_request *freq)
 +{
-+	char *url;
-+	struct strbuf buf = STRBUF_INIT;
-+	struct http_info_packs_request *req;
++	if (freq->slot == NULL)
++		return;
++	freq->curl_result = freq->slot->curl_result;
++	freq->http_code = freq->slot->http_code;
++	freq->slot = NULL;
++}
 +
-+	req = xmalloc(sizeof(*req));
++int finish_http_object_request(struct http_object_request *freq)
++{
++	struct stat st;
 +
-+	req->buffer = xmalloc(sizeof(*req->buffer));
-+	strbuf_init(req->buffer, 0);
++	close(freq->localfile);
++	freq->localfile = -1;
 +
-+	end_url_with_slash(&buf, base_url);
-+	strbuf_addstr(&buf, "objects/info/packs");
-+	url = strbuf_detach(&buf, NULL);
-+	req->url = xstrdup(url);
++	process_http_object_request(freq);
 +
-+	req->slot = get_active_slot();
-+	curl_easy_setopt(req->slot->curl, CURLOPT_FILE, req->buffer);
-+	curl_easy_setopt(req->slot->curl, CURLOPT_WRITEFUNCTION, fwrite_buffer);
-+	curl_easy_setopt(req->slot->curl, CURLOPT_URL, url);
-+	curl_easy_setopt(req->slot->curl, CURLOPT_HTTPHEADER, NULL);
++	if (freq->http_code == 416) {
++		fprintf(stderr, "Warning: requested range invalid; we may already have all the data.\n");
++	} else if (freq->curl_result != CURLE_OK) {
++		if (stat(freq->tmpfile, &st) == 0)
++			if (st.st_size == 0)
++				unlink(freq->tmpfile);
++		return -1;
++	}
 +
-+	return req;
++	git_inflate_end(&freq->stream);
++	git_SHA1_Final(freq->real_sha1, &freq->c);
++	if (freq->zret != Z_STREAM_END) {
++		unlink(freq->tmpfile);
++		return -1;
++	}
++	if (hashcmp(freq->sha1, freq->real_sha1)) {
++		unlink(freq->tmpfile);
++		return -1;
++	}
++	freq->rename =
++		move_temp_to_file(freq->tmpfile, freq->filename);
++
++	return freq->rename;
++}
++
++void abort_http_object_request(struct http_object_request *freq)
++{
++	unlink(freq->tmpfile);
++
++	release_http_object_request(freq);
++}
++
++void release_http_object_request(struct http_object_request *freq)
++{
++	if (freq->localfile != -1) {
++		close(freq->localfile);
++		freq->localfile = -1;
++	}
++	if (freq->url != NULL) {
++		free(freq->url);
++		freq->url = NULL;
++	}
++	freq->slot = NULL;
 +}
 diff --git a/http.h b/http.h
-index c72bcc1..c4b1204 100644
+index c4b1204..299145c 100644
 --- a/http.h
 +++ b/http.h
-@@ -137,4 +137,22 @@ extern struct http_pack_request *new_http_pack_request(
- extern int finish_http_pack_request(struct http_pack_request *preq);
- extern void release_http_pack_request(struct http_pack_request *preq);
+@@ -88,10 +88,6 @@ extern void add_fill_function(void *data, int (*fill)(void *));
+ extern void step_active_slots(void);
+ #endif
  
-+/* Helpers for fetching objects/info/packs */
-+struct http_info_packs_request
+-extern struct curl_slist *no_pragma_header;
+-
+-#define RANGE_HEADER_SIZE 30
+-
+ extern void http_init(struct remote *remote);
+ extern void http_cleanup(void);
+ 
+@@ -114,6 +110,13 @@ static inline int missing__target(int code, int result)
+ 
+ #define missing_target(a) missing__target((a)->http_code, (a)->curl_result)
+ 
++/* Helpers for modifying and creating URLs */
++extern void append_remote_object_url(struct strbuf *buf, const char *url,
++				     const char *hex,
++				     int only_two_digit_prefix);
++extern char *get_remote_object_url(const char *url, const char *hex,
++				   int only_two_digit_prefix);
++
+ extern int http_fetch_ref(const char *base, struct ref *ref);
+ 
+ /* Helpers for fetching packs */
+@@ -155,4 +158,30 @@ extern void finish_http_info_packs_request(
+ extern void release_http_info_packs_request(
+ 	struct http_info_packs_request *req);
+ 
++/* Helpers for fetching object */
++struct http_object_request
 +{
 +	char *url;
-+	struct strbuf *buffer;
++	char filename[PATH_MAX];
++	char tmpfile[PATH_MAX];
++	int localfile;
++	CURLcode curl_result;
++	char errorstr[CURL_ERROR_SIZE];
++	long http_code;
++	unsigned char sha1[20];
++	unsigned char real_sha1[20];
++	git_SHA_CTX c;
++	z_stream stream;
++	int zret;
++	int rename;
 +	struct active_request_slot *slot;
-+
-+	void *callback_data;
-+	void (*callback_func)(unsigned char *sha1, void *callback_data);
 +};
 +
-+extern struct http_info_packs_request *new_http_info_packs_request(
-+	const char *base_url);
-+extern void finish_http_info_packs_request(
-+	struct http_info_packs_request *req);
-+extern void release_http_info_packs_request(
-+	struct http_info_packs_request *req);
++extern struct http_object_request *new_http_object_request(
++	const char *base_url, unsigned char *sha1);
++extern void process_http_object_request(struct http_object_request *freq);
++extern int finish_http_object_request(struct http_object_request *freq);
++extern void abort_http_object_request(struct http_object_request *freq);
++extern void release_http_object_request(struct http_object_request *freq);
 +
  #endif /* HTTP_H */
 -- 
