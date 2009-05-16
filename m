@@ -1,90 +1,141 @@
-From: Avery Pennarun <apenwarr@gmail.com>
-Subject: Re: git svn rebase problem
-Date: Fri, 15 May 2009 19:53:31 -0400
-Message-ID: <32541b130905151653u436f3c5cwcf1d896c96148efa@mail.gmail.com>
-References: <4A0DDCC5.4010001@dlasys.net>
+From: Joe Perches <joe@perches.com>
+Subject: Re: [RFC PATCH] builtin-log: Add options to --coverletter
+Date: Fri, 15 May 2009 17:46:36 -0700
+Message-ID: <1242434796.4070.2.camel@Joe-Laptop.home>
+References: <1242349041.646.8.camel@Joe-Laptop.home>
+	 <7v63g2tewu.fsf@alter.siamese.dyndns.org>
+	 <1242418762.3373.90.camel@Joe-Laptop.home>
+	 <7vljoyrq4z.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain
 Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: "David H. Lynch J.r" <ml@dlasys.net>
-X-From: git-owner@vger.kernel.org Sat May 16 01:54:03 2009
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat May 16 02:47:14 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M57E0-0003fn-K2
-	for gcvg-git-2@gmane.org; Sat, 16 May 2009 01:54:01 +0200
+	id 1M583U-0008B2-NF
+	for gcvg-git-2@gmane.org; Sat, 16 May 2009 02:47:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753428AbZEOXxv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 15 May 2009 19:53:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753269AbZEOXxv
-	(ORCPT <rfc822;git-outgoing>); Fri, 15 May 2009 19:53:51 -0400
-Received: from yw-out-2324.google.com ([74.125.46.29]:59185 "EHLO
-	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751479AbZEOXxu (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 15 May 2009 19:53:50 -0400
-Received: by yw-out-2324.google.com with SMTP id 5so1266702ywb.1
-        for <git@vger.kernel.org>; Fri, 15 May 2009 16:53:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=Nh+e9QF1JwSmWm/dx2YBjkKWD6uDLzAES2qESB9Ql/8=;
-        b=ZNXduBTtD5jikq1AKV+VAR+SVYlJ3u2GQqmF8+/CwEvz8jqRlLegKQbyfF0vSFo6Xo
-         OKdaQKDcpgDu9uhB9mnhLQtMIFxpxjxXm3JvoFHMWp5Qdl3UlxY2ugSjUTQEi1lCC/in
-         Kmnj8u6J1UnoHSGHotuyvpSAyiRSaWtE/RpnI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=nCYSTuv9JUJ9CMllTb95r70YwOZ0ELTXhmpR5kdNWMHqJdNB+VJtKXuMr2kHXwpyQH
-         WnnvIQq2kZn5qok2ztduXythLqNY/v8QrrGPDM2DS8Z/OwN57QFWQr/8bx6byO9BDK81
-         Axs6g6J0lLsFN9QVtR3xcWkpvFcqebssswo0E=
-Received: by 10.151.138.7 with SMTP id q7mr7223600ybn.166.1242431631081; Fri, 
-	15 May 2009 16:53:51 -0700 (PDT)
-In-Reply-To: <4A0DDCC5.4010001@dlasys.net>
+	id S1755430AbZEPAqt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 15 May 2009 20:46:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755118AbZEPAqs
+	(ORCPT <rfc822;git-outgoing>); Fri, 15 May 2009 20:46:48 -0400
+Received: from 136-022.dsl.LABridge.com ([206.117.136.22]:2522 "EHLO
+	mail.perches.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754904AbZEPAqr (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 May 2009 20:46:47 -0400
+Received: from [192.168.1.158] ([192.168.1.158])
+	by mail.perches.com (8.9.3/8.9.3) with ESMTP id RAA13711;
+	Fri, 15 May 2009 17:46:19 -0700
+In-Reply-To: <7vljoyrq4z.fsf@alter.siamese.dyndns.org>
+X-Mailer: Evolution 2.26.1 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119307>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119308>
 
-On Fri, May 15, 2009 at 5:21 PM, David H. Lynch J.r <ml@dlasys.net> wrote:
-> A few days ago I did an
-> git svn rebase
->
-> The rebase took a while and after it completed reported
-> fatal: bad object HEAD
->
-> git status reports
-> root@hp-dhlii:/usr/src/pico/git# git status
-> # Not currently on any branch.
-> fatal: bad object HEAD
->
-> and git fsck reports
-> root@hp-dhlii:/usr/src/pico/git# git fsck
-> dangling blob eb3afb4aa3aaf0003bac601a5db4fd76aafa2a87
-> dangling commit 5c496db25007c17c325f294bb8324097c9bc407d
->
-> How can I recover without downloading the entire repository again which
-> could take days?
+Perhaps this?
 
-I don't know how this would happen; it would be great if you could
-find reproduction steps and send them in, or if you had the complete
-git rebase log, some of which probably explains the problem.
+Signed-off-by: Joe Perches <joe@perches.com>
+---
+ Documentation/git-format-patch.txt     |   13 +++++++++++++
+ builtin-log.c                          |   22 ++++++++++++++++++----
+ contrib/completion/git-completion.bash |    1 +
+ 3 files changed, 32 insertions(+), 4 deletions(-)
 
-You can probably recover your pre-rebased repository using 'git
-reflog'.  Look through the reflog to find the commit you want, then do
-something like
-
-    git checkout whatever-the-commit-id-was-that-you-got-from-git-reflog
-
-and then optionally
-
-    git checkout -b master
-
-Good luck.
-
-Avery
+diff --git a/Documentation/git-format-patch.txt b/Documentation/git-format-patch.txt
+index 6f1fc80..f6b34ff 100644
+--- a/Documentation/git-format-patch.txt
++++ b/Documentation/git-format-patch.txt
+@@ -20,6 +20,8 @@ SYNOPSIS
+ 		   [--subject-prefix=Subject-Prefix]
+ 		   [--cc=<email>]
+ 		   [--cover-letter]
++		   [--cover-letter-wrap=width[,indent1[,indent2]]]
++		   [--no-cover-letter-wrap]
+ 		   [<common diff options>]
+ 		   [ <since> | <revision range> ]
+ 
+@@ -168,6 +170,17 @@ if that is not set.
+ 	containing the shortlog and the overall diffstat.  You can
+ 	fill in a description in the file before sending it out.
+ 
++--cover-letter-wrap=<width>[,<indent1>[,<indent2>]]]::
++	Linewrap the cover-letter shortlog output by wrapping each line at
++	`width`.  The first line of each entry is indented by `indent1`
++	spaces, and the second and subsequent lines are indented by
++	`indent2` spaces.
++	`width`, `indent1`, and `indent2` default to 72, 2 and 4 respectively.
++
++--no-cover-letter-wrap::
++	Do not linewrap the cover-letter shortlog output.
++	indent is fixed at 6.
++
+ --suffix=.<sfx>::
+ 	Instead of using `.patch` as the suffix for generated
+ 	filenames, use specified suffix.  A common alternative is
+diff --git a/builtin-log.c b/builtin-log.c
+index 5eaec5d..271cbc1 100644
+--- a/builtin-log.c
++++ b/builtin-log.c
+@@ -460,6 +460,11 @@ static void add_header(const char *value)
+ static int thread = 0;
+ static int do_signoff = 0;
+ 
++static int cover_letter_wrap = 1;
++static int cover_letter_wrappos = 72;
++static int cover_letter_indent1 = 2;
++static int cover_letter_indent2 = 4;
++
+ static int git_format_config(const char *var, const char *value, void *cb)
+ {
+ 	if (!strcmp(var, "format.headers")) {
+@@ -668,10 +673,10 @@ static void make_cover_letter(struct rev_info *rev, int use_stdout,
+ 	strbuf_release(&sb);
+ 
+ 	shortlog_init(&log);
+-	log.wrap_lines = 1;
+-	log.wrap = 72;
+-	log.in1 = 2;
+-	log.in2 = 4;
++	log.wrap_lines = cover_letter_wrap;
++	log.wrap = cover_letter_wrappos;
++	log.in1 = cover_letter_indent1;
++	log.in2 = cover_letter_indent2;
+ 	for (i = 0; i < nr; i++)
+ 		shortlog_add_commit(&log, list[i]);
+ 
+@@ -868,6 +873,15 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
+ 			fmt_patch_suffix = argv[i] + 9;
+ 		else if (!strcmp(argv[i], "--cover-letter"))
+ 			cover_letter = 1;
++		else if (!strcmp(argv[i], "--no-cover-letter-wrap"))
++			cover_letter_wrap = 0;
++		else if (!prefixcmp(argv[i], "--cover-letter-wrap=")) {
++			if (sscanf(argv[i] + 20, "%d,%d,%d",
++				   &cover_letter_wrappos,
++				   &cover_letter_indent1,
++				   &cover_letter_indent2) <= 0)
++				die("Need options for --cover-letter-wrap=");
++			}
+ 		else if (!strcmp(argv[i], "--no-binary"))
+ 			no_binary_diff = 1;
+ 		else if (!prefixcmp(argv[i], "--add-header="))
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index ad26b7c..2f5c42b 100755
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -969,6 +969,7 @@ _git_format_patch ()
+ 			--full-index --binary
+ 			--not --all
+ 			--cover-letter
++			--no-cover-letter-wrap --cover-letter-wrap=
+ 			--no-prefix --src-prefix= --dst-prefix=
+ 			--inline --suffix= --ignore-if-in-upstream
+ 			--subject-prefix=
+-- 
+1.6.3.1.9.g95405b.dirty
