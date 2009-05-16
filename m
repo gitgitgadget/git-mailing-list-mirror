@@ -1,60 +1,86 @@
-From: Peter Krefting <peter@softwolves.pp.se>
-Subject: Re: Announce: Git for Windows 1.6.3
-Date: Sat, 16 May 2009 20:19:20 +0100 (CET)
-Organization: /universe/earth/europe/norway/oslo
-Message-ID: <alpine.DEB.2.00.0905162017450.2954@ds9.cixit.se>
-References: <alpine.DEB.1.00.0905071554070.16585@intel-tinevez-2-302> <alpine.DEB.2.00.0905141920140.10118@ds9.cixit.se> <alpine.DEB.1.00.0905142101450.27348@pacific.mpi-cbg.de>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] new test fails "add -p" for adds on the top line
+Date: Sat, 16 May 2009 12:51:16 -0700
+Message-ID: <7vab5cn7wr.fsf@alter.siamese.dyndns.org>
+References: <1c5969370905152010m486a8b85s96334e99e6c54ad5@mail.gmail.com>
+	<20090516192529.6117@nanako3.lavabit.com>
+	<200905161612.30911.trast@student.ethz.ch>
+	<7viqk1ndlk.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-Cc: msysgit@googlegroups.com, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Sat May 16 21:19:35 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Nanako Shiraishi <nanako3@lavabit.com>,
+	Matt Graham <mdg149@gmail.com>, git@vger.kernel.org
+To: Thomas Rast <trast@student.ethz.ch>
+X-From: git-owner@vger.kernel.org Sat May 16 21:54:26 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M5PPv-0005Qa-VB
-	for gcvg-git-2@gmane.org; Sat, 16 May 2009 21:19:32 +0200
+	id 1M5Pxh-0001Uf-CH
+	for gcvg-git-2@gmane.org; Sat, 16 May 2009 21:54:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755668AbZEPTTX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 16 May 2009 15:19:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755528AbZEPTTX
-	(ORCPT <rfc822;git-outgoing>); Sat, 16 May 2009 15:19:23 -0400
-Received: from upper-gw.cixit.se ([92.43.32.133]:49914 "EHLO mail.cixit.se"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1754971AbZEPTTX (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 16 May 2009 15:19:23 -0400
-Received: from ds9.cixit.se (peter@localhost [127.0.0.1])
-	by mail.cixit.se (8.14.3/8.14.3/Debian-5) with ESMTP id n4GJJKVD003307
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Sat, 16 May 2009 21:19:20 +0200
-Received: from localhost (peter@localhost)
-	by ds9.cixit.se (8.14.3/8.14.3/Submit) with ESMTP id n4GJJK7F003301;
-	Sat, 16 May 2009 21:19:20 +0200
-X-Authentication-Warning: ds9.cixit.se: peter owned process doing -bs
-In-Reply-To: <alpine.DEB.1.00.0905142101450.27348@pacific.mpi-cbg.de>
-User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
-Accept: text/plain
-X-Warning: Junk / bulk email will be reported
-X-Rating: This message is not to be eaten by humans
-X-Greylist: Sender is SPF-compliant, not delayed by milter-greylist-3.0 (mail.cixit.se [127.0.0.1]); Sat, 16 May 2009 21:19:20 +0200 (CEST)
+	id S1755130AbZEPTvQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 16 May 2009 15:51:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754409AbZEPTvQ
+	(ORCPT <rfc822;git-outgoing>); Sat, 16 May 2009 15:51:16 -0400
+Received: from fed1rmmtao104.cox.net ([68.230.241.42]:60627 "EHLO
+	fed1rmmtao104.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754386AbZEPTvP (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 16 May 2009 15:51:15 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao104.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20090516195117.LAPV17135.fed1rmmtao104.cox.net@fed1rmimpo01.cox.net>;
+          Sat, 16 May 2009 15:51:17 -0400
+Received: from localhost ([68.225.240.211])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id sKrG1b0044aMwMQ03KrGmm; Sat, 16 May 2009 15:51:16 -0400
+X-Authority-Analysis: v=1.0 c=1 a=bKi9ceUIwy0A:10 a=8WvdOqfm3OgA:10
+ a=ybZZDoGAAAAA:8 a=WVWtLNSG7iKV3QmHPEYA:9 a=AGsaeeJKSvTtSfDopYkA:7
+ a=P6StOSDS8e9B1Ec9KMUT10hZ4nwA:4 a=qIVjreYYsbEA:10
+X-CM-Score: 0.00
+In-Reply-To: <7viqk1ndlk.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's message of "Sat\, 16 May 2009 10\:48\:23 -0700")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119377>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119378>
 
-Johannes Schindelin:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> But the puzzle is easy to solve: git-upload-pack is called on the remote 
-> side.  So it is not Git for Windows having this issue.
+> Thomas Rast <trast@student.ethz.ch> writes:
+> ...
+>> The above commit still reverts cleanly, but AFAICS merge_hunk blindly
+>> trusts the hunk headers, an assumption that is no longer valid due to
+>> the 'edit' feature.
+>
+> Heh, here is my "I told you so" moment ;-).
 
-Yes, of course. I didn't think of that.
+It never blindly trusted before the edit 'feature'; it counted carefully
+and it could do so because it had all the necessary information.
 
-Now to figure out what makes it different from when I do a pull from other 
-Git installs over ssh from this repository and have it working.
+I told you that 'edit' could remember the line offset and line numbers
+before giving the buffer to the end user, and then recount and adjust the
+count after getting the edited results back, to update the offset and
+count with the same carefulness.  You (and I think there was somebody else
+who was helping) didn't listen.
 
-Thanks for the pointer!
+Fundamentally, after you remove some hunks (and worse yet, you modify
+some) from the patch and feed that to "git apply --recount", it can never
+do as thorough a job as you could do inside "add -p" itself.  The latter
+has more information (the omitted hunks, and the hunks before/after the
+user edited) necessary to reconstruct the line numbers and hunk size.  To
+keep the whole process more robust and trustworthy, you must do the
+necessary computation while you still have all the information about the
+hunks you are not feeding to the downstream.
 
--- 
-\\// Peter - http://www.softwolves.pp.se/
+That was what the "I told you so" was about in my message.
+
+It is not too late to teach the 'edit hack' to do so.  That would allow us
+to remove the "$_->{DIRTY}" bit my "how about this" patch adds, and I'll
+stop calling it the 'edit hack' and start calling it the 'edit feature'
+when that happens ;-).
+
+But at least the "how about this" patch should restore the original
+behaviour as long as the user does not use the 'edit hack' for now.
