@@ -1,141 +1,103 @@
-From: Joe Perches <joe@perches.com>
-Subject: Re: [RFC PATCH] builtin-log: Add options to --coverletter
-Date: Fri, 15 May 2009 17:46:36 -0700
-Message-ID: <1242434796.4070.2.camel@Joe-Laptop.home>
-References: <1242349041.646.8.camel@Joe-Laptop.home>
-	 <7v63g2tewu.fsf@alter.siamese.dyndns.org>
-	 <1242418762.3373.90.camel@Joe-Laptop.home>
-	 <7vljoyrq4z.fsf@alter.siamese.dyndns.org>
+From: Johan Herland <johan@herland.net>
+Subject: [PATCH 0/5] RESEND: git notes
+Date: Sat, 16 May 2009 03:45:03 +0200
+Message-ID: <cover.1242437696.git.johan@herland.net>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat May 16 02:47:14 2009
+Content-Type: TEXT/PLAIN
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org, johannes.schindelin@gmx.de,
+	trast@student.ethz.ch, tavestbo@trolltech.com, johan@herland.net,
+	git@drmicha.warpmail.net, chriscool@tuxfamily.org
+To: gitster@pobox.com
+X-From: git-owner@vger.kernel.org Sat May 16 03:47:41 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M583U-0008B2-NF
-	for gcvg-git-2@gmane.org; Sat, 16 May 2009 02:47:13 +0200
+	id 1M5900-0004iT-7n
+	for gcvg-git-2@gmane.org; Sat, 16 May 2009 03:47:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755430AbZEPAqt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 15 May 2009 20:46:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755118AbZEPAqs
-	(ORCPT <rfc822;git-outgoing>); Fri, 15 May 2009 20:46:48 -0400
-Received: from 136-022.dsl.LABridge.com ([206.117.136.22]:2522 "EHLO
-	mail.perches.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754904AbZEPAqr (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 15 May 2009 20:46:47 -0400
-Received: from [192.168.1.158] ([192.168.1.158])
-	by mail.perches.com (8.9.3/8.9.3) with ESMTP id RAA13711;
-	Fri, 15 May 2009 17:46:19 -0700
-In-Reply-To: <7vljoyrq4z.fsf@alter.siamese.dyndns.org>
-X-Mailer: Evolution 2.26.1 
+	id S1753943AbZEPBq2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 15 May 2009 21:46:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753829AbZEPBq2
+	(ORCPT <rfc822;git-outgoing>); Fri, 15 May 2009 21:46:28 -0400
+Received: from mx.getmail.no ([84.208.15.66]:51867 "EHLO
+	get-mta-out01.get.basefarm.net" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1753821AbZEPBq1 (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 15 May 2009 21:46:27 -0400
+Received: from mx.getmail.no ([10.5.16.4]) by get-mta-out01.get.basefarm.net
+ (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
+ with ESMTP id <0KJP000GWRLFXB40@get-mta-out01.get.basefarm.net> for
+ git@vger.kernel.org; Sat, 16 May 2009 03:46:27 +0200 (MEST)
+Received: from localhost.localdomain ([84.215.102.95])
+ by get-mta-in02.get.basefarm.net
+ (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
+ with ESMTP id <0KJP0047TRKAYOH0@get-mta-in02.get.basefarm.net> for
+ git@vger.kernel.org; Sat, 16 May 2009 03:46:27 +0200 (MEST)
+X-PMX-Version: 5.5.3.366731, Antispam-Engine: 2.7.0.366912,
+ Antispam-Data: 2009.5.16.13426
+X-Mailer: git-send-email 1.6.3.rc0.1.gf800
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119308>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119309>
 
-Perhaps this?
+Hi,
 
-Signed-off-by: Joe Perches <joe@perches.com>
----
- Documentation/git-format-patch.txt     |   13 +++++++++++++
- builtin-log.c                          |   22 ++++++++++++++++++----
- contrib/completion/git-completion.bash |    1 +
- 3 files changed, 32 insertions(+), 4 deletions(-)
+Dscho has asked me to take over the responsibility for the js/notes
+patch series.
 
-diff --git a/Documentation/git-format-patch.txt b/Documentation/git-format-patch.txt
-index 6f1fc80..f6b34ff 100644
---- a/Documentation/git-format-patch.txt
-+++ b/Documentation/git-format-patch.txt
-@@ -20,6 +20,8 @@ SYNOPSIS
- 		   [--subject-prefix=Subject-Prefix]
- 		   [--cc=<email>]
- 		   [--cover-letter]
-+		   [--cover-letter-wrap=width[,indent1[,indent2]]]
-+		   [--no-cover-letter-wrap]
- 		   [<common diff options>]
- 		   [ <since> | <revision range> ]
- 
-@@ -168,6 +170,17 @@ if that is not set.
- 	containing the shortlog and the overall diffstat.  You can
- 	fill in a description in the file before sending it out.
- 
-+--cover-letter-wrap=<width>[,<indent1>[,<indent2>]]]::
-+	Linewrap the cover-letter shortlog output by wrapping each line at
-+	`width`.  The first line of each entry is indented by `indent1`
-+	spaces, and the second and subsequent lines are indented by
-+	`indent2` spaces.
-+	`width`, `indent1`, and `indent2` default to 72, 2 and 4 respectively.
-+
-+--no-cover-letter-wrap::
-+	Do not linewrap the cover-letter shortlog output.
-+	indent is fixed at 6.
-+
- --suffix=.<sfx>::
- 	Instead of using `.patch` as the suffix for generated
- 	filenames, use specified suffix.  A common alternative is
-diff --git a/builtin-log.c b/builtin-log.c
-index 5eaec5d..271cbc1 100644
---- a/builtin-log.c
-+++ b/builtin-log.c
-@@ -460,6 +460,11 @@ static void add_header(const char *value)
- static int thread = 0;
- static int do_signoff = 0;
- 
-+static int cover_letter_wrap = 1;
-+static int cover_letter_wrappos = 72;
-+static int cover_letter_indent1 = 2;
-+static int cover_letter_indent2 = 4;
-+
- static int git_format_config(const char *var, const char *value, void *cb)
- {
- 	if (!strcmp(var, "format.headers")) {
-@@ -668,10 +673,10 @@ static void make_cover_letter(struct rev_info *rev, int use_stdout,
- 	strbuf_release(&sb);
- 
- 	shortlog_init(&log);
--	log.wrap_lines = 1;
--	log.wrap = 72;
--	log.in1 = 2;
--	log.in2 = 4;
-+	log.wrap_lines = cover_letter_wrap;
-+	log.wrap = cover_letter_wrappos;
-+	log.in1 = cover_letter_indent1;
-+	log.in2 = cover_letter_indent2;
- 	for (i = 0; i < nr; i++)
- 		shortlog_add_commit(&log, list[i]);
- 
-@@ -868,6 +873,15 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
- 			fmt_patch_suffix = argv[i] + 9;
- 		else if (!strcmp(argv[i], "--cover-letter"))
- 			cover_letter = 1;
-+		else if (!strcmp(argv[i], "--no-cover-letter-wrap"))
-+			cover_letter_wrap = 0;
-+		else if (!prefixcmp(argv[i], "--cover-letter-wrap=")) {
-+			if (sscanf(argv[i] + 20, "%d,%d,%d",
-+				   &cover_letter_wrappos,
-+				   &cover_letter_indent1,
-+				   &cover_letter_indent2) <= 0)
-+				die("Need options for --cover-letter-wrap=");
-+			}
- 		else if (!strcmp(argv[i], "--no-binary"))
- 			no_binary_diff = 1;
- 		else if (!prefixcmp(argv[i], "--add-header="))
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index ad26b7c..2f5c42b 100755
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -969,6 +969,7 @@ _git_format_patch ()
- 			--full-index --binary
- 			--not --all
- 			--cover-letter
-+			--no-cover-letter-wrap --cover-letter-wrap=
- 			--no-prefix --src-prefix= --dst-prefix=
- 			--inline --suffix= --ignore-if-in-upstream
- 			--subject-prefix=
--- 
-1.6.3.1.9.g95405b.dirty
+The following is a re-roll and resend of the patch series currently
+in pu, plus my own 2 patches for adding support for "-m" and "-F" to
+"git notes edit".
+
+On advice from Dscho, I have squashed the current bugfix and cleanup
+patches in js/notes into the first 4 "main" patches. As a result the
+original 15 + 2 patch series is now down to 5 (4 + 1) patches.
+
+In sum, these 5 patches produce the exact same result as the original
+js/notes series (plus my 2 patches).
+
+I have taken the liberty of squashing the various Signed-off-by tags
+(along with their corresponding patches) into these 5 new patches.
+I hope this is OK with everybody. If not, I apologize; please tell me,
+and I will re-send.
+
+
+Have fun! :)
+
+...Johan
+
+
+Johan Herland (1):
+  Teach "-m <msg>" and "-F <file>" to "git notes edit"
+
+Johannes Schindelin (4):
+  Introduce commit notes
+  Add a script to edit/inspect notes
+  Speed up git notes lookup
+  Add an expensive test for git-notes
+
+ .gitignore                       |    1 +
+ Documentation/config.txt         |   13 +++
+ Documentation/git-notes.txt      |   60 ++++++++++++++
+ Makefile                         |    3 +
+ cache.h                          |    4 +
+ command-list.txt                 |    1 +
+ commit.c                         |    1 +
+ config.c                         |    5 +
+ environment.c                    |    1 +
+ git-notes.sh                     |  121 ++++++++++++++++++++++++++++
+ notes.c                          |  160 ++++++++++++++++++++++++++++++++++++++
+ notes.h                          |    7 ++
+ pretty.c                         |    5 +
+ t/t3301-notes.sh                 |  149 +++++++++++++++++++++++++++++++++++
+ t/t3302-notes-index-expensive.sh |   98 +++++++++++++++++++++++
+ 15 files changed, 629 insertions(+), 0 deletions(-)
+ create mode 100644 Documentation/git-notes.txt
+ create mode 100755 git-notes.sh
+ create mode 100644 notes.c
+ create mode 100644 notes.h
+ create mode 100755 t/t3301-notes.sh
+ create mode 100755 t/t3302-notes-index-expensive.sh
