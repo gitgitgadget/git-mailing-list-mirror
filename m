@@ -1,71 +1,69 @@
 From: Stephen Boyd <bebarino@gmail.com>
-Subject: [PATCH 3/3] format-patch: migrate to parse-options API
-Date: Sat, 16 May 2009 02:24:46 -0700
-Message-ID: <1242465886-31769-3-git-send-email-bebarino@gmail.com>
-References: <1242465886-31769-1-git-send-email-bebarino@gmail.com>
- <1242465886-31769-2-git-send-email-bebarino@gmail.com>
+Subject: [PATCH] format-patch: migrate to parse-options API
+Date: Sat, 16 May 2009 02:27:42 -0700
+Message-ID: <1242466062-31997-1-git-send-email-bebarino@gmail.com>
+References: <1242465886-31769-3-git-send-email-bebarino@gmail.com>
 Cc: Junio C Hamano <gitster@pobox.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat May 16 11:25:26 2009
+X-From: git-owner@vger.kernel.org Sat May 16 11:28:03 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M5G8y-0006BM-5h
-	for gcvg-git-2@gmane.org; Sat, 16 May 2009 11:25:24 +0200
+	id 1M5GBW-0006w3-Mq
+	for gcvg-git-2@gmane.org; Sat, 16 May 2009 11:28:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755024AbZEPJY6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 16 May 2009 05:24:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754915AbZEPJY6
-	(ORCPT <rfc822;git-outgoing>); Sat, 16 May 2009 05:24:58 -0400
-Received: from mail-pz0-f115.google.com ([209.85.222.115]:56546 "EHLO
-	mail-pz0-f115.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754749AbZEPJY4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 16 May 2009 05:24:56 -0400
-Received: by pzk13 with SMTP id 13so1406036pzk.33
-        for <git@vger.kernel.org>; Sat, 16 May 2009 02:24:57 -0700 (PDT)
+	id S1755568AbZEPJ1r (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 16 May 2009 05:27:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755096AbZEPJ1r
+	(ORCPT <rfc822;git-outgoing>); Sat, 16 May 2009 05:27:47 -0400
+Received: from rv-out-0506.google.com ([209.85.198.228]:12067 "EHLO
+	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754786AbZEPJ1q (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 16 May 2009 05:27:46 -0400
+Received: by rv-out-0506.google.com with SMTP id f9so1274963rvb.1
+        for <git@vger.kernel.org>; Sat, 16 May 2009 02:27:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:received:from:to:cc:subject
          :date:message-id:x-mailer:in-reply-to:references;
-        bh=4Y6E/3rND9qhIGBGutUWCWMNa++aSTwk/88KyBUgEks=;
-        b=Y3geJSliJnsmIugXQ8c2vuWxZpA4QX5KtG+vyYeSmySMNpgg/4kVryQPhXhd6cZRUq
-         Dbem+cBhnkyKhEFjZQTBxJexioLuNEINcFaBcjg5GXr18MXtaVas3Qt0lc3TWG8JmPX2
-         vo8Sc7YQY8oM1RawBkHsR90jYa4VHyebEI+q0=
+        bh=0utzDrenBIGt4dOYR2HXcVcK2iXR84bU7gtEBMOZmyo=;
+        b=LVs4dAaUl2MXfrtL3yZNNY+s31zCNRPfBQuZw0oZk5ojnWVGbBXaZ54xDa0xdH434Q
+         TnMgXot25zmRseMR28K7+3k30s1BOmPTuRnhhIn5+Nhko8vNWLSIrOz1IUvCLc5YXWQF
+         LAvhkqi2Js98N2+6YsGl+mSvxaIXsGBXQ9DVs=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=xGD9qMXZ27aMy+xu02veoTAJB3Lzw+khOt2mSmAbANVt3SR+qMbMDGHdPzE/rAcRt/
-         7kYVjzPvr7r5iXLlYbJ6AlD3HvZs8IRCMi46XGei/o22+z5naRHNh7UqfWGcLDp2pBIi
-         xjvOui+pWj5ZfOTbRngOeuWdq3CZMHmKxLFvM=
-Received: by 10.114.60.7 with SMTP id i7mr6502986waa.174.1242465897361;
-        Sat, 16 May 2009 02:24:57 -0700 (PDT)
+        b=iV+LLNsdkndZ8iSFXjhmdIFHz+nm7mO+0BX+4/6SY0oBZdkt9Igvu3ZxHVNPpG8ygQ
+         8mDUPam/YifSp7fdVzO5+4LIkamJeu+KArbPJIL98rb78Iy5Tgpo87TWtzlMq8JmhfjT
+         idbayCfF8kFwE8jTdsd6GAROC1HHsgGA4dWSE=
+Received: by 10.141.116.16 with SMTP id t16mr1587658rvm.107.1242466066365;
+        Sat, 16 May 2009 02:27:46 -0700 (PDT)
 Received: from earth ([76.89.212.195])
-        by mx.google.com with ESMTPS id n9sm2403073wag.34.2009.05.16.02.24.55
+        by mx.google.com with ESMTPS id c20sm6546380rvf.40.2009.05.16.02.27.44
         (version=SSLv3 cipher=RC4-MD5);
-        Sat, 16 May 2009 02:24:56 -0700 (PDT)
-Received: by earth (sSMTP sendmail emulation); Sat, 16 May 2009 02:24:53 -0700
+        Sat, 16 May 2009 02:27:45 -0700 (PDT)
+Received: by earth (sSMTP sendmail emulation); Sat, 16 May 2009 02:27:42 -0700
 X-Mailer: git-send-email 1.6.3.1.9.g95405b
-In-Reply-To: <1242465886-31769-2-git-send-email-bebarino@gmail.com>
+In-Reply-To: <1242465886-31769-3-git-send-email-bebarino@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119347>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119348>
 
 
 Signed-off-by: Stephen Boyd <bebarino@gmail.com>
 ---
 
-I know that two patch series are coming which will conflict. One is already
-in next, ca6b91d (format-patch let -k override format.numbered, 2009-05-09).
-I will send a patch against next as a followup, just in case.
+This is against next. Essentially numbered_cmdline_opt becomes global and
+is assigned to in the callback.
 
- builtin-log.c |  255 +++++++++++++++++++++++++++++++++++----------------------
- 1 files changed, 158 insertions(+), 97 deletions(-)
+ builtin-log.c |  260 +++++++++++++++++++++++++++++++++++----------------------
+ 1 files changed, 160 insertions(+), 100 deletions(-)
 
 diff --git a/builtin-log.c b/builtin-log.c
-index 5eaec5d..2a35b6b 100644
+index f10cfeb..2acf2cd 100644
 --- a/builtin-log.c
 +++ b/builtin-log.c
 @@ -18,6 +18,7 @@
@@ -76,7 +74,7 @@ index 5eaec5d..2a35b6b 100644
  
  /* Set a default date-time format for git log ("log.date" config variable) */
  static const char *default_date_mode = NULL;
-@@ -740,17 +741,117 @@ static const char *set_outdir(const char *prefix, const char *output_directory)
+@@ -740,27 +741,179 @@ static const char *set_outdir(const char *prefix, const char *output_directory)
  				       output_directory));
  }
  
@@ -104,10 +102,12 @@ index 5eaec5d..2a35b6b 100644
 +	return 0;
 +}
 +
++static int numbered_cmdline_opt = 0;
++
 +static int numbered_callback(const struct option *opt, const char *arg,
 +			     int unset)
 +{
-+	*(int *)opt->value = unset ? 0 : 1;
++	*(int *)opt->value = numbered_cmdline_opt = unset ? 0 : 1;
 +	if (unset)
 +		auto_number =  0;
 +	return 0;
@@ -197,7 +197,10 @@ index 5eaec5d..2a35b6b 100644
  	int ignore_if_in_upstream = 0;
  	int cover_letter = 0;
  	int boundary_count = 0;
-@@ -760,6 +861,57 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
+ 	int no_binary_diff = 0;
+-	int numbered_cmdline_opt = 0;
+ 	struct commit *origin = NULL, *head = NULL;
+ 	const char *in_reply_to = NULL;
  	struct patch_ids ids;
  	char *add_signoff = NULL;
  	struct strbuf buf = STRBUF_INIT;
@@ -255,7 +258,7 @@ index 5eaec5d..2a35b6b 100644
  
  	git_config(git_format_config, NULL);
  	init_revisions(&rev, prefix);
-@@ -782,100 +934,9 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
+@@ -783,102 +936,9 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
  	 * like "git format-patch -o a123 HEAD^.." may fail; a123 is
  	 * possibly a valid SHA1.
  	 */
@@ -263,8 +266,10 @@ index 5eaec5d..2a35b6b 100644
 -		if (!strcmp(argv[i], "--stdout"))
 -			use_stdout = 1;
 -		else if (!strcmp(argv[i], "-n") ||
--				!strcmp(argv[i], "--numbered"))
+-				!strcmp(argv[i], "--numbered")) {
 -			numbered = 1;
+-			numbered_cmdline_opt = 1;
+-		}
 -		else if (!strcmp(argv[i], "-N") ||
 -				!strcmp(argv[i], "--no-numbered")) {
 -			numbered = 0;
