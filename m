@@ -1,69 +1,60 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: [PATCH] new test fails "add -p" for adds on the top line
-Date: Sat, 16 May 2009 21:14:45 +0200
-Message-ID: <fabb9a1e0905161214o66736a56y5660c576095a3cb5@mail.gmail.com>
-References: <1c5969370905152010m486a8b85s96334e99e6c54ad5@mail.gmail.com> 
-	<20090516192529.6117@nanako3.lavabit.com> <200905161612.30911.trast@student.ethz.ch> 
-	<7viqk1ndlk.fsf@alter.siamese.dyndns.org> <fabb9a1e0905161055q89b9e6ei77a922749ed8cd5e@mail.gmail.com> 
-	<7vr5yon9ny.fsf@alter.siamese.dyndns.org>
+From: Peter Krefting <peter@softwolves.pp.se>
+Subject: Re: Announce: Git for Windows 1.6.3
+Date: Sat, 16 May 2009 20:19:20 +0100 (CET)
+Organization: /universe/earth/europe/norway/oslo
+Message-ID: <alpine.DEB.2.00.0905162017450.2954@ds9.cixit.se>
+References: <alpine.DEB.1.00.0905071554070.16585@intel-tinevez-2-302> <alpine.DEB.2.00.0905141920140.10118@ds9.cixit.se> <alpine.DEB.1.00.0905142101450.27348@pacific.mpi-cbg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Thomas Rast <trast@student.ethz.ch>,
-	Nanako Shiraishi <nanako3@lavabit.com>,
-	Matt Graham <mdg149@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat May 16 21:15:20 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Cc: msysgit@googlegroups.com, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Sat May 16 21:19:35 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M5PLm-0003UT-PY
-	for gcvg-git-2@gmane.org; Sat, 16 May 2009 21:15:15 +0200
+	id 1M5PPv-0005Qa-VB
+	for gcvg-git-2@gmane.org; Sat, 16 May 2009 21:19:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755267AbZEPTPH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 16 May 2009 15:15:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755315AbZEPTPG
-	(ORCPT <rfc822;git-outgoing>); Sat, 16 May 2009 15:15:06 -0400
-Received: from mail-fx0-f158.google.com ([209.85.220.158]:53955 "EHLO
-	mail-fx0-f158.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755039AbZEPTPE (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 16 May 2009 15:15:04 -0400
-Received: by fxm2 with SMTP id 2so2532841fxm.37
-        for <git@vger.kernel.org>; Sat, 16 May 2009 12:15:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=0BpiUSa1RUtRTMo6LaVteZEdkCmdREgVvPKDkriuUcQ=;
-        b=KXhvJKDIvvzJSQddSreWzjsfnsNJdwbYySipDkKTujuHEGWrQcyrMQewlMz9Z5E/9k
-         oOTAWIuWLdbDK4p+T6OQ77xJ5faclMND8uzyHwowuvk8PRAkdFFzKwz+9VdVYBDKir7V
-         OIp9J8BdjMAW81SToLO2VAJM0DX2pb/9q5erc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=wSVKx9EBcI4o40g5FdyQCWhFNmkjfI+d5RinlfxVF9gre7Cvd2RoDg8ev/UfaTF8zR
-         7HKb2/m0eFa7QtKAIYgfjENuT7z9i9D0cCxyOT9Gz4Cj3T+Y/KHbgLrj42s/Zmgw3lRQ
-         A5mKNJ+N1dK6KYw93lFHpbHuf6l+4UzEMBMrs=
-Received: by 10.103.213.19 with SMTP id p19mr3112168muq.9.1242501305092; Sat, 
-	16 May 2009 12:15:05 -0700 (PDT)
-In-Reply-To: <7vr5yon9ny.fsf@alter.siamese.dyndns.org>
+	id S1755668AbZEPTTX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 16 May 2009 15:19:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755528AbZEPTTX
+	(ORCPT <rfc822;git-outgoing>); Sat, 16 May 2009 15:19:23 -0400
+Received: from upper-gw.cixit.se ([92.43.32.133]:49914 "EHLO mail.cixit.se"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1754971AbZEPTTX (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 16 May 2009 15:19:23 -0400
+Received: from ds9.cixit.se (peter@localhost [127.0.0.1])
+	by mail.cixit.se (8.14.3/8.14.3/Debian-5) with ESMTP id n4GJJKVD003307
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Sat, 16 May 2009 21:19:20 +0200
+Received: from localhost (peter@localhost)
+	by ds9.cixit.se (8.14.3/8.14.3/Submit) with ESMTP id n4GJJK7F003301;
+	Sat, 16 May 2009 21:19:20 +0200
+X-Authentication-Warning: ds9.cixit.se: peter owned process doing -bs
+In-Reply-To: <alpine.DEB.1.00.0905142101450.27348@pacific.mpi-cbg.de>
+User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
+Accept: text/plain
+X-Warning: Junk / bulk email will be reported
+X-Rating: This message is not to be eaten by humans
+X-Greylist: Sender is SPF-compliant, not delayed by milter-greylist-3.0 (mail.cixit.se [127.0.0.1]); Sat, 16 May 2009 21:19:20 +0200 (CEST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119376>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119377>
 
-Heya,
+Johannes Schindelin:
 
-On Sat, May 16, 2009 at 21:13, Junio C Hamano <gitster@pobox.com> wrote:
-> Sorry, forgot a smiley ;-).
+> But the puzzle is easy to solve: git-upload-pack is called on the remote 
+> side.  So it is not Git for Windows having this issue.
 
-Phew, what would be without those :).
+Yes, of course. I didn't think of that.
+
+Now to figure out what makes it different from when I do a pull from other 
+Git installs over ssh from this repository and have it working.
+
+Thanks for the pointer!
 
 -- 
-Cheers,
-
-Sverre Rabbelier
+\\// Peter - http://www.softwolves.pp.se/
