@@ -1,101 +1,98 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: Rebase a whole tree from one commit to another?
-Date: Sat, 16 May 2009 09:35:33 +0200
-Message-ID: <4A0E6CC5.5090503@op5.se>
-References: <4A0DC4CD.1030401@dirk.my1.cc>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: git-tag bug? confusing git fast-export with double tag objects
+Date: Sat, 16 May 2009 09:56:24 +0200
+Message-ID: <200905160956.27417.jnareb@gmail.com>
+References: <op.utv93sdo1e62zd@merlin.emma.line.org> <7v3ab6uuw4.fsf@alter.siamese.dyndns.org> <4A0E67E9.3020208@op5.se>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>
-To: =?ISO-8859-15?Q?Dirk_S=FCsserott?= <newsletter@dirk.my1.cc>
-X-From: git-owner@vger.kernel.org Sat May 16 09:36:43 2009
+Content-Type: text/plain;
+  charset="iso-8859-15"
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Alex Riesen <raa.lkml@gmail.com>,
+	Johannes Sixt <j.sixt@viscovery.net>,
+	Matthias Andree <matthias.andree@gmx.de>,
+	Jeff King <peff@peff.net>, git@vger.kernel.org,
+	Brandon Casey <casey@nrlssc.navy.mil>,
+	Sverre Rabbelier <srabbelier@gmail.com>
+To: Andreas Ericsson <ae@op5.se>
+X-From: git-owner@vger.kernel.org Sat May 16 10:00:52 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M5ERm-0006tf-Oq
-	for gcvg-git-2@gmane.org; Sat, 16 May 2009 09:36:43 +0200
+	id 1M5Ep8-0000GV-TJ
+	for gcvg-git-2@gmane.org; Sat, 16 May 2009 10:00:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752683AbZEPHfg convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 16 May 2009 03:35:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752297AbZEPHfg
-	(ORCPT <rfc822;git-outgoing>); Sat, 16 May 2009 03:35:36 -0400
-Received: from fg-out-1718.google.com ([72.14.220.157]:17988 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752065AbZEPHfg (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 16 May 2009 03:35:36 -0400
-Received: by fg-out-1718.google.com with SMTP id 16so818073fgg.17
-        for <git@vger.kernel.org>; Sat, 16 May 2009 00:35:36 -0700 (PDT)
-Received: by 10.86.59.2 with SMTP id h2mr4540007fga.30.1242459336334;
-        Sat, 16 May 2009 00:35:36 -0700 (PDT)
-Received: from clix.int.op5.se ([212.112.163.94])
-        by mx.google.com with ESMTPS id e11sm727404fga.16.2009.05.16.00.35.34
+	id S1753439AbZEPH4h (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 16 May 2009 03:56:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752822AbZEPH4h
+	(ORCPT <rfc822;git-outgoing>); Sat, 16 May 2009 03:56:37 -0400
+Received: from mail-fx0-f158.google.com ([209.85.220.158]:48300 "EHLO
+	mail-fx0-f158.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752734AbZEPH4g (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 16 May 2009 03:56:36 -0400
+Received: by fxm2 with SMTP id 2so2307665fxm.37
+        for <git@vger.kernel.org>; Sat, 16 May 2009 00:56:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=icbvnuJ9MF5BRDJCcYu1C38WM6HZTRcNqQa7xy5gLdw=;
+        b=Bl+wgeC2hlkJ4nYai8cPmHZgo0eOttDlDS3R/dBH4V2EZUvA3+WtfY7Wvp77ZKm79J
+         Dw4LE/BOL8a/QjCtkjK4OwJ+zLb5O74KIBBk6kKC4wpUOt76cnN6GWOuz5bk3C/4TOmS
+         p8fA2kjTqaJMc1RgTy4W4UKolLhDDoLzY5GBI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=aKCuh7v6DbyneS+yOsgn5U+KSB7b11Tkn3E+GJhXzUHb29tB92Cp8s9u+s3IKo8rYy
+         C6KqEKwh6cTqJG1lZI0YY7SA1AOueuiqHSLpcRm1zCfZMZu77qOIyYGTdADexuUY75/9
+         8Ne9BbwMPfAmv+/rLSyOnGt8hbV5d/K2mKtxc=
+Received: by 10.86.70.20 with SMTP id s20mr4569482fga.1.1242460596570;
+        Sat, 16 May 2009 00:56:36 -0700 (PDT)
+Received: from ?192.168.1.13? (abvj81.neoplus.adsl.tpnet.pl [83.8.207.81])
+        by mx.google.com with ESMTPS id 12sm3790397fgg.25.2009.05.16.00.56.35
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sat, 16 May 2009 00:35:35 -0700 (PDT)
-User-Agent: Thunderbird 2.0.0.21 (X11/20090320)
-In-Reply-To: <4A0DC4CD.1030401@dirk.my1.cc>
+        Sat, 16 May 2009 00:56:36 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <4A0E67E9.3020208@op5.se>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119341>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119342>
 
-Dirk S=FCsserott wrote:
-> Hi alltogether.
->=20
-> Let's say I have the following history:
->=20
->     | | | | branch-c
->     | | | |
->     | | |/  branch-b
->     | | |
->     | |/    branch-a
->     | |
->     |/
->     | master
->=20
-> Now I checkout master, do some changes, and commit them to the master=
-=20
-> branch. Let's call that new-master:
->=20
->    | new-master
->    | | | | | branch-c
->    | | | | |
->    | | | |/  branch-b
->    | | | |
->    | | |/    branch-a
->    | | |
->    | |/
->     \| master
->=20
-> I want to rebase my branches a, b, c to the new master. The clumsy wa=
-y=20
-> would be:
->=20
->     git rebase new-master branch-a
->     git rebase branch-a   branch-b
->     git rebase branch-b   branch-c
->=20
-> The question is: Is there a way to rebase the whole tree (master ->=20
-> branch-a -> branch-b -> branch-c) from master to new-master with a=20
-> single command?
->=20
+On Sat, 16 May 2009, Andreas Ericsson wrote:
 
-No. You could merge all the branches that forked from master, rebase
-the merged branch to new-master and then undo the merge-commit though,
-but that would still mean three commands (and most likely some
-conflict resolution). Assuming you have (a lot) more than three
-branches, this might be a way forward for you.
+> Add a tag with a new name, pointing to the original tag. Try doing what
+> Matthias did and then run "git show $tagname". It won't show the original
+> tag at all, so people have to resort to low-level commands in order to
+> see it, but it will still exist as an object.
 
---=20
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+Not true. Did you check that?
 
-Register now for Nordic Meet on Nagios, June 3-4 in Stockholm
- http://nordicmeetonnagios.op5.org/
+"git show <tag>" shows the whole chain of objects down to non-tag object.
 
-Considering the successes of the wars on alcohol, poverty, drugs and
-terror, I think we should give some serious thought to declaring war
-on peace.
+  tag tag1
+  Tagger: Jakub Narebski <jnareb@gmail.com>
+  Date:   Sat May 16 09:55:13 2009 +0200
+
+
+  tag1 (retagged)
+  tag tag1
+  Tagger: Jakub Narebski <jnareb@gmail.com>
+  Date:   Sat May 16 09:54:58 2009 +0200
+  
+  
+  tag1
+  commit 6d3eee4f5e9fde51f3213320b98bda5f325000e4
+  [...]
+
+True, the separation between objects could have been made more explicit...
+
+-- 
+Jakub Narebski
+Poland
