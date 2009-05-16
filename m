@@ -1,173 +1,57 @@
-From: Johan Herland <johan@herland.net>
-Subject: [PATCHv2 4/5] Add an expensive test for git-notes
-Date: Sat, 16 May 2009 13:44:16 +0200
-Message-ID: <81845dbcafeabb34a81e4c59e390aaaa3fc604ea.1242473357.git.johan@herland.net>
-References: <200905161320.45426.johan@herland.net>
+From: Clemens Buchacher <drizzd@aon.at>
+Subject: Re: Rebase a whole tree from one commit to another?
+Date: Sat, 16 May 2009 15:49:06 +0200
+Message-ID: <20090516134906.GA19110@localhost>
+References: <4A0DC4CD.1030401@dirk.my1.cc>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org, johannes.schindelin@gmx.de,
-	trast@student.ethz.ch, tavestbo@trolltech.com, johan@herland.net,
-	git@drmicha.warpmail.net, chriscool@tuxfamily.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Sat May 16 13:45:38 2009
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Dirk =?iso-8859-1?Q?S=FCsserott?= <newsletter@dirk.my1.cc>
+X-From: git-owner@vger.kernel.org Sat May 16 15:49:43 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M5IKc-0006Ey-Po
-	for gcvg-git-2@gmane.org; Sat, 16 May 2009 13:45:35 +0200
+	id 1M5KGl-00079f-41
+	for gcvg-git-2@gmane.org; Sat, 16 May 2009 15:49:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755635AbZEPLpQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 16 May 2009 07:45:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755472AbZEPLpN
-	(ORCPT <rfc822;git-outgoing>); Sat, 16 May 2009 07:45:13 -0400
-Received: from mx.getmail.no ([84.208.15.66]:33744 "EHLO
-	get-mta-out01.get.basefarm.net" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1754626AbZEPLpI (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 16 May 2009 07:45:08 -0400
-Received: from mx.getmail.no ([10.5.16.4]) by get-mta-out01.get.basefarm.net
- (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
- with ESMTP id <0KJQ00AMXJB9PS50@get-mta-out01.get.basefarm.net> for
- git@vger.kernel.org; Sat, 16 May 2009 13:45:09 +0200 (MEST)
-Received: from localhost.localdomain ([84.215.102.95])
- by get-mta-in01.get.basefarm.net
- (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
- with ESMTP id <0KJQ000ANJA8KDC0@get-mta-in01.get.basefarm.net> for
- git@vger.kernel.org; Sat, 16 May 2009 13:45:09 +0200 (MEST)
-X-PMX-Version: 5.5.3.366731, Antispam-Engine: 2.7.0.366912,
- Antispam-Data: 2009.5.16.112528
-X-Mailer: git-send-email 1.6.3.rc0.1.gf800
-In-reply-to: <200905161320.45426.johan@herland.net>
-In-reply-to: <cover.1242473357.git.johan@herland.net>
-References: <cover.1242473357.git.johan@herland.net>
+	id S1757614AbZEPNtJ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 16 May 2009 09:49:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757581AbZEPNtI
+	(ORCPT <rfc822;git-outgoing>); Sat, 16 May 2009 09:49:08 -0400
+Received: from postman.fh-hagenberg.at ([193.170.124.96]:56260 "EHLO
+	mail.fh-hagenberg.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756199AbZEPNtH (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 16 May 2009 09:49:07 -0400
+Received: from darc.dyndns.org ([84.154.123.237]) by mail.fh-hagenberg.at over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
+	 Sat, 16 May 2009 15:49:05 +0200
+Received: from drizzd by darc.dyndns.org with local (Exim 4.69)
+	(envelope-from <drizzd@aon.at>)
+	id 1M5KGB-000529-06; Sat, 16 May 2009 15:49:07 +0200
+Content-Disposition: inline
+In-Reply-To: <4A0DC4CD.1030401@dirk.my1.cc>
+User-Agent: Mutt/1.5.18 (2008-05-17)
+X-OriginalArrivalTime: 16 May 2009 13:49:06.0071 (UTC) FILETIME=[14638A70:01C9D62D]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119360>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119361>
 
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+On Fri, May 15, 2009 at 09:38:53PM +0200, Dirk S=FCsserott wrote:
+>
+>     git rebase new-master branch-a
+>     git rebase branch-a   branch-b
+>     git rebase branch-b   branch-c
+>
 
-git-notes have the potential of being pretty expensive, so test with
-a lot of commits.  A lot.  So to make things cheaper, you have to
-opt-in explicitely, by setting the environment variable
-GIT_NOTES_TIMING_TESTS.
+You probably want something like
 
-[jc: tests: fix "export var=val"]
+	git rebase new-master branch-a
+	git rebase --onto branch-a branch-a@{1} branch-b
+	git rebase --onto branch-b branch-b@{1} branch-c
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-Signed-off-by: Johan Herland <johan@herland.net>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- t/t3302-notes-index-expensive.sh |   98 ++++++++++++++++++++++++++++++++++++++
- 1 files changed, 98 insertions(+), 0 deletions(-)
- create mode 100755 t/t3302-notes-index-expensive.sh
-
-diff --git a/t/t3302-notes-index-expensive.sh b/t/t3302-notes-index-expensive.sh
-new file mode 100755
-index 0000000..0ef3e95
---- /dev/null
-+++ b/t/t3302-notes-index-expensive.sh
-@@ -0,0 +1,98 @@
-+#!/bin/sh
-+#
-+# Copyright (c) 2007 Johannes E. Schindelin
-+#
-+
-+test_description='Test commit notes index (expensive!)'
-+
-+. ./test-lib.sh
-+
-+test -z "$GIT_NOTES_TIMING_TESTS" && {
-+	say Skipping timing tests
-+	test_done
-+	exit
-+}
-+
-+create_repo () {
-+	number_of_commits=$1
-+	nr=0
-+	parent=
-+	test -d .git || {
-+	git init &&
-+	tree=$(git write-tree) &&
-+	while [ $nr -lt $number_of_commits ]; do
-+		test_tick &&
-+		commit=$(echo $nr | git commit-tree $tree $parent) ||
-+			return
-+		parent="-p $commit"
-+		nr=$(($nr+1))
-+	done &&
-+	git update-ref refs/heads/master $commit &&
-+	{
-+		GIT_INDEX_FILE=.git/temp; export GIT_INDEX_FILE;
-+		git rev-list HEAD | cat -n | sed "s/^[ 	][ 	]*/ /g" |
-+		while read nr sha1; do
-+			blob=$(echo note $nr | git hash-object -w --stdin) &&
-+			echo $sha1 | sed "s/^/0644 $blob 0	/"
-+		done | git update-index --index-info &&
-+		tree=$(git write-tree) &&
-+		test_tick &&
-+		commit=$(echo notes | git commit-tree $tree) &&
-+		git update-ref refs/notes/commits $commit
-+	} &&
-+	git config core.notesRef refs/notes/commits
-+	}
-+}
-+
-+test_notes () {
-+	count=$1 &&
-+	git config core.notesRef refs/notes/commits &&
-+	git log | grep "^    " > output &&
-+	i=1 &&
-+	while [ $i -le $count ]; do
-+		echo "    $(($count-$i))" &&
-+		echo "    note $i" &&
-+		i=$(($i+1));
-+	done > expect &&
-+	git diff expect output
-+}
-+
-+cat > time_notes << \EOF
-+	mode=$1
-+	i=1
-+	while [ $i -lt $2 ]; do
-+		case $1 in
-+		no-notes)
-+			GIT_NOTES_REF=non-existing; export GIT_NOTES_REF
-+		;;
-+		notes)
-+			unset GIT_NOTES_REF
-+		;;
-+		esac
-+		git log >/dev/null
-+		i=$(($i+1))
-+	done
-+EOF
-+
-+time_notes () {
-+	for mode in no-notes notes
-+	do
-+		echo $mode
-+		/usr/bin/time sh ../time_notes $mode $1
-+	done
-+}
-+
-+for count in 10 100 1000 10000; do
-+
-+	mkdir $count
-+	(cd $count;
-+
-+	test_expect_success "setup $count" "create_repo $count"
-+
-+	test_expect_success 'notes work' "test_notes $count"
-+
-+	test_expect_success 'notes timing' "time_notes 100"
-+	)
-+done
-+
-+test_done
--- 
-1.6.3.rc0.1.gf800
+instead, because if you have any conflicts during rebase, the rebased
+commits will no longer be recognized as identical, causing even more
+conflicts in the following rebases.
