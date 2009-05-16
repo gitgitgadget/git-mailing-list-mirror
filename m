@@ -1,124 +1,118 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: Re: [PATCH] new test fails "add -p" for adds on the top line
-Date: Sat, 16 May 2009 16:12:22 +0200
-Message-ID: <200905161612.30911.trast@student.ethz.ch>
-References: <1c5969370905152010m486a8b85s96334e99e6c54ad5@mail.gmail.com> <20090516192529.6117@nanako3.lavabit.com>
+From: git@drmicha.warpmail.net
+Subject: Re: [PATCH 0/5] RESEND: git notes
+Date: Sat, 16 May 2009 17:06:55 +0200
+Message-ID: <4A0ED68F.6060200@drmicha.warpmail.net>
+References: <cover.1242437696.git.johan@herland.net>
 Mime-Version: 1.0
-Content-Type: multipart/signed;
-  boundary="nextPart2758120.4o2knWFYyk";
-  protocol="application/pgp-signature";
-  micalg=pgp-sha1
+Content-Type: text/plain; charset=ISO-8859-15
 Content-Transfer-Encoding: 7bit
-Cc: Matt Graham <mdg149@gmail.com>, git@vger.kernel.org
-To: Nanako Shiraishi <nanako3@lavabit.com>
-X-From: git-owner@vger.kernel.org Sat May 16 16:13:35 2009
+Cc: gitster@pobox.com, git@vger.kernel.org, johannes.schindelin@gmx.de,
+	trast@student.ethz.ch, tavestbo@trolltech.com,
+	chriscool@tuxfamily.org
+To: Johan Herland <johan@herland.net>
+X-From: git-owner@vger.kernel.org Sat May 16 17:24:09 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M5Kdr-0007CS-Ew
-	for gcvg-git-2@gmane.org; Sat, 16 May 2009 16:13:35 +0200
+	id 1M5LjL-0007Yl-V7
+	for gcvg-git-2@gmane.org; Sat, 16 May 2009 17:23:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754891AbZEPONT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 16 May 2009 10:13:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754802AbZEPONS
-	(ORCPT <rfc822;git-outgoing>); Sat, 16 May 2009 10:13:18 -0400
-Received: from xsmtp1.ethz.ch ([82.130.70.13]:20904 "EHLO xsmtp1.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754782AbZEPONR (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 16 May 2009 10:13:17 -0400
-Received: from xfe2.d.ethz.ch ([82.130.124.42]) by xsmtp1.ethz.ch with Microsoft SMTPSVC(6.0.3790.3959);
-	 Sat, 16 May 2009 16:13:12 +0200
-Received: from thomas.localnet ([77.56.223.244]) by xfe2.d.ethz.ch over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
-	 Sat, 16 May 2009 16:13:16 +0200
-User-Agent: KMail/1.11.3 (Linux/2.6.27.21-0.1-default; KDE/4.2.3; x86_64; ; )
-In-Reply-To: <20090516192529.6117@nanako3.lavabit.com>
-X-OriginalArrivalTime: 16 May 2009 14:13:17.0058 (UTC) FILETIME=[753E9620:01C9D630]
+	id S1754891AbZEPPXK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 16 May 2009 11:23:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752627AbZEPPXI
+	(ORCPT <rfc822;git-outgoing>); Sat, 16 May 2009 11:23:08 -0400
+Received: from hades.rz.tu-clausthal.de ([139.174.2.20]:56294 "EHLO
+	hades.rz.tu-clausthal.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753497AbZEPPXH (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 16 May 2009 11:23:07 -0400
+X-Greylist: delayed 882 seconds by postgrey-1.27 at vger.kernel.org; Sat, 16 May 2009 11:23:07 EDT
+Received: from hades.rz.tu-clausthal.de (localhost [127.0.0.1])
+	by localhost (Postfix) with SMTP id 39CDF21EEA9;
+	Sat, 16 May 2009 17:07:02 +0200 (CEST)
+Received: from tu-clausthal.de (poseidon [139.174.2.21])
+	by hades.rz.tu-clausthal.de (Postfix) with ESMTP id 1B2F321EEA8;
+	Sat, 16 May 2009 17:07:01 +0200 (CEST)
+Received: from [84.133.139.66] (account mjg HELO localhost.localdomain)
+  by tu-clausthal.de (CommuniGate Pro SMTP 5.2.14)
+  with ESMTPSA id 43219606; Sat, 16 May 2009 17:07:01 +0200
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1b5pre) Gecko/20090511 Lightning/1.0pre Shredder/3.0b3pre
+In-Reply-To: <cover.1242437696.git.johan@herland.net>
+X-Enigmail-Version: 0.96a
+X-Virus-Scanned: by PureMessage V5.5 at tu-clausthal.de
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119362>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119363>
 
---nextPart2758120.4o2knWFYyk
-Content-Type: text/plain;
-  charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
-Content-Disposition: inline
+Johan Herland venit, vidit, dixit 16.05.2009 03:45:
+> Hi,
+> 
+> Dscho has asked me to take over the responsibility for the js/notes
+> patch series.
+> 
+> The following is a re-roll and resend of the patch series currently
+> in pu, plus my own 2 patches for adding support for "-m" and "-F" to
+> "git notes edit".
+> 
+> On advice from Dscho, I have squashed the current bugfix and cleanup
+> patches in js/notes into the first 4 "main" patches. As a result the
+> original 15 + 2 patch series is now down to 5 (4 + 1) patches.
+> 
+> In sum, these 5 patches produce the exact same result as the original
+> js/notes series (plus my 2 patches).
+> 
+> I have taken the liberty of squashing the various Signed-off-by tags
+> (along with their corresponding patches) into these 5 new patches.
+> I hope this is OK with everybody. If not, I apologize; please tell me,
+> and I will re-send.
 
-Nanako Shiraishi wrote:
-> Quoting Matt Graham <mdg149@gmail.com>:
->=20
-> > add -p doesn't work for some diffs.  diffs adding a new line at the top=
- of
-> > the file with other adds later in the file are one way to trigger the p=
-roblem.
-> >
-> > during add -p, split the diff and then answer y for all segments.  the =
-file
-> > won't have been added to the index.
-> >
-> > Signed-off-by: Matthew Graham <mdg149@gmail.com>
->=20
-> I tried "git-add -p" from different versions and I found out that version=
-s before the commit 0beee4c6dec15292415e3d56075c16a76a22af54 doesn't have t=
-his problem.
->=20
-> commit 0beee4c6dec15292415e3d56075c16a76a22af54
-> Author: Thomas Rast <trast@student.ethz.ch>
-> Date:   Wed Jul 2 23:59:44 2008 +0200
->=20
->     git-add--interactive: remove hunk coalescing
->    =20
->     Current git-apply has no trouble at all applying chunks that have
->     overlapping context, as produced by the splitting feature. So we can
->     drop the manual coalescing.
->    =20
->     Signed-off-by: Thomas Rast <trast@student.ethz.ch>
->     Signed-off-by: Junio C Hamano <gitster@pobox.com>
+Well, effectively you removed me (and others) from the author list :|
 
-The above commit still reverts cleanly, but AFAICS merge_hunk blindly
-trusts the hunk headers, an assumption that is no longer valid due to
-the 'edit' feature.  So either we need to recount the hunk headers
-prior to merging (which was rejected back in the 'edit' feature
-discussion due to code complexity) or find some other solution.
+I think the issue with the tree difference after this series (compared
+to the original one) shows that this squashing action makes reviewers'
+lives more complicated rather than easier. If it were the other way
+round squashing would be fine, of course.
 
-Passing either --unidiff-zero or -C1 with the failing patch fixes the
-problem, but oddly (to me at least) -C2 does not.  The generated error
-looks like
+Michael
 
-  $ git apply --check -v -C2 < patch
-  Checking patch file...
-  error: while searching for:
-  baseline
-  content
-
-  error: patch failed: file:1
-  error: file: patch does not apply
-
-The corresponding call (builtin-apply.c:2093) is
-
-			error("while searching for:\n%.*s",
-			      (int)(old - oldlines), oldlines);
-
-so it does not seem to insert the extra newline.  Is it actually
-looking for a blank line in the context?  If so, wouldn't that be a
-git-apply bug?
-
-=2D-=20
-Thomas Rast
-trast@{inf,student}.ethz.ch
-
---nextPart2758120.4o2knWFYyk
-Content-Type: application/pgp-signature; name=signature.asc 
-Content-Description: This is a digitally signed message part.
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.9 (GNU/Linux)
-
-iEYEABECAAYFAkoOyc4ACgkQqUud07tmzP0yDwCffLMTHS0b81Pw0YOkQzccPMgO
-B64An3qXmhm4p0gKyTZttVVGrvTlS6Mk
-=RtNv
------END PGP SIGNATURE-----
-
---nextPart2758120.4o2knWFYyk--
+> 
+> 
+> Have fun! :)
+> 
+> ...Johan
+> 
+> 
+> Johan Herland (1):
+>   Teach "-m <msg>" and "-F <file>" to "git notes edit"
+> 
+> Johannes Schindelin (4):
+>   Introduce commit notes
+>   Add a script to edit/inspect notes
+>   Speed up git notes lookup
+>   Add an expensive test for git-notes
+> 
+>  .gitignore                       |    1 +
+>  Documentation/config.txt         |   13 +++
+>  Documentation/git-notes.txt      |   60 ++++++++++++++
+>  Makefile                         |    3 +
+>  cache.h                          |    4 +
+>  command-list.txt                 |    1 +
+>  commit.c                         |    1 +
+>  config.c                         |    5 +
+>  environment.c                    |    1 +
+>  git-notes.sh                     |  121 ++++++++++++++++++++++++++++
+>  notes.c                          |  160 ++++++++++++++++++++++++++++++++++++++
+>  notes.h                          |    7 ++
+>  pretty.c                         |    5 +
+>  t/t3301-notes.sh                 |  149 +++++++++++++++++++++++++++++++++++
+>  t/t3302-notes-index-expensive.sh |   98 +++++++++++++++++++++++
+>  15 files changed, 629 insertions(+), 0 deletions(-)
+>  create mode 100644 Documentation/git-notes.txt
+>  create mode 100755 git-notes.sh
+>  create mode 100644 notes.c
+>  create mode 100644 notes.h
+>  create mode 100755 t/t3301-notes.sh
+>  create mode 100755 t/t3302-notes-index-expensive.sh
+> 
