@@ -1,11 +1,11 @@
 From: Johan Herland <johan@herland.net>
-Subject: [PATCHv2 2/5] Add a script to edit/inspect notes
-Date: Sat, 16 May 2009 13:44:14 +0200
-Message-ID: <dd22ea95fb7fbf8cfee5b0ec482af3395b408175.1242473357.git.johan@herland.net>
+Subject: [PATCHv2 3/5] Speed up git notes lookup
+Date: Sat, 16 May 2009 13:44:15 +0200
+Message-ID: <1534aac028f3b64578b6f07858cf6108736a3e32.1242473357.git.johan@herland.net>
 References: <200905161320.45426.johan@herland.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: TEXT/PLAIN
+Content-Transfer-Encoding: 7BIT
 Cc: git@vger.kernel.org, johannes.schindelin@gmx.de,
 	trast@student.ethz.ch, tavestbo@trolltech.com, johan@herland.net,
 	git@drmicha.warpmail.net, chriscool@tuxfamily.org,
@@ -16,26 +16,26 @@ Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M5IKb-0006Ey-Di
-	for gcvg-git-2@gmane.org; Sat, 16 May 2009 13:45:33 +0200
+	id 1M5IKc-0006Ey-3X
+	for gcvg-git-2@gmane.org; Sat, 16 May 2009 13:45:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755098AbZEPLpJ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 16 May 2009 07:45:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754799AbZEPLpI
-	(ORCPT <rfc822;git-outgoing>); Sat, 16 May 2009 07:45:08 -0400
-Received: from mx.getmail.no ([84.208.15.66]:42088 "EHLO
-	get-mta-out02.get.basefarm.net" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1754626AbZEPLpF (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 16 May 2009 07:45:05 -0400
-Received: from mx.getmail.no ([10.5.16.4]) by get-mta-out02.get.basefarm.net
+	id S1755619AbZEPLpN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 16 May 2009 07:45:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755415AbZEPLpK
+	(ORCPT <rfc822;git-outgoing>); Sat, 16 May 2009 07:45:10 -0400
+Received: from mx.getmail.no ([84.208.15.66]:33631 "EHLO
+	get-mta-out01.get.basefarm.net" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1754749AbZEPLpG (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 16 May 2009 07:45:06 -0400
+Received: from mx.getmail.no ([10.5.16.4]) by get-mta-out01.get.basefarm.net
  (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
- with ESMTP id <0KJQ00MYIJB4B920@get-mta-out02.get.basefarm.net> for
- git@vger.kernel.org; Sat, 16 May 2009 13:45:04 +0200 (MEST)
+ with ESMTP id <0KJQ00AMCJB6PS50@get-mta-out01.get.basefarm.net> for
+ git@vger.kernel.org; Sat, 16 May 2009 13:45:07 +0200 (MEST)
 Received: from localhost.localdomain ([84.215.102.95])
  by get-mta-in01.get.basefarm.net
  (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
  with ESMTP id <0KJQ000ANJA8KDC0@get-mta-in01.get.basefarm.net> for
- git@vger.kernel.org; Sat, 16 May 2009 13:45:01 +0200 (MEST)
+ git@vger.kernel.org; Sat, 16 May 2009 13:45:05 +0200 (MEST)
 X-PMX-Version: 5.5.3.366731, Antispam-Engine: 2.7.0.366912,
  Antispam-Data: 2009.5.16.112528
 X-Mailer: git-send-email 1.6.3.rc0.1.gf800
@@ -46,341 +46,170 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119357>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119358>
 
-=46rom: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 
-The script 'git notes' allows you to edit and show commit notes, by
-calling either
+To avoid looking up each and every commit in the notes ref's tree
+object, which is very expensive, speed things up by slurping the tree
+object's contents into a hash_map.
 
-	git notes show <commit>
+The idea for the hashmap singleton is from David Reiss, initial
+benchmarking by Jeff King.
 
-or
+Note: the implementation allows for arbitrary entries in the notes
+tree object, ignoring those that do not reference a valid object.  This
+allows you to annotate arbitrary branches, or objects.
 
-	git notes edit <commit>
-
-[tv: fix printing of multi-line notes]
-[mg: test and handle empty notes gracefully]
-[tr: only clean up message file when editing]
-[tr: use GIT_EDITOR and core.editor over VISUAL/EDITOR]
-[tr: t3301: fix confusing quoting in test for valid notes ref]
-[tr: t3301: use test_must_fail instead of !]
-[tr: refuse to edit notes outside refs/notes/]
-[jc: tests: fix "export var=3Dval"]
-[cc: Documentation: fix 'linkgit' macro in "git-notes.txt"]
-[jh: Minor cleanup and bugfixing in git-notes.sh (v2)]
+[jc: fixed an obvious error in initialize_hash_map()]
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-Signed-off-by: Tor Arne Vestb=C3=B8 <tavestbo@trolltech.com>
-Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
-Signed-off-by: Thomas Rast <trast@student.ethz.ch>
-Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 Signed-off-by: Johan Herland <johan@herland.net>
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- .gitignore                  |    1 +
- Documentation/git-notes.txt |   46 +++++++++++++++++
- Makefile                    |    1 +
- command-list.txt            |    1 +
- git-notes.sh                |   73 +++++++++++++++++++++++++++
- t/t3301-notes.sh            |  114 +++++++++++++++++++++++++++++++++++=
-++++++++
- 6 files changed, 236 insertions(+), 0 deletions(-)
- create mode 100644 Documentation/git-notes.txt
- create mode 100755 git-notes.sh
- create mode 100755 t/t3301-notes.sh
+ notes.c |  113 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++------
+ 1 files changed, 102 insertions(+), 11 deletions(-)
 
-diff --git a/.gitignore b/.gitignore
-index 41c0b20..13221e7 100644
---- a/.gitignore
-+++ b/.gitignore
-@@ -86,6 +86,7 @@ git-mktag
- git-mktree
- git-name-rev
- git-mv
-+git-notes
- git-pack-redundant
- git-pack-objects
- git-pack-refs
-diff --git a/Documentation/git-notes.txt b/Documentation/git-notes.txt
-new file mode 100644
-index 0000000..7136016
---- /dev/null
-+++ b/Documentation/git-notes.txt
-@@ -0,0 +1,46 @@
-+git-notes(1)
-+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+diff --git a/notes.c b/notes.c
+index b0cf553..bd73784 100644
+--- a/notes.c
++++ b/notes.c
+@@ -4,16 +4,112 @@
+ #include "refs.h"
+ #include "utf8.h"
+ #include "strbuf.h"
++#include "tree-walk.h"
 +
-+NAME
-+----
-+git-notes - Add/inspect commit notes
++struct entry {
++	unsigned char commit_sha1[20];
++	unsigned char notes_sha1[20];
++};
 +
-+SYNOPSIS
-+--------
-+[verse]
-+'git-notes' (edit | show) [commit]
++struct hash_map {
++	struct entry *entries;
++	off_t count, size;
++};
+ 
+ static int initialized;
++static struct hash_map hash_map;
 +
-+DESCRIPTION
-+-----------
-+This command allows you to add notes to commit messages, without
-+changing the commit.  To discern these notes from the message stored
-+in the commit object, the notes are indented like the message, after
-+an unindented line saying "Notes:".
++static int hash_index(struct hash_map *map, const unsigned char *sha1)
++{
++	int i = ((*(unsigned int *)sha1) % map->size);
 +
-+To disable commit notes, you have to set the config variable
-+core.notesRef to the empty string.  Alternatively, you can set it
-+to a different ref, something like "refs/notes/bugzilla".  This settin=
-g
-+can be overridden by the environment variable "GIT_NOTES_REF".
++	for (;;) {
++		unsigned char *current = map->entries[i].commit_sha1;
 +
++		if (!hashcmp(sha1, current))
++			return i;
 +
-+SUBCOMMANDS
-+-----------
++		if (is_null_sha1(current))
++			return -1 - i;
 +
-+edit::
-+	Edit the notes for a given commit (defaults to HEAD).
++		if (++i == map->size)
++			i = 0;
++	}
++}
 +
-+show::
-+	Show the notes for a given commit (defaults to HEAD).
++static void add_entry(const unsigned char *commit_sha1,
++		const unsigned char *notes_sha1)
++{
++	int index;
 +
++	if (hash_map.count + 1 > hash_map.size >> 1) {
++		int i, old_size = hash_map.size;
++		struct entry *old = hash_map.entries;
 +
-+Author
-+------
-+Written by Johannes Schindelin <johannes.schindelin@gmx.de>
++		hash_map.size = old_size ? old_size << 1 : 64;
++		hash_map.entries = (struct entry *)
++			xcalloc(sizeof(struct entry), hash_map.size);
 +
-+Documentation
-+-------------
-+Documentation by Johannes Schindelin
++		for (i = 0; i < old_size; i++)
++			if (!is_null_sha1(old[i].commit_sha1)) {
++				index = -1 - hash_index(&hash_map,
++						old[i].commit_sha1);
++				memcpy(hash_map.entries + index, old + i,
++					sizeof(struct entry));
++			}
++		free(old);
++	}
 +
-+GIT
-+---
-+Part of the linkgit:git[7] suite
-diff --git a/Makefile b/Makefile
-index 59e102c..1d91a04 100644
---- a/Makefile
-+++ b/Makefile
-@@ -295,6 +295,7 @@ SCRIPT_SH +=3D git-merge-one-file.sh
- SCRIPT_SH +=3D git-merge-resolve.sh
- SCRIPT_SH +=3D git-mergetool.sh
- SCRIPT_SH +=3D git-mergetool--lib.sh
-+SCRIPT_SH +=3D git-notes.sh
- SCRIPT_SH +=3D git-parse-remote.sh
- SCRIPT_SH +=3D git-pull.sh
- SCRIPT_SH +=3D git-quiltimport.sh
-diff --git a/command-list.txt b/command-list.txt
-index fb03a2e..4296941 100644
---- a/command-list.txt
-+++ b/command-list.txt
-@@ -74,6 +74,7 @@ git-mktag                               plumbingmanip=
-ulators
- git-mktree                              plumbingmanipulators
- git-mv                                  mainporcelain common
- git-name-rev                            plumbinginterrogators
-+git-notes                               mainporcelain
- git-pack-objects                        plumbingmanipulators
- git-pack-redundant                      plumbinginterrogators
- git-pack-refs                           ancillarymanipulators
-diff --git a/git-notes.sh b/git-notes.sh
-new file mode 100755
-index 0000000..f06c254
---- /dev/null
-+++ b/git-notes.sh
-@@ -0,0 +1,73 @@
-+#!/bin/sh
++	index = hash_index(&hash_map, commit_sha1);
++	if (index < 0) {
++		index = -1 - index;
++		hash_map.count++;
++	}
 +
-+USAGE=3D"(edit | show) [commit]"
-+. git-sh-setup
++	hashcpy(hash_map.entries[index].commit_sha1, commit_sha1);
++	hashcpy(hash_map.entries[index].notes_sha1, notes_sha1);
++}
 +
-+test -n "$3" && usage
++static void initialize_hash_map(const char *notes_ref_name)
++{
++	unsigned char sha1[20], commit_sha1[20];
++	unsigned mode;
++	struct tree_desc desc;
++	struct name_entry entry;
++	void *buf;
 +
-+test -z "$1" && usage
-+ACTION=3D"$1"; shift
++	if (!notes_ref_name || read_ref(notes_ref_name, commit_sha1) ||
++	    get_tree_entry(commit_sha1, "", sha1, &mode))
++		return;
 +
-+test -z "$GIT_NOTES_REF" && GIT_NOTES_REF=3D"$(git config core.notesre=
-f)"
-+test -z "$GIT_NOTES_REF" && GIT_NOTES_REF=3D"refs/notes/commits"
++	buf = fill_tree_descriptor(&desc, sha1);
++	if (!buf)
++		die("Could not read %s for notes-index", sha1_to_hex(sha1));
 +
-+COMMIT=3D$(git rev-parse --verify --default HEAD "$@") ||
-+die "Invalid commit: $@"
++	while (tree_entry(&desc, &entry))
++		if (!get_sha1(entry.path, commit_sha1))
++			add_entry(commit_sha1, entry.sha1);
++	free(buf);
++}
 +
-+case "$ACTION" in
-+edit)
-+	if [ "${GIT_NOTES_REF#refs/notes/}" =3D "$GIT_NOTES_REF" ]; then
-+		die "Refusing to edit notes in $GIT_NOTES_REF (outside of refs/notes=
-/)"
-+	fi
++static unsigned char *lookup_notes(const unsigned char *commit_sha1)
++{
++	int index;
 +
-+	MSG_FILE=3D"$GIT_DIR/new-notes-$COMMIT"
-+	GIT_INDEX_FILE=3D"$MSG_FILE.idx"
-+	export GIT_INDEX_FILE
++	if (!hash_map.size)
++		return NULL;
 +
-+	trap '
-+		test -f "$MSG_FILE" && rm "$MSG_FILE"
-+		test -f "$GIT_INDEX_FILE" && rm "$GIT_INDEX_FILE"
-+	' 0
-+
-+	GIT_NOTES_REF=3D git log -1 $COMMIT | sed "s/^/#/" > "$MSG_FILE"
-+
-+	CURRENT_HEAD=3D$(git show-ref "$GIT_NOTES_REF" | cut -f 1 -d ' ')
-+	if [ -z "$CURRENT_HEAD" ]; then
-+		PARENT=3D
-+	else
-+		PARENT=3D"-p $CURRENT_HEAD"
-+		git read-tree "$GIT_NOTES_REF" || die "Could not read index"
-+		git cat-file blob :$COMMIT >> "$MSG_FILE" 2> /dev/null
-+	fi
-+
-+	core_editor=3D"$(git config core.editor)"
-+	${GIT_EDITOR:-${core_editor:-${VISUAL:-${EDITOR:-vi}}}} "$MSG_FILE"
-+
-+	grep -v ^# < "$MSG_FILE" | git stripspace > "$MSG_FILE".processed
-+	mv "$MSG_FILE".processed "$MSG_FILE"
-+	if [ -s "$MSG_FILE" ]; then
-+		BLOB=3D$(git hash-object -w "$MSG_FILE") ||
-+			die "Could not write into object database"
-+		git update-index --add --cacheinfo 0644 $BLOB $COMMIT ||
-+			die "Could not write index"
-+	else
-+		test -z "$CURRENT_HEAD" &&
-+			die "Will not initialise with empty tree"
-+		git update-index --force-remove $COMMIT ||
-+			die "Could not update index"
-+	fi
-+
-+	TREE=3D$(git write-tree) || die "Could not write tree"
-+	NEW_HEAD=3D$(echo Annotate $COMMIT | git commit-tree $TREE $PARENT) |=
-|
-+		die "Could not annotate"
-+	git update-ref -m "Annotate $COMMIT" \
-+		"$GIT_NOTES_REF" $NEW_HEAD $CURRENT_HEAD
-+;;
-+show)
-+	git rev-parse -q --verify "$GIT_NOTES_REF":$COMMIT > /dev/null ||
-+		die "No note for commit $COMMIT."
-+	git show "$GIT_NOTES_REF":$COMMIT
-+;;
-+*)
-+	usage
-+esac
-diff --git a/t/t3301-notes.sh b/t/t3301-notes.sh
-new file mode 100755
-index 0000000..73e53be
---- /dev/null
-+++ b/t/t3301-notes.sh
-@@ -0,0 +1,114 @@
-+#!/bin/sh
-+#
-+# Copyright (c) 2007 Johannes E. Schindelin
-+#
-+
-+test_description=3D'Test commit notes'
-+
-+. ./test-lib.sh
-+
-+cat > fake_editor.sh << \EOF
-+echo "$MSG" > "$1"
-+echo "$MSG" >& 2
-+EOF
-+chmod a+x fake_editor.sh
-+VISUAL=3D./fake_editor.sh
-+export VISUAL
-+
-+test_expect_success 'cannot annotate non-existing HEAD' '
-+	(MSG=3D3 && export MSG && test_must_fail git notes edit)
-+'
-+
-+test_expect_success setup '
-+	: > a1 &&
-+	git add a1 &&
-+	test_tick &&
-+	git commit -m 1st &&
-+	: > a2 &&
-+	git add a2 &&
-+	test_tick &&
-+	git commit -m 2nd
-+'
-+
-+test_expect_success 'need valid notes ref' '
-+	(MSG=3D1 GIT_NOTES_REF=3D/ && export MSG GIT_NOTES_REF &&
-+	 test_must_fail git notes edit) &&
-+	(MSG=3D2 GIT_NOTES_REF=3D/ && export MSG GIT_NOTES_REF &&
-+	 test_must_fail git notes show)
-+'
-+
-+test_expect_success 'refusing to edit in refs/heads/' '
-+	(MSG=3D1 GIT_NOTES_REF=3Drefs/heads/bogus &&
-+	 export MSG GIT_NOTES_REF &&
-+	 test_must_fail git notes edit)
-+'
-+
-+test_expect_success 'refusing to edit in refs/remotes/' '
-+	(MSG=3D1 GIT_NOTES_REF=3Drefs/remotes/bogus &&
-+	 export MSG GIT_NOTES_REF &&
-+	 test_must_fail git notes edit)
-+'
-+
-+# 1 indicates caught gracefully by die, 128 means git-show barked
-+test_expect_success 'handle empty notes gracefully' '
-+	git notes show ; test 1 =3D $?
-+'
-+
-+test_expect_success 'create notes' '
-+	git config core.notesRef refs/notes/commits &&
-+	MSG=3Db1 git notes edit &&
-+	test ! -f .git/new-notes &&
-+	test 1 =3D $(git ls-tree refs/notes/commits | wc -l) &&
-+	test b1 =3D $(git notes show) &&
-+	git show HEAD^ &&
-+	test_must_fail git notes show HEAD^
-+'
-+
-+cat > expect << EOF
-+commit 268048bfb8a1fb38e703baceb8ab235421bf80c5
-+Author: A U Thor <author@example.com>
-+Date:   Thu Apr 7 15:14:13 2005 -0700
-+
-+    2nd
-+
-+Notes:
-+    b1
-+EOF
-+
-+test_expect_success 'show notes' '
-+	! (git cat-file commit HEAD | grep b1) &&
-+	git log -1 > output &&
-+	test_cmp expect output
-+'
-+test_expect_success 'create multi-line notes (setup)' '
-+	: > a3 &&
-+	git add a3 &&
-+	test_tick &&
-+	git commit -m 3rd &&
-+	MSG=3D"b3
-+c3c3c3c3
-+d3d3d3" git notes edit
-+'
-+
-+cat > expect-multiline << EOF
-+commit 1584215f1d29c65e99c6c6848626553fdd07fd75
-+Author: A U Thor <author@example.com>
-+Date:   Thu Apr 7 15:15:13 2005 -0700
-+
-+    3rd
-+
-+Notes:
-+    b3
-+    c3c3c3c3
-+    d3d3d3
-+EOF
-+
-+printf "\n" >> expect-multiline
-+cat expect >> expect-multiline
-+
-+test_expect_success 'show multi-line notes' '
-+	git log -2 > output &&
-+	test_cmp expect-multiline output
-+'
-+
-+test_done
---=20
++	index = hash_index(&hash_map, commit_sha1);
++	if (index < 0)
++		return NULL;
++	return hash_map.entries[index].notes_sha1;
++}
+ 
+ void get_commit_notes(const struct commit *commit, struct strbuf *sb,
+ 		const char *output_encoding)
+ {
+ 	static const char *utf8 = "utf-8";
+-	struct strbuf name = STRBUF_INIT;
+-	const char *hex;
+-	unsigned char sha1[20];
++	unsigned char *sha1;
+ 	char *msg, *msg_p;
+ 	unsigned long linelen, msglen;
+ 	enum object_type type;
+@@ -24,17 +120,12 @@ void get_commit_notes(const struct commit *commit, struct strbuf *sb,
+ 			notes_ref_name = getenv(GIT_NOTES_REF_ENVIRONMENT);
+ 		else if (!notes_ref_name)
+ 			notes_ref_name = GIT_NOTES_DEFAULT_REF;
+-		if (notes_ref_name && read_ref(notes_ref_name, sha1))
+-			notes_ref_name = NULL;
++		initialize_hash_map(notes_ref_name);
+ 		initialized = 1;
+ 	}
+ 
+-	if (!notes_ref_name)
+-		return;
+-
+-	strbuf_addf(&name, "%s:%s", notes_ref_name,
+-			sha1_to_hex(commit->object.sha1));
+-	if (get_sha1(name.buf, sha1))
++	sha1 = lookup_notes(commit->object.sha1);
++	if (!sha1)
+ 		return;
+ 
+ 	if (!(msg = read_sha1_file(sha1, &type, &msglen)) || !msglen ||
+-- 
 1.6.3.rc0.1.gf800
