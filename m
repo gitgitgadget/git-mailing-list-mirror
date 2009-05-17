@@ -1,109 +1,76 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: On data structures and parallelism
-Date: Sun, 17 May 2009 13:35:44 -0700 (PDT)
-Message-ID: <alpine.LFD.2.01.0905171308010.3301@localhost.localdomain>
-References: <20090517152335.GC11543@zakalwe.fi> <alpine.LFD.2.01.0905170950230.3301@localhost.localdomain> <alpine.LFD.2.01.0905171038320.3301@localhost.localdomain> <alpine.DEB.1.10.0905171230070.26653@asgard>
+From: Stephen Boyd <bebarino@gmail.com>
+Subject: Re: [PATCH 3/3] format-patch: migrate to parse-options API
+Date: Sun, 17 May 2009 14:30:04 -0700
+Message-ID: <4A1081DC.9030403@gmail.com>
+References: <1242465886-31769-1-git-send-email-bebarino@gmail.com> <1242465886-31769-2-git-send-email-bebarino@gmail.com> <1242465886-31769-3-git-send-email-bebarino@gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Heikki Orsila <shdl@zakalwe.fi>, git@vger.kernel.org
-To: david@lang.hm
-X-From: git-owner@vger.kernel.org Sun May 17 22:36:16 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun May 17 23:30:20 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M5n5h-00048F-4w
-	for gcvg-git-2@gmane.org; Sun, 17 May 2009 22:36:13 +0200
+	id 1M5nw4-0006NM-1s
+	for gcvg-git-2@gmane.org; Sun, 17 May 2009 23:30:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752602AbZEQUgF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 17 May 2009 16:36:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752250AbZEQUgE
-	(ORCPT <rfc822;git-outgoing>); Sun, 17 May 2009 16:36:04 -0400
-Received: from smtp1.linux-foundation.org ([140.211.169.13]:36400 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751918AbZEQUgA (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 17 May 2009 16:36:00 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
-	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id n4HKZjfb028261
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Sun, 17 May 2009 13:35:47 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id n4HKZisd002141;
-	Sun, 17 May 2009 13:35:45 -0700
-X-X-Sender: torvalds@localhost.localdomain
-In-Reply-To: <alpine.DEB.1.10.0905171230070.26653@asgard>
-User-Agent: Alpine 2.01 (LFD 1184 2008-12-16)
-X-Spam-Status: No, hits=-3.464 required=5 tests=AWL,BAYES_00
-X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
+	id S1754134AbZEQVaJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 17 May 2009 17:30:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754013AbZEQVaI
+	(ORCPT <rfc822;git-outgoing>); Sun, 17 May 2009 17:30:08 -0400
+Received: from wf-out-1314.google.com ([209.85.200.175]:59397 "EHLO
+	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753735AbZEQVaG (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 17 May 2009 17:30:06 -0400
+Received: by wf-out-1314.google.com with SMTP id 26so1724331wfd.4
+        for <git@vger.kernel.org>; Sun, 17 May 2009 14:30:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from
+         :user-agent:mime-version:to:cc:subject:references:in-reply-to
+         :content-type:content-transfer-encoding;
+        bh=Nhby/dX1rya/aK0E7Gkyn0ZFHoKNzihvBiGokuJ7p1Q=;
+        b=ct0fmsAOqd/MDTSvSpDDdi0LsfPfWGKDn93IXmaefFzCb/LeYltLiupszA/EVxFHWm
+         arPp718N0SwqW2k9H6x/r4SGy2Qv7U7fVErCCi+l+QqPWIsOgohbdTlEvqC8880wOmjN
+         JvU4wplmoRzSyfkz2bOPXpgFBAA9bCxK//mGE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        b=TRkT1EfHHxurW2I4+8dDUZ97M1LodtxgHAWXVvkuXb8XM0ODQEuHeYtlTIK76rP+/V
+         llLQWSXlIcnWZRWmh+yvH5vC7NRiJAlMT2PFvRXZlZMEj8oLncQ4JUMLNZgsUEbi9Tb1
+         bGCD11mJ0gjsX9X0j19OzBi2+jrPOVpR99gcI=
+Received: by 10.142.226.7 with SMTP id y7mr326571wfg.174.1242595807987;
+        Sun, 17 May 2009 14:30:07 -0700 (PDT)
+Received: from ?192.168.1.2? ([76.89.212.195])
+        by mx.google.com with ESMTPS id 32sm7147625wfa.13.2009.05.17.14.30.06
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sun, 17 May 2009 14:30:07 -0700 (PDT)
+User-Agent: Thunderbird 2.0.0.21 (X11/20090429)
+In-Reply-To: <1242465886-31769-3-git-send-email-bebarino@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119408>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119409>
 
+Oops there's a typo. Junio, can you squash this in?
 
+Thanks,
+-Stephen
 
-On Sun, 17 May 2009, david@lang.hm wrote:
-> 
-> do things change with SSDs? I've heard that even (especially??) with the Intel
-> SSDs you want to have several operations going in paralllel to get the best
-> out of them.
-
-There's a slight, but noticeable, improvement.
-
-This is: "echo 3 > /proc/sys/vm/drop_caches; time git diff" run in a loop. 
-
-With 'core.preloadindex = true':
-
-	real	0m1.138s
-	real	0m1.116s
-	real	0m1.132s
-	real	0m1.120s
-	real	0m1.106s
-	real	0m1.132s
-
-and with it set to 'false':
-
-	real	0m1.256s
-	real	0m1.258s
-	real	0m1.242s
-	real	0m1.240s
-	real	0m1.244s
-	real	0m1.242s
-
-so it's about a 10% improvement. Which is pretty good, considering 
-that
-
- (a) those disks are fast enough that even for that totally cache-cold 
-     case, I get about 35% CPU utilization for the single-threaded case.
-
-     And that's despite this being a 3.2GHz Nehalem box, so 35% CPU is 
-     really quite remarkably good. Om my (much slower) laptop with a 
-     1.2GHz Core 2, I get 2-3% CPU-time (and the whole operation takes 20 
-     seconds).
-
- (b) Not all the IO ends up being parallelized, since there is a 
-     per-directory mutex that means that even though we start 20 threads, 
-     it probably gets a much smaller amount of real parallelism due to 
-     locking.
-
-in general, the IO parallelization obviously helps most when the IO is 
-slow _and_ overlaps perfectly. Perfect overlap doesn't end up happening 
-due to the per-directory lookup semaphore (think of it like a bank 
-conflict in trying to parallelize memory accesses), but with a slow NFS 
-connection you should get reasonably close to that optimal situation.
-
-But with a single spindle, and rotating media, there really is sadly very 
-little room for optimization. I suspect a SATA with TCQ disk might be able 
-to do _somewhat_ better than my old PATA-only laptop (discounting the fact 
-that my PATA laptop harddisk is extra slow due to being just 4200rpm: any 
-desktop disk will be much faster), but I doubt the index preloading is 
-really all that noticeable.
-
-In fact, I just tested on another machine, and saw no difference 
-what-so-ever. If anything, it was slightly slower. I suspect TCQ is a 
-bigger win with writes.
-
-			Linus
+diff --git a/builtin-log.c b/builtin-log.c
+index 3a8b9fa..d522b3d 100644
+--- a/builtin-log.c
++++ b/builtin-log.c
+@@ -868,7 +868,7 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
+                            "use [PATCH n/m] even with a single patch",
+                            PARSE_OPT_NOARG, numbered_callback },
+                { OPTION_CALLBACK, 'N', "no-numbered", &numbered, NULL,
+-                           "use [PATCH] even with a multiple patches",
++                           "use [PATCH] even with multiple patches",
+                            PARSE_OPT_NOARG, no_numbered_callback },
+                OPT_BOOLEAN('s', "signoff", &do_signoff, "add Signed-off-by:"),
+                OPT_BOOLEAN(0, "stdout", &use_stdout,
