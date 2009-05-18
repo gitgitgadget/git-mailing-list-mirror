@@ -1,179 +1,71 @@
-From: Stephen Boyd <bebarino@gmail.com>
-Subject: [PATCH] tests: introduce --trash specifying root directory for trash folders
-Date: Mon, 18 May 2009 00:49:16 -0700
-Message-ID: <1242632956-7175-1-git-send-email-bebarino@gmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon May 18 09:49:29 2009
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/3] parse-options: add PARSE_OPT_CUSTOM_ARGH for complicated argh's
+Date: Mon, 18 May 2009 00:57:43 -0700
+Message-ID: <7vmy9aetc8.fsf@alter.siamese.dyndns.org>
+References: <1242557224-8411-1-git-send-email-bebarino@gmail.com>
+	<1242557224-8411-2-git-send-email-bebarino@gmail.com>
+	<7vd4a7ey4h.fsf@alter.siamese.dyndns.org> <4A11096B.8020208@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Stephen Boyd <bebarino@gmail.com>
+X-From: git-owner@vger.kernel.org Mon May 18 09:58:43 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M5xbE-00075D-CC
-	for gcvg-git-2@gmane.org; Mon, 18 May 2009 09:49:28 +0200
+	id 1M5xkB-0001su-1H
+	for gcvg-git-2@gmane.org; Mon, 18 May 2009 09:58:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756022AbZERHtU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 18 May 2009 03:49:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755880AbZERHtT
-	(ORCPT <rfc822;git-outgoing>); Mon, 18 May 2009 03:49:19 -0400
-Received: from wf-out-1314.google.com ([209.85.200.171]:30069 "EHLO
-	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755852AbZERHtS (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 May 2009 03:49:18 -0400
-Received: by wf-out-1314.google.com with SMTP id 26so1824836wfd.4
-        for <git@vger.kernel.org>; Mon, 18 May 2009 00:49:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:from:to:cc:subject
-         :date:message-id:x-mailer;
-        bh=v+EK24ffNtWmmjFeXBWGRJD9QAUitmkpf0uOCUCUG6A=;
-        b=EjXnEuW+ii3JJfjMrFtsI7fe2vMScSJR4utVxqjPxIyFQhzMXmeySf/66Bzmb6tUsY
-         BpeMWFl+Fk2jOLueRAtVIKizqvC1JtrJznPVH2c+J8T7d58VnaJZxLiaGuvl5/SS0wz7
-         UmHvP53AOzFXBsUMg7CzRCKikhgs9wLIBGeQ4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        b=vw0hY7mGSmm6EaYEgZwyLu0DLG6l80eOcIYDEKeB+lglDg7lQZNyE/Rj72md0st1y3
-         nKgQu/cZDQ7lAtVh5+os3PrlmSFh9XtgsuVN9UxzCs5hN+U+JmdUo1vQDDamaGMexHXw
-         kI20edHr2MQKbRyzQ6W/31LfGSQdk9oG3f/ME=
-Received: by 10.142.103.11 with SMTP id a11mr1802388wfc.113.1242632960140;
-        Mon, 18 May 2009 00:49:20 -0700 (PDT)
-Received: from earth ([76.89.212.195])
-        by mx.google.com with ESMTPS id 24sm8270546wfc.37.2009.05.18.00.49.18
-        (version=SSLv3 cipher=RC4-MD5);
-        Mon, 18 May 2009 00:49:19 -0700 (PDT)
-Received: by earth (sSMTP sendmail emulation); Mon, 18 May 2009 00:49:16 -0700
-X-Mailer: git-send-email 1.6.3.1.30.g55524
+	id S1756970AbZERH5p (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 18 May 2009 03:57:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756988AbZERH5o
+	(ORCPT <rfc822;git-outgoing>); Mon, 18 May 2009 03:57:44 -0400
+Received: from fed1rmmtao105.cox.net ([68.230.241.41]:41065 "EHLO
+	fed1rmmtao105.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756950AbZERH5n (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 May 2009 03:57:43 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao105.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20090518075745.VIBU20430.fed1rmmtao105.cox.net@fed1rmimpo02.cox.net>;
+          Mon, 18 May 2009 03:57:45 -0400
+Received: from localhost ([68.225.240.211])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id svxj1b0074aMwMQ04vxjZS; Mon, 18 May 2009 03:57:43 -0400
+X-Authority-Analysis: v=1.0 c=1 a=ckEMPOoq4BcA:10 a=gN7GTBdjX9cA:10
+ a=pGLkceISAAAA:8 a=SCkgvFZ-nr6HT9gnmGYA:9 a=E6RUanH0SDuHBTyOv5JKs40YBKYA:4
+ a=MSl-tDqOz04A:10
+X-CM-Score: 0.00
+In-Reply-To: <4A11096B.8020208@gmail.com> (Stephen Boyd's message of "Mon\, 18 May 2009 00\:08\:27 -0700")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119422>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119423>
 
-Normally, a directory named "trash directory.$TEST_NAME" is created for
-each test in the t directory (where the test resides). This option
-allows you to specify a different location to create the trash
-directories.
+Stephen Boyd <bebarino@gmail.com> writes:
 
-For example:
+> This description sounds nice ;) Is PARSE_OPT_CUSTOM_ARGH a good name? I
+> was thinking maybe PARSE_OPT_MULTARGS is better?
 
-    ./some_test.sh --trash /tmp
+You are asking a wrong person.  I am terrible at naming things; think
+"rerere" ;-).
 
-will create a git repo and run the tests in some_test.sh under
-/tmp/trash directory.some_test/
+But I think custom-arghelp is much better than multargs.  You are asking
+"use this help for argument value _literally_", so another possibility
+perhaps is PARSE_OPT_ARGHELP_LITERAL.
 
-Users may want to run tests on a tmpfs or maybe they have a disk they
-would like to run tests on that differs from the location of the source
-code. This option allows them to do so without having to do any mounting
-mumbo-jumbo.
----
+After all, there probably are many other valid reasons why you may not
+want "s/.*/<&>/" blindly applied to your string.  One reason may be
+because the string describes multiple arguments, but I suspect that it is
+not the only one.  It is better to name the option after what it does,
+than naming it after one sample reason why you might want to use that
+option.
 
- I tried this out on a tmpfs and it didn't seem to give me too much speedup.
- Maybe something like 1%, but I couldn't test it with the 2GB test where it
- might be useful? I'm just throwing this out there as something people
- might like.
+>> Please update Documentation/technical/api-parse-options.txt as well.
+>
+> There's no documentation on the flags yet, but I suppose I could add that.
 
-
- t/README                                 |    6 ++++++
- t/t3404-rebase-interactive.sh            |    2 +-
- t/t3411-rebase-preserve-around-merges.sh |    2 +-
- t/t4014-format-patch.sh                  |    2 +-
- t/t4020-diff-external.sh                 |    2 +-
- t/test-lib.sh                            |    6 ++++--
- 6 files changed, 14 insertions(+), 6 deletions(-)
-
-diff --git a/t/README b/t/README
-index d8f6c7d..47a8da3 100644
---- a/t/README
-+++ b/t/README
-@@ -75,6 +75,12 @@ appropriately before running "make".
- 	As the names depend on the tests' file names, it is safe to
- 	run the tests with this option in parallel.
- 
-+--trash::
-+	Normally a directory named "trash directory.$TEST_NAME" is
-+	created for each test in the t directory (where the test
-+	resides). This option allows you to specify a different
-+	location to create the trash directories.
-+
- Skipping Tests
- --------------
- 
-diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
-index c32ff66..da337c3 100755
---- a/t/t3404-rebase-interactive.sh
-+++ b/t/t3404-rebase-interactive.sh
-@@ -10,7 +10,7 @@ that the result still makes sense.
- '
- . ./test-lib.sh
- 
--. ../lib-rebase.sh
-+. $TEST_DIRECTORY/lib-rebase.sh
- 
- set_fake_editor
- 
-diff --git a/t/t3411-rebase-preserve-around-merges.sh b/t/t3411-rebase-preserve-around-merges.sh
-index 6533505..2b82c33 100755
---- a/t/t3411-rebase-preserve-around-merges.sh
-+++ b/t/t3411-rebase-preserve-around-merges.sh
-@@ -10,7 +10,7 @@ a merge to before the merge.
- '
- . ./test-lib.sh
- 
--. ../lib-rebase.sh
-+. $TEST_DIRECTORY/lib-rebase.sh
- 
- set_fake_editor
- 
-diff --git a/t/t4014-format-patch.sh b/t/t4014-format-patch.sh
-index 922a894..0fd7be7 100755
---- a/t/t4014-format-patch.sh
-+++ b/t/t4014-format-patch.sh
-@@ -493,7 +493,7 @@ test_expect_success 'format-patch from a subdirectory (2)' '
- '
- 
- test_expect_success 'format-patch from a subdirectory (3)' '
--	here="$TEST_DIRECTORY/$test" &&
-+	here="$PWD" &&
- 	rm -f 0* &&
- 	filename=$(
- 		rm -rf sub &&
-diff --git a/t/t4020-diff-external.sh b/t/t4020-diff-external.sh
-index 0720001..3d27a95 100755
---- a/t/t4020-diff-external.sh
-+++ b/t/t4020-diff-external.sh
-@@ -157,7 +157,7 @@ test_expect_success 'diff --cached' '
- 	git update-index --assume-unchanged file &&
- 	echo second >file &&
- 	git diff --cached >actual &&
--	test_cmp ../t4020/diff.NUL actual
-+	test_cmp $TEST_DIRECTORY/t4020/diff.NUL actual
- '
- 
- test_done
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index dad1437..022f826 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -114,6 +114,8 @@ do
- 		valgrind=t; verbose=t; shift ;;
- 	--tee)
- 		shift ;; # was handled already
-+	--tr|--tra|--tras|--trash)
-+		shift; trash_dir=$1; shift;;
- 	*)
- 		break ;;
- 	esac
-@@ -637,8 +639,8 @@ fi
- . ../GIT-BUILD-OPTIONS
- 
- # Test repository
--test="trash directory.$(basename "$0" .sh)"
--test ! -z "$debug" || remove_trash="$TEST_DIRECTORY/$test"
-+test="${trash_dir:-$TEST_DIRECTORY}/trash directory.$(basename "$0" .sh)"
-+test ! -z "$debug" || remove_trash=$test
- rm -fr "$test" || {
- 	trap - EXIT
- 	echo >&5 "FATAL: Cannot prepare test area"
--- 
-1.6.3.1.30.g55524
+Thanks.
