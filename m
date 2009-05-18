@@ -1,78 +1,56 @@
-From: "Matthias Andree" <matthias.andree@gmx.de>
-Subject: Re: git svn rebase problem
-Date: Mon, 18 May 2009 10:38:30 +0200
-Message-ID: <op.ut4aagco1e62zd@merlin.emma.line.org>
-References: <4A0DDCC5.4010001@dlasys.net>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: Merging a branch when I don't want conflicts
+Date: Mon, 18 May 2009 11:01:56 +0200
+Message-ID: <4A112404.6060004@viscovery.net>
+References: <93c3eada0905171930m36765d4fued9c2efdc57e51a4@mail.gmail.com>	 <4A10FDC6.2040706@viscovery.net> <93c3eada0905180105n641614eodb0469dceca20bc9@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; format=flowed; delsp=yes; charset=utf-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-To: "David H. Lynch J.r" <ml@dlasys.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon May 18 10:38:44 2009
+Cc: git@vger.kernel.org
+To: geoffrey.russell@gmail.com
+X-From: git-owner@vger.kernel.org Mon May 18 11:02:11 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M5yMt-0007LG-ED
-	for gcvg-git-2@gmane.org; Mon, 18 May 2009 10:38:43 +0200
+	id 1M5yjY-0008SD-FZ
+	for gcvg-git-2@gmane.org; Mon, 18 May 2009 11:02:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751499AbZERIie (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 18 May 2009 04:38:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751073AbZERIid
-	(ORCPT <rfc822;git-outgoing>); Mon, 18 May 2009 04:38:33 -0400
-Received: from mail.gmx.net ([213.165.64.20]:59873 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750768AbZERIic (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 May 2009 04:38:32 -0400
-Received: (qmail invoked by alias); 18 May 2009 08:38:32 -0000
-Received: from unknown (EHLO mandree.no-ip.org) [85.183.215.232]
-  by mail.gmx.net (mp070) with SMTP; 18 May 2009 10:38:32 +0200
-X-Authenticated: #428038
-X-Provags-ID: V01U2FsdGVkX1/yP31cB57yf9YYAvYaOd4W7nbZAnnvOXctyRF0AV
-	95qowu67ol0U9G
-Received: from merlin.emma.line.org (localhost [127.0.0.1])
-	by merlin.emma.line.org (Postfix) with ESMTP id D9A9594AC6;
-	Mon, 18 May 2009 10:38:30 +0200 (CEST)
-In-Reply-To: <4A0DDCC5.4010001@dlasys.net>
-User-Agent: Opera Mail/9.64 (Linux)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.58
+	id S1753901AbZERJB5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 18 May 2009 05:01:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753278AbZERJB5
+	(ORCPT <rfc822;git-outgoing>); Mon, 18 May 2009 05:01:57 -0400
+Received: from lilzmailso01.liwest.at ([212.33.55.23]:60133 "EHLO
+	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751359AbZERJB4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 May 2009 05:01:56 -0400
+Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
+	by lilzmailso01.liwest.at with esmtpa (Exim 4.69)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1M5yjL-0004Hj-Pj; Mon, 18 May 2009 11:01:56 +0200
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.96])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id 48855FCD2; Mon, 18 May 2009 11:01:55 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.21 (Windows/20090302)
+In-Reply-To: <93c3eada0905180105n641614eodb0469dceca20bc9@mail.gmail.com>
+X-Enigmail-Version: 0.95.5
+X-Spam-Score: -1.4 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119431>
 
-Am 15.05.2009, 23:21 Uhr, schrieb David H. Lynch J.r <ml@dlasys.net>:
+Geoff Russell schrieb:
+> The file is data coming out of an interactive program which reads
+> the entire file, edits and then writes the entire file at which point
+> this file is correct
+> and all previous versions are obsolete.  I don't really want a merge
+> at all, but just
+> want to replace the file in the master with the version on the branch.
 
-> For some time I am using git svn to manage a local copy of a remote svn
-> repository.
->
-> The svn repository has no branches.
->
-> A few days ago I did an
-> git svn rebase
->
-> The rebase took a while and after it completed reported
-> fatal: bad object HEAD
->
-> git status reports
-> root@hp-dhlii:/usr/src/pico/git# git status
-> # Not currently on any branch.
-> fatal: bad object HEAD
->
-> and git fsck reports
-> root@hp-dhlii:/usr/src/pico/git# git fsck
-> dangling blob eb3afb4aa3aaf0003bac601a5db4fd76aafa2a87
-> dangling commit 5c496db25007c17c325f294bb8324097c9bc407d
->
-> How can I recover without downloading the entire repository again which
-> could take days?
+Ah, so finally you say what you mean ;)
 
-Have you been working on a branch other than the one that git-svn created  
-for you? If so, you may have to "git checkout" the original branch before  
-being able to "git svn rebase".
+You can define a custom merge driver that always returns the content of
+the second branch. See 'man gitattributes'.
 
-Branches and git-svn don't mix.
-
--- 
-Matthias Andree
+-- Hannes
