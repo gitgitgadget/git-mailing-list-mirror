@@ -1,227 +1,104 @@
-From: David =?utf-8?q?K=C3=A5gedal?= <davidk@lysator.liu.se>
-Subject: [StGit PATCH] Add a --tree flag to stg push
-Date: Mon, 18 May 2009 16:50:18 +0200
-Message-ID: <20090518144754.30487.84132.stgit@krank>
+From: Ping Yin <pkufranky@gmail.com>
+Subject: Re: git subtree: an alternative to git submodule
+Date: Mon, 18 May 2009 23:55:06 +0800
+Message-ID: <46dff0320905180855m3e1bd74esb564af0fbcf4b1ff@mail.gmail.com>
+References: <1241822349-27470-1-git-send-email-apenwarr@gmail.com>
+	 <32541b130905150909h7e596f26w7db6887e7f4267ff@mail.gmail.com>
+	 <7vzldes0ce.fsf@alter.siamese.dyndns.org>
+	 <32541b130905151131h76048ff2o418764aa41bcd13b@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: kha@treskal.com, catalin.marinas@gmail.com
-X-From: git-owner@vger.kernel.org Mon May 18 17:16:58 2009
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Avery Pennarun <apenwarr@gmail.com>
+X-From: git-owner@vger.kernel.org Mon May 18 17:55:18 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M64aA-00087R-5i
-	for gcvg-git-2@gmane.org; Mon, 18 May 2009 17:16:50 +0200
+	id 1M65BM-0001Wy-Sr
+	for gcvg-git-2@gmane.org; Mon, 18 May 2009 17:55:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752782AbZERPQc convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 18 May 2009 11:16:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752092AbZERPQb
-	(ORCPT <rfc822;git-outgoing>); Mon, 18 May 2009 11:16:31 -0400
-Received: from mail.lysator.liu.se ([130.236.254.3]:53817 "EHLO
-	mail.lysator.liu.se" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752540AbZERPQa (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 May 2009 11:16:30 -0400
-X-Greylist: delayed 1570 seconds by postgrey-1.27 at vger.kernel.org; Mon, 18 May 2009 11:16:29 EDT
-Received: from mail.lysator.liu.se (localhost [127.0.0.1])
-	by mail.lysator.liu.se (Postfix) with ESMTP id D4A0F40021;
-	Mon, 18 May 2009 16:49:53 +0200 (CEST)
-Received: by mail.lysator.liu.se (Postfix, from userid 1674)
-	id C842D40047; Mon, 18 May 2009 16:49:53 +0200 (CEST)
-X-Spam-Checker-Version: SpamAssassin 3.1.7-deb3 (2006-10-05) on 
-	bernadotte.lysator.liu.se
-X-Spam-Level: 
-X-Spam-Status: No, score=-0.5 required=5.0 tests=AWL autolearn=disabled 
-	version=3.1.7-deb3
-Received: from krank (unknown [87.96.142.66])
-	(using TLSv1 with cipher ADH-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by mail.lysator.liu.se (Postfix) with ESMTP id 4941440021;
-	Mon, 18 May 2009 16:49:53 +0200 (CEST)
-Received: from [127.0.1.1] (localhost [127.0.0.1])
-	by krank (Postfix) with ESMTP id 334BEDC26A;
-	Mon, 18 May 2009 16:50:19 +0200 (CEST)
-User-Agent: StGit/0.14.3.376.gb91d
-X-Virus-Scanned: ClamAV using ClamSMTP
+	id S1753110AbZERPzI convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 18 May 2009 11:55:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752796AbZERPzH
+	(ORCPT <rfc822;git-outgoing>); Mon, 18 May 2009 11:55:07 -0400
+Received: from yw-out-2324.google.com ([74.125.46.29]:28622 "EHLO
+	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752540AbZERPzF convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 18 May 2009 11:55:05 -0400
+Received: by yw-out-2324.google.com with SMTP id 5so2023379ywb.1
+        for <git@vger.kernel.org>; Mon, 18 May 2009 08:55:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=VoJrTFp1T0wSoXczFnzRlTXcjpPwfx3nS/hRvn99VTg=;
+        b=javTFunWpoEce5P8+pqGgNAWDLxApZ3Vwrq/hGTZg6m2bSjwS/u+qAFPL/MbPeJnf6
+         TZGopkkfZLpTsQUEx/um+edk8yqHPzcUtT4pG+w8VsKySroZkP17/Fw2tsM/q9n+kdRT
+         F4SfsZ/Et/0HGntqiNEIbPLsbW1zz4BiSX0LE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=o0rlcJnN1ASkzn3ary3SNAODSDZTxL6EIrRbNnskWCh6c5vMQ7eL4ZETBLdFo38pQp
+         dLmZJA/+nL+5B+KRLAYP5/JSWRROvcSLpB1WZJOaKtnE5Inf2+uPmY4sURnj76sqJq7Y
+         J7FZEjYgaDIcc2m5q2YIqstz7MSI9rNsUsIr4=
+Received: by 10.100.10.15 with SMTP id 15mr9013754anj.8.1242662106475; Mon, 18 
+	May 2009 08:55:06 -0700 (PDT)
+In-Reply-To: <32541b130905151131h76048ff2o418764aa41bcd13b@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119450>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119451>
 
-This flag makes the push simply restore the tree that the patch used
-before, rather than doing any kind of merge.
----
+On Sat, May 16, 2009 at 2:31 AM, Avery Pennarun <apenwarr@gmail.com> wr=
+ote:
+> On Fri, May 15, 2009 at 2:11 PM, Junio C Hamano <gitster@pobox.com> w=
+rote:
+>> Avery Pennarun <apenwarr@gmail.com> writes:
+>>> ... =C2=A0Obviously I would need to write a man page, but I've been
+>>> hesitant to do that in case people have suggestions that need the
+>>> whole UI to change. =C2=A0Perhaps that's a chicken-and-egg problem,=
+ though,...
+>>
+>> If you fear that you might get into a situation that the UI _must_ c=
+hange
+>> because it does not fit people's needs or workflows, that is a sign =
+that
+>> the UI and the workflow it was designed to support may not have been=
+ well
+>> thought out yet. =C2=A0At least, you do not even _know_ if it is wel=
+l thought
+>> out or not. =C2=A0It is understandable that people would say "sounds=
+ cool,
+>> could potentially be good, but I'll wait and see if it is real" and =
+leave.
+>
+> Well, I'm already using it myself in my own projects and I like it.
+> So I'm pretty confident that it is *a* useful workflow. =C2=A0Whether=
+ it's
+> useful for others is a good question, and the only way to know the
+> answer is to put it out there.
+>
+> But I'm at a bit of a loss as to why so many people (er, as compared
+> to none) seem to have gotten excited about the tool, but then it
+> fizzled. =C2=A0This implies to me that something is missing. =C2=A0Pe=
+rhaps it's
+> just the documentation; I'll work on that next, then.
+>
 
-This scratches a long-time itch for me. The typical use case is when
-you want to break up a larg patch inte smaller ones. You back out the
-orignal patch, apply a small set of changes from it and then push the
-patch back again. But then you don't want to do a merge, with the
-possibility of conflict. You simply want to restore to the tree that
-the patch had before so you can see what's left to create cleaned-up
-patches of.  The command "stg push --tree" does just that.
+It's really a cool feature, but i havn't tried it. Why?
 
-The naming of flags and functions isn't very obvious, and suggestions
-for improvements are welcome.
+It will spends me some time saving and applying the patches and then
+testing it (i don't have the appropriate environment setuped). But I
+am busy and there is no urgent need to use this feature ( it is only a
+rare case for me).  So i will wait until i need the feature or there
+is an easy to fetch the code ( pu of official reposotory or other
+repository with these patches applied).
 
- stgit/commands/push.py   |   26 ++++++++++++-------
- stgit/lib/transaction.py |   28 ++++++++++++++++++++
- t/t1207-push-tree.sh     |   64 ++++++++++++++++++++++++++++++++++++++=
-++++++++
- 3 files changed, 108 insertions(+), 10 deletions(-)
- create mode 100755 t/t1207-push-tree.sh
-
-diff --git a/stgit/commands/push.py b/stgit/commands/push.py
-index 0d25a65..8d4d3fc 100644
---- a/stgit/commands/push.py
-+++ b/stgit/commands/push.py
-@@ -43,7 +43,9 @@ options =3D [
-     opt('-n', '--number', type =3D 'int',
-         short =3D 'Push the specified number of patches'),
-     opt('--reverse', action =3D 'store_true',
--        short =3D 'Push the patches in reverse order')
-+        short =3D 'Push the patches in reverse order'),
-+    opt('--tree', action =3D 'store_true',
-+        short =3D 'Push the patch with the original tree')
-     ] + argparse.keep_option() + argparse.merged_option()
-=20
- directory =3D common.DirectoryHasRepositoryLib()
-@@ -74,14 +76,18 @@ def func(parser, options, args):
-     if options.reverse:
-         patches.reverse()
-=20
--    try:
--        if options.merged:
--            merged =3D set(trans.check_merged(patches))
--        else:
--            merged =3D set()
-+    if options.tree:
-         for pn in patches:
--            trans.push_patch(pn, iw, allow_interactive =3D True,
--                             already_merged =3D pn in merged)
--    except transaction.TransactionHalted:
--        pass
-+            trans.push_tree(pn)
-+    else:
-+        try:
-+            if options.merged:
-+                merged =3D set(trans.check_merged(patches))
-+            else:
-+                merged =3D set()
-+            for pn in patches:
-+                trans.push_patch(pn, iw, allow_interactive =3D True,
-+                                 already_merged =3D pn in merged)
-+        except transaction.TransactionHalted:
-+            pass
-     return trans.run(iw)
-diff --git a/stgit/lib/transaction.py b/stgit/lib/transaction.py
-index 4148ff3..1c21938 100644
---- a/stgit/lib/transaction.py
-+++ b/stgit/lib/transaction.py
-@@ -372,6 +372,34 @@ class StackTransaction(object):
-             # Update immediately.
-             update()
-=20
-+    def push_tree(self, pn):
-+        """Push the named patch without updating its tree."""
-+        orig_cd =3D self.patches[pn].data
-+        cd =3D orig_cd.set_committer(None)
-+        oldparent =3D cd.parent
-+        cd =3D cd.set_parent(self.top)
-+
-+        s =3D ''
-+        if any(getattr(cd, a) !=3D getattr(orig_cd, a) for a in
-+               ['parent', 'tree', 'author', 'message']):
-+            comm =3D self.__stack.repository.commit(cd)
-+            self.head =3D comm
-+        else:
-+            comm =3D None
-+            s =3D ' (unmodified)'
-+        if cd.is_nochange():
-+            s =3D ' (empty)'
-+        out.info('Pushed %s%s' % (pn, s))
-+
-+        if comm:
-+            self.patches[pn] =3D comm
-+        if pn in self.hidden:
-+            x =3D self.hidden
-+        else:
-+            x =3D self.unapplied
-+        del x[x.index(pn)]
-+        self.applied.append(pn)
-+
-     def reorder_patches(self, applied, unapplied, hidden =3D None, iw =
-=3D None):
-         """Push and pop patches to attain the given ordering."""
-         if hidden is None:
-diff --git a/t/t1207-push-tree.sh b/t/t1207-push-tree.sh
-new file mode 100755
-index 0000000..83f5cbf
---- /dev/null
-+++ b/t/t1207-push-tree.sh
-@@ -0,0 +1,64 @@
-+#!/bin/sh
-+#
-+# Copyright (c) 2006 David K=C3=A5gedal
-+#
-+
-+test_description=3D'Exercise pushing patches with --tree.'
-+
-+. ./test-lib.sh
-+
-+# don't need this repo, but better not drop it, see t1100
-+#rm -rf .git
-+
-+# Need a repo to clone
-+test_create_repo foo
-+
-+test_expect_success \
-+    'Create initial patches' '
-+    (
-+        cd foo &&
-+        stg init &&
-+        stg new A -m A &&
-+        echo hello world > a &&
-+        git add a &&
-+        stg refresh
-+        stg new B -m B &&
-+        echo HELLO WORLD > a &&
-+        stg refresh
-+    )
-+'
-+
-+test_expect_success \
-+    'Back up and create a partial patch' '
-+    (
-+        cd foo &&
-+        stg pop &&
-+        stg new C -m C &&
-+        echo hello WORLD > a &&
-+        stg refresh
-+    )
-+'
-+
-+test_expect_success \
-+    'Reapply patch B' '
-+    (
-+        cd foo &&
-+        stg push --tree B
-+    )
-+'
-+
-+test_expect_success \
-+    'Compare results' '
-+    (
-+        cd foo &&
-+        stg pop -a &&
-+        stg push &&
-+        test "$(echo $(cat a))" =3D "hello world" &&
-+        stg push &&
-+        test "$(echo $(cat a))" =3D "hello WORLD" &&
-+        stg push &&
-+        test "$(echo $(cat a))" =3D "HELLO WORLD"
-+    )
-+'
-+
-+test_done
+I don't whether this is a common reason, but at least it is the reason =
+for me.
