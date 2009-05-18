@@ -1,82 +1,66 @@
-From: Heiko Voigt <hvoigt@hvoigt.net>
+From: Johannes Sixt <j.sixt@viscovery.net>
 Subject: Re: [PATCH] Extend sample pre-commit hook to check for non ascii
-	filenames
-Date: Mon, 18 May 2009 13:50:11 +0200
-Message-ID: <20090518115002.GA3374@heiko-voigts-macbook.local>
-References: <20090512214250.GA22974@macbook.lan> <200905122356.00659.jnareb@gmail.com> <20090514175850.GA26267@macbook.lan> <7vbpputewv.fsf@alter.siamese.dyndns.org> <419AD153-53B4-4DAB-AF72-4127C17B1CA0@gmail.com> <200905122356.00659.jnareb@gmail.com> <20090514175850.GA26267@macbook.lan> <200905151657.47225.jnareb@gmail.com> <20090518095044.GB910@heiko-voigts-macbook.local> <4A113B09.6040301@viscovery.net>
+ filenames
+Date: Mon, 18 May 2009 14:04:08 +0200
+Message-ID: <4A114EB8.60609@viscovery.net>
+References: <20090512214250.GA22974@macbook.lan> <200905122356.00659.jnareb@gmail.com> <20090514175850.GA26267@macbook.lan> <7vbpputewv.fsf@alter.siamese.dyndns.org> <419AD153-53B4-4DAB-AF72-4127C17B1CA0@gmail.com> <200905122356.00659.jnareb@gmail.com> <20090514175850.GA26267@macbook.lan> <200905151657.47225.jnareb@gmail.com> <20090518095044.GB910@heiko-voigts-macbook.local> <4A113B09.6040301@viscovery.net> <20090518115002.GA3374@heiko-voigts-macbook.local>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
 Cc: Jakub Narebski <jnareb@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>,
 	Martin Langhoff <martin.langhoff@gmail.com>,
 	Dmitry Potapov <dpotapov@gmail.com>,
 	Esko Luontola <esko.luontola@gmail.com>, git@vger.kernel.org
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Mon May 18 13:50:30 2009
+To: Heiko Voigt <hvoigt@hvoigt.net>
+X-From: git-owner@vger.kernel.org Mon May 18 14:04:41 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M61MR-0000AP-9p
-	for gcvg-git-2@gmane.org; Mon, 18 May 2009 13:50:27 +0200
+	id 1M61aC-0005Sw-Hv
+	for gcvg-git-2@gmane.org; Mon, 18 May 2009 14:04:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752739AbZERLuQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 18 May 2009 07:50:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752349AbZERLuQ
-	(ORCPT <rfc822;git-outgoing>); Mon, 18 May 2009 07:50:16 -0400
-Received: from darksea.de ([83.133.111.250]:51631 "HELO darksea.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751727AbZERLuP (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 May 2009 07:50:15 -0400
-Received: (qmail 21411 invoked from network); 18 May 2009 13:50:04 +0200
-Received: from unknown (HELO localhost) (127.0.0.1)
-  by localhost with SMTP; 18 May 2009 13:50:04 +0200
-Content-Disposition: inline
-In-Reply-To: <4A113B09.6040301@viscovery.net>
-User-Agent: Mutt/1.5.19 (2009-01-05)
+	id S1754629AbZERMEQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 18 May 2009 08:04:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754515AbZERMEP
+	(ORCPT <rfc822;git-outgoing>); Mon, 18 May 2009 08:04:15 -0400
+Received: from lilzmailso01.liwest.at ([212.33.55.23]:14374 "EHLO
+	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752494AbZERMEN (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 May 2009 08:04:13 -0400
+Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
+	by lilzmailso01.liwest.at with esmtpa (Exim 4.69)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1M61Zi-00029C-LJ; Mon, 18 May 2009 14:04:10 +0200
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.96])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id 4A7C1FCD2; Mon, 18 May 2009 14:04:10 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.21 (Windows/20090302)
+In-Reply-To: <20090518115002.GA3374@heiko-voigts-macbook.local>
+X-Enigmail-Version: 0.95.5
+X-Spam-Score: -1.4 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119438>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119439>
 
-On Mon, May 18, 2009 at 12:40:09PM +0200, Johannes Sixt wrote:
-> Heiko Voigt schrieb:
-> > +# is_ascii() Tests the string given given on standard input for
-> > +# printable ascii conformance. We exploit the fact that the printable
-> > +# range starts at the space character and ends with tilde.
-> > +is_ascii() {
-> > +    test -z "$(LC_ALL=C tr -d \ -~)"
-> > +}
-> > +
-> > +if [ "$allownonascii" != "true" ]
-> > +then
-> > +	# until git can handle non-ascii filenames gracefully
-> > +	# prevent them to be added into the repository
-> > +	if ! git diff --cached --name-only --diff-filter=A -z \
-> > +	   | tr "\0" "\n" | is_ascii; then
+Heiko Voigt schrieb:
+> Are there any problems with '\0' and tr other than swallowing of it.
+
+I can't tell. But the commits ae90e16..aab0abf are interesting to study in
+w.r.t. portability.
+
+> In
+> case not I would just change
 > 
-> Will this not fail to add more than one file with allowed names? The \n is
-> not removed in is_ascii(), and so the resulting string will not be empty.
+> 	tr "\0" "\n"
+> to
+>   	tr -d '\0'
 
-No currently it does not. At least on my system, but good point.
+In which case I'd suggest that you call tr only once, in isascii():
 
-> BTW, not all tr work well with NULs. See the commit message of e85fe4d8,
-> for example. Otherwise, I would have suggested to convert the NUL to some
-> allowed ASCII character, e.g. 'A'. BTW, you should really use '\0' and
-> '\n' (single-quotes) to guarantee that the shell does not ignore the
-> backslash.
+     tr -d '[ -~]\0'
 
-Are there any problems with '\0' and tr other than swallowing of it. In
-case not I would just change
-
-	tr "\0" "\n"
-to
-  	tr -d '\0'
-
-That way there are no '\n's left over and it doesn't matter if tr
-swallows the '\0'.
-
-Waiting for further comments before sending the cleanup.
-
-cheers Heiko
+-- Hannes
