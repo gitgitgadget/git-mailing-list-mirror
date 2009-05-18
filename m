@@ -1,84 +1,72 @@
 From: Avery Pennarun <apenwarr@gmail.com>
-Subject: Re: git subtree: an alternative to git submodule
-Date: Mon, 18 May 2009 12:38:56 -0400
-Message-ID: <32541b130905180938v5dd5283g6b75ffb7e76f3280@mail.gmail.com>
-References: <1241822349-27470-1-git-send-email-apenwarr@gmail.com> 
-	<32541b130905150909h7e596f26w7db6887e7f4267ff@mail.gmail.com> 
-	<7vzldes0ce.fsf@alter.siamese.dyndns.org> <32541b130905151131h76048ff2o418764aa41bcd13b@mail.gmail.com> 
-	<46dff0320905180855m3e1bd74esb564af0fbcf4b1ff@mail.gmail.com>
+Subject: Re: git svn rebase problem
+Date: Mon, 18 May 2009 13:00:25 -0400
+Message-ID: <32541b130905181000v34d5fd6arcb662bff232cb81c@mail.gmail.com>
+References: <4A0DDCC5.4010001@dlasys.net> <op.ut4aagco1e62zd@merlin.emma.line.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Ping Yin <pkufranky@gmail.com>
-X-From: git-owner@vger.kernel.org Mon May 18 18:39:27 2009
+Content-Transfer-Encoding: 7bit
+Cc: "David H. Lynch J.r" <ml@dlasys.net>, git@vger.kernel.org
+To: Matthias Andree <matthias.andree@gmx.de>
+X-From: git-owner@vger.kernel.org Mon May 18 19:01:16 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M65s4-0004Km-Cc
-	for gcvg-git-2@gmane.org; Mon, 18 May 2009 18:39:24 +0200
+	id 1M66DD-0005Ue-DW
+	for gcvg-git-2@gmane.org; Mon, 18 May 2009 19:01:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753456AbZERQjQ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 18 May 2009 12:39:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752641AbZERQjP
-	(ORCPT <rfc822;git-outgoing>); Mon, 18 May 2009 12:39:15 -0400
-Received: from mail-gx0-f166.google.com ([209.85.217.166]:61051 "EHLO
+	id S1751998AbZERRAq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 18 May 2009 13:00:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751422AbZERRAp
+	(ORCPT <rfc822;git-outgoing>); Mon, 18 May 2009 13:00:45 -0400
+Received: from mail-gx0-f166.google.com ([209.85.217.166]:63269 "EHLO
 	mail-gx0-f166.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751771AbZERQjP convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 18 May 2009 12:39:15 -0400
-Received: by gxk10 with SMTP id 10so6453575gxk.13
-        for <git@vger.kernel.org>; Mon, 18 May 2009 09:39:16 -0700 (PDT)
+	with ESMTP id S1751101AbZERRAp (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 May 2009 13:00:45 -0400
+Received: by gxk10 with SMTP id 10so6476931gxk.13
+        for <git@vger.kernel.org>; Mon, 18 May 2009 10:00:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:mime-version:received:in-reply-to:references
          :from:date:message-id:subject:to:cc:content-type
          :content-transfer-encoding;
-        bh=EuVBGYfuw7sOxbzdug/B4AgNpnyO1C3iRvytT70sTa8=;
-        b=oA/Z4FcqcJUTDaEHkRMt7yOLEmlmDSdwSB6WgUCpbnGbSWAQBkffqCgzUfSmt6DP5Z
-         jBFxrLn83RfIpSBxl/i2A/vGsB7Sat2/dX5suj82YVPrtMCmqVrYAYmOpTdtfDY3s9VT
-         3pLJ3/eRsXZLCJvbLbPtKSR1ha6RF3eq/vVUI=
+        bh=SRF/K7DWW/vxOsHJWv5r9g4UAltYZSbY7XuVFEmLwfI=;
+        b=Towd34JptorFlKwqjgP0IRYQgg0h2ZNn+OmXTUJXzyVD2CQPRHHBwszJju2yZPOctt
+         qQk0j3nRXxGs47POxSPgKW/Ur7Yo90pxqXQr4sJv9bpITJKaQRsjhppBUVcu67gHnC4J
+         m07a9J4zRFBZIzew57p+IZ0IEhXGz7CoWSoyc=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc:content-type:content-transfer-encoding;
-        b=uiBLoCurmrwFgxyuupfILjXQSMj25BVsOPP+L3oA9DzrojaRVf8Rol5Vzt5gH2Iip0
-         sm2/RRJLboImPFDDneiEB8Rg71yAnxJxm49EFJM5+QSm0JOjLbMhULFIVP/579v0xZtS
-         oCd8hJLSNYZUtzGacgr5LbdfFQ+LK+/sRjVh0=
-Received: by 10.151.46.11 with SMTP id y11mr12914566ybj.325.1242664756104; 
-	Mon, 18 May 2009 09:39:16 -0700 (PDT)
-In-Reply-To: <46dff0320905180855m3e1bd74esb564af0fbcf4b1ff@mail.gmail.com>
+        b=CZDdn4FsHGFI0v0fnt8Tlb1eq15dIk3MGFQJtx18TFnNNVgrKNXyFek19m7FfWuDCo
+         WYILvObvmEajROE5VtdO/FnX9szmnCor8mm/4KmGU/MY4jtb+3FLUYNxDzc12+bCVmso
+         ZMk1pZyszJK0qsqTB7J9V4i+XorXlxroultl4=
+Received: by 10.151.150.21 with SMTP id c21mr12889028ybo.322.1242666045281; 
+	Mon, 18 May 2009 10:00:45 -0700 (PDT)
+In-Reply-To: <op.ut4aagco1e62zd@merlin.emma.line.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119457>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119458>
 
-On Mon, May 18, 2009 at 11:55 AM, Ping Yin <pkufranky@gmail.com> wrote:
-> It's really a cool feature, but i havn't tried it. Why?
+On Mon, May 18, 2009 at 4:38 AM, Matthias Andree <matthias.andree@gmx.de> wrote:
+> Have you been working on a branch other than the one that git-svn created
+> for you? If so, you may have to "git checkout" the original branch before
+> being able to "git svn rebase".
 >
-> It will spends me some time saving and applying the patches and then
-> testing it (i don't have the appropriate environment setuped). But I
-> am busy and there is no urgent need to use this feature ( it is only =
-a
-> rare case for me). =A0So i will wait until i need the feature or ther=
-e
-> is an easy to fetch the code ( pu of official reposotory or other
-> repository with these patches applied).
+> Branches and git-svn don't mix.
 
-Excellent, thanks for the feedback.  In fact you can git clone the
-code from here:
+That's not exactly true: merging and git-svn don't mix.  But rebasing
+works fine.
 
-  git clone git://github.com/apenwarr/git-subtree.git
-
-(It's not a copy of the git repo; it's a tiny standalone repo.)
-
-The important file is 'git-subtree'.  Copy this anywhere on your PATH,
-and magically the 'git subtree' command will work.
-
-I admit that your next roadblock will probably be lack of
-documentation, though, as Junio points out.
+If you have a separate branch and do 'git svn rebase', then as far as
+I know, the original git-svn branch(es) will get updated to the latest
+version from svn, and then your current branch will be rebased on top
+of it.  This is often what you want, unless you've been using 'git
+merge' from that branch.  Rebasing (unless you know exactly what
+you're doing) always messes up git merge.
 
 Have fun,
 
