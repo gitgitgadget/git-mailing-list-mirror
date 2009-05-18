@@ -1,70 +1,89 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/3] commit: add function to unparse a commit and its parents
-Date: Sun, 17 May 2009 23:27:58 -0700
-Message-ID: <7v3ab3exht.fsf@alter.siamese.dyndns.org>
-References: <20090517153307.6403.73576.>
-	<20090517153647.6403.44036.chriscool@tuxfamily.org>
+From: Stephen Boyd <bebarino@gmail.com>
+Subject: Re: [PATCH 2/3] parse-options: add PARSE_OPT_CUSTOM_ARGH for complicated
+ argh's
+Date: Mon, 18 May 2009 00:08:27 -0700
+Message-ID: <4A11096B.8020208@gmail.com>
+References: <1242557224-8411-1-git-send-email-bebarino@gmail.com>	<1242557224-8411-2-git-send-email-bebarino@gmail.com> <7vd4a7ey4h.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Christian Couder <chriscool@tuxfamily.org>
-X-From: git-owner@vger.kernel.org Mon May 18 08:28:22 2009
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon May 18 09:08:40 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M5wKj-0002Z0-81
-	for gcvg-git-2@gmane.org; Mon, 18 May 2009 08:28:21 +0200
+	id 1M5wxj-0000uR-8m
+	for gcvg-git-2@gmane.org; Mon, 18 May 2009 09:08:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754873AbZERG17 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 18 May 2009 02:27:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754254AbZERG16
-	(ORCPT <rfc822;git-outgoing>); Mon, 18 May 2009 02:27:58 -0400
-Received: from fed1rmmtao106.cox.net ([68.230.241.40]:34498 "EHLO
-	fed1rmmtao106.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752761AbZERG15 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 May 2009 02:27:57 -0400
-Received: from fed1rmimpo03.cox.net ([70.169.32.75])
-          by fed1rmmtao106.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20090518062758.NWLZ25927.fed1rmmtao106.cox.net@fed1rmimpo03.cox.net>;
-          Mon, 18 May 2009 02:27:58 -0400
-Received: from localhost ([68.225.240.211])
-	by fed1rmimpo03.cox.net with bizsmtp
-	id suTy1b0094aMwMQ04uTyTw; Mon, 18 May 2009 02:27:58 -0400
-X-Authority-Analysis: v=1.0 c=1 a=4Mj9RkLmTmMA:10 a=wsYAPnAVpiQA:10
- a=dIu3SnmMAAAA:8 a=ZtQdXitFJ_k59hATaT4A:9 a=A-rj2hxJ0T2of8kqZPWX4YmzAtMA:4
- a=Rn8qiON8_f4A:10
-X-CM-Score: 0.00
-In-Reply-To: <20090517153647.6403.44036.chriscool@tuxfamily.org> (Christian Couder's message of "Sun\, 17 May 2009 17\:36\:45 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+	id S1755199AbZERHIa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 18 May 2009 03:08:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751405AbZERHI3
+	(ORCPT <rfc822;git-outgoing>); Mon, 18 May 2009 03:08:29 -0400
+Received: from wa-out-1112.google.com ([209.85.146.181]:6277 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751379AbZERHI3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 May 2009 03:08:29 -0400
+Received: by wa-out-1112.google.com with SMTP id j5so1050361wah.21
+        for <git@vger.kernel.org>; Mon, 18 May 2009 00:08:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from
+         :user-agent:mime-version:to:cc:subject:references:in-reply-to
+         :content-type:content-transfer-encoding;
+        bh=PKeY7noFYv4NZMoObcKU1RN18wpYoI2QOYFLBMPsGGM=;
+        b=eM3azAR5e+K+Ot6+WPW0s/s7jJaof4x2dRf/9siWPMjQMR9wQS20SFXThXdOax8Hsg
+         KeDtvmITMotPcG4T6g+ZFl19kKLVy7hRIaRCi0ob+1NB0nzNNwLPUmUyA58GVLzbbrGQ
+         uRfOeMQU9DTwzqw/hOXBGIGikhWQXQKqLHohM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        b=lGejYcZ8C44uB3UAPTSjEexF9YtTaCDlIw/ySdoBWh8kr9JO0CkMl93FzOL3DvJGvS
+         CX7UjVNMGAjlr8F9DnZCDzJ/OiUhUK294LCUuXqw957xo6D3jvx7ONBtJw6NmcegQsVV
+         KsZUyj601jdHwT+nkvENRLfmZFZCYzBsa3oH4=
+Received: by 10.115.47.1 with SMTP id z1mr10616015waj.133.1242630510038;
+        Mon, 18 May 2009 00:08:30 -0700 (PDT)
+Received: from ?192.168.1.2? ([76.89.212.195])
+        by mx.google.com with ESMTPS id m28sm4584514waf.2.2009.05.18.00.08.28
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 18 May 2009 00:08:29 -0700 (PDT)
+User-Agent: Thunderbird 2.0.0.21 (X11/20090429)
+In-Reply-To: <7vd4a7ey4h.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119420>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119421>
 
-Christian Couder <chriscool@tuxfamily.org> writes:
+Junio C Hamano wrote:
+> Stephen Boyd <bebarino@gmail.com> writes:
+>> If argh is complicated, i.e. the option takes more than one argument,
+>> don't add the brackets around argh in the usage message.
+>
+> I think later user wants a bit more descriptive explanation, like...
+>
+> 	Usually, argh element in struct option points at a placeholder
+> 	value (e.g. "val"), and this is used to show
+>
+> 	    --option=<val>
+>
+> 	by enclosing the string inside of angle brackets.
+>
+> 	When the option takes something more complex (e.g. optional part
+> 	separated by comma), you would want to produce a help that looks
+> 	like
+>
+> 	    --option=<val1>[,<val2>]
+>
+> 	In such a case, the caller can pass a string to argh with
+> 	placeholders already enclosed in necessary angle brackets
+> 	(e.g. "<val1>[,<val2>]") and set this option.
 
-> Its parents are recursively unparsed too, because they might have
-> been changed. But its tree is not unparsed as it should not have
-> been modifed.
+This description sounds nice ;) Is PARSE_OPT_CUSTOM_ARGH a good name? I
+was thinking maybe PARSE_OPT_MULTARGS is better?
 
-It is a bug in any codepath if it used commit->tree without first checking
-if commit->parsed is true to begin with, so you could NULLify commit->tree
-but that shouldn't make any difference.  I agree leaving the tree object
-as-is would make sense.
+> Please update Documentation/technical/api-parse-options.txt as well.
 
-I am not convinced that unparsing all the _remaining_ parents recursively
-like your patch does is enough.  Isn't there a codepath that
-
- - parses a commit A to find list of true parents X, Y, Z;
-
- - iterates over that list and descend into one of these parents X, doing
-   nasty things such as pruning its parents list after parsing it; and
-
- - decides to prune that parent X from the parent list, making the parent
-   list of A into Y and Z?
-
-After such a sequence, calling your unparse_commit(A) will unparse A and
-remaining parents of Y and Z, but will still leave X in the dirty state.
+There's no documentation on the flags yet, but I suppose I could add that.
