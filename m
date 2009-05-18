@@ -1,99 +1,79 @@
-From: Johan Herland <johan@herland.net>
-Subject: Re: What's cooking in git.git (May 2009, #02; Sun, 17)
-Date: Mon, 18 May 2009 23:55:21 +0200
-Message-ID: <200905182355.21645.johan@herland.net>
-References: <7vab5ci281.fsf@alter.siamese.dyndns.org>
- <200905181536.39508.johan@herland.net>
- <200905182140.29953.markus.heidelberg@web.de>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH v2] Extend sample pre-commit hook to check for non ascii filenames
+Date: Tue, 19 May 2009 00:26:35 +0200
+Message-ID: <200905190026.37291.jnareb@gmail.com>
+References: <419AD153-53B4-4DAB-AF72-4127C17B1CA0@gmail.com> <46a038f90905150352q76157227q24c6b8c0befa4108@mail.gmail.com> <20090518093655.GA910@heiko-voigts-macbook.local>
 Mime-Version: 1.0
-Content-Type: Text/Plain; charset=iso-8859-1
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org, Peter Hutterer <peter.hutterer@who-t.net>,
-	Junio C Hamano <gitster@pobox.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: markus.heidelberg@web.de
-X-From: git-owner@vger.kernel.org Mon May 18 23:55:33 2009
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Martin Langhoff <martin.langhoff@gmail.com>,
+	Dmitry Potapov <dpotapov@gmail.com>,
+	Esko Luontola <esko.luontola@gmail.com>, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>
+To: Heiko Voigt <hvoigt@hvoigt.net>
+X-From: git-owner@vger.kernel.org Tue May 19 00:27:11 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M6Ao0-00008O-9s
-	for gcvg-git-2@gmane.org; Mon, 18 May 2009 23:55:32 +0200
+	id 1M6BIc-0004vh-S0
+	for gcvg-git-2@gmane.org; Tue, 19 May 2009 00:27:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753573AbZERVzY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 18 May 2009 17:55:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752953AbZERVzX
-	(ORCPT <rfc822;git-outgoing>); Mon, 18 May 2009 17:55:23 -0400
-Received: from mx.getmail.no ([84.208.15.66]:36757 "EHLO
-	get-mta-out02.get.basefarm.net" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1752393AbZERVzX (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 18 May 2009 17:55:23 -0400
-Content-disposition: inline
-Received: from mx.getmail.no ([10.5.16.4]) by get-mta-out02.get.basefarm.net
- (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
- with ESMTP id <0KJV000QP0WBWF00@get-mta-out02.get.basefarm.net> for
- git@vger.kernel.org; Mon, 18 May 2009 23:55:23 +0200 (MEST)
-Received: from alpha.localnet ([84.215.102.95])
- by get-mta-in02.get.basefarm.net
- (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
- with ESMTP id <0KJV00MA60WAQA40@get-mta-in02.get.basefarm.net> for
- git@vger.kernel.org; Mon, 18 May 2009 23:55:23 +0200 (MEST)
-X-PMX-Version: 5.5.3.366731, Antispam-Engine: 2.7.0.366912,
- Antispam-Data: 2009.5.18.214343
-User-Agent: KMail/1.11.3 (Linux/2.6.29-ARCH; KDE/4.2.3; x86_64; ; )
-In-reply-to: <200905182140.29953.markus.heidelberg@web.de>
+	id S1754890AbZERW0q convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 18 May 2009 18:26:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754737AbZERW0p
+	(ORCPT <rfc822;git-outgoing>); Mon, 18 May 2009 18:26:45 -0400
+Received: from fg-out-1718.google.com ([72.14.220.159]:44396 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754694AbZERW0o (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 May 2009 18:26:44 -0400
+Received: by fg-out-1718.google.com with SMTP id 16so1271144fgg.17
+        for <git@vger.kernel.org>; Mon, 18 May 2009 15:26:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=9KK+yA1GkNUlBbnOiYP7x2WbOWxzltrEWRbZf7gS5gg=;
+        b=bFoZkONVbjEZEgel4EMOt28RVky3Cx1v5YScZsgDHpfcs8ZS6YpEIXJM+V6gR130gS
+         CV+DsKxGn8/P1P72f8VE4tek296z6txX06+1tuKGu7i32rUr3fWUkZPuHJv2V24dJVkn
+         9z5IRFV7ZZH2yKJHAOSQnBVzwUFOcMJUygyiA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=lyFE2gGw4pJ/eQ2Y/4gkX0gXfjL0PgW9Gzs5x9tlHmV9jg2XGw74WYF2syG5gax6hD
+         pNnNCVeUMoIkK5Th8c1Bvst7rnvLi7KZFcDPS2ZHcIMUg8zprqHGmFSp0BszW+SrFg35
+         dXCHFkNbEh6CXc0UnrYx5lHTh65/eMW68AEj4=
+Received: by 10.86.91.10 with SMTP id o10mr7203979fgb.13.1242685603699;
+        Mon, 18 May 2009 15:26:43 -0700 (PDT)
+Received: from ?192.168.1.13? (abwi178.neoplus.adsl.tpnet.pl [83.8.232.178])
+        by mx.google.com with ESMTPS id d4sm8622021fga.9.2009.05.18.15.26.41
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 18 May 2009 15:26:42 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <20090518093655.GA910@heiko-voigts-macbook.local>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119467>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119468>
 
-On Monday 18 May 2009, Markus Heidelberg wrote:
-> Johan Herland, 18.05.2009:
-> > On Sunday 17 May 2009, Junio C Hamano wrote:
-> > > [Will merge to "master" soon]
-> > >
-> > > * ph/submodule-rebase (Fri Apr 24 09:06:38 2009 +1000) 1 commit
-> > >  + git-submodule: add support for --rebase.
-> >
-> > [..]
-> >
-> > Now, my question should not stop this feature from going into 'master',
-> > except for the fact that if we also want to support merge, we should
-> > rename the associated config variable:
-> >
-> > Instead of
-> >
-> >   submodule.<name>.rebase = true/false (false if unset)
-> >
-> > we should have something like
-> >
-> >   submodule.<name>.resolve = checkout/rebase/merge (checkout if unset)
->
-> At least this would be inconsistent with options like
-> branch.<name>.merge and branch.<name>.rebase
+On Mon, 18 May 2009, Heiko Voigt wrote:
+> On Fri, May 15, 2009 at 12:52:41PM +0200, Martin Langhoff wrote:
 
-No. We cannot "reuse" the branch.<name>.merge/rebase semantics in this case: 
-branch.<name>.merge takes a remote branch name to merge with, while 
-submodule.<name>.merge needs no such name (the merge is well-specified 
-without that extra name: the new submodule commit is merged into the 
-submodule's current branch). Thus, submodule.<name>.merge is reduced to a 
-simple bool indicating whether or not we should merge. At this point, 
-however, it is not only inconsistent with branch.<name>.merge, it also 
-directly conflicts with submodule.<name>.rebase (they cannot both be "true" 
-simultaneously). They should therefore be collapsed into one tri-state 
-config variable set to either 'rebase', 'merge' or 'false'/unset (which 
-triggers the default 'checkout' behaviour). This is pretty much what I 
-propose above.
+> > =A0- Should all of this be a general "portablefilenames" setting?
+>=20
+> Well, if you can specify what general portable filenames would have a=
+s
+> properties.
 
-After some thinking, I don't like my original name submodule.<name>.resolve, 
-since ".resolve" sounds more like a merge strategy or conflict resolution 
-method, than a "how to deal with submodule update" choice. I propose 
-submodule.<name>.update instead.
+"Fixing Unix/Linux/POSIX Filenames: Control Characters (such as=20
+Newline), Leading Dashes, and Other Problems" by David A. Wheeler
+http://www.dwheeler.com/essays/fixing-unix-linux-filenames.html
 
-
-...Johan
-
--- 
-Johan Herland, <johan@herland.net>
-www.herland.net
+--=20
+Jakub Narebski
+Poland
