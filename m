@@ -1,71 +1,82 @@
-From: Nanako Shiraishi <nanako3@lavabit.com>
-Subject: Re: Merging a branch when I don't want conflicts
-Date: Mon, 18 May 2009 19:45:48 +0900
-Message-ID: <20090518194548.6117@nanako3.lavabit.com>
-References: <93c3eada0905171930m36765d4fued9c2efdc57e51a4@mail.gmail.com>
-	<4A10FDC6.2040706@viscovery.net>
+From: Heiko Voigt <hvoigt@hvoigt.net>
+Subject: Re: [PATCH] Extend sample pre-commit hook to check for non ascii
+	filenames
+Date: Mon, 18 May 2009 13:50:11 +0200
+Message-ID: <20090518115002.GA3374@heiko-voigts-macbook.local>
+References: <20090512214250.GA22974@macbook.lan> <200905122356.00659.jnareb@gmail.com> <20090514175850.GA26267@macbook.lan> <7vbpputewv.fsf@alter.siamese.dyndns.org> <419AD153-53B4-4DAB-AF72-4127C17B1CA0@gmail.com> <200905122356.00659.jnareb@gmail.com> <20090514175850.GA26267@macbook.lan> <200905151657.47225.jnareb@gmail.com> <20090518095044.GB910@heiko-voigts-macbook.local> <4A113B09.6040301@viscovery.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Cc: geoffrey.russell@gmail.com, git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+Cc: Jakub Narebski <jnareb@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Martin Langhoff <martin.langhoff@gmail.com>,
+	Dmitry Potapov <dpotapov@gmail.com>,
+	Esko Luontola <esko.luontola@gmail.com>, git@vger.kernel.org
 To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Mon May 18 12:46:37 2009
+X-From: git-owner@vger.kernel.org Mon May 18 13:50:30 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M60Md-0001iu-WB
-	for gcvg-git-2@gmane.org; Mon, 18 May 2009 12:46:36 +0200
+	id 1M61MR-0000AP-9p
+	for gcvg-git-2@gmane.org; Mon, 18 May 2009 13:50:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756039AbZERKqX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 18 May 2009 06:46:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755770AbZERKqW
-	(ORCPT <rfc822;git-outgoing>); Mon, 18 May 2009 06:46:22 -0400
-Received: from karen.lavabit.com ([72.249.41.33]:39830 "EHLO karen.lavabit.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755902AbZERKqV (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 May 2009 06:46:21 -0400
-Received: from b.earth.lavabit.com (b.earth.lavabit.com [192.168.111.11])
-	by karen.lavabit.com (Postfix) with ESMTP id CDB8C11B882;
-	Mon, 18 May 2009 05:46:21 -0500 (CDT)
-Received: from 8269.lavabit.com (212.62.97.20)
-	by lavabit.com with ESMTP id VN85UDN7J15P; Mon, 18 May 2009 05:46:21 -0500
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws; s=lavabit; d=lavabit.com;
-  b=T+5lgXRXWXk8+gwRFv6ylLzSh9X9ZzmNiSOD2zKUYWw8n4nH2Nw/OHHJvm6UCq8J2tE1bVRxMABdvmLDtF6gheSbGhXLrM0rjkt6ygMkPNGzajd2rOL7Plk6lPHx4DYElTnu1GTkuVkLWB4oW8AUPvNMCUQYrAC/bmbC/s/DfL8=;
-  h=From:To:Cc:Subject:In-Reply-To:References:Date:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id;
-In-Reply-To: <4A10FDC6.2040706@viscovery.net>
+	id S1752739AbZERLuQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 18 May 2009 07:50:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752349AbZERLuQ
+	(ORCPT <rfc822;git-outgoing>); Mon, 18 May 2009 07:50:16 -0400
+Received: from darksea.de ([83.133.111.250]:51631 "HELO darksea.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751727AbZERLuP (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 May 2009 07:50:15 -0400
+Received: (qmail 21411 invoked from network); 18 May 2009 13:50:04 +0200
+Received: from unknown (HELO localhost) (127.0.0.1)
+  by localhost with SMTP; 18 May 2009 13:50:04 +0200
+Content-Disposition: inline
+In-Reply-To: <4A113B09.6040301@viscovery.net>
+User-Agent: Mutt/1.5.19 (2009-01-05)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119437>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119438>
 
-Quoting Johannes Sixt <j.sixt@viscovery.net>:
+On Mon, May 18, 2009 at 12:40:09PM +0200, Johannes Sixt wrote:
+> Heiko Voigt schrieb:
+> > +# is_ascii() Tests the string given given on standard input for
+> > +# printable ascii conformance. We exploit the fact that the printable
+> > +# range starts at the space character and ends with tilde.
+> > +is_ascii() {
+> > +    test -z "$(LC_ALL=C tr -d \ -~)"
+> > +}
+> > +
+> > +if [ "$allownonascii" != "true" ]
+> > +then
+> > +	# until git can handle non-ascii filenames gracefully
+> > +	# prevent them to be added into the repository
+> > +	if ! git diff --cached --name-only --diff-filter=A -z \
+> > +	   | tr "\0" "\n" | is_ascii; then
+> 
+> Will this not fail to add more than one file with allowed names? The \n is
+> not removed in is_ascii(), and so the resulting string will not be empty.
 
-> Geoff Russell schrieb:
->> How do I merge a branch X into my master and tell git that whenever there
->> is a conflict, the file on X should prevail?  This is for a scripted
->> application.
->
-> I assume you talk about file-level (content) merges.
->
-> There is no such tool, and the reason is that what you try to do here does
-> not make sense *in general*. It must be a very special kind of project
-> where you can blindly trust one side over the other if there are
-> conflicts, and that you can additionally trust non-conflicting content merges.
->
-> The best you can do is perhaps to pipe conflicting files through
->
->     sed -e '/^<<<<<<</,/^=======/d' -e '/^>>>>>>>/d'
->
-> -- Hannes
+No currently it does not. At least on my system, but good point.
 
-I think -Xours enhancement that was developed long time ago
+> BTW, not all tr work well with NULs. See the commit message of e85fe4d8,
+> for example. Otherwise, I would have suggested to convert the NUL to some
+> allowed ASCII character, e.g. 'A'. BTW, you should really use '\0' and
+> '\n' (single-quotes) to guarantee that the shell does not ignore the
+> backslash.
 
-    http://thread.gmane.org/gmane.comp.version-control.git/76650/focus=89021
+Are there any problems with '\0' and tr other than swallowing of it. In
+case not I would just change
 
-should help Geoff's use case.
+	tr "\0" "\n"
+to
+  	tr -d '\0'
 
--- 
-Nanako Shiraishi
-http://ivory.ap.teacup.com/nanako3/
+That way there are no '\n's left over and it doesn't matter if tr
+swallows the '\0'.
+
+Waiting for further comments before sending the cleanup.
+
+cheers Heiko
