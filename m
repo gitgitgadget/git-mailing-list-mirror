@@ -1,79 +1,227 @@
-From: dloewenherz@gmail.com
-Subject: Pretty date option for git tag?
-Date: Mon, 18 May 2009 11:14:40 -0400
-Message-ID: <20090518151440.GA10536@andros.its.yale.edu>
+From: David =?utf-8?q?K=C3=A5gedal?= <davidk@lysator.liu.se>
+Subject: [StGit PATCH] Add a --tree flag to stg push
+Date: Mon, 18 May 2009 16:50:18 +0200
+Message-ID: <20090518144754.30487.84132.stgit@krank>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-To: gitster@pobox.com, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon May 18 17:16:07 2009
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: kha@treskal.com, catalin.marinas@gmail.com
+X-From: git-owner@vger.kernel.org Mon May 18 17:16:58 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M64ZP-0007gM-2d
-	for gcvg-git-2@gmane.org; Mon, 18 May 2009 17:16:03 +0200
+	id 1M64aA-00087R-5i
+	for gcvg-git-2@gmane.org; Mon, 18 May 2009 17:16:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756212AbZERPOo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 18 May 2009 11:14:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755957AbZERPOo
-	(ORCPT <rfc822;git-outgoing>); Mon, 18 May 2009 11:14:44 -0400
-Received: from mail-qy0-f112.google.com ([209.85.221.112]:46293 "EHLO
-	mail-qy0-f112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755276AbZERPOn (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 May 2009 11:14:43 -0400
-Received: by qyk10 with SMTP id 10so1316762qyk.33
-        for <git@vger.kernel.org>; Mon, 18 May 2009 08:14:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:subject
-         :message-id:mail-followup-to:mime-version:content-type
-         :content-disposition:x-os:user-agent;
-        bh=+PnlblwKk6chNJcZFu5XyMQ0RdjKYa+eFqURXmeFJTY=;
-        b=cA9xJst0IY7w31tFCTtKWfyJAQoQCIMTr7UiZA86vYJaFWp0BhpGrxowaDXzL5snBy
-         kW9y063TAK3sBPAUTRVygqi2EKFMh7pp4N901LfCv6QLoDzMe5PXxD6eCKVcyDL/Sf7r
-         oM7q7sk29eTEV6H5Fecf1Pg1n9OUUhnqUlrRA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:subject:message-id:mail-followup-to:mime-version
-         :content-type:content-disposition:x-os:user-agent;
-        b=qeSbQaoVSOTHc370tDVPFa1cWCNbynOlsmm7o96bjCd6FciX1fV54RLVIpbkjk8AD9
-         YHQXQSoZrwQx0qyWH2hvBJMp+eebIB9s14mZGYNv4i60dvxMHL028fCVw9fKAfHGy9vV
-         vK1emx8Sl6I6/CFwyFSPoHgkNyWt+qkytKMSQ=
-Received: by 10.224.32.73 with SMTP id b9mr6451207qad.11.1242659683639;
-        Mon, 18 May 2009 08:14:43 -0700 (PDT)
-Received: from andros.its.yale.edu (dhcp128036172176.med.yale.edu [128.36.172.176])
-        by mx.google.com with ESMTPS id 26sm1011819qwa.8.2009.05.18.08.14.42
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 18 May 2009 08:14:43 -0700 (PDT)
-Mail-Followup-To: gitster@pobox.com, git@vger.kernel.org
-Content-Disposition: inline
-X-OS: Darwin andros 9.7.0 i386
-User-Agent: Mutt/1.5.19 (2009-01-05)
+	id S1752782AbZERPQc convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 18 May 2009 11:16:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752092AbZERPQb
+	(ORCPT <rfc822;git-outgoing>); Mon, 18 May 2009 11:16:31 -0400
+Received: from mail.lysator.liu.se ([130.236.254.3]:53817 "EHLO
+	mail.lysator.liu.se" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752540AbZERPQa (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 May 2009 11:16:30 -0400
+X-Greylist: delayed 1570 seconds by postgrey-1.27 at vger.kernel.org; Mon, 18 May 2009 11:16:29 EDT
+Received: from mail.lysator.liu.se (localhost [127.0.0.1])
+	by mail.lysator.liu.se (Postfix) with ESMTP id D4A0F40021;
+	Mon, 18 May 2009 16:49:53 +0200 (CEST)
+Received: by mail.lysator.liu.se (Postfix, from userid 1674)
+	id C842D40047; Mon, 18 May 2009 16:49:53 +0200 (CEST)
+X-Spam-Checker-Version: SpamAssassin 3.1.7-deb3 (2006-10-05) on 
+	bernadotte.lysator.liu.se
+X-Spam-Level: 
+X-Spam-Status: No, score=-0.5 required=5.0 tests=AWL autolearn=disabled 
+	version=3.1.7-deb3
+Received: from krank (unknown [87.96.142.66])
+	(using TLSv1 with cipher ADH-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by mail.lysator.liu.se (Postfix) with ESMTP id 4941440021;
+	Mon, 18 May 2009 16:49:53 +0200 (CEST)
+Received: from [127.0.1.1] (localhost [127.0.0.1])
+	by krank (Postfix) with ESMTP id 334BEDC26A;
+	Mon, 18 May 2009 16:50:19 +0200 (CEST)
+User-Agent: StGit/0.14.3.376.gb91d
+X-Virus-Scanned: ClamAV using ClamSMTP
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119449>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119450>
 
-It is relatively hard to verify the date a tag was created unless it was been
-gpg/pgp-signed at the time of creation, no? I suppose that the Unix timestamp
-included in each tag file is useful for sorting, but it's not very easy for
-people to digest.  Additionally, we have our `log.date` config, why not use it
-here for some sort of option, like `--pretty=date` to make it easy to see when
-a tag was created?
+This flag makes the push simply restore the tree that the patch used
+before, rather than doing any kind of merge.
+---
 
-I.e.
+This scratches a long-time itch for me. The typical use case is when
+you want to break up a larg patch inte smaller ones. You back out the
+orignal patch, apply a small set of changes from it and then push the
+patch back again. But then you don't want to do a merge, with the
+possibility of conflict. You simply want to restore to the tree that
+the patch had before so you can see what's left to create cleaned-up
+patches of.  The command "stg push --tree" does just that.
 
-$ git tag -l --pretty=date
-...
-Mon, 13 Apr 2009 00:06:25: v1.6.3-rc0
-Sat, 18 Apr 2009 22:11:00: v1.6.3-rc1 
-Sat, 25 Apr 2009 06:01:13: v1.6.3-rc2 
-Sun, 26 Apr 2009 23:43:48: v1.6.3-rc3 
-Sat, 02 May 2009 06:32:21: v1.6.3-rc4 
-Wed, 13 May 2009 05:30:37: v1.6.3.1
+The naming of flags and functions isn't very obvious, and suggestions
+for improvements are welcome.
 
-I don't know if this is feasible. Perhaps there already exists a feature for
-this that I'm unaware of. Or maybe this would be a waste of time.
+ stgit/commands/push.py   |   26 ++++++++++++-------
+ stgit/lib/transaction.py |   28 ++++++++++++++++++++
+ t/t1207-push-tree.sh     |   64 ++++++++++++++++++++++++++++++++++++++=
+++++++++
+ 3 files changed, 108 insertions(+), 10 deletions(-)
+ create mode 100755 t/t1207-push-tree.sh
 
-Dan
+diff --git a/stgit/commands/push.py b/stgit/commands/push.py
+index 0d25a65..8d4d3fc 100644
+--- a/stgit/commands/push.py
++++ b/stgit/commands/push.py
+@@ -43,7 +43,9 @@ options =3D [
+     opt('-n', '--number', type =3D 'int',
+         short =3D 'Push the specified number of patches'),
+     opt('--reverse', action =3D 'store_true',
+-        short =3D 'Push the patches in reverse order')
++        short =3D 'Push the patches in reverse order'),
++    opt('--tree', action =3D 'store_true',
++        short =3D 'Push the patch with the original tree')
+     ] + argparse.keep_option() + argparse.merged_option()
+=20
+ directory =3D common.DirectoryHasRepositoryLib()
+@@ -74,14 +76,18 @@ def func(parser, options, args):
+     if options.reverse:
+         patches.reverse()
+=20
+-    try:
+-        if options.merged:
+-            merged =3D set(trans.check_merged(patches))
+-        else:
+-            merged =3D set()
++    if options.tree:
+         for pn in patches:
+-            trans.push_patch(pn, iw, allow_interactive =3D True,
+-                             already_merged =3D pn in merged)
+-    except transaction.TransactionHalted:
+-        pass
++            trans.push_tree(pn)
++    else:
++        try:
++            if options.merged:
++                merged =3D set(trans.check_merged(patches))
++            else:
++                merged =3D set()
++            for pn in patches:
++                trans.push_patch(pn, iw, allow_interactive =3D True,
++                                 already_merged =3D pn in merged)
++        except transaction.TransactionHalted:
++            pass
+     return trans.run(iw)
+diff --git a/stgit/lib/transaction.py b/stgit/lib/transaction.py
+index 4148ff3..1c21938 100644
+--- a/stgit/lib/transaction.py
++++ b/stgit/lib/transaction.py
+@@ -372,6 +372,34 @@ class StackTransaction(object):
+             # Update immediately.
+             update()
+=20
++    def push_tree(self, pn):
++        """Push the named patch without updating its tree."""
++        orig_cd =3D self.patches[pn].data
++        cd =3D orig_cd.set_committer(None)
++        oldparent =3D cd.parent
++        cd =3D cd.set_parent(self.top)
++
++        s =3D ''
++        if any(getattr(cd, a) !=3D getattr(orig_cd, a) for a in
++               ['parent', 'tree', 'author', 'message']):
++            comm =3D self.__stack.repository.commit(cd)
++            self.head =3D comm
++        else:
++            comm =3D None
++            s =3D ' (unmodified)'
++        if cd.is_nochange():
++            s =3D ' (empty)'
++        out.info('Pushed %s%s' % (pn, s))
++
++        if comm:
++            self.patches[pn] =3D comm
++        if pn in self.hidden:
++            x =3D self.hidden
++        else:
++            x =3D self.unapplied
++        del x[x.index(pn)]
++        self.applied.append(pn)
++
+     def reorder_patches(self, applied, unapplied, hidden =3D None, iw =
+=3D None):
+         """Push and pop patches to attain the given ordering."""
+         if hidden is None:
+diff --git a/t/t1207-push-tree.sh b/t/t1207-push-tree.sh
+new file mode 100755
+index 0000000..83f5cbf
+--- /dev/null
++++ b/t/t1207-push-tree.sh
+@@ -0,0 +1,64 @@
++#!/bin/sh
++#
++# Copyright (c) 2006 David K=C3=A5gedal
++#
++
++test_description=3D'Exercise pushing patches with --tree.'
++
++. ./test-lib.sh
++
++# don't need this repo, but better not drop it, see t1100
++#rm -rf .git
++
++# Need a repo to clone
++test_create_repo foo
++
++test_expect_success \
++    'Create initial patches' '
++    (
++        cd foo &&
++        stg init &&
++        stg new A -m A &&
++        echo hello world > a &&
++        git add a &&
++        stg refresh
++        stg new B -m B &&
++        echo HELLO WORLD > a &&
++        stg refresh
++    )
++'
++
++test_expect_success \
++    'Back up and create a partial patch' '
++    (
++        cd foo &&
++        stg pop &&
++        stg new C -m C &&
++        echo hello WORLD > a &&
++        stg refresh
++    )
++'
++
++test_expect_success \
++    'Reapply patch B' '
++    (
++        cd foo &&
++        stg push --tree B
++    )
++'
++
++test_expect_success \
++    'Compare results' '
++    (
++        cd foo &&
++        stg pop -a &&
++        stg push &&
++        test "$(echo $(cat a))" =3D "hello world" &&
++        stg push &&
++        test "$(echo $(cat a))" =3D "hello WORLD" &&
++        stg push &&
++        test "$(echo $(cat a))" =3D "HELLO WORLD"
++    )
++'
++
++test_done
