@@ -1,58 +1,73 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
+From: Sverre Rabbelier <srabbelier@gmail.com>
 Subject: Re: Git screwup with reset
-Date: Mon, 18 May 2009 08:08:40 -0700
-Message-ID: <20090518150840.GJ30527@spearce.org>
+Date: Mon, 18 May 2009 17:11:38 +0200
+Message-ID: <fabb9a1e0905180811r6e408ce5ged65ddfb3846111c@mail.gmail.com>
 References: <9D569322-6A7B-4447-962C-0C740945E227@orgsync.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
 To: jake varghese <jake@orgsync.com>
-X-From: git-owner@vger.kernel.org Mon May 18 17:08:50 2009
+X-From: git-owner@vger.kernel.org Mon May 18 17:12:25 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M64SP-00046i-8K
-	for gcvg-git-2@gmane.org; Mon, 18 May 2009 17:08:49 +0200
+	id 1M64Vr-0005rJ-El
+	for gcvg-git-2@gmane.org; Mon, 18 May 2009 17:12:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752655AbZERPIl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 18 May 2009 11:08:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752576AbZERPIk
-	(ORCPT <rfc822;git-outgoing>); Mon, 18 May 2009 11:08:40 -0400
-Received: from george.spearce.org ([209.20.77.23]:34855 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752072AbZERPIj (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 May 2009 11:08:39 -0400
-Received: by george.spearce.org (Postfix, from userid 1001)
-	id C1508381FD; Mon, 18 May 2009 15:08:40 +0000 (UTC)
-Content-Disposition: inline
+	id S1753306AbZERPMA convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 18 May 2009 11:12:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753226AbZERPL7
+	(ORCPT <rfc822;git-outgoing>); Mon, 18 May 2009 11:11:59 -0400
+Received: from mail-bw0-f222.google.com ([209.85.218.222]:38260 "EHLO
+	mail-bw0-f222.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752998AbZERPL6 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 18 May 2009 11:11:58 -0400
+Received: by bwz22 with SMTP id 22so3267791bwz.37
+        for <git@vger.kernel.org>; Mon, 18 May 2009 08:11:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=aLbhUrO8oSl8BTTfblo4nSVX/8RyMkMmszpDkC3+kx8=;
+        b=VM2zEVUiAjNlFHpbdT0hBfUM5VB2gPsDP5mdPXGKJbR3bGPPDwzzMJ0VCjzwSV5qTU
+         W5tTR5CG5huMhVPofTzeur+mG8PyDBccelesN6jAotx+KCx18sqsskJizvYRUhY4UVrH
+         2Mrp9IUE3B0OBhLXBZcJIuKRXI/cmUTZSc2z0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=n1zQH9nn7C79SQ/zb7l9bdnSaraGzgmuBuVmAJMtTUMgz4Fd8qF7bec7It7w6JUjs0
+         xYR/oDWqm77YAhuxMqNJODDdazqbdzJemW+f3ck7EZLbNDR4F/6y9UTjzg/2za2jk27H
+         SHVfWZm5eZJ4qh4fq2J8nYQqR7Dw36FZxpono=
+Received: by 10.103.228.19 with SMTP id f19mr4148190mur.32.1242659518098; Mon, 
+	18 May 2009 08:11:58 -0700 (PDT)
 In-Reply-To: <9D569322-6A7B-4447-962C-0C740945E227@orgsync.com>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119447>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119448>
 
-jake varghese <jake@orgsync.com> wrote:
-> When I run git fsck --lost-found i get a whole bunch of dangling  
-> objects.  If I run git show on those objects it shows me the code that 
-> was lost.  Anyone know of a way to get this stuff back.  I tried  
-> rebasing and merging and neither worked.
+Heya,
 
-For each of those dangling blobs:
+On Mon, May 18, 2009 at 16:58, jake varghese <jake@orgsync.com> wrote:
+> =A0Anyone know of a way to get this stuff back.
 
-  git cat-file blob $sha1 >$path
+Make a backup copy of that .git directory, so that whatever you do you
+won't lose that work ;). Also, the reason you can't merge or rebase
+that hash is because it's the hash of a tree or a blob, not a commit.
+You can use git commit-tree [0] to create a commit from your lost
+tree, but that works only if you have a tree (for just a blob you can
+use git cat-file [1])
 
-where you need to manually figure out the relationship between
-$sha1 and the local $path within your project.  Git doesn't have
-that relationship data, because you never made a commit.
+[0] http://www.kernel.org/pub/software/scm/git/docs/git-commit-tree.htm=
+l
+[1] http://kernel.org/pub/software/scm/git/docs/git-cat-file.html
 
-Oh, and next time, commit like every hour, or more frequently than
-that.  At worst, you'll need to do a "git merge --squash" near the
-end to flatten out your silly "save my work" checkpoints and draft
-a more useful commit message for your coworkers.  But at least you
-lose less when you have a "git reset --hard" fat finger accident.
+--=20
+Cheers,
 
--- 
-Shawn.
+Sverre Rabbelier
