@@ -1,80 +1,88 @@
-From: Thomas Rast <trast@student.ethz.ch>
+From: Jeff King <peff@peff.net>
 Subject: Re: Pretty date option for git tag?
-Date: Mon, 18 May 2009 23:11:37 +0200
-Message-ID: <200905182311.41876.trast@student.ethz.ch>
-References: <20090518151440.GA10536@andros.its.yale.edu> <alpine.LFD.2.01.0905181015080.3301@localhost.localdomain> <20090518174547.GA14509@sigill.intra.peff.net>
+Date: Mon, 18 May 2009 17:27:31 -0400
+Message-ID: <20090518212731.GA14050@coredump.intra.peff.net>
+References: <20090518151440.GA10536@andros.its.yale.edu> <alpine.LFD.2.01.0905181015080.3301@localhost.localdomain> <20090518174547.GA14509@sigill.intra.peff.net> <200905182311.41876.trast@student.ethz.ch>
 Mime-Version: 1.0
-Content-Type: multipart/signed;
-  boundary="nextPart1685695.ucjARfUJjF";
-  protocol="application/pgp-signature";
-  micalg=pgp-sha1
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
 Cc: Linus Torvalds <torvalds@linux-foundation.org>,
 	Michael J Gruber <git@drmicha.warpmail.net>,
 	dloewenherz@gmail.com, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon May 18 23:12:40 2009
+To: Thomas Rast <trast@student.ethz.ch>
+X-From: git-owner@vger.kernel.org Mon May 18 23:27:42 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M6A8T-0000HN-4G
-	for gcvg-git-2@gmane.org; Mon, 18 May 2009 23:12:37 +0200
+	id 1M6AN4-0006Ls-3r
+	for gcvg-git-2@gmane.org; Mon, 18 May 2009 23:27:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753573AbZERVM2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 18 May 2009 17:12:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753306AbZERVM1
-	(ORCPT <rfc822;git-outgoing>); Mon, 18 May 2009 17:12:27 -0400
-Received: from xsmtp1.ethz.ch ([82.130.70.13]:40279 "EHLO xsmtp1.ethz.ch"
+	id S1753647AbZERV1d (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 18 May 2009 17:27:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753283AbZERV1c
+	(ORCPT <rfc822;git-outgoing>); Mon, 18 May 2009 17:27:32 -0400
+Received: from peff.net ([208.65.91.99]:46100 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753484AbZERVM0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 May 2009 17:12:26 -0400
-Received: from xfe1.d.ethz.ch ([82.130.124.41]) by xsmtp1.ethz.ch with Microsoft SMTPSVC(6.0.3790.3959);
-	 Mon, 18 May 2009 23:12:20 +0200
-Received: from thomas.localnet ([84.75.148.203]) by xfe1.d.ethz.ch over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
-	 Mon, 18 May 2009 23:12:25 +0200
-User-Agent: KMail/1.11.3 (Linux/2.6.27.21-0.1-default; KDE/4.2.3; x86_64; ; )
-In-Reply-To: <20090518174547.GA14509@sigill.intra.peff.net>
-X-OriginalArrivalTime: 18 May 2009 21:12:25.0275 (UTC) FILETIME=[579378B0:01C9D7FD]
+	id S1752753AbZERV1c (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 May 2009 17:27:32 -0400
+Received: (qmail 19724 invoked by uid 107); 18 May 2009 21:27:35 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Mon, 18 May 2009 17:27:35 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Mon, 18 May 2009 17:27:31 -0400
+Content-Disposition: inline
+In-Reply-To: <200905182311.41876.trast@student.ethz.ch>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119464>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119465>
 
---nextPart1685695.ucjARfUJjF
-Content-Type: text/plain;
-  charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
-Content-Disposition: inline
+On Mon, May 18, 2009 at 11:11:37PM +0200, Thomas Rast wrote:
 
-Jeff King wrote:
-> It seems like you should be able to script around for-each-ref and
-> remain efficient, but I don't think there is a way to convince it to
-> dereference tags.
+> Jeff King wrote:
+> > It seems like you should be able to script around for-each-ref and
+> > remain efficient, but I don't think there is a way to convince it to
+> > dereference tags.
+> 
+> Actually there's the * operator.  For example
+> 
+>   git$ git for-each-ref --format="%(objecttype) %(*objecttype)" refs/tags/v1.6.0
+>   tag commit
+> 
+> Does that solve the problem at hand?
 
-Actually there's the * operator.  For example
+Oh, right, thanks. I missed that when reading the manual (I was looking
+for "dereference" or "peel", but those words are never used). So you can
+do:
 
-  git$ git for-each-ref --format=3D"%(objecttype) %(*objecttype)" refs/tags=
-/v1.6.0
-  tag commit
+  git for-each-ref --format='%(refname)
+  Tag: %(taggername) %(taggeremail) %(taggerdate)
+  Commit: %(*authorname) %(*authoremail) %(*authordate)
+  ' refs/tags
 
-Does that solve the problem at hand?
+to show both.
 
-=2D-=20
-Thomas Rast
-trast@{inf,student}.ethz.ch
+That could go in an alias, though it isn't exactly what the original
+poster asked for. Besides not being a one-line format, it has refs/tags/
+cruft at the beginning of each ref. I think what the OP asked for
+exactly is:
 
---nextPart1685695.ucjARfUJjF
-Content-Type: application/pgp-signature; name=signature.asc 
-Content-Description: This is a digitally signed message part.
+  eval "`git for-each-ref --shell --format='
+    r=%(refname)
+    d=%(taggerdate)
+    T=${r#refs/tags/}
+    echo "$T $d"
+    ' refs/tags`"
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.9 (GNU/Linux)
+Though as Linus said, I think the actual commit date is also interesting
+(and you could expand that shell snippet to show it instead, in addition
+to, or whatever).
 
-iEYEABECAAYFAkoRzw0ACgkQqUud07tmzP131gCgjdPxx0iKQSkkcWdJ8N7BBiLQ
-vBoAn3fS7T9C++pvc3XAnuPkebX6dDSb
-=/yk7
------END PGP SIGNATURE-----
+And before anyone says anything, yes, I think building a shell script
+and eval'ing it is a little ugly compared to a "--show-date" option to
+"git tag". If this is something a lot of people want to do, it wouldn't
+be that hard an option to add (in fact, it would be really nice to unify
+the show-ref and pretty=format substitutions, and extend them into "git
+tag --format='%r %td'" or whatever).
 
---nextPart1685695.ucjARfUJjF--
+-Peff
