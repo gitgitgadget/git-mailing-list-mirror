@@ -1,161 +1,85 @@
-From: Brandon Casey <casey@nrlssc.navy.mil>
-Subject: [PATCH 8/8] t5100: use ancient encoding syntax for backwards compatibility
-Date: Mon, 18 May 2009 18:44:45 -0500
-Message-ID: <KfeKNR3Jm6YKvPIcYGBMpDtcOdL_JQMWwSHWkmiNf_gpkqZ0z2Gj3DhR4xNob0vpb5MbKv1cOns@cipher.nrlssc.navy.mil>
-References: <KfeKNR3Jm6YKvPIcYGBMpCbbOxxIaBRphS4qzgN2W9mXIvp7Hl8SgBQzbAhZRV4A4Q6X14JTLR4@cipher.nrlssc.navy.mil> <KfeKNR3Jm6YKvPIcYGBMpKjNOsMcmMNMJ1vr-EBr-eE371H-Rg69NOM1rMB2Oa5nCGVe2SMGKdc@cipher.nrlssc.navy.mil> <KfeKNR3Jm6YKvPIcYGBMpLkRr97IFN82BZR2bJNHFQYwhjGgwGRoIAkKO5m1EZb7M9epcX8P-fk@cipher.nrlssc.navy.mil> <KfeKNR3Jm6YKvPIcYGBMpEj60b9ww0Dv2XSyNy2qLE-KEaaF8D8q9OHVC3tPAPSzNe1CJUXJDfA@cipher.nrlssc.navy.mil> <KfeKNR3Jm6YKvPIcYGBMpGlk83sgTnCuuc7WdvYgBn_Ja9b0yZjdlJxTSSCaDWC05irzAQVk1uM@cipher.nrlssc.navy.mil> <KfeKNR3Jm6YKvPIcYGBMpPhpa6XnDlrUaNKPjrH6NYGZK9NzwH2STGreDnkCUEwiMxu0BD6uSgk@cipher.nrlssc.navy.mil> <KfeKNR3Jm6YKvPIcYGBMpKMgDQvtEffFhDQ5lsZU861rwPvLMbXRKufUbP1Cj7yuYKrGcvxDsnU@cipher.nrlssc.navy.mil> <KfeKNR3Jm6YKvPIcYGBMpD_AmxNUeXbQUOa7RCzy3RyTmaiqpcJHJcp9eR8w363qcg0oZzieLd0@ciph
- er.nrlssc.navy.mil>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue May 19 01:45:53 2009
+From: Geoff Russell <geoffrey.russell@gmail.com>
+Subject: Re: Merging a branch when I don't want conflicts
+Date: Tue, 19 May 2009 09:23:54 +0930
+Message-ID: <93c3eada0905181653r2694550djd2e0f75de22c156d@mail.gmail.com>
+References: <93c3eada0905171930m36765d4fued9c2efdc57e51a4@mail.gmail.com>
+	 <4A10FDC6.2040706@viscovery.net>
+	 <93c3eada0905180105n641614eodb0469dceca20bc9@mail.gmail.com>
+	 <4A112404.6060004@viscovery.net>
+Reply-To: geoffrey.russell@gmail.com
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Tay Ray Chuan <rctay89@gmail.com>,
+	Nanako Shiraishi <nanako3@lavabit.com>, git@vger.kernel.org
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Tue May 19 01:54:03 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M6CWm-0003iT-SE
-	for gcvg-git-2@gmane.org; Tue, 19 May 2009 01:45:53 +0200
+	id 1M6Ceg-00062V-Eg
+	for gcvg-git-2@gmane.org; Tue, 19 May 2009 01:54:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754308AbZERXpP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 18 May 2009 19:45:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754054AbZERXpP
-	(ORCPT <rfc822;git-outgoing>); Mon, 18 May 2009 19:45:15 -0400
-Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:50122 "EHLO
-	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753677AbZERXpB (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 May 2009 19:45:01 -0400
-Received: by mail.nrlssc.navy.mil id n4INitKY024906; Mon, 18 May 2009 18:45:00 -0500
-In-Reply-To: <KfeKNR3Jm6YKvPIcYGBMpD_AmxNUeXbQUOa7RCzy3RyTmaiqpcJHJcp9eR8w363qcg0oZzieLd0@cipher.nrlssc.navy.mil>
-X-OriginalArrivalTime: 18 May 2009 23:44:56.0183 (UTC) FILETIME=[A5F13870:01C9D812]
+	id S1753007AbZERXxy convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 18 May 2009 19:53:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752695AbZERXxy
+	(ORCPT <rfc822;git-outgoing>); Mon, 18 May 2009 19:53:54 -0400
+Received: from qw-out-2122.google.com ([74.125.92.25]:24177 "EHLO
+	qw-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752506AbZERXxx convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 18 May 2009 19:53:53 -0400
+Received: by qw-out-2122.google.com with SMTP id 5so2757601qwd.37
+        for <git@vger.kernel.org>; Mon, 18 May 2009 16:53:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:reply-to:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=MDAtV2gQW++4OWq4t2PggAea5gP1ALUPKON4vtDGE3U=;
+        b=q0BNWx6NdUxdsKH24Kki1OTHxLO4wwDRGwjTouBDpF35+nJNB5j1rRjIA4Ige2bbeX
+         Zop8p+PPc10iYUxkrK9B0xQqXQjUVseJUPZ0QHcD320nP93LMbDocvKgorB309xw4ef8
+         6OuFr4dyoCByJ5/SULUBn3fbO/mfoL1mQUCS0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:reply-to:in-reply-to:references:date:message-id
+         :subject:from:to:cc:content-type:content-transfer-encoding;
+        b=pGNHyqDWKGwqL+w3JGYGsW6xT0WAU9Npugi7M3XpFZ5pXv4oQ0zUrWYQsWLOXtmQFJ
+         ndKPVJfr+kVAfCKpSvAmVC8UipJAdZIUlds0BTtRuk+avJvemzSbQ1TsBzZiydJl4rMk
+         SGZuvFuQyy+qIoMXhws4UeftqgnyixT8Kd518=
+Received: by 10.220.90.144 with SMTP id i16mr7569851vcm.14.1242690834184; Mon, 
+	18 May 2009 16:53:54 -0700 (PDT)
+In-Reply-To: <4A112404.6060004@viscovery.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119479>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119480>
 
-Some ancient platforms do not have an extensive list of alternate names for
-character encodings.  For example, Solaris 7 does not know that ISO-8859-1
-is the same as ISO8859-1.  Modern platforms do know this, so use the older
-names.
+On Mon, May 18, 2009 at 6:31 PM, Johannes Sixt <j.sixt@viscovery.net> w=
+rote:
+> Geoff Russell schrieb:
+>> The file is data coming out of an interactive program which reads
+>> the entire file, edits and then writes the entire file at which poin=
+t
+>> this file is correct
+>> and all previous versions are obsolete. =A0I don't really want a mer=
+ge
+>> at all, but just
+>> want to replace the file in the master with the version on the branc=
+h.
+>
+> Ah, so finally you say what you mean ;)
+>
+> You can define a custom merge driver that always returns the content =
+of
+> the second branch. See 'man gitattributes'.
+>
+> -- Hannes
+>
 
-The following conversions were performed:
+Sorry for the confusion. A custom merge driver will work fine ... but I
+will also rethink carefully  what I am doing.
 
-    ISO-8859-1 --> ISO8859-1
-    ISO-8859-2 --> ISO8859-2
-    ISO-8859-8 --> ISO8859-8
-    iso-2022-jp --> ISO-2022-JP
-
-Signed-off-by: Brandon Casey <casey@nrlssc.navy.mil>
----
- t/t5100/rfc2047-samples.mbox |   32 ++++++++++++++++----------------
- t/t5100/sample.mbox          |    8 ++++----
- 2 files changed, 20 insertions(+), 20 deletions(-)
-
-diff --git a/t/t5100/rfc2047-samples.mbox b/t/t5100/rfc2047-samples.mbox
-index 3ca2470..1fc2248 100644
---- a/t/t5100/rfc2047-samples.mbox
-+++ b/t/t5100/rfc2047-samples.mbox
-@@ -1,48 +1,48 @@
- From nobody Mon Sep 17 00:00:00 2001
- From: =?US-ASCII?Q?Keith_Moore?= <moore@cs.utk.edu>
--To: =?ISO-8859-1?Q?Keld_J=F8rn_Simonsen?= <keld@dkuug.dk>
--CC: =?ISO-8859-1?Q?Andr=E9?= Pirard <PIRARD@vm1.ulg.ac.be>
--Subject: =?ISO-8859-1?B?SWYgeW91IGNhbiByZWFkIHRoaXMgeW8=?=
-- =?ISO-8859-2?B?dSB1bmRlcnN0YW5kIHRoZSBleGFtcGxlLg==?=
-+To: =?ISO8859-1?Q?Keld_J=F8rn_Simonsen?= <keld@dkuug.dk>
-+CC: =?ISO8859-1?Q?Andr=E9?= Pirard <PIRARD@vm1.ulg.ac.be>
-+Subject: =?ISO8859-1?B?SWYgeW91IGNhbiByZWFkIHRoaXMgeW8=?=
-+ =?ISO8859-2?B?dSB1bmRlcnN0YW5kIHRoZSBleGFtcGxlLg==?=
- 
- From nobody Mon Sep 17 00:00:00 2001
--From: =?ISO-8859-1?Q?Olle_J=E4rnefors?= <ojarnef@admin.kth.se>
-+From: =?ISO8859-1?Q?Olle_J=E4rnefors?= <ojarnef@admin.kth.se>
- To: ietf-822@dimacs.rutgers.edu, ojarnef@admin.kth.se
- Subject: Time for ISO 10646?
- 
- From nobody Mon Sep 17 00:00:00 2001
- To: Dave Crocker <dcrocker@mordor.stanford.edu>
- Cc: ietf-822@dimacs.rutgers.edu, paf@comsol.se
--From: =?ISO-8859-1?Q?Patrik_F=E4ltstr=F6m?= <paf@nada.kth.se>
-+From: =?ISO8859-1?Q?Patrik_F=E4ltstr=F6m?= <paf@nada.kth.se>
- Subject: Re: RFC-HDR care and feeding
- 
- From nobody Mon Sep 17 00:00:00 2001
- From: Nathaniel Borenstein <nsb@thumper.bellcore.com>
--      (=?iso-8859-8?b?7eXs+SDv4SDp7Oj08A==?=)
-+      (=?ISO8859-8?b?7eXs+SDv4SDp7Oj08A==?=)
- To: Greg Vaudreuil <gvaudre@NRI.Reston.VA.US>, Ned Freed
-    <ned@innosoft.com>, Keith Moore <moore@cs.utk.edu>
- Subject: Test of new header generator
- MIME-Version: 1.0
--Content-type: text/plain; charset=ISO-8859-1
-+Content-type: text/plain; charset=ISO8859-1
- 
- From nobody Mon Sep 17 00:00:00 2001
--Subject: (=?ISO-8859-1?Q?a?=)
-+Subject: (=?ISO8859-1?Q?a?=)
- 
- From nobody Mon Sep 17 00:00:00 2001
--Subject: (=?ISO-8859-1?Q?a?= b)
-+Subject: (=?ISO8859-1?Q?a?= b)
- 
- From nobody Mon Sep 17 00:00:00 2001
--Subject: (=?ISO-8859-1?Q?a?= =?ISO-8859-1?Q?b?=)
-+Subject: (=?ISO8859-1?Q?a?= =?ISO8859-1?Q?b?=)
- 
- From nobody Mon Sep 17 00:00:00 2001
--Subject: (=?ISO-8859-1?Q?a?=  =?ISO-8859-1?Q?b?=)
-+Subject: (=?ISO8859-1?Q?a?=  =?ISO8859-1?Q?b?=)
- 
- From nobody Mon Sep 17 00:00:00 2001
--Subject: (=?ISO-8859-1?Q?a?=
--    =?ISO-8859-1?Q?b?=)
-+Subject: (=?ISO8859-1?Q?a?=
-+    =?ISO8859-1?Q?b?=)
- 
- From nobody Mon Sep 17 00:00:00 2001
--Subject: (=?ISO-8859-1?Q?a_b?=)
-+Subject: (=?ISO8859-1?Q?a_b?=)
- 
- From nobody Mon Sep 17 00:00:00 2001
--Subject: (=?ISO-8859-1?Q?a?= =?ISO-8859-2?Q?_b?=)
-+Subject: (=?ISO8859-1?Q?a?= =?ISO8859-2?Q?_b?=)
-diff --git a/t/t5100/sample.mbox b/t/t5100/sample.mbox
-index c5ad206..c3074ac 100644
---- a/t/t5100/sample.mbox
-+++ b/t/t5100/sample.mbox
-@@ -99,7 +99,7 @@ index 9123cdc..918dcf8 100644
- From nobody Sat Aug 27 23:07:49 2005
- Path: news.gmane.org!not-for-mail
- Message-ID: <20050721.091036.01119516.yoshfuji@linux-ipv6.org>
--From: YOSHIFUJI Hideaki / =?iso-2022-jp?B?GyRCNUhGIzFRTEAbKEI=?= 
-+From: YOSHIFUJI Hideaki / =?ISO-2022-JP?B?GyRCNUhGIzFRTEAbKEI=?= 
- 	<yoshfuji@linux-ipv6.org>
- Newsgroups: gmane.comp.version-control.git
- Subject: [PATCH 1/2] GIT: Try all addresses for given remote name
-@@ -218,7 +218,7 @@ GPG-FP  : 9022 65EB 1ECF 3AD1 0BDF  80D8 4807 F894 E062 0EEA
- From nobody Sat Aug 27 23:07:49 2005
- Path: news.gmane.org!not-for-mail
- Message-ID: <u5tacjjdpxq.fsf@lysator.liu.se>
--From: =?iso-8859-1?Q?David_K=E5gedal?= <davidk@lysator.liu.se>
-+From: =?ISO8859-1?Q?David_K=E5gedal?= <davidk@lysator.liu.se>
- Newsgroups: gmane.comp.version-control.git
- Subject: [PATCH] Fixed two bugs in git-cvsimport-script.
- Date: Mon, 15 Aug 2005 20:18:25 +0200
-@@ -226,7 +226,7 @@ Lines: 83
- Approved: news@gmane.org
- NNTP-Posting-Host: main.gmane.org
- Mime-Version: 1.0
--Content-Type: text/plain; charset=iso-8859-1
-+Content-Type: text/plain; charset=ISO8859-1
- Content-Transfer-Encoding: QUOTED-PRINTABLE
- X-Trace: sea.gmane.org 1124130247 31839 80.91.229.2 (15 Aug 2005 18:24:07 GMT)
- X-Complaints-To: usenet@sea.gmane.org
-@@ -476,7 +476,7 @@ MIME-Version: 1.0
- Content-Type: multipart/mixed; boundary="=-=-="
- 
- --=-=-=
--Content-Type: text/plain; charset=iso-8859-15
-+Content-Type: text/plain; charset=ISO8859-15
- Content-Transfer-Encoding: quoted-printable
- 
- Here comes a commit log message, and
--- 
-1.6.3.1.24.g152f4
+Cheers,
+Geoff.
