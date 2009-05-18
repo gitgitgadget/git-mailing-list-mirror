@@ -1,66 +1,85 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH] Extend sample pre-commit hook to check for non ascii
- filenames
-Date: Mon, 18 May 2009 14:04:08 +0200
-Message-ID: <4A114EB8.60609@viscovery.net>
-References: <20090512214250.GA22974@macbook.lan> <200905122356.00659.jnareb@gmail.com> <20090514175850.GA26267@macbook.lan> <7vbpputewv.fsf@alter.siamese.dyndns.org> <419AD153-53B4-4DAB-AF72-4127C17B1CA0@gmail.com> <200905122356.00659.jnareb@gmail.com> <20090514175850.GA26267@macbook.lan> <200905151657.47225.jnareb@gmail.com> <20090518095044.GB910@heiko-voigts-macbook.local> <4A113B09.6040301@viscovery.net> <20090518115002.GA3374@heiko-voigts-macbook.local>
+From: "Sohn, Matthias" <matthias.sohn@sap.com>
+Subject: [JGIT PATCH] FindBugs: Superclass uses subclass during initialization
+Date: Mon, 18 May 2009 15:11:58 +0200
+Message-ID: <366BBB1215D0AB4B8A153AF047A287800319BD13@dewdfe18.wdf.sap.corp>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Jakub Narebski <jnareb@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Martin Langhoff <martin.langhoff@gmail.com>,
-	Dmitry Potapov <dpotapov@gmail.com>,
-	Esko Luontola <esko.luontola@gmail.com>, git@vger.kernel.org
-To: Heiko Voigt <hvoigt@hvoigt.net>
-X-From: git-owner@vger.kernel.org Mon May 18 14:04:41 2009
+Content-Type: text/plain;
+	charset="UTF-8"
+Content-Transfer-Encoding: base64
+Cc: <git@vger.kernel.org>
+To: "Shawn O. Pearce" <spearce@spearce.org>,
+	"Robin Rosenberg" <robin.rosenberg@dewire.com>
+X-From: git-owner@vger.kernel.org Mon May 18 15:12:52 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M61aC-0005Sw-Hv
-	for gcvg-git-2@gmane.org; Mon, 18 May 2009 14:04:41 +0200
+	id 1M62e8-0000Cj-VX
+	for gcvg-git-2@gmane.org; Mon, 18 May 2009 15:12:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754629AbZERMEQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 18 May 2009 08:04:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754515AbZERMEP
-	(ORCPT <rfc822;git-outgoing>); Mon, 18 May 2009 08:04:15 -0400
-Received: from lilzmailso01.liwest.at ([212.33.55.23]:14374 "EHLO
-	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752494AbZERMEN (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 May 2009 08:04:13 -0400
-Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
-	by lilzmailso01.liwest.at with esmtpa (Exim 4.69)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1M61Zi-00029C-LJ; Mon, 18 May 2009 14:04:10 +0200
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.96])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id 4A7C1FCD2; Mon, 18 May 2009 14:04:10 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.21 (Windows/20090302)
-In-Reply-To: <20090518115002.GA3374@heiko-voigts-macbook.local>
-X-Enigmail-Version: 0.95.5
-X-Spam-Score: -1.4 (-)
+	id S1751992AbZERNMZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 18 May 2009 09:12:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751096AbZERNMZ
+	(ORCPT <rfc822;git-outgoing>); Mon, 18 May 2009 09:12:25 -0400
+Received: from smtpde03.sap-ag.de ([155.56.68.140]:32952 "EHLO
+	smtpde03.sap-ag.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751771AbZERNMY (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 May 2009 09:12:24 -0400
+Received: from mail.sap.corp
+	by smtpde03.sap-ag.de (26) with ESMTP id n4IDCK1Z010358
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Mon, 18 May 2009 15:12:20 +0200 (MEST)
+X-MimeOLE: Produced By Microsoft Exchange V6.5
+Content-class: urn:content-classes:message
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+Thread-Topic: [JGIT PATCH] FindBugs: Superclass uses subclass during initialization
+Thread-Index: AcnSjD6Ul5gId49hTjGQDkNS0WsE4AFLUSsQ
+X-OriginalArrivalTime: 18 May 2009 13:12:01.0156 (UTC) FILETIME=[3B0FF440:01C9D7BA]
+X-Scanner: Virus Scanner virwal04
+X-SAP: out
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119439>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119440>
 
-Heiko Voigt schrieb:
-> Are there any problems with '\0' and tr other than swallowing of it.
-
-I can't tell. But the commits ae90e16..aab0abf are interesting to study in
-w.r.t. portability.
-
-> In
-> case not I would just change
-> 
-> 	tr "\0" "\n"
-> to
->   	tr -d '\0'
-
-In which case I'd suggest that you call tr only once, in isascii():
-
-     tr -d '[ -~]\0'
-
--- Hannes
+RnJvbTogTWF0dGhpYXMgU29obiA8bWF0dGhpYXMuc29obkBzYXAuY29tPg0KDQpGaW5kQnVncyBy
+ZXBvcnRlZCB0aGUgZm9sbG93aW5nIHByb2JsZW0gd2l0aCBoaWdoIHByaW9yaXR5Og0KL3Vzci9z
+cmMvZWdpdC9vcmcuc3BlYXJjZS5qZ2l0L3NyYy9vcmcvc3BlYXJjZS9qZ2l0L21lcmdlL01lcmdl
+U3RyYXRlZ3kuamF2YTo1OA0KSW5pdGlhbGl6YXRpb24gb2Ygb3JnLnNwZWFyY2UuamdpdC5tZXJn
+ZS5NZXJnZVN0cmF0ZWd5IGFjY2Vzc2VzIGNsYXNzDQpvcmcuc3BlYXJjZS5qZ2l0Lm1lcmdlLlN0
+cmF0ZWd5U2ltcGxlVHdvV2F5SW5Db3JlLCB3aGljaCBpc24ndA0KaW5pdGlhbGl6ZWQgeWV0Lg0K
+DQpUbyBmaXggdGhpcyBwcm9ibGVtIG1vdmUgaW5zdGFudGlhdGlvbiBmcm9tIFN0cmF0ZWd5U2lt
+cGxlVHdvV2F5SW5Db3JlDQp1cCB0byB0aGUgYWJzdHJhY3Qgc3VwZXJjbGFzcyBNZXJnZVN0cmF0
+ZWd5Lg0KDQpTaWduZWQtb2ZmLWJ5OiBNYXR0aGlhcyBTb2huIDxtYXR0aGlhcy5zb2huQHNhcC5j
+b20+DQotLS0NCiAuLi4vc3JjL29yZy9zcGVhcmNlL2pnaXQvbWVyZ2UvTWVyZ2VTdHJhdGVneS5q
+YXZhICB8ICAgIDIgKy0NCiAuLi4vamdpdC9tZXJnZS9TdHJhdGVneVNpbXBsZVR3b1dheUluQ29y
+ZS5qYXZhICAgICB8ICAgIDIgLS0NCiAyIGZpbGVzIGNoYW5nZWQsIDEgaW5zZXJ0aW9ucygrKSwg
+MyBkZWxldGlvbnMoLSkNCg0KZGlmZiAtLWdpdCBhL29yZy5zcGVhcmNlLmpnaXQvc3JjL29yZy9z
+cGVhcmNlL2pnaXQvbWVyZ2UvTWVyZ2VTdHJhdGVneS5qYXZhIGIvb3JnLnNwZWFyY2UuamdpdC9z
+cmMvb3JnL3NwZWFyY2UvamdpdC9tZXJnZS9NZXJnZVN0cmF0ZWd5LmphdmENCmluZGV4IDU0Mzll
+NWMuLmY1Y2VkNzIgMTAwNjQ0DQotLS0gYS9vcmcuc3BlYXJjZS5qZ2l0L3NyYy9vcmcvc3BlYXJj
+ZS9qZ2l0L21lcmdlL01lcmdlU3RyYXRlZ3kuamF2YQ0KKysrIGIvb3JnLnNwZWFyY2UuamdpdC9z
+cmMvb3JnL3NwZWFyY2UvamdpdC9tZXJnZS9NZXJnZVN0cmF0ZWd5LmphdmENCkBAIC01NSw3ICs1
+NSw3IEBADQogCXB1YmxpYyBzdGF0aWMgZmluYWwgTWVyZ2VTdHJhdGVneSBUSEVJUlMgPSBuZXcg
+U3RyYXRlZ3lPbmVTaWRlZCgidGhlaXJzIiwgMSk7DQogDQogCS8qKiBTaW1wbGUgc3RyYXRlZ3kg
+dG8gbWVyZ2UgcGF0aHMsIHdpdGhvdXQgc2ltdWx0YW5lb3VzIGVkaXRzLiAqLw0KLQlwdWJsaWMg
+c3RhdGljIGZpbmFsIFRocmVlV2F5TWVyZ2VTdHJhdGVneSBTSU1QTEVfVFdPX1dBWV9JTl9DT1JF
+ID0gU3RyYXRlZ3lTaW1wbGVUd29XYXlJbkNvcmUuSU5TVEFOQ0U7DQorCXB1YmxpYyBzdGF0aWMg
+ZmluYWwgVGhyZWVXYXlNZXJnZVN0cmF0ZWd5IFNJTVBMRV9UV09fV0FZX0lOX0NPUkUgPSBuZXcg
+U3RyYXRlZ3lTaW1wbGVUd29XYXlJbkNvcmUoKTsNCiANCiAJcHJpdmF0ZSBzdGF0aWMgZmluYWwg
+SGFzaE1hcDxTdHJpbmcsIE1lcmdlU3RyYXRlZ3k+IFNUUkFURUdJRVMgPSBuZXcgSGFzaE1hcDxT
+dHJpbmcsIE1lcmdlU3RyYXRlZ3k+KCk7DQogDQpkaWZmIC0tZ2l0IGEvb3JnLnNwZWFyY2Uuamdp
+dC9zcmMvb3JnL3NwZWFyY2UvamdpdC9tZXJnZS9TdHJhdGVneVNpbXBsZVR3b1dheUluQ29yZS5q
+YXZhIGIvb3JnLnNwZWFyY2UuamdpdC9zcmMvb3JnL3NwZWFyY2UvamdpdC9tZXJnZS9TdHJhdGVn
+eVNpbXBsZVR3b1dheUluQ29yZS5qYXZhDQppbmRleCA1ZDQ0NDdjLi42MjZmZTA2IDEwMDY0NA0K
+LS0tIGEvb3JnLnNwZWFyY2UuamdpdC9zcmMvb3JnL3NwZWFyY2UvamdpdC9tZXJnZS9TdHJhdGVn
+eVNpbXBsZVR3b1dheUluQ29yZS5qYXZhDQorKysgYi9vcmcuc3BlYXJjZS5qZ2l0L3NyYy9vcmcv
+c3BlYXJjZS9qZ2l0L21lcmdlL1N0cmF0ZWd5U2ltcGxlVHdvV2F5SW5Db3JlLmphdmENCkBAIC02
+MSw4ICs2MSw2IEBADQogICogZmlsZSBjb250ZW50cy4NCiAgKi8NCiBwdWJsaWMgY2xhc3MgU3Ry
+YXRlZ3lTaW1wbGVUd29XYXlJbkNvcmUgZXh0ZW5kcyBUaHJlZVdheU1lcmdlU3RyYXRlZ3kgew0K
+LQlzdGF0aWMgZmluYWwgVGhyZWVXYXlNZXJnZVN0cmF0ZWd5IElOU1RBTkNFID0gbmV3IFN0cmF0
+ZWd5U2ltcGxlVHdvV2F5SW5Db3JlKCk7DQotDQogCS8qKiBDcmVhdGUgYSBuZXcgaW5zdGFuY2Ug
+b2YgdGhlIHN0cmF0ZWd5LiAqLw0KIAlwcm90ZWN0ZWQgU3RyYXRlZ3lTaW1wbGVUd29XYXlJbkNv
+cmUoKSB7DQogCQkvLw0KLS0gDQoxLjYuMy4xLjMwLmc1NTUyNA0KDQo=
