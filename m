@@ -1,188 +1,83 @@
-From: David Aguilar <davvid@gmail.com>
-Subject: [PATCH] mergetool--lib: add support for araxis merge
-Date: Sun, 17 May 2009 20:18:20 -0700
-Message-ID: <1242616700-26022-1-git-send-email-davvid@gmail.com>
-Cc: git@vger.kernel.org, markus.heidelberg@web.de,
-	David Aguilar <davvid@gmail.com>
-To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Mon May 18 05:19:35 2009
+From: Nick Welch <nick@incise.org>
+Subject: Running vimdiff in read-only mode with git-difftool?
+Date: Sun, 17 May 2009 22:01:02 -0700
+Message-ID: <9e00fd550905172201n6c95dc1bia48c9ac25d8ec98f@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon May 18 07:01:18 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M5tO3-0003fX-EC
-	for gcvg-git-2@gmane.org; Mon, 18 May 2009 05:19:35 +0200
+	id 1M5uyS-0000Vj-QA
+	for gcvg-git-2@gmane.org; Mon, 18 May 2009 07:01:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752925AbZERDT1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 17 May 2009 23:19:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751917AbZERDT0
-	(ORCPT <rfc822;git-outgoing>); Sun, 17 May 2009 23:19:26 -0400
-Received: from wf-out-1314.google.com ([209.85.200.173]:1756 "EHLO
-	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751580AbZERDT0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 17 May 2009 23:19:26 -0400
-Received: by wf-out-1314.google.com with SMTP id 26so1773814wfd.4
-        for <git@vger.kernel.org>; Sun, 17 May 2009 20:19:27 -0700 (PDT)
+	id S1750999AbZERFBF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 18 May 2009 01:01:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750779AbZERFBD
+	(ORCPT <rfc822;git-outgoing>); Mon, 18 May 2009 01:01:03 -0400
+Received: from rv-out-0506.google.com ([209.85.198.230]:58222 "EHLO
+	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750739AbZERFBB (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 May 2009 01:01:01 -0400
+Received: by rv-out-0506.google.com with SMTP id f9so1532368rvb.1
+        for <git@vger.kernel.org>; Sun, 17 May 2009 22:01:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer;
-        bh=Dzy2ZG7lh2H7irFyJE4ZpfOQP8El3kSWb5fM7wjxmnQ=;
-        b=khWvTep/1Btjp1fb/a4KayFHsYy4e0PndVxJQD2GMsy2NSVBjzjTCUb9spKc7LuWlt
-         DrrFmGjggF23ROhLlF2OxgFoiCraHXTHC/kRQORYrYqC9o92ZdQyvRwtMvzfUXnAuZ+l
-         J6VS/wuA1PS6hsU/YHK/91Y5PI1qkZaHoqReU=
+        h=domainkey-signature:mime-version:sender:received:date
+         :x-google-sender-auth:message-id:subject:from:to:content-type
+         :content-transfer-encoding;
+        bh=0lu8D0rNVSzkc5sdMwwNeHkaCi48rKSwe2Oa621jWUg=;
+        b=AUls3lWKWpEAVT82xcsnGo2MqKp9kmMNOxFdGRpwqB4eQDwOFie3PXbvv9/kMX5rlv
+         sEiRjVgjvH+8sm70gfTHfIiYWBvTIK1Cwd6cK0mctMtklGkcMo1qaFmib/08O1M1wa7B
+         fqjmRcmVCwIPCNFcINcGRRh2cPHU0O67AxNpE=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        b=nupH5MTzbupbiYfveEuhZG26wjm459Vxkl2EFbYeODVJ3ZMF/b9fEX8+0U5wgMyNDO
-         +Cj1h6uRrjvWFf34xv0f9NON8jSaWPuTDPYEhzz/dHXnbtDUhWE3JYoB3QmSecBvuqYS
-         eYJ3tp6gmEhhuunyQ7GNYkEf43Ds+AFsUucnY=
-Received: by 10.142.77.7 with SMTP id z7mr1905358wfa.272.1242616767436;
-        Sun, 17 May 2009 20:19:27 -0700 (PDT)
-Received: from localhost (adsl-75-50-171-106.dsl.lsan03.sbcglobal.net [75.50.171.106])
-        by mx.google.com with ESMTPS id 24sm7845577wfc.37.2009.05.17.20.19.26
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 17 May 2009 20:19:27 -0700 (PDT)
-X-Mailer: git-send-email 1.6.3.1.30.g55524
+        h=mime-version:sender:date:x-google-sender-auth:message-id:subject
+         :from:to:content-type:content-transfer-encoding;
+        b=moZAyDmnF71IqfrR17I0FnGeXh8JW7yS+y9gpsJDQNToOEhPD3ONLFSnKEQX8vqa2a
+         kaoYowbc+vmWtWSUkqSpsrajKJmH166/uWqzs/evk3pyR8Y0TGO4Cy+r4MgUJpoCl+Wp
+         CyL+IwrH9f1VLEjZ6Z67sXBJGsc4NTHhH6R5k=
+Received: by 10.142.84.5 with SMTP id h5mr1823292wfb.200.1242622862745; Sun, 
+	17 May 2009 22:01:02 -0700 (PDT)
+X-Google-Sender-Auth: 4fc7573b044d41d1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119413>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119414>
 
-Araxis merge is now a built-in diff/merge tool.
-This adds araxis to git-completion and updates
-the documentation as well.
+I'm running:
 
-Signed-off-by: David Aguilar <davvid@gmail.com>
----
+git difftool -y --tool=vimdiff -U99999 --patience
 
-This applies on top of the da/mergetool-lib branch
-currently in pu.
+and I have the following in ~/.gitconfig:
 
-This is a rework of a patch to add araxis support
-to mergetool which originated on the msysgit list.
-The commented-out "-titleN:" options were
-intentionally left out of this patch because
-no amount of shell-quoting could get it to work
-when the title contained spaces.
+[difftool "vimdiff"]
+    cmd = "vimdiff -R"
 
-http://groups.google.com/group/msysgit/browse_thread/thread/fa353fa2240594d7
+But vimdiff is still run in read/write mode.  In the output of ps, I see:
 
- Documentation/git-difftool.txt         |    2 +-
- Documentation/git-mergetool.txt        |    2 +-
- Documentation/merge-config.txt         |    2 +-
- contrib/completion/git-completion.bash |    2 +-
- git-mergetool--lib.sh                  |   24 ++++++++++++++++++++++--
- 5 files changed, 26 insertions(+), 6 deletions(-)
+vim -d -c wincmd l /tmp/.diff_bP2Tjf <original file>
 
-diff --git a/Documentation/git-difftool.txt b/Documentation/git-difftool.txt
-index 15b247b..96a6c51 100644
---- a/Documentation/git-difftool.txt
-+++ b/Documentation/git-difftool.txt
-@@ -31,7 +31,7 @@ OPTIONS
- 	Use the diff tool specified by <tool>.
- 	Valid merge tools are:
- 	kdiff3, kompare, tkdiff, meld, xxdiff, emerge, vimdiff, gvimdiff,
--	ecmerge, diffuse and opendiff
-+	ecmerge, diffuse, opendiff and araxis.
- +
- If a diff tool is not specified, 'git-difftool'
- will use the configuration variable `diff.tool`.  If the
-diff --git a/Documentation/git-mergetool.txt b/Documentation/git-mergetool.txt
-index ff9700d..68ed6c0 100644
---- a/Documentation/git-mergetool.txt
-+++ b/Documentation/git-mergetool.txt
-@@ -27,7 +27,7 @@ OPTIONS
- 	Use the merge resolution program specified by <tool>.
- 	Valid merge tools are:
- 	kdiff3, tkdiff, meld, xxdiff, emerge, vimdiff, gvimdiff, ecmerge,
--	diffuse, tortoisemerge and opendiff
-+	diffuse, tortoisemerge, opendiff and araxis.
- +
- If a merge resolution program is not specified, 'git-mergetool'
- will use the configuration variable `merge.tool`.  If the
-diff --git a/Documentation/merge-config.txt b/Documentation/merge-config.txt
-index 4832bc7..c0f96e7 100644
---- a/Documentation/merge-config.txt
-+++ b/Documentation/merge-config.txt
-@@ -23,7 +23,7 @@ merge.tool::
- 	Controls which merge resolution program is used by
- 	linkgit:git-mergetool[1].  Valid built-in values are: "kdiff3",
- 	"tkdiff", "meld", "xxdiff", "emerge", "vimdiff", "gvimdiff",
--	"diffuse", "ecmerge", "tortoisemerge", and
-+	"diffuse", "ecmerge", "tortoisemerge", "araxis", and
- 	"opendiff".  Any other value is treated is custom merge tool
- 	and there must be a corresponding mergetool.<tool>.cmd option.
- 
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index 1683e6d..ead530d 100755
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -911,7 +911,7 @@ _git_diff ()
- }
- 
- __git_mergetools_common="diffuse ecmerge emerge kdiff3 meld opendiff
--			tkdiff vimdiff gvimdiff xxdiff
-+			tkdiff vimdiff gvimdiff xxdiff araxis
- "
- 
- _git_difftool ()
-diff --git a/git-mergetool--lib.sh b/git-mergetool--lib.sh
-index 8b5e6a8..e771b63 100644
---- a/git-mergetool--lib.sh
-+++ b/git-mergetool--lib.sh
-@@ -18,6 +18,9 @@ translate_merge_tool_path () {
- 	emerge)
- 		echo emacs
- 		;;
-+	araxis)
-+		echo compare
-+		;;
- 	*)
- 		echo "$1"
- 		;;
-@@ -43,7 +46,7 @@ check_unchanged () {
- valid_tool () {
- 	case "$1" in
- 	kdiff3 | tkdiff | xxdiff | meld | opendiff | \
--	emerge | vimdiff | gvimdiff | ecmerge | diffuse)
-+	emerge | vimdiff | gvimdiff | ecmerge | diffuse | araxis)
- 		;; # happy
- 	tortoisemerge)
- 		if ! merge_mode; then
-@@ -263,6 +266,23 @@ run_merge_tool () {
- 			status=1
- 		fi
- 		;;
-+	araxis)
-+		if merge_mode; then
-+			if $base_present; then
-+				"$merge_tool_path" -wait -merge -3 -a1 \
-+					"$BASE" "$LOCAL" "$REMOTE" "$MERGED" \
-+					>/dev/null 2>&1
-+			else
-+				"$merge_tool_path" -wait -2 \
-+					"$LOCAL" "$REMOTE" "$MERGED" \
-+					>/dev/null 2>&1
-+			fi
-+			check_unchanged
-+		else
-+			"$merge_tool_path" -wait -2 "$LOCAL" "$REMOTE" \
-+				>/dev/null 2>&1
-+		fi
-+		;;
- 	*)
- 		merge_tool_cmd="$(get_merge_tool_cmd "$1")"
- 		if test -z "$merge_tool_cmd"; then
-@@ -302,7 +322,7 @@ guess_merge_tool () {
- 		else
- 			tools="opendiff kdiff3 tkdiff xxdiff meld $tools"
- 		fi
--		tools="$tools gvimdiff diffuse ecmerge"
-+		tools="$tools gvimdiff diffuse ecmerge araxis"
- 	fi
- 	if echo "${VISUAL:-$EDITOR}" | grep emacs > /dev/null 2>&1; then
- 		# $EDITOR is emacs so add emerge as a candidate
--- 
-1.6.3.1.30.g55524
+There should be an -R in there, but there's not.  And if I'm trying to
+edit <original file> in another instance of vim, I get the annoying "a swap
+file exists, what should I do?" message, which is my main motivation in
+trying to use read-only mode.
+
+According to the git-difftool manpage, what I'm trying to do should work:
+
+    Instead of running one of the known diff tools, git-difftool can be
+    customized to run an alternative program by specifying the command line to
+    invoke in a configuration variable difftool.<tool>.cmd.
+
+I've also tried specifying the full path to vim diff, like this:
+
+[difftool "vimdiff"]
+    cmd = "/usr/bin/vimdiff -R"
+
+and it didn't work either.
+
+Any ideas?
