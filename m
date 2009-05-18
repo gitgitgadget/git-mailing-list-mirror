@@ -1,71 +1,100 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/3] parse-options: add PARSE_OPT_CUSTOM_ARGH for complicated argh's
-Date: Mon, 18 May 2009 00:57:43 -0700
-Message-ID: <7vmy9aetc8.fsf@alter.siamese.dyndns.org>
-References: <1242557224-8411-1-git-send-email-bebarino@gmail.com>
-	<1242557224-8411-2-git-send-email-bebarino@gmail.com>
-	<7vd4a7ey4h.fsf@alter.siamese.dyndns.org> <4A11096B.8020208@gmail.com>
+From: Geoff Russell <geoffrey.russell@gmail.com>
+Subject: Re: Merging a branch when I don't want conflicts
+Date: Mon, 18 May 2009 17:35:46 +0930
+Message-ID: <93c3eada0905180105n641614eodb0469dceca20bc9@mail.gmail.com>
+References: <93c3eada0905171930m36765d4fued9c2efdc57e51a4@mail.gmail.com>
+	 <4A10FDC6.2040706@viscovery.net>
+Reply-To: geoffrey.russell@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Stephen Boyd <bebarino@gmail.com>
-X-From: git-owner@vger.kernel.org Mon May 18 09:58:43 2009
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Mon May 18 10:05:56 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M5xkB-0001su-1H
-	for gcvg-git-2@gmane.org; Mon, 18 May 2009 09:58:43 +0200
+	id 1M5xrA-0004F5-C2
+	for gcvg-git-2@gmane.org; Mon, 18 May 2009 10:05:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756970AbZERH5p (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 18 May 2009 03:57:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756988AbZERH5o
-	(ORCPT <rfc822;git-outgoing>); Mon, 18 May 2009 03:57:44 -0400
-Received: from fed1rmmtao105.cox.net ([68.230.241.41]:41065 "EHLO
-	fed1rmmtao105.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756950AbZERH5n (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 May 2009 03:57:43 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao105.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20090518075745.VIBU20430.fed1rmmtao105.cox.net@fed1rmimpo02.cox.net>;
-          Mon, 18 May 2009 03:57:45 -0400
-Received: from localhost ([68.225.240.211])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id svxj1b0074aMwMQ04vxjZS; Mon, 18 May 2009 03:57:43 -0400
-X-Authority-Analysis: v=1.0 c=1 a=ckEMPOoq4BcA:10 a=gN7GTBdjX9cA:10
- a=pGLkceISAAAA:8 a=SCkgvFZ-nr6HT9gnmGYA:9 a=E6RUanH0SDuHBTyOv5JKs40YBKYA:4
- a=MSl-tDqOz04A:10
-X-CM-Score: 0.00
-In-Reply-To: <4A11096B.8020208@gmail.com> (Stephen Boyd's message of "Mon\, 18 May 2009 00\:08\:27 -0700")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+	id S1753533AbZERIFt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 18 May 2009 04:05:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753075AbZERIFr
+	(ORCPT <rfc822;git-outgoing>); Mon, 18 May 2009 04:05:47 -0400
+Received: from mail-qy0-f112.google.com ([209.85.221.112]:34675 "EHLO
+	mail-qy0-f112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752020AbZERIFq (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 May 2009 04:05:46 -0400
+Received: by qyk10 with SMTP id 10so1004971qyk.33
+        for <git@vger.kernel.org>; Mon, 18 May 2009 01:05:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:reply-to:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=ig0va4LPQ/dVhIer8ZEFpGSM9W+jymqdWvh6JaJL04A=;
+        b=l2liMu/VXpU2hSTRvvrLKgQdEVegJRReYQW0rwhulofYoUtf94OxAHi4DE+hk/cfM2
+         iCwdDs1jzqb9wd6QsyQYgVvvqs2OHHmbESOU2Fd2T+Fw7HT3ghT7c/lHxjFLtUroA9lS
+         FMiOzK+5krlzKNdac+5CN05W3o/0Ln+n6Agpg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:reply-to:in-reply-to:references:date:message-id
+         :subject:from:to:cc:content-type:content-transfer-encoding;
+        b=YOHfugDgH3vMBn+W/kVBWIfgTbPRIUcX6RozLiQKRqUIIbQYSr9mnKtMxdvNq03lKE
+         4j/BQlqofQ8Fl4iZmx4lGR2K42aqk/+23rq0mCB9gdWR3Wq0Ybu0I74yTGndqxz9WmLR
+         KWYIt4aLo3zByIVq/+zMV44d1ZRTxprR8p/QA=
+Received: by 10.220.77.79 with SMTP id f15mr6365749vck.2.1242633946207; Mon, 
+	18 May 2009 01:05:46 -0700 (PDT)
+In-Reply-To: <4A10FDC6.2040706@viscovery.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119423>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119424>
 
-Stephen Boyd <bebarino@gmail.com> writes:
-
-> This description sounds nice ;) Is PARSE_OPT_CUSTOM_ARGH a good name? I
-> was thinking maybe PARSE_OPT_MULTARGS is better?
-
-You are asking a wrong person.  I am terrible at naming things; think
-"rerere" ;-).
-
-But I think custom-arghelp is much better than multargs.  You are asking
-"use this help for argument value _literally_", so another possibility
-perhaps is PARSE_OPT_ARGHELP_LITERAL.
-
-After all, there probably are many other valid reasons why you may not
-want "s/.*/<&>/" blindly applied to your string.  One reason may be
-because the string describes multiple arguments, but I suspect that it is
-not the only one.  It is better to name the option after what it does,
-than naming it after one sample reason why you might want to use that
-option.
-
->> Please update Documentation/technical/api-parse-options.txt as well.
+On 5/18/09, Johannes Sixt <j.sixt@viscovery.net> wrote:
+> Geoff Russell schrieb:
 >
-> There's no documentation on the flags yet, but I suppose I could add that.
+> > How do I merge a branch X into my master and tell git that whenever there
+>  > is a conflict, the file on X should prevail?  This is for a scripted
+>  > application.
+>
+>
+> I assume you talk about file-level (content) merges.
 
-Thanks.
+Yes.
+
+>
+>  There is no such tool, and the reason is that what you try to do here does
+>  not make sense *in general*. It must be a very special kind of project
+>  where you can blindly trust one side over the other if there are
+>  conflicts, and that you can additionally trust non-conflicting content merges.
+
+The file is data coming out of an interactive program which reads
+the entire file, edits and then writes the entire file at which point
+this file is correct
+and all previous versions are obsolete.  I don't really want a merge
+at all, but just
+want to replace the file in the master with the version on the branch.
+
+Thanks anyway.
+
+Cheers,
+Geoff.
+
+>
+>  The best you can do is perhaps to pipe conflicting files through
+>
+>     sed -e '/^<<<<<<</,/^=======/d' -e '/^>>>>>>>/d'
+>
+>  -- Hannes
+>
+>
+
+
+-- 
+6 Fifth Ave,
+St Morris, S.A. 5068
+Australia
+Ph: 041 8805 184 / 08 8332 5069
