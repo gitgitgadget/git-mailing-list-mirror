@@ -1,77 +1,76 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH] for-each-ref: fix segfault in copy_email
-Date: Mon, 18 May 2009 13:58:11 -0400
-Message-ID: <20090518175811.GB14509@sigill.intra.peff.net>
-References: <20090518151440.GA10536@andros.its.yale.edu> <4A118696.80902@drmicha.warpmail.net> <alpine.LFD.2.01.0905181015080.3301@localhost.localdomain> <20090518174547.GA14509@sigill.intra.peff.net>
+From: Markus Heidelberg <markus.heidelberg@web.de>
+Subject: Re: What's cooking in git.git (May 2009, #02; Sun, 17)
+Date: Mon, 18 May 2009 21:40:29 +0200
+Message-ID: <200905182140.29953.markus.heidelberg@web.de>
+References: <7vab5ci281.fsf@alter.siamese.dyndns.org> <200905181536.39508.johan@herland.net>
+Reply-To: markus.heidelberg@web.de
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	Michael J Gruber <git@drmicha.warpmail.net>,
-	dloewenherz@gmail.com, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon May 18 19:58:25 2009
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: Peter Hutterer <peter.hutterer@who-t.net>, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Johan Herland <johan@herland.net>
+X-From: git-owner@vger.kernel.org Mon May 18 21:44:16 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M676U-0007Me-5E
-	for gcvg-git-2@gmane.org; Mon, 18 May 2009 19:58:22 +0200
+	id 1M68kw-0004cm-0M
+	for gcvg-git-2@gmane.org; Mon, 18 May 2009 21:44:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751450AbZERR6N (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 18 May 2009 13:58:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751218AbZERR6M
-	(ORCPT <rfc822;git-outgoing>); Mon, 18 May 2009 13:58:12 -0400
-Received: from peff.net ([208.65.91.99]:49556 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751160AbZERR6L (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 May 2009 13:58:11 -0400
-Received: (qmail 18584 invoked by uid 107); 18 May 2009 17:58:15 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.40) with ESMTPA; Mon, 18 May 2009 13:58:15 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 18 May 2009 13:58:11 -0400
+	id S1751858AbZERToE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 18 May 2009 15:44:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751422AbZERToD
+	(ORCPT <rfc822;git-outgoing>); Mon, 18 May 2009 15:44:03 -0400
+Received: from fmmailgate02.web.de ([217.72.192.227]:47906 "EHLO
+	fmmailgate02.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750898AbZERToC (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 May 2009 15:44:02 -0400
+Received: from smtp07.web.de (fmsmtp07.dlan.cinetic.de [172.20.5.215])
+	by fmmailgate02.web.de (Postfix) with ESMTP id 16A83FF8194D;
+	Mon, 18 May 2009 21:43:43 +0200 (CEST)
+Received: from [89.59.74.55] (helo=.)
+	by smtp07.web.de with asmtp (TLSv1:AES256-SHA:256)
+	(WEB.DE 4.110 #277)
+	id 1M68kQ-0004q6-00; Mon, 18 May 2009 21:43:42 +0200
+User-Agent: KMail/1.9.9
+In-Reply-To: <200905181536.39508.johan@herland.net>
+Jabber-ID: markus.heidelberg@web.de
 Content-Disposition: inline
-In-Reply-To: <20090518174547.GA14509@sigill.intra.peff.net>
+X-Sender: markus.heidelberg@web.de
+X-Provags-ID: V01U2FsdGVkX18JIe5UVk+ht/lq/KPpkvfBxL+YhOLUGluuvi35
+	xzdll/fdYeympYphxrAA5AmM4pNFWEY0BNMO1PCTrKfYg3G/42
+	53AGAaPPVN5KrXvu+m+Q==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119461>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119462>
 
-You can trigger a segfault in git.git by doing:
+Johan Herland, 18.05.2009:
+> On Sunday 17 May 2009, Junio C Hamano wrote:
+> > [Will merge to "master" soon]
+> >
+> > * ph/submodule-rebase (Fri Apr 24 09:06:38 2009 +1000) 1 commit 
+> >  + git-submodule: add support for --rebase.
+> 
+> [..]
+> 
+> Now, my question should not stop this feature from going into 'master', 
+> except for the fact that if we also want to support merge, we should 
+> rename the associated config variable:
+> 
+> Instead of
+> 
+>   submodule.<name>.rebase = true/false (false if unset)
+> 
+> we should have something like
+> 
+>   submodule.<name>.resolve = checkout/rebase/merge (checkout if unset)
 
-  git for-each-ref --format='%(taggeremail)' refs/tags/v0.99
+At least this would be inconsistent with options like
+branch.<name>.merge and branch.<name>.rebase
 
-The v0.99 tag is special in that it contains no "tagger"
-header.
-
-The bug is obvious in copy_email, which carefully checks to
-make sure the result of a strchr is non-NULL, but only after
-already having used it to perform other work. The fix is to
-move the check up.
-
-Signed-off-by: Jeff King <peff@peff.net>
----
- builtin-for-each-ref.c |    7 +++++--
- 1 files changed, 5 insertions(+), 2 deletions(-)
-
-diff --git a/builtin-for-each-ref.c b/builtin-for-each-ref.c
-index 91e8f95..d091e04 100644
---- a/builtin-for-each-ref.c
-+++ b/builtin-for-each-ref.c
-@@ -339,8 +339,11 @@ static const char *copy_name(const char *buf)
- static const char *copy_email(const char *buf)
- {
- 	const char *email = strchr(buf, '<');
--	const char *eoemail = strchr(email, '>');
--	if (!email || !eoemail)
-+	const char *eoemail;
-+	if (!email)
-+		return "";
-+	eoemail = strchr(email, '>');
-+	if (!eoemail)
- 		return "";
- 	return xmemdupz(email, eoemail + 1 - email);
- }
--- 
-1.6.3.1.137.g9019.dirty
+Markus
