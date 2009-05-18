@@ -1,72 +1,71 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH] Extend sample pre-commit hook to check for non ascii
-   filenames
-Date: Mon, 18 May 2009 12:40:09 +0200
-Message-ID: <4A113B09.6040301@viscovery.net>
-References: <419AD153-53B4-4DAB-AF72-4127C17B1CA0@gmail.com> <m3r5yukv6g.fsf@localhost.localdomain> <20090512214250.GA22974@macbook.lan> <200905122356.00659.jnareb@gmail.com> <20090514175850.GA26267@macbook.lan> <7vbpputewv.fsf@alter.siamese.dyndns.org> <419AD153-53B4-4DAB-AF72-4127C17B1CA0@gmail.com> <200905122356.00659.jnareb@gmail.com> <20090514175850.GA26267@macbook.lan> <200905151657.47225.jnareb@gmail.com> <20090518095044.GB910@heiko-voigts-macbook.local>
+From: Nanako Shiraishi <nanako3@lavabit.com>
+Subject: Re: Merging a branch when I don't want conflicts
+Date: Mon, 18 May 2009 19:45:48 +0900
+Message-ID: <20090518194548.6117@nanako3.lavabit.com>
+References: <93c3eada0905171930m36765d4fued9c2efdc57e51a4@mail.gmail.com>
+	<4A10FDC6.2040706@viscovery.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Jakub Narebski <jnareb@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Martin Langhoff <martin.langhoff@gmail.com>,
-	Dmitry Potapov <dpotapov@gmail.com>,
-	Esko Luontola <esko.luontola@gmail.com>, git@vger.kernel.org
-To: Heiko Voigt <hvoigt@hvoigt.net>
-X-From: git-owner@vger.kernel.org Mon May 18 12:40:30 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Cc: geoffrey.russell@gmail.com, git@vger.kernel.org
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Mon May 18 12:46:37 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M60Gh-0007x2-Rw
-	for gcvg-git-2@gmane.org; Mon, 18 May 2009 12:40:28 +0200
+	id 1M60Md-0001iu-WB
+	for gcvg-git-2@gmane.org; Mon, 18 May 2009 12:46:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754526AbZERKkT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 18 May 2009 06:40:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754248AbZERKkR
-	(ORCPT <rfc822;git-outgoing>); Mon, 18 May 2009 06:40:17 -0400
-Received: from lilzmailso01.liwest.at ([212.33.55.23]:40728 "EHLO
-	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754161AbZERKkQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 May 2009 06:40:16 -0400
-Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
-	by lilzmailso01.liwest.at with esmtpa (Exim 4.69)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1M60GT-0007jx-24; Mon, 18 May 2009 12:40:13 +0200
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.96])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id D21A3FCD2; Mon, 18 May 2009 12:40:09 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.21 (Windows/20090302)
-In-Reply-To: <20090518095044.GB910@heiko-voigts-macbook.local>
-X-Spam-Score: -1.4 (-)
+	id S1756039AbZERKqX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 18 May 2009 06:46:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755770AbZERKqW
+	(ORCPT <rfc822;git-outgoing>); Mon, 18 May 2009 06:46:22 -0400
+Received: from karen.lavabit.com ([72.249.41.33]:39830 "EHLO karen.lavabit.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755902AbZERKqV (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 May 2009 06:46:21 -0400
+Received: from b.earth.lavabit.com (b.earth.lavabit.com [192.168.111.11])
+	by karen.lavabit.com (Postfix) with ESMTP id CDB8C11B882;
+	Mon, 18 May 2009 05:46:21 -0500 (CDT)
+Received: from 8269.lavabit.com (212.62.97.20)
+	by lavabit.com with ESMTP id VN85UDN7J15P; Mon, 18 May 2009 05:46:21 -0500
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws; s=lavabit; d=lavabit.com;
+  b=T+5lgXRXWXk8+gwRFv6ylLzSh9X9ZzmNiSOD2zKUYWw8n4nH2Nw/OHHJvm6UCq8J2tE1bVRxMABdvmLDtF6gheSbGhXLrM0rjkt6ygMkPNGzajd2rOL7Plk6lPHx4DYElTnu1GTkuVkLWB4oW8AUPvNMCUQYrAC/bmbC/s/DfL8=;
+  h=From:To:Cc:Subject:In-Reply-To:References:Date:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id;
+In-Reply-To: <4A10FDC6.2040706@viscovery.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119436>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119437>
 
-Heiko Voigt schrieb:
-> +# is_ascii() Tests the string given given on standard input for
-> +# printable ascii conformance. We exploit the fact that the printable
-> +# range starts at the space character and ends with tilde.
-> +is_ascii() {
-> +    test -z "$(LC_ALL=C tr -d \ -~)"
-> +}
-> +
-> +if [ "$allownonascii" != "true" ]
-> +then
-> +	# until git can handle non-ascii filenames gracefully
-> +	# prevent them to be added into the repository
-> +	if ! git diff --cached --name-only --diff-filter=A -z \
-> +	   | tr "\0" "\n" | is_ascii; then
+Quoting Johannes Sixt <j.sixt@viscovery.net>:
 
-Will this not fail to add more than one file with allowed names? The \n is
-not removed in is_ascii(), and so the resulting string will not be empty.
+> Geoff Russell schrieb:
+>> How do I merge a branch X into my master and tell git that whenever there
+>> is a conflict, the file on X should prevail?  This is for a scripted
+>> application.
+>
+> I assume you talk about file-level (content) merges.
+>
+> There is no such tool, and the reason is that what you try to do here does
+> not make sense *in general*. It must be a very special kind of project
+> where you can blindly trust one side over the other if there are
+> conflicts, and that you can additionally trust non-conflicting content merges.
+>
+> The best you can do is perhaps to pipe conflicting files through
+>
+>     sed -e '/^<<<<<<</,/^=======/d' -e '/^>>>>>>>/d'
+>
+> -- Hannes
 
-BTW, not all tr work well with NULs. See the commit message of e85fe4d8,
-for example. Otherwise, I would have suggested to convert the NUL to some
-allowed ASCII character, e.g. 'A'. BTW, you should really use '\0' and
-'\n' (single-quotes) to guarantee that the shell does not ignore the
-backslash.
+I think -Xours enhancement that was developed long time ago
 
--- Hannes
+    http://thread.gmane.org/gmane.comp.version-control.git/76650/focus=89021
+
+should help Geoff's use case.
+
+-- 
+Nanako Shiraishi
+http://ivory.ap.teacup.com/nanako3/
