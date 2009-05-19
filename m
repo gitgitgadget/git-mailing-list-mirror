@@ -1,85 +1,83 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/3] commit: add function to unparse a commit and its parents
-Date: Tue, 19 May 2009 00:14:01 -0700
-Message-ID: <7vfxf18szq.fsf@alter.siamese.dyndns.org>
-References: <20090517153307.6403.73576.>
-	<20090517153647.6403.44036.chriscool@tuxfamily.org>
-	<7v3ab3exht.fsf@alter.siamese.dyndns.org>
-	<200905190616.30132.chriscool@tuxfamily.org>
-	<7vws8d8y8i.fsf@alter.siamese.dyndns.org>
-	<m3r5ylk347.fsf@localhost.localdomain>
+From: Johan Herland <johan@herland.net>
+Subject: Re: What's cooking in git.git (May 2009, #02; Sun, 17)
+Date: Tue, 19 May 2009 09:23:33 +0200
+Message-ID: <200905190923.33874.johan@herland.net>
+References: <7vab5ci281.fsf@alter.siamese.dyndns.org>
+ <200905182355.21645.johan@herland.net>
+ <7vpre5anaz.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Christian Couder <chriscool@tuxfamily.org>, git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Tue May 19 09:14:19 2009
+Content-Type: Text/Plain; charset=iso-8859-1
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org, markus.heidelberg@web.de,
+	Peter Hutterer <peter.hutterer@who-t.net>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue May 19 09:23:58 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M6JWi-000554-Tk
-	for gcvg-git-2@gmane.org; Tue, 19 May 2009 09:14:17 +0200
+	id 1M6Jfu-0001l9-5n
+	for gcvg-git-2@gmane.org; Tue, 19 May 2009 09:23:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752860AbZESHOE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 May 2009 03:14:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752744AbZESHOB
-	(ORCPT <rfc822;git-outgoing>); Tue, 19 May 2009 03:14:01 -0400
-Received: from fed1rmmtao106.cox.net ([68.230.241.40]:40619 "EHLO
-	fed1rmmtao106.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752392AbZESHOB (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 May 2009 03:14:01 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao106.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20090519071402.HUPP25927.fed1rmmtao106.cox.net@fed1rmimpo01.cox.net>;
-          Tue, 19 May 2009 03:14:02 -0400
-Received: from localhost ([68.225.240.211])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id tKE11b0024aMwMQ03KE1mV; Tue, 19 May 2009 03:14:01 -0400
-X-Authority-Analysis: v=1.0 c=1 a=4Mj9RkLmTmMA:10 a=wsYAPnAVpiQA:10
- a=pGLkceISAAAA:8 a=Ngk9f2QB3E7FFquQu_AA:9 a=jG-h5BUAakSYNvHDSevG729QmmsA:4
- a=MSl-tDqOz04A:10
-X-CM-Score: 0.00
-In-Reply-To: <m3r5ylk347.fsf@localhost.localdomain> (Jakub Narebski's message of "Mon\, 18 May 2009 23\:35\:45 -0700 \(PDT\)")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+	id S1753707AbZESHXg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 May 2009 03:23:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753646AbZESHXf
+	(ORCPT <rfc822;git-outgoing>); Tue, 19 May 2009 03:23:35 -0400
+Received: from mx.getmail.no ([84.208.15.66]:44913 "EHLO
+	get-mta-out02.get.basefarm.net" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1752994AbZESHXf (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 19 May 2009 03:23:35 -0400
+Content-disposition: inline
+Received: from mx.getmail.no ([10.5.16.4]) by get-mta-out02.get.basefarm.net
+ (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
+ with ESMTP id <0KJV00041R7BWFD0@get-mta-out02.get.basefarm.net> for
+ git@vger.kernel.org; Tue, 19 May 2009 09:23:35 +0200 (MEST)
+Received: from alpha.localnet ([84.215.102.95])
+ by get-mta-in01.get.basefarm.net
+ (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
+ with ESMTP id <0KJV007CDR7ALKI0@get-mta-in01.get.basefarm.net> for
+ git@vger.kernel.org; Tue, 19 May 2009 09:23:35 +0200 (MEST)
+X-PMX-Version: 5.5.3.366731, Antispam-Engine: 2.7.0.366912,
+ Antispam-Data: 2009.5.19.70500
+User-Agent: KMail/1.11.3 (Linux/2.6.29-ARCH; KDE/4.2.3; x86_64; ; )
+In-reply-to: <7vpre5anaz.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119498>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119499>
 
-Jakub Narebski <jnareb@gmail.com> writes:
+On Tuesday 19 May 2009, Junio C Hamano wrote:
+> Johan Herland <johan@herland.net> writes:
+> > After some thinking, I don't like my original name
+> > submodule.<name>.resolve, since ".resolve" sounds more like a merge
+> > strategy or conflict resolution method, than a "how to deal with
+> > submodule update" choice. I propose submodule.<name>.update instead.
+>
+> Sounds like a plan, even though I do not necessarily agree with the idea
+> of automatically rebinding what is at the submodule path every time you
+> update the toplevel project tree.
 
-> First, I have always thought that you cannot push arbitrary SHA-1
-> (arbitrary commits) in git; you can only push via refs. Isn't it true?
+I agree that in many workflows this does not make sense, but I believe that 
+(as with 'git submodule update --rebase') there are some cases where it does 
+make sense, and I see no reason to support one, but not the other.
 
-No.
+> And from my point of view, "rebind" (or "autorebind") would be more
+> appropriate name than "update"
 
-> Second, the "refs/replace" mechanism has the advantage over grafts
-> that it is sanely transferrable. Whether "04a8c^2"^{replaced} exists
-> on remote side depends on if other side has the same replacement, or
-> if you push replacements in the same push.
+Feel free to fix up my patch with whatever the community finds most 
+appropriate. Personally, I still like "update" better because it determines 
+what "happens" on a git submodule update, but I'm not religious about this.
 
-The reason why replace mechanism could be cleaner than grafts is because
-reachability traversal and transfer do not obey replacements, and local
-ancestry traversal will if there are refs/replace entries.
+> (and I would probably set it to "never").
 
-So "git log" and friends will obey refs/replace/*, but between
-a repository that replaces a commit and another that doesn't, they will
-transfer history without replace entries getting in the way.  Whatever
-04a8c^2 resolves to with replacements, the _real_ history between that
-commit and whatever the tips of refs on the other side has is
-transferred, and that commit will update the 'master' branch on the other
-side.
+That's perfectly ok. So will I, in most of my repos. But there are cases 
+(e.g. in the workflows at $dayjob) where this feature will be very valuable.
 
-If the other side sees it as the second parent of 04a8c is a different
-matter.  If refs/replace hierarchy is shared between the repositories, it
-will; otherwise it won't.  And the beauty of the replace mechanism is,
-unlike grafts, because object transfer will always be done using _real_
-history, you can sanely sync refs/replace hierarchy between the
-repositories via push or fetch.  During the push of the 04a8c^2 object,
-the other side does not have to worry about the presense/absense of
-replace that changes the interpretation of that notation on either end.
-The exact same underlying history is transferred with or without the
-replacement objects.
+
+...Johan
+
+-- 
+Johan Herland, <johan@herland.net>
+www.herland.net
