@@ -1,63 +1,62 @@
-From: Miles Bader <miles@gnu.org>
-Subject: Re: [PATCH 2/3] commit: add function to unparse a commit and its parents
-Date: Tue, 19 May 2009 16:02:25 +0900
-Message-ID: <buozld9o9ry.fsf@dhlpc061.dev.necel.com>
-References: <20090517153647.6403.44036.chriscool@tuxfamily.org>
-	<7v3ab3exht.fsf@alter.siamese.dyndns.org>
-	<200905190616.30132.chriscool@tuxfamily.org>
-	<7vws8d8y8i.fsf@alter.siamese.dyndns.org>
-	<m3r5ylk347.fsf@localhost.localdomain>
-Reply-To: Miles Bader <miles@gnu.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/3] Convert hash functions to char instead of struct object
+Date: Tue, 19 May 2009 00:04:18 -0700
+Message-ID: <7vk54d8tfx.fsf@alter.siamese.dyndns.org>
+References: <449c10960905182132h2c1b38b4jd28721adaeb38484@mail.gmail.com>
+	<1242707644-29893-1-git-send-email-dpmcgee@gmail.com>
+	<1242707644-29893-2-git-send-email-dpmcgee@gmail.com>
+	<4A12507A.3050307@viscovery.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Christian Couder <chriscool@tuxfamily.org>, git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Tue May 19 09:02:49 2009
+Cc: Dan McGee <dpmcgee@gmail.com>, git@vger.kernel.org,
+	Johannes.Schindelin@gmx.de, gitster@pobox.com
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Tue May 19 09:14:03 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M6JLc-00018k-W1
-	for gcvg-git-2@gmane.org; Tue, 19 May 2009 09:02:49 +0200
+	id 1M6JWV-00050x-Aw
+	for gcvg-git-2@gmane.org; Tue, 19 May 2009 09:14:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753006AbZESHCl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 May 2009 03:02:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752796AbZESHCk
-	(ORCPT <rfc822;git-outgoing>); Tue, 19 May 2009 03:02:40 -0400
-Received: from TYO202.gate.nec.co.jp ([202.32.8.206]:43427 "EHLO
-	tyo202.gate.nec.co.jp" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752063AbZESHCj (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 May 2009 03:02:39 -0400
-Received: from relay21.aps.necel.com ([10.29.19.50])
-	by tyo202.gate.nec.co.jp (8.13.8/8.13.4) with ESMTP id n4J72QKH014846;
-	Tue, 19 May 2009 16:02:26 +0900 (JST)
-Received: from relay21.aps.necel.com ([10.29.19.24] [10.29.19.24]) by relay21.aps.necel.com with ESMTP; Tue, 19 May 2009 16:02:25 +0900
-Received: from dhlpc061 ([10.114.114.140] [10.114.114.140]) by relay21.aps.necel.com with ESMTP; Tue, 19 May 2009 16:02:25 +0900
-Received: by dhlpc061 (Postfix, from userid 31295)
-	id 9D4C852E30F; Tue, 19 May 2009 16:02:25 +0900 (JST)
-System-Type: x86_64-unknown-linux-gnu
-Blat: Foop
-In-Reply-To: <m3r5ylk347.fsf@localhost.localdomain> (Jakub Narebski's message
-	of "Mon, 18 May 2009 23:35:45 -0700 (PDT)")
+	id S1752669AbZESHNz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 May 2009 03:13:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752392AbZESHNy
+	(ORCPT <rfc822;git-outgoing>); Tue, 19 May 2009 03:13:54 -0400
+Received: from fed1rmmtai109.cox.net ([68.230.241.51]:50967 "EHLO
+	fed1rmmtai109.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751385AbZESHNy (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 May 2009 03:13:54 -0400
+Received: from fed1rmimpo03.cox.net ([70.169.32.75])
+          by fed1rmmtao103.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20090519070419.BLMA2915.fed1rmmtao103.cox.net@fed1rmimpo03.cox.net>;
+          Tue, 19 May 2009 03:04:19 -0400
+Received: from localhost ([68.225.240.211])
+	by fed1rmimpo03.cox.net with bizsmtp
+	id tK4J1b0054aMwMQ04K4J0j; Tue, 19 May 2009 03:04:18 -0400
+X-Authority-Analysis: v=1.0 c=1 a=0aA7sQqUqVEA:10 a=9g9rV6vYGpAA:10
+ a=fv-XvKvnAAAA:8 a=BxqranHHwmWsJRS7eukA:9 a=RQ9ax241BT-oLD4KNmqDovlpDuQA:4
+ a=l9rlz7MJbUIA:10
+X-CM-Score: 0.00
+In-Reply-To: <4A12507A.3050307@viscovery.net> (Johannes Sixt's message of "Tue\, 19 May 2009 08\:23\:54 +0200")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119496>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119497>
 
-Jakub Narebski <jnareb@gmail.com> writes:
->> 	git push $there 04a8c^2:master
+Johannes Sixt <j.sixt@viscovery.net> writes:
+
+> Dan McGee schrieb:
+>> -static unsigned int hash_obj(struct object *obj, unsigned int n)
+>> +static unsigned int hash_chars(const unsigned char *c, unsigned int n)
 >
-> First, I have always thought that you cannot push arbitrary SHA-1
-> (arbitrary commits) in git; you can only push via refs. Isn't it true?
+> hash_chars suggests that this function hashes arbitrary character
+> sequences, but it doesn't do that. Wouldn't hash_object_id be a better
+> name? (And the parameter would then obviously be named sha1 or id.)
 
-Hmm, you could try it...
-
-[Pushing random commits has always worked for me though.]
-
--miles
-
--- 
-The secret to creativity is knowing how to hide your sources.
-  --Albert Einstein
+Yes, the parameter to this function is what we call "unsigned char *sha1"
+everywhere else in the code.  hash-object-id or hash-object-name is a good
+name for the function.
