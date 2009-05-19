@@ -1,83 +1,95 @@
-From: Johan Herland <johan@herland.net>
-Subject: Re: What's cooking in git.git (May 2009, #02; Sun, 17)
-Date: Tue, 19 May 2009 09:23:33 +0200
-Message-ID: <200905190923.33874.johan@herland.net>
-References: <7vab5ci281.fsf@alter.siamese.dyndns.org>
- <200905182355.21645.johan@herland.net>
- <7vpre5anaz.fsf@alter.siamese.dyndns.org>
+From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
+Subject: Re: [StGit PATCH] Add a --tree flag to stg push
+Date: Tue, 19 May 2009 09:25:12 +0200
+Message-ID: <20090519072512.GA8451@diana.vm.bytemark.co.uk>
+References: <20090518144754.30487.84132.stgit@krank>
 Mime-Version: 1.0
-Content-Type: Text/Plain; charset=iso-8859-1
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org, markus.heidelberg@web.de,
-	Peter Hutterer <peter.hutterer@who-t.net>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue May 19 09:23:58 2009
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: catalin.marinas@gmail.com, git@vger.kernel.org
+To: David =?iso-8859-1?Q?K=E5gedal?= <davidk@lysator.liu.se>
+X-From: git-owner@vger.kernel.org Tue May 19 09:25:32 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M6Jfu-0001l9-5n
-	for gcvg-git-2@gmane.org; Tue, 19 May 2009 09:23:46 +0200
+	id 1M6JhY-0002nl-Am
+	for gcvg-git-2@gmane.org; Tue, 19 May 2009 09:25:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753707AbZESHXg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 May 2009 03:23:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753646AbZESHXf
-	(ORCPT <rfc822;git-outgoing>); Tue, 19 May 2009 03:23:35 -0400
-Received: from mx.getmail.no ([84.208.15.66]:44913 "EHLO
-	get-mta-out02.get.basefarm.net" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1752994AbZESHXf (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 19 May 2009 03:23:35 -0400
-Content-disposition: inline
-Received: from mx.getmail.no ([10.5.16.4]) by get-mta-out02.get.basefarm.net
- (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
- with ESMTP id <0KJV00041R7BWFD0@get-mta-out02.get.basefarm.net> for
- git@vger.kernel.org; Tue, 19 May 2009 09:23:35 +0200 (MEST)
-Received: from alpha.localnet ([84.215.102.95])
- by get-mta-in01.get.basefarm.net
- (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
- with ESMTP id <0KJV007CDR7ALKI0@get-mta-in01.get.basefarm.net> for
- git@vger.kernel.org; Tue, 19 May 2009 09:23:35 +0200 (MEST)
-X-PMX-Version: 5.5.3.366731, Antispam-Engine: 2.7.0.366912,
- Antispam-Data: 2009.5.19.70500
-User-Agent: KMail/1.11.3 (Linux/2.6.29-ARCH; KDE/4.2.3; x86_64; ; )
-In-reply-to: <7vpre5anaz.fsf@alter.siamese.dyndns.org>
+	id S1753916AbZESHZU convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 19 May 2009 03:25:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752892AbZESHZT
+	(ORCPT <rfc822;git-outgoing>); Tue, 19 May 2009 03:25:19 -0400
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:38818 "EHLO
+	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752796AbZESHZS (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 May 2009 03:25:18 -0400
+Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
+	id 1M6JhI-0002GX-00; Tue, 19 May 2009 08:25:12 +0100
+Content-Disposition: inline
+In-Reply-To: <20090518144754.30487.84132.stgit@krank>
+X-Manual-Spam-Check: kha@treskal.com, clean
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119499>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119500>
 
-On Tuesday 19 May 2009, Junio C Hamano wrote:
-> Johan Herland <johan@herland.net> writes:
-> > After some thinking, I don't like my original name
-> > submodule.<name>.resolve, since ".resolve" sounds more like a merge
-> > strategy or conflict resolution method, than a "how to deal with
-> > submodule update" choice. I propose submodule.<name>.update instead.
->
-> Sounds like a plan, even though I do not necessarily agree with the idea
-> of automatically rebinding what is at the submodule path every time you
-> update the toplevel project tree.
+On 2009-05-18 16:50:18 +0200, David K=E5gedal wrote:
 
-I agree that in many workflows this does not make sense, but I believe that 
-(as with 'git submodule update --rebase') there are some cases where it does 
-make sense, and I see no reason to support one, but not the other.
+> This scratches a long-time itch for me. The typical use case is when
+> you want to break up a larg patch inte smaller ones. You back out
+> the orignal patch, apply a small set of changes from it and then
+> push the patch back again. But then you don't want to do a merge,
+> with the possibility of conflict. You simply want to restore to the
+> tree that the patch had before so you can see what's left to create
+> cleaned-up patches of. The command "stg push --tree" does just that.
 
-> And from my point of view, "rebind" (or "autorebind") would be more
-> appropriate name than "update"
+Thanks!
 
-Feel free to fix up my patch with whatever the community finds most 
-appropriate. Personally, I still like "update" better because it determines 
-what "happens" on a git submodule update, but I'm not religious about this.
+There's no sign-off.
 
-> (and I would probably set it to "never").
+> The naming of flags and functions isn't very obvious, and
+> suggestions for improvements are welcome.
 
-That's perfectly ok. So will I, in most of my repos. But there are cases 
-(e.g. in the workflows at $dayjob) where this feature will be very valuable.
+--set-tree maybe?
 
+>  t/t1207-push-tree.sh     |   64 ++++++++++++++++++++++++++++++++++++=
+++++++++++
 
-...Johan
+A test! Very good.
 
--- 
-Johan Herland, <johan@herland.net>
-www.herland.net
+> +    opt('--tree', action =3D 'store_true',
+> +        short =3D 'Push the patch with the original tree')
+
+This probably deserves a long description as well. (That most existing
+options lack them is unfortunate---the support for long descriptions
+was added rather recently.)
+
+> +        if any(getattr(cd, a) !=3D getattr(orig_cd, a) for a in
+> +               ['parent', 'tree', 'author', 'message']):
+> +            comm =3D self.__stack.repository.commit(cd)
+> +            self.head =3D comm
+> +        else:
+> +            comm =3D None
+> +            s =3D ' (unmodified)'
+
+Shouldn't self.head be set in both cases?
+
+> +# Copyright (c) 2006 David K=E5gedal
+
+Been sitting on this patch long? :-)
+
+> +# don't need this repo, but better not drop it, see t1100
+> +#rm -rf .git
+> +
+> +# Need a repo to clone
+> +test_create_repo foo
+
+Umm, your test doesn't seem to depend on using this separate repo
+instead of the default one.
+
+--=20
+Karl Hasselstr=F6m, kha@treskal.com
+      www.treskal.com/kalle
