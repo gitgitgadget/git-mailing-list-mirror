@@ -1,92 +1,120 @@
 From: Dan McGee <dpmcgee@gmail.com>
-Subject: Re: [PATCH] Fix type-punning issues
-Date: Mon, 18 May 2009 23:32:48 -0500
-Message-ID: <449c10960905182132h2c1b38b4jd28721adaeb38484@mail.gmail.com>
-References: <1242091058-25197-1-git-send-email-dpmcgee@gmail.com>
-	 <7vy6t292ix.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: unlisted-recipients:; (no To-header on input)
-X-From: git-owner@vger.kernel.org Tue May 19 06:32:58 2009
+Subject: [PATCH 1/3] Unify signedness in hashing calls
+Date: Mon, 18 May 2009 23:34:02 -0500
+Message-ID: <1242707644-29893-1-git-send-email-dpmcgee@gmail.com>
+References: <449c10960905182132h2c1b38b4jd28721adaeb38484@mail.gmail.com>
+Cc: Johannes.Schindelin@gmx.de, gitster@pobox.com,
+	Dan McGee <dpmcgee@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue May 19 06:34:25 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M6H0c-0004bW-G3
-	for gcvg-git-2@gmane.org; Tue, 19 May 2009 06:32:58 +0200
+	id 1M6H1z-0004yy-9x
+	for gcvg-git-2@gmane.org; Tue, 19 May 2009 06:34:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751309AbZESEcu convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 19 May 2009 00:32:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751295AbZESEct
-	(ORCPT <rfc822;git-outgoing>); Tue, 19 May 2009 00:32:49 -0400
-Received: from mail-ew0-f224.google.com ([209.85.219.224]:33009 "EHLO
-	mail-ew0-f224.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750888AbZESEcs convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 19 May 2009 00:32:48 -0400
-Received: by ewy24 with SMTP id 24so4598954ewy.37
-        for <git@vger.kernel.org>; Mon, 18 May 2009 21:32:49 -0700 (PDT)
+	id S1751780AbZESEeQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 May 2009 00:34:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751713AbZESEeP
+	(ORCPT <rfc822;git-outgoing>); Tue, 19 May 2009 00:34:15 -0400
+Received: from yx-out-2324.google.com ([74.125.44.28]:50589 "EHLO
+	yx-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751179AbZESEeO (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 May 2009 00:34:14 -0400
+Received: by yx-out-2324.google.com with SMTP id 3so2267774yxj.1
+        for <git@vger.kernel.org>; Mon, 18 May 2009 21:34:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:cc:content-type
-         :content-transfer-encoding;
-        bh=wRZqQERGRilUq+769B/9NSJOaHhaqd3T/M6dloaoiFQ=;
-        b=vEgVM5XyDCWKu06tsq9A1Ngbs3x4qeN4TpZCTG7DZlXIXczVubPm6MBp53UhUaDRjk
-         zl3nBHk5Q+SQB9yWNUHuYpQ7bp9fuSZalGmZBvAdnscdgNiwCUldbfy+M14j/+AY4uI6
-         WX/1b/jSecwQKPfENQV99mRDf0SZTYoLNE4o4=
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer:in-reply-to:references;
+        bh=sqDtNfHu3mLGzCH9FXde8Sdflx8CXmybBJMM/7xlKAA=;
+        b=N3DeyKqTdSTUp8qjeCC47K03BnSpbVRPkpDVMQlQmhXIQiI32DyumQJhPPWSRVy+lX
+         faUT+Rs8sh+NbNeTCq4cnUNO2k6w3tSjQx6oV4iOBlpYcuOfG4BTPfnYXmYvtegcKKoI
+         NSi3yw5AhClxZNW6oEXbWBPvopTUYdRr1qkPg=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:cc
-         :content-type:content-transfer-encoding;
-        b=t/FySF7FzK3geRGcGoRWk8ERrbrW7BAqv2WrqbXb+74phIPfPcTwxaH8ZAczUgcKqv
-         okUibcJiIkJTm5tRibFXtR486wUWwJW+WnwDkGENlyVwy2/CFGNUSie0Is20g1m2l2rw
-         pakZblFM8W5nFao+3Pm883FhOZCKWMRb+Ovo0=
-Received: by 10.216.52.194 with SMTP id e44mr2332782wec.34.1242707568950; Mon, 
-	18 May 2009 21:32:48 -0700 (PDT)
-In-Reply-To: <7vy6t292ix.fsf@alter.siamese.dyndns.org>
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        b=Vd7bTw/aOza4jttuRg/2OCD3ykiUYsjMFcrRSpNzCLMhMprqGyVOd1zT5ALk4paifh
+         E5Svoq6aByZwuzit2Yqn+ymdYQkrHNEhcwbv9cCYVqGiwWlMwdOxFkO0RzccK6Znp2rZ
+         GIeFl9Ow2YjQpp03vRbtA1t6dGplXKDQc8avM=
+Received: by 10.90.113.11 with SMTP id l11mr6569842agc.7.1242707655531;
+        Mon, 18 May 2009 21:34:15 -0700 (PDT)
+Received: from localhost (adsl-76-197-232-78.dsl.chcgil.sbcglobal.net [76.197.232.78])
+        by mx.google.com with ESMTPS id 39sm8927850aga.21.2009.05.18.21.34.14
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 18 May 2009 21:34:14 -0700 (PDT)
+X-Mailer: git-send-email 1.6.3.1
+In-Reply-To: <449c10960905182132h2c1b38b4jd28721adaeb38484@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119487>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119488>
 
-On Tue, May 12, 2009 at 2:57 AM, Junio C Hamano <gitster@pobox.com> wro=
-te:
-> Dan McGee <dpmcgee@gmail.com> writes:
->
->> In these two places we are casting part of our unsigned char sha1 ar=
-ray into
->> an unsigned int, which violates GCCs strict-aliasing rules (and prob=
-ably
->> other compilers).
->
-> Yay.
->
+Our hash_obj and hashtable_index calls and functions were doing a lot of
+funny things with signedness. Unify all of it to 'unsigned int'.
 
-> It might make more sense to have one canonical
->
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0unsigned int hash_obj(const struct object =
-*obj, unsigned int n)
->
-> here, export it to object.h, and remove the one in decorate.c.
->
-> Or am I missing something?
+Signed-off-by: Dan McGee <dpmcgee@gmail.com>
+---
+ decorate.c |    4 ++--
+ object.c   |    8 ++++----
+ 2 files changed, 6 insertions(+), 6 deletions(-)
 
-(argh: sorry Junio for sending the last reply to just you)
-
-So due to me taking so long to resubmit, I see you committed a
-stripped-down version of my patch. I had a patch just like this (minus
-one newline diff), but it was in a series of 4 I will submit in just a
-second.
-
-The three remaining patches implement the above suggestion of having
-one canonical "hash" function. However, the name changes to hash_char
-and takes a unsigned char pointer rather than a struct object pointer
-so we can use the same function for both insertion into the hashes as
-well as lookup.
-
-Looking forward to any feedback.
-
--Dan
+diff --git a/decorate.c b/decorate.c
+index e6fd8a7..2f8a63e 100644
+--- a/decorate.c
++++ b/decorate.c
+@@ -18,7 +18,7 @@ static void *insert_decoration(struct decoration *n, const struct object *base,
+ {
+ 	int size = n->size;
+ 	struct object_decoration *hash = n->hash;
+-	int j = hash_obj(base, size);
++	unsigned int j = hash_obj(base, size);
+ 
+ 	while (hash[j].base) {
+ 		if (hash[j].base == base) {
+@@ -70,7 +70,7 @@ void *add_decoration(struct decoration *n, const struct object *obj,
+ /* Lookup a decoration pointer */
+ void *lookup_decoration(struct decoration *n, const struct object *obj)
+ {
+-	int j;
++	unsigned int j;
+ 
+ 	/* nothing to lookup */
+ 	if (!n->size)
+diff --git a/object.c b/object.c
+index e1feef9..a6ef439 100644
+--- a/object.c
++++ b/object.c
+@@ -52,7 +52,7 @@ static unsigned int hash_obj(struct object *obj, unsigned int n)
+ 
+ static void insert_obj_hash(struct object *obj, struct object **hash, unsigned int size)
+ {
+-	int j = hash_obj(obj, size);
++	unsigned int j = hash_obj(obj, size);
+ 
+ 	while (hash[j]) {
+ 		j++;
+@@ -62,16 +62,16 @@ static void insert_obj_hash(struct object *obj, struct object **hash, unsigned i
+ 	hash[j] = obj;
+ }
+ 
+-static int hashtable_index(const unsigned char *sha1)
++static unsigned int hashtable_index(const unsigned char *sha1)
+ {
+ 	unsigned int i;
+ 	memcpy(&i, sha1, sizeof(unsigned int));
+-	return (int)(i % obj_hash_size);
++	return i % obj_hash_size;
+ }
+ 
+ struct object *lookup_object(const unsigned char *sha1)
+ {
+-	int i;
++	unsigned int i;
+ 	struct object *obj;
+ 
+ 	if (!obj_hash)
+-- 
+1.6.3.1
