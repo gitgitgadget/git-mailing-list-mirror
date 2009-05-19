@@ -1,91 +1,85 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: [RFC/PATCH] gitweb: Fail early
-Date: Tue, 19 May 2009 22:40:31 +0200
-Message-ID: <200905192240.34199.jnareb@gmail.com>
+From: "Chris Friesen" <cfriesen@nortel.com>
+Subject: Re: any way to apply tag across all branches in repository?
+Date: Tue, 19 May 2009 14:56:54 -0600
+Message-ID: <4A131D16.1030001@nortel.com>
+References: <4A12DDB9.60608@nortel.com> <Y0WmOpNg_9ptwbJ3VHYrzAgFtDvPi5pn4Tz-0w5Phhlo9frjieUaeA@cipher.nrlssc.navy.mil> <4A12F0ED.4070707@nortel.com> <alpine.LFD.2.01.0905191132490.3301@localhost.localdomain> <4A13030D.8000000@nortel.com> <alpine.LFD.2.01.0905191307320.3301@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-2"
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue May 19 22:41:01 2009
+Cc: Brandon Casey <casey@nrlssc.navy.mil>, git@vger.kernel.org
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Tue May 19 22:57:17 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M6W7I-0002VX-Rk
-	for gcvg-git-2@gmane.org; Tue, 19 May 2009 22:40:53 +0200
+	id 1M6WNA-0001UL-Fy
+	for gcvg-git-2@gmane.org; Tue, 19 May 2009 22:57:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753579AbZESUko (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 May 2009 16:40:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753441AbZESUko
-	(ORCPT <rfc822;git-outgoing>); Tue, 19 May 2009 16:40:44 -0400
-Received: from fg-out-1718.google.com ([72.14.220.152]:54879 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753392AbZESUkn (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 May 2009 16:40:43 -0400
-Received: by fg-out-1718.google.com with SMTP id 16so14607fgg.17
-        for <git@vger.kernel.org>; Tue, 19 May 2009 13:40:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        bh=G4VikndDNdQZAQeh6BdLtxT1HP9OPiGVuhfRC4Wrt1M=;
-        b=xn0edB7iEAhDvurPK6FIaskogsud7KiwWAt5H/z0gLk+obMEuGf+cE5Ls9RRCMCRu9
-         VU2v4XoS90G2lNrjUpzNobl6dxwDmZfj08obQ1f48TdL6FHtf88eeoHbRDNMOAZB117K
-         t8jNxUywv8LnTtkct6xAdVGXGltXBScw0cY3Q=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        b=VLLVYP4/+YgRpnIpoE2Pq8F0si6b/odB/cmTybZDI9ovaGlvWReWL+cj5K043uHa1k
-         d2bt30p4NFX2okrsoSPtBjLi/hIwbG41S/cLoqPL+JhmQApQcQg1nZeFKCqomlw2OL1A
-         /7HnT5vEkPjo90hrXvADD2pqFzgxW32JsR0zk=
-Received: by 10.86.79.6 with SMTP id c6mr463593fgb.52.1242765643827;
-        Tue, 19 May 2009 13:40:43 -0700 (PDT)
-Received: from ?192.168.1.13? (abvi55.neoplus.adsl.tpnet.pl [83.8.206.55])
-        by mx.google.com with ESMTPS id e11sm7576910fga.21.2009.05.19.13.40.42
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 19 May 2009 13:40:43 -0700 (PDT)
-User-Agent: KMail/1.9.3
-Content-Disposition: inline
+	id S1753460AbZESU5I (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 May 2009 16:57:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752811AbZESU5H
+	(ORCPT <rfc822;git-outgoing>); Tue, 19 May 2009 16:57:07 -0400
+Received: from zrtps0kp.nortel.com ([47.140.192.56]:42640 "EHLO
+	zrtps0kp.nortel.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751979AbZESU5H (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 May 2009 16:57:07 -0400
+Received: from zcarhxs1.corp.nortel.com (casmtp.ca.nortel.com [47.129.230.89])
+	by zrtps0kp.nortel.com (Switch-2.2.6/Switch-2.2.0) with ESMTP id n4JKuut11083;
+	Tue, 19 May 2009 20:56:56 GMT
+Received: from localhost.localdomain ([47.130.81.171] RDNS failed) by zcarhxs1.corp.nortel.com with Microsoft SMTPSVC(6.0.3790.3959);
+	 Tue, 19 May 2009 16:56:55 -0400
+User-Agent: Thunderbird 2.0.0.21 (X11/20090302)
+In-Reply-To: <alpine.LFD.2.01.0905191307320.3301@localhost.localdomain>
+X-OriginalArrivalTime: 19 May 2009 20:56:55.0648 (UTC) FILETIME=[57E36600:01C9D8C4]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119567>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119568>
 
-Return HTTP 500 Internal Server Error if $GIT is not defined (which
-would cause Perl error), or if "$GIT --version" failed to run.  This
-should not happen often, but I think this change would make diagnosing
-misconfiguration easier.
----
-Is "git version" in 'git --version' output ensured? How did other git
-implementations and ports (like msysGit and jgit) output of --version
-looks like?
+Linus Torvalds wrote:
+> On Tue, 19 May 2009, Chris Friesen wrote:
 
-Does it make sense to check whether output matches, and if it doesn't
-match assume that $GIT points to something other, perhaps some other
-git like GIT Interactive Tools or something?
+>> The brute-force way to do this would be to manually loop through each branch
+>> and create a tag of the form "$branch_$version" to ensure unique tags.  But I was
+>> hoping there was a more elegant way.
+> 
+> Well, I would suggest that you do it fundamentally differently.
+> 
+> Instead of tagging each build, I would suggest just associating each build 
+> with the commit SHA1 of the time. That's what Linux does (if you enable 
+> CONFIG_LOCALVERSION_AUTO), and it's _way_ superior to lots of crazy tags.
+> 
+> So for example, I can do
+> 
+> 	[torvalds@nehalem ~]$ uname -r
+> 	2.6.30-rc6-00302-g72357d5-dirty
+> 
+> and it tells me exactly what kernel version I'm running (well, the "dirty"
+> part means that it's not exact and has some additional patches that 
+> weren't committed, but that's as close as you can get). It's very useful.
 
-Does it makes sense to try various other checks to make error message
-more detailed like $GIT is not found, or is not executable?
+Agreed.  The project in question actually involves (among other things)
+a linux kernel build, so we will be making use of this to work backwards
+from the running kernel to the commit used to generate it.
 
-diff --git i/gitweb/gitweb.perl w/gitweb/gitweb.perl
-index 05702e4..0cb53ca 100755
---- i/gitweb/gitweb.perl
-+++ w/gitweb/gitweb.perl
-@@ -471,7 +471,13 @@ if (-e $GITWEB_CONFIG) {
- }
- 
- # version of the core git binary
-+if (!defined $GIT) {
-+	die_error(500, "Undefined path to git binary");
-+}
- our $git_version = qx("$GIT" --version) =~ m/git version (.*)$/ ? $1 : "unknown";
-+if ($?) {
-+	die_error(500, "Error calling '$GIT --version': $?");
-+}
- 
- $projects_list ||= $projectroot;
- 
+However, we also want to be able to work in the other direction--given a
+known-buggy kernel commit, which shipped versions of the product contain
+the buggy code?  We do in-the-field upgrades, and different sites may be
+running different versions, so it's important to be able to easily
+determine which sites are currently running the buggy code so that we
+can get them upgraded.  We know which sites are running which versions,
+so it is useful to tag the repository branches with that version number.
+
+> Trust me, something like the above is _much_ better than tagging each 
+> branchthat you build. Partly because it means that you can do the builds 
+> in a distributed manner, and they'll all get the version built in, rather 
+> than having to rely on everybody tagging everything and then trying to 
+> match up the tag to some random binary.
+
+The tagging would be done only by the "official" build process (which
+pulls from an "official" repository), not by each designer.  Typically
+the official builds would be done weekly, more frequently if requested.
+
+Chris
