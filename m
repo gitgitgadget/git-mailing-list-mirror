@@ -1,61 +1,81 @@
-From: "Chris Friesen" <cfriesen@nortel.com>
-Subject: Re: any way to apply tag across all branches in repository?
-Date: Tue, 19 May 2009 10:59:50 -0600
-Message-ID: <4A12E586.60705@nortel.com>
-References: <4A12DDB9.60608@nortel.com> <F3E3C849-76E1-4D5F-8305-276C4C205250@dbservice.com>
+From: Jeff Brown <jeff@jeffandbetsy.net>
+Subject: Re: committing to a checked out branch
+Date: Tue, 19 May 2009 12:01:00 -0500
+Message-ID: <bbd12f0f0905191001iad76a64id648780547b43b34@mail.gmail.com>
+References: <bbd12f0f0905181733h6a9537d2hf4e6b7a1384fa32d@mail.gmail.com>
+	 <76718490905181917u1f41e06dq9cf527a1dac9bea5@mail.gmail.com>
+	 <bbd12f0f0905190809k3dc13c3ak170535a5c0eed9b9@mail.gmail.com>
+	 <76718490905190821p1776905bn53610c0e8acd0113@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Tomas Carnecky <tom@dbservice.com>
-X-From: git-owner@vger.kernel.org Tue May 19 19:00:11 2009
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue May 19 19:01:12 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M6Sff-0003TR-4o
-	for gcvg-git-2@gmane.org; Tue, 19 May 2009 19:00:07 +0200
+	id 1M6Sgh-000426-As
+	for gcvg-git-2@gmane.org; Tue, 19 May 2009 19:01:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753278AbZESQ7z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 May 2009 12:59:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753163AbZESQ7z
-	(ORCPT <rfc822;git-outgoing>); Tue, 19 May 2009 12:59:55 -0400
-Received: from zrtps0kp.nortel.com ([47.140.192.56]:41805 "EHLO
-	zrtps0kp.nortel.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752636AbZESQ7z (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 May 2009 12:59:55 -0400
-Received: from zcarhxs1.corp.nortel.com (casmtp.ca.nortel.com [47.129.230.89])
-	by zrtps0kp.nortel.com (Switch-2.2.6/Switch-2.2.0) with ESMTP id n4JGxrt01890;
-	Tue, 19 May 2009 16:59:54 GMT
-Received: from localhost.localdomain ([47.130.81.171] RDNS failed) by zcarhxs1.corp.nortel.com with Microsoft SMTPSVC(6.0.3790.3959);
-	 Tue, 19 May 2009 12:59:52 -0400
-User-Agent: Thunderbird 2.0.0.21 (X11/20090302)
-In-Reply-To: <F3E3C849-76E1-4D5F-8305-276C4C205250@dbservice.com>
-X-OriginalArrivalTime: 19 May 2009 16:59:52.0317 (UTC) FILETIME=[3A1F52D0:01C9D8A3]
+	id S1753496AbZESRBA convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 19 May 2009 13:01:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753372AbZESRBA
+	(ORCPT <rfc822;git-outgoing>); Tue, 19 May 2009 13:01:00 -0400
+Received: from mail-bw0-f174.google.com ([209.85.218.174]:60707 "EHLO
+	mail-bw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753348AbZESRBA convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 19 May 2009 13:01:00 -0400
+Received: by bwz22 with SMTP id 22so3955102bwz.37
+        for <git@vger.kernel.org>; Tue, 19 May 2009 10:01:00 -0700 (PDT)
+Received: by 10.204.59.18 with SMTP id j18mr213130bkh.206.1242752460684; Tue, 
+	19 May 2009 10:01:00 -0700 (PDT)
+In-Reply-To: <76718490905190821p1776905bn53610c0e8acd0113@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119550>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119551>
 
-Tomas Carnecky wrote:
+On Tue, May 19, 2009 at 10:21 AM, Jay Soffian <jaysoffian@gmail.com> wr=
+ote:
+> On Tue, May 19, 2009 at 11:09 AM, Jeff Brown <jeff@jeffandbetsy.net> =
+wrote:
+>> When I create a new repo on my server I have been creating an empty
+>> directory, then git init, then git add some file and commit. =A0I ex=
+pect
+>> that is the long/wrong way to initialize a repo, especially if I wan=
+t
+>> it to be bare. =A0What is the best approach to creating a cloneable =
+bare
+>> repo?
+>
+> server$ mkdir /path/to/newrepo.git
+> server$ cd /path/to/newrepo.git && git init --bare
+> laptop$ git clone ssh://server/path/to/newrepo.git
+> laptop$ cd newrepo
+> laptop$ # add; commit; add; commit; ...
+> laptop$ git push origin master
+>
+> (This may only work with recent versions of git as I believe earlier
+> versions used to complain about cloning an empty repository.)
+>
 
-> Tags are not specific to any branch in particular. Usually you tag  
-> commits, and git doesn't care on which branch these commits are. That  
-> information is not recorded in the tag.
-> 
-> What you can do is create an alias that iterates over all branches and  
-> tags each one.
-> 
-> git for-each-ref refs/heads/main refs/heads/arch/ | while read sha  
-> type ref; do
->      git tag TAGNAME $sha -m "Tagged $ref"
-> done
-> 
-> $sha is the sha where the ref points to, $type will be 'commit' and  
-> $ref is the full ref (refs/heads/arch/xxx for example)
+git init --bare
 
-I tried something like this manually but on the second branch it complained
-that the tag already existed.
+That is the bit I needed.
 
-Chris
+Thanks again!
+
+
+
+jb
+
+--=20
+Jeff Brown
+SpringSource
+http://www.springsource.com/
+
+Autism Strikes 1 in 166
+=46ind The Cause ~ Find The Cure
+http://www.autismspeaks.org/
