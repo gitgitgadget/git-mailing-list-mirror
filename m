@@ -1,85 +1,67 @@
-From: Johan Herland <johan@herland.net>
-Subject: Re: What's cooking in git.git (May 2009, #02; Sun, 17)
-Date: Tue, 19 May 2009 10:45:38 +0200
-Message-ID: <200905191045.39108.johan@herland.net>
-References: <7vab5ci281.fsf@alter.siamese.dyndns.org> <200905190923.33874.johan@herland.net> <alpine.DEB.1.00.0905191015560.26154@pacific.mpi-cbg.de>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: [PATCH] gitk: Handle msysGit version during version   comparisons
+Date: Tue, 19 May 2009 10:51:18 +0200
+Message-ID: <4A127306.6040904@drmicha.warpmail.net>
+References: <87hbzirso6.fsf@users.sourceforge.net> <alpine.DEB.1.00.0905191043320.26154@pacific.mpi-cbg.de>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	markus.heidelberg@web.de, Peter Hutterer <peter.hutterer@who-t.net>
+Cc: Pat Thoyts <patthoyts@users.sourceforge.net>,
+	Paul Mackerras <paulus@samba.org>, git@vger.kernel.org
 To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue May 19 10:45:52 2009
+X-From: git-owner@vger.kernel.org Tue May 19 10:51:35 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M6KxM-0000te-3Z
-	for gcvg-git-2@gmane.org; Tue, 19 May 2009 10:45:52 +0200
+	id 1M6L2q-00039D-2f
+	for gcvg-git-2@gmane.org; Tue, 19 May 2009 10:51:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751520AbZESIpo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 May 2009 04:45:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751179AbZESIpo
-	(ORCPT <rfc822;git-outgoing>); Tue, 19 May 2009 04:45:44 -0400
-Received: from sam.opera.com ([213.236.208.81]:46140 "EHLO smtp.opera.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750840AbZESIpn (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 May 2009 04:45:43 -0400
-Received: from pc107.coreteam.oslo.opera.com (pat-tdc.opera.com [213.236.208.22])
-	(authenticated bits=0)
-	by smtp.opera.com (8.13.4/8.13.4/Debian-3sarge3) with ESMTP id n4J8jdUc031906
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Tue, 19 May 2009 08:45:39 GMT
-User-Agent: KMail/1.9.9
-In-Reply-To: <alpine.DEB.1.00.0905191015560.26154@pacific.mpi-cbg.de>
-Content-Disposition: inline
+	id S1751804AbZESIvX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 May 2009 04:51:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751212AbZESIvX
+	(ORCPT <rfc822;git-outgoing>); Tue, 19 May 2009 04:51:23 -0400
+Received: from out1.smtp.messagingengine.com ([66.111.4.25]:39485 "EHLO
+	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750778AbZESIvX (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 19 May 2009 04:51:23 -0400
+Received: from compute2.internal (compute2.internal [10.202.2.42])
+	by out1.messagingengine.com (Postfix) with ESMTP id C779F3461DC;
+	Tue, 19 May 2009 04:51:23 -0400 (EDT)
+Received: from heartbeat2.messagingengine.com ([10.202.2.161])
+  by compute2.internal (MEProxy); Tue, 19 May 2009 04:51:23 -0400
+X-Sasl-enc: MIXkIjDKTRlg0YM0jKYG2vMjRP37ZtF06bgL/UMZXr+d 1242723083
+Received: from localhost.localdomain (p548599BC.dip0.t-ipconnect.de [84.133.153.188])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id C2B1B2B960;
+	Tue, 19 May 2009 04:51:22 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1b5pre) Gecko/20090519 Lightning/1.0pre Shredder/3.0b3pre
+In-Reply-To: <alpine.DEB.1.00.0905191043320.26154@pacific.mpi-cbg.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119507>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119508>
 
-On Tuesday 19 May 2009, Johannes Schindelin wrote:
-> On Tue, 19 May 2009, Johan Herland wrote:
-> > On Tuesday 19 May 2009, Junio C Hamano wrote:
-> > > Johan Herland <johan@herland.net> writes:
-> > > > After some thinking, I don't like my original name
-> > > > submodule.<name>.resolve, since ".resolve" sounds more like a
-> > > > merge strategy or conflict resolution method, than a "how to
-> > > > deal with submodule update" choice. I propose
-> > > > submodule.<name>.update instead.
-> > >
-> > > Sounds like a plan, even though I do not necessarily agree with
-> > > the idea of automatically rebinding what is at the submodule path
-> > > every time you update the toplevel project tree.
-> >
-> > I agree that in many workflows this does not make sense, but I
-> > believe that (as with 'git submodule update --rebase') there are
-> > some cases where it does make sense, and I see no reason to support
-> > one, but not the other.
->
-> We have a _lot_ of obscure things that are not supported by core Git,
-> but are _very_ easy to add as _tiny_ add-on scripts by the user,
-> without the need for "official" feature support.
->
-> Just like this one
+Johannes Schindelin venit, vidit, dixit 19.05.2009 10:43:
+> Hi,
+> 
+> On Mon, 18 May 2009, Pat Thoyts wrote:
+> 
+>>
+>>   msysGit generates version strings with text appended which cannot
+>>   be used with vcompare. Limit git_version to the first three digits
+>>   which are the real git version.
+>>
+>> Signed-off-by: Pat Thoyts <patthoyts@users.sourceforge.net>
+> 
+> Is that indent intentional?
+> 
+> Ciao,
+> Dscho
 
-Does that mean you're also opposed to 'git submodule update --rebase' 
-(which is already in 'next', and is even Signed-off-by yourself)?
+It is clearly indentional :)
 
-I still don't see any reason why one should be added (--rebase), and not 
-the other (--merge).
+[During my git beginnings, the standard output format of git log made me
+believe I should format commit message bodies like that, too.]
 
-Dropping both would at least be consistent from core Git's POV, but 
-following that thread, we should probably also drop "git pull" (which 
-is just a simple wrapper around "git fetch" and "git merge"), and maybe 
-also "git clone" (which can easily be scripted, using "git init", "git 
-remote", "git fetch" and "git branch")...
-
-
-...Johan
-
--- 
-Johan Herland, <johan@herland.net>
-www.herland.net
+Michael
