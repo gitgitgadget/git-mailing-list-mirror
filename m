@@ -1,123 +1,91 @@
-From: Alex Bennee <kernel-hacker@bennee.com>
-Subject: Re: What is the current best bi-directional git<->bzr method?
-Date: Tue, 19 May 2009 21:31:44 +0100
-Message-ID: <b2cdc9f30905191331t73795005haad00c7840e9e2a1@mail.gmail.com>
-References: <b2cdc9f30905190708t1e170106oce3c577933c99247@mail.gmail.com>
-	 <03D68F82-503F-47D1-BF65-9D255E16EE00@frim.nl>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: [RFC/PATCH] gitweb: Fail early
+Date: Tue, 19 May 2009 22:40:31 +0200
+Message-ID: <200905192240.34199.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain;
+  charset="iso-8859-2"
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Pieter de Bie <pieter@frim.nl>
-X-From: git-owner@vger.kernel.org Tue May 19 22:31:55 2009
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue May 19 22:41:01 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M6Vyc-000706-LU
-	for gcvg-git-2@gmane.org; Tue, 19 May 2009 22:31:55 +0200
+	id 1M6W7I-0002VX-Rk
+	for gcvg-git-2@gmane.org; Tue, 19 May 2009 22:40:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753006AbZESUbo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 May 2009 16:31:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752893AbZESUbo
-	(ORCPT <rfc822;git-outgoing>); Tue, 19 May 2009 16:31:44 -0400
-Received: from mail-gx0-f166.google.com ([209.85.217.166]:53224 "EHLO
-	mail-gx0-f166.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752756AbZESUbn (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 May 2009 16:31:43 -0400
-Received: by gxk10 with SMTP id 10so60924gxk.13
-        for <git@vger.kernel.org>; Tue, 19 May 2009 13:31:44 -0700 (PDT)
-Received: by 10.90.101.17 with SMTP id y17mr333689agb.102.1242765104126; Tue, 
-	19 May 2009 13:31:44 -0700 (PDT)
-In-Reply-To: <03D68F82-503F-47D1-BF65-9D255E16EE00@frim.nl>
-X-Google-Sender-Auth: 507001a62260d4eb
+	id S1753579AbZESUko (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 May 2009 16:40:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753441AbZESUko
+	(ORCPT <rfc822;git-outgoing>); Tue, 19 May 2009 16:40:44 -0400
+Received: from fg-out-1718.google.com ([72.14.220.152]:54879 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753392AbZESUkn (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 May 2009 16:40:43 -0400
+Received: by fg-out-1718.google.com with SMTP id 16so14607fgg.17
+        for <git@vger.kernel.org>; Tue, 19 May 2009 13:40:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        bh=G4VikndDNdQZAQeh6BdLtxT1HP9OPiGVuhfRC4Wrt1M=;
+        b=xn0edB7iEAhDvurPK6FIaskogsud7KiwWAt5H/z0gLk+obMEuGf+cE5Ls9RRCMCRu9
+         VU2v4XoS90G2lNrjUpzNobl6dxwDmZfj08obQ1f48TdL6FHtf88eeoHbRDNMOAZB117K
+         t8jNxUywv8LnTtkct6xAdVGXGltXBScw0cY3Q=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        b=VLLVYP4/+YgRpnIpoE2Pq8F0si6b/odB/cmTybZDI9ovaGlvWReWL+cj5K043uHa1k
+         d2bt30p4NFX2okrsoSPtBjLi/hIwbG41S/cLoqPL+JhmQApQcQg1nZeFKCqomlw2OL1A
+         /7HnT5vEkPjo90hrXvADD2pqFzgxW32JsR0zk=
+Received: by 10.86.79.6 with SMTP id c6mr463593fgb.52.1242765643827;
+        Tue, 19 May 2009 13:40:43 -0700 (PDT)
+Received: from ?192.168.1.13? (abvi55.neoplus.adsl.tpnet.pl [83.8.206.55])
+        by mx.google.com with ESMTPS id e11sm7576910fga.21.2009.05.19.13.40.42
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Tue, 19 May 2009 13:40:43 -0700 (PDT)
+User-Agent: KMail/1.9.3
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119566>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119567>
 
-2009/5/19 Pieter de Bie <pieter@frim.nl>:
-> Hi,
->
-> On May 19, 2009, at 3:08 PM, Alex Bennee wrote:
->>
->> I found a script[1] which I have hacked a bit[2] to import repo's
->> fine. However going the other way doesn't seem to work. Before I mess
->> around too much further I though I'd check if there are any known
->> working gateways at the moment?
->
-> Bidirectional syncing should work, though I've heard there
-> may be some problems with multiple branches. I had a discussion
-> with someone about the used mapping, and they hacked up something
-> in bash, though I've never looked at it. I've lost interest in
-> git<->bzr syncing (and bzr in general) some time ago, so I never
-> looked at it further. What specific problem do you have?
+Return HTTP 500 Internal Server Error if $GIT is not defined (which
+would cause Perl error), or if "$GIT --version" failed to run.  This
+should not happen often, but I think this change would make diagnosing
+misconfiguration easier.
+---
+Is "git version" in 'git --version' output ensured? How did other git
+implementations and ports (like msysGit and jgit) output of --version
+looks like?
 
-Erm it spat out a bunch of python errors which didn't make much sense
-and I was hoping to avoid digging into:
+Does it make sense to check whether output matches, and if it doesn't
+match assume that $GIT points to something other, perhaps some other
+git like GIT Interactive Tools or something?
 
-21:28 alex@danny/x86_64 [gwibber.git] >git bzr push test
-bzr: ERROR: exceptions.KeyError: ':465'
+Does it makes sense to try various other checks to make error message
+more detailed like $GIT is not found, or is not executable?
 
-Traceback (most recent call last):
-  File "//usr/lib64/python2.5/site-packages/bzrlib/commands.py", line
-727, in exception_to_return_code
-    return the_callable(*args, **kwargs)
-  File "//usr/lib64/python2.5/site-packages/bzrlib/commands.py", line
-922, in run_bzr
-    ret = run(*run_argv)
-  File "//usr/lib64/python2.5/site-packages/bzrlib/commands.py", line
-559, in run_argv_aliases
-    return self.run(**all_cmd_args)
-  File "/home/alex/.bazaar/plugins/fastimport/__init__.py", line 221, in run
-    params, verbose)
-  File "/home/alex/.bazaar/plugins/fastimport/__init__.py", line 75, in _run
-    return proc.process(p.iter_commands)
-  File "/home/alex/.bazaar/plugins/fastimport/processor.py", line 92, in process
-    self._process(command_iter)
-  File "/home/alex/.bazaar/plugins/fastimport/processors/generic_processor.py",
-line 269, in _process
-    processor.ImportProcessor._process(self, command_iter)
-  File "/home/alex/.bazaar/plugins/fastimport/processor.py", line 114,
-in _process
-    handler(self, cmd)
-  File "/home/alex/.bazaar/plugins/fastimport/processors/generic_processor.py",
-line 459, in commit_handler
-    handler.process()
-  File "/home/alex/.bazaar/plugins/fastimport/processor.py", line 193,
-in process
-    self.pre_process_files()
-  File "/home/alex/.bazaar/plugins/fastimport/bzr_commit_handler.py",
-line 517, in pre_process_files
-    super(InventoryDeltaCommitHandler, self).pre_process_files()
-  File "/home/alex/.bazaar/plugins/fastimport/bzr_commit_handler.py",
-line 64, in pre_process_files
-    for p in parents]
-KeyError: ':465'
-
-bzr 1.14.1 on python 2.5.4 (linux2)
-arguments: ['/usr/bin/bzr', 'fast-import',
-'--import-marks=/home/alex/src/gwibber/gwibber.git/.git/bzr-git/test-bzr-map',
-'--export-marks=/home/alex/src/gwibber/gwibber.git/.git/bzr-git/test-bzr-map',
-'-']
-encoding: 'ANSI_X3.4-1968', fsenc: 'ANSI_X3.4-1968', lang: 'en_GB'
-plugins:
-  bzrtools
-/usr/lib64/python2.5/site-packages/bzrlib/plugins/bzrtools [1.14]
-  fastimport           /home/alex/.bazaar/plugins/fastimport [0.8dev]
-  launchpad
-/usr/lib64/python2.5/site-packages/bzrlib/plugins/launchpad [unknown]
-  netrc_credential_store
-/usr/lib64/python2.5/site-packages/bzrlib/plugins/netrc_credential_store
-[unknown]
-*** Bazaar has encountered an internal error.
-    Please report a bug at https://bugs.launchpad.net/bzr/+filebug
-    including this traceback, and a description of what you
-    were doing when the error occurred.
-
-*sigh* I suppose it's time to break out those debugging shoes...
-
--- 
-Alex, homepage: http://www.bennee.com/~alex/
-CV: http://www.bennee.com/~alex/cv.php
+diff --git i/gitweb/gitweb.perl w/gitweb/gitweb.perl
+index 05702e4..0cb53ca 100755
+--- i/gitweb/gitweb.perl
++++ w/gitweb/gitweb.perl
+@@ -471,7 +471,13 @@ if (-e $GITWEB_CONFIG) {
+ }
+ 
+ # version of the core git binary
++if (!defined $GIT) {
++	die_error(500, "Undefined path to git binary");
++}
+ our $git_version = qx("$GIT" --version) =~ m/git version (.*)$/ ? $1 : "unknown";
++if ($?) {
++	die_error(500, "Error calling '$GIT --version': $?");
++}
+ 
+ $projects_list ||= $projectroot;
+ 
