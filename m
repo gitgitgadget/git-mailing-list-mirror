@@ -1,81 +1,83 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: git-tag bug? confusing git fast-export with double tag objects
-Date: Tue, 19 May 2009 07:29:14 -0400
-Message-ID: <20090519112914.GA21386@coredump.intra.peff.net>
-References: <20090515020206.GA12451@coredump.intra.peff.net> <op.uty0pjb51e62zd@balu> <m34ovmlcve.fsf@localhost.localdomain> <4A0D8211.5010806@viscovery.net> <81b0412b0905150851q232b3f6s95df89e72d4dc381@mail.gmail.com> <4A0D9696.1040805@op5.se> <7v3ab6uuw4.fsf@alter.siamese.dyndns.org> <4A0E67E9.3020208@op5.se> <7vtz3lnf1x.fsf@alter.siamese.dyndns.org> <op.ut6ciwjl1e62zd@balu.cs.uni-paderborn.de>
+From: Bert Wesarg <bert.wesarg@googlemail.com>
+Subject: Re: [TopGit PATCH] tg-graph: print dependency graph like git log 
+	--graph
+Date: Tue, 19 May 2009 13:47:39 +0200
+Message-ID: <36ca99e90905190447u19d7cd19re8932f8f3aadefb2@mail.gmail.com>
+References: <1242711875-25666-1-git-send-email-bert.wesarg@googlemail.com>
+	 <20090519102742.GA28702@noris.de>
+	 <36ca99e90905190337y63aeb98ag59ff37688f75ba96@mail.gmail.com>
+	 <20090519110800.GB28702@noris.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>, Andreas Ericsson <ae@op5.se>,
-	Alex Riesen <raa.lkml@gmail.com>,
-	Johannes Sixt <j.sixt@viscovery.net>,
-	Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org,
-	Brandon Casey <casey@nrlssc.navy.mil>,
-	Sverre Rabbelier <srabbelier@gmail.com>
-To: Matthias Andree <matthias.andree@gmx.de>
-X-From: git-owner@vger.kernel.org Tue May 19 13:29:27 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Petr Baudis <pasky@suse.cz>, git@vger.kernel.org,
+	martin f krafft <madduck@debian.org>,
+	Uwe Kleine-Koenig <u.kleine-koenig@pengutronix.de>,
+	Adam Simpkins <adam@adamsimpkins.net>
+To: Michael Radziej <mir@noris.de>
+X-From: git-owner@vger.kernel.org Tue May 19 13:47:52 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M6NVe-00084F-LB
-	for gcvg-git-2@gmane.org; Tue, 19 May 2009 13:29:27 +0200
+	id 1M6NnT-0006p1-VU
+	for gcvg-git-2@gmane.org; Tue, 19 May 2009 13:47:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753174AbZESL3P (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 May 2009 07:29:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753163AbZESL3P
-	(ORCPT <rfc822;git-outgoing>); Tue, 19 May 2009 07:29:15 -0400
-Received: from peff.net ([208.65.91.99]:33537 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752092AbZESL3O (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 May 2009 07:29:14 -0400
-Received: (qmail 22394 invoked by uid 107); 19 May 2009 11:29:19 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Tue, 19 May 2009 07:29:19 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 19 May 2009 07:29:14 -0400
-Content-Disposition: inline
-In-Reply-To: <op.ut6ciwjl1e62zd@balu.cs.uni-paderborn.de>
+	id S1752020AbZESLrn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 May 2009 07:47:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750849AbZESLrm
+	(ORCPT <rfc822;git-outgoing>); Tue, 19 May 2009 07:47:42 -0400
+Received: from mail-bw0-f174.google.com ([209.85.218.174]:64610 "EHLO
+	mail-bw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750831AbZESLrm (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 May 2009 07:47:42 -0400
+Received: by bwz22 with SMTP id 22so3766779bwz.37
+        for <git@vger.kernel.org>; Tue, 19 May 2009 04:47:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=pKFrHeBkrn6IkOZVjR+rUg8yxuDR8q3OTxHqn7luhF0=;
+        b=ep8tac0GUkAPDu8pIgFvhk1nzbB9APSxlyP0+KCrI5VXR1hk0VU6OiZDJG+mAWlA2e
+         SbuomN+qrO2f+G9QuDPHLNoVlBWfQ1HB5kvCMoJQ313yMNxbX9Zgbg4+PE3n4vfYL+JP
+         mMFvjxEwEznJx80F+aewM/y+7oRLAbKS6Ltfc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlemail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=Q2lK7uuQFuT8eAPbAtW5k8rrXbnLeIBo8Ev88hW/KvPsXsvjY3MovK+UItnRvhUqQZ
+         rEAtjDHJU8HWMIZkY3zFSsd5toZAUZRMhXlOlM0ZYQ5437GKMVfTkoenjZdnNihf5xPk
+         ULgfhXgNTAaRByB9LiCai3jVyPm6hegvDUD20=
+Received: by 10.223.126.145 with SMTP id c17mr5057931fas.16.1242733661388; 
+	Tue, 19 May 2009 04:47:41 -0700 (PDT)
+In-Reply-To: <20090519110800.GB28702@noris.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119518>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119519>
 
-On Tue, May 19, 2009 at 01:21:58PM +0200, Matthias Andree wrote:
+On Tue, May 19, 2009 at 13:08, Michael Radziej <mir@noris.de> wrote:
+> On Tue, May 19, Bert Wesarg wrote:
+>
+>> No, it works here. Which version of graphviz do you have?
+>
+> I tried two versions on debian:
+>
+> 2.8-3+etch1 (debian etch)
+> 2.20.2-3~bpo40+1 (debian etch-backports)
+>
+> I also tried it on a different host running Ubuntu with
+> 2.16-3ubuntu2
+>
+> Which one did you use?
+The 2.20.2 one.
 
-> What else can we tag in Git? Commits and Tags.  Is it sensible and does it 
-> work to tag blobs or trees?
+And you see the error with all 3?
 
-A tagged blob:
+Can you send the output from 'tg summary --graphviz' too?
 
-  $ cd git && git show junio-gpg-pub | sed '/^--/Q'
-  tag junio-gpg-pub
-  Tagger: Junio C Hamano <junkio@cox.net>
-  Date:   Tue Dec 13 16:33:29 2005 -0800
-
-
-  GPG key to sign git.git archive.
-
-  This blob object contains the GPG public key I use to sign git.git
-  archive.
-
-  To use it to verify tags I signed, do:
-
-    $ git-cat-file blob junio-gpg-pub | gpg --import
-
-  to import it into your keyring, and then
-
-    $ git-verify-tag $tag_to_be_verified
-
-A tagged tree:
-
-  $ cd linux-2.6 && git show v2.6.11 | sed '/^--/Q'
-  tag v2.6.11-tree
-
-  This is the 2.6.11 tree object.
-
-  NOTE! There's no commit for this, since it happened before I started with git.
-  Eventually we'll import some sort of history, and that should tie this tree
-  object up to a real commit. In the meantime, this acts as an anchor point for
-  doing diffs etc under git.
-
--Peff
+Bert
+>
+> Michael
