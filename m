@@ -1,79 +1,62 @@
-From: Robert Haines <rhaines@manchester.ac.uk>
-Subject: Re: problems getting uptodate from a remote repository
-Date: Tue, 19 May 2009 18:03:55 +0100
-Message-ID: <ADB06DB0-9198-4AB4-8BE8-6472B943C872@manchester.ac.uk>
-References: <33710F9891EA4BFD8ACD60798E354138@HPLAPTOP> <9719867c0905190908n2364da92s88ad646e8667298c@mail.gmail.com> <9719867c0905190909q74e4a6b9r4857fb6f32ff394@mail.gmail.com>
-Mime-Version: 1.0 (Apple Message framework v930.3)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
+From: "Chris Friesen" <cfriesen@nortel.com>
+Subject: Re: any way to apply tag across all branches in repository?
+Date: Tue, 19 May 2009 11:48:29 -0600
+Message-ID: <4A12F0ED.4070707@nortel.com>
+References: <4A12DDB9.60608@nortel.com> <Y0WmOpNg_9ptwbJ3VHYrzAgFtDvPi5pn4Tz-0w5Phhlo9frjieUaeA@cipher.nrlssc.navy.mil>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Aaron Gray <aaronngray.lists@googlemail.com>
-X-From: git-owner@vger.kernel.org Tue May 19 19:28:41 2009
+To: Brandon Casey <casey@nrlssc.navy.mil>
+X-From: git-owner@vger.kernel.org Tue May 19 19:48:39 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M6T7H-0000DD-S2
-	for gcvg-git-2@gmane.org; Tue, 19 May 2009 19:28:40 +0200
+	id 1M6TQa-0000cp-Ef
+	for gcvg-git-2@gmane.org; Tue, 19 May 2009 19:48:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752856AbZESR2X (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 May 2009 13:28:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751701AbZESR2X
-	(ORCPT <rfc822;git-outgoing>); Tue, 19 May 2009 13:28:23 -0400
-Received: from tranquility.mcc.ac.uk ([130.88.200.145]:49876 "EHLO
-	tranquility.mcc.ac.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751177AbZESR2X (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 May 2009 13:28:23 -0400
-X-Greylist: delayed 1467 seconds by postgrey-1.27 at vger.kernel.org; Tue, 19 May 2009 13:28:22 EDT
-Received: from kelvin.its.manchester.ac.uk ([130.88.25.195])
-	by tranquility.mcc.ac.uk with esmtps (TLSv1:AES256-SHA:256)
-	(Exim 4.69 (FreeBSD))
-	(envelope-from <rhaines@manchester.ac.uk>)
-	id 1M6SjM-0004eI-I6; Tue, 19 May 2009 18:03:56 +0100
-Received: from 94-192-243-24.zone6.bethere.co.uk ([94.192.243.24]:57941 helo=leela.config)
-	by kelvin.its.manchester.ac.uk with esmtpsa (TLSv1:AES128-SHA:128)
-	(Exim 4.69)
-	(envelope-from <rhaines@manchester.ac.uk>)
-	id 1M6SjM-0003CY-D7; Tue, 19 May 2009 18:03:56 +0100
-In-Reply-To: <9719867c0905190909q74e4a6b9r4857fb6f32ff394@mail.gmail.com>
-X-Mailer: Apple Mail (2.930.3)
-X-Authenticated-Sender: Robert Haines from 94-192-243-24.zone6.bethere.co.uk (leela.config) [94.192.243.24]:57941
-X-Authenticated-From: Robert.Haines@manchester.ac.uk
-X-UoM: Scanned by the University Mail System. See http://www.itservices.manchester.ac.uk/email/filtering/information/ for details.
+	id S1752931AbZESRsd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 May 2009 13:48:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753006AbZESRsc
+	(ORCPT <rfc822;git-outgoing>); Tue, 19 May 2009 13:48:32 -0400
+Received: from zcars04e.nortel.com ([47.129.242.56]:41808 "EHLO
+	zcars04e.nortel.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752903AbZESRsb (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 May 2009 13:48:31 -0400
+Received: from zcarhxs1.corp.nortel.com (casmtp.ca.nortel.com [47.129.230.89])
+	by zcars04e.nortel.com (Switch-2.2.0/Switch-2.2.0) with ESMTP id n4JHlRo23682;
+	Tue, 19 May 2009 17:47:27 GMT
+Received: from localhost.localdomain ([47.130.81.171] RDNS failed) by zcarhxs1.corp.nortel.com with Microsoft SMTPSVC(6.0.3790.3959);
+	 Tue, 19 May 2009 13:48:30 -0400
+User-Agent: Thunderbird 2.0.0.21 (X11/20090302)
+In-Reply-To: <Y0WmOpNg_9ptwbJ3VHYrzAgFtDvPi5pn4Tz-0w5Phhlo9frjieUaeA@cipher.nrlssc.navy.mil>
+X-OriginalArrivalTime: 19 May 2009 17:48:30.0439 (UTC) FILETIME=[05756770:01C9D8AA]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119554>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119555>
 
-Hi Aaron,
+Brandon Casey wrote:
 
-On 19 May 2009, at 17:09, Aaron Gray wrote:
+> If I understand you correctly, you are doing your primary development on
+> the "main" branch and then merging this into the architecture specific
+> branches which contain additional architecture specific changes.
 
-> I have done a 'git fetch' but the repo is not being updated to  
-> latest changes.
->
-> I am getting the message :-
->
->    "Your branch is behind 'origin/master' by 53 commits, and can be
-> fast-forwarded.
->
-> when I do a 'git checkout master'
->
-> What is going on here and what can I do about it ?
+Correct.
 
+> All you need to do is tag the "main" branch.  Actually, you are tagging
+> the commit that the branch currently points at.  When this branch is
+> merged into the other branches, they will also contain this commit, and
+> 'git describe' will use the tag you created when generating the version
+> string.
 
-<snip config>
+I think this would work if the most recent commit is on the main branch.
 
-A fetch just updates your remote tracking branches in your local  
-repository, it doesn't merge them as well. To update your local master  
-you would then do (while on branch master):
+However, if I make a change on the arch-specific branch, then tag the
+main branch and merge it into the arch-specific branch, git tells me
+the arch-specific branch is already up-to-date and the tag doesn't
+get propagated.
 
-$ git merge origin/master
-
-This extra step allows you to create a new branch with origin/master  
-as its start point to check that you're happy with the updates before  
-you update your local master should you wish to do so.
-
-Cheers,
-Rob
+Chris
