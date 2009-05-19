@@ -1,66 +1,140 @@
-From: "Chris Friesen" <cfriesen@nortel.com>
+From: Brandon Casey <casey@nrlssc.navy.mil>
 Subject: Re: any way to apply tag across all branches in repository?
-Date: Tue, 19 May 2009 13:05:49 -0600
-Message-ID: <4A13030D.8000000@nortel.com>
-References: <4A12DDB9.60608@nortel.com> <Y0WmOpNg_9ptwbJ3VHYrzAgFtDvPi5pn4Tz-0w5Phhlo9frjieUaeA@cipher.nrlssc.navy.mil> <4A12F0ED.4070707@nortel.com> <alpine.LFD.2.01.0905191132490.3301@localhost.localdomain>
+Date: Tue, 19 May 2009 14:30:30 -0500
+Message-ID: <0WGSJO_TdUxCKWhDCupb3MaPOyPeVNH7Rs_7iKVnQcahmxUpwu8qzw@cipher.nrlssc.navy.mil>
+References: <4A12DDB9.60608@nortel.com> <Y0WmOpNg_9ptwbJ3VHYrzAgFtDvPi5pn4Tz-0w5Phhlo9frjieUaeA@cipher.nrlssc.navy.mil> <4A12F0ED.4070707@nortel.com> <NFLo0xGp2o-oBdtr_pq1jvwATe1ZALaD9dHkr5hmKNkU30gr_isMpQ@cipher.nrlssc.navy.mil> <4A130309.2060407@nortel.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: Brandon Casey <casey@nrlssc.navy.mil>, git@vger.kernel.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Tue May 19 21:06:39 2009
+Cc: git@vger.kernel.org
+To: Chris Friesen <cfriesen@nortel.com>
+X-From: git-owner@vger.kernel.org Tue May 19 21:30:46 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M6Ue6-000331-6b
-	for gcvg-git-2@gmane.org; Tue, 19 May 2009 21:06:38 +0200
+	id 1M6V1R-0005jb-9Y
+	for gcvg-git-2@gmane.org; Tue, 19 May 2009 21:30:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753624AbZESTGa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 May 2009 15:06:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753564AbZESTG3
-	(ORCPT <rfc822;git-outgoing>); Tue, 19 May 2009 15:06:29 -0400
-Received: from zcars04e.nortel.com ([47.129.242.56]:49460 "EHLO
-	zcars04e.nortel.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753460AbZESTG3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 May 2009 15:06:29 -0400
-Received: from zcarhxs1.corp.nortel.com (casmtp.ca.nortel.com [47.129.230.89])
-	by zcars04e.nortel.com (Switch-2.2.0/Switch-2.2.0) with ESMTP id n4JJ4lo13487;
-	Tue, 19 May 2009 19:04:47 GMT
-Received: from localhost.localdomain ([47.130.81.171] RDNS failed) by zcarhxs1.corp.nortel.com with Microsoft SMTPSVC(6.0.3790.3959);
-	 Tue, 19 May 2009 15:05:50 -0400
-User-Agent: Thunderbird 2.0.0.21 (X11/20090302)
-In-Reply-To: <alpine.LFD.2.01.0905191132490.3301@localhost.localdomain>
-X-OriginalArrivalTime: 19 May 2009 19:05:50.0519 (UTC) FILETIME=[D3296C70:01C9D8B4]
+	id S1753735AbZESTag (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 May 2009 15:30:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753650AbZESTag
+	(ORCPT <rfc822;git-outgoing>); Tue, 19 May 2009 15:30:36 -0400
+Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:45098 "EHLO
+	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753484AbZESTag (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 May 2009 15:30:36 -0400
+Received: by mail.nrlssc.navy.mil id n4JJUUQF026970; Tue, 19 May 2009 14:30:30 -0500
+In-Reply-To: <4A130309.2060407@nortel.com>
+X-OriginalArrivalTime: 19 May 2009 19:30:30.0557 (UTC) FILETIME=[45554CD0:01C9D8B8]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119560>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119561>
 
-Linus Torvalds wrote:
+Chris Friesen wrote:
+> Brandon Casey wrote:
 > 
-> On Tue, 19 May 2009, Chris Friesen wrote:
->> However, if I make a change on the arch-specific branch, then tag the
->> main branch and merge it into the arch-specific branch, git tells me
->> the arch-specific branch is already up-to-date and the tag doesn't
->> get propagated.
+>> Try these commands:
+>>
+>>   git describe $main
+>>   git describe $arch_branch
+>>   git tag -m 'a test tag' my_tag $main
+>>   git describe $main
+>>   git describe $arch_branch
 > 
-> You can always just do "git fetch --tags" to fetch any new tags without 
-> doing anything else.
+> In the commands below, "main" is $main, and "arch" is $arch_branch.
+> I'm starting out with the arch branch checked out.
+> 
+> [cfriesen@localhost linux]$ git describe main
+> dynamic_ftrace_excluded-auto-mark-225-g7c2dc32
+> [cfriesen@localhost linux]$ git describe arch
+> dynamic_ftrace_excluded-auto-mark-225-g7c2dc32
+> [cfriesen@localhost linux]$ git tag -m 'a test tag' my_tag ncgl
 
-This is all in the same local repository, but with target-specific branches
-containing arch-specific changes on top of a common codebase.  The
-arch-specific stuff often comes from board vendors and such, and they're
-never going to be merged back into the common codebase.
+What's "ncgl"?  Another branch at the same tip as "arch"?
 
-I'm looking for some way to conceptually tag the current head of each
-branch to indicate "this commit was used to build product version FOO" so
-that later on when we find a bug in our code we can tell which product
-version(s) contain the bug and need to be patched in the field.
+> [cfriesen@localhost linux]$ git describe arch
+> my_tag
+> [cfriesen@localhost linux]$ git describe arch
+> my_tag
 
-The brute-force way to do this would be to manually loop through each branch
-and create a tag of the form "$branch_$version" to ensure unique tags.  But I was
-hoping there was a more elegant way.
+Was one of those supposed to be "main"?
 
-Chris
+> So far so good.
+
+I expected to see:
+
+  $ git tag -m 'a test tag' my_tag main
+
+  $ git describe main
+  my_tag
+
+  $ git describe arch
+  my_tag-X-g0123456
+
+Where 'X' is some number equal to the number of commits _not_ reachable
+from "my_tag", and the digits after the 'g' are an abbreviated sha1 of
+the tip commit on the arch branch.
+
+> Now I make a change to the arch branch, and add
+> another tag to the main branch.
+> 
+> [cfriesen@localhost linux]$ echo a > asdf
+> [cfriesen@localhost linux]$ git add asdf
+> [cfriesen@localhost linux]$ git commit
+> Created commit 4c8dfa7: blah
+>  1 files changed, 1 insertions(+), 0 deletions(-)
+>  create mode 100644 asdf
+> 
+> [cfriesen@localhost linux]$ git describe main
+> my_tag
+> [cfriesen@localhost linux]$ git describe arch
+> my_tag-1-g4c8dfa7
+
+Ok, so maybe this is a test repo.  I didn't expect main and arch
+to ever point to the exact same state.  This won't happen in
+your real repo unless you are merging arch back into main.
+
+Ok, you tagged main, and previously arch was at the same state,
+so 'git describe' printed out 'my_tag' for both of them.  Now,
+the arch branch is ahead of main by one commit, so you get an
+expanded string from 'git describe' (the meaning of which I
+described earlier, above).
+
+> Now we add another tag to the main branch:
+> 
+> [cfriesen@localhost linux]$ git tag -m 'a test tag' my_tag2 main
+> [cfriesen@localhost linux]$ git describe main
+> my_tag
+> [cfriesen@localhost linux]$ git describe arch
+> my_tag-1-g4c8dfa7
+> 
+> I assume that since there were no code changes on the main branch,
+> it doesn't think that there is any difference between the two tags.
+
+Right.  There is no difference.  You created another tag pointing at
+the same revision as the first tag.  Here's something else to try:
+
+   $ git rev-parse main
+   $ git rev-parse my_tag
+   $ git rev-parse my_tag2
+
+You'll see that they all print out the same sha1 string.
+
+You can also try this:
+
+   $ git rev-parse arch^
+   # prints out same sha1 as above
+
+   $ git rev-parse arch
+   # prints out the sha1 of the commit that you just created
+
+Off-hand, I'm not sure how 'git describe' decides which tag to use
+in the describe output when there is more than one candidate.
+Possibly earliest created?, possible alphabetical?  I didn't look.
+
+Starting to make sense?
+
+-brandon
