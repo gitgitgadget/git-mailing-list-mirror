@@ -1,98 +1,57 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: git subtree: an alternative to git submodule
-Date: Tue, 19 May 2009 09:13:41 -0700 (PDT)
-Message-ID: <m3my99jclg.fsf@localhost.localdomain>
-References: <1241822349-27470-1-git-send-email-apenwarr@gmail.com>
-	<32541b130905150909h7e596f26w7db6887e7f4267ff@mail.gmail.com>
+From: Tony Finch <dot@dotat.at>
+Subject: Re: How to check repository/working tree status from a script
+Date: Tue, 19 May 2009 17:16:36 +0100
+Message-ID: <alpine.LSU.2.00.0905191710430.23478@hermes-2.csi.cam.ac.uk>
+References: <20090519143537.GA23505@torres.zugschlus.de> <alpine.LSU.2.00.0905191630120.23478@hermes-2.csi.cam.ac.uk> <20090519160031.GB23505@torres.zugschlus.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Avery Pennarun <apenwarr@gmail.com>
-X-From: git-owner@vger.kernel.org Tue May 19 18:13:56 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Marc Haber <mh+git@zugschlus.de>
+X-From: git-owner@vger.kernel.org Tue May 19 18:17:24 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M6Rwt-0004bg-QS
-	for gcvg-git-2@gmane.org; Tue, 19 May 2009 18:13:52 +0200
+	id 1M6S0J-0006KI-11
+	for gcvg-git-2@gmane.org; Tue, 19 May 2009 18:17:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753174AbZESQNn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 May 2009 12:13:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753226AbZESQNm
-	(ORCPT <rfc822;git-outgoing>); Tue, 19 May 2009 12:13:42 -0400
-Received: from mail-fx0-f158.google.com ([209.85.220.158]:61617 "EHLO
-	mail-fx0-f158.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753171AbZESQNm (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 May 2009 12:13:42 -0400
-Received: by fxm2 with SMTP id 2so3976747fxm.37
-        for <git@vger.kernel.org>; Tue, 19 May 2009 09:13:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received
-         :x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        bh=qdrkLXzKzhX6mbE8+OpSnarcKRnm2PUx2vR8hEPNSBg=;
-        b=HDKD2pCpMqDJfN5Nh5UsEfm0BvTDX2bpAKI5+Xpho2lO78kPTyPRZBy3FYRzXKVyJq
-         bbPbfZC/gx8Q5KWsIQloe6u0hbf/UAU6fdjUjWv82/B7KyXxZqtgof/QpLgzb/HAGYSW
-         4upECGjfFc1a2xOAQPKCLx6XUfCOamYpyZiz8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        b=fDXi9vuHVlcDLFqG058E419pd2s/qK2+Ry/ZRH67iwyQC28K7Fq+7WzSDRBZnYYZcn
-         VaLM/UGDSkBPwnLOwlfuMGQnndBlKYpj2vy0xvgNe6VgwKV20IJhOTDcIFeClnGTpI93
-         meeCLDS8LTIIMlqKW6t9TZP4/PEyWPq0TpSfY=
-Received: by 10.103.246.1 with SMTP id y1mr122867mur.72.1242749622226;
-        Tue, 19 May 2009 09:13:42 -0700 (PDT)
-Received: from localhost.localdomain (abvi55.neoplus.adsl.tpnet.pl [83.8.206.55])
-        by mx.google.com with ESMTPS id n10sm209322mue.17.2009.05.19.09.13.40
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 19 May 2009 09:13:41 -0700 (PDT)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id n4JGD2P6015621;
-	Tue, 19 May 2009 18:13:13 +0200
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id n4JGCh0S015617;
-	Tue, 19 May 2009 18:12:43 +0200
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <32541b130905150909h7e596f26w7db6887e7f4267ff@mail.gmail.com>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+	id S1753673AbZESQQh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 May 2009 12:16:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752827AbZESQQg
+	(ORCPT <rfc822;git-outgoing>); Tue, 19 May 2009 12:16:36 -0400
+Received: from ppsw-7.csi.cam.ac.uk ([131.111.8.137]:52597 "EHLO
+	ppsw-7.csi.cam.ac.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751482AbZESQQg (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 May 2009 12:16:36 -0400
+X-Cam-AntiVirus: no malware found
+X-Cam-SpamDetails: not scanned
+X-Cam-ScannerInfo: http://www.cam.ac.uk/cs/email/scanner/
+Received: from hermes-2.csi.cam.ac.uk ([131.111.8.54]:60335)
+	by ppsw-7.csi.cam.ac.uk (smtp.hermes.cam.ac.uk [131.111.8.157]:25)
+	with esmtpa (EXTERNAL:fanf2) id 1M6RzY-0000X3-PX (Exim 4.70)
+	(return-path <fanf2@hermes.cam.ac.uk>); Tue, 19 May 2009 17:16:36 +0100
+Received: from fanf2 (helo=localhost) by hermes-2.csi.cam.ac.uk (hermes.cam.ac.uk)
+	with local-esmtp id 1M6RzY-0007Ns-T8 (Exim 4.67)
+	(return-path <fanf2@hermes.cam.ac.uk>); Tue, 19 May 2009 17:16:36 +0100
+X-X-Sender: fanf2@hermes-2.csi.cam.ac.uk
+In-Reply-To: <20090519160031.GB23505@torres.zugschlus.de>
+User-Agent: Alpine 2.00 (LSU 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119542>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119543>
 
-Avery Pennarun <apenwarr@gmail.com> writes:
-> On Fri, May 8, 2009 at 6:39 PM, Avery Pennarun <apenwarr@gmail.com> wrote:
-> >
-> > I first sent out this patch set a couple of weeks ago
-> > (http://article.gmane.org/gmane.comp.version-control.git/117612) and got a
-> > couple of positive comments, but no negative ones, so I'm guessing people
-> > haven't reviewed it as closely as I would have hoped :)
-[...]
+On Tue, 19 May 2009, Marc Haber wrote:
+>
+> Am I missing something?
 
-> Just checking in again.  Since I originally announced git-subtree, it
-> (or rather the concept) has received a bit of positive feedback out in
-> the wild.  My original blog post about it:
-> http://alumnit.ca/~apenwarr/log/?m=200904#30
+git-diff won't tell you about untracked files.
 
-[...]
-> Meanwhile, I've been keeping it in a separate git repo here:
-> http://github.com/apenwarr/git-subtree/commits/master (that's a web
-> link, not a git link).
+Use git ls-files --others --exclude-standard
 
-I have added information about git-subtree to git wiki on
-http://git.or.cz/gitwiki/InterfacesFrontendsAndTools (which page I
-imagined to be clearinghouse / list of relevant git related tools).
-Please correct any mistakes, and perhaps expand information there.
-
-You might want to add SubtreeMerge page to git wiki, and link it
-from subproject pages (SubmoduleSupport, GitSubmoduleTutorial)
-and perhaps also from GitDocumentation. But it is not necessary.
-
+Tony.
 -- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+f.anthony.n.finch  <dot@dotat.at>  http://dotat.at/
+GERMAN BIGHT HUMBER: SOUTHWEST 5 TO 7. MODERATE OR ROUGH. SQUALLY SHOWERS.
+MODERATE OR GOOD.
