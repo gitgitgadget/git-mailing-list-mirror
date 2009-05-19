@@ -1,74 +1,62 @@
-From: Miles Bader <miles@gnu.org>
-Subject: Re: git svn rebase problem
-Date: Tue, 19 May 2009 09:56:08 +0900
-Message-ID: <buobpppq5av.fsf@dhlpc061.dev.necel.com>
-References: <4A0DDCC5.4010001@dlasys.net>
-	<op.ut4aagco1e62zd@merlin.emma.line.org>
-	<32541b130905181000v34d5fd6arcb662bff232cb81c@mail.gmail.com>
-Reply-To: Miles Bader <miles@gnu.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: What's cooking in git.git (May 2009, #02; Sun, 17)
+Date: Mon, 18 May 2009 18:33:56 -0700
+Message-ID: <7vpre5anaz.fsf@alter.siamese.dyndns.org>
+References: <7vab5ci281.fsf@alter.siamese.dyndns.org>
+	<200905181536.39508.johan@herland.net>
+	<200905182140.29953.markus.heidelberg@web.de>
+	<200905182355.21645.johan@herland.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Matthias Andree <matthias.andree@gmx.de>,
-	"David H. Lynch J.r" <ml@dlasys.net>, git@vger.kernel.org
-To: Avery Pennarun <apenwarr@gmail.com>
-X-From: git-owner@vger.kernel.org Tue May 19 02:56:57 2009
+Cc: markus.heidelberg@web.de, git@vger.kernel.org,
+	Peter Hutterer <peter.hutterer@who-t.net>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Johan Herland <johan@herland.net>
+X-From: git-owner@vger.kernel.org Tue May 19 03:34:05 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M6DdZ-00008b-3V
-	for gcvg-git-2@gmane.org; Tue, 19 May 2009 02:56:57 +0200
+	id 1M6EDU-0001dQ-Ij
+	for gcvg-git-2@gmane.org; Tue, 19 May 2009 03:34:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752544AbZESA4U (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 18 May 2009 20:56:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752324AbZESA4T
-	(ORCPT <rfc822;git-outgoing>); Mon, 18 May 2009 20:56:19 -0400
-Received: from TYO202.gate.nec.co.jp ([202.32.8.206]:45276 "EHLO
-	tyo202.gate.nec.co.jp" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751918AbZESA4S (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 May 2009 20:56:18 -0400
-Received: from relay31.aps.necel.com ([10.29.19.54])
-	by tyo202.gate.nec.co.jp (8.13.8/8.13.4) with ESMTP id n4J0u3xt005297;
-	Tue, 19 May 2009 09:56:09 +0900 (JST)
-Received: from relay11.aps.necel.com ([10.29.19.16] [10.29.19.16]) by relay31.aps.necel.com with ESMTP; Tue, 19 May 2009 09:56:09 +0900
-Received: from dhlpc061 ([10.114.114.140] [10.114.114.140]) by relay11.aps.necel.com with ESMTP; Tue, 19 May 2009 09:56:08 +0900
-Received: by dhlpc061 (Postfix, from userid 31295)
-	id C9DAF52E30E; Tue, 19 May 2009 09:56:08 +0900 (JST)
-System-Type: x86_64-unknown-linux-gnu
-Blat: Foop
-In-Reply-To: <32541b130905181000v34d5fd6arcb662bff232cb81c@mail.gmail.com>
-	(Avery Pennarun's message of "Mon, 18 May 2009 13:00:25 -0400")
+	id S1752665AbZESBd5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 18 May 2009 21:33:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752713AbZESBd4
+	(ORCPT <rfc822;git-outgoing>); Mon, 18 May 2009 21:33:56 -0400
+Received: from fed1rmmtao101.cox.net ([68.230.241.45]:63897 "EHLO
+	fed1rmmtao101.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752495AbZESBdz (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 May 2009 21:33:55 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao101.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20090519013357.LEXK17670.fed1rmmtao101.cox.net@fed1rmimpo01.cox.net>;
+          Mon, 18 May 2009 21:33:57 -0400
+Received: from localhost ([68.225.240.211])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id tDZw1b00H4aMwMQ03DZwlZ; Mon, 18 May 2009 21:33:56 -0400
+X-Authority-Analysis: v=1.0 c=1 a=jpUCGHAuqP8A:10 a=AqR8L7kc4dQA:10
+ a=CeZos8cfAAAA:8 a=iLsdlJpzVFg5mSPap8MA:9 a=hpALcvd270dXNUpTpJwjDxHzwxsA:4
+ a=8lZzlOcxvREA:10
+X-CM-Score: 0.00
+In-Reply-To: <200905182355.21645.johan@herland.net> (Johan Herland's message of "Mon\, 18 May 2009 23\:55\:21 +0200")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119483>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119484>
 
-Avery Pennarun <apenwarr@gmail.com> writes:
->> Branches and git-svn don't mix.
->
-> That's not exactly true: merging and git-svn don't mix.  But rebasing
-> works fine.
+Johan Herland <johan@herland.net> writes:
 
-I've given up on trying to maintain rigid consistency with svn --
-git-svn's constant rebasing is just too painful -- and just cherry-pick
-everything between my "svn" branch and master, and use master in
-conjunction with better-behaved git-only branches.  I often end up with
-the same commits in a different order on the two branches, but oh well,
-not much to do about that I suppose.
+> After some thinking, I don't like my original name submodule.<name>.resolve, 
+> since ".resolve" sounds more like a merge strategy or conflict resolution 
+> method, than a "how to deal with submodule update" choice. I propose 
+> submodule.<name>.update instead.
 
-This means I often end up cherry-picking long sequences of commits, and
-need to deal with conflicts in these cp-sequences.  For this reason, I
-often wish cherry-pick supported all the fancy features of rebase
-(multiple commits, nice handling of conflicts, -i, etc) -- after all
-rebasing is really just a special case of cherry-picking.
-
-[I've tried on a shell-script implementation of such an extended
-cherry-pick, but soooo many little corner cases to deal with... maybe
-it'd be easier to try and generalize git-rebase...?]
-
--Miles
-
--- 
-Conservative, n. A statesman enamored of existing evils, as opposed to a
-Liberal, who wants to replace them with new ones.
+Sounds like a plan, even though I do not necessarily agree with the idea
+of automatically rebinding what is at the submodule path every time you
+update the toplevel project tree.  And from my point of view, "rebind" (or
+"autorebind") would be more appropriate name than "update" (and I would
+probably set it to "never").
