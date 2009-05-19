@@ -1,76 +1,66 @@
-From: "Chris Friesen" <cfriesen@nortel.com>
-Subject: Re: any way to apply tag across all branches in repository?
-Date: Tue, 19 May 2009 15:31:18 -0600
-Message-ID: <4A132526.6050109@nortel.com>
-References: <4A12DDB9.60608@nortel.com> <Y0WmOpNg_9ptwbJ3VHYrzAgFtDvPi5pn4Tz-0w5Phhlo9frjieUaeA@cipher.nrlssc.navy.mil> <4A12F0ED.4070707@nortel.com> <alpine.LFD.2.01.0905191132490.3301@localhost.localdomain> <4A13030D.8000000@nortel.com> <alpine.LFD.2.01.0905191307320.3301@localhost.localdomain> <4A131D16.1030001@nortel.com> <alpine.LFD.2.01.0905191403090.3301@localhost.localdomain>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Brandon Casey <casey@nrlssc.navy.mil>, git@vger.kernel.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Tue May 19 23:32:28 2009
+From: Robin Rosenberg <robin.rosenberg@dewire.com>
+Subject: [EGIT PATCH 0/6] Ref rename
+Date: Wed, 20 May 2009 01:13:12 +0200
+Message-ID: <1242774798-23639-1-git-send-email-robin.rosenberg@dewire.com>
+References: <20090507155117.GS30527@spearce.org>
+Cc: git@vger.kernel.org, Robin Rosenberg <robin.rosenberg@dewire.com>
+To: spearce@spearce.org
+X-From: git-owner@vger.kernel.org Wed May 20 01:13:39 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M6WvD-0006sP-Fp
-	for gcvg-git-2@gmane.org; Tue, 19 May 2009 23:32:27 +0200
+	id 1M6YV8-0003FB-Eq
+	for gcvg-git-2@gmane.org; Wed, 20 May 2009 01:13:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752761AbZESVbc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 May 2009 17:31:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751960AbZESVbc
-	(ORCPT <rfc822;git-outgoing>); Tue, 19 May 2009 17:31:32 -0400
-Received: from zcars04e.nortel.com ([47.129.242.56]:63070 "EHLO
-	zcars04e.nortel.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751910AbZESVbb (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 May 2009 17:31:31 -0400
-Received: from zcarhxs1.corp.nortel.com (casmtp.ca.nortel.com [47.129.230.89])
-	by zcars04e.nortel.com (Switch-2.2.0/Switch-2.2.0) with ESMTP id n4JLUIo14056;
-	Tue, 19 May 2009 21:30:18 GMT
-Received: from localhost.localdomain ([47.130.81.171] RDNS failed) by zcarhxs1.corp.nortel.com with Microsoft SMTPSVC(6.0.3790.3959);
-	 Tue, 19 May 2009 17:31:20 -0400
-User-Agent: Thunderbird 2.0.0.21 (X11/20090302)
-In-Reply-To: <alpine.LFD.2.01.0905191403090.3301@localhost.localdomain>
-X-OriginalArrivalTime: 19 May 2009 21:31:20.0728 (UTC) FILETIME=[26C59980:01C9D8C9]
+	id S1755656AbZESXN1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 May 2009 19:13:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754472AbZESXN1
+	(ORCPT <rfc822;git-outgoing>); Tue, 19 May 2009 19:13:27 -0400
+Received: from mail.dewire.com ([83.140.172.130]:25879 "EHLO dewire.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755359AbZESXN1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 May 2009 19:13:27 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by dewire.com (Postfix) with ESMTP id E2FA8145D12E;
+	Wed, 20 May 2009 01:13:22 +0200 (CEST)
+X-Virus-Scanned: by amavisd-new at dewire.com
+Received: from dewire.com ([127.0.0.1])
+	by localhost (torino.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 5OJ-VrdffaQj; Wed, 20 May 2009 01:13:21 +0200 (CEST)
+Received: from localhost.localdomain (unknown [10.9.0.11])
+	by dewire.com (Postfix) with ESMTP id BDEA3800277;
+	Wed, 20 May 2009 01:13:21 +0200 (CEST)
+X-Mailer: git-send-email 1.6.3.dirty
+In-Reply-To: <20090507155117.GS30527@spearce.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119570>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119571>
 
-Linus Torvalds wrote:
-> 
-> On Tue, 19 May 2009, Chris Friesen wrote:
->> The tagging would be done only by the "official" build process (which
->> pulls from an "official" repository), not by each designer.  Typically
->> the official builds would be done weekly, more frequently if requested.
-> 
-> Well, you can tag when you do that official build. Do you really do 
-> "official" builds from all branches? That sounds a bit insane.
+Ok, an update with most of your comments and a mix of other fixes
+founding since then during testing.
 
-We have one "official" branch for each target board...so maybe a dozen
-or so branches.
+Robin Rosenberg (6):
+  Make sure we get the right storage for loose/pack/loose and packed
+    refs
+  Add ref rename support to JGit
+  Add ref rename support to the branch dialog
+  Allow non-ASCII ref names when writing the packed-refs file
+  Use Constants.PACKED_REFS in RefWriter
+  Improve error reporting in the branch dialog
 
-Developers do private builds, but they're not tagged.
-
-> Remember: you don't have to tag whatever is the "top" - tagging can happen 
-> later. Tagging at build-time is perfectly fine.
-
-Tagging at build-time is actually the plan.
-
-> In fact, I'd suggest going even further. Don't tag the source branch when 
-> you build - tag it after it has passed whatever testing you do (I hope you 
-> _do_ have some extensive test-suite before release), and as you actually 
-> make it public (or whatever you do). Only at _that_ point, tag the tree 
-> with "release-$branch-$date" or something like that.
-
-There's a fairly extensive test suite.  This might be an option.
-
-> Remember: you don't have to tag the top-of branch. You can tag any commit, 
-> after-the-fact. So even if you've done other development since, just make 
-> sure to tag the commit you actually built and tested.
-
-Good point.  I think I've got enough information to get something
-working.  Thanks for all the help.
-
-Chris
+ .../src/org/spearce/egit/ui/UIText.java            |   15 ++
+ .../ui/internal/dialogs/BranchSelectionDialog.java |  119 ++++++++++++----
+ .../src/org/spearce/egit/ui/uitext.properties      |    6 +
+ .../tst/org/spearce/jgit/lib/RefTest.java          |   94 ++++++++++++
+ .../tst/org/spearce/jgit/lib/RefUpdateTest.java    |  152 ++++++++++++++++++++
+ .../src/org/spearce/jgit/lib/RefDatabase.java      |   56 +++++++-
+ .../src/org/spearce/jgit/lib/RefLogWriter.java     |   20 +++-
+ .../src/org/spearce/jgit/lib/RefRename.java        |  101 +++++++++++++
+ .../src/org/spearce/jgit/lib/RefUpdate.java        |   29 +++-
+ .../src/org/spearce/jgit/lib/RefWriter.java        |    2 +-
+ .../src/org/spearce/jgit/lib/Repository.java       |   16 ++
+ 11 files changed, 567 insertions(+), 43 deletions(-)
+ create mode 100644 org.spearce.jgit/src/org/spearce/jgit/lib/RefRename.java
