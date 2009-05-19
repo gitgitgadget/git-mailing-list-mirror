@@ -1,82 +1,59 @@
-From: "Chris Friesen" <cfriesen@nortel.com>
+From: Brandon Casey <casey@nrlssc.navy.mil>
 Subject: Re: any way to apply tag across all branches in repository?
-Date: Tue, 19 May 2009 13:49:25 -0600
-Message-ID: <4A130D45.1050207@nortel.com>
-References: <4A12DDB9.60608@nortel.com> <Y0WmOpNg_9ptwbJ3VHYrzAgFtDvPi5pn4Tz-0w5Phhlo9frjieUaeA@cipher.nrlssc.navy.mil> <4A12F0ED.4070707@nortel.com> <NFLo0xGp2o-oBdtr_pq1jvwATe1ZALaD9dHkr5hmKNkU30gr_isMpQ@cipher.nrlssc.navy.mil> <4A130309.2060407@nortel.com> <0WGSJO_TdUxCKWhDCupb3MaPOyPeVNH7Rs_7iKVnQcahmxUpwu8qzw@cipher.nrlssc.navy.mil>
+Date: Tue, 19 May 2009 14:58:01 -0500
+Message-ID: <ZSs3H_GRUGTI_yYwSwXULjkMD8YR-hSkoePTFq0NfYvkbDV9N7CgMw@cipher.nrlssc.navy.mil>
+References: <4A12DDB9.60608@nortel.com> <Y0WmOpNg_9ptwbJ3VHYrzAgFtDvPi5pn4Tz-0w5Phhlo9frjieUaeA@cipher.nrlssc.navy.mil> <4A12F0ED.4070707@nortel.com> <NFLo0xGp2o-oBdtr_pq1jvwATe1ZALaD9dHkr5hmKNkU30gr_isMpQ@cipher.nrlssc.navy.mil> <4A130309.2060407@nortel.com> <0WGSJO_TdUxCKWhDCupb3MaPOyPeVNH7Rs_7iKVnQcahmxUpwu8qzw@cipher.nrlssc.navy.mil> <4A130D45.1050207@nortel.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Brandon Casey <casey@nrlssc.navy.mil>
-X-From: git-owner@vger.kernel.org Tue May 19 21:49:38 2009
+To: Chris Friesen <cfriesen@nortel.com>
+X-From: git-owner@vger.kernel.org Tue May 19 21:58:27 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M6VJh-0000fn-JB
-	for gcvg-git-2@gmane.org; Tue, 19 May 2009 21:49:38 +0200
+	id 1M6VS8-0004cZ-3w
+	for gcvg-git-2@gmane.org; Tue, 19 May 2009 21:58:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753792AbZESTt3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 May 2009 15:49:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753601AbZESTt2
-	(ORCPT <rfc822;git-outgoing>); Tue, 19 May 2009 15:49:28 -0400
-Received: from zrtps0kp.nortel.com ([47.140.192.56]:33305 "EHLO
-	zrtps0kp.nortel.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752943AbZESTt2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 May 2009 15:49:28 -0400
-Received: from zcarhxs1.corp.nortel.com (casmtp.ca.nortel.com [47.129.230.89])
-	by zrtps0kp.nortel.com (Switch-2.2.6/Switch-2.2.0) with ESMTP id n4JJnRt22199;
-	Tue, 19 May 2009 19:49:27 GMT
-Received: from localhost.localdomain ([47.130.81.171] RDNS failed) by zcarhxs1.corp.nortel.com with Microsoft SMTPSVC(6.0.3790.3959);
-	 Tue, 19 May 2009 15:49:27 -0400
-User-Agent: Thunderbird 2.0.0.21 (X11/20090302)
-In-Reply-To: <0WGSJO_TdUxCKWhDCupb3MaPOyPeVNH7Rs_7iKVnQcahmxUpwu8qzw@cipher.nrlssc.navy.mil>
-X-OriginalArrivalTime: 19 May 2009 19:49:27.0158 (UTC) FILETIME=[EACCD960:01C9D8BA]
+	id S1754330AbZEST6H (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 May 2009 15:58:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752943AbZEST6G
+	(ORCPT <rfc822;git-outgoing>); Tue, 19 May 2009 15:58:06 -0400
+Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:60204 "EHLO
+	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754023AbZEST6F (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 May 2009 15:58:05 -0400
+Received: by mail.nrlssc.navy.mil id n4JJw20u032256; Tue, 19 May 2009 14:58:02 -0500
+In-Reply-To: <4A130D45.1050207@nortel.com>
+X-OriginalArrivalTime: 19 May 2009 19:58:02.0328 (UTC) FILETIME=[1DDD8D80:01C9D8BC]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119562>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119563>
 
-Brandon Casey wrote:
-> Chris Friesen wrote:
+Chris Friesen wrote:
+> Brandon Casey wrote:
 
->> [cfriesen@localhost linux]$ git tag -m 'a test tag' my_tag ncgl
+> <snip>
 > 
-> What's "ncgl"?  Another branch at the same tip as "arch"?
-
-Oops, missed a replace.  "ncgl" is my main branch.
-
-> Ok, you tagged main, and previously arch was at the same state,
-> so 'git describe' printed out 'my_tag' for both of them.  Now,
-> the arch branch is ahead of main by one commit, so you get an
-> expanded string from 'git describe' (the meaning of which I
-> described earlier, above).
+>> Starting to make sense?
 > 
->> Now we add another tag to the main branch:
->>
->> [cfriesen@localhost linux]$ git tag -m 'a test tag' my_tag2 main
->> [cfriesen@localhost linux]$ git describe main
->> my_tag
->> [cfriesen@localhost linux]$ git describe arch
->> my_tag-1-g4c8dfa7
->>
->> I assume that since there were no code changes on the main branch,
->> it doesn't think that there is any difference between the two tags.
+> Yep.  I still need whatever identifier I use to be associated with the
+> head of each branch.
 > 
-> Right.  There is no difference.  You created another tag pointing at
-> the same revision as the first tag.  Here's something else to try:
+> Based on the discussion (thanks for the explanations, by the way) I
+> don't see any option other than looping through each branch and using
+> tags with the branch name embedded in them to ensure uniqueness across
+> the repository.
 
-<snip>
+Based on this, and your other message, it sounds like you want to have a
+tag named 'v1.2.3' which is treated differently for each branch.  Since
+there is only a single tag namespace, this is not possible.  Tag names
+must be unique.
 
-> Starting to make sense?
+You can also use slashes in tag names.  Perhaps you could have the illusion
+of common version numbers by using tag names like $arch/$version?
 
-Yep.  I still need whatever identifier I use to be associated with the
-head of each branch.
-
-Based on the discussion (thanks for the explanations, by the way) I
-don't see any option other than looping through each branch and using
-tags with the branch name embedded in them to ensure uniqueness across
-the repository.
-
-Chris
+-brandon
