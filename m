@@ -1,85 +1,78 @@
-From: Bert Wesarg <bert.wesarg@googlemail.com>
-Subject: Re: [TopGit PATCH] tg-graph: print dependency graph like git log 
-	--graph
-Date: Tue, 19 May 2009 12:37:25 +0200
-Message-ID: <36ca99e90905190337y63aeb98ag59ff37688f75ba96@mail.gmail.com>
-References: <1242711875-25666-1-git-send-email-bert.wesarg@googlemail.com>
-	 <20090519102742.GA28702@noris.de>
+From: Pat Thoyts <patthoyts@users.sourceforge.net>
+Subject: Re: [PATCH] gitk: Handle msysGit version during version   comparisons
+Date: 19 May 2009 11:38:08 +0100
+Message-ID: <877i0ds7hr.fsf@users.sourceforge.net>
+References: <87hbzirso6.fsf@users.sourceforge.net>
+	<alpine.DEB.1.00.0905191043320.26154@pacific.mpi-cbg.de>
+	<4A127306.6040904@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Petr Baudis <pasky@suse.cz>, git@vger.kernel.org,
-	martin f krafft <madduck@debian.org>,
-	Uwe Kleine-Koenig <u.kleine-koenig@pengutronix.de>,
-	Adam Simpkins <adam@adamsimpkins.net>
-To: Michael Radziej <mir@noris.de>
-X-From: git-owner@vger.kernel.org Tue May 19 12:37:36 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Tue May 19 12:38:27 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M6MhT-0004HO-OI
-	for gcvg-git-2@gmane.org; Tue, 19 May 2009 12:37:36 +0200
+	id 1M6MiI-0004dV-Ho
+	for gcvg-git-2@gmane.org; Tue, 19 May 2009 12:38:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753545AbZESKh0 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 19 May 2009 06:37:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752020AbZESKh0
-	(ORCPT <rfc822;git-outgoing>); Tue, 19 May 2009 06:37:26 -0400
-Received: from mail-fx0-f158.google.com ([209.85.220.158]:41898 "EHLO
-	mail-fx0-f158.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751782AbZESKhZ convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 19 May 2009 06:37:25 -0400
-Received: by fxm2 with SMTP id 2so3775060fxm.37
-        for <git@vger.kernel.org>; Tue, 19 May 2009 03:37:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=1tGf/hDVgbFmJev/EoyX6ITc9CTw3nkm22beq8NqcIE=;
-        b=mrhYCg4OWt9jL3W3n/rjPKBWUuM7oqrQOxPPieUwnMhQ1Bq9VOGxdaFpuqQu1kQqo9
-         XC6RnD22QEZwZ2jxVLKsqGJQESTwgRi0DXBKEOCKFxGqyvsYGgaTgJdfId6dRCyMjks6
-         ZOg8BoiQ48RdauzxY7mqZPknI19E0ObVf6VjM=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=D/ICpyJfhOTvO1AH1vkgxrH9E9NZ8D5UtiaweicapIDd03aGIaiAgU+1Xa7RJ4lxl3
-         f0RSN9Pxxw6Ths1mGQZVtn7b2IUYMCc0Nd/fMVKtM9iQFgQVvvKMOLzAOA5gNudYiIA9
-         9SQyBXhH64skuV+WYnE4Ab3wUpGeJjcG9UeK4=
-Received: by 10.223.103.133 with SMTP id k5mr4984331fao.23.1242729445912; Tue, 
-	19 May 2009 03:37:25 -0700 (PDT)
-In-Reply-To: <20090519102742.GA28702@noris.de>
+	id S1753470AbZESKiQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 May 2009 06:38:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753250AbZESKiQ
+	(ORCPT <rfc822;git-outgoing>); Tue, 19 May 2009 06:38:16 -0400
+Received: from smtp-out3.blueyonder.co.uk ([195.188.213.6]:34240 "EHLO
+	smtp-out3.blueyonder.co.uk" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751382AbZESKiP (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 19 May 2009 06:38:15 -0400
+Received: from [172.23.170.146] (helo=anti-virus03-09)
+	by smtp-out3.blueyonder.co.uk with smtp (Exim 4.52)
+	id 1M6Mi5-0002AJ-Sg; Tue, 19 May 2009 11:38:14 +0100
+Received: from [92.238.221.8] (helo=badger.patthoyts.tk)
+	by asmtp-out5.blueyonder.co.uk with esmtp (Exim 4.52)
+	id 1M6Mi3-0007WI-Ib; Tue, 19 May 2009 11:38:11 +0100
+Received: by badger.patthoyts.tk (Postfix, from userid 1000)
+	id 99F575183F; Tue, 19 May 2009 11:38:10 +0100 (BST)
+X-Face: .`d#euqz@6H{";Ysmx2IVe_7M3vA+2w1X[QLk?ZO&QRauXQL{*L'$3getx}9+zK.-KWDx3.
+ qrlR)76MFb`6bgoGvLpLtcQKB=X~;*<JKLtwLBM(IA'?rVjs1*tq\VHn?WMNsB,3XXWF@5.)4SRFa+
+ '?a?.s#@hl7CiTo'F"O!fvbL0
+X-Url: http://www.patthoyts.tk/
+In-Reply-To: <4A127306.6040904@drmicha.warpmail.net>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119513>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119514>
 
-On Tue, May 19, 2009 at 12:27, Michael Radziej <mir@noris.de> wrote:
-> Hi,
->
-> I'm really looking forward for a tool like this and tried your patch
-> instantly, but I keep getting:
->
-> gvpr: "/usr/local/share/topgit/graph.gvpr", line 936: gg_nl_ret +=3D
-> graph_output_commit_line();<<<
-> =C2=A0-- cannot convert node_t to string
-> Error: <stdin>:16: syntax error near line 16
-> context: =C2=A0>>> \ <<< t"t/conflicts" -> "master";
->
-> I have no idea what graph.gvpr is trying. My repo is available at:
->
-> git://github.com/mradziej/topgit.git
->
-> Your patch is on t/tg-graph. I tried "tg graph" on this repo.
->
-> Any idea?
-No, it works here. Which version of graphviz do you have?
+Michael J Gruber <git@drmicha.warpmail.net> writes:
 
-Thanks,
-Bert
+>Johannes Schindelin venit, vidit, dixit 19.05.2009 10:43:
+>> Hi,
+>> 
+>> On Mon, 18 May 2009, Pat Thoyts wrote:
+>> 
+>>>
+>>>   msysGit generates version strings with text appended which cannot
+>>>   be used with vcompare. Limit git_version to the first three digits
+>>>   which are the real git version.
+>>>
+>>> Signed-off-by: Pat Thoyts <patthoyts@users.sourceforge.net>
+>> 
+>> Is that indent intentional?
+>> 
+>> Ciao,
+>> Dscho
 >
-> Cheers
+>It is clearly indentional :)
 >
-> Michael
+>[During my git beginnings, the standard output format of git log made me
+>believe I should format commit message bodies like that, too.]
+
+It was intentional and the above followup is why. Evidently I should
+not do so in the future.
+
+-- 
+Pat Thoyts                            http://www.patthoyts.tk/
+PGP fingerprint 2C 6E 98 07 2C 59 C8 97  10 CE 11 E6 04 E0 B9 DD
