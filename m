@@ -1,78 +1,81 @@
-From: Pat Thoyts <patthoyts@users.sourceforge.net>
-Subject: Re: [PATCH] gitk: Handle msysGit version during version   comparisons
-Date: 19 May 2009 11:38:08 +0100
-Message-ID: <877i0ds7hr.fsf@users.sourceforge.net>
-References: <87hbzirso6.fsf@users.sourceforge.net>
-	<alpine.DEB.1.00.0905191043320.26154@pacific.mpi-cbg.de>
-	<4A127306.6040904@drmicha.warpmail.net>
+From: Karl =?utf-8?q?Hasselstr=C3=B6m?= <kha@treskal.com>
+Subject: [PATCH] Transaction.push_patch(): Set self.head only when we have a
+	merge conflict
+Date: Tue, 19 May 2009 12:07:26 +0200
+Message-ID: <20090519100635.2943.31546.stgit@october.hq.vtech>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: David =?utf-8?q?K=C3=A5gedal?= <davidk@lysator.liu.se>,
 	git@vger.kernel.org
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Tue May 19 12:38:27 2009
+To: Catalin Marinas <catalin.marinas@gmail.com>
+X-From: git-owner@vger.kernel.org Tue May 19 12:40:28 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M6MiI-0004dV-Ho
-	for gcvg-git-2@gmane.org; Tue, 19 May 2009 12:38:26 +0200
+	id 1M6MkF-0005Y0-9l
+	for gcvg-git-2@gmane.org; Tue, 19 May 2009 12:40:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753470AbZESKiQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 May 2009 06:38:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753250AbZESKiQ
-	(ORCPT <rfc822;git-outgoing>); Tue, 19 May 2009 06:38:16 -0400
-Received: from smtp-out3.blueyonder.co.uk ([195.188.213.6]:34240 "EHLO
-	smtp-out3.blueyonder.co.uk" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751382AbZESKiP (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 19 May 2009 06:38:15 -0400
-Received: from [172.23.170.146] (helo=anti-virus03-09)
-	by smtp-out3.blueyonder.co.uk with smtp (Exim 4.52)
-	id 1M6Mi5-0002AJ-Sg; Tue, 19 May 2009 11:38:14 +0100
-Received: from [92.238.221.8] (helo=badger.patthoyts.tk)
-	by asmtp-out5.blueyonder.co.uk with esmtp (Exim 4.52)
-	id 1M6Mi3-0007WI-Ib; Tue, 19 May 2009 11:38:11 +0100
-Received: by badger.patthoyts.tk (Postfix, from userid 1000)
-	id 99F575183F; Tue, 19 May 2009 11:38:10 +0100 (BST)
-X-Face: .`d#euqz@6H{";Ysmx2IVe_7M3vA+2w1X[QLk?ZO&QRauXQL{*L'$3getx}9+zK.-KWDx3.
- qrlR)76MFb`6bgoGvLpLtcQKB=X~;*<JKLtwLBM(IA'?rVjs1*tq\VHn?WMNsB,3XXWF@5.)4SRFa+
- '?a?.s#@hl7CiTo'F"O!fvbL0
-X-Url: http://www.patthoyts.tk/
-In-Reply-To: <4A127306.6040904@drmicha.warpmail.net>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.3
+	id S1753670AbZESKj7 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 19 May 2009 06:39:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753549AbZESKj7
+	(ORCPT <rfc822;git-outgoing>); Tue, 19 May 2009 06:39:59 -0400
+Received: from oden.vtab.com ([62.20.90.195]:37901 "EHLO oden.vtab.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753470AbZESKj6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 May 2009 06:39:58 -0400
+X-Greylist: delayed 1953 seconds by postgrey-1.27 at vger.kernel.org; Tue, 19 May 2009 06:39:58 EDT
+Received: from oden.vtab.com (oden.vtab.com [127.0.0.1])
+	by oden.vtab.com (Postfix) with ESMTP id D41D826EF39;
+	Tue, 19 May 2009 12:07:26 +0200 (CEST)
+Received: from october.hq.vtech (october.hq.vtech [10.0.0.43])
+	by oden.vtab.com (Postfix) with ESMTP id BC3E626EF0E;
+	Tue, 19 May 2009 12:07:26 +0200 (CEST)
+User-Agent: StGit/0.14.3.379.gfc7c.dirty
+X-Virus-Scanned: ClamAV using ClamSMTP
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119514>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119515>
 
-Michael J Gruber <git@drmicha.warpmail.net> writes:
+Setting self.head when we don't have a merge conflict is a harmless
+no-op---as long as we set it to the commit that was going to be the
+stack top anyway---so this patch should not change the behavior. But
+it's not really nice to do it unconditionally, especially considering
+that we want people to be able to understand what the code does ...
 
->Johannes Schindelin venit, vidit, dixit 19.05.2009 10:43:
->> Hi,
->> 
->> On Mon, 18 May 2009, Pat Thoyts wrote:
->> 
->>>
->>>   msysGit generates version strings with text appended which cannot
->>>   be used with vcompare. Limit git_version to the first three digits
->>>   which are the real git version.
->>>
->>> Signed-off-by: Pat Thoyts <patthoyts@users.sourceforge.net>
->> 
->> Is that indent intentional?
->> 
->> Ciao,
->> Dscho
->
->It is clearly indentional :)
->
->[During my git beginnings, the standard output format of git log made me
->believe I should format commit message bodies like that, too.]
+Also add a comment that explains why we set it, since the logic is
+rather more hairy than I'd like.
 
-It was intentional and the above followup is why. Evidently I should
-not do so in the future.
+Signed-off-by: Karl Hasselstr=C3=B6m <kha@treskal.com>
 
--- 
-Pat Thoyts                            http://www.patthoyts.tk/
-PGP fingerprint 2C 6E 98 07 2C 59 C8 97  10 CE 11 E6 04 E0 B9 DD
+---
+
+This patch came out of a discussion I just had with David regarding
+his --set-tree patch.
+
+ stgit/lib/transaction.py |    8 +++++++-
+ 1 files changed, 7 insertions(+), 1 deletions(-)
+
+
+diff --git a/stgit/lib/transaction.py b/stgit/lib/transaction.py
+index 4148ff3..5c662bb 100644
+--- a/stgit/lib/transaction.py
++++ b/stgit/lib/transaction.py
+@@ -342,7 +342,13 @@ class StackTransaction(object):
+         if any(getattr(cd, a) !=3D getattr(orig_cd, a) for a in
+                ['parent', 'tree', 'author', 'message']):
+             comm =3D self.__stack.repository.commit(cd)
+-            self.head =3D comm
++            if merge_conflict:
++                # When we produce a conflict, we'll run the update()
++                # function defined below _after_ having done the
++                # checkout in run(). To make sure that we check out
++                # the real stack top (as it will look after update()
++                # has been run), set it hard here.
++                self.head =3D comm
+         else:
+             comm =3D None
+             s =3D ' (unmodified)'
