@@ -1,88 +1,92 @@
-From: Brandon Casey <casey@nrlssc.navy.mil>
-Subject: Re: any way to apply tag across all branches in repository?
-Date: Tue, 19 May 2009 13:36:46 -0500
-Message-ID: <NFLo0xGp2o-oBdtr_pq1jvwATe1ZALaD9dHkr5hmKNkU30gr_isMpQ@cipher.nrlssc.navy.mil>
-References: <4A12DDB9.60608@nortel.com> <Y0WmOpNg_9ptwbJ3VHYrzAgFtDvPi5pn4Tz-0w5Phhlo9frjieUaeA@cipher.nrlssc.navy.mil> <4A12F0ED.4070707@nortel.com>
+From: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
+	<u.kleine-koenig@pengutronix.de>
+Subject: Re: [TopGit PATCH] tg-graph: print dependency graph like git log
+	--graph
+Date: Tue, 19 May 2009 20:44:02 +0200
+Message-ID: <20090519184402.GA27352@pengutronix.de>
+References: <1242711875-25666-1-git-send-email-bert.wesarg@googlemail.com> <20090519132854.GA9606@piper.oerlikon.madduck.net> <36ca99e90905190633l46fff979jecb61d4d0d907815@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Chris Friesen <cfriesen@nortel.com>
-X-From: git-owner@vger.kernel.org Tue May 19 20:37:02 2009
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: martin f krafft <madduck@debian.org>, Petr Baudis <pasky@suse.cz>,
+	git@vger.kernel.org, Adam Simpkins <adam@adamsimpkins.net>
+To: Bert Wesarg <bert.wesarg@googlemail.com>
+X-From: git-owner@vger.kernel.org Tue May 19 20:44:18 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M6UBS-0006pv-2y
-	for gcvg-git-2@gmane.org; Tue, 19 May 2009 20:37:02 +0200
+	id 1M6UIS-0001Td-7v
+	for gcvg-git-2@gmane.org; Tue, 19 May 2009 20:44:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753518AbZESSgx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 May 2009 14:36:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753350AbZESSgx
-	(ORCPT <rfc822;git-outgoing>); Tue, 19 May 2009 14:36:53 -0400
-Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:40064 "EHLO
-	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752952AbZESSgx (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 May 2009 14:36:53 -0400
-Received: by mail.nrlssc.navy.mil id n4JIalVW015814; Tue, 19 May 2009 13:36:47 -0500
-In-Reply-To: <4A12F0ED.4070707@nortel.com>
-X-OriginalArrivalTime: 19 May 2009 18:36:46.0703 (UTC) FILETIME=[C3C437F0:01C9D8B0]
+	id S1752289AbZESSoI convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 19 May 2009 14:44:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751600AbZESSoH
+	(ORCPT <rfc822;git-outgoing>); Tue, 19 May 2009 14:44:07 -0400
+Received: from metis.ext.pengutronix.de ([92.198.50.35]:54926 "EHLO
+	metis.ext.pengutronix.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750721AbZESSoG (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 May 2009 14:44:06 -0400
+Received: from octopus.hi.pengutronix.de ([2001:6f8:1178:2:215:17ff:fe12:23b0])
+	by metis.ext.pengutronix.de with esmtp (Exim 4.63)
+	(envelope-from <ukl@pengutronix.de>)
+	id 1M6UIG-0006gn-2A; Tue, 19 May 2009 20:44:04 +0200
+Received: from ukl by octopus.hi.pengutronix.de with local (Exim 4.69)
+	(envelope-from <ukl@pengutronix.de>)
+	id 1M6UIE-00077T-3C; Tue, 19 May 2009 20:44:02 +0200
+Content-Disposition: inline
+In-Reply-To: <36ca99e90905190633l46fff979jecb61d4d0d907815@mail.gmail.com>
+User-Agent: Mutt/1.5.18 (2008-05-17)
+X-SA-Exim-Connect-IP: 2001:6f8:1178:2:215:17ff:fe12:23b0
+X-SA-Exim-Mail-From: ukl@pengutronix.de
+X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
+X-PTX-Original-Recipient: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119557>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119558>
 
-Chris Friesen wrote:
-> Brandon Casey wrote:
-> 
->> If I understand you correctly, you are doing your primary development on
->> the "main" branch and then merging this into the architecture specific
->> branches which contain additional architecture specific changes.
-> 
-> Correct.
-> 
->> All you need to do is tag the "main" branch.  Actually, you are tagging
->> the commit that the branch currently points at.  When this branch is
->> merged into the other branches, they will also contain this commit, and
->> 'git describe' will use the tag you created when generating the version
->> string.
-> 
-> I think this would work if the most recent commit is on the main branch.
-> 
-> However, if I make a change on the arch-specific branch, then tag the
-> main branch and merge it into the arch-specific branch, git tells me
-> the arch-specific branch is already up-to-date and the tag doesn't
-> get propagated.
+Hi Bert,
 
-Tags aren't versioned.  They exist outside of the branch namespace.
-So merging doesn't have any direct effect on tags.  It is the _commits_
-that are merged in (which the tags point to).  If you have already
-merged the main branch into the arch-specific branch, then there is
-nothing else for git to do.  Your repository looks something like this
-graph:
+On Tue, May 19, 2009 at 03:33:16PM +0200, Bert Wesarg wrote:
+> On Tue, May 19, 2009 at 15:28, martin f krafft <madduck@debian.org> w=
+rote:
+> > also sprach Bert Wesarg <bert.wesarg@googlemail.com> [2009.05.19.07=
+44 +0200]:
+> >> @@ -62,12 +70,33 @@ git for-each-ref refs/top-bases |
+> >> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 continue
+> >> =A0 =A0 =A0 =A0 =A0 =A0 =A0 fi
+> >> =A0 =A0 =A0 =A0 =A0 =A0 =A0 if [ -n "$graphviz" ]; then
+> >> +
+> >> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 if [ -n "$graphviz_verbo=
+se" ]; then
+> >> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 type=3D"=
+header"
+> >> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 lines=3D=
+0
+> >> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 echo "\t=
+\"$name\" ["
+> >
+> > You need to pass -e to echo for it to honour escape sequences. That
+> > should solve Michael's problem. Alternatively, just use ^I directly=
+=2E
+> Correct, thanks. Looks like a feature from bash or dash to honor
+> escape sequences without -e'
+quoting
+http://www.gnu.org/software/hello/manual/autoconf/Limitations-of-Builti=
+ns.html#Limitations-of-Builtins:
 
-    --o--o---o---o---o---o--o   "arch"
-     /                  /
-   -o--o---o---o---o---o        "main"
-                       |
-                      my_tag
+	It is not possible to use `echo' portably unless both options
+	and escape sequences are omitted.
 
-When you merge "main" into "arch", the "main" DAG* becomes a part of the
-"arch" DAG.  The tag points to a specific commit, which represents a state
-of the DAG, which is also now part of the "arch" DAG.
+=2E.. use printf instead.
 
-The output of 'git describe $arch_branch' will likely change after you
-create the tag though.
+Best regards
+Uwe
 
-Try these commands:
-
-  git describe $main
-  git describe $arch_branch
-  git tag -m 'a test tag' my_tag $main
-  git describe $main
-  git describe $arch_branch
-
--brandon
-
-* DAG - directed acyclic graph
+--=20
+Pengutronix e.K.                              | Uwe Kleine-K=F6nig     =
+       |
+Industrial Linux Solutions                    | http://www.pengutronix.=
+de/  |
