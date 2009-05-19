@@ -1,81 +1,61 @@
-From: Jeff Brown <jeff@jeffandbetsy.net>
-Subject: Re: committing to a checked out branch
-Date: Tue, 19 May 2009 12:01:00 -0500
-Message-ID: <bbd12f0f0905191001iad76a64id648780547b43b34@mail.gmail.com>
-References: <bbd12f0f0905181733h6a9537d2hf4e6b7a1384fa32d@mail.gmail.com>
-	 <76718490905181917u1f41e06dq9cf527a1dac9bea5@mail.gmail.com>
-	 <bbd12f0f0905190809k3dc13c3ak170535a5c0eed9b9@mail.gmail.com>
-	 <76718490905190821p1776905bn53610c0e8acd0113@mail.gmail.com>
+From: Brandon Casey <casey@nrlssc.navy.mil>
+Subject: Re: any way to apply tag across all branches in repository?
+Date: Tue, 19 May 2009 12:05:29 -0500
+Message-ID: <Y0WmOpNg_9ptwbJ3VHYrzAgFtDvPi5pn4Tz-0w5Phhlo9frjieUaeA@cipher.nrlssc.navy.mil>
+References: <4A12DDB9.60608@nortel.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue May 19 19:01:12 2009
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Chris Friesen <cfriesen@nortel.com>
+X-From: git-owner@vger.kernel.org Tue May 19 19:05:55 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M6Sgh-000426-As
-	for gcvg-git-2@gmane.org; Tue, 19 May 2009 19:01:11 +0200
+	id 1M6Sl7-00066x-4q
+	for gcvg-git-2@gmane.org; Tue, 19 May 2009 19:05:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753496AbZESRBA convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 19 May 2009 13:01:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753372AbZESRBA
-	(ORCPT <rfc822;git-outgoing>); Tue, 19 May 2009 13:01:00 -0400
-Received: from mail-bw0-f174.google.com ([209.85.218.174]:60707 "EHLO
-	mail-bw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753348AbZESRBA convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 19 May 2009 13:01:00 -0400
-Received: by bwz22 with SMTP id 22so3955102bwz.37
-        for <git@vger.kernel.org>; Tue, 19 May 2009 10:01:00 -0700 (PDT)
-Received: by 10.204.59.18 with SMTP id j18mr213130bkh.206.1242752460684; Tue, 
-	19 May 2009 10:01:00 -0700 (PDT)
-In-Reply-To: <76718490905190821p1776905bn53610c0e8acd0113@mail.gmail.com>
+	id S1752827AbZESRFf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 May 2009 13:05:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752451AbZESRFf
+	(ORCPT <rfc822;git-outgoing>); Tue, 19 May 2009 13:05:35 -0400
+Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:55267 "EHLO
+	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752136AbZESRFe (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 May 2009 13:05:34 -0400
+Received: by mail.nrlssc.navy.mil id n4JH5VdV027319; Tue, 19 May 2009 12:05:31 -0500
+In-Reply-To: <4A12DDB9.60608@nortel.com>
+X-OriginalArrivalTime: 19 May 2009 17:05:30.0028 (UTC) FILETIME=[0369EEC0:01C9D8A4]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119551>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119552>
 
-On Tue, May 19, 2009 at 10:21 AM, Jay Soffian <jaysoffian@gmail.com> wr=
-ote:
-> On Tue, May 19, 2009 at 11:09 AM, Jeff Brown <jeff@jeffandbetsy.net> =
-wrote:
->> When I create a new repo on my server I have been creating an empty
->> directory, then git init, then git add some file and commit. =A0I ex=
-pect
->> that is the long/wrong way to initialize a repo, especially if I wan=
-t
->> it to be bare. =A0What is the best approach to creating a cloneable =
-bare
->> repo?
->
-> server$ mkdir /path/to/newrepo.git
-> server$ cd /path/to/newrepo.git && git init --bare
-> laptop$ git clone ssh://server/path/to/newrepo.git
-> laptop$ cd newrepo
-> laptop$ # add; commit; add; commit; ...
-> laptop$ git push origin master
->
-> (This may only work with recent versions of git as I believe earlier
-> versions used to complain about cloning an empty repository.)
->
+Chris Friesen wrote:
+> Hi all,
+> 
+> I'm hoping you can help me out...please CC me on replies, I'm not
+> subscribed to the list.
+> 
+> We have a piece of software with a "main" branch and multiple
+> architecture-specific "target" branches.  At each "official" compile,
+> we'd like to tag the commits that went into that compile with an identifier.
+> 
+> Using tags normally requires that the tag be assigned to each branch
+> individually--is there any way to apply some sort of designator to the
+> head of each branch in the repository all at once rather than doing it
+> separately for each branch?
 
-git init --bare
+If I understand you correctly, you are doing your primary development on
+the "main" branch and then merging this into the architecture specific
+branches which contain additional architecture specific changes.
 
-That is the bit I needed.
+All you need to do is tag the "main" branch.  Actually, you are tagging
+the commit that the branch currently points at.  When this branch is
+merged into the other branches, they will also contain this commit, and
+'git describe' will use the tag you created when generating the version
+string.
 
-Thanks again!
-
-
-
-jb
-
---=20
-Jeff Brown
-SpringSource
-http://www.springsource.com/
-
-Autism Strikes 1 in 166
-=46ind The Cause ~ Find The Cure
-http://www.autismspeaks.org/
+-brandon
