@@ -1,94 +1,103 @@
-From: martin f krafft <madduck@debian.org>
-Subject: Re: [TopGit PATCH] tg-graph: print dependency graph like git log
+From: Bert Wesarg <bert.wesarg@googlemail.com>
+Subject: Re: [TopGit PATCH] tg-graph: print dependency graph like git log 
 	--graph
-Date: Tue, 19 May 2009 15:28:54 +0200
-Organization: The Debian project
-Message-ID: <20090519132854.GA9606@piper.oerlikon.madduck.net>
+Date: Tue, 19 May 2009 15:32:00 +0200
+Message-ID: <36ca99e90905190632q656a5855qe7624902ef82a3da@mail.gmail.com>
 References: <1242711875-25666-1-git-send-email-bert.wesarg@googlemail.com>
+	 <20090519102742.GA28702@noris.de>
+	 <36ca99e90905190337y63aeb98ag59ff37688f75ba96@mail.gmail.com>
+	 <20090519110800.GB28702@noris.de>
+	 <36ca99e90905190448k64ee18afw8abc49bd90ecb58f@mail.gmail.com>
+	 <20090519131044.GD28702@noris.de>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-ripemd160;
-	protocol="application/pgp-signature"; boundary="OgqxwSJOaUobr8KG"
-To: Bert Wesarg <bert.wesarg@googlemail.com>,
-	Petr Baudis <pasky@suse.cz>, git@vger.kernel.org,
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Petr Baudis <pasky@suse.cz>, git@vger.kernel.org,
+	martin f krafft <madduck@debian.org>,
 	Uwe Kleine-Koenig <u.kleine-koenig@pengutronix.de>,
 	Adam Simpkins <adam@adamsimpkins.net>
-X-From: git-owner@vger.kernel.org Tue May 19 15:29:28 2009
+To: Michael Radziej <mir@noris.de>
+X-From: git-owner@vger.kernel.org Tue May 19 15:32:17 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M6PNm-0004PX-HR
-	for gcvg-git-2@gmane.org; Tue, 19 May 2009 15:29:26 +0200
+	id 1M6PQV-0005nO-7z
+	for gcvg-git-2@gmane.org; Tue, 19 May 2009 15:32:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753443AbZESN3S (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 May 2009 09:29:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753366AbZESN3R
-	(ORCPT <rfc822;git-outgoing>); Tue, 19 May 2009 09:29:17 -0400
-Received: from clegg.madduck.net ([193.242.105.96]:41915 "EHLO
-	clegg.madduck.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753372AbZESN3R (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 May 2009 09:29:17 -0400
-Received: from piper.oerlikon.madduck.net (piper.oerlikon.madduck.net [IPv6:2001:41e0:ff12:0:211:2fff:fe6b:c869])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "piper.oerlikon.madduck.net", Issuer "CAcert Class 3 Root" (verified OK))
-	by clegg.madduck.net (postfix) with ESMTPS id AD9631D409E;
-	Tue, 19 May 2009 15:28:55 +0200 (CEST)
-Received: by piper.oerlikon.madduck.net (Postfix, from userid 1000)
-	id DB1F644C6; Tue, 19 May 2009 15:28:54 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <1242711875-25666-1-git-send-email-bert.wesarg@googlemail.com>
-X-Motto: Keep the good times rollin'
-X-OS: Debian GNU/Linux squeeze/sid kernel 2.6.30-rc5-amd64 x86_64
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-Virus-Scanned: ClamAV 0.94.2/9370/Tue May 19 15:10:15 2009 on clegg.madduck.net
-X-Virus-Status: Clean
+	id S1753366AbZESNcF convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 19 May 2009 09:32:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753440AbZESNcD
+	(ORCPT <rfc822;git-outgoing>); Tue, 19 May 2009 09:32:03 -0400
+Received: from mail-bw0-f174.google.com ([209.85.218.174]:33874 "EHLO
+	mail-bw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752952AbZESNcB convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 19 May 2009 09:32:01 -0400
+Received: by bwz22 with SMTP id 22so3827033bwz.37
+        for <git@vger.kernel.org>; Tue, 19 May 2009 06:32:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=OEt6DH+0PXqhTcivtOxAml552x14QLG5Kdgxxv/DZRk=;
+        b=BU4tyocz10tEdYsBAji3IMTk/tnrFAitANs3Edv6GU8ScaQxJH8Opb5+gvLRjORPW3
+         y+zXML/OeAYe5RttHGZiaK4cYrDTwVLlv+cIbCgI52xLhChWFcZW70OegpUm0mGKUGS4
+         7tYf2+yux3Pvo5ra05kjtbFa9HZvknA6EPi2U=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlemail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=uhWA0EUYqs+MaUrd1u1+XDM7GSonpQQQeQS8cMn5WvypSNAG+/1toWje/znZcS6BPe
+         iwIAYwp9E+BQFC/WGAzM5imHf8nJ25gw4xHMiR1+Pm7RSWMtYoHz3jTTlhvBO+eVy1vh
+         jvHsT8oJkbzFtmgwIzNBI6OJpzZePjuY7W9SU=
+Received: by 10.204.57.81 with SMTP id b17mr37979bkh.186.1242739921537; Tue, 
+	19 May 2009 06:32:01 -0700 (PDT)
+In-Reply-To: <20090519131044.GD28702@noris.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119525>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119526>
 
+On Tue, May 19, 2009 at 15:10, Michael Radziej <mir@noris.de> wrote:
+> On Tue, May 19, Bert Wesarg wrote:
+>> And you see the error with all 3?
+>
+> Yes
+>
+>>
+>> Can you send the output from 'tg summary --graphviz' too?
+>
+> # GraphViz output; pipe to:
+> # =C2=A0 | dot -Tpng -o <ouput>
+> # or
+> # =C2=A0 | dot -Txlib
+>
+> digraph G {
+>
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0graph [
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0rankdir =3D "T=
+B"
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0label=3D"TopGi=
+t Layout\n\n\n"
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0fontsize =3D 1=
+4
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0labelloc=3Dtop
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0pad =3D "0.5,0=
+=2E5"
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0];
+>
+> \t"t/conflicts" -> "master";
+> \t"t/python" -> "master";
+> \t"t/tg-graph" -> "master";
+> }
+can you remove the '\t' and pipe the resulting file into this command
+inside your topgit work dir:
 
---OgqxwSJOaUobr8KG
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+cat "$file" | gvpr -f share/graph.gvpr
 
-also sprach Bert Wesarg <bert.wesarg@googlemail.com> [2009.05.19.0744 +0200=
-]:
-> @@ -62,12 +70,33 @@ git for-each-ref refs/top-bases |
->  			continue
->  		fi
->  		if [ -n "$graphviz" ]; then
-> +
-> +			if [ -n "$graphviz_verbose" ]; then
-> +				type=3D"header"
-> +				lines=3D0
-> +				echo "\t\"$name\" ["
+Bert
 
-You need to pass -e to echo for it to honour escape sequences. That
-should solve Michael's problem. Alternatively, just use ^I directly.
-
---=20
- .''`.   martin f. krafft <madduck@d.o>      Related projects:
-: :'  :  proud Debian developer               http://debiansystem.info
-`. `'`   http://people.debian.org/~madduck    http://vcs-pkg.org
-  `-  Debian - when you have better things to do than fixing systems
-=20
-"in just seven days, i can make you a man!"
-                                      -- the rocky horror picture show
-
---OgqxwSJOaUobr8KG
-Content-Type: application/pgp-signature; name="digital_signature_gpg.asc"
-Content-Description: Digital signature (see http://martin-krafft.net/gpg/)
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
-
-iEYEAREDAAYFAkoStBMACgkQIgvIgzMMSnXxoQCgm8mK1xbWdo9UnhqLe6JNLa4W
-xwIAoMSYC24rPLZ2zv3S+Ve+LbUQMELN
-=DzOC
------END PGP SIGNATURE-----
-
---OgqxwSJOaUobr8KG--
+>
+> Michael
