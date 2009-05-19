@@ -1,81 +1,76 @@
-From: Karl =?utf-8?q?Hasselstr=C3=B6m?= <kha@treskal.com>
-Subject: [PATCH] Transaction.push_patch(): Set self.head only when we have a
-	merge conflict
-Date: Tue, 19 May 2009 12:07:26 +0200
-Message-ID: <20090519100635.2943.31546.stgit@october.hq.vtech>
+From: Michael Radziej <mir@noris.de>
+Subject: Re: [TopGit PATCH] tg-graph: print dependency graph like git log
+	--graph
+Date: Tue, 19 May 2009 13:08:00 +0200
+Message-ID: <20090519110800.GB28702@noris.de>
+References: <1242711875-25666-1-git-send-email-bert.wesarg@googlemail.com> <20090519102742.GA28702@noris.de> <36ca99e90905190337y63aeb98ag59ff37688f75ba96@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=iso-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: David =?utf-8?q?K=C3=A5gedal?= <davidk@lysator.liu.se>,
-	git@vger.kernel.org
-To: Catalin Marinas <catalin.marinas@gmail.com>
-X-From: git-owner@vger.kernel.org Tue May 19 12:40:28 2009
+Cc: Petr Baudis <pasky@suse.cz>, git@vger.kernel.org,
+	martin f krafft <madduck@debian.org>,
+	Uwe Kleine-Koenig <u.kleine-koenig@pengutronix.de>,
+	Adam Simpkins <adam@adamsimpkins.net>
+To: Bert Wesarg <bert.wesarg@googlemail.com>
+X-From: git-owner@vger.kernel.org Tue May 19 13:08:13 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M6MkF-0005Y0-9l
-	for gcvg-git-2@gmane.org; Tue, 19 May 2009 12:40:27 +0200
+	id 1M6NB7-0008TK-Cz
+	for gcvg-git-2@gmane.org; Tue, 19 May 2009 13:08:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753670AbZESKj7 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 19 May 2009 06:39:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753549AbZESKj7
-	(ORCPT <rfc822;git-outgoing>); Tue, 19 May 2009 06:39:59 -0400
-Received: from oden.vtab.com ([62.20.90.195]:37901 "EHLO oden.vtab.com"
+	id S1752020AbZESLIF convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 19 May 2009 07:08:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751848AbZESLID
+	(ORCPT <rfc822;git-outgoing>); Tue, 19 May 2009 07:08:03 -0400
+Received: from mail02.noris.net ([62.128.1.232]:46162 "EHLO mail02.noris.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753470AbZESKj6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 May 2009 06:39:58 -0400
-X-Greylist: delayed 1953 seconds by postgrey-1.27 at vger.kernel.org; Tue, 19 May 2009 06:39:58 EDT
-Received: from oden.vtab.com (oden.vtab.com [127.0.0.1])
-	by oden.vtab.com (Postfix) with ESMTP id D41D826EF39;
-	Tue, 19 May 2009 12:07:26 +0200 (CEST)
-Received: from october.hq.vtech (october.hq.vtech [10.0.0.43])
-	by oden.vtab.com (Postfix) with ESMTP id BC3E626EF0E;
-	Tue, 19 May 2009 12:07:26 +0200 (CEST)
-User-Agent: StGit/0.14.3.379.gfc7c.dirty
-X-Virus-Scanned: ClamAV using ClamSMTP
+	id S1751782AbZESLIC convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 19 May 2009 07:08:02 -0400
+Received: from mail-intern.backup.noris.net ([10.1.0.25] helo=mail.office.noris.de)
+	by mail02.noris.net with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.63)
+	(envelope-from <mir@noris.de>)
+	id 1M6NAu-0004km-Lo; Tue, 19 May 2009 13:08:00 +0200
+Received: from mir.office.noris.de ([10.2.6.66] ident=postfix)
+	by mail.office.noris.de with esmtp (Exim 4.63)
+	(envelope-from <mir@noris.de>)
+	id 1M6NAu-0005HU-GE; Tue, 19 May 2009 13:08:00 +0200
+Received: by mir.office.noris.de (Postfix, from userid 294)
+	id 670821179041; Tue, 19 May 2009 13:08:00 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <36ca99e90905190337y63aeb98ag59ff37688f75ba96@mail.gmail.com>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+X-Noris-IP: 10.1.0.25
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119515>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119516>
 
-Setting self.head when we don't have a merge conflict is a harmless
-no-op---as long as we set it to the commit that was going to be the
-stack top anyway---so this patch should not change the behavior. But
-it's not really nice to do it unconditionally, especially considering
-that we want people to be able to understand what the code does ...
+On Tue, May 19, Bert Wesarg wrote:
 
-Also add a comment that explains why we set it, since the logic is
-rather more hairy than I'd like.
+> No, it works here. Which version of graphviz do you have?
 
-Signed-off-by: Karl Hasselstr=C3=B6m <kha@treskal.com>
+I tried two versions on debian:
 
----
+2.8-3+etch1 (debian etch)
+2.20.2-3~bpo40+1 (debian etch-backports)
 
-This patch came out of a discussion I just had with David regarding
-his --set-tree patch.
+I also tried it on a different host running Ubuntu with
+2.16-3ubuntu2
 
- stgit/lib/transaction.py |    8 +++++++-
- 1 files changed, 7 insertions(+), 1 deletions(-)
+Which one did you use?
 
+Michael
 
-diff --git a/stgit/lib/transaction.py b/stgit/lib/transaction.py
-index 4148ff3..5c662bb 100644
---- a/stgit/lib/transaction.py
-+++ b/stgit/lib/transaction.py
-@@ -342,7 +342,13 @@ class StackTransaction(object):
-         if any(getattr(cd, a) !=3D getattr(orig_cd, a) for a in
-                ['parent', 'tree', 'author', 'message']):
-             comm =3D self.__stack.repository.commit(cd)
--            self.head =3D comm
-+            if merge_conflict:
-+                # When we produce a conflict, we'll run the update()
-+                # function defined below _after_ having done the
-+                # checkout in run(). To make sure that we check out
-+                # the real stack top (as it will look after update()
-+                # has been run), set it hard here.
-+                self.head =3D comm
-         else:
-             comm =3D None
-             s =3D ' (unmodified)'
+--=20
+noris network AG - Deutschherrnstra=DFe 15-19 - D-90429 N=FCrnberg -
+Tel +49-911-9352-0 - Fax +49-911-9352-100
+http://www.noris.de - The IT-Outsourcing Company
+=20
+Vorstand: Ingo Kraupa (Vorsitzender), Joachim Astel, Hansjochen Klenk -=
+=20
+Vorsitzender des Aufsichtsrats: Stefan Schnabel - AG N=FCrnberg HRB 176=
+89
