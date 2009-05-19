@@ -1,98 +1,131 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH 2/3] commit: add function to unparse a commit and its parents
-Date: Tue, 19 May 2009 09:48:07 +0200
-Message-ID: <200905190948.09378.jnareb@gmail.com>
-References: <20090517153307.6403.73576.> <m3r5ylk347.fsf@localhost.localdomain> <7vfxf18szq.fsf@alter.siamese.dyndns.org>
+From: =?utf-8?Q?David_K=C3=A5gedal?= <davidk@lysator.liu.se>
+Subject: Re: [StGit PATCH] Add a --tree flag to stg push
+Date: Tue, 19 May 2009 09:50:26 +0200
+Message-ID: <87d4a5fs59.fsf@krank.kagedal.org>
+References: <20090518144754.30487.84132.stgit@krank>
+	<20090519072512.GA8451@diana.vm.bytemark.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: Christian Couder <chriscool@tuxfamily.org>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue May 19 09:48:31 2009
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, catalin marinas <catalin.marinas@gmail.com>
+To: Karl =?utf-8?Q?Hasselstr=C3=B6m?= <kha@treskal.com>
+X-From: git-owner@vger.kernel.org Tue May 19 09:50:41 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M6K3j-0003JU-Qv
-	for gcvg-git-2@gmane.org; Tue, 19 May 2009 09:48:24 +0200
+	id 1M6K5w-0004cb-BG
+	for gcvg-git-2@gmane.org; Tue, 19 May 2009 09:50:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751790AbZESHsP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 May 2009 03:48:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751320AbZESHsP
-	(ORCPT <rfc822;git-outgoing>); Tue, 19 May 2009 03:48:15 -0400
-Received: from mail-gx0-f166.google.com ([209.85.217.166]:57225 "EHLO
-	mail-gx0-f166.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751172AbZESHsO (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 May 2009 03:48:14 -0400
-Received: by gxk10 with SMTP id 10so7226950gxk.13
-        for <git@vger.kernel.org>; Tue, 19 May 2009 00:48:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=pccNqpCTUyYJjTuB7qHgUSlbSP7JY0aqdlyav26IWRo=;
-        b=CLg32ueUuSkdvNfTLdLfp0QgglZwEUeR2iI47nJVGIjJnPXHX7TH9AgLeGYDPfpvpO
-         P8Iw/D1OeRWLl9d5KjNJVt0b8/5Yg1N+szUlSXg07KSAj94y/AsOmQjJScosyQbYWb3Q
-         0PmdHenv+8iEqp3VN78HTgl6lboXMdGT5cXZ4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=Wu0npKTEyyUkV0Zyg+nfNkScJN+B4p5qRCG0qoBEiBM0MRhGPvl1R0WzcKrLuDbbvS
-         ADvMdy4tUOyvtPrBMFovPXnn7IX69HDOjbd5H8rEa55jU1jI6mcuj0gQXZVCZzimAUTk
-         SKcNz7O6JvlfmxYrjLXfrsZPEPXWTJ0pTDfTk=
-Received: by 10.90.92.16 with SMTP id p16mr2444047agb.87.1242719295531;
-        Tue, 19 May 2009 00:48:15 -0700 (PDT)
-Received: from ?192.168.1.13? (abwi178.neoplus.adsl.tpnet.pl [83.8.232.178])
-        by mx.google.com with ESMTPS id 40sm9204912aga.63.2009.05.19.00.48.13
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 19 May 2009 00:48:14 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <7vfxf18szq.fsf@alter.siamese.dyndns.org>
-Content-Disposition: inline
+	id S1752339AbZESHuc convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 19 May 2009 03:50:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751848AbZESHub
+	(ORCPT <rfc822;git-outgoing>); Tue, 19 May 2009 03:50:31 -0400
+Received: from mail.lysator.liu.se ([130.236.254.3]:53535 "EHLO
+	mail.lysator.liu.se" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751780AbZESHua (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 May 2009 03:50:30 -0400
+Received: from mail.lysator.liu.se (localhost [127.0.0.1])
+	by mail.lysator.liu.se (Postfix) with ESMTP id E930340087;
+	Tue, 19 May 2009 09:50:04 +0200 (CEST)
+Received: by mail.lysator.liu.se (Postfix, from userid 1674)
+	id DCD4D40092; Tue, 19 May 2009 09:50:04 +0200 (CEST)
+X-Spam-Checker-Version: SpamAssassin 3.1.7-deb3 (2006-10-05) on 
+	bernadotte.lysator.liu.se
+X-Spam-Level: 
+X-Spam-Status: No, score=0.0 required=5.0 tests=none autolearn=disabled 
+	version=3.1.7-deb3
+Received: from krank (unknown [95.209.167.132])
+	(using TLSv1 with cipher ADH-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by mail.lysator.liu.se (Postfix) with ESMTP id 04E6040087;
+	Tue, 19 May 2009 09:50:04 +0200 (CEST)
+Received: by krank (Postfix, from userid 1000)
+	id 00B52DC26A; Tue, 19 May 2009 09:50:26 +0200 (CEST)
+In-Reply-To: <20090519072512.GA8451@diana.vm.bytemark.co.uk> ("Karl
+ =?utf-8?Q?Hasselstr=C3=B6m=22's?= message of "Tue\, 19 May 2009 09\:25\:12
+ +0200")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Virus-Scanned: ClamAV using ClamSMTP
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119501>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119502>
 
-On Tue, 19 May 2009, Junio C Hamano wrote:
-> Jakub Narebski <jnareb@gmail.com> writes:
-> 
-> > First, I have always thought that you cannot push arbitrary SHA-1
-> > (arbitrary commits) in git; you can only push via refs. Isn't it true?
-> 
-> No.
+Karl Hasselstr=C3=B6m <kha@treskal.com> writes:
 
-Oh. I must have mistaken it with the protection in the opposite side:
-git-fetch doesn't allow fetching arbitrary SHA-1 (arbitrary commits),
-isn't it?
+> On 2009-05-18 16:50:18 +0200, David K=C3=A5gedal wrote:
+>
+>> This scratches a long-time itch for me. The typical use case is when
+>> you want to break up a larg patch inte smaller ones. You back out
+>> the orignal patch, apply a small set of changes from it and then
+>> push the patch back again. But then you don't want to do a merge,
+>> with the possibility of conflict. You simply want to restore to the
+>> tree that the patch had before so you can see what's left to create
+>> cleaned-up patches of. The command "stg push --tree" does just that.
+>
+> Thanks!
+>
+> There's no sign-off.
 
-Side note: I wonder if any other DVCS has such shotgun of^W^W a feature ;-)
+I counted on getting comments, so it's not finished yet...
 
-> > Second, the "refs/replace" mechanism has the advantage over grafts
-> > that it is sanely transferrable. Whether "04a8c^2"^{replaced} exists
-> > on remote side depends on if other side has the same replacement, or
-> > if you push replacements in the same push.
-> 
-> The reason why replace mechanism could be cleaner than grafts is because
-> reachability traversal and transfer do not obey replacements, and local
-> ancestry traversal will if there are refs/replace entries.
-[cut]
+>> The naming of flags and functions isn't very obvious, and
+>> suggestions for improvements are welcome.
+>
+> --set-tree maybe?
 
-Thanks for an explanation. So "refs/replace" is sanely transferrable
-because it can be transferred using local reachability only (without
-replacements turned on), isn't it?
+Probably better. But perhaps there is a way to not have to talk about
+"trees" at all?
 
-As I understand the problem with replacement rules is that it cannot be
-treated simply as 'extended SHA1' syntax; the replacements must be done
-only for local operations, which probably means opt-in, and pushing it
-down to the commands itself... well, that or marking commands as local
-or remote...
+>>  t/t1207-push-tree.sh     |   64 +++++++++++++++++++++++++++++++++++=
++++++++++++
+>
+> A test! Very good.
+>
+>> +    opt('--tree', action =3D 'store_true',
+>> +        short =3D 'Push the patch with the original tree')
+>
+> This probably deserves a long description as well. (That most existin=
+g
+> options lack them is unfortunate---the support for long descriptions
+> was added rather recently.)
 
--- 
-Jakub Narebski
-Poland
+I didn't look putside push.py, and just followed the pattern
+there. But a long description sounds like a good idea. It won't be
+obvious what this does with just a short one.
+
+>> +        if any(getattr(cd, a) !=3D getattr(orig_cd, a) for a in
+>> +               ['parent', 'tree', 'author', 'message']):
+>> +            comm =3D self.__stack.repository.commit(cd)
+>> +            self.head =3D comm
+>> +        else:
+>> +            comm =3D None
+>> +            s =3D ' (unmodified)'
+>
+> Shouldn't self.head be set in both cases?
+
+I guess so. I'm a bit unsure about the correctness of that whole
+function.
+
+>> +# Copyright (c) 2006 David K=C3=A5gedal
+>
+> Been sitting on this patch long? :-)
+
+Copy/paste error.
+
+>> +# don't need this repo, but better not drop it, see t1100
+>> +#rm -rf .git
+>> +
+>> +# Need a repo to clone
+>> +test_create_repo foo
+>
+> Umm, your test doesn't seem to depend on using this separate repo
+> instead of the default one.
+
+Call it copy/paste programming or cargo cult programming. I will clean
+up.
+
+--=20
+David K=C3=A5gedal
