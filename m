@@ -1,76 +1,80 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: Reverting an uncommitted revert
-Date: Wed, 20 May 2009 18:13:55 +0200
-Message-ID: <fabb9a1e0905200913u5252973aia9a20983b20243d3@mail.gmail.com>
-References: <4A136C40.6020808@workspacewhiz.com> <alpine.LFD.2.00.0905192300070.3906@xanadu.home> 
-	<20090520032139.GB10212@coredump.intra.peff.net> <alpine.LFD.2.00.0905192328310.3906@xanadu.home> 
-	<025225A0-FACC-4A29-A747-40201A7FBA19@wincent.com> <alpine.LFD.2.00.0905200853010.3906@xanadu.home> 
-	<96BC1064-EEEF-48BC-B79A-9D15C517CF47@wincent.com> <alpine.LFD.2.00.0905201144040.3906@xanadu.home>
+From: Josef Wolf <jw@raven.inka.de>
+Subject: Re: Trying to sync two svn repositories with git-svn (repost)
+Date: Wed, 20 May 2009 18:40:14 +0200
+Message-ID: <20090520164014.GU15420@raven.wolf.lan>
+References: <32541b130905081344m634a78d5l984f4903ec1515eb@mail.gmail.com> <20090508235821.GO15420@raven.wolf.lan> <20090513120922.GP15420@raven.wolf.lan> <32541b130905131028i5c4b1a31j7f760f8157507df6@mail.gmail.com> <20090513222243.GQ15420@raven.wolf.lan> <32541b130905132335t3cbd0e7wf29577ee15ba0bac@mail.gmail.com> <20090514214120.GR15420@raven.wolf.lan> <32541b130905141457u196e1a68w8250489b88eb83c4@mail.gmail.com> <20090515175203.GS15420@raven.wolf.lan> <32541b130905151205h6ca89d85q97e72ce23bf233ee@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Wincent Colaiuta <win@wincent.com>, Jeff King <peff@peff.net>,
-	Joshua Jensen <jjensen@workspacewhiz.com>,
-	Nicolas Pitre <nico@cam.org>
-To: Git List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed May 20 18:15:03 2009
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed May 20 18:41:12 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M6oRZ-0001GL-CF
-	for gcvg-git-2@gmane.org; Wed, 20 May 2009 18:15:01 +0200
+	id 1M6oqt-0005pk-Mc
+	for gcvg-git-2@gmane.org; Wed, 20 May 2009 18:41:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755119AbZETQOP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 20 May 2009 12:14:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755312AbZETQOP
-	(ORCPT <rfc822;git-outgoing>); Wed, 20 May 2009 12:14:15 -0400
-Received: from mail-fx0-f158.google.com ([209.85.220.158]:60071 "EHLO
-	mail-fx0-f158.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754860AbZETQOO (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 May 2009 12:14:14 -0400
-Received: by fxm2 with SMTP id 2so522859fxm.37
-        for <git@vger.kernel.org>; Wed, 20 May 2009 09:14:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=mqR9HTDsKgnPfVIFM+La5A0g3si8PU+skkjYIc/i9tE=;
-        b=RYihY4O1i5NiPnHE0ErlwtGhC+ndlKJfhxnv3XY/GzNHuaZpvZtstEVGcFagi6DPeu
-         4qNKZRYsWSXpG3A3ARI0qbVHGxJCS6qyv6uZ9a0gvIFtWi875oJKQzJET7ivUxV4uXP1
-         sMLHA5tJ+Ril1aZwDwSzrdM+JGDCj/c+poFMo=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=d5R11URqfo2gdDJWyDKzmz5054UmxFKvrj09EmEajdVN+V4YlrT5S43xd5uqqoEWGh
-         esxTERgo5uxzHxYhkpXq5gnzYaDwkQYqxG2FzfNhXW8FHJrsPr996GafNmE5GpDJIhrn
-         za2ptGJzPQII2s0hdQOYKnHt4cWIDAesWdZWY=
-Received: by 10.103.117.9 with SMTP id u9mr814579mum.55.1242836055122; Wed, 20 
-	May 2009 09:14:15 -0700 (PDT)
-In-Reply-To: <alpine.LFD.2.00.0905201144040.3906@xanadu.home>
+	id S1755321AbZETQlG convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 20 May 2009 12:41:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755049AbZETQlF
+	(ORCPT <rfc822;git-outgoing>); Wed, 20 May 2009 12:41:05 -0400
+Received: from quechua.inka.de ([193.197.184.2]:52167 "EHLO mail.inka.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754861AbZETQlE (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 May 2009 12:41:04 -0400
+Received: from raven.inka.de (uucp@[127.0.0.1])
+	by mail.inka.de with uucp (rmailwrap 0.5) 
+	id 1M6oql-0008M6-UJ; Wed, 20 May 2009 18:41:04 +0200
+Received: by raven.inka.de (Postfix, from userid 1000)
+	id 3909E2CD14; Wed, 20 May 2009 18:40:14 +0200 (CEST)
+Mail-Followup-To: Josef Wolf <jw@raven.inka.de>, git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <32541b130905151205h6ca89d85q97e72ce23bf233ee@mail.gmail.com>
+User-Agent: Mutt/1.5.17 (2007-11-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119618>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119619>
 
-Heya,
+On Fri, May 15, 2009 at 03:05:14PM -0400, Avery Pennarun wrote:
+> On Fri, May 15, 2009 at 1:52 PM, Josef Wolf <jw@raven.inka.de> wrote:
+> > On Thu, May 14, 2009 at 05:57:00PM -0400, Avery Pennarun wrote:
+> >> I'd say that basically none of your problems have anything to do w=
+ith
+> >> svn's lack of merge support, and everything to do with the fact th=
+at
+> >> you aren't doing all your changes first on a 'public' branch and t=
+hen
+> >> merging from there into the private branches. =A0(That's really no=
+t so
+> >> hard to do in svn either, and would save a ton of confusion.)
+> >
+> > The problem here is that it does not match the work flow. =A0IMHO, =
+my work
+> > flow is very similar to the work flow of the kernel, so I fail to s=
+ee why
+> > it can not work. =A0See the analogies:
+> >
+> > kernel: Submodule maintainers are committing into private repositor=
+ies
+> > me: =A0 =A0 People are committing into private repositories
+> >
+> > kernel: Those commits are forwarded to Linus's repository
+> > me: =A0 =A0 Those commits are forwarded to the public repository
+> >
+> > kernel: Maintainers receive commits for other submodules from linus
+> > me: =A0 =A0 Commits are distributed from public to private reposito=
+ries
+>=20
+> There is one critical difference here: if someone merges from Linus
+> and then Linus merges back from them, then the two resulting
+> repositories will be *identical* (at least, the trees will be; if the
+> second merge uses --no-ff, the histories will be very slightly
+> different, but not importantly so).
 
-On Wed, May 20, 2009 at 17:47, Nicolas Pitre <nico@cam.org> wrote:
-> [...] _then_ it is worth adding a reflog entry for the otherwise about to
-> be lost state.
-
-On that note, the usefulness of such a feature is dependant on the
-support we have for actually restoring an entry from this new reflog.
-The current reflog is so amazingly useful because git has
-awesome-cherry-pick-and-the-like-commit-handling powers that make it
-easy to restore the otherwise lost state. But as far as I know,
-there's no nice 'n easy support for restoring state to the information
-contained in this new reflog, is there?
-
--- 
-Cheers,
-
-Sverre Rabbelier
+Hmm, maybe submodules could be of some help here?  If I put the generic
+content into a submodule, and the localized content into (multiple)
+superprojects, the kernel work flow should be easy to adopt, or am I
+missing something?
