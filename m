@@ -1,94 +1,124 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: [PATCH] setup_revisions(): do not access outside argv
-Date: Wed, 20 May 2009 18:23:27 +1000
-Message-ID: <fcaeb9bf0905200123r3649a7e5vc40ece402379e701@mail.gmail.com>
-References: <1242806900-3499-1-git-send-email-pclouds@gmail.com> 
-	<4A13BC3C.5070000@viscovery.net>
+From: Mark Struberg <struberg@yahoo.de>
+Subject: Re: any way to apply tag across all branches in repository?
+Date: Wed, 20 May 2009 08:58:12 +0000 (GMT)
+Message-ID: <627610.63870.qm@web27808.mail.ukl.yahoo.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=iso-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Wed May 20 10:23:59 2009
+Cc: Brandon Casey <casey@nrlssc.navy.mil>, git@vger.kernel.org
+To: Linus Torvalds <torvalds@linux-foundation.org>,
+	Chris Friesen <cfriesen@nortel.com>
+X-From: git-owner@vger.kernel.org Wed May 20 10:58:23 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M6h5h-0002wI-AC
-	for gcvg-git-2@gmane.org; Wed, 20 May 2009 10:23:57 +0200
+	id 1M6hd0-0003wK-6A
+	for gcvg-git-2@gmane.org; Wed, 20 May 2009 10:58:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754167AbZETIXt convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 20 May 2009 04:23:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753500AbZETIXr
-	(ORCPT <rfc822;git-outgoing>); Wed, 20 May 2009 04:23:47 -0400
-Received: from yw-out-2324.google.com ([74.125.46.30]:22636 "EHLO
-	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752629AbZETIXq convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 20 May 2009 04:23:46 -0400
-Received: by yw-out-2324.google.com with SMTP id 5so202825ywb.1
-        for <git@vger.kernel.org>; Wed, 20 May 2009 01:23:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=zookS5Rcz/g1CP6vM5nNRXsGa+bSn+Ttmp5CmRkKBxg=;
-        b=pbDZcEfhaiLJYpjW/HukPbZExLNoJxahIGRgk+e0rgJtv0KsxPpJnSiCJepAdoR9+K
-         z1Z0W1cui1KjqSRkGpd148Yz8gPbcC/JHbmfjlra8wFf8K/JueHk/1NHEHfHqlAcY2u3
-         yznEK9kRIVMbkMP/+ltzmFtnyMT8uRSNwkcnM=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=h0MEpu/YS9UsuVIhUgNa8Sr8IYGF0DcPBqCeAt9rFj0eY3SWrEuAv9+LUHUb2w/tNj
-         O8eAtbOJw6QY4sEXrAmp3kGWUT3/thnMuGj7EDkDO8dyKP7i+OK3Vr/91W+kp3f/U4Pd
-         qSFNDOq6na39DYiCqgvJbZw8UD2KpwDiiDKdw=
-Received: by 10.100.202.8 with SMTP id z8mr1994200anf.151.1242807827080; Wed, 
-	20 May 2009 01:23:47 -0700 (PDT)
-In-Reply-To: <4A13BC3C.5070000@viscovery.net>
+	id S1753760AbZETI6O convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 20 May 2009 04:58:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753500AbZETI6N
+	(ORCPT <rfc822;git-outgoing>); Wed, 20 May 2009 04:58:13 -0400
+Received: from web27808.mail.ukl.yahoo.com ([217.146.182.13]:28316 "HELO
+	web27808.mail.ukl.yahoo.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with SMTP id S1752466AbZETI6M convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 May 2009 04:58:12 -0400
+Received: (qmail 64852 invoked by uid 60001); 20 May 2009 08:58:12 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.de; s=s1024; t=1242809892; bh=gzIsxDYIQLz1Z2HE1EF6WZpeJfD7/06aARfnzBT6zc8=; h=Message-ID:X-YMail-OSG:Received:X-Mailer:Date:From:Subject:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding; b=RpilP0eJ9LS6cKvmte9amlLuxTIm5bu4JB9RZmQ52Lt3WdsXbcxstpukHwagYYS+EfyU0pFoISUSrCSTd7GrLKbXr6H9qHz3+GmRvwiQwVKmjOHuTpGg01/cGX1o7zNqR1Fvv5BEY6f2WB1hkD799lhwQXwLOn10Hayf9VEpm4k=
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=s1024; d=yahoo.de;
+  h=Message-ID:X-YMail-OSG:Received:X-Mailer:Date:From:Subject:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding;
+  b=BXBi+VLQz3jpow53OH4WYnrn1GQm0H9w7Ac8PTT2PNGVZ7AnPURgRvOHSyN9bza+78Udq2jlNFGdv7bJlWMw5E5veOO2BK+/2WW/XCjJ1ZoVlY+QTCjV6jYd4UCqyCqPqRbqBGMZ7oQy8+fpQSrYOL/sBv9iIOaNowdNcBMCH5g=;
+X-YMail-OSG: HhB7qbYVM1m35.bGfugNF5WPTOcAFUA8Y6aBRQkrr1CifNR3_OUh0QLbQOqjIiIla6QK5dKQBJZC2a0lvkSdujGI8CE2MnW6K9Bdkn.WSjwtOue7OcMkAEL._Kk.oHVG59Vfsx53bqWK4hYblmIg.5iQNADSLKJm4BRFXfxedMghGHckpDE6smLoi3FzVHd5ABBxzhg59hmfsgxrxv4Db0Paz0UJV7NJk4R6BUl2Qq9z54YE15hHji3tWDkxN8QY9I3lVhd3GD0LQIJL_ftKpiWNyb3mUD0nf7W74_97LW88JpNKP_PFn1aFF.UjqCdZkz788CxYURmA.9G6sTKn_2o-
+Received: from [213.235.230.200] by web27808.mail.ukl.yahoo.com via HTTP; Wed, 20 May 2009 08:58:12 GMT
+X-Mailer: YahooMailClassic/5.3.9 YahooMailWebService/0.7.289.10
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119589>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119590>
 
-2009/5/20 Johannes Sixt <j.sixt@viscovery.net>:
-> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy schrieb:
->> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gm=
-ail.com>
->> ---
->> =C2=A0revision.c | =C2=A0 =C2=A04 ++--
->> =C2=A01 files changed, 2 insertions(+), 2 deletions(-)
->>
->> diff --git a/revision.c b/revision.c
->> index 18b7ebb..be1e307 100644
->> --- a/revision.c
->> +++ b/revision.c
->> @@ -1241,9 +1241,9 @@ int setup_revisions(int argc, const char **arg=
-v, struct rev_info *revs, const ch
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (strcmp(arg, "--=
-"))
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 continue;
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 argv[i] =3D NULL;
->> - =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 argc =3D i;
->> - =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (argv[i + 1])
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (i + 1 < argc && argv=
-[i + 1])
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 revs->prune_data =3D get_pathspec(revs->prefix, argv + i + 1);
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 argc =3D i;
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 seen_dashdash =3D 1=
-;
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 break;
->> =C2=A0 =C2=A0 =C2=A0 }
->
-> Why is this necessary? I'd expect that argv arrays have NULL at the e=
-nd.
 
-I have no idea. I hit this "bug" in my builtin-rebase.c and had that
-question too. But I grepped through and saw that
-at least verify_bundle() does not terminate argv with NULL. So I
-assume that setup_revisions() does not expect NULL at the end.
---=20
-Duy
+> We have one "official" branch for each target board...so
+> maybe a dozen or so branches.
+
+Chis, to me this sounds more like you abuse SCM branches for what shoul=
+d be into 'modules'
+In SVN this would make not a big difference (because of the silly svn:c=
+opy thingy) but for any sane SCM, tags are not directories!
+
+If you move all your board specific code into child-modules, then you c=
+ould happily tag over your whole project (including all those modules).
+
+LieGrue,
+strub
+
+--- Chris Friesen <cfriesen@nortel.com> schrieb am Di, 19.5.2009:
+
+> Von: Chris Friesen <cfriesen@nortel.com>
+> Betreff: Re: any way to apply tag across all branches in repository?
+> An: "Linus Torvalds" <torvalds@linux-foundation.org>
+> CC: "Brandon Casey" <casey@nrlssc.navy.mil>, git@vger.kernel.org
+> Datum: Dienstag, 19. Mai 2009, 23:31
+> Linus Torvalds wrote:
+> >=20
+> > On Tue, 19 May 2009, Chris Friesen wrote:
+> >> The tagging would be done only by the "official"
+> build process (which
+> >> pulls from an "official" repository), not by each
+> designer.=A0 Typically
+> >> the official builds would be done weekly, more
+> frequently if requested.
+> >=20
+> > Well, you can tag when you do that official build. Do
+> you really do=20
+> > "official" builds from all branches? That sounds a bit
+> insane.
+>=20
+> We have one "official" branch for each target board...so
+> maybe a dozen
+> or so branches.
+>=20
+> Developers do private builds, but they're not tagged.
+>=20
+> > Remember: you don't have to tag whatever is the "top"
+> - tagging can happen=20
+> > later. Tagging at build-time is perfectly fine.
+>=20
+> Tagging at build-time is actually the plan.
+>=20
+> > In fact, I'd suggest going even further. Don't tag the
+> source branch when=20
+> > you build - tag it after it has passed whatever
+> testing you do (I hope you=20
+> > _do_ have some extensive test-suite before release),
+> and as you actually=20
+> > make it public (or whatever you do). Only at _that_
+> point, tag the tree=20
+> > with "release-$branch-$date" or something like that.
+>=20
+> There's a fairly extensive test suite.=A0 This might be
+> an option.
+>=20
+> > Remember: you don't have to tag the top-of branch. You
+> can tag any commit,=20
+> > after-the-fact. So even if you've done other
+> development since, just make=20
+> > sure to tag the commit you actually built and tested.
+>=20
+> Good point.=A0 I think I've got enough information to
+> get something
+> working.=A0 Thanks for all the help.
+>=20
+> Chris
+> --
+> To unsubscribe from this list: send the line "unsubscribe
+> git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at=A0 http://vger.kernel.org/majordomo-info.html
+>=20
+
+
+     =20
