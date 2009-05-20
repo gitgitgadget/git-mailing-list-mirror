@@ -1,104 +1,72 @@
-From: Bert Wesarg <bert.wesarg@googlemail.com>
-Subject: Re: [TopGit PATCH] tg-graph: print dependency graph like git log 
-	--graph
-Date: Wed, 20 May 2009 08:07:05 +0200
-Message-ID: <36ca99e90905192307m67c11b83y7af44ccdb48f43e0@mail.gmail.com>
-References: <1242711875-25666-1-git-send-email-bert.wesarg@googlemail.com>
-	 <20090519132854.GA9606@piper.oerlikon.madduck.net>
-	 <36ca99e90905190633l46fff979jecb61d4d0d907815@mail.gmail.com>
-	 <20090519184402.GA27352@pengutronix.de>
+From: Mike Hommey <mh@glandium.org>
+Subject: Re: [PATCH 0/3] http*: refactor fetching code (v2)
+Date: Wed, 20 May 2009 09:43:52 +0200
+Message-ID: <20090520074352.GC21455@glandium.org>
+References: <20090518163025.58842505.rctay89@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: martin f krafft <madduck@debian.org>, Petr Baudis <pasky@suse.cz>,
-	git@vger.kernel.org, Adam Simpkins <adam@adamsimpkins.net>
-To: =?UTF-8?Q?Uwe_Kleine=2DK=C3=B6nig?= 
-	<u.kleine-koenig@pengutronix.de>
-X-From: git-owner@vger.kernel.org Wed May 20 08:08:37 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: Tay Ray Chuan <rctay89@gmail.com>
+X-From: git-owner@vger.kernel.org Wed May 20 09:44:55 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M6exR-0007An-Vb
-	for gcvg-git-2@gmane.org; Wed, 20 May 2009 08:07:18 +0200
+	id 1M6gTu-0005CZ-77
+	for gcvg-git-2@gmane.org; Wed, 20 May 2009 09:44:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751869AbZETGHI convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 20 May 2009 02:07:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751756AbZETGHH
-	(ORCPT <rfc822;git-outgoing>); Wed, 20 May 2009 02:07:07 -0400
-Received: from mail-bw0-f222.google.com ([209.85.218.222]:35597 "EHLO
-	mail-bw0-f222.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751009AbZETGHG convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 20 May 2009 02:07:06 -0400
-Received: by bwz22 with SMTP id 22so199306bwz.37
-        for <git@vger.kernel.org>; Tue, 19 May 2009 23:07:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=TrzXXS7Ndw7rze9vuzSuTpRJMAlC7cpNO9qG+JcuTHY=;
-        b=p0xSsyuU6jnAR5sE4n+RLR68uNQ0HmWZ+paN+VUNlyrE6pZTB6sqvL8oE22CO3x4eV
-         7Y5UY04MTy6xQqmDBR4ytT2ve0Vp/Vt38DCq9nzRPSRdwueXkcN2xW2EPLQvRmXk4sL2
-         UvFENTIMJEZtqSo8K0iI84HODGPe5z6/ddARQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=KBB0zMUn9IBHadvJvJSY7OnFOEol5q7hNcLnXe2Ox24VLFMjY1MLo6hXVomBhwCDnd
-         og/tNB77XsQARVb4KdjSWz9F1UquP7wclZG7t0xLz+MV8B6W+mONBTsOLqFCiR1vhVgh
-         iW/5pw2ePYU5hBzcAIrBUCeBIY1b+aWlFqG4U=
-Received: by 10.223.115.193 with SMTP id j1mr547623faq.85.1242799625392; Tue, 
-	19 May 2009 23:07:05 -0700 (PDT)
-In-Reply-To: <20090519184402.GA27352@pengutronix.de>
+	id S1754208AbZETHoE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 20 May 2009 03:44:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754058AbZETHoD
+	(ORCPT <rfc822;git-outgoing>); Wed, 20 May 2009 03:44:03 -0400
+Received: from vuizook.err.no ([85.19.221.46]:53717 "EHLO vuizook.err.no"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753931AbZETHoB (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 May 2009 03:44:01 -0400
+Received: from cha92-13-88-165-248-19.fbx.proxad.net ([88.165.248.19] helo=jigen)
+	by vuizook.err.no with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.69)
+	(envelope-from <mh@glandium.org>)
+	id 1M6gSt-0005IO-GT; Wed, 20 May 2009 09:43:55 +0200
+Received: from mh by jigen with local (Exim 4.69)
+	(envelope-from <mh@jigen>)
+	id 1M6gSu-0006MN-1o; Wed, 20 May 2009 09:43:52 +0200
+Content-Disposition: inline
+In-Reply-To: <20090518163025.58842505.rctay89@gmail.com>
+X-GPG-Fingerprint: A479 A824 265C B2A5 FC54  8D1E DE4B DA2C 54FD 2A58
+User-Agent: Mutt/1.5.18 (2008-05-17)
+X-Spam-Status: (score 0.1): No, score=0.1 required=5.0 tests=RDNS_DYNAMIC autolearn=disabled version=3.2.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119584>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119585>
 
-2009/5/19 Uwe Kleine-K=C3=B6nig <u.kleine-koenig@pengutronix.de>:
-> Hi Bert,
->
-> On Tue, May 19, 2009 at 03:33:16PM +0200, Bert Wesarg wrote:
->> On Tue, May 19, 2009 at 15:28, martin f krafft <madduck@debian.org> =
-wrote:
->> > also sprach Bert Wesarg <bert.wesarg@googlemail.com> [2009.05.19.0=
-744 +0200]:
->> >> @@ -62,12 +70,33 @@ git for-each-ref refs/top-bases |
->> >> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 continue
->> >> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 fi
->> >> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if [ -n "$graphv=
-iz" ]; then
->> >> +
->> >> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 if [ -n "$graphviz_verbose" ]; then
->> >> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 type=3D"header"
->> >> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 lines=3D0
->> >> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 echo "\t\"$name\" ["
->> >
->> > You need to pass -e to echo for it to honour escape sequences. Tha=
-t
->> > should solve Michael's problem. Alternatively, just use ^I directl=
-y.
->> Correct, thanks. Looks like a feature from bash or dash to honor
->> escape sequences without -e'
-> quoting
-> http://www.gnu.org/software/hello/manual/autoconf/Limitations-of-Buil=
-tins.html#Limitations-of-Builtins:
->
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0It is not possible to use `echo' portably =
-unless both options
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0and escape sequences are omitted.
->
-> ... use printf instead.
-Thank you for this valuable link, Will switch to printf.
+On Mon, May 18, 2009 at 04:30:25PM +0800, Tay Ray Chuan wrote:
+> This patch series applies on pu.
+> 
+> The major differences between this series and the 11-patch long one
+> (dated May 15, 2009) are:
+> 
+>  *check 'preq' pointer before using it (for fetching packs) [1]
+>  *moved free(url) before 'abort' label to stop -Wuninitialized warning
+>   (for fetching loose objects) [2]
+>  *use unlink_or_warn, after 691f1a2 ("replace direct calls to unlink
+>   (2) with unlink_or_warn")
+> 
+> Junio: I've rebased the patch series on pu, hopefully this stops the
+> attribute warnings for patch 3.
+> 
+> Tay Ray Chuan (3):
+>   http*: add helper methods for fetching packs
+>   http*: add helper methods for fetching objects/info/packs
+>   http*: add helper methods for fetching objects (loose)
 
-Bert
->
-> Best regards
-> Uwe
+I do think these would be even better if they were integrated with
+http://kerneltrap.org/mailarchive/git/2009/1/18/4757804.
+
+Speaking of which, do we have a better http test suite now ? If we do, I
+can try to (finally) finalize my work.
+
+Mike
