@@ -1,91 +1,114 @@
-From: Dmitry Gryazin <dosagc@gmail.com>
-Subject: git-grep colouring bug with -w option.
-Date: Wed, 20 May 2009 22:38:57 +0400
-Message-ID: <4A144E41.4010303@gmail.com>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: Reverting an uncommitted revert
+Date: Wed, 20 May 2009 11:57:40 -0700
+Message-ID: <20090520185740.GP30527@spearce.org>
+References: <4A136C40.6020808@workspacewhiz.com> <alpine.LFD.2.00.0905192300070.3906@xanadu.home> <20090520032139.GB10212@coredump.intra.peff.net> <alpine.LFD.2.00.0905192328310.3906@xanadu.home> <025225A0-FACC-4A29-A747-40201A7FBA19@wincent.com> <alpine.LFD.2.00.0905200853010.3906@xanadu.home> <20090520141709.GO30527@spearce.org> <7vab57zmd8.fsf@alter.siamese.dyndns.org> <alpine.LFD.2.00.0905201406280.3906@xanadu.home>
 Mime-Version: 1.0
-Content-Type: multipart/mixed;
- boundary="------------090509040705070608060405"
-Cc: rene.scharfe@lsrfire.ath.cx
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 20 20:39:55 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Wincent Colaiuta <win@wincent.com>, Jeff King <peff@peff.net>,
+	Joshua Jensen <jjensen@workspacewhiz.com>, git@vger.kernel.org
+To: Nicolas Pitre <nico@cam.org>
+X-From: git-owner@vger.kernel.org Wed May 20 20:57:52 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M6qhh-0007oJ-B5
-	for gcvg-git-2@gmane.org; Wed, 20 May 2009 20:39:49 +0200
+	id 1M6qz9-0000Lm-In
+	for gcvg-git-2@gmane.org; Wed, 20 May 2009 20:57:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756218AbZETSjL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 20 May 2009 14:39:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756192AbZETSjL
-	(ORCPT <rfc822;git-outgoing>); Wed, 20 May 2009 14:39:11 -0400
-Received: from mail-bw0-f222.google.com ([209.85.218.222]:62718 "EHLO
-	mail-bw0-f222.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755985AbZETSjJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 May 2009 14:39:09 -0400
-Received: by bwz22 with SMTP id 22so585678bwz.37
-        for <git@vger.kernel.org>; Wed, 20 May 2009 11:39:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from
-         :user-agent:mime-version:to:cc:subject:content-type;
-        bh=50UsOLmdY6+oqagTHXJ8RDZUu3LwNUxRAJQEO5nnru4=;
-        b=LagtUHpvQBaGnnpSuVWLMU76165V829+nGNHuycfgXLSL+Ru8HVlRwUK9oWi5NiFN3
-         Csq3ft9vO0THbmVIITiYi4eqDKz6T1wEfhFGZEGAziWNXJzRJQhG4iBNm5GVUM5dnzxR
-         ggzaVSLNdem68TG+XBKJrOsTJvwvhNQKzjRNM=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :content-type;
-        b=WojeSgbJ4nuYIOhshzGc/d5re0okbLfa+CX3/eMMSadAckT0t7oLRKgiXHiuGGww32
-         7PK83ATIogIIN0n6QFsua8lhsw/Kqe4QxPpYMu8/J57wDv6pT7Rg/OMNkYGK30fWSmtE
-         j3C7zOiDCxZLJUvxT7cMMfevw8bKfc9k6dJew=
-Received: by 10.103.215.15 with SMTP id s15mr854127muq.118.1242844749984;
-        Wed, 20 May 2009 11:39:09 -0700 (PDT)
-Received: from ?10.206.120.194? ([77.241.45.26])
-        by mx.google.com with ESMTPS id s11sm1964675mue.50.2009.05.20.11.39.07
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 20 May 2009 11:39:09 -0700 (PDT)
-User-Agent: Thunderbird 2.0.0.21 (X11/20090409)
+	id S1755483AbZETS5l (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 20 May 2009 14:57:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755321AbZETS5k
+	(ORCPT <rfc822;git-outgoing>); Wed, 20 May 2009 14:57:40 -0400
+Received: from george.spearce.org ([209.20.77.23]:36079 "EHLO
+	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754955AbZETS5j (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 May 2009 14:57:39 -0400
+Received: by george.spearce.org (Postfix, from userid 1001)
+	id D0722381FE; Wed, 20 May 2009 18:57:40 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <alpine.LFD.2.00.0905201406280.3906@xanadu.home>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119630>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119631>
 
-This is a multi-part message in MIME format.
---------------090509040705070608060405
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Nicolas Pitre <nico@cam.org> wrote:
+> On Wed, 20 May 2009, Junio C Hamano wrote:
+> > "Shawn O. Pearce" <spearce@spearce.org> writes:
+> > 
+> > > You did say "uncommitted entry causes reflog append", so in Peff's
+> > > original example of "git add a; vi a; git add a", we should be
+> > > creating a reflog entry for that first added state, which is clearly
+> > > not a disagreement.
+> > >
+> > > FWIW, I think this is a great idea, but lack the time to code it
+> > > myself, otherwise I probably would start hacking on it right now.
+> > 
+> > The devil's in the details.  There are at least four things you would need
+> > to design before start hacking.
+> > 
+> >  (0) Do you want this to apply only to Porcelains, or do you want to use
+> >      this for plumbing operations as well?
+> 
+> Depends if current plumbing already takes care of reflogs for normal 
+> operations.
 
-I've found that "git-grep --color -w VirtualKeybord" works not correct 
-for string like:
+git update-ref and git symbolic-ref, both plumbing, update the
+reflog automatically.
 
-vkbd = RVirtualKeyboard(main_window, "VirtualKeyboard")
+Why?  Because that was the best way to ensure we always caught the
+change, so we didn't miss updates and have a missing but important
+state.
 
-My script in attachment reproduces this bug.
+However, git rebase was moved from operating on its branch to work
+on detached HEAD to avoid polluting the branch reflog with all of
+the intermediate states.  So, here is a case where porcelain had to
+be changed after the fact to work around the log-by-default nature
+of the plumbing.
+ 
+> >  (2) Enumerate the operations that falls into the category you decided in
+> >      the above question.  For example, "git apply --index" and "git apply
+> >      --cached" would fall into the same category as "git add".  If you
+> >      cover plumbing, you would also need to cover "git update-index".
+> 
+> Plumbing should probably have the mechanism to create those trash 
+> reflogs if desired, but not active by default.  Plumbing is normally for 
+> scripts, and once a script is debugged it shouldn't discard data by 
+> mistake.  Let's not forget that this is a feature for mistake inducing 
+> humans.
 
---------------090509040705070608060405
-Content-Type: application/x-sh;
- name="git_grep_colouring_bug.sh"
-Content-Transfer-Encoding: 7bit
-Content-Disposition: inline;
- filename="git_grep_colouring_bug.sh"
+git gui calls plumbing.  It uses git update-index directly.  IMHO,
+git gui is porcelain, and wants this log, if its available.  But,
+by the same token, git filter-branch is porcelain, and probably
+does *not* want this logging on the index updates it makes.
 
-#!/bin/sh
+So, if its off by default, we really need a way to allow git gui
+to force it on.
 
-echo "This script requires git >= 1.6.3"
-mkdir git_grep_bug
-cd git_grep_bug
-git init --quiet
-echo "vkbd = RVirtualKeyboard(main_window, \"VirtualKeyboard\")" > bug.py
-git add bug.py
-git commit --message="Introduce git-grep colouring bug with -w option." \
-           --author="Dmitry Gryazin <dosagc@yandex.ru>" \
-           --quiet
-echo "git-grep with --word-regexp option:"
-git grep --word-regexp --color VirtualKeyboard
-echo "git-grep without --word-regexp option:"
-git grep --color VirtualKeyboard
+But... given that it is a safety measure, I would prefer to make it
+on by default, and permit scripts to disable it, and update tools
+like git filter-branch to disable it, because that fits with our
+other rules to try and err on the side of caution for the user's
+data when given the choice between raw speed and some minor safety.
+(E.g. we fsync objects to disk for safety, not because its fast.)
+ 
+> >  (3) What should happen when you cannot write the index out as a tree?  I
+> >      think it is easier to make mistakes during a conflicted merge
+> >      resolution than during a straight linear development of your own, and
+> >      one of the cases that would benefit most would be that you have
+> >      resolved a path to your satisfaction but then later you screw up
+> >      while resolving some other paths, losing an earlier resolution.
+> 
+> This one is tricky.  Maybe storing two reflog entries corresponding to 
+> the unresolved stages?
 
---------------090509040705070608060405--
+Yea, and as was pointed out, git stash doesn't support this, but
+it probably should be able to do it, assuming the index could write
+out 3 (or maybe 4) trees in this case, one for each stage.
+
+-- 
+Shawn.
