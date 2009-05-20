@@ -1,78 +1,124 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [EGIT PATCH 1/6] Make sure we get the right storage for
-	loose/pack/loose and packed refs
-Date: Wed, 20 May 2009 14:43:59 -0700
-Message-ID: <20090520214359.GQ30527@spearce.org>
-References: <20090507155117.GS30527@spearce.org> <1242774798-23639-1-git-send-email-robin.rosenberg@dewire.com> <1242774798-23639-2-git-send-email-robin.rosenberg@dewire.com>
+From: =?ISO-8859-1?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
+Subject: [PATCH] grep: make callback functions static
+Date: Thu, 21 May 2009 00:05:22 +0200
+Message-ID: <4A147EA2.7050203@lsrfire.ath.cx>
+References: <1241725380.4772.6.camel@ubuntu.ubuntu-domain> <1241725608.4772.11.camel@ubuntu.ubuntu-domain> <4A0E8AEF.3000704@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Robin Rosenberg <robin.rosenberg@dewire.com>
-X-From: git-owner@vger.kernel.org Wed May 20 23:44:07 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Pierre Habouzit <madcoder@debian.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: Stephen Boyd <bebarino@gmail.com>
+X-From: git-owner@vger.kernel.org Thu May 21 00:05:33 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M6ta3-0000Hc-A7
-	for gcvg-git-2@gmane.org; Wed, 20 May 2009 23:44:07 +0200
+	id 1M6tum-00006K-In
+	for gcvg-git-2@gmane.org; Thu, 21 May 2009 00:05:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754044AbZETVn7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 20 May 2009 17:43:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753579AbZETVn6
-	(ORCPT <rfc822;git-outgoing>); Wed, 20 May 2009 17:43:58 -0400
-Received: from george.spearce.org ([209.20.77.23]:36784 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753334AbZETVn6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 May 2009 17:43:58 -0400
-Received: by george.spearce.org (Postfix, from userid 1001)
-	id EC32F381FD; Wed, 20 May 2009 21:43:59 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <1242774798-23639-2-git-send-email-robin.rosenberg@dewire.com>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1753229AbZETWFZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 20 May 2009 18:05:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753074AbZETWFY
+	(ORCPT <rfc822;git-outgoing>); Wed, 20 May 2009 18:05:24 -0400
+Received: from india601.server4you.de ([85.25.151.105]:39627 "EHLO
+	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752038AbZETWFX (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 May 2009 18:05:23 -0400
+Received: from [10.0.1.101] (p57B7BC6E.dip.t-dialin.net [87.183.188.110])
+	by india601.server4you.de (Postfix) with ESMTPSA id 5FCDD2F8044;
+	Thu, 21 May 2009 00:05:24 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.21 (Windows/20090302)
+In-Reply-To: <4A0E8AEF.3000704@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119635>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119636>
 
-Robin Rosenberg <robin.rosenberg@dewire.com> wrote:
-> Also adds a few some more test for refs, though not complete.
+Suggested by Stephen Boyd: make the callback functions used for option
+parsing static.
 
-Hmm, tests fail, wrong expected values?
+Signed-off-by: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
+---
+Patch applies to next.
+
+ builtin-grep.c |   18 ++++++++++--------
+ 1 files changed, 10 insertions(+), 8 deletions(-)
+
+diff --git a/builtin-grep.c b/builtin-grep.c
+index 169a91c..5308b34 100644
+--- a/builtin-grep.c
++++ b/builtin-grep.c
+@@ -565,7 +565,8 @@ static int grep_object(struct grep_opt *opt, const char **paths,
+ 	die("unable to grep from object of type %s", typename(obj->type));
+ }
  
-> +	public void testReadSymRefToPacked() throws IOException {
-> +		assertEquals(Ref.Storage.LOOSE, ref.getStorage());
-
-Actual was LOOSE_PACKED.
-
-> +	public void testReadSymRefToLoosePacked() throws IOException {
-> +		assertEquals(Ref.Storage.LOOSE, ref.getStorage());
-
-Actual was LOOSE_PACKED.
-
-> +	public void testDeleteLoosePacked() throws IOException {
-> +		ObjectId pid = db.resolve("refs/heads/master^");
-> +		RefUpdate updateRef = db.updateRef("refs/heads/master");
-> +		updateRef.setNewObjectId(pid);
-> +		updateRef.setForceUpdate(true);
-> +		Result update = updateRef.update();
-> +		assertEquals(Result.FORCED, update); // internal
-> +
-> +		RefUpdate updateRef2 = db.updateRef("refs/heads/master");
-> +		Result delete = updateRef2.delete();
-> +		assertEquals(Result.FORCED, delete);
-
-Actual was Result.REJECTED_CURRENT_BRANCH.
-
-> @@ -349,12 +355,20 @@ private synchronized Ref readRefBasic(final String origName,
-> +
-> +		if (!origName.equals(name)) {
-> +			ref = new Ref(Ref.Storage.LOOSE, origName, name, id);
-> +			looseRefs.put(origName, ref);
-> +		}
-
-Seems fine, but I'm starting to hate our current way of handling
-symrefs.  Not for this series.  But its starting to worry me.
-
+-int context_callback(const struct option *opt, const char *arg, int unset)
++static int context_callback(const struct option *opt, const char *arg,
++			    int unset)
+ {
+ 	struct grep_opt *grep_opt = opt->value;
+ 	int value;
+@@ -584,7 +585,7 @@ int context_callback(const struct option *opt, const char *arg, int unset)
+ 	return 0;
+ }
+ 
+-int file_callback(const struct option *opt, const char *arg, int unset)
++static int file_callback(const struct option *opt, const char *arg, int unset)
+ {
+ 	struct grep_opt *grep_opt = opt->value;
+ 	FILE *patterns;
+@@ -606,42 +607,43 @@ int file_callback(const struct option *opt, const char *arg, int unset)
+ 	return 0;
+ }
+ 
+-int not_callback(const struct option *opt, const char *arg, int unset)
++static int not_callback(const struct option *opt, const char *arg, int unset)
+ {
+ 	struct grep_opt *grep_opt = opt->value;
+ 	append_grep_pattern(grep_opt, "--not", "command line", 0, GREP_NOT);
+ 	return 0;
+ }
+ 
+-int and_callback(const struct option *opt, const char *arg, int unset)
++static int and_callback(const struct option *opt, const char *arg, int unset)
+ {
+ 	struct grep_opt *grep_opt = opt->value;
+ 	append_grep_pattern(grep_opt, "--and", "command line", 0, GREP_AND);
+ 	return 0;
+ }
+ 
+-int open_callback(const struct option *opt, const char *arg, int unset)
++static int open_callback(const struct option *opt, const char *arg, int unset)
+ {
+ 	struct grep_opt *grep_opt = opt->value;
+ 	append_grep_pattern(grep_opt, "(", "command line", 0, GREP_OPEN_PAREN);
+ 	return 0;
+ }
+ 
+-int close_callback(const struct option *opt, const char *arg, int unset)
++static int close_callback(const struct option *opt, const char *arg, int unset)
+ {
+ 	struct grep_opt *grep_opt = opt->value;
+ 	append_grep_pattern(grep_opt, ")", "command line", 0, GREP_CLOSE_PAREN);
+ 	return 0;
+ }
+ 
+-int pattern_callback(const struct option *opt, const char *arg, int unset)
++static int pattern_callback(const struct option *opt, const char *arg,
++			    int unset)
+ {
+ 	struct grep_opt *grep_opt = opt->value;
+ 	append_grep_pattern(grep_opt, arg, "-e option", 0, GREP_PATTERN);
+ 	return 0;
+ }
+ 
+-int help_callback(const struct option *opt, const char *arg, int unset)
++static int help_callback(const struct option *opt, const char *arg, int unset)
+ {
+ 	return -1;
+ }
 -- 
-Shawn.
+1.6.3.1
