@@ -1,57 +1,75 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
+From: Stephan Beyer <s-beyer@gmx.net>
 Subject: Re: help reproduce fast-forward in rebase
-Date: Wed, 20 May 2009 11:26:47 +0200
-Message-ID: <4A13CCD7.5090900@viscovery.net>
+Date: Wed, 20 May 2009 11:33:21 +0200
+Message-ID: <20090520093321.GF6169@leksak.fem-net>
 References: <fcaeb9bf0905200113s43eb5693l24a1f8848bafabd2@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: Git Mailing List <git@vger.kernel.org>
 To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Wed May 20 11:27:19 2009
+X-From: git-owner@vger.kernel.org Wed May 20 11:33:37 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M6i4m-0001yz-2d
-	for gcvg-git-2@gmane.org; Wed, 20 May 2009 11:27:04 +0200
+	id 1M6iB6-00053C-3C
+	for gcvg-git-2@gmane.org; Wed, 20 May 2009 11:33:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756103AbZETJ0w (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 20 May 2009 05:26:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755942AbZETJ0w
-	(ORCPT <rfc822;git-outgoing>); Wed, 20 May 2009 05:26:52 -0400
-Received: from lilzmailso02.liwest.at ([212.33.55.13]:6561 "EHLO
-	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752793AbZETJ0v (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 May 2009 05:26:51 -0400
-Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
-	by lilzmailso02.liwest.at with esmtpa (Exim 4.69)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1M6i4S-0003qO-EY; Wed, 20 May 2009 11:26:49 +0200
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.96])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id 34F826D9; Wed, 20 May 2009 11:26:44 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.21 (Windows/20090302)
+	id S1753985AbZETJd2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 20 May 2009 05:33:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753506AbZETJd1
+	(ORCPT <rfc822;git-outgoing>); Wed, 20 May 2009 05:33:27 -0400
+Received: from mail.gmx.net ([213.165.64.20]:39391 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752793AbZETJd1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 May 2009 05:33:27 -0400
+Received: (qmail invoked by alias); 20 May 2009 09:33:27 -0000
+Received: from q137.fem.tu-ilmenau.de (EHLO leksak.fem-net) [141.24.46.137]
+  by mail.gmx.net (mp019) with SMTP; 20 May 2009 11:33:27 +0200
+X-Authenticated: #1499303
+X-Provags-ID: V01U2FsdGVkX1/jTs1fsrrj2oZ/ggqHHnkG4XG5HfwkaEc1Mh33Bd
+	AXKI6tFcKd/CAJ
+Received: from sbeyer by leksak.fem-net with local (Exim 4.69)
+	(envelope-from <s-beyer@gmx.net>)
+	id 1M6iAr-0008AD-KL; Wed, 20 May 2009 11:33:21 +0200
+Content-Disposition: inline
 In-Reply-To: <fcaeb9bf0905200113s43eb5693l24a1f8848bafabd2@mail.gmail.com>
-X-Spam-Score: -1.4 (-)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.57
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119592>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119593>
 
-Nguyen Thai Ngoc Duy schrieb:
+Hi Nguyen,
+
+Nguyen Thai Ngoc Duy wrote:
 > Hi,
 > 
-> I'm rewriting rebase in C and do not quite understand this code inside
-> git-rebase.sh
+> I'm rewriting rebase in C
 
-One thing that has annoyed me sometimes is that 'git rebase --cont' works
-only after 'git rebase -i' but not after plain 'git rebase'. The reason is
-that the two instances of rebase do their own argument parsing, and the
-interactive version uses rev-parse --parseopt, and normal rebase does not.
-I hope you will rectify this situation.
+Oh. First two remarks that may or may not affect you:
 
+ 1. rebase -i -p is reworked by Dscho:
+
+    http://repo.or.cz/w/git/dscho.git?a=shortlog;h=refs/heads/rebase-i-p
+
+ 2. sequencer, a C backend for git am and git rebase -i, actually exists
+
+    http://repo.or.cz/w/git/sbeyer.git?a=shortlog;h=refs/heads/seq-builtin-dev
+
+    although to even more lack of time the missing/non-perfect parts are not
+    getting fewer.
+
+
+Both remarks regard "rebase -i" and not the am-based rebase, which means
+you are not getting into some kind of conflict with these other developments
+(or IOW: you are not doing already done work a second or third time) when you
+keep your rebase rewrite close to the original in sh.
+
+> and do not quite understand this code inside git-rebase.sh
+> 
 > # If the $onto is a proper descendant of the tip of the branch, then
 > # we just fast forwarded.
 > if test "$mb" = "$branch"
@@ -63,12 +81,22 @@ I hope you will rectify this situation.
 > 
 > Anyone has an example how to make "git rebase" execute that code?
 
-  $ git checkout -b topic master^
-  Switched to a new branch 'topic'
-  $ git rebase master
-  First, rewinding head to replay your work on top of it...
-  Fast-forwarded topic to master.
+Yes, "if the $onto is a proper descendant of the tip of the branch",
+then there are no commits that have to be rewritten. Rebasing can be
+done by simple fast-forwarding, i.e. setting the branch to another,
+yet existing commit.
 
-That is, topic was already merged into master.
+Example:
 
--- Hannes
+   * onto                 * onto, mybranch
+   |                      |
+   *                      *
+   |                      |
+   * mybranch    =>       *
+   |                      |
+   *                      *
+   |                      |
+
+
+Regards,
+  Stephan
