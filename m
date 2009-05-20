@@ -1,124 +1,135 @@
-From: =?ISO-8859-1?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
-Subject: [PATCH] grep: make callback functions static
-Date: Thu, 21 May 2009 00:05:22 +0200
-Message-ID: <4A147EA2.7050203@lsrfire.ath.cx>
-References: <1241725380.4772.6.camel@ubuntu.ubuntu-domain> <1241725608.4772.11.camel@ubuntu.ubuntu-domain> <4A0E8AEF.3000704@gmail.com>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: [PATCH] Fix for a merge where a branch has an F->D transition
+Date: Thu, 21 May 2009 00:09:57 +0200
+Message-ID: <81b0412b0905201509o3db682dm9a667210a60b2d24@mail.gmail.com>
+References: <81b0412b0905110242u3624f0eeyc0dc9b2b987bfa2b@mail.gmail.com>
+	 <20090511192536.GA1485@blimp.localdomain>
+	 <alpine.DEB.1.00.0905201228040.16461@intel-tinevez-2-302>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Pierre Habouzit <madcoder@debian.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: Stephen Boyd <bebarino@gmail.com>
-X-From: git-owner@vger.kernel.org Thu May 21 00:05:33 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Anders Melchiorsen <mail@cup.kalibalik.dk>, git@vger.kernel.org,
+	Samuel Tardieu <sam@rfc1149.net>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	=?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder@ira.uka.de>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Thu May 21 00:10:08 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M6tum-00006K-In
-	for gcvg-git-2@gmane.org; Thu, 21 May 2009 00:05:33 +0200
+	id 1M6tzD-0002Y4-Aq
+	for gcvg-git-2@gmane.org; Thu, 21 May 2009 00:10:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753229AbZETWFZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 20 May 2009 18:05:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753074AbZETWFY
-	(ORCPT <rfc822;git-outgoing>); Wed, 20 May 2009 18:05:24 -0400
-Received: from india601.server4you.de ([85.25.151.105]:39627 "EHLO
-	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752038AbZETWFX (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 May 2009 18:05:23 -0400
-Received: from [10.0.1.101] (p57B7BC6E.dip.t-dialin.net [87.183.188.110])
-	by india601.server4you.de (Postfix) with ESMTPSA id 5FCDD2F8044;
-	Thu, 21 May 2009 00:05:24 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.21 (Windows/20090302)
-In-Reply-To: <4A0E8AEF.3000704@gmail.com>
+	id S1754345AbZETWJ7 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 20 May 2009 18:09:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753650AbZETWJ6
+	(ORCPT <rfc822;git-outgoing>); Wed, 20 May 2009 18:09:58 -0400
+Received: from mail-fx0-f158.google.com ([209.85.220.158]:59701 "EHLO
+	mail-fx0-f158.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753376AbZETWJ6 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 20 May 2009 18:09:58 -0400
+Received: by fxm2 with SMTP id 2so704312fxm.37
+        for <git@vger.kernel.org>; Wed, 20 May 2009 15:09:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=DG7ggA0LPX0EHuUHUXfSUXT0Y8NA+hpn7jAABXwgpto=;
+        b=UrjGMSsr+ymcuOEDArKEl6nPDfpu4sbr9w/+atVgJulMCU97+wHAV+i1B8wcV3jwoq
+         4+xRi/XNKAUG2yBLNIP/DgvqrzgLTUeCLHoBPxlD55nbssQB2QfGS4tSJFlsJranOcN3
+         wTzTcIiKisvWwkh6WUJ1++HiFFv5AzGzsyCUI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=wU43wmOj2hKHMl+0OX+hztIi/P4AhrKfym4jSG5ty7clrhBfR8+7mFRI9QjSxmmZQ+
+         QsQTsDOBljKp5hYV7GOvrCt1w/n+vbhlxZaa5HI47XDAaLCHnQ4sK8+XtJkCyOULOjB9
+         z1pJ/KhLa14wHefxsgVhepUX3Y5HQ5Ek5m8tE=
+Received: by 10.204.112.11 with SMTP id u11mr1695414bkp.134.1242857398148; 
+	Wed, 20 May 2009 15:09:58 -0700 (PDT)
+In-Reply-To: <alpine.DEB.1.00.0905201228040.16461@intel-tinevez-2-302>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119636>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119637>
 
-Suggested by Stephen Boyd: make the callback functions used for option
-parsing static.
+2009/5/20 Johannes Schindelin <Johannes.Schindelin@gmx.de>:
+> On Mon, 11 May 2009, Alex Riesen wrote:
+>
+>> Some path names which transitioned from file to a directory were not
+>> updated in the final part of the merge (loop around unmerged entries=
+ in
+>> merge_trees), because the branch in process_renames which filtered o=
+ut
+>> updates for the files with the same content ("merged same as existin=
+g")
+>> has left the rename entry in processed state. In this case, the
+>> processing cannot be finished at the process_renames phase (because
+>> the old file still blocks creation of directory where new files shou=
+ld
+>> appear), and must be postponed until the update_entry phase.
+>
+> I know that as a German, I am supposed to like long sentences and cro=
+wded
+> paragraphs. =C2=A0Maybe I am not that German after all.
+>
 
-Signed-off-by: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
----
-Patch applies to next.
+Will be shortened.
 
- builtin-grep.c |   18 ++++++++++--------
- 1 files changed, 10 insertions(+), 8 deletions(-)
+>> diff --git a/merge-recursive.c b/merge-recursive.c
+>> index a3721ef..3c5420b 100644
+>> --- a/merge-recursive.c
+>> +++ b/merge-recursive.c
+>> @@ -980,14 +980,15 @@ static int process_renames(struct merge_option=
+s *o,
+>>
+>> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (mfi.clean &&
+>> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 sha_eq(mfi.sha, ren1-=
+>pair->two->sha1) &&
+>> - =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 mfi.mode =3D=3D ren1->pai=
+r->two->mode)
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 mfi.mode =3D=3D ren1->pai=
+r->two->mode) {
+>> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 /*
+>> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0*=
+ This messaged is part of
+>> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0*=
+ t6022 test. If you change
+>> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0*=
+ it update the test too.
+>> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0*=
+/
+>> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 output(=
+o, 3, "Skipped %s (merged same as existing)", ren1_dst);
+>> - =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 else {
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 ren1->dst_e=
+ntry->processed =3D 0;
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 } else {
+>
+> So basically, you say that a dst_entry has not been processed, when i=
+t
+> _has_ been? =C2=A0That cannot be correct...
+>
 
-diff --git a/builtin-grep.c b/builtin-grep.c
-index 169a91c..5308b34 100644
---- a/builtin-grep.c
-+++ b/builtin-grep.c
-@@ -565,7 +565,8 @@ static int grep_object(struct grep_opt *opt, const char **paths,
- 	die("unable to grep from object of type %s", typename(obj->type));
- }
- 
--int context_callback(const struct option *opt, const char *arg, int unset)
-+static int context_callback(const struct option *opt, const char *arg,
-+			    int unset)
- {
- 	struct grep_opt *grep_opt = opt->value;
- 	int value;
-@@ -584,7 +585,7 @@ int context_callback(const struct option *opt, const char *arg, int unset)
- 	return 0;
- }
- 
--int file_callback(const struct option *opt, const char *arg, int unset)
-+static int file_callback(const struct option *opt, const char *arg, int unset)
- {
- 	struct grep_opt *grep_opt = opt->value;
- 	FILE *patterns;
-@@ -606,42 +607,43 @@ int file_callback(const struct option *opt, const char *arg, int unset)
- 	return 0;
- }
- 
--int not_callback(const struct option *opt, const char *arg, int unset)
-+static int not_callback(const struct option *opt, const char *arg, int unset)
- {
- 	struct grep_opt *grep_opt = opt->value;
- 	append_grep_pattern(grep_opt, "--not", "command line", 0, GREP_NOT);
- 	return 0;
- }
- 
--int and_callback(const struct option *opt, const char *arg, int unset)
-+static int and_callback(const struct option *opt, const char *arg, int unset)
- {
- 	struct grep_opt *grep_opt = opt->value;
- 	append_grep_pattern(grep_opt, "--and", "command line", 0, GREP_AND);
- 	return 0;
- }
- 
--int open_callback(const struct option *opt, const char *arg, int unset)
-+static int open_callback(const struct option *opt, const char *arg, int unset)
- {
- 	struct grep_opt *grep_opt = opt->value;
- 	append_grep_pattern(grep_opt, "(", "command line", 0, GREP_OPEN_PAREN);
- 	return 0;
- }
- 
--int close_callback(const struct option *opt, const char *arg, int unset)
-+static int close_callback(const struct option *opt, const char *arg, int unset)
- {
- 	struct grep_opt *grep_opt = opt->value;
- 	append_grep_pattern(grep_opt, ")", "command line", 0, GREP_CLOSE_PAREN);
- 	return 0;
- }
- 
--int pattern_callback(const struct option *opt, const char *arg, int unset)
-+static int pattern_callback(const struct option *opt, const char *arg,
-+			    int unset)
- {
- 	struct grep_opt *grep_opt = opt->value;
- 	append_grep_pattern(grep_opt, arg, "-e option", 0, GREP_PATTERN);
- 	return 0;
- }
- 
--int help_callback(const struct option *opt, const char *arg, int unset)
-+static int help_callback(const struct option *opt, const char *arg, int unset)
- {
- 	return -1;
- }
--- 
-1.6.3.1
+My feeling exactly. I'm afraid I just zeroed the effect of the branch
+which should avoid rewriting of files with known same content.
+It's just that the code has grown a little confusing...
+I'm still thinking about how to avoid unneeded rewrites of the files
+with same content under same name.
