@@ -1,83 +1,86 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: Nicolas Pitre <nico@cam.org>
 Subject: Re: Reverting an uncommitted revert
-Date: Wed, 20 May 2009 10:59:31 -0700
-Message-ID: <7vab57zmd8.fsf@alter.siamese.dyndns.org>
+Date: Wed, 20 May 2009 14:04:58 -0400 (EDT)
+Message-ID: <alpine.LFD.2.00.0905201358000.3906@xanadu.home>
 References: <4A136C40.6020808@workspacewhiz.com>
-	<alpine.LFD.2.00.0905192300070.3906@xanadu.home>
-	<20090520032139.GB10212@coredump.intra.peff.net>
-	<alpine.LFD.2.00.0905192328310.3906@xanadu.home>
-	<025225A0-FACC-4A29-A747-40201A7FBA19@wincent.com>
-	<alpine.LFD.2.00.0905200853010.3906@xanadu.home>
-	<20090520141709.GO30527@spearce.org>
+ <alpine.LFD.2.00.0905192300070.3906@xanadu.home>
+ <20090520032139.GB10212@coredump.intra.peff.net>
+ <alpine.LFD.2.00.0905192328310.3906@xanadu.home>
+ <025225A0-FACC-4A29-A747-40201A7FBA19@wincent.com>
+ <alpine.LFD.2.00.0905200853010.3906@xanadu.home>
+ <96BC1064-EEEF-48BC-B79A-9D15C517CF47@wincent.com>
+ <alpine.LFD.2.00.0905201144040.3906@xanadu.home>
+ <fabb9a1e0905200913u5252973aia9a20983b20243d3@mail.gmail.com>
+ <20090520165854.GA23031@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Nicolas Pitre <nico@cam.org>, Wincent Colaiuta <win@wincent.com>,
-	Jeff King <peff@peff.net>,
-	Joshua Jensen <jjensen@workspacewhiz.com>, git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Wed May 20 19:59:41 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Sverre Rabbelier <srabbelier@gmail.com>,
+	Git List <git@vger.kernel.org>,
+	Wincent Colaiuta <win@wincent.com>,
+	Joshua Jensen <jjensen@workspacewhiz.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed May 20 20:05:28 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M6q4q-00033e-CZ
-	for gcvg-git-2@gmane.org; Wed, 20 May 2009 19:59:40 +0200
+	id 1M6qAN-0005li-2A
+	for gcvg-git-2@gmane.org; Wed, 20 May 2009 20:05:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754167AbZETR7c (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 20 May 2009 13:59:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753210AbZETR7b
-	(ORCPT <rfc822;git-outgoing>); Wed, 20 May 2009 13:59:31 -0400
-Received: from fed1rmmtao104.cox.net ([68.230.241.42]:34672 "EHLO
-	fed1rmmtao104.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751461AbZETR7b (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 May 2009 13:59:31 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao104.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20090520175931.MMEK17135.fed1rmmtao104.cox.net@fed1rmimpo02.cox.net>;
-          Wed, 20 May 2009 13:59:31 -0400
-Received: from localhost ([68.225.240.211])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id ttzY1b0054aMwMQ04tzYCn; Wed, 20 May 2009 13:59:32 -0400
-X-Authority-Analysis: v=1.0 c=1 a=oAYF_C9AAAAA:8 a=CjNCB-vqXkWgjbxkGs0A:9
- a=GwwwYVjTzBrH3EELYrOUlfEBqlMA:4 a=R0wQ3QzoQ0IA:10
-X-CM-Score: 0.00
-In-Reply-To: <20090520141709.GO30527@spearce.org> (Shawn O. Pearce's message of "Wed\, 20 May 2009 07\:17\:09 -0700")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+	id S1754919AbZETSFO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 20 May 2009 14:05:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754893AbZETSFO
+	(ORCPT <rfc822;git-outgoing>); Wed, 20 May 2009 14:05:14 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:13150 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754659AbZETSFN (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 May 2009 14:05:13 -0400
+Received: from xanadu.home ([66.131.194.97]) by VL-MH-MR001.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
+ with ESMTP id <0KJY007LVFKAOAY2@VL-MH-MR001.ip.videotron.ca> for
+ git@vger.kernel.org; Wed, 20 May 2009 14:05:00 -0400 (EDT)
+X-X-Sender: nico@xanadu.home
+In-reply-to: <20090520165854.GA23031@coredump.intra.peff.net>
+User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119623>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119624>
 
-"Shawn O. Pearce" <spearce@spearce.org> writes:
+On Wed, 20 May 2009, Jeff King wrote:
 
-> You did say "uncommitted entry causes reflog append", so in Peff's
-> original example of "git add a; vi a; git add a", we should be
-> creating a reflog entry for that first added state, which is clearly
-> not a disagreement.
->
-> FWIW, I think this is a great idea, but lack the time to code it
-> myself, otherwise I probably would start hacking on it right now.
+> On Wed, May 20, 2009 at 06:13:55PM +0200, Sverre Rabbelier wrote:
+> 
+> > On that note, the usefulness of such a feature is dependant on the
+> > support we have for actually restoring an entry from this new reflog.
+> > The current reflog is so amazingly useful because git has
+> > awesome-cherry-pick-and-the-like-commit-handling powers that make it
+> > easy to restore the otherwise lost state. But as far as I know,
+> > there's no nice 'n easy support for restoring state to the information
+> > contained in this new reflog, is there?
+> 
+> I was envisioning a reflog of tree objects, so you could do:
+> 
+>   $ git reflog show TRASH ;# show the reflog message
+>   $ git show TRASH@{1} ;# show what's in the tree
+>   $ git show TRASH@{1}:path/to/file ;# see a file
+>   $ git checkout TRASH@{1} path/to/file ;# restore a file
+> 
+> which should all work as-is.
+> 
+> I suspect "git log -g" might need some tweaking to get a tree rather
+> than a commit (but in theory we should just show the "Reflog *:" headers
+> and not the commit headers).
 
-The devil's in the details.  There are at least four things you would need
-to design before start hacking.
+Even simpler (for the user) would be to create a full commit with a 
+synthetic message.  The advantage is that the commit would have for 
+parent the HEAD commit at the moment the operation leading to the reflog 
+entry was made, with the date tag, etc.  The message could even contain 
+information about what exactly was discarded by the operation.  This 
+commit would be referenced only by the trash reflog and not be part of 
+any branch. And all your examples above should still work of course.
 
- (0) Do you want this to apply only to Porcelains, or do you want to use
-     this for plumbing operations as well?
 
- (1) When would you "auto" write-tree?  When you do "git add" or anything
-     that adds new contents to the index?  Or immediately before you do
-     something destructive like "git reset"?  Or perhaps both?
-
- (2) Enumerate the operations that falls into the category you decided in
-     the above question.  For example, "git apply --index" and "git apply
-     --cached" would fall into the same category as "git add".  If you
-     cover plumbing, you would also need to cover "git update-index".
-
- (3) What should happen when you cannot write the index out as a tree?  I
-     think it is easier to make mistakes during a conflicted merge
-     resolution than during a straight linear development of your own, and
-     one of the cases that would benefit most would be that you have
-     resolved a path to your satisfaction but then later you screw up
-     while resolving some other paths, losing an earlier resolution.
+Nicolas
