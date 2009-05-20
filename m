@@ -1,78 +1,55 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: Reverting an uncommitted revert
-Date: Wed, 20 May 2009 08:53:51 -0400 (EDT)
-Message-ID: <alpine.LFD.2.00.0905200853010.3906@xanadu.home>
-References: <4A136C40.6020808@workspacewhiz.com>
- <alpine.LFD.2.00.0905192300070.3906@xanadu.home>
- <20090520032139.GB10212@coredump.intra.peff.net>
- <alpine.LFD.2.00.0905192328310.3906@xanadu.home>
- <025225A0-FACC-4A29-A747-40201A7FBA19@wincent.com>
+From: Tony Finch <dot@dotat.at>
+Subject: Re: [PATCH 0/3] http*: refactor fetching code (v2)
+Date: Wed, 20 May 2009 15:03:07 +0100
+Message-ID: <alpine.LSU.2.00.0905201500220.23478@hermes-2.csi.cam.ac.uk>
+References: <20090518163025.58842505.rctay89@gmail.com> <20090520074352.GC21455@glandium.org>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; boundary="Boundary_(ID_rZVg3yiJcfevKWAOHbUObw)"
-Cc: Jeff King <peff@peff.net>,
-	Joshua Jensen <jjensen@workspacewhiz.com>, git@vger.kernel.org
-To: Wincent Colaiuta <win@wincent.com>
-X-From: git-owner@vger.kernel.org Wed May 20 14:54:08 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Tay Ray Chuan <rctay89@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: Mike Hommey <mh@glandium.org>
+X-From: git-owner@vger.kernel.org Wed May 20 16:03:19 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M6lJ9-0001rg-SO
-	for gcvg-git-2@gmane.org; Wed, 20 May 2009 14:54:08 +0200
+	id 1M6mO5-0001Xv-MU
+	for gcvg-git-2@gmane.org; Wed, 20 May 2009 16:03:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756215AbZETMyA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 20 May 2009 08:54:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755630AbZETMx7
-	(ORCPT <rfc822;git-outgoing>); Wed, 20 May 2009 08:53:59 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:52015 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753352AbZETMx6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 May 2009 08:53:58 -0400
-Received: from xanadu.home ([66.131.194.97]) by VL-MH-MR001.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
- with ESMTP id <0KJY006QH15RRKF1@VL-MH-MR001.ip.videotron.ca> for
- git@vger.kernel.org; Wed, 20 May 2009 08:53:52 -0400 (EDT)
-X-X-Sender: nico@xanadu.home
-In-reply-to: <025225A0-FACC-4A29-A747-40201A7FBA19@wincent.com>
-User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
+	id S1754167AbZETODJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 20 May 2009 10:03:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753985AbZETODI
+	(ORCPT <rfc822;git-outgoing>); Wed, 20 May 2009 10:03:08 -0400
+Received: from ppsw-1.csi.cam.ac.uk ([131.111.8.131]:38397 "EHLO
+	ppsw-1.csi.cam.ac.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753735AbZETODI (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 May 2009 10:03:08 -0400
+X-Cam-AntiVirus: no malware found
+X-Cam-SpamDetails: not scanned
+X-Cam-ScannerInfo: http://www.cam.ac.uk/cs/email/scanner/
+Received: from hermes-2.csi.cam.ac.uk ([131.111.8.54]:45284)
+	by ppsw-1.csi.cam.ac.uk (smtp.hermes.cam.ac.uk [131.111.8.151]:25)
+	with esmtpa (EXTERNAL:fanf2) id 1M6mNv-0008L3-46 (Exim 4.70)
+	(return-path <fanf2@hermes.cam.ac.uk>); Wed, 20 May 2009 15:03:07 +0100
+Received: from fanf2 (helo=localhost) by hermes-2.csi.cam.ac.uk (hermes.cam.ac.uk)
+	with local-esmtp id 1M6mNv-0004gW-82 (Exim 4.67)
+	(return-path <fanf2@hermes.cam.ac.uk>); Wed, 20 May 2009 15:03:07 +0100
+X-X-Sender: fanf2@hermes-2.csi.cam.ac.uk
+In-Reply-To: <20090520074352.GC21455@glandium.org>
+User-Agent: Alpine 2.00 (LSU 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119608>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119609>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+On this topic, some of my friends have complained that git doesn't
+automatically try appending .git to a URL when it fails to find a
+bare git repository on the server.
 
---Boundary_(ID_rZVg3yiJcfevKWAOHbUObw)
-Content-type: TEXT/PLAIN; charset=ISO-8859-1
-Content-transfer-encoding: 8BIT
-
-On Wed, 20 May 2009, Wincent Colaiuta wrote:
-
-> El 20/5/2009, a las 5:35, Nicolas Pitre escribió:
-> 
-> > Having a "trash" reflog would solve this unambiguously.  That could also
-> > include your index example above.  However, in the index case, I'd
-> > record a reflog entry only if you're about to discard a previously non
-> > committed entry.  If you do:
-> > 
-> > 	$ git add foo
-> > 	$ git add bar
-> > 	$ git commit
-> > 	$ hack hack hack
-> > 	$ git add foo
-> > 
-> > then in this case there is nothing to be lost hence no additional entry
-> > in the "trash" reflog.
-> 
-> That's true in the example you provide, but it doesn't really handle Jeff's
-> initial example ("git add" twice on the same file), where it is possible to
-> throw away intermediate state (by overwriting).
-
-Did I disagree with Jeff's original example?
-
-
-Nicolas
-
---Boundary_(ID_rZVg3yiJcfevKWAOHbUObw)--
+Tony.
+-- 
+f.anthony.n.finch  <dot@dotat.at>  http://dotat.at/
+GERMAN BIGHT HUMBER: SOUTHWEST 5 TO 7. MODERATE OR ROUGH. SQUALLY SHOWERS.
+MODERATE OR GOOD.
