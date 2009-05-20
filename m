@@ -1,65 +1,60 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: How to check repository/working tree status from a script
-Date: Wed, 20 May 2009 13:32:30 +0200
-Message-ID: <4A13EA4E.9050805@viscovery.net>
-References: <20090519143537.GA23505@torres.zugschlus.de> <alpine.LSU.2.00.0905191630120.23478@hermes-2.csi.cam.ac.uk> <20090519160031.GB23505@torres.zugschlus.de> <alpine.LFD.2.01.0905190915050.3301@localhost.localdomain> <20090520111028.GA15453@torres.zugschlus.de>
+From: Johan Herland <johan@herland.net>
+Subject: Re: [PATCHv2 0/5] RESEND: git notes
+Date: Wed, 20 May 2009 13:54:53 +0200
+Message-ID: <200905201354.53501.johan@herland.net>
+References: <200905161320.45426.johan@herland.net> <cover.1242473357.git.johan@herland.net> <alpine.DEB.1.00.0905201224080.16461@intel-tinevez-2-302>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain;
+  charset="iso-8859-1"
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Marc Haber <mh+git@zugschlus.de>
-X-From: git-owner@vger.kernel.org Wed May 20 13:38:07 2009
+Cc: gitster@pobox.com, git@vger.kernel.org, trast@student.ethz.ch,
+	tavestbo@trolltech.com, git@drmicha.warpmail.net,
+	chriscool@tuxfamily.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed May 20 13:56:13 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M6k7b-000172-0E
-	for gcvg-git-2@gmane.org; Wed, 20 May 2009 13:38:07 +0200
+	id 1M6kP4-0000PD-Au
+	for gcvg-git-2@gmane.org; Wed, 20 May 2009 13:56:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756992AbZETLcV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 20 May 2009 07:32:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759527AbZETLcU
-	(ORCPT <rfc822;git-outgoing>); Wed, 20 May 2009 07:32:20 -0400
-Received: from lilzmailso01.liwest.at ([212.33.55.23]:46584 "EHLO
-	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759546AbZETLcT (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 May 2009 07:32:19 -0400
-Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
-	by lilzmailso01.liwest.at with esmtpa (Exim 4.69)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1M6k1x-00011W-C6; Wed, 20 May 2009 13:32:17 +0200
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.96])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id 1648E6D9; Wed, 20 May 2009 13:32:17 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.21 (Windows/20090302)
-In-Reply-To: <20090520111028.GA15453@torres.zugschlus.de>
-X-Spam-Score: -1.4 (-)
+	id S1754511AbZETL4A (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 20 May 2009 07:56:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754184AbZETLz7
+	(ORCPT <rfc822;git-outgoing>); Wed, 20 May 2009 07:55:59 -0400
+Received: from sam.opera.com ([213.236.208.81]:34310 "EHLO smtp.opera.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753788AbZETLz7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 May 2009 07:55:59 -0400
+Received: from pc107.coreteam.oslo.opera.com (pat-tdc.opera.com [213.236.208.22])
+	(authenticated bits=0)
+	by smtp.opera.com (8.13.4/8.13.4/Debian-3sarge3) with ESMTP id n4KBsrhP027298
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Wed, 20 May 2009 11:54:54 GMT
+User-Agent: KMail/1.9.9
+In-Reply-To: <alpine.DEB.1.00.0905201224080.16461@intel-tinevez-2-302>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119603>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119604>
 
-Marc Haber schrieb:
-> On Tue, May 19, 2009 at 09:18:12AM -0700, Linus Torvalds wrote:
->> And if what you want to know about is whether there are _new_ files you 
->> might want to check, then you need a third check: 'git ls-files'. You 
->> won't see it in the error code, but you can do
->>
->> 	others=$(git ls-files -o --exclude-standard)
->>
->> and then check it 'others' is empty or not.
-> 
-> So parsing the output is both the canonical and only way to do so
-> since there is no meaningful exit code? Can I assume that the
-> formatting of git output is not subject to change?
+On Wednesday 20 May 2009, Johannes Schindelin wrote:
+> How's the enhanced note-tree lookup going?
 
-See 'man git':
+Haven't had time to work on it, yet.
 
-"Porcelain" commands are *not* for use in scripts; their output may
-change. git diff, git status, git commit, git checkout are in this category.
+> And do you have updated the patches to attribute people who provided
+> now-squashed-in patches properly?
 
-"Plumbing" commands are for use in scripts and their output will not
-change. git ls-files, git diff-tree, git diff-files are in this category.
+Yes, I have re-rolled the commit message to include the full name (not 
+just the initials) of each contributor. Will resend when time permits. 
+Is there anything more I can do to provide proper attribution?
 
--- Hannes
+...Johan
+
+-- 
+Johan Herland, <johan@herland.net>
+www.herland.net
