@@ -1,75 +1,60 @@
 From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [RFC/PATCH] completion: complete pretty format placeholders
-Date: Wed, 20 May 2009 15:52:58 -0700
-Message-ID: <20090520225258.GT30527@spearce.org>
-References: <1242468449-3364-1-git-send-email-bebarino@gmail.com>
+Subject: Re: [PATCH] completion: use git rev-parse to detect bare repos
+Date: Wed, 20 May 2009 15:54:30 -0700
+Message-ID: <20090520225430.GU30527@spearce.org>
+References: <1242663870-11895-1-git-send-email-giuseppe.bilotta@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Stephen Boyd <bebarino@gmail.com>
-X-From: git-owner@vger.kernel.org Thu May 21 00:53:14 2009
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+X-From: git-owner@vger.kernel.org Thu May 21 00:54:37 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M6uet-0006yr-Cr
-	for gcvg-git-2@gmane.org; Thu, 21 May 2009 00:53:11 +0200
+	id 1M6ugG-0007RD-Qu
+	for gcvg-git-2@gmane.org; Thu, 21 May 2009 00:54:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756677AbZETWw6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 20 May 2009 18:52:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756649AbZETWw5
-	(ORCPT <rfc822;git-outgoing>); Wed, 20 May 2009 18:52:57 -0400
-Received: from george.spearce.org ([209.20.77.23]:55724 "EHLO
+	id S1755611AbZETWy3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 20 May 2009 18:54:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754997AbZETWy2
+	(ORCPT <rfc822;git-outgoing>); Wed, 20 May 2009 18:54:28 -0400
+Received: from george.spearce.org ([209.20.77.23]:55728 "EHLO
 	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756841AbZETWw5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 May 2009 18:52:57 -0400
+	with ESMTP id S1754760AbZETWy2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 May 2009 18:54:28 -0400
 Received: by george.spearce.org (Postfix, from userid 1001)
-	id 9F0C5381FD; Wed, 20 May 2009 22:52:58 +0000 (UTC)
+	id 2CA2E381FD; Wed, 20 May 2009 22:54:30 +0000 (UTC)
 Content-Disposition: inline
-In-Reply-To: <1242468449-3364-1-git-send-email-bebarino@gmail.com>
+In-Reply-To: <1242663870-11895-1-git-send-email-giuseppe.bilotta@gmail.com>
 User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119639>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119640>
 
-Stephen Boyd <bebarino@gmail.com> wrote:
->  This seems to work most of the time.
-> 
->  This
->     git log --pretty=format:%ad:%<TAB>
->  becomes
->     git log --pretty=format:%ad:%ad:% 
->  which is wrong.
-> 
->  But in quotes
->     git log --pretty=format:"%ad:%<TAB>
->  works.
-> 
->  I'm not sure why.
+Giuseppe Bilotta <giuseppe.bilotta@gmail.com> wrote:
+> Its check is more robust than a config check for core.bare
 
-bash oddity?  Back when I started the completion I had a lot
-of trouble with stuff like --pretty=<TAB>, or foo:<TAB> because
-bash more often than not tried to second guess what I was doing.
-I wonder if you are running against that here.
-  
+Trivially-Acked-by: Shawn O. Pearce <spearce@spearce.org>
+
 > diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-> index ad26b7c..3819c73 100755
+> index ba13c49..0c8bb53 100755
 > --- a/contrib/completion/git-completion.bash
 > +++ b/contrib/completion/git-completion.bash
-> @@ -1117,6 +1117,9 @@ __git_log_shortlog_options="
+> @@ -132,7 +132,7 @@ __git_ps1 ()
+>  		local c
 >  
->  __git_log_pretty_formats="oneline short medium full fuller email raw format:"
->  __git_log_date_formats="relative iso8601 rfc2822 short local default raw"
-> +__git_log_format_placeholders="ad aD ae aE ai an aN ar at b Cblue cd cD ce cE
-> +Cgreen ci cn cN cr Cred Creset ct d e f h H m n p P s t T x
-> +"
+>  		if [ "true" = "$(git rev-parse --is-inside-git-dir 2>/dev/null)" ]; then
+> -			if [ "true" = "$(git config --bool core.bare 2>/dev/null)" ]; then
+> +			if [ "true" = "$(git rev-parse --is-bare-repository 2>/dev/null)" ]; then
+>  				c="BARE:"
+>  			else
+>  				b="GIT_DIR!"
+> -- 
+> 1.6.3.1.137.g29aa
+> 
 
-To be honest, I'm not sure what value this provides.  Its just as
-many characters to type, isn't it, and it doesn't offer me any help
-as to which placeholder should be inserted to get the value I want.
-"Was it ae or aE that I wanted here?  WTF, manpage time!".
-  
 -- 
 Shawn.
