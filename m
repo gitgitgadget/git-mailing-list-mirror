@@ -1,76 +1,78 @@
-From: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <rene.scharfe@lsrfire.ath.cx>
-Subject: [PATCH] grep: fix word-regexp colouring
-Date: Wed, 20 May 2009 23:31:53 +0200
-Message-ID: <4A1476C9.8060900@lsrfire.ath.cx>
-References: <4A144E41.4010303@gmail.com>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: [EGIT PATCH 1/6] Make sure we get the right storage for
+	loose/pack/loose and packed refs
+Date: Wed, 20 May 2009 14:43:59 -0700
+Message-ID: <20090520214359.GQ30527@spearce.org>
+References: <20090507155117.GS30527@spearce.org> <1242774798-23639-1-git-send-email-robin.rosenberg@dewire.com> <1242774798-23639-2-git-send-email-robin.rosenberg@dewire.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Dmitry Gryazin <dosagc@gmail.com>
-X-From: git-owner@vger.kernel.org Wed May 20 23:32:09 2009
+To: Robin Rosenberg <robin.rosenberg@dewire.com>
+X-From: git-owner@vger.kernel.org Wed May 20 23:44:07 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M6tOS-0003zy-6s
-	for gcvg-git-2@gmane.org; Wed, 20 May 2009 23:32:08 +0200
+	id 1M6ta3-0000Hc-A7
+	for gcvg-git-2@gmane.org; Wed, 20 May 2009 23:44:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753334AbZETVb7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 20 May 2009 17:31:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752761AbZETVb6
-	(ORCPT <rfc822;git-outgoing>); Wed, 20 May 2009 17:31:58 -0400
-Received: from india601.server4you.de ([85.25.151.105]:59009 "EHLO
-	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751126AbZETVb6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 May 2009 17:31:58 -0400
-Received: from [10.0.1.101] (p57B7BC6E.dip.t-dialin.net [87.183.188.110])
-	by india601.server4you.de (Postfix) with ESMTPSA id A34AD2F8044;
-	Wed, 20 May 2009 23:31:58 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.21 (Windows/20090302)
-In-Reply-To: <4A144E41.4010303@gmail.com>
+	id S1754044AbZETVn7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 20 May 2009 17:43:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753579AbZETVn6
+	(ORCPT <rfc822;git-outgoing>); Wed, 20 May 2009 17:43:58 -0400
+Received: from george.spearce.org ([209.20.77.23]:36784 "EHLO
+	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753334AbZETVn6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 May 2009 17:43:58 -0400
+Received: by george.spearce.org (Postfix, from userid 1001)
+	id EC32F381FD; Wed, 20 May 2009 21:43:59 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <1242774798-23639-2-git-send-email-robin.rosenberg@dewire.com>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119634>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119635>
 
-As noticed by Dmitry Gryazin: When a pattern is found but it doesn't
-start and end at word boundaries, bol is forwarded to after the match and
-the pattern is searched again.  When a pattern is finally found between
-word boundaries, the match offsets are off by the number of characters
-that have been skipped.
+Robin Rosenberg <robin.rosenberg@dewire.com> wrote:
+> Also adds a few some more test for refs, though not complete.
 
-This patch corrects the offsets to be relative to the value of bol as
-passed to match_one_pattern() by its caller.
-
-Signed-off-by: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
----
- grep.c |    5 +++++
- 1 files changed, 5 insertions(+), 0 deletions(-)
-
-diff --git a/grep.c b/grep.c
-index 04c777a..a649f06 100644
---- a/grep.c
-+++ b/grep.c
-@@ -305,6 +305,7 @@ static int match_one_pattern(struct grep_pat *p, char *bol, char *eol,
- {
- 	int hit = 0;
- 	int saved_ch = 0;
-+	const char *start = bol;
+Hmm, tests fail, wrong expected values?
  
- 	if ((p->token != GREP_PATTERN) &&
- 	    ((p->token == GREP_PATTERN_HEAD) != (ctx == GREP_CONTEXT_HEAD)))
-@@ -365,6 +366,10 @@ static int match_one_pattern(struct grep_pat *p, char *bol, char *eol,
- 	}
- 	if (p->token == GREP_PATTERN_HEAD && saved_ch)
- 		*eol = saved_ch;
-+	if (hit) {
-+		pmatch[0].rm_so += bol - start;
-+		pmatch[0].rm_eo += bol - start;
-+	}
- 	return hit;
- }
- 
+> +	public void testReadSymRefToPacked() throws IOException {
+> +		assertEquals(Ref.Storage.LOOSE, ref.getStorage());
+
+Actual was LOOSE_PACKED.
+
+> +	public void testReadSymRefToLoosePacked() throws IOException {
+> +		assertEquals(Ref.Storage.LOOSE, ref.getStorage());
+
+Actual was LOOSE_PACKED.
+
+> +	public void testDeleteLoosePacked() throws IOException {
+> +		ObjectId pid = db.resolve("refs/heads/master^");
+> +		RefUpdate updateRef = db.updateRef("refs/heads/master");
+> +		updateRef.setNewObjectId(pid);
+> +		updateRef.setForceUpdate(true);
+> +		Result update = updateRef.update();
+> +		assertEquals(Result.FORCED, update); // internal
+> +
+> +		RefUpdate updateRef2 = db.updateRef("refs/heads/master");
+> +		Result delete = updateRef2.delete();
+> +		assertEquals(Result.FORCED, delete);
+
+Actual was Result.REJECTED_CURRENT_BRANCH.
+
+> @@ -349,12 +355,20 @@ private synchronized Ref readRefBasic(final String origName,
+> +
+> +		if (!origName.equals(name)) {
+> +			ref = new Ref(Ref.Storage.LOOSE, origName, name, id);
+> +			looseRefs.put(origName, ref);
+> +		}
+
+Seems fine, but I'm starting to hate our current way of handling
+symrefs.  Not for this series.  But its starting to worry me.
+
 -- 
-1.6.3.1
+Shawn.
