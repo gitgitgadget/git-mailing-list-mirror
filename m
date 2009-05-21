@@ -1,87 +1,119 @@
-From: Avery Pennarun <apenwarr@gmail.com>
-Subject: Re: Submodules and merge conflicts
-Date: Thu, 21 May 2009 16:31:39 -0400
-Message-ID: <32541b130905211331u47be06afrcff2e01f0c666680@mail.gmail.com>
-References: <1242912120853-2951928.post@n2.nabble.com>
+From: Stephen Boyd <bebarino@gmail.com>
+Subject: Re: [PATCHv2 1/2] parse-options: add PARSE_OPT_LITERAL_ARGHELP for
+ complicated argh's
+Date: Thu, 21 May 2009 14:27:25 -0700
+Message-ID: <4A15C73D.3010301@gmail.com>
+References: <1242557224-8411-1-git-send-email-bebarino@gmail.com>	 <fbaa26d941f496efefc30e298f5534f8194ee716.1242891030.git.bebarino@gmail.com>	 <7v3aaybewo.fsf@alter.siamese.dyndns.org>	 <4A1586A7.9000909@lsrfire.ath.cx> <780e0a6b0905211203g3223fe3fp5eed27ebf244394a@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Henk <henk_westhuis@hotmail.com>
-X-From: git-owner@vger.kernel.org Thu May 21 22:32:10 2009
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Jakub Narebski <jnareb@gmail.com>,
+	Sverre Rabbelier <srabbelier@gmail.com>
+To: =?ISO-8859-1?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
+X-From: git-owner@vger.kernel.org Thu May 21 23:32:20 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M7Evx-0004vi-MR
-	for gcvg-git-2@gmane.org; Thu, 21 May 2009 22:32:10 +0200
+	id 1M7Fnd-0002nI-48
+	for gcvg-git-2@gmane.org; Thu, 21 May 2009 23:27:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754898AbZEUUcA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 21 May 2009 16:32:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754667AbZEUUb7
-	(ORCPT <rfc822;git-outgoing>); Thu, 21 May 2009 16:31:59 -0400
-Received: from yx-out-2324.google.com ([74.125.44.30]:59712 "EHLO
-	yx-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754597AbZEUUb7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 May 2009 16:31:59 -0400
-Received: by yx-out-2324.google.com with SMTP id 3so801116yxj.1
-        for <git@vger.kernel.org>; Thu, 21 May 2009 13:31:59 -0700 (PDT)
+	id S1752749AbZEUV1c convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 21 May 2009 17:27:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753951AbZEUV1b
+	(ORCPT <rfc822;git-outgoing>); Thu, 21 May 2009 17:27:31 -0400
+Received: from rv-out-0506.google.com ([209.85.198.237]:9422 "EHLO
+	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753847AbZEUV1a (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 May 2009 17:27:30 -0400
+Received: by rv-out-0506.google.com with SMTP id f9so447398rvb.1
+        for <git@vger.kernel.org>; Thu, 21 May 2009 14:27:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=8sSqUOide50BaRfAoNZpTDDG9kOhDNHj2aGqXUIiQQ0=;
-        b=CgRgueJjSdkHWrAo7wWy6zGP3ap42sXSCLtwfZJrrPCYkpPGDBHBJhIyDD8dtu4zfq
-         UnK4wVg8N9R67hOQ506E5q61b3VKRdqR+Zw/HZZldmqSQ3gVvwV0a8DLbihdaAPgyvrz
-         1ha1s1CW4OaTI3f7ShhDmgK63XFUB2IfPSvvQ=
+        h=domainkey-signature:received:received:message-id:date:from
+         :user-agent:mime-version:to:cc:subject:references:in-reply-to
+         :content-type:content-transfer-encoding;
+        bh=oO1pkxhg9VE99E9hWRXW0cphMkFq0WW71Farx4kQmhQ=;
+        b=B7ST9fC0jVvNT96MhwS/pvKJ6ulRnRVv+WrE5ewCx3JUlRbzRYogj4JqE4pBcWEo/e
+         u/xuBO4eT4BYk+yrCEMjDtbgdy/mSIMcY1VfzgAZMSdfVe8DiNOMh82YwfA2x/f6Ivdn
+         hi5o8xs0PXc/3qMlzSXCjtQtUker42X/pLVLM=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=j3obZlKFUIiwFyjHnnXK249vZ0LSfbaTkUcxdFqAGbdsSPy6aOqF/OqYXoLll1k42+
-         SmsV+rqGqvLgtlLLDlzuikMy1zelN9ULRqPSg6TP7PENoiTHm8hOoyLU7VWJHX9QS6XK
-         DI4vpXwM8h+7C6myhgroWhBN0/Pf1fNZP1xiU=
-Received: by 10.150.136.15 with SMTP id j15mr5871586ybd.260.1242937919099; 
-	Thu, 21 May 2009 13:31:59 -0700 (PDT)
-In-Reply-To: <1242912120853-2951928.post@n2.nabble.com>
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        b=XBu5/9Iwr79COCFyiDDbZjrmB+UXtvxd6wDUFRwgrVRmMr7mZqzl0nXdBQYPClwPcf
+         or3uV3v9Aczs8BAPt5lOWDxjU3lkEZkeklVbnFn+3ELpKzAYtuSQbZMrEVbMATEeLbEJ
+         vM1SOB7xLkSE9k3HZrpCZdfBSgqwtHs38pkbY=
+Received: by 10.141.48.6 with SMTP id a6mr1423072rvk.36.1242941250230;
+        Thu, 21 May 2009 14:27:30 -0700 (PDT)
+Received: from ?192.168.1.2? ([76.89.212.195])
+        by mx.google.com with ESMTPS id k41sm8247386rvb.7.2009.05.21.14.27.26
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Thu, 21 May 2009 14:27:28 -0700 (PDT)
+User-Agent: Thunderbird 2.0.0.21 (X11/20090429)
+In-Reply-To: <780e0a6b0905211203g3223fe3fp5eed27ebf244394a@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119706>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119707>
 
-On Thu, May 21, 2009 at 9:22 AM, Henk <henk_westhuis@hotmail.com> wrote:
-> Instead of using the sha1 of a specific revision in the submodule, I would
-> find it more logical to use a branch-name or tag. This way you can commit on
-> the submodule without having to commit the new submodule revision to the
-> main repository also.
+Stephen Boyd wrote:
+> On Thu, May 21, 2009 at 9:51 AM, Ren=C3=A9 Scharfe
+> <rene.scharfe@lsrfire.ath.cx> wrote:
+>> Junio C Hamano schrieb:
+>>> Hmmm, why does this break t0040 (I am queuing this on top of 5acb3e=
+5)?
+>> Probably because it changes this:
+>>
+>> =C2  =C2  =C2  =C2 pos +=3D fprintf(...);
+>>
+>> into this (simplified, usage_argh() expanded):
+>>
+>> =C2  =C2  =C2  =C2 pos +=3D pos + fprintf(...);
+>>
+>> usage_argh() doesn't need the parameter pos.
+>>
+>> Ren=C3=A9
+>>
 >
-> I would like to hear your thoughts on this. Maybe we are using submodules
-> wrong, or maybe this is already possible.
+> Woops. I thought I ran the tests but I guess I didn't. This is the
+> correct fix, thanks.
 
-The primary advantage of the git submodule code is the ability to lock
-to a specific sha1.  If you don't want to do that, you're not going to
-get much benefit from using submodules.
+And here's the patch you can squash in.
 
-One option here is to simply skip the 'git submodule' altogether and
-just have a script that checks out the other git repositories into
-subdirs.  Then you have total control over which branches, etc are
-included, the changes to the script (eg. to change which branch you
-want to use) can be merged just like changes to anything else.
+diff --git a/parse-options.c b/parse-options.c
+index 2b880b1..e8955be 100644
+--- a/parse-options.c
++++ b/parse-options.c
+@@ -361,7 +361,7 @@ int parse_options(int argc, const char **argv, cons=
+t struct option *options,
+        return parse_options_end(&ctx);
+ }
 
-We do something in between on our internal projects: we use git
-submodules to lock in the sha-1 (it's really valuable to know
-*exactly* which version of everything was used in a particular
-release), but we have scripts to auto-update the sha-1 for each
-submodule to the tip of the right branches.
+-static int usage_argh(const struct option *opts, int pos)
++static int usage_argh(const struct option *opts)
+ {
+        const char *s;
+        int literal =3D opts->flags & PARSE_OPT_LITERAL_ARGHELP;
+@@ -372,7 +372,7 @@ static int usage_argh(const struct option *opts, in=
+t pos)
+                        s =3D literal ? "[%s]" : "[<%s>]";
+        else
+                s =3D literal ? " %s" : " <%s>";
+-       return pos + fprintf(stderr, s, opts->argh);
++       return fprintf(stderr, s, opts->argh);
+ }
 
-For some other projects, we also use the git-subtree tool I developed
-(http://alumnit.ca/~apenwarr/log/?m=200904#30) but given that your
-submodules are huge things like the Linux kernel, it's probably not
-appropriate in your case.  You might want to look at it anyway in case
-I'm wrong.
-
-Have fun,
-
-Avery
+ #define USAGE_OPTS_WIDTH 24
+@@ -436,7 +436,7 @@ int usage_with_options_internal(const char * const =
+*usagestr,
+                        /* FALLTHROUGH */
+                case OPTION_STRING:
+                        if (opts->argh)
+-                               pos +=3D usage_argh(opts, pos);
++                               pos +=3D usage_argh(opts);
+                        else {
+                                if (opts->flags & PARSE_OPT_OPTARG)
+                                        if (opts->long_name)
