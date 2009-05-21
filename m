@@ -1,60 +1,69 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] apply: handle filenames with double slashes better
-Date: Thu, 21 May 2009 12:22:16 -0700
-Message-ID: <7vws8a9s7r.fsf@alter.siamese.dyndns.org>
-References: <20090521122511.GA31614@sepie.suse.cz>
-	<7vd4a2bj3p.fsf@alter.siamese.dyndns.org>
-	<20090521191204.GA29362@sepie.suse.cz>
+From: skillzero@gmail.com
+Subject: git merge remote branch says "Merge commit ..."?
+Date: Thu, 21 May 2009 12:50:48 -0700
+Message-ID: <2729632a0905211250v4e7537caybe9e703c14361b5f@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Michal Marek <mmarek@suse.cz>
-X-From: git-owner@vger.kernel.org Thu May 21 21:23:05 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu May 21 21:51:09 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M7Dr3-0000tm-95
-	for gcvg-git-2@gmane.org; Thu, 21 May 2009 21:23:01 +0200
+	id 1M7EI7-0004hL-7E
+	for gcvg-git-2@gmane.org; Thu, 21 May 2009 21:50:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754004AbZEUTWU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 21 May 2009 15:22:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753654AbZEUTWU
-	(ORCPT <rfc822;git-outgoing>); Thu, 21 May 2009 15:22:20 -0400
-Received: from fed1rmmtao101.cox.net ([68.230.241.45]:39460 "EHLO
-	fed1rmmtao101.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753362AbZEUTWT (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 May 2009 15:22:19 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao101.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20090521192217.NNDE17670.fed1rmmtao101.cox.net@fed1rmimpo01.cox.net>;
-          Thu, 21 May 2009 15:22:17 -0400
-Received: from localhost ([68.225.240.211])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id uKNG1b00K4aMwMQ03KNGwg; Thu, 21 May 2009 15:22:16 -0400
-X-Authority-Analysis: v=1.0 c=1 a=YytS7IVUZiMA:10 a=MBz2rtpSkVcA:10
- a=rtW5m38tb8FSwb90NdoA:9 a=MCRtbqmO-zdkzDump98cu3lj6JYA:4
-X-CM-Score: 0.00
-In-Reply-To: <20090521191204.GA29362@sepie.suse.cz> (Michal Marek's message of "Thu\, 21 May 2009 21\:12\:04 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+	id S1754763AbZEUTus (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 21 May 2009 15:50:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754538AbZEUTus
+	(ORCPT <rfc822;git-outgoing>); Thu, 21 May 2009 15:50:48 -0400
+Received: from yw-out-2324.google.com ([74.125.46.30]:23404 "EHLO
+	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754568AbZEUTur (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 May 2009 15:50:47 -0400
+Received: by yw-out-2324.google.com with SMTP id 5so787687ywb.1
+        for <git@vger.kernel.org>; Thu, 21 May 2009 12:50:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:date:message-id:subject
+         :from:to:content-type:content-transfer-encoding;
+        bh=d+YCuCbMQiz2N2UrQ35ngvAI/7l6dsYNPkFbOtD8kxg=;
+        b=p5HaXNqs6hpTFUFxTuclljWrCXIrLc5nDG7GJikAV/tCAWRFdKb+8YYOeYFd8+rK7J
+         oL+B7uKeGxCwXBjczpj49B/xCPYR2DPdtJXTPYtHL0n3ZPYRS2PkablkS46rUC8Tfdkb
+         HSnPVJDDWfi8DOl6rPuqEhLmevh9OUHgUouzk=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:date:message-id:subject:from:to:content-type
+         :content-transfer-encoding;
+        b=VF70FNRdbi3jZTT5aWjISsUdyFbPQqiQT478Eu7b6mSMX/4J/I7x0A0WdcID5A8ilW
+         SBhX0d0Vr4XOGT8ROzo1C/r1GwxG8GCR9GtK82pO1ROcsIu815yU7ZkBzKYFzqAame8s
+         QOT3vZJDOrE1Uk25XybeCX4YzAAfuvL/SRMvk=
+Received: by 10.100.140.15 with SMTP id n15mr5753591and.83.1242935448496; Thu, 
+	21 May 2009 12:50:48 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119703>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119704>
 
-Michal Marek <mmarek@suse.cz> writes:
+I noticed that if I do 'git merge origin/branch' that the log message
+says (using --log):
 
-> I tried this, but I'm not sure it's better now (and there might be some
-> inconsistencies left). IMHO removing the double slashes is an operation
-> similar to the unquoting done in find_name(), i.e. converting the text
-> in the patch to something that can be passed to lstat() or
-> cache_name_lookup().
+Merge commit 'origin/branch'
 
-Ok, you convinced me.
+   * commit 'origin/branch':
+     Fixed some bug.
 
-Let's take your first patch with just the s/canon_name/squash_slash/
-change.
+If I do the same thing from a local tracking branch of origin/branch, it says:
 
-Thanks.
+Merge branch 'branch'
+
+   * branch:
+     Fixed some bug.
+
+Is it expected that it say "commit" instead of "branch" when the
+branch is not a local tracking branch? I sometimes merge from remote
+branches when I don't need to do anything with that branch locally
+(e.g. I already did the work on another computer and I'm just merging
+the result into my test machine before I push to the shared server).
