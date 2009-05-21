@@ -1,70 +1,75 @@
-From: Tony Finch <dot@dotat.at>
-Subject: Re: git doesn't append ".git" to url WAS [PATCH 0/3] http*: refactor
-  fetching code (v2)
-Date: Thu, 21 May 2009 15:29:48 +0100
-Message-ID: <alpine.LSU.2.00.0905211518430.23333@hermes-2.csi.cam.ac.uk>
-References: <be6fef0d0905210717j174499f5k4740dc2f821bec62@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v3] git-svn: add --authors-prog option
+Date: Thu, 21 May 2009 07:30:18 -0700
+Message-ID: <7vljoqbkat.fsf@alter.siamese.dyndns.org>
+References: <20090510003509.GA2000@dcvr.yhbt.net>
+	<1242350835-22684-1-git-send-email-lodatom@gmail.com>
+	<20090521084343.GA6401@dcvr.yhbt.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Tay Ray Chuan <rctay89@gmail.com>
-X-From: git-owner@vger.kernel.org Thu May 21 16:29:58 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Alex Vandiver <alexmv@MIT.EDU>,
+	Eygene Ryabinkin <rea-git@codelabs.ru>,
+	Michael J Gruber <git@drmicha.warpmail.net>,
+	Mark Lodato <lodatom@gmail.com>
+To: Eric Wong <normalperson@yhbt.net>
+X-From: git-owner@vger.kernel.org Thu May 21 16:30:36 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M79HS-0007Kq-0N
-	for gcvg-git-2@gmane.org; Thu, 21 May 2009 16:29:58 +0200
+	id 1M79Hx-0007c9-Ja
+	for gcvg-git-2@gmane.org; Thu, 21 May 2009 16:30:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753705AbZEUO3t (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 21 May 2009 10:29:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752989AbZEUO3s
-	(ORCPT <rfc822;git-outgoing>); Thu, 21 May 2009 10:29:48 -0400
-Received: from ppsw-5.csi.cam.ac.uk ([131.111.8.135]:39291 "EHLO
-	ppsw-5.csi.cam.ac.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753352AbZEUO3r (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 May 2009 10:29:47 -0400
-X-Cam-AntiVirus: no malware found
-X-Cam-SpamDetails: not scanned
-X-Cam-ScannerInfo: http://www.cam.ac.uk/cs/email/scanner/
-Received: from hermes-2.csi.cam.ac.uk ([131.111.8.54]:41879)
-	by ppsw-5.csi.cam.ac.uk (smtp.hermes.cam.ac.uk [131.111.8.155]:25)
-	with esmtpa (EXTERNAL:fanf2) id 1M79HI-0004DZ-Gv (Exim 4.70)
-	(return-path <fanf2@hermes.cam.ac.uk>); Thu, 21 May 2009 15:29:48 +0100
-Received: from fanf2 (helo=localhost) by hermes-2.csi.cam.ac.uk (hermes.cam.ac.uk)
-	with local-esmtp id 1M79HI-00005f-7T (Exim 4.67)
-	(return-path <fanf2@hermes.cam.ac.uk>); Thu, 21 May 2009 15:29:48 +0100
-X-X-Sender: fanf2@hermes-2.csi.cam.ac.uk
-In-Reply-To: <be6fef0d0905210717j174499f5k4740dc2f821bec62@mail.gmail.com>
-User-Agent: Alpine 2.00 (LSU 1167 2008-08-23)
+	id S1753857AbZEUOaT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 21 May 2009 10:30:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753847AbZEUOaS
+	(ORCPT <rfc822;git-outgoing>); Thu, 21 May 2009 10:30:18 -0400
+Received: from fed1rmmtao105.cox.net ([68.230.241.41]:54789 "EHLO
+	fed1rmmtao105.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753738AbZEUOaR (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 May 2009 10:30:17 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao105.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20090521143018.CBRF20430.fed1rmmtao105.cox.net@fed1rmimpo01.cox.net>;
+          Thu, 21 May 2009 10:30:18 -0400
+Received: from localhost ([68.225.240.211])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id uEWJ1b0034aMwMQ03EWJJC; Thu, 21 May 2009 10:30:18 -0400
+X-Authority-Analysis: v=1.0 c=1 a=UjTZZmnVF2gA:10 a=xLGSft7owA8A:10
+ a=Hbzmh3xeAAAA:8 a=pGLkceISAAAA:8 a=Ee8u8gBEAAAA:8 a=-zBy0DUhNBB0qEmutNQA:9
+ a=dd8VuJBKmqMjh2dqCYluMzDzQRUA:4 a=BEwxGj72lFYA:10 a=MSl-tDqOz04A:10
+X-CM-Score: 0.00
+In-Reply-To: <20090521084343.GA6401@dcvr.yhbt.net> (Eric Wong's message of "Thu\, 21 May 2009 01\:43\:43 -0700")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119685>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119686>
 
-On Thu, 21 May 2009, Tay Ray Chuan wrote:
+Eric Wong <normalperson@yhbt.net> writes:
+
+> Mark Lodato <lodatom@gmail.com> wrote:
+>> Signed-off-by: Mark Lodato <lodatom@gmail.com>
 >
-> are your friends hosting non-bare repositories directly (with
-> checked-out copies)? In the first place, this isn't a good idea;
+> Thanks again Mark, sorry again for the late response, it's been
+> a long few weeks for me.
+>
+> Acked-by: Eric Wong <normalperson@yhbt.net>
+>
+> And pushed out to git://git.bogomips.org/git-svn along with
+> a few others that I had acked:
+>
+> Alex Vandiver (3):
+>       git-svn: Fix for svn paths removed > log-window-size revisions ago
+>       git-svn: Correctly report max revision when following deleted paths
+>       git-svn: Set svn.authorsfile if it is passed to git svn clone
+>
+> Eygene Ryabinkin (1):
+>       git-svn testsuite: use standard configuration for Subversion tools
+>
+> Mark Lodato (1):
+>       git-svn: add --authors-prog option
 
-Yes, and yes we all know that this is discouraged.
-
-There are two bugs. Git's error message is misleading: the problem is
-nothing to do with running git update-server-info (see below). Its
-behaviour is inconsistent: git retries after appending .git if you are
-fetching from a local repository or ssh:// or git:// URLs but not for
-http:// URLs.
-
-$ git clone http://www.greenend.org.uk/rjk/
-Initialized empty Git repository in /tmp/rjk/.git/
-fatal: http://www.greenend.org.uk/rjk//info/refs not found: did you run git update-server-info on the server?
-
-Actually maybe there's a third bug: it says it has initialized
-a repository but it removes it again if the clone fails.
-
-Tony.
--- 
-f.anthony.n.finch  <dot@dotat.at>  http://dotat.at/
-GERMAN BIGHT HUMBER: SOUTHWEST 5 TO 7. MODERATE OR ROUGH. SQUALLY SHOWERS.
-MODERATE OR GOOD.
+Thanks, pulled.
