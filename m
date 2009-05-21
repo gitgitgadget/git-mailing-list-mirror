@@ -1,71 +1,126 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Reverting an uncommitted revert
-Date: Wed, 20 May 2009 23:16:17 -0700
-Message-ID: <7vk54bc766.fsf@alter.siamese.dyndns.org>
-References: <4A136C40.6020808@workspacewhiz.com>
-	<alpine.LFD.2.00.0905192300070.3906@xanadu.home>
-	<20090520032139.GB10212@coredump.intra.peff.net>
-	<alpine.LFD.2.00.0905192328310.3906@xanadu.home>
-	<025225A0-FACC-4A29-A747-40201A7FBA19@wincent.com>
-	<alpine.LFD.2.00.0905200853010.3906@xanadu.home>
-	<20090520141709.GO30527@spearce.org>
-	<7vab57zmd8.fsf@alter.siamese.dyndns.org>
-	<alpine.LFD.2.00.0905201406280.3906@xanadu.home>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [PATCH v3 0/2] Re: user-manual: general improvements
+Date: Thu, 21 May 2009 10:17:45 +0300
+Message-ID: <94a0d4530905210017x1ce3e32bk3b1fbf9044377763@mail.gmail.com>
+References: <1241650416-12224-1-git-send-email-felipe.contreras@gmail.com>
+	 <20090507072326.GA13123@vidovic>
+	 <7veiv0cvdt.fsf@alter.siamese.dyndns.org>
+	 <20090508042814.GA30031@vidovic>
+	 <94a0d4530905131430q2250a43ei692265c3f32b5715@mail.gmail.com>
+	 <20090514160609.GA12910@vidovic>
+	 <7vvdnvtf2n.fsf@alter.siamese.dyndns.org>
+	 <20090521041529.GD8091@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Shawn O. Pearce" <spearce@spearce.org>,
-	Wincent Colaiuta <win@wincent.com>, Jeff King <peff@peff.net>,
-	Joshua Jensen <jjensen@workspacewhiz.com>, git@vger.kernel.org
-To: Nicolas Pitre <nico@cam.org>
-X-From: git-owner@vger.kernel.org Thu May 21 08:16:35 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Nicolas Sebrecht <nicolas.s.dev@gmx.fr>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu May 21 09:17:58 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M71Zq-0007dq-LL
-	for gcvg-git-2@gmane.org; Thu, 21 May 2009 08:16:27 +0200
+	id 1M72XN-0004sW-AC
+	for gcvg-git-2@gmane.org; Thu, 21 May 2009 09:17:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751216AbZEUGQS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 21 May 2009 02:16:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751034AbZEUGQR
-	(ORCPT <rfc822;git-outgoing>); Thu, 21 May 2009 02:16:17 -0400
-Received: from fed1rmmtao105.cox.net ([68.230.241.41]:37339 "EHLO
-	fed1rmmtao105.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750853AbZEUGQQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 May 2009 02:16:16 -0400
-Received: from fed1rmimpo03.cox.net ([70.169.32.75])
-          by fed1rmmtao105.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20090521061617.OUZP20430.fed1rmmtao105.cox.net@fed1rmimpo03.cox.net>;
-          Thu, 21 May 2009 02:16:17 -0400
-Received: from localhost ([68.225.240.211])
-	by fed1rmimpo03.cox.net with bizsmtp
-	id u6GH1b00D4aMwMQ046GHMn; Thu, 21 May 2009 02:16:18 -0400
-X-Authority-Analysis: v=1.0 c=1 a=6VC1-P1-AAAA:8 a=uy3BJzjmVHgcyDdf62kA:9
- a=7StXrWUCn8xhnnql1LZgP6WDuecA:4 a=LRnQQUT8V1QA:10
-X-CM-Score: 0.00
-In-Reply-To: <alpine.LFD.2.00.0905201406280.3906@xanadu.home> (Nicolas Pitre's message of "Wed\, 20 May 2009 14\:19\:09 -0400 \(EDT\)")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+	id S1751383AbZEUHRr convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 21 May 2009 03:17:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751408AbZEUHRq
+	(ORCPT <rfc822;git-outgoing>); Thu, 21 May 2009 03:17:46 -0400
+Received: from mail-fx0-f158.google.com ([209.85.220.158]:43213 "EHLO
+	mail-fx0-f158.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751307AbZEUHRp convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 21 May 2009 03:17:45 -0400
+Received: by fxm2 with SMTP id 2so854486fxm.37
+        for <git@vger.kernel.org>; Thu, 21 May 2009 00:17:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=W56C+4iSuIzZ9xV0pLU5vsOP15CRltI9PafpK8ZoJOQ=;
+        b=wCh18bgBp9nqyMQCRlEf7FtkdTc+Ao0RaQRslwdeSDbbBiamgSoR45eL0aE6kRb4HA
+         gqU1/WYto/8IVJOQuARynHIcrY7A4fVumrHm+gmg5Tvv1S2jEODLPbeIzgrPtLqE16Q6
+         lET6MW0GMc9Bvt1MaN+hQyEo7tlk/1cKSshdg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=h8+GGtJ3FFGkCEk8dX/WjklPZETpjgSH7C2sUa79DhP7sW9RWzgJD7/nSEk0n1F+HD
+         cB5D2ekx3FYocLAa+SP9+7guxwOON6ZyMXQ7Z3Ti6G7hvOuP3DSSsXgon2B05GoP7e/u
+         E5M4ZsojCjCNI3ZVmPKCJO6U40RwZnb7WXY7s=
+Received: by 10.86.83.15 with SMTP id g15mr1065954fgb.64.1242890265674; Thu, 
+	21 May 2009 00:17:45 -0700 (PDT)
+In-Reply-To: <20090521041529.GD8091@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119657>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119658>
 
-Nicolas Pitre <nico@cam.org> writes:
-
->>  (1) When would you "auto" write-tree?  When you do "git add" or anything
->>      that adds new contents to the index?  Or immediately before you do
->>      something destructive like "git reset"?  Or perhaps both?
+On Thu, May 21, 2009 at 7:15 AM, Jeff King <peff@peff.net> wrote:
+> On Wed, May 20, 2009 at 06:33:36PM -0700, Junio C Hamano wrote:
 >
-> Delaying any IO until it is clear that something is to be discarded is 
-> the best approach performance wise.  So perhaps not on the first 'git 
-> add' but certainly on the second one with an already cached path for 
-> which new (different) content is going to replace previous content.
+>> >> http://people.freedesktop.org/~felipec/git/user-manual-general-im=
+provements/
+>> >
+>> > Thank you very much Felipe to take the time to upload the patches =
+there.
+>> > I already have a copy there and I'll look at it soon.
+>>
+>> Has anybody looked at this? =C2=A0It's a bit large-ish and touches a=
+ll over the
+>> place, so I am finding it a bit hard to concentrate on it myself rea=
+lly
+>> nitpicking, but from the cursory look after formatting the result lo=
+oked
+>> Ok.
+>
+> I started to, but the first commit message is lacking something that =
+I
+> think would make reviewing much simpler: what are the general classes=
+ of
+> changes that are being made?
+>
+> I see some doublequotes becoming backticks, and some becoming single
+> quotes. And some becoming tex-quotes (``...''), and even some becomin=
+g
+> doublequotes _with_ single quotes. It would be easier to verify that
+> they are doing the right thing if the commit message briefly describe=
+d
+> the rules it followed for changing each one. I think they are somethi=
+ng
+> like:
+>
+> =C2=A0- tex-quotes if it was really a prose-style quotation
+>
+> =C2=A0- backticks (causing monospace) for branch names, commands, etc=
+ in
+> =C2=A0 =C2=A0prose
+>
+> but that leaves me confused. Some things which I thought should be in
+> monospace backticks are in single-quotes (causing emphasis). Like
+> 'master' or 'linux-2.6'. And some things are emphasized and in double
+> quotes in the prose, like '"o"' or '"branch A"'. What is the rule to
+> decide which text should have visible doublequotes but also be
+> emphasized, as opposed to just having double-quotes or just being
+> emphasized?
+>
+> Maybe this was even discussed earlier in the thread (I didn't go back=
+ to
+> look), but it should definitely be part of the commit message.
 
-I hope that you are not forgetting that it costs cycles to determine "it
-is clear that something is to be discarded".
+The rule I followed is: change it to whatever looks best.
 
-The "diff-index --cached" optimization I did today may help, as it would
-allow you to check with the last trash-log more cheaply, but it certainly
-is not free.
+I followed some guidelines such as: make common text monospace, such
+as gitk and master. And emphasize whatever needs emphasizing, such as
+fb47ddb2db. Examples are both monospace *and* emphasized.
+
+Sometimes the end result still didn't look good so I just used
+whatever looked best.
+
+Have you actually looked at the end result?
+
+--=20
+=46elipe Contreras
