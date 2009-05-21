@@ -1,174 +1,67 @@
-From: Nicolas Sebrecht <nicolas.s.dev@gmx.fr>
-Subject: [PATCH v3 0/2] Re: user-manual: general improvements
-Date: Thu, 21 May 2009 15:18:02 +0200
-Message-ID: <20090521131802.GA13840@vidovic>
-References: <1241650416-12224-1-git-send-email-felipe.contreras@gmail.com> <20090507072326.GA13123@vidovic> <7veiv0cvdt.fsf@alter.siamese.dyndns.org> <20090508042814.GA30031@vidovic> <94a0d4530905131430q2250a43ei692265c3f32b5715@mail.gmail.com> <20090514160609.GA12910@vidovic> <7vvdnvtf2n.fsf@alter.siamese.dyndns.org> <20090521041529.GD8091@sigill.intra.peff.net> <94a0d4530905210017x1ce3e32bk3b1fbf9044377763@mail.gmail.com>
+From: Henk <henk_westhuis@hotmail.com>
+Subject: Submodules and merge conflicts
+Date: Thu, 21 May 2009 06:22:00 -0700 (PDT)
+Message-ID: <1242912120853-2951928.post@n2.nabble.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-	Nicolas Sebrecht <nicolas.s.dev@gmx.fr>, git@vger.kernel.org
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Thu May 21 15:18:21 2009
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu May 21 15:22:09 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M78A7-0006yu-3i
-	for gcvg-git-2@gmane.org; Thu, 21 May 2009 15:18:19 +0200
+	id 1M78Do-0000GH-0v
+	for gcvg-git-2@gmane.org; Thu, 21 May 2009 15:22:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753010AbZEUNSL convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 21 May 2009 09:18:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751629AbZEUNSJ
-	(ORCPT <rfc822;git-outgoing>); Thu, 21 May 2009 09:18:09 -0400
-Received: from fg-out-1718.google.com ([72.14.220.157]:6144 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751325AbZEUNSI (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 May 2009 09:18:08 -0400
-Received: by fg-out-1718.google.com with SMTP id 16so379451fgg.17
-        for <git@vger.kernel.org>; Thu, 21 May 2009 06:18:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:sender:date:from:to:cc
-         :subject:message-id:references:mime-version:content-type
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=8gZrNISSzmM41b8IiIChj7SFVJYgjBp3kXE30hy4W/8=;
-        b=XB0bTaYcJ3t/otO0jvyMHGKYjZuS/PjgaPhFcAJmO5mdZDQspivQ/1EEYuNN6d/x9Q
-         3mi2B4ysfGgStiqKIvb7fjNEKTsi0443DOmXBpPWE8XKs1RK5DDUTroBBwc2L+vx/H+7
-         8iFrsjY3FAFIujLmUvmvodWwprbWFSAsQG86U=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=sender:date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=LVWS9qimCgfc8ocS9nAtlcDenD0H76aFKOzAf5WIcA0DKXEEipeAKT6VChXaNny3av
-         mqdX/s9Kozf8k/lO9uu0QsIbjka68GchCPbY4Ol0ubxitsDzoJ722ccKwxfZSCPCCi4m
-         oOeA9n9NGq6uojEb9k9Lbf8V78RiZdPuQpvi4=
-Received: by 10.86.86.2 with SMTP id j2mr2188248fgb.50.1242911888273;
-        Thu, 21 May 2009 06:18:08 -0700 (PDT)
-Received: from @ (91-164-141-247.rev.libertysurf.net [91.164.141.247])
-        by mx.google.com with ESMTPS id 3sm1018999fge.9.2009.05.21.06.18.04
-        (version=SSLv3 cipher=RC4-MD5);
-        Thu, 21 May 2009 06:18:05 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <94a0d4530905210017x1ce3e32bk3b1fbf9044377763@mail.gmail.com>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+	id S1753986AbZEUNWA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 21 May 2009 09:22:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753705AbZEUNWA
+	(ORCPT <rfc822;git-outgoing>); Thu, 21 May 2009 09:22:00 -0400
+Received: from kuber.nabble.com ([216.139.236.158]:44171 "EHLO
+	kuber.nabble.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753392AbZEUNV7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 May 2009 09:21:59 -0400
+Received: from tervel.nabble.com ([192.168.236.150])
+	by kuber.nabble.com with esmtp (Exim 4.63)
+	(envelope-from <lists+1217463532682-661346@n2.nabble.com>)
+	id 1M78Dg-0003kQ-Rl
+	for git@vger.kernel.org; Thu, 21 May 2009 06:22:00 -0700
+X-Nabble-From: henk_westhuis@hotmail.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119675>
-
-The 21/05/09, Felipe Contreras wrote:
-> On Thu, May 21, 2009 at 7:15 AM, Jeff King <peff@peff.net> wrote:
-> > On Wed, May 20, 2009 at 06:33:36PM -0700, Junio C Hamano wrote:
-> >
-> >> >> http://people.freedesktop.org/~felipec/git/user-manual-general-=
-improvements/
-> >> >
-> >> > Thank you very much Felipe to take the time to upload the patche=
-s there.
-> >> > I already have a copy there and I'll look at it soon.
-> >>
-> >> Has anybody looked at this? =A0It's a bit large-ish and touches al=
-l over the
-> >> place, so I am finding it a bit hard to concentrate on it myself r=
-eally
-> >> nitpicking, but from the cursory look after formatting the result =
-looked
-> >> Ok.
-> >
-> > I started to, but the first commit message is lacking something tha=
-t I
-> > think would make reviewing much simpler: what are the general class=
-es of
-> > changes that are being made?
-> >
-> > I see some doublequotes becoming backticks, and some becoming singl=
-e
-> > quotes. And some becoming tex-quotes (``...''), and even some becom=
-ing
-> > doublequotes _with_ single quotes. It would be easier to verify tha=
-t
-> > they are doing the right thing if the commit message briefly descri=
-bed
-> > the rules it followed for changing each one. I think they are somet=
-hing
-> > like:
-> >
-> > =A0- tex-quotes if it was really a prose-style quotation
-> >
-> > =A0- backticks (causing monospace) for branch names, commands, etc =
-in
-> > =A0 =A0prose
-> >
-> > but that leaves me confused. Some things which I thought should be =
-in
-> > monospace backticks are in single-quotes (causing emphasis). Like
-> > 'master' or 'linux-2.6'. And some things are emphasized and in doub=
-le
-> > quotes in the prose, like '"o"' or '"branch A"'. What is the rule t=
-o
-> > decide which text should have visible doublequotes but also be
-> > emphasized, as opposed to just having double-quotes or just being
-> > emphasized?
-> >
-> > Maybe this was even discussed earlier in the thread (I didn't go ba=
-ck to
-> > look), but it should definitely be part of the commit message.
-
-Agreed.
-
-> The rule I followed is: change it to whatever looks best.
->=20
-> I followed some guidelines such as: make common text monospace, such
-> as gitk and master. And emphasize whatever needs emphasizing, such as
-> fb47ddb2db. Examples are both monospace *and* emphasized.
->=20
-> Sometimes the end result still didn't look good so I just used
-> whatever looked best.
-
-IHMO, "what looks best" is not the best way to enhance the user manual
-because it may be somewhat confusing.
-
-Without being as strict as in the manpages we should have good rules to
-display the commands, branch names, etc to the end-users all over the
-manual (think SYNOPSIS). For example, all branch names in the text coul=
-d
-be "italic, green, without quotes". Now, in the paragraph "Fetching
-individual branches" we have
-
-  will create a new branch named '"example-master"' and store in it the
-  branch named '"master"' from the repository at the given URL.  If you
-  already have a branch named 'example-master', it will attempt to
-
-where the branch name /example-master/ has two different occurences _wi=
-th_
-and _without_ quotes.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119676>
 
 
-This is for the end user part. For the contributers, the commit could s=
-ay:
+We have a git repository with 2 submodules structured like this:
+-Root
+ -Src
+    -Scripts [Submodule]
+    -Kernel [Submodule]
+    -Web
 
-" - branch names: uses the form 'branch-name' to appear in green,
-    italic.
-  - file names: uses [...] to appear in [...]
-  - refspec: uses [...] to appear in [...]
-  - etc.
-"
+When someone makes changes in the Kernel submodule, the sha1 of the
+submodule changes. This means that the repository that uses this submodule
+also changes because the link to the submodule changes. This very often
+causes confusion. Co-workers very often get merge-conflicts on the submodule
+sha1 which are annoying and confusing.
 
-> Have you actually looked at the end result?
+The reason we like using submodules instead of having one larger repository
+is that there are seperate teams working on each module. We also use other
+version numbers voor the kernel and the appllications using the kernel.
 
-Yes, I think it's much better with your patch but "display-types" shoul=
-d
-follow the same rules all over the text.
+Instead of using the sha1 of a specific revision in the submodule, I would
+find it more logical to use a branch-name or tag. This way you can commit on
+the submodule without having to commit the new submodule revision to the
+main repository also.
 
+I would like to hear your thoughts on this. Maybe we are using submodules
+wrong, or maybe this is already possible.
 
-I'm missing of time theses days. I think I'll could help you in one or
-two weeks I you want. It's an ant work. :-)
-AFAICT, some people here want to rewrite the manual, right? Maybe it
-could be done with this rewriting?
+Henk Westhuis
 
---=20
-Nicolas Sebrecht
+-- 
+View this message in context: http://n2.nabble.com/Submodules-and-merge-conflicts-tp2951928p2951928.html
+Sent from the git mailing list archive at Nabble.com.
