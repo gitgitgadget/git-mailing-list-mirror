@@ -1,152 +1,86 @@
-From: Stephen Boyd <bebarino@gmail.com>
-Subject: [PATCHv2 1/2] parse-options: add PARSE_OPT_LITERAL_ARGHELP for complicated argh's
-Date: Thu, 21 May 2009 00:33:17 -0700
-Message-ID: <fbaa26d941f496efefc30e298f5534f8194ee716.1242891030.git.bebarino@gmail.com>
-References: <1242557224-8411-1-git-send-email-bebarino@gmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Jakub Narebski <jnareb@gmail.com>,
-	Sverre Rabbelier <srabbelier@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu May 21 10:04:06 2009
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: [PATCH v3] git-svn: add --authors-prog option
+Date: Thu, 21 May 2009 01:43:43 -0700
+Message-ID: <20090521084343.GA6401@dcvr.yhbt.net>
+References: <20090510003509.GA2000@dcvr.yhbt.net> <1242350835-22684-1-git-send-email-lodatom@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Michael J Gruber <git@drmicha.warpmail.net>,
+	Mark Lodato <lodatom@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu May 21 10:43:56 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M73Fy-0005s6-9J
-	for gcvg-git-2@gmane.org; Thu, 21 May 2009 10:04:02 +0200
+	id 1M73sZ-0005Mz-68
+	for gcvg-git-2@gmane.org; Thu, 21 May 2009 10:43:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751258AbZEUIDx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 21 May 2009 04:03:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751190AbZEUIDw
-	(ORCPT <rfc822;git-outgoing>); Thu, 21 May 2009 04:03:52 -0400
-Received: from mail-pz0-f177.google.com ([209.85.222.177]:41130 "EHLO
-	mail-pz0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750797AbZEUIDt (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 May 2009 04:03:49 -0400
-X-Greylist: delayed 1418 seconds by postgrey-1.27 at vger.kernel.org; Thu, 21 May 2009 04:03:49 EDT
-Received: by pzk7 with SMTP id 7so535667pzk.33
-        for <git@vger.kernel.org>; Thu, 21 May 2009 01:03:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:from:to:cc:subject
-         :date:message-id:x-mailer:in-reply-to:references;
-        bh=2nKjNFWICyVh79mz+YixtVNp76Ibd3NBCuVGjOGgzEY=;
-        b=n1R8Na4liC9Bj5C+bs3gRqzy9bNbrsxGIf2VI0pV+RnYu/gXI42Wbi6FtTvG+0iYkT
-         0rnyGUMHmU8By2390ByAfm0jSVo6XR+IS3Yo8Ul5WRltacMjvrnakBUotj34D914Jdm0
-         007Hs2ZzEKmldqzZQP/SeWfVNDjyZ/9Z7WlrY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=chznai2S6ScC5d9cSGG0uKDE4CzgS2oUACbvjfIGo6JL4oIt0KaY/iD/Zw6kOcyoBX
-         dHP9LWhJospzAPxlk9/i33JOs0YT1ue5hIqppYxuP0qtkPLVZ6Bve37rAi+HxXkvi2g8
-         xNdwHu1AlwbMBPnWnl6q41piRL2XcMhsMHalw=
-Received: by 10.114.136.16 with SMTP id j16mr4544997wad.209.1242891202231;
-        Thu, 21 May 2009 00:33:22 -0700 (PDT)
-Received: from earth ([76.89.212.195])
-        by mx.google.com with ESMTPS id c26sm4882126waa.15.2009.05.21.00.33.19
-        (version=SSLv3 cipher=RC4-MD5);
-        Thu, 21 May 2009 00:33:21 -0700 (PDT)
-Received: by earth (sSMTP sendmail emulation); Thu, 21 May 2009 00:33:18 -0700
-X-Mailer: git-send-email 1.6.3.1.61.g065b0
-In-Reply-To: <1242557224-8411-1-git-send-email-bebarino@gmail.com>
+	id S1751883AbZEUIno (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 21 May 2009 04:43:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751723AbZEUInm
+	(ORCPT <rfc822;git-outgoing>); Thu, 21 May 2009 04:43:42 -0400
+Received: from dcvr.yhbt.net ([64.71.152.64]:53395 "EHLO dcvr.yhbt.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751459AbZEUInm (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 May 2009 04:43:42 -0400
+Received: from localhost (unknown [127.0.2.5])
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7DA041F7CC;
+	Thu, 21 May 2009 08:43:43 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <1242350835-22684-1-git-send-email-lodatom@gmail.com>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119660>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119661>
 
-Usually, the argh element in struct option points at a placeholder value
-(e.g. "val"), and is shown in the usage message as
+Mark Lodato <lodatom@gmail.com> wrote:
+> Signed-off-by: Mark Lodato <lodatom@gmail.com>
 
-    --option=<val>
+Thanks again Mark, sorry again for the late response, it's been
+a long few weeks for me.
 
-by enclosing the string inside of angle brackets.
+Acked-by: Eric Wong <normalperson@yhbt.net>
 
-When the option is more complex (e.g. optional arguments separated by a
-comma), you would want to produce a usage message that looks like
+And pushed out to git://git.bogomips.org/git-svn along with
+a few others that I had acked:
 
-    --option=<val1>[,<val2>]
+Alex Vandiver (3):
+      git-svn: Fix for svn paths removed > log-window-size revisions ago
+      git-svn: Correctly report max revision when following deleted paths
+      git-svn: Set svn.authorsfile if it is passed to git svn clone
 
-In such a case, the caller can pass a string to argh with placeholders
-already enclosed in necessary angle brackets (e.g.  "<val1>[,<val2>]")
-and set this flag.
+Eygene Ryabinkin (1):
+      git-svn testsuite: use standard configuration for Subversion tools
 
-[nicer description from Junio Hamano]
+Mark Lodato (1):
+      git-svn: add --authors-prog option
 
-Signed-off-by: Stephen Boyd <bebarino@gmail.com>
----
+> ---
+> 
+> Third attempt at the patch.  I fixed a typo and reworded the documentation
+> (thanks to Michael Gruber), and I fixed a small mistake in the commit message.
+> Other than rebasing onto master, nothing else was changed.
 
-I've decided to appease the pirate haters :-)
+A bunch of tests got broken but I squished this on top to fix them:
 
- parse-options.c |   26 +++++++++++++++++---------
- parse-options.h |    4 ++++
- 2 files changed, 21 insertions(+), 9 deletions(-)
-
-diff --git a/parse-options.c b/parse-options.c
-index cf71bcf..2b880b1 100644
---- a/parse-options.c
-+++ b/parse-options.c
-@@ -361,6 +361,20 @@ int parse_options(int argc, const char **argv, const struct option *options,
- 	return parse_options_end(&ctx);
- }
- 
-+static int usage_argh(const struct option *opts, int pos)
-+{
-+	const char *s;
-+	int literal = opts->flags & PARSE_OPT_LITERAL_ARGHELP;
-+	if (opts->flags & PARSE_OPT_OPTARG)
-+		if (opts->long_name)
-+			s = literal ? "[=%s]" : "[=<%s>]";
-+		else
-+			s = literal ? "[%s]" : "[<%s>]";
-+	else
-+		s = literal ? " %s" : " <%s>";
-+	return pos + fprintf(stderr, s, opts->argh);
+diff --git a/git-svn.perl b/git-svn.perl
+index af80e24..a70c7d7 100755
+--- a/git-svn.perl
++++ b/git-svn.perl
+@@ -265,7 +265,9 @@ usage(0) if $_help;
+ version() if $_version;
+ usage(1) unless defined $cmd;
+ load_authors() if $_authors;
+-$_authors_prog = "'" . File::Spec->rel2abs($_authors_prog) . "'";
++if (defined $_authors_prog) {
++	$_authors_prog = "'" . File::Spec->rel2abs($_authors_prog) . "'";
 +}
-+
- #define USAGE_OPTS_WIDTH 24
- #define USAGE_GAP         2
  
-@@ -421,15 +435,9 @@ int usage_with_options_internal(const char * const *usagestr,
- 				break;
- 			/* FALLTHROUGH */
- 		case OPTION_STRING:
--			if (opts->argh) {
--				if (opts->flags & PARSE_OPT_OPTARG)
--					if (opts->long_name)
--						pos += fprintf(stderr, "[=<%s>]", opts->argh);
--					else
--						pos += fprintf(stderr, "[<%s>]", opts->argh);
--				else
--					pos += fprintf(stderr, " <%s>", opts->argh);
--			} else {
-+			if (opts->argh)
-+				pos += usage_argh(opts, pos);
-+			else {
- 				if (opts->flags & PARSE_OPT_OPTARG)
- 					if (opts->long_name)
- 						pos += fprintf(stderr, "[=...]");
-diff --git a/parse-options.h b/parse-options.h
-index b54eec1..910aa1e 100644
---- a/parse-options.h
-+++ b/parse-options.h
-@@ -31,6 +31,7 @@ enum parse_opt_option_flags {
- 	PARSE_OPT_NONEG   = 4,
- 	PARSE_OPT_HIDDEN  = 8,
- 	PARSE_OPT_LASTARG_DEFAULT = 16,
-+	PARSE_OPT_LITERAL_ARGHELP = 64,
- };
- 
- struct option;
-@@ -66,6 +67,9 @@ typedef int parse_opt_cb(const struct option *, const char *arg, int unset);
-  *   PARSE_OPT_NONEG: says that this option cannot be negated
-  *   PARSE_OPT_HIDDEN this option is skipped in the default usage, showed in
-  *                    the long one.
-+ *   PARSE_OPT_LITERAL_ARGHELP: says that argh shouldn't be enclosed in brackets
-+ *				(i.e. '<argh>') in the help message.
-+ *				Useful for options with multiple parameters.
-  *
-  * `callback`::
-  *   pointer to the callback to use for OPTION_CALLBACK.
+ unless ($cmd =~ /^(?:clone|init|multi-init|commit-diff)$/) {
+ 	Git::SVN::Migration::migration_check();
+
 -- 
-1.6.3.1.61.g065b0
+Eric Wong
