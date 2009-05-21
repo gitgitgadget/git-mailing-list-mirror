@@ -1,118 +1,70 @@
-From: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <rene.scharfe@lsrfire.ath.cx>
-Subject: Re: git archive, cygwin, and --git-dir vs --remote
-Date: Thu, 21 May 2009 16:29:42 +0200
-Message-ID: <4A156556.900@lsrfire.ath.cx>
-References: <e664dae0905180737mae29811ie4cae889b3e3904f@mail.gmail.com> <4A151A15.6040609@lsrfire.ath.cx> <alpine.LSU.2.00.0905211431060.23478@hermes-2.csi.cam.ac.uk>
+From: Tony Finch <dot@dotat.at>
+Subject: Re: git doesn't append ".git" to url WAS [PATCH 0/3] http*: refactor
+  fetching code (v2)
+Date: Thu, 21 May 2009 15:29:48 +0100
+Message-ID: <alpine.LSU.2.00.0905211518430.23333@hermes-2.csi.cam.ac.uk>
+References: <be6fef0d0905210717j174499f5k4740dc2f821bec62@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Bob Kagy <bobkagy@gmail.com>, git@vger.kernel.org
-To: Tony Finch <dot@dotat.at>
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Tay Ray Chuan <rctay89@gmail.com>
 X-From: git-owner@vger.kernel.org Thu May 21 16:29:58 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M79HR-0007Kq-AO
-	for gcvg-git-2@gmane.org; Thu, 21 May 2009 16:29:57 +0200
+	id 1M79HS-0007Kq-0N
+	for gcvg-git-2@gmane.org; Thu, 21 May 2009 16:29:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753392AbZEUO3q convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 21 May 2009 10:29:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752989AbZEUO3p
-	(ORCPT <rfc822;git-outgoing>); Thu, 21 May 2009 10:29:45 -0400
-Received: from india601.server4you.de ([85.25.151.105]:36665 "EHLO
-	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750946AbZEUO3p (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 May 2009 10:29:45 -0400
-Received: from [10.0.1.101] (p57B7DF15.dip.t-dialin.net [87.183.223.21])
-	by india601.server4you.de (Postfix) with ESMTPSA id 0F64B2F8044;
-	Thu, 21 May 2009 16:29:46 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.21 (Windows/20090302)
-In-Reply-To: <alpine.LSU.2.00.0905211431060.23478@hermes-2.csi.cam.ac.uk>
+	id S1753705AbZEUO3t (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 21 May 2009 10:29:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752989AbZEUO3s
+	(ORCPT <rfc822;git-outgoing>); Thu, 21 May 2009 10:29:48 -0400
+Received: from ppsw-5.csi.cam.ac.uk ([131.111.8.135]:39291 "EHLO
+	ppsw-5.csi.cam.ac.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753352AbZEUO3r (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 May 2009 10:29:47 -0400
+X-Cam-AntiVirus: no malware found
+X-Cam-SpamDetails: not scanned
+X-Cam-ScannerInfo: http://www.cam.ac.uk/cs/email/scanner/
+Received: from hermes-2.csi.cam.ac.uk ([131.111.8.54]:41879)
+	by ppsw-5.csi.cam.ac.uk (smtp.hermes.cam.ac.uk [131.111.8.155]:25)
+	with esmtpa (EXTERNAL:fanf2) id 1M79HI-0004DZ-Gv (Exim 4.70)
+	(return-path <fanf2@hermes.cam.ac.uk>); Thu, 21 May 2009 15:29:48 +0100
+Received: from fanf2 (helo=localhost) by hermes-2.csi.cam.ac.uk (hermes.cam.ac.uk)
+	with local-esmtp id 1M79HI-00005f-7T (Exim 4.67)
+	(return-path <fanf2@hermes.cam.ac.uk>); Thu, 21 May 2009 15:29:48 +0100
+X-X-Sender: fanf2@hermes-2.csi.cam.ac.uk
+In-Reply-To: <be6fef0d0905210717j174499f5k4740dc2f821bec62@mail.gmail.com>
+User-Agent: Alpine 2.00 (LSU 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119684>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119685>
 
-Tony Finch schrieb:
-> On Thu, 21 May 2009, Ren=C3=A9 Scharfe wrote:
->> That's strange.  It seems that poll() reports that there is data to =
-read
->> from the child (which is running git-upload-archive), even though it
->> already called exit().
->=20
-> Poll reports an FD is readable when it reaches EOF.
+On Thu, 21 May 2009, Tay Ray Chuan wrote:
+>
+> are your friends hosting non-bare repositories directly (with
+> checked-out copies)? In the first place, this isn't a good idea;
 
-OK, makes sense.  I still don't understand why upload-archive doesn't g=
-et
-into an infinite loop on Linux (Fedora 10), though.
+Yes, and yes we all know that this is discouraged.
 
->> The following patch works around this issue by terminating the other=
-wise
->> endless loop after read() returned nothing for the thousandth time i=
-n a
->> row.
->=20
-> You should stop reading the first time read() returns 0 i.e. EOF.
+There are two bugs. Git's error message is misleading: the problem is
+nothing to do with running git update-server-info (see below). Its
+behaviour is inconsistent: git retries after appending .git if you are
+fetching from a local repository or ssh:// or git:// URLs but not for
+http:// URLs.
 
-Thanks.  In that case the following patch is better.
+$ git clone http://www.greenend.org.uk/rjk/
+Initialized empty Git repository in /tmp/rjk/.git/
+fatal: http://www.greenend.org.uk/rjk//info/refs not found: did you run git update-server-info on the server?
 
+Actually maybe there's a third bug: it says it has initialized
+a repository but it removes it again if the clone fails.
 
- builtin-upload-archive.c |   15 +++++++++------
- 1 files changed, 9 insertions(+), 6 deletions(-)
-
-diff --git a/builtin-upload-archive.c b/builtin-upload-archive.c
-index 0206b41..a3fa5b3 100644
---- a/builtin-upload-archive.c
-+++ b/builtin-upload-archive.c
-@@ -80,16 +80,19 @@ static void error_clnt(const char *fmt, ...)
- 	die("sent error to the client: %s", buf);
- }
-=20
--static void process_input(int child_fd, int band)
-+static int process_input(int child_fd, int band)
- {
- 	char buf[16384];
- 	ssize_t sz =3D read(child_fd, buf, sizeof(buf));
-+	if (sz =3D=3D 0)
-+		return EOF;
- 	if (sz < 0) {
- 		if (errno !=3D EAGAIN && errno !=3D EINTR)
- 			error_clnt("read error: %s\n", strerror(errno));
--		return;
-+		return 0;
- 	}
- 	send_sideband(1, band, buf, sz, LARGE_PACKET_MAX);
-+	return 0;
- }
-=20
- int cmd_upload_archive(int argc, const char **argv, const char *prefix=
-)
-@@ -131,7 +134,7 @@ int cmd_upload_archive(int argc, const char **argv,=
- const char *prefix)
-=20
- 	while (1) {
- 		struct pollfd pfd[2];
--		int status;
-+		int status, both_at_eof =3D EOF;
-=20
- 		pfd[0].fd =3D fd1[0];
- 		pfd[0].events =3D POLLIN;
-@@ -147,12 +150,12 @@ int cmd_upload_archive(int argc, const char **arg=
-v, const char *prefix)
- 		}
- 		if (pfd[0].revents & POLLIN)
- 			/* Data stream ready */
--			process_input(pfd[0].fd, 1);
-+			both_at_eof &=3D process_input(pfd[0].fd, 1);
- 		if (pfd[1].revents & POLLIN)
- 			/* Status stream ready */
--			process_input(pfd[1].fd, 2);
-+			both_at_eof &=3D process_input(pfd[1].fd, 2);
- 		/* Always finish to read data when available */
--		if ((pfd[0].revents | pfd[1].revents) & POLLIN)
-+		if (!both_at_eof)
- 			continue;
-=20
- 		if (waitpid(writer, &status, 0) < 0)
+Tony.
+-- 
+f.anthony.n.finch  <dot@dotat.at>  http://dotat.at/
+GERMAN BIGHT HUMBER: SOUTHWEST 5 TO 7. MODERATE OR ROUGH. SQUALLY SHOWERS.
+MODERATE OR GOOD.
