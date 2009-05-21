@@ -1,93 +1,118 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v0 2/3] t/t3400-rebase.sh: add more tests to help migrating git-rebase.sh to C
-Date: Thu, 21 May 2009 07:22:37 -0700
-Message-ID: <7vr5yibknm.fsf@alter.siamese.dyndns.org>
-References: <1242899229-27603-1-git-send-email-pclouds@gmail.com>
-	<1242899229-27603-2-git-send-email-pclouds@gmail.com>
+From: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <rene.scharfe@lsrfire.ath.cx>
+Subject: Re: git archive, cygwin, and --git-dir vs --remote
+Date: Thu, 21 May 2009 16:29:42 +0200
+Message-ID: <4A156556.900@lsrfire.ath.cx>
+References: <e664dae0905180737mae29811ie4cae889b3e3904f@mail.gmail.com> <4A151A15.6040609@lsrfire.ath.cx> <alpine.LSU.2.00.0905211431060.23478@hermes-2.csi.cam.ac.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Thu May 21 16:22:47 2009
+Cc: Bob Kagy <bobkagy@gmail.com>, git@vger.kernel.org
+To: Tony Finch <dot@dotat.at>
+X-From: git-owner@vger.kernel.org Thu May 21 16:29:58 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M79AU-00049P-2p
-	for gcvg-git-2@gmane.org; Thu, 21 May 2009 16:22:46 +0200
+	id 1M79HR-0007Kq-AO
+	for gcvg-git-2@gmane.org; Thu, 21 May 2009 16:29:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753738AbZEUOWh convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 21 May 2009 10:22:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753362AbZEUOWh
-	(ORCPT <rfc822;git-outgoing>); Thu, 21 May 2009 10:22:37 -0400
-Received: from fed1rmmtao102.cox.net ([68.230.241.44]:41411 "EHLO
-	fed1rmmtao102.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753196AbZEUOWg (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 May 2009 10:22:36 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao102.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20090521142237.GUZG20976.fed1rmmtao102.cox.net@fed1rmimpo02.cox.net>;
-          Thu, 21 May 2009 10:22:37 -0400
-Received: from localhost ([68.225.240.211])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id uENd1b0064aMwMQ04ENdts; Thu, 21 May 2009 10:22:37 -0400
-X-Authority-Analysis: v=1.0 c=1 a=rx5fn5RtJCkA:10 a=ILK5RQY-hJ4A:10
- a=pGLkceISAAAA:8 a=hRO4xYfcO-DtgFJsTF0A:9 a=D6kQp_l6eXEMIr1YLZ6ZCSJzafQA:4
- a=MSl-tDqOz04A:10
-X-CM-Score: 0.00
-In-Reply-To: <1242899229-27603-2-git-send-email-pclouds@gmail.com>
- (=?utf-8?B?Ik5ndXnhu4VuIFRow6FpIE5n4buNYw==?= Duy"'s message of "Thu\, 21
- May 2009 19\:47\:08 +1000")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+	id S1753392AbZEUO3q convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 21 May 2009 10:29:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752989AbZEUO3p
+	(ORCPT <rfc822;git-outgoing>); Thu, 21 May 2009 10:29:45 -0400
+Received: from india601.server4you.de ([85.25.151.105]:36665 "EHLO
+	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750946AbZEUO3p (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 May 2009 10:29:45 -0400
+Received: from [10.0.1.101] (p57B7DF15.dip.t-dialin.net [87.183.223.21])
+	by india601.server4you.de (Postfix) with ESMTPSA id 0F64B2F8044;
+	Thu, 21 May 2009 16:29:46 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.21 (Windows/20090302)
+In-Reply-To: <alpine.LSU.2.00.0905211431060.23478@hermes-2.csi.cam.ac.uk>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119683>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119684>
 
-Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.com> writes:
+Tony Finch schrieb:
+> On Thu, 21 May 2009, Ren=C3=A9 Scharfe wrote:
+>> That's strange.  It seems that poll() reports that there is data to =
+read
+>> from the child (which is running git-upload-archive), even though it
+>> already called exit().
+>=20
+> Poll reports an FD is readable when it reaches EOF.
 
-> +test_expect_success 'rebase on dirty worktree' '
-> +     echo dirty >> A &&
-> +     ! git rebase master'
+OK, makes sense.  I still don't understand why upload-archive doesn't g=
+et
+into an infinite loop on Linux (Fedora 10), though.
 
-It is a good defensive way to use "test_must_fail" instead of "!" when
-testing git itself; test_must_fail does not allow the program to termin=
-ate
-with non-zero value by segfaulting, while "!" does.
+>> The following patch works around this issue by terminating the other=
+wise
+>> endless loop after read() returned nothing for the thousandth time i=
+n a
+>> row.
+>=20
+> You should stop reading the first time read() returns 0 i.e. EOF.
 
-> +test_expect_success 'rebase on dirty cache' '
-> +     git add  A &&
+Thanks.  In that case the following patch is better.
 
-Two-spaces?
 
-> +     ! git rebase master'
-> +
->  test_expect_success 'rebase against master' '
-> +     git reset HEAD &&
-> +     git checkout -f &&
+ builtin-upload-archive.c |   15 +++++++++------
+ 1 files changed, 9 insertions(+), 6 deletions(-)
 
-Hmm, why not "reset --hard HEAD".  Not asking to change (yet), but just
-asking if there is a reason.
-
->       git rebase master'
-> =20
-> +test_expect_success 'rebase against master twice' '
-> +	git rebase master 2>&1|grep "Current branch my-topic-branch is up t=
-o date\\."
-> +'
-> +
-> +test_expect_success 'rebase against master twice with --force' '
-> +	git rebase --force-rebase master 2>&1|grep "Current branch my-topic=
--branch is up to date, rebase forced"
-
-Do not to use any pipe while testing, i.e.
-
-	git rebase >out 2>err &&
-        grep "what you expect in 'out'" out &&
-        grep "what you expect in 'err'" err
-
-so that you can catch exit status from the command you placed in the
-upstream of the pipe.
+diff --git a/builtin-upload-archive.c b/builtin-upload-archive.c
+index 0206b41..a3fa5b3 100644
+--- a/builtin-upload-archive.c
++++ b/builtin-upload-archive.c
+@@ -80,16 +80,19 @@ static void error_clnt(const char *fmt, ...)
+ 	die("sent error to the client: %s", buf);
+ }
+=20
+-static void process_input(int child_fd, int band)
++static int process_input(int child_fd, int band)
+ {
+ 	char buf[16384];
+ 	ssize_t sz =3D read(child_fd, buf, sizeof(buf));
++	if (sz =3D=3D 0)
++		return EOF;
+ 	if (sz < 0) {
+ 		if (errno !=3D EAGAIN && errno !=3D EINTR)
+ 			error_clnt("read error: %s\n", strerror(errno));
+-		return;
++		return 0;
+ 	}
+ 	send_sideband(1, band, buf, sz, LARGE_PACKET_MAX);
++	return 0;
+ }
+=20
+ int cmd_upload_archive(int argc, const char **argv, const char *prefix=
+)
+@@ -131,7 +134,7 @@ int cmd_upload_archive(int argc, const char **argv,=
+ const char *prefix)
+=20
+ 	while (1) {
+ 		struct pollfd pfd[2];
+-		int status;
++		int status, both_at_eof =3D EOF;
+=20
+ 		pfd[0].fd =3D fd1[0];
+ 		pfd[0].events =3D POLLIN;
+@@ -147,12 +150,12 @@ int cmd_upload_archive(int argc, const char **arg=
+v, const char *prefix)
+ 		}
+ 		if (pfd[0].revents & POLLIN)
+ 			/* Data stream ready */
+-			process_input(pfd[0].fd, 1);
++			both_at_eof &=3D process_input(pfd[0].fd, 1);
+ 		if (pfd[1].revents & POLLIN)
+ 			/* Status stream ready */
+-			process_input(pfd[1].fd, 2);
++			both_at_eof &=3D process_input(pfd[1].fd, 2);
+ 		/* Always finish to read data when available */
+-		if ((pfd[0].revents | pfd[1].revents) & POLLIN)
++		if (!both_at_eof)
+ 			continue;
+=20
+ 		if (waitpid(writer, &status, 0) < 0)
