@@ -1,74 +1,78 @@
-From: Big Lebowski <duderino.lebowski@gmail.com>
-Subject: Getting Commits from One Repository to Another
-Date: Wed, 20 May 2009 19:37:54 -0400
-Message-ID: <7D9240D0-C8BA-40C6-A89E-8BC7E08B1163@gmail.com>
-Mime-Version: 1.0 (Apple Message framework v935.3)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
-Content-Transfer-Encoding: 7bit
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH 1/2] cache-tree.c::cache_tree_find(): simplify inernal API
+Date: Wed, 20 May 2009 17:40:11 -0700
+Message-ID: <7vab57waok.fsf_-_@alter.siamese.dyndns.org>
+References: <4A136C40.6020808@workspacewhiz.com>
+	<alpine.LFD.2.00.0905192300070.3906@xanadu.home>
+	<20090520032139.GB10212@coredump.intra.peff.net>
+	<7vfxezzms0.fsf@alter.siamese.dyndns.org>
+	<7vws8by6iz.fsf_-_@alter.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Jeff King <peff@peff.net>, Nicolas Pitre <nico@cam.org>,
+	Joshua Jensen <jjensen@workspacewhiz.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu May 21 01:38:07 2009
+X-From: git-owner@vger.kernel.org Thu May 21 02:40:30 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M6vMM-0004Hk-6J
-	for gcvg-git-2@gmane.org; Thu, 21 May 2009 01:38:06 +0200
+	id 1M6wKc-0006rE-V4
+	for gcvg-git-2@gmane.org; Thu, 21 May 2009 02:40:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753579AbZETXh4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 20 May 2009 19:37:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753341AbZETXh4
-	(ORCPT <rfc822;git-outgoing>); Wed, 20 May 2009 19:37:56 -0400
-Received: from mail-gx0-f166.google.com ([209.85.217.166]:53333 "EHLO
-	mail-gx0-f166.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753229AbZETXhz (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 May 2009 19:37:55 -0400
-Received: by gxk10 with SMTP id 10so1396903gxk.13
-        for <git@vger.kernel.org>; Wed, 20 May 2009 16:37:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:from:to
-         :content-type:content-transfer-encoding:mime-version:subject:date
-         :x-mailer;
-        bh=UYi6jwLejmfkJIqGDLwm4pT8YqvbIbmYylGnACsmX5w=;
-        b=Xa2Vr1adVhD8p2eo4QIe3exzxjptmZRj9RLohDMCIfuqZfPZFVWVRmD/rgjCY7/quF
-         bYgKsrksOyPmxtLeEscBM2cdhp0/QrdBFqVNdj9jddI+tWU2+8q2ABnQ7XPd3n/euo2T
-         nYVd+QIPBlZVEEavnDUOyJQf3QIaVm1sRHvzk=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:from:to:content-type:content-transfer-encoding
-         :mime-version:subject:date:x-mailer;
-        b=OZBnSYc1oN4GF0R6nKYkF9swppacFa7NuPcrTGjwwqe5mdSBIv1uOV/8uDAhf0IlCX
-         2t8u9bFyZUQTBNIt6OwSB3+OYb7M2hR7PNkfRtNN+XovDiJNypp7KLs3vXOi9L2rHF14
-         ELJcongX1Z36nmFO9az15jeae25kCjqfEQTLc=
-Received: by 10.151.119.5 with SMTP id w5mr3819305ybm.167.1242862676538;
-        Wed, 20 May 2009 16:37:56 -0700 (PDT)
-Received: from ?172.21.42.131? (pool-173-66-53-162.washdc.fios.verizon.net [173.66.53.162])
-        by mx.google.com with ESMTPS id 6sm78517ywn.37.2009.05.20.16.37.55
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 20 May 2009 16:37:55 -0700 (PDT)
-X-Mailer: Apple Mail (2.935.3)
+	id S1755779AbZEUAkM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 20 May 2009 20:40:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755247AbZEUAkL
+	(ORCPT <rfc822;git-outgoing>); Wed, 20 May 2009 20:40:11 -0400
+Received: from fed1rmmtao105.cox.net ([68.230.241.41]:47419 "EHLO
+	fed1rmmtao105.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754921AbZEUAkK (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 May 2009 20:40:10 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao105.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20090521004011.CYYV20430.fed1rmmtao105.cox.net@fed1rmimpo02.cox.net>;
+          Wed, 20 May 2009 20:40:11 -0400
+Received: from localhost ([68.225.240.211])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id u0gB1b00D4aMwMQ040gBnk; Wed, 20 May 2009 20:40:11 -0400
+X-Authority-Analysis: v=1.0 c=1 a=vTwp5Sfy4l0A:10 a=7ihouLK4gf0A:10
+ a=ybZZDoGAAAAA:8 a=ec7ICQJVDLLWZ3m8dxEA:9 a=33_a3gQRluOfj0BM_WbB1qKsdZ0A:4
+ a=qIVjreYYsbEA:10
+X-CM-Score: 0.00
+In-Reply-To: <7vws8by6iz.fsf_-_@alter.siamese.dyndns.org> (Junio C. Hamano's message of "Wed\, 20 May 2009 11\:27\:00 -0700")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119641>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119642>
 
-Hi all,
+Earlier cache_tree_find() needs to be called with a valid cache_tree,
+but repeated look-up may find an invalid or missing cache_tree in between.
+Help simplify the callers by returning NULL to mean "nothing appropriate
+found" when the input is NULL.
 
-I hope this isn't a FAQ. I searched, and the closest thing in there  
-(which may be what I want, but sounded wrong) was "How to share  
-objects between existing repositories?" If that is it, then I  
-apologize for the bandwidth.
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
 
-Essentially, when I came on a project, a git repository was made  
-available to me (lets call that 'public_repo'). That repository was  
-put up on an unfuddle account, as an initial check-in; it was not  
-cloned from the repository they were working on (lets call that  
-'private_repo'). I wrote some code, and pushed it to the repository.  
-Now that I guess they feel comfortable with me, they reveal to me the  
-private_repo.
+ * This is a preliminary clean-up patch.  What comes next is much bigger.
 
-How do I get my code from public_repo to private_repo?
+ cache-tree.c |    2 ++
+ 1 files changed, 2 insertions(+), 0 deletions(-)
 
-Thanks for helping a novice out.
-Ryan
+diff --git a/cache-tree.c b/cache-tree.c
+index 6dd8411..5481e43 100644
+--- a/cache-tree.c
++++ b/cache-tree.c
+@@ -514,6 +514,8 @@ struct cache_tree *cache_tree_read(const char *buffer, unsigned long size)
+ 
+ static struct cache_tree *cache_tree_find(struct cache_tree *it, const char *path)
+ {
++	if (!it)
++		return NULL;
+ 	while (*path) {
+ 		const char *slash;
+ 		struct cache_tree_sub *sub;
+-- 
+1.6.3.1.56.gd00e3.dirty
