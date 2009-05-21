@@ -1,79 +1,141 @@
-From: Stephen Boyd <bebarino@gmail.com>
-Subject: Re: [PATCHv2 1/2] parse-options: add PARSE_OPT_LITERAL_ARGHELP for 
-	complicated argh's
-Date: Thu, 21 May 2009 12:03:23 -0700
-Message-ID: <780e0a6b0905211203g3223fe3fp5eed27ebf244394a@mail.gmail.com>
-References: <1242557224-8411-1-git-send-email-bebarino@gmail.com> 
-	<fbaa26d941f496efefc30e298f5534f8194ee716.1242891030.git.bebarino@gmail.com> 
-	<7v3aaybewo.fsf@alter.siamese.dyndns.org> <4A1586A7.9000909@lsrfire.ath.cx>
+From: Michal Marek <mmarek@suse.cz>
+Subject: Re: [PATCH] apply: handle filenames with double slashes better
+Date: Thu, 21 May 2009 21:12:04 +0200
+Message-ID: <20090521191204.GA29362@sepie.suse.cz>
+References: <20090521122511.GA31614@sepie.suse.cz> <7vd4a2bj3p.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Jakub Narebski <jnareb@gmail.com>,
-	Sverre Rabbelier <srabbelier@gmail.com>
-To: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
-X-From: git-owner@vger.kernel.org Thu May 21 21:03:54 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu May 21 21:12:18 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M7DYX-0000Ck-9x
-	for gcvg-git-2@gmane.org; Thu, 21 May 2009 21:03:53 +0200
+	id 1M7Dge-0004Nh-Ob
+	for gcvg-git-2@gmane.org; Thu, 21 May 2009 21:12:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753475AbZEUTDp convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 21 May 2009 15:03:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753465AbZEUTDo
-	(ORCPT <rfc822;git-outgoing>); Thu, 21 May 2009 15:03:44 -0400
-Received: from an-out-0708.google.com ([209.85.132.245]:10800 "EHLO
-	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752954AbZEUTDn convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 21 May 2009 15:03:43 -0400
-Received: by an-out-0708.google.com with SMTP id d40so2750892and.1
-        for <git@vger.kernel.org>; Thu, 21 May 2009 12:03:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=VoU0nIglYMi61v/NrjgH31/NHGLy+NRZTFpgHMfxgG0=;
-        b=VxvvvQlhh0jnmerCKsKkU041Ycig92vDAAsfWLF9Iu4PtjnxASiIbcEhQNMKMm1+xR
-         gDa/DVK0sozRbMIOYEeZBHvlBRJKXcXpmrMjgt6iXL8RNdMX80G/w87QcO4bovUFrJ2n
-         CcFYMYBF+OcQ4KwZD9fauPUtbSTzjhD7lvzfA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=XpKkScBdOWLy9RDpIaddxbwk3PdTJvhS+W+uyuzv0sBzc0pdfSafR3VOWqUsk066i0
-         qtOL2N4Ku65V+dC6IE6mv7EvOMXPKF7luedh30QeEyVQic/Xac2t6A2y6ZKFkm+Mxvqj
-         oWL2pw8KteJCdmkn9E5c7uCTz9LtmLAb2dmvQ=
-Received: by 10.100.58.19 with SMTP id g19mr5419695ana.150.1242932623330; Thu, 
-	21 May 2009 12:03:43 -0700 (PDT)
-In-Reply-To: <4A1586A7.9000909@lsrfire.ath.cx>
+	id S1754096AbZEUTMH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 21 May 2009 15:12:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753662AbZEUTMG
+	(ORCPT <rfc822;git-outgoing>); Thu, 21 May 2009 15:12:06 -0400
+Received: from cantor.suse.de ([195.135.220.2]:58891 "EHLO mx1.suse.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753362AbZEUTMF (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 May 2009 15:12:05 -0400
+Received: from relay1.suse.de (mail2.suse.de [195.135.221.8])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by mx1.suse.de (Postfix) with ESMTP id 90928749C2;
+	Thu, 21 May 2009 21:12:05 +0200 (CEST)
+Received: by sepie.suse.cz (Postfix, from userid 10020)
+	id 10D7176646; Thu, 21 May 2009 21:12:04 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <7vd4a2bj3p.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.17 (2007-11-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119701>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119702>
 
-On Thu, May 21, 2009 at 9:51 AM, Ren=C3=A9 Scharfe
-<rene.scharfe@lsrfire.ath.cx> wrote:
-> Junio C Hamano schrieb:
->> Hmmm, why does this break t0040 (I am queuing this on top of 5acb3e5=
-)?
->
-> Probably because it changes this:
->
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0pos +=3D fprintf(...);
->
-> into this (simplified, usage_argh() expanded):
->
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0pos +=3D pos + fprintf(...);
->
-> usage_argh() doesn't need the parameter pos.
->
-> Ren=C3=A9
->
+On Thu, May 21, 2009 at 07:56:10AM -0700, Junio C Hamano wrote:
+> Michal Marek <mmarek@suse.cz> writes:
+> 
+> > Collapse double slashes to make patches like this work with --index or
+> > --cached:
+> >
+> > git apply --index <<-EOF
+> > 	--- a/perl//Git.pm
+> > 	+++ b/perl//Git.pm
+> > 	@@ -1358,3 +1358,4 @@
+> >
+> >
+> > 	 1; # Famous last words
+> > 	+# test
+> > EOF
+> >
+> > Signed-off-by: Michal Marek <mmarek@suse.cz>
+> 
+> Hmm, I do not know if this is a good change.
+> 
+> For duplicate slashes in paths, I do not think there is any other sensible
+> way to handle them other than squashing them together, but naming the
+> function to do so "canon_name()" would tempt people to add other
+> not-so-clearly-sensible "canonicalization" such as turning "./a" to "a"
+> (which we shouldn't --- we should treat "./" as one level so that we keep
+> behaving in a similar way as "patch -p1" does) or "a/../b" to "b".
 
-Woops. I thought I ran the tests but I guess I didn't. This is the
-correct fix, thanks.
+OK, renamed to squash_slash().
+
+
+> Also calling this in find_name() loses information too early in the
+> processing; how bad would it look if you move the callsite of this
+> duplicate slash squashing down the callchain where the names are actually
+> used?
+
+I tried this, but I'm not sure it's better now (and there might be some
+inconsistencies left). IMHO removing the double slashes is an operation
+similar to the unquoting done in find_name(), i.e. converting the text
+in the patch to something that can be passed to lstat() or
+cache_name_lookup(). Anyway, new patch attached.
+
+Michal
+
+diff --git a/builtin-apply.c b/builtin-apply.c
+index 8a3771e..5a35d9f 100644
+--- a/builtin-apply.c
++++ b/builtin-apply.c
+@@ -320,6 +320,22 @@ static int name_terminate(const char *name, int namelen, int c, int terminate)
+ 	return 1;
+ }
+ 
++/* remove double slashes to make --index work with such filenames */
++static char *squash_slash(char *name)
++{
++	int i = 0, j = 0;
++
++	if (!name)
++		return name;
++	while (name[i]) {
++		if ((name[j++] = name[i++]) == '/')
++			while (name[i] == '/')
++				i++;
++	}
++	name[j] = '\0';
++	return name;
++}
++
+ static char *find_name(const char *line, char *def, int p_value, int terminate)
+ {
+ 	int len;
+@@ -423,6 +439,7 @@ static int guess_p_value(const char *nameline)
+ 	name = find_name(nameline, NULL, 0, TERM_SPACE | TERM_TAB);
+ 	if (!name)
+ 		return -1;
++	name = squash_slash(name);
+ 	cp = strchr(name, '/');
+ 	if (!cp)
+ 		val = 0;
+@@ -2416,7 +2433,7 @@ static int verify_index_match(struct cache_entry *ce, struct stat *st)
+ 
+ static int check_preimage(struct patch *patch, struct cache_entry **ce, struct stat *st)
+ {
+-	const char *old_name = patch->old_name;
++	const char *old_name = squash_slash(patch->old_name);
+ 	struct patch *tpatch = NULL;
+ 	int stat_ret = 0;
+ 	unsigned st_mode = 0;
+@@ -2503,8 +2520,8 @@ static int check_preimage(struct patch *patch, struct cache_entry **ce, struct s
+ static int check_patch(struct patch *patch)
+ {
+ 	struct stat st;
+-	const char *old_name = patch->old_name;
+-	const char *new_name = patch->new_name;
++	const char *old_name = squash_slash(patch->old_name);
++	const char *new_name = squash_slash(patch->new_name);
+ 	const char *name = old_name ? old_name : new_name;
+ 	struct cache_entry *ce = NULL;
+ 	struct patch *tpatch;
+-- 
+1.6.3
