@@ -1,72 +1,61 @@
-From: Stephen Boyd <bebarino@gmail.com>
-Subject: Re: [RFC/PATCH] completion: complete pretty format placeholders
-Date: Wed, 20 May 2009 20:59:00 -0700
-Message-ID: <4A14D184.8030301@gmail.com>
-References: <1242468449-3364-1-git-send-email-bebarino@gmail.com> <20090520225258.GT30527@spearce.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: Getting Commits from One Repository to Another
+Date: Thu, 21 May 2009 00:04:51 -0400
+Message-ID: <20090521040451.GC8091@sigill.intra.peff.net>
+References: <7D9240D0-C8BA-40C6-A89E-8BC7E08B1163@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
 Cc: git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Thu May 21 05:59:15 2009
+To: Big Lebowski <duderino.lebowski@gmail.com>
+X-From: git-owner@vger.kernel.org Thu May 21 06:05:00 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M6zR4-0003oC-0A
-	for gcvg-git-2@gmane.org; Thu, 21 May 2009 05:59:14 +0200
+	id 1M6zWd-0005Sz-E1
+	for gcvg-git-2@gmane.org; Thu, 21 May 2009 06:04:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751506AbZEUD7G (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 20 May 2009 23:59:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751212AbZEUD7E
-	(ORCPT <rfc822;git-outgoing>); Wed, 20 May 2009 23:59:04 -0400
-Received: from mail-px0-f171.google.com ([209.85.216.171]:60739 "EHLO
-	mail-px0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750971AbZEUD7D (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 May 2009 23:59:03 -0400
-Received: by pxi1 with SMTP id 1so463225pxi.33
-        for <git@vger.kernel.org>; Wed, 20 May 2009 20:59:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from
-         :user-agent:mime-version:to:cc:subject:references:in-reply-to
-         :content-type:content-transfer-encoding;
-        bh=pq/DlXdyEiBbJrmvUwpuuzKvVqqq6UU2v2QLr1RZl6g=;
-        b=teCvPcN1gvOFRM2SdVreULQRBtQ0abs77BraJk/fvUTAFcWGhaJk2FNomi/e0ceWJr
-         6gWfAJdNLaj7739iIQvPBdgeEQADsnjNiTK7bc2P1d/BBIEW6JVSdNtMlmQOX3wBIVgQ
-         02RKZX6zk6LSZCkXX4+gv3wKTBB6kfVvJHo1s=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        b=LkRz+qkPtxKPcbFn+h07I12HgaYXgt0eEaViKOy686FTsN/WL420/gT0+AHaOg++/z
-         /18ITS+nn7ObB1+/PRKMMFVAn4Yhpduz0igJYOU2FPd2YGFPyzcy2SVyT08jRrGEVPl2
-         X2tV4nFoGO2qwUwzC8b/tgjgL1jy40+DBxn1c=
-Received: by 10.115.58.1 with SMTP id l1mr4159778wak.191.1242878344056;
-        Wed, 20 May 2009 20:59:04 -0700 (PDT)
-Received: from ?192.168.1.2? ([76.89.212.195])
-        by mx.google.com with ESMTPS id m6sm4552867wag.49.2009.05.20.20.59.02
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 20 May 2009 20:59:02 -0700 (PDT)
-User-Agent: Thunderbird 2.0.0.21 (X11/20090429)
-In-Reply-To: <20090520225258.GT30527@spearce.org>
+	id S1750730AbZEUEEw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 21 May 2009 00:04:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750719AbZEUEEv
+	(ORCPT <rfc822;git-outgoing>); Thu, 21 May 2009 00:04:51 -0400
+Received: from peff.net ([208.65.91.99]:56754 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750715AbZEUEEu (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 May 2009 00:04:50 -0400
+Received: (qmail 12162 invoked by uid 107); 21 May 2009 04:04:56 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.40) with ESMTPA; Thu, 21 May 2009 00:04:56 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 21 May 2009 00:04:51 -0400
+Content-Disposition: inline
+In-Reply-To: <7D9240D0-C8BA-40C6-A89E-8BC7E08B1163@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119651>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119652>
 
-Shawn O. Pearce wrote:
-> bash oddity?  Back when I started the completion I had a lot
-> of trouble with stuff like --pretty=<TAB>, or foo:<TAB> because
-> bash more often than not tried to second guess what I was doing.
-> I wonder if you are running against that here.
+On Wed, May 20, 2009 at 07:37:54PM -0400, Big Lebowski wrote:
 
-Thanks for the heads up.
+> Essentially, when I came on a project, a git repository was made  
+> available to me (lets call that 'public_repo'). That repository was put up 
+> on an unfuddle account, as an initial check-in; it was not cloned from the 
+> repository they were working on (lets call that 'private_repo'). I wrote 
+> some code, and pushed it to the repository. Now that I guess they feel 
+> comfortable with me, they reveal to me the private_repo.
+>
+> How do I get my code from public_repo to private_repo?
 
-> To be honest, I'm not sure what value this provides.  Its just as
-> many characters to type, isn't it, and it doesn't offer me any help
-> as to which placeholder should be inserted to get the value I want.
-> "Was it ae or aE that I wanted here?  WTF, manpage time!".
+You could just repeat the push you made to public_repo to private_repo.
+Or you could push to private_repo from public_repo, or pull from
+public_repo to private_repo. One of the results of git's distributed
+nature is that a commit is a commit is a commit. It doesn't matter where
+it comes from: pushing or pulling the same commit (i.e., the same sha-1
+commit id) will give the same results.
 
-Yeah, you're probably right. Throw it on the dust pile ;-)
+Does that make sense? If not, can you be more specific about the setup
+(i.e., which commands were run to create public_repo and your personal
+clone)? Without that, it's hard to offer more specific advice.
+
+-Peff
