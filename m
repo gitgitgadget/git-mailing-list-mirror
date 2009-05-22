@@ -1,65 +1,100 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: git merge remote branch says "Merge commit ..."?
-Date: Fri, 22 May 2009 13:54:01 -0400
-Message-ID: <20090522175401.GB11640@coredump.intra.peff.net>
-References: <2729632a0905211250v4e7537caybe9e703c14361b5f@mail.gmail.com> <20090522074927.GB1409@coredump.intra.peff.net> <loom.20090522T172429-73@post.gmane.org>
+From: Jim Meyering <jim@meyering.net>
+Subject: Re: git-diff: must --exit-code work with --ignore* options?
+Date: Fri, 22 May 2009 19:54:14 +0200
+Message-ID: <87eiuhdnw9.fsf@meyering.net>
+References: <87k549dyne.fsf@meyering.net>
+	<7vvdnt869j.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Eric Raible <raible@gmail.com>
-X-From: git-owner@vger.kernel.org Fri May 22 19:54:14 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git list <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri May 22 19:54:34 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M7Ywf-0006sR-VU
-	for gcvg-git-2@gmane.org; Fri, 22 May 2009 19:54:14 +0200
+	id 1M7Ywy-0006yD-0H
+	for gcvg-git-2@gmane.org; Fri, 22 May 2009 19:54:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757225AbZEVRyG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 22 May 2009 13:54:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757201AbZEVRyE
-	(ORCPT <rfc822;git-outgoing>); Fri, 22 May 2009 13:54:04 -0400
-Received: from peff.net ([208.65.91.99]:58415 "EHLO peff.net"
+	id S1757310AbZEVRyX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 22 May 2009 13:54:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757243AbZEVRyW
+	(ORCPT <rfc822;git-outgoing>); Fri, 22 May 2009 13:54:22 -0400
+Received: from smtp2-g21.free.fr ([212.27.42.2]:58479 "EHLO smtp2-g21.free.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756903AbZEVRyE (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 May 2009 13:54:04 -0400
-Received: (qmail 20773 invoked by uid 107); 22 May 2009 17:54:09 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Fri, 22 May 2009 13:54:09 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Fri, 22 May 2009 13:54:01 -0400
-Content-Disposition: inline
-In-Reply-To: <loom.20090522T172429-73@post.gmane.org>
+	id S1757201AbZEVRyV (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 May 2009 13:54:21 -0400
+Received: from smtp2-g21.free.fr (localhost [127.0.0.1])
+	by smtp2-g21.free.fr (Postfix) with ESMTP id 2A8084B00B9
+	for <git@vger.kernel.org>; Fri, 22 May 2009 19:54:17 +0200 (CEST)
+Received: from mx.meyering.net (mx.meyering.net [82.230.74.64])
+	by smtp2-g21.free.fr (Postfix) with ESMTP id 4A3B44B011B
+	for <git@vger.kernel.org>; Fri, 22 May 2009 19:54:15 +0200 (CEST)
+Received: by rho.meyering.net (Acme Bit-Twister, from userid 1000)
+	id E521C2AD05; Fri, 22 May 2009 19:54:14 +0200 (CEST)
+In-Reply-To: <7vvdnt869j.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+	message of "Fri, 22 May 2009 09:14:00 -0700")
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119745>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119746>
 
-On Fri, May 22, 2009 at 05:29:41PM +0000, Eric Raible wrote:
+Junio C Hamano wrote:
+> Jim Meyering <jim@meyering.net> writes:
+>> git-diff's --quiet option works how I'd expect with --ignore-space-at-eol
+>> as long as I'm also using --no-index:
+>>
+>>     $ echo>b; echo \ >c; git diff --no-index --quiet --ignore-space-at-eol b c \
+>>       && echo good
+>>     good
+>>
+>> But in what I think of as normal operation (i.e., without --no-index),
+>> --exit-code (or --quiet) makes git-diff say there were differences,
+>> even when they have been ignored:
+>>
+>>     # do this in an empty directory
+>>     $ git init -q; echo>k; git add .; git commit -q -m. .; echo \ >k
+>>     $ git diff --ignore-space-at-eol --quiet || echo bad
+>>     bad
+>
+> I am slightly torn about this, in that I can picture myself saying that
+> this is unintuitive on some different days, but not today ;-)
 
-> Jeff King <peff <at> peff.net> writes:
-> 
-> > I think doing a "git merge origin/master" is perfectly normal for some
-> > workflows. For example:
-> > 
-> >   $ git fetch origin ;# grab it
-> >   $ gitk origin/master...master ;# check if it is good to merge
-> >   $ git merge origin/master ;# and merge it
-> > 
-> > The final step _could_ be a pull, but there is no point in repeating the
-> > fetch (which might be costly).
-> 
-> My understanding is that if the objects already exist
-> locally then this is not going to be costly at all.
-> The negotiation of what is needed is cheap, isn't it?
+Thanks for the quick reply.  Here's why I noticed:
 
-No, it is not terribly expensive. But you do have to talk to the server,
-which may mean making an ssh connection, or the server may be overloaded
-and slow. So it can take a few seconds instead of a few microseconds.
+I wanted to ensure that the only changes induced by commit C were
+to trailing blanks.  I wrote something like this, expecting to be able
+to deal with the exception:
 
-There is actually another reason not to pull, though: you just inspected
-what is in origin/master, so that is what you are expecting to merge.
-If there is new stuff on the remote, you probably don't want to merge it
-without similarly inspecting it.
+    git --quiet --ignore-space-at-eol --quiet C^..C || handle_unexpected
 
--Peff
+But handle_unexpected was always being invoked.
+I was surprised because GNU diff's --ignore-all-space (-w) option does
+work the way I expected:
+
+    $ echo>b; echo \ >c; diff -w b c && echo $?
+    0
+
+> If you look at the output (i.e. no --quiet), you would see that the blob
+> changes are still reported for the path.  E.g.  you would see something
+> like...
+>
+> 	$ git diff --ignore-space-at-eol
+>         diff --git a/k b/k
+>         index 8b13789..8d1c8b6 100644
+>
+> The "index" line is still showing that there _is_ a difference.
+
+I did see that, to my chagrin:
+if using a --ignore-... option had also suppressed those, I could
+have tested for empty output instead of exit status.
+
+> The --ignore-* options are there merely to tell git what changes are not
+> worth _showing_ in the textual part of the patch, in order to cut down the
+> amount of the output.  It never affects the outcome.
+>
+> So if anything, I think --no-index codepath is what's buggy; if it does
+> not report the blob difference that is a different matter, though.
+
+If need be, I can work around it.
