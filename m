@@ -1,58 +1,63 @@
-From: Brandon Casey <casey@nrlssc.navy.mil>
-Subject: Re: [PATCH] t8005: use more portable character encoding names
-Date: Fri, 22 May 2009 11:51:10 -0500
-Message-ID: <1vlRZ6iKMvKwtgMEJxvNoDcPRfAVCJ39d4srmMwFYEWx2SenNTUkig@cipher.nrlssc.navy.mil>
-References: <WnZxv4G_GKTN4oHhxHO_HuQt0cTqurrqXf2HHDiHLAzdp7wC70aKuqDot7xQ1nG9C8_NASCL1_Q@cipher.nrlssc.navy.mil> <7vhbzd85ux.fsf@alter.siamese.dyndns.org>
+From: Eric Raible <raible@gmail.com>
+Subject: Re: git merge remote branch says "Merge commit ..."?
+Date: Fri, 22 May 2009 17:29:41 +0000 (UTC)
+Message-ID: <loom.20090522T172429-73@post.gmane.org>
+References: <2729632a0905211250v4e7537caybe9e703c14361b5f@mail.gmail.com> <20090522074927.GB1409@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri May 22 18:51:30 2009
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri May 22 19:30:07 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M7Xxy-0002if-6x
-	for gcvg-git-2@gmane.org; Fri, 22 May 2009 18:51:30 +0200
+	id 1M7YZJ-0004wJ-BV
+	for gcvg-git-2@gmane.org; Fri, 22 May 2009 19:30:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756436AbZEVQvU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 22 May 2009 12:51:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752836AbZEVQvT
-	(ORCPT <rfc822;git-outgoing>); Fri, 22 May 2009 12:51:19 -0400
-Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:37892 "EHLO
-	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751778AbZEVQvS (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 May 2009 12:51:18 -0400
-Received: by mail.nrlssc.navy.mil id n4MGpCVU028279; Fri, 22 May 2009 11:51:12 -0500
-In-Reply-To: <7vhbzd85ux.fsf@alter.siamese.dyndns.org>
-X-OriginalArrivalTime: 22 May 2009 16:51:11.0272 (UTC) FILETIME=[82CB6A80:01C9DAFD]
+	id S1756377AbZEVR34 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 22 May 2009 13:29:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755700AbZEVR3z
+	(ORCPT <rfc822;git-outgoing>); Fri, 22 May 2009 13:29:55 -0400
+Received: from main.gmane.org ([80.91.229.2]:58194 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755342AbZEVR3z (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 May 2009 13:29:55 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1M7YZA-00063U-IA
+	for git@vger.kernel.org; Fri, 22 May 2009 17:29:57 +0000
+Received: from mail.nextest.com ([12.96.234.114])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 22 May 2009 17:29:56 +0000
+Received: from raible by mail.nextest.com with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 22 May 2009 17:29:56 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: main.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 12.96.234.114 (Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US) AppleWebKit/525.19 (KHTML, like Gecko) Chrome/1.0.154.65 Safari/525.19)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119742>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119743>
 
-Junio C Hamano wrote:
-> Brandon Casey <casey@nrlssc.navy.mil> writes:
+Jeff King <peff <at> peff.net> writes:
+
+> I think doing a "git merge origin/master" is perfectly normal for some
+> workflows. For example:
 > 
->> ...  I hesitate to send it since it does not actually allow any
->> tests to pass which were previously failing for me.  At least the utf-8 to
->> UTF-8 shouldn't cause any harm.  The shift-jis to SJIS seems to be commonly
->> supported?  at least IRIX 6.5 and Solaris as old as 7 recognize it, but the
->> evidence is only empirical.  Modern Solaris, and of course Linux recognize
->> either.
+>   $ git fetch origin ;# grab it
+>   $ gitk origin/master...master ;# check if it is good to merge
+>   $ git merge origin/master ;# and merge it
 > 
-> Perhaps the test can be changed from using cp1251 (whatever that is) to
-> something more common (e.g. 8859-1)?
+> The final step _could_ be a pull, but there is no point in repeating the
+> fetch (which might be costly).
 
-Good idea.
+My understanding is that if the objects already exist
+locally then this is not going to be costly at all.
+The negotiation of what is needed is cheap, isn't it?
 
-> There was another more large-ish patch to the tests around this area
-> recently from you.  I liked them but somehow failed to queue any of them
-> yet, sorry.
-
-You've got them in 'next'.  Did you forget? :) or don't you consider that
-queued?
-
--brandon
+- Eric
