@@ -1,87 +1,51 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] setup_revisions(): do not access outside argv
-Date: Fri, 22 May 2009 04:02:58 -0400
-Message-ID: <20090522080258.GD1409@coredump.intra.peff.net>
-References: <1242806900-3499-1-git-send-email-pclouds@gmail.com> <4A13BC3C.5070000@viscovery.net> <fcaeb9bf0905200123r3649a7e5vc40ece402379e701@mail.gmail.com> <7v7i0btdwu.fsf@alter.siamese.dyndns.org> <20090521041812.GE8091@sigill.intra.peff.net> <4A159720.3020103@intra2net.com> <20090522075620.GC1409@coredump.intra.peff.net>
+From: Clemens Buchacher <drizzd@aon.at>
+Subject: Re: [PATCH 0/3] http*: refactor fetching code (v2)
+Date: Fri, 22 May 2009 10:34:42 +0200
+Message-ID: <20090522083442.GA30571@localhost>
+References: <20090518163025.58842505.rctay89@gmail.com> <20090520074352.GC21455@glandium.org> <alpine.DEB.1.00.0905201220270.16461@intel-tinevez-2-302> <be6fef0d0905200514p55317a80ra765f6027f47c339@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	Johannes Sixt <j.sixt@viscovery.net>, git@vger.kernel.org
-To: Thomas Jarosch <thomas.jarosch@intra2net.com>
-X-From: git-owner@vger.kernel.org Fri May 22 10:03:18 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Mike Hommey <mh@glandium.org>,
+	Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: Tay Ray Chuan <rctay89@gmail.com>
+X-From: git-owner@vger.kernel.org Fri May 22 10:35:08 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M7Pim-00047F-6Z
-	for gcvg-git-2@gmane.org; Fri, 22 May 2009 10:03:16 +0200
+	id 1M7QDb-0000jo-Lu
+	for gcvg-git-2@gmane.org; Fri, 22 May 2009 10:35:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756813AbZEVIDC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 22 May 2009 04:03:02 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756663AbZEVIDA
-	(ORCPT <rfc822;git-outgoing>); Fri, 22 May 2009 04:03:00 -0400
-Received: from peff.net ([208.65.91.99]:53011 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756813AbZEVIC6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 May 2009 04:02:58 -0400
-Received: (qmail 17083 invoked by uid 107); 22 May 2009 08:03:04 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Fri, 22 May 2009 04:03:04 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Fri, 22 May 2009 04:02:58 -0400
+	id S1752066AbZEVIe6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 22 May 2009 04:34:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751608AbZEVIe5
+	(ORCPT <rfc822;git-outgoing>); Fri, 22 May 2009 04:34:57 -0400
+Received: from postman.fh-hagenberg.at ([193.170.124.96]:35108 "EHLO
+	mail.fh-hagenberg.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751475AbZEVIe4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 May 2009 04:34:56 -0400
+Received: from darc.dyndns.org ([80.123.242.182]) by mail.fh-hagenberg.at over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
+	 Fri, 22 May 2009 10:34:56 +0200
+Received: from drizzd by darc.dyndns.org with local (Exim 4.69)
+	(envelope-from <drizzd@aon.at>)
+	id 1M7QDC-0007zH-KF; Fri, 22 May 2009 10:34:42 +0200
 Content-Disposition: inline
-In-Reply-To: <20090522075620.GC1409@coredump.intra.peff.net>
+In-Reply-To: <be6fef0d0905200514p55317a80ra765f6027f47c339@mail.gmail.com>
+User-Agent: Mutt/1.5.18 (2008-05-17)
+X-OriginalArrivalTime: 22 May 2009 08:34:56.0927 (UTC) FILETIME=[2FE6EAF0:01C9DAB8]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119719>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119720>
 
-On Fri, May 22, 2009 at 03:56:20AM -0400, Jeff King wrote:
+On Wed, May 20, 2009 at 08:14:59PM +0800, Tay Ray Chuan wrote:
+> a quick list of tests available for http* (I left out some minor ones):
+[...]
+> 
+> Mike and Johannes, what else do you have in mind?
 
-> Yeah, it is fine because it just passes the result to prep_temp_blob,
-> which respects the length. I don't know if it is worth making it more
-> safe (arguably it should just be using strbuf_readlink anyway, but that
-> does introduce an extra malloc).
-
-And here is the strbuf_readlink version, which actually does make the
-source shorter and easier to read.
-
--- >8 --
-Subject: [PATCH] convert bare readlink to strbuf_readlink
-
-This particular readlink call never NUL-terminated its
-result, making it a potential source of bugs (though there
-is no bug now, as it currently always respects the length
-field). Let's just switch it to strbuf_readlink which is
-shorter and less error-prone.
-
-Signed-off-by: Jeff King <peff@peff.net>
----
- diff.c |   10 +++-------
- 1 files changed, 3 insertions(+), 7 deletions(-)
-
-diff --git a/diff.c b/diff.c
-index f06876b..ffbe5c4 100644
---- a/diff.c
-+++ b/diff.c
-@@ -2014,14 +2014,10 @@ static struct diff_tempfile *prepare_temp_file(const char *name,
- 			die("stat(%s): %s", name, strerror(errno));
- 		}
- 		if (S_ISLNK(st.st_mode)) {
--			int ret;
--			char buf[PATH_MAX + 1]; /* ought to be SYMLINK_MAX */
--			ret = readlink(name, buf, sizeof(buf));
--			if (ret < 0)
-+			struct strbuf sb = STRBUF_INIT;
-+			if (strbuf_readlink(&sb, name, st.st_size) < 0)
- 				die("readlink(%s)", name);
--			if (ret == sizeof(buf))
--				die("symlink too long: %s", name);
--			prep_temp_blob(name, temp, buf, ret,
-+			prep_temp_blob(name, temp, sb.buf, sb.len,
- 				       (one->sha1_valid ?
- 					one->sha1 : null_sha1),
- 				       (one->sha1_valid ?
--- 
-1.6.3.1.179.gec578.dirty
+As I understand it, there is a bunch of error regressions in Mike's patches.
+Having tests for those would help.
