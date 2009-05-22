@@ -1,63 +1,126 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] setup_revisions(): do not access outside argv
-Date: Fri, 22 May 2009 11:34:26 -0400
-Message-ID: <20090522153426.GA10390@coredump.intra.peff.net>
-References: <1242806900-3499-1-git-send-email-pclouds@gmail.com> <4A13BC3C.5070000@viscovery.net> <fcaeb9bf0905200123r3649a7e5vc40ece402379e701@mail.gmail.com> <7v7i0btdwu.fsf@alter.siamese.dyndns.org> <20090521041812.GE8091@sigill.intra.peff.net> <4A159720.3020103@intra2net.com> <20090522075620.GC1409@coredump.intra.peff.net> <20090522080258.GD1409@coredump.intra.peff.net> <Ys7Cih8N_SClhy9WmlLefLAxz2_XjZb3KAO1jrRMNrMcLq4T98MuIA@cipher.nrlssc.navy.mil>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: [PATCH] gitweb: Sanitize title attribute in format_subject_html
+Date: Fri, 22 May 2009 17:35:46 +0200
+Message-ID: <200905221735.48310.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Thomas Jarosch <thomas.jarosch@intra2net.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	Johannes Sixt <j.sixt@viscovery.net>, git@vger.kernel.org
-To: Brandon Casey <casey@nrlssc.navy.mil>
-X-From: git-owner@vger.kernel.org Fri May 22 17:34:37 2009
+Content-Type: text/plain;
+  charset="iso-8859-2"
+Content-Transfer-Encoding: 7bit
+Cc: Paul Gortmaker <paul.gortmaker@windriver.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri May 22 17:36:03 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M7WlX-0005te-FG
-	for gcvg-git-2@gmane.org; Fri, 22 May 2009 17:34:35 +0200
+	id 1M7Wmx-0006V3-4o
+	for gcvg-git-2@gmane.org; Fri, 22 May 2009 17:36:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756979AbZEVPe2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 22 May 2009 11:34:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756954AbZEVPe1
-	(ORCPT <rfc822;git-outgoing>); Fri, 22 May 2009 11:34:27 -0400
-Received: from peff.net ([208.65.91.99]:54431 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753051AbZEVPe1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 May 2009 11:34:27 -0400
-Received: (qmail 19972 invoked by uid 107); 22 May 2009 15:34:34 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Fri, 22 May 2009 11:34:34 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Fri, 22 May 2009 11:34:26 -0400
+	id S1757251AbZEVPf4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 22 May 2009 11:35:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756969AbZEVPfz
+	(ORCPT <rfc822;git-outgoing>); Fri, 22 May 2009 11:35:55 -0400
+Received: from mail-fx0-f158.google.com ([209.85.220.158]:60101 "EHLO
+	mail-fx0-f158.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753207AbZEVPfy (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 May 2009 11:35:54 -0400
+Received: by fxm2 with SMTP id 2so1733962fxm.37
+        for <git@vger.kernel.org>; Fri, 22 May 2009 08:35:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        bh=BVv/Xk0uxn52huFQQRELH0xl/yP+uLhEVNqAfJX8a1Q=;
+        b=Zf0HyZjDrAGrDsc8sQ7Ht755NDjr22p3K+xygxOyiTqgntcICbv960WUxyWtyjKsdJ
+         oQtkd3HY+Lj2hRfI3dkJFAmS/7ag7bgB+/msIVEv6+pPzLiKPUjvY2sYFhGimjkr0/JZ
+         0D9Goh+fnSCr6Iql0w9tbhXJf/VQsjqXW1gSU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        b=Ue9BdcXtTQZxoxdrJ74Di5GUMgprKL9t1H+m4Bcux5m7VboVloMRGQ9sHSRdiqf1oR
+         KzXld4HGxhZfsCOcQpQNl3a8Yh8sbSkDoaouAvGJsExY1/g60d14ex1O5cdoJ3b0rpaC
+         dERw2Gw80FfiEpZH2Rjy61Iwlcbwtl9WK8mjM=
+Received: by 10.86.51.10 with SMTP id y10mr3219138fgy.51.1243006554389;
+        Fri, 22 May 2009 08:35:54 -0700 (PDT)
+Received: from ?192.168.1.13? (abwq183.neoplus.adsl.tpnet.pl [83.8.240.183])
+        by mx.google.com with ESMTPS id 4sm5730423fgg.28.2009.05.22.08.35.52
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 22 May 2009 08:35:53 -0700 (PDT)
+User-Agent: KMail/1.9.3
 Content-Disposition: inline
-In-Reply-To: <Ys7Cih8N_SClhy9WmlLefLAxz2_XjZb3KAO1jrRMNrMcLq4T98MuIA@cipher.nrlssc.navy.mil>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119735>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119736>
 
-On Fri, May 22, 2009 at 10:33:22AM -0500, Brandon Casey wrote:
+Replace control characters with question mark '?' (like in
+chop_and_esc_str).
 
-> >  		if (S_ISLNK(st.st_mode)) {
-> > -			int ret;
-> > -			char buf[PATH_MAX + 1]; /* ought to be SYMLINK_MAX */
-> > -			ret = readlink(name, buf, sizeof(buf));
-> > -			if (ret < 0)
-> > +			struct strbuf sb = STRBUF_INIT;
-> > +			if (strbuf_readlink(&sb, name, st.st_size) < 0)
-> >  				die("readlink(%s)", name);
-> > -			if (ret == sizeof(buf))
-> > -				die("symlink too long: %s", name);
-> > -			prep_temp_blob(name, temp, buf, ret,
-> > +			prep_temp_blob(name, temp, sb.buf, sb.len,
-> >  				       (one->sha1_valid ?
-> >  					one->sha1 : null_sha1),
-> >  				       (one->sha1_valid ?
-> 
-> Don't you need to strbuf_release() ?
 
-Urgh, yes, of course. Thanks for noticing.
+A little background: some web browsers turn on strict (and
+unforgiving) XML validating mode for XHTML documents served using
+application/xhtml+xml content type.  This means among others that
+control characters are forbidden to appear in gitweb output.
 
--Peff
+CGI.pm does by default slight escaping (using simple_escape subroutine
+from CGI::Util) of all _attribute_ values (depending on the value of
+autoEscape, by default on).  This escaping, at least in CGI.pm version
+3.10 (most current version at CPAN is 3.43), is minimal: only '"',
+'&', '<' and '>' are escaped using named HTML entity references
+(&quot;, &amp;, &lt; and &gt; respectively).  But simple_escape does
+not do escaping of control characters such as ^X which are invalid in
+XHTML (in strict mode).
+
+If by some accident commit message do contain some control character
+in first 50 characters (more or less) of first line of commit message,
+and this line is longer than 50 characters (so gitweb shortens it for
+display), then gitweb would put this control character in title
+attribute (and CGI.pm would not remove them).  The tag _contents_ is
+safe because it is escaped using esc_html() explicitly, and it
+replaces control characters by their printable representation.
+
+
+While at it: chop_and_escape_str doesn't need capturing group.
+
+Noticed-by: Paul Gortmaker <paul.gortmaker@windriver.com>
+Signed-off-by: Jakub Narebski <jnareb@gmail.com>
+---
+This issue first appeared (with a wrong solution) month ago in
+http://thread.gmane.org/gmane.comp.version-control.git/116755
+
+I'm sorry Paul that it took so long to fix it.
+
+
+This patch will be followed by 'lite' version, with minimal commit
+message (this one is a bit long), and with failed attempt using
+esc_attr.
+
+ gitweb/gitweb.perl |    3 ++-
+ 1 files changed, 2 insertions(+), 1 deletions(-)
+
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index 05702e4..1e7e2d8 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -1236,7 +1236,7 @@ sub chop_and_escape_str {
+ 	if ($chopped eq $str) {
+ 		return esc_html($chopped);
+ 	} else {
+-		$str =~ s/([[:cntrl:]])/?/g;
++		$str =~ s/[[:cntrl:]]/?/g;
+ 		return $cgi->span({-title=>$str}, esc_html($chopped));
+ 	}
+ }
+@@ -1459,6 +1459,7 @@ sub format_subject_html {
+ 	$extra = '' unless defined($extra);
+ 
+ 	if (length($short) < length($long)) {
++		$long =~ s/[[:cntrl:]]/?/g;
+ 		return $cgi->a({-href => $href, -class => "list subject",
+ 		                -title => to_utf8($long)},
+ 		       esc_html($short) . $extra);
+-- 
+1.6.3.1
