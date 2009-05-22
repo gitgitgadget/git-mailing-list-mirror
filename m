@@ -1,68 +1,71 @@
-From: Jim Meyering <jim@meyering.net>
-Subject: git-diff: must --exit-code work with --ignore* options?
-Date: Fri, 22 May 2009 16:01:57 +0200
-Message-ID: <87k549dyne.fsf@meyering.net>
+From: Thomas Jarosch <thomas.jarosch@intra2net.com>
+Subject: Re: [PATCH] setup_revisions(): do not access outside argv
+Date: Fri, 22 May 2009 16:23:44 +0200
+Organization: Intra2net AG
+Message-ID: <200905221625.07628.thomas.jarosch@intra2net.com>
+References: <1242806900-3499-1-git-send-email-pclouds@gmail.com> <20090522075620.GC1409@coredump.intra.peff.net> <20090522080258.GD1409@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git list <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri May 22 16:02:30 2009
+Content-Type: text/plain;
+  charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	Johannes Sixt <j.sixt@viscovery.net>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri May 22 16:56:19 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M7VK9-0003aG-BF
-	for gcvg-git-2@gmane.org; Fri, 22 May 2009 16:02:13 +0200
+	id 1M7WAR-00058M-96
+	for gcvg-git-2@gmane.org; Fri, 22 May 2009 16:56:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754279AbZEVOCG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 22 May 2009 10:02:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752386AbZEVOCF
-	(ORCPT <rfc822;git-outgoing>); Fri, 22 May 2009 10:02:05 -0400
-Received: from smtp2-g21.free.fr ([212.27.42.2]:46824 "EHLO smtp2-g21.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753805AbZEVOCE (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 May 2009 10:02:04 -0400
-Received: from smtp2-g21.free.fr (localhost [127.0.0.1])
-	by smtp2-g21.free.fr (Postfix) with ESMTP id 704634B00A5
-	for <git@vger.kernel.org>; Fri, 22 May 2009 16:01:59 +0200 (CEST)
-Received: from mx.meyering.net (mx.meyering.net [82.230.74.64])
-	by smtp2-g21.free.fr (Postfix) with ESMTP id 8F41F4B00B3
-	for <git@vger.kernel.org>; Fri, 22 May 2009 16:01:57 +0200 (CEST)
-Received: by rho.meyering.net (Acme Bit-Twister, from userid 1000)
-	id 6C0798BC4; Fri, 22 May 2009 16:01:57 +0200 (CEST)
+	id S1757201AbZEVO4E (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 22 May 2009 10:56:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756433AbZEVO4C
+	(ORCPT <rfc822;git-outgoing>); Fri, 22 May 2009 10:56:02 -0400
+Received: from re01.intra2net.com ([82.165.28.202]:50162 "EHLO
+	re01.intra2net.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753051AbZEVO4A (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 May 2009 10:56:00 -0400
+X-Greylist: delayed 1848 seconds by postgrey-1.27 at vger.kernel.org; Fri, 22 May 2009 10:56:00 EDT
+Received: from intranator.m.i2n (unknown [172.16.1.99])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by re01.intra2net.com (Postfix) with ESMTP id 798455F24;
+	Fri, 22 May 2009 16:25:09 +0200 (CEST)
+Received: from localhost (intranator.m.i2n [127.0.0.1])
+	by localhost (Postfix) with ESMTP id 29B132AC4F;
+	Fri, 22 May 2009 16:25:09 +0200 (CEST)
+Received: from storm.localnet (storm.m.i2n [172.16.1.2])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by intranator.m.i2n (Postfix) with ESMTP id 490362AC4E;
+	Fri, 22 May 2009 16:25:08 +0200 (CEST)
+User-Agent: KMail/1.11.0 (Linux/2.6.27.21-78.2.41.fc9.i686; KDE/4.2.3; i686; ; )
+In-Reply-To: <20090522080258.GD1409@coredump.intra.peff.net>
+Content-Disposition: inline
+X-Virus-Scanned: by Intranator (www.intra2net.com) with AMaViS and F-Secure AntiVirus (fsavdb 2009-05-22_05)
+X-Spam-Status: hits=-1.8 tests=[ALL_TRUSTED=-1.8,BAYES_50=0.001]
+X-Spam-Level: 982
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119731>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119732>
 
-git-diff's --quiet option works how I'd expect with --ignore-space-at-eol
-as long as I'm also using --no-index:
+On Friday, 22. May 2009 10:02:58 Jeff King wrote:
+> On Fri, May 22, 2009 at 03:56:20AM -0400, Jeff King wrote:
+> > Yeah, it is fine because it just passes the result to prep_temp_blob,
+> > which respects the length. I don't know if it is worth making it more
+> > safe (arguably it should just be using strbuf_readlink anyway, but that
+> > does introduce an extra malloc).
+>
+> And here is the strbuf_readlink version, which actually does make the
+> source shorter and easier to read.
 
-    $ echo>b; echo \ >c; git diff --no-index --quiet --ignore-space-at-eol b c \
-      && echo good
-    good
+Good work! Patch looks fine to me. Guess you can't even benchmark
+the "extra" malloc ;-)
 
-But in what I think of as normal operation (i.e., without --no-index),
---exit-code (or --quiet) makes git-diff say there were differences,
-even when they have been ignored:
-
-    # do this in an empty directory
-    $ git init -q; echo>k; git add .; git commit -q -m. .; echo \ >k
-    $ git diff --ignore-space-at-eol --quiet || echo bad
-    bad
-
-Same problem with --ignore-space-change.
-
--------------------
-In the surprising case, builtin-diff.c's builtin_diff_files calls
-diff_result_code, which returns nonzero due to this:
-
-          if (diff_queued_diff.nr)
-                  DIFF_OPT_SET(options, HAS_CHANGES);
-          else
-                  DIFF_OPT_CLR(options, HAS_CHANGES);
-
-However, the queued diffs may contain only ignorable changes.
-
-With --no-index, it takes a different code path and uses
-diffopt.found_changes to produce the desired exit status.
+Have a nice weekend,
+Thomas
