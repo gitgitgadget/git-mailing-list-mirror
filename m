@@ -1,80 +1,86 @@
-From: Richard Quadling <rquadling@googlemail.com>
-Subject: Heap allocation error in git-1.6.2.4 on Cygwin. Problem not present 
-	in git-1.6.1.2
-Date: Fri, 22 May 2009 12:23:42 +0100
-Message-ID: <10845a340905220423x69eb1718n7a6f9dcd5c2df459@mail.gmail.com>
-Reply-To: RQuadling@googlemail.com
+From: Tim Uckun <timuckun@gmail.com>
+Subject: Re: can anybody explain the following to a git noob?
+Date: Fri, 22 May 2009 23:36:01 +1200
+Message-ID: <855e4dcf0905220436h1b6fa632q7804c98bf09b324c@mail.gmail.com>
+References: <855e4dcf0905212046o3e1d6ec6l487829a0a411dcaf@mail.gmail.com>
+	 <32541b130905212202q9aed54cn892171b7e654812f@mail.gmail.com>
+	 <855e4dcf0905212244r454a5c21w7bdbfb566a28efb8@mail.gmail.com>
+	 <4A1671E5.4030400@op5.se>
+	 <855e4dcf0905220335n367a065fidc65567119c0a5a3@mail.gmail.com>
+	 <4A16822A.2060404@viscovery.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri May 22 13:24:37 2009
+Cc: Andreas Ericsson <ae@op5.se>, Avery Pennarun <apenwarr@gmail.com>,
+	git@vger.kernel.org
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Fri May 22 13:41:24 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M7Src-00057H-P8
-	for gcvg-git-2@gmane.org; Fri, 22 May 2009 13:24:37 +0200
+	id 1M7T7q-0003Ip-5d
+	for gcvg-git-2@gmane.org; Fri, 22 May 2009 13:41:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755310AbZEVLYD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 22 May 2009 07:24:03 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754762AbZEVLYD
-	(ORCPT <rfc822;git-outgoing>); Fri, 22 May 2009 07:24:03 -0400
-Received: from mail-fx0-f158.google.com ([209.85.220.158]:50296 "EHLO
-	mail-fx0-f158.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753831AbZEVLYB (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 May 2009 07:24:01 -0400
-Received: by fxm2 with SMTP id 2so1591158fxm.37
-        for <git@vger.kernel.org>; Fri, 22 May 2009 04:24:02 -0700 (PDT)
+	id S1752577AbZEVLlO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 22 May 2009 07:41:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751584AbZEVLlN
+	(ORCPT <rfc822;git-outgoing>); Fri, 22 May 2009 07:41:13 -0400
+Received: from yw-out-2324.google.com ([74.125.46.31]:57878 "EHLO
+	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751376AbZEVLlN (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 May 2009 07:41:13 -0400
+Received: by yw-out-2324.google.com with SMTP id 5so996313ywb.1
+        for <git@vger.kernel.org>; Fri, 22 May 2009 04:41:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:reply-to:from:date
-         :message-id:subject:to:content-type:content-transfer-encoding;
-        bh=yCFweL+5OyM5A3hJNpV5qOzfgaEukilrKmRU8F5OsIY=;
-        b=ufoCEIK/EiLAcK6nOOAm0UkfyFQJZB5mMyqlBA1WkufxDKSbYtj+/vPGBsa8ZQcYt+
-         f4gO/hJwIflVWJf7iAyOIrvWnVNdUOUJjlJSvCXAOhnxIDAidFXMHWPsRaNvRqUKAsS0
-         CanzifQ51hV/yAhXvXS//6s+TAKdeqnx41Jxc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=mime-version:reply-to:from:date:message-id:subject:to:content-type
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
          :content-transfer-encoding;
-        b=w1cVBwg8XkeBz+YTWz9UMHUPN5RJv1O/Ohe4Gv33lhyJWNPhRR6ufoiA4zZcpX5dAe
-         pZ2c4kiGI1OU1A7s0XAdsz8TXq+qvpgHNTKwCPiiYEQI7H8ReH1weiDhZ3Q4EzK97det
-         015wQjGVvqD28dJbnY9a6FwzXRZoEZFl9pzGE=
-Received: by 10.223.110.4 with SMTP id l4mr2196795fap.47.1242991442075; Fri, 
-	22 May 2009 04:24:02 -0700 (PDT)
+        bh=C19NCOdItMWQ4mGp8vtf71YCA7U69V6OqfFedQDy+3A=;
+        b=mejX5r1CyvLRPS2pFGIMf15gHWyPZ8NjyuEhqCGY6KOnnTP6BeaZOU3V7s4/LRpyoT
+         M/1qiZl8YyjH8iEAWyHNFBp8Yh2hjhBPwmL7pbZfYN3nmbaojdIdw0QvzxbXdlHn65ff
+         4HfTKY0k2swEo2yfBsdij8GXWdqpfZWsmR1Eg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=ubkd5C516g+ZUUbiV78pnYXXcySzkaMsF28mx0HHe7JUwoaSBqybUxZySwVLHkwBg3
+         RGQO4ks4gq4KY5vbRh13zsFYqoQMKsej0MLB+eCxBkEMcDCco6rH7F+AFICPIYYKRP8S
+         giPrtasFIIqfSNIfe+4sr6Y/XEW9V3/C9f8fU=
+Received: by 10.100.154.17 with SMTP id b17mr7303344ane.45.1242992161890; Fri, 
+	22 May 2009 04:36:01 -0700 (PDT)
+In-Reply-To: <4A16822A.2060404@viscovery.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119726>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119727>
 
-Hi.
+>
+> Did test_new contain ignored files?
 
-I've just upgraded GIT on Cygwin from git-1.6.1.2 to git-1.6.2.4.
+No.  I put the entire transcript in the first email. I did not tell
+git to ignore anything and there were no .git directories in the test
+folder.
 
-I'm getting a crash ...
+> In this case, when you checkout the
+> branch that does not have test_new, only the tracked files are removed;
+> the ignored (i.e untracked) files remain. Therefore, after the checkout
+> you still have a test_new directory.
+>
 
-21 [main] git 4620 C:\Cygwin\bin\git.exe: *** fatal error - couldn't
-allocate heap, Win32 error 487, base 0x990000, top 0xA10000,
-reserve_size 520192, allocsize 524288, page_const 4096
+As far as I can tell all the files are tracked after I do a commit.
 
-When I kill git.exe, I get ...
+I can understand why it put the original test directory back when I
+changed to the master branch but I don't understand why it's missing a
+subdirectory.  I don't think the test_new directory should be in the
+master branch at all but I guess I can kind of sort of see why git
+might not remove it. What I can't understand at all is why it's
+missing subdirectories.
 
-17 [unknown (0x1048)] GIT 1824 fork: child -1 - died waiting for
-longjmp before initialization, retry 0, exit code 0x1, errno 11
-
-
-Reverting back to git-1.6.1.2 and the problem does not exist.
-
-Happy to help if given some direction.
-
-Regards,
-
-Richard Quadling.
-
--- 
------
-Richard Quadling
-Zend Certified Engineer : http://zend.com/zce.php?c=ZEND002498&r=213474731
-"Standing on the shoulders of some very clever giants!"
+I hate to say this but I tried the exact same thing with mercurial in
+the last half hour and it did exactly what I thought it should do. The
+master had the test directory but not the test_new and the branch had
+the test_new directory but not the test. No subdirectories were
+missing out of either one.
