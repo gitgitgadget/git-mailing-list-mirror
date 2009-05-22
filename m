@@ -1,62 +1,116 @@
-From: Thomas Guyot-Sionnest <dermoth@aei.ca>
-Subject: git reset --hard and uncommitted files in index
-Date: Thu, 21 May 2009 22:32:36 -0400
-Message-ID: <gv52s4$e7h$1@ger.gmane.org>
+From: Tim Uckun <timuckun@gmail.com>
+Subject: can anybody explain the following to a git noob?
+Date: Fri, 22 May 2009 15:46:08 +1200
+Message-ID: <855e4dcf0905212046o3e1d6ec6l487829a0a411dcaf@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri May 22 04:35:19 2009
+X-From: git-owner@vger.kernel.org Fri May 22 05:46:24 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M7KbL-0000Kx-EK
-	for gcvg-git-2@gmane.org; Fri, 22 May 2009 04:35:15 +0200
+	id 1M7LiB-00089V-SK
+	for gcvg-git-2@gmane.org; Fri, 22 May 2009 05:46:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752508AbZEVCfE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 21 May 2009 22:35:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752451AbZEVCfD
-	(ORCPT <rfc822;git-outgoing>); Thu, 21 May 2009 22:35:03 -0400
-Received: from main.gmane.org ([80.91.229.2]:39140 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751782AbZEVCfD (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 May 2009 22:35:03 -0400
-Received: from root by ciao.gmane.org with local (Exim 4.43)
-	id 1M7Kb8-00016D-Di
-	for git@vger.kernel.org; Fri, 22 May 2009 02:35:02 +0000
-Received: from 236-76.162.dsl.aei.ca ([216.162.76.236])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 22 May 2009 02:35:02 +0000
-Received: from dermoth by 236-76.162.dsl.aei.ca with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 22 May 2009 02:35:02 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: 236-76.162.dsl.aei.ca
-User-Agent: Thunderbird 2.0.0.21 (X11/20090318)
+	id S1752497AbZEVDqL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 21 May 2009 23:46:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752451AbZEVDqI
+	(ORCPT <rfc822;git-outgoing>); Thu, 21 May 2009 23:46:08 -0400
+Received: from mail-gx0-f166.google.com ([209.85.217.166]:47724 "EHLO
+	mail-gx0-f166.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752084AbZEVDqI (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 May 2009 23:46:08 -0400
+Received: by gxk10 with SMTP id 10so2773568gxk.13
+        for <git@vger.kernel.org>; Thu, 21 May 2009 20:46:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:date:message-id:subject
+         :from:to:content-type:content-transfer-encoding;
+        bh=TXsU5zo1dGKIhevl7pnCNhcUnUOwcg/G02dcgC32d18=;
+        b=KpT9aAVQfQHdnDBjkRK9c35HIE9Jj9x4DB3kLmtRZ4/Vi4/3HXNKXMSiFAv9rPq9W1
+         6ojwrE5VYlQ+1sDwA9mSdyfLcOCzS1SkJzh6oEXgpnmFzYlh8Bb4kRFje3rlPC9NdKn1
+         t7DrOmo4mboZoAlB0IPNle9Xc/fA/bmav6azQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:date:message-id:subject:from:to:content-type
+         :content-transfer-encoding;
+        b=cDoXTdXg/J4qLnw3wsOeuPSWsJ49NLuOWkGRa9+1QTTX/3KPwE43xTsbQjSILRBSf6
+         5PK1CslFWhCg0oG7UiGGXCq7dMG+k9g6DU2a3nrv/84AYOyS7fI1EYj1Yjlv9QlWxS1f
+         WGed54b+CXc3WXWKc+7O1DDpmKRheqBpDC4eY=
+Received: by 10.90.81.11 with SMTP id e11mr2728308agb.119.1242963968385; Thu, 
+	21 May 2009 20:46:08 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119709>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119710>
 
-Hi,
+A transcript...
 
-Today I was working on a script that modify many files on a repository,
-therefore during testing phase I needed to reset --hard to get back to
-the last commit. This operation does not affect untracked files.
+git init
+git add . > /dev/nul
+git commit -m 'initial import'
 
-Since i was going to commit the script, at some point I decided to add
-it to the index so I could track/revert changes to it. On the next reset
-Git deleted the script.
+git status
+# On branch master
+nothing to commit (working directory clean)
 
-Fortunately "git add" creates an object that I could easily recover
-(thanks to wereHamster on #git for pointing that out), however I was
-wondering if it's really the desired behavior to *delete* a file that
-have been added to the index but isn't on the previous commit? Shouldn't
-git just unstage it?
+***** Create new branch  ********
+git checkout -b my_branch
+Switched to a new branch "my_branch"
 
---
-Thomas
+*********Try to rename a directory  WTF?: Git thinks any directory with a
+.git folder is empty and refuses to rename the directory.
+git mv vendor vendor_new
+fatal: source directory is empty, source=vendor/plugins/acts_as_audited,
+destination=vendor_new/plugins/acts_as_audited
+
+ls vendor/plugins/acts_as_audited/
+CHANGELOG  generators  init.rb  lib  LICENSE  Rakefile  README  spec  tasks
+test.txt
+
+******** Initial state of the test directory
+ls test
+fixtures  functional  integration  mocks  test_helper.rb  unit  watir
+
+****** Rename and commit changes
+git mv test test_new
+git commit -m 'renamed the test directory'
+
+********Current state of the directory
+ ls
+app  Capfile  config  db  doc  lib  MyProject.kpf  public  Rakefile  README
+script  test_new  tmp  vendor
+
+
+********Checkout master. WTF?: Both the test and the test_new directories
+exist. Why does the test_new exist in this branch?
+git checkout master
+ls
+app  Capfile  config  db  doc  lib  MyProject.kpf  public  Rakefile  README
+script  test  test_new  tmp  vendor
+
+******** list  the test directory.  WTF?: Where did the mocks subdir go??
+(see above for the initial directory listing)
+ ls test
+fixtures  functional  integration  test_helper.rb  unit  watir
+
+**** Check the test_new directory:  WTF?: Where are all the other
+subdirectories?
+ls test_new
+functional  mocks
+
+******** Merge  Everything is merged properly.
+git merge my_branch
+
+ls
+app  Capfile  config  db  doc  lib  MyProject.kpf  public  Rakefile  README
+script  test_new  tmp  vendor
+ls test_new
+fixtures  functional  integration  mocks  test_helper.rb  unit  watir
+
+
+obviously I am doing something profoundly wrong. Can somebody explain why
+this is happening?
