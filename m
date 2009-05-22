@@ -1,63 +1,83 @@
-From: Eric Raible <raible@gmail.com>
-Subject: Re: git merge remote branch says "Merge commit ..."?
-Date: Fri, 22 May 2009 17:29:41 +0000 (UTC)
-Message-ID: <loom.20090522T172429-73@post.gmane.org>
-References: <2729632a0905211250v4e7537caybe9e703c14361b5f@mail.gmail.com> <20090522074927.GB1409@coredump.intra.peff.net>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: can anybody explain the following to a git noob?
+Date: Fri, 22 May 2009 13:33:56 -0400 (EDT)
+Message-ID: <alpine.LNX.2.00.0905221244370.2147@iabervon.org>
+References: <855e4dcf0905212046o3e1d6ec6l487829a0a411dcaf@mail.gmail.com>  <32541b130905212202q9aed54cn892171b7e654812f@mail.gmail.com>  <855e4dcf0905212244r454a5c21w7bdbfb566a28efb8@mail.gmail.com>  <4A1671E5.4030400@op5.se> 
+ <855e4dcf0905220335n367a065fidc65567119c0a5a3@mail.gmail.com>  <4A16822A.2060404@viscovery.net> <855e4dcf0905220436h1b6fa632q7804c98bf09b324c@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri May 22 19:30:07 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Johannes Sixt <j.sixt@viscovery.net>, Andreas Ericsson <ae@op5.se>,
+	Avery Pennarun <apenwarr@gmail.com>, git@vger.kernel.org
+To: Tim Uckun <timuckun@gmail.com>
+X-From: git-owner@vger.kernel.org Fri May 22 19:34:13 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M7YZJ-0004wJ-BV
-	for gcvg-git-2@gmane.org; Fri, 22 May 2009 19:30:05 +0200
+	id 1M7YdI-0006ld-To
+	for gcvg-git-2@gmane.org; Fri, 22 May 2009 19:34:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756377AbZEVR34 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 22 May 2009 13:29:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755700AbZEVR3z
-	(ORCPT <rfc822;git-outgoing>); Fri, 22 May 2009 13:29:55 -0400
-Received: from main.gmane.org ([80.91.229.2]:58194 "EHLO ciao.gmane.org"
+	id S1756743AbZEVReG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 22 May 2009 13:34:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755700AbZEVReE
+	(ORCPT <rfc822;git-outgoing>); Fri, 22 May 2009 13:34:04 -0400
+Received: from iabervon.org ([66.92.72.58]:41651 "EHLO iabervon.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755342AbZEVR3z (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 May 2009 13:29:55 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1M7YZA-00063U-IA
-	for git@vger.kernel.org; Fri, 22 May 2009 17:29:57 +0000
-Received: from mail.nextest.com ([12.96.234.114])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 22 May 2009 17:29:56 +0000
-Received: from raible by mail.nextest.com with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 22 May 2009 17:29:56 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: main.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 12.96.234.114 (Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US) AppleWebKit/525.19 (KHTML, like Gecko) Chrome/1.0.154.65 Safari/525.19)
+	id S1755868AbZEVReD (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 May 2009 13:34:03 -0400
+Received: (qmail 9724 invoked by uid 1000); 22 May 2009 17:33:56 -0000
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 22 May 2009 17:33:56 -0000
+In-Reply-To: <855e4dcf0905220436h1b6fa632q7804c98bf09b324c@mail.gmail.com>
+User-Agent: Alpine 2.00 (LNX 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119743>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119744>
 
-Jeff King <peff <at> peff.net> writes:
+On Fri, 22 May 2009, Tim Uckun wrote:
 
-> I think doing a "git merge origin/master" is perfectly normal for some
-> workflows. For example:
+> >
+> > Did test_new contain ignored files?
 > 
->   $ git fetch origin ;# grab it
->   $ gitk origin/master...master ;# check if it is good to merge
->   $ git merge origin/master ;# and merge it
+> No.  I put the entire transcript in the first email. I did not tell
+> git to ignore anything and there were no .git directories in the test
+> folder.
+
+Obviously, there's more before the transcript started; otherwise, there 
+would be nothing to import in the initial commit, and there certainly 
+wouldn't be .git directories that came from nowhere. I don't think any 
+version control system I know of likes having your initial import be of a 
+directory with other working directories for the same system as 
+subdirectories. (That is, Mercurial will be fine having git working 
+directories in the import, but git won't, and Mercurial wouldn't be happy 
+about having Mercurial working directories as subdirectories).
+
 > 
-> The final step _could_ be a pull, but there is no point in repeating the
-> fetch (which might be costly).
+> > In this case, when you checkout the
+> > branch that does not have test_new, only the tracked files are removed;
+> > the ignored (i.e untracked) files remain. Therefore, after the checkout
+> > you still have a test_new directory.
+> >
+> 
+> As far as I can tell all the files are tracked after I do a commit.
+> 
+> I can understand why it put the original test directory back when I
+> changed to the master branch but I don't understand why it's missing a
+> subdirectory.  I don't think the test_new directory should be in the
+> master branch at all but I guess I can kind of sort of see why git
+> might not remove it. What I can't understand at all is why it's
+> missing subdirectories.
 
-My understanding is that if the objects already exist
-locally then this is not going to be costly at all.
-The negotiation of what is needed is cheap, isn't it?
+This tends to happen if, while on a different branch, you editted some 
+files and left editor backups or compiled (maybe just-in-time) files in 
+that directory. Then there are files in the directory that don't belong to 
+any branch, since they're not source files.
 
-- Eric
+It's also highly likely that what's missing is stuff you thought you 
+imported initially, but did not actually import due to the confusion with 
+it already being a git working directory.
+
+	-Daniel
+*This .sig left intentionally blank*
