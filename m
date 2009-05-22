@@ -1,59 +1,66 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] t8005: use more portable character encoding names
-Date: Fri, 22 May 2009 09:22:46 -0700
-Message-ID: <7vhbzd85ux.fsf@alter.siamese.dyndns.org>
-References: <WnZxv4G_GKTN4oHhxHO_HuQt0cTqurrqXf2HHDiHLAzdp7wC70aKuqDot7xQ1nG9C8_NASCL1_Q@cipher.nrlssc.navy.mil>
+From: Tay Ray Chuan <rctay89@gmail.com>
+Subject: Re: Heap allocation error in git-1.6.2.4 on Cygwin. Problem not 
+	present in git-1.6.1.2
+Date: Sat, 23 May 2009 00:29:20 +0800
+Message-ID: <be6fef0d0905220929p64f45f52ub8dd39feb063936b@mail.gmail.com>
+References: <10845a340905220423x69eb1718n7a6f9dcd5c2df459@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Brandon Casey <casey@nrlssc.navy.mil>
-X-From: git-owner@vger.kernel.org Fri May 22 18:23:17 2009
+To: RQuadling@googlemail.com
+X-From: git-owner@vger.kernel.org Fri May 22 18:29:33 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M7XWe-00043U-JS
-	for gcvg-git-2@gmane.org; Fri, 22 May 2009 18:23:16 +0200
+	id 1M7Xch-0007Dw-H6
+	for gcvg-git-2@gmane.org; Fri, 22 May 2009 18:29:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756145AbZEVQWr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 22 May 2009 12:22:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754323AbZEVQWr
-	(ORCPT <rfc822;git-outgoing>); Fri, 22 May 2009 12:22:47 -0400
-Received: from fed1rmmtao106.cox.net ([68.230.241.40]:46371 "EHLO
-	fed1rmmtao106.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751535AbZEVQWq (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 May 2009 12:22:46 -0400
-Received: from fed1rmimpo03.cox.net ([70.169.32.75])
-          by fed1rmmtao106.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20090522162247.DTRE25927.fed1rmmtao106.cox.net@fed1rmimpo03.cox.net>;
-          Fri, 22 May 2009 12:22:47 -0400
-Received: from localhost ([68.225.240.211])
-	by fed1rmimpo03.cox.net with bizsmtp
-	id ugNm1b00m4aMwMQ04gNnL2; Fri, 22 May 2009 12:22:47 -0400
-X-Authority-Analysis: v=1.0 c=1 a=A45FNvI-izYA:10 a=Tuf-O-QHtNkA:10
- a=yVAoY06rBgFK-_Q3j44A:9 a=p0DPRM_GKTx1FK6mSMwyC1xSUGEA:4
-X-CM-Score: 0.00
-In-Reply-To: <WnZxv4G_GKTN4oHhxHO_HuQt0cTqurrqXf2HHDiHLAzdp7wC70aKuqDot7xQ1nG9C8_NASCL1_Q@cipher.nrlssc.navy.mil> (Brandon Casey's message of "Fri\, 22 May 2009 10\:25\:04 -0500")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+	id S1752133AbZEVQ3V (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 22 May 2009 12:29:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751336AbZEVQ3U
+	(ORCPT <rfc822;git-outgoing>); Fri, 22 May 2009 12:29:20 -0400
+Received: from mail-px0-f103.google.com ([209.85.216.103]:50081 "EHLO
+	mail-px0-f103.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751250AbZEVQ3T (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 May 2009 12:29:19 -0400
+Received: by pxi1 with SMTP id 1so1424404pxi.33
+        for <git@vger.kernel.org>; Fri, 22 May 2009 09:29:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=VO1NoP5SlTZwtHJ6UcpaJOZb9213rMUrhJnCOsVJ7Hs=;
+        b=rD39vRU4/9L52SWm61Zfj0NHTZ/O3xGn+/RJ87Nwec7Tm4F7mTxo8sqYL+rnMDOnpG
+         uFP3sfFNCst/sk+9Ka2Z4YskgRUEj2+8sXBNdnVvDWNHeNBjIDnC/pxxolP/7GWdC0Sy
+         +++p1z2Bxj5eyI17X4T+R8DftrAG8TBqF5tv8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=URNDsPvYesjBV165GJvvG0ZCKPId2CJRsO6uJV/JjWRT4HO403Rl47AqyDtE0kyUL2
+         U9aWoQFQTaoNO8U27RWptXBZyGddGgFIX/2yaZnTsfCXMweUILBCujkZmlB6C7swqhM1
+         bckgfUjfujUKcCcTBLDhl6LT/WBd/+3uVzBkk=
+Received: by 10.114.200.2 with SMTP id x2mr8156394waf.83.1243009760455; Fri, 
+	22 May 2009 09:29:20 -0700 (PDT)
+In-Reply-To: <10845a340905220423x69eb1718n7a6f9dcd5c2df459@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119740>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119741>
 
-Brandon Casey <casey@nrlssc.navy.mil> writes:
+Hi,
 
-> ...  I hesitate to send it since it does not actually allow any
-> tests to pass which were previously failing for me.  At least the utf-8 to
-> UTF-8 shouldn't cause any harm.  The shift-jis to SJIS seems to be commonly
-> supported?  at least IRIX 6.5 and Solaris as old as 7 recognize it, but the
-> evidence is only empirical.  Modern Solaris, and of course Linux recognize
-> either.
+On Fri, May 22, 2009 at 7:23 PM, Richard Quadling
+<rquadling@googlemail.com> wrote:
+> I've just upgraded GIT on Cygwin from git-1.6.1.2 to git-1.6.2.4.
 
-Perhaps the test can be changed from using cp1251 (whatever that is) to
-something more common (e.g. 8859-1)?
+you would be better off posting this on the cygwin list; I've read of
+some git problems there.
 
-There was another more large-ish patch to the tests around this area
-recently from you.  I liked them but somehow failed to queue any of them
-yet, sorry.
+-- 
+Cheers,
+Ray Chuan
