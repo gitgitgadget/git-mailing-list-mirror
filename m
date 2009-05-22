@@ -1,50 +1,57 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: git merge remote branch says
-Date: Fri, 22 May 2009 14:10:23 -0400
-Message-ID: <20090522181023.GA11913@coredump.intra.peff.net>
-References: <2729632a0905211250v4e7537caybe9e703c14361b5f@mail.gmail.com> <20090522074927.GB1409@coredump.intra.peff.net> <loom.20090522T172429-73@post.gmane.org> <20090522175401.GB11640@coredump.intra.peff.net> <loom.20090522T175633-762@post.gmane.org>
+From: Johannes Sixt <j6t@kdbg.org>
+Subject: Re: git merge remote branch says "Merge commit ..."?
+Date: Fri, 22 May 2009 20:30:34 +0200
+Message-ID: <200905222030.34301.j6t@kdbg.org>
+References: <2729632a0905211250v4e7537caybe9e703c14361b5f@mail.gmail.com> <loom.20090522T172429-73@post.gmane.org> <20090522175401.GB11640@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Eric Raible <raible@gmail.com>
-X-From: git-owner@vger.kernel.org Fri May 22 20:10:34 2009
+Content-Type: text/plain;
+  charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Cc: Eric Raible <raible@gmail.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri May 22 20:31:13 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M7ZCR-0004s8-NR
-	for gcvg-git-2@gmane.org; Fri, 22 May 2009 20:10:32 +0200
+	id 1M7ZWR-0005PA-MW
+	for gcvg-git-2@gmane.org; Fri, 22 May 2009 20:31:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753013AbZEVSKZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 22 May 2009 14:10:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752066AbZEVSKY
-	(ORCPT <rfc822;git-outgoing>); Fri, 22 May 2009 14:10:24 -0400
-Received: from peff.net ([208.65.91.99]:41748 "EHLO peff.net"
+	id S1754239AbZEVSai (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 22 May 2009 14:30:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753191AbZEVSah
+	(ORCPT <rfc822;git-outgoing>); Fri, 22 May 2009 14:30:37 -0400
+Received: from bsmtp.bon.at ([213.33.87.14]:55834 "EHLO bsmtp.bon.at"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751853AbZEVSKX (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 May 2009 14:10:23 -0400
-Received: (qmail 20855 invoked by uid 107); 22 May 2009 18:10:30 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Fri, 22 May 2009 14:10:30 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Fri, 22 May 2009 14:10:23 -0400
+	id S1752620AbZEVSag (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 May 2009 14:30:36 -0400
+Received: from dx.sixt.local (unknown [93.83.142.38])
+	by bsmtp.bon.at (Postfix) with ESMTP id 16CB6CDF8F;
+	Fri, 22 May 2009 20:30:34 +0200 (CEST)
+Received: from localhost (localhost [IPv6:::1])
+	by dx.sixt.local (Postfix) with ESMTP id 89E0C5AF31;
+	Fri, 22 May 2009 20:30:34 +0200 (CEST)
+User-Agent: KMail/1.9.9
+In-Reply-To: <20090522175401.GB11640@coredump.intra.peff.net>
 Content-Disposition: inline
-In-Reply-To: <loom.20090522T175633-762@post.gmane.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119748>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119749>
 
-On Fri, May 22, 2009 at 06:08:41PM +0000, Eric Raible wrote:
+On Freitag, 22. Mai 2009, Jeff King wrote:
+> No, it is not terribly expensive. But you do have to talk to the server,
+> which may mean making an ssh connection, or the server may be overloaded
+> and slow. So it can take a few seconds instead of a few microseconds.
 
-> I wasn't trying to argue that a pull would be a good idea, but more
-> that it's not that expensive because of the content-addressable
-> nature of git's object store.
-> 
-> And saying that is "might be costly" could be misleading to people
-> who haven't groked how a commit is a commit is a commit.
+It's certainly doable without a remote connection with some digging in the 
+configuration.
 
-OK, then I agree with you. My "costly" was just "I don't want to touch
-the network if I don't have to".
+Git-gui has some magic to find out the remote when you request to merge a 
+remote tracking branch. That is, even though you clickety-click through to do 
+the equivalent of 'git merge origin/master', it comes up with a merge message 
+that is the same as if you had said 'git pull origin master' on the command 
+line. It doesn't need a connection to do that.
 
--Peff
+-- Hannes
