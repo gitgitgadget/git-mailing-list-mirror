@@ -1,98 +1,124 @@
-From: Markus Heidelberg <markus.heidelberg@web.de>
-Subject: [PATCH] Revert "git gui: show diffs with a minimum of 1 context line"
-Date: Sat, 23 May 2009 19:28:47 +0200
-Message-ID: <1243099727-5272-1-git-send-email-markus.heidelberg@web.de>
-Cc: Clemens Buchacher <drizzd@aon.at>, git@vger.kernel.org,
-	Markus Heidelberg <markus.heidelberg@web.de>
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Sat May 23 19:32:52 2009
+From: Stephen Boyd <bebarino@gmail.com>
+Subject: [PATCH 0/4] Add OPT_FILENAME to parse-opts
+Date: Sat, 23 May 2009 11:53:09 -0700
+Message-ID: <1243104793-3254-1-git-send-email-bebarino@gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat May 23 20:53:47 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M7v5U-0003ft-5F
-	for gcvg-git-2@gmane.org; Sat, 23 May 2009 19:32:48 +0200
+	id 1M7wLq-0007xZ-QG
+	for gcvg-git-2@gmane.org; Sat, 23 May 2009 20:53:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752844AbZEWR3Z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 23 May 2009 13:29:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751689AbZEWR3Y
-	(ORCPT <rfc822;git-outgoing>); Sat, 23 May 2009 13:29:24 -0400
-Received: from fmmailgate01.web.de ([217.72.192.221]:50031 "EHLO
-	fmmailgate01.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751490AbZEWR3X (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 23 May 2009 13:29:23 -0400
-Received: from smtp06.web.de (fmsmtp06.dlan.cinetic.de [172.20.5.172])
-	by fmmailgate01.web.de (Postfix) with ESMTP id 6B1A2103C3075;
-	Sat, 23 May 2009 19:29:24 +0200 (CEST)
-Received: from [89.59.125.192] (helo=localhost.localdomain)
-	by smtp06.web.de with asmtp (TLSv1:AES256-SHA:256)
-	(WEB.DE 4.110 #277)
-	id 1M7v2C-0005xQ-00; Sat, 23 May 2009 19:29:24 +0200
-X-Mailer: git-send-email 1.6.3.1.160.g45b30
-X-Sender: markus.heidelberg@web.de
-X-Provags-ID: V01U2FsdGVkX1/2aL14R+TBNzNy1PGrYO+/5EBjFwipUnIvvoI5
-	cAkVUDOs20PZewpYgvFNTeveSoGBmp3AZIL1vLgbb5FpWKDm5E
-	hULm3SjzQP7F6uSREpWw==
+	id S1751989AbZEWSxR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 23 May 2009 14:53:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751903AbZEWSxQ
+	(ORCPT <rfc822;git-outgoing>); Sat, 23 May 2009 14:53:16 -0400
+Received: from mail-px0-f103.google.com ([209.85.216.103]:54773 "EHLO
+	mail-px0-f103.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751208AbZEWSxP (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 23 May 2009 14:53:15 -0400
+Received: by pxi1 with SMTP id 1so1894468pxi.33
+        for <git@vger.kernel.org>; Sat, 23 May 2009 11:53:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:from:to:cc:subject
+         :date:message-id:x-mailer;
+        bh=Vr08B83o+tHKqS9cGzzAnrC5sjQymjeCkmggW3FCaoo=;
+        b=dls7uoXKh/73xgMJ0K4WWZISC9PKSbe/IsdKgJCAt+s2OMSNPMWIfhEjqlDEilhCbw
+         UttwQoUjcQKWkXs+z/WyvGwzmFL5nq9SkjkkmrKWObhv6z9KZL5tN0QFhGP/baUaVex6
+         T2BmlwTBTmLjakYSUNESnRrkmTKf+Ho39Xv8c=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=sub093uykvigI5oPFEQpBI2xLmTPOW8VXKm27klNOV4AUeOE1vMwCrwoQCAFIg2/Uc
+         MP0Uz488zNnNp2T8yTVLbWMVVZcJQ4ZQudT6tVu+NrYYyi+GpTt1MkObd46gjjEoE1RK
+         XAAxGmH6bZxgky6McKU6egmQyecPReR18HmH4=
+Received: by 10.114.72.1 with SMTP id u1mr10562486waa.154.1243104797179;
+        Sat, 23 May 2009 11:53:17 -0700 (PDT)
+Received: from earth ([76.89.212.195])
+        by mx.google.com with ESMTPS id c26sm10789434waa.15.2009.05.23.11.53.14
+        (version=SSLv3 cipher=RC4-MD5);
+        Sat, 23 May 2009 11:53:16 -0700 (PDT)
+Received: by earth (sSMTP sendmail emulation); Sat, 23 May 2009 11:53:13 -0700
+X-Mailer: git-send-email 1.6.3.1.145.gb74d77
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119781>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119782>
 
-This reverts commit 55ba8a3474102eb8d638834d2b9bfe58d5014a40.
+OPT_FILENAME is used to prefix filenames given on the command line, so
+that they are relative to the current working directory. For a more 
+in-depth description see the fourth patch.
 
-Conflicts:
+This series is really two parts, two bug fixes and the introduction
+of OPT_FILNAME, but they're all related to one commit
+dbd0f5c (Files given on the command line are relative to $cwd,
+2008-08-06).
 
-	lib/option.tcl
+It touches a lot of files, but that's mostly because of
+patch three.
 
-Diffs without context can actually be useful. Depending on the changes
-it can be less distracting to read them or to get an overview.
+Stephen Boyd (4):
+  commit: -F overrides -t
+  apply, fmt-merge-msg: use relative filenames
+  parse-opts: prepare for OPT_FILENAME
+  parse-opts: add OPT_FILENAME and transition builtins
 
-Signed-off-by: Markus Heidelberg <markus.heidelberg@web.de>
----
- git-gui.sh     |    2 +-
- lib/diff.tcl   |    2 +-
- lib/option.tcl |    2 +-
- 3 files changed, 3 insertions(+), 3 deletions(-)
-
-diff --git a/git-gui.sh b/git-gui.sh
-index 14b92ba..604fdad 100755
---- a/git-gui.sh
-+++ b/git-gui.sh
-@@ -2287,7 +2287,7 @@ proc show_more_context {} {
- 
- proc show_less_context {} {
- 	global repo_config
--	if {$repo_config(gui.diffcontext) > 1} {
-+	if {$repo_config(gui.diffcontext) >= 1} {
- 		incr repo_config(gui.diffcontext) -1
- 		reshow_diff
- 	}
-diff --git a/lib/diff.tcl b/lib/diff.tcl
-index 925b3f5..71b250b 100644
---- a/lib/diff.tcl
-+++ b/lib/diff.tcl
-@@ -282,7 +282,7 @@ proc start_show_diff {cont_info {add_opts {}}} {
- 
- 	lappend cmd -p
- 	lappend cmd --no-color
--	if {$repo_config(gui.diffcontext) >= 1} {
-+	if {$repo_config(gui.diffcontext) >= 0} {
- 		lappend cmd "-U$repo_config(gui.diffcontext)"
- 	}
- 	if {$w eq $ui_index} {
-diff --git a/lib/option.tcl b/lib/option.tcl
-index 1d55b49..eb216f6 100644
---- a/lib/option.tcl
-+++ b/lib/option.tcl
-@@ -149,7 +149,7 @@ proc do_options {} {
- 		{b gui.fastcopyblame {mc "Blame Copy Only On Changed Files"}}
- 		{i-20..200 gui.copyblamethreshold {mc "Minimum Letters To Blame Copy On"}}
- 		{i-0..300 gui.blamehistoryctx {mc "Blame History Context Radius (days)"}}
--		{i-1..99 gui.diffcontext {mc "Number of Diff Context Lines"}}
-+		{i-0..99 gui.diffcontext {mc "Number of Diff Context Lines"}}
- 		{i-0..99 gui.commitmsgwidth {mc "Commit Message Text Width"}}
- 		{t gui.newbranchtemplate {mc "New Branch Name Template"}}
- 		{c gui.encoding {mc "Default File Contents Encoding"}}
--- 
-1.6.3.1.160.g45b30
+ Documentation/technical/api-parse-options.txt |    9 ++++-
+ archive.c                                     |    2 +-
+ builtin-add.c                                 |    2 +-
+ builtin-apply.c                               |    5 ++-
+ builtin-archive.c                             |    3 +-
+ builtin-bisect--helper.c                      |    3 +-
+ builtin-blame.c                               |    2 +-
+ builtin-branch.c                              |    3 +-
+ builtin-cat-file.c                            |    2 +-
+ builtin-check-attr.c                          |    4 +-
+ builtin-checkout-index.c                      |    2 +-
+ builtin-checkout.c                            |    2 +-
+ builtin-clean.c                               |    3 +-
+ builtin-clone.c                               |    2 +-
+ builtin-commit.c                              |    9 ++---
+ builtin-config.c                              |    3 +-
+ builtin-count-objects.c                       |    2 +-
+ builtin-describe.c                            |    2 +-
+ builtin-fast-export.c                         |    2 +-
+ builtin-fetch.c                               |    2 +-
+ builtin-fmt-merge-msg.c                       |    5 ++-
+ builtin-for-each-ref.c                        |    2 +-
+ builtin-fsck.c                                |    2 +-
+ builtin-gc.c                                  |    3 +-
+ builtin-grep.c                                |    2 +-
+ builtin-help.c                                |    2 +-
+ builtin-ls-files.c                            |    2 +-
+ builtin-merge-base.c                          |    2 +-
+ builtin-merge-file.c                          |    2 +-
+ builtin-merge.c                               |    4 +-
+ builtin-mv.c                                  |    3 +-
+ builtin-name-rev.c                            |    2 +-
+ builtin-pack-refs.c                           |    2 +-
+ builtin-prune.c                               |    2 +-
+ builtin-push.c                                |    2 +-
+ builtin-remote.c                              |   16 +++++---
+ builtin-reset.c                               |    2 +-
+ builtin-rev-parse.c                           |    4 +-
+ builtin-revert.c                              |    2 +-
+ builtin-rm.c                                  |    3 +-
+ builtin-shortlog.c                            |    2 +-
+ builtin-symbolic-ref.c                        |    3 +-
+ builtin-tag.c                                 |    5 +--
+ builtin-update-ref.c                          |    3 +-
+ hash-object.c                                 |    3 +-
+ parse-options.c                               |   47 ++++++++++++++++--------
+ parse-options.h                               |   11 ++++--
+ t/t0040-parse-options.sh                      |   19 +++++++++-
+ t/t4131-apply-fake-ancestor.sh                |   42 ++++++++++++++++++++++
+ t/t6200-fmt-merge-msg.sh                      |   32 +++++++++++++++++
+ t/t7500-commit.sh                             |   10 +++++
+ test-parse-options.c                          |    6 +++-
+ 52 files changed, 226 insertions(+), 85 deletions(-)
+ create mode 100755 t/t4131-apply-fake-ancestor.sh
