@@ -1,84 +1,61 @@
-From: Florian =?iso-8859-1?Q?K=F6berle?= <florian@fkoeberle.de>
-Subject: gitignore bug: including files in an excluded directoy does not 
-     work.
-Date: Sat, 23 May 2009 11:18:25 +0200 (CEST)
-Message-ID: <809f58722b8bdb916fa7816cd80d3833-EhVcXl1BQAtYRw8cBxcBWQEwfgFLV15YQUBGAEFbXkI3XV8WXlhwH1RQWEFeRENtXlhdQ1hSWAtfWg==-webmailer2@server05.webmailer.hosteurope.de>
-Reply-To: florian@fkoeberle.de
+From: Michele Ballabio <barra_cuda@katamail.com>
+Subject: [PATCH] gitk: add a string to translation
+Date: Sat, 23 May 2009 11:48:25 +0200
+Message-ID: <200905231148.25678.barra_cuda@katamail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "Junio C Hamano" <gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat May 23 11:41:32 2009
+Content-Type: text/plain;
+  charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>
+To: paulus@samba.org
+X-From: git-owner@vger.kernel.org Sat May 23 11:49:17 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M7njO-0005mt-AH
-	for gcvg-git-2@gmane.org; Sat, 23 May 2009 11:41:30 +0200
+	id 1M7nqp-0000Bq-Qy
+	for gcvg-git-2@gmane.org; Sat, 23 May 2009 11:49:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751808AbZEWJgd convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 23 May 2009 05:36:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751509AbZEWJgc
-	(ORCPT <rfc822;git-outgoing>); Sat, 23 May 2009 05:36:32 -0400
-Received: from perry.mc0.hosteurope.de ([80.237.138.8]:49679 "EHLO
-	perry.mc0.hosteurope.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751282AbZEWJgb (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 23 May 2009 05:36:31 -0400
-X-Greylist: delayed 1087 seconds by postgrey-1.27 at vger.kernel.org; Sat, 23 May 2009 05:36:31 EDT
-Received: from server05.webmailer.hosteurope.de ([10.9.0.184]); 
-	by mailout.hosteurope.de (perry.mc0.hosteurope.de) running EXperimental Internet Mailer using esmtp
-	id 1M7nNy-0000IJ-8H; Sat, 23 May 2009 11:19:22 +0200
-Received: from nobody by server05.webmailer.hosteurope.de with local (Exim 4.63)
-	(envelope-from <florian@fkoeberle.de>)
-	id 1M7nN2-00041G-Vd; Sat, 23 May 2009 11:18:25 +0200
-X-Squirrel-UserHash: EhVcXl1BQAtYRw8cBxcBWQE=
-X-Squirrel-FromHash: UFIPX1YTTFE=
-User-Agent: Host Europe Webmailer/1.0
-X-Priority: 3 (Normal)
-Importance: Normal
-X-HE-Spam-Level: /
+	id S1751812AbZEWJtB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 23 May 2009 05:49:01 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751649AbZEWJtA
+	(ORCPT <rfc822;git-outgoing>); Sat, 23 May 2009 05:49:00 -0400
+Received: from smtp.katamail.com ([62.149.157.154]:39472 "HELO smtp1.aruba.it"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with SMTP
+	id S1751509AbZEWJs7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 23 May 2009 05:48:59 -0400
+Received: (qmail 6405 invoked by uid 89); 23 May 2009 09:48:45 -0000
+X-Spam-Checker-Version: SpamAssassin 3.2.3 (2007-08-08) on smtp1-pc
+X-Spam-Level: *
+X-Spam-Status: No, score=1.1 required=5.0 tests=BAYES_50,RDNS_NONE
+	autolearn=no version=3.2.3
+Received: from unknown (HELO host80-57-dynamic.104-80-r.retail.telecomitalia.it) (barra?cuda@katamail.com@80.104.57.80)
+  by smtp1-pc with SMTP; 23 May 2009 09:48:45 -0000
+User-Agent: KMail/1.9.10
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119771>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119772>
 
-steps to reproduce:
+Signed-off-by: Michele Ballabio <barra_cuda@katamail.com>
+---
+ gitk |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-git init
-echo /src/config > .gitignore
-echo \!/src/config/readme.txt >> .gitignore
-mkdir -p src/config
-touch src/config/readme.txt
-git add src
-
-expected results:
-git should add the readme.txt file
-
-actual result:
-git doesn't add the readme.txt file
-
-
-additional comments:
-
-pre to the commit d6b8fc303b it was possible to archive the wished effe=
-ct
-with this .gitignore file:
-------------------
-/src/config/
-!/src/config/readme.txt
-------------------
-The pre d6b8fc303b git fails to detect that it can exclude src/config.
-Thus it checks the directory content and finds out that the readme.txt
-matches both - the exclude and the include pattern.
-
-
-commit d6b8fc303b389b026f2bf9918f6f83041488989b
-Author: Junio C Hamano <gitster pobox.com>
-Date:   Thu Jan 31 01:17:48 2008 -0800
-    gitignore(5): Allow "foo/" in ignore list to match directory "foo"
-
-
-Best regards,
-=46lorian K=F6berle
+diff --git a/gitk b/gitk
+index 1855390..c8af13e 100755
+--- a/gitk
++++ b/gitk
+@@ -3829,7 +3829,7 @@ proc vieweditor {top n title} {
+     global known_view_options
+ 
+     toplevel $top
+-    wm title $top [concat $title "-- criteria for selecting revisions"]
++    wm title $top [concat $title [mc "-- criteria for selecting revisions"]]
+     make_transient $top .
+ 
+     # View name
+-- 
+1.6.3.1.17.g076c3
