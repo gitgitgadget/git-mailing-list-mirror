@@ -1,69 +1,66 @@
-From: Steffen Prohaska <prohaska@zib.de>
-Subject: [PATCH 3/5] MinGW: use POSIX signature of waitpid()
-Date: Sat, 23 May 2009 10:04:49 +0200
-Message-ID: <1243065891-13270-4-git-send-email-prohaska@zib.de>
-References: <1243065891-13270-1-git-send-email-prohaska@zib.de>
- <1243065891-13270-2-git-send-email-prohaska@zib.de>
- <1243065891-13270-3-git-send-email-prohaska@zib.de>
-Cc: git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Johannes Sixt <johannes.sixt@telecom.at>,
-	Johannes Schindelin <johannes.schindelin@gmx.de>,
-	Steffen Prohaska <prohaska@zib.de>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat May 23 10:30:37 2009
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Funny error with git gc...
+Date: Sat, 23 May 2009 10:53:41 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.0905231050480.9099@intel-tinevez-2-302>
+References: <alpine.DEB.1.00.0905152000520.4449@intel-tinevez-2-302> <7vmy9etey8.fsf@alter.siamese.dyndns.org> <alpine.LFD.2.01.0905151128230.3343@localhost.localdomain> <alpine.DEB.1.00.0905152105340.26154@pacific.mpi-cbg.de> <alpine.DEB.1.00.0905152111140.26154@pacific.mpi-cbg.de>
+ <alpine.DEB.1.00.0905152115220.26154@pacific.mpi-cbg.de> <alpine.LFD.2.01.0905151307390.3343@localhost.localdomain>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Sat May 23 10:53:56 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M7mck-0005CC-1Z
-	for gcvg-git-2@gmane.org; Sat, 23 May 2009 10:30:34 +0200
+	id 1M7mzL-0007Oh-8d
+	for gcvg-git-2@gmane.org; Sat, 23 May 2009 10:53:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751868AbZEWIaF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 23 May 2009 04:30:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751907AbZEWIaD
-	(ORCPT <rfc822;git-outgoing>); Sat, 23 May 2009 04:30:03 -0400
-Received: from mailer.zib.de ([130.73.108.11]:34254 "EHLO mailer.zib.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751662AbZEWIaA (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 23 May 2009 04:30:00 -0400
-X-Greylist: delayed 1475 seconds by postgrey-1.27 at vger.kernel.org; Sat, 23 May 2009 04:29:52 EDT
-Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
-	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id n4N84wta001294;
-	Sat, 23 May 2009 10:05:03 +0200 (CEST)
-Received: from localhost.localdomain (vss6.zib.de [130.73.69.7])
-	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id n4N84pOM028553;
-	Sat, 23 May 2009 10:04:57 +0200 (MEST)
-X-Mailer: git-send-email 1.5.6
-In-Reply-To: <1243065891-13270-3-git-send-email-prohaska@zib.de>
+	id S1751868AbZEWIxo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 23 May 2009 04:53:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751662AbZEWIxn
+	(ORCPT <rfc822;git-outgoing>); Sat, 23 May 2009 04:53:43 -0400
+Received: from mail.gmx.net ([213.165.64.20]:58156 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751329AbZEWIxn (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 23 May 2009 04:53:43 -0400
+Received: (qmail invoked by alias); 23 May 2009 08:53:43 -0000
+Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
+  by mail.gmx.net (mp052) with SMTP; 23 May 2009 10:53:43 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/QKAMHokPQlNsqAAoEWk4My6sIReaPez7NHG1TJK
+	Yt50K29+BHZZ+l
+X-X-Sender: schindel@intel-tinevez-2-302
+In-Reply-To: <alpine.LFD.2.01.0905151307390.3343@localhost.localdomain>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.61
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119766>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119767>
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+Hi,
 
-Git's source code expects waitpid() to return a signed int status.
+On Fri, 15 May 2009, Linus Torvalds wrote:
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-Signed-off-by: Steffen Prohaska <prohaska@zib.de>
----
- compat/mingw.h |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+> On Fri, 15 May 2009, Johannes Schindelin wrote:
+> >  
+> >  	fd = mkstemp(template);
+> > +	if (fd < 0) {
+> > +		release_pack_memory((size_t)-1ll, -1);
+> > +		fd = mkstemp(template);
+> 
+> This is wrong. You can't use "template" twice. You need to re-initialize 
+> it. The first one will blow away the XXXX pattern.
 
-diff --git a/compat/mingw.h b/compat/mingw.h
-index 762eb14..b1156b8 100644
---- a/compat/mingw.h
-+++ b/compat/mingw.h
-@@ -109,7 +109,7 @@ static inline int mingw_unlink(const char *pathname)
- }
- #define unlink mingw_unlink
- 
--static inline int waitpid(pid_t pid, unsigned *status, unsigned options)
-+static inline int waitpid(pid_t pid, int *status, unsigned options)
- {
- 	if (options == 0)
- 		return _cwait(status, pid, 0);
--- 
-1.6.3.1.54.g99dd
+Turns out that would be awkward, as the xmkstemp() function would have to 
+copy the template just in case mkstemp() fails due to too many open files, 
+and of course it would need to release the copy afterwards.
+
+OTOH we cannot just use the initialized filename, because there 
+might be a race condition with another process, right?
+
+Ciao,
+Dscho
