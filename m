@@ -1,80 +1,85 @@
-From: Jim Meyering <jim@meyering.net>
-Subject: Re: git-diff: must --exit-code work with --ignore* options?
-Date: Sat, 23 May 2009 09:26:25 +0200
-Message-ID: <878wkoe0v2.fsf@meyering.net>
-References: <87k549dyne.fsf@meyering.net>
-	<7vvdnt869j.fsf@alter.siamese.dyndns.org>
-	<87eiuhdnw9.fsf@meyering.net>
-	<7v7i087twu.fsf@alter.siamese.dyndns.org>
+From: Tim Uckun <timuckun@gmail.com>
+Subject: Re: can anybody explain the following to a git noob?
+Date: Sat, 23 May 2009 20:03:56 +1200
+Message-ID: <855e4dcf0905230103q33508f0eh3aa2838ee71e0a81@mail.gmail.com>
+References: <855e4dcf0905212046o3e1d6ec6l487829a0a411dcaf@mail.gmail.com>
+	 <32541b130905212202q9aed54cn892171b7e654812f@mail.gmail.com>
+	 <855e4dcf0905212244r454a5c21w7bdbfb566a28efb8@mail.gmail.com>
+	 <4A1671E5.4030400@op5.se>
+	 <855e4dcf0905220335n367a065fidc65567119c0a5a3@mail.gmail.com>
+	 <4A16822A.2060404@viscovery.net>
+	 <855e4dcf0905220436h1b6fa632q7804c98bf09b324c@mail.gmail.com>
+	 <alpine.LNX.2.00.0905221259330.27232@reaper.quantumfyre.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git list <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat May 23 09:26:49 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Johannes Sixt <j.sixt@viscovery.net>, Andreas Ericsson <ae@op5.se>,
+	Avery Pennarun <apenwarr@gmail.com>, git@vger.kernel.org
+To: Julian Phillips <julian@quantumfyre.co.uk>
+X-From: git-owner@vger.kernel.org Sat May 23 10:07:10 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M7ld3-00088g-9b
-	for gcvg-git-2@gmane.org; Sat, 23 May 2009 09:26:49 +0200
+	id 1M7mG1-0006MH-3m
+	for gcvg-git-2@gmane.org; Sat, 23 May 2009 10:07:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751561AbZEWH0g (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 23 May 2009 03:26:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751509AbZEWH0f
-	(ORCPT <rfc822;git-outgoing>); Sat, 23 May 2009 03:26:35 -0400
-Received: from smtp1-g21.free.fr ([212.27.42.1]:58718 "EHLO smtp1-g21.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751443AbZEWH0e (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 23 May 2009 03:26:34 -0400
-Received: from smtp1-g21.free.fr (localhost [127.0.0.1])
-	by smtp1-g21.free.fr (Postfix) with ESMTP id 451949400E1
-	for <git@vger.kernel.org>; Sat, 23 May 2009 09:26:28 +0200 (CEST)
-Received: from mx.meyering.net (mx.meyering.net [82.230.74.64])
-	by smtp1-g21.free.fr (Postfix) with ESMTP id 60FA6940048
-	for <git@vger.kernel.org>; Sat, 23 May 2009 09:26:26 +0200 (CEST)
-Received: by rho.meyering.net (Acme Bit-Twister, from userid 1000)
-	id 018EB2A2CA; Sat, 23 May 2009 09:26:25 +0200 (CEST)
-In-Reply-To: <7v7i087twu.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
-	message of "Fri, 22 May 2009 13:40:49 -0700")
+	id S1751290AbZEWID7 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 23 May 2009 04:03:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751267AbZEWID6
+	(ORCPT <rfc822;git-outgoing>); Sat, 23 May 2009 04:03:58 -0400
+Received: from mail-gx0-f166.google.com ([209.85.217.166]:61408 "EHLO
+	mail-gx0-f166.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751044AbZEWIDz convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 23 May 2009 04:03:55 -0400
+Received: by gxk10 with SMTP id 10so3992432gxk.13
+        for <git@vger.kernel.org>; Sat, 23 May 2009 01:03:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=c0OWmQtWTavbxsDDcYE+kJW5xp81GI9MIzplTzbPSWA=;
+        b=tKBLTodwKlh8AN8wh3TlWuBu7GhcrXL37B2r8dsWtzcXcapAiwkYmDu2TbXquHr/5H
+         gzcik135ffdXJsUNXNLXSR94c18zdyGgkQYRVJmyFmzqC/7lmzZVhGuevzC2zPDaUQHD
+         OpX7GvONNBS7lfiYP6VC4F9nNm5d+NCzGyYKs=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=ioODvK2Nm3yvHxhM5x0UJ8faV5NTRJoLLCIbXZI/N+Za9gISEOBbFrrzJVvkd+99kD
+         j7jxFJ954MCaSifb1k/qFrxzUIJFh0iU6N+47cXkGUyRwZj8+JgHdfau7CBl9r4DswXS
+         dcFcaTepVz6hDBDaCiKV8xAvKk0u/Cz1PswDw=
+Received: by 10.90.93.17 with SMTP id q17mr3996892agb.33.1243065836246; Sat, 
+	23 May 2009 01:03:56 -0700 (PDT)
+In-Reply-To: <alpine.LNX.2.00.0905221259330.27232@reaper.quantumfyre.co.uk>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119757>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119758>
 
-Junio C Hamano wrote:
-> Jim Meyering <jim@meyering.net> writes:
->> Junio C Hamano wrote:
->>> Jim Meyering <jim@meyering.net> writes:
->>>>
->>>>     # do this in an empty directory
->>>>     $ git init -q; echo>k; git add .; git commit -q -m. .; echo \ >k
->>>>     $ git diff --ignore-space-at-eol --quiet || echo bad
->>>>     bad
->>>
->>> I am slightly torn about this, in that I can picture myself saying that
->>> this is unintuitive on some different days, but not today ;-)
->>
->> Thanks for the quick reply.  Here's why I noticed:
->> ...
+> What's in the subdirectory? =C2=A0Is it empty? =C2=A0If so, that woul=
+d explain what
+> you are seeing. =C2=A0Git doesn't track directories - so an empty dir=
+ectory is
+> always treated as an untracked file.
+
+The directories are not empty. They contain various tests (unit tests,
+integration tests etc).
+
 >
-> It seems that today is already "some different day" ;-) We could do
-> something like this patch.
+> I don't know if mercurial tracks directories, if it does, then this w=
+ould
+> explain why it behaves diffently to git.
 >
-> While in the longer term I think it may make the world a better place by
-> being more consistent with what users expect, I am not sure at what
-> revision boundary we should introduce such a semantic change.
->
-> -- >8 --
-> Subject: [PATCH] diff --quiet: special case "ignore whitespace" options
-> ...
 
-Wow.  And now a patch.  Service with style ;-)
+That might be the reason.
 
-> We could always declare this a bug and apply the "fix" at any time.  It's
-> all perception ;-).
+I am just baffled. I have run that script many times and it always
+turns out the same. For example on one run I removed all the .git
+directories in all the subdirectories to see if I would get different
+results but it didn't help (git mv worked but the messed up
+directories remained).
 
-The declare-it-a-bug option sounds sensible, since I doubt anyone
-even noticed, much less relied on, the changing behavior.
-
-Thank you!
+I also tried renaming other directories and similar things happen.
