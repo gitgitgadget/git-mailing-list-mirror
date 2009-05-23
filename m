@@ -1,150 +1,135 @@
-From: Chani <chanika@gmail.com>
-Subject: Re: partial checkouts
-Date: Sat, 23 May 2009 17:26:09 -0700
-Message-ID: <200905231726.10361.chanika@gmail.com>
-References: <200905231401.11651.chanika@gmail.com> <200905240134.53387.johan@herland.net>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: [PATCH v0 3/3] Build in git-rebase.sh
+Date: Sun, 24 May 2009 00:50:42 +1000
+Message-ID: <20090523145042.GA13139@dektop>
+References: <1242899229-27603-1-git-send-email-pclouds@gmail.com> <1242899229-27603-2-git-send-email-pclouds@gmail.com> <1242899229-27603-3-git-send-email-pclouds@gmail.com> <4A164C85.3000703@viscovery.net> <fcaeb9bf0905220030l45e1b7dfqd30f35b7c8e43b51@mail.gmail.com> <20090523092603.GA7420@dektop>
 Mime-Version: 1.0
-Content-Type: multipart/signed;
-  boundary="nextPart21436433.U7GjHoQHCX";
-  protocol="application/pgp-signature";
-  micalg=pgp-sha1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Johan Herland <johan@herland.net>
-X-From: git-owner@vger.kernel.org Sun May 24 02:27:05 2009
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Brandon Casey <casey@nrlsrc.navy.mil>
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Sun May 24 03:52:54 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M81YP-0000BD-5f
-	for gcvg-git-2@gmane.org; Sun, 24 May 2009 02:27:05 +0200
+	id 1M82tR-0005pO-Kj
+	for gcvg-git-2@gmane.org; Sun, 24 May 2009 03:52:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754372AbZEXA06 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 23 May 2009 20:26:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753605AbZEXA05
-	(ORCPT <rfc822;git-outgoing>); Sat, 23 May 2009 20:26:57 -0400
-Received: from wf-out-1314.google.com ([209.85.200.170]:20946 "EHLO
-	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753582AbZEXA04 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 23 May 2009 20:26:56 -0400
-Received: by wf-out-1314.google.com with SMTP id 26so859549wfd.4
-        for <git@vger.kernel.org>; Sat, 23 May 2009 17:26:56 -0700 (PDT)
+	id S1753876AbZEXBwS convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 23 May 2009 21:52:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753109AbZEXBwR
+	(ORCPT <rfc822;git-outgoing>); Sat, 23 May 2009 21:52:17 -0400
+Received: from rv-out-0506.google.com ([209.85.198.234]:54729 "EHLO
+	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752988AbZEXBwR (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 23 May 2009 21:52:17 -0400
+Received: by rv-out-0506.google.com with SMTP id f9so815756rvb.1
+        for <git@vger.kernel.org>; Sat, 23 May 2009 18:52:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:message-id;
-        bh=LjkNqdlJsqsUC9+yTymrA1Gdib4BNSDRecYoIIW0rp0=;
-        b=Z6w6Tda0R4LYERNYs9QwBFW6fYSZ5oG7kYOgdwVNmd6UkZIGFtYk6nNJgqy9JdYxuj
-         dPtGN+aLf+NsQKZ3TJUafhADVHUuyEyTmOR/NhWA5BCiQT6TtzqKsLBfzgmRz2/d/Gf0
-         2i782Eudokf8sAgUP9RkmtUDTZuIxLWMF3/vQ=
+        h=domainkey-signature:received:received:received:date:from:to:cc
+         :subject:message-id:references:mime-version:content-type
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=iV1BIZfLLyEwyo6t4dZ0Ob919rQpU2OwAEiA8vIWVGk=;
+        b=m0hF+z7Tfqz8YDl+jGSnqQDvmoKB8ZaJYiv5GB/247zQxwbQhp6WjsOxA/DgQ5p5k2
+         n3UyjORyPnm+HG6VshFZGhguBL9Twh+9bEo01MgThulQBuk2WdHb74kZetN5HpzvwhVf
+         K5LHNpWpratFMNc+/3aZk/hmnBBkjJZmdiISU=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding:message-id;
-        b=pjv97nHrmKrjSnd7w4EZT1lN40dwoUPxfOmh4t4CnzxAYp/6pONzTrAPW7RVMFx9C0
-         58iyVWsWC7GWJjRQ6mj5GLQNY8H0ZV1GdX37Zy/LtI8oL9QqUwMjl1S18kucdss1Uk6r
-         QS69a36Y2wvfXpw9HTe1vSewoRpnmH+4FVS04=
-Received: by 10.143.2.20 with SMTP id e20mr2044885wfi.298.1243124816906;
-        Sat, 23 May 2009 17:26:56 -0700 (PDT)
-Received: from brain.localnet ([96.49.70.32])
-        by mx.google.com with ESMTPS id 30sm5433515wfd.21.2009.05.23.17.26.55
-        (version=SSLv3 cipher=RC4-MD5);
-        Sat, 23 May 2009 17:26:56 -0700 (PDT)
-User-Agent: KMail/1.11.90 (Linux/2.6.27-ARCH; KDE/4.2.87; i686; svn-970258; 2009-05-17)
-In-Reply-To: <200905240134.53387.johan@herland.net>
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        b=Hu4v16393gX3Dw/i8tRXbcXGqLD9Uxkb68O+oElnZoAHAha4WQO2RiBZO4EygfNnRp
+         LyDE4LwvvOYD+a2e4dsIwYFBkvOvw37hiKHNp5KOniqAbuF/yCNxKxILaCKXsaZ/q0qo
+         vFyGsqgDuAXdri+DaMdczhnrtviY9bWb0TgxI=
+Received: by 10.141.40.20 with SMTP id s20mr2166647rvj.86.1243129936802;
+        Sat, 23 May 2009 18:52:16 -0700 (PDT)
+Received: from dektop ([121.91.81.118])
+        by mx.google.com with ESMTPS id c20sm15322675rvf.0.2009.05.23.18.52.12
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sat, 23 May 2009 18:52:15 -0700 (PDT)
+Received: by dektop (sSMTP sendmail emulation); Sun, 24 May 2009 00:50:42 +1000
+Content-Disposition: inline
+In-Reply-To: <20090523092603.GA7420@dektop>
+User-Agent: Mutt/1.5.19 (2009-01-05)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119807>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119808>
 
---nextPart21436433.U7GjHoQHCX
-Content-Type: Text/Plain;
-  charset="iso-8859-15"
-Content-Transfer-Encoding: quoted-printable
+On Sat, May 23, 2009 at 07:26:03PM +1000, Nguyen Thai Ngoc Duy wrote:
+> On Fri, May 22, 2009 at 05:30:31PM +1000, Nguyen Thai Ngoc Duy wrote:
+> > 2009/5/22 Johannes Sixt <j.sixt@viscovery.net>:
+> > > Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy schrieb:
+> > >> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pcloud=
+s@gmail.com>
+> > >
+> > > Is it possible for you to test this series on Windows? Many rebas=
+e tests
+> > > fail, but I haven't investigated why.
+> >=20
+> > I'll try it this weekend.
+>=20
+> This patch makes t3*rebase*.sh pass for me except t3412 (more exactly
+> t3412.8). That test failed even with git-rebase.sh. Hmm... Anyway
+> could you try again to see what tests still fail?
 
-On May 23, 2009 16:34:53 Johan Herland wrote:
-> On Saturday 23 May 2009, Chani wrote:
-> > [...]
-> >
-> > right now all I've thought of is one ugly hack: have a server that chec=
-ks
-> > out all the kde git repos, pulls daily, copies all the doc/ folders into
-> > a documentation folder, and offers that folder up on the interwebs so
-> > that update_xml can rsync from it or download a tgz of it or something.
-> > there appear to be lots of images in the documentation, so it's not a
-> > small download - 200mb and growing. it still hasn't finished downloading
-> > all the externals...
->
-> Do you need the doc/ folders from _all_ kde git repos, or just from those
-> repos that you have currently checked out? In the latter case, you could
-> solve this by adding symlinks to all the doc/ folders inside the
-> documentation/ folder, and then make sure the software that traverse the
-> documentation/ folder recognize and skips symlinks. Of course, this won't
-> work if the translations project need _all_ doc/ folders accessible, but
-> not all the kde git repos.
+Someone with better Windows knowledge than me should explain how this w=
+orks. Windows'
+snprintf() just cuts out the last character in this statement:
 
-nope, the translators may not have checked out *any* of them but the script=
+snprintf(buf, 8, "--%s", "onto"); // result: '--ont', expected: '--onto=
+'
+
+All rebase tests now pass for me on Windows (Vista something, I have
+yet to find where it hides its "uname" command)
+
+-->--
+diff --git a/compat/snprintf.c b/compat/snprintf.c
+index 357e733..1cea768 100644
+--- a/compat/snprintf.c
++++ b/compat/snprintf.c
+@@ -13,7 +13,7 @@
+ int git_vsnprintf(char *str, size_t maxsize, const char *format, va_li=
+st ap)
+ {
+ 	char *s;
+-	int ret =3D -1;
++	int size, ret =3D -1;
 =20
-they want to run needs *all* the docs. :( however, I've been told they also=
+ 	if (maxsize > 0) {
+ 		ret =3D vsnprintf(str, maxsize-SNPRINTF_SIZE_CORR, format, ap);
+@@ -26,18 +26,19 @@ int git_vsnprintf(char *str, size_t maxsize, const =
+char *format, va_list ap)
+ 		return ret;
 =20
-don't want to have to change their workflow in any way at all no matter how=
+ 	s =3D NULL;
+-	if (maxsize < 128)
+-		maxsize =3D 128;
++	size =3D maxsize < 128 ? 128 : maxsize;
 =20
-small, so we may be stuck in svn-land anyways, because you can't make an sv=
-n=20
-external out of something that's not in svn, and having anything other than=
-=20
-svn externals would change their workflow :(
-
->
-> > I'm kinda wondering if there'd be a way to use git-filter-branch to make
-> > a repo that only tracks the doc/ folder for a module - but I've no idea
-> > whether it'd have to be recreated from scratch every time someone chang=
-es
-> > something in the real repo's doc/
-> >
-> > can anyone think of a less ugly solution?
-> > what are the chances of git supporting this kind of partial checkout
-> > someday?
->
-> Check out git-subtree. It can split out a subdirectory into its own repo,
-> and re-integrate it back into the "parent" repo at a later date.
-> git-subtree has been posted as a patch to this list a couple of times
-> without much response, but it looks like an interesting alternative to
-> submodules: http://alumnit.ca/~apenwarr/log/?m=3D200904#30
->
-> If a lot of people find git-subtree useful, who knows, it might be includ=
-ed
-> in a future git version.
-
-looks interesting. might have been a solution until I heard about this=20
-requirement to not change workflow at all. :/
-
-however, my friend told me about a project to make a git-svnserver that ser=
-ves=20
-git repos as svn repos, and *that* would allow the translators to stay wher=
-e=20
-they are without holding everyone else there too. know anything about that?=
-=20
-
-mm, google turns up an email from someone claiming they have a partial=20
-implementation in python...
-
-=2D-=20
-This message brought to you by eevil bananas and the number 3.
-www.chani3.com
-
---nextPart21436433.U7GjHoQHCX
-Content-Type: application/pgp-signature; name=signature.asc 
-Content-Description: This is a digitally signed message part.
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
-
-iEYEABECAAYFAkoYlCIACgkQeGbAwpIS3GxrTgCfdv7PAG2RQw+Os5t4e/xFM6zB
-gIQAniYyg8usepo7534cHX2vWivrUF2K
-=sZF7
------END PGP SIGNATURE-----
-
---nextPart21436433.U7GjHoQHCX--
+ 	while (ret =3D=3D -1) {
+-		maxsize *=3D 4;
+-		str =3D realloc(s, maxsize);
+-		if (! str)
++		size *=3D 4;
++		s =3D realloc(s, size);
++		if (!s)
+ 			break;
+-		s =3D str;
+-		ret =3D vsnprintf(str, maxsize-SNPRINTF_SIZE_CORR, format, ap);
+-		if (ret =3D=3D maxsize-1)
++		s =3D s;
++		ret =3D vsnprintf(s, size-SNPRINTF_SIZE_CORR, format, ap);
++		if (ret =3D=3D size-1)
+ 			ret =3D -1;
++		else
++			memcpy(str, s, maxsize-1);
+ 	}
+ 	free(s);
+ 	return ret;
+-->--
