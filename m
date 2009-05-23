@@ -1,72 +1,108 @@
-From: Stephen Boyd <bebarino@gmail.com>
-Subject: [PATCH] t5500-fetch-pack: ignore output from git init
-Date: Sat, 23 May 2009 12:34:42 -0700
-Message-ID: <1243107282-9259-1-git-send-email-bebarino@gmail.com>
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat May 23 21:35:04 2009
+From: Marc Haber <mh+git@zugschlus.de>
+Subject: Re: How to check repository/working tree status from a script
+Date: Sat, 23 May 2009 22:39:26 +0200
+Message-ID: <20090523203926.GA24004@torres.zugschlus.de>
+References: <20090519143537.GA23505@torres.zugschlus.de> <20090521132457.GB5625@torres.zugschlus.de> <20090521153745.GA23463@coredump.intra.peff.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat May 23 22:39:49 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M7wzn-0005Px-Ft
-	for gcvg-git-2@gmane.org; Sat, 23 May 2009 21:35:03 +0200
+	id 1M7y0S-0001vR-PJ
+	for gcvg-git-2@gmane.org; Sat, 23 May 2009 22:39:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754134AbZEWTep (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 23 May 2009 15:34:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753856AbZEWTep
-	(ORCPT <rfc822;git-outgoing>); Sat, 23 May 2009 15:34:45 -0400
-Received: from rv-out-0506.google.com ([209.85.198.231]:42624 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752006AbZEWTeo (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 23 May 2009 15:34:44 -0400
-Received: by rv-out-0506.google.com with SMTP id f9so790747rvb.1
-        for <git@vger.kernel.org>; Sat, 23 May 2009 12:34:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:from:to:cc:subject
-         :date:message-id:x-mailer;
-        bh=7vZOSG1iIPiD0xaYeQU1HPMDhngEvAMVn2EAHsEd4pE=;
-        b=KeabKEiLqslC0sUJqoncngULafdXg80O2unKWFlwFi/+XkBJ6GoT+gxsABiGlUY1YU
-         o43CKc0wgjg3pDxY/nD0bh9Q2AFioLfOmKD+cN00baCOzmoT/mnkC3LIsBaCBdoJrQ//
-         XdyjjC3AUExk2kiMtjaDV8mngiDSp6PDDvhJ0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        b=MAdKLUFQh6oYuTpJtl7q7SZv/DbwdlrabwnFvzvEUXKiTOBeru+3Wel1/TrW+D+3IL
-         orQhACMO7ri3NwNfAtwGs3qCNkwMGI16QBkkKtGB/CtLiJnUraJg5vhHfVYHWitCgDVv
-         9suptJi+a7/wBuOD19pzxADYyi0QeHZfC0/Rs=
-Received: by 10.141.206.10 with SMTP id i10mr1125388rvq.152.1243107285572;
-        Sat, 23 May 2009 12:34:45 -0700 (PDT)
-Received: from earth ([76.89.212.195])
-        by mx.google.com with ESMTPS id g31sm3366449rvb.33.2009.05.23.12.34.43
-        (version=SSLv3 cipher=RC4-MD5);
-        Sat, 23 May 2009 12:34:45 -0700 (PDT)
-Received: by earth (sSMTP sendmail emulation); Sat, 23 May 2009 12:34:42 -0700
-X-Mailer: git-send-email 1.6.3.1.145.gb74d77
+	id S1753122AbZEWUj2 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 23 May 2009 16:39:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752904AbZEWUj1
+	(ORCPT <rfc822;git-outgoing>); Sat, 23 May 2009 16:39:27 -0400
+Received: from torres.zugschlus.de ([85.214.68.41]:34093 "EHLO
+	torres.zugschlus.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752399AbZEWUj0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 23 May 2009 16:39:26 -0400
+Received: from mh by torres.zugschlus.de with local (Exim 4.69)
+	(envelope-from <mh+git@zugschlus.de>)
+	id 1M7y06-0006Hs-UA
+	for git@vger.kernel.org; Sat, 23 May 2009 22:39:26 +0200
+Content-Disposition: inline
+In-Reply-To: <20090521153745.GA23463@coredump.intra.peff.net>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119800>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119801>
 
-Signed-off-by: Stephen Boyd <bebarino@gmail.com>
----
- t/t5500-fetch-pack.sh |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+On Thu, May 21, 2009 at 11:37:45AM -0400, Jeff King wrote:
+> On Thu, May 21, 2009 at 03:24:57PM +0200, Marc Haber wrote:
+> > I am now looking for a solution for (b). I tried=20
+> >=20
+> > git log -n1 --pretty=3Doneline master..origin/master
+> >=20
+> > but that seems to always give empty output even if a later issued g=
+it
+> > pull will actually pull in changes.
+>=20
+> Try running "git fetch" beforehand, which will actually update
+> origin/master with what is on the remote.
 
-diff --git a/t/t5500-fetch-pack.sh b/t/t5500-fetch-pack.sh
-index c450f33..ce74508 100755
---- a/t/t5500-fetch-pack.sh
-+++ b/t/t5500-fetch-pack.sh
-@@ -97,7 +97,7 @@ pull_to_client () {
- (
- 	mkdir client &&
- 	cd client &&
--	git init 2>> log2.txt &&
-+	git init 2>> log2.txt > /dev/null &&
- 	git config transfer.unpacklimit 0
- )
- 
--- 
-1.6.3.1.145.gb74d77
+I slowly begin to grasp how git works. Thanks for enlightening.
+
+> Also, if you are just checking to see whether there is any output, yo=
+u
+> can use the plumbing "git rev-list" instead of "git log". So somethin=
+g
+> like:
+>=20
+>   git fetch origin || { echo >&2 unable to fetch; exit 1; }
+>   test -z "`git rev-list -1 master..origin/master`"
+
+if ! git fetch origin; then
+  echo >&2 "unable to fetch"
+  exit 1
+fi
+if git rev-list -1 master..origin/master | grep -q . ; then
+  echo >&2 "unmerged changes on remote repository"
+  exit 1
+fi
+
+Works fine. Thanks.
+
+Greetings
+Marc
+
+--=20
+-----------------------------------------------------------------------=
+------
+Marc Haber         | "I don't trust Computers. They | Mailadresse im He=
+ader
+Mannheim, Germany  |  lose things."    Winona Ryder | Fon: *49 621 7273=
+9834
+Nordisch by Nature |  How to make an American Quilt | Fax: *49 3221 232=
+3190
+
+Bitte beachten Sie, da=C3=9F dem [m.E. grundgesetzwidrigen] Gesetz zur
+Vorratsdatenspeicherung zufolge, seit dem 1. Januar 2008 jeglicher
+elektronische Kontakt (E-Mail, Telefongespr=C3=A4che, SMS, Internet-
+Telefonie, Mobilfunk, Fax) mit mir oder anderen Nutzern verdachts-
+unabh=C3=A4ngig f=C3=BCr den automatisierten geheimen Zugriff durch Str=
+afver-
+folgungs- u. Polizeivollzugsbeh=C3=B6rden, die Bundesanstalt f=C3=BCr F=
+inanz-
+dienstleistungsaufsicht, Zollkriminal- und Zollfahndungs=C3=A4mter,die
+Zollverwaltung zur Schwarzarbeitsbek=C3=A4mpfung, Notrufabfragestellen,
+Verfassungsschutzbeh=C3=B6rden, den Milit=C3=A4rischen Abschirmdienst, =
+Bundes-
+nachrichtendienst sowie 52 Staaten wie beispielsweise Aserbeidschan
+oder die USA sechs Monate lang gespeichert wird, einschlie=C3=9Flich de=
+r
+Kommunikation mit Berufsgeheimnistr=C3=A4gern wie =C3=84rzten, Journali=
+sten und
+Anw=C3=A4lten. Mehr Infos zur totalen Protokollierung Ihrer Kommunikati=
+ons-
+daten auf www.vorratsdatenspeicherung.de. (leicht ver=C3=A4ndert =C3=BC=
+bernommen
+kopiert von www.lawblog.de)
