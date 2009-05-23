@@ -1,124 +1,114 @@
 From: Stephen Boyd <bebarino@gmail.com>
-Subject: [PATCH 0/4] Add OPT_FILENAME to parse-opts
-Date: Sat, 23 May 2009 11:53:09 -0700
-Message-ID: <1243104793-3254-1-git-send-email-bebarino@gmail.com>
+Subject: [PATCH 1/4] commit: -F overrides -t
+Date: Sat, 23 May 2009 11:53:10 -0700
+Message-ID: <1243104793-3254-2-git-send-email-bebarino@gmail.com>
+References: <1243104793-3254-1-git-send-email-bebarino@gmail.com>
 Cc: Junio C Hamano <gitster@pobox.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat May 23 20:53:47 2009
+X-From: git-owner@vger.kernel.org Sat May 23 20:53:48 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M7wLq-0007xZ-QG
+	id 1M7wLr-0007xZ-GK
 	for gcvg-git-2@gmane.org; Sat, 23 May 2009 20:53:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751989AbZEWSxR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 23 May 2009 14:53:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751903AbZEWSxQ
-	(ORCPT <rfc822;git-outgoing>); Sat, 23 May 2009 14:53:16 -0400
+	id S1752317AbZEWSxV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 23 May 2009 14:53:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752006AbZEWSxU
+	(ORCPT <rfc822;git-outgoing>); Sat, 23 May 2009 14:53:20 -0400
 Received: from mail-px0-f103.google.com ([209.85.216.103]:54773 "EHLO
 	mail-px0-f103.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751208AbZEWSxP (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 23 May 2009 14:53:15 -0400
-Received: by pxi1 with SMTP id 1so1894468pxi.33
-        for <git@vger.kernel.org>; Sat, 23 May 2009 11:53:17 -0700 (PDT)
+	with ESMTP id S1751903AbZEWSxT (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 23 May 2009 14:53:19 -0400
+Received: by mail-px0-f103.google.com with SMTP id 1so1894468pxi.33
+        for <git@vger.kernel.org>; Sat, 23 May 2009 11:53:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:received:from:to:cc:subject
-         :date:message-id:x-mailer;
-        bh=Vr08B83o+tHKqS9cGzzAnrC5sjQymjeCkmggW3FCaoo=;
-        b=dls7uoXKh/73xgMJ0K4WWZISC9PKSbe/IsdKgJCAt+s2OMSNPMWIfhEjqlDEilhCbw
-         UttwQoUjcQKWkXs+z/WyvGwzmFL5nq9SkjkkmrKWObhv6z9KZL5tN0QFhGP/baUaVex6
-         T2BmlwTBTmLjakYSUNESnRrkmTKf+Ho39Xv8c=
+         :date:message-id:x-mailer:in-reply-to:references;
+        bh=K76hTsxz1VAOlcpNkC7hsPletMnhX5FLr3NV1K3Ohjo=;
+        b=XcgUWBF2HoacW9rEmxNLS4HJx5Ig9983/XMA8hAxp+M1SCTJVW+0ok+uWTAR4vMT6N
+         IquX9quYbW241X3emZLLmigxyD4WP/9P/7q9f/hZd2ZFe65OHIVreGobny6IY/7jqKIj
+         AFz88/uOyW5jReCPihGaiSGJZlpyBaFN5x3IA=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        b=sub093uykvigI5oPFEQpBI2xLmTPOW8VXKm27klNOV4AUeOE1vMwCrwoQCAFIg2/Uc
-         MP0Uz488zNnNp2T8yTVLbWMVVZcJQ4ZQudT6tVu+NrYYyi+GpTt1MkObd46gjjEoE1RK
-         XAAxGmH6bZxgky6McKU6egmQyecPReR18HmH4=
-Received: by 10.114.72.1 with SMTP id u1mr10562486waa.154.1243104797179;
-        Sat, 23 May 2009 11:53:17 -0700 (PDT)
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        b=rZkplB7gLhKtHLTfeTyzp4PYL2nomkfS15mqIcOijbf0ZaRaxwkcIPbywCvYk1t5XI
+         WUVUtVntG/sHytsYdgL4lHqa6CjkqtBEeK5UnSkxsn3xfOsUez6kPDAk/SFUjMvR5utM
+         2X0Bf3Yuzq/p/9knq4GZUFfkSKZxYMtdrw22o=
+Received: by 10.114.127.1 with SMTP id z1mr10933944wac.3.1243104801747;
+        Sat, 23 May 2009 11:53:21 -0700 (PDT)
 Received: from earth ([76.89.212.195])
-        by mx.google.com with ESMTPS id c26sm10789434waa.15.2009.05.23.11.53.14
+        by mx.google.com with ESMTPS id j28sm10705022waf.23.2009.05.23.11.53.18
         (version=SSLv3 cipher=RC4-MD5);
-        Sat, 23 May 2009 11:53:16 -0700 (PDT)
-Received: by earth (sSMTP sendmail emulation); Sat, 23 May 2009 11:53:13 -0700
+        Sat, 23 May 2009 11:53:19 -0700 (PDT)
+Received: by earth (sSMTP sendmail emulation); Sat, 23 May 2009 11:53:17 -0700
 X-Mailer: git-send-email 1.6.3.1.145.gb74d77
+In-Reply-To: <1243104793-3254-1-git-send-email-bebarino@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119782>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119783>
 
-OPT_FILENAME is used to prefix filenames given on the command line, so
-that they are relative to the current working directory. For a more 
-in-depth description see the fourth patch.
+Commit dbd0f5c7 (Files given on the command line are relative to $cwd,
+2008-08-06) introduced parse_options_fix_filename() as a quick fix for
+filename arguments used in the parse options API.
 
-This series is really two parts, two bug fixes and the introduction
-of OPT_FILNAME, but they're all related to one commit
-dbd0f5c (Files given on the command line are relative to $cwd,
-2008-08-06).
+git-commit was still broken. This means
 
-It touches a lot of files, but that's mostly because of
-patch three.
+    git commit -F log -t temp
 
-Stephen Boyd (4):
-  commit: -F overrides -t
-  apply, fmt-merge-msg: use relative filenames
-  parse-opts: prepare for OPT_FILENAME
-  parse-opts: add OPT_FILENAME and transition builtins
+in a subdirectory would make git think the log message should be taken
+from temp instead of log.
 
- Documentation/technical/api-parse-options.txt |    9 ++++-
- archive.c                                     |    2 +-
- builtin-add.c                                 |    2 +-
- builtin-apply.c                               |    5 ++-
- builtin-archive.c                             |    3 +-
- builtin-bisect--helper.c                      |    3 +-
- builtin-blame.c                               |    2 +-
- builtin-branch.c                              |    3 +-
- builtin-cat-file.c                            |    2 +-
- builtin-check-attr.c                          |    4 +-
- builtin-checkout-index.c                      |    2 +-
- builtin-checkout.c                            |    2 +-
- builtin-clean.c                               |    3 +-
- builtin-clone.c                               |    2 +-
- builtin-commit.c                              |    9 ++---
- builtin-config.c                              |    3 +-
- builtin-count-objects.c                       |    2 +-
- builtin-describe.c                            |    2 +-
- builtin-fast-export.c                         |    2 +-
- builtin-fetch.c                               |    2 +-
- builtin-fmt-merge-msg.c                       |    5 ++-
- builtin-for-each-ref.c                        |    2 +-
- builtin-fsck.c                                |    2 +-
- builtin-gc.c                                  |    3 +-
- builtin-grep.c                                |    2 +-
- builtin-help.c                                |    2 +-
- builtin-ls-files.c                            |    2 +-
- builtin-merge-base.c                          |    2 +-
- builtin-merge-file.c                          |    2 +-
- builtin-merge.c                               |    4 +-
- builtin-mv.c                                  |    3 +-
- builtin-name-rev.c                            |    2 +-
- builtin-pack-refs.c                           |    2 +-
- builtin-prune.c                               |    2 +-
- builtin-push.c                                |    2 +-
- builtin-remote.c                              |   16 +++++---
- builtin-reset.c                               |    2 +-
- builtin-rev-parse.c                           |    4 +-
- builtin-revert.c                              |    2 +-
- builtin-rm.c                                  |    3 +-
- builtin-shortlog.c                            |    2 +-
- builtin-symbolic-ref.c                        |    3 +-
- builtin-tag.c                                 |    5 +--
- builtin-update-ref.c                          |    3 +-
- hash-object.c                                 |    3 +-
- parse-options.c                               |   47 ++++++++++++++++--------
- parse-options.h                               |   11 ++++--
- t/t0040-parse-options.sh                      |   19 +++++++++-
- t/t4131-apply-fake-ancestor.sh                |   42 ++++++++++++++++++++++
- t/t6200-fmt-merge-msg.sh                      |   32 +++++++++++++++++
- t/t7500-commit.sh                             |   10 +++++
- test-parse-options.c                          |    6 +++-
- 52 files changed, 226 insertions(+), 85 deletions(-)
- create mode 100755 t/t4131-apply-fake-ancestor.sh
+This is because parse_options_fix_filename() calls prefix_filename()
+which uses a single static char buffer to do its work. Making two calls
+with two char pointers causes the pointers to alias. To prevent
+aliasing, we duplicate the string returned by
+parse_options_fix_filename().
+
+Signed-off-by: Stephen Boyd <bebarino@gmail.com>
+---
+ builtin-commit.c  |    4 ++++
+ t/t7500-commit.sh |   10 ++++++++++
+ 2 files changed, 14 insertions(+), 0 deletions(-)
+
+diff --git a/builtin-commit.c b/builtin-commit.c
+index 81371b1..baaa75c 100644
+--- a/builtin-commit.c
++++ b/builtin-commit.c
+@@ -699,7 +699,11 @@ static int parse_and_validate_options(int argc, const char *argv[],
+ 
+ 	argc = parse_options(argc, argv, builtin_commit_options, usage, 0);
+ 	logfile = parse_options_fix_filename(prefix, logfile);
++	if (logfile)
++		logfile = xstrdup(logfile);
+ 	template_file = parse_options_fix_filename(prefix, template_file);
++	if (template_file)
++		template_file = xstrdup(template_file);
+ 
+ 	if (force_author && !strchr(force_author, '>'))
+ 		force_author = find_author_by_nickname(force_author);
+diff --git a/t/t7500-commit.sh b/t/t7500-commit.sh
+index 5998baf..8eec0fa 100755
+--- a/t/t7500-commit.sh
++++ b/t/t7500-commit.sh
+@@ -183,4 +183,14 @@ test_expect_success 'commit message from stdin' '
+ 	commit_msg_is "Log with foo word"
+ '
+ 
++test_expect_success 'commit -F overrides -t' '
++	(
++		cd subdir &&
++		echo "-F log" > f.log &&
++		echo "-t template" > t.template &&
++		git commit --allow-empty -F f.log -t t.template
++	) &&
++	commit_msg_is "-F log"
++'
++
+ test_done
+-- 
+1.6.3.1.145.gb74d77
