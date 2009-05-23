@@ -1,85 +1,79 @@
-From: Tim Uckun <timuckun@gmail.com>
-Subject: Re: can anybody explain the following to a git noob?
-Date: Sat, 23 May 2009 20:03:56 +1200
-Message-ID: <855e4dcf0905230103q33508f0eh3aa2838ee71e0a81@mail.gmail.com>
-References: <855e4dcf0905212046o3e1d6ec6l487829a0a411dcaf@mail.gmail.com>
-	 <32541b130905212202q9aed54cn892171b7e654812f@mail.gmail.com>
-	 <855e4dcf0905212244r454a5c21w7bdbfb566a28efb8@mail.gmail.com>
-	 <4A1671E5.4030400@op5.se>
-	 <855e4dcf0905220335n367a065fidc65567119c0a5a3@mail.gmail.com>
-	 <4A16822A.2060404@viscovery.net>
-	 <855e4dcf0905220436h1b6fa632q7804c98bf09b324c@mail.gmail.com>
-	 <alpine.LNX.2.00.0905221259330.27232@reaper.quantumfyre.co.uk>
+From: Richard Quadling <rquadling@googlemail.com>
+Subject: Re: Heap allocation error in git-1.6.2.4 on Cygwin. Problem not 
+	present in git-1.6.1.2
+Date: Sat, 23 May 2009 09:01:57 +0100
+Message-ID: <10845a340905230101w677510ebje387b93fcdac2d87@mail.gmail.com>
+References: <10845a340905220423x69eb1718n7a6f9dcd5c2df459@mail.gmail.com> 
+	<be6fef0d0905220929p64f45f52ub8dd39feb063936b@mail.gmail.com>
+Reply-To: RQuadling@googlemail.com
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Johannes Sixt <j.sixt@viscovery.net>, Andreas Ericsson <ae@op5.se>,
-	Avery Pennarun <apenwarr@gmail.com>, git@vger.kernel.org
-To: Julian Phillips <julian@quantumfyre.co.uk>
-X-From: git-owner@vger.kernel.org Sat May 23 10:07:10 2009
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Tay Ray Chuan <rctay89@gmail.com>
+X-From: git-owner@vger.kernel.org Sat May 23 10:08:57 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M7mG1-0006MH-3m
-	for gcvg-git-2@gmane.org; Sat, 23 May 2009 10:07:05 +0200
+	id 1M7mHn-0006yE-2B
+	for gcvg-git-2@gmane.org; Sat, 23 May 2009 10:08:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751290AbZEWID7 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 23 May 2009 04:03:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751267AbZEWID6
-	(ORCPT <rfc822;git-outgoing>); Sat, 23 May 2009 04:03:58 -0400
-Received: from mail-gx0-f166.google.com ([209.85.217.166]:61408 "EHLO
-	mail-gx0-f166.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751044AbZEWIDz convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 23 May 2009 04:03:55 -0400
-Received: by gxk10 with SMTP id 10so3992432gxk.13
-        for <git@vger.kernel.org>; Sat, 23 May 2009 01:03:56 -0700 (PDT)
+	id S1751561AbZEWIIr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 23 May 2009 04:08:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751443AbZEWIIp
+	(ORCPT <rfc822;git-outgoing>); Sat, 23 May 2009 04:08:45 -0400
+Received: from mail-fx0-f168.google.com ([209.85.220.168]:50219 "EHLO
+	mail-fx0-f168.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751360AbZEWIIo (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 23 May 2009 04:08:44 -0400
+X-Greylist: delayed 388 seconds by postgrey-1.27 at vger.kernel.org; Sat, 23 May 2009 04:08:44 EDT
+Received: by fxm12 with SMTP id 12so272497fxm.37
+        for <git@vger.kernel.org>; Sat, 23 May 2009 01:08:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:reply-to:in-reply-to
+         :references:from:date:message-id:subject:to:cc:content-type
          :content-transfer-encoding;
-        bh=c0OWmQtWTavbxsDDcYE+kJW5xp81GI9MIzplTzbPSWA=;
-        b=tKBLTodwKlh8AN8wh3TlWuBu7GhcrXL37B2r8dsWtzcXcapAiwkYmDu2TbXquHr/5H
-         gzcik135ffdXJsUNXNLXSR94c18zdyGgkQYRVJmyFmzqC/7lmzZVhGuevzC2zPDaUQHD
-         OpX7GvONNBS7lfiYP6VC4F9nNm5d+NCzGyYKs=
+        bh=lLmlsdQz35jaMrJJhZ5LyJX1aN/mza5ygE/0ioL+IhI=;
+        b=m8oM6lVKk5+M4i7O3oJRGHnyPpS6vKN1cfkBxOYHqC8yyxPN9hCpBkpCmzj3uQNbjz
+         z15ze0JWFpSlXfY/CP83Zk5idlPbP/uSSdUWda2aUXVTcFrLo0D6b9Uq+sfaAthzQXsu
+         1HPYPjki2Gb4fVnoNYciJa32ZOIdehJ4RUu60=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=ioODvK2Nm3yvHxhM5x0UJ8faV5NTRJoLLCIbXZI/N+Za9gISEOBbFrrzJVvkd+99kD
-         j7jxFJ954MCaSifb1k/qFrxzUIJFh0iU6N+47cXkGUyRwZj8+JgHdfau7CBl9r4DswXS
-         dcFcaTepVz6hDBDaCiKV8xAvKk0u/Cz1PswDw=
-Received: by 10.90.93.17 with SMTP id q17mr3996892agb.33.1243065836246; Sat, 
-	23 May 2009 01:03:56 -0700 (PDT)
-In-Reply-To: <alpine.LNX.2.00.0905221259330.27232@reaper.quantumfyre.co.uk>
+        d=googlemail.com; s=gamma;
+        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type:content-transfer-encoding;
+        b=HItgKaGWYIAs++mKXgen+OTFyFD+okUEV6X9uKxL9mTiWT/SVGeEKw5Sj/fzi5g7n9
+         nKdoRLRuqrsvJBGWOFxCI0A9zh4srAY259JRhvON04HbXOIajWMeCmOXr9D5aMyHjAZg
+         yD1O3qraRvMSe19p9AkDTdovn0opEUfyh7kZM=
+Received: by 10.223.108.210 with SMTP id g18mr2698154fap.38.1243065737172; 
+	Sat, 23 May 2009 01:02:17 -0700 (PDT)
+In-Reply-To: <be6fef0d0905220929p64f45f52ub8dd39feb063936b@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119758>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119759>
 
-> What's in the subdirectory? =C2=A0Is it empty? =C2=A0If so, that woul=
-d explain what
-> you are seeing. =C2=A0Git doesn't track directories - so an empty dir=
-ectory is
-> always treated as an untracked file.
-
-The directories are not empty. They contain various tests (unit tests,
-integration tests etc).
-
+2009/5/22 Tay Ray Chuan <rctay89@gmail.com>:
+> Hi,
 >
-> I don't know if mercurial tracks directories, if it does, then this w=
-ould
-> explain why it behaves diffently to git.
+> On Fri, May 22, 2009 at 7:23 PM, Richard Quadling
+> <rquadling@googlemail.com> wrote:
+>> I've just upgraded GIT on Cygwin from git-1.6.1.2 to git-1.6.2.4.
+>
+> you would be better off posting this on the cygwin list; I've read of
+> some git problems there.
+>
+> --
+> Cheers,
+> Ray Chuan
 >
 
-That might be the reason.
+OK. Thank you,
 
-I am just baffled. I have run that script many times and it always
-turns out the same. For example on one run I removed all the .git
-directories in all the subdirectories to see if I would get different
-results but it didn't help (git mv worked but the messed up
-directories remained).
-
-I also tried renaming other directories and similar things happen.
+-- 
+-----
+Richard Quadling
+Zend Certified Engineer : http://zend.com/zce.php?c=ZEND002498&r=213474731
+"Standing on the shoulders of some very clever giants!"
