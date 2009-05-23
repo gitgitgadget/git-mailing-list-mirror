@@ -1,246 +1,61 @@
-From: =?ISO-8859-2?Q?Serhat_=AAevki_Din=E7er?= <jfcgauss@gmail.com>
-Subject: y.a. static code analysis
-Date: Sat, 23 May 2009 22:00:58 +0300
-Message-ID: <927245250905231200ifbda2f6t1c54628e314d63e6@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: multipart/mixed; boundary=001636457e8a56b67a046a98ff20
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH 0/5] Speeding up "git status" and "git diff --cached"
+Date: Sat, 23 May 2009 12:24:33 -0700
+Message-ID: <1243106678-6343-1-git-send-email-gitster@pobox.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat May 23 21:03:13 2009
+X-From: git-owner@vger.kernel.org Sat May 23 21:24:51 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M7wUy-0002du-3z
-	for gcvg-git-2@gmane.org; Sat, 23 May 2009 21:03:13 +0200
+	id 1M7wpu-0001xr-Gc
+	for gcvg-git-2@gmane.org; Sat, 23 May 2009 21:24:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752980AbZEWTBA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 23 May 2009 15:01:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752426AbZEWTA7
-	(ORCPT <rfc822;git-outgoing>); Sat, 23 May 2009 15:00:59 -0400
-Received: from mail-bw0-f174.google.com ([209.85.218.174]:45479 "EHLO
-	mail-bw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752317AbZEWTA6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 23 May 2009 15:00:58 -0400
-Received: by bwz22 with SMTP id 22so2259640bwz.37
-        for <git@vger.kernel.org>; Sat, 23 May 2009 12:00:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:date:message-id:subject
-         :from:to:content-type;
-        bh=LnCbbr2EIBwCcWXhIU245NNbG7fuE3EbqWX8AjoAYHQ=;
-        b=aif7Edz2cAHd2n3MmBtkW7239poN4jRh8khmYWSYaixrSK0VjSVZOUOHkK74ehGjS9
-         Mi91m7Qm0hbBCqJz/jNw+0oNUdKMXM/aM77PP1iGgUpEGHQrvuYOfw4g0xB9DvzLVDGb
-         VOa5+BGO3NX1lFhjH/lO2Gsv7Q1zFFsnWnohc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        b=T+l925xcmGKjeFo+B29OhCtwSqjxPJWrf+w2p7Uf9VBlIO3RdQ+EhQ5wp9PTouZ+Fg
-         /RtQZFvfPVI9/8cTUoUTG5ozlCDijT4Heo5W2m7x+g6PADq1vD+oNDhFzEIVydR/SLqN
-         IAD82N7HHN1iBLqraCCe4WNkDcMDNvLzHCnMo=
-Received: by 10.239.134.78 with SMTP id 14mr376016hby.141.1243105258288; Sat, 
-	23 May 2009 12:00:58 -0700 (PDT)
+	id S1752426AbZEWTYm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 23 May 2009 15:24:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751903AbZEWTYl
+	(ORCPT <rfc822;git-outgoing>); Sat, 23 May 2009 15:24:41 -0400
+Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:62464 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752077AbZEWTYk (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 23 May 2009 15:24:40 -0400
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 11CACB56B3
+	for <git@vger.kernel.org>; Sat, 23 May 2009 15:24:41 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 886EBB56B2 for
+ <git@vger.kernel.org>; Sat, 23 May 2009 15:24:40 -0400 (EDT)
+X-Mailer: git-send-email 1.6.3.1.145.gb74d77
+X-Pobox-Relay-ID: 5CEAFCE2-47CF-11DE-A446-F6BA321C86B1-77302942!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119787>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119788>
 
---001636457e8a56b67a046a98ff20
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
+Here is a refined version of an earlier patch series to use cache-tree
+information to optimize comparison between the index with an existing
+commit.
 
-hi,
-although static code analysis have apparently been used/mentioned
-here, i did not see any mention of cppcheck
-(http://cppcheck.wiki.sourceforge.net) in the mailist archive. i was
-playing with cppcheck (1.32) on some OSS, so i decided to try it on
-git (1.6.3.1) as well.
-$ cppcheck -a -q -s . &> ccgit.txt
-possibly the most useful parts of the output are:
-$ grep -v 'is never used\|The scope of the variable\| Error: In' ccgit.txt
-i think only the ones about date.c (below note) are real defects
-(first chars are not checked).
+Recently there was a discussion to auto-commit any change to the index
+that are going to be discarded to some kind of "trash" branch; I am not
+personally interested in writing a patch to do so, but this will also help
+such a feature by making it cheaper to see if there are differences worth
+saving.
 
-and also how about http://scan.coverity.com? i see it was mentined
-before (http://article.gmane.org/gmane.comp.version-control.git/111562)
-with apparently no responses or arguments (there has been a suggestion
-of bad license terms in that message, but if the scan is suitable for
-so many FOSS (see all rungs) including the kernel, why would it be not
-good for git?). i think it could be a good free (as in beer) code
-check for git.
-regards
+Junio C Hamano (5):
+  write-tree --ignore-cache-tree
+  cache-tree.c::cache_tree_find(): simplify inernal API
+  t4007: modernize the style
+  Optimize "diff-index --cached" using cache-tree
+  Avoid "diff-index --cached" optimization under --find-copies-harder
 
-note:
-[./builtin-apply.c:482]: (error) Using 'name' after it is deallocated / released
-[./compat/mingw.c:273]: (style) Found 'mktemp'. You should use 'mkstemp' instead
-[./compat/mkdtemp.c:5]: (style) Found 'mktemp'. You should use 'mkstemp' instead
-[./date.c:268]: (style) Redundant code: Found a statement that begins
-with numeric constant
-[./date.c:483]: (style) Redundant code: Found a statement that begins
-with numeric constant
-[./http-push.c:1419]: (error) Using 'lock' after it is deallocated / released
-[./read-cache.c:938] -> [./read-cache.c:759] -> [./read-cache.c:729]:
-(all) Array index out of bounds
-[./read-cache.c:938] -> [./read-cache.c:759] -> [./read-cache.c:731]:
-(all) Array index out of bounds
-[./read-cache.c:938] -> [./read-cache.c:759] -> [./read-cache.c:736]:
-(all) Array index out of bounds
-[./test-sha1.c:16]: (error) Memory leak: buffer
-
---001636457e8a56b67a046a98ff20
-Content-Type: text/plain; charset=US-ASCII; name="ccgit.txt"
-Content-Disposition: attachment; filename="ccgit.txt"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: f_fv2o3xaa0
-
-Wy4vYWxsb2MuYzo0MV06IChzdHlsZSkgc3RydWN0IG9yIHVuaW9uIG1lbWJlciAnYW55X29iamVj
-dDo6b2JqZWN0JyBpcyBuZXZlciB1c2VkClsuL2FsbG9jLmM6NDJdOiAoc3R5bGUpIHN0cnVjdCBv
-ciB1bmlvbiBtZW1iZXIgJ2FueV9vYmplY3Q6OmJsb2InIGlzIG5ldmVyIHVzZWQKWy4vYWxsb2Mu
-Yzo0M106IChzdHlsZSkgc3RydWN0IG9yIHVuaW9uIG1lbWJlciAnYW55X29iamVjdDo6dHJlZScg
-aXMgbmV2ZXIgdXNlZApbLi9hbGxvYy5jOjQ0XTogKHN0eWxlKSBzdHJ1Y3Qgb3IgdW5pb24gbWVt
-YmVyICdhbnlfb2JqZWN0Ojpjb21taXQnIGlzIG5ldmVyIHVzZWQKWy4vYWxsb2MuYzo0NV06IChz
-dHlsZSkgc3RydWN0IG9yIHVuaW9uIG1lbWJlciAnYW55X29iamVjdDo6dGFnJyBpcyBuZXZlciB1
-c2VkClsuL2FyY2hpdmUtemlwLmM6MzFdOiAoc3R5bGUpIHN0cnVjdCBvciB1bmlvbiBtZW1iZXIg
-J3ppcF9sb2NhbF9oZWFkZXI6Ol9lbmQnIGlzIG5ldmVyIHVzZWQKWy4vYXJjaGl2ZS16aXAuYzo1
-Ml06IChzdHlsZSkgc3RydWN0IG9yIHVuaW9uIG1lbWJlciAnemlwX2Rpcl9oZWFkZXI6Ol9lbmQn
-IGlzIG5ldmVyIHVzZWQKWy4vYXJjaGl2ZS16aXAuYzo2NF06IChzdHlsZSkgc3RydWN0IG9yIHVu
-aW9uIG1lbWJlciAnemlwX2Rpcl90cmFpbGVyOjpfZW5kJyBpcyBuZXZlciB1c2VkClsuL2FyY2hp
-dmUuYzoyNzhdOiAoc3R5bGUpIFRoZSBzY29wZSBvZiB0aGUgdmFyaWFibGUgaSBjYW4gYmUgbGlt
-aXRlZApbLi9idWlsdGluLWFwcGx5LmM6MTQ0NV06IChzdHlsZSkgVGhlIHNjb3BlIG9mIHRoZSB2
-YXJpYWJsZSBpIGNhbiBiZSBsaW1pdGVkClsuL2J1aWx0aW4tYXBwbHkuYzoxOTEyXTogKHN0eWxl
-KSBUaGUgc2NvcGUgb2YgdGhlIHZhcmlhYmxlIGFkZGVkIGNhbiBiZSBsaW1pdGVkClsuL2J1aWx0
-aW4tYXBwbHkuYzoyMTA4XTogKHN0eWxlKSBUaGUgc2NvcGUgb2YgdGhlIHZhcmlhYmxlIGxlbiBj
-YW4gYmUgbGltaXRlZApbLi9idWlsdGluLWFwcGx5LmM6MzI0Nl06IChzdHlsZSkgVGhlIHNjb3Bl
-IG9mIHRoZSB2YXJpYWJsZSBiaW5hcnkgY2FuIGJlIGxpbWl0ZWQKWy4vYnVpbHRpbi1hcHBseS5j
-OjE1N106IChzdHlsZSkgc3RydWN0IG9yIHVuaW9uIG1lbWJlciAncGF0Y2g6OmRlZmxhdGVfb3Jp
-Z2xlbicgaXMgbmV2ZXIgdXNlZApbLi9idWlsdGluLWFwcGx5LmM6NDgyXTogKGVycm9yKSBVc2lu
-ZyAnbmFtZScgYWZ0ZXIgaXQgaXMgZGVhbGxvY2F0ZWQgLyByZWxlYXNlZApbLi9idWlsdGluLWJs
-YW1lLmM6MTU0MF06IChzdHlsZSkgVGhlIHNjb3BlIG9mIHRoZSB2YXJpYWJsZSB0aW1lX2xlbiBj
-YW4gYmUgbGltaXRlZApbLi9idWlsdGluLWJsYW1lLmM6MTU0MV06IChzdHlsZSkgVGhlIHNjb3Bl
-IG9mIHRoZSB2YXJpYWJsZSB0eiBjYW4gYmUgbGltaXRlZApbLi9idWlsdGluLWNoZWNrb3V0LmM6
-NTk5XTogKHN0eWxlKSBUaGUgc2NvcGUgb2YgdGhlIHZhcmlhYmxlIGhhc19kYXNoX2Rhc2ggY2Fu
-IGJlIGxpbWl0ZWQKWy4vYnVpbHRpbi1jb21taXQuYzo0MTldOiAoc3R5bGUpIFRoZSBzY29wZSBv
-ZiB0aGUgdmFyaWFibGUgc2F2ZWRfY29sb3Jfc2V0dGluZyBjYW4gYmUgbGltaXRlZApbLi9idWls
-dGluLWdyZXAuYzozOTldOiAoc3R5bGUpIFRoZSBzY29wZSBvZiB0aGUgdmFyaWFibGUga2VwdCBj
-YW4gYmUgbGltaXRlZApbLi9idWlsdGluLW1haWxpbmZvLmM6NjgzXTogKHN0eWxlKSBUaGUgc2Nv
-cGUgb2YgdGhlIHZhcmlhYmxlIGkgY2FuIGJlIGxpbWl0ZWQKWy4vYnVpbHRpbi1tZXJnZS5jOjUy
-N106IChzdHlsZSkgVGhlIHNjb3BlIG9mIHRoZSB2YXJpYWJsZSByZXQgY2FuIGJlIGxpbWl0ZWQK
-Wy4vYnVpbHRpbi1tdi5jOjk5XTogKHN0eWxlKSBUaGUgc2NvcGUgb2YgdGhlIHZhcmlhYmxlIHNy
-Y19pc19kaXIgY2FuIGJlIGxpbWl0ZWQKWy4vYnVpbHRpbi1wYWNrLW9iamVjdHMuYzoxMDIzXTog
-KHN0eWxlKSBUaGUgc2NvcGUgb2YgdGhlIHZhcmlhYmxlIHVzZWRfMCBjYW4gYmUgbGltaXRlZApb
-Li9idWlsdGluLXBhY2stb2JqZWN0cy5jOjEwMjVdOiAoc3R5bGUpIFRoZSBzY29wZSBvZiB0aGUg
-dmFyaWFibGUgb2ZzIGNhbiBiZSBsaW1pdGVkClsuL2J1aWx0aW4tcGFjay1vYmplY3RzLmM6MTAy
-Nl06IChzdHlsZSkgVGhlIHNjb3BlIG9mIHRoZSB2YXJpYWJsZSBjIGNhbiBiZSBsaW1pdGVkClsu
-L2J1aWx0aW4tcmVtb3RlLmM6NDg0XTogKHN0eWxlKSBUaGUgc2NvcGUgb2YgdGhlIHZhcmlhYmxl
-IGZsYWcgY2FuIGJlIGxpbWl0ZWQKWy4vYnVpbHRpbi1yZW1vdGUuYzoxMDAyXTogKHN0eWxlKSBU
-aGUgc2NvcGUgb2YgdGhlIHZhcmlhYmxlIGkgY2FuIGJlIGxpbWl0ZWQKWy4vYnVpbHRpbi1yZW1v
-dGUuYzoxMDY3XTogKHN0eWxlKSBUaGUgc2NvcGUgb2YgdGhlIHZhcmlhYmxlIGkgY2FuIGJlIGxp
-bWl0ZWQKWy4vYnVpbHRpbi1yZXZlcnQuYzo1Ml06IChzdHlsZSkgVGhlIHNjb3BlIG9mIHRoZSB2
-YXJpYWJsZSBub29wIGNhbiBiZSBsaW1pdGVkClsuL2J1aWx0aW4tc2hvdy1icmFuY2guYzozNTZd
-OiAoc3R5bGUpIFRoZSBzY29wZSBvZiB0aGUgdmFyaWFibGUgaSBjYW4gYmUgbGltaXRlZApbLi9i
-dWlsdGluLXNob3ctYnJhbmNoLmM6ODM0XTogKHN0eWxlKSBUaGUgc2NvcGUgb2YgdGhlIHZhcmlh
-YmxlIGogY2FuIGJlIGxpbWl0ZWQKWy4vY29tYmluZS1kaWZmLmM6OTEzXTogKHN0eWxlKSBUaGUg
-c2NvcGUgb2YgdGhlIHZhcmlhYmxlIG9mZnNldCBjYW4gYmUgbGltaXRlZApbLi9jb21wYXQvbWlu
-Z3cuYzoyNzNdOiAoc3R5bGUpIEZvdW5kICdta3RlbXAnLiBZb3Ugc2hvdWxkIHVzZSAnbWtzdGVt
-cCcgaW5zdGVhZApbLi9jb21wYXQvbWtkdGVtcC5jOjVdOiAoc3R5bGUpIEZvdW5kICdta3RlbXAn
-LiBZb3Ugc2hvdWxkIHVzZSAnbWtzdGVtcCcgaW5zdGVhZAojIyMgRXJyb3I6IEludmFsaWQgbnVt
-YmVyIG9mIGNoYXJhY3RlciB7CiMjIyBFcnJvcjogSW52YWxpZCBudW1iZXIgb2YgY2hhcmFjdGVy
-IHsKIyMjIEVycm9yOiBJbnZhbGlkIG51bWJlciBvZiBjaGFyYWN0ZXIgewojIyMgRXJyb3I6IElu
-dmFsaWQgbnVtYmVyIG9mIGNoYXJhY3RlciB7CiMjIyBFcnJvcjogSW52YWxpZCBudW1iZXIgb2Yg
-Y2hhcmFjdGVyIHsKIyMjIEVycm9yOiBJbnZhbGlkIG51bWJlciBvZiBjaGFyYWN0ZXIgewojIyMg
-RXJyb3I6IEludmFsaWQgbnVtYmVyIG9mIGNoYXJhY3RlciB7CiMjIyBFcnJvcjogSW52YWxpZCBu
-dW1iZXIgb2YgY2hhcmFjdGVyIHsKIyMjIEVycm9yOiBJbnZhbGlkIG51bWJlciBvZiBjaGFyYWN0
-ZXIgewojIyMgRXJyb3I6IEludmFsaWQgbnVtYmVyIG9mIGNoYXJhY3RlciB7CiMjIyBFcnJvcjog
-SW52YWxpZCBudW1iZXIgb2YgY2hhcmFjdGVyIHsKIyMjIEVycm9yOiBJbnZhbGlkIG51bWJlciBv
-ZiBjaGFyYWN0ZXIgewpbLi9jb25maWcuYzo3NDddOiAoc3R5bGUpIFRoZSBzY29wZSBvZiB0aGUg
-dmFyaWFibGUgc2VjdGlvbl9sZW4gY2FuIGJlIGxpbWl0ZWQKWy4vY29uZmlnLmM6ODE2XTogKHN0
-eWxlKSBUaGUgc2NvcGUgb2YgdGhlIHZhcmlhYmxlIGkgY2FuIGJlIGxpbWl0ZWQKWy4vY29ubmVj
-dC5jOjM3Nl06IChzdHlsZSkgVGhlIHNjb3BlIG9mIHRoZSB2YXJpYWJsZSBob3N0bGVuIGNhbiBi
-ZSBsaW1pdGVkClsuL2RhdGUuYzozNzBdOiAoc3R5bGUpIFRoZSBzY29wZSBvZiB0aGUgdmFyaWFi
-bGUgbm93IGNhbiBiZSBsaW1pdGVkClsuL2RhdGUuYzoyNjhdOiAoc3R5bGUpIFJlZHVuZGFudCBj
-b2RlOiBGb3VuZCBhIHN0YXRlbWVudCB0aGF0IGJlZ2lucyB3aXRoIG51bWVyaWMgY29uc3RhbnQK
-Wy4vZGF0ZS5jOjQ4M106IChzdHlsZSkgUmVkdW5kYW50IGNvZGU6IEZvdW5kIGEgc3RhdGVtZW50
-IHRoYXQgYmVnaW5zIHdpdGggbnVtZXJpYyBjb25zdGFudApbLi9kaWZmLW5vLWluZGV4LmM6MjA5
-XTogKHN0eWxlKSBUaGUgc2NvcGUgb2YgdGhlIHZhcmlhYmxlIGogY2FuIGJlIGxpbWl0ZWQKWy4v
-ZGlmZmNvcmUtYnJlYWsuYzoxNzBdOiAoc3R5bGUpIFRoZSBzY29wZSBvZiB0aGUgdmFyaWFibGUg
-c2NvcmUgY2FuIGJlIGxpbWl0ZWQKWy4vZGlyLmM6MzAwXTogKHN0eWxlKSBUaGUgc2NvcGUgb2Yg
-dGhlIHZhcmlhYmxlIGkgY2FuIGJlIGxpbWl0ZWQKWy4vZW50cnkuYzo5N106IChzdHlsZSkgVGhl
-IHNjb3BlIG9mIHRoZSB2YXJpYWJsZSBmZCBjYW4gYmUgbGltaXRlZApbLi9lbnRyeS5jOjk3XTog
-KHN0eWxlKSBUaGUgc2NvcGUgb2YgdGhlIHZhcmlhYmxlIHJldCBjYW4gYmUgbGltaXRlZApbLi9l
-bnRyeS5jOjEwMF06IChzdHlsZSkgVGhlIHNjb3BlIG9mIHRoZSB2YXJpYWJsZSBzaXplIGNhbiBi
-ZSBsaW1pdGVkClsuL2VudHJ5LmM6MTAxXTogKHN0eWxlKSBUaGUgc2NvcGUgb2YgdGhlIHZhcmlh
-YmxlIHdyb3RlIGNhbiBiZSBsaW1pdGVkClsuL2Zhc3QtaW1wb3J0LmM6OTQ1XTogKHN0eWxlKSBU
-aGUgc2NvcGUgb2YgdGhlIHZhcmlhYmxlIGkgY2FuIGJlIGxpbWl0ZWQKWy4vZ2l0LmM6MTM4XTog
-KHN0eWxlKSBUaGUgc2NvcGUgb2YgdGhlIHZhcmlhYmxlIGNvdW50IGNhbiBiZSBsaW1pdGVkClsu
-L2dpdC5jOjEzOF06IChzdHlsZSkgVGhlIHNjb3BlIG9mIHRoZSB2YXJpYWJsZSBvcHRpb25fY291
-bnQgY2FuIGJlIGxpbWl0ZWQKWy4vZ3JlcC5jOjM3NV06IChzdHlsZSkgVGhlIHNjb3BlIG9mIHRo
-ZSB2YXJpYWJsZSBtYXRjaCBjYW4gYmUgbGltaXRlZApbLi9oZWxwLmM6MTMyXTogKHN0eWxlKSBU
-aGUgc2NvcGUgb2YgdGhlIHZhcmlhYmxlIG4gY2FuIGJlIGxpbWl0ZWQKWy4vaHR0cC1wdXNoLmM6
-MTE2Ml06IChzdHlsZSkgVGhlIHNjb3BlIG9mIHRoZSB2YXJpYWJsZSBzaGFfY3R4IGNhbiBiZSBs
-aW1pdGVkClsuL2h0dHAtcHVzaC5jOjEyOF06IChzdHlsZSkgc3RydWN0IG9yIHVuaW9uIG1lbWJl
-ciAndHJhbnNmZXJfcmVxdWVzdDo6ZXJyb3JzdHInIGlzIG5ldmVyIHVzZWQKWy4vaHR0cC1wdXNo
-LmM6MTQxOV06IChlcnJvcikgVXNpbmcgJ2xvY2snIGFmdGVyIGl0IGlzIGRlYWxsb2NhdGVkIC8g
-cmVsZWFzZWQKWy4vaW1hcC1zZW5kLmM6NDE5XTogKHN0eWxlKSBUaGUgc2NvcGUgb2YgdGhlIHZh
-cmlhYmxlIHZhIGNhbiBiZSBsaW1pdGVkClsuL2ltYXAtc2VuZC5jOjQzMV06IChzdHlsZSkgVGhl
-IHNjb3BlIG9mIHRoZSB2YXJpYWJsZSB2YSBjYW4gYmUgbGltaXRlZApbLi9pbWFwLXNlbmQuYzo1
-NDRdOiAoc3R5bGUpIFRoZSBzY29wZSBvZiB0aGUgdmFyaWFibGUgbiBjYW4gYmUgbGltaXRlZApb
-Li9pbWFwLXNlbmQuYzo5ODddOiAoc3R5bGUpIFRoZSBzY29wZSBvZiB0aGUgdmFyaWFibGUgcyBj
-YW4gYmUgbGltaXRlZApbLi9pbWFwLXNlbmQuYzo5ODhdOiAoc3R5bGUpIFRoZSBzY29wZSBvZiB0
-aGUgdmFyaWFibGUgcGlkIGNhbiBiZSBsaW1pdGVkClsuL2ltYXAtc2VuZC5jOjExNjJdOiAoc3R5
-bGUpIFRoZSBzY29wZSBvZiB0aGUgdmFyaWFibGUgaiBjYW4gYmUgbGltaXRlZApbLi9pbWFwLXNl
-bmQuYzoxMTYzXTogKHN0eWxlKSBUaGUgc2NvcGUgb2YgdGhlIHZhcmlhYmxlIHN0YXJ0IGNhbiBi
-ZSBsaW1pdGVkClsuL2ltYXAtc2VuZC5jOjMzXTogKHN0eWxlKSBzdHJ1Y3Qgb3IgdW5pb24gbWVt
-YmVyICdzdG9yZV9jb25mOjpwYXRoJyBpcyBuZXZlciB1c2VkClsuL2ltYXAtc2VuZC5jOjM0XTog
-KHN0eWxlKSBzdHJ1Y3Qgb3IgdW5pb24gbWVtYmVyICdzdG9yZV9jb25mOjptYXBfaW5ib3gnIGlz
-IG5ldmVyIHVzZWQKWy4vaW1hcC1zZW5kLmM6NDJdOiAoc3R5bGUpIHN0cnVjdCBvciB1bmlvbiBt
-ZW1iZXIgJ3N0cmluZ19saXN0OjpzdHJpbmcnIGlzIG5ldmVyIHVzZWQKWy4vaW1hcC1zZW5kLmM6
-NDhdOiAoc3R5bGUpIHN0cnVjdCBvciB1bmlvbiBtZW1iZXIgJ2NoYW5uZWxfY29uZjo6bWFzdGVy
-JyBpcyBuZXZlciB1c2VkClsuL2ltYXAtc2VuZC5jOjQ4XTogKHN0eWxlKSBzdHJ1Y3Qgb3IgdW5p
-b24gbWVtYmVyICdjaGFubmVsX2NvbmY6OnNsYXZlJyBpcyBuZXZlciB1c2VkClsuL2ltYXAtc2Vu
-ZC5jOjQ5XTogKHN0eWxlKSBzdHJ1Y3Qgb3IgdW5pb24gbWVtYmVyICdjaGFubmVsX2NvbmY6Om1h
-c3Rlcl9uYW1lJyBpcyBuZXZlciB1c2VkClsuL2ltYXAtc2VuZC5jOjQ5XTogKHN0eWxlKSBzdHJ1
-Y3Qgb3IgdW5pb24gbWVtYmVyICdjaGFubmVsX2NvbmY6OnNsYXZlX25hbWUnIGlzIG5ldmVyIHVz
-ZWQKWy4vaW1hcC1zZW5kLmM6NTBdOiAoc3R5bGUpIHN0cnVjdCBvciB1bmlvbiBtZW1iZXIgJ2No
-YW5uZWxfY29uZjo6c3luY19zdGF0ZScgaXMgbmV2ZXIgdXNlZApbLi9pbWFwLXNlbmQuYzo1MV06
-IChzdHlsZSkgc3RydWN0IG9yIHVuaW9uIG1lbWJlciAnY2hhbm5lbF9jb25mOjpwYXR0ZXJucycg
-aXMgbmV2ZXIgdXNlZApbLi9pbWFwLXNlbmQuYzo1Ml06IChzdHlsZSkgc3RydWN0IG9yIHVuaW9u
-IG1lbWJlciAnY2hhbm5lbF9jb25mOjptb3BzJyBpcyBuZXZlciB1c2VkClsuL2ltYXAtc2VuZC5j
-OjUyXTogKHN0eWxlKSBzdHJ1Y3Qgb3IgdW5pb24gbWVtYmVyICdjaGFubmVsX2NvbmY6OnNvcHMn
-IGlzIG5ldmVyIHVzZWQKWy4vaW1hcC1zZW5kLmM6NTldOiAoc3R5bGUpIHN0cnVjdCBvciB1bmlv
-biBtZW1iZXIgJ2dyb3VwX2NvbmY6OmNoYW5uZWxzJyBpcyBuZXZlciB1c2VkClsuL2ltYXAtc2Vu
-ZC5jOjcxXTogKHN0eWxlKSBzdHJ1Y3Qgb3IgdW5pb24gbWVtYmVyICdtZXNzYWdlOjp1aWQnIGlz
-IG5ldmVyIHVzZWQKWy4vaW1hcC1zZW5kLmM6NzJdOiAoc3R5bGUpIHN0cnVjdCBvciB1bmlvbiBt
-ZW1iZXIgJ21lc3NhZ2U6OnN0YXR1cycgaXMgbmV2ZXIgdXNlZApbLi9pbWFwLXNlbmQuYzo4MF06
-IChzdHlsZSkgc3RydWN0IG9yIHVuaW9uIG1lbWJlciAnc3RvcmU6OnBhdGgnIGlzIG5ldmVyIHVz
-ZWQKWy4vaW1hcC1zZW5kLmM6ODNdOiAoc3R5bGUpIHN0cnVjdCBvciB1bmlvbiBtZW1iZXIgJ3N0
-b3JlOjpvcHRzJyBpcyBuZXZlciB1c2VkClsuL2ltYXAtc2VuZC5jOjE0M106IChzdHlsZSkgc3Ry
-dWN0IG9yIHVuaW9uIG1lbWJlciAnaW1hcF9zdG9yZV9jb25mOjpzZXJ2ZXInIGlzIG5ldmVyIHVz
-ZWQKWy4vaW5kZXgtcGFjay5jOjI5OF06IChzdHlsZSkgVGhlIHNjb3BlIG9mIHRoZSB2YXJpYWJs
-ZSBiYXNlX29mZnNldCBjYW4gYmUgbGltaXRlZApbLi9vYmplY3QuYzoxODldOiAoc3R5bGUpIFRo
-ZSBzY29wZSBvZiB0aGUgdmFyaWFibGUgZWF0ZW4gY2FuIGJlIGxpbWl0ZWQKWy4vcHJldHR5LmM6
-NTkzXTogKHN0eWxlKSBUaGUgc2NvcGUgb2YgdGhlIHZhcmlhYmxlIGgxIGNhbiBiZSBsaW1pdGVk
-ClsuL3ByZXR0eS5jOjU5M106IChzdHlsZSkgVGhlIHNjb3BlIG9mIHRoZSB2YXJpYWJsZSBoMiBj
-YW4gYmUgbGltaXRlZApbLi9yZWFkLWNhY2hlLmM6OTM4XSAtPiBbLi9yZWFkLWNhY2hlLmM6NzU5
-XSAtPiBbLi9yZWFkLWNhY2hlLmM6NzI5XTogKGFsbCkgQXJyYXkgaW5kZXggb3V0IG9mIGJvdW5k
-cwpbLi9yZWFkLWNhY2hlLmM6OTM4XSAtPiBbLi9yZWFkLWNhY2hlLmM6NzU5XSAtPiBbLi9yZWFk
-LWNhY2hlLmM6NzMxXTogKGFsbCkgQXJyYXkgaW5kZXggb3V0IG9mIGJvdW5kcwpbLi9yZWFkLWNh
-Y2hlLmM6OTM4XSAtPiBbLi9yZWFkLWNhY2hlLmM6NzU5XSAtPiBbLi9yZWFkLWNhY2hlLmM6NzM2
-XTogKGFsbCkgQXJyYXkgaW5kZXggb3V0IG9mIGJvdW5kcwpbLi9yZWZzLmM6NjldOiAoc3R5bGUp
-IFRoZSBzY29wZSBvZiB0aGUgdmFyaWFibGUgcHNpemUgY2FuIGJlIGxpbWl0ZWQKWy4vcmVmcy5j
-OjY5XTogKHN0eWxlKSBUaGUgc2NvcGUgb2YgdGhlIHZhcmlhYmxlIHFzaXplIGNhbiBiZSBsaW1p
-dGVkClsuL3JlZnMuYzo2OV06IChzdHlsZSkgVGhlIHNjb3BlIG9mIHRoZSB2YXJpYWJsZSBjbXAg
-Y2FuIGJlIGxpbWl0ZWQKWy4vc2hhMV9maWxlLmM6MTkyNl06IChzdHlsZSkgVGhlIHNjb3BlIG9m
-IHRoZSB2YXJpYWJsZSBvZmZzZXQgY2FuIGJlIGxpbWl0ZWQKWy4vc2hhMV9maWxlLmM6MTk4OV06
-IChzdHlsZSkgVGhlIHNjb3BlIG9mIHRoZSB2YXJpYWJsZSBzaXplIGNhbiBiZSBsaW1pdGVkClsu
-L3NoYTFfZmlsZS5jOjI1MTldOiAoc3R5bGUpIFRoZSBzY29wZSBvZiB0aGUgdmFyaWFibGUgZmQg
-Y2FuIGJlIGxpbWl0ZWQKWy4vc2hhMV9uYW1lLmM6Njg0XTogKHN0eWxlKSBUaGUgc2NvcGUgb2Yg
-dGhlIHZhcmlhYmxlIHNpemUgY2FuIGJlIGxpbWl0ZWQKWy4vc3ltbGlua3MuYzo3Nl06IChzdHls
-ZSkgVGhlIHNjb3BlIG9mIHRoZSB2YXJpYWJsZSBwcmV2aW91c19zbGFzaCBjYW4gYmUgbGltaXRl
-ZApbLi9zeW1saW5rcy5jOjc3XTogKHN0eWxlKSBUaGUgc2NvcGUgb2YgdGhlIHZhcmlhYmxlIG1h
-dGNoX2ZsYWdzIGNhbiBiZSBsaW1pdGVkClsuL3Rlc3Qtc2hhMS5jOjE2XTogKGVycm9yKSBNZW1v
-cnkgbGVhazogYnVmZmVyClsuL3VucGFjay10cmVlcy5jOjU3N106IChzdHlsZSkgVGhlIHNjb3Bl
-IG9mIHRoZSB2YXJpYWJsZSByZXQgY2FuIGJlIGxpbWl0ZWQKWy4vdXBsb2FkLXBhY2suYzoxMDZd
-OiAoc3R5bGUpIFRoZSBzY29wZSBvZiB0aGUgdmFyaWFibGUgaSBjYW4gYmUgbGltaXRlZApbLi94
-ZGlmZi94cHJlcGFyZS5jOjE0MF06IChzdHlsZSkgVGhlIHNjb3BlIG9mIHRoZSB2YXJpYWJsZSBo
-YXYgY2FuIGJlIGxpbWl0ZWQK
---001636457e8a56b67a046a98ff20--
+ builtin-write-tree.c |   12 ++++++--
+ cache-tree.c         |   44 +++++++++++++++++++++++++++--
+ cache-tree.h         |   10 ++++++-
+ diff-lib.c           |    3 ++
+ t/t4007-rename-3.sh  |   74 +++++++++++++++++++++++++-------------------------
+ unpack-trees.c       |   17 +++++++++++
+ unpack-trees.h       |    1 +
+ 7 files changed, 117 insertions(+), 44 deletions(-)
