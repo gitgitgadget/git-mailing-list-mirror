@@ -1,93 +1,98 @@
 From: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-Subject: [PATCH 1/2] mailinfo: handle StGit patches
-Date: Sun, 24 May 2009 09:19:17 +0200
-Message-ID: <1243149558-17160-2-git-send-email-giuseppe.bilotta@gmail.com>
+Subject: [PATCH 2/2] git-am: support StGit patch series
+Date: Sun, 24 May 2009 09:19:18 +0200
+Message-ID: <1243149558-17160-3-git-send-email-giuseppe.bilotta@gmail.com>
 Cc: Junio C Hamano <gitster@pobox.com>,
 	Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun May 24 09:19:44 2009
+X-From: git-owner@vger.kernel.org Sun May 24 09:19:47 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M87zj-0005bT-9g
-	for gcvg-git-2@gmane.org; Sun, 24 May 2009 09:19:43 +0200
+	id 1M87zk-0005bT-1O
+	for gcvg-git-2@gmane.org; Sun, 24 May 2009 09:19:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754094AbZEXHTd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 24 May 2009 03:19:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753106AbZEXHTc
-	(ORCPT <rfc822;git-outgoing>); Sun, 24 May 2009 03:19:32 -0400
+	id S1754353AbZEXHTg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 24 May 2009 03:19:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753282AbZEXHTe
+	(ORCPT <rfc822;git-outgoing>); Sun, 24 May 2009 03:19:34 -0400
 Received: from mail-bw0-f174.google.com ([209.85.218.174]:64843 "EHLO
 	mail-bw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753282AbZEXHTa (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 24 May 2009 03:19:30 -0400
-Received: by bwz22 with SMTP id 22so2436821bwz.37
-        for <git@vger.kernel.org>; Sun, 24 May 2009 00:19:31 -0700 (PDT)
+	with ESMTP id S1752699AbZEXHTc (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 24 May 2009 03:19:32 -0400
+Received: by mail-bw0-f174.google.com with SMTP id 22so2436821bwz.37
+        for <git@vger.kernel.org>; Sun, 24 May 2009 00:19:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:cc:subject:date
          :message-id:x-mailer;
-        bh=W2zq3B7DA9QTiksuEFzv8YYIRlQnjBXhCrqzpVPHwbI=;
-        b=gKe3iXynBxwymBw1+OrHQNuYWrg5mnl24dxkz5L+Bu+L0Nt+8No32R9VHMSOfeSAgw
-         +cqBKYcA/3lydMhqEA8SHmNxlidkk0xCSnCm/OGnSITpy+YnvG3ybCS0HKbfGqcZ9721
-         XMp4FuobSYc09srHeUwVov5uu3qIi6RSMOP+M=
+        bh=JgXhmnEGlOYz4EJQ2cD+9IljSuC5dnydQJqb2fDNVOk=;
+        b=VErTSdiBtfJSzL6nJDaFZyGqVJDWuTRNA8J8h4DkE6k7BpxoSPG++t0Yx6XmNWwcDp
+         bQcBIrIfsRhVz2V+ELVpCh42YrmlJU97CL0TruS6oN/VLJNsTcWNzx8GyazdMwSpzIF+
+         BrN6/9sQDYpqkAEOy9ZzeyYqypfv2XIYdYDrA=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer;
-        b=iskwLXyehJcz0bbjXAcDYqZW2AeDkroj7BTiurDf538jihGf8AF/Ub8wXkpaXGk4gg
-         9Lat7AGF7BUkOd7x+589MK+Q0dnRv6lVqTx9PmVUMWCIAFI2agmhNEyDwcSog80xJq0X
-         7V0lb+LCiQtfCsrTms0s97CfAZnz2Ixg9wit0=
-Received: by 10.103.240.15 with SMTP id s15mr2906734mur.93.1243149571162;
-        Sun, 24 May 2009 00:19:31 -0700 (PDT)
+        b=D7BEaUBm4570vO7yvulloZxZGQHt83CucLZjQWwHC3rfMvoz0mDzw3zLHn8871Qtl2
+         2OaNA+3x0BiOiwj3mFYhz2Bf7Pzxx/9pahMHU2SA6dYF8u9+NN0awevTwyFC2pTeNe7V
+         HZ2SLW5aaUZV6ScK5B/Hzm/a+SngDCsBsD7wg=
+Received: by 10.103.247.14 with SMTP id z14mr2903990mur.70.1243149573721;
+        Sun, 24 May 2009 00:19:33 -0700 (PDT)
 Received: from localhost (host-78-15-2-20.cust-adsl.tiscali.it [78.15.2.20])
-        by mx.google.com with ESMTPS id i7sm2047574mue.18.2009.05.24.00.19.30
+        by mx.google.com with ESMTPS id t10sm4606097muh.0.2009.05.24.00.19.32
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 24 May 2009 00:19:30 -0700 (PDT)
+        Sun, 24 May 2009 00:19:32 -0700 (PDT)
 X-Mailer: git-send-email 1.6.3.1.212.g6c0d3.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119812>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119813>
 
-The default StGit export template puts author information in a From:
-line located between the subject and the body of the commit message.
-We can handle these files by prepending 'Subject: ' to the first
-line of the file and skipping the whitespace following it.
+Stacked Git exports patch series with an 'index', a file containing
+the list of the exported patches by filename. The file can be detected
+by the '# This series applies on GIT commit somehash' header, and in
+such a case git-am can replace its argument list with the list of files
+taken from the index, proceeding then to import the whole series.
 
 Signed-off-by: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
 ---
- builtin-mailinfo.c |   18 ++++++++++++++++++
- 1 files changed, 18 insertions(+), 0 deletions(-)
+ git-am.sh |   22 ++++++++++++++++++++++
+ 1 files changed, 22 insertions(+), 0 deletions(-)
 
-diff --git a/builtin-mailinfo.c b/builtin-mailinfo.c
-index 92637ac..67317e2 100644
---- a/builtin-mailinfo.c
-+++ b/builtin-mailinfo.c
-@@ -920,6 +920,24 @@ static int mailinfo(FILE *in, FILE *out, int ks, const char *encoding,
- 	} while (isspace(peek));
- 	ungetc(peek, in);
- 
-+	/* The default StGit export template has the subject as first line
-+	   (without 'Subject:') followed by an empty line, followed by
-+	   the author info (with 'From:'), followed by an empty line,
-+	   followed by the body. If the first line is not a mail header
-+	   and we add 'Subject:' in front of it, skipping the subsequent
-+	   empty line(s), we can thus parse StGit patches.
-+	   */
-+	if (read_one_header_line(&line, fin))
-+		check_header(&line, p_hdr_data, 1);
-+	else {
-+		strbuf_insert(&line, 0, "Subject: ", 9);
-+		check_header(&line, p_hdr_data, 1);
-+		do {
-+			peek = fgetc(in);
-+		} while (isspace(peek));
-+		ungetc(peek, in);
-+	}
-+
- 	/* process the email header */
- 	while (read_one_header_line(&line, fin))
- 		check_header(&line, p_hdr_data, 1);
+diff --git a/git-am.sh b/git-am.sh
+index 578780b..d65e3c1 100755
+--- a/git-am.sh
++++ b/git-am.sh
+@@ -274,6 +274,28 @@ else
+ 		done
+ 		shift
+ 	fi
++	# if a single argument was passed, check if it's a StGit patch series
++	# index by checking if the first line begins with '# This series'
++	if test $# = 1
++	then
++		read is_sharp is_this is_series is_therest < "$1"
++		if test x"$is_sharp $is_this $is_series" = 'x# This series'
++		then
++			# replace the argument list with the files listed
++			# in the series index, prefixing them with the
++			# series index dirname
++			series_dir=`dirname "$1"`
++			while read filename
++			do
++				set "$@" "$series_dir/$filename"
++			done < "$1"
++			# remove the series index name
++			shift
++			# and skip the first line of the series
++			# index, which was the comment
++			shift
++		fi
++	fi
+ 	git mailsplit -d"$prec" -o"$dotest" -b -- "$@" > "$dotest/last" ||  {
+ 		rm -fr "$dotest"
+ 		exit 1
 -- 
 1.6.3.1.212.g6c0d3.dirty
