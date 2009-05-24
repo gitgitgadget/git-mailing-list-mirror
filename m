@@ -1,65 +1,65 @@
-From: John Bito <jwbito@gmail.com>
-Subject: [JGIT] Bus error (SIGBUS) on Solaris
-Date: Sun, 24 May 2009 11:13:24 -0700
-Message-ID: <3ae83b000905241113u6895a7edlc1f81f0ea54a0c53@mail.gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: hg2git error
+Date: Sun, 24 May 2009 20:16:02 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.0905242013080.26154@pacific.mpi-cbg.de>
+References: <alpine.DEB.1.00.0905241932301.26154@pacific.mpi-cbg.de> <fabb9a1e0905241038x7ea22622k930f50b9c7598c6e@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun May 24 20:14:36 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Rocco Rutte <pdmef@gmx.net>,
+	Matthias Urlichs <smurf@smurf.noris.de>, git@vger.kernel.org
+To: Sverre Rabbelier <srabbelier@gmail.com>
+X-From: git-owner@vger.kernel.org Sun May 24 20:17:19 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M8IDM-0006Po-1N
-	for gcvg-git-2@gmane.org; Sun, 24 May 2009 20:14:28 +0200
+	id 1M8IF7-0007Mq-8I
+	for gcvg-git-2@gmane.org; Sun, 24 May 2009 20:16:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752903AbZEXSNZ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 24 May 2009 14:13:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752856AbZEXSNY
-	(ORCPT <rfc822;git-outgoing>); Sun, 24 May 2009 14:13:24 -0400
-Received: from yx-out-2324.google.com ([74.125.44.30]:40049 "EHLO
-	yx-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752393AbZEXSNY convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 24 May 2009 14:13:24 -0400
-Received: by yx-out-2324.google.com with SMTP id 3so1619819yxj.1
-        for <git@vger.kernel.org>; Sun, 24 May 2009 11:13:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:date:message-id:subject
-         :from:to:content-type:content-transfer-encoding;
-        bh=SN8sLpmvc7TxeuoMnNTaG+wZLSWg0oNRbk2Zgl7P760=;
-        b=HQRpU2yl1AHK2ZEPS0qsmp40UF0vYjs55GLga9jyy3I3EQLDUvCLKF09WjRwxDmvE/
-         dAvqbllEns/jIsarkr7tTsuIkftQzpmk1n5vnEwlxUffSwZPcBuz/CXXfaHVTI3h1RE9
-         DyfG6PBuso8NsDUqZuz3mzxWh6SQvCH18C1I0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type
-         :content-transfer-encoding;
-        b=Ya6WJM9IeqD63q8bvE83w6rxeGWsUwuEPTsSlzeQ0YROwGgzByaDkqgbrFAVLtouB2
-         K2LtGezktNlSxj9lDMVQznACfirsMHQccemrJ1NkJZbQkyiAe5BxUXXt9Lt5R50PjMNb
-         MH6zFIJSpNXCVw4mR73zizlGr0reVrdvvzstQ=
-Received: by 10.100.141.12 with SMTP id o12mr10075242and.141.1243188804819; 
-	Sun, 24 May 2009 11:13:24 -0700 (PDT)
+	id S1753635AbZEXSPg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 24 May 2009 14:15:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753319AbZEXSPf
+	(ORCPT <rfc822;git-outgoing>); Sun, 24 May 2009 14:15:35 -0400
+Received: from mail.gmx.net ([213.165.64.20]:33793 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753056AbZEXSPf (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 24 May 2009 14:15:35 -0400
+Received: (qmail invoked by alias); 24 May 2009 18:15:35 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp008) with SMTP; 24 May 2009 20:15:35 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18bp8A0kj4bBwZISoVzWN59xM8MR/JLf6k+BtmTk5
+	9x/6TJUKc+1lu5
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <fabb9a1e0905241038x7ea22622k930f50b9c7598c6e@mail.gmail.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.63
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119847>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119848>
 
-I updated with the integration build on the update site today, after
-restart, Eclipse failed with a bus error.
+Hi,
 
-> #=A0 SIGBUS (0xa) at pc=3D0xf88162fc, pid=3D15191, tid=3D23
-> #
-> # Java VM: Java HotSpot(TM) Client VM (11.2-b01 mixed mode solaris-sp=
-arc)
-> # Problematic frame:
-> # j=A0 org.spearce.jgit.lib.OffsetCache.getOrLoad(Lorg/spearce/jgit/l=
-ib/PackFile;J)Ljava/lang/Object;+17
+On Sun, 24 May 2009, Sverre Rabbelier wrote:
 
-I haven't updated my WinVista workstation, yet.=A0 Shall I create a bug
-report with the full error log, or is this something that's already
-known?
+> On Sun, May 24, 2009 at 19:33, Johannes Schindelin
+> <Johannes.Schindelin@gmx.de> wrote:
+> > How to cope with that?
+> 
+> I've been working on making hg-git [0] usable as a two-way bridge
+> (that is, use it to interact with a hg repository using git). It is
+> coping just fine with unnamed heads so far :).
+> 
+> </shameless plug>
 
-The failure seems repeatable with my current workspace configuration.
+It says "Achtung! Alpha!".  How alpha is it?
+
+Also, there is the issue that it is a Hg extension.  My experience with 
+such extensions and their dependency on certain Hg versions make me ask: 
+what version of Hg must I install before I can use Hg-git?
+
+Ciao,
+Dscho
