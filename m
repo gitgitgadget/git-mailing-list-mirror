@@ -1,91 +1,181 @@
-From: Johan Herland <johan@herland.net>
-Subject: Re: partial checkouts
-Date: Sun, 24 May 2009 01:34:53 +0200
-Message-ID: <200905240134.53387.johan@herland.net>
-References: <200905231401.11651.chanika@gmail.com>
-Mime-Version: 1.0
-Content-Type: Text/Plain; charset=iso-8859-15
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org
-To: Chani <chanika@gmail.com>
-X-From: git-owner@vger.kernel.org Sun May 24 01:38:55 2009
+From: David Aguilar <davvid@gmail.com>
+Subject: [PATCH v2] mergetool--lib: add support for araxis merge
+Date: Sun, 24 May 2009 00:24:41 +0000 (UTC)
+Message-ID: <1243272220-40471-1-git-send-email-davvid@gmail.com>
+Cc: git@vger.kernel.org, markus.heidelberg@web.de, snowcoder@gmail.com,
+	spearce@spearce.org, Johannes.Schindelin@gmx.de,
+	charles@hashpling.org, David Aguilar <davvid@gmail.com>
+To: gitster@pobox.com
+X-From: git-owner@vger.kernel.org Sun May 24 02:24:33 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M80nm-0006u5-CR
-	for gcvg-git-2@gmane.org; Sun, 24 May 2009 01:38:54 +0200
+	id 1M81Vw-0007yR-QW
+	for gcvg-git-2@gmane.org; Sun, 24 May 2009 02:24:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752926AbZEWXe5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 23 May 2009 19:34:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752090AbZEWXe5
-	(ORCPT <rfc822;git-outgoing>); Sat, 23 May 2009 19:34:57 -0400
-Received: from mx.getmail.no ([84.208.15.66]:60901 "EHLO
-	get-mta-out02.get.basefarm.net" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1751326AbZEWXe4 (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 23 May 2009 19:34:56 -0400
-Content-disposition: inline
-Received: from mx.getmail.no ([10.5.16.4]) by get-mta-out02.get.basefarm.net
- (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
- with ESMTP id <0KK400FO2EU6C4C0@get-mta-out02.get.basefarm.net> for
- git@vger.kernel.org; Sun, 24 May 2009 01:34:54 +0200 (MEST)
-Received: from alpha.localnet ([84.215.102.95])
- by get-mta-in02.get.basefarm.net
- (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
- with ESMTP id <0KK400J6HEU56SB0@get-mta-in02.get.basefarm.net> for
- git@vger.kernel.org; Sun, 24 May 2009 01:34:54 +0200 (MEST)
-X-PMX-Version: 5.5.3.366731, Antispam-Engine: 2.7.0.366912,
- Antispam-Data: 2009.5.23.232259
-User-Agent: KMail/1.11.3 (Linux/2.6.29-ARCH; KDE/4.2.3; x86_64; ; )
-In-reply-to: <200905231401.11651.chanika@gmail.com>
+	id S1753890AbZEXAYW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 23 May 2009 20:24:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753605AbZEXAYV
+	(ORCPT <rfc822;git-outgoing>); Sat, 23 May 2009 20:24:21 -0400
+Received: from mail-px0-f103.google.com ([209.85.216.103]:56530 "EHLO
+	mail-px0-f103.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753582AbZEXAYU (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 23 May 2009 20:24:20 -0400
+Received: by pxi1 with SMTP id 1so1957418pxi.33
+        for <git@vger.kernel.org>; Sat, 23 May 2009 17:24:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer;
+        bh=TuXw/SMgpacArlRvAEHKZUq0t+MXCBLKzfoB7b5Q+44=;
+        b=oVOde1FvLVOMCeAmK/0fepEh1m7ZLkzoPIxmTQNaY/JPCprfS/QYsGS0e35nB9MOIV
+         RaXO0wqCtvstEPdGKyg5hD8pjVSYnmacbfbQOfTjeRiF6Fi6e8ZAxO0WcSkdxLw2vYYb
+         S6jo2LJbVpy1AlBZ//ysIWvV1W2hGY3rtrJIE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=rolOhEpKgbb6mJcMCzZ0jE18SoK9ykyPUybsOcmG+g1VvXvr9eRxy6eI1x3BleARl4
+         OHJWu4xMmgGRDfxlyKCZ7x0SgV0fAc7XGzSKymiyEciw8xJxHkbz+p4MNk2y3agnXJOq
+         1s2Jst68Fgif09EKUE562VBzBkUTy3+lH0wLY=
+Received: by 10.114.157.11 with SMTP id f11mr11352553wae.75.1243124661365;
+        Sat, 23 May 2009 17:24:21 -0700 (PDT)
+Received: from localhost (208-106-56-2.static.dsltransport.net [208.106.56.2])
+        by mx.google.com with ESMTPS id m28sm4039087waf.2.2009.05.23.17.24.20
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sat, 23 May 2009 17:24:21 -0700 (PDT)
+Date: Mon, 25 May 2009 10:23:40 -0700
+X-Mailer: git-send-email 1.6.3.1.145.gb74d77
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119805>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119806>
 
-On Saturday 23 May 2009, Chani wrote:
-> [...]
->
-> right now all I've thought of is one ugly hack: have a server that checks
-> out all the kde git repos, pulls daily, copies all the doc/ folders into
-> a documentation folder, and offers that folder up on the interwebs so
-> that update_xml can rsync from it or download a tgz of it or something.
-> there appear to be lots of images in the documentation, so it's not a
-> small download - 200mb and growing. it still hasn't finished downloading
-> all the externals...
+Araxis merge is now a built-in diff/merge tool.
+This adds araxis to git-completion and updates
+the documentation to mention araxis.
 
-Do you need the doc/ folders from _all_ kde git repos, or just from those 
-repos that you have currently checked out? In the latter case, you could 
-solve this by adding symlinks to all the doc/ folders inside the 
-documentation/ folder, and then make sure the software that traverse the 
-documentation/ folder recognize and skips symlinks. Of course, this won't 
-work if the translations project need _all_ doc/ folders accessible, but not 
-all the kde git repos.
+Signed-off-by: David Aguilar <davvid@gmail.com>
+---
 
-> I'm kinda wondering if there'd be a way to use git-filter-branch to make
-> a repo that only tracks the doc/ folder for a module - but I've no idea
-> whether it'd have to be recreated from scratch every time someone changes
-> something in the real repo's doc/
->
-> can anyone think of a less ugly solution?
-> what are the chances of git supporting this kind of partial checkout
-> someday?
+Markus noticed that we forgot to touch "$BACKUP" so this is v2.
 
-Check out git-subtree. It can split out a subdirectory into its own repo, 
-and re-integrate it back into the "parent" repo at a later date. git-subtree 
-has been posted as a patch to this list a couple of times without much 
-response, but it looks like an interesting alternative to submodules:
-http://alumnit.ca/~apenwarr/log/?m=200904#30
+ Documentation/git-difftool.txt         |    2 +-
+ Documentation/git-mergetool.txt        |    2 +-
+ Documentation/merge-config.txt         |    2 +-
+ contrib/completion/git-completion.bash |    2 +-
+ git-mergetool--lib.sh                  |   25 +++++++++++++++++++++++--
+ 5 files changed, 27 insertions(+), 6 deletions(-)
 
-If a lot of people find git-subtree useful, who knows, it might be included 
-in a future git version.
-
-
-Have fun! :)
-
-...Johan
-
+diff --git a/Documentation/git-difftool.txt b/Documentation/git-difftool.txt
+index 15b247b..96a6c51 100644
+--- a/Documentation/git-difftool.txt
++++ b/Documentation/git-difftool.txt
+@@ -31,7 +31,7 @@ OPTIONS
+ 	Use the diff tool specified by <tool>.
+ 	Valid merge tools are:
+ 	kdiff3, kompare, tkdiff, meld, xxdiff, emerge, vimdiff, gvimdiff,
+-	ecmerge, diffuse and opendiff
++	ecmerge, diffuse, opendiff and araxis.
+ +
+ If a diff tool is not specified, 'git-difftool'
+ will use the configuration variable `diff.tool`.  If the
+diff --git a/Documentation/git-mergetool.txt b/Documentation/git-mergetool.txt
+index ff9700d..68ed6c0 100644
+--- a/Documentation/git-mergetool.txt
++++ b/Documentation/git-mergetool.txt
+@@ -27,7 +27,7 @@ OPTIONS
+ 	Use the merge resolution program specified by <tool>.
+ 	Valid merge tools are:
+ 	kdiff3, tkdiff, meld, xxdiff, emerge, vimdiff, gvimdiff, ecmerge,
+-	diffuse, tortoisemerge and opendiff
++	diffuse, tortoisemerge, opendiff and araxis.
+ +
+ If a merge resolution program is not specified, 'git-mergetool'
+ will use the configuration variable `merge.tool`.  If the
+diff --git a/Documentation/merge-config.txt b/Documentation/merge-config.txt
+index 4832bc7..c0f96e7 100644
+--- a/Documentation/merge-config.txt
++++ b/Documentation/merge-config.txt
+@@ -23,7 +23,7 @@ merge.tool::
+ 	Controls which merge resolution program is used by
+ 	linkgit:git-mergetool[1].  Valid built-in values are: "kdiff3",
+ 	"tkdiff", "meld", "xxdiff", "emerge", "vimdiff", "gvimdiff",
+-	"diffuse", "ecmerge", "tortoisemerge", and
++	"diffuse", "ecmerge", "tortoisemerge", "araxis", and
+ 	"opendiff".  Any other value is treated is custom merge tool
+ 	and there must be a corresponding mergetool.<tool>.cmd option.
+ 
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index 1683e6d..ead530d 100755
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -911,7 +911,7 @@ _git_diff ()
+ }
+ 
+ __git_mergetools_common="diffuse ecmerge emerge kdiff3 meld opendiff
+-			tkdiff vimdiff gvimdiff xxdiff
++			tkdiff vimdiff gvimdiff xxdiff araxis
+ "
+ 
+ _git_difftool ()
+diff --git a/git-mergetool--lib.sh b/git-mergetool--lib.sh
+index 8b5e6a8..bfb01f7 100644
+--- a/git-mergetool--lib.sh
++++ b/git-mergetool--lib.sh
+@@ -18,6 +18,9 @@ translate_merge_tool_path () {
+ 	emerge)
+ 		echo emacs
+ 		;;
++	araxis)
++		echo compare
++		;;
+ 	*)
+ 		echo "$1"
+ 		;;
+@@ -43,7 +46,7 @@ check_unchanged () {
+ valid_tool () {
+ 	case "$1" in
+ 	kdiff3 | tkdiff | xxdiff | meld | opendiff | \
+-	emerge | vimdiff | gvimdiff | ecmerge | diffuse)
++	emerge | vimdiff | gvimdiff | ecmerge | diffuse | araxis)
+ 		;; # happy
+ 	tortoisemerge)
+ 		if ! merge_mode; then
+@@ -263,6 +266,24 @@ run_merge_tool () {
+ 			status=1
+ 		fi
+ 		;;
++	araxis)
++		if merge_mode; then
++			touch "$BACKUP"
++			if $base_present; then
++				"$merge_tool_path" -wait -merge -3 -a1 \
++					"$BASE" "$LOCAL" "$REMOTE" "$MERGED" \
++					>/dev/null 2>&1
++			else
++				"$merge_tool_path" -wait -2 \
++					"$LOCAL" "$REMOTE" "$MERGED" \
++					>/dev/null 2>&1
++			fi
++			check_unchanged
++		else
++			"$merge_tool_path" -wait -2 "$LOCAL" "$REMOTE" \
++				>/dev/null 2>&1
++		fi
++		;;
+ 	*)
+ 		merge_tool_cmd="$(get_merge_tool_cmd "$1")"
+ 		if test -z "$merge_tool_cmd"; then
+@@ -302,7 +323,7 @@ guess_merge_tool () {
+ 		else
+ 			tools="opendiff kdiff3 tkdiff xxdiff meld $tools"
+ 		fi
+-		tools="$tools gvimdiff diffuse ecmerge"
++		tools="$tools gvimdiff diffuse ecmerge araxis"
+ 	fi
+ 	if echo "${VISUAL:-$EDITOR}" | grep emacs > /dev/null 2>&1; then
+ 		# $EDITOR is emacs so add emerge as a candidate
 -- 
-Johan Herland, <johan@herland.net>
-www.herland.net
+1.6.3.1.145.gb74d77
