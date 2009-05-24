@@ -1,71 +1,63 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: [PATCH 0/2] StGit patch series import
-Date: Sun, 24 May 2009 23:55:32 +0200
-Message-ID: <fabb9a1e0905241455j7045a920m11e7dcd6a92dd80a@mail.gmail.com>
-References: <1243149558-17160-1-git-send-email-giuseppe.bilotta@gmail.com> 
-	<7voctirzu6.fsf@alter.siamese.dyndns.org> <cb7bb73a0905241443m6b5d6ba4vab438c856e47a947@mail.gmail.com>
+Date: Sun, 24 May 2009 15:02:03 -0700
+Message-ID: <7vfxeurwh0.fsf@alter.siamese.dyndns.org>
+References: <1243149558-17160-1-git-send-email-giuseppe.bilotta@gmail.com>
+	<7voctirzu6.fsf@alter.siamese.dyndns.org>
+	<cb7bb73a0905241443m6b5d6ba4vab438c856e47a947@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
 To: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-X-From: git-owner@vger.kernel.org Sun May 24 23:56:02 2009
+X-From: git-owner@vger.kernel.org Mon May 25 00:02:23 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M8Lfk-0006cJ-V1
-	for gcvg-git-2@gmane.org; Sun, 24 May 2009 23:56:01 +0200
+	id 1M8Llu-0008Uh-Tw
+	for gcvg-git-2@gmane.org; Mon, 25 May 2009 00:02:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753709AbZEXVzx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 24 May 2009 17:55:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753546AbZEXVzw
-	(ORCPT <rfc822;git-outgoing>); Sun, 24 May 2009 17:55:52 -0400
-Received: from mail-ew0-f176.google.com ([209.85.219.176]:57553 "EHLO
-	mail-ew0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753484AbZEXVzv (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 24 May 2009 17:55:51 -0400
-Received: by ewy24 with SMTP id 24so2778359ewy.37
-        for <git@vger.kernel.org>; Sun, 24 May 2009 14:55:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=Y3oNAYxPM3nOvPOChd+IpSx8LM+zQ5XI1n6wiHsIMT8=;
-        b=JHLhWPJlk1s0N54/ZlBoPFV76Gmi9dRdhYgGG2p/FooOUtiObV/KkEr/pHvpl84cUr
-         sl8JupT10ui12SGlBzNxMBG88LpmsS7Y2gvB8IRwBZ5Tsq3q12v+rIByqNXoeT7ygKUW
-         x5tpw6G4u7NAgGC10XG4vdro1apJ2uTnj7zTs=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=Uz5QPyTUFww04NEQgDIx4UPXGZfc+YHPsJLeos2TiXldV4G9X5jraQbqev6ifL5Ks8
-         nVZiUca607drEIMGP0Gp8h+FEnmqhHGHrVVDUOPEpnEaqvYMYAroMqZoOrJUabluKci5
-         RQTJE+RxnqSUxn0TFJEMrPneaP9D/KJcnIBt8=
-Received: by 10.216.35.204 with SMTP id u54mr1246470wea.182.1243202152259; 
-	Sun, 24 May 2009 14:55:52 -0700 (PDT)
-In-Reply-To: <cb7bb73a0905241443m6b5d6ba4vab438c856e47a947@mail.gmail.com>
+	id S1757733AbZEXWCI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 24 May 2009 18:02:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758004AbZEXWCF
+	(ORCPT <rfc822;git-outgoing>); Sun, 24 May 2009 18:02:05 -0400
+Received: from fed1rmmtao105.cox.net ([68.230.241.41]:33786 "EHLO
+	fed1rmmtao105.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758009AbZEXWCC (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 24 May 2009 18:02:02 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao105.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20090524220204.BKDJ20430.fed1rmmtao105.cox.net@fed1rmimpo02.cox.net>;
+          Sun, 24 May 2009 18:02:04 -0400
+Received: from localhost ([68.225.240.211])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id va231b00D4aMwMQ04a23N5; Sun, 24 May 2009 18:02:03 -0400
+X-Authority-Analysis: v=1.0 c=1 a=cKKtvLOY1ucA:10 a=pGLkceISAAAA:8
+ a=NuJchNabJ1lEK_S4WfIA:9 a=8mYbtyHEmUI63YFdB9bYyR7FVukA:4 a=MSl-tDqOz04A:10
+X-CM-Score: 0.00
+In-Reply-To: <cb7bb73a0905241443m6b5d6ba4vab438c856e47a947@mail.gmail.com> (Giuseppe Bilotta's message of "Sun\, 24 May 2009 23\:43\:40 +0200")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119865>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119866>
 
-Heya,
+Giuseppe Bilotta <giuseppe.bilotta@gmail.com> writes:
 
-On Sun, May 24, 2009 at 23:43, Giuseppe Bilotta
-<giuseppe.bilotta@gmail.com> wrote:
-> As I mentioned, Wine uses plain git, and we've tried asking this
-> (non-core) developer to expose a standard git tree. But he finds StGIT
-> much more comfortable for the task.
+> That was my initial thought too, but then I realized that having the
+> 'heuristics' (although a very braindead one) in mailinfo makes more
+> sense because otherwise StGIT patch autodetection would only work when
+> applying a whole series, and not when applying a single (or a few)
+> patches.
 
-Silly question, doesn't StGit have an export option? Methinks if all
-the developer has to do is run 'stgit export' and then attach those
-patches instead of the raw patches, it'd be really lame of him not to
-do at least that?
+The above is very selfish---what if somebody else wanted to add a feature
+to grok a non-mailbox input to the same codepath, and it is not a StGIT
+patch?
 
--- 
-Cheers,
+That is what I called "bad taste".
 
-Sverre Rabbelier
+The same comment may apply to the rest of your response.  "This hack is
+good enough for _my_ use case; I do not care if my change makes life
+harder for others to build on top of my patch" is not what I want to see.
