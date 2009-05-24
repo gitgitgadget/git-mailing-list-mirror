@@ -1,135 +1,71 @@
 From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: [PATCH v0 3/3] Build in git-rebase.sh
-Date: Sun, 24 May 2009 00:50:42 +1000
-Message-ID: <20090523145042.GA13139@dektop>
-References: <1242899229-27603-1-git-send-email-pclouds@gmail.com> <1242899229-27603-2-git-send-email-pclouds@gmail.com> <1242899229-27603-3-git-send-email-pclouds@gmail.com> <4A164C85.3000703@viscovery.net> <fcaeb9bf0905220030l45e1b7dfqd30f35b7c8e43b51@mail.gmail.com> <20090523092603.GA7420@dektop>
+Subject: Re: partial checkouts
+Date: Sun, 24 May 2009 12:07:37 +1000
+Message-ID: <fcaeb9bf0905231907q16160ad1t8aa8ef71e2adc8b0@mail.gmail.com>
+References: <200905231401.11651.chanika@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Brandon Casey <casey@nrlsrc.navy.mil>
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Sun May 24 03:52:54 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Chani <chanika@gmail.com>
+X-From: git-owner@vger.kernel.org Sun May 24 04:08:21 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M82tR-0005pO-Kj
-	for gcvg-git-2@gmane.org; Sun, 24 May 2009 03:52:54 +0200
+	id 1M838O-0000c0-Cg
+	for gcvg-git-2@gmane.org; Sun, 24 May 2009 04:08:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753876AbZEXBwS convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 23 May 2009 21:52:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753109AbZEXBwR
-	(ORCPT <rfc822;git-outgoing>); Sat, 23 May 2009 21:52:17 -0400
-Received: from rv-out-0506.google.com ([209.85.198.234]:54729 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752988AbZEXBwR (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 23 May 2009 21:52:17 -0400
-Received: by rv-out-0506.google.com with SMTP id f9so815756rvb.1
-        for <git@vger.kernel.org>; Sat, 23 May 2009 18:52:17 -0700 (PDT)
+	id S1754410AbZEXCH5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 23 May 2009 22:07:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754369AbZEXCH4
+	(ORCPT <rfc822;git-outgoing>); Sat, 23 May 2009 22:07:56 -0400
+Received: from yw-out-2324.google.com ([74.125.46.31]:45457 "EHLO
+	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754343AbZEXCH4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 23 May 2009 22:07:56 -0400
+Received: by yw-out-2324.google.com with SMTP id 5so1471401ywb.1
+        for <git@vger.kernel.org>; Sat, 23 May 2009 19:07:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:date:from:to:cc
-         :subject:message-id:references:mime-version:content-type
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=iV1BIZfLLyEwyo6t4dZ0Ob919rQpU2OwAEiA8vIWVGk=;
-        b=m0hF+z7Tfqz8YDl+jGSnqQDvmoKB8ZaJYiv5GB/247zQxwbQhp6WjsOxA/DgQ5p5k2
-         n3UyjORyPnm+HG6VshFZGhguBL9Twh+9bEo01MgThulQBuk2WdHb74kZetN5HpzvwhVf
-         K5LHNpWpratFMNc+/3aZk/hmnBBkjJZmdiISU=
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=iWiZn2f/eKO/8i9JwEyGQJtQrPtm0YkReJCTJP+6+AU=;
+        b=OaLqS86ywf6sV7ZosP25Z54Fl3TZDsCZruF43Ik8AX5zFCcdW1XgLZzxRWktXIVU8M
+         U7eXh0DcqNStBp65rPzTsHH+dubx6L50Ay3yWmvphpOyRXCN75J3cc1Yxq3DL33L6u7X
+         DqNafh9bgn4se+eNjVxf9DqEFQgA6BCexrbrw=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=Hu4v16393gX3Dw/i8tRXbcXGqLD9Uxkb68O+oElnZoAHAha4WQO2RiBZO4EygfNnRp
-         LyDE4LwvvOYD+a2e4dsIwYFBkvOvw37hiKHNp5KOniqAbuF/yCNxKxILaCKXsaZ/q0qo
-         vFyGsqgDuAXdri+DaMdczhnrtviY9bWb0TgxI=
-Received: by 10.141.40.20 with SMTP id s20mr2166647rvj.86.1243129936802;
-        Sat, 23 May 2009 18:52:16 -0700 (PDT)
-Received: from dektop ([121.91.81.118])
-        by mx.google.com with ESMTPS id c20sm15322675rvf.0.2009.05.23.18.52.12
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sat, 23 May 2009 18:52:15 -0700 (PDT)
-Received: by dektop (sSMTP sendmail emulation); Sun, 24 May 2009 00:50:42 +1000
-Content-Disposition: inline
-In-Reply-To: <20090523092603.GA7420@dektop>
-User-Agent: Mutt/1.5.19 (2009-01-05)
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=jHXMDjy5Dis4jfehqXbxbxKFSe+Uq6mZ6TjHmOoYiaEYTLebQTmAxkNepm5TZPvVzN
+         EiHQx0+kesyXYoGaSQj/glNPFP33YTetiK9fzb6kDOKciZdxTIc6n0a6NVk4ILatACnV
+         t7MZGQNibFwOvNXWSreLR+STpErCB4Tmx70kE=
+Received: by 10.100.143.17 with SMTP id q17mr10066686and.114.1243130877174; 
+	Sat, 23 May 2009 19:07:57 -0700 (PDT)
+In-Reply-To: <200905231401.11651.chanika@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119808>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119809>
 
-On Sat, May 23, 2009 at 07:26:03PM +1000, Nguyen Thai Ngoc Duy wrote:
-> On Fri, May 22, 2009 at 05:30:31PM +1000, Nguyen Thai Ngoc Duy wrote:
-> > 2009/5/22 Johannes Sixt <j.sixt@viscovery.net>:
-> > > Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy schrieb:
-> > >> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pcloud=
-s@gmail.com>
-> > >
-> > > Is it possible for you to test this series on Windows? Many rebas=
-e tests
-> > > fail, but I haven't investigated why.
-> >=20
-> > I'll try it this weekend.
->=20
-> This patch makes t3*rebase*.sh pass for me except t3412 (more exactly
-> t3412.8). That test failed even with git-rebase.sh. Hmm... Anyway
-> could you try again to see what tests still fail?
+On Sun, May 24, 2009 at 7:00 AM, Chani <chanika@gmail.com> wrote:
+> checking out the entire git repo isn't really feasible, because once KDE
+> finishes switching to git that'll mean checking out all of KDE.
+> I don't think that turning every doc folder into a submodule is feasible,
+> either - they sound kinda awkward to work with, and I can imagine lots of
+> people getting confused and messing them up...
 
-Someone with better Windows knowledge than me should explain how this w=
-orks. Windows'
-snprintf() just cuts out the last character in this statement:
+If you don't mind cloning the entire git repo (which may be quite
+large in KDE case, I guess), then you may want to try "sparse
+checkout". The patch series is available as a topic branch "tp/sco" in
+this branch:
 
-snprintf(buf, 8, "--%s", "onto"); // result: '--ont', expected: '--onto=
-'
+http://repo.or.cz/w/git/pclouds.git?a=shortlog;h=refs/heads/inst
 
-All rebase tests now pass for me on Windows (Vista something, I have
-yet to find where it hides its "uname" command)
-
--->--
-diff --git a/compat/snprintf.c b/compat/snprintf.c
-index 357e733..1cea768 100644
---- a/compat/snprintf.c
-+++ b/compat/snprintf.c
-@@ -13,7 +13,7 @@
- int git_vsnprintf(char *str, size_t maxsize, const char *format, va_li=
-st ap)
- {
- 	char *s;
--	int ret =3D -1;
-+	int size, ret =3D -1;
-=20
- 	if (maxsize > 0) {
- 		ret =3D vsnprintf(str, maxsize-SNPRINTF_SIZE_CORR, format, ap);
-@@ -26,18 +26,19 @@ int git_vsnprintf(char *str, size_t maxsize, const =
-char *format, va_list ap)
- 		return ret;
-=20
- 	s =3D NULL;
--	if (maxsize < 128)
--		maxsize =3D 128;
-+	size =3D maxsize < 128 ? 128 : maxsize;
-=20
- 	while (ret =3D=3D -1) {
--		maxsize *=3D 4;
--		str =3D realloc(s, maxsize);
--		if (! str)
-+		size *=3D 4;
-+		s =3D realloc(s, size);
-+		if (!s)
- 			break;
--		s =3D str;
--		ret =3D vsnprintf(str, maxsize-SNPRINTF_SIZE_CORR, format, ap);
--		if (ret =3D=3D maxsize-1)
-+		s =3D s;
-+		ret =3D vsnprintf(s, size-SNPRINTF_SIZE_CORR, format, ap);
-+		if (ret =3D=3D size-1)
- 			ret =3D -1;
-+		else
-+			memcpy(str, s, maxsize-1);
- 	}
- 	free(s);
- 	return ret;
--->--
+Or I can send the patch series to you. It lets you specify what part
+of the tree you want to checkout.
+-- 
+Duy
