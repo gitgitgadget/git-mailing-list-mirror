@@ -1,120 +1,127 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 0/2] StGit patch series import
-Date: Sun, 24 May 2009 13:49:21 -0700
-Message-ID: <7voctirzu6.fsf@alter.siamese.dyndns.org>
-References: <1243149558-17160-1-git-send-email-giuseppe.bilotta@gmail.com>
+From: Michael Gaber <Michael.Gaber@gmx.net>
+Subject: [egit] how to use a ssh private key
+Date: Sun, 24 May 2009 23:01:16 +0200
+Message-ID: <4A19B59C.7020408@gmx.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-X-From: git-owner@vger.kernel.org Sun May 24 22:49:32 2009
+Content-Type: multipart/signed; protocol="application/x-pkcs7-signature"; micalg=sha1; boundary="------------ms060202000609090005070803"
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun May 24 23:02:03 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M8KdQ-0004He-Bt
-	for gcvg-git-2@gmane.org; Sun, 24 May 2009 22:49:32 +0200
+	id 1M8KpU-0000Jf-UC
+	for gcvg-git-2@gmane.org; Sun, 24 May 2009 23:02:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758204AbZEXUtW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 24 May 2009 16:49:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756841AbZEXUtV
-	(ORCPT <rfc822;git-outgoing>); Sun, 24 May 2009 16:49:21 -0400
-Received: from fed1rmmtao101.cox.net ([68.230.241.45]:37185 "EHLO
-	fed1rmmtao101.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757764AbZEXUtU (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 24 May 2009 16:49:20 -0400
-Received: from fed1rmimpo03.cox.net ([70.169.32.75])
-          by fed1rmmtao101.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20090524204921.TQCL17670.fed1rmmtao101.cox.net@fed1rmimpo03.cox.net>;
-          Sun, 24 May 2009 16:49:21 -0400
-Received: from localhost ([68.225.240.211])
-	by fed1rmimpo03.cox.net with bizsmtp
-	id vYpM1b0084aMwMQ04YpMMs; Sun, 24 May 2009 16:49:21 -0400
-X-Authority-Analysis: v=1.0 c=1 a=cKKtvLOY1ucA:10 a=pGLkceISAAAA:8
- a=4i2KtJ69iurDqMuHItEA:9 a=i2DVWNH3n0rzEYL2sN0A:7
- a=l7sW_O8_PzM_-cNVe0mYWNp9TlcA:4 a=MSl-tDqOz04A:10
-X-CM-Score: 0.00
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+	id S1752005AbZEXVBS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 24 May 2009 17:01:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751972AbZEXVBR
+	(ORCPT <rfc822;git-outgoing>); Sun, 24 May 2009 17:01:17 -0400
+Received: from mail.gmx.net ([213.165.64.20]:60786 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751691AbZEXVBR (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 24 May 2009 17:01:17 -0400
+Received: (qmail invoked by alias); 24 May 2009 21:01:17 -0000
+Received: from unknown (EHLO [192.168.178.66]) [95.222.249.246]
+  by mail.gmx.net (mp020) with SMTP; 24 May 2009 23:01:17 +0200
+X-Authenticated: #1286246
+X-Provags-ID: V01U2FsdGVkX185Cmxr4Ns5GkC4OpY0yxTURPX3Da4bm/K4dCTcWZ
+	duxVLslrhF8rvA
+User-Agent: Thunderbird 2.0.0.21 (Windows/20090302)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.82
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119859>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119860>
 
-Giuseppe Bilotta <giuseppe.bilotta@gmail.com> writes:
+This is a cryptographically signed message in MIME format.
 
-> This small patch series implements support for Stacked Git patch
-> series import.
->
-> The first commit adds support for StGit patches to mailinfo, which is
-> required because StGit's default export template puts the From: line
-> between the subject and the body.
+--------------ms060202000609090005070803
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
 
-This problem description makes it sound as if we always expect From: to
-come before Subject: in the mailbox, and reject the input if they come in
-a different order, which would be a bug.  Fixing it would not be limited
-to supporting StGIT generated patch email.
+Hi.
 
-But a quick glance at the actual patch makes me suspect that is not what
-you are doing.  You are feeding something that is not a mailbox at all to
-the mailinfo and _unconditionally_ extract the information according to
-StGIT rules.
+I'd like to know if current egit/jgit supports using a ssh private key 
+(with or without password) to sync to a git repository and how this 
+could be accomplished.
 
-That's a bad taste.
+Regards Michael
 
-At least, add a "this is not a mailbox, but is a StGIT formatted file, so
-please extract info according to the StGIT rule, not the mailbox rule"
-option, and
+--------------ms060202000609090005070803
+Content-Type: application/x-pkcs7-signature; name="smime.p7s"
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="smime.p7s"
+Content-Description: S/MIME Cryptographic Signature
 
-  (1) have a parameter to mailinfo() to trigger your new codepath only
-      when the option is given; or
-
-  (2) have a separate function "stgitinfo()" not "mailinfo()" that perhaps
-      largely share the logic with the original "mailinfo()" function, and
-      call that when the option is given; or even
-
-  (3) have a separate _program_ that knows how to extract information from
-      such an input file;
-
-so that normal mailinfo invocation does not mishandle input that is _not_
-StGIT output.
-
-> The second commit makes git-am autodetect an StGit patch series index
-> (when it's the only file passed to it) and proceeds to import the
-> patches indicated in the series.
-
-And that change would be a good place to decide to pass that "This is not
-a mailbox but is a StGIT output" option to the updated mailinfo program
-(or the new "stgitinfo" program).
-
-What is the larger picture workflow that this new feature is expected to
-help?  A project takes patches not in e-mail form but in a directory full
-of files uploaded via scp/sftp with the StGIT series file and individual
-StGIT patches that are pointed by the series file contained within?
-
-I do not use StGIT anymore, so I do not remember how flexible its export
-template mechanism is, nor how widely people use non-default templates,
-but I have wonder about two and half things.
-
- - I am assuming that your patch won't be able to read the StGIT output if
-   the uploader used non-default export template, so such a project needs
-   to ask the uploaders to use the default template.
-
-   If that is the case, why not ask them to use a custom template that
-   generates one single valid mailbox that stores the patches in the right
-   order?  That can be processed with stock "git am"; in addition, the
-   output can be fed not just to "git".  Any other SCM that can work with
-   e-mail based patchflow can use it.
-
- - Such a project can allow users to use random export templates as long
-   as the template used to export the series is indentifiable (perhaps by
-   including that template itself in the upload).  Your mailinfo patch
-   needs to be extended to reverse what the export template did, and it
-   really shouldn't be in the normal mailinfo() codepath.  The right
-   approach would become something like (3) above, i.e. separate
-   "StGITinfo" program called from "git am" if that is what you shoot for.
-
- - If StGIT is used by the project to such an extent to allow series
-   directory upload, shouldn't the receiving end be also using StGIT to
-   import the series, instead of running "git am" anyway?
+MIAGCSqGSIb3DQEHAqCAMIACAQExCzAJBgUrDgMCGgUAMIAGCSqGSIb3DQEHAQAAoIIKdjCC
+BTcwggMfoAMCAQICAwa1/DANBgkqhkiG9w0BAQUFADB5MRAwDgYDVQQKEwdSb290IENBMR4w
+HAYDVQQLExVodHRwOi8vd3d3LmNhY2VydC5vcmcxIjAgBgNVBAMTGUNBIENlcnQgU2lnbmlu
+ZyBBdXRob3JpdHkxITAfBgkqhkiG9w0BCQEWEnN1cHBvcnRAY2FjZXJ0Lm9yZzAeFw0wOTA0
+MTAxNzIzNDlaFw0xMTA0MTAxNzIzNDlaMD4xFjAUBgNVBAMTDU1pY2hhZWwgR2FiZXIxJDAi
+BgkqhkiG9w0BCQEWFU1pY2hhZWwuR2FiZXJAZ214Lm5ldDCCASIwDQYJKoZIhvcNAQEBBQAD
+ggEPADCCAQoCggEBANlvNCEKkhAhmwIpzXamq89nexUPZxbvGR05bN8NlABb/ZkrsUzq56ni
+E4uA61Uuwz3stsXXPN5SOV+oJABDWgvgUsk4fZavEMbP7Kk5iJpZf+ZYDc+z+cYEgxLcQ/v2
+I3j5r7sdT8L6KuB4mvJaQ2WLMcAzyE4J3b39IzPHjrKkTWHyNQP8UUVEJ8qIZ3oCNAYYkTar
+2nKv9uCz//ne40luTpPaEi4vrV5x3F9VKLVLWp1pjceE2xC6wSRlF9ZouOhk6aefTeJ0zMCK
+yiCxhk/4pDM5GfXePU7a05uP7NWtvFPPVt8ahIXoX4J4mRdxByijW1wIAqP2ghjL0IHWHlcC
+AwEAAaOCAQEwgf4wDAYDVR0TAQH/BAIwADBWBglghkgBhvhCAQ0ESRZHVG8gZ2V0IHlvdXIg
+b3duIGNlcnRpZmljYXRlIGZvciBGUkVFIGhlYWQgb3ZlciB0byBodHRwOi8vd3d3LkNBY2Vy
+dC5vcmcwQAYDVR0lBDkwNwYIKwYBBQUHAwQGCCsGAQUFBwMCBgorBgEEAYI3CgMEBgorBgEE
+AYI3CgMDBglghkgBhvhCBAEwMgYIKwYBBQUHAQEEJjAkMCIGCCsGAQUFBzABhhZodHRwOi8v
+b2NzcC5jYWNlcnQub3JnMCAGA1UdEQQZMBeBFU1pY2hhZWwuR2FiZXJAZ214Lm5ldDANBgkq
+hkiG9w0BAQUFAAOCAgEAZy8jWlhd7lK824fomYsYCfGMwjgvJs8iW72U1ewbrc8FAd9974aS
+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
+ChMHUm9vdCBDQTEeMBwGA1UECxMVaHR0cDovL3d3dy5jYWNlcnQub3JnMSIwIAYDVQQDExlD
+QSBDZXJ0IFNpZ25pbmcgQXV0aG9yaXR5MSEwHwYJKoZIhvcNAQkBFhJzdXBwb3J0QGNhY2Vy
+dC5vcmcCAwa1/DAJBgUrDgMCGgUAoIIB2zAYBgkqhkiG9w0BCQMxCwYJKoZIhvcNAQcBMBwG
+CSqGSIb3DQEJBTEPFw0wOTA1MjQyMTAxMTZaMCMGCSqGSIb3DQEJBDEWBBQ38RjrTPFM24Gh
+qaAt6xsLHrWLHzBSBgkqhkiG9w0BCQ8xRTBDMAoGCCqGSIb3DQMHMA4GCCqGSIb3DQMCAgIA
+gDANBggqhkiG9w0DAgIBQDAHBgUrDgMCBzANBggqhkiG9w0DAgIBKDCBkQYJKwYBBAGCNxAE
+MYGDMIGAMHkxEDAOBgNVBAoTB1Jvb3QgQ0ExHjAcBgNVBAsTFWh0dHA6Ly93d3cuY2FjZXJ0
+Lm9yZzEiMCAGA1UEAxMZQ0EgQ2VydCBTaWduaW5nIEF1dGhvcml0eTEhMB8GCSqGSIb3DQEJ
+ARYSc3VwcG9ydEBjYWNlcnQub3JnAgMGtfwwgZMGCyqGSIb3DQEJEAILMYGDoIGAMHkxEDAO
+BgNVBAoTB1Jvb3QgQ0ExHjAcBgNVBAsTFWh0dHA6Ly93d3cuY2FjZXJ0Lm9yZzEiMCAGA1UE
+AxMZQ0EgQ2VydCBTaWduaW5nIEF1dGhvcml0eTEhMB8GCSqGSIb3DQEJARYSc3VwcG9ydEBj
+YWNlcnQub3JnAgMGtfwwDQYJKoZIhvcNAQEBBQAEggEASpEGnHF/iINQH8D+CG737Pcxw1yW
+lNMa4N+GtkXhlAz1Dh3DNAhLqUyhbM+fxTF6LRdj0d1iFsf/aO1gbVF/aCfdOfxK8ypcs3ql
+ODvAAedYHgjLJgIA9wHB/8kodJw4BJB/72VQzbQ+xd3SIR9wfHupgL+Q9MltcT/99yfKch+l
+UcHA6JrkJRZ1GYEy4PCwlg1neFIushcV6hKD/KuX2+FED2TyceWqJVjgtsuFsbS8X8d/99cy
+ZanyHZE4thbOQS0pH9Dj+cFj1U/4xRKQ+v4fDmiYD90VFiRJRV2YGLa7Hbi67+wRl2vQRhaa
+FYOLtBjKx/XJkXsw7IDJB5MW7QAAAAAAAA==
+--------------ms060202000609090005070803--
