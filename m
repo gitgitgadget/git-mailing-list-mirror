@@ -1,11 +1,12 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 18/18] http*: add helper methods for fetching objects (loose)
-Date: Sun, 24 May 2009 13:44:15 -0700
-Message-ID: <7vzld2s02o.fsf@alter.siamese.dyndns.org>
-References: <20090524222008.b9de3f45.rctay89@gmail.com>
+Subject: Re: [PATCH 17/18] http*: add helper methods for fetching packs
+Date: Sun, 24 May 2009 13:44:03 -0700
+Message-ID: <7v7i06teng.fsf@alter.siamese.dyndns.org>
+References: <20090524222006.cd71f8dc.rctay89@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
 	Mike Hommey <mh@glandium.org>
 To: Tay Ray Chuan <rctay89@gmail.com>
@@ -14,73 +15,75 @@ Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M8KYN-0002b3-WB
-	for gcvg-git-2@gmane.org; Sun, 24 May 2009 22:44:20 +0200
+	id 1M8KYN-0002b3-C3
+	for gcvg-git-2@gmane.org; Sun, 24 May 2009 22:44:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755123AbZEXUoO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 24 May 2009 16:44:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753350AbZEXUoO
-	(ORCPT <rfc822;git-outgoing>); Sun, 24 May 2009 16:44:14 -0400
-Received: from fed1rmmtao105.cox.net ([68.230.241.41]:48121 "EHLO
-	fed1rmmtao105.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752683AbZEXUoO (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 24 May 2009 16:44:14 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao105.cox.net
+	id S1752133AbZEXUoG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 24 May 2009 16:44:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753350AbZEXUoE
+	(ORCPT <rfc822;git-outgoing>); Sun, 24 May 2009 16:44:04 -0400
+Received: from fed1rmmtao102.cox.net ([68.230.241.44]:38397 "EHLO
+	fed1rmmtao102.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754868AbZEXUoC (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 24 May 2009 16:44:02 -0400
+Received: from fed1rmimpo03.cox.net ([70.169.32.75])
+          by fed1rmmtao102.cox.net
           (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20090524204415.YQAK20430.fed1rmmtao105.cox.net@fed1rmimpo01.cox.net>;
-          Sun, 24 May 2009 16:44:15 -0400
+          id <20090524204404.MXEA20976.fed1rmmtao102.cox.net@fed1rmimpo03.cox.net>;
+          Sun, 24 May 2009 16:44:04 -0400
 Received: from localhost ([68.225.240.211])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id vYkF1b0014aMwMQ03YkF5U; Sun, 24 May 2009 16:44:15 -0400
-X-Authority-Analysis: v=1.0 c=1 a=Mz4lW8oJAIYA:10 a=Tnb7dDIH5bkA:10
- a=pGLkceISAAAA:8 a=HKJwtpWfpazfx1qdNPoA:9 a=v1aqqZHwk6NI1kqLpEQA:7
- a=huD2BYO_OE9NNoJNJ3DSqbqZcJEA:4 a=MSl-tDqOz04A:10
+	by fed1rmimpo03.cox.net with bizsmtp
+	id vYk31b00D4aMwMQ04Yk3ZM; Sun, 24 May 2009 16:44:04 -0400
+X-Authority-Analysis: v=1.0 c=1 a=l6C0ey3IMRMA:10 a=CYmAowFhlkkA:10
+ a=pGLkceISAAAA:8 a=8I7qvBULHheKW2qMy3AA:9 a=4GLYPLhVQtDO0B5s54MA:7
+ a=H3s67DOPLrhBrTdXiCyJxfehMEwA:4 a=MSl-tDqOz04A:10 a=gL_Cd0aKKSpnZdhT:21
+ a=gT14A9zaNABl4i9J:21
 X-CM-Score: 0.00
 User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119857>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119858>
 
 Tay Ray Chuan <rctay89@gmail.com> writes:
 
-> ...
-> Signed-off-by: Tay Ray Chuan <rctay89@gmail.com>
+> The code handling the fetching of packs in http-push.c and
+> http-walker.c have been refactored into new methods and a new struct
+> (http_pack_request) in http.c. They are not meant to be invoked
+> elsewhere.
+>
+> The new methods in http.c are
+>  *new_http_pack_request
+>  *finish_http_pack_request
+>  *release_http_pack_request
+> and the new struct is http_pack_request.
 
-I think you can guess what my suggestion would be for the proposed commit
-log message from comments to other patches, so I won't repeat them for
-this patch.
+Please do not use '*' not followed by any whitespace for enumerations; use
+of '*' when you talk about code is confusing (e.g "is he talking about a
+pointer?").
 
-You make a couple of variables no longer necessary with this patch; please
-squash this in when rerolling.
+> ***http-push.c***
+> The local_stream member of the transfer_request has been removed, as
+> the packfile pointer will be managed in the struct http_pack_request.
+>
+> The code moved out from start_fetch_packed to new_http_pack_request
+> deals with filenames, file and curl options, and does not change
+> its behaviour.
 
- http-push.c   |    1 -
- http-walker.c |    1 -
- 2 files changed, 0 insertions(+), 2 deletions(-)
+Sorry, I cannot parse these.  Do you mean
 
-diff --git a/http-push.c b/http-push.c
-index 122cf56..386552c 100644
---- a/http-push.c
-+++ b/http-push.c
-@@ -524,7 +524,6 @@ static void release_request(struct transfer_request *request)
- 
- static void finish_request(struct transfer_request *request)
- {
--	struct stat st;
- 	struct http_pack_request *preq;
- 	struct http_object_request *obj_req;
- 
-diff --git a/http-walker.c b/http-walker.c
-index 95a1e9b..8a617ae 100644
---- a/http-walker.c
-+++ b/http-walker.c
-@@ -152,7 +152,6 @@ static void prefetch(struct walker *walker, unsigned char *sha1)
- 	struct object_request *newreq;
- 	struct object_request *tail;
- 	struct walker_data *data = walker->data;
--	char *filename = sha1_file_name(sha1);
- 
- 	newreq = xmalloc(sizeof(*newreq));
- 	newreq->walker = walker;
+	Refactor code from start_fetch_packed() to a new function,
+	new_http_pack_request(); this deals with filenames, file and curl
+	options.
+
+I am a bit puzzled about the description split along the filename boundary
+of the source files.  You also describe the new_http_pack_request()
+function below, where you talk about changes to http-walker.c.  It would
+be much easier to review if you don't split them, e.g.
+
+	Add a function, new_http_pack_request(), that deals with the
+	details of coming up with the filename to store the retrieved
+	packfile, resuming a previously aborted request, and making a new
+	curl request.  Update start_fetch_packed() in http-push.c and
+	fetch_pack() in http-walker.c to use this.
