@@ -1,65 +1,70 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: hg2git error
-Date: Sun, 24 May 2009 20:16:02 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.0905242013080.26154@pacific.mpi-cbg.de>
-References: <alpine.DEB.1.00.0905241932301.26154@pacific.mpi-cbg.de> <fabb9a1e0905241038x7ea22622k930f50b9c7598c6e@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: git-ls-files --added?
+Date: Sun, 24 May 2009 11:17:04 -0700
+Message-ID: <7vmy921i3j.fsf@alter.siamese.dyndns.org>
+References: <2cfc40320905240054j2c08da8bt4df95c6f1bc9e254@mail.gmail.com>
+	<m3fxeudhho.fsf@localhost.localdomain>
+	<2cfc40320905240212jc111b1xfeb39b1851c606d3@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Rocco Rutte <pdmef@gmx.net>,
-	Matthias Urlichs <smurf@smurf.noris.de>, git@vger.kernel.org
-To: Sverre Rabbelier <srabbelier@gmail.com>
-X-From: git-owner@vger.kernel.org Sun May 24 20:17:19 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Jakub Narebski <jnareb@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Jon Seymour <jon.seymour@gmail.com>
+X-From: git-owner@vger.kernel.org Sun May 24 20:17:55 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M8IF7-0007Mq-8I
-	for gcvg-git-2@gmane.org; Sun, 24 May 2009 20:16:17 +0200
+	id 1M8IGP-00084y-Vo
+	for gcvg-git-2@gmane.org; Sun, 24 May 2009 20:17:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753635AbZEXSPg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 24 May 2009 14:15:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753319AbZEXSPf
-	(ORCPT <rfc822;git-outgoing>); Sun, 24 May 2009 14:15:35 -0400
-Received: from mail.gmx.net ([213.165.64.20]:33793 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753056AbZEXSPf (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 24 May 2009 14:15:35 -0400
-Received: (qmail invoked by alias); 24 May 2009 18:15:35 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp008) with SMTP; 24 May 2009 20:15:35 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18bp8A0kj4bBwZISoVzWN59xM8MR/JLf6k+BtmTk5
-	9x/6TJUKc+1lu5
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <fabb9a1e0905241038x7ea22622k930f50b9c7598c6e@mail.gmail.com>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.63
+	id S1753893AbZEXSRG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 24 May 2009 14:17:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753670AbZEXSRE
+	(ORCPT <rfc822;git-outgoing>); Sun, 24 May 2009 14:17:04 -0400
+Received: from fed1rmmtao104.cox.net ([68.230.241.42]:47008 "EHLO
+	fed1rmmtao104.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753056AbZEXSRD (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 24 May 2009 14:17:03 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao104.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20090524181704.RNMF17135.fed1rmmtao104.cox.net@fed1rmimpo01.cox.net>;
+          Sun, 24 May 2009 14:17:04 -0400
+Received: from localhost ([68.225.240.211])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id vWH41b0024aMwMQ03WH48t; Sun, 24 May 2009 14:17:04 -0400
+X-Authority-Analysis: v=1.0 c=1 a=pGLkceISAAAA:8 a=m6t-_Tl5oBjCg2ybMl8A:9
+ a=iDgj683BSzYiz3iPqqtPfG4nbIsA:4 a=MSl-tDqOz04A:10
+X-CM-Score: 0.00
+In-Reply-To: <2cfc40320905240212jc111b1xfeb39b1851c606d3@mail.gmail.com> (Jon Seymour's message of "Sun\, 24 May 2009 19\:12\:00 +1000")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119848>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119849>
 
-Hi,
+Jon Seymour <jon.seymour@gmail.com> writes:
 
-On Sun, 24 May 2009, Sverre Rabbelier wrote:
+> Jakub,
+>
+> Thanks - yes, I wasn't happy about parsing git status.
+>
+> I am still interested in the rationale for git-ls-files not supporting
+> such an option directly, since git-diff still seems a little indirect.
 
-> On Sun, May 24, 2009 at 19:33, Johannes Schindelin
-> <Johannes.Schindelin@gmx.de> wrote:
-> > How to cope with that?
-> 
-> I've been working on making hg-git [0] usable as a two-way bridge
-> (that is, use it to interact with a hg repository using git). It is
-> coping just fine with unnamed heads so far :).
-> 
-> </shameless plug>
+Partly historical, but more fundamental reason is because ls-files
+plumbing is about the index.
 
-It says "Achtung! Alpha!".  How alpha is it?
+The index by definition knows about the work tree files.  Reporting the
+status of work tree files by comparing what was added to the index makes
+sense in that context.
 
-Also, there is the issue that it is a Hg extension.  My experience with 
-such extensions and their dependency on certain Hg versions make me ask: 
-what version of Hg must I install before I can use Hg-git?
+git-ls-files documentation lists --cached/deleted...  and if you think
+about them, you will realize that the all of them make sense; they are
+about the index or comparison between the index and the work tree.
 
-Ciao,
-Dscho
+Added is _not_ about comparision between the index and the work tree.  It
+is between the HEAD commit and the index, and it does not belong to
+ls-files plumbing.
