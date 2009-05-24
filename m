@@ -1,84 +1,81 @@
-From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
-Subject: Re: [JGIT] Bus error (SIGBUS) on Solaris
-Date: Sun, 24 May 2009 22:11:19 +0200
-Message-ID: <200905242211.19708.robin.rosenberg.lists@dewire.com>
-References: <3ae83b000905241113u6895a7edlc1f81f0ea54a0c53@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 02/18] http-push, http-walker: style fixes
+Date: Sun, 24 May 2009 13:43:21 -0700
+Message-ID: <7v7i06ut92.fsf@alter.siamese.dyndns.org>
+References: <20090524221941.8670c41d.rctay89@gmail.com>
 Mime-Version: 1.0
-Content-Type: Text/Plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git <git@vger.kernel.org>
-To: John Bito <jwbito@gmail.com>
-X-From: git-owner@vger.kernel.org Sun May 24 22:11:40 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Mike Hommey <mh@glandium.org>
+To: Tay Ray Chuan <rctay89@gmail.com>
+X-From: git-owner@vger.kernel.org Sun May 24 22:43:43 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M8K2j-0006WB-Vz
-	for gcvg-git-2@gmane.org; Sun, 24 May 2009 22:11:38 +0200
+	id 1M8KXm-0002L3-M6
+	for gcvg-git-2@gmane.org; Sun, 24 May 2009 22:43:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753991AbZEXUL2 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 24 May 2009 16:11:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754451AbZEXUL1
-	(ORCPT <rfc822;git-outgoing>); Sun, 24 May 2009 16:11:27 -0400
-Received: from mail.dewire.com ([83.140.172.130]:24856 "EHLO dewire.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752592AbZEXULZ convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 24 May 2009 16:11:25 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by dewire.com (Postfix) with ESMTP id 3CB69145A8EC;
-	Sun, 24 May 2009 22:11:22 +0200 (CEST)
-X-Virus-Scanned: by amavisd-new at dewire.com
-Received: from dewire.com ([127.0.0.1])
-	by localhost (torino.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id lE2rM8zKSJXu; Sun, 24 May 2009 22:11:21 +0200 (CEST)
-Received: from sleipner.localnet (unknown [10.9.0.2])
-	by dewire.com (Postfix) with ESMTP id 55AB1145A8EB;
-	Sun, 24 May 2009 22:11:21 +0200 (CEST)
-User-Agent: KMail/1.11.2 (Linux/2.6.28-11-generic; KDE/4.2.2; i686; ; )
-In-Reply-To: <3ae83b000905241113u6895a7edlc1f81f0ea54a0c53@mail.gmail.com>
-Content-Disposition: inline
+	id S1751691AbZEXUnW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 24 May 2009 16:43:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751676AbZEXUnV
+	(ORCPT <rfc822;git-outgoing>); Sun, 24 May 2009 16:43:21 -0400
+Received: from fed1rmmtao106.cox.net ([68.230.241.40]:39798 "EHLO
+	fed1rmmtao106.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751363AbZEXUnV (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 24 May 2009 16:43:21 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao106.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20090524204321.KIFP25927.fed1rmmtao106.cox.net@fed1rmimpo01.cox.net>;
+          Sun, 24 May 2009 16:43:21 -0400
+Received: from localhost ([68.225.240.211])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id vYjM1b0074aMwMQ03YjMv2; Sun, 24 May 2009 16:43:21 -0400
+X-Authority-Analysis: v=1.0 c=1 a=jzda2yG1zNcA:10 a=crBg8x4GWd0A:10
+ a=pGLkceISAAAA:8 a=jWeDsi2YCO7P3Ine8yYA:9 a=iKgsCWTOuE0-dqhMp-cA:7
+ a=pEMbuNFoirzO6H_M_bivTS5IunEA:4 a=MSl-tDqOz04A:10
+X-CM-Score: 0.00
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119852>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119853>
 
-s=F6ndag 24 maj 2009 20:13:24 skrev John Bito:
-> I updated with the integration build on the update site today, after
-> restart, Eclipse failed with a bus error.
->=20
-> > #  SIGBUS (0xa) at pc=3D0xf88162fc, pid=3D15191, tid=3D23
-> > #
-> > # Java VM: Java HotSpot(TM) Client VM (11.2-b01 mixed mode solaris-=
-sparc)
-> > # Problematic frame:
-> > # j  org.spearce.jgit.lib.OffsetCache.getOrLoad(Lorg/spearce/jgit/l=
-ib/PackFile;J)Ljava/lang/Object;+17
->=20
-> I haven't updated my WinVista workstation, yet.  Shall I create a bug
-> report with the full error log, or is this something that's already
-> known?
->=20
-> The failure seems repeatable with my current workspace configuration.
+Tay Ray Chuan <rctay89@gmail.com> writes:
 
-There is no way a Java bug can crash the VM by itself. You can hit eith=
-er a real
-VM bug or a bug in native code used by the VM.
+>  *spaces used as indentation have been replaced by tabs instead.
+>
+>  *'if' and 'while' conditionals with a single line have had their curly
+>   braces removed.
+>
 
-So you have one or more
-1) A broken Windows installation (some might consider this an tautology=
-).
-2) A corrupt JRE installation. Reinstall and see if things works better
-3) A corrupt Eclipse. Try a fresh Eclipse.
-4) Bad hardward, memory, malware leading to broken files (1).
+We need to apply a style fix to your commit messages first.
 
-2 & 3 are easy to test.  If reinstalling the JRE doesn't help, try t he=
- newest JRE
-available from SUN and see, Sun JVM bug reports should go to SUN. We wi=
-ll
-do absolutely nothing with them, though it would be interesting to get =
-the
-ticket id when it gets assigned one.
+Using '*' without any space as the enumeration bullet makes the message
+harder to read.  Please don't.  Also we prefer to give orders to the
+person who applies the patch (i.e. "do _this_, so that the result becomes
+better in _this_ and _that_ way"), instead of saying "I've done this and
+that".
 
--- robin
-'
+	- Use tabs to indent, instead of spaces.
+
+	- Do not use curly-braces around a single statement body in
+          if/while statement; 
+
+	- Do not start multi-line comment with description on the first
+          line after "/*", i.e.
+        
+            /*
+             * We prefer this over...
+             */
+
+            /* comments like
+             * this (notice the first line)
+             */
+
+I personally do not necessarily agree with the first "clean-up", but as
+long as the style is internally consistent within the file that's Ok.
