@@ -1,84 +1,70 @@
-From: Jon Seymour <jon.seymour@gmail.com>
-Subject: Re: git-ls-files --added?
-Date: Sun, 24 May 2009 19:12:00 +1000
-Message-ID: <2cfc40320905240212jc111b1xfeb39b1851c606d3@mail.gmail.com>
-References: <2cfc40320905240054j2c08da8bt4df95c6f1bc9e254@mail.gmail.com>
-	 <m3fxeudhho.fsf@localhost.localdomain>
+From: Markus Heidelberg <markus.heidelberg@web.de>
+Subject: Re: [PATCH] Revert "git gui: show diffs with a minimum of 1 context line"
+Date: Sun, 24 May 2009 12:01:03 +0200
+Message-ID: <200905241201.04297.markus.heidelberg@web.de>
+References: <1243099727-5272-1-git-send-email-markus.heidelberg@web.de> <20090523231605.GA4522@localhost>
+Reply-To: markus.heidelberg@web.de
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain;
+  charset="iso-8859-1"
 Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Sun May 24 11:22:45 2009
+Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
+To: Clemens Buchacher <drizzd@aon.at>
+X-From: git-owner@vger.kernel.org Sun May 24 12:05:11 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M89uj-0003Hy-Vk
-	for gcvg-git-2@gmane.org; Sun, 24 May 2009 11:22:42 +0200
+	id 1M8AZq-0007Hc-4D
+	for gcvg-git-2@gmane.org; Sun, 24 May 2009 12:05:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751854AbZEXJMA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 24 May 2009 05:12:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751704AbZEXJL7
-	(ORCPT <rfc822;git-outgoing>); Sun, 24 May 2009 05:11:59 -0400
-Received: from yw-out-2324.google.com ([74.125.46.29]:2693 "EHLO
-	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751066AbZEXJL7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 24 May 2009 05:11:59 -0400
-Received: by yw-out-2324.google.com with SMTP id 5so1528955ywb.1
-        for <git@vger.kernel.org>; Sun, 24 May 2009 02:12:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=KSXSCLJ/QzFrnrcvXvv4SFE+s/MKmI7rreuJDVV3fbM=;
-        b=lqixmGDpbHB7S5CpPGU4qEkvNJq5qy+RM2IDGJcxjArSqtAv+LUYwhhSZuGoy81tMz
-         DqOpX2QH9nNtDXCEwn5EAYlWq8GOBae1BexNN39UOtBgpeO3WDQELYu56Kbx2gNlFL6z
-         eAd8645H8lL+UFEAOuCKuszkbxRS9L0y81J3U=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=KZeJPZcI3qmkrqMGYcZNQCLd7Om6ebthc3xBYTBhx0FokS+DA5iw35sJSFYrZeWaHf
-         uV9OrUmq13/lw5u1+dV3zOxcX5XbVoqkvLR0FRt5t7/93vXMsga2ty+tQ9K911Rcd0vr
-         DSHaFdYWU8lTlurdd0TeHAW2rP2y7hqMIuvp0=
-Received: by 10.150.151.20 with SMTP id y20mr11554901ybd.17.1243156320079; 
-	Sun, 24 May 2009 02:12:00 -0700 (PDT)
-In-Reply-To: <m3fxeudhho.fsf@localhost.localdomain>
+	id S1751865AbZEXKBE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 24 May 2009 06:01:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751401AbZEXKBE
+	(ORCPT <rfc822;git-outgoing>); Sun, 24 May 2009 06:01:04 -0400
+Received: from fmmailgate02.web.de ([217.72.192.227]:51593 "EHLO
+	fmmailgate02.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750900AbZEXKBD (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 24 May 2009 06:01:03 -0400
+Received: from smtp07.web.de (fmsmtp07.dlan.cinetic.de [172.20.5.215])
+	by fmmailgate02.web.de (Postfix) with ESMTP id 68278100E2819;
+	Sun, 24 May 2009 12:01:01 +0200 (CEST)
+Received: from [89.59.101.94] (helo=.)
+	by smtp07.web.de with asmtp (TLSv1:AES256-SHA:256)
+	(WEB.DE 4.110 #277)
+	id 1M8AVp-0003Xz-00; Sun, 24 May 2009 12:01:01 +0200
+User-Agent: KMail/1.9.9
+In-Reply-To: <20090523231605.GA4522@localhost>
+Jabber-ID: markus.heidelberg@web.de
+Content-Disposition: inline
+X-Sender: markus.heidelberg@web.de
+X-Provags-ID: V01U2FsdGVkX1+IovFqAgjpMvqNw8hQT8Q6bmFT88+uOGVxZM2O
+	u6xhp1ucOIfzIadbifZcyM2+8iWQOFZytgSoKrJbP5rxNVY7CK
+	nuXY6LqzpTlWudUx3dUA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119816>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119817>
 
-Jakub,
+Clemens Buchacher, 24.05.2009:
+> On Sat, May 23, 2009 at 07:28:47PM +0200, Markus Heidelberg wrote:
+> > Diffs without context can actually be useful. Depending on the changes
+> > it can be less distracting to read them or to get an overview.
+> 
+> Maybe so. But as stated in the commit message of 55ba8a3 (git gui: show
+> diffs with a minimum of 1 context line) context-less diff was disabled
+> because it caused bugs with staging.
 
-Thanks - yes, I wasn't happy about parsing git status.
+It wasn't clear to me that there were bugs. I thought it just "does not
+work" in some way, but should have tried it at least. Now I see.
 
-I am still interested in the rationale for git-ls-files not supporting
-such an option directly, since git-diff still seems a little indirect.
+> However, I never got around to fix the
+> real cause of the problem. See the original thread at
+> 
+> http://article.gmane.org/gmane.comp.version-control.git/94387
 
-Regards,
+Thanks for the link. After reading this discussion I also see that
+disabling staging with zero context is not a user-friendly solution.
 
-jon.
-
-On Sun, May 24, 2009 at 6:37 PM, Jakub Narebski <jnareb@gmail.com> wrote:
-> Jon Seymour <jon.seymour@gmail.com> writes:
->
->> Is there a reason why git-ls-files does not have an --added option?
->>
->> I'd like to get a list of new files, due to be committed. Currently, I
->> have to parse the output of git status to get that, but it seems like
->> a reasonable function for git-ls-files.
->
-> You can use git-diff-* with --name-only and --diff-filter=A for
-> that; you shouldn't parse result of porcelain git-status.
->
-> And there is also contrib/examples/git-commit.sh as a guideline...
->
-> --
-> Jakub Narebski
-> Poland
-> ShadeHawk on #git
->
+Markus
