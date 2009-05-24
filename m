@@ -1,71 +1,70 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: [PATCH 0/2] StGit patch series import
-Date: Mon, 25 May 2009 00:28:36 +0200
-Message-ID: <fabb9a1e0905241528r7b5102b0w5d064727125654d@mail.gmail.com>
-References: <1243149558-17160-1-git-send-email-giuseppe.bilotta@gmail.com> 
-	<7voctirzu6.fsf@alter.siamese.dyndns.org> <cb7bb73a0905241443m6b5d6ba4vab438c856e47a947@mail.gmail.com> 
-	<7vfxeurwh0.fsf@alter.siamese.dyndns.org> <cb7bb73a0905241518l43048416i34cb905c143c63e0@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-X-From: git-owner@vger.kernel.org Mon May 25 00:32:30 2009
+From: Samuel Bronson <naesten@gmail.com>
+Subject: [PATCH] Have make fail when $(DOCBOOK2X_TEXI) fails in building gitman.texi
+Date: Sun, 24 May 2009 18:51:05 -0400
+Message-ID: <1243205465-12139-1-git-send-email-naesten@gmail.com>
+Cc: git@vger.kernel.org, Samuel Bronson <naesten@gmail.com>
+To: gitster@pobox.com
+X-From: git-owner@vger.kernel.org Mon May 25 00:52:31 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M8MF3-0001iu-G2
-	for gcvg-git-2@gmane.org; Mon, 25 May 2009 00:32:29 +0200
+	id 1M8MYQ-0007lR-IF
+	for gcvg-git-2@gmane.org; Mon, 25 May 2009 00:52:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759847AbZEXW25 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 24 May 2009 18:28:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759843AbZEXW24
-	(ORCPT <rfc822;git-outgoing>); Sun, 24 May 2009 18:28:56 -0400
-Received: from mail-ew0-f176.google.com ([209.85.219.176]:33666 "EHLO
-	mail-ew0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758965AbZEXW2z (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 24 May 2009 18:28:55 -0400
-Received: by ewy24 with SMTP id 24so2787430ewy.37
-        for <git@vger.kernel.org>; Sun, 24 May 2009 15:28:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=zEqMNqMI0aT8W+V7V592N9j+okYu57qxuy6M6w/v8iA=;
-        b=ee8Ixyo15Ec/dHxzLq2m7tjRpePZNu8DBQLha1rcJ95gR7IKJs7iT3pFonn9y25VGG
-         HS+F2E1kABlTWdnQdORQ4CTfi+SFyWMwfvkYcQe338yLIBq00lNeoWstapnmfkxtiYLU
-         DHX5fb4gDfr0S4VpPxorSBjvEGV/uye4YkiQw=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=bYCcUz59K1+343ZEDaPBoRZzkjJFMpSUTrSVhimkhwJ4DFa3PNvLelRrKr1mbpjlcb
-         UuXjVL68h+fJXSCrtkjP9tFbb/oePK6fxv9WaQ22heKQXoTzaiw794/ns/t6w9PTggLJ
-         rF8mnFQE+LiDuiFB0vojgOCUiE2SAloW/xyvA=
-Received: by 10.216.7.209 with SMTP id 59mr1234342wep.213.1243204136077; Sun, 
-	24 May 2009 15:28:56 -0700 (PDT)
-In-Reply-To: <cb7bb73a0905241518l43048416i34cb905c143c63e0@mail.gmail.com>
+	id S1754396AbZEXWwW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 24 May 2009 18:52:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754109AbZEXWwW
+	(ORCPT <rfc822;git-outgoing>); Sun, 24 May 2009 18:52:22 -0400
+Received: from smtp02.lnh.mail.rcn.net ([207.172.157.102]:31742 "EHLO
+	smtp02.lnh.mail.rcn.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754047AbZEXWwV (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 24 May 2009 18:52:21 -0400
+Received: from mr08.lnh.mail.rcn.net ([207.172.157.28])
+  by smtp02.lnh.mail.rcn.net with ESMTP; 24 May 2009 18:52:22 -0400
+Received: from smtp01.lnh.mail.rcn.net (smtp01.lnh.mail.rcn.net [207.172.4.11])
+	by mr08.lnh.mail.rcn.net (MOS 3.10.5-GA)
+	with ESMTP id KWO69722;
+	Sun, 24 May 2009 18:51:57 -0400 (EDT)
+Received: from 207-172-203-39.c3-0.upd-ubr7.trpr-upd.pa.cable.rcn.com (HELO hydrogen) ([207.172.203.39])
+  by smtp01.lnh.mail.rcn.net with ESMTP; 24 May 2009 18:51:57 -0400
+Received: from naesten by hydrogen with local (Exim 4.69)
+	(envelope-from <naesten@gmail.com>)
+	id 1M8MXs-0003Ai-OU; Sun, 24 May 2009 18:51:56 -0400
+X-Mailer: git-send-email 1.6.3.1
+X-Junkmail-Whitelist: YES (by domain whitelist at mr08.lnh.mail.rcn.net)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119870>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119871>
 
-Heya,
+This is handy for when docbook2x isn't installed. Without this change,
+we would just build a mostly-empty gitman.texi rather than failing as we
+should.
 
-On Mon, May 25, 2009 at 00:18, Giuseppe Bilotta
-<giuseppe.bilotta@gmail.com> wrote:
-> Sorry, that's totally not the idea was trying to convey. In fact, just
-> after sending the email I went back to the code to look for a better
-> solution (I should have probably also made the first try a RFC).
+Signed-off-by: Samuel Bronson <naesten@gmail.com>
+---
+ Documentation/Makefile |    6 ++++--
+ 1 files changed, 4 insertions(+), 2 deletions(-)
 
-Perhaps a more elegant solution is a script that munges a hg/stgit/svn
-patch into a mailbox format before feeding it to git-am? 'git munge'
-is free :D
-
+diff --git a/Documentation/Makefile b/Documentation/Makefile
+index 144ec32..2998f0d 100644
+--- a/Documentation/Makefile
++++ b/Documentation/Makefile
+@@ -205,9 +205,11 @@ user-manual.pdf: user-manual.xml
+ 	mv $@+ $@
+ 
+ gitman.texi: $(MAN_XML) cat-texi.perl
+-	$(RM) $@+ $@
++	$(RM) $@++ $@+ $@
+ 	($(foreach xml,$(MAN_XML),$(DOCBOOK2X_TEXI) --encoding=UTF-8 \
+-		--to-stdout $(xml);)) | $(PERL_PATH) cat-texi.perl $@ >$@+
++		--to-stdout $(xml);)) >$@++
++	$(PERL_PATH) cat-texi.perl $@ <$@++ >$@+
++	$(RM) $@++
+ 	mv $@+ $@
+ 
+ gitman.info: gitman.texi
 -- 
-Cheers,
-
-Sverre Rabbelier
+1.6.3.1
