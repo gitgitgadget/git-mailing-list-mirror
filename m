@@ -1,7 +1,7 @@
 From: Tay Ray Chuan <rctay89@gmail.com>
-Subject: [PATCH 01/18] t5550-http-fetch: test fetching of packed objects
-Date: Sun, 24 May 2009 22:19:38 +0800
-Message-ID: <20090524221938.48d8b748.rctay89@gmail.com>
+Subject: [PATCH 14/18] http-push: use the new http API in fetch_symref()
+Date: Sun, 24 May 2009 22:20:01 +0800
+Message-ID: <20090524222001.ee7143cc.rctay89@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
@@ -14,71 +14,88 @@ Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M8Eaj-0005ol-Fp
-	for gcvg-git-2@gmane.org; Sun, 24 May 2009 16:22:21 +0200
+	id 1M8Ear-0005ol-Vl
+	for gcvg-git-2@gmane.org; Sun, 24 May 2009 16:22:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753283AbZEXOVZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 24 May 2009 10:21:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753274AbZEXOVZ
-	(ORCPT <rfc822;git-outgoing>); Sun, 24 May 2009 10:21:25 -0400
+	id S1754471AbZEXOWZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 24 May 2009 10:22:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754521AbZEXOWX
+	(ORCPT <rfc822;git-outgoing>); Sun, 24 May 2009 10:22:23 -0400
 Received: from mail-px0-f103.google.com ([209.85.216.103]:48930 "EHLO
 	mail-px0-f103.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752971AbZEXOVY (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 24 May 2009 10:21:24 -0400
+	with ESMTP id S1754295AbZEXOWV (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 24 May 2009 10:22:21 -0400
 Received: by mail-px0-f103.google.com with SMTP id 1so2153790pxi.33
-        for <git@vger.kernel.org>; Sun, 24 May 2009 07:21:26 -0700 (PDT)
+        for <git@vger.kernel.org>; Sun, 24 May 2009 07:22:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:date:from:to:cc:subject
          :message-id:x-mailer:mime-version:content-type
          :content-transfer-encoding;
-        bh=h+xQ7yjK8rqqXOQDqfcHISCXZzyqq4ElmczYQxNNqKA=;
-        b=INTzq3WuPPGMuzVVJ8vJdRUQapzdjOMcQCvAGRgztAjPKFy+D7Kzm2UY3BtULgPg+0
-         8BduAFJRmz+Z1fg5nn+RQE1o97AltXqCYHFif+sFaemaDEj49YM4aRXG7qm0QC7aU1Mm
-         NwPtVqhvxUtKRL1fVXA3C2vYvQgOzwiBA2pyk=
+        bh=yMFq3v5N0MbfZyE6c8m9G3rAajQuoOkTXfU5adX448c=;
+        b=C2JBGPc5w5Fd84qG4ukblotFX4Een7q0+pnZKr0+kH/+7KnJFLJMb7r4dQRni03W1L
+         cvOUZarr0G1ZE6Q5fKdx0T7fiNgM/McXY4H0G+4WQH4DcTFUIvILsHGIUHh2QrEjWvET
+         RFZKJoMnVhp2m8NAYra18MSzy6ndHFtoFUxBU=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=date:from:to:cc:subject:message-id:x-mailer:mime-version
          :content-type:content-transfer-encoding;
-        b=ni5pf0yc/dm83b5Ro8vX2cUMh7fs4jU35LQb/LtV3/JF+TM08TGc0OVeWllWAN3fhP
-         gTgVhfAy9z6LSXrvDfzS/gtp5TAim52Wy9kdHWef4OO1QeBs+Bq2VALE6mXx3E22vKog
-         LCQV4dLs2vexN9rNSd5oR9m+Rg8jc2UU1gtJU=
-Received: by 10.114.37.1 with SMTP id k1mr12263468wak.172.1243174884548;
-        Sun, 24 May 2009 07:21:24 -0700 (PDT)
+        b=GrAmgQHuuO+DxlQatZWgRcxme/26YIrvL3yAIPSl7YeFrjLXttDMn9mqe/CVf6+TZZ
+         0UFLTfS/cvCkmew/H9TNeqkiwJMR0KlmK7nQ8WutDGtGam9KFRRPsbk2zOktNAxw0eWf
+         jJEE50phczB4daYLUES8Ui7hkhdD3C9nLGVIs=
+Received: by 10.114.152.17 with SMTP id z17mr12606965wad.91.1243174943590;
+        Sun, 24 May 2009 07:22:23 -0700 (PDT)
 Received: from your-cukc5e3z5n (cm10.zeta148.maxonline.com.sg [116.87.148.10])
-        by mx.google.com with ESMTPS id l30sm12234864waf.0.2009.05.24.07.21.22
+        by mx.google.com with ESMTPS id j39sm2711546waf.45.2009.05.24.07.22.21
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 24 May 2009 07:21:23 -0700 (PDT)
+        Sun, 24 May 2009 07:22:23 -0700 (PDT)
 X-Mailer: Sylpheed 2.6.0 (GTK+ 2.10.14; i686-pc-mingw32)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119825>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119826>
 
-
+Signed-off-by: Mike Hommey <mh@glandium.org>
 Signed-off-by: Tay Ray Chuan <rctay89@gmail.com>
 ---
- t/t5550-http-fetch.sh |    8 ++++++++
- 1 files changed, 8 insertions(+), 0 deletions(-)
+ http-push.c |   20 +++-----------------
+ 1 files changed, 3 insertions(+), 17 deletions(-)
 
-diff --git a/t/t5550-http-fetch.sh b/t/t5550-http-fetch.sh
-index 05b1b62..0e69324 100755
---- a/t/t5550-http-fetch.sh
-+++ b/t/t5550-http-fetch.sh
-@@ -53,5 +53,13 @@ test_expect_success 'http remote detects correct HEAD' '
- 	)
- '
+diff --git a/http-push.c b/http-push.c
+index 5b20cec..7aa4fc4 100644
+--- a/http-push.c
++++ b/http-push.c
+@@ -2024,27 +2024,13 @@ static void fetch_symref(const char *path, char **symref, unsigned char *sha1)
+ {
+ 	char *url;
+ 	struct strbuf buffer = STRBUF_INIT;
+-	struct active_request_slot *slot;
+-	struct slot_results results;
 
-+test_expect_success 'fetch packed objects' '
-+	cp -R "$HTTPD_DOCUMENT_ROOT_PATH"/repo.git "$HTTPD_DOCUMENT_ROOT_PATH"/repo_pack.git &&
-+	cd "$HTTPD_DOCUMENT_ROOT_PATH"/repo_pack.git &&
-+	git --bare repack &&
-+	git --bare prune-packed &&
-+	git clone $HTTPD_URL/repo_pack.git
-+'
-+
- stop_httpd
- test_done
+ 	url = xmalloc(strlen(repo->url) + strlen(path) + 1);
+ 	sprintf(url, "%s%s", repo->url, path);
+
+-	slot = get_active_slot();
+-	slot->results = &results;
+-	curl_easy_setopt(slot->curl, CURLOPT_FILE, &buffer);
+-	curl_easy_setopt(slot->curl, CURLOPT_WRITEFUNCTION, fwrite_buffer);
+-	curl_easy_setopt(slot->curl, CURLOPT_HTTPHEADER, NULL);
+-	curl_easy_setopt(slot->curl, CURLOPT_URL, url);
+-	if (start_active_slot(slot)) {
+-		run_active_slot(slot);
+-		if (results.curl_result != CURLE_OK) {
+-			die("Couldn't get %s for remote symref\n%s",
+-			    url, curl_errorstr);
+-		}
+-	} else {
+-		die("Unable to start remote symref request");
+-	}
++	if (http_get_strbuf(url, &buffer, 0) != HTTP_OK)
++		die("Couldn't get %s for remote symref\n%s", url,
++		    curl_errorstr);
+ 	free(url);
+
+ 	free(*symref);
 --
 1.6.3.1
