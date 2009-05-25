@@ -1,159 +1,169 @@
-From: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-Subject: Re: [PATCH 1/2] git-am foreign patch support: format autodetection
-Date: Tue, 26 May 2009 00:49:14 +0200
-Message-ID: <cb7bb73a0905251549s49d7fc28ge63b12e52029dd0b@mail.gmail.com>
-References: <1243278846-14120-1-git-send-email-giuseppe.bilotta@gmail.com>
-	 <1243278846-14120-2-git-send-email-giuseppe.bilotta@gmail.com>
-	 <7vk544u8hx.fsf@alter.siamese.dyndns.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: git subtree as a solution to partial cloning?
+Date: Mon, 25 May 2009 16:26:00 -0700 (PDT)
+Message-ID: <m3bppgdan2.fsf@localhost.localdomain>
+References: <8873ae500905250021p20e7096dwf5bc71c36c4047b@mail.gmail.com>
+	<32541b130905250059n7b31cc1bk688e5f4bfaf83142@mail.gmail.com>
+	<8873ae500905250233t52dce5b5v8ca88b9921a88437@mail.gmail.com>
+	<32541b130905250850h75f905e0t84287f897600187f@mail.gmail.com>
+	<8873ae500905251035v64084e83wa1a89a562d20224a@mail.gmail.com>
+	<32541b130905251054k44bdb218sde8837e87d8e8e69@mail.gmail.com>
+	<8873ae500905251128h1921895dp6ef227e0e0bbec49@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=iso-8859-15
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue May 26 00:49:26 2009
+Cc: Avery Pennarun <apenwarr@gmail.com>, git@vger.kernel.org,
+	Alexander Gavrilov <angavrilov@gmail.com>
+To: Asger Ottar Alstrup <asger@area9.dk>
+X-From: git-owner@vger.kernel.org Tue May 26 01:26:25 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M8iyy-0007g4-7H
-	for gcvg-git-2@gmane.org; Tue, 26 May 2009 00:49:24 +0200
+	id 1M8jYm-0002ma-CC
+	for gcvg-git-2@gmane.org; Tue, 26 May 2009 01:26:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752991AbZEYWtQ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 25 May 2009 18:49:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752893AbZEYWtP
-	(ORCPT <rfc822;git-outgoing>); Mon, 25 May 2009 18:49:15 -0400
-Received: from mail-bw0-f222.google.com ([209.85.218.222]:52072 "EHLO
-	mail-bw0-f222.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752523AbZEYWtO convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 25 May 2009 18:49:14 -0400
-Received: by bwz22 with SMTP id 22so3405871bwz.37
-        for <git@vger.kernel.org>; Mon, 25 May 2009 15:49:14 -0700 (PDT)
+	id S1754393AbZEYX0G convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 25 May 2009 19:26:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753670AbZEYX0E
+	(ORCPT <rfc822;git-outgoing>); Mon, 25 May 2009 19:26:04 -0400
+Received: from fg-out-1718.google.com ([72.14.220.155]:7639 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753933AbZEYX0C convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 25 May 2009 19:26:02 -0400
+Received: by fg-out-1718.google.com with SMTP id 16so1267249fgg.17
+        for <git@vger.kernel.org>; Mon, 25 May 2009 16:26:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
+        h=domainkey-signature:received:received:received:received
+         :x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type
          :content-transfer-encoding;
-        bh=WJEEFmOkS+qS2oy+UKDfEKUo0QC4GxA1jcxK8/WWzDM=;
-        b=xBL2d0U9U3o6AlL1XbZTT49zr+k39w7cnFaUgqZ4j+fs8ncOtEVgfjwCkmtrQhXZsM
-         gGMeGLFFoXfF6voM3/KVB1xonrKfyk1v31s/frNQUTyE3zm9f4p6dWi9TAx0Jt9Rj9dP
-         O3Ij/NpXJ+ISAGPrFz1hIRP1IKPwxzdbEU6eM=
+        bh=YaMfqjVcOiAqs8GmnmJYG8/8s8aTMSnxSRTStrKirQQ=;
+        b=IkjELD+zwyLDLrZ3Fbn37JlqMmeqXOm1s7OSBV/TTd0ykli7kI9Dj9/Tsu/yZrKErG
+         LFHunPmIY3SoJ1FHXdczKM8B1k1HVu0EYwcbLZdMtmEAVzM5U/m6sPfV4WbX78zWNVod
+         PDCNC0MjyJovBydJfgrydiOcXHYxfJ0P7eywA=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=qmp4Ne9OYK64zUnJOoigLcCeSiIpg9C8rGd/oDlj0lmbSX4eyl7Z56NFgmK/v7Dz2f
-         Z23dJbC8Cs5OMEAYZY4r4MDoJ7Wq/3pziqktNcu/wR626wBvlseQ9TSIXfnFuMxQayc7
-         /b/fDEOU6uh6dX8tX1sbCRKNqELHyXqMYNNJA=
-Received: by 10.204.31.77 with SMTP id x13mr7432272bkc.6.1243291754135; Mon, 
-	25 May 2009 15:49:14 -0700 (PDT)
-In-Reply-To: <7vk544u8hx.fsf@alter.siamese.dyndns.org>
+        h=x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type
+         :content-transfer-encoding;
+        b=U9o5khvQ/GGD+t/LId1YOWrtLK4dZ6G6T55UkIlr+2Id+oNY6qOezBcCF4p0xI0AKz
+         yOMuuOv9FN+0bte0fxQFeCdbwQRJfcaussF/3BcAoGEDqIyn8EUR5oSjilSiLfS0Y/tx
+         eCDujpYMMSfMQjGPrfLpvUvk+Vtvk56DLCXxw=
+Received: by 10.86.60.15 with SMTP id i15mr6239133fga.5.1243293961589;
+        Mon, 25 May 2009 16:26:01 -0700 (PDT)
+Received: from localhost.localdomain (abvv167.neoplus.adsl.tpnet.pl [83.8.219.167])
+        by mx.google.com with ESMTPS id 4sm6925042fge.13.2009.05.25.16.26.00
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 25 May 2009 16:26:00 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id n4PNTsGL020361;
+	Tue, 26 May 2009 01:29:59 +0200
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id n4PNTcI2020348;
+	Tue, 26 May 2009 01:29:38 +0200
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <8873ae500905251128h1921895dp6ef227e0e0bbec49@mail.gmail.com>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119980>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119981>
 
-On Tue, May 26, 2009 at 12:23 AM, Junio C Hamano <gitster@pobox.com> wr=
-ote:
-> Giuseppe Bilotta <giuseppe.bilotta@gmail.com> writes:
->
->> This patch is the first step towards the introduction of a framework=
- to
->> allow git-am to import patches not in mailbox format.
+Asger Ottar Alstrup <asger@area9.dk> writes:
+
+> On Mon, May 25, 2009 at 7:54 PM, Avery Pennarun <apenwarr@gmail.com> =
+wrote:
+>> On Mon, May 25, 2009 at 1:35 PM, Asger Ottar Alstrup <asger@area9.dk=
+> wrote:
+>>> So a poor mans system could work like this:
+>>>
+>>> - A reduced repository is defined by a list of paths in a file, I
+>>> guess with a format similar to .gitignore
 >>
->> Currently detected formats are
->> =A0 * the mailbox format itself, which is assumed by default if inpu=
-t is
->> =A0 =A0 form stdin
->> =A0 * Mercurial's output from 'hg export'
->> =A0 * Stacked Git's output from 'stg export' with the default export
->> =A0 =A0 template; StGIT patch series are also detected and expanded.
->
-> I personally do not trust "autodetection" (especially done by others =
-;-),
-> and prefer to have an explicit override by the users, but that aside.=
-=2E.
+>> Are you sure you want to define the list with exclusions instead of
+>> inclusions? =A0I don't really know your use case.
+>=20
+> Since the .gitignore format supports !, I believe that should not mak=
+e
+> much of a difference.
+>=20
+>> Anyway, if you're using git filter-branch, it'll be up to you to fix
+>> the index to contain the list of files you want. (See man
+>> git-filter-branch)
+>=20
+> Yes, sure, and that is why I asked whether there is some tool in git
+> that can give a list of concrete files surviving a .gitignore list of
+> patterns.
 
-No problem. --patch-format or just --format ?
+I think you would want to use git-ls-files, using --exclude-from=3D<fil=
+e>
+option, and perhaps also -i/--ignored to create list of files to be
+removed (using git-update-index) instead of list of files to be kept.
+=20
+>>> - To extract: A copy of the original repository is made. This copy =
+is
+>>> reduced using git filter-branch. Is there some way of turning a
+>>> .gitignore syntax file into a concrete list of files? Also, can thi=
+s
+>>> entire step be done in one step without the copy? Having to copy th=
+e
+>>> entire project first seems excessive. Will filter-branch preserve
+>>> and/or prune pack files intelligently?
+>>
+>> You probably need to read about the differences between git trees,
+>> blobs, and commits. =A0You're not actually "copying" anything; you'r=
+e
+>> just creating some new directory structures that contain the
+>> *existing* blobs. =A0And of course the existing blobs are in your
+>> existing packs.
+>=20
+> Thanks. OK, I see now that filter-branch will not destroy the origina=
+l
+> repository. That is not at all obvious from reading the man page, whe=
+n
+> the very first sentence says that it will rewrite history.=20
 
-> =A0 =A0 =A0 =A0if test -z "$patch_format" && {
-> =A0 =A0 =A0 =A0 =A0 test $# =3D 0 || test "x$1" =3D x-
-> =A0 =A0 =A0 =A0}
-> =A0 =A0 =A0 =A0then
-> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0patch_format=3Dmbox
-> =A0 =A0 =A0 =A0else
-> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0patch_format=3D$(guess_patch_format)
-> =A0 =A0 =A0 =A0fi
->
-> Having this extra logic inside the main codeflow makes it extremely h=
-arder
-> to read; have it in a separate shell function.
+What git-filter-branch does is to write _new_ history, and move old
+history to refs/original/* namespace (that might have changed; anyway
+the old history should be available via reflog).  The visible efect
+is that history got rewritten.
 
-I assume you mean the patch format detection, yes?
+> But the
+> main point of this exercise is to reduce the size of the reduced
+> repository so that it can be transferred effectively. So after
+> filter-branch, I guess I would run clone afterwards to make the new,
+> smaller repository, and then the question becomes: Will clone reuse
+> and prune packs intelligently?
 
->> +# a single non-stdin argument was passed, check if it's a StGit pat=
-ch series
->> +# index by checking if the first line begins with '# This series'
->> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 {
->> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 read l1
->> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 case "$l1"=
- in
->> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 '# This se=
-ries '*)
->> +# replace the argument list with the files listed in the series ind=
-ex,
->> +# prefixing them with the series index dirname, skipping comment li=
-nes
->
-> Can the "series-index-name" file begin with '-' (which would affect t=
-he
-> way how 'set "@"' works in the loop below)? =A0A standard trick would=
- be to
-> do something like this.
->
-> =A0 =A0 =A0 =A0series_index=3D"$1"
-> =A0 =A0 =A0 =A0shift ;# discard
-> =A0 =A0 =A0 =A0set x
-> =A0 =A0 =A0 =A0while ...
-> =A0 =A0 =A0 =A0do
-> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0set "$@" another
-> =A0 =A0 =A0 =A0done
-> =A0 =A0 =A0 =A0shift ;# discard 'x' protection
+Yes, it would... well, you have to take into account that ordinary
+clone over local filesystem does hardlinking of packfiles, and you
+need to use file:// trick to force repack; also you might want to use
+--reference to set up alternates.
 
-Ah, good point. I'll do it that way.
+But that is not necessary: if you want to push effectively _subset_
+of branches, you can define remote infor in appropriate way and push
+would intelligently transfer only needed objects.
 
->> + =A0 =A0 # (which is not stdin) to try to understand the format.
->> + =A0 =A0 if test $patch_format =3D none
->
-> I do not understand this duplication and inconsistency. =A0Why have t=
-he
-> detection in two places?
+[...]
+> However, there is a large group of users that do not need this, but
+> they DO need the entire history of the files they are interested in.
+> Subversion does not provide this. Also, Subversion is simply too slow
+> to handle the kind of files we need to work with. Also, we have run
+> tests on the kind of files we have, and the delta compression that gi=
+t
+> uses is very effective for compression the pdf and openoffice
+> documents we use. The big files we have are primarily image files, an=
+d
+> obviously they do not compress very well. Fortunately, they do not
+> change much either.
 
-It's not in two places. The first part sets the patch format only if
-we are either reading from stdin or have been passed a stgit patch
-series. Otherwise, we still don't know what we're getting, so now we
-inspect the first patch to see what format it's in. (Consider for
-example the case of appication of a StGIT patch which is not part of a
-series.)
-
->> + =A0 =A0 case "$patch_format" in
->> + =A0 =A0 mbox)
->> + =A0 =A0 =A0 =A0 =A0 =A0 git mailsplit -d"$prec" -o"$dotest" -b -- =
-"$@" > "$dotest/last" || =A0{
->> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 rm -fr "$dotest"
->> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 exit 1
->> + =A0 =A0 =A0 =A0 =A0 =A0 }
->> + =A0 =A0 =A0 =A0 =A0 =A0 ;;
->> + =A0 =A0 *)
->> + =A0 =A0 =A0 =A0 =A0 =A0 echo "Patch format $patch_format is not cu=
-rrently handled, sorry"
->> =A0 =A0 =A0 =A0 =A0 =A0 =A0 exit 1
->
-> No fixing broken "Subject:" line for your format here?
-
-No, I put that in the second patch, because it was a different thing
-(patch processing as opposed to format detection).
-
+You might want to turn off deltaification for binary files via `delta`
+gitattribute; it might help (it might not).
 
 --=20
-Giuseppe "Oblomov" Bilotta
+Jakub Narebski
+Poland
+ShadeHawk on #git
