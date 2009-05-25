@@ -1,191 +1,81 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: [PATCH v3 0/2] Re: user-manual: general improvements
-Date: Mon, 25 May 2009 14:41:47 +0200
-Message-ID: <4A1A920B.5000206@drmicha.warpmail.net>
-References: <1241650416-12224-1-git-send-email-felipe.contreras@gmail.com>	 <20090507072326.GA13123@vidovic>	 <7veiv0cvdt.fsf@alter.siamese.dyndns.org>	 <20090508042814.GA30031@vidovic>	 <94a0d4530905131430q2250a43ei692265c3f32b5715@mail.gmail.com>	 <20090514160609.GA12910@vidovic>	 <7vvdnvtf2n.fsf@alter.siamese.dyndns.org>	 <20090521041529.GD8091@sigill.intra.peff.net>	 <94a0d4530905210017x1ce3e32bk3b1fbf9044377763@mail.gmail.com>	 <4A155643.5030804@drmicha.warpmail.net> <94a0d4530905210857y51c22909ke65d643abd3e8cee@mail.gmail.com>
+From: Tim Uckun <timuckun@gmail.com>
+Subject: Re: can anybody explain the following to a git noob?
+Date: Tue, 26 May 2009 00:52:29 +1200
+Message-ID: <855e4dcf0905250552r27e73a15tc06dbd9fa1cbb507@mail.gmail.com>
+References: <855e4dcf0905212046o3e1d6ec6l487829a0a411dcaf@mail.gmail.com>
+	 <32541b130905212202q9aed54cn892171b7e654812f@mail.gmail.com>
+	 <855e4dcf0905212244r454a5c21w7bdbfb566a28efb8@mail.gmail.com>
+	 <4A1671E5.4030400@op5.se>
+	 <855e4dcf0905220335n367a065fidc65567119c0a5a3@mail.gmail.com>
+	 <4A16822A.2060404@viscovery.net>
+	 <855e4dcf0905220436h1b6fa632q7804c98bf09b324c@mail.gmail.com>
+	 <alpine.LNX.2.00.0905221244370.2147@iabervon.org>
+	 <855e4dcf0905230121h28ef22f8n4758953e612325cf@mail.gmail.com>
+	 <20090525111059.GE1070@macbook.lan>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-	Nicolas Sebrecht <nicolas.s.dev@gmx.fr>, git@vger.kernel.org
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Mon May 25 14:42:29 2009
+Cc: Daniel Barkalow <barkalow@iabervon.org>,
+	Johannes Sixt <j.sixt@viscovery.net>,
+	Andreas Ericsson <ae@op5.se>,
+	Avery Pennarun <apenwarr@gmail.com>, git@vger.kernel.org
+To: Heiko Voigt <hvoigt@hvoigt.net>
+X-From: git-owner@vger.kernel.org Mon May 25 14:52:39 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M8ZVV-0001qc-V6
-	for gcvg-git-2@gmane.org; Mon, 25 May 2009 14:42:22 +0200
+	id 1M8ZfS-0005VN-MO
+	for gcvg-git-2@gmane.org; Mon, 25 May 2009 14:52:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751035AbZEYMmB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 25 May 2009 08:42:01 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750761AbZEYMmA
-	(ORCPT <rfc822;git-outgoing>); Mon, 25 May 2009 08:42:00 -0400
-Received: from out1.smtp.messagingengine.com ([66.111.4.25]:60998 "EHLO
-	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750756AbZEYMl7 (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 25 May 2009 08:41:59 -0400
-Received: from compute1.internal (compute1.internal [10.202.2.41])
-	by out1.messagingengine.com (Postfix) with ESMTP id 43B5E3463E2;
-	Mon, 25 May 2009 08:42:01 -0400 (EDT)
-Received: from heartbeat1.messagingengine.com ([10.202.2.160])
-  by compute1.internal (MEProxy); Mon, 25 May 2009 08:42:01 -0400
-X-Sasl-enc: VxnqXP0f7GvwD4dNXsFtlMoaWmEoBLRTAh8lq19184mS 1243255320
-Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.12])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 1C7863251A;
-	Mon, 25 May 2009 08:41:59 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1pre) Gecko/20090522 Lightning/1.0pre Shredder/3.0b3pre
-In-Reply-To: <94a0d4530905210857y51c22909ke65d643abd3e8cee@mail.gmail.com>
+	id S1751658AbZEYMwa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 25 May 2009 08:52:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751294AbZEYMwa
+	(ORCPT <rfc822;git-outgoing>); Mon, 25 May 2009 08:52:30 -0400
+Received: from mail-gx0-f166.google.com ([209.85.217.166]:33107 "EHLO
+	mail-gx0-f166.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751166AbZEYMw3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 May 2009 08:52:29 -0400
+Received: by gxk10 with SMTP id 10so5548732gxk.13
+        for <git@vger.kernel.org>; Mon, 25 May 2009 05:52:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=/1WAC71jyKAU0Yya9fuHHpNcat+TIOqI2g7NiOzb1jg=;
+        b=Pzw/M+EFYjlWdHGfBB8cbOJXSkjabUHp/MqKzPv2ORVW8CVqdaOu2XR92u0dSfreeO
+         6Lp6PlwMsHEImbDe6iv23kkBiVQII39g7jmDiigW9JG9POwyXmWveCBegM0pi5GA15Wl
+         gYo9B1U13PYrzo8tTKVDLLXLDZwHcF09eJbFA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=k2LebNEMSHzWM1SZS+IYln9pteWmAa11fT2T9DChgQchO6F/kdpsK4JQPjCDiTH2Br
+         le4ZiPjhCUlaWoueANb8owkIF545M7ii0uLecbWExRp0WP0fv7wtP4RNS8RuaqIT5i1x
+         /zf5yCENaQlf2RTvG2NB2vz8CR9coBEFeXtAI=
+Received: by 10.90.69.15 with SMTP id r15mr6293376aga.74.1243255949888; Mon, 
+	25 May 2009 05:52:29 -0700 (PDT)
+In-Reply-To: <20090525111059.GE1070@macbook.lan>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119932>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119933>
 
-Felipe Contreras venit, vidit, dixit 21.05.2009 17:57:
-> On Thu, May 21, 2009 at 4:25 PM, Michael J Gruber
-> <git@drmicha.warpmail.net> wrote:
->> Felipe Contreras venit, vidit, dixit 21.05.2009 09:17:
->>> On Thu, May 21, 2009 at 7:15 AM, Jeff King <peff@peff.net> wrote:
->>>> On Wed, May 20, 2009 at 06:33:36PM -0700, Junio C Hamano wrote:
->>>>
->>>>>>> http://people.freedesktop.org/~felipec/git/user-manual-general-improvements/
->>>>>>
->>>>>> Thank you very much Felipe to take the time to upload the patches there.
->>>>>> I already have a copy there and I'll look at it soon.
->>>>>
->>>>> Has anybody looked at this?  It's a bit large-ish and touches all over the
->>>>> place, so I am finding it a bit hard to concentrate on it myself really
->>>>> nitpicking, but from the cursory look after formatting the result looked
->>>>> Ok.
->>>>
->>>> I started to, but the first commit message is lacking something that I
->>>> think would make reviewing much simpler: what are the general classes of
->>>> changes that are being made?
->>>>
->>>> I see some doublequotes becoming backticks, and some becoming single
->>>> quotes. And some becoming tex-quotes (``...''), and even some becoming
->>>> doublequotes _with_ single quotes. It would be easier to verify that
->>>> they are doing the right thing if the commit message briefly described
->>>> the rules it followed for changing each one. I think they are something
->>>> like:
->>>>
->>>>  - tex-quotes if it was really a prose-style quotation
->>>>
->>>>  - backticks (causing monospace) for branch names, commands, etc in
->>>>    prose
->>>>
->>>> but that leaves me confused. Some things which I thought should be in
->>>> monospace backticks are in single-quotes (causing emphasis). Like
->>>> 'master' or 'linux-2.6'. And some things are emphasized and in double
->>>> quotes in the prose, like '"o"' or '"branch A"'. What is the rule to
->>>> decide which text should have visible doublequotes but also be
->>>> emphasized, as opposed to just having double-quotes or just being
->>>> emphasized?
->>>>
->>>> Maybe this was even discussed earlier in the thread (I didn't go back to
->>>> look), but it should definitely be part of the commit message.
->>>
->>> The rule I followed is: change it to whatever looks best.
->>>
->>> I followed some guidelines such as: make common text monospace, such
->>> as gitk and master. And emphasize whatever needs emphasizing, such as
->>> fb47ddb2db. Examples are both monospace *and* emphasized.
->>>
->>> Sometimes the end result still didn't look good so I just used
->>> whatever looked best.
->>
->> I think that's a bit of a "quick and dirty" approach. Man pages and user
->> manual should use semantic markup. The matter of "looks" is up to the
->> documentation tool chain, i.e. the style sheets etc. for the various
->> backends.
->>
->> So we would need:
->>
->> - a documentation "style guide" which tells you how to do the semantic
->> markup, such as `cmd` for commands, 'foo' for emphasis etc.
->>
->> - maybe some changes to the style sheets etc. which make the semantic
->> markup "look good"
->>
->> The standard transformations which come with asciidoc/docbook can serve
->> as a guide.
-> 
-> There's already a guide: the asciidoc user-guide... you can only go as
-> far as asciidoc lets you. `` for monospace, '' for emphasis, ``'' for
-> double quotes.
+>
+> Note that a second git init does not delete the previous database. So if
+> you want to start from scratch you need to delete the main .git folder.
 
-I am sorry but I don't think you fully comprehend the documentation tool
-chain. Asciidoc translates the *.txt according to config files which
-come with asciidoc and can be (and are, in our case) modified. It
-translates into xml (for man pages) which is semantic markup. Even at
-that step, there are more options - the standard asciidoc.conf (asciidoc
-8) has:
+Yes of course.
 
-[quotes]
-# Constrained quotes.
-*=strong
-'=emphasis
-`=monospaced
-``|''=quoted
-ifdef::asciidoc7compatible[]
-\##=unquoted
-endif::asciidoc7compatible[]
-ifndef::asciidoc7compatible[]
-\#=unquoted
-_=emphasis
-+=monospaced
-# Unconstrained quotes.
-**=#strong
-__=#emphasis
-++=#monospaced
-\##=#unquoted
-^=#superscript
-~=#subscript
-endif::asciidoc7compatible[]
 
-So, you see we could use quite a few more quote designators if we wished
-to. We only needed ' and _ to be different, for example.
+> As already mentioned a script recreating your setup from public sources
+> would really be a big help to find out were git does not do what you are
+> expecting.
+>
 
-Backend specific config files determine what "emphasis" is translated
-into: an <emphasis> tag for docbook-xml, an <em> tag (with attributes)
-for xhtml.
+OK. I'll give that a shot.
 
-Then, for man page format, docbook style sheets are applied (using
-xsltproc or such) to the xml files. The final appearance is determined
-by those sheets. (For html, it's merely css applied by the browser.)
-
-The asciidoc manual really only explains example usage with the default,
-unmodified config files.
-
-> 
-> I have a problem with clear-cut rules such as: `cmd` for commands.
-> 
-> Do you think all these are the same?
-> The `git clone` command allows you to...
-> You can do that by doing '"git commit -a -m Example"'
-> Please refer to linkgit:git-add[1]
-> 
-> If you are reading the text you'll see that the 3 usages have different intents.
-
-Yes, which is why I said "for example", and why a guide needs some
-thinking. Or I would have come up with one...
-
-> 
->>> Have you actually looked at the end result?
->>>
->>
->> No. My attempts at doing systematic changes (rather than modifying
->> single pages without a clear target) have failed, so I've been keeping
->> out of this business...
-> 
-> It's one click away:
-> http://people.freedesktop.org/~felipec/git/user-manual/user-manual.html
-> 
-
-I guess you completely misunderstood my remark (and I may very well be
-the one to blame for that), and it doesn't matter in the context of this
-thread. I have no problems formatting the user-manual, thanks to the
-recent addition of ASCIIDOC_NO_ROFF ;)
-
-Michael
+I would still like to know what went wrong with my own sources though.
+ After all I am going to be using it with my own sources.
