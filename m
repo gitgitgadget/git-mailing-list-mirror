@@ -1,71 +1,113 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: Re: hg2git error
-Date: Mon, 25 May 2009 13:57:19 +0200
-Message-ID: <vpqprdxpf8g.fsf@bauges.imag.fr>
-References: <alpine.DEB.1.00.0905241932301.26154@pacific.mpi-cbg.de>
-	<20090525113418.GA3259@robert>
-	<alpine.DEB.1.00.0905251341370.4288@intel-tinevez-2-302>
+From: Johan Herland <johan@herland.net>
+Subject: Re: git submodule update --merge (Was: What's cooking in git.git (May 2009, #02; Sun, 17))
+Date: Mon, 25 May 2009 13:59:37 +0200
+Message-ID: <200905251359.37619.johan@herland.net>
+References: <7vab5ci281.fsf@alter.siamese.dyndns.org> <alpine.DEB.1.00.0905191348460.4266@intel-tinevez-2-302> <200905191526.40471.johan@herland.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Rocco Rutte <pdmef@gmx.net>,
-	Matthias Urlichs <smurf@smurf.noris.de>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Mon May 25 14:00:01 2009
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Junio C Hamano <gitster@pobox.com>, markus.heidelberg@web.de,
+	Peter Hutterer <peter.hutterer@who-t.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon May 25 14:00:07 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M8YqX-0002nE-4y
-	for gcvg-git-2@gmane.org; Mon, 25 May 2009 14:00:01 +0200
+	id 1M8YqX-0002nE-QY
+	for gcvg-git-2@gmane.org; Mon, 25 May 2009 14:00:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751358AbZEYL7x (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 25 May 2009 07:59:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751367AbZEYL7w
-	(ORCPT <rfc822;git-outgoing>); Mon, 25 May 2009 07:59:52 -0400
-Received: from harmonie.imag.fr ([147.171.130.40]:45296 "EHLO harmonie.imag.fr"
+	id S1751503AbZEYL74 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 25 May 2009 07:59:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751418AbZEYL74
+	(ORCPT <rfc822;git-outgoing>); Mon, 25 May 2009 07:59:56 -0400
+Received: from sam.opera.com ([213.236.208.81]:55255 "EHLO smtp.opera.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751277AbZEYL7w (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 May 2009 07:59:52 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by harmonie.imag.fr (8.13.8/8.13.8) with ESMTP id n4PBvKMn029435;
-	Mon, 25 May 2009 13:57:20 +0200 (CEST)
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
-	(Exim 4.50)
-	id 1M8Ynw-0008JF-1X; Mon, 25 May 2009 13:57:20 +0200
-Received: from moy by bauges.imag.fr with local (Exim 4.63)
-	(envelope-from <moy@imag.fr>)
-	id 1M8Ynv-0002No-WE; Mon, 25 May 2009 13:57:19 +0200
-In-Reply-To: <alpine.DEB.1.00.0905251341370.4288@intel-tinevez-2-302> (Johannes Schindelin's message of "Mon\, 25 May 2009 13\:43\:15 +0200 \(CEST\)")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.0.91 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (harmonie.imag.fr [147.171.130.40]); Mon, 25 May 2009 13:57:20 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
+	id S1751367AbZEYL7z (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 May 2009 07:59:55 -0400
+Received: from pc107.coreteam.oslo.opera.com (pat-tdc.opera.com [213.236.208.22])
+	(authenticated bits=0)
+	by smtp.opera.com (8.13.4/8.13.4/Debian-3sarge3) with ESMTP id n4PBxbk1010415
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Mon, 25 May 2009 11:59:47 GMT
+User-Agent: KMail/1.9.9
+In-Reply-To: <200905191526.40471.johan@herland.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119926>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119927>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+On Tuesday 19 May 2009, Johan Herland wrote:
+> On Tuesday 19 May 2009, Johannes Schindelin wrote:
+> > On Tue, 19 May 2009, Johan Herland wrote:
+> > > I still don't see any reason why one should be added (--rebase),
+> > > and not the other (--merge).
+> >
+> > When you rebase, you see your personal stuff (i.e. stuff that you
+> > do not want to submit, or not in its current form, or that you
+> > submitted and it waits for inclusion) on top of things right away.
+>
+> But if there are developers downstream whose work is based on your
+> submodule branch, the rebase will disrupt _their_ work, in the same
+> way that rebasing any other public branch would disrupt people's
+> work.
+>
+> > In contrast, if you merge, you will have a different state from the
+> > upstream _forever_.  Even if your stuff gets included.
+>
+> Correct, but there are cases where reconciliation with the upstream
+> repo is less important than not disrupting downstream developers (see
+> below).
+>
+> > Needless to say, I do not see much use for the latter case, but
+> > tons for the former.
+>
+> I fully agree that for a regular downstream (or "leaf") developer,
+> there is not much use for git submodule rebase --merge.
+>
+> But not all developers fit nicely into your scenario above.
+>=20
+> [Workflow description in which "git submodule update --merge" would
+>  be a helpful addition]
+>
+> I understand that the above scenario is not common in the free
+> software world, but I believe it is much more common in an
+> enterprise/company setting. Therefore, the support of such workflows
+> is important to companies that are currently considering (or have
+> already chosen) Git. I believe there is value in supporting such
+> workflows, especially when doing so is as straightforward as my patch
+> shows.
 
-> I disagree... The worst solution is to stop working at all.  A better 
-> solution would be to ignore the unnamed head,
+I haven't received any replies to my attempt to describe the context in=
+=20
+which "git submodule update --merge" is useful. A hint as to whether my=
+=20
+argument is valid, or just crap, would be nice.
 
-... or to import the commits of this unnamed head, without setting a
-Git reference to it (with a message on the console saying stg like
-"Unnamed head imported as commit %s\n" to let the user do something
-with the sha1).
+In any case, even if we don't include "git submodule update --merge",=20
+could we _please_ consider changing the associated config variable from
 
-> and the best solution would probably be to generate ref names that
-> are _not_ branch names for such heads.
+=A0 submodule.<name>.rebase =3D true/false (false if unset)
 
-Stg like refs/hg-heads/<branch>/<number> ? (seems to be accepted in
-the Git namespace)
+to something like
 
-(my 2 cents)
+=A0 submodule.<name>.update =3D checkout/rebase (checkout if unset)
 
--- 
-Matthieu
+or (Junio's suggestion)
+
+  submodule.<name>.rebind =3D never/rebase (never if unset)
+
+so that we at least have the _option_ of adding other alternatives in=20
+the future?
+
+
+Have fun! :)
+
+=2E..Johan
+
+--=20
+Johan Herland, <johan@herland.net>
+www.herland.net
