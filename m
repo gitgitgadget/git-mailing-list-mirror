@@ -1,109 +1,106 @@
-From: Chani <chanika@gmail.com>
-Subject: Re: partial checkouts
-Date: Sun, 24 May 2009 20:07:18 -0700
-Message-ID: <200905242007.26575.chanika@gmail.com>
-References: <200905231401.11651.chanika@gmail.com> <200905231726.10361.chanika@gmail.com> <32541b130905241245m7139c766v73f6fe2aeda1fcf9@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Git produces Unidiff - Does it really?
+Date: Sun, 24 May 2009 20:27:10 -0700
+Message-ID: <7v4ov9zwtt.fsf@alter.siamese.dyndns.org>
+References: <alpine.LSU.2.00.0905250105410.22963@fbirervta.pbzchgretzou.qr>
 Mime-Version: 1.0
-Content-Type: multipart/signed;
-  boundary="nextPart1626251.8PqAF4jZmc";
-  protocol="application/pgp-signature";
-  micalg=pgp-sha1
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Avery Pennarun <apenwarr@gmail.com>
-X-From: git-owner@vger.kernel.org Mon May 25 05:08:24 2009
+To: Jan Engelhardt <jengelh@medozas.de>
+X-From: git-owner@vger.kernel.org Mon May 25 05:28:48 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M8QY3-0008G0-Kv
-	for gcvg-git-2@gmane.org; Mon, 25 May 2009 05:08:24 +0200
+	id 1M8Qrn-00051M-Th
+	for gcvg-git-2@gmane.org; Mon, 25 May 2009 05:28:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752099AbZEYDIQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 24 May 2009 23:08:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752052AbZEYDIP
-	(ORCPT <rfc822;git-outgoing>); Sun, 24 May 2009 23:08:15 -0400
-Received: from rv-out-0506.google.com ([209.85.198.233]:36445 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752023AbZEYDIO (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 24 May 2009 23:08:14 -0400
-Received: by rv-out-0506.google.com with SMTP id f9so945748rvb.1
-        for <git@vger.kernel.org>; Sun, 24 May 2009 20:08:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:references:in-reply-to:cc:mime-version:content-type
-         :content-transfer-encoding:message-id;
-        bh=dYvI5B00+CjclK+lM1A368wA5OuhUZOlWOTZs++khy4=;
-        b=x4yEiumfAX7+K83UarYoj1l2T81W9faVxg8Jvs9TnKjb6dDpa4Kq8HTnuP+gENH1vn
-         CH+D+GG85OmDWrR/eVpVmQOcSoeVfpeVWTIm1Cq1I0s2HTOYuffVuNLViTmJ6eIpfpzx
-         RJYXdBhufe7+GjWzV2rQ80RDrr4Yp9hHHr3cc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:references:in-reply-to:cc
-         :mime-version:content-type:content-transfer-encoding:message-id;
-        b=gt1vTbTf9QP1XVAgfqx2RR6tZgGx0yQCS8fcBoLeT8ukJ2yeOqD9u5hxrX52Mnxyzx
-         ZBCSZszTq8RG4v7l74gkEialgVUHcdambCHF6bz5nLgleN7uYptOeUbjTZTiSNrE22j/
-         VVjunkbqKhLWDShZfPFtVnrWJBv/Rwt4j4aV4=
-Received: by 10.143.39.13 with SMTP id r13mr2115386wfj.33.1243220894636;
-        Sun, 24 May 2009 20:08:14 -0700 (PDT)
-Received: from brain.localnet ([96.49.70.32])
-        by mx.google.com with ESMTPS id 30sm7999937wff.29.2009.05.24.20.08.13
-        (version=SSLv3 cipher=RC4-MD5);
-        Sun, 24 May 2009 20:08:14 -0700 (PDT)
-User-Agent: KMail/1.11.90 (Linux/2.6.27-ARCH; KDE/4.2.87; i686; svn-970258; 2009-05-17)
-In-Reply-To: <32541b130905241245m7139c766v73f6fe2aeda1fcf9@mail.gmail.com>
+	id S1751772AbZEYD1K (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 24 May 2009 23:27:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751580AbZEYD1K
+	(ORCPT <rfc822;git-outgoing>); Sun, 24 May 2009 23:27:10 -0400
+Received: from fed1rmmtao106.cox.net ([68.230.241.40]:35000 "EHLO
+	fed1rmmtao106.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750849AbZEYD1J (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 24 May 2009 23:27:09 -0400
+Received: from fed1rmimpo03.cox.net ([70.169.32.75])
+          by fed1rmmtao106.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20090525032711.WHJM25927.fed1rmmtao106.cox.net@fed1rmimpo03.cox.net>;
+          Sun, 24 May 2009 23:27:11 -0400
+Received: from localhost ([68.225.240.211])
+	by fed1rmimpo03.cox.net with bizsmtp
+	id vfTA1b00E4aMwMQ04fTAMe; Sun, 24 May 2009 23:27:10 -0400
+X-Authority-Analysis: v=1.0 c=1 a=dvCLD_nRVvgA:10 a=LCMQ-0ShYWwA:10
+ a=uZvujYp8AAAA:8 a=0dMwXjx9bwxo7ISuhGwA:9 a=R4r7oCh7h67yHrL97kUA:7
+ a=uCjODzMeL32LZkCiQZsR-dTVw7EA:4 a=bAv3psboLzYA:10
+X-CM-Score: 0.00
+In-Reply-To: <alpine.LSU.2.00.0905250105410.22963@fbirervta.pbzchgretzou.qr> (Jan Engelhardt's message of "Mon\, 25 May 2009 01\:15\:43 +0200 \(CEST\)")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119883>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119884>
 
---nextPart1626251.8PqAF4jZmc
-Content-Type: Text/Plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
+Jan Engelhardt <jengelh@medozas.de> writes:
 
-> >>
-> >> Check out git-subtree. It can split out a subdirectory into its own
-> >> repo, and re-integrate it back into the "parent" repo at a later date.
-> >> git-subtree has been posted as a patch to this list a couple of times
-> >> without much response, but it looks like an interesting alternative to
-> >> submodules: http://alumnit.ca/~apenwarr/log/?m=3D200904#30
-> >
-> > looks interesting. might have been a solution until I heard about this
-> > requirement to not change workflow at all. :/
->
-> Here's something that might work.  Write a script that runs on a
-> server somewhere.  It checks out *all* of the git-managed KDE
-> components, including documentation (it's okay to do this from *one*
-> place, right?).  Then it loops through all the documentation
-> subdirectories and splits them out into individual projects/branches
-> with 'git subtree split'.
->
+> Any insights?
 
-I like this idea. I like the idea of git subtree in general. :)
-however, we've decided to go the "copy all documentation into svn" route fo=
-r=20
-now (so that the translators can keep using only svn).
-I'll be back when we run into the next svn-external issue (there's sure to =
-be=20
-more). :)
+We have "index ..." and other metainformation (most noticeable when
+renames and mode changes are involved) before any hunk begins.  POSIX
+unified context format of course would not know about them either.
 
-=2D-=20
-This message brought to you by eevil bananas and the number 3.
-www.chani3.com
+In the context of git, file modification time often does not have a
+defined meaning.  If you are comparing two arbitrary tree objects (or two
+arbitrary blob objects), there is no concept of "timestamp of the preimage
+and the postimage".  If you are comparing two commits, you _could_ show
+the timestamps of the commits, but that is misleading and useless
+information.  The paths being shown may not have been changed by the newer
+commit being compared, but by some other commit in-between the two commits
+(and even that is not guaranteed --- the two commits may not have any
+ancestry relationship, and/or the clock of the committer who made one of
+these commits may have had skews).
 
---nextPart1626251.8PqAF4jZmc
-Content-Type: application/pgp-signature; name=signature.asc 
-Content-Description: This is a digitally signed message part.
+The enhancements and ommissions were chosen not to confuse tools that
+people use to process patches.  The metainformation headers are safely
+ignored by "patch", for example (of course "patch" does not know about
+renames yet, but that can be fixed later).  Even though "patch" _can_
+optionally set the timestamp of the affected files, nobody sane would do
+so in the context of source code control (it will screw up "make").
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
+The answer to your question depends on how anal you would want to be, but
+no, we fundamentally cannot produce "unidiff -- _really_" in the "POSIX
+unified context format" without losing useful information (renames and
+modes) nor without adding information that is meaningless (timestamps).
 
-iEYEABECAAYFAkoaC2cACgkQeGbAwpIS3GwcVACgwzcWQujdja3UpqVfE6P6whq4
-ww4AoNdrbyEhY8RqOF2Le13vONuz5UYM
-=449u
------END PGP SIGNATURE-----
+But on the other hand, you can say what we produce is in unified context
+format to the same extent that RCS and CVS produces unified when given -u
+option (i.e. "rcsdiff -u", "cvs diff -u").
 
---nextPart1626251.8PqAF4jZmc--
+For example, "rcsdiff -u" shows something like:
+
+    diff -u -r1.1 -r1.2
+    --- Make        1995/01/08 20:50:24     1.1
+    +++ Make        2001/10/04 07:14:29     1.2
+    @@ -1,7 +1,11 @@
+     #!/bin/sh
+    -...
+
+It has cruft after the timestamp, and the timestamp itself is not even in
+the format POSIX expects to see (see
+
+ http://www.opengroup.org/onlinepubs/9699919799/utilities/diff.html#tag_20_34_10_07
+
+if you really care).
+
+Is it in violation of POSIX unified context format?  Of course yes.  Is it
+then not in unified context format at all?
+
+For all practical purposes, if you (either you human or your tool) know
+how to read unified context format, you can process what we (or RCS)
+produce.
+
+I used RCS as an example because it has been maintained by the same person
+who maintains "GNU diff" and was one of the main player who pushed
+"unified context" format to the updated POSIX.
