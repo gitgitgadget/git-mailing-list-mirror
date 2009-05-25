@@ -1,93 +1,84 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: [PATCH] speed: reuse char instead of recreation in loop
-Date: Mon, 25 May 2009 18:08:55 -0400 (EDT)
-Message-ID: <alpine.LNX.2.00.0905251733240.2147@iabervon.org>
-References: <pan.2009.05.25.19.44.10@fedoraproject.org> <20090525201602.GA18471@atjola.homenet> <pan.2009.05.25.20.40.20@fedoraproject.org>
+From: Johan Herland <johan@herland.net>
+Subject: Re: git submodule update --merge
+Date: Tue, 26 May 2009 00:10:37 +0200
+Message-ID: <200905260010.37454.johan@herland.net>
+References: <7vab5ci281.fsf@alter.siamese.dyndns.org>
+ <200905251359.37619.johan@herland.net>
+ <7vmy91vxqc.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="1547844168-1819914988-1243288404=:2147"
-Cc: git@vger.kernel.org
-To: Thomas Spura <tomspur@fedoraproject.org>
-X-From: git-owner@vger.kernel.org Tue May 26 00:09:04 2009
+Content-Type: Text/Plain; charset=iso-8859-1
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	markus.heidelberg@web.de, Peter Hutterer <peter.hutterer@who-t.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue May 26 00:11:10 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M8iLv-0003lr-O1
-	for gcvg-git-2@gmane.org; Tue, 26 May 2009 00:09:04 +0200
+	id 1M8iNx-0004fh-7T
+	for gcvg-git-2@gmane.org; Tue, 26 May 2009 00:11:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753502AbZEYWIz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 25 May 2009 18:08:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752810AbZEYWIz
-	(ORCPT <rfc822;git-outgoing>); Mon, 25 May 2009 18:08:55 -0400
-Received: from iabervon.org ([66.92.72.58]:45078 "EHLO iabervon.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751263AbZEYWIy (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 May 2009 18:08:54 -0400
-Received: (qmail 11690 invoked by uid 1000); 25 May 2009 22:08:55 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 25 May 2009 22:08:55 -0000
-In-Reply-To: <pan.2009.05.25.20.40.20@fedoraproject.org>
-User-Agent: Alpine 2.00 (LNX 1167 2008-08-23)
-Content-ID: <alpine.LNX.2.00.0905251755030.2147@iabervon.org>
+	id S1752508AbZEYWKn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 25 May 2009 18:10:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752192AbZEYWKm
+	(ORCPT <rfc822;git-outgoing>); Mon, 25 May 2009 18:10:42 -0400
+Received: from mx.getmail.no ([84.208.15.66]:41776 "EHLO
+	get-mta-out02.get.basefarm.net" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1751519AbZEYWKm (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 25 May 2009 18:10:42 -0400
+Content-disposition: inline
+Received: from mx.getmail.no ([10.5.16.4]) by get-mta-out02.get.basefarm.net
+ (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
+ with ESMTP id <0KK800EFV09TKMD0@get-mta-out02.get.basefarm.net> for
+ git@vger.kernel.org; Tue, 26 May 2009 00:10:41 +0200 (MEST)
+Received: from alpha.localnet ([84.215.102.95])
+ by get-mta-in02.get.basefarm.net
+ (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
+ with ESMTP id <0KK800KNB09PPS90@get-mta-in02.get.basefarm.net> for
+ git@vger.kernel.org; Tue, 26 May 2009 00:10:41 +0200 (MEST)
+X-PMX-Version: 5.5.3.366731, Antispam-Engine: 2.7.0.366912,
+ Antispam-Data: 2009.5.25.214352
+User-Agent: KMail/1.11.3 (Linux/2.6.29-ARCH; KDE/4.2.3; x86_64; ; )
+In-reply-to: <7vmy91vxqc.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119969>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119970>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+On Monday 25 May 2009, Junio C Hamano wrote:
+> Johan Herland <johan@herland.net> writes:
+> > I haven't received any replies to my attempt to describe the context in
+> > which "git submodule update --merge" is useful. A hint as to whether my
+> > argument is valid, or just crap, would be nice.
+>
+> FWIW, I didn't find "rebase makes sense but merge doesn't" argument very
+> convincing to begin with.  Because the configuration variable is about
+> "update" action, I agree it makes sense to do
+>
+> >   submodule.<name>.update = checkout/rebase (checkout if unset)
+>
+> from the UI standpoint.
+>
+> I do not know what the sensible repertoire of options nor what the
+> default should be, though.  That's up to the submodule using people to
+> sort out.
 
---1547844168-1819914988-1243288404=:2147
-Content-Type: TEXT/PLAIN; CHARSET=ISO-8859-15
-Content-Transfer-Encoding: 8BIT
-Content-ID: <alpine.LNX.2.00.0905251755031.2147@iabervon.org>
+I suggest the default should be whatever "git submodule update" does today, 
+which is what I've called 'checkout' above (i.e. it simply checks out the 
+submodule commit, which naturally detaches the head).
 
-On Mon, 25 May 2009, Thomas Spura wrote:
+If you prefer, I can split my previous patch in two; one that fixes the 
+config variable, and one that adds "submodule update --merge", so that they 
+can be evaluated separately. Hmm?
 
-> Am Mon, 25 May 2009 22:16:02 +0200 schrieb Björn Steinbrink:
-> 
-> > On 2009.05.25 19:44:10 +0000, Thomas Spura wrote:
-> >> Move a char and a char * outside of a for loop for speed improvements
-> >> 
-> >> Signed-off-by: Thomas Spura <tomspur@fedoraproject.org> ---
-> >> Comments?
-> >> 
-> >>  transport.c |    7 +++----
-> >>  1 files changed, 3 insertions(+), 4 deletions(-)
-> >> 
-> >> diff --git a/transport.c b/transport.c index 17891d5..e350937 100644
-> >> --- a/transport.c
-> >> +++ b/transport.c
-> >> @@ -263,11 +263,10 @@ static int write_refs_to_temp_dir(struct strbuf
-> >> *temp_dir,
-> >>  		int refspec_nr, const char **refspec)
-> >>  {
-> >>  	int i;
-> >> +	unsigned char sha1[20];
-> >> +	char *ref;
-> >>  
-> >>  	for (i = 0; i < refspec_nr; i++) {
-> >> -		unsigned char sha1[20];
-> >> -		char *ref;
-> >> -
-> > 
-> > I doubt that this makes any difference at all.
-> 
-> With ints, the loop costs about 40% of speed. Without recreation, it 
-> should be always faster.
 
-Actually, having the variables go out of scope should be at least as fast. 
-The compiler doesn't actually do anything to make the old variable
-inaccessible and get a new variable; with the variable uninitialized, it's 
-legitimate for the compiler to simply reuse the same storage for all 
-iterations. Futhermore, with the variables declared inside the loop, the 
-compiler is allowed to make optimizations that would fail to preserve 
-those variables between iterations. There are probably no such 
-optimizations in this code for it to make, but, in general, letting 
-variables in loops go out of scope (in C) only improves optimization 
-possibilities.
+Have fun! :)
 
-	-Daniel
-*This .sig left intentionally blank*
---1547844168-1819914988-1243288404=:2147--
+...Johan
+
+-- 
+Johan Herland, <johan@herland.net>
+www.herland.net
