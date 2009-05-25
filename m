@@ -1,94 +1,109 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+From: Chani <chanika@gmail.com>
 Subject: Re: partial checkouts
-Date: Mon, 25 May 2009 11:51:46 +1000
-Message-ID: <fcaeb9bf0905241851i768b4c5bl9bca9faeb12ff4a@mail.gmail.com>
-References: <200905231401.11651.chanika@gmail.com> <fcaeb9bf0905231907q16160ad1t8aa8ef71e2adc8b0@mail.gmail.com> 
-	<18071eea0905240857x2433e7a1x5776def3209afbf5@mail.gmail.com>
+Date: Sun, 24 May 2009 20:07:18 -0700
+Message-ID: <200905242007.26575.chanika@gmail.com>
+References: <200905231401.11651.chanika@gmail.com> <200905231726.10361.chanika@gmail.com> <32541b130905241245m7139c766v73f6fe2aeda1fcf9@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Chani <chanika@gmail.com>, git@vger.kernel.org
-To: Thomas Adam <thomas.adam22@gmail.com>
-X-From: git-owner@vger.kernel.org Mon May 25 03:53:42 2009
+Content-Type: multipart/signed;
+  boundary="nextPart1626251.8PqAF4jZmc";
+  protocol="application/pgp-signature";
+  micalg=pgp-sha1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Avery Pennarun <apenwarr@gmail.com>
+X-From: git-owner@vger.kernel.org Mon May 25 05:08:24 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M8PNi-0007xq-HG
-	for gcvg-git-2@gmane.org; Mon, 25 May 2009 03:53:38 +0200
+	id 1M8QY3-0008G0-Kv
+	for gcvg-git-2@gmane.org; Mon, 25 May 2009 05:08:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754079AbZEYBwH convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 24 May 2009 21:52:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753862AbZEYBwG
-	(ORCPT <rfc822;git-outgoing>); Sun, 24 May 2009 21:52:06 -0400
-Received: from an-out-0708.google.com ([209.85.132.249]:43524 "EHLO
-	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753184AbZEYBwE convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 24 May 2009 21:52:04 -0400
-Received: by an-out-0708.google.com with SMTP id d40so6538328and.1
-        for <git@vger.kernel.org>; Sun, 24 May 2009 18:52:06 -0700 (PDT)
+	id S1752099AbZEYDIQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 24 May 2009 23:08:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752052AbZEYDIP
+	(ORCPT <rfc822;git-outgoing>); Sun, 24 May 2009 23:08:15 -0400
+Received: from rv-out-0506.google.com ([209.85.198.233]:36445 "EHLO
+	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752023AbZEYDIO (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 24 May 2009 23:08:14 -0400
+Received: by rv-out-0506.google.com with SMTP id f9so945748rvb.1
+        for <git@vger.kernel.org>; Sun, 24 May 2009 20:08:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=EABsCb8J6/eWhsErSZMmeJA6m5QkL4Td3YOaPudJUvw=;
-        b=ds6aHHVx6RsBUDra2IAMG0BMGfwmU9T93rXcDNt+yi5Idvu/tFx/FNojzxDfy6xg4M
-         ituJw03O+3a4VZq75GOXwjwyIAlJWH3lLWYxMQT0LmPGsYZXxQK1eMs8+Uk3cIkRFjz6
-         inIgSXws+/CfiWPa2usI4iqkH7OzvjIEpZ+sk=
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:references:in-reply-to:cc:mime-version:content-type
+         :content-transfer-encoding:message-id;
+        bh=dYvI5B00+CjclK+lM1A368wA5OuhUZOlWOTZs++khy4=;
+        b=x4yEiumfAX7+K83UarYoj1l2T81W9faVxg8Jvs9TnKjb6dDpa4Kq8HTnuP+gENH1vn
+         CH+D+GG85OmDWrR/eVpVmQOcSoeVfpeVWTIm1Cq1I0s2HTOYuffVuNLViTmJ6eIpfpzx
+         RJYXdBhufe7+GjWzV2rQ80RDrr4Yp9hHHr3cc=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=k0I7TRwEopOLhJBC600oEvMca1HBVCK2ts73IFy4sLlbcMUPZRsYD/O0KFBGY4Llzr
-         eRPSa0U6CLMirS8DKaSmfm9/1T2SSKV/4YdvGA4wp3pz6aETUDHnc5Wf4UU/dcFDsFow
-         DWhE01AXog1KTmlbRcedc2dTVSZ4h0DpZlLyA=
-Received: by 10.100.126.15 with SMTP id y15mr11048459anc.14.1243216326097; 
-	Sun, 24 May 2009 18:52:06 -0700 (PDT)
-In-Reply-To: <18071eea0905240857x2433e7a1x5776def3209afbf5@mail.gmail.com>
+        h=from:to:subject:date:user-agent:references:in-reply-to:cc
+         :mime-version:content-type:content-transfer-encoding:message-id;
+        b=gt1vTbTf9QP1XVAgfqx2RR6tZgGx0yQCS8fcBoLeT8ukJ2yeOqD9u5hxrX52Mnxyzx
+         ZBCSZszTq8RG4v7l74gkEialgVUHcdambCHF6bz5nLgleN7uYptOeUbjTZTiSNrE22j/
+         VVjunkbqKhLWDShZfPFtVnrWJBv/Rwt4j4aV4=
+Received: by 10.143.39.13 with SMTP id r13mr2115386wfj.33.1243220894636;
+        Sun, 24 May 2009 20:08:14 -0700 (PDT)
+Received: from brain.localnet ([96.49.70.32])
+        by mx.google.com with ESMTPS id 30sm7999937wff.29.2009.05.24.20.08.13
+        (version=SSLv3 cipher=RC4-MD5);
+        Sun, 24 May 2009 20:08:14 -0700 (PDT)
+User-Agent: KMail/1.11.90 (Linux/2.6.27-ARCH; KDE/4.2.87; i686; svn-970258; 2009-05-17)
+In-Reply-To: <32541b130905241245m7139c766v73f6fe2aeda1fcf9@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119882>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119883>
 
-On Mon, May 25, 2009 at 1:57 AM, Thomas Adam <thomas.adam22@gmail.com> =
-wrote:
-> 2009/5/24 Nguyen Thai Ngoc Duy <pclouds@gmail.com>:
->> On Sun, May 24, 2009 at 7:00 AM, Chani <chanika@gmail.com> wrote:
->>> checking out the entire git repo isn't really feasible, because onc=
-e KDE
->>> finishes switching to git that'll mean checking out all of KDE.
->>> I don't think that turning every doc folder into a submodule is fea=
-sible,
->>> either - they sound kinda awkward to work with, and I can imagine l=
-ots of
->>> people getting confused and messing them up...
->>
->> If you don't mind cloning the entire git repo (which may be quite
->> large in KDE case, I guess), then you may want to try "sparse
->> checkout". The patch series is available as a topic branch "tp/sco" =
-in
->> this branch:
->>
->> http://repo.or.cz/w/git/pclouds.git?a=3Dshortlog;h=3Drefs/heads/inst
->>
->> Or I can send the patch series to you. It lets you specify what part
->> of the tree you want to checkout.
+--nextPart1626251.8PqAF4jZmc
+Content-Type: Text/Plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+
+> >>
+> >> Check out git-subtree. It can split out a subdirectory into its own
+> >> repo, and re-integrate it back into the "parent" repo at a later date.
+> >> git-subtree has been posted as a patch to this list a couple of times
+> >> without much response, but it looks like an interesting alternative to
+> >> submodules: http://alumnit.ca/~apenwarr/log/?m=3D200904#30
+> >
+> > looks interesting. might have been a solution until I heard about this
+> > requirement to not change workflow at all. :/
 >
-> I recall following this series when you first announced it. =C2=A0Do =
-you
-> have any plans to try and get it included in mainline? =C2=A0ISTR the=
-re was
-> some more work needed to be done on it before then.
+> Here's something that might work.  Write a script that runs on a
+> server somewhere.  It checks out *all* of the git-managed KDE
+> components, including documentation (it's okay to do this from *one*
+> place, right?).  Then it loops through all the documentation
+> subdirectories and splits them out into individual projects/branches
+> with 'git subtree split'.
+>
 
-It was pulled off because of big, intrusive and not well-designed patch=
-es.
+I like this idea. I like the idea of git subtree in general. :)
+however, we've decided to go the "copy all documentation into svn" route fo=
+r=20
+now (so that the translators can keep using only svn).
+I'll be back when we run into the next svn-external issue (there's sure to =
+be=20
+more). :)
 
-http://mid.gmane.org/20081128192033.GF23984@spearce.org
+=2D-=20
+This message brought to you by eevil bananas and the number 3.
+www.chani3.com
 
-I may submit it again when I get code insertions down to ~500 lines or
-something like that ;-) Anyway you could always help by giving more
-use cases to test against the current design.
---=20
-Duy
+--nextPart1626251.8PqAF4jZmc
+Content-Type: application/pgp-signature; name=signature.asc 
+Content-Description: This is a digitally signed message part.
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
+
+iEYEABECAAYFAkoaC2cACgkQeGbAwpIS3GwcVACgwzcWQujdja3UpqVfE6P6whq4
+ww4AoNdrbyEhY8RqOF2Le13vONuz5UYM
+=449u
+-----END PGP SIGNATURE-----
+
+--nextPart1626251.8PqAF4jZmc--
