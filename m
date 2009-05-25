@@ -1,62 +1,82 @@
-From: Wincent Colaiuta <win@wincent.com>
-Subject: Re: Araxis in mergetool, was Re: What's cooking in git.git (May 2009, #03; Mon, 25)
-Date: Mon, 25 May 2009 11:31:30 +0200
-Message-ID: <695E5CDA-CB26-44C9-B8B0-8215E16728F2@wincent.com>
-References: <7vd49xy42b.fsf@alter.siamese.dyndns.org> <alpine.DEB.1.00.0905251050050.4288@intel-tinevez-2-302>
-Mime-Version: 1.0 (Apple Message framework v930.3)
-Content-Type: text/plain; charset=ISO-8859-1;
-	format=flowed	delsp=yes
+From: Asger Ottar Alstrup <asger@area9.dk>
+Subject: Re: git subtree as a solution to partial cloning?
+Date: Mon, 25 May 2009 11:33:57 +0200
+Message-ID: <8873ae500905250233t52dce5b5v8ca88b9921a88437@mail.gmail.com>
+References: <8873ae500905250021p20e7096dwf5bc71c36c4047b@mail.gmail.com>
+	 <32541b130905250059n7b31cc1bk688e5f4bfaf83142@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Mon May 25 11:32:11 2009
+Cc: git@vger.kernel.org, Alexander Gavrilov <angavrilov@gmail.com>
+To: Avery Pennarun <apenwarr@gmail.com>
+X-From: git-owner@vger.kernel.org Mon May 25 11:34:07 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M8WXS-0001Ps-BG
-	for gcvg-git-2@gmane.org; Mon, 25 May 2009 11:32:10 +0200
+	id 1M8WZK-000225-Gq
+	for gcvg-git-2@gmane.org; Mon, 25 May 2009 11:34:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753698AbZEYJb4 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 25 May 2009 05:31:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753485AbZEYJb4
-	(ORCPT <rfc822;git-outgoing>); Mon, 25 May 2009 05:31:56 -0400
-Received: from wincent1.inetu.net ([209.235.192.161]:49441 "EHLO
-	wincent1.inetu.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752611AbZEYJbz convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 25 May 2009 05:31:55 -0400
-Received: from cuzco.lan (156.pool85-53-12.dynamic.orange.es [85.53.12.156])
-	(authenticated bits=0)
-	by wincent1.inetu.net (8.13.8/8.13.8) with ESMTP id n4P9VUOk004827
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
-	Mon, 25 May 2009 05:31:54 -0400
-In-Reply-To: <alpine.DEB.1.00.0905251050050.4288@intel-tinevez-2-302>
-X-Mailer: Apple Mail (2.930.3)
+	id S1752181AbZEYJd6 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 25 May 2009 05:33:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752163AbZEYJd5
+	(ORCPT <rfc822;git-outgoing>); Mon, 25 May 2009 05:33:57 -0400
+Received: from mail-ew0-f176.google.com ([209.85.219.176]:46337 "EHLO
+	mail-ew0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751550AbZEYJd5 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 25 May 2009 05:33:57 -0400
+Received: by ewy24 with SMTP id 24so2944906ewy.37
+        for <git@vger.kernel.org>; Mon, 25 May 2009 02:33:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:sender:received:in-reply-to
+         :references:date:x-google-sender-auth:message-id:subject:from:to:cc
+         :content-type:content-transfer-encoding;
+        bh=kEuEesEAEHyi5R6bb94iEKwYAtEtPLjSA9pJmDzsJOc=;
+        b=expnQHvd5gSugEWrOatQz/lyYP22vc6zLQEmp7JfgWKoNwROjCWEon1b3/EVfWSB5Q
+         f5wrGFuMalzFD2kEVlxNFHOoSskGmlJgCIResW7lr3oldDP+SZVrxsRfTr/PMr0Vw5Bo
+         nsHJmTS88NEZgsmEYRUCQaVJGzz3Y7JXZJJyw=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:sender:in-reply-to:references:date
+         :x-google-sender-auth:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        b=Ra8HdKw/7Bt9V4wLQCEE3HU4HKd8EI9K1yiedo3cB8zmCI8FuAFf/h7oMye6VY/3c1
+         QltYj2Fc42lquBD2o0qMns2foy2tr3c2zaicE0jfkACzp+qOEm6c5QfdVPXozWocwGZP
+         PGxC+tSQtFIAQN/uf7icWXDHAp/mfg3mK4zCY=
+Received: by 10.216.0.81 with SMTP id 59mr1546155wea.77.1243244037758; Mon, 25 
+	May 2009 02:33:57 -0700 (PDT)
+In-Reply-To: <32541b130905250059n7b31cc1bk688e5f4bfaf83142@mail.gmail.com>
+X-Google-Sender-Auth: 63303545ec7f88e7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119907>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119908>
 
-El 25/5/2009, a las 10:54, Johannes Schindelin escribi=F3:
-
-> Hi,
+On Mon, May 25, 2009 at 9:59 AM, Avery Pennarun <apenwarr@gmail.com> wr=
+ote:
+> On Mon, May 25, 2009 at 3:21 AM, Asger Ottar Alstrup <asger@area9.dk>=
+ wrote:
+>> Does git subtree support splitting at the file level, or only at dir=
+ectory
+>> level?
 >
-> On Mon, 25 May 2009, Junio C Hamano wrote:
->
->> * da/araxis-mergetool (Sun May 24 00:24:41 2009 +0000) 1 commit
->> + mergetool--lib: add support for araxis merge
->>
->> I admit that I feel certain distaste in supporting a closed tool, =20
->> but we
->> already make things bearable for people on Windows; Araxis is no =20
->> worse,
->> right?
->
-> Well, I think it is the first closed-source tool that we support
+> Currently only at the directory level. =A0In theory, there's nothing
+> stopping us from working with any subset of files... but it's really
+> much simpler this way (both to code and to explain) so I'd much rathe=
+r
+> leave it as is. =A0Can you reorganize your tree so that you divide th=
+e
+> needed files into different subdirectories?
 
-No, to my knowledge Apple FileMerge isn't open source either and it's =20
-supported.
+No, that is unfortunately not so easy. If we could, I suppose we could
+use submodules instead.
 
-Cheers,
-Wincent
+Are the subtree split and merge operations effective? I.e. how do they
+scale with the size of the original and reduced repositories? I.e. is
+it feasible to use hooks to automate the splitting and merging
+whenever there are changes in the original or reduced repositories?
+
+Regards,
+Asger
