@@ -1,49 +1,46 @@
-From: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
+From: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <rene.scharfe@lsrfire.ath.cx>
 Subject: Re: [PATCH] speed: reuse char instead of recreation in loop
-Date: Mon, 25 May 2009 22:16:02 +0200
-Message-ID: <20090525201602.GA18471@atjola.homenet>
+Date: Mon, 25 May 2009 22:39:05 +0200
+Message-ID: <4A1B01E9.30601@lsrfire.ath.cx>
 References: <pan.2009.05.25.19.44.10@fedoraproject.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
 To: Thomas Spura <tomspur@fedoraproject.org>
-X-From: git-owner@vger.kernel.org Mon May 25 22:16:18 2009
+X-From: git-owner@vger.kernel.org Mon May 25 22:39:33 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M8gan-0000bh-6I
-	for gcvg-git-2@gmane.org; Mon, 25 May 2009 22:16:17 +0200
+	id 1M8gxI-0003r8-9l
+	for gcvg-git-2@gmane.org; Mon, 25 May 2009 22:39:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752350AbZEYUQH convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 25 May 2009 16:16:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751551AbZEYUQF
-	(ORCPT <rfc822;git-outgoing>); Mon, 25 May 2009 16:16:05 -0400
-Received: from mail.gmx.net ([213.165.64.20]:44321 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751483AbZEYUQE (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 May 2009 16:16:04 -0400
-Received: (qmail invoked by alias); 25 May 2009 20:16:04 -0000
-Received: from i59F55D76.versanet.de (EHLO atjola.local) [89.245.93.118]
-  by mail.gmx.net (mp036) with SMTP; 25 May 2009 22:16:04 +0200
-X-Authenticated: #5039886
-X-Provags-ID: V01U2FsdGVkX1/9dVEIM6H9KZTURXNGatebRC2vQSVAux0VrdsRNr
-	BoZ7BTqiDjWkDp
-Content-Disposition: inline
+	id S1751793AbZEYUjS convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 25 May 2009 16:39:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751781AbZEYUjR
+	(ORCPT <rfc822;git-outgoing>); Mon, 25 May 2009 16:39:17 -0400
+Received: from india601.server4you.de ([85.25.151.105]:55007 "EHLO
+	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751711AbZEYUjR (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 May 2009 16:39:17 -0400
+Received: from [10.0.1.101] (p57B7E11B.dip.t-dialin.net [87.183.225.27])
+	by india601.server4you.de (Postfix) with ESMTPSA id 9496D2F805B;
+	Mon, 25 May 2009 22:39:17 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.21 (Windows/20090302)
 In-Reply-To: <pan.2009.05.25.19.44.10@fedoraproject.org>
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.51
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119961>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119962>
 
-On 2009.05.25 19:44:10 +0000, Thomas Spura wrote:
+Thomas Spura schrieb:
 > Move a char and a char * outside of a for loop for speed improvements
->=20
+
+It's a good idea to include actual timings, to give the reader a better
+idea what operation is sped up and by how much.
+
 > Signed-off-by: Thomas Spura <tomspur@fedoraproject.org>
 > ---
 > Comments?
@@ -58,6 +55,10 @@ On 2009.05.25 19:44:10 +0000, Thomas Spura wrote:
 > @@ -263,11 +263,10 @@ static int write_refs_to_temp_dir(struct strbuf=
 =20
 > *temp_dir,
+
+Please turn off automatic line wrapping in your email program when
+sending patches (at least for the patch part).
+
 >  		int refspec_nr, const char **refspec)
 >  {
 >  	int i;
@@ -69,7 +70,11 @@ On 2009.05.25 19:44:10 +0000, Thomas Spura wrote:
 > -		char *ref;
 > -
 
-I doubt that this makes any difference at all.
+I wouldn't expect this to significantly change the object code.
+Declaring variables in as narrow a scope as possible often helps to mak=
+e
+the code more readable, though.  write_refs_to_temp_dir() is short
+enough, so it doesn't matter in this case, though.
 
 >  		if (dwim_ref(refspec[i], strlen(refspec[i]), sha1, &ref) !
 > =3D 1)
@@ -83,7 +88,11 @@ I doubt that this makes any difference at all.
 > -		free(ref);
 >  	}
 > +	free(ref);
+>  	return 0;
+>  }
 
-And this now leaks memory.
+This introduces a memory leak.  The string pointed to by ref is
+allocated by dwim_ref() and needs to be free()'d after use, and -- more
+importantly -- before ref is assigned its next value by dwim_ref().
 
-Bj=F6rn
+Ren=C3=A9
