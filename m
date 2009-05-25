@@ -1,72 +1,60 @@
-From: Jeff Brown <jeff@jeffandbetsy.net>
-Subject: tracking committer vs. author
-Date: Mon, 25 May 2009 16:20:02 -0500
-Message-ID: <bbd12f0f0905251420l1ab63ca5y32589a4451064b9a@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon May 25 23:20:41 2009
+From: Samuel Bronson <naesten@gmail.com>
+Subject: [PATCH 1/3] Documentation/Makefile: add a commented-out ' to unconfuse Emacs
+Date: Mon, 25 May 2009 18:07:09 -0400
+Message-ID: <1243289231-32500-1-git-send-email-naesten@gmail.com>
+Cc: git@vger.kernel.org, Samuel Bronson <naesten@gmail.com>
+To: gitster@pobox.com
+X-From: git-owner@vger.kernel.org Tue May 26 00:08:01 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M8hb5-0002To-Sz
-	for gcvg-git-2@gmane.org; Mon, 25 May 2009 23:20:40 +0200
+	id 1M8iKv-0003Kc-9p
+	for gcvg-git-2@gmane.org; Tue, 26 May 2009 00:08:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753460AbZEYVUD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 25 May 2009 17:20:03 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753409AbZEYVUD
-	(ORCPT <rfc822;git-outgoing>); Mon, 25 May 2009 17:20:03 -0400
-Received: from mail-fx0-f168.google.com ([209.85.220.168]:57007 "EHLO
-	mail-fx0-f168.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751998AbZEYVUC (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 May 2009 17:20:02 -0400
-Received: by fxm12 with SMTP id 12so1605919fxm.37
-        for <git@vger.kernel.org>; Mon, 25 May 2009 14:20:03 -0700 (PDT)
-Received: by 10.204.65.65 with SMTP id h1mr7359232bki.18.1243286402937; Mon, 
-	25 May 2009 14:20:02 -0700 (PDT)
+	id S1753032AbZEYWHW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 25 May 2009 18:07:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752463AbZEYWHU
+	(ORCPT <rfc822;git-outgoing>); Mon, 25 May 2009 18:07:20 -0400
+Received: from smtp02.lnh.mail.rcn.net ([207.172.157.102]:52679 "EHLO
+	smtp02.lnh.mail.rcn.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751976AbZEYWHT (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 May 2009 18:07:19 -0400
+Received: from mr08.lnh.mail.rcn.net ([207.172.157.28])
+  by smtp02.lnh.mail.rcn.net with ESMTP; 25 May 2009 18:07:20 -0400
+Received: from smtp01.lnh.mail.rcn.net (smtp01.lnh.mail.rcn.net [207.172.4.11])
+	by mr08.lnh.mail.rcn.net (MOS 3.10.5-GA)
+	with ESMTP id KWP43128;
+	Mon, 25 May 2009 18:07:20 -0400 (EDT)
+Received: from 207-172-203-39.c3-0.upd-ubr7.trpr-upd.pa.cable.rcn.com (HELO hydrogen) ([207.172.203.39])
+  by smtp01.lnh.mail.rcn.net with ESMTP; 25 May 2009 18:07:20 -0400
+Received: from naesten by hydrogen with local (Exim 4.69)
+	(envelope-from <naesten@gmail.com>)
+	id 1M8iKE-0008So-Nr; Mon, 25 May 2009 18:07:18 -0400
+X-Mailer: git-send-email 1.6.3.1
+X-Junkmail-Whitelist: YES (by domain whitelist at mr08.lnh.mail.rcn.net)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119965>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119966>
 
-I have noticed that when we pull changes from non-committers into our
-repo, sometimes meta information about who committed the change to the
-repo is included along side info about who actually wrote the changes.
- For example, see
-http://github.com/grails/grails/commit/8ac450c37d16b0468ba0f92d3008968fd6a41a75
-and note that graemerocher has commit privileges to the repo but
-ihotary does not.  ihatory's commit was pulled in by graemerocher.
+Signed-off-by: Samuel Bronson <naesten@gmail.com>
+---
+ Documentation/Makefile |    1 +
+ 1 files changed, 1 insertions(+), 0 deletions(-)
 
-The commit at http://github.com/grails/grails/commit/ff770359d152683d5794887cd743a10ce7d04501
-was also authored by a non committer.  I pulled that change in myself
-this evening.  Notice that there is no info displayed there to
-indicate that I (jeffbrown) am the person who pushed that change into
-the repo.
-
-I don't know what was done differently for those 2 scenarios but both
-of those commits were authored by folks who do not have commit
-privileges to the repo at
-http://github.com/grails/grails/commits/master.
-
-I don't think this is a github issue.  If I am wrong, please let me know.
-
-If I want to track not only who authored the commit but also who
-pushed it into the repo (like you see at
-http://github.com/grails/grails/commit/8ac450c37d16b0468ba0f92d3008968fd6a41a75),
-what is the procedure for making that happen?
-
-
-
-jb
-
+diff --git a/Documentation/Makefile b/Documentation/Makefile
+index 7a8037f..f5d670e 100644
+--- a/Documentation/Makefile
++++ b/Documentation/Makefile
+@@ -106,6 +106,7 @@ endif
+ SHELL_PATH ?= $(SHELL)
+ # Shell quote;
+ SHELL_PATH_SQ = $(subst ','\'',$(SHELL_PATH))
++# unconfuse Emacs: '
+ 
+ #
+ # Please note that there is a minor bug in asciidoc.
 -- 
-Jeff Brown
-SpringSource
-http://www.springsource.com/
-
-Autism Strikes 1 in 166
-Find The Cause ~ Find The Cure
-http://www.autismspeaks.org/
+1.6.3.1
