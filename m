@@ -1,191 +1,131 @@
-From: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-Subject: [PATCH 1/2] git-am foreign patch support: format autodetection
-Date: Mon, 25 May 2009 21:14:05 +0200
-Message-ID: <1243278846-14120-2-git-send-email-giuseppe.bilotta@gmail.com>
-References: <1243278846-14120-1-git-send-email-giuseppe.bilotta@gmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon May 25 21:14:31 2009
+From: Avery Pennarun <apenwarr@gmail.com>
+Subject: Re: git subtree as a solution to partial cloning?
+Date: Mon, 25 May 2009 15:18:50 -0400
+Message-ID: <32541b130905251218w10e43b85v489f6018366058d4@mail.gmail.com>
+References: <8873ae500905250021p20e7096dwf5bc71c36c4047b@mail.gmail.com> 
+	<32541b130905250059n7b31cc1bk688e5f4bfaf83142@mail.gmail.com> 
+	<8873ae500905250233t52dce5b5v8ca88b9921a88437@mail.gmail.com> 
+	<32541b130905250850h75f905e0t84287f897600187f@mail.gmail.com> 
+	<8873ae500905251035v64084e83wa1a89a562d20224a@mail.gmail.com> 
+	<32541b130905251054k44bdb218sde8837e87d8e8e69@mail.gmail.com> 
+	<8873ae500905251128h1921895dp6ef227e0e0bbec49@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Alexander Gavrilov <angavrilov@gmail.com>
+To: Asger Ottar Alstrup <asger@area9.dk>
+X-From: git-owner@vger.kernel.org Mon May 25 21:19:37 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M8fcx-0002ls-NU
-	for gcvg-git-2@gmane.org; Mon, 25 May 2009 21:14:28 +0200
+	id 1M8fhu-0004p0-Qy
+	for gcvg-git-2@gmane.org; Mon, 25 May 2009 21:19:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752863AbZEYTOP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 25 May 2009 15:14:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752794AbZEYTOO
-	(ORCPT <rfc822;git-outgoing>); Mon, 25 May 2009 15:14:14 -0400
-Received: from mail-fx0-f168.google.com ([209.85.220.168]:47103 "EHLO
-	mail-fx0-f168.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752472AbZEYTOM (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 May 2009 15:14:12 -0400
-Received: by mail-fx0-f168.google.com with SMTP id 12so1539209fxm.37
-        for <git@vger.kernel.org>; Mon, 25 May 2009 12:14:14 -0700 (PDT)
+	id S1753363AbZEYTTL convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 25 May 2009 15:19:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752563AbZEYTTK
+	(ORCPT <rfc822;git-outgoing>); Mon, 25 May 2009 15:19:10 -0400
+Received: from yx-out-2324.google.com ([74.125.44.28]:35990 "EHLO
+	yx-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752538AbZEYTTI convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 25 May 2009 15:19:08 -0400
+Received: by yx-out-2324.google.com with SMTP id 3so1950448yxj.1
+        for <git@vger.kernel.org>; Mon, 25 May 2009 12:19:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer:in-reply-to:references;
-        bh=tgIjAXgn1RxpD+Z6NvNxCGmPCQptXZTUlO5eVqpUomE=;
-        b=Z+g0/4+Bo8m2FuNMNnt5Owe0VNDhhZTzMGVZs1gaJRyGdcb0Fgx35Tv6OkTuzpRpZt
-         Y1VBlG1mw3FOOiZEVpVrzHZ92j2OSwj3VeBZ1iLh2bjQCi0kTiV/yt8Kc0KoYTjKFItN
-         IpdBZO1hAM7W0lezhnVvAC2DoxiKEsJu0WhWE=
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=oUY8gDM3KsPcZuatCnf1cZv9IoMYxqpzMqO8+5ZlWOA=;
+        b=kUtuBpUH7QOza6eg544kf6q6ksFb5pseOnq3uXDdxKygB2K+UUud6LA0mAlEVQWAVy
+         qyV9aGfLPIaGarh5OB8nP3cOCd/D2UcFqz/4QhG7dwF3JtYm2G8VJCHFF5egJ8HesHtq
+         shEBSgkGBByZsbkuSrxX4XKAiE6mVzHpx0bJ8=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=pnA8TH3uftHAsLiclREy2nrLZJ9UgDK72HAQ9K0TeubyGp5qBda0DGdjYKl71ys7l4
-         RT3WQdqh0YDCabkZfZwmYB0coMV7uSuOt5DLD0M78iXDAozW9Y3vmG8mNfCMFZA9icl9
-         e8mNl+VwMiXtZ21LBfSAdKgS4+JNby1F8BDuI=
-Received: by 10.103.161.16 with SMTP id n16mr3864943muo.79.1243278854044;
-        Mon, 25 May 2009 12:14:14 -0700 (PDT)
-Received: from localhost (host-78-15-9-104.cust-adsl.tiscali.it [78.15.9.104])
-        by mx.google.com with ESMTPS id j10sm9350532muh.15.2009.05.25.12.14.12
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 25 May 2009 12:14:13 -0700 (PDT)
-X-Mailer: git-send-email 1.6.3.1.245.g4529.dirty
-In-Reply-To: <1243278846-14120-1-git-send-email-giuseppe.bilotta@gmail.com>
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=rfTKPyjahBaCkgf/h1G94dfvFeESfGgB3rH/aKRKYa2I0Dz2yQ4HK44BGbLiUpDnZn
+         vGFYiJSZw6qVCbqQLDM3GWQwRMOUOeOsjeJPplzMA5w2j7WF+xe5l9uMlGF0LJcdvXRa
+         pJ1ly0LqN9kPtqS07id2ZIFAgggFPQ5X70214=
+Received: by 10.151.134.2 with SMTP id l2mr14920735ybn.105.1243279150086; Mon, 
+	25 May 2009 12:19:10 -0700 (PDT)
+In-Reply-To: <8873ae500905251128h1921895dp6ef227e0e0bbec49@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119955>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119956>
 
-This patch is the first step towards the introduction of a framework to
-allow git-am to import patches not in mailbox format.
+On Mon, May 25, 2009 at 2:28 PM, Asger Ottar Alstrup <asger@area9.dk> w=
+rote:
+> On Mon, May 25, 2009 at 7:54 PM, Avery Pennarun <apenwarr@gmail.com> =
+wrote:
+>> On Mon, May 25, 2009 at 1:35 PM, Asger Ottar Alstrup <asger@area9.dk=
+> wrote:
+>>> So a poor mans system could work like this:
+>>>
+>>> - A reduced repository is defined by a list of paths in a file, I
+>>> guess with a format similar to .gitignore
+>>
+>> Are you sure you want to define the list with exclusions instead of
+>> inclusions? =A0I don't really know your use case.
+>
+> Since the .gitignore format supports !, I believe that should not mak=
+e
+> much of a difference.
+>
+>> Anyway, if you're using git filter-branch, it'll be up to you to fix
+>> the index to contain the list of files you want. (See man
+>> git-filter-branch)
+>
+> Yes, sure, and that is why I asked whether there is some tool in git
+> that can give a list of concrete files surviving a .gitignore list of
+> patterns.
 
-Currently detected formats are
-  * the mailbox format itself, which is assumed by default if input is
-    form stdin
-  * Mercurial's output from 'hg export'
-  * Stacked Git's output from 'stg export' with the default export
-    template; StGIT patch series are also detected and expanded.
+Well, the problem here is with the definition of "concrete file."  If
+you're using git filter-branch --index-filter (which is much faster
+than --tree-filter), then your trees won't be checked out at all.  And
+thus there is the open question of exactly what list of files you want
+to use.  It's unlikely that any existing tool will do it exactly the
+way you want (although I could be wrong).
 
-Signed-off-by: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
----
- git-am.sh |  108 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++--
- 1 files changed, 105 insertions(+), 3 deletions(-)
+In any case, what you'd probably do is something like git ls-files
+--cached | perlscript, where your perlscript does whatever you want to
+the file list.
 
-diff --git a/git-am.sh b/git-am.sh
-index 578780b..3508b7e 100755
---- a/git-am.sh
-+++ b/git-am.sh
-@@ -274,10 +274,112 @@ else
- 		done
- 		shift
- 	fi
--	git mailsplit -d"$prec" -o"$dotest" -b -- "$@" > "$dotest/last" ||  {
--		rm -fr "$dotest"
-+
-+	# format of the patch(es) to be processed. we assume they are all
-+	# of the same kind
-+	patch_format=none
-+
-+	# from stdin we only accept mboxes, because peeking at stdin
-+	# to detect the format is destructive
-+	case $# in
-+	0)
-+		patch_format=mbox
-+		;;
-+	1)
-+		if test x"$1" = x"-"
-+		then
-+			# stdin, so assume mbox
-+			patch_format=mbox
-+		else
-+# a single non-stdin argument was passed, check if it's a StGit patch series
-+# index by checking if the first line begins with '# This series'
-+			{
-+				read l1
-+				case "$l1" in
-+				'# This series '*)
-+# replace the argument list with the files listed in the series index,
-+# prefixing them with the series index dirname, skipping comment lines
-+					series_dir=`dirname "$1"`
-+					while read filename
-+					do
-+						set "$@" "$series_dir/$filename"
-+					done
-+					# remove the series index name
-+					shift
-+					# set the patch format appropriately
-+					patch_format=stgit
-+					;;
-+				*)
-+					;;
-+				esac
-+			} < "$1"
-+		fi
-+		;;
-+	*)
-+		;;
-+	esac
-+
-+	# if the format is not defined yet, we can look at the first patch
-+	# (which is not stdin) to try to understand the format.
-+	if test $patch_format = none
-+	then
-+		echo "$patch_format"
-+		# if it's a directory, assume mbox format
-+		# TODO we could suppot StGIT patch series here too
-+		if test -d "$1"
-+		then
-+			patch_format=mbox
-+		else
-+			# read the first four lines
-+			{
-+				read l1
-+				read l2
-+				read l3
-+				read l4
-+			} < "$1"
-+			case "$l1" in
-+			"# HG changeset patch")
-+				patch_format=hg
-+				;;
-+			From\ *)
-+				patch_format=mbox
-+				;;
-+			From:\ *)
-+				patch_format=mbox
-+				;;
-+			*)
-+				# if the second and fourth lines are empty,
-+				# this might be an StGIT patch
-+				if test x"$l2$l4" = x
-+				then
-+					case "$l3" in
-+						From:\ *)
-+							patch_format=stgit
-+							;;
-+						Author:\ *)
-+							patch_format=stgit
-+							;;
-+						*)
-+							;;
-+					esac
-+				fi
-+				;;
-+			esac
-+		fi
-+	fi
-+
-+	case "$patch_format" in
-+	mbox)
-+		git mailsplit -d"$prec" -o"$dotest" -b -- "$@" > "$dotest/last" ||  {
-+			rm -fr "$dotest"
-+			exit 1
-+		}
-+		;;
-+	*)
-+		echo "Patch format $patch_format is not currently handled, sorry"
- 		exit 1
--	}
-+		;;
-+	esac
- 
- 	# -s, -u, -k, --whitespace, -3, -C and -p flags are kept
- 	# for the resuming session after a patch failure.
--- 
-1.6.3.1.245.g4529.dirty
+> Thanks. OK, I see now that filter-branch will not destroy the origina=
+l
+> repository. That is not at all obvious from reading the man page, whe=
+n
+> the very first sentence says that it will rewrite history. But the
+> main point of this exercise is to reduce the size of the reduced
+> repository so that it can be transferred effectively. So after
+> filter-branch, I guess I would run clone afterwards to make the new,
+> smaller repository, and then the question becomes: Will clone reuse
+> and prune packs intelligently?
+
+filter-branch will destroy the history of the current branch.  But if
+you make a new branch first, you'll be okay.
+
+You seem to be giving the concept of "packs" a bit too much weight.
+Packs are just groups of objects.  AFAIK, cloning and fetching
+generally produces entirely new packs for each client.
+
+clone is quite intelligent; in fact, if you clone the repository on
+your local machine, it's so intelligent that it'll hardlink the packs
+instead of copying them and it'll take virtually no space at all!
+
+But you don't need to copy the whole repository unless you want to.
+You can retrieve just the one, stripped-down branch from a client with
+something like this:
+
+   mkdir myproj
+   cd myproj
+   git init
+   git fetch server:whatever.git my-stripped-down-branchname
+   git checkout -b master FETCH_HEAD
+
+Have fun,
+
+Avery
