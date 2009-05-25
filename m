@@ -1,62 +1,98 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 1/2] merge-file fails to output anything for a degenerate
- merge
-Date: Mon, 25 May 2009 09:52:05 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.0905250951120.26154@pacific.mpi-cbg.de>
-References: <1243210874-18451-1-git-send-email-charles@hashpling.org> <1243210874-18451-2-git-send-email-charles@hashpling.org>
+From: Avery Pennarun <apenwarr@gmail.com>
+Subject: Re: git subtree as a solution to partial cloning?
+Date: Mon, 25 May 2009 03:59:12 -0400
+Message-ID: <32541b130905250059n7b31cc1bk688e5f4bfaf83142@mail.gmail.com>
+References: <8873ae500905250021p20e7096dwf5bc71c36c4047b@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Charles Bailey <charles@hashpling.org>
-X-From: git-owner@vger.kernel.org Mon May 25 09:51:55 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Alexander Gavrilov <angavrilov@gmail.com>
+To: Asger Ottar Alstrup <asger@area9.dk>
+X-From: git-owner@vger.kernel.org Mon May 25 09:59:41 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M8UyR-0003qv-GN
-	for gcvg-git-2@gmane.org; Mon, 25 May 2009 09:51:55 +0200
+	id 1M8V5w-0006rp-Bp
+	for gcvg-git-2@gmane.org; Mon, 25 May 2009 09:59:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753235AbZEYHvg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 25 May 2009 03:51:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753275AbZEYHvf
-	(ORCPT <rfc822;git-outgoing>); Mon, 25 May 2009 03:51:35 -0400
-Received: from mail.gmx.net ([213.165.64.20]:40643 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752242AbZEYHvf (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 May 2009 03:51:35 -0400
-Received: (qmail invoked by alias); 25 May 2009 07:51:35 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp013) with SMTP; 25 May 2009 09:51:35 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19VEjgW0nZV9vNr33nagmk+1PISpjoS5wL+fOLVpw
-	OFJEqt1NB8h0/g
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <1243210874-18451-2-git-send-email-charles@hashpling.org>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.65
+	id S1751756AbZEYH7b (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 25 May 2009 03:59:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751387AbZEYH7b
+	(ORCPT <rfc822;git-outgoing>); Mon, 25 May 2009 03:59:31 -0400
+Received: from mail-gx0-f166.google.com ([209.85.217.166]:41734 "EHLO
+	mail-gx0-f166.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751015AbZEYH7a (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 May 2009 03:59:30 -0400
+Received: by gxk10 with SMTP id 10so5369727gxk.13
+        for <git@vger.kernel.org>; Mon, 25 May 2009 00:59:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=m7DNKMtJE1qTeZiLD5oHj3quZipYzzbXV6UIKoOGTAg=;
+        b=NwvVvCl4JMYXctyjN9t8006MxorO/Mik76I5DprkCQwNVL+TFh0yLQL/rQtXljZaJo
+         CG/KMBbvuZNr3NfkL3/Gzm+lYzGFnLW9oJfJpo3mC08nHS/C3nCumN7wwQ8806gSryso
+         /g8g8KgWqS834Uy0lqEbBfguD3Bl+Hy8tDy5c=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=dQAEJCqp6TbOzfu000cFBJLyRBgY4j6F30XjGX3TZMxYzmreynrXdI4KolrKjO9PBK
+         hcjiypaOreDhuPd94BdIcyfBD6PcLJNkGbZIya2MmuCVkr1WB0dSxnOe/8cIdBcO/QPj
+         kg1Et7VYDlAqfzueJNpV2+u28H7T1PVzLpQyU=
+Received: by 10.151.131.3 with SMTP id i3mr13634988ybn.206.1243238372053; Mon, 
+	25 May 2009 00:59:32 -0700 (PDT)
+In-Reply-To: <8873ae500905250021p20e7096dwf5bc71c36c4047b@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119898>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119899>
 
-Hi,
+On Mon, May 25, 2009 at 3:21 AM, Asger Ottar Alstrup <asger@area9.dk> wrote:
+> I am considering different ways to get git to handle repositories with very
+> big files in a setup where partial clone is required, and it seems git
+> subtree might be a part of the solution.
 
-On Mon, 25 May 2009, Charles Bailey wrote:
+Well, that wasn't really what it was originally made for... but perhaps.
 
-> In the case that merge-file is passed three files with identical
-> contents it wipes the contents of the output file instead of
-> leaving it unchanged.
-> 
-> Althought merge-file is porcelain and this will never happen in
-> normal usage, it is still wrong.
-> 
-> Signed-off-by: Charles Bailey <charles@hashpling.org>
+> Does git subtree support splitting at the file level, or only at directory
+> level?
 
-Your patch is good, but I'd like to have it mention in the commit subject 
-that this is not a fix, but a patch to the test suite.  A prefix "t6023:" 
-would suffice, methinks.
+Currently only at the directory level.  In theory, there's nothing
+stopping us from working with any subset of files... but it's really
+much simpler this way (both to code and to explain) so I'd much rather
+leave it as is.  Can you reorganize your tree so that you divide the
+needed files into different subdirectories?
 
-Thanks,
-Dscho
+> Also, how are conflicts handled when you subtree merge changes back
+> to the master?
+
+'git subtree split' generates a new commit history on top of the *most
+recently merged* commit from the subproject.  To merge back into the
+subproject, you would take that newly-generated commit and do the
+usual "git merge".  (ie. you'll have to check out the branch and merge
+it as usual)
+
+Alternatively, you could 'git subtree pull' the subproject first,
+resolve the conflicts there, and  'git subtree split' after that; in
+such a case, the newly-generated commit would be a fast-forward from
+the original subproject's HEAD, so it would be okay to push right away
+without switching branches first.
+
+(Someone else suggested that we add a 'git subtree push' command to
+make the split-then-push sequence nice and obvious; I think that's a
+good idea and pretty easy.)
+
+> Can the
+> reduced split repositories reuse pack files from the original repository?
+
+Yes, all the tree and blob objects are identical between the two
+repositories (except that the superproject has more of them, of
+course).
+
+Have fun,
+
+Avery
