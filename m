@@ -1,113 +1,95 @@
-From: Jan Engelhardt <jengelh@medozas.de>
-Subject: Re: Git produces Unidiff - Does it really?
-Date: Mon, 25 May 2009 11:48:38 +0200 (CEST)
-Message-ID: <alpine.LSU.2.00.0905251117340.27529@fbirervta.pbzchgretzou.qr>
-References: <alpine.LSU.2.00.0905250105410.22963@fbirervta.pbzchgretzou.qr> <7v4ov9zwtt.fsf@alter.siamese.dyndns.org>
+From: David Aguilar <davvid@gmail.com>
+Subject: Re: Araxis in mergetool, was Re: What's cooking in git.git (May
+	2009, #03; Mon, 25)
+Date: Mon, 25 May 2009 02:50:45 -0700
+Message-ID: <20090525095044.GA13411@gmail.com>
+References: <7vd49xy42b.fsf@alter.siamese.dyndns.org> <alpine.DEB.1.00.0905251050050.4288@intel-tinevez-2-302>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon May 25 11:48:55 2009
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Mon May 25 11:51:52 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M8WnW-0007x1-9p
-	for gcvg-git-2@gmane.org; Mon, 25 May 2009 11:48:46 +0200
+	id 1M8WqW-0000ZS-8N
+	for gcvg-git-2@gmane.org; Mon, 25 May 2009 11:51:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752781AbZEYJsj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 25 May 2009 05:48:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752298AbZEYJsi
-	(ORCPT <rfc822;git-outgoing>); Mon, 25 May 2009 05:48:38 -0400
-Received: from sovereign.computergmbh.de ([85.214.69.204]:41830 "EHLO
-	sovereign.computergmbh.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751649AbZEYJsh (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 May 2009 05:48:37 -0400
-Received: by sovereign.computergmbh.de (Postfix, from userid 25121)
-	id 3F006D0CD67; Mon, 25 May 2009 11:48:38 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
-	by sovereign.computergmbh.de (Postfix) with ESMTP id 3CA1443C8D14;
-	Mon, 25 May 2009 11:48:38 +0200 (CEST)
-In-Reply-To: <7v4ov9zwtt.fsf@alter.siamese.dyndns.org>
-User-Agent: Alpine 2.00 (LSU 1167 2008-08-23)
+	id S1753966AbZEYJuy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 25 May 2009 05:50:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753301AbZEYJuy
+	(ORCPT <rfc822;git-outgoing>); Mon, 25 May 2009 05:50:54 -0400
+Received: from mail-px0-f103.google.com ([209.85.216.103]:56687 "EHLO
+	mail-px0-f103.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753626AbZEYJux (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 May 2009 05:50:53 -0400
+Received: by pxi1 with SMTP id 1so2486195pxi.33
+        for <git@vger.kernel.org>; Mon, 25 May 2009 02:50:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=uS0harS61V0evzfDzYJMpJqz2IgeiTzQoSwAPX7wZCc=;
+        b=TBmmxbYHt2ngueq+snQDBAzOkaLRzdE/aiOkKtVF6cpqRXANnuMTYFoqPTTvteXl6b
+         IMQfg741ndIdWUvMGFhdvtelU0KRZRSHo8wvxeslvMDkv3nXriZIC7B9eje2yE3EgixO
+         7OY2jD1ojPnZwNgHkrJwDSeWhaoEAZRM+3knk=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=Devb0ZmbsAaQqeoQTZBB/BAMW62SPbbe/v2BVC6ibOSbb8BibkV46MrW2OUkaZMvDA
+         AWGA0uZbNL2A31tLgfJQz86CeHwtcbiKUig8SRfyfSSCzPGlCuMrshyhnQBiAiyco+M+
+         VhVVozCueX4ozeMWyTaUCfyGSwqaStwanG8g0=
+Received: by 10.114.154.1 with SMTP id b1mr14550368wae.77.1243245054500;
+        Mon, 25 May 2009 02:50:54 -0700 (PDT)
+Received: from gmail.com (208-106-56-2.static.dsltransport.net [208.106.56.2])
+        by mx.google.com with ESMTPS id l28sm6210578waf.54.2009.05.25.02.50.53
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 25 May 2009 02:50:53 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <alpine.DEB.1.00.0905251050050.4288@intel-tinevez-2-302>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119911>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119912>
 
+On Mon, May 25, 2009 at 10:54:43AM +0200, Johannes Schindelin wrote:
+> Hi,
+> 
+> On Mon, 25 May 2009, Junio C Hamano wrote:
+> 
+> > * da/araxis-mergetool (Sun May 24 00:24:41 2009 +0000) 1 commit
+> >  + mergetool--lib: add support for araxis merge
+> > 
+> > I admit that I feel certain distaste in supporting a closed tool, but we
+> > already make things bearable for people on Windows; Araxis is no worse,
+> > right?
+> 
+> Well, I think it is the first closed-source tool that we support, and I 
+> would feel less unhappy if somebody reported back that she tested it and 
+> it works fine.
+> 
+> For the future, it might be better if mergetool could be configured using 
+> /etc/gitconfig to call the merge helper properly.  Then we would not need 
+> to clutter git.git with properietary stuff, but could just have the 
+> Windows-specific handling in Git for Windows.
 
-On Monday 2009-05-25 05:27, Junio C Hamano wrote:
->Jan Engelhardt writes:
->
->> Any insights?
->
->[...]
->For example, "rcsdiff -u" shows something like:
->
->    diff -u -r1.1 -r1.2
->    --- Make        1995/01/08 20:50:24     1.1
->    +++ Make        2001/10/04 07:14:29     1.2
->    @@ -1,7 +1,11 @@
->     #!/bin/sh
->    -...
->It has cruft after the timestamp, and the timestamp itself is not even in
->the format POSIX expects to see (see
-> http://www.opengroup.org/onlinepubs/9699919799/utilities/diff.html#tag_20_34_10_07
->if you really care).
->
->Is it in violation of POSIX unified context format?  Of course yes.  Is it
->then not in unified context format at all?
->
->For all practical purposes, if you (either you human or your tool) know
->how to read unified context format, you can process what we (or RCS)
->produce.
->I used RCS as an example because it has been maintained by the same person
->who maintains "GNU diff" and was one of the main player who pushed
->"unified context" format to the updated POSIX.
->
+I have the same reservations.
 
-Here is a random patch; not that I am fond of it, but it
-speaks in code at least.
-Tear it apar! :)
+When I first picked up mergetool it supported ecmerge.
+ecmerge is also closed which is why I reasoned that it was ok
+to try and win over Windows users.
 
+It should be possible to configure it today using
+/etc/gitconfig, so we might be best served going down the
+add-an-entry-to-the-git-wiki route next time; provided
+Windows paths and shell-quoting doesn't drive us mad when
+writing it, of course ;)
 
-parent 9619ff14159ab3401636b9883a715b0f20b051df (v1.6.3.1-152-g9619ff1)
-commit 9d73395d1c08d2fc4e1b740c2d37d8daed7cb3e6
-Author: Jan Engelhardt <jengelh@medozas.de>
-Date:   Mon May 25 11:40:34 2009 +0200
-
-diff: produce TSVN-acceptable diff
-
-Once TortoiseSVNMerge sees a \t after the filename in a --- line,
-it accepts a patch. (Not that t
-So let's produce patches with said \t, and a $ so the \t does not
-get chopped off by incompetent tools or overlooked otherwise.
----
- diff.c |    4 ++--
- 1 files changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/diff.c b/diff.c
-index f06876b..55cb974 100644
---- a/diff.c
-+++ b/diff.c
-@@ -324,7 +324,7 @@ static void emit_rewrite_diff(const char *name_a,
- 	lc_a = count_lines(data_one, size_one);
- 	lc_b = count_lines(data_two, size_two);
- 	fprintf(o->file,
--		"%s--- %s%s%s\n%s+++ %s%s%s\n%s@@ -",
-+		"%s--- %s%s%s\t$\n%s+++ %s%s%s\n%s@@ -",
- 		metainfo, a_name.buf, name_a_tab, reset,
- 		metainfo, b_name.buf, name_b_tab, reset, fraginfo);
- 	print_line_count(o->file, lc_a);
-@@ -637,7 +637,7 @@ static void fn_out_consume(void *priv, char *line, unsigned long len)
- 		name_a_tab = strchr(ecbdata->label_path[0], ' ') ? "\t" : "";
- 		name_b_tab = strchr(ecbdata->label_path[1], ' ') ? "\t" : "";
- 
--		fprintf(ecbdata->file, "%s--- %s%s%s\n",
-+		fprintf(ecbdata->file, "%s--- %s%s%s\t$\n",
- 			meta, ecbdata->label_path[0], reset, name_a_tab);
- 		fprintf(ecbdata->file, "%s+++ %s%s%s\n",
- 			meta, ecbdata->label_path[1], reset, name_b_tab);
 -- 
-# Created with git-export-patch
+
+	David
