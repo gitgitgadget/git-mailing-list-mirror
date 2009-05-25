@@ -1,106 +1,128 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Git produces Unidiff - Does it really?
-Date: Sun, 24 May 2009 20:27:10 -0700
-Message-ID: <7v4ov9zwtt.fsf@alter.siamese.dyndns.org>
-References: <alpine.LSU.2.00.0905250105410.22963@fbirervta.pbzchgretzou.qr>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: [PATCH v0 3/3] Build in git-rebase.sh
+Date: Mon, 25 May 2009 08:16:13 +0200
+Message-ID: <4A1A37AD.4080309@viscovery.net>
+References: <1242899229-27603-1-git-send-email-pclouds@gmail.com> <1242899229-27603-2-git-send-email-pclouds@gmail.com> <1242899229-27603-3-git-send-email-pclouds@gmail.com> <4A164C85.3000703@viscovery.net> <fcaeb9bf0905220030l45e1b7dfqd30f35b7c8e43b51@mail.gmail.com> <20090523092603.GA7420@dektop> <20090523145042.GA13139@dektop>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Jan Engelhardt <jengelh@medozas.de>
-X-From: git-owner@vger.kernel.org Mon May 25 05:28:48 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Brandon Casey <casey@nrlsrc.navy.mil>
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Mon May 25 08:16:58 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M8Qrn-00051M-Th
-	for gcvg-git-2@gmane.org; Mon, 25 May 2009 05:28:48 +0200
+	id 1M8TUX-0007gA-E3
+	for gcvg-git-2@gmane.org; Mon, 25 May 2009 08:16:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751772AbZEYD1K (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 24 May 2009 23:27:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751580AbZEYD1K
-	(ORCPT <rfc822;git-outgoing>); Sun, 24 May 2009 23:27:10 -0400
-Received: from fed1rmmtao106.cox.net ([68.230.241.40]:35000 "EHLO
-	fed1rmmtao106.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750849AbZEYD1J (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 24 May 2009 23:27:09 -0400
-Received: from fed1rmimpo03.cox.net ([70.169.32.75])
-          by fed1rmmtao106.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20090525032711.WHJM25927.fed1rmmtao106.cox.net@fed1rmimpo03.cox.net>;
-          Sun, 24 May 2009 23:27:11 -0400
-Received: from localhost ([68.225.240.211])
-	by fed1rmimpo03.cox.net with bizsmtp
-	id vfTA1b00E4aMwMQ04fTAMe; Sun, 24 May 2009 23:27:10 -0400
-X-Authority-Analysis: v=1.0 c=1 a=dvCLD_nRVvgA:10 a=LCMQ-0ShYWwA:10
- a=uZvujYp8AAAA:8 a=0dMwXjx9bwxo7ISuhGwA:9 a=R4r7oCh7h67yHrL97kUA:7
- a=uCjODzMeL32LZkCiQZsR-dTVw7EA:4 a=bAv3psboLzYA:10
-X-CM-Score: 0.00
-In-Reply-To: <alpine.LSU.2.00.0905250105410.22963@fbirervta.pbzchgretzou.qr> (Jan Engelhardt's message of "Mon\, 25 May 2009 01\:15\:43 +0200 \(CEST\)")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+	id S1752193AbZEYGQ1 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 25 May 2009 02:16:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752102AbZEYGQ0
+	(ORCPT <rfc822;git-outgoing>); Mon, 25 May 2009 02:16:26 -0400
+Received: from lilzmailso02.liwest.at ([212.33.55.13]:36452 "EHLO
+	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751963AbZEYGQZ convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 25 May 2009 02:16:25 -0400
+Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
+	by lilzmailso02.liwest.at with esmtpa (Exim 4.69)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1M8TTp-0001Ia-Hh; Mon, 25 May 2009 08:16:20 +0200
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.96])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id 4D4DA54D; Mon, 25 May 2009 08:16:13 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.21 (Windows/20090302)
+In-Reply-To: <20090523145042.GA13139@dektop>
+X-Enigmail-Version: 0.95.5
+X-Spam-Score: -1.4 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119884>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119885>
 
-Jan Engelhardt <jengelh@medozas.de> writes:
+Nguyen Thai Ngoc Duy schrieb:
+> On Sat, May 23, 2009 at 07:26:03PM +1000, Nguyen Thai Ngoc Duy wrote:
+>> On Fri, May 22, 2009 at 05:30:31PM +1000, Nguyen Thai Ngoc Duy wrote=
+:
+>>> 2009/5/22 Johannes Sixt <j.sixt@viscovery.net>:
+>>>> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy schrieb:
+>>>>> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds=
+@gmail.com>
+>>>> Is it possible for you to test this series on Windows? Many rebase=
+ tests
+>>>> fail, but I haven't investigated why.
+>>> I'll try it this weekend.
+>> This patch makes t3*rebase*.sh pass for me except t3412 (more exactl=
+y
+>> t3412.8). That test failed even with git-rebase.sh. Hmm... Anyway
+>> could you try again to see what tests still fail?
+>=20
+> Someone with better Windows knowledge than me should explain how this=
+ works. Windows'
+> snprintf() just cuts out the last character in this statement:
+>=20
+> snprintf(buf, 8, "--%s", "onto"); // result: '--ont', expected: '--on=
+to'
 
-> Any insights?
+This doesn't happen for me: neither with Windows's original snprintf no=
+r
+with the version from compat/. Are you using the latest msysgit
+environment to compile, i.e. gcc 4.4? There was a change regarding
+SNPRINTF_SIZE_CORR; perhaps that's the culprit?
 
-We have "index ..." and other metainformation (most noticeable when
-renames and mode changes are involved) before any hunk begins.  POSIX
-unified context format of course would not know about them either.
+I don't undertand what this patch does, anyway. Where is the detail tha=
+t I
+am missing?
 
-In the context of git, file modification time often does not have a
-defined meaning.  If you are comparing two arbitrary tree objects (or two
-arbitrary blob objects), there is no concept of "timestamp of the preimage
-and the postimage".  If you are comparing two commits, you _could_ show
-the timestamps of the commits, but that is misleading and useless
-information.  The paths being shown may not have been changed by the newer
-commit being compared, but by some other commit in-between the two commits
-(and even that is not guaranteed --- the two commits may not have any
-ancestry relationship, and/or the clock of the committer who made one of
-these commits may have had skews).
+> All rebase tests now pass for me on Windows (Vista something, I have
+> yet to find where it hides its "uname" command)
 
-The enhancements and ommissions were chosen not to confuse tools that
-people use to process patches.  The metainformation headers are safely
-ignored by "patch", for example (of course "patch" does not know about
-renames yet, but that can be fixed later).  Even though "patch" _can_
-optionally set the timestamp of the affected files, nobody sane would do
-so in the context of source code control (it will screw up "make").
+They also pass for me with your earlier fix-up patch, but with or witho=
+ut
+this patch to compat/snprintf.c.
 
-The answer to your question depends on how anal you would want to be, but
-no, we fundamentally cannot produce "unidiff -- _really_" in the "POSIX
-unified context format" without losing useful information (renames and
-modes) nor without adding information that is meaningless (timestamps).
-
-But on the other hand, you can say what we produce is in unified context
-format to the same extent that RCS and CVS produces unified when given -u
-option (i.e. "rcsdiff -u", "cvs diff -u").
-
-For example, "rcsdiff -u" shows something like:
-
-    diff -u -r1.1 -r1.2
-    --- Make        1995/01/08 20:50:24     1.1
-    +++ Make        2001/10/04 07:14:29     1.2
-    @@ -1,7 +1,11 @@
-     #!/bin/sh
-    -...
-
-It has cruft after the timestamp, and the timestamp itself is not even in
-the format POSIX expects to see (see
-
- http://www.opengroup.org/onlinepubs/9699919799/utilities/diff.html#tag_20_34_10_07
-
-if you really care).
-
-Is it in violation of POSIX unified context format?  Of course yes.  Is it
-then not in unified context format at all?
-
-For all practical purposes, if you (either you human or your tool) know
-how to read unified context format, you can process what we (or RCS)
-produce.
-
-I used RCS as an example because it has been maintained by the same person
-who maintains "GNU diff" and was one of the main player who pushed
-"unified context" format to the updated POSIX.
+> diff --git a/compat/snprintf.c b/compat/snprintf.c
+> index 357e733..1cea768 100644
+> --- a/compat/snprintf.c
+> +++ b/compat/snprintf.c
+> @@ -13,7 +13,7 @@
+>  int git_vsnprintf(char *str, size_t maxsize, const char *format, va_=
+list ap)
+>  {
+>  	char *s;
+> -	int ret =3D -1;
+> +	int size, ret =3D -1;
+> =20
+>  	if (maxsize > 0) {
+>  		ret =3D vsnprintf(str, maxsize-SNPRINTF_SIZE_CORR, format, ap);
+> @@ -26,18 +26,19 @@ int git_vsnprintf(char *str, size_t maxsize, cons=
+t char *format, va_list ap)
+>  		return ret;
+> =20
+>  	s =3D NULL;
+> -	if (maxsize < 128)
+> -		maxsize =3D 128;
+> +	size =3D maxsize < 128 ? 128 : maxsize;
+> =20
+>  	while (ret =3D=3D -1) {
+> -		maxsize *=3D 4;
+> -		str =3D realloc(s, maxsize);
+> -		if (! str)
+> +		size *=3D 4;
+> +		s =3D realloc(s, size);
+> +		if (!s)
+>  			break;
+> -		s =3D str;
+> -		ret =3D vsnprintf(str, maxsize-SNPRINTF_SIZE_CORR, format, ap);
+> -		if (ret =3D=3D maxsize-1)
+> +		s =3D s;
+> +		ret =3D vsnprintf(s, size-SNPRINTF_SIZE_CORR, format, ap);
+> +		if (ret =3D=3D size-1)
+>  			ret =3D -1;
+> +		else
+> +			memcpy(str, s, maxsize-1);
+>  	}
+>  	free(s);
+>  	return ret;
