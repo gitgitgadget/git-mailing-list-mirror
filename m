@@ -1,219 +1,76 @@
-From: Michele Ballabio <barra_cuda@katamail.com>
-Subject: [PATCH] gitk: update Italian translation
-Date: Mon, 25 May 2009 15:13:07 +0200
-Message-ID: <200905251513.07564.barra_cuda@katamail.com>
+From: Rocco Rutte <pdmef@gmx.net>
+Subject: Re: hg2git error
+Date: Mon, 25 May 2009 15:22:42 +0200
+Message-ID: <20090525132242.GB3259@robert>
+References: <alpine.DEB.1.00.0905241932301.26154@pacific.mpi-cbg.de>
+ <20090525113418.GA3259@robert>
+ <alpine.DEB.1.00.0905251341370.4288@intel-tinevez-2-302>
 Mime-Version: 1.0
-Content-Type: Multipart/Mixed;
-  boundary="Boundary-00=_jlpGK+4fZmS7xtp"
-Cc: Git Mailing List <git@vger.kernel.org>
-To: paulus@samba.org
-X-From: git-owner@vger.kernel.org Mon May 25 15:14:30 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Matthias Urlichs <smurf@smurf.noris.de>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Mon May 25 15:23:01 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M8a0U-0005Ve-W5
-	for gcvg-git-2@gmane.org; Mon, 25 May 2009 15:14:23 +0200
+	id 1M8a8q-0000gt-HS
+	for gcvg-git-2@gmane.org; Mon, 25 May 2009 15:23:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751935AbZEYNNr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 25 May 2009 09:13:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752164AbZEYNNr
-	(ORCPT <rfc822;git-outgoing>); Mon, 25 May 2009 09:13:47 -0400
-Received: from smtp.katamail.com ([62.149.157.154]:33731 "HELO smtp2.aruba.it"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with SMTP
-	id S1751820AbZEYNNq (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 May 2009 09:13:46 -0400
-Received: (qmail 30260 invoked by uid 89); 25 May 2009 13:13:36 -0000
-X-Spam-Checker-Version: SpamAssassin 3.2.3 (2007-08-08) on smtp2-pc
-X-Spam-Level: *
-X-Spam-Status: No, score=1.1 required=5.0 tests=BAYES_50,RDNS_NONE
-	autolearn=no version=3.2.3
-Received: from unknown (HELO host38-57-dynamic.104-80-r.retail.telecomitalia.it) (barra?cuda@katamail.com@80.104.57.38)
-  by smtp2-pc with SMTP; 25 May 2009 13:13:31 -0000
-User-Agent: KMail/1.9.10
+	id S1753042AbZEYNWq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 25 May 2009 09:22:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752192AbZEYNWq
+	(ORCPT <rfc822;git-outgoing>); Mon, 25 May 2009 09:22:46 -0400
+Received: from mail.gmx.net ([213.165.64.20]:37920 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751249AbZEYNWp (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 May 2009 09:22:45 -0400
+Received: (qmail invoked by alias); 25 May 2009 13:22:44 -0000
+Received: from dslb-094-222-114-239.pools.arcor-ip.net (EHLO robert) [94.222.114.239]
+  by mail.gmx.net (mp050) with SMTP; 25 May 2009 15:22:44 +0200
+X-Authenticated: #1642131
+X-Provags-ID: V01U2FsdGVkX180uYBZ06I0lRvYfs85JlKTFB23CURsOATQ1PvBGS
+	9JuiazbY8nNWOS
+Mail-Followup-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Matthias Urlichs <smurf@smurf.noris.de>, git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <alpine.DEB.1.00.0905251341370.4288@intel-tinevez-2-302>
+User-Agent: Mutt/1.5.19 (2009-05-15)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.64
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119934>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119935>
 
---Boundary-00=_jlpGK+4fZmS7xtp
-Content-Type: text/plain;
-  charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-Content-Disposition: inline
+Hi,
 
-Patch attached.
+* Johannes Schindelin wrote:
+> On Mon, 25 May 2009, Rocco Rutte wrote:
+> > * Johannes Schindelin wrote:
 
---Boundary-00=_jlpGK+4fZmS7xtp
-Content-Type: application/x-gzip;
-  name="0001-gitk-update-Italian-translation.patch.gz"
-Content-Transfer-Encoding: base64
-Content-Disposition: attachment;
-	filename="0001-gitk-update-Italian-translation.patch.gz"
+> > > Error: repository has at least one unnamed head: hg r533
 
-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
-z/4PGurOuoJ/AAA=
+> > I'm afraid there's nothing you can do except a) wait until somebody with
+> > push access to the repo merges or b) do that yourself. The error means
+> > that on a branch there's more than one head (i.e. childless
+> > revision). There's no equivalent concept in git which is why I don't
+> > know what to do. Generating fake branch names for git may be a little
+> > messy I think.
 
---Boundary-00=_jlpGK+4fZmS7xtp--
+> I disagree... The worst solution is to stop working at all.  A better 
+> solution would be to ignore the unnamed head, and the best solution would 
+> probably be to generate ref names that are _not_ branch names for such 
+> heads.
+
+Both solutions require refactoring and new code that is abled to walk
+the DAG mercurial gives us since in both cases we'd need to find the
+fork point. I don't know mercurials good enough to say if and how much
+its API can help here.
+
+I don't use git any longer and do only fix obvious breakages for
+hg-fast-export, read: since this is a new feature I'm afraid I won't
+implement it.
+
+Rocco
