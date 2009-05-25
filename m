@@ -1,70 +1,67 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [RFC PATCH] am: do not do any reset on --abort
-Date: Mon, 25 May 2009 08:00:19 -0400
-Message-ID: <20090525120019.GA1740@coredump.intra.peff.net>
-References: <20090525104308.GA26775@coredump.intra.peff.net> <alpine.DEB.1.00.0905251348050.4288@intel-tinevez-2-302>
+From: Tay Ray Chuan <rctay89@gmail.com>
+Subject: Re: [PATCH 02/18] http-push, http-walker: style fixes
+Date: Mon, 25 May 2009 20:03:55 +0800
+Message-ID: <be6fef0d0905250503s8a6facax94dc19ff4a462b70@mail.gmail.com>
+References: <20090524221941.8670c41d.rctay89@gmail.com>
+	 <7v7i06ut92.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Mon May 25 14:00:31 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Mike Hommey <mh@glandium.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon May 25 14:04:52 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M8Yr0-0002zl-9Z
-	for gcvg-git-2@gmane.org; Mon, 25 May 2009 14:00:30 +0200
+	id 1M8YvA-0004pb-83
+	for gcvg-git-2@gmane.org; Mon, 25 May 2009 14:04:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751633AbZEYMAV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 25 May 2009 08:00:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751547AbZEYMAV
-	(ORCPT <rfc822;git-outgoing>); Mon, 25 May 2009 08:00:21 -0400
-Received: from peff.net ([208.65.91.99]:55811 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751525AbZEYMAV (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 May 2009 08:00:21 -0400
-Received: (qmail 4260 invoked by uid 107); 25 May 2009 12:00:23 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Mon, 25 May 2009 08:00:23 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Mon, 25 May 2009 08:00:19 -0400
-Content-Disposition: inline
-In-Reply-To: <alpine.DEB.1.00.0905251348050.4288@intel-tinevez-2-302>
+	id S1751982AbZEYMEG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 25 May 2009 08:04:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751951AbZEYMEG
+	(ORCPT <rfc822;git-outgoing>); Mon, 25 May 2009 08:04:06 -0400
+Received: from wa-out-1112.google.com ([209.85.146.180]:17689 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751737AbZEYMEE (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 May 2009 08:04:04 -0400
+Received: by wa-out-1112.google.com with SMTP id j5so700295wah.21
+        for <git@vger.kernel.org>; Mon, 25 May 2009 05:04:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=XaqpgNB3yF+mn/sBu+ZKC1Ni3clKlTCcCSyuTsEi/Cg=;
+        b=lXxu8EOWsYfxrwpc3qdnBSkvEVtCwSn0/tjEyi5EK/tewuiyZ8P/QieFgbfU0FsPkR
+         haIxvK7zFxyUAvQRVKu46DtHrrlHNN0lvkJZ+ORG1oVzKzbWc/s4jT9HJzYqEMSOsLB2
+         SKTCSREDd3eyboPo7KUt/DqUk/a6HSeumNAlY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=UImxLzZgxXm0c/zcArJBrk6JmDSf+rAb8Hktv7L3Quf2n7ULjhzEpu/59MJ6PwMzVb
+         VOcPCwfGZqyL4dBdtRJh7nfx6YDihMb0sOsdqZP6ZBTWqrFSktlXsJAJjUThJzjUBCsG
+         /wVbgluVzy2B72kHiGOvvc5+UjzJ2q006Fs9A=
+Received: by 10.114.182.1 with SMTP id e1mr13945304waf.163.1243253035225; Mon, 
+	25 May 2009 05:03:55 -0700 (PDT)
+In-Reply-To: <7v7i06ut92.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119928>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119929>
 
-On Mon, May 25, 2009 at 01:49:18PM +0200, Johannes Schindelin wrote:
+Hi,
 
-> > We really have no idea what state the tree is in at this
-> > point, and whether the user might have done useful work on
-> > top of it. So let's err on the side of keeping the user's
-> > data intact.
-> > 
-> > The downside is that if they do have cruft to get rid of, or
-> > want to pretend as if earlier parts of the series that were
-> > applied did not exist, they must manually "git reset --hard"
-> > now.
-> 
-> Hmm.  I think I would revert that patch after merging git.git right away.
+On Mon, May 25, 2009 at 4:43 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> We need to apply a style fix to your commit messages first.
 
-You know, you can just say you don't like it. ;)
+thanks for taking the time to go through this gargantuan series; your
+suggestions and comments are really appreciated. I'll fix it soon.
 
-> Can you at least check for a dirty tree and reset --hard if it is clean?
-
-No, that would defeat the purpose. The problem is that we have no idea
-what has happened since the initial "git am". The user may have made
-commits they want to keep, and we don't want to reset those away. They
-may even have pulled, which means ORIG_HEAD can no longer be trusted for
-a reset.
-
-> In the other case, you could still say "you seem to have modifications, 
-> bla bla bla"...
-
-I think you raise a good point here. If we do decide to stop doing the
-reset automatically, it is probably better not to simply stop doing it
-(as my patch does), but to downgrade it to a warning ("You probably want
-to reset, etc...").
-
--Peff
+-- 
+Cheers,
+Ray Chuan
