@@ -1,54 +1,72 @@
-From: Thomas Spura <tomspur@fedoraproject.org>
-Subject: Re: [PATCH] speed: reuse char instead of recreation in loop
-Date: Mon, 25 May 2009 20:44:20 +0000 (UTC)
-Message-ID: <pan.2009.05.25.20.44.20@fedoraproject.org>
-References: <pan.2009.05.25.19.44.10@fedoraproject.org>
-	<4A1B01E9.30601@lsrfire.ath.cx>
+From: Jeff Brown <jeff@jeffandbetsy.net>
+Subject: tracking committer vs. author
+Date: Mon, 25 May 2009 16:20:02 -0500
+Message-ID: <bbd12f0f0905251420l1ab63ca5y32589a4451064b9a@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon May 25 22:45:16 2009
+X-From: git-owner@vger.kernel.org Mon May 25 23:20:41 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M8h2p-0005yH-J2
-	for gcvg-git-2@gmane.org; Mon, 25 May 2009 22:45:15 +0200
+	id 1M8hb5-0002To-Sz
+	for gcvg-git-2@gmane.org; Mon, 25 May 2009 23:20:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752338AbZEYUpH convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 25 May 2009 16:45:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751975AbZEYUpH
-	(ORCPT <rfc822;git-outgoing>); Mon, 25 May 2009 16:45:07 -0400
-Received: from main.gmane.org ([80.91.229.2]:37250 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751729AbZEYUpG (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 May 2009 16:45:06 -0400
-Received: from root by ciao.gmane.org with local (Exim 4.43)
-	id 1M8h2d-0002Xz-45
-	for git@vger.kernel.org; Mon, 25 May 2009 20:45:03 +0000
-Received: from p5b20e9ac.dip.t-dialin.net ([91.32.233.172])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 25 May 2009 20:45:03 +0000
-Received: from tomspur by p5b20e9ac.dip.t-dialin.net with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 25 May 2009 20:45:03 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: p5b20e9ac.dip.t-dialin.net
+	id S1753460AbZEYVUD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 25 May 2009 17:20:03 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753409AbZEYVUD
+	(ORCPT <rfc822;git-outgoing>); Mon, 25 May 2009 17:20:03 -0400
+Received: from mail-fx0-f168.google.com ([209.85.220.168]:57007 "EHLO
+	mail-fx0-f168.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751998AbZEYVUC (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 May 2009 17:20:02 -0400
+Received: by fxm12 with SMTP id 12so1605919fxm.37
+        for <git@vger.kernel.org>; Mon, 25 May 2009 14:20:03 -0700 (PDT)
+Received: by 10.204.65.65 with SMTP id h1mr7359232bki.18.1243286402937; Mon, 
+	25 May 2009 14:20:02 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119964>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119965>
 
-Am Mon, 25 May 2009 22:39:05 +0200 schrieb Ren=C3=A9 Scharfe:
-> This introduces a memory leak.  The string pointed to by ref is
-> allocated by dwim_ref() and needs to be free()'d after use, and -- mo=
-re
-> importantly -- before ref is assigned its next value by dwim_ref().
+I have noticed that when we pull changes from non-committers into our
+repo, sometimes meta information about who committed the change to the
+repo is included along side info about who actually wrote the changes.
+ For example, see
+http://github.com/grails/grails/commit/8ac450c37d16b0468ba0f92d3008968fd6a41a75
+and note that graemerocher has commit privileges to the repo but
+ihotary does not.  ihatory's commit was pulled in by graemerocher.
 
-Thanks, sorry for the noise...
+The commit at http://github.com/grails/grails/commit/ff770359d152683d5794887cd743a10ce7d04501
+was also authored by a non committer.  I pulled that change in myself
+this evening.  Notice that there is no info displayed there to
+indicate that I (jeffbrown) am the person who pushed that change into
+the repo.
 
-	Thomas
+I don't know what was done differently for those 2 scenarios but both
+of those commits were authored by folks who do not have commit
+privileges to the repo at
+http://github.com/grails/grails/commits/master.
+
+I don't think this is a github issue.  If I am wrong, please let me know.
+
+If I want to track not only who authored the commit but also who
+pushed it into the repo (like you see at
+http://github.com/grails/grails/commit/8ac450c37d16b0468ba0f92d3008968fd6a41a75),
+what is the procedure for making that happen?
+
+
+
+jb
+
+-- 
+Jeff Brown
+SpringSource
+http://www.springsource.com/
+
+Autism Strikes 1 in 166
+Find The Cause ~ Find The Cure
+http://www.autismspeaks.org/
