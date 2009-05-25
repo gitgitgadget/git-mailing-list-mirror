@@ -1,80 +1,72 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH RESEND] Git.pm: Always set Repository to absolute path
- if autodetecting
-Date: Mon, 25 May 2009 09:33:20 +0200
-Message-ID: <4A1A49C0.7040102@viscovery.net>
-References: <1241703688-6892-1-git-send-email-frank@lichtenheld.de> <1241703688-6892-2-git-send-email-frank@lichtenheld.de>
+From: Asger Ottar Alstrup <asger@area9.dk>
+Subject: git subtree as a solution to partial cloning?
+Date: Mon, 25 May 2009 09:35:38 +0200
+Message-ID: <8873ae500905250035h74fc366ct907998c62e518fcf@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: gitster@pobox.com, Petr Baudis <pasky@suse.cz>, git@vger.kernel.org
-To: Frank Lichtenheld <frank@lichtenheld.de>
-X-From: git-owner@vger.kernel.org Mon May 25 09:34:35 2009
+Cc: Avery Pennarun <apenwarr@gmail.com>,
+	Alexander Gavrilov <angavrilov@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon May 25 09:40:00 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M8UhM-0002Wu-79
-	for gcvg-git-2@gmane.org; Mon, 25 May 2009 09:34:16 +0200
+	id 1M8Ulq-00066u-8V
+	for gcvg-git-2@gmane.org; Mon, 25 May 2009 09:38:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757934AbZEYHdq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 25 May 2009 03:33:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757910AbZEYHdq
-	(ORCPT <rfc822;git-outgoing>); Mon, 25 May 2009 03:33:46 -0400
-Received: from lilzmailso01.liwest.at ([212.33.55.23]:61611 "EHLO
-	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757584AbZEYHdn (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 May 2009 03:33:43 -0400
-Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
-	by lilzmailso01.liwest.at with esmtpa (Exim 4.69)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1M8UgZ-0000Tw-7R; Mon, 25 May 2009 09:33:34 +0200
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.96])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id 09EA754D; Mon, 25 May 2009 09:33:27 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.21 (Windows/20090302)
-Newsgroups: gmane.comp.version-control.git
-In-Reply-To: <1241703688-6892-2-git-send-email-frank@lichtenheld.de>
-X-Spam-Score: -1.4 (-)
+	id S1758670AbZEYHfo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 25 May 2009 03:35:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758742AbZEYHfn
+	(ORCPT <rfc822;git-outgoing>); Mon, 25 May 2009 03:35:43 -0400
+Received: from mail-ew0-f176.google.com ([209.85.219.176]:54231 "EHLO
+	mail-ew0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758652AbZEYHfj (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 May 2009 03:35:39 -0400
+Received: by ewy24 with SMTP id 24so2906349ewy.37
+        for <git@vger.kernel.org>; Mon, 25 May 2009 00:35:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:sender:received:date
+         :x-google-sender-auth:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=kVZutAPzMH2bLJB/9JlPkSJPo5WHYS/6U72XuHp9Fus=;
+        b=dvPrAV2qXyVZLN5NWyJtVisqsyVXoZl9rLIs0yIeBjwyZvvRATNg8an3W1ro71vwNY
+         WsNAob9D4n8DpS+EB6H8XcNw75lhUIqN/0q48XBFMHCOVEzpbDlsbryzjEf5VWbzu47Y
+         E/UfPhA8WM4T4IXwKdSkC8YZPMZADJQLtARLM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:sender:date:x-google-sender-auth:message-id:subject
+         :from:to:cc:content-type:content-transfer-encoding;
+        b=wAN/XzE7mkaVuFVTSzHHeBp+f2soywaB2IRmFl374tTYqapr6UN/rO66dH9LG5Tm+y
+         tOhnk4qZSJCanFbfc1EKgXwdmXtqYhUHP/xdyC9awM8LiaxwWDiBN1mVpnd1JjHOLn65
+         49m13Rq/NJiO85wkv/A28YXQ1V8jlHoHprF88=
+Received: by 10.216.21.205 with SMTP id r55mr1395864wer.175.1243236938998; 
+	Mon, 25 May 2009 00:35:38 -0700 (PDT)
+X-Google-Sender-Auth: 31c3f68a8126bdaa
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119893>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119894>
 
-Frank Lichtenheld schrieb:
-> From: Frank Lichtenheld <flichtenheld@astaro.com>
-> 
-> So far we only set it to absolute paths in some cases which lead
-> to problems like wc_chdir not working.
-> 
-> Signed-off-by: Frank Lichtenheld <flichtenheld@astaro.com>
-> ---
->  perl/Git.pm     |    2 +-
->  t/t9700/test.pl |   10 ++--------
->  2 files changed, 3 insertions(+), 9 deletions(-)
-> 
-> Resent unchanged. There was one comment which I've reponded too and
-> argued that it didn't apply and there was no further objections.
-> 
-> diff --git a/perl/Git.pm b/perl/Git.pm
-> index 4313db7..e8df55d 100644
-> --- a/perl/Git.pm
-> +++ b/perl/Git.pm
-> @@ -185,7 +185,7 @@ sub repository {
->  
->  		if ($dir) {
->  			$dir =~ m#^/# or $dir = $opts{Directory} . '/' . $dir;
-> -			$opts{Repository} = $dir;
-> +			$opts{Repository} = abs_path($dir);
+I am considering different ways to get git to handle repositories with
+very big files in a setup where partial clone is required, and it
+seems git subtree might be a part of the solution.
 
-Unfortunately, this change breaks MinGW git because the absolute path that
-this produces is MSYS-style /c/path/to/repo, but git does not understand
-this; it should be c:/path/to/repo. This value is ultimately assigned to
-GIT_DIR, but the path name mangling that usually happens when an MSYS
-program (like perl) spawns a non-MSYS program (like git) does not happen.
+Does git subtree support splitting at the file level, or only at
+directory level? Also, how are conflicts handled when you subtree
+merge changes back to the master? For this to work in practice, I
+suppose the users of the split repositories should see the conflicts
+and fix them themselves. Can the reduced split repositories reuse pack
+files from the original repository? Can you think of any other
+limitations to git subtree that would prevent it from working with big
+files to support a partial cloning setup?
 
-Your commit message is quite vague about the problems that you have seen.
-I vote to revert this change.
+The alternative seems to be git sparse checkout extended with
+non-existing narrow clone, but it seems that a git subtree based
+approach might be simpler.
 
--- Hannes
+Regards,
+Asger Ottar Alstrup
