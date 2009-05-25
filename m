@@ -1,109 +1,90 @@
-From: Clemens Buchacher <drizzd@aon.at>
-Subject: Re: Segfault in "git remote show <remote-name>"
-Date: Mon, 25 May 2009 21:01:21 +0200
-Message-ID: <20090525190121.GA3979@localhost>
-References: <40aa078e0905250910v268faa66p29a0183db26cb0df@mail.gmail.com>
+From: Avery Pennarun <apenwarr@gmail.com>
+Subject: Re: git submodule update --merge
+Date: Mon, 25 May 2009 15:04:19 -0400
+Message-ID: <32541b130905251204q20b5600fr4486390cc9157f66@mail.gmail.com>
+References: <7vab5ci281.fsf@alter.siamese.dyndns.org> <alpine.DEB.1.00.0905191348460.4266@intel-tinevez-2-302> 
+	<200905191526.40471.johan@herland.net> <200905251359.37619.johan@herland.net> 
+	<7vmy91vxqc.fsf@alter.siamese.dyndns.org> <alpine.DEB.1.00.0905252053070.4288@intel-tinevez-2-302>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Erik Faye-Lund <kusmabite@googlemail.com>
-X-From: git-owner@vger.kernel.org Mon May 25 21:01:43 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Johan Herland <johan@herland.net>, git@vger.kernel.org,
+	markus.heidelberg@web.de, Peter Hutterer <peter.hutterer@who-t.net>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Mon May 25 21:04:52 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M8fQb-0005uB-Km
-	for gcvg-git-2@gmane.org; Mon, 25 May 2009 21:01:42 +0200
+	id 1M8fTg-0007JN-13
+	for gcvg-git-2@gmane.org; Mon, 25 May 2009 21:04:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752607AbZEYTBb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 25 May 2009 15:01:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752446AbZEYTBb
-	(ORCPT <rfc822;git-outgoing>); Mon, 25 May 2009 15:01:31 -0400
-Received: from postman.fh-hagenberg.at ([193.170.124.96]:13505 "EHLO
-	mail.fh-hagenberg.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750917AbZEYTBa (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 May 2009 15:01:30 -0400
-Received: from darc.dnsalias.org ([84.154.65.240]) by mail.fh-hagenberg.at over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
-	 Mon, 25 May 2009 21:01:30 +0200
-Received: from drizzd by darc.dnsalias.org with local (Exim 4.69)
-	(envelope-from <drizzd@aon.at>)
-	id 1M8fQH-0005jz-Vb; Mon, 25 May 2009 21:01:21 +0200
-Content-Disposition: inline
-In-Reply-To: <40aa078e0905250910v268faa66p29a0183db26cb0df@mail.gmail.com>
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-OriginalArrivalTime: 25 May 2009 19:01:30.0638 (UTC) FILETIME=[36BD3AE0:01C9DD6B]
+	id S1753661AbZEYTEj convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 25 May 2009 15:04:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753361AbZEYTEi
+	(ORCPT <rfc822;git-outgoing>); Mon, 25 May 2009 15:04:38 -0400
+Received: from yw-out-2324.google.com ([74.125.46.30]:44587 "EHLO
+	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753517AbZEYTEi convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 25 May 2009 15:04:38 -0400
+Received: by yw-out-2324.google.com with SMTP id 5so1947932ywb.1
+        for <git@vger.kernel.org>; Mon, 25 May 2009 12:04:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=oH5Y3TIuQI567hQXt7d74nA8WyKZECErA2I2kISNdNM=;
+        b=o6fLs4/FWAB9N9UqYJrheN8UVYiVp8Jg2PVoasx8+6ZwyZpK+SatuQiGQ8IrYj2Ij2
+         J9CZ3wqgfZ6iI2Cox6oNlKTTDS+yumyEORt/lAaihNwO0F61ZMfNpfS5Cc41ZuZDzdjl
+         etpnR/nK45VvRUDUFSCZfmXX7LjPz/2umnL+4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=Cxg4v7jWlZpGGidQFdS8rp5s19Lwoz2mgavwo+7DhSmtL6rq7K9sA1TpgKU51Tx/IJ
+         4+yj8DgoSbEjVmNMKBfHE2ifacGdKj+r9pxVhHWvdSEtR49JM7qdCr07fYLnyZ9OfFND
+         s++Jm9lofA1GsdFSwYHYjuLUxLrLVp27f2kK4=
+Received: by 10.151.134.2 with SMTP id l2mr14895494ybn.105.1243278279078; Mon, 
+	25 May 2009 12:04:39 -0700 (PDT)
+In-Reply-To: <alpine.DEB.1.00.0905252053070.4288@intel-tinevez-2-302>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119950>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119951>
 
-Subject: [PATCH] fix segfault showing an empty remote
+On Mon, May 25, 2009 at 2:57 PM, Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+> Because in the project I use submodules most heavily, there is one
+> recurring theme: you cannot push to the submodules. =A0And by "you" I=
+ mean
+> "a regular user".
+>
+> So virtually all you do in these submodules cannot be pushed at all. =
+=A0It
+> has to be submitted to the respective submodule maintainer.
+>
+> And guess what happens in such a case when you set that tentative "up=
+date"
+> variable to "merge"?
+>
+> Exactly.
+>
+> FWIW I consider any scenario where the average users have push access=
+ to
+> the submodule a toy scenario.
 
-In case of an empty list, the search for its tail caused a
-NULL-pointer dereference.
+I have the same problem.  Out of curiosity, how do you handle the case
+where you really need to make a change to the submodule and let your
+team members see that change, even though the submodule's upstream is
+slow and/or doesn't accept the patch?
 
-Reported-by: Erik Faye-Lund <kusmabite@googlemail.com>
-Signed-off-by: Clemens Buchacher <drizzd@aon.at>
----
+In that situation, we've had to make local shared mirrors of all the
+submodules and point .gitmodules at that.  But that would be your
+"toy" scenario - our local users have push access to the submodule.
 
-On Mon, May 25, 2009 at 06:10:12PM +0200, Erik Faye-Lund wrote:
-> I've been messing around a bit, trying to set up a gitosis repo to
-> mirror one of my projects. Now, I added the remote to my project, but
-> when running "git remote show <remote-name>", I'm getting a segfault
-> in builtin-remote.c at line 303 ("while (ref->next)"), because ref
-> itself is NULL.
+Thanks,
 
-This should fix it.
-
-I simply copied this from other uses of match_refs. I wonder if this calls
-for a find_link_ref_tail() function, but I didn't know where to put it.
-
-Clemens
-
- builtin-remote.c  |    8 ++++----
- t/t5505-remote.sh |   10 ++++++++++
- 2 files changed, 14 insertions(+), 4 deletions(-)
-
-diff --git a/builtin-remote.c b/builtin-remote.c
-index 71abf68..fda9a54 100644
---- a/builtin-remote.c
-+++ b/builtin-remote.c
-@@ -299,11 +299,11 @@ static int get_push_ref_states(const struct ref *remote_refs,
- 		return 0;
- 
- 	local_refs = get_local_heads();
--	ref = push_map = copy_ref_list(remote_refs);
--	while (ref->next)
--		ref = ref->next;
--	push_tail = &ref->next;
-+	push_map = copy_ref_list(remote_refs);
- 
-+	push_tail = &push_map;
-+	while (*push_tail)
-+		push_tail = &((*push_tail)->next);
- 	match_refs(local_refs, push_map, &push_tail, remote->push_refspec_nr,
- 		   remote->push_refspec, MATCH_REFS_NONE);
- 
-diff --git a/t/t5505-remote.sh b/t/t5505-remote.sh
-index 5ec668d..e70246b 100755
---- a/t/t5505-remote.sh
-+++ b/t/t5505-remote.sh
-@@ -494,5 +494,15 @@ test_expect_success 'remote prune to cause a dangling symref' '
- 	grep "dangling symref" err
- '
- 
-+test_expect_success 'show empty remote' '
-+
-+	test_create_repo empty &&
-+	git clone empty empty-clone &&
-+	(
-+		cd empty-clone &&
-+		git remote show origin
-+	)
-+'
-+
- test_done
- 
--- 
-1.6.3.1.147.g637c3
+Avery
