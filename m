@@ -1,126 +1,159 @@
-From: Johan Herland <johan@herland.net>
-Subject: Re: git submodule update --merge
-Date: Tue, 26 May 2009 00:48:54 +0200
-Message-ID: <200905260048.54625.johan@herland.net>
-References: <7vab5ci281.fsf@alter.siamese.dyndns.org>
- <32541b130905251204q20b5600fr4486390cc9157f66@mail.gmail.com>
- <alpine.DEB.1.00.0905252149370.4288@intel-tinevez-2-302>
+From: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+Subject: Re: [PATCH 1/2] git-am foreign patch support: format autodetection
+Date: Tue, 26 May 2009 00:49:14 +0200
+Message-ID: <cb7bb73a0905251549s49d7fc28ge63b12e52029dd0b@mail.gmail.com>
+References: <1243278846-14120-1-git-send-email-giuseppe.bilotta@gmail.com>
+	 <1243278846-14120-2-git-send-email-giuseppe.bilotta@gmail.com>
+	 <7vk544u8hx.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: Text/Plain; charset=iso-8859-15
-Content-Transfer-Encoding: 7BIT
-Cc: Avery Pennarun <apenwarr@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	markus.heidelberg@web.de, Peter Hutterer <peter.hutterer@who-t.net>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue May 26 00:49:04 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue May 26 00:49:26 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M8iye-0007aQ-0H
-	for gcvg-git-2@gmane.org; Tue, 26 May 2009 00:49:04 +0200
+	id 1M8iyy-0007g4-7H
+	for gcvg-git-2@gmane.org; Tue, 26 May 2009 00:49:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752579AbZEYWs5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 25 May 2009 18:48:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752523AbZEYWs4
-	(ORCPT <rfc822;git-outgoing>); Mon, 25 May 2009 18:48:56 -0400
-Received: from mx.getmail.no ([84.208.15.66]:43616 "EHLO
-	get-mta-out01.get.basefarm.net" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1752212AbZEYWsz (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 25 May 2009 18:48:55 -0400
-Content-disposition: inline
-Received: from mx.getmail.no ([10.5.16.4]) by get-mta-out01.get.basefarm.net
- (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
- with ESMTP id <0KK800HG521K84D0@get-mta-out01.get.basefarm.net> for
- git@vger.kernel.org; Tue, 26 May 2009 00:48:56 +0200 (MEST)
-Received: from alpha.localnet ([84.215.102.95])
- by get-mta-in02.get.basefarm.net
- (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
- with ESMTP id <0KK800KB921IM9B0@get-mta-in02.get.basefarm.net> for
- git@vger.kernel.org; Tue, 26 May 2009 00:48:56 +0200 (MEST)
-X-PMX-Version: 5.5.3.366731, Antispam-Engine: 2.7.0.366912,
- Antispam-Data: 2009.5.25.223737
-User-Agent: KMail/1.11.3 (Linux/2.6.29-ARCH; KDE/4.2.3; x86_64; ; )
-In-reply-to: <alpine.DEB.1.00.0905252149370.4288@intel-tinevez-2-302>
+	id S1752991AbZEYWtQ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 25 May 2009 18:49:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752893AbZEYWtP
+	(ORCPT <rfc822;git-outgoing>); Mon, 25 May 2009 18:49:15 -0400
+Received: from mail-bw0-f222.google.com ([209.85.218.222]:52072 "EHLO
+	mail-bw0-f222.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752523AbZEYWtO convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 25 May 2009 18:49:14 -0400
+Received: by bwz22 with SMTP id 22so3405871bwz.37
+        for <git@vger.kernel.org>; Mon, 25 May 2009 15:49:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=WJEEFmOkS+qS2oy+UKDfEKUo0QC4GxA1jcxK8/WWzDM=;
+        b=xBL2d0U9U3o6AlL1XbZTT49zr+k39w7cnFaUgqZ4j+fs8ncOtEVgfjwCkmtrQhXZsM
+         gGMeGLFFoXfF6voM3/KVB1xonrKfyk1v31s/frNQUTyE3zm9f4p6dWi9TAx0Jt9Rj9dP
+         O3Ij/NpXJ+ISAGPrFz1hIRP1IKPwxzdbEU6eM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=qmp4Ne9OYK64zUnJOoigLcCeSiIpg9C8rGd/oDlj0lmbSX4eyl7Z56NFgmK/v7Dz2f
+         Z23dJbC8Cs5OMEAYZY4r4MDoJ7Wq/3pziqktNcu/wR626wBvlseQ9TSIXfnFuMxQayc7
+         /b/fDEOU6uh6dX8tX1sbCRKNqELHyXqMYNNJA=
+Received: by 10.204.31.77 with SMTP id x13mr7432272bkc.6.1243291754135; Mon, 
+	25 May 2009 15:49:14 -0700 (PDT)
+In-Reply-To: <7vk544u8hx.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119979>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119980>
 
-On Monday 25 May 2009, Johannes Schindelin wrote:
-> On Mon, 25 May 2009, Avery Pennarun wrote:
-> > On Mon, May 25, 2009 at 2:57 PM, Johannes Schindelin wrote:
-> > > Because in the project I use submodules most heavily, there is one
-> > > recurring theme: you cannot push to the submodules.  And by "you" I
-> > > mean "a regular user".
-> > >
-> > > So virtually all you do in these submodules cannot be pushed at all.
-> > >  It has to be submitted to the respective submodule maintainer.
-> > >
-> > > And guess what happens in such a case when you set that tentative
-> > > "update" variable to "merge"?
-> > >
-> > > Exactly.
-> > >
-> > > FWIW I consider any scenario where the average users have push access
-> > > to the submodule a toy scenario.
-
-Well, in the scenario I described earlier, the project developers (your 
-"average users") _do_ have push access to the submodules. And that scenario 
-is certainly not a toy scenario.
-
-> > I have the same problem.  Out of curiosity, how do you handle the case
-> > where you really need to make a change to the submodule and let your
-> > team members see that change, even though the submodule's upstream is
-> > slow and/or doesn't accept the patch?
-> >
-> > In that situation, we've had to make local shared mirrors of all the
-> > submodules and point .gitmodules at that.  But that would be your
-> > "toy" scenario - our local users have push access to the submodule.
-
-For the purposes of this discussion, this is pretty close to the use case I 
-described earlier in my scenario as well. Thanks, Avery, for presenting the 
-argument in a more readable manner.
-
-> Happily enough, our changes were accepted so far.
+On Tue, May 26, 2009 at 12:23 AM, Junio C Hamano <gitster@pobox.com> wr=
+ote:
+> Giuseppe Bilotta <giuseppe.bilotta@gmail.com> writes:
 >
-> For a few branches, though, the patches are not ready to be sent upstream
-> (or, from a certain viewpoint, sometimes downstream) yet, so we do have
-> local forks for those working on that.
+>> This patch is the first step towards the introduction of a framework=
+ to
+>> allow git-am to import patches not in mailbox format.
+>>
+>> Currently detected formats are
+>> =A0 * the mailbox format itself, which is assumed by default if inpu=
+t is
+>> =A0 =A0 form stdin
+>> =A0 * Mercurial's output from 'hg export'
+>> =A0 * Stacked Git's output from 'stg export' with the default export
+>> =A0 =A0 template; StGIT patch series are also detected and expanded.
 >
-> Note, however, that even in this case, it is better to use 'rebase'
-> rather than 'merge', for exactly the same (I almost wrote "unconvincing")
-> reason as before.
+> I personally do not trust "autodetection" (especially done by others =
+;-),
+> and prefer to have an explicit override by the users, but that aside.=
+=2E.
 
-Yes, and I have never argued that your "average users" should use 'merge'. 
-Indeed I have not argued that 'merge' is suitable for your workflow _at_ 
-_all_.
+No problem. --patch-format or just --format ?
 
-One of the guiding principles I have learned from earlier submodule 
-discussions on this list, is that the git submodule commands should NOT 
-impose restrictions on the workflows available to its users. But in this 
-case you are using your own workflow to argue what should, and should not be 
-part of the git submodule repertoire. I am arguing that there are 
-_different_ workflows, with _different_ requirements where 'merge' would be 
-a useful addition. Just because you won't ever use it, does not mean that it 
-will not be useful to anybody else.
+> =A0 =A0 =A0 =A0if test -z "$patch_format" && {
+> =A0 =A0 =A0 =A0 =A0 test $# =3D 0 || test "x$1" =3D x-
+> =A0 =A0 =A0 =A0}
+> =A0 =A0 =A0 =A0then
+> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0patch_format=3Dmbox
+> =A0 =A0 =A0 =A0else
+> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0patch_format=3D$(guess_patch_format)
+> =A0 =A0 =A0 =A0fi
+>
+> Having this extra logic inside the main codeflow makes it extremely h=
+arder
+> to read; have it in a separate shell function.
 
-> P.S.: in some cases, the submodules' "upstreams" are maintained by team
-> members, but that is very much on purpose.  They are trusted maintainers,
-> and there is no reason to let some young and maybe overly energetic
-> friends push to such a trusted repository.
+I assume you mean the patch format detection, yes?
 
-Do you argue that protecting these "young and maybe overly energetic" 
-developers from themselves should be hardcoded into the git submodule 
-behaviour, in such a way that it obscures the availability of other 
-alternative submodule workflows?
+>> +# a single non-stdin argument was passed, check if it's a StGit pat=
+ch series
+>> +# index by checking if the first line begins with '# This series'
+>> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 {
+>> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 read l1
+>> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 case "$l1"=
+ in
+>> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 '# This se=
+ries '*)
+>> +# replace the argument list with the files listed in the series ind=
+ex,
+>> +# prefixing them with the series index dirname, skipping comment li=
+nes
+>
+> Can the "series-index-name" file begin with '-' (which would affect t=
+he
+> way how 'set "@"' works in the loop below)? =A0A standard trick would=
+ be to
+> do something like this.
+>
+> =A0 =A0 =A0 =A0series_index=3D"$1"
+> =A0 =A0 =A0 =A0shift ;# discard
+> =A0 =A0 =A0 =A0set x
+> =A0 =A0 =A0 =A0while ...
+> =A0 =A0 =A0 =A0do
+> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0set "$@" another
+> =A0 =A0 =A0 =A0done
+> =A0 =A0 =A0 =A0shift ;# discard 'x' protection
+
+Ah, good point. I'll do it that way.
+
+>> + =A0 =A0 # (which is not stdin) to try to understand the format.
+>> + =A0 =A0 if test $patch_format =3D none
+>
+> I do not understand this duplication and inconsistency. =A0Why have t=
+he
+> detection in two places?
+
+It's not in two places. The first part sets the patch format only if
+we are either reading from stdin or have been passed a stgit patch
+series. Otherwise, we still don't know what we're getting, so now we
+inspect the first patch to see what format it's in. (Consider for
+example the case of appication of a StGIT patch which is not part of a
+series.)
+
+>> + =A0 =A0 case "$patch_format" in
+>> + =A0 =A0 mbox)
+>> + =A0 =A0 =A0 =A0 =A0 =A0 git mailsplit -d"$prec" -o"$dotest" -b -- =
+"$@" > "$dotest/last" || =A0{
+>> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 rm -fr "$dotest"
+>> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 exit 1
+>> + =A0 =A0 =A0 =A0 =A0 =A0 }
+>> + =A0 =A0 =A0 =A0 =A0 =A0 ;;
+>> + =A0 =A0 *)
+>> + =A0 =A0 =A0 =A0 =A0 =A0 echo "Patch format $patch_format is not cu=
+rrently handled, sorry"
+>> =A0 =A0 =A0 =A0 =A0 =A0 =A0 exit 1
+>
+> No fixing broken "Subject:" line for your format here?
+
+No, I put that in the second patch, because it was a different thing
+(patch processing as opposed to format detection).
 
 
-Have fun! :)
-
-...Johan
-
--- 
-Johan Herland, <johan@herland.net>
-www.herland.net
+--=20
+Giuseppe "Oblomov" Bilotta
