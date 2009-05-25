@@ -1,61 +1,58 @@
-From: Heiko Voigt <hvoigt@hvoigt.net>
-Subject: Re: can anybody explain the following to a git noob?
-Date: Mon, 25 May 2009 13:10:59 +0200
-Message-ID: <20090525111059.GE1070@macbook.lan>
-References: <855e4dcf0905212046o3e1d6ec6l487829a0a411dcaf@mail.gmail.com> <32541b130905212202q9aed54cn892171b7e654812f@mail.gmail.com> <855e4dcf0905212244r454a5c21w7bdbfb566a28efb8@mail.gmail.com> <4A1671E5.4030400@op5.se> <855e4dcf0905220335n367a065fidc65567119c0a5a3@mail.gmail.com> <4A16822A.2060404@viscovery.net> <855e4dcf0905220436h1b6fa632q7804c98bf09b324c@mail.gmail.com> <alpine.LNX.2.00.0905221244370.2147@iabervon.org> <855e4dcf0905230121h28ef22f8n4758953e612325cf@mail.gmail.com>
+From: Rocco Rutte <pdmef@gmx.net>
+Subject: Re: hg2git error
+Date: Mon, 25 May 2009 13:34:18 +0200
+Message-ID: <20090525113418.GA3259@robert>
+References: <alpine.DEB.1.00.0905241932301.26154@pacific.mpi-cbg.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Daniel Barkalow <barkalow@iabervon.org>,
-	Johannes Sixt <j.sixt@viscovery.net>,
-	Andreas Ericsson <ae@op5.se>,
-	Avery Pennarun <apenwarr@gmail.com>, git@vger.kernel.org
-To: Tim Uckun <timuckun@gmail.com>
-X-From: git-owner@vger.kernel.org Mon May 25 13:11:17 2009
+Cc: Matthias Urlichs <smurf@smurf.noris.de>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Mon May 25 13:34:46 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M8Y5N-0008If-GS
-	for gcvg-git-2@gmane.org; Mon, 25 May 2009 13:11:17 +0200
+	id 1M8YRu-0000h4-N2
+	for gcvg-git-2@gmane.org; Mon, 25 May 2009 13:34:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751215AbZEYLLB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 25 May 2009 07:11:01 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751147AbZEYLLA
-	(ORCPT <rfc822;git-outgoing>); Mon, 25 May 2009 07:11:00 -0400
-Received: from darksea.de ([83.133.111.250]:60365 "HELO darksea.de"
+	id S1751263AbZEYLe0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 25 May 2009 07:34:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751221AbZEYLeZ
+	(ORCPT <rfc822;git-outgoing>); Mon, 25 May 2009 07:34:25 -0400
+Received: from mail.gmx.net ([213.165.64.20]:36487 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751044AbZEYLK7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 May 2009 07:10:59 -0400
-Received: (qmail 13428 invoked from network); 25 May 2009 13:10:52 +0200
-Received: from unknown (HELO localhost) (127.0.0.1)
-  by localhost with SMTP; 25 May 2009 13:10:52 +0200
+	id S1751092AbZEYLeY (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 May 2009 07:34:24 -0400
+Received: (qmail invoked by alias); 25 May 2009 11:34:24 -0000
+Received: from dslb-094-222-114-239.pools.arcor-ip.net (EHLO robert) [94.222.114.239]
+  by mail.gmx.net (mp053) with SMTP; 25 May 2009 13:34:24 +0200
+X-Authenticated: #1642131
+X-Provags-ID: V01U2FsdGVkX1+pWJ5nHz+pHCYNSbDEAA070OgccQEjtWB103c+wb
+	2gO4kEBDS8KIus
+Mail-Followup-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Matthias Urlichs <smurf@smurf.noris.de>, git@vger.kernel.org
 Content-Disposition: inline
-In-Reply-To: <855e4dcf0905230121h28ef22f8n4758953e612325cf@mail.gmail.com>
-User-Agent: Mutt/1.5.19 (2009-01-05)
+In-Reply-To: <alpine.DEB.1.00.0905241932301.26154@pacific.mpi-cbg.de>
+User-Agent: Mutt/1.5.19 (2009-05-15)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.71
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119922>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119923>
 
-On Sat, May 23, 2009 at 08:21:09PM +1200, Tim Uckun wrote:
-> > I don't think any
-> > version control system I know of likes having your initial import be of a
-> > directory with other working directories for the same system as
-> > subdirectories. (That is, Mercurial will be fine having git working
-> > directories in the import, but git won't, and Mercurial wouldn't be happy
-> > about having Mercurial working directories as subdirectories).
-> >
-> 
-> I now realize that.  I did however did the same thing again but first
-> deleted all the .git directories before doing a git init.  The end
-> result didn't change.
+Hi,
 
-Note that a second git init does not delete the previous database. So if
-you want to start from scratch you need to delete the main .git folder.
+* Johannes Schindelin wrote:
 
-As already mentioned a script recreating your setup from public sources
-would really be a big help to find out were git does not do what you are
-expecting.
+> Error: repository has at least one unnamed head: hg r533
 
-cheers Heiko
+I'm afraid there's nothing you can do except a) wait until somebody with
+push access to the repo merges or b) do that yourself. The error means
+that on a branch there's more than one head (i.e. childless
+revision). There's no equivalent concept in git which is why I don't
+know what to do. Generating fake branch names for git may be a little
+messy I think.
+
+Rocco
