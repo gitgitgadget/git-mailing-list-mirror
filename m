@@ -1,69 +1,50 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: [PATCH] merge-options.txt: Clarify merge --squash
-Date: Mon, 25 May 2009 18:00:10 +0200
-Message-ID: <1243267210-28997-1-git-send-email-git@drmicha.warpmail.net>
-Cc: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon May 25 18:00:40 2009
+From: Jeff King <peff@peff.net>
+Subject: Re: [RFC PATCH] am: do not do any reset on --abort
+Date: Mon, 25 May 2009 12:02:07 -0400
+Message-ID: <20090525160207.GB5449@coredump.intra.peff.net>
+References: <20090525104308.GA26775@coredump.intra.peff.net> <alpine.DEB.1.00.0905251348050.4288@intel-tinevez-2-302> <20090525120019.GA1740@coredump.intra.peff.net> <4A1A8C6C.5020009@viscovery.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Mon May 25 18:02:18 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M8cbN-0004mg-77
-	for gcvg-git-2@gmane.org; Mon, 25 May 2009 18:00:37 +0200
+	id 1M8cd0-0005XO-8u
+	for gcvg-git-2@gmane.org; Mon, 25 May 2009 18:02:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752637AbZEYQAV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 25 May 2009 12:00:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752634AbZEYQAV
-	(ORCPT <rfc822;git-outgoing>); Mon, 25 May 2009 12:00:21 -0400
-Received: from out1.smtp.messagingengine.com ([66.111.4.25]:43197 "EHLO
-	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752402AbZEYQAU (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 25 May 2009 12:00:20 -0400
-Received: from compute1.internal (compute1.internal [10.202.2.41])
-	by out1.messagingengine.com (Postfix) with ESMTP id 32BF3346453;
-	Mon, 25 May 2009 12:00:22 -0400 (EDT)
-Received: from heartbeat1.messagingengine.com ([10.202.2.160])
-  by compute1.internal (MEProxy); Mon, 25 May 2009 12:00:22 -0400
-X-Sasl-enc: eg5f+2NG3HKr3C3lpT6FLFlrrIxYT4lxoKwi1QdC/i8d 1243267221
-Received: from localhost (whitehead.math.tu-clausthal.de [139.174.44.12])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 91E2B75C7;
-	Mon, 25 May 2009 12:00:21 -0400 (EDT)
-X-Mailer: git-send-email 1.6.3.1.241.g24356
+	id S1752958AbZEYQCJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 25 May 2009 12:02:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752778AbZEYQCJ
+	(ORCPT <rfc822;git-outgoing>); Mon, 25 May 2009 12:02:09 -0400
+Received: from peff.net ([208.65.91.99]:43662 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752731AbZEYQCJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 May 2009 12:02:09 -0400
+Received: (qmail 5102 invoked by uid 107); 25 May 2009 16:02:11 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Mon, 25 May 2009 12:02:11 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Mon, 25 May 2009 12:02:07 -0400
+Content-Disposition: inline
+In-Reply-To: <4A1A8C6C.5020009@viscovery.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119940>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119941>
 
-With the --squash option, merge sets up the index just like for a real
-merge, but without the merge info (stages). Say so.
+On Mon, May 25, 2009 at 02:17:48PM +0200, Johannes Sixt wrote:
 
-Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
----
-I think this kind of fell under the rug back then when it was discussed
-(http://permalink.gmane.org/gmane.comp.version-control.git/119185).
-So I'm resending it.
+> I wonder why we have this problem (and do something about it) with git-am,
+> but not with git-rebase. Is it perhaps that the usual case were people
+> were bitten by the old behavior is:
 
-Cheers,
-Michael
+I don't know. I had assumed a safety valve we put in git-am might need
+to be matched in rebase. But I don't recall whether I have screwed
+myself in the same way with rebase. Perhaps because rebase happens on a
+detached HEAD, I tend to notice sooner that something is not right.
 
- Documentation/merge-options.txt |    3 ++-
- 1 files changed, 2 insertions(+), 1 deletions(-)
-
-diff --git a/Documentation/merge-options.txt b/Documentation/merge-options.txt
-index 637b53f..adadf8e 100644
---- a/Documentation/merge-options.txt
-+++ b/Documentation/merge-options.txt
-@@ -39,7 +39,8 @@
- 
- --squash::
- 	Produce the working tree and index state as if a real
--	merge happened, but do not actually make a commit or
-+	merge happened (except for the merge information),
-+	but do not actually make a commit or
- 	move the `HEAD`, nor record `$GIT_DIR/MERGE_HEAD` to
- 	cause the next `git commit` command to create a merge
- 	commit.  This allows you to create a single commit on
--- 
-1.6.3.1.241.g24356
+-Peff
