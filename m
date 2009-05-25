@@ -1,70 +1,93 @@
-From: Samuel Bronson <naesten@gmail.com>
-Subject: [PATCH 2/3] Makefile: Add "make help" telling users to read INSTALL and Makefile
-Date: Mon, 25 May 2009 18:07:10 -0400
-Message-ID: <1243289231-32500-2-git-send-email-naesten@gmail.com>
-References: <1243289231-32500-1-git-send-email-naesten@gmail.com>
-Cc: git@vger.kernel.org, Samuel Bronson <naesten@gmail.com>
-To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Tue May 26 00:08:05 2009
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: [PATCH] speed: reuse char instead of recreation in loop
+Date: Mon, 25 May 2009 18:08:55 -0400 (EDT)
+Message-ID: <alpine.LNX.2.00.0905251733240.2147@iabervon.org>
+References: <pan.2009.05.25.19.44.10@fedoraproject.org> <20090525201602.GA18471@atjola.homenet> <pan.2009.05.25.20.40.20@fedoraproject.org>
+Mime-Version: 1.0
+Content-Type: MULTIPART/MIXED; BOUNDARY="1547844168-1819914988-1243288404=:2147"
+Cc: git@vger.kernel.org
+To: Thomas Spura <tomspur@fedoraproject.org>
+X-From: git-owner@vger.kernel.org Tue May 26 00:09:04 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M8iKv-0003Kc-TQ
-	for gcvg-git-2@gmane.org; Tue, 26 May 2009 00:08:02 +0200
+	id 1M8iLv-0003lr-O1
+	for gcvg-git-2@gmane.org; Tue, 26 May 2009 00:09:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753056AbZEYWH1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 25 May 2009 18:07:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753455AbZEYWH0
-	(ORCPT <rfc822;git-outgoing>); Mon, 25 May 2009 18:07:26 -0400
-Received: from smtp02.lnh.mail.rcn.net ([207.172.157.102]:52748 "EHLO
-	smtp02.lnh.mail.rcn.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753112AbZEYWH0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 May 2009 18:07:26 -0400
-Received: from mr02.lnh.mail.rcn.net ([207.172.157.22])
-  by smtp02.lnh.mail.rcn.net with ESMTP; 25 May 2009 18:07:28 -0400
-Received: from smtp01.lnh.mail.rcn.net (smtp01.lnh.mail.rcn.net [207.172.4.11])
-	by mr02.lnh.mail.rcn.net (MOS 3.10.5-GA)
-	with ESMTP id PXI13374;
-	Mon, 25 May 2009 18:07:27 -0400 (EDT)
-Received: from 207-172-203-39.c3-0.upd-ubr7.trpr-upd.pa.cable.rcn.com (HELO hydrogen) ([207.172.203.39])
-  by smtp01.lnh.mail.rcn.net with ESMTP; 25 May 2009 18:07:28 -0400
-Received: from naesten by hydrogen with local (Exim 4.69)
-	(envelope-from <naesten@gmail.com>)
-	id 1M8iKM-0008Sv-No; Mon, 25 May 2009 18:07:26 -0400
-X-Mailer: git-send-email 1.6.3.1
-In-Reply-To: <1243289231-32500-1-git-send-email-naesten@gmail.com>
-X-Junkmail-Whitelist: YES (by domain whitelist at mr02.lnh.mail.rcn.net)
+	id S1753502AbZEYWIz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 25 May 2009 18:08:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752810AbZEYWIz
+	(ORCPT <rfc822;git-outgoing>); Mon, 25 May 2009 18:08:55 -0400
+Received: from iabervon.org ([66.92.72.58]:45078 "EHLO iabervon.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751263AbZEYWIy (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 May 2009 18:08:54 -0400
+Received: (qmail 11690 invoked by uid 1000); 25 May 2009 22:08:55 -0000
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 25 May 2009 22:08:55 -0000
+In-Reply-To: <pan.2009.05.25.20.40.20@fedoraproject.org>
+User-Agent: Alpine 2.00 (LNX 1167 2008-08-23)
+Content-ID: <alpine.LNX.2.00.0905251755030.2147@iabervon.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119968>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119969>
 
-Without this, "make help" first builds "help.o", then tries to link it to
-make a "help" executable, which might take a while to fail in a clean tree.
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-Signed-off-by: Samuel Bronson <naesten@gmail.com>
----
- Makefile |    6 ++++++
- 1 files changed, 6 insertions(+), 0 deletions(-)
+--1547844168-1819914988-1243288404=:2147
+Content-Type: TEXT/PLAIN; CHARSET=ISO-8859-15
+Content-Transfer-Encoding: 8BIT
+Content-ID: <alpine.LNX.2.00.0905251755031.2147@iabervon.org>
 
-diff --git a/Makefile b/Makefile
-index eaae45d..07a141d 100644
---- a/Makefile
-+++ b/Makefile
-@@ -1,6 +1,12 @@
- # The default target of this Makefile is...
- all::
- 
-+.PHONY: help
-+help:
-+	@echo 'Building:'
-+	@echo '  For help on building, see the INSTALL file and the comments at'
-+	@echo '  the top of Makefile'
-+
- # Define V=1 to have a more verbose compile.
- #
- # Define SNPRINTF_RETURNS_BOGUS if your are on a system which snprintf()
--- 
-1.6.3.1
+On Mon, 25 May 2009, Thomas Spura wrote:
+
+> Am Mon, 25 May 2009 22:16:02 +0200 schrieb Björn Steinbrink:
+> 
+> > On 2009.05.25 19:44:10 +0000, Thomas Spura wrote:
+> >> Move a char and a char * outside of a for loop for speed improvements
+> >> 
+> >> Signed-off-by: Thomas Spura <tomspur@fedoraproject.org> ---
+> >> Comments?
+> >> 
+> >>  transport.c |    7 +++----
+> >>  1 files changed, 3 insertions(+), 4 deletions(-)
+> >> 
+> >> diff --git a/transport.c b/transport.c index 17891d5..e350937 100644
+> >> --- a/transport.c
+> >> +++ b/transport.c
+> >> @@ -263,11 +263,10 @@ static int write_refs_to_temp_dir(struct strbuf
+> >> *temp_dir,
+> >>  		int refspec_nr, const char **refspec)
+> >>  {
+> >>  	int i;
+> >> +	unsigned char sha1[20];
+> >> +	char *ref;
+> >>  
+> >>  	for (i = 0; i < refspec_nr; i++) {
+> >> -		unsigned char sha1[20];
+> >> -		char *ref;
+> >> -
+> > 
+> > I doubt that this makes any difference at all.
+> 
+> With ints, the loop costs about 40% of speed. Without recreation, it 
+> should be always faster.
+
+Actually, having the variables go out of scope should be at least as fast. 
+The compiler doesn't actually do anything to make the old variable
+inaccessible and get a new variable; with the variable uninitialized, it's 
+legitimate for the compiler to simply reuse the same storage for all 
+iterations. Futhermore, with the variables declared inside the loop, the 
+compiler is allowed to make optimizations that would fail to preserve 
+those variables between iterations. There are probably no such 
+optimizations in this code for it to make, but, in general, letting 
+variables in loops go out of scope (in C) only improves optimization 
+possibilities.
+
+	-Daniel
+*This .sig left intentionally blank*
+--1547844168-1819914988-1243288404=:2147--
