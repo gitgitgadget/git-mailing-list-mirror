@@ -1,112 +1,82 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: [PATCH v0 3/3] Build in git-rebase.sh
-Date: Mon, 25 May 2009 16:34:52 +1000
-Message-ID: <fcaeb9bf0905242334q37ef9a05xa05315639af4daf3@mail.gmail.com>
-References: <1242899229-27603-1-git-send-email-pclouds@gmail.com> 
-	<1242899229-27603-2-git-send-email-pclouds@gmail.com> <1242899229-27603-3-git-send-email-pclouds@gmail.com> 
-	<4A164C85.3000703@viscovery.net> <fcaeb9bf0905220030l45e1b7dfqd30f35b7c8e43b51@mail.gmail.com> 
-	<20090523092603.GA7420@dektop> <20090523145042.GA13139@dektop> 
-	<4A1A37AD.4080309@viscovery.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 0/2] StGit patch series import
+Date: Sun, 24 May 2009 23:39:08 -0700
+Message-ID: <7vocthy9df.fsf@alter.siamese.dyndns.org>
+References: <1243149558-17160-1-git-send-email-giuseppe.bilotta@gmail.com>
+	<7voctirzu6.fsf@alter.siamese.dyndns.org>
+	<cb7bb73a0905241443m6b5d6ba4vab438c856e47a947@mail.gmail.com>
+	<7vfxeurwh0.fsf@alter.siamese.dyndns.org>
+	<cb7bb73a0905241518l43048416i34cb905c143c63e0@mail.gmail.com>
+	<fabb9a1e0905241528r7b5102b0w5d064727125654d@mail.gmail.com>
+	<cb7bb73a0905241553i2cf2c246ycd0b5466e60c8de8@mail.gmail.com>
+	<fabb9a1e0905241557l403037f6p7c1df1f587cb9cf7@mail.gmail.com>
+	<cb7bb73a0905241603r4949abb5g1a9e861aba40c6fe@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Brandon Casey <casey@nrlssc.navy.mil>
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Mon May 25 08:35:29 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Sverre Rabbelier <srabbelier@gmail.com>, git@vger.kernel.org
+To: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+X-From: git-owner@vger.kernel.org Mon May 25 08:39:34 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M8TmQ-0007sv-T6
-	for gcvg-git-2@gmane.org; Mon, 25 May 2009 08:35:27 +0200
+	id 1M8TqP-0000dz-L3
+	for gcvg-git-2@gmane.org; Mon, 25 May 2009 08:39:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751726AbZEYGfO convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 25 May 2009 02:35:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751815AbZEYGfM
-	(ORCPT <rfc822;git-outgoing>); Mon, 25 May 2009 02:35:12 -0400
-Received: from yw-out-2324.google.com ([74.125.46.29]:50606 "EHLO
-	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751123AbZEYGfL convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 25 May 2009 02:35:11 -0400
-Received: by yw-out-2324.google.com with SMTP id 5so1764769ywb.1
-        for <git@vger.kernel.org>; Sun, 24 May 2009 23:35:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=A4GbYgioNhvI5dTXYR53ACm3W8owbs9YL48tBGtvD6A=;
-        b=gGo3nE+5gSWMEw82J6aNq3OhGXrSdDPKhD2P7m/UJQ0WJuzBz6aqD2GLls24sGOXiG
-         T2M5tRJCgF5+aC9BPRXnmvWXuEYJnfOV8DorxNSl+qJ8KKeJH8GpkEMYNw4efEKfYP7X
-         6LqCH5BnR3S+MowQslsHUat5oDxyq9iP52SIU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=gn88stf68cJddQa8WkM9V9SD3YZdOV9oFWsVk8YhRd02GH1zKSScXASiac2O2dICJ5
-         TH+QzLf8NNvaSNaaONJEA6jBawugE8IYeuIBkJ7wXvhyX95VmRiGFbaxJe4ALw66d+9i
-         96w2HC0M5R5SKsn+FUYG1pELCMaWusGSFOg3k=
-Received: by 10.100.43.10 with SMTP id q10mr7571301anq.125.1243233312348; Sun, 
-	24 May 2009 23:35:12 -0700 (PDT)
-In-Reply-To: <4A1A37AD.4080309@viscovery.net>
+	id S1751117AbZEYGjK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 25 May 2009 02:39:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751233AbZEYGjJ
+	(ORCPT <rfc822;git-outgoing>); Mon, 25 May 2009 02:39:09 -0400
+Received: from fed1rmmtao106.cox.net ([68.230.241.40]:39447 "EHLO
+	fed1rmmtao106.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750981AbZEYGjI (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 May 2009 02:39:08 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao106.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20090525063908.BJSG25927.fed1rmmtao106.cox.net@fed1rmimpo01.cox.net>;
+          Mon, 25 May 2009 02:39:08 -0400
+Received: from localhost ([68.225.240.211])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id vif81b0064aMwMQ03if8H9; Mon, 25 May 2009 02:39:08 -0400
+X-Authority-Analysis: v=1.0 c=1 a=cKKtvLOY1ucA:10 a=pGLkceISAAAA:8
+ a=J5WQ9VrmoZyw_-i-iZ8A:9 a=_meeTwAlW8mggPePahgA:7
+ a=uPsfFCSZtotTP4ZAEAD148cATSoA:4 a=MSl-tDqOz04A:10 a=zzooIisAW3TT70o4:21
+ a=4OTeNjueSjhKCeeS:21
+X-CM-Score: 0.00
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119887>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119888>
 
-On Mon, May 25, 2009 at 4:16 PM, Johannes Sixt <j.sixt@viscovery.net> w=
-rote:
-> Nguyen Thai Ngoc Duy schrieb:
->> On Sat, May 23, 2009 at 07:26:03PM +1000, Nguyen Thai Ngoc Duy wrote=
-:
->>> On Fri, May 22, 2009 at 05:30:31PM +1000, Nguyen Thai Ngoc Duy wrot=
-e:
->>>> 2009/5/22 Johannes Sixt <j.sixt@viscovery.net>:
->>>>> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy schrieb:
->>>>>> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pcloud=
-s@gmail.com>
->>>>> Is it possible for you to test this series on Windows? Many rebas=
-e tests
->>>>> fail, but I haven't investigated why.
->>>> I'll try it this weekend.
->>> This patch makes t3*rebase*.sh pass for me except t3412 (more exact=
-ly
->>> t3412.8). That test failed even with git-rebase.sh. Hmm... Anyway
->>> could you try again to see what tests still fail?
->>
->> Someone with better Windows knowledge than me should explain how thi=
-s works. Windows'
->> snprintf() just cuts out the last character in this statement:
->>
->> snprintf(buf, 8, "--%s", "onto"); // result: '--ont', expected: '--o=
-nto'
->
-> This doesn't happen for me: neither with Windows's original snprintf =
-nor
-> with the version from compat/. Are you using the latest msysgit
-> environment to compile, i.e. gcc 4.4? There was a change regarding
-> SNPRINTF_SIZE_CORR; perhaps that's the culprit?
+Giuseppe Bilotta <giuseppe.bilotta@gmail.com> writes:
 
-It could be. I used git.git's next branch, not msys4git or mingw.git
-repositories.
+> But then the name munge would not be descriptive of what the command
+> does. If git am is to be left untouched, I would rather then have
+> something like git import-patches that accepts patches in 'any'
+> format,...
 
-> I don't undertand what this patch does, anyway. Where is the detail t=
-hat I
-> am missing?
+There is no need to introduce any new program, I think.
 
-The first vsnprintf() in "onto" case above did not produce " --onto"
-as it should have been. I tried to recover by filling "str" with the
-second vsnprintf() in the loop.
+Nobody is against your teaching the "git am" callchain to accept things
+other than Berkeley mbox.  "git am" is "import-patches" in that sense
+already.
 
->> All rebase tests now pass for me on Windows (Vista something, I have
->> yet to find where it hides its "uname" command)
->
-> They also pass for me with your earlier fix-up patch, but with or wit=
-hout
-> this patch to compat/snprintf.c.
+You can add a conditional (perhaps triggered by a "the patches are in this
+format" command line option) to "git am" to alter the way it splits the
+input into individual pieces of e-mail, named 0001, 0002, 0003, ..., and
+leaves the total number of message in $dotest/last.
 
-Good to know.
---=20
-Duy
+Currently we call "git-mailsplit" to do all of that; your new conditional
+will take StGIT export, and instead of calling "git-mailsplit", read the
+series file and process individual patch files into 0001, 0002,... that
+are in proper mbox format (i.e. you would need to fix the "Subject: " less
+title line when you do this), and leave the total number of patches in
+$dotest/last file.
+
+With that change, the main loop that iterates 'while test "$this" -le
+"$last"' does not have to change, right?
+
+We could for example add RMAIL format support in the same way.
