@@ -1,69 +1,88 @@
-From: Constantine Plotnikov <constantine.plotnikov@gmail.com>
-Subject: "git ls-files -i" does not shows ignored files on Windows
-Date: Tue, 26 May 2009 21:36:40 +0400
-Message-ID: <85647ef50905261036u2d3c00c9lcf0df8f29de051ef@mail.gmail.com>
+From: David Aguilar <davvid@gmail.com>
+Subject: Re: [PATCH v3] diff: generate prettier filenames when using GIT_EXTERNAL_DIFF
+Date: Tue, 26 May 2009 10:37:29 -0700
+Message-ID: <20090526173726.GA5528@gmail.com>
+References: <1243316165-99065-1-git-send-email-davvid@gmail.com> <4A1B85B8.1050907@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue May 26 19:36:47 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, gitster@pobox.com, johannes.schindelin@gmx.de,
+	markus.heidelberg@web.de, nick@incise.org
+To: Stephen Boyd <bebarino@gmail.com>
+X-From: git-owner@vger.kernel.org Tue May 26 19:47:12 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M90Zx-0007UK-Tv
-	for gcvg-git-2@gmane.org; Tue, 26 May 2009 19:36:46 +0200
+	id 1M90k0-0003Nr-Oc
+	for gcvg-git-2@gmane.org; Tue, 26 May 2009 19:47:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755794AbZEZRgl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 26 May 2009 13:36:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754547AbZEZRgl
-	(ORCPT <rfc822;git-outgoing>); Tue, 26 May 2009 13:36:41 -0400
-Received: from mail-fx0-f168.google.com ([209.85.220.168]:45607 "EHLO
-	mail-fx0-f168.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751229AbZEZRgk (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 May 2009 13:36:40 -0400
-Received: by fxm12 with SMTP id 12so2225738fxm.37
-        for <git@vger.kernel.org>; Tue, 26 May 2009 10:36:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:date:message-id:subject
-         :from:to:content-type:content-transfer-encoding;
-        bh=iMfOvWvOjuTZTB+9hYQWFT6UPtX9UWAhJYNjNhhdz8k=;
-        b=vfGJd/X5PYZWIytjGhawvRveWAdF/ptIODcgZGuclIB9SKmccXVVzZkfTwFHDZ4S4H
-         TIt0kPK516zuy7rqPNqXVAPc5gdVV0C0aHggEgi6U851WT+y7ueXn766gbb0OQ9zZnfb
-         mVM+MSs2xf32Km4UWKATd3ljXDcwQeBRPyvdA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type
-         :content-transfer-encoding;
-        b=rxsSXfJ6KKOFSFNFsIT25QJShJj+KqlnHB9x6k84FTeU29Iar5/JuzCUJSavOm57kp
-         2irUDcTpj9R05yPahDoyjeNbCu85wRC8+2RKn6Y/TTs9EiJj2vjyiU4pxeopcXgOyXkB
-         g5z4DfzG+0leWo1gcOcz8O6+UN3U7ekNalq18=
-Received: by 10.204.116.212 with SMTP id n20mr8275285bkq.138.1243359400819; 
-	Tue, 26 May 2009 10:36:40 -0700 (PDT)
+	id S1755000AbZEZRrA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 26 May 2009 13:47:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754356AbZEZRq7
+	(ORCPT <rfc822;git-outgoing>); Tue, 26 May 2009 13:46:59 -0400
+Received: from mailgate1.disneyanimation.com ([12.188.26.101]:18467 "EHLO
+	mailgate1.disneyanimation.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754091AbZEZRq6 (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 26 May 2009 13:46:58 -0400
+X-Greylist: delayed 571 seconds by postgrey-1.27 at vger.kernel.org; Tue, 26 May 2009 13:46:58 EDT
+X-IronPort-AV: E=Sophos;i="4.41,253,1241420400"; 
+   d="scan'208";a="1242820"
+Received: from unknown (HELO mailgate1.disneyanimation.com) ([172.30.246.101])
+  by mailgate1.disneyanimation.com with ESMTP; 26 May 2009 10:37:31 -0700
+X-IronPort-AV: E=Sophos;i="4.41,253,1241420400"; 
+   d="scan'208";a="1242818"
+Received: from unknown (HELO mailhub.fa.disney.com) ([172.30.246.239])
+  by mailgate1.disneyanimation.com with SMTP; 26 May 2009 10:37:30 -0700
+Received: from warlord.local (unknown [172.30.157.163])
+	by mailhub.fa.disney.com (Postfix) with ESMTP id 61BDC1253C2;
+	Tue, 26 May 2009 10:37:29 -0700 (PDT)
+Received: by warlord.local (Postfix, from userid 2573)
+	id 4FC9A25AE4C; Tue, 26 May 2009 10:37:29 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <4A1B85B8.1050907@gmail.com>
+User-Agent: Mutt/1.4.2.3i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120006>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120007>
 
-I have encountered a strange problem on Windows (cygwin git 1.6.1.2
-and msys git version 1.6.2.2.1669.g7eaf8).
+On Mon, May 25, 2009 at 11:01:28PM -0700, Stephen Boyd wrote:
+> David Aguilar wrote:
+> > -	fd = git_mkstemp(temp->tmp_path, PATH_MAX, ".diff_XXXXXX");
+> > +	if (pretty_filename) {
+> > +		struct strbuf pretty_name = STRBUF_INIT;
+> > +		char *pathdup = xstrdup(path);
+> > +		char *base = basename(pathdup);
+> > +		char *dot = strchr(base, '.');
+> > +		int suffix_len = 0;
+> > +
+> > +		if (dot) {
+> > +			/* path has an extension, e.g. "foo.txt";
+> > +			 * generate "foo.XXXX.txt".
+> > +			 */
+> > +			*dot = '\0';
+> > +			strbuf_addstr(&pretty_name, base);
+> > +			*dot = '.';
+> > +			strbuf_addstr(&pretty_name, ".XXXXXX");
+> > +			suffix_len = strlen(dot);
+> > +			strbuf_addstr(&pretty_name, dot);
+> 
+> This *dot business annoys me. Would it be better to use strbuf_add()
+> with some pointer math thrown in? Also, what happens with files such as
+> "foo.bar.txt"? Do we want "foo.XXXXX.bar.txt"?
 
-Lets execute the following sequence of commands:
 
-git init
-echo a >.gitignore
-echo test >a
-git ls-files -i --exclude-standard
+That was intentional; "foo.tar.gz" becomes "foo.XXXXXX.tar.gz",
+which is what I considered better behavior when writing it.
 
-The last command in the sequence gives an empty output. But "git
-status" and "git ls-files -o --exclude-standard" show only
-".gitignore" file as untracked. So the file "a" is considered as
-ignored by git, but it is not displayed in output "git ls-files -i
---exclude-standard".
+Thanks for the note about using strbuf_add().  I'll see if we
+can simplify things by using it instead of strbuf_addstr().
 
-Does the bug happen on other platforms and versions of git?
+I should probably split the "add compat/mkstemps" and
+"use it in git_mkstemps()" parts into separate commits since
+we're going to want to use the native mkstemps implementation if
+it's available.
 
-Regards,
-Constantine
+-- 
+		David
