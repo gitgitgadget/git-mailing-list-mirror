@@ -1,144 +1,316 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: tracking committer vs. author
-Date: Tue, 26 May 2009 07:10:11 +0200
-Message-ID: <4A1B79B3.6090002@op5.se>
-References: <bbd12f0f0905251420l1ab63ca5y32589a4451064b9a@mail.gmail.com>	 <alpine.LNX.2.00.0905260015430.32620@reaper.quantumfyre.co.uk> <bbd12f0f0905251640p16727ea9pedbbc99796def340@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Jeff Brown <jeff@jeffandbetsy.net>
-X-From: git-owner@vger.kernel.org Tue May 26 07:10:57 2009
+From: David Aguilar <davvid@gmail.com>
+Subject: [PATCH v3] diff: generate prettier filenames when using GIT_EXTERNAL_DIFF
+Date: Mon, 25 May 2009 22:36:05 -0700
+Message-ID: <1243316165-99065-1-git-send-email-davvid@gmail.com>
+Cc: gitster@pobox.com, johannes.schindelin@gmx.de,
+	markus.heidelberg@web.de, nick@incise.org,
+	David Aguilar <davvid@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue May 26 07:37:22 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M8owC-0007FI-KA
-	for gcvg-git-2@gmane.org; Tue, 26 May 2009 07:10:57 +0200
+	id 1M8pLm-0008Pk-3i
+	for gcvg-git-2@gmane.org; Tue, 26 May 2009 07:37:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752567AbZEZFKT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 26 May 2009 01:10:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752747AbZEZFKQ
-	(ORCPT <rfc822;git-outgoing>); Tue, 26 May 2009 01:10:16 -0400
-Received: from na3sys009aog103.obsmtp.com ([74.125.149.71]:43776 "HELO
-	na3sys009aog103.obsmtp.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with SMTP id S1751229AbZEZFKP (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 26 May 2009 01:10:15 -0400
-Received: from source ([72.14.220.155]) by na3sys009aob103.postini.com ([74.125.148.12]) with SMTP
-	ID DSNKSht5t5mLfOvHkZX6iMZq1S9vvi0rq0GC@postini.com; Mon, 25 May 2009 22:10:17 PDT
-Received: by fg-out-1718.google.com with SMTP id e12so1324648fga.10
-        for <git@vger.kernel.org>; Mon, 25 May 2009 22:10:14 -0700 (PDT)
-Received: by 10.86.1.1 with SMTP id 1mr6511330fga.0.1243314614055;
-        Mon, 25 May 2009 22:10:14 -0700 (PDT)
-Received: from clix.int.op5.se ([212.112.174.166])
-        by mx.google.com with ESMTPS id d6sm12106663fga.2.2009.05.25.22.10.12
+	id S1751703AbZEZFgL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 26 May 2009 01:36:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751517AbZEZFgJ
+	(ORCPT <rfc822;git-outgoing>); Tue, 26 May 2009 01:36:09 -0400
+Received: from mail-px0-f103.google.com ([209.85.216.103]:48292 "EHLO
+	mail-px0-f103.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751364AbZEZFgI (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 May 2009 01:36:08 -0400
+Received: by pxi1 with SMTP id 1so2857424pxi.33
+        for <git@vger.kernel.org>; Mon, 25 May 2009 22:36:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer;
+        bh=GcHR/kU+WKujjnHHTdeQ20LPUvJ9aL9MZx818c+QbUg=;
+        b=pKVLMXpvgXG5P0X8HunLL9+7pTUjSEjux08v299vAwshPZdZhYt28THIpeE/Bu5JLu
+         OJ2Fr6l99iDT1Mb+AJJ3O6Bbx2Xogoa329ZSWpGPbBLwwgEU+M0X1gw1pSHQy/mtn8/5
+         nDoKjnq+ORK53iSZysOso60mCFH2H3btysJ0o=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=Eto4jzmS8UPNDwBMxKcM6FIufBc/axgw35Aac8i7fir/hJal4wLN3JH653SOybZekP
+         5rTZAwyuAwOMR9Qqlsr23Z6xLnF70bnLmZLm+zqpWRtF8772P8doxK5/sSW2aLdkzxry
+         omBkh0u9ZSRVkIvnn6bNGyE+o9OOs99U3LXA0=
+Received: by 10.142.82.6 with SMTP id f6mr2526920wfb.182.1243316168755;
+        Mon, 25 May 2009 22:36:08 -0700 (PDT)
+Received: from localhost (cpe-76-87-90-126.socal.res.rr.com [76.87.90.126])
+        by mx.google.com with ESMTPS id 20sm3045078wfi.0.2009.05.25.22.36.07
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 25 May 2009 22:10:12 -0700 (PDT)
-User-Agent: Thunderbird 2.0.0.21 (X11/20090320)
-In-Reply-To: <bbd12f0f0905251640p16727ea9pedbbc99796def340@mail.gmail.com>
+        Mon, 25 May 2009 22:36:08 -0700 (PDT)
+X-Mailer: git-send-email 1.6.1.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119993>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119994>
 
-Jeff Brown wrote:
-> On Mon, May 25, 2009 at 6:28 PM, Julian Phillips
-> <julian@quantumfyre.co.uk> wrote:
->> On Mon, 25 May 2009, Jeff Brown wrote:
->>
->>> I have noticed that when we pull changes from non-committers into our
->>> repo, sometimes meta information about who committed the change to the
->>> repo is included along side info about who actually wrote the changes.
->>> For example, see
->>>
->>> http://github.com/grails/grails/commit/8ac450c37d16b0468ba0f92d3008968fd6a41a75
->>> and note that graemerocher has commit privileges to the repo but
->>> ihotary does not.  ihatory's commit was pulled in by graemerocher.
->>>
->>> The commit at
->>> http://github.com/grails/grails/commit/ff770359d152683d5794887cd743a10ce7d04501
->>> was also authored by a non committer.  I pulled that change in myself
->>> this evening.  Notice that there is no info displayed there to
->>> indicate that I (jeffbrown) am the person who pushed that change into
->>> the repo.
->>>
->>> I don't know what was done differently for those 2 scenarios but both
->>> of those commits were authored by folks who do not have commit
->>> privileges to the repo at
->>> http://github.com/grails/grails/commits/master.
->> You say "pulled" for both commits, but do you mean that in an exact git
->> sense (i.e. 'git pull ...' command was used)?  I assume not ...
->>
->> If you pull from someone, then you get their commits, so they are the
->> committer - on the other hand if you apply patches they have sent, then you
->> become committer (though they remain the author of course) as you create new
->> commits (containing basically the same changes and message).
->>
->> If you compare the git repository
->> (http://git.kernel.org/?p=git/git.git;a=summary) where all changes are made
->> by Junio applying patches, to the Linux kernel
->> (http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=summary)
->> where Linus pulls from many (trusted) people you can see that while the
->> commits in git are all committed by Junio, the kernel commits are made by a
->> wide variety of people.
->>
->>> I don't think this is a github issue.  If I am wrong, please let me know.
->>>
->>> If I want to track not only who authored the commit but also who
->>> pushed it into the repo (like you see at
->>>
->>> http://github.com/grails/grails/commit/8ac450c37d16b0468ba0f92d3008968fd6a41a75),
->>> what is the procedure for making that happen?
->> This easiest way is to not pull from people who "don't have commit rights"
->> but to apply a patch series instead, as by pulling you are basically
->> trusting them - possibly more that you intend/want?
->>
->> HTH,
->> --
->> Julian
->>
-> 
-> I understand all of that but now I am not sure what the best procedure
-> is.  This is what I have been doing.
-> 
-> - create an integration branch
-> - pull changes from someones repo into my integration branch
-> - do whatever testing/reviewing/etc. necessary and if I want their
-> changes, continue...
-> - merge integration branch (which contains their changes) into my
-> master branch (test etc...)
-> - push my master to my origin
-> 
-> I expect there is a simple way to do what I want without having to
-> create patch files, but I don't know what that is.
-> 
-> Thanks for any suggestions.
-> 
+Naturally, prep_temp_blob() did not care about filenames.
+As a result, scripts that use GIT_EXTERNAL_DIFF ended up
+with filenames such as ".diff_XXXXXX".
 
-Rebase instead of merging, or rebase interactively onto the mergebase
-of your integration branch and master if you want to preserve the
-merge commits. Since rebase is basically implemented as either
-format-patch + am, or cherry-pick (depending on the invocation used),
-it will create new commits where you become the committer.
+This specializes the GIT_EXTERNAL_DIFF code to generate
+prettier filenames.
 
-To preserve the merge-commits when integrating you should use a
-command such as this. I'm assuming assuming your integration branch
-is named 'integrate' and your primary release branch is called
-master:
-GIT_EDITOR=: git rebase -i --onto $(git merge-base integrate master) \
-   integrate
+Diffing "name.ext" now generates "name.XXXX.ext".
+Diffing files with no extension now generates "name_XXXX".
 
-Mind the continued line, please.
+Signed-off-by: David Aguilar <davvid@gmail.com>
+---
 
+I renamed a few variables and unrolled the inner loop in
+git_mkstemps() since the last patch to make things easier to read/review.
+
+We might as well go with this one if we haven't applied the
+previous versions of this patch. 
+
+ cache.h                  |    2 +
+ diff.c                   |   55 +++++++++++++++++++++++++++++++-----
+ path.c                   |   70 ++++++++++++++++++++++++++++++++++++++++++++++
+ t/t4020-diff-external.sh |   18 ++++++++++++
+ 4 files changed, 137 insertions(+), 8 deletions(-)
+
+diff --git a/cache.h b/cache.h
+index b8503ad..871c984 100644
+--- a/cache.h
++++ b/cache.h
+@@ -614,6 +614,8 @@ extern int is_empty_blob_sha1(const unsigned char *sha1);
+ 
+ int git_mkstemp(char *path, size_t n, const char *template);
+ 
++int git_mkstemps(char *path, size_t n, const char *template, int suffix_len);
++
+ /*
+  * NOTE NOTE NOTE!!
+  *
+diff --git a/diff.c b/diff.c
+index f06876b..226771d 100644
+--- a/diff.c
++++ b/diff.c
+@@ -1960,12 +1960,47 @@ static void prep_temp_blob(const char *path, struct diff_tempfile *temp,
+ 			   void *blob,
+ 			   unsigned long size,
+ 			   const unsigned char *sha1,
+-			   int mode)
++			   int mode,
++			   int pretty_filename)
+ {
+ 	int fd;
+ 	struct strbuf buf = STRBUF_INIT;
+ 
+-	fd = git_mkstemp(temp->tmp_path, PATH_MAX, ".diff_XXXXXX");
++	if (pretty_filename) {
++		struct strbuf pretty_name = STRBUF_INIT;
++		char *pathdup = xstrdup(path);
++		char *base = basename(pathdup);
++		char *dot = strchr(base, '.');
++		int suffix_len = 0;
++
++		if (dot) {
++			/* path has an extension, e.g. "foo.txt";
++			 * generate "foo.XXXX.txt".
++			 */
++			*dot = '\0';
++			strbuf_addstr(&pretty_name, base);
++			*dot = '.';
++			strbuf_addstr(&pretty_name, ".XXXXXX");
++			suffix_len = strlen(dot);
++			strbuf_addstr(&pretty_name, dot);
++		}
++		else {
++			/* path has no extension, e.g. "Makefile";
++			 * generate "Makefile_XXXX".
++			 */
++			strbuf_addstr(&pretty_name, base);
++			strbuf_addstr(&pretty_name, "_XXXXXX");
++		}
++
++		fd = git_mkstemps(temp->tmp_path, PATH_MAX,
++			pretty_name.buf, suffix_len);
++
++		free(pathdup);
++		strbuf_release(&pretty_name);
++	}
++	else {
++		fd = git_mkstemp(temp->tmp_path, PATH_MAX, ".diff_XXXXXX");
++	}
+ 	if (fd < 0)
+ 		die("unable to create temp-file: %s", strerror(errno));
+ 	if (convert_to_working_tree(path,
+@@ -1984,7 +2019,8 @@ static void prep_temp_blob(const char *path, struct diff_tempfile *temp,
+ }
+ 
+ static struct diff_tempfile *prepare_temp_file(const char *name,
+-		struct diff_filespec *one)
++		struct diff_filespec *one,
++		int pretty_filename)
+ {
+ 	struct diff_tempfile *temp = claim_diff_tempfile();
+ 
+@@ -2025,7 +2061,8 @@ static struct diff_tempfile *prepare_temp_file(const char *name,
+ 				       (one->sha1_valid ?
+ 					one->sha1 : null_sha1),
+ 				       (one->sha1_valid ?
+-					one->mode : S_IFLNK));
++					one->mode : S_IFLNK),
++				       pretty_filename);
+ 		}
+ 		else {
+ 			/* we can borrow from the file in the work tree */
+@@ -2048,7 +2085,7 @@ static struct diff_tempfile *prepare_temp_file(const char *name,
+ 		if (diff_populate_filespec(one, 0))
+ 			die("cannot read data blob for %s", one->path);
+ 		prep_temp_blob(name, temp, one->data, one->size,
+-			       one->sha1, one->mode);
++			       one->sha1, one->mode, pretty_filename);
+ 	}
+ 	return temp;
+ }
+@@ -2074,8 +2111,9 @@ static void run_external_diff(const char *pgm,
+ 	if (one && two) {
+ 		struct diff_tempfile *temp_one, *temp_two;
+ 		const char *othername = (other ? other : name);
+-		temp_one = prepare_temp_file(name, one);
+-		temp_two = prepare_temp_file(othername, two);
++		int pretty_filename = 1;
++		temp_one = prepare_temp_file(name, one, pretty_filename);
++		temp_two = prepare_temp_file(othername, two, pretty_filename);
+ 		*arg++ = pgm;
+ 		*arg++ = name;
+ 		*arg++ = temp_one->name;
+@@ -3577,8 +3615,9 @@ static char *run_textconv(const char *pgm, struct diff_filespec *spec,
+ 	const char **arg = argv;
+ 	struct child_process child;
+ 	struct strbuf buf = STRBUF_INIT;
++	int pretty_filename = 0;
+ 
+-	temp = prepare_temp_file(spec->path, spec);
++	temp = prepare_temp_file(spec->path, spec, pretty_filename);
+ 	*arg++ = pgm;
+ 	*arg++ = temp->name;
+ 	*arg = NULL;
+diff --git a/path.c b/path.c
+index 8a0a674..6292410 100644
+--- a/path.c
++++ b/path.c
+@@ -12,6 +12,8 @@
+  */
+ #include "cache.h"
+ 
++#define GIT_MKSTEMPS_MAX 16384
++
+ static char bad_path[] = "/bad-path/";
+ 
+ static char *get_pathname(void)
+@@ -140,6 +142,74 @@ int git_mkstemp(char *path, size_t len, const char *template)
+ }
+ 
+ 
++
++/* git_mkstemps() - create tmp file with suffix honoring TMPDIR variable.
++ * This is adapted from libguile's GPLv2 mkstemp.c.
++ */
++int git_mkstemps(char *path, size_t len, const char *template, int suffix_len)
++{
++	static const char letters[] =
++		"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
++		"0123456789_";
++	const char *tmp;
++	char *pattern;
++	size_t n;
++	size_t path_noext_len, letters_len;
++	struct timeval tv;
++	uint64_t value, v;
++	int fd, count;
++
++	tmp = getenv("TMPDIR");
++	if (!tmp)
++		tmp = "/tmp";
++	n = snprintf(path, len, "%s/%s", tmp, template);
++	if (len <= n) {
++		errno = ENAMETOOLONG;
++		return -1;
++	}
++
++	letters_len = strlen(letters);
++	path_noext_len = n - suffix_len;
++
++	if (path_noext_len < 0 || strlen(template) - suffix_len < 6) {
++		errno = EINVAL;
++		return -1;
++	}
++
++	if (strncmp(path + path_noext_len - 6, "XXXXXX", 6)) {
++		errno = EINVAL;
++		return -1;
++	}
++
++	/* Replace template's XXXXXX characters with randomness.
++	 * Try GIT_MKSTEMPS_MAX different filenames.
++	 */
++	gettimeofday(&tv, NULL);
++	value = ((size_t)(tv.tv_usec << 16)) ^ tv.tv_sec ^ getpid();
++	pattern = path + path_noext_len - 6;
++	for (count = 0; count < GIT_MKSTEMPS_MAX; ++count) {
++		v = value;
++		pattern[0] = letters[v % letters_len]; v/= letters_len;
++		pattern[1] = letters[v % letters_len]; v/= letters_len;
++		pattern[2] = letters[v % letters_len]; v/= letters_len;
++		pattern[3] = letters[v % letters_len]; v/= letters_len;
++		pattern[4] = letters[v % letters_len]; v/= letters_len;
++		pattern[5] = letters[v % letters_len]; v/= letters_len;
++
++		fd = open(path, O_CREAT | O_EXCL | O_RDWR, 0600);
++		if (fd > 0)
++			return fd;
++		/* This is a random value.  It is only necessary that
++		 * the next value generated by adding 7777 is different
++		 * modulus 2^32.
++		 */
++		value += 7777;
++	}
++	errno = EINVAL;
++	return -1;
++}
++
++
+ int validate_headref(const char *path)
+ {
+ 	struct stat st;
+diff --git a/t/t4020-diff-external.sh b/t/t4020-diff-external.sh
+index 0720001..a9fdcb0 100755
+--- a/t/t4020-diff-external.sh
++++ b/t/t4020-diff-external.sh
+@@ -136,6 +136,24 @@ test_expect_success 'GIT_EXTERNAL_DIFF with more than one changed files' '
+ 	GIT_EXTERNAL_DIFF=echo git diff
+ '
+ 
++test_expect_success 'GIT_EXTERNAL_DIFF generates pretty paths with no ext' '
++	touch filenoext &&
++	git add filenoext &&
++	echo no extension > filenoext &&
++	GIT_EXTERNAL_DIFF=echo git diff filenoext | grep filenoext_ &&
++	git update-index --force-remove filenoext &&
++	rm filenoext
++'
++
++test_expect_success 'GIT_EXTERNAL_DIFF generates pretty paths with ext' '
++	touch file.ext &&
++	git add file.ext &&
++	echo with extension > file.ext &&
++	GIT_EXTERNAL_DIFF=echo git diff file.ext | grep file\.......\.ext &&
++	git update-index --force-remove file.ext &&
++	rm file.ext
++'
++
+ echo "#!$SHELL_PATH" >fake-diff.sh
+ cat >> fake-diff.sh <<\EOF
+ cat $2 >> crlfed.txt
 -- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
-
-Register now for Nordic Meet on Nagios, June 3-4 in Stockholm
- http://nordicmeetonnagios.op5.org/
-
-Considering the successes of the wars on alcohol, poverty, drugs and
-terror, I think we should give some serious thought to declaring war
-on peace.
+1.6.1.3
