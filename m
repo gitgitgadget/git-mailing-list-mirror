@@ -1,66 +1,137 @@
-From: Matthew Clemence <matthew.clemence@virgin.net>
-Subject: Suggested workflow for frequent directory renames.
-Date: Tue, 26 May 2009 01:17:48 +0100
-Message-ID: <4A1B352C.9030409@virgin.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
+From: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+Subject: [PATCHv2 3/4] git-am foreign patch support: StGIT support
+Date: Tue, 26 May 2009 02:38:09 +0200
+Message-ID: <1243298290-5909-4-git-send-email-giuseppe.bilotta@gmail.com>
+References: <1243298290-5909-1-git-send-email-giuseppe.bilotta@gmail.com>
+ <1243298290-5909-2-git-send-email-giuseppe.bilotta@gmail.com>
+ <1243298290-5909-3-git-send-email-giuseppe.bilotta@gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue May 26 02:39:10 2009
+X-From: git-owner@vger.kernel.org Tue May 26 02:39:13 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M8khC-0004qX-2L
-	for gcvg-git-2@gmane.org; Tue, 26 May 2009 02:39:10 +0200
+	id 1M8khA-0004qX-R9
+	for gcvg-git-2@gmane.org; Tue, 26 May 2009 02:39:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752465AbZEZAi6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 25 May 2009 20:38:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752516AbZEZAi6
-	(ORCPT <rfc822;git-outgoing>); Mon, 25 May 2009 20:38:58 -0400
-Received: from smtprelay-virgin0153.hostedemail.com ([64.99.136.153]:42038
-	"EHLO smtprelay-virgin.hostedemail.com" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1751857AbZEZAi5 (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 25 May 2009 20:38:57 -0400
-X-Greylist: delayed 1262 seconds by postgrey-1.27 at vger.kernel.org; Mon, 25 May 2009 20:38:57 EDT
-Received: from smtprelay-virgin.hostedemail.com (ff-bigip1 [10.5.19.254])
-	by smtpgrave07.hostedemail.com (Postfix) with ESMTP id B03032E346D
-	for <git@vger.kernel.org>; Tue, 26 May 2009 00:19:02 +0000 (UTC)
-Received: from filter.hostedemail.com (ff-bigip1 [10.5.19.254])
-	by smtprelay05.hostedemail.com (Postfix) with SMTP id AEA0B1A670C
-	for <git@vger.kernel.org>; Tue, 26 May 2009 00:17:55 +0000 (UTC)
-X-Spam-Summary: 2,0,0,d0572914cbbf58b6,96158787c8943071,matthew.clemence@virgin.net,git@vger.kernel.org,RULES_HIT:355:379:854:945:969:988:989:1187:1260:1261:1277:1311:1313:1314:1345:1437:1515:1516:1518:1534:1540:1593:1594:1711:1730:1747:1766:1792:2194:2199:2393:2559:2562:2828:3352:3622:3740:3865:3866:3867:3868:3869:3871:3874:3876:3877:5007:6114:7652:7875:8501:9108,0,RBL:none,CacheIP:none,Bayesian:0.5,0.5,0.5,Netcheck:none,DomainCache:0,MSF:not bulk,SPF:,MSBL:none,DNSBL:none
-X-Session-Marker: 6D6174746865772E636C656D656E6365
-X-Filterd-Recvd-Size: 1609
-Received: from [192.168.2.2] (client-86-27-120-160.hers.adsl.virgin.net [86.27.120.160])
-	(Authenticated sender: matthew.clemence)
-	by omf11.hostedemail.com (Postfix) with ESMTP
-	for <git@vger.kernel.org>; Tue, 26 May 2009 00:17:55 +0000 (UTC)
-User-Agent: Thunderbird 2.0.0.21 (Windows/20090302)
+	id S1753389AbZEZAiX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 25 May 2009 20:38:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752839AbZEZAiW
+	(ORCPT <rfc822;git-outgoing>); Mon, 25 May 2009 20:38:22 -0400
+Received: from mail-fx0-f168.google.com ([209.85.220.168]:40776 "EHLO
+	mail-fx0-f168.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753174AbZEZAiV (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 May 2009 20:38:21 -0400
+Received: by mail-fx0-f168.google.com with SMTP id 12so1678631fxm.37
+        for <git@vger.kernel.org>; Mon, 25 May 2009 17:38:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer:in-reply-to:references;
+        bh=FNkAvlJgNdvpC1Wpjuei7jHQqGAbrx8fC5q4h8i7/DI=;
+        b=WkiJuR2sCst9lF30zSz+K3/Ak5CQ4ul0bqNAy2bwVEXMiTHHMU+jqvQIKGZZUEW4mP
+         LMs+4JgCXAlKW6HOBkgFIlsdaHkIv++BwEcV42PcDWAmVIBYc0o5FsAHD0/GqxZ3wndr
+         Toyz7AtCYijOwDG2wx8tsPmQe75iO//sDuHCY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        b=FvVhX2JqYXdsaATHXsxHJaR8a9fP9yCaGABWdhRD/nNp0TewlExIzzaQrYMQJXbA4n
+         Vu4CnFcE2YUan/JmafXyzz8/F5A1DSKocybYxnigFA/0xFYzcRvIkwQFG8YvzdRFKChv
+         BgL/XJ0/HnpfjIZqh5Qw31IEOhI+Akgd6s3zo=
+Received: by 10.103.172.9 with SMTP id z9mr4040786muo.58.1243298302461;
+        Mon, 25 May 2009 17:38:22 -0700 (PDT)
+Received: from localhost (host-78-15-9-104.cust-adsl.tiscali.it [78.15.9.104])
+        by mx.google.com with ESMTPS id j10sm193692mue.41.2009.05.25.17.38.21
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 25 May 2009 17:38:21 -0700 (PDT)
+X-Mailer: git-send-email 1.6.3.1.248.gb44be
+In-Reply-To: <1243298290-5909-3-git-send-email-giuseppe.bilotta@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119989>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119990>
 
-Dear git users,
+Support StGIT patches by implementing a simple awk-based converter
+mimicking StGIT's own parse_patch. Also support StGIT patch series by
+'exploding' the index into a lif of files and re-running the mail
+splitting with patch_format set to stgit.
+---
+ git-am.sh |   60 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 files changed, 60 insertions(+), 0 deletions(-)
 
-I am working with an externally supplied code tree (some 2000 files, 
-which gets passed to me without any SCM) and have multiple users wokring 
-on their own individual branched versions under git control. The problem 
-I am facing is that there are frequenct directory renames when the code 
-updates which I need to find a relatively painless way of bringing the 
-users branches up to date. From reading the lists and faq, there seems 
-to be problems (and strong opinions) with this, and I am struggling to 
-find an effcient model to manage this merging - either git loses track 
-of the users changed files (and so have to be manually merged from diff 
-files and usually lose history) or git loses track of everything else 
-(and I end up manually adding files from the new tree to get out of 
-merge conflict).
-
-I would be very interested to hear if anyone has a suggestion on how 
-this could best be handled.
-
-Many thanks
-
-Matthew
+diff --git a/git-am.sh b/git-am.sh
+index 4cf66aa..1a00830 100755
+--- a/git-am.sh
++++ b/git-am.sh
+@@ -203,6 +203,66 @@ split_patches () {
+ 			exit 1
+ 		}
+ 		;;
++	stgit-series)
++		if test $# -ne 1
++		then
++			echo "Only one StGIT patch series can be applied at once"
++			exit 1
++		fi
++		series_dir=`dirname "$1"`
++		series_file="$1"
++		shift
++		{
++			set x
++			while read filename
++			do
++				set "$@" "$series_dir/$filename"
++			done
++			# remove the safety x
++			shift
++			# remove the arg coming from the first-line comment
++			shift
++		} < "$series_file"
++		# set the patch format appropriately
++		patch_format=stgit
++		# now handle the actual StGIT patches
++		split_patches "$@"
++		;;
++	stgit)
++		this=0
++		for stgit in "$@"
++		do
++			this=`expr "$this" + 1`
++			msgnum=`printf "%0${prec}d" $this`
++			touch "$dotest/$msgnum"
++			# Awk version of StGIT parse_patch. The first nonemptyline
++			# not starting with Author, From or Date is the
++			# subject, and the body starts with the next nonempty
++			# line not starting with Author, From or Date
++			awk 'BEGIN { subject=0 }
++			{
++				if (subject > 1)
++					print ;
++				else if (/^$/) next ;
++				else if (/^Author:/) print sub("Author", "From"), $ORS ;
++				else if (/^(From|Date)/) print ;
++				else if (subject) {
++					subject = 2 ;
++					print "" ;
++					print ;
++				} else {
++					print "Subject:", $0 ;
++					subject = 1;
++				}
++			}' "$stgit" > "$dotest/$msgnum" || {
++				echo "Failed to import $patch_format patch $stgit"
++				exit 1
++			}
++		done
++		echo "$this" > "$dotest/last"
++		this=
++		msgnum=
++		;;
+ 	*)
+ 		echo "Patch format $patch_format is not supported."
+ 		exit 1
+-- 
+1.6.3.1.248.gb44be
