@@ -1,101 +1,82 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH] completion: fix PS1 display during an AM on detached HEAD
-Date: Mon, 25 May 2009 22:56:03 -0700
-Message-ID: <7vy6skqufg.fsf@alter.siamese.dyndns.org>
+From: Stephen Boyd <bebarino@gmail.com>
+Subject: Re: [PATCH v3] diff: generate prettier filenames when using GIT_EXTERNAL_DIFF
+Date: Mon, 25 May 2009 23:01:28 -0700
+Message-ID: <4A1B85B8.1050907@gmail.com>
+References: <1243316165-99065-1-git-send-email-davvid@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Shawn O. Pearce" <spearce@spearce.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue May 26 07:56:22 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, gitster@pobox.com, johannes.schindelin@gmx.de,
+	markus.heidelberg@web.de, nick@incise.org
+To: David Aguilar <davvid@gmail.com>
+X-From: git-owner@vger.kernel.org Tue May 26 08:01:42 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M8pe9-0005vH-LV
-	for gcvg-git-2@gmane.org; Tue, 26 May 2009 07:56:22 +0200
+	id 1M8pjH-0007UJ-6F
+	for gcvg-git-2@gmane.org; Tue, 26 May 2009 08:01:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753924AbZEZF4F (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 26 May 2009 01:56:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753877AbZEZF4E
-	(ORCPT <rfc822;git-outgoing>); Tue, 26 May 2009 01:56:04 -0400
-Received: from fed1rmmtao105.cox.net ([68.230.241.41]:50386 "EHLO
-	fed1rmmtao105.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753620AbZEZF4D (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 May 2009 01:56:03 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao105.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20090526055603.LBSW20430.fed1rmmtao105.cox.net@fed1rmimpo01.cox.net>;
-          Tue, 26 May 2009 01:56:03 -0400
-Received: from localhost ([68.225.240.211])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id w5w31b0034aMwMQ035w3dk; Tue, 26 May 2009 01:56:04 -0400
-X-Authority-Analysis: v=1.0 c=1 a=XyVkfOVLXpcA:10 a=sgsF-1rxaPEA:10
- a=ybZZDoGAAAAA:8 a=7collTRRkirXcnq1TnwA:9 a=nNFxXnqUdj84qf0KNP3Qk5lVkNUA:4
- a=qIVjreYYsbEA:10
-X-CM-Score: 0.00
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+	id S1753992AbZEZGBc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 26 May 2009 02:01:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753985AbZEZGBb
+	(ORCPT <rfc822;git-outgoing>); Tue, 26 May 2009 02:01:31 -0400
+Received: from mail-px0-f103.google.com ([209.85.216.103]:33630 "EHLO
+	mail-px0-f103.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753685AbZEZGBa (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 May 2009 02:01:30 -0400
+Received: by pxi1 with SMTP id 1so2866829pxi.33
+        for <git@vger.kernel.org>; Mon, 25 May 2009 23:01:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from
+         :user-agent:mime-version:to:cc:subject:references:in-reply-to
+         :content-type:content-transfer-encoding;
+        bh=Ujv8yJGjnAurRoP0eqp5za5PcjZg3UQ8JWt3QUNERVs=;
+        b=dAKdTA6AZN8AsbOfDNr6YoJHy/JQ/y30bBANVYF9Hwm9n0jZ/QttlvJTugLL+Mtj0M
+         R7AxDEdDEyJxvFHn8MU7MGPHTqZnhsTiCtIBCEKvfAv0HjqQ3AtG9lGQDXYuxq+GG4X5
+         vI6odfqJ8kY0OPg++uyHkOHsx2Njp7kYbQmmM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        b=NIRfiWqQLrIoTPrS/36M8C7Aq/SBcQC9dSU8JXtA0Rh8IK6/hRs6LC4b71VUil4kH9
+         kztXsYHRIpgcIh2fJuXYCug3ugqohJYi6d85TohxgB84hpxphxLXZstQ3IiiDkCVB0fP
+         KTyGFIK+xdslO6F6/b3EIBXo9ffDdGWi4hEOg=
+Received: by 10.114.146.4 with SMTP id t4mr16441862wad.143.1243317691871;
+        Mon, 25 May 2009 23:01:31 -0700 (PDT)
+Received: from ?192.168.1.2? ([76.89.212.195])
+        by mx.google.com with ESMTPS id k37sm15855292waf.7.2009.05.25.23.01.30
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 25 May 2009 23:01:31 -0700 (PDT)
+User-Agent: Thunderbird 2.0.0.21 (X11/20090429)
+In-Reply-To: <1243316165-99065-1-git-send-email-davvid@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119995>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119996>
 
-This is a companion patch to previous 8763dbb (completion: fix PS1 display
-during a merge on detached HEAD, 2009-05-16).  While rebasing or running am
-on a detached HEAD, the code failed to set $b (branch description) that
-enables the whole status display business.
+David Aguilar wrote:
+> -	fd = git_mkstemp(temp->tmp_path, PATH_MAX, ".diff_XXXXXX");
+> +	if (pretty_filename) {
+> +		struct strbuf pretty_name = STRBUF_INIT;
+> +		char *pathdup = xstrdup(path);
+> +		char *base = basename(pathdup);
+> +		char *dot = strchr(base, '.');
+> +		int suffix_len = 0;
+> +
+> +		if (dot) {
+> +			/* path has an extension, e.g. "foo.txt";
+> +			 * generate "foo.XXXX.txt".
+> +			 */
+> +			*dot = '\0';
+> +			strbuf_addstr(&pretty_name, base);
+> +			*dot = '.';
+> +			strbuf_addstr(&pretty_name, ".XXXXXX");
+> +			suffix_len = strlen(dot);
+> +			strbuf_addstr(&pretty_name, dot);
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
-
- The original incorrectly indents the "rebase-apply" case, which gives
- the patch some "Huh?" effect, which this patch also fixes.
-
- contrib/completion/git-completion.bash |   24 +++++++++++-------------
- 1 files changed, 11 insertions(+), 13 deletions(-)
-
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index 0c8bb53..c84d765 100755
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -84,26 +84,24 @@ __git_ps1 ()
- 	if [ -n "$g" ]; then
- 		local r
- 		local b
--		if [ -d "$g/rebase-apply" ]; then
--			if [ -f "$g/rebase-apply/rebasing" ]; then
--				r="|REBASE"
--		elif [ -f "$g/rebase-apply/applying" ]; then
--				r="|AM"
--			else
--				r="|AM/REBASE"
--			fi
--			b="$(git symbolic-ref HEAD 2>/dev/null)"
--		elif [ -f "$g/rebase-merge/interactive" ]; then
-+		if [ -f "$g/rebase-merge/interactive" ]; then
- 			r="|REBASE-i"
- 			b="$(cat "$g/rebase-merge/head-name")"
- 		elif [ -d "$g/rebase-merge" ]; then
- 			r="|REBASE-m"
- 			b="$(cat "$g/rebase-merge/head-name")"
- 		else
--			if [ -f "$g/MERGE_HEAD" ]; then
-+			if [ -d "$g/rebase-apply" ]; then
-+				if [ -f "$g/rebase-apply/rebasing" ]; then
-+					r="|REBASE"
-+				elif [ -f "$g/rebase-apply/applying" ]; then
-+					r="|AM"
-+				else
-+					r="|AM/REBASE"
-+				fi
-+			elif [ -f "$g/MERGE_HEAD" ]; then
- 				r="|MERGING"
--			fi
--			if [ -f "$g/BISECT_LOG" ]; then
-+			elif [ -f "$g/BISECT_LOG" ]; then
- 				r="|BISECTING"
- 			fi
- 
--- 
-1.6.3.1.169.g33fd7
+This *dot business annoys me. Would it be better to use strbuf_add()
+with some pointer math thrown in? Also, what happens with files such as
+"foo.bar.txt"? Do we want "foo.XXXXX.bar.txt"?
