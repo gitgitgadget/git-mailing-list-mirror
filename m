@@ -1,87 +1,58 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: [PATCH RFC] Convert ce_path_match() use to match_pathspec()
-Date: Tue, 26 May 2009 21:04:35 +1000
-Message-ID: <fcaeb9bf0905260404h3eb35355p4fec33bc1912ce9b@mail.gmail.com>
-References: <1243240924-5981-1-git-send-email-pclouds@gmail.com> 
-	<7voctgvnic.fsf@alter.siamese.dyndns.org>
+From: "Stephen R. van den Berg" <srb@cuci.nl>
+Subject: Re: [PATCH] speed: reuse char instead of recreation in loop
+Date: Tue, 26 May 2009 13:54:03 +0200
+Message-ID: <20090526115403.GA4246@cuci.nl>
+References: <pan.2009.05.25.19.44.10@fedoraproject.org> <20090525201602.GA18471@atjola.homenet> <pan.2009.05.25.20.40.20@fedoraproject.org> <alpine.LNX.2.00.0905251733240.2147@iabervon.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue May 26 13:05:03 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Thomas Spura <tomspur@fedoraproject.org>, git@vger.kernel.org
+To: Daniel Barkalow <barkalow@iabervon.org>
+X-From: git-owner@vger.kernel.org Tue May 26 13:54:20 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M8uSs-00084q-2W
-	for gcvg-git-2@gmane.org; Tue, 26 May 2009 13:05:02 +0200
+	id 1M8vEX-0003rr-SD
+	for gcvg-git-2@gmane.org; Tue, 26 May 2009 13:54:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752181AbZEZLEz convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 26 May 2009 07:04:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751364AbZEZLEz
-	(ORCPT <rfc822;git-outgoing>); Tue, 26 May 2009 07:04:55 -0400
-Received: from an-out-0708.google.com ([209.85.132.249]:25073 "EHLO
-	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751857AbZEZLEy convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 26 May 2009 07:04:54 -0400
-Received: by an-out-0708.google.com with SMTP id d40so8352653and.1
-        for <git@vger.kernel.org>; Tue, 26 May 2009 04:04:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=jEter3Mo4OFCpsa7PrNFnpqXRV0in/mouZX4p5fp7jI=;
-        b=ayxyjUqIK4yRqBK8Putl+4LapKCTUDLh/pIqrrIAq0gLJWUmHmRl0iGZI3PWNesd5m
-         GbcyXCY+2Ms+mW0ZY9ZIG+gKMcr0A+PyrHVJpyta6lS33eJfyisWbMK9eD2lADbxd/an
-         kCxGJ2fQ7xWPX+SHipmFIUcVSvMdzYMKrEak4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=OYcbwni7MFQq1HbHbpsgCt3pXEf/3UJbIebG1tDqhEbJRsO8ubx9vBdAfNHwXsyFqS
-         fEYLVAfBoTRv3b5V5p1d5keOXRC3O1dIDKYI2B+6c0CwDTy7rU1/gWmcWgH6RF4p7DzH
-         9YGi927/Q3OpZyOBrHUyGVul6onkQ9lY+UsEM=
-Received: by 10.100.143.9 with SMTP id q9mr14004662and.145.1243335895697; Tue, 
-	26 May 2009 04:04:55 -0700 (PDT)
-In-Reply-To: <7voctgvnic.fsf@alter.siamese.dyndns.org>
+	id S1754888AbZEZLyJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 26 May 2009 07:54:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754735AbZEZLyI
+	(ORCPT <rfc822;git-outgoing>); Tue, 26 May 2009 07:54:08 -0400
+Received: from aristoteles.cuci.nl ([212.125.128.18]:41962 "EHLO
+	aristoteles.cuci.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754663AbZEZLyH (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 May 2009 07:54:07 -0400
+Received: by aristoteles.cuci.nl (Postfix, from userid 500)
+	id 5678B5420; Tue, 26 May 2009 13:54:03 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <alpine.LNX.2.00.0905251733240.2147@iabervon.org>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120001>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120002>
 
-2009/5/26 Junio C Hamano <gitster@pobox.com>:
-> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy =C2=A0<pclouds@gmail.com> w=
-rites:
->
->> For some reasons diff code did not get converted to use
->> match_pathspec(). So diff commands do not understand wildcards.
->
-> ce_path_match() is not just about diffs; there may be places that do =
-not
-> expect pathspecs to match cruft with globs. =C2=A0Have you checked al=
-l the
-> callsites and they are Ok with globbing?
+Daniel Barkalow wrote:
+>On Mon, 25 May 2009, Thomas Spura wrote:
+>> Am Mon, 25 May 2009 22:16:02 +0200 schrieb Bj?rn Steinbrink:
+>> > On 2009.05.25 19:44:10 +0000, Thomas Spura wrote:
+>> >> Move a char and a char * outside of a for loop for speed improvements
 
-I'm pretty sure except preload-index. I have checked again, all
-read_cache_preload() callsites seem to prefer files and leading path
-over globbing.
+>> > I doubt that this makes any difference at all.
 
-> I think using glob in diff-files should be Ok, but that would make it
-> inconsistent with diff-tree (and possibly diff-index but I didn't che=
-ck).
-> The correct operation of diff-tree (and path pruning in "git log" fam=
-ily)
-> heavily relies on an early-exit optimization not to recurse into a
-> directory when we can detect that none of the paths in that directory=
- will
-> ever match any of the given pathspecs, and this is done based on the
-> non-globbing (iow "leading path") semantics; you need to be extra car=
-eful
-> about this.
+>> With ints, the loop costs about 40% of speed. Without recreation, it 
+>> should be always faster.
 
-Now I know the reason. Thanks.
---=20
-Duy
+>optimizations in this code for it to make, but, in general, letting 
+>variables in loops go out of scope (in C) only improves optimization 
+>possibilities.
+
+Quite.  The proposed patch is more likely to slow down the code than to
+speed it up.
+-- 
+Sincerely,
+           Stephen R. van den Berg.
+
+E Pluribus Unix.
