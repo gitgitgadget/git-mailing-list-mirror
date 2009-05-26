@@ -1,316 +1,101 @@
-From: David Aguilar <davvid@gmail.com>
-Subject: [PATCH v3] diff: generate prettier filenames when using GIT_EXTERNAL_DIFF
-Date: Mon, 25 May 2009 22:36:05 -0700
-Message-ID: <1243316165-99065-1-git-send-email-davvid@gmail.com>
-Cc: gitster@pobox.com, johannes.schindelin@gmx.de,
-	markus.heidelberg@web.de, nick@incise.org,
-	David Aguilar <davvid@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH] completion: fix PS1 display during an AM on detached HEAD
+Date: Mon, 25 May 2009 22:56:03 -0700
+Message-ID: <7vy6skqufg.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: "Shawn O. Pearce" <spearce@spearce.org>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue May 26 07:37:22 2009
+X-From: git-owner@vger.kernel.org Tue May 26 07:56:22 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M8pLm-0008Pk-3i
-	for gcvg-git-2@gmane.org; Tue, 26 May 2009 07:37:22 +0200
+	id 1M8pe9-0005vH-LV
+	for gcvg-git-2@gmane.org; Tue, 26 May 2009 07:56:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751703AbZEZFgL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 26 May 2009 01:36:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751517AbZEZFgJ
-	(ORCPT <rfc822;git-outgoing>); Tue, 26 May 2009 01:36:09 -0400
-Received: from mail-px0-f103.google.com ([209.85.216.103]:48292 "EHLO
-	mail-px0-f103.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751364AbZEZFgI (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 May 2009 01:36:08 -0400
-Received: by pxi1 with SMTP id 1so2857424pxi.33
-        for <git@vger.kernel.org>; Mon, 25 May 2009 22:36:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer;
-        bh=GcHR/kU+WKujjnHHTdeQ20LPUvJ9aL9MZx818c+QbUg=;
-        b=pKVLMXpvgXG5P0X8HunLL9+7pTUjSEjux08v299vAwshPZdZhYt28THIpeE/Bu5JLu
-         OJ2Fr6l99iDT1Mb+AJJ3O6Bbx2Xogoa329ZSWpGPbBLwwgEU+M0X1gw1pSHQy/mtn8/5
-         nDoKjnq+ORK53iSZysOso60mCFH2H3btysJ0o=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        b=Eto4jzmS8UPNDwBMxKcM6FIufBc/axgw35Aac8i7fir/hJal4wLN3JH653SOybZekP
-         5rTZAwyuAwOMR9Qqlsr23Z6xLnF70bnLmZLm+zqpWRtF8772P8doxK5/sSW2aLdkzxry
-         omBkh0u9ZSRVkIvnn6bNGyE+o9OOs99U3LXA0=
-Received: by 10.142.82.6 with SMTP id f6mr2526920wfb.182.1243316168755;
-        Mon, 25 May 2009 22:36:08 -0700 (PDT)
-Received: from localhost (cpe-76-87-90-126.socal.res.rr.com [76.87.90.126])
-        by mx.google.com with ESMTPS id 20sm3045078wfi.0.2009.05.25.22.36.07
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 25 May 2009 22:36:08 -0700 (PDT)
-X-Mailer: git-send-email 1.6.1.3
+	id S1753924AbZEZF4F (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 26 May 2009 01:56:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753877AbZEZF4E
+	(ORCPT <rfc822;git-outgoing>); Tue, 26 May 2009 01:56:04 -0400
+Received: from fed1rmmtao105.cox.net ([68.230.241.41]:50386 "EHLO
+	fed1rmmtao105.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753620AbZEZF4D (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 May 2009 01:56:03 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao105.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20090526055603.LBSW20430.fed1rmmtao105.cox.net@fed1rmimpo01.cox.net>;
+          Tue, 26 May 2009 01:56:03 -0400
+Received: from localhost ([68.225.240.211])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id w5w31b0034aMwMQ035w3dk; Tue, 26 May 2009 01:56:04 -0400
+X-Authority-Analysis: v=1.0 c=1 a=XyVkfOVLXpcA:10 a=sgsF-1rxaPEA:10
+ a=ybZZDoGAAAAA:8 a=7collTRRkirXcnq1TnwA:9 a=nNFxXnqUdj84qf0KNP3Qk5lVkNUA:4
+ a=qIVjreYYsbEA:10
+X-CM-Score: 0.00
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119994>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/119995>
 
-Naturally, prep_temp_blob() did not care about filenames.
-As a result, scripts that use GIT_EXTERNAL_DIFF ended up
-with filenames such as ".diff_XXXXXX".
+This is a companion patch to previous 8763dbb (completion: fix PS1 display
+during a merge on detached HEAD, 2009-05-16).  While rebasing or running am
+on a detached HEAD, the code failed to set $b (branch description) that
+enables the whole status display business.
 
-This specializes the GIT_EXTERNAL_DIFF code to generate
-prettier filenames.
-
-Diffing "name.ext" now generates "name.XXXX.ext".
-Diffing files with no extension now generates "name_XXXX".
-
-Signed-off-by: David Aguilar <davvid@gmail.com>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
 
-I renamed a few variables and unrolled the inner loop in
-git_mkstemps() since the last patch to make things easier to read/review.
+ The original incorrectly indents the "rebase-apply" case, which gives
+ the patch some "Huh?" effect, which this patch also fixes.
 
-We might as well go with this one if we haven't applied the
-previous versions of this patch. 
+ contrib/completion/git-completion.bash |   24 +++++++++++-------------
+ 1 files changed, 11 insertions(+), 13 deletions(-)
 
- cache.h                  |    2 +
- diff.c                   |   55 +++++++++++++++++++++++++++++++-----
- path.c                   |   70 ++++++++++++++++++++++++++++++++++++++++++++++
- t/t4020-diff-external.sh |   18 ++++++++++++
- 4 files changed, 137 insertions(+), 8 deletions(-)
-
-diff --git a/cache.h b/cache.h
-index b8503ad..871c984 100644
---- a/cache.h
-+++ b/cache.h
-@@ -614,6 +614,8 @@ extern int is_empty_blob_sha1(const unsigned char *sha1);
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index 0c8bb53..c84d765 100755
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -84,26 +84,24 @@ __git_ps1 ()
+ 	if [ -n "$g" ]; then
+ 		local r
+ 		local b
+-		if [ -d "$g/rebase-apply" ]; then
+-			if [ -f "$g/rebase-apply/rebasing" ]; then
+-				r="|REBASE"
+-		elif [ -f "$g/rebase-apply/applying" ]; then
+-				r="|AM"
+-			else
+-				r="|AM/REBASE"
+-			fi
+-			b="$(git symbolic-ref HEAD 2>/dev/null)"
+-		elif [ -f "$g/rebase-merge/interactive" ]; then
++		if [ -f "$g/rebase-merge/interactive" ]; then
+ 			r="|REBASE-i"
+ 			b="$(cat "$g/rebase-merge/head-name")"
+ 		elif [ -d "$g/rebase-merge" ]; then
+ 			r="|REBASE-m"
+ 			b="$(cat "$g/rebase-merge/head-name")"
+ 		else
+-			if [ -f "$g/MERGE_HEAD" ]; then
++			if [ -d "$g/rebase-apply" ]; then
++				if [ -f "$g/rebase-apply/rebasing" ]; then
++					r="|REBASE"
++				elif [ -f "$g/rebase-apply/applying" ]; then
++					r="|AM"
++				else
++					r="|AM/REBASE"
++				fi
++			elif [ -f "$g/MERGE_HEAD" ]; then
+ 				r="|MERGING"
+-			fi
+-			if [ -f "$g/BISECT_LOG" ]; then
++			elif [ -f "$g/BISECT_LOG" ]; then
+ 				r="|BISECTING"
+ 			fi
  
- int git_mkstemp(char *path, size_t n, const char *template);
- 
-+int git_mkstemps(char *path, size_t n, const char *template, int suffix_len);
-+
- /*
-  * NOTE NOTE NOTE!!
-  *
-diff --git a/diff.c b/diff.c
-index f06876b..226771d 100644
---- a/diff.c
-+++ b/diff.c
-@@ -1960,12 +1960,47 @@ static void prep_temp_blob(const char *path, struct diff_tempfile *temp,
- 			   void *blob,
- 			   unsigned long size,
- 			   const unsigned char *sha1,
--			   int mode)
-+			   int mode,
-+			   int pretty_filename)
- {
- 	int fd;
- 	struct strbuf buf = STRBUF_INIT;
- 
--	fd = git_mkstemp(temp->tmp_path, PATH_MAX, ".diff_XXXXXX");
-+	if (pretty_filename) {
-+		struct strbuf pretty_name = STRBUF_INIT;
-+		char *pathdup = xstrdup(path);
-+		char *base = basename(pathdup);
-+		char *dot = strchr(base, '.');
-+		int suffix_len = 0;
-+
-+		if (dot) {
-+			/* path has an extension, e.g. "foo.txt";
-+			 * generate "foo.XXXX.txt".
-+			 */
-+			*dot = '\0';
-+			strbuf_addstr(&pretty_name, base);
-+			*dot = '.';
-+			strbuf_addstr(&pretty_name, ".XXXXXX");
-+			suffix_len = strlen(dot);
-+			strbuf_addstr(&pretty_name, dot);
-+		}
-+		else {
-+			/* path has no extension, e.g. "Makefile";
-+			 * generate "Makefile_XXXX".
-+			 */
-+			strbuf_addstr(&pretty_name, base);
-+			strbuf_addstr(&pretty_name, "_XXXXXX");
-+		}
-+
-+		fd = git_mkstemps(temp->tmp_path, PATH_MAX,
-+			pretty_name.buf, suffix_len);
-+
-+		free(pathdup);
-+		strbuf_release(&pretty_name);
-+	}
-+	else {
-+		fd = git_mkstemp(temp->tmp_path, PATH_MAX, ".diff_XXXXXX");
-+	}
- 	if (fd < 0)
- 		die("unable to create temp-file: %s", strerror(errno));
- 	if (convert_to_working_tree(path,
-@@ -1984,7 +2019,8 @@ static void prep_temp_blob(const char *path, struct diff_tempfile *temp,
- }
- 
- static struct diff_tempfile *prepare_temp_file(const char *name,
--		struct diff_filespec *one)
-+		struct diff_filespec *one,
-+		int pretty_filename)
- {
- 	struct diff_tempfile *temp = claim_diff_tempfile();
- 
-@@ -2025,7 +2061,8 @@ static struct diff_tempfile *prepare_temp_file(const char *name,
- 				       (one->sha1_valid ?
- 					one->sha1 : null_sha1),
- 				       (one->sha1_valid ?
--					one->mode : S_IFLNK));
-+					one->mode : S_IFLNK),
-+				       pretty_filename);
- 		}
- 		else {
- 			/* we can borrow from the file in the work tree */
-@@ -2048,7 +2085,7 @@ static struct diff_tempfile *prepare_temp_file(const char *name,
- 		if (diff_populate_filespec(one, 0))
- 			die("cannot read data blob for %s", one->path);
- 		prep_temp_blob(name, temp, one->data, one->size,
--			       one->sha1, one->mode);
-+			       one->sha1, one->mode, pretty_filename);
- 	}
- 	return temp;
- }
-@@ -2074,8 +2111,9 @@ static void run_external_diff(const char *pgm,
- 	if (one && two) {
- 		struct diff_tempfile *temp_one, *temp_two;
- 		const char *othername = (other ? other : name);
--		temp_one = prepare_temp_file(name, one);
--		temp_two = prepare_temp_file(othername, two);
-+		int pretty_filename = 1;
-+		temp_one = prepare_temp_file(name, one, pretty_filename);
-+		temp_two = prepare_temp_file(othername, two, pretty_filename);
- 		*arg++ = pgm;
- 		*arg++ = name;
- 		*arg++ = temp_one->name;
-@@ -3577,8 +3615,9 @@ static char *run_textconv(const char *pgm, struct diff_filespec *spec,
- 	const char **arg = argv;
- 	struct child_process child;
- 	struct strbuf buf = STRBUF_INIT;
-+	int pretty_filename = 0;
- 
--	temp = prepare_temp_file(spec->path, spec);
-+	temp = prepare_temp_file(spec->path, spec, pretty_filename);
- 	*arg++ = pgm;
- 	*arg++ = temp->name;
- 	*arg = NULL;
-diff --git a/path.c b/path.c
-index 8a0a674..6292410 100644
---- a/path.c
-+++ b/path.c
-@@ -12,6 +12,8 @@
-  */
- #include "cache.h"
- 
-+#define GIT_MKSTEMPS_MAX 16384
-+
- static char bad_path[] = "/bad-path/";
- 
- static char *get_pathname(void)
-@@ -140,6 +142,74 @@ int git_mkstemp(char *path, size_t len, const char *template)
- }
- 
- 
-+
-+/* git_mkstemps() - create tmp file with suffix honoring TMPDIR variable.
-+ * This is adapted from libguile's GPLv2 mkstemp.c.
-+ */
-+int git_mkstemps(char *path, size_t len, const char *template, int suffix_len)
-+{
-+	static const char letters[] =
-+		"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
-+		"0123456789_";
-+	const char *tmp;
-+	char *pattern;
-+	size_t n;
-+	size_t path_noext_len, letters_len;
-+	struct timeval tv;
-+	uint64_t value, v;
-+	int fd, count;
-+
-+	tmp = getenv("TMPDIR");
-+	if (!tmp)
-+		tmp = "/tmp";
-+	n = snprintf(path, len, "%s/%s", tmp, template);
-+	if (len <= n) {
-+		errno = ENAMETOOLONG;
-+		return -1;
-+	}
-+
-+	letters_len = strlen(letters);
-+	path_noext_len = n - suffix_len;
-+
-+	if (path_noext_len < 0 || strlen(template) - suffix_len < 6) {
-+		errno = EINVAL;
-+		return -1;
-+	}
-+
-+	if (strncmp(path + path_noext_len - 6, "XXXXXX", 6)) {
-+		errno = EINVAL;
-+		return -1;
-+	}
-+
-+	/* Replace template's XXXXXX characters with randomness.
-+	 * Try GIT_MKSTEMPS_MAX different filenames.
-+	 */
-+	gettimeofday(&tv, NULL);
-+	value = ((size_t)(tv.tv_usec << 16)) ^ tv.tv_sec ^ getpid();
-+	pattern = path + path_noext_len - 6;
-+	for (count = 0; count < GIT_MKSTEMPS_MAX; ++count) {
-+		v = value;
-+		pattern[0] = letters[v % letters_len]; v/= letters_len;
-+		pattern[1] = letters[v % letters_len]; v/= letters_len;
-+		pattern[2] = letters[v % letters_len]; v/= letters_len;
-+		pattern[3] = letters[v % letters_len]; v/= letters_len;
-+		pattern[4] = letters[v % letters_len]; v/= letters_len;
-+		pattern[5] = letters[v % letters_len]; v/= letters_len;
-+
-+		fd = open(path, O_CREAT | O_EXCL | O_RDWR, 0600);
-+		if (fd > 0)
-+			return fd;
-+		/* This is a random value.  It is only necessary that
-+		 * the next value generated by adding 7777 is different
-+		 * modulus 2^32.
-+		 */
-+		value += 7777;
-+	}
-+	errno = EINVAL;
-+	return -1;
-+}
-+
-+
- int validate_headref(const char *path)
- {
- 	struct stat st;
-diff --git a/t/t4020-diff-external.sh b/t/t4020-diff-external.sh
-index 0720001..a9fdcb0 100755
---- a/t/t4020-diff-external.sh
-+++ b/t/t4020-diff-external.sh
-@@ -136,6 +136,24 @@ test_expect_success 'GIT_EXTERNAL_DIFF with more than one changed files' '
- 	GIT_EXTERNAL_DIFF=echo git diff
- '
- 
-+test_expect_success 'GIT_EXTERNAL_DIFF generates pretty paths with no ext' '
-+	touch filenoext &&
-+	git add filenoext &&
-+	echo no extension > filenoext &&
-+	GIT_EXTERNAL_DIFF=echo git diff filenoext | grep filenoext_ &&
-+	git update-index --force-remove filenoext &&
-+	rm filenoext
-+'
-+
-+test_expect_success 'GIT_EXTERNAL_DIFF generates pretty paths with ext' '
-+	touch file.ext &&
-+	git add file.ext &&
-+	echo with extension > file.ext &&
-+	GIT_EXTERNAL_DIFF=echo git diff file.ext | grep file\.......\.ext &&
-+	git update-index --force-remove file.ext &&
-+	rm file.ext
-+'
-+
- echo "#!$SHELL_PATH" >fake-diff.sh
- cat >> fake-diff.sh <<\EOF
- cat $2 >> crlfed.txt
 -- 
-1.6.1.3
+1.6.3.1.169.g33fd7
