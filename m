@@ -1,79 +1,107 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/2] t8005: convert CP1251 character set to ISO8859-5
-Date: Tue, 26 May 2009 15:56:39 -0700
-Message-ID: <7v3aaro4m0.fsf@alter.siamese.dyndns.org>
-References: <7vhbzd85ux.fsf@alter.siamese.dyndns.org>
-	<p2A1PR1KFf_G_uMMwQZtVeaDE_VcBr8lFjs9Jsg_OIkeypNbwPPRHP32EUHJ4leCZsycUOhFjHc@cipher.nrlssc.navy.mil>
-	<p2A1PR1KFf_G_uMMwQZtVXPPBSNcQqEAV1ZnkoQLMJaPzWwJrkH_HCs5Kbt70yQlltZJxs4WxXo@cipher.nrlssc.navy.mil>
-	<7vskiw4ooe.fsf@alter.siamese.dyndns.org>
-	<7vhbzc4oht.fsf@alter.siamese.dyndns.org>
-	<20090525092027.GA22382@coredump.intra.peff.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Brandon Casey <casey@nrlssc.navy.mil>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed May 27 00:57:10 2009
+From: Bert Wesarg <bert.wesarg@googlemail.com>
+Subject: [TopGit PATCH v2] tg-push: add bash completion
+Date: Wed, 27 May 2009 01:31:34 +0200
+Message-ID: <1243380694-7744-1-git-send-email-bert.wesarg@googlemail.com>
+References: <1243377428-27546-1-git-send-email-bert.wesarg@googlemail.com>
+Cc: Bert Wesarg <bert.wesarg@googlemail.com>, git@vger.kernel.org,
+	martin f krafft <madduck@debian.org>,
+	Uwe Kleine-Koenig <u.kleine-koenig@pengutronix.de>
+To: Petr Baudis <pasky@suse.cz>
+X-From: git-owner@vger.kernel.org Wed May 27 01:31:52 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M95a0-0007Gz-0c
-	for gcvg-git-2@gmane.org; Wed, 27 May 2009 00:57:08 +0200
+	id 1M967Z-0000ea-KO
+	for gcvg-git-2@gmane.org; Wed, 27 May 2009 01:31:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755194AbZEZW4k (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 26 May 2009 18:56:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754876AbZEZW4j
-	(ORCPT <rfc822;git-outgoing>); Tue, 26 May 2009 18:56:39 -0400
-Received: from fed1rmmtao101.cox.net ([68.230.241.45]:54581 "EHLO
-	fed1rmmtao101.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754845AbZEZW4j (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 May 2009 18:56:39 -0400
-Received: from fed1rmimpo03.cox.net ([70.169.32.75])
-          by fed1rmmtao101.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20090526225640.KVFJ17670.fed1rmmtao101.cox.net@fed1rmimpo03.cox.net>;
-          Tue, 26 May 2009 18:56:40 -0400
-Received: from localhost ([68.225.240.211])
-	by fed1rmimpo03.cox.net with bizsmtp
-	id wNwf1b00G4aMwMQ04Nwf4B; Tue, 26 May 2009 18:56:40 -0400
-X-Authority-Analysis: v=1.0 c=1 a=4ueMqUMRleoA:10 a=_0s4GiiSMUIA:10
- a=PKzvZo6CAAAA:8 a=ybZZDoGAAAAA:8 a=cknCivPPAAAA:8 a=GPE_amUcK6MDR3ljIOAA:9
- a=9u-gDNqZixH0gs78SAQA:7 a=Zc9pO2IaGJbZJZFGaLNJcFetmecA:4 a=OdWmie4EkE0A:10
- a=qIVjreYYsbEA:10
-X-CM-Score: 0.00
-In-Reply-To: <20090525092027.GA22382@coredump.intra.peff.net> (Jeff King's message of "Mon\, 25 May 2009 05\:20\:27 -0400")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+	id S1755159AbZEZXbj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 26 May 2009 19:31:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754875AbZEZXbj
+	(ORCPT <rfc822;git-outgoing>); Tue, 26 May 2009 19:31:39 -0400
+Received: from fg-out-1718.google.com ([72.14.220.159]:3682 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754702AbZEZXbi (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 May 2009 19:31:38 -0400
+Received: by fg-out-1718.google.com with SMTP id d23so1062331fga.17
+        for <git@vger.kernel.org>; Tue, 26 May 2009 16:31:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer:in-reply-to:references;
+        bh=yLkcub1aiFZ5iwXq4Y+/iyb7+nXI4URk1I+gg/yQE8g=;
+        b=iMCmnCaiBcWoG9QPQF7CZ8Ml63hUhRKh2d/dqi7aDrCNMLwqKAeOZwO6Wd2GnZ6YnB
+         5MpDVnqugvvAcRuTtRo8+d0o99sMHA6ewduU/avhaZC3SgwZxT93wVoNt+LUu0Z1DzFz
+         q6+88Y3XUwjot+7e9zu3tI4sTyxu1PM0RUR4g=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlemail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        b=cgc62tK3dHseMrEtYw4mQYoktCqIBy+T//TbtSVkkwNikHpis6ZsNzv/X20P2ZV7Vm
+         ChTroRZt3kcaIvL8qcpDbVMeUoWYfebEulorIoJkzhHkgAgODTW8ogJeZr/ryaQt4+go
+         2UollQ2Dfoi09uwQ3TmTldbnrZD7Ift4AgcFE=
+Received: by 10.86.70.20 with SMTP id s20mr7641725fga.1.1243380698288;
+        Tue, 26 May 2009 16:31:38 -0700 (PDT)
+Received: from localhost (drsd-4db3d3cf.pool.einsundeins.de [77.179.211.207])
+        by mx.google.com with ESMTPS id 3sm825687fge.19.2009.05.26.16.31.35
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Tue, 26 May 2009 16:31:37 -0700 (PDT)
+X-Mailer: git-send-email 1.6.2.2.463.g124d4
+In-Reply-To: <1243377428-27546-1-git-send-email-bert.wesarg@googlemail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120016>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120017>
 
-Jeff King <peff@peff.net> writes:
+Include all options.
 
->   t3900 - still problems in the eucJP test. I haven't looked closely,
->           but my understanding is that this might need extra language
->           packs installed (I know virtually nothing about Solaris
->           administration and the box is not mine).
+Signed-off-by: Bert Wesarg <bert.wesarg@googlemail.com>
 
-I think I know about this one.
+---
+ contrib/tg-completion.bash |   24 ++++++++++++++++++++++++
+ 1 files changed, 24 insertions(+), 0 deletions(-)
 
-    From:	Junio C Hamano <gitster@pobox.com>
-    Subject: [PATCH] t3900: ISO-2022-JP has more than one popular variants
-    Date:	Tue, 12 May 2009 02:29:10 -0700
-    Message-ID: <7vljp28yah.fsf@alter.siamese.dyndns.org>
-
-   I had to "pkg install lang-support-japanese" to pass this test.
-
->   t8005 - git produces incorrect (or at least not expected) results for
->           the iso8859-5 to sjis conversion. It all looks like control
->           characters to me, so I'm not sure how to diagnose (and it may
->           just be an installation issue again).
-
-I haven't looked at this myself, but I've seen this consistently fail.
-
->   t4116,t5000,t5001 - Solaris tar doesn't like pax headers that
->                       git-archive generates
-
-I think I force it to use gtar.
+diff --git a/contrib/tg-completion.bash b/contrib/tg-completion.bash
+index de8a7b5..0ee233c 100755
+--- a/contrib/tg-completion.bash
++++ b/contrib/tg-completion.bash
+@@ -370,6 +370,29 @@ _tg_patch ()
+ 	esac
+ }
+ 
++_tg_push ()
++{
++	local cur="${COMP_WORDS[COMP_CWORD]}"
++
++	__tg_complete_arg "-r" && {
++		__tgcomp "$(__tg_remotes)"
++		return
++	}
++
++	case "$cur" in
++	-*)
++		__tgcomp "
++			--no-deps
++			--dry-run
++			--tgish-only
++			-r
++		"
++		;;
++	*)
++		__tgcomp "$(__tg_topics)"
++	esac
++}
++
+ _tg_remote ()
+ {
+ 	local cur="${COMP_WORDS[COMP_CWORD]}"
+@@ -449,6 +472,7 @@ _tg ()
+ 	info)        _tg_info ;;
+ 	mail)        _tg_mail ;;
+ 	patch)       _tg_patch ;;
++	push)        _tg_push ;;
+ 	remote)      _tg_remote ;;
+ 	summary)     _tg_summary ;;
+ 	update)      _tg_update ;;
+-- 
+tg: (b725fc9..) bw/push-completion (depends on: master)
