@@ -1,86 +1,96 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] bisect: display first bad commit without forking a new process
-Date: Wed, 27 May 2009 15:38:05 -0700
-Message-ID: <7veiuai33m.fsf@alter.siamese.dyndns.org>
-References: <20090527052354.3824.22018.chriscool@tuxfamily.org>
-	<200905272107.52095.chriscool@tuxfamily.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Christian Couder <chriscool@tuxfamily.org>
-X-From: git-owner@vger.kernel.org Thu May 28 00:38:14 2009
+From: "Neal Kreitzinger" <neal@rsss.com>
+Subject: Re: git log missing last line of output
+Date: Wed, 27 May 2009 18:06:50 -0500
+Message-ID: <gvkgrs$hs8$1@ger.gmane.org>
+References: <gvhrtf$vpr$1@ger.gmane.org> <4A1D5F70.4030101@drmicha.warpmail.net> <gvjsc9$f40$1@ger.gmane.org> <200905272106.31036.j6t@kdbg.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu May 28 01:03:54 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M9RlF-0006k3-1h
-	for gcvg-git-2@gmane.org; Thu, 28 May 2009 00:38:13 +0200
+	id 1M9SA5-0006pw-0b
+	for gcvg-git-2@gmane.org; Thu, 28 May 2009 01:03:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755801AbZE0WiI convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 27 May 2009 18:38:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754401AbZE0WiG
-	(ORCPT <rfc822;git-outgoing>); Wed, 27 May 2009 18:38:06 -0400
-Received: from fed1rmmtao104.cox.net ([68.230.241.42]:59541 "EHLO
-	fed1rmmtao104.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751974AbZE0WiF (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 May 2009 18:38:05 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao104.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20090527223806.TQDJ17135.fed1rmmtao104.cox.net@fed1rmimpo02.cox.net>;
-          Wed, 27 May 2009 18:38:06 -0400
-Received: from localhost ([68.225.240.211])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id wme51b00G4aMwMQ04me50R; Wed, 27 May 2009 18:38:05 -0400
-X-Authority-Analysis: v=1.0 c=1 a=PuJ6MZPdszgA:10 a=QAs3T6ytnZkA:10
- a=dIu3SnmMAAAA:8 a=FnhqwwBEuQ9BXcgAEuUA:9 a=ARxfPxoGjHpbmsSOT0AA:7
- a=k5NkVRchaPI4bB4w0oofseNX2ckA:4 a=Rn8qiON8_f4A:10
-X-CM-Score: 0.00
-In-Reply-To: <200905272107.52095.chriscool@tuxfamily.org> (Christian Couder's message of "Wed\, 27 May 2009 21\:07\:52 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+	id S1755602AbZE0XDn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 May 2009 19:03:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755337AbZE0XDn
+	(ORCPT <rfc822;git-outgoing>); Wed, 27 May 2009 19:03:43 -0400
+Received: from main.gmane.org ([80.91.229.2]:57557 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753106AbZE0XDn (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 May 2009 19:03:43 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1M9S9u-0002oH-LG
+	for git@vger.kernel.org; Wed, 27 May 2009 23:03:42 +0000
+Received: from 216-60-24-100.rsss.biz ([216.60.24.100])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 27 May 2009 23:03:42 +0000
+Received: from neal by 216-60-24-100.rsss.biz with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 27 May 2009 23:03:42 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: 216-60-24-100.rsss.biz
+X-MSMail-Priority: Normal
+X-Newsreader: Microsoft Outlook Express 6.00.2900.5512
+X-RFC2646: Format=Flowed; Original
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.5579
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120126>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120127>
 
-Christian Couder <chriscool@tuxfamily.org> writes:
+$ git --no-pager log
 
-> Le Wednesday 27 May 2009, Christian Couder a =C3=A9crit :
->> Previously "git diff-tree --pretty COMMIT" was run using
->> "run_command_v_opt" to display information about the first bad
->> commit.
->>
->> The goal of this patch is to avoid a "fork" and an "exec" call
->> when displaying that information.
->>
->> To do that, we manually setup revision information as
->> "git diff-tree --pretty" would do it, and then use the
->> "log_tree_commit" function.
->>
->> Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
->> ---
->>  bisect.c |   30 +++++++++++++++++++++++++++---
->>  1 files changed, 27 insertions(+), 3 deletions(-)
->>
->> diff --git a/bisect.c b/bisect.c
->> index c43c120..e94a77b 100644
->> --- a/bisect.c
->> +++ b/bisect.c
->> @@ -816,6 +816,31 @@ static void check_good_are_ancestors_of_bad(con=
-st
->> char *prefix) }
->>
->>  /*
->> + * This does "git diff-tree --pretty COMMIT" without one fork+exec.
->> + */
->> +static void show_diff_tree(const char *prefix, struct commit *commi=
-t)
->> +{
->> +	static struct rev_info opt;
+...does display the last line of output.  (The missing last line occurs in 
+the SmarTerm terminal emulator.)
+
+$ git log
+
+...does display the last line of output on the same server's desktop when 
+connecting via VNC.
+
+Thanks for the help.  (Not sure how to 'reply to all' in Outlook newsreader. 
+It only has 'reply to group' and 'reply to sender' options...)
+
+Neal
+
+"Johannes Sixt" <j6t@kdbg.org> wrote in message 
+news:200905272106.31036.j6t@kdbg.org...
+> Please use "Reply to all" so that Cc list remains.
 >
-> Oops, "static" can be removed, it's a copy-paste error, sorry.
-
-Is that "can" or "must"?  If the answer is the latter, shouldn't the
-function be renamed to make it clear it is a bisect specific thing?
+> On Mittwoch, 27. Mai 2009, Neal Kreitzinger wrote:
+>> $ git log
+>> commit 73170498d68a0011b37d7ee095bf88b8dcb6fbb5
+>> Author: tstuser1 <tstuser1@tstuser.com>
+>> Date:   Wed May 27 11:48:30 2009 -0500
+>>
+>>     2nd commit after initial commit
+>>
+>> commit 9f9ed5663d180caefd0bcaff4578fdb2c542bf17
+>> Author: tstuser1 <tstuser1@tstuser.com>
+>> Date:   Wed May 27 11:14:38 2009 -0500
+>>
+>>     1st commit after initial commit
+>>
+>> commit bee2e0fa066aaa9fed99c15c2ab58744a34fda48
+>> Author: tstuser1 <tstuser1@tstuser.com>
+>> Date:   Wed May 27 11:13:13 2009 -0500
+>>
+>> $
+>> ***NOTE THAT LAST LINE OF OUTPUT IS MISSING ABOVE (SHOULD BE THE TITLE 
+>> LINE
+>> OF THE INITIAL COMMIT -- BUT ITS NOT THERE)***
+>
+> Please try
+>
+>   git --no-pager log
+>
+> Do you see the line? Yes? Then your pager and your terminal do not 
+> cooperate
+> correctly.
+>
+> -- Hannes 
