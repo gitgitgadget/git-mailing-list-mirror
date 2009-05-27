@@ -1,104 +1,127 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: Problem with large files on different OSes
-Date: Wed, 27 May 2009 13:37:26 -0400 (EDT)
-Message-ID: <alpine.LFD.2.00.0905271312220.3906@xanadu.home>
-References: <submission.1M9Gk0-0000N8-MQ@mail.cs.st-andrews.ac.uk>
- <m3y6siboij.fsf@localhost.localdomain>
- <alpine.LFD.2.01.0905270922250.3435@localhost.localdomain>
- <alpine.LFD.2.01.0905270942580.3435@localhost.localdomain>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: [PATCH 1/7] Add specification of git-vcs-* helper programs
+Date: Wed, 27 May 2009 14:15:29 -0400 (EDT)
+Message-ID: <alpine.LNX.2.00.0905271403570.2147@iabervon.org>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Jakub Narebski <jnareb@gmail.com>,
-	Christopher Jefferson <caj@cs.st-andrews.ac.uk>,
-	git@vger.kernel.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Wed May 27 19:37:58 2009
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed May 27 20:16:17 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M9N4f-0003PR-Mr
-	for gcvg-git-2@gmane.org; Wed, 27 May 2009 19:37:58 +0200
+	id 1M9Nfj-0001Hm-Aq
+	for gcvg-git-2@gmane.org; Wed, 27 May 2009 20:16:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759780AbZE0Rhc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 May 2009 13:37:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759378AbZE0Rhc
-	(ORCPT <rfc822;git-outgoing>); Wed, 27 May 2009 13:37:32 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:36637 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758671AbZE0Rhb (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 May 2009 13:37:31 -0400
-Received: from xanadu.home ([66.131.194.97]) by VL-MH-MR001.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
- with ESMTP id <0KKB00H3TCYEN8I0@VL-MH-MR001.ip.videotron.ca> for
- git@vger.kernel.org; Wed, 27 May 2009 13:37:27 -0400 (EDT)
-X-X-Sender: nico@xanadu.home
-In-reply-to: <alpine.LFD.2.01.0905270942580.3435@localhost.localdomain>
-User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
+	id S932733AbZE0SPe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 May 2009 14:15:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1763445AbZE0SPc
+	(ORCPT <rfc822;git-outgoing>); Wed, 27 May 2009 14:15:32 -0400
+Received: from iabervon.org ([66.92.72.58]:46847 "EHLO iabervon.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S933045AbZE0SP3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 May 2009 14:15:29 -0400
+Received: (qmail 18390 invoked by uid 1000); 27 May 2009 18:15:29 -0000
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 27 May 2009 18:15:29 -0000
+User-Agent: Alpine 2.00 (LNX 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120082>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120085>
 
-On Wed, 27 May 2009, Linus Torvalds wrote:
+Signed-off-by: Daniel Barkalow <barkalow@iabervon.org>
+---
+ Documentation/git-vcs.txt |   77 +++++++++++++++++++++++++++++++++++++++++++++
+ 1 files changed, 77 insertions(+), 0 deletions(-)
+ create mode 100644 Documentation/git-vcs.txt
 
-> Hmm. No. Looking at it some more, we could add some nasty code to do 
-> _some_ things chunked (like adding a new file as a single object), but it 
-> doesn't really help. For any kind of useful thing, we'd need to handle the 
-> "read from pack" case in multiple chunks too, and that gets really nasty 
-> really quickly.
-> 
-> The whole "each object as one allocation" design is pretty core, and it 
-> looks pointless to have a few special cases, when any actual relevant use 
-> would need a whole lot more than the few simple ones.
-> 
-> Git really doesn't like big individual objects.
-> 
-> I've occasionally thought about handling big files as multiple big 
-> objects: we'd split them into a "pseudo-directory" (it would have some new 
-> object ID), and then treat them as a magical special kind of directory 
-> that just happens to be represented as one large file on the filesystem.
-> 
-> That would mean that if you have a huge file, git internally would never 
-> think of it as one big file, but as a collection of many smaller objects. 
-> By just making the point where you break up files be a consistent rule 
-> ("always break into 256MB pieces"), it would be a well-behaved design (ie 
-> things like behaviour convergence wrt the same big file being created 
-> different ways).
-> 
-> HOWEVER.
-> 
-> While that would fit in the git design (ie it would be just a fairly 
-> straightforward extension - another level of indirection, kind of the way 
-> we added subprojects), it would still be a rewrite of some core stuff. The 
-> actual number of lines might not be too horrid, but quite frankly, I 
-> wouldn't want to do it personally. It would be a lot of work with lots of 
-> careful special case handling - and no real upside for normal use.
-
-My idea for handling big files is simply to:
-
- 1) Define a new parameter to determine what is considered a big file.
-
- 2) Store any file larger than the treshold defined in (1) directly into 
-    a pack of their own at "git add" time.
-
- 3) Never attempt to diff nor delta large objects, again according to 
-    (1) above.  It is typical for large files not to be deltifiable, and 
-    a diff for files in the thousands of megabytes cannot possibly be 
-    sane.
-
-The idea is to avoid ever needing to load such object's content entirely 
-in memory. So with the data already in a pack, the pack data reuse logic 
-(which already does its copy in chunks) could be triggered during a 
-repack/fetch/push.
-
-This is also quite trivial to implement with very few special cases, and 
-then git would handle huge repositories with lots of huge files just as 
-well as any other SCMs.  The usual git repository compactness won't be 
-there of course, but I doubt people dealing with repositories in the 
-hundreds of gigabytes really care.
-
-
-Nicolas
+diff --git a/Documentation/git-vcs.txt b/Documentation/git-vcs.txt
+new file mode 100644
+index 0000000..402c927
+--- /dev/null
++++ b/Documentation/git-vcs.txt
+@@ -0,0 +1,77 @@
++git-vcs(1)
++============
++
++NAME
++----
++git-vcs - Helper programs for interoperation with foreign systems
++
++SYNOPSIS
++--------
++'git vcs-<system>' <remote>
++
++DESCRIPTION
++-----------
++
++These programs are normally not used directly by end users, but are
++invoked by various git programs that interact with remote repositories
++when the repository they would operate on uses a foreign system.
++
++Each 'git vcs-<system>' is a helper for interoperating with a
++particular version control system. Different helpers have different
++capabilities (limited both by the particular helper and by the
++capabilities of the system they connect to), and they report what
++capabilities they support.
++
++These programs can store refs in refs/<system>/*, and arbitrary
++information in info/<system>.
++
++COMMANDS
++--------
++
++Commands are given by the caller on the helper's standard input, one per line.
++
++'capabilities'::
++	Outputs a single line with a list of feature names separated
++	by spaces. Each of these indicates a supported feature of the
++	helper, and the caller will only attempt operations that are
++	supported.
++
++'list'::
++	Outputs the names of refs, one per line. These may be
++	followed, after a single space, by "changed" or "unchanged",
++	indicating whether the foreign repository has changed from the
++	state in the ref. If the helper doesn't know, it doesn't have
++	to provide a value. (In particular, it shouldn't do expensive
++	operations, such as importing the content, to see whether it
++	matches.) Other information, not yet supported, may be output
++	as well, separated by single spaces.
++
++'import' ref::
++	Imports the given ref by outputting it in git-fast-import
++	format.
++
++'export' commit ref::
++	Sends the given commit to the foreign system, with the
++	location given by ref, and reimports it by outputting it in
++	git-fast-import format as the foreign system rendered it.
+++
++All parents of commit must either have been created with 'import' or
++have been passed to 'export' previously. Depending on the features,
++there may be other restrictions on what may be exported.
++
++FEATURES
++--------
++
++'export'::
++	Helper supports exporting commits, at least exporting
++	non-merge commits whose parents are not the parents of any
++	other commit exported to the same branch or make in the other
++	system on the same branch.
++
++'export-branch'::
++	Helper supports creating new branches by exporting commits to
++	them.
++
++'export-merges'::
++	Helper supports exporting two-parent merges, where both
++	parents have already been exported successfully.
+-- 
+1.6.0.6
