@@ -1,113 +1,133 @@
-From: Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v2 1/2] bisect: rework some rev related functions to make them
-	more reusable
-Date: Wed, 27 May 2009 07:09:41 +0200
-Message-ID: <20090527050943.3694.58743.chriscool@tuxfamily.org>
-References: <20090527050656.3694.86787.chriscool@tuxfamily.org>
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed May 27 07:13:06 2009
+From: David Aguilar <davvid@gmail.com>
+Subject: Re: [PATCH 2/2] diff: generate prettier filenames when using
+	GIT_EXTERNAL_DIFF
+Date: Tue, 26 May 2009 22:17:38 -0700
+Message-ID: <20090527051737.GA2986@gmail.com>
+References: <1243394364-13772-1-git-send-email-davvid@gmail.com> <1243394364-13772-2-git-send-email-davvid@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Cc: gitster@pobox.com, johannes.schindelin@gmx.de,
+	markus.heidelberg@web.de, nick@incise.org
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed May 27 07:17:59 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M9BRo-0002xG-4E
-	for gcvg-git-2@gmane.org; Wed, 27 May 2009 07:13:04 +0200
+	id 1M9BWW-00043f-Jz
+	for gcvg-git-2@gmane.org; Wed, 27 May 2009 07:17:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758776AbZE0FMw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 May 2009 01:12:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757567AbZE0FMv
-	(ORCPT <rfc822;git-outgoing>); Wed, 27 May 2009 01:12:51 -0400
-Received: from smtp2-g21.free.fr ([212.27.42.2]:50154 "EHLO smtp2-g21.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757084AbZE0FMr (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 May 2009 01:12:47 -0400
-Received: from smtp2-g21.free.fr (localhost [127.0.0.1])
-	by smtp2-g21.free.fr (Postfix) with ESMTP id D08E64B00B7;
-	Wed, 27 May 2009 07:12:42 +0200 (CEST)
-Received: from bureau.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
-	by smtp2-g21.free.fr (Postfix) with ESMTP id AC9494B00C1;
-	Wed, 27 May 2009 07:12:39 +0200 (CEST)
-X-git-sha1: d1a45ff9a3658f8914c20e7ee550fd195790aad4 
-X-Mailer: git-mail-commits v0.4.5
-In-Reply-To: <20090527050656.3694.86787.chriscool@tuxfamily.org>
+	id S1757680AbZE0FRt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 May 2009 01:17:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757584AbZE0FRs
+	(ORCPT <rfc822;git-outgoing>); Wed, 27 May 2009 01:17:48 -0400
+Received: from mail-px0-f123.google.com ([209.85.216.123]:49254 "EHLO
+	mail-px0-f123.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757308AbZE0FRr (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 May 2009 01:17:47 -0400
+Received: by pxi29 with SMTP id 29so183137pxi.33
+        for <git@vger.kernel.org>; Tue, 26 May 2009 22:17:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=tRsk34ni2+aT8Prju/MwuHgMhdEv0tvR/mdhNVpMkwU=;
+        b=et2nIc2bB51JzjuRiPKDLws/DJdi7fulwjgA1lSfCVojtB/Yn9yiSXoEhrP2sFz/Ld
+         BHnomr5lj7Yc5qkCZrlMBmrhTAuxw48H/KnRLhKevRGjSUxOX4r/VMYAzBMJVC7odGqX
+         PmmwxJIUhVvWlk4+yX94e+FMvSl4YPLUGLC1Q=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=j3EqHLIrksITMNbOwwQClmQdFT3ApHetwNlComlvLAQ54HC0SzUWvBEc94uxWzAVUX
+         EObPxQ6M73xktyCQUfC7DQOqRbkPD2JTxZ0/6gsqhl1kUJnjR054pLWoaL81urhSgAqm
+         tdx2SvQMxbIZi/d/gHGry7y2YKXKuSfARt51o=
+Received: by 10.114.88.1 with SMTP id l1mr18999898wab.97.1243401467767;
+        Tue, 26 May 2009 22:17:47 -0700 (PDT)
+Received: from gmail.com (208-106-56-2.static.dsltransport.net [208.106.56.2])
+        by mx.google.com with ESMTPS id v9sm1375127wah.1.2009.05.26.22.17.46
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Tue, 26 May 2009 22:17:47 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <1243394364-13772-2-git-send-email-davvid@gmail.com>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120030>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120031>
 
-This patches changes the "bisect_rev_setup" and "bisect_common"
-functions to make it easier to reuse them in a later patch.
+On Tue, May 26, 2009 at 08:19:24PM -0700, David Aguilar wrote:
+> --- a/t/t4020-diff-external.sh
+> +++ b/t/t4020-diff-external.sh
+> @@ -136,6 +136,24 @@ test_expect_success 'GIT_EXTERNAL_DIFF with more than one changed files' '
+>  	GIT_EXTERNAL_DIFF=echo git diff
+>  '
 
-Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
----
- bisect.c |   25 ++++++++++++++-----------
- 1 files changed, 14 insertions(+), 11 deletions(-)
+Sorry for including both tests here.
+I forgot to remove the first test when we changed the naming
+convention to 6X_name and not special-casing filenames with
+dots in them.
 
-diff --git a/bisect.c b/bisect.c
-index f57b62c..dc4e1bb 100644
---- a/bisect.c
-+++ b/bisect.c
-@@ -553,7 +553,9 @@ struct commit_list *filter_skipped(struct commit_list *list,
- 	return filtered;
- }
- 
--static void bisect_rev_setup(struct rev_info *revs, const char *prefix)
-+static void bisect_rev_setup(struct rev_info *revs, const char *prefix,
-+			     const char *bad_format, const char *good_format,
-+			     int read_paths)
- {
- 	struct argv_array rev_argv = { NULL, 0, 0 };
- 	int i;
-@@ -564,26 +566,24 @@ static void bisect_rev_setup(struct rev_info *revs, const char *prefix)
- 
- 	/* rev_argv.argv[0] will be ignored by setup_revisions */
- 	argv_array_push(&rev_argv, xstrdup("bisect_rev_setup"));
--	argv_array_push_sha1(&rev_argv, current_bad_sha1, "%s");
-+	argv_array_push_sha1(&rev_argv, current_bad_sha1, bad_format);
- 	for (i = 0; i < good_revs.sha1_nr; i++)
--		argv_array_push_sha1(&rev_argv, good_revs.sha1[i], "^%s");
-+		argv_array_push_sha1(&rev_argv, good_revs.sha1[i],
-+				     good_format);
- 	argv_array_push(&rev_argv, xstrdup("--"));
--	read_bisect_paths(&rev_argv);
-+	if (read_paths)
-+		read_bisect_paths(&rev_argv);
- 	argv_array_push(&rev_argv, NULL);
- 
- 	setup_revisions(rev_argv.argv_nr, rev_argv.argv, revs, NULL);
--	revs->limited = 1;
- }
- 
--static void bisect_common(struct rev_info *revs, int *reaches, int *all)
-+static void bisect_common(struct rev_info *revs)
- {
- 	if (prepare_revision_walk(revs))
- 		die("revision walk setup failed");
- 	if (revs->tree_objects)
- 		mark_edges_uninteresting(revs->commits, revs, NULL);
--
--	revs->commits = find_bisection(revs->commits, reaches, all,
--				       !!skipped_revs.sha1_nr);
- }
- 
- static void exit_if_skipped_commits(struct commit_list *tried,
-@@ -843,10 +843,13 @@ int bisect_next_all(const char *prefix)
- 
- 	check_good_are_ancestors_of_bad(prefix);
- 
--	bisect_rev_setup(&revs, prefix);
-+	bisect_rev_setup(&revs, prefix, "%s", "^%s", 1);
-+	revs.limited = 1;
- 
--	bisect_common(&revs, &reaches, &all);
-+	bisect_common(&revs);
- 
-+	revs.commits = find_bisection(revs.commits, &reaches, &all,
-+				       !!skipped_revs.sha1_nr);
- 	revs.commits = filter_skipped(revs.commits, &tried, 0);
- 
- 	if (!revs.commits) {
+I guess I'll resend w/out it.  I'll wait until wednesday
+evening before resending to see if anyone spots any other
+fixups.
+
+
+The rationale for the original naming convention was that it
+was arguably easier for users to spot what file they're
+working on when playing games with dot.
+
+compare:
+
+a) !!!!!!_Makefile
+
+b) Makefile_!!!!!!
+
+and:
+
+a) !!!!!!_diff.c
+
+b) diff.!!!!!!.c
+
+
+In both examples you already know what filename you're talking
+about before scanning past any other information.
+
+.gitignore would look like .!!!!!!.gitignore, which isn't too
+bad either.
+
+Anyways, not looking to bikeshed, so I'll wait to here what
+others have to say and continue.  The patch is fine as-is too
+sans the first test.
+
+
+> +test_expect_success 'GIT_EXTERNAL_DIFF generates pretty paths with no ext' '
+> +	touch filenoext &&
+> +	git add filenoext &&
+> +	echo no extension > filenoext &&
+> +	GIT_EXTERNAL_DIFF=echo git diff filenoext | grep _filenoext &&
+> +	git update-index --force-remove filenoext &&
+> +	rm filenoext
+> +'
+> +
+> +test_expect_success 'GIT_EXTERNAL_DIFF generates pretty paths with ext' '
+> +	touch file.ext &&
+> +	git add file.ext &&
+> +	echo with extension > file.ext &&
+> +	GIT_EXTERNAL_DIFF=echo git diff file.ext | grep ......_file\.ext &&
+> +	git update-index --force-remove file.ext &&
+> +	rm file.ext
+> +'
+> +
+>  echo "#!$SHELL_PATH" >fake-diff.sh
+>  cat >> fake-diff.sh <<\EOF
+>  cat $2 >> crlfed.txt
+> -- 
+> 1.6.3.1.169.g33fd
+> 
+
 -- 
-1.6.3.GIT
+
+	David
