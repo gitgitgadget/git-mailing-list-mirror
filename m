@@ -1,98 +1,67 @@
-From: Tomas Carnecky <tom@dbservice.com>
-Subject: Re: Problem with large files on different OSes
-Date: Wed, 27 May 2009 16:01:57 +0200
-Message-ID: <C933C1BA-0170-4469-8099-2C0E95C61D24@dbservice.com>
-References: <submission.1M9Gk0-0000N8-MQ@mail.cs.st-andrews.ac.uk>
-Mime-Version: 1.0 (Apple Message framework v935.3)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Christopher Jefferson <caj@cs.st-andrews.ac.uk>
-X-From: git-owner@vger.kernel.org Wed May 27 16:02:36 2009
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: Re: Error during git gc
+Date: Wed, 27 May 2009 16:00:19 +0200
+Message-ID: <vpqeiua8x3g.fsf@bauges.imag.fr>
+References: <APEJLFBGDNOMCHGLHIHFEEKPDEAA.dforman@dairyfoodusa.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: <git@vger.kernel.org>
+To: "David Forman" <dforman@dairyfoodusa.com>
+X-From: git-owner@vger.kernel.org Wed May 27 16:04:46 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M9JiF-0007by-KQ
-	for gcvg-git-2@gmane.org; Wed, 27 May 2009 16:02:36 +0200
+	id 1M9JkM-0000BG-4q
+	for gcvg-git-2@gmane.org; Wed, 27 May 2009 16:04:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761014AbZE0OC0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 May 2009 10:02:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755967AbZE0OCZ
-	(ORCPT <rfc822;git-outgoing>); Wed, 27 May 2009 10:02:25 -0400
-Received: from office.neopsis.com ([78.46.209.98]:41747 "EHLO
-	office.neopsis.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756099AbZE0OCZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 May 2009 10:02:25 -0400
-Received: from calvin.emmen.dbservice.com ([62.65.141.13])
-	(authenticated user tom@dbservice.com)
-	by office.neopsis.com
-	(using TLSv1/SSLv3 with cipher AES128-SHA (128 bits));
-	Wed, 27 May 2009 16:02:23 +0200
-In-Reply-To: <submission.1M9Gk0-0000N8-MQ@mail.cs.st-andrews.ac.uk>
-X-Mailer: Apple Mail (2.935.3)
+	id S1763226AbZE0OEV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 May 2009 10:04:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1763067AbZE0OEV
+	(ORCPT <rfc822;git-outgoing>); Wed, 27 May 2009 10:04:21 -0400
+Received: from harmonie.imag.fr ([147.171.130.40]:42540 "EHLO harmonie.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1762908AbZE0OEU (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 May 2009 10:04:20 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by harmonie.imag.fr (8.13.8/8.13.8) with ESMTP id n4RE0KY2000427;
+	Wed, 27 May 2009 16:00:20 +0200 (CEST)
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
+	(Exim 4.50)
+	id 1M9Jg3-0002bj-Sk; Wed, 27 May 2009 16:00:19 +0200
+Received: from moy by bauges.imag.fr with local (Exim 4.63)
+	(envelope-from <moy@imag.fr>)
+	id 1M9Jg3-0007ss-RL; Wed, 27 May 2009 16:00:19 +0200
+In-Reply-To: <APEJLFBGDNOMCHGLHIHFEEKPDEAA.dforman@dairyfoodusa.com> (David Forman's message of "Wed\, 27 May 2009 08\:28\:29 -0500")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.0.91 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (harmonie.imag.fr [147.171.130.40]); Wed, 27 May 2009 16:00:20 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120066>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120067>
 
+(please provide a Subject: line)
 
-On May 27, 2009, at 12:52 PM, Christopher Jefferson wrote:
+"David Forman" <dforman@dairyfoodusa.com> writes:
 
-> I recently came across a very annoying problem, characterised by the  
-> following example:
+> I've encountered the following whenever I access Git and try to compress the
+> database due to loose objects.
 >
-> On a recent ubuntu install:
->
-> dd if=/dev/zero of=file bs=1300k count=1k
-> git commit file -m "Add huge file"
->
->
-> The repository can be pulled and pushed successfully to other ubuntu  
-> installs, but on Mac OS X, 10.5.7 machine with 4GB ram git pull  
-> produces:
->
-> remote: Counting objects: 6, done.
-> remote: git(1533,0xb0081000) malloc: *** mmap(size=1363152896)  
-> failed (error code=12)
-> remote: *** error: can't allocate region
-> remote: *** set a breakpoint in malloc_error_break to debug
-> remote: git(1533,0xb0081000) malloc: *** mmap(size=1363152896)  
-> failed (error code=12)
-> remote: *** error: can't allocate region
-> remote: *** set a breakpoint in malloc_error_break to debug
-> remote: fatal: Out of memory, malloc failed
-> error: git upload-pack: git-pack-objects died with error.
-> fatal: git upload-pack: aborting due to possible repository  
-> corruption on the remote side.
-> remote: aborting due to possible repository corruption on the remote  
-> side.
-> fatal: protocol error: bad pack header
->
->
-> The problem appears to be the different maximum mmap sizes available  
-> on different OSes. Whic I don't really mind the maximum file size  
-> restriction git imposes, this restriction varying from OS to OS is  
-> very annoying, fixing this required rewriting history to remove the  
-> commit, which caused problems as the commit had already been pulled,  
-> and built on, by a number of developers.
->
-> If the requirement that all files can be mmapped cannot be easily  
-> removed, would be it perhaps be acceptable to impose a (soft?)  
-> 1GB(ish) file size limit? I suggest 1GB as all the OSes I can get  
-> hold of easily (freeBSD, windows, Mac OS X, linux) support a mmap of  
-> size > 1GB.
+> error: cannot lock ref 'HEAD~'
+> error: cannot lock ref 'refs/heads/collections~'
+> error: cannot lock ref 'refs/heads/master~'
 
-I think this is a limitation of a 32bit build of git. I just tried  
-with a 64bit build and it added the file just fine. The compiler on  
-MacOSX (gcc) produces 32bit builds by default, even if the system  
-supports 64bit executables. But gcc on 64bit Linux (at least the  
-installations I have at home) produces a 64bit executables by default.  
-Solaris/OpenSolaris behaves like MacOSX, no idea about *BSD or  
-Windows. Maybe this is why git works on Linux but not MacOSX even on  
-the same hardware.
-Btw, I built git with: make install prefix=... CC="gcc -m64", no  
-modifications needed (MacOSX 10.5.7).
+I'd say you've edited the files .git/HEAD, refs/heads/collections, ...
+manually with a text editor that leaves ~ backup files. Unless you
+_really_ have branches called collections~ and master~, you can move
+these three files (in a temporary folder, or to trash if you're
+confident enough).
 
-tom
+-- 
+Matthieu
