@@ -1,74 +1,90 @@
-From: Peter Harris <git@peter.is-a-geek.org>
-Subject: Re: msysgit git log slow performance
-Date: Wed, 27 May 2009 11:49:59 -0400
-Message-ID: <eaa105840905270849l5ca0b501id8f86c9c0b44719f@mail.gmail.com>
-References: <4120f6ec0905270843u225d6b3bt701c1817d68b4648@mail.gmail.com>
+From: "Matthias Andree" <matthias.andree@gmx.de>
+Subject: git-svn dcommits messages not in UTF-8 charset to mod_dav_svn?
+Date: Wed, 27 May 2009 18:16:24 +0200
+Message-ID: <op.uuljhmmg1e62zd@balu.cs.uni-paderborn.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; format=flowed; delsp=yes; charset=iso-8859-15
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: guo tang <tangguo77@gmail.com>
-X-From: git-owner@vger.kernel.org Wed May 27 17:50:13 2009
+To: git@vger.kernel.org, users@subversion.tigris.org
+X-From: git-owner@vger.kernel.org Wed May 27 18:16:53 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M9LOO-0000xH-NH
-	for gcvg-git-2@gmane.org; Wed, 27 May 2009 17:50:13 +0200
+	id 1M9LoD-0004Zc-1e
+	for gcvg-git-2@gmane.org; Wed, 27 May 2009 18:16:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757498AbZE0PuB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 May 2009 11:50:01 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757456AbZE0PuB
-	(ORCPT <rfc822;git-outgoing>); Wed, 27 May 2009 11:50:01 -0400
-Received: from mail-ew0-f176.google.com ([209.85.219.176]:56927 "EHLO
-	mail-ew0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756389AbZE0PuA (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 May 2009 11:50:00 -0400
-Received: by ewy24 with SMTP id 24so4460541ewy.37
-        for <git@vger.kernel.org>; Wed, 27 May 2009 08:50:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:sender:received:in-reply-to
-         :references:date:x-google-sender-auth:message-id:subject:from:to:cc
-         :content-type:content-transfer-encoding;
-        bh=4r3nK0tLdNYXgH4gK/csRp4EBDC283TJWWGhRO/PAFs=;
-        b=qTrKz9fszvBjj6X5v3x/2kUmc09cBALfEADYwBrM6DKqusag28TPTCbb1SIlBJJBjI
-         JWp2XacoOGoD3QSkugZ6NsaSgDFBGNhgf/WAhFvUyVjUb9Dt2/eleCYrQEy3PZSBhcm7
-         GOpnu838CfX6fuNCcNXMisy0xEcJgaxFwDP/0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:sender:in-reply-to:references:date
-         :x-google-sender-auth:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        b=OgjV4BZOE8i73lB/rLWQHsXZnKKgRyjEfNq/bNHwKYeMXbouJN0eMB5i+rqV6NPfil
-         2YhQSwjDqglh+7SE4j6HVNBDvZYGQvyjdpDwdIcEKulpyFG4efPLJPqJVk4QfIbrPbTa
-         l9OxGfcSH9dDABf2cw1iQuQNM9//AGtRBWiek=
-Received: by 10.210.116.14 with SMTP id o14mr1848792ebc.43.1243439399124; Wed, 
-	27 May 2009 08:49:59 -0700 (PDT)
-In-Reply-To: <4120f6ec0905270843u225d6b3bt701c1817d68b4648@mail.gmail.com>
-X-Google-Sender-Auth: 80eb9ba5fbe3ee2d
+	id S1756776AbZE0QQZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 May 2009 12:16:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757172AbZE0QQZ
+	(ORCPT <rfc822;git-outgoing>); Wed, 27 May 2009 12:16:25 -0400
+Received: from mail.gmx.net ([213.165.64.20]:48565 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1757121AbZE0QQY (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 May 2009 12:16:24 -0400
+Received: (qmail invoked by alias); 27 May 2009 16:16:25 -0000
+Received: from balu.cs.uni-paderborn.de (EHLO balu.cs.uni-paderborn.de) [131.234.21.37]
+  by mail.gmx.net (mp069) with SMTP; 27 May 2009 18:16:25 +0200
+X-Authenticated: #428038
+X-Provags-ID: V01U2FsdGVkX18opIk9zJUonMvVD8ekXU9R8jIb/Tc6k9ULVSpVds
+	cDl2YXKLS0VFtL
+Received: from localhost ([127.0.0.1] helo=balu.cs.uni-paderborn.de)
+	by balu.cs.uni-paderborn.de with esmtp (Exim 4.69)
+	(envelope-from <matthias.andree@gmx.de>)
+	id KKB97C-0004JW-NW; Wed, 27 May 2009 18:16:24 +0200
+User-Agent: Opera Mail/9.64 (Win32)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.54
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120074>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120075>
 
-On Wed, May 27, 2009 at 11:43 AM, guo tang wrote:
-> Hi, Gentlemen,
->
-> Anyone else has performance problem with msysgit "git log" command? In
-> one of my XP box,
-> git log takes about 5 seconds. I did some Google search, one email
-> thread in this mailing list
-> says setting "GIT_PAGER=" can solve the problem. I tried it, it really
-> works. But some other
-> commands like push is still slow. I am using
-> http://msysgit.googlecode.com/files/PortableGit-1.6.3-preview20090507.7z
-> In another XP box, the same msysgit binary, the same "git log" command
-> is very fast without GIT_PAGER change.
-> So it might due to some strange XP settings. Anyone has idea?
+Greetings,
 
-At a guess, maybe you have a (disconnected) network share somewhere in
-your PATH?
+I had tried to use git cvsimport and git svn to transfer a CVS repository  
+(I have access to it) to an SVN repository (where I don't have access to  
+the repo, so I cannot use cvs2svn or similar).
 
-Peter Harris
+The problem is that the CVS repo had non-UTF-8 commit log messages, and I  
+didn't bother to convert them to UTF-8. However, SVN insists on encoding  
+filenames and log messages in UTF-8.
+
+"git svn dcommit" (which uses the SVN Perl bindings under the hood)  
+happily committed such a non-UTF-8 message and br0ke the repo. The actual  
+reason is that the SVN server (https://...) is now wedged, as in:
+
+$ svn log -r130
+svn: REPORT of '/repos/!svn/bc/130': 200 OK (https://svn-serv...de)
+
+$ svn --xml log -r130  2>/dev/null
+[stdout:]
+<?xml version="1.0"?>
+<log>
+[stderr:]
+svn: REPORT of '/repos/!svn/bc/130': 200 OK (https://svn-serv...de)
+
+$ svn propget --revprop svn:log -r130 https://svn-serv...de/path/
+aktuelle version (disclaimer)
+kopf und fu?\223zeilen
+etc.
+
+
+While mod_dav_svn arguably shouldn't accept b0rked messages, git-svn  
+shouldn't attempt to commit them either. It seems that the svn command  
+line utilities validate the message format by themselves, and apparently  
+the svn server module (likely mod_dav_svn - or are there others?) does not.
+
+So, could
+a) git-svn be modified to refuse dcommiting non-UTF-8 messages?
+b) mod_dav_svn be modified to refuse commits/propedits/propsets with  
+non-UTF-8 messages?
+
+I'm sorry to say I don't have information how the SVN server is configured  
+and which version it's running.
+
+Thanks.
+
+-- 
+Matthias Andree
