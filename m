@@ -1,108 +1,113 @@
 From: Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH 2/3] commit: add function to unparse a commit and its parents
-Date: Wed, 27 May 2009 07:12:36 +0200
-Message-ID: <200905270712.36866.chriscool@tuxfamily.org>
-References: <20090517153307.6403.73576.> <4A1A621E.10703@viscovery.net> <alpine.DEB.1.00.0905251140320.4288@intel-tinevez-2-302>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Johannes Sixt <j.sixt@viscovery.net>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed May 27 07:13:04 2009
+Subject: [PATCH v2 1/2] bisect: rework some rev related functions to make them
+	more reusable
+Date: Wed, 27 May 2009 07:09:41 +0200
+Message-ID: <20090527050943.3694.58743.chriscool@tuxfamily.org>
+References: <20090527050656.3694.86787.chriscool@tuxfamily.org>
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed May 27 07:13:06 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M9BRn-0002xG-Fs
-	for gcvg-git-2@gmane.org; Wed, 27 May 2009 07:13:03 +0200
+	id 1M9BRo-0002xG-4E
+	for gcvg-git-2@gmane.org; Wed, 27 May 2009 07:13:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757105AbZE0FMu convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 27 May 2009 01:12:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757567AbZE0FMt
-	(ORCPT <rfc822;git-outgoing>); Wed, 27 May 2009 01:12:49 -0400
-Received: from smtp4-g21.free.fr ([212.27.42.4]:53413 "EHLO smtp4-g21.free.fr"
+	id S1758776AbZE0FMw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 May 2009 01:12:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757567AbZE0FMv
+	(ORCPT <rfc822;git-outgoing>); Wed, 27 May 2009 01:12:51 -0400
+Received: from smtp2-g21.free.fr ([212.27.42.2]:50154 "EHLO smtp2-g21.free.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756075AbZE0FMq convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 27 May 2009 01:12:46 -0400
-Received: from smtp4-g21.free.fr (localhost [127.0.0.1])
-	by smtp4-g21.free.fr (Postfix) with ESMTP id 1CEAB4C80BD;
-	Wed, 27 May 2009 07:12:39 +0200 (CEST)
+	id S1757084AbZE0FMr (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 May 2009 01:12:47 -0400
+Received: from smtp2-g21.free.fr (localhost [127.0.0.1])
+	by smtp2-g21.free.fr (Postfix) with ESMTP id D08E64B00B7;
+	Wed, 27 May 2009 07:12:42 +0200 (CEST)
 Received: from bureau.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
-	by smtp4-g21.free.fr (Postfix) with ESMTP id 13CAC4C80B9;
-	Wed, 27 May 2009 07:12:37 +0200 (CEST)
-User-Agent: KMail/1.9.9
-In-Reply-To: <alpine.DEB.1.00.0905251140320.4288@intel-tinevez-2-302>
-Content-Disposition: inline
+	by smtp2-g21.free.fr (Postfix) with ESMTP id AC9494B00C1;
+	Wed, 27 May 2009 07:12:39 +0200 (CEST)
+X-git-sha1: d1a45ff9a3658f8914c20e7ee550fd195790aad4 
+X-Mailer: git-mail-commits v0.4.5
+In-Reply-To: <20090527050656.3694.86787.chriscool@tuxfamily.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120029>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120030>
 
-Hi,
+This patches changes the "bisect_rev_setup" and "bisect_common"
+functions to make it easier to reuse them in a later patch.
 
-Le Monday 25 May 2009, Johannes Schindelin a =E9crit :
-> Hi,
->
-> On Mon, 25 May 2009, Johannes Sixt wrote:
-> > Christian Couder schrieb:
-> > > +static void unparse_commit_list(struct commit_list *list)
-> > > +{
-> > > +	for (; list; list =3D list->next)
-> > > +		unparse_commit(list->item);
-> > > +}
-> > > +
-> > > +void unparse_commit(struct commit *item)
-> > > +{
-> > > +	item->object.flags =3D 0;
-> > > +	item->object.used =3D 0;
-> > > +	if (item->object.parsed) {
-> > > +		item->object.parsed =3D 0;
-> > > +		if (item->parents) {
-> > > +			unparse_commit_list(item->parents);
-> > > +			free_commit_list(item->parents);
-> > > +			item->parents =3D NULL;
-> > > +		}
-> > > +	}
-> > > +}
-> >
-> > I see a recursion here. Could this not overflow the stack if there =
-is a
-> > long ancestry chain?
->
-> You mean tail recursion, i.e. something like
->
-> void unparse_commit(struct commit *item)
-> {
-> 	item->object.flags =3D 0;
-> 	item->object.used =3D 0;
-> 	while (item->object.parsed) {
-> 		struct commit *first;
->
-> 		item->object.parsed =3D 0;
-> 		if (!item->parents)
-> 			break;
-> 		if (item->parents->next)
-> 			unparse_commit_list(item->parents->next);
-> 		first =3D item->parents->item;
-> 		free_commit_list(item->parents);
-> 		item->parents =3D NULL;
-> 		item =3D first;
-> 	}
-> }
+Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+---
+ bisect.c |   25 ++++++++++++++-----------
+ 1 files changed, 14 insertions(+), 11 deletions(-)
 
-Yes, it is better like this. Thanks and sorry about responding late.
-
-> However, I am a bit concerned that this function is dangerous, as it =
-just
-> assumes that there is no reference to the commits left, which assumpt=
-ion
-> is _very_ easy to break by mistake.
-
-Anyway I will send a 2 patch series that will use clear_commit_marks in=
-stead=20
-of this function.
-
-Thanks,
-Christian.
+diff --git a/bisect.c b/bisect.c
+index f57b62c..dc4e1bb 100644
+--- a/bisect.c
++++ b/bisect.c
+@@ -553,7 +553,9 @@ struct commit_list *filter_skipped(struct commit_list *list,
+ 	return filtered;
+ }
+ 
+-static void bisect_rev_setup(struct rev_info *revs, const char *prefix)
++static void bisect_rev_setup(struct rev_info *revs, const char *prefix,
++			     const char *bad_format, const char *good_format,
++			     int read_paths)
+ {
+ 	struct argv_array rev_argv = { NULL, 0, 0 };
+ 	int i;
+@@ -564,26 +566,24 @@ static void bisect_rev_setup(struct rev_info *revs, const char *prefix)
+ 
+ 	/* rev_argv.argv[0] will be ignored by setup_revisions */
+ 	argv_array_push(&rev_argv, xstrdup("bisect_rev_setup"));
+-	argv_array_push_sha1(&rev_argv, current_bad_sha1, "%s");
++	argv_array_push_sha1(&rev_argv, current_bad_sha1, bad_format);
+ 	for (i = 0; i < good_revs.sha1_nr; i++)
+-		argv_array_push_sha1(&rev_argv, good_revs.sha1[i], "^%s");
++		argv_array_push_sha1(&rev_argv, good_revs.sha1[i],
++				     good_format);
+ 	argv_array_push(&rev_argv, xstrdup("--"));
+-	read_bisect_paths(&rev_argv);
++	if (read_paths)
++		read_bisect_paths(&rev_argv);
+ 	argv_array_push(&rev_argv, NULL);
+ 
+ 	setup_revisions(rev_argv.argv_nr, rev_argv.argv, revs, NULL);
+-	revs->limited = 1;
+ }
+ 
+-static void bisect_common(struct rev_info *revs, int *reaches, int *all)
++static void bisect_common(struct rev_info *revs)
+ {
+ 	if (prepare_revision_walk(revs))
+ 		die("revision walk setup failed");
+ 	if (revs->tree_objects)
+ 		mark_edges_uninteresting(revs->commits, revs, NULL);
+-
+-	revs->commits = find_bisection(revs->commits, reaches, all,
+-				       !!skipped_revs.sha1_nr);
+ }
+ 
+ static void exit_if_skipped_commits(struct commit_list *tried,
+@@ -843,10 +843,13 @@ int bisect_next_all(const char *prefix)
+ 
+ 	check_good_are_ancestors_of_bad(prefix);
+ 
+-	bisect_rev_setup(&revs, prefix);
++	bisect_rev_setup(&revs, prefix, "%s", "^%s", 1);
++	revs.limited = 1;
+ 
+-	bisect_common(&revs, &reaches, &all);
++	bisect_common(&revs);
+ 
++	revs.commits = find_bisection(revs.commits, &reaches, &all,
++				       !!skipped_revs.sha1_nr);
+ 	revs.commits = filter_skipped(revs.commits, &tried, 0);
+ 
+ 	if (!revs.commits) {
+-- 
+1.6.3.GIT
