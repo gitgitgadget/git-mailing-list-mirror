@@ -1,67 +1,75 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: Re: Error during git gc
-Date: Wed, 27 May 2009 16:00:19 +0200
-Message-ID: <vpqeiua8x3g.fsf@bauges.imag.fr>
-References: <APEJLFBGDNOMCHGLHIHFEEKPDEAA.dforman@dairyfoodusa.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: <git@vger.kernel.org>
-To: "David Forman" <dforman@dairyfoodusa.com>
-X-From: git-owner@vger.kernel.org Wed May 27 16:04:46 2009
+From: Christopher Jefferson <caj@cs.st-andrews.ac.uk>
+Subject: Re: Problem with large files on different OSes
+Date: Wed, 27 May 2009 15:09:47 +0100
+Message-ID: <submission.1M9JpE-0005AW-92@mail.cs.st-andrews.ac.uk>
+References: <submission.1M9Gk0-0000N8-MQ@mail.cs.st-andrews.ac.uk> <C933C1BA-0170-4469-8099-2C0E95C61D24@dbservice.com>
+Mime-Version: 1.0 (Apple Message framework v935.3)
+Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Tomas Carnecky <tom@dbservice.com>
+X-From: git-owner@vger.kernel.org Wed May 27 16:09:59 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M9JkM-0000BG-4q
-	for gcvg-git-2@gmane.org; Wed, 27 May 2009 16:04:46 +0200
+	id 1M9JpN-0002kh-Df
+	for gcvg-git-2@gmane.org; Wed, 27 May 2009 16:09:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1763226AbZE0OEV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 May 2009 10:04:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1763067AbZE0OEV
-	(ORCPT <rfc822;git-outgoing>); Wed, 27 May 2009 10:04:21 -0400
-Received: from harmonie.imag.fr ([147.171.130.40]:42540 "EHLO harmonie.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1762908AbZE0OEU (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 May 2009 10:04:20 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by harmonie.imag.fr (8.13.8/8.13.8) with ESMTP id n4RE0KY2000427;
-	Wed, 27 May 2009 16:00:20 +0200 (CEST)
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
-	(Exim 4.50)
-	id 1M9Jg3-0002bj-Sk; Wed, 27 May 2009 16:00:19 +0200
-Received: from moy by bauges.imag.fr with local (Exim 4.63)
-	(envelope-from <moy@imag.fr>)
-	id 1M9Jg3-0007ss-RL; Wed, 27 May 2009 16:00:19 +0200
-In-Reply-To: <APEJLFBGDNOMCHGLHIHFEEKPDEAA.dforman@dairyfoodusa.com> (David Forman's message of "Wed\, 27 May 2009 08\:28\:29 -0500")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.0.91 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (harmonie.imag.fr [147.171.130.40]); Wed, 27 May 2009 16:00:20 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
+	id S1759467AbZE0OJr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 May 2009 10:09:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758727AbZE0OJr
+	(ORCPT <rfc822;git-outgoing>); Wed, 27 May 2009 10:09:47 -0400
+Received: from mail.cs.st-andrews.ac.uk ([138.251.206.35]:33863 "EHLO
+	mail.cs.st-andrews.ac.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758264AbZE0OJr (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 May 2009 10:09:47 -0400
+Received: by mail.cs.st-andrews.ac.uk with esmtpsa (authid caj) (TLSv1:AES128-SHA:128)
+	(Exim 4.43)
+	id 1M9JpE-0005AW-92; Wed, 27 May 2009 15:09:48 +0100
+In-Reply-To: <C933C1BA-0170-4469-8099-2C0E95C61D24@dbservice.com>
+X-Mailer: Apple Mail (2.935.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120067>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120068>
 
-(please provide a Subject: line)
 
-"David Forman" <dforman@dairyfoodusa.com> writes:
+On 27 May 2009, at 15:01, Tomas Carnecky wrote:
 
-> I've encountered the following whenever I access Git and try to compress the
-> database due to loose objects.
+>>
+>> The problem appears to be the different maximum mmap sizes  
+>> available on different OSes. Whic I don't really mind the maximum  
+>> file size restriction git imposes, this restriction varying from OS  
+>> to OS is very annoying, fixing this required rewriting history to  
+>> remove the commit, which caused problems as the commit had already  
+>> been pulled, and built on, by a number of developers.
+>>
+>> If the requirement that all files can be mmapped cannot be easily  
+>> removed, would be it perhaps be acceptable to impose a (soft?)  
+>> 1GB(ish) file size limit? I suggest 1GB as all the OSes I can get  
+>> hold of easily (freeBSD, windows, Mac OS X, linux) support a mmap  
+>> of size > 1GB.
 >
-> error: cannot lock ref 'HEAD~'
-> error: cannot lock ref 'refs/heads/collections~'
-> error: cannot lock ref 'refs/heads/master~'
+> I think this is a limitation of a 32bit build of git. I just tried  
+> with a 64bit build and it added the file just fine. The compiler on  
+> MacOSX (gcc) produces 32bit builds by default, even if the system  
+> supports 64bit executables. But gcc on 64bit Linux (at least the  
+> installations I have at home) produces a 64bit executables by  
+> default. Solaris/OpenSolaris behaves like MacOSX, no idea about *BSD  
+> or Windows. Maybe this is why git works on Linux but not MacOSX even  
+> on the same hardware.
+> Btw, I built git with: make install prefix=... CC="gcc -m64", no  
+> modifications needed (MacOSX 10.5.7).
 
-I'd say you've edited the files .git/HEAD, refs/heads/collections, ...
-manually with a text editor that leaves ~ backup files. Unless you
-_really_ have branches called collections~ and master~, you can move
-these three files (in a temporary folder, or to trash if you're
-confident enough).
+The git installs I am using are all 32bit, this machine doesn't have a  
+64bit processor (it is one of the few macs released without one). It's  
+nice to know long term this problem will go away, that all suggests  
+introducing some limit is not approriate, as while 32bit users have  
+some arbitary limit above which they cannot go, I am sure all 64-bit  
+OSes will manage to easily mmap any file. Of course warning such users  
+they are producing packs that are not going to work on 32bit compiles  
+of git isn't a stupid idea.
 
--- 
-Matthieu
+Chris
