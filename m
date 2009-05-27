@@ -1,68 +1,167 @@
-From: "H. Peter Anvin" <hpa@zytor.com>
-Subject: Re: RFE: "git bisect reverse"
-Date: Tue, 26 May 2009 21:20:10 -0700
-Message-ID: <4A1CBF7A.3090708@zytor.com>
-References: <4A1C6B70.4050501@zytor.com> <4A1CACB2.7000702@vilain.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Sam Vilain <sam@vilain.net>
-X-From: git-owner@vger.kernel.org Wed May 27 06:20:21 2009
+From: Christian Couder <chriscool@tuxfamily.org>
+Subject: [PATCH v2 2/2] bisect: check ancestors without forking a "git
+	rev-list" process
+Date: Wed, 27 May 2009 07:09:42 +0200
+Message-ID: <20090527050943.3694.90014.chriscool@tuxfamily.org>
+References: <20090527050656.3694.86787.chriscool@tuxfamily.org>
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed May 27 07:13:05 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M9Acm-0005L5-QD
-	for gcvg-git-2@gmane.org; Wed, 27 May 2009 06:20:21 +0200
+	id 1M9BRo-0002xG-Ow
+	for gcvg-git-2@gmane.org; Wed, 27 May 2009 07:13:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750984AbZE0EUM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 May 2009 00:20:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750936AbZE0EUM
-	(ORCPT <rfc822;git-outgoing>); Wed, 27 May 2009 00:20:12 -0400
-Received: from terminus.zytor.com ([198.137.202.10]:39423 "EHLO
-	terminus.zytor.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750926AbZE0EUL (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 May 2009 00:20:11 -0400
-Received: from mail.hos.anvin.org (c-98-210-181-100.hsd1.ca.comcast.net [98.210.181.100])
-	(authenticated bits=0)
-	by terminus.zytor.com (8.14.3/8.14.1) with ESMTP id n4R4KCTa027397
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Tue, 26 May 2009 21:20:13 -0700
-Received: from tazenda.hos.anvin.org (tazenda.hos.anvin.org [172.27.0.16])
-	by mail.hos.anvin.org (8.14.2/8.13.8) with ESMTP id n4R4KCte024244;
-	Tue, 26 May 2009 21:20:12 -0700
-Received: from tazenda.hos.anvin.org (localhost.localdomain [127.0.0.1])
-	by tazenda.hos.anvin.org (8.14.3/8.13.6) with ESMTP id n4R4KAJA016733;
-	Tue, 26 May 2009 21:20:11 -0700
-User-Agent: Thunderbird 2.0.0.14 (X11/20080501)
-In-Reply-To: <4A1CACB2.7000702@vilain.net>
-X-Virus-Scanned: ClamAV 0.94.2/9393/Tue May 26 03:17:55 2009 on terminus.zytor.com
-X-Virus-Status: Clean
+	id S1759103AbZE0FMz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 May 2009 01:12:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758481AbZE0FMw
+	(ORCPT <rfc822;git-outgoing>); Wed, 27 May 2009 01:12:52 -0400
+Received: from smtp6-g21.free.fr ([212.27.42.6]:54403 "EHLO smtp6-g21.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757348AbZE0FMr (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 May 2009 01:12:47 -0400
+Received: from smtp6-g21.free.fr (localhost [127.0.0.1])
+	by smtp6-g21.free.fr (Postfix) with ESMTP id 56929E0804C;
+	Wed, 27 May 2009 07:12:42 +0200 (CEST)
+Received: from bureau.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
+	by smtp6-g21.free.fr (Postfix) with ESMTP id 1B76AE08026;
+	Wed, 27 May 2009 07:12:40 +0200 (CEST)
+X-git-sha1: c30ffc14d2a4586aa76a6becdd44bb8a710a04ac 
+X-Mailer: git-mail-commits v0.4.5
+In-Reply-To: <20090527050656.3694.86787.chriscool@tuxfamily.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120026>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120027>
 
-Sam Vilain wrote:
-> 
-> Oh, yes.  And another thing: 'git bisect run' / 'git bisect skip'
-> doesn't do a very good job of skipping around broken commits (ie when
-> the script returns 126).  It just seems to move to the next one; it
-> would be much better IMHO to first try the commit 1/3rd of the way into
-> the range, then if that fails, the commit 2/3rd of the way through it, etc.
-> 
+We must save the pending commits that will be used during revision
+walking and clear marks on them after, because we want to leave a
+clean state for the next revision walking that will try to find the
+best bisection point.
 
-I posted about that last year:
+As we don't fork a process anymore to call "git rev-list", we need
+to remove the use of GIT_TRACE to check how "git rev-list" is
+called from the t6030 test that uses it.
 
-http://marc.info/?l=git&i=48F3DCEB.1060803@zytor.com
+Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+---
+ bisect.c                    |   54 +++++++++++++++++-------------------------
+ t/t6030-bisect-porcelain.sh |   13 +---------
+ 2 files changed, 23 insertions(+), 44 deletions(-)
 
-At the time, git bisect was still done in the shell and it was deemed
-too difficult.
-
-	-hpa
-
+diff --git a/bisect.c b/bisect.c
+index dc4e1bb..18f9fa4 100644
+--- a/bisect.c
++++ b/bisect.c
+@@ -750,42 +750,31 @@ static void check_merge_bases(void)
+ 	free_commit_list(result);
+ }
+ 
+-/*
+- * This function runs the command "git rev-list $_good ^$_bad"
+- * and returns 1 if it produces some output, 0 otherwise.
+- */
+-static int check_ancestors(void)
++static int check_ancestors(const char *prefix)
+ {
+-	struct argv_array rev_argv = { NULL, 0, 0 };
+-	struct strbuf str = STRBUF_INIT;
+-	int i, result = 0;
+-	struct child_process rls;
+-	FILE *rls_fout;
++	struct rev_info revs;
++	struct object_array pending_copy;
++	int i, res;
+ 
+-	argv_array_push(&rev_argv, xstrdup("rev-list"));
+-	argv_array_push_sha1(&rev_argv, current_bad_sha1, "^%s");
+-	for (i = 0; i < good_revs.sha1_nr; i++)
+-		argv_array_push_sha1(&rev_argv, good_revs.sha1[i], "%s");
+-	argv_array_push(&rev_argv, NULL);
++	bisect_rev_setup(&revs, prefix, "^%s", "%s", 0);
+ 
+-	memset(&rls, 0, sizeof(rls));
+-	rls.argv = rev_argv.argv;
+-	rls.out = -1;
+-	rls.git_cmd = 1;
+-	if (start_command(&rls))
+-		die("Could not launch 'git rev-list' command.");
+-	rls_fout = fdopen(rls.out, "r");
+-	while (strbuf_getline(&str, rls_fout, '\n') != EOF) {
+-		strbuf_trim(&str);
+-		if (*str.buf) {
+-			result = 1;
+-			break;
+-		}
++	/* Save pending objects, so they can be cleaned up later. */
++	memset(&pending_copy, 0, sizeof(pending_copy));
++	for (i = 0; i < revs.pending.nr; i++)
++		add_object_array(revs.pending.objects[i].item,
++				 revs.pending.objects[i].name,
++				 &pending_copy);
++
++	bisect_common(&revs);
++	res = (revs.commits != NULL);
++
++	/* Clean up objects used, as they will be reused. */
++	for (i = 0; i < pending_copy.nr; i++) {
++		struct object *o = pending_copy.objects[i].item;
++		clear_commit_marks((struct commit *)o, ALL_REV_FLAGS);
+ 	}
+-	fclose(rls_fout);
+-	finish_command(&rls);
+ 
+-	return result;
++	return res;
+ }
+ 
+ /*
+@@ -813,7 +802,8 @@ static void check_good_are_ancestors_of_bad(const char *prefix)
+ 	if (good_revs.sha1_nr == 0)
+ 		return;
+ 
+-	if (check_ancestors())
++	/* Check if all good revs are ancestor of the bad rev. */
++	if (check_ancestors(prefix))
+ 		check_merge_bases();
+ 
+ 	/* Create file BISECT_ANCESTORS_OK. */
+diff --git a/t/t6030-bisect-porcelain.sh b/t/t6030-bisect-porcelain.sh
+index 54b7ea6..5254b23 100755
+--- a/t/t6030-bisect-porcelain.sh
++++ b/t/t6030-bisect-porcelain.sh
+@@ -482,28 +482,17 @@ test_expect_success 'good merge bases when good and bad are siblings' '
+ 	git bisect reset
+ '
+ 
+-check_trace() {
+-	grep "$1" "$GIT_TRACE" | grep "\^$2" | grep "$3" >/dev/null
+-}
+-
+ test_expect_success 'optimized merge base checks' '
+-	GIT_TRACE="$(pwd)/trace.log" &&
+-	export GIT_TRACE &&
+ 	git bisect start "$HASH7" "$SIDE_HASH7" > my_bisect_log.txt &&
+ 	grep "merge base must be tested" my_bisect_log.txt &&
+ 	grep "$HASH4" my_bisect_log.txt &&
+-	check_trace "rev-list" "$HASH7" "$SIDE_HASH7" &&
+ 	git bisect good > my_bisect_log2.txt &&
+ 	test -f ".git/BISECT_ANCESTORS_OK" &&
+ 	test "$HASH6" = $(git rev-parse --verify HEAD) &&
+-	: > "$GIT_TRACE" &&
+ 	git bisect bad > my_bisect_log3.txt &&
+-	test_must_fail check_trace "rev-list" "$HASH6" "$SIDE_HASH7" &&
+ 	git bisect good "$A_HASH" > my_bisect_log4.txt &&
+ 	grep "merge base must be tested" my_bisect_log4.txt &&
+-	test_must_fail test -f ".git/BISECT_ANCESTORS_OK" &&
+-	check_trace "rev-list" "$HASH6" "$A_HASH" &&
+-	unset GIT_TRACE
++	test_must_fail test -f ".git/BISECT_ANCESTORS_OK"
+ '
+ 
+ # This creates another side branch called "parallel" with some files
 -- 
-H. Peter Anvin, Intel Open Source Technology Center
-I work for Intel.  I don't speak on their behalf.
+1.6.3.GIT
