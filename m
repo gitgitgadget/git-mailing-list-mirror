@@ -1,61 +1,115 @@
-From: Clemens Buchacher <drizzd@aon.at>
-Subject: Re: RFE: "git bisect reverse"
-Date: Wed, 27 May 2009 23:18:36 +0200
-Message-ID: <20090527211836.GA14841@localhost>
-References: <4A1C6B70.4050501@zytor.com> <4A1CACB2.7000702@vilain.net> <4A1CBF7A.3090708@zytor.com> <200905270726.59883.chriscool@tuxfamily.org> <efe2b6d70905271411g4e1616b5w548141ee9fab2c14@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Christian Couder <chriscool@tuxfamily.org>,
-	"H. Peter Anvin" <hpa@zytor.com>, Sam Vilain <sam@vilain.net>,
-	Git Mailing List <git@vger.kernel.org>
-To: Ealdwulf Wuffinga <ealdwulf@googlemail.com>
-X-From: git-owner@vger.kernel.org Wed May 27 23:18:55 2009
+From: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+Subject: [PATCHv3bis 2/4] git-am foreign patch support: autodetect some patch formats
+Date: Wed, 27 May 2009 23:20:12 +0200
+Message-ID: <1243459212-6074-1-git-send-email-giuseppe.bilotta@gmail.com>
+References: <1243416319-31477-3-git-send-email-giuseppe.bilotta@gmail.com>
+Cc: git@vger.kernel.org, Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed May 27 23:20:38 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M9QWR-0002Dp-Tz
-	for gcvg-git-2@gmane.org; Wed, 27 May 2009 23:18:52 +0200
+	id 1M9QY6-0003P9-Ix
+	for gcvg-git-2@gmane.org; Wed, 27 May 2009 23:20:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751857AbZE0VSn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 May 2009 17:18:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751795AbZE0VSn
-	(ORCPT <rfc822;git-outgoing>); Wed, 27 May 2009 17:18:43 -0400
-Received: from postman.fh-hagenberg.at ([193.170.124.96]:6761 "EHLO
-	mail.fh-hagenberg.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750928AbZE0VSm (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 May 2009 17:18:42 -0400
-Received: from darc.dnsalias.org ([84.154.120.211]) by mail.fh-hagenberg.at over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
-	 Wed, 27 May 2009 23:18:37 +0200
-Received: from drizzd by darc.dnsalias.org with local (Exim 4.69)
-	(envelope-from <drizzd@aon.at>)
-	id 1M9QWC-00044C-QD; Wed, 27 May 2009 23:18:36 +0200
-Content-Disposition: inline
-In-Reply-To: <efe2b6d70905271411g4e1616b5w548141ee9fab2c14@mail.gmail.com>
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-OriginalArrivalTime: 27 May 2009 21:18:37.0834 (UTC) FILETIME=[B35B36A0:01C9DF10]
+	id S1757187AbZE0VUU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 May 2009 17:20:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756168AbZE0VUT
+	(ORCPT <rfc822;git-outgoing>); Wed, 27 May 2009 17:20:19 -0400
+Received: from mail-bw0-f222.google.com ([209.85.218.222]:37964 "EHLO
+	mail-bw0-f222.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757286AbZE0VUQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 May 2009 17:20:16 -0400
+Received: by bwz22 with SMTP id 22so4997998bwz.37
+        for <git@vger.kernel.org>; Wed, 27 May 2009 14:20:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer:in-reply-to:references;
+        bh=8TZuTy6UwvKWtwXNP2nL3e5IOrIIxV/4I6kuA07AaSM=;
+        b=F3lBw/BzUut2m/3PyD9L8a0FXeqQ7unL2Yw3zqV7RhrCbvM/DEyhnINugJnGvbQeoa
+         j+RdVX9YftThxJO7Fmv3VNOI8aedI0om9oukLCR7XKEHTxrvFPUdUjJXN3r8a/zEfqEr
+         TM0u3ZMbSfGnSDc0FTBAjhqK5jlCTrqXu28X0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        b=cWIp6TKTY5I3txuJf2STqlNFACWjiylr/GiON0JNX0iwQIUyyDuW7TiIvvQabb0tYd
+         tf6EBWP3vR751O6l47KK9GBP+TP9WoJ+RPISU5I0VoXrK8C7WXolL1oto+4+w1uYXk3/
+         mcMi5eB5oHxCWlsOe0caeZ4ESKJ7bsAEFm2FM=
+Received: by 10.103.241.15 with SMTP id t15mr359680mur.85.1243459217381;
+        Wed, 27 May 2009 14:20:17 -0700 (PDT)
+Received: from localhost (host-78-15-9-104.cust-adsl.tiscali.it [78.15.9.104])
+        by mx.google.com with ESMTPS id u26sm7579204mug.52.2009.05.27.14.20.16
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 27 May 2009 14:20:16 -0700 (PDT)
+X-Mailer: git-send-email 1.6.3.1.274.gd2e8.dirty
+In-Reply-To: <1243416319-31477-3-git-send-email-giuseppe.bilotta@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120108>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120109>
 
-On Wed, May 27, 2009 at 10:11:35PM +0100, Ealdwulf Wuffinga wrote:
-> >> Sam Vilain wrote:
-> >> > Oh, yes.  And another thing: 'git bisect run' / 'git bisect skip'
-> >> > doesn't do a very good job of skipping around broken commits (ie when
-> >> > the script returns 126).  It just seems to move to the next one; it
-> >> > would be much better IMHO to first try the commit 1/3rd of the way into
-> >> > the range, then if that fails, the commit 2/3rd of the way through it,
-> >> > etc.
-> 
-> As I understand it, the idea is that the probability that a commit is
-> broken is greater if it is close in the DAG to a known-broken commit.
-> I wonder if this can be made more concrete? Can we derive a formula
-> for, or collect empriical data on, these probabilities?
+Default to mbox format if input is from stdin. Otherwise, look at the
+first few lines of the first patch to try to guess its format.
 
-No. The idea is that we want to reduce to bisect as close to the middle as
-possible so we only have to do log2(n) tests. But if a commit is skipped,
-that means we cannot decide whether the test passes or fails for this
-commit. But if we choose a commit close to the skipped one, we will likely
-have to skip the that one for the same reason.
+Include checks for mailboxes, stgit patch series, stgit single patches
+and hg patches.
+---
+ git-am.sh |   40 +++++++++++++++++++++++++++++++++++++++-
+ 1 files changed, 39 insertions(+), 1 deletions(-)
+
+diff --git a/git-am.sh b/git-am.sh
+index da160de..8519701 100755
+--- a/git-am.sh
++++ b/git-am.sh
+@@ -142,7 +142,45 @@ check_patch_format () {
+ 	then
+ 		return 0
+ 	fi
+-	patch_format=mbox
++
++	# we default to mbox format if input is from stdin and for
++	# directories
++	if test $# = 0 || test "x$1" = "x-" || test -d "$1"
++	then
++		patch_format=mbox
++		return 0
++	fi
++
++	# otherwise, check the first few lines of the first patch to try
++	# to detect its format
++	{
++		read l1
++		read l2
++		read l3
++		case "$l1" in
++		"From "*|"From: "*)
++			patch_format=mbox
++			;;
++		'# This series applies on GIT commit'*)
++			patch_format=stgit-series
++			;;
++		"# HG changeset patch")
++			patch_format=hg
++			;;
++		*)
++			# if the second line is empty and the third is
++			# a From, Author or Date entry, this is very
++			# likely an StGIT patch
++			case "$l2,$l3" in
++			,"From: "*|,"Author: "*|,"Date: "*)
++				patch_format=stgit
++				;;
++			*)
++				;;
++			esac
++			;;
++		esac
++	} < "$1"
+ }
+ 
+ split_patches () {
+-- 
+1.6.3.1.274.gd2e8.dirty
