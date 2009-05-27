@@ -1,116 +1,140 @@
-From: Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH] bisect: display first bad commit without forking a new process
-Date: Wed, 27 May 2009 07:23:53 +0200
-Message-ID: <20090527052354.3824.22018.chriscool@tuxfamily.org>
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed May 27 07:28:41 2009
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] imap-send: add support for IPv6
+Date: Tue, 26 May 2009 23:28:41 -0700
+Message-ID: <7v7i03kqjq.fsf@alter.siamese.dyndns.org>
+References: <4A1AEDF2.7060307@googlemail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, mike@codeweavers.com
+To: Benjamin Kramer <benny.kra@googlemail.com>
+X-From: git-owner@vger.kernel.org Wed May 27 08:28:56 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M9Bgu-0006w3-Eo
-	for gcvg-git-2@gmane.org; Wed, 27 May 2009 07:28:40 +0200
+	id 1M9Cd9-0005mX-J0
+	for gcvg-git-2@gmane.org; Wed, 27 May 2009 08:28:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759590AbZE0F2O (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 May 2009 01:28:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758415AbZE0F2N
-	(ORCPT <rfc822;git-outgoing>); Wed, 27 May 2009 01:28:13 -0400
-Received: from smtp5-g21.free.fr ([212.27.42.5]:52346 "EHLO smtp5-g21.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755763AbZE0F2M (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 May 2009 01:28:12 -0400
-Received: from smtp5-g21.free.fr (localhost [127.0.0.1])
-	by smtp5-g21.free.fr (Postfix) with ESMTP id D938DD4807D;
-	Wed, 27 May 2009 07:28:08 +0200 (CEST)
-Received: from bureau.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
-	by smtp5-g21.free.fr (Postfix) with ESMTP id E550BD4801C;
-	Wed, 27 May 2009 07:28:05 +0200 (CEST)
-X-git-sha1: c60cb01718130aaa07b2e1f3bef90a597320aea2 
-X-Mailer: git-mail-commits v0.4.5
+	id S1759359AbZE0G2l (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 May 2009 02:28:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759028AbZE0G2l
+	(ORCPT <rfc822;git-outgoing>); Wed, 27 May 2009 02:28:41 -0400
+Received: from fed1rmmtao106.cox.net ([68.230.241.40]:64549 "EHLO
+	fed1rmmtao106.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757659AbZE0G2k (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 May 2009 02:28:40 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao106.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20090527062842.MWJQ25927.fed1rmmtao106.cox.net@fed1rmimpo02.cox.net>;
+          Wed, 27 May 2009 02:28:42 -0400
+Received: from localhost ([68.225.240.211])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id wWUi1b0024aMwMQ04WUinM; Wed, 27 May 2009 02:28:42 -0400
+X-Authority-Analysis: v=1.0 c=1 a=KXBDSr8jsPIA:10 a=qCZrQ46jRoIA:10
+ a=mK_AVkanAAAA:8 a=cO6QobQ9GtJL3ZHPM8oA:9 a=lYaqV7U91jVXpyY6rDcA:7
+ a=q_KGFVu7zGlDsftMqiQKU1dLcK0A:4 a=9xyTavCNlvEA:10 a=SodS6OqPmmEl0FGG:21
+ a=t7MNVfoJ1ZocmLxU:21
+X-CM-Score: 0.00
+In-Reply-To: <4A1AEDF2.7060307@googlemail.com> (Benjamin Kramer's message of "Mon\, 25 May 2009 21\:13\:54 +0200")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120034>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120035>
 
-Previously "git diff-tree --pretty COMMIT" was run using
-"run_command_v_opt" to display information about the first bad
-commit.
+Benjamin Kramer <benny.kra@googlemail.com> writes:
 
-The goal of this patch is to avoid a "fork" and an "exec" call
-when displaying that information.
+> Add IPv6 support by implementing name resolution with the
+> protocol agnostic getaddrinfo(3) API. The old gethostbyname(3)
+> code is still available when git is compiled with NO_IPV6.
 
-To do that, we manually setup revision information as
-"git diff-tree --pretty" would do it, and then use the
-"log_tree_commit" function.
+> diff --git a/imap-send.c b/imap-send.c
+> index 8154cb2..861268a 100644
+> --- a/imap-send.c
+> +++ b/imap-send.c
+> @@ -1021,6 +1019,51 @@ static struct store *imap_open_store(struct imap_server_conf *srvc)
+>  
+>  		imap_info("ok\n");
+>  	} else {
+> +#ifndef NO_IPV6
+> +		struct addrinfo hints, *ai0, *ai;
+> +		int gai;
+> +		char portstr[6];
+> +
+> +		snprintf(portstr, sizeof(portstr), "%hu", srvc->port);
 
-Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
----
- bisect.c |   30 +++++++++++++++++++++++++++---
- 1 files changed, 27 insertions(+), 3 deletions(-)
+We already use %h length specifier to explicitly say the parameter is
+a short in the IPV4 part of this program, so I am sure this won't regress
+anything for people, but I wonder what the point of it is...  (I am not
+asking nor even suggesting to change this, by the way).
 
-diff --git a/bisect.c b/bisect.c
-index c43c120..e94a77b 100644
---- a/bisect.c
-+++ b/bisect.c
-@@ -7,6 +7,7 @@
- #include "quote.h"
- #include "sha1-lookup.h"
- #include "run-command.h"
-+#include "log-tree.h"
- #include "bisect.h"
- 
- struct sha1_array {
-@@ -27,7 +28,6 @@ struct argv_array {
- 	int argv_alloc;
- };
- 
--static const char *argv_diff_tree[] = {"diff-tree", "--pretty", NULL, NULL};
- static const char *argv_checkout[] = {"checkout", "-q", NULL, "--", NULL};
- static const char *argv_show_branch[] = {"show-branch", NULL, NULL};
- 
-@@ -816,6 +816,31 @@ static void check_good_are_ancestors_of_bad(const char *prefix)
- }
- 
- /*
-+ * This does "git diff-tree --pretty COMMIT" without one fork+exec.
-+ */
-+static void show_diff_tree(const char *prefix, struct commit *commit)
-+{
-+	static struct rev_info opt;
-+
-+	/* diff-tree init */
-+	init_revisions(&opt, prefix);
-+	git_config(git_diff_basic_config, NULL); /* no "diff" UI options */
-+	opt.abbrev = 0;
-+	opt.diff = 1;
-+
-+	/* This is what "--pretty" does */
-+	opt.verbose_header = 1;
-+	opt.use_terminator = 0;
-+	opt.commit_format = CMIT_FMT_DEFAULT;
-+
-+	/* diff-tree init */
-+	if (!opt.diffopt.output_format)
-+		opt.diffopt.output_format = DIFF_FORMAT_RAW;
-+
-+	log_tree_commit(&opt, commit);
-+}
-+
-+/*
-  * We use the convention that exiting with an exit code 10 means that
-  * the bisection process finished successfully.
-  * In this case the calling shell script should exit 0.
-@@ -860,8 +885,7 @@ int bisect_next_all(const char *prefix)
- 	if (!hashcmp(bisect_rev, current_bad_sha1)) {
- 		exit_if_skipped_commits(tried, current_bad_sha1);
- 		printf("%s is first bad commit\n", bisect_rev_hex);
--		argv_diff_tree[2] = bisect_rev_hex;
--		run_command_v_opt(argv_diff_tree, RUN_GIT_CMD);
-+		show_diff_tree(prefix, revs.commits->item);
- 		/* This means the bisection process succeeded. */
- 		exit(10);
- 	}
--- 
-1.6.3.GIT
+> +		memset(&hints, 0, sizeof(hints));
+> +		hints.ai_socktype = SOCK_STREAM;
+> +		hints.ai_protocol = IPPROTO_TCP;
+> +
+> +		imap_info("Resolving %s... ", srvc->host);
+> +		gai = getaddrinfo(srvc->host, portstr, &hints, &ai);
+> +		if (gai) {
+> +			fprintf(stderr, "getaddrinfo: %s\n", gai_strerror(gai));
+> +			goto bail;
+
+It is Ok for now (as existing codepath liberally uses fprintf() and
+fputs() to report errors), but ideally we should start converting these to
+error() calls, I think, in a follow-up patch.
+
+> +		}
+> +		imap_info("ok\n");
+> +
+> +		for (ai0 = ai; ai; ai = ai->ai_next) {
+> +			char addr[NI_MAXHOST];
+> +
+> +			s = socket(ai->ai_family, ai->ai_socktype,
+> +				   ai->ai_protocol);
+> +			if (s < 0)
+> +				continue;
+> +
+> +			getnameinfo(ai->ai_addr, ai->ai_addrlen, addr,
+> +				    sizeof(addr), NULL, 0, NI_NUMERICHOST);
+> +			imap_info("Connecting to [%s]:%s... ", addr, portstr);
+
+Is forcing to NUMERICHOST done to match IPV4 codepath that does
+inet_ntoa()?  I guess that makes sense.
+
+> +			if (connect(s, ai->ai_addr, ai->ai_addrlen) < 0) {
+> +				close(s);
+> +				s = -1;
+> +				perror("connect");
+> +				continue;
+> +			}
+> +
+> +			break;
+> +		}
+> +		freeaddrinfo(ai0);
+> +#else /* NO_IPV6 */
+> +		struct hostent *he;
+> +		struct sockaddr_in addr;
+> +
+>  		memset(&addr, 0, sizeof(addr));
+>  		addr.sin_port = htons(srvc->port);
+>  		addr.sin_family = AF_INET;
+> @@ -1040,7 +1083,12 @@ static struct store *imap_open_store(struct imap_server_conf *srvc)
+>  		imap_info("Connecting to %s:%hu... ", inet_ntoa(addr.sin_addr), ntohs(addr.sin_port));
+>  		if (connect(s, (struct sockaddr *)&addr, sizeof(addr))) {
+>  			close(s);
+> +			s = -1;
+>  			perror("connect");
+> +		}
+> +#endif
+> +		if (s < 0) {
+> +			fputs("Error: unable to connect to server.\n", stderr);
+>  			goto bail;
+>  		}
+
+I do not use imap-send myself, and I suspect not many people do so either,
+so I originally guessed the best way to judge if this has any portability
+(or other) issues is to directly apply to 'master' and see if anybody
+screams.
+
+Thanks.
