@@ -1,92 +1,74 @@
-From: Bert Wesarg <bert.wesarg@googlemail.com>
-Subject: Re: [PATCH 4/7] Allow programs to not depend on remotes having urls
-Date: Wed, 27 May 2009 20:42:57 +0200
-Message-ID: <36ca99e90905271142q577f026bidffa1ae89714d2a5@mail.gmail.com>
-References: <alpine.LNX.2.00.0905271408380.2147@iabervon.org>
+From: Johannes Sixt <j6t@kdbg.org>
+Subject: Re: git log missing last line of output
+Date: Wed, 27 May 2009 21:06:30 +0200
+Message-ID: <200905272106.31036.j6t@kdbg.org>
+References: <gvhrtf$vpr$1@ger.gmane.org> <4A1D5F70.4030101@drmicha.warpmail.net> <gvjsc9$f40$1@ger.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: base64
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Sverre Rabbelier <srabbelier@gmail.com>
-To: Daniel Barkalow <barkalow@iabervon.org>
-X-From: git-owner@vger.kernel.org Wed May 27 20:43:20 2009
+Content-Type: text/plain;
+  charset="iso-8859-15"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "Neal Kreitzinger" <neal@rsss.com>
+X-From: git-owner@vger.kernel.org Wed May 27 21:07:35 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M9O5w-0005NS-49
-	for gcvg-git-2@gmane.org; Wed, 27 May 2009 20:43:20 +0200
+	id 1M9OTK-0007FD-L5
+	for gcvg-git-2@gmane.org; Wed, 27 May 2009 21:07:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758311AbZE0SnH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 May 2009 14:43:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753942AbZE0SnE
-	(ORCPT <rfc822;git-outgoing>); Wed, 27 May 2009 14:43:04 -0400
-Received: from mail-fx0-f168.google.com ([209.85.220.168]:45022 "EHLO
-	mail-fx0-f168.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756105AbZE0SnC (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 May 2009 14:43:02 -0400
-Received: by fxm12 with SMTP id 12so3133231fxm.37
-        for <git@vger.kernel.org>; Wed, 27 May 2009 11:43:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=RzWSYoZPdJw93cAnUzLwo83EOzb9m3zoRdJ7qU4Yfss=;
-        b=Bvsp+4QEgN7obhr/B2qP2atlWO32TgG4Y27H3fFs9EsPOiHpUooYcDs3yv6MvfVbGC
-         DEqPgpOF8xUhxLbhblC6j0PGhe6FAL4AAFCXfv+2SfonW+lzZMhKpB0qR6Ay5g2fPiQw
-         6JAPfDTS/mALLH7Xk4oCQUgeKCVo8nEx+Bjhc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=fcNLevBqoMWXe7yvr2M+o9fZUYMBL46NB4TnkJfT9HISwVnZ9avNFmLx9o/WPaawAD
-         DWsUlRZtZXBknnqA32zVtbuoDop3UGFMooZrWFL4p2Abp2wLme7ZB2KmzMW8gm8EdWmu
-         qMzoqVLVdH1MDPkLThwAHnST5RTq5A+etOzqQ=
-Received: by 10.223.126.69 with SMTP id b5mr372519fas.54.1243449777939; Wed, 
-	27 May 2009 11:42:57 -0700 (PDT)
-In-Reply-To: <alpine.LNX.2.00.0905271408380.2147@iabervon.org>
+	id S1760047AbZE0TGe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 May 2009 15:06:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757326AbZE0TGe
+	(ORCPT <rfc822;git-outgoing>); Wed, 27 May 2009 15:06:34 -0400
+Received: from bsmtp.bon.at ([213.33.87.14]:61012 "EHLO bsmtp.bon.at"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757213AbZE0TGd (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 May 2009 15:06:33 -0400
+Received: from dx.sixt.local (unknown [93.83.142.38])
+	by bsmtp.bon.at (Postfix) with ESMTP id 7C864CDF8C;
+	Wed, 27 May 2009 21:06:31 +0200 (CEST)
+Received: from localhost (localhost [IPv6:::1])
+	by dx.sixt.local (Postfix) with ESMTP id 7EC9542767;
+	Wed, 27 May 2009 21:06:31 +0200 (CEST)
+User-Agent: KMail/1.9.9
+In-Reply-To: <gvjsc9$f40$1@ger.gmane.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120093>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120094>
 
-RGFuaWVsLAoKSSBmb3VuZCBhIHNtYWxsIHR5cG8uCgpCZXJ0CgpPbiBXZWQsIE1heSAyNywgMjAw
-OSBhdCAyMDoxNSwgRGFuaWVsIEJhcmthbG93IDxiYXJrYWxvd0BpYWJlcnZvbi5vcmc+IHdyb3Rl
-Ogo+IEZvciBmZXRjaCBhbmQgbHMtcmVtb3RlLCB3aGljaCB1c2UgdGhlIGZpcnN0IHVybCBvZiBh
-IHJlbW90ZSwgaGF2ZQo+IHRyYW5zcG9ydF9nZXQoKSBkZXRlcm1pbmUgdGhpcyBieSBwYXNzaW5n
-IGEgcmVtb3RlIGFuZCBwYXNzaW5nIE5VTEwKPiBmb3IgdGhlIHVybC4gRm9yIHB1c2gsIHdoaWNo
-IHVzZXMgZXZlcnkgdXJsIG9mIGEgcmVtb3RlLCB1c2UgZWFjaCB1cmwKPiBpbiB0dXJuIGlmIHRo
-ZXJlIGFyZSBhbnksIGFuZCB1c2UgTlVMTCBpZiB0aGVyZSBhcmUgbm9uZS4KPgo+IFRoaXMgd2ls
-bCBhbGxvdyB0aGUgdHJhbnNwb3J0IGNvZGUgdG8gZG8gc29tZXRoaW5nIGRpZmZlcmVudCBpZiB0
-aGUKPiBsb2NhdGlvbiBpcyBub3Qgc3BlY2lmaWVkIHdpdGggYSB1cmwuCj4KPiBBbHNvLCBoYXZl
-IHRoZSBtZXNzYWdlIGZvciBhIGZldGNoIHNheSAiZm9yZWlnbiIgaWYgdGhlcmUgaXMgbm8gdXJs
-Lgo+Cj4gU2lnbmVkLW9mZi1ieTogRGFuaWVsIEJhcmthbG93IDxiYXJrYWxvd0BpYWJlcnZvbi5v
-cmc+Cj4gLS0tCj4gwqBidWlsdGluLWZldGNoLmMgwqAgwqAgfCDCoCAxOSArKysrKysrKysrKy0t
-LS0tLQo+IMKgYnVpbHRpbi1scy1yZW1vdGUuYyB8IMKgIMKgNCArLQo+IMKgYnVpbHRpbi1wdXNo
-LmMgwqAgwqAgwqB8IMKgIDU0ICsrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKy0tLS0t
-LS0tLS0tLS0tLS0tCj4gwqB0cmFuc3BvcnQuYyDCoCDCoCDCoCDCoCB8IMKgIMKgMyArKwo+IMKg
-NCBmaWxlcyBjaGFuZ2VkLCA1MiBpbnNlcnRpb25zKCspLCAyOCBkZWxldGlvbnMoLSkKPgo+IGRp
-ZmYgLS1naXQgYS9idWlsdGluLWZldGNoLmMgYi9idWlsdGluLWZldGNoLmMKPiBpbmRleCA3N2Fj
-YWJmLi5iYjE1MzRhIDEwMDY0NAo+IC0tLSBhL2J1aWx0aW4tZmV0Y2guYwo+ICsrKyBiL2J1aWx0
-aW4tZmV0Y2guYwo+IEBAIC0zNDEsMTIgKzM0MSwxNyBAQCBzdGF0aWMgaW50IHN0b3JlX3VwZGF0
-ZWRfcmVmcyhjb25zdCBjaGFyICpyYXdfdXJsLCBjb25zdCBjaGFyICpyZW1vdGVfbmFtZSwKPiDC
-oCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoHdoYXQgPSBybS0+bmFtZTsKPiDCoCDC
-oCDCoCDCoCDCoCDCoCDCoCDCoH0KPgo+IC0gwqAgwqAgwqAgwqAgwqAgwqAgwqAgdXJsX2xlbiA9
-IHN0cmxlbih1cmwpOwo+IC0gwqAgwqAgwqAgwqAgwqAgwqAgwqAgZm9yIChpID0gdXJsX2xlbiAt
-IDE7IHVybFtpXSA9PSAnLycgJiYgMCA8PSBpOyBpLS0pCj4gLSDCoCDCoCDCoCDCoCDCoCDCoCDC
-oCDCoCDCoCDCoCDCoCA7Cj4gLSDCoCDCoCDCoCDCoCDCoCDCoCDCoCB1cmxfbGVuID0gaSArIDE7
-Cj4gLSDCoCDCoCDCoCDCoCDCoCDCoCDCoCBpZiAoNCA8IGkgJiYgIXN0cm5jbXAoIi5naXQiLCB1
-cmwgKyBpIC0gMywgNCkpCj4gLSDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCB1cmxf
-bGVuID0gaSAtIDM7Cj4gKyDCoCDCoCDCoCDCoCDCoCDCoCDCoCBpZiAodXJsKSB7Cj4gKyDCoCDC
-oCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCB1cmxfbGVuID0gc3RybGVuKHVybCk7Cj4gKyDC
-oCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCBmb3IgKGkgPSB1cmxfbGVuIC0gMTsgdXJs
-W2ldID09ICcvJyAmJiAwIDw9IGk7IGktLSkKPiArIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKg
-IMKgIMKgIMKgIMKgIMKgIMKgIDsKPiArIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKg
-IHVybF9sZW4gPSBpICsgMTsKPiArIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIGlm
-ICg0IDwgaSAmJiAhc3RybmNtcCgiLmdpdCIsIHVybCArIGkgLSAzLCA0KSkKPiArIMKgIMKgIMKg
-IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIHVybF9sZW4gPSBpIC0gMzsKPiAr
-IMKgIMKgIMKgIMKgIMKgIMKgIMKgIH0gZWxzZSB7Cj4gKyDCoCDCoCDCoCDCoCDCoCDCoCDCoCDC
-oCDCoCDCoCDCoCB1cmwgPSAiZm9yaWVnbiI7ClR5cG8uCg==
+Please use "Reply to all" so that Cc list remains.
+
+On Mittwoch, 27. Mai 2009, Neal Kreitzinger wrote:
+> $ git log
+> commit 73170498d68a0011b37d7ee095bf88b8dcb6fbb5
+> Author: tstuser1 <tstuser1@tstuser.com>
+> Date:   Wed May 27 11:48:30 2009 -0500
+>
+>     2nd commit after initial commit
+>
+> commit 9f9ed5663d180caefd0bcaff4578fdb2c542bf17
+> Author: tstuser1 <tstuser1@tstuser.com>
+> Date:   Wed May 27 11:14:38 2009 -0500
+>
+>     1st commit after initial commit
+>
+> commit bee2e0fa066aaa9fed99c15c2ab58744a34fda48
+> Author: tstuser1 <tstuser1@tstuser.com>
+> Date:   Wed May 27 11:13:13 2009 -0500
+>
+> $
+> ***NOTE THAT LAST LINE OF OUTPUT IS MISSING ABOVE (SHOULD BE THE TITLE LINE
+> OF THE INITIAL COMMIT -- BUT ITS NOT THERE)***
+
+Please try
+
+   git --no-pager log
+
+Do you see the line? Yes? Then your pager and your terminal do not cooperate 
+correctly.
+
+-- Hannes
