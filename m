@@ -1,74 +1,80 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: Re: RFE: "git bisect reverse"
-Date: Wed, 27 May 2009 22:26:01 +0200
-Message-ID: <vpqprdue1ie.fsf@bauges.imag.fr>
-References: <4A1C6B70.4050501@zytor.com>
-	<20090527172233.6117@nanako3.lavabit.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCHv2 3/4] git-am foreign patch support: StGIT support
+Date: Wed, 27 May 2009 13:50:35 -0700
+Message-ID: <7vmy8yi82s.fsf@alter.siamese.dyndns.org>
+References: <1243298290-5909-1-git-send-email-giuseppe.bilotta@gmail.com>
+	<1243298290-5909-2-git-send-email-giuseppe.bilotta@gmail.com>
+	<1243298290-5909-3-git-send-email-giuseppe.bilotta@gmail.com>
+	<1243298290-5909-4-git-send-email-giuseppe.bilotta@gmail.com>
+	<7v7i03j9mb.fsf@alter.siamese.dyndns.org>
+	<cb7bb73a0905270129j375ac104yb9ca8601312ddbde@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "H. Peter Anvin" <hpa@zytor.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Nanako Shiraishi <nanako3@lavabit.com>
-X-From: git-owner@vger.kernel.org Wed May 27 22:28:31 2009
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+X-From: git-owner@vger.kernel.org Wed May 27 22:50:54 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M9Pjj-0001fg-0W
-	for gcvg-git-2@gmane.org; Wed, 27 May 2009 22:28:31 +0200
+	id 1M9Q5N-0006AB-Qy
+	for gcvg-git-2@gmane.org; Wed, 27 May 2009 22:50:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752340AbZE0U2Q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 May 2009 16:28:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751643AbZE0U2P
-	(ORCPT <rfc822;git-outgoing>); Wed, 27 May 2009 16:28:15 -0400
-Received: from harmonie.imag.fr ([147.171.130.40]:40500 "EHLO harmonie.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751405AbZE0U2P (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 May 2009 16:28:15 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by harmonie.imag.fr (8.13.8/8.13.8) with ESMTP id n4RKQ2iq021559;
-	Wed, 27 May 2009 22:26:02 +0200 (CEST)
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
-	(Exim 4.50)
-	id 1M9PhJ-0002KX-Si; Wed, 27 May 2009 22:26:01 +0200
-Received: from moy by bauges.imag.fr with local (Exim 4.63)
-	(envelope-from <moy@imag.fr>)
-	id 1M9PhJ-0000lS-RL; Wed, 27 May 2009 22:26:01 +0200
-In-Reply-To: <20090527172233.6117@nanako3.lavabit.com> (Nanako Shiraishi's message of "Wed\, 27 May 2009 17\:22\:33 +0900")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.0.91 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (harmonie.imag.fr [147.171.130.40]); Wed, 27 May 2009 22:26:02 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
+	id S1751684AbZE0Uuf convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 27 May 2009 16:50:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751521AbZE0Uuf
+	(ORCPT <rfc822;git-outgoing>); Wed, 27 May 2009 16:50:35 -0400
+Received: from fed1rmmtao106.cox.net ([68.230.241.40]:34095 "EHLO
+	fed1rmmtao106.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750874AbZE0Uue (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 May 2009 16:50:34 -0400
+Received: from fed1rmimpo03.cox.net ([70.169.32.75])
+          by fed1rmmtao106.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20090527205035.NQCD25927.fed1rmmtao106.cox.net@fed1rmimpo03.cox.net>;
+          Wed, 27 May 2009 16:50:35 -0400
+Received: from localhost ([68.225.240.211])
+	by fed1rmimpo03.cox.net with bizsmtp
+	id wkqb1b0084aMwMQ04kqbDd; Wed, 27 May 2009 16:50:35 -0400
+X-Authority-Analysis: v=1.0 c=1 a=u217S5DB6-EA:10 a=VLcXo6BCFe0A:10
+ a=pGLkceISAAAA:8 a=ybZZDoGAAAAA:8 a=jl6dxy4fduqIGx2U7ogA:9
+ a=6HZOd3cdZdOR2hkxXYCFkyGSFtsA:4 a=MSl-tDqOz04A:10 a=qIVjreYYsbEA:10
+X-CM-Score: 0.00
+In-Reply-To: <cb7bb73a0905270129j375ac104yb9ca8601312ddbde@mail.gmail.com> (Giuseppe Bilotta's message of "Wed\, 27 May 2009 10\:29\:06 +0200")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120103>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120104>
 
-Nanako Shiraishi <nanako3@lavabit.com> writes:
+Giuseppe Bilotta <giuseppe.bilotta@gmail.com> writes:
 
-> Quoting "H. Peter Anvin" <hpa@zytor.com>:
->
->> I would like to request the following feature:
+> On Wed, May 27, 2009 at 9:19 AM, Junio C Hamano <gitster@pobox.com> w=
+rote:
+>> Giuseppe Bilotta <giuseppe.bilotta@gmail.com> writes:
 >>
->> "git bisect reverse"
+>>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 # set the patch format =
+appropriately
+>>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 patch_format=3Dstgit
+>>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 # now handle the actual=
+ StGIT patches
+>>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 split_patches "$@"
 >>
->> ... does exactly the same thing as "git bisect start", except that it
->> flips the meaning of "good" and "bad".  It is mentally fairly taxing to
->> do a reverse bisection (looking for an antiregression) when one has to
->> flip the meaning of "good" and "bad" (which are very loaded words to our
->> psyche), and it's even worse to try to get a user to do it...
+>> Can an stgit patch file (or the leading pathname for that matter) ha=
+ve IFS
+>> character in its name?
 >
-> There was a discussion on "fixed" and "unfixed" aliases to find a commit that fixed an old breakage.
+> StGIT sanitizes filenames in a way similar to what format-patch does.
+
+Good ;-)
+
+>> Since we rely on Perl but not awk in core-ish part of the scripted
+>> Porcelains, it might be a good idea to write this in Perl as well.
 >
->   http://thread.gmane.org/gmane.comp.version-control.git/86063/focus=86563
+> By 'as well' you mean in case awk is missing, and have both, or by
+> only keeping a perl version?
 
-I think the bzr "bisect" plugin uses "yes" and "no" instead for this
-reason. I find it mentally easier to adapt it to both cases ("yes,
-it's fixed" or "yes, it's broken" depending on what you search).
-
--- 
-Matthieu
+"As well" I meant "Using Perl instead of awk, just like other scripted
+Porcelains."
