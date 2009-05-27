@@ -1,88 +1,66 @@
-From: Aaron180 <aaron@vanstralen.net>
-Subject: Access Denied when pushing git
-Date: Tue, 26 May 2009 18:40:47 -0700 (PDT)
-Message-ID: <1243388447198-2978561.post@n2.nabble.com>
+From: Sam Vilain <sam@vilain.net>
+Subject: Re: RFE: "git bisect reverse"
+Date: Wed, 27 May 2009 15:00:02 +1200
+Message-ID: <4A1CACB2.7000702@vilain.net>
+References: <4A1C6B70.4050501@zytor.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 27 03:41:42 2009
+Cc: Git Mailing List <git@vger.kernel.org>
+To: "H. Peter Anvin" <hpa@zytor.com>
+X-From: git-owner@vger.kernel.org Wed May 27 05:00:29 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M9899-00070v-GA
-	for gcvg-git-2@gmane.org; Wed, 27 May 2009 03:41:35 +0200
+	id 1M99NV-0002TV-1U
+	for gcvg-git-2@gmane.org; Wed, 27 May 2009 05:00:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756670AbZE0Bkq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 26 May 2009 21:40:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756203AbZE0Bkq
-	(ORCPT <rfc822;git-outgoing>); Tue, 26 May 2009 21:40:46 -0400
-Received: from kuber.nabble.com ([216.139.236.158]:48848 "EHLO
-	kuber.nabble.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755737AbZE0Bkp (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 May 2009 21:40:45 -0400
-Received: from tervel.nabble.com ([192.168.236.150])
-	by kuber.nabble.com with esmtp (Exim 4.63)
-	(envelope-from <lists+1217463532682-661346@n2.nabble.com>)
-	id 1M988N-0008FB-6e
-	for git@vger.kernel.org; Tue, 26 May 2009 18:40:47 -0700
-X-Nabble-From: aaron@vanstralen.net
+	id S1755609AbZE0DAV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 26 May 2009 23:00:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755545AbZE0DAU
+	(ORCPT <rfc822;git-outgoing>); Tue, 26 May 2009 23:00:20 -0400
+Received: from watts.utsl.gen.nz ([202.78.240.73]:49613 "EHLO mail.utsl.gen.nz"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755364AbZE0DAT (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 May 2009 23:00:19 -0400
+Received: by mail.utsl.gen.nz (Postfix, from userid 1004)
+	id 5DD4021C47E; Wed, 27 May 2009 15:00:10 +1200 (NZST)
+X-Spam-Checker-Version: SpamAssassin 3.2.5 (2008-06-10) on
+	mail.musashi.utsl.gen.nz
+X-Spam-Level: 
+X-Spam-Status: No, score=-4.3 required=5.0 tests=ALL_TRUSTED,AWL,BAYES_00
+	autolearn=ham version=3.2.5
+Received: from [192.168.2.22] (leibniz.catalyst.net.nz [202.78.240.7])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by mail.utsl.gen.nz (Postfix) with ESMTPSA id 0E3C421C3A5;
+	Wed, 27 May 2009 15:00:05 +1200 (NZST)
+User-Agent: Mozilla-Thunderbird 2.0.0.19 (X11/20090103)
+In-Reply-To: <4A1C6B70.4050501@zytor.com>
+X-Enigmail-Version: 0.95.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120018>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120019>
 
+H. Peter Anvin wrote:
+> I would like to request the following feature:
+>
+> "git bisect reverse"
+>
+> ... does exactly the same thing as "git bisect start", except that it
+> flips the meaning of "good" and "bad".  It is mentally fairly taxing to
+> do a reverse bisection (looking for an antiregression) when one has to
+> flip the meaning of "good" and "bad" (which are very loaded words to our
+> psyche), and it's even worse to try to get a user to do it...
+>   
 
-I am a newbie with git but seem to have a problem with pushing a git
-repository over a network.
-Here is what I do to recreate the problem:
+Oh, yes.  And another thing: 'git bisect run' / 'git bisect skip'
+doesn't do a very good job of skipping around broken commits (ie when
+the script returns 126).  It just seems to move to the next one; it
+would be much better IMHO to first try the commit 1/3rd of the way into
+the range, then if that fails, the commit 2/3rd of the way through it, etc.
 
-1. create a new git repository on the computer to push to
-    mkdir ~/git/test.git
-    cd !$
-    git --bare init-db
-
-2. On my local computer I then create a new git repository and add a random
-file to it:
-   mkdir test
-   git init
-   touch TEST
-   git add .
-   git commit -m "initial commit"
-
-3. Then add the remote computer via:
-   git remote add origin ssh://user@site.com/~/git/test.git
-
-4. Then I try to push the local repository to the remote via:
-   git push origin master
-
-This is what I get when I do that:
-
-fatal: protocol error: bad line length character  <---- sometimes this is
-not there
-Access denied
-Access denied
-Access denied
-Access denied
-FATAL ERROR: Server sent disconnect message
-type 2 (protocol error):
-"Too many authentication failures for user"
-
-I am using cygwin on an XP machine and trying to push to a unix server.
-
-I have also tried it between my two computers I have at home and I have the
-same problem, both are windows machines by the way.
-
-I have set up passwordless login via ssh and I can ssh no problem via: 
-ssh user@site.com
-
-I've been trying to figure this out for two days now, any help would be
-appreciated
-
-Thanks,
-Aaron
--- 
-View this message in context: http://n2.nabble.com/Access-Denied-when-pushing-git-tp2978561p2978561.html
-Sent from the git mailing list archive at Nabble.com.
+Sam.
