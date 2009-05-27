@@ -1,144 +1,96 @@
-From: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-Subject: [PATCHv3 4/4] git-am: refactor 'cleaning up and aborting'
-Date: Wed, 27 May 2009 11:25:19 +0200
-Message-ID: <1243416319-31477-5-git-send-email-giuseppe.bilotta@gmail.com>
-References: <1243416319-31477-1-git-send-email-giuseppe.bilotta@gmail.com>
- <1243416319-31477-2-git-send-email-giuseppe.bilotta@gmail.com>
- <1243416319-31477-3-git-send-email-giuseppe.bilotta@gmail.com>
- <1243416319-31477-4-git-send-email-giuseppe.bilotta@gmail.com>
-Cc: git@vger.kernel.org, Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+From: Benjamin Kramer <benny.kra@googlemail.com>
+Subject: Re: [PATCH] imap-send: add support for IPv6
+Date: Wed, 27 May 2009 12:50:11 +0200
+Message-ID: <4A1D1AE3.9030900@googlemail.com>
+References: <4A1AEDF2.7060307@googlemail.com> <7v7i03kqjq.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, mike@codeweavers.com
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed May 27 11:26:11 2009
+X-From: git-owner@vger.kernel.org Wed May 27 12:50:29 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M9FOk-0007o4-KS
-	for gcvg-git-2@gmane.org; Wed, 27 May 2009 11:26:11 +0200
+	id 1M9GiG-0006Wf-St
+	for gcvg-git-2@gmane.org; Wed, 27 May 2009 12:50:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759031AbZE0JZk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 May 2009 05:25:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758492AbZE0JZj
-	(ORCPT <rfc822;git-outgoing>); Wed, 27 May 2009 05:25:39 -0400
-Received: from mail-bw0-f222.google.com ([209.85.218.222]:48476 "EHLO
+	id S1758907AbZE0KuP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 May 2009 06:50:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758843AbZE0KuP
+	(ORCPT <rfc822;git-outgoing>); Wed, 27 May 2009 06:50:15 -0400
+Received: from mail-bw0-f222.google.com ([209.85.218.222]:49565 "EHLO
 	mail-bw0-f222.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758670AbZE0JZh (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 May 2009 05:25:37 -0400
-Received: by bwz22 with SMTP id 22so4435812bwz.37
-        for <git@vger.kernel.org>; Wed, 27 May 2009 02:25:37 -0700 (PDT)
+	with ESMTP id S1758352AbZE0KuN (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 May 2009 06:50:13 -0400
+Received: by bwz22 with SMTP id 22so4488442bwz.37
+        for <git@vger.kernel.org>; Wed, 27 May 2009 03:50:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer:in-reply-to:references;
-        bh=T6RgJe3Yt5aUCM5gyHbHB14dmGY8DZA8ut2orej9pAk=;
-        b=CPs37p7wBwaNdXKHBXGadnVJk0eCH2uzAyYKeniLnjubcgNRsi2WnnD3U1TrctSwA3
-         Ph+YW2ie7jv3eCxER8VqDA/iX7IPoJ3fE8CZhLT6zGgyJ135VrffbqlCcH+TJHCPbkIb
-         vfeEsFQfwtutE8QimLMwQz7vWQ748oBpUGbjY=
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from
+         :user-agent:mime-version:to:cc:subject:references:in-reply-to
+         :content-type:content-transfer-encoding;
+        bh=Xch6FPVegB+Csx2rtiZ1+CP31BDCKkbXGmTxAEU+lWU=;
+        b=fjozMtMCMwJf+37BHVB6G5wFVqNgiHX0wbhIBYGIpXjc5q69c6P/WmtlptyX9iG2QM
+         piZRQX7gqZ6cNKqM20ZhurdcAryBXSH5yLaahO3KCoo8WMEHk5FmwWqpysmRH25FPhv9
+         mbGcYljimoLg3rF0QTbCtNtDT/C2+5Na64cfo=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=tdAyAOP1VDAYCOcpgEmJydccSG0LnqrlQgDwb86kgrUVnf4SMLN0KTwY3IdpCfWUgV
-         bgWNpZki5Nqt6ZRJ6uQD4eS4BdPIvhvK18KGk1Me1V8zHJVCbenUR/WpvTJyFuCC8Y5o
-         j92QG9d3OxkKI5Cw4L4CDmGe6QeTQJcLfxQHM=
-Received: by 10.103.173.15 with SMTP id a15mr4934052mup.59.1243416337519;
-        Wed, 27 May 2009 02:25:37 -0700 (PDT)
-Received: from localhost (host-78-15-9-104.cust-adsl.tiscali.it [78.15.9.104])
-        by mx.google.com with ESMTPS id j2sm1123093mue.12.2009.05.27.02.25.36
+        d=googlemail.com; s=gamma;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        b=iZujI5YlnF6tn/ZX8AHWNDfvg1WNDp7V3yd4aPCb1EFGIV5iIalzDb6fyirvIWAGBP
+         9DkhW9eiQbdi0fTjq5MUpGvT2UNTJPuFV/3u+JUpvxLWnKPV+MdAa/AX454vpflr6BpX
+         YXt6MCQzotVq8XoflmTeoGnjGVzUXMvPvvl3k=
+Received: by 10.103.105.15 with SMTP id h15mr2180128mum.56.1243421414010;
+        Wed, 27 May 2009 03:50:14 -0700 (PDT)
+Received: from golden.local (p5B01F2D3.dip.t-dialin.net [91.1.242.211])
+        by mx.google.com with ESMTPS id i7sm5293552mue.48.2009.05.27.03.50.12
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 27 May 2009 02:25:36 -0700 (PDT)
-X-Mailer: git-send-email 1.6.3.1.274.gd2e8.dirty
-In-Reply-To: <1243416319-31477-4-git-send-email-giuseppe.bilotta@gmail.com>
+        Wed, 27 May 2009 03:50:13 -0700 (PDT)
+User-Agent: Thunderbird 2.0.0.21 (Macintosh/20090302)
+In-Reply-To: <7v7i03kqjq.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120054>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120055>
 
-Introduce a clean_abort function that echoes an optional error message
-to standard error, removes the dotest directory and exits with status 1.
+Junio C Hamano wrote:
+> We already use %h length specifier to explicitly say the parameter is
+> a short in the IPV4 part of this program, so I am sure this won't regress
+> anything for people, but I wonder what the point of it is...  (I am not
+> asking nor even suggesting to change this, by the way).
 
-Use it when patch format detection or patch splitting fails early.
+getaddrinfo(3) takes the port as a string so we have to convert it. I tried
+to match the style of the existing code with the format string. The portstr
+buffer is 6 chars long so the highest possible unsigned short 65535 fits in
+exactly.
 
-Signed-off-by: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
----
- git-am.sh |   29 +++++++++++++++--------------
- 1 files changed, 15 insertions(+), 14 deletions(-)
+> It is Ok for now (as existing codepath liberally uses fprintf() and
+> fputs() to report errors), but ideally we should start converting these to
+> error() calls, I think, in a follow-up patch.
 
-diff --git a/git-am.sh b/git-am.sh
-index 3757269..588beea 100755
---- a/git-am.sh
-+++ b/git-am.sh
-@@ -134,6 +134,15 @@ It does not apply to blobs recorded in its index."
-     unset GITHEAD_$his_tree
- }
- 
-+clean_abort () {
-+	if test $# -gt 0
-+	then
-+		echo "$@" > /dev/stderr
-+	fi
-+	rm -fr "$dotest"
-+	exit 1
-+}
-+
- patch_format=
- 
- check_patch_format () {
-@@ -180,22 +189,18 @@ check_patch_format () {
- 				esac
- 				;;
- 		esac
--	} < "$1"
-+	} < "$1" || clean_abort
- }
- 
- split_patches () {
- 	case "$patch_format" in
- 	mbox)
--		git mailsplit -d"$prec" -o"$dotest" -b -- "$@" > "$dotest/last" ||  {
--			rm -fr "$dotest"
--			exit 1
--		}
-+		git mailsplit -d"$prec" -o"$dotest" -b -- "$@" > "$dotest/last" || clean_abort
- 		;;
- 	stgit-series)
- 		if test $# -ne 1
- 		then
--			echo "Only one StGIT patch series can be applied at once"
--			exit 1
-+			clean_abort "Only one StGIT patch series can be applied at once"
- 		fi
- 		series_dir=`dirname "$1"`
- 		series_file="$1"
-@@ -210,7 +215,7 @@ split_patches () {
- 			shift
- 			# remove the arg coming from the first-line comment
- 			shift
--		} < "$series_file"
-+		} < "$series_file" || clean_abort
- 		# set the patch format appropriately
- 		patch_format=stgit
- 		# now handle the actual StGIT patches
-@@ -239,18 +244,14 @@ split_patches () {
- 					print "Subject: ", $_ ;
- 					$subject = 1;
- 				}
--			' < "$stgit" > "$dotest/$msgnum" || {
--				echo "Failed to import $patch_format patch $stgit"
--				exit 1
--			}
-+			' < "$stgit" > "$dotest/$msgnum" || clean_abort
- 		done
- 		echo "$this" > "$dotest/last"
- 		this=
- 		msgnum=
- 		;;
- 	*)
--		echo "Patch format $patch_format is not supported."
--		exit 1
-+		clean_abort "Patch format $patch_format is not supported."
- 		;;
- 	esac
- }
--- 
-1.6.3.1.274.gd2e8.dirty
+Looking at the number of fprintfs in imap-send.c a simple search/replace
+probably won't do the job here. I tried to contact the original author but
+his mail address seems to be dead ...
+
+> Is forcing to NUMERICHOST done to match IPV4 codepath that does
+> inet_ntoa()?  I guess that makes sense.
+
+We need to get the IP string, otherwise the output of imap-send would
+make no sense. Here's what imap-send outputs when I try to connect to
+localhost.
+
+Without the patch:
+    Resolving localhost... ok
+    Connecting to 127.0.0.1:993... connect: Connection refused
+
+With the patch:
+    Resolving localhost... ok
+    Connecting to [::1]:993... connect: Connection refused
+    Connecting to [fe80::1%lo0]:993... connect: Connection refused
+    Connecting to [127.0.0.1]:993... connect: Connection refused
+    Error: unable to connect to server.
+
+Using the hostname instead of the IP address here wouldn't be very useful.
