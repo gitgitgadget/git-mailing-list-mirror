@@ -1,105 +1,333 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: Problem with large files on different OSes
-Date: Wed, 27 May 2009 09:59:21 -0700 (PDT)
-Message-ID: <alpine.LFD.2.01.0905270942580.3435@localhost.localdomain>
-References: <submission.1M9Gk0-0000N8-MQ@mail.cs.st-andrews.ac.uk> <m3y6siboij.fsf@localhost.localdomain> <alpine.LFD.2.01.0905270922250.3435@localhost.localdomain>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Christopher Jefferson <caj@cs.st-andrews.ac.uk>,
-	git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Wed May 27 18:59:42 2009
+From: "Neal Kreitzinger" <neal@rsss.com>
+Subject: Re: git log missing last line of output
+Date: Wed, 27 May 2009 12:17:09 -0500
+Message-ID: <gvjsc9$f40$1@ger.gmane.org>
+References: <gvhrtf$vpr$1@ger.gmane.org> <4A1D5F70.4030101@drmicha.warpmail.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed May 27 19:14:18 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M9MTc-00007E-Cr
-	for gcvg-git-2@gmane.org; Wed, 27 May 2009 18:59:40 +0200
+	id 1M9Mhl-00015H-4Z
+	for gcvg-git-2@gmane.org; Wed, 27 May 2009 19:14:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754658AbZE0Q7d (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 May 2009 12:59:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752901AbZE0Q7c
-	(ORCPT <rfc822;git-outgoing>); Wed, 27 May 2009 12:59:32 -0400
-Received: from smtp1.linux-foundation.org ([140.211.169.13]:59459 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751516AbZE0Q7b (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 27 May 2009 12:59:31 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
-	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id n4RGxMEb019372
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Wed, 27 May 2009 09:59:23 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id n4RGxLAt022033;
-	Wed, 27 May 2009 09:59:21 -0700
-X-X-Sender: torvalds@localhost.localdomain
-In-Reply-To: <alpine.LFD.2.01.0905270922250.3435@localhost.localdomain>
-User-Agent: Alpine 2.01 (LFD 1184 2008-12-16)
-X-Spam-Status: No, hits=-3.462 required=5 tests=AWL,BAYES_00
-X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
+	id S1756117AbZE0ROH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 May 2009 13:14:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754997AbZE0ROF
+	(ORCPT <rfc822;git-outgoing>); Wed, 27 May 2009 13:14:05 -0400
+Received: from main.gmane.org ([80.91.229.2]:33451 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754764AbZE0ROD (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 May 2009 13:14:03 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1M9MhX-0002J8-OH
+	for git@vger.kernel.org; Wed, 27 May 2009 17:14:03 +0000
+Received: from 216-60-24-100.rsss.biz ([216.60.24.100])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 27 May 2009 17:14:03 +0000
+Received: from neal by 216-60-24-100.rsss.biz with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 27 May 2009 17:14:03 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: 216-60-24-100.rsss.biz
+X-MSMail-Priority: Normal
+X-Newsreader: Microsoft Outlook Express 6.00.2900.5512
+X-RFC2646: Format=Flowed; Original
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.5579
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120078>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120079>
+
+Here is a 'copy and paste' of a testcase scenario that I recreated/executed 
+in response to your reply (with comments added):
+
+***CREATE NEW PROJECT SOURCE***
+$ mkdir tstcase1
+$ cd tstcase1
+$ vi file1
+$ cat file1
+test1
+***MAKE IT A GIT REPO***
+$ git config --global user.name 'tstuser1'
+$ git config --global user.name 'tstuser1@tstuser.com'
+$ git config --list
+user.name=tstuser1
+user.email=tstuser1@tstuser.com
+$ git init
+Initialized empty Git repository in .git/
+$ git add .
+$ git status
+# On branch master
+#
+# Initial commit
+#
+# Changes to be committed:
+#   (use "git rm --cached <file>..." to unstage)
+#
+#       new file: file1
+#
+***INITIAL COMMIT***
+$ git commit
+
+initial commit
+# Please enter the commit message for your changes.
+# (Comment lines starting with '#' will not be included)
+# On branch master
+#
+# Initial commit
+#
+# Changes to be committed:
+#   (use "git rm --cached <file>..." to unstage)
+#
+#       new file: file1
+#
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+".git/COMMIT_EDITMSG" 12L, 262C written
+Created initial commit bee2e0f: initial commit
+ 1 files changed, 1 insertions(+), 0 deletions(-)
+ create mode 100644 file1
+***FIRST MODIFICATION TO REPO***
+$ vi file1
+$ cat file1
+test1 mod1
+$ git add file1
+$ git status
+# On branch master
+# Changes to be committed:
+#   (use "git reset HEAD <file>..." to unstage)
+#
+#       modified:   file1
+#
+***FIRST COMMIT AFTER INITIAL COMMIT***
+$ git commit
+
+1st commit after initial commit
+# Please enter the commit message for your changes.
+# (Comment lines starting with '#' will not be included)
+# On branch master
+# Changes to be committed:
+#   (use "git reset HEAD <file>..." to unstage)
+#
+#       modified:   file1
+#
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+".git/COMMIT_EDITMSG" 9L, 259C written
+Created commit 9f9ed56: 1st commit after initial commit
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+***MODIFY THE REPO AGAIN FOR GOOD MEASURE***
+$ vi file1
+$ cat file1
+test1 mod2
+$ git add file1
+$ git status
+# On branch master
+# Changes to be committed:
+#   (use "git reset HEAD <file>..." to unstage)
+#
+#       modified:   file1
+#
+***SECOND COMMIT AFTER INITIAL COMMIT***
+$ git commit
+
+2nd commit after initial commit
+# Please enter the commit message for your changes.
+# (Comment lines starting with '#' will not be included)
+# On branch master
+# Changes to be committed:
+#   (use "git reset HEAD <file>..." to unstage)
+#
+#       modified:   file1
+#
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+".git/COMMIT_EDITMSG" 9L, 259C written
+Created commit 7317049: 2nd commit after initial commit
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+$ clear
+
+***EXECUTE GIT LOG***
+$ git log
 
 
 
-On Wed, 27 May 2009, Linus Torvalds wrote:
-> 
-> I'll see if I can make us handle the "big file without diff" case better 
-> by chunking.
 
-Hmm. No. Looking at it some more, we could add some nasty code to do 
-_some_ things chunked (like adding a new file as a single object), but it 
-doesn't really help. For any kind of useful thing, we'd need to handle the 
-"read from pack" case in multiple chunks too, and that gets really nasty 
-really quickly.
 
-The whole "each object as one allocation" design is pretty core, and it 
-looks pointless to have a few special cases, when any actual relevant use 
-would need a whole lot more than the few simple ones.
 
-Git really doesn't like big individual objects.
 
-I've occasionally thought about handling big files as multiple big 
-objects: we'd split them into a "pseudo-directory" (it would have some new 
-object ID), and then treat them as a magical special kind of directory 
-that just happens to be represented as one large file on the filesystem.
 
-That would mean that if you have a huge file, git internally would never 
-think of it as one big file, but as a collection of many smaller objects. 
-By just making the point where you break up files be a consistent rule 
-("always break into 256MB pieces"), it would be a well-behaved design (ie 
-things like behaviour convergence wrt the same big file being created 
-different ways).
 
-HOWEVER.
 
-While that would fit in the git design (ie it would be just a fairly 
-straightforward extension - another level of indirection, kind of the way 
-we added subprojects), it would still be a rewrite of some core stuff. The 
-actual number of lines might not be too horrid, but quite frankly, I 
-wouldn't want to do it personally. It would be a lot of work with lots of 
-careful special case handling - and no real upside for normal use.
 
-So I'm kind of down on it. I would suggest just admitting that git isn't 
-very good at big individual files - especially not if you have a limited 
-address space.
 
-So "don't do it then" or "make sure you are 64-bit and have lots of 
-memory if you do it" may well be the right solution.
 
-[ And it's really really sad how Apple migrated to x86-32. It was totally 
-  unforgivably stupid, and I said so at the time. When Apple did the 
-  PowerPC -> x86 transition, they should have just transitioned to x86-64, 
-  and never had a 32-bit space.
 
-  But Apple does stupid things, that seem to be driven by marketing rather 
-  than thinking deeply about the technology, and now they basically _have_ 
-  to default to that 32-bit environment. ]
 
-Oh well. 
 
-			Linus
+
+
+
+
+
+
+commit 73170498d68a0011b37d7ee095bf88b8dcb6fbb5
+Author: tstuser1 <tstuser1@tstuser.com>
+Date:   Wed May 27 11:48:30 2009 -0500
+
+    2nd commit after initial commit
+
+commit 9f9ed5663d180caefd0bcaff4578fdb2c542bf17
+Author: tstuser1 <tstuser1@tstuser.com>
+Date:   Wed May 27 11:14:38 2009 -0500
+
+    1st commit after initial commit
+
+commit bee2e0fa066aaa9fed99c15c2ab58744a34fda48
+Author: tstuser1 <tstuser1@tstuser.com>
+Date:   Wed May 27 11:13:13 2009 -0500
+
+$
+***NOTE THAT LAST LINE OF OUTPUT IS MISSING ABOVE (SHOULD BE THE TITLE LINE 
+OF THE INITIAL COMMIT -- BUT ITS NOT THERE)***
+$ clear
+***GIT LOG LAST TWO COMMITS***
+$ git log -2
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+commit 73170498d68a0011b37d7ee095bf88b8dcb6fbb5
+Author: tstuser1 <tstuser1@tstuser.com>
+Date:   Wed May 27 11:48:30 2009 -0500
+
+    2nd commit after initial commit
+
+commit 9f9ed5663d180caefd0bcaff4578fdb2c542bf17
+Author: tstuser1 <tstuser1@tstuser.com>
+Date:   Wed May 27 11:14:38 2009 -0500
+
+$
+***NOTE THAT THE LAST LINE OF OUTPUT IS MISSING (SHOULD BE THE TITLE LINE OF 
+THE 1ST COMMIT AFTER INITIAL COMMIT -- BUT ITS NOT THERE)***
+$ clear
+***GIT LOG LAST COMMIT***
+$ git log -1
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+commit 73170498d68a0011b37d7ee095bf88b8dcb6fbb5
+Author: tstuser1 <tstuser1@tstuser.com>
+Date:   Wed May 27 11:48:30 2009 -0500
+
+$
+***NOTE THAT LAST LINE OF OUTPUT IS MISSING (SHOULD BE THE TITLE LINE OF THE 
+LAST COMMIT -- BUT ITS NOT THERE)***
+
+Is this the kind of testcase that you are looking for?
+
+
+v/r,
+Neal
+
+"Michael J Gruber" <git@drmicha.warpmail.net> wrote in message 
+news:4A1D5F70.4030101@drmicha.warpmail.net...
+> Neal Kreitzinger venit, vidit, dixit 27.05.2009 00:57:
+>> Git log is not displaying the last line of output (for a plain "$ git 
+>> log"
+>> the last line of output should be the title line of the initial commit).
+>
+> It should be the last line of the commit message, which is the "title
+> line" (subject) if and only if the message consists of the subject line
+> only.
+>
+>> (I'm using git 1.5.5.6 on rhel 5.3.)  This missing last line also occurs
+>> with "git log --since" in which the last line of output should be the 
+>> title
+>> line of the first commit after the specified date, but it is missing in 
+>> this
+>> scenario also.  I've searched the release notes for 1.5.6 thru 1.6.3.1 
+>> and
+>> did not find this mentioned.  Does this also happen in newer versions of 
+>> git
+>> after 1.5.5.6?
+>
+> I can't reproduce this with git 1.5.5.6 (vanilla, not rhel). Do you have
+> a minimal reproducible test case?
+>
+> Michael 
