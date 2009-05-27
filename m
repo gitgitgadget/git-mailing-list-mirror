@@ -1,84 +1,71 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: gitignore bug: including files in an excluded directoy does not
-        work.
-Date: Wed, 27 May 2009 22:55:03 +0200
-Message-ID: <4A1DA8A7.9030606@drmicha.warpmail.net>
-References: <809f58722b8bdb916fa7816cd80d3833-EhVcXl1BQAtYRw8cBxcBWQEwfgFLV15YQUBGAEFbXkI3XV8WXlhwH1RQWEFeRENtXlhdQ1hSWAtfWg==-webmailer2@server05.webmailer.hosteurope.de>
+From: Clemens Buchacher <drizzd@aon.at>
+Subject: [PATCH] refuse to merge during a merge
+Date: Wed, 27 May 2009 23:04:10 +0200
+Message-ID: <20090527210410.GA14742@localhost>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: florian@fkoeberle.de
-X-From: git-owner@vger.kernel.org Wed May 27 22:56:58 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Dave Olszewski <cxreg@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed May 27 23:04:28 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M9QBD-0008QG-Uz
-	for gcvg-git-2@gmane.org; Wed, 27 May 2009 22:56:56 +0200
+	id 1M9QIV-0003o6-Ex
+	for gcvg-git-2@gmane.org; Wed, 27 May 2009 23:04:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760487AbZE0UzO convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 27 May 2009 16:55:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760756AbZE0UzO
-	(ORCPT <rfc822;git-outgoing>); Wed, 27 May 2009 16:55:14 -0400
-Received: from out1.smtp.messagingengine.com ([66.111.4.25]:52103 "EHLO
-	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1760737AbZE0UzM (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 27 May 2009 16:55:12 -0400
-Received: from compute1.internal (compute1.internal [10.202.2.41])
-	by out1.messagingengine.com (Postfix) with ESMTP id 426B6346835;
-	Wed, 27 May 2009 16:55:14 -0400 (EDT)
-Received: from heartbeat1.messagingengine.com ([10.202.2.160])
-  by compute1.internal (MEProxy); Wed, 27 May 2009 16:55:14 -0400
-X-Sasl-enc: jomobjr6CwjJT4FlXiY7RTnyPakCVZhXQzI1ujViqKlg 1243457713
-Received: from localhost.localdomain (p548598F2.dip0.t-ipconnect.de [84.133.152.242])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 5FF5F16A78;
-	Wed, 27 May 2009 16:55:13 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1pre) Gecko/20090525 Lightning/1.0pre Shredder/3.0b3pre
-In-Reply-To: <809f58722b8bdb916fa7816cd80d3833-EhVcXl1BQAtYRw8cBxcBWQEwfgFLV15YQUBGAEFbXkI3XV8WXlhwH1RQWEFeRENtXlhdQ1hSWAtfWg==-webmailer2@server05.webmailer.hosteurope.de>
+	id S1754548AbZE0VEP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 May 2009 17:04:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751548AbZE0VEP
+	(ORCPT <rfc822;git-outgoing>); Wed, 27 May 2009 17:04:15 -0400
+Received: from postman.fh-hagenberg.at ([193.170.124.96]:3214 "EHLO
+	mail.fh-hagenberg.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751381AbZE0VEO (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 May 2009 17:04:14 -0400
+Received: from darc.dnsalias.org ([84.154.120.211]) by mail.fh-hagenberg.at over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
+	 Wed, 27 May 2009 23:04:15 +0200
+Received: from drizzd by darc.dnsalias.org with local (Exim 4.69)
+	(envelope-from <drizzd@aon.at>)
+	id 1M9QIE-0003wQ-8B; Wed, 27 May 2009 23:04:10 +0200
+Content-Disposition: inline
+User-Agent: Mutt/1.5.18 (2008-05-17)
+X-OriginalArrivalTime: 27 May 2009 21:04:15.0280 (UTC) FILETIME=[B13BEB00:01C9DF0E]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120105>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120106>
 
-=46lorian K=F6berle venit, vidit, dixit 23.05.2009 11:18:
-> steps to reproduce:
->=20
-> git init
-> echo /src/config > .gitignore
-> echo \!/src/config/readme.txt >> .gitignore
-> mkdir -p src/config
-> touch src/config/readme.txt
-> git add src
->=20
-> expected results:
-> git should add the readme.txt file
->=20
-> actual result:
-> git doesn't add the readme.txt file
->=20
->=20
-> additional comments:
->=20
-> pre to the commit d6b8fc303b it was possible to archive the wished ef=
-fect
-> with this .gitignore file:
-> ------------------
-> /src/config/
-> !/src/config/readme.txt
-> ------------------
-> The pre d6b8fc303b git fails to detect that it can exclude src/config=
-=2E
-> Thus it checks the directory content and finds out that the readme.tx=
-t
-> matches both - the exclude and the include pattern.
+The following is an easy mistake to make for users coming from version
+control systems with an "update and commit"-style workflow.
 
-The change in behaviour was intentional. You get the desired effect usi=
-ng:
+	1. git merge
+	2. resolve conflicts
+	3. git pull, instead of commit
 
-/src/config/*
-!/src/config/readme.txt
+This overrides MERGE_HEAD, starting a new merge with dirty index. IOW,
+probably not what the user intented. Instead, refuse to merge again if a
+merge is in progress.
 
-Cheers,
-Michael
+Reported-by: Dave Olszewski <cxreg@pobox.com>
+Signed-off-by: Clemens Buchacher <drizzd@aon.at>
+---
+
+ builtin-merge.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/builtin-merge.c b/builtin-merge.c
+index 0b58e5e..74a8c8f 100644
+--- a/builtin-merge.c
++++ b/builtin-merge.c
+@@ -836,7 +836,7 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
+ 	struct commit_list **remotes = &remoteheads;
+ 
+ 	setup_work_tree();
+-	if (read_cache_unmerged())
++	if (read_cache_unmerged() || file_exists(git_path("MERGE_HEAD")))
+ 		die("You are in the middle of a conflicted merge.");
+ 
+ 	/*
+-- 
+1.6.3.1.147.g637c3
