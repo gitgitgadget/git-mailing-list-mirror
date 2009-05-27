@@ -1,64 +1,73 @@
-From: Frank Lichtenheld <frank@lichtenheld.de>
-Subject: Re: [PATCH RESEND] Git.pm: Always set Repository to absolute path
-	if autodetecting
-Date: Wed, 27 May 2009 15:46:17 +0200
-Message-ID: <20090527134617.GY17706@mail-vs.djpig.de>
-References: <1241703688-6892-1-git-send-email-frank@lichtenheld.de> <1241703688-6892-2-git-send-email-frank@lichtenheld.de> <4A1A49C0.7040102@viscovery.net> <20090527105454.GW17706@mail-vs.djpig.de> <4A1D2100.5040903@viscovery.net>
+From: "David Forman" <dforman@dairyfoodusa.com>
+Subject: (unknown)
+Date: Wed, 27 May 2009 08:28:29 -0500
+Message-ID: <APEJLFBGDNOMCHGLHIHFEEKPDEAA.dforman@dairyfoodusa.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: gitster@pobox.com, Petr Baudis <pasky@suse.cz>, git@vger.kernel.org
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Wed May 27 15:46:39 2009
+Content-Type: text/plain;
+	charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed May 27 15:51:57 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M9JSj-0000FD-Um
-	for gcvg-git-2@gmane.org; Wed, 27 May 2009 15:46:34 +0200
+	id 1M9JXx-0002q5-Ay
+	for gcvg-git-2@gmane.org; Wed, 27 May 2009 15:51:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1762634AbZE0NqY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 May 2009 09:46:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759198AbZE0NqY
-	(ORCPT <rfc822;git-outgoing>); Wed, 27 May 2009 09:46:24 -0400
-Received: from pauli.djpig.de ([78.46.38.139]:46982 "EHLO pauli.djpig.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1762101AbZE0NqX (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 May 2009 09:46:23 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by pauli.djpig.de (Postfix) with ESMTP id 33BB19007F;
-	Wed, 27 May 2009 15:46:25 +0200 (CEST)
-X-Virus-Scanned: Debian amavisd-new at pauli.djpig.de
-Received: from pauli.djpig.de ([127.0.0.1])
-	by localhost (pauli.djpig.de [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id EKzCfnxB3nS6; Wed, 27 May 2009 15:46:17 +0200 (CEST)
-Received: from mail-vs.djpig.de (mail-vs.djpig.de [78.47.136.189])
-	by pauli.djpig.de (Postfix) with ESMTP id B26B69007C;
-	Wed, 27 May 2009 15:46:17 +0200 (CEST)
-Received: from djpig by mail-vs.djpig.de with local (Exim 4.69)
-	(envelope-from <djpig@mail-vs.djpig.de>)
-	id 1M9JST-0003bx-J5; Wed, 27 May 2009 15:46:17 +0200
-Content-Disposition: inline
-In-Reply-To: <4A1D2100.5040903@viscovery.net>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+	id S1755738AbZE0Nvt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 May 2009 09:51:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754091AbZE0Nvs
+	(ORCPT <rfc822;git-outgoing>); Wed, 27 May 2009 09:51:48 -0400
+Received: from spamtest.bright.net ([216.255.50.24]:38850 "EHLO
+	spamtest.bright.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753996AbZE0Nvr (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 May 2009 09:51:47 -0400
+X-Greylist: delayed 1964 seconds by postgrey-1.27 at vger.kernel.org; Wed, 27 May 2009 09:51:47 EDT
+Received: from rg7.cniteam.com (rg7.cniteam.com [209.143.0.247])
+	by spamtest.bright.net (8.14.2/8.13.8) with ESMTP id n4RDIfqW020724
+	for <git@vger.kernel.org>; Wed, 27 May 2009 09:19:03 -0400
+Received: from LACTO (wan-1.broadband.sta.dairyfoodusa.com [216.180.195.131])
+	by rg7.cniteam.com (MOS 4.1.5-GA)
+	with SMTP id CNT27607
+	for <git@vger.kernel.org>;
+	Wed, 27 May 2009 09:19:02 -0400
+Subject: 
+X-Priority: 3 (Normal)
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook IMO, Build 9.0.6604 (9.0.2911.0)
+Importance: Normal
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.3350
+X-Junkmail-Status: score=10/50, host=rg7.cniteam.com
+X-Junkmail-SD-Raw: score=unknown,
+	refid=str=0001.0A090204.4A1D3DC7.01B5:SCFSTAT4771472,ss=1,fgs=0,
+	ip=216.180.195.131,
+	so=2009-03-06 21:06:27,
+	dmn=2009-05-12 18:33:47,
+	mode=single engine
+X-Junkmail-IWF: false
+X-Spam-Score: 1.30 (*) [Hold at 9.50] MISSING_SUBJECT,SPF(none,0)
+X-CanItPRO-Stream: Razorgate (inherits from default)
+X-Scanned-By: CanIt (www . roaringpenguin . com) on 216.255.50.24
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120064>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120065>
 
-On Wed, May 27, 2009 at 01:16:16PM +0200, Johannes Sixt wrote:
-> Frank Lichtenheld schrieb:
-> > As for the problems, a part of the public API of the module simply doesn't work
-> > (i.e. wc_chdir) which I fixed. If we can't fix it we should at least not pretend
-> > that it works.
-> 
-> Since you keep repeating "does not work", without any specifics, I can't
-> help (and I'm not going to find out myself what "does not work").
+I've encountered the following whenever I access Git and try to compress the
+database due to loose objects.
 
-Oh, sorry, I thought that the core problem would be obvious from the related test
-suite changes. I can elaborate on that later this evening when I'm not at work.
+error: cannot lock ref 'HEAD~'
+error: cannot lock ref 'refs/heads/collections~'
+error: cannot lock ref 'refs/heads/master~'
 
-Gruesse,
--- 
-Frank Lichtenheld <frank@lichtenheld.de>
-www: http://www.djpig.de/
+I'm on a Windows box (no comments please!), I've tried gc from the command
+line, as well as the GUI option, with the same results. Any help would be
+greatly appreciated, last count was over 2000 loose objects.
+
+Thanks,
+
+David Forman
+Systems Manager
+dairyfood USA, Inc.
