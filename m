@@ -1,66 +1,64 @@
-From: John Tapsell <johnflux@gmail.com>
-Subject: Re: Problem with large files on different OSes
-Date: Wed, 27 May 2009 14:32:40 +0100
-Message-ID: <43d8ce650905270632t2a2914b4j340a5cfd756023a4@mail.gmail.com>
-References: <submission.1M9Gk0-0000N8-MQ@mail.cs.st-andrews.ac.uk>
-	 <4A1D2614.5060303@op5.se>
-	 <43d8ce650905270628o2eb4ed3cqf6b78e00933198af@mail.gmail.com>
-	 <submission.1M9JCt-00047m-4a@mail.cs.st-andrews.ac.uk>
+From: Frank Lichtenheld <frank@lichtenheld.de>
+Subject: Re: [PATCH RESEND] Git.pm: Always set Repository to absolute path
+	if autodetecting
+Date: Wed, 27 May 2009 15:46:17 +0200
+Message-ID: <20090527134617.GY17706@mail-vs.djpig.de>
+References: <1241703688-6892-1-git-send-email-frank@lichtenheld.de> <1241703688-6892-2-git-send-email-frank@lichtenheld.de> <4A1A49C0.7040102@viscovery.net> <20090527105454.GW17706@mail-vs.djpig.de> <4A1D2100.5040903@viscovery.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Andreas Ericsson <ae@op5.se>, git@vger.kernel.org
-To: Christopher Jefferson <caj@cs.st-andrews.ac.uk>
-X-From: git-owner@vger.kernel.org Wed May 27 15:32:51 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: gitster@pobox.com, Petr Baudis <pasky@suse.cz>, git@vger.kernel.org
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Wed May 27 15:46:39 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M9JFP-0002qT-JU
-	for gcvg-git-2@gmane.org; Wed, 27 May 2009 15:32:48 +0200
+	id 1M9JSj-0000FD-Um
+	for gcvg-git-2@gmane.org; Wed, 27 May 2009 15:46:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1762142AbZE0Ncl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 May 2009 09:32:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762139AbZE0Nck
-	(ORCPT <rfc822;git-outgoing>); Wed, 27 May 2009 09:32:40 -0400
-Received: from yw-out-2324.google.com ([74.125.46.31]:51362 "EHLO
-	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759153AbZE0Ncj (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 May 2009 09:32:39 -0400
-Received: by yw-out-2324.google.com with SMTP id 5so2615367ywb.1
-        for <git@vger.kernel.org>; Wed, 27 May 2009 06:32:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=fNRkKZiiEKUP59WQV6Z3W6eNWKl8P00GAri3X9v7bbA=;
-        b=Th8AhgTtu6gBmx88pL3EE3DLd4UTO0IEVweQo0DKSipi5G3NdB79F7RVnt5/jpDD1l
-         jnN88MiAhqDr5TMg6B0VTtWhBkPpIy0hzh9UZ3K6C3RlRnQIoopDg5jH4oKQDcz3XlrC
-         lVkAAR722OoGVqCONHGMhqCE4yOGSXBO6uZmU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=gdnbiS32rFewe/e43z7b5UIB4Sr49svE3lBeMATofFKU8x8CHPNcwbI8jh9cuSlSit
-         0jSOuQe7DxOMTUDVmMXdhHJ3jW3saZRcGpxk3DO0N9dpOZT2atfQ9s3GKE4HVLZcicUw
-         4qT7mPqXsHB0zF9SjB27wytCiTVxdf5zuJRio=
-Received: by 10.151.138.13 with SMTP id q13mr230898ybn.157.1243431160974; Wed, 
-	27 May 2009 06:32:40 -0700 (PDT)
-In-Reply-To: <submission.1M9JCt-00047m-4a@mail.cs.st-andrews.ac.uk>
+	id S1762634AbZE0NqY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 May 2009 09:46:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759198AbZE0NqY
+	(ORCPT <rfc822;git-outgoing>); Wed, 27 May 2009 09:46:24 -0400
+Received: from pauli.djpig.de ([78.46.38.139]:46982 "EHLO pauli.djpig.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1762101AbZE0NqX (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 May 2009 09:46:23 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by pauli.djpig.de (Postfix) with ESMTP id 33BB19007F;
+	Wed, 27 May 2009 15:46:25 +0200 (CEST)
+X-Virus-Scanned: Debian amavisd-new at pauli.djpig.de
+Received: from pauli.djpig.de ([127.0.0.1])
+	by localhost (pauli.djpig.de [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id EKzCfnxB3nS6; Wed, 27 May 2009 15:46:17 +0200 (CEST)
+Received: from mail-vs.djpig.de (mail-vs.djpig.de [78.47.136.189])
+	by pauli.djpig.de (Postfix) with ESMTP id B26B69007C;
+	Wed, 27 May 2009 15:46:17 +0200 (CEST)
+Received: from djpig by mail-vs.djpig.de with local (Exim 4.69)
+	(envelope-from <djpig@mail-vs.djpig.de>)
+	id 1M9JST-0003bx-J5; Wed, 27 May 2009 15:46:17 +0200
+Content-Disposition: inline
+In-Reply-To: <4A1D2100.5040903@viscovery.net>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120063>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120064>
 
-2009/5/27 Christopher Jefferson <caj@cs.st-andrews.ac.uk>:
-> Something like that, except that limit seems to be only 1.3GB on Mac OS X
+On Wed, May 27, 2009 at 01:16:16PM +0200, Johannes Sixt wrote:
+> Frank Lichtenheld schrieb:
+> > As for the problems, a part of the public API of the module simply doesn't work
+> > (i.e. wc_chdir) which I fixed. If we can't fix it we should at least not pretend
+> > that it works.
+> 
+> Since you keep repeating "does not work", without any specifics, I can't
+> help (and I'm not going to find out myself what "does not work").
 
-Does linux have a similar limitation, lower than the limit imposed by
-the filesystem?
-Could this be solved by having a fallback solution for mmap?
-(switching to opening the file normally)  Or would this fallback be
-too intrusive/large of a change?
+Oh, sorry, I thought that the core problem would be obvious from the related test
+suite changes. I can elaborate on that later this evening when I'm not at work.
 
-John
+Gruesse,
+-- 
+Frank Lichtenheld <frank@lichtenheld.de>
+www: http://www.djpig.de/
