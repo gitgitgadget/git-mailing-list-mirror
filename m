@@ -1,93 +1,62 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: Re: Error during git gc
-Date: Wed, 27 May 2009 17:03:47 +0200
-Message-ID: <vpq63fmtwoc.fsf@bauges.imag.fr>
-References: <APEJLFBGDNOMCHGLHIHFGELBDEAA.dforman@dairyfoodusa.com>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: git log missing last line of output
+Date: Wed, 27 May 2009 17:42:40 +0200
+Message-ID: <4A1D5F70.4030101@drmicha.warpmail.net>
+References: <gvhrtf$vpr$1@ger.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git <git@vger.kernel.org>
-To: "David Forman" <dforman@dairyfoodusa.com>
-X-From: git-owner@vger.kernel.org Wed May 27 17:08:36 2009
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Neal Kreitzinger <neal@rsss.com>
+X-From: git-owner@vger.kernel.org Wed May 27 17:43:23 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M9Kk7-000747-7x
-	for gcvg-git-2@gmane.org; Wed, 27 May 2009 17:08:35 +0200
+	id 1M9LHl-0006HF-Ip
+	for gcvg-git-2@gmane.org; Wed, 27 May 2009 17:43:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761685AbZE0PIR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 May 2009 11:08:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760307AbZE0PIQ
-	(ORCPT <rfc822;git-outgoing>); Wed, 27 May 2009 11:08:16 -0400
-Received: from imag.imag.fr ([129.88.30.1]:38176 "EHLO imag.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1759659AbZE0PIQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 May 2009 11:08:16 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id n4RF41f1004188
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Wed, 27 May 2009 17:04:01 +0200 (CEST)
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
-	(Exim 4.50)
-	id 1M9KfT-0004xY-9t; Wed, 27 May 2009 17:03:47 +0200
-Received: from moy by bauges.imag.fr with local (Exim 4.63)
-	(envelope-from <moy@imag.fr>)
-	id 1M9KfT-0008Dz-8V; Wed, 27 May 2009 17:03:47 +0200
-In-Reply-To: <APEJLFBGDNOMCHGLHIHFGELBDEAA.dforman@dairyfoodusa.com> (David Forman's message of "Wed\, 27 May 2009 09\:41\:14 -0500")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.0.91 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Wed, 27 May 2009 17:04:01 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
+	id S1760177AbZE0Pmz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 May 2009 11:42:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759797AbZE0Pmz
+	(ORCPT <rfc822;git-outgoing>); Wed, 27 May 2009 11:42:55 -0400
+Received: from out1.smtp.messagingengine.com ([66.111.4.25]:43896 "EHLO
+	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1759731AbZE0Pmy (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 27 May 2009 11:42:54 -0400
+Received: from compute1.internal (compute1.internal [10.202.2.41])
+	by out1.messagingengine.com (Postfix) with ESMTP id 0D2B8345B21;
+	Wed, 27 May 2009 11:42:56 -0400 (EDT)
+Received: from heartbeat1.messagingengine.com ([10.202.2.160])
+  by compute1.internal (MEProxy); Wed, 27 May 2009 11:42:56 -0400
+X-Sasl-enc: E9igamo2Vu3dz6625qFtZ5ejJiYI1NNdaUOiV4ZJlRek 1243438975
+Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.12])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 630F5326AE;
+	Wed, 27 May 2009 11:42:55 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1pre) Gecko/20090525 Lightning/1.0pre Shredder/3.0b3pre
+In-Reply-To: <gvhrtf$vpr$1@ger.gmane.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120071>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120072>
 
-(please, keep the Git list in copy, and don't top-post)
+Neal Kreitzinger venit, vidit, dixit 27.05.2009 00:57:
+> Git log is not displaying the last line of output (for a plain "$ git log" 
+> the last line of output should be the title line of the initial commit). 
 
-"David Forman" <dforman@dairyfoodusa.com> writes:
+It should be the last line of the commit message, which is the "title
+line" (subject) if and only if the message consists of the subject line
+only.
 
-> Hi Matthieu,
->
-> Thanks for the quick reply. Silly me, I was thinking it was an authorization
-> issue or something. Now I understand (I think) that the issue is, it's
-> trying to access these files, but they don't exist. I can't seem to find the
-> '~' files anywhere in the project or .git folder. Is there a spot where
-> these names are registered that I can remove them so Git doesn't look for
-> them?
+> (I'm using git 1.5.5.6 on rhel 5.3.)  This missing last line also occurs 
+> with "git log --since" in which the last line of output should be the title 
+> line of the first commit after the specified date, but it is missing in this 
+> scenario also.  I've searched the release notes for 1.5.6 thru 1.6.3.1 and 
+> did not find this mentioned.  Does this also happen in newer versions of git 
+> after 1.5.5.6?
 
-Maybe in .git/packed-refs, but I think (or thought !) that Git found
-these files only by listing directories.
+I can't reproduce this with git 1.5.5.6 (vanilla, not rhel). Do you have
+a minimal reproducible test case?
 
-> -----Original Message-----
-> From: Matthieu Moy [mailto:Matthieu.Moy@imag.fr]
-> Sent: Wednesday, May 27, 2009 9:00 AM
-> To: David Forman
-> Cc: git@vger.kernel.org
-> Subject: Re: Error during git gc
->
->
-> (please provide a Subject: line)
->
-> "David Forman" <dforman@dairyfoodusa.com> writes:
->
->> I've encountered the following whenever I access Git and try to compress
-> the
->> database due to loose objects.
->>
->> error: cannot lock ref 'HEAD~'
->> error: cannot lock ref 'refs/heads/collections~'
->> error: cannot lock ref 'refs/heads/master~'
->
-> I'd say you've edited the files .git/HEAD, refs/heads/collections, ...
-> manually with a text editor that leaves ~ backup files. Unless you
-> _really_ have branches called collections~ and master~, you can move
-> these three files (in a temporary folder, or to trash if you're
-> confident enough).
-
--- 
-Matthieu
+Michael
