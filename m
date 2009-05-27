@@ -1,60 +1,150 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH 2/2] diff: generate prettier filenames when using	GIT_EXTERNAL_DIFF
-Date: Wed, 27 May 2009 09:14:27 +0200
-Message-ID: <4A1CE853.9080305@viscovery.net>
-References: <1243394364-13772-1-git-send-email-davvid@gmail.com> <1243394364-13772-2-git-send-email-davvid@gmail.com> <4A1CDF11.4080507@viscovery.net> <20090527070221.GC2986@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCHv2 3/4] git-am foreign patch support: StGIT support
+Date: Wed, 27 May 2009 00:19:40 -0700
+Message-ID: <7v7i03j9mb.fsf@alter.siamese.dyndns.org>
+References: <1243298290-5909-1-git-send-email-giuseppe.bilotta@gmail.com>
+	<1243298290-5909-2-git-send-email-giuseppe.bilotta@gmail.com>
+	<1243298290-5909-3-git-send-email-giuseppe.bilotta@gmail.com>
+	<1243298290-5909-4-git-send-email-giuseppe.bilotta@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, gitster@pobox.com, johannes.schindelin@gmx.de,
-	markus.heidelberg@web.de, nick@incise.org
-To: David Aguilar <davvid@gmail.com>
-X-From: git-owner@vger.kernel.org Wed May 27 09:14:39 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+X-From: git-owner@vger.kernel.org Wed May 27 09:20:29 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M9DLS-0003A8-3K
-	for gcvg-git-2@gmane.org; Wed, 27 May 2009 09:14:38 +0200
+	id 1M9DR7-0004uj-Cb
+	for gcvg-git-2@gmane.org; Wed, 27 May 2009 09:20:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752970AbZE0HOa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 May 2009 03:14:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751356AbZE0HO3
-	(ORCPT <rfc822;git-outgoing>); Wed, 27 May 2009 03:14:29 -0400
-Received: from lilzmailso02.liwest.at ([212.33.55.13]:61870 "EHLO
-	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751298AbZE0HO2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 May 2009 03:14:28 -0400
-Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
-	by lilzmailso02.liwest.at with esmtpa (Exim 4.69)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1M9DLH-0007Tx-E9; Wed, 27 May 2009 09:14:27 +0200
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.96])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id 2FC85795; Wed, 27 May 2009 09:14:27 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.21 (Windows/20090302)
-In-Reply-To: <20090527070221.GC2986@gmail.com>
-X-Enigmail-Version: 0.95.5
-X-Spam-Score: -1.4 (-)
+	id S1761383AbZE0HTu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 May 2009 03:19:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757909AbZE0HTn
+	(ORCPT <rfc822;git-outgoing>); Wed, 27 May 2009 03:19:43 -0400
+Received: from fed1rmmtao106.cox.net ([68.230.241.40]:39007 "EHLO
+	fed1rmmtao106.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1761412AbZE0HTj (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 May 2009 03:19:39 -0400
+Received: from fed1rmimpo03.cox.net ([70.169.32.75])
+          by fed1rmmtao106.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20090527071942.NWZM25927.fed1rmmtao106.cox.net@fed1rmimpo03.cox.net>;
+          Wed, 27 May 2009 03:19:42 -0400
+Received: from localhost ([68.225.240.211])
+	by fed1rmimpo03.cox.net with bizsmtp
+	id wXKg1b00B4aMwMQ04XKgXu; Wed, 27 May 2009 03:19:41 -0400
+X-Authority-Analysis: v=1.0 c=1 a=u217S5DB6-EA:10 a=VLcXo6BCFe0A:10
+ a=pGLkceISAAAA:8 a=0KG2QjlQkSYAfJyHZjIA:9 a=xfXX30WnhZ-BEyznEIkA:7
+ a=-4FgxZIQkMAe9i4__Oa0jMYYzP4A:4 a=MSl-tDqOz04A:10
+X-CM-Score: 0.00
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120039>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120040>
 
-David Aguilar schrieb:
-> On Wed, May 27, 2009 at 08:34:57AM +0200, Johannes Sixt wrote:
->> David Aguilar schrieb:
->>> +#include <libgen.h>
->> We don't have libgen.h on Windows :-( (at least not with my aging gcc
->> 3.something). Would you please open-code the call to basename()?
-> 
-> I don't know much about Windows.
-> Do we need to check for \ in addition to /?
+Giuseppe Bilotta <giuseppe.bilotta@gmail.com> writes:
 
-If the paths have been taken from the index or have passed through
-get_pathspec or prefix_filename, then it is sufficient to check for '/'.
-Otherwise, use is_dir_sep() (note it is a macro: don't call it like
-is_dir_sep(*c++)).
+> Support StGIT patches by implementing a simple awk-based converter
+> mimicking StGIT's own parse_patch. Also support StGIT patch series by
+> 'exploding' the index into a lif of files and re-running the mail
+> splitting with patch_format set to stgit.
+> ---
+>  git-am.sh |   60 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+>  1 files changed, 60 insertions(+), 0 deletions(-)
+>
+> diff --git a/git-am.sh b/git-am.sh
+> index 4cf66aa..1a00830 100755
+> --- a/git-am.sh
+> +++ b/git-am.sh
+> @@ -203,6 +203,66 @@ split_patches () {
+>  			exit 1
+>  		}
+>  		;;
+> +	stgit-series)
+> +		if test $# -ne 1
+> +		then
+> +			echo "Only one StGIT patch series can be applied at once"
+> +			exit 1
+> +		fi
+> +		series_dir=`dirname "$1"`
+> +		series_file="$1"
+> +		shift
+> +		{
+> +			set x
+> +			while read filename
+> +			do
+> +				set "$@" "$series_dir/$filename"
+> +			done
+> +			# remove the safety x
+> +			shift
+> +			# remove the arg coming from the first-line comment
+> +			shift
+> +		} < "$series_file"
+> +		# set the patch format appropriately
+> +		patch_format=stgit
+> +		# now handle the actual StGIT patches
+> +		split_patches "$@"
 
--- Hannes
+Can an stgit patch file (or the leading pathname for that matter) have IFS
+character in its name?
+
+> +		;;
+> +	stgit)
+> +		this=0
+> +		for stgit in "$@"
+> +		do
+> +			this=`expr "$this" + 1`
+> +			msgnum=`printf "%0${prec}d" $this`
+> +			touch "$dotest/$msgnum"
+
+Portability tip from an old timer: do not create a new empty file with
+"touch" (only use that command to update the timestamp of an existing
+file).
+
+Instead say
+
+	>"$dotest/$msgnum"
+
+> +			# Awk version of StGIT parse_patch. The first nonemptyline
+> +			# not starting with Author, From or Date is the
+> +			# subject, and the body starts with the next nonempty
+> +			# line not starting with Author, From or Date
+> +			awk 'BEGIN { subject=0 }
+> +			{
+> +				if (subject > 1)
+> +					print ;
+> +				else if (/^$/) next ;
+> +				else if (/^Author:/) print sub("Author", "From"), $ORS ;
+
+Can any token that match Author other than the initial "Author: " appear
+on this line?
+
+Since we rely on Perl but not awk in core-ish part of the scripted
+Porcelains, it might be a good idea to write this in Perl as well.
+
+> +				else if (/^(From|Date)/) print ;
+> +				else if (subject) {
+> +					subject = 2 ;
+> +					print "" ;
+> +					print ;
+> +				} else {
+> +					print "Subject:", $0 ;
+> +					subject = 1;
+> +				}
+> +			}' "$stgit" > "$dotest/$msgnum" || {
+> +				echo "Failed to import $patch_format patch $stgit"
+> +				exit 1
+> +			}
+> +		done
+> +		echo "$this" > "$dotest/last"
+> +		this=
+> +		msgnum=
+> +		;;
+>  	*)
+>  		echo "Patch format $patch_format is not supported."
+>  		exit 1
+> -- 
+> 1.6.3.1.248.gb44be
