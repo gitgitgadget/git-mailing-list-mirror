@@ -1,133 +1,138 @@
-From: David Aguilar <davvid@gmail.com>
-Subject: Re: [PATCH 2/2] diff: generate prettier filenames when using
-	GIT_EXTERNAL_DIFF
-Date: Tue, 26 May 2009 22:17:38 -0700
-Message-ID: <20090527051737.GA2986@gmail.com>
-References: <1243394364-13772-1-git-send-email-davvid@gmail.com> <1243394364-13772-2-git-send-email-davvid@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: gitster@pobox.com, johannes.schindelin@gmx.de,
-	markus.heidelberg@web.de, nick@incise.org
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 27 07:17:59 2009
+From: Christian Couder <chriscool@tuxfamily.org>
+Subject: [PATCH] t6050: check pushing something based on a replaced commit
+Date: Wed, 27 May 2009 07:14:09 +0200
+Message-ID: <20090527051410.3789.1705.chriscool@tuxfamily.org>
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed May 27 07:19:32 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M9BWW-00043f-Jz
-	for gcvg-git-2@gmane.org; Wed, 27 May 2009 07:17:57 +0200
+	id 1M9BY4-0004Qv-2e
+	for gcvg-git-2@gmane.org; Wed, 27 May 2009 07:19:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757680AbZE0FRt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 May 2009 01:17:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757584AbZE0FRs
-	(ORCPT <rfc822;git-outgoing>); Wed, 27 May 2009 01:17:48 -0400
-Received: from mail-px0-f123.google.com ([209.85.216.123]:49254 "EHLO
-	mail-px0-f123.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757308AbZE0FRr (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 May 2009 01:17:47 -0400
-Received: by pxi29 with SMTP id 29so183137pxi.33
-        for <git@vger.kernel.org>; Tue, 26 May 2009 22:17:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=tRsk34ni2+aT8Prju/MwuHgMhdEv0tvR/mdhNVpMkwU=;
-        b=et2nIc2bB51JzjuRiPKDLws/DJdi7fulwjgA1lSfCVojtB/Yn9yiSXoEhrP2sFz/Ld
-         BHnomr5lj7Yc5qkCZrlMBmrhTAuxw48H/KnRLhKevRGjSUxOX4r/VMYAzBMJVC7odGqX
-         PmmwxJIUhVvWlk4+yX94e+FMvSl4YPLUGLC1Q=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=j3EqHLIrksITMNbOwwQClmQdFT3ApHetwNlComlvLAQ54HC0SzUWvBEc94uxWzAVUX
-         EObPxQ6M73xktyCQUfC7DQOqRbkPD2JTxZ0/6gsqhl1kUJnjR054pLWoaL81urhSgAqm
-         tdx2SvQMxbIZi/d/gHGry7y2YKXKuSfARt51o=
-Received: by 10.114.88.1 with SMTP id l1mr18999898wab.97.1243401467767;
-        Tue, 26 May 2009 22:17:47 -0700 (PDT)
-Received: from gmail.com (208-106-56-2.static.dsltransport.net [208.106.56.2])
-        by mx.google.com with ESMTPS id v9sm1375127wah.1.2009.05.26.22.17.46
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 26 May 2009 22:17:47 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <1243394364-13772-2-git-send-email-davvid@gmail.com>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+	id S1758364AbZE0FTY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 May 2009 01:19:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757880AbZE0FTX
+	(ORCPT <rfc822;git-outgoing>); Wed, 27 May 2009 01:19:23 -0400
+Received: from smtp3-g21.free.fr ([212.27.42.3]:56538 "EHLO smtp3-g21.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752112AbZE0FTW (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 May 2009 01:19:22 -0400
+Received: from smtp3-g21.free.fr (localhost [127.0.0.1])
+	by smtp3-g21.free.fr (Postfix) with ESMTP id 6AEB48180A6;
+	Wed, 27 May 2009 07:19:17 +0200 (CEST)
+Received: from bureau.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
+	by smtp3-g21.free.fr (Postfix) with ESMTP id 730AA818078;
+	Wed, 27 May 2009 07:19:15 +0200 (CEST)
+X-git-sha1: 5d76b1b10c8b276ad9fca6d395bfcbeca71ec650 
+X-Mailer: git-mail-commits v0.4.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120031>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120032>
 
-On Tue, May 26, 2009 at 08:19:24PM -0700, David Aguilar wrote:
-> --- a/t/t4020-diff-external.sh
-> +++ b/t/t4020-diff-external.sh
-> @@ -136,6 +136,24 @@ test_expect_success 'GIT_EXTERNAL_DIFF with more than one changed files' '
->  	GIT_EXTERNAL_DIFF=echo git diff
->  '
+When using something like:
 
-Sorry for including both tests here.
-I forgot to remove the first test when we changed the naming
-convention to 6X_name and not special-casing filenames with
-dots in them.
+$ git push $there 04a8c^2:master
 
-I guess I'll resend w/out it.  I'll wait until wednesday
-evening before resending to see if anyone spots any other
-fixups.
+we need to parse 04a8c to find its second parent and then start
+discussing what object to send with the other end.  "04a8c^2" is a direct
+user input and should mean the same commit as git show "04a8c^2" would
+give the user, so it obviously needs to obey the replace rules (making
+04a8c parsed), but the object transfer should not look at replace at all.
 
+This patch adds some tests to check that the above is working well.
 
-The rationale for the original naming convention was that it
-was arguably easier for users to spot what file they're
-working on when playing games with dot.
+Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+---
+ t/t6050-replace.sh |   68 ++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 files changed, 68 insertions(+), 0 deletions(-)
 
-compare:
+	Maybe I am missing something but it looks like replacing
+	an object directly listed on the command line works.
+	And this means that we don't need to unparse commits.
 
-a) !!!!!!_Makefile
-
-b) Makefile_!!!!!!
-
-and:
-
-a) !!!!!!_diff.c
-
-b) diff.!!!!!!.c
-
-
-In both examples you already know what filename you're talking
-about before scanning past any other information.
-
-.gitignore would look like .!!!!!!.gitignore, which isn't too
-bad either.
-
-Anyways, not looking to bikeshed, so I'll wait to here what
-others have to say and continue.  The patch is fine as-is too
-sans the first test.
-
-
-> +test_expect_success 'GIT_EXTERNAL_DIFF generates pretty paths with no ext' '
-> +	touch filenoext &&
-> +	git add filenoext &&
-> +	echo no extension > filenoext &&
-> +	GIT_EXTERNAL_DIFF=echo git diff filenoext | grep _filenoext &&
-> +	git update-index --force-remove filenoext &&
-> +	rm filenoext
-> +'
-> +
-> +test_expect_success 'GIT_EXTERNAL_DIFF generates pretty paths with ext' '
-> +	touch file.ext &&
-> +	git add file.ext &&
-> +	echo with extension > file.ext &&
-> +	GIT_EXTERNAL_DIFF=echo git diff file.ext | grep ......_file\.ext &&
-> +	git update-index --force-remove file.ext &&
-> +	rm file.ext
-> +'
-> +
->  echo "#!$SHELL_PATH" >fake-diff.sh
->  cat >> fake-diff.sh <<\EOF
->  cat $2 >> crlfed.txt
-> -- 
-> 1.6.3.1.169.g33fd
-> 
-
+diff --git a/t/t6050-replace.sh b/t/t6050-replace.sh
+index 448a19a..8b8bd81 100755
+--- a/t/t6050-replace.sh
++++ b/t/t6050-replace.sh
+@@ -127,6 +127,74 @@ test_expect_success '"git replace" replacing' '
+      test "$HASH2" = "$(git replace)"
+ '
+ 
++# This creates a side branch where the bug in H2
++# does not appear because P2 is created by applying
++# H2 and squashing H5 into it.
++# P3, P4 and P6 are created by cherry-picking H3, H4
++# and H6 respectively.
++#
++# At this point, we should have the following:
++#
++#    P2--P3--P4--P6
++#   /
++# H1-H2-H3-H4-H5-H6-H7
++#
++# Then we replace H6 with P6.
++#
++test_expect_success 'create parallel branch without the bug' '
++     git replace -d $HASH2 &&
++     git show $HASH2 | grep "A U Thor" &&
++     git checkout $HASH1 &&
++     git cherry-pick $HASH2 &&
++     git show $HASH5 | git apply &&
++     git commit --amend -m "hello: 4 more lines WITHOUT the bug" hello &&
++     PARA2=$(git rev-parse --verify HEAD) &&
++     git cherry-pick $HASH3 &&
++     PARA3=$(git rev-parse --verify HEAD) &&
++     git cherry-pick $HASH4 &&
++     PARA4=$(git rev-parse --verify HEAD) &&
++     git cherry-pick $HASH6 &&
++     PARA6=$(git rev-parse --verify HEAD) &&
++     git replace $HASH6 $PARA6 &&
++     git checkout master &&
++     cur=$(git rev-parse --verify HEAD) &&
++     test "$cur" = "$HASH7" &&
++     git log --pretty=oneline | grep $PARA2 &&
++     git remote add cloned ./clone_dir
++'
++
++test_expect_success 'push to cloned repo' '
++     git push cloned $HASH6^:refs/heads/parallel &&
++     cd clone_dir &&
++     git checkout parallel &&
++     git log --pretty=oneline | grep $PARA2 &&
++     cd ..
++'
++
++test_expect_success 'push branch with replacement' '
++     git cat-file commit $PARA3 | grep "author A U Thor" &&
++     S=$(git cat-file commit $PARA3 | sed -e "s/A U/O/" | git hash-object -t commit --stdin -w) &&
++     git cat-file commit $S | grep "author O Thor" &&
++     git replace $PARA3 $S &&
++     git show $HASH6~2 | grep "O Thor" &&
++     git show $PARA3 | grep "O Thor" &&
++     git push cloned $HASH6^:refs/heads/parallel2 &&
++     cd clone_dir &&
++     git checkout parallel2 &&
++     git log --pretty=oneline | grep $PARA3 &&
++     git show $PARA3 | grep "A U Thor" &&
++     cd ..
++'
++
++test_expect_success 'fetch branch with replacement' '
++     git branch tofetch $HASH6 &&
++     cd clone_dir &&
++     git fetch origin refs/heads/tofetch:refs/heads/parallel3
++     git log --pretty=oneline parallel3 | grep $PARA3
++     git show $PARA3 | grep "A U Thor"
++     cd ..
++'
++
+ #
+ #
+ test_done
 -- 
-
-	David
+1.6.3.GIT
