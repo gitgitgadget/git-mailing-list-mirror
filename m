@@ -1,87 +1,93 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Problem with large files on different OSes
-Date: Wed, 27 May 2009 07:37:33 -0700 (PDT)
-Message-ID: <m3y6siboij.fsf@localhost.localdomain>
-References: <submission.1M9Gk0-0000N8-MQ@mail.cs.st-andrews.ac.uk>
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: Re: Error during git gc
+Date: Wed, 27 May 2009 17:03:47 +0200
+Message-ID: <vpq63fmtwoc.fsf@bauges.imag.fr>
+References: <APEJLFBGDNOMCHGLHIHFGELBDEAA.dforman@dairyfoodusa.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Christopher Jefferson <caj@cs.st-andrews.ac.uk>
-X-From: git-owner@vger.kernel.org Wed May 27 16:37:46 2009
+Cc: git <git@vger.kernel.org>
+To: "David Forman" <dforman@dairyfoodusa.com>
+X-From: git-owner@vger.kernel.org Wed May 27 17:08:36 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M9KGH-00082p-MV
-	for gcvg-git-2@gmane.org; Wed, 27 May 2009 16:37:46 +0200
+	id 1M9Kk7-000747-7x
+	for gcvg-git-2@gmane.org; Wed, 27 May 2009 17:08:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760585AbZE0Ohg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 May 2009 10:37:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760295AbZE0Ohf
-	(ORCPT <rfc822;git-outgoing>); Wed, 27 May 2009 10:37:35 -0400
-Received: from mail-fx0-f168.google.com ([209.85.220.168]:45142 "EHLO
-	mail-fx0-f168.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759849AbZE0Ohe (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 May 2009 10:37:34 -0400
-Received: by fxm12 with SMTP id 12so2931541fxm.37
-        for <git@vger.kernel.org>; Wed, 27 May 2009 07:37:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received
-         :x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        bh=mNQ3dFAl6MWf02ntLjK7b2jCsDJ32QR3Bcv9TOynuZ4=;
-        b=E7IA3CVzimDGk8kup4iJEWq4v33rhY8uB3lIuKNZsrd1zC+byl1JRf+K8j5eqbyeGQ
-         5owjP1krFb+3r05LraRwR0C/Gns9jzc1eh/3EfLTmGeKVSHtKNw3ngc8Lg7iNny529sl
-         Zh1R3yVZYRQqwXZPtR74B18FnTUAzM28+9Wws=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        b=BxIK4+HBHRW2Gcb63QNqTWgzp9ehFzPeu+h042b2ocwEDPD3tB/33kTjjo6dt075+S
-         AyWtAivlulyMYuMVLDeyOfq214S75QpMGR41rnPzActi6MZFNXUZpCtH++n7+LlHIi3g
-         WvxVBlc29m1SpaKOyUupwFMpdgKgfZzVszoiY=
-Received: by 10.216.54.83 with SMTP id h61mr29785wec.69.1243435055223;
-        Wed, 27 May 2009 07:37:35 -0700 (PDT)
-Received: from localhost.localdomain (abvl57.neoplus.adsl.tpnet.pl [83.8.209.57])
-        by mx.google.com with ESMTPS id f13sm3840987gvd.23.2009.05.27.07.37.32
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 27 May 2009 07:37:33 -0700 (PDT)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id n4REbVt1015551;
-	Wed, 27 May 2009 16:37:31 +0200
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id n4REbPrr015546;
-	Wed, 27 May 2009 16:37:25 +0200
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <submission.1M9Gk0-0000N8-MQ@mail.cs.st-andrews.ac.uk>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+	id S1761685AbZE0PIR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 May 2009 11:08:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760307AbZE0PIQ
+	(ORCPT <rfc822;git-outgoing>); Wed, 27 May 2009 11:08:16 -0400
+Received: from imag.imag.fr ([129.88.30.1]:38176 "EHLO imag.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1759659AbZE0PIQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 May 2009 11:08:16 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id n4RF41f1004188
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Wed, 27 May 2009 17:04:01 +0200 (CEST)
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
+	(Exim 4.50)
+	id 1M9KfT-0004xY-9t; Wed, 27 May 2009 17:03:47 +0200
+Received: from moy by bauges.imag.fr with local (Exim 4.63)
+	(envelope-from <moy@imag.fr>)
+	id 1M9KfT-0008Dz-8V; Wed, 27 May 2009 17:03:47 +0200
+In-Reply-To: <APEJLFBGDNOMCHGLHIHFGELBDEAA.dforman@dairyfoodusa.com> (David Forman's message of "Wed\, 27 May 2009 09\:41\:14 -0500")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.0.91 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Wed, 27 May 2009 17:04:01 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120070>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120071>
 
-Christopher Jefferson <caj@cs.st-andrews.ac.uk> writes:
+(please, keep the Git list in copy, and don't top-post)
 
-> I recently came across a very annoying problem, characterised by the
-> following example:
-> 
-> On a recent ubuntu install:
-> 
-> dd if=/dev/zero of=file bs=1300k count=1k
-> git commit file -m "Add huge file"
-> 
-> 
-> The repository can be pulled and pushed successfully to other ubuntu
-> installs, but on Mac OS X, 10.5.7 machine with 4GB ram git pull
-> produces:
+"David Forman" <dforman@dairyfoodusa.com> writes:
 
-Do seting `pack.packSizeLimit`, or adjusting values of
-`core.packedGitWindowSize` and/or `core.packedGitLimit`
-(see git-config(1)) help in your situation?
+> Hi Matthieu,
+>
+> Thanks for the quick reply. Silly me, I was thinking it was an authorization
+> issue or something. Now I understand (I think) that the issue is, it's
+> trying to access these files, but they don't exist. I can't seem to find the
+> '~' files anywhere in the project or .git folder. Is there a spot where
+> these names are registered that I can remove them so Git doesn't look for
+> them?
+
+Maybe in .git/packed-refs, but I think (or thought !) that Git found
+these files only by listing directories.
+
+> -----Original Message-----
+> From: Matthieu Moy [mailto:Matthieu.Moy@imag.fr]
+> Sent: Wednesday, May 27, 2009 9:00 AM
+> To: David Forman
+> Cc: git@vger.kernel.org
+> Subject: Re: Error during git gc
+>
+>
+> (please provide a Subject: line)
+>
+> "David Forman" <dforman@dairyfoodusa.com> writes:
+>
+>> I've encountered the following whenever I access Git and try to compress
+> the
+>> database due to loose objects.
+>>
+>> error: cannot lock ref 'HEAD~'
+>> error: cannot lock ref 'refs/heads/collections~'
+>> error: cannot lock ref 'refs/heads/master~'
+>
+> I'd say you've edited the files .git/HEAD, refs/heads/collections, ...
+> manually with a text editor that leaves ~ backup files. Unless you
+> _really_ have branches called collections~ and master~, you can move
+> these three files (in a temporary folder, or to trash if you're
+> confident enough).
 
 -- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+Matthieu
