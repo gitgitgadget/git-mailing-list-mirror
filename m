@@ -1,309 +1,234 @@
 From: David Aguilar <davvid@gmail.com>
-Subject: [PATCH v3 1/2] compat: add a mkstemps() compatibility function
-Date: Thu, 28 May 2009 02:43:50 -0700
-Message-ID: <1243503831-17993-1-git-send-email-davvid@gmail.com>
+Subject: [PATCH v3 2/2] diff: generate prettier filenames when using GIT_EXTERNAL_DIFF
+Date: Thu, 28 May 2009 02:43:51 -0700
+Message-ID: <1243503831-17993-2-git-send-email-davvid@gmail.com>
+References: <1243503831-17993-1-git-send-email-davvid@gmail.com>
 Cc: git@vger.kernel.org, j.sixt@viscovery.net,
 	markus.heidelberg@web.de, jnareb@gmail.com,
 	David Aguilar <davvid@gmail.com>
 To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Thu May 28 11:44:22 2009
+X-From: git-owner@vger.kernel.org Thu May 28 11:44:32 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M9c9m-0004BJ-PW
-	for gcvg-git-2@gmane.org; Thu, 28 May 2009 11:44:15 +0200
+	id 1M9cA0-0004El-Dt
+	for gcvg-git-2@gmane.org; Thu, 28 May 2009 11:44:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753133AbZE1JoG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 May 2009 05:44:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752863AbZE1JoE
-	(ORCPT <rfc822;git-outgoing>); Thu, 28 May 2009 05:44:04 -0400
-Received: from mail-px0-f123.google.com ([209.85.216.123]:44642 "EHLO
-	mail-px0-f123.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751227AbZE1JoC (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 May 2009 05:44:02 -0400
-Received: by pxi29 with SMTP id 29so890678pxi.33
-        for <git@vger.kernel.org>; Thu, 28 May 2009 02:44:02 -0700 (PDT)
+	id S1753626AbZE1JoO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 May 2009 05:44:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750755AbZE1JoM
+	(ORCPT <rfc822;git-outgoing>); Thu, 28 May 2009 05:44:12 -0400
+Received: from mail-pz0-f177.google.com ([209.85.222.177]:39339 "EHLO
+	mail-pz0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751934AbZE1JoK (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 May 2009 05:44:10 -0400
+Received: by pzk7 with SMTP id 7so4126598pzk.33
+        for <git@vger.kernel.org>; Thu, 28 May 2009 02:44:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer;
-        bh=nnrDPnl6eUh9RUzJ1ZkDvtMASbprQNcD4DyKORdum7I=;
-        b=aiHAedkemqBVAYU8/RDfD8QakgkiYsoIGAgbiZpWf/90XIPy7LEQZ8ZV5yyyVk679L
-         swfRidk70lZ7Ivkwpmr4ZZ4+a44EgSXI/klpz8JzRNNlXsFD58F4IDi+yDGKvBqF79p1
-         CR+6HtzuBjOMLk7EPisItMH7tj+OGOWg9DAfw=
+         :message-id:x-mailer:in-reply-to:references;
+        bh=eqVTTtfqv2uhIFhYPWfLNVNw7BGuLcAiWd+lzyaftpk=;
+        b=nlroKjSai2Ykf2myLopEK0gmI2llZBnLPpqL60PGjUsV2B31mMFexGV4zP0xek6BF/
+         SkmdDyz/Ky2QdMylMzEUhNv8SNpIiAshzPeL4WoCHBBQ0GwwQ5zZUAHZ9MLO8ZrDmwz6
+         EfDoWjVd9/JuuQ+IqXHMPceMk6DWhScx9PBlE=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        b=ddJKOpixy9cO4BQYJB/fmCZa8GyPrT8Krs09ALmFpZJTPi5cFffm1TBXguo9yI4fUX
-         hshWza4gZcWFI0njSHid4da7cCTuMk8n0UNUdRIAOzwCg7Iqd9cMqw3T7cxgUw82KtSw
-         gwZExktp9Xjnzvb2CAtEN6nFqT8wBfF81+NCY=
-Received: by 10.114.167.3 with SMTP id p3mr990460wae.214.1243503842266;
-        Thu, 28 May 2009 02:44:02 -0700 (PDT)
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        b=tjIcpWVbf42jfYSwdPyVbY6TcfZv7cFcQe3tISPKupp3yXg94tLnhZy1S5sqK+xcwg
+         3ZY9/GrMWpOOI2qoMoV/FRCy/Hse7XYwIGXFQnY1puIEvTMKlVYSqwJ9KVutkUziVUID
+         JfhNi1PWud0gFPvd/AOvZT85IXKVPMuj9BnxM=
+Received: by 10.115.18.3 with SMTP id v3mr995681wai.32.1243503851616;
+        Thu, 28 May 2009 02:44:11 -0700 (PDT)
 Received: from localhost (208-106-56-2.static.dsltransport.net [208.106.56.2])
-        by mx.google.com with ESMTPS id v9sm4277853wah.1.2009.05.28.02.44.00
+        by mx.google.com with ESMTPS id m30sm12910949wag.53.2009.05.28.02.44.09
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 28 May 2009 02:44:01 -0700 (PDT)
+        Thu, 28 May 2009 02:44:10 -0700 (PDT)
 X-Mailer: git-send-email 1.6.3.1.169.g33fd
+In-Reply-To: <1243503831-17993-1-git-send-email-davvid@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120179>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120180>
 
-mkstemps() is a BSD extension so provide an implementation
-for cross-platform use.
+Naturally, prep_temp_blob() did not care about filenames.
+As a result, scripts that use GIT_EXTERNAL_DIFF ended up
+with filenames such as ".diff_XXXXXX".
+
+This specializes the GIT_EXTERNAL_DIFF code to generate
+user-friendly filenames when creating temporary files.
+
+Diffing "name.ext" now generates "XXXXXX_name.ext".
 
 Signed-off-by: David Aguilar <davvid@gmail.com>
 Tested-by: Johannes Sixt <j6t@kdbg.org> (Windows)
 ---
- Makefile          |   19 +++++++++++++++
- compat/mkstemps.c |   67 +++++++++++++++++++++++++++++++++++++++++++++++++++++
- config.mak.in     |    1 +
- configure.ac      |    6 ++++
- git-compat-util.h |    5 ++++
- 5 files changed, 98 insertions(+), 0 deletions(-)
- create mode 100644 compat/mkstemps.c
+ cache.h                  |    2 ++
+ diff.c                   |   45 +++++++++++++++++++++++++++++++++++++--------
+ path.c                   |   19 +++++++++++++++++++
+ t/t4020-diff-external.sh |    9 +++++++++
+ 4 files changed, 67 insertions(+), 8 deletions(-)
 
-diff --git a/Makefile b/Makefile
-index eaae45d..a70b5f0 100644
---- a/Makefile
-+++ b/Makefile
-@@ -52,6 +52,8 @@ all::
- #
- # Define NO_MKDTEMP if you don't have mkdtemp in the C library.
- #
-+# Define NO_MKSTEMPS if you don't have mkstemps in the C library.
-+#
- # Define NO_SYS_SELECT_H if you don't have sys/select.h.
- #
- # Define NO_SYMLINK_HEAD if you never want .git/HEAD to be a symbolic link.
-@@ -636,10 +638,12 @@ EXTLIBS =
+diff --git a/cache.h b/cache.h
+index b8503ad..871c984 100644
+--- a/cache.h
++++ b/cache.h
+@@ -614,6 +614,8 @@ extern int is_empty_blob_sha1(const unsigned char *sha1);
  
- ifeq ($(uname_S),Linux)
- 	NO_STRLCPY = YesPlease
-+	NO_MKSTEMPS = YesPlease
- 	THREADED_DELTA_SEARCH = YesPlease
- endif
- ifeq ($(uname_S),GNU/kFreeBSD)
- 	NO_STRLCPY = YesPlease
-+	NO_MKSTEMPS = YesPlease
- 	THREADED_DELTA_SEARCH = YesPlease
- endif
- ifeq ($(uname_S),UnixWare)
-@@ -651,6 +655,7 @@ ifeq ($(uname_S),UnixWare)
- 	SHELL_PATH = /usr/local/bin/bash
- 	NO_IPV6 = YesPlease
- 	NO_HSTRERROR = YesPlease
-+	NO_MKSTEMPS = YesPlease
- 	BASIC_CFLAGS += -Kthread
- 	BASIC_CFLAGS += -I/usr/local/include
- 	BASIC_LDFLAGS += -L/usr/local/lib
-@@ -674,6 +679,7 @@ ifeq ($(uname_S),SCO_SV)
- 	SHELL_PATH = /usr/bin/bash
- 	NO_IPV6 = YesPlease
- 	NO_HSTRERROR = YesPlease
-+	NO_MKSTEMPS = YesPlease
- 	BASIC_CFLAGS += -I/usr/local/include
- 	BASIC_LDFLAGS += -L/usr/local/lib
- 	NO_STRCASESTR = YesPlease
-@@ -702,6 +708,7 @@ ifeq ($(uname_S),SunOS)
- 	NO_MEMMEM = YesPlease
- 	NO_HSTRERROR = YesPlease
- 	NO_MKDTEMP = YesPlease
-+	NO_MKSTEMPS = YesPlease
- 	OLD_ICONV = UnfortunatelyYes
- 	ifeq ($(uname_R),5.8)
- 		NO_UNSETENV = YesPlease
-@@ -724,6 +731,7 @@ ifeq ($(uname_O),Cygwin)
- 	NO_D_INO_IN_DIRENT = YesPlease
- 	NO_STRCASESTR = YesPlease
- 	NO_MEMMEM = YesPlease
-+	NO_MKSTEMPS = YesPlease
- 	NO_SYMLINK_HEAD = YesPlease
- 	NEEDS_LIBICONV = YesPlease
- 	NO_FAST_WORKING_DIRECTORY = UnfortunatelyYes
-@@ -767,11 +775,13 @@ ifeq ($(uname_S),NetBSD)
- 	BASIC_LDFLAGS += -L/usr/pkg/lib $(CC_LD_DYNPATH)/usr/pkg/lib
- 	THREADED_DELTA_SEARCH = YesPlease
- 	USE_ST_TIMESPEC = YesPlease
-+	NO_MKSTEMPS = YesPlease
- endif
- ifeq ($(uname_S),AIX)
- 	NO_STRCASESTR=YesPlease
- 	NO_MEMMEM = YesPlease
- 	NO_MKDTEMP = YesPlease
-+	NO_MKSTEMPS = YesPlease
- 	NO_STRLCPY = YesPlease
- 	NO_NSEC = YesPlease
- 	FREAD_READS_DIRECTORIES = UnfortunatelyYes
-@@ -787,12 +797,14 @@ endif
- ifeq ($(uname_S),GNU)
- 	# GNU/Hurd
- 	NO_STRLCPY=YesPlease
-+	NO_MKSTEMPS = YesPlease
- endif
- ifeq ($(uname_S),IRIX64)
- 	NO_IPV6=YesPlease
- 	NO_SETENV=YesPlease
- 	NO_STRCASESTR=YesPlease
- 	NO_MEMMEM = YesPlease
-+	NO_MKSTEMPS = YesPlease
- 	NO_STRLCPY = YesPlease
- 	NO_SOCKADDR_STORAGE=YesPlease
- 	SHELL_PATH=/usr/gnu/bin/bash
-@@ -805,6 +817,7 @@ ifeq ($(uname_S),HP-UX)
- 	NO_SETENV=YesPlease
- 	NO_STRCASESTR=YesPlease
- 	NO_MEMMEM = YesPlease
-+	NO_MKSTEMPS = YesPlease
- 	NO_STRLCPY = YesPlease
- 	NO_MKDTEMP = YesPlease
- 	NO_UNSETENV = YesPlease
-@@ -834,6 +847,7 @@ ifneq (,$(findstring MINGW,$(uname_S)))
- 	NO_C99_FORMAT = YesPlease
- 	NO_STRTOUMAX = YesPlease
- 	NO_MKDTEMP = YesPlease
-+	NO_MKSTEMPS = YesPlease
- 	SNPRINTF_RETURNS_BOGUS = YesPlease
- 	NO_SVN_TESTS = YesPlease
- 	NO_PERL_MAKEMAKER = YesPlease
-@@ -853,6 +867,7 @@ ifneq (,$(findstring MINGW,$(uname_S)))
- endif
- ifneq (,$(findstring arm,$(uname_M)))
- 	ARM_SHA1 = YesPlease
-+	NO_MKSTEMPS = YesPlease
- endif
+ int git_mkstemp(char *path, size_t n, const char *template);
  
- -include config.mak.autogen
-@@ -1011,6 +1026,10 @@ ifdef NO_MKDTEMP
- 	COMPAT_CFLAGS += -DNO_MKDTEMP
- 	COMPAT_OBJS += compat/mkdtemp.o
- endif
-+ifdef NO_MKSTEMPS
-+	COMPAT_CFLAGS += -DNO_MKSTEMPS
-+	COMPAT_OBJS += compat/mkstemps.o
-+endif
- ifdef NO_UNSETENV
- 	COMPAT_CFLAGS += -DNO_UNSETENV
- 	COMPAT_OBJS += compat/unsetenv.o
-diff --git a/compat/mkstemps.c b/compat/mkstemps.c
-new file mode 100644
-index 0000000..87ebc2a
---- /dev/null
-+++ b/compat/mkstemps.c
-@@ -0,0 +1,67 @@
-+#include "../git-compat-util.h"
++int git_mkstemps(char *path, size_t n, const char *template, int suffix_len);
 +
-+#ifndef TMP_MAX
-+#define TMP_MAX 16384
-+#endif
+ /*
+  * NOTE NOTE NOTE!!
+  *
+diff --git a/diff.c b/diff.c
+index dcfbcb0..60f07a0 100644
+--- a/diff.c
++++ b/diff.c
+@@ -1960,12 +1960,37 @@ static void prep_temp_blob(const char *path, struct diff_tempfile *temp,
+ 			   void *blob,
+ 			   unsigned long size,
+ 			   const unsigned char *sha1,
+-			   int mode)
++			   int mode,
++			   int pretty_filename)
+ {
+ 	int fd;
+ 	struct strbuf buf = STRBUF_INIT;
+ 
+-	fd = git_mkstemp(temp->tmp_path, PATH_MAX, ".diff_XXXXXX");
++	if (pretty_filename) {
++		/* Generate "XXXXXX_filename" */
++		struct strbuf pretty_name = STRBUF_INIT;
++		char *basename = ((char*)path) + strlen(path) - 1;
 +
-+/* Adapted from libiberty's mkstemp.c. */
-+int gitmkstemps(char *pattern, int suffix_len)
++		/* Windows lacks basename() */
++		while(*basename && basename > path) {
++			basename--;
++			if (is_dir_sep(*basename)) {
++				basename++;
++				break;
++			}
++		}
++
++		strbuf_addstr(&pretty_name, "XXXXXX_");
++		strbuf_addstr(&pretty_name, basename);
++
++		fd = git_mkstemps(temp->tmp_path, PATH_MAX,
++			pretty_name.buf, strlen(basename) + 1);
++
++		strbuf_release(&pretty_name);
++	}
++	else {
++		fd = git_mkstemp(temp->tmp_path, PATH_MAX, ".diff_XXXXXX");
++	}
+ 	if (fd < 0)
+ 		die("unable to create temp-file: %s", strerror(errno));
+ 	if (convert_to_working_tree(path,
+@@ -1984,7 +2009,8 @@ static void prep_temp_blob(const char *path, struct diff_tempfile *temp,
+ }
+ 
+ static struct diff_tempfile *prepare_temp_file(const char *name,
+-		struct diff_filespec *one)
++		struct diff_filespec *one,
++		int pretty_filename)
+ {
+ 	struct diff_tempfile *temp = claim_diff_tempfile();
+ 
+@@ -2021,7 +2047,8 @@ static struct diff_tempfile *prepare_temp_file(const char *name,
+ 				       (one->sha1_valid ?
+ 					one->sha1 : null_sha1),
+ 				       (one->sha1_valid ?
+-					one->mode : S_IFLNK));
++					one->mode : S_IFLNK),
++				       pretty_filename);
+ 			strbuf_release(&sb);
+ 		}
+ 		else {
+@@ -2045,7 +2072,7 @@ static struct diff_tempfile *prepare_temp_file(const char *name,
+ 		if (diff_populate_filespec(one, 0))
+ 			die("cannot read data blob for %s", one->path);
+ 		prep_temp_blob(name, temp, one->data, one->size,
+-			       one->sha1, one->mode);
++			       one->sha1, one->mode, pretty_filename);
+ 	}
+ 	return temp;
+ }
+@@ -2071,8 +2098,9 @@ static void run_external_diff(const char *pgm,
+ 	if (one && two) {
+ 		struct diff_tempfile *temp_one, *temp_two;
+ 		const char *othername = (other ? other : name);
+-		temp_one = prepare_temp_file(name, one);
+-		temp_two = prepare_temp_file(othername, two);
++		int pretty_filename = 1;
++		temp_one = prepare_temp_file(name, one, pretty_filename);
++		temp_two = prepare_temp_file(othername, two, pretty_filename);
+ 		*arg++ = pgm;
+ 		*arg++ = name;
+ 		*arg++ = temp_one->name;
+@@ -3574,8 +3602,9 @@ static char *run_textconv(const char *pgm, struct diff_filespec *spec,
+ 	const char **arg = argv;
+ 	struct child_process child;
+ 	struct strbuf buf = STRBUF_INIT;
++	int pretty_filename = 0;
+ 
+-	temp = prepare_temp_file(spec->path, spec);
++	temp = prepare_temp_file(spec->path, spec, pretty_filename);
+ 	*arg++ = pgm;
+ 	*arg++ = temp->name;
+ 	*arg = NULL;
+diff --git a/path.c b/path.c
+index 8a0a674..090b490 100644
+--- a/path.c
++++ b/path.c
+@@ -140,6 +140,25 @@ int git_mkstemp(char *path, size_t len, const char *template)
+ }
+ 
+ 
++
++/* git_mkstemps() - create tmp file with suffix honoring TMPDIR variable. */
++int git_mkstemps(char *path, size_t len, const char *template, int suffix_len)
 +{
-+	static const char letters[] =
-+		"abcdefghijklmnopqrstuvwxyz"
-+		"ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-+		"0123456789";
-+	static const int num_letters = 62;
-+	uint64_t value;
-+	struct timeval tv;
-+	char *template;
-+	size_t len;
-+	int fd, count;
++	const char *tmp;
++	size_t n;
 +
-+	len = strlen(pattern);
-+
-+	if (len < 6 + suffix_len) {
-+		errno = EINVAL;
++	tmp = getenv("TMPDIR");
++	if (!tmp)
++		tmp = "/tmp";
++	n = snprintf(path, len, "%s/%s", tmp, template);
++	if (len <= n) {
++		errno = ENAMETOOLONG;
 +		return -1;
 +	}
-+
-+	if (strncmp(&pattern[len - 6 - suffix_len], "XXXXXX", 6)) {
-+		errno = EINVAL;
-+		return -1;
-+	}
-+
-+	/* Replace pattern's XXXXXX characters with randomness.
-+	 * Try TMP_MAX different filenames.
-+	 */
-+	gettimeofday(&tv, NULL);
-+	value = ((size_t)(tv.tv_usec << 16)) ^ tv.tv_sec ^ getpid();
-+	template = &pattern[len - 6 - suffix_len];
-+	for (count = 0; count < TMP_MAX; ++count) {
-+		uint64_t v = value;
-+		/* Fill in the random bits. */
-+		template[0] = letters[v % num_letters]; v/= num_letters;
-+		template[1] = letters[v % num_letters]; v/= num_letters;
-+		template[2] = letters[v % num_letters]; v/= num_letters;
-+		template[3] = letters[v % num_letters]; v/= num_letters;
-+		template[4] = letters[v % num_letters]; v/= num_letters;
-+		template[5] = letters[v % num_letters]; v/= num_letters;
-+
-+		fd = open(pattern, O_CREAT | O_EXCL | O_RDWR, 0600);
-+		if (fd > 0)
-+			return fd;
-+		/* Fatal error (EPERM, ENOSPC etc).
-+		 * It doesn't make sense to loop.
-+		 */
-+		if (errno != EEXIST)
-+			break;
-+		/* This is a random value.  It is only necessary that
-+		 * the next TMP_MAX values generated by adding 7777 to
-+		 * VALUE are different with (module 2^32).
-+		 */
-+		value += 7777;
-+	}
-+	/* We return the null string if we can't find a unique file name.  */
-+	pattern[0] = '\0';
-+	errno = EINVAL;
-+	return -1;
++	return mkstemps(path, suffix_len);
 +}
-diff --git a/config.mak.in b/config.mak.in
-index 7cce0c1..b6619af 100644
---- a/config.mak.in
-+++ b/config.mak.in
-@@ -46,6 +46,7 @@ NO_STRTOUMAX=@NO_STRTOUMAX@
- NO_SETENV=@NO_SETENV@
- NO_UNSETENV=@NO_UNSETENV@
- NO_MKDTEMP=@NO_MKDTEMP@
-+NO_MKSTEMPS=@NO_MKSTEMPS@
- NO_ICONV=@NO_ICONV@
- OLD_ICONV=@OLD_ICONV@
- NO_DEFLATE_BOUND=@NO_DEFLATE_BOUND@
-diff --git a/configure.ac b/configure.ac
-index 4e728bc..95dccd4 100644
---- a/configure.ac
-+++ b/configure.ac
-@@ -676,6 +676,12 @@ GIT_CHECK_FUNC(mkdtemp,
- [NO_MKDTEMP=],
- [NO_MKDTEMP=YesPlease])
- AC_SUBST(NO_MKDTEMP)
-+# Define NO_MKSTEMPS if you don't have mkstemps in the C library.
-+GIT_CHECK_FUNC(mkstemps,
-+[NO_MKSTEMPS=],
-+[NO_MKSTEMPS=YesPlease])
-+AC_SUBST(NO_MKSTEMPS)
-+#
- #
- # Define NO_MMAP if you want to avoid mmap.
- #
-diff --git a/git-compat-util.h b/git-compat-util.h
-index c7cf2d5..f7217ad 100644
---- a/git-compat-util.h
-+++ b/git-compat-util.h
-@@ -232,6 +232,11 @@ extern int gitsetenv(const char *, const char *, int);
- extern char *gitmkdtemp(char *);
- #endif
- 
-+#ifdef NO_MKSTEMPS
-+#define mkstemps gitmkstemps
-+extern int gitmkstemps(char *, int);
-+#endif
 +
- #ifdef NO_UNSETENV
- #define unsetenv gitunsetenv
- extern void gitunsetenv(const char *);
++
+ int validate_headref(const char *path)
+ {
+ 	struct stat st;
+diff --git a/t/t4020-diff-external.sh b/t/t4020-diff-external.sh
+index 0720001..4ea42e0 100755
+--- a/t/t4020-diff-external.sh
++++ b/t/t4020-diff-external.sh
+@@ -136,6 +136,15 @@ test_expect_success 'GIT_EXTERNAL_DIFF with more than one changed files' '
+ 	GIT_EXTERNAL_DIFF=echo git diff
+ '
+ 
++test_expect_success 'GIT_EXTERNAL_DIFF generates pretty paths' '
++	touch file.ext &&
++	git add file.ext &&
++	echo with extension > file.ext &&
++	GIT_EXTERNAL_DIFF=echo git diff file.ext | grep ......_file\.ext &&
++	git update-index --force-remove file.ext &&
++	rm file.ext
++'
++
+ echo "#!$SHELL_PATH" >fake-diff.sh
+ cat >> fake-diff.sh <<\EOF
+ cat $2 >> crlfed.txt
 -- 
 1.6.3.1.169.g33fd
