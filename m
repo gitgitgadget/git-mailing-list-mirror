@@ -1,89 +1,120 @@
-From: Eric Raible <raible@gmail.com>
-Subject: Re: Problem with large files on different OSes
-Date: Wed, 27 May 2009 22:52:37 -0700
-Message-ID: <279b37b20905272252i3d98b6bv698ff636d61ee058@mail.gmail.com>
-References: <m3y6siboij.fsf@localhost.localdomain>
-	 <alpine.LFD.2.01.0905270942580.3435@localhost.localdomain>
-	 <alpine.LFD.2.00.0905271312220.3906@xanadu.home>
-	 <20090527215314.GA10362@coredump.intra.peff.net>
-	 <alpine.LFD.2.01.0905271457310.3435@localhost.localdomain>
-	 <f95910c20905271609u63d04965oa38b8af34d7704c1@mail.gmail.com>
-	 <alpine.LFD.2.01.0905271825520.3435@localhost.localdomain>
-	 <alpine.LFD.2.00.0905272312370.3906@xanadu.home>
-	 <loom.20090528T041831-21@post.gmane.org>
-	 <20090528043019.GA30527@spearce.org>
+From: David Aguilar <davvid@gmail.com>
+Subject: Re: How to share config and hooks ?
+Date: Wed, 27 May 2009 22:54:18 -0700
+Message-ID: <20090528055417.GA21329@gmail.com>
+References: <4A1D9B4C.7030504@gmx.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=utf-8
 Cc: git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Thu May 28 07:52:48 2009
+To: Christian Senkowski <csenkowski@gmx.de>
+X-From: git-owner@vger.kernel.org Thu May 28 07:54:33 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M9YXn-0007ok-Ai
-	for gcvg-git-2@gmane.org; Thu, 28 May 2009 07:52:47 +0200
+	id 1M9YZV-00089p-3Q
+	for gcvg-git-2@gmane.org; Thu, 28 May 2009 07:54:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759153AbZE1Fwh convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 28 May 2009 01:52:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758574AbZE1Fwh
-	(ORCPT <rfc822;git-outgoing>); Thu, 28 May 2009 01:52:37 -0400
-Received: from qw-out-2122.google.com ([74.125.92.26]:13605 "EHLO
-	qw-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752978AbZE1Fwg convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 28 May 2009 01:52:36 -0400
-Received: by qw-out-2122.google.com with SMTP id 5so3292451qwd.37
-        for <git@vger.kernel.org>; Wed, 27 May 2009 22:52:37 -0700 (PDT)
+	id S1759886AbZE1Fy0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 May 2009 01:54:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759116AbZE1FyZ
+	(ORCPT <rfc822;git-outgoing>); Thu, 28 May 2009 01:54:25 -0400
+Received: from mail-px0-f123.google.com ([209.85.216.123]:62269 "EHLO
+	mail-px0-f123.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751400AbZE1FyY (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 May 2009 01:54:24 -0400
+Received: by pxi29 with SMTP id 29so801972pxi.33
+        for <git@vger.kernel.org>; Wed, 27 May 2009 22:54:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=3LTKHLXGPGsivUH8CVQgfGPk8P4hUI/qVO/hkVMVSZg=;
-        b=TDR7cvGjYSXNjhB7+Usx8qAsojgg4ORqEUvI6PDhol+YQMqkCAuc5LRLCAEvbjRn3C
-         5S7Vl1Xt/hBEjeVChO5P6EZmXI9YKuYciAgKUg9u/5MCZD6ad0ef4qJQV4d0FbuM8x5K
-         02ti6+UiLwMNv6Z/atP8+O40Aj/C+1bCoWaWo=
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=WLJk/av/5UOJ98OQci2zUaEjyUdELfTx/o+8vjp6oNs=;
+        b=PUF9H06DCEyd922jsGOjutlLeWRVvOPhQsPMKEMdpcsErxBWFCrSCNVWeicvEt11tO
+         BUU4vMR0a3bciKlLQ9fFBfgL2z/L5KfvJf0SX4XFAqzKJlL6ix7KF0/+6nxJXZgsAuXr
+         IoXbOtuEcueO8FnK8UOi4ugvXrMSsZxE68p8Q=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=jUnMbZx1b/F/lx7O5FUBjYFtnsPCDlA7SZIXPnHuhrjAOL8ZnPCCExv2qteZwQDOQr
-         fwOCQJinrGYL7rPUOYCgVtAdkXcUxhVlZ4a/Hpm1hWlUQV9YrfyWrawhTNfxq05ncBgH
-         VnW3D3GGuhzGiutqFJOeFS6Yx+ebMULwmkWaQ=
-Received: by 10.220.77.79 with SMTP id f15mr1053396vck.2.1243489957271; Wed, 
-	27 May 2009 22:52:37 -0700 (PDT)
-In-Reply-To: <20090528043019.GA30527@spearce.org>
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=mtZgiCKIw5nsbzPaZNr4NzN0edHCbX9RyfQ61rQ04GVZhNh60yv9AJQCgv8c2yG0ZW
+         zD9Gmk9LafPMacWGkQ6wvqUjS5SjK8v6OcCoskN+mQoouTljtQvst1Dq9kN/MUlQZpag
+         EjZulcYgceZdjn0yqeFOrseRPHzafom0bMc5k=
+Received: by 10.115.75.6 with SMTP id c6mr626422wal.118.1243490066667;
+        Wed, 27 May 2009 22:54:26 -0700 (PDT)
+Received: from gmail.com (208-106-56-2.static.dsltransport.net [208.106.56.2])
+        by mx.google.com with ESMTPS id l30sm20537286waf.0.2009.05.27.22.54.25
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 27 May 2009 22:54:26 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <4A1D9B4C.7030504@gmx.de>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120151>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120152>
 
-On Wed, May 27, 2009 at 9:30 PM, Shawn O. Pearce <spearce@spearce.org> =
-wrote:
-> Eric Raible <raible@gmail.com> wrote:
->> Nicolas Pitre <nico <at> cam.org> writes:
->> > On Wed, 27 May 2009, Linus Torvalds wrote:
->> >
->> > > +pack.packDeltaLimit::
->> > > + The default maximum size of objects that we try to delta.
->> >
->> > The option name feels a bit wrong here, like if it meant the max n=
-umber
->> > of deltas in a pack. =A0Nothing better comes to my mind at the mom=
-ent
->> > though.
->>
->> pack.maxDeltaSize sounds weird when said aloud.
->> How about pack.deltaMaxSize?
->
-> That sounds like, how big should a delta be? =A0E.g. set it to 200
-> and any delta instruction stream over 200 bytes would be discarded,
-> causing the whole object to be stored instead. =A0Which is obviously
-> somewhat silly, but that's the way I'd read that option...
->
-> --
-> Shawn.
+On Wed, May 27, 2009 at 09:58:04PM +0200, Christian Senkowski wrote:
+> I am searching for a way to share 'config' and hooks/* automatically.
+> I'd like to change and commit them as normal files and every user
+> cloning this repo should get those.
 
-You're right, that _is_ a strange color for the bike shed...
+Assuming you control your users' machines (such as in a company)
+then you can simply add something like in:
+/usr/share/git-core/templates/hooks/pre-commit
+
+#!/bin/sh
+for hook in /usr/share/git-hooks/pre-commit.d/*; do
+	if ! $hook "$@"; then
+		exit $?
+	fi
+fi
+
+Just create a wrapper for each hook.
+
+When you want to upgrade your hooks you just change the
+"included" hooks in /usr/share/git-hooks/<hookname>.d/ and all
+of your repos pick up the updated hooks since they reference
+them indirectly.
+
+Assuming you're using an apt or rpm infrastructure and you
+control your users' machines, then this is easy.
+
+
+If you're trying to do this generally for anybody who clones
+your project (such as in the real world), then there's no way.
+
+
+> One way might be a little wrapper-script for git-clone which looks if
+> repo/.gitconfig or repo/.githooks exist and copies then the files to
+> repo/.git/[...]
+> But I am searching for a way to do this without any additional scripts.
+
+You're looking for the git templates directory.  That's what
+gets copied into each repository at git-init/git-clone time.
+Again, only useful in a controlled environment where you
+control your user's git install.
+
+I mention the trick above because if you install normal hooks,
+upgrading them is a pain because every repo has its own copy.
+By adding indirection into the hooks you can upgrade the
+hooks globally with little effort.  It's also neat because the
+example allows you to install multiple hooks for the same
+action.  e.g. the post-commit example above allows you to have
+several hooks in the post-commit.d/ directory.
+
+
+> And what'd you say about implementing this (with a
+> yes-please-copy-the-found-files/no-leave-them-alone - question) directly
+> into the git-binary ?
+
+Nope, Dscho already mentioned the security implications.
+
+
+Have fun,
+
+-- 
+
+	David
