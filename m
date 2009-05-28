@@ -1,87 +1,64 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: Recover broken git index?
-Date: Thu, 28 May 2009 11:01:49 +0200
-Message-ID: <4A1E52FD.6090801@op5.se>
-References: <4A1DB700.4080705@bcm.edu>
+From: Clemens Buchacher <drizzd@aon.at>
+Subject: Re: [PATCH 2/2] match_refs: search ref list tail internally
+Date: Thu, 28 May 2009 11:26:24 +0200
+Message-ID: <20090528092624.GA8787@localhost>
+References: <76718490905260727v7261391uab169167978e4522@mail.gmail.com> <1243455224-3463-1-git-send-email-drizzd@aon.at> <1243455224-3463-2-git-send-email-drizzd@aon.at> <7vtz35hfk7.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Misha Koshelev <mk144210@bcm.edu>
-X-From: git-owner@vger.kernel.org Thu May 28 11:02:09 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Erik Faye-Lund <kusmabite@googlemail.com>,
+	Jay Soffian <jaysoffian@gmail.com>,
+	Tay Ray Chuan <rctay89@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu May 28 11:26:38 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M9bV2-0005Io-Bw
-	for gcvg-git-2@gmane.org; Thu, 28 May 2009 11:02:08 +0200
+	id 1M9bsj-00062r-Ji
+	for gcvg-git-2@gmane.org; Thu, 28 May 2009 11:26:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756340AbZE1JBy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 May 2009 05:01:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756195AbZE1JBy
-	(ORCPT <rfc822;git-outgoing>); Thu, 28 May 2009 05:01:54 -0400
-Received: from na3sys009aog108.obsmtp.com ([74.125.149.199]:44879 "HELO
-	na3sys009aog108.obsmtp.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with SMTP id S1753511AbZE1JBx (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 28 May 2009 05:01:53 -0400
-Received: from source ([72.14.220.158]) by na3sys009aob108.postini.com ([74.125.148.12]) with SMTP
-	ID DSNKSh5S+5KP1Iy6JfEUut5Ndyt2H0es8hX8@postini.com; Thu, 28 May 2009 02:01:48 PDT
-Received: by fg-out-1718.google.com with SMTP id 16so1438685fgg.10
-        for <git@vger.kernel.org>; Thu, 28 May 2009 02:01:47 -0700 (PDT)
-Received: by 10.86.91.13 with SMTP id o13mr1285950fgb.23.1243501306873;
-        Thu, 28 May 2009 02:01:46 -0700 (PDT)
-Received: from clix.int.op5.se ([212.112.174.166])
-        by mx.google.com with ESMTPS id d6sm18367938fga.2.2009.05.28.02.01.45
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 28 May 2009 02:01:46 -0700 (PDT)
-User-Agent: Thunderbird 2.0.0.21 (X11/20090320)
-In-Reply-To: <4A1DB700.4080705@bcm.edu>
+	id S1758921AbZE1J0X (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 May 2009 05:26:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756306AbZE1J0X
+	(ORCPT <rfc822;git-outgoing>); Thu, 28 May 2009 05:26:23 -0400
+Received: from postman.fh-hagenberg.at ([193.170.124.96]:46970 "EHLO
+	mail.fh-hagenberg.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756186AbZE1J0W (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 May 2009 05:26:22 -0400
+Received: from darc.dnsalias.org ([84.154.120.211]) by mail.fh-hagenberg.at over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
+	 Thu, 28 May 2009 11:26:23 +0200
+Received: from drizzd by darc.dnsalias.org with local (Exim 4.69)
+	(envelope-from <drizzd@aon.at>)
+	id 1M9bsW-0002K8-3l; Thu, 28 May 2009 11:26:24 +0200
+Content-Disposition: inline
+In-Reply-To: <7vtz35hfk7.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.18 (2008-05-17)
+X-OriginalArrivalTime: 28 May 2009 09:26:24.0014 (UTC) FILETIME=[5E6D82E0:01C9DF76]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120173>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120174>
 
-Misha Koshelev wrote:
-> Hi, I seem to have an unrecoverable git index. I have attached the
-> output of git-fsck --full. There seem to be a lot of missing trees and
-> blobs. Any good way to recover?
+On Thu, May 28, 2009 at 12:06:32AM -0700, Junio C Hamano wrote:
+> It so happens that http-push.c never looked at remote_tail to do further
+> processing on the list after match_refs() returned, and that is why your
+> patch does not break http-push.c.
 > 
+> Any third-party patch to http-push.c
+> that relied on the old guarantee will textually merge cleanly but will
+> subtly break with this change.
+> 
+> Other parts of this patch removes the local "remote_tail" variables, and
+> it is very clear that they do not have this problem; any third-parth patch
+> will break if they used remote_tail after match_refs() returned, so this
+> change is a safe one for them.
 
-Start by copying the repository somewhere safe so you don't accidentally
-delete things in it.
+Yes, I tried to get rid of remote_tail entirely, but I could not come up
+with a solution immediately. We could insert to the front of the list
+instead. I'll try that.
 
-If it's really the index that's broken, a simple
+> I wonder what interaction this change will have with the http-push
+> clean-up Ray Chuan has been working on...
 
-  git checkout master && git reset --hard
-
-should do the trick.
-
-If it doesn't, it's not the index that's at fault.
-
-
-Have you done history surgery on this repository (extensive rebasing
-or filter-branch'ing)?
-
-
-Answers to the questions below really should have been in your original
-post. Please include them if we're to be able to understand what's going
-on:
-What OS and platform are you using?
-What git version are you using?
-How did you first notice this?
-What were you doing when you first noticed this?
-Is your repository working correctly otherwise (ie, do you only spot
-these errors when you run "git fsck --full")?
-
--- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
-
-Register now for Nordic Meet on Nagios, June 3-4 in Stockholm
- http://nordicmeetonnagios.op5.org/
-
-Considering the successes of the wars on alcohol, poverty, drugs and
-terror, I think we should give some serious thought to declaring war
-on peace.
+For me, t5540 currently segfaults on pu. I'm looking into it.
