@@ -1,91 +1,103 @@
-From: "Matthias Andree" <matthias.andree@gmx.de>
-Subject: Re: git-svn clone problem
-Date: Thu, 28 May 2009 09:47:16 +0200
-Message-ID: <op.uumqk2gt1e62zd@merlin.emma.line.org>
-References: <20090527221601.GA12914@mail.oracle.com>
- <86d4c5e00905271911g58cccc1bwd4b881541db6f7a5@mail.gmail.com>
- <20090528024153.GH12914@mail.oracle.com>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: exit status = 1 from git fetch -t
+Date: Thu, 28 May 2009 09:56:33 +0200
+Message-ID: <4A1E43B1.20400@drmicha.warpmail.net>
+References: <200905280357.n4S3v73G016535@hilo.ca.kronos.com>
 Mime-Version: 1.0
-Content-Type: text/plain; format=flowed; delsp=yes; charset=utf-8
+Content-Type: text/plain; charset=ISO-8859-15
 Content-Transfer-Encoding: 7bit
-Cc: "Git Mailing List" <git@vger.kernel.org>
-To: "Joel Becker" <Joel.Becker@oracle.com>
-X-From: git-owner@vger.kernel.org Thu May 28 09:47:33 2009
+Cc: git@vger.kernel.org
+To: dvilleneuve@kronos.com
+X-From: git-owner@vger.kernel.org Thu May 28 09:57:01 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M9aKq-00018s-KE
-	for gcvg-git-2@gmane.org; Thu, 28 May 2009 09:47:33 +0200
+	id 1M9aTx-0004ia-Op
+	for gcvg-git-2@gmane.org; Thu, 28 May 2009 09:56:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754936AbZE1HrS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 May 2009 03:47:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754563AbZE1HrS
-	(ORCPT <rfc822;git-outgoing>); Thu, 28 May 2009 03:47:18 -0400
-Received: from mail.gmx.net ([213.165.64.20]:45155 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752863AbZE1HrS (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 May 2009 03:47:18 -0400
-Received: (qmail invoked by alias); 28 May 2009 07:47:18 -0000
-Received: from unknown (EHLO mandree.no-ip.org) [85.183.213.241]
-  by mail.gmx.net (mp021) with SMTP; 28 May 2009 09:47:18 +0200
-X-Authenticated: #428038
-X-Provags-ID: V01U2FsdGVkX1/07MEnneP0RJqEm3qXQwVL7W+KTD20fVwDStXXwS
-	qC+WFgW8e48Zr3
-Received: from merlin.emma.line.org (localhost [127.0.0.1])
-	by merlin.emma.line.org (Postfix) with ESMTP id D167494606;
-	Thu, 28 May 2009 09:47:16 +0200 (CEST)
-In-Reply-To: <20090528024153.GH12914@mail.oracle.com>
-User-Agent: Opera Mail/9.64 (Linux)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.54
+	id S1758792AbZE1H4q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 May 2009 03:56:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757268AbZE1H4p
+	(ORCPT <rfc822;git-outgoing>); Thu, 28 May 2009 03:56:45 -0400
+Received: from out1.smtp.messagingengine.com ([66.111.4.25]:39629 "EHLO
+	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1757895AbZE1H4o (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 28 May 2009 03:56:44 -0400
+Received: from compute1.internal (compute1.internal [10.202.2.41])
+	by out1.messagingengine.com (Postfix) with ESMTP id D76A4346E8A;
+	Thu, 28 May 2009 03:56:45 -0400 (EDT)
+Received: from heartbeat1.messagingengine.com ([10.202.2.160])
+  by compute1.internal (MEProxy); Thu, 28 May 2009 03:56:45 -0400
+X-Sasl-enc: anjjY96eIdeUmhhrN+JSEv7HgMJZQfe7xjMCARTWHD2s 1243497405
+Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.12])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 45BA9B439;
+	Thu, 28 May 2009 03:56:45 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1pre) Gecko/20090525 Lightning/1.0pre Shredder/3.0b3pre
+In-Reply-To: <200905280357.n4S3v73G016535@hilo.ca.kronos.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120166>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120167>
 
-Am 28.05.2009, 04:41 Uhr, schrieb Joel Becker <Joel.Becker@oracle.com>:
+Villeneuve venit, vidit, dixit 28.05.2009 05:57:
+> Hi,
+> 
+> I'm getting an unexpected exit status of 1 from "git fetch
+> -t" on one of our largest repositories (by large, I mean 47
+> branches and 5442 tags, some of which might not be reachable
+> from branch heads).
+> 
+> The docs are not clear about the interpretation of git
+> fetch's exit status, so maybe I should not bother.
+> 
+> But assuming the exit status of 1 really indicates some
+> trouble, here are more details.
+> 
+> Next tests done with git over ssh (server 1.6.1.3, client
+> 1.6.3.1) on RHEL4.
+> 
+> In the "REPO1" repository (exit status printed just before $
+> in prompt following command):
+> 
+> [REPO1] 0 $ git fetch -t -v -v
+> Server supports multi_ack
+> Server supports side-band-64k
+> Server supports ofs-delta
+> Marking 60e4d540748c5c3d368c888c4c248de0bdd684cc as complete
+> Marking 60e4d540748c5c3d368c888c4c248de0bdd684cc as complete
+> [REPO1] 1 $
+> 
+> while with another repository, "REPO2":
+> 
+> [REPO2] 0 $ git fetch -t -v -v
+> From ssh://user@machine/path/to/GIT/dir1/dir2/REPO2
+>  = [up to date]      v1.1 -> v1.1
+>  = [up to date]      v1.2 -> v1.2
+>  = [up to date]      v2.0 -> v2.0
+> ... # lots of other similar lines
+> [REPO2] 0 $
+> 
+> I've compiled git in debug to step in the code, and the
+> source of the "error" exit status seems to come from
+> builtin-fetch-pack.c:everything_local, where *refs being
+> NULL leaves retval to 1 in the final loop.
+> 
+> I'm also puzzled that I don't get the "From ssh://..." in
+> the trace from "REPO1" as for the "REPO2" repository above.
+> I do get the "From ssh://..."  line if doing only "git fetch
+> -v -v" without the "-t" option in "REPO1".
 
-> On Wed, May 27, 2009 at 07:11:01PM -0700, Deskin Miller wrote:
->> The problem here isn't with git-svn; rather, it is with the svn
->> repository at oss.oracle.com claiming a nonsensical UUID.  svn uses
->> UUIDs behind the scenes to identify each repository, and git-svn does
->> the same thing.  When doing git svn init (or clone, which is just init
->> && fetch) the svn server sends back a UUID which identifies it.  When
->> I use wireshark and expand the first HTTP packet back from a good svn
->> server, I see something like the following embedded in the xml tree:
->>
->> <lp3:repository-uuid>
->> 612f8ebc-c883-4be0-9ee0-a4e9ef946e3a
->> </lp3:repository-uuid>
->>
->> However when I do the same with oss.oracle.com I see
->>
->> <lp2:repository-uuid>
->> ????????-????-????-????-????????????
->> </lp2:repository-uuid>
->>
->> git-svn tries to play along for a while, but the bottom line is that a
->> string of question marks isn't a UUID.
->>
->> There's more about svn's use of UUIDs in the svn book.  Perhaps the
->> admin of oss.oracle.com can correct this UUID problem so one can use
->> git-svn with this repository.
->
-> 	Is this some new feature of svn that git-svn has decided to
-> require?  We're running subversion 1.4.4 there, and git-svn used to work
-> against those repos.
-> 	Hmm, it's only a couple of very old repos with this problem -
-> they were probably created with subversion 1.1 or 1.0.  I found how to
-> fix it.  Thanks.
+Looking at that loop, I reckon everything_local() returns 0 if there is
+at least one object we "want" from the remote and 1 if there is none
+(i.e. if "everything is local"). So that seems intentional. (The
+structure of REPO1 and your fetch refspecs lines should explain why we
+don't want anything.)
 
-Hi Joel,
+About the "From": If fetch displays no note (i.e. "foo   ref -> ref") it
+displays no "From" either, which makes sense. We're not getting anything
+from anywhere, we're not even listing up to date info, so we're not
+displaying the reference point.
 
-could you share a pointer to or outline of the solution with the list, for  
-the completeness of the (searchable) archives?
-
-Thanks.
-
--- 
-Matthias Andree
+Michael
