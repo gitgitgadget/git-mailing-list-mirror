@@ -1,80 +1,119 @@
-From: =?utf-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>
-Subject: [PATCH] bash: display git prompt in case of merge conflict during
-	rebase
-Date: Thu, 28 May 2009 18:17:21 +0200
-Message-ID: <1243527441-3394-1-git-send-email-szeder@ira.uka.de>
+From: Brandon Casey <casey@nrlssc.navy.mil>
+Subject: Re: [RFC/PATCH 1/2] Teach Solaris that _XOPEN_SOURCE=600 really menas
+ XPG6
+Date: Thu, 28 May 2009 11:46:50 -0500
+Message-ID: <WLNdjYtfqcg2bT6yOBtAykIqOBTeSLRUdlB6-sTM2KzTjwOmzN3fLg@cipher.nrlssc.navy.mil>
+References: <1243106697-6424-1-git-send-email-gitster@pobox.com> <1243106697-6424-2-git-send-email-gitster@pobox.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Ted Pavlic <ted@tedpavlic.com>, git@vger.kernel.org,
-	=?utf-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Thu May 28 18:33:36 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu May 28 18:47:23 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M9iXt-0003tV-2e
-	for gcvg-git-2@gmane.org; Thu, 28 May 2009 18:33:33 +0200
+	id 1M9ilF-0003PZ-0p
+	for gcvg-git-2@gmane.org; Thu, 28 May 2009 18:47:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757193AbZE1QdE convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 28 May 2009 12:33:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753769AbZE1QdB
-	(ORCPT <rfc822;git-outgoing>); Thu, 28 May 2009 12:33:01 -0400
-Received: from francis.fzi.de ([141.21.7.5]:33635 "EHLO exchange.fzi.de"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1751374AbZE1QdA (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 May 2009 12:33:00 -0400
-X-Greylist: delayed 912 seconds by postgrey-1.27 at vger.kernel.org; Thu, 28 May 2009 12:33:00 EDT
-Received: from [127.0.1.1] ([141.21.4.196]) by exchange.fzi.de with Microsoft SMTPSVC(6.0.3790.3959);
-	 Thu, 28 May 2009 18:17:45 +0200
-X-Mailer: git-send-email 1.6.3.1.189.g9321
-X-OriginalArrivalTime: 28 May 2009 16:17:45.0452 (UTC) FILETIME=[D5B612C0:01C9DFAF]
+	id S1755302AbZE1QrN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 May 2009 12:47:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753421AbZE1QrM
+	(ORCPT <rfc822;git-outgoing>); Thu, 28 May 2009 12:47:12 -0400
+Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:53788 "EHLO
+	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752910AbZE1QrL (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 May 2009 12:47:11 -0400
+Received: by mail.nrlssc.navy.mil id n4SGkpnG018629; Thu, 28 May 2009 11:46:52 -0500
+In-Reply-To: <1243106697-6424-2-git-send-email-gitster@pobox.com>
+X-OriginalArrivalTime: 28 May 2009 16:46:51.0106 (UTC) FILETIME=[E633BC20:01C9DFB3]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120197>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120198>
 
-Since e5dd864a (completion: Better __git_ps1 support when not in
-working directory, 2009-02-11) the git prompt becomes empty, if we hit
-a merge conflict during a rebase.
+Junio C Hamano wrote:
+> In git-compat-util.h, we do
+> 
+>     #define _XOPEN_SOURCE 600
+>     #define _XOPEN_SOURCE_EXTENDED 1
+> 
+> unless we are on BSD or SCO.
+> 
+> On OpenSolaris (200811), /usr/include/sys/feature_tests.h has this nice
+> table:
+> 
+>     Feature Test Macro				     Specification
+>     ------------------------------------------------  -------------
+>     _XOPEN_SOURCE                                         XPG3
+>     _XOPEN_SOURCE && _XOPEN_VERSION = 4                   XPG4
+>     _XOPEN_SOURCE && _XOPEN_SOURCE_EXTENDED = 1           XPG4v2
+>     _XOPEN_SOURCE = 500                                   XPG5
+>     _XOPEN_SOURCE = 600  (or POSIX_C_SOURCE=200112L)      XPG6
+> 
+> Later in the same header, compilation with -c99 is made to fail if _XPG6 is
+> not set, like this:
+> 
+>     #if defined(_STDC_C99) && (defined(__XOPEN_OR_POSIX) && !defined(_XPG6))
+>     #error "Compiler or options invalid for pre-UNIX 03 X/Open applications \
+>             and pre-2001 POSIX applications"
+>     #elif ...
+> 
+> The problem is that they check things in an order that is inconvenient for
+> us.  When they see _XOPEN_SOURCE_EXTENDED, they declare that we are XPG4v2,
+> regardless of the value of _XOPEN_SOURCE.
+> 
+> To work around this problem, do not define _XOPEN_SOURCE_EXTENDED on
+> Sun's.
+> 
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> ---
+>  git-compat-util.h |    2 ++
+>  1 files changed, 2 insertions(+), 0 deletions(-)
+> 
+> diff --git a/git-compat-util.h b/git-compat-util.h
+> index c7cf2d5..4236647 100644
+> --- a/git-compat-util.h
+> +++ b/git-compat-util.h
+> @@ -41,8 +41,10 @@
+>  
+>  #if !defined(__APPLE__) && !defined(__FreeBSD__)  && !defined(__USLC__) && !defined(_M_UNIX)
+>  #define _XOPEN_SOURCE 600 /* glibc2 and AIX 5.3L need 500, OpenBSD needs 600 for S_ISLNK() */
+> +#ifndef __sun__
 
-e5dd864a added an if statement at the end of __git_ps1 to only display
-anything in the prompt, if the branch name is not empty.  This caused
-the empty prompt in the "merge conflict during rebase" case, because
-in this case we display neither the branch name nor the abbreviated
-SHA1, the ongoing rebase is identified.
+__sun__ is not defined by the SUNWspro compiler.  We can fix that by adding
+a -D__sun__ in the SunOS section of the Makefile though.
 
-This patch removes that check, so the git prompt is displayed even if
-the branch name is empty.
+A more important issue, is that now that this causes _XPG6 to be defined,
+sun's header files _require_ a c99 compiler to be used.
 
-Signed-off-by: SZEDER G=C3=A1bor <szeder@ira.uka.de>
----
- contrib/completion/git-completion.bash |   10 ++++------
- 1 files changed, 4 insertions(+), 6 deletions(-)
+Here's the comment that goes along with the partial snippet that you showed
+above from /usr/include/sys/feature_tests.h:
 
-diff --git a/contrib/completion/git-completion.bash b/contrib/completio=
-n/git-completion.bash
-index 0c8bb53..6c78c94 100755
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -152,12 +152,10 @@ __git_ps1 ()
- 			fi
- 		fi
-=20
--		if [ -n "$b" ]; then
--			if [ -n "${1-}" ]; then
--				printf "$1" "$c${b##refs/heads/}$w$i$r"
--			else
--				printf " (%s)" "$c${b##refs/heads/}$w$i$r"
--			fi
-+		if [ -n "${1-}" ]; then
-+			printf "$1" "$c${b##refs/heads/}$w$i$r"
-+		else
-+			printf " (%s)" "$c${b##refs/heads/}$w$i$r"
- 		fi
- 	fi
- }
---=20
-1.6.3.1.189.g9321
+  /*
+   * It is invalid to compile an XPG3, XPG4, XPG4v2, or XPG5 application
+   * using c99.  The same is true for POSIX.1-1990, POSIX.2-1992, POSIX.1b,
+   * and POSIX.1c applications. Likewise, it is invalid to compile an XPG6
+   * or a POSIX.1-2001 application with anything other than a c99 or later
+   * compiler.  Therefore, we force an error in both cases.
+   */
+
+And the rest of the macro implements the check for source/compiler
+suitability.
+
+So we either require compiling with a c99 compiler (by ensuring that
+_XPG6 is set) or exclude compiling with a c99 compiler on sun (by
+ensuring that _XPG6 is not set).  Actually, this would only affect Solaris
+versions which support XPG6.  Solaris 11 and 10 do.  I don't know about
+Solaris 9 and 8.  Solaris 7 doesn't.
+
+Which do we want to do?
+
+>  #define _XOPEN_SOURCE_EXTENDED 1 /* AIX 5.3L needs this */
+>  #endif
+> +#endif
+>  #define _ALL_SOURCE 1
+>  #define _GNU_SOURCE 1
+>  #define _BSD_SOURCE 1
