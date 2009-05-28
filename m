@@ -1,104 +1,61 @@
-From: Villeneuve <dvilleneuve@kronos.com>
-Subject: exit status = 1 from git fetch -t
-Date: Wed, 27 May 2009 23:57:07 -0400
-Message-ID: <200905280357.n4S3v73G016535@hilo.ca.kronos.com>
-Reply-To: dvilleneuve@kronos.com
+From: Eric Raible <raible@gmail.com>
+Subject: Re: Problem with large files on different OSes
+Date: Thu, 28 May 2009 04:21:11 +0000 (UTC)
+Message-ID: <loom.20090528T041831-21@post.gmane.org>
+References: <submission.1M9Gk0-0000N8-MQ@mail.cs.st-andrews.ac.uk> <m3y6siboij.fsf@localhost.localdomain> <alpine.LFD.2.01.0905270922250.3435@localhost.localdomain> <alpine.LFD.2.01.0905270942580.3435@localhost.localdomain> <alpine.LFD.2.00.0905271312220.3906@xanadu.home> <20090527215314.GA10362@coredump.intra.peff.net> <alpine.LFD.2.01.0905271457310.3435@localhost.localdomain> <f95910c20905271609u63d04965oa38b8af34d7704c1@mail.gmail.com> <alpine.LFD.2.01.0905271825520.3435@localhost.localdomain> <alpine.LFD.2.00.0905272312370.3906@xanadu.home>
 Mime-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu May 28 06:15:46 2009
+X-From: git-owner@vger.kernel.org Thu May 28 06:22:54 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M9X1q-0001mj-PP
-	for gcvg-git-2@gmane.org; Thu, 28 May 2009 06:15:43 +0200
+	id 1M9X8n-0003By-2M
+	for gcvg-git-2@gmane.org; Thu, 28 May 2009 06:22:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750830AbZE1EOm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 May 2009 00:14:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750801AbZE1EOm
-	(ORCPT <rfc822;git-outgoing>); Thu, 28 May 2009 00:14:42 -0400
-Received: from mx1.kronos.com ([158.228.122.16]:40481 "EHLO mx1.kronos.com"
+	id S1750907AbZE1EVX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 May 2009 00:21:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750865AbZE1EVW
+	(ORCPT <rfc822;git-outgoing>); Thu, 28 May 2009 00:21:22 -0400
+Received: from main.gmane.org ([80.91.229.2]:35801 "EHLO ciao.gmane.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750780AbZE1EOm (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 May 2009 00:14:42 -0400
-X-Greylist: delayed 1051 seconds by postgrey-1.27 at vger.kernel.org; Thu, 28 May 2009 00:14:41 EDT
-X-WSS-ID: 0KKC5N9-01-0SB-02
-X-M-MSG: 
-Received: from kex-us-hub02.KRONOS.COM (kex-us-hub02.kronos.com [10.0.64.82])
-	(using TLSv1 with cipher RC4-MD5 (128/128 bits))
-	(No client certificate requested)
-	by mx1.kronos.com (Tumbleweed MailGate 3.6.1) with ESMTP id 2684F111C6C4
-	for <git@vger.kernel.org>; Wed, 27 May 2009 23:57:08 -0400 (EDT)
-Received: from exchg-m.KRONOS.COM (158.228.0.206) by kex-us-hub02.KRONOS.COM
- (10.0.64.82) with Microsoft SMTP Server id 8.1.291.1; Wed, 27 May 2009
- 23:57:08 -0400
-Received: from exchange-ca1.CA.KRONOS.COM ([10.129.60.29]) by
- exchg-m.KRONOS.COM with Microsoft SMTPSVC(6.0.3790.3959);	 Wed, 27 May 2009
- 23:57:08 -0400
-Received: from hilo.ca.kronos.com ([10.129.63.5]) by
- exchange-ca1.CA.KRONOS.COM with Microsoft SMTPSVC(6.0.3790.3959);	 Wed, 27
- May 2009 23:57:07 -0400
-Received: from hilo.ca.kronos.com (localhost [127.0.0.1])	by
- hilo.ca.kronos.com (8.13.1/8.13.1) with ESMTP id n4S3v7Wi016538	for
- <git@vger.kernel.org>; Wed, 27 May 2009 23:57:07 -0400
-Received: (from dvilleneuve@localhost)	by hilo.ca.kronos.com
- (8.13.1/8.13.1/Submit) id n4S3v73G016535;	Wed, 27 May 2009 23:57:07 -0400
-X-OriginalArrivalTime: 28 May 2009 03:57:07.0628 (UTC) FILETIME=[5EB43EC0:01C9DF48]
+	id S1750833AbZE1EVW (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 May 2009 00:21:22 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1M9X7J-0005us-S4
+	for git@vger.kernel.org; Thu, 28 May 2009 04:21:22 +0000
+Received: from adsl-67-119-194-173.dsl.pltn13.pacbell.net ([67.119.194.173])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 28 May 2009 04:21:21 +0000
+Received: from raible by adsl-67-119-194-173.dsl.pltn13.pacbell.net with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 28 May 2009 04:21:21 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: main.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 67.119.194.173 (Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US) AppleWebKit/525.19 (KHTML, like Gecko) Chrome/1.0.154.65 Safari/525.19)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120143>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120144>
 
-Hi,
+Nicolas Pitre <nico <at> cam.org> writes:
 
-I'm getting an unexpected exit status of 1 from "git fetch
--t" on one of our largest repositories (by large, I mean 47
-branches and 5442 tags, some of which might not be reachable
-from branch heads).
+> On Wed, 27 May 2009, Linus Torvalds wrote:
+> 
+> > +pack.packDeltaLimit::
+> > +	The default maximum size of objects that we try to delta.
+> 
+> The option name feels a bit wrong here, like if it meant the max number 
+> of deltas in a pack.  Nothing better comes to my mind at the moment 
+> though.
 
-The docs are not clear about the interpretation of git
-fetch's exit status, so maybe I should not bother.
+pack.maxDeltaSize sounds weird when said aloud.
+How about pack.deltaMaxSize?
 
-But assuming the exit status of 1 really indicates some
-trouble, here are more details.
-
-Next tests done with git over ssh (server 1.6.1.3, client
-1.6.3.1) on RHEL4.
-
-In the "REPO1" repository (exit status printed just before $
-in prompt following command):
-
-[REPO1] 0 $ git fetch -t -v -v
-Server supports multi_ack
-Server supports side-band-64k
-Server supports ofs-delta
-Marking 60e4d540748c5c3d368c888c4c248de0bdd684cc as complete
-Marking 60e4d540748c5c3d368c888c4c248de0bdd684cc as complete
-[REPO1] 1 $
-
-while with another repository, "REPO2":
-
-[REPO2] 0 $ git fetch -t -v -v
-From ssh://user@machine/path/to/GIT/dir1/dir2/REPO2
- = [up to date]      v1.1 -> v1.1
- = [up to date]      v1.2 -> v1.2
- = [up to date]      v2.0 -> v2.0
-... # lots of other similar lines
-[REPO2] 0 $
-
-I've compiled git in debug to step in the code, and the
-source of the "error" exit status seems to come from
-builtin-fetch-pack.c:everything_local, where *refs being
-NULL leaves retval to 1 in the final loop.
-
-I'm also puzzled that I don't get the "From ssh://..." in
-the trace from "REPO1" as for the "REPO2" repository above.
-I do get the "From ssh://..."  line if doing only "git fetch
--v -v" without the "-t" option in "REPO1".
-
-Any help/advice appreciated,
---
-Daniel Villeneuve
-Kronos, AD OPT Division
+- Eric
