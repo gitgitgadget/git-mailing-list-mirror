@@ -1,61 +1,67 @@
-From: "H. Peter Anvin" <hpa@zytor.com>
-Subject: Re: RFE: "git bisect reverse"
-Date: Thu, 28 May 2009 14:54:02 -0700
-Message-ID: <4A1F07FA.6040008@zytor.com>
-References: <4A1C6B70.4050501@zytor.com> <4A1CACB2.7000702@vilain.net> 	<4A1CBF7A.3090708@zytor.com> <200905270726.59883.chriscool@tuxfamily.org> 	<efe2b6d70905271411g4e1616b5w548141ee9fab2c14@mail.gmail.com> 	<20090527211836.GA14841@localhost> <efe2b6d70905271507s187babe9yf19a25268ab0b95e@mail.gmail.com> 	<4A1E00F1.4030709@zytor.com> <efe2b6d70905281407x56bb788aq3dba4b27eb91d7a6@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH v2 2/2] diff: generate prettier filenames when using
+	GIT_EXTERNAL_DIFF
+Date: Thu, 28 May 2009 18:06:06 -0400
+Message-ID: <20090528220606.GA24148@coredump.intra.peff.net>
+References: <1243491077-27738-1-git-send-email-davvid@gmail.com> <1243491077-27738-2-git-send-email-davvid@gmail.com> <20090528174436.GA12723@coredump.intra.peff.net> <20090528213049.GA55167@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Clemens Buchacher <drizzd@aon.at>,
-	Christian Couder <chriscool@tuxfamily.org>,
-	Sam Vilain <sam@vilain.net>,
-	Git Mailing List <git@vger.kernel.org>
-To: Ealdwulf Wuffinga <ealdwulf@googlemail.com>
-X-From: git-owner@vger.kernel.org Thu May 28 23:54:36 2009
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org, gitster@pobox.com, markus.heidelberg@web.de,
+	jnareb@gmail.com, j.sixt@viscovery.net
+To: David Aguilar <davvid@gmail.com>
+X-From: git-owner@vger.kernel.org Fri May 29 00:06:43 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M9nYZ-0006hV-Gp
-	for gcvg-git-2@gmane.org; Thu, 28 May 2009 23:54:35 +0200
+	id 1M9nkH-0003Av-Ik
+	for gcvg-git-2@gmane.org; Fri, 29 May 2009 00:06:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751253AbZE1VyY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 May 2009 17:54:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751109AbZE1VyX
-	(ORCPT <rfc822;git-outgoing>); Thu, 28 May 2009 17:54:23 -0400
-Received: from terminus.zytor.com ([198.137.202.10]:55206 "EHLO
-	terminus.zytor.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750891AbZE1VyX (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 May 2009 17:54:23 -0400
-Received: from anacreon.sc.intel.com (hpa@localhost [127.0.0.1])
-	(authenticated bits=0)
-	by terminus.zytor.com (8.14.3/8.14.1) with ESMTP id n4SLs4Hs006771
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Thu, 28 May 2009 14:54:10 -0700
-User-Agent: Thunderbird 2.0.0.21 (X11/20090320)
-In-Reply-To: <efe2b6d70905281407x56bb788aq3dba4b27eb91d7a6@mail.gmail.com>
-X-Virus-Scanned: ClamAV 0.94.2/9402/Thu May 28 13:16:58 2009 on terminus.zytor.com
-X-Virus-Status: Clean
+	id S1751601AbZE1WGP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 May 2009 18:06:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751515AbZE1WGO
+	(ORCPT <rfc822;git-outgoing>); Thu, 28 May 2009 18:06:14 -0400
+Received: from peff.net ([208.65.91.99]:44415 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751011AbZE1WGO (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 May 2009 18:06:14 -0400
+Received: (qmail 23621 invoked by uid 107); 28 May 2009 22:06:17 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Thu, 28 May 2009 18:06:17 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Thu, 28 May 2009 18:06:06 -0400
+Content-Disposition: inline
+In-Reply-To: <20090528213049.GA55167@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120239>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120240>
 
-Ealdwulf Wuffinga wrote:
+On Thu, May 28, 2009 at 02:30:49PM -0700, David Aguilar wrote:
+
+> > FWIW, I find this name not very descriptive. From the name, I would
+> > expect it to do the exact same thing as mkstemps, but be our own
+> > personal implementation. But it is actually a wrapper that behaves
+> > somewhat differently. So I wonder if "mkstemps_tmpdir" or something
+> > would be a better name.
 > 
-> It would fit a lot better into this algorithm to have some model of
-> the probability that a commit will cause a skip. It doesn't actually
-> have to be a very good one, because if it's poor it will only make the
-> search slightly less efficient, not affect the reliability of the
-> final result.
+> It does exactly what git_mkstemp() does, plus the extra
+> suffix_len parameter.  If we rename this function we have to
+> rename both.
+
+Ah. Well, I think that is a crappy name, too, then, but it is not your
+fault. ;) So if there is precedent, I guess somebody else thought it was
+a good idea, and you should leave your patch as-is.
+
+> I was not aware of the other code paths and only wanted to
+> affect the one that I knew about.  I agree that making that the
+> default behavior would be great, meaning we could drop the
+> pretty_filename flag altogether.
 > 
+> If you and others agree that the user-friendly names are a good
+> thing to have by default then I can rework patch 2/2.
 
-How about simply modelling it linearly, with 100% probability for known
-skip point, 0% for a known good/bad point, and a linear gradient in
-between?  It's probably a good enough model.  In practice, it will
-vastly overestimate the probability of a skip, so if a linear model
-turns out to be too conservative, I would probably just try to model it
-as a higher-order power function.
+Switching to user-friendly temp filenames for textconv was on my todo
+list, so I definitely think it is a good idea.
 
-	-hpa
+-Peff
