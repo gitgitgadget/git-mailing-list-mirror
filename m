@@ -1,112 +1,94 @@
-From: Brian de Alwis <brian.de.alwis@usask.ca>
-Subject: Survey on DVCS usage and experience
-Date: Wed, 27 May 2009 18:02:57 -0600
-Message-ID: <75599A84-8A53-4DA4-A022-1BEF4EEDA943@usask.ca>
-Mime-Version: 1.0 (Apple Message framework v935.3)
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: mercurial-bounces@selenic.com Thu May 28 08:33:56 2009
-Return-path: <mercurial-bounces@selenic.com>
-Envelope-to: gcvmd-mercurial@gmane.org
-Received: from waste.org ([66.93.16.53] helo=mail.waste.org)
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/2] match_refs: search ref list tail internally
+Date: Thu, 28 May 2009 00:06:32 -0700
+Message-ID: <7vtz35hfk7.fsf@alter.siamese.dyndns.org>
+References: <76718490905260727v7261391uab169167978e4522@mail.gmail.com>
+	<1243455224-3463-1-git-send-email-drizzd@aon.at>
+	<1243455224-3463-2-git-send-email-drizzd@aon.at>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Erik Faye-Lund <kusmabite@googlemail.com>,
+	Jay Soffian <jaysoffian@gmail.com>,
+	Tay Ray Chuan <rctay89@gmail.com>
+To: Clemens Buchacher <drizzd@aon.at>
+X-From: git-owner@vger.kernel.org Thu May 28 09:06:47 2009
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@gmane.org
+Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M9ZBU-0002Qb-48
-	for gcvmd-mercurial@gmane.org; Thu, 28 May 2009 08:33:49 +0200
-Received: from waste.org (staticwaste [66.93.16.53])
-	by mail.waste.org (Postfix) with ESMTP id 46D3D5C8092;
-	Thu, 28 May 2009 01:33:46 -0500 (CDT)
-Received: from smtp.usask.ca (smtp.usask.ca [128.233.192.40])
-	by waste.org (8.13.8/8.13.8/Debian-3) with ESMTP id n4S1LrGK001851
-	(version=TLSv1/SSLv3 cipher=RC4-MD5 bits=128 verify=NOT)
-	for <mercurial@selenic.com>; Wed, 27 May 2009 20:21:54 -0500
-Received: from conversion-daemon.usask.ca by usask.ca
-	(iPlanet Messaging Server 5.2 HotFix 2.18 (built Jul  3 2007))
-	id <0KKB00G01VGNF9@usask.ca> (original mail from
-	brian.de.alwis@usask.ca)
-	for mercurial@selenic.com; Wed, 27 May 2009 18:21:50 -0600 (CST)
-Received: from [192.168.0.42]
-	(s142-179-174-58.ab.hsia.telus.net [142.179.174.58])
-	by usask.ca (iPlanet Messaging Server 5.2 HotFix 2.18 (built Jul 3
-	2007))
-	with ESMTPSA id <0KKB001HJVODK4@usask.ca> for mercurial@selenic.com;
-	Wed, 27 May 2009 18:21:50 -0600 (CST)
-Resent-date: Wed, 27 May 2009 18:21:48 -0600
-Resent-from: Brian de Alwis <brian.de.alwis@usask.ca>
-Resent-to: mercurial@selenic.com
-Resent-message-id: <0KKB001HKVOEK4@usask.ca>
-X-Mailer: Apple Mail (2.935.3)
-X-Virus-Scanned: by amavisd-new
-X-Greylist: delayed for 01:00:02 at (waste.org [66.93.16.53])
-	for <mercurial@selenic.com> by smf-grey v2.1.0 - http://smfs.sf.net/
-X-Mailman-Approved-At: Thu, 28 May 2009 01:33:44 -0500
-X-BeenThere: mercurial@selenic.com
-X-Mailman-Version: 2.1.9
-Precedence: list
-List-Id: <mercurial.selenic.com>
-List-Unsubscribe: <http://selenic.com/mailman/listinfo/mercurial>,
-	<mailto:mercurial-request@selenic.com?subject=unsubscribe>
-List-Archive: <http://selenic.com/pipermail/mercurial>
-List-Post: <mailto:mercurial@selenic.com>
-List-Help: <mailto:mercurial-request@selenic.com?subject=help>
-List-Subscribe: <http://selenic.com/mailman/listinfo/mercurial>,
-	<mailto:mercurial-request@selenic.com?subject=subscribe>
-Sender: mercurial-bounces@selenic.com
-Errors-To: mercurial-bounces@selenic.com
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120157>
+	id 1M9ZhP-0007rP-4p
+	for gcvg-git-2@gmane.org; Thu, 28 May 2009 09:06:47 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1751207AbZE1HGd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 May 2009 03:06:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751039AbZE1HGc
+	(ORCPT <rfc822;git-outgoing>); Thu, 28 May 2009 03:06:32 -0400
+Received: from fed1rmmtao106.cox.net ([68.230.241.40]:33918 "EHLO
+	fed1rmmtao106.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750951AbZE1HGc (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 May 2009 03:06:32 -0400
+Received: from fed1rmimpo03.cox.net ([70.169.32.75])
+          by fed1rmmtao106.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20090528070631.JUBU25927.fed1rmmtao106.cox.net@fed1rmimpo03.cox.net>;
+          Thu, 28 May 2009 03:06:31 -0400
+Received: from localhost ([68.225.240.211])
+	by fed1rmimpo03.cox.net with bizsmtp
+	id wv6Z1b0024aMwMQ04v6Z0Y; Thu, 28 May 2009 03:06:33 -0400
+X-Authority-Analysis: v=1.0 c=1 a=X0za5sGunokA:10 a=lRXe1y6VuJAA:10
+ a=-kq21c6ceYbpZsfJ63YA:9 a=kB2A1Dhsj6fsZIHWIHgA:7
+ a=y8mzYV5kdlNf_TP0I6KjaeHTb7UA:4
+X-CM-Score: 0.00
+In-Reply-To: <1243455224-3463-2-git-send-email-drizzd@aon.at> (Clemens Buchacher's message of "Wed\, 27 May 2009 22\:13\:44 +0200")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120158>
 
-Hello everybody.  I'm part of a team conducting a survey to understand
-the perceived benefits and challenges of using a decentralized or
-distributed version control systems (DVCS) in software development.
-Presuming that most people on this list have used a DVCS :)  we would
-like to invite all people over 18 years old to participate in our survey
-and share your experiences.  Details on partcipating are below.
-Thanks for your time!
+Clemens Buchacher <drizzd@aon.at> writes:
 
-Brian.
+> Avoid code duplication by moving list tail search to match_refs().
+>
+> This does not change the semantics, not even for http-push. The NULL
+> test for remote_tail was redundant.
 
-----------------------------------------------------------------------
-An increasing number of software projects have or are considering
-switching their code repositories to a decentralized or distributed
-VCS (DVCS).  There are many such DVCS tools, including git, bzr,
-mercurial, monotone, or bitkeeper.  We are conducting a survey to
-assess the perceived benefits and challenges of using a DVCS.  We
-would ask that any individuals who use or are comfortable using a
-DVCS for managing the artifacts for a project to please consider
-completing the survey.  The survey has several open-ended questions,
-and may take up to 20 minutes to complete.
+The existing program (and the result after the patch) open-codes too much
+inside the huge main() function, and it is extremely painful to follow
+what is going on.
 
-The data collected from this study will be used in articles for
-publication in journals and conference proceedings.  The results
-of this study will provide additional knowledge and guidance for
-projects considering moving to using a DVCS.
+But it is not that "the NULL test was redundant" that I'd be worried
+about.  In that unreadable main() function:
 
-This is an anonymous survey.  Any personal information divulged
-in answering a question will be kept strictly confidential.
+ - get_dav_remote_heads() is called, which asks the other end what the
+   remote refs are; the result is queued in the linked list whose head is
+   remote_refs and tail is remote_tail;
 
-The survey is at:
+ - the resulting remote_tail is given to match_refs() to further grow the
+   linked list.  The function will queue new "struct ref" instances
+   (e.g. by making a call to match_explicit_refs()) at the end of the
+   list.
 
-    http://www.cs.usask.ca/~bsd178/research/dvcs-survey/
+   The caller used to pass "here is the end of the list" variable to it,
+   but now you compute (perhaps redundantly) the end of the ref list by
+   tangling from dst to its tail, yourself, and match_refs() links new
+   elements at the tail of the list correctly.
 
-Please feel free to redistribute this to other interested groups.
+   But what happens to the calling program's remote_tail variable after
+   match_refs() returns?  The code used to guarantee that it always point
+   at the real end of the list, but that guarantee is now gone.
 
-If you would like more detail about the survey, or information not
-included here, please contact us.
+It so happens that http-push.c never looked at remote_tail to do further
+processing on the list after match_refs() returned, and that is why your
+patch does not break http-push.c.  Any third-party patch to http-push.c
+that relied on the old guarantee will textually merge cleanly but will
+subtly break with this change.
 
-    Brian de Alwis
-    Department of Computer Science
-    University of Saskatchewan
-    brian.de.alwis@usask.ca
+Other parts of this patch removes the local "remote_tail" variables, and
+it is very clear that they do not have this problem; any third-parth patch
+will break if they used remote_tail after match_refs() returned, so this
+change is a safe one for them.
 
-This research has the ethical approval of the Research Ethics Office
-at the University of Saskatchewan.  If you have any concerns about your
-treatment or rights as a research subject, please contact the office
-at 306-966-2084.
-
-----------------------------------------------------------------------
-
-
---  
-Brian de Alwis | HCI Lab | University of Saskatchewan
-On bike helmets: "If you think your hair is more important than your  
-brain, you're probably right."  (B. J. Wawrykow)
+I wonder what interaction this change will have with the http-push
+clean-up Ray Chuan has been working on...
