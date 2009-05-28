@@ -1,50 +1,98 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 2/2] t8005: convert CP1251 character set to ISO8859-5
-Date: Thu, 28 May 2009 14:47:58 -0400
-Message-ID: <20090528184758.GC13499@coredump.intra.peff.net>
-References: <7vhbzd85ux.fsf@alter.siamese.dyndns.org> <p2A1PR1KFf_G_uMMwQZtVeaDE_VcBr8lFjs9Jsg_OIkeypNbwPPRHP32EUHJ4leCZsycUOhFjHc@cipher.nrlssc.navy.mil> <p2A1PR1KFf_G_uMMwQZtVXPPBSNcQqEAV1ZnkoQLMJaPzWwJrkH_HCs5Kbt70yQlltZJxs4WxXo@cipher.nrlssc.navy.mil> <7vskiw4ooe.fsf@alter.siamese.dyndns.org> <7vhbzc4oht.fsf@alter.siamese.dyndns.org> <20090525092027.GA22382@coredump.intra.peff.net> <xZbeuW5cnER48WqsONW1BxZmepHjuwJtRUnpLAV0nv4mheMkGHT26g@cipher.nrlssc.navy.mil>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: git & bug tracking
+Date: Thu, 28 May 2009 11:53:00 -0700 (PDT)
+Message-ID: <m3prdtawl3.fsf@localhost.localdomain>
+References: <F3DFF098-5198-4252-9F69-2805E5566155@btinternet.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Brandon Casey <casey@nrlssc.navy.mil>
-X-From: git-owner@vger.kernel.org Thu May 28 20:48:16 2009
+Content-Type: text/plain; charset=utf-16be
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: =?utf-16be?b?/v8AfgA6ACcAJwAgMEIwijBMMGgwRjBUMFYwRDB+MFcA?=
+	 =?utf-16be?b?MF8wAg==?= <j.chetwynd@btinternet.com>
+X-From: git-owner@vger.kernel.org Thu May 28 20:53:15 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M9keG-0001xb-2h
-	for gcvg-git-2@gmane.org; Thu, 28 May 2009 20:48:16 +0200
+	id 1M9kj1-00047w-B5
+	for gcvg-git-2@gmane.org; Thu, 28 May 2009 20:53:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756861AbZE1SsI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 May 2009 14:48:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755202AbZE1SsF
-	(ORCPT <rfc822;git-outgoing>); Thu, 28 May 2009 14:48:05 -0400
-Received: from peff.net ([208.65.91.99]:33397 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753195AbZE1SsF (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 May 2009 14:48:05 -0400
-Received: (qmail 22290 invoked by uid 107); 28 May 2009 18:48:09 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Thu, 28 May 2009 14:48:09 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Thu, 28 May 2009 14:47:58 -0400
-Content-Disposition: inline
-In-Reply-To: <xZbeuW5cnER48WqsONW1BxZmepHjuwJtRUnpLAV0nv4mheMkGHT26g@cipher.nrlssc.navy.mil>
+	id S1760170AbZE1SxA convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 28 May 2009 14:53:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758715AbZE1SxA
+	(ORCPT <rfc822;git-outgoing>); Thu, 28 May 2009 14:53:00 -0400
+Received: from fg-out-1718.google.com ([72.14.220.156]:40136 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756842AbZE1Sw7 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 28 May 2009 14:52:59 -0400
+Received: by fg-out-1718.google.com with SMTP id d23so1588649fga.17
+        for <git@vger.kernel.org>; Thu, 28 May 2009 11:53:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:received
+         :x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type
+         :content-transfer-encoding;
+        bh=u3iUGm8wHVdvcmk/quENM8Q9a6cahfW9TP+mET6sBxc=;
+        b=cdXHpB4ZMTz4NjuKqdlq8ef6+3P5JUeQwqbRLP5T1U0dWgDQ0juSPozuVo8Jf3TOLn
+         7hMky+kWIbqTiantzcMXAPxNYWQoqoXltvaJ0aJUuijDn51pqYjexjR5cqKdUc2KMLZz
+         kaDCmwmiBOR6UY8akuxe4K4H73lDqt+sUIjp8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type
+         :content-transfer-encoding;
+        b=qsrZITbxDdVt9p7AqQPc5ISiLi9f33zZnA05uJrHL/6d971I4tsa3bz8RExhfHen6f
+         IdOmsT4ewgwKMReiJgR9/1ExQoqP1k1nPXIUhs24Yzjsh9JrzedgurgQauXg2+XYZOG2
+         QEZvVlsbKZ2lz/OxdRss/ToSNB2Na++Rt8l7I=
+Received: by 10.86.86.10 with SMTP id j10mr1898899fgb.37.1243536780757;
+        Thu, 28 May 2009 11:53:00 -0700 (PDT)
+Received: from localhost.localdomain (abtj91.neoplus.adsl.tpnet.pl [83.8.155.91])
+        by mx.google.com with ESMTPS id e20sm6011998fga.5.2009.05.28.11.52.59
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Thu, 28 May 2009 11:53:00 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id n4SIqxHV001778;
+	Thu, 28 May 2009 20:53:00 +0200
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id n4SIqvaj001771;
+	Thu, 28 May 2009 20:52:57 +0200
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <F3DFF098-5198-4252-9F69-2805E5566155@btinternet.com>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120208>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120209>
 
-On Tue, May 26, 2009 at 09:57:41AM -0500, Brandon Casey wrote:
+"~:'' =FE=FF0B0=8A0L0h0F0T0V0D0~0W0_0=02" <j.chetwynd@btinternet.com> w=
+rites:
 
-> > With current 'next' and NO_PERL set, I can pass every test except:
-> 
-> Oh, and have the recent changes that are now in next _allowed_ any new
-> tests to pass that were previously failing?
+> git & bug tracking**
+>=20
+> what is the reason that bug tracking was not part* of the development
+> and implementation of git?
 
-Just one. It had been a while since I re-checked the skipped tests, so
-most of what I found I could now pass was unrelated. But I believe your
-recent patches fixed t3901 for me. On current 'next', it passes, but on
-current 'maint', it says something like "cannot convert UTF-8 to utf-8".
+[...]
+> *the 'graphical' relationship between the git & bug tracking threads
+> is of interest.
+> beyond open source I'm interested in inviting naive users to
+> participate in the development process, for instance by bug filing.
+>=20
+> **found this related threads
+> http://thread.gmane.org/gmane.comp.version-control.git/110117
 
--Peff
+Because while I think that Git gets distributed version control right,
+there is still debate about how to do distributed bugtracking?
+Because of "one tool for one thing" or "do one thing, and do it well"?
+Because you might not need bugtracker or code review tool: mailing
+list is sometimes well enough?
+
+Or I have misunderstood you because you didn't explain what you meant
+clearly enough?
+
+--=20
+Jakub Narebski
+Poland
+ShadeHawk on #git
