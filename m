@@ -1,150 +1,71 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: [PATCH] git-svn: refuse to dcommit non-UTF-8 messages
-Date: Thu, 28 May 2009 01:18:04 -0700
-Message-ID: <20090528081804.GB9239@dcvr.yhbt.net>
-References: <op.uuljhmmg1e62zd@balu.cs.uni-paderborn.de> <20090528080706.GA9239@dcvr.yhbt.net>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: Strangely hosed git install
+Date: Thu, 28 May 2009 10:29:54 +0200
+Message-ID: <4A1E4B82.9040809@drmicha.warpmail.net>
+References: <46a038f90905280008h5510d03aj5f6e5728ca075027@mail.gmail.com>	 <7vprdthezg.fsf@alter.siamese.dyndns.org> <46a038f90905280022s1c07565bnf26335fccf7c7e94@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, users@subversion.tigris.org,
-	Matthias Andree <matthias.andree@gmx.de>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu May 28 10:18:22 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Martin Langhoff <martin.langhoff@gmail.com>
+X-From: git-owner@vger.kernel.org Thu May 28 10:30:31 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M9aoZ-00057W-4M
-	for gcvg-git-2@gmane.org; Thu, 28 May 2009 10:18:15 +0200
+	id 1M9b0Q-0000wi-4g
+	for gcvg-git-2@gmane.org; Thu, 28 May 2009 10:30:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753796AbZE1ISG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 May 2009 04:18:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751560AbZE1ISG
-	(ORCPT <rfc822;git-outgoing>); Thu, 28 May 2009 04:18:06 -0400
-Received: from dcvr.yhbt.net ([64.71.152.64]:37347 "EHLO dcvr.yhbt.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751497AbZE1ISE (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 May 2009 04:18:04 -0400
-Received: from localhost (user-118bg0q.cable.mindspring.com [66.133.192.26])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by dcvr.yhbt.net (Postfix) with ESMTPSA id CFCFF1F586;
-	Thu, 28 May 2009 08:18:05 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <20090528080706.GA9239@dcvr.yhbt.net>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+	id S1761582AbZE1IaK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 May 2009 04:30:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757258AbZE1IaJ
+	(ORCPT <rfc822;git-outgoing>); Thu, 28 May 2009 04:30:09 -0400
+Received: from out1.smtp.messagingengine.com ([66.111.4.25]:52227 "EHLO
+	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1761015AbZE1IaF (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 28 May 2009 04:30:05 -0400
+Received: from compute2.internal (compute2.internal [10.202.2.42])
+	by out1.messagingengine.com (Postfix) with ESMTP id D9612346B0E;
+	Thu, 28 May 2009 04:30:06 -0400 (EDT)
+Received: from heartbeat1.messagingengine.com ([10.202.2.160])
+  by compute2.internal (MEProxy); Thu, 28 May 2009 04:30:06 -0400
+X-Sasl-enc: 6hxTMnKg95KDr031Xz0Eo2apL5jSzWiBivr4WCmaYMtS 1243499406
+Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.12])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 0A2613BC1C;
+	Thu, 28 May 2009 04:30:05 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1pre) Gecko/20090525 Lightning/1.0pre Shredder/3.0b3pre
+In-Reply-To: <46a038f90905280022s1c07565bnf26335fccf7c7e94@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120170>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120171>
 
-...without i18n.commitencoding set in the config.
+Martin Langhoff venit, vidit, dixit 28.05.2009 09:22:
+> On Thu, May 28, 2009 at 9:18 AM, Junio C Hamano <gitster@pobox.com> wrote:
+>> "type --all git"?
+>> "git --exec-path"?
+>> "ls $(git --exec-path)"?
+>>
+> 
+> It all looks fairly correct to me:
 
-SVN tries to store all commit messages in UTF-8, however it is
-up to the job of the clients to enforce this rule.  SVN servers
-themselves do not always enforce this; allowing clients to
-commit malformed UTF-8 messages and break repositories.
+Yes, but your shell seems to find git-diff somewhere, so what about:
 
-So git-svn will enforce this and tell the user to set
-i18n.commitencoding when a git commit is is not in UTF-8.
+type --all git-diff
+echo $PATH
 
-Signed-off-by: Eric Wong <normalperson@yhbt.net>
----
+In any case, Ubuntu seems to do something strange about binaries which
+used to be installed. How can "git-diff" trigger a message about
+"apt-get install git-core"?
 
- Also pushed to git://git.bogomips.org/git-svn.git
+For sure it does the same strange thing for everything else which used
+to be in your PATH, and this makes current stash, gc etc. fail when
+trying to call git-pack-objects and such. A "/usr/bin time machine"???
 
- git-svn.perl                               |   17 ++++++++--
- t/t9139-git-svn-non-utf8-commitencoding.sh |   47 ++++++++++++++++++++++++++++
- 2 files changed, 61 insertions(+), 3 deletions(-)
- create mode 100755 t/t9139-git-svn-non-utf8-commitencoding.sh
+OTOH: The git-pack-objects usage line indicates that you clearly have
+older plumbing lying around. I suspect there are at least 2 issues on
+that box.
 
-diff --git a/git-svn.perl b/git-svn.perl
-index a70c7d7..3301797 100755
---- a/git-svn.perl
-+++ b/git-svn.perl
-@@ -1178,16 +1178,27 @@ sub get_commit_entry {
- 	}
- 	rename $commit_editmsg, $commit_msg or croak $!;
- 	{
-+		require Encode;
- 		# SVN requires messages to be UTF-8 when entering the repo
- 		local $/;
- 		open $log_fh, '<', $commit_msg or croak $!;
- 		binmode $log_fh;
- 		chomp($log_entry{log} = <$log_fh>);
- 
--		if (my $enc = Git::config('i18n.commitencoding')) {
--			require Encode;
--			Encode::from_to($log_entry{log}, $enc, 'UTF-8');
-+		my $enc = Git::config('i18n.commitencoding') || 'UTF-8';
-+		my $msg = $log_entry{log};
-+
-+		eval { $msg = Encode::decode($enc, $msg, 1) };
-+		if ($@) {
-+			die "Could not decode as $enc:\n", $msg,
-+			    "\nPerhaps you need to set i18n.commitencoding\n";
- 		}
-+
-+		eval { $msg = Encode::encode('UTF-8', $msg, 1) };
-+		die "Could not encode as UTF-8:\n$msg\n" if $@;
-+
-+		$log_entry{log} = $msg;
-+
- 		close $log_fh or croak $!;
- 	}
- 	unlink $commit_msg;
-diff --git a/t/t9139-git-svn-non-utf8-commitencoding.sh b/t/t9139-git-svn-non-utf8-commitencoding.sh
-new file mode 100755
-index 0000000..2b1db97
---- /dev/null
-+++ b/t/t9139-git-svn-non-utf8-commitencoding.sh
-@@ -0,0 +1,47 @@
-+#!/bin/sh
-+#
-+# Copyright (c) 2009 Eric Wong
-+
-+test_description='git svn refuses to dcommit non-UTF8 messages'
-+
-+. ./lib-git-svn.sh
-+
-+# ISO-2022-JP can pass for valid UTF-8, so skipping that in this test
-+
-+for H in ISO-8859-1 EUCJP
-+do
-+	test_expect_success "$H setup" '
-+		mkdir $H &&
-+		svn_cmd import -m "$H test" $H "$svnrepo"/$H &&
-+		git svn clone "$svnrepo"/$H $H
-+	'
-+done
-+
-+for H in ISO-8859-1 EUCJP
-+do
-+	test_expect_success "$H commit on git side" '
-+	(
-+		cd $H &&
-+		git config i18n.commitencoding $H &&
-+		git checkout -b t refs/remotes/git-svn &&
-+		echo $H >F &&
-+		git add F &&
-+		git commit -a -F "$TEST_DIRECTORY"/t3900/$H.txt &&
-+		E=$(git cat-file commit HEAD | sed -ne "s/^encoding //p") &&
-+		test "z$E" = "z$H"
-+	)
-+	'
-+done
-+
-+for H in ISO-8859-1 EUCJP
-+do
-+	test_expect_success "$H dcommit to svn" '
-+	(
-+		cd $H &&
-+		git config --unset i18n.commitencoding &&
-+		! git svn dcommit
-+	)
-+	'
-+done
-+
-+test_done
--- 
-Eric Wong
+Michael
