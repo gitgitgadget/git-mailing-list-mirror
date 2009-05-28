@@ -1,181 +1,309 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: [RFC PATCH] Documentation: teach stash/pop workflow instead of stash/apply
-Date: Thu, 28 May 2009 11:40:15 +0200
-Message-ID: <ef178b42f4db36811e07f1bca4436ed79e550957.1243502202.git.trast@student.ethz.ch>
-References: <20090515021105.GA19241@coredump.intra.peff.net>
-Cc: Jeff King <peff@peff.net>,
-	Daniel Trstenjak <Daniel.Trstenjak@science-computing.de>,
-	Junio C Hamano <gitster@pobox.com>, spearce@spearce.org,
-	John Tapsell <johnflux@gmail.com>,
-	Brian Gernhardt <benji@silverinsanity.com>,
-	Nanako Shiraishi <nanako3@lavabit.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu May 28 11:40:30 2009
+From: David Aguilar <davvid@gmail.com>
+Subject: [PATCH v3 1/2] compat: add a mkstemps() compatibility function
+Date: Thu, 28 May 2009 02:43:50 -0700
+Message-ID: <1243503831-17993-1-git-send-email-davvid@gmail.com>
+Cc: git@vger.kernel.org, j.sixt@viscovery.net,
+	markus.heidelberg@web.de, jnareb@gmail.com,
+	David Aguilar <davvid@gmail.com>
+To: gitster@pobox.com
+X-From: git-owner@vger.kernel.org Thu May 28 11:44:22 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M9c6A-0002vr-0K
-	for gcvg-git-2@gmane.org; Thu, 28 May 2009 11:40:30 +0200
+	id 1M9c9m-0004BJ-PW
+	for gcvg-git-2@gmane.org; Thu, 28 May 2009 11:44:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751894AbZE1JkT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 May 2009 05:40:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751118AbZE1JkS
-	(ORCPT <rfc822;git-outgoing>); Thu, 28 May 2009 05:40:18 -0400
-Received: from xsmtp0.ethz.ch ([82.130.70.14]:55318 "EHLO XSMTP0.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751114AbZE1JkR (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 May 2009 05:40:17 -0400
-Received: from xfe0.d.ethz.ch ([82.130.124.40]) by XSMTP0.ethz.ch with Microsoft SMTPSVC(6.0.3790.3959);
-	 Thu, 28 May 2009 11:40:16 +0200
-Received: from localhost.localdomain ([129.132.153.233]) by xfe0.d.ethz.ch over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
-	 Thu, 28 May 2009 11:40:16 +0200
-X-Mailer: git-send-email 1.6.3.1.276.gb65cd
-In-Reply-To: <20090515021105.GA19241@coredump.intra.peff.net>
-X-OriginalArrivalTime: 28 May 2009 09:40:16.0445 (UTC) FILETIME=[4E9866D0:01C9DF78]
+	id S1753133AbZE1JoG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 May 2009 05:44:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752863AbZE1JoE
+	(ORCPT <rfc822;git-outgoing>); Thu, 28 May 2009 05:44:04 -0400
+Received: from mail-px0-f123.google.com ([209.85.216.123]:44642 "EHLO
+	mail-px0-f123.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751227AbZE1JoC (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 May 2009 05:44:02 -0400
+Received: by pxi29 with SMTP id 29so890678pxi.33
+        for <git@vger.kernel.org>; Thu, 28 May 2009 02:44:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer;
+        bh=nnrDPnl6eUh9RUzJ1ZkDvtMASbprQNcD4DyKORdum7I=;
+        b=aiHAedkemqBVAYU8/RDfD8QakgkiYsoIGAgbiZpWf/90XIPy7LEQZ8ZV5yyyVk679L
+         swfRidk70lZ7Ivkwpmr4ZZ4+a44EgSXI/klpz8JzRNNlXsFD58F4IDi+yDGKvBqF79p1
+         CR+6HtzuBjOMLk7EPisItMH7tj+OGOWg9DAfw=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=ddJKOpixy9cO4BQYJB/fmCZa8GyPrT8Krs09ALmFpZJTPi5cFffm1TBXguo9yI4fUX
+         hshWza4gZcWFI0njSHid4da7cCTuMk8n0UNUdRIAOzwCg7Iqd9cMqw3T7cxgUw82KtSw
+         gwZExktp9Xjnzvb2CAtEN6nFqT8wBfF81+NCY=
+Received: by 10.114.167.3 with SMTP id p3mr990460wae.214.1243503842266;
+        Thu, 28 May 2009 02:44:02 -0700 (PDT)
+Received: from localhost (208-106-56-2.static.dsltransport.net [208.106.56.2])
+        by mx.google.com with ESMTPS id v9sm4277853wah.1.2009.05.28.02.44.00
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Thu, 28 May 2009 02:44:01 -0700 (PDT)
+X-Mailer: git-send-email 1.6.3.1.169.g33fd
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120178>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120179>
 
-Recent discussion on the list showed some comments in favour of a
-stash/pop workflow:
+mkstemps() is a BSD extension so provide an implementation
+for cross-platform use.
 
-  http://marc.info/?l=git&m=124234911423358&w=2
-  http://marc.info/?l=git&m=124235348327711&w=2
-
-Change the stash documentation and examples to document pop in its own
-right (and apply in terms of pop), and use stash/pop in the examples.
-
-Signed-off-by: Thomas Rast <trast@student.ethz.ch>
+Signed-off-by: David Aguilar <davvid@gmail.com>
+Tested-by: Johannes Sixt <j6t@kdbg.org> (Windows)
 ---
+ Makefile          |   19 +++++++++++++++
+ compat/mkstemps.c |   67 +++++++++++++++++++++++++++++++++++++++++++++++++++++
+ config.mak.in     |    1 +
+ configure.ac      |    6 ++++
+ git-compat-util.h |    5 ++++
+ 5 files changed, 98 insertions(+), 0 deletions(-)
+ create mode 100644 compat/mkstemps.c
 
-I meant to write this for a while now, but never got around to it.
-
-Jeff King wrote:
-> On Fri, May 15, 2009 at 09:57:20AM +0900, Miles Bader wrote:
-> > I don't understand why you say this -- sure "drop" is dangerous, but
-> > that's exactly why you should use "pop" instead, because it makes sure
-> > the changes are _somewhere_.  I found with the old (pre-"pop") stash,
-> > I'd often end up in a situation where I'd lose track of whether I had
-> > done a stash apply or not, and the risk of inadvertently doing a drop
-> > _without_ a corresponding apply was very real.
-> 
-> "pop" doesn't always succeed. If you have conflicts in applying, then
-> you end up with conflict markers, and the stash remains. You then fix up
-> and commit as you see fit, but your stash is still there. So this bash
-> prompt will nag you, which I think is what Thomas was complaining about
-> (but perhaps the nagging would then convince you to keep a cleaner stash
-> area by dropping the resolved stash).
-
-Actually I was mostly concerned about dropping the stashes at all.
-But I guess if you treat the stash as a short-term stack that holds a
-change or two while you're working on something else, stash/pop fits
-better.
-
-I'd still prefer some configurability in the original patch, as I
-think nagging the user into discarding data is a bad thing, even
-though I now agree that if the 'pop' actually went through, it's not
-really discarded.  (Also, ISTR a discussion about automatic gc'ing of
-the stash reflog where a few people said they expect to hit any
-reasonably short time limit in some of their repos and thus risk
-losing work; regardless of cleanup disclipline, they would also have
-the prompt on all the time).
-
-
-By the way, why doesn't gmane find these mails?  I tried things like
-
-  http://search.gmane.org/?query=stash&group=gmane.comp.version-control.git&author=miles@gnu.org
-
-but the entire thread seems to be missing from gmane.
-
-
-
- Documentation/git-stash.txt   |   30 ++++++++++++++++--------------
- Documentation/user-manual.txt |    4 ++--
- 2 files changed, 18 insertions(+), 16 deletions(-)
-
-diff --git a/Documentation/git-stash.txt b/Documentation/git-stash.txt
-index 051f94d..1cc24cc 100644
---- a/Documentation/git-stash.txt
-+++ b/Documentation/git-stash.txt
-@@ -75,14 +75,22 @@ show [<stash>]::
- 	it will accept any format known to 'git-diff' (e.g., `git stash show
- 	-p stash@\{1}` to view the second most recent stash in patch form).
+diff --git a/Makefile b/Makefile
+index eaae45d..a70b5f0 100644
+--- a/Makefile
++++ b/Makefile
+@@ -52,6 +52,8 @@ all::
+ #
+ # Define NO_MKDTEMP if you don't have mkdtemp in the C library.
+ #
++# Define NO_MKSTEMPS if you don't have mkstemps in the C library.
++#
+ # Define NO_SYS_SELECT_H if you don't have sys/select.h.
+ #
+ # Define NO_SYMLINK_HEAD if you never want .git/HEAD to be a symbolic link.
+@@ -636,10 +638,12 @@ EXTLIBS =
  
--apply [--index] [<stash>]::
-+pop [<stash>]::
+ ifeq ($(uname_S),Linux)
+ 	NO_STRLCPY = YesPlease
++	NO_MKSTEMPS = YesPlease
+ 	THREADED_DELTA_SEARCH = YesPlease
+ endif
+ ifeq ($(uname_S),GNU/kFreeBSD)
+ 	NO_STRLCPY = YesPlease
++	NO_MKSTEMPS = YesPlease
+ 	THREADED_DELTA_SEARCH = YesPlease
+ endif
+ ifeq ($(uname_S),UnixWare)
+@@ -651,6 +655,7 @@ ifeq ($(uname_S),UnixWare)
+ 	SHELL_PATH = /usr/local/bin/bash
+ 	NO_IPV6 = YesPlease
+ 	NO_HSTRERROR = YesPlease
++	NO_MKSTEMPS = YesPlease
+ 	BASIC_CFLAGS += -Kthread
+ 	BASIC_CFLAGS += -I/usr/local/include
+ 	BASIC_LDFLAGS += -L/usr/local/lib
+@@ -674,6 +679,7 @@ ifeq ($(uname_S),SCO_SV)
+ 	SHELL_PATH = /usr/bin/bash
+ 	NO_IPV6 = YesPlease
+ 	NO_HSTRERROR = YesPlease
++	NO_MKSTEMPS = YesPlease
+ 	BASIC_CFLAGS += -I/usr/local/include
+ 	BASIC_LDFLAGS += -L/usr/local/lib
+ 	NO_STRCASESTR = YesPlease
+@@ -702,6 +708,7 @@ ifeq ($(uname_S),SunOS)
+ 	NO_MEMMEM = YesPlease
+ 	NO_HSTRERROR = YesPlease
+ 	NO_MKDTEMP = YesPlease
++	NO_MKSTEMPS = YesPlease
+ 	OLD_ICONV = UnfortunatelyYes
+ 	ifeq ($(uname_R),5.8)
+ 		NO_UNSETENV = YesPlease
+@@ -724,6 +731,7 @@ ifeq ($(uname_O),Cygwin)
+ 	NO_D_INO_IN_DIRENT = YesPlease
+ 	NO_STRCASESTR = YesPlease
+ 	NO_MEMMEM = YesPlease
++	NO_MKSTEMPS = YesPlease
+ 	NO_SYMLINK_HEAD = YesPlease
+ 	NEEDS_LIBICONV = YesPlease
+ 	NO_FAST_WORKING_DIRECTORY = UnfortunatelyYes
+@@ -767,11 +775,13 @@ ifeq ($(uname_S),NetBSD)
+ 	BASIC_LDFLAGS += -L/usr/pkg/lib $(CC_LD_DYNPATH)/usr/pkg/lib
+ 	THREADED_DELTA_SEARCH = YesPlease
+ 	USE_ST_TIMESPEC = YesPlease
++	NO_MKSTEMPS = YesPlease
+ endif
+ ifeq ($(uname_S),AIX)
+ 	NO_STRCASESTR=YesPlease
+ 	NO_MEMMEM = YesPlease
+ 	NO_MKDTEMP = YesPlease
++	NO_MKSTEMPS = YesPlease
+ 	NO_STRLCPY = YesPlease
+ 	NO_NSEC = YesPlease
+ 	FREAD_READS_DIRECTORIES = UnfortunatelyYes
+@@ -787,12 +797,14 @@ endif
+ ifeq ($(uname_S),GNU)
+ 	# GNU/Hurd
+ 	NO_STRLCPY=YesPlease
++	NO_MKSTEMPS = YesPlease
+ endif
+ ifeq ($(uname_S),IRIX64)
+ 	NO_IPV6=YesPlease
+ 	NO_SETENV=YesPlease
+ 	NO_STRCASESTR=YesPlease
+ 	NO_MEMMEM = YesPlease
++	NO_MKSTEMPS = YesPlease
+ 	NO_STRLCPY = YesPlease
+ 	NO_SOCKADDR_STORAGE=YesPlease
+ 	SHELL_PATH=/usr/gnu/bin/bash
+@@ -805,6 +817,7 @@ ifeq ($(uname_S),HP-UX)
+ 	NO_SETENV=YesPlease
+ 	NO_STRCASESTR=YesPlease
+ 	NO_MEMMEM = YesPlease
++	NO_MKSTEMPS = YesPlease
+ 	NO_STRLCPY = YesPlease
+ 	NO_MKDTEMP = YesPlease
+ 	NO_UNSETENV = YesPlease
+@@ -834,6 +847,7 @@ ifneq (,$(findstring MINGW,$(uname_S)))
+ 	NO_C99_FORMAT = YesPlease
+ 	NO_STRTOUMAX = YesPlease
+ 	NO_MKDTEMP = YesPlease
++	NO_MKSTEMPS = YesPlease
+ 	SNPRINTF_RETURNS_BOGUS = YesPlease
+ 	NO_SVN_TESTS = YesPlease
+ 	NO_PERL_MAKEMAKER = YesPlease
+@@ -853,6 +867,7 @@ ifneq (,$(findstring MINGW,$(uname_S)))
+ endif
+ ifneq (,$(findstring arm,$(uname_M)))
+ 	ARM_SHA1 = YesPlease
++	NO_MKSTEMPS = YesPlease
+ endif
  
--	Restore the changes recorded in the stash on top of the current
--	working tree state.  When no `<stash>` is given, applies the latest
--	one.  The working directory must match the index.
-+	Remove a single stashed state from the stash list and apply it
-+	on top of the current working tree state, i.e., do the inverse
-+	operation of `git stash save`. The working directory must
-+	match the index.
- +
--This operation can fail with conflicts; you need to resolve them
--by hand in the working tree.
-+Applying the state can fail with conflicts; in this case, it is not
-+removed from the stash list. You need to resolve the conflicts by hand
-+and call `git stash drop` manually afterwards.
-++
-+When no `<stash>` is given, `stash@\{0}` is assumed. See also `apply`.
+ -include config.mak.autogen
+@@ -1011,6 +1026,10 @@ ifdef NO_MKDTEMP
+ 	COMPAT_CFLAGS += -DNO_MKDTEMP
+ 	COMPAT_OBJS += compat/mkdtemp.o
+ endif
++ifdef NO_MKSTEMPS
++	COMPAT_CFLAGS += -DNO_MKSTEMPS
++	COMPAT_OBJS += compat/mkstemps.o
++endif
+ ifdef NO_UNSETENV
+ 	COMPAT_CFLAGS += -DNO_UNSETENV
+ 	COMPAT_OBJS += compat/unsetenv.o
+diff --git a/compat/mkstemps.c b/compat/mkstemps.c
+new file mode 100644
+index 0000000..87ebc2a
+--- /dev/null
++++ b/compat/mkstemps.c
+@@ -0,0 +1,67 @@
++#include "../git-compat-util.h"
 +
-+apply [--index] [<stash>]::
++#ifndef TMP_MAX
++#define TMP_MAX 16384
++#endif
 +
-+	Like `pop`, but do not remove the state from the stash list.
- +
- If the `--index` option is used, then tries to reinstate not only the working
- tree's changes, but also the index's ones. However, this can fail, when you
-@@ -112,12 +120,6 @@ drop [<stash>]::
- 	Remove a single stashed state from the stash list. When no `<stash>`
- 	is given, it removes the latest one. i.e. `stash@\{0}`
++/* Adapted from libiberty's mkstemp.c. */
++int gitmkstemps(char *pattern, int suffix_len)
++{
++	static const char letters[] =
++		"abcdefghijklmnopqrstuvwxyz"
++		"ABCDEFGHIJKLMNOPQRSTUVWXYZ"
++		"0123456789";
++	static const int num_letters = 62;
++	uint64_t value;
++	struct timeval tv;
++	char *template;
++	size_t len;
++	int fd, count;
++
++	len = strlen(pattern);
++
++	if (len < 6 + suffix_len) {
++		errno = EINVAL;
++		return -1;
++	}
++
++	if (strncmp(&pattern[len - 6 - suffix_len], "XXXXXX", 6)) {
++		errno = EINVAL;
++		return -1;
++	}
++
++	/* Replace pattern's XXXXXX characters with randomness.
++	 * Try TMP_MAX different filenames.
++	 */
++	gettimeofday(&tv, NULL);
++	value = ((size_t)(tv.tv_usec << 16)) ^ tv.tv_sec ^ getpid();
++	template = &pattern[len - 6 - suffix_len];
++	for (count = 0; count < TMP_MAX; ++count) {
++		uint64_t v = value;
++		/* Fill in the random bits. */
++		template[0] = letters[v % num_letters]; v/= num_letters;
++		template[1] = letters[v % num_letters]; v/= num_letters;
++		template[2] = letters[v % num_letters]; v/= num_letters;
++		template[3] = letters[v % num_letters]; v/= num_letters;
++		template[4] = letters[v % num_letters]; v/= num_letters;
++		template[5] = letters[v % num_letters]; v/= num_letters;
++
++		fd = open(pattern, O_CREAT | O_EXCL | O_RDWR, 0600);
++		if (fd > 0)
++			return fd;
++		/* Fatal error (EPERM, ENOSPC etc).
++		 * It doesn't make sense to loop.
++		 */
++		if (errno != EEXIST)
++			break;
++		/* This is a random value.  It is only necessary that
++		 * the next TMP_MAX values generated by adding 7777 to
++		 * VALUE are different with (module 2^32).
++		 */
++		value += 7777;
++	}
++	/* We return the null string if we can't find a unique file name.  */
++	pattern[0] = '\0';
++	errno = EINVAL;
++	return -1;
++}
+diff --git a/config.mak.in b/config.mak.in
+index 7cce0c1..b6619af 100644
+--- a/config.mak.in
++++ b/config.mak.in
+@@ -46,6 +46,7 @@ NO_STRTOUMAX=@NO_STRTOUMAX@
+ NO_SETENV=@NO_SETENV@
+ NO_UNSETENV=@NO_UNSETENV@
+ NO_MKDTEMP=@NO_MKDTEMP@
++NO_MKSTEMPS=@NO_MKSTEMPS@
+ NO_ICONV=@NO_ICONV@
+ OLD_ICONV=@OLD_ICONV@
+ NO_DEFLATE_BOUND=@NO_DEFLATE_BOUND@
+diff --git a/configure.ac b/configure.ac
+index 4e728bc..95dccd4 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -676,6 +676,12 @@ GIT_CHECK_FUNC(mkdtemp,
+ [NO_MKDTEMP=],
+ [NO_MKDTEMP=YesPlease])
+ AC_SUBST(NO_MKDTEMP)
++# Define NO_MKSTEMPS if you don't have mkstemps in the C library.
++GIT_CHECK_FUNC(mkstemps,
++[NO_MKSTEMPS=],
++[NO_MKSTEMPS=YesPlease])
++AC_SUBST(NO_MKSTEMPS)
++#
+ #
+ # Define NO_MMAP if you want to avoid mmap.
+ #
+diff --git a/git-compat-util.h b/git-compat-util.h
+index c7cf2d5..f7217ad 100644
+--- a/git-compat-util.h
++++ b/git-compat-util.h
+@@ -232,6 +232,11 @@ extern int gitsetenv(const char *, const char *, int);
+ extern char *gitmkdtemp(char *);
+ #endif
  
--pop [<stash>]::
--
--	Remove a single stashed state from the stash list and apply on top
--	of the current working tree state. When no `<stash>` is given,
--	`stash@\{0}` is assumed. See also `apply`.
--
- create::
- 
- 	Create a stash (which is a regular commit object) and return its
-@@ -163,7 +165,7 @@ $ git pull
- file foobar not up to date, cannot merge.
- $ git stash
- $ git pull
--$ git stash apply
-+$ git stash pop
- ----------------------------------------------------------------
- 
- Interrupted workflow::
-@@ -192,7 +194,7 @@ You can use 'git-stash' to simplify the above, like this:
- $ git stash
- $ edit emergency fix
- $ git commit -a -m "Fix in a hurry"
--$ git stash apply
-+$ git stash pop
- # ... continue hacking ...
- ----------------------------------------------------------------
- 
-diff --git a/Documentation/user-manual.txt b/Documentation/user-manual.txt
-index dbbeb7e..0b88a51 100644
---- a/Documentation/user-manual.txt
-+++ b/Documentation/user-manual.txt
-@@ -1520,10 +1520,10 @@ $ git commit -a -m "blorpl: typofix"
- ------------------------------------------------
- 
- After that, you can go back to what you were working on with
--`git stash apply`:
-+`git stash pop`:
- 
- ------------------------------------------------
--$ git stash apply
-+$ git stash pop
- ------------------------------------------------
- 
- 
++#ifdef NO_MKSTEMPS
++#define mkstemps gitmkstemps
++extern int gitmkstemps(char *, int);
++#endif
++
+ #ifdef NO_UNSETENV
+ #define unsetenv gitunsetenv
+ extern void gitunsetenv(const char *);
 -- 
-1.6.3.1.276.gb65cd
+1.6.3.1.169.g33fd
