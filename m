@@ -1,104 +1,131 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC/PATCH 1/2] Teach Solaris that _XOPEN_SOURCE=600 really menas XPG6
-Date: Thu, 28 May 2009 13:37:09 -0700
-Message-ID: <7viqjlge16.fsf@alter.siamese.dyndns.org>
-References: <1243106697-6424-1-git-send-email-gitster@pobox.com>
-	<1243106697-6424-2-git-send-email-gitster@pobox.com>
-	<WLNdjYtfqcg2bT6yOBtAykIqOBTeSLRUdlB6-sTM2KzTjwOmzN3fLg@cipher.nrlssc.navy.mil>
+From: Paul Menzel <paulepanter@users.sourceforge.net>
+Subject: Git, Debian and development against xf86-video-intel
+Date: Thu, 28 May 2009 16:39:33 +0200
+Message-ID: <1243521573.944.170.camel@mattotaupa.wohnung.familie-menzel.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
-To: Brandon Casey <casey@nrlssc.navy.mil>
-X-From: git-owner@vger.kernel.org Thu May 28 22:37:45 2009
+Content-Type: multipart/signed; micalg="pgp-sha1"; protocol="application/pgp-signature"; boundary="=-m7NPdRl+oAZ6N+j933EU"
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu May 28 22:50:37 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M9mMC-00067k-Cf
-	for gcvg-git-2@gmane.org; Thu, 28 May 2009 22:37:44 +0200
+	id 1M9mYe-00063r-U3
+	for gcvg-git-2@gmane.org; Thu, 28 May 2009 22:50:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1764353AbZE1UhJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 May 2009 16:37:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1764114AbZE1UhJ
-	(ORCPT <rfc822;git-outgoing>); Thu, 28 May 2009 16:37:09 -0400
-Received: from fed1rmmtao102.cox.net ([68.230.241.44]:48224 "EHLO
-	fed1rmmtao102.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759820AbZE1UhI (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 May 2009 16:37:08 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao102.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20090528203709.JWUO20976.fed1rmmtao102.cox.net@fed1rmimpo01.cox.net>;
-          Thu, 28 May 2009 16:37:09 -0400
-Received: from localhost ([68.225.240.211])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id x8d91b00F4aMwMQ038d9kh; Thu, 28 May 2009 16:37:09 -0400
-X-Authority-Analysis: v=1.0 c=1 a=UYOYdknvHTQA:10 a=aXQZQtK9SsAA:10
- a=DujndSHeXfpZKyUntsoA:9 a=ncFZiLJFtHVnYd8ezBsA:7
- a=gfvOW5zgkHY_w-CYWvdSpw0uyOwA:4
-X-CM-Score: 0.00
-In-Reply-To: <WLNdjYtfqcg2bT6yOBtAykIqOBTeSLRUdlB6-sTM2KzTjwOmzN3fLg@cipher.nrlssc.navy.mil> (Brandon Casey's message of "Thu\, 28 May 2009 11\:46\:50 -0500")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+	id S1764839AbZE1UtT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 May 2009 16:49:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1764815AbZE1UtS
+	(ORCPT <rfc822;git-outgoing>); Thu, 28 May 2009 16:49:18 -0400
+Received: from b186.blue.fastwebserver.de ([62.141.42.186]:50667 "EHLO
+	mail.gw90.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1764821AbZE1UtQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 May 2009 16:49:16 -0400
+X-Greylist: delayed 22176 seconds by postgrey-1.27 at vger.kernel.org; Thu, 28 May 2009 16:49:16 EDT
+Received: from f053034254.adsl.alicedsl.de ([78.53.34.254] helo=[192.168.178.21])
+	by mail.gw90.de with esmtpsa (TLS1.0:DHE_RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.69)
+	(envelope-from <paulepanter@users.sourceforge.net>)
+	id 1M9glg-0007cm-7K
+	for git@vger.kernel.org; Thu, 28 May 2009 14:39:40 +0000
+X-Mailer: Evolution 2.26.1.1 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120226>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120227>
 
-Brandon Casey <casey@nrlssc.navy.mil> writes:
 
-> So we either require compiling with a c99 compiler (by ensuring that
-> _XPG6 is set) or exclude compiling with a c99 compiler on sun (by
-> ensuring that _XPG6 is not set).  Actually, this would only affect Solaris
-> versions which support XPG6.  Solaris 11 and 10 do.  I don't know about
-> Solaris 9 and 8.  Solaris 7 doesn't.
->
-> Which do we want to do?
+--=-m7NPdRl+oAZ6N+j933EU
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-If possible, both ;-), because people would have or want to use different
-compilers.
+Dear list readers,
 
-I use "gcc -std=c99" on all platforms I compile git on (for details see
-"Make" in the 'todo' branch; I have a checkout of the todo branch at Meta/
-and say "Meta/Make --pedantic" from the toplevel), and that is how I
-noticed this breakage on OpenSolaris 08.11 (it identifies itself as 5.11,
-so presumably it falls into "Solaris 11" category you cited above?)
 
->> diff --git a/git-compat-util.h b/git-compat-util.h
->> index c7cf2d5..4236647 100644
->> --- a/git-compat-util.h
->> +++ b/git-compat-util.h
->> @@ -41,8 +41,10 @@
->>  
->>  #if !defined(__APPLE__) && !defined(__FreeBSD__)  && !defined(__USLC__) && !defined(_M_UNIX)
->>  #define _XOPEN_SOURCE 600 /* glibc2 and AIX 5.3L need 500, OpenBSD needs 600 for S_ISLNK() */
+I sent this message to the xorg list but did not get an answer [3]. I
+adapted this message a little bit.
 
-Judging from their header files, I guess Sun's attitude is incompatible
-with the above comment for _XOPEN_SOURCE.  We say "... need 500" and set
-it to 600 because we merely mean "need to be at least 500" by "need 500",
-but Sun wants us to be very precise.  So instead of saying __sun__, we
-could do something more explicit with a huge comment...
+I have some patches against xf86-video-intel 2.3.2 [4], which is the
+version in Debian Lenny. Ultimately these should be integrated upstream,
+so probably in version 2.7.x.
 
-	#if !defined(__APPLE__) ...
-        # define _XOPEN_SOURCE 600
-        /*
-         * On Solaris, when _XOPEN_EXTENDED is set, its header file
-         * forces the programs to be XPG4v2, defeating the _XOPEN_SOURCE
-         * setting we just made to say we are XPG6.  Also on Solaris,
-         * XPG6 programs must be compiled with a c99 compiler, while
-         * non XPG6 programs must be compiled with a pre-c99 compiler.
-         */
-        # if defined(__sun__) && !(__STDC_VERSION__ - 0 >= 199901L)
-        # define _XOPEN_EXTENDED 1 /* AIX 5.3L wants this */
-        # endif
-	#endif
+The developer of the patch is using Debian Lenny and therefore it would
+be convenient to be able to build always a Debian package to be able to
+test the patches.
 
-We might want to flatten this a bit more to special case Solaris, which
-might make it easier to maintain, e.g.
+My question is: =E2=80=9CHow is your repository setup?=E2=80=9D or =E2=80=
+=9CHow do you do
+this?=E2=80=9D.
 
-	#if defined(__sun__)
-        # ... whatever _XOPEN_SOURCE and _XOPEN_EXTENDED magic
-        # ... Solaris wants
-        #elif !defined(__APPLE__) && ...
-        # ... existing code
-        #endif
+The Debian Git repository is available [1] and of course the xorg one
+too [2].
+
+*One problem is, that the Debian branch includes some patches in debian/
+which do not apply cleanly anymore after changing the Intel sources.
+Therefore it is not so easy to just merge to branches!*
+
+1. One suggestion I got from Tobias Grimm was to do the following.
+
+git init
+git remote add xorg git://anongit.freedesktop.org/xorg/driver/xf86-video-in=
+tel
+git remote add debian git://git.debian.org/git/pkg-xorg/driver/xserver-xorg=
+-video-intel
+git fetch debian ; git fetch --tags debian
+git fetch xorg ; git fetch --tags xorg
+# there are some minor discrepancies between the tags
+git br frc-patch xorg/master
+git br frc-debian-lenny debian/debian-lenny
+# publish the branches on a server
+
+Then develop against one branch (probably debian-lenny the patches are
+based on) and cherry-pick them into master.
+
+2. One other way is to only use the Debian Git repository because it
+tracks the xorg branches.
+
+git clone git://git.debian.org/git/pkg-xorg/driver/xserver-xorg-video-intel
+git checkout --track origin/upstream-lenny
+# apply patches against upstream-lenny
+git checkout --track origin/debian-lenny
+git merge upstream-lenny # rebase does not work
+# adapt a Debian specific patch
+# publish the branches on a server
+
+3. Or would it be better to directly develop against debian-lenny?
+
+4. What branches should be published? 4? One for upstream version in
+Debian Lenny, one to be ready to build for Debian Lenny, one for latest
+upstream and one adapted for Debian?
+
+Sorry for this kind of post. But I am no Git expert, so any advice is
+much appreciated. I found this post [5] but because of the
+Debian/distribution specific stuff it did not solve all my questions.
+
+
+Thanks,
+
+Paul
+
+
+[1] http://git.debian.org/?p=3Dpkg-xorg/driver/xserver-xorg-video-intel.git
+[2] http://cgit.freedesktop.org/xorg/driver/xf86-video-intel/
+[3] http://lists.freedesktop.org/archives/xorg/2009-April/045279.html
+[4] http://projects.vdr-developer.org/git/?p=3Dxf86-video-intel-frc.git;a=
+=3Dsummary
+[5] http://www.gelato.unsw.edu.au/archives/git/0601/15567.html
+
+--=-m7NPdRl+oAZ6N+j933EU
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Dies ist ein digital signierter Nachrichtenteil
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
+
+iEYEABECAAYFAkoeoiUACgkQPX1aK2wOHVhMVgCfaXlupdhUgU0RR/4UOKSmczVS
+t28An3mqZ6kQFapD1MiPPXwP2x612vsH
+=BoyN
+-----END PGP SIGNATURE-----
+
+--=-m7NPdRl+oAZ6N+j933EU--
