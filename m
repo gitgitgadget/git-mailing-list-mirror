@@ -1,95 +1,92 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Quick way to clone exactly one branch
-Date: Thu, 28 May 2009 13:26:05 -0700 (PDT)
-Message-ID: <m3ljohas9x.fsf@localhost.localdomain>
-References: <32541b130905201345h6daa84e8hb937e1e46456b3c5@mail.gmail.com>
-	<20090528201503.GL13499@coredump.intra.peff.net>
+From: Ealdwulf Wuffinga <ealdwulf@googlemail.com>
+Subject: Re: RFE: "git bisect reverse"
+Date: Thu, 28 May 2009 21:29:26 +0100
+Message-ID: <efe2b6d70905281329s1ae5a94coe5875714f341d5a9@mail.gmail.com>
+References: <4A1C6B70.4050501@zytor.com> <4A1CACB2.7000702@vilain.net> 
+	<4A1CBF7A.3090708@zytor.com> <200905270726.59883.chriscool@tuxfamily.org> 
+	<efe2b6d70905271411g4e1616b5w548141ee9fab2c14@mail.gmail.com> 
+	<20090527211836.GA14841@localhost> <efe2b6d70905271507s187babe9yf19a25268ab0b95e@mail.gmail.com> 
+	<4A1DC7D8.2050601@vilain.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Avery Pennarun <apenwarr@gmail.com>,
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Clemens Buchacher <drizzd@aon.at>,
+	Christian Couder <chriscool@tuxfamily.org>,
+	"H. Peter Anvin" <hpa@zytor.com>,
 	Git Mailing List <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu May 28 22:26:19 2009
+To: Sam Vilain <sam@vilain.net>
+X-From: git-owner@vger.kernel.org Thu May 28 22:30:00 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M9mB7-0000Af-C5
-	for gcvg-git-2@gmane.org; Thu, 28 May 2009 22:26:17 +0200
+	id 1M9mEe-0001tL-Sz
+	for gcvg-git-2@gmane.org; Thu, 28 May 2009 22:29:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760865AbZE1U0G (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 May 2009 16:26:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759962AbZE1U0G
-	(ORCPT <rfc822;git-outgoing>); Thu, 28 May 2009 16:26:06 -0400
-Received: from fg-out-1718.google.com ([72.14.220.154]:30626 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759813AbZE1U0F (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 May 2009 16:26:05 -0400
-Received: by fg-out-1718.google.com with SMTP id 16so2092466fgg.17
-        for <git@vger.kernel.org>; Thu, 28 May 2009 13:26:05 -0700 (PDT)
+	id S1757845AbZE1U3s (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 May 2009 16:29:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759091AbZE1U3r
+	(ORCPT <rfc822;git-outgoing>); Thu, 28 May 2009 16:29:47 -0400
+Received: from mail-ew0-f176.google.com ([209.85.219.176]:49725 "EHLO
+	mail-ew0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755360AbZE1U3q (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 May 2009 16:29:46 -0400
+Received: by ewy24 with SMTP id 24so5784898ewy.37
+        for <git@vger.kernel.org>; Thu, 28 May 2009 13:29:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received
-         :x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        bh=n4wM5M/ZfzIETgxj29QpscBq4hETS11mYxAhnaqzjDY=;
-        b=YGOuk3PPxdvT/W1tDvaK3T7IaMKkioZlqPhDPIvgO4qJ9I0HNFuRAQmRRtjEN0jZRq
-         2ZdgduTX0MWWR29c5dgTRI+geZNDWATngKZebzrvWGQADzkf3kTnLxBwjPDWQKv7Dc5r
-         RPQdSHmRkLDF3QFYmtCHPpUtvM32EkPcmM0nE=
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=Qst6wg4xImE+T8ABQKbng/jZZOHnRU/I9mCA+FHrwIc=;
+        b=uiumrUx711LNWux6Bp8/XKG4RL1lSxK4vgaDVHo+f1F3Z6L68BaBe8YTNXaU6Nk78l
+         3xTqZDrgeIqsXFTPOhuMFYHtXc9Ldw4Cg9DeFCCJDSKfbgvy/KqCNPvr8lQ2cjfbrG1H
+         +gevB/+r0ej8rwVPabO/C9k7AnUYNUWZTFwWs=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        b=fvlJC6UPsuarutRoOfNYAaztxVSefjtSEPCWFeMF7EYeixnCj7LGbl4crZNlyQyS5i
-         RMLn3GWtM3gxvCJxbKEejj7oX3l/IiZ4hJyWk6gLwr8xt9N/PdDrrzwjtf8CQ6szicVn
-         0xV18t4floyZwzwWmzKiSzi8GYImYkQ+CI5qA=
-Received: by 10.86.91.10 with SMTP id o10mr1981624fgb.13.1243542365672;
-        Thu, 28 May 2009 13:26:05 -0700 (PDT)
-Received: from localhost.localdomain (abtj91.neoplus.adsl.tpnet.pl [83.8.155.91])
-        by mx.google.com with ESMTPS id d4sm885320fga.19.2009.05.28.13.26.04
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 28 May 2009 13:26:05 -0700 (PDT)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id n4SKQ586002968;
-	Thu, 28 May 2009 22:26:05 +0200
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id n4SKQ3pB002965;
-	Thu, 28 May 2009 22:26:03 +0200
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <20090528201503.GL13499@coredump.intra.peff.net>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+        d=googlemail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=TTNsHoBbQglSZGe6z+oMLMgV7x36xIY8muK57xzeCcP+ykx4/tuXD/gY8paS7NE8Dr
+         iO0nKBu8tyUeljjYenaukTOtR8BBgL3408+klExaCIXj+CSJPipa5rRMPiQcPKzg6VhL
+         fh5S8BJwt0MDMrPfhbvG5rYwpRfHFDJpoTU38=
+Received: by 10.216.11.138 with SMTP id 10mr652386wex.51.1243542586384; Thu, 
+	28 May 2009 13:29:46 -0700 (PDT)
+In-Reply-To: <4A1DC7D8.2050601@vilain.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120223>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120224>
 
-Jeff King <peff@peff.net> writes:
+On Thu, May 28, 2009 at 12:08 AM, Sam Vilain <sam@vilain.net> wrote:
+> Ealdwulf Wuffinga wrote:
 
-> On Wed, May 20, 2009 at 04:45:44PM -0400, Avery Pennarun wrote:
-> 
-> > Is there a quick alternative to the following?
-> > 
-> >    mkdir myproj
-> >    cd myproj
-> >    git init
-> >    git fetch git://whatever master
-> >    git checkout -b master FETCH_HEAD
-> > 
-> > Basically, the above is a lot like 'git clone' but only clones the
-> > 'master' branch.  For really big projects with lots of junk in other
-> > branches, the above can save a lot of bandwidth.
-> 
-> No, AFAIK there isn't a simpler way to do it. But it is something people
-> have asked about before, so I think it would be a nice addition.
-> 
-> You can't even use "git remote" because it doesn't allow you to tweak
-> the refspecs you add. [...]
+>> [some time back] http://github.com/Ealdwulf/bbchop/tree/master
 
-It doesn't? Strange, I thought that is what '-t <branch>' option
-for "git remote add" for ;-))))
+>> For git-bisect, Sam and H Peter are proposing a heuristic to trade off
+>> between information gained and likelihood of testing a bad commit. For
+>> bbchop, I am already doing calculating the information gain directly,
+>> so if I can incorporate the probability that a commit is broken - has
+>> to be skipped - then the trade-off will happen automatically.
+>> Therefore it would be useful to have some plausible theory as to how
+>> the probability of a broken commit should be calculated, given some
+>> known-broken and known-not-broken commits.
+>>
+>
+> Sounds like interesting stuff, can you make a patch out of it?
 
--- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+The code as it stands will actually work with an unmodified git.
+What it doesn't yet have is a 'git-bisect'-like frontend, which is the only
+part which would actually require modifying (or just adding to) git itself.
+
+It does already interface to the git plumbing, so you can try it out if you
+don't mind using a slightly ungitlike  interface.
+
+I assume it's not worth doing a patch which would just copy my tree
+into the git source tree?
+
+There was also, last time I mentioned this on the list, some question
+as to whether it was acceptable to add something written in python to
+git.
+
+Ealdwulf
