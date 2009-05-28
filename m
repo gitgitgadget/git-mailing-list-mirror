@@ -1,71 +1,85 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: Strangely hosed git install
-Date: Thu, 28 May 2009 10:29:54 +0200
-Message-ID: <4A1E4B82.9040809@drmicha.warpmail.net>
-References: <46a038f90905280008h5510d03aj5f6e5728ca075027@mail.gmail.com>	 <7vprdthezg.fsf@alter.siamese.dyndns.org> <46a038f90905280022s1c07565bnf26335fccf7c7e94@mail.gmail.com>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: Problem with large files on different OSes
+Date: Thu, 28 May 2009 10:52:36 +0200
+Message-ID: <4A1E50D4.2010203@op5.se>
+References: <m3y6siboij.fsf@localhost.localdomain>	 <alpine.LFD.2.01.0905270942580.3435@localhost.localdomain>	 <alpine.LFD.2.00.0905271312220.3906@xanadu.home>	 <20090527215314.GA10362@coredump.intra.peff.net>	 <alpine.LFD.2.01.0905271457310.3435@localhost.localdomain>	 <f95910c20905271609u63d04965oa38b8af34d7704c1@mail.gmail.com>	 <alpine.LFD.2.01.0905271825520.3435@localhost.localdomain>	 <alpine.LFD.2.00.0905272312370.3906@xanadu.home>	 <loom.20090528T041831-21@post.gmane.org>	 <20090528043019.GA30527@spearce.org> <279b37b20905272252i3d98b6bv698ff636d61ee058@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Martin Langhoff <martin.langhoff@gmail.com>
-X-From: git-owner@vger.kernel.org Thu May 28 10:30:31 2009
+Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
+To: Eric Raible <raible@gmail.com>
+X-From: git-owner@vger.kernel.org Thu May 28 10:52:55 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M9b0Q-0000wi-4g
-	for gcvg-git-2@gmane.org; Thu, 28 May 2009 10:30:30 +0200
+	id 1M9bLv-0001QM-NT
+	for gcvg-git-2@gmane.org; Thu, 28 May 2009 10:52:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761582AbZE1IaK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 May 2009 04:30:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757258AbZE1IaJ
-	(ORCPT <rfc822;git-outgoing>); Thu, 28 May 2009 04:30:09 -0400
-Received: from out1.smtp.messagingengine.com ([66.111.4.25]:52227 "EHLO
-	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1761015AbZE1IaF (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 28 May 2009 04:30:05 -0400
-Received: from compute2.internal (compute2.internal [10.202.2.42])
-	by out1.messagingengine.com (Postfix) with ESMTP id D9612346B0E;
-	Thu, 28 May 2009 04:30:06 -0400 (EDT)
-Received: from heartbeat1.messagingengine.com ([10.202.2.160])
-  by compute2.internal (MEProxy); Thu, 28 May 2009 04:30:06 -0400
-X-Sasl-enc: 6hxTMnKg95KDr031Xz0Eo2apL5jSzWiBivr4WCmaYMtS 1243499406
-Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.12])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 0A2613BC1C;
-	Thu, 28 May 2009 04:30:05 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1pre) Gecko/20090525 Lightning/1.0pre Shredder/3.0b3pre
-In-Reply-To: <46a038f90905280022s1c07565bnf26335fccf7c7e94@mail.gmail.com>
+	id S1762112AbZE1Iwe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 May 2009 04:52:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759462AbZE1Iwe
+	(ORCPT <rfc822;git-outgoing>); Thu, 28 May 2009 04:52:34 -0400
+Received: from na3sys009aog103.obsmtp.com ([74.125.149.71]:33657 "HELO
+	na3sys009aog103.obsmtp.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with SMTP id S1759318AbZE1Iwd (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 28 May 2009 04:52:33 -0400
+Received: from source ([72.14.220.158]) by na3sys009aob103.postini.com ([74.125.148.12]) with SMTP
+	ID DSNKSh5Q0ufAtx8SjtxqTU+NgLFNyO6wd64X@postini.com; Thu, 28 May 2009 01:52:35 PDT
+Received: by fg-out-1718.google.com with SMTP id e12so1960702fga.10
+        for <git@vger.kernel.org>; Thu, 28 May 2009 01:52:33 -0700 (PDT)
+Received: by 10.86.59.2 with SMTP id h2mr1280734fga.30.1243500753487;
+        Thu, 28 May 2009 01:52:33 -0700 (PDT)
+Received: from clix.int.op5.se ([212.112.174.166])
+        by mx.google.com with ESMTPS id l12sm4677045fgb.16.2009.05.28.01.52.32
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Thu, 28 May 2009 01:52:33 -0700 (PDT)
+User-Agent: Thunderbird 2.0.0.21 (X11/20090320)
+In-Reply-To: <279b37b20905272252i3d98b6bv698ff636d61ee058@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120171>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120172>
 
-Martin Langhoff venit, vidit, dixit 28.05.2009 09:22:
-> On Thu, May 28, 2009 at 9:18 AM, Junio C Hamano <gitster@pobox.com> wrote:
->> "type --all git"?
->> "git --exec-path"?
->> "ls $(git --exec-path)"?
+Eric Raible wrote:
+> On Wed, May 27, 2009 at 9:30 PM, Shawn O. Pearce <spearce@spearce.org> wrote:
+>> Eric Raible <raible@gmail.com> wrote:
+>>> Nicolas Pitre <nico <at> cam.org> writes:
+>>>> On Wed, 27 May 2009, Linus Torvalds wrote:
+>>>>
+>>>>> +pack.packDeltaLimit::
+>>>>> + The default maximum size of objects that we try to delta.
+>>>> The option name feels a bit wrong here, like if it meant the max number
+>>>> of deltas in a pack.  Nothing better comes to my mind at the moment
+>>>> though.
+>>> pack.maxDeltaSize sounds weird when said aloud.
+>>> How about pack.deltaMaxSize?
+>> That sounds like, how big should a delta be?  E.g. set it to 200
+>> and any delta instruction stream over 200 bytes would be discarded,
+>> causing the whole object to be stored instead.  Which is obviously
+>> somewhat silly, but that's the way I'd read that option...
 >>
+>> --
+>> Shawn.
 > 
-> It all looks fairly correct to me:
+> You're right, that _is_ a strange color for the bike shed...
 
-Yes, but your shell seems to find git-diff somewhere, so what about:
+Since 'delta' names both the action and the result of the action, it's
+tricky to get it unambiguous without helping the grammar along a little.
 
-type --all git-diff
-echo $PATH
+    pack.maxFileSizeToDelta
 
-In any case, Ubuntu seems to do something strange about binaries which
-used to be installed. How can "git-diff" trigger a message about
-"apt-get install git-core"?
+is probably the shortest we're going to get it while avoiding ambiguity.
 
-For sure it does the same strange thing for everything else which used
-to be in your PATH, and this makes current stash, gc etc. fail when
-trying to call git-pack-objects and such. A "/usr/bin time machine"???
+-- 
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
 
-OTOH: The git-pack-objects usage line indicates that you clearly have
-older plumbing lying around. I suspect there are at least 2 issues on
-that box.
+Register now for Nordic Meet on Nagios, June 3-4 in Stockholm
+ http://nordicmeetonnagios.op5.org/
 
-Michael
+Considering the successes of the wars on alcohol, poverty, drugs and
+terror, I think we should give some serious thought to declaring war
+on peace.
