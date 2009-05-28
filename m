@@ -1,67 +1,163 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH v2 2/2] diff: generate prettier filenames when using
-	GIT_EXTERNAL_DIFF
-Date: Thu, 28 May 2009 18:06:06 -0400
-Message-ID: <20090528220606.GA24148@coredump.intra.peff.net>
-References: <1243491077-27738-1-git-send-email-davvid@gmail.com> <1243491077-27738-2-git-send-email-davvid@gmail.com> <20090528174436.GA12723@coredump.intra.peff.net> <20090528213049.GA55167@gmail.com>
+From: Nick Woolley <nickwoolley@yahoo.co.uk>
+Subject: [PATCH] git-cvsexportcommit can't commit files which have been removed
+ from CVS
+Date: Fri, 29 May 2009 00:23:33 +0100
+Message-ID: <4A1F1CF5.8030002@yahoo.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, gitster@pobox.com, markus.heidelberg@web.de,
-	jnareb@gmail.com, j.sixt@viscovery.net
-To: David Aguilar <davvid@gmail.com>
-X-From: git-owner@vger.kernel.org Fri May 29 00:06:43 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri May 29 01:23:46 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M9nkH-0003Av-Ik
-	for gcvg-git-2@gmane.org; Fri, 29 May 2009 00:06:42 +0200
+	id 1M9owr-00012k-Vi
+	for gcvg-git-2@gmane.org; Fri, 29 May 2009 01:23:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751601AbZE1WGP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 May 2009 18:06:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751515AbZE1WGO
-	(ORCPT <rfc822;git-outgoing>); Thu, 28 May 2009 18:06:14 -0400
-Received: from peff.net ([208.65.91.99]:44415 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751011AbZE1WGO (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 May 2009 18:06:14 -0400
-Received: (qmail 23621 invoked by uid 107); 28 May 2009 22:06:17 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Thu, 28 May 2009 18:06:17 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Thu, 28 May 2009 18:06:06 -0400
-Content-Disposition: inline
-In-Reply-To: <20090528213049.GA55167@gmail.com>
+	id S1751732AbZE1XXd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 May 2009 19:23:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751367AbZE1XXd
+	(ORCPT <rfc822;git-outgoing>); Thu, 28 May 2009 19:23:33 -0400
+Received: from udon.noodlefactory.co.uk ([80.68.88.167]:53689 "EHLO
+	udon.noodlefactory.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751109AbZE1XXc (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 May 2009 19:23:32 -0400
+Received: from 87-194-154-6.bethere.co.uk ([87.194.154.6] helo=[192.168.0.101])
+	by udon.noodlefactory.co.uk with esmtpsa (TLS-1.0:DHE_RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.63)
+	(envelope-from <nickwoolley@yahoo.co.uk>)
+	id 1M9owe-0002yf-SL
+	for git@vger.kernel.org; Fri, 29 May 2009 00:23:33 +0100
+User-Agent: Thunderbird 2.0.0.21 (X11/20090318)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120240>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120241>
 
-On Thu, May 28, 2009 at 02:30:49PM -0700, David Aguilar wrote:
+If a file X is removed from CVS, it goes into the Attic directory, and
+CVS reports it as 'no file X' but with status 'Up-to-date'.  This is
+misinterpreted an existing file when git-cvsexportcommit tries to commit a file
+with the same name as one of these.  This patch attempts to correctly identify
+these files, so that new files with the same name can be committed.
 
-> > FWIW, I find this name not very descriptive. From the name, I would
-> > expect it to do the exact same thing as mkstemps, but be our own
-> > personal implementation. But it is actually a wrapper that behaves
-> > somewhat differently. So I wonder if "mkstemps_tmpdir" or something
-> > would be a better name.
-> 
-> It does exactly what git_mkstemp() does, plus the extra
-> suffix_len parameter.  If we rename this function we have to
-> rename both.
+Added a test to t9200-git-cvsexportcommit.sh, which tests that we can
+re-commit a removed filename which remains in CVS's attic. This adds a
+file 'attic_gremlin' in CVS, then "removes" it, then tries to commit a
+file with the same name from git.
 
-Ah. Well, I think that is a crappy name, too, then, but it is not your
-fault. ;) So if there is precedent, I guess somebody else thought it was
-a good idea, and you should leave your patch as-is.
+Signed-off-by: Nick Woolley <git.wu-lee@noodlefactory.co.uk>
+---
+ git-cvsexportcommit.perl       |   49 ++++++++++++++++++++++++++++-----------
+ t/t9200-git-cvsexportcommit.sh |   18 ++++++++++++++
+ 2 files changed, 53 insertions(+), 14 deletions(-)
 
-> I was not aware of the other code paths and only wanted to
-> affect the one that I knew about.  I agree that making that the
-> default behavior would be great, meaning we could drop the
-> pretty_filename flag altogether.
-> 
-> If you and others agree that the user-friendly names are a good
-> thing to have by default then I can rework patch 2/2.
+diff --git a/git-cvsexportcommit.perl b/git-cvsexportcommit.perl
+index 6d9f0ef..e5e8ca9 100755
+--- a/git-cvsexportcommit.perl
++++ b/git-cvsexportcommit.perl
+@@ -225,7 +225,14 @@ if (@canstatusfiles) {
+       foreach my $name (keys %todo) {
+ 	my $basename = basename($name);
 
-Switching to user-friendly temp filenames for textconv was on my todo
-list, so I definitely think it is a good idea.
+-	$basename = "no file " . $basename if (exists($added{$basename}));
++	# CVS reports files which are "status"ed which don't exist
++	# in the current revision as "no file $basename", so we
++	# should anticipate that.  Totally unknown files will have
++	# a status "Unknown". However, if they exist in the attic
++	# their status will be "Up-to-date" (this means they were
++	# added once but have been removed).
++	$basename = "no file $basename" if $added{$basename};
++
+ 	$basename =~ s/^\s+//;
+ 	$basename =~ s/\s+$//;
 
--Peff
+@@ -233,31 +240,45 @@ if (@canstatusfiles) {
+ 	  $fullname{$basename} = $name;
+ 	  push (@canstatusfiles2, $name);
+ 	  delete($todo{$name});
+-        }
++	}
+       }
+       my @cvsoutput;
+       @cvsoutput = xargs_safe_pipe_capture([@cvs, 'status'], @canstatusfiles2);
+       foreach my $l (@cvsoutput) {
+-        chomp $l;
+-        if ($l =~ /^File:\s+(.*\S)\s+Status: (.*)$/) {
+-	  if (!exists($fullname{$1})) {
+-	    print STDERR "Huh? Status reported for unexpected file '$1'\n";
+-	  } else {
+-	    $cvsstat{$fullname{$1}} = $2;
+-	  }
+-	}
++	chomp $l;
++	next unless
++	    my ($file, $status) = $l =~ /^File:\s+(.*\S)\s+Status: (.*)$/;
++
++	my $fullname = $fullname{$file};
++	print STDERR "Huh? Status '$status' reported for unexpected file '$file'\n"
++	    unless defined $fullname;
++
++	# This response means the file does not exist except in
++	# CVS's attic, so set the status accordingly
++	$status = "In-attic"
++	    if $file =~ /^no file /
++		&& $status eq 'Up-to-date';
++
++	$cvsstat{$fullname{$file}} = $status;
+       }
+     }
+ }
+
+-# ... validate new files,
++# ... Validate new files have the correct status
+ foreach my $f (@afiles) {
+-    if (defined ($cvsstat{$f}) and $cvsstat{$f} ne "Unknown") {
+-	$dirty = 1;
++    next unless defined(my $stat = $cvsstat{$f});
++
++    # This means the file has never been seen before
++    next if $stat eq 'Unknown';
++
++    # This means the file has been seen before but was removed
++    next if $stat eq 'In-attic';
++
++    $dirty = 1;
+ 	warn "File $f is already known in your CVS checkout -- perhaps it has been
+added by another user. Or this may indicate that it exists on a different
+branch. If this is the case, use -f to force the merge.\n";
+ 	warn "Status was: $cvsstat{$f}\n";
+-    }
+ }
++
+ # ... validate known files.
+ foreach my $f (@files) {
+     next if grep { $_ eq $f } @afiles;
+diff --git a/t/t9200-git-cvsexportcommit.sh b/t/t9200-git-cvsexportcommit.sh
+index 56b7c06..ef1f8d2 100755
+--- a/t/t9200-git-cvsexportcommit.sh
++++ b/t/t9200-git-cvsexportcommit.sh
+@@ -317,4 +317,22 @@ test_expect_success 'use the same checkout for Git and CVS' '
+
+ '
+
++test_expect_success 're-commit a removed filename which remains in CVS attic' '
++
++    (cd "$CVSWORK" &&
++     echo >attic_gremlin &&
++     cvs -Q add attic_gremlin &&
++     cvs -Q ci -m "added attic_gremlin" &&
++     rm attic_gremlin &&
++     cvs -Q rm attic_gremlin &&
++     cvs -Q ci -m "removed attic_gremlin") &&
++
++    echo > attic_gremlin &&
++    git add attic_gremlin &&
++    git commit -m "Added attic_gremlin" &&
++	git cvsexportcommit -w "$CVSWORK" -c HEAD &&
++    (cd "$CVSWORK"; cvs -Q update -d) &&
++    test -f "$CVSWORK/attic_gremlin"
++'
++
+ test_done
