@@ -1,81 +1,170 @@
-From: "H. Peter Anvin" <hpa@zytor.com>
-Subject: Re: RFE: "git bisect reverse"
-Date: Wed, 27 May 2009 20:11:45 -0700
-Message-ID: <4A1E00F1.4030709@zytor.com>
-References: <4A1C6B70.4050501@zytor.com> <4A1CACB2.7000702@vilain.net> 	<4A1CBF7A.3090708@zytor.com> <200905270726.59883.chriscool@tuxfamily.org> 	<efe2b6d70905271411g4e1616b5w548141ee9fab2c14@mail.gmail.com> 	<20090527211836.GA14841@localhost> <efe2b6d70905271507s187babe9yf19a25268ab0b95e@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Clemens Buchacher <drizzd@aon.at>,
-	Christian Couder <chriscool@tuxfamily.org>,
-	Sam Vilain <sam@vilain.net>,
-	Git Mailing List <git@vger.kernel.org>
-To: Ealdwulf Wuffinga <ealdwulf@googlemail.com>
-X-From: git-owner@vger.kernel.org Thu May 28 05:12:12 2009
+From: Mark Lodato <lodatom@gmail.com>
+Subject: [PATCH 1/2] http.c: prompt for SSL client certificate password
+Date: Wed, 27 May 2009 23:16:02 -0400
+Message-ID: <1243480563-5954-1-git-send-email-lodatom@gmail.com>
+Cc: Mark Lodato <lodatom@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu May 28 05:16:47 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M9W2M-0004oZ-TV
-	for gcvg-git-2@gmane.org; Thu, 28 May 2009 05:12:11 +0200
+	id 1M9W6o-0005jG-Sj
+	for gcvg-git-2@gmane.org; Thu, 28 May 2009 05:16:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754384AbZE1DMB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 May 2009 23:12:01 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753726AbZE1DMB
-	(ORCPT <rfc822;git-outgoing>); Wed, 27 May 2009 23:12:01 -0400
-Received: from terminus.zytor.com ([198.137.202.10]:37524 "EHLO
-	terminus.zytor.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751734AbZE1DMA (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 May 2009 23:12:00 -0400
-Received: from mail.hos.anvin.org (c-98-210-181-100.hsd1.ca.comcast.net [98.210.181.100])
-	(authenticated bits=0)
-	by terminus.zytor.com (8.14.3/8.14.1) with ESMTP id n4S3BnOe001211
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Wed, 27 May 2009 20:11:50 -0700
-Received: from tazenda.hos.anvin.org (tazenda.hos.anvin.org [172.27.0.16])
-	by mail.hos.anvin.org (8.14.2/8.13.8) with ESMTP id n4S3BmuC007267;
-	Wed, 27 May 2009 20:11:49 -0700
-Received: from tazenda.hos.anvin.org (localhost.localdomain [127.0.0.1])
-	by tazenda.hos.anvin.org (8.14.3/8.13.6) with ESMTP id n4S3BjFv026885;
-	Wed, 27 May 2009 20:11:46 -0700
-User-Agent: Thunderbird 2.0.0.14 (X11/20080501)
-In-Reply-To: <efe2b6d70905271507s187babe9yf19a25268ab0b95e@mail.gmail.com>
-X-Virus-Scanned: ClamAV 0.94.2/9397/Wed May 27 07:48:50 2009 on terminus.zytor.com
-X-Virus-Status: Clean
+	id S1755441AbZE1DQj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 May 2009 23:16:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754858AbZE1DQj
+	(ORCPT <rfc822;git-outgoing>); Wed, 27 May 2009 23:16:39 -0400
+Received: from mail-qy0-f190.google.com ([209.85.221.190]:48947 "EHLO
+	mail-qy0-f190.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754377AbZE1DQi (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 May 2009 23:16:38 -0400
+Received: by qyk28 with SMTP id 28so5128155qyk.33
+        for <git@vger.kernel.org>; Wed, 27 May 2009 20:16:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer;
+        bh=2+ay2opALLrAf4wW9faPBLRkEC2/+oMffA0SCIvGXds=;
+        b=xPMGz3FmiMI80TCyc41agSdcbkvLdWNGsT3swOBnXJ3q3lrIqEtR0I0IcH2VuE4vmZ
+         Ee2BiHfDvY8sCte8NMj6meumgkwDL4E64yDa3kFQBXol8qHWO6dwissSnXJTwRw+FEnY
+         /9gKzJ2z2g+SoHXENkQfLyykZ978e81mdgcmU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=TJscl+S+zCQIHPsIrXi1oDMHh1/oqwFnVMoAZMkDxPdEGzBJTvEJtb773yH29+1V3q
+         xUWI/ZwTC95aMxqbiYyBG/7lry5qHHWCcCPuBCs2txH4m+tUlvQwcuk1x3T9Ld7qCJmK
+         u13mSPvgWTptsl4CCG7KIr3mewIMvUImf2yYY=
+Received: by 10.224.37.138 with SMTP id x10mr946317qad.147.1243480597653;
+        Wed, 27 May 2009 20:16:37 -0700 (PDT)
+Received: from localhost.localdomain (c-68-33-182-150.hsd1.dc.comcast.net [68.33.182.150])
+        by mx.google.com with ESMTPS id 5sm680953qwg.29.2009.05.27.20.16.36
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 27 May 2009 20:16:37 -0700 (PDT)
+X-Mailer: git-send-email 1.6.3.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120139>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120140>
 
-Ealdwulf Wuffinga wrote:
-> 
-> For git-bisect, Sam and H Peter are proposing a heuristic to trade off
-> between information gained and likelihood of testing a bad commit. For
-> bbchop, I am already doing calculating the information gain directly,
-> so if I can incorporate the probability that a commit is broken - has
-> to be skipped - then the trade-off will happen automatically.
-> Therefore it would be useful to have some plausible theory as to how
-> the probability of a broken commit should be calculated, given some
-> known-broken and known-not-broken commits.
-> 
+If an SSL client certificate is enabled (via http.sslcert or
+GIT_SSL_CERT), prompt for the certificate password rather than
+defaulting to OpenSSL's password prompt.  This causes the prompt to only
+appear once each run.  Previously, OpenSSL prompted the user *many*
+times, causing git to be unusable over HTTPS with client-side
+certificates.
 
-Again, given a bisection, the information gain by "bisecting" at point x
- where 0 < x < 1 is:
+Note that the password is stored in memory in the clear while the
+program is running.  This may be a security problem if git crashes and
+core dumps.
 
-	-(x log2 x)-((1-x) log2 (1-x))
+The user is always prompted, even if the certificate is not encrypted.
+This should be fine; unencrypted certificates are rare and a security
+risk anyway.
 
-At x = 0.5 this gives the optimal 1 bit, but the curve is rather flat
-near the top.  You don't drop to 1/2 bit of information until
-x = 0.11 or 0.89, and it doesn't drop to 1/4 bit of information until
-x = 0.04 or 0.96.
+Signed-off-by: Mark Lodato <lodatom@gmail.com>
+---
 
-Thus, the lack of optimality in searching away from a skip point is much
-smaller than the potential cost of having to having to skip multiple
-nearby points.
+See http://osdir.com/ml/git/2009-02/msg03402.html for a discussion of
+this topic and an example showing how horrible the current password
+prompts are.
 
-	-hpa
+The next patch adds an option to disable this feature.  I split it into
+two commits in case the configuration option is not wanted.
 
+I did not create any tests because the existing http.sslcert option has
+no tests to begin with.
+
+I would really like to use git over HTTPS with client certs, but the
+current situation is just unusable.  So, I'm hoping this gets included
+in git.git at some point.  I would be happy to hear any comments people
+have about this patch series.  Thanks!
+
+
+ http.c |   40 +++++++++++++++++++++++++++++++++++++++-
+ 1 files changed, 39 insertions(+), 1 deletions(-)
+
+diff --git a/http.c b/http.c
+index 2e3d649..1fc3444 100644
+--- a/http.c
++++ b/http.c
+@@ -26,6 +26,8 @@ static long curl_low_speed_time = -1;
+ static int curl_ftp_no_epsv;
+ static const char *curl_http_proxy;
+ static char *user_name, *user_pass;
++static char *ssl_cert_password;
++static int ssl_cert_password_required;
+ 
+ static struct curl_slist *pragma_header;
+ 
+@@ -167,6 +169,22 @@ static void init_curl_http_auth(CURL *result)
+ 	}
+ }
+ 
++static int has_cert_password(void)
++{
++	if (ssl_cert_password != NULL)
++		return 1;
++	if (ssl_cert == NULL || ssl_cert_password_required != 1)
++		return 0;
++	/* Only prompt the user once. */
++	ssl_cert_password_required = -1;
++	ssl_cert_password = getpass("Certificate Password: ");
++	if (ssl_cert_password != NULL) {
++		ssl_cert_password = xstrdup(ssl_cert_password);
++		return 1;
++	} else
++		return 0;
++}
++
+ static CURL *get_curl_handle(void)
+ {
+ 	CURL *result = curl_easy_init();
+@@ -189,6 +207,16 @@ static CURL *get_curl_handle(void)
+ 
+ 	if (ssl_cert != NULL)
+ 		curl_easy_setopt(result, CURLOPT_SSLCERT, ssl_cert);
++	if (has_cert_password())
++		curl_easy_setopt(result,
++#if LIBCURL_VERSION_NUM >= 0x071700
++				 CURLOPT_KEYPASSWD,
++#elif LIBCURL_VERSION_NUM >= 0x070903
++				 CURLOPT_SSLKEYPASSWD,
++#else
++				 CURLOPT_SSLCERTPASSWD,
++#endif
++				 ssl_cert_password);
+ #if LIBCURL_VERSION_NUM >= 0x070902
+ 	if (ssl_key != NULL)
+ 		curl_easy_setopt(result, CURLOPT_SSLKEY, ssl_key);
+@@ -329,8 +357,11 @@ void http_init(struct remote *remote)
+ 	if (getenv("GIT_CURL_FTP_NO_EPSV"))
+ 		curl_ftp_no_epsv = 1;
+ 
+-	if (remote && remote->url && remote->url[0])
++	if (remote && remote->url && remote->url[0]) {
+ 		http_auth_init(remote->url[0]);
++		if (!prefixcmp(remote->url[0], "https://"))
++			ssl_cert_password_required = 1;
++	}
+ 
+ #ifndef NO_CURL_EASY_DUPHANDLE
+ 	curl_default = get_curl_handle();
+@@ -370,6 +401,13 @@ void http_cleanup(void)
+ 		free((void *)curl_http_proxy);
+ 		curl_http_proxy = NULL;
+ 	}
++
++	if (ssl_cert_password != NULL) {
++		memset(ssl_cert_password, 0, strlen(ssl_cert_password));
++		free(ssl_cert_password);
++		ssl_cert_password = NULL;
++	}
++	ssl_cert_password_required = 0;
+ }
+ 
+ struct active_request_slot *get_active_slot(void)
 -- 
-H. Peter Anvin, Intel Open Source Technology Center
-I work for Intel.  I don't speak on their behalf.
+1.6.3.1
