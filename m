@@ -1,108 +1,132 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH v2 1/2] compat: add a mkstemps() compatibility function
-Date: Thu, 28 May 2009 09:07:32 +0200
-Message-ID: <4A1E3834.3020502@viscovery.net>
-References: <1243491077-27738-1-git-send-email-davvid@gmail.com>
+From: Martin Langhoff <martin.langhoff@gmail.com>
+Subject: Strangely hosed git install
+Date: Thu, 28 May 2009 09:08:58 +0200
+Message-ID: <46a038f90905280008h5510d03aj5f6e5728ca075027@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, gitster@pobox.com, markus.heidelberg@web.de,
-	jnareb@gmail.com
-To: David Aguilar <davvid@gmail.com>
-X-From: git-owner@vger.kernel.org Thu May 28 09:07:44 2009
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu May 28 09:09:13 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M9ZiK-0008EZ-03
-	for gcvg-git-2@gmane.org; Thu, 28 May 2009 09:07:44 +0200
+	id 1M9Zjk-0000CV-5f
+	for gcvg-git-2@gmane.org; Thu, 28 May 2009 09:09:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751939AbZE1HHg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 May 2009 03:07:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751473AbZE1HHg
-	(ORCPT <rfc822;git-outgoing>); Thu, 28 May 2009 03:07:36 -0400
-Received: from lilzmailso02.liwest.at ([212.33.55.13]:14742 "EHLO
-	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751380AbZE1HHf (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 May 2009 03:07:35 -0400
-Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
-	by lilzmailso02.liwest.at with esmtpa (Exim 4.69)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1M9Zi9-00021K-4R; Thu, 28 May 2009 09:07:33 +0200
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.96])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id D687A6B7; Thu, 28 May 2009 09:07:32 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.21 (Windows/20090302)
-In-Reply-To: <1243491077-27738-1-git-send-email-davvid@gmail.com>
-X-Enigmail-Version: 0.95.5
-X-Spam-Score: -1.4 (-)
+	id S1751994AbZE1HI7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 May 2009 03:08:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751728AbZE1HI6
+	(ORCPT <rfc822;git-outgoing>); Thu, 28 May 2009 03:08:58 -0400
+Received: from mail-fx0-f168.google.com ([209.85.220.168]:50223 "EHLO
+	mail-fx0-f168.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751327AbZE1HI6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 May 2009 03:08:58 -0400
+Received: by fxm12 with SMTP id 12so3467593fxm.37
+        for <git@vger.kernel.org>; Thu, 28 May 2009 00:08:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:date:message-id:subject
+         :from:to:content-type:content-transfer-encoding;
+        bh=P8VZ1erPmU3ak0NvhrFf4wNvkrK1sEFSVKx8BbrTJy8=;
+        b=wlAm5ZepSToNQOhHNPYkparrv6gecpUh4ikLcsYYDZEbNBQxEpgoolpR1lSk8T29Ct
+         0AJzoRWEWPcO02hrsXXBQwWGLE2jI13WoaCNo3LooTgVqpC3tkxvDOmsoVKQITxIJFh7
+         cO/eIdVR9w3V7Apc1OcJcO9aChMaW04iJdWeM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:date:message-id:subject:from:to:content-type
+         :content-transfer-encoding;
+        b=AjmkD19KAzdI9lGvShtSxaETVzTic+6pwW1lvZI1t6mLU1463C5fvwyb1AJvsVRoDj
+         HL0bjI1irw6XalR8sMh/GGUv6SC+0R3ljXULP/0Y3tXH3lcO3jjPqSZSdEUF/XmoVimF
+         To6cUnie2izuGeaWOVmnhw2ewjCpIykDBS1qs=
+Received: by 10.223.122.141 with SMTP id l13mr797524far.99.1243494538700; Thu, 
+	28 May 2009 00:08:58 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120159>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120160>
 
-David Aguilar schrieb:
-> +++ b/compat/mkstemps.c
-> @@ -0,0 +1,78 @@
-> +#include <string.h>
-> +#include <errno.h>
-> +#include <stdio.h>
-> +#include <fcntl.h>
-> +#include <inttypes.h>
-> +#include <unistd.h>
-> +#include <sys/time.h>
-> +#include <sys/types.h>
-...
-> +#ifndef O_BINARY
-> +#define O_BINARY 0
-> +#endif
-...
-> +		fd = open(pattern, O_BINARY|O_CREAT|O_EXCL|O_RDWR, 0600);
+My main laptop (and part-time dev box) has a partially hosed git
+installation. This is an ubuntu intrepid machine where I have been
+building git from src for a while. Perhaps there's a way to diagnose
+this before I take more drastic measures :-)
 
-You should not include "random" system headers, nor has mkstemps any
-business deciding whether files are opened in binary mode. We are not
-using O_BINARY anywhere else (except in compat/mingw.c). With the patch
-below squashed in (I hope it won't be wrapped) you can add:
+So far gc, repack and stash show errors. No dataloss AFAICS (though
+the git stash errors scared me initially).
 
-Tested-by: Johannes Sixt <j6t@kdbg.org> (Windows)
+gc and repack error out thus:
 
-to both your patches. And, yes, I like them :-)
+$ git gc
+usage: git-pack-objects [{ -q | --progress | --all-progress }]
+        [--max-pack-size=N] [--local] [--incremental]
+        [--window=N] [--window-memory=N] [--depth=N]
+        [--no-reuse-delta] [--no-reuse-object] [--delta-base-offset]
+        [--threads=N] [--non-empty] [--revs [--unpacked | --all]*] [--reflog]
+        [--stdout | base-name] [--keep-unreachable] [<ref-list | <object-list]
+error: failed to run repack
+$ echo $?
+255
 
--- Hannes
+And stash...
 
-diff --git a/compat/mkstemps.c b/compat/mkstemps.c
-index 10f9ed6..1cf7f3d 100644
---- a/compat/mkstemps.c
-+++ b/compat/mkstemps.c
-@@ -1,20 +1,9 @@
--#include <string.h>
--#include <errno.h>
--#include <stdio.h>
--#include <fcntl.h>
--#include <inttypes.h>
--#include <unistd.h>
--#include <sys/time.h>
--#include <sys/types.h>
-+#include "../git-compat-util.h"
+$ git stash
+usage: git-diff-index [-m] [--cached] [<common diff options>]
+<tree-ish> [<path>...]
+common diff options:
+(...)
 
- #ifndef TMP_MAX
- #define TMP_MAX 16384
- #endif
+usage: git-diff-index [-m] [--cached] [<common diff options>]
+<tree-ish> [<path>...]
+common diff options:
+(...)
+Saved working directory and index state "WIP on master: 1eac877... WIP
+olpc-update-query: if the lease is due soon avoid
+randomly_do_nothing()"
+HEAD is now at 1eac877... WIP olpc-update-query: if the lease is due
+soon avoid randomly_do_nothing()
+(To restore them type "git stash apply")
+$ echo $?
+0
+$ git stash show
+ olpc-update-query |    5 +++++
+ 1 files changed, 5 insertions(+), 0 deletions(-)
+$ git stash apply # does the right thing
 
--#ifndef O_BINARY
--#define O_BINARY 0
--#endif
--
- /* Adapted from libiberty's mkstemp.c. */
- int gitmkstemps(char *pattern, int suffix_len)
- {
-@@ -57,7 +46,7 @@ int gitmkstemps(char *pattern, int suffix_len)
- 		template[4] = letters[v % num_letters]; v/= num_letters;
- 		template[5] = letters[v % num_letters]; v/= num_letters;
+Some background diagnostics info
 
--		fd = open(pattern, O_BINARY|O_CREAT|O_EXCL|O_RDWR, 0600);
-+		fd = open(pattern, O_CREAT|O_EXCL|O_RDWR, 0600);
- 		if (fd > 0)
- 			return fd;
- 		/* Fatal error (EPERM, ENOSPC etc).
+ - $ git --version
+   git version 1.6.3.1.26.gf5b223
+
+ - $ which git
+   /home/martin/bin/git
+  # there is no other git install anywhere on the box
+
+ - the git-core package was once installed temporarily (to try out a
+package that depends on git-core)
+
+ - some oldstyle "dashed" commands trigger a helper bash extension, thus
+   $ git-diff
+   The program 'git-diff' is currently not installed.  You can install
+it by typing:
+   sudo apt-get install git-core
+   bash: git-diff: command not found
+
+
+I can't figure out what is wrong with the install. I have bisected a
+few bugs in the past, but that had never left any traces behind.
+
+It's not a serious problem -- I just wonder whether it'd affect other
+people developing / tracking git.
+
+cheers,
+
+
+
+m
+--
+ martin.langhoff@gmail.com
+ martin@laptop.org -- School Server Architect
+ - ask interesting questions
+ - don't get distracted with shiny stuff  - working code first
+ - http://wiki.laptop.org/go/User:Martinlanghoff
