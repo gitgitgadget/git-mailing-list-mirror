@@ -1,131 +1,138 @@
-From: Paul Menzel <paulepanter@users.sourceforge.net>
-Subject: Git, Debian and development against xf86-video-intel
-Date: Thu, 28 May 2009 16:39:33 +0200
-Message-ID: <1243521573.944.170.camel@mattotaupa.wohnung.familie-menzel.net>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: Problem with large files on different OSes
+Date: Thu, 28 May 2009 16:54:28 -0400 (EDT)
+Message-ID: <alpine.LFD.2.00.0905281608060.3906@xanadu.home>
+References: <submission.1M9Gk0-0000N8-MQ@mail.cs.st-andrews.ac.uk>
+ <m3y6siboij.fsf@localhost.localdomain>
+ <alpine.LFD.2.01.0905270922250.3435@localhost.localdomain>
+ <alpine.LFD.2.01.0905270942580.3435@localhost.localdomain>
+ <alpine.LFD.2.00.0905271312220.3906@xanadu.home>
+ <20090527215314.GA10362@coredump.intra.peff.net>
+ <alpine.LFD.2.00.0905271834280.3906@xanadu.home>
+ <20090528200039.GI13499@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg="pgp-sha1"; protocol="application/pgp-signature"; boundary="=-m7NPdRl+oAZ6N+j933EU"
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu May 28 22:50:37 2009
+Content-Type: multipart/mixed; boundary="Boundary_(ID_z4lfvbToK1raKapDO+eBbA)"
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	Jakub Narebski <jnareb@gmail.com>,
+	Christopher Jefferson <caj@cs.st-andrews.ac.uk>,
+	git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu May 28 22:54:45 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M9mYe-00063r-U3
-	for gcvg-git-2@gmane.org; Thu, 28 May 2009 22:50:37 +0200
+	id 1M9mce-0007ge-MK
+	for gcvg-git-2@gmane.org; Thu, 28 May 2009 22:54:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1764839AbZE1UtT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 May 2009 16:49:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1764815AbZE1UtS
-	(ORCPT <rfc822;git-outgoing>); Thu, 28 May 2009 16:49:18 -0400
-Received: from b186.blue.fastwebserver.de ([62.141.42.186]:50667 "EHLO
-	mail.gw90.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1764821AbZE1UtQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 May 2009 16:49:16 -0400
-X-Greylist: delayed 22176 seconds by postgrey-1.27 at vger.kernel.org; Thu, 28 May 2009 16:49:16 EDT
-Received: from f053034254.adsl.alicedsl.de ([78.53.34.254] helo=[192.168.178.21])
-	by mail.gw90.de with esmtpsa (TLS1.0:DHE_RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.69)
-	(envelope-from <paulepanter@users.sourceforge.net>)
-	id 1M9glg-0007cm-7K
-	for git@vger.kernel.org; Thu, 28 May 2009 14:39:40 +0000
-X-Mailer: Evolution 2.26.1.1 
+	id S1757899AbZE1Uyf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 May 2009 16:54:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757194AbZE1Uye
+	(ORCPT <rfc822;git-outgoing>); Thu, 28 May 2009 16:54:34 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:20405 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756189AbZE1Uyd (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 May 2009 16:54:33 -0400
+Received: from xanadu.home ([66.131.194.97]) by VL-MO-MR003.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
+ with ESMTP id <0KKD0058MGQS1N60@VL-MO-MR003.ip.videotron.ca> for
+ git@vger.kernel.org; Thu, 28 May 2009 16:54:28 -0400 (EDT)
+X-X-Sender: nico@xanadu.home
+In-reply-to: <20090528200039.GI13499@coredump.intra.peff.net>
+User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120227>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120228>
+
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
+
+--Boundary_(ID_z4lfvbToK1raKapDO+eBbA)
+Content-type: TEXT/PLAIN; charset=utf-8
+Content-transfer-encoding: 8BIT
+
+On Thu, 28 May 2009, Jeff King wrote:
+
+> On Wed, May 27, 2009 at 07:29:02PM -0400, Nicolas Pitre wrote:
+> 
+> > > What about large files that have a short metadata section that may
+> > > change? Versions with only the metadata changed delta well, and with a
+> > > custom diff driver, can produce useful diffs. And I don't think that is
+> > > an impractical or unlikely example; large files can often be tagged
+> > > media.
+> > 
+> > Sure... but what is the actual data pattern currently used out there?
+> 
+> I'm not sure what you mean by "out there", but I just exactly described
+> the data pattern of a repo I have (a few thousand 5 megapixel JPEGs and
+> short (a few dozens of megabytes) AVIs, frequent additions, infrequently
+> changing photo contents, and moderately changing metadata). I don't know
+> how that matches other peoples' needs.
+
+How do diffing à la 'git diff' JPEGs or AVIs make sense?
+
+Also, you certainly have little to delta against as you add new photos 
+more often than modifying existing ones?
+
+> Game designers have been mentioned before in large media checkins, and I
+> think they focus less on metadata changes. Media is either there to
+> stay, or it is replaced as a whole.
+
+Right.  And my proposal fits that scenario pretty well.
+
+> > What does P4 or CVS or SVN do with multiple versions of almost identical 
+> > 2GB+ files?
+> 
+> I only ever tried this with CVS, which just stored the entire binary
+> version as a whole. And of course running "diff" was useless, but then
+> it was also useless on text files. ;) I suspect CVS would simply choke
+> on a 2G file.
+> 
+> But I don't want to do as well as those other tools. I want to be able
+> to do all of the useful things git can do but with large files.
+
+Right now git simply do much worse.  So doing as well is still a worthy 
+goal.
+
+> Right. I think in some ways we are perhaps talking about two different
+> problems. I am really interested in moderately large files (a few
+> megabytes up to a few dozens or even a hundred megabytes), but I want
+> git to be _fast_ at dealing with them, and doing useful operations on
+> them (like rename detection, diffing, etc).
+
+I still can't see how diffing big files is useful.  Certainly you'll 
+need a specialized external diff tool, in which case it is not git's 
+problem anymore except for writing content to temporary files.
+
+Rename detection: either you deal with the big files each time, or you 
+(re)create a cache with that information so no analysis is needed the 
+second time around.  This is something that even small files might 
+possibly benefit from.  But in any case, there is no other ways but to 
+bite the bullet at least initially, and big files will be slower to 
+process no matter what.
+
+> A smart splitter would probably want to mark part of the split as "this
+> section is large and uninteresting for compression, deltas, diffing, and
+> renames".  And that half may be stored in the way that you are proposing
+> (in a separate single-object pack, no compression, no delta, etc). So in
+> a sense I think what I am talking about would built on top of what you
+> want to do.
+
+Looks to me like you wish for git to do what a specialized database 
+would be much more suited for the task.  Isn't there tools to gather 
+picture metadata info, just like itunes does with MP3s already?
+
+> But I do think we can get some of the benefits by maintaining a split
+> cache for viewers.
+
+Sure.
+
+But being able to deal with large (1GB and more) files remains a totally 
+different problem.
 
 
---=-m7NPdRl+oAZ6N+j933EU
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Nicolas
 
-Dear list readers,
-
-
-I sent this message to the xorg list but did not get an answer [3]. I
-adapted this message a little bit.
-
-I have some patches against xf86-video-intel 2.3.2 [4], which is the
-version in Debian Lenny. Ultimately these should be integrated upstream,
-so probably in version 2.7.x.
-
-The developer of the patch is using Debian Lenny and therefore it would
-be convenient to be able to build always a Debian package to be able to
-test the patches.
-
-My question is: =E2=80=9CHow is your repository setup?=E2=80=9D or =E2=80=
-=9CHow do you do
-this?=E2=80=9D.
-
-The Debian Git repository is available [1] and of course the xorg one
-too [2].
-
-*One problem is, that the Debian branch includes some patches in debian/
-which do not apply cleanly anymore after changing the Intel sources.
-Therefore it is not so easy to just merge to branches!*
-
-1. One suggestion I got from Tobias Grimm was to do the following.
-
-git init
-git remote add xorg git://anongit.freedesktop.org/xorg/driver/xf86-video-in=
-tel
-git remote add debian git://git.debian.org/git/pkg-xorg/driver/xserver-xorg=
--video-intel
-git fetch debian ; git fetch --tags debian
-git fetch xorg ; git fetch --tags xorg
-# there are some minor discrepancies between the tags
-git br frc-patch xorg/master
-git br frc-debian-lenny debian/debian-lenny
-# publish the branches on a server
-
-Then develop against one branch (probably debian-lenny the patches are
-based on) and cherry-pick them into master.
-
-2. One other way is to only use the Debian Git repository because it
-tracks the xorg branches.
-
-git clone git://git.debian.org/git/pkg-xorg/driver/xserver-xorg-video-intel
-git checkout --track origin/upstream-lenny
-# apply patches against upstream-lenny
-git checkout --track origin/debian-lenny
-git merge upstream-lenny # rebase does not work
-# adapt a Debian specific patch
-# publish the branches on a server
-
-3. Or would it be better to directly develop against debian-lenny?
-
-4. What branches should be published? 4? One for upstream version in
-Debian Lenny, one to be ready to build for Debian Lenny, one for latest
-upstream and one adapted for Debian?
-
-Sorry for this kind of post. But I am no Git expert, so any advice is
-much appreciated. I found this post [5] but because of the
-Debian/distribution specific stuff it did not solve all my questions.
-
-
-Thanks,
-
-Paul
-
-
-[1] http://git.debian.org/?p=3Dpkg-xorg/driver/xserver-xorg-video-intel.git
-[2] http://cgit.freedesktop.org/xorg/driver/xf86-video-intel/
-[3] http://lists.freedesktop.org/archives/xorg/2009-April/045279.html
-[4] http://projects.vdr-developer.org/git/?p=3Dxf86-video-intel-frc.git;a=
-=3Dsummary
-[5] http://www.gelato.unsw.edu.au/archives/git/0601/15567.html
-
---=-m7NPdRl+oAZ6N+j933EU
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Dies ist ein digital signierter Nachrichtenteil
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
-
-iEYEABECAAYFAkoeoiUACgkQPX1aK2wOHVhMVgCfaXlupdhUgU0RR/4UOKSmczVS
-t28An3mqZ6kQFapD1MiPPXwP2x612vsH
-=BoyN
------END PGP SIGNATURE-----
-
---=-m7NPdRl+oAZ6N+j933EU--
+--Boundary_(ID_z4lfvbToK1raKapDO+eBbA)--
