@@ -1,85 +1,78 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH v2 2/2] diff: generate prettier filenames when using
-	GIT_EXTERNAL_DIFF
-Date: Thu, 28 May 2009 13:44:36 -0400
-Message-ID: <20090528174436.GA12723@coredump.intra.peff.net>
-References: <1243491077-27738-1-git-send-email-davvid@gmail.com> <1243491077-27738-2-git-send-email-davvid@gmail.com>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: [PATCH WIP 0/4] Special code path for large blobs
+Date: Thu, 28 May 2009 14:03:40 -0400 (EDT)
+Message-ID: <alpine.LFD.2.00.0905281349320.3906@xanadu.home>
+References: <1243488550-15357-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, gitster@pobox.com, markus.heidelberg@web.de,
-	jnareb@gmail.com, j.sixt@viscovery.net
-To: David Aguilar <davvid@gmail.com>
-X-From: git-owner@vger.kernel.org Thu May 28 19:45:04 2009
+Content-Type: multipart/mixed; boundary="Boundary_(ID_sd40/m8AgXmTe/yVHQlwbw)"
+Cc: git@vger.kernel.org
+To: =?VISCII?Q?Nguy=ADn_Th=E1i_Ng=F7c_Duy?= <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Thu May 28 20:04:08 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M9jf4-00066v-BM
-	for gcvg-git-2@gmane.org; Thu, 28 May 2009 19:45:02 +0200
+	id 1M9jxT-0006tp-Up
+	for gcvg-git-2@gmane.org; Thu, 28 May 2009 20:04:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756206AbZE1Roo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 May 2009 13:44:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755677AbZE1Roo
-	(ORCPT <rfc822;git-outgoing>); Thu, 28 May 2009 13:44:44 -0400
-Received: from peff.net ([208.65.91.99]:56621 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756538AbZE1Ron (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 May 2009 13:44:43 -0400
-Received: (qmail 22004 invoked by uid 107); 28 May 2009 17:44:47 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Thu, 28 May 2009 13:44:47 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Thu, 28 May 2009 13:44:36 -0400
-Content-Disposition: inline
-In-Reply-To: <1243491077-27738-2-git-send-email-davvid@gmail.com>
+	id S1755059AbZE1SDy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 May 2009 14:03:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754817AbZE1SDy
+	(ORCPT <rfc822;git-outgoing>); Thu, 28 May 2009 14:03:54 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:64696 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752274AbZE1SDx (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 May 2009 14:03:53 -0400
+Received: from xanadu.home ([66.131.194.97]) by VL-MO-MR004.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
+ with ESMTP id <0KKD00HLE8UELR20@VL-MO-MR004.ip.videotron.ca> for
+ git@vger.kernel.org; Thu, 28 May 2009 14:03:50 -0400 (EDT)
+X-X-Sender: nico@xanadu.home
+In-reply-to: <1243488550-15357-1-git-send-email-pclouds@gmail.com>
+User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120203>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120204>
 
-On Wed, May 27, 2009 at 11:11:17PM -0700, David Aguilar wrote:
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-> +int git_mkstemps(char *path, size_t n, const char *template, int suffix_len);
+--Boundary_(ID_sd40/m8AgXmTe/yVHQlwbw)
+Content-type: TEXT/PLAIN; charset=VISCII
+Content-transfer-encoding: 8BIT
 
-FWIW, I find this name not very descriptive. From the name, I would
-expect it to do the exact same thing as mkstemps, but be our own
-personal implementation. But it is actually a wrapper that behaves
-somewhat differently. So I wonder if "mkstemps_tmpdir" or something
-would be a better name.
+On Thu, 28 May 2009, Nguy­n Thái Ng÷c Duy wrote:
 
-> +	if (pretty_filename) {
-> +		/* Generate "XXXXXX_filename" */
+> Thread "Problem with large files on different OSes" reminds me this.
+> This series is in my repository for quite some time. It addresses
+> adding/checking out large blobs as long as:
+> 
+>  - no conversion will be done
+>  - blobs are loose (in checkout case)
+> 
+> Together with a patch that prevents large blobs from being packed
+> (something like Dana How sent long ago), and a modification of "lazy
+> clone/remote alternatives" patch to avoid packing large blobs again
+> for sending over network, I think it should make git possible for
+> large files.
+> 
+> Just something to play.
 
-Is there a reason _not_ to always just use the pretty filename? It looks
-like you turn it on for external diff, but off for textconv. I don't
-think there is a reason not to use it for textconv.
+I think this is a good start.
 
-Is there some other code path that changes it that I'm missing?
+However, like I said previously, I'd encapsulate large blobs in a pack 
+right away instead of storing them as loose objects.  The reason is that 
+you can effortlessly repack/fetch/push them afterwards by simply 
+triggering the pack data reuse code path for them.  Extracting large and 
+undeltified blobs from a pack is just as easy as from a loose object.
 
-> +		int pretty_filename = 1;
-> +		temp_one = prepare_temp_file(name, one, pretty_filename);
-> +		temp_two = prepare_temp_file(othername, two, pretty_filename);
+To accomplish that, you only need to copy write_pack_file() from 
+builtin-pack-objects.c and strip it to the bone with only one object to 
+write.
 
-I think this reads much better as just:
 
-  temp_one = prepare_temp_file(name, one, 1);
-  temp_two = prepare_temp_file(othername, two, 1);
+Nicolas
 
-Then it eliminates one bit of state for the reader to keep track of; I
-don't have to wonder if pretty_filename might ever change. If I care
-about what the '1' means, I can go look at the definition of
-prepare_temp_file (or if you really want to make it more
-self-documenting, make it a "flags" field and set the
-USE_PRETTY_FILENAME flag).
-
-However, I suspect that all callers should use pretty filenames, and
-then this bit would just go away.
-
-> +	int pretty_filename = 0;
->  
-> -	temp = prepare_temp_file(spec->path, spec);
-> +	temp = prepare_temp_file(spec->path, spec, pretty_filename);
-
-Ditto here.
-
--Peff
+--Boundary_(ID_sd40/m8AgXmTe/yVHQlwbw)--
