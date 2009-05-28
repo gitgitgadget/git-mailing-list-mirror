@@ -1,78 +1,128 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: Recover broken git index?
-Date: Thu, 28 May 2009 14:20:16 -0700 (PDT)
-Message-ID: <alpine.LFD.2.01.0905281413130.3435@localhost.localdomain>
-References: <4A1DB700.4080705@bcm.edu> <4A1E52FD.6090801@op5.se> <4A1E86D7.3060401@bcm.edu> <alpine.LFD.2.01.0905281053030.3435@localhost.localdomain> <4A1EFBE9.7070805@bcm.edu>
+From: Jeff King <peff@peff.net>
+Subject: Re: Problem with large files on different OSes
+Date: Thu, 28 May 2009 17:21:06 -0400
+Message-ID: <20090528212106.GA14874@coredump.intra.peff.net>
+References: <submission.1M9Gk0-0000N8-MQ@mail.cs.st-andrews.ac.uk> <m3y6siboij.fsf@localhost.localdomain> <alpine.LFD.2.01.0905270922250.3435@localhost.localdomain> <alpine.LFD.2.01.0905270942580.3435@localhost.localdomain> <alpine.LFD.2.00.0905271312220.3906@xanadu.home> <20090527215314.GA10362@coredump.intra.peff.net> <alpine.LFD.2.00.0905271834280.3906@xanadu.home> <20090528200039.GI13499@coredump.intra.peff.net> <alpine.LFD.2.00.0905281608060.3906@xanadu.home>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Andreas Ericsson <ae@op5.se>, git@vger.kernel.org
-To: Misha Koshelev <mk144210@bcm.edu>
-X-From: git-owner@vger.kernel.org Thu May 28 23:20:33 2009
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	Jakub Narebski <jnareb@gmail.com>,
+	Christopher Jefferson <caj@cs.st-andrews.ac.uk>,
+	git@vger.kernel.org
+To: Nicolas Pitre <nico@cam.org>
+X-From: git-owner@vger.kernel.org Thu May 28 23:21:37 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M9n1d-0001N6-EK
-	for gcvg-git-2@gmane.org; Thu, 28 May 2009 23:20:33 +0200
+	id 1M9n2d-0001kD-DE
+	for gcvg-git-2@gmane.org; Thu, 28 May 2009 23:21:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1764066AbZE1VUY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 May 2009 17:20:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760302AbZE1VUY
-	(ORCPT <rfc822;git-outgoing>); Thu, 28 May 2009 17:20:24 -0400
-Received: from smtp1.linux-foundation.org ([140.211.169.13]:41105 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1763387AbZE1VUW (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 28 May 2009 17:20:22 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
-	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id n4SLKHDK008097
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Thu, 28 May 2009 14:20:18 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id n4SLKGLQ018048;
-	Thu, 28 May 2009 14:20:16 -0700
-X-X-Sender: torvalds@localhost.localdomain
-In-Reply-To: <4A1EFBE9.7070805@bcm.edu>
-User-Agent: Alpine 2.01 (LFD 1184 2008-12-16)
-X-Spam-Status: No, hits=-3.462 required=5 tests=AWL,BAYES_00
-X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
+	id S1761708AbZE1VVO convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 28 May 2009 17:21:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760629AbZE1VVN
+	(ORCPT <rfc822;git-outgoing>); Thu, 28 May 2009 17:21:13 -0400
+Received: from peff.net ([208.65.91.99]:48364 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1759432AbZE1VVN (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 May 2009 17:21:13 -0400
+Received: (qmail 23375 invoked by uid 107); 28 May 2009 21:21:17 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Thu, 28 May 2009 17:21:17 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Thu, 28 May 2009 17:21:06 -0400
+Content-Disposition: inline
+In-Reply-To: <alpine.LFD.2.00.0905281608060.3906@xanadu.home>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120231>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120232>
 
+On Thu, May 28, 2009 at 04:54:28PM -0400, Nicolas Pitre wrote:
 
+> > I'm not sure what you mean by "out there", but I just exactly descr=
+ibed
+> > the data pattern of a repo I have (a few thousand 5 megapixel JPEGs=
+ and
+> > short (a few dozens of megabytes) AVIs, frequent additions, infrequ=
+ently
+> > changing photo contents, and moderately changing metadata). I don't=
+ know
+> > how that matches other peoples' needs.
+>=20
+> How do diffing =C3=A0 la 'git diff' JPEGs or AVIs make sense?
 
-On Thu, 28 May 2009, Misha Koshelev wrote:
-> 
-> Actually it was technically a _clean_ restart on Ubuntu 8.04. I suspect
-> there may have been some kind of strange hardware error though as
-> computer was very sluggish and BIOS took a while to start up.
+It is useful to see the changes in a text representation of the
+metadata, with a single-line mention if the image or movie data has
+changed. It's why I wrote the textconv feature.
 
-You may have had a disk that flaked out (disconnected from the SATA bus or 
-something). Sadly, when that happens, the messages obviously don't make it 
-to /var/log/messages, but you might have had them in your log when you 
-rebooted. Things like
+> Also, you certainly have little to delta against as you add new photo=
+s=20
+> more often than modifying existing ones?
 
-	ata1: device not ready (errno=-16), forcing hardreset
-	ata1: hard resetting port
-	ata1 SRST failed (errno=-19)
-	ata1: reset failed (errno=-19), retrying in 10 secs
-	...
+I do add new photos more than modifying existing ones. But I do modify
+the old ones (tag corrections, new tags I didn't think of initially,
+updates to the tagging schema, etc), too.
 
-and sometimes the problem doesn't go away until power is actually 
-disconnected, or a hard reset is performed.
+The sum of the sizes for all objects in the repo is 8.3G. The fully
+packed repo is 3.3G. So there clearly is some benefit from deltas, and =
+I
+don't want to just turn them off. Doing the actual repack is painfully
+slow.
 
-It could be a one-time event, but it could also be a sign of something bad 
-going on with the disk. Since you likely don't have any messages anywhere, 
-it's hard to even guess what is going on. But your symptoms are consistent 
-with that (sluggish simply because some things try to read or write to 
-disk and will fail after a _loong_ timeout, and BIOS taking a while to 
-start up because it probably does some really fundamental reset thing to 
-get the controller back)..
+> I still can't see how diffing big files is useful.  Certainly you'll=20
+> need a specialized external diff tool, in which case it is not git's=20
+> problem anymore except for writing content to temporary files.
 
-Of course, that's just a guess. 
+Writing content to temporarily files is actually quite slow when the
+files are hundreds of megabytes (even "git show" can be painful, let
+alone "git log -p"). But that is something that can be dealt with by
+improving the interface to external diff and textconv to avoid writing
+out the whole file (and is something I have patches in the works for,
+but they need finished and cleaned up).
 
-		Linus
+> Rename detection: either you deal with the big files each time, or yo=
+u=20
+> (re)create a cache with that information so no analysis is needed the=
+=20
+> second time around.  This is something that even small files might=20
+> possibly benefit from.  But in any case, there is no other ways but t=
+o=20
+> bite the bullet at least initially, and big files will be slower to=20
+> process no matter what.
+
+Right. What I am proposing is basically to create such a cache. But it
+is one that is general enough that it could be used for more than just
+the rename detection (though arguably rename detection and deltificatio=
+n
+could actually share more of the same techniques, in which case a cache
+for one would help the other).
+
+> Looks to me like you wish for git to do what a specialized database=20
+> would be much more suited for the task.  Isn't there tools to gather=20
+> picture metadata info, just like itunes does with MP3s already?
+
+Yes, I already have tools for handling picture metadata info. How do I
+version control that information? How do I keep it in sync across
+multiple checkouts? How do I handle merging concurrent changes from
+multiple sources? How do I keep that metadata connected to the pictures
+that it describes? The things I want to do are conceptually
+no different what I do with other files; it's merely the size of the
+files that makes working with them in git less convenient (but it does
+_work_; I am using git for this _now_, and I have been for a few years)=
+=2E
+
+> But being able to deal with large (1GB and more) files remains a tota=
+lly=20
+> different problem.
+
+Right, that is why I think I will end up building on top of what you do=
+=2E
+I am trying to make a way for some operations to avoid looking at the
+entire file, even streaming, which should drastically speed up those
+operations.  But it is unavoidable that some operations (e.g., "git
+add") will have to look at the entire file. And that is what your
+proposal is about; streaming is basically the only way forward there.
+
+-Peff
