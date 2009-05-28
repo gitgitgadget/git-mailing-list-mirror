@@ -1,119 +1,47 @@
-From: Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH] bisect: display first bad commit without forking a new process
-Date: Thu, 28 May 2009 23:21:16 +0200
-Message-ID: <20090528212117.3989.88194.chriscool@tuxfamily.org>
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu May 28 23:24:57 2009
+From: =?UTF-8?B?In46Jycg44GC44KK44GM44Go44GG44GU44GW44GE44G+44GX44Gf?=
+	 =?UTF-8?B?44CCIg==?= <j.chetwynd@btinternet.com>
+Subject: git & bug tracking
+Date: Thu, 28 May 2009 22:25:12 +0100
+Message-ID: <86D53106-920E-4499-B4F2-AE3B78053260@btinternet.com>
+Mime-Version: 1.0 (Apple Message framework v935.3)
+Content-Type: text/plain; charset=US-ASCII; format=flowed
+Content-Transfer-Encoding: 7bit
+To: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu May 28 23:27:06 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M9n5p-0002xo-Qz
-	for gcvg-git-2@gmane.org; Thu, 28 May 2009 23:24:54 +0200
+	id 1M9n7w-0003mB-AD
+	for gcvg-git-2@gmane.org; Thu, 28 May 2009 23:27:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932145AbZE1VXh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 May 2009 17:23:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1764322AbZE1VXg
-	(ORCPT <rfc822;git-outgoing>); Thu, 28 May 2009 17:23:36 -0400
-Received: from smtp5-g21.free.fr ([212.27.42.5]:45425 "EHLO smtp5-g21.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1764536AbZE1VXc (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 May 2009 17:23:32 -0400
-Received: from smtp5-g21.free.fr (localhost [127.0.0.1])
-	by smtp5-g21.free.fr (Postfix) with ESMTP id 4DD23D480DE;
-	Thu, 28 May 2009 23:23:27 +0200 (CEST)
-Received: from bureau.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
-	by smtp5-g21.free.fr (Postfix) with ESMTP id 5884CD480BB;
-	Thu, 28 May 2009 23:23:25 +0200 (CEST)
-X-git-sha1: adc73844cb81dc10b5b98c36b94f3495c9b088e8 
-X-Mailer: git-mail-commits v0.4.5
+	id S932239AbZE1VY4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 May 2009 17:24:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932235AbZE1VY4
+	(ORCPT <rfc822;git-outgoing>); Thu, 28 May 2009 17:24:56 -0400
+Received: from smtp815.mail.ird.yahoo.com ([77.238.189.20]:35222 "HELO
+	smtp815.mail.ird.yahoo.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with SMTP id S932144AbZE1VYz (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 28 May 2009 17:24:55 -0400
+Received: (qmail 15722 invoked from network); 28 May 2009 21:24:55 -0000
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=s1024; d=btinternet.com;
+  h=Received:X-YMail-OSG:X-Yahoo-Newman-Property:Message-Id:From:To:Content-Type:Content-Transfer-Encoding:Mime-Version:Subject:Date:X-Mailer;
+  b=yUIfi9OY+I8RNHRT1ZadF9tZBbYLfxTQcpFfZKULLlJP7MzgYITeBab89CG3mU7rhzsh0kwTAmRq3Aa3T4w+nIZ04CK9yT8MfONZFY05CGRjuj7dO2qBwgsRvYZi+1cUOQM0au7tEMjCkwRywGAXMr5+qPIHQi4mzNU5feSjpPo=  ;
+Received: from unknown (HELO Jay.home) (j.chetwynd@86.129.168.0 with plain)
+  by smtp815.mail.ird.yahoo.com with SMTP; 28 May 2009 21:24:55 -0000
+X-YMail-OSG: GQce.gcVM1nHTNpYADvTSZIURET3YfRe.zBihIfmOEwm8Ebij3cYDABv7LfM91x4ZAPq1XZFG10C5VmcOPDymOkcYx5V6u5IqBf1CBXUpTzndIiTsvWVoiN0Ynwo9ys8XBUsXRNnAzMLj2r_UoqnDMWql3s0D073oE8INGlc2K90vbKotGDtWMtfTHGGuk3AJA0ZL4JG2GbE9HfdBEqEXH.HH3eWnEiF17EnvdEE_rmNysQFYN4fFGbMR4k-
+X-Yahoo-Newman-Property: ymail-3
+X-Mailer: Apple Mail (2.935.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120234>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120235>
 
-Previously "git diff-tree --pretty COMMIT" was run using
-"run_command_v_opt" to display information about the first bad
-commit.
+Jakub, branching between japanese and chinese has limited appeal,
+how about answering the question and less of the smarts?
 
-The goal of this patch is to avoid a "fork" and an "exec" call
-when displaying that information.
+cheers
 
-To do that, we manually setup revision information as
-"git diff-tree --pretty" would do it, and then use the
-"log_tree_commit" function.
-
-Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
----
- bisect.c |   30 +++++++++++++++++++++++++++---
- 1 files changed, 27 insertions(+), 3 deletions(-)
-
-	The only change is that "struct rev_info opt" is not
-	static anymore. 
-
-diff --git a/bisect.c b/bisect.c
-index c43c120..edd3cfb 100644
---- a/bisect.c
-+++ b/bisect.c
-@@ -7,6 +7,7 @@
- #include "quote.h"
- #include "sha1-lookup.h"
- #include "run-command.h"
-+#include "log-tree.h"
- #include "bisect.h"
- 
- struct sha1_array {
-@@ -27,7 +28,6 @@ struct argv_array {
- 	int argv_alloc;
- };
- 
--static const char *argv_diff_tree[] = {"diff-tree", "--pretty", NULL, NULL};
- static const char *argv_checkout[] = {"checkout", "-q", NULL, "--", NULL};
- static const char *argv_show_branch[] = {"show-branch", NULL, NULL};
- 
-@@ -816,6 +816,31 @@ static void check_good_are_ancestors_of_bad(const char *prefix)
- }
- 
- /*
-+ * This does "git diff-tree --pretty COMMIT" without one fork+exec.
-+ */
-+static void show_diff_tree(const char *prefix, struct commit *commit)
-+{
-+	struct rev_info opt;
-+
-+	/* diff-tree init */
-+	init_revisions(&opt, prefix);
-+	git_config(git_diff_basic_config, NULL); /* no "diff" UI options */
-+	opt.abbrev = 0;
-+	opt.diff = 1;
-+
-+	/* This is what "--pretty" does */
-+	opt.verbose_header = 1;
-+	opt.use_terminator = 0;
-+	opt.commit_format = CMIT_FMT_DEFAULT;
-+
-+	/* diff-tree init */
-+	if (!opt.diffopt.output_format)
-+		opt.diffopt.output_format = DIFF_FORMAT_RAW;
-+
-+	log_tree_commit(&opt, commit);
-+}
-+
-+/*
-  * We use the convention that exiting with an exit code 10 means that
-  * the bisection process finished successfully.
-  * In this case the calling shell script should exit 0.
-@@ -860,8 +885,7 @@ int bisect_next_all(const char *prefix)
- 	if (!hashcmp(bisect_rev, current_bad_sha1)) {
- 		exit_if_skipped_commits(tried, current_bad_sha1);
- 		printf("%s is first bad commit\n", bisect_rev_hex);
--		argv_diff_tree[2] = bisect_rev_hex;
--		run_command_v_opt(argv_diff_tree, RUN_GIT_CMD);
-+		show_diff_tree(prefix, revs.commits->item);
- 		/* This means the bisection process succeeded. */
- 		exit(10);
- 	}
--- 
-1.6.3.GIT
+~:"
