@@ -1,47 +1,64 @@
-From: =?UTF-8?B?In46Jycg44GC44KK44GM44Go44GG44GU44GW44GE44G+44GX44Gf?=
-	 =?UTF-8?B?44CCIg==?= <j.chetwynd@btinternet.com>
-Subject: git & bug tracking
-Date: Thu, 28 May 2009 22:25:12 +0100
-Message-ID: <86D53106-920E-4499-B4F2-AE3B78053260@btinternet.com>
-Mime-Version: 1.0 (Apple Message framework v935.3)
-Content-Type: text/plain; charset=US-ASCII; format=flowed
-Content-Transfer-Encoding: 7bit
-To: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu May 28 23:27:06 2009
+From: Christian Couder <chriscool@tuxfamily.org>
+Subject: [PATCH] bisect: use "clear_commit_marks" after checking ancestors
+Date: Thu, 28 May 2009 23:24:43 +0200
+Message-ID: <20090528212444.4034.68662.chriscool@tuxfamily.org>
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu May 28 23:30:16 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M9n7w-0003mB-AD
-	for gcvg-git-2@gmane.org; Thu, 28 May 2009 23:27:04 +0200
+	id 1M9nB1-0004td-Oz
+	for gcvg-git-2@gmane.org; Thu, 28 May 2009 23:30:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932239AbZE1VY4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 May 2009 17:24:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932235AbZE1VY4
-	(ORCPT <rfc822;git-outgoing>); Thu, 28 May 2009 17:24:56 -0400
-Received: from smtp815.mail.ird.yahoo.com ([77.238.189.20]:35222 "HELO
-	smtp815.mail.ird.yahoo.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with SMTP id S932144AbZE1VYz (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 28 May 2009 17:24:55 -0400
-Received: (qmail 15722 invoked from network); 28 May 2009 21:24:55 -0000
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=s1024; d=btinternet.com;
-  h=Received:X-YMail-OSG:X-Yahoo-Newman-Property:Message-Id:From:To:Content-Type:Content-Transfer-Encoding:Mime-Version:Subject:Date:X-Mailer;
-  b=yUIfi9OY+I8RNHRT1ZadF9tZBbYLfxTQcpFfZKULLlJP7MzgYITeBab89CG3mU7rhzsh0kwTAmRq3Aa3T4w+nIZ04CK9yT8MfONZFY05CGRjuj7dO2qBwgsRvYZi+1cUOQM0au7tEMjCkwRywGAXMr5+qPIHQi4mzNU5feSjpPo=  ;
-Received: from unknown (HELO Jay.home) (j.chetwynd@86.129.168.0 with plain)
-  by smtp815.mail.ird.yahoo.com with SMTP; 28 May 2009 21:24:55 -0000
-X-YMail-OSG: GQce.gcVM1nHTNpYADvTSZIURET3YfRe.zBihIfmOEwm8Ebij3cYDABv7LfM91x4ZAPq1XZFG10C5VmcOPDymOkcYx5V6u5IqBf1CBXUpTzndIiTsvWVoiN0Ynwo9ys8XBUsXRNnAzMLj2r_UoqnDMWql3s0D073oE8INGlc2K90vbKotGDtWMtfTHGGuk3AJA0ZL4JG2GbE9HfdBEqEXH.HH3eWnEiF17EnvdEE_rmNysQFYN4fFGbMR4k-
-X-Yahoo-Newman-Property: ymail-3
-X-Mailer: Apple Mail (2.935.3)
+	id S1758711AbZE1VaE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 May 2009 17:30:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758267AbZE1VaE
+	(ORCPT <rfc822;git-outgoing>); Thu, 28 May 2009 17:30:04 -0400
+Received: from smtp4-g21.free.fr ([212.27.42.4]:47465 "EHLO smtp4-g21.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1758079AbZE1VaC (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 May 2009 17:30:02 -0400
+Received: from smtp4-g21.free.fr (localhost [127.0.0.1])
+	by smtp4-g21.free.fr (Postfix) with ESMTP id 6CFE24C80FF;
+	Thu, 28 May 2009 23:29:57 +0200 (CEST)
+Received: from bureau.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
+	by smtp4-g21.free.fr (Postfix) with ESMTP id 75C654C80D9;
+	Thu, 28 May 2009 23:29:55 +0200 (CEST)
+X-git-sha1: 00ac3e0514e45403b31e57cba264cf349ff27bf9 
+X-Mailer: git-mail-commits v0.4.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120235>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120236>
 
-Jakub, branching between japanese and chinese has limited appeal,
-how about answering the question and less of the smarts?
+instead of "unparse_commit", as it is enough to just clear flags.
 
-cheers
+Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+---
+ bisect.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-~:"
+	As the patch series where "unparse_commit" is added and
+	used is already in "next". Here is a patch to use
+	"clear_commit_marks" instead. The patch that adds
+	"unparse_commit" can be reverted from "next" after this
+	one.
+
+diff --git a/bisect.c b/bisect.c
+index c43c120..18f9fa4 100644
+--- a/bisect.c
++++ b/bisect.c
+@@ -771,7 +771,7 @@ static int check_ancestors(const char *prefix)
+ 	/* Clean up objects used, as they will be reused. */
+ 	for (i = 0; i < pending_copy.nr; i++) {
+ 		struct object *o = pending_copy.objects[i].item;
+-		unparse_commit((struct commit *)o);
++		clear_commit_marks((struct commit *)o, ALL_REV_FLAGS);
+ 	}
+ 
+ 	return res;
+-- 
+1.6.3.GIT
