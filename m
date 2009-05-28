@@ -1,96 +1,77 @@
-From: David Aguilar <davvid@gmail.com>
-Subject: Re: [PATCH v2 2/2] diff: generate prettier filenames when using
-	GIT_EXTERNAL_DIFF
-Date: Thu, 28 May 2009 14:30:49 -0700
-Message-ID: <20090528213049.GA55167@gmail.com>
-References: <1243491077-27738-1-git-send-email-davvid@gmail.com> <1243491077-27738-2-git-send-email-davvid@gmail.com> <20090528174436.GA12723@coredump.intra.peff.net>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: git & bug tracking
+Date: Thu, 28 May 2009 23:39:11 +0200
+Message-ID: <200905282339.13555.jnareb@gmail.com>
+References: <86D53106-920E-4499-B4F2-AE3B78053260@btinternet.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, gitster@pobox.com, markus.heidelberg@web.de,
-	jnareb@gmail.com, j.sixt@viscovery.net
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu May 28 23:31:27 2009
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: "~:'' =?utf-8?b?44GC44KK44GM44Go44GG44GU44GW44GE44G+44GX44Gf44CC?=" 
+	<j.chetwynd@btinternet.com>
+X-From: git-owner@vger.kernel.org Thu May 28 23:39:26 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M9nC7-0005Vg-IL
-	for gcvg-git-2@gmane.org; Thu, 28 May 2009 23:31:24 +0200
+	id 1M9nJs-0000nE-Kh
+	for gcvg-git-2@gmane.org; Thu, 28 May 2009 23:39:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760852AbZE1Vaz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 May 2009 17:30:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759187AbZE1Vay
-	(ORCPT <rfc822;git-outgoing>); Thu, 28 May 2009 17:30:54 -0400
-Received: from rv-out-0506.google.com ([209.85.198.229]:53378 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756994AbZE1Vay (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 May 2009 17:30:54 -0400
-Received: by rv-out-0506.google.com with SMTP id f9so1747140rvb.1
-        for <git@vger.kernel.org>; Thu, 28 May 2009 14:30:55 -0700 (PDT)
+	id S1753314AbZE1VjP convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 28 May 2009 17:39:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753236AbZE1VjO
+	(ORCPT <rfc822;git-outgoing>); Thu, 28 May 2009 17:39:14 -0400
+Received: from fg-out-1718.google.com ([72.14.220.159]:14949 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752411AbZE1VjO (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 May 2009 17:39:14 -0400
+Received: by fg-out-1718.google.com with SMTP id 16so2107585fgg.17
+        for <git@vger.kernel.org>; Thu, 28 May 2009 14:39:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=ywS4RNNZ/+puqj6gf7HeuRoiRaT24jkXuUKZWCj5EJ4=;
-        b=nlWo2KEwiZRW8iZYY9vJjfUSGYseDRV0wsTIkJ/zBckUhGtOq3wkkjISggBX0lLwgn
-         3VEL9qhJ1M7TymK/eP2QgyWPktxGwGzyArApL1QzFR7PAnLQloN4/bITPB5gWPPthII5
-         o8p3K94rZqdqcExFDn8SnKF9lhf8xRPc4JPsE=
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=Eo0+CRUHPksFtV1/GKGRrPgWTb4zpU1MW/4lx4Lk5pw=;
+        b=tPUXd/CIQBml3qzBG/roPWlchBr8AZyFa7fSOGcPaO5sim9a++y8UhaQ0BfIqsAnuN
+         bTFFy67sUVblWP6+D3bNYWlqU0Ge1R3zRMWRXWFHE4mC5/jNGXRz41r3UaGDjExg/Kpn
+         z/5ZdPaPnD0r3UX3gxIX4MLlQU/XkxGTsUTXY=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=JyYkVFWI9kGUbTltqJzjB3FNXxbO64VWChyn3Ix4S/x1rX4WaMPN1ESiSg7nrd9yXH
-         7UGSviXSpXfJxC6YGvEEyuLE4Hn+Tastpkzls1Npqc17Ems1Sp5i5CBiJdYRQQUAgYE7
-         TMq0dDWYqdRjiLmgfsAQtwHf+A5nIh0yyEbBs=
-Received: by 10.141.41.3 with SMTP id t3mr910044rvj.149.1243546255356;
-        Thu, 28 May 2009 14:30:55 -0700 (PDT)
-Received: from gmail.com (wdas-1.disneyanimation.com [12.188.26.1])
-        by mx.google.com with ESMTPS id g22sm1498860rvb.36.2009.05.28.14.30.54
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=TDquHHWd9st3+KJk3fWAYWSXOMAR14818nop0w33K3leIeKdDqRWfEcDoU2xRAFkwj
+         yoJDA8XYmXlzaZErOXGmuXI1tT3g8+ihde+27Dv4ubQRqPVuXdFS9zNmNKBlgcrSVN7h
+         2eLcvCwxs1NgF1Vc0L8V7ACXMFzCwsR7za9EA=
+Received: by 10.86.49.13 with SMTP id w13mr2031749fgw.38.1243546755007;
+        Thu, 28 May 2009 14:39:15 -0700 (PDT)
+Received: from ?192.168.1.13? (abtj91.neoplus.adsl.tpnet.pl [83.8.155.91])
+        by mx.google.com with ESMTPS id d4sm1009953fga.19.2009.05.28.14.39.13
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 28 May 2009 14:30:55 -0700 (PDT)
+        Thu, 28 May 2009 14:39:14 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <86D53106-920E-4499-B4F2-AE3B78053260@btinternet.com>
 Content-Disposition: inline
-In-Reply-To: <20090528174436.GA12723@coredump.intra.peff.net>
-User-Agent: Mutt/1.5.19 (2009-01-05)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120237>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120238>
 
-On Thu, May 28, 2009 at 01:44:36PM -0400, Jeff King wrote:
-> On Wed, May 27, 2009 at 11:11:17PM -0700, David Aguilar wrote:
-> 
-> > +int git_mkstemps(char *path, size_t n, const char *template, int suffix_len);
-> 
-> FWIW, I find this name not very descriptive. From the name, I would
-> expect it to do the exact same thing as mkstemps, but be our own
-> personal implementation. But it is actually a wrapper that behaves
-> somewhat differently. So I wonder if "mkstemps_tmpdir" or something
-> would be a better name.
+On Thu, 28 May 2009, ~:'' =E3=81=82=E3=82=8A=E3=81=8C=E3=81=A8=E3=81=86=
+=E3=81=94=E3=81=96=E3=81=84=E3=81=BE=E3=81=97=E3=81=9F=E3=80=82 wrote:
 
-It does exactly what git_mkstemp() does, plus the extra
-suffix_len parameter.  If we rename this function we have to
-rename both.
+> Jakub, branching between japanese and chinese has limited appeal,
 
+I'm sorry about that. Blame Gnus ;-)
 
-> Is there a reason _not_ to always just use the pretty filename? It looks
-> like you turn it on for external diff, but off for textconv. I don't
-> think there is a reason not to use it for textconv.
+> how about answering the question and less of the smarts?
 
-I was not aware of the other code paths and only wanted to
-affect the one that I knew about.  I agree that making that the
-default behavior would be great, meaning we could drop the
-pretty_filename flag altogether.
+How about explaining the question in more detail? I am not entirely
+sure what you wanted to ask about.
 
-If you and others agree that the user-friendly names are a good
-thing to have by default then I can rework patch 2/2.
-
-> However, I suspect that all callers should use pretty filenames, and
-> then this bit would just go away.
-
-I fully agree.
-
-
--- 
-		David
+P.S. Please quote relevant parts of email you are replying to.
+--=20
+Jakub Narebski
+Poland
