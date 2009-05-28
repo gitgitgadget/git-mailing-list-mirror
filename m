@@ -1,103 +1,100 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: exit status = 1 from git fetch -t
-Date: Thu, 28 May 2009 09:56:33 +0200
-Message-ID: <4A1E43B1.20400@drmicha.warpmail.net>
-References: <200905280357.n4S3v73G016535@hilo.ca.kronos.com>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: [PATCH] bisect: display first bad commit without forking a new
+ process
+Date: Thu, 28 May 2009 10:04:30 +0200
+Message-ID: <4A1E458E.6050505@op5.se>
+References: <20090527052354.3824.22018.chriscool@tuxfamily.org>	<200905272107.52095.chriscool@tuxfamily.org> <7veiuai33m.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: dvilleneuve@kronos.com
-X-From: git-owner@vger.kernel.org Thu May 28 09:57:01 2009
+Content-Type: text/plain; charset=ISO-8859-15;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Christian Couder <chriscool@tuxfamily.org>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu May 28 10:04:43 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M9aTx-0004ia-Op
-	for gcvg-git-2@gmane.org; Thu, 28 May 2009 09:56:58 +0200
+	id 1M9abS-0007mB-Qw
+	for gcvg-git-2@gmane.org; Thu, 28 May 2009 10:04:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758792AbZE1H4q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 May 2009 03:56:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757268AbZE1H4p
-	(ORCPT <rfc822;git-outgoing>); Thu, 28 May 2009 03:56:45 -0400
-Received: from out1.smtp.messagingengine.com ([66.111.4.25]:39629 "EHLO
-	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1757895AbZE1H4o (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 28 May 2009 03:56:44 -0400
-Received: from compute1.internal (compute1.internal [10.202.2.41])
-	by out1.messagingengine.com (Postfix) with ESMTP id D76A4346E8A;
-	Thu, 28 May 2009 03:56:45 -0400 (EDT)
-Received: from heartbeat1.messagingengine.com ([10.202.2.160])
-  by compute1.internal (MEProxy); Thu, 28 May 2009 03:56:45 -0400
-X-Sasl-enc: anjjY96eIdeUmhhrN+JSEv7HgMJZQfe7xjMCARTWHD2s 1243497405
-Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.12])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 45BA9B439;
-	Thu, 28 May 2009 03:56:45 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1pre) Gecko/20090525 Lightning/1.0pre Shredder/3.0b3pre
-In-Reply-To: <200905280357.n4S3v73G016535@hilo.ca.kronos.com>
+	id S1754338AbZE1IEd convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 28 May 2009 04:04:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753810AbZE1IEd
+	(ORCPT <rfc822;git-outgoing>); Thu, 28 May 2009 04:04:33 -0400
+Received: from na3sys009aog106.obsmtp.com ([74.125.149.77]:34703 "HELO
+	na3sys009aog106.obsmtp.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with SMTP id S1751162AbZE1IEa (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 28 May 2009 04:04:30 -0400
+Received: from source ([72.14.220.155]) by na3sys009aob106.postini.com ([74.125.148.12]) with SMTP
+	ID DSNKSh5FjlPWcqlcEtg5rIPBxhaCItbX+q34@postini.com; Thu, 28 May 2009 01:04:32 PDT
+Received: by fg-out-1718.google.com with SMTP id e12so1950377fga.10
+        for <git@vger.kernel.org>; Thu, 28 May 2009 01:04:29 -0700 (PDT)
+Received: by 10.86.62.3 with SMTP id k3mr1233438fga.28.1243497869445;
+        Thu, 28 May 2009 01:04:29 -0700 (PDT)
+Received: from clix.int.op5.se ([212.112.174.166])
+        by mx.google.com with ESMTPS id e11sm4697793fga.1.2009.05.28.01.04.27
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Thu, 28 May 2009 01:04:28 -0700 (PDT)
+User-Agent: Thunderbird 2.0.0.21 (X11/20090320)
+In-Reply-To: <7veiuai33m.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120167>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120168>
 
-Villeneuve venit, vidit, dixit 28.05.2009 05:57:
-> Hi,
-> 
-> I'm getting an unexpected exit status of 1 from "git fetch
-> -t" on one of our largest repositories (by large, I mean 47
-> branches and 5442 tags, some of which might not be reachable
-> from branch heads).
-> 
-> The docs are not clear about the interpretation of git
-> fetch's exit status, so maybe I should not bother.
-> 
-> But assuming the exit status of 1 really indicates some
-> trouble, here are more details.
-> 
-> Next tests done with git over ssh (server 1.6.1.3, client
-> 1.6.3.1) on RHEL4.
-> 
-> In the "REPO1" repository (exit status printed just before $
-> in prompt following command):
-> 
-> [REPO1] 0 $ git fetch -t -v -v
-> Server supports multi_ack
-> Server supports side-band-64k
-> Server supports ofs-delta
-> Marking 60e4d540748c5c3d368c888c4c248de0bdd684cc as complete
-> Marking 60e4d540748c5c3d368c888c4c248de0bdd684cc as complete
-> [REPO1] 1 $
-> 
-> while with another repository, "REPO2":
-> 
-> [REPO2] 0 $ git fetch -t -v -v
-> From ssh://user@machine/path/to/GIT/dir1/dir2/REPO2
->  = [up to date]      v1.1 -> v1.1
->  = [up to date]      v1.2 -> v1.2
->  = [up to date]      v2.0 -> v2.0
-> ... # lots of other similar lines
-> [REPO2] 0 $
-> 
-> I've compiled git in debug to step in the code, and the
-> source of the "error" exit status seems to come from
-> builtin-fetch-pack.c:everything_local, where *refs being
-> NULL leaves retval to 1 in the final loop.
-> 
-> I'm also puzzled that I don't get the "From ssh://..." in
-> the trace from "REPO1" as for the "REPO2" repository above.
-> I do get the "From ssh://..."  line if doing only "git fetch
-> -v -v" without the "-t" option in "REPO1".
+Junio C Hamano wrote:
+> Christian Couder <chriscool@tuxfamily.org> writes:
+>=20
+>> Le Wednesday 27 May 2009, Christian Couder a =E9crit :
+>>> Previously "git diff-tree --pretty COMMIT" was run using
+>>> "run_command_v_opt" to display information about the first bad
+>>> commit.
+>>>
+>>> The goal of this patch is to avoid a "fork" and an "exec" call
+>>> when displaying that information.
+>>>
+>>> To do that, we manually setup revision information as
+>>> "git diff-tree --pretty" would do it, and then use the
+>>> "log_tree_commit" function.
+>>>
+>>> Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+>>> ---
+>>>  bisect.c |   30 +++++++++++++++++++++++++++---
+>>>  1 files changed, 27 insertions(+), 3 deletions(-)
+>>>
+>>> diff --git a/bisect.c b/bisect.c
+>>> index c43c120..e94a77b 100644
+>>> --- a/bisect.c
+>>> +++ b/bisect.c
+>>> @@ -816,6 +816,31 @@ static void check_good_are_ancestors_of_bad(co=
+nst
+>>> char *prefix) }
+>>>
+>>>  /*
+>>> + * This does "git diff-tree --pretty COMMIT" without one fork+exec=
+=2E
+>>> + */
+>>> +static void show_diff_tree(const char *prefix, struct commit *comm=
+it)
+>>> +{
+>>> +	static struct rev_info opt;
+>> Oops, "static" can be removed, it's a copy-paste error, sorry.
+>=20
+> Is that "can" or "must"?  If the answer is the latter, shouldn't the
+> function be renamed to make it clear it is a bisect specific thing?
 
-Looking at that loop, I reckon everything_local() returns 0 if there is
-at least one object we "want" from the remote and 1 if there is none
-(i.e. if "everything is local"). So that seems intentional. (The
-structure of REPO1 and your fetch refspecs lines should explain why we
-don't want anything.)
+I think he was referring to the 'static' in the variable declarations.
 
-About the "From": If fetch displays no note (i.e. "foo   ref -> ref") it
-displays no "From" either, which makes sense. We're not getting anything
-from anywhere, we're not even listing up to date info, so we're not
-displaying the reference point.
+--=20
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
 
-Michael
+Register now for Nordic Meet on Nagios, June 3-4 in Stockholm
+ http://nordicmeetonnagios.op5.org/
+
+Considering the successes of the wars on alcohol, poverty, drugs and
+terror, I think we should give some serious thought to declaring war
+on peace.
