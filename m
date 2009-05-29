@@ -1,60 +1,63 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Git Confusion
-Date: Fri, 29 May 2009 09:52:42 -0400
-Message-ID: <20090529135242.GA30926@coredump.intra.peff.net>
-References: <815c8c330905290043i4c99a753jd5ad9bdd4cf18bbc@mail.gmail.com> <20090529125853.GB11785@sigill.intra.peff.net> <m3d49sauru.fsf@localhost.localdomain>
+From: Brandon Casey <casey@nrlssc.navy.mil>
+Subject: Re: [PATCH] git-svn: refuse to dcommit non-UTF-8 messages
+Date: Fri, 29 May 2009 09:11:22 -0500
+Message-ID: <6I7Qq-BKaJmSe6FJkYgjMpNqo6RFAVB0STpL09QJO1skOCB2ezM6mA@cipher.nrlssc.navy.mil>
+References: <op.uuljhmmg1e62zd@balu.cs.uni-paderborn.de>	<20090528080706.GA9239@dcvr.yhbt.net>	<20090528081804.GB9239@dcvr.yhbt.net> <7v3aaoe40j.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Paul Tarjan <ptarjan@gmail.com>, git@vger.kernel.org,
-	yury239@gmail.com
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Fri May 29 15:53:05 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Eric Wong <normalperson@yhbt.net>, git@vger.kernel.org,
+	Brandon Casey <drafnel@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri May 29 16:14:51 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MA2W4-0002Ps-EJ
-	for gcvg-git-2@gmane.org; Fri, 29 May 2009 15:53:00 +0200
+	id 1MA2rC-000434-Dn
+	for gcvg-git-2@gmane.org; Fri, 29 May 2009 16:14:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760576AbZE2Nwv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 29 May 2009 09:52:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760768AbZE2Nwu
-	(ORCPT <rfc822;git-outgoing>); Fri, 29 May 2009 09:52:50 -0400
-Received: from peff.net ([208.65.91.99]:45982 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1760705AbZE2Nwu (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 May 2009 09:52:50 -0400
-Received: (qmail 26763 invoked by uid 107); 29 May 2009 13:52:53 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Fri, 29 May 2009 09:52:53 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Fri, 29 May 2009 09:52:42 -0400
-Content-Disposition: inline
-In-Reply-To: <m3d49sauru.fsf@localhost.localdomain>
+	id S1756906AbZE2OOf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 29 May 2009 10:14:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756531AbZE2OOe
+	(ORCPT <rfc822;git-outgoing>); Fri, 29 May 2009 10:14:34 -0400
+Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:52990 "EHLO
+	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754821AbZE2OOe (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 May 2009 10:14:34 -0400
+Received: by mail.nrlssc.navy.mil id n4TEBNk7005525; Fri, 29 May 2009 09:11:23 -0500
+In-Reply-To: <7v3aaoe40j.fsf@alter.siamese.dyndns.org>
+X-OriginalArrivalTime: 29 May 2009 14:11:23.0548 (UTC) FILETIME=[58F515C0:01C9E067]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120279>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120280>
 
-On Fri, May 29, 2009 at 06:44:26AM -0700, Jakub Narebski wrote:
-
-> > Usually such a repo is bare, and gets updates only by push. In that
-> > case, enabling the update hook to run update-server-info is sufficient.
-> > But in your case, you are actually working on the remote repo via commit
-> > and other means, so there is no convenient way to always
-> > update-server-info after a change.
+Junio C Hamano wrote:
+> Eric Wong <normalperson@yhbt.net> writes:
 > 
-> Well, he can always add git-update-server-info to post-commit hook.
+>>  t/t9139-git-svn-non-utf8-commitencoding.sh |   47 ++++++++++++++++++++++++++++
+> 
+> Hmm.
+> 
+>> +# Copyright (c) 2009 Eric Wong
+>> +
+>> +test_description='git svn refuses to dcommit non-UTF8 messages'
+>> +
+>> +. ./lib-git-svn.sh
+> 
+> This passes when merged to 'master', but together with bc/old-iconv branch
+> cooking in 'next' it breaks.
 
-That covers committing, but what about reset, rebase, "branch -f", etc?
-I don't think there is a catch-all for all the ways that a repo can be
-updated locally.
+Yeah, it's the second for loop which accesses the files in t/t3900/.
+bc/old-iconv replaces each occurrence of ISO-8859-1 with ISO8859-1
+and EUCJP with eucJP since old Solaris didn't know both names and
+modern platforms handle either name.  The text files in t/t3900/
+were renamed accordingly.
 
-> > Is there a particular reason you cloned over http instead of over ssh?
-> Or git protocol?
+It would be nice to use these older names here too, even though I
+won't be able to test it since svn is not installed on the older
+platforms I have access to.
 
-Yes, that would work fine, too. I mentioned ssh because he already
-indicated that he was able to ssh into the box (and may or may not have
-the git daemon set up).
-
--Peff
+-brandon
