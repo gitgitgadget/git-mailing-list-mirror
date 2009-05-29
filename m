@@ -1,74 +1,78 @@
-From: Sam Vilain <sam@vilain.net>
-Subject: Re: RFE: "git bisect reverse"
-Date: Fri, 29 May 2009 16:20:31 +1200
-Message-ID: <4A1F628F.9010407@vilain.net>
-References: <4A1C6B70.4050501@zytor.com> <4A1CACB2.7000702@vilain.net> 	<4A1CBF7A.3090708@zytor.com> <200905270726.59883.chriscool@tuxfamily.org> 	<efe2b6d70905271411g4e1616b5w548141ee9fab2c14@mail.gmail.com> 	<20090527211836.GA14841@localhost> <efe2b6d70905271507s187babe9yf19a25268ab0b95e@mail.gmail.com> 	<4A1DC7D8.2050601@vilain.net> <efe2b6d70905281329s1ae5a94coe5875714f341d5a9@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 4/4] Makefile: introduce SANE_TOOL_PATH for prepending required elements to PATH
+Date: Thu, 28 May 2009 22:13:54 -0700
+Message-ID: <7v63fkh4od.fsf@alter.siamese.dyndns.org>
+References: <8D9Pn2N3FZLQcyxrPABrG-rVdsP-X00e6c8oj-YzYQzWI-MvSy5AAzVjbQS0XsK76Ax9XKaLBbU@cipher.nrlssc.navy.mil>
+	<8D9Pn2N3FZLQcyxrPABrG3rdrFXFL1OddmlhE77V4q-K8NSzkS8xbqdJw0C0CnqkCcLEUU_UEIs@cipher.nrlssc.navy.mil>
+	<8D9Pn2N3FZLQcyxrPABrG-BSSbTCg9PE0lVG9rBAr5BVQibQYcIzXrxDf4S0P9Pb6AZO5MBuasg@cipher.nrlssc.navy.mil>
+	<8D9Pn2N3FZLQcyxrPABrGxTLa3Dlq25WDqK5xSJyY6cvQv4mphIUXvRu59EA7ewVS-vbi5IZUc4@cipher.nrlssc.navy.mil>
+	<20090528191342.GF13499@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Clemens Buchacher <drizzd@aon.at>,
-	Christian Couder <chriscool@tuxfamily.org>,
-	"H. Peter Anvin" <hpa@zytor.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Ealdwulf Wuffinga <ealdwulf@googlemail.com>
-X-From: git-owner@vger.kernel.org Fri May 29 06:21:30 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Brandon Casey <casey@nrlssc.navy.mil>, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>,
+	Brandon Casey <drafnel@gmail.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri May 29 07:14:56 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M9tay-0005CX-LS
-	for gcvg-git-2@gmane.org; Fri, 29 May 2009 06:21:29 +0200
+	id 1M9uQg-0001KO-My
+	for gcvg-git-2@gmane.org; Fri, 29 May 2009 07:14:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751125AbZE2EVT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 29 May 2009 00:21:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751124AbZE2EVS
-	(ORCPT <rfc822;git-outgoing>); Fri, 29 May 2009 00:21:18 -0400
-Received: from watts.utsl.gen.nz ([202.78.240.73]:48248 "EHLO mail.utsl.gen.nz"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751024AbZE2EVS (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 May 2009 00:21:18 -0400
-Received: by mail.utsl.gen.nz (Postfix, from userid 1004)
-	id 8C6B821C3ED; Fri, 29 May 2009 16:20:43 +1200 (NZST)
-X-Spam-Checker-Version: SpamAssassin 3.2.5 (2008-06-10) on
-	mail.musashi.utsl.gen.nz
-X-Spam-Level: 
-X-Spam-Status: No, score=-4.4 required=5.0 tests=ALL_TRUSTED,AWL,BAYES_00
-	autolearn=ham version=3.2.5
-Received: from [192.168.2.22] (leibniz.catalyst.net.nz [202.78.240.7])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by mail.utsl.gen.nz (Postfix) with ESMTPSA id B377D21C2EB;
-	Fri, 29 May 2009 16:20:32 +1200 (NZST)
-User-Agent: Mozilla-Thunderbird 2.0.0.19 (X11/20090103)
-In-Reply-To: <efe2b6d70905281329s1ae5a94coe5875714f341d5a9@mail.gmail.com>
-X-Enigmail-Version: 0.95.0
+	id S1751777AbZE2FOq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 29 May 2009 01:14:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751570AbZE2FOp
+	(ORCPT <rfc822;git-outgoing>); Fri, 29 May 2009 01:14:45 -0400
+Received: from fed1rmmtao103.cox.net ([68.230.241.43]:40365 "EHLO
+	fed1rmmtao103.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751236AbZE2FOo (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 May 2009 01:14:44 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao103.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20090529051356.BLFB2915.fed1rmmtao103.cox.net@fed1rmimpo01.cox.net>;
+          Fri, 29 May 2009 01:13:56 -0400
+Received: from localhost ([68.225.240.211])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id xHDv1b0044aMwMQ03HDvYs; Fri, 29 May 2009 01:13:55 -0400
+X-Authority-Analysis: v=1.0 c=1 a=eDh1dgJSGzsA:10 a=G4P8onpsFtgA:10
+ a=PKzvZo6CAAAA:8 a=t0EAXYfJfIJ4AB_ZQmUA:9 a=cF_jeK-0BYPmB1dCCaYA:7
+ a=5X2t-P3b9KFM7MqH_8T-n0hha18A:4 a=OdWmie4EkE0A:10
+X-CM-Score: 0.00
+In-Reply-To: <20090528191342.GF13499@coredump.intra.peff.net> (Jeff King's message of "Thu\, 28 May 2009 15\:13\:43 -0400")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120247>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120248>
 
-Ealdwulf Wuffinga wrote:
->> Sounds like interesting stuff, can you make a patch out of it?
->>     
->
-> The code as it stands will actually work with an unmodified git.
-> What it doesn't yet have is a 'git-bisect'-like frontend, which is the only
-> part which would actually require modifying (or just adding to) git itself.
->
-> It does already interface to the git plumbing, so you can try it out if you
-> don't mind using a slightly ungitlike  interface.
->
-> I assume it's not worth doing a patch which would just copy my tree
-> into the git source tree?
->
-> There was also, last time I mentioned this on the list, some question
-> as to whether it was acceptable to add something written in python to
-> git.
->   
+Jeff King <peff@peff.net> writes:
 
-I mean, can you port your algorithm from python to the git-bisect C
-source and therefore make something of benefit to existing 'git bisect'
-users ?
+> On Wed, May 27, 2009 at 09:17:08PM -0500, Brandon Casey wrote:
+>
+>> Some platforms (like SunOS and family) have kept their common binaries at
+>> some historical moment in time, and introduced new binaries with modern
+>> features in a special location like /usr/xpg4/bin or /usr/ucb.  Some of the
+>> features provided by these modern binaries are expected and required by git.
+>> If the featureful binaries are not in the users path, then git could end up
+>> using the less featureful binary and fail.
+>> 
+>> So provide a mechanism to prepend elements to the users PATH at runtime so
+>> the modern binaries will be found.
+>
+> My concern with this is that the PATH bleeds over into things we execute
+> on behalf of the user, like GIT_EDITOR or snippets in git-filter-branch.
+> So we can end up surprising users that way.
+>
+> On the other hand, I don't know how big a problem that is in practice. I
+> feel like any sane Solaris user is going to have xpg4 in their PATH
+> these days.
 
-Sam.
+I share that feeling, in which case the patch should be no-op.
+
+But I recall the "how about this" patch was done as an illustration of a
+possible approach to solve breakage in _tests_; the patch actually does
+not touch t/Makefile and would not help tests.
