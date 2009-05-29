@@ -1,67 +1,74 @@
-From: =?ISO-8859-1?Q?Thorben_Schr=F6der?= <stillepost@gmail.com>
-Subject: After update to 1.6.3.1. I get this error: error: bad index file sha1 
-	signature
-Date: Fri, 29 May 2009 09:25:27 +0200
-Message-ID: <64fe838e0905290025h6bf2172agea4beb1ccff6dd6e@mail.gmail.com>
+From: Paul Tarjan <ptarjan@gmail.com>
+Subject: Git Confusion
+Date: Fri, 29 May 2009 00:43:35 -0700
+Message-ID: <815c8c330905290043i4c99a753jd5ad9bdd4cf18bbc@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
+Cc: yury239@gmail.com
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri May 29 09:26:03 2009
+X-From: git-owner@vger.kernel.org Fri May 29 09:43:47 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M9wTX-0005Ic-4s
-	for gcvg-git-2@gmane.org; Fri, 29 May 2009 09:25:59 +0200
+	id 1M9wki-0003tH-Gb
+	for gcvg-git-2@gmane.org; Fri, 29 May 2009 09:43:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755357AbZE2HZ3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 29 May 2009 03:25:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755019AbZE2HZ1
-	(ORCPT <rfc822;git-outgoing>); Fri, 29 May 2009 03:25:27 -0400
-Received: from mail-fx0-f168.google.com ([209.85.220.168]:41117 "EHLO
-	mail-fx0-f168.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753554AbZE2HZ1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 May 2009 03:25:27 -0400
-Received: by fxm12 with SMTP id 12so4193157fxm.37
-        for <git@vger.kernel.org>; Fri, 29 May 2009 00:25:28 -0700 (PDT)
+	id S1753979AbZE2Hng (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 29 May 2009 03:43:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753862AbZE2Hnf
+	(ORCPT <rfc822;git-outgoing>); Fri, 29 May 2009 03:43:35 -0400
+Received: from mail-gx0-f166.google.com ([209.85.217.166]:35542 "EHLO
+	mail-gx0-f166.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752965AbZE2Hnf (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 May 2009 03:43:35 -0400
+Received: by gxk10 with SMTP id 10so10124795gxk.13
+        for <git@vger.kernel.org>; Fri, 29 May 2009 00:43:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:mime-version:received:date:message-id:subject
-         :from:to:content-type:content-transfer-encoding;
-        bh=Sg+FbyO3gjHKV9pGr/AIuGjvJpP/nfQ1VusvCrw2LKo=;
-        b=pS3IbBkdfjTvDX7x9U194QF3XVdS8iaPAIkQEADkDIL4kutIEjFCINoWCvo9izfEHD
-         JKkXgAWIsH6zH/4PYiiFbZujtCe0ILzG5EGTr08l/TW/t82jj+Ejibh2KJLmO/PVmCgK
-         R1ECNhr+gbSxC3U0Oe/d7keNpwfm9sS/efEDw=
+         :from:to:cc:content-type:content-transfer-encoding;
+        bh=UPZGXDQj7IPrj78yZp44wWoD4+ySSlGB8858p0Rtl6M=;
+        b=phsd0oNBpPs6YAkhOI46D0D5EGzEj+ArvNhZo1FxqllsbGthaoKgXuvn4o07pS07ic
+         gFUG5KlyluiIMy1cDRxB2KMQ3RX+lV2oUhJPQ/b1RoZJHBwDnkZ0SUtRN/nApbDk5uXJ
+         EhQiDf7waT/DtavNwDoX8A/KTc6j2Wsu/4T48=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type
+        h=mime-version:date:message-id:subject:from:to:cc:content-type
          :content-transfer-encoding;
-        b=lgpPzU8mEHK5yTsmYHLL7M//fP9qskZgsaSlKdyaqbru897LLcd3rBaDq7UrJHe+ul
-         W7RUziH36fteFkg45oZ9p3ffXe74uoA0TEPs1j9T7RHL2GFzsYVM5Hl81BIxySTr8/0A
-         bKOjbxQmTnJU1DKhVwJfwuFwEz00CASZIzmdw=
-Received: by 10.223.111.134 with SMTP id s6mr1745716fap.37.1243581927920; Fri, 
-	29 May 2009 00:25:27 -0700 (PDT)
+        b=uBPFmNFttkdIH35iOZ0jW6rEEgbFBlmV1B25khDSJKtfqu/HCFQoynbMu1fPJaZ4Mv
+         qsw8siboVUln6QarPMaV8vOdYstEWLPvTTgrJtGbunu6UceuChcvjt2Hi1ZUJBUTMs1b
+         GioBzrgs+9+0KohiKVm55pPEDKRb0pidxiUZM=
+Received: by 10.151.134.2 with SMTP id l2mr4515831ybn.217.1243583015997; Fri, 
+	29 May 2009 00:43:35 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120253>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120254>
 
-Hi,
+Hi all,
 
-I've recently updated from 1.6.1.2 to 1.6.3.1 on OS X. And after that
-transition I get this:
+I'm new to git and probably doing something very dumb, but I can't
+seem to resolve this.
 
-  error: bad index file sha1 signature
-  fatal: index file corrupt
+I have a remote repository and a local one. I ssh to the remote
+machine, goto the repository directory (not a bare repository), edit a
+file and commit it. All if fine.
 
-on any git command I invoke in any of my repositories. I even tried to
-go back to 1.6.1.2 but the error still occurs.
+I leave the remote host and go into the local git directory. Doing
+"git pull origin master" says "Already up-to-date." but there is a
+file I changed remotely, and I want to pull it locally!
 
-Is there any thing I can do to fix this? Would be great, otherwise all
-my local repositories are busted :/
+The local repo was made with "git clone http://example.com/.git". I
+have no branching (both are on master).
 
-Thank you a lot for your help in advance!
+My way around this, is on the remote server, I do a "git push other
+master", and then on the local one I do "git checkout HEAD file1" for
+each file. Painful and I'm sure it is wrong.
 
-Thorben
+Any ideas? How do you debug this?
+
+Thanks
+Paul
