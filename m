@@ -1,100 +1,60 @@
-From: Sitaram Chamarty <sitaramc@gmail.com>
-Subject: Re: What is the mechanism of a git checkout?
-Date: Fri, 29 May 2009 01:15:12 +0000 (UTC)
-Organization: disorganised!
-Message-ID: <slrnh1udov.6ls.sitaramc@sitaramc.homelinux.net>
-References: <23764024.post@talk.nabble.com>
+From: Miles Bader <miles@gnu.org>
+Subject: Re: git & bug tracking
+Date: Fri, 29 May 2009 10:44:20 +0900
+Message-ID: <buotz34hedn.fsf@dhlpc061.dev.necel.com>
+References: <86D53106-920E-4499-B4F2-AE3B78053260@btinternet.com>
+	<200905282339.13555.jnareb@gmail.com>
+Reply-To: Miles Bader <miles@gnu.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri May 29 03:15:49 2009
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?utf-8?B?fjonJyDjgYLjgorjgYzjgajjgYbjgZTjgZbjgYTjgb7jgZfjgZ/jgII=?= 
+	<j.chetwynd@btinternet.com>, git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Fri May 29 03:44:41 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M9qhJ-0002ps-7g
-	for gcvg-git-2@gmane.org; Fri, 29 May 2009 03:15:49 +0200
+	id 1M9r9F-0000tS-2E
+	for gcvg-git-2@gmane.org; Fri, 29 May 2009 03:44:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753200AbZE2BPc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 May 2009 21:15:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752459AbZE2BPc
-	(ORCPT <rfc822;git-outgoing>); Thu, 28 May 2009 21:15:32 -0400
-Received: from main.gmane.org ([80.91.229.2]:53507 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752318AbZE2BPb (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 May 2009 21:15:31 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1M9qgw-0003ih-9B
-	for git@vger.kernel.org; Fri, 29 May 2009 01:15:26 +0000
-Received: from atcmail.atc.tcs.co.in ([203.200.212.145])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 29 May 2009 01:15:26 +0000
-Received: from sitaramc by atcmail.atc.tcs.co.in with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 29 May 2009 01:15:26 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: atcmail.atc.tcs.co.in
-User-Agent: slrn/0.9.9 (Linux)
+	id S1753300AbZE2Boc convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 28 May 2009 21:44:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752220AbZE2Bob
+	(ORCPT <rfc822;git-outgoing>); Thu, 28 May 2009 21:44:31 -0400
+Received: from TYO201.gate.nec.co.jp ([202.32.8.193]:62716 "EHLO
+	tyo201.gate.nec.co.jp" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752183AbZE2Bob convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 28 May 2009 21:44:31 -0400
+Received: from relay21.aps.necel.com ([10.29.19.50])
+	by tyo201.gate.nec.co.jp (8.13.8/8.13.4) with ESMTP id n4T1iK0k010553;
+	Fri, 29 May 2009 10:44:20 +0900 (JST)
+Received: from relay21.aps.necel.com ([10.29.19.24] [10.29.19.24]) by relay21.aps.necel.com with ESMTP; Fri, 29 May 2009 10:44:20 +0900
+Received: from dhlpc061 ([10.114.113.45] [10.114.113.45]) by relay21.aps.necel.com with ESMTP; Fri, 29 May 2009 10:44:20 +0900
+Received: by dhlpc061 (Postfix, from userid 31295)
+	id 222A352E237; Fri, 29 May 2009 10:44:20 +0900 (JST)
+System-Type: x86_64-unknown-linux-gnu
+Blat: Foop
+In-Reply-To: <200905282339.13555.jnareb@gmail.com> (Jakub Narebski's message
+	of "Thu, 28 May 2009 23:39:11 +0200")
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120245>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120246>
 
-On 2009-05-28 15:21:59, mastermindxs <mastermindxs@gmail.com> wrote:
+Jakub Narebski <jnareb@gmail.com> writes:
+> On Thu, 28 May 2009, ~:'' =E3=81=82=E3=82=8A=E3=81=8C=E3=81=A8=E3=81=86=
+=E3=81=94=E3=81=96=E3=81=84=E3=81=BE=E3=81=97=E3=81=9F=E3=80=82 wrote:
+>> Jakub, branching between japanese and chinese has limited appeal,
 >
-> does a git checkout pull the contents of a branch? how does it physically
-> separate files in your working directory from other branches? 
->
-> The speed of which it works leads me to the logical conclusion that the
-> files in the working directory are all there for all branches and git simply
-> only shows you the files of the active branch.
->
-> Can anyone shed more light on the underlying mechanisms of git checkout
-> maybe even branch and merge as well?
+> I'm sorry about that. Blame Gnus ;-)
 
-I explain it as below when I get asked this question.  It's
-a simplified answer but largely correct, I believe.
-Corrections from git.gods welcome :-)
+To be fair, the Gnus version you're using is pretty old...
 
-When you checkout a branch, you are moving from a "before"
-branch to an "after" branch.  git does this:
+-Miles
 
-  - untracked files are never touched; the rest of this
-    discussion does not apply to them
-
-  - files which do NOT show up in "git status" (ie unchanged
-    with respect to the "before" branch) are changed as per
-    their status in the "after" branch.
-
-    - if they exist in the "after" branch, and are the same
-      as in the "before" branch, they are left alone
-
-      This is where all the speed you see comes from!
-
-    - if they exist in the "after" branch, and they are
-      **different** than in the "before" branch, they are
-      checked out from the "after" branch
-
-      This is the bulk of the disk activity; if there are
-      few of these, it's fast enough for you think nothing
-      is actually happening ;-)
-
-    - if they do not exist in the "after" branch, they are
-      deleted
-
-  - files that do show up in "git status" in the "before"
-    branch, are either modified or staged.
-    
-    - if the "before" branch version is the same as the
-      "after" branch version, that also is not touched.  In
-      the new branch, running "git status" will show you the
-      same files.
-
-    - if the "before" branch version and the "after" branch
-      version are *not* the same, git would lose your local
-      (uncommitted) changes, so it refuses to do the
-      checkout and stays where it is.
+--=20
+The trouble with most people is that they think with their hopes or
+fears or wishes rather than with their minds.  -- Will Durant
