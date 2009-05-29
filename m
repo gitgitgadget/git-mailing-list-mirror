@@ -1,82 +1,58 @@
-From: Andrew Neil <andrew.jr.neil@googlemail.com>
-Subject: Problem with submodules
-Date: Fri, 29 May 2009 12:44:50 +0100
-Message-ID: <77493F66-6FBF-46E8-AD5B-702DC245AA43@googlemail.com>
-Mime-Version: 1.0 (Apple Message framework v930.3)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri May 29 13:55:30 2009
+From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
+Subject: Re: [RFC][StGit PATCH] Add support for merge-friendly branches
+Date: Fri, 29 May 2009 13:59:20 +0200
+Message-ID: <20090529115920.GA14429@diana.vm.bytemark.co.uk>
+References: <20090528111212.21925.45527.stgit@pc1117.cambridge.arm.com> <20090528124817.GA22262@diana.vm.bytemark.co.uk> <b0943d9e0905280738n51476ab7vd0498ea7a236c4a7@mail.gmail.com> <20090529083739.GB9760@diana.vm.bytemark.co.uk> <b0943d9e0905290216m3c2bb639kc951510c72212ff@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Catalin Marinas <catalin.marinas@gmail.com>
+X-From: git-owner@vger.kernel.org Fri May 29 13:59:35 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MA0gL-00075w-IU
-	for gcvg-git-2@gmane.org; Fri, 29 May 2009 13:55:30 +0200
+	id 1MA0kE-0000JW-Em
+	for gcvg-git-2@gmane.org; Fri, 29 May 2009 13:59:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755523AbZE2LzQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 29 May 2009 07:55:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753982AbZE2LzP
-	(ORCPT <rfc822;git-outgoing>); Fri, 29 May 2009 07:55:15 -0400
-Received: from ttsmtp-1.cpwnetworks.com ([62.24.128.242]:43380 "EHLO
-	ttsmtp.cpwnetworks.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752815AbZE2LzO (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 May 2009 07:55:14 -0400
-X-Greylist: delayed 619 seconds by postgrey-1.27 at vger.kernel.org; Fri, 29 May 2009 07:55:13 EDT
-X-Path: TalkTalk-smtp
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: AiwCAPJmH0pUDXCl/2dsb2JhbAAIz02EDAU
-Received: from host-84-13-112-165.opaltelecom.net (HELO [192.168.2.3]) ([84.13.112.165])
-  by ttsmtp.cpwnetworks.com with ESMTP; 29 May 2009 12:44:52 +0100
-X-Mailer: Apple Mail (2.930.3)
+	id S1757896AbZE2L7V convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 29 May 2009 07:59:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757657AbZE2L7U
+	(ORCPT <rfc822;git-outgoing>); Fri, 29 May 2009 07:59:20 -0400
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:50905 "EHLO
+	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752815AbZE2L7U (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 May 2009 07:59:20 -0400
+Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
+	id 1MA0k4-0003ng-00; Fri, 29 May 2009 12:59:20 +0100
+Content-Disposition: inline
+In-Reply-To: <b0943d9e0905290216m3c2bb639kc951510c72212ff@mail.gmail.com>
+X-Manual-Spam-Check: kha@treskal.com, clean
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120271>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120272>
 
-I am having trouble with submodules on one of my machines. When I run
-`git submodule init`, then `git submodule update`, it looks as though
-everything is going fine, then it crashes out with an error:
-"pathspec '665a3c' did not match any file known to git.".
-(The full output is pasted below).
+On 2009-05-29 10:16:52 +0100, Catalin Marinas wrote:
 
-According to this article: http://book.git-scm.com/5_submodules.html
-under the heading "Pitfalls with submodules", this error is expected
-to occur if you don't publish changes to a submodule. This doesn't
-seem to be the problem in my case. I have tried installing the same
-git repository on 2 other machines, and the submodule init/update
-commands worked fine on both of them. So it looks as though there is
-something on one of my machines that is interfering with this process.
+> 2009/5/29 Karl Hasselstr=F6m <kha@treskal.com>:
+>
+> > The situation I described looks like this:
+> >
+> > =A0 =A0B--o--o--o--o--o--P--T
+> >
+> > Time goes from left to right. B is the stack base, P the head of
+> > the public branch, T the stack top. merge_base(P, T) is P, and not
+> > B.
+>
+> I don't check merge_base(P, T) but merge_base(P, B) to avoid the
+> issues you described. So that's always B.
 
-I discovered that if I run the `git submodule update` command as sudo,
-the problem goes away. However, this has the side-effect that the
-submodule directories are created with root as the owner.
+Ah, so that's where I got myself confused. Thanks.
 
-Can anyone help with this problem?
-
-Much appreciated,
-Drew
-
-
-Here is the full output of the init/update commands, with my faulty
-machine:
-
-$ git submodule init
-Submodule 'vendor/plugins/dataset' (git://github.com/jgarber/ 
-dataset.git) registered for path 'vendor/plugins/dataset'
-Submodule 'vendor/plugins/simply_versioned' (git://github.com/mmower/ 
-simply_versioned.git) registered for path 'vendor/plugins/ 
-simply_versioned'
-$ git submodule update
-Initialized empty Git repository in /Users/drew/web/extensions/ 
-chronicle/vendor/plugins/dataset/.git/
-remote: Counting objects: 899, done.
-remote: Compressing objects: 100% (692/692), done.
-remote: Total 899 (delta 539), reused 250 (delta 158)
-Receiving objects: 100% (899/899), 141.93 KiB | 42 KiB/s, done.
-Resolving deltas: 100% (539/539), done.
-error: pathspec '665a3c03f6a65a586839b8de437c60f98177dd78' did not  
-match any file(s) known to git.
-Unable to checkout '665a3c03f6a65a586839b8de437c60f98177dd78' in  
-submodule path 'vendor/plugins/dataset'
+--=20
+Karl Hasselstr=F6m, kha@treskal.com
+      www.treskal.com/kalle
