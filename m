@@ -1,77 +1,63 @@
-From: Avery Pennarun <apenwarr@gmail.com>
-Subject: Re: Managing submodules on large multi-user projects
-Date: Fri, 29 May 2009 15:53:26 -0400
-Message-ID: <32541b130905291253k3fa1d675yde1dddb5e8090ef9@mail.gmail.com>
-References: <20090529184125.GE11222@starfruit.corp.slide.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH v4 2/2] diff: generate pretty filenames in
+	prep_temp_blob()
+Date: Fri, 29 May 2009 15:55:37 -0400
+Message-ID: <20090529195537.GA13961@coredump.intra.peff.net>
+References: <1243558164-74756-1-git-send-email-davvid@gmail.com> <1243558164-74756-2-git-send-email-davvid@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "R. Tyler Ballance" <tyler@slide.com>
-X-From: git-owner@vger.kernel.org Fri May 29 21:53:57 2009
+Content-Type: text/plain; charset=utf-8
+Cc: gitster@pobox.com, git@vger.kernel.org, markus.heidelberg@web.de,
+	jnareb@gmail.com, j.sixt@viscovery.net
+To: David Aguilar <davvid@gmail.com>
+X-From: git-owner@vger.kernel.org Fri May 29 21:56:20 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MA89M-0002u6-BS
-	for gcvg-git-2@gmane.org; Fri, 29 May 2009 21:53:56 +0200
+	id 1MA8BQ-0004Uk-NA
+	for gcvg-git-2@gmane.org; Fri, 29 May 2009 21:56:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753784AbZE2Txq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 29 May 2009 15:53:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752899AbZE2Txp
-	(ORCPT <rfc822;git-outgoing>); Fri, 29 May 2009 15:53:45 -0400
-Received: from yx-out-2324.google.com ([74.125.44.29]:8773 "EHLO
-	yx-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752142AbZE2Txp (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 May 2009 15:53:45 -0400
-Received: by yx-out-2324.google.com with SMTP id 3so3461557yxj.1
-        for <git@vger.kernel.org>; Fri, 29 May 2009 12:53:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=e9+GMPWSpGSvWKNxGtuxkXrq3/a6j1cNwL5lnSB//RE=;
-        b=eahUrnblps/aTOaVxQvAKspiAqaX9bHPMTSz2KUU+dvr9XQHwkLzp0gsbe7UeMJTMT
-         mfXj6EQPP2HcbtZF2ikEX2pOdo3pc/4Qb/bYSGUEjnUodgEaA68QuIhrwEWp0c9+u4gr
-         /OomtcLeoUa9fwrEcLTAXFiMpd0uyeN62MEyg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=djk+K+WNLAnx3MCQc5OF2OS0UNJ8WFlYoCIwDB1xStVEz6vrQBivzh8PJS9zmDFEte
-         bDrq38tF2mDwrqwz7EmKn5ciqnPWttg9FkUJDd1X+jpX6cxVEf6k/DeZNHvMDv0ouQKD
-         5h/F8YITgMCz2gF6qaQI4Ha8GUraKXJ17Diz0=
-Received: by 10.151.119.12 with SMTP id w12mr5838383ybm.191.1243626826106; 
-	Fri, 29 May 2009 12:53:46 -0700 (PDT)
-In-Reply-To: <20090529184125.GE11222@starfruit.corp.slide.com>
+	id S1760352AbZE2Tzp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 29 May 2009 15:55:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756944AbZE2Tzo
+	(ORCPT <rfc822;git-outgoing>); Fri, 29 May 2009 15:55:44 -0400
+Received: from peff.net ([208.65.91.99]:54269 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756515AbZE2Tzo (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 May 2009 15:55:44 -0400
+Received: (qmail 28351 invoked by uid 107); 29 May 2009 19:55:49 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Fri, 29 May 2009 15:55:49 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Fri, 29 May 2009 15:55:37 -0400
+Content-Disposition: inline
+In-Reply-To: <1243558164-74756-2-git-send-email-davvid@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120307>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120308>
 
-On Fri, May 29, 2009 at 2:41 PM, R. Tyler Ballance <tyler@slide.com> wrote:
-> As some of you may recall from my last swath of emails to the list
-> regarding memory usage and repository size, we have quite a large
-> repository. About a month ago, I added a submodule to the primary repo
-> in an effort to start to segment where possible, particularly around
-> third party modules.
->
-> I've noticed that keeping submodules updated is an absolute pain,
-> particularly with a large multiuser setup with *lots* of branches.
+On Thu, May 28, 2009 at 05:49:24PM -0700, David Aguilar wrote:
 
-Just so I understand, is the reason you're splitting into submodules
-*just* to avoid memory usage / repository size issues?  I can sort of
-understand the memory usage issues - sort of - but how does it reduce
-repository size if you need to need to check out all the submodule
-repositories along with the main project anyway?
+> @@ -1964,8 +1964,24 @@ static void prep_temp_blob(const char *path, struct diff_tempfile *temp,
+>  {
+>  	int fd;
+>  	struct strbuf buf = STRBUF_INIT;
+> +	struct strbuf template = STRBUF_INIT;
+> +	char *basename = ((char*)path) + strlen(path) - 1;
 
-Just looking to clarify for myself.  (I'm continuing my work on
-git-subtree, which is getting more and more positive feedback.  It
-solves all the *other* problems that you listed vs. submodules, but it
-certainly doesn't resolve any repository size issues.)
+Why do you drop constness in this assignment?
 
-Have fun,
+> +	/* Windows lacks basename() */
+> +	while(*basename && basename > path) {
+> +		basename--;
+> +		if (is_dir_sep(*basename)) {
+> +			basename++;
+> +			break;
+> +		}
+> +	}
 
-Avery
+This is such an easily-factorable bit, maybe it makes sense to add as
+basename() in compat/?
+
+-Peff
