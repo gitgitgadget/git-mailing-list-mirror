@@ -1,57 +1,90 @@
-From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
-Subject: Re: =?utf-8?b?5Yml46ig5p2p55Cg4pig5om15pyg55Gy5oWj5q2p5rmn?=
-Date: Fri, 29 May 2009 10:18:32 +0200
-Message-ID: <200905291018.32935.robin.rosenberg.lists@dewire.com>
+From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
+Subject: Re: [RFC][StGit PATCH] Add support for merge-friendly branches
+Date: Fri, 29 May 2009 10:37:39 +0200
+Message-ID: <20090529083739.GB9760@diana.vm.bytemark.co.uk>
+References: <20090528111212.21925.45527.stgit@pc1117.cambridge.arm.com> <20090528124817.GA22262@diana.vm.bytemark.co.uk> <b0943d9e0905280738n51476ab7vd0498ea7a236c4a7@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: Text/Plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: "~:'' =?utf-8?b?44GC44KK44GM44Go44GG44GU44GW44GE44G+44GX44Gf44CC?=" 
-	<j.chetwynd@btinternet.com>, git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Fri May 29 10:18:48 2009
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Catalin Marinas <catalin.marinas@gmail.com>
+X-From: git-owner@vger.kernel.org Fri May 29 10:37:50 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M9xId-0000ZS-KW
-	for gcvg-git-2@gmane.org; Fri, 29 May 2009 10:18:48 +0200
+	id 1M9xb2-0006yc-V9
+	for gcvg-git-2@gmane.org; Fri, 29 May 2009 10:37:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754903AbZE2ISj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 29 May 2009 04:18:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753593AbZE2ISi
-	(ORCPT <rfc822;git-outgoing>); Fri, 29 May 2009 04:18:38 -0400
-Received: from mail.dewire.com ([83.140.172.130]:11697 "EHLO dewire.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751277AbZE2ISh (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 May 2009 04:18:37 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by dewire.com (Postfix) with ESMTP id BA848145D138;
-	Fri, 29 May 2009 10:18:34 +0200 (CEST)
-X-Virus-Scanned: by amavisd-new at dewire.com
-Received: from dewire.com ([127.0.0.1])
-	by localhost (torino.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 6kAOX3I5rVZm; Fri, 29 May 2009 10:18:34 +0200 (CEST)
-Received: from sleipner.localnet (unknown [10.9.0.13])
-	by dewire.com (Postfix) with ESMTP id 0A3C5145D137;
-	Fri, 29 May 2009 10:18:34 +0200 (CEST)
-User-Agent: KMail/1.11.2 (Linux/2.6.28-11-generic; KDE/4.2.2; i686; ; )
-References: ???????????????????
-In-Reply-To: =?utf-8?b?47Gt442w54mk55Gh552s44yu5pmz5pmA5rGv5o2h5rGo5r2z55Cu5rGv5o2h5rGk?=
- =?utf-8?b?5r2t5oWp5ri+?=
+	id S1756403AbZE2Ihk convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 29 May 2009 04:37:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755700AbZE2Ihk
+	(ORCPT <rfc822;git-outgoing>); Fri, 29 May 2009 04:37:40 -0400
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:38552 "EHLO
+	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755320AbZE2Ihj (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 May 2009 04:37:39 -0400
+Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
+	id 1M9xat-00030Q-00; Fri, 29 May 2009 09:37:39 +0100
 Content-Disposition: inline
+In-Reply-To: <b0943d9e0905280738n51476ab7vd0498ea7a236c4a7@mail.gmail.com>
+X-Manual-Spam-Check: kha@treskal.com, clean
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120259>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120260>
 
+On 2009-05-28 15:38:44 +0100, Catalin Marinas wrote:
 
-This is what the header says.
+> 2009/5/28 Karl Hasselstr=F6m <kha@treskal.com>:
+>
+> > On 2009-05-28 12:12:42 +0100, Catalin Marinas wrote:
+> >
+> > > The patch proposes a new StGit command called "publish". This
+> > > command allows one to develop patches normally on a StGit branch
+> > > but publish the stack changes to a separate, merge-friendly
+> > > branch whose history is not re-writable.
+> >
+> > Hmm, interesting. I don't think I'd want to use a command like
+> > this myself, but I can see how it might be useful.
+>
+> For me it is useful. I publish a kernel tree with over 100 patches.
+> Later I find that one patch is buggy. The current merge-friendly
+> solution is to add another patch but I may want to just update the
+> buggy patch as it's easier when time comes to submit upstream. This,
+> however, rewrites the history. So with the "publish" command I just
+> generate another commit on top of the public branch and I always end
+> up with the same tree as on my stack.
 
-Content-Type: text/plain;
-  charset=utf-16be
+I think I would've kludged this by making --theirs merges from the
+StGit branch to the public branch. But "stg publish" should definitely
+make the kludge history less ugly.
 
-The message its doesn't seem to be UTF-16 encoded however. My mail client gets confused...
+> > Hmm. Couldn't the merge base conceivably be higher up in the
+> > stack? Like, right at the beginning, don't we have public_head =3D=3D
+> > stack.head? That would be caught by the "same tree" check" a bit
+> > earlier, but after adding another patch, don't we have public_head
+> > =3D=3D stack.head^ ? Which would give merge_base =3D=3D public_head=
+=2E
+>
+> We could have public_head =3D=3D stack.head^... but that's not an iss=
+ue.
+> The merge_base above is checked against the base of the stack rather
+> than the top as we assume that the base isn't volatile. So even if
+> public_head is the same as some patch commit, the merge_base above
+> would always be the base of the stack. Only if the stack base was
+> updated, we get a different merge_base (equal to the previous stack
+> base).
 
--- robin
+The situation I described looks like this:
+
+    B--o--o--o--o--o--P--T
+
+Time goes from left to right. B is the stack base, P the head of the
+public branch, T the stack top. merge_base(P, T) is P, and not B.
+
+--=20
+Karl Hasselstr=F6m, kha@treskal.com
+      www.treskal.com/kalle
