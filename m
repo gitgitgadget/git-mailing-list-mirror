@@ -1,63 +1,116 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH v4 2/2] diff: generate pretty filenames in
-	prep_temp_blob()
-Date: Fri, 29 May 2009 15:55:37 -0400
-Message-ID: <20090529195537.GA13961@coredump.intra.peff.net>
-References: <1243558164-74756-1-git-send-email-davvid@gmail.com> <1243558164-74756-2-git-send-email-davvid@gmail.com>
+From: "R. Tyler Ballance" <tyler@slide.com>
+Subject: Re: Managing submodules on large multi-user projects
+Date: Fri, 29 May 2009 13:09:29 -0700
+Message-ID: <20090529200928.GH11222@starfruit.corp.slide.com>
+References: <20090529184125.GE11222@starfruit.corp.slide.com> <32541b130905291253k3fa1d675yde1dddb5e8090ef9@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: gitster@pobox.com, git@vger.kernel.org, markus.heidelberg@web.de,
-	jnareb@gmail.com, j.sixt@viscovery.net
-To: David Aguilar <davvid@gmail.com>
-X-From: git-owner@vger.kernel.org Fri May 29 21:56:20 2009
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="nhYGnrYv1PEJ5gA2"
+Cc: git@vger.kernel.org
+To: Avery Pennarun <apenwarr@gmail.com>
+X-From: git-owner@vger.kernel.org Fri May 29 22:10:17 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MA8BQ-0004Uk-NA
-	for gcvg-git-2@gmane.org; Fri, 29 May 2009 21:56:05 +0200
+	id 1MA8PA-0007L8-B1
+	for gcvg-git-2@gmane.org; Fri, 29 May 2009 22:10:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760352AbZE2Tzp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 29 May 2009 15:55:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756944AbZE2Tzo
-	(ORCPT <rfc822;git-outgoing>); Fri, 29 May 2009 15:55:44 -0400
-Received: from peff.net ([208.65.91.99]:54269 "EHLO peff.net"
+	id S1760774AbZE2UKG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 29 May 2009 16:10:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758466AbZE2UKG
+	(ORCPT <rfc822;git-outgoing>); Fri, 29 May 2009 16:10:06 -0400
+Received: from mx0.slide.com ([208.76.68.7]:58985 "EHLO mx0.slide.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756515AbZE2Tzo (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 May 2009 15:55:44 -0400
-Received: (qmail 28351 invoked by uid 107); 29 May 2009 19:55:49 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Fri, 29 May 2009 15:55:49 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Fri, 29 May 2009 15:55:37 -0400
+	id S1756665AbZE2UKF (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 May 2009 16:10:05 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+	d=slide.com; s=slideinc; h=Date:From:To:Subject:Message-ID; bh=i
+	N8gfR6jlYzhTogh6pXi3jiiS3kyob6+JvGEIrQPHHI=; b=rfpK1d8OHNP04VL05
+	IsCh3b2RAt9diaOphIZIj37e8CEQjuffGNtKPia4Izkfo5IDzf/4/2GuwazI3nBO
+	4Fo1NiRoA2l9ldluRvvI8nCFysXVYzyO66OhxMey7x26gdWxQTR8PyxJLxjAOSra
+	B/qGyv8M8jIy5GLfyB52VmawDE=
+Received: from nat3.slide.com ([208.76.69.126]:59310 helo=calculon.corp.slide.com)
+	by mx0.slide.com with esmtp (Exim 4.69 #1)
+	id 1MA8P0-0002SU-AA; Fri, 29 May 2009 13:10:06 -0700
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by calculon.corp.slide.com (Postfix) with ESMTP id 49337A6F0002;
+	Fri, 29 May 2009 13:10:06 -0700 (PDT)
+X-Virus-Scanned: amavisd-new at calculon.corp.slide.com
+Received: from calculon.corp.slide.com ([127.0.0.1])
+	by localhost (calculon.corp.slide.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 5Og1-kw6Jeq8; Fri, 29 May 2009 13:10:06 -0700 (PDT)
+Received: from starfruit.corp.slide.com (starfruit.corp.slide.com [10.10.10.45])
+	by calculon.corp.slide.com (Postfix) with ESMTP id 0DBA9A6F0001;
+	Fri, 29 May 2009 13:10:06 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <1243558164-74756-2-git-send-email-davvid@gmail.com>
+In-Reply-To: <32541b130905291253k3fa1d675yde1dddb5e8090ef9@mail.gmail.com>
+User-Agent: Mutt/1.5.18 (2008-05-17)
+X-Content-Bypass: Bypassed by sending host IP
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120308>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120309>
 
-On Thu, May 28, 2009 at 05:49:24PM -0700, David Aguilar wrote:
 
-> @@ -1964,8 +1964,24 @@ static void prep_temp_blob(const char *path, struct diff_tempfile *temp,
->  {
->  	int fd;
->  	struct strbuf buf = STRBUF_INIT;
-> +	struct strbuf template = STRBUF_INIT;
-> +	char *basename = ((char*)path) + strlen(path) - 1;
+--nhYGnrYv1PEJ5gA2
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Why do you drop constness in this assignment?
+On Fri, May 29, 2009 at 03:53:26PM -0400, Avery Pennarun wrote:
+> On Fri, May 29, 2009 at 2:41 PM, R. Tyler Ballance <tyler@slide.com> wrot=
+e:
+> > As some of you may recall from my last swath of emails to the list
+> > regarding memory usage and repository size, we have quite a large
+> > repository. About a month ago, I added a submodule to the primary repo
+> > in an effort to start to segment where possible, particularly around
+> > third party modules.
+> >
+> > I've noticed that keeping submodules updated is an absolute pain,
+> > particularly with a large multiuser setup with *lots* of branches.
+>=20
+> Just so I understand, is the reason you're splitting into submodules
+> *just* to avoid memory usage / repository size issues?  I can sort of
+> understand the memory usage issues - sort of - but how does it reduce
+> repository size if you need to need to check out all the submodule
+> repositories along with the main project anyway?
 
-> +	/* Windows lacks basename() */
-> +	while(*basename && basename > path) {
-> +		basename--;
-> +		if (is_dir_sep(*basename)) {
-> +			basename++;
-> +			break;
-> +		}
-> +	}
+I've got an eye on submodules as a way of avoiding the need to require a
+whole tree clone to just work on parts of it, but that's not really
+relevant to my query, just explaining our environment and setting the stage=
+ ;)
 
-This is such an easily-factorable bit, maybe it makes sense to add as
-basename() in compat/?
+We're using submodules right now similar to how we used svn externals in
+the past (except better, clearly), to incorporate outside components
+(like open source projects) that our stack depends on.
 
--Peff
+> Just looking to clarify for myself.  (I'm continuing my work on
+> git-subtree, which is getting more and more positive feedback.  It
+> solves all the *other* problems that you listed vs. submodules, but it
+> certainly doesn't resolve any repository size issues.)
+
+Good to know, we're still on Git 1.6.1, are there any benefits or
+additional features in more recent releases of Git that help alleviate
+the submodules issues I outlined at the top of the thread?
+
+
+Cheers
+--=20
+-R. Tyler Ballance
+Slide, Inc.
+
+--nhYGnrYv1PEJ5gA2
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.9 (GNU/Linux)
+
+iEYEARECAAYFAkogQPgACgkQFCbH3D9R4W9wjwCcCEjg/yJz3fQe9HPZK4NfKRgX
+ZMAAoIJXP7blzFc6oEETQR1R3403rp3Y
+=VHL3
+-----END PGP SIGNATURE-----
+
+--nhYGnrYv1PEJ5gA2--
