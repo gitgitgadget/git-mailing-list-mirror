@@ -1,95 +1,88 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Git Confusion
-Date: Fri, 29 May 2009 22:45:55 +0200
-Message-ID: <200905292245.56702.jnareb@gmail.com>
-References: <815c8c330905290043i4c99a753jd5ad9bdd4cf18bbc@mail.gmail.com> <20090529135242.GA30926@coredump.intra.peff.net> <815c8c330905291324w4e861602n8278df72fdbc28db@mail.gmail.com>
+From: John Koleszar <john.koleszar@on2.com>
+Subject: Re: git-svn: importing internal externals
+Date: Fri, 29 May 2009 17:05:19 -0400
+Organization: On2 Technologies
+Message-ID: <1243631119.6276.46.camel@cp-jk-linux.corp.on2.com>
+References: <1243443089.3192.43.camel@cp-jk-linux.corp.on2.com>
+	 <20090528112542.GA24403@nan92-1-81-57-214-146.fbx.proxad.net>
+Reply-To: john.koleszar@on2.com
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
+Content-Type: text/plain
 Content-Transfer-Encoding: 7bit
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org, yury239@gmail.com
-To: Paul Tarjan <ptarjan@gmail.com>
-X-From: git-owner@vger.kernel.org Fri May 29 22:46:08 2009
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Yann Dirson <ydirson@altern.org>
+X-From: git-owner@vger.kernel.org Fri May 29 23:05:48 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MA8xq-0005yA-Ni
-	for gcvg-git-2@gmane.org; Fri, 29 May 2009 22:46:07 +0200
+	id 1MA9Gt-0004bz-7X
+	for gcvg-git-2@gmane.org; Fri, 29 May 2009 23:05:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752066AbZE2Up5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 29 May 2009 16:45:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752013AbZE2Up4
-	(ORCPT <rfc822;git-outgoing>); Fri, 29 May 2009 16:45:56 -0400
-Received: from fg-out-1718.google.com ([72.14.220.153]:48790 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751585AbZE2Up4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 May 2009 16:45:56 -0400
-Received: by fg-out-1718.google.com with SMTP id 16so2345797fgg.17
-        for <git@vger.kernel.org>; Fri, 29 May 2009 13:45:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=6aWpQ3G8ScBOnJYNDQD0OmqS7fg4GWhrZ0bB6EZXEM4=;
-        b=KVCxel1sWEV7odCImKHyOcF7s5MGMw9soXXMUXIcfalYlBYjjc0xlLLwLaL3QGJg2e
-         ly1pcUzhVWqDj4u9WnqPlAa7PQERhsswLDQ0t6vEgT4F4/prC0N7l7Z1Gur65rd7MA2f
-         /8NicVt8CBirIMTby6wi0zAuq6djHf19H/ZTM=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=KtaA1mVsknKIWlbsiNdlOoNyxOmz3vqHnNWm73vfNbeCDAjnyuvuy7n0KNyHF4bDB8
-         kG/Mj6eMbyrNu0p+Ohd0AzvLJ8bEPofgjpABdXAk/AFJapNLeo5cucY830H7yB42BtIK
-         p5Uu0Rkr1kWAw5v1C6Mq9TM58vYrMaTPSOdr4=
-Received: by 10.86.59.2 with SMTP id h2mr3356879fga.30.1243629956848;
-        Fri, 29 May 2009 13:45:56 -0700 (PDT)
-Received: from ?192.168.1.13? (abwe32.neoplus.adsl.tpnet.pl [83.8.228.32])
-        by mx.google.com with ESMTPS id 4sm3662552fgg.28.2009.05.29.13.45.55
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 29 May 2009 13:45:56 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <815c8c330905291324w4e861602n8278df72fdbc28db@mail.gmail.com>
-Content-Disposition: inline
+	id S1751708AbZE2VFi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 29 May 2009 17:05:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751406AbZE2VFh
+	(ORCPT <rfc822;git-outgoing>); Fri, 29 May 2009 17:05:37 -0400
+Received: from mail.on2.com ([66.162.65.131]:53516 "EHLO on2.com"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1751346AbZE2VFh (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 May 2009 17:05:37 -0400
+In-Reply-To: <20090528112542.GA24403@nan92-1-81-57-214-146.fbx.proxad.net>
+X-Mailer: Evolution 2.24.5 
+X-On2-MailScanner-i: Found to be clean
+X-On2-MailScanner-From: john.koleszar@on2.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120315>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120316>
 
-On Fri, 29 May 2009, Paul Tarjan wrote:
-> Thank you very much. For skimmers the solution is :
+On Thu, 2009-05-28 at 07:25 -0400, Yann Dirson wrote:
+> On Wed, May 27, 2009 at 12:51:29PM -0400, John Koleszar wrote:
+> > Hi,
+> > 
+> > I'm working on a one-off import of an SVN repo that makes use of
+> > "internal" svn:externals; i.e. all URLs refer to different spots in the
+> > same repo, potentially with peg revisions. The SVN repo holds a number
+> > of projects, and my plan is to import them into individual git repos,
+> > incorporating the history from any svn:external linked sub-projects.
 > 
-> git update-server-info
+[...]
+> It can be a good idea to share your script nevertheless :)
 > 
-> every time I do something to the remote repo.
-> 
-> The reason I need http is slightly convoluted. The remote machine is
-> shared hosting with 1 ssh login that I don't want to give to my
-> partner AND I don't have root on that box. And as you correctly
-> guessed, that box doesn't have the git demon. The local machine where
-> he is doing his development. The only solution I saw without giving
-> him my username + pass to SSH was to do http cloning. Any better
-> solutions?
 
-I see two possible solutions (and you can use both):
+I hacked on this some more and got something pretty usable (for me). It
+operates on a git-svn clone of the whole repository, propagates commits
+to different paths if referenced by an external, rearranges the tree to
+isolate each svn branch on its own head, reparents the branches to their
+proper branch points, and converts any tags branches to real git tags.
 
-1. Have separate publishing repository, which would be bare, and updated
-   only via push (so enabling 'update' / 'post-receive' hooks would be
-   enough for HTTP). This is good idea also because it makes it possible
-   to change commits (rewrite history), e.g. do "git commit --amend"...
-   provided that you didn't push part of history you are changing to
-   public repository. If you are worrying about disk space, you can
-   always set up alternates.
+Don't know what the netequitte is on this list regarding attachments for
+this sort of thing, so I posted it here:
+http://github.com/jkoleszar/git-svn-internal-externals/tree/master
 
-2. Use Gitosis (or ssh_acl) to control access via SSH to repository
-   without need to provide extra user accounts, or use git-shell as
-   login shell for user accounts which are meant only to access
-   repositories. I think you can use Gitosis without being a root...
-   see link in BlogPosts page at Git Wiki.
+It's not as fast as I'd like, but it's workable, at least for small
+repositories. Bottleneck seems to be git-update-index (100s of ms/call)
+but I haven't looked into it too much. I'm sure I could be smarter in
+some of my pipelines too. Some numbers (2246 revisions, ~15k files,
+Core2 6600 @ 2.4GHz, tmpfs):
 
--- 
-Jakub Narebski
-Poland
+git-svn fetch:
+197.03user 174.63system 22:36.59elapsed 27%CPU (0avgtext+0avgdata
+0maxresident)k 0inputs+0outputs (0major+35448577minor)pagefaults 0swaps
+
+propagating externals:
+1381.29user 744.42system 34:28.67elapsed 102%CPU (0avgtext+0avgdata
+0maxresident)k 0inputs+0outputs (2major+305234667minor)pagefaults 0swaps
+
+rearranging heads:
+46.13user 64.23system 1:52.42elapsed 98%CPU (0avgtext+0avgdata
+0maxresident)k 0inputs+0outputs (4major+28752709minor)pagefaults 0swaps
+
+reparenting branches:
+151.52user 263.50system 6:19.54elapsed 109%CPU (0avgtext+0avgdata
+0maxresident)k 0inputs+0outputs (2major+135830914minor)pagefaults 0swaps
+
+Hope this is useful for someone!
+
+John
