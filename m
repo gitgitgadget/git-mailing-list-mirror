@@ -1,74 +1,75 @@
-From: Paul Tarjan <ptarjan@gmail.com>
-Subject: Git Confusion
-Date: Fri, 29 May 2009 00:43:35 -0700
-Message-ID: <815c8c330905290043i4c99a753jd5ad9bdd4cf18bbc@mail.gmail.com>
+From: Karl =?utf-8?q?Hasselstr=C3=B6m?= <kha@treskal.com>
+Subject: [PATCH] Pass "git config" flags in the right order
+Date: Fri, 29 May 2009 09:43:50 +0200
+Message-ID: <20090529074300.20591.96310.stgit@october.hq.vtech>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: yury239@gmail.com
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri May 29 09:43:47 2009
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Daniel Aarno <aarno@virtutech.com>, git@vger.kernel.org
+To: Catalin Marinas <catalin.marinas@gmail.com>
+X-From: git-owner@vger.kernel.org Fri May 29 09:44:01 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M9wki-0003tH-Gb
-	for gcvg-git-2@gmane.org; Fri, 29 May 2009 09:43:44 +0200
+	id 1M9wky-0003yj-9B
+	for gcvg-git-2@gmane.org; Fri, 29 May 2009 09:44:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753979AbZE2Hng (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 29 May 2009 03:43:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753862AbZE2Hnf
-	(ORCPT <rfc822;git-outgoing>); Fri, 29 May 2009 03:43:35 -0400
-Received: from mail-gx0-f166.google.com ([209.85.217.166]:35542 "EHLO
-	mail-gx0-f166.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752965AbZE2Hnf (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 May 2009 03:43:35 -0400
-Received: by gxk10 with SMTP id 10so10124795gxk.13
-        for <git@vger.kernel.org>; Fri, 29 May 2009 00:43:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:date:message-id:subject
-         :from:to:cc:content-type:content-transfer-encoding;
-        bh=UPZGXDQj7IPrj78yZp44wWoD4+ySSlGB8858p0Rtl6M=;
-        b=phsd0oNBpPs6YAkhOI46D0D5EGzEj+ArvNhZo1FxqllsbGthaoKgXuvn4o07pS07ic
-         gFUG5KlyluiIMy1cDRxB2KMQ3RX+lV2oUhJPQ/b1RoZJHBwDnkZ0SUtRN/nApbDk5uXJ
-         EhQiDf7waT/DtavNwDoX8A/KTc6j2Wsu/4T48=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        b=uBPFmNFttkdIH35iOZ0jW6rEEgbFBlmV1B25khDSJKtfqu/HCFQoynbMu1fPJaZ4Mv
-         qsw8siboVUln6QarPMaV8vOdYstEWLPvTTgrJtGbunu6UceuChcvjt2Hi1ZUJBUTMs1b
-         GioBzrgs+9+0KohiKVm55pPEDKRb0pidxiUZM=
-Received: by 10.151.134.2 with SMTP id l2mr4515831ybn.217.1243583015997; Fri, 
-	29 May 2009 00:43:35 -0700 (PDT)
+	id S1754575AbZE2Hnu convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 29 May 2009 03:43:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754558AbZE2Hnu
+	(ORCPT <rfc822;git-outgoing>); Fri, 29 May 2009 03:43:50 -0400
+Received: from vtab.com ([62.20.90.195]:51808 "EHLO oden.vtab.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754297AbZE2Hnt (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 May 2009 03:43:49 -0400
+Received: from oden.vtab.com (oden.vtab.com [127.0.0.1])
+	by oden.vtab.com (Postfix) with ESMTP id 6BCE726EF6A;
+	Fri, 29 May 2009 09:43:50 +0200 (CEST)
+Received: from october.hq.vtech (october.hq.vtech [10.0.0.43])
+	by oden.vtab.com (Postfix) with ESMTP id 5764A26EF5E;
+	Fri, 29 May 2009 09:43:50 +0200 (CEST)
+User-Agent: StGit/0.14.3.390.g9adb
+X-Virus-Scanned: ClamAV using ClamSMTP
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120254>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120255>
 
-Hi all,
+=46rom: Karl Hasselstr=C3=B6m <kha@treskal.com>
 
-I'm new to git and probably doing something very dumb, but I can't
-seem to resolve this.
+New enough gits accept the --null and --list flags in any order, but
+older gits want --null before --list. So do it the way that's fine
+with everyone.
 
-I have a remote repository and a local one. I ssh to the remote
-machine, goto the repository directory (not a bare repository), edit a
-file and commit it. All if fine.
+I think (but haven't verified) that git started to accept the flags in
+any order after commit d64ec16c2af4ddcf3985d11d5dc28a15db181de5 ("git
+config: reorganize to use parseopt") by Felipe Contreras on
+2009-02-21, first released in git v1.6.3.
 
-I leave the remote host and go into the local git directory. Doing
-"git pull origin master" says "Already up-to-date." but there is a
-file I changed remotely, and I want to pull it locally!
+Signed-off-by: Karl Hasselstr=C3=B6m <kha@treskal.com>
 
-The local repo was made with "git clone http://example.com/.git". I
-have no branching (both are on master).
+---
 
-My way around this, is on the remote server, I do a "git push other
-master", and then on the local one I do "git checkout HEAD file1" for
-each file. Painful and I'm sure it is wrong.
+Bug discovered by Daniel Aarno.
 
-Any ideas? How do you debug this?
+ stgit/config.py |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-Thanks
-Paul
+
+diff --git a/stgit/config.py b/stgit/config.py
+index c40756c..dc9c9eb 100644
+--- a/stgit/config.py
++++ b/stgit/config.py
+@@ -48,7 +48,7 @@ class GitConfig:
+         if self.__cache is not None:
+             return
+         self.__cache =3D {}
+-        lines =3D Run('git', 'config', '--list', '--null').raw_output(=
+)
++        lines =3D Run('git', 'config', '--null', '--list').raw_output(=
+)
+         for line in filter(None, lines.split('\0')):
+             key, value =3D line.split('\n', 1)
+             self.__cache.setdefault(key, []).append(value)
