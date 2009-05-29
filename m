@@ -1,99 +1,104 @@
-From: Andrew Neil <andrew.jr.neil@googlemail.com>
-Subject: Re: Problem with submodules
-Date: Fri, 29 May 2009 14:38:32 +0100
-Message-ID: <7FD6E590-8C6F-4DC6-8F64-A52FFCA92515@googlemail.com>
-References: <77493F66-6FBF-46E8-AD5B-702DC245AA43@googlemail.com>
-Mime-Version: 1.0 (Apple Message framework v930.3)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri May 29 15:38:49 2009
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: Git Confusion
+Date: Fri, 29 May 2009 06:44:26 -0700 (PDT)
+Message-ID: <m3d49sauru.fsf@localhost.localdomain>
+References: <815c8c330905290043i4c99a753jd5ad9bdd4cf18bbc@mail.gmail.com>
+	<20090529125853.GB11785@sigill.intra.peff.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Paul Tarjan <ptarjan@gmail.com>, git@vger.kernel.org,
+	yury239@gmail.com
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri May 29 15:45:09 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MA2IL-0003uT-9G
-	for gcvg-git-2@gmane.org; Fri, 29 May 2009 15:38:49 +0200
+	id 1MA2OM-0006af-I1
+	for gcvg-git-2@gmane.org; Fri, 29 May 2009 15:45:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758291AbZE2Nil (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 29 May 2009 09:38:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757730AbZE2Nik
-	(ORCPT <rfc822;git-outgoing>); Fri, 29 May 2009 09:38:40 -0400
-Received: from wmsmtp.opaltelecom.net ([62.24.128.253]:51282 "EHLO
-	otmx.cpwnetworks.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1756948AbZE2Nij (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 May 2009 09:38:39 -0400
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: AiwCAMuCH0pUDXCl/2dsb2JhbAAI0E2EDAU
-Received: from host-84-13-112-165.opaltelecom.net (HELO [192.168.2.3]) ([84.13.112.165])
-  by ttsmtp.cpwnetworks.com with ESMTP; 29 May 2009 14:38:33 +0100
-In-Reply-To: <77493F66-6FBF-46E8-AD5B-702DC245AA43@googlemail.com>
-X-Mailer: Apple Mail (2.930.3)
+	id S1760855AbZE2No3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 29 May 2009 09:44:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760736AbZE2No2
+	(ORCPT <rfc822;git-outgoing>); Fri, 29 May 2009 09:44:28 -0400
+Received: from mail-bw0-f222.google.com ([209.85.218.222]:62273 "EHLO
+	mail-bw0-f222.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1760904AbZE2No1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 May 2009 09:44:27 -0400
+Received: by bwz22 with SMTP id 22so6136994bwz.37
+        for <git@vger.kernel.org>; Fri, 29 May 2009 06:44:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:received
+         :x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        bh=Df/UAxxq/7hOgPD+MkoUSOccESDOiJ0bzJO3zd8Epn4=;
+        b=EY+QGQ52loVylSw2wV2b6gX++1zRwEB25yTHKpWl3xYduolFSDf3RUvjqev0KvPXQV
+         gmV9GT+jYaRadcKhcKB3vp5wrjd8eUcStLdF0KwSWDgniKPW53qVxFGBhuCBNHqlujz7
+         fL1mzv5I9mN+ldgWDH3KZ0IdsjhiGa4qqFXa0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        b=AH3pV1ynfqQApg6MvPJadt8OD8GsBJ5acM1Fqu5EDniaacoCmD0iZvjFtC5ZPZcDog
+         0M4Lixa586VWr+8h9/N15dtamPVnx61cAMJRgexsAHPzx/sv3y3g7tZK53Z5PuslCDBX
+         CE0LEB2v636yq/3T5KDLEG5aER3Bp8kmyYwTM=
+Received: by 10.103.52.13 with SMTP id e13mr1633314muk.46.1243604667241;
+        Fri, 29 May 2009 06:44:27 -0700 (PDT)
+Received: from localhost.localdomain (abwe32.neoplus.adsl.tpnet.pl [83.8.228.32])
+        by mx.google.com with ESMTPS id y2sm4393215mug.13.2009.05.29.06.44.25
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 29 May 2009 06:44:26 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id n4TDiO3E013361;
+	Fri, 29 May 2009 15:44:25 +0200
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id n4TDiMwF013358;
+	Fri, 29 May 2009 15:44:22 +0200
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <20090529125853.GB11785@sigill.intra.peff.net>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120277>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120278>
 
-I found a solution to this here:
+Jeff King <peff@peff.net> writes:
+> On Fri, May 29, 2009 at 12:43:35AM -0700, Paul Tarjan wrote:
+> 
+> > I'm new to git and probably doing something very dumb, but I can't
+> > seem to resolve this.
+> > 
+> > I have a remote repository and a local one. I ssh to the remote
+> > machine, goto the repository directory (not a bare repository), edit a
+> > file and commit it. All if fine.
+> > 
+> > I leave the remote host and go into the local git directory. Doing
+> > "git pull origin master" says "Already up-to-date." but there is a
+> > file I changed remotely, and I want to pull it locally!
+> > 
+> > The local repo was made with "git clone http://example.com/.git". I
+> > have no branching (both are on master).
+> 
+> Your repository is accessed over http.  You need to run "git
+> update-server-info" to build the files for clients to see the actual
+> updates.
+> 
+> Usually such a repo is bare, and gets updates only by push. In that
+> case, enabling the update hook to run update-server-info is sufficient.
+> But in your case, you are actually working on the remote repo via commit
+> and other means, so there is no convenient way to always
+> update-server-info after a change.
 
-	http://www.websideattractions.com/2008/10/21/no-color-for-git/
+Well, he can always add git-update-server-info to post-commit hook.
 
-Turns out that the following line in my .profile was messing things up:
+> 
+> Is there a particular reason you cloned over http instead of over ssh?
 
-	GREP_OPTIONS="--color=always"; export GREP_OPTIONS
+Or git protocol?
 
-I changed --color=always to auto, and everything works fine now.
-
-Cheers,
-Drew
-
-
-On 29 May 2009, at 12:44, Andrew Neil wrote:
-
-> I am having trouble with submodules on one of my machines. When I run
-> `git submodule init`, then `git submodule update`, it looks as though
-> everything is going fine, then it crashes out with an error:
-> "pathspec '665a3c' did not match any file known to git.".
-> (The full output is pasted below).
->
-> According to this article: http://book.git-scm.com/5_submodules.html
-> under the heading "Pitfalls with submodules", this error is expected
-> to occur if you don't publish changes to a submodule. This doesn't
-> seem to be the problem in my case. I have tried installing the same
-> git repository on 2 other machines, and the submodule init/update
-> commands worked fine on both of them. So it looks as though there is
-> something on one of my machines that is interfering with this process.
->
-> I discovered that if I run the `git submodule update` command as sudo,
-> the problem goes away. However, this has the side-effect that the
-> submodule directories are created with root as the owner.
->
-> Can anyone help with this problem?
->
-> Much appreciated,
-> Drew
->
->
-> Here is the full output of the init/update commands, with my faulty
-> machine:
->
-> $ git submodule init
-> Submodule 'vendor/plugins/dataset' (git://github.com/jgarber/ 
-> dataset.git) registered for path 'vendor/plugins/dataset'
-> Submodule 'vendor/plugins/simply_versioned' (git://github.com/mmower/ 
-> simply_versioned.git) registered for path 'vendor/plugins/ 
-> simply_versioned'
-> $ git submodule update
-> Initialized empty Git repository in /Users/drew/web/extensions/ 
-> chronicle/vendor/plugins/dataset/.git/
-> remote: Counting objects: 899, done.
-> remote: Compressing objects: 100% (692/692), done.
-> remote: Total 899 (delta 539), reused 250 (delta 158)
-> Receiving objects: 100% (899/899), 141.93 KiB | 42 KiB/s, done.
-> Resolving deltas: 100% (539/539), done.
-> error: pathspec '665a3c03f6a65a586839b8de437c60f98177dd78' did not  
-> match any file(s) known to git.
-> Unable to checkout '665a3c03f6a65a586839b8de437c60f98177dd78' in  
-> submodule path 'vendor/plugins/dataset'
->
+-- 
+Jakub Narebski
+Poland
+ShadeHawk on #git
