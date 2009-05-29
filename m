@@ -1,90 +1,108 @@
-From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
+From: Catalin Marinas <catalin.marinas@gmail.com>
 Subject: Re: [RFC][StGit PATCH] Add support for merge-friendly branches
-Date: Fri, 29 May 2009 10:37:39 +0200
-Message-ID: <20090529083739.GB9760@diana.vm.bytemark.co.uk>
-References: <20090528111212.21925.45527.stgit@pc1117.cambridge.arm.com> <20090528124817.GA22262@diana.vm.bytemark.co.uk> <b0943d9e0905280738n51476ab7vd0498ea7a236c4a7@mail.gmail.com>
+Date: Fri, 29 May 2009 09:40:59 +0100
+Message-ID: <b0943d9e0905290140i57aeaa33r8de34302b63ffa5e@mail.gmail.com>
+References: <20090528111212.21925.45527.stgit@pc1117.cambridge.arm.com>
+	 <20090528124817.GA22262@diana.vm.bytemark.co.uk>
+	 <b0943d9e0905280738n51476ab7vd0498ea7a236c4a7@mail.gmail.com>
+	 <b0943d9e0905280751k3b9f26c9gd907a7c11ca9d5e2@mail.gmail.com>
+	 <20090529072050.GA9760@diana.vm.bytemark.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: Catalin Marinas <catalin.marinas@gmail.com>
-X-From: git-owner@vger.kernel.org Fri May 29 10:37:50 2009
+To: =?ISO-8859-1?Q?Karl_Hasselstr=F6m?= <kha@treskal.com>
+X-From: git-owner@vger.kernel.org Fri May 29 10:42:31 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M9xb2-0006yc-V9
-	for gcvg-git-2@gmane.org; Fri, 29 May 2009 10:37:49 +0200
+	id 1M9xfV-00006b-Ma
+	for gcvg-git-2@gmane.org; Fri, 29 May 2009 10:42:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756403AbZE2Ihk convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 29 May 2009 04:37:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755700AbZE2Ihk
-	(ORCPT <rfc822;git-outgoing>); Fri, 29 May 2009 04:37:40 -0400
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:38552 "EHLO
-	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755320AbZE2Ihj (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 May 2009 04:37:39 -0400
-Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
-	id 1M9xat-00030Q-00; Fri, 29 May 2009 09:37:39 +0100
-Content-Disposition: inline
-In-Reply-To: <b0943d9e0905280738n51476ab7vd0498ea7a236c4a7@mail.gmail.com>
-X-Manual-Spam-Check: kha@treskal.com, clean
-User-Agent: Mutt/1.5.9i
+	id S1757433AbZE2IlC convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 29 May 2009 04:41:02 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757294AbZE2IlC
+	(ORCPT <rfc822;git-outgoing>); Fri, 29 May 2009 04:41:02 -0400
+Received: from ey-out-2122.google.com ([74.125.78.27]:54708 "EHLO
+	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757432AbZE2Ik7 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 29 May 2009 04:40:59 -0400
+Received: by ey-out-2122.google.com with SMTP id 22so34101eye.37
+        for <git@vger.kernel.org>; Fri, 29 May 2009 01:40:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=X5tECJqZvuLwBfKmxfj191PU/NGAmtOnaqygtcC9f4E=;
+        b=wIs6wL4kD8lqDxDbF+cXZ7YUMcmPBNTznNcAcsXPHdKCHi4PSb09FMJw7w5NpUO0yc
+         jJqw9+Ca3dO3EeDPeAeksD67sF+KUUDm+FRQUulFuHTvFzAUMW0MnwBR8gPlS+js2a3R
+         wz0WVp1FNkydXZPw4vtjtwFvP5WWGXmSD1cUg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=k+WQNr2umCNi+W9G+30jKoCZNwoZLH+tahFcBAi+p/dlzyBM0YhiNzTR0yr337xsc6
+         pAkoLNm6jmAbc9y2m9erC1a+baCLdqqOGYm2jfmTvd/8fsP++gQHHd5ZmGrQt/pnsDh+
+         Ps/zfZWMuPb+Z0/CJSHo0WvOxOI9R3gIq+ZyQ=
+Received: by 10.216.17.213 with SMTP id j63mr828941wej.140.1243586459377; Fri, 
+	29 May 2009 01:40:59 -0700 (PDT)
+In-Reply-To: <20090529072050.GA9760@diana.vm.bytemark.co.uk>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120260>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120261>
 
-On 2009-05-28 15:38:44 +0100, Catalin Marinas wrote:
-
-> 2009/5/28 Karl Hasselstr=F6m <kha@treskal.com>:
+2009/5/29 Karl Hasselstr=F6m <kha@treskal.com>:
+> On 2009-05-28 15:51:20 +0100, Catalin Marinas wrote:
 >
-> > On 2009-05-28 12:12:42 +0100, Catalin Marinas wrote:
-> >
-> > > The patch proposes a new StGit command called "publish". This
-> > > command allows one to develop patches normally on a StGit branch
-> > > but publish the stack changes to a separate, merge-friendly
-> > > branch whose history is not re-writable.
-> >
-> > Hmm, interesting. I don't think I'd want to use a command like
-> > this myself, but I can see how it might be useful.
+>> 2009/5/28 Catalin Marinas <catalin.marinas@gmail.com>:
+>>
+>> > 2009/5/28 Karl Hasselstr=F6m <kha@treskal.com>:
+>> >
+>> > > This funcion should probably return a list of zero or more merge
+>> > > bases. See the --all flag to git merge-base.
+>> >
+>> > OK, I'll add this and check the stack base against this set(list).
+>>
+>> What about this change to the original patch (it's faster to just
+>> return the sha1 refs than building the Commit objects):
 >
-> For me it is useful. I publish a kernel tree with over 100 patches.
-> Later I find that one patch is buggy. The current merge-friendly
-> solution is to add another patch but I may want to just update the
-> buggy patch as it's easier when time comes to submit upstream. This,
-> however, rewrites the history. So with the "publish" command I just
-> generate another commit on top of the public branch and I always end
-> up with the same tree as on my stack.
+> Creating Commit objects is really cheap---just look at the
+> constructor. I made them that way on purpose, so that we'd never have
+> to think twice about using Commit objects instead of passing sha1s
+> around.
 
-I think I would've kludged this by making --theirs merges from the
-StGit branch to the public branch. But "stg publish" should definitely
-make the kludge history less ugly.
+I was worried it may invoke git to get the CommitData.
 
-> > Hmm. Couldn't the merge base conceivably be higher up in the
-> > stack? Like, right at the beginning, don't we have public_head =3D=3D
-> > stack.head? That would be caught by the "same tree" check" a bit
-> > earlier, but after adding another patch, don't we have public_head
-> > =3D=3D stack.head^ ? Which would give merge_base =3D=3D public_head=
-=2E
->
-> We could have public_head =3D=3D stack.head^... but that's not an iss=
-ue.
-> The merge_base above is checked against the base of the stack rather
-> than the top as we assume that the base isn't volatile. So even if
-> public_head is the same as some patch commit, the merge_base above
-> would always be the base of the stack. Only if the stack base was
-> updated, we get a different merge_base (equal to the previous stack
-> base).
+> Also, you said "set", and I agree---the return value of
+> get_mege_bases() should be a set. That's what it _is_, conceptually,
+> and it makes little sense to obscure that fact.
 
-The situation I described looks like this:
+If we return a set of commits, I suspect the Repository object
+guarantees that having the same sha1 value always returns the same
+Commit object and the code below is valid:
 
-    B--o--o--o--o--o--P--T
+    merge_bases =3D repository.get_merge_bases(public_head, stack.base)
+    if not stack.base in merge_bases:
+        public_head =3D __create_commit(repository, stack.head.data.tre=
+e,
+                                      [public_head, stack.base], option=
+s)
+        repository.refs.set(public_ref, public_head, 'publish')
+        out.info('Merged the stack base into "%s"' % public_ref)
+        return
 
-Time goes from left to right. B is the stack base, P the head of the
-public branch, T the stack top. merge_base(P, T) is P, and not B.
+=2E..
+
+    def get_merge_bases(self, commit1, commit2):
+        """Return a set of merge bases of two commits."""
+        sha1_list =3D self.run(['git', 'merge-base', '--all',
+                              commit1.sha1, commit2.sha1]).output_lines=
+()
+        return set(self.get_commit(sha1) for sha1 in sha1_list)
 
 --=20
-Karl Hasselstr=F6m, kha@treskal.com
-      www.treskal.com/kalle
+Catalin
