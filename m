@@ -1,7 +1,7 @@
 From: Tay Ray Chuan <rctay89@gmail.com>
-Subject: [PATCH 02/17] http-walker: verify remote packs
-Date: Sat, 30 May 2009 01:58:42 +0800
-Message-ID: <20090530015842.0cff57d1.rctay89@gmail.com>
+Subject: [PATCH 03/17] http*: copy string returned by sha1_to_hex
+Date: Sat, 30 May 2009 01:58:45 +0800
+Message-ID: <20090530015845.5c4c777c.rctay89@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
@@ -9,140 +9,238 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
 	Mike Hommey <mh@glandium.org>
 To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri May 29 20:00:53 2009
+X-From: git-owner@vger.kernel.org Fri May 29 20:00:55 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MA6Nv-0008Tp-VU
-	for gcvg-git-2@gmane.org; Fri, 29 May 2009 20:00:52 +0200
+	id 1MA6Nw-0008Tp-NX
+	for gcvg-git-2@gmane.org; Fri, 29 May 2009 20:00:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756069AbZE2SAj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 29 May 2009 14:00:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755935AbZE2SAj
-	(ORCPT <rfc822;git-outgoing>); Fri, 29 May 2009 14:00:39 -0400
-Received: from mail-px0-f123.google.com ([209.85.216.123]:53739 "EHLO
-	mail-px0-f123.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754072AbZE2SAi (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 May 2009 14:00:38 -0400
-Received: by mail-px0-f123.google.com with SMTP id 29so1678194pxi.33
-        for <git@vger.kernel.org>; Fri, 29 May 2009 11:00:40 -0700 (PDT)
+	id S1757239AbZE2SAo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 29 May 2009 14:00:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755935AbZE2SAn
+	(ORCPT <rfc822;git-outgoing>); Fri, 29 May 2009 14:00:43 -0400
+Received: from mail-pz0-f109.google.com ([209.85.222.109]:56012 "EHLO
+	mail-pz0-f109.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756537AbZE2SAm (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 May 2009 14:00:42 -0400
+Received: by mail-pz0-f109.google.com with SMTP id 7so4912264pzk.33
+        for <git@vger.kernel.org>; Fri, 29 May 2009 11:00:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:date:from:to:cc:subject
          :message-id:x-mailer:mime-version:content-type
          :content-transfer-encoding;
-        bh=ZyqN90z5sS6RVXVglVQRw3s8Nvep9SwodDgVhkwkWlQ=;
-        b=IpLmOguQvBZGkFdLMaumTfyLDYfDQiuyo1l1XDkdIZeJWxoZ1i+LBd2kUdEmjr3z2/
-         fXna8kXhQPlmfS69Ja15jyGaOgBzv86U2YH4garN22hBCq8NTH9bGnQLdYJhNbzsCG21
-         qQRlTdGlz28RDabVIBoQSOJeSkExIjnkeXeG0=
+        bh=w5Xr/iHtotmRbhkgb578hTmJTjd7P69SjR1Rhb87BqA=;
+        b=niBbjDhRTuHrJuAUfSez+w8gmfvtSCkW/WK5is/LQlQy0iinPXdUrtu0bguVzFnDqh
+         xoprGpcIbbn39JSAoWCInx1DGD6n2P9CCLgTmHCXlVAZSuebbee+lknZ7pD5xH580mNM
+         S29PQ/fUBVssp2mKeDq5KeNp/lkbik3LNScgY=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=date:from:to:cc:subject:message-id:x-mailer:mime-version
          :content-type:content-transfer-encoding;
-        b=U7KXYUL7Lw2USvDzFMDI51RL6keovcCQPwmLtUlw3qiR9Ayy/5ZvODReAbMJxMh37g
-         zj/d0CFzQgVyKBcn50L1rTUvuGevQlOPTr/kRRLiiDW5AwvhxZxen/hp23k3CJWpXAKg
-         IgxQbJTdPo2IhM3L2TfnaE51bPSL3GAixixqs=
-Received: by 10.114.169.20 with SMTP id r20mr4426002wae.222.1243620040455;
-        Fri, 29 May 2009 11:00:40 -0700 (PDT)
+        b=xMgc1xx3wHKTH5Kq1De13obLTsjTtzHOSNbSobzEauyrDVBYI7AKvAinOYL1frC4bs
+         XGb6ozJN44rZSF+EjqchpDPqvMencgtgDrbbeUrleyI5ijGKRfrr3bnLa44wu+dsEq0y
+         Mdd362iqNMNDOldk/G4DQZ0h9aNxToziJEAAM=
+Received: by 10.114.58.15 with SMTP id g15mr5050168waa.186.1243620044581;
+        Fri, 29 May 2009 11:00:44 -0700 (PDT)
 Received: from your-cukc5e3z5n (cm189.zeta148.maxonline.com.sg [116.87.148.189])
-        by mx.google.com with ESMTPS id m6sm2551242wag.14.2009.05.29.11.00.38
+        by mx.google.com with ESMTPS id n33sm2544951wag.69.2009.05.29.11.00.42
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 29 May 2009 11:00:40 -0700 (PDT)
+        Fri, 29 May 2009 11:00:44 -0700 (PDT)
 X-Mailer: Sylpheed 2.6.0 (GTK+ 2.10.14; i686-pc-mingw32)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120289>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120290>
 
-In c17fb6e ("Verify remote packs, speed up pending request queue"),
-changes were made to index fetching in http-push.c, particularly the
-methods fetch_index and setup_index. Since http-walker.c has similar
-code for index fetching, these improvements should apply to
-http-walker.c's fetch_index and setup_index.
+In the fetch_index implementations in http-push.c and http-walker.c,
+the string returned by sha1_to_hex is assumed to stay immutable.
 
-Invocations of free() of string memory are reproduced as well.
+This patch ensures that hex stays immutable by copying the string
+returned by sha1_to_hex (via xstrdup) and frees it subsequently. It
+also refactors free()'s and fclose()'s with labels.
 
 Signed-off-by: Tay Ray Chuan <rctay89@gmail.com>
 ---
- http-walker.c |   33 ++++++++++++++++++++++++++++++---
- 1 files changed, 30 insertions(+), 3 deletions(-)
+ http-push.c   |   45 ++++++++++++++++++++++++---------------------
+ http-walker.c |   43 +++++++++++++++++++++++--------------------
+ 2 files changed, 47 insertions(+), 41 deletions(-)
 
-diff --git a/http-walker.c b/http-walker.c
-index dffb844..13ca934 100644
---- a/http-walker.c
-+++ b/http-walker.c
-@@ -384,24 +384,48 @@ static int fetch_index(struct walker *walker, struct alt_base *repo, unsigned ch
- 	struct active_request_slot *slot;
- 	struct slot_results results;
+diff --git a/http-push.c b/http-push.c
+index 024f05b..9655b2c 100644
+--- a/http-push.c
++++ b/http-push.c
+@@ -955,7 +955,8 @@ static int add_send_request(struct object *obj, struct remote_lock *lock)
 
--	if (has_pack_index(sha1))
-+	/* Don't use the index if the pack isn't there */
-+	url = xmalloc(strlen(repo->base) + 64);
-+	sprintf(url, "%s/objects/pack/pack-%s.pack", repo->base, hex);
-+	slot = get_active_slot();
-+	slot->results = &results;
-+	curl_easy_setopt(slot->curl, CURLOPT_URL, url);
-+	curl_easy_setopt(slot->curl, CURLOPT_NOBODY, 1);
-+	if (start_active_slot(slot)) {
-+		run_active_slot(slot);
-+		if (results.curl_result != CURLE_OK) {
-+			free(url);
-+			return error("Unable to verify pack %s is available",
-+				     hex);
-+		}
-+	} else {
-+		free(url);
-+		return error("Unable to start request");
-+	}
-+
-+	if (has_pack_index(sha1)) {
-+		free(url);
- 		return 0;
-+	}
-
- 	if (walker->get_verbosely)
- 		fprintf(stderr, "Getting index for pack %s\n", hex);
-
--	url = xmalloc(strlen(repo->base) + 64);
- 	sprintf(url, "%s/objects/pack/pack-%s.idx", repo->base, hex);
-
- 	filename = sha1_pack_index_name(sha1);
- 	snprintf(tmpfile, sizeof(tmpfile), "%s.temp", filename);
- 	indexfile = fopen(tmpfile, "a");
--	if (!indexfile)
-+	if (!indexfile) {
-+		free(url);
- 		return error("Unable to open local file %s for pack index",
- 			     tmpfile);
-+	}
-
- 	slot = get_active_slot();
- 	slot->results = &results;
-+	curl_easy_setopt(slot->curl, CURLOPT_NOBODY, 0);
-+	curl_easy_setopt(slot->curl, CURLOPT_HTTPGET, 1);
- 	curl_easy_setopt(slot->curl, CURLOPT_FILE, indexfile);
- 	curl_easy_setopt(slot->curl, CURLOPT_WRITEFUNCTION, fwrite);
- 	curl_easy_setopt(slot->curl, CURLOPT_URL, url);
-@@ -426,15 +450,18 @@ static int fetch_index(struct walker *walker, struct alt_base *repo, unsigned ch
+ static int fetch_index(unsigned char *sha1)
+ {
+-	char *hex = sha1_to_hex(sha1);
++	int ret = 0;
++	char *hex = xstrdup(sha1_to_hex(sha1));
+ 	char *filename;
+ 	char *url;
+ 	char tmpfile[PATH_MAX];
+@@ -977,18 +978,18 @@ static int fetch_index(unsigned char *sha1)
  	if (start_active_slot(slot)) {
  		run_active_slot(slot);
  		if (results.curl_result != CURLE_OK) {
-+			free(url);
- 			fclose(indexfile);
- 			return error("Unable to get pack index %s\n%s", url,
- 				     curl_errorstr);
+-			free(url);
+-			return error("Unable to verify pack %s is available",
+-				     hex);
++			ret = error("Unable to verify pack %s is available",
++				    hex);
++			goto cleanup_pack;
  		}
  	} else {
-+		free(url);
- 		fclose(indexfile);
- 		return error("Unable to start request");
+-		free(url);
+-		return error("Unable to start request");
++		ret = error("Unable to start request");
++		goto cleanup_pack;
  	}
 
-+	free(url);
- 	fclose(indexfile);
+ 	if (has_pack_index(sha1)) {
+-		free(url);
+-		return 0;
++		ret = 0;
++		goto cleanup_pack;
+ 	}
 
- 	return move_temp_to_file(tmpfile, filename);
+ 	if (push_verbosely)
+@@ -1000,9 +1001,9 @@ static int fetch_index(unsigned char *sha1)
+ 	snprintf(tmpfile, sizeof(tmpfile), "%s.temp", filename);
+ 	indexfile = fopen(tmpfile, "a");
+ 	if (!indexfile) {
+-		free(url);
+-		return error("Unable to open local file %s for pack index",
+-			     tmpfile);
++		ret = error("Unable to open local file %s for pack index",
++			    tmpfile);
++		goto cleanup_pack;
+ 	}
+
+ 	slot = get_active_slot();
+@@ -1033,21 +1034,23 @@ static int fetch_index(unsigned char *sha1)
+ 	if (start_active_slot(slot)) {
+ 		run_active_slot(slot);
+ 		if (results.curl_result != CURLE_OK) {
+-			free(url);
+-			fclose(indexfile);
+-			return error("Unable to get pack index %s\n%s", url,
+-				     curl_errorstr);
++			ret = error("Unable to get pack index %s\n%s", url,
++				    curl_errorstr);
++			goto cleanup_index;
+ 		}
+ 	} else {
+-		free(url);
+-		fclose(indexfile);
+-		return error("Unable to start request");
++		ret = error("Unable to start request");
++		goto cleanup_index;
+ 	}
+
+-	free(url);
+-	fclose(indexfile);
++	ret = move_temp_to_file(tmpfile, filename);
+
+-	return move_temp_to_file(tmpfile, filename);
++cleanup_index:
++	fclose(indexfile);
++cleanup_pack:
++	free(url);
++	free(hex);
++	return ret;
+ }
+
+ static int setup_index(unsigned char *sha1)
+diff --git a/http-walker.c b/http-walker.c
+index 13ca934..a2c9810 100644
+--- a/http-walker.c
++++ b/http-walker.c
+@@ -371,7 +371,8 @@ static void prefetch(struct walker *walker, unsigned char *sha1)
+
+ static int fetch_index(struct walker *walker, struct alt_base *repo, unsigned char *sha1)
+ {
+-	char *hex = sha1_to_hex(sha1);
++	int ret = 0;
++	char *hex = xstrdup(sha1_to_hex(sha1));
+ 	char *filename;
+ 	char *url;
+ 	char tmpfile[PATH_MAX];
+@@ -394,18 +395,18 @@ static int fetch_index(struct walker *walker, struct alt_base *repo, unsigned ch
+ 	if (start_active_slot(slot)) {
+ 		run_active_slot(slot);
+ 		if (results.curl_result != CURLE_OK) {
+-			free(url);
+-			return error("Unable to verify pack %s is available",
++			ret = error("Unable to verify pack %s is available",
+ 				     hex);
++			goto cleanup_pack;
+ 		}
+ 	} else {
+-		free(url);
+-		return error("Unable to start request");
++		ret = error("Unable to start request");
++		goto cleanup_pack;
+ 	}
+
+ 	if (has_pack_index(sha1)) {
+-		free(url);
+-		return 0;
++		ret = 0;
++		goto cleanup_pack;
+ 	}
+
+ 	if (walker->get_verbosely)
+@@ -417,9 +418,9 @@ static int fetch_index(struct walker *walker, struct alt_base *repo, unsigned ch
+ 	snprintf(tmpfile, sizeof(tmpfile), "%s.temp", filename);
+ 	indexfile = fopen(tmpfile, "a");
+ 	if (!indexfile) {
+-		free(url);
+-		return error("Unable to open local file %s for pack index",
+-			     tmpfile);
++		ret = error("Unable to open local file %s for pack index",
++			    tmpfile);
++		goto cleanup_pack;
+ 	}
+
+ 	slot = get_active_slot();
+@@ -450,21 +451,23 @@ static int fetch_index(struct walker *walker, struct alt_base *repo, unsigned ch
+ 	if (start_active_slot(slot)) {
+ 		run_active_slot(slot);
+ 		if (results.curl_result != CURLE_OK) {
+-			free(url);
+-			fclose(indexfile);
+-			return error("Unable to get pack index %s\n%s", url,
+-				     curl_errorstr);
++			ret = error("Unable to get pack index %s\n%s", url,
++				    curl_errorstr);
++			goto cleanup_index;
+ 		}
+ 	} else {
+-		free(url);
+-		fclose(indexfile);
+-		return error("Unable to start request");
++		ret = error("Unable to start request");
++		goto cleanup_index;
+ 	}
+
+-	free(url);
+-	fclose(indexfile);
++	ret = move_temp_to_file(tmpfile, filename);
+
+-	return move_temp_to_file(tmpfile, filename);
++cleanup_index:
++	fclose(indexfile);
++cleanup_pack:
++	free(url);
++	free(hex);
++	return ret;
+ }
+
+ static int setup_index(struct walker *walker, struct alt_base *repo, unsigned char *sha1)
 --
 1.6.3.1
