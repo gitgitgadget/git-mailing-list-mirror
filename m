@@ -1,118 +1,267 @@
-From: David Aguilar <davvid@gmail.com>
-Subject: Re: git-ls-files --added?
-Date: Fri, 29 May 2009 14:26:42 -0700
-Message-ID: <20090529212634.GA86167@gmail.com>
-References: <2cfc40320905240054j2c08da8bt4df95c6f1bc9e254@mail.gmail.com> <m3fxeudhho.fsf@localhost.localdomain> <2cfc40320905240212jc111b1xfeb39b1851c606d3@mail.gmail.com> <7vmy921i3j.fsf@alter.siamese.dyndns.org> <7vws85y9n7.fsf@alter.siamese.dyndns.org> <2cfc40320905251756t32e092fdqda769e21669f5d86@mail.gmail.com>
+From: Catalin Marinas <catalin.marinas@gmail.com>
+Subject: [StGit PATCH] Remove the resolved command
+Date: Fri, 29 May 2009 22:30:13 +0100
+Message-ID: <20090529213013.8908.45041.stgit@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Jakub Narebski <jnareb@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Jon Seymour <jon.seymour@gmail.com>
-X-From: git-owner@vger.kernel.org Fri May 29 23:26:57 2009
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org,
+	Karl =?utf-8?q?Hasselstr=C3=B6m?= <kha@treskal.com>
+X-From: git-owner@vger.kernel.org Fri May 29 23:35:40 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MA9bN-00048w-7d
-	for gcvg-git-2@gmane.org; Fri, 29 May 2009 23:26:57 +0200
+	id 1MA9ji-0007VI-Fv
+	for gcvg-git-2@gmane.org; Fri, 29 May 2009 23:35:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752823AbZE2V0r (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 29 May 2009 17:26:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752313AbZE2V0r
-	(ORCPT <rfc822;git-outgoing>); Fri, 29 May 2009 17:26:47 -0400
-Received: from mail-pz0-f177.google.com ([209.85.222.177]:60164 "EHLO
-	mail-pz0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752104AbZE2V0q (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 May 2009 17:26:46 -0400
-Received: by pzk7 with SMTP id 7so4981875pzk.33
-        for <git@vger.kernel.org>; Fri, 29 May 2009 14:26:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=JMMT+03cD9hJZXpAfBIUaGzsxNZ+NgBfp0kUnncVd+Q=;
-        b=Woe7SjYr+RYZM2MBxPl8q5bHXpLSYFIk8Fy/90WTejn5IdJ5AGZBSJ+JhrezghrbPU
-         NexUnDs5JaaOMBOif/KqfkE8iw6Jd66s+5r2Vae72nL4BwDB91zA7PaQR2slIU4E8KbQ
-         bNSLbRsXcGOWO8AyPhQs5XGKD1WEVr9cyWNpE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=w8zb99wwO/gTSo5Ds/j7UE9zlL3AQyQGWTQ9zbEQmCe6G/kAA1dyT/iPWIcofJ66zb
-         nj5h8Dtsee0HULRSJiHDX/rNbg9afKyhcNDHtU0ER1JF82FTlSnsXA6fHbtCtzTW83C7
-         L2G5PJaUfFenfSoIJ123PJUJuJ2XJoW/x6iAU=
-Received: by 10.142.192.3 with SMTP id p3mr287716wff.188.1243632407949;
-        Fri, 29 May 2009 14:26:47 -0700 (PDT)
-Received: from gmail.com (wdas-1.disneyanimation.com [12.188.26.1])
-        by mx.google.com with ESMTPS id k2sm3784990rvb.2.2009.05.29.14.26.46
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 29 May 2009 14:26:47 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <2cfc40320905251756t32e092fdqda769e21669f5d86@mail.gmail.com>
-User-Agent: Mutt/1.5.19 (2009-01-05)
+	id S1752853AbZE2VfY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 29 May 2009 17:35:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752104AbZE2VfY
+	(ORCPT <rfc822;git-outgoing>); Fri, 29 May 2009 17:35:24 -0400
+Received: from queueout01-winn.ispmail.ntl.com ([81.103.221.31]:37564 "EHLO
+	queueout01-winn.ispmail.ntl.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752430AbZE2VfW (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 29 May 2009 17:35:22 -0400
+X-Greylist: delayed 316 seconds by postgrey-1.27 at vger.kernel.org; Fri, 29 May 2009 17:35:20 EDT
+Received: from aamtaout02-winn.ispmail.ntl.com ([81.103.221.35])
+          by mtaout01-winn.ispmail.ntl.com
+          (InterMail vM.7.08.04.00 201-2186-134-20080326) with ESMTP
+          id <20090529213015.SYJN6742.mtaout01-winn.ispmail.ntl.com@aamtaout02-winn.ispmail.ntl.com>;
+          Fri, 29 May 2009 22:30:15 +0100
+Received: from localhost.localdomain ([86.9.126.106])
+          by aamtaout02-winn.ispmail.ntl.com
+          (InterMail vG.2.02.00.01 201-2161-120-102-20060912) with ESMTP
+          id <20090529213015.CUEG21638.aamtaout02-winn.ispmail.ntl.com@localhost.localdomain>;
+          Fri, 29 May 2009 22:30:15 +0100
+User-Agent: StGit/0.14.3.340.ge799
+X-Cloudmark-Analysis: v=1.0 c=1 a=jM_PeXI2IywA:10 a=7CQSdrXTAAAA:8 a=pGLkceISAAAA:8 a=j7wr7-tgU26FNkBVIgEA:9 a=lvY4HIhyj2wd7WtXN2wA:7 a=RjzJXwGhrNJ5jpnTcQVpp4Tli-YA:4 a=ESTKKtUg-DoA:10 a=MSl-tDqOz04A:10
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120317>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120318>
 
-On Tue, May 26, 2009 at 10:56:52AM +1000, Jon Seymour wrote:
-> Thanks for your answer's Junio.
-> 
-> I am indeed writing some porcelain. I currently have some bash tooling
+From: Catalin Marinas <catalin.marinas@arm.com>
 
+This command simply duplicates the "git add" or "git mergetool" commands
+for handling conflicts.
 
-I know that for the purposes of writing scripts it would be
-really great if we had a plumbing command that gave us exactly
-what git-status tells us, but in a machine-parseable
-and stable output format.
+Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
+---
+ Documentation/tutorial.txt |    2 +
+ examples/gitconfig         |    4 --
+ stgit/commands/common.py   |    2 +
+ stgit/commands/push.py     |    4 +-
+ stgit/commands/rebase.py   |    2 +
+ stgit/commands/resolved.py |   82 --------------------------------------------
+ stgit/config.py            |    1 -
+ t/t0002-status.sh          |    2 +
+ t/t2000-sync.sh            |    4 +-
+ 9 files changed, 8 insertions(+), 95 deletions(-)
+ delete mode 100644 stgit/commands/resolved.py
 
-Particularly tricky to get both correct and fast is
-partially-staged files, but git-status gets it right.
-By partially staged I mean it has new uncommitted content
-in the index as well as even newer content in the worktree.
-
-Files fall roughly into these categories:
-
-1. Staged:
-	1.1 Existing file
-	1.2 New file
-	1.3 Deleted file
-	1.4 File was renamed, this is the old path
-	1.5 File was renamed, this is the new path
-
-
-2. Unmerged
-
-3. Modified
-	3.1 File was modified
-	3.2 File was deleted
-
-4. Untracked
-	4.1 This is a file
-	4.2 This is a directory
-
-
-Here's some semantics I would expect from such a command:
-
-- A file can be both staged and modified.
-
-- A file that is unmerged is only unmerged.
-  It is neither modified nor staged.
-
-- Untracked path behavior is nicer with git-status then with
-  git-ls-files, the reason being that status special-cases
-  directories.
-
-
-Getting all of this information quickly (without having to run
-multiple commands) would be ideal.  This command is a
-combination of diff-against-worktree, diff-against-index,
-show-untracked-files, etc. so it's not a paradigm that's
-easily constructed with the existing plumbing.
-
-
--- 
-		David
+diff --git a/Documentation/tutorial.txt b/Documentation/tutorial.txt
+index 8e0adbf..4aa7629 100644
+--- a/Documentation/tutorial.txt
++++ b/Documentation/tutorial.txt
+@@ -313,7 +313,7 @@ markers.
+ Now that we've resolved the conflict, we just need to tell StGit about
+ it:
+ 
+-  $ stg resolved TODO
++  $ git add TODO
+   $ stg status
+   M TODO
+ 
+diff --git a/examples/gitconfig b/examples/gitconfig
+index e235e14..4f56918 100644
+--- a/examples/gitconfig
++++ b/examples/gitconfig
+@@ -17,10 +17,6 @@
+ 	# Automatically sign newly created patches
+ 	#autosign = Signed-off-by
+ 
+-	# Set to 'yes' if you don't want to use the 'resolved' command.
+-	# 'refresh' will automatically mark the conflicts as resolved
+-	#autoresolved = no
+-
+ 	# SMTP server for sending patches
+ 	#smtpserver = /usr/sbin/sendmail -t -i
+ 	#smtpserver = localhost:25
+diff --git a/stgit/commands/common.py b/stgit/commands/common.py
+index 1bc162f..bc8266e 100644
+--- a/stgit/commands/common.py
++++ b/stgit/commands/common.py
+@@ -120,7 +120,7 @@ def check_head_top_equal(crt_series):
+ def check_conflicts():
+     if git.get_conflicts():
+         raise CmdException('Unsolved conflicts. Please fix the conflicts'
+-                           ' then use "resolve <files>" or revert the'
++                           ' then use "git add --update <files>" or revert the'
+                            ' changes with "status --reset".')
+ 
+ def print_crt_patch(crt_series, branch = None):
+diff --git a/stgit/commands/push.py b/stgit/commands/push.py
+index 84a93bd..d5e02e0 100644
+--- a/stgit/commands/push.py
++++ b/stgit/commands/push.py
+@@ -30,8 +30,8 @@ the stack. The 'push' operation allows patch reordering by commuting
+ them with the three-way merge algorithm. If there are conflicts while
+ pushing a patch, those conflicts are written to the work tree, and the
+ command halts. Conflicts raised during the push operation have to be
+-fixed and the 'resolved' command run (alternatively, you may undo the
+-conflicting push with 'stg undo').
++fixed and the 'git add --update' command run (alternatively, you may
++undo the conflicting push with 'stg undo').
+ 
+ The command also notifies when the patch becomes empty (fully merged
+ upstream) or is modified (three-way merged) by the 'push' operation."""
+diff --git a/stgit/commands/rebase.py b/stgit/commands/rebase.py
+index a4bc6e7..b949a5c 100644
+--- a/stgit/commands/rebase.py
++++ b/stgit/commands/rebase.py
+@@ -31,7 +31,7 @@ Pop all patches from current stack, move the stack base to the given
+ If you experience merge conflicts, resolve the problem and continue
+ the rebase by executing the following sequence:
+ 
+-        $ stg resolved -a [-i]
++        $ git add --update
+         $ stg refresh
+         $ stg goto top-patch
+ 
+diff --git a/stgit/commands/resolved.py b/stgit/commands/resolved.py
+deleted file mode 100644
+index eba778d..0000000
+--- a/stgit/commands/resolved.py
++++ /dev/null
+@@ -1,82 +0,0 @@
+-
+-__copyright__ = """
+-Copyright (C) 2005, Catalin Marinas <catalin.marinas@gmail.com>
+-
+-This program is free software; you can redistribute it and/or modify
+-it under the terms of the GNU General Public License version 2 as
+-published by the Free Software Foundation.
+-
+-This program is distributed in the hope that it will be useful,
+-but WITHOUT ANY WARRANTY; without even the implied warranty of
+-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+-GNU General Public License for more details.
+-
+-You should have received a copy of the GNU General Public License
+-along with this program; if not, write to the Free Software
+-Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+-"""
+-
+-import sys, os
+-from stgit.argparse import opt
+-from stgit.commands.common import *
+-from stgit.utils import *
+-from stgit import argparse, stack, git, basedir
+-from stgit.config import config, file_extensions
+-
+-help = 'Mark a file conflict as solved'
+-kind = 'wc'
+-usage = ['[options] [<files...>]']
+-description = """
+-Mark a merge conflict as resolved. The conflicts can be seen with the
+-'status' command, the corresponding files being prefixed with a
+-'C'."""
+-
+-args = [argparse.conflicting_files]
+-options = [
+-    opt('-a', '--all', action = 'store_true',
+-        short = 'Mark all conflicts as solved'),
+-    opt('-r', '--reset', metavar = '(ancestor|current|patched)',
+-        args = [argparse.strings('ancestor', 'current', 'patched')],
+-        short = 'Reset the file(s) to the given state'),
+-    opt('-i', '--interactive', action = 'store_true',
+-        short = 'Run the interactive merging tool')]
+-
+-directory = DirectoryHasRepository(needs_current_series = False, log = False)
+-
+-def func(parser, options, args):
+-    """Mark the conflict as resolved
+-    """
+-    args = git.ls_files(args)
+-    directory.cd_to_topdir()
+-
+-    if options.reset \
+-           and options.reset not in file_extensions():
+-        raise CmdException, 'Unknown reset state: %s' % options.reset
+-
+-    if options.all and not options.interactive:
+-        resolved_all(options.reset)
+-        return
+-
+-    conflicts = git.get_conflicts()
+-
+-    if len(args) != 0:
+-        files = args
+-    elif options.all:
+-        files = conflicts
+-    else:
+-        parser.error('incorrect number of arguments')
+-
+-    if not conflicts:
+-        raise CmdException, 'No more conflicts'
+-
+-    # check for arguments validity
+-    if not options.all:
+-        for filename in files:
+-            if not filename in conflicts:
+-                raise CmdException, 'No conflicts for "%s"' % filename
+-
+-    # resolved
+-    if options.interactive:
+-        git.mergetool(files)
+-    else:
+-        git.resolved(files, options.reset)
+diff --git a/stgit/config.py b/stgit/config.py
+index a98c303..a3dbfa5 100644
+--- a/stgit/config.py
++++ b/stgit/config.py
+@@ -28,7 +28,6 @@ class GitConfigException(StgException):
+ 
+ class GitConfig:
+     __defaults={
+-        'stgit.autoresolved':	'no',
+         'stgit.smtpserver':	'localhost:25',
+         'stgit.smtpdelay':	'5',
+         'stgit.pullcmd':	'git pull',
+diff --git a/t/t0002-status.sh b/t/t0002-status.sh
+index ffcad77..2512c53 100755
+--- a/t/t0002-status.sh
++++ b/t/t0002-status.sh
+@@ -145,7 +145,7 @@ A fie
+ M foo/bar
+ EOF
+ test_expect_success 'Status after resolving the push' '
+-    stg resolved -a &&
++    git add --update &&
+     stg status > output.txt &&
+     test_cmp expected.txt output.txt
+ '
+diff --git a/t/t2000-sync.sh b/t/t2000-sync.sh
+index 00ea7bd..d550538 100755
+--- a/t/t2000-sync.sh
++++ b/t/t2000-sync.sh
+@@ -117,7 +117,7 @@ test_expect_success \
+     '
+     [ "$(echo $(stg series --applied --noprefix))" = "p1" ] &&
+     [ "$(echo $(stg series --unapplied --noprefix))" = "p2 p3" ] &&
+-    stg resolved -a &&
++    git add --update &&
+     stg refresh &&
+     stg goto p3
+     [ "$(echo $(stg series --applied --noprefix))" = "p1 p2 p3" ] &&
+@@ -135,7 +135,7 @@ test_expect_success \
+     '
+     [ "$(echo $(stg series --applied --noprefix))" = "p1 p2 p3" ] &&
+     [ "$(echo $(stg series --unapplied --noprefix))" = "" ] &&
+-    stg resolved -a &&
++    git add --update &&
+     stg refresh &&
+     [ "$(echo $(stg series --applied --noprefix))" = "p1 p2 p3" ] &&
+     [ "$(echo $(stg series --unapplied --noprefix))" = "" ]
