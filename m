@@ -1,58 +1,80 @@
-From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-Subject: Re: [RFC][StGit PATCH] Add support for merge-friendly branches
-Date: Fri, 29 May 2009 13:59:20 +0200
-Message-ID: <20090529115920.GA14429@diana.vm.bytemark.co.uk>
-References: <20090528111212.21925.45527.stgit@pc1117.cambridge.arm.com> <20090528124817.GA22262@diana.vm.bytemark.co.uk> <b0943d9e0905280738n51476ab7vd0498ea7a236c4a7@mail.gmail.com> <20090529083739.GB9760@diana.vm.bytemark.co.uk> <b0943d9e0905290216m3c2bb639kc951510c72212ff@mail.gmail.com>
+From: =?utf-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>
+Subject: [PATCH] bash: remove always true if statement from __git_ps1()
+Date: Fri, 29 May 2009 14:00:36 +0200
+Message-ID: <1243598436-2207-1-git-send-email-szeder@ira.uka.de>
+References: <1243527441-3394-1-git-send-email-szeder@ira.uka.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Catalin Marinas <catalin.marinas@gmail.com>
-X-From: git-owner@vger.kernel.org Fri May 29 13:59:35 2009
+Cc: Ted Pavlic <ted@tedpavlic.com>, Junio C Hamano <gitster@pobox.com>,
+	git@vger.kernel.org,
+	=?utf-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Fri May 29 14:00:53 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MA0kE-0000JW-Em
-	for gcvg-git-2@gmane.org; Fri, 29 May 2009 13:59:30 +0200
+	id 1MA0lU-0000r6-Mp
+	for gcvg-git-2@gmane.org; Fri, 29 May 2009 14:00:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757896AbZE2L7V convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 29 May 2009 07:59:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757657AbZE2L7U
-	(ORCPT <rfc822;git-outgoing>); Fri, 29 May 2009 07:59:20 -0400
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:50905 "EHLO
-	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752815AbZE2L7U (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 May 2009 07:59:20 -0400
-Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
-	id 1MA0k4-0003ng-00; Fri, 29 May 2009 12:59:20 +0100
-Content-Disposition: inline
-In-Reply-To: <b0943d9e0905290216m3c2bb639kc951510c72212ff@mail.gmail.com>
-X-Manual-Spam-Check: kha@treskal.com, clean
-User-Agent: Mutt/1.5.9i
+	id S1757744AbZE2MAk convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 29 May 2009 08:00:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755961AbZE2MAj
+	(ORCPT <rfc822;git-outgoing>); Fri, 29 May 2009 08:00:39 -0400
+Received: from francis.fzi.de ([141.21.7.5]:35578 "EHLO exchange.fzi.de"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1754788AbZE2MAj (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 May 2009 08:00:39 -0400
+Received: from [127.0.1.1] ([141.21.4.196]) by exchange.fzi.de with Microsoft SMTPSVC(6.0.3790.3959);
+	 Fri, 29 May 2009 14:00:37 +0200
+X-Mailer: git-send-email 1.6.3.1.189.g9321
+In-Reply-To: <1243527441-3394-1-git-send-email-szeder@ira.uka.de>
+X-OriginalArrivalTime: 29 May 2009 12:00:37.0856 (UTC) FILETIME=[148F7E00:01C9E055]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120272>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120273>
 
-On 2009-05-29 10:16:52 +0100, Catalin Marinas wrote:
+The recent commits 8763dbb1 (completion: fix PS1 display during a
+merge on detached HEAD, 2009-05-16), ff790b6a (completion: simplify
+"current branch" in __git_ps1(), 2009-05-10), and d7107ca6
+(completion: fix PS1 display during an AM on detached HEAD,
+2009-05-26) ensure that the branch name in __git_ps1() is always set
+to something sensible.  Therefore, the condition for checking the
+non-empty branch name is always fulfilled, and can be removed.
 
-> 2009/5/29 Karl Hasselstr=F6m <kha@treskal.com>:
->
-> > The situation I described looks like this:
-> >
-> > =A0 =A0B--o--o--o--o--o--P--T
-> >
-> > Time goes from left to right. B is the stack base, P the head of
-> > the public branch, T the stack top. merge_base(P, T) is P, and not
-> > B.
->
-> I don't check merge_base(P, T) but merge_base(P, B) to avoid the
-> issues you described. So that's always B.
+Signed-off-by: SZEDER G=C3=A1bor <szeder@ira.uka.de>
+---
 
-Ah, so that's where I got myself confused. Thanks.
+The patch is the same, but the commit message is different, because
+Junio's d7107ca6 has fixed the issue.
 
+ contrib/completion/git-completion.bash |   10 ++++------
+ 1 files changed, 4 insertions(+), 6 deletions(-)
+
+diff --git a/contrib/completion/git-completion.bash b/contrib/completio=
+n/git-completion.bash
+index 0c8bb53..6c78c94 100755
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -152,12 +152,10 @@ __git_ps1 ()
+ 			fi
+ 		fi
+=20
+-		if [ -n "$b" ]; then
+-			if [ -n "${1-}" ]; then
+-				printf "$1" "$c${b##refs/heads/}$w$i$r"
+-			else
+-				printf " (%s)" "$c${b##refs/heads/}$w$i$r"
+-			fi
++		if [ -n "${1-}" ]; then
++			printf "$1" "$c${b##refs/heads/}$w$i$r"
++		else
++			printf " (%s)" "$c${b##refs/heads/}$w$i$r"
+ 		fi
+ 	fi
+ }
 --=20
-Karl Hasselstr=F6m, kha@treskal.com
-      www.treskal.com/kalle
+1.6.3.1.189.g9321
