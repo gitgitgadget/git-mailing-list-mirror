@@ -1,61 +1,67 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] git-svn: refuse to dcommit non-UTF-8 messages
-Date: Fri, 29 May 2009 00:56:28 -0700
-Message-ID: <7v3aaoe40j.fsf@alter.siamese.dyndns.org>
-References: <op.uuljhmmg1e62zd@balu.cs.uni-paderborn.de>
-	<20090528080706.GA9239@dcvr.yhbt.net>
-	<20090528081804.GB9239@dcvr.yhbt.net>
+From: Eric Raible <raible@gmail.com>
+Subject: Re: WISH: Extending git commit --amend
+Date: Fri, 29 May 2009 08:09:58 +0000 (UTC)
+Message-ID: <loom.20090529T080514-262@post.gmane.org>
+References: <e5bfff550905282348gf29aa16o6eec88423bb5ce23@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Brandon Casey <drafnel@gmail.com>
-To: Eric Wong <normalperson@yhbt.net>
-X-From: git-owner@vger.kernel.org Fri May 29 09:56:39 2009
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri May 29 10:10:29 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1M9wxC-0000fE-1r
-	for gcvg-git-2@gmane.org; Fri, 29 May 2009 09:56:38 +0200
+	id 1M9xAa-0005wI-4J
+	for gcvg-git-2@gmane.org; Fri, 29 May 2009 10:10:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753979AbZE2H43 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 29 May 2009 03:56:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753749AbZE2H42
-	(ORCPT <rfc822;git-outgoing>); Fri, 29 May 2009 03:56:28 -0400
-Received: from fed1rmmtao105.cox.net ([68.230.241.41]:52033 "EHLO
-	fed1rmmtao105.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752225AbZE2H41 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 May 2009 03:56:27 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao105.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20090529075628.UHBV20430.fed1rmmtao105.cox.net@fed1rmimpo01.cox.net>;
-          Fri, 29 May 2009 03:56:28 -0400
-Received: from localhost ([68.225.240.211])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id xKwV1b0014aMwMQ03KwVBG; Fri, 29 May 2009 03:56:29 -0400
-X-Authority-Analysis: v=1.0 c=1 a=X5p2AuBCShgA:10 a=iP3C-SWiKv8A:10
- a=Hbzmh3xeAAAA:8 a=uMf4GC2R7Isx0c16deMA:9 a=rAqBFE3S7BK-af86vTGgPd4udEIA:4
- a=BEwxGj72lFYA:10
-X-CM-Score: 0.00
-In-Reply-To: <20090528081804.GB9239@dcvr.yhbt.net> (Eric Wong's message of "Thu\, 28 May 2009 01\:18\:04 -0700")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+	id S1755473AbZE2IKT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 29 May 2009 04:10:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755428AbZE2IKS
+	(ORCPT <rfc822;git-outgoing>); Fri, 29 May 2009 04:10:18 -0400
+Received: from main.gmane.org ([80.91.229.2]:60372 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755254AbZE2IKQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 May 2009 04:10:16 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1M9xAP-0003F4-9y
+	for git@vger.kernel.org; Fri, 29 May 2009 08:10:17 +0000
+Received: from adsl-67-119-194-173.dsl.pltn13.pacbell.net ([67.119.194.173])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 29 May 2009 08:10:17 +0000
+Received: from raible by adsl-67-119-194-173.dsl.pltn13.pacbell.net with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 29 May 2009 08:10:17 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: main.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 67.119.194.173 (Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US) AppleWebKit/525.19 (KHTML, like Gecko) Chrome/1.0.154.65 Safari/525.19)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120256>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120257>
 
-Eric Wong <normalperson@yhbt.net> writes:
+Marco Costalba <mcostalba <at> gmail.com> writes:
 
->  t/t9139-git-svn-non-utf8-commitencoding.sh |   47 ++++++++++++++++++++++++++++
+> [snip]
+> I find myself wanting to amend not tip of the branch, but an older
+> commit (typically to change log message). As example if I have this
+> 
+> D---E---F---G master
+> 
+> And I want to amend revision E currently I do
+> 
+> [snip]
+> 
+> Thanks in advance
+> Marco
+> 
 
-Hmm.
+git rebase --interactive E^
+Then change the commit for E from 'pick' to 'edit'.
+Then follow the directions.
 
-> +# Copyright (c) 2009 Eric Wong
-> +
-> +test_description='git svn refuses to dcommit non-UTF8 messages'
-> +
-> +. ./lib-git-svn.sh
-
-This passes when merged to 'master', but together with bc/old-iconv branch
-cooking in 'next' it breaks.
+- Eric
