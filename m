@@ -1,8 +1,9 @@
 From: David Aguilar <davvid@gmail.com>
-Subject: [PATCH v5 2/3] path: add a find_basename() portability function
-Date: Fri, 29 May 2009 19:18:09 -0700
-Message-ID: <1243649890-4522-2-git-send-email-davvid@gmail.com>
+Subject: [PATCH v5 3/3] diff: generate pretty filenames in prep_temp_blob()
+Date: Fri, 29 May 2009 19:18:10 -0700
+Message-ID: <1243649890-4522-3-git-send-email-davvid@gmail.com>
 References: <1243649890-4522-1-git-send-email-davvid@gmail.com>
+ <1243649890-4522-2-git-send-email-davvid@gmail.com>
 Cc: gitster@pobox.com, peff@peff.net, markus.heidelberg@web.de,
 	jnareb@gmail.com, j.sixt@viscovery.net,
 	David Aguilar <davvid@gmail.com>
@@ -12,103 +13,156 @@ Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MAEBF-0005Vv-VW
-	for gcvg-git-2@gmane.org; Sat, 30 May 2009 04:20:18 +0200
+	id 1MAEBG-0005Vv-M5
+	for gcvg-git-2@gmane.org; Sat, 30 May 2009 04:20:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753211AbZE3CSU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 29 May 2009 22:18:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752189AbZE3CST
-	(ORCPT <rfc822;git-outgoing>); Fri, 29 May 2009 22:18:19 -0400
+	id S1753330AbZE3CSX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 29 May 2009 22:18:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753356AbZE3CSW
+	(ORCPT <rfc822;git-outgoing>); Fri, 29 May 2009 22:18:22 -0400
 Received: from rv-out-0506.google.com ([209.85.198.236]:57308 "EHLO
 	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752866AbZE3CSR (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 May 2009 22:18:17 -0400
+	with ESMTP id S1753101AbZE3CSU (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 May 2009 22:18:20 -0400
 Received: by rv-out-0506.google.com with SMTP id f9so1967900rvb.1
-        for <git@vger.kernel.org>; Fri, 29 May 2009 19:18:19 -0700 (PDT)
+        for <git@vger.kernel.org>; Fri, 29 May 2009 19:18:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:cc:subject:date
          :message-id:x-mailer:in-reply-to:references;
-        bh=eW8/lZjHYEcTqm9zrP85jCJhJIwvrV162Wb1iw8T6Us=;
-        b=Toj73groBWUxeq7O1hJfmSRlRjQDFJTQYb4c57VL8ycnHI8+ZIwravIpk91z44FQcF
-         VjNo7H24ointZ/PTmZd3wZSalGLwl//gi8VHq8pcyd5YcQpE7h011OcTRfiBmrp/3M9T
-         ZchuuNyHjbaiiT5EYVgDRM7rH3VoG+/LhXxS4=
+        bh=4ax1kfk/sqKG472C1iXZwiN4Ay8l1KqOUTg9Gi73JhQ=;
+        b=Yoc45oZ8yRBC6DiofnYoCp/9nq0Z1ojvTFTRRiJ4TPzT/+/kXjlQbubc0zTn4qcMd7
+         1mY/2i55i26TR2AdS3xdHJYD/VN93tfPrkRkh5r7y3Tkv6Fdy1IaAIuBZFDxt3tfZobX
+         ATACymwrHWHE7jBLrQfmZpjeUz9VV+7MMQapg=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=NfFRkmvV3EcHksS4rseKc8130bNBfItlvpF5MM3Hi3CXOZwEG7B9+Ert556acNTDMA
-         d8enHO1IoM42O4DMmZLec+R4ff0tLhrYerfgrSj/vD+AmaPL7MUUUAHko4OcQiePPMNV
-         A5/6lU2v+xeNgKnsggr48oheb+Rt8yE3Ncu/s=
-Received: by 10.140.247.11 with SMTP id u11mr1883777rvh.247.1243649899620;
-        Fri, 29 May 2009 19:18:19 -0700 (PDT)
+        b=RAWe/JOgVYXPZXQq65zBWtJy+vWuhsMw3CDjeoGACRnBtFzHHfRuOWoixHxnfWELXc
+         9ZhCXpphSBI/TD7w5o2cQv6LlEYa+tXSpMjyVC9Omo5T1Mp2rGN1SP9XkTnBCKK6RuUX
+         cOSnT2b6867/Uri8DFMXXBSxrJ8Iqwfvtq8UY=
+Received: by 10.141.48.6 with SMTP id a6mr2054727rvk.161.1243649902560;
+        Fri, 29 May 2009 19:18:22 -0700 (PDT)
 Received: from localhost (208-106-56-2.static.dsltransport.net [208.106.56.2])
-        by mx.google.com with ESMTPS id m31sm3105176wag.31.2009.05.29.19.18.18
+        by mx.google.com with ESMTPS id j15sm3171940waf.16.2009.05.29.19.18.21
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 29 May 2009 19:18:19 -0700 (PDT)
+        Fri, 29 May 2009 19:18:21 -0700 (PDT)
 X-Mailer: git-send-email 1.6.3.1.178.g4daa97
-In-Reply-To: <1243649890-4522-1-git-send-email-davvid@gmail.com>
+In-Reply-To: <1243649890-4522-2-git-send-email-davvid@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120335>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120336>
 
-find_basename() is a simpler version of basename().
-It maintains constness and thus does not require you
-to pass in a copy.  It is only concerned with finding
-the last directory separator in a string and returning
-a pointer.
+Naturally, prep_temp_blob() did not care about filenames.
+As a result, GIT_EXTERNAL_DIFF and textconv generated
+filenames such as ".diff_XXXXXX".
 
-This function was written because Windows does not
-have basename().  It is called "find_basename()"
-to avoid name collisions and to provide a hint that
-it is not quite the same thing as POSIX basename().
+This modifies prep_temp_blob() to generate user-friendly
+filenames when creating temporary files.
+
+Diffing "name.ext" now generates "XXXXXX_name.ext".
 
 Signed-off-by: David Aguilar <davvid@gmail.com>
 ---
 
-As suggested by Peff.
+The difference since v4 is that find_basename() was
+factored out into its own function.
 
- cache.h |    1 +
- path.c  |   14 ++++++++++++++
- 2 files changed, 15 insertions(+), 0 deletions(-)
+ cache.h                  |    2 ++
+ diff.c                   |   10 +++++++++-
+ path.c                   |   16 ++++++++++++++++
+ t/t4020-diff-external.sh |    9 +++++++++
+ 4 files changed, 36 insertions(+), 1 deletions(-)
 
 diff --git a/cache.h b/cache.h
-index b8503ad..08b6f42 100644
+index 08b6f42..337458d 100644
 --- a/cache.h
 +++ b/cache.h
-@@ -640,6 +640,7 @@ static inline int is_absolute_path(const char *path)
- 	return path[0] == '/' || has_dos_drive_prefix(path);
- }
- int is_directory(const char *);
-+const char *find_basename(const char *path);
- const char *make_absolute_path(const char *path);
- const char *make_nonrelative_path(const char *path);
- const char *make_relative_path(const char *abs, const char *base);
-diff --git a/path.c b/path.c
-index 8a0a674..7a2fe14 100644
---- a/path.c
-+++ b/path.c
-@@ -358,6 +358,20 @@ int set_shared_perm(const char *path, int mode)
- 	return 0;
+@@ -614,6 +614,8 @@ extern int is_empty_blob_sha1(const unsigned char *sha1);
+ 
+ int git_mkstemp(char *path, size_t n, const char *template);
+ 
++int git_mkstemps(char *path, size_t n, const char *template, int suffix_len);
++
+ /*
+  * NOTE NOTE NOTE!!
+  *
+diff --git a/diff.c b/diff.c
+index dcfbcb0..7edee28 100644
+--- a/diff.c
++++ b/diff.c
+@@ -1964,8 +1964,15 @@ static void prep_temp_blob(const char *path, struct diff_tempfile *temp,
+ {
+ 	int fd;
+ 	struct strbuf buf = STRBUF_INIT;
++	struct strbuf template = STRBUF_INIT;
++	const char *basename = find_basename(path);
+ 
+-	fd = git_mkstemp(temp->tmp_path, PATH_MAX, ".diff_XXXXXX");
++	/* Generate "XXXXXX_basename.ext" */
++	strbuf_addstr(&template, "XXXXXX_");
++	strbuf_addstr(&template, basename);
++
++	fd = git_mkstemps(temp->tmp_path, PATH_MAX, template.buf,
++			strlen(basename) + 1);
+ 	if (fd < 0)
+ 		die("unable to create temp-file: %s", strerror(errno));
+ 	if (convert_to_working_tree(path,
+@@ -1981,6 +1988,7 @@ static void prep_temp_blob(const char *path, struct diff_tempfile *temp,
+ 	temp->hex[40] = 0;
+ 	sprintf(temp->mode, "%06o", mode);
+ 	strbuf_release(&buf);
++	strbuf_release(&template);
  }
  
-+/* return the basename of a path */
-+const char *find_basename(const char *path)
+ static struct diff_tempfile *prepare_temp_file(const char *name,
+diff --git a/path.c b/path.c
+index 7a2fe14..4f7fe8f 100644
+--- a/path.c
++++ b/path.c
+@@ -139,6 +139,22 @@ int git_mkstemp(char *path, size_t len, const char *template)
+ 	return mkstemp(path);
+ }
+ 
++/* git_mkstemps() - create tmp file with suffix honoring TMPDIR variable. */
++int git_mkstemps(char *path, size_t len, const char *template, int suffix_len)
 +{
-+	const char *basename = path + strlen(path) - 1;
-+	while(*basename && basename > path) {
-+		basename--;
-+		if (is_dir_sep(*basename)) {
-+			basename++;
-+			break;
-+		}
-+	}
-+	return basename;
-+}
++	const char *tmp;
++	size_t n;
 +
- const char *make_relative_path(const char *abs, const char *base)
++	tmp = getenv("TMPDIR");
++	if (!tmp)
++		tmp = "/tmp";
++	n = snprintf(path, len, "%s/%s", tmp, template);
++	if (len <= n) {
++		errno = ENAMETOOLONG;
++		return -1;
++	}
++	return mkstemps(path, suffix_len);
++}
+ 
+ int validate_headref(const char *path)
  {
- 	static char buf[PATH_MAX + 1];
+diff --git a/t/t4020-diff-external.sh b/t/t4020-diff-external.sh
+index 0720001..4ea42e0 100755
+--- a/t/t4020-diff-external.sh
++++ b/t/t4020-diff-external.sh
+@@ -136,6 +136,15 @@ test_expect_success 'GIT_EXTERNAL_DIFF with more than one changed files' '
+ 	GIT_EXTERNAL_DIFF=echo git diff
+ '
+ 
++test_expect_success 'GIT_EXTERNAL_DIFF generates pretty paths' '
++	touch file.ext &&
++	git add file.ext &&
++	echo with extension > file.ext &&
++	GIT_EXTERNAL_DIFF=echo git diff file.ext | grep ......_file\.ext &&
++	git update-index --force-remove file.ext &&
++	rm file.ext
++'
++
+ echo "#!$SHELL_PATH" >fake-diff.sh
+ cat >> fake-diff.sh <<\EOF
+ cat $2 >> crlfed.txt
 -- 
 1.6.3.1.178.g4daa97
