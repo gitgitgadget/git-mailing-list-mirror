@@ -1,66 +1,90 @@
-From: Tay Ray Chuan <rctay89@gmail.com>
-Subject: Re: [PATCH 3/3] http-push: send out fetch requests on queue
-Date: Sat, 30 May 2009 18:52:07 +0800
-Message-ID: <be6fef0d0905300352o33694420m9c988daa554420a3@mail.gmail.com>
-References: <49F1EA6D.8080406@gmail.com> <20090530091755.GA13578@localhost>
-	 <be6fef0d0905300231k5167f3efle9a450419bdfa1cb@mail.gmail.com>
-	 <20090530093717.GA22129@localhost>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: Re: [PATCH] refuse to merge during a merge
+Date: Sat, 30 May 2009 12:57:23 +0200
+Message-ID: <200905301257.27630.trast@student.ethz.ch>
+References: <20090527210410.GA14742@localhost> <20090530083721.GA12963@localhost> <m34ov2c1wx.fsf@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: multipart/signed;
+  boundary="nextPart4278181.WuI1JWUMKa";
+  protocol="application/pgp-signature";
+  micalg=pgp-sha1
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Clemens Buchacher <drizzd@aon.at>
-X-From: git-owner@vger.kernel.org Sat May 30 12:52:42 2009
+Cc: Clemens Buchacher <drizzd@aon.at>,
+	John Tapsell <johnflux@gmail.com>, git@vger.kernel.org,
+	Dave Olszewski <cxreg@pobox.com>
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Sat May 30 12:57:40 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MAMB7-00076H-76
-	for gcvg-git-2@gmane.org; Sat, 30 May 2009 12:52:41 +0200
+	id 1MAMFv-0008VO-NT
+	for gcvg-git-2@gmane.org; Sat, 30 May 2009 12:57:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760509AbZE3KwJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 30 May 2009 06:52:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760521AbZE3KwI
-	(ORCPT <rfc822;git-outgoing>); Sat, 30 May 2009 06:52:08 -0400
-Received: from wf-out-1314.google.com ([209.85.200.174]:65300 "EHLO
-	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1760509AbZE3KwG (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 30 May 2009 06:52:06 -0400
-Received: by wf-out-1314.google.com with SMTP id 26so2230133wfd.4
-        for <git@vger.kernel.org>; Sat, 30 May 2009 03:52:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=QdVCR4zhuA7VhH4DacgmATSBKqx2ziCcq7oC5sG2G10=;
-        b=KSQw9EMjJP6j1V2SBadN6IY+3v9V9j/D+BlByfdui95LY7GKbeKrfERNOVzpnOMStU
-         YTM7mg5vWsAgyKOjr8MaQ3CIaRjz5zorR6ItGXlIOb67OI/T/FH/pT4/3HngO5oVBtir
-         dC5pBujwRzLm6zuirt4oic3bM0dNusVOIA8Tw=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=eO9zKXCqgp5so+EzXE7Eb9X1YNa9XecolnN+343EbJpz6SXYQCNaQiwcco6gvvtznM
-         3J1wKzYWPkuscBhqG3cyzaQ0k9dV1o8jtq7UJfXAnou9ryeDXNBC9AmtI3fUutaa91H4
-         +qzwsd4ScpJe8H49M/iv1dgwiwEgLhTwEg6DA=
-Received: by 10.142.169.4 with SMTP id r4mr1233593wfe.105.1243680727982; Sat, 
-	30 May 2009 03:52:07 -0700 (PDT)
-In-Reply-To: <20090530093717.GA22129@localhost>
+	id S1757460AbZE3K53 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 30 May 2009 06:57:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756571AbZE3K53
+	(ORCPT <rfc822;git-outgoing>); Sat, 30 May 2009 06:57:29 -0400
+Received: from xsmtp1.ethz.ch ([82.130.70.13]:47893 "EHLO xsmtp1.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755464AbZE3K52 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 30 May 2009 06:57:28 -0400
+Received: from xfe1.d.ethz.ch ([82.130.124.41]) by xsmtp1.ethz.ch with Microsoft SMTPSVC(6.0.3790.3959);
+	 Sat, 30 May 2009 12:57:17 +0200
+Received: from thomas.localnet ([84.75.150.195]) by xfe1.d.ethz.ch over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
+	 Sat, 30 May 2009 12:57:28 +0200
+User-Agent: KMail/1.11.3 (Linux/2.6.27.21-0.1-default; KDE/4.2.3; x86_64; ; )
+In-Reply-To: <m34ov2c1wx.fsf@localhost.localdomain>
+X-OriginalArrivalTime: 30 May 2009 10:57:28.0426 (UTC) FILETIME=[6C4C1CA0:01C9E115]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120347>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120348>
 
-Hi,
+--nextPart4278181.WuI1JWUMKa
+Content-Type: text/plain;
+  charset="iso-8859-15"
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
 
-On Sat, May 30, 2009 at 5:37 PM, Clemens Buchacher <drizzd@aon.at> wrote:
-> Sure. The same thing happens.
+Jakub Narebski wrote:
+> Clemens Buchacher <drizzd@aon.at> writes:
+> > fatal: You are in the middle of a [conflicted] merge. To complete the m=
+erge
+> > [resolve conflicts and] commit the changes. To abort, use "git reset HE=
+AD".
+> >=20
+> > The part about resolving changes is only displayed if there are unmerged
+> > entries. I intentionally left out --hard, because it potentially removes
+> > changes unrelated to the merge (if the work tree was dirty prior to the
+> > merge). The user will find out how to reset the work tree by reading the
+> > docs.
+>=20
+> Why not advertise new "git reset --merge HEAD" then?
 
-curiously, I wasn't able to reproduce on my cygwin setup, but on my ubuntu box.
+That doesn't deal with conflicts at all.  It fills the rather
+different case where you did a clean merge with some uncommitted
+changes in the worktree, but then want to discard the merge again
+without losing the uncommitted changes.  In absence of the changes,
+you would just use --hard, but here you want to move the branch tip
+while merging them over, similar to what 'git checkout -m' does for
+moving HEAD.
 
--- 
-Cheers,
-Ray Chuan
+=2D-=20
+Thomas Rast
+trast@{inf,student}.ethz.ch
+
+--nextPart4278181.WuI1JWUMKa
+Content-Type: application/pgp-signature; name=signature.asc 
+Content-Description: This is a digitally signed message part.
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.9 (GNU/Linux)
+
+iEYEABECAAYFAkohERcACgkQqUud07tmzP1kPACggBH2urQkUeH7PVG1L56hBHGd
+yiIAn32slXhNI+JDeDKfef2XtYSGrFCS
+=qjTU
+-----END PGP SIGNATURE-----
+
+--nextPart4278181.WuI1JWUMKa--
