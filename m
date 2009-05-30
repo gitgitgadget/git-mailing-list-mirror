@@ -1,89 +1,69 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [RFH] Questions for Git User's Survey 2009
-Date: Sat, 30 May 2009 12:45:14 +0300
-Message-ID: <94a0d4530905300245nc3b46b7p6a29fbee2cebf8cd@mail.gmail.com>
-References: <200905291855.03328.jnareb@gmail.com>
-	 <94a0d4530905300153l361ed7d9l4376cb4c85001772@mail.gmail.com>
-	 <200905301139.26737.jnareb@gmail.com>
+From: Clemens Buchacher <drizzd@aon.at>
+Subject: Re: [PATCH] refuse to merge during a merge
+Date: Sat, 30 May 2009 10:37:21 +0200
+Message-ID: <20090530083721.GA12963@localhost>
+References: <20090527210410.GA14742@localhost> <43d8ce650905280912q71c749bn7146210a5838a453@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Sat May 30 11:45:25 2009
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Dave Olszewski <cxreg@pobox.com>
+To: John Tapsell <johnflux@gmail.com>
+X-From: git-owner@vger.kernel.org Sat May 30 11:45:56 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MAL81-0001lQ-4M
-	for gcvg-git-2@gmane.org; Sat, 30 May 2009 11:45:25 +0200
+	id 1MAL8T-0001v7-BJ
+	for gcvg-git-2@gmane.org; Sat, 30 May 2009 11:45:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755327AbZE3JpP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 30 May 2009 05:45:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754355AbZE3JpP
-	(ORCPT <rfc822;git-outgoing>); Sat, 30 May 2009 05:45:15 -0400
-Received: from fg-out-1718.google.com ([72.14.220.158]:57539 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753791AbZE3JpO (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 30 May 2009 05:45:14 -0400
-Received: by fg-out-1718.google.com with SMTP id d23so195718fga.17
-        for <git@vger.kernel.org>; Sat, 30 May 2009 02:45:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=bhyI9PqG+rN7wDZJorBAl7st1qLC75StaMcMQViD6Aw=;
-        b=W/mVpCyVcfpFRWkFMkfklLk22SHPYtc2N1HYOu8VTObvdyEIi+DNftXHd/jFJ9vQvQ
-         tGbJKIldzCd0suzYcFdzGu0Ha7sGX9TDapbpsPyyO/xUCPG+MMVYygbFgQioe86vjhM5
-         1A3sT8jBCrINvYP8ru4JjKc3Xz6TpF7ygPljU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=Jk7NjGHaRWDkXZdpNx21/2s90NNg/etAmVQz5gct8j2TAbN8cjyTT12+XPXXeaL857
-         PCMIEECHXbb5CgJCv3/8gRG6lfqbIrHAS3tlWqEypFLv5Uvlrz7J0oyKITZeYtBKlGw2
-         1AULZhjsfljKlJk0VyTr5dU+9+HkwNS++YhkQ=
-Received: by 10.86.31.19 with SMTP id e19mr3900915fge.24.1243676714705; Sat, 
-	30 May 2009 02:45:14 -0700 (PDT)
-In-Reply-To: <200905301139.26737.jnareb@gmail.com>
+	id S1755412AbZE3Jpo convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 30 May 2009 05:45:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755379AbZE3Jpn
+	(ORCPT <rfc822;git-outgoing>); Sat, 30 May 2009 05:45:43 -0400
+Received: from postman.fh-hagenberg.at ([193.170.124.96]:41087 "EHLO
+	mail.fh-hagenberg.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755376AbZE3Jpn (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 30 May 2009 05:45:43 -0400
+Received: from darc.dnsalias.org ([80.123.242.182]) by mail.fh-hagenberg.at over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
+	 Sat, 30 May 2009 11:45:44 +0200
+Received: from drizzd by darc.dnsalias.org with local (Exim 4.69)
+	(envelope-from <drizzd@aon.at>)
+	id 1MAK49-0003Wn-58; Sat, 30 May 2009 10:37:21 +0200
+Content-Disposition: inline
+In-Reply-To: <43d8ce650905280912q71c749bn7146210a5838a453@mail.gmail.com>
+User-Agent: Mutt/1.5.18 (2008-05-17)
+X-OriginalArrivalTime: 30 May 2009 09:45:44.0484 (UTC) FILETIME=[66F2AE40:01C9E10B]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120344>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120345>
 
-On Sat, May 30, 2009 at 12:39 PM, Jakub Narebski <jnareb@gmail.com> wrote:
-> On Sat, 30 May 2009, Felipe Contreras wrote:
->> On Fri, May 29, 2009 at 7:55 PM, Jakub Narebski <jnareb@gmail.com> wrote:
->
-> [...]
->> > So what I would like to have is to come up with a LIST OF QUESTIONS
->> > and possible answers; I'd like to limit number of questions with
->> > free-form part, and reduce number of free-form questions to absolute
->> > minimum; they are pain to analyse with so large number of responses.
->> >
->> > Please write also _why_ you would want a question; what we can learn
->> > from it, how it can help in developing git.
->> >
->> > Thanks in advance
->>
->> Personally I think last year's survey was great, but it was missing
->> questions regarding git's user interface. How good is it? What would
->> you improve, etc.
->
-> The problem with this question is that it is free-form question (and
-> not single or multiple choice one). With more than 3000 responses to
-> last year survey free-form questions are not summarized till now.
-> I'd rather limit number of free-form questions to absolute minimum.
->
-> Hmmm... I wonder if the trend would continue, and we would get around
-> 15,000 responses to this year survey (if there would be one)...
+On Thu, May 28, 2009 at 05:12:40PM +0100, John Tapsell wrote:
+> > + =A0 =A0 =A0 if (read_cache_unmerged() || file_exists(git_path("ME=
+RGE_HEAD")))
+> > =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0die("You are in the middle of a conf=
+licted merge.");
+>=20
+> Could the error message also give possible solutions?   "Commit the
+> current merge first with 'git commit', or discard the current merge
+> attempt with 'git reset --hard'" or something.  Or at least a pointer
+> to where to read for more info.
 
-Yes free-form questions should be reduced, but IMHO this one should
-stay. If there's only 2 free-form questions I'd pick
- * What would you improve in git's UI?
- * Any words you want to share with git developers?
+How about this.
 
--- 
-Felipe Contreras
+fatal: You are in the middle of a [conflicted] merge. To complete the m=
+erge
+[resolve conflicts and] commit the changes. To abort, use "git reset HE=
+AD".
+
+The part about resolving changes is only displayed if there are unmerge=
+d
+entries. I intentionally left out --hard, because it potentially remove=
+s
+changes unrelated to the merge (if the work tree was dirty prior to the
+merge). The user will find out how to reset the work tree by reading th=
+e
+docs.
+
+Clemens
