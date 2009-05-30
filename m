@@ -1,99 +1,72 @@
 From: Markus Heidelberg <markus.heidelberg@web.de>
-Subject: Re: [PATCH v2] add --abbrev to 'git cherry'
-Date: Sat, 30 May 2009 18:26:11 +0200
-Message-ID: <200905301826.11924.markus.heidelberg@web.de>
-References: <20090530140349.GA25265@unpythonic.net>
+Subject: Re: BUG: mergetool fails on gitignore:d files
+Date: Sat, 30 May 2009 18:38:08 +0200
+Message-ID: <200905301838.09081.markus.heidelberg@web.de>
+References: <e87cdfda0905300830t6b332533g9a4298f6b8005b9e@mail.gmail.com>
 Reply-To: markus.heidelberg@web.de
 Mime-Version: 1.0
 Content-Type: text/plain;
   charset="iso-8859-1"
 Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Jeff Epler <jepler@unpythonic.net>
-X-From: git-owner@vger.kernel.org Sat May 30 18:26:28 2009
+To: Erik Sandberg <mandolaerik@gmail.com>
+X-From: git-owner@vger.kernel.org Sat May 30 18:38:21 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MARO7-00050s-Tp
-	for gcvg-git-2@gmane.org; Sat, 30 May 2009 18:26:28 +0200
+	id 1MARZc-0000Kh-A7
+	for gcvg-git-2@gmane.org; Sat, 30 May 2009 18:38:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759961AbZE3Q0M (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 30 May 2009 12:26:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759784AbZE3Q0M
-	(ORCPT <rfc822;git-outgoing>); Sat, 30 May 2009 12:26:12 -0400
-Received: from fmmailgate03.web.de ([217.72.192.234]:57233 "EHLO
-	fmmailgate03.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758642AbZE3Q0L (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 30 May 2009 12:26:11 -0400
-Received: from smtp08.web.de (fmsmtp08.dlan.cinetic.de [172.20.5.216])
-	by fmmailgate03.web.de (Postfix) with ESMTP id 068BEFE7610B;
-	Sat, 30 May 2009 18:26:13 +0200 (CEST)
+	id S932328AbZE3QiL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 30 May 2009 12:38:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932110AbZE3QiK
+	(ORCPT <rfc822;git-outgoing>); Sat, 30 May 2009 12:38:10 -0400
+Received: from fmmailgate02.web.de ([217.72.192.227]:35359 "EHLO
+	fmmailgate02.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757756AbZE3QiJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 30 May 2009 12:38:09 -0400
+Received: from smtp05.web.de (fmsmtp05.dlan.cinetic.de [172.20.4.166])
+	by fmmailgate02.web.de (Postfix) with ESMTP id 7A0DB1015D5EE;
+	Sat, 30 May 2009 18:38:10 +0200 (CEST)
 Received: from [89.59.100.180] (helo=.)
-	by smtp08.web.de with asmtp (TLSv1:AES256-SHA:256)
+	by smtp05.web.de with asmtp (TLSv1:AES256-SHA:256)
 	(WEB.DE 4.110 #277)
-	id 1MARNs-0003NH-00; Sat, 30 May 2009 18:26:12 +0200
+	id 1MARZR-00069F-00; Sat, 30 May 2009 18:38:10 +0200
 User-Agent: KMail/1.9.9
-In-Reply-To: <20090530140349.GA25265@unpythonic.net>
+In-Reply-To: <e87cdfda0905300830t6b332533g9a4298f6b8005b9e@mail.gmail.com>
 Jabber-ID: markus.heidelberg@web.de
 Content-Disposition: inline
 X-Sender: markus.heidelberg@web.de
-X-Provags-ID: V01U2FsdGVkX1+bNRs42p9UoJFR4HbqjkqdSFiwUf2zONcS3mj6
-	5LrTSPEV8HCvS2X9Po3O1A/r5+Z8r/eVa+cwEJb/tp+bQGt6+O
-	tHnLChWn/WCxDJh7SVnQ==
+X-Provags-ID: V01U2FsdGVkX1/FKHy8HRYCQL16N7OxclOCOkcReIPUN6Klogjg
+	WExPu2FLooI4G0v/gLok+Hw8fmJYrrsSLqy5OQec+dfnFkrAb4
+	pXtk927DbWrbBO8Fk8Kw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120357>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120358>
 
-Jeff Epler, 30.05.2009:
->  Documentation/git-cherry.txt |    5 ++++-
->  builtin-log.c                |   24 +++++++++++++++++++-----
->  2 files changed, 23 insertions(+), 6 deletions(-)
+Erik Sandberg, 30.05.2009:
+> If a version-controlled file is ignored by git, and a conflict arises
+> on the file, and I use mergetool to resolve the conflict, then
+> mergetool fails with a message like:
+> 
+> The following paths are ignored by one of your .gitignore files:
+> a
+> Use -f if you really want to add them.
+> 
+> The problem disappears if I edit the git-mergetool script to always
+> pass -f to "git add", but I'm not sure if that's the right fix; I have
+> a vague feeling that "git-update-index --add" could be more correct.
+> 
+> I have attached a script that reproduces the problem.
 
-You could also add --abbrev= to the bash completion.
+The script would have been more readable if you haven't given both the
+file and the branch name as well as the file content and the commit
+message the same string "a".
 
-> diff --git a/Documentation/git-cherry.txt b/Documentation/git-cherry.txt
-> index 7deefda..5c03da0 100644
-> --- a/Documentation/git-cherry.txt
-> +++ b/Documentation/git-cherry.txt
-> @@ -49,6 +49,9 @@ OPTIONS
->  -v::
->  	Verbose.
->  
-> +--abbrev[=<n>]::
-> +	Abbreviate commit ids to the given number of characters
-
-The full stop is missing :)
-And you could add "The default value is 7." as in the git-branch docs.
-Or even copy the whole description from there for consistency, it also
-mentions that this sets the minimum length, the displayed SHA1 may be
-longer, but more about this below.
-
-> diff --git a/builtin-log.c b/builtin-log.c
-> index f10cfeb..1f3093e 100644
-> --- a/builtin-log.c
-> +++ b/builtin-log.c
-> @@ -1218,12 +1232,12 @@ int cmd_cherry(int argc, const char **argv, const char *prefix)
->  			struct strbuf buf = STRBUF_INIT;
->  			pretty_print_commit(CMIT_FMT_ONELINE, commit,
->  			                    &buf, 0, NULL, NULL, 0, 0);
-> -			printf("%c %s %s\n", sign,
-> +			printf("%c %.*s %s\n", sign, abbrev,
->  			       sha1_to_hex(commit->object.sha1), buf.buf);
->  			strbuf_release(&buf);
->  		}
->  		else {
-> -			printf("%c %s\n", sign,
-> +			printf("%c %.*s\n", sign, abbrev,
->  			       sha1_to_hex(commit->object.sha1));
->  		}
-
-There is no test for unique ids. "git cherry --abbrev=4" always prints 4
-chars per SHA1, so "git show" on these SHA1s mostly gives "error: short
-SHA1 xxxx is ambiguous." in git.git.
-
-find_unique_abbrev() will help.
+Apart from that I wonder if your real repo also ignores the file 'a'
+although it is tracked in every branch. If so, why do you ignore it?
 
 Markus
