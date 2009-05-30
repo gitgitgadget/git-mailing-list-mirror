@@ -1,107 +1,66 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH] refuse to merge during a merge
-Date: Sat, 30 May 2009 03:38:02 -0700 (PDT)
-Message-ID: <m34ov2c1wx.fsf@localhost.localdomain>
-References: <20090527210410.GA14742@localhost>
-	<43d8ce650905280912q71c749bn7146210a5838a453@mail.gmail.com>
-	<20090530083721.GA12963@localhost>
+From: Tay Ray Chuan <rctay89@gmail.com>
+Subject: Re: [PATCH 3/3] http-push: send out fetch requests on queue
+Date: Sat, 30 May 2009 18:52:07 +0800
+Message-ID: <be6fef0d0905300352o33694420m9c988daa554420a3@mail.gmail.com>
+References: <49F1EA6D.8080406@gmail.com> <20090530091755.GA13578@localhost>
+	 <be6fef0d0905300231k5167f3efle9a450419bdfa1cb@mail.gmail.com>
+	 <20090530093717.GA22129@localhost>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-15
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: John Tapsell <johnflux@gmail.com>, git@vger.kernel.org,
-	Dave Olszewski <cxreg@pobox.com>
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
 To: Clemens Buchacher <drizzd@aon.at>
-X-From: git-owner@vger.kernel.org Sat May 30 12:38:20 2009
+X-From: git-owner@vger.kernel.org Sat May 30 12:52:42 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MALx9-0003Cf-6M
-	for gcvg-git-2@gmane.org; Sat, 30 May 2009 12:38:15 +0200
+	id 1MAMB7-00076H-76
+	for gcvg-git-2@gmane.org; Sat, 30 May 2009 12:52:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758936AbZE3KiF convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 30 May 2009 06:38:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754274AbZE3KiE
-	(ORCPT <rfc822;git-outgoing>); Sat, 30 May 2009 06:38:04 -0400
-Received: from mail-ew0-f176.google.com ([209.85.219.176]:62831 "EHLO
-	mail-ew0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753791AbZE3KiC convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 30 May 2009 06:38:02 -0400
-Received: by ewy24 with SMTP id 24so6797711ewy.37
-        for <git@vger.kernel.org>; Sat, 30 May 2009 03:38:03 -0700 (PDT)
+	id S1760509AbZE3KwJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 30 May 2009 06:52:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760521AbZE3KwI
+	(ORCPT <rfc822;git-outgoing>); Sat, 30 May 2009 06:52:08 -0400
+Received: from wf-out-1314.google.com ([209.85.200.174]:65300 "EHLO
+	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1760509AbZE3KwG (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 30 May 2009 06:52:06 -0400
+Received: by wf-out-1314.google.com with SMTP id 26so2230133wfd.4
+        for <git@vger.kernel.org>; Sat, 30 May 2009 03:52:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received
-         :x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
          :content-transfer-encoding;
-        bh=6+9/gTs6utrix02Rv0Az4cxX3brVEQ/0c9ICyBkqAXE=;
-        b=rhsIvZTiL0ZStLx2el9HeyZyEqHG0t+y6Xn9GXXK0zNiIPcfU4ODMRNVB7UZJjI9z2
-         Ip6YQtRK5htlwZr3AVmdWJJhZaa3Tgan0tKVhGBB+ERYOABQTqRarLfDkXQBCg9DZd9N
-         BbMuMAgASkEU8ia9P2bqrfUzPyeFsuJH+6yOM=
+        bh=QdVCR4zhuA7VhH4DacgmATSBKqx2ziCcq7oC5sG2G10=;
+        b=KSQw9EMjJP6j1V2SBadN6IY+3v9V9j/D+BlByfdui95LY7GKbeKrfERNOVzpnOMStU
+         YTM7mg5vWsAgyKOjr8MaQ3CIaRjz5zorR6ItGXlIOb67OI/T/FH/pT4/3HngO5oVBtir
+         dC5pBujwRzLm6zuirt4oic3bM0dNusVOIA8Tw=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type
-         :content-transfer-encoding;
-        b=T0TmesqyURCLR6mQ1amtM35knyDgBsoBBe0fsUmcwapotXtosoiqiyEpna/nHPebwY
-         6xMj+Y1Q9SREE5LC4w1HyeeR6wy88sSlw/v/6anwwK7TKAHwIB3Dl3DeMzdsXXkBiZmI
-         GWzywzHJ8UD8QY7lGkhdeLSB2DruiyMrZ2qCQ=
-Received: by 10.210.33.15 with SMTP id g15mr3717521ebg.63.1243679883212;
-        Sat, 30 May 2009 03:38:03 -0700 (PDT)
-Received: from localhost.localdomain (abvr167.neoplus.adsl.tpnet.pl [83.8.215.167])
-        by mx.google.com with ESMTPS id 24sm4204906eyx.3.2009.05.30.03.38.02
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sat, 30 May 2009 03:38:02 -0700 (PDT)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id n4UAbJhC026737;
-	Sat, 30 May 2009 12:37:29 +0200
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id n4UAb2eO026733;
-	Sat, 30 May 2009 12:37:02 +0200
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <20090530083721.GA12963@localhost>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=eO9zKXCqgp5so+EzXE7Eb9X1YNa9XecolnN+343EbJpz6SXYQCNaQiwcco6gvvtznM
+         3J1wKzYWPkuscBhqG3cyzaQ0k9dV1o8jtq7UJfXAnou9ryeDXNBC9AmtI3fUutaa91H4
+         +qzwsd4ScpJe8H49M/iv1dgwiwEgLhTwEg6DA=
+Received: by 10.142.169.4 with SMTP id r4mr1233593wfe.105.1243680727982; Sat, 
+	30 May 2009 03:52:07 -0700 (PDT)
+In-Reply-To: <20090530093717.GA22129@localhost>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120346>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120347>
 
-Clemens Buchacher <drizzd@aon.at> writes:
+Hi,
 
-> On Thu, May 28, 2009 at 05:12:40PM +0100, John Tapsell wrote:
-> > > + =A0 =A0 =A0 if (read_cache_unmerged() || file_exists(git_path("=
-MERGE_HEAD")))
-> > > =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0die("You are in the middle of a co=
-nflicted merge.");
-> >=20
-> > Could the error message also give possible solutions?   "Commit the
-> > current merge first with 'git commit', or discard the current merge
-> > attempt with 'git reset --hard'" or something.  Or at least a point=
-er
-> > to where to read for more info.
->=20
-> How about this.
->=20
-> fatal: You are in the middle of a [conflicted] merge. To complete the=
- merge
-> [resolve conflicts and] commit the changes. To abort, use "git reset =
-HEAD".
->=20
-> The part about resolving changes is only displayed if there are unmer=
-ged
-> entries. I intentionally left out --hard, because it potentially remo=
-ves
-> changes unrelated to the merge (if the work tree was dirty prior to t=
-he
-> merge). The user will find out how to reset the work tree by reading =
-the
-> docs.
+On Sat, May 30, 2009 at 5:37 PM, Clemens Buchacher <drizzd@aon.at> wrote:
+> Sure. The same thing happens.
 
-Why not advertise new "git reset --merge HEAD" then?
+curiously, I wasn't able to reproduce on my cygwin setup, but on my ubuntu box.
 
---=20
-Jakub Narebski
-Poland
-ShadeHawk on #git
+-- 
+Cheers,
+Ray Chuan
