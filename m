@@ -1,127 +1,72 @@
-From: Jeff Epler <jepler@unpythonic.net>
-Subject: [PATCH v2] add --abbrev to 'git cherry'
-Date: Sat, 30 May 2009 09:03:49 -0500
-Message-ID: <20090530140349.GA25265@unpythonic.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH v5 2/3] path: add a find_basename() portability function
+Date: Sat, 30 May 2009 10:05:19 -0400
+Message-ID: <20090530140519.GA22905@sigill.intra.peff.net>
+References: <1243649890-4522-1-git-send-email-davvid@gmail.com> <1243649890-4522-2-git-send-email-davvid@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat May 30 16:04:04 2009
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org, gitster@pobox.com, markus.heidelberg@web.de,
+	jnareb@gmail.com, j.sixt@viscovery.net
+To: David Aguilar <davvid@gmail.com>
+X-From: git-owner@vger.kernel.org Sat May 30 16:05:28 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MAPAE-0005kC-JP
-	for gcvg-git-2@gmane.org; Sat, 30 May 2009 16:03:59 +0200
+	id 1MAPBf-0006Ex-Jx
+	for gcvg-git-2@gmane.org; Sat, 30 May 2009 16:05:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932099AbZE3ODu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 30 May 2009 10:03:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758889AbZE3ODt
-	(ORCPT <rfc822;git-outgoing>); Sat, 30 May 2009 10:03:49 -0400
-Received: from dsl.unpythonic.net ([206.222.212.217]:54692 "EHLO
-	unpythonic.net" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1758863AbZE3ODs (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 30 May 2009 10:03:48 -0400
-Received: by unpythonic.net (Postfix, from userid 1000)
-	id EB2EB1146F7; Sat, 30 May 2009 09:03:49 -0500 (CDT)
+	id S932187AbZE3OFU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 30 May 2009 10:05:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932104AbZE3OFT
+	(ORCPT <rfc822;git-outgoing>); Sat, 30 May 2009 10:05:19 -0400
+Received: from peff.net ([208.65.91.99]:49436 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1758725AbZE3OFT (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 30 May 2009 10:05:19 -0400
+Received: (qmail 356 invoked by uid 107); 30 May 2009 14:05:24 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.40) with ESMTPA; Sat, 30 May 2009 10:05:24 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 30 May 2009 10:05:19 -0400
 Content-Disposition: inline
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+In-Reply-To: <1243649890-4522-2-git-send-email-davvid@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120352>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120353>
 
-Abbreviating ids makes 'git cherry -v' more useful, since you can see more
-of the commit message summary:
-    git cherry -v --abbrev | less -S
+On Fri, May 29, 2009 at 07:18:09PM -0700, David Aguilar wrote:
 
-Signed-off-by: Jeff Epler <jepler@unpythonic.net>
----
+> +/* return the basename of a path */
+> +const char *find_basename(const char *path)
+> +{
+> +	const char *basename = path + strlen(path) - 1;
+> +	while(*basename && basename > path) {
+> +		basename--;
+> +		if (is_dir_sep(*basename)) {
+> +			basename++;
+> +			break;
+> +		}
+> +	}
+> +	return basename;
+> +}
 
-An earlier version of this patch added multiple different flags to 'git
-cherry', but --abbrev (was -a) is really the important one.  Thanks to
-Jakub Narebski and Michael J Gruber for comments on the first patch.
+Hmm. Is there any point to the *basename condition in the loop? By using
+strlen, you are not going to go past any NULs, and you are already
+checking that you don't go past the beginning of the string.
 
- Documentation/git-cherry.txt |    5 ++++-
- builtin-log.c                |   24 +++++++++++++++++++-----
- 2 files changed, 23 insertions(+), 6 deletions(-)
+Speaking of which, how does this handle an input of ""? It seems that it
+would return a pointer to one character before the string. Given your
+loop, you need to special-case when *path is NUL.
 
-diff --git a/Documentation/git-cherry.txt b/Documentation/git-cherry.txt
-index 7deefda..5c03da0 100644
---- a/Documentation/git-cherry.txt
-+++ b/Documentation/git-cherry.txt
-@@ -7,7 +7,7 @@ git-cherry - Find commits not merged upstream
- 
- SYNOPSIS
- --------
--'git cherry' [-v] [<upstream> [<head> [<limit>]]]
-+'git cherry' [-v] [--abbrev[=<n>]] [<upstream> [<head> [<limit>]]]
- 
- DESCRIPTION
- -----------
-@@ -49,6 +49,9 @@ OPTIONS
- -v::
- 	Verbose.
- 
-+--abbrev[=<n>]::
-+	Abbreviate commit ids to the given number of characters
-+
- <upstream>::
- 	Upstream branch to compare against.
- 	Defaults to the first tracked remote branch, if available.
-diff --git a/builtin-log.c b/builtin-log.c
-index f10cfeb..1f3093e 100644
---- a/builtin-log.c
-+++ b/builtin-log.c
-@@ -1130,7 +1130,7 @@ static int add_pending_commit(const char *arg, struct rev_info *revs, int flags)
- }
- 
- static const char cherry_usage[] =
--"git cherry [-v] [<upstream> [<head> [<limit>]]]";
-+"git cherry [-v] [--abbrev[=<n>]] [<upstream> [<head> [<limit>]]]";
- int cmd_cherry(int argc, const char **argv, const char *prefix)
- {
- 	struct rev_info revs;
-@@ -1142,9 +1142,23 @@ int cmd_cherry(int argc, const char **argv, const char *prefix)
- 	const char *head = "HEAD";
- 	const char *limit = NULL;
- 	int verbose = 0;
-+	int abbrev = 40;
-+
-+	while(argc > 1 && argv[1][0] == '-') {
-+		if (!strcmp(argv[1], "-v")) {
-+			verbose = 1;
-+		} else if(!strcmp(argv[1], "--abbrev")) {
-+			abbrev = DEFAULT_ABBREV;
-+		} else if(!prefixcmp(argv[1], "--abbrev=")) {
-+			abbrev = strtol(argv[1] + 9, NULL, 10);
-+			if(abbrev < MINIMUM_ABBREV)
-+				abbrev = MINIMUM_ABBREV;
-+			else if(abbrev > 40)
-+				abbrev = 40;
-+		} else {
-+			die("unrecognized argument: %s", argv[1]);
-+		}
- 
--	if (argc > 1 && !strcmp(argv[1], "-v")) {
--		verbose = 1;
- 		argc--;
- 		argv++;
- 	}
-@@ -1218,12 +1232,12 @@ int cmd_cherry(int argc, const char **argv, const char *prefix)
- 			struct strbuf buf = STRBUF_INIT;
- 			pretty_print_commit(CMIT_FMT_ONELINE, commit,
- 			                    &buf, 0, NULL, NULL, 0, 0);
--			printf("%c %s %s\n", sign,
-+			printf("%c %.*s %s\n", sign, abbrev,
- 			       sha1_to_hex(commit->object.sha1), buf.buf);
- 			strbuf_release(&buf);
- 		}
- 		else {
--			printf("%c %s\n", sign,
-+			printf("%c %.*s\n", sign, abbrev,
- 			       sha1_to_hex(commit->object.sha1));
- 		}
- 
--- 
-1.5.4.3
+Also, how should trailing dir_seps be handled? basename() will actually
+return "" if given "foo/". Your implementation, when given "/foo/bar/"
+will return "bar/" (and it must keep the trailing bit since we are
+neither reallocating nor munging the input string). But given
+"/foo/bar//", it will return simply "/". I could see an argument for
+either "bar//" or "", but I think behaving differently for trailing "/"
+versus trailing "//" doesn't make sense.
+
+-Peff
