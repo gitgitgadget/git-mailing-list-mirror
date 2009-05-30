@@ -1,132 +1,127 @@
-From: Nick Woolley <nickwoolley@yahoo.co.uk>
-Subject: [RFC] git-cvs script
-Date: Sat, 30 May 2009 14:41:39 +0100
-Message-ID: <4A213793.3030205@yahoo.co.uk>
+From: Jeff Epler <jepler@unpythonic.net>
+Subject: [PATCH v2] add --abbrev to 'git cherry'
+Date: Sat, 30 May 2009 09:03:49 -0500
+Message-ID: <20090530140349.GA25265@unpythonic.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat May 30 15:42:08 2009
+X-From: git-owner@vger.kernel.org Sat May 30 16:04:04 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MAOp0-0006v9-R9
-	for gcvg-git-2@gmane.org; Sat, 30 May 2009 15:42:03 +0200
+	id 1MAPAE-0005kC-JP
+	for gcvg-git-2@gmane.org; Sat, 30 May 2009 16:03:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932166AbZE3Nla (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 30 May 2009 09:41:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758673AbZE3Nla
-	(ORCPT <rfc822;git-outgoing>); Sat, 30 May 2009 09:41:30 -0400
-Received: from udon.noodlefactory.co.uk ([80.68.88.167]:49664 "EHLO
-	udon.noodlefactory.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754631AbZE3Nl3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 30 May 2009 09:41:29 -0400
-Received: from 87-194-154-6.bethere.co.uk ([87.194.154.6] helo=[192.168.0.101])
-	by udon.noodlefactory.co.uk with esmtpsa (TLS-1.0:DHE_RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.63)
-	(envelope-from <nickwoolley@yahoo.co.uk>)
-	id 1MAOoT-0005HQ-TP
-	for git@vger.kernel.org; Sat, 30 May 2009 14:41:30 +0100
-User-Agent: Thunderbird 2.0.0.21 (X11/20090318)
+	id S932099AbZE3ODu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 30 May 2009 10:03:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758889AbZE3ODt
+	(ORCPT <rfc822;git-outgoing>); Sat, 30 May 2009 10:03:49 -0400
+Received: from dsl.unpythonic.net ([206.222.212.217]:54692 "EHLO
+	unpythonic.net" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1758863AbZE3ODs (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 30 May 2009 10:03:48 -0400
+Received: by unpythonic.net (Postfix, from userid 1000)
+	id EB2EB1146F7; Sat, 30 May 2009 09:03:49 -0500 (CDT)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120351>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120352>
 
-Hi,
+Abbreviating ids makes 'git cherry -v' more useful, since you can see more
+of the commit message summary:
+    git cherry -v --abbrev | less -S
 
-I have script which wraps git-cvsimport and git-cvsexport, called "git-cvs".
+Signed-off-by: Jeff Epler <jepler@unpythonic.net>
+---
 
-The main aim of the script is to automate the steps for tracking a CVS
-repository with the git-cvs* commands.
+An earlier version of this patch added multiple different flags to 'git
+cherry', but --abbrev (was -a) is really the important one.  Thanks to
+Jakub Narebski and Michael J Gruber for comments on the first patch.
 
-It's not currently as sophisticated as git-svn, it's undoubtably flawed and
-isn't foolproof (e.g. exports to CVS of merged git histories can be
-problematic), but I find it useful, because a lot of the nitty-gritty is done
-for me.
+ Documentation/git-cherry.txt |    5 ++++-
+ builtin-log.c                |   24 +++++++++++++++++++-----
+ 2 files changed, 23 insertions(+), 6 deletions(-)
 
-I'd like to ask:
-
- - Is this at all useful to anyone else in it's current form?
-
- - Is there any prior art I should be aware of? (Presumably most people
-   just roll their own scripts, like I have)
-
- - Bearing in mind that it's a work-in progress, are there any suggestions for
-   improvement?
-
-
-The script can be found in its current state here:
-
- http://github.com/wu-lee/git-cvs/
-
-
-There's no installer, but the script is self-contained and just needs to be on
-the execution $PATH (as well as git and cvs).
-
-Given a CVS repository at $CVS_ROOT, tracking a module $CVS_MODULE can be done
-like this:
-
- # Create a git repo
- git init
-
- # Initialise git-cvs's config file
- echo cvsroot=$CVS_ROOT      >.git-cvs
- echo cvsmodule=$CVS_MODULE >>.git-cvs
-
- # First pull gets cvs files using git-cvsimport
- # (optionally you can supply the option
- # --author-file <authormap> for pass-through
- # to git-cvsimport -A on subsequent invocations)
- git-cvs pull
-
- # hack hack...
-
- # Push the files back into CVS with git-cvsexportcommit
- # (This pushes the commits master..remotes/cvs/cvshead by default,
- # or cvsworking/NAME..remotes/cvs/NAME for each CVS branch NAME)
- git-cvs push
-
- # Pull the changes back into remote/cvs/cvshead and
- # (a messy part I've not found a way round yet) throw away our
- # locally merged commits
- git-cvs pull
- git reset --hard master
-
- # More hacking...
-
- # Repeat push/pull steps as needed
-
-
-Some other points:
-
- - Changes in CVS get pulled back, including multiple branches.
-
- - An author-mapping file can be supplied as for cvs-import -A
-
- - The script creates local CVS working directories
-   .git/git-cvs/cvscheckout/NAME, one for each CVS branch NAME.
-
- - Git's master branch tracks CVS's HEAD branch.
-
- - A git branch cvsworking/NAME is created to track each CVS branch NAME.
-
- - Edits in these branches get pushed back to the appropriate CVS branches.
-
- - Verbose subcommand output currently goes into .git/git-cvs/logs.
-
- - Invoking git-cvs with no parameters gets information about the options.
-
- - In an emergency, a list of commit ids can be supplied to git-cvs push.
-
- - Written in Perl, uses only core modules (tested with v5.8.8)
-
- - There is a small test suite in t/, run individually or with "prove/*.t"
-
-
-
-Thanks,
-
-Nick
+diff --git a/Documentation/git-cherry.txt b/Documentation/git-cherry.txt
+index 7deefda..5c03da0 100644
+--- a/Documentation/git-cherry.txt
++++ b/Documentation/git-cherry.txt
+@@ -7,7 +7,7 @@ git-cherry - Find commits not merged upstream
+ 
+ SYNOPSIS
+ --------
+-'git cherry' [-v] [<upstream> [<head> [<limit>]]]
++'git cherry' [-v] [--abbrev[=<n>]] [<upstream> [<head> [<limit>]]]
+ 
+ DESCRIPTION
+ -----------
+@@ -49,6 +49,9 @@ OPTIONS
+ -v::
+ 	Verbose.
+ 
++--abbrev[=<n>]::
++	Abbreviate commit ids to the given number of characters
++
+ <upstream>::
+ 	Upstream branch to compare against.
+ 	Defaults to the first tracked remote branch, if available.
+diff --git a/builtin-log.c b/builtin-log.c
+index f10cfeb..1f3093e 100644
+--- a/builtin-log.c
++++ b/builtin-log.c
+@@ -1130,7 +1130,7 @@ static int add_pending_commit(const char *arg, struct rev_info *revs, int flags)
+ }
+ 
+ static const char cherry_usage[] =
+-"git cherry [-v] [<upstream> [<head> [<limit>]]]";
++"git cherry [-v] [--abbrev[=<n>]] [<upstream> [<head> [<limit>]]]";
+ int cmd_cherry(int argc, const char **argv, const char *prefix)
+ {
+ 	struct rev_info revs;
+@@ -1142,9 +1142,23 @@ int cmd_cherry(int argc, const char **argv, const char *prefix)
+ 	const char *head = "HEAD";
+ 	const char *limit = NULL;
+ 	int verbose = 0;
++	int abbrev = 40;
++
++	while(argc > 1 && argv[1][0] == '-') {
++		if (!strcmp(argv[1], "-v")) {
++			verbose = 1;
++		} else if(!strcmp(argv[1], "--abbrev")) {
++			abbrev = DEFAULT_ABBREV;
++		} else if(!prefixcmp(argv[1], "--abbrev=")) {
++			abbrev = strtol(argv[1] + 9, NULL, 10);
++			if(abbrev < MINIMUM_ABBREV)
++				abbrev = MINIMUM_ABBREV;
++			else if(abbrev > 40)
++				abbrev = 40;
++		} else {
++			die("unrecognized argument: %s", argv[1]);
++		}
+ 
+-	if (argc > 1 && !strcmp(argv[1], "-v")) {
+-		verbose = 1;
+ 		argc--;
+ 		argv++;
+ 	}
+@@ -1218,12 +1232,12 @@ int cmd_cherry(int argc, const char **argv, const char *prefix)
+ 			struct strbuf buf = STRBUF_INIT;
+ 			pretty_print_commit(CMIT_FMT_ONELINE, commit,
+ 			                    &buf, 0, NULL, NULL, 0, 0);
+-			printf("%c %s %s\n", sign,
++			printf("%c %.*s %s\n", sign, abbrev,
+ 			       sha1_to_hex(commit->object.sha1), buf.buf);
+ 			strbuf_release(&buf);
+ 		}
+ 		else {
+-			printf("%c %s\n", sign,
++			printf("%c %.*s\n", sign, abbrev,
+ 			       sha1_to_hex(commit->object.sha1));
+ 		}
+ 
+-- 
+1.5.4.3
