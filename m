@@ -1,375 +1,112 @@
-From: Avery Pennarun <apenwarr@gmail.com>
-Subject: [git subtree] documentation and new --squash mode
-Date: Sat, 30 May 2009 14:36:18 -0400
-Message-ID: <32541b130905301136i2d9ec05ew9ba54c6ca746af15@mail.gmail.com>
+From: Samuel Bronson <naesten@gmail.com>
+Subject: Re: [PATCH 3/3] Makefile: add commented out 's for Emacs here, too
+Date: Sat, 30 May 2009 14:37:14 -0400
+Message-ID: <db65a1cd0905301137o482d9b14se0c438678fb4e4dd@mail.gmail.com>
+References: <1243289231-32500-1-git-send-email-naesten@gmail.com>
+	 <1243289231-32500-2-git-send-email-naesten@gmail.com>
+	 <1243289231-32500-3-git-send-email-naesten@gmail.com>
+	 <200905301505.38016.markus.heidelberg@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat May 30 20:36:58 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: gitster@pobox.com, git@vger.kernel.org
+To: markus.heidelberg@web.de
+X-From: git-owner@vger.kernel.org Sat May 30 20:37:30 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MATQG-0003ad-IS
-	for gcvg-git-2@gmane.org; Sat, 30 May 2009 20:36:49 +0200
+	id 1MATQq-0003uY-2Z
+	for gcvg-git-2@gmane.org; Sat, 30 May 2009 20:37:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761687AbZE3Sgj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 30 May 2009 14:36:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761598AbZE3Sgi
-	(ORCPT <rfc822;git-outgoing>); Sat, 30 May 2009 14:36:38 -0400
-Received: from yx-out-2324.google.com ([74.125.44.29]:33551 "EHLO
-	yx-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1761537AbZE3Sgh (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 30 May 2009 14:36:37 -0400
-Received: by yx-out-2324.google.com with SMTP id 3so3731792yxj.1
-        for <git@vger.kernel.org>; Sat, 30 May 2009 11:36:38 -0700 (PDT)
+	id S1762313AbZE3ShP convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 30 May 2009 14:37:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761962AbZE3ShO
+	(ORCPT <rfc822;git-outgoing>); Sat, 30 May 2009 14:37:14 -0400
+Received: from an-out-0708.google.com ([209.85.132.243]:60118 "EHLO
+	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1761920AbZE3ShN convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 30 May 2009 14:37:13 -0400
+Received: by an-out-0708.google.com with SMTP id d40so13931702and.1
+        for <git@vger.kernel.org>; Sat, 30 May 2009 11:37:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:from:date:message-id
-         :subject:to:content-type:content-transfer-encoding;
-        bh=oNylHw8Ffq2JAgYFwmihsqKUZVQwMkeAg8vZBmT0q8s=;
-        b=wWkxW7K/cuByBA0n7sAfmcFEV7jHcnGARtHZt7cjzQW+80ToyZmrg50Te1zmlkx+U0
-         vuQ7yeukyUCpXRSFNms+O3UOylSoAory/tuOaxdTnTOVW9EMeJQweLzEuqR2faAZNG3L
-         TTWkBVr2T3QGgPObxm/hVM4tpinM5e+rSDTSQ=
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=feOmGIAzznswoXPEeklS/PGeKbu4bG6vx05/WWYsSGQ=;
+        b=Dx/MqTBc365CNmV2gs4zEB58MMGculIwMXHbevVaK2n4xOnyEPaZOFOgcJreZ0mJh6
+         BT34d1nvRk7SOYdxnITXq2MhAGcICG9D918SvAMF9zPCF9vK4eTE7Fi7ZXFGOy0WjT2O
+         sDHlkgpdSIjmK2IUT71SQqoxdsILBfevAv3WM=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:from:date:message-id:subject:to:content-type
-         :content-transfer-encoding;
-        b=PtqCf8CC8Up09YSZU8aS4JTL0yNL5XJb3zSLANzFJ+F9brYoYEGdqxwiMu9gxta2+Y
-         KLSDBSgm8qVkbZzlS3YdpmSdFaAP5ekHOAWvpQFn1MMwLIs1SycumxBQsQiTctqzmaf/
-         bfjcaFRdx5u7q46vM3wzcsLN9/kUCfVdtNaFk=
-Received: by 10.151.121.6 with SMTP id y6mr8022011ybm.56.1243708598087; Sat, 
-	30 May 2009 11:36:38 -0700 (PDT)
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=VEn1/5VhDVzNYVWYRTIoQR8/wQu9Y2zcmKWeZKZK4KAB9rDEvSI/VAaEb9MGC1M0pO
+         N75DgI3QeMubCVl7frtPBP/i7n923Iv9WvenatmS5o9LvUxpFIjuOfrNXeJlzqt7sSbr
+         RCffu2/sJlfGUAfJ74v6jmRRTDBCQgPPjfe0A=
+Received: by 10.100.213.13 with SMTP id l13mr5319900ang.110.1243708634674; 
+	Sat, 30 May 2009 11:37:14 -0700 (PDT)
+In-Reply-To: <200905301505.38016.markus.heidelberg@web.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120361>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120362>
 
-Hi all,
+On Sat, May 30, 2009 at 9:05 AM, Markus Heidelberg
+<markus.heidelberg@web.de> wrote:
 
-I've finally had some time to write an asciidoc man page for git
-subtree, which is included below for your convenience.
+>> +# The above comment is in case there is an odd number of _SQ
+>> +# definitions above, since they seem to confuse Emacs. If there is =
+an
+>> +# even number of such definitions, it does no harm, since emacs
+>> +# doesn't recognize string delimiters inside recognized comments.
+>
+> This doesn't only confuse Emacs, so the subject should be changed to
+> something like "... to unconfuse editors' syntax highlighting" and be
+> squashed with Patch 1/3, since this is exactly the same issue.
+>
+> I think this is way too much comment and would prefer none at all. I
+> also would remove the global 4-line comment.
 
-I added a new "--squash" option to the subtree merge command, which
-lets you do cool stuff like switch your subtree branch back and forth
-between upstream versions without actually losing any of your local
-customizations.  It also avoids the problem of polluting your
-project's history: it pulls in only individual subproject trees (by
-creating a synthetic commit for the desired tree, with its parent
-being the *previous* synthetic commit).  This saves repository size
-(you don't slurp in all the intermediate trees), plus you don't get
-all the commit messages from the subproject, which are probably
-irrelevant to you anyway.
+Okay. I guess I'll save it for the commit message (rewritten to match
+the changes suggested below), maybe keep two words for the first one
+in each Makefile ...
 
-As always, comments welcome.  Quite a few people have emailed me about
-git subtree lately; I think the --squash mode will probably resolve
-the problems for almost everyone who had them.  Assuming it works
-correctly, which is of course 100% guaranteed or your money back.
+> But Vim for example is not satisfied with your fix above. It needs th=
+is
+> workaround for every line and additionally needs a closing parenthesi=
+s,
+> because the real one is hidden in the string. So this would work for
+> Vim:
+>
+> =C2=A0PERL_PATH_SQ =3D $(subst ','\'',$(PERL_PATH))
+> +#')
+> =C2=A0TCLTK_PATH_SQ =3D $(subst ','\'',$(TCLTK_PATH))
+> +#')
 
-You can always find the latest git-subtree at:
-git://github.com/apenwarr/git-subtree
+Yeah, emacs would work better that way too -- I was going for a
+low-disruption patch, and was mostly interested in making sure
+unrelated portions of the Makefile didn't get swallowed by
+string-coloring. I didn't particularly care about the parentheses --
+does Vim care about that for indentation, or just paren-matching?
 
-Docs below.  Check out the EXAMPLES section for a quick start.
+I wonder why emacs and vim both have the same problem with that
+construct ... and how hard it would be to fix. (Thankfully, this
+approach to dealing with the breakage will not confuse corrected
+versions, since they will basically ignore the contents of the
+comments for syntax highlighting purposes :-).
 
-Have fun,
+> Maybe even behind the concerned line to avoid clutter, if this doesn'=
+t
+> cause other problems:
+>
+> -PERL_PATH_SQ =3D $(subst ','\'',$(PERL_PATH))
+> +PERL_PATH_SQ =3D $(subst ','\'',$(PERL_PATH))#')
+> -TCLTK_PATH_SQ =3D $(subst ','\'',$(TCLTK_PATH))
+> +TCLTK_PATH_SQ =3D $(subst ','\'',$(TCLTK_PATH))#')
 
-Avery
-
-
-git-subtree(1)
-==============
-
-NAME
-----
-git-subtree - add, merge, and split subprojects stored in subtrees
-
-
-SYNOPSIS
---------
-[verse]
-'git subtree' add   --prefix=<prefix> <commit>
-'git subtree' merge --prefix=<prefix> <commit>
-'git subtree' pull  --prefix=<prefix> <repository> <refspec...>
-'git subtree' split --prefix=<prefix> <commit...>
-
-
-DESCRIPTION
------------
-git subtree allows you to include an subproject in your
-own repository as a subdirectory, optionally including the
-subproject's entire history. For example, you could
-include the source code for a library as a subdirectory of your
-application.
-
-You can also extract the entire history of a subdirectory from
-your project and make it into a standalone project.  For
-example, if a library you made for one application ends up being
-useful elsewhere, you can extract its entire history and publish
-that as its own git repository, without accidentally
-intermingling the history of your application project.
-
-Most importantly, you can alternate back and forth between these
-two operations.  If the standalone library gets updated, you can
-automatically merge the changes into your project; if you
-update the library inside your project, you can "split" the
-changes back out again and merge them back into the library
-project.
-
-Unlike the 'git submodule' command, git subtree doesn't produce
-any special constructions (like .gitmodule files or gitlinks) in
-your repository, and doesn't require end-users of your
-repository to do anything special or to understand how subtrees
-work.  A subtree is just another subdirectory and can be
-committed to, branched, and merged along with your project in
-any way you want.
-
-In order to keep your commit messages clean, we recommend that
-people split their commits between the subtrees and the main
-project as much as possible.  That is, if you make a change that
-affects both the library and the main application, commit it in
-two pieces.  That way, when you split the library commits out
-later, their descriptions will still make sense.  But if this
-isn't important to you, it's not *necessary*.  git subtree will
-simply leave out the non-library-related parts of the commit
-when it splits it out into the subproject later.
-
-
-COMMANDS
---------
-add::
-	Create the <prefix> subtree by importing its contents
-	from the given commit.  A new commit is created
-	automatically, joining the imported project's history
-	with your own.  With '--squash', imports only a single
-	commit from the subproject, rather than its entire
-	history.
-
-merge::
-	Merge recent changes up to <commit> into the <prefix>
-	subtree.  As with normal 'git merge', this doesn't
-	remove your own local changes; it just merges those
-	changes into the latest <commit>.  With '--squash',
-	creates only one commit that contains all the changes,
-	rather than merging in the entire history.
-
-	If you use '--squash', the merge direction doesn't
-	always have to be forward; you can use this command to
-	go back in time from v2.5 to v2.4, for example.  If your
-	merge introduces a conflict, you can resolve it in the
-	usual ways.
-	
-pull::
-	Exactly like 'merge', but parallels 'git pull' in that
-	it fetches the given commit from the specified remote
-	repository.
-
-split::
-	Extract a new, synthetic project history from the
-	history of the <prefix> subtree.  The new history
-	includes only the commits (including merges) that
-	affected <prefix>, and each of those commits now has the
-	contents of <prefix> at the root of the project instead
-	of in a subdirectory.  Thus, the newly created history
-	is suitable for export as a separate git repository.
-	
-	After splitting successfully, a single commit id is
-	printed to stdout.  This corresponds to the HEAD of the
-	newly created tree, which you can manipulate however you
-	want.
-	
-	Repeated splits of exactly the same history are
-	guaranteed to be identical (ie. to produce the same
-	commit ids).  Because of this, if you add new commits
-	and then re-split, the new commits will be attached as
-	commits on top of the history you generated last time,
-	so 'git merge' and friends will work as expected.
-	
-	Note that if you use '--squash' when you merge, you
-	should usually not just '--rejoin' when you split.
-
-
-OPTIONS
--------
--q::
---quiet::
-	Suppress unnecessary output messages on stderr.
-
--d::
---debug::
-	Produce even more unnecessary output messages on stderr.
-
---prefix=<prefix>::
-	Specify the path in the repository to the subtree you
-	want to manipulate.  This option is currently mandatory
-	for all commands.
-
-
-OPTIONS FOR add, merge, AND pull
---------------------------------
---squash::
-	Instead of merging the entire history from the subtree
-	project, produce only a single commit that contains all
-	the differences you want to merge, and then merge that
-	new commit into your project.
-
-	Using this option helps to reduce log clutter. People
-	rarely want to see every change that happened between
-	v1.0 and v1.1 of the library they're using, since none of the
-	interim versions were ever included in their application.
-	
-	Using '--squash' also helps avoid problems when the same
-	subproject is included multiple times in the same
-	project, or is removed and then re-added.  In such a
-	case, it doesn't make sense to combine the histories
-	anyway, since it's unclear which part of the history
-	belongs to which subtree.
-	
-	Furthermore, with '--squash', you can switch back and
-	forth between different versions of a subtree, rather
-	than strictly forward.  'git subtree merge --squash'
-	always adjusts the subtree to match the exactly
-	specified commit, even if getting to that commit would
-	require undoing some changes that were added earlier.
-	
-	Whether or not you use '--squash', changes made in your
-	local repository remain intact and can be later split
-	and send upstream to the subproject.
-
-
-OPTIONS FOR split
------------------
---annotate=<annotation>::
-	When generating synthetic history, add <annotation> as a
-	prefix to each commit message.  Since we're creating new
-	commits with the same commit message, but possibly
-	different content, from the original commits, this can help
-	to differentiate them and avoid confusion.
-	
-	Whenever you split, you need to use the same
-	<annotation>, or else you don't have a guarantee that
-	the new re-created history will be identical to the old
-	one.  That will prevent merging from working correctly.
-	git subtree tries to make it work anyway, particularly
-	if you use --rejoin, but it may not always be effective.
-
--b <branch>::
---branch=<branch>::
-	After generating the synthetic history, create a new
-	branch called <branch> that contains the new history.
-	This is suitable for immediate pushing upstream.
-	<branch> must not already exist.
-
---ignore-joins::
-	If you use '--rejoin', git subtree attempts to optimize
-	its history reconstruction to generate only the new
-	commits since the last '--rejoin'.  '--ignore-join'
-	disables this behaviour, forcing it to regenerate the
-	entire history.  In a large project, this can take a
-	long time.
-
---onto=<onto>::
-	If your subtree was originally imported using something
-	other than git subtree, its history may not match what
-	git subtree is expecting.  In that case, you can specify
-	the commit id <onto> that corresponds to the first
-	revision of the subproject's history that was imported
-	into your project, and git subtree will attempt to build
-	its history from there.
-	
-	If you used 'git subtree add', you should never need
-	this option.
-
---rejoin::
-	After splitting, merge the newly created synthetic
-	history back into your main project.  That way, future
-	splits can search only the part of history that has
-	been added since the most recent --rejoin.
-	
-	If your split commits end up merged into the upstream
-	subproject, and then you want to get the latest upstream
-	version, this will allow git's merge algorithm to more
-	intelligently avoid conflicts (since it knows these
-	synthetic commits are already part of the upstream
-	repository).
-	
-	Unfortunately, using this option results in 'git log'
-	showing an extra copy of every new commit that was
-	created (the original, and the synthetic one).
-	
-	If you do all your merges with '--squash', don't use
-	'--rejoin' when you split, because you don't want the
-	subproject's history to be part of your project anyway.
-
-
-EXAMPLES
---------
-Let's use the repository for the git source code as an example.
-First, get your own copy of the git.git repository:
-
-	$ git clone git://git.kernel.org/pub/scm/git/git.git test-git
-	$ cd test-git
-
-gitweb (commit 1130ef3) was merged into git as of commit
-0a8f4f0, after which it was no longer maintained separately.
-But imagine it had been maintained separately, and we wanted to
-extract git's changes to gitweb since that time, to share with
-the upstream.  You could do this:
-
-	$ git subtree split --prefix=gitweb --annotate='(split) ' \
-        	0a8f4f0^.. --onto=1130ef3 --rejoin \
-        	--branch gitweb-latest
-        $ gitk gitweb-latest
-        $ git push git@github.com:whatever/gitweb gitweb-latest:master
-
-(We use '0a8f4f0^..' because that means "all the changes from
-0a8f4f0 to the current version, including 0a8f4f0 itself.")
-
-If gitweb had originally been merged using 'git subtree add' (or
-a previous split had already been done with --rejoin specified)
-then you can do all your splits without having to remember any
-weird commit ids:
-
-	$ git subtree split --prefix=gitweb --annotate='(split) ' --rejoin \
-		--branch gitweb-latest2
-
-And you can merge changes back in from the upstream project just
-as easily:
-
-	$ git subtree pull --prefix=gitweb \
-		git@github.com:whatever/gitweb gitweb-latest:master
-
-Or, using '--squash', you can actually rewind to an earlier
-version of gitweb:
-
-	$ git subtree merge --prefix=gitweb --squash gitweb-latest~10
-
-Then make some changes:
-
-	$ date >gitweb/myfile
-	$ git add gitweb/myfile
-	$ git commit -m 'created myfile'
-
-And fast forward again:
-
-	$ git subtree merge --prefix=gitweb --squash gitweb-latest
-
-And notice that your change is still intact:
-	
-	$ ls -l gitweb/myfile
-
-And you can split it out and look at your changes versus
-the standard gitweb:
-
-	git log gitweb-latest..$(git subtree split --prefix=gitweb)
-
-
-AUTHOR
-------
-Written by Avery Pennarun <apenwarr@gmail.com>
-
-
-GIT
----
-Part of the linkgit:git[1] suite
+That should at least work a lot better than my initial attempt at 1/3,
+where I had a space before the # -- the space broke the build, which
+is actually how I ended up noticing the need for 2/3 .
