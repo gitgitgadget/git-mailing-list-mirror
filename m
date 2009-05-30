@@ -1,112 +1,72 @@
-From: Samuel Bronson <naesten@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: [PATCH 3/3] Makefile: add commented out 's for Emacs here, too
-Date: Sat, 30 May 2009 14:37:14 -0400
-Message-ID: <db65a1cd0905301137o482d9b14se0c438678fb4e4dd@mail.gmail.com>
+Date: Sat, 30 May 2009 12:07:30 -0700
+Message-ID: <7vr5y6z9xp.fsf@alter.siamese.dyndns.org>
 References: <1243289231-32500-1-git-send-email-naesten@gmail.com>
-	 <1243289231-32500-2-git-send-email-naesten@gmail.com>
-	 <1243289231-32500-3-git-send-email-naesten@gmail.com>
-	 <200905301505.38016.markus.heidelberg@web.de>
+	<1243289231-32500-2-git-send-email-naesten@gmail.com>
+	<1243289231-32500-3-git-send-email-naesten@gmail.com>
+	<200905301505.38016.markus.heidelberg@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: gitster@pobox.com, git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+Cc: Samuel Bronson <naesten@gmail.com>, git@vger.kernel.org
 To: markus.heidelberg@web.de
-X-From: git-owner@vger.kernel.org Sat May 30 20:37:30 2009
+X-From: git-owner@vger.kernel.org Sat May 30 21:09:18 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MATQq-0003uY-2Z
-	for gcvg-git-2@gmane.org; Sat, 30 May 2009 20:37:24 +0200
+	id 1MATvb-0007cy-Pz
+	for gcvg-git-2@gmane.org; Sat, 30 May 2009 21:09:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1762313AbZE3ShP convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 30 May 2009 14:37:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761962AbZE3ShO
-	(ORCPT <rfc822;git-outgoing>); Sat, 30 May 2009 14:37:14 -0400
-Received: from an-out-0708.google.com ([209.85.132.243]:60118 "EHLO
-	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1761920AbZE3ShN convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 30 May 2009 14:37:13 -0400
-Received: by an-out-0708.google.com with SMTP id d40so13931702and.1
-        for <git@vger.kernel.org>; Sat, 30 May 2009 11:37:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=feOmGIAzznswoXPEeklS/PGeKbu4bG6vx05/WWYsSGQ=;
-        b=Dx/MqTBc365CNmV2gs4zEB58MMGculIwMXHbevVaK2n4xOnyEPaZOFOgcJreZ0mJh6
-         BT34d1nvRk7SOYdxnITXq2MhAGcICG9D918SvAMF9zPCF9vK4eTE7Fi7ZXFGOy0WjT2O
-         sDHlkgpdSIjmK2IUT71SQqoxdsILBfevAv3WM=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=VEn1/5VhDVzNYVWYRTIoQR8/wQu9Y2zcmKWeZKZK4KAB9rDEvSI/VAaEb9MGC1M0pO
-         N75DgI3QeMubCVl7frtPBP/i7n923Iv9WvenatmS5o9LvUxpFIjuOfrNXeJlzqt7sSbr
-         RCffu2/sJlfGUAfJ74v6jmRRTDBCQgPPjfe0A=
-Received: by 10.100.213.13 with SMTP id l13mr5319900ang.110.1243708634674; 
-	Sat, 30 May 2009 11:37:14 -0700 (PDT)
-In-Reply-To: <200905301505.38016.markus.heidelberg@web.de>
+	id S1755445AbZE3THb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 30 May 2009 15:07:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753189AbZE3THa
+	(ORCPT <rfc822;git-outgoing>); Sat, 30 May 2009 15:07:30 -0400
+Received: from fed1rmmtao103.cox.net ([68.230.241.43]:42906 "EHLO
+	fed1rmmtao103.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751190AbZE3TH3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 30 May 2009 15:07:29 -0400
+Received: from fed1rmimpo03.cox.net ([70.169.32.75])
+          by fed1rmmtao103.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20090530190731.ELGP2915.fed1rmmtao103.cox.net@fed1rmimpo03.cox.net>;
+          Sat, 30 May 2009 15:07:31 -0400
+Received: from localhost ([68.225.240.211])
+	by fed1rmimpo03.cox.net with bizsmtp
+	id xv7W1b00B4aMwMQ04v7W7B; Sat, 30 May 2009 15:07:30 -0400
+X-Authority-Analysis: v=1.0 c=1 a=iMutr_JqIw0A:10 a=Axlyvr_QWucA:10
+ a=ydqd3Hvr2R6zATG_w7MA:9 a=HmYMxQW4oI-ltCmBNb4A:7
+ a=NWUTIIoFvE4yoaxnwkr5VNFFZjgA:4 a=5KVauyKsRKMA:10 a=ig5HIMzj6DG0FPxy:21
+ a=mGpakk-R8Vmdwb5U:21
+X-CM-Score: 0.00
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120362>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120363>
 
-On Sat, May 30, 2009 at 9:05 AM, Markus Heidelberg
-<markus.heidelberg@web.de> wrote:
+Markus Heidelberg <markus.heidelberg@web.de> writes:
 
+>> +# unconfuse Emacs: '
+>> +
 >> +# The above comment is in case there is an odd number of _SQ
->> +# definitions above, since they seem to confuse Emacs. If there is =
-an
+>> +# definitions above, since they seem to confuse Emacs. If there is an
 >> +# even number of such definitions, it does no harm, since emacs
 >> +# doesn't recognize string delimiters inside recognized comments.
->
-> This doesn't only confuse Emacs, so the subject should be changed to
-> something like "... to unconfuse editors' syntax highlighting" and be
-> squashed with Patch 1/3, since this is exactly the same issue.
->
+> ...
 > I think this is way too much comment and would prefer none at all. I
 > also would remove the global 4-line comment.
 
-Okay. I guess I'll save it for the commit message (rewritten to match
-the changes suggested below), maybe keep two words for the first one
-in each Makefile ...
+I personally do not like contaminating our source files with this kind of
+magic crufts just to please broken tools, be they emacs or vim.  I would
+hate them even more if they are not clearly commented why they exist for
+two reasons.
 
-> But Vim for example is not satisfied with your fix above. It needs th=
-is
-> workaround for every line and additionally needs a closing parenthesi=
-s,
-> because the real one is hidden in the string. So this would work for
-> Vim:
->
-> =C2=A0PERL_PATH_SQ =3D $(subst ','\'',$(PERL_PATH))
-> +#')
-> =C2=A0TCLTK_PATH_SQ =3D $(subst ','\'',$(TCLTK_PATH))
-> +#')
+ (1) without clear instructions ("odd number of ..." is not quite enough),
+     people who do *not* use broken tools cannot keep them up-to-date when
+     they make modifications;
 
-Yeah, emacs would work better that way too -- I was going for a
-low-disruption patch, and was mostly interested in making sure
-unrelated portions of the Makefile didn't get swallowed by
-string-coloring. I didn't particularly care about the parentheses --
-does Vim care about that for indentation, or just paren-matching?
-
-I wonder why emacs and vim both have the same problem with that
-construct ... and how hard it would be to fix. (Thankfully, this
-approach to dealing with the breakage will not confuse corrected
-versions, since they will basically ignore the contents of the
-comments for syntax highlighting purposes :-).
-
-> Maybe even behind the concerned line to avoid clutter, if this doesn'=
-t
-> cause other problems:
->
-> -PERL_PATH_SQ =3D $(subst ','\'',$(PERL_PATH))
-> +PERL_PATH_SQ =3D $(subst ','\'',$(PERL_PATH))#')
-> -TCLTK_PATH_SQ =3D $(subst ','\'',$(TCLTK_PATH))
-> +TCLTK_PATH_SQ =3D $(subst ','\'',$(TCLTK_PATH))#')
-
-That should at least work a lot better than my initial attempt at 1/3,
-where I had a space before the # -- the space broke the build, which
-is actually how I ended up noticing the need for 2/3 .
+ (2) when broken tools are finally fixed, nobody would remember why the
+     magic crufts exist, and they will end up staying in the source for a
+     long time.
