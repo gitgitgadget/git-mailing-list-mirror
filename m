@@ -1,93 +1,85 @@
-From: Stephen Boyd <bebarino@gmail.com>
-Subject: Re: [PATCH v3] add --abbrev to 'git cherry'
-Date: Sat, 30 May 2009 14:13:51 -0700
-Message-ID: <780e0a6b0905301413o2686fe34qaa076209c26c0b55@mail.gmail.com>
-References: <20090530140349.GA25265@unpythonic.net> <200905301826.11924.markus.heidelberg@web.de> 
-	<20090530165306.GA1142@unpythonic.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: BUG: mergetool fails on gitignore:d files
+Date: Sat, 30 May 2009 17:54:18 -0400
+Message-ID: <20090530215418.GA19241@coredump.intra.peff.net>
+References: <e87cdfda0905300830t6b332533g9a4298f6b8005b9e@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: base64
-Cc: git@vger.kernel.org, markus.heidelberg@web.de
-To: Jeff Epler <jepler@unpythonic.net>
-X-From: git-owner@vger.kernel.org Sat May 30 23:14:46 2009
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Erik Sandberg <mandolaerik@gmail.com>
+X-From: git-owner@vger.kernel.org Sat May 30 23:54:36 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MAVt7-0008Iu-1O
-	for gcvg-git-2@gmane.org; Sat, 30 May 2009 23:14:45 +0200
+	id 1MAWVe-0001Li-Kq
+	for gcvg-git-2@gmane.org; Sat, 30 May 2009 23:54:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759025AbZE3VOL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 30 May 2009 17:14:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755006AbZE3VOL
-	(ORCPT <rfc822;git-outgoing>); Sat, 30 May 2009 17:14:11 -0400
-Received: from yx-out-2324.google.com ([74.125.44.30]:47087 "EHLO
-	yx-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754755AbZE3VOK (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 30 May 2009 17:14:10 -0400
-Received: by yx-out-2324.google.com with SMTP id 3so3760997yxj.1
-        for <git@vger.kernel.org>; Sat, 30 May 2009 14:14:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=v/bYbgK937i2lmSCmRteI6QdKG3FdcTmIFeyrBgVrd8=;
-        b=adDiHw6AKa9AU/WTRy+Cp5YuRz4phfU6uqidiQvhOmp+iHI1X86CDtEVo59kmGkP+w
-         St/W6hJex0PvE+KMmLUrZVcC0Ii/XDb8fp+jdllegzYJPjl8CwEDASwagdV9vMuVAzDV
-         bRuFxfq1BCAojOLOyzfwsRQ73bz7ZxxM1FlB0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=BMZhilc1nqvSfVxc6THWTArLpE0bGytxqoeFu2TggsrEH2lLj/k/fGRMQF8Ypc+/R5
-         hT4nIJuc/MFwrMHfpDV4691mg4OeOS39xd7L6FqmSxjnkpTWMibc32tb6WKe6I2dHKFF
-         NKgo1typwB/Tevni9NgTKEApJL/Acv+iruMso=
-Received: by 10.100.109.13 with SMTP id h13mr5562618anc.16.1243718051266; Sat, 
-	30 May 2009 14:14:11 -0700 (PDT)
-In-Reply-To: <20090530165306.GA1142@unpythonic.net>
+	id S1751619AbZE3VyZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 30 May 2009 17:54:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751554AbZE3VyZ
+	(ORCPT <rfc822;git-outgoing>); Sat, 30 May 2009 17:54:25 -0400
+Received: from peff.net ([208.65.91.99]:59870 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751494AbZE3VyY (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 30 May 2009 17:54:24 -0400
+Received: (qmail 1508 invoked by uid 107); 30 May 2009 21:54:29 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Sat, 30 May 2009 17:54:29 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sat, 30 May 2009 17:54:18 -0400
+Content-Disposition: inline
+In-Reply-To: <e87cdfda0905300830t6b332533g9a4298f6b8005b9e@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120364>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120365>
 
-T24gU2F0LCBNYXkgMzAsIDIwMDkgYXQgOTo1MyBBTSwgSmVmZiBFcGxlciA8amVwbGVyQHVucHl0
-aG9uaWMubmV0PiB3cm90ZToKPiBAQCAtMTE0Miw5ICsxMTQyLDIzIEBAIGludCBjbWRfY2hlcnJ5
-KGludCBhcmdjLCBjb25zdCBjaGFyICoqYXJndiwgY29uc3QgY2hhciAqcHJlZml4KQo+IMKgIMKg
-IMKgIMKgY29uc3QgY2hhciAqaGVhZCA9ICJIRUFEIjsKPiDCoCDCoCDCoCDCoGNvbnN0IGNoYXIg
-KmxpbWl0ID0gTlVMTDsKPiDCoCDCoCDCoCDCoGludCB2ZXJib3NlID0gMDsKPiArIMKgIMKgIMKg
-IGludCBhYmJyZXYgPSA0MDsKPiArCj4gKyDCoCDCoCDCoCB3aGlsZShhcmdjID4gMSAmJiBhcmd2
-WzFdWzBdID09ICctJykgewo+ICsgwqAgwqAgwqAgwqAgwqAgwqAgwqAgaWYgKCFzdHJjbXAoYXJn
-dlsxXSwgIi12IikpIHsKPiArIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIHZlcmJv
-c2UgPSAxOwo+ICsgwqAgwqAgwqAgwqAgwqAgwqAgwqAgfSBlbHNlIGlmKCFzdHJjbXAoYXJndlsx
-XSwgIi0tYWJicmV2IikpIHsKPiArIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIGFi
-YnJldiA9IERFRkFVTFRfQUJCUkVWOwo+ICsgwqAgwqAgwqAgwqAgwqAgwqAgwqAgfSBlbHNlIGlm
-KCFwcmVmaXhjbXAoYXJndlsxXSwgIi0tYWJicmV2PSIpKSB7Cj4gKyDCoCDCoCDCoCDCoCDCoCDC
-oCDCoCDCoCDCoCDCoCDCoCBhYmJyZXYgPSBzdHJ0b2woYXJndlsxXSArIDksIE5VTEwsIDEwKTsK
-PiArIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIGlmKGFiYnJldiA8IE1JTklNVU1f
-QUJCUkVWKQo+ICsgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAg
-YWJicmV2ID0gTUlOSU1VTV9BQkJSRVY7Cj4gKyDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDC
-oCDCoCBlbHNlIGlmKGFiYnJldiA+IDQwKQo+ICsgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAg
-wqAgwqAgwqAgwqAgwqAgwqAgYWJicmV2ID0gNDA7Cj4gKyDCoCDCoCDCoCDCoCDCoCDCoCDCoCB9
-IGVsc2Ugewo+ICsgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgZGllKCJ1bnJlY29n
-bml6ZWQgYXJndW1lbnQ6ICVzIiwgYXJndlsxXSk7Cj4gKyDCoCDCoCDCoCDCoCDCoCDCoCDCoCB9
-Cj4KCllvdSBtaWdodCB3YW50IHRvIGxvb2sgYXQgdXNpbmcgdGhlIHBhcnNlIG9wdGlvbnMgQVBJ
-LiBJdCBoYXMgb3B0aW9ucwpmb3IgdmVyYm9zZSBhbmQgYWJicmV2IGJ1aWx0aW4sIHNvIHlvdSBk
-b24ndCBoYXZlIHRvIGRvIGFueSBleHRyYQp3b3JrLiBQbHVzIHlvdSBnZXQgYSBuaWNlIHVzYWdl
-IG1lc3NhZ2UgZm9yIGZyZWUuIFNlZQpEb2N1bWVudGF0aW9uL3RlY2huaWNhbC9hcGktcGFyc2Ut
-b3B0aW9ucy50eHQgZm9yIG1vcmUgaW5mby4KCj4gZGlmZiAtLWdpdCBhL2NvbnRyaWIvY29tcGxl
-dGlvbi9naXQtY29tcGxldGlvbi5iYXNoIGIvY29udHJpYi9jb21wbGV0aW9uL2dpdC1jb21wbGV0
-aW9uLmJhc2gKPiBpbmRleCBjODRkNzY1Li41MzZhNzY5IDEwMDc1NQo+IC0tLSBhL2NvbnRyaWIv
-Y29tcGxldGlvbi9naXQtY29tcGxldGlvbi5iYXNoCj4gKysrIGIvY29udHJpYi9jb21wbGV0aW9u
-L2dpdC1jb21wbGV0aW9uLmJhc2gKPiBAQCAtODA0LDcgKzgwNCwxNSBAQCBfZ2l0X2NoZWNrb3V0
-ICgpCj4KPiDCoF9naXRfY2hlcnJ5ICgpCj4gwqB7Cj4gLSDCoCDCoCDCoCBfX2dpdGNvbXAgIiQo
-X19naXRfcmVmcykiCj4gKyDCoCDCoCDCoCBsb2NhbCBjdXI9IiR7Q09NUF9XT1JEU1tDT01QX0NX
-T1JEXX0iCj4gKyDCoCDCoCDCoCBjYXNlICIkY3VyIiBpbgo+ICsgwqAgwqAgwqAgLSopCj4gKyDC
-oCDCoCDCoCDCoCDCoCDCoCDCoCBfX2dpdGNvbXAgIi12IC0tYWJicmV2IC0tYWJicmV2PSIKPiAr
-IMKgIMKgIMKgIMKgIMKgIMKgIMKgIDs7Cj4gKyDCoCDCoCDCoCAqKQo+ICsgwqAgwqAgwqAgwqAg
-wqAgwqAgwqAgX19naXRjb21wICIkKF9fZ2l0X3JlZnMpIgo+ICsgwqAgwqAgwqAgwqAgwqAgwqAg
-wqAgOzsKPiArIMKgIMKgIMKgIGVzYWMKCkNvbXBsZXRpb24gZG9lc24ndCBpbmNsdWRlIHNob3J0
-IG9wdGlvbnMgKC12KS4gVGhpcyBhbHNvIG1lYW5zIHRoYXQKLS0qIGlzIHVzZWQgaW5zdGVhZCBv
-ZiAtKgoKRmluYWxseSwgeW91J2xsIHdhbnQgdG8gQ2MgU2hhd24gKFNoYXduIE8uIFBlYXJjZQo8
-c3BlYXJjZUBzcGVhcmNlLm9yZz4pIG9uIGJhc2ggY29tcGxldGlvbi4K
+On Sat, May 30, 2009 at 05:30:52PM +0200, Erik Sandberg wrote:
+
+> If a version-controlled file is ignored by git, and a conflict arises
+> on the file, and I use mergetool to resolve the conflict, then
+> mergetool fails with a message like:
+> 
+> The following paths are ignored by one of your .gitignore files:
+> a
+> Use -f if you really want to add them.
+> 
+> The problem disappears if I edit the git-mergetool script to always
+> pass -f to "git add", but I'm not sure if that's the right fix; I have
+> a vague feeling that "git-update-index --add" could be more correct.
+
+Actually, I think the problem is not in mergetool at all, but with the
+dir.c code underlying "git add". "git add" really should not be
+complaining, because you are not adding a new path at all, but are
+rather adding content to a tracked path.
+
+So this should work (and does):
+
+  $ echo file >.gitignore
+  $ echo content >file
+  $ git add -f file ;# need -f because we are adding new path
+  $ echo more content >>file
+  $ git add file ;# don't need -f; it is not actually an "other" file
+
+This is handled under the hood by the COLLECT_IGNORED option to
+read_directory. When that code finds an ignored file, it checks the
+index to make sure it is not actually a tracked file. However, the test
+it uses does not take into account unmerged entries, and considers them
+to still be ignored. "git ls-files" uses a more elaborate test and gets
+the right answer. So I think we want to use the same test:
+
+---
+diff --git a/dir.c b/dir.c
+index 0e6b752..bbfcb56 100644
+--- a/dir.c
++++ b/dir.c
+@@ -396,7 +396,7 @@ static struct dir_entry *dir_add_name(struct dir_struct *dir, const char *pathna
+ 
+ static struct dir_entry *dir_add_ignored(struct dir_struct *dir, const char *pathname, int len)
+ {
+-	if (cache_name_pos(pathname, len) >= 0)
++	if (!cache_name_is_other(pathname, len))
+ 		return NULL;
+ 
+ 	ALLOC_GROW(dir->ignored, dir->ignored_nr+1, dir->ignored_alloc);
