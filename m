@@ -1,128 +1,89 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH 2/2] document new flags
-Date: Sat, 30 May 2009 01:19:53 -0700 (PDT)
-Message-ID: <m38wkfatqc.fsf@localhost.localdomain>
-References: <1243647555-25098-1-git-send-email-user@lamp>
-	<1243647555-25098-2-git-send-email-user@lamp>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [RFH] Questions for Git User's Survey 2009
+Date: Sat, 30 May 2009 11:53:06 +0300
+Message-ID: <94a0d4530905300153l361ed7d9l4376cb4c85001772@mail.gmail.com>
+References: <200905291855.03328.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Jeff Epler <jepler@unpythonic.net>
-To: Jeff Epler <unpythonic.net@unpythonic.net>
-X-From: git-owner@vger.kernel.org Sat May 30 10:20:08 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Sat May 30 10:54:25 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MAJnT-0000vL-Kn
-	for gcvg-git-2@gmane.org; Sat, 30 May 2009 10:20:08 +0200
+	id 1MAKKf-0001M3-5i
+	for gcvg-git-2@gmane.org; Sat, 30 May 2009 10:54:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752815AbZE3IT6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 30 May 2009 04:19:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752007AbZE3IT4
-	(ORCPT <rfc822;git-outgoing>); Sat, 30 May 2009 04:19:56 -0400
-Received: from ey-out-2122.google.com ([74.125.78.24]:48858 "EHLO
-	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751333AbZE3ITz (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 30 May 2009 04:19:55 -0400
-Received: by ey-out-2122.google.com with SMTP id 22so196092eye.37
-        for <git@vger.kernel.org>; Sat, 30 May 2009 01:19:55 -0700 (PDT)
+	id S1753738AbZE3IxJ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 30 May 2009 04:53:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752988AbZE3IxI
+	(ORCPT <rfc822;git-outgoing>); Sat, 30 May 2009 04:53:08 -0400
+Received: from fg-out-1718.google.com ([72.14.220.157]:43196 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751625AbZE3IxG convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 30 May 2009 04:53:06 -0400
+Received: by fg-out-1718.google.com with SMTP id 16so2423446fgg.17
+        for <git@vger.kernel.org>; Sat, 30 May 2009 01:53:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received
-         :x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        bh=FXMsYlr8LGm8tevcHo8Va34+uV03KFMDMf0pBv+aQxM=;
-        b=GcftTqx9H4rO2453hgZlp3uyjs+SXqmH/pTWn9u8LtbMQou91Y2ynnaQGmO+9TFCtj
-         p3Kl0yqtKqK0fqHGjU1/TXUcbRd6UwYiN6RXj10S1m9vdTy47/Aubl8XfeLuoaNS2vki
-         T0pybu9b6+xH7fV6Zd4is41WQjpCD9ZyZjTXE=
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=eCRmhmJAEL/IjLOwH2qkUWysQpg2FkbHCFJ7hKB4e60=;
+        b=v5eI9Ha6HHcnOIZlT/y7W91edqokgIFQCAp9EKxH0SvcxBcLhfJDDI64Vc7/Ulqc/T
+         hlS8y9meMCGT5czioxqOb63aRBH9eari0n8AGE3rmojeWgKa8eimTivu60Wb4lrds1Wj
+         L46S13koOBOa7h0ub4NmG4CTRymZXtK/sixqo=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        b=LapD0ZVkWN28oGntRBAJ5VZl8iqT0LCCGFm1j6UaLgqBIHmmg4H8LuwKDbgOxgtZu1
-         /ahf+4BRVhSO3yqTEi1Oj1fVis+++eLEbYOi/yq1V1Y+gEE50U66VWB73pPz9ULmBr04
-         smrteQ7T9rnODBddvdbh2ynWhA5jLj5gbj4gk=
-Received: by 10.210.37.16 with SMTP id k16mr1254164ebk.14.1243671593902;
-        Sat, 30 May 2009 01:19:53 -0700 (PDT)
-Received: from localhost.localdomain (abvr167.neoplus.adsl.tpnet.pl [83.8.215.167])
-        by mx.google.com with ESMTPS id 28sm3412140eye.56.2009.05.30.01.19.52
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sat, 30 May 2009 01:19:53 -0700 (PDT)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id n4U8JP6U025008;
-	Sat, 30 May 2009 10:19:35 +0200
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id n4U8J8S0024994;
-	Sat, 30 May 2009 10:19:08 +0200
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <1243647555-25098-2-git-send-email-user@lamp>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=tdYEfVwugFtpxkW+ES+iMpSOZbYiKybVrdcnp1aq05tZysbQQ7Ia6Z4ipkfcsa0CEx
+         n15R1zSsn2biSLTjq8h85TiE+cf6WDScdlq4WbNUkRpPmiky8n0YwF2MPwUxKvBqC7FJ
+         DToUyuioPfJslcErsUobk0Y5GJwNGIz993EmQ=
+Received: by 10.86.68.10 with SMTP id q10mr3855051fga.78.1243673586285; Sat, 
+	30 May 2009 01:53:06 -0700 (PDT)
+In-Reply-To: <200905291855.03328.jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120338>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120339>
 
-Jeff Epler <unpythonic.net@unpythonic.net> writes:
+On Fri, May 29, 2009 at 7:55 PM, Jakub Narebski <jnareb@gmail.com> wrot=
+e:
+> Even though analyzing answers from "Git User's Survey 2008" is not
+> finished (although I have added partial results for questions with a
+> free-form part, see http://git.or.cz/gitwiki/GitSurvey2008), it looks
+> like there is time for annual Git User's Survey (which takes place in
+> summer)... or at least thinking about possible questions. =C2=A0Comin=
+g up
+> with a good list of questions (see below) would take time.
+>
+> More than 55% of people answering survey wanted to have Git User's
+> Survey repeated, with below 1% of people who didn't want for there
+> to be next year survey.
+>
+> On the other hand one of common complaints was that the survey was
+> much too long, with around 60 questions (one question was split into
+> two). It was requested for survey in this year to have maximum 20
+> questions.
+>
+>
+> So what I would like to have is to come up with a LIST OF QUESTIONS
+> and possible answers; I'd like to limit number of questions with
+> free-form part, and reduce number of free-form questions to absolute
+> minimum; they are pain to analyse with so large number of responses.
+>
+> Please write also _why_ you would want a question; what we can learn
+> from it, how it can help in developing git.
+>
+> Thanks in advance
 
-> From: Jeff Epler <jepler@unpythonic.net>
-> 
-> Signed-off-by: Jeff Epler <jepler@unpythonic.net>
-> ---
->  Documentation/git-cherry.txt |   14 +++++++++++++-
->  1 files changed, 13 insertions(+), 1 deletions(-)
+Personally I think last year's survey was great, but it was missing
+questions regarding git's user interface. How good is it? What would
+you improve, etc.
 
-Why split this patch in two? It is better to have new feature and
-documentation together, I think.
- 
-> diff --git a/Documentation/git-cherry.txt b/Documentation/git-cherry.txt
-> index 7deefda..100ed69 100644
-> --- a/Documentation/git-cherry.txt
-> +++ b/Documentation/git-cherry.txt
-> @@ -7,7 +7,7 @@ git-cherry - Find commits not merged upstream
->  
->  SYNOPSIS
->  --------
-> -'git cherry' [-v] [<upstream> [<head> [<limit>]]]
-> +'git cherry' [-v] [-a|-#] [-r] [-d|-D] [<upstream> [<head> [<limit>]]]
->  
->  DESCRIPTION
->  -----------
-> @@ -49,6 +49,18 @@ OPTIONS
->  -v::
->  	Verbose.
->  
-> +-a|-#::
-> +	Abbreviate commit ids to the given number of characters, or 7 for -a
-> +
-
-Why invent new convention, instead of using -<n> like git-log?
-Why do not use --abbrev or --abbrev-commit? -<n> is used elsewhere
-to limit number of commits...
-
-> +-r::
-> +	Swap <upstream> and <head>
-
-Why not -R like in git-diff?
-
-> +
-> +-d::
-> +	Only show commits that don't exist in upstream ("+" lines)
-> +
-> +-D::
-> +	Only show commits that do exist in upstream ("-" lines)
-> +
-
-I'm not sure if -d/-D is the best name of this short option...
-
->  <upstream>::
->  	Upstream branch to compare against.
->  	Defaults to the first tracked remote branch, if available.
-> -- 
-> 1.5.4.3
-> 
-
--- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+--=20
+=46elipe Contreras
