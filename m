@@ -1,317 +1,96 @@
-From: David Aguilar <davvid@gmail.com>
-Subject: [PATCH v7 1/3] compat: add a mkstemps() compatibility function
-Date: Sun, 31 May 2009 01:35:50 -0700
-Message-ID: <1243758952-28972-1-git-send-email-davvid@gmail.com>
-Cc: git@vger.kernel.org, peff@peff.net, markus.heidelberg@web.de,
-	jnareb@gmail.com, j.sixt@viscovery.net,
-	David Aguilar <davvid@gmail.com>
-To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Sun May 31 10:37:59 2009
+From: Peter Baumann <waste.manager@gmx.de>
+Subject: [PATCH] Show selected subdirectory paths in gitk
+Date: Sun, 31 May 2009 10:50:45 +0200
+Message-ID: <20090531085045.GA8129@m62s10.vlinux.de>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Paul Mackerras <paulus@samba.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun May 31 10:44:37 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MAgYE-0001sf-2X
-	for gcvg-git-2@gmane.org; Sun, 31 May 2009 10:37:54 +0200
+	id 1MAgeh-0003UA-Rj
+	for gcvg-git-2@gmane.org; Sun, 31 May 2009 10:44:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756708AbZEaIfy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 31 May 2009 04:35:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753233AbZEaIfy
-	(ORCPT <rfc822;git-outgoing>); Sun, 31 May 2009 04:35:54 -0400
-Received: from mail-pz0-f177.google.com ([209.85.222.177]:41167 "EHLO
-	mail-pz0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752827AbZEaIfw (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 31 May 2009 04:35:52 -0400
-Received: by pzk7 with SMTP id 7so5479474pzk.33
-        for <git@vger.kernel.org>; Sun, 31 May 2009 01:35:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer;
-        bh=cUZr6v7CqTJt8v9QgT8BIGgyu4TG9JmISU1c8/iSeCI=;
-        b=LnqLGAcLzrbQ5iFjiFwJGG0WN4A1Ud+M9+5mgseu/OjplmybB6aPtxv5h2wZkctkuB
-         +GC9RHSspj6DecJiPjE7Wt057VHJzRNgGRXaKR0Wlnof6uDx5bU+wsRIoBTcW94mVMkT
-         tUnnK4CbB1h1H/x/zvszrQcLFs7DkBJJ0MCYI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        b=Q66e1rj6PwFmf1eYYceOiYm9gKsWDzzbC6jWCNYG4Png4zfnDovrKepO9/Dx5P6i1/
-         OI5/Zt8PM28uOWojlJlW9noIh1F1aS1v93FeChiPh+h67gOq9BRD22QTUlJyfzqVOj+2
-         4THXqhEjzVTJGy8tL+CLrTH35VBrp3I1tNCsk=
-Received: by 10.141.97.5 with SMTP id z5mr4154715rvl.212.1243758954017;
-        Sun, 31 May 2009 01:35:54 -0700 (PDT)
-Received: from localhost (cpe-76-87-90-126.socal.res.rr.com [76.87.90.126])
-        by mx.google.com with ESMTPS id k37sm4305155waf.42.2009.05.31.01.35.53
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 31 May 2009 01:35:53 -0700 (PDT)
-X-Mailer: git-send-email 1.6.1.3
+	id S1757328AbZEaIo2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 31 May 2009 04:44:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757291AbZEaIo1
+	(ORCPT <rfc822;git-outgoing>); Sun, 31 May 2009 04:44:27 -0400
+Received: from mail.gmx.net ([213.165.64.20]:53403 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1757240AbZEaIo0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 31 May 2009 04:44:26 -0400
+Received: (qmail invoked by alias); 31 May 2009 08:44:27 -0000
+Received: from m62s10.vlinux.de (EHLO m62s10.vlinux.de) [83.151.21.204]
+  by mail.gmx.net (mp039) with SMTP; 31 May 2009 10:44:27 +0200
+X-Authenticated: #1252284
+X-Provags-ID: V01U2FsdGVkX1//uTAOhmb/pR8fGtX187TP2qBk9Itf5v3wa0SPew
+	2kJC427cTgffeB
+Received: by m62s10.vlinux.de (Postfix, from userid 1000)
+	id 79DDB180BA; Sun, 31 May 2009 10:50:45 +0200 (CEST)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.18 (2008-05-17)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.57
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120390>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120391>
 
-mkstemps() is a BSD extension so provide an implementation
-for cross-platform use.
+Previously, running 'gitk -- file' in a subdirectory of the worktree didn't
+show the file in the file selection widget. This is especially annoying if
+multiple files and/or a subdirectory was given as parameter to gitk, because
+no visual reprasentation on the changed files was given besides the commit
+diff itself.
 
-Signed-off-by: David Aguilar <davvid@gmail.com>
-Tested-by: Johannes Sixt <j6t@kdbg.org> (Windows)
+By prefixing all file filters with the result of the newly added function
+get_subdir_prefix which returns the subdirectory relative to the GIT_DIR,
+we make sure we always use the correct file name.
+
+Signed-off-by: Peter Baumann <waste.manager@gmx.de>
 ---
- Makefile          |   19 ++++++++++++++++
- compat/mkstemps.c |   63 +++++++++++++++++++++++++++++++++++++++++++++++++++++
- config.mak.in     |    1 +
- configure.ac      |    7 ++++++
- git-compat-util.h |    9 +++++++
- 5 files changed, 99 insertions(+), 0 deletions(-)
- create mode 100644 compat/mkstemps.c
 
-diff --git a/Makefile b/Makefile
-index eaae45d..a70b5f0 100644
---- a/Makefile
-+++ b/Makefile
-@@ -52,6 +52,8 @@ all::
- #
- # Define NO_MKDTEMP if you don't have mkdtemp in the C library.
- #
-+# Define NO_MKSTEMPS if you don't have mkstemps in the C library.
-+#
- # Define NO_SYS_SELECT_H if you don't have sys/select.h.
- #
- # Define NO_SYMLINK_HEAD if you never want .git/HEAD to be a symbolic link.
-@@ -636,10 +638,12 @@ EXTLIBS =
+The problem this patch fixes could be reproduced in the git repo by
+
+	cd Documentation
+	gitk git-add.txt
+
+Running the above commands and you should not see any file listed in the
+file selection widget in gitk. After applying the patch, the file is listed
+there (for any non merge commit).
+
+
+ gitk-git/gitk |   11 ++++++++++-
+ 1 files changed, 10 insertions(+), 1 deletions(-)
+ mode change 100644 => 100755 gitk-git/gitk
+
+diff --git a/gitk-git/gitk b/gitk-git/gitk
+old mode 100644
+new mode 100755
+index 1a7887b..2355d82
+--- a/gitk-git/gitk
++++ b/gitk-git/gitk
+@@ -7104,8 +7104,17 @@ proc startdiff {ids} {
+     }
+ }
  
- ifeq ($(uname_S),Linux)
- 	NO_STRLCPY = YesPlease
-+	NO_MKSTEMPS = YesPlease
- 	THREADED_DELTA_SEARCH = YesPlease
- endif
- ifeq ($(uname_S),GNU/kFreeBSD)
- 	NO_STRLCPY = YesPlease
-+	NO_MKSTEMPS = YesPlease
- 	THREADED_DELTA_SEARCH = YesPlease
- endif
- ifeq ($(uname_S),UnixWare)
-@@ -651,6 +655,7 @@ ifeq ($(uname_S),UnixWare)
- 	SHELL_PATH = /usr/local/bin/bash
- 	NO_IPV6 = YesPlease
- 	NO_HSTRERROR = YesPlease
-+	NO_MKSTEMPS = YesPlease
- 	BASIC_CFLAGS += -Kthread
- 	BASIC_CFLAGS += -I/usr/local/include
- 	BASIC_LDFLAGS += -L/usr/local/lib
-@@ -674,6 +679,7 @@ ifeq ($(uname_S),SCO_SV)
- 	SHELL_PATH = /usr/bin/bash
- 	NO_IPV6 = YesPlease
- 	NO_HSTRERROR = YesPlease
-+	NO_MKSTEMPS = YesPlease
- 	BASIC_CFLAGS += -I/usr/local/include
- 	BASIC_LDFLAGS += -L/usr/local/lib
- 	NO_STRCASESTR = YesPlease
-@@ -702,6 +708,7 @@ ifeq ($(uname_S),SunOS)
- 	NO_MEMMEM = YesPlease
- 	NO_HSTRERROR = YesPlease
- 	NO_MKDTEMP = YesPlease
-+	NO_MKSTEMPS = YesPlease
- 	OLD_ICONV = UnfortunatelyYes
- 	ifeq ($(uname_R),5.8)
- 		NO_UNSETENV = YesPlease
-@@ -724,6 +731,7 @@ ifeq ($(uname_O),Cygwin)
- 	NO_D_INO_IN_DIRENT = YesPlease
- 	NO_STRCASESTR = YesPlease
- 	NO_MEMMEM = YesPlease
-+	NO_MKSTEMPS = YesPlease
- 	NO_SYMLINK_HEAD = YesPlease
- 	NEEDS_LIBICONV = YesPlease
- 	NO_FAST_WORKING_DIRECTORY = UnfortunatelyYes
-@@ -767,11 +775,13 @@ ifeq ($(uname_S),NetBSD)
- 	BASIC_LDFLAGS += -L/usr/pkg/lib $(CC_LD_DYNPATH)/usr/pkg/lib
- 	THREADED_DELTA_SEARCH = YesPlease
- 	USE_ST_TIMESPEC = YesPlease
-+	NO_MKSTEMPS = YesPlease
- endif
- ifeq ($(uname_S),AIX)
- 	NO_STRCASESTR=YesPlease
- 	NO_MEMMEM = YesPlease
- 	NO_MKDTEMP = YesPlease
-+	NO_MKSTEMPS = YesPlease
- 	NO_STRLCPY = YesPlease
- 	NO_NSEC = YesPlease
- 	FREAD_READS_DIRECTORIES = UnfortunatelyYes
-@@ -787,12 +797,14 @@ endif
- ifeq ($(uname_S),GNU)
- 	# GNU/Hurd
- 	NO_STRLCPY=YesPlease
-+	NO_MKSTEMPS = YesPlease
- endif
- ifeq ($(uname_S),IRIX64)
- 	NO_IPV6=YesPlease
- 	NO_SETENV=YesPlease
- 	NO_STRCASESTR=YesPlease
- 	NO_MEMMEM = YesPlease
-+	NO_MKSTEMPS = YesPlease
- 	NO_STRLCPY = YesPlease
- 	NO_SOCKADDR_STORAGE=YesPlease
- 	SHELL_PATH=/usr/gnu/bin/bash
-@@ -805,6 +817,7 @@ ifeq ($(uname_S),HP-UX)
- 	NO_SETENV=YesPlease
- 	NO_STRCASESTR=YesPlease
- 	NO_MEMMEM = YesPlease
-+	NO_MKSTEMPS = YesPlease
- 	NO_STRLCPY = YesPlease
- 	NO_MKDTEMP = YesPlease
- 	NO_UNSETENV = YesPlease
-@@ -834,6 +847,7 @@ ifneq (,$(findstring MINGW,$(uname_S)))
- 	NO_C99_FORMAT = YesPlease
- 	NO_STRTOUMAX = YesPlease
- 	NO_MKDTEMP = YesPlease
-+	NO_MKSTEMPS = YesPlease
- 	SNPRINTF_RETURNS_BOGUS = YesPlease
- 	NO_SVN_TESTS = YesPlease
- 	NO_PERL_MAKEMAKER = YesPlease
-@@ -853,6 +867,7 @@ ifneq (,$(findstring MINGW,$(uname_S)))
- endif
- ifneq (,$(findstring arm,$(uname_M)))
- 	ARM_SHA1 = YesPlease
-+	NO_MKSTEMPS = YesPlease
- endif
- 
- -include config.mak.autogen
-@@ -1011,6 +1026,10 @@ ifdef NO_MKDTEMP
- 	COMPAT_CFLAGS += -DNO_MKDTEMP
- 	COMPAT_OBJS += compat/mkdtemp.o
- endif
-+ifdef NO_MKSTEMPS
-+	COMPAT_CFLAGS += -DNO_MKSTEMPS
-+	COMPAT_OBJS += compat/mkstemps.o
-+endif
- ifdef NO_UNSETENV
- 	COMPAT_CFLAGS += -DNO_UNSETENV
- 	COMPAT_OBJS += compat/unsetenv.o
-diff --git a/compat/mkstemps.c b/compat/mkstemps.c
-new file mode 100644
-index 0000000..9ce729b
---- /dev/null
-+++ b/compat/mkstemps.c
-@@ -0,0 +1,63 @@
-+#include "../git-compat-util.h"
-+
-+/* Adapted from libiberty's mkstemp.c. */
-+int gitmkstemps(char *pattern, int suffix_len)
-+{
-+	static const char letters[] =
-+		"abcdefghijklmnopqrstuvwxyz"
-+		"ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-+		"0123456789";
-+	static const int num_letters = 62;
-+	uint64_t value;
-+	struct timeval tv;
-+	char *template;
-+	size_t len;
-+	int fd, count;
-+
-+	len = strlen(pattern);
-+
-+	if (len < 6 + suffix_len) {
-+		errno = EINVAL;
-+		return -1;
-+	}
-+
-+	if (strncmp(&pattern[len - 6 - suffix_len], "XXXXXX", 6)) {
-+		errno = EINVAL;
-+		return -1;
-+	}
-+
-+	/* Replace pattern's XXXXXX characters with randomness.
-+	 * Try TMP_MAX different filenames.
-+	 */
-+	gettimeofday(&tv, NULL);
-+	value = ((size_t)(tv.tv_usec << 16)) ^ tv.tv_sec ^ getpid();
-+	template = &pattern[len - 6 - suffix_len];
-+	for (count = 0; count < TMP_MAX; ++count) {
-+		uint64_t v = value;
-+		/* Fill in the random bits. */
-+		template[0] = letters[v % num_letters]; v/= num_letters;
-+		template[1] = letters[v % num_letters]; v/= num_letters;
-+		template[2] = letters[v % num_letters]; v/= num_letters;
-+		template[3] = letters[v % num_letters]; v/= num_letters;
-+		template[4] = letters[v % num_letters]; v/= num_letters;
-+		template[5] = letters[v % num_letters]; v/= num_letters;
-+
-+		fd = open(pattern, O_CREAT | O_EXCL | O_RDWR, 0600);
-+		if (fd > 0)
-+			return fd;
-+		/* Fatal error (EPERM, ENOSPC etc).
-+		 * It doesn't make sense to loop.
-+		 */
-+		if (errno != EEXIST)
-+			break;
-+		/* This is a random value.  It is only necessary that
-+		 * the next TMP_MAX values generated by adding 7777 to
-+		 * VALUE are different with (module 2^32).
-+		 */
-+		value += 7777;
-+	}
-+	/* We return the null string if we can't find a unique file name.  */
-+	pattern[0] = '\0';
-+	errno = EINVAL;
-+	return -1;
++# Return the current subdirectory relative to the repository root
++proc get_subdir_prefix {} {
++    return [exec git rev-parse --show-prefix]
 +}
-diff --git a/config.mak.in b/config.mak.in
-index 7cce0c1..b6619af 100644
---- a/config.mak.in
-+++ b/config.mak.in
-@@ -46,6 +46,7 @@ NO_STRTOUMAX=@NO_STRTOUMAX@
- NO_SETENV=@NO_SETENV@
- NO_UNSETENV=@NO_UNSETENV@
- NO_MKDTEMP=@NO_MKDTEMP@
-+NO_MKSTEMPS=@NO_MKSTEMPS@
- NO_ICONV=@NO_ICONV@
- OLD_ICONV=@OLD_ICONV@
- NO_DEFLATE_BOUND=@NO_DEFLATE_BOUND@
-diff --git a/configure.ac b/configure.ac
-index 4e728bc..953da07 100644
---- a/configure.ac
-+++ b/configure.ac
-@@ -677,6 +677,13 @@ GIT_CHECK_FUNC(mkdtemp,
- [NO_MKDTEMP=YesPlease])
- AC_SUBST(NO_MKDTEMP)
- #
-+# Define NO_MKSTEMPS if you don't have mkstemps in the C library.
-+GIT_CHECK_FUNC(mkstemps,
-+[NO_MKSTEMPS=],
-+[NO_MKSTEMPS=YesPlease])
-+AC_SUBST(NO_MKSTEMPS)
-+#
-+#
- # Define NO_MMAP if you want to avoid mmap.
- #
- # Define NO_ICONV if your libc does not properly support iconv.
-diff --git a/git-compat-util.h b/git-compat-util.h
-index c7cf2d5..5a2d4e7 100644
---- a/git-compat-util.h
-+++ b/git-compat-util.h
-@@ -113,6 +113,10 @@
- #define PATH_MAX 4096
- #endif
- 
-+#ifndef TMP_MAX
-+#define TMP_MAX 16384
-+#endif
 +
- #ifndef PRIuMAX
- #define PRIuMAX "llu"
- #endif
-@@ -232,6 +236,11 @@ extern int gitsetenv(const char *, const char *, int);
- extern char *gitmkdtemp(char *);
- #endif
- 
-+#ifdef NO_MKSTEMPS
-+#define mkstemps gitmkstemps
-+extern int gitmkstemps(char *, int);
-+#endif
+ proc path_filter {filter name} {
+-    foreach p $filter {
++    set prefix [get_subdir_prefix]
++    foreach f $filter {
++	# get full pathname starting from the workdir root
++	set p "$prefix$f"
 +
- #ifdef NO_UNSETENV
- #define unsetenv gitunsetenv
- extern void gitunsetenv(const char *);
+ 	set l [string length $p]
+ 	if {[string index $p end] eq "/"} {
+ 	    if {[string compare -length $l $p $name] == 0} {
 -- 
-1.6.1.3
+1.6.3.1.70.ga80aa.dirty
