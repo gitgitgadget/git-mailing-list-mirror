@@ -1,103 +1,84 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] refuse to merge during a merge
-Date: Sun, 31 May 2009 12:36:37 -0700
-Message-ID: <7vd49prrne.fsf@alter.siamese.dyndns.org>
-References: <20090527210410.GA14742@localhost>
-	<43d8ce650905280912q71c749bn7146210a5838a453@mail.gmail.com>
-	<20090530083721.GA12963@localhost> <20090531104359.GA19094@localhost>
+From: Johannes Sixt <j6t@kdbg.org>
+Subject: Re: [PATCH 05/11] winansi: fix compile warnings
+Date: Sun, 31 May 2009 21:52:11 +0200
+Message-ID: <200905312152.11434.j6t@kdbg.org>
+References: <1243786525-4493-1-git-send-email-prohaska@zib.de> <1243786525-4493-6-git-send-email-prohaska@zib.de> <4A22C674.603@kdbg.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Dave Olszewski <cxreg@pobox.com>,
-	John Tapsell <johnflux@gmail.com>
-To: Clemens Buchacher <drizzd@aon.at>
-X-From: git-owner@vger.kernel.org Sun May 31 21:36:46 2009
+Content-Type: text/plain;
+  charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Steffen Prohaska <prohaska@zib.de>
+X-From: git-owner@vger.kernel.org Sun May 31 21:54:48 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MAqpp-0001ln-Fz
-	for gcvg-git-2@gmane.org; Sun, 31 May 2009 21:36:45 +0200
+	id 1MAr7E-0000ah-Hb
+	for gcvg-git-2@gmane.org; Sun, 31 May 2009 21:54:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752715AbZEaTgi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 31 May 2009 15:36:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752638AbZEaTgh
-	(ORCPT <rfc822;git-outgoing>); Sun, 31 May 2009 15:36:37 -0400
-Received: from fed1rmmtao106.cox.net ([68.230.241.40]:49998 "EHLO
-	fed1rmmtao106.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752600AbZEaTgg (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 31 May 2009 15:36:36 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao106.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20090531193636.QDMO25927.fed1rmmtao106.cox.net@fed1rmimpo01.cox.net>;
-          Sun, 31 May 2009 15:36:36 -0400
-Received: from localhost ([68.225.240.211])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id yKcd1b00B4aMwMQ03KcdEL; Sun, 31 May 2009 15:36:37 -0400
-X-Authority-Analysis: v=1.0 c=1 a=C9IecrIIepwA:10 a=rCiRbmqKF_gA:10
- a=hfEFsvr2-C-2YoE9P8cA:9 a=OfUrvGZFy15SCmSNAGgA:7
- a=6wLdmER_m0Zn34G_JS7zFcSGMngA:4
-X-CM-Score: 0.00
-In-Reply-To: <20090531104359.GA19094@localhost> (Clemens Buchacher's message of "Sun\, 31 May 2009 12\:43\:59 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+	id S1751853AbZEaTwO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 31 May 2009 15:52:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751798AbZEaTwN
+	(ORCPT <rfc822;git-outgoing>); Sun, 31 May 2009 15:52:13 -0400
+Received: from bsmtp.bon.at ([213.33.87.14]:49832 "EHLO bsmtp.bon.at"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751597AbZEaTwN (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 31 May 2009 15:52:13 -0400
+Received: from dx.sixt.local (unknown [93.83.142.38])
+	by bsmtp.bon.at (Postfix) with ESMTP id 31A89A7EB4;
+	Sun, 31 May 2009 21:52:12 +0200 (CEST)
+Received: from localhost (localhost [IPv6:::1])
+	by dx.sixt.local (Postfix) with ESMTP id EC36842601;
+	Sun, 31 May 2009 21:52:11 +0200 (CEST)
+User-Agent: KMail/1.9.9
+In-Reply-To: <4A22C674.603@kdbg.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120426>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120427>
 
-Clemens Buchacher <drizzd@aon.at> writes:
-
-> The following is an easy mistake to make for users coming from version
-> control systems with an "update and commit"-style workflow.
+On Sonntag, 31. Mai 2009, Johannes Sixt wrote:
+> Steffen Prohaska schrieb:
+> > diff --git a/compat/win32.h b/compat/win32.h
+> > index c26384e..d531130 100644
+> > --- a/compat/win32.h
+> > +++ b/compat/win32.h
+> > @@ -1,5 +1,6 @@
+> >  /* common Win32 functions for MinGW and Cygwin */
+> >  #include <windows.h>
+> > +#include <conio.h>
+> >
+> >  static inline int file_attr_to_st_mode (DWORD attr)
+> >  {
 >
->         1. git pull
->         2. resolve conflicts
->         3. git pull
+> I assume this is to remove the warning about missing declaration of
+> _getch(). Can we have this patch instead? I don't have conio.h in my
+> oldish MinGW environment.
 >
-> Step 3 overrides MERGE_HEAD, starting a new merge with dirty index.
+> diff --git a/compat/mingw.c b/compat/mingw.c
+> index 52961ee..53053ad 100644
+> --- a/compat/mingw.c
+> +++ b/compat/mingw.c
+> @@ -1211,6 +1211,9 @@ int link(const char *oldpath, const char *newpath)
+>   	return 0;
+>   }
+>
+> +/* from conio.h */
+> +int _getch(void);  // FIXME: really look this up in conio.h!!!!
+> +
+>   char *getpass(const char *prompt)
+>   {
+>   	struct strbuf buf = STRBUF_INIT;
 
-I think the new condition that you added to stop the merge is more in line
-with the original intent of the check.  We never wanted to check "do we
-still have unmerged entries?" but wanted to see "is another merge in
-progress?"; not checking MERGE_HEAD was a simple omission.
+Ok, forget this patch; I'll upgrade my MinGW instead, and let's assume all 
+other mingw.git h4ckrz who aren't using the latest msysgit will upgrade as 
+well.
 
-But I do not necessarily agree with the combined check nor with the new
-message.  I think it would be more sensible to split the codepath like
-this:
+Nevertheless, I think that the #include <conio.h> is in the wrong file: it 
+should be included from compat/mingw.c.
 
-	if (we see MERGE_HEAD)
-		die("You have not concluded your merge (MERGE_HEAD exists).");
-	if (the index is unmerged)
-		die("You are in the middle of a conflicted merge (index unmerged).");
-
-Then in a _later_ patch, you could try to be more helpful by paying more
-attention to the context.  E.g.
-
-	if (we see MERGE_HEAD) {
-        	figure out what was attempted by looking at
-                MERGE_MSG and other cues;
-		die("You have not concluded your merge with %s.\n"
-		    "Perhaps you would want 'git reset' to recover?"
-                    that);
-	}
-	if (the index is unmerged)
-		die("You are in the middle of a conflicted merge");
-
-The point is that combining the checks makes it harder to later give more
-appropriate diagnosis and suggestion to the end user.
-
-For example, "git merge" may learn "git merge --abort" like other commands
-that have "attempt, stop, let the user fix up to conclude" modes of
-operations (i.e. rebase and am), and we may suggest to use that to recover
-in the message, instead of 'git reset'.  But that can only be used if we
-stopped because we saw MERGE_HEAD; you definitely do not want to suggest
-"git merge --abort" if the index is unmerged due to a conflicted rebase in
-progress.
-
-Note that I am not suggesting you to blow this up to one large patch by
-adding fancier "what were we doing" logic; I am perfectly OK with the
-minimum "detect MERGE_HEAD and refuse".  I am only saying that I am
-unhappy with the way two different error conditions are conflated.
-
-Personally, I'd suggest not to give "you can do this to recover" message.
+-- Hannes
