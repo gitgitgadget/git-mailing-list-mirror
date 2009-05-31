@@ -1,186 +1,116 @@
-From: Tay Ray Chuan <rctay89@gmail.com>
-Subject: [PATCH v2] http*: cleanup slot->local after fclose
-Date: Sun, 31 May 2009 17:54:13 +0800
-Message-ID: <20090531175413.962a55c3.rctay89@gmail.com>
-References: <49F1EA6D.8080406@gmail.com>
-	<20090530091755.GA13578@localhost>
-	<be6fef0d0905300231k5167f3efle9a450419bdfa1cb@mail.gmail.com>
-	<20090530093717.GA22129@localhost>
-	<be6fef0d0905300352o33694420m9c988daa554420a3@mail.gmail.com>
-	<20090530230153.527532b0.rctay89@gmail.com>
-	<20090531000955.953725d9.rctay89@gmail.com>
-	<7vy6sdssnk.fsf@alter.siamese.dyndns.org>
+From: Clemens Buchacher <drizzd@aon.at>
+Subject: [PATCH] http-push: reuse existing is_null_ref
+Date: Sun, 31 May 2009 12:36:10 +0200
+Message-ID: <20090531103610.GA7913@localhost>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: Clemens Buchacher <drizzd@aon.at>, git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Content-Type: text/plain; charset=us-ascii
+Cc: Tay Ray Chuan <rctay89@gmail.com>, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun May 31 11:54:42 2009
+X-From: git-owner@vger.kernel.org Sun May 31 12:36:39 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MAhkW-0006J6-BZ
-	for gcvg-git-2@gmane.org; Sun, 31 May 2009 11:54:40 +0200
+	id 1MAiP8-00087Y-CV
+	for gcvg-git-2@gmane.org; Sun, 31 May 2009 12:36:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754753AbZEaJyb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 31 May 2009 05:54:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754587AbZEaJya
-	(ORCPT <rfc822;git-outgoing>); Sun, 31 May 2009 05:54:30 -0400
-Received: from rv-out-0506.google.com ([209.85.198.238]:7589 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754099AbZEaJy3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 31 May 2009 05:54:29 -0400
-Received: by rv-out-0506.google.com with SMTP id f9so2117786rvb.1
-        for <git@vger.kernel.org>; Sun, 31 May 2009 02:54:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:in-reply-to:references:x-mailer:mime-version
-         :content-type:content-transfer-encoding;
-        bh=EUVWzQBOGPm3zQbj6PvEC6S1qyyrND4V6ohGQKvz26U=;
-        b=LTQ1lLVIz5B0++RbK1CQX0WC5EqSMtPOcL5SdBH4a8c2J0okWrjaIQVdqrRQlFVH0V
-         lJZwzjVxyWxa0gELoEtbJHKfbaDH38syThD1+vS6eaPVviRMo9s73/Tt8spU7rMFzY89
-         wRSyB6pZWDe8rOh3o8E1YsVHMnmP3EXdTdshI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:in-reply-to:references:x-mailer
-         :mime-version:content-type:content-transfer-encoding;
-        b=P72aei1220MTjNJrrtbFXDgUVNSOyUEtFPyTFcTCH4zzZMg95lf4+5TDGh5E0hy9g6
-         wT/hpzbP5ScnyZ9ag46XPWcUm0y285+SZ2wUww2xucbJdA+ooypIz2SRSoP3iZd5xJt4
-         b635s7BjJYNnmME802rEtTpwFUnw4D2YlJhlY=
-Received: by 10.141.84.21 with SMTP id m21mr4228125rvl.284.1243763671631;
-        Sun, 31 May 2009 02:54:31 -0700 (PDT)
-Received: from your-cukc5e3z5n (cm189.zeta148.maxonline.com.sg [116.87.148.189])
-        by mx.google.com with ESMTPS id n33sm4376938wag.34.2009.05.31.02.54.29
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 31 May 2009 02:54:31 -0700 (PDT)
-In-Reply-To: <7vy6sdssnk.fsf@alter.siamese.dyndns.org>
-X-Mailer: Sylpheed 2.6.0 (GTK+ 2.10.14; i686-pc-mingw32)
+	id S1756545AbZEaKg2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 31 May 2009 06:36:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755989AbZEaKg2
+	(ORCPT <rfc822;git-outgoing>); Sun, 31 May 2009 06:36:28 -0400
+Received: from postman.fh-hagenberg.at ([193.170.124.96]:8538 "EHLO
+	mail.fh-hagenberg.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751737AbZEaKg1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 31 May 2009 06:36:27 -0400
+Received: from darc.dnsalias.org ([80.123.242.182]) by mail.fh-hagenberg.at over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
+	 Sun, 31 May 2009 12:36:27 +0200
+Received: from drizzd by darc.dnsalias.org with local (Exim 4.69)
+	(envelope-from <drizzd@aon.at>)
+	id 1MAiOg-0001r2-Nu; Sun, 31 May 2009 12:36:10 +0200
+Content-Disposition: inline
+User-Agent: Mutt/1.5.18 (2008-05-17)
+X-OriginalArrivalTime: 31 May 2009 10:36:27.0377 (UTC) FILETIME=[A7110E10:01C9E1DB]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120394>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120395>
 
-Set slot->local to NULL after doing a fclose on the FILE* pointer it
-points to.
-
-This fixes the issue raised by Clemens Buchacher on 30th May:
-
-  http://www.spinics.net/lists/git/msg104623.html
-
-Signed-off-by: Tay Ray Chuan <rctay89@gmail.com>
+Signed-off-by: Clemens Buchacher <drizzd@aon.at>
 ---
 
-On Sat, 30 May 2009 23:17:19 -0700
-Junio C Hamano <gitster@pobox.com> wrote:
-> Shouldn't a fix instead be queued for 'maint', without "refactoring"?
+While we're at it, here's a trivial cleanup for http-push. Applies to both
+master and pu.
 
-I tested this on top of the first 4 patches in 'rc/http-push' in 'pu',
-applied on 'maint'. [1] I wonder if this should instead be queued for
-'pu' [2], since the issue only occurs there, although, conceivably, it
-*could* happen without those patches in 'pu'.
+Clemens
 
-Footnotes:
-[1] You can find this in the 'http-cleanup-slot-local_maint branch' at
-    git://github.com/rctay/git.git. It's quite a minimal testcase, if
-    you're looking for one.
-
-[2] Found in 'http-cleanup-slot-local_pu'.
-
- http-push.c   |    6 ++++++
- http-walker.c |    6 ++++++
- 2 files changed, 12 insertions(+), 0 deletions(-)
+ http-push.c |   21 +++++----------------
+ 1 files changed, 5 insertions(+), 16 deletions(-)
 
 diff --git a/http-push.c b/http-push.c
-index e16a0ad..0b12ffe 100644
+index 45e8a69..43e2dda 100644
 --- a/http-push.c
 +++ b/http-push.c
-@@ -724,9 +724,11 @@ static void finish_request(struct transfer_request *request)
- 	struct stat st;
- 	struct packed_git *target;
- 	struct packed_git **lst;
-+	struct active_request_slot *slot;
- 
- 	request->curl_result = request->slot->curl_result;
- 	request->http_code = request->slot->http_code;
-+	slot = request->slot;
- 	request->slot = NULL;
- 
- 	/* Keep locks active */
-@@ -823,6 +825,7 @@ static void finish_request(struct transfer_request *request)
- 
- 			fclose(request->local_stream);
- 			request->local_stream = NULL;
-+			slot->local = NULL;
- 			if (!move_temp_to_file(request->tmpfile,
- 					       request->filename)) {
- 				target = (struct packed_git *)request->userData;
-@@ -1024,17 +1027,20 @@ static int fetch_index(unsigned char *sha1)
- 		if (results.curl_result != CURLE_OK) {
- 			free(url);
- 			fclose(indexfile);
-+			slot->local = NULL;
- 			return error("Unable to get pack index %s\n%s", url,
- 				     curl_errorstr);
- 		}
- 	} else {
- 		free(url);
- 		fclose(indexfile);
-+		slot->local = NULL;
- 		return error("Unable to start request");
- 	}
- 
- 	free(url);
- 	fclose(indexfile);
-+	slot->local = NULL;
- 
- 	return move_temp_to_file(tmpfile, filename);
+@@ -1884,17 +1884,6 @@ static void get_dav_remote_heads(void)
+ 	remote_ls("refs/", (PROCESS_FILES | PROCESS_DIRS | RECURSIVE), process_ls_ref, NULL);
  }
-diff --git a/http-walker.c b/http-walker.c
-index 7321ccc..9377851 100644
---- a/http-walker.c
-+++ b/http-walker.c
-@@ -418,15 +418,18 @@ static int fetch_index(struct walker *walker, struct alt_base *repo, unsigned ch
- 		run_active_slot(slot);
- 		if (results.curl_result != CURLE_OK) {
- 			fclose(indexfile);
-+			slot->local = NULL;
- 			return error("Unable to get pack index %s\n%s", url,
- 				     curl_errorstr);
+ 
+-static int is_zero_sha1(const unsigned char *sha1)
+-{
+-	int i;
+-
+-	for (i = 0; i < 20; i++) {
+-		if (*sha1++)
+-			return 0;
+-	}
+-	return 1;
+-}
+-
+ static void add_remote_info_ref(struct remote_ls_ctx *ls)
+ {
+ 	struct strbuf *buf = (struct strbuf *)ls->userData;
+@@ -2120,13 +2109,13 @@ static int delete_remote_branch(char *pattern, int force)
+ 		/* Remote HEAD must resolve to a known object */
+ 		if (symref)
+ 			return error("Remote HEAD symrefs too deep");
+-		if (is_zero_sha1(head_sha1))
++		if (is_null_sha1(head_sha1))
+ 			return error("Unable to resolve remote HEAD");
+ 		if (!has_sha1_file(head_sha1))
+ 			return error("Remote HEAD resolves to object %s\nwhich does not exist locally, perhaps you need to fetch?", sha1_to_hex(head_sha1));
+ 
+ 		/* Remote branch must resolve to a known object */
+-		if (is_zero_sha1(remote_ref->old_sha1))
++		if (is_null_sha1(remote_ref->old_sha1))
+ 			return error("Unable to resolve remote branch %s",
+ 				     remote_ref->name);
+ 		if (!has_sha1_file(remote_ref->old_sha1))
+@@ -2334,7 +2323,7 @@ int main(int argc, char **argv)
+ 		if (!ref->peer_ref)
+ 			continue;
+ 
+-		if (is_zero_sha1(ref->peer_ref->new_sha1)) {
++		if (is_null_sha1(ref->peer_ref->new_sha1)) {
+ 			if (delete_remote_branch(ref->name, 1) == -1) {
+ 				error("Could not remove %s", ref->name);
+ 				rc = -4;
+@@ -2350,7 +2339,7 @@ int main(int argc, char **argv)
  		}
- 	} else {
- 		fclose(indexfile);
-+		slot->local = NULL;
- 		return error("Unable to start request");
- 	}
  
- 	fclose(indexfile);
-+	slot->local = NULL;
- 
- 	return move_temp_to_file(tmpfile, filename);
- }
-@@ -776,16 +779,19 @@ static int fetch_pack(struct walker *walker, struct alt_base *repo, unsigned cha
- 		run_active_slot(slot);
- 		if (results.curl_result != CURLE_OK) {
- 			fclose(packfile);
-+			slot->local = NULL;
- 			return error("Unable to get pack file %s\n%s", url,
- 				     curl_errorstr);
- 		}
- 	} else {
- 		fclose(packfile);
-+		slot->local = NULL;
- 		return error("Unable to start request");
- 	}
- 
- 	target->pack_size = ftell(packfile);
- 	fclose(packfile);
-+	slot->local = NULL;
- 
- 	ret = move_temp_to_file(tmpfile, filename);
- 	if (ret)
+ 		if (!force_all &&
+-		    !is_zero_sha1(ref->old_sha1) &&
++		    !is_null_sha1(ref->old_sha1) &&
+ 		    !ref->force) {
+ 			if (!has_sha1_file(ref->old_sha1) ||
+ 			    !ref_newer(ref->peer_ref->new_sha1,
+@@ -2400,7 +2389,7 @@ int main(int argc, char **argv)
+ 		old_sha1_hex = NULL;
+ 		commit_argv[1] = "--objects";
+ 		commit_argv[2] = new_sha1_hex;
+-		if (!push_all && !is_zero_sha1(ref->old_sha1)) {
++		if (!push_all && !is_null_sha1(ref->old_sha1)) {
+ 			old_sha1_hex = xmalloc(42);
+ 			sprintf(old_sha1_hex, "^%s",
+ 				sha1_to_hex(ref->old_sha1));
 -- 
-1.6.3.1
+1.6.3.1.147.g637c3
