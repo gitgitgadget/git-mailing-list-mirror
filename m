@@ -1,100 +1,94 @@
-From: Steffen Prohaska <prohaska@zib.de>
-Subject: [PATCH 07/11] connect.c: Support PuTTY plink and TortoisePlink as SSH on Windows
-Date: Sun, 31 May 2009 18:15:21 +0200
-Message-ID: <1243786525-4493-8-git-send-email-prohaska@zib.de>
-References: <1243786525-4493-1-git-send-email-prohaska@zib.de>
- <1243786525-4493-2-git-send-email-prohaska@zib.de>
- <1243786525-4493-3-git-send-email-prohaska@zib.de>
- <1243786525-4493-4-git-send-email-prohaska@zib.de>
- <1243786525-4493-5-git-send-email-prohaska@zib.de>
- <1243786525-4493-6-git-send-email-prohaska@zib.de>
- <1243786525-4493-7-git-send-email-prohaska@zib.de>
-Cc: git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Johannes Sixt <j6t@kdbg.org>,
-	"Edward Z. Yang" <edwardzyang@thewritingpot.com>,
-	Steffen Prohaska <prohaska@zib.de>,
-	Johannes Schindelin <johannes.schindelin@gmx.de>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun May 31 18:19:34 2009
+From: Avery Pennarun <apenwarr@gmail.com>
+Subject: Re: [git subtree] documentation and new --squash mode
+Date: Sun, 31 May 2009 12:42:43 -0400
+Message-ID: <32541b130905310942x3ca98b0ibbed8598f4ba6e56@mail.gmail.com>
+References: <32541b130905301136i2d9ec05ew9ba54c6ca746af15@mail.gmail.com> 
+	<slrnh24bff.n9t.sitaramc@sitaramc.homelinux.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Sitaram Chamarty <sitaramc@gmail.com>
+X-From: git-owner@vger.kernel.org Sun May 31 18:43:17 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MAnkz-0002tv-M7
-	for gcvg-git-2@gmane.org; Sun, 31 May 2009 18:19:34 +0200
+	id 1MAo7s-0007NF-9V
+	for gcvg-git-2@gmane.org; Sun, 31 May 2009 18:43:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758794AbZEaQT3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 31 May 2009 12:19:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759256AbZEaQT2
-	(ORCPT <rfc822;git-outgoing>); Sun, 31 May 2009 12:19:28 -0400
-Received: from mailer.zib.de ([130.73.108.11]:58967 "EHLO mailer.zib.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1759162AbZEaQT1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 31 May 2009 12:19:27 -0400
-Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
-	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id n4VGFWaB006800;
-	Sun, 31 May 2009 18:15:37 +0200 (CEST)
-Received: from localhost.localdomain (vss6.zib.de [130.73.69.7])
-	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id n4VGFPVE021220;
-	Sun, 31 May 2009 18:15:31 +0200 (MEST)
-X-Mailer: git-send-email 1.5.6
-In-Reply-To: <1243786525-4493-7-git-send-email-prohaska@zib.de>
+	id S1756899AbZEaQnE convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 31 May 2009 12:43:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756457AbZEaQnD
+	(ORCPT <rfc822;git-outgoing>); Sun, 31 May 2009 12:43:03 -0400
+Received: from mail-gx0-f214.google.com ([209.85.217.214]:52403 "EHLO
+	mail-gx0-f214.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753620AbZEaQnB convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 31 May 2009 12:43:01 -0400
+Received: by gxk10 with SMTP id 10so12199415gxk.13
+        for <git@vger.kernel.org>; Sun, 31 May 2009 09:43:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=ZeM5Y/UFD4AZzqGYGdtOyfQkvo2ucUawZ/guUj2kmVk=;
+        b=PHf8MdbjtDzYdui29bqXiK3bpVlWdaGok/GuAeLJ+NIOXjCPgc4apBCJBDx/4RJsWQ
+         nBnBAR1lR2eYSUUqZ+lxZEUWTqk4BC5MzwUtuRU46Fg5aurlg22lWHcdiMgLeirF5013
+         2zIj7EtRk/fq3hB527OZ9hpBfORNKhkP42CgA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=GcdCFrsP91Lzozn7BnbfhxK4OXn/cktU4IEr7VQlSnxUmMjD1V+FmJiZuavC6Q9h6X
+         70NSA6dZGFqJbJ4mb9wq5hXhPPIwzmCrdwHKH35iixj7nUnYxfoe2f3pa1O2uPfm2fD0
+         xJtHiGoVpNiMQ23rW9OQ6q217QMu8Ob5O04K4=
+Received: by 10.151.74.9 with SMTP id b9mr9785612ybl.5.1243788183045; Sun, 31 
+	May 2009 09:43:03 -0700 (PDT)
+In-Reply-To: <slrnh24bff.n9t.sitaramc@sitaramc.homelinux.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120419>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120420>
 
-From: Edward Z. Yang <edwardzyang@thewritingpot.com>
+On Sun, May 31, 2009 at 3:12 AM, Sitaram Chamarty <sitaramc@gmail.com> =
+wrote:
+> As I understand the documentation (and past emails, snippets
+> of IRC traffic, etc) git subtree will help me do precisely
+> what I want -- a simple way to deal with this all-too-common
+> SVN-ism. =A0If not "simple", at least
+>
+> =A0- simpler than submodules, and
+>
+> =A0- no need for advance planning [1] about what parts will
+> =A0 =A0be subprojects.
 
-OpenSSH uses -p to specify custom ports, while PuTTY plink and
-TortoisePlink use -P. Git now detects if plink is in GIT_SSH and
-modify its flags as necessary.
+Well, I don't know that I'd go so far as to advise against advance
+planning :)  But git subtree does make it easy for you to change your
+mind later, that much is true.
 
-We call plink with -batch, so that it will error out with an error
-message instead of waiting for user input.  As reported in msysGit
-issue 96, plink wants to interact with the user asking if a host
-key should be accepted, but this just blocks the terminal, since
-plink tries to get the answer from stdin.  However, stdin is
-already connected to Git that wants to send input to the remote
-command.
+You might still have some troubles if you rename subdirectories a lot;
+perhaps I don't understand it correctly, but the so-called file
+move/rename detection in git doesn't seem to be implemented
+everywhere. If you extract the history of a subdirectory that was
+previously renamed, you'll get only the history since it was renamed.
+(Which might be fine with you.  You can certainly still merge it back
+in afterwards.)
 
-But we do not pass -batch to TortoisePlink, because TortoisePlink
-uses a GUI to communicate with the user, and it does not understand
--batch.
+Also, git-subtree might have bugs yet.  Watch out for that :)
 
-Signed-off-by: Edward Z. Yang <edwardzyang@thewritingpot.com>
-Signed-off-by: Steffen Prohaska <prohaska@zib.de>
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- connect.c |    8 ++++++--
- 1 files changed, 6 insertions(+), 2 deletions(-)
+> [1] I do understand filter-branch quite well, and I know that
+> even without advance planning it is possible to separate a
+> subdirectory into its own repo using filter-branch. =A0I don't
+> fancy teaching *them* filter-branch, so that makes me
+> personally central to their projects, which is not scalable
+> at all.
 
-diff --git a/connect.c b/connect.c
-index f6b8ba6..692d476 100644
---- a/connect.c
-+++ b/connect.c
-@@ -602,14 +602,18 @@ struct child_process *git_connect(int fd[2], const char *url_orig,
- 		die("command line too long");
- 
- 	conn->in = conn->out = -1;
--	conn->argv = arg = xcalloc(6, sizeof(*arg));
-+	conn->argv = arg = xcalloc(7, sizeof(*arg));
- 	if (protocol == PROTO_SSH) {
- 		const char *ssh = getenv("GIT_SSH");
-+		int putty = ssh && strcasestr(ssh, "plink");
- 		if (!ssh) ssh = "ssh";
- 
- 		*arg++ = ssh;
-+		if (putty && !strcasestr(ssh, "tortoiseplink"))
-+			*arg++ = "-batch";
- 		if (port) {
--			*arg++ = "-p";
-+			/* P is for PuTTY, p is for OpenSSH */
-+			*arg++ = putty ? "-P" : "-p";
- 			*arg++ = port;
- 		}
- 		*arg++ = host;
--- 
-1.6.3.1.54.g99dd
+git-subtree is certainly easier to use than filter-branch, IMHO.  Plus
+it helps you merge things back in afterwards, which filter-branch
+doesn't particularly.
+
+Have fun,
+
+Avery
