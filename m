@@ -1,69 +1,65 @@
-From: "Aaron Gray" <aaronngray.lists@googlemail.com>
-Subject: Resetting working files
-Date: Sun, 31 May 2009 14:09:09 +0100
-Message-ID: <DA26600008CE404B831978F6EBB31C6B@HPLAPTOP>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: Managing submodules on large multi-user projects
+Date: Sun, 31 May 2009 15:39:28 +0200
+Message-ID: <81b0412b0905310639i12440ae4i9331d57a752a6b96@mail.gmail.com>
+References: <20090529184125.GE11222@starfruit.corp.slide.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	format=flowed;
-	charset="iso-8859-1";
-	reply-type=original
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-To: "Git Mailing List" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun May 31 15:09:31 2009
+Cc: git@vger.kernel.org
+To: "R. Tyler Ballance" <tyler@slide.com>
+X-From: git-owner@vger.kernel.org Sun May 31 15:41:47 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MAkn4-0006Wf-Fy
-	for gcvg-git-2@gmane.org; Sun, 31 May 2009 15:09:30 +0200
+	id 1MAlIE-0003MJ-VK
+	for gcvg-git-2@gmane.org; Sun, 31 May 2009 15:41:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753576AbZEaNJO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 31 May 2009 09:09:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753382AbZEaNJN
-	(ORCPT <rfc822;git-outgoing>); Sun, 31 May 2009 09:09:13 -0400
-Received: from ey-out-2122.google.com ([74.125.78.27]:36686 "EHLO
-	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753269AbZEaNJM (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 31 May 2009 09:09:12 -0400
-Received: by ey-out-2122.google.com with SMTP id 22so328416eye.37
-        for <git@vger.kernel.org>; Sun, 31 May 2009 06:09:12 -0700 (PDT)
+	id S1754864AbZEaNj3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 31 May 2009 09:39:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753900AbZEaNj2
+	(ORCPT <rfc822;git-outgoing>); Sun, 31 May 2009 09:39:28 -0400
+Received: from mail-bw0-f222.google.com ([209.85.218.222]:33699 "EHLO
+	mail-bw0-f222.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752164AbZEaNj2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 31 May 2009 09:39:28 -0400
+Received: by bwz22 with SMTP id 22so6989358bwz.37
+        for <git@vger.kernel.org>; Sun, 31 May 2009 06:39:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:from:to:subject
-         :date:mime-version:content-type:content-transfer-encoding:x-priority
-         :x-msmail-priority:x-mailer:x-mimeole;
-        bh=qVRQBawe0kd9vhni3m1wiUXzB87fYVNu3/7vR/VWblk=;
-        b=VIkEQSsAQZ/EaKe43NuWde4fQvvRtFMb8JXMOUjVUgLCluYx/qxABLAtKEPnBKlDYy
-         hxsBb9C2vpo5SGJ6IvHPoOQRhSFdYQkLXsB6IskpeK023hlvEDIh6djDFZx/SsY9VEEj
-         SzzBvkIz0ey22AcpqwS3hVZchVK0yK1gJ3f8Y=
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=71HBMPWHXWaqdB4kAejZfrSJEm6l0kpL3Asrr05Vyyc=;
+        b=Zv5qyoi+Q8Ak6cNante3NURhjZQ0aP9y2nLbSTro2jd8hgG6NjMr8zwnRkpeu1R6gA
+         jLKmq2l/Yu1Kc+MmN1PQYy/JGw8aNmmGJvdN0vdqGv0utFe+XkHa8FZeC5lJGbFbw8aP
+         GW00fxeWLClbOBv+LzoZBJI9w9PaYd31MqJrQ=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=message-id:from:to:subject:date:mime-version:content-type
-         :content-transfer-encoding:x-priority:x-msmail-priority:x-mailer
-         :x-mimeole;
-        b=QvawGnGTQpQEwv1AjNhdrUI962k6ERnC8XDKZCoRAXXPnhiFk2tDWkGqhu2UuvBQIH
-         u6YkTf7pvunxDvFJFkVt9LX0oXSbOLduF2h/FemkX/QbOmetyAZCNBxR+1Y0ZnnJxWmq
-         h+0qu2JwP64zzc28vBYBB7f88FQ77t4FOZhK8=
-Received: by 10.210.41.1 with SMTP id o1mr2714801ebo.7.1243775352352;
-        Sun, 31 May 2009 06:09:12 -0700 (PDT)
-Received: from HPLAPTOP (mwgray.force9.co.uk [212.159.110.144])
-        by mx.google.com with ESMTPS id 5sm5832659eyh.0.2009.05.31.06.09.11
-        (version=SSLv3 cipher=RC4-MD5);
-        Sun, 31 May 2009 06:09:12 -0700 (PDT)
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5512
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.5579
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=JJcgtgS7M1uuXNDckBeDbuFi2LzgIkZPEgXAx6S0W1/qzzpoaN184rVp8xCrGgB+5M
+         d7NemEehQnF2LvDd7H6Z0HAVOd8kYt+mSXuZMOdowPQ/wddr6Lhucxw9reSV+KSsjHA2
+         EgDYqvZGuoaSThHXKHqtmIDat+WMHTOX6Jktk=
+Received: by 10.204.62.68 with SMTP id w4mr4629559bkh.122.1243777168933; Sun, 
+	31 May 2009 06:39:28 -0700 (PDT)
+In-Reply-To: <20090529184125.GE11222@starfruit.corp.slide.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120398>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120399>
 
-Hi,
+2009/5/29 R. Tyler Ballance <tyler@slide.com>:
+> Other developers with other branches will then periodically merge master
+> into their project/topic branches but will either neglect to run
+> `git submodule update` or our bootstrap script (which also executes the
+> submodule update command). At this point they'll have outstanding
+> changes of their own, and the submodule will be marked as "modified" as
+> well. Usually what will then happen is they'll `git commit -a` without
+> thinking and the submodule's reference will be changed (typically from
+> B->A, undoing the previous change).
 
-How do I reset the working files back to HEAD ?
-
-Many thanks,
-
-Aaron
+This (the fact that "git commit -a" updates submodules in the index after merge)
+is probably our bug (or at least an unfinished feature).
