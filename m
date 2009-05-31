@@ -1,96 +1,80 @@
-From: Peter Baumann <waste.manager@gmx.de>
-Subject: [PATCH] Show selected subdirectory paths in gitk
-Date: Sun, 31 May 2009 10:50:45 +0200
-Message-ID: <20090531085045.GA8129@m62s10.vlinux.de>
+From: Tay Ray Chuan <rctay89@gmail.com>
+Subject: Re: [PATCH] http*: cleanup slot->local after fclose
+Date: Sun, 31 May 2009 16:48:58 +0800
+Message-ID: <be6fef0d0905310148g7ee7a642jf6a9661d6e62b40b@mail.gmail.com>
+References: <49F1EA6D.8080406@gmail.com> <20090530091755.GA13578@localhost>
+	 <be6fef0d0905300231k5167f3efle9a450419bdfa1cb@mail.gmail.com>
+	 <20090530093717.GA22129@localhost>
+	 <be6fef0d0905300352o33694420m9c988daa554420a3@mail.gmail.com>
+	 <20090530230153.527532b0.rctay89@gmail.com>
+	 <20090531000955.953725d9.rctay89@gmail.com>
+	 <7vy6sdssnk.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Paul Mackerras <paulus@samba.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun May 31 10:44:37 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Clemens Buchacher <drizzd@aon.at>, git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun May 31 10:49:10 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MAgeh-0003UA-Rj
-	for gcvg-git-2@gmane.org; Sun, 31 May 2009 10:44:36 +0200
+	id 1MAgj5-0004u3-9V
+	for gcvg-git-2@gmane.org; Sun, 31 May 2009 10:49:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757328AbZEaIo2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 31 May 2009 04:44:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757291AbZEaIo1
-	(ORCPT <rfc822;git-outgoing>); Sun, 31 May 2009 04:44:27 -0400
-Received: from mail.gmx.net ([213.165.64.20]:53403 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1757240AbZEaIo0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 31 May 2009 04:44:26 -0400
-Received: (qmail invoked by alias); 31 May 2009 08:44:27 -0000
-Received: from m62s10.vlinux.de (EHLO m62s10.vlinux.de) [83.151.21.204]
-  by mail.gmx.net (mp039) with SMTP; 31 May 2009 10:44:27 +0200
-X-Authenticated: #1252284
-X-Provags-ID: V01U2FsdGVkX1//uTAOhmb/pR8fGtX187TP2qBk9Itf5v3wa0SPew
-	2kJC427cTgffeB
-Received: by m62s10.vlinux.de (Postfix, from userid 1000)
-	id 79DDB180BA; Sun, 31 May 2009 10:50:45 +0200 (CEST)
-Content-Disposition: inline
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.57
+	id S1757313AbZEaIs6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 31 May 2009 04:48:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757240AbZEaIs5
+	(ORCPT <rfc822;git-outgoing>); Sun, 31 May 2009 04:48:57 -0400
+Received: from mail-px0-f191.google.com ([209.85.216.191]:33196 "EHLO
+	mail-px0-f191.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751626AbZEaIs4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 31 May 2009 04:48:56 -0400
+Received: by pxi29 with SMTP id 29so2237703pxi.33
+        for <git@vger.kernel.org>; Sun, 31 May 2009 01:48:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=qQlqXXGQ++V42JiI+VypowYEQ+MGtIqOjbYK4uv/hyI=;
+        b=oe7sX3DxeYmWM13fClkKP6CV0+RbbSFrvThe75r0pQy6IQotX742yQCNG6xqkLOCfK
+         pj18dSVNKp0ic1I/JWgfwHa/WOgUbwzD6XCTyLtyUwnsEzBanzFthQBuKnCFEZjOjohD
+         Ss11p0yuPyk2oybcunkMREUdhCEJCxz6PMik0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=MZ67L0zumLMN1gGfPt17FON/xuik4oEHjhL2HFymUbYDWf46e8fjdBQ6LOOywgcinD
+         0JqJTvNYIkTaVltBsIF0livI+jOnu3gtiNquzBLL4ILmMWl7325xyEMF5SMRyiAFtzFG
+         j5plJRL/AkNWhVR75RRFoIurQzCoWrnwYNoFI=
+Received: by 10.141.29.14 with SMTP id g14mr4316946rvj.232.1243759738293; Sun, 
+	31 May 2009 01:48:58 -0700 (PDT)
+In-Reply-To: <7vy6sdssnk.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120391>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120392>
 
-Previously, running 'gitk -- file' in a subdirectory of the worktree didn't
-show the file in the file selection widget. This is especially annoying if
-multiple files and/or a subdirectory was given as parameter to gitk, because
-no visual reprasentation on the changed files was given besides the commit
-diff itself.
+Hi,
 
-By prefixing all file filters with the result of the newly added function
-get_subdir_prefix which returns the subdirectory relative to the GIT_DIR,
-we make sure we always use the correct file name.
+On Sun, May 31, 2009 at 2:17 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Shouldn't a fix instead be queued for 'maint', without "refactoring"?
 
-Signed-off-by: Peter Baumann <waste.manager@gmx.de>
----
+one on the way.
 
-The problem this patch fixes could be reproduced in the git repo by
+> Is there a reproducible repipe you can add to the test script?
 
-	cd Documentation
-	gitk git-add.txt
+what do you mean by "repipe"? To my mind, reproducing Clemens' issue
+would require some code manipulation and compiling.
 
-Running the above commands and you should not see any file listed in the
-file selection widget in gitk. After applying the patch, the file is listed
-there (for any non merge commit).
+> Hmm, what's the point of setting NULL to request->slot if you are already
+> freeing "request" that contains the field?
 
+you do have a point. :)
 
- gitk-git/gitk |   11 ++++++++++-
- 1 files changed, 10 insertions(+), 1 deletions(-)
- mode change 100644 => 100755 gitk-git/gitk
-
-diff --git a/gitk-git/gitk b/gitk-git/gitk
-old mode 100644
-new mode 100755
-index 1a7887b..2355d82
---- a/gitk-git/gitk
-+++ b/gitk-git/gitk
-@@ -7104,8 +7104,17 @@ proc startdiff {ids} {
-     }
- }
- 
-+# Return the current subdirectory relative to the repository root
-+proc get_subdir_prefix {} {
-+    return [exec git rev-parse --show-prefix]
-+}
-+
- proc path_filter {filter name} {
--    foreach p $filter {
-+    set prefix [get_subdir_prefix]
-+    foreach f $filter {
-+	# get full pathname starting from the workdir root
-+	set p "$prefix$f"
-+
- 	set l [string length $p]
- 	if {[string index $p end] eq "/"} {
- 	    if {[string compare -length $l $p $name] == 0} {
 -- 
-1.6.3.1.70.ga80aa.dirty
+Cheers,
+Ray Chuan
