@@ -1,86 +1,66 @@
-From: Nicolas Sebrecht <nicolas.s.dev@gmx.fr>
-Subject: Re: Resetting working files
-Date: Sun, 31 May 2009 19:39:32 +0200
-Message-ID: <20090531173932.GA13856@vidovic>
-References: <DA26600008CE404B831978F6EBB31C6B@HPLAPTOP> <4A229B9A.6060807@dirk.my1.cc> <20090531162515.GB8129@m62s10.vlinux.de> <20090531163225.GE3674@debian.b2j> <9719867c0905310950x153db8efw179a8a10ac3f4640@mail.gmail.com>
+From: Sverre Rabbelier <srabbelier@gmail.com>
+Subject: Re: inconsistency with --abbrev=0
+Date: Sun, 31 May 2009 19:46:31 +0200
+Message-ID: <fabb9a1e0905311046t1cd45b2cj4f889313c7781b38@mail.gmail.com>
+References: <200905311748.00782.markus.heidelberg@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Peter Baumann <waste.manager@gmx.de>,
-	Git Mailing List <git@vger.kernel.org>
-To: Aaron Gray <aaronngray.lists@googlemail.com>
-X-From: git-owner@vger.kernel.org Sun May 31 19:39:49 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: markus.heidelberg@web.de
+X-From: git-owner@vger.kernel.org Sun May 31 19:50:48 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MAp0f-0004QH-36
-	for gcvg-git-2@gmane.org; Sun, 31 May 2009 19:39:49 +0200
+	id 1MApBH-0000Hs-6A
+	for gcvg-git-2@gmane.org; Sun, 31 May 2009 19:50:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751583AbZEaRjk convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 31 May 2009 13:39:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751263AbZEaRjj
-	(ORCPT <rfc822;git-outgoing>); Sun, 31 May 2009 13:39:39 -0400
-Received: from mail-ew0-f176.google.com ([209.85.219.176]:63794 "EHLO
+	id S1751798AbZEaRqw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 31 May 2009 13:46:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751691AbZEaRqv
+	(ORCPT <rfc822;git-outgoing>); Sun, 31 May 2009 13:46:51 -0400
+Received: from mail-ew0-f176.google.com ([209.85.219.176]:50303 "EHLO
 	mail-ew0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750777AbZEaRjj (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 31 May 2009 13:39:39 -0400
-Received: by ewy24 with SMTP id 24so7357923ewy.37
-        for <git@vger.kernel.org>; Sun, 31 May 2009 10:39:40 -0700 (PDT)
+	with ESMTP id S1750866AbZEaRqv (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 31 May 2009 13:46:51 -0400
+Received: by ewy24 with SMTP id 24so7360610ewy.37
+        for <git@vger.kernel.org>; Sun, 31 May 2009 10:46:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:sender:date:from:to:cc
-         :subject:message-id:references:mime-version:content-type
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=ps3x8sUqdI0nFcVrSgiqcX9lAQ35q6RoFr1eD4lYHXA=;
-        b=lThYKf2azilx+hpXaAACjTpeufY/dZXpW1wpVMJdlurSHL91yF3UN0CtJ9qIXPwqv4
-         146UZITB3dz6Ge5KZLU7DKcuKTYzDS0snyE2NFGTwuMUl4KrR1kvUQuNRVmZjR4OYFpV
-         X+9MLMaKXPiqpYaDR8LMFfudJmeBe7WcsESq8=
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=TToYqczOS/QhhGUqFWkNUble5fL7yiIsaNS7ueyBvxo=;
+        b=q5dijRzVSqMxSixmUn2/OpQtuBpD8TttVttrl3+S8JHJQYTyIyBZnAhmEdXBbhcJoB
+         gOMyFWiwESfLoiF2DUvZknsyU1H45bVIOruYGe/oNQ2K2O/cOSmzU6j6MCksKbuxWkxM
+         dGh2ynUxAf+wJ/tAoDRSzWePrPxq/coKUVNEg=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=sender:date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=COVFJc9/QL//XEgV59GBgKQAZ2LVQJinsYj4A2uPDftpbJCszqEZRPzzUZnQ04j7Ed
-         6Rjsh4GvopuSIQHnaGVMGsgqQb3SiXrfp9wZ7P10S0otLDa0TsgKLNlsl0Zll5b5yApP
-         GHMtfWQHHRwQQ9oE8gYkPhJxkueuspqOh1Rkg=
-Received: by 10.210.88.7 with SMTP id l7mr5321368ebb.55.1243791579993;
-        Sun, 31 May 2009 10:39:39 -0700 (PDT)
-Received: from @ (ABordeaux-258-1-66-239.w92-136.abo.wanadoo.fr [92.136.17.239])
-        by mx.google.com with ESMTPS id 7sm464221eyb.45.2009.05.31.10.39.36
-        (version=SSLv3 cipher=RC4-MD5);
-        Sun, 31 May 2009 10:39:38 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <9719867c0905310950x153db8efw179a8a10ac3f4640@mail.gmail.com>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=AzoP8B6hrRrt/R4HTU4fcYoLV1Fu/UvqcVwvQuAkNlE/0SzfCXHvyplyXUhg+hVLph
+         a8y31W/osstoC4Ekm3/Kpw/mYK/EEOGkHSSzMzLxSdgm8LdrXLw9MbG9Af3LVFcX4FAx
+         HNWEflZzUOzYjN5fcNVjSmyf8QFxS1BISRA/U=
+Received: by 10.216.3.195 with SMTP id 45mr1592024weh.8.1243792011238; Sun, 31 
+	May 2009 10:46:51 -0700 (PDT)
+In-Reply-To: <200905311748.00782.markus.heidelberg@web.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120422>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120423>
 
-The 31/05/09, Aaron Gray wrote:
+Heya,
 
-> > I still do not understand what index is.
-> > 1. is index an replica of the committed tree
-> > 2. is index only transient in that its content will be reset once
-> > =A0 committed?
-> > 3. or other ?
->=20
-> I think index is HEAD or a revision hash. Am I correct ?
+On Sun, May 31, 2009 at 17:48, Markus Heidelberg
+<markus.heidelberg@web.de> wrote:
+> What should --abbrev=0 behave like?
 
-HEAD is a reference to a branch name:
-$ cat .git/HEAD
-ref: refs/heads/master
-$
+If the minimum is 4, then --abbrev=n with n < 4 should give an error
+saying that it should be >= 4, no?
 
-The branch name is a reference to a commit:
-$ cat .git/refs/heads/master
-a80aad7b85fc560451e07792d64ab6cb15a39914
-$
+-- 
+Cheers,
 
-The index is what will be committed by 'git commit'.
-
---=20
-Nicolas Sebrecht
+Sverre Rabbelier
