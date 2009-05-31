@@ -1,116 +1,92 @@
 From: Clemens Buchacher <drizzd@aon.at>
-Subject: [PATCH] http-push: reuse existing is_null_ref
-Date: Sun, 31 May 2009 12:36:10 +0200
-Message-ID: <20090531103610.GA7913@localhost>
+Subject: [PATCH] refuse to merge during a merge
+Date: Sun, 31 May 2009 12:43:59 +0200
+Message-ID: <20090531104359.GA19094@localhost>
+References: <20090527210410.GA14742@localhost> <43d8ce650905280912q71c749bn7146210a5838a453@mail.gmail.com> <20090530083721.GA12963@localhost>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Tay Ray Chuan <rctay89@gmail.com>, git@vger.kernel.org
+Cc: git@vger.kernel.org, Dave Olszewski <cxreg@pobox.com>,
+	John Tapsell <johnflux@gmail.com>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun May 31 12:36:39 2009
+X-From: git-owner@vger.kernel.org Sun May 31 12:51:02 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MAiP8-00087Y-CV
-	for gcvg-git-2@gmane.org; Sun, 31 May 2009 12:36:38 +0200
+	id 1MAid4-0003ZX-0G
+	for gcvg-git-2@gmane.org; Sun, 31 May 2009 12:51:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756545AbZEaKg2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 31 May 2009 06:36:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755989AbZEaKg2
-	(ORCPT <rfc822;git-outgoing>); Sun, 31 May 2009 06:36:28 -0400
-Received: from postman.fh-hagenberg.at ([193.170.124.96]:8538 "EHLO
+	id S1757244AbZEaKoR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 31 May 2009 06:44:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756602AbZEaKoQ
+	(ORCPT <rfc822;git-outgoing>); Sun, 31 May 2009 06:44:16 -0400
+Received: from postman.fh-hagenberg.at ([193.170.124.96]:9548 "EHLO
 	mail.fh-hagenberg.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751737AbZEaKg1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 31 May 2009 06:36:27 -0400
+	with ESMTP id S1751737AbZEaKoQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 31 May 2009 06:44:16 -0400
 Received: from darc.dnsalias.org ([80.123.242.182]) by mail.fh-hagenberg.at over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
-	 Sun, 31 May 2009 12:36:27 +0200
+	 Sun, 31 May 2009 12:44:17 +0200
 Received: from drizzd by darc.dnsalias.org with local (Exim 4.69)
 	(envelope-from <drizzd@aon.at>)
-	id 1MAiOg-0001r2-Nu; Sun, 31 May 2009 12:36:10 +0200
+	id 1MAiWF-00052o-W3; Sun, 31 May 2009 12:43:59 +0200
 Content-Disposition: inline
+In-Reply-To: <20090530083721.GA12963@localhost>
 User-Agent: Mutt/1.5.18 (2008-05-17)
-X-OriginalArrivalTime: 31 May 2009 10:36:27.0377 (UTC) FILETIME=[A7110E10:01C9E1DB]
+X-OriginalArrivalTime: 31 May 2009 10:44:17.0664 (UTC) FILETIME=[BF612800:01C9E1DC]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120395>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120396>
 
+The following is an easy mistake to make for users coming from version
+control systems with an "update and commit"-style workflow.
+
+        1. git pull
+        2. resolve conflicts
+        3. git pull
+
+Step 3 overrides MERGE_HEAD, starting a new merge with dirty index.
+IOW, probably not what the user intented. Instead, refuse to merge
+again if a merge is in progress and present the user with his options.
+
+"git reset --hard" is not suggested, because it potentially removes
+changes unrelated to the merge (if the work tree was dirty prior to
+the merge).
+
+Reported-by: Dave Olszewski <cxreg@pobox.com>
 Signed-off-by: Clemens Buchacher <drizzd@aon.at>
 ---
 
-While we're at it, here's a trivial cleanup for http-push. Applies to both
-master and pu.
+Ok, since I'm not seeing any more objections. Here's the code.
 
 Clemens
 
- http-push.c |   21 +++++----------------
- 1 files changed, 5 insertions(+), 16 deletions(-)
+ builtin-merge.c |   10 ++++++++--
+ 1 files changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/http-push.c b/http-push.c
-index 45e8a69..43e2dda 100644
---- a/http-push.c
-+++ b/http-push.c
-@@ -1884,17 +1884,6 @@ static void get_dav_remote_heads(void)
- 	remote_ls("refs/", (PROCESS_FILES | PROCESS_DIRS | RECURSIVE), process_ls_ref, NULL);
- }
+diff --git a/builtin-merge.c b/builtin-merge.c
+index 0b58e5e..8169ded 100644
+--- a/builtin-merge.c
++++ b/builtin-merge.c
+@@ -834,10 +834,16 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
+ 	struct commit_list *common = NULL;
+ 	const char *best_strategy = NULL, *wt_strategy = NULL;
+ 	struct commit_list **remotes = &remoteheads;
++	int unmerged;
  
--static int is_zero_sha1(const unsigned char *sha1)
--{
--	int i;
--
--	for (i = 0; i < 20; i++) {
--		if (*sha1++)
--			return 0;
--	}
--	return 1;
--}
--
- static void add_remote_info_ref(struct remote_ls_ctx *ls)
- {
- 	struct strbuf *buf = (struct strbuf *)ls->userData;
-@@ -2120,13 +2109,13 @@ static int delete_remote_branch(char *pattern, int force)
- 		/* Remote HEAD must resolve to a known object */
- 		if (symref)
- 			return error("Remote HEAD symrefs too deep");
--		if (is_zero_sha1(head_sha1))
-+		if (is_null_sha1(head_sha1))
- 			return error("Unable to resolve remote HEAD");
- 		if (!has_sha1_file(head_sha1))
- 			return error("Remote HEAD resolves to object %s\nwhich does not exist locally, perhaps you need to fetch?", sha1_to_hex(head_sha1));
+ 	setup_work_tree();
+-	if (read_cache_unmerged())
+-		die("You are in the middle of a conflicted merge.");
++	unmerged = read_cache_unmerged();
++	if (unmerged || file_exists(git_path("MERGE_HEAD")))
++		die("You are in the middle of a %smerge. To complete "
++			"the merge %scommit the changes. To abort, "
++			"use \"git reset HEAD\".",
++			unmerged ? "conflicted " : "",
++			unmerged ? "resolve conflicts and " : "");
  
- 		/* Remote branch must resolve to a known object */
--		if (is_zero_sha1(remote_ref->old_sha1))
-+		if (is_null_sha1(remote_ref->old_sha1))
- 			return error("Unable to resolve remote branch %s",
- 				     remote_ref->name);
- 		if (!has_sha1_file(remote_ref->old_sha1))
-@@ -2334,7 +2323,7 @@ int main(int argc, char **argv)
- 		if (!ref->peer_ref)
- 			continue;
- 
--		if (is_zero_sha1(ref->peer_ref->new_sha1)) {
-+		if (is_null_sha1(ref->peer_ref->new_sha1)) {
- 			if (delete_remote_branch(ref->name, 1) == -1) {
- 				error("Could not remove %s", ref->name);
- 				rc = -4;
-@@ -2350,7 +2339,7 @@ int main(int argc, char **argv)
- 		}
- 
- 		if (!force_all &&
--		    !is_zero_sha1(ref->old_sha1) &&
-+		    !is_null_sha1(ref->old_sha1) &&
- 		    !ref->force) {
- 			if (!has_sha1_file(ref->old_sha1) ||
- 			    !ref_newer(ref->peer_ref->new_sha1,
-@@ -2400,7 +2389,7 @@ int main(int argc, char **argv)
- 		old_sha1_hex = NULL;
- 		commit_argv[1] = "--objects";
- 		commit_argv[2] = new_sha1_hex;
--		if (!push_all && !is_zero_sha1(ref->old_sha1)) {
-+		if (!push_all && !is_null_sha1(ref->old_sha1)) {
- 			old_sha1_hex = xmalloc(42);
- 			sprintf(old_sha1_hex, "^%s",
- 				sha1_to_hex(ref->old_sha1));
+ 	/*
+ 	 * Check if we are _not_ on a detached HEAD, i.e. if there is a
 -- 
 1.6.3.1.147.g637c3
