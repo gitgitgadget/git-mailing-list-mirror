@@ -1,101 +1,71 @@
-From: Daniel Mierswa <impulze@impulze.org>
-Subject: whitespace ignoring during diff -M
-Date: Sun, 31 May 2009 22:28:50 +0200
-Message-ID: <4A22E882.8020500@impulze.org>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: Resetting working files
+Date: Sun, 31 May 2009 23:30:10 +0200
+Message-ID: <81b0412b0905311430v7874013cm6db84bd12d749134@mail.gmail.com>
+References: <DA26600008CE404B831978F6EBB31C6B@HPLAPTOP>
+	 <4A229B9A.6060807@dirk.my1.cc>
+	 <20090531162515.GB8129@m62s10.vlinux.de>
+	 <20090531163225.GE3674@debian.b2j>
+	 <9719867c0905310950x153db8efw179a8a10ac3f4640@mail.gmail.com>
+	 <20090531173932.GA13856@vidovic>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun May 31 22:34:07 2009
+Cc: Aaron Gray <aaronngray.lists@googlemail.com>,
+	Peter Baumann <waste.manager@gmx.de>,
+	Git Mailing List <git@vger.kernel.org>
+To: Nicolas Sebrecht <nicolas.s.dev@gmx.fr>
+X-From: git-owner@vger.kernel.org Sun May 31 23:30:25 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MArjL-0005yF-4F
-	for gcvg-git-2@gmane.org; Sun, 31 May 2009 22:34:07 +0200
+	id 1MAsbo-0001PD-MI
+	for gcvg-git-2@gmane.org; Sun, 31 May 2009 23:30:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753355AbZEaUd4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 31 May 2009 16:33:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753346AbZEaUd4
-	(ORCPT <rfc822;git-outgoing>); Sun, 31 May 2009 16:33:56 -0400
-Received: from eta-ori.net ([91.121.142.51]:47976 "EHLO orion.eta-ori.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753239AbZEaUdz (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 31 May 2009 16:33:55 -0400
-X-Greylist: delayed 619 seconds by postgrey-1.27 at vger.kernel.org; Sun, 31 May 2009 16:33:55 EDT
-Received: by orion.eta-ori.net (Postfix, from userid 1006)
-	id 0EF1648CEDE; Sun, 31 May 2009 22:23:38 +0200 (CEST)
-X-Spam-Checker-Version: SpamAssassin 3.2.5-gr0 (2008-06-10) on
-	orion.eta-ori.net
-X-Spam-Level: 
-X-Spam-Status: No, score=-0.0 required=8.0 tests=NO_RELAYS autolearn=ham
-	version=3.2.5-gr0
-Received: from [IPv6:2a01:198:229:0:217:31ff:fe81:8c8] (istari.fallback.kleinerfeigling.org [IPv6:2a01:198:229:0:217:31ff:fe81:8c8])
-	by orion.eta-ori.net (Postfix) with ESMTPSA id 93D3048CED3
-	for <git@vger.kernel.org>; Sun, 31 May 2009 22:23:37 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.19 (X11/20090522)
-X-Enigmail-Version: 0.95.7
-OpenPGP: id=ADF32F97
+	id S1752300AbZEaVaM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 31 May 2009 17:30:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752161AbZEaVaL
+	(ORCPT <rfc822;git-outgoing>); Sun, 31 May 2009 17:30:11 -0400
+Received: from mail-bw0-f222.google.com ([209.85.218.222]:56742 "EHLO
+	mail-bw0-f222.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751685AbZEaVaK (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 31 May 2009 17:30:10 -0400
+Received: by bwz22 with SMTP id 22so7136846bwz.37
+        for <git@vger.kernel.org>; Sun, 31 May 2009 14:30:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=cix+sk/AbEMCrzyN6A3zZzA7CSsYD5tCIKU18q6PsT0=;
+        b=L9khvCyYGTww7g4CTtlmYM20KF8yt07w/t3Y11j4oi6f/xYx63LRPV42EZXJ33hP1m
+         ftpR9O/5fY6woeP9qPFLiTy3wDg8dFJlZYT4viizeSmtCobBMhYN2VzD29toBoagD4qk
+         rhAr2TK/kTls/WPnLb9z9Xn8se3MmbUCzrp2c=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=hC7tg82xA5Iq6SSP1p2DXzuTznULJxzt8kwUcJBFmxcP73QXPmd2d772dJgwegYyat
+         yGN3mKaJvSvQS/MvmWKsfgfWpz7f+XPf4e9p6qzKCOPILwA2YCENvIFGhYkz9tr6B1FH
+         /kKp3PPEN/9gvgEVGjbY7yJTEG3rVbvQoQu5k=
+Received: by 10.204.117.141 with SMTP id r13mr4990070bkq.207.1243805411052; 
+	Sun, 31 May 2009 14:30:11 -0700 (PDT)
+In-Reply-To: <20090531173932.GA13856@vidovic>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120431>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120432>
 
-Hi list,
-I was told to try it here after visiting #git/Freenode
-I want git to think that the diff of two branches where filenames and
-whitespace amount differ are the same.
-The following is a snippet from my terminal with output, is there a
-chance to make git think that those are equal?
+2009/5/31 Nicolas Sebrecht <nicolas.s.dev@gmx.fr>:
+> The 31/05/09, Aaron Gray wrote:
+>>
+>> I think index is HEAD or a revision hash. Am I correct ?
+>
+> HEAD is a reference to a branch name:
 
-impulze@istari ~/gittest $ git init
-Initialized empty Git repository in /home/impulze/gittest/.git/
-impulze@istari ~/gittest $ touch initial
-impulze@istari ~/gittest $ git add initial && git commit initial -m
-'initial commit'
-[master (root-commit) 7b67dcd] initial commit
- 0 files changed, 0 insertions(+), 0 deletions(-)
- create mode 100644 initial
-impulze@istari ~/gittest $ git checkout -b another
-Switched to a new branch 'another'
-impulze@istari ~/gittest $ echo -e "   abcdef   \n   ghijkl " > file.cc
-impulze@istari ~/gittest $ unix2dos -a -u file.cc
-impulze@istari ~/gittest $ git add file.cc && git commit file.cc -m
-'another commit'
-[another 37826f4] another commit
- 1 files changed, 2 insertions(+), 0 deletions(-)
- create mode 100644 file.cc
-impulze@istari ~/gittest $ git checkout master
-Switched to branch 'master'
-impulze@istari ~/gittest $ echo -e "\t\tabcdef\t\n\tghijkl\t" > file.c
-impulze@istari ~/gittest $ git add file.c && git commit file.c -m
-'master commit'
-[master f9f0ac5] master commit
- 1 files changed, 2 insertions(+), 0 deletions(-)
- create mode 100644 file.c
-impulze@istari ~/gittest $ git --no-pager diff another -M -w
-diff --git a/file.c b/file.c
-new file mode 100644
-index 0000000..18364be
---- /dev/null
-+++ b/file.c
-@@ -0,0 +1,2 @@
-+               abcdef
-+       ghijkl
-diff --git a/file.cc b/file.cc
-deleted file mode 100644
-index 1a303ea..0000000
---- a/file.cc
-+++ /dev/null
-@@ -1,2 +0,0 @@
--   abcdef
--   ghijkl
+Not really. Try "git checkout HEAD^" and run cat .git/HEAD
 
-
--- 
-Mierswa, Daniel
-
-If you still don't like it, that's ok: that's why I'm boss. I simply
-know better than you do.
-               --- Linus Torvalds, comp.os.linux.advocacy, 1996/07/22
+It is more a pointer to a commit. The pointers to a commit
+in git are allowed to be indirect by referencing other pointers.
