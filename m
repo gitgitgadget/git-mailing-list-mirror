@@ -1,66 +1,74 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: Re: "exclude" and ".gitignore" for everyone
-Date: Mon, 01 Jun 2009 16:36:30 +0200
-Message-ID: <vpqy6scc975.fsf@bauges.imag.fr>
-References: <h00m32$gs0$2@ger.gmane.org>
-	<E6F58E6B-4ECF-4A55-9249-9A8BBFBDBC24@silverinsanity.com>
+From: Brandon Casey <casey@nrlssc.navy.mil>
+Subject: Re: What's cooking in git.git (May 2009, #04; Sun, 31)
+Date: Mon, 01 Jun 2009 11:05:16 -0500
+Message-ID: <iHgBjpVVWguPJEPP4Ongi5IDGr3NDPAyUgAg5Ticr0KHPFiQTrqgpg@cipher.nrlssc.navy.mil>
+References: <7v63fgpwyd.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Nikos Chantziaras <realnc@arcor.de>, git@vger.kernel.org
-To: Brian Gernhardt <benji@silverinsanity.com>
-X-From: git-owner@vger.kernel.org Mon Jun 01 16:42:19 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Jun 01 18:05:48 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MB8iQ-0000gz-UG
-	for gcvg-git-2@gmane.org; Mon, 01 Jun 2009 16:42:19 +0200
+	id 1MBA1D-0002Ws-Of
+	for gcvg-git-2@gmane.org; Mon, 01 Jun 2009 18:05:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752442AbZFAOmK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 1 Jun 2009 10:42:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752266AbZFAOmJ
-	(ORCPT <rfc822;git-outgoing>); Mon, 1 Jun 2009 10:42:09 -0400
-Received: from imag.imag.fr ([129.88.30.1]:38029 "EHLO imag.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751983AbZFAOmI (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Jun 2009 10:42:08 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id n51Ec4Ox028575
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Mon, 1 Jun 2009 16:38:04 +0200 (CEST)
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
-	(Exim 4.50)
-	id 1MB8dW-0004he-AJ; Mon, 01 Jun 2009 16:37:14 +0200
-Received: from moy by bauges.imag.fr with local (Exim 4.63)
-	(envelope-from <moy@imag.fr>)
-	id 1MB8co-0001p1-Nz; Mon, 01 Jun 2009 16:36:30 +0200
-In-Reply-To: <E6F58E6B-4ECF-4A55-9249-9A8BBFBDBC24@silverinsanity.com> (Brian Gernhardt's message of "Mon\, 1 Jun 2009 09\:58\:11 -0400")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.0.91 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Mon, 01 Jun 2009 16:38:04 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
+	id S1753339AbZFAQFi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 1 Jun 2009 12:05:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752966AbZFAQFh
+	(ORCPT <rfc822;git-outgoing>); Mon, 1 Jun 2009 12:05:37 -0400
+Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:56746 "EHLO
+	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752560AbZFAQFh (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Jun 2009 12:05:37 -0400
+Received: by mail.nrlssc.navy.mil id n51G5HlE006151; Mon, 1 Jun 2009 11:05:17 -0500
+In-Reply-To: <7v63fgpwyd.fsf@alter.siamese.dyndns.org>
+X-OriginalArrivalTime: 01 Jun 2009 16:05:17.0715 (UTC) FILETIME=[C1AD7630:01C9E2D2]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120473>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120474>
 
-Brian Gernhardt <benji@silverinsanity.com> writes:
+Junio C Hamano wrote:
+> Here are the topics that have been cooking.  Commits prefixed with '-' are
+> only in 'pu' while commits prefixed with '+' are in 'next'.  The ones
+> marked with '.' do not appear in any of the branches, but I am still
+> holding onto them.
+> 
+> The topics list the commits in reverse chronological order.  The topics
+> meant to be merged to the maintenance series have "maint-" in their names.
+> 
+> ----------------------------------------------------------------
+> [New Topics]
+> 
+> All of these are soon to be in 'next'.
+> 
+> * bc/solaris (Wed May 27 21:17:08 2009 -0500) 4 commits
+>  - Makefile: introduce SANE_TOOL_PATH for prepending required
+>    elements to PATH
+>  - Makefile: add section for SunOS 5.7
+>  - Makefile: add NEEDS_RESOLV to optionally add -lresolv to compile
+>    arguments
+>  - Makefile: use /usr/ucb/install on SunOS platforms rather than
+>    ginstall
 
->  Generally, I'd suggest putting [...] your editor's garbage in
-> exclude.
+If you haven't already merged this to 'next', then give me some time
+and I'll resubmit a new series based on the feedback from you and
+Jeff.
 
-better: put them in a user-wide ignore file.
+Jeff pointed out that HSTRERROR only has any effect when NO_IPV6 is
+set.  So, NEEDS_RESOLV is really only necessary on Solaris versions
+which must set NO_IPV6.
 
-in ~/.gitconfig:
+You suggested changes to git-compat-util.h for handling compiling on
+Solaris with/without c99 compiler.
 
-[core]
-        excludesfile = /home/yourlogin/.gitignore
+The bottom patch that switches to /usr/ucb/install is fine as-is.
 
-then put whatever you want in $HOME/.gitignore.
+If the series is already applied, no big deal, I'll just work on top of that.
 
--- 
-Matthieu
+-brandon
