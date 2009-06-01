@@ -1,72 +1,72 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 03/11 v2] Work around a regression in Windows 7, causing
- erase_in_line() to crash sometimes
-Date: Mon, 1 Jun 2009 12:41:40 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.0906011241100.26154@pacific.mpi-cbg.de>
-References: <4A22C674.603@kdbg.org> <1243836256-11958-1-git-send-email-prohaska@zib.de> <alpine.DEB.1.00.0906011025080.26154@pacific.mpi-cbg.de> <B70B2E5A-970F-4FB1-A109-84EE199A15DF@zib.de>
+From: Nick Woolley <nickwoolley@yahoo.co.uk>
+Subject: Re: [RFC] git-cvs script
+Date: Mon, 01 Jun 2009 11:47:10 +0100
+Message-ID: <4A23B1AE.1070000@yahoo.co.uk>
+References: <4A213793.3030205@yahoo.co.uk> <7vr5y6xj2a.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Johannes Sixt <j6t@kdbg.org>
-To: Steffen Prohaska <prohaska@zib.de>
-X-From: git-owner@vger.kernel.org Mon Jun 01 12:41:09 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Jun 01 12:46:58 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MB4wz-00033l-EG
-	for gcvg-git-2@gmane.org; Mon, 01 Jun 2009 12:41:05 +0200
+	id 1MB52g-0004ps-7M
+	for gcvg-git-2@gmane.org; Mon, 01 Jun 2009 12:46:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756431AbZFAKk5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 1 Jun 2009 06:40:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755902AbZFAKk4
-	(ORCPT <rfc822;git-outgoing>); Mon, 1 Jun 2009 06:40:56 -0400
-Received: from mail.gmx.net ([213.165.64.20]:37812 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752809AbZFAKk4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Jun 2009 06:40:56 -0400
-Received: (qmail invoked by alias); 01 Jun 2009 10:40:56 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp015) with SMTP; 01 Jun 2009 12:40:56 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18Axz9Dd98AU93ca8cs6fVtMtRGTUVfFj+AhAmZ8I
-	ERvUGugE48I7bO
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <B70B2E5A-970F-4FB1-A109-84EE199A15DF@zib.de>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.5600000000000001
+	id S1756625AbZFAKqu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 1 Jun 2009 06:46:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756563AbZFAKqt
+	(ORCPT <rfc822;git-outgoing>); Mon, 1 Jun 2009 06:46:49 -0400
+Received: from udon.noodlefactory.co.uk ([80.68.88.167]:34158 "EHLO
+	udon.noodlefactory.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756396AbZFAKqt (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Jun 2009 06:46:49 -0400
+Received: from 87-194-154-6.bethere.co.uk ([87.194.154.6] helo=[192.168.0.101])
+	by udon.noodlefactory.co.uk with esmtpsa (TLS-1.0:DHE_RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.63)
+	(envelope-from <nickwoolley@yahoo.co.uk>)
+	id 1MB52X-0001O7-MO; Mon, 01 Jun 2009 11:46:49 +0100
+User-Agent: Thunderbird 2.0.0.21 (X11/20090318)
+In-Reply-To: <7vr5y6xj2a.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120458>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120459>
 
-Hi,
-
-On Mon, 1 Jun 2009, Steffen Prohaska wrote:
-
-> On Jun 1, 2009, at 10:25 AM, Johannes Schindelin wrote:
+Junio C Hamano wrote:
+> If I recall correctly, the above is in line with the original spirit of
+> how git-cvsexportcommit was envisioned to be used by its original authors.
 > 
-> >On Mon, 1 Jun 2009, Steffen Prohaska wrote:
-> >
-> > >From: Johannes Schindelin <johannes.schindelin@gmx.de>
-> > >
-> > >The function FillConsoleOutputCharacterA() was pretty content in XP to take
-> > >a NULL
-> > >pointer if we did not want to store the number of written columns.  In
-> > >Windows 7,
-> > >it crashes, but only when called from within Git Bash, not from within
-> > >cmd.exe.
-> > >Go figure.
-> >
-> >Did I really have too-long lines in my commit message?
-> 
-> 
-> Yes.  See aa3abfc9852a4d4cfaa7f0042102eb56ed2e0daa on 4msysgit's devel.
-> You are author and committer.
+> That is, the import side is more or less satisfactory done in the sense
+> that it deserved a short and sweet command name, but the export side is
+> not as finished as the import side is, and you have to drive it more
+> explicitly by telling what commit to send back to the CVS side.  Building
+> on top of it so the tool keeps track of what needs to be sent, like git-svn
+> allows users to do, would be the right thing to do.
 
-My bad, then!
+Ok - thanks.
 
-Ciao,
-Dscho
+Apart from fixing significant bugs, for now I've been avoiding making any major
+changes to git-cvsexportcommit git-cvsimport, since understanding their guts
+takes a significant amount of time and effort.
+
+On the other hand, if I ever did, then currently git-cvsexportcommit and
+git-cvsimport are separate commands.  I would imagine they would want to share
+some code, like "push" and "pull" operations do in git-cvs.  Is that
+possible/encouraged in the current scheme? (e.g. "use Git::CVS" - I notice there
+is a Git.pm in the source.)  Or would this need to be done by rolling it all
+into a single command as git-svn seems to do it?
+
+>>  - Is this at all useful to anyone else in it's current form?
+> 
+> I have to admit that it won't be to me (because I do not interact with CVS
+> myself) but I don't count ;-)
+
+An enviable position to be in, sir.
+
+
+N
