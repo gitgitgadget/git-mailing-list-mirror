@@ -1,106 +1,61 @@
-From: Clemens Buchacher <drizzd@aon.at>
-Subject: [PATCH v3] refuse to merge during a merge
-Date: Mon, 1 Jun 2009 11:20:56 +0200
-Message-ID: <20090601092056.GA6933@localhost>
-References: <20090527210410.GA14742@localhost> <43d8ce650905280912q71c749bn7146210a5838a453@mail.gmail.com> <20090530083721.GA12963@localhost> <20090531104359.GA19094@localhost> <7vd49prrne.fsf@alter.siamese.dyndns.org>
+From: Nick Woolley <nickwoolley@yahoo.co.uk>
+Subject: Re: [RFC] git-cvs script
+Date: Mon, 01 Jun 2009 10:47:52 +0100
+Message-ID: <4A23A3C8.3090506@yahoo.co.uk>
+References: <4A213793.3030205@yahoo.co.uk> <b2cdc9f30905310042u592a6f5cv541055194524cce0@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Dave Olszewski <cxreg@pobox.com>,
-	John Tapsell <johnflux@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jun 01 11:21:10 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Alex Bennee <kernel-hacker@bennee.com>
+X-From: git-owner@vger.kernel.org Mon Jun 01 11:47:50 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MB3hd-0000YZ-LF
-	for gcvg-git-2@gmane.org; Mon, 01 Jun 2009 11:21:10 +0200
+	id 1MB47M-0001ty-Qz
+	for gcvg-git-2@gmane.org; Mon, 01 Jun 2009 11:47:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754721AbZFAJVB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 1 Jun 2009 05:21:01 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754632AbZFAJVA
-	(ORCPT <rfc822;git-outgoing>); Mon, 1 Jun 2009 05:21:00 -0400
-Received: from postman.fh-hagenberg.at ([193.170.124.96]:4684 "EHLO
-	mail.fh-hagenberg.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754384AbZFAJVA (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Jun 2009 05:21:00 -0400
-Received: from darc.dnsalias.org ([80.123.242.182]) by mail.fh-hagenberg.at over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
-	 Mon, 1 Jun 2009 11:21:01 +0200
-Received: from drizzd by darc.dnsalias.org with local (Exim 4.69)
-	(envelope-from <drizzd@aon.at>)
-	id 1MB3hQ-0001sA-L0; Mon, 01 Jun 2009 11:20:56 +0200
-Content-Disposition: inline
-In-Reply-To: <7vd49prrne.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-OriginalArrivalTime: 01 Jun 2009 09:21:01.0651 (UTC) FILETIME=[47EFD230:01C9E29A]
+	id S1754061AbZFAJrh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 1 Jun 2009 05:47:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753902AbZFAJrg
+	(ORCPT <rfc822;git-outgoing>); Mon, 1 Jun 2009 05:47:36 -0400
+Received: from udon.noodlefactory.co.uk ([80.68.88.167]:45269 "EHLO
+	udon.noodlefactory.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752186AbZFAJrf (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Jun 2009 05:47:35 -0400
+Received: from 87-194-154-6.bethere.co.uk ([87.194.154.6] helo=[192.168.0.101])
+	by udon.noodlefactory.co.uk with esmtpsa (TLS-1.0:DHE_RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.63)
+	(envelope-from <nickwoolley@yahoo.co.uk>)
+	id 1MB47E-00017W-FR; Mon, 01 Jun 2009 10:47:36 +0100
+User-Agent: Thunderbird 2.0.0.21 (X11/20090318)
+In-Reply-To: <b2cdc9f30905310042u592a6f5cv541055194524cce0@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120453>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120454>
 
-The following is an easy mistake to make for users coming from version
-control systems with an "update and commit"-style workflow.
+Alex Bennee wrote:
+> If this is using the inbuilt cvsps and perl then it will likely choke
+> on very large CVS repos. For some CVS tree's I've had to resort to a
+> hacked up version of parsecvs to get a conversion running.
 
-        1. git pull
-        2. resolve conflicts
-        3. git pull
+I gather cvsps has to read the whole history to be able to interpret the latest
+commits, is that right?  In which case a long history is going to generate long
+waits on each import. And possibly eat lots of memory too.
 
-Step 3 overrides MERGE_HEAD, starting a new merge with dirty index.
-IOW, probably not what the user intended. Instead, refuse to merge
-again if a merge is in progress.
+I do actually have a larger CVS tree to test it on than I have been using (it's
+about a decade's worth of changes on a production website) but I didn't want to
+set myself up for a fall by tackling it.  For now, my aim has been to keep CVS
+"out of the living room" whilst I work on the small CVS module that concerns me.
+Meanwhile, I'm hoping to convince the powers that be that CVS needs to be
+replaced, preferably with Git, before I get asked to work on something larger.
 
-Reported-by: Dave Olszewski <cxreg@pobox.com>
-Signed-off-by: Clemens Buchacher <drizzd@aon.at>
----
+However, if you can test it on your repository, and with your patched version of
+parsecvs, that would be a good thing. Especially if it works.
 
-On Sun, May 31, 2009 at 12:36:37PM -0700, Junio C Hamano wrote:
-> For example, "git merge" may learn "git merge --abort" like other commands
-> that have "attempt, stop, let the user fix up to conclude" modes of
-> operations (i.e. rebase and am), and we may suggest to use that to recover
-> in the message, instead of 'git reset'.  But that can only be used if we
-> stopped because we saw MERGE_HEAD; you definitely do not want to suggest
-> "git merge --abort" if the index is unmerged due to a conflicted rebase in
-> progress.
+Thanks,
 
-Indeed. I wasn't thinking.
-
-Clemens
-
- builtin-merge.c            |    5 ++++-
- t/t3030-merge-recursive.sh |    3 +++
- 2 files changed, 7 insertions(+), 1 deletions(-)
-
-diff --git a/builtin-merge.c b/builtin-merge.c
-index 0b58e5e..9e9bd52 100644
---- a/builtin-merge.c
-+++ b/builtin-merge.c
-@@ -836,8 +836,11 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
- 	struct commit_list **remotes = &remoteheads;
- 
- 	setup_work_tree();
-+	if (file_exists(git_path("MERGE_HEAD")))
-+		die("You have not concluded your merge. (MERGE_HEAD exists)");
- 	if (read_cache_unmerged())
--		die("You are in the middle of a conflicted merge.");
-+		die("You are in the middle of a conflicted merge."
-+				" (index unmerged)");
- 
- 	/*
- 	 * Check if we are _not_ on a detached HEAD, i.e. if there is a
-diff --git a/t/t3030-merge-recursive.sh b/t/t3030-merge-recursive.sh
-index 0de613d..9b3fa2b 100755
---- a/t/t3030-merge-recursive.sh
-+++ b/t/t3030-merge-recursive.sh
-@@ -276,6 +276,9 @@ test_expect_success 'fail if the index has unresolved entries' '
- 
- 	test_must_fail git merge "$c5" &&
- 	test_must_fail git merge "$c5" 2> out &&
-+	grep "You have not concluded your merge" out &&
-+	rm -f .git/MERGE_HEAD &&
-+	test_must_fail git merge "$c5" 2> out &&
- 	grep "You are in the middle of a conflicted merge" out
- 
- '
--- 
-1.6.3.1.147.g637c3
+N
