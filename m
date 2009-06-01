@@ -1,342 +1,194 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: What's cooking in git.git (May 2009, #04; Sun, 31)
-Date: Sun, 31 May 2009 18:24:58 -0700
-Message-ID: <7v63fgpwyd.fsf@alter.siamese.dyndns.org>
+Subject: What's in git.git (May 2009, #03; Sun, 31)
+Date: Sun, 31 May 2009 18:25:06 -0700
+Message-ID: <7vy6scoidp.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jun 01 03:28:40 2009
+X-From: git-owner@vger.kernel.org Mon Jun 01 03:50:15 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MAwKL-0005Ca-Ud
-	for gcvg-git-2@gmane.org; Mon, 01 Jun 2009 03:28:38 +0200
+	id 1MAwfD-0000ww-0l
+	for gcvg-git-2@gmane.org; Mon, 01 Jun 2009 03:50:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752939AbZFABY7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 31 May 2009 21:24:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752855AbZFABY6
-	(ORCPT <rfc822;git-outgoing>); Sun, 31 May 2009 21:24:58 -0400
-Received: from fed1rmmtao105.cox.net ([68.230.241.41]:55051 "EHLO
-	fed1rmmtao105.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752753AbZFABY6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 31 May 2009 21:24:58 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao105.cox.net
+	id S1753273AbZFABuA convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 31 May 2009 21:50:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753228AbZFABt7
+	(ORCPT <rfc822;git-outgoing>); Sun, 31 May 2009 21:49:59 -0400
+Received: from fed1rmpop109.cox.net ([68.230.241.13]:47797 "EHLO
+	fed1rmpop109.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753206AbZFABt6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 31 May 2009 21:49:58 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao103.cox.net
           (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20090601012500.CNHX20430.fed1rmmtao105.cox.net@fed1rmimpo01.cox.net>;
-          Sun, 31 May 2009 21:25:00 -0400
+          id <20090601012508.NWAB2915.fed1rmmtao103.cox.net@fed1rmimpo02.cox.net>;
+          Sun, 31 May 2009 21:25:08 -0400
 Received: from localhost ([68.225.240.211])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id yRQy1b00H4aMwMQ03RQzMq; Sun, 31 May 2009 21:24:59 -0400
-X-Authority-Analysis: v=1.0 c=1 a=n9hohcYa0b8A:10 a=9ttGZAtH5zYA:10
- a=DVJC8n9COtcj36KGD9wA:9 a=NGzsMjlTPGLQB9LHO3YA:7
- a=h2GyG4GrRINDa5fvI-mJsttAjWcA:4
+	by fed1rmimpo02.cox.net with bizsmtp
+	id yRR71b0024aMwMQ04RR7MU; Sun, 31 May 2009 21:25:07 -0400
+X-Authority-Analysis: v=1.0 c=1 a=_A0hQgEeTukA:10 a=VpRIGokqTj8A:10
+ a=joD3RMtZyvqe7IAqmCIA:9 a=_vuyuJ-2lL2bKpSFvqsA:7
+ a=mdOR74YvdzlOfFehvJOv4vvSgLIA:4
 X-CM-Score: 0.00
+X-maint-at: 6a01554e6350123c78de805d820e90f1c56e5fdc
 X-master-at: f9275c68af58e0f65e1557b5109ccbfdbbbc384a
-X-next-at: 426b5a935392df623347be0aea16bca045d44b52
 User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120438>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120439>
 
-Here are the topics that have been cooking.  Commits prefixed with '-' are
-only in 'pu' while commits prefixed with '+' are in 'next'.  The ones
-marked with '.' do not appear in any of the branches, but I am still
-holding onto them.
+A rather large-ish updates on the 'master' front.  The 'maint' has some
+fixes that should eventually produce 1.6.3.2.
 
-The topics list the commits in reverse chronological order.  The topics
-meant to be merged to the maintenance series have "maint-" in their names.
+* The 'maint' branch has these fixes since the last announcement.
 
-----------------------------------------------------------------
-[New Topics]
+Alex Riesen (5):
+  Introduce an unlink(2) wrapper which gives warning if unlink failed
+  replace direct calls to unlink(2) with unlink_or_warn
+  print unlink(2) errno in copy_or_link_directory
+  Clarify kind of conflict in merge-one-file helper
+  http-push.c::remove_locks(): fix use after free
 
-All of these are soon to be in 'next'.
+Clemens Buchacher (1):
+  fix segfault showing an empty remote
 
-* bc/solaris (Wed May 27 21:17:08 2009 -0500) 4 commits
- - Makefile: introduce SANE_TOOL_PATH for prepending required
-   elements to PATH
- - Makefile: add section for SunOS 5.7
- - Makefile: add NEEDS_RESOLV to optionally add -lresolv to compile
-   arguments
- - Makefile: use /usr/ucb/install on SunOS platforms rather than
-   ginstall
+Dave Olszewski (1):
+  merge-recursive: never leave index unmerged while recursing
 
-* nw/maint-cvsexportcommit (Fri May 29 00:23:33 2009 +0100) 1 commit
- - git-cvsexportcommit can't commit files which have been removed
-   from CVS
+Jeff King (5):
+  fix GIT_TRACE segfault with shell-quoted aliases
+  add: don't complain when adding empty project root
+  lock_ref: inform callers of unavailable ref
+  fetch: report ref storage DF errors more accurately
+  fix cat-file usage message and documentation
 
-* tr/maint-doc-stash-pop (Thu May 28 11:40:15 2009 +0200) 1 commit
- - Documentation: teach stash/pop workflow instead of stash/apply
+Jim Meyering (1):
+  format-patch let -k override a config-specified format.numbered
 
-* da/pretty-tempname (Sun May 31 01:35:52 2009 -0700) 3 commits
- - diff: generate pretty filenames in prep_temp_blob()
- - compat: add a basename() compatibility function
- - compat: add a mkstemps() compatibility function
+Johannes Schindelin (1):
+  Add NO_CROSS_DIRECTORY_HARDLINKS support to the Makefile
 
-* ak/maint-for-each-ref-no-lookup (Wed May 27 15:23:12 2009 -0400) 1 commit
- - for-each-ref: Do not lookup objects when they will not be used
+Junio C Hamano (1):
+  Prepare for 1.6.3.2
 
-* cb/match_refs_internal_tail (Wed May 27 22:13:44 2009 +0200) 1 commit
- - match_refs: search ref list tail internally
+Linus Torvalds (2):
+  Avoid unnecessary 'lstat()' calls in 'get_stat_data()'
+  Teach 'git checkout' to preload the index contents
 
-I need to replace this with the new iteration...
+Michael J Gruber (1):
+  merge-options.txt: Clarify merge --squash
 
-* gb/am-foreign (Wed May 27 11:25:19 2009 +0200) 4 commits
- - git-am: refactor 'cleaning up and aborting'
- - git-am foreign patch support: StGIT support
- - git-am foreign patch support: autodetect some patch formats
- - git-am foreign patch support: introduce patch_format
+Nicolas Pitre (1):
+  allow OFS_DELTA objects during a push
 
-----------------------------------------------------------------
-[Graduated to "master"]
 
-* sb/opt-filename (Sat May 23 11:53:13 2009 -0700) 2 commits
- + parse-opts: add OPT_FILENAME and transition builtins
- + parse-opts: prepare for OPT_FILENAME
+* The 'master' branch has these since the last announcement
+  in addition to the above.
 
-* rs/maint-grep-word-regexp-fix (Sat May 23 13:45:26 2009 +0200) 1 commit
- + grep: fix word-regexp at the beginning of lines
+Benjamin Kramer (1):
+  imap-send: add support for IPv6
 
-* mm/apply-double-slash (Thu May 21 14:25:11 2009 +0200) 1 commit
- + apply: handle filenames with double slashes better
+Bj=C3=B6rn Steinbrink (1):
+  git-apply(1): Clarify that one can select where to apply the patch
 
-* bc/old-iconv (Fri May 22 18:47:06 2009 -0500) 10 commits
- + t8005: convert CP1251 character set to ISO8859-5
- + t8005: use more portable character encoding names
- + t5100: use ancient encoding syntax for backwards compatibility
- + t9301: use ISO8859-1 rather than ISO-8859-1
- + t3901: Use ISO8859-1 instead of ISO-8859-1 for backward
-   compatibility
- + t3901: avoid negation on right hand side of '|'
- + builtin-mailinfo.c: use "ISO8859-1" instead of "latin1" as
-   fallback encoding
- + builtin-mailinfo.c: compare character encodings case insensitively
- + Use 'UTF-8' rather than 'utf-8' everywhere for backward
-   compatibility
- + t3900: use ancient iconv names for backward compatibility
+Brandon Casey (11):
+  t3900: use ancient iconv names for backward compatibility
+  Use 'UTF-8' rather than 'utf-8' everywhere for backward compatibility
+  builtin-mailinfo.c: compare character encodings case insensitively
+  builtin-mailinfo.c: use "ISO8859-1" instead of "latin1" as fallback
+    encoding
+  t3901: avoid negation on right hand side of '|'
+  t3901: Use ISO8859-1 instead of ISO-8859-1 for backward compatibility
+  t9301: use ISO8859-1 rather than ISO-8859-1
+  t5100: use ancient encoding syntax for backwards compatibility
+  t8005: use more portable character encoding names
+  t8005: convert CP1251 character set to ISO8859-5
+  t8005: fix typo, it's ISO-8859-5, not KOI8-R
 
-* sb/show-branch-parse-options (Thu May 21 00:33:18 2009 -0700) 3 commits
- + show-branch: migrate to parse-options API
- + Merge branch 'mh/show-branch-color' into sb/show-branch-parse-
-   options
- + parse-options: add PARSE_OPT_LITERAL_ARGHELP for complicated
-   argh's
+Christian Couder (3):
+  bisect: rework some rev related functions to make them more reusable
+  commit: add function to unparse a commit and its parents
+  bisect: check ancestors without forking a "git rev-list" process
 
-* sb/maint-1.6.2-opt-filename-fix (Sat May 23 11:53:11 2009 -0700) 2 commits
- + apply, fmt-merge-msg: use relative filenames
- + commit: -F overrides -t
+Clemens Buchacher (1):
+  http-push: reuse existing is_null_ref
 
-* jc/solaris-0811 (Fri May 22 22:55:31 2009 -0700) 2 commits
- - OpenSolaris 200811 (SunOS 5.11) does not want OLD_ICONV
- - Teach Solaris that _XOPEN_SOURCE=600 really menas XPG6
+Eric Wong (1):
+  git-svn: refuse to dcommit non-UTF-8 messages
 
-* mw/send-email (Mon Apr 13 13:23:52 2009 -0500) 6 commits
- + send-email: Remove superfluous `my $editor = ...'
- + send-email: 'References:' should only reference what is sent
- + send-email: Handle "GIT:" rather than "GIT: " during --compose
- + Docs: send-email: --smtp-server-port can take symbolic ports
- + Docs: send-email: Refer to CONFIGURATION section for
-   sendemail.multiedit
- + Docs: send-email: Put options back into alphabetical order
+Jeff King (2):
+  convert bare readlink to strbuf_readlink
+  git-add: no need for -f when resolving a conflict in already tracked =
+path
 
-* jc/mktree (Thu May 14 15:49:10 2009 -0700) 9 commits
- + mktree: validate entry type in input
- + mktree --batch: build more than one tree object
- + mktree --missing: updated usage message and man page
- + mktree --missing: allow missing objects
- + t1010: add mktree test
- + mktree: do not barf on a submodule commit
- + builtin-mktree.c: use a helper function to handle one line of
-   input
- + mktree: use parse-options
- + build-in git-mktree
+Jim Meyering (1):
+  post-receive-email: hooks.showrev: show how to include both web link =
+and
+    patch
 
-* jc/maint-add-p-coalesce-fix (Sat May 16 10:48:23 2009 -0700) 2 commits
- + Revert "git-add--interactive: remove hunk coalescing"
- + Splitting a hunk that adds a line at the top fails in "add -p"
+Johannes Sixt (1):
+  t3701: ensure correctly set up repository after skipped tests
 
-* sb/format-patch-parseopt (Sat May 16 02:24:46 2009 -0700) 1 commit
- + format-patch: migrate to parse-options API
+Josh Micich (3):
+  mktree --missing: updated usage message and man page
+  mktree --batch: build more than one tree object
+  mktree: validate entry type in input
 
-* cc/bisect (Sun May 17 17:36:46 2009 +0200) 3 commits (early part)
- + bisect: check ancestors without forking a "git rev-list" process
- + commit: add function to unparse a commit and its parents
- + bisect: rework some rev related functions to make them more
-   reusable
+Junio C Hamano (11):
+  build-in git-mktree
+  mktree: use parse-options
+  builtin-mktree.c: use a helper function to handle one line of input
+  mktree: do not barf on a submodule commit
+  t1010: add mktree test
+  mktree --missing: allow missing objects
+  Revert "git-add--interactive: remove hunk coalescing"
+  Teach Solaris that _XOPEN_SOURCE=3D600 really menas XPG6
+  OpenSolaris 200811 (SunOS 5.11) does not want OLD_ICONV
+  Update draft release notes to 1.6.4
+  completion: fix PS1 display during an AM on detached HEAD
 
-----------------------------------------------------------------
-[Stalled and may need help and prodding to go forward]
+Matt Graham (1):
+  Splitting a hunk that adds a line at the top fails in "add -p"
 
-* jh/notes (Sat May 16 13:44:17 2009 +0200) 5 commits
- - Teach "-m <msg>" and "-F <file>" to "git notes edit"
- - Add an expensive test for git-notes
- - Speed up git notes lookup
- - Add a script to edit/inspect notes
- - Introduce commit notes
+Michael Witten (6):
+  Docs: send-email: Put options back into alphabetical order
+  Docs: send-email: Refer to CONFIGURATION section for sendemail.multie=
+dit
+  Docs: send-email: --smtp-server-port can take symbolic ports
+  send-email: Handle "GIT:" rather than "GIT: " during --compose
+  send-email: 'References:' should only reference what is sent
+  send-email: Remove superfluous `my $editor =3D ...'
 
-Dscho asked about the performance implications of this; I do not think I
-saw any progress on that yet...
+Michal Marek (1):
+  apply: handle filenames with double slashes better
 
-* ph/submodule-rebase (Fri Apr 24 09:06:38 2009 +1000) 1 commit
- + git-submodule: add support for --rebase.
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy (1):
+  t/t3400-rebase.sh: add more tests to help migrating git-rebase.sh to =
+C
 
-There was a discussion on --rebase vs --merge and needs for unified
-configuration variable handling for this patch...
+Ren=C3=A9 Scharfe (1):
+  grep: fix word-regexp at the beginning of lines
 
-* lt/read-directory (Fri May 15 12:01:29 2009 -0700) 3 commits
- - Add initial support for pathname conversion to UTF-8
- - read_directory(): infrastructure for pathname character set
-   conversion
- - Add 'fill_directory()' helper function for directory traversal
+SZEDER G=C3=A1bor (1):
+  bash: remove always true if statement from __git_ps1()
 
-Before adding the real "conversion", this needs a few real fixups, I
-think.  For example there is one hardcoded array that is used without
-bounds check.
+Stephen Boyd (10):
+  format-patch: migrate to parse-options API
+  parse-options: add PARSE_OPT_LITERAL_ARGHELP for complicated argh's
+  show-branch: migrate to parse-options API
+  commit: -F overrides -t
+  apply, fmt-merge-msg: use relative filenames
+  parse-opts: prepare for OPT_FILENAME
+  parse-opts: add OPT_FILENAME and transition builtins
+  t5500: Modernize test style
+  t9120: don't expect failure with SVN_HTTPD_PORT unset
+  config.txt: document add.ignore-errors
 
-* ar/maint-1.6.2-merge-recursive-d-f (Mon May 11 21:25:36 2009 +0200) 2 commits
- - Fix for a merge where a branch has an F->D transition
- - Add a reminder test case for a merge with F/D transition
-
-Although the reported breakage is covered with the patch, Alex feels the
-solution unsatisfactory. Cleaning up D/F conflict handling in merge-recursive
-may be long overdue but seems to be a hard problem.
-
-* ps/blame (Thu Mar 12 21:30:03 2009 +1100) 1 commit
- - blame.c: start libifying the blame infrastructure
-
-A few minor point remains in this initial one.  I hate to do these minor
-fix-ups myself, but I may end up doing so...
-
-* jc/log-tz (Tue Mar 3 00:45:37 2009 -0800) 1 commit
- - Allow --date=local --date=other-format to work as expected
-
-The one I posted had a few corner-case bugs that was caught with the test
-suite; this one has them fixed.  People did not like the UI so it is kept
-out of 'next'
-
-* jc/merge-convert (Mon Jan 26 16:45:01 2009 -0800) 1 commit
- - git-merge-file: allow converting the results for the work tree
-
-This is a feature waiting for a user.
-
-We did not give scripted Porcelains a way to say "this temporary file I am
-using for merging is for this path, so use the core.autocrlf and attributes
-rules for that final path".  Instead, merge-file simply wrote out the
-data in the canonical repository representation.
-
-rerere has the same issue, but it is a lot worse.  It reads the three
-files (preimage, postimage and thisimage) from the work tree in the work
-tree representation, merges them without converting them to the canonical
-representation first but inserts the conflict markers with the canonical
-representation and writes the resulting mess out.  It needs to be fixed to
-read with convert_to_git(), merge them while they are still in the
-canonical representation and possibly add conflict markers, and then write
-the results out after convert_to_working_tree().  It also needs to write
-in binary mode as well.
-
-* db/foreign-scm (Tue Mar 24 23:04:12 2009 -0400) 3 commits
- - Add option for using a foreign VCS
- - Document details of transport function APIs
- - Allow late reporting of fetched hashes
-
-* hv/cvsps-tests (Sun Apr 5 01:40:50 2009 -0700) 8 commits
- - t/t9600: remove exit after test_done
- - cvsimport: extend testcase about patchset order to contain
-   branches
- - cvsimport: add test illustrating a bug in cvsps
- - Add a test of "git cvsimport"'s handling of tags and branches
- - Add some tests of git-cvsimport's handling of vendor branches
- - Test contents of entire cvsimported "master" tree contents
- - Use CVS's -f option if available (ignore user's ~/.cvsrc file)
- - Start a library for cvsimport-related tests
-
-----------------------------------------------------------------
-[Actively cooking]
-
-* da/araxis-mergetool (Sun May 24 00:24:41 2009 +0000) 1 commit
- + mergetool--lib: add support for araxis merge
-
-* jc/cache-tree (Fri May 22 23:14:25 2009 -0700) 5 commits
- + Avoid "diff-index --cached" optimization under --find-copies-
-   harder
- + Optimize "diff-index --cached" using cache-tree
- + t4007: modernize the style
- + cache-tree.c::cache_tree_find(): simplify internal API
- + write-tree --ignore-cache-tree
-
-* cb/maint-1.6.0-xdl-merge-fix (Mon May 25 01:21:14 2009 +0100) 2 commits
- - Change xdl_merge to generate output even for null merges
- - t6023: merge-file fails to output anything for a degenerate merge
-
-Soon in 'next';
-
-* jc/diff-whitespace-only-status (Sat May 23 01:15:35 2009 -0700) 2 commits
- - diff: Rename QUIET internal option to QUICK
- - diff: change semantics of "ignore whitespace" options
-
-* cc/bisect (Thu May 28 23:21:16 2009 +0200) 2 commits
- - bisect: display first bad commit without forking a new process
- - bisect: drop unparse_commit() and use clear_commit_marks()
-
-Soon in 'next';
-
-* rc/http-push (Sat May 30 01:59:50 2009 +0800) 21 commits
- - http*: add helper methods for fetching objects (loose)
- - http*: add helper methods for fetching packs
- - http: use new http API in fetch_index()
- - http*: add http_get_info_packs
- - Use the new http API in fetch_symref()
- - Use the new http API in update_remote_info_refs()
- - Use the new http API in http_fetch_ref()
- - Use the new http API in get_refs_via_curl()
- - Two new functions for the http API
- - http: create function end_url_with_slash
- - http*: move common variables and macros to http.[ch]
- - Some cleanup in get_refs_via_curl()
- - Don't expect verify_pack() callers to set pack_size
- - http-push: do not SEGV after fetching a bad pack idx file
- - http*: copy string returned by sha1_to_hex
- - http-walker: verify remote packs
- - http-push, http-walker: style fixes
- - http-push: fix missing "#ifdef USE_CURL_MULTI" around
-   "is_running_queue"
- - http-push: send out fetch requests on queue
- - t5540-http-push: test fetching of packed objects
- - t5540-http-push: test fetching of loose objects
-
-Updated (but not yet with the "slot->local = NULL" patch)
-
-* cc/replace (Wed May 27 07:14:09 2009 +0200) 14 commits
- - t6050: check pushing something based on a replaced commit
- - Documentation: add documentation for "git replace"
- - Add git-replace to .gitignore
- - builtin-replace: use "usage_msg_opt" to give better error messages
- - parse-options: add new function "usage_msg_opt"
- - builtin-replace: teach "git replace" to actually replace
- - Add new "git replace" command
- - environment: add global variable to disable replacement
- - mktag: call "check_sha1_signature" with the replacement sha1
- - replace_object: add a test case
- - object: call "check_sha1_signature" with the replacement sha1
- - sha1_file: add a "read_sha1_file_repl" function
- - replace_object: add mechanism to replace objects found in
-   "refs/replace/"
- - refs: add a "for_each_replace_ref" function
-
-Rebased to master.
-
-----------------------------------------------------------------
-[On Hold]
-
-* jc/deny-delete-current-1.7.0 (Mon Feb 9 00:19:46 2009 -0800) 1 commit
- - receive-pack: default receive.denyDeleteCurrent to refuse
-
-* jc/refuse-push-to-current-1.7.0 (Wed Feb 11 02:28:03 2009 -0800) 1 commit
- - Refuse updating the current branch in a non-bare repository via
-   push
-
-These are for 1.7.0, but the messages when they trigger together may need
-to be rethought.
+Thomas Rast (1):
+  Documentation: teach stash/pop workflow instead of stash/apply
