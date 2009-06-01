@@ -1,74 +1,79 @@
-From: Marcelo de Moraes Serpa <celoserpa@gmail.com>
-Subject: Re: Spreading .gitignore rules to svn:ignore and keeping them in sync
-Date: Mon, 1 Jun 2009 00:10:34 -0500
-Message-ID: <1e5bcefd0905312210l60497a0p2d84795b1cb84420@mail.gmail.com>
-References: <1e5bcefd0905291623v6d90d9acv92bdaa05b0e72ee9@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jun 01 07:10:44 2009
+From: Steffen Prohaska <prohaska@zib.de>
+Subject: [PATCH 03/11 v2] Work around a regression in Windows 7, causing erase_in_line() to crash sometimes
+Date: Mon,  1 Jun 2009 08:04:16 +0200
+Message-ID: <1243836256-11958-1-git-send-email-prohaska@zib.de>
+References: <4A22C674.603@kdbg.org>
+Cc: git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Johannes Sixt <j6t@kdbg.org>,
+	Johannes Schindelin <johannes.schindelin@gmx.de>,
+	Steffen Prohaska <prohaska@zib.de>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Jun 01 08:04:53 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MAznH-0001kD-IF
-	for gcvg-git-2@gmane.org; Mon, 01 Jun 2009 07:10:43 +0200
+	id 1MB0df-0004f3-UE
+	for gcvg-git-2@gmane.org; Mon, 01 Jun 2009 08:04:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751311AbZFAFKf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 1 Jun 2009 01:10:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751056AbZFAFKd
-	(ORCPT <rfc822;git-outgoing>); Mon, 1 Jun 2009 01:10:33 -0400
-Received: from an-out-0708.google.com ([209.85.132.251]:59136 "EHLO
-	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750921AbZFAFKd (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Jun 2009 01:10:33 -0400
-Received: by an-out-0708.google.com with SMTP id d40so15494582and.1
-        for <git@vger.kernel.org>; Sun, 31 May 2009 22:10:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:content-type
-         :content-transfer-encoding;
-        bh=ZU7Na126ZhMp/3Y+u42DqOxfgJdGaHQjrhQzncTXDNA=;
-        b=GPjATkZWUGs5e7vmhBdnkrZIlJQTEOnfpAntuVkoO4wmXmI5AbUZ9BnED7wkGNS5V5
-         BQua8uYIWjPRkyLioaTmnpaoWOhU8Cn8n4KZAoKLI0/VEjmFuR+MrjNDPPv5ium5GlWV
-         m/73YbX50n/RTK6pJ8iAiFFVfvxp+b5agXqw8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :content-type:content-transfer-encoding;
-        b=hLmPepBnL/JYKLTU3NETQvTtBL3uboEJ2TT2etqp3Q8y96I+VMvW7OlE0lX1dXV5Rf
-         NHpIdeMhmx6GQdQdlAoiVTCsxJSg7ERAeWmAe1ln+Pi5Fj24oxAl2nTkuj1vawXBLaPh
-         ldSJwcel5tUjCRjrjdFTpBQbwsN4GzBGzXeMM=
-Received: by 10.100.141.15 with SMTP id o15mr6561500and.20.1243833034740; Sun, 
-	31 May 2009 22:10:34 -0700 (PDT)
-In-Reply-To: <1e5bcefd0905291623v6d90d9acv92bdaa05b0e72ee9@mail.gmail.com>
+	id S1752210AbZFAGEo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 1 Jun 2009 02:04:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752148AbZFAGEn
+	(ORCPT <rfc822;git-outgoing>); Mon, 1 Jun 2009 02:04:43 -0400
+Received: from mailer.zib.de ([130.73.108.11]:61566 "EHLO mailer.zib.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752025AbZFAGEn (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Jun 2009 02:04:43 -0400
+Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
+	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id n5164Mib006427;
+	Mon, 1 Jun 2009 08:04:27 +0200 (CEST)
+Received: from localhost.localdomain (vss6.zib.de [130.73.69.7])
+	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id n5164GL2013260;
+	Mon, 1 Jun 2009 08:04:16 +0200 (MEST)
+X-Mailer: git-send-email 1.5.6
+In-Reply-To: <4A22C674.603@kdbg.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120443>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120444>
 
-Anyone?
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-On Fri, May 29, 2009 at 6:23 PM, Marcelo de Moraes
-Serpa<celoserpa@gmail.com> wrote:
-> Hello list,
->
-> I'm working on a project that is using svn as it's
-> vesion-tracking/control technology. I'm the only rebel and I'm using
-> git-svn to interact with this svn repo :)
->
-> I need to make the version control system ignore a specific file and
-> spread this ignore rule across all developers. Now, if everyone was
-> using git, this would be a simple solution -- just create a .gitignore
-> file in the root of the working tree and commit it. The thing is, all
-> other developers are using svn, and I'm not sure how I could put this
-> entry into svn:ignore for them and also make my .gitignore synced with
-> svn:ignore.
->
-> Any ideas?
->
-> Thanks in advance,
->
+The function FillConsoleOutputCharacterA() was pretty content in XP to take a NULL
+pointer if we did not want to store the number of written columns.  In Windows 7,
+it crashes, but only when called from within Git Bash, not from within cmd.exe.
+Go figure.
+
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+Signed-off-by: Steffen Prohaska <prohaska@zib.de>
+---
+ compat/winansi.c |    3 ++-
+ 1 files changed, 2 insertions(+), 1 deletions(-)
+
+I squashed the second chunk of 05/11, as suggested by Hannes.
+
+diff --git a/compat/winansi.c b/compat/winansi.c
+index 44dc293..9217c24 100644
+--- a/compat/winansi.c
++++ b/compat/winansi.c
+@@ -80,6 +80,7 @@ static void set_console_attr(void)
+ static void erase_in_line(void)
+ {
+ 	CONSOLE_SCREEN_BUFFER_INFO sbi;
++	DWORD dummy; /* Needed for Windows 7 (or Vista) regression */
+ 
+ 	if (!console)
+ 		return;
+@@ -87,7 +88,7 @@ static void erase_in_line(void)
+ 	GetConsoleScreenBufferInfo(console, &sbi);
+ 	FillConsoleOutputCharacterA(console, ' ',
+ 		sbi.dwSize.X - sbi.dwCursorPosition.X, sbi.dwCursorPosition,
+-		NULL);
++		&dummy);
+ }
+ 
+ 
+-- 
+1.6.3.1.54.g99dd
