@@ -1,66 +1,66 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [OT] Using object store for other (java) applications
-Date: Mon, 1 Jun 2009 07:34:48 -0700
-Message-ID: <20090601143448.GF30527@spearce.org>
-References: <4A22F39A.9010900@cedarsoft.com>
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: Re: "exclude" and ".gitignore" for everyone
+Date: Mon, 01 Jun 2009 16:36:30 +0200
+Message-ID: <vpqy6scc975.fsf@bauges.imag.fr>
+References: <h00m32$gs0$2@ger.gmane.org>
+	<E6F58E6B-4ECF-4A55-9249-9A8BBFBDBC24@silverinsanity.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Johannes Schneider <mailings@cedarsoft.com>
-X-From: git-owner@vger.kernel.org Mon Jun 01 16:34:58 2009
+Cc: Nikos Chantziaras <realnc@arcor.de>, git@vger.kernel.org
+To: Brian Gernhardt <benji@silverinsanity.com>
+X-From: git-owner@vger.kernel.org Mon Jun 01 16:42:19 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MB8bJ-0006Ag-Mg
-	for gcvg-git-2@gmane.org; Mon, 01 Jun 2009 16:34:58 +0200
+	id 1MB8iQ-0000gz-UG
+	for gcvg-git-2@gmane.org; Mon, 01 Jun 2009 16:42:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752157AbZFAOer (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 1 Jun 2009 10:34:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751632AbZFAOeq
-	(ORCPT <rfc822;git-outgoing>); Mon, 1 Jun 2009 10:34:46 -0400
-Received: from george.spearce.org ([209.20.77.23]:39415 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751386AbZFAOeq (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Jun 2009 10:34:46 -0400
-Received: by george.spearce.org (Postfix, from userid 1001)
-	id 35535381D1; Mon,  1 Jun 2009 14:34:48 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <4A22F39A.9010900@cedarsoft.com>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1752442AbZFAOmK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 1 Jun 2009 10:42:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752266AbZFAOmJ
+	(ORCPT <rfc822;git-outgoing>); Mon, 1 Jun 2009 10:42:09 -0400
+Received: from imag.imag.fr ([129.88.30.1]:38029 "EHLO imag.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751983AbZFAOmI (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Jun 2009 10:42:08 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id n51Ec4Ox028575
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Mon, 1 Jun 2009 16:38:04 +0200 (CEST)
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
+	(Exim 4.50)
+	id 1MB8dW-0004he-AJ; Mon, 01 Jun 2009 16:37:14 +0200
+Received: from moy by bauges.imag.fr with local (Exim 4.63)
+	(envelope-from <moy@imag.fr>)
+	id 1MB8co-0001p1-Nz; Mon, 01 Jun 2009 16:36:30 +0200
+In-Reply-To: <E6F58E6B-4ECF-4A55-9249-9A8BBFBDBC24@silverinsanity.com> (Brian Gernhardt's message of "Mon\, 1 Jun 2009 09\:58\:11 -0400")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.0.91 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Mon, 01 Jun 2009 16:38:04 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120472>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120473>
 
-Johannes Schneider <mailings@cedarsoft.com> wrote:
-> what do you think: Is it possible to use the object store (hash based  
-> and optimized storage) within another Java application?
+Brian Gernhardt <benji@silverinsanity.com> writes:
 
-Sure.  So long as your storage model fits well onto the Git object
-store.  If all you want is a content keyed lookup, Git is possibly
-overkill, but you could use it.
+>  Generally, I'd suggest putting [...] your editor's garbage in
+> exclude.
 
-> Maybe the JGIT implementation contains anything that could be used?
+better: put them in a user-wide ignore file.
 
-Yes.  Use the Repository class to access the local repository, use
-an ObjectWriter to store blobs and compute their names.  Use the
-openBlob method on Repository to obtain an ObjectLoader for a blob
-content you previously had stored.
+in ~/.gitconfig:
 
-ObjectWriter stores everything as loose files.  Eventually, you may
-want to pack them.  Use a PackWriter.  JGit lacks `git prune-packed`
-support, but this probably could be coded up in Java and contributed
-to JGit with fairly little effort.
+[core]
+        excludesfile = /home/yourlogin/.gitignore
 
-If you store data, you probably should connect the blobs into a
-tree and into commits, so that the blobs are considered reachable
-and can't be cleaned out by `git gc`.
-
-But, if you only ever use your own application against the
-repository, and use JGit to manage it, you would never be invoking
-GC and thus would never need to worry about it.
+then put whatever you want in $HOME/.gitignore.
 
 -- 
-Shawn.
+Matthieu
