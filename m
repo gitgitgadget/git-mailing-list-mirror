@@ -1,74 +1,89 @@
-From: Brandon Casey <casey@nrlssc.navy.mil>
-Subject: Re: What's cooking in git.git (May 2009, #04; Sun, 31)
-Date: Mon, 01 Jun 2009 11:05:16 -0500
-Message-ID: <iHgBjpVVWguPJEPP4Ongi5IDGr3NDPAyUgAg5Ticr0KHPFiQTrqgpg@cipher.nrlssc.navy.mil>
-References: <7v63fgpwyd.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2] http*: cleanup slot->local after fclose
+Date: Mon, 01 Jun 2009 09:13:16 -0700
+Message-ID: <7vws7wkk4j.fsf@alter.siamese.dyndns.org>
+References: <49F1EA6D.8080406@gmail.com> <20090530091755.GA13578@localhost>
+	<be6fef0d0905300231k5167f3efle9a450419bdfa1cb@mail.gmail.com>
+	<20090530093717.GA22129@localhost>
+	<be6fef0d0905300352o33694420m9c988daa554420a3@mail.gmail.com>
+	<20090530230153.527532b0.rctay89@gmail.com>
+	<20090531000955.953725d9.rctay89@gmail.com>
+	<7vy6sdssnk.fsf@alter.siamese.dyndns.org>
+	<20090531175413.962a55c3.rctay89@gmail.com>
+	<7vws7xqazi.fsf@alter.siamese.dyndns.org>
+	<be6fef0d0906010652v4fc814f9j631795cbad61be9@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jun 01 18:05:48 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Clemens Buchacher <drizzd@aon.at>, git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Tay Ray Chuan <rctay89@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jun 01 18:26:23 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MBA1D-0002Ws-Of
-	for gcvg-git-2@gmane.org; Mon, 01 Jun 2009 18:05:48 +0200
+	id 1MBAL6-0005SJ-A4
+	for gcvg-git-2@gmane.org; Mon, 01 Jun 2009 18:26:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753339AbZFAQFi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 1 Jun 2009 12:05:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752966AbZFAQFh
-	(ORCPT <rfc822;git-outgoing>); Mon, 1 Jun 2009 12:05:37 -0400
-Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:56746 "EHLO
-	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752560AbZFAQFh (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Jun 2009 12:05:37 -0400
-Received: by mail.nrlssc.navy.mil id n51G5HlE006151; Mon, 1 Jun 2009 11:05:17 -0500
-In-Reply-To: <7v63fgpwyd.fsf@alter.siamese.dyndns.org>
-X-OriginalArrivalTime: 01 Jun 2009 16:05:17.0715 (UTC) FILETIME=[C1AD7630:01C9E2D2]
+	id S1753339AbZFAQ0L (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 1 Jun 2009 12:26:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752771AbZFAQ0L
+	(ORCPT <rfc822;git-outgoing>); Mon, 1 Jun 2009 12:26:11 -0400
+Received: from fed1rmpop112.cox.net ([68.230.241.16]:60773 "EHLO
+	fed1rmpop112.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750970AbZFAQ0K (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Jun 2009 12:26:10 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao103.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20090601161316.TTBM2915.fed1rmmtao103.cox.net@fed1rmimpo02.cox.net>;
+          Mon, 1 Jun 2009 12:13:16 -0400
+Received: from localhost ([68.225.240.211])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id ygDG1b00M4aMwMQ04gDGFG; Mon, 01 Jun 2009 12:13:16 -0400
+X-Authority-Analysis: v=1.0 c=1 a=n6gMUD2reQ4A:10 a=OUZzaqIY_TkA:10
+ a=pGLkceISAAAA:8 a=qjrwCw2FKjMWDySdPNcA:9 a=_b-vx9-eiL84qrgw6VCO7IYrLDQA:4
+ a=MSl-tDqOz04A:10
+X-CM-Score: 0.00
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120474>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120475>
 
-Junio C Hamano wrote:
-> Here are the topics that have been cooking.  Commits prefixed with '-' are
-> only in 'pu' while commits prefixed with '+' are in 'next'.  The ones
-> marked with '.' do not appear in any of the branches, but I am still
-> holding onto them.
-> 
-> The topics list the commits in reverse chronological order.  The topics
-> meant to be merged to the maintenance series have "maint-" in their names.
-> 
-> ----------------------------------------------------------------
-> [New Topics]
-> 
-> All of these are soon to be in 'next'.
-> 
-> * bc/solaris (Wed May 27 21:17:08 2009 -0500) 4 commits
->  - Makefile: introduce SANE_TOOL_PATH for prepending required
->    elements to PATH
->  - Makefile: add section for SunOS 5.7
->  - Makefile: add NEEDS_RESOLV to optionally add -lresolv to compile
->    arguments
->  - Makefile: use /usr/ucb/install on SunOS platforms rather than
->    ginstall
+Tay Ray Chuan <rctay89@gmail.com> writes:
 
-If you haven't already merged this to 'next', then give me some time
-and I'll resubmit a new series based on the feedback from you and
-Jeff.
+> the problem isn't triggered by fclose(slot->local) being done twice,
+> but a ftell() being done on slot->local, which points to a FILE*
+> handle that has already been fclose()'d (that is what the valgrind log
+> provided by Clemens reported). The offending ftell() is found in
+> http.c::run_active_slot(), and the code there does indeed depend on
+> the NULLness of slot->local (it checks whether slot->local is NULL
+> before doing the ftell()).
+>
+> run_active_slot() is used rather heavily, and users of slot->local
+> always neglect to set it to NULL doing a fclose() on the FILE* handle
+> it points to.
 
-Jeff pointed out that HSTRERROR only has any effect when NO_IPV6 is
-set.  So, NEEDS_RESOLV is really only necessary on Solaris versions
-which must set NO_IPV6.
+Thanks; that clearly indicates that you are fixing an existing bug.
 
-You suggested changes to git-compat-util.h for handling compiling on
-Solaris with/without c99 compiler.
+I wish the commit log message explained that from the beginning without
+being asked.
 
-The bottom patch that switches to /usr/ucb/install is fine as-is.
+So what would we want to do?
 
-If the series is already applied, no big deal, I'll just work on top of that.
+No patch from your http-push topic is in 'next' yet, and I presume that
+the same issue exists in 'maint', so I'd say:
 
--brandon
+ (0) queue your slimmed down fix to 'maint' (or rc/maint-http-local-slot-fix
+     that is forked from 'maint', to later merge to 'maint');
+
+ (1) create a new rc/http-push topic branch from 'master';
+
+ (2) merge (0) into the result of (1);
+ 
+ (3) re-apply the patches queued on the current rc/http-push topic on top
+     of the result of (2).
+
+to rebuild it, perhaps?
