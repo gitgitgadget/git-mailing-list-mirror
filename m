@@ -1,136 +1,102 @@
-From: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-Subject: [PATCHv3 (resend) 3/4] git-am foreign patch support: StGIT support
-Date: Tue,  2 Jun 2009 01:10:40 +0200
-Message-ID: <1243897841-8923-4-git-send-email-giuseppe.bilotta@gmail.com>
-References: <1243897841-8923-1-git-send-email-giuseppe.bilotta@gmail.com>
- <1243897841-8923-2-git-send-email-giuseppe.bilotta@gmail.com>
- <1243897841-8923-3-git-send-email-giuseppe.bilotta@gmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jun 02 01:11:24 2009
+From: GeunSik Lim <leemgs1@gmail.com>
+Subject: Re: [PATCH 10/11] Fix warnings in nedmalloc when compiling with GCC 
+	4.4.0
+Date: Tue, 2 Jun 2009 08:38:55 +0900
+Message-ID: <49b7c2350906011638j12948f1do8d1c8f28d0bf2739@mail.gmail.com>
+References: <1243786525-4493-1-git-send-email-prohaska@zib.de>
+	 <1243786525-4493-6-git-send-email-prohaska@zib.de>
+	 <1243786525-4493-7-git-send-email-prohaska@zib.de>
+	 <1243786525-4493-8-git-send-email-prohaska@zib.de>
+	 <1243786525-4493-9-git-send-email-prohaska@zib.de>
+	 <1243786525-4493-10-git-send-email-prohaska@zib.de>
+	 <1243786525-4493-11-git-send-email-prohaska@zib.de>
+	 <7vhbz0mmai.fsf@alter.siamese.dyndns.org>
+	 <alpine.DEB.1.00.0906011054410.26154@pacific.mpi-cbg.de>
+	 <7vr5y3lxrj.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Steffen Prohaska <prohaska@zib.de>, git@vger.kernel.org,
+	Johannes Sixt <j6t@kdbg.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jun 02 01:39:50 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MBGf2-0003zM-IQ
-	for gcvg-git-2@gmane.org; Tue, 02 Jun 2009 01:11:20 +0200
+	id 1MBH6b-0002FY-TQ
+	for gcvg-git-2@gmane.org; Tue, 02 Jun 2009 01:39:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755124AbZFAXK4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 1 Jun 2009 19:10:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755992AbZFAXKz
-	(ORCPT <rfc822;git-outgoing>); Mon, 1 Jun 2009 19:10:55 -0400
-Received: from mail-bw0-f222.google.com ([209.85.218.222]:48984 "EHLO
-	mail-bw0-f222.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754135AbZFAXKw (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Jun 2009 19:10:52 -0400
-Received: by mail-bw0-f222.google.com with SMTP id 22so7792812bwz.37
-        for <git@vger.kernel.org>; Mon, 01 Jun 2009 16:10:54 -0700 (PDT)
+	id S1752982AbZFAXiz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 1 Jun 2009 19:38:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752731AbZFAXiz
+	(ORCPT <rfc822;git-outgoing>); Mon, 1 Jun 2009 19:38:55 -0400
+Received: from yw-out-2324.google.com ([74.125.46.29]:57748 "EHLO
+	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752716AbZFAXiy (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Jun 2009 19:38:54 -0400
+Received: by yw-out-2324.google.com with SMTP id 5so4481212ywb.1
+        for <git@vger.kernel.org>; Mon, 01 Jun 2009 16:38:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer:in-reply-to:references;
-        bh=MSbYRstnf/V/6dY49H/66Nw+e19LLIqGx+3H212KGJw=;
-        b=A6ML19c91zkwYvN+Aui7TJqA4HZs37GQ9LC2jGVGvxQjEHID1GQZAsqJvgZf7dbufH
-         W56PqWrFmRlOMYA9VkQTo3pc/z4S6G5A4KUe9q++jhZE6SLAhGw+6tLEB36fGmJvj47P
-         Ll2PV7j95oR7nAOE7jfty8GfugIaYk6D080uk=
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=14oQViWbpsN5eVTaswvSG/kZZFJ56pfLLiSnhwrstk0=;
+        b=wlIezhCq997jv1tm+/54GCHRRXOM22s9sDhaUeBi9KqP/08vvlXamBTaNvm8HOoaiR
+         +zlzDY06dw1bhK9UiChtntgCvXHHsz1O/kOVsLN8gPghwVQPqZxde3i2n+3mrrxhXqYq
+         2ZVZyLN7s7UCxgs4N2YuOpDIvJKnNlYxKyr4I=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=kMHTT5jyi2bCCAZzOJbUe+yH2UDgAxNYzszmOHGRQgg9Vy8UttWSrl0EcVfqF2Byba
-         BeMR9GWFttGzmjV/jdWiOOMg60eZYh8cFuZuP6FiX/mzhf0ArhYQJ46kfDbZmRjoy2SQ
-         46hEPctutOpUVboN3Jhyj2eMLd/j0MWokTfCM=
-Received: by 10.204.112.1 with SMTP id u1mr6220188bkp.37.1243897854794;
-        Mon, 01 Jun 2009 16:10:54 -0700 (PDT)
-Received: from localhost (host-78-13-53-56.cust-adsl.tiscali.it [78.13.53.56])
-        by mx.google.com with ESMTPS id k29sm7895528fkk.17.2009.06.01.16.10.53
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 01 Jun 2009 16:10:54 -0700 (PDT)
-X-Mailer: git-send-email 1.6.3.1.282.g9f93
-In-Reply-To: <1243897841-8923-3-git-send-email-giuseppe.bilotta@gmail.com>
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=BOxysCCuTS68jNzel9WzZXMcHSWVAPuR2l1pMAmxhy/do1lQ/fAC+jdVkrvs7WysHK
+         BztsFXkr9uRxZ6HIwuuA7ib6IviXHwzG7gfe7YrKECCyyDMtxatzEydUOkXbBLm7qtvt
+         JcLlffnEi79pQ3BvU1LRCyCUQZS/U0zzW+O0Q=
+Received: by 10.151.134.6 with SMTP id l6mr12782418ybn.163.1243899535739; Mon, 
+	01 Jun 2009 16:38:55 -0700 (PDT)
+In-Reply-To: <7vr5y3lxrj.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120489>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120490>
 
-Support StGIT patches by implementing a simple perl-based converter
-mimicking StGIT's own parse_patch. Also support StGIT patch series by
-'exploding' the index into a list of files and re-running the mail
-splitting with patch_format set to stgit.
+On Tue, Jun 2, 2009 at 1:33 AM, Junio C Hamano <gitster@pobox.com> wrote:
 
-Signed-off-by: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
----
- git-am.sh |   57 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++
- 1 files changed, 57 insertions(+), 0 deletions(-)
+>>> Can somebody enlighten me what this hunk is about, and how it helps GCC
+>>> 4.4?
+>>
+Um... It's strange.
+I can not connect to  http://gcc.gnu.org website
+to get GCC 4.4 manual(pdf format) currently.
+ping is normal just.
 
-diff --git a/git-am.sh b/git-am.sh
-index 8519701..d05c9b4 100755
---- a/git-am.sh
-+++ b/git-am.sh
-@@ -191,6 +191,63 @@ split_patches () {
- 			exit 1
- 		}
- 		;;
-+	stgit-series)
-+		if test $# -ne 1
-+		then
-+			echo "Only one StGIT patch series can be applied at once"
-+			exit 1
-+		fi
-+		series_dir=`dirname "$1"`
-+		series_file="$1"
-+		shift
-+		{
-+			set x
-+			while read filename
-+			do
-+				set "$@" "$series_dir/$filename"
-+			done
-+			# remove the safety x
-+			shift
-+			# remove the arg coming from the first-line comment
-+			shift
-+		} < "$series_file"
-+		# set the patch format appropriately
-+		patch_format=stgit
-+		# now handle the actual StGIT patches
-+		split_patches "$@"
-+		;;
-+	stgit)
-+		this=0
-+		for stgit in "$@"
-+		do
-+			this=`expr "$this" + 1`
-+			msgnum=`printf "%0${prec}d" $this`
-+			# Perl version of StGIT parse_patch. The first nonemptyline
-+			# not starting with Author, From or Date is the
-+			# subject, and the body starts with the next nonempty
-+			# line not starting with Author, From or Date
-+			perl -ne 'BEGIN { $subject = 0 }
-+				if ($subject > 1) { print ; }
-+				elsif (/^\s+$/) { next ; }
-+				elsif (/^Author:/) { print s/Author/From/ ; }
-+				elsif (/^(From|Date)/) { print ; }
-+				elsif ($subject) {
-+					$subject = 2 ;
-+					print "\n" ;
-+					print ;
-+				} else {
-+					print "Subject: ", $_ ;
-+					$subject = 1;
-+				}
-+			' < "$stgit" > "$dotest/$msgnum" || {
-+				echo "Failed to import $patch_format patch $stgit"
-+				exit 1
-+			}
-+		done
-+		echo "$this" > "$dotest/last"
-+		this=
-+		msgnum=
-+		;;
- 	*)
- 		echo "Patch format $patch_format is not supported."
- 		exit 1
+[invain@fedora9 invain]$ ping gcc.gnu.org
+PING gcc.gnu.org (209.132.176.174) 56(84) bytes of data.
+64 bytes from sourceware.org (209.132.176.174): icmp_seq=1 ttl=40 time=194 ms
+64 bytes from sourceware.org (209.132.176.174): icmp_seq=2 ttl=40 time=199 ms
+^X64 bytes from sourceware.org (209.132.176.174): icmp_seq=3 ttl=40 time=193 ms
+64 bytes from sourceware.org (209.132.176.174): icmp_seq=4 ttl=40 time=203 ms
+^C
+--- gcc.gnu.org ping statistics ---
+4 packets transmitted, 4 received, 0% packet loss, time 3326ms
+rtt min/avg/max/mdev = 193.762/198.126/203.978/4.135 ms
+[invain@fedora9 invain]$
+[invain@fedora9 invain]$ nmap  gcc.gnu.org
+[invain@fedora9 invain]$ nmap -p 80  gcc.gnu.org
+
+Starting Nmap 4.53 ( http://insecure.org ) at 2009-06-02 08:37 KST
+Note: Host seems down. If it is really up, but blocking our ping probes, try -PN
+Nmap done: 1 IP address (0 hosts up) scanned in 2.023 seconds
+[invain@fedora9 invain]$
+
+
+
 -- 
-1.6.3.1.282.g9f93
+Regards,
+GeunSik Lim ( Samsung Electronics )
+Blog : http://blog.naver.com/invain/
+e-Mail: geunsik.lim@samsung.com
+           leemgs@gmail.com , leemgs1@gmail.com
