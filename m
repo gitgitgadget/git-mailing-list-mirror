@@ -1,89 +1,76 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2] http*: cleanup slot->local after fclose
-Date: Mon, 01 Jun 2009 09:13:16 -0700
-Message-ID: <7vws7wkk4j.fsf@alter.siamese.dyndns.org>
-References: <49F1EA6D.8080406@gmail.com> <20090530091755.GA13578@localhost>
-	<be6fef0d0905300231k5167f3efle9a450419bdfa1cb@mail.gmail.com>
-	<20090530093717.GA22129@localhost>
-	<be6fef0d0905300352o33694420m9c988daa554420a3@mail.gmail.com>
-	<20090530230153.527532b0.rctay89@gmail.com>
-	<20090531000955.953725d9.rctay89@gmail.com>
-	<7vy6sdssnk.fsf@alter.siamese.dyndns.org>
-	<20090531175413.962a55c3.rctay89@gmail.com>
-	<7vws7xqazi.fsf@alter.siamese.dyndns.org>
-	<be6fef0d0906010652v4fc814f9j631795cbad61be9@mail.gmail.com>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: A usage question
+Date: Mon, 1 Jun 2009 12:32:00 -0400 (EDT)
+Message-ID: <alpine.LNX.2.00.0906011215140.2147@iabervon.org>
+References: <20090531033431.GB25869@darkbox>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Clemens Buchacher <drizzd@aon.at>, git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Tay Ray Chuan <rctay89@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jun 01 18:26:23 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Jeremy O'Brien <obrien654j@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jun 01 18:32:16 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MBAL6-0005SJ-A4
-	for gcvg-git-2@gmane.org; Mon, 01 Jun 2009 18:26:20 +0200
+	id 1MBAQn-0008Up-Hd
+	for gcvg-git-2@gmane.org; Mon, 01 Jun 2009 18:32:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753339AbZFAQ0L (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 1 Jun 2009 12:26:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752771AbZFAQ0L
-	(ORCPT <rfc822;git-outgoing>); Mon, 1 Jun 2009 12:26:11 -0400
-Received: from fed1rmpop112.cox.net ([68.230.241.16]:60773 "EHLO
-	fed1rmpop112.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750970AbZFAQ0K (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Jun 2009 12:26:10 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao103.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20090601161316.TTBM2915.fed1rmmtao103.cox.net@fed1rmimpo02.cox.net>;
-          Mon, 1 Jun 2009 12:13:16 -0400
-Received: from localhost ([68.225.240.211])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id ygDG1b00M4aMwMQ04gDGFG; Mon, 01 Jun 2009 12:13:16 -0400
-X-Authority-Analysis: v=1.0 c=1 a=n6gMUD2reQ4A:10 a=OUZzaqIY_TkA:10
- a=pGLkceISAAAA:8 a=qjrwCw2FKjMWDySdPNcA:9 a=_b-vx9-eiL84qrgw6VCO7IYrLDQA:4
- a=MSl-tDqOz04A:10
-X-CM-Score: 0.00
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+	id S1755730AbZFAQcA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 1 Jun 2009 12:32:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755792AbZFAQcA
+	(ORCPT <rfc822;git-outgoing>); Mon, 1 Jun 2009 12:32:00 -0400
+Received: from iabervon.org ([66.92.72.58]:54724 "EHLO iabervon.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755218AbZFAQb7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Jun 2009 12:31:59 -0400
+Received: (qmail 10753 invoked by uid 1000); 1 Jun 2009 16:32:00 -0000
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 1 Jun 2009 16:32:00 -0000
+In-Reply-To: <20090531033431.GB25869@darkbox>
+User-Agent: Alpine 2.00 (LNX 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120475>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120476>
 
-Tay Ray Chuan <rctay89@gmail.com> writes:
+On Sat, 30 May 2009, Jeremy O'Brien wrote:
 
-> the problem isn't triggered by fclose(slot->local) being done twice,
-> but a ftell() being done on slot->local, which points to a FILE*
-> handle that has already been fclose()'d (that is what the valgrind log
-> provided by Clemens reported). The offending ftell() is found in
-> http.c::run_active_slot(), and the code there does indeed depend on
-> the NULLness of slot->local (it checks whether slot->local is NULL
-> before doing the ftell()).
->
-> run_active_slot() is used rather heavily, and users of slot->local
-> always neglect to set it to NULL doing a fclose() on the FILE* handle
-> it points to.
+> Hello,
+> 
+> I have a git usage question. I'm working on three separate branches in a
+> foreign SCM called Surround. One branch is the mainline, and two others
+> are a v1 branch based off the mainline and the other is a v2 branch
+> based off the mainline with many new features that we hope to release
+> soon. Some components of the v1 branch are similar, but not identical to
+> the v2 branch, and other parts are completely different. I am primarily
+> working on the v2 branch, but some things that I change can/should be
+> backported to the v1 and mainline branches.
+> 
+> The foreign SCM requires one working directory for each branch, so I
+> currently have three separate git repos with the contents of what is on
+> Surround for each, and then I have one "local" git repo that I'm using
+> to do my development. I have three branches on this local repo: one to
+> track each git repo set up for Surround. I've been using topic branches
+> in my local dev repo to do my work, and then merging my changes into the
+> branch I branched my topic branch from, and cherry-picking ones into the
+> other two branches that could be used there. I then push these branches
+> to the repos and check then into Surround when I am ready to. This
+> doesn't seem efficient to me at all, and I was wondering if there is a
+> better setup someone could suggest that would make development easier.
 
-Thanks; that clearly indicates that you are fixing an existing bug.
+It sounds to me like all of the steps are required, since Surround want 
+those directories to exist and contain your work. You may be able to 
+automate them, though, depending on how amenable Surround is to being part 
+of scripts (and how comfortable you are writing scripts). Of course, in 
+the limit, a script could be called from "git fetch" and "git push", and 
+it would essentially act like native git interaction with an upstream 
+maintainer who rewrites commits.
 
-I wish the commit log message explained that from the beginning without
-being asked.
+If Surround has an API like Perforce does, and it extends to allowing the 
+developer to implement a different view of the filesystem, you might not 
+even need to have those directories on disk, unless you want to be able to 
+show your coworkers something in an environment they recognize.
 
-So what would we want to do?
-
-No patch from your http-push topic is in 'next' yet, and I presume that
-the same issue exists in 'maint', so I'd say:
-
- (0) queue your slimmed down fix to 'maint' (or rc/maint-http-local-slot-fix
-     that is forked from 'maint', to later merge to 'maint');
-
- (1) create a new rc/http-push topic branch from 'master';
-
- (2) merge (0) into the result of (1);
- 
- (3) re-apply the patches queued on the current rc/http-push topic on top
-     of the result of (2).
-
-to rebuild it, perhaps?
+	-Daniel
+*This .sig left intentionally blank*
