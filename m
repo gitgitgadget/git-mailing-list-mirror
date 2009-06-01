@@ -1,53 +1,74 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: BUG: mergetool fails on gitignore:d files
-Date: Sun, 31 May 2009 19:04:01 -0700
-Message-ID: <7vk53wogku.fsf@alter.siamese.dyndns.org>
-References: <e87cdfda0905300830t6b332533g9a4298f6b8005b9e@mail.gmail.com>
-	<20090530215418.GA19241@coredump.intra.peff.net>
+From: Marcelo de Moraes Serpa <celoserpa@gmail.com>
+Subject: Re: Spreading .gitignore rules to svn:ignore and keeping them in sync
+Date: Mon, 1 Jun 2009 00:10:34 -0500
+Message-ID: <1e5bcefd0905312210l60497a0p2d84795b1cb84420@mail.gmail.com>
+References: <1e5bcefd0905291623v6d90d9acv92bdaa05b0e72ee9@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Erik Sandberg <mandolaerik@gmail.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Jun 01 04:04:19 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jun 01 07:10:44 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MAwss-0003aE-GO
-	for gcvg-git-2@gmane.org; Mon, 01 Jun 2009 04:04:18 +0200
+	id 1MAznH-0001kD-IF
+	for gcvg-git-2@gmane.org; Mon, 01 Jun 2009 07:10:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753885AbZFACEB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 31 May 2009 22:04:01 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753804AbZFACEB
-	(ORCPT <rfc822;git-outgoing>); Sun, 31 May 2009 22:04:01 -0400
-Received: from fed1rmmtao107.cox.net ([68.230.241.39]:52220 "EHLO
-	fed1rmmtao107.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753798AbZFACEA (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 31 May 2009 22:04:00 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao107.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20090601020401.UUWQ18948.fed1rmmtao107.cox.net@fed1rmimpo01.cox.net>;
-          Sun, 31 May 2009 22:04:01 -0400
-Received: from localhost ([68.225.240.211])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id yS411b00D4aMwMQ03S417Z; Sun, 31 May 2009 22:04:01 -0400
-X-Authority-Analysis: v=1.0 c=1 a=dVn6bHWbdvAA:10 a=d6Ba7Pab9WwA:10
- a=PKzvZo6CAAAA:8 a=EahY2xKc4gF1h1vfiuoA:9 a=NIcfzTN_ECHEKqYQY8rsHBXsNE4A:4
- a=OdWmie4EkE0A:10
-X-CM-Score: 0.00
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+	id S1751311AbZFAFKf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 1 Jun 2009 01:10:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751056AbZFAFKd
+	(ORCPT <rfc822;git-outgoing>); Mon, 1 Jun 2009 01:10:33 -0400
+Received: from an-out-0708.google.com ([209.85.132.251]:59136 "EHLO
+	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750921AbZFAFKd (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Jun 2009 01:10:33 -0400
+Received: by an-out-0708.google.com with SMTP id d40so15494582and.1
+        for <git@vger.kernel.org>; Sun, 31 May 2009 22:10:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:content-type
+         :content-transfer-encoding;
+        bh=ZU7Na126ZhMp/3Y+u42DqOxfgJdGaHQjrhQzncTXDNA=;
+        b=GPjATkZWUGs5e7vmhBdnkrZIlJQTEOnfpAntuVkoO4wmXmI5AbUZ9BnED7wkGNS5V5
+         BQua8uYIWjPRkyLioaTmnpaoWOhU8Cn8n4KZAoKLI0/VEjmFuR+MrjNDPPv5ium5GlWV
+         m/73YbX50n/RTK6pJ8iAiFFVfvxp+b5agXqw8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :content-type:content-transfer-encoding;
+        b=hLmPepBnL/JYKLTU3NETQvTtBL3uboEJ2TT2etqp3Q8y96I+VMvW7OlE0lX1dXV5Rf
+         NHpIdeMhmx6GQdQdlAoiVTCsxJSg7ERAeWmAe1ln+Pi5Fj24oxAl2nTkuj1vawXBLaPh
+         ldSJwcel5tUjCRjrjdFTpBQbwsN4GzBGzXeMM=
+Received: by 10.100.141.15 with SMTP id o15mr6561500and.20.1243833034740; Sun, 
+	31 May 2009 22:10:34 -0700 (PDT)
+In-Reply-To: <1e5bcefd0905291623v6d90d9acv92bdaa05b0e72ee9@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120442>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120443>
 
-Jeff King <peff@peff.net> writes:
+Anyone?
 
-> Actually, I think the problem is not in mergetool at all, but with the
-> dir.c code underlying "git add". "git add" really should not be
-> complaining, because you are not adding a new path at all, but are
-> rather adding content to a tracked path.
-
-Correct, and thanks.
+On Fri, May 29, 2009 at 6:23 PM, Marcelo de Moraes
+Serpa<celoserpa@gmail.com> wrote:
+> Hello list,
+>
+> I'm working on a project that is using svn as it's
+> vesion-tracking/control technology. I'm the only rebel and I'm using
+> git-svn to interact with this svn repo :)
+>
+> I need to make the version control system ignore a specific file and
+> spread this ignore rule across all developers. Now, if everyone was
+> using git, this would be a simple solution -- just create a .gitignore
+> file in the root of the working tree and commit it. The thing is, all
+> other developers are using svn, and I'm not sure how I could put this
+> entry into svn:ignore for them and also make my .gitignore synced with
+> svn:ignore.
+>
+> Any ideas?
+>
+> Thanks in advance,
+>
