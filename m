@@ -1,98 +1,71 @@
-From: Stephen Boyd <bebarino@gmail.com>
-Subject: [PATCHv2] git-show-branch.txt: document --date-order option
-Date: Sun, 31 May 2009 23:34:46 -0700
-Message-ID: <1243838086-32430-1-git-send-email-bebarino@gmail.com>
-Cc: git@vger.kernel.org
+From: Steffen Prohaska <prohaska@zib.de>
+Subject: [PATCH 05/11 v2] MinGW: fix warning about implicit declaration of _getch()
+Date: Mon,  1 Jun 2009 08:41:45 +0200
+Message-ID: <1243838505-27641-1-git-send-email-prohaska@zib.de>
+References: <200905312152.11434.j6t@kdbg.org>
+Cc: git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Johannes Sixt <j6t@kdbg.org>,
+	Johannes Schindelin <johannes.schindelin@gmx.de>,
+	Steffen Prohaska <prohaska@zib.de>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jun 01 08:35:41 2009
+X-From: git-owner@vger.kernel.org Mon Jun 01 08:42:02 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MB17U-0003K9-KI
-	for gcvg-git-2@gmane.org; Mon, 01 Jun 2009 08:35:41 +0200
+	id 1MB1Dd-0004sL-TR
+	for gcvg-git-2@gmane.org; Mon, 01 Jun 2009 08:42:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752210AbZFAGet (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 1 Jun 2009 02:34:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751828AbZFAGet
-	(ORCPT <rfc822;git-outgoing>); Mon, 1 Jun 2009 02:34:49 -0400
-Received: from rv-out-0506.google.com ([209.85.198.227]:6117 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752149AbZFAGes (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Jun 2009 02:34:48 -0400
-Received: by rv-out-0506.google.com with SMTP id f9so2224661rvb.1
-        for <git@vger.kernel.org>; Sun, 31 May 2009 23:34:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:from:to:cc:subject
-         :date:message-id:x-mailer;
-        bh=Bp7/LVLUgEhKaVh7d6aZNfUJxSyMN0VWR1bHp4mHuWw=;
-        b=GkEqM+InqaZiNoWtWjJ1zvRurjbgeNN7NBK8l+PQuL0z/XVI0iH8xG38zE6KJeHPj+
-         aM7fbWNLbxXQ3uv6+y2z5VR3HN5L26Oi2Xq+uTVy+QEi2PraTbCiv5igRQ0oRQtTZcRk
-         k63KuUzeLyvlANgHngSUGJlsXoet2v3Yq7XuM=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        b=pdxNgQC6gTOcnMOjnNBbq7AB/q+BWRTY4Pp4tGw8AB++SuGcerAmMRXPYD06NiNXDR
-         ccoC/YNDEx7FB/d+XSsHdhElFzjw/8HuFdnY7XIoFP6yEXQQ2+XzJLOXupLBA8qiXPSh
-         Dm0eO4zM3oQb82TinJVKU5WFEiPDyU0YLiySU=
-Received: by 10.140.172.20 with SMTP id u20mr5982222rve.244.1243838090546;
-        Sun, 31 May 2009 23:34:50 -0700 (PDT)
-Received: from earth ([76.89.212.195])
-        by mx.google.com with ESMTPS id c20sm13955079rvf.40.2009.05.31.23.34.48
-        (version=SSLv3 cipher=RC4-MD5);
-        Sun, 31 May 2009 23:34:49 -0700 (PDT)
-Received: by earth (sSMTP sendmail emulation); Sun, 31 May 2009 23:34:46 -0700
-X-Mailer: git-send-email 1.6.3.1.244.gf9275
+	id S1753943AbZFAGly (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 1 Jun 2009 02:41:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753160AbZFAGlx
+	(ORCPT <rfc822;git-outgoing>); Mon, 1 Jun 2009 02:41:53 -0400
+Received: from mailer.zib.de ([130.73.108.11]:63609 "EHLO mailer.zib.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752149AbZFAGlw (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Jun 2009 02:41:52 -0400
+Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
+	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id n516fjx8008156;
+	Mon, 1 Jun 2009 08:41:50 +0200 (CEST)
+Received: from localhost.localdomain (vss6.zib.de [130.73.69.7])
+	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id n516fjh4016200;
+	Mon, 1 Jun 2009 08:41:45 +0200 (MEST)
+X-Mailer: git-send-email 1.5.6
+In-Reply-To: <200905312152.11434.j6t@kdbg.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120445>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120446>
 
-Copy the description of date-order from rev-list-options.txt, and then
-reword it to be commit specific. While we're at it, put <rev> <glob>...
-on a new line to not exceed 80 characters.
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-Signed-off-by: Stephen Boyd <bebarino@gmail.com>
+conio.h provides the declaration.
+
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+Signed-off-by: Steffen Prohaska <prohaska@zib.de>
 ---
+ compat/mingw.c |    1 +
+ 1 files changed, 1 insertions(+), 0 deletions(-)
 
-Seems like this wasn't picked up. I also found a small typo, so it's good
-that it wasn't picked up.
+This replaces 05/11.  The original commit messages was
+misleading.  Apparently, the original 05/11 solved two things.
+First, it fixed a warning in winansi.c, which has been squashed
+into 03/11.  Second, it fixed a warning about implict decl of
+_getch().  Including conio.h in mingw.c is sufficient to fix
+this warning.
 
- Documentation/git-show-branch.txt |   12 +++++++++---
- 1 files changed, 9 insertions(+), 3 deletions(-)
-
-diff --git a/Documentation/git-show-branch.txt b/Documentation/git-show-branch.txt
-index edd8f64..89ec536 100644
---- a/Documentation/git-show-branch.txt
-+++ b/Documentation/git-show-branch.txt
-@@ -8,10 +8,11 @@ git-show-branch - Show branches and their commits
- SYNOPSIS
- --------
- [verse]
--'git show-branch' [--all] [--remotes] [--topo-order] [--current]
-+'git show-branch' [--all] [--remotes] [--topo-order | --date-order]
-+		[--current] [--color | --no-color]
- 		[--more=<n> | --list | --independent | --merge-base]
--		[--color | --no-color]
--		[--no-name | --sha1-name] [--topics] [<rev> | <glob>]...
-+		[--no-name | --sha1-name] [--topics]
-+		[<rev> | <glob>]...
- 'git show-branch' (-g|--reflog)[=<n>[,<base>]] [--list] [<ref>]
+diff --git a/compat/mingw.c b/compat/mingw.c
+index e190fdd..12d0c2f 100644
+--- a/compat/mingw.c
++++ b/compat/mingw.c
+@@ -1,5 +1,6 @@
+ #include "../git-compat-util.h"
+ #include "win32.h"
++#include <conio.h>
+ #include "../strbuf.h"
  
- DESCRIPTION
-@@ -58,6 +59,11 @@ OPTIONS
-         appear in topological order (i.e., descendant commits
-         are shown before their parents).
- 
-+--date-order::
-+	This option is similar to '--topo-order' in the sense that no
-+	parent comes before all of its children, but otherwise commits
-+	are ordered according to their commit date.
-+
- --sparse::
- 	By default, the output omits merges that are reachable
- 	from only one tip being shown.  This option makes them
+ unsigned int _CRT_fmode = _O_BINARY;
 -- 
-1.6.3.1.244.gf9275
+1.6.3.1.54.g99dd
