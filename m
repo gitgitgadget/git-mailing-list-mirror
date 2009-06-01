@@ -1,76 +1,83 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: A usage question
-Date: Mon, 1 Jun 2009 12:32:00 -0400 (EDT)
-Message-ID: <alpine.LNX.2.00.0906011215140.2147@iabervon.org>
-References: <20090531033431.GB25869@darkbox>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 10/11] Fix warnings in nedmalloc when compiling with GCC 4.4.0
+Date: Mon, 01 Jun 2009 09:33:20 -0700
+Message-ID: <7vr5y3lxrj.fsf@alter.siamese.dyndns.org>
+References: <1243786525-4493-1-git-send-email-prohaska@zib.de>
+	<1243786525-4493-2-git-send-email-prohaska@zib.de>
+	<1243786525-4493-3-git-send-email-prohaska@zib.de>
+	<1243786525-4493-4-git-send-email-prohaska@zib.de>
+	<1243786525-4493-5-git-send-email-prohaska@zib.de>
+	<1243786525-4493-6-git-send-email-prohaska@zib.de>
+	<1243786525-4493-7-git-send-email-prohaska@zib.de>
+	<1243786525-4493-8-git-send-email-prohaska@zib.de>
+	<1243786525-4493-9-git-send-email-prohaska@zib.de>
+	<1243786525-4493-10-git-send-email-prohaska@zib.de>
+	<1243786525-4493-11-git-send-email-prohaska@zib.de>
+	<7vhbz0mmai.fsf@alter.siamese.dyndns.org>
+	<alpine.DEB.1.00.0906011054410.26154@pacific.mpi-cbg.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Jeremy O'Brien <obrien654j@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jun 01 18:32:16 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Steffen Prohaska <prohaska@zib.de>, git@vger.kernel.org,
+	Johannes Sixt <j6t@kdbg.org>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Mon Jun 01 18:33:32 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MBAQn-0008Up-Hd
-	for gcvg-git-2@gmane.org; Mon, 01 Jun 2009 18:32:13 +0200
+	id 1MBAS4-0000eI-6X
+	for gcvg-git-2@gmane.org; Mon, 01 Jun 2009 18:33:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755730AbZFAQcA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 1 Jun 2009 12:32:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755792AbZFAQcA
-	(ORCPT <rfc822;git-outgoing>); Mon, 1 Jun 2009 12:32:00 -0400
-Received: from iabervon.org ([66.92.72.58]:54724 "EHLO iabervon.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755218AbZFAQb7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Jun 2009 12:31:59 -0400
-Received: (qmail 10753 invoked by uid 1000); 1 Jun 2009 16:32:00 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 1 Jun 2009 16:32:00 -0000
-In-Reply-To: <20090531033431.GB25869@darkbox>
-User-Agent: Alpine 2.00 (LNX 1167 2008-08-23)
+	id S1754630AbZFAQdU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 1 Jun 2009 12:33:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753713AbZFAQdT
+	(ORCPT <rfc822;git-outgoing>); Mon, 1 Jun 2009 12:33:19 -0400
+Received: from fed1rmmtao106.cox.net ([68.230.241.40]:43263 "EHLO
+	fed1rmmtao106.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753023AbZFAQdT (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Jun 2009 12:33:19 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao106.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20090601163321.FVME25927.fed1rmmtao106.cox.net@fed1rmimpo01.cox.net>;
+          Mon, 1 Jun 2009 12:33:21 -0400
+Received: from localhost ([68.225.240.211])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id ygZL1b0084aMwMQ03gZLzl; Mon, 01 Jun 2009 12:33:20 -0400
+X-Authority-Analysis: v=1.0 c=1 a=pJQHuwW63eoA:10 a=O6WTdPAIJOYA:10
+ a=BuLlYUs4nyg05ef-U_cA:9 a=pPQtMjhi0hQ8dKqeZ9TjVf6UKJ4A:4 a=_RhRFcbxBZMA:10
+X-CM-Score: 0.00
+In-Reply-To: <alpine.DEB.1.00.0906011054410.26154@pacific.mpi-cbg.de> (Johannes Schindelin's message of "Mon\, 1 Jun 2009 10\:57\:49 +0200 \(CEST\)")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120476>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120477>
 
-On Sat, 30 May 2009, Jeremy O'Brien wrote:
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-> Hello,
-> 
-> I have a git usage question. I'm working on three separate branches in a
-> foreign SCM called Surround. One branch is the mainline, and two others
-> are a v1 branch based off the mainline and the other is a v2 branch
-> based off the mainline with many new features that we hope to release
-> soon. Some components of the v1 branch are similar, but not identical to
-> the v2 branch, and other parts are completely different. I am primarily
-> working on the v2 branch, but some things that I change can/should be
-> backported to the v1 and mainline branches.
-> 
-> The foreign SCM requires one working directory for each branch, so I
-> currently have three separate git repos with the contents of what is on
-> Surround for each, and then I have one "local" git repo that I'm using
-> to do my development. I have three branches on this local repo: one to
-> track each git repo set up for Surround. I've been using topic branches
-> in my local dev repo to do my work, and then merging my changes into the
-> branch I branched my topic branch from, and cherry-picking ones into the
-> other two branches that could be used there. I then push these branches
-> to the repos and check then into Surround when I am ready to. This
-> doesn't seem efficient to me at all, and I was wondering if there is a
-> better setup someone could suggest that would make development easier.
+>> > diff --git a/compat/nedmalloc/nedmalloc.c b/compat/nedmalloc/nedmalloc.c
+>> > index a381a7d..60a4093 100644
+>> > --- a/compat/nedmalloc/nedmalloc.c
+>> > +++ b/compat/nedmalloc/nedmalloc.c
+>> > @@ -34,7 +34,7 @@ DEALINGS IN THE SOFTWARE.
+>> >  /*#define FULLSANITYCHECKS*/
+>> >  
+>> >  #include "nedmalloc.h"
+>> > -#if defined(WIN32) && !defined(__MINGW32__)
+>> > +#if defined(WIN32)
+>> >   #include <malloc.h>
+>> >  #endif
+>> 
+>> Can somebody enlighten me what this hunk is about, and how it helps GCC
+>> 4.4?
+>
+> It helps in that malloc.h is included even if we happen to compile the 
+> stuff as a MinGW program.  Otherwise necessary function declarations are 
+> missing.
+> ...
+> Hopefully less so, now.
 
-It sounds to me like all of the steps are required, since Surround want 
-those directories to exist and contain your work. You may be able to 
-automate them, though, depending on how amenable Surround is to being part 
-of scripts (and how comfortable you are writing scripts). Of course, in 
-the limit, a script could be called from "git fetch" and "git push", and 
-it would essentially act like native git interaction with an upstream 
-maintainer who rewrites commits.
-
-If Surround has an API like Perforce does, and it extends to allowing the 
-developer to implement a different view of the filesystem, you might not 
-even need to have those directories on disk, unless you want to be able to 
-show your coworkers something in an environment they recognize.
-
-	-Daniel
-*This .sig left intentionally blank*
+I wish enough information were in the commit log message from the
+beginning.
