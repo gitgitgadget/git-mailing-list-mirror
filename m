@@ -1,61 +1,80 @@
-From: Nick Woolley <nickwoolley@yahoo.co.uk>
-Subject: Re: [RFC] git-cvs script
-Date: Mon, 01 Jun 2009 10:47:52 +0100
-Message-ID: <4A23A3C8.3090506@yahoo.co.uk>
-References: <4A213793.3030205@yahoo.co.uk> <b2cdc9f30905310042u592a6f5cv541055194524cce0@mail.gmail.com>
+From: jean-luc malet <jeanluc.malet@gmail.com>
+Subject: remotely deleting a branch
+Date: Mon, 1 Jun 2009 12:16:46 +0200
+Message-ID: <1de9d39c0906010316v657f2624i3f16b8b5bea73122@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Alex Bennee <kernel-hacker@bennee.com>
-X-From: git-owner@vger.kernel.org Mon Jun 01 11:47:50 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Jun 01 12:17:00 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MB47M-0001ty-Qz
-	for gcvg-git-2@gmane.org; Mon, 01 Jun 2009 11:47:45 +0200
+	id 1MB4Zf-0003yL-U0
+	for gcvg-git-2@gmane.org; Mon, 01 Jun 2009 12:17:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754061AbZFAJrh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 1 Jun 2009 05:47:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753902AbZFAJrg
-	(ORCPT <rfc822;git-outgoing>); Mon, 1 Jun 2009 05:47:36 -0400
-Received: from udon.noodlefactory.co.uk ([80.68.88.167]:45269 "EHLO
-	udon.noodlefactory.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752186AbZFAJrf (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Jun 2009 05:47:35 -0400
-Received: from 87-194-154-6.bethere.co.uk ([87.194.154.6] helo=[192.168.0.101])
-	by udon.noodlefactory.co.uk with esmtpsa (TLS-1.0:DHE_RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.63)
-	(envelope-from <nickwoolley@yahoo.co.uk>)
-	id 1MB47E-00017W-FR; Mon, 01 Jun 2009 10:47:36 +0100
-User-Agent: Thunderbird 2.0.0.21 (X11/20090318)
-In-Reply-To: <b2cdc9f30905310042u592a6f5cv541055194524cce0@mail.gmail.com>
+	id S1756585AbZFAKQr convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 1 Jun 2009 06:16:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755831AbZFAKQq
+	(ORCPT <rfc822;git-outgoing>); Mon, 1 Jun 2009 06:16:46 -0400
+Received: from mail-fx0-f168.google.com ([209.85.220.168]:55828 "EHLO
+	mail-fx0-f168.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754690AbZFAKQq convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 1 Jun 2009 06:16:46 -0400
+Received: by fxm12 with SMTP id 12so5677026fxm.37
+        for <git@vger.kernel.org>; Mon, 01 Jun 2009 03:16:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:date:message-id:subject
+         :from:to:content-type:content-transfer-encoding;
+        bh=/N4zKbl5AlprWZwoDJkL9N0bdw3nHMMXQQKQp1yylPk=;
+        b=skh8I26SVUkHawf1v2XMaC5nC+iqDF1E18sDuC1EXwgOUpam3jR9uxMiX3cM0MiHcx
+         LjxWs3WOPZEFGqTLrsTIf7kFDdZAMlQcLmKzNI3nMYhKu/EnWfnhFF0tquB+5l30stpT
+         aT5PQrpSWajjoDC6r9RGIG4kJWlW+54MWKuR4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:date:message-id:subject:from:to:content-type
+         :content-transfer-encoding;
+        b=BHaeALotFedB5XAF47NBmx054z9bUbp0Mx6vRdbrKrWxtjm5M2nz4Qe+8aGGVbtkJG
+         hayfNkHmazT3B3Fu5Km7+MyMJEVSUjvqGrFDq+5bvt0SWdSXehW+wZEMycWsRWYoh+Cy
+         H0+s8qM35NPooj8TzCMDUS6QOSL9wCVoAGi04=
+Received: by 10.103.224.2 with SMTP id b2mr3164252mur.30.1243851406223; Mon, 
+	01 Jun 2009 03:16:46 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120454>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120455>
 
-Alex Bennee wrote:
-> If this is using the inbuilt cvsps and perl then it will likely choke
-> on very large CVS repos. For some CVS tree's I've had to resort to a
-> hacked up version of parsecvs to get a conversion running.
+hi!
+I created a remote branch by doing
+$ git push origin mynewbranch
+I done some work on mynewbranch, commited, pushed changes to origin,
+merged it to master and pushed to origin and deleted the mynewbranch
+localy because I don't need it anymore
+now I want to "undo" the git push origin mynewbranch ie remotely
+delete the branch from the repository
+I tried git push --mirror but it deleted all remote branches that I
+didn't worked on... I don't want to have it be a mirror... but
+something like
+$ git branch -r -d origin/mynewbranch
+$ git push
+   ---> deleting origin/mynewbranch
 
-I gather cvsps has to read the whole history to be able to interpret the latest
-commits, is that right?  In which case a long history is going to generate long
-waits on each import. And possibly eat lots of memory too.
+how shall I do that?
+thanks
+JLM
 
-I do actually have a larger CVS tree to test it on than I have been using (it's
-about a decade's worth of changes on a production website) but I didn't want to
-set myself up for a fall by tackling it.  For now, my aim has been to keep CVS
-"out of the living room" whilst I work on the small CVS module that concerns me.
-Meanwhile, I'm hoping to convince the powers that be that CVS needs to be
-replaced, preferably with Git, before I get asked to work on something larger.
-
-However, if you can test it on your repository, and with your patched version of
-parsecvs, that would be a good thing. Especially if it works.
-
-Thanks,
-
-N
+--=20
+KISS! (Keep It Simple, Stupid!)
+(garde le simple, imb=C3=A9cile!)
+"mais qu'est-ce que tu m'as pondu comme usine =C3=A0 gaz? fait des chos=
+es
+simples et qui marchent, esp=C3=A8ce d'imb=C3=A9cile!"
+-----------------------------
+"Si vous pensez que vous =C3=AAtes trop petit pour changer quoique ce s=
+oit,
+essayez donc de dormir avec un moustique dans votre chambre." Betty
+Reese
+http://www.grainesdechangement.com/citations.htm
