@@ -1,91 +1,68 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 04/11] test-chmtime: work around Windows limitation
-Date: Mon, 01 Jun 2009 00:43:40 -0700
-Message-ID: <7vab4smmab.fsf@alter.siamese.dyndns.org>
-References: <1243786525-4493-1-git-send-email-prohaska@zib.de>
-	<1243786525-4493-2-git-send-email-prohaska@zib.de>
-	<1243786525-4493-3-git-send-email-prohaska@zib.de>
-	<1243786525-4493-4-git-send-email-prohaska@zib.de>
-	<1243786525-4493-5-git-send-email-prohaska@zib.de>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 03/11 v2] Work around a regression in Windows 7, causing
+ erase_in_line() to crash sometimes
+Date: Mon, 1 Jun 2009 10:25:48 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.0906011025080.26154@pacific.mpi-cbg.de>
+References: <4A22C674.603@kdbg.org> <1243836256-11958-1-git-send-email-prohaska@zib.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
 	Johannes Sixt <j6t@kdbg.org>
 To: Steffen Prohaska <prohaska@zib.de>
-X-From: git-owner@vger.kernel.org Mon Jun 01 09:43:56 2009
+X-From: git-owner@vger.kernel.org Mon Jun 01 10:25:17 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MB2BX-000301-Ix
-	for gcvg-git-2@gmane.org; Mon, 01 Jun 2009 09:43:56 +0200
+	id 1MB2pW-0001kD-FY
+	for gcvg-git-2@gmane.org; Mon, 01 Jun 2009 10:25:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753425AbZFAHnk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 1 Jun 2009 03:43:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752910AbZFAHnj
-	(ORCPT <rfc822;git-outgoing>); Mon, 1 Jun 2009 03:43:39 -0400
-Received: from fed1rmmtao106.cox.net ([68.230.241.40]:36993 "EHLO
-	fed1rmmtao106.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751615AbZFAHni (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Jun 2009 03:43:38 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao106.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20090601074339.OPVG25927.fed1rmmtao106.cox.net@fed1rmimpo01.cox.net>;
-          Mon, 1 Jun 2009 03:43:39 -0400
-Received: from localhost ([68.225.240.211])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id yXjg1b0034aMwMQ03Xjgz8; Mon, 01 Jun 2009 03:43:40 -0400
-X-Authority-Analysis: v=1.0 c=1 a=4n06hotiqrIA:10 a=YZBqRnCg1bkA:10
- a=VOOERgDTbnW5-a77gvMA:9 a=vxvx9YFEhGAUhnM2ti4xs78rkX0A:4 a=JO-CUkcG2iAA:10
- a=_RhRFcbxBZMA:10
-X-CM-Score: 0.00
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+	id S1754027AbZFAIZG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 1 Jun 2009 04:25:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752966AbZFAIZF
+	(ORCPT <rfc822;git-outgoing>); Mon, 1 Jun 2009 04:25:05 -0400
+Received: from mail.gmx.net ([213.165.64.20]:56139 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752676AbZFAIZE (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Jun 2009 04:25:04 -0400
+Received: (qmail invoked by alias); 01 Jun 2009 08:25:04 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp052) with SMTP; 01 Jun 2009 10:25:04 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18PMxgWv7sPryOQc0Xf27fPMrwodqdoLN32B5p4xg
+	OOESjKNDUCixje
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <1243836256-11958-1-git-send-email-prohaska@zib.de>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.55
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120449>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120450>
 
-Steffen Prohaska <prohaska@zib.de> writes:
+Hi,
+
+On Mon, 1 Jun 2009, Steffen Prohaska wrote:
 
 > From: Johannes Schindelin <johannes.schindelin@gmx.de>
->
-> Windows has problems changing the mtime when the file is write protected,
-> even by the owner of said file.
->
-> Add a Windows-only workaround to change the mode if necessary before
-> trying to change the mtime.
+> 
+> The function FillConsoleOutputCharacterA() was pretty content in XP to take a NULL
+> pointer if we did not want to store the number of written columns.  In Windows 7,
+> it crashes, but only when called from within Git Bash, not from within cmd.exe.
+> Go figure.
 
-I'll queue this as-is for now, but shouldn't the code remember the
-original mode and change it back?
+Did I really have too-long lines in my commit message?
 
+> 
 > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 > Signed-off-by: Steffen Prohaska <prohaska@zib.de>
 > ---
->  test-chmtime.c |    9 +++++++++
->  1 files changed, 9 insertions(+), 0 deletions(-)
->
-> diff --git a/test-chmtime.c b/test-chmtime.c
-> index d5358cb..fe476cb 100644
-> --- a/test-chmtime.c
-> +++ b/test-chmtime.c
-> @@ -87,6 +87,15 @@ int main(int argc, const char *argv[])
->  			return -1;
->  		}
->  
-> +#ifdef WIN32
-> +		if (!(sb.st_mode & S_IWUSR) &&
-> +				chmod(argv[i], sb.st_mode | S_IWUSR)) {
-> +			fprintf(stderr, "Could not make user-writable %s: %s",
-> +				argv[i], strerror(errno));
-> +			return -1;
-> +		}
-> +#endif
-> +
->  		utb.actime = sb.st_atime;
->  		utb.modtime = set_eq ? set_time : sb.st_mtime + set_time;
->  
-> -- 
-> 1.6.3.1.54.g99dd
+>  compat/winansi.c |    3 ++-
+>  1 files changed, 2 insertions(+), 1 deletions(-)
+> 
+> I squashed the second chunk of 05/11, as suggested by Hannes.
+
+Makes sense, thank you!
+Dscho
