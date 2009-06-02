@@ -1,117 +1,126 @@
-From: "Aaron Gray" <aaronngray.lists@googlemail.com>
-Subject: Re: Duplicating a branch
-Date: Tue, 2 Jun 2009 17:50:09 +0100
-Message-ID: <70411981D37A4F2ABF5D0A9CF24E6884@HPLAPTOP>
-References: <BAF61FDE71D344FDB9F1415B5E2AFD75@HPLAPTOP> <7voct6fy1e.fsf@alter.siamese.dyndns.org>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: [PATCH WIP 0/4] Special code path for large blobs
+Date: Tue, 02 Jun 2009 13:22:14 -0400 (EDT)
+Message-ID: <alpine.LFD.2.00.0906021235100.3906@xanadu.home>
+References: <1243488550-15357-1-git-send-email-pclouds@gmail.com>
+ <alpine.LFD.2.00.0905281349320.3906@xanadu.home>
+ <fcaeb9bf0906012146t7eab8dafm2b2b58aa96fb6220@mail.gmail.com>
+ <20090602144555.GH30527@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	format=flowed;
-	charset="iso-8859-1";
-	reply-type=original
-Content-Transfer-Encoding: 7bit
-To: "Git Mailing List" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Jun 02 18:50:28 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Nguyen Thai Ngoc Duy <pclouds@gmail.com>, git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Tue Jun 02 19:22:38 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MBXBx-0008AT-PI
-	for gcvg-git-2@gmane.org; Tue, 02 Jun 2009 18:50:26 +0200
+	id 1MBXh8-0007ow-1r
+	for gcvg-git-2@gmane.org; Tue, 02 Jun 2009 19:22:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753564AbZFBQuQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Jun 2009 12:50:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753499AbZFBQuP
-	(ORCPT <rfc822;git-outgoing>); Tue, 2 Jun 2009 12:50:15 -0400
-Received: from mail-fx0-f216.google.com ([209.85.220.216]:32949 "EHLO
-	mail-fx0-f216.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752941AbZFBQuN (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Jun 2009 12:50:13 -0400
-Received: by fxm12 with SMTP id 12so6656333fxm.37
-        for <git@vger.kernel.org>; Tue, 02 Jun 2009 09:50:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:from:to:references
-         :subject:date:mime-version:content-type:content-transfer-encoding
-         :x-priority:x-msmail-priority:x-mailer:x-mimeole;
-        bh=PR/CUI0s7t48mq/BNjsP5RTQWbZmQo+oYPY9mJL1e0g=;
-        b=gvZDXhy2DL4UOJPvdyYM9soaX218BPio+Mq2HJ22opkCWzF1aAVNGpKob3b3DjNRsH
-         ivcGnKMnOcCCIxIKfpQ0xhn1wfzVfoDgfvut912j8q20F8Raq0a7L7Ug9YlL835Gplqr
-         OnOVEz86TuuLvUOixhGwb5t2iD6y0epaj/qao=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=message-id:from:to:references:subject:date:mime-version
-         :content-type:content-transfer-encoding:x-priority:x-msmail-priority
-         :x-mailer:x-mimeole;
-        b=gGpKO9an6cDSBwl8nJb9ZWWNGPV5+/ZuxbqvtGBV4ggAED5l0X0+pMuKdkVFN4/hzR
-         R3MA6GS+0i+Krf0uDj2a/na+fV1jTLpW3OrhurPmeIVZYP5mV4m8YNH52KzcyJVKBIrY
-         90TxkVtp5DphKj4tneyARQ/bRSoNRML3Porho=
-Received: by 10.86.59.18 with SMTP id h18mr8016681fga.71.1243961414087;
-        Tue, 02 Jun 2009 09:50:14 -0700 (PDT)
-Received: from HPLAPTOP (mwgray.force9.co.uk [212.159.110.144])
-        by mx.google.com with ESMTPS id e20sm11943697fga.25.2009.06.02.09.50.12
-        (version=SSLv3 cipher=RC4-MD5);
-        Tue, 02 Jun 2009 09:50:13 -0700 (PDT)
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5512
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.5579
+	id S1757948AbZFBRWV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Jun 2009 13:22:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757155AbZFBRWV
+	(ORCPT <rfc822;git-outgoing>); Tue, 2 Jun 2009 13:22:21 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:16342 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756193AbZFBRWS (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Jun 2009 13:22:18 -0400
+Received: from xanadu.home ([66.131.194.97]) by VL-MO-MR002.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
+ with ESMTP id <0KKM00KCRG92YRJ0@VL-MO-MR002.ip.videotron.ca> for
+ git@vger.kernel.org; Tue, 02 Jun 2009 13:22:15 -0400 (EDT)
+X-X-Sender: nico@xanadu.home
+In-reply-to: <20090602144555.GH30527@spearce.org>
+User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120528>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120529>
 
-Nice expanation and mini tutoial Junio !
+On Tue, 2 Jun 2009, Shawn O. Pearce wrote:
 
-Thanks ever so much, very useful.
-
-Aaron
-
-> "Aaron Gray" <aaronngray.lists@googlemail.com> writes:
->
->> How do I go about duplicating a branch within a repository, so I can
->> make test mods ?
->
-> Run
->
->    $ git checkout -b experiment master
->
-> to make a new "experiment" branch that points at the same comit as
-> "master" (or whatever other branch), hack away (including committing which
-> would grow the history of "experiment" branch without touching "master").
->
-> After you are done, and if you want to discard it, simply:
->
->    $ git checkout master
->    $ git branch -D experiment
->
-> or if you want to keep all of it:
->
->    $ git checkout master
->    $ git merge experiment
->
-> *BUT* if your "experiment" was truly exploratory in the sense that your
-> history is full of "let's try this, commit to snapshot, test, oops, it did
-> not work, let's try that, commit to snapshot, test, ok, I made some
-> progress, let's continue" crufts, you would most likely want to clean-up
-> your history before the latter "checkout master and merge experiment into
-> it" steps with something like:
->
->    $ git rebase -i master experiment
->
-> If you in advance know that what you are going to do is truly "throw-away
-> experiment", you do not even need to use an "experiment" branch.  You can
-> do your exploration while on a detached HEAD:
->
->    $ git checkout master^0
->
-> and hack away, including making commits (but you will discard them in
-> the end), and then finally:
->
->    $ git reset --hard ;# if you have local changes you do not want to
->   take back to master
->    $ git checkout master
->
->
->
+> Nguyen Thai Ngoc Duy <pclouds@gmail.com> wrote:
+> > 2009/5/29 Nicolas Pitre <nico@cam.org>:
+> > > However, like I said previously, I'd encapsulate large blobs in a pack
+> > > right away instead of storing them as loose objects. ??The reason is that
+> > > you can effortlessly repack/fetch/push them afterwards by simply
+> > > triggering the pack data reuse code path for them. ??Extracting large and
+> > > undeltified blobs from a pack is just as easy as from a loose object.
+> > 
+> > Makes sense. And the code looks nice too.
+> > 
+> > > To accomplish that, you only need to copy write_pack_file() from
+> > > builtin-pack-objects.c and strip it to the bone with only one object to
+> > > write.
+> > 
+> > write_pack_file() is too scary to me, I ripped from fast-import.c
+> > instead. BTW, how does git handle hundreds of single object packs? I
+> > don't know if prepare_packed_git scales in such cases.
 > 
+> Yea, its not going to do that great.
+
+Well... remember that we're talking about huge objects here.  You're not 
+likely to have so many of them.  And if you do have that many huge 
+objects, then any operation you do is likely to access one of them 
+anyway and then the pack lookup overhead will be lost in the noise.
+
+> We may be able to improve that code path by sorting any pack whose
+> index is really small and pack file is really big to the end of
+> the list, where its least likely to be matched, so we don't even
+> bother to load the index into memory during normal commit traversal.
+> 
+> But even with that sorting, its still going to suck.
+
+I don't agree with that statement.  Supposing the sorting you propose 
+above which I consider a pretty good idea doesn't provide any 
+improvement, we already do pretty well with many packs since commit 
+f7c22cc6.
+
+> Lookup for a large binary is O(N), where N is the number of large 
+> binary *revisions*.  Yuck.
+
+It is almost like loose object lookups, except that you don't have a 256 
+entry fanout.  But since the IO corresponding to such objects is 
+expected to be much more significant than 256 times the IO for a tree or 
+commit object, then again this shouldn't matter much in practice.
+
+> Really, objects in the 200MB+ range probably should just be in a lone
+> file named by its SHA-1... aka, a loose object.  Combining them into
+> a pack is going to be potentially expensive disk IO wise, and may
+> not gain you very much (its over 200 MB compressed with deflate, its
+> likely already compressed binary content that may not delta well).
+
+I must disagree again.  The above notwithstanding, the idea is _not_ to 
+keep those large blobs into their own packs.  The idea is mainly to make 
+a future repack much much easier with the current repack-objects code.  
+And yes, we should repack even those large blobs eventually just like we 
+do for loose objects.  Really there is no point keeping even large blobs 
+in their own files.  If you do care about object lookup efficiency, 
+having large objects into their own pack or loose does not make such a 
+huge difference.  Sure a factor of 256 might be considered significant, 
+but this is only a linear cost improvement while object lookup within a 
+pack gets an exponential cost improvement.
+
+There are ways already to enforce some size policies on pack files if 
+you don't want to keep all your objects into a single pack, but even a 
+single huge pack should work just fine as well and you may .keep it 
+afterward not to repack it anymore, or until a monthly or quarterly 
+repository maintenance.  So in practice you shouldn't be accumulating 
+_that_ many single object packs anyway.
+
+> Way back we had that pack-style loose object format, for exactly
+> these sorts of files, and exactly to avoid having many packs of
+> just 1 object, but that didn't go anywhere... indeed, Nico deleted
+> the code that creates that format.
+
+And the rational was exactly the one above: large blobs have no reason 
+what so ever to _remain_ alone into a file, be it a loose object or a 
+single object pack.  And just like for loose objects, you don't have to 
+repack large blobs right away so the IO cost can be postponed for when 
+that doesn't matter.
+
+
+Nicolas
