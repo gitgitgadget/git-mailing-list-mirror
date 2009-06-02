@@ -1,60 +1,117 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH v3 1/2] compat: add a mkstemps() compatibility function
-Date: Tue, 02 Jun 2009 15:05:05 +0200
-Message-ID: <4A252381.9000103@viscovery.net>
-References: <1243503831-17993-1-git-send-email-davvid@gmail.com> <e6cd6cf90906020535m24d588eau40b800555c9e906f@mail.gmail.com>
+From: Sitaram Chamarty <sitaramc@gmail.com>
+Subject: Re: gitosis question: identifying/logging remote user
+Date: Tue, 2 Jun 2009 18:49:22 +0530
+Message-ID: <2e24e5b90906020619o1bef150k43eba2870ff4fc4e@mail.gmail.com>
+References: <2e24e5b90906012102y4e1e6281p437e4d88da517c08@mail.gmail.com>
+	 <robbat2-20090602T062332-128740789Z@orbis-terrarum.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: David Aguilar <davvid@gmail.com>, gitster@pobox.com,
-	git@vger.kernel.org, markus.heidelberg@web.de, jnareb@gmail.com
-To: Antriksh Pany <antriksh.pany@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jun 02 15:05:23 2009
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>, tv@eagain.net
+To: "Robin H. Johnson" <robbat2@gentoo.org>
+X-From: git-owner@vger.kernel.org Tue Jun 02 15:19:52 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MBTgA-0002va-6t
-	for gcvg-git-2@gmane.org; Tue, 02 Jun 2009 15:05:22 +0200
+	id 1MBTuA-0000WP-6x
+	for gcvg-git-2@gmane.org; Tue, 02 Jun 2009 15:19:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752798AbZFBNFN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Jun 2009 09:05:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752570AbZFBNFM
-	(ORCPT <rfc822;git-outgoing>); Tue, 2 Jun 2009 09:05:12 -0400
-Received: from lilzmailso02.liwest.at ([212.33.55.13]:61315 "EHLO
-	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752330AbZFBNFL (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Jun 2009 09:05:11 -0400
-Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
-	by lilzmailso02.liwest.at with esmtpa (Exim 4.69)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1MBTfw-0001pj-01; Tue, 02 Jun 2009 15:05:08 +0200
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.96])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id B56C5FCD2; Tue,  2 Jun 2009 15:05:07 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.21 (Windows/20090302)
-In-Reply-To: <e6cd6cf90906020535m24d588eau40b800555c9e906f@mail.gmail.com>
-X-Enigmail-Version: 0.95.5
-X-Spam-Score: -1.4 (-)
+	id S1753227AbZFBNTX convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 2 Jun 2009 09:19:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752757AbZFBNTX
+	(ORCPT <rfc822;git-outgoing>); Tue, 2 Jun 2009 09:19:23 -0400
+Received: from wa-out-1112.google.com ([209.85.146.182]:13927 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752689AbZFBNTW convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 2 Jun 2009 09:19:22 -0400
+Received: by wa-out-1112.google.com with SMTP id j5so1699140wah.21
+        for <git@vger.kernel.org>; Tue, 02 Jun 2009 06:19:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=cy1NAEauf1GmKQPRnIkBfk7feQER/e7lsvyybTkS4kA=;
+        b=HYlnWxBY2YwsMBOsgihoJ6lFvke5aUcLVOdjjRSsc74LxBjcg56eK3L0uiNUF0+W8R
+         lQ1RvpvHrOJqlmq7NMeUdzBTg6fuUaYk7oLo8IwjDG2NDCG70MrpZXeDsX6rOp/WFd1V
+         K3ENd35NroowNzMh7P/fvG+0NXMvQsvzKJKc4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=ZThV+5saGBFL1+4Dy2xDl0te6NX9hevY+wZDKq99kR9Z4QVOKghick9bYIjZ9zRU0f
+         v6w537dRBUiXP/LPhkEttXqVnZ4avrtke+Hm+VgtAtYIeL3WYuHujdPDnRYQYhmS6CU0
+         U4jXJRR91fIpUgPltJf1Ymfa6MFvk6VfS/RtQ=
+Received: by 10.115.46.10 with SMTP id y10mr6117217waj.121.1243948763854; Tue, 
+	02 Jun 2009 06:19:23 -0700 (PDT)
+In-Reply-To: <robbat2-20090602T062332-128740789Z@orbis-terrarum.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120508>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120509>
 
-Antriksh Pany schrieb:
-> 2. tv_usec has a decimal value range of 0-999999  (10^6 usec make 1
-> sec). Which means that tv_usec fits completely in 20 bits (or less).
-> (tv_usec << 16) yields a number that fits completely in 36 bits (or
-> less). Max value of this number is 999999 * 2^16, or for convenience,
-> about M = 10^6 * 2^16. This number (in the range of 0 to M) goes on to
-> be divided by D=62^6. Also, M > D. Thus, there is about a  D / M * 100
-> ~ 87 % probability of the division M / D working out to be zero. i.e,
-> in 87% cases, the last division (v/= num_letters) will cause 'v' to
-> become 0.
+On Tue, Jun 2, 2009 at 12:01 PM, Robin H. Johnson <robbat2@gentoo.org> =
+wrote:
+> On Tue, Jun 02, 2009 at 09:32:40AM +0530, Sitaram Chamarty wrote:
+>> I want to be able to log the information that the post-receive hook
+>> receives, but I *also* want, along with that, the name of the pubkey
+>> that was used in this particular "push".
+> I've got a partial patch that I never finished for using this with th=
+e
+> gitosis-gentoo fork that powers git.overlays.gentoo.org. It needs
+> re-implementation from scratch, but here's the design notes:
+> 1. Use the username to open the file in keydir again.
 
-But this value (after the 6th division, mind you) is not used. v is used
-the last time after the 5th division; at this time it still carries enough
-randomness: 62^5 < 2^32.
+This is the directory that contains all the *.pub files, so ok...
 
--- Hannes
+> 2. At the top, look for RFC822 headers with a leading "# " as padding=
+:
+> =A0 Examples from my own patch:
+> =A0 # Full-Name: "Robin H. Johnson (robbat2)" <robbat2@gentoo.org>
+> =A0 # cia-vc-username: robbat2
+
+Hmmm... is this a significantly different gitosis?  The files in my
+keydir mostly contain just one line (some have two, for people who
+work from different machines), looking like this:
+
+ssh-rsa [long series of base64 type characters]=3D=3D some.one@company.=
+com
+
+> =A0 The headers are followed by a blank line then further text is fre=
+e-form
+> =A0 and not parsed. Continuation lines are NOT supported.
+> 3. The header field names are transformed to enviornoment variable na=
+mes
+> =A0 as follows:
+> =A0 - y/[[:lower:]]/[[:upper:]]/g
+> =A0 - s/-/_/g
+> 4. Export the environment variables, named per above, with the full
+> =A0 content of the rest of the line.
+>
+> (We need to export the CIA.vc data, and also send off a commit mail).
+
+Nope, I'm completely lost.  Perhaps I failed miserably in explaining
+what I want... !
+
+----------
+
+I'm thinking along the lines of a simple change to this:
+
+    TEMPLATE=3D('command=3D"gitosis-serve %(user)s",no-port-forwarding,=
+'
+              +'no-X11-forwarding,no-agent-forwarding,no-pty %(key)s')
+
+(in function generateAuthorizedKeys of gitosis/ssh.py) to generate an
+additional ssh directive in the authorized_keys file:
+
+    environment=3D"REMOTEUSER=3D%(user)s"
+
+I haven't tested it yet, but I'm expecting that this will pass on the
+name of the user (like "sitaram" in my case) as an env var so that I
+can do whatever I want with it in the hooks.
+
+Thanks,
+
+Sitaram
