@@ -1,93 +1,99 @@
-From: sparse@infidigm.net
-Subject: [Patch] Prevent cloning over http from spewing
-Date: Tue, 2 Jun 2009 13:42:29 -0400
-Message-ID: <20090602174229.GA14455@infidigm.net>
+From: Daniel Trstenjak <daniel.trstenjak@online.de>
+Subject: Re: [PATCH] Show presense of stashed changes in bash prompt.
+Date: Tue, 2 Jun 2009 20:03:22 +0200
+Message-ID: <20090602180322.GA5719@laptop>
+References: <20090602114325.GA3427@laptop> <7vzlcqfyli.fsf@alter.siamese.dyndns.org> <20090602152915.GK30527@spearce.org>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; boundary="k+w/mQv8wyuph6w0"
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jun 02 19:50:40 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Daniel Trstenjak <Daniel.Trstenjak@science-computing.de>
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Tue Jun 02 20:03:57 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MBY8G-0004QV-2e
-	for gcvg-git-2@gmane.org; Tue, 02 Jun 2009 19:50:40 +0200
+	id 1MBYL6-0002Rs-Ge
+	for gcvg-git-2@gmane.org; Tue, 02 Jun 2009 20:03:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755475AbZFBRu3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Jun 2009 13:50:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754861AbZFBRu2
-	(ORCPT <rfc822;git-outgoing>); Tue, 2 Jun 2009 13:50:28 -0400
-Received: from ironport2-out.pppoe.ca ([206.248.154.182]:6027 "EHLO
-	ironport2-out.teksavvy.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754780AbZFBRu1 (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 2 Jun 2009 13:50:27 -0400
-X-Greylist: delayed 582 seconds by postgrey-1.27 at vger.kernel.org; Tue, 02 Jun 2009 13:50:27 EDT
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: AhsDAFcAJUpFxKWY/2dsb2JhbACBT5VPuQmECwWGBw
-X-IronPort-AV: E=Sophos;i="4.41,292,1241409600"; 
-   d="scan'208";a="39504075"
-Received: from 69-196-165-152.dsl.teksavvy.com (HELO freiheit.infidigm.net) ([69.196.165.152])
-  by ironport2-out.teksavvy.com with ESMTP; 02 Jun 2009 13:40:46 -0400
-Received: from sparse by freiheit.infidigm.net with local (Exim 4.50)
-	id 1MBY0L-0003wk-Vc
-	for git@vger.kernel.org; Tue, 02 Jun 2009 13:42:30 -0400
+	id S1758196AbZFBSD3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Jun 2009 14:03:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757856AbZFBSD3
+	(ORCPT <rfc822;git-outgoing>); Tue, 2 Jun 2009 14:03:29 -0400
+Received: from moutng.kundenserver.de ([212.227.126.177]:62128 "EHLO
+	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755066AbZFBSD2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Jun 2009 14:03:28 -0400
+Received: from localhost (p5B0EEE2C.dip.t-dialin.net [91.14.238.44])
+	by mrelayeu.kundenserver.de (node=mrelayeu4) with ESMTP (Nemesis)
+	id 0ML21M-1MBYKZ0RCS-0002GS; Tue, 02 Jun 2009 20:03:26 +0200
 Content-Disposition: inline
-User-Agent: Mutt/1.5.9i
+In-Reply-To: <20090602152915.GK30527@spearce.org>
+User-Agent: Mutt/1.5.18 (2008-05-17)
+X-Provags-ID: V01U2FsdGVkX1+3o2mnpSHkh3D8TdOn0MCrqnPiFw2OLdvT73P
+ BpOMZusvPQFf+lxpILBLCYCK2p9oZB94xVWEm+iCy2VA3m4SNV
+ nCHEbVwSPDI6djTCiuJSg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120530>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120531>
 
+Avoid the forgetting of stashed changes by showing
+them in the bash prompt.
 
---k+w/mQv8wyuph6w0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+If the presense is shown is configurable by setting
+GIT_PS1_SHOWSTASHSTATE to a nonempty value.
 
-When cloning over http git spews a bunch of hashs that don't really convey much.
-The attached patch disables them unless --verbose is specified.
+The code for checking if the stash has entries is
+taken from 'git-stash.sh'.
 
---k+w/mQv8wyuph6w0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: attachment; filename=patch
+Signed-off-by: Daniel Trstenjak <daniel.trstenjak@online.de>
+Acked-by: Shawn O. Pearce <spearce@spearce.org>
+---
+ contrib/completion/git-completion.bash |   12 ++++++++++--
+ 1 files changed, 10 insertions(+), 2 deletions(-)
 
-commit 67be7a94c94100d24bcccf1248a26afc1dec8d05
-Author: Jeff Muizelaar <jmuizelaar@mozilla.com>
-Date:   Tue Jun 2 13:32:41 2009 -0400
-
-    Prevent cloning over http from spewing
-    
-    This propogates the verbose flag to the transport and makes
-    the walker verbose only if the transport is verbose.
-
-diff --git a/builtin-clone.c b/builtin-clone.c
-index 5c46496..f25d60b 100644
---- a/builtin-clone.c
-+++ b/builtin-clone.c
-@@ -502,8 +502,10 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index 98b9cbe..c4ae423 100755
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -40,6 +40,10 @@
+ #       with the bash.showDirtyState variable, which defaults to true
+ #       once GIT_PS1_SHOWDIRTYSTATE is enabled.
+ #
++#       You can also see if currently something is stashed, by setting
++#       GIT_PS1_SHOWSTASHSTATE to a nonempty value. If something is stashed,
++#       then a '$' will be shown next to the branch name. 
++#
+ # To submit patches:
+ #
+ #    *) Read Documentation/SubmittingPatches
+@@ -127,6 +131,7 @@ __git_ps1 ()
  
- 		if (option_quiet)
- 			transport->verbose = -1;
--		else if (option_verbose)
-+		else if (option_verbose) {
- 			transport->progress = 1;
-+			transport->verbose = 1;
-+		}
+ 		local w
+ 		local i
++		local s
+ 		local c
  
- 		if (option_upload_pack)
- 			transport_set_option(transport, TRANS_OPT_UPLOADPACK,
-diff --git a/transport.c b/transport.c
-index 17891d5..3bb87f3 100644
---- a/transport.c
-+++ b/transport.c
-@@ -366,7 +366,7 @@ static int fetch_objs_via_walker(struct transport *transport,
- 	walker->get_all = 1;
- 	walker->get_tree = 1;
- 	walker->get_history = 1;
--	walker->get_verbosely = transport->verbose >= 0;
-+	walker->get_verbosely = transport->verbose > 0;
- 	walker->get_recover = 0;
+ 		if [ "true" = "$(git rev-parse --is-inside-git-dir 2>/dev/null)" ]; then
+@@ -148,12 +153,15 @@ __git_ps1 ()
+ 					fi
+ 				fi
+ 			fi
++			if [ -n "${GIT_PS1_SHOWSTASHSTATE-}" ]; then
++			        git rev-parse --verify refs/stash >/dev/null 2>&1 && s="$"
++			fi
+ 		fi
  
- 	for (i = 0; i < nr_objs; i++)
-
---k+w/mQv8wyuph6w0--
+ 		if [ -n "${1-}" ]; then
+-			printf "$1" "$c${b##refs/heads/}$w$i$r"
++			printf "$1" "$c${b##refs/heads/}$w$i$s$r"
+ 		else
+-			printf " (%s)" "$c${b##refs/heads/}$w$i$r"
++			printf " (%s)" "$c${b##refs/heads/}$w$i$s$r"
+ 		fi
+ 	fi
+ }
+-- 
+1.6.1.2
