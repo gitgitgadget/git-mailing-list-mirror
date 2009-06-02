@@ -1,107 +1,60 @@
-From: Raman Gupta <rocketraman@fastmail.fm>
-Subject: Cygwin: Initial clone of repo containing .gitattributes has modified
- files
-Date: Tue, 02 Jun 2009 08:47:34 -0400
-Message-ID: <4A251F66.2020809@fastmail.fm>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: [PATCH v3 1/2] compat: add a mkstemps() compatibility function
+Date: Tue, 02 Jun 2009 15:05:05 +0200
+Message-ID: <4A252381.9000103@viscovery.net>
+References: <1243503831-17993-1-git-send-email-davvid@gmail.com> <e6cd6cf90906020535m24d588eau40b800555c9e906f@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jun 02 14:54:26 2009
+Cc: David Aguilar <davvid@gmail.com>, gitster@pobox.com,
+	git@vger.kernel.org, markus.heidelberg@web.de, jnareb@gmail.com
+To: Antriksh Pany <antriksh.pany@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jun 02 15:05:23 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MBTVZ-0006eA-Kj
-	for gcvg-git-2@gmane.org; Tue, 02 Jun 2009 14:54:26 +0200
+	id 1MBTgA-0002va-6t
+	for gcvg-git-2@gmane.org; Tue, 02 Jun 2009 15:05:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753192AbZFBMyR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Jun 2009 08:54:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751661AbZFBMyQ
-	(ORCPT <rfc822;git-outgoing>); Tue, 2 Jun 2009 08:54:16 -0400
-Received: from smtp108.rog.mail.re2.yahoo.com ([68.142.225.206]:26221 "HELO
-	smtp108.rog.mail.re2.yahoo.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with SMTP id S1752570AbZFBMyQ (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 2 Jun 2009 08:54:16 -0400
-X-Greylist: delayed 398 seconds by postgrey-1.27 at vger.kernel.org; Tue, 02 Jun 2009 08:54:15 EDT
-Received: (qmail 13683 invoked from network); 2 Jun 2009 12:47:38 -0000
-Received: from unknown (HELO apollo.rocketraman.com) (rocketraman@99.224.155.40 with login)
-  by smtp108.rog.mail.re2.yahoo.com with SMTP; 2 Jun 2009 12:47:38 -0000
-X-YMail-OSG: 7yimZfsVM1ms0VnQZvjGJQRYCwa9T.Enx.Wh.F47QEV_8I_6iI7j4xgKC1eItPGmxw--
-X-Yahoo-Newman-Property: ymail-3
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by apollo.rocketraman.com (Postfix) with ESMTP id 41FB821C0528
-	for <git@vger.kernel.org>; Tue,  2 Jun 2009 08:47:38 -0400 (EDT)
-X-Virus-Scanned: amavisd-new at rocketraman.com
-Received: from apollo.rocketraman.com ([127.0.0.1])
-	by localhost (apollo.rocketraman.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id gKL4xfysJK5F for <git@vger.kernel.org>;
-	Tue,  2 Jun 2009 08:47:34 -0400 (EDT)
-Received: from [192.168.1.5] (zeus.rocketraman.com [192.168.1.5])
-	by apollo.rocketraman.com (Postfix) with ESMTP id 805C221C0527
-	for <git@vger.kernel.org>; Tue,  2 Jun 2009 08:47:34 -0400 (EDT)
-User-Agent: Thunderbird 2.0.0.21 (X11/20090320)
-X-Enigmail-Version: 0.95.2
+	id S1752798AbZFBNFN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Jun 2009 09:05:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752570AbZFBNFM
+	(ORCPT <rfc822;git-outgoing>); Tue, 2 Jun 2009 09:05:12 -0400
+Received: from lilzmailso02.liwest.at ([212.33.55.13]:61315 "EHLO
+	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752330AbZFBNFL (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Jun 2009 09:05:11 -0400
+Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
+	by lilzmailso02.liwest.at with esmtpa (Exim 4.69)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1MBTfw-0001pj-01; Tue, 02 Jun 2009 15:05:08 +0200
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.96])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id B56C5FCD2; Tue,  2 Jun 2009 15:05:07 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.21 (Windows/20090302)
+In-Reply-To: <e6cd6cf90906020535m24d588eau40b800555c9e906f@mail.gmail.com>
+X-Enigmail-Version: 0.95.5
+X-Spam-Score: -1.4 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120507>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120508>
 
-When a repository containing a .gitattributes file, which contains
-other files with -crlf set is cloned on cygwin, with autocrlf = true,
-the initial checkout of the working copy sets the line endings for the
--crlf files incorrectly (it ignores the .gitattributes, presumably
-because it hasn't been checked out yet).
+Antriksh Pany schrieb:
+> 2. tv_usec has a decimal value range of 0-999999  (10^6 usec make 1
+> sec). Which means that tv_usec fits completely in 20 bits (or less).
+> (tv_usec << 16) yields a number that fits completely in 36 bits (or
+> less). Max value of this number is 999999 * 2^16, or for convenience,
+> about M = 10^6 * 2^16. This number (in the range of 0 to M) goes on to
+> be divided by D=62^6. Also, M > D. Thus, there is about a  D / M * 100
+> ~ 87 % probability of the division M / D working out to be zero. i.e,
+> in 87% cases, the last division (v/= num_letters) will cause 'v' to
+> become 0.
 
-After the checkout has been done, git does correctly mark the files
-with -crlf as "modified" and a simple reset --hard fixes it, but this
-is very confusing for the user as the user has not done anything -- it
-is git itself that has "modified" the file by not assigning the
-correct line endings.
+But this value (after the 6th division, mind you) is not used. v is used
+the last time after the 5th division; at this time it still carries enough
+randomness: 62^5 < 2^32.
 
-Reproduction recipe (on a cygwin binmode mount):
-
----------------------------------------------------
-$ git --version
-git version 1.6.1.2
-$ git config --global core.autocrlf true
-$ git config --global core.safecrlf true
-$ mkdir temp.git; cd temp.git; git init
-$ cat | unix2dos > file_dos
-DOS
-line
-endings
-^D
-$ cat > file_unix
-UNIX
-line
-endings
-^D
-$ cat > .gitattributes
-.gitattributes -crlf
-file_unix -crlf
-^D
-$ git add .gitattributes *
-$ git commit -m "Test"
-$ cd ..
-$ git clone temp.git tempclone.git
-$ cd tempclone.git
-$ git status
-...
-#      modified:  .gitattributes
-#      modified:  file_unix
-...
----------------------------------------------------
-
-Also, in a related issue, git on cygwin requires .gitattributes itself
-to be included in .gitattributes, otherwise with safecrlf = true you get:
-
-$ git add .gitattributes
-fatal: LF would be replaced by CRLF in .gitattributes
-
-(since .gitattributes created with a cygwin editor on a binmode mount
-uses unix line endings)
-
-Cheers,
-Raman Gupta
+-- Hannes
