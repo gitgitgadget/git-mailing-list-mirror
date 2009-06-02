@@ -1,85 +1,64 @@
-From: Bert Wesarg <bert.wesarg@googlemail.com>
-Subject: Re: [TopGit PATCH v2] tg-push: add bash completion
-Date: Tue, 2 Jun 2009 22:44:56 +0200
-Message-ID: <36ca99e90906021344k340b5747q7d45a7b1d98f8f67@mail.gmail.com>
-References: <1243377428-27546-1-git-send-email-bert.wesarg@googlemail.com>
-	 <1243380694-7744-1-git-send-email-bert.wesarg@googlemail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 0/4] make it possible to skip away from broken commits
+Date: Tue, 02 Jun 2009 13:53:41 -0700
+Message-ID: <7vmy8qe4ru.fsf@alter.siamese.dyndns.org>
+References: <20090602200731.3630.33652.chriscool@tuxfamily.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: base64
-Cc: Bert Wesarg <bert.wesarg@googlemail.com>, git@vger.kernel.org,
-	martin f krafft <madduck@debian.org>,
-	Uwe Kleine-Koenig <u.kleine-koenig@pengutronix.de>
-To: Petr Baudis <pasky@suse.cz>
-X-From: git-owner@vger.kernel.org Tue Jun 02 22:45:08 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Sam Vilain <sam@vilain.net>,
+	"H. Peter Anvin" <hpa@zytor.com>, Ingo Molnar <mingo@elte.hu>
+To: Christian Couder <chriscool@tuxfamily.org>
+X-From: git-owner@vger.kernel.org Tue Jun 02 22:53:58 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MBar3-0000WR-L4
-	for gcvg-git-2@gmane.org; Tue, 02 Jun 2009 22:45:06 +0200
+	id 1MBaza-0003ef-Bu
+	for gcvg-git-2@gmane.org; Tue, 02 Jun 2009 22:53:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752717AbZFBUo6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Jun 2009 16:44:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752043AbZFBUo6
-	(ORCPT <rfc822;git-outgoing>); Tue, 2 Jun 2009 16:44:58 -0400
-Received: from fg-out-1718.google.com ([72.14.220.155]:43036 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751486AbZFBUo5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Jun 2009 16:44:57 -0400
-Received: by fg-out-1718.google.com with SMTP id d23so947612fga.17
-        for <git@vger.kernel.org>; Tue, 02 Jun 2009 13:44:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=bZhh1itBMm8N8h3DuyjJYwELkDMkmjnREpGDq3hRW/E=;
-        b=OEshdzy9rgy3YYds9iV50wxU1zWfNxPusYFP6ng6xWsDshGi9o+4UoFgF35vCWnZJ1
-         VjZcVaQz/pIKopKJgv5OwiJXBysgn/XP7mkuOaZdF2CtyGOF/uaLItoEyasXgBOoDdD6
-         Uf8cUcxsSXhCB1kZxO/9hR994yao1zZJZHq/A=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=LP2Y2XGcPZXkcTx0sE9aCVrscHxBUxa2UZtZFs+TVM0bEga+DWQKlMB3Bja3eiCvuL
-         7G4MkXURaOgllBRXsi4q9iYMU/sVkmt1XCiKMLh6VS2FI1hJM6yPIHHbUNnpxTkT42fq
-         Q067F+dyKLyws3AhnOTWIil1tmLtDzBQSYcDY=
-Received: by 10.223.108.15 with SMTP id d15mr106802fap.62.1243975497691; Tue, 
-	02 Jun 2009 13:44:57 -0700 (PDT)
-In-Reply-To: <1243380694-7744-1-git-send-email-bert.wesarg@googlemail.com>
+	id S1751823AbZFBUxm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Jun 2009 16:53:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752127AbZFBUxl
+	(ORCPT <rfc822;git-outgoing>); Tue, 2 Jun 2009 16:53:41 -0400
+Received: from fed1rmmtao102.cox.net ([68.230.241.44]:40559 "EHLO
+	fed1rmmtao102.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750871AbZFBUxk (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Jun 2009 16:53:40 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao102.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20090602205342.UDXZ20976.fed1rmmtao102.cox.net@fed1rmimpo02.cox.net>;
+          Tue, 2 Jun 2009 16:53:42 -0400
+Received: from localhost ([68.225.240.211])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id z8th1b00J4aMwMQ048th2p; Tue, 02 Jun 2009 16:53:41 -0400
+X-Authority-Analysis: v=1.0 c=1 a=jiczcZSvnhMA:10 a=FbtlXE8tIuYA:10
+ a=dIu3SnmMAAAA:8 a=drfayxQA0siduz1zRp8A:9 a=MUFtQTpYhGlCQQJayaLZLdQbxTAA:4
+ a=Rn8qiON8_f4A:10
+X-CM-Score: 0.00
+In-Reply-To: <20090602200731.3630.33652.chriscool@tuxfamily.org> (Christian Couder's message of "Tue\, 02 Jun 2009 22\:16\:29 +0200")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120546>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120547>
 
-UGluZy4KClJlZ2FyZHMsCkJlcnQKCk9uIFdlZCwgTWF5IDI3LCAyMDA5IGF0IDAxOjMxLCBCZXJ0
-IFdlc2FyZyA8YmVydC53ZXNhcmdAZ29vZ2xlbWFpbC5jb20+IHdyb3RlOgo+IEluY2x1ZGUgYWxs
-IG9wdGlvbnMuCj4KPiBTaWduZWQtb2ZmLWJ5OiBCZXJ0IFdlc2FyZyA8YmVydC53ZXNhcmdAZ29v
-Z2xlbWFpbC5jb20+Cj4KPiAtLS0KPiDCoGNvbnRyaWIvdGctY29tcGxldGlvbi5iYXNoIHwgwqAg
-MjQgKysrKysrKysrKysrKysrKysrKysrKysrCj4gwqAxIGZpbGVzIGNoYW5nZWQsIDI0IGluc2Vy
-dGlvbnMoKyksIDAgZGVsZXRpb25zKC0pCj4KPiBkaWZmIC0tZ2l0IGEvY29udHJpYi90Zy1jb21w
-bGV0aW9uLmJhc2ggYi9jb250cmliL3RnLWNvbXBsZXRpb24uYmFzaAo+IGluZGV4IGRlOGE3YjUu
-LjBlZTIzM2MgMTAwNzU1Cj4gLS0tIGEvY29udHJpYi90Zy1jb21wbGV0aW9uLmJhc2gKPiArKysg
-Yi9jb250cmliL3RnLWNvbXBsZXRpb24uYmFzaAo+IEBAIC0zNzAsNiArMzcwLDI5IEBAIF90Z19w
-YXRjaCAoKQo+IMKgIMKgIMKgIMKgZXNhYwo+IMKgfQo+Cj4gK190Z19wdXNoICgpCj4gK3sKPiAr
-IMKgIMKgIMKgIGxvY2FsIGN1cj0iJHtDT01QX1dPUkRTW0NPTVBfQ1dPUkRdfSIKPiArCj4gKyDC
-oCDCoCDCoCBfX3RnX2NvbXBsZXRlX2FyZyAiLXIiICYmIHsKPiArIMKgIMKgIMKgIMKgIMKgIMKg
-IMKgIF9fdGdjb21wICIkKF9fdGdfcmVtb3RlcykiCj4gKyDCoCDCoCDCoCDCoCDCoCDCoCDCoCBy
-ZXR1cm4KPiArIMKgIMKgIMKgIH0KPiArCj4gKyDCoCDCoCDCoCBjYXNlICIkY3VyIiBpbgo+ICsg
-wqAgwqAgwqAgLSopCj4gKyDCoCDCoCDCoCDCoCDCoCDCoCDCoCBfX3RnY29tcCAiCj4gKyDCoCDC
-oCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCAtLW5vLWRlcHMKPiArIMKgIMKgIMKgIMKgIMKg
-IMKgIMKgIMKgIMKgIMKgIMKgIC0tZHJ5LXJ1bgo+ICsgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAg
-wqAgwqAgwqAgLS10Z2lzaC1vbmx5Cj4gKyDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDC
-oCAtcgo+ICsgwqAgwqAgwqAgwqAgwqAgwqAgwqAgIgo+ICsgwqAgwqAgwqAgwqAgwqAgwqAgwqAg
-OzsKPiArIMKgIMKgIMKgICopCj4gKyDCoCDCoCDCoCDCoCDCoCDCoCDCoCBfX3RnY29tcCAiJChf
-X3RnX3RvcGljcykiCj4gKyDCoCDCoCDCoCBlc2FjCj4gK30KPiArCj4gwqBfdGdfcmVtb3RlICgp
-Cj4gwqB7Cj4gwqAgwqAgwqAgwqBsb2NhbCBjdXI9IiR7Q09NUF9XT1JEU1tDT01QX0NXT1JEXX0i
-Cj4gQEAgLTQ0OSw2ICs0NzIsNyBAQCBfdGcgKCkKPiDCoCDCoCDCoCDCoGluZm8pIMKgIMKgIMKg
-IMKgX3RnX2luZm8gOzsKPiDCoCDCoCDCoCDCoG1haWwpIMKgIMKgIMKgIMKgX3RnX21haWwgOzsK
-PiDCoCDCoCDCoCDCoHBhdGNoKSDCoCDCoCDCoCBfdGdfcGF0Y2ggOzsKPiArIMKgIMKgIMKgIHB1
-c2gpIMKgIMKgIMKgIMKgX3RnX3B1c2ggOzsKPiDCoCDCoCDCoCDCoHJlbW90ZSkgwqAgwqAgwqBf
-dGdfcmVtb3RlIDs7Cj4gwqAgwqAgwqAgwqBzdW1tYXJ5KSDCoCDCoCBfdGdfc3VtbWFyeSA7Owo+
-IMKgIMKgIMKgIMKgdXBkYXRlKSDCoCDCoCDCoF90Z191cGRhdGUgOzsKPiAtLQo+IHRnOiAoYjcy
-NWZjOS4uKSBidy9wdXNoLWNvbXBsZXRpb24gKGRlcGVuZHMgb246IG1hc3RlcikKPgo=
+Christian Couder <chriscool@tuxfamily.org> writes:
+
+> This patch series adds a "--ratio=x/y" option to "git bisect skip" so
+> that it is possible to skip away from an area were the commits cannot
+> be tested.
+>
+> Note that in this series "--ratio=4" means the same as "--ratio=1/4".
+> But I am not sure if this shortcut is worth it.
+
+Actually my gut feeling is that a tweakable knob itself is worth it,
+because the user can never tell what the right value should be.
+
+Especially without any documentation updates that explains what this ratio
+refers to ;-), but I suspect, unless the user is very familiar with how
+the revision graph bisection internally works, such an explanation would
+not help him find a skip ratio that is closer to the optimum than a random
+guess.  Why not use a constant ratio (or perhaps a pair of alternating
+ratios) on "bisect skip" without any new options?
