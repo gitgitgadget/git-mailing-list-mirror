@@ -1,61 +1,76 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH v7 3/3] diff: generate pretty filenames in prep_temp_blob()
-Date: Tue, 02 Jun 2009 09:04:08 +0200
-Message-ID: <4A24CEE8.4090702@viscovery.net>
-References: <1243758952-28972-1-git-send-email-davvid@gmail.com> <1243758952-28972-2-git-send-email-davvid@gmail.com> <1243758952-28972-3-git-send-email-davvid@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
+From: JiHO <jo.lists@gmail.com>
+Subject: Issues with file status over samba
+Date: Tue, 2 Jun 2009 11:11:43 +0200
+Message-ID: <3A1A5212-FFB4-4B0D-A972-C90EA336F5D9@gmail.com>
+Mime-Version: 1.0 (Apple Message framework v935.3)
+Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
 Content-Transfer-Encoding: 7bit
-Cc: gitster@pobox.com, git@vger.kernel.org, peff@peff.net,
-	markus.heidelberg@web.de, jnareb@gmail.com
-To: David Aguilar <davvid@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jun 02 09:04:33 2009
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jun 02 11:18:51 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MBO2y-0001vD-SU
-	for gcvg-git-2@gmane.org; Tue, 02 Jun 2009 09:04:33 +0200
+	id 1MBQ8m-0004Il-HD
+	for gcvg-git-2@gmane.org; Tue, 02 Jun 2009 11:18:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757375AbZFBHEV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Jun 2009 03:04:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756728AbZFBHEV
-	(ORCPT <rfc822;git-outgoing>); Tue, 2 Jun 2009 03:04:21 -0400
-Received: from lilzmailso01.liwest.at ([212.33.55.23]:53687 "EHLO
-	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756691AbZFBHEV (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Jun 2009 03:04:21 -0400
-Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
-	by lilzmailso01.liwest.at with esmtpa (Exim 4.69)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1MBO2b-0006aT-OG; Tue, 02 Jun 2009 09:04:10 +0200
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.96])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id 821BEFCD2; Tue,  2 Jun 2009 09:04:08 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.21 (Windows/20090302)
-In-Reply-To: <1243758952-28972-3-git-send-email-davvid@gmail.com>
-X-Enigmail-Version: 0.95.5
-X-Spam-Score: -1.4 (-)
+	id S1757333AbZFBJS0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Jun 2009 05:18:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757321AbZFBJSZ
+	(ORCPT <rfc822;git-outgoing>); Tue, 2 Jun 2009 05:18:25 -0400
+Received: from mail-fx0-f216.google.com ([209.85.220.216]:52315 "EHLO
+	mail-fx0-f216.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758259AbZFBJSX (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Jun 2009 05:18:23 -0400
+X-Greylist: delayed 397 seconds by postgrey-1.27 at vger.kernel.org; Tue, 02 Jun 2009 05:18:23 EDT
+Received: by fxm12 with SMTP id 12so6344724fxm.37
+        for <git@vger.kernel.org>; Tue, 02 Jun 2009 02:18:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:from:to
+         :content-type:content-transfer-encoding:mime-version:subject:date
+         :x-mailer;
+        bh=8Q0s306ZRC0uIxNltSUsoj26m8tAmn/ntKRu49h53z8=;
+        b=mEvSkkjCKbt/E0yo4/EYN3X6hD3am66LOakXr7+lyhx8bR2bljsbLqOVeh/VCrobjI
+         dZBrpvPHvhkIBlBcaO8ypQfHjyGotdCtMVc4IGLq3fjY/8hmn4N8uSnsEv2o6JVrmWxR
+         YwvoKFJEOaQ6Dgrx+E7trdR3uzSaPNG4U3NAg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:from:to:content-type:content-transfer-encoding
+         :mime-version:subject:date:x-mailer;
+        b=tr9RDEUcqMt6LPEGxBZ35/VQSQvYackm53Ffr/NLTrEiMKAlOM4+G5XcFYOX42lRVY
+         0pZ4xfZW0ZANQG3FdUJ3AZvZkMohr2ThB/8kCmGc+TDAtvGrAPQMDzNuiWhhQsGJnvKA
+         QCjxrP5q6StJHH1hqN7vRP+3+N0HPZQEU+5GU=
+Received: by 10.102.215.1 with SMTP id n1mr3821426mug.57.1243933907505;
+        Tue, 02 Jun 2009 02:11:47 -0700 (PDT)
+Received: from ?192.168.1.173? (chercheur-ephe01.univ-perp.fr [194.167.139.32])
+        by mx.google.com with ESMTPS id u9sm4148124muf.37.2009.06.02.02.11.45
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Tue, 02 Jun 2009 02:11:45 -0700 (PDT)
+X-Mailer: Apple Mail (2.935.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120497>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120498>
 
-David Aguilar schrieb:
-> Naturally, prep_temp_blob() did not care about filenames.
-> As a result, GIT_EXTERNAL_DIFF and textconv generated
-> filenames such as ".diff_XXXXXX".
-> 
-> This modifies prep_temp_blob() to generate user-friendly
-> filenames when creating temporary files.
-> 
-> Diffing "name.ext" now generates "XXXXXX_name.ext".
-> 
-> Signed-off-by: David Aguilar <davvid@gmail.com>
+Hello everyone,
 
-This series (as per 003b33a from Junio's pu):
+When working on a git repository on a mounted samba share, I am having  
+trouble because some files are detected as changed while they are not.  
+git status works OK but git GUIs (git gui and gitX on mac OS X) show  
+the problem.
 
-Tested-by: Johannes Sixt <j6t@kdbg.org> (Windows)
+The issue was initially investigated through gitX and the bug report  
+is there:
 
--- Hannes
+http://gitx.lighthouseapp.com/projects/17830/tickets/147-wrong-status-over-samba
+
+Please let me know what I can do to test this further and help fix  
+this issue.
+
+Thank you very much in advance. Sincerely,
+
+JiHO
+---
+http://jo.irisson.free.fr/
