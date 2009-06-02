@@ -1,7 +1,7 @@
 From: Johan Herland <johan@herland.net>
-Subject: [PATCH 1/2] Rename submodule.<name>.rebase to submodule.<name>.update
-Date: Wed, 03 Jun 2009 00:59:11 +0200
-Message-ID: <1243983552-24810-2-git-send-email-johan@herland.net>
+Subject: [PATCH 2/2] git-submodule: add support for --merge.
+Date: Wed, 03 Jun 2009 00:59:12 +0200
+Message-ID: <1243983552-24810-3-git-send-email-johan@herland.net>
 References: <7v63fgpwyd.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN
@@ -10,31 +10,31 @@ Cc: git@vger.kernel.org, Johannes.Schindelin@gmx.de,
 	apenwarr@gmail.com, peter.hutterer@who-t.net,
 	markus.heidelberg@web.de, Johan Herland <johan@herland.net>
 To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Wed Jun 03 01:01:29 2009
+X-From: git-owner@vger.kernel.org Wed Jun 03 01:01:49 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MBcz1-00007d-UG
-	for gcvg-git-2@gmane.org; Wed, 03 Jun 2009 01:01:28 +0200
+	id 1MBczL-0000BG-MU
+	for gcvg-git-2@gmane.org; Wed, 03 Jun 2009 01:01:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753567AbZFBXBX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Jun 2009 19:01:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753001AbZFBXBW
-	(ORCPT <rfc822;git-outgoing>); Tue, 2 Jun 2009 19:01:22 -0400
-Received: from mx.getmail.no ([84.208.15.66]:64777 "EHLO
+	id S1753800AbZFBXB0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Jun 2009 19:01:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753588AbZFBXB0
+	(ORCPT <rfc822;git-outgoing>); Tue, 2 Jun 2009 19:01:26 -0400
+Received: from mx.getmail.no ([84.208.15.66]:64842 "EHLO
 	get-mta-out01.get.basefarm.net" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1751515AbZFBXBV (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 2 Jun 2009 19:01:21 -0400
+	by vger.kernel.org with ESMTP id S1753068AbZFBXBZ (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 2 Jun 2009 19:01:25 -0400
 Received: from mx.getmail.no ([10.5.16.4]) by get-mta-out01.get.basefarm.net
  (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
- with ESMTP id <0KKM000UWVY8A000@get-mta-out01.get.basefarm.net> for
- git@vger.kernel.org; Wed, 03 Jun 2009 01:01:20 +0200 (MEST)
+ with ESMTP id <0KKM000V4VYEA000@get-mta-out01.get.basefarm.net> for
+ git@vger.kernel.org; Wed, 03 Jun 2009 01:01:26 +0200 (MEST)
 Received: from localhost.localdomain ([84.215.102.95])
  by get-mta-in01.get.basefarm.net
  (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
  with ESMTP id <0KKM00EMTVVXLQ80@get-mta-in01.get.basefarm.net> for
- git@vger.kernel.org; Wed, 03 Jun 2009 01:01:15 +0200 (MEST)
+ git@vger.kernel.org; Wed, 03 Jun 2009 01:01:21 +0200 (MEST)
 X-PMX-Version: 5.5.3.366731, Antispam-Engine: 2.7.0.366912,
  Antispam-Data: 2009.6.2.224626
 X-Mailer: git-send-email 1.6.3.rc0.1.gf800
@@ -43,219 +43,214 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120557>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120558>
 
-The addition of "submodule.<name>.rebase" demonstrates the usefulness of
-alternatives to the default behaviour of "git submodule update". However,
-by naming the config variable "submodule.<name>.rebase", and making it a
-boolean choice, we are artificially constraining future git versions that
-may want to add _more_ alternatives than just "rebase".
+'git submodule update --merge' merges the commit referenced by the
+superproject into your local branch, instead of checking it out on
+a detached HEAD.
 
-Therefore, while "submodule.<name>.rebase" are not yet in a stable git
-release, future-proof it, by changing it from
-
-  submodule.<name>.rebase = true/false
-
-to
-
-  submodule.<name>.update = checkout/rebase
-
-where "checkout" specifies the default behaviour of "git submodule update"
-(checking out the new commit to a detached HEAD), and "rebase" specifies
-the --rebase behaviour (where the current local branch in the submodule is
-rebase onto the new commit). Thus .update == checkout is .rebase == false,
-and .update == rebase is equivalent to .rebase == false. Finally, leaving
-.update unset is equivalent to leaving .rebase unset.
-
-In future git versions, other alternatives to "git submodule update"
-behaviour can be included by adding them to the list of allowable values
-for the submodule.<name>.update variable.
+As evidenced by the addition of "git submodule update --rebase", it
+is useful to provide alternatives to the default 'checkout' behaviour
+of "git submodule update". One such alternative is, when updating a
+submodule to a new commit, to merge that commit into the current
+local branch in that submodule. This is useful in workflows where
+you want to update your submodule from its upstream, but you cannot
+use --rebase, because you have downstream people working on top of
+your submodule branch, and you don't want to disrupt their work.
 
 Signed-off-by: Johan Herland <johan@herland.net>
 ---
- Documentation/git-submodule.txt |    4 ++--
- Documentation/gitmodules.txt    |   10 ++++++++--
- git-submodule.sh                |   32 +++++++++++++++++---------------
- t/t7406-submodule-update.sh     |   16 ++++++++--------
- 4 files changed, 35 insertions(+), 27 deletions(-)
+ Documentation/git-submodule.txt |   17 +++++++++--
+ Documentation/gitmodules.txt    |    6 ++-
+ git-submodule.sh                |   11 ++++++-
+ t/t7406-submodule-update.sh     |   60 ++++++++++++++++++++++++++++++++++++++-
+ 4 files changed, 87 insertions(+), 7 deletions(-)
 
 diff --git a/Documentation/git-submodule.txt b/Documentation/git-submodule.txt
-index acd16ac..cd8e861 100644
+index cd8e861..1cbb181 100644
 --- a/Documentation/git-submodule.txt
 +++ b/Documentation/git-submodule.txt
-@@ -116,7 +116,7 @@ update::
+@@ -13,7 +13,7 @@ SYNOPSIS
+ 	      [--reference <repository>] [--] <repository> <path>
+ 'git submodule' [--quiet] status [--cached] [--] [<path>...]
+ 'git submodule' [--quiet] init [--] [<path>...]
+-'git submodule' [--quiet] update [--init] [-N|--no-fetch] [--rebase]
++'git submodule' [--quiet] update [--init] [-N|--no-fetch] [--rebase|--merge]
+ 	      [--reference <repository>] [--] [<path>...]
+ 'git submodule' [--quiet] summary [--summary-limit <n>] [commit] [--] [<path>...]
+ 'git submodule' [--quiet] foreach <command>
+@@ -115,8 +115,9 @@ init::
+ update::
  	Update the registered submodules, i.e. clone missing submodules and
  	checkout the commit specified in the index of the containing repository.
- 	This will make the submodules HEAD be detached unless '--rebase' is
--	specified or the key `submodule.$name.rebase` is set to `true`.
-+	specified or the key `submodule.$name.update` is set to	`rebase`.
+-	This will make the submodules HEAD be detached unless '--rebase' is
+-	specified or the key `submodule.$name.update` is set to	`rebase`.
++	This will make the submodules HEAD be detached unless '--rebase' or
++	'--merge' is specified or the key `submodule.$name.update` is set to
++	`rebase` or `merge`.
  +
  If the submodule is not yet initialized, and you just want to use the
  setting as stored in .gitmodules, you can automatically initialize the
-@@ -186,7 +186,7 @@ OPTIONS
- 	superproject. If this option is given, the submodule's HEAD will not
- 	be detached. If a a merge failure prevents this process, you will have
- 	to resolve these failures with linkgit:git-rebase[1].
--	If the key `submodule.$name.rebase` is set to `true`, this option is
-+	If the key `submodule.$name.update` is set to `rebase`, this option is
+@@ -189,6 +190,16 @@ OPTIONS
+ 	If the key `submodule.$name.update` is set to `rebase`, this option is
  	implicit.
  
++--merge::
++	This option is only valid for the update command.
++	Merge the commit recorded in the superproject into the current branch
++	of the submodule. If this option is given, the submodule's HEAD will
++	not be detached. If a merge failure prevents this process, you will
++	have to resolve the resulting conflicts within the submodule with the
++	usual conflict resolution tools.
++	If the key `submodule.$name.update` is set to `merge`, this option is
++	implicit.
++
  --reference <repository>::
+ 	This option is only valid for add and update commands.  These
+ 	commands sometimes need to clone a remote repository. In this case,
 diff --git a/Documentation/gitmodules.txt b/Documentation/gitmodules.txt
-index 7c22c40..1b67f0a 100644
+index 1b67f0a..5daf750 100644
 --- a/Documentation/gitmodules.txt
 +++ b/Documentation/gitmodules.txt
-@@ -30,8 +30,14 @@ submodule.<name>.path::
- submodule.<name>.url::
- 	Defines an url from where the submodule repository can be cloned.
- 
--submodule.<name>.rebase::
--	Defines that the submodule should be rebased by default.
-+submodule.<name>.update::
-+	Defines what to do when the submodule is updated by the superproject.
-+	If 'checkout' (the default), the new commit specified in the
-+	superproject will be checked out in the submodule on a detached HEAD.
-+	If 'rebase', the current branch of the submodule will be rebased onto
-+	the commit specified in the superproject.
-+	This config option is overridden if 'git submodule update' is given
-+	the '--rebase' option.
+@@ -35,9 +35,11 @@ submodule.<name>.update::
+ 	If 'checkout' (the default), the new commit specified in the
+ 	superproject will be checked out in the submodule on a detached HEAD.
+ 	If 'rebase', the current branch of the submodule will be rebased onto
+-	the commit specified in the superproject.
++	the commit specified in the superproject. If 'merge', the commit
++	specified in the superproject will be merged into the current branch
++	in the submodule.
+ 	This config option is overridden if 'git submodule update' is given
+-	the '--rebase' option.
++	the '--merge' or '--rebase' options.
  
  
  EXAMPLES
 diff --git a/git-submodule.sh b/git-submodule.sh
-index bbca183..19a3a84 100755
+index 19a3a84..2a1e73c 100755
 --- a/git-submodule.sh
 +++ b/git-submodule.sh
-@@ -18,7 +18,7 @@ quiet=
- reference=
- cached=
- nofetch=
--rebase=
-+update=
+@@ -5,7 +5,7 @@
+ # Copyright (c) 2007 Lars Hjemli
  
- #
- # print stuff on stdout unless -q was specified
-@@ -311,10 +311,10 @@ cmd_init()
- 		git config submodule."$name".url "$url" ||
- 		die "Failed to register url for submodule path '$path'"
- 
--		test true != "$(git config -f .gitmodules --bool \
--			submodule."$name".rebase)" ||
--		git config submodule."$name".rebase true ||
--		die "Failed to register submodule path '$path' as rebasing"
-+		upd="$(git config -f .gitmodules submodule."$name".update)"
-+		test -z "$upd" ||
-+		git config submodule."$name".update "$upd" ||
-+		die "Failed to register update mode for submodule path '$path'"
- 
- 		say "Submodule '$name' ($url) registered for path '$path'"
- 	done
-@@ -345,7 +345,7 @@ cmd_update()
- 			;;
- 		-r|--rebase)
+ USAGE="[--quiet] [--cached] \
+-[add [-b branch] <repo> <path>]|[status|init|update [-i|--init] [-N|--no-fetch]|summary [-n|--summary-limit <n>] [<commit>]] \
++[add [-b branch] <repo> <path>]|[status|init|update [-i|--init] [-N|--no-fetch] [--rebase|--merge]|summary [-n|--summary-limit <n>] [<commit>]] \
+ [--] [<path>...]|[foreach <command>]|[sync [--] [<path>...]]"
+ OPTIONS_SPEC=
+ . git-sh-setup
+@@ -347,6 +347,10 @@ cmd_update()
  			shift
--			rebase=true
-+			update="rebase"
+ 			update="rebase"
  			;;
++		-m|--merge)
++			shift
++			update="merge"
++			;;
  		--reference)
  			case "$2" in '') usage ;; esac
-@@ -379,7 +379,7 @@ cmd_update()
- 	do
- 		name=$(module_name "$path") || exit
- 		url=$(git config submodule."$name".url)
--		rebase_module=$(git config --bool submodule."$name".rebase)
-+		update_module=$(git config submodule."$name".update)
- 		if test -z "$url"
- 		then
- 			# Only mention uninitialized submodules when its
-@@ -400,9 +400,9 @@ cmd_update()
- 			die "Unable to find current revision in submodule path '$path'"
- 		fi
- 
--		if test true = "$rebase"
-+		if ! test -z "$update"
- 		then
--			rebase_module=true
-+			update_module=$update
- 		fi
- 
- 		if test "$subsha1" != "$sha1"
-@@ -420,16 +420,18 @@ cmd_update()
- 				die "Unable to fetch in submodule path '$path'"
- 			fi
- 
--			if test true = "$rebase_module"
--			then
--				command="git-rebase"
-+			case "$update_module" in
-+			rebase)
-+				command="git rebase"
+ 			reference="--reference=$2"
+@@ -426,6 +430,11 @@ cmd_update()
  				action="rebase"
  				msg="rebased onto"
--			else
--				command="git-checkout $force -q"
+ 				;;
++			merge)
++				command="git merge"
++				action="merge"
++				msg="merged in"
 +				;;
-+			*)
-+				command="git checkout $force -q"
+ 			*)
+ 				command="git checkout $force -q"
  				action="checkout"
- 				msg="checked out"
--			fi
-+				;;
-+			esac
- 
- 			(unset GIT_DIR; cd "$path" && $command "$sha1") ||
- 			die "Unable to $action '$sha1' in submodule path '$path'"
 diff --git a/t/t7406-submodule-update.sh b/t/t7406-submodule-update.sh
-index 3442c05..0773fe4 100755
+index 0773fe4..2d33d9e 100755
 --- a/t/t7406-submodule-update.sh
 +++ b/t/t7406-submodule-update.sh
-@@ -76,9 +76,9 @@ test_expect_success 'submodule update --rebase staying on master' '
+@@ -6,7 +6,7 @@
+ test_description='Test updating submodules
+ 
+ This test verifies that "git submodule update" detaches the HEAD of the
+-submodule and "git submodule update --rebase" does not detach the HEAD.
++submodule and "git submodule update --rebase/--merge" does not detach the HEAD.
+ '
+ 
+ . ./test-lib.sh
+@@ -76,6 +76,20 @@ test_expect_success 'submodule update --rebase staying on master' '
  	)
  '
  
--test_expect_success 'submodule update - rebase true in .git/config' '
-+test_expect_success 'submodule update - rebase in .git/config' '
++test_expect_success 'submodule update --merge staying on master' '
++	(cd super/submodule &&
++	  git reset --hard HEAD~1
++	) &&
++	(cd super &&
++	 (cd submodule &&
++	  compare_head
++	 ) &&
++	 git submodule update --merge submodule &&
++	 cd submodule &&
++	 compare_head
++	)
++'
++
+ test_expect_success 'submodule update - rebase in .git/config' '
  	(cd super &&
--	 git config submodule.submodule.rebase true
-+	 git config submodule.submodule.update rebase
- 	) &&
- 	(cd super/submodule &&
- 	  git reset --hard HEAD~1
-@@ -93,9 +93,9 @@ test_expect_success 'submodule update - rebase true in .git/config' '
+ 	 git config submodule.submodule.update rebase
+@@ -110,6 +124,40 @@ test_expect_success 'submodule update - checkout in .git/config but --rebase giv
  	)
  '
  
--test_expect_success 'submodule update - rebase false in .git/config but --rebase given' '
-+test_expect_success 'submodule update - checkout in .git/config but --rebase given' '
- 	(cd super &&
--	 git config submodule.submodule.rebase false
++test_expect_success 'submodule update - merge in .git/config' '
++	(cd super &&
++	 git config submodule.submodule.update merge
++	) &&
++	(cd super/submodule &&
++	  git reset --hard HEAD~1
++	) &&
++	(cd super &&
++	 (cd submodule &&
++	  compare_head
++	 ) &&
++	 git submodule update submodule &&
++	 cd submodule &&
++	 compare_head
++	)
++'
++
++test_expect_success 'submodule update - checkout in .git/config but --merge given' '
++	(cd super &&
 +	 git config submodule.submodule.update checkout
- 	) &&
- 	(cd super/submodule &&
- 	  git reset --hard HEAD~1
-@@ -110,9 +110,9 @@ test_expect_success 'submodule update - rebase false in .git/config but --rebase
++	) &&
++	(cd super/submodule &&
++	  git reset --hard HEAD~1
++	) &&
++	(cd super &&
++	 (cd submodule &&
++	  compare_head
++	 ) &&
++	 git submodule update --merge submodule &&
++	 cd submodule &&
++	 compare_head
++	)
++'
++
+ test_expect_success 'submodule update - checkout in .git/config' '
+ 	(cd super &&
+ 	 git config submodule.submodule.update checkout
+@@ -137,4 +185,14 @@ test_expect_success 'submodule init picks up rebase' '
  	)
  '
  
--test_expect_success 'submodule update - rebase false in .git/config' '
-+test_expect_success 'submodule update - checkout in .git/config' '
- 	(cd super &&
--	 git config submodule.submodule.rebase false
-+	 git config submodule.submodule.update checkout
- 	) &&
- 	(cd super/submodule &&
- 	  git reset --hard HEAD^
-@@ -131,9 +131,9 @@ test_expect_success 'submodule init picks up rebase' '
- 	(cd super &&
- 	 git config submodule.rebasing.url git://non-existing/git &&
- 	 git config submodule.rebasing.path does-not-matter &&
--	 git config submodule.rebasing.rebase true &&
-+	 git config submodule.rebasing.update rebase &&
- 	 git submodule init rebasing &&
--	 test true = $(git config --bool submodule.rebasing.rebase)
-+	 test "rebase" = $(git config submodule.rebasing.update)
- 	)
- '
- 
++test_expect_success 'submodule init picks up merge' '
++	(cd super &&
++	 git config submodule.merging.url git://non-existing/git &&
++	 git config submodule.merging.path does-not-matter &&
++	 git config submodule.merging.update merge &&
++	 git submodule init merging &&
++	 test "merge" = $(git config submodule.merging.update)
++	)
++'
++
+ test_done
 -- 
 1.6.3.rc0.1.gf800
