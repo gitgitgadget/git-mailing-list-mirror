@@ -1,65 +1,90 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: configure.ac and friends could use some love
-Date: Tue, 02 Jun 2009 08:26:20 +0200
-Message-ID: <4A24C60C.3000600@op5.se>
-References: <1243892495.5366.11.camel@norseth>
+From: "Robin H. Johnson" <robbat2@gentoo.org>
+Subject: Re: gitosis question: identifying/logging remote user
+Date: Mon, 1 Jun 2009 23:31:58 -0700
+Message-ID: <robbat2-20090602T062332-128740789Z@orbis-terrarum.net>
+References: <2e24e5b90906012102y4e1e6281p437e4d88da517c08@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "C.J. Adams-Collier" <cjac@colliertech.org>
-X-From: git-owner@vger.kernel.org Tue Jun 02 08:27:13 2009
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="XvKFcGCOAo53UbWW"
+Cc: tv@eagain.net
+To: Sitaram Chamarty <sitaramc@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Jun 02 08:32:33 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MBNSq-000860-Ex
-	for gcvg-git-2@gmane.org; Tue, 02 Jun 2009 08:27:12 +0200
+	id 1MBNY1-0000tG-71
+	for gcvg-git-2@gmane.org; Tue, 02 Jun 2009 08:32:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756143AbZFBG0M (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Jun 2009 02:26:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756067AbZFBG0L
-	(ORCPT <rfc822;git-outgoing>); Tue, 2 Jun 2009 02:26:11 -0400
-Received: from na3sys009aog110.obsmtp.com ([74.125.149.203]:55588 "HELO
-	na3sys009aog110.obsmtp.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with SMTP id S1755578AbZFBG0K (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 2 Jun 2009 02:26:10 -0400
-Received: from source ([209.85.219.173]) by na3sys009aob110.postini.com ([74.125.148.12]) with SMTP
-	ID DSNKSiTGAAneUwiA8uVVX3slC1I/KzERCyo4@postini.com; Mon, 01 Jun 2009 23:26:13 PDT
-Received: by mail-ew0-f173.google.com with SMTP id 21so13350407ewy.18
-        for <git@vger.kernel.org>; Mon, 01 Jun 2009 23:26:08 -0700 (PDT)
-Received: by 10.216.0.84 with SMTP id 62mr2162418wea.185.1243923967928;
-        Mon, 01 Jun 2009 23:26:07 -0700 (PDT)
-Received: from clix.int.op5.se (90-227-179-205-no128.tbcn.telia.com [90.227.179.205])
-        by mx.google.com with ESMTPS id f13sm14528723gvd.23.2009.06.01.23.26.06
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 01 Jun 2009 23:26:07 -0700 (PDT)
-User-Agent: Thunderbird 2.0.0.21 (X11/20090320)
-In-Reply-To: <1243892495.5366.11.camel@norseth>
+	id S1756933AbZFBGcZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Jun 2009 02:32:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753565AbZFBGcY
+	(ORCPT <rfc822;git-outgoing>); Tue, 2 Jun 2009 02:32:24 -0400
+Received: from b01.ext.isohunt.com ([208.71.112.51]:60826 "EHLO
+	mail.isohunt.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1754680AbZFBGcY (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Jun 2009 02:32:24 -0400
+Received: (qmail 8513 invoked from network); 2 Jun 2009 06:32:23 -0000
+Received: from tsi-static.orbis-terrarum.net (HELO curie.orbis-terrarum.net) (76.10.188.108)
+  (smtp-auth username robbat2@isohunt.com, mechanism login)
+  by mail.isohunt.com (qpsmtpd/0.33-dev on beta01) with (AES256-SHA encrypted) ESMTPSA; Tue, 02 Jun 2009 06:32:23 +0000
+Received: (qmail 19579 invoked by uid 10000); 1 Jun 2009 23:31:58 -0700
+Content-Disposition: inline
+In-Reply-To: <2e24e5b90906012102y4e1e6281p437e4d88da517c08@mail.gmail.com>
+User-Agent: Mutt/1.5.16 (2007-06-09)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120495>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120496>
 
-C.J. Adams-Collier wrote:
-> with whom should I co-ordinate?
-> 
 
-git@vger and Jakub Narebski.
+--XvKFcGCOAo53UbWW
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-  git shortlog -ns -- configure.ac
+On Tue, Jun 02, 2009 at 09:32:40AM +0530, Sitaram Chamarty wrote:
+> I want to be able to log the information that the post-receive hook
+> receives, but I *also* want, along with that, the name of the pubkey
+> that was used in this particular "push".
+I've got a partial patch that I never finished for using this with the
+gitosis-gentoo fork that powers git.overlays.gentoo.org. It needs
+re-implementation from scratch, but here's the design notes:
+1. Use the username to open the file in keydir again.
+2. At the top, look for RFC822 headers with a leading "# " as padding:
+   Examples from my own patch:
+   # Full-Name: "Robin H. Johnson (robbat2)" <robbat2@gentoo.org>
+   # cia-vc-username: robbat2
+   The headers are followed by a blank line then further text is free-form
+   and not parsed. Continuation lines are NOT supported.
+3. The header field names are transformed to enviornoment variable names
+   as follows:
+   - y/[[:lower:]]/[[:upper:]]/g
+   - s/-/_/g
+4. Export the environment variables, named per above, with the full
+   content of the rest of the line.
 
-would have told you as much ;-)
+(We need to export the CIA.vc data, and also send off a commit mail).
 
--- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+--=20
+Robin Hugh Johnson
+Gentoo Linux Developer & Infra Guy
+E-Mail     : robbat2@gentoo.org
+GnuPG FP   : 11AC BA4F 4778 E3F6 E4ED  F38E B27B 944E 3488 4E85
 
-Register now for Nordic Meet on Nagios, June 3-4 in Stockholm
- http://nordicmeetonnagios.op5.org/
+--XvKFcGCOAo53UbWW
+Content-Type: application/pgp-signature
+Content-Disposition: inline
 
-Considering the successes of the wars on alcohol, poverty, drugs and
-terror, I think we should give some serious thought to declaring war
-on peace.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.11 (GNU/Linux)
+Comment: Robbat2 @ Orbis-Terrarum Networks - The text below is a digital signature. If it doesn't make any sense to you, ignore it.
+
+iEYEARECAAYFAkokx14ACgkQPpIsIjIzwixkuQCeNb+6qKq4G911Vn/ek6oyxsUZ
+gJsAnRfjrUjKfYUZ8HhJa7v9dMj8j3l1
+=FFiW
+-----END PGP SIGNATURE-----
+
+--XvKFcGCOAo53UbWW--
