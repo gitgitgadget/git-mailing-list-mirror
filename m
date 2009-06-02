@@ -1,71 +1,117 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: [PATCH] config: add --repository option
-Date: Tue, 2 Jun 2009 18:38:59 +0200
-Message-ID: <fabb9a1e0906020938h73a49ecbr5a7c78e30c8ec6d7@mail.gmail.com>
-References: <1241886936-18941-1-git-send-email-srabbelier@gmail.com> 
-	<20090602195555.6117@nanako3.lavabit.com> <7vskiifyd5.fsf@alter.siamese.dyndns.org>
+From: "Aaron Gray" <aaronngray.lists@googlemail.com>
+Subject: Re: Duplicating a branch
+Date: Tue, 2 Jun 2009 17:50:09 +0100
+Message-ID: <70411981D37A4F2ABF5D0A9CF24E6884@HPLAPTOP>
+References: <BAF61FDE71D344FDB9F1415B5E2AFD75@HPLAPTOP> <7voct6fy1e.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain;
+	format=flowed;
+	charset="iso-8859-1";
+	reply-type=original
 Content-Transfer-Encoding: 7bit
-Cc: Nanako Shiraishi <nanako3@lavabit.com>,
-	Git List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jun 02 18:39:32 2009
+To: "Git Mailing List" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Jun 02 18:50:28 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MBX1P-0001LH-GO
-	for gcvg-git-2@gmane.org; Tue, 02 Jun 2009 18:39:31 +0200
+	id 1MBXBx-0008AT-PI
+	for gcvg-git-2@gmane.org; Tue, 02 Jun 2009 18:50:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753880AbZFBQjW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Jun 2009 12:39:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753555AbZFBQjV
-	(ORCPT <rfc822;git-outgoing>); Tue, 2 Jun 2009 12:39:21 -0400
-Received: from mail-ew0-f224.google.com ([209.85.219.224]:62701 "EHLO
-	mail-ew0-f224.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753191AbZFBQjU (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Jun 2009 12:39:20 -0400
-Received: by ewy24 with SMTP id 24so8854040ewy.37
-        for <git@vger.kernel.org>; Tue, 02 Jun 2009 09:39:20 -0700 (PDT)
+	id S1753564AbZFBQuQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Jun 2009 12:50:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753499AbZFBQuP
+	(ORCPT <rfc822;git-outgoing>); Tue, 2 Jun 2009 12:50:15 -0400
+Received: from mail-fx0-f216.google.com ([209.85.220.216]:32949 "EHLO
+	mail-fx0-f216.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752941AbZFBQuN (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Jun 2009 12:50:13 -0400
+Received: by fxm12 with SMTP id 12so6656333fxm.37
+        for <git@vger.kernel.org>; Tue, 02 Jun 2009 09:50:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=yiLxKWWExV0su0snCMqabaQfe29rxvkC2cPPkZSUjIA=;
-        b=xhlW5YQxHtlvKyREA8bTHCw5vtxMGCK2Urf9sNLXD7lP6RkafnkfC4VRZinP3FWMZs
-         H0ze8sUQnHFVFZnUR3F0wlIT7uCxfxij4T1S2ekyoMzH51Gt5d7HKoRfCkXfBTchBduo
-         XvTyRRGI6s1TPFSWI1f0ZqM1Aonr4X50zXGOU=
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:from:to:references
+         :subject:date:mime-version:content-type:content-transfer-encoding
+         :x-priority:x-msmail-priority:x-mailer:x-mimeole;
+        bh=PR/CUI0s7t48mq/BNjsP5RTQWbZmQo+oYPY9mJL1e0g=;
+        b=gvZDXhy2DL4UOJPvdyYM9soaX218BPio+Mq2HJ22opkCWzF1aAVNGpKob3b3DjNRsH
+         ivcGnKMnOcCCIxIKfpQ0xhn1wfzVfoDgfvut912j8q20F8Raq0a7L7Ug9YlL835Gplqr
+         OnOVEz86TuuLvUOixhGwb5t2iD6y0epaj/qao=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=ID0Us9rCADx0VWhwIa0tWCh1o4r+2vpkIzSk+m3FM8sAzpaywviQ3yiyzG615CnEko
-         L+89pVbL7oiYdwCjqbGQdkDHpR/A9SQucp2J32OJmyOUnxYeYQhTQ80Bl/WiLVqC+eBK
-         Kbg9MiSeA8634poOTzGS1+iFRYSygdSbP+Pb4=
-Received: by 10.216.21.205 with SMTP id r55mr2343996wer.175.1243960760506; 
-	Tue, 02 Jun 2009 09:39:20 -0700 (PDT)
-In-Reply-To: <7vskiifyd5.fsf@alter.siamese.dyndns.org>
+        d=googlemail.com; s=gamma;
+        h=message-id:from:to:references:subject:date:mime-version
+         :content-type:content-transfer-encoding:x-priority:x-msmail-priority
+         :x-mailer:x-mimeole;
+        b=gGpKO9an6cDSBwl8nJb9ZWWNGPV5+/ZuxbqvtGBV4ggAED5l0X0+pMuKdkVFN4/hzR
+         R3MA6GS+0i+Krf0uDj2a/na+fV1jTLpW3OrhurPmeIVZYP5mV4m8YNH52KzcyJVKBIrY
+         90TxkVtp5DphKj4tneyARQ/bRSoNRML3Porho=
+Received: by 10.86.59.18 with SMTP id h18mr8016681fga.71.1243961414087;
+        Tue, 02 Jun 2009 09:50:14 -0700 (PDT)
+Received: from HPLAPTOP (mwgray.force9.co.uk [212.159.110.144])
+        by mx.google.com with ESMTPS id e20sm11943697fga.25.2009.06.02.09.50.12
+        (version=SSLv3 cipher=RC4-MD5);
+        Tue, 02 Jun 2009 09:50:13 -0700 (PDT)
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5512
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.5579
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120527>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120528>
 
-Heya,
+Nice expanation and mini tutoial Junio !
 
-On Tue, Jun 2, 2009 at 17:29, Junio C Hamano <gitster@pobox.com> wrote:
-> I somehow think --repository is much harder to type than --local, and in
-> the context of the command, somehow --local would mesh better with other
-> existing options --system and --global, but that comment falls into the
-> bikeshedding category.
+Thanks ever so much, very useful.
 
-Ha! I had --local at first, but then figured that might be confusing
-since 'local' usually refers to 'on my machine', rather than 'in this
-repository'. I'm fine with either.
+Aaron
 
--- 
-Cheers,
-
-Sverre Rabbelier
+> "Aaron Gray" <aaronngray.lists@googlemail.com> writes:
+>
+>> How do I go about duplicating a branch within a repository, so I can
+>> make test mods ?
+>
+> Run
+>
+>    $ git checkout -b experiment master
+>
+> to make a new "experiment" branch that points at the same comit as
+> "master" (or whatever other branch), hack away (including committing which
+> would grow the history of "experiment" branch without touching "master").
+>
+> After you are done, and if you want to discard it, simply:
+>
+>    $ git checkout master
+>    $ git branch -D experiment
+>
+> or if you want to keep all of it:
+>
+>    $ git checkout master
+>    $ git merge experiment
+>
+> *BUT* if your "experiment" was truly exploratory in the sense that your
+> history is full of "let's try this, commit to snapshot, test, oops, it did
+> not work, let's try that, commit to snapshot, test, ok, I made some
+> progress, let's continue" crufts, you would most likely want to clean-up
+> your history before the latter "checkout master and merge experiment into
+> it" steps with something like:
+>
+>    $ git rebase -i master experiment
+>
+> If you in advance know that what you are going to do is truly "throw-away
+> experiment", you do not even need to use an "experiment" branch.  You can
+> do your exploration while on a detached HEAD:
+>
+>    $ git checkout master^0
+>
+> and hack away, including making commits (but you will discard them in
+> the end), and then finally:
+>
+>    $ git reset --hard ;# if you have local changes you do not want to
+>   take back to master
+>    $ git checkout master
+>
+>
+>
+> 
