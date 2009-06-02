@@ -1,80 +1,69 @@
-From: Tay Ray Chuan <rctay89@gmail.com>
-Subject: Re: [PATCH v2] http*: cleanup slot->local after fclose
-Date: Tue, 2 Jun 2009 21:55:23 +0800
-Message-ID: <be6fef0d0906020655w64fa7653t908347b3dfc98f7b@mail.gmail.com>
-References: <49F1EA6D.8080406@gmail.com> <20090530093717.GA22129@localhost>
-	 <be6fef0d0905300352o33694420m9c988daa554420a3@mail.gmail.com>
-	 <20090530230153.527532b0.rctay89@gmail.com>
-	 <20090531000955.953725d9.rctay89@gmail.com>
-	 <7vy6sdssnk.fsf@alter.siamese.dyndns.org>
-	 <20090531175413.962a55c3.rctay89@gmail.com>
-	 <7vws7xqazi.fsf@alter.siamese.dyndns.org>
-	 <be6fef0d0906010652v4fc814f9j631795cbad61be9@mail.gmail.com>
-	 <7vws7wkk4j.fsf@alter.siamese.dyndns.org>
+From: Heiko Voigt <hvoigt@hvoigt.net>
+Subject: [PATCH] Add USER environment variable to executed git commands
+	when serving
+Date: Tue, 2 Jun 2009 15:56:59 +0200
+Message-ID: <20090602135659.GA4320@macbook.lan>
+References: <2e24e5b90906012102y4e1e6281p437e4d88da517c08@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Clemens Buchacher <drizzd@aon.at>, git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jun 02 15:55:41 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, tv@eagain.net
+To: Sitaram Chamarty <sitaramc@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jun 02 15:57:12 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MBUSo-0002PG-Sn
-	for gcvg-git-2@gmane.org; Tue, 02 Jun 2009 15:55:39 +0200
+	id 1MBUUI-0002zH-Sm
+	for gcvg-git-2@gmane.org; Tue, 02 Jun 2009 15:57:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753207AbZFBNzX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Jun 2009 09:55:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752994AbZFBNzW
-	(ORCPT <rfc822;git-outgoing>); Tue, 2 Jun 2009 09:55:22 -0400
-Received: from wf-out-1314.google.com ([209.85.200.170]:59608 "EHLO
-	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751573AbZFBNzW (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Jun 2009 09:55:22 -0400
-Received: by wf-out-1314.google.com with SMTP id 26so2820460wfd.4
-        for <git@vger.kernel.org>; Tue, 02 Jun 2009 06:55:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=IlZNEEv2Ln3AILiigOX7L1wvSKqilO50JvjV7RJ70m0=;
-        b=lEVbD1IwzRmczFvb2csbm03DHm1FJRNDAwUfkuakBKXA4fXduci6XSjRVC3kIBnpkb
-         fQfRwJm20Iz/+9pjYL9rxwTYhnKt57oVgEcpYGEQjMwuGNlDaIUP4WBH0PkL7/DjhSn1
-         tmkpOTnL6DssYW2ey5AuL1kC346oEzj7aT4vg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=FqAxk3sFJYh0scZVjLrPxGHopGlMsZRmjIO5/w0TwcBI0qJEyAAliWe9+mW3gbnZxp
-         o3ZKZZoTxZL8vMDDnuyED3diGDqQuRj+Clh4qTnPn3q2UkoE9tRdLNyfEB0rmqmS67Pp
-         6WzOvsph/N2L0t13KOLOEQcuVUGJSWzgi8O+o=
-Received: by 10.142.144.9 with SMTP id r9mr3069658wfd.91.1243950923786; Tue, 
-	02 Jun 2009 06:55:23 -0700 (PDT)
-In-Reply-To: <7vws7wkk4j.fsf@alter.siamese.dyndns.org>
+	id S1754004AbZFBN5A (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Jun 2009 09:57:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753941AbZFBN5A
+	(ORCPT <rfc822;git-outgoing>); Tue, 2 Jun 2009 09:57:00 -0400
+Received: from darksea.de ([83.133.111.250]:38739 "HELO darksea.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753458AbZFBN5A (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Jun 2009 09:57:00 -0400
+Received: (qmail 9085 invoked from network); 2 Jun 2009 15:56:51 +0200
+Received: from unknown (HELO localhost) (127.0.0.1)
+  by localhost with SMTP; 2 Jun 2009 15:56:51 +0200
+Content-Disposition: inline
+In-Reply-To: <2e24e5b90906012102y4e1e6281p437e4d88da517c08@mail.gmail.com>
+User-Agent: Mutt/1.5.19 (2009-01-05)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120510>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120511>
 
-Hi,
+This is useful if you want to implement access rights by branchname.
+The update hook can check this variable and react accordingly.
 
-On Tue, Jun 2, 2009 at 12:13 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> I wish the commit log message explained that from the beginning without
-> being asked.
+Signed-off-by: Heiko Voigt <hvoigt@hvoigt.net>
+---
+On Tue, Jun 02, 2009 at 09:32:40AM +0530, Sitaram Chamarty wrote:
+> I'd like it to set an additional env var which will contain "username"
+> so that hooks etc can get that info and use it as they they see fit.
 
-Indeed, I guess I only hinted at the bug being fixed, and in the last
-line, at that.
+Here is a trivial patch. This is totally untested as I wanted to
+implement something similar but never had the time to work more on it.
 
-> So what would we want to do?
+cheers Heiko
 
-You can go ahead and apply this patch, many thanks. Don't bother with
-re-applying the rc/http-push though; I'll send in the revised patches
-sometime this weekend.
+ gitosis/serve.py |    1 +
+ 1 files changed, 1 insertions(+), 0 deletions(-)
 
+diff --git a/gitosis/serve.py b/gitosis/serve.py
+index 867249e..0e2c4af 100644
+--- a/gitosis/serve.py
++++ b/gitosis/serve.py
+@@ -201,6 +201,7 @@ class Main(app.App):
+             sys.exit(1)
+ 
+         main_log.debug('Serving %s', newcmd)
++        os.putenv('USER', user)
+         os.execvp('git', ['git', 'shell', '-c', newcmd])
+         main_log.error('Cannot execute git-shell.')
+         sys.exit(1)
 -- 
-Cheers,
-Ray Chuan
+1.6.2.1.424.g0b27.dirty
