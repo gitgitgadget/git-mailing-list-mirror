@@ -1,107 +1,83 @@
-From: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <rene.scharfe@lsrfire.ath.cx>
-Subject: Re: [PATCH] parse-options: make OPT_NUMBER's argh explicit
-Date: Wed, 03 Jun 2009 22:22:59 +0200
-Message-ID: <4A26DBA3.90604@lsrfire.ath.cx>
-References: <1244015367-16998-1-git-send-email-bebarino@gmail.com> 	<4A264DFA.3090309@lsrfire.ath.cx> <780e0a6b0906031235q1438b76cyba1172556c94d1d0@mail.gmail.com>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: Request for detailed documentation of git pack protocol
+Date: Wed, 3 Jun 2009 13:24:29 -0700
+Message-ID: <20090603202429.GO3355@spearce.org>
+References: <200905122329.15379.jnareb@gmail.com> <200906031851.12160.jnareb@gmail.com> <20090603165613.GJ3355@spearce.org> <200906032220.00238.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Stephen Boyd <bebarino@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jun 03 22:23:42 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Scott Chacon <schacon@gmail.com>, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jun 03 22:24:37 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MBwzt-0006O6-6b
-	for gcvg-git-2@gmane.org; Wed, 03 Jun 2009 22:23:41 +0200
+	id 1MBx0m-0006rN-JW
+	for gcvg-git-2@gmane.org; Wed, 03 Jun 2009 22:24:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754857AbZFCUXF convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 3 Jun 2009 16:23:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754566AbZFCUXD
-	(ORCPT <rfc822;git-outgoing>); Wed, 3 Jun 2009 16:23:03 -0400
-Received: from india601.server4you.de ([85.25.151.105]:50298 "EHLO
-	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751409AbZFCUXC (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Jun 2009 16:23:02 -0400
-Received: from [10.0.1.101] (p57B7BC33.dip.t-dialin.net [87.183.188.51])
-	by india601.server4you.de (Postfix) with ESMTPSA id 0FB862F8042;
-	Wed,  3 Jun 2009 22:23:03 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.21 (Windows/20090302)
-In-Reply-To: <780e0a6b0906031235q1438b76cyba1172556c94d1d0@mail.gmail.com>
+	id S1753053AbZFCUY2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Jun 2009 16:24:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752540AbZFCUY1
+	(ORCPT <rfc822;git-outgoing>); Wed, 3 Jun 2009 16:24:27 -0400
+Received: from george.spearce.org ([209.20.77.23]:50703 "EHLO
+	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750954AbZFCUY0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Jun 2009 16:24:26 -0400
+Received: by george.spearce.org (Postfix, from userid 1001)
+	id 0F5CC381D1; Wed,  3 Jun 2009 20:24:29 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <200906032220.00238.jnareb@gmail.com>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120637>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120638>
 
-Stephen Boyd schrieb:
-> On Wed, Jun 3, 2009 at 3:18 AM, Ren=C3=A9 Scharfe<rene.scharfe@lsrfir=
-e.ath.cx> wrote:
->> By the way, can the switch be replaced by a simple check for
->> PARSE_OPT_NOARG now?
->>
->=20
-> This looks possible. I think just set PARSE_OPT_NOARG as the flag of
-> the appropriate OPT_* macros. I'll have to grep the tree for custom
-> uses of OPTION_* though.
+Jakub Narebski <jnareb@gmail.com> wrote:
+> 
+> >>> Oh, and send-pack/receive-pack protocol now has ".have" refs [...]
+> 
+> So the output (for fetch or clone) would look like this for repository
+> with alternates (shared object database):
 
-Yes, it's only worthwhile if there aren't too many special cases that
-require explicit setting of PARSE_OPT_NOARG.
+No.  fetch/clone (aka fetch-pack/upload-pack protocl) does not use
+the .have feature.
+ 
+> Does it matter for fetch, or is it important only for pushing?
 
->=20
-> Should that be all squashed together? Or maybe that could be a follow=
- up patch?
+Because yea, it only matters for pushing.  Actually, in the case of
+fetch, we shouldn't advertise what our alternate has, the client
+should just fetch from the alternate.
 
-Your existing patch looks fine as is, I'd keep additional changes
-separate.
+In push it matters because the client wants to know what the remote
+has, so it can trim the pack down to only the new objects, to reduce
+transfer time.
+ 
+> BTW. do "include-tag" capability MUST NOT (REQUIRED) be send if there
+> are not tags (tag objects?), or just SHOULD NOT (RECOMMENDED), or even
+> MAY NOT (OPTIONAL).  GitHub server doesn't send it if there are no 
+> tags...
 
-Hmm, and how about the following in between them?
+Clients MAY always send include-tag, hardcoding it into a request.
+The decision for a client to request include-tag only has to do
+with the client's desires for tag data, whether or not a server
+had advertised objects in the refs/tags/* namespace.
 
- parse-options.c |   16 +++-------------
- 1 files changed, 3 insertions(+), 13 deletions(-)
+Clients SHOULD NOT send include-tag if remote.name.tagopt was set
+to --no-tags, as the client doesn't want tag data.
 
-diff --git a/parse-options.c b/parse-options.c
-index b85cab2..dda36b1 100644
---- a/parse-options.c
-+++ b/parse-options.c
-@@ -440,7 +440,7 @@ int parse_options(int argc, const char **argv, cons=
-t char *prefix,
- static int usage_argh(const struct option *opts)
- {
- 	const char *s;
--	int literal =3D opts->flags & PARSE_OPT_LITERAL_ARGHELP;
-+	int literal =3D (opts->flags & PARSE_OPT_LITERAL_ARGHELP) || !opt->ar=
-gh;
- 	if (opts->flags & PARSE_OPT_OPTARG)
- 		if (opts->long_name)
- 			s =3D literal ? "[=3D%s]" : "[=3D<%s>]";
-@@ -448,7 +448,7 @@ static int usage_argh(const struct option *opts)
- 			s =3D literal ? "[%s]" : "[<%s>]";
- 	else
- 		s =3D literal ? " %s" : " <%s>";
--	return fprintf(stderr, s, opts->argh);
-+	return fprintf(stderr, s, opt->argh ? opt->argh : "...");
- }
-=20
- #define USAGE_OPTS_WIDTH 24
-@@ -519,17 +519,7 @@ int usage_with_options_internal(const char * const=
- *usagestr,
- 		case OPTION_FILENAME:
- 			/* FALLTHROUGH */
- 		case OPTION_STRING:
--			if (opts->argh)
--				pos +=3D usage_argh(opts);
--			else {
--				if (opts->flags & PARSE_OPT_OPTARG)
--					if (opts->long_name)
--						pos +=3D fprintf(stderr, "[=3D...]");
--					else
--						pos +=3D fprintf(stderr, "[...]");
--				else
--					pos +=3D fprintf(stderr, " ...");
--			}
-+			pos +=3D usage_argh(opts);
- 			break;
- 		default: /* OPTION_{BIT,BOOLEAN,NUMBER,SET_INT,SET_PTR} */
- 			break;
+Servers MUST accept include-tag without error or warning, even if the
+server does not understand or support the option.
+
+Servers SHOULD pack the tags if their referrant is packed and the
+client has requested include-tag.
+
+Clients MUST be prepared for the case where a server has ignored
+include-tag and has not actually sent tags in the pack.  In such
+cases the client SHOULD issue a subsequent fetch to acquire the
+tags that include-tag would have otherwise given the client.
+
+-- 
+Shawn.
