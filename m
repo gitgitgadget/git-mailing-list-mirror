@@ -1,83 +1,59 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: Request for detailed documentation of git pack protocol
-Date: Wed, 3 Jun 2009 13:24:29 -0700
-Message-ID: <20090603202429.GO3355@spearce.org>
-References: <200905122329.15379.jnareb@gmail.com> <200906031851.12160.jnareb@gmail.com> <20090603165613.GJ3355@spearce.org> <200906032220.00238.jnareb@gmail.com>
+From: Heiko Voigt <hvoigt@hvoigt.net>
+Subject: Re: Re: [PATCH] Add USER environment variable to executed git
+	commands when serving
+Date: Wed, 3 Jun 2009 22:27:02 +0200
+Message-ID: <20090603202701.GA8739@macbook.lan>
+References: <2e24e5b90906012102y4e1e6281p437e4d88da517c08@mail.gmail.com> <20090602135659.GA4320@macbook.lan> <2e24e5b90906021804tf3db263qc41a6f8b171111e1@mail.gmail.com> <2e24e5b90906022324pe6769d5vfa5e3eec44daeaf3@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Scott Chacon <schacon@gmail.com>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jun 03 22:24:37 2009
+Cc: git@vger.kernel.org, tv@eagain.net
+To: Sitaram Chamarty <sitaramc@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jun 03 22:27:24 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MBx0m-0006rN-JW
-	for gcvg-git-2@gmane.org; Wed, 03 Jun 2009 22:24:37 +0200
+	id 1MBx3Q-0008RZ-5x
+	for gcvg-git-2@gmane.org; Wed, 03 Jun 2009 22:27:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753053AbZFCUY2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Jun 2009 16:24:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752540AbZFCUY1
-	(ORCPT <rfc822;git-outgoing>); Wed, 3 Jun 2009 16:24:27 -0400
-Received: from george.spearce.org ([209.20.77.23]:50703 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750954AbZFCUY0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Jun 2009 16:24:26 -0400
-Received: by george.spearce.org (Postfix, from userid 1001)
-	id 0F5CC381D1; Wed,  3 Jun 2009 20:24:29 +0000 (UTC)
+	id S1753884AbZFCU1G (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Jun 2009 16:27:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752458AbZFCU1F
+	(ORCPT <rfc822;git-outgoing>); Wed, 3 Jun 2009 16:27:05 -0400
+Received: from darksea.de ([83.133.111.250]:43770 "HELO darksea.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751153AbZFCU1E (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Jun 2009 16:27:04 -0400
+Received: (qmail 13341 invoked from network); 3 Jun 2009 22:26:49 +0200
+Received: from unknown (HELO localhost) (127.0.0.1)
+  by localhost with SMTP; 3 Jun 2009 22:26:49 +0200
 Content-Disposition: inline
-In-Reply-To: <200906032220.00238.jnareb@gmail.com>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+In-Reply-To: <2e24e5b90906022324pe6769d5vfa5e3eec44daeaf3@mail.gmail.com>
+User-Agent: Mutt/1.5.19 (2009-01-05)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120638>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120639>
 
-Jakub Narebski <jnareb@gmail.com> wrote:
+On Wed, Jun 03, 2009 at 11:54:50AM +0530, Sitaram Chamarty wrote:
+> On Wed, Jun 3, 2009 at 6:34 AM, Sitaram Chamarty <sitaramc@gmail.com> wrote:
 > 
-> >>> Oh, and send-pack/receive-pack protocol now has ".have" refs [...]
+> > I will test it out today at work and report back but it should work; I
+> > don't see why it wouldn't, unless somewhere else there's a
+> > sanitisation of env vars going on for security.
 > 
-> So the output (for fetch or clone) would look like this for repository
-> with alternates (shared object database):
+> works beautifully!  Thanks again.
 
-No.  fetch/clone (aka fetch-pack/upload-pack protocl) does not use
-the .have feature.
- 
-> Does it matter for fetch, or is it important only for pushing?
+You are welcome. An interesting addition would be to propagate allowed
+branchnames from gitosis.conf. That way you can implement write-
+protected branches using an update hook.
 
-Because yea, it only matters for pushing.  Actually, in the case of
-fetch, we shouldn't advertise what our alternate has, the client
-should just fetch from the alternate.
+Which enables better support for a maintainer based workflow for
+centralized setups. Every developer would be allowed to push all branch
+names he likes but the master branch is only writable by the maintainer.
 
-In push it matters because the client wants to know what the remote
-has, so it can trim the pack down to only the new objects, to reduce
-transfer time.
- 
-> BTW. do "include-tag" capability MUST NOT (REQUIRED) be send if there
-> are not tags (tag objects?), or just SHOULD NOT (RECOMMENDED), or even
-> MAY NOT (OPTIONAL).  GitHub server doesn't send it if there are no 
-> tags...
+A nice solution to steer this directly from gitosis.conf? I never got
+around implementing it.
 
-Clients MAY always send include-tag, hardcoding it into a request.
-The decision for a client to request include-tag only has to do
-with the client's desires for tag data, whether or not a server
-had advertised objects in the refs/tags/* namespace.
-
-Clients SHOULD NOT send include-tag if remote.name.tagopt was set
-to --no-tags, as the client doesn't want tag data.
-
-Servers MUST accept include-tag without error or warning, even if the
-server does not understand or support the option.
-
-Servers SHOULD pack the tags if their referrant is packed and the
-client has requested include-tag.
-
-Clients MUST be prepared for the case where a server has ignored
-include-tag and has not actually sent tags in the pack.  In such
-cases the client SHOULD issue a subsequent fetch to acquire the
-tags that include-tag would have otherwise given the client.
-
--- 
-Shawn.
+cheers Heiko
