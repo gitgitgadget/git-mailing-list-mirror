@@ -1,91 +1,107 @@
-From: Todd Zullinger <tmz@pobox.com>
-Subject: [PATCH v2] completion: Add --full-diff to log options
-Date: Wed, 3 Jun 2009 16:20:58 -0400
-Message-ID: <20090603202058.GA28808@inocybe.localdomain>
-References: <pan.2009.06.02.00.34.36@fedoraproject.org>
- <7vzlcrihew.fsf@alter.siamese.dyndns.org>
- <20090603122230.GZ28808@inocybe.localdomain>
- <200906031630.09962.trast@student.ethz.ch>
+From: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <rene.scharfe@lsrfire.ath.cx>
+Subject: Re: [PATCH] parse-options: make OPT_NUMBER's argh explicit
+Date: Wed, 03 Jun 2009 22:22:59 +0200
+Message-ID: <4A26DBA3.90604@lsrfire.ath.cx>
+References: <1244015367-16998-1-git-send-email-bebarino@gmail.com> 	<4A264DFA.3090309@lsrfire.ath.cx> <780e0a6b0906031235q1438b76cyba1172556c94d1d0@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Thomas Spura <tomspur@fedoraproject.org>, git@vger.kernel.org
-To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Wed Jun 03 22:21:20 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Stephen Boyd <bebarino@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jun 03 22:23:42 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MBwxb-0005BZ-HB
-	for gcvg-git-2@gmane.org; Wed, 03 Jun 2009 22:21:19 +0200
+	id 1MBwzt-0006O6-6b
+	for gcvg-git-2@gmane.org; Wed, 03 Jun 2009 22:23:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753399AbZFCUVL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Jun 2009 16:21:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753053AbZFCUVJ
-	(ORCPT <rfc822;git-outgoing>); Wed, 3 Jun 2009 16:21:09 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:55182 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752458AbZFCUVI (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Jun 2009 16:21:08 -0400
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 291D9B8DE7;
-	Wed,  3 Jun 2009 16:21:10 -0400 (EDT)
-Received: from inocybe.localdomain (unknown [173.67.155.244]) (using TLSv1
- with cipher AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 40DFAB8DE3; Wed,
-  3 Jun 2009 16:21:03 -0400 (EDT)
-Content-Disposition: inline
-In-Reply-To: <200906031630.09962.trast@student.ethz.ch>
-User-Agent: Mutt/1.5.19 (2009-01-05)
-X-Pobox-Relay-ID: 1384A700-507C-11DE-AF1D-97731A10BFE7-09356542!a-sasl-fastnet.pobox.com
+	id S1754857AbZFCUXF convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 3 Jun 2009 16:23:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754566AbZFCUXD
+	(ORCPT <rfc822;git-outgoing>); Wed, 3 Jun 2009 16:23:03 -0400
+Received: from india601.server4you.de ([85.25.151.105]:50298 "EHLO
+	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751409AbZFCUXC (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Jun 2009 16:23:02 -0400
+Received: from [10.0.1.101] (p57B7BC33.dip.t-dialin.net [87.183.188.51])
+	by india601.server4you.de (Postfix) with ESMTPSA id 0FB862F8042;
+	Wed,  3 Jun 2009 22:23:03 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.21 (Windows/20090302)
+In-Reply-To: <780e0a6b0906031235q1438b76cyba1172556c94d1d0@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120636>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120637>
 
-Signed-off-by: Todd Zullinger <tmz@pobox.com>
----
+Stephen Boyd schrieb:
+> On Wed, Jun 3, 2009 at 3:18 AM, Ren=C3=A9 Scharfe<rene.scharfe@lsrfir=
+e.ath.cx> wrote:
+>> By the way, can the switch be replaced by a simple check for
+>> PARSE_OPT_NOARG now?
+>>
+>=20
+> This looks possible. I think just set PARSE_OPT_NOARG as the flag of
+> the appropriate OPT_* macros. I'll have to grep the tree for custom
+> uses of OPTION_* though.
 
-Thomas Rast wrote:
-> Todd Zullinger wrote:
->> I *think* __git_log_gitk_options is the proper place for it, but it's
->> early in the a.m. and I'm not averse to being proved wrong.
-> [...]
->>  # Options that go well for log and gitk (not shortlog)
->>  __git_log_gitk_options="
->> -	--dense --sparse --full-history
->> +	--dense --sparse --full-diff --full-history
->
-> Gitk has its own setting in the Preferences called "limit diffs to
-> listed paths", and ignores this option, so it should go directly in
-> _git_log.
+Yes, it's only worthwhile if there aren't too many special cases that
+require explicit setting of PARSE_OPT_NOARG.
 
-Ahh, thanks Thomas.
+>=20
+> Should that be all squashed together? Or maybe that could be a follow=
+ up patch?
 
- contrib/completion/git-completion.bash |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+Your existing patch looks fine as is, I'd keep additional changes
+separate.
 
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index 98b9cbe..79a99af 100755
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -1157,7 +1157,7 @@ _git_log ()
- 			$__git_log_shortlog_options
- 			$__git_log_gitk_options
- 			--root --topo-order --date-order --reverse
--			--follow
-+			--follow --full-diff
- 			--abbrev-commit --abbrev=
- 			--relative-date --date=
- 			--pretty= --format= --oneline
--- 
-1.6.3.1
+Hmm, and how about the following in between them?
 
--- 
-Todd        OpenPGP -> KeyID: 0xBEAF0CE3 | URL: www.pobox.com/~tmz/pgp
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-I have to decide between two equally frightening options.  If I wanted
-to do that, I'd vote.
-    -- Duckman
+ parse-options.c |   16 +++-------------
+ 1 files changed, 3 insertions(+), 13 deletions(-)
+
+diff --git a/parse-options.c b/parse-options.c
+index b85cab2..dda36b1 100644
+--- a/parse-options.c
++++ b/parse-options.c
+@@ -440,7 +440,7 @@ int parse_options(int argc, const char **argv, cons=
+t char *prefix,
+ static int usage_argh(const struct option *opts)
+ {
+ 	const char *s;
+-	int literal =3D opts->flags & PARSE_OPT_LITERAL_ARGHELP;
++	int literal =3D (opts->flags & PARSE_OPT_LITERAL_ARGHELP) || !opt->ar=
+gh;
+ 	if (opts->flags & PARSE_OPT_OPTARG)
+ 		if (opts->long_name)
+ 			s =3D literal ? "[=3D%s]" : "[=3D<%s>]";
+@@ -448,7 +448,7 @@ static int usage_argh(const struct option *opts)
+ 			s =3D literal ? "[%s]" : "[<%s>]";
+ 	else
+ 		s =3D literal ? " %s" : " <%s>";
+-	return fprintf(stderr, s, opts->argh);
++	return fprintf(stderr, s, opt->argh ? opt->argh : "...");
+ }
+=20
+ #define USAGE_OPTS_WIDTH 24
+@@ -519,17 +519,7 @@ int usage_with_options_internal(const char * const=
+ *usagestr,
+ 		case OPTION_FILENAME:
+ 			/* FALLTHROUGH */
+ 		case OPTION_STRING:
+-			if (opts->argh)
+-				pos +=3D usage_argh(opts);
+-			else {
+-				if (opts->flags & PARSE_OPT_OPTARG)
+-					if (opts->long_name)
+-						pos +=3D fprintf(stderr, "[=3D...]");
+-					else
+-						pos +=3D fprintf(stderr, "[...]");
+-				else
+-					pos +=3D fprintf(stderr, " ...");
+-			}
++			pos +=3D usage_argh(opts);
+ 			break;
+ 		default: /* OPTION_{BIT,BOOLEAN,NUMBER,SET_INT,SET_PTR} */
+ 			break;
