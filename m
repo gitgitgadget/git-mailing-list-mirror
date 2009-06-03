@@ -1,101 +1,81 @@
-From: Antriksh Pany <antriksh.pany@gmail.com>
-Subject: Re: [PATCH v3 1/2] compat: add a mkstemps() compatibility function
-Date: Wed, 3 Jun 2009 21:29:06 +0530
-Message-ID: <e6cd6cf90906030859m2725856cl77e210d87e261df0@mail.gmail.com>
-References: <1243503831-17993-1-git-send-email-davvid@gmail.com>
-	 <e6cd6cf90906020535m24d588eau40b800555c9e906f@mail.gmail.com>
-	 <4A252381.9000103@viscovery.net>
+From: =?ISO-8859-15?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
+Subject: [PATCH] grep: fix empty word-regexp matches
+Date: Wed, 03 Jun 2009 18:19:01 +0200
+Message-ID: <4A26A275.7000900@lsrfire.ath.cx>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: David Aguilar <davvid@gmail.com>, gitster@pobox.com,
-	git@vger.kernel.org, markus.heidelberg@web.de, jnareb@gmail.com
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Wed Jun 03 17:59:21 2009
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jun 03 18:19:19 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MBss4-0005Lp-Aw
-	for gcvg-git-2@gmane.org; Wed, 03 Jun 2009 17:59:20 +0200
+	id 1MBtBJ-0005UM-NU
+	for gcvg-git-2@gmane.org; Wed, 03 Jun 2009 18:19:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755266AbZFCP7I convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 3 Jun 2009 11:59:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753741AbZFCP7H
-	(ORCPT <rfc822;git-outgoing>); Wed, 3 Jun 2009 11:59:07 -0400
-Received: from mail-qy0-f189.google.com ([209.85.221.189]:48306 "EHLO
-	mail-qy0-f189.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752088AbZFCP7G convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 3 Jun 2009 11:59:06 -0400
-X-Greylist: delayed 98607 seconds by postgrey-1.27 at vger.kernel.org; Wed, 03 Jun 2009 11:59:06 EDT
-Received: by qyk27 with SMTP id 27so123609qyk.33
-        for <git@vger.kernel.org>; Wed, 03 Jun 2009 08:59:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=aaNBkSnLXTtQBTU5F5K9+DRiFwo/7QBdk9gQ5gdUFdw=;
-        b=D2YbPVOYzvrxRS3S4DzaT1dQBVO1X+GoLK52lM62V0tTMykcZSVBw8lVC4Cx9BY+k/
-         kExVa9deoSThJaZUGdN7oCGIWN8lvW42ZRShZdHzwhJbyCP2+ogVI3IlkFgtR3824w6U
-         TNGGVYEFUM5IkBhgDdFq+Lreh4eRVG7Fgzg48=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=J3fYTlb5k89qszFWWYZGB7T1lIMdGvnsi9+0ewAPCg4yFphwpIVZxdzzHCEeU9FBMK
-         nZ3dOqbUrTsE4ciOOxCIuP/eXyE2fQaHrFwe/H5/1RPrKRjftjnFXTkHmyu7/2ZZ4In+
-         qaYuZPLa4az3z6dLxfIvEWzMFHxJ5r14AcyQ4=
-Received: by 10.229.70.139 with SMTP id d11mr386849qcj.51.1244044747046; Wed, 
-	03 Jun 2009 08:59:07 -0700 (PDT)
-In-Reply-To: <4A252381.9000103@viscovery.net>
+	id S1755371AbZFCQTF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Jun 2009 12:19:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755342AbZFCQTE
+	(ORCPT <rfc822;git-outgoing>); Wed, 3 Jun 2009 12:19:04 -0400
+Received: from india601.server4you.de ([85.25.151.105]:34658 "EHLO
+	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754900AbZFCQTD (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Jun 2009 12:19:03 -0400
+Received: from [10.0.1.101] (p57B7CBE0.dip.t-dialin.net [87.183.203.224])
+	by india601.server4you.de (Postfix) with ESMTPSA id 216D72F8042;
+	Wed,  3 Jun 2009 18:19:04 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.21 (Windows/20090302)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120617>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120618>
 
-Oh ok, didn't realize the sixth division was not used. In which case,
-we needn't have the sixth division.
+The command "git grep -w ''" dies as soon as it encounters an empty line,
+reporting (wrongly) that "regexp returned nonsense".  The first hunk of
+this patch relaxes the sanity check that is responsible for that,
+allowing matches to start at the end.
 
-Also, 62^5 compared to 2^32 still gives a ~ 21% probability of the
-fifth division becoming zero, fairly high perhaps.
+The second hunk complements it by making sure that empty matches are
+rejected if -w was specified, as they are not really words.
 
-The suggestion to change the code to
-   ((uint64_t) tv.tv_usec) << 16)
-might help here. This would still leave about a 1.4% chance of v
-becoming zero, higher than (being pedantic!) what perfect randomness
-would require. Livable. But (just curious), do we see any loss in
-shifting a few more positions?
+GNU grep does the same:
 
-- Antriksh
+	$ echo foo | grep -c ''
+	1
+	$ echo foo | grep -c -w ''
+	0
 
+Signed-off-by: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
+---
+ grep.c |    6 +++++-
+ 1 files changed, 5 insertions(+), 1 deletions(-)
 
-On Tue, Jun 2, 2009 at 6:35 PM, Johannes Sixt <j.sixt@viscovery.net> wr=
-ote:
-> Antriksh Pany schrieb:
->> 2. tv_usec has a decimal value range of 0-999999 =A0(10^6 usec make =
-1
->> sec). Which means that tv_usec fits completely in 20 bits (or less).
->> (tv_usec << 16) yields a number that fits completely in 36 bits (or
->> less). Max value of this number is 999999 * 2^16, or for convenience=
-,
->> about M =3D 10^6 * 2^16. This number (in the range of 0 to M) goes o=
-n to
->> be divided by D=3D62^6. Also, M > D. Thus, there is about a =A0D / M=
- * 100
->> ~ 87 % probability of the division M / D working out to be zero. i.e=
-,
->> in 87% cases, the last division (v/=3D num_letters) will cause 'v' t=
-o
->> become 0.
->
-> But this value (after the 6th division, mind you) is not used. v is u=
-sed
-> the last time after the 5th division; at this time it still carries e=
-nough
-> randomness: 62^5 < 2^32.
->
-> -- Hannes
->
->
+diff --git a/grep.c b/grep.c
+index 7bf4a60..92a47c7 100644
+--- a/grep.c
++++ b/grep.c
+@@ -331,7 +331,7 @@ static int match_one_pattern(struct grep_pat *p, char *bol, char *eol,
+ 
+ 	if (hit && p->word_regexp) {
+ 		if ((pmatch[0].rm_so < 0) ||
+-		    (eol - bol) <= pmatch[0].rm_so ||
++		    (eol - bol) < pmatch[0].rm_so ||
+ 		    (pmatch[0].rm_eo < 0) ||
+ 		    (eol - bol) < pmatch[0].rm_eo)
+ 			die("regexp returned nonsense");
+@@ -350,6 +350,10 @@ static int match_one_pattern(struct grep_pat *p, char *bol, char *eol,
+ 		else
+ 			hit = 0;
+ 
++		/* Words consist of at least one character. */
++		if (pmatch->rm_so == pmatch->rm_eo)
++			hit = 0;
++
+ 		if (!hit && pmatch[0].rm_so + bol + 1 < eol) {
+ 			/* There could be more than one match on the
+ 			 * line, and the first match might not be
+-- 
+1.6.3.1
