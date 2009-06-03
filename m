@@ -1,90 +1,86 @@
-From: Todd Zullinger <tmz@pobox.com>
-Subject: [PATCH] completion: Add --full-diff to log/gitk options
-Date: Wed, 3 Jun 2009 08:22:30 -0400
-Message-ID: <20090603122230.GZ28808@inocybe.localdomain>
-References: <pan.2009.06.02.00.34.36@fedoraproject.org>
- <7vzlcrihew.fsf@alter.siamese.dyndns.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: Request for detailed documentation of git pack protocol
+Date: Wed, 3 Jun 2009 14:29:24 +0200
+Message-ID: <200906031429.28967.jnareb@gmail.com>
+References: <200905122329.15379.jnareb@gmail.com> <d411cc4a0905140655y244f21aem44f1e246dd74d80c@mail.gmail.com> <200906022339.08639.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Shawn O. Pearce" <spearce@spearce.org>,
-	Thomas Spura <tomspur@fedoraproject.org>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jun 03 14:23:17 2009
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
+To: Scott Chacon <schacon@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jun 03 14:29:44 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MBpUy-0001ap-Go
-	for gcvg-git-2@gmane.org; Wed, 03 Jun 2009 14:23:16 +0200
+	id 1MBpbD-0003UH-Cl
+	for gcvg-git-2@gmane.org; Wed, 03 Jun 2009 14:29:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755296AbZFCMWh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Jun 2009 08:22:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754698AbZFCMWh
-	(ORCPT <rfc822;git-outgoing>); Wed, 3 Jun 2009 08:22:37 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:38927 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755212AbZFCMWh (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Jun 2009 08:22:37 -0400
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id E3F14B8570;
-	Wed,  3 Jun 2009 08:22:37 -0400 (EDT)
-Received: from inocybe.localdomain (unknown [173.67.155.244]) (using TLSv1
- with cipher AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 522C3B856E; Wed,
-  3 Jun 2009 08:22:33 -0400 (EDT)
+	id S1755154AbZFCM3c convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 3 Jun 2009 08:29:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754563AbZFCM3c
+	(ORCPT <rfc822;git-outgoing>); Wed, 3 Jun 2009 08:29:32 -0400
+Received: from fg-out-1718.google.com ([72.14.220.152]:29287 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753567AbZFCM3b (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Jun 2009 08:29:31 -0400
+Received: by fg-out-1718.google.com with SMTP id 16so3368335fgg.17
+        for <git@vger.kernel.org>; Wed, 03 Jun 2009 05:29:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=C9qt1l5soQ7aNCYhBwYn+T+NnLoslBdQaqjBSC7CG2k=;
+        b=AwJRA0pzrUbHXx9Zbzjb3eXptEnf67WniGXv9kkzhH6JMAccO/1ExCImQCur2DC2bh
+         8Luo7sOKZzKFz3Rn+Cg0vmUA4/jXrF8VTzdRDHwc3DV6M3X+Q2D4tyYDy3zgnHJ4XHEA
+         KQYofalHFKO8qKnZrptcpl19JDcVyek0OFAk8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=FOP0+mKED8UlTsd9IBqGm4AP0Pe7nCP5JCuBBXMy6zN0+OT/Bb8t9Q7CyNbHIDtcEP
+         +PpqkBlby0tn4czFpjiGCBts+n0UQjkgz6jqN8VYD9Fj9SUL1RYgTJZky9yjGAKMOFxQ
+         Vyn8ciQ7KO2QoZJYyf9q+WQxqSlR7jpZJ8Kms=
+Received: by 10.86.25.10 with SMTP id 10mr1021947fgy.79.1244032172766;
+        Wed, 03 Jun 2009 05:29:32 -0700 (PDT)
+Received: from ?192.168.1.13? (abws210.neoplus.adsl.tpnet.pl [83.8.242.210])
+        by mx.google.com with ESMTPS id e11sm2196165fga.11.2009.06.03.05.29.31
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 03 Jun 2009 05:29:31 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <200906022339.08639.jnareb@gmail.com>
 Content-Disposition: inline
-In-Reply-To: <7vzlcrihew.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.19 (2009-01-05)
-X-Pobox-Relay-ID: 39B1CCB6-5039-11DE-BB1B-97731A10BFE7-09356542!a-sasl-fastnet.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120605>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120606>
 
-Signed-off-by: Todd Zullinger <tmz@pobox.com>
----
+On Tue, 2 Jun 2009, Jakub Narebski wrote:
+> Should we describe here, or in appendix, or in sidenote, or
+> in a footnote, all currently supported client capabilities
+> and server capabilities?=20
+>=20
+> =C2=A0* multi_ack (why not multi-ack?)
+> =C2=A0* thin-pack=20
+> =C2=A0* side-band=20
+> =C2=A0* side-band-64k=20
+> =C2=A0* ofs-delta=20
+> =C2=A0* shallow=20
+> =C2=A0* no-progress
 
-Junio C Hamano wrote:
-> Thomas Spura <tomspur@fedoraproject.org> writes:
->
->> If running "git log -p parse-options.*", the last commit is
->> df217ed6430efe444a09fffdafd39720ae3f9864
->> There are the changes this commit makes towards parse-options.*.
->>
->> I was expecting to see the full commit with all changes and not only
->> towards the 2 files - only including the two files.
->>
->> Is my expactation wrong or is this a bug?
->
-> Time to run "man git-log" and look for --full-diff, perhaps?
+There is also another capability
 
-While this patch won't do much to help people find the option, perhaps
-those who learn about it will appreciate not having to type it. :)
+   * include-tag
 
-I *think* __git_log_gitk_options is the proper place for it, but it's
-early in the a.m. and I'm not averse to being proved wrong.
+What does it mean? Is it about sending tags if we are sending objects=20
+they point to, or is it about sending all tags?
 
- contrib/completion/git-completion.bash |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
 
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index 0c8bb53..2b291ea 100755
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -1117,7 +1117,7 @@ __git_log_common_options="
- "
- # Options that go well for log and gitk (not shortlog)
- __git_log_gitk_options="
--	--dense --sparse --full-history
-+	--dense --sparse --full-diff --full-history
- 	--simplify-merges --simplify-by-decoration
- 	--left-right
- "
--- 
-1.6.3.1
-
--- 
-Todd        OpenPGP -> KeyID: 0xBEAF0CE3 | URL: www.pobox.com/~tmz/pgp
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Going to hell when I die would just be redundant.
+P.S. Is hexdigit length case sensitive i.e. 0-9a-f, or is it not
+     case sensitive i.e. 0-9a-fA-F?
+--=20
+Jakub Narebski
+Poland
