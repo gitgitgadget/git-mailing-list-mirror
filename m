@@ -1,123 +1,70 @@
-From: Stephen Boyd <bebarino@gmail.com>
-Subject: [PATCH] parse-options: make OPT_NUMBER's argh explicit
-Date: Wed,  3 Jun 2009 00:49:27 -0700
-Message-ID: <1244015367-16998-1-git-send-email-bebarino@gmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jun 03 09:49:42 2009
+From: Sverre Rabbelier <srabbelier@gmail.com>
+Subject: Re: state of libgit2?
+Date: Wed, 3 Jun 2009 10:21:51 +0200
+Message-ID: <fabb9a1e0906030121v1aaa8315paeda9e9ef3062399@mail.gmail.com>
+References: <200906030822.15516.thomas@koch.ro>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: thomas@koch.ro
+X-From: git-owner@vger.kernel.org Wed Jun 03 10:29:34 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MBlEB-0005Ji-9Z
-	for gcvg-git-2@gmane.org; Wed, 03 Jun 2009 09:49:39 +0200
+	id 1MBlqk-0000sO-CI
+	for gcvg-git-2@gmane.org; Wed, 03 Jun 2009 10:29:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753725AbZFCHtb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Jun 2009 03:49:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753326AbZFCHta
-	(ORCPT <rfc822;git-outgoing>); Wed, 3 Jun 2009 03:49:30 -0400
-Received: from mail-px0-f182.google.com ([209.85.216.182]:39486 "EHLO
-	mail-px0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753178AbZFCHta (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Jun 2009 03:49:30 -0400
-Received: by pxi12 with SMTP id 12so559776pxi.33
-        for <git@vger.kernel.org>; Wed, 03 Jun 2009 00:49:31 -0700 (PDT)
+	id S1753915AbZFCI3T (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Jun 2009 04:29:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753668AbZFCI3S
+	(ORCPT <rfc822;git-outgoing>); Wed, 3 Jun 2009 04:29:18 -0400
+Received: from mail-ew0-f162.google.com ([209.85.219.162]:62445 "EHLO
+	mail-ew0-f162.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753301AbZFCI3R (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Jun 2009 04:29:17 -0400
+X-Greylist: delayed 426 seconds by postgrey-1.27 at vger.kernel.org; Wed, 03 Jun 2009 04:29:16 EDT
+Received: by ewy6 with SMTP id 6so25457ewy.37
+        for <git@vger.kernel.org>; Wed, 03 Jun 2009 01:29:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:from:to:cc:subject
-         :date:message-id:x-mailer;
-        bh=LfvGgT2ggVz89WP7X3vecHmQNZEXk7fLO7JEPXh6o3w=;
-        b=JatsCv+BXZWrP0Jv0BzMwNP7fnAWoxht3NutBwppJLokwZG0bxWCXdnBHJcr+gAYiB
-         THpWsGU+OybH66208P/sYsf/4ojPmpvawKQEyzyQTJwOJMPiJlJCBeQbwJKQUu2FTsmx
-         I0Xz1dGi/E0VIIa222tORj8nKJm6+3LaTEGHQ=
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=3kGRF0LLxw1mSXsqAhZ68pI8VsQlXgrB/o/qqCMx7Fw=;
+        b=HnMFuMF/ap2pYnK07ldCpuPXj0XGgncNgVOM5+6243EjUrs8wd6yotIadWoZ2aEvxr
+         D9sNUcyTuZvFXlAOdy/jAELnJuc8S+PciUIReeFwhHO96BoBkS9On/iRItrAQEJ6JB8s
+         SSf4KOn6Xs60zVqh6dVajB/ttwEEuefmrBRLs=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        b=TnCEfpHZKVGrzhkMH+3Q6/Q/SDyDO83mk6ad8LsBiKgDabMdqth/ddgdCHwcs9lYJv
-         yDyE9iGdmpSvSqOHd66Bv8IJdaizYSKeKP/sBycb6FNbw+eYbbNNhpAntV9yNhVlMFW+
-         kBAIkDN7lhGepOaiiN40jvQIhnPqI3ZaVa0Ik=
-Received: by 10.141.29.16 with SMTP id g16mr584753rvj.92.1244015371347;
-        Wed, 03 Jun 2009 00:49:31 -0700 (PDT)
-Received: from earth ([76.89.212.195])
-        by mx.google.com with ESMTPS id g31sm21969695rvb.43.2009.06.03.00.49.28
-        (version=SSLv3 cipher=RC4-MD5);
-        Wed, 03 Jun 2009 00:49:30 -0700 (PDT)
-Received: by earth (sSMTP sendmail emulation); Wed, 03 Jun 2009 00:49:27 -0700
-X-Mailer: git-send-email 1.6.3.1.244.gf9275
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=x5OOp0fAPPRk6xHD8WAdulx0tRH1U/qJKW19NXwZ5v549+fcmwsr6q1kJJ+bTZGEv4
+         8pNMF6Zj8eN0Dd39HZk1yWBcY5zPBPXVzLS9K0vY5Gg01xcrG4eVRTJyPIxLckLG9unq
+         NWfxacswTGL04OdlXgOGv200XI7NHD/Xjei2k=
+Received: by 10.216.53.196 with SMTP id g46mr226221wec.63.1244017331126; Wed, 
+	03 Jun 2009 01:22:11 -0700 (PDT)
+In-Reply-To: <200906030822.15516.thomas@koch.ro>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120591>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120592>
 
-OPTION_NUMBER hard codes its argh member to be "n", but the decision is
-hidden deep in usage_with_options_internal(). Make "n" the default argh
-for the OPT_NUMBER macro while leaving it undecided for the OPTION_NUMBER
-enum.
+Heya,
 
-This make it less surprising to users that argh is "n" when using the
-OPT_NUMBER macro.
+On Wed, Jun 3, 2009 at 08:22, Thomas Koch <thomas@koch.ro> wrote:
+> Just want to show, that there is interest in the state and roadmap for
+> libgit2. If I understand right, libgit2 is necessary to get GIT bindings in
+> scripting languages like PHP, Python, etc.
 
-Signed-off-by: Stephen Boyd <bebarino@gmail.com>
----
- builtin-tag.c   |    4 ++--
- parse-options.c |   11 ++---------
- parse-options.h |    2 +-
- 3 files changed, 5 insertions(+), 12 deletions(-)
+As you can see from [0] the development on libgit2 is stalled, I'm
+assuming due to lack of developer time.
 
-diff --git a/builtin-tag.c b/builtin-tag.c
-index dc3db62..080e04a 100644
---- a/builtin-tag.c
-+++ b/builtin-tag.c
-@@ -376,8 +376,8 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
- 	struct commit_list *with_commit = NULL;
- 	struct option options[] = {
- 		OPT_BOOLEAN('l', NULL, &list, "list tag names"),
--		{ OPTION_INTEGER, 'n', NULL, &lines, NULL,
--				"print n lines of each tag message",
-+		{ OPTION_INTEGER, 'n', NULL, &lines, "n",
-+				"print <n> lines of each tag message",
- 				PARSE_OPT_OPTARG, NULL, 1 },
- 		OPT_BOOLEAN('d', NULL, &delete, "delete tags"),
- 		OPT_BOOLEAN('v', NULL, &verify, "verify tags"),
-diff --git a/parse-options.c b/parse-options.c
-index b85cab2..48ba62b 100644
---- a/parse-options.c
-+++ b/parse-options.c
-@@ -503,19 +503,12 @@ int usage_with_options_internal(const char * const *usagestr,
- 		switch (opts->type) {
- 		case OPTION_ARGUMENT:
- 			break;
--		case OPTION_INTEGER:
--			if (opts->flags & PARSE_OPT_OPTARG)
--				if (opts->long_name)
--					pos += fprintf(stderr, "[=<n>]");
--				else
--					pos += fprintf(stderr, "[<n>]");
--			else
--				pos += fprintf(stderr, " <n>");
--			break;
- 		case OPTION_CALLBACK:
- 			if (opts->flags & PARSE_OPT_NOARG)
- 				break;
- 			/* FALLTHROUGH */
-+		case OPTION_INTEGER:
-+			/* FALLTHROUGH */
- 		case OPTION_FILENAME:
- 			/* FALLTHROUGH */
- 		case OPTION_STRING:
-diff --git a/parse-options.h b/parse-options.h
-index b374ade..b141ae6 100644
---- a/parse-options.h
-+++ b/parse-options.h
-@@ -108,7 +108,7 @@ struct option {
- #define OPT_BOOLEAN(s, l, v, h)     { OPTION_BOOLEAN, (s), (l), (v), NULL, (h) }
- #define OPT_SET_INT(s, l, v, h, i)  { OPTION_SET_INT, (s), (l), (v), NULL, (h), 0, NULL, (i) }
- #define OPT_SET_PTR(s, l, v, h, p)  { OPTION_SET_PTR, (s), (l), (v), NULL, (h), 0, NULL, (p) }
--#define OPT_INTEGER(s, l, v, h)     { OPTION_INTEGER, (s), (l), (v), NULL, (h) }
-+#define OPT_INTEGER(s, l, v, h)     { OPTION_INTEGER, (s), (l), (v), "n", (h) }
- #define OPT_STRING(s, l, v, a, h)   { OPTION_STRING,  (s), (l), (v), (a), (h) }
- #define OPT_DATE(s, l, v, h) \
- 	{ OPTION_CALLBACK, (s), (l), (v), "time",(h), 0, \
+[0] http://repo.or.cz/w/libgit2.git
+
 -- 
-1.6.3.1.244.gf9275
+Cheers,
+
+Sverre Rabbelier
