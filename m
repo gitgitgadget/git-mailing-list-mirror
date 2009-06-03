@@ -1,56 +1,90 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
+From: "Robin H. Johnson" <robbat2@gentoo.org>
 Subject: Re: Request for detailed documentation of git pack protocol
-Date: Tue, 2 Jun 2009 19:15:18 -0700
-Message-ID: <20090603021518.GB3355@spearce.org>
-References: <200905122329.15379.jnareb@gmail.com> <200906022339.08639.jnareb@gmail.com> <20090602232724.GN30527@spearce.org> <200906030250.01413.jnareb@gmail.com> <20090603012940.GA3355@spearce.org> <7vab4qdq2j.fsf@alter.siamese.dyndns.org>
+Date: Tue, 2 Jun 2009 19:18:40 -0700
+Message-ID: <20090603021840.GE3042@orbis-terrarum.net>
+References: <200905122329.15379.jnareb@gmail.com> <200906022339.08639.jnareb@gmail.com> <20090602232724.GN30527@spearce.org> <200906030250.01413.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jakub Narebski <jnareb@gmail.com>,
-	Scott Chacon <schacon@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jun 03 04:15:27 2009
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="QnBU6tTI9sljzm9u"
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Jun 03 04:19:09 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MBg0k-00011v-Jz
-	for gcvg-git-2@gmane.org; Wed, 03 Jun 2009 04:15:27 +0200
+	id 1MBg4K-0001Ys-Ag
+	for gcvg-git-2@gmane.org; Wed, 03 Jun 2009 04:19:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752794AbZFCCPR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Jun 2009 22:15:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752722AbZFCCPR
-	(ORCPT <rfc822;git-outgoing>); Tue, 2 Jun 2009 22:15:17 -0400
-Received: from george.spearce.org ([209.20.77.23]:57014 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752375AbZFCCPQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Jun 2009 22:15:16 -0400
-Received: by george.spearce.org (Postfix, from userid 1001)
-	id E54B2381FE; Wed,  3 Jun 2009 02:15:18 +0000 (UTC)
+	id S1753753AbZFCCS4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Jun 2009 22:18:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753155AbZFCCS4
+	(ORCPT <rfc822;git-outgoing>); Tue, 2 Jun 2009 22:18:56 -0400
+Received: from b01.ext.isohunt.com ([208.71.112.51]:49891 "EHLO
+	mail.isohunt.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752932AbZFCCSz (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Jun 2009 22:18:55 -0400
+Received: (qmail 24431 invoked from network); 3 Jun 2009 02:18:56 -0000
+Received: from tsi-static.orbis-terrarum.net (HELO curie.orbis-terrarum.net) (76.10.188.108)
+  (smtp-auth username robbat2@isohunt.com, mechanism login)
+  by mail.isohunt.com (qpsmtpd/0.33-dev on beta01) with (AES256-SHA encrypted) ESMTPSA; Wed, 03 Jun 2009 02:18:56 +0000
+Received: (qmail 22453 invoked by uid 10000); 2 Jun 2009 19:18:40 -0700
 Content-Disposition: inline
-In-Reply-To: <7vab4qdq2j.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+In-Reply-To: <200906030250.01413.jnareb@gmail.com>
+User-Agent: Mutt/1.5.16 (2007-06-09)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120575>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120576>
 
-Junio C Hamano <gitster@pobox.com> wrote:
-> One thing that I did not see mentioned in this thread is that the
-> implementation is allowed to buffer non-flush packets and send multiple of
-> them out with a single write(2).  In other words, packet_write() could
-> buffer instead of directly calling safe_write(), while packet_flush() must
-> do safe_write() and make sure it drains.
 
-Good point.
+--QnBU6tTI9sljzm9u
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-That's one reason why in JGit I call the flush packet of "0000"
-end(), and flush() triggers the drain.  JGit buffers everything
-its writing, but only by one standard "have" window IIRC.
+> >>> 	"0008NAK\n"
+> >> What does this server response mean? That served doesn't need more
+> >> info?
+> > It means the server is answering a prior flush from the client,
+> > and is saying "I still can't serve you, keep tell me more have".
+> Hmmm... the communication between server and client is not entirely
+> clean. Do I understand correctly that this NAK is response to clients
+> flush after all those "want" lines? And that "0009done" from client
+> tells server that it should send everything it has?
+Relatedly with the "done" message, I'm in the process of writing a hook
+that allows the server to deny the client at this point, instead of
+building and sending a pack.
 
-JGit server code triggers a flush() after side-band channel 2 packet
-ends, but not an end(), because we only want to drain to the network,
-not inject a bad "0000" packet in the stream.
+Suggestions on other modifications that might be needed to integrate.=20
+The hook:
+- takes all want/have lines as input (maybe capabilities too?)
+- returns 0/1
+- on error, should also send a message to stderr, to be passed over the
+  wire.
 
--- 
-Shawn.
+My intended use is to block initial clones while still allowing updates
+(as long as you've got a tree at least commit X recent, I'll talk to
+you). Initial and too-old clients get a message to go and download a
+bundle instead.
+
+--=20
+Robin Hugh Johnson
+Gentoo Linux Developer & Infra Guy
+E-Mail     : robbat2@gentoo.org
+GnuPG FP   : 11AC BA4F 4778 E3F6 E4ED  F38E B27B 944E 3488 4E85
+
+--QnBU6tTI9sljzm9u
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.11 (GNU/Linux)
+Comment: Robbat2 @ Orbis-Terrarum Networks - The text below is a digital signature. If it doesn't make any sense to you, ignore it.
+
+iEYEARECAAYFAkol3YAACgkQPpIsIjIzwiz1UQCgy5Di9dZnYcf9Z/B6eWiWcYP8
+jRQAoNEUkJAAm2qaKXtVL2pBwNJOZHXM
+=WXdy
+-----END PGP SIGNATURE-----
+
+--QnBU6tTI9sljzm9u--
