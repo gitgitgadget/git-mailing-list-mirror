@@ -1,70 +1,84 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: Am able to delete a file with no trace in the log
-Date: Wed, 3 Jun 2009 14:33:39 -0700 (PDT)
-Message-ID: <alpine.LFD.2.01.0906031431100.4880@localhost.localdomain>
-References: <EB2D87B9-3B03-431A-B204-C7799F9BA291@ausperks.net> <20090602213439.GA7584@coredump.intra.peff.net> <alpine.LFD.2.01.0906021439030.4880@localhost.localdomain> <7vfxeidqoz.fsf@alter.siamese.dyndns.org> <alpine.LFD.2.01.0906022000040.4880@localhost.localdomain>
- <7vtz2x6mor.fsf@alter.siamese.dyndns.org>
+From: Tony Finch <dot@dotat.at>
+Subject: Re: Request for detailed documentation of git pack protocol
+Date: Wed, 3 Jun 2009 22:38:31 +0100
+Message-ID: <alpine.LSU.2.00.0906032211350.31588@hermes-2.csi.cam.ac.uk>
+References: <200905122329.15379.jnareb@gmail.com> <200906031121.38616.jnareb@gmail.com> <20090603144837.GE3355@spearce.org> <200906031851.12160.jnareb@gmail.com>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Jeff King <peff@peff.net>, Graham Perks <gperks@ausperks.net>,
-	Git List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jun 03 23:34:13 2009
+Cc: "Shawn O. Pearce" <spearce@spearce.org>,
+	Scott Chacon <schacon@gmail.com>, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jun 03 23:38:51 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MBy66-0002uV-RT
-	for gcvg-git-2@gmane.org; Wed, 03 Jun 2009 23:34:11 +0200
+	id 1MByAa-0005PU-Fa
+	for gcvg-git-2@gmane.org; Wed, 03 Jun 2009 23:38:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754138AbZFCVd7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Jun 2009 17:33:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754014AbZFCVd6
-	(ORCPT <rfc822;git-outgoing>); Wed, 3 Jun 2009 17:33:58 -0400
-Received: from smtp1.linux-foundation.org ([140.211.169.13]:53050 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753700AbZFCVd6 (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 3 Jun 2009 17:33:58 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
-	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id n53LXefk031033
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Wed, 3 Jun 2009 14:33:41 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id n53LXdOo007902;
-	Wed, 3 Jun 2009 14:33:39 -0700
-X-X-Sender: torvalds@localhost.localdomain
-In-Reply-To: <7vtz2x6mor.fsf@alter.siamese.dyndns.org>
-User-Agent: Alpine 2.01 (LFD 1184 2008-12-16)
-X-Spam-Status: No, hits=-3.468 required=5 tests=AWL,BAYES_00
-X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
+	id S1754219AbZFCVic (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Jun 2009 17:38:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754145AbZFCVic
+	(ORCPT <rfc822;git-outgoing>); Wed, 3 Jun 2009 17:38:32 -0400
+Received: from ppsw-0.csi.cam.ac.uk ([131.111.8.130]:37685 "EHLO
+	ppsw-0.csi.cam.ac.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753607AbZFCVib (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Jun 2009 17:38:31 -0400
+X-Cam-AntiVirus: no malware found
+X-Cam-SpamDetails: not scanned
+X-Cam-ScannerInfo: http://www.cam.ac.uk/cs/email/scanner/
+Received: from hermes-2.csi.cam.ac.uk ([131.111.8.54]:51641)
+	by ppsw-0.csi.cam.ac.uk (smtp.hermes.cam.ac.uk [131.111.8.150]:25)
+	with esmtpa (EXTERNAL:fanf2) id 1MByAJ-0005cW-25 (Exim 4.70)
+	(return-path <fanf2@hermes.cam.ac.uk>); Wed, 03 Jun 2009 22:38:31 +0100
+Received: from fanf2 (helo=localhost) by hermes-2.csi.cam.ac.uk (hermes.cam.ac.uk)
+	with local-esmtp id 1MByAJ-0007m9-K9 (Exim 4.67)
+	(return-path <fanf2@hermes.cam.ac.uk>); Wed, 03 Jun 2009 22:38:31 +0100
+X-X-Sender: fanf2@hermes-2.csi.cam.ac.uk
+In-Reply-To: <200906031851.12160.jnareb@gmail.com>
+User-Agent: Alpine 2.00 (LSU 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120646>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120647>
 
+On Wed, 3 Jun 2009, Jakub Narebski wrote:
+> On Wed, 3 Jun 2009, Shawn O. Pearce wrote:
+> > Jakub Narebski <jnareb@gmail.com> wrote:
+> >>
+> >> I do wonder if existing Internet Standard (in the meaning of RFC)
+> >> protocols also have such kludges and hacks...
+> >
+> > I'm sure they have some... oddities.  But perhaps not as bad as git.
 
+One small example is the way DNS was extended to support extra flags and
+response codes (and other features). EDNS is signalled using an OPT
+pseudo-RR, which is basically the same technique as git's .have refs.
 
-On Wed, 3 Jun 2009, Junio C Hamano wrote:
-> 
-> E.g. "git log --graph --oneline -- git-clone.sh" shows that the scripted
-> version ceased to exist at 8434c2f
+There are a couple of examples in RFC 822 / MIME headers: RFC 2047 (for
+encoding character set information in subject and address headers) and RFC
+2231 (the same job but for attachment filenames etc.). In practice common
+software uses 2047 syntax for both purposes :-/
 
-Btw, this example misses the whole point of the original problem.
+Mostly Internet protocols have grown generic extension frameworks fairly
+early in their lives, so syntactic hacks are rare.
 
-The original problem was:
+> I wonder if there are some BCP (Best Common Practices) RFC for designing
+> protocols (and BCP documents for designing file formats). And which one
+> of RFC 2360, RFC 2424,... are applicable here.
 
- - create new file 'x' in branch 'a'
+As far as I know protocol design is pretty much folklore.
 
- - merge branch 'a' into branch 'b', but because of a merge conflict and 
-   confurion in the merge, the merge result doesn't contain 'x' any more.
+> Magic number (magic sequence) identifying protocol / format plus
+> version number.  But it is good that we have capabilities now
+> (which is better than version number in this case, IMHO).
 
- - try to find out what happened to 'x' after-the-fact.
+Yes, capabilities are a good design pattern.
 
-Try it. Git really doesn't make it very easy, because git will notice that 
-'x' didn't exist before the branch either (in branch 'b'), so there will 
-be _no_ sign of 'x' actually going away.
-
-			Linus
+Tony.
+-- 
+f.anthony.n.finch  <dot@dotat.at>  http://dotat.at/
+GERMAN BIGHT HUMBER: SOUTHWEST 5 TO 7. MODERATE OR ROUGH. SQUALLY SHOWERS.
+MODERATE OR GOOD.
