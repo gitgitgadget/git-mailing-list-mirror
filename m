@@ -1,77 +1,107 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Request for detailed documentation of git pack protocol
-Date: Wed, 03 Jun 2009 15:16:12 -0700
-Message-ID: <7vzlcp55g3.fsf@alter.siamese.dyndns.org>
-References: <200905122329.15379.jnareb@gmail.com>
-	<200906032220.00238.jnareb@gmail.com>
-	<20090603202429.GO3355@spearce.org>
-	<200906040004.18594.jnareb@gmail.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: Am able to delete a file with no trace in the log
+Date: Wed, 3 Jun 2009 15:17:49 -0700 (PDT)
+Message-ID: <alpine.LFD.2.01.0906031504080.4880@localhost.localdomain>
+References: <EB2D87B9-3B03-431A-B204-C7799F9BA291@ausperks.net> <20090602213439.GA7584@coredump.intra.peff.net> <alpine.LFD.2.01.0906021439030.4880@localhost.localdomain> <7vfxeidqoz.fsf@alter.siamese.dyndns.org> <alpine.LFD.2.01.0906022000040.4880@localhost.localdomain>
+ <7vtz2x6mor.fsf@alter.siamese.dyndns.org> <alpine.LFD.2.01.0906031431100.4880@localhost.localdomain> <7v8wk96knh.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Shawn O. Pearce" <spearce@spearce.org>,
-	Scott Chacon <schacon@gmail.com>, git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jun 04 00:16:25 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Jeff King <peff@peff.net>, Graham Perks <gperks@ausperks.net>,
+	Git List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jun 04 00:19:09 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MBykz-0000Pi-Dk
-	for gcvg-git-2@gmane.org; Thu, 04 Jun 2009 00:16:25 +0200
+	id 1MBync-0001j4-Os
+	for gcvg-git-2@gmane.org; Thu, 04 Jun 2009 00:19:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754395AbZFCWQN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Jun 2009 18:16:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754287AbZFCWQL
-	(ORCPT <rfc822;git-outgoing>); Wed, 3 Jun 2009 18:16:11 -0400
-Received: from fed1rmmtao104.cox.net ([68.230.241.42]:47366 "EHLO
-	fed1rmmtao104.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754096AbZFCWQK (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Jun 2009 18:16:10 -0400
-Received: from fed1rmimpo03.cox.net ([70.169.32.75])
-          by fed1rmmtao104.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20090603221610.DCQS17135.fed1rmmtao104.cox.net@fed1rmimpo03.cox.net>;
-          Wed, 3 Jun 2009 18:16:10 -0400
-Received: from localhost ([68.225.240.211])
-	by fed1rmimpo03.cox.net with bizsmtp
-	id zaGC1b00F4aMwMQ04aGCF9; Wed, 03 Jun 2009 18:16:12 -0400
-X-VR-Score: -100.00
-X-Authority-Analysis: v=1.0 c=1 a=1cH15jnNZHcA:10 a=8-WIN01VSTQA:10
- a=pGLkceISAAAA:8 a=KiYATCRP-6Llle_O_eoA:9 a=x3eZ7E_xJgh9l9nztTwA:7
- a=RDNLOtXRhx58OyrKbdLwRq2mnYEA:4 a=MSl-tDqOz04A:10
-X-CM-Score: 0.00
-In-Reply-To: <200906040004.18594.jnareb@gmail.com> (Jakub Narebski's message of "Thu\, 4 Jun 2009 00\:04\:09 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+	id S1754451AbZFCWSq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Jun 2009 18:18:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753880AbZFCWSp
+	(ORCPT <rfc822;git-outgoing>); Wed, 3 Jun 2009 18:18:45 -0400
+Received: from smtp1.linux-foundation.org ([140.211.169.13]:47938 "EHLO
+	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751237AbZFCWSo (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 3 Jun 2009 18:18:44 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
+	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id n53MHolw003119
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Wed, 3 Jun 2009 15:17:51 -0700
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id n53MHnnu009937;
+	Wed, 3 Jun 2009 15:17:50 -0700
+X-X-Sender: torvalds@localhost.localdomain
+In-Reply-To: <7v8wk96knh.fsf@alter.siamese.dyndns.org>
+User-Agent: Alpine 2.01 (LFD 1184 2008-12-16)
+X-Spam-Status: No, hits=-3.467 required=5 tests=AWL,BAYES_00
+X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120654>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120655>
 
-Jakub Narebski <jnareb@gmail.com> writes:
 
-> 1. Server sends space separated list of capabilities it support. It
->    MUST NOT send capabilities it *does not* support. It MAY NOT send
->    "include-tag" if there are no tag objects (or is it SHOULD NOT?).
 
-I doubt RFC 2119 lingo would include MAY NOT, as it is ambiguous
-especially to non-native speakers (like me).  You meant to say "MAY omit
-sending", perhaps, but in general capabilies are what you _can_ do at the
-protocol level, and in my opinion, you shouldn't have to check if a
-particular repository you (as a program with given set of features
-implemented) happen to be looking at has tags in order to decide what
-capabilities to advertise.
+On Wed, 3 Jun 2009, Junio C Hamano wrote:
 
-> 2. Client sends space separated list of capabilities it wants. It SHOULD
->    (or perhaps it is MAY?) send subset of server capabilities, i.e do
->    not send capabilities served does not advertise.
+> Linus Torvalds <torvalds@linux-foundation.org> writes:
+> 
+> > The original problem was:
+> >
+> >  - create new file 'x' in branch 'a'
+> >
+> >  - merge branch 'a' into branch 'b', but because of a merge conflict and 
+> >    confurion in the merge, the merge result doesn't contain 'x' any more.
+> >
+> >  - try to find out what happened to 'x' after-the-fact.
+> >
+> > Try it. Git really doesn't make it very easy, because git will notice that 
+> > 'x' didn't exist before the branch either (in branch 'b'), so there will 
+> > be _no_ sign of 'x' actually going away.
+> 
+> That is true.  The "crude attempt" patch I just sent actually catches
+> this, but it does not show the lossage of "new" in the "diff/diffstat"
+> part of the merge, when run with "git log --stat -- x".  Besides, it shows
+> too many other uninteresting "merged two branches, resolving to lossage of
+> the path the same way as all the previous merges" to be really useful.
 
-I'd say "the client SHOULD NOT ask for capabilities the server did not say
-it supports".
+Yes.
 
-> 3. Server MUST ignore capabilities it does not understand. Server MUST
->    NOT ignore capabilities (or SHOULD NOT only?) that client requested
->    and server advertised.
+Thinking more about it, we always did have fairly good workarounds for the 
+"we optimized away the history too aggressively" (ie the original 
+--full-history, and then the newer and nicer --simplify-merges).
 
-I know unrecognized capability requests are silently ignored, but I
-consider that as a sloppy/practical programming, and not a specification.
+So I'm starting to suspect that I was just wrong in looking at the 
+revision history simplification. Yes, that can cause simplification that 
+we don't want, but on the other hand, it's reasonably easy to work around.
+
+Maybe what we want is a better model for showing diffs from merges.
+
+For example, right now there is _no_ way to get even a "show diff relative 
+to first parent". You can do "-m", which will show it relative to _both_ 
+parents, but nobody ever wants that. And you can do "-c" or "--cc", but 
+that simplifies away all the paths that match in one. 
+
+So here's a challenge: in the git repository, get a nice view of what your 
+merges looked like. The closest I can get is
+
+	git log -c --stat --grep="Merge branch '"
+
+which is actually very non-intuitive ("-c" on its own gives no useful 
+output, but "-c --stat" gives nice diffstat against the first parent, 
+which in this case is what we want).
+
+But I can't actually get git to generate the _patch_ that the --stat 
+describes. You'd have to do something like
+
+	git rev-list --parents --grep="Merge branch '" HEAD |
+		while read a b c; do git show -s $a ; git diff $b..$a; done | less -S
+
+which is pretty ugly.
+
+			Linus
