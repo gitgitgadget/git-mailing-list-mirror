@@ -1,125 +1,67 @@
-From: =?ISO-8859-15?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
-Subject: Re: [PATCH] parse-options: make OPT_NUMBER's argh explicit
-Date: Wed, 03 Jun 2009 12:18:34 +0200
-Message-ID: <4A264DFA.3090309@lsrfire.ath.cx>
-References: <1244015367-16998-1-git-send-email-bebarino@gmail.com>
+From: Erik Faye-Lund <kusmabite@googlemail.com>
+Subject: Re: [Patch] Prevent cloning over http from spewing
+Date: Wed, 3 Jun 2009 12:21:07 +0200
+Message-ID: <40aa078e0906030321u11ec3bbag47e66ca23ec94e09@mail.gmail.com>
+References: <20090602174229.GA14455@infidigm.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Stephen Boyd <bebarino@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jun 03 12:18:50 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: sparse@infidigm.net
+X-From: git-owner@vger.kernel.org Wed Jun 03 12:29:04 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MBnYY-0000yp-0D
-	for gcvg-git-2@gmane.org; Wed, 03 Jun 2009 12:18:50 +0200
+	id 1MBniQ-0003pL-Vk
+	for gcvg-git-2@gmane.org; Wed, 03 Jun 2009 12:29:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752898AbZFCKSl convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 3 Jun 2009 06:18:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752528AbZFCKSk
-	(ORCPT <rfc822;git-outgoing>); Wed, 3 Jun 2009 06:18:40 -0400
-Received: from india601.server4you.de ([85.25.151.105]:34362 "EHLO
-	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752314AbZFCKSk (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Jun 2009 06:18:40 -0400
-Received: from [10.0.1.101] (p57B7CBE0.dip.t-dialin.net [87.183.203.224])
-	by india601.server4you.de (Postfix) with ESMTPSA id 934512F8042;
-	Wed,  3 Jun 2009 12:18:40 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.21 (Windows/20090302)
-In-Reply-To: <1244015367-16998-1-git-send-email-bebarino@gmail.com>
+	id S1753316AbZFCK2y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Jun 2009 06:28:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753277AbZFCK2x
+	(ORCPT <rfc822;git-outgoing>); Wed, 3 Jun 2009 06:28:53 -0400
+Received: from mail-bw0-f165.google.com ([209.85.218.165]:38357 "EHLO
+	mail-bw0-f165.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753185AbZFCK2x (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Jun 2009 06:28:53 -0400
+X-Greylist: delayed 466 seconds by postgrey-1.27 at vger.kernel.org; Wed, 03 Jun 2009 06:28:52 EDT
+Received: by bwz9 with SMTP id 9so22682bwz.37
+        for <git@vger.kernel.org>; Wed, 03 Jun 2009 03:28:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=ilj47x+jdzakT0tANuCsvjtlUQChwtgMw9xwhspPaE0=;
+        b=bsFGhRhScPpbrpaZ6MWI3Pl1M+TzRGmm/lZsmHv1X+5BtK2Vcy0tfZZ+fkRGx4Wm9y
+         VjhOplosqWSaISpWxJ1WX2SiSL9AC46i6ZTdfFUTIjbX8t9Yq73p9yqwE6ZMuHe+xDbV
+         JK/dep1wK3SEgcn0o7lTinCloOetBhzNhaG64=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlemail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=H3ZeAFGdoot5QeY4zcnKYNYVckNAhwjGbgzUgftaq5Z1OKfNlduUjTP0PwlImEkGox
+         5LvQL11aBChaUjbx9HNbG7YEP94yXQsMRI5GgdMhabrslk979yyxmMlKWOvdr7iZkC0e
+         qCFu5uQXQZ9tPkPXJFQvxD5/fqVsPeUvScjic=
+Received: by 10.239.175.146 with SMTP id n18mr63641hbf.16.1244024467537; Wed, 
+	03 Jun 2009 03:21:07 -0700 (PDT)
+In-Reply-To: <20090602174229.GA14455@infidigm.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120595>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120596>
 
-Stephen Boyd schrieb:
-> OPTION_NUMBER hard codes its argh member to be "n", but the decision =
-is
-> hidden deep in usage_with_options_internal(). Make "n" the default ar=
-gh
-> for the OPT_NUMBER macro while leaving it undecided for the OPTION_NU=
-MBER
-> enum.
->=20
-> This make it less surprising to users that argh is "n" when using the
-> OPT_NUMBER macro.
->=20
-> Signed-off-by: Stephen Boyd <bebarino@gmail.com>
-> ---
->  builtin-tag.c   |    4 ++--
->  parse-options.c |   11 ++---------
->  parse-options.h |    2 +-
->  3 files changed, 5 insertions(+), 12 deletions(-)
->=20
-> diff --git a/builtin-tag.c b/builtin-tag.c
-> index dc3db62..080e04a 100644
-> --- a/builtin-tag.c
-> +++ b/builtin-tag.c
-> @@ -376,8 +376,8 @@ int cmd_tag(int argc, const char **argv, const ch=
-ar *prefix)
->  	struct commit_list *with_commit =3D NULL;
->  	struct option options[] =3D {
->  		OPT_BOOLEAN('l', NULL, &list, "list tag names"),
-> -		{ OPTION_INTEGER, 'n', NULL, &lines, NULL,
-> -				"print n lines of each tag message",
-> +		{ OPTION_INTEGER, 'n', NULL, &lines, "n",
-> +				"print <n> lines of each tag message",
->  				PARSE_OPT_OPTARG, NULL, 1 },
->  		OPT_BOOLEAN('d', NULL, &delete, "delete tags"),
->  		OPT_BOOLEAN('v', NULL, &verify, "verify tags"),
-> diff --git a/parse-options.c b/parse-options.c
-> index b85cab2..48ba62b 100644
-> --- a/parse-options.c
-> +++ b/parse-options.c
-> @@ -503,19 +503,12 @@ int usage_with_options_internal(const char * co=
-nst *usagestr,
->  		switch (opts->type) {
->  		case OPTION_ARGUMENT:
->  			break;
-> -		case OPTION_INTEGER:
-> -			if (opts->flags & PARSE_OPT_OPTARG)
-> -				if (opts->long_name)
-> -					pos +=3D fprintf(stderr, "[=3D<n>]");
-> -				else
-> -					pos +=3D fprintf(stderr, "[<n>]");
-> -			else
-> -				pos +=3D fprintf(stderr, " <n>");
-> -			break;
->  		case OPTION_CALLBACK:
->  			if (opts->flags & PARSE_OPT_NOARG)
->  				break;
->  			/* FALLTHROUGH */
-> +		case OPTION_INTEGER:
-> +			/* FALLTHROUGH */
->  		case OPTION_FILENAME:
->  			/* FALLTHROUGH */
->  		case OPTION_STRING:
-> diff --git a/parse-options.h b/parse-options.h
-> index b374ade..b141ae6 100644
-> --- a/parse-options.h
-> +++ b/parse-options.h
-> @@ -108,7 +108,7 @@ struct option {
->  #define OPT_BOOLEAN(s, l, v, h)     { OPTION_BOOLEAN, (s), (l), (v),=
- NULL, (h) }
->  #define OPT_SET_INT(s, l, v, h, i)  { OPTION_SET_INT, (s), (l), (v),=
- NULL, (h), 0, NULL, (i) }
->  #define OPT_SET_PTR(s, l, v, h, p)  { OPTION_SET_PTR, (s), (l), (v),=
- NULL, (h), 0, NULL, (p) }
-> -#define OPT_INTEGER(s, l, v, h)     { OPTION_INTEGER, (s), (l), (v),=
- NULL, (h) }
-> +#define OPT_INTEGER(s, l, v, h)     { OPTION_INTEGER, (s), (l), (v),=
- "n", (h) }
->  #define OPT_STRING(s, l, v, a, h)   { OPTION_STRING,  (s), (l), (v),=
- (a), (h) }
->  #define OPT_DATE(s, l, v, h) \
->  	{ OPTION_CALLBACK, (s), (l), (v), "time",(h), 0, \
+On Tue, Jun 2, 2009 at 7:42 PM,  <sparse@infidigm.net> wrote:
+> When cloning over http git spews a bunch of hashs that don't really convey much.
+> The attached patch disables them unless --verbose is specified.
+>
 
-Nice code reduction.  s/NUMBER/INTEGER/ in the commit message?
+We prefer patches inline on this mailing-list. See
+Documentation/SubmittingPatches, "(3) Sending your patches." for more
+details.
 
-By the way, can the switch be replaced by a simple check for
-PARSE_OPT_NOARG now?
-
-Ren=E9
+-- 
+Erik "kusma" Faye-Lund
+kusmabite@gmail.com
+(+47) 986 59 656
