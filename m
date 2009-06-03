@@ -1,149 +1,123 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/2] blame: Fix corner case when a directory becomes a file
-Date: Wed, 03 Jun 2009 00:43:22 -0700
-Message-ID: <7vr5y1bw4l.fsf@alter.siamese.dyndns.org>
-References: <cover.1243969358.git.benwillard@gmail.com>
-	<4a257d91.0407560a.04d2.ffffe775@mx.google.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Ben Willard <benwillard@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jun 03 09:43:27 2009
+From: Stephen Boyd <bebarino@gmail.com>
+Subject: [PATCH] parse-options: make OPT_NUMBER's argh explicit
+Date: Wed,  3 Jun 2009 00:49:27 -0700
+Message-ID: <1244015367-16998-1-git-send-email-bebarino@gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jun 03 09:49:42 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MBl8A-0003Lv-Vh
-	for gcvg-git-2@gmane.org; Wed, 03 Jun 2009 09:43:27 +0200
+	id 1MBlEB-0005Ji-9Z
+	for gcvg-git-2@gmane.org; Wed, 03 Jun 2009 09:49:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754585AbZFCHnW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Jun 2009 03:43:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753645AbZFCHnV
-	(ORCPT <rfc822;git-outgoing>); Wed, 3 Jun 2009 03:43:21 -0400
-Received: from fed1rmmtao107.cox.net ([68.230.241.39]:42269 "EHLO
-	fed1rmmtao107.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753263AbZFCHnV (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Jun 2009 03:43:21 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao107.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20090603074321.MNCB18948.fed1rmmtao107.cox.net@fed1rmimpo01.cox.net>;
-          Wed, 3 Jun 2009 03:43:21 -0400
-Received: from localhost ([68.225.240.211])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id zKjN1b0054aMwMQ03KjN00; Wed, 03 Jun 2009 03:43:22 -0400
-X-Authority-Analysis: v=1.0 c=1 a=DXlptMxM95YA:10 a=m5BZlfTxKaIA:10
- a=pGLkceISAAAA:8 a=ybZZDoGAAAAA:8 a=j5tnuKaqCcAQ6C3DAJMA:9
- a=9iaQ_sIBANyRi4v42jN8cot6jmEA:4 a=MSl-tDqOz04A:10 a=qIVjreYYsbEA:10
-X-CM-Score: 0.00
-In-Reply-To: <4a257d91.0407560a.04d2.ffffe775@mx.google.com> (Ben Willard's message of "Tue\, 2 Jun 2009 15\:29\:17 -0400")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+	id S1753725AbZFCHtb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Jun 2009 03:49:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753326AbZFCHta
+	(ORCPT <rfc822;git-outgoing>); Wed, 3 Jun 2009 03:49:30 -0400
+Received: from mail-px0-f182.google.com ([209.85.216.182]:39486 "EHLO
+	mail-px0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753178AbZFCHta (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Jun 2009 03:49:30 -0400
+Received: by pxi12 with SMTP id 12so559776pxi.33
+        for <git@vger.kernel.org>; Wed, 03 Jun 2009 00:49:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:from:to:cc:subject
+         :date:message-id:x-mailer;
+        bh=LfvGgT2ggVz89WP7X3vecHmQNZEXk7fLO7JEPXh6o3w=;
+        b=JatsCv+BXZWrP0Jv0BzMwNP7fnAWoxht3NutBwppJLokwZG0bxWCXdnBHJcr+gAYiB
+         THpWsGU+OybH66208P/sYsf/4ojPmpvawKQEyzyQTJwOJMPiJlJCBeQbwJKQUu2FTsmx
+         I0Xz1dGi/E0VIIa222tORj8nKJm6+3LaTEGHQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=TnCEfpHZKVGrzhkMH+3Q6/Q/SDyDO83mk6ad8LsBiKgDabMdqth/ddgdCHwcs9lYJv
+         yDyE9iGdmpSvSqOHd66Bv8IJdaizYSKeKP/sBycb6FNbw+eYbbNNhpAntV9yNhVlMFW+
+         kBAIkDN7lhGepOaiiN40jvQIhnPqI3ZaVa0Ik=
+Received: by 10.141.29.16 with SMTP id g16mr584753rvj.92.1244015371347;
+        Wed, 03 Jun 2009 00:49:31 -0700 (PDT)
+Received: from earth ([76.89.212.195])
+        by mx.google.com with ESMTPS id g31sm21969695rvb.43.2009.06.03.00.49.28
+        (version=SSLv3 cipher=RC4-MD5);
+        Wed, 03 Jun 2009 00:49:30 -0700 (PDT)
+Received: by earth (sSMTP sendmail emulation); Wed, 03 Jun 2009 00:49:27 -0700
+X-Mailer: git-send-email 1.6.3.1.244.gf9275
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120590>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120591>
 
-Ben Willard <benwillard@gmail.com> writes:
+OPTION_NUMBER hard codes its argh member to be "n", but the decision is
+hidden deep in usage_with_options_internal(). Make "n" the default argh
+for the OPT_NUMBER macro while leaving it undecided for the OPTION_NUMBER
+enum.
 
-> find_origin() assumes that there will be only one listing in
-> diff_queued_diff, but this is not the case when a directory becomes a
-> file in a single commit.  So, don't fail in this case.
+This make it less surprising to users that argh is "n" when using the
+OPT_NUMBER macro.
 
-Thanks.
-
-Your problem analysis is almost correct but the solution is wrong.
-
-By the way, I'd rather not see people waste a whole _new_ test script when
-there are existing test scripts availble for the command.
-
--- >8 --
-Subject: [PATCH] blame: correctly handle a path that used to be a directory
-
-When trying to see if the same path exists in the parent, we ran
-"diff-tree" with pathspec set to the path we are interested in with the
-parent, and expect either to have exactly one resulting filepair (either
-"changed from the parent", "created when there was none") or nothing (when
-there is no change from the parent).
-
-If the path used to be a directory, however, we will also see unbounded
-number of entries that talk about the files that used to exist underneath
-the directory in question.  Correctly pick only the entry that describes
-the path we are interested in in such a case (namely, the creation of the
-path as a regular file).
-
-Noticed by Ben Willard.
-
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
+Signed-off-by: Stephen Boyd <bebarino@gmail.com>
 ---
- builtin-blame.c  |   26 ++++++++++++++++++--------
- t/t8003-blame.sh |   15 +++++++++++++++
- 2 files changed, 33 insertions(+), 8 deletions(-)
+ builtin-tag.c   |    4 ++--
+ parse-options.c |   11 ++---------
+ parse-options.h |    2 +-
+ 3 files changed, 5 insertions(+), 12 deletions(-)
 
-diff --git a/builtin-blame.c b/builtin-blame.c
-index cf74a92..0afdb16 100644
---- a/builtin-blame.c
-+++ b/builtin-blame.c
-@@ -362,18 +362,28 @@ static struct origin *find_origin(struct scoreboard *sb,
- 			       "", &diff_opts);
- 	diffcore_std(&diff_opts);
- 
--	/* It is either one entry that says "modified", or "created",
--	 * or nothing.
--	 */
- 	if (!diff_queued_diff.nr) {
- 		/* The path is the same as parent */
- 		porigin = get_origin(sb, parent, origin->path);
- 		hashcpy(porigin->blob_sha1, origin->blob_sha1);
--	}
--	else if (diff_queued_diff.nr != 1)
--		die("internal error in blame::find_origin");
--	else {
--		struct diff_filepair *p = diff_queued_diff.queue[0];
-+	} else {
-+		/*
-+		 * Since origin->path is a pathspec, if the parent
-+		 * commit had it as a directory, we will see a whole
-+		 * bunch of deletion of files in the directory that we
-+		 * do not care about.
-+		 */
-+		int i;
-+		struct diff_filepair *p = NULL;
-+		for (i = 0; i < diff_queued_diff.nr; i++) {
-+			const char *name;
-+			p = diff_queued_diff.queue[i];
-+			name = p->one->path ? p->one->path : p->two->path;
-+			if (!strcmp(name, origin->path))
-+				break;
-+		}
-+		if (!p)
-+			die("internal error in blame::find_origin");
- 		switch (p->status) {
- 		default:
- 			die("internal error in blame::find_origin (%c)",
-diff --git a/t/t8003-blame.sh b/t/t8003-blame.sh
-index 966bb0a..13c25f1 100755
---- a/t/t8003-blame.sh
-+++ b/t/t8003-blame.sh
-@@ -129,4 +129,19 @@ test_expect_success 'blame wholesale copy and more' '
- 
- '
- 
-+test_expect_success 'blame path that used to be a directory' '
-+	mkdir path &&
-+	echo A A A A A >path/file &&
-+	echo B B B B B >path/elif &&
-+	git add path &&
-+	test_tick &&
-+	git commit -m "path was a directory" &&
-+	rm -fr path &&
-+	echo A A A A A >path &&
-+	git add path &&
-+	test_tick &&
-+	git commit -m "path is a regular file" &&
-+	git blame HEAD^.. -- path
-+'
-+
- test_done
+diff --git a/builtin-tag.c b/builtin-tag.c
+index dc3db62..080e04a 100644
+--- a/builtin-tag.c
++++ b/builtin-tag.c
+@@ -376,8 +376,8 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
+ 	struct commit_list *with_commit = NULL;
+ 	struct option options[] = {
+ 		OPT_BOOLEAN('l', NULL, &list, "list tag names"),
+-		{ OPTION_INTEGER, 'n', NULL, &lines, NULL,
+-				"print n lines of each tag message",
++		{ OPTION_INTEGER, 'n', NULL, &lines, "n",
++				"print <n> lines of each tag message",
+ 				PARSE_OPT_OPTARG, NULL, 1 },
+ 		OPT_BOOLEAN('d', NULL, &delete, "delete tags"),
+ 		OPT_BOOLEAN('v', NULL, &verify, "verify tags"),
+diff --git a/parse-options.c b/parse-options.c
+index b85cab2..48ba62b 100644
+--- a/parse-options.c
++++ b/parse-options.c
+@@ -503,19 +503,12 @@ int usage_with_options_internal(const char * const *usagestr,
+ 		switch (opts->type) {
+ 		case OPTION_ARGUMENT:
+ 			break;
+-		case OPTION_INTEGER:
+-			if (opts->flags & PARSE_OPT_OPTARG)
+-				if (opts->long_name)
+-					pos += fprintf(stderr, "[=<n>]");
+-				else
+-					pos += fprintf(stderr, "[<n>]");
+-			else
+-				pos += fprintf(stderr, " <n>");
+-			break;
+ 		case OPTION_CALLBACK:
+ 			if (opts->flags & PARSE_OPT_NOARG)
+ 				break;
+ 			/* FALLTHROUGH */
++		case OPTION_INTEGER:
++			/* FALLTHROUGH */
+ 		case OPTION_FILENAME:
+ 			/* FALLTHROUGH */
+ 		case OPTION_STRING:
+diff --git a/parse-options.h b/parse-options.h
+index b374ade..b141ae6 100644
+--- a/parse-options.h
++++ b/parse-options.h
+@@ -108,7 +108,7 @@ struct option {
+ #define OPT_BOOLEAN(s, l, v, h)     { OPTION_BOOLEAN, (s), (l), (v), NULL, (h) }
+ #define OPT_SET_INT(s, l, v, h, i)  { OPTION_SET_INT, (s), (l), (v), NULL, (h), 0, NULL, (i) }
+ #define OPT_SET_PTR(s, l, v, h, p)  { OPTION_SET_PTR, (s), (l), (v), NULL, (h), 0, NULL, (p) }
+-#define OPT_INTEGER(s, l, v, h)     { OPTION_INTEGER, (s), (l), (v), NULL, (h) }
++#define OPT_INTEGER(s, l, v, h)     { OPTION_INTEGER, (s), (l), (v), "n", (h) }
+ #define OPT_STRING(s, l, v, a, h)   { OPTION_STRING,  (s), (l), (v), (a), (h) }
+ #define OPT_DATE(s, l, v, h) \
+ 	{ OPTION_CALLBACK, (s), (l), (v), "time",(h), 0, \
 -- 
-1.6.3.1.263.g85347
+1.6.3.1.244.gf9275
