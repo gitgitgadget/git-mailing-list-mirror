@@ -1,109 +1,80 @@
-From: Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH 0/4] make it possible to skip away from broken commits
-Date: Wed, 3 Jun 2009 08:32:01 +0200
-Message-ID: <200906030832.01898.chriscool@tuxfamily.org>
-References: <20090602200731.3630.33652.chriscool@tuxfamily.org> <7vmy8qe4ru.fsf@alter.siamese.dyndns.org> <4A25EA85.5090208@zytor.com>
+From: Johan Herland <johan@herland.net>
+Subject: Re: [PATCH 1/2] Rename submodule.<name>.rebase to
+ submodule.<name>.update
+Date: Wed, 03 Jun 2009 08:46:35 +0200
+Message-ID: <200906030846.35704.johan@herland.net>
+References: <7v63fgpwyd.fsf@alter.siamese.dyndns.org>
+ <20090603001553.GB27149@dingo.bne.redhat.com>
+ <7v4ouydp0q.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Sam Vilain <sam@vilain.net>, Ingo Molnar <mingo@elte.hu>
-To: "H. Peter Anvin" <hpa@zytor.com>
-X-From: git-owner@vger.kernel.org Wed Jun 03 08:32:18 2009
+Content-Type: Text/Plain; charset=iso-8859-1
+Content-Transfer-Encoding: 7BIT
+Cc: Peter Hutterer <peter.hutterer@who-t.net>, git@vger.kernel.org,
+	Johannes.Schindelin@gmx.de, apenwarr@gmail.com,
+	markus.heidelberg@web.de
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jun 03 08:47:30 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MBk1I-0003LC-O9
-	for gcvg-git-2@gmane.org; Wed, 03 Jun 2009 08:32:17 +0200
+	id 1MBkFy-00088H-Kl
+	for gcvg-git-2@gmane.org; Wed, 03 Jun 2009 08:47:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753821AbZFCGcG convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 3 Jun 2009 02:32:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753920AbZFCGcF
-	(ORCPT <rfc822;git-outgoing>); Wed, 3 Jun 2009 02:32:05 -0400
-Received: from smtp4-g21.free.fr ([212.27.42.4]:60412 "EHLO smtp4-g21.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753587AbZFCGcE convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 3 Jun 2009 02:32:04 -0400
-Received: from smtp4-g21.free.fr (localhost [127.0.0.1])
-	by smtp4-g21.free.fr (Postfix) with ESMTP id BDCED4C816B;
-	Wed,  3 Jun 2009 08:31:58 +0200 (CEST)
-Received: from bureau.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
-	by smtp4-g21.free.fr (Postfix) with ESMTP id D5B084C8014;
-	Wed,  3 Jun 2009 08:31:55 +0200 (CEST)
-User-Agent: KMail/1.9.9
-In-Reply-To: <4A25EA85.5090208@zytor.com>
-Content-Disposition: inline
+	id S1752836AbZFCGqg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Jun 2009 02:46:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752058AbZFCGqf
+	(ORCPT <rfc822;git-outgoing>); Wed, 3 Jun 2009 02:46:35 -0400
+Received: from mx.getmail.no ([84.208.15.66]:37586 "EHLO
+	get-mta-out02.get.basefarm.net" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1751713AbZFCGqf (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 3 Jun 2009 02:46:35 -0400
+Content-disposition: inline
+Received: from mx.getmail.no ([10.5.16.4]) by get-mta-out02.get.basefarm.net
+ (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
+ with ESMTP id <0KKN00JO4HHOBF90@get-mta-out02.get.basefarm.net> for
+ git@vger.kernel.org; Wed, 03 Jun 2009 08:46:36 +0200 (MEST)
+Received: from alpha.localnet ([84.215.102.95])
+ by get-mta-in02.get.basefarm.net
+ (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
+ with ESMTP id <0KKN006JWHHNKIC0@get-mta-in02.get.basefarm.net> for
+ git@vger.kernel.org; Wed, 03 Jun 2009 08:46:36 +0200 (MEST)
+X-PMX-Version: 5.5.3.366731, Antispam-Engine: 2.7.0.366912,
+ Antispam-Data: 2009.6.3.63422
+User-Agent: KMail/1.11.3 (Linux/2.6.29-ARCH; KDE/4.2.3; x86_64; ; )
+In-reply-to: <7v4ouydp0q.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120585>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120586>
 
-Le Wednesday 03 June 2009, H. Peter Anvin a =C3=A9crit :
-> Junio C Hamano wrote:
-> > Christian Couder <chriscool@tuxfamily.org> writes:
-> >> This patch series adds a "--ratio=3Dx/y" option to "git bisect ski=
-p" so
-> >> that it is possible to skip away from an area were the commits can=
-not
-> >> be tested.
-> >>
-> >> Note that in this series "--ratio=3D4" means the same as "--ratio=3D=
-1/4".
-> >> But I am not sure if this shortcut is worth it.
-> >
-> > Actually my gut feeling is that a tweakable knob itself is worth it=
-,
-> > because the user can never tell what the right value should be.
-> >
-> > Especially without any documentation updates that explains what thi=
-s
-> > ratio refers to ;-), but I suspect, unless the user is very familia=
-r
-> > with how the revision graph bisection internally works, such an
-> > explanation would not help him find a skip ratio that is closer to =
-the
-> > optimum than a random guess.  Why not use a constant ratio (or perh=
-aps
-> > a pair of alternating ratios) on "bisect skip" without any new opti=
-ons?
+On Wednesday 03 June 2009, Junio C Hamano wrote:
+> Peter Hutterer <peter.hutterer@who-t.net> writes:
+> > I noticed this patch still leaves the --rebase commandline flag.
+> > Shouldn't that be changed to --update=rebase for consistency?
 >
-> I would agree with this assessment.  It's hard enough to teach a user
-> how to use "git bisect" as it is... and being able to have a *user*
-> bisect a problem is worth its weight in gold.
->
-> If the algorithm I proposed earlier is too complex, here is a very
-> simple approximation:
->
-> start:
-> 	num =3D 1
-> 	den =3D 2
->
-> again:
-> 	run test (num/den)
-> 	if (!skip)
-> 		goto start
->
-> 	num =3D num + 2
-> 	if (num > den)
-> 		num =3D 1
-> 		den =3D den * 2
->
-> 	goto again
->
->
-> This creates test ratios in the following sequence:
->
-> 1/2 1/4 3/4 1/8 3/8 5/8 7/8 1/16 3/16 ...
->
-> When one gets down to a small number of points this could get weird, =
-but
-> as long as skip points are filtered (which looks like it's already be=
-ing
->  done) it should converge.
+> If we were to add many more (I think --update=merge was mentioned, but do
+> we have any other plausibly useful modes of operations?) options, it
+> would make sense to support --update=rebase; my impression from the
+> previous discussion was that rebase would make sense for more people than
+> other modes would, so it also would make sense to keep --rebase as a
+> shorthand, rather than forcing everybody to say --update=rebase for the
+> sake of consistency.
 
-I agree. I will have a look.
+I agree. Even if we had a hundred alternatives, the most common should be 
+available in shorthand form.
 
-Thanks,
-Christian.
+Also, I don't think it makes sense to introduce --update=foo until we have, 
+say, 3-4 different alternatives. As long as --rebase and --merge are the 
+only alternatives (no other alternatives have been suggested so far, AFAIK), 
+I don't think we need to introduce --update=foo.
+
+
+Have fun! :)
+
+...Johan
+
+-- 
+Johan Herland, <johan@herland.net>
+www.herland.net
