@@ -1,106 +1,212 @@
-From: Andreas =?utf-8?q?Kl=C3=B6ckner?= <lists@informa.tiker.net>
-Subject: git repack and dumb protocols
-Date: Wed, 3 Jun 2009 19:50:54 -0400
-Message-ID: <200906031950.56974.lists@informa.tiker.net>
-Mime-Version: 1.0
-Content-Type: multipart/signed;
-  boundary="nextPart3620844.eDXxLrlkiA";
-  protocol="application/pgp-signature";
-  micalg=pgp-sha1
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jun 04 01:57:39 2009
+From: Matthias Andree <matthias.andree@gmx.de>
+Subject: [PATCH v4] To make GIT-VERSION-FILE, search for git more widely
+Date: Thu,  4 Jun 2009 02:12:08 +0200
+Message-ID: <1244074328-20995-1-git-send-email-matthias.andree@gmx.de>
+References: <200906022035.30081.j6t@kdbg.org>
+Cc: Johannes Sixt <j6t@kdbg.org>,
+	Nanako Shiraishi <nanako3@lavabit.com>,
+	Matthias Andree <matthias.andree@gmx.de>
+To: git@vger.kernel.org, "Junio C. Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jun 04 02:12:29 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MC0Kr-00011b-Nu
-	for gcvg-git-2@gmane.org; Thu, 04 Jun 2009 01:57:34 +0200
+	id 1MC0ZG-0006nz-EF
+	for gcvg-git-2@gmane.org; Thu, 04 Jun 2009 02:12:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754451AbZFCX5Z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Jun 2009 19:57:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753489AbZFCX5Y
-	(ORCPT <rfc822;git-outgoing>); Wed, 3 Jun 2009 19:57:24 -0400
-Received: from outbound-mail-306.bluehost.com ([67.222.53.252]:59355 "HELO
-	outbound-mail-306.bluehost.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with SMTP id S1753153AbZFCX5X (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 3 Jun 2009 19:57:23 -0400
-X-Greylist: delayed 399 seconds by postgrey-1.27 at vger.kernel.org; Wed, 03 Jun 2009 19:57:23 EDT
-Received: (qmail 24001 invoked by uid 0); 3 Jun 2009 23:50:46 -0000
-Received: from unknown (HELO host304.hostmonster.com) (74.220.215.104)
-  by outboundproxy6.bluehost.com with SMTP; 3 Jun 2009 23:50:46 -0000
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws; s=default; d=informa.tiker.net;
-	h=Received:From:To:Subject:Date:User-Agent:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id:X-Identified-User;
-	b=FNuB7pXX2jfCl3F4CrKN5T7D63+C8T5EF9hx4PpuOlt//yBJdEGfQBhwjA3wKPAyacDZDXc84BuFBL/y9YZpMF3nRcD5YXTgCKFZOIdxFc67oQEyq1y4GLzJUySaRxVE;
-Received: from ip68-9-132-118.ri.ri.cox.net ([68.9.132.118] helo=grizzly.localnet)
-	by host304.hostmonster.com with esmtpsa (TLSv1:AES256-SHA:256)
-	(Exim 4.69)
-	(envelope-from <lists@informa.tiker.net>)
-	id 1MC0EH-00089A-Sp
-	for git@vger.kernel.org; Wed, 03 Jun 2009 17:50:46 -0600
-User-Agent: KMail/1.11.2 (Linux/2.6.30-rc7-686; KDE/4.2.2; i686; ; )
-X-Identified-User: {11749:host304.hostmonster.com:tikernet:tiker.net} {sentby:smtp auth 68.9.132.118 authed with andreas-store+tiker.net}
+	id S1753723AbZFDAMR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Jun 2009 20:12:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753665AbZFDAMQ
+	(ORCPT <rfc822;git-outgoing>); Wed, 3 Jun 2009 20:12:16 -0400
+Received: from mail.gmx.net ([213.165.64.20]:41352 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753489AbZFDAMQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Jun 2009 20:12:16 -0400
+Received: (qmail invoked by alias); 04 Jun 2009 00:12:16 -0000
+Received: from e179168167.adsl.alicedsl.de (EHLO mandree.no-ip.org) [85.179.168.167]
+  by mail.gmx.net (mp062) with SMTP; 04 Jun 2009 02:12:16 +0200
+X-Authenticated: #428038
+X-Provags-ID: V01U2FsdGVkX19FVdQiv/BFQW0CkCGGNr2LGUgNfbLWQRSGDRKI6j
+	sniQde8ZXDptUS
+Received: by merlin.emma.line.org (Postfix, from userid 1000)
+	id E10A5945D1; Thu,  4 Jun 2009 02:12:14 +0200 (CEST)
+X-Mailer: git-send-email 1.6.3.1.267.gd260a
+In-Reply-To: <200906022035.30081.j6t@kdbg.org>
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.42
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120667>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120668>
 
---nextPart3620844.eDXxLrlkiA
-Content-Type: text/plain;
-  charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
-Content-Disposition: inline
+Situation: sudo make install can rebuilds the whole package even if
+you've just built it before. For instance:
 
-Hi there,
+make configure
+./configure    # defaults to --prefix=/usr/local
+make all doc
+sudo make install install-doc install-html # REBUILDS HAPPEN HERE
 
-I've posted a git repository to the web that is an rsync copy of my=20
-development archive's .git directory, with update-server-info run on it. No=
-w=20
-if I understand correctly, this contains a single file for every=20
-commit/file/whatever else I ever made, which is a paint over HTTP. I have t=
-hen=20
-recently learned about the wonder that is git repack, which I would love to=
-=20
-use on this repository, were it not for this comment in its manpage:
+This causes the "sudo make install" to rebuild everything because it believes
+the version had changed.  sudo strips $PATH for security reasons.
 
-8< ----------------------------------------------------------------------
-Especially useful when packing a repository that is used for private=20
-development and there is no need to worry about people fetching via dumb=20
-protocols from it. 8<=20
-=2D---------------------------------------------------------------------
+The underlying problem flow is:
 
-It says this relating to the '-a' option, but it makes me wonder if I'll br=
-eak=20
-copies of the repo that other people have pulled if I use 'repack'? What ar=
-e=20
-the possible interactions and things to keep in mind between repack and dum=
-b=20
-protocols?
+1 - Makefile has "include GIT-VERSION-FILE", thus gmake builds
+    GIT-VERSION-FILE early.
+2 - GIT-VERSION-FILE depends on a .PHONY target (.FORCE-GIT-VERSION-FILE)
+3 - Thus, GNU make *always* executes GIT-VERSION-GEN
+4 - GIT-VERSION-GEN now, under the stripped $PATH, cannot find "git" and
+    sees a different version number.
+5 - GIT-VERSION-GEN notes the difference in versions and regenerates
+    GIT-VERSION-FILE, with up-to-date timestamp.
+6 - GNU make rebuilds everything because GIT-VERSION-FILE is new.
 
-In any case, I would like to suggest that the rather ominous-sounding text =
-in=20
-the manpage be replaced with something more concrete, i.e. "If you repack a=
-n=20
-archive that has people fetching via dumb protocols from it, X, Y, and Z wi=
-ll=20
-happen."
+The patch makes GIT-VERSION-GEN look for git in $(prefix)/bin, then for
+the newly built git$X executable, before falling back to plain "git" and
+thus to the default version in GIT-VERSION-GEN. This increases chances
+that we get the same version with the stripped $PATH and get away
+without rebuild.
 
-Thanks,
-Andreas
+Junio C. Hamano suggested that we look into $(prefix)/bin before the
+current work directory in order to aid cross-compiling.
 
-(please cc--not subscribed)
+Signed-off-by: Matthias Andree <matthias.andree@gmx.de>
+---
+ GIT-VERSION-GEN         |    9 ++++-----
+ Makefile                |    6 +++++-
+ git-gui/GIT-VERSION-GEN |   18 ++++++++++--------
+ git-gui/Makefile        |    6 +++++-
+ 4 files changed, 24 insertions(+), 15 deletions(-)
 
---nextPart3620844.eDXxLrlkiA
-Content-Type: application/pgp-signature; name=signature.asc 
-Content-Description: This is a digitally signed message part.
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
-
-iD8DBQBKJwxeJZ7T4Hn4+FIRAoKTAJ91/4b5g2b78ERdvX2HmU93Hn3Y6gCfeSKQ
-Kg0PkwJROKjuXulVZ/+pAf0=
-=lRnf
------END PGP SIGNATURE-----
-
---nextPart3620844.eDXxLrlkiA--
+diff --git a/GIT-VERSION-GEN b/GIT-VERSION-GEN
+index 39cde78..2334cc1 100755
+--- a/GIT-VERSION-GEN
++++ b/GIT-VERSION-GEN
+@@ -2,6 +2,7 @@
+ 
+ GVF=GIT-VERSION-FILE
+ DEF_VER=v1.6.3.GIT
++type >/dev/null "$GIT" || GIT=git
+ 
+ LF='
+ '
+@@ -12,12 +13,12 @@ if test -f version
+ then
+ 	VN=$(cat version) || VN="$DEF_VER"
+ elif test -d .git -o -f .git &&
+-	VN=$(git describe --abbrev=4 HEAD 2>/dev/null) &&
++	VN=$($GIT describe --abbrev=4 HEAD 2>/dev/null) &&
+ 	case "$VN" in
+ 	*$LF*) (exit 1) ;;
+ 	v[0-9]*)
+-		git update-index -q --refresh
+-		test -z "$(git diff-index --name-only HEAD --)" ||
++		$GIT update-index -q --refresh
++		test -z "$($GIT diff-index --name-only HEAD --)" ||
+ 		VN="$VN-dirty" ;;
+ 	esac
+ then
+@@ -38,5 +39,3 @@ test "$VN" = "$VC" || {
+ 	echo >&2 "GIT_VERSION = $VN"
+ 	echo "GIT_VERSION = $VN" >$GVF
+ }
+-
+-
+diff --git a/Makefile b/Makefile
+index 06c39e4..7adcf40 100644
+--- a/Makefile
++++ b/Makefile
+@@ -184,7 +184,11 @@ all::
+ # programs as a tar, where bin/ and libexec/ might be on different file systems.
+ 
+ GIT-VERSION-FILE: .FORCE-GIT-VERSION-FILE
+-	@$(SHELL_PATH) ./GIT-VERSION-GEN
++	@{ GIT=$(prefix)/bin/git$X ; test -x "$$GIT" ; } \
++	|| { GIT=./git$X ; test -x "$$GIT" ; } \
++	|| GIT=git ; \
++	export GIT ; \
++	$(SHELL_PATH) ./GIT-VERSION-GEN
+ -include GIT-VERSION-FILE
+ 
+ uname_S := $(shell sh -c 'uname -s 2>/dev/null || echo not')
+diff --git a/git-gui/GIT-VERSION-GEN b/git-gui/GIT-VERSION-GEN
+index b3f937e..729e93f 100755
+--- a/git-gui/GIT-VERSION-GEN
++++ b/git-gui/GIT-VERSION-GEN
+@@ -3,6 +3,8 @@
+ GVF=GIT-VERSION-FILE
+ DEF_VER=0.12.GITGUI
+ 
++type >/dev/null "$GIT" || GIT=git
++
+ LF='
+ '
+ 
+@@ -10,10 +12,10 @@ tree_search ()
+ {
+ 	head=$1
+ 	tree=$2
+-	for p in $(git rev-list --parents --max-count=1 $head 2>/dev/null)
++	for p in $($GIT rev-list --parents --max-count=1 $head 2>/dev/null)
+ 	do
+-		test $tree = $(git rev-parse $p^{tree} 2>/dev/null) &&
+-		vn=$(git describe --abbrev=4 $p 2>/dev/null) &&
++		test $tree = $($GIT rev-parse $p^{tree} 2>/dev/null) &&
++		vn=$($GIT describe --abbrev=4 $p 2>/dev/null) &&
+ 		case "$vn" in
+ 		gitgui-[0-9]*) echo $vn; break;;
+ 		esac
+@@ -38,10 +40,10 @@ if test -f version &&
+    VN=$(cat version)
+ then
+ 	: happy
+-elif prefix="$(git rev-parse --show-prefix 2>/dev/null)"
++elif prefix="$($GIT rev-parse --show-prefix 2>/dev/null)"
+    test -n "$prefix" &&
+-   head=$(git rev-list --max-count=1 HEAD -- . 2>/dev/null) &&
+-   tree=$(git rev-parse --verify "HEAD:$prefix" 2>/dev/null) &&
++   head=$($GIT rev-list --max-count=1 HEAD -- . 2>/dev/null) &&
++   tree=$($GIT rev-parse --verify "HEAD:$prefix" 2>/dev/null) &&
+    VN=$(tree_search $head $tree)
+    case "$VN" in
+    gitgui-[0-9]*) : happy ;;
+@@ -49,7 +51,7 @@ elif prefix="$(git rev-parse --show-prefix 2>/dev/null)"
+    esac
+ then
+ 	VN=$(echo "$VN" | sed -e 's/^gitgui-//;s/-/./g');
+-elif VN=$(git describe --abbrev=4 HEAD 2>/dev/null) &&
++elif VN=$($GIT describe --abbrev=4 HEAD 2>/dev/null) &&
+    case "$VN" in
+    gitgui-[0-9]*) : happy ;;
+    *) (exit 1) ;;
+@@ -60,7 +62,7 @@ else
+ 	VN="$DEF_VER"
+ fi
+ 
+-dirty=$(sh -c 'git diff-index --name-only HEAD' 2>/dev/null) || dirty=
++dirty=$(sh -c '$GIT diff-index --name-only HEAD' 2>/dev/null) || dirty=
+ case "$dirty" in
+ '')
+ 	;;
+diff --git a/git-gui/Makefile b/git-gui/Makefile
+index b3580e9..bbdb4d8 100644
+--- a/git-gui/Makefile
++++ b/git-gui/Makefile
+@@ -8,7 +8,11 @@ all::
+ #
+ 
+ GIT-VERSION-FILE: .FORCE-GIT-VERSION-FILE
+-	@$(SHELL_PATH) ./GIT-VERSION-GEN
++	@{ GIT=$(prefix)/bin/git$X ; test -x "$$GIT" ; } \
++	|| { GIT=./git$X ; test -x "$$GIT" ; } \
++	|| GIT=git ; \
++	export GIT ; \
++	$(SHELL_PATH) ./GIT-VERSION-GEN
+ -include GIT-VERSION-FILE
+ 
+ uname_S := $(shell sh -c 'uname -s 2>/dev/null || echo not')
+-- 
+1.6.3.1.267.gd260a
