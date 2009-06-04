@@ -1,74 +1,68 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: [PATCH v2] git-svn: let 'dcommit $rev' work on $rev instead of
-	HEAD
-Date: Wed, 3 Jun 2009 19:45:27 -0700
-Message-ID: <20090604024527.GA19622@dcvr.yhbt.net>
-References: <64a802c5249465dc9e39faa480133f501e5d1b59.1243609198.git.trast@student.ethz.ch>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.or, Thomas Rast <trast@student.ethz.ch>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jun 04 04:54:22 2009
+From: Ben Jackson <ben@ben.com>
+Subject: [PATCHv2 1/2] Limit start revision of find_rev_before to max existing revision
+Date: Wed,  3 Jun 2009 20:45:51 -0700
+Message-ID: <1244087152-17002-1-git-send-email-ben@ben.com>
+Cc: gitster@pobox.com, normalperson@yhbt.net, Ben Jackson <ben@ben.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jun 04 05:46:27 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MC35x-00066w-N0
-	for gcvg-git-2@gmane.org; Thu, 04 Jun 2009 04:54:22 +0200
+	id 1MC3uM-0003R2-M8
+	for gcvg-git-2@gmane.org; Thu, 04 Jun 2009 05:46:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753968AbZFDCyI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Jun 2009 22:54:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754484AbZFDCyH
-	(ORCPT <rfc822;git-outgoing>); Wed, 3 Jun 2009 22:54:07 -0400
-Received: from dcvr.yhbt.net ([64.71.152.64]:55943 "EHLO dcvr.yhbt.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751647AbZFDCyG (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Jun 2009 22:54:06 -0400
-Received: from localhost (unknown [127.0.2.5])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D21CC1F7D1
-	for <git@vger.kernel.org>; Thu,  4 Jun 2009 02:54:07 +0000 (UTC)
-X-Spam-ASN: 
-X-Spam-Checker-Version: SpamAssassin 3.2.5 (2008-06-10) on dcvr.yhbt.net
-X-Spam-Level: 
-X-Spam-Status: No, score=-4.4 required=5.0 tests=ALL_TRUSTED,BAYES_00
-	shortcircuit=no autolearn=ham version=3.2.5
-X-Original-To: normalperson@yhbt.net
-Received: from localhost (unknown [127.0.2.5])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EA5651F7D1;
-	Thu,  4 Jun 2009 02:45:27 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <64a802c5249465dc9e39faa480133f501e5d1b59.1243609198.git.trast@student.ethz.ch>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+	id S1753941AbZFDDqS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Jun 2009 23:46:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753626AbZFDDqR
+	(ORCPT <rfc822;git-outgoing>); Wed, 3 Jun 2009 23:46:17 -0400
+Received: from kronos.home.ben.com ([71.117.242.19]:61161 "EHLO
+	kronos.home.ben.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752949AbZFDDqR (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Jun 2009 23:46:17 -0400
+Received: from kronos.home.ben.com (localhost [127.0.0.1])
+	by kronos.home.ben.com (8.14.3/8.14.3) with ESMTP id n543kGN3017071;
+	Wed, 3 Jun 2009 20:46:16 -0700 (PDT)
+Received: (from bjj@localhost)
+	by kronos.home.ben.com (8.14.3/8.14.3/Submit) id n543kEBW017069;
+	Wed, 3 Jun 2009 20:46:14 -0700 (PDT)
+	(envelope-from bjj)
+X-Mailer: git-send-email 1.6.3.GIT
+X-Virus-Scanned: ClamAV 0.93.3/9418/Wed Jun  3 05:18:15 2009 on kronos.home.ben.com
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120675>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120676>
 
-Thomas Rast <trast@student.ethz.ch> wrote:
-> 'git svn dcommit' takes an optional revision argument, but the meaning
-> of it was rather scary.  It completely ignored the current state of
-> the HEAD, only looking at the revisions between SVN and $rev.  If HEAD
-> was attached to $branch, the branch lost all commits $rev..$branch in
-> the process.
-> 
-> Considering that 'git svn dcommit HEAD^' has the intuitive meaning
-> "dcommit all changes on my branch except the last one", we change the
-> meaning of the revision argument.  git-svn temporarily checks out $rev
-> for its work, meaning that
-> 
-> * if a branch is specified, that branch (_not_ the HEAD) is rebased as
->   part of the dcommit,
-> 
-> * if some other revision is specified, as in the example, all work
->   happens on a detached HEAD and no branch is affected.
-> 
-> Signed-off-by: Thomas Rast <trast@student.ethz.ch>
+Signed-off-by: Ben Jackson <ben@ben.com>
+---
 
-Thanks.  Took me a while to remember why dcommit was was the way it
-originally was and I couldn't remember for the life of me.
+On Wed, Jun 03, 2009 at 05:24:06PM -0700, Eric Wong wrote:
+>
+> find_rev_before can certainly be improved.  I haven't noticed
+> performance issues with it myself, but you should be able to improve it.
 
-Acked and pushed out to git://git.bogomips.org/git-svn
+This avoids a long wait if you do 'git svn reset -r 9999999'.  The
+linear search within the contiguous revisions doesn't seem to be a
+problem.
 
+ git-svn.perl |    2 ++
+ 1 files changed, 2 insertions(+), 0 deletions(-)
+
+diff --git a/git-svn.perl b/git-svn.perl
+index 20bf828..b77710c 100755
+--- a/git-svn.perl
++++ b/git-svn.perl
+@@ -3130,6 +3130,8 @@ sub find_rev_before {
+ 	my ($self, $rev, $eq_ok, $min_rev) = @_;
+ 	--$rev unless $eq_ok;
+ 	$min_rev ||= 1;
++	my $max_rev = $self->rev_map_max;
++	$rev = $max_rev if ($rev > $max_rev);
+ 	while ($rev >= $min_rev) {
+ 		if (my $c = $self->rev_map_get($rev)) {
+ 			return ($rev, $c);
 -- 
-Eric Wong
+1.6.3.GIT
