@@ -1,117 +1,61 @@
-From: Tay Ray Chuan <rctay89@gmail.com>
-Subject: Re: [Patch] Prevent cloning over http from spewing
-Date: Thu, 4 Jun 2009 20:45:28 +0800
-Message-ID: <be6fef0d0906040545j7bd754e0j2c60af833e2ac4a4@mail.gmail.com>
-References: <20090602174229.GA14455@infidigm.net>
-	 <m3vdnda9f7.fsf@localhost.localdomain>
-	 <7vmy8p8947.fsf@alter.siamese.dyndns.org>
-	 <20090603191050.GB29564@coredump.intra.peff.net>
-	 <20090603191555.GL3355@spearce.org>
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: Re: di-git-ally managing love letters - a Git presentation
+Date: Thu, 04 Jun 2009 14:44:12 +0200
+Message-ID: <vpqmy8ogodf.fsf@bauges.imag.fr>
+References: <d16b1c80906040441n7ad549eay83a6ccfd5db09fb3@mail.gmail.com>
+	<alpine.DEB.1.00.0906041350330.4912@intel-tinevez-2-302>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-	Jakub Narebski <jnareb@gmail.com>, sparse@infidigm.net,
-	git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Thu Jun 04 14:45:42 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Shakthi Kannan <shakthimaan@gmail.com>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Thu Jun 04 14:47:11 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MCCKD-0008L0-WF
-	for gcvg-git-2@gmane.org; Thu, 04 Jun 2009 14:45:42 +0200
+	id 1MCCLe-0000Xf-I5
+	for gcvg-git-2@gmane.org; Thu, 04 Jun 2009 14:47:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755653AbZFDMpa convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 4 Jun 2009 08:45:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755441AbZFDMp2
-	(ORCPT <rfc822;git-outgoing>); Thu, 4 Jun 2009 08:45:28 -0400
-Received: from wf-out-1314.google.com ([209.85.200.175]:57135 "EHLO
-	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756664AbZFDMp1 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 4 Jun 2009 08:45:27 -0400
-Received: by wf-out-1314.google.com with SMTP id 26so322353wfd.4
-        for <git@vger.kernel.org>; Thu, 04 Jun 2009 05:45:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=e4002/xLFBvatht3i2bn38GCn+RHaSc8yKwzhF0GHZE=;
-        b=HHCLj6peEXucOFkXzBtP0Cnq/4coB1ZdIM+NEffca0NYO6YLySg6tIm05aRuAIiOhP
-         JB2c5wEl4MaE5a4aGoCgnq5g0V8L6p7h9mo6mczSnKeVuWrsoaPzqVottjW/ShLOJLVH
-         t5sTD16KeI6t80iK/pyW2CKB+Y36rq28eZHCs=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=nwugpmSjUZDf25Mc60lBWBVb5fhMICQ4/2ebpgAaH+vOwScW8iy8IBeAhnf+VwHEWc
-         v3ZNBc+S/v9lf8UxAI+5nMrCfzhbtQoVTHPbaR0xbvT0CADcRUxL2ofizeYsiVBe3MlH
-         5FVQyHGeR6j0sKFelwgrAkkcufACuAZlQXaT4=
-Received: by 10.142.200.3 with SMTP id x3mr237216wff.295.1244119528154; Thu, 
-	04 Jun 2009 05:45:28 -0700 (PDT)
-In-Reply-To: <20090603191555.GL3355@spearce.org>
+	id S1756122AbZFDMq3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Jun 2009 08:46:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754878AbZFDMq3
+	(ORCPT <rfc822;git-outgoing>); Thu, 4 Jun 2009 08:46:29 -0400
+Received: from harmonie.imag.fr ([147.171.130.40]:57612 "EHLO harmonie.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755161AbZFDMq3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Jun 2009 08:46:29 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by harmonie.imag.fr (8.13.8/8.13.8) with ESMTP id n54CiDkU029936;
+	Thu, 4 Jun 2009 14:44:13 +0200 (CEST)
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
+	(Exim 4.50)
+	id 1MCCIm-0005ev-GG; Thu, 04 Jun 2009 14:44:12 +0200
+Received: from moy by bauges.imag.fr with local (Exim 4.63)
+	(envelope-from <moy@imag.fr>)
+	id 1MCCIm-0004Zx-Ew; Thu, 04 Jun 2009 14:44:12 +0200
+In-Reply-To: <alpine.DEB.1.00.0906041350330.4912@intel-tinevez-2-302> (Johannes Schindelin's message of "Thu\, 4 Jun 2009 13\:51\:45 +0200 \(CEST\)")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.0.91 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (harmonie.imag.fr [147.171.130.40]); Thu, 04 Jun 2009 14:44:13 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120694>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120695>
 
-Hi,
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-On Thu, Jun 4, 2009 at 3:15 AM, Shawn O. Pearce <spearce@spearce.org> w=
-rote:
-> No, you are right Peff, you can't give a "percent complete" because
-> you don't know how much you need to fetch.
->
-> What we could do is try to organize the fetch queue by object type,
-> get all commits, then all trees, then blobs. =A0The blobs are the
-> bulk of the data, and by the time we hit them, we should be able
-> to give some estimate on progress because we have all of the ones
-> we need to fetch in our fetch queue. =A0But its only a "object count"
-> sort of thing, not a byte count.
->
-> When fetching a .idx or a .pack though, we should be able to show
-> progress... assuming the server sent us a Content-Length header.
-> If not, in the case of a pack, we could still show receive speed
-> like index-pack does.
+> Oh, and I would prefer to teach the people about "git log" rather than 
+> "git gl", but I guess that is my personal taste only.
 
-I have a branch 'http-progress-indicators' at my repo
-git://github.com/rctay/git.git. It contains a patch on walker.c that
-updates the object total as the fetch goes along. The progress
-indicator says "Processing targets:..." for lack of a better name; I'm
-all for suggestions.
+Well, there's what you want to teach, and what fits on a slide ;-).
+git log would force either a long command-line, or a very verbose
+output (which in turn implies very small font). So, I found the alias
+idea in the presentation to be good.
 
-The branch also patches that display progress meters for the
-downloading of .idx and .pack files. I also added a progress indicator
-for verifying pack files in pack-check.c, because I noticed some
-significant time was spent doing that without informing the user about
-what was going on, but I'm not really sure if everyone else would
-accept it.
-
-So far, I've used git built using that branch to fetch the git repo,
-and I also attempted the linux 2.6 kernel repo. Counting the objects
-fetched was accurate in both cases (ie. matching counts of objects
-fetched and objects to-be-fetched).
-
-I plan to clean up the patches and send it in when the http
-refactoring patches are finalized.
-
-> Jeff King <peff@peff.net> wrote:
->> =A0 1. summarize what we have fetched (N packs, N loose objects)
->> =A0 2. show what we are currently fetching (object or pack)
->> =A0 3. show the number of bytes retrieved for the current item
->> =A0 4. if the server provides content-length, show the percentage
->> =A0 =A0 =A0completed for this object
->> =A0 5. show the current throughput
-
-Points 1. and 5. can probably be combined, because showing info by
-type (packs and objects) isn't very easy to do. http-walker.c first
-tries to fetch the raw pack; if it can't be found at the url, or at
-alternate locations, it then tries to fetching packs. In other words,
-it's hard to know in advance if the object is found in unpacked or
-packed form.
-
---=20
-Cheers,
-Ray Chuan
+-- 
+Matthieu
