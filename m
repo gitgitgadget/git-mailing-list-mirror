@@ -1,141 +1,364 @@
-From: Bert Wesarg <bert.wesarg@googlemail.com>
-Subject: Re: [TopGit PATCH] hooks/pre-commit: check for cycles in dependencies
-Date: Thu, 4 Jun 2009 23:33:19 +0200
-Message-ID: <36ca99e90906041433je1b4ce8ob121b70a2ed5e669@mail.gmail.com>
-References: <1244148073-2313-1-git-send-email-bert.wesarg@googlemail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Bert Wesarg <bert.wesarg@googlemail.com>, git@vger.kernel.org
-To: Uwe Kleine-Koenig <u.kleine-koenig@pengutronix.de>
-X-From: git-owner@vger.kernel.org Thu Jun 04 23:35:29 2009
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: [JGIT PATCH 1/7] Move hex parsing functions to RawParseUtil, accept upper case
+Date: Thu,  4 Jun 2009 14:43:57 -0700
+Message-ID: <1244151843-26954-2-git-send-email-spearce@spearce.org>
+References: <1244151843-26954-1-git-send-email-spearce@spearce.org>
+Cc: git@vger.kernel.org
+To: Robin Rosenberg <robin.rosenberg@dewire.com>
+X-From: git-owner@vger.kernel.org Thu Jun 04 23:45:09 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MCKar-0006Z1-93
-	for gcvg-git-2@gmane.org; Thu, 04 Jun 2009 23:35:25 +0200
+	id 1MCKkF-0001OL-Uf
+	for gcvg-git-2@gmane.org; Thu, 04 Jun 2009 23:45:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754696AbZFDVdT convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 4 Jun 2009 17:33:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754539AbZFDVdT
-	(ORCPT <rfc822;git-outgoing>); Thu, 4 Jun 2009 17:33:19 -0400
-Received: from mail-bw0-f213.google.com ([209.85.218.213]:42895 "EHLO
-	mail-bw0-f213.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753188AbZFDVdS convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 4 Jun 2009 17:33:18 -0400
-Received: by bwz9 with SMTP id 9so1073218bwz.37
-        for <git@vger.kernel.org>; Thu, 04 Jun 2009 14:33:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=lHgyCZPaCNqPjrYFo5zoZSJMUu3YnnV0mhRdETHBhzA=;
-        b=Ngpwp+sfAGEYuyQjSs6SG5m4K7mpmgRBSBSxW0m7+jQcQQ7jowFfUuaSvxlCWG6Pei
-         0knV9B0McHcpIijq1J0C4uBgdy0a7cEpJ1FHMYZTr/X2g9KvqgVJkkkCjG4u8DM0TQ/k
-         HEIpOkTL+1/3cjgFcwcwqHXWWqx2jCVdkYz4I=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=jDUmEGV0YJCgP28DRE6wFCzlQVRWscuCyBQKibYr5e3SiVQaPSfnQ3WIOZoR5f6Y/4
-         ztb1eluVdFBxZ4xhuGrpVFz+88zLCL78OkKWVg6/v9/XUVhsUYwdE2khOLIP/NU1ZA9u
-         oEkEk9pP09dFwydhiCeZKYwJrhFVbj7WQTEa8=
-Received: by 10.223.117.14 with SMTP id o14mr1696705faq.21.1244151199154; Thu, 
-	04 Jun 2009 14:33:19 -0700 (PDT)
-In-Reply-To: <1244148073-2313-1-git-send-email-bert.wesarg@googlemail.com>
+	id S1754313AbZFDVoI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Jun 2009 17:44:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754397AbZFDVoG
+	(ORCPT <rfc822;git-outgoing>); Thu, 4 Jun 2009 17:44:06 -0400
+Received: from george.spearce.org ([209.20.77.23]:35362 "EHLO
+	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753507AbZFDVoD (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Jun 2009 17:44:03 -0400
+Received: by george.spearce.org (Postfix, from userid 1000)
+	id 4C4A338221; Thu,  4 Jun 2009 21:44:05 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.2.4 (2008-01-01) on george.spearce.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-4.4 required=4.0 tests=ALL_TRUSTED,BAYES_00
+	autolearn=ham version=3.2.4
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by george.spearce.org (Postfix) with ESMTP id C38BA381D1;
+	Thu,  4 Jun 2009 21:44:03 +0000 (UTC)
+X-Mailer: git-send-email 1.6.3.1.333.g3ebba7
+In-Reply-To: <1244151843-26954-1-git-send-email-spearce@spearce.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120714>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120715>
 
-On Thu, Jun 4, 2009 at 22:41, Bert Wesarg <bert.wesarg@googlemail.com> =
-wrote:
-> Only newly added dependencies needs to be considered. =C2=A0For each =
-of these deps
-> check if there is a path from this dep to the current HEAD.
->
-> Use recursive_dep() for this task. =C2=A0Even if recursive_dep() uses=
- a DFS-like
-> traversal it will not run into an infty-loop if there would be a cycl=
-e, because
-> recursive_dep() takes .topdeps only from committed trees. =C2=A0And i=
-t is required
-> that the committed dependency graph is acyclic.
->
-> Signed-off-by: Bert Wesarg <bert.wesarg@googlemail.com>
->
-> ---
-> =C2=A0hooks/pre-commit.sh | =C2=A0 30 ++++++++++++++++++++++++++++--
-> =C2=A01 files changed, 28 insertions(+), 2 deletions(-)
->
-> diff --git a/hooks/pre-commit.sh b/hooks/pre-commit.sh
-> index 9d677e9..8e05a4e 100644
-> --- a/hooks/pre-commit.sh
-> +++ b/hooks/pre-commit.sh
-> @@ -20,7 +20,8 @@ tg_util
-> =C2=A0if head_=3D$(git symbolic-ref -q HEAD); then
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0case "$head_" in
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0refs/heads/*)
-> - =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 git rev-parse -q --verify "refs/top-bases${head_#refs/heads}" >=
-/dev/null || exit 0;;
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 head_=3D"${head_#refs/heads/}"
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 git rev-parse -q --verify "refs/top-bases/$head_" >/dev/null ||=
- exit 0;;
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0*)
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0exit 0;;
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0esac
-> @@ -35,4 +36,29 @@ fi
-> =C2=A0[ -s "$root_dir/.topmsg" ] ||
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0die ".topmsg is missing"
->
-> -# TODO: Verify .topdeps for valid branch names and against cycles
-> +check_cycle_name()
-> +{
-> + =C2=A0 =C2=A0 =C2=A0 [ "$head_" !=3D "$_dep" ] ||
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 die "TopGit depend=
-encies form a cycle: perpetrator is $_name"
-> +}
-> +
-> +# only check newly added deps
-> +# check if a path exists to the current HEAD
-> +git diff --cached "$root_dir/.topdeps" |
-> + =C2=A0 =C2=A0 =C2=A0 awk '
-> +BEGIN =C2=A0 =C2=A0 =C2=A0{ in_hunk =3D 0; }
-> +/^@@ / =C2=A0 =C2=A0 { in_hunk =3D 1; }
-> +/^\+/ =C2=A0 =C2=A0 =C2=A0{ if (in_hunk =3D=3D 1) printf("%s\n", sub=
-str($0, 2)); }
-> +/^[^@ +-]/ { in_hunk =3D 0; }
-> +' |
-> + =C2=A0 =C2=A0 =C2=A0 while read newly_added; do
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 # deps can be non-=
-tgish but we can't run recurse_deps() on them
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 ref_exists "refs/t=
-op-bases/$newly_added" ||
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 continue
-I think we need also a test to check against self-loops, i.e.:
-                     [ "$head_" !=3D "$newly_added" ] ||
-                         die "Can't have myself as dep"
+This way we can reuse them beyond just the ObjectId family of classes.
 
-Can you please squash this in.
+We also now accept upper case hex digits in object ids.
 
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 # recurse_deps use=
-s dfs but takes the .topdeps from the tree,
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 # therefor no inft=
-y-loop in the cycle-check
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 no_remotes=3D1 rec=
-urse_deps check_cycle_name "$newly_added"
-> + =C2=A0 =C2=A0 =C2=A0 done
-> +
-> +
-> +# TODO: Verify .topdeps for valid branch names
-> --
-> tg: (99f2ef6..) bw/check-for-dep-cycle (depends on: master)
->
+Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
+---
+ .../tst/org/spearce/jgit/lib/T0001_ObjectId.java   |   10 ++-
+ .../org/spearce/jgit/lib/AbbreviatedObjectId.java  |    8 +-
+ .../src/org/spearce/jgit/lib/AnyObjectId.java      |   36 ---------
+ .../src/org/spearce/jgit/lib/MutableObjectId.java  |   11 ++-
+ .../src/org/spearce/jgit/lib/ObjectId.java         |   19 +++--
+ .../src/org/spearce/jgit/util/RawParseUtils.java   |   80 ++++++++++++++++++--
+ 6 files changed, 101 insertions(+), 63 deletions(-)
+
+diff --git a/org.spearce.jgit.test/tst/org/spearce/jgit/lib/T0001_ObjectId.java b/org.spearce.jgit.test/tst/org/spearce/jgit/lib/T0001_ObjectId.java
+index 4c03667..7a53925 100644
+--- a/org.spearce.jgit.test/tst/org/spearce/jgit/lib/T0001_ObjectId.java
++++ b/org.spearce.jgit.test/tst/org/spearce/jgit/lib/T0001_ObjectId.java
+@@ -74,8 +74,8 @@ assertFalse("39 digits is not an id", ObjectId
+ 				.isId("def4c620bc3713bb1bb26b808ec9312548e7394"));
+ 	}
+ 
+-	public void test007_notIsId() {
+-		assertFalse("uppercase is not accepted", ObjectId
++	public void test007_isId() {
++		assertTrue("uppercase is accepted", ObjectId
+ 				.isId("Def4c620bc3713bb1bb26b808ec9312548e73946"));
+ 	}
+ 
+@@ -94,4 +94,10 @@ public void test010_toString() {
+ 		final String x = "0000000000000000000000000000000000000000";
+ 		assertEquals(x, ObjectId.toString(null));
+ 	}
++
++	public void test011_toString() {
++		final String x = "0123456789ABCDEFabcdef1234567890abcdefAB";
++		final ObjectId oid = ObjectId.fromString(x);
++		assertEquals(x.toLowerCase(), oid.name());
++	}
+ }
+diff --git a/org.spearce.jgit/src/org/spearce/jgit/lib/AbbreviatedObjectId.java b/org.spearce.jgit/src/org/spearce/jgit/lib/AbbreviatedObjectId.java
+index ed03fb5..1706e88 100644
+--- a/org.spearce.jgit/src/org/spearce/jgit/lib/AbbreviatedObjectId.java
++++ b/org.spearce.jgit/src/org/spearce/jgit/lib/AbbreviatedObjectId.java
+@@ -40,6 +40,7 @@
+ import java.io.UnsupportedEncodingException;
+ 
+ import org.spearce.jgit.util.NB;
++import org.spearce.jgit.util.RawParseUtils;
+ 
+ /**
+  * A prefix abbreviation of an {@link ObjectId}.
+@@ -107,15 +108,12 @@ private static final AbbreviatedObjectId fromHexString(final byte[] bs,
+ 
+ 	private static final int hexUInt32(final byte[] bs, int p, final int end) {
+ 		if (8 <= end - p)
+-			return AnyObjectId.hexUInt32(bs, p);
++			return RawParseUtils.parseHexInt32(bs, p);
+ 
+ 		int r = 0, n = 0;
+ 		while (n < 8 && p < end) {
+-			final int v = AnyObjectId.fromhex[bs[p++]];
+-			if (v < 0)
+-				throw new ArrayIndexOutOfBoundsException();
+ 			r <<= 4;
+-			r |= v;
++			r |= RawParseUtils.parseHexInt4(bs[p++]);
+ 			n++;
+ 		}
+ 		return r << (8 - n) * 4;
+diff --git a/org.spearce.jgit/src/org/spearce/jgit/lib/AnyObjectId.java b/org.spearce.jgit/src/org/spearce/jgit/lib/AnyObjectId.java
+index acb3cb5..0df2768 100644
+--- a/org.spearce.jgit/src/org/spearce/jgit/lib/AnyObjectId.java
++++ b/org.spearce.jgit/src/org/spearce/jgit/lib/AnyObjectId.java
+@@ -41,7 +41,6 @@
+ import java.io.OutputStream;
+ import java.io.Writer;
+ import java.nio.ByteBuffer;
+-import java.util.Arrays;
+ 
+ import org.spearce.jgit.util.NB;
+ 
+@@ -57,16 +56,7 @@
+ 
+ 	static final int STR_LEN = RAW_LEN * 2;
+ 
+-	static final byte fromhex[];
+-
+ 	static {
+-		fromhex = new byte['f' + 1];
+-		Arrays.fill(fromhex, (byte) -1);
+-		for (char i = '0'; i <= '9'; i++)
+-			fromhex[i] = (byte) (i - '0');
+-		for (char i = 'a'; i <= 'f'; i++)
+-			fromhex[i] = (byte) ((i - 'a') + 10);
+-
+ 		if (RAW_LEN != 20)
+ 			throw new LinkageError("ObjectId expects"
+ 					+ " Constants.OBJECT_ID_LENGTH = 20; it is " + RAW_LEN
+@@ -100,32 +90,6 @@ public static boolean equals(final AnyObjectId firstObjectId,
+ 				&& firstObjectId.w1 == secondObjectId.w1;
+ 	}
+ 
+-	static final int hexUInt32(final byte[] bs, final int p) {
+-		int r = fromhex[bs[p]] << 4;
+-
+-		r |= fromhex[bs[p + 1]];
+-		r <<= 4;
+-
+-		r |= fromhex[bs[p + 2]];
+-		r <<= 4;
+-
+-		r |= fromhex[bs[p + 3]];
+-		r <<= 4;
+-
+-		r |= fromhex[bs[p + 4]];
+-		r <<= 4;
+-
+-		r |= fromhex[bs[p + 5]];
+-		r <<= 4;
+-
+-		r |= fromhex[bs[p + 6]];
+-
+-		final int last = fromhex[bs[p + 7]];
+-		if (r < 0 || last < 0)
+-			throw new ArrayIndexOutOfBoundsException();
+-		return (r << 4) | last;
+-	}
+-
+ 	int w1;
+ 
+ 	int w2;
+diff --git a/org.spearce.jgit/src/org/spearce/jgit/lib/MutableObjectId.java b/org.spearce.jgit/src/org/spearce/jgit/lib/MutableObjectId.java
+index fadebab..805f328 100644
+--- a/org.spearce.jgit/src/org/spearce/jgit/lib/MutableObjectId.java
++++ b/org.spearce.jgit/src/org/spearce/jgit/lib/MutableObjectId.java
+@@ -40,6 +40,7 @@
+ import java.io.UnsupportedEncodingException;
+ 
+ import org.spearce.jgit.util.NB;
++import org.spearce.jgit.util.RawParseUtils;
+ 
+ /**
+  * A mutable SHA-1 abstraction.
+@@ -159,11 +160,11 @@ public void fromString(final String str) {
+ 
+ 	private void fromHexString(final byte[] bs, int p) {
+ 		try {
+-			w1 = hexUInt32(bs, p);
+-			w2 = hexUInt32(bs, p + 8);
+-			w3 = hexUInt32(bs, p + 16);
+-			w4 = hexUInt32(bs, p + 24);
+-			w5 = hexUInt32(bs, p + 32);
++			w1 = RawParseUtils.parseHexInt32(bs, p);
++			w2 = RawParseUtils.parseHexInt32(bs, p + 8);
++			w3 = RawParseUtils.parseHexInt32(bs, p + 16);
++			w4 = RawParseUtils.parseHexInt32(bs, p + 24);
++			w5 = RawParseUtils.parseHexInt32(bs, p + 32);
+ 		} catch (ArrayIndexOutOfBoundsException e1) {
+ 			try {
+ 				final String str = new String(bs, p, STR_LEN, "US-ASCII");
+diff --git a/org.spearce.jgit/src/org/spearce/jgit/lib/ObjectId.java b/org.spearce.jgit/src/org/spearce/jgit/lib/ObjectId.java
+index fde209b..cdd523f 100644
+--- a/org.spearce.jgit/src/org/spearce/jgit/lib/ObjectId.java
++++ b/org.spearce.jgit/src/org/spearce/jgit/lib/ObjectId.java
+@@ -41,6 +41,7 @@
+ import java.io.UnsupportedEncodingException;
+ 
+ import org.spearce.jgit.util.NB;
++import org.spearce.jgit.util.RawParseUtils;
+ 
+ /**
+  * A SHA-1 abstraction.
+@@ -74,12 +75,12 @@ public static final ObjectId zeroId() {
+ 	 * @return true if the string can converted into an ObjectId.
+ 	 */
+ 	public static final boolean isId(final String id) {
+-		if (id.length() != 2 * Constants.OBJECT_ID_LENGTH)
++		if (id.length() != STR_LEN)
+ 			return false;
+ 		try {
+-			for (int k = id.length() - 1; k >= 0; k--)
+-				if (fromhex[id.charAt(k)] < 0)
+-					return false;
++			for (int i = 0; i < STR_LEN; i++) {
++				RawParseUtils.parseHexInt4((byte) id.charAt(i));
++			}
+ 			return true;
+ 		} catch (ArrayIndexOutOfBoundsException e) {
+ 			return false;
+@@ -222,11 +223,11 @@ public static final ObjectId fromString(final String str) {
+ 
+ 	private static final ObjectId fromHexString(final byte[] bs, int p) {
+ 		try {
+-			final int a = hexUInt32(bs, p);
+-			final int b = hexUInt32(bs, p + 8);
+-			final int c = hexUInt32(bs, p + 16);
+-			final int d = hexUInt32(bs, p + 24);
+-			final int e = hexUInt32(bs, p + 32);
++			final int a = RawParseUtils.parseHexInt32(bs, p);
++			final int b = RawParseUtils.parseHexInt32(bs, p + 8);
++			final int c = RawParseUtils.parseHexInt32(bs, p + 16);
++			final int d = RawParseUtils.parseHexInt32(bs, p + 24);
++			final int e = RawParseUtils.parseHexInt32(bs, p + 32);
+ 			return new ObjectId(a, b, c, d, e);
+ 		} catch (ArrayIndexOutOfBoundsException e1) {
+ 			try {
+diff --git a/org.spearce.jgit/src/org/spearce/jgit/util/RawParseUtils.java b/org.spearce.jgit/src/org/spearce/jgit/util/RawParseUtils.java
+index 79ebe41..0554acb 100644
+--- a/org.spearce.jgit/src/org/spearce/jgit/util/RawParseUtils.java
++++ b/org.spearce.jgit/src/org/spearce/jgit/util/RawParseUtils.java
+@@ -54,13 +54,24 @@
+ 
+ /** Handy utility functions to parse raw object contents. */
+ public final class RawParseUtils {
+-	private static final byte[] digits;
++	private static final byte[] digits10;
++
++	private static final byte[] digits16;
+ 
+ 	static {
+-		digits = new byte['9' + 1];
+-		Arrays.fill(digits, (byte) -1);
++		digits10 = new byte['9' + 1];
++		Arrays.fill(digits10, (byte) -1);
++		for (char i = '0'; i <= '9'; i++)
++			digits10[i] = (byte) (i - '0');
++
++		digits16 = new byte['f' + 1];
++		Arrays.fill(digits16, (byte) -1);
+ 		for (char i = '0'; i <= '9'; i++)
+-			digits[i] = (byte) (i - '0');
++			digits16[i] = (byte) (i - '0');
++		for (char i = 'a'; i <= 'f'; i++)
++			digits16[i] = (byte) ((i - 'a') + 10);
++		for (char i = 'A'; i <= 'F'; i++)
++			digits16[i] = (byte) ((i - 'A') + 10);
+ 	}
+ 
+ 	/**
+@@ -175,7 +186,7 @@ public static final int parseBase10(final byte[] b, int ptr,
+ 			}
+ 
+ 			while (ptr < sz) {
+-				final byte v = digits[b[ptr]];
++				final byte v = digits10[b[ptr]];
+ 				if (v < 0)
+ 					break;
+ 				r = (r * 10) + v;
+@@ -229,7 +240,7 @@ public static final long parseLongBase10(final byte[] b, int ptr,
+ 			}
+ 
+ 			while (ptr < sz) {
+-				final byte v = digits[b[ptr]];
++				final byte v = digits10[b[ptr]];
+ 				if (v < 0)
+ 					break;
+ 				r = (r * 10) + v;
+@@ -244,6 +255,63 @@ public static final long parseLongBase10(final byte[] b, int ptr,
+ 	}
+ 
+ 	/**
++	 * Parse 8 character base 16 (hex) formatted string to unsigned integer.
++	 * <p>
++	 * The number is read in network byte order, that is, most significant
++	 * nybble first.
++	 *
++	 * @param bs
++	 *            buffer to parse digits from; positions {@code [p, p+8)} will
++	 *            be parsed.
++	 * @param p
++	 *            first position within the buffer to parse.
++	 * @return the integer value.
++	 * @throws ArrayIndexOutOfBoundsException
++	 *             if the string is not hex formatted.
++	 */
++	public static final int parseHexInt32(final byte[] bs, final int p) {
++		int r = digits16[bs[p]] << 4;
++
++		r |= digits16[bs[p + 1]];
++		r <<= 4;
++
++		r |= digits16[bs[p + 2]];
++		r <<= 4;
++
++		r |= digits16[bs[p + 3]];
++		r <<= 4;
++
++		r |= digits16[bs[p + 4]];
++		r <<= 4;
++
++		r |= digits16[bs[p + 5]];
++		r <<= 4;
++
++		r |= digits16[bs[p + 6]];
++
++		final int last = digits16[bs[p + 7]];
++		if (r < 0 || last < 0)
++			throw new ArrayIndexOutOfBoundsException();
++		return (r << 4) | last;
++	}
++
++	/**
++	 * Parse a single hex digit to its numeric value (0-15).
++	 *
++	 * @param digit
++	 *            hex character to parse.
++	 * @return numeric value, in the range 0-15.
++	 * @throws ArrayIndexOutOfBoundsException
++	 *             if the input digit is not a valid hex digit.
++	 */
++	public static final int parseHexInt4(final byte digit) {
++		final byte r = digits16[digit];
++		if (r < 0)
++			throw new ArrayIndexOutOfBoundsException();
++		return r;
++	}
++
++	/**
+ 	 * Parse a Git style timezone string.
+ 	 * <p>
+ 	 * The sequence "-0315" will be parsed as the numeric value -195, as the
+-- 
+1.6.3.1.333.g3ebba7
