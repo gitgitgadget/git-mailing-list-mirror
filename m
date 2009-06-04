@@ -1,83 +1,56 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [Patch] Prevent cloning over http from spewing
-Date: Thu, 4 Jun 2009 12:01:52 -0400
-Message-ID: <20090604160152.GA13984@sigill.intra.peff.net>
-References: <20090602174229.GA14455@infidigm.net> <m3vdnda9f7.fsf@localhost.localdomain> <7vmy8p8947.fsf@alter.siamese.dyndns.org> <20090603191050.GB29564@coredump.intra.peff.net> <20090603191555.GL3355@spearce.org> <be6fef0d0906040545j7bd754e0j2c60af833e2ac4a4@mail.gmail.com>
+From: stuart <stuart@xnet.com>
+Subject: Can I set up a GIT server w/o administration privileges on a Solaris
+ machine?
+Date: Thu, 04 Jun 2009 11:35:50 -0500
+Message-ID: <4A27F7E6.8060405@xnet.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: "Shawn O. Pearce" <spearce@spearce.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Jakub Narebski <jnareb@gmail.com>, sparse@infidigm.net,
-	git@vger.kernel.org
-To: Tay Ray Chuan <rctay89@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jun 04 18:03:15 2009
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jun 04 18:41:48 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MCFPL-0002lH-TW
-	for gcvg-git-2@gmane.org; Thu, 04 Jun 2009 18:03:12 +0200
+	id 1MCG0d-0001M4-K2
+	for gcvg-git-2@gmane.org; Thu, 04 Jun 2009 18:41:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756149AbZFDQBx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Jun 2009 12:01:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757639AbZFDQBx
-	(ORCPT <rfc822;git-outgoing>); Thu, 4 Jun 2009 12:01:53 -0400
-Received: from peff.net ([208.65.91.99]:48885 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756782AbZFDQBw (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Jun 2009 12:01:52 -0400
-Received: (qmail 31998 invoked by uid 107); 4 Jun 2009 16:02:00 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.40) with ESMTPA; Thu, 04 Jun 2009 12:02:00 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 04 Jun 2009 12:01:52 -0400
-Content-Disposition: inline
-In-Reply-To: <be6fef0d0906040545j7bd754e0j2c60af833e2ac4a4@mail.gmail.com>
+	id S1756308AbZFDQkb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Jun 2009 12:40:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755840AbZFDQka
+	(ORCPT <rfc822;git-outgoing>); Thu, 4 Jun 2009 12:40:30 -0400
+Received: from nlpi157.sbcis.sbc.com ([207.115.36.171]:34006 "EHLO
+	nlpi157.prodigy.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754166AbZFDQka (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Jun 2009 12:40:30 -0400
+X-Greylist: delayed 389 seconds by postgrey-1.27 at vger.kernel.org; Thu, 04 Jun 2009 12:40:29 EDT
+Received: from [192.168.0.201] (adsl-99-142-0-215.dsl.emhril.sbcglobal.net [99.142.0.215])
+	(authenticated bits=0)
+	by nlpi157.prodigy.net (8.13.8 smtpauth/dk/map_regex/8.13.8) with ESMTP id n54GY2eE014253
+	for <git@vger.kernel.org>; Thu, 4 Jun 2009 11:34:03 -0500
+User-Agent: Thunderbird 2.0.0.16 (X11/20080723)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120700>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120701>
 
-On Thu, Jun 04, 2009 at 08:45:28PM +0800, Tay Ray Chuan wrote:
+Hi...
 
-> I have a branch 'http-progress-indicators' at my repo
-> git://github.com/rctay/git.git. It contains a patch on walker.c that
-> updates the object total as the fetch goes along. The progress
-> indicator says "Processing targets:..." for lack of a better name; I'm
-> all for suggestions.
+Can I set up a GIT server w/o administration privileges on a Solaris 
+machine?
 
-Thanks, I took a look at starting on a progress meter yesterday, but I
-do think it makes sense to integrate with the work you are doing.
+I think this should be a simple question to answer.  I have looked in 
+the archives - but most, if not all, who post are setting up GIT servers 
+  using administration privileges.  I have a shell account on a Solaris 
+box where I can create web pages and trigger the execution of scripts 
+from those pages...but no administration right.  So, I started down the 
+path of privately installing software.  However, it became apparent that 
+I need git listing on this port and running that daemon...both of which 
+are almost impossible with out administration rights.
 
-I tried your http-progress-indicators branch. A few comments:
+So, is there a way to get some basic GIT functionality through serving 
+up web pages and executing CGI scripts.  Is there somewhere I can read 
+up on this type of server installation?
 
-  1. You still end up with a lot of lines of output. Some of those are
-     "Getting pack $x" which we can probably get rid of in non-verbose
-     mode. But we still get a different progress indicator line for each
-     fetched item, which can add up to quite a lot. I was thinking of
-     something like
-
-        Fetching %s (got %d packs, %d loose): (%d/%d)
-
-     with the substitutions:
-
-       %s = "pack", "index", or "loose object"
-       %d packs, %d loose = a running count of how much we've gotten
-       %d/%d = current and total byte counts for what we are getting now
-
-     and then you could keep everything on a single line. I don't think
-     is possible with the current progress code (it doesn't let you
-     restart the counter), but it should be easy with some tweaking.
-
-  2. The current progress code can also do throughput display, which
-     would be nice (see display_throughput in progress.[ch]).
-
-  3. Your implementation calls your get_http_file_size, which does a
-     separate HEAD request to get the content-length. Instead, do
-     a "curl_easy_setopt(slot->curl, CURLOPT_PROGRESSFUNCTION, ...)"
-     to set up a progress callback. Curl will call it with the total
-     number of bytes (from the content-length header of the actual GET
-     request) and the number of bytes currently downloaded.
-
--Peff
+-thank you
