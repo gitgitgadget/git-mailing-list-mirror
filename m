@@ -1,93 +1,96 @@
-From: Tomas Carnecky <tom@dbservice.com>
-Subject: Re: Can I set up a GIT server w/o administration privileges on a Solaris machine?
-Date: Thu, 4 Jun 2009 19:37:55 +0200
-Message-ID: <8F7A6F2A-D286-4DC2-B17A-FB016C31B1F2@dbservice.com>
-References: <4A27F7E6.8060405@xnet.com> <32C5F26D-7498-440C-8BF4-97AF137EF78F@dbservice.com>
-Mime-Version: 1.0 (Apple Message framework v935.3)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
-Content-Transfer-Encoding: 7bit
-Cc: stuart <stuart@xnet.com>, git@vger.kernel.org
-To: Tomas Carnecky <tom@dbservice.com>
-X-From: git-owner@vger.kernel.org Thu Jun 04 19:38:23 2009
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: Request for detailed documentation of git pack protocol
+Date: Thu, 4 Jun 2009 11:41:09 -0700
+Message-ID: <20090604184109.GR3355@spearce.org>
+References: <200905122329.15379.jnareb@gmail.com> <200906032320.23559.jnareb@gmail.com> <alpine.LSU.2.00.0906032240300.31588@hermes-2.csi.cam.ac.uk> <200906041045.11328.jnareb@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Tony Finch <dot@dotat.at>, Scott Chacon <schacon@gmail.com>,
+	git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jun 04 20:41:21 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MCGtS-0007uS-QB
-	for gcvg-git-2@gmane.org; Thu, 04 Jun 2009 19:38:23 +0200
+	id 1MCHsO-0006Jh-6O
+	for gcvg-git-2@gmane.org; Thu, 04 Jun 2009 20:41:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751567AbZFDRiO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Jun 2009 13:38:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751555AbZFDRiN
-	(ORCPT <rfc822;git-outgoing>); Thu, 4 Jun 2009 13:38:13 -0400
-Received: from office.neopsis.com ([78.46.209.98]:33779 "EHLO
-	office.neopsis.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751211AbZFDRiN (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Jun 2009 13:38:13 -0400
-Received: from calvin.emmen.dbservice.com ([62.65.141.13])
-	(authenticated user tom@dbservice.com)
-	by office.neopsis.com
-	(using TLSv1/SSLv3 with cipher AES128-SHA (128 bits));
-	Thu, 4 Jun 2009 19:38:10 +0200
-In-Reply-To: <32C5F26D-7498-440C-8BF4-97AF137EF78F@dbservice.com>
-X-Mailer: Apple Mail (2.935.3)
+	id S1751341AbZFDSlK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Jun 2009 14:41:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751151AbZFDSlI
+	(ORCPT <rfc822;git-outgoing>); Thu, 4 Jun 2009 14:41:08 -0400
+Received: from george.spearce.org ([209.20.77.23]:42033 "EHLO
+	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750984AbZFDSlH (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Jun 2009 14:41:07 -0400
+Received: by george.spearce.org (Postfix, from userid 1001)
+	id 806E7381D1; Thu,  4 Jun 2009 18:41:09 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <200906041045.11328.jnareb@gmail.com>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120703>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120704>
 
+Jakub Narebski <jnareb@gmail.com> wrote:
+> Dnia ?roda 3. czerwca 2009 23:53, Tony Finch napisa?:
+> > On Wed, 3 Jun 2009, Jakub Narebski wrote:
+> > >
+> > > Actually git accepts both lowercase and uppercase in HEXDIG (at least
+> > > for pkt-length), but it prefers lowercase.
+> > 
+> > You should ensure that all hex digit strings follow the same rule.
+> > Are SHA-1 object names case insensitive too?
+> > 
+> > Case insensitivity has a history of being awkward. SMTP has always had
+> > case-insensitive commands, though the RFCs have always written them in
+> > upper case and implementations have pretty much all emitted them in upper
+> > case. See http://tools.ietf.org/html/rfc5321#section-2.4 especially the
+> > caveat about broken case-sensitive implementations.
+> 
+> There should be no problem with pkt-length being case insensitive, as
+> standard conversion routines (strtol, sprintf) accept 0-9a-fA-F for 
+> base 16 / hexadecimal conversion.  The requirement here is that client
+> and server SHOULD use lowercase, but MUST accept mixed case (do case
+> insensitive parsing of hex4).
 
-On Jun 4, 2009, at 7:34 PM, Tomas Carnecky wrote:
+ACK.  This is what C Git does today.  JGit sends lower case, but
+is wrong by only accepting lowercase.  I will patch it today to
+accept mixed case.
+ 
+> I think SHA-1 is lowercased, so mixed case should work there. Well, at
+> least "git show 6096D7" (note the uppercase 'D' in shortened SHA-1 name)
+> works as expected.
 
->
-> On Jun 4, 2009, at 6:35 PM, stuart wrote:
->
->> Hi...
->>
->> Can I set up a GIT server w/o administration privileges on a  
->> Solaris machine?
->>
->> I think this should be a simple question to answer.  I have looked  
->> in the archives - but most, if not all, who post are setting up GIT  
->> servers  using administration privileges.  I have a shell account  
->> on a Solaris box where I can create web pages and trigger the  
->> execution of scripts from those pages...but no administration  
->> right.  So, I started down the path of privately installing  
->> software.  However, it became apparent that I need git listing on  
->> this port and running that daemon...both of which are almost  
->> impossible with out administration rights.
->
-> The default port of the git daemon is 9418. Unix systems usually  
-> don't require admin privileges to bind to port >1024. Maybe there's  
-> a firewall between you and the solaris box preventing you from  
-> connecting to such non-standard port? If you are sure there is no  
-> such thing, then simply fire up git-daemon and try to connect to it:
->
-> (assuming /path/to/repo.git is the git repository on the server)
-> server$ git-daemon --export-all --verbose --base-path=/path/to/ / 
-> path/to/
-> client$ git ls-remote git://<server>/repo.git
->
-> If the connection was successful, then stop git-daemon, add '-- 
-> detach' to its command line and start it again. It will put itself  
-> into the background, so you can log off the server and git-daemon  
-> will keep runnig. One downside is that it will not be automatically  
-> restarted when it crashes, or when the server is restarted.
->
->> So, is there a way to get some basic GIT functionality through  
->> serving up web pages and executing CGI scripts.  Is there somewhere  
->> I can read up on this type of server installation?
->
-> Git can be used over dumb http protocol. Fetching through http is  
-> fairly easy, simply put the git repo into a directory where the web  
-> server has read rights. Pushing
+ACK.  Mixed case SHA-1 MUST be accepted, but lower case SHOULD
+be output.
+ 
+> But I do not know what are, or what should be protocol requirements.
+> Should SHA-1 use lowercase, or be case insensitive?
 
-... and run git-update-server-info in the git repository.
+SHA-1 SHOULD be lowercase (a-f), MUST accept a-f or A-F.
 
-> through http will likely require you to edit the http server  
-> settings. Also, git:// protocol is almost always preferable over  
-> http://.
->
-> tom
->
+> Should commands such as "have", "want", "done" use lower case or
+> be case insensitive?
+
+These MUST be lowercase.
+
+> Should status indicators "ACK" and "NAK" be upper case,
+
+These MUST be uppercase.  Though "ACK %s continue" MUST be mixed
+case, as I just wrote it.
+
+> Should capabilities be case sensitive, and should they be
+> compared case sensitive or not?
+
+No, they are case sensitive.  
+
+Why?  All of the above is the current C code implementation.
+We have to follow what the code does today, and it does case
+sensitive compares almost everywhere... except in the SHA-1 parsing.
+
+-- 
+Shawn.
