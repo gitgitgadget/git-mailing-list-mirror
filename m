@@ -1,60 +1,61 @@
 From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: [JGIT PATCH 6/7] Add tests for PacketLineOut
-Date: Thu,  4 Jun 2009 14:44:02 -0700
-Message-ID: <1244151843-26954-7-git-send-email-spearce@spearce.org>
+Subject: [JGIT PATCH 7/7] Add tests for SideBandOutputStream
+Date: Thu,  4 Jun 2009 14:44:03 -0700
+Message-ID: <1244151843-26954-8-git-send-email-spearce@spearce.org>
 References: <1244151843-26954-1-git-send-email-spearce@spearce.org>
  <1244151843-26954-2-git-send-email-spearce@spearce.org>
  <1244151843-26954-3-git-send-email-spearce@spearce.org>
  <1244151843-26954-4-git-send-email-spearce@spearce.org>
  <1244151843-26954-5-git-send-email-spearce@spearce.org>
  <1244151843-26954-6-git-send-email-spearce@spearce.org>
+ <1244151843-26954-7-git-send-email-spearce@spearce.org>
 Cc: git@vger.kernel.org
 To: Robin Rosenberg <robin.rosenberg@dewire.com>
-X-From: git-owner@vger.kernel.org Thu Jun 04 23:45:12 2009
+X-From: git-owner@vger.kernel.org Thu Jun 04 23:45:13 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MCKkJ-0001OL-NN
+	id 1MCKkK-0001OL-EJ
 	for gcvg-git-2@gmane.org; Thu, 04 Jun 2009 23:45:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754666AbZFDVoV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Jun 2009 17:44:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754651AbZFDVoU
-	(ORCPT <rfc822;git-outgoing>); Thu, 4 Jun 2009 17:44:20 -0400
-Received: from george.spearce.org ([209.20.77.23]:35377 "EHLO
+	id S1754750AbZFDVoZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Jun 2009 17:44:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754715AbZFDVoX
+	(ORCPT <rfc822;git-outgoing>); Thu, 4 Jun 2009 17:44:23 -0400
+Received: from george.spearce.org ([209.20.77.23]:35365 "EHLO
 	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754379AbZFDVoH (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Jun 2009 17:44:07 -0400
+	with ESMTP id S1754575AbZFDVoI (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Jun 2009 17:44:08 -0400
 Received: by george.spearce.org (Postfix, from userid 1000)
-	id 3814E3821F; Thu,  4 Jun 2009 21:44:09 +0000 (UTC)
+	id 046D9381D1; Thu,  4 Jun 2009 21:44:09 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.2.4 (2008-01-01) on george.spearce.org
 X-Spam-Level: 
 X-Spam-Status: No, score=-4.4 required=4.0 tests=ALL_TRUSTED,BAYES_00
 	autolearn=ham version=3.2.4
 Received: from localhost.localdomain (localhost [127.0.0.1])
-	by george.spearce.org (Postfix) with ESMTP id 88BE8381D1;
+	by george.spearce.org (Postfix) with ESMTP id D464538215;
 	Thu,  4 Jun 2009 21:44:05 +0000 (UTC)
 X-Mailer: git-send-email 1.6.3.1.333.g3ebba7
-In-Reply-To: <1244151843-26954-6-git-send-email-spearce@spearce.org>
+In-Reply-To: <1244151843-26954-7-git-send-email-spearce@spearce.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120721>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120722>
 
 Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
 ---
- .../spearce/jgit/transport/PacketLineOutTest.java  |  175 ++++++++++++++++++++
- 1 files changed, 175 insertions(+), 0 deletions(-)
- create mode 100644 org.spearce.jgit.test/tst/org/spearce/jgit/transport/PacketLineOutTest.java
+ .../jgit/transport/SideBandOutputStreamTest.java   |  146 ++++++++++++++++++++
+ 1 files changed, 146 insertions(+), 0 deletions(-)
+ create mode 100644 org.spearce.jgit.test/tst/org/spearce/jgit/transport/SideBandOutputStreamTest.java
 
-diff --git a/org.spearce.jgit.test/tst/org/spearce/jgit/transport/PacketLineOutTest.java b/org.spearce.jgit.test/tst/org/spearce/jgit/transport/PacketLineOutTest.java
+diff --git a/org.spearce.jgit.test/tst/org/spearce/jgit/transport/SideBandOutputStreamTest.java b/org.spearce.jgit.test/tst/org/spearce/jgit/transport/SideBandOutputStreamTest.java
 new file mode 100644
-index 0000000..de0f222
+index 0000000..59e55dc
 --- /dev/null
-+++ b/org.spearce.jgit.test/tst/org/spearce/jgit/transport/PacketLineOutTest.java
-@@ -0,0 +1,175 @@
++++ b/org.spearce.jgit.test/tst/org/spearce/jgit/transport/SideBandOutputStreamTest.java
+@@ -0,0 +1,146 @@
 +/*
 + * Copyright (C) 2009, Google Inc.
 + *
@@ -106,106 +107,68 @@ index 0000000..de0f222
 +//
 +// perl -e 'printf "%4.4x%s\n", 4+length($ARGV[0]),$ARGV[0]'
 +
-+public class PacketLineOutTest extends TestCase {
++public class SideBandOutputStreamTest extends TestCase {
 +	private ByteArrayOutputStream rawOut;
 +
-+	private PacketLineOut out;
++	private PacketLineOut pckOut;
 +
 +	protected void setUp() throws Exception {
 +		super.setUp();
 +		rawOut = new ByteArrayOutputStream();
-+		out = new PacketLineOut(rawOut);
++		pckOut = new PacketLineOut(rawOut);
 +	}
 +
-+	// writeString
-+
-+	public void testWriteString1() throws IOException {
-+		out.writeString("a");
-+		out.writeString("bc");
-+		assertBuffer("0005a0006bc");
++	public void testWrite_CH_DATA() throws IOException {
++		final SideBandOutputStream out;
++		out = new SideBandOutputStream(SideBandOutputStream.CH_DATA, pckOut);
++		out.write(new byte[] { 'a', 'b', 'c' });
++		assertBuffer("0008\001abc");
 +	}
 +
-+	public void testWriteString2() throws IOException {
-+		out.writeString("a\n");
-+		out.writeString("bc\n");
-+		assertBuffer("0006a\n0007bc\n");
++	public void testWrite_CH_PROGRESS() throws IOException {
++		final SideBandOutputStream out;
++		out = new SideBandOutputStream(SideBandOutputStream.CH_PROGRESS, pckOut);
++		out.write(new byte[] { 'a', 'b', 'c' });
++		assertBuffer("0008\002abc");
 +	}
 +
-+	public void testWriteString3() throws IOException {
-+		out.writeString("");
-+		assertBuffer("0004");
++	public void testWrite_CH_ERROR() throws IOException {
++		final SideBandOutputStream out;
++		out = new SideBandOutputStream(SideBandOutputStream.CH_ERROR, pckOut);
++		out.write(new byte[] { 'a', 'b', 'c' });
++		assertBuffer("0008\003abc");
 +	}
 +
-+	// end
-+
-+	public void testWriteEnd() throws IOException {
-+		final int[] flushCnt = new int[1];
-+		final OutputStream mockout = new OutputStream() {
-+			@Override
-+			public void write(int arg0) throws IOException {
-+				rawOut.write(arg0);
-+			}
-+
-+			@Override
-+			public void flush() throws IOException {
-+				flushCnt[0]++;
-+			}
-+		};
-+
-+		new PacketLineOut(mockout).end();
-+		assertBuffer("0000");
-+		assertEquals(1, flushCnt[0]);
++	public void testWrite_Small() throws IOException {
++		final SideBandOutputStream out;
++		out = new SideBandOutputStream(SideBandOutputStream.CH_DATA, pckOut);
++		out.write('a');
++		out.write('b');
++		out.write('c');
++		assertBuffer("0006\001a0006\001b0006\001c");
 +	}
 +
-+	// writePacket
-+
-+	public void testWritePacket1() throws IOException {
-+		out.writePacket(new byte[] { 'a' });
-+		assertBuffer("0005a");
-+	}
-+
-+	public void testWritePacket2() throws IOException {
-+		out.writePacket(new byte[] { 'a', 'b', 'c', 'd' });
-+		assertBuffer("0008abcd");
-+	}
-+
-+	public void testWritePacket3() throws IOException {
++	public void testWrite_Large() throws IOException {
 +		final int buflen = SideBandOutputStream.MAX_BUF
 +				- SideBandOutputStream.HDR_SIZE;
 +		final byte[] buf = new byte[buflen];
 +		for (int i = 0; i < buf.length; i++) {
 +			buf[i] = (byte) i;
 +		}
-+		out.writePacket(buf);
-+		out.flush();
++
++		final SideBandOutputStream out;
++		out = new SideBandOutputStream(SideBandOutputStream.CH_DATA, pckOut);
++		out.write(buf);
 +
 +		final byte[] act = rawOut.toByteArray();
-+		final String explen = Integer.toString(buf.length + 4, 16);
-+		assertEquals(4 + buf.length, act.length);
++		final String explen = Integer.toString(buf.length + 5, 16);
++		assertEquals(5 + buf.length, act.length);
 +		assertEquals(new String(act, 0, 4, "UTF-8"), explen);
-+		for (int i = 0, j = 4; i < buf.length; i++, j++) {
++		assertEquals(1, act[4]);
++		for (int i = 0, j = 5; i < buf.length; i++, j++) {
 +			assertEquals(buf[i], act[j]);
 +		}
 +	}
-+
-+	// writeChannelPacket
-+
-+	public void testWriteChannelPacket1() throws IOException {
-+		out.writeChannelPacket(1, new byte[] { 'a' }, 0, 1);
-+		assertBuffer("0006\001a");
-+	}
-+
-+	public void testWriteChannelPacket2() throws IOException {
-+		out.writeChannelPacket(2, new byte[] { 'b' }, 0, 1);
-+		assertBuffer("0006\002b");
-+	}
-+
-+	public void testWriteChannelPacket3() throws IOException {
-+		out.writeChannelPacket(3, new byte[] { 'c' }, 0, 1);
-+		assertBuffer("0006\003c");
-+	}
-+
-+	// flush
 +
 +	public void testFlush() throws IOException {
 +		final int[] flushCnt = new int[1];
@@ -221,8 +184,17 @@ index 0000000..de0f222
 +			}
 +		};
 +
-+		new PacketLineOut(mockout).flush();
++		new SideBandOutputStream(SideBandOutputStream.CH_DATA,
++				new PacketLineOut(mockout)).flush();
++		assertEquals(0, flushCnt[0]);
++
++		new SideBandOutputStream(SideBandOutputStream.CH_ERROR,
++				new PacketLineOut(mockout)).flush();
 +		assertEquals(1, flushCnt[0]);
++
++		new SideBandOutputStream(SideBandOutputStream.CH_PROGRESS,
++				new PacketLineOut(mockout)).flush();
++		assertEquals(2, flushCnt[0]);
 +	}
 +
 +	private void assertBuffer(final String exp) throws IOException {
