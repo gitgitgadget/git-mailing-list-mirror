@@ -1,12 +1,11 @@
 From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: [JGIT PATCH 5/7] Add tests for PacketLineIn
-Date: Thu,  4 Jun 2009 14:44:01 -0700
-Message-ID: <1244151843-26954-6-git-send-email-spearce@spearce.org>
+Subject: [JGIT PATCH 4/7] Add tests for RawParseUtil's hex string parsing
+Date: Thu,  4 Jun 2009 14:44:00 -0700
+Message-ID: <1244151843-26954-5-git-send-email-spearce@spearce.org>
 References: <1244151843-26954-1-git-send-email-spearce@spearce.org>
  <1244151843-26954-2-git-send-email-spearce@spearce.org>
  <1244151843-26954-3-git-send-email-spearce@spearce.org>
  <1244151843-26954-4-git-send-email-spearce@spearce.org>
- <1244151843-26954-5-git-send-email-spearce@spearce.org>
 Cc: git@vger.kernel.org
 To: Robin Rosenberg <robin.rosenberg@dewire.com>
 X-From: git-owner@vger.kernel.org Thu Jun 04 23:45:11 2009
@@ -14,46 +13,46 @@ Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MCKkJ-0001OL-0b
-	for gcvg-git-2@gmane.org; Thu, 04 Jun 2009 23:45:11 +0200
+	id 1MCKkI-0001OL-AA
+	for gcvg-git-2@gmane.org; Thu, 04 Jun 2009 23:45:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754455AbZFDVoT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Jun 2009 17:44:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754549AbZFDVoR
-	(ORCPT <rfc822;git-outgoing>); Thu, 4 Jun 2009 17:44:17 -0400
-Received: from george.spearce.org ([209.20.77.23]:35374 "EHLO
+	id S1754693AbZFDVoP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Jun 2009 17:44:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754455AbZFDVoO
+	(ORCPT <rfc822;git-outgoing>); Thu, 4 Jun 2009 17:44:14 -0400
+Received: from george.spearce.org ([209.20.77.23]:35371 "EHLO
 	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754293AbZFDVoG (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Jun 2009 17:44:06 -0400
+	with ESMTP id S1754198AbZFDVoF (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Jun 2009 17:44:05 -0400
 Received: by george.spearce.org (Postfix, from userid 1000)
-	id 7037438200; Thu,  4 Jun 2009 21:44:08 +0000 (UTC)
+	id 8D620381FE; Thu,  4 Jun 2009 21:44:07 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.2.4 (2008-01-01) on george.spearce.org
 X-Spam-Level: 
 X-Spam-Status: No, score=-4.4 required=4.0 tests=ALL_TRUSTED,BAYES_00
 	autolearn=ham version=3.2.4
 Received: from localhost.localdomain (localhost [127.0.0.1])
-	by george.spearce.org (Postfix) with ESMTP id 383923821F;
-	Thu,  4 Jun 2009 21:44:05 +0000 (UTC)
+	by george.spearce.org (Postfix) with ESMTP id CF5E438200;
+	Thu,  4 Jun 2009 21:44:04 +0000 (UTC)
 X-Mailer: git-send-email 1.6.3.1.333.g3ebba7
-In-Reply-To: <1244151843-26954-5-git-send-email-spearce@spearce.org>
+In-Reply-To: <1244151843-26954-4-git-send-email-spearce@spearce.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120719>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120720>
 
 Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
 ---
- .../spearce/jgit/transport/PacketLineInTest.java   |  262 ++++++++++++++++++++
- 1 files changed, 262 insertions(+), 0 deletions(-)
- create mode 100644 org.spearce.jgit.test/tst/org/spearce/jgit/transport/PacketLineInTest.java
+ .../jgit/util/RawParseUtils_HexParseTest.java      |  158 ++++++++++++++++++++
+ 1 files changed, 158 insertions(+), 0 deletions(-)
+ create mode 100644 org.spearce.jgit.test/tst/org/spearce/jgit/util/RawParseUtils_HexParseTest.java
 
-diff --git a/org.spearce.jgit.test/tst/org/spearce/jgit/transport/PacketLineInTest.java b/org.spearce.jgit.test/tst/org/spearce/jgit/transport/PacketLineInTest.java
+diff --git a/org.spearce.jgit.test/tst/org/spearce/jgit/util/RawParseUtils_HexParseTest.java b/org.spearce.jgit.test/tst/org/spearce/jgit/util/RawParseUtils_HexParseTest.java
 new file mode 100644
-index 0000000..b9ab50e
+index 0000000..0f0ddde
 --- /dev/null
-+++ b/org.spearce.jgit.test/tst/org/spearce/jgit/transport/PacketLineInTest.java
-@@ -0,0 +1,262 @@
++++ b/org.spearce.jgit.test/tst/org/spearce/jgit/util/RawParseUtils_HexParseTest.java
+@@ -0,0 +1,158 @@
 +/*
 + * Copyright (C) 2009, Google Inc.
 + *
@@ -91,229 +90,125 @@ index 0000000..b9ab50e
 + * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 + */
 +
-+package org.spearce.jgit.transport;
-+
-+import java.io.ByteArrayInputStream;
-+import java.io.IOException;
++package org.spearce.jgit.util;
 +
 +import junit.framework.TestCase;
 +
 +import org.spearce.jgit.lib.Constants;
-+import org.spearce.jgit.lib.MutableObjectId;
-+import org.spearce.jgit.lib.ObjectId;
 +
-+// Note, test vectors created with:
-+//
-+// perl -e 'printf "%4.4x%s\n", 4+length($ARGV[0]),$ARGV[0]'
++public class RawParseUtils_HexParseTest extends TestCase {
++	public void testInt4_1() {
++		assertEquals(0, RawParseUtils.parseHexInt4((byte) '0'));
++		assertEquals(1, RawParseUtils.parseHexInt4((byte) '1'));
++		assertEquals(2, RawParseUtils.parseHexInt4((byte) '2'));
++		assertEquals(3, RawParseUtils.parseHexInt4((byte) '3'));
++		assertEquals(4, RawParseUtils.parseHexInt4((byte) '4'));
++		assertEquals(5, RawParseUtils.parseHexInt4((byte) '5'));
++		assertEquals(6, RawParseUtils.parseHexInt4((byte) '6'));
++		assertEquals(7, RawParseUtils.parseHexInt4((byte) '7'));
++		assertEquals(8, RawParseUtils.parseHexInt4((byte) '8'));
++		assertEquals(9, RawParseUtils.parseHexInt4((byte) '9'));
++		assertEquals(10, RawParseUtils.parseHexInt4((byte) 'a'));
++		assertEquals(11, RawParseUtils.parseHexInt4((byte) 'b'));
++		assertEquals(12, RawParseUtils.parseHexInt4((byte) 'c'));
++		assertEquals(13, RawParseUtils.parseHexInt4((byte) 'd'));
++		assertEquals(14, RawParseUtils.parseHexInt4((byte) 'e'));
++		assertEquals(15, RawParseUtils.parseHexInt4((byte) 'f'));
 +
-+public class PacketLineInTest extends TestCase {
-+	private ByteArrayInputStream rawIn;
++		assertEquals(10, RawParseUtils.parseHexInt4((byte) 'A'));
++		assertEquals(11, RawParseUtils.parseHexInt4((byte) 'B'));
++		assertEquals(12, RawParseUtils.parseHexInt4((byte) 'C'));
++		assertEquals(13, RawParseUtils.parseHexInt4((byte) 'D'));
++		assertEquals(14, RawParseUtils.parseHexInt4((byte) 'E'));
++		assertEquals(15, RawParseUtils.parseHexInt4((byte) 'F'));
 +
-+	private PacketLineIn in;
-+
-+	// readString
-+
-+	public void testReadString1() throws IOException {
-+		init("0006a\n0007bc\n");
-+		assertEquals("a", in.readString());
-+		assertEquals("bc", in.readString());
-+		assertEOF();
++		assertNotHex('q');
++		assertNotHex(' ');
++		assertNotHex('.');
 +	}
 +
-+	public void testReadString2() throws IOException {
-+		init("0032want fcfcfb1fd94829c1a1704f894fc111d14770d34e\n");
-+		final String act = in.readString();
-+		assertEquals("want fcfcfb1fd94829c1a1704f894fc111d14770d34e", act);
-+		assertEOF();
-+	}
-+
-+	public void testReadString4() throws IOException {
-+		init("0005a0006bc");
-+		assertEquals("a", in.readString());
-+		assertEquals("bc", in.readString());
-+		assertEOF();
-+	}
-+
-+	public void testReadString5() throws IOException {
-+		// accept both upper and lower case
-+		init("000Fhi i am a s");
-+		assertEquals("hi i am a s", in.readString());
-+		assertEOF();
-+
-+		init("000fhi i am a s");
-+		assertEquals("hi i am a s", in.readString());
-+		assertEOF();
-+	}
-+
-+	public void testReadString_LenHELO() {
-+		init("HELO");
++	private static void assertNotHex(final char c) {
 +		try {
-+			in.readString();
-+			fail("incorrectly accepted invalid packet header");
-+		} catch (IOException e) {
-+			assertEquals("Invalid packet line header: HELO", e.getMessage());
++			RawParseUtils.parseHexInt4((byte) c);
++			fail("Incorrectly acccepted " + c);
++		} catch (ArrayIndexOutOfBoundsException e) {
++			// pass
 +		}
 +	}
 +
-+	public void testReadString_Len0001() {
-+		init("0001");
++	public void testInt16() {
++		assertEquals(0x0000, parse16("0000"));
++		assertEquals(0x0001, parse16("0001"));
++		assertEquals(0x1234, parse16("1234"));
++		assertEquals(0xdead, parse16("dead"));
++		assertEquals(0xBEEF, parse16("BEEF"));
++		assertEquals(0x4321, parse16("4321"));
++		assertEquals(0xffff, parse16("ffff"));
++
 +		try {
-+			in.readString();
-+			fail("incorrectly accepted invalid packet header");
-+		} catch (IOException e) {
-+			assertEquals("Invalid packet line header: 0001", e.getMessage());
++			parse16("noth");
++			fail("Incorrectly acccepted \"noth\"");
++		} catch (ArrayIndexOutOfBoundsException e) {
++			// pass
++		}
++
++		try {
++			parse16("01");
++			fail("Incorrectly acccepted \"01\"");
++		} catch (ArrayIndexOutOfBoundsException e) {
++			// pass
++		}
++
++		try {
++			parse16("000.");
++			fail("Incorrectly acccepted \"000.\"");
++		} catch (ArrayIndexOutOfBoundsException e) {
++			// pass
 +		}
 +	}
 +
-+	public void testReadString_Len0002() {
-+		init("0002");
++	private static int parse16(final String str) {
++		return RawParseUtils.parseHexInt16(Constants.encodeASCII(str), 0);
++	}
++
++	public void testInt32() {
++		assertEquals(0x00000000, parse32("00000000"));
++		assertEquals(0x00000001, parse32("00000001"));
++		assertEquals(0xc0ffEE42, parse32("c0ffEE42"));
++		assertEquals(0xffffffff, parse32("ffffffff"));
++		assertEquals(-1, parse32("ffffffff"));
++
 +		try {
-+			in.readString();
-+			fail("incorrectly accepted invalid packet header");
-+		} catch (IOException e) {
-+			assertEquals("Invalid packet line header: 0002", e.getMessage());
++			parse32("noth");
++			fail("Incorrectly acccepted \"noth\"");
++		} catch (ArrayIndexOutOfBoundsException e) {
++			// pass
++		}
++
++		try {
++			parse32("notahexs");
++			fail("Incorrectly acccepted \"notahexs\"");
++		} catch (ArrayIndexOutOfBoundsException e) {
++			// pass
++		}
++
++		try {
++			parse32("01");
++			fail("Incorrectly acccepted \"01\"");
++		} catch (ArrayIndexOutOfBoundsException e) {
++			// pass
++		}
++
++		try {
++			parse32("0000000.");
++			fail("Incorrectly acccepted \"0000000.\"");
++		} catch (ArrayIndexOutOfBoundsException e) {
++			// pass
 +		}
 +	}
 +
-+	public void testReadString_Len0003() {
-+		init("0003");
-+		try {
-+			in.readString();
-+			fail("incorrectly accepted invalid packet header");
-+		} catch (IOException e) {
-+			assertEquals("Invalid packet line header: 0003", e.getMessage());
-+		}
-+	}
-+
-+	public void testReadString_Len0004() throws IOException {
-+		init("0004");
-+		final String act = in.readString();
-+		assertEquals("", act);
-+		assertNotSame(PacketLineIn.END, act);
-+		assertEOF();
-+	}
-+
-+	public void testReadString_End() throws IOException {
-+		init("0000");
-+		assertSame(PacketLineIn.END, in.readString());
-+		assertEOF();
-+	}
-+
-+	// readStringNoLF
-+
-+	public void testReadStringRaw1() throws IOException {
-+		init("0005a0006bc");
-+		assertEquals("a", in.readStringRaw());
-+		assertEquals("bc", in.readStringRaw());
-+		assertEOF();
-+	}
-+
-+	public void testReadStringRaw2() throws IOException {
-+		init("0031want fcfcfb1fd94829c1a1704f894fc111d14770d34e");
-+		final String act = in.readStringRaw();
-+		assertEquals("want fcfcfb1fd94829c1a1704f894fc111d14770d34e", act);
-+		assertEOF();
-+	}
-+
-+	public void testReadStringRaw3() throws IOException {
-+		init("0004");
-+		final String act = in.readStringRaw();
-+		assertEquals("", act);
-+		assertNotSame(PacketLineIn.END, act);
-+		assertEOF();
-+	}
-+
-+	public void testReadStringRaw_End() throws IOException {
-+		init("0000");
-+		assertSame(PacketLineIn.END, in.readStringRaw());
-+		assertEOF();
-+	}
-+
-+	public void testReadStringRaw4() {
-+		init("HELO");
-+		try {
-+			in.readStringRaw();
-+			fail("incorrectly accepted invalid packet header");
-+		} catch (IOException e) {
-+			assertEquals("Invalid packet line header: HELO", e.getMessage());
-+		}
-+	}
-+
-+	// readACK
-+
-+	public void testReadACK_NAK() throws IOException {
-+		final ObjectId expid = ObjectId
-+				.fromString("fcfcfb1fd94829c1a1704f894fc111d14770d34e");
-+		final MutableObjectId actid = new MutableObjectId();
-+		actid.fromString(expid.name());
-+
-+		init("0008NAK\n");
-+		assertSame(PacketLineIn.AckNackResult.NAK, in.readACK(actid));
-+		assertTrue(actid.equals(expid));
-+		assertEOF();
-+	}
-+
-+	public void testReadACK_ACK1() throws IOException {
-+		final ObjectId expid = ObjectId
-+				.fromString("fcfcfb1fd94829c1a1704f894fc111d14770d34e");
-+		final MutableObjectId actid = new MutableObjectId();
-+
-+		init("0031ACK fcfcfb1fd94829c1a1704f894fc111d14770d34e\n");
-+		assertSame(PacketLineIn.AckNackResult.ACK, in.readACK(actid));
-+		assertTrue(actid.equals(expid));
-+		assertEOF();
-+	}
-+
-+	public void testReadACK_ACKcontinue1() throws IOException {
-+		final ObjectId expid = ObjectId
-+				.fromString("fcfcfb1fd94829c1a1704f894fc111d14770d34e");
-+		final MutableObjectId actid = new MutableObjectId();
-+
-+		init("003aACK fcfcfb1fd94829c1a1704f894fc111d14770d34e continue\n");
-+		assertSame(PacketLineIn.AckNackResult.ACK_CONTINUE, in.readACK(actid));
-+		assertTrue(actid.equals(expid));
-+		assertEOF();
-+	}
-+
-+	public void testReadACK_Invalid1() {
-+		init("HELO");
-+		try {
-+			in.readACK(new MutableObjectId());
-+			fail("incorrectly accepted invalid packet header");
-+		} catch (IOException e) {
-+			assertEquals("Invalid packet line header: HELO", e.getMessage());
-+		}
-+	}
-+
-+	public void testReadACK_Invalid2() {
-+		init("0009HELO\n");
-+		try {
-+			in.readACK(new MutableObjectId());
-+			fail("incorrectly accepted invalid ACK/NAK");
-+		} catch (IOException e) {
-+			assertEquals("Expected ACK/NAK, got: HELO", e.getMessage());
-+		}
-+	}
-+
-+	public void testReadACK_Invalid3() {
-+		init("0000");
-+		try {
-+			in.readACK(new MutableObjectId());
-+			fail("incorrectly accepted no ACK/NAK");
-+		} catch (IOException e) {
-+			assertEquals("Expected ACK/NAK, found EOF", e.getMessage());
-+		}
-+	}
-+
-+	// test support
-+
-+	private void init(final String msg) {
-+		rawIn = new ByteArrayInputStream(Constants.encodeASCII(msg));
-+		in = new PacketLineIn(rawIn);
-+	}
-+
-+	private void assertEOF() {
-+		assertEquals(-1, rawIn.read());
++	private static int parse32(final String str) {
++		return RawParseUtils.parseHexInt32(Constants.encodeASCII(str), 0);
 +	}
 +}
 -- 
