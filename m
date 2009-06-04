@@ -1,93 +1,72 @@
-From: "Reynolds, Stephen (GE EntSol, Intelligent Platforms)" 
-	<Stephen.Reynolds@gefanuc.com>
-Subject: git-p4: submit  to blank p4 repository help please
-Date: Thu, 4 Jun 2009 08:16:04 +0100
-Message-ID: <F61C2CF29BF32C4A805C6C029452B92004756039@LONMLVEM06.e2k.ad.ge.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Request for detailed documentation of git pack protocol
+Date: Thu, 04 Jun 2009 00:26:08 -0700
+Message-ID: <7v63fczchb.fsf@alter.siamese.dyndns.org>
+References: <200905122329.15379.jnareb@gmail.com>
+	<200906031851.12160.jnareb@gmail.com>
+	<20090603165613.GJ3355@spearce.org>
+	<200906032220.00238.jnareb@gmail.com>
+	<20090603202429.GO3355@spearce.org> <4A277507.2060409@op5.se>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="US-ASCII"
-Content-Transfer-Encoding: 8BIT
-To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Jun 04 09:21:28 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: "Shawn O. Pearce" <spearce@spearce.org>,
+	Jakub Narebski <jnareb@gmail.com>,
+	Scott Chacon <schacon@gmail.com>, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>
+To: Andreas Ericsson <ae@op5.se>
+X-From: git-owner@vger.kernel.org Thu Jun 04 09:26:24 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MC7GS-0005FX-3g
-	for gcvg-git-2@gmane.org; Thu, 04 Jun 2009 09:21:28 +0200
+	id 1MC7LA-0006iL-PM
+	for gcvg-git-2@gmane.org; Thu, 04 Jun 2009 09:26:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753405AbZFDHVR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Jun 2009 03:21:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753353AbZFDHVQ
-	(ORCPT <rfc822;git-outgoing>); Thu, 4 Jun 2009 03:21:16 -0400
-Received: from exprod5og111.obsmtp.com ([64.18.0.22]:39772 "EHLO
-	exprod5og111.obsmtp.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753084AbZFDHVP convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 4 Jun 2009 03:21:15 -0400
-X-Greylist: delayed 303 seconds by postgrey-1.27 at vger.kernel.org; Thu, 04 Jun 2009 03:21:15 EDT
-Received: from source ([12.71.149.1]) (using TLSv1) by exprod5ob111.postini.com ([64.18.4.12]) with SMTP
-	ID DSNKSid17WxPZkEo5A03pZMvtQvxfzpAox3S@postini.com; Thu, 04 Jun 2009 00:21:18 PDT
-Received: from unknown (HELO cinmlef03.e2k.ad.ge.com) ([3.159.213.46])
-  by Cinmlip09.e2k.ad.ge.com with ESMTP; 04 Jun 2009 03:16:12 -0400
-Received: from LONMLVEM06.e2k.ad.ge.com ([3.159.240.62]) by cinmlef03.e2k.ad.ge.com with Microsoft SMTPSVC(6.0.3790.3959);
-	 Thu, 4 Jun 2009 03:16:12 -0400
-X-MimeOLE: Produced By Microsoft Exchange V6.5
-Content-class: urn:content-classes:message
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-Thread-Topic: git-p4: submit  to blank p4 repository help please
-Thread-Index: AcnkXHctNycaZbe1RwqPHQNw1bPBtwAARW4QACGl0iA=
-X-OriginalArrivalTime: 04 Jun 2009 07:16:12.0119 (UTC) FILETIME=[57112E70:01C9E4E4]
+	id S1753941AbZFDH0K (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Jun 2009 03:26:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753723AbZFDH0J
+	(ORCPT <rfc822;git-outgoing>); Thu, 4 Jun 2009 03:26:09 -0400
+Received: from fed1rmmtao104.cox.net ([68.230.241.42]:62049 "EHLO
+	fed1rmmtao104.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752473AbZFDH0I (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Jun 2009 03:26:08 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao104.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20090604072610.BARN17135.fed1rmmtao104.cox.net@fed1rmimpo01.cox.net>;
+          Thu, 4 Jun 2009 03:26:10 -0400
+Received: from localhost ([68.225.240.211])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id zjS91b0034aMwMQ03jS96p; Thu, 04 Jun 2009 03:26:09 -0400
+X-VR-Score: -100.00
+X-Authority-Analysis: v=1.0 c=1 a=1cH15jnNZHcA:10 a=8-WIN01VSTQA:10
+ a=UImmgy8r03327txCHIAA:9 a=U-2HA7vqY_9B2WImVN4A:7
+ a=2n9wWGUpFx5Xgyxzl6wrLEqG7kYA:4
+X-CM-Score: 0.00
+In-Reply-To: <4A277507.2060409@op5.se> (Andreas Ericsson's message of "Thu\, 04 Jun 2009 09\:17\:27 +0200")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120683>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120684>
 
-Hi
+Andreas Ericsson <ae@op5.se> writes:
 
-There was some discussion of this under the topic "bug in git-p4?" but I
-could see no resolution so I am putting the question out again.
+> How is "no tags present" signalled? Without such a signal, the client
+> must always issue a subsequent request every time there are no tags
+> embedded in the received pack, as it can't know if the server ignored
+> the option silently or if there just aren't any new tags.
 
-Git-p4 does not seem to work (for me at least) when you try to submit a
-git repository to a blank p4 repository. It seems that you have to have
-pulled your git repository from p4 originally in order for it to work?
+The fetcher first learns the set of tags and what objects they point at.
+That's in the first part of the upload-pack protocol.
 
-This is the kind of thing I have typically been trying  
+Of course, if there is no tag, you won't see them advertised, so you can
+know.
 
-git-p4 clone //depot/firmware/fred/bloggs.git
-
-(//depot/firmware/fred/bloggs.git is a folder synced to an empty p4
-repository)
-
-cd bloggs
-
-(there is now an empty git repository here)
-
-If I then pull from a git repository into the newly created bloggs.git
-and do git-p4 submit 
-
-I get...
-
-Syncronizing p4 checkout...
-... - file(s) up-to-date.
-Applying 0b666f81da14bf46cada222856762f7fd6641c26 Initial revision
-
-fatal: ambiguous argument '0b666f81da14bf46cada222856762f7fd6641c26^':
-unknown revision or path not in the working tree.
-Use '--' to separate paths from revisions
-Command failed: git diff-tree -r
-"0b666f81da14bf46cada222856762f7fd6641c26^"
-"0b666f81da14bf46cada222856762f7fd6641c26"
-
-
-I have tried to checkout pre-existing files from P4, change them in git
-and put them back and that works fine.
-
-I am using the git 1.6.3.1.fc9 rpms with the git-p4 taken from the
-git-1.6.3.1 source tree.
-
-
-Thanks for your help
-
-Steve
+After finishing the main part of the object transfer, if some of the
+objects that are pointed at by tags are present (and reachable from refs),
+but the tags that point at them do not exist yet, that is a sign that the
+uploader didn't give you these tag objects.  Then you can turn around to
+request those tags by initiating another exchange, and ask for them with
+"want" lines.
