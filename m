@@ -1,72 +1,128 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Request for detailed documentation of git pack protocol
-Date: Thu, 04 Jun 2009 00:26:08 -0700
-Message-ID: <7v63fczchb.fsf@alter.siamese.dyndns.org>
-References: <200905122329.15379.jnareb@gmail.com>
-	<200906031851.12160.jnareb@gmail.com>
-	<20090603165613.GJ3355@spearce.org>
-	<200906032220.00238.jnareb@gmail.com>
-	<20090603202429.GO3355@spearce.org> <4A277507.2060409@op5.se>
+From: "Matthias Andree" <matthias.andree@gmx.de>
+Subject: Re: [PATCH v3] To make GIT-VERSION-FILE, search for git more widely
+Date: Thu, 04 Jun 2009 10:35:58 +0200
+Message-ID: <op.uuzrh8jr1e62zd@balu.cs.uni-paderborn.de>
+References: <1241688129-31613-1-git-send-email-matthias.andree@gmx.de>
+ <20090602195533.6117@nanako3.lavabit.com>
+ <7v7hzufxcu.fsf@alter.siamese.dyndns.org> <200906022035.30081.j6t@kdbg.org>
+ <7vvdnc37b6.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Shawn O. Pearce" <spearce@spearce.org>,
-	Jakub Narebski <jnareb@gmail.com>,
-	Scott Chacon <schacon@gmail.com>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>
-To: Andreas Ericsson <ae@op5.se>
-X-From: git-owner@vger.kernel.org Thu Jun 04 09:26:24 2009
+Content-Type: text/plain; format=flowed; delsp=yes; charset=iso-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: "Nanako Shiraishi" <nanako3@lavabit.com>, git@vger.kernel.org
+To: "Junio C Hamano" <gitster@pobox.com>,
+	"Johannes Sixt" <j6t@kdbg.org>
+X-From: git-owner@vger.kernel.org Thu Jun 04 10:36:12 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MC7LA-0006iL-PM
-	for gcvg-git-2@gmane.org; Thu, 04 Jun 2009 09:26:21 +0200
+	id 1MC8Qi-0006JZ-7d
+	for gcvg-git-2@gmane.org; Thu, 04 Jun 2009 10:36:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753941AbZFDH0K (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Jun 2009 03:26:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753723AbZFDH0J
-	(ORCPT <rfc822;git-outgoing>); Thu, 4 Jun 2009 03:26:09 -0400
-Received: from fed1rmmtao104.cox.net ([68.230.241.42]:62049 "EHLO
-	fed1rmmtao104.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752473AbZFDH0I (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Jun 2009 03:26:08 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao104.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20090604072610.BARN17135.fed1rmmtao104.cox.net@fed1rmimpo01.cox.net>;
-          Thu, 4 Jun 2009 03:26:10 -0400
-Received: from localhost ([68.225.240.211])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id zjS91b0034aMwMQ03jS96p; Thu, 04 Jun 2009 03:26:09 -0400
-X-VR-Score: -100.00
-X-Authority-Analysis: v=1.0 c=1 a=1cH15jnNZHcA:10 a=8-WIN01VSTQA:10
- a=UImmgy8r03327txCHIAA:9 a=U-2HA7vqY_9B2WImVN4A:7
- a=2n9wWGUpFx5Xgyxzl6wrLEqG7kYA:4
-X-CM-Score: 0.00
-In-Reply-To: <4A277507.2060409@op5.se> (Andreas Ericsson's message of "Thu\, 04 Jun 2009 09\:17\:27 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+	id S1752081AbZFDIgA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Jun 2009 04:36:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751091AbZFDIf7
+	(ORCPT <rfc822;git-outgoing>); Thu, 4 Jun 2009 04:35:59 -0400
+Received: from mail.gmx.net ([213.165.64.20]:35100 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751080AbZFDIf5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Jun 2009 04:35:57 -0400
+Received: (qmail invoked by alias); 04 Jun 2009 08:35:58 -0000
+Received: from balu.cs.uni-paderborn.de (EHLO balu.cs.uni-paderborn.de) [131.234.21.37]
+  by mail.gmx.net (mp006) with SMTP; 04 Jun 2009 10:35:58 +0200
+X-Authenticated: #428038
+X-Provags-ID: V01U2FsdGVkX18hmcQypbAhPSHj+rCSHpZ7bXufgEk9PWtw1WHah5
+	qvN5HWKIMwQfz/
+Received: from localhost ([127.0.0.1] helo=balu.cs.uni-paderborn.de)
+	by balu.cs.uni-paderborn.de with esmtp (Exim 4.69)
+	(envelope-from <matthias.andree@gmx.de>)
+	id KKPH7Z-0004O0-BR; Thu, 04 Jun 2009 10:35:59 +0200
+In-Reply-To: <7vvdnc37b6.fsf@alter.siamese.dyndns.org>
+User-Agent: Opera Mail/9.64 (Win32)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.46
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120684>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120685>
 
-Andreas Ericsson <ae@op5.se> writes:
+Am 04.06.2009, 07:18 Uhr, schrieb Junio C Hamano <gitster@pobox.com>:
 
-> How is "no tags present" signalled? Without such a signal, the client
-> must always issue a subsequent request every time there are no tags
-> embedded in the received pack, as it can't know if the server ignored
-> the option silently or if there just aren't any new tags.
+> Johannes Sixt <j6t@kdbg.org> writes:
+>
+>> On Dienstag, 2. Juni 2009, Junio C Hamano wrote:
+>>> Nanako Shiraishi <nanako3@lavabit.com> writes:
+>>> > Junio, I think you forgot to take a follow-up action on this thread  
+>>> after
+>>> > sending this message.  The patch favors the git program in the  
+>>> current
+>>> > directory.
+>>>
+>>> Indeed, I did, and I think I am Ok with the patch.  Thanks for a
+>>> reminder.
+>>>
+>>> I thought there was an "simplicity" issue raised by J6t that was not
+>>> addressed, but after re-reading the thread I do not think it applies
+>>> (J6t?)
+>>
+>> Sorry, I don't recall anymore what I said; but since the thread petered  
+>> out, I
+>> use this patch in the repository where I share Matthias' 'sudo make  
+>> install'
+>> problem:
+>>
+>> Subject: [PATCH] version-gen: Use just built git if no other git is in  
+>> PATH
+>>
+>> Signed-off-by: Johannes Sixt <j6t@kdbg.org>
+>>
+>> diff --git a/GIT-VERSION-GEN b/GIT-VERSION-GEN
+>> index 39cde78..4779313 100755
+>> --- a/GIT-VERSION-GEN
+>> +++ b/GIT-VERSION-GEN
+>> @@ -3,6 +3,9 @@
+>>  GVF=GIT-VERSION-FILE
+>>  DEF_VER=v1.6.3.GIT
+>>
+>> +# use git that was just compiled if there is no git elsewhere in PATH
+>> +PATH=$PATH:.
+>> +
+>>  LF='
+>>  '
+>
+> I actually think this is much saner and cleaner (it certainly is  
+> smaller),
+> especially having seen Matthias's v4, which feels a tad overengineered.
 
-The fetcher first learns the set of tags and what objects they point at.
-That's in the first part of the upload-pack protocol.
+It's nothing more than
 
-Of course, if there is no tag, you won't see them advertised, so you can
-know.
+(a) followed your suggestion to look in $(prefix) first for cross-building  
+support
 
-After finishing the main part of the object transfer, if some of the
-objects that are pointed at by tags are present (and reachable from refs),
-but the tags that point at them do not exist yet, that is a sign that the
-uploader didn't give you these tag objects.  Then you can turn around to
-request those tags by initiating another exchange, and ask for them with
-"want" lines.
+(b) ported to git-gui as well (copy & paste-style)
+
+Also, we certainly do not want to stuff "." in root's PATH, not even for  
+simple scripts like GIT-VERSION-GEN.
+
+> I honestly do not understand why we need to bend backwards to cater to
+> "sudo".  Real men, when needing to do things as root, have always done
+> "su", and _if_ the environment is unsuited for the job, they can do:
+>
+> 	$ su
+>         # PATH=$PATH:/usr/local/bin make prefix=/usr/local install
+
+sudo caches passwords for a couple of minutes, su does not, and su isn't  
+available everywhere ("wheel" group on BSD and stuff); particularly, sudo  
+is *the* get-root-tool on Ubuntu.
+
+If you argue "real men", then break that damn rebuild cycle and either fix  
+dependencies properly, rather than second-guessing in shell scripts at  
+"make install" time, or add post-update hooks (or whatever) to update the  
+GIT-VERSION-FILE...
+
+"." doesn't belong in root's $PATH, period.
+
+-- 
+Matthias Andree
