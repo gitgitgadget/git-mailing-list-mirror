@@ -1,149 +1,83 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: di-git-ally managing love letters - a Git presentation
-Date: Thu, 04 Jun 2009 07:51:20 -0700 (PDT)
-Message-ID: <m3oct46oji.fsf@localhost.localdomain>
-References: <d16b1c80906040441n7ad549eay83a6ccfd5db09fb3@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [Patch] Prevent cloning over http from spewing
+Date: Thu, 4 Jun 2009 12:01:52 -0400
+Message-ID: <20090604160152.GA13984@sigill.intra.peff.net>
+References: <20090602174229.GA14455@infidigm.net> <m3vdnda9f7.fsf@localhost.localdomain> <7vmy8p8947.fsf@alter.siamese.dyndns.org> <20090603191050.GB29564@coredump.intra.peff.net> <20090603191555.GL3355@spearce.org> <be6fef0d0906040545j7bd754e0j2c60af833e2ac4a4@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Shakthi Kannan <shakthimaan@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jun 04 16:52:15 2009
+Content-Type: text/plain; charset=utf-8
+Cc: "Shawn O. Pearce" <spearce@spearce.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Jakub Narebski <jnareb@gmail.com>, sparse@infidigm.net,
+	git@vger.kernel.org
+To: Tay Ray Chuan <rctay89@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jun 04 18:03:15 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MCEIX-0007He-CJ
-	for gcvg-git-2@gmane.org; Thu, 04 Jun 2009 16:52:05 +0200
+	id 1MCFPL-0002lH-TW
+	for gcvg-git-2@gmane.org; Thu, 04 Jun 2009 18:03:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754804AbZFDOvY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Jun 2009 10:51:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754420AbZFDOvX
-	(ORCPT <rfc822;git-outgoing>); Thu, 4 Jun 2009 10:51:23 -0400
-Received: from fg-out-1718.google.com ([72.14.220.152]:42108 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753968AbZFDOvW (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Jun 2009 10:51:22 -0400
-Received: by fg-out-1718.google.com with SMTP id d23so1453411fga.17
-        for <git@vger.kernel.org>; Thu, 04 Jun 2009 07:51:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received
-         :x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        bh=vf7QUHfSaqfHYjl4ok3hEX4Aq9SPLr34EFaLNIuUm/A=;
-        b=QJSLPB6N7ffEkQTMK4SaKeipvw+wBe+QGp1HOW3qnvVXGLYkXOv0fSEfhSn6nKzQ+4
-         1s3I69xBIYKhAiVejcs99H8Re91J6/kU+y9IHxWwBiZi43C46iSxvTKfIjXC5k1LHAUX
-         wFagw8cNKIuqsJVrHcT/LAti/dWwrMNItX3qI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        b=Jn3IXRXNZg1Pb5dj/sOHSrrf7HBSxyQgo6k6SgUyftwZ5h0CkIYGtRQOL8DWPTfZiE
-         hkAn5LDIQgoRlakQpC60a3MGO5Yv1o1VfEOmHJ65DgPkNv4k4wEUzCf0Pfpp8IkYvBgo
-         dzcQPjJxz62KcLsINW/qJcS73IfgnLNdAHx4k=
-Received: by 10.86.90.2 with SMTP id n2mr2634102fgb.39.1244127082701;
-        Thu, 04 Jun 2009 07:51:22 -0700 (PDT)
-Received: from localhost.localdomain (abvg76.neoplus.adsl.tpnet.pl [83.8.204.76])
-        by mx.google.com with ESMTPS id 4sm2784232fgg.8.2009.06.04.07.51.19
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 04 Jun 2009 07:51:20 -0700 (PDT)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id n54EotuI004282;
-	Thu, 4 Jun 2009 16:51:05 +0200
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id n54Eogcb004273;
-	Thu, 4 Jun 2009 16:50:42 +0200
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <d16b1c80906040441n7ad549eay83a6ccfd5db09fb3@mail.gmail.com>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+	id S1756149AbZFDQBx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Jun 2009 12:01:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757639AbZFDQBx
+	(ORCPT <rfc822;git-outgoing>); Thu, 4 Jun 2009 12:01:53 -0400
+Received: from peff.net ([208.65.91.99]:48885 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756782AbZFDQBw (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Jun 2009 12:01:52 -0400
+Received: (qmail 31998 invoked by uid 107); 4 Jun 2009 16:02:00 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.40) with ESMTPA; Thu, 04 Jun 2009 12:02:00 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 04 Jun 2009 12:01:52 -0400
+Content-Disposition: inline
+In-Reply-To: <be6fef0d0906040545j7bd754e0j2c60af833e2ac4a4@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120699>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120700>
 
-Shakthi Kannan <shakthimaan@gmail.com> writes:
+On Thu, Jun 04, 2009 at 08:45:28PM +0800, Tay Ray Chuan wrote:
 
-> I have tried to make a basic presentation on Git, that covers some
-> basic commands. Please find it here:
-> http://shakthimaan.com/downloads/glv/presentations/di-git-ally-managing-love-letters.pdf
-> 
-> The LaTeX beamer sources are available at:
-> http://shakthimaan.com/downloads/glv/presentations/di-git-ally-managing-love-letters.tar.bz2
+> I have a branch 'http-progress-indicators' at my repo
+> git://github.com/rctay/git.git. It contains a patch on walker.c that
+> updates the object total as the fetch goes along. The progress
+> indicator says "Processing targets:..." for lack of a better name; I'm
+> all for suggestions.
 
-Why don't you use git to manage LaTeX sources, using for example one
-of free git hosting sites (repo.or.cz, GitHub, Gitorious)?
+Thanks, I took a look at starting on a progress meter yesterday, but I
+do think it makes sense to integrate with the work you are doing.
 
+I tried your http-progress-indicators branch. A few comments:
 
-I liked the presentation, especially visualisation of status of
-working area, index and object database (repository).
+  1. You still end up with a lot of lines of output. Some of those are
+     "Getting pack $x" which we can probably get rid of in non-verbose
+     mode. But we still get a different progress indicator line for each
+     fetched item, which can add up to quite a lot. I was thinking of
+     something like
 
-A few comments:
- * For which git version do you write your presentation?  Modern
-   git (which might mean just released version, and perhaps even
-   yet-to-be-released version) has:
-     - git config --global --edit   #; for Windows users
-     - git log --oneline == git log --pretty=oneline --abbrev-commit
+        Fetching %s (got %d packs, %d loose): (%d/%d)
 
- * Nitpick: git index (also known as staging area) does not contain
-   objects itself.  They are put in objects database.  The index 
-   contains references to those objects (so they can be found).
+     with the substitutions:
 
- * Suggestion: When showing "git diff", "git diff --cached" and 
-   "git diff HEAD" output you might want to show which parts
-   in the diagram below you compare.
+       %s = "pack", "index", or "loose object"
+       %d packs, %d loose = a running count of how much we've gotten
+       %d/%d = current and total byte counts for what we are getting now
 
- * Why there is no diagram / graph for tagging?
+     and then you could keep everything on a single line. I don't think
+     is possible with the current progress code (it doesn't let you
+     restart the counter), but it should be easy with some tweaking.
 
- * Nitpick: you have spelled 'git-format-patch' by mistake
-   instead of modern 'git format-patch'.
+  2. The current progress code can also do throughput display, which
+     would be nice (see display_throughput in progress.[ch]).
 
->
-> I start with git init, add, commit;
+  3. Your implementation calls your get_http_file_size, which does a
+     separate HEAD request to get the content-length. Instead, do
+     a "curl_easy_setopt(slot->curl, CURLOPT_PROGRESSFUNCTION, ...)"
+     to set up a progress callback. Curl will call it with the total
+     number of bytes (from the content-length header of the actual GET
+     request) and the number of bytes currently downloaded.
 
- * I wonder which of workflows is more common: starting with empty
-   repository, or starting with some set of files.  You can do
-   "git init" in existing directory.  But perhaps starting with
-   clean state is easier to describe, as you can just "git add .",
-   while you might want to add only subset of files (using for
-   example ignore rules) in project import workflow.
-
-> show how to use rm with -f and --cached options; 
-
- * I would personally use "git rm -f <file>", but it might be easier
-   tu add '-f' at the end of line.
-
-> then go on to show reset HEAD (alternative to using --cached?);
-
- * I would guess that this usage ("git reset HEAD <file>") is quite
-   rare, and would make more sense if there would be some committed
-   version of <file>; then it wouldn't be equivalent to 
-   "git rm --cached <file>".
-
-> proceed further to show reset --soft
-
- * I think that actual usage of "git reset --soft" is pretty pretty
-   rare since we have "git commit --amend".
-
-> and --hard options.
-
- * "git reset --hard <revision>" is actually pretty useful.
-
-> Finally, branching, merging, rebase and clone. It is not meant to be a
-> comprehensive list of git commands, but, some essential ones to get
-> people started with (I hope).
-> 
-> I would appreciate feedback, suggestions on the same. If you feel the
-> commands are to be used differently, or in a different workflow
-> perhaps, or if you find something that needs to be added, removed or
-> fixed, please let me know.
-> 
-> Kindly ignore the nouns used.
-
-I don't know if presentation is not too long. On the other hand it
-doesn't cover situations such as non fast-formard merge...
-
--- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+-Peff
