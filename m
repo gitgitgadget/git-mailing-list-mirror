@@ -1,70 +1,108 @@
-From: Magnus =?iso-8859-1?Q?B=E4ck?= <baeck@swipnet.se>
-Subject: Re: di-git-ally managing love letters - a Git presentation
-Date: Thu, 4 Jun 2009 14:56:53 +0200
-Message-ID: <20090604125653.GA26121@jeeves.jpl.local>
-References: <d16b1c80906040441n7ad549eay83a6ccfd5db09fb3@mail.gmail.com> <alpine.DEB.1.00.0906041350330.4912@intel-tinevez-2-302>
+From: Andreas =?iso-8859-15?q?Kl=F6ckner?= <lists@informa.tiker.net>
+Subject: Re: [PATCHv1+eps] git-repack.txt: Clarify implications of -a for dumb protocols
+Date: Thu, 4 Jun 2009 09:34:12 -0400
+Message-ID: <200906040934.39475.lists@informa.tiker.net>
+References: <200906031950.56974.lists@informa.tiker.net> <1244115295-28688-1-git-send-email-git@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Shakthi Kannan <shakthimaan@gmail.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jun 04 14:57:09 2009
+Content-Type: multipart/signed;
+  boundary="nextPart4428413.9Z9QYlvITr";
+  protocol="application/pgp-signature";
+  micalg=pgp-sha1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Thu Jun 04 15:41:38 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MCCVJ-0004YK-Fq
-	for gcvg-git-2@gmane.org; Thu, 04 Jun 2009 14:57:09 +0200
+	id 1MCDCH-00008F-5t
+	for gcvg-git-2@gmane.org; Thu, 04 Jun 2009 15:41:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752527AbZFDM47 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 4 Jun 2009 08:56:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752345AbZFDM46
-	(ORCPT <rfc822;git-outgoing>); Thu, 4 Jun 2009 08:56:58 -0400
-Received: from proxy2.bredband.net ([195.54.101.72]:44045 "EHLO
-	proxy2.bredband.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752284AbZFDM45 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Jun 2009 08:56:57 -0400
-Received: from ironport2.bredband.com (195.54.101.122) by proxy2.bredband.net (7.3.140.3)
-        id 49F59CBD00EF750D for git@vger.kernel.org; Thu, 4 Jun 2009 14:56:58 +0200
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: AkAFAARhJ0pT4/BMPGdsb2JhbACBT5ZBAQEBAR4it0eEDAU
-X-IronPort-AV: E=Sophos;i="4.41,305,1241388000"; 
-   d="scan'208";a="499120629"
-Received: from ua-83-227-240-76.cust.bredbandsbolaget.se (HELO elwood.jpl.local) ([83.227.240.76])
-  by ironport2.bredband.com with ESMTP; 04 Jun 2009 14:56:58 +0200
-Received: from jeeves.jpl.local (jeeves.jpl.local [192.168.7.3])
-	by elwood.jpl.local (Postfix) with ESMTP id 292B2422A9;
-	Thu,  4 Jun 2009 14:56:57 +0200 (CEST)
-Received: by jeeves.jpl.local (Postfix, from userid 100)
-	id 762693C2D; Thu,  4 Jun 2009 14:56:54 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <alpine.DEB.1.00.0906041350330.4912@intel-tinevez-2-302>
-User-Agent: Mutt/1.4.1i
+	id S1752396AbZFDNlJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Jun 2009 09:41:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751977AbZFDNlH
+	(ORCPT <rfc822;git-outgoing>); Thu, 4 Jun 2009 09:41:07 -0400
+Received: from outbound-mail-20.bluehost.com ([69.89.20.235]:50108 "HELO
+	outbound-mail-20.bluehost.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with SMTP id S1751542AbZFDNlH (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 4 Jun 2009 09:41:07 -0400
+X-Greylist: delayed 399 seconds by postgrey-1.27 at vger.kernel.org; Thu, 04 Jun 2009 09:41:06 EDT
+Received: (qmail 1169 invoked by uid 0); 4 Jun 2009 13:34:28 -0000
+Received: from unknown (HELO host304.hostmonster.com) (74.220.215.104)
+  by outboundproxy1.bluehost.com with SMTP; 4 Jun 2009 13:34:28 -0000
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws; s=default; d=informa.tiker.net;
+	h=Received:From:To:Subject:Date:User-Agent:Cc:References:In-Reply-To:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id:X-Identified-User;
+	b=hZw+D6i36MVwdmCV7K6MurKegmJ/viYJmOEoK6l1ODhg4Y76UauL7Zq3Uy97WldW0WYh/m93/Rxu/sETuZl9B41J5XYHZPHrYmsCiYKgMsaRRnYjiKGUcxSCNnxs16l5;
+Received: from ip68-9-132-118.ri.ri.cox.net ([68.9.132.118] helo=grizzly.localnet)
+	by host304.hostmonster.com with esmtpsa (TLSv1:AES256-SHA:256)
+	(Exim 4.69)
+	(envelope-from <lists@informa.tiker.net>)
+	id 1MCD5P-0003YE-UG; Thu, 04 Jun 2009 07:34:28 -0600
+User-Agent: KMail/1.11.2 (Linux/2.6.30-rc7-686; KDE/4.2.2; i686; ; )
+In-Reply-To: <1244115295-28688-1-git-send-email-git@drmicha.warpmail.net>
+X-Identified-User: {11749:host304.hostmonster.com:tikernet:tiker.net} {sentby:smtp auth 68.9.132.118 authed with andreas-store+tiker.net}
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120697>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120698>
 
-On Thursday, June 04, 2009 at 13:51 CEST,
-     Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+--nextPart4428413.9Z9QYlvITr
+Content-Type: text/plain;
+  charset="iso-8859-15"
+Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
 
-> On Thu, 4 Jun 2009, Shakthi Kannan wrote:
->=20
-> > I have tried to make a basic presentation on Git, that covers some
-> > basic commands. Please find it here:
-> > http://shakthimaan.com/downloads/glv/presentations/di-git-ally-mana=
-ging-love-letters.pdf
->=20
-> Fun!
+Thanks, that's much better!
 
-Indeed, I thought the visualization of what happens when you edit a
-file, add it to the index etc was great.
+Andreas
 
-> The tilde in ~/.gitconfig gets on top of the slash, though...
+On Donnerstag 04 Juni 2009, Michael J Gruber wrote:
+> The current text makes some users feel uneasy, worrying whether
+> '-a' could lead to corrupt repositories. Clarify that '-a'
+> may lead to performance issues only for dumb protocols.
+>
+> Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
+> ---
+> Is that clear enough but concise?
+>
+> Applies to maint.
+>
+> [Sorry for the resend, I managed to mistype the subject.]
+>
+>  Documentation/git-repack.txt |    5 ++++-
+>  1 files changed, 4 insertions(+), 1 deletions(-)
+>
+> diff --git a/Documentation/git-repack.txt b/Documentation/git-repack.txt
+> index aaa8852..8af5505 100644
+> --- a/Documentation/git-repack.txt
+> +++ b/Documentation/git-repack.txt
+> @@ -32,7 +32,10 @@ OPTIONS
+>  	pack everything referenced into a single pack.
+>  	Especially useful when packing a repository that is used
+>  	for private development and there is no need to worry
+> -	about people fetching via dumb protocols from it.  Use
+> +	about people fetching via dumb protocols from it.
+> +	(Over dumb protocols, one would have to fetch the whole new
+> +	pack in order to get any contained object, no matter how
+> +	many other objects in that pack exist locally already.) Use
+>  	with '-d'.  This will clean up the objects that `git prune`
+>  	leaves behind, but `git fsck --full` shows as
+>  	dangling.
 
-\textasciitilde instead of \~ should solve that problem.
 
---=20
-Magnus B=E4ck
-baeck@swipnet.se
+
+--nextPart4428413.9Z9QYlvITr
+Content-Type: application/pgp-signature; name=signature.asc 
+Content-Description: This is a digitally signed message part.
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
+
+iD8DBQBKJ81VJZ7T4Hn4+FIRArSzAKCUP0KgIiKJ1BatmGIa2u8yVJCYmwCfYBgW
+k5/+JKa6Ju45jVbx7EK/MpU=
+=jYjT
+-----END PGP SIGNATURE-----
+
+--nextPart4428413.9Z9QYlvITr--
