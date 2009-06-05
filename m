@@ -1,73 +1,133 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: Request for detailed documentation of git pack protocol
-Date: Thu, 4 Jun 2009 17:45:40 -0700
-Message-ID: <20090605004540.GU3355@spearce.org>
-References: <200905122329.15379.jnareb@gmail.com> <d411cc4a0905140655y244f21aem44f1e246dd74d80c@mail.gmail.com> <200906022339.08639.jnareb@gmail.com> <200906042255.43952.jnareb@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] daemon: Skip unknown "extra arg" information
+Date: Thu, 04 Jun 2009 17:50:07 -0700
+Message-ID: <7vbpp3tsg0.fsf@alter.siamese.dyndns.org>
+References: <20090604220824.GT3355@spearce.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Scott Chacon <schacon@gmail.com>, git@vger.kernel.org,
-	Linus Torvalds <torvalds@linux-foundation.org>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jun 05 02:45:49 2009
+Cc: git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Fri Jun 05 02:50:18 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MCNZ6-0006so-94
-	for gcvg-git-2@gmane.org; Fri, 05 Jun 2009 02:45:48 +0200
+	id 1MCNdQ-0007os-5q
+	for gcvg-git-2@gmane.org; Fri, 05 Jun 2009 02:50:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751775AbZFEApk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Jun 2009 20:45:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751608AbZFEApj
-	(ORCPT <rfc822;git-outgoing>); Thu, 4 Jun 2009 20:45:39 -0400
-Received: from george.spearce.org ([209.20.77.23]:52626 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751228AbZFEApi (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Jun 2009 20:45:38 -0400
-Received: by george.spearce.org (Postfix, from userid 1001)
-	id EE9DD381D1; Fri,  5 Jun 2009 00:45:40 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <200906042255.43952.jnareb@gmail.com>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1751998AbZFEAuI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Jun 2009 20:50:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751838AbZFEAuH
+	(ORCPT <rfc822;git-outgoing>); Thu, 4 Jun 2009 20:50:07 -0400
+Received: from fed1rmmtao101.cox.net ([68.230.241.45]:34948 "EHLO
+	fed1rmmtao101.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751721AbZFEAuF (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Jun 2009 20:50:05 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao101.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20090605005007.RGOD17670.fed1rmmtao101.cox.net@fed1rmimpo01.cox.net>;
+          Thu, 4 Jun 2009 20:50:07 -0400
+Received: from localhost ([68.225.240.211])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id 00q71c00A4aMwMQ030q728; Thu, 04 Jun 2009 20:50:07 -0400
+X-VR-Score: -300.00
+X-Authority-Analysis: v=1.0 c=1 a=86Vp4Fqyi4EA:10 a=0a0hY8H0wKQA:10
+ a=oAYF_C9AAAAA:8 a=iKYaXlt2pSHn4UarqeMA:9 a=92yVUlQQKQfs69XX_ucA:7
+ a=MjeGVzFW3kf5Eh09kJt0COeXVkAA:4 a=R0wQ3QzoQ0IA:10
+X-CM-Score: 0.00
+In-Reply-To: <20090604220824.GT3355@spearce.org> (Shawn O. Pearce's message of "Thu\, 4 Jun 2009 15\:08\:24 -0700")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120730>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120731>
 
-Jakub Narebski <jnareb@gmail.com> wrote:
-> 
-> Here we were talking about the following part of exchange: 
-> (I have added "C:" prefix to signal that this is what client, 
-> git-clone here, sends; I have added also explicit "\n" to mark LF
-> characters terminating lines, and put each pkt-line on separate line)
-> 
-> gb>  C: 0054want 74730d410fcb6603ace96f1dc55ea6196122532d multi_ack side-band-64k ofs-delta\n
-> gb>  C: 0032want 7d1665144a3a975c05f1f43902ddaf084e784dbe\n
-> gb>  C: 0032want 5a3f6be755bbb7deae50065988cbfa1ffa9ab68a\n
-> gb>  C: 0032want 7e47fe2bd8d01d481f44d7af0531bd93d3b21c01\n
-> gb>  C: 0032want 74730d410fcb6603ace96f1dc55ea6196122532d\n
-> gb>  C: 0000
-> gb>  C: 0009done\n
-> 
-> and where server response is (again the quote from "Git Community Book"
-> was modified, removing here doublequotes and doubling of backslashes):
+"Shawn O. Pearce" <spearce@spearce.org> writes:
 
-That should be fine.
+> If we don't recognize an extra arg supplied hidden behind the
+> command, we should skip it and look at the next extra arg, in
+> case we recognize the next one.
+>
+> For example, we currently don't recognize the "user=" extra arg,
+> but we should still be able to start this connection anyway:
 
-Here's a dummy client that works against both jgit and C Git:
+I do not necessarily agree 100% with that argument.
 
-  perl -e '
-	$h="fcfcfb1fd94829c1a1704f894fc111d14770d34e";
-	$c="multi_ack side-band-64k ofs-delta";
-    sub w{$_=shift;printf "%4.4x%s",4+length,$_;}
-    w("git-upload-pack /.git");
-    w("want $h $c\n");
-    printf "0000";
-    w("done")
-  ' | nc localhost 9418
+When there is a room for "protocol negotiation", it is clear that somebody
+asking for what we said we do not support is bogus, and we should reject.
 
-Are you sure you are flushing the IO buffers in the dummy client?
+Unfortunately, there is no room in the protocol for git-daemon to announce
+its capabilities, so the initial exchange can only be "unilaterally ask
+and hope for the best" from the client's point of view.
 
--- 
-Shawn.
+However, in such a protocol exchange, there should be a way for a client
+to say "if you do not understand this request, it is _NOT_ OK to continue,
+pretending as if I never asked for it; instead please disconnect to avoid
+doing any further harm".
+
+We do something similar in the index extension.  In that area, obviously
+there is no way for the writer who writes the index file to negotiate with
+the reader who will later read from the index to know what the reader can
+understand.  Extension sections are marked with section names, whose case
+allows the reader to tell if it is Ok to simply ignore the section, or
+understanding of the section contents is required for the proper operation
+by the reader.  Perhaps we should be doing something similar.
+
+>  perl -e '
+>    $s="git-upload-pack /.git\0user=me\0host=localhost\0";
+>    printf "%4.4x%s",4+length $s,$s
+>  ' | ./git-daemon --inetd --base-path=`pwd` --export-all
+>
+> Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
+> ---
+>
+>  This should go in maint.
+
+In its current form, I do not think so.  Rejecting unknown is safer and
+maint is about safety, not about feature.  Setting a precedent to accept
+anything unknown will make it harder to later say "the server must
+understand extension tokens that begin with uppercase".  It always is
+easier to start stricter and then later loosen the rules in a controlled
+way.
+
+>  daemon.c |    9 ++++-----
+>  1 files changed, 4 insertions(+), 5 deletions(-)
+>
+> diff --git a/daemon.c b/daemon.c
+> index daa4c8e..a9a4f02 100644
+> --- a/daemon.c
+> +++ b/daemon.c
+> @@ -411,14 +411,13 @@ static char *xstrdup_tolower(const char *str)
+>  static void parse_extra_args(char *extra_args, int buflen)
+>  {
+>  	char *val;
+> -	int vallen;
+>  	char *end = extra_args + buflen;
+>  
+>  	while (extra_args < end && *extra_args) {
+> +		int arglen = strlen(extra_args);
+>  		saw_extended_args = 1;
+>  		if (strncasecmp("host=", extra_args, 5) == 0) {
+>  			val = extra_args + 5;
+> -			vallen = strlen(val) + 1;
+>  			if (*val) {
+>  				/* Split <host>:<port> at colon. */
+>  				char *host = val;
+> @@ -432,10 +431,10 @@ static void parse_extra_args(char *extra_args, int buflen)
+>  				free(hostname);
+>  				hostname = xstrdup_tolower(host);
+>  			}
+> -
+> -			/* On to the next one */
+> -			extra_args = val + vallen;
+>  		}
+> +
+> +		/* On to the next one */
+> +		extra_args += arglen + 1;
+>  	}
+>  
+>  	/*
+> -- 
+> 1.6.3.1.333.g3ebba7
