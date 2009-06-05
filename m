@@ -1,85 +1,102 @@
-From: "Kelly F. Hickel" <kfh@mqsoftware.com>
-Subject: Best way to merge two repos with same content, different history
-Date: Fri, 5 Jun 2009 11:30:32 -0500
-Message-ID: <63BEA5E623E09F4D92233FB12A9F794303117DBF@emailmn.mqsoftware.com>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: [WIP] Shift rev-list enumeration from upload-pack to pack-objects
+Date: Fri, 05 Jun 2009 12:51:08 -0400 (EDT)
+Message-ID: <alpine.LFD.2.00.0906051224510.3906@xanadu.home>
+References: <20090605054500.06A9D21C3F4@mail.utsl.gen.nz>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
-To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Jun 05 18:45:54 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Andreas Ericsson <exon@op5.se>,
+	Christian Couder <christian@couder.net>,
+	Jeff King <peff@peff.net>
+To: sam@vilain.net, Nick Edelen <sirnot@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jun 05 18:51:25 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MCcYD-0004vj-ME
-	for gcvg-git-2@gmane.org; Fri, 05 Jun 2009 18:45:54 +0200
+	id 1MCcdX-0007R0-Sf
+	for gcvg-git-2@gmane.org; Fri, 05 Jun 2009 18:51:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752570AbZFEQpp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 5 Jun 2009 12:45:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751636AbZFEQpo
-	(ORCPT <rfc822;git-outgoing>); Fri, 5 Jun 2009 12:45:44 -0400
-Received: from emailmn.mqsoftware.com ([66.192.70.108]:18901 "EHLO
-	emailmn.mqsoftware.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751302AbZFEQpn convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 5 Jun 2009 12:45:43 -0400
-X-Greylist: delayed 911 seconds by postgrey-1.27 at vger.kernel.org; Fri, 05 Jun 2009 12:45:43 EDT
-X-MimeOLE: Produced By Microsoft Exchange V6.5
-Content-class: urn:content-classes:message
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-Thread-Topic: Best way to merge two repos with same content, different history
-Thread-Index: Acnl+vIAIFFVbrlOSWmycAg7zDze+A==
+	id S1752733AbZFEQvN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 5 Jun 2009 12:51:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752490AbZFEQvN
+	(ORCPT <rfc822;git-outgoing>); Fri, 5 Jun 2009 12:51:13 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:17243 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752307AbZFEQvM (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 5 Jun 2009 12:51:12 -0400
+Received: from xanadu.home ([66.131.194.97]) by VL-MH-MR001.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
+ with ESMTP id <0KKR00HBTYT8KLR0@VL-MH-MR001.ip.videotron.ca> for
+ git@vger.kernel.org; Fri, 05 Jun 2009 12:51:09 -0400 (EDT)
+X-X-Sender: nico@xanadu.home
+In-reply-to: <20090605054500.06A9D21C3F4@mail.utsl.gen.nz>
+User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120807>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120808>
 
-Hi all,
-	We're converting out of CVS after 10 years... The cvs2git
-conversion takes around 4-5 days, and there doesn't seem to be any way
-to speed that up.  So, our current plan is to take the tip of the
-branches that we need for the next week, and import each of those
-branches into its own clean git repo (top-skim).  Then we'll work out of
-those repos while the conversion is in process (presumably creating
-branches in those repos as needed).  Once the conversion is finished,
-we'll need to get all the work done in the top-skimmed repos merged into
-the converted repo so that we end up with little to no developer down
-time, and all of our history, pre and post conversion in one repo.
-	I'm testing all of this in advance, of course, and the tricky
-part at the moment is how to "stitch" the commits from the top-skim
-repos back onto the converted repo when the conversion is done.  The
-file content of the initial commit for the skimmed repo is identical to
-the last commit for the respective branch in the converted repo, but the
-SHA1s are different, presumably because the history of the content is
-different.
+On Fri, 5 Jun 2009, sam@vilain.net wrote:
 
-	Stated another way, I have two repositories, "new" and "old",
-where the files in the initial commit on branch "B1" in "new" have
-exactly the same content as the last commit on branch "B1" in "old".
-There also exist various branches in "new" based on "B1".  I'd like to
-merge all the commits from "new" into "old", but the SHA1s are
-different, presumably because the history leading up to those points are
-different.
+> instead of using the internal revision walker and piping object refs
+> to pack-objects this patch passes only the revs to pack-objects, which
+> in turn handles both enumeration and packing.
+> 
+> Signed-off-by: Sam Vilain <sam@vilain.net>
+> ---
+>   Submitted on behalf of Nick in order to get wider feedback on this.
+>   This version passes the test suite.
+> 
+>  upload-pack.c |   54 +++++++++++++++++++++++++++++++++++++++++++++---------
+>  1 files changed, 45 insertions(+), 9 deletions(-)
+> 
+> diff --git a/upload-pack.c b/upload-pack.c
+> index edc7861..7eda8fd 100644
+> --- a/upload-pack.c
+> +++ b/upload-pack.c
+> @@ -155,13 +155,27 @@ static void create_pack_file(void)
+>  	const char *argv[10];
+>  	int arg = 0;
+>  
+> -	rev_list.proc = do_rev_list;
+> -	/* .data is just a boolean: any non-NULL value will do */
+> -	rev_list.data = create_full_pack ? &rev_list : NULL;
+> -	if (start_async(&rev_list))
+> -		die("git upload-pack: unable to fork git-rev-list");
+> -
+> -	argv[arg++] = "pack-objects";
+> +	/* sending rev params to pack-objects directly is great, but unfortunately pack-objects 
+> +	 * has no way of turning off thin pack generation.  this would be a relatively simple 
+> +	 * addition, but as we also have to deal with shallow grafts and all it's simplest to 
+> +	 * just resort to piping object refs.
+> +	 */
 
-	Other than using manually format-patch on every branch in new,
-then applying the patches (presumably with regular old patch, since the
-ancestor commit IDs won't match), is there any "good" way to merge "new"
-into "old"?
+What's that?  Where did you get that?
 
-Thanks,	
+The way to not generate a thin pack is to not specify --thin to 
+pack-objects.  If you get a thin pack without specifying --thin then 
+this is a bug that needs to be fixed first.
+
+> +	if (!use_thin_pack) {
+> +		rev_list.proc = do_rev_list;
+> +		/* .data is just a boolean: any non-NULL value will do */
+> +		rev_list.data = create_full_pack ? &rev_list : NULL;
+> +		if (start_async(&rev_list))
+> +			die("git upload-pack: unable to fork git-rev-list");
+> +		
+> +		argv[arg++] = "pack-objects";
+> +	} else {
+> +		argv[arg++] = "pack-objects";
+> +		argv[arg++] = "--revs";
+> +		argv[arg++] = "--include-tag";
+
+Shouldn't this be specified only if corresponding capability was 
+provided by the client?
 
 
---
-
-Kelly F. Hickel
-Senior Product Architect
-MQSoftware, Inc.
-952-345-8677 Office
-952-345-8721 Fax
-kfh@mqsoftware.com
-www.mqsoftware.com
-Certified IBM SOA Specialty
-Your Full Service Provider for IBM WebSphere
-Learn more at www.mqsoftware.com 
+Nicolas
