@@ -1,111 +1,95 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH 0/7] [GSoC2009] Revision cache / git-daemon caching plan
-Date: Fri, 05 Jun 2009 09:56:27 -0700 (PDT)
-Message-ID: <m34ouu7h70.fsf@localhost.localdomain>
-References: <cover.1244125127.git.sam@vilain.net>
+From: Avery Pennarun <apenwarr@gmail.com>
+Subject: Re: Best way to merge two repos with same content, different history
+Date: Fri, 5 Jun 2009 13:01:00 -0400
+Message-ID: <32541b130906051001k1ea4d960m4fcf7679b5b4f740@mail.gmail.com>
+References: <63BEA5E623E09F4D92233FB12A9F794303117DBF@emailmn.mqsoftware.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Nick Edelen <sirnot@gmail.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Andreas Ericsson <exon@op5.se>,
-	Christian Couder <christian@couder.net>,
-	Jeff King <peff@peff.net>
-To: Sam Vilain <sam@vilain.net>
-X-From: git-owner@vger.kernel.org Fri Jun 05 18:56:48 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: "Kelly F. Hickel" <kfh@mqsoftware.com>
+X-From: git-owner@vger.kernel.org Fri Jun 05 19:01:34 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MCcij-00016P-2C
-	for gcvg-git-2@gmane.org; Fri, 05 Jun 2009 18:56:45 +0200
+	id 1MCcnK-00040K-0I
+	for gcvg-git-2@gmane.org; Fri, 05 Jun 2009 19:01:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754770AbZFEQ4a (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 5 Jun 2009 12:56:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754398AbZFEQ4a
-	(ORCPT <rfc822;git-outgoing>); Fri, 5 Jun 2009 12:56:30 -0400
-Received: from mail-fx0-f213.google.com ([209.85.220.213]:64282 "EHLO
-	mail-fx0-f213.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754272AbZFEQ43 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 5 Jun 2009 12:56:29 -0400
-Received: by fxm9 with SMTP id 9so710775fxm.37
-        for <git@vger.kernel.org>; Fri, 05 Jun 2009 09:56:28 -0700 (PDT)
+	id S1751673AbZFERBU convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 5 Jun 2009 13:01:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751419AbZFERBU
+	(ORCPT <rfc822;git-outgoing>); Fri, 5 Jun 2009 13:01:20 -0400
+Received: from mail-gx0-f214.google.com ([209.85.217.214]:34711 "EHLO
+	mail-gx0-f214.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751379AbZFERBU convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 5 Jun 2009 13:01:20 -0400
+Received: by gxk10 with SMTP id 10so2984419gxk.13
+        for <git@vger.kernel.org>; Fri, 05 Jun 2009 10:01:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received
-         :x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        bh=yLkZ/NUKB3jJ2jC9pCpueGA0J5n5Ui3rC5q6NMruQqE=;
-        b=guBxuJiN9P90KhG0NYQQ+6wbJUNzgyRaciyly84cBHk0Biw96bxV2+U80y9pPDOdss
-         WvoUmQxy59lvAddVCi3lz4Cz2dq7z+IURoyo7Nt4XLbANY9zaiuuqC4XnwNCCQeG1Ecs
-         zKOiUkA+YEIqvKlQZlYSnG4kROZHpZLeZXAqY=
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=NU0I4vJfz8fZDma3j6Zid3brdqrSexOU0oKTH0mCtBg=;
+        b=yIcZyCknZDsTHmKYjD/djbmwZxlQNlbxnaFddB7QkvzEhXxXsSqKr5MHM84q3xUNUp
+         LzYZ39Q95v3AnRZmT7uznYUX2xyaYtApnayhYeBTNf0ARiXB+BXHNZIzdKJAyf4Fs3Dw
+         /z9c+F3rckKIdCX4VECtte+ZI5Tqu7cPjEdCA=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        b=gEGfCNV+A8fjrVr9oRYKEzmbVkLxCjnQWZU9qycsWnyxwXO+56SzbicK2za1ozmIkq
-         2cETjSXOAqmPC81VLAr6jrwUaU9ohF8dNFjVYEVg/VIVsSjYIYPVHBS1skk+mUkrM2W8
-         xTpSOx+GJOAyXjSCl2JOqZcsNLE8yqivzD0RA=
-Received: by 10.86.3.11 with SMTP id 11mr4129300fgc.11.1244220988706;
-        Fri, 05 Jun 2009 09:56:28 -0700 (PDT)
-Received: from localhost.localdomain (abwo21.neoplus.adsl.tpnet.pl [83.8.238.21])
-        by mx.google.com with ESMTPS id 12sm383948fgg.20.2009.06.05.09.56.27
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 05 Jun 2009 09:56:27 -0700 (PDT)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id n55GuPon021705;
-	Fri, 5 Jun 2009 18:56:25 +0200
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id n55GuKXD021702;
-	Fri, 5 Jun 2009 18:56:20 +0200
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <cover.1244125127.git.sam@vilain.net>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=wmjXAPLF/Fp1CoW20KCk9Q/X00ltsHfNBIh9BK0OQkkaXm5AGmTtMMhWtTNIO/GIN4
+         bIB/ODzzC5oKaFzkJ6JW0UeXTVfIGbQ7E41gyEhokezf04CTOUTYInidN9Like0LPzLt
+         HlBXW86czWqN0vsaIPLpDZlFH2USom0EtcU2A=
+Received: by 10.151.158.21 with SMTP id k21mr6327986ybo.298.1244221281459; 
+	Fri, 05 Jun 2009 10:01:21 -0700 (PDT)
+In-Reply-To: <63BEA5E623E09F4D92233FB12A9F794303117DBF@emailmn.mqsoftware.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120810>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120811>
 
-Sam Vilain <sam@vilain.net> writes:
+On Fri, Jun 5, 2009 at 12:30 PM, Kelly F. Hickel <kfh@mqsoftware.com> w=
+rote:
+> =A0 =A0 =A0 =A0Stated another way, I have two repositories, "new" and=
+ "old",
+> where the files in the initial commit on branch "B1" in "new" have
+> exactly the same content as the last commit on branch "B1" in "old".
+> There also exist various branches in "new" based on "B1". =A0I'd like=
+ to
+> merge all the commits from "new" into "old", but the SHA1s are
+> different, presumably because the history leading up to those points =
+are
+> different.
+>
+> =A0 =A0 =A0 =A0Other than using manually format-patch on every branch=
+ in new,
+> then applying the patches (presumably with regular old patch, since t=
+he
+> ancestor commit IDs won't match), is there any "good" way to merge "n=
+ew"
+> into "old"?
 
-> This patch series describes the structure of the object list cache
-> on-disk format.  It is built successively from a very simple design -
-> just an object list - to a version that allows for as many rev-list
-> operations to be accelerated as possible, and potentially immediate
-> startup of full clone operations in the common case; ie skipping the
-> "Counting Objects" and "Compressing Objects" phase once a matching
-> index is found.
-> 
-> The plan will be to implement each step incrementally, with a test-*.c
-> file along the way which tests the API provided by the revision cache
-> API.  While the revision cache format will change along the way, this
-> will not require an index format deprecation cycle, as integration with
-> the rest of git will not happen until the format is settled.
-> 
-> The plan is to aim for one of these API milestones completed per week.
-> When complete, each commit will contain tests for the level of cache
-> that it delivers.  Later milestones include joining the dots -
-> integrating with the 'rev-list' machinery and most importantly,
-> 'pack-objects'.
+The usual replacement for "manually using format-patch" is to use "git
+rebase."  It does pretty much exactly what you're describing, assuming
+you don't do too many complicated merges in the meantime.
 
-I like this sharing not only completed code, but plans, designs (and
-status reports) with Git Development Community (i.e. git mailing
-list).  I like this very much.
+Another option is to use the .git/info/grafts file.  Here's a brief
+intro: http://git.or.cz/gitwiki/GraftPoint
 
+You'd use that to pretend the parent of your top-skimmed branch is
+actually the equivalent commit in your new branch.  Then could run
+"git filter-branch" to make the graft permanent, and get all your
+users to switch to the new repository.
 
-I'd like to ask if there any results of profiling git server
-(git-daemon) code: how much is spend on object enumeration this GSoC
-project tries to make faster by the means of caching?
+Or you could skip the filter-branch stuff and keep the really hold
+history somewhere else, available for use if someone installs the
+graft in their local repo.  This would lead to a smaller repository in
+the general case.  (I gather that's what the Linux kernel does for
+per-2.6.11 versions.)
 
-Are there prepared benchmarks and tests to check if the code gives
-correct results, and to measure improvements brought by caching?
-Would it be possible to get some real-life statistics of git-daemon
-usage, so that you optimize against real scenarios?
+Have fun,
 
-
-I wish you good work on git-daemon caching...
--- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+Avery
