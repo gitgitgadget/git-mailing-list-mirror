@@ -1,7 +1,7 @@
 From: Tay Ray Chuan <rctay89@gmail.com>
-Subject: [PATCH 13/23] http*: move common variables and macros to http.[ch]
-Date: Sat, 6 Jun 2009 00:04:54 +0800
-Message-ID: <20090606000454.e85871fc.rctay89@gmail.com>
+Subject: [PATCH 15/23] http.c: new functions for the http API
+Date: Sat, 6 Jun 2009 00:05:50 +0800
+Message-ID: <20090606000550.17d48ace.rctay89@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
@@ -9,287 +9,229 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
 	Mike Hommey <mh@glandium.org>
 To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Jun 05 18:09:50 2009
+X-From: git-owner@vger.kernel.org Fri Jun 05 18:09:52 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MCbzH-00053w-HW
-	for gcvg-git-2@gmane.org; Fri, 05 Jun 2009 18:09:48 +0200
+	id 1MCbzI-00053w-V2
+	for gcvg-git-2@gmane.org; Fri, 05 Jun 2009 18:09:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753036AbZFEQI6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 5 Jun 2009 12:08:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755577AbZFEQI5
-	(ORCPT <rfc822;git-outgoing>); Fri, 5 Jun 2009 12:08:57 -0400
-Received: from wf-out-1314.google.com ([209.85.200.172]:10154 "EHLO
-	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755335AbZFEQI4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 5 Jun 2009 12:08:56 -0400
-Received: by wf-out-1314.google.com with SMTP id 26so716862wfd.4
-        for <git@vger.kernel.org>; Fri, 05 Jun 2009 09:08:58 -0700 (PDT)
+	id S1755675AbZFEQJG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 5 Jun 2009 12:09:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755630AbZFEQJF
+	(ORCPT <rfc822;git-outgoing>); Fri, 5 Jun 2009 12:09:05 -0400
+Received: from mail-pz0-f171.google.com ([209.85.222.171]:43072 "EHLO
+	mail-pz0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755590AbZFEQJD (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 5 Jun 2009 12:09:03 -0400
+Received: by mail-pz0-f171.google.com with SMTP id 1so944213pzk.33
+        for <git@vger.kernel.org>; Fri, 05 Jun 2009 09:09:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:date:from:to:cc:subject
          :message-id:x-mailer:mime-version:content-type
          :content-transfer-encoding;
-        bh=8Px/Q5GrkK9lskpSgnGB+MMO/ye1RoEjXfqbcdeT5iU=;
-        b=mJT2KF/oNL0gXJXaMjBKQHApkZyHhWXFrrsorycgJw2+LYBSImBVf+H4QzJHu+L897
-         9toun0yOQvp1soDydWov7aOKiUcUdJH+9kVJzB4iamJ68sj+FhiNhZ4Xv0xOH4Lbmsj5
-         IlfHksJnHKUIVVz8NOwHsSQlVm8Dicu+7LFVc=
+        bh=TzQnpvNu1w+/rmP2MOtLCahWDs/t+01C//jjHOAWNiA=;
+        b=EFYnDDgMZehs7YsHQfZcg1Zim36Ky7vQtI/kO8WbSdSCSWHk7FyjHaRkECWRgNF2yV
+         DdzzcRHDnrQbsi8XYst4mVM0wXXl9Fp7YIAHmsFr3AuQBxjR2Wqs5Hl2+pG0WbC9ngZt
+         gOfyXij5RnK2hdzYG4osj21JC9gcScp4U1lwY=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=date:from:to:cc:subject:message-id:x-mailer:mime-version
          :content-type:content-transfer-encoding;
-        b=dtrBdDG1L8wDxuGSmibxQeQ+cnqeRb9R/4NX8G2nVAaFBQovs8TIAoRWorNplVgnJa
-         q0tIMPcjc6/0dUaaE2IpZp8frMb5xGqoszcrrGUZyWjvOXINUinegxzFfRsQeYM40kok
-         Xi9edXkV1VIgbw5q/tHyDNDzdWC1UkGLf33lw=
-Received: by 10.142.187.19 with SMTP id k19mr1397763wff.218.1244218138515;
-        Fri, 05 Jun 2009 09:08:58 -0700 (PDT)
+        b=K7mSmEwlJMlar9RmEHkGI7T40kHGeisR/3NS+6IF3XXYNUqXJxPdBtgvD/QGorvIIh
+         W0SEgSd3O0ENmrTl35D25xZd6SszPTZWehqgntsRrMnTHSucrtmtetyopypkU2RGbjKL
+         N5bkGZF2GzXLeXl05+UGZxi6x0t0OlVZcZPVI=
+Received: by 10.142.88.4 with SMTP id l4mr1325451wfb.136.1244218146305;
+        Fri, 05 Jun 2009 09:09:06 -0700 (PDT)
 Received: from your-cukc5e3z5n (cm97.zeta149.maxonline.com.sg [116.87.149.97])
-        by mx.google.com with ESMTPS id 9sm440195wfc.16.2009.06.05.09.08.56
+        by mx.google.com with ESMTPS id 20sm435054wfi.20.2009.06.05.09.09.04
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 05 Jun 2009 09:08:58 -0700 (PDT)
+        Fri, 05 Jun 2009 09:09:06 -0700 (PDT)
 X-Mailer: Sylpheed 2.6.0 (GTK+ 2.10.14; i686-pc-mingw32)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120794>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120795>
 
-Move RANGE_HEADER_SIZE to http.h.
+From:	Mike Hommey <mh@glandium.org>
+Subject: [WIP Patch 03/12] Two new functions for the http API
+Date:	Sun, 18 Jan 2009 09:04:28 +0100
 
-Create no_pragma_header, the curl header list containing the header
-"Pragma:" in http.[ch]. It is allocated in http_init, and freed in
-http_cleanup. This replaces the no_pragma_header in http-push.c, and
-the no_pragma_header member in walker_data in http-walker.c.
+http_get_strbuf and http_get_file allow respectively to retrieve contents of
+an URL to a strbuf or an opened file handle.
 
-Create http_is_verbose. It is to be used by methods in http.c, and is
-modified at the entry points of http.c's users, namely http-push.c
-(when parsing options) and http-walker.c (in get_http_walker).
+http_error prints out an error message containing the URL and the curl error
+(in curl_errorstr).
 
+Signed-off-by: Mike Hommey <mh@glandium.org>
 Signed-off-by: Tay Ray Chuan <rctay89@gmail.com>
 ---
- http-push.c   |    8 +-------
- http-walker.c |   18 +++++-------------
- http.c        |    9 +++++++++
- http.h        |    5 +++++
- 4 files changed, 20 insertions(+), 20 deletions(-)
 
-diff --git a/http-push.c b/http-push.c
-index a6ca2ac..b01db75 100644
---- a/http-push.c
-+++ b/http-push.c
-@@ -27,7 +27,6 @@ enum XML_Status {
- #endif
+I've added an additional slot->local = NULL when cleaning up in
+http_request().
 
- #define PREV_BUF_SIZE 4096
--#define RANGE_HEADER_SIZE 30
+ http.c |  104 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ http.h |   30 ++++++++++++++++++
+ 2 files changed, 134 insertions(+), 0 deletions(-)
 
- /* DAV methods */
- #define DAV_LOCK "LOCK"
-@@ -76,8 +75,6 @@ static int pushing;
- static int aborted;
- static signed char remote_dir_exists[256];
-
--static struct curl_slist *no_pragma_header;
--
- static int push_verbosely;
- static int push_all = MATCH_REFS_NONE;
- static int force_all;
-@@ -2251,6 +2248,7 @@ int main(int argc, char **argv)
- 			}
- 			if (!strcmp(arg, "--verbose")) {
- 				push_verbosely = 1;
-+				http_is_verbose = 1;
- 				continue;
- 			}
- 			if (!strcmp(arg, "-d")) {
-@@ -2300,8 +2298,6 @@ int main(int argc, char **argv)
- 	remote->url[remote->url_nr++] = repo->url;
- 	http_init(remote);
-
--	no_pragma_header = curl_slist_append(no_pragma_header, "Pragma:");
--
- 	if (repo->url && repo->url[strlen(repo->url)-1] != '/') {
- 		rewritten_url = xmalloc(strlen(repo->url)+2);
- 		strcpy(rewritten_url, repo->url);
-@@ -2504,8 +2500,6 @@ int main(int argc, char **argv)
- 		unlock_remote(info_ref_lock);
- 	free(repo);
-
--	curl_slist_free_all(no_pragma_header);
--
- 	http_cleanup();
-
- 	request = request_queue_head;
-diff --git a/http-walker.c b/http-walker.c
-index d6cc622..032a7be 100644
---- a/http-walker.c
-+++ b/http-walker.c
-@@ -5,7 +5,6 @@
- #include "http.h"
-
- #define PREV_BUF_SIZE 4096
--#define RANGE_HEADER_SIZE 30
-
- struct alt_base
- {
-@@ -57,7 +56,6 @@ struct walker_data {
- 	const char *url;
- 	int got_alternates;
- 	struct alt_base *alt;
--	struct curl_slist *no_pragma_header;
- };
-
- static struct object_request *object_queue_head;
-@@ -108,7 +106,6 @@ static void start_object_request(struct walker *walker,
- 	char range[RANGE_HEADER_SIZE];
- 	struct curl_slist *range_header = NULL;
- 	struct active_request_slot *slot;
--	struct walker_data *data = walker->data;
-
- 	snprintf(prevfile, sizeof(prevfile), "%s.prev", obj_req->filename);
- 	unlink_or_warn(prevfile);
-@@ -205,7 +202,7 @@ static void start_object_request(struct walker *walker,
- 	curl_easy_setopt(slot->curl, CURLOPT_WRITEFUNCTION, fwrite_sha1_file);
- 	curl_easy_setopt(slot->curl, CURLOPT_ERRORBUFFER, obj_req->errorstr);
- 	curl_easy_setopt(slot->curl, CURLOPT_URL, url);
--	curl_easy_setopt(slot->curl, CURLOPT_HTTPHEADER, data->no_pragma_header);
-+	curl_easy_setopt(slot->curl, CURLOPT_HTTPHEADER, no_pragma_header);
-
- 	/*
- 	 * If we have successfully processed data from a previous fetch
-@@ -354,6 +351,8 @@ static void prefetch(struct walker *walker, unsigned char *sha1)
- 	newreq->slot = NULL;
- 	newreq->next = NULL;
-
-+	http_is_verbose = walker->get_verbosely;
-+
- 	if (object_queue_head == NULL) {
- 		object_queue_head = newreq;
- 	} else {
-@@ -379,7 +378,6 @@ static int fetch_index(struct walker *walker, struct alt_base *repo, unsigned ch
- 	long prev_posn = 0;
- 	char range[RANGE_HEADER_SIZE];
- 	struct curl_slist *range_header = NULL;
--	struct walker_data *data = walker->data;
-
- 	FILE *indexfile;
- 	struct active_request_slot *slot;
-@@ -430,7 +428,7 @@ static int fetch_index(struct walker *walker, struct alt_base *repo, unsigned ch
- 	curl_easy_setopt(slot->curl, CURLOPT_FILE, indexfile);
- 	curl_easy_setopt(slot->curl, CURLOPT_WRITEFUNCTION, fwrite);
- 	curl_easy_setopt(slot->curl, CURLOPT_URL, url);
--	curl_easy_setopt(slot->curl, CURLOPT_HTTPHEADER, data->no_pragma_header);
-+	curl_easy_setopt(slot->curl, CURLOPT_HTTPHEADER, no_pragma_header);
- 	slot->local = indexfile;
-
- 	/*
-@@ -768,7 +766,6 @@ static int fetch_pack(struct walker *walker, struct alt_base *repo, unsigned cha
- 	long prev_posn = 0;
- 	char range[RANGE_HEADER_SIZE];
- 	struct curl_slist *range_header = NULL;
--	struct walker_data *data = walker->data;
-
- 	struct active_request_slot *slot;
- 	struct slot_results results;
-@@ -802,7 +799,7 @@ static int fetch_pack(struct walker *walker, struct alt_base *repo, unsigned cha
- 	curl_easy_setopt(slot->curl, CURLOPT_FILE, packfile);
- 	curl_easy_setopt(slot->curl, CURLOPT_WRITEFUNCTION, fwrite);
- 	curl_easy_setopt(slot->curl, CURLOPT_URL, url);
--	curl_easy_setopt(slot->curl, CURLOPT_HTTPHEADER, data->no_pragma_header);
-+	curl_easy_setopt(slot->curl, CURLOPT_HTTPHEADER, no_pragma_header);
- 	slot->local = packfile;
-
- 	/*
-@@ -948,10 +945,7 @@ static int fetch_ref(struct walker *walker, struct ref *ref)
-
- static void cleanup(struct walker *walker)
- {
--	struct walker_data *data = walker->data;
- 	http_cleanup();
--
--	curl_slist_free_all(data->no_pragma_header);
- }
-
- struct walker *get_http_walker(const char *url, struct remote *remote)
-@@ -962,8 +956,6 @@ struct walker *get_http_walker(const char *url, struct remote *remote)
-
- 	http_init(remote);
-
--	data->no_pragma_header = curl_slist_append(NULL, "Pragma:");
--
- 	data->alt = xmalloc(sizeof(*data->alt));
- 	data->alt->base = xmalloc(strlen(url) + 1);
- 	strcpy(data->alt->base, url);
 diff --git a/http.c b/http.c
-index 2e3d649..3ca60bb 100644
+index 75fce9e..df22180 100644
 --- a/http.c
 +++ b/http.c
-@@ -2,6 +2,7 @@
+@@ -665,6 +665,110 @@ static char *quote_ref_url(const char *base, const char *ref)
+ 	return strbuf_detach(&buf, NULL);
+ }
 
- int data_received;
- int active_requests;
-+int http_is_verbose;
-
- #ifdef USE_CURL_MULTI
- static int max_requests = -1;
-@@ -29,6 +30,8 @@ static char *user_name, *user_pass;
-
- static struct curl_slist *pragma_header;
-
-+struct curl_slist *no_pragma_header;
++/* http_request() targets */
++#define HTTP_REQUEST_STRBUF	0
++#define HTTP_REQUEST_FILE	1
 +
- static struct active_request_slot *active_queue_head;
-
- size_t fread_buffer(void *ptr, size_t eltsize, size_t nmemb, void *buffer_)
-@@ -276,6 +279,8 @@ void http_init(struct remote *remote)
- 	char *low_speed_limit;
- 	char *low_speed_time;
-
-+	http_is_verbose = 0;
++static int http_request(const char *url, void *result, int target, int options)
++{
++	struct active_request_slot *slot;
++	struct slot_results results;
++	struct curl_slist *headers = NULL;
++	struct strbuf buf = STRBUF_INIT;
++	int ret;
 +
- 	git_config(http_options, NULL);
-
- 	curl_global_init(CURL_GLOBAL_ALL);
-@@ -284,6 +289,7 @@ void http_init(struct remote *remote)
- 		curl_http_proxy = xstrdup(remote->http_proxy);
-
- 	pragma_header = curl_slist_append(pragma_header, "Pragma: no-cache");
-+	no_pragma_header = curl_slist_append(no_pragma_header, "Pragma:");
-
- #ifdef USE_CURL_MULTI
- 	{
-@@ -366,6 +372,9 @@ void http_cleanup(void)
- 	curl_slist_free_all(pragma_header);
- 	pragma_header = NULL;
-
-+	curl_slist_free_all(no_pragma_header);
-+	no_pragma_header = NULL;
++	slot = get_active_slot();
++	slot->results = &results;
++	curl_easy_setopt(slot->curl, CURLOPT_HTTPGET, 1);
 +
- 	if (curl_http_proxy) {
- 		free((void *)curl_http_proxy);
- 		curl_http_proxy = NULL;
++	if (result == NULL) {
++		curl_easy_setopt(slot->curl, CURLOPT_NOBODY, 1);
++	} else {
++		curl_easy_setopt(slot->curl, CURLOPT_NOBODY, 0);
++		curl_easy_setopt(slot->curl, CURLOPT_FILE, result);
++
++		if (target == HTTP_REQUEST_FILE) {
++			long posn = ftell(result);
++			curl_easy_setopt(slot->curl, CURLOPT_WRITEFUNCTION,
++					 fwrite);
++			if (posn > 0) {
++				strbuf_addf(&buf, "Range: bytes=%ld-", posn);
++				headers = curl_slist_append(headers, buf.buf);
++				strbuf_reset(&buf);
++			}
++			slot->local = result;
++		} else
++			curl_easy_setopt(slot->curl, CURLOPT_WRITEFUNCTION,
++					 fwrite_buffer);
++	}
++
++	strbuf_addstr(&buf, "Pragma:");
++	if (options & HTTP_NO_CACHE)
++		strbuf_addstr(&buf, " no-cache");
++
++	headers = curl_slist_append(headers, buf.buf);
++
++	curl_easy_setopt(slot->curl, CURLOPT_URL, url);
++	curl_easy_setopt(slot->curl, CURLOPT_HTTPHEADER, headers);
++
++	if (start_active_slot(slot)) {
++		run_active_slot(slot);
++		if (results.curl_result == CURLE_OK)
++			ret = HTTP_OK;
++		else if (missing_target(&results))
++			ret = HTTP_MISSING_TARGET;
++		else
++			ret = HTTP_ERROR;
++	} else {
++		error("Unable to start HTTP request for %s", url);
++		ret = HTTP_START_FAILED;
++	}
++
++	slot->local = NULL;
++	curl_slist_free_all(headers);
++	strbuf_release(&buf);
++
++	return ret;
++}
++
++int http_get_strbuf(const char *url, struct strbuf *result, int options)
++{
++	return http_request(url, result, HTTP_REQUEST_STRBUF, options);
++}
++
++int http_get_file(const char *url, const char *filename, int options)
++{
++	int ret;
++	struct strbuf tmpfile = STRBUF_INIT;
++	FILE *result;
++
++	strbuf_addf(&tmpfile, "%s.temp", filename);
++	result = fopen(tmpfile.buf, "a");
++	if (! result) {
++		error("Unable to open local file %s", tmpfile.buf);
++		ret = HTTP_ERROR;
++		goto cleanup;
++	}
++
++	ret = http_request(url, result, HTTP_REQUEST_FILE, options);
++	fclose(result);
++
++	if ((ret == HTTP_OK) && move_temp_to_file(tmpfile.buf, filename))
++		ret = HTTP_ERROR;
++cleanup:
++	strbuf_release(&tmpfile);
++	return ret;
++}
++
++int http_error(const char *url, int ret)
++{
++	/* http_request has already handled HTTP_START_FAILED. */
++	if (ret != HTTP_START_FAILED)
++		error("%s while accessing %s\n", curl_errorstr, url);
++
++	return ret;
++}
++
+ int http_fetch_ref(const char *base, struct ref *ref)
+ {
+ 	char *url;
 diff --git a/http.h b/http.h
-index 26abebe..1ef7dc1 100644
+index 1ef7dc1..3d878d5 100644
 --- a/http.h
 +++ b/http.h
-@@ -88,11 +88,16 @@ extern void add_fill_function(void *data, int (*fill)(void *));
- extern void step_active_slots(void);
- #endif
+@@ -114,6 +114,36 @@ static inline int missing__target(int code, int result)
 
-+extern struct curl_slist *no_pragma_header;
+ #define missing_target(a) missing__target((a)->http_code, (a)->curl_result)
+
++/* Options for http_request_*() */
++#define HTTP_NO_CACHE		1
 +
-+#define RANGE_HEADER_SIZE 30
++/* Return values for http_request_*() */
++#define HTTP_OK			0
++#define HTTP_MISSING_TARGET	1
++#define HTTP_ERROR		2
++#define HTTP_START_FAILED	3
 +
- extern void http_init(struct remote *remote);
- extern void http_cleanup(void);
++/*
++ * Requests an url and stores the result in a strbuf.
++ *
++ * If the result pointer is NULL, a HTTP HEAD request is made instead of GET.
++ */
++int http_get_strbuf(const char *url, struct strbuf *result, int options);
++
++/*
++ * Downloads an url and stores the result in the given file.
++ *
++ * If a previous interrupted download is detected (i.e. a previous temporary
++ * file is still around) the download is resumed.
++ */
++int http_get_file(const char *url, const char *filename, int options);
++
++/*
++ * Prints an error message using error() containing url and curl_errorstr,
++ * and returns ret.
++ */
++int http_error(const char *url, int ret);
++
+ extern int http_fetch_ref(const char *base, struct ref *ref);
 
- extern int data_received;
- extern int active_requests;
-+extern int http_is_verbose;
-
- extern char curl_errorstr[CURL_ERROR_SIZE];
-
+ #endif /* HTTP_H */
 --
 1.6.3.1
