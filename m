@@ -1,86 +1,79 @@
-From: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
-	<u.kleine-koenig@pengutronix.de>
-Subject: Re: [TopGit PATCH] hooks/pre-commit: check for cycles in
-	dependencies
-Date: Fri, 5 Jun 2009 22:25:26 +0200
-Message-ID: <20090605202526.GB671@pengutronix.de>
-References: <1244148073-2313-1-git-send-email-bert.wesarg@googlemail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH 00/23] http*: refactor (v5)
+Date: Fri, 05 Jun 2009 13:41:30 -0700 (PDT)
+Message-ID: <m3zlcm5s7g.fsf@localhost.localdomain>
+References: <20090605235959.f4df6457.rctay89@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Bert Wesarg <bert.wesarg@googlemail.com>
-X-From: git-owner@vger.kernel.org Fri Jun 05 22:25:40 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Mike Hommey <mh@glandium.org>,
+	Clemens Buchacher <drizzd@aon.at>
+To: Tay Ray Chuan <rctay89@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jun 05 22:41:42 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MCfyt-00081q-Rd
-	for gcvg-git-2@gmane.org; Fri, 05 Jun 2009 22:25:40 +0200
+	id 1MCgEP-00062w-Le
+	for gcvg-git-2@gmane.org; Fri, 05 Jun 2009 22:41:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752652AbZFEUZ2 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 5 Jun 2009 16:25:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751510AbZFEUZ0
-	(ORCPT <rfc822;git-outgoing>); Fri, 5 Jun 2009 16:25:26 -0400
-Received: from metis.ext.pengutronix.de ([92.198.50.35]:40474 "EHLO
-	metis.ext.pengutronix.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751503AbZFEUZZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 5 Jun 2009 16:25:25 -0400
-Received: from octopus.hi.pengutronix.de ([2001:6f8:1178:2:215:17ff:fe12:23b0])
-	by metis.ext.pengutronix.de with esmtp (Exim 4.63)
-	(envelope-from <ukl@pengutronix.de>)
-	id 1MCfyh-00035i-9N; Fri, 05 Jun 2009 22:25:27 +0200
-Received: from ukl by octopus.hi.pengutronix.de with local (Exim 4.69)
-	(envelope-from <ukl@pengutronix.de>)
-	id 1MCfyg-0000HG-H5; Fri, 05 Jun 2009 22:25:26 +0200
-Content-Disposition: inline
-In-Reply-To: <1244148073-2313-1-git-send-email-bert.wesarg@googlemail.com>
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-SA-Exim-Connect-IP: 2001:6f8:1178:2:215:17ff:fe12:23b0
-X-SA-Exim-Mail-From: ukl@pengutronix.de
-X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
-X-PTX-Original-Recipient: git@vger.kernel.org
+	id S1752490AbZFEUlc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 5 Jun 2009 16:41:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751637AbZFEUlb
+	(ORCPT <rfc822;git-outgoing>); Fri, 5 Jun 2009 16:41:31 -0400
+Received: from fg-out-1718.google.com ([72.14.220.154]:59377 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751503AbZFEUlb (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 5 Jun 2009 16:41:31 -0400
+Received: by fg-out-1718.google.com with SMTP id 16so649232fgg.17
+        for <git@vger.kernel.org>; Fri, 05 Jun 2009 13:41:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:received
+         :x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        bh=0YrycOhV+XZxLcTR8CUEAz7C7cj7oAgya9x/x3mU/2s=;
+        b=rVYGcJRDYGIDem1OZ4SWfJmIR//4FCt8DUaEJ578mrPxKWl4WmSisbeiTjzlbJFiQF
+         KQTydOlbKeoMeV+6a6EIHZ/gmB9KHwgwxOgOtq1JN5C2MNn0sx/s6V2276/8/Gh0Dg1B
+         hGP/YQ0SwJmPoaP2yuSXPATgspAkA90KlmeFI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        b=Wmuaklv08dlUYza0Q5kGY5xtrCa5QQDwdcCNRZjGIALgBHtCHxLUng8QJlbIt05E2q
+         REjXzVp7g0Z71EoV+3wBGoxT1ayvME+EKK7WI1rEjz7R1+0R2GT8ZawfixYKwpUA5AN6
+         UbbEPLzY65tK+sIfLozb58BtDTI24G9PBMPUc=
+Received: by 10.86.36.11 with SMTP id j11mr4354438fgj.56.1244234491012;
+        Fri, 05 Jun 2009 13:41:31 -0700 (PDT)
+Received: from localhost.localdomain (abwo21.neoplus.adsl.tpnet.pl [83.8.238.21])
+        by mx.google.com with ESMTPS id 3sm838314fge.16.2009.06.05.13.41.29
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 05 Jun 2009 13:41:30 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id n55KfRZU024544;
+	Fri, 5 Jun 2009 22:41:27 +0200
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id n55KfNMQ024540;
+	Fri, 5 Jun 2009 22:41:23 +0200
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <20090605235959.f4df6457.rctay89@gmail.com>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120828>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120829>
 
-Hi Bert,
+Could you please make all patches in this series to be replies to this
+cover letter ('shallow' threading)?  This way it would be easier to
+read this patch series (or kill / ignore it as a whole)?
 
-On Thu, Jun 04, 2009 at 10:41:13PM +0200, Bert Wesarg wrote:
-> Only newly added dependencies needs to be considered.  For each of th=
-ese deps
-> check if there is a path from this dep to the current HEAD.
->=20
-> Use recursive_dep() for this task.  Even if recursive_dep() uses a DF=
-S-like
-> traversal it will not run into an infty-loop if there would be a cycl=
-e, because
-I'm not sure how understandable this is.  After some thinking I
-understood DFS.  Up to now I thought infty is just the LaTeX macro name
-for "infinity", but apart of this, is this really the right term here?
-endless loop?
+Thanks in advance
 
-> recursive_dep() takes .topdeps only from committed trees.  And it is =
-required
-> that the committed dependency graph is acyclic.
-
-I didn't check the implementation deeply.  But all in all I don't have
-the usual warm and fuzzy feeling about it.  What happens during a remot=
-e
-update if only the merged dependency graph has a cycle[1]?
-
-Best regards
-Uwe
-
-[1] The question is a bit theoretic because remote updating is broken
-here.  If you are my remote and changed a .topdep file, my update simpl=
-y
-discards your change.
-
---=20
-Pengutronix e.K.                              | Uwe Kleine-K=F6nig     =
-       |
-Industrial Linux Solutions                    | http://www.pengutronix.=
-de/  |
+P.S. Why subject is "Re: [PATCH 00/23] ..." and not "[PATCH 00/23] ..."?
+-- 
+Jakub Narebski
+Poland
+ShadeHawk on #git
