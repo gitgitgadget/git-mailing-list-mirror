@@ -1,161 +1,206 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [PATCH] daemon: Skip unknown "extra arg" information
-Date: Thu, 4 Jun 2009 18:33:32 -0700
-Message-ID: <20090605013332.GV3355@spearce.org>
-References: <20090604220824.GT3355@spearce.org> <7vbpp3tsg0.fsf@alter.siamese.dyndns.org>
+From: Mark Lodato <lodatom@gmail.com>
+Subject: Re: [PATCH 1/2] http.c: prompt for SSL client certificate password
+Date: Thu, 4 Jun 2009 22:44:58 -0400
+Message-ID: <ca433830906041944s1a2b12en36eb88b23cb93a7c@mail.gmail.com>
+References: <1243480563-5954-1-git-send-email-lodatom@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jun 05 03:33:41 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jun 05 04:45:20 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MCOJR-0000zp-0S
-	for gcvg-git-2@gmane.org; Fri, 05 Jun 2009 03:33:41 +0200
+	id 1MCPQi-00078U-6p
+	for gcvg-git-2@gmane.org; Fri, 05 Jun 2009 04:45:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752373AbZFEBdb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Jun 2009 21:33:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752205AbZFEBda
-	(ORCPT <rfc822;git-outgoing>); Thu, 4 Jun 2009 21:33:30 -0400
-Received: from george.spearce.org ([209.20.77.23]:51937 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752138AbZFEBda (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Jun 2009 21:33:30 -0400
-Received: by george.spearce.org (Postfix, from userid 1001)
-	id 37530381D1; Fri,  5 Jun 2009 01:33:32 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <7vbpp3tsg0.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1752292AbZFECpB convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 4 Jun 2009 22:45:01 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752204AbZFECpA
+	(ORCPT <rfc822;git-outgoing>); Thu, 4 Jun 2009 22:45:00 -0400
+Received: from mail-bw0-f213.google.com ([209.85.218.213]:41619 "EHLO
+	mail-bw0-f213.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751721AbZFECo7 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 4 Jun 2009 22:44:59 -0400
+Received: by bwz9 with SMTP id 9so1190930bwz.37
+        for <git@vger.kernel.org>; Thu, 04 Jun 2009 19:45:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:content-type
+         :content-transfer-encoding;
+        bh=wvy+WgbC7895i+wgrzykUnja/7u7wbOrLLiFMiGJsZ4=;
+        b=ac04KAnXiKT54SzKV9QnGVr/Ol9xvH+VmsET77/ToL3OqR+AwLYrZ2G7sdvmEtzbrv
+         +hpm2DLI4PaxCPKI/LbjsIiwilkuF8vTml5t4iWSW2sMuvoIrx8fWMz8ivUnTth7g7zt
+         d+QHiD+j5BLQaKFxre9KMunI57EdbIEODodys=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :content-type:content-transfer-encoding;
+        b=r7Sx3c5Q0vSHLwlaJfhGCsj1LQjE3STVj+dc8gf5+ipWeCLX8hLQPPlNVJaMaKnKe3
+         GWfPU6K3I0q7nkvEY4ZZ/r7IBIcoaRZLEbtlVVsY4GeNQP+yJeKryjzm+D3fqyUMIqT2
+         eQ19B6BouJTVgia1dXyYQEwZ+JAklEVwEif0Q=
+Received: by 10.223.108.210 with SMTP id g18mr1732430fap.38.1244169900202; 
+	Thu, 04 Jun 2009 19:45:00 -0700 (PDT)
+In-Reply-To: <1243480563-5954-1-git-send-email-lodatom@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120733>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120734>
 
-Junio C Hamano <gitster@pobox.com> wrote:
-> "Shawn O. Pearce" <spearce@spearce.org> writes:
-> 
-> > If we don't recognize an extra arg supplied hidden behind the
-> > command, we should skip it and look at the next extra arg, in
-> > case we recognize the next one.
-> >
-> > For example, we currently don't recognize the "user=" extra arg,
-> > but we should still be able to start this connection anyway:
-> 
-> I do not necessarily agree 100% with that argument.
+Any thoughts on this?  I would love to see this in git 1.6.4, and I
+don't think it affects people who do not use certificates.
 
-Actually, we're already f'kd.  We can't change the protocol like
-we had hoped.  I still think this should go in maint.
+~ Mark
 
---8<--
-daemon: Strictly parse the "extra arg" part of the command
-
-Since 1.4.4.5 (49ba83fb67 "Add virtualization support to git-daemon")
-git daemon enters an infinite loop and never terminates if a client
-hides any extra arguments in the initial request line which is not
-exactly "\0host=blah\0".
-
-Since that change, a client must never insert additional extra
-arguments, or attempt to use any argument other than "host=", as
-any daemon will get stuck parsing the request line and will never
-complete the request.
-
-Since the client can't tell if the daemon is patched or not, it
-is not possible to know if additional extra args might actually be
-able to be safely requested.
-
-If we ever need to extend the git daemon protocol to support a new
-feature, we may have to do something like this to the exchange:
-
-  # If both support git:// v2
-  #
-  C: 000cgit://v2
-  S: 0010ok host user
-  C: 0018host git.kernel.org
-  C: 0027git-upload-pack /pub/linux-2.6.git
-  S: ...git-upload-pack header...
-
-  # If client supports git:// v2, server does not:
-  #
-  C: 000cgit://v2
-  S: <EOF>
-
-  C: 003bgit-upload-pack /pub/linux-2.6.git\0host=git.kernel.org\0
-  S: ...git-upload-pack header...
-
-This requires the client to create two TCP connections to talk to
-an older git daemon, however all daemons since the introduction of
-daemon.c will safely reject the unknown "git://v2" command request,
-so the client can quite easily determine the server supports an
-older protocol.
-
-Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
----
- connect.c |    5 ++++-
- daemon.c  |   10 ++++++----
- 2 files changed, 10 insertions(+), 5 deletions(-)
-
-diff --git a/connect.c b/connect.c
-index f6b8ba6..958c831 100644
---- a/connect.c
-+++ b/connect.c
-@@ -579,7 +579,10 @@ struct child_process *git_connect(int fd[2], const char *url_orig,
- 			git_tcp_connect(fd, host, flags);
- 		/*
- 		 * Separate original protocol components prog and path
--		 * from extended components with a NUL byte.
-+		 * from extended host header with a NUL byte.
-+		 *
-+		 * Note: Do not add any other headers here!  Doing so
-+		 * will cause older git-daemon servers to crash.
- 		 */
- 		packet_write(fd[1],
- 			     "%s %s%chost=%s%c",
-diff --git a/daemon.c b/daemon.c
-index daa4c8e..b2babcc 100644
---- a/daemon.c
-+++ b/daemon.c
-@@ -406,15 +406,15 @@ static char *xstrdup_tolower(const char *str)
- }
- 
- /*
-- * Separate the "extra args" information as supplied by the client connection.
-+ * Read the host as supplied by the client connection.
-  */
--static void parse_extra_args(char *extra_args, int buflen)
-+static void parse_host_arg(char *extra_args, int buflen)
- {
- 	char *val;
- 	int vallen;
- 	char *end = extra_args + buflen;
- 
--	while (extra_args < end && *extra_args) {
-+	if (extra_args < end && *extra_args) {
- 		saw_extended_args = 1;
- 		if (strncasecmp("host=", extra_args, 5) == 0) {
- 			val = extra_args + 5;
-@@ -436,6 +436,8 @@ static void parse_extra_args(char *extra_args, int buflen)
- 			/* On to the next one */
- 			extra_args = val + vallen;
- 		}
-+		if (extra_args < end && *extra_args)
-+			die("Invalid request");
- 	}
- 
- 	/*
-@@ -545,7 +547,7 @@ static int execute(struct sockaddr *addr)
- 	hostname = canon_hostname = ip_address = tcp_port = NULL;
- 
- 	if (len != pktlen)
--		parse_extra_args(line + len + 1, pktlen - len - 1);
-+		parse_host_arg(line + len + 1, pktlen - len - 1);
- 
- 	for (i = 0; i < ARRAY_SIZE(daemon_service); i++) {
- 		struct daemon_service *s = &(daemon_service[i]);
--- 
-1.6.3.2.277.gd10543
-
--- 
-Shawn.
+On Wed, May 27, 2009 at 11:16 PM, Mark Lodato<lodatom@gmail.com> wrote:
+> If an SSL client certificate is enabled (via http.sslcert or
+> GIT_SSL_CERT), prompt for the certificate password rather than
+> defaulting to OpenSSL's password prompt. =C2=A0This causes the prompt=
+ to only
+> appear once each run. =C2=A0Previously, OpenSSL prompted the user *ma=
+ny*
+> times, causing git to be unusable over HTTPS with client-side
+> certificates.
+>
+> Note that the password is stored in memory in the clear while the
+> program is running. =C2=A0This may be a security problem if git crash=
+es and
+> core dumps.
+>
+> The user is always prompted, even if the certificate is not encrypted=
+=2E
+> This should be fine; unencrypted certificates are rare and a security
+> risk anyway.
+>
+> Signed-off-by: Mark Lodato <lodatom@gmail.com>
+> ---
+>
+> See http://osdir.com/ml/git/2009-02/msg03402.html for a discussion of
+> this topic and an example showing how horrible the current password
+> prompts are.
+>
+> The next patch adds an option to disable this feature. =C2=A0I split =
+it into
+> two commits in case the configuration option is not wanted.
+>
+> I did not create any tests because the existing http.sslcert option h=
+as
+> no tests to begin with.
+>
+> I would really like to use git over HTTPS with client certs, but the
+> current situation is just unusable. =C2=A0So, I'm hoping this gets in=
+cluded
+> in git.git at some point. =C2=A0I would be happy to hear any comments=
+ people
+> have about this patch series. =C2=A0Thanks!
+>
+>
+> =C2=A0http.c | =C2=A0 40 +++++++++++++++++++++++++++++++++++++++-
+> =C2=A01 files changed, 39 insertions(+), 1 deletions(-)
+>
+> diff --git a/http.c b/http.c
+> index 2e3d649..1fc3444 100644
+> --- a/http.c
+> +++ b/http.c
+> @@ -26,6 +26,8 @@ static long curl_low_speed_time =3D -1;
+> =C2=A0static int curl_ftp_no_epsv;
+> =C2=A0static const char *curl_http_proxy;
+> =C2=A0static char *user_name, *user_pass;
+> +static char *ssl_cert_password;
+> +static int ssl_cert_password_required;
+>
+> =C2=A0static struct curl_slist *pragma_header;
+>
+> @@ -167,6 +169,22 @@ static void init_curl_http_auth(CURL *result)
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0}
+> =C2=A0}
+>
+> +static int has_cert_password(void)
+> +{
+> + =C2=A0 =C2=A0 =C2=A0 if (ssl_cert_password !=3D NULL)
+> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return 1;
+> + =C2=A0 =C2=A0 =C2=A0 if (ssl_cert =3D=3D NULL || ssl_cert_password_=
+required !=3D 1)
+> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return 0;
+> + =C2=A0 =C2=A0 =C2=A0 /* Only prompt the user once. */
+> + =C2=A0 =C2=A0 =C2=A0 ssl_cert_password_required =3D -1;
+> + =C2=A0 =C2=A0 =C2=A0 ssl_cert_password =3D getpass("Certificate Pas=
+sword: ");
+> + =C2=A0 =C2=A0 =C2=A0 if (ssl_cert_password !=3D NULL) {
+> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 ssl_cert_password =
+=3D xstrdup(ssl_cert_password);
+> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return 1;
+> + =C2=A0 =C2=A0 =C2=A0 } else
+> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return 0;
+> +}
+> +
+> =C2=A0static CURL *get_curl_handle(void)
+> =C2=A0{
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0CURL *result =3D curl_easy_init();
+> @@ -189,6 +207,16 @@ static CURL *get_curl_handle(void)
+>
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0if (ssl_cert !=3D NULL)
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0curl_easy_seto=
+pt(result, CURLOPT_SSLCERT, ssl_cert);
+> + =C2=A0 =C2=A0 =C2=A0 if (has_cert_password())
+> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 curl_easy_setopt(r=
+esult,
+> +#if LIBCURL_VERSION_NUM >=3D 0x071700
+> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0CURLOPT_KEYPASSWD,
+> +#elif LIBCURL_VERSION_NUM >=3D 0x070903
+> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0CURLOPT_SSLKEYPASSWD,
+> +#else
+> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0CURLOPT_SSLCERTPASSWD,
+> +#endif
+> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0ssl_cert_password);
+> =C2=A0#if LIBCURL_VERSION_NUM >=3D 0x070902
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0if (ssl_key !=3D NULL)
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0curl_easy_seto=
+pt(result, CURLOPT_SSLKEY, ssl_key);
+> @@ -329,8 +357,11 @@ void http_init(struct remote *remote)
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0if (getenv("GIT_CURL_FTP_NO_EPSV"))
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0curl_ftp_no_ep=
+sv =3D 1;
+>
+> - =C2=A0 =C2=A0 =C2=A0 if (remote && remote->url && remote->url[0])
+> + =C2=A0 =C2=A0 =C2=A0 if (remote && remote->url && remote->url[0]) {
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0http_auth_init=
+(remote->url[0]);
+> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (!prefixcmp(rem=
+ote->url[0], "https://"))
+> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 ssl_cert_password_required =3D 1;
+> + =C2=A0 =C2=A0 =C2=A0 }
+>
+> =C2=A0#ifndef NO_CURL_EASY_DUPHANDLE
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0curl_default =3D get_curl_handle();
+> @@ -370,6 +401,13 @@ void http_cleanup(void)
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0free((void *)c=
+url_http_proxy);
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0curl_http_prox=
+y =3D NULL;
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0}
+> +
+> + =C2=A0 =C2=A0 =C2=A0 if (ssl_cert_password !=3D NULL) {
+> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 memset(ssl_cert_pa=
+ssword, 0, strlen(ssl_cert_password));
+> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 free(ssl_cert_pass=
+word);
+> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 ssl_cert_password =
+=3D NULL;
+> + =C2=A0 =C2=A0 =C2=A0 }
+> + =C2=A0 =C2=A0 =C2=A0 ssl_cert_password_required =3D 0;
+> =C2=A0}
+>
+> =C2=A0struct active_request_slot *get_active_slot(void)
+> --
+> 1.6.3.1
+>
+>
