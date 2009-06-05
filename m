@@ -1,101 +1,97 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: [BUG ext4?] Working tree getting out of date "spontaneously"
-Date: Fri, 5 Jun 2009 08:39:24 -0700 (PDT)
-Message-ID: <alpine.LFD.2.01.0906050825120.6847@localhost.localdomain>
-References: <20090605122444.GA11035@atjola.homenet> <20090605132126.GB11035@atjola.homenet>
+From: Tay Ray Chuan <rctay89@gmail.com>
+Subject: [PATCH 02/23] t5540-http-push: test fetching of packed objects
+Date: Sat, 6 Jun 2009 00:00:30 +0800
+Message-ID: <20090606000030.35be616e.rctay89@gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Theodore Tso <tytso@mit.edu>, Junio C Hamano <gitster@pobox.com>,
-	git@vger.kernel.org
-To: =?ISO-8859-15?Q?Bj=F6rn_Steinbrink?= <B.Steinbrink@gmx.de>
-X-From: git-owner@vger.kernel.org Fri Jun 05 17:39:47 2009
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Mike Hommey <mh@glandium.org>
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Jun 05 18:09:40 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MCbW9-0007T9-Ig
-	for gcvg-git-2@gmane.org; Fri, 05 Jun 2009 17:39:42 +0200
+	id 1MCbz9-00053w-9Z
+	for gcvg-git-2@gmane.org; Fri, 05 Jun 2009 18:09:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752309AbZFEPjd convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 5 Jun 2009 11:39:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752159AbZFEPjc
-	(ORCPT <rfc822;git-outgoing>); Fri, 5 Jun 2009 11:39:32 -0400
-Received: from smtp1.linux-foundation.org ([140.211.169.13]:44874 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752079AbZFEPjc (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 5 Jun 2009 11:39:32 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
-	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id n55FdPPJ000971
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Fri, 5 Jun 2009 08:39:26 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id n55FdORs023071;
-	Fri, 5 Jun 2009 08:39:25 -0700
-X-X-Sender: torvalds@localhost.localdomain
-In-Reply-To: <20090605132126.GB11035@atjola.homenet>
-User-Agent: Alpine 2.01 (LFD 1184 2008-12-16)
-X-Spam-Status: No, hits=-3.965 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED
-X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
+	id S1754430AbZFEQIN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 5 Jun 2009 12:08:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754184AbZFEQIM
+	(ORCPT <rfc822;git-outgoing>); Fri, 5 Jun 2009 12:08:12 -0400
+Received: from wf-out-1314.google.com ([209.85.200.172]:10154 "EHLO
+	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753197AbZFEQIL (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 5 Jun 2009 12:08:11 -0400
+Received: by wf-out-1314.google.com with SMTP id 26so716862wfd.4
+        for <git@vger.kernel.org>; Fri, 05 Jun 2009 09:08:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:x-mailer:mime-version:content-type
+         :content-transfer-encoding;
+        bh=XflAqflOLFTWw5Pt8nEDYPCJG5sfa90L6MrwDYuIvsI=;
+        b=wIysThMbxM/NS5FgqvGtmetlgtQprUk/jnpeRj/7G47qO4Z452DPzeRp5Qn/IXEkBI
+         8uMQIeOFsSj07vYCS9XTTjlObUHbyoO1ZW50cHtZn39zRlyjdwZj2WCvlo4rnpJYCsZ4
+         Ia4bUG6EzNg4BUGmhQqBfNkDw/BpHkJP71Hyc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:x-mailer:mime-version
+         :content-type:content-transfer-encoding;
+        b=tLcPUNFVXGRT6kao0bu62BvoG0T79CqJlkWHwzN1FCEflZ71FOaN/863dtN5o/J8+h
+         ORomMrQsCVRuV2geXFwWOb9MsnFkkdwBZfONywpGZ8cCXBPH0Zqw16xkMJB28+vLl4kC
+         f1O9kDryzF5jZvwY0rZWaSbh/ERFaz/fdbnt4=
+Received: by 10.142.49.20 with SMTP id w20mr1220654wfw.330.1244218093249;
+        Fri, 05 Jun 2009 09:08:13 -0700 (PDT)
+Received: from your-cukc5e3z5n (cm97.zeta149.maxonline.com.sg [116.87.149.97])
+        by mx.google.com with ESMTPS id 27sm428601wfa.2.2009.06.05.09.08.11
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 05 Jun 2009 09:08:12 -0700 (PDT)
+X-Mailer: Sylpheed 2.6.0 (GTK+ 2.10.14; i686-pc-mingw32)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120780>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120781>
 
 
+Signed-off-by: Tay Ray Chuan <rctay89@gmail.com>
+---
+ t/t5540-http-push.sh |   20 ++++++++++++++++++++
+ 1 files changed, 20 insertions(+), 0 deletions(-)
 
-On Fri, 5 Jun 2009, Bj=F6rn Steinbrink wrote:
-> >=20
-> > *wait a minute, doing nothing*
-> >=20
-> > doener@atjola:git (master) $ git diff-index --name-only HEAD
-> > Documentation/RelNotes-1.6.3.2.txt
-> > Documentation/git.txt
-> > contrib/completion/git-completion.bash
-> > grep.c
->=20
-> Hm, looks like this is not a git bug. Went back to 1.5.4, and even th=
-at
-> shows the error. So I actually looked at the files, and indeed, the f=
-ile
-> in the working tree gets modified. stat(1) shows:
+diff --git a/t/t5540-http-push.sh b/t/t5540-http-push.sh
+index 65a41db..ad0f14b 100755
+--- a/t/t5540-http-push.sh
++++ b/t/t5540-http-push.sh
+@@ -83,6 +83,26 @@ test_expect_failure 'http-push fetches unpacked objects' '
+ 	 git push -f -v $HTTPD_URL/test_repo_unpacked.git master)
+ '
 
-You have beagle running, don't you?
-
-It's a piece of sh*t, and uses extended attributes to track indexing=20
-information.
-
-So the "wait a minute" will just give beagle the chance to index your g=
-it=20
-working tree, and update the extended attributes. That is entirely hidd=
-en=20
-from all normal filesystem stat information, *EXCEPT* it changes ctime,=
-=20
-since the inode is changed.
-
-It's annoying as hell. Beagle is broken. It's a particularly inefficien=
-t=20
-way to store index information, and it is annoying that an indexing eng=
-ine=20
-actually changes the files it indexes.=20
-
-You can tell git to ignore CTIME, by using
-
-	[core]
-		trustctime =3D false
-
-and now git will ignore the mess that beagle makes of things.=20
-
-The other alternative is to tell beagle to behave. The beagle people=20
-claims this makes things slower. Which is quite possibly true, since th=
-e=20
-kernel is optimized and caches things well (extended attributes in the=20
-filesystem), and beagles alternative model is probably some incredibly=20
-crappy indexing built on top of MySQL.
-
-Your choice.
-
-		Linus
++test_expect_failure 'http-push fetches packed objects' '
++	cp -R "$HTTPD_DOCUMENT_ROOT_PATH"/test_repo.git \
++		"$HTTPD_DOCUMENT_ROOT_PATH"/test_repo_packed.git &&
++
++	git clone $HTTPD_URL/test_repo_packed.git \
++		"$ROOT_PATH"/test_repo_clone_packed &&
++
++	(cd "$HTTPD_DOCUMENT_ROOT_PATH"/test_repo_packed.git &&
++	 git --bare repack &&
++	 git --bare prune-packed) &&
++
++	# By reset, we force git to retrieve the packed object
++	(cd "$ROOT_PATH"/test_repo_clone_packed &&
++	 git reset --hard HEAD^ &&
++	 git remote rm origin &&
++	 git reflog expire --expire=0 --all &&
++	 git prune &&
++	 git push -f -v $HTTPD_URL/test_repo_packed.git master)
++'
++
+ test_expect_success 'create and delete remote branch' '
+ 	cd "$ROOT_PATH"/test_repo_clone &&
+ 	git checkout -b dev &&
+--
+1.6.3.1
