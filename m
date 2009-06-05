@@ -1,77 +1,80 @@
-From: Theodore Tso <tytso@mit.edu>
-Subject: Re: [BUG ext4?] Working tree getting out of date "spontaneously"
-Date: Fri, 5 Jun 2009 17:38:24 -0400
-Message-ID: <20090605213824.GD6442@mit.edu>
-References: <20090605122444.GA11035@atjola.homenet> <20090605132126.GB11035@atjola.homenet> <20090605145508.GA6442@mit.edu> <20090605150212.GC764@atjola.homenet> <20090605180630.GC6442@mit.edu> <20090605183538.GE764@atjola.homenet>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 2/3] pull --rebase: Add support for rebased default
+ upstream
+Date: Sat, 6 Jun 2009 01:22:19 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.0906060120140.26154@pacific.mpi-cbg.de>
+References: <1244231617-17754-2-git-send-email-santi@agolina.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	git@vger.kernel.org
-To: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
-X-From: git-owner@vger.kernel.org Fri Jun 05 23:41:17 2009
+Content-Type: MULTIPART/MIXED; BOUNDARY="8323328-1382109001-1244244140=:26154"
+Cc: git@vger.kernel.org
+To: =?ISO-8859-15?Q?Santi_B=E9jar?= <santi@agolina.net>
+X-From: git-owner@vger.kernel.org Sat Jun 06 01:22:09 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MChA3-0003tb-5g
-	for gcvg-git-2@gmane.org; Fri, 05 Jun 2009 23:41:15 +0200
+	id 1MCijg-0007e5-C2
+	for gcvg-git-2@gmane.org; Sat, 06 Jun 2009 01:22:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754799AbZFEVin convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 5 Jun 2009 17:38:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754270AbZFEVim
-	(ORCPT <rfc822;git-outgoing>); Fri, 5 Jun 2009 17:38:42 -0400
-Received: from thunk.org ([69.25.196.29]:39078 "EHLO thunker.thunk.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754315AbZFEVih (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 5 Jun 2009 17:38:37 -0400
-Received: from root (helo=closure.thunk.org)
-	by thunker.thunk.org with local-esmtp   (Exim 4.50 #1 (Debian))
-	id 1MCh7L-0007Bf-5o; Fri, 05 Jun 2009 17:38:28 -0400
-Received: from tytso by closure.thunk.org with local (Exim 4.69)
-	(envelope-from <tytso@mit.edu>)
-	id 1MCh7I-000283-Rl; Fri, 05 Jun 2009 17:38:24 -0400
-Content-Disposition: inline
-In-Reply-To: <20090605183538.GE764@atjola.homenet>
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-SA-Exim-Connect-IP: <locally generated>
-X-SA-Exim-Mail-From: tytso@mit.edu
-X-SA-Exim-Scanned: No (on thunker.thunk.org); SAEximRunCond expanded to false
+	id S1752458AbZFEXV3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 5 Jun 2009 19:21:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752454AbZFEXV2
+	(ORCPT <rfc822;git-outgoing>); Fri, 5 Jun 2009 19:21:28 -0400
+Received: from mail.gmx.net ([213.165.64.20]:59718 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752234AbZFEXV2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 5 Jun 2009 19:21:28 -0400
+Received: (qmail invoked by alias); 05 Jun 2009 23:21:28 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp037) with SMTP; 06 Jun 2009 01:21:28 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/I6Bget2TI8FfPnmR35M6Xuf4qdUZI2sTtnnATXM
+	dGzWj5DLcIIh2O
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <1244231617-17754-2-git-send-email-santi@agolina.net>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120838>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120839>
 
-On Fri, Jun 05, 2009 at 08:35:38PM +0200, Bj=F6rn Steinbrink wrote:
-> > So the next step is to create an ext3 filesystem with a git reposit=
-ory
-> > on it, and then to gradually turn on various ext4 specific features
-> > and see when the bug ends up getting replicated.  If I had to guess
-> > it's the lack (or absense) of the extents feature, but I'll have to
-> > run the test and find out for sure.
->=20
-> Yep, seems to be extents. Test script:
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-OK, I see what's going on.  When doing delayed allocation, and we're
-not using extents, the call to ext4_get_blocks() which does the
-allocation ultimately ends up calling ext4_slice_branch if the inode
-is using direct/indirect blocks instead of extents.
-ext4_splice_branch() sets ctime.  Taking out the this line in
-fs/ext4/inode.c:ext4_splice_branch() should fix things:
+--8323328-1382109001-1244244140=:26154
+Content-Type: TEXT/PLAIN; charset=UTF-8
+Content-Transfer-Encoding: 8BIT
 
+Hi,
 
-	/* We are done with atomic stuff, now do the rest of housekeeping */
+On Fri, 5 Jun 2009, Santi Béjar wrote:
 
--	inode->i_ctime =3D ext4_current_time(inode);
-	ext4_mark_inode_dirty(handle, inode);
+> Also add a test to check for this case and another one (failing) to
+> test rebasing two branches on top of a rebased upstream using just
+> 'git pull --rebase'.
+> 
+> Signed-off-by: Santi Béjar <santi@agolina.net>
 
-	/* had we spliced it onto indirect block? */
+Either I am a stupid moron (which is a completely valid suggestion) or 
+this commit message lacks in detail severely.
 
-I'm pretty sure we don't need to set i_ctime anywhere else, since we
-don't have a similar line in the extents code and we
-fs/inode.c:file_update_time() should take care updating i_ctime where
-it needs it, but I want to take a closer look to be sure.
+For example, when I "git pull --rebase junio next" and "next" was rebased, 
+it works _perfectly_, so I do not see any need for a fix.
 
-   	     	   	   	  	 - Ted
+Further, this:
+
+> ---
+>  git-parse-remote.sh |    8 +++++++-
+>  t/t5520-pull.sh     |   29 +++++++++++++++++++++++++++++
+>  2 files changed, 36 insertions(+), 1 deletions(-)
+
+... suggests to me that pull --rebase is not even affected by your patch.  
+So maybe you want to clarify so much that even stupid morons understand 
+what you want to achieve, and how.
+
+Ciao,
+Dscho
+--8323328-1382109001-1244244140=:26154--
