@@ -1,81 +1,72 @@
 From: Brandon Casey <casey@nrlssc.navy.mil>
-Subject: [PATCH 5/8] git-compat-util.h: tweak the way _XOPEN_SOURCE is set on Solaris
-Date: Fri,  5 Jun 2009 18:36:13 -0500
-Message-ID: <67hZHClrEWQHxCRdWosE26gwuGblUI8bcWLxyoPZhmfzJAibRVMtix-zkRUKYe5Y8R8-GRcIkUI@cipher.nrlssc.navy.mil>
-References: <7vk53vlxhz.fsf@alter.siamese.dyndns.org> <67hZHClrEWQHxCRdWosE25_CVQVNIYpTaeW2DKuCCDfW4h-jHQ82zlGcCNn49KcxUKsj-TSJSVQ@cipher.nrlssc.navy.mil> <67hZHClrEWQHxCRdWosE24eNsO0do05033zPcGsXrwIRCoU8GtXor_XD8ayKlybu-V7PGeTC_PA@cipher.nrlssc.navy.mil> <67hZHClrEWQHxCRdWosE21Y219yACHqb_DoUmykc1kiOxwRuziSDMczTdmGkyEob9g6DVoIraR4@cipher.nrlssc.navy.mil> <67hZHClrEWQHxCRdWosE24FbCSWPktK230jx86LzLj0Aqa5g5XoJb3Iv805pzfx5wCPameuSp6M@cipher.nrlssc.navy.mil> <67hZHClrEWQHxCRdWosE28bOBU_EdMUdyv6uENKCaQfOLQjhGBq3kLwxe6mMrfW4HauaUwWt5eM@cipher.nrlssc.navy.mil>
+Subject: [PATCH 4/8] On Solaris choose the OLD_ICONV iconv() declaration based on the UNIX spec
+Date: Fri,  5 Jun 2009 18:36:12 -0500
+Message-ID: <67hZHClrEWQHxCRdWosE28bOBU_EdMUdyv6uENKCaQfOLQjhGBq3kLwxe6mMrfW4HauaUwWt5eM@cipher.nrlssc.navy.mil>
+References: <7vk53vlxhz.fsf@alter.siamese.dyndns.org> <67hZHClrEWQHxCRdWosE25_CVQVNIYpTaeW2DKuCCDfW4h-jHQ82zlGcCNn49KcxUKsj-TSJSVQ@cipher.nrlssc.navy.mil> <67hZHClrEWQHxCRdWosE24eNsO0do05033zPcGsXrwIRCoU8GtXor_XD8ayKlybu-V7PGeTC_PA@cipher.nrlssc.navy.mil> <67hZHClrEWQHxCRdWosE21Y219yACHqb_DoUmykc1kiOxwRuziSDMczTdmGkyEob9g6DVoIraR4@cipher.nrlssc.navy.mil> <67hZHClrEWQHxCRdWosE24FbCSWPktK230jx86LzLj0Aqa5g5XoJb3Iv805pzfx5wCPameuSp6M@cipher.nrlssc.navy.mil>
 Cc: gitster@pobox.com, peff@peff.net, Brandon Casey <drafnel@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jun 06 01:40:11 2009
+X-From: git-owner@vger.kernel.org Sat Jun 06 01:40:12 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MCj18-0003L7-RU
-	for gcvg-git-2@gmane.org; Sat, 06 Jun 2009 01:40:11 +0200
+	id 1MCj19-0003L7-JE
+	for gcvg-git-2@gmane.org; Sat, 06 Jun 2009 01:40:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753257AbZFEXjo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 5 Jun 2009 19:39:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753252AbZFEXjn
-	(ORCPT <rfc822;git-outgoing>); Fri, 5 Jun 2009 19:39:43 -0400
-Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:42259 "EHLO
+	id S1753815AbZFEXjp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 5 Jun 2009 19:39:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753489AbZFEXjp
+	(ORCPT <rfc822;git-outgoing>); Fri, 5 Jun 2009 19:39:45 -0400
+Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:42260 "EHLO
 	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752674AbZFEXjl (ORCPT <rfc822;git@vger.kernel.org>);
+	with ESMTP id S1752806AbZFEXjl (ORCPT <rfc822;git@vger.kernel.org>);
 	Fri, 5 Jun 2009 19:39:41 -0400
-Received: by mail.nrlssc.navy.mil id n55NaS13019262; Fri, 5 Jun 2009 18:36:30 -0500
-In-Reply-To: <67hZHClrEWQHxCRdWosE28bOBU_EdMUdyv6uENKCaQfOLQjhGBq3kLwxe6mMrfW4HauaUwWt5eM@cipher.nrlssc.navy.mil>
-X-OriginalArrivalTime: 05 Jun 2009 23:36:28.0364 (UTC) FILETIME=[72B1B0C0:01C9E636]
+Received: by mail.nrlssc.navy.mil id n55NaS11019262; Fri, 5 Jun 2009 18:36:28 -0500
+In-Reply-To: <67hZHClrEWQHxCRdWosE24FbCSWPktK230jx86LzLj0Aqa5g5XoJb3Iv805pzfx5wCPameuSp6M@cipher.nrlssc.navy.mil>
+X-OriginalArrivalTime: 05 Jun 2009 23:36:28.0208 (UTC) FILETIME=[7299E300:01C9E636]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120847>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120848>
 
 From: Brandon Casey <drafnel@gmail.com>
 
-On Solaris, when _XOPEN_EXTENDED is set, its header file forces the
-programs to be XPG4v2, defeating any _XOPEN_SOURCE setting to say we are
-XPG5 or XPG6.  Also on Solaris, XPG6 programs must be compiled with a c99
-compiler, while non XPG6 programs must be compiled with a pre-c99 compiler.
-
-So when compiling on Solaris, always refrain from setting _XOPEN_EXTENDED,
-and then set _XOPEN_SOURCE to 600 or 500 based on whether a c99 compiler
-is being used or not.
+OLD_ICONV is only necessary on Solaris until UNIX03.  This is indicated
+by the private macro _XPG6 which is set in /usr/include/sys/feature_tests.h.
 
 Signed-off-by: Brandon Casey <drafnel@gmail.com>
 ---
- git-compat-util.h |   17 ++++++++++++++---
- 1 files changed, 14 insertions(+), 3 deletions(-)
+ Makefile |    3 ---
+ utf8.c   |    2 +-
+ 2 files changed, 1 insertions(+), 4 deletions(-)
 
-diff --git a/git-compat-util.h b/git-compat-util.h
-index f25f7f1..13e450d 100644
---- a/git-compat-util.h
-+++ b/git-compat-util.h
-@@ -39,12 +39,23 @@
- /* Approximation of the length of the decimal representation of this type. */
- #define decimal_length(x)	((int)(sizeof(x) * 2.56 + 0.5) + 1)
- 
--#if !defined(__APPLE__) && !defined(__FreeBSD__)  && !defined(__USLC__) && !defined(_M_UNIX)
-+#if defined(__sun__)
-+ /*
-+  * On Solaris, when _XOPEN_EXTENDED is set, its header file
-+  * forces the programs to be XPG4v2, defeating any _XOPEN_SOURCE
-+  * setting to say we are XPG5 or XPG6.  Also on Solaris,
-+  * XPG6 programs must be compiled with a c99 compiler, while
-+  * non XPG6 programs must be compiled with a pre-c99 compiler.
-+  */
-+# if __STDC_VERSION__ - 0 >= 199901L
-+# define _XOPEN_SOURCE 600
-+# else
-+# define _XOPEN_SOURCE 500
-+# endif
-+#elif !defined(__APPLE__) && !defined(__FreeBSD__)  && !defined(__USLC__) && !defined(_M_UNIX)
- #define _XOPEN_SOURCE 600 /* glibc2 and AIX 5.3L need 500, OpenBSD needs 600 for S_ISLNK() */
--#ifndef __sun__
- #define _XOPEN_SOURCE_EXTENDED 1 /* AIX 5.3L needs this */
- #endif
--#endif
- #define _ALL_SOURCE 1
- #define _GNU_SOURCE 1
- #define _BSD_SOURCE 1
+diff --git a/Makefile b/Makefile
+index 40642f7..375cf2a 100644
+--- a/Makefile
++++ b/Makefile
+@@ -714,9 +714,6 @@ ifeq ($(uname_S),SunOS)
+ 	NO_MEMMEM = YesPlease
+ 	NO_MKDTEMP = YesPlease
+ 	NO_MKSTEMPS = YesPlease
+-	ifneq ($(uname_R),5.11)
+-		OLD_ICONV = UnfortunatelyYes
+-	endif
+ 	ifeq ($(uname_R),5.8)
+ 		NO_UNSETENV = YesPlease
+ 		NO_SETENV = YesPlease
+diff --git a/utf8.c b/utf8.c
+index ddfdc5e..db706ac 100644
+--- a/utf8.c
++++ b/utf8.c
+@@ -354,7 +354,7 @@ int is_encoding_utf8(const char *name)
+  * with iconv.  If the conversion fails, returns NULL.
+  */
+ #ifndef NO_ICONV
+-#ifdef OLD_ICONV
++#if defined(OLD_ICONV) || (defined(__sun__) && !defined(_XPG6))
+ 	typedef const char * iconv_ibp;
+ #else
+ 	typedef char * iconv_ibp;
 -- 
 1.6.3.1.24.g152f4
