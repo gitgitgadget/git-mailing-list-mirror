@@ -1,166 +1,85 @@
-From: "Kelly F. Hickel" <kfh@mqsoftware.com>
-Subject: RE: Best way to merge two repos with same content, differenthistory
-Date: Fri, 5 Jun 2009 14:06:25 -0500
-Message-ID: <63BEA5E623E09F4D92233FB12A9F794303117DCB@emailmn.mqsoftware.com>
-References: <63BEA5E623E09F4D92233FB12A9F794303117DBF@emailmn.mqsoftware.com> <286817520906050953n1afed29cn6c85f219a0c9b8b5@mail.gmail.com> <63BEA5E623E09F4D92233FB12A9F794303117DC1@emailmn.mqsoftware.com> <robbat2-20090605T183716-227340397Z@orbis-terrarum.net>
+From: Stephen Boyd <bebarino@gmail.com>
+Subject: Re: [PATCHv1+eps] git-repack.txt: Clarify implications of -a for dumb 
+	protocols
+Date: Fri, 5 Jun 2009 12:14:15 -0700
+Message-ID: <780e0a6b0906051214t76f2bf37u96cc0b8039f63d23@mail.gmail.com>
+References: <200906031950.56974.lists@informa.tiker.net> <1244115295-28688-1-git-send-email-git@drmicha.warpmail.net> 
+	<780e0a6b0906041246k43d42af1xe623168c52ff7e4f@mail.gmail.com> 
+	<4A28D470.5030403@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
-To: "Robin H. Johnson" <robbat2@gentoo.org>,
-	"Git Mailing List" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Jun 05 21:07:01 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, lists@informa.tiker.net,
+	Junio C Hamano <gitster@pobox.com>
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Fri Jun 05 21:14:44 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MCekl-00046t-MN
-	for gcvg-git-2@gmane.org; Fri, 05 Jun 2009 21:07:00 +0200
+	id 1MCesF-00079u-G5
+	for gcvg-git-2@gmane.org; Fri, 05 Jun 2009 21:14:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752698AbZFETGb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 5 Jun 2009 15:06:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753827AbZFETGa
-	(ORCPT <rfc822;git-outgoing>); Fri, 5 Jun 2009 15:06:30 -0400
-Received: from emailmn.mqsoftware.com ([66.192.70.108]:26140 "EHLO
-	emailmn.mqsoftware.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753779AbZFETGY convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 5 Jun 2009 15:06:24 -0400
-X-MimeOLE: Produced By Microsoft Exchange V6.5
-Content-class: urn:content-classes:message
-In-Reply-To: <robbat2-20090605T183716-227340397Z@orbis-terrarum.net>
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-Thread-Topic: Best way to merge two repos with same content, differenthistory
-Thread-Index: AcnmDnSeuoR6cWmFSkS3GcEge92nIwAAXiaQ
+	id S1752030AbZFETOf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 5 Jun 2009 15:14:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751794AbZFETOe
+	(ORCPT <rfc822;git-outgoing>); Fri, 5 Jun 2009 15:14:34 -0400
+Received: from mail-gx0-f214.google.com ([209.85.217.214]:45324 "EHLO
+	mail-gx0-f214.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750876AbZFETOd (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 5 Jun 2009 15:14:33 -0400
+Received: by gxk10 with SMTP id 10so3127348gxk.13
+        for <git@vger.kernel.org>; Fri, 05 Jun 2009 12:14:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=z1bjtpa18TzkMmkIO+zkf3wxu0UBwjv8zWD33ejRIjI=;
+        b=bFxxJQgkOtWC9UPOmmb96a9bnHEr5j9sQGbvkgA+Rk4zQ/DOdZwFA0uv8AknNa5C4k
+         Cw/dI9HZ3GzaNVKYRTt5hu/6+fIAuck+B+/9Ju1+OiLgDokVSC/289orLUQguGXq9/Fi
+         43Ufj210Vam1KmygsDF7cp54WkglaDePGnS1k=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=pCrFiItBz8JCpJ9s1Er446lEiOklVhp22kgCj4RpnzvaAx9T9xIVtnlMGhGMJreBY8
+         JDiEx3R1i1ZOKtsxuETdFq/B2e4Eqx1Bf1NS8NhLcCjSwHc2vsaL2rDuXlQTm+zNZDSa
+         JQtIk2cfhoweliq4TWjFSyC2RdrR/F+wtLgHw=
+Received: by 10.100.41.9 with SMTP id o9mr4429334ano.155.1244229275279; Fri, 
+	05 Jun 2009 12:14:35 -0700 (PDT)
+In-Reply-To: <4A28D470.5030403@drmicha.warpmail.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120819>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120820>
 
-> -----Original Message-----
-> From: git-owner@vger.kernel.org [mailto:git-owner@vger.kernel.org] On
-> Behalf Of Robin H. Johnson
-> Sent: Friday, June 05, 2009 1:46 PM
-> To: Git Mailing List
-> Subject: Re: Best way to merge two repos with same content,
-> differenthistory
-> 
-> On Fri, Jun 05, 2009 at 12:10:30PM -0500, Kelly F. Hickel wrote:
-> > Bost,
-> > 	Thanks, but I'm already working with a local copy of the CVS
-> repo.
-> > 	I've corresponded with Michael Haggerty about the time this
-> takes,
-> > 	and there just doesn't seem to be any way to improve the speed,
-> > 	without making some fairly drastic changes to cvs2git.
-> I've been working with mhagger lately as it also pertains to the
-Gentoo
-> conversion. We've made some very good progress.
-> 
-> A couple of comments in that regard:
-> - Make really sure your box is not short of RAM. Throw some
-measurement
->   tools onto there to see it. A couple of GiB is worthwhile. After we
->   found this early on, and switched boxes, we dropped from our initial
->   multiple days to 20 hours.
-> - His latest ExternalBlobGenerator code (_NOT_ available in SVN yet)
->   reduced our pass1 time from 36204 seconds to 1598 seconds, with
->   a potential to be much faster now, as parallelization of part of
-that
->   is now trivial.
-> - pass9 is still the remaining large time-eater for us. I've started
-to
->   look at it, but I haven't made any actual developments yet.
-> 
-> Would you mind posting your cvs2svn stats like these?
-> http://archives.gentoo.org/gentoo-
-> scm/msg_b69b2f6ecee0ec7bb402d31b372b945b.xml
-> 
-> --
-> Robin Hugh Johnson
-> Gentoo Linux Developer & Infra Guy
-> E-Mail     : robbat2@gentoo.org
-> GnuPG FP   : 11AC BA4F 4778 E3F6 E4ED  F38E B27B 944E 3488 4E85
+On Fri, Jun 5, 2009 at 1:16 AM, Michael J
+Gruber<git@drmicha.warpmail.net> wrote:
+> Stephen Boyd venit, vidit, dixit 04.06.2009 21:46:
+>> Instead of adding this, why don't we just remove the part about dumb
+>> protocols? So just say that it's especially useful for private
+>> development. Then, if we really want to keep this performance note
+>> just add it after the paragraph in one of those "+" things (What are
+>> those called?)
+>
+> ...because "repack -a" hurts *badly* on even midsized repos when dumb
+> protocols are used. On the other hand, using it isn't that much of an
+> improvement in terms of pack size, unless you repack manually very often
+> and, thus, produce many small packs. So, "gc --auto" users should be
+> fine in any case (dumb or not - the protocol, that is...) as long as
+> they don't use "-a".
 
-Robin, 
-	That's all good news, I have an 8 way box with 32gb of ram
-running a 64 bit Linux, a box with 4 gb of ram panics during the
-conversion.
+Maybe I spoke wrongly. I'm suggesting something like
 
-My conversion data is below...
+       Especially useful when packing a repository that is used
+       for private development.  Use with '-d'.  This will clean up
+       the objects that `git prune` leaves behind, but
+       `git fsck --full` shows as dangling.
++
+Note: Users fetching over dumb protocols will have to fetch the
+whole pack in order to get any contained object, no matter how
+many other objects in that pack they already have locally.
 
-Thanks,
-Kelly
-
-
-cvs2svn Statistics:
-------------------
-Total CVS Files:             18488
-Total CVS Revisions:        225208
-Total CVS Branches:       15203751
-Total CVS Tags:           39079236
-Total Unique Tags:           11453
-Total Unique Branches:        4364
-CVS Repos Size in KB:      3355895
-Total SVN Commits:           49967
-First Revision Date:    Mon Nov  8 02:26:51 1999
-Last Revision Date:     Wed Apr 22 17:59:44 2009
-------------------
-Timings (seconds):
-------------------
-251546   pass1    CollectRevsPass
-     4   pass2    CleanMetadataPass
-   142   pass3    CollateSymbolsPass
- 53491   pass4    FilterSymbolsPass
-     4   pass5    SortRevisionSummaryPass
-   163   pass6    SortSymbolSummaryPass
-  8825   pass7    InitializeChangesetsPass
-   418   pass8    BreakRevisionChangesetCyclesPass
-   418   pass9    RevisionTopologicalSortPass
-  4256   pass10   BreakSymbolChangesetCyclesPass
-  4914   pass11   BreakAllChangesetCyclesPass
-  4575   pass12   TopologicalSortPass
-  3111   pass13   CreateRevsPass
-   270   pass14   SortSymbolsPass
-   154   pass15   IndexSymbolsPass
-  5517   pass16   OutputPass
-337808   total
-251783.89user 80800.42system 93:50:11elapsed 98%CPU (0avgtext+0avgdata
-0maxresident)k
-0inputs+0outputs (3major+3132264023minor)pagefaults 0swaps
-
-
-git-fast-import statistics: 
----------------------------------------------------------------------
-Alloc'd objects:     415000
-Total objects:       410079 (   2628078 duplicates                  )
-      blobs  :       152002 (     68715 duplicates     135125 deltas)
-      trees  :       213636 (   2559363 duplicates     164052 deltas)
-      commits:        44441 (         0 duplicates          0 deltas)
-      tags   :            0 (         0 duplicates          0 deltas)
-Total branches:       15822 (      6184 loads     )
-      marks:     1073741824 (    265158 unique    )
-      atoms:          14807
-Memory total:         32402 KiB
-       pools:         16192 KiB
-     objects:         16210 KiB
----------------------------------------------------------------------
-pack_report: getpagesize()            =       4096
-pack_report: core.packedGitWindowSize = 1073741824
-pack_report: core.packedGitLimit      = 8589934592
-pack_report: pack_used_ctr            =     311525
-pack_report: pack_mmap_calls          =      13303
-pack_report: pack_open_windows        =          1 /          1
-pack_report: pack_mapped              =  403041230 /  403041230
----------------------------------------------------------------------
-
-
-git repack -a -d -f --depth=4000 --window=4000 && git pack-refs --all
-Counting objects: 409458, done.5/119582)   
-Compressing objects: 100% (119582/119582), done.
-Writing objects: 100% (128713/128713), done.
-Total 128713 (delta 82330), reused 0 (delta 0)
-Compressing objects: 100% (384171/384171), done.
-Writing objects: 100% (409458/409458), done.
-Total 409458 (delta 309214), reused 0 (delta 0)
+I think this Note part probably needs some work though.
