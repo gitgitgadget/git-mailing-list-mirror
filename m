@@ -1,84 +1,97 @@
 From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Can I set up a GIT server w/o administration privileges on a Solaris machine?
-Date: Fri, 05 Jun 2009 01:42:30 -0700 (PDT)
-Message-ID: <m3eitz6php.fsf@localhost.localdomain>
-References: <4A27F7E6.8060405@xnet.com>
-	<32C5F26D-7498-440C-8BF4-97AF137EF78F@dbservice.com>
+Subject: Re: Request for detailed documentation of git pack protocol
+Date: Fri, 05 Jun 2009 01:45:49 -0700 (PDT)
+Message-ID: <m3ab4n6pc6.fsf@localhost.localdomain>
+References: <200905122329.15379.jnareb@gmail.com>
+	<200906042255.43952.jnareb@gmail.com>
+	<20090605004540.GU3355@spearce.org>
+	<200906050924.43882.jnareb@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: stuart <stuart@xnet.com>, git@vger.kernel.org
-To: Tomas Carnecky <tom@dbservice.com>
-X-From: git-owner@vger.kernel.org Fri Jun 05 10:42:53 2009
+Cc: Scott Chacon <schacon@gmail.com>, git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Fri Jun 05 10:46:08 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MCV0n-0002Ek-0K
-	for gcvg-git-2@gmane.org; Fri, 05 Jun 2009 10:42:53 +0200
+	id 1MCV3r-0003P3-S9
+	for gcvg-git-2@gmane.org; Fri, 05 Jun 2009 10:46:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755169AbZFEImc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 5 Jun 2009 04:42:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755163AbZFEImb
-	(ORCPT <rfc822;git-outgoing>); Fri, 5 Jun 2009 04:42:31 -0400
-Received: from fg-out-1718.google.com ([72.14.220.154]:40798 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754971AbZFEIma (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 5 Jun 2009 04:42:30 -0400
-Received: by fg-out-1718.google.com with SMTP id d23so170005fga.17
-        for <git@vger.kernel.org>; Fri, 05 Jun 2009 01:42:31 -0700 (PDT)
+	id S1753599AbZFEIpv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 5 Jun 2009 04:45:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753260AbZFEIpu
+	(ORCPT <rfc822;git-outgoing>); Fri, 5 Jun 2009 04:45:50 -0400
+Received: from mail-fx0-f213.google.com ([209.85.220.213]:50225 "EHLO
+	mail-fx0-f213.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752628AbZFEIpt (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 5 Jun 2009 04:45:49 -0400
+Received: by fxm9 with SMTP id 9so388199fxm.37
+        for <git@vger.kernel.org>; Fri, 05 Jun 2009 01:45:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:received:received
          :x-authentication-warning:to:cc:subject:references:from:date
          :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        bh=A4oT0AbAKjPnPLlVUFCZKkmmQoCeotD/3rKHZWqjJu4=;
-        b=g9I6nzZ0FfU5hJ9kGUqfvjDk9FMwcPCc9xUy097Yo+22ZtRtvu7TBiJFAah9fcM88u
-         U873mixdoAzoDPE/i+l1YijL23Ek4oX0FRNtQ8gytgo0cT5PZzjBgBcFNA3UWLFux6dz
-         Lxygron0N64Mnj+yYclmTFeADmUCbSHGaNvZQ=
+        bh=gCbl1jUteOv0QjoZQ+3kgdMHvwMmkVTqDyeQNBlBNOA=;
+        b=Q9pk1X6mo3ZWye5rHD5dZChwUomFnEIn6HMp6YkBUZ7Zfd8VE8rsi1+KLmPzJf1SjZ
+         THDNuUdd4Qx76gd8n2MyHg2nOBeqWT0YheKp1qfsvu/6sbEydLUoLapc1l3CkN0qgQwA
+         2dcWsRsw/L1cQPePnU+32fD3EySlOJrDtCxKU=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=x-authentication-warning:to:cc:subject:references:from:date
          :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        b=u8S3igoakq64I0Di0RHoxDGTTuwz2ZVKfUH/29QM/cfT3OL2IFHV3uQ9ZsaBdZ4Lze
-         cQkAl+LGMQ5rrEEK7uRJSE0z2Hq9GyqCP3HZIhNPb/6VCRT9byo1STiVSWm6GJrSUI46
-         CS6KgOy7FIHvlmMJo9ZiOUVg4qtNcl/CPrDyw=
-Received: by 10.86.91.3 with SMTP id o3mr3648582fgb.29.1244191351483;
-        Fri, 05 Jun 2009 01:42:31 -0700 (PDT)
+        b=qpejEUs9sPQuHHKyXD6SHg4HwrDrcGRTQTGtEqr15W6VhUgX2sMT/L2Ckc6CKIhGLw
+         s18ONPfkgQbc6EF1KNJm76sWBDMv4jzbneH1vAi1aVAzuGns68psVaK9R9M2zkynvK+E
+         YWe2bNpN2HwbRzRzaFO2YqP8YkyvMH5hbzW4w=
+Received: by 10.86.91.13 with SMTP id o13mr3684210fgb.7.1244191550237;
+        Fri, 05 Jun 2009 01:45:50 -0700 (PDT)
 Received: from localhost.localdomain (abvg76.neoplus.adsl.tpnet.pl [83.8.204.76])
-        by mx.google.com with ESMTPS id 4sm19657fge.13.2009.06.05.01.42.30
+        by mx.google.com with ESMTPS id l19sm1169514fgb.2.2009.06.05.01.45.48
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 05 Jun 2009 01:42:30 -0700 (PDT)
+        Fri, 05 Jun 2009 01:45:49 -0700 (PDT)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id n558gRQR013835;
-	Fri, 5 Jun 2009 10:42:27 +0200
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id n558jkss013878;
+	Fri, 5 Jun 2009 10:45:46 +0200
 Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id n558gQ5J013832;
-	Fri, 5 Jun 2009 10:42:26 +0200
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id n558jj40013875;
+	Fri, 5 Jun 2009 10:45:45 +0200
 X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <32C5F26D-7498-440C-8BF4-97AF137EF78F@dbservice.com>
+In-Reply-To: <200906050924.43882.jnareb@gmail.com>
 User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120763>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120764>
 
-Tomas Carnecky <tom@dbservice.com> writes:
+Jakub Narebski <jnareb@gmail.com> writes:
 
-> The default port of the git daemon is 9418. Unix systems usually don't
-> require admin privileges to bind to port >1024. Maybe there's a
-> firewall between you and the solaris box preventing you from
-> connecting to such non-standard port? If you are sure there is no such
-> thing, then simply fire up git-daemon and try to connect to it:
+> Also the flush "0000" seems to be required... but when I tried to repeat
+> it using the above example it actually does not hang, but doesn't get
+> PACK from git-daemon: there is something wrong in above snippet, as 
+> I get the same error on server whether I put "0000" flush line or not...
 > 
-> (assuming /path/to/repo.git is the git repository on the server)
->
-> server$ git-daemon --export-all --verbose \
->   --base-path=/path/to/ /path/to/
-> client$ git ls-remote git://<server>/repo.git
+>  c$  perl -e '
+>          my $h="c1e54552c9b35521f189db53db24cc82b5b75816";
+>          my $c="multi_ack side-band-64k ofs-delta";
+>          sub w{$_=shift;printf "%04x%s",4+length,$_;}
+>          w("git-upload-pack /git.git");
+>          w("want $h $c\n");
+>          ## printf "0000";    # <-- commented out!
+>          w("done");
+>      ' | nc localhost -v 9418
+>  
+>  s$  git daemon --export-all --verbose \
+>          --base-path=/home/local/scm/ /home/local/scm/
+>  [12791] Connection from 127.0.0.1:42484
+>  [12791] Request upload-pack for '/git.git'
+>  fatal: git upload-pack: not our ref c1e54552c9b35521f189db53db24cc82b5b75816 multi_ack side-band-64k ofs-delta
+> 
+>  [12692] [12791] Disconnected (with error)
 
-Use dashless form "git daemon" and not "git-daemon", otherwise
-it cannot be found with modern git installation.
+While it works against git-clone ("git clone git://localhost/git.git"),
+so the problem is with the above snippet, not with git-daemon invocation.
 
 -- 
 Jakub Narebski
