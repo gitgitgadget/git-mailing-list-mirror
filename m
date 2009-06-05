@@ -1,206 +1,158 @@
-From: Mark Lodato <lodatom@gmail.com>
-Subject: Re: [PATCH 1/2] http.c: prompt for SSL client certificate password
-Date: Thu, 4 Jun 2009 22:44:58 -0400
-Message-ID: <ca433830906041944s1a2b12en36eb88b23cb93a7c@mail.gmail.com>
-References: <1243480563-5954-1-git-send-email-lodatom@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jun 05 04:45:20 2009
+From: Christian Couder <chriscool@tuxfamily.org>
+Subject: [PATCH v2 1/3] bisect: add parameters to "filter_skipped"
+Date: Fri, 05 Jun 2009 06:10:41 +0200
+Message-ID: <20090605041044.8885.91204.chriscool@tuxfamily.org>
+References: <20090605040238.8885.92790.chriscool@tuxfamily.org>
+Cc: git@vger.kernel.org, Sam Vilain <sam@vilain.net>,
+	"H. Peter Anvin" <hpa@zytor.com>, Ingo Molnar <mingo@elte.hu>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jun 05 06:12:46 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MCPQi-00078U-6p
-	for gcvg-git-2@gmane.org; Fri, 05 Jun 2009 04:45:16 +0200
+	id 1MCQnL-0001a8-4R
+	for gcvg-git-2@gmane.org; Fri, 05 Jun 2009 06:12:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752292AbZFECpB convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 4 Jun 2009 22:45:01 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752204AbZFECpA
-	(ORCPT <rfc822;git-outgoing>); Thu, 4 Jun 2009 22:45:00 -0400
-Received: from mail-bw0-f213.google.com ([209.85.218.213]:41619 "EHLO
-	mail-bw0-f213.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751721AbZFECo7 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 4 Jun 2009 22:44:59 -0400
-Received: by bwz9 with SMTP id 9so1190930bwz.37
-        for <git@vger.kernel.org>; Thu, 04 Jun 2009 19:45:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:content-type
-         :content-transfer-encoding;
-        bh=wvy+WgbC7895i+wgrzykUnja/7u7wbOrLLiFMiGJsZ4=;
-        b=ac04KAnXiKT54SzKV9QnGVr/Ol9xvH+VmsET77/ToL3OqR+AwLYrZ2G7sdvmEtzbrv
-         +hpm2DLI4PaxCPKI/LbjsIiwilkuF8vTml5t4iWSW2sMuvoIrx8fWMz8ivUnTth7g7zt
-         d+QHiD+j5BLQaKFxre9KMunI57EdbIEODodys=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :content-type:content-transfer-encoding;
-        b=r7Sx3c5Q0vSHLwlaJfhGCsj1LQjE3STVj+dc8gf5+ipWeCLX8hLQPPlNVJaMaKnKe3
-         GWfPU6K3I0q7nkvEY4ZZ/r7IBIcoaRZLEbtlVVsY4GeNQP+yJeKryjzm+D3fqyUMIqT2
-         eQ19B6BouJTVgia1dXyYQEwZ+JAklEVwEif0Q=
-Received: by 10.223.108.210 with SMTP id g18mr1732430fap.38.1244169900202; 
-	Thu, 04 Jun 2009 19:45:00 -0700 (PDT)
-In-Reply-To: <1243480563-5954-1-git-send-email-lodatom@gmail.com>
+	id S1751315AbZFEEM2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 5 Jun 2009 00:12:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750937AbZFEEM2
+	(ORCPT <rfc822;git-outgoing>); Fri, 5 Jun 2009 00:12:28 -0400
+Received: from smtp3-g21.free.fr ([212.27.42.3]:32960 "EHLO smtp3-g21.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750832AbZFEEM0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 5 Jun 2009 00:12:26 -0400
+Received: from smtp3-g21.free.fr (localhost [127.0.0.1])
+	by smtp3-g21.free.fr (Postfix) with ESMTP id 6F53F818049;
+	Fri,  5 Jun 2009 06:12:19 +0200 (CEST)
+Received: from bureau.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
+	by smtp3-g21.free.fr (Postfix) with ESMTP id 5BF03818062;
+	Fri,  5 Jun 2009 06:12:17 +0200 (CEST)
+X-git-sha1: fc3c33febdcb5bd8417224894b37be0195816ad0 
+X-Mailer: git-mail-commits v0.4.5
+In-Reply-To: <20090605040238.8885.92790.chriscool@tuxfamily.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120734>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120735>
 
-Any thoughts on this?  I would love to see this in git 1.6.4, and I
-don't think it affects people who do not use certificates.
+because we will need to get more information from this function in
+some later patches.
 
-~ Mark
+The new "int *count" parameter gives the number of commits left after
+the skipped commit have been filtered out.
 
-On Wed, May 27, 2009 at 11:16 PM, Mark Lodato<lodatom@gmail.com> wrote:
-> If an SSL client certificate is enabled (via http.sslcert or
-> GIT_SSL_CERT), prompt for the certificate password rather than
-> defaulting to OpenSSL's password prompt. =C2=A0This causes the prompt=
- to only
-> appear once each run. =C2=A0Previously, OpenSSL prompted the user *ma=
-ny*
-> times, causing git to be unusable over HTTPS with client-side
-> certificates.
->
-> Note that the password is stored in memory in the clear while the
-> program is running. =C2=A0This may be a security problem if git crash=
-es and
-> core dumps.
->
-> The user is always prompted, even if the certificate is not encrypted=
-=2E
-> This should be fine; unencrypted certificates are rare and a security
-> risk anyway.
->
-> Signed-off-by: Mark Lodato <lodatom@gmail.com>
-> ---
->
-> See http://osdir.com/ml/git/2009-02/msg03402.html for a discussion of
-> this topic and an example showing how horrible the current password
-> prompts are.
->
-> The next patch adds an option to disable this feature. =C2=A0I split =
-it into
-> two commits in case the configuration option is not wanted.
->
-> I did not create any tests because the existing http.sslcert option h=
-as
-> no tests to begin with.
->
-> I would really like to use git over HTTPS with client certs, but the
-> current situation is just unusable. =C2=A0So, I'm hoping this gets in=
-cluded
-> in git.git at some point. =C2=A0I would be happy to hear any comments=
- people
-> have about this patch series. =C2=A0Thanks!
->
->
-> =C2=A0http.c | =C2=A0 40 +++++++++++++++++++++++++++++++++++++++-
-> =C2=A01 files changed, 39 insertions(+), 1 deletions(-)
->
-> diff --git a/http.c b/http.c
-> index 2e3d649..1fc3444 100644
-> --- a/http.c
-> +++ b/http.c
-> @@ -26,6 +26,8 @@ static long curl_low_speed_time =3D -1;
-> =C2=A0static int curl_ftp_no_epsv;
-> =C2=A0static const char *curl_http_proxy;
-> =C2=A0static char *user_name, *user_pass;
-> +static char *ssl_cert_password;
-> +static int ssl_cert_password_required;
->
-> =C2=A0static struct curl_slist *pragma_header;
->
-> @@ -167,6 +169,22 @@ static void init_curl_http_auth(CURL *result)
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0}
-> =C2=A0}
->
-> +static int has_cert_password(void)
-> +{
-> + =C2=A0 =C2=A0 =C2=A0 if (ssl_cert_password !=3D NULL)
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return 1;
-> + =C2=A0 =C2=A0 =C2=A0 if (ssl_cert =3D=3D NULL || ssl_cert_password_=
-required !=3D 1)
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return 0;
-> + =C2=A0 =C2=A0 =C2=A0 /* Only prompt the user once. */
-> + =C2=A0 =C2=A0 =C2=A0 ssl_cert_password_required =3D -1;
-> + =C2=A0 =C2=A0 =C2=A0 ssl_cert_password =3D getpass("Certificate Pas=
-sword: ");
-> + =C2=A0 =C2=A0 =C2=A0 if (ssl_cert_password !=3D NULL) {
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 ssl_cert_password =
-=3D xstrdup(ssl_cert_password);
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return 1;
-> + =C2=A0 =C2=A0 =C2=A0 } else
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return 0;
-> +}
-> +
-> =C2=A0static CURL *get_curl_handle(void)
-> =C2=A0{
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0CURL *result =3D curl_easy_init();
-> @@ -189,6 +207,16 @@ static CURL *get_curl_handle(void)
->
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0if (ssl_cert !=3D NULL)
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0curl_easy_seto=
-pt(result, CURLOPT_SSLCERT, ssl_cert);
-> + =C2=A0 =C2=A0 =C2=A0 if (has_cert_password())
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 curl_easy_setopt(r=
-esult,
-> +#if LIBCURL_VERSION_NUM >=3D 0x071700
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0CURLOPT_KEYPASSWD,
-> +#elif LIBCURL_VERSION_NUM >=3D 0x070903
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0CURLOPT_SSLKEYPASSWD,
-> +#else
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0CURLOPT_SSLCERTPASSWD,
-> +#endif
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0ssl_cert_password);
-> =C2=A0#if LIBCURL_VERSION_NUM >=3D 0x070902
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0if (ssl_key !=3D NULL)
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0curl_easy_seto=
-pt(result, CURLOPT_SSLKEY, ssl_key);
-> @@ -329,8 +357,11 @@ void http_init(struct remote *remote)
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0if (getenv("GIT_CURL_FTP_NO_EPSV"))
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0curl_ftp_no_ep=
-sv =3D 1;
->
-> - =C2=A0 =C2=A0 =C2=A0 if (remote && remote->url && remote->url[0])
-> + =C2=A0 =C2=A0 =C2=A0 if (remote && remote->url && remote->url[0]) {
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0http_auth_init=
-(remote->url[0]);
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (!prefixcmp(rem=
-ote->url[0], "https://"))
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 ssl_cert_password_required =3D 1;
-> + =C2=A0 =C2=A0 =C2=A0 }
->
-> =C2=A0#ifndef NO_CURL_EASY_DUPHANDLE
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0curl_default =3D get_curl_handle();
-> @@ -370,6 +401,13 @@ void http_cleanup(void)
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0free((void *)c=
-url_http_proxy);
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0curl_http_prox=
-y =3D NULL;
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0}
-> +
-> + =C2=A0 =C2=A0 =C2=A0 if (ssl_cert_password !=3D NULL) {
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 memset(ssl_cert_pa=
-ssword, 0, strlen(ssl_cert_password));
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 free(ssl_cert_pass=
-word);
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 ssl_cert_password =
-=3D NULL;
-> + =C2=A0 =C2=A0 =C2=A0 }
-> + =C2=A0 =C2=A0 =C2=A0 ssl_cert_password_required =3D 0;
-> =C2=A0}
->
-> =C2=A0struct active_request_slot *get_active_slot(void)
-> --
-> 1.6.3.1
->
->
+The new "int *skipped_first" parameter tells us if the first commit
+in the list has been skipped. Note that using this parameter also
+changes the behavior of the function if the first commit is indeed
+skipped. Because we assume that in this case we will want all the
+filtered commits, not just the first one, even if "show_all" is not
+set.
+
+Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+---
+ bisect.c           |   26 ++++++++++++++++++++++----
+ bisect.h           |    4 +++-
+ builtin-rev-list.c |    4 +++-
+ 3 files changed, 28 insertions(+), 6 deletions(-)
+
+diff --git a/bisect.c b/bisect.c
+index 2c14f4d..02497f7 100644
+--- a/bisect.c
++++ b/bisect.c
+@@ -523,12 +523,19 @@ static char *join_sha1_array_hex(struct sha1_array *array, char delim)
+ 
+ struct commit_list *filter_skipped(struct commit_list *list,
+ 				   struct commit_list **tried,
+-				   int show_all)
++				   int show_all,
++				   int *count,
++				   int *skipped_first)
+ {
+ 	struct commit_list *filtered = NULL, **f = &filtered;
+ 
+ 	*tried = NULL;
+ 
++	if (skipped_first)
++		*skipped_first = 0;
++	if (count)
++		*count = 0;
++
+ 	if (!skipped_revs.sha1_nr)
+ 		return list;
+ 
+@@ -537,19 +544,30 @@ struct commit_list *filter_skipped(struct commit_list *list,
+ 		list->next = NULL;
+ 		if (0 <= lookup_sha1_array(&skipped_revs,
+ 					   list->item->object.sha1)) {
++			if (skipped_first && !*skipped_first)
++				*skipped_first = 1;
+ 			/* Move current to tried list */
+ 			*tried = list;
+ 			tried = &list->next;
+ 		} else {
+-			if (!show_all)
+-				return list;
++			if (!show_all) {
++				if (!skipped_first || !*skipped_first)
++					return list;
++			} else if (skipped_first && !*skipped_first) {
++				*skipped_first = -1;
++			}
+ 			/* Move current to filtered list */
+ 			*f = list;
+ 			f = &list->next;
++			if (count)
++				(*count)++;
+ 		}
+ 		list = next;
+ 	}
+ 
++	if (skipped_first && *skipped_first == -1)
++		*skipped_first = 0;
++
+ 	return filtered;
+ }
+ 
+@@ -865,7 +883,7 @@ int bisect_next_all(const char *prefix)
+ 
+ 	revs.commits = find_bisection(revs.commits, &reaches, &all,
+ 				       !!skipped_revs.sha1_nr);
+-	revs.commits = filter_skipped(revs.commits, &tried, 0);
++	revs.commits = filter_skipped(revs.commits, &tried, 0, NULL, NULL);
+ 
+ 	if (!revs.commits) {
+ 		/*
+diff --git a/bisect.h b/bisect.h
+index fb744fd..82f8fc1 100644
+--- a/bisect.h
++++ b/bisect.h
+@@ -7,7 +7,9 @@ extern struct commit_list *find_bisection(struct commit_list *list,
+ 
+ extern struct commit_list *filter_skipped(struct commit_list *list,
+ 					  struct commit_list **tried,
+-					  int show_all);
++					  int show_all,
++					  int *count,
++					  int *skipped_first);
+ 
+ extern void print_commit_list(struct commit_list *list,
+ 			      const char *format_cur,
+diff --git a/builtin-rev-list.c b/builtin-rev-list.c
+index 73bff84..69753dc 100644
+--- a/builtin-rev-list.c
++++ b/builtin-rev-list.c
+@@ -262,7 +262,9 @@ int show_bisect_vars(struct rev_list_info *info, int reaches, int all)
+ 	if (!revs->commits && !(flags & BISECT_SHOW_TRIED))
+ 		return 1;
+ 
+-	revs->commits = filter_skipped(revs->commits, &tried, flags & BISECT_SHOW_ALL);
++	revs->commits = filter_skipped(revs->commits, &tried,
++				       flags & BISECT_SHOW_ALL,
++				       NULL, NULL);
+ 
+ 	/*
+ 	 * revs->commits can reach "reaches" commits among
+-- 
+1.6.3.GIT
