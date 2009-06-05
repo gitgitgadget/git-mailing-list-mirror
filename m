@@ -1,7 +1,7 @@
 From: Tay Ray Chuan <rctay89@gmail.com>
-Subject: [PATCH 08/23] http-walker: verify remote packs
-Date: Sat, 6 Jun 2009 00:04:43 +0800
-Message-ID: <20090606000443.cb6cc2ad.rctay89@gmail.com>
+Subject: [PATCH 03/23] http*: cleanup slot->local after fclose
+Date: Sat, 6 Jun 2009 00:01:33 +0800
+Message-ID: <20090606000133.33101b1e.rctay89@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
@@ -9,142 +9,157 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
 	Mike Hommey <mh@glandium.org>
 To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Jun 05 18:09:44 2009
+X-From: git-owner@vger.kernel.org Fri Jun 05 18:09:40 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MCbzD-00053w-SJ
-	for gcvg-git-2@gmane.org; Fri, 05 Jun 2009 18:09:44 +0200
+	id 1MCbzA-00053w-18
+	for gcvg-git-2@gmane.org; Fri, 05 Jun 2009 18:09:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755378AbZFEQIk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 5 Jun 2009 12:08:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755335AbZFEQIi
-	(ORCPT <rfc822;git-outgoing>); Fri, 5 Jun 2009 12:08:38 -0400
-Received: from mail-px0-f202.google.com ([209.85.216.202]:50429 "EHLO
-	mail-px0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755035AbZFEQIi (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 5 Jun 2009 12:08:38 -0400
-Received: by mail-px0-f202.google.com with SMTP id 40so80522pxi.33
-        for <git@vger.kernel.org>; Fri, 05 Jun 2009 09:08:40 -0700 (PDT)
+	id S1754668AbZFEQIQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 5 Jun 2009 12:08:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754570AbZFEQIP
+	(ORCPT <rfc822;git-outgoing>); Fri, 5 Jun 2009 12:08:15 -0400
+Received: from wf-out-1314.google.com ([209.85.200.172]:10154 "EHLO
+	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754184AbZFEQIO (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 5 Jun 2009 12:08:14 -0400
+Received: by wf-out-1314.google.com with SMTP id 26so716862wfd.4
+        for <git@vger.kernel.org>; Fri, 05 Jun 2009 09:08:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:date:from:to:cc:subject
          :message-id:x-mailer:mime-version:content-type
          :content-transfer-encoding;
-        bh=ZdhmepjALGcaJF5K2YLjKb2yDprHQgmOtu+uGTLNdgU=;
-        b=Z0/Zzsku5+wI2yZso1mtnr0tYF61YdgBxY3qpZK2O9PGHYhw5OIVZhSCe7I8rhd0FL
-         rQ/YXKxGzHXAbE1hK7Ebn/Rehzbb2qJQeL1Uwh66/LLiLwFSwREjOANLttMGcQSpiJvi
-         GggjP/7xHh/g/Qq7iHe2syyKVd88wRts65aOo=
+        bh=/PbYX0wCL/SjCGSzQngDr5WoQtoi4fSppv6z9c01gzE=;
+        b=wKXGXyscKqccpHNVLAxR/K02BNjbeR2XImwqj2vITVtM8/QJKzQpNIfV4ZsmiubDkU
+         oaJbNf1EOuHTt2fx80gUm1MKJUaoCc0p2yuX1qaVB33KTu7bjbkkEmLtWGpt/3aRew09
+         vLDpTL/g1tloePuIKiCUWFkW2UqxHADCDSdGk=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=date:from:to:cc:subject:message-id:x-mailer:mime-version
          :content-type:content-transfer-encoding;
-        b=FTSKlze8UBLbyoUG/eNMdGDgXLkeeLxg5J/h7ti+TsYAe1kWzrRTbBvMP+EtcdkkSc
-         2EVZiVja2KgaUEssNmGn4LRJcx8xaRivkMdK/cU78EYor13jzm4Rz4OvwD4mCLN4RUT+
-         yGEETyWkMSEn55VWliPPWWzlJdSMzcRYpdWGg=
-Received: by 10.142.226.7 with SMTP id y7mr192313wfg.180.1244218118847;
-        Fri, 05 Jun 2009 09:08:38 -0700 (PDT)
+        b=Blq+Jozx7PUi/3WFp7M66FzGjEtgOh3IhU6AVP/AU4Itq7fRbQTKLcDq9rzCzhxgI/
+         IKBsLxWmG2AxJ6MmDpFriU8DPP78CmhaeXjjJvHaNocvHO6oE+2NsYV5+eLJsDty39p/
+         9Uz+q2hn7z4taer1oIFmUTODOPzVhhul4hrVQ=
+Received: by 10.142.188.12 with SMTP id l12mr179376wff.124.1244218097245;
+        Fri, 05 Jun 2009 09:08:17 -0700 (PDT)
 Received: from your-cukc5e3z5n (cm97.zeta149.maxonline.com.sg [116.87.149.97])
-        by mx.google.com with ESMTPS id 30sm409050wfg.30.2009.06.05.09.08.36
+        by mx.google.com with ESMTPS id 30sm395293wfc.38.2009.06.05.09.08.15
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 05 Jun 2009 09:08:38 -0700 (PDT)
+        Fri, 05 Jun 2009 09:08:16 -0700 (PDT)
 X-Mailer: Sylpheed 2.6.0 (GTK+ 2.10.14; i686-pc-mingw32)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120787>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120788>
 
-In c17fb6e ("Verify remote packs, speed up pending request queue"),
-changes were made to index fetching in http-push.c, particularly the
-methods fetch_index and setup_index. Since http-walker.c has similar
-code for index fetching, these improvements should apply to
-http-walker.c's fetch_index and setup_index.
+Set slot->local to NULL after doing a fclose on the FILE* pointer it
+points to. This prevents an invalid FILE* pointer from being passed to
+ftell() in http.c::run_active_slot().
 
-Invocations of free() of string memory are reproduced as well.
+This issue was raised by Clemens Buchacher on 30th May:
+
+  http://www.spinics.net/lists/git/msg104623.html
 
 Signed-off-by: Tay Ray Chuan <rctay89@gmail.com>
 ---
- http-walker.c |   33 ++++++++++++++++++++++++++++++---
- 1 files changed, 30 insertions(+), 3 deletions(-)
 
-diff --git a/http-walker.c b/http-walker.c
-index 6ac1783..bbc3023 100644
---- a/http-walker.c
-+++ b/http-walker.c
-@@ -384,24 +384,48 @@ static int fetch_index(struct walker *walker, struct alt_base *repo, unsigned ch
- 	struct active_request_slot *slot;
- 	struct slot_results results;
+I've made it more clear what issue this patch is fixing.
 
--	if (has_pack_index(sha1))
-+	/* Don't use the index if the pack isn't there */
-+	url = xmalloc(strlen(repo->base) + 64);
-+	sprintf(url, "%s/objects/pack/pack-%s.pack", repo->base, hex);
-+	slot = get_active_slot();
-+	slot->results = &results;
-+	curl_easy_setopt(slot->curl, CURLOPT_URL, url);
-+	curl_easy_setopt(slot->curl, CURLOPT_NOBODY, 1);
-+	if (start_active_slot(slot)) {
-+		run_active_slot(slot);
-+		if (results.curl_result != CURLE_OK) {
-+			free(url);
-+			return error("Unable to verify pack %s is available",
-+				     hex);
-+		}
-+	} else {
-+		free(url);
-+		return error("Unable to start request");
-+	}
-+
-+	if (has_pack_index(sha1)) {
-+		free(url);
- 		return 0;
-+	}
+ http-push.c   |    6 ++++++
+ http-walker.c |    6 ++++++
+ 2 files changed, 12 insertions(+), 0 deletions(-)
 
- 	if (walker->get_verbosely)
- 		fprintf(stderr, "Getting index for pack %s\n", hex);
+diff --git a/http-push.c b/http-push.c
+index e16a0ad..0b12ffe 100644
+--- a/http-push.c
++++ b/http-push.c
+@@ -724,9 +724,11 @@ static void finish_request(struct transfer_request *request)
+ 	struct stat st;
+ 	struct packed_git *target;
+ 	struct packed_git **lst;
++	struct active_request_slot *slot;
 
--	url = xmalloc(strlen(repo->base) + 64);
- 	sprintf(url, "%s/objects/pack/pack-%s.idx", repo->base, hex);
+ 	request->curl_result = request->slot->curl_result;
+ 	request->http_code = request->slot->http_code;
++	slot = request->slot;
+ 	request->slot = NULL;
 
- 	filename = sha1_pack_index_name(sha1);
- 	snprintf(tmpfile, sizeof(tmpfile), "%s.temp", filename);
- 	indexfile = fopen(tmpfile, "a");
--	if (!indexfile)
-+	if (!indexfile) {
-+		free(url);
- 		return error("Unable to open local file %s for pack index",
- 			     tmpfile);
-+	}
+ 	/* Keep locks active */
+@@ -823,6 +825,7 @@ static void finish_request(struct transfer_request *request)
 
- 	slot = get_active_slot();
- 	slot->results = &results;
-+	curl_easy_setopt(slot->curl, CURLOPT_NOBODY, 0);
-+	curl_easy_setopt(slot->curl, CURLOPT_HTTPGET, 1);
- 	curl_easy_setopt(slot->curl, CURLOPT_FILE, indexfile);
- 	curl_easy_setopt(slot->curl, CURLOPT_WRITEFUNCTION, fwrite);
- 	curl_easy_setopt(slot->curl, CURLOPT_URL, url);
-@@ -426,17 +450,20 @@ static int fetch_index(struct walker *walker, struct alt_base *repo, unsigned ch
- 	if (start_active_slot(slot)) {
- 		run_active_slot(slot);
+ 			fclose(request->local_stream);
+ 			request->local_stream = NULL;
++			slot->local = NULL;
+ 			if (!move_temp_to_file(request->tmpfile,
+ 					       request->filename)) {
+ 				target = (struct packed_git *)request->userData;
+@@ -1024,17 +1027,20 @@ static int fetch_index(unsigned char *sha1)
  		if (results.curl_result != CURLE_OK) {
-+			free(url);
+ 			free(url);
  			fclose(indexfile);
- 			slot->local = NULL;
++			slot->local = NULL;
  			return error("Unable to get pack index %s\n%s", url,
  				     curl_errorstr);
  		}
  	} else {
-+		free(url);
+ 		free(url);
  		fclose(indexfile);
- 		slot->local = NULL;
++		slot->local = NULL;
  		return error("Unable to start request");
  	}
 
-+	free(url);
+ 	free(url);
  	fclose(indexfile);
- 	slot->local = NULL;
++	slot->local = NULL;
 
+ 	return move_temp_to_file(tmpfile, filename);
+ }
+diff --git a/http-walker.c b/http-walker.c
+index 7321ccc..9377851 100644
+--- a/http-walker.c
++++ b/http-walker.c
+@@ -418,15 +418,18 @@ static int fetch_index(struct walker *walker, struct alt_base *repo, unsigned ch
+ 		run_active_slot(slot);
+ 		if (results.curl_result != CURLE_OK) {
+ 			fclose(indexfile);
++			slot->local = NULL;
+ 			return error("Unable to get pack index %s\n%s", url,
+ 				     curl_errorstr);
+ 		}
+ 	} else {
+ 		fclose(indexfile);
++		slot->local = NULL;
+ 		return error("Unable to start request");
+ 	}
+
+ 	fclose(indexfile);
++	slot->local = NULL;
+
+ 	return move_temp_to_file(tmpfile, filename);
+ }
+@@ -776,16 +779,19 @@ static int fetch_pack(struct walker *walker, struct alt_base *repo, unsigned cha
+ 		run_active_slot(slot);
+ 		if (results.curl_result != CURLE_OK) {
+ 			fclose(packfile);
++			slot->local = NULL;
+ 			return error("Unable to get pack file %s\n%s", url,
+ 				     curl_errorstr);
+ 		}
+ 	} else {
+ 		fclose(packfile);
++		slot->local = NULL;
+ 		return error("Unable to start request");
+ 	}
+
+ 	target->pack_size = ftell(packfile);
+ 	fclose(packfile);
++	slot->local = NULL;
+
+ 	ret = move_temp_to_file(tmpfile, filename);
+ 	if (ret)
 --
 1.6.3.1
