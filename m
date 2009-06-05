@@ -1,144 +1,91 @@
-From: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
-Subject: Re: [BUG ext4?] Working tree getting out of date "spontaneously"
-Date: Fri, 5 Jun 2009 20:35:38 +0200
-Message-ID: <20090605183538.GE764@atjola.homenet>
-References: <20090605122444.GA11035@atjola.homenet> <20090605132126.GB11035@atjola.homenet> <20090605145508.GA6442@mit.edu> <20090605150212.GC764@atjola.homenet> <20090605180630.GC6442@mit.edu>
+From: "Robin H. Johnson" <robbat2@gentoo.org>
+Subject: Re: Best way to merge two repos with same content, different
+	history
+Date: Fri, 5 Jun 2009 11:46:16 -0700
+Message-ID: <robbat2-20090605T183716-227340397Z@orbis-terrarum.net>
+References: <63BEA5E623E09F4D92233FB12A9F794303117DBF@emailmn.mqsoftware.com> <286817520906050953n1afed29cn6c85f219a0c9b8b5@mail.gmail.com> <63BEA5E623E09F4D92233FB12A9F794303117DC1@emailmn.mqsoftware.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	git@vger.kernel.org
-To: Theodore Tso <tytso@mit.edu>
-X-From: git-owner@vger.kernel.org Fri Jun 05 20:36:10 2009
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="R+My9LyyhiUvIEro"
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Jun 05 20:48:16 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MCeGs-0000a4-1u
-	for gcvg-git-2@gmane.org; Fri, 05 Jun 2009 20:36:06 +0200
+	id 1MCeSY-00053w-48
+	for gcvg-git-2@gmane.org; Fri, 05 Jun 2009 20:48:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752451AbZFESfl convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 5 Jun 2009 14:35:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752106AbZFESfk
-	(ORCPT <rfc822;git-outgoing>); Fri, 5 Jun 2009 14:35:40 -0400
-Received: from mail.gmx.net ([213.165.64.20]:42469 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750876AbZFESfj (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 5 Jun 2009 14:35:39 -0400
-Received: (qmail invoked by alias); 05 Jun 2009 18:35:40 -0000
-Received: from i59F5600C.versanet.de (EHLO atjola.local) [89.245.96.12]
-  by mail.gmx.net (mp048) with SMTP; 05 Jun 2009 20:35:40 +0200
-X-Authenticated: #5039886
-X-Provags-ID: V01U2FsdGVkX19bbkkni/hbCiVP00yeSFtBRsMRwOkUL26fC6IKau
-	tQjGRqc9o8mxI7
+	id S1753157AbZFESq4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 5 Jun 2009 14:46:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752161AbZFESq4
+	(ORCPT <rfc822;git-outgoing>); Fri, 5 Jun 2009 14:46:56 -0400
+Received: from b01.ext.isohunt.com ([208.71.112.51]:37672 "EHLO
+	mail.isohunt.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752692AbZFESqz (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 5 Jun 2009 14:46:55 -0400
+Received: (qmail 5963 invoked from network); 5 Jun 2009 18:46:53 -0000
+Received: from tsi-static.orbis-terrarum.net (HELO curie.orbis-terrarum.net) (76.10.188.108)
+  (smtp-auth username robbat2@isohunt.com, mechanism login)
+  by mail.isohunt.com (qpsmtpd/0.33-dev on beta01) with (AES256-SHA encrypted) ESMTPSA; Fri, 05 Jun 2009 18:46:53 +0000
+Received: (qmail 5588 invoked by uid 10000); 5 Jun 2009 11:46:16 -0700
 Content-Disposition: inline
-In-Reply-To: <20090605180630.GC6442@mit.edu>
-User-Agent: Mutt/1.5.19 (2009-01-05)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.48
+In-Reply-To: <63BEA5E623E09F4D92233FB12A9F794303117DC1@emailmn.mqsoftware.com>
+User-Agent: Mutt/1.5.16 (2007-06-09)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120817>
-
-On 2009.06.05 14:06:30 -0400, Theodore Tso wrote:
-> On Fri, Jun 05, 2009 at 05:02:12PM +0200, Bj=F6rn Steinbrink wrote:
-> > On 2009.06.05 10:55:08 -0400, Theodore Tso wrote:
-> > > On Fri, Jun 05, 2009 at 03:21:26PM +0200, Bj=F6rn Steinbrink wrot=
-e:
-> > > > So the ctime got modified. I don't have any fancy indexing stuf=
-f
-> > > > running, and inotify doesn't see any events either while the ct=
-ime is
-> > > > changed.
-> > > >=20
-> > > > The only thing I changed lately was upgrading to 2.6.30-rc8 and=
- going
-> > > > from ext3 to ext4. As the ctime change always seems to happen a=
-round 30
-> > > > seconds after the real change, I kind of suspect ext4 to be gui=
-lty.
-> > > > Ted, is that possible?
-> > > >=20
-> > > > FS is mounted as:
-> > > > /dev/mapper/vg0-home on /home type ext4 (rw,noatime,nodiratime,=
-barrier=3D0)
-> > > >=20
-> > >=20
-> > > I agree it sounds like it's ext4 related, but I'm not able to
-> > > reproduce it (using 2.6.30-rc8 with the patches planned for the 2=
-=2E6.31
-> > > merge window).  This should show the problem, you were seeing, do=
- you
-> > > agree?
-> >=20
-> > Yeah, that should do I guess. See my other mail for a simpler, less
-> > time consuming way to test. And as noted in there, it seems to happ=
-en
-> > only on ext3 filesystems mounted using ext4.
->=20
-> > Filesystem features:      has_journal resize_inode dir_index filety=
-pe
-> >                           needs_recovery sparse_super large_file
->=20
-> Yeah, so you haven't turned on any of the ext4 filesystem features, I
-> assume because you wanted to be easily go back to ext3 if you ran int=
-o
-> problems?  OK, that's a good starting point.
-
-Right.
-
-> I'm guessing it's the presence or absence of one of the ext4-specific
-> filesystem features, most probably the extents feature (which is why =
-I
-> had asked you to to send me your dumpe2fs -h output). =20
->=20
-> So the next step is to create an ext3 filesystem with a git repositor=
-y
-> on it, and then to gradually turn on various ext4 specific features
-> and see when the bug ends up getting replicated.  If I had to guess
-> it's the lack (or absense) of the extents feature, but I'll have to
-> run the test and find out for sure.
-
-Yep, seems to be extents. Test script:
-
-#!bin/bash
-
-do_test ()
-{
-	mke2fs -j -m 1 /dev/loop0 -O $1 2>&1
-	mount -t ext4 /dev/loop0 foo
-	cd foo
-	git init=20
-	echo 123 > foo
-	git add foo
-	git commit -m test
-	sleep 2
-	sync
-	git diff-index --exit-code HEAD && echo "Good: $1" >&2 ||
-		echo "Bad: $1" >&2
-	cd ..
-	umount foo
-}
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120818>
 
 
-for opt in extent dir_index uninit_bg extent,dir_index extent,uninit_bg=
-\
-	dir_index,uninit_bg extent,dir_index,uninit_bg
-do
-	do_test "$opt" > /dev/null
-done
+--R+My9LyyhiUvIEro
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Results:
-$ sudo bash e3t.sh=20
-Good: extent
-Bad: dir_index
-Bad: uninit_bg
-Good: extent,dir_index
-Good: extent,uninit_bg
-Bad: dir_index,uninit_bg
-Good: extent,dir_index,uninit_bg
+On Fri, Jun 05, 2009 at 12:10:30PM -0500, Kelly F. Hickel wrote:
+> Bost,=20
+> 	Thanks, but I'm already working with a local copy of the CVS repo.
+> 	I've corresponded with Michael Haggerty about the time this takes,
+> 	and there just doesn't seem to be any way to improve the speed,
+> 	without making some fairly drastic changes to cvs2git.
+I've been working with mhagger lately as it also pertains to the Gentoo
+conversion. We've made some very good progress.
 
-Bj=F6rn
+A couple of comments in that regard:
+- Make really sure your box is not short of RAM. Throw some measurement
+  tools onto there to see it. A couple of GiB is worthwhile. After we
+  found this early on, and switched boxes, we dropped from our initial
+  multiple days to 20 hours.
+- His latest ExternalBlobGenerator code (_NOT_ available in SVN yet)
+  reduced our pass1 time from 36204 seconds to 1598 seconds, with
+  a potential to be much faster now, as parallelization of part of that
+  is now trivial.
+- pass9 is still the remaining large time-eater for us. I've started to
+  look at it, but I haven't made any actual developments yet.
+
+Would you mind posting your cvs2svn stats like these?
+http://archives.gentoo.org/gentoo-scm/msg_b69b2f6ecee0ec7bb402d31b372b945b.=
+xml
+
+--=20
+Robin Hugh Johnson
+Gentoo Linux Developer & Infra Guy
+E-Mail     : robbat2@gentoo.org
+GnuPG FP   : 11AC BA4F 4778 E3F6 E4ED  F38E B27B 944E 3488 4E85
+
+--R+My9LyyhiUvIEro
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.11 (GNU/Linux)
+Comment: Robbat2 @ Orbis-Terrarum Networks - The text below is a digital signature. If it doesn't make any sense to you, ignore it.
+
+iEYEARECAAYFAkopZ/gACgkQPpIsIjIzwiy9agCglTiczixDXKaOU+jX0kSoYbcx
+MbMAoL2cKxv+4vGwFeYY3QDIzN6X4fGI
+=j/n6
+-----END PGP SIGNATURE-----
+
+--R+My9LyyhiUvIEro--
