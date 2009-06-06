@@ -1,89 +1,89 @@
-From: Stephen Boyd <bebarino@gmail.com>
-Subject: Re: parse-options: ambiguous LASTARG_DEFAULT and OPTARG
-Date: Sat, 06 Jun 2009 13:14:42 -0700
-Message-ID: <4A2ACE32.8080504@gmail.com>
-References: <4A28B072.8030006@gmail.com> <4A2A4534.80604@lsrfire.ath.cx>
+From: Johannes Sixt <j6t@kdbg.org>
+Subject: Re: [PATCH v2 2/3] Convert existing die(..., strerror(errno)) to die_errno()
+Date: Sat, 6 Jun 2009 22:31:24 +0200
+Message-ID: <200906062231.24184.j6t@kdbg.org>
+References: <cover.1244299302.git.trast@student.ethz.ch> <3672f22723a4c14c4a6d67278e9865424c0c68dc.1244299302.git.trast@student.ethz.ch> <095b4af080c11b4ad3fcfaefc9cdf49d383cb714.1244299302.git.trast@student.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git list <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-	Pierre Habouzit <madcoder@madism.org>
-To: =?ISO-8859-1?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
-X-From: git-owner@vger.kernel.org Sat Jun 06 22:15:24 2009
+Content-Type: text/plain;
+  charset="iso-8859-15"
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Jeff King <peff@peff.net>,
+	Alexander Potashev <aspotashev@gmail.com>
+To: Thomas Rast <trast@student.ethz.ch>
+X-From: git-owner@vger.kernel.org Sat Jun 06 22:31:57 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MD2IR-0001Kw-9J
-	for gcvg-git-2@gmane.org; Sat, 06 Jun 2009 22:15:19 +0200
+	id 1MD2YW-0008V8-Nc
+	for gcvg-git-2@gmane.org; Sat, 06 Jun 2009 22:31:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751717AbZFFUOp convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 6 Jun 2009 16:14:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751534AbZFFUOo
-	(ORCPT <rfc822;git-outgoing>); Sat, 6 Jun 2009 16:14:44 -0400
-Received: from mail-gx0-f214.google.com ([209.85.217.214]:38459 "EHLO
-	mail-gx0-f214.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751131AbZFFUOn (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 6 Jun 2009 16:14:43 -0400
-Received: by gxk10 with SMTP id 10so84323gxk.13
-        for <git@vger.kernel.org>; Sat, 06 Jun 2009 13:14:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from
-         :user-agent:mime-version:to:cc:subject:references:in-reply-to
-         :content-type:content-transfer-encoding;
-        bh=lmsGerW4gpx5PvDUcazKFbjMPA7n6AZlNHLzzQWehqY=;
-        b=qTKRixWGa3v7dpey3adnGTlyYcbUcHZ0/dg7ySNNZAu6KrHoiGtjMUQi0GaVYRrI8u
-         O7Hd/lQvunxbjIo/GTDdhuTE3DPluY2XKY1NZREkyQXcu9SiQuiS/FiQbqZSpz4My60r
-         aKI/MwMEJppZj+0rxZcL7r0D1W/h7+9zhPv/c=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        b=yDkNATqTzoWd3fKQKuJVMd7k+2djO0mS7saesejzSW5j75uByNSC240uv7n/s5lZmK
-         D5beniAeb9jGg0inY9n9cd33fTEnB1fP1lv91ScZ5aOeBvGSUIfSvj3n0cOVtFlgTyRG
-         ObMQAe8N4R44IVnDsEQYgNWssnSX6P8y0QVYg=
-Received: by 10.90.72.3 with SMTP id u3mr4165332aga.82.1244319285133;
-        Sat, 06 Jun 2009 13:14:45 -0700 (PDT)
-Received: from ?192.168.1.2? ([76.89.212.195])
-        by mx.google.com with ESMTPS id 1sm3377936agb.48.2009.06.06.13.14.43
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sat, 06 Jun 2009 13:14:44 -0700 (PDT)
-User-Agent: Thunderbird 2.0.0.21 (X11/20090429)
-In-Reply-To: <4A2A4534.80604@lsrfire.ath.cx>
+	id S1751826AbZFFUb3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 6 Jun 2009 16:31:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751788AbZFFUb2
+	(ORCPT <rfc822;git-outgoing>); Sat, 6 Jun 2009 16:31:28 -0400
+Received: from bsmtp.bon.at ([213.33.87.14]:27856 "EHLO bsmtp.bon.at"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751768AbZFFUb1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 6 Jun 2009 16:31:27 -0400
+Received: from dx.sixt.local (unknown [93.83.142.38])
+	by bsmtp.bon.at (Postfix) with ESMTP id 42831CDF8B;
+	Sat,  6 Jun 2009 22:31:25 +0200 (CEST)
+Received: from localhost (localhost [IPv6:::1])
+	by dx.sixt.local (Postfix) with ESMTP id D11B93BDFC;
+	Sat,  6 Jun 2009 22:31:24 +0200 (CEST)
+User-Agent: KMail/1.9.9
+In-Reply-To: <095b4af080c11b4ad3fcfaefc9cdf49d383cb714.1244299302.git.trast@student.ethz.ch>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120932>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120933>
 
-Ren=E9 Scharfe wrote:
-> PARSE_OPT_OPTARG overrides PARSE_OPT_LASTARG_DEFAULT, as Pierre noted=
- in
-> commit 1cc6985c, which introduced the latter, so the two should not b=
-e
-> used together.
+On Samstag, 6. Juni 2009, Thomas Rast wrote:
+> Change calls to die(..., strerror(errno)) to use the new die_errno().
+>
+> In the process, also make slight style adjustments: at least state
+> _something_ about the function that failed (instead of just printing
+> the pathname), and put paths in single quotes.
 
-Ok, thanks. This means I used it wrong when I switched over show-branch
-:-/ I'll have to send a follow-up patch for that.
+> @@ -428,8 +428,8 @@ static void merge_name(const char *remote, struct
+> strbuf *msg)
+>
+>  		fp = fopen(git_path("FETCH_HEAD"), "r");
+>  		if (!fp)
+> -			die("could not open %s for reading: %s",
+> -				git_path("FETCH_HEAD"), strerror(errno));
+> +			die_errno("could not open %s for reading",
+> +				  git_path("FETCH_HEAD"));
 
-> PARSE_OPT_LASTARG_DEFAULT uses the default value if the option is the
-> last one on the command line and requires an explicit argument if it'=
-s
-> not the last, as you found out above.  That's also what the code says
-> and its name implies; the comment in parse-options.h (by yours truly)
-> is probably misleading because it doesn't mention this condition.
+You said you added quotes, but you didn't do that here and in quite a few more 
+other cases.
 
-I was mislead. When I read it I thought I had to use the flag to say
-that the default value will be used in the case when no argument is
-given. I completely ignored the LASTARG part (I thought it was
-referencing the default arg). I think just adding what you said here to
-parse-options.h will help others to avoid this.
+IMHO, the quotes are not an improvement anyway, but that's really only my 
+personal taste.
 
-> I don't remember any other program having options with such a
-> behaviour; I'm not sure how to stress that --merged needs to be the
-> last option, as implied by the help message.
+> --- a/connect.c
+> +++ b/connect.c
+> @@ -256,7 +256,7 @@ static int git_tcp_connect_sock(char *host, int flags)
+>  	freeaddrinfo(ai0);
+>
+>  	if (sockfd < 0)
+> -		die("unable to connect a socket (%s)", strerror(saved_errno));
+> +		die_errno("unable to connect a socket");
 
-"git tag --contains" is the same. Figuring out a way to say that the
-syntax changes when it's the last option versus in the middle is not
-obvious to me either.
+You cannot convert this: We want strerror(saved_errno), but die_errno would 
+print strerror(errno).
+
+> @@ -345,7 +345,7 @@ static int git_tcp_connect_sock(char *host, int flags)
+>  	}
+>
+>  	if (sockfd < 0)
+> -		die("unable to connect a socket (%s)", strerror(saved_errno));
+> +		die_errno("unable to connect a socket");
+
+Same here.
+
+-- Hannes
