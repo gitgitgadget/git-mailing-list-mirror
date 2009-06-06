@@ -1,146 +1,82 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 19/23] http-push.c::fetch_symref(): use the new http API
-Date: Fri, 05 Jun 2009 22:32:28 -0700
-Message-ID: <7vvdnadj0z.fsf@alter.siamese.dyndns.org>
-References: <20090606000559.483f22da.rctay89@gmail.com>
-	<m37hzq5rod.fsf@localhost.localdomain>
-	<be6fef0d0906051802n4f6d5df3g453b292787ed62d0@mail.gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH 17/23] http.c::http_fetch_ref(): use the new http API
+Date: Sat, 6 Jun 2009 09:17:24 +0200
+Message-ID: <200906060917.25362.jnareb@gmail.com>
+References: <20090606000556.9cbf4ac0.rctay89@gmail.com> <m3eity5rtq.fsf@localhost.localdomain> <be6fef0d0906051804t704a802ane4921c56d4577401@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jakub Narebski <jnareb@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
 	Mike Hommey <mh@glandium.org>
 To: Tay Ray Chuan <rctay89@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Jun 06 07:38:42 2009
+X-From: git-owner@vger.kernel.org Sat Jun 06 09:17:38 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MCobz-0000Tz-Uf
-	for gcvg-git-2@gmane.org; Sat, 06 Jun 2009 07:38:36 +0200
+	id 1MCq9p-0005DO-Vi
+	for gcvg-git-2@gmane.org; Sat, 06 Jun 2009 09:17:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750898AbZFFFc2 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 6 Jun 2009 01:32:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750793AbZFFFc2
-	(ORCPT <rfc822;git-outgoing>); Sat, 6 Jun 2009 01:32:28 -0400
-Received: from fed1rmmtao103.cox.net ([68.230.241.43]:61221 "EHLO
-	fed1rmmtao103.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750721AbZFFFc1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 6 Jun 2009 01:32:27 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao103.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20090606053228.WFSU2915.fed1rmmtao103.cox.net@fed1rmimpo02.cox.net>;
-          Sat, 6 Jun 2009 01:32:28 -0400
-Received: from localhost ([68.225.240.211])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id 0VYU1c0074aMwMQ04VYUqR; Sat, 06 Jun 2009 01:32:29 -0400
-X-VR-Score: -200.00
-X-Authority-Analysis: v=1.0 c=1 a=H-8FU1NQUpMA:10 a=BuE6NxGQqqQA:10
- a=pGLkceISAAAA:8 a=z23upLkTAAAA:8 a=-iqeroRl1tK8Yin71dsA:9
- a=62V76XeA9a2U87apTOAA:7 a=2FTpbquNS9xIVkhGnqEyZZAm7RUA:4 a=MSl-tDqOz04A:10
- a=Ak6yjH5nytEA:10
-X-CM-Score: 0.00
-In-Reply-To: <be6fef0d0906051802n4f6d5df3g453b292787ed62d0@mail.gmail.com> (Tay Ray Chuan's message of "Sat\, 6 Jun 2009 09\:02\:32 +0800")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+	id S1751177AbZFFHR3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 6 Jun 2009 03:17:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750802AbZFFHR2
+	(ORCPT <rfc822;git-outgoing>); Sat, 6 Jun 2009 03:17:28 -0400
+Received: from mail-fx0-f218.google.com ([209.85.220.218]:47118 "EHLO
+	mail-fx0-f218.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750792AbZFFHR1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 6 Jun 2009 03:17:27 -0400
+Received: by fxm18 with SMTP id 18so2057179fxm.7
+        for <git@vger.kernel.org>; Sat, 06 Jun 2009 00:17:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=LPJvXBnI3hHk8R9EuL9n3OVxHwsXjcHYQKL1nBN5/bs=;
+        b=GHXpc3BES0SiyDrw7uFEX8w/WcW122S3T8kFnaGKPREF6Uwcq5iQpiIkSsDuQfbbP/
+         YICEjWPZyGyB3+TYbLZjbDJvDf5hKA2Pw0sAuIZvLyCAa2spiuESKYRo4FvFYeB+mvvL
+         hOH3E6ZJvs/i0uldTzLa9JZVb2Gi+u38KhwyA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=H8RqMiusOLA9SusZpoJvPgsp+q0rZ5LswbzoL0GIFPUZ5kfIwsJXX5Qxtj4FRMjv3q
+         0nq36omLOyqMsZJnnEMGce1udOqJ+x2SqPKW8cgwVDfTk+wD+8ydZskrk1ZRFpYF+tam
+         0kHcz1V2ZSHSTmfT6bNZEGX7IvkvYHTwZWD3k=
+Received: by 10.86.36.11 with SMTP id j11mr4750803fgj.22.1244272648882;
+        Sat, 06 Jun 2009 00:17:28 -0700 (PDT)
+Received: from ?192.168.1.13? (abwo21.neoplus.adsl.tpnet.pl [83.8.238.21])
+        by mx.google.com with ESMTPS id 12sm1581006fgg.5.2009.06.06.00.17.28
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sat, 06 Jun 2009 00:17:28 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <be6fef0d0906051804t704a802ane4921c56d4577401@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120874>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120875>
 
-Tay Ray Chuan <rctay89@gmail.com> writes:
+On Sat, 6 Jun 2009, Tay Ray Chuan wrote:
+> On Sat, Jun 6, 2009 at 4:50 AM, Jakub Narebski<jnareb@gmail.com> wrote:
 
-> On Sat, Jun 6, 2009 at 4:54 AM, Jakub Narebski<jnareb@gmail.com> wrot=
-e:
->>> From: Mike Hommey <mh@glandium.org>
->>> Subject: [WIP Patch 09/12] Use the new http API in fetch_symref()
->>
->> What is the subject of this patch:
->> =C2=A0"http-push.c::fetch_symref(): use the new http API"
->> or
->> =C2=A0"Use the new http API in fetch_symref()"
->> [...]
->> If you wanted to note old subject, it would be better to put it in
->> comments (here).
->
-> Since the title of the patch differed from Mike's original, I was
-> afraid the attribution to the author's original patch was lost on the
-> reader of the commit message, thus I added the original subject, in
-> addition to the author and date, into the commit message.
+[...]
 
-Please don't.
+> > Perhaps this and previous patch should be squashed?
+> 
+> Why should this and patch #16 (for get_refs_via_curl()) be squashed?
+> Are you perhaps suggesting that all the use-the-new-http-API patches
+> should be squashed?
 
-If you chose to use a better (in your opinion) subject from the origina=
-l
-one, we'd want to have that improved one in our commit.  The same thing=
- if
-you chose to rewrite the proposed commit log message, or the contents o=
-f
-the patch, to add your own improvement.  That is what we review here, a=
-nd
-if people think your submitted version is good, that is what we want to
-record as a commit.
+I'm sorry this was before I noticed that there are a few more patches
+which are about using newly introduced API. Please disregard this part
+of message.
 
-So, in general we would want to see something like this:
-
-(1)     From: Tay Ray Chuan <rctay89@gmail.com>
-        Subject: [PATCH 19/23] http-push.c:fetch_symref(): use the new =
-HTTP API
-
-(2)     From: Mike Hommey <mh@glandium.org>
-
-(3)     Now the contents of a file can be slurped into a strbuf with a =
-single
-        call to http_get_strbuf(), use it to simplify fetch_symref().
-
-(4)     Signed-off-by: Mike Hommey <mh@glandium.org>
-        Signed-off-by: Tay Ray Chuan <rctay89@gmail.com>
-(5)     ---
-(6)      This is based on Mike's earlier patch:
-
-         Subject: [WIP Patch 09/12] Use the new http API in fetch_symre=
-f()
-         Date:  Sun, 18 Jan 2009 09:04:34 +0100
-
-         I retitlted Mike's patch in order to ...
-         Also changed frotz and nitfol so that they distim doshes bette=
-r...
-
-(7)     http-push.c |   20 +++-----------------
-         1 files changed, 3 insertions(+), 17 deletions(-)
-
-(8)     diff --git a/http-push.c b/http-push.c
-        ...
-
-That is,
-
-    (1) RFC2822 headers your MUA gives us;
-
-    (2) In-body (fake)headers for From: if the author is different from
-        what (1) records.  If you are forwarding somebody else's patch
-        verbatim without modification, you may want to add Date: to kee=
-p
-        the original datestamp, but if you are sending a version with y=
-our
-        own improvements, we would rather use the Date: recorded in (1)=
- in
-        the final commit.
-
-    (3) Proposed commit log message;
-
-    (4) Chain of Signed-off-by lines;
-
-    (5) Three-dash separator;
-
-    (6) Commentary to explain the history of the patch, and/or backgrou=
-nd
-        information if necessary,
-
-    (7) diffstat;
-
-    (8) the patch itself.
-
-Thanks.
+-- 
+Jakub Narebski
+Poland
