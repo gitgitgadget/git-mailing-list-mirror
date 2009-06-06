@@ -1,100 +1,76 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: [PATCH] Documentation: refer to gitworkflows(7) from tutorial and git(1)
-Date: Sat,  6 Jun 2009 15:11:07 +0200
-Message-ID: <9bb279ebf19c2b71c3b817f45b5a7e22496d6881.1244292346.git.trast@student.ethz.ch>
-References: <86ws7qkuv3.fsf@blue.stonehenge.com>
-Cc: git@vger.kernel.org, "Randal L. Schwartz" <merlyn@stonehenge.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Jun 06 15:11:45 2009
+From: Marco Costalba <mcostalba@gmail.com>
+Subject: Re: [PATCH QGit 0/4] enhancements for the context menu of the Rev 
+	list
+Date: Sat, 6 Jun 2009 15:50:23 +0200
+Message-ID: <e5bfff550906060650p691bd6d0o136a981159b5050e@mail.gmail.com>
+References: <1244289471-698-1-git-send-email-markus.heidelberg@web.de>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Markus Heidelberg <markus.heidelberg@web.de>
+X-From: git-owner@vger.kernel.org Sat Jun 06 15:50:32 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MCvgW-0000MP-PN
-	for gcvg-git-2@gmane.org; Sat, 06 Jun 2009 15:11:45 +0200
+	id 1MCwI4-0004rp-Dd
+	for gcvg-git-2@gmane.org; Sat, 06 Jun 2009 15:50:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754239AbZFFNLQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 6 Jun 2009 09:11:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753860AbZFFNLP
-	(ORCPT <rfc822;git-outgoing>); Sat, 6 Jun 2009 09:11:15 -0400
-Received: from xsmtp1.ethz.ch ([82.130.70.13]:13217 "EHLO xsmtp1.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753205AbZFFNLP (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 6 Jun 2009 09:11:15 -0400
-Received: from xfe2.d.ethz.ch ([82.130.124.42]) by xsmtp1.ethz.ch with Microsoft SMTPSVC(6.0.3790.3959);
-	 Sat, 6 Jun 2009 15:11:02 +0200
-Received: from localhost.localdomain ([77.56.223.244]) by xfe2.d.ethz.ch over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
-	 Sat, 6 Jun 2009 15:11:01 +0200
-X-Mailer: git-send-email 1.6.3.2.297.g3a54
-In-Reply-To: <86ws7qkuv3.fsf@blue.stonehenge.com>
-X-OriginalArrivalTime: 06 Jun 2009 13:11:01.0552 (UTC) FILETIME=[3D625B00:01C9E6A8]
+	id S1752424AbZFFNuX convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 6 Jun 2009 09:50:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752164AbZFFNuW
+	(ORCPT <rfc822;git-outgoing>); Sat, 6 Jun 2009 09:50:22 -0400
+Received: from mail-ew0-f210.google.com ([209.85.219.210]:35142 "EHLO
+	mail-ew0-f210.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752080AbZFFNuW convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 6 Jun 2009 09:50:22 -0400
+Received: by ewy6 with SMTP id 6so2917721ewy.37
+        for <git@vger.kernel.org>; Sat, 06 Jun 2009 06:50:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=fdzarYlJh0xOrINYQBWXCtQ9sZLaq13BkpNkCrxcrQI=;
+        b=Ln4j40/YpsanEIgF6iDu90DcDPLvoLy4+c5YuW2f4xiOiSgZoIgWPdviBGv3afrUyV
+         JStYgIcMiwkWuYrTk2rHvvJSHiJXQeQj7YyyGXt6Zv1VQFok5KtEiGcjFelFdNILVdY0
+         VJapD+XtuYNhvJEpfeLEldfgGf0kk/YF5Ou6c=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=cs+e1GgYNZSd2nKbuytQSProcx4Jc9zLvUz25WO0imgtWwlAfcgbn4SijwDyC4HXzr
+         aruiFwgxZm58JDCGiQyWHYbRZiMYrpfAblPuu3SGoTrVKsh4nzF70BlZ3sm7go+DPqpX
+         hUpuOgY3fTXtea3rDRrf3p57Aa25bHrQ2oOU0=
+Received: by 10.216.28.193 with SMTP id g43mr1587022wea.192.1244296223533; 
+	Sat, 06 Jun 2009 06:50:23 -0700 (PDT)
+In-Reply-To: <1244289471-698-1-git-send-email-markus.heidelberg@web.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120916>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120917>
 
-Add references to the gitworkflows(7) manpage added in f948dd8
-(Documentation: add manpage about workflows, 2008-10-19) to both
-gittutorial(1) and git(1), so that new users might actually discover
-and read it.
+On Sat, Jun 6, 2009 at 13:57, Markus Heidelberg<markus.heidelberg@web.d=
+e> wrote:
+> Markus Heidelberg (4):
+> =C2=A0Don't count the submenu entries for checking if it is empty
+> =C2=A0Correctly count the entries in the revs context menu
+> =C2=A0Avoid submenus with merely 1 entry
+> =C2=A0Create a separate submenu for tags
+>
+> =C2=A0src/mainimpl.cpp | =C2=A0 51 ++++++++++++++++++++++++++++++++++=
++++++------------
+> =C2=A01 files changed, 39 insertions(+), 12 deletions(-)
+>
+>
 
-Noticed by Randal L. Schwartz.
+Thanks for this series. Context menu really needed some love.
 
-Signed-off-by: Thomas Rast <trast@student.ethz.ch>
----
+Patches applied and pushed to
 
-Mea culpa, obviously...
+http://git.kernel.org/?p=3Dqgit/qgit4.git;a=3Dsummary
 
 
- Documentation/git.txt         |    5 ++++-
- Documentation/gittutorial.txt |    4 ++++
- 2 files changed, 8 insertions(+), 1 deletions(-)
-
-diff --git a/Documentation/git.txt b/Documentation/git.txt
-index 68ce6e0..56d4770 100644
---- a/Documentation/git.txt
-+++ b/Documentation/git.txt
-@@ -232,6 +232,8 @@ The link:user-manual.html#git-concepts[git concepts chapter of the
- user-manual] and linkgit:gitcore-tutorial[7] both provide
- introductions to the underlying git architecture.
- 
-+See linkgit:gitworkflows[7] for an overview of recommended workflows.
-+
- See also the link:howto-index.html[howto] documents for some useful
- examples.
- 
-@@ -649,7 +651,8 @@ SEE ALSO
- linkgit:gittutorial[7], linkgit:gittutorial-2[7],
- link:everyday.html[Everyday Git], linkgit:gitcvs-migration[7],
- linkgit:gitglossary[7], linkgit:gitcore-tutorial[7],
--linkgit:gitcli[7], link:user-manual.html[The Git User's Manual]
-+linkgit:gitcli[7], link:user-manual.html[The Git User's Manual],
-+linkgit:gitworkflows[7]
- 
- GIT
- ---
-diff --git a/Documentation/gittutorial.txt b/Documentation/gittutorial.txt
-index c5d5596..c7fa949 100644
---- a/Documentation/gittutorial.txt
-+++ b/Documentation/gittutorial.txt
-@@ -650,6 +650,9 @@ digressions that may be interesting at this point are:
-     smart enough to perform a close-to-optimal search even in the
-     case of complex non-linear history with lots of merged branches.
- 
-+  * linkgit:gitworkflows[7]: Gives an overview of recommended
-+    workflows.
-+
-   * link:everyday.html[Everyday GIT with 20 Commands Or So]
- 
-   * linkgit:gitcvs-migration[7]: Git for CVS users.
-@@ -661,6 +664,7 @@ linkgit:gitcvs-migration[7],
- linkgit:gitcore-tutorial[7],
- linkgit:gitglossary[7],
- linkgit:git-help[1],
-+linkgit:gitworkflows[7],
- link:everyday.html[Everyday git],
- link:user-manual.html[The Git User's Manual]
- 
--- 
-1.6.3.2.297.g3a54
+Marco
