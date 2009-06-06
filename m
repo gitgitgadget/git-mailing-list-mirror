@@ -1,372 +1,373 @@
 From: Tay Ray Chuan <rctay89@gmail.com>
-Subject: [PATCH 20/23] http*: add http_get_info_packs
-Date: Sat, 6 Jun 2009 16:43:59 +0800
-Message-ID: <20090606164359.818a2d9f.rctay89@gmail.com>
+Subject: [PATCH 22/23] http*: add helper methods for fetching packs
+Date: Sat, 6 Jun 2009 16:44:01 +0800
+Message-ID: <20090606164401.c0d1d202.rctay89@gmail.com>
 References: <cover.1244277116.git.rctay89@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
 Cc: Junio C Hamano <gitster@pobox.com>,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Mike Hommey <mh@glandium.org>,
-	Clemens Buchacher <drizzd@aon.at>
+	Mike Hommey <mh@glandium.org>
 To: Git Mailing List <git@vger.kernel.org>
 X-From: git-owner@vger.kernel.org Sat Jun 06 10:51:12 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MCrcL-0004Mp-97
-	for gcvg-git-2@gmane.org; Sat, 06 Jun 2009 10:51:09 +0200
+	id 1MCrcM-0004Mp-Ti
+	for gcvg-git-2@gmane.org; Sat, 06 Jun 2009 10:51:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754681AbZFFIuj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 6 Jun 2009 04:50:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753619AbZFFIui
-	(ORCPT <rfc822;git-outgoing>); Sat, 6 Jun 2009 04:50:38 -0400
-Received: from mail-pz0-f171.google.com ([209.85.222.171]:34239 "EHLO
-	mail-pz0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753033AbZFFIug (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 6 Jun 2009 04:50:36 -0400
-Received: by mail-pz0-f171.google.com with SMTP id 1so1305746pzk.33
-        for <git@vger.kernel.org>; Sat, 06 Jun 2009 01:50:39 -0700 (PDT)
+	id S1754756AbZFFIu7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 6 Jun 2009 04:50:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754755AbZFFIu7
+	(ORCPT <rfc822;git-outgoing>); Sat, 6 Jun 2009 04:50:59 -0400
+Received: from mail-px0-f181.google.com ([209.85.216.181]:59422 "EHLO
+	mail-px0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754383AbZFFIu6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 6 Jun 2009 04:50:58 -0400
+Received: by pxi11 with SMTP id 11so22128pxi.33
+        for <git@vger.kernel.org>; Sat, 06 Jun 2009 01:51:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:date:from:to:cc:subject
          :message-id:in-reply-to:references:x-mailer:mime-version
          :content-type:content-transfer-encoding;
-        bh=YEZlKQwHv8qzK/0oUmXht+jajdqi+SsLdV8oQ0ezDfM=;
-        b=R0h9+1Qw1v6zULqFKLpyjDJlw0qkdKk1uCrTBXos7Erm0mHSylMx58okZ4rrWE+BpJ
-         a/rSS4F27FdIeD2zAtRRC/HuwEp+Yd+S3zVyghV2uacSAEw1uYC5UuqPmYEn8Pt/bcQt
-         waL4KOge+DGDOIbABPNJpGFS+g5z2FLMwyges=
+        bh=khjoK6nBVjT+8/EYPkHMqpRHZpMTqVL3W9xwu4O0nFo=;
+        b=GCwPMjYZNw4yjoVxau0DJ1BLqKw53IKuL/yOxFGRv9DssUuuYHGsggodIJtcnogL8t
+         lEXW4TllRjmEotyKT5B/jInDIt8HRoLtrblLzFKtH7Nkm/xH/hHsgigTP1c4E840Pa93
+         QlD+cMOfFo53qLq5afeBlCSUxwbiPbktfHmHU=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=date:from:to:cc:subject:message-id:in-reply-to:references:x-mailer
          :mime-version:content-type:content-transfer-encoding;
-        b=jAcCtk5tCWJ43jjW20QQvEiJdH4i4mbqplA2LEvLHnLD9uxvsWMMWKDymZiYVMwU+t
-         42oqjEgQX/fW6128goihTIbWs+cYLMRjHNT3q17kqWfHN9Zybw+zyqzijQPAlz8PN/Fh
-         ebI2ZmQZnS8uL4Tt+EFGDQLRcFjEDnzquyWU0=
-Received: by 10.142.80.16 with SMTP id d16mr1510007wfb.181.1244278239244;
-        Sat, 06 Jun 2009 01:50:39 -0700 (PDT)
+        b=J6U1z/tYWOqFfoiXqRlu5fL8kyNIBwkSbMLH42tWFRP0ZE+BgfnQ3Su/xkp73538pF
+         M/gdZz3XFWstGPDWkJDsz5Hcsomy3EjszWgo4/ILZ2M+WKT2kTKer1PPtdmlTPNi+6zu
+         CUsAxsZCVg4K8tHBbq80QfK2UCVSK0vyefzfM=
+Received: by 10.142.144.16 with SMTP id r16mr1490742wfd.84.1244278259867;
+        Sat, 06 Jun 2009 01:50:59 -0700 (PDT)
 Received: from your-cukc5e3z5n (cm97.zeta149.maxonline.com.sg [116.87.149.97])
-        by mx.google.com with ESMTPS id 27sm2708111wfa.22.2009.06.06.01.50.36
+        by mx.google.com with ESMTPS id 31sm2804405wff.24.2009.06.06.01.50.54
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sat, 06 Jun 2009 01:50:38 -0700 (PDT)
+        Sat, 06 Jun 2009 01:50:59 -0700 (PDT)
 In-Reply-To: <cover.1244277116.git.rctay89@gmail.com>
 X-Mailer: Sylpheed 2.6.0 (GTK+ 2.10.14; i686-pc-mingw32)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120902>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120903>
 
-http-push.c and http-walker.c no longer have to use fetch_index or
-setup_index; they simply need to use http_get_info_packs, a new http
-method, in their fetch_indices implementations.
+The code handling the fetching of packs in http-push.c and
+http-walker.c have been refactored into new methods and a new struct
+(http_pack_request) in http.c. They are not meant to be invoked
+elsewhere.
 
-Move fetch_index() and rename to fetch_pack_index() in http.c; this
-method is not meant to be used outside of http.c. It invokes
-end_url_with_slash with base_url; apart from that change, the code is
-identical.
+The new methods in http.c are
+ - new_http_pack_request
+ - finish_http_pack_request
+ - release_http_pack_request
 
-Move setup_index() and rename to fetch_and_setup_pack_index() in
-http.c; this method is not meant to be used outside of http.c.
+and the new struct is http_pack_request.
 
-Do not immediately set ret to 0 in http-walker.c::fetch_indices();
-instead do it in the HTTP_MISSING_TARGET case, to make it clear that
-the HTTP_OK and HTTP_MISSING_TARGET cases both return 0.
+Add a function, new_http_pack_request(), that deals with the details of
+coming up with the filename to store the retrieved packfile, resuming a
+previously aborted request, and making a new curl request. Update
+http-push.c::start_fetch_packed() and http-walker.c::fetch_pack() to
+use this.
+
+Add a function, finish_http_pack_request(), that deals with renaming
+the pack, advancing the pack list, and installing the pack. Update
+http-push.c::finish_request() and http-walker.c::fetch_pack to use
+this.
+
+Update release_request() in http-push.c and http-walker.c to invoke
+release_http_pack_request() to clean up pack request helper data.
+
+The local_stream member of the transfer_request struct in http-push.c
+has been removed, as the packfile pointer will be managed in the struct
+http_pack_request.
 
 Signed-off-by: Tay Ray Chuan <rctay89@gmail.com>
 ---
-
-Clemens, I've corrected the return values for
-http-push.c::fetch_indices(). I won't touch repo->has_info_packs yet,
-though, as I've already mentioned.
-
- http-push.c   |  179 +++----------------------------------------------------
- http-walker.c |  184 +++------------------------------------------------------
- http.c        |  164 ++++++++++++++++++++++++++++++++++++++++++++++++++
- http.h        |    4 +
- 4 files changed, 186 insertions(+), 345 deletions(-)
+ http-push.c   |  110 +++++++++++++-------------------------------------------
+ http-walker.c |   85 +++++++++----------------------------------
+ http.c        |  106 ++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ http.h        |   17 +++++++++
+ 4 files changed, 167 insertions(+), 151 deletions(-)
 
 diff --git a/http-push.c b/http-push.c
-index 1714e4e..d6f3b8e 100644
+index d6f3b8e..71d9967 100644
 --- a/http-push.c
 +++ b/http-push.c
-@@ -953,184 +953,23 @@ static int add_send_request(struct object *obj, struct remote_lock *lock)
- 	return 1;
- }
+@@ -1,6 +1,5 @@
+ #include "cache.h"
+ #include "commit.h"
+-#include "pack.h"
+ #include "tag.h"
+ #include "blob.h"
+ #include "http.h"
+@@ -119,7 +118,6 @@ struct transfer_request
+ 	char filename[PATH_MAX];
+ 	char tmpfile[PATH_MAX];
+ 	int local_fileno;
+-	FILE *local_stream;
+ 	enum transfer_state state;
+ 	CURLcode curl_result;
+ 	char errorstr[CURL_ERROR_SIZE];
+@@ -452,16 +450,10 @@ static void start_mkcol(struct transfer_request *request)
 
--static int fetch_index(unsigned char *sha1)
--{
--	int ret = 0;
--	char *hex = xstrdup(sha1_to_hex(sha1));
--	char *filename;
+ static void start_fetch_packed(struct transfer_request *request)
+ {
 -	char *url;
--	char tmpfile[PATH_MAX];
+ 	struct packed_git *target;
+-	FILE *packfile;
+-	char *filename;
 -	long prev_posn = 0;
 -	char range[RANGE_HEADER_SIZE];
 -	struct curl_slist *range_header = NULL;
--
--	FILE *indexfile;
+
+ 	struct transfer_request *check_request = request_queue_head;
 -	struct active_request_slot *slot;
--	struct slot_results results;
++	struct http_pack_request *preq;
+
+ 	target = find_sha1_pack(request->obj->sha1, repo->packs);
+ 	if (!target) {
+@@ -474,68 +466,35 @@ static void start_fetch_packed(struct transfer_request *request)
+ 	fprintf(stderr,	"Fetching pack %s\n", sha1_to_hex(target->sha1));
+ 	fprintf(stderr, " which contains %s\n", sha1_to_hex(request->obj->sha1));
+
+-	filename = sha1_pack_name(target->sha1);
+-	snprintf(request->filename, sizeof(request->filename), "%s", filename);
+-	snprintf(request->tmpfile, sizeof(request->tmpfile),
+-		 "%s.temp", filename);
 -
--	/* Don't use the index if the pack isn't there */
 -	url = xmalloc(strlen(repo->url) + 64);
--	sprintf(url, "%sobjects/pack/pack-%s.pack", repo->url, hex);
--	slot = get_active_slot();
--	slot->results = &results;
--	curl_easy_setopt(slot->curl, CURLOPT_URL, url);
--	curl_easy_setopt(slot->curl, CURLOPT_NOBODY, 1);
--	if (start_active_slot(slot)) {
--		run_active_slot(slot);
--		if (results.curl_result != CURLE_OK) {
--			ret = error("Unable to verify pack %s is available",
--				    hex);
--			goto cleanup_pack;
--		}
--	} else {
--		ret = error("Unable to start request");
--		goto cleanup_pack;
--	}
--
--	if (has_pack_index(sha1)) {
--		ret = 0;
--		goto cleanup_pack;
--	}
--
--	if (push_verbosely)
--		fprintf(stderr, "Getting index for pack %s\n", hex);
--
--	sprintf(url, "%sobjects/pack/pack-%s.idx", repo->url, hex);
--
--	filename = sha1_pack_index_name(sha1);
--	snprintf(tmpfile, sizeof(tmpfile), "%s.temp", filename);
--	indexfile = fopen(tmpfile, "a");
--	if (!indexfile) {
--		ret = error("Unable to open local file %s for pack index",
--			    tmpfile);
--		goto cleanup_pack;
+-	sprintf(url, "%sobjects/pack/pack-%s.pack",
+-		repo->url, sha1_to_hex(target->sha1));
++	preq = new_http_pack_request(target, repo->url);
++	if (preq == NULL) {
++		release_http_pack_request(preq);
++		repo->can_update_info_refs = 0;
++		return;
++	}
++	preq->lst = &repo->packs;
+
+ 	/* Make sure there isn't another open request for this pack */
+ 	while (check_request) {
+ 		if (check_request->state == RUN_FETCH_PACKED &&
+-		    !strcmp(check_request->url, url)) {
+-			free(url);
++		    !strcmp(check_request->url, preq->url)) {
++			release_http_pack_request(preq);
+ 			release_request(request);
+ 			return;
+ 		}
+ 		check_request = check_request->next;
+ 	}
+
+-	packfile = fopen(request->tmpfile, "a");
+-	if (!packfile) {
+-		fprintf(stderr, "Unable to open local file %s for pack",
+-			request->tmpfile);
+-		repo->can_update_info_refs = 0;
+-		free(url);
+-		return;
 -	}
 -
 -	slot = get_active_slot();
--	slot->results = &results;
--	curl_easy_setopt(slot->curl, CURLOPT_NOBODY, 0);
--	curl_easy_setopt(slot->curl, CURLOPT_HTTPGET, 1);
--	curl_easy_setopt(slot->curl, CURLOPT_FILE, indexfile);
+-	slot->callback_func = process_response;
+-	slot->callback_data = request;
+-	request->slot = slot;
+-	request->local_stream = packfile;
+-	request->userData = target;
+-
+-	request->url = url;
+-	curl_easy_setopt(slot->curl, CURLOPT_FILE, packfile);
 -	curl_easy_setopt(slot->curl, CURLOPT_WRITEFUNCTION, fwrite);
 -	curl_easy_setopt(slot->curl, CURLOPT_URL, url);
 -	curl_easy_setopt(slot->curl, CURLOPT_HTTPHEADER, no_pragma_header);
--	slot->local = indexfile;
+-	slot->local = packfile;
 -
 -	/*
 -	 * If there is data present from a previous transfer attempt,
 -	 * resume where it left off
 -	 */
--	prev_posn = ftell(indexfile);
+-	prev_posn = ftell(packfile);
 -	if (prev_posn>0) {
 -		if (push_verbosely)
 -			fprintf(stderr,
--				"Resuming fetch of index for pack %s at byte %ld\n",
--				hex, prev_posn);
+-				"Resuming fetch of pack %s at byte %ld\n",
+-				sha1_to_hex(target->sha1), prev_posn);
 -		sprintf(range, "Range: bytes=%ld-", prev_posn);
 -		range_header = curl_slist_append(range_header, range);
 -		curl_easy_setopt(slot->curl, CURLOPT_HTTPHEADER, range_header);
 -	}
--
--	if (start_active_slot(slot)) {
--		run_active_slot(slot);
--		if (results.curl_result != CURLE_OK) {
--			ret = error("Unable to get pack index %s\n%s", url,
--				    curl_errorstr);
--			goto cleanup_index;
--		}
--	} else {
--		ret = error("Unable to start request");
--		goto cleanup_index;
--	}
--
--	ret = move_temp_to_file(tmpfile, filename);
--
--cleanup_index:
--	fclose(indexfile);
--	slot->local = NULL;
--cleanup_pack:
--	free(url);
--	free(hex);
--	return ret;
--}
--
--static int setup_index(unsigned char *sha1)
--{
--	struct packed_git *new_pack;
--
--	if (fetch_index(sha1))
--		return -1;
--
--	new_pack = parse_pack_index(sha1);
--	if (!new_pack)
--		return -1; /* parse_pack_index() already issued error message */
--	new_pack->next = repo->packs;
--	repo->packs = new_pack;
--	return 0;
--}
--
- static int fetch_indices(void)
- {
--	unsigned char sha1[20];
--	char *url;
--	struct strbuf buffer = STRBUF_INIT;
--	char *data;
--	int i = 0;
--
--	struct active_request_slot *slot;
--	struct slot_results results;
-+	int ret;
++	preq->slot->callback_func = process_response;
++	preq->slot->callback_data = request;
++	request->slot = preq->slot;
++	request->userData = preq;
 
- 	if (push_verbosely)
- 		fprintf(stderr, "Getting pack list\n");
-
--	url = xmalloc(strlen(repo->url) + 20);
--	sprintf(url, "%sobjects/info/packs", repo->url);
--
--	slot = get_active_slot();
--	slot->results = &results;
--	curl_easy_setopt(slot->curl, CURLOPT_FILE, &buffer);
--	curl_easy_setopt(slot->curl, CURLOPT_WRITEFUNCTION, fwrite_buffer);
--	curl_easy_setopt(slot->curl, CURLOPT_URL, url);
--	curl_easy_setopt(slot->curl, CURLOPT_HTTPHEADER, NULL);
--	if (start_active_slot(slot)) {
--		run_active_slot(slot);
--		if (results.curl_result != CURLE_OK) {
--			strbuf_release(&buffer);
--			free(url);
--			if (results.http_code == 404)
--				return 0;
--			else
--				return error("%s", curl_errorstr);
--		}
--	} else {
--		strbuf_release(&buffer);
--		free(url);
--		return error("Unable to start request");
--	}
--	free(url);
--
--	data = buffer.buf;
--	while (i < buffer.len) {
--		switch (data[i]) {
--		case 'P':
--			i++;
--			if (i + 52 < buffer.len &&
--			    !prefixcmp(data + i, " pack-") &&
--			    !prefixcmp(data + i + 46, ".pack\n")) {
--				get_sha1_hex(data + i + 6, sha1);
--				setup_index(sha1);
--				i += 51;
--				break;
--			}
--		default:
--			while (data[i] != '\n')
--				i++;
--		}
--		i++;
-+	switch (http_get_info_packs(repo->url, &repo->packs)) {
-+	case HTTP_OK:
-+	case HTTP_MISSING_TARGET:
-+		ret = 0;
-+		break;
-+	default:
-+		ret = -1;
+ 	/* Try to get the request started, abort the request on error */
+ 	request->state = RUN_FETCH_PACKED;
+-	if (!start_active_slot(slot)) {
++	if (!start_active_slot(preq->slot)) {
+ 		fprintf(stderr, "Unable to start GET request\n");
++		release_http_pack_request(preq);
+ 		repo->can_update_info_refs = 0;
+ 		release_request(request);
  	}
+@@ -718,8 +677,6 @@ static void release_request(struct transfer_request *request)
 
--	strbuf_release(&buffer);
--	return 0;
-+	return ret;
+ 	if (request->local_fileno != -1)
+ 		close(request->local_fileno);
+-	if (request->local_stream)
+-		fclose(request->local_stream);
+ 	free(request->url);
+ 	free(request);
  }
+@@ -727,13 +684,10 @@ static void release_request(struct transfer_request *request)
+ static void finish_request(struct transfer_request *request)
+ {
+ 	struct stat st;
+-	struct packed_git *target;
+-	struct packed_git **lst;
+-	struct active_request_slot *slot;
++	struct http_pack_request *preq;
 
- static void one_remote_object(const char *hex)
+ 	request->curl_result = request->slot->curl_result;
+ 	request->http_code = request->slot->http_code;
+-	slot = request->slot;
+ 	request->slot = NULL;
+
+ 	/* Keep locks active */
+@@ -821,31 +775,21 @@ static void finish_request(struct transfer_request *request)
+ 			start_fetch_packed(request);
+
+ 	} else if (request->state == RUN_FETCH_PACKED) {
++		int fail = 1;
+ 		if (request->curl_result != CURLE_OK) {
+ 			fprintf(stderr, "Unable to get pack file %s\n%s",
+ 				request->url, curl_errorstr);
+-			repo->can_update_info_refs = 0;
+ 		} else {
+-			off_t pack_size = ftell(request->local_stream);
+-
+-			fclose(request->local_stream);
+-			request->local_stream = NULL;
+-			slot->local = NULL;
+-			if (!move_temp_to_file(request->tmpfile,
+-					       request->filename)) {
+-				target = (struct packed_git *)request->userData;
+-				target->pack_size = pack_size;
+-				lst = &repo->packs;
+-				while (*lst != target)
+-					lst = &((*lst)->next);
+-				*lst = (*lst)->next;
+-
+-				if (!verify_pack(target))
+-					install_packed_git(target);
+-				else
+-					repo->can_update_info_refs = 0;
++			preq = (struct http_pack_request *)request->userData;
++
++			if (preq) {
++				if (finish_http_pack_request(preq) > 0)
++					fail = 0;
++				release_http_pack_request(preq);
+ 			}
+ 		}
++		if (fail)
++			repo->can_update_info_refs = 0;
+ 		release_request(request);
+ 	}
+ }
+@@ -900,7 +844,6 @@ static void add_fetch_request(struct object *obj)
+ 	request->lock = NULL;
+ 	request->headers = NULL;
+ 	request->local_fileno = -1;
+-	request->local_stream = NULL;
+ 	request->state = NEED_FETCH;
+ 	request->next = request_queue_head;
+ 	request_queue_head = request;
+@@ -940,7 +883,6 @@ static int add_send_request(struct object *obj, struct remote_lock *lock)
+ 	request->lock = lock;
+ 	request->headers = NULL;
+ 	request->local_fileno = -1;
+-	request->local_stream = NULL;
+ 	request->state = NEED_PUSH;
+ 	request->next = request_queue_head;
+ 	request_queue_head = request;
 diff --git a/http-walker.c b/http-walker.c
-index 032a7be..ac343fd 100644
+index ac343fd..8f7a975 100644
 --- a/http-walker.c
 +++ b/http-walker.c
-@@ -368,124 +368,6 @@ static void prefetch(struct walker *walker, unsigned char *sha1)
- #endif
- }
+@@ -1,6 +1,5 @@
+ #include "cache.h"
+ #include "commit.h"
+-#include "pack.h"
+ #include "walker.h"
+ #include "http.h"
 
--static int fetch_index(struct walker *walker, struct alt_base *repo, unsigned char *sha1)
--{
--	int ret = 0;
--	char *hex = xstrdup(sha1_to_hex(sha1));
--	char *filename;
+@@ -590,19 +589,10 @@ static int fetch_indices(struct walker *walker, struct alt_base *repo)
+
+ static int fetch_pack(struct walker *walker, struct alt_base *repo, unsigned char *sha1)
+ {
 -	char *url;
+ 	struct packed_git *target;
+-	struct packed_git **lst;
+-	FILE *packfile;
+-	char *filename;
 -	char tmpfile[PATH_MAX];
+ 	int ret;
 -	long prev_posn = 0;
 -	char range[RANGE_HEADER_SIZE];
 -	struct curl_slist *range_header = NULL;
 -
--	FILE *indexfile;
 -	struct active_request_slot *slot;
--	struct slot_results results;
--
--	/* Don't use the index if the pack isn't there */
--	url = xmalloc(strlen(repo->base) + 64);
--	sprintf(url, "%s/objects/pack/pack-%s.pack", repo->base, hex);
--	slot = get_active_slot();
--	slot->results = &results;
--	curl_easy_setopt(slot->curl, CURLOPT_URL, url);
--	curl_easy_setopt(slot->curl, CURLOPT_NOBODY, 1);
--	if (start_active_slot(slot)) {
--		run_active_slot(slot);
--		if (results.curl_result != CURLE_OK) {
--			ret = error("Unable to verify pack %s is available",
--				     hex);
--			goto cleanup_pack;
--		}
--	} else {
--		ret = error("Unable to start request");
--		goto cleanup_pack;
--	}
--
--	if (has_pack_index(sha1)) {
--		ret = 0;
--		goto cleanup_pack;
--	}
--
--	if (walker->get_verbosely)
--		fprintf(stderr, "Getting index for pack %s\n", hex);
--
--	sprintf(url, "%s/objects/pack/pack-%s.idx", repo->base, hex);
--
--	filename = sha1_pack_index_name(sha1);
+ 	struct slot_results results;
++	struct http_pack_request *preq;
+
+ 	if (fetch_indices(walker, repo))
+ 		return -1;
+@@ -617,72 +607,33 @@ static int fetch_pack(struct walker *walker, struct alt_base *repo, unsigned cha
+ 			sha1_to_hex(sha1));
+ 	}
+
+-	url = xmalloc(strlen(repo->base) + 65);
+-	sprintf(url, "%s/objects/pack/pack-%s.pack",
+-		repo->base, sha1_to_hex(target->sha1));
++	preq = new_http_pack_request(target, repo->base);
++	if (preq == NULL)
++		goto abort;
++	preq->lst = &repo->packs;
++	preq->slot->results = &results;
+
+-	filename = sha1_pack_name(target->sha1);
 -	snprintf(tmpfile, sizeof(tmpfile), "%s.temp", filename);
--	indexfile = fopen(tmpfile, "a");
--	if (!indexfile) {
--		ret = error("Unable to open local file %s for pack index",
--			    tmpfile);
--		goto cleanup_pack;
--	}
+-	packfile = fopen(tmpfile, "a");
+-	if (!packfile)
+-		return error("Unable to open local file %s for pack",
+-			     tmpfile);
 -
 -	slot = get_active_slot();
 -	slot->results = &results;
--	curl_easy_setopt(slot->curl, CURLOPT_NOBODY, 0);
--	curl_easy_setopt(slot->curl, CURLOPT_HTTPGET, 1);
--	curl_easy_setopt(slot->curl, CURLOPT_FILE, indexfile);
+-	curl_easy_setopt(slot->curl, CURLOPT_FILE, packfile);
 -	curl_easy_setopt(slot->curl, CURLOPT_WRITEFUNCTION, fwrite);
 -	curl_easy_setopt(slot->curl, CURLOPT_URL, url);
 -	curl_easy_setopt(slot->curl, CURLOPT_HTTPHEADER, no_pragma_header);
--	slot->local = indexfile;
+-	slot->local = packfile;
 -
 -	/*
 -	 * If there is data present from a previous transfer attempt,
 -	 * resume where it left off
 -	 */
--	prev_posn = ftell(indexfile);
+-	prev_posn = ftell(packfile);
 -	if (prev_posn>0) {
 -		if (walker->get_verbosely)
 -			fprintf(stderr,
--				"Resuming fetch of index for pack %s at byte %ld\n",
--				hex, prev_posn);
+-				"Resuming fetch of pack %s at byte %ld\n",
+-				sha1_to_hex(target->sha1), prev_posn);
 -		sprintf(range, "Range: bytes=%ld-", prev_posn);
 -		range_header = curl_slist_append(range_header, range);
 -		curl_easy_setopt(slot->curl, CURLOPT_HTTPHEADER, range_header);
@@ -374,313 +375,194 @@ index 032a7be..ac343fd 100644
 -
 -	if (start_active_slot(slot)) {
 -		run_active_slot(slot);
--		if (results.curl_result != CURLE_OK) {
--			ret = error("Unable to get pack index %s\n%s", url,
--				    curl_errorstr);
--			goto cleanup_index;
--		}
--	} else {
--		ret = error("Unable to start request");
--		goto cleanup_index;
--	}
--
--	ret = move_temp_to_file(tmpfile, filename);
--
--cleanup_index:
--	fclose(indexfile);
--	slot->local = NULL;
--cleanup_pack:
--	free(url);
--	free(hex);
--	return ret;
--}
--
--static int setup_index(struct walker *walker, struct alt_base *repo, unsigned char *sha1)
--{
--	struct packed_git *new_pack;
--	if (has_pack_file(sha1))
--		return 0; /* don't list this as something we can get */
--
--	if (fetch_index(walker, repo, sha1))
--		return -1;
--
--	new_pack = parse_pack_index(sha1);
--	if (!new_pack)
--		return -1; /* parse_pack_index() already issued error message */
--	new_pack->next = repo->packs;
--	repo->packs = new_pack;
--	return 0;
--}
--
- static void process_alternates_response(void *callback_data)
- {
- 	struct alternates_request *alt_req =
-@@ -684,15 +566,7 @@ static void fetch_alternates(struct walker *walker, const char *base)
-
- static int fetch_indices(struct walker *walker, struct alt_base *repo)
- {
--	unsigned char sha1[20];
--	char *url;
--	struct strbuf buffer = STRBUF_INIT;
--	char *data;
--	int i = 0;
--	int ret = 0;
--
--	struct active_request_slot *slot;
--	struct slot_results results;
-+	int ret;
-
- 	if (repo->got_indices)
- 		return 0;
-@@ -700,57 +574,17 @@ static int fetch_indices(struct walker *walker, struct alt_base *repo)
- 	if (walker->get_verbosely)
- 		fprintf(stderr, "Getting pack list for %s\n", repo->base);
-
--	url = xmalloc(strlen(repo->base) + 21);
--	sprintf(url, "%s/objects/info/packs", repo->base);
--
--	slot = get_active_slot();
--	slot->results = &results;
--	curl_easy_setopt(slot->curl, CURLOPT_FILE, &buffer);
--	curl_easy_setopt(slot->curl, CURLOPT_WRITEFUNCTION, fwrite_buffer);
--	curl_easy_setopt(slot->curl, CURLOPT_URL, url);
--	curl_easy_setopt(slot->curl, CURLOPT_HTTPHEADER, NULL);
--	if (start_active_slot(slot)) {
--		run_active_slot(slot);
--		if (results.curl_result != CURLE_OK) {
--			if (missing_target(&results)) {
--				repo->got_indices = 1;
--				goto cleanup;
--			} else {
--				repo->got_indices = 0;
--				ret = error("%s", curl_errorstr);
--				goto cleanup;
--			}
--		}
--	} else {
-+	switch (http_get_info_packs(repo->base, &repo->packs)) {
-+	case HTTP_OK:
-+	case HTTP_MISSING_TARGET:
-+		repo->got_indices = 1;
-+		ret = 0;
-+		break;
-+	default:
- 		repo->got_indices = 0;
--		ret = error("Unable to start request");
--		goto cleanup;
-+		ret = -1;
++	if (start_active_slot(preq->slot)) {
++		run_active_slot(preq->slot);
+ 		if (results.curl_result != CURLE_OK) {
+-			fclose(packfile);
+-			slot->local = NULL;
+-			return error("Unable to get pack file %s\n%s", url,
+-				     curl_errorstr);
++			error("Unable to get pack file %s\n%s", preq->url,
++			      curl_errorstr);
++			goto abort;
+ 		}
+ 	} else {
+-		fclose(packfile);
+-		slot->local = NULL;
+-		return error("Unable to start request");
++		error("Unable to start request");
++		goto abort;
  	}
 
--	data = buffer.buf;
--	while (i < buffer.len) {
--		switch (data[i]) {
--		case 'P':
--			i++;
--			if (i + 52 <= buffer.len &&
--			    !prefixcmp(data + i, " pack-") &&
--			    !prefixcmp(data + i + 46, ".pack\n")) {
--				get_sha1_hex(data + i + 6, sha1);
--				setup_index(walker, repo, sha1);
--				i += 51;
--				break;
--			}
--		default:
--			while (i < buffer.len && data[i] != '\n')
--				i++;
--		}
--		i++;
--	}
+-	target->pack_size = ftell(packfile);
+-	fclose(packfile);
+-	slot->local = NULL;
 -
--	repo->got_indices = 1;
--cleanup:
--	strbuf_release(&buffer);
--	free(url);
- 	return ret;
+-	ret = move_temp_to_file(tmpfile, filename);
++	ret = finish_http_pack_request(preq);
++	release_http_pack_request(preq);
+ 	if (ret)
+ 		return ret;
+
+-	lst = &repo->packs;
+-	while (*lst != target)
+-		lst = &((*lst)->next);
+-	*lst = (*lst)->next;
+-
+-	if (verify_pack(target))
+-		return -1;
+-	install_packed_git(target);
+-
+ 	return 0;
++
++abort:
++	return -1;
  }
 
+ static void abort_object_request(struct object_request *obj_req)
 diff --git a/http.c b/http.c
-index 2a49372..96d83d5 100644
+index 0701a6f..3815934 100644
 --- a/http.c
 +++ b/http.c
-@@ -790,3 +790,167 @@ int http_fetch_ref(const char *base, struct ref *ref)
+@@ -1,4 +1,5 @@
+ #include "http.h"
++#include "pack.h"
+
+ int data_received;
+ int active_requests;
+@@ -889,3 +890,108 @@ cleanup:
  	free(url);
  	return ret;
  }
 +
-+/* Helpers for fetching packs */
-+static int fetch_pack_index(unsigned char *sha1, const char *base_url)
++void release_http_pack_request(struct http_pack_request *preq)
 +{
-+	int ret = 0;
-+	char *hex = xstrdup(sha1_to_hex(sha1));
-+	char *filename;
++	if (preq->packfile != NULL) {
++		fclose(preq->packfile);
++		preq->packfile = NULL;
++		preq->slot->local = NULL;
++	}
++	if (preq->range_header != NULL) {
++		curl_slist_free_all(preq->range_header);
++		preq->range_header = NULL;
++	}
++	preq->slot = NULL;
++	free(preq->url);
++}
++
++int finish_http_pack_request(struct http_pack_request *preq)
++{
++	int ret;
++	struct packed_git **lst;
++
++	preq->target->pack_size = ftell(preq->packfile);
++
++	if (preq->packfile != NULL) {
++		fclose(preq->packfile);
++		preq->packfile = NULL;
++		preq->slot->local = NULL;
++	}
++
++	ret = move_temp_to_file(preq->tmpfile, preq->filename);
++	if (ret)
++		return ret;
++
++	lst = preq->lst;
++	while (*lst != preq->target)
++		lst = &((*lst)->next);
++	*lst = (*lst)->next;
++
++	if (verify_pack(preq->target))
++		return -1;
++	install_packed_git(preq->target);
++
++	return 0;
++}
++
++struct http_pack_request *new_http_pack_request(
++	struct packed_git *target, const char *base_url)
++{
 +	char *url;
-+	char tmpfile[PATH_MAX];
++	char *filename;
 +	long prev_posn = 0;
 +	char range[RANGE_HEADER_SIZE];
 +	struct strbuf buf = STRBUF_INIT;
-+	struct curl_slist *range_header = NULL;
++	struct http_pack_request *preq;
 +
-+	FILE *indexfile;
-+	struct active_request_slot *slot;
-+	struct slot_results results;
-+
-+	/* Don't use the index if the pack isn't there */
-+	end_url_with_slash(&buf, base_url);
-+	strbuf_addf(&buf, "objects/pack/pack-%s.pack", hex);
-+	url = strbuf_detach(&buf, 0);
-+
-+	slot = get_active_slot();
-+	slot->results = &results;
-+	curl_easy_setopt(slot->curl, CURLOPT_URL, url);
-+	curl_easy_setopt(slot->curl, CURLOPT_NOBODY, 1);
-+	if (start_active_slot(slot)) {
-+		run_active_slot(slot);
-+		if (results.curl_result != CURLE_OK) {
-+			ret = error("Unable to verify pack %s is available",
-+				    hex);
-+			goto cleanup_pack;
-+		}
-+	} else {
-+		ret = error("Unable to start request");
-+		goto cleanup_pack;
-+	}
-+
-+	if (has_pack_index(sha1)) {
-+		ret = 0;
-+		goto cleanup_pack;
-+	}
-+
-+	if (http_is_verbose)
-+		fprintf(stderr, "Getting index for pack %s\n", hex);
++	preq = xmalloc(sizeof(*preq));
++	preq->target = target;
++	preq->range_header = NULL;
 +
 +	end_url_with_slash(&buf, base_url);
-+	strbuf_addf(&buf, "objects/pack/pack-%s.idx", hex);
++	strbuf_addf(&buf, "objects/pack/pack-%s.pack",
++		sha1_to_hex(target->sha1));
 +	url = strbuf_detach(&buf, NULL);
++	preq->url = xstrdup(url);
 +
-+	filename = sha1_pack_index_name(sha1);
-+	snprintf(tmpfile, sizeof(tmpfile), "%s.temp", filename);
-+	indexfile = fopen(tmpfile, "a");
-+	if (!indexfile) {
-+		ret = error("Unable to open local file %s for pack index",
-+			    tmpfile);
-+		goto cleanup_pack;
++	filename = sha1_pack_name(target->sha1);
++	snprintf(preq->filename, sizeof(preq->filename), "%s", filename);
++	snprintf(preq->tmpfile, sizeof(preq->tmpfile), "%s.temp", filename);
++	preq->packfile = fopen(preq->tmpfile, "a");
++	if (!preq->packfile) {
++		error("Unable to open local file %s for pack",
++		      preq->tmpfile);
++		goto abort;
 +	}
 +
-+	slot = get_active_slot();
-+	slot->results = &results;
-+	curl_easy_setopt(slot->curl, CURLOPT_NOBODY, 0);
-+	curl_easy_setopt(slot->curl, CURLOPT_HTTPGET, 1);
-+	curl_easy_setopt(slot->curl, CURLOPT_FILE, indexfile);
-+	curl_easy_setopt(slot->curl, CURLOPT_WRITEFUNCTION, fwrite);
-+	curl_easy_setopt(slot->curl, CURLOPT_URL, url);
-+	curl_easy_setopt(slot->curl, CURLOPT_HTTPHEADER, no_pragma_header);
-+	slot->local = indexfile;
++	preq->slot = get_active_slot();
++	preq->slot->local = preq->packfile;
++	curl_easy_setopt(preq->slot->curl, CURLOPT_FILE, preq->packfile);
++	curl_easy_setopt(preq->slot->curl, CURLOPT_WRITEFUNCTION, fwrite);
++	curl_easy_setopt(preq->slot->curl, CURLOPT_URL, url);
++	curl_easy_setopt(preq->slot->curl, CURLOPT_HTTPHEADER,
++		no_pragma_header);
 +
 +	/*
 +	 * If there is data present from a previous transfer attempt,
 +	 * resume where it left off
 +	 */
-+	prev_posn = ftell(indexfile);
++	prev_posn = ftell(preq->packfile);
 +	if (prev_posn>0) {
 +		if (http_is_verbose)
 +			fprintf(stderr,
-+				"Resuming fetch of index for pack %s at byte %ld\n",
-+				hex, prev_posn);
++				"Resuming fetch of pack %s at byte %ld\n",
++				sha1_to_hex(target->sha1), prev_posn);
 +		sprintf(range, "Range: bytes=%ld-", prev_posn);
-+		range_header = curl_slist_append(range_header, range);
-+		curl_easy_setopt(slot->curl, CURLOPT_HTTPHEADER, range_header);
++		preq->range_header = curl_slist_append(NULL, range);
++		curl_easy_setopt(preq->slot->curl, CURLOPT_HTTPHEADER,
++			preq->range_header);
 +	}
 +
-+	if (start_active_slot(slot)) {
-+		run_active_slot(slot);
-+		if (results.curl_result != CURLE_OK) {
-+			ret = error("Unable to get pack index %s\n%s",
-+				    url, curl_errorstr);
-+			goto cleanup_index;
-+		}
-+	} else {
-+		ret = error("Unable to start request");
-+		goto cleanup_index;
-+	}
++	return preq;
 +
-+	ret = move_temp_to_file(tmpfile, filename);
-+
-+cleanup_index:
-+	fclose(indexfile);
-+	slot->local = NULL;
-+cleanup_pack:
-+	free(hex);
-+	free(url);
-+	return ret;
-+}
-+
-+static int fetch_and_setup_pack_index(struct packed_git **packs_head,
-+	unsigned char *sha1, const char *base_url)
-+{
-+	struct packed_git *new_pack;
-+
-+	if (fetch_pack_index(sha1, base_url))
-+		return -1;
-+
-+	new_pack = parse_pack_index(sha1);
-+	if (!new_pack)
-+		return -1; /* parse_pack_index() already issued error message */
-+	new_pack->next = *packs_head;
-+	*packs_head = new_pack;
-+	return 0;
-+}
-+
-+int http_get_info_packs(const char *base_url, struct packed_git **packs_head)
-+{
-+	int ret = 0, i = 0;
-+	char *url, *data;
-+	struct strbuf buf = STRBUF_INIT;
-+	unsigned char sha1[20];
-+
-+	end_url_with_slash(&buf, base_url);
-+	strbuf_addstr(&buf, "objects/info/packs");
-+	url = strbuf_detach(&buf, NULL);
-+
-+	ret = http_get_strbuf(url, &buf, HTTP_NO_CACHE);
-+	if (ret != HTTP_OK)
-+		goto cleanup;
-+
-+	data = buf.buf;
-+	while (i < buf.len) {
-+		switch (data[i]) {
-+		case 'P':
-+			i++;
-+			if (i + 52 <= buf.len &&
-+			    !prefixcmp(data + i, " pack-") &&
-+			    !prefixcmp(data + i + 46, ".pack\n")) {
-+				get_sha1_hex(data + i + 6, sha1);
-+				fetch_and_setup_pack_index(packs_head, sha1,
-+						      base_url);
-+				i += 51;
-+				break;
-+			}
-+		default:
-+			while (i < buf.len && data[i] != '\n')
-+				i++;
-+		}
-+		i++;
-+	}
-+
-+cleanup:
-+	free(url);
-+	return ret;
++abort:
++	free(filename);
++	return NULL;
 +}
 diff --git a/http.h b/http.h
-index 3d878d5..180b1c2 100644
+index 180b1c2..511c0c4 100644
 --- a/http.h
 +++ b/http.h
-@@ -146,4 +146,8 @@ int http_error(const char *url, int ret);
+@@ -150,4 +150,21 @@ extern int http_fetch_ref(const char *base, struct ref *ref);
+ extern int http_get_info_packs(const char *base_url,
+ 	struct packed_git **packs_head);
 
- extern int http_fetch_ref(const char *base, struct ref *ref);
-
-+/* Helpers for fetching packs */
-+extern int http_get_info_packs(const char *base_url,
-+	struct packed_git **packs_head);
++struct http_pack_request
++{
++	char *url;
++	struct packed_git *target;
++	struct packed_git **lst;
++	FILE *packfile;
++	char filename[PATH_MAX];
++	char tmpfile[PATH_MAX];
++	struct curl_slist *range_header;
++	struct active_request_slot *slot;
++};
++
++extern struct http_pack_request *new_http_pack_request(
++	struct packed_git *target, const char *base_url);
++extern int finish_http_pack_request(struct http_pack_request *preq);
++extern void release_http_pack_request(struct http_pack_request *preq);
 +
  #endif /* HTTP_H */
 --
