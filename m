@@ -1,65 +1,52 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: Re: [PATCH v2 3/3] Use die_errno() instead of die() when checking syscalls
-Date: Sun, 7 Jun 2009 00:27:41 +0200
-Message-ID: <200906070027.44136.trast@student.ethz.ch>
-References: <cover.1244299302.git.trast@student.ethz.ch> <62538974f2c0f4561428507e514daa87dbfcac01.1244299302.git.trast@student.ethz.ch> <200906062302.08616.j6t@kdbg.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH v2 1/3] Introduce die_errno() that appends
+	strerror(errno) to die()
+Date: Sat, 6 Jun 2009 18:47:11 -0400
+Message-ID: <20090606224711.GC30064@coredump.intra.peff.net>
+References: <cover.1244299302.git.trast@student.ethz.ch> <3672f22723a4c14c4a6d67278e9865424c0c68dc.1244299302.git.trast@student.ethz.ch> <200906062236.42858.j6t@kdbg.org> <200906062256.34074.trast@student.ethz.ch>
 Mime-Version: 1.0
-Content-Type: Text/Plain;
-  charset="iso-8859-15"
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Jeff King <peff@peff.net>,
-	Alexander Potashev <aspotashev@gmail.com>
-To: Johannes Sixt <j6t@kdbg.org>
-X-From: git-owner@vger.kernel.org Sun Jun 07 00:27:57 2009
+Content-Type: text/plain; charset=utf-8
+Cc: Johannes Sixt <j6t@kdbg.org>, Junio C Hamano <gitster@pobox.com>,
+	git@vger.kernel.org, Alexander Potashev <aspotashev@gmail.com>
+To: Thomas Rast <trast@student.ethz.ch>
+X-From: git-owner@vger.kernel.org Sun Jun 07 00:47:30 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MD4Mm-0006qd-Ee
-	for gcvg-git-2@gmane.org; Sun, 07 Jun 2009 00:27:56 +0200
+	id 1MD4fi-0002ls-Dp
+	for gcvg-git-2@gmane.org; Sun, 07 Jun 2009 00:47:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751991AbZFFW1r (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 6 Jun 2009 18:27:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751803AbZFFW1q
-	(ORCPT <rfc822;git-outgoing>); Sat, 6 Jun 2009 18:27:46 -0400
-Received: from xsmtp0.ethz.ch ([82.130.70.14]:50748 "EHLO XSMTP0.ethz.ch"
+	id S1752807AbZFFWrU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 6 Jun 2009 18:47:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752430AbZFFWrT
+	(ORCPT <rfc822;git-outgoing>); Sat, 6 Jun 2009 18:47:19 -0400
+Received: from peff.net ([208.65.91.99]:49239 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751684AbZFFW1q (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 6 Jun 2009 18:27:46 -0400
-Received: from xfe2.d.ethz.ch ([82.130.124.42]) by XSMTP0.ethz.ch with Microsoft SMTPSVC(6.0.3790.3959);
-	 Sun, 7 Jun 2009 00:27:47 +0200
-Received: from thomas.localnet ([77.56.223.244]) by xfe2.d.ethz.ch over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
-	 Sun, 7 Jun 2009 00:27:32 +0200
-User-Agent: KMail/1.11.3 (Linux/2.6.27.21-0.1-default; KDE/4.2.3; x86_64; ; )
-In-Reply-To: <200906062302.08616.j6t@kdbg.org>
+	id S1751881AbZFFWrT (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 6 Jun 2009 18:47:19 -0400
+Received: (qmail 12571 invoked by uid 107); 6 Jun 2009 22:47:28 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Sat, 06 Jun 2009 18:47:28 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sat, 06 Jun 2009 18:47:11 -0400
 Content-Disposition: inline
-X-OriginalArrivalTime: 06 Jun 2009 22:27:32.0073 (UTC) FILETIME=[FBAF8590:01C9E6F5]
+In-Reply-To: <200906062256.34074.trast@student.ethz.ch>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120944>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120945>
 
-Johannes Sixt wrote:
-> > @@ -2262,7 +2262,6 @@ int cmd_blame(int argc, const char **argv, const char
-> > *prefix)
-> >
-> >  	if (revs_file && read_ancestry(revs_file))
-> >  		die_errno("reading graft file '%s' failed", revs_file);
-> > -
-> >  	if (cmd_is_annotate) {
-> >  		output_option |= OUTPUT_ANNOTATE_COMPAT;
-> >  		blame_date_mode = DATE_ISO8601;
+On Sat, Jun 06, 2009 at 10:56:31PM +0200, Thomas Rast wrote:
+
+> > Cannot vsnprintf potentially modify errno?
 > 
-> Unrelated and not an improvement.
+> Manpage turns up nothing, so AFAICT, no.
 
-I used an Emacs macro to turn the die(..., strerror(errno)) [that I
-had from v1] into die_errno, and obviously something went terribly
-wrong _and_ I missed it.  Sorry :-(
+POSIX seems to imply that it can:
 
-I'll make a new version tomorrow.
+  http://www.opengroup.org/onlinepubs/009695399/functions/fprintf.html
 
--- 
-Thomas Rast
-trast@{inf,student}.ethz.ch
+though it looks like the conditions are fairly unlikely.
+
+-Peff
