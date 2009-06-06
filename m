@@ -1,70 +1,150 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: Re: [PATCH v2 1/3] Introduce die_errno() that appends strerror(errno) to die()
-Date: Sat, 6 Jun 2009 22:56:31 +0200
-Message-ID: <200906062256.34074.trast@student.ethz.ch>
-References: <cover.1244299302.git.trast@student.ethz.ch> <3672f22723a4c14c4a6d67278e9865424c0c68dc.1244299302.git.trast@student.ethz.ch> <200906062236.42858.j6t@kdbg.org>
+From: Johannes Sixt <j6t@kdbg.org>
+Subject: Re: [PATCH v2 3/3] Use die_errno() instead of die() when checking syscalls
+Date: Sat, 6 Jun 2009 23:02:08 +0200
+Message-ID: <200906062302.08616.j6t@kdbg.org>
+References: <cover.1244299302.git.trast@student.ethz.ch> <095b4af080c11b4ad3fcfaefc9cdf49d383cb714.1244299302.git.trast@student.ethz.ch> <62538974f2c0f4561428507e514daa87dbfcac01.1244299302.git.trast@student.ethz.ch>
 Mime-Version: 1.0
-Content-Type: Text/Plain;
+Content-Type: text/plain;
   charset="iso-8859-15"
 Content-Transfer-Encoding: 7bit
 Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
 	Jeff King <peff@peff.net>,
 	Alexander Potashev <aspotashev@gmail.com>
-To: Johannes Sixt <j6t@kdbg.org>
-X-From: git-owner@vger.kernel.org Sat Jun 06 22:56:52 2009
+To: Thomas Rast <trast@student.ethz.ch>
+X-From: git-owner@vger.kernel.org Sat Jun 06 23:02:20 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MD2wc-0007v8-RH
-	for gcvg-git-2@gmane.org; Sat, 06 Jun 2009 22:56:51 +0200
+	id 1MD31v-0000vS-Ph
+	for gcvg-git-2@gmane.org; Sat, 06 Jun 2009 23:02:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752501AbZFFU4h (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 6 Jun 2009 16:56:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752207AbZFFU4h
-	(ORCPT <rfc822;git-outgoing>); Sat, 6 Jun 2009 16:56:37 -0400
-Received: from xsmtp1.ethz.ch ([82.130.70.13]:7860 "EHLO xsmtp1.ethz.ch"
+	id S1752507AbZFFVCJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 6 Jun 2009 17:02:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751909AbZFFVCJ
+	(ORCPT <rfc822;git-outgoing>); Sat, 6 Jun 2009 17:02:09 -0400
+Received: from bsmtp.bon.at ([213.33.87.14]:41448 "EHLO bsmtp.bon.at"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751932AbZFFU4g (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 6 Jun 2009 16:56:36 -0400
-Received: from xfe2.d.ethz.ch ([82.130.124.42]) by xsmtp1.ethz.ch with Microsoft SMTPSVC(6.0.3790.3959);
-	 Sat, 6 Jun 2009 22:56:22 +0200
-Received: from thomas.localnet ([77.56.223.244]) by xfe2.d.ethz.ch over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
-	 Sat, 6 Jun 2009 22:56:22 +0200
-User-Agent: KMail/1.11.3 (Linux/2.6.27.21-0.1-default; KDE/4.2.3; x86_64; ; )
-In-Reply-To: <200906062236.42858.j6t@kdbg.org>
+	id S1751893AbZFFVCI (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 6 Jun 2009 17:02:08 -0400
+Received: from dx.sixt.local (unknown [93.83.142.38])
+	by bsmtp.bon.at (Postfix) with ESMTP id DBB1B2C4002;
+	Sat,  6 Jun 2009 23:02:08 +0200 (CEST)
+Received: from localhost (localhost [IPv6:::1])
+	by dx.sixt.local (Postfix) with ESMTP id B27363FFB6;
+	Sat,  6 Jun 2009 23:02:08 +0200 (CEST)
+User-Agent: KMail/1.9.9
+In-Reply-To: <62538974f2c0f4561428507e514daa87dbfcac01.1244299302.git.trast@student.ethz.ch>
 Content-Disposition: inline
-X-OriginalArrivalTime: 06 Jun 2009 20:56:22.0404 (UTC) FILETIME=[3F824440:01C9E6E9]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120936>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120937>
 
-Johannes Sixt wrote:
-> On Samstag, 6. Juni 2009, Thomas Rast wrote:
-> > +void die_errno(const char *err, ...)
-> > +{
-> > +	va_list params;
-> > +	char msg[1024];
-> > +
-> > +	va_start(params, err);
-> > +
-> > +	vsnprintf(msg, sizeof(msg), err, params);
-> > +	die("%s: %s", msg, strerror(errno));
-> 
-> Cannot vsnprintf potentially modify errno?
+On Samstag, 6. Juni 2009, Thomas Rast wrote:
+> Lots of die() calls did not actually report the kind of error, which
+> can leave the user confused as to the real problem.  Use die_errno()
+> where we check a system/library call that sets errno on failure, or
+> one of the following that wrap such calls:
+>
+>   Function              Passes on error from
+>   --------              --------------------
+>   odb_pack_keep         open
+>   read_ancestry         fopen
+>   read_in_full          xread
+>   strbuf_read           xread
+>   strbuf_read_file      open or strbuf_read_file
+>   strbuf_readlink       readlink
+>   write_in_full         xwrite
+>
+> Signed-off-by: Thomas Rast <trast@student.ethz.ch>
+> ---
 
-Manpage turns up nothing, so AFAICT, no.
+> @@ -2262,7 +2262,6 @@ int cmd_blame(int argc, const char **argv, const char
+> *prefix)
+>
+>  	if (revs_file && read_ancestry(revs_file))
+>  		die_errno("reading graft file '%s' failed", revs_file);
+> -
+>  	if (cmd_is_annotate) {
+>  		output_option |= OUTPUT_ANNOTATE_COMPAT;
+>  		blame_date_mode = DATE_ISO8601;
 
-> > +
-> > +	va_end(params);
-> 
-> This va_end should better be before die().
+Unrelated and not an improvement.
 
-Not that I object to changing it, but out of curiosity, what do I
-break by putting it after?
+> @@ -220,13 +220,12 @@ static void copy_or_link_directory(struct strbuf
+> *src, struct strbuf *dest)
+>
+>  	dir = opendir(src->buf);
+>  	if (!dir)
+> -		die("failed to open %s", src->buf);
+> -
+> +		die_errno("failed to open '%s'", src->buf);
 
--- 
-Thomas Rast
-trast@{inf,student}.ethz.ch
+Here (and in other cases) you remote an empty line. I don't think that is an 
+improvement.
+
+> @@ -472,7 +472,6 @@ static int prepare_to_commit(const char *index_file,
+> const char *prefix) fp = fopen(git_path(commit_editmsg), "w");
+>  	if (fp == NULL)
+>  		die_errno("could not open '%s'", git_path(commit_editmsg));
+> -
+>  	if (cleanup_mode != CLEANUP_NONE)
+>  		stripspace(&sb, 0);
+>
+
+Unrelated.
+
+> @@ -496,7 +495,6 @@ static int prepare_to_commit(const char *index_file,
+> const char *prefix)
+>
+>  	if (fwrite(sb.buf, 1, sb.len, fp) < sb.len)
+>  		die_errno("could not write commit template");
+> -
+>  	strbuf_release(&sb);
+>
+>  	determine_author_info();
+
+Ditto.
+
+> @@ -1018,8 +1017,10 @@ int cmd_commit(int argc, const char **argv, const
+> char *prefix)
+>
+>  	if (commit_index_files())
+>  		die ("Repository has been updated, but unable to write\n"
+> -		     "new_index file. Check that disk is not full or quota is\n"
+> -		     "not exceeded, and then \"git reset HEAD\" to recover.");
+> +		     "new_index file: %s.\n"
+> +		     "Check that disk is not full or quota is not exceeded,\n"
+> +		     "and then \"git reset HEAD\" to recover.",
+> +		     strerror(errno));
+
+This change should probably not be in this patch.
+
+> @@ -452,7 +452,6 @@ static void import_marks(char *input_file)
+>  	FILE *f = fopen(input_file, "r");
+>  	if (!f)
+>  		die_errno("cannot read '%s'", input_file);
+> -
+>  	while (fgets(line, sizeof(line), f)) {
+>  		uint32_t mark;
+>  		char *line_end, *mark_end;
+
+Unrelated.
+
+> diff --git a/csum-file.c b/csum-file.c
+> index 9cc93ba..4d50cc5 100644
+> --- a/csum-file.c
+> +++ b/csum-file.c
+> @@ -55,8 +55,7 @@ int sha1close(struct sha1file *f, unsigned char *result,
+> unsigned int flags) if (flags & CSUM_FSYNC)
+>  			fsync_or_die(f->fd, f->name);
+>  		if (close(f->fd))
+> -			die_errno("%s: sha1 file error on close",
+> -			    f->name);
+> +			die_errno("%s: sha1 file error on close", f->name);
+
+This should be in 2/3.
+
+-- Hannes
