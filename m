@@ -1,167 +1,118 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: [WIP/RFC] Allow push and fetch urls to be different
-Date: Sat,  6 Jun 2009 16:43:15 +0200
-Message-ID: <1244299395-6605-1-git-send-email-git@drmicha.warpmail.net>
-References: <7v1vpztsci.fsf@alter.siamese.dyndns.org>
-Cc: Nikos Chantziaras <realnc@arcor.de>,
-	Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jun 06 16:43:45 2009
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: [PATCH v2 0/3] Thomas Rast <trast@student.ethz.ch>
+Date: Sat,  6 Jun 2009 16:44:50 +0200
+Message-ID: <cover.1244299302.git.trast@student.ethz.ch>
+References: <200906061509.15870.trast@student.ethz.ch>
+Cc: git@vger.kernel.org, Johannes Sixt <j6t@kdbg.org>,
+	Jeff King <peff@peff.net>,
+	Alexander Potashev <aspotashev@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Jun 06 16:45:08 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MCx7Y-0000K3-2N
-	for gcvg-git-2@gmane.org; Sat, 06 Jun 2009 16:43:44 +0200
+	id 1MCx8t-0000n1-Bc
+	for gcvg-git-2@gmane.org; Sat, 06 Jun 2009 16:45:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755199AbZFFOnU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 6 Jun 2009 10:43:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753275AbZFFOnU
-	(ORCPT <rfc822;git-outgoing>); Sat, 6 Jun 2009 10:43:20 -0400
-Received: from out2.smtp.messagingengine.com ([66.111.4.26]:51820 "EHLO
-	out2.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754779AbZFFOnT (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 6 Jun 2009 10:43:19 -0400
-Received: from compute2.internal (compute2.internal [10.202.2.42])
-	by out1.messagingengine.com (Postfix) with ESMTP id 854BE357581;
-	Sat,  6 Jun 2009 10:43:21 -0400 (EDT)
-Received: from heartbeat1.messagingengine.com ([10.202.2.160])
-  by compute2.internal (MEProxy); Sat, 06 Jun 2009 10:43:21 -0400
-X-Sasl-enc: FSAE/dA3IUqwFOo6pRxqOPGC37OBLV1O7Yfasws31tRj 1244299400
-Received: from localhost (p548596E3.dip0.t-ipconnect.de [84.133.150.227])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 914F72E230;
-	Sat,  6 Jun 2009 10:43:20 -0400 (EDT)
-X-Mailer: git-send-email 1.6.3.2.277.gd10543
-In-Reply-To: <7v1vpztsci.fsf@alter.siamese.dyndns.org>
+	id S1753473AbZFFOo6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 6 Jun 2009 10:44:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753275AbZFFOo5
+	(ORCPT <rfc822;git-outgoing>); Sat, 6 Jun 2009 10:44:57 -0400
+Received: from xsmtp1.ethz.ch ([82.130.70.13]:24862 "EHLO xsmtp1.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752174AbZFFOo4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 6 Jun 2009 10:44:56 -0400
+Received: from xfe2.d.ethz.ch ([82.130.124.42]) by xsmtp1.ethz.ch with Microsoft SMTPSVC(6.0.3790.3959);
+	 Sat, 6 Jun 2009 16:44:43 +0200
+Received: from localhost.localdomain ([77.56.223.244]) by xfe2.d.ethz.ch over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
+	 Sat, 6 Jun 2009 16:44:42 +0200
+X-Mailer: git-send-email 1.6.3.2.288.g40844
+In-Reply-To: <200906061509.15870.trast@student.ethz.ch>
+X-OriginalArrivalTime: 06 Jun 2009 14:44:42.0876 (UTC) FILETIME=[53F453C0:01C9E6B5]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120918>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120919>
 
-This introduces a config setting remote.$remotename.pushurl which is
-used for pushes only. If absent remote.$remotename.url is used for
-pushes and fetches as before.
-This is useful, for example, in order to to do passwordless fetches
-(remote update) over git: but pushes over ssh.
+So here's the reroll.
 
-Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
----
-This is a working prototype, but I'd like to rfc about the approach before
-coding further. Do I need to do anything in http-push.c? I don't think so.
+Changes since v1:
 
-Things that would go in a full series:
-* documentation (man pages, maybe manual)
-* tests
-* teach builtin-remote about pushurl
+- add die_errno() [1/3] and use it [2/3]
 
- builtin-push.c |   17 +++++++++++++----
- remote.c       |   14 ++++++++++++++
- remote.h       |    4 ++++
- 3 files changed, 31 insertions(+), 4 deletions(-)
+- [3/3] dropped errno reporting after write_buffer, as it already does
+  error(..., strerror(errno))
 
-diff --git a/builtin-push.c b/builtin-push.c
-index c869974..7be1239 100644
---- a/builtin-push.c
-+++ b/builtin-push.c
-@@ -117,6 +117,8 @@ static int do_push(const char *repo, int flags)
- {
- 	int i, errs;
- 	struct remote *remote = remote_get(repo);
-+	const char **url;
-+	int url_nr;
- 
- 	if (!remote) {
- 		if (repo)
-@@ -152,9 +154,16 @@ static int do_push(const char *repo, int flags)
- 			setup_default_push_refspecs();
- 	}
- 	errs = 0;
--	for (i = 0; i < remote->url_nr; i++) {
-+	if (remote->pushurl_nr) {
-+		url = remote->pushurl;
-+		url_nr = remote->pushurl_nr;
-+	} else {
-+		url = remote->url;
-+		url_nr = remote->url_nr;
-+	}
-+	for (i = 0; i < url_nr; i++) {
- 		struct transport *transport =
--			transport_get(remote, remote->url[i]);
-+			transport_get(remote, url[i]);
- 		int err;
- 		if (receivepack)
- 			transport_set_option(transport,
-@@ -163,14 +172,14 @@ static int do_push(const char *repo, int flags)
- 			transport_set_option(transport, TRANS_OPT_THIN, "yes");
- 
- 		if (flags & TRANSPORT_PUSH_VERBOSE)
--			fprintf(stderr, "Pushing to %s\n", remote->url[i]);
-+			fprintf(stderr, "Pushing to %s\n", url[i]);
- 		err = transport_push(transport, refspec_nr, refspec, flags);
- 		err |= transport_disconnect(transport);
- 
- 		if (!err)
- 			continue;
- 
--		error("failed to push some refs to '%s'", remote->url[i]);
-+		error("failed to push some refs to '%s'", url[i]);
- 		errs++;
- 	}
- 	return !!errs;
-diff --git a/remote.c b/remote.c
-index 08a5964..9a0397e 100644
---- a/remote.c
-+++ b/remote.c
-@@ -106,6 +106,12 @@ static void add_url_alias(struct remote *remote, const char *url)
- 	add_url(remote, alias_url(url));
- }
- 
-+static void add_pushurl(struct remote *remote, const char *pushurl)
-+{
-+	ALLOC_GROW(remote->pushurl, remote->pushurl_nr + 1, remote->pushurl_alloc);
-+	remote->pushurl[remote->pushurl_nr++] = pushurl;
-+}
-+
- static struct remote *make_remote(const char *name, int len)
- {
- 	struct remote *ret;
-@@ -379,6 +385,11 @@ static int handle_config(const char *key, const char *value, void *cb)
- 		if (git_config_string(&v, key, value))
- 			return -1;
- 		add_url(remote, v);
-+	} else if (!strcmp(subkey, ".pushurl")) {
-+		const char *v;
-+		if (git_config_string(&v, key, value))
-+			return -1;
-+		add_pushurl(remote, v);
- 	} else if (!strcmp(subkey, ".push")) {
- 		const char *v;
- 		if (git_config_string(&v, key, value))
-@@ -424,6 +435,9 @@ static void alias_all_urls(void)
- 		for (j = 0; j < remotes[i]->url_nr; j++) {
- 			remotes[i]->url[j] = alias_url(remotes[i]->url[j]);
- 		}
-+		for (j = 0; j < remotes[i]->pushurl_nr; j++) {
-+			remotes[i]->pushurl[j] = alias_url(remotes[i]->pushurl[j]);
-+		}
- 	}
- }
- 
-diff --git a/remote.h b/remote.h
-index 257a555..5db8420 100644
---- a/remote.h
-+++ b/remote.h
-@@ -15,6 +15,10 @@ struct remote {
- 	int url_nr;
- 	int url_alloc;
- 
-+	const char **pushurl;
-+	int pushurl_nr;
-+	int pushurl_alloc;
-+
- 	const char **push_refspec;
- 	struct refspec *push;
- 	int push_refspec_nr;
--- 
-1.6.3.2.277.gd10543
+- [3/3] save errno around rollback_locks in builtin-commit.c:965
+
+
+
+Thomas Rast (3):
+  Introduce die_errno() that appends strerror(errno) to die()
+  Convert existing die(..., strerror(errno)) to die_errno()
+  Use die_errno() instead of die() when checking syscalls
+
+ abspath.c                |   12 ++++++------
+ bisect.c                 |    5 ++---
+ branch.c                 |    4 ++--
+ builtin-add.c            |    2 +-
+ builtin-apply.c          |   12 ++++++------
+ builtin-archive.c        |    4 ++--
+ builtin-blame.c          |   16 +++++++---------
+ builtin-clone.c          |   22 ++++++++++------------
+ builtin-commit-tree.c    |    3 +--
+ builtin-commit.c         |   36 +++++++++++++++++-------------------
+ builtin-config.c         |    4 ++--
+ builtin-diff.c           |    2 +-
+ builtin-fast-export.c    |    5 ++---
+ builtin-fetch--tool.c    |    2 +-
+ builtin-fmt-merge-msg.c  |    5 ++---
+ builtin-fsck.c           |   10 +++++-----
+ builtin-grep.c           |    2 +-
+ builtin-init-db.c        |   22 +++++++++++-----------
+ builtin-log.c            |    4 ++--
+ builtin-mailsplit.c      |    7 +++----
+ builtin-merge.c          |   33 +++++++++++++++++++--------------
+ builtin-mv.c             |    2 +-
+ builtin-pack-objects.c   |   14 +++++---------
+ builtin-rev-parse.c      |    2 +-
+ builtin-revert.c         |    2 +-
+ builtin-rm.c             |    2 +-
+ builtin-send-pack.c      |    2 +-
+ builtin-stripspace.c     |    2 +-
+ builtin-tag.c            |    9 ++++-----
+ builtin-tar-tree.c       |    2 +-
+ builtin-unpack-objects.c |    2 +-
+ combine-diff.c           |    2 +-
+ connect.c                |    4 ++--
+ csum-file.c              |    5 ++---
+ daemon.c                 |   15 +++++++--------
+ diff.c                   |   10 +++++-----
+ dir.c                    |    2 +-
+ entry.c                  |   10 +++++-----
+ fast-import.c            |    8 ++++----
+ git-compat-util.h        |    1 +
+ git.c                    |    6 +++---
+ hash-object.c            |    2 +-
+ index-pack.c             |   21 ++++++++++-----------
+ ll-merge.c               |    2 +-
+ merge-recursive.c        |    6 +++---
+ mktag.c                  |    2 +-
+ pack-refs.c              |    7 +++----
+ pack-write.c             |   10 +++++-----
+ pkt-line.c               |    4 ++--
+ read-cache.c             |    8 ++++----
+ refs.c                   |    2 +-
+ run-command.c            |    4 ++--
+ setup.c                  |   18 +++++++++---------
+ sha1_file.c              |    2 +-
+ shell.c                  |    2 +-
+ test-sha1.c              |    2 +-
+ transport.c              |    4 ++--
+ unpack-file.c            |    2 +-
+ usage.c                  |   13 +++++++++++++
+ wrapper.c                |    8 ++++----
+ write_or_die.c           |    6 +++---
+ 61 files changed, 219 insertions(+), 220 deletions(-)
