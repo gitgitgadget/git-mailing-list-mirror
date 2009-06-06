@@ -1,8 +1,7 @@
 From: Tay Ray Chuan <rctay89@gmail.com>
-Subject: [PATCH 16/23] transport.c::get_refs_via_curl(): use the new http
- API
-Date: Sat, 6 Jun 2009 16:43:54 +0800
-Message-ID: <20090606164354.82d6073b.rctay89@gmail.com>
+Subject: [PATCH 21/23] http: use new http API in fetch_index()
+Date: Sat, 6 Jun 2009 16:44:00 +0800
+Message-ID: <20090606164400.c923729b.rctay89@gmail.com>
 References: <cover.1244277116.git.rctay89@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
@@ -11,129 +10,170 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
 	Mike Hommey <mh@glandium.org>
 To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Jun 06 10:51:09 2009
+X-From: git-owner@vger.kernel.org Sat Jun 06 10:51:10 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MCrcI-0004Mp-FB
-	for gcvg-git-2@gmane.org; Sat, 06 Jun 2009 10:51:06 +0200
+	id 1MCrcM-0004Mp-72
+	for gcvg-git-2@gmane.org; Sat, 06 Jun 2009 10:51:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754639AbZFFIuU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 6 Jun 2009 04:50:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754694AbZFFIuR
-	(ORCPT <rfc822;git-outgoing>); Sat, 6 Jun 2009 04:50:17 -0400
-Received: from rv-out-0506.google.com ([209.85.198.238]:48030 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754657AbZFFIuQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 6 Jun 2009 04:50:16 -0400
-Received: by rv-out-0506.google.com with SMTP id f9so823200rvb.1
-        for <git@vger.kernel.org>; Sat, 06 Jun 2009 01:50:18 -0700 (PDT)
+	id S1754751AbZFFIuq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 6 Jun 2009 04:50:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754748AbZFFIup
+	(ORCPT <rfc822;git-outgoing>); Sat, 6 Jun 2009 04:50:45 -0400
+Received: from mail-pz0-f171.google.com ([209.85.222.171]:34239 "EHLO
+	mail-pz0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753619AbZFFIuo (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 6 Jun 2009 04:50:44 -0400
+Received: by mail-pz0-f171.google.com with SMTP id 1so1305746pzk.33
+        for <git@vger.kernel.org>; Sat, 06 Jun 2009 01:50:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:date:from:to:cc:subject
          :message-id:in-reply-to:references:x-mailer:mime-version
          :content-type:content-transfer-encoding;
-        bh=QfX86zwtlBfg4KYCdixulnKYfpaflQBtPEBEUpbY5U8=;
-        b=N8NzkMMvH1SDuvSMPZprUDSnDrmnCpPxxAbD0Me9lIBvX1NfqnX/Nnu5OxuaYWCOcV
-         DyjLqbFRHFGDWi2tB7BswjfthciIsDlxSUibX2nJPWkov2Vn0tBOBmCHHIL1FQqs0eMD
-         LSCC+J+pl+oNC1oC6aXHy9Ps68aUa8oCntZf4=
+        bh=FKaXEIce0FN39YhdCqEtsgepWVtY35qIGOWESfci2aA=;
+        b=l1ABWTj3KWwKfMqHVxp5UmzmM5zPRREJy+bgGnYEa4kidfX/VmjPexRXh+rNcuYAlt
+         2QP39eOO76A5B8734Km+/GTkKTUgUKGjU+/sInrcSIFtvgbdU7txCsweGrAeC2yH3qee
+         hXUBAMoHsNYQIQCtqxqGOHnjsLNCdTN7tLo0Y=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=date:from:to:cc:subject:message-id:in-reply-to:references:x-mailer
          :mime-version:content-type:content-transfer-encoding;
-        b=oUzN6FXQQYEWckW0Yj1p2ep4SAIMFaFqLOEv3iOFq2A1UG662rfHC/xVaE+DsvFj2O
-         8vlKifO4pgioPjTDwlLoY6O/sq21zOkJvUykjXca1T+mpu4ldR7QFxtY28kF4OBms0Zy
-         nxL7r6LorXuGB7pqcYG5bArtE0H71yb/TOh5U=
-Received: by 10.142.125.4 with SMTP id x4mr1674231wfc.75.1244278218148;
-        Sat, 06 Jun 2009 01:50:18 -0700 (PDT)
+        b=cyrC2ZJ8Z83gDHv0v37xNV7jygJihFgblbyG3zF9LdW3zNPNzieut5t2V0V3EOjXQA
+         ygUkURrzdwmhnEVNehig9nN5liulL86Ol6nQOk9SKBqMvh3mquXUJ4S1OkuVipsJu518
+         bLNy3bvGriRFbAzUQF5daB/eulpKNqbEioGK8=
+Received: by 10.142.82.6 with SMTP id f6mr1633296wfb.182.1244278247326;
+        Sat, 06 Jun 2009 01:50:47 -0700 (PDT)
 Received: from your-cukc5e3z5n (cm97.zeta149.maxonline.com.sg [116.87.149.97])
-        by mx.google.com with ESMTPS id 32sm2742002wfc.14.2009.06.06.01.50.16
+        by mx.google.com with ESMTPS id 28sm2717722wfg.25.2009.06.06.01.50.42
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sat, 06 Jun 2009 01:50:17 -0700 (PDT)
+        Sat, 06 Jun 2009 01:50:46 -0700 (PDT)
 In-Reply-To: <cover.1244277116.git.rctay89@gmail.com>
 X-Mailer: Sylpheed 2.6.0 (GTK+ 2.10.14; i686-pc-mingw32)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120898>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120899>
 
-From:	Mike Hommey <mh@glandium.org>
 
-Signed-off-by: Mike Hommey <mh@glandium.org>
 Signed-off-by: Tay Ray Chuan <rctay89@gmail.com>
 ---
+ http.c |   81 ++++++---------------------------------------------------------
+ 1 files changed, 8 insertions(+), 73 deletions(-)
 
-This is based on Mike's earlier patch:
-
-Subject: [WIP Patch 05/12] Use the new http API in get_refs_via_curl()
-Date:	Sun, 18 Jan 2009 09:04:30 +0100
-
-I added back the die()'s like in the original, which Mike had removed.
-
- transport.c |   35 +++++++++++++----------------------
- 1 files changed, 13 insertions(+), 22 deletions(-)
-
-diff --git a/transport.c b/transport.c
-index 9edd5aa..af75f7b 100644
---- a/transport.c
-+++ b/transport.c
-@@ -439,9 +439,7 @@ static struct ref *get_refs_via_curl(struct transport *transport, int for_push)
- 	char *ref_name;
- 	char *refs_url;
- 	int i = 0;
+diff --git a/http.c b/http.c
+index 96d83d5..0701a6f 100644
+--- a/http.c
++++ b/http.c
+@@ -798,40 +798,22 @@ static int fetch_pack_index(unsigned char *sha1, const char *base_url)
+ 	char *hex = xstrdup(sha1_to_hex(sha1));
+ 	char *filename;
+ 	char *url;
+-	char tmpfile[PATH_MAX];
+-	long prev_posn = 0;
+-	char range[RANGE_HEADER_SIZE];
+ 	struct strbuf buf = STRBUF_INIT;
+-	struct curl_slist *range_header = NULL;
 -
+-	FILE *indexfile;
 -	struct active_request_slot *slot;
 -	struct slot_results results;
-+	int http_ret;
 
- 	struct ref *refs = NULL;
- 	struct ref *ref = NULL;
-@@ -461,25 +459,16 @@ static struct ref *get_refs_via_curl(struct transport *transport, int for_push)
- 	refs_url = xmalloc(strlen(transport->url) + 11);
- 	sprintf(refs_url, "%s/info/refs", transport->url);
+ 	/* Don't use the index if the pack isn't there */
+ 	end_url_with_slash(&buf, base_url);
+ 	strbuf_addf(&buf, "objects/pack/pack-%s.pack", hex);
+ 	url = strbuf_detach(&buf, 0);
 
 -	slot = get_active_slot();
 -	slot->results = &results;
--	curl_easy_setopt(slot->curl, CURLOPT_FILE, &buffer);
--	curl_easy_setopt(slot->curl, CURLOPT_WRITEFUNCTION, fwrite_buffer);
--	curl_easy_setopt(slot->curl, CURLOPT_URL, refs_url);
--	curl_easy_setopt(slot->curl, CURLOPT_HTTPHEADER, NULL);
+-	curl_easy_setopt(slot->curl, CURLOPT_URL, url);
+-	curl_easy_setopt(slot->curl, CURLOPT_NOBODY, 1);
+-	if (start_active_slot(slot)) {
+-		run_active_slot(slot);
+-		if (results.curl_result != CURLE_OK) {
+-			ret = error("Unable to verify pack %s is available",
+-				    hex);
+-			goto cleanup_pack;
+-		}
+-	} else {
+-		ret = error("Unable to start request");
+-		goto cleanup_pack;
++	if (http_get_strbuf(url, NULL, 0)) {
++		ret = error("Unable to verify pack %s is available",
++			    hex);
++		goto cleanup;
+ 	}
+
+ 	if (has_pack_index(sha1)) {
+ 		ret = 0;
+-		goto cleanup_pack;
++		goto cleanup;
+ 	}
+
+ 	if (http_is_verbose)
+@@ -842,57 +824,10 @@ static int fetch_pack_index(unsigned char *sha1, const char *base_url)
+ 	url = strbuf_detach(&buf, NULL);
+
+ 	filename = sha1_pack_index_name(sha1);
+-	snprintf(tmpfile, sizeof(tmpfile), "%s.temp", filename);
+-	indexfile = fopen(tmpfile, "a");
+-	if (!indexfile) {
+-		ret = error("Unable to open local file %s for pack index",
+-			    tmpfile);
+-		goto cleanup_pack;
+-	}
++	if (http_get_file(url, filename, 0) != HTTP_OK)
++		ret = error("Unable to get pack index %s\n", url);
+
+-	slot = get_active_slot();
+-	slot->results = &results;
+-	curl_easy_setopt(slot->curl, CURLOPT_NOBODY, 0);
+-	curl_easy_setopt(slot->curl, CURLOPT_HTTPGET, 1);
+-	curl_easy_setopt(slot->curl, CURLOPT_FILE, indexfile);
+-	curl_easy_setopt(slot->curl, CURLOPT_WRITEFUNCTION, fwrite);
+-	curl_easy_setopt(slot->curl, CURLOPT_URL, url);
+-	curl_easy_setopt(slot->curl, CURLOPT_HTTPHEADER, no_pragma_header);
+-	slot->local = indexfile;
+-
+-	/*
+-	 * If there is data present from a previous transfer attempt,
+-	 * resume where it left off
+-	 */
+-	prev_posn = ftell(indexfile);
+-	if (prev_posn>0) {
+-		if (http_is_verbose)
+-			fprintf(stderr,
+-				"Resuming fetch of index for pack %s at byte %ld\n",
+-				hex, prev_posn);
+-		sprintf(range, "Range: bytes=%ld-", prev_posn);
+-		range_header = curl_slist_append(range_header, range);
+-		curl_easy_setopt(slot->curl, CURLOPT_HTTPHEADER, range_header);
+-	}
 -
 -	if (start_active_slot(slot)) {
 -		run_active_slot(slot);
 -		if (results.curl_result != CURLE_OK) {
--			strbuf_release(&buffer);
--			if (missing_target(&results))
--				die("%s not found: did you run git update-server-info on the server?", refs_url);
--			else
--				die("%s download error - %s", refs_url, curl_errorstr);
+-			ret = error("Unable to get pack index %s\n%s",
+-				    url, curl_errorstr);
+-			goto cleanup_index;
 -		}
 -	} else {
--		strbuf_release(&buffer);
--		die("Unable to start HTTP request");
-+	http_ret = http_get_strbuf(refs_url, &buffer, HTTP_NO_CACHE);
-+	switch (http_ret) {
-+	case HTTP_OK:
-+		break;
-+	case HTTP_MISSING_TARGET:
-+		die("%s not found: did you run git update-server-info on the"
-+		    " server?", refs_url);
-+	default:
-+		http_error(refs_url, http_ret);
-+		die("HTTP request failed");
- 	}
-
- 	data = buffer.buf;
-@@ -519,6 +508,8 @@ static struct ref *get_refs_via_curl(struct transport *transport, int for_push)
- 		free(ref);
- 	}
-
+-		ret = error("Unable to start request");
+-		goto cleanup_index;
+-	}
+-
+-	ret = move_temp_to_file(tmpfile, filename);
+-
+-cleanup_index:
+-	fclose(indexfile);
+-	slot->local = NULL;
+-cleanup_pack:
 +cleanup:
-+	strbuf_release(&buffer);
- 	free(refs_url);
- 	return refs;
- }
+ 	free(hex);
+ 	free(url);
+ 	return ret;
 --
 1.6.3.1
