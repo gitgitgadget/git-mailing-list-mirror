@@ -1,72 +1,61 @@
-From: =?ISO-8859-1?Q?Santi_B=E9jar?= <santi@agolina.net>
-Subject: Re: [PATCH 3/3] git-parse-remote: remove unused functions
-Date: Sat, 6 Jun 2009 23:03:47 +0200
-Message-ID: <adf1fd3d0906061403sd13200co286e986c67135f4b@mail.gmail.com>
-References: <1244231617-17754-3-git-send-email-santi@agolina.net>
-	 <7v63f9cd4s.fsf@alter.siamese.dyndns.org>
+From: Johannes Sixt <j6t@kdbg.org>
+Subject: Re: [PATCH v2 1/3] Introduce die_errno() that appends strerror(errno) to die()
+Date: Sat, 6 Jun 2009 23:17:22 +0200
+Message-ID: <200906062317.22172.j6t@kdbg.org>
+References: <cover.1244299302.git.trast@student.ethz.ch> <200906062236.42858.j6t@kdbg.org> <200906062256.34074.trast@student.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Jun 06 23:03:58 2009
+Content-Type: text/plain;
+  charset="iso-8859-15"
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Jeff King <peff@peff.net>,
+	Alexander Potashev <aspotashev@gmail.com>
+To: Thomas Rast <trast@student.ethz.ch>
+X-From: git-owner@vger.kernel.org Sat Jun 06 23:17:34 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MD33V-0001SI-U2
-	for gcvg-git-2@gmane.org; Sat, 06 Jun 2009 23:03:58 +0200
+	id 1MD3Gg-0005qi-3P
+	for gcvg-git-2@gmane.org; Sat, 06 Jun 2009 23:17:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752528AbZFFVDr convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 6 Jun 2009 17:03:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752519AbZFFVDq
-	(ORCPT <rfc822;git-outgoing>); Sat, 6 Jun 2009 17:03:46 -0400
-Received: from mail-bw0-f213.google.com ([209.85.218.213]:51236 "EHLO
-	mail-bw0-f213.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752207AbZFFVDp convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 6 Jun 2009 17:03:45 -0400
-Received: by bwz9 with SMTP id 9so2235244bwz.37
-        for <git@vger.kernel.org>; Sat, 06 Jun 2009 14:03:47 -0700 (PDT)
-Received: by 10.204.72.15 with SMTP id k15mr4704878bkj.14.1244322227024; Sat, 
-	06 Jun 2009 14:03:47 -0700 (PDT)
-In-Reply-To: <7v63f9cd4s.fsf@alter.siamese.dyndns.org>
+	id S1752986AbZFFVRX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 6 Jun 2009 17:17:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752632AbZFFVRW
+	(ORCPT <rfc822;git-outgoing>); Sat, 6 Jun 2009 17:17:22 -0400
+Received: from bsmtp.bon.at ([213.33.87.14]:46709 "EHLO bsmtp.bon.at"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752606AbZFFVRV (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 6 Jun 2009 17:17:21 -0400
+Received: from dx.sixt.local (unknown [93.83.142.38])
+	by bsmtp.bon.at (Postfix) with ESMTP id 7B033A7ECA;
+	Sat,  6 Jun 2009 23:17:22 +0200 (CEST)
+Received: from localhost (localhost [IPv6:::1])
+	by dx.sixt.local (Postfix) with ESMTP id 45CA43FFB6;
+	Sat,  6 Jun 2009 23:17:22 +0200 (CEST)
+User-Agent: KMail/1.9.9
+In-Reply-To: <200906062256.34074.trast@student.ethz.ch>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120938>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120939>
 
-2009/6/6 Junio C Hamano <gitster@pobox.com>:
-> Santi B=E9jar <santi@agolina.net> writes:
+On Samstag, 6. Juni 2009, Thomas Rast wrote:
+> Johannes Sixt wrote:
+> > On Samstag, 6. Juni 2009, Thomas Rast wrote:
+> > > +
+> > > +	va_end(params);
+> >
+> > This va_end should better be before die().
 >
->> Signed-off-by: Santi B=E9jar <santi@agolina.net>
->> ---
->> =A0.gitignore =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 | =A0 =
-=A01 -
->> =A0Documentation/git-parse-remote.txt | =A0 50 ---------
->> =A0git-parse-remote.sh =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0| =A0204 -----=
--------------------------------
->> =A03 files changed, 0 insertions(+), 255 deletions(-)
->> =A0delete mode 100644 Documentation/git-parse-remote.txt
->
-> I do not understand this patch.
->
-> With this patch remove git-parse-remote from .gitignore (as if the en=
-tire
-> file is going away)
+> Not that I object to changing it, but out of curiosity, what do I
+> break by putting it after?
 
-Ops, the .gitignore removal was a mistake.
+I don't know, and I suspect that in practice nothing breaks. It's just a 
+matter of style: va_start acquires a "resource", and va_end releases it, and 
+you should do that as soon as possible after the "resource" is no longer 
+needed.
 
-> and its documentation (again as if the entire file is
-> going away), so naturally I would have expected to see removal of the=
- file
-> in the patch as well (and that means Makefile needs to be touched), b=
-ut
-> that is not what is happening.
-
-I just wanted to remove the unused functions, and their documentation.
-But I was removing the two functions that were documented, so I
-removed all the file. Maybe I can just remove their documentation and
-leave the rest of the file.
-
-Santi
+-- Hannes
