@@ -1,95 +1,70 @@
-From: =?ISO-8859-1?Q?Santi_B=E9jar?= <santi@agolina.net>
-Subject: Re: [PATCH 2/3] pull --rebase: Add support for rebased default 
-	upstream
-Date: Sat, 6 Jun 2009 10:00:18 +0200
-Message-ID: <adf1fd3d0906060100vc04032eh6315d336ef619402@mail.gmail.com>
-References: <1244231617-17754-2-git-send-email-santi@agolina.net>
-	 <alpine.DEB.1.00.0906060120140.26154@pacific.mpi-cbg.de>
+From: Shakthi Kannan <shakthimaan@gmail.com>
+Subject: Re: di-git-ally managing love letters - a Git presentation
+Date: Sat, 6 Jun 2009 13:59:40 +0530
+Message-ID: <d16b1c80906060129te40d53eyea31b116d807cd8d@mail.gmail.com>
+References: <d16b1c80906040441n7ad549eay83a6ccfd5db09fb3@mail.gmail.com>
+	 <slrnh2hffa.2tt.sitaramc@sitaramc.homelinux.net>
+	 <d16b1c80906050445j12b985ecmbc0c51c9b81b9f4d@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Sat Jun 06 10:01:00 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Jun 06 10:30:19 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MCqpn-000216-Hj
-	for gcvg-git-2@gmane.org; Sat, 06 Jun 2009 10:01:00 +0200
+	id 1MCrI9-0006U8-7z
+	for gcvg-git-2@gmane.org; Sat, 06 Jun 2009 10:30:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751992AbZFFIAV convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 6 Jun 2009 04:00:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751958AbZFFIAU
-	(ORCPT <rfc822;git-outgoing>); Sat, 6 Jun 2009 04:00:20 -0400
-Received: from mail-bw0-f213.google.com ([209.85.218.213]:52923 "EHLO
-	mail-bw0-f213.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751848AbZFFIAT convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 6 Jun 2009 04:00:19 -0400
-Received: by bwz9 with SMTP id 9so1954485bwz.37
-        for <git@vger.kernel.org>; Sat, 06 Jun 2009 01:00:20 -0700 (PDT)
-Received: by 10.204.72.129 with SMTP id m1mr4068846bkj.61.1244275219823; Sat, 
-	06 Jun 2009 01:00:19 -0700 (PDT)
-In-Reply-To: <alpine.DEB.1.00.0906060120140.26154@pacific.mpi-cbg.de>
+	id S1752650AbZFFI3n (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 6 Jun 2009 04:29:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752644AbZFFI3k
+	(ORCPT <rfc822;git-outgoing>); Sat, 6 Jun 2009 04:29:40 -0400
+Received: from mail-gx0-f214.google.com ([209.85.217.214]:51796 "EHLO
+	mail-gx0-f214.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752271AbZFFI3j (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 6 Jun 2009 04:29:39 -0400
+Received: by gxk10 with SMTP id 10so3767465gxk.13
+        for <git@vger.kernel.org>; Sat, 06 Jun 2009 01:29:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:content-type
+         :content-transfer-encoding;
+        bh=mTlFB979QEyGXc0V8DxdsbN1WGLa4RVPkuDYgXakvaM=;
+        b=mq7fAkVC+/krGLchp0+EciKB5zpHjr2Hw3e47zWOKuefd3BEphqEYSkcOyLPglYXyl
+         RXho2vEnZt8aZaLDibatl1BnwCJMumO0LC9CkOzjpyUiHdNgOCwAr797dVAYKEdKt+Ce
+         c1JwrypfnhJDVRxqOShfnu7pgMKtzCd+v6cQY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :content-type:content-transfer-encoding;
+        b=M4Edv0XkkkwT9kDtn6s4QGUpVgT+Mgi5QhePtSJwyA4fIa5yvT8DUywQScmtly8lRO
+         LCKhi1oKvIVGxk3ee5zyJuQgL9gojxZ4zUAPVCeBMK4YlHXYFWf4OwL4bhBRzsldHN7c
+         PHhwS07fQ3Jhb7cShkwWQ1v4Jy7yjGwuU8GFc=
+Received: by 10.90.70.6 with SMTP id s6mr145141aga.118.1244276980973; Sat, 06 
+	Jun 2009 01:29:40 -0700 (PDT)
+In-Reply-To: <d16b1c80906050445j12b985ecmbc0c51c9b81b9f4d@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120879>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120880>
 
-2009/6/6 Johannes Schindelin <Johannes.Schindelin@gmx.de>:
-> Hi,
->
-> On Fri, 5 Jun 2009, Santi B=E9jar wrote:
->
->> Also add a test to check for this case and another one (failing) to
->> test rebasing two branches on top of a rebased upstream using just
->> 'git pull --rebase'.
->>
->> Signed-off-by: Santi B=E9jar <santi@agolina.net>
->
-> Either I am a stupid moron (which is a completely valid suggestion) o=
-r
-> this commit message lacks in detail severely.
->
-> For example, when I "git pull --rebase junio next" and "next" was reb=
-ased,
-> it works _perfectly_, so I do not see any need for a fix.
+Hi!
 
-It is for the default upstream (with no arguments), so before this patc=
-h:
+I have made the necessary changes. Hopefully we can add more use cases
+to it, as required. You can now clone the source repo from:
+  git clone git://gitorious.org/di-git-ally-managing-love-letters/mainline.git
 
-git pull --rebase
+If you just want the updated pdf, take it from:
+http://shakthimaan.com/downloads/glv/presentations/di-git-ally-managing-love-letters.pdf
 
-did not work with a rebased upstream.
+Thanks for all your feedback! Appreciate it!
 
-But you are right, the commit message can be improved a lot. I've
-redone this patch series so much that at the end the commit message
-lack details.
->
-> Further, this:
->
->> ---
->> =A0git-parse-remote.sh | =A0 =A08 +++++++-
->> =A0t/t5520-pull.sh =A0 =A0 | =A0 29 +++++++++++++++++++++++++++++
->> =A02 files changed, 36 insertions(+), 1 deletions(-)
->
-> ... suggests to me that pull --rebase is not even affected by your pa=
-tch.
+SK
 
-It modifies a function used in git pull --rebase.
-
-> So maybe you want to clarify so much that even stupid morons understa=
-nd
-> what you want to achieve, and how.
-
-OK, I'll try.
-
-parse-remote: support default reflist in get_remote_merge_branch
-
-Expand get_remote_merge_branch to compute the tracking branch to merge
-when called without arguments (or only the remote name). This allows
-"git pull --rebase" without arguments (default upstream branch) to
-work with a rebased upstream.
-
-Santi
+-- 
+Shakthi Kannan
+http://www.shakthimaan.com
