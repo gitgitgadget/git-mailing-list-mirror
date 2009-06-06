@@ -1,109 +1,90 @@
-From: "A. Christine Spang" <spang@MIT.EDU>
-Subject: [BUG] git config --rename-section and variable replacement can lose config data
-Date: Sat, 6 Jun 2009 04:52:12 -0400
-Message-ID: <20090606085212.GA17461@how-about-a-nice-game-of-chess.mit.edu>
+From: =?ISO-8859-1?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
+Subject: Re: parse-options: ambiguous LASTARG_DEFAULT and OPTARG
+Date: Sat, 06 Jun 2009 12:30:12 +0200
+Message-ID: <4A2A4534.80604@lsrfire.ath.cx>
+References: <4A28B072.8030006@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jun 06 10:52:28 2009
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git list <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+	Pierre Habouzit <madcoder@madism.org>
+To: Stephen Boyd <bebarino@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Jun 06 12:36:18 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MCrdb-0004ms-Hy
-	for gcvg-git-2@gmane.org; Sat, 06 Jun 2009 10:52:28 +0200
+	id 1MCtG5-0000Ny-Ha
+	for gcvg-git-2@gmane.org; Sat, 06 Jun 2009 12:36:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753708AbZFFIwS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 6 Jun 2009 04:52:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753556AbZFFIwS
-	(ORCPT <rfc822;git-outgoing>); Sat, 6 Jun 2009 04:52:18 -0400
-Received: from BISCAYNE-ONE-STATION.MIT.EDU ([18.7.7.80]:40261 "EHLO
-	biscayne-one-station.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752860AbZFFIwR (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 6 Jun 2009 04:52:17 -0400
-Received: from outgoing.mit.edu (OUTGOING-AUTH.MIT.EDU [18.7.22.103])
-	by biscayne-one-station.mit.edu (8.13.6/8.9.2) with ESMTP id n568qDno019884
-	for <git@vger.kernel.org>; Sat, 6 Jun 2009 04:52:14 -0400 (EDT)
-Received: from how-about-a-nice-game-of-chess.mit.edu (HOW-ABOUT-A-NICE-GAME-OF-CHESS.MIT.EDU [18.152.0.130])
-	(authenticated bits=56)
-        (User authenticated as spang@ATHENA.MIT.EDU)
-	by outgoing.mit.edu (8.13.6/8.12.4) with ESMTP id n568qCdm015863
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT)
-	for <git@vger.kernel.org>; Sat, 6 Jun 2009 04:52:13 -0400 (EDT)
-Received: (from spang@localhost) by how-about-a-nice-game-of-chess.mit.edu (8.12.9.20060308)
-	id n568qCqE017578; Sat, 6 Jun 2009 04:52:12 -0400
-Content-Disposition: inline
-X-GPG-Key-Server: pgp.mit.edu
-User-Agent: Mutt/1.5.12-2006-07-14
-X-Scanned-By: MIMEDefang 2.42
-X-Spam-Flag: NO
-X-Spam-Score: 0.00
+	id S1752655AbZFFKaZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 6 Jun 2009 06:30:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752572AbZFFKaZ
+	(ORCPT <rfc822;git-outgoing>); Sat, 6 Jun 2009 06:30:25 -0400
+Received: from india601.server4you.de ([85.25.151.105]:38249 "EHLO
+	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752297AbZFFKaY (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 6 Jun 2009 06:30:24 -0400
+Received: from [10.0.1.101] (p57B7E4B1.dip.t-dialin.net [87.183.228.177])
+	by india601.server4you.de (Postfix) with ESMTPSA id BBB092F806B;
+	Sat,  6 Jun 2009 12:30:24 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.21 (X11/20090320)
+In-Reply-To: <4A28B072.8030006@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120905>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120906>
 
-Hi,
+Stephen Boyd schrieb:
+> Hi,
+> 
+> This in builtin-branch.c
+> 
+>         {
+> 		OPTION_CALLBACK, 0, "merged", &merge_filter_ref,
+> 		"commit", "print only merged branches",
+> 		PARSE_OPT_LASTARG_DEFAULT | PARSE_OPT_NONEG,
+> 		opt_parse_merge_filter, (intptr_t) "HEAD",
+> 	},
+> 
+> and the usage message for "git-branch -h" will print out
+> 
+>     --merged <commit>
+> 
+> when I'm expecting
+> 
+>     --merged[=<commit>]
+> 
+> This is because the PARSE_OPT_OPTARG flag is not used. Is this correct?
 
-While working on a Perl module that parses git-style config files I noticed
-the following bug while replicating the --rename-section functionality:
+> The default value is still set correctly in some cases, but become
+> ambiguous in other cases. Take this for example
+> 
+>     $ git branch --merged --verbose
+>     fatal: malformed object name --verbose
+> 
+> but
+> 
+>     $ git branch --verbose --merged
+> 
+> works fine.
+> 
+> The simple fix is to just add PARSE_OPT_OPTARG to the flags, and fix a
+> test or two. But I'm wondering if doing that will become problematic for
+> end-users. Essentially you can no longer do git branch --merged master,
+> you must do git branch --merged=master.
 
-spang@loki:~/tmp> cat .git/config
-[core]
-    repositoryformatversion = 0
-    filemode = true
-    bare = false
-    logallrefupdates = true
-        [valid] foo = bar
-    hello = world
-spang@loki:~/tmp> git config --get valid.foo
-bar
-spang@loki:~/tmp> git config --rename-section valid lost-data
-spang@loki:~/tmp> cat .git/config
-[core]
-    repositoryformatversion = 0
-    filemode = true
-    bare = false
-    logallrefupdates = true
-[lost-data]
-    hello = world
+PARSE_OPT_OPTARG overrides PARSE_OPT_LASTARG_DEFAULT, as Pierre noted in
+commit 1cc6985c, which introduced the latter, so the two should not be
+used together.
 
-As you can see, --rename-section just replaces the entire line
-containing the section header that is being renamed, and if there is a
-config variable (or a comment, for that matter) following the section
-header on the same line (which is valid according to the config format
-documentation and the test suite), it is lost.
+PARSE_OPT_LASTARG_DEFAULT uses the default value if the option is the
+last one on the command line and requires an explicit argument if it's
+not the last, as you found out above.  That's also what the code says 
+and its name implies; the comment in parse-options.h (by yours truly) is 
+probably misleading because it doesn't mention this condition.
 
-On further investigation, git config also blows away comments at the end
-of the line when replacing variable values, e.g.:
-
-spang@loki:~/tmp> cat .git/config
-[core]
-    repositoryformatversion = 0
-    filemode = true
-    bare = false
-    logallrefupdates = true
-[test]
-    foo = bar ; a comment
-spang@loki:~/tmp> git config test.foo baz
-spang@loki:~/tmp> cat .git/config
-[core]
-    repositoryformatversion = 0
-    filemode = true
-    bare = false
-    logallrefupdates = true
-[test]
-    foo = baz
-
-IMHO, it would be saner to, when a section header or variable value is to be
-replaced, just replace the substring of the line in question that needs
-replacing, rather than writing whole new lines and having to check if there is
-a variable and/or a comment following the data that is being replaced and then
-writing those to new lines as well. (Where would the comment be moved to?)
-
-I'm using git v1.6.3.1, but I've looked at the code and the bug is still
-present in HEAD.
-
-cheers,
-Christine
+I don't remember any other program having options with such a behaviour; 
+I'm not sure how to stress that --merged needs to be the last option, as 
+implied by the help message.
