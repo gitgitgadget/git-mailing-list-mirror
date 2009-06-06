@@ -1,146 +1,146 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 2/3] bisect: when skipping, choose a commit away from a skipped commit
-Date: Fri, 05 Jun 2009 22:19:32 -0700
-Message-ID: <7vzlcmdjmj.fsf@alter.siamese.dyndns.org>
-References: <20090605040238.8885.92790.chriscool@tuxfamily.org>
-	<20090605041044.8885.92104.chriscool@tuxfamily.org>
-	<7vmy8np44z.fsf@alter.siamese.dyndns.org>
-	<200906060638.25566.chriscool@tuxfamily.org>
+Subject: Re: [PATCH 19/23] http-push.c::fetch_symref(): use the new http API
+Date: Fri, 05 Jun 2009 22:32:28 -0700
+Message-ID: <7vvdnadj0z.fsf@alter.siamese.dyndns.org>
+References: <20090606000559.483f22da.rctay89@gmail.com>
+	<m37hzq5rod.fsf@localhost.localdomain>
+	<be6fef0d0906051802n4f6d5df3g453b292787ed62d0@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Sam Vilain <sam@vilain.net>,
-	"H. Peter Anvin" <hpa@zytor.com>, Ingo Molnar <mingo@elte.hu>
-To: Christian Couder <chriscool@tuxfamily.org>
-X-From: git-owner@vger.kernel.org Sat Jun 06 07:21:37 2009
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jakub Narebski <jnareb@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Mike Hommey <mh@glandium.org>
+To: Tay Ray Chuan <rctay89@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Jun 06 07:38:42 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MCoLY-0005kP-Tc
-	for gcvg-git-2@gmane.org; Sat, 06 Jun 2009 07:21:37 +0200
+	id 1MCobz-0000Tz-Uf
+	for gcvg-git-2@gmane.org; Sat, 06 Jun 2009 07:38:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751815AbZFFFUA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 6 Jun 2009 01:20:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751445AbZFFFT7
-	(ORCPT <rfc822;git-outgoing>); Sat, 6 Jun 2009 01:19:59 -0400
-Received: from fed1rmmtao103.cox.net ([68.230.241.43]:58201 "EHLO
+	id S1750898AbZFFFc2 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 6 Jun 2009 01:32:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750793AbZFFFc2
+	(ORCPT <rfc822;git-outgoing>); Sat, 6 Jun 2009 01:32:28 -0400
+Received: from fed1rmmtao103.cox.net ([68.230.241.43]:61221 "EHLO
 	fed1rmmtao103.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752813AbZFFFTz (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 6 Jun 2009 01:19:55 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+	with ESMTP id S1750721AbZFFFc1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 6 Jun 2009 01:32:27 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
           by fed1rmmtao103.cox.net
           (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20090606051931.VTAP2915.fed1rmmtao103.cox.net@fed1rmimpo01.cox.net>;
-          Sat, 6 Jun 2009 01:19:31 -0400
+          id <20090606053228.WFSU2915.fed1rmmtao103.cox.net@fed1rmimpo02.cox.net>;
+          Sat, 6 Jun 2009 01:32:28 -0400
 Received: from localhost ([68.225.240.211])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id 0VKY1c00A4aMwMQ03VKYRJ; Sat, 06 Jun 2009 01:19:32 -0400
-X-VR-Score: -100.00
-X-Authority-Analysis: v=1.0 c=1 a=4e42I7BXjMAA:10 a=8Hn-nT45BrsA:10
- a=dIu3SnmMAAAA:8 a=LyZXNj_hYiT7xaHYGe8A:9 a=MX8JcioaZcP3y6d9CisA:7
- a=eBnYXR3gBu8m1sYJDsgguZCpE_8A:4 a=Rn8qiON8_f4A:10 a=k7cj8AfdmP7oi0wq:21
- a=o0ykAukQjRvMnHqr:21
+	by fed1rmimpo02.cox.net with bizsmtp
+	id 0VYU1c0074aMwMQ04VYUqR; Sat, 06 Jun 2009 01:32:29 -0400
+X-VR-Score: -200.00
+X-Authority-Analysis: v=1.0 c=1 a=H-8FU1NQUpMA:10 a=BuE6NxGQqqQA:10
+ a=pGLkceISAAAA:8 a=z23upLkTAAAA:8 a=-iqeroRl1tK8Yin71dsA:9
+ a=62V76XeA9a2U87apTOAA:7 a=2FTpbquNS9xIVkhGnqEyZZAm7RUA:4 a=MSl-tDqOz04A:10
+ a=Ak6yjH5nytEA:10
 X-CM-Score: 0.00
-In-Reply-To: <200906060638.25566.chriscool@tuxfamily.org> (Christian Couder's message of "Sat\, 6 Jun 2009 06\:38\:25 +0200")
+In-Reply-To: <be6fef0d0906051802n4f6d5df3g453b292787ed62d0@mail.gmail.com> (Tay Ray Chuan's message of "Sat\, 6 Jun 2009 09\:02\:32 +0800")
 User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120873>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120874>
 
-Christian Couder <chriscool@tuxfamily.org> writes:
+Tay Ray Chuan <rctay89@gmail.com> writes:
 
-> For example using the following script:
->
-> -------------
-> #!/bin/sh
->
-> new_commit() {
->     num="$1"
->     echo "line for commit $num" >> hello
->     git commit -m "commit $num" hello
-> }
->
-> touch hello
-> git add hello
->
-> for val in $(seq 100)
-> do
->   new_commit $val
-> done
-
-But isn't this a totally uninteresting case of 100 _single_ strand of
-pearls?  For a linear history, you do not even need the bisect machinery;
-you can even bisect by hand.
-
->> Imagine you have a graph like this (G is good, B is bad, and both
->> branches have similar number of commits):
+> On Sat, Jun 6, 2009 at 4:54 AM, Jakub Narebski<jnareb@gmail.com> wrot=
+e:
+>>> From: Mike Hommey <mh@glandium.org>
+>>> Subject: [WIP Patch 09/12] Use the new http API in fetch_symref()
 >>
->> 	G-------------y--z--a--b--c--B
->>                               /
->>         G--------------f--e--d
->>
->> In the above graph, a and d would give the best bisection, because they
->> can reach about half the number of nodes in the entire graph, and the
->> goal of the basic "find_bisection()" is to find a commit that cuts the
->> graph into closest-to-the-equal halves.  For this reason, 'a' and 'd'
->> would be near the beginning of the output from find_bisection(find_all)
->> you run when there are untestable commits in your managed_skipped().
->>
->> Suppose 'd' was already marked untestable, but 'a' is not.  And 'd' has
->> slightly better "goodness" value than 'a'.
->>
->> 	Side note.  I do not think the situation should change drastically
->> 	if 'a' has a better "goodness" value than 'd' has, but your
->> 	"skipped_first" logic that I already said I do not understand in
->> 	my earlier comment treats them quite differently, so this example
->> 	explicitly talks about the case where 'd' is better than 'a'.
->>
->> You do not check 'a' but check somewhere much older, either on the top
->> branch or on the bottom branch.  Why?
+>> What is the subject of this patch:
+>> =C2=A0"http-push.c::fetch_symref(): use the new http API"
+>> or
+>> =C2=A0"Use the new http API in fetch_symref()"
+>> [...]
+>> If you wanted to note old subject, it would be better to put it in
+>> comments (here).
 >
-> The reason is that it would make the code more complex to check that we are 
-> in this case, and that this case may not happen very often (it relies on 
-> both being near a merge and having branches of the same size), and that we 
-> don't loose much (see above my reference to what HPA wrote) by testing a 
-> commit quite far away.
+> Since the title of the patch differed from Mike's original, I was
+> afraid the attribution to the author's original patch was lost on the
+> reader of the commit message, thus I added the original subject, in
+> addition to the author and date, into the commit message.
 
-I think what you are missing is that you are not even guaranteeing "quite
-far away" in the _topological_ space, especially in the presense of merges.
+Please don't.
 
-If you focus on a totally linear history, yes, picking somewhere away, in
-the "goodness" scale space, from the optimal point (and there is a single
-optimal point) that is untestable happens to take you away from that
-particular untestable one in the topology space as well.  But that only
-holds true when you have no merges.
+If you chose to use a better (in your opinion) subject from the origina=
+l
+one, we'd want to have that improved one in our commit.  The same thing=
+ if
+you chose to rewrite the proposed commit log message, or the contents o=
+f
+the patch, to add your own improvement.  That is what we review here, a=
+nd
+if people think your submitted version is good, that is what we want to
+record as a commit.
 
-My example graph was not an extreme special case at all.  It is just an
-illustration of a typical real-life history.  Sure, I told you to assume
-that both sides have about equal number of commits, but if the top branch
-were longer, then instead of 'a', perhaps 'y' or its parent may be the
-next best commit.  It is still very close in the "goodness" space to the
-untestable commit 'd', but it is very far away from it in the topological
-space, but your algorithm discards it because it is close in the
-"goodness" scale space.  And the distance in the topological space from
-untestable ones is what we seek here.
+So, in general we would want to see something like this:
 
->>  - The point chosen should be far from any known untestable commits.  We
->>    do not currently have function to count distance from untestable
->>    commits, nor make a call to such a function after filtering untestable
->>    commits, but I think we should.
->
-> I think this should be the case with my patch series.
+(1)     From: Tay Ray Chuan <rctay89@gmail.com>
+        Subject: [PATCH 19/23] http-push.c:fetch_symref(): use the new =
+HTTP API
 
-Why?  You are picking "away, in the goodness scale, from the _best_ one".
-I've already explained why it does not follow that the commit chosen that
-way is _topologically_ away from _untestable_ ones.
+(2)     From: Mike Hommey <mh@glandium.org>
 
-> I agree that we could probably analyse the graph much better than what my 
-> patch series does, but I think that it would be quite complex.
+(3)     Now the contents of a file can be slurped into a strbuf with a =
+single
+        call to http_get_strbuf(), use it to simplify fetch_symref().
 
-If you do not want complexity, let's not even do this "away in the
-goodness space from the best one".  Your three patches already add
-complexity to the algorithm, and I do not think what they do is worth it.
-It solves a wrong problem, that does not have anything to do with "stay
-away from untestable ones in the topological space".
+(4)     Signed-off-by: Mike Hommey <mh@glandium.org>
+        Signed-off-by: Tay Ray Chuan <rctay89@gmail.com>
+(5)     ---
+(6)      This is based on Mike's earlier patch:
+
+         Subject: [WIP Patch 09/12] Use the new http API in fetch_symre=
+f()
+         Date:  Sun, 18 Jan 2009 09:04:34 +0100
+
+         I retitlted Mike's patch in order to ...
+         Also changed frotz and nitfol so that they distim doshes bette=
+r...
+
+(7)     http-push.c |   20 +++-----------------
+         1 files changed, 3 insertions(+), 17 deletions(-)
+
+(8)     diff --git a/http-push.c b/http-push.c
+        ...
+
+That is,
+
+    (1) RFC2822 headers your MUA gives us;
+
+    (2) In-body (fake)headers for From: if the author is different from
+        what (1) records.  If you are forwarding somebody else's patch
+        verbatim without modification, you may want to add Date: to kee=
+p
+        the original datestamp, but if you are sending a version with y=
+our
+        own improvements, we would rather use the Date: recorded in (1)=
+ in
+        the final commit.
+
+    (3) Proposed commit log message;
+
+    (4) Chain of Signed-off-by lines;
+
+    (5) Three-dash separator;
+
+    (6) Commentary to explain the history of the patch, and/or backgrou=
+nd
+        information if necessary,
+
+    (7) diffstat;
+
+    (8) the patch itself.
+
+Thanks.
