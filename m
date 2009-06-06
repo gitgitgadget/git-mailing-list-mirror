@@ -1,150 +1,72 @@
-From: Johannes Sixt <j6t@kdbg.org>
-Subject: Re: [PATCH v2 3/3] Use die_errno() instead of die() when checking syscalls
-Date: Sat, 6 Jun 2009 23:02:08 +0200
-Message-ID: <200906062302.08616.j6t@kdbg.org>
-References: <cover.1244299302.git.trast@student.ethz.ch> <095b4af080c11b4ad3fcfaefc9cdf49d383cb714.1244299302.git.trast@student.ethz.ch> <62538974f2c0f4561428507e514daa87dbfcac01.1244299302.git.trast@student.ethz.ch>
+From: =?ISO-8859-1?Q?Santi_B=E9jar?= <santi@agolina.net>
+Subject: Re: [PATCH 3/3] git-parse-remote: remove unused functions
+Date: Sat, 6 Jun 2009 23:03:47 +0200
+Message-ID: <adf1fd3d0906061403sd13200co286e986c67135f4b@mail.gmail.com>
+References: <1244231617-17754-3-git-send-email-santi@agolina.net>
+	 <7v63f9cd4s.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-15"
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Jeff King <peff@peff.net>,
-	Alexander Potashev <aspotashev@gmail.com>
-To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Sat Jun 06 23:02:20 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Jun 06 23:03:58 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MD31v-0000vS-Ph
-	for gcvg-git-2@gmane.org; Sat, 06 Jun 2009 23:02:20 +0200
+	id 1MD33V-0001SI-U2
+	for gcvg-git-2@gmane.org; Sat, 06 Jun 2009 23:03:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752507AbZFFVCJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 6 Jun 2009 17:02:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751909AbZFFVCJ
-	(ORCPT <rfc822;git-outgoing>); Sat, 6 Jun 2009 17:02:09 -0400
-Received: from bsmtp.bon.at ([213.33.87.14]:41448 "EHLO bsmtp.bon.at"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751893AbZFFVCI (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 6 Jun 2009 17:02:08 -0400
-Received: from dx.sixt.local (unknown [93.83.142.38])
-	by bsmtp.bon.at (Postfix) with ESMTP id DBB1B2C4002;
-	Sat,  6 Jun 2009 23:02:08 +0200 (CEST)
-Received: from localhost (localhost [IPv6:::1])
-	by dx.sixt.local (Postfix) with ESMTP id B27363FFB6;
-	Sat,  6 Jun 2009 23:02:08 +0200 (CEST)
-User-Agent: KMail/1.9.9
-In-Reply-To: <62538974f2c0f4561428507e514daa87dbfcac01.1244299302.git.trast@student.ethz.ch>
-Content-Disposition: inline
+	id S1752528AbZFFVDr convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 6 Jun 2009 17:03:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752519AbZFFVDq
+	(ORCPT <rfc822;git-outgoing>); Sat, 6 Jun 2009 17:03:46 -0400
+Received: from mail-bw0-f213.google.com ([209.85.218.213]:51236 "EHLO
+	mail-bw0-f213.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752207AbZFFVDp convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 6 Jun 2009 17:03:45 -0400
+Received: by bwz9 with SMTP id 9so2235244bwz.37
+        for <git@vger.kernel.org>; Sat, 06 Jun 2009 14:03:47 -0700 (PDT)
+Received: by 10.204.72.15 with SMTP id k15mr4704878bkj.14.1244322227024; Sat, 
+	06 Jun 2009 14:03:47 -0700 (PDT)
+In-Reply-To: <7v63f9cd4s.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120937>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120938>
 
-On Samstag, 6. Juni 2009, Thomas Rast wrote:
-> Lots of die() calls did not actually report the kind of error, which
-> can leave the user confused as to the real problem.  Use die_errno()
-> where we check a system/library call that sets errno on failure, or
-> one of the following that wrap such calls:
+2009/6/6 Junio C Hamano <gitster@pobox.com>:
+> Santi B=E9jar <santi@agolina.net> writes:
 >
->   Function              Passes on error from
->   --------              --------------------
->   odb_pack_keep         open
->   read_ancestry         fopen
->   read_in_full          xread
->   strbuf_read           xread
->   strbuf_read_file      open or strbuf_read_file
->   strbuf_readlink       readlink
->   write_in_full         xwrite
+>> Signed-off-by: Santi B=E9jar <santi@agolina.net>
+>> ---
+>> =A0.gitignore =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 | =A0 =
+=A01 -
+>> =A0Documentation/git-parse-remote.txt | =A0 50 ---------
+>> =A0git-parse-remote.sh =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0| =A0204 -----=
+-------------------------------
+>> =A03 files changed, 0 insertions(+), 255 deletions(-)
+>> =A0delete mode 100644 Documentation/git-parse-remote.txt
 >
-> Signed-off-by: Thomas Rast <trast@student.ethz.ch>
-> ---
-
-> @@ -2262,7 +2262,6 @@ int cmd_blame(int argc, const char **argv, const char
-> *prefix)
+> I do not understand this patch.
 >
->  	if (revs_file && read_ancestry(revs_file))
->  		die_errno("reading graft file '%s' failed", revs_file);
-> -
->  	if (cmd_is_annotate) {
->  		output_option |= OUTPUT_ANNOTATE_COMPAT;
->  		blame_date_mode = DATE_ISO8601;
+> With this patch remove git-parse-remote from .gitignore (as if the en=
+tire
+> file is going away)
 
-Unrelated and not an improvement.
+Ops, the .gitignore removal was a mistake.
 
-> @@ -220,13 +220,12 @@ static void copy_or_link_directory(struct strbuf
-> *src, struct strbuf *dest)
->
->  	dir = opendir(src->buf);
->  	if (!dir)
-> -		die("failed to open %s", src->buf);
-> -
-> +		die_errno("failed to open '%s'", src->buf);
+> and its documentation (again as if the entire file is
+> going away), so naturally I would have expected to see removal of the=
+ file
+> in the patch as well (and that means Makefile needs to be touched), b=
+ut
+> that is not what is happening.
 
-Here (and in other cases) you remote an empty line. I don't think that is an 
-improvement.
+I just wanted to remove the unused functions, and their documentation.
+But I was removing the two functions that were documented, so I
+removed all the file. Maybe I can just remove their documentation and
+leave the rest of the file.
 
-> @@ -472,7 +472,6 @@ static int prepare_to_commit(const char *index_file,
-> const char *prefix) fp = fopen(git_path(commit_editmsg), "w");
->  	if (fp == NULL)
->  		die_errno("could not open '%s'", git_path(commit_editmsg));
-> -
->  	if (cleanup_mode != CLEANUP_NONE)
->  		stripspace(&sb, 0);
->
-
-Unrelated.
-
-> @@ -496,7 +495,6 @@ static int prepare_to_commit(const char *index_file,
-> const char *prefix)
->
->  	if (fwrite(sb.buf, 1, sb.len, fp) < sb.len)
->  		die_errno("could not write commit template");
-> -
->  	strbuf_release(&sb);
->
->  	determine_author_info();
-
-Ditto.
-
-> @@ -1018,8 +1017,10 @@ int cmd_commit(int argc, const char **argv, const
-> char *prefix)
->
->  	if (commit_index_files())
->  		die ("Repository has been updated, but unable to write\n"
-> -		     "new_index file. Check that disk is not full or quota is\n"
-> -		     "not exceeded, and then \"git reset HEAD\" to recover.");
-> +		     "new_index file: %s.\n"
-> +		     "Check that disk is not full or quota is not exceeded,\n"
-> +		     "and then \"git reset HEAD\" to recover.",
-> +		     strerror(errno));
-
-This change should probably not be in this patch.
-
-> @@ -452,7 +452,6 @@ static void import_marks(char *input_file)
->  	FILE *f = fopen(input_file, "r");
->  	if (!f)
->  		die_errno("cannot read '%s'", input_file);
-> -
->  	while (fgets(line, sizeof(line), f)) {
->  		uint32_t mark;
->  		char *line_end, *mark_end;
-
-Unrelated.
-
-> diff --git a/csum-file.c b/csum-file.c
-> index 9cc93ba..4d50cc5 100644
-> --- a/csum-file.c
-> +++ b/csum-file.c
-> @@ -55,8 +55,7 @@ int sha1close(struct sha1file *f, unsigned char *result,
-> unsigned int flags) if (flags & CSUM_FSYNC)
->  			fsync_or_die(f->fd, f->name);
->  		if (close(f->fd))
-> -			die_errno("%s: sha1 file error on close",
-> -			    f->name);
-> +			die_errno("%s: sha1 file error on close", f->name);
-
-This should be in 2/3.
-
--- Hannes
+Santi
