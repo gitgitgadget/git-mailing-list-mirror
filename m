@@ -1,165 +1,89 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3 0/3] automatically skip away from broken commits
-Date: Sat, 06 Jun 2009 12:51:11 -0700
-Message-ID: <7vskidcf9s.fsf@alter.siamese.dyndns.org>
-References: <20090606043853.4031.78284.chriscool@tuxfamily.org>
+From: Stephen Boyd <bebarino@gmail.com>
+Subject: Re: parse-options: ambiguous LASTARG_DEFAULT and OPTARG
+Date: Sat, 06 Jun 2009 13:14:42 -0700
+Message-ID: <4A2ACE32.8080504@gmail.com>
+References: <4A28B072.8030006@gmail.com> <4A2A4534.80604@lsrfire.ath.cx>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Sam Vilain <sam@vilain.net>,
-	"H. Peter Anvin" <hpa@zytor.com>, Ingo Molnar <mingo@elte.hu>
-To: Christian Couder <chriscool@tuxfamily.org>
-X-From: git-owner@vger.kernel.org Sat Jun 06 21:59:23 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git list <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+	Pierre Habouzit <madcoder@madism.org>
+To: =?ISO-8859-1?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
+X-From: git-owner@vger.kernel.org Sat Jun 06 22:15:24 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MD22x-0004IT-02
-	for gcvg-git-2@gmane.org; Sat, 06 Jun 2009 21:59:19 +0200
+	id 1MD2IR-0001Kw-9J
+	for gcvg-git-2@gmane.org; Sat, 06 Jun 2009 22:15:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751646AbZFFTvM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 6 Jun 2009 15:51:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751595AbZFFTvK
-	(ORCPT <rfc822;git-outgoing>); Sat, 6 Jun 2009 15:51:10 -0400
-Received: from fed1rmmtao104.cox.net ([68.230.241.42]:42330 "EHLO
-	fed1rmmtao104.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751534AbZFFTvK (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 6 Jun 2009 15:51:10 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao104.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20090606195113.KOCT17135.fed1rmmtao104.cox.net@fed1rmimpo01.cox.net>;
-          Sat, 6 Jun 2009 15:51:13 -0400
-Received: from localhost ([68.225.240.211])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id 0jrB1c00D4aMwMQ03jrBNA; Sat, 06 Jun 2009 15:51:11 -0400
-X-VR-Score: -180.00
-X-Authority-Analysis: v=1.0 c=1 a=ZlvubiwuF4QA:10 a=BRJNLUJM0I0A:10
- a=hpLoFPsW44nVjqyl1tQA:9 a=jTtF_HlCZp9UHjT6CPAA:7
- a=PeQL_h33Pq2HgQmy0RoufaJPKuEA:4
-X-CM-Score: 0.00
-In-Reply-To: <20090606043853.4031.78284.chriscool@tuxfamily.org> (Christian Couder's message of "Sat\, 06 Jun 2009 06\:41\:32 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+	id S1751717AbZFFUOp convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 6 Jun 2009 16:14:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751534AbZFFUOo
+	(ORCPT <rfc822;git-outgoing>); Sat, 6 Jun 2009 16:14:44 -0400
+Received: from mail-gx0-f214.google.com ([209.85.217.214]:38459 "EHLO
+	mail-gx0-f214.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751131AbZFFUOn (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 6 Jun 2009 16:14:43 -0400
+Received: by gxk10 with SMTP id 10so84323gxk.13
+        for <git@vger.kernel.org>; Sat, 06 Jun 2009 13:14:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from
+         :user-agent:mime-version:to:cc:subject:references:in-reply-to
+         :content-type:content-transfer-encoding;
+        bh=lmsGerW4gpx5PvDUcazKFbjMPA7n6AZlNHLzzQWehqY=;
+        b=qTKRixWGa3v7dpey3adnGTlyYcbUcHZ0/dg7ySNNZAu6KrHoiGtjMUQi0GaVYRrI8u
+         O7Hd/lQvunxbjIo/GTDdhuTE3DPluY2XKY1NZREkyQXcu9SiQuiS/FiQbqZSpz4My60r
+         aKI/MwMEJppZj+0rxZcL7r0D1W/h7+9zhPv/c=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        b=yDkNATqTzoWd3fKQKuJVMd7k+2djO0mS7saesejzSW5j75uByNSC240uv7n/s5lZmK
+         D5beniAeb9jGg0inY9n9cd33fTEnB1fP1lv91ScZ5aOeBvGSUIfSvj3n0cOVtFlgTyRG
+         ObMQAe8N4R44IVnDsEQYgNWssnSX6P8y0QVYg=
+Received: by 10.90.72.3 with SMTP id u3mr4165332aga.82.1244319285133;
+        Sat, 06 Jun 2009 13:14:45 -0700 (PDT)
+Received: from ?192.168.1.2? ([76.89.212.195])
+        by mx.google.com with ESMTPS id 1sm3377936agb.48.2009.06.06.13.14.43
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sat, 06 Jun 2009 13:14:44 -0700 (PDT)
+User-Agent: Thunderbird 2.0.0.21 (X11/20090429)
+In-Reply-To: <4A2A4534.80604@lsrfire.ath.cx>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120931>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120932>
 
-Here is a fairly unscientific test to see how these three patches improve
-things.  It involves two test scripts:
+Ren=E9 Scharfe wrote:
+> PARSE_OPT_OPTARG overrides PARSE_OPT_LASTARG_DEFAULT, as Pierre noted=
+ in
+> commit 1cc6985c, which introduced the latter, so the two should not b=
+e
+> used together.
 
- - ./+runme is a "bisect run" script.  It says "tests OK" for all the
-   commits given, except that it says "untestable" for all commits that
-   are on the side branch of a merge that we first test.  I think this
-   reflects what happens in the real world setting very well, in that a
-   merge brings in a topic whose breakge is irrelevant to the bug we are
-   hunting.
+Ok, thanks. This means I used it wrong when I switched over show-branch
+:-/ I'll have to send a follow-up patch for that.
 
- - ./+runall is run in one git tree with two parameters (bad commit and
-   good commit); it assumes that
+> PARSE_OPT_LASTARG_DEFAULT uses the default value if the option is the
+> last one on the command line and requires an explicit argument if it'=
+s
+> not the last, as you found out above.  That's also what the code says
+> and its name implies; the comment in parse-options.h (by yours truly)
+> is probably misleading because it doesn't mention this condition.
 
-   - ./+runme script above is in /var/tmp/+runme;
+I was mislead. When I read it I thought I had to use the flag to say
+that the default value will be used in the case when no argument is
+given. I completely ignored the LASTARG part (I thought it was
+referencing the default arg). I think just adding what you said here to
+parse-options.h will help others to avoid this.
 
-   - a version of git without these three patches is installed with
-     prefix=/var/tmp/cc-original;
+> I don't remember any other program having options with such a
+> behaviour; I'm not sure how to stress that --merged needs to be the
+> last option, as implied by the help message.
 
-   - a version of git with these three patches is installed with
-     prefix=/var/tmp/cc-updated;
-
-   and runs the bisection using both versions of git.
-
-The results are not that great; these three patches do not give clear win
-as we hoped:
-
-    $ linux-2.6/master; /var/tmp/+runall v2.6.30-rc8 v2.6.30-rc1
-    Total 2681 commits...
-    Marked 254 commits as untestable
-    Took 14 rounds with cc-updated
-    Marked 254 commits as untestable
-    Took 13 rounds with cc-original
-    $ linux-2.6/master; /var/tmp/+runall v2.6.30-rc8 v2.6.29
-    Total 12917 commits...
-    Marked 141 commits as untestable
-    Took 15 rounds with cc-updated
-    Marked 141 commits as untestable
-    Took 15 rounds with cc-original
-    $ linux-2.6/master; /var/tmp/+runall v2.6.30-rc1 v2.6.29
-    Total 10236 commits...
-    Marked 7749 commits as untestable
-    Took 15 rounds with cc-updated
-    Marked 7749 commits as untestable
-    Took 14 rounds with cc-original
-
-I think this shows that the "skip ratio" heuristics based on the distance
-in the "goodness scale" space does not help in avoiding commits that are
-close in topological space.  There may be cases where the version with
-patch gives fewer rounds especially when the history is very linear, but I
-was mostly interested in the number of commits at least in the thousands,
-which I think is what we should optimize things for, not a toy history of
-linear 100 commits.
-
-Here are the test scripts you can use to reproduce the results.
-
-diff --git a/+runall b/+runall
-new file mode 100755
-index 0000000..291d000
---- /dev/null
-+++ b/+runall
-@@ -0,0 +1,23 @@
-+#!/bin/sh
-+
-+BAD=${1?BAD}
-+GOOD=${2?GOOD}
-+TOTAL=$(git rev-list $GOOD..$BAD | wc -l)
-+
-+echo Total $TOTAL commits...
-+
-+for git in cc-updated cc-original
-+do
-+	logfile=/var/tmp/log-$git-$BAD-$GOOD
-+	(
-+		PATH=/var/tmp/$git/bin:$PATH
-+		export PATH
-+		rm -f .git/UNTESTABLE
-+		git bisect reset
-+		git bisect start $BAD $GOOD
-+		git bisect run /var/tmp/+runme
-+		git bisect reset
-+	) >$logfile 2>&1
-+	grep "^Marked " $logfile
-+	echo Took $(grep -c "Bisecting:" $logfile) rounds with $git
-+done
-diff --git a/+runme b/+runme
-new file mode 100755
-index 0000000..7b77338
---- /dev/null
-+++ b/+runme
-@@ -0,0 +1,23 @@
-+#!/bin/sh
-+
-+# Pretend that the first merged branch were untestable
-+
-+THIS=$(git rev-parse HEAD)
-+
-+if ! test -f .git/UNTESTABLE
-+then
-+	if MERGED=$(git rev-parse HEAD^2 2>/dev/null)
-+	then
-+		git rev-list HEAD^ ^$MERGED >.git/UNTESTABLE
-+		echo Marked $(wc -l <.git/UNTESTABLE) commits as untestable
-+		exit 125
-+	else
-+		exit 0
-+	fi
-+fi
-+
-+if grep "$THIS" .git/UNTESTABLE >/dev/null
-+then
-+	exit 125
-+fi
-+exit 0
-
-
-
-
-   
+"git tag --contains" is the same. Figuring out a way to say that the
+syntax changes when it's the last option versus in the middle is not
+obvious to me either.
