@@ -1,87 +1,75 @@
-From: Sam Vilain <sam@vilain.net>
-Subject: Re: [PATCH 0/7] [GSoC2009] Revision cache / git-daemon caching plan
-Date: Sun, 07 Jun 2009 16:01:41 +1200
-Message-ID: <1244347301.9843.52.camel@maia.lan>
-References: <cover.1244125127.git.sam@vilain.net>
-	 <m34ouu7h70.fsf@localhost.localdomain>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [WIP/RFC] Allow push and fetch urls to be different
+Date: Sat, 06 Jun 2009 21:19:34 -0700
+Message-ID: <7vtz2sbrqh.fsf@alter.siamese.dyndns.org>
+References: <7v1vpztsci.fsf@alter.siamese.dyndns.org>
+	<1244299395-6605-1-git-send-email-git@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Nick Edelen <sirnot@gmail.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Andreas Ericsson <exon@op5.se>,
-	Christian Couder <christian@couder.net>,
-	Jeff King <peff@peff.net>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Jun 07 06:07:43 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Nikos Chantziaras <realnc@arcor.de>,
+	Junio C Hamano <gitster@pobox.com>
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Sun Jun 07 06:19:49 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MD9fa-0004ZC-Ip
-	for gcvg-git-2@gmane.org; Sun, 07 Jun 2009 06:07:42 +0200
+	id 1MD9rJ-0006B8-AN
+	for gcvg-git-2@gmane.org; Sun, 07 Jun 2009 06:19:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750963AbZFGEBT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 7 Jun 2009 00:01:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750862AbZFGEBS
-	(ORCPT <rfc822;git-outgoing>); Sun, 7 Jun 2009 00:01:18 -0400
-Received: from watts.utsl.gen.nz ([202.78.240.73]:52056 "EHLO mail.utsl.gen.nz"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750784AbZFGEBS (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 7 Jun 2009 00:01:18 -0400
-Received: by mail.utsl.gen.nz (Postfix, from userid 1004)
-	id 7BC5C21C400; Sun,  7 Jun 2009 16:00:52 +1200 (NZST)
-X-Spam-Checker-Version: SpamAssassin 3.2.5 (2008-06-10) on
-	mail.musashi.utsl.gen.nz
-X-Spam-Level: 
-X-Spam-Status: No, score=-4.4 required=5.0 tests=ALL_TRUSTED,AWL,BAYES_00
-	autolearn=ham version=3.2.5
-Received: from [192.168.69.182] (203-97-235-49.cable.telstraclear.net [203.97.235.49])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by mail.utsl.gen.nz (Postfix) with ESMTPSA id 380C521C335;
-	Sun,  7 Jun 2009 16:00:36 +1200 (NZST)
-In-Reply-To: <m34ouu7h70.fsf@localhost.localdomain>
-X-Mailer: Evolution 2.24.1 
+	id S1751100AbZFGETd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 7 Jun 2009 00:19:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751049AbZFGETd
+	(ORCPT <rfc822;git-outgoing>); Sun, 7 Jun 2009 00:19:33 -0400
+Received: from fed1rmmtao104.cox.net ([68.230.241.42]:41396 "EHLO
+	fed1rmmtao104.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751026AbZFGETc (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 7 Jun 2009 00:19:32 -0400
+Received: from fed1rmimpo03.cox.net ([70.169.32.75])
+          by fed1rmmtao104.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20090607041934.DHFD17135.fed1rmmtao104.cox.net@fed1rmimpo03.cox.net>;
+          Sun, 7 Jun 2009 00:19:34 -0400
+Received: from localhost ([68.225.240.211])
+	by fed1rmimpo03.cox.net with bizsmtp
+	id 0sKa1c0044aMwMQ04sKaxx; Sun, 07 Jun 2009 00:19:34 -0400
+X-VR-Score: 0.00
+X-Authority-Analysis: v=1.0 c=1 a=UKPG_okjeu0A:10 a=VWv6Vc0wgp8A:10
+ a=cCri8_SAAAAA:8 a=LP5qKHGBwGA1bLpMitAA:9 a=RlnaoN0gN6YpYTIzjBsBKhM0rsMA:4
+X-CM-Score: 0.00
+In-Reply-To: <1244299395-6605-1-git-send-email-git@drmicha.warpmail.net> (Michael J. Gruber's message of "Sat\,  6 Jun 2009 16\:43\:15 +0200")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120952>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120953>
 
-On Fri, 2009-06-05 at 09:56 -0700, Jakub Narebski wrote:
-> > The plan is to aim for one of these API milestones completed per week.
-> > When complete, each commit will contain tests for the level of cache
-> > that it delivers.  Later milestones include joining the dots -
-> > integrating with the 'rev-list' machinery and most importantly,
-> > 'pack-objects'.
-> 
-> I like this sharing not only completed code, but plans, designs (and
-> status reports) with Git Development Community (i.e. git mailing
-> list).  I like this very much.
-> 
-> 
-> I'd like to ask if there any results of profiling git server
-> (git-daemon) code: how much is spend on object enumeration this GSoC
-> project tries to make faster by the means of caching?
+Michael J Gruber <git@drmicha.warpmail.net> writes:
 
-No, but you're not the first to ask - I'll research this and include
-profiling of it (obviously needing to descend into stages taken by
-pack-objects/receive-packs, as Nicholas points out) in the next update I
-send out.
+> This introduces a config setting remote.$remotename.pushurl which is
+> used for pushes only. If absent remote.$remotename.url is used for
+> pushes and fetches as before.
+> This is useful, for example, in order to to do passwordless fetches
+> (remote update) over git: but pushes over ssh.
+>
+> Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
+> ---
+> This is a working prototype, but I'd like to rfc about the approach before
+> coding further.
 
-> Are there prepared benchmarks and tests to check if the code gives
-> correct results, and to measure improvements brought by caching?
-> Would it be possible to get some real-life statistics of git-daemon
-> usage, so that you optimize against real scenarios?
+As I am guilty for suggesting this, obviously I do not have a problem with
+what the patch wants to achieve.
 
-In terms of correct results - that will come down to the test cases
-which are written for it, and possibly extending the existing test cases
-eg t5500-fetch-pack.sh
+And the change looks simple, straightforward and correct.
 
-> I wish you good work on git-daemon caching...
+> Things that would go in a full series:
+> * documentation (man pages, maybe manual)
+> * tests
 
-Thanks!
+Surely.
 
-Sam.
+> * teach builtin-remote about pushurl
+
+Hmm,...  my impression was that "git remote" does not have much support
+for the push side.  What kind of things are you going to teach?
