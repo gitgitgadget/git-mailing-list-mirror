@@ -1,95 +1,95 @@
-From: Kjetil Barvik <barvik@broadpark.no>
-Subject: [PATCH v2] symlinks.c: small style cleanup
-Date: Sun, 07 Jun 2009 16:43:56 +0200
-Message-ID: <1244385836-8540-1-git-send-email-barvik@broadpark.no>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN
-Content-Transfer-Encoding: 7BIT
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Kjetil Barvik <barvik@broadpark.no>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jun 07 16:45:20 2009
+From: Markus Heidelberg <markus.heidelberg@web.de>
+Subject: [PATCH 1/2] add a test case for threaded mails without chain-reply-to
+Date: Sun,  7 Jun 2009 17:20:18 +0200
+Message-ID: <1244388019-12763-1-git-send-email-markus.heidelberg@web.de>
+References: <200906061414.27371.markus.heidelberg@web.de>
+Cc: git@vger.kernel.org, Michael Witten <mfwitten@gmail.com>,
+	Markus Heidelberg <markus.heidelberg@web.de>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Jun 07 17:20:42 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MDJcc-0006dE-2u
-	for gcvg-git-2@gmane.org; Sun, 07 Jun 2009 16:45:18 +0200
+	id 1MDKAs-0003iV-2a
+	for gcvg-git-2@gmane.org; Sun, 07 Jun 2009 17:20:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754227AbZFGOpH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 7 Jun 2009 10:45:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752378AbZFGOpG
-	(ORCPT <rfc822;git-outgoing>); Sun, 7 Jun 2009 10:45:06 -0400
-Received: from osl1smout1.broadpark.no ([80.202.4.58]:60570 "EHLO
-	osl1smout1.broadpark.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753267AbZFGOpG (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 7 Jun 2009 10:45:06 -0400
-Received: from osl1sminn1.broadpark.no ([80.202.4.59])
- by osl1smout1.broadpark.no
- (Sun Java(tm) System Messaging Server 6.3-3.01 (built Jul 12 2007; 32bit))
- with ESMTP id <0KKV00D16IB76320@osl1smout1.broadpark.no> for
- git@vger.kernel.org; Sun, 07 Jun 2009 16:45:07 +0200 (CEST)
-Received: from localhost.localdomain ([80.202.166.56])
- by osl1sminn1.broadpark.no
- (Sun Java(tm) System Messaging Server 6.3-3.01 (built Jul 12 2007; 32bit))
- with ESMTPA id <0KKV00B1DIB6PX50@osl1sminn1.broadpark.no> for
- git@vger.kernel.org; Sun, 07 Jun 2009 16:45:07 +0200 (CEST)
-X-Mailer: git-send-email 1.6.3.2.277.gd10543
+	id S1755029AbZFGPUa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 7 Jun 2009 11:20:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754867AbZFGPUa
+	(ORCPT <rfc822;git-outgoing>); Sun, 7 Jun 2009 11:20:30 -0400
+Received: from fmmailgate01.web.de ([217.72.192.221]:57063 "EHLO
+	fmmailgate01.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754692AbZFGPU3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 7 Jun 2009 11:20:29 -0400
+Received: from smtp08.web.de (fmsmtp08.dlan.cinetic.de [172.20.5.216])
+	by fmmailgate01.web.de (Postfix) with ESMTP id 7D8F0104B039C;
+	Sun,  7 Jun 2009 17:20:31 +0200 (CEST)
+Received: from [89.59.87.118] (helo=localhost.localdomain)
+	by smtp08.web.de with asmtp (TLSv1:AES256-SHA:256)
+	(WEB.DE 4.110 #277)
+	id 1MDKAh-0001nD-00; Sun, 07 Jun 2009 17:20:31 +0200
+X-Mailer: git-send-email 1.6.3.2.216.g24c61
+In-Reply-To: <200906061414.27371.markus.heidelberg@web.de>
+X-Sender: markus.heidelberg@web.de
+X-Provags-ID: V01U2FsdGVkX18TRoKCrIpvxrt3Uw/ohn+/xujaZFxkMAuLO97Q
+	Ov1xCedAzIkcfMEXY+eYJkeZnfgKatR2+Gc7QN8sDnO09i7Rdm
+	8ItnEU8WG57t+aO2E2qQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120976>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120977>
 
-Remove some unnecessary "return;"-statements at the end of "void
-foo()"-functions.
 
-Signed-off-by: Kjetil Barvik <barvik@broadpark.no>
+Signed-off-by: Markus Heidelberg <markus.heidelberg@web.de>
 ---
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> Markus Heidelberg, 06.06.2009:
+> > Markus Heidelberg (4):
+> >   Don't count the submenu entries for checking if it is empty
+> >   Correctly count the entries in the revs context menu
+> >   Avoid submenus with merely 1 entry
+> >   Create a separate submenu for tags
+> 
+> Hmm, no In-Reply-To in 1..4/4
+> 
+> I think I managed to do this earlier with just
+>   $ git format-patch -4 -s
+>   $ git send-email 000*
+> 
+> But not even
+>   $ git send-email --thread 000*
+> seems to work.
+> 
+> Only 
+>   $ git format-patch -4 -s --thread
+>   $ git send-email 000*
 
-> Hi,
->
-> On Sun, 7 Jun 2009, Kjetil Barvik wrote:
->
->> Add {}-braces around an else-part, where the if-part already has
->> {}-braces.
->
-> This is the wrong way round.  We prefer _not_ to add unnecessary
-> braces, but do tolerate them from time to time.
+Indeed a regression.
 
-  OK.  Have taken away that part of the patch in this verson (v2).
+ t/t9001-send-email.sh |   11 +++++++++++
+ 1 files changed, 11 insertions(+), 0 deletions(-)
 
-  -- kjetil
-
-
- symlinks.c |    3 ---
- 1 files changed, 0 insertions(+), 3 deletions(-)
-
-diff --git a/symlinks.c b/symlinks.c
-index 1d6b35b..64c8cd3 100644
---- a/symlinks.c
-+++ b/symlinks.c
-@@ -263,7 +263,6 @@ static void do_remove_scheduled_dirs(int new_len)
- 			 removal.path[removal.len] != '/');
- 	}
- 	removal.len = new_len;
--	return;
- }
+diff --git a/t/t9001-send-email.sh b/t/t9001-send-email.sh
+index ce26ea4..576bbd3 100755
+--- a/t/t9001-send-email.sh
++++ b/t/t9001-send-email.sh
+@@ -621,4 +621,15 @@ test_expect_success 'in-reply-to but no threading' '
+ 	grep "In-Reply-To: <in-reply-id@example.com>"
+ '
  
- void schedule_dir_for_removal(const char *name, int len)
-@@ -296,11 +295,9 @@ void schedule_dir_for_removal(const char *name, int len)
- 		       last_slash - match_len);
- 		removal.len = last_slash;
- 	}
--	return;
- }
- 
- void remove_scheduled_dirs(void)
- {
- 	do_remove_scheduled_dirs(0);
--	return;
- }
++test_expect_failure 'threading but no chain-reply-to' '
++	git send-email \
++		--dry-run \
++		--from="Example <nobody@example.com>" \
++		--to=nobody@example.com \
++		--thread \
++		--no-chain-reply-to \
++		$patches $patches |
++	grep "In-Reply-To: "
++'
++
+ test_done
 -- 
-1.6.3.2.277.gd10543
+1.6.3.2.216.g24c61
