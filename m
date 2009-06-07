@@ -1,137 +1,70 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: [WIP] Shift rev-list enumeration from upload-pack to pack-objects
-Date: Sun, 07 Jun 2009 16:48:48 -0400 (EDT)
-Message-ID: <alpine.LFD.2.00.0906071637530.3906@xanadu.home>
-References: <20090605054500.06A9D21C3F4@mail.utsl.gen.nz>
- <alpine.LFD.2.00.0906051224510.3906@xanadu.home>
- <c77435a80906070625i4daaa69bi134df765d7a77cdf@mail.gmail.com>
- <alpine.LFD.2.00.0906071225060.3906@xanadu.home>
- <c77435a80906070947u9bf8ce9m9d59f86e5a5f18ab@mail.gmail.com>
- <c77435a80906071155g5530ccdel286907b7c6022838@mail.gmail.com>
+From: Kjetil Barvik <barvik@broadpark.no>
+Subject: Re: [PATCH] symlinks.c: small style cleanup
+Date: Sun, 07 Jun 2009 23:25:47 +0200
+Organization: private
+Message-ID: <86fxebwxb8.fsf@broadpark.no>
+References: <1244374385-5253-1-git-send-email-barvik@broadpark.no>
+ <alpine.DEB.1.00.0906071616060.26154@pacific.mpi-cbg.de>
+ <7veitwatvy.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7BIT
-Cc: sam@vilain.net, git@vger.kernel.org,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Andreas Ericsson <exon@op5.se>,
-	Christian Couder <christian@couder.net>,
-	Jeff King <peff@peff.net>
-To: Nick Edelen <sirnot@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Jun 07 22:49:23 2009
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Jun 07 23:27:08 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MDPIw-0003dB-DX
-	for gcvg-git-2@gmane.org; Sun, 07 Jun 2009 22:49:22 +0200
+	id 1MDPtT-0008MV-DR
+	for gcvg-git-2@gmane.org; Sun, 07 Jun 2009 23:27:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755244AbZFGUtO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 7 Jun 2009 16:49:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755230AbZFGUtN
-	(ORCPT <rfc822;git-outgoing>); Sun, 7 Jun 2009 16:49:13 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:59407 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755104AbZFGUtM (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 7 Jun 2009 16:49:12 -0400
-Received: from xanadu.home ([66.131.194.97]) by VL-MH-MR002.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
- with ESMTP id <0KKV00362Z5CAP60@VL-MH-MR002.ip.videotron.ca> for
- git@vger.kernel.org; Sun, 07 Jun 2009 16:48:49 -0400 (EDT)
-X-X-Sender: nico@xanadu.home
-In-reply-to: <c77435a80906071155g5530ccdel286907b7c6022838@mail.gmail.com>
-User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
+	id S1755641AbZFGV05 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 7 Jun 2009 17:26:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754456AbZFGV04
+	(ORCPT <rfc822;git-outgoing>); Sun, 7 Jun 2009 17:26:56 -0400
+Received: from osl1smout1.broadpark.no ([80.202.4.58]:40723 "EHLO
+	osl1smout1.broadpark.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754156AbZFGV04 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 7 Jun 2009 17:26:56 -0400
+Received: from osl1sminn1.broadpark.no ([80.202.4.59])
+ by osl1smout1.broadpark.no
+ (Sun Java(tm) System Messaging Server 6.3-3.01 (built Jul 12 2007; 32bit))
+ with ESMTP id <0KKW00HLK0WXK330@osl1smout1.broadpark.no> for
+ git@vger.kernel.org; Sun, 07 Jun 2009 23:26:57 +0200 (CEST)
+Received: from localhost ([80.202.166.56]) by osl1sminn1.broadpark.no
+ (Sun Java(tm) System Messaging Server 6.3-3.01 (built Jul 12 2007; 32bit))
+ with ESMTP id <0KKW003G80WWO740@osl1sminn1.broadpark.no> for
+ git@vger.kernel.org; Sun, 07 Jun 2009 23:26:57 +0200 (CEST)
+In-reply-to: <7veitwatvy.fsf@alter.siamese.dyndns.org>
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121003>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121004>
 
-On Sun, 7 Jun 2009, Nick Edelen wrote:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> how does this look?
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+>
+>> On Sun, 7 Jun 2009, Kjetil Barvik wrote:
+>>
+>>> Add {}-braces around an else-part, where the if-part already has
+>>> {}-braces.
+>>
+>> This is the wrong way round.  We prefer _not_ to add unnecessary braces, 
+>> but do tolerate them from time to time.
+>
+> I am at fault not spelling this out so far, but we prefer to match the
+> kernel style of having {} around a single-statment "else" body when the
+> corresponding "if" side needs one (or vice versa).
 
-Comments below.
+  OK!
 
-> Signed-off-by: Nick Edelen <sirnot@gmail.com>
-> 
-> ---
->  t/t5530-upload-pack-error.sh |    2 +-
->  upload-pack.c                |   50 +++++++++++++++++++++++++++++++++--------
->  2 files changed, 41 insertions(+), 11 deletions(-)
-> 
-> diff --git a/t/t5530-upload-pack-error.sh b/t/t5530-upload-pack-error.sh
-> index f5102b9..26bcd1e 100755
-> --- a/t/t5530-upload-pack-error.sh
-> +++ b/t/t5530-upload-pack-error.sh
-> @@ -51,7 +51,7 @@ test_expect_success 'fsck fails' '
->  test_expect_success 'upload-pack fails due to error in rev-list' '
-> 
->  	! echo "0032want $(git rev-parse HEAD)
-> -00000009done
-> +0034shallow $(git rev-parse HEAD^)00000009done
+  I can also say that it looks better in my eyes to do it like this, so,
+  Junio, please use this version of the patch, and forget about v2 of
+  the patch posted some time later.
 
-Why did you modify this?
-
->  0000" | git upload-pack . > /dev/null 2> output.err &&
->  	grep "waitpid (async) failed" output.err
->  '
-> diff --git a/upload-pack.c b/upload-pack.c
-> index edc7861..c8f2dca 100644
-> --- a/upload-pack.c
-> +++ b/upload-pack.c
-> @@ -29,6 +29,7 @@ static unsigned long oldest_have;
->  static int multi_ack, nr_our_refs;
->  static int use_thin_pack, use_ofs_delta, use_include_tag;
->  static int no_progress;
-> +static int shallow_nr;
->  static struct object_array have_obj;
->  static struct object_array want_obj;
->  static unsigned int timeout;
-> @@ -107,8 +108,6 @@ static int do_rev_list(int fd, void *create_full_pack)
->  	struct rev_info revs;
-> 
->  	pack_pipe = fdopen(fd, "w");
-> -	if (create_full_pack)
-> -		use_thin_pack = 0; /* no point doing it */
->  	init_revisions(&revs, NULL);
->  	revs.tag_objects = 1;
->  	revs.tree_objects = 1;
-> @@ -155,13 +154,22 @@ static void create_pack_file(void)
->  	const char *argv[10];
->  	int arg = 0;
-> 
-> -	rev_list.proc = do_rev_list;
-> -	/* .data is just a boolean: any non-NULL value will do */
-> -	rev_list.data = create_full_pack ? &rev_list : NULL;
-
-I'm glad you got rid of that.
-
-> -	if (start_async(&rev_list))
-> -		die("git upload-pack: unable to fork git-rev-list");
-> +	if (shallow_nr) {
-> +		rev_list.proc = do_rev_list;
-> +		rev_list.data = 0;
-> +		if (start_async(&rev_list))
-> +			die("git upload-pack: unable to fork git-rev-list");
-> +		argv[arg++] = "pack-objects";
-> +	} else {
-> +		argv[arg++] = "pack-objects";
-> +		argv[arg++] = "--revs";
-> +		argv[arg++] = "--include-tag";
-
-Why this unconditional --include-tags here?  Isn't it handled already a 
-couple lines down already?
-
-> +		if (create_full_pack)
-> +			argv[arg++] = "--all";
-> +		if (use_thin_pack)
-> +			argv[arg++] = "--thin";
-
-Please turn this "if (use_thin_pack)" into an "else if (use_thin_pack)" 
-instead.  No point using --thin for a full pack.
-
-The rest looks fine to me.
-
-
-Nicolas
+  -- kjetil
