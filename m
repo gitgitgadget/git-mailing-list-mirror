@@ -1,70 +1,63 @@
-From: Kjetil Barvik <barvik@broadpark.no>
-Subject: Re: [PATCH] symlinks.c: small style cleanup
-Date: Sun, 07 Jun 2009 23:25:47 +0200
-Organization: private
-Message-ID: <86fxebwxb8.fsf@broadpark.no>
-References: <1244374385-5253-1-git-send-email-barvik@broadpark.no>
- <alpine.DEB.1.00.0906071616060.26154@pacific.mpi-cbg.de>
- <7veitwatvy.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7BIT
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
+From: Markus Heidelberg <markus.heidelberg@web.de>
+Subject: [PATCH 1/6] send-email: fix a typo in a comment
+Date: Sun,  7 Jun 2009 23:40:52 +0200
+Message-ID: <1244410857-920-2-git-send-email-markus.heidelberg@web.de>
+References: <1244410857-920-1-git-send-email-markus.heidelberg@web.de>
+Cc: git@vger.kernel.org, Markus Heidelberg <markus.heidelberg@web.de>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Jun 07 23:27:08 2009
+X-From: git-owner@vger.kernel.org Sun Jun 07 23:41:39 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MDPtT-0008MV-DR
-	for gcvg-git-2@gmane.org; Sun, 07 Jun 2009 23:27:07 +0200
+	id 1MDQ7W-0004bz-Ow
+	for gcvg-git-2@gmane.org; Sun, 07 Jun 2009 23:41:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755641AbZFGV05 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 7 Jun 2009 17:26:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754456AbZFGV04
-	(ORCPT <rfc822;git-outgoing>); Sun, 7 Jun 2009 17:26:56 -0400
-Received: from osl1smout1.broadpark.no ([80.202.4.58]:40723 "EHLO
-	osl1smout1.broadpark.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754156AbZFGV04 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 7 Jun 2009 17:26:56 -0400
-Received: from osl1sminn1.broadpark.no ([80.202.4.59])
- by osl1smout1.broadpark.no
- (Sun Java(tm) System Messaging Server 6.3-3.01 (built Jul 12 2007; 32bit))
- with ESMTP id <0KKW00HLK0WXK330@osl1smout1.broadpark.no> for
- git@vger.kernel.org; Sun, 07 Jun 2009 23:26:57 +0200 (CEST)
-Received: from localhost ([80.202.166.56]) by osl1sminn1.broadpark.no
- (Sun Java(tm) System Messaging Server 6.3-3.01 (built Jul 12 2007; 32bit))
- with ESMTP id <0KKW003G80WWO740@osl1sminn1.broadpark.no> for
- git@vger.kernel.org; Sun, 07 Jun 2009 23:26:57 +0200 (CEST)
-In-reply-to: <7veitwatvy.fsf@alter.siamese.dyndns.org>
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.3 (gnu/linux)
+	id S1754955AbZFGVlF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 7 Jun 2009 17:41:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754555AbZFGVlE
+	(ORCPT <rfc822;git-outgoing>); Sun, 7 Jun 2009 17:41:04 -0400
+Received: from fmmailgate01.web.de ([217.72.192.221]:33445 "EHLO
+	fmmailgate01.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752947AbZFGVlD (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 7 Jun 2009 17:41:03 -0400
+Received: from smtp07.web.de (fmsmtp07.dlan.cinetic.de [172.20.5.215])
+	by fmmailgate01.web.de (Postfix) with ESMTP id BC881104B5D4D;
+	Sun,  7 Jun 2009 23:41:04 +0200 (CEST)
+Received: from [89.59.87.118] (helo=localhost.localdomain)
+	by smtp07.web.de with asmtp (TLSv1:AES256-SHA:256)
+	(WEB.DE 4.110 #277)
+	id 1MDQ6y-0007ZM-01; Sun, 07 Jun 2009 23:41:04 +0200
+X-Mailer: git-send-email 1.6.3.2.221.g0ff2f
+In-Reply-To: <1244410857-920-1-git-send-email-markus.heidelberg@web.de>
+X-Sender: markus.heidelberg@web.de
+X-Provags-ID: V01U2FsdGVkX194xUL6c/epUIuzaX+beWM3rYp6+LysXlRs10Gf
+	18dXHMnkSXjJIJnz25gFdrT3Sv7/+h4hTNEkaYZhheR+kGq0Yz
+	roM5Fg7/K7KAy1dDk7FQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121004>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121005>
 
-Junio C Hamano <gitster@pobox.com> writes:
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
->
->> On Sun, 7 Jun 2009, Kjetil Barvik wrote:
->>
->>> Add {}-braces around an else-part, where the if-part already has
->>> {}-braces.
->>
->> This is the wrong way round.  We prefer _not_ to add unnecessary braces, 
->> but do tolerate them from time to time.
->
-> I am at fault not spelling this out so far, but we prefer to match the
-> kernel style of having {} around a single-statment "else" body when the
-> corresponding "if" side needs one (or vice versa).
+Signed-off-by: Markus Heidelberg <markus.heidelberg@web.de>
+---
+ git-send-email.perl |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-  OK!
-
-  I can also say that it looks better in my eyes to do it like this, so,
-  Junio, please use this version of the patch, and forget about v2 of
-  the patch posted some time later.
-
-  -- kjetil
+diff --git a/git-send-email.perl b/git-send-email.perl
+index 3d6a982..5b7ab4e 100755
+--- a/git-send-email.perl
++++ b/git-send-email.perl
+@@ -804,7 +804,7 @@ sub sanitize_address
+ }
+ 
+ # Returns 1 if the message was sent, and 0 otherwise.
+-# In actuality, the whole program dies when a there
++# In actuality, the whole program dies when there
+ # is an error sending a message.
+ 
+ sub send_message
+-- 
+1.6.3.2.221.g0ff2f
