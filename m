@@ -1,59 +1,138 @@
-From: Nanako Shiraishi <nanako3@lavabit.com>
-Subject: Re: post-rebase hook (correction from Re: post-update hook)
-Date: Mon, 08 Jun 2009 05:41:48 +0900
-Message-ID: <20090608054148.6117@nanako3.lavabit.com>
-References: <4A2BC306.3000001@box.net> <4A2BC367.7020309@box.net>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: Comments pack protocol description in "Git Community Book"
+	(second round)
+Date: Sun, 7 Jun 2009 13:43:43 -0700
+Message-ID: <20090607204343.GC16497@spearce.org>
+References: <200905122329.15379.jnareb@gmail.com> <d411cc4a0905140655y244f21aem44f1e246dd74d80c@mail.gmail.com> <200906022339.08639.jnareb@gmail.com> <200906062338.02451.jnareb@gmail.com> <d411cc4a0906061458g494d80dbwe3a5358edfd1d49e@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Cc: git@vger.kernel.org
-To: Soham Mehta <soham@box.net>
-X-From: git-owner@vger.kernel.org Sun Jun 07 22:42:51 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>,
+	Andreas Ericsson <ae@op5.se>, Tony Finch <dot@dotat.at>,
+	Johannes Sixt <j6t@kdbg.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>
+To: Scott Chacon <schacon@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Jun 07 22:43:54 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MDPCU-00015x-PK
-	for gcvg-git-2@gmane.org; Sun, 07 Jun 2009 22:42:43 +0200
+	id 1MDPDb-0001Z7-Iq
+	for gcvg-git-2@gmane.org; Sun, 07 Jun 2009 22:43:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754715AbZFGUmc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 7 Jun 2009 16:42:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754439AbZFGUmb
-	(ORCPT <rfc822;git-outgoing>); Sun, 7 Jun 2009 16:42:31 -0400
-Received: from karen.lavabit.com ([72.249.41.33]:47077 "EHLO karen.lavabit.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754205AbZFGUmb (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 7 Jun 2009 16:42:31 -0400
-Received: from d.earth.lavabit.com (d.earth.lavabit.com [192.168.111.13])
-	by karen.lavabit.com (Postfix) with ESMTP id 1DA5E11B7C7;
-	Sun,  7 Jun 2009 15:42:33 -0500 (CDT)
-Received: from 4622.lavabit.com (212.62.97.21)
-	by lavabit.com with ESMTP id 2HDE0O6R0QJM; Sun, 07 Jun 2009 15:42:33 -0500
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws; s=lavabit; d=lavabit.com;
-  b=1SlI6V6TDkE/UUtgB2uRmBQfcYPLDm8r47qXfcYmMSSZnL5HKWtaJ4y4g4wzB/CMmOtgN9Xrv7ezmTwDpIQPkhiC/fG7E8EIqUUrBOf0YmE16HGsNv6BMbqiTkjz7jNgn6SZRgDxqWlRMGfFDnD9mE//SP1ExnzrWUVHl2sybsA=;
-  h=From:To:Cc:Subject:In-Reply-To:References:Date:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id;
-In-Reply-To: <4A2BC367.7020309@box.net>
+	id S1754795AbZFGUnn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 7 Jun 2009 16:43:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754570AbZFGUnm
+	(ORCPT <rfc822;git-outgoing>); Sun, 7 Jun 2009 16:43:42 -0400
+Received: from george.spearce.org ([209.20.77.23]:56142 "EHLO
+	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754551AbZFGUnl (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 7 Jun 2009 16:43:41 -0400
+Received: by george.spearce.org (Postfix, from userid 1001)
+	id DB3F2381FD; Sun,  7 Jun 2009 20:43:43 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <d411cc4a0906061458g494d80dbwe3a5358edfd1d49e@mail.gmail.com>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121000>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121001>
 
-Quoting Soham Mehta <soham@box.net>:
+Scott Chacon <schacon@gmail.com> wrote:
+> In addition to that, I started taking a shot at putting together an
+> RFC formatted documentation of this protocol as was requested.
+...
+> http://git-scm.com/gitserver.txt
 
-> thus spake Soham Mehta , On 6/7/2009 6:39 AM:
->> Wondering why there isn't a post-update (post-reset, post-cherrypick
->> etc) hook in git? Is it only a matter of creating one, or is there a
->> reason?
->>
-> Oops, I meant post-rebase hook
+SSH is described by RFC 4251 and RFC 4254.  Reference it when you
+mention it.
 
-There are five valid reasons you might want a hook to a git operation.
+Section 2.2.3 Commit is missing spaces after the parent, author,
+committer, encoding headers:
 
-http://thread.gmane.org/gmane.comp.version-control.git/70781/focus=71069
+>  parent    = "parent" + sha + \n
+>  userinfo  = NAME <EMAIL> TIME
+>  author    = "author" + userinfo + \n
+>  committer = "committer" + userinfo + \n
+>  encoding  = "encoding" + encoding + \n
 
-I don't think yours is backed by any of them.
+2.2.4. Tag, same problem.
+
+>   At the end of the
+> packfile is a 20-byte SHA1 sum of all the shas in that packfile.
+
+No.  The SHA-1 checksum on the footer of the pack is over all of
+the preceeding bytes of the pack.
+
+> (B << 4) & A bytes when expanded
+
+No.  (B << 4) | A bytes when expanded.
+
+>  [1 byte]   | 1 | type (3) | size A (4)     |  |- object #3 header
+>             +-------------------------------+  |
+>  [1 byte]   | 0 | size data B (7)           |  |
+>             +-------------------------------+  |
+>  [1 byte]   | 0 | size data C (7)           |  |
+>             +-------------------------------+ -+
+>             | compressed object data        | (C << 11) & (B << 4) & A
+>             |                               | bytes when expanded
+
+The B byte has the high bit set (1).  And the length is
+(C << 11) | (B << 4) | A.
+
+Also, I found reading that difficult, and it doesn't mention the
+OBJ_REF_DELTA or OBJ_OFS_DELTA cases.
+
+You also need to note that the version number in the file header
+is currently '2', as described by this RFC.
+
+>    Finally, the trailer records 20-byte SHA1 checksum of the rest of the
+>   file.
+
+Like I said above, its the preceeding bytes of the pack.
+
+Section 4.2 Git Protocol, explain the git:// URI first, and then
+how a client splits that into the request, and then how it formats
+the request.  Don't forget to include an example with a non-standard
+port number.
+
+Also document what the standard port number is.
+
+Elsewhere in the document you say 'upload-pack' or 'receive-pack'.
+I think you should be saying 'git-upload-pack' or 'git-receive-pack'
+everywhere, as these are the formal names in the protocol.
+
+Section 5.2, Capabilities:
+
+>  Client sends space separated list of capabilities it wants.  It
+>  SHOULD send a subset of server capabilities, i.e do not send
+>  capabilities served does not advertise.  The client SHOULD NOT ask
+>  for capabilities the server did not say it supports.
+
+I thought we had said it was client MUST send a subset of server
+capabilities; client MUST NOT ask for capabilities server did
+not advertise support of.
+
+>  Server MUST ignore capabilities it does not understand.  Server MUST
+>  NOT ignore capabilities that client requested and server advertised.
+
+I think that's just lazy coding on the server part.  If the server
+gets a capability request it can't honor, it MUST abort, it might
+corrupt the stream to the client.
+
+> 5.2.1.  multi-ack
+>
+>  The 'multi-ack' capability allows the server to return "ACK $SHA1
+
+multi_ack
+
+>  Without multi_ack, a client sends have lines in --date-order until
+>  the server has found a common base.  That means the client will send
+
+Explain --date-order, don't assume the reader knows it.
+
+I'm giving up for now.  :-)
 
 -- 
-Nanako Shiraishi
-http://ivory.ap.teacup.com/nanako3/
+Shawn.
