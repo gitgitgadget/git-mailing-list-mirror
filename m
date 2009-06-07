@@ -1,72 +1,175 @@
-From: "Robin H. Johnson" <robbat2@gentoo.org>
-Subject: Re: post-rebase hook (correction from Re: post-update hook)
-Date: Sun, 7 Jun 2009 15:37:08 -0700
-Message-ID: <robbat2-20090607T223615-931190896Z@orbis-terrarum.net>
-References: <4A2BC306.3000001@box.net> <4A2BC367.7020309@box.net> <20090608054148.6117@nanako3.lavabit.com>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: [EGIT PATCH 05/10] Do not write to the reflog unless the
+	refupdate logmessage is set
+Date: Sun, 7 Jun 2009 15:44:46 -0700
+Message-ID: <20090607224446.GE16497@spearce.org>
+References: <20090520221651.GR30527@spearce.org> <1243462137-24133-6-git-send-email-robin.rosenberg@dewire.com> <20090603154129.GG3355@spearce.org> <200906080027.16338.robin.rosenberg.lists@dewire.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="Vy1A5eXR7jld12ZH"
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Jun 08 00:37:26 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+X-From: git-owner@vger.kernel.org Mon Jun 08 00:44:56 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MDQzW-0002R5-8M
-	for gcvg-git-2@gmane.org; Mon, 08 Jun 2009 00:37:26 +0200
+	id 1MDR6k-0004dD-0h
+	for gcvg-git-2@gmane.org; Mon, 08 Jun 2009 00:44:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756248AbZFGWhN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 7 Jun 2009 18:37:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756098AbZFGWhM
-	(ORCPT <rfc822;git-outgoing>); Sun, 7 Jun 2009 18:37:12 -0400
-Received: from b01.ext.isohunt.com ([208.71.112.51]:45960 "EHLO
-	mail.isohunt.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1755183AbZFGWhL (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 7 Jun 2009 18:37:11 -0400
-Received: (qmail 29569 invoked from network); 7 Jun 2009 22:37:11 -0000
-Received: from tsi-static.orbis-terrarum.net (HELO curie.orbis-terrarum.net) (76.10.188.108)
-  (smtp-auth username robbat2@isohunt.com, mechanism login)
-  by mail.isohunt.com (qpsmtpd/0.33-dev on beta01) with (AES256-SHA encrypted) ESMTPSA; Sun, 07 Jun 2009 22:37:11 +0000
-Received: (qmail 24991 invoked by uid 10000); 7 Jun 2009 15:37:08 -0700
+	id S1754938AbZFGWop (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 7 Jun 2009 18:44:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754703AbZFGWoo
+	(ORCPT <rfc822;git-outgoing>); Sun, 7 Jun 2009 18:44:44 -0400
+Received: from george.spearce.org ([209.20.77.23]:44523 "EHLO
+	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752935AbZFGWon (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 7 Jun 2009 18:44:43 -0400
+Received: by george.spearce.org (Postfix, from userid 1001)
+	id 54BC2381FE; Sun,  7 Jun 2009 22:44:46 +0000 (UTC)
 Content-Disposition: inline
-In-Reply-To: <20090608054148.6117@nanako3.lavabit.com>
-User-Agent: Mutt/1.5.16 (2007-06-09)
+In-Reply-To: <200906080027.16338.robin.rosenberg.lists@dewire.com>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121017>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121018>
 
+Robin Rosenberg <robin.rosenberg.lists@dewire.com> wrote:
+> onsdag 03 juni 2009 17:41:29 skrev "Shawn O. Pearce" <spearce@spearce.org>:
+> > Robin Rosenberg <robin.rosenberg@dewire.com> wrote:
+> > > Do not write to the reflog unless the refupdate logmessage is set
+> > 
+> > Why not?  What is the justification for this?  Isn't a reflog record
+> > still useful, at least to point out that something happened at this
+> > point in time, and here's the old/new values?
+> 
+> I need to do an update without logging to avoid a "dummy" entry in the
+> reflog since I use the RefUpdate mechanism. Since this is an API and
+> not and end user function, I was thinking this might be ok after all.
 
---Vy1A5eXR7jld12ZH
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+ACK, I agree.  How about this then?
+ 
+--8<--
+From: Robin Rosenberg <robin.rosenberg@dewire.com>
+Subject: [PATCH] Do not write to the reflog if refLogMessage is null
 
-On Mon, Jun 08, 2009 at 05:41:48AM +0900, Nanako Shiraishi wrote:
-> There are five valid reasons you might want a hook to a git operation.
-> http://thread.gmane.org/gmane.comp.version-control.git/70781/focus=3D71069
-> I don't think yours is backed by any of them.
-That's a nice writeup. Could we consider adding this to the githooks
-documentation?
+This permits micro-update steps (or otherwise uninteresting states)
+to be skipped in the reflog.
 
---=20
-Robin Hugh Johnson
-Gentoo Linux Developer & Infra Guy
-E-Mail     : robbat2@gentoo.org
-GnuPG FP   : 11AC BA4F 4778 E3F6 E4ED  F38E B27B 944E 3488 4E85
+Signed-off-by: Robin Rosenberg <robin.rosenberg@dewire.com>
+Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
+---
+ .../tst/org/spearce/jgit/lib/RefUpdateTest.java    |    1 +
+ .../src/org/spearce/jgit/lib/RefUpdate.java        |   53 +++++++++++++++----
+ 2 files changed, 43 insertions(+), 11 deletions(-)
 
---Vy1A5eXR7jld12ZH
-Content-Type: application/pgp-signature
-Content-Disposition: inline
+diff --git a/org.spearce.jgit.test/tst/org/spearce/jgit/lib/RefUpdateTest.java b/org.spearce.jgit.test/tst/org/spearce/jgit/lib/RefUpdateTest.java
+index 6b1975a..84653c8 100644
+--- a/org.spearce.jgit.test/tst/org/spearce/jgit/lib/RefUpdateTest.java
++++ b/org.spearce.jgit.test/tst/org/spearce/jgit/lib/RefUpdateTest.java
+@@ -126,6 +126,7 @@ public void testDeleteLooseAndItsDirectory() throws IOException {
+ 		RefUpdate updateRef = db.updateRef("refs/heads/z/c");
+ 		updateRef.setNewObjectId(pid);
+ 		updateRef.setForceUpdate(true);
++		updateRef.setRefLogMessage("new test ref", false);
+ 		Result update = updateRef.update();
+ 		assertEquals(Result.NEW, update); // internal
+ 		assertTrue(new File(db.getDirectory(), Constants.R_HEADS + "z")
+diff --git a/org.spearce.jgit/src/org/spearce/jgit/lib/RefUpdate.java b/org.spearce.jgit/src/org/spearce/jgit/lib/RefUpdate.java
+index a9ab73b..17fe3be 100644
+--- a/org.spearce.jgit/src/org/spearce/jgit/lib/RefUpdate.java
++++ b/org.spearce.jgit/src/org/spearce/jgit/lib/RefUpdate.java
+@@ -165,6 +165,7 @@ RefUpdate(final RefDatabase r, final Ref ref, final File f) {
+ 		this.ref = ref;
+ 		oldValue = ref.getObjectId();
+ 		looseFile = f;
++		refLogMessage = "";
+ 	}
+ 
+ 	/** @return the repository the updated ref resides in */
+@@ -264,7 +265,8 @@ public void setRefLogIdent(final PersonIdent pi) {
+ 	/**
+ 	 * Get the message to include in the reflog.
+ 	 * 
+-	 * @return message the caller wants to include in the reflog.
++	 * @return message the caller wants to include in the reflog; null if the
++	 *         update should not be logged.
+ 	 */
+ 	public String getRefLogMessage() {
+ 		return refLogMessage;
+@@ -281,8 +283,21 @@ public String getRefLogMessage() {
+ 	 *            message.
+ 	 */
+ 	public void setRefLogMessage(final String msg, final boolean appendStatus) {
+-		refLogMessage = msg;
+-		refLogIncludeResult = appendStatus;
++		if (msg == null && !appendStatus)
++			disableRefLog();
++		else if (msg == null && appendStatus) {
++			refLogMessage = "";
++			refLogIncludeResult = true;
++		} else {
++			refLogMessage = msg;
++			refLogIncludeResult = appendStatus;
++		}
++	}
++
++	/** Don't record this update in the ref's associated reflog. */
++	public void disableRefLog() {
++		refLogMessage = null;
++		refLogIncludeResult = false;
+ 	}
+ 
+ 	/**
+@@ -471,21 +486,37 @@ private Result updateStore(final LockFile lock, final Result status)
+ 		lock.setNeedStatInformation(true);
+ 		lock.write(newValue);
+ 		String msg = getRefLogMessage();
+-		if (msg != null && refLogIncludeResult) {
+-			if (status == Result.FORCED)
+-				msg += ": forced-update";
+-			else if (status == Result.FAST_FORWARD)
+-				msg += ": fast forward";
+-			else if (status == Result.NEW)
+-				msg += ": created";
++		if (msg != null) {
++			if (refLogIncludeResult) {
++				String strResult = toResultString(status);
++				if (strResult != null) {
++					if (msg.length() > 0)
++						msg = msg + ": " + strResult;
++					else
++						msg = strResult;
++				}
++			}
++			RefLogWriter.append(this, msg);
+ 		}
+-		RefLogWriter.append(this, msg);
+ 		if (!lock.commit())
+ 			return Result.LOCK_FAILURE;
+ 		db.stored(this.ref.getOrigName(),  ref.getName(), newValue, lock.getCommitLastModified());
+ 		return status;
+ 	}
+ 
++	private static String toResultString(final Result status) {
++		switch (status) {
++		case FORCED:
++			return "forced-update";
++		case FAST_FORWARD:
++			return "fast forward";
++		case NEW:
++			return "created";
++		default:
++			return null;
++		}
++	}
++
+ 	/**
+ 	 * Handle the abstraction of storing a ref update. This is because both
+ 	 * updating and deleting of a ref have merge testing in common.
+-- 
+1.6.3.2.322.g117de
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.11 (GNU/Linux)
-Comment: Robbat2 @ Orbis-Terrarum Networks - The text below is a digital signature. If it doesn't make any sense to you, ignore it.
-
-iEYEARECAAYFAkosQRQACgkQPpIsIjIzwiwjsACgyUK7PJD5KQ6TNUioQQeyWQ/A
-kEYAnApeHRFsXYa0oZpm+GyYpNT0D8CE
-=X60P
------END PGP SIGNATURE-----
-
---Vy1A5eXR7jld12ZH--
+-- 
+Shawn.
