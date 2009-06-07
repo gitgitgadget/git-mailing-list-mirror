@@ -1,69 +1,68 @@
-From: Robin Rosenberg <robin.rosenberg@dewire.com>
-Subject: [EGIT PATCH 1/3] Assert the name and origName properties of Ref objects
-Date: Sun,  7 Jun 2009 22:19:09 +0200
-Message-ID: <1244405951-21808-2-git-send-email-robin.rosenberg@dewire.com>
-References: <y>
- <1244405951-21808-1-git-send-email-robin.rosenberg@dewire.com>
-Cc: git@vger.kernel.org, Robin Rosenberg <robin.rosenberg@dewire.com>
-To: spearce@spearce.org
-X-From: git-owner@vger.kernel.org Sun Jun 07 22:19:48 2009
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] daemon: Skip unknown "extra arg" information
+Date: Sun, 07 Jun 2009 13:29:16 -0700
+Message-ID: <7vfxebaiub.fsf@alter.siamese.dyndns.org>
+References: <20090604220824.GT3355@spearce.org>
+	<7vbpp3tsg0.fsf@alter.siamese.dyndns.org>
+	<20090605013332.GV3355@spearce.org> <200906072056.08680.j6t@kdbg.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
+To: Johannes Sixt <j6t@kdbg.org>
+X-From: git-owner@vger.kernel.org Sun Jun 07 22:29:26 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MDOqG-0003R9-J3
-	for gcvg-git-2@gmane.org; Sun, 07 Jun 2009 22:19:45 +0200
+	id 1MDOzd-0006my-Rp
+	for gcvg-git-2@gmane.org; Sun, 07 Jun 2009 22:29:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754706AbZFGUTR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 7 Jun 2009 16:19:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754551AbZFGUTQ
-	(ORCPT <rfc822;git-outgoing>); Sun, 7 Jun 2009 16:19:16 -0400
-Received: from mail.dewire.com ([83.140.172.130]:18039 "EHLO dewire.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754029AbZFGUTP (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 7 Jun 2009 16:19:15 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by dewire.com (Postfix) with ESMTP id 2ACA2146D031;
-	Sun,  7 Jun 2009 22:19:15 +0200 (CEST)
-X-Virus-Scanned: by amavisd-new at dewire.com
-Received: from dewire.com ([127.0.0.1])
-	by localhost (torino.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id Nr7POK9mCNqJ; Sun,  7 Jun 2009 22:19:14 +0200 (CEST)
-Received: from localhost.localdomain (unknown [10.9.0.5])
-	by dewire.com (Postfix) with ESMTP id 09193146D038;
-	Sun,  7 Jun 2009 22:19:14 +0200 (CEST)
-X-Mailer: git-send-email 1.6.3.2.199.g7340d
-In-Reply-To: <1244405951-21808-1-git-send-email-robin.rosenberg@dewire.com>
+	id S1754401AbZFGU3R (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 7 Jun 2009 16:29:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754295AbZFGU3Q
+	(ORCPT <rfc822;git-outgoing>); Sun, 7 Jun 2009 16:29:16 -0400
+Received: from fed1rmmtao102.cox.net ([68.230.241.44]:63138 "EHLO
+	fed1rmmtao102.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754205AbZFGU3P (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 7 Jun 2009 16:29:15 -0400
+Received: from fed1rmimpo03.cox.net ([70.169.32.75])
+          by fed1rmmtao102.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20090607202917.QYFC20976.fed1rmmtao102.cox.net@fed1rmimpo03.cox.net>;
+          Sun, 7 Jun 2009 16:29:17 -0400
+Received: from localhost ([68.225.240.211])
+	by fed1rmimpo03.cox.net with bizsmtp
+	id 18VH1c0024aMwMQ048VHaw; Sun, 07 Jun 2009 16:29:17 -0400
+X-VR-Score: -200.00
+X-Authority-Analysis: v=1.0 c=1 a=86Vp4Fqyi4EA:10 a=0a0hY8H0wKQA:10
+ a=A9qS8gIqAAAA:8 a=4FQ_ZY0aZZZ1nY8ZNKQA:9 a=zub2SzJIyg5zbBH3_3grLw6yrwkA:4
+ a=Kj4G0JfAssAA:10
+X-CM-Score: 0.00
+In-Reply-To: <200906072056.08680.j6t@kdbg.org> (Johannes Sixt's message of "Sun\, 7 Jun 2009 20\:56\:08 +0200")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120998>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120999>
 
-Signed-off-by: Robin Rosenberg <robin.rosenberg@dewire.com>
----
- .../tst/org/spearce/jgit/lib/RefTest.java          |   11 +++++++++++
- 1 files changed, 11 insertions(+), 0 deletions(-)
+Johannes Sixt <j6t@kdbg.org> writes:
 
-diff --git a/org.spearce.jgit.test/tst/org/spearce/jgit/lib/RefTest.java b/org.spearce.jgit.test/tst/org/spearce/jgit/lib/RefTest.java
-index 440686d..fabbe7e 100644
---- a/org.spearce.jgit.test/tst/org/spearce/jgit/lib/RefTest.java
-+++ b/org.spearce.jgit.test/tst/org/spearce/jgit/lib/RefTest.java
-@@ -144,4 +144,15 @@ public void testReadSimplePackedRefSameRepo() throws IOException {
- 		assertEquals(Storage.LOOSE_PACKED, ref.getStorage());
- 	}
- 
-+	public void testOrigResolvedNamesBranch() throws IOException {
-+		Ref ref = db.getRef("a");
-+		assertEquals("refs/heads/a", ref.getName());
-+		assertEquals("refs/heads/a", ref.getOrigName());
-+	}
-+
-+	public void testOrigResolvedNamesSymRef() throws IOException {
-+		Ref ref = db.getRef("HEAD");
-+		assertEquals("refs/heads/master", ref.getName());
-+		assertEquals("HEAD", ref.getOrigName());
-+	}
- }
--- 
-1.6.3.2.199.g7340d
+> On Freitag, 5. Juni 2009, Shawn O. Pearce wrote:
+>> Actually, we're already f'kd.  We can't change the protocol like
+>> we had hoped.  I still think this should go in maint.
+>>
+>> --8<--
+>> daemon: Strictly parse the "extra arg" part of the command
+>>
+>> Since 1.4.4.5 (49ba83fb67 "Add virtualization support to git-daemon")
+>> git daemon enters an infinite loop and never terminates if a client
+>> hides any extra arguments in the initial request line which is not
+>> exactly "\0host=blah\0".
+>
+> I see you applied this to maint. Since this patch actually fixes a 
+> DoS-exploitable bug, shouldn't it be applied all the way back to 1.4.4.5?
+
+I personally do not have the bandwidth to worry about anything older than
+say 1.6.0.  Interested parties (read: distro packagers who pride
+themselves for their LTS) can do that themselves.
