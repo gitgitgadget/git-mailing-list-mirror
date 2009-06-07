@@ -1,124 +1,105 @@
-From: =?utf-8?q?Santi=20B=C3=A9jar?= <santi@agolina.net>
-Subject: [PATCHv2 1/3] parse-remote: function to get the tracking branch to be merge
-Date: Sun,  7 Jun 2009 11:44:20 +0200
-Message-ID: <1244367862-6306-1-git-send-email-santi@agolina.net>
+From: Tay Ray Chuan <rctay89@gmail.com>
+Subject: Re: [Patch] Prevent cloning over http from spewing
+Date: Sun, 7 Jun 2009 18:31:38 +0800
+Message-ID: <be6fef0d0906070331y5fd596d1k67893a96a4d872ac@mail.gmail.com>
+References: <20090602174229.GA14455@infidigm.net>
+	 <m3vdnda9f7.fsf@localhost.localdomain>
+	 <7vmy8p8947.fsf@alter.siamese.dyndns.org>
+	 <20090603191050.GB29564@coredump.intra.peff.net>
+	 <20090603191555.GL3355@spearce.org>
+	 <be6fef0d0906040545j7bd754e0j2c60af833e2ac4a4@mail.gmail.com>
+	 <20090604160152.GA13984@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jun 07 11:44:51 2009
+Cc: "Shawn O. Pearce" <spearce@spearce.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Jakub Narebski <jnareb@gmail.com>, sparse@infidigm.net,
+	git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sun Jun 07 12:31:53 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MDEvn-000847-RS
-	for gcvg-git-2@gmane.org; Sun, 07 Jun 2009 11:44:48 +0200
+	id 1MDFfG-0003BJ-IZ
+	for gcvg-git-2@gmane.org; Sun, 07 Jun 2009 12:31:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755048AbZFGJoK convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 7 Jun 2009 05:44:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754118AbZFGJoK
-	(ORCPT <rfc822;git-outgoing>); Sun, 7 Jun 2009 05:44:10 -0400
-Received: from mail-bw0-f213.google.com ([209.85.218.213]:59715 "EHLO
-	mail-bw0-f213.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753073AbZFGJoJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 7 Jun 2009 05:44:09 -0400
-Received: by bwz9 with SMTP id 9so2420856bwz.37
-        for <git@vger.kernel.org>; Sun, 07 Jun 2009 02:44:10 -0700 (PDT)
-Received: by 10.204.51.210 with SMTP id e18mr5295534bkg.69.1244367850060;
-        Sun, 07 Jun 2009 02:44:10 -0700 (PDT)
-Received: from localhost (p5B0D6736.dip.t-dialin.net [91.13.103.54])
-        by mx.google.com with ESMTPS id 19sm2094308fkr.55.2009.06.07.02.44.09
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 07 Jun 2009 02:44:09 -0700 (PDT)
-X-Mailer: git-send-email 1.6.3.1.308.g426b5
+	id S1755255AbZFGKbi convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 7 Jun 2009 06:31:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754619AbZFGKbh
+	(ORCPT <rfc822;git-outgoing>); Sun, 7 Jun 2009 06:31:37 -0400
+Received: from mail-pz0-f171.google.com ([209.85.222.171]:43512 "EHLO
+	mail-pz0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754612AbZFGKbg convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 7 Jun 2009 06:31:36 -0400
+Received: by pzk1 with SMTP id 1so1671858pzk.33
+        for <git@vger.kernel.org>; Sun, 07 Jun 2009 03:31:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=paC8+2DgmMJBlLkVRhLviUJpBeoadqh+Sirj1Vj2r7c=;
+        b=HwvEeaFgCxIe5r/Ddk+yssRD4iwi6WGrEL9J+E8+00sGOZTLf5pEJDVuWQZatZKUcn
+         v6FNkhNVcPEDJ5gC8ujVLS+cR31X8DAmQMvKWZGox106/cmHlDu1TfBZdmHJwlPPuWcG
+         N0rv2izzgdSFKLF0i0eX8eqDxtwwu3Vd3VW48=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=mNBkIsWFFb3YbNIZNNMzE1ltdS3LLbSbjR24yU+pPjIOfwe1RISvIUFaHkW6+xn7/y
+         kmcZohDUPXv/N8uxqEZkfc93rx2wexYDm4dnrnzsAei2765KEl/nzj+p6sNhlfflGUkc
+         aySYwOnDjXHdyesti9ywoeOoEN3h71XZjFgeg=
+Received: by 10.142.82.6 with SMTP id f6mr2012860wfb.182.1244370698268; Sun, 
+	07 Jun 2009 03:31:38 -0700 (PDT)
+In-Reply-To: <20090604160152.GA13984@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120961>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120962>
 
-The only user of get_remote_refs_for_fetch was "git pull --rebase" and
-it only wanted the tracking branch to be merge. So, add a simple
-function with this new meaning.
+Hi,
 
-No behavior changes.
+On Fri, Jun 5, 2009 at 12:01 AM, Jeff King<peff@peff.net> wrote:
+> Thanks, I took a look at starting on a progress meter yesterday, but =
+I
+> do think it makes sense to integrate with the work you are doing.
+>
+> I tried your http-progress-indicators branch. A few comments:
+>
+> =A01. You still end up with a lot of lines of output. Some of those a=
+re
+> =A0 =A0 "Getting pack $x" which we can probably get rid of in non-ver=
+bose
+> =A0 =A0 mode. But we still get a different progress indicator line fo=
+r each
+> =A0 =A0 fetched item, which can add up to quite a lot. I was thinking=
+ of
+> =A0 =A0 something like
+>
+> =A0 =A0 =A0 =A0Fetching %s (got %d packs, %d loose): (%d/%d)
+>
+> =A0 =A0 with the substitutions:
+>
+> =A0 =A0 =A0 %s =3D "pack", "index", or "loose object"
+> =A0 =A0 =A0 %d packs, %d loose =3D a running count of how much we've =
+gotten
+> =A0 =A0 =A0 %d/%d =3D current and total byte counts for what we are g=
+etting now
+>
+> =A0 =A0 and then you could keep everything on a single line. I don't =
+think
+> =A0 =A0 is possible with the current progress code (it doesn't let yo=
+u
+> =A0 =A0 restart the counter), but it should be easy with some tweakin=
+g.
 
-Signed-off-by: Santi B=C3=A9jar <santi@agolina.net>
----
- git-parse-remote.sh |   33 +++++++++++++++++++++++++++++++++
- git-pull.sh         |    7 ++-----
- 2 files changed, 35 insertions(+), 5 deletions(-)
- mode change 100755 =3D> 100644 git-parse-remote.sh
+Hmm, just wondering, is this is the intended display for "-q" or "-v"?
+Or should I do isatty(), like builtin-pack-objects.c does for the
+"Writing objects" progress indicator?
 
-diff --git a/git-parse-remote.sh b/git-parse-remote.sh
-old mode 100755
-new mode 100644
-index a296719..8b3ba72
---- a/git-parse-remote.sh
-+++ b/git-parse-remote.sh
-@@ -229,6 +229,38 @@ get_remote_refs_for_fetch () {
- 	esac
- }
-=20
-+get_remote_merge_branch () {
-+	case "$#" in
-+	0|1)
-+	    die "internal error: get-remote-merge-branch." ;;
-+	*)
-+	    repo=3D$1
-+	    shift
-+	    # FIXME: It should return the tracking branch
-+	    #        Currently only works with the default mapping
-+	    for ref
-+	    do
-+		case "$ref" in
-+		+*)
-+			ref=3D$(expr "z$ref" : 'z+\(.*\)')
-+			;;
-+		esac
-+		expr "z$ref" : 'z.*:' >/dev/null || ref=3D"${ref}:"
-+		remote=3D$(expr "z$ref" : 'z\([^:]*\):')
-+		case "$remote" in
-+		'' | HEAD ) remote=3DHEAD ;;
-+		heads/*) remote=3D${remote#heads/} ;;
-+		refs/heads/*) remote=3D${remote#refs/heads/} ;;
-+		refs/* | tags/* | remotes/* ) break
-+		esac
-+
-+		echo "refs/remotes/$repo/$remote"
-+		break
-+	    done
-+	    ;;
-+	esac
-+}
-+
- resolve_alternates () {
- 	# original URL (xxx.git)
- 	top_=3D`expr "z$1" : 'z\([^:]*:/*[^/]*\)/'`
-@@ -262,3 +294,4 @@ get_uploadpack () {
- 		;;
- 	esac
- }
-+
-diff --git a/git-pull.sh b/git-pull.sh
-index 3526153..3cf2663 100755
---- a/git-pull.sh
-+++ b/git-pull.sh
-@@ -125,12 +125,9 @@ test true =3D "$rebase" && {
- 	die "refusing to pull with rebase: your working tree is not up-to-dat=
-e"
-=20
- 	. git-parse-remote &&
--	origin=3D"$1"
--	test -z "$origin" && origin=3D$(get_default_remote)
--	reflist=3D"$(get_remote_refs_for_fetch "$@" 2>/dev/null |
--		sed "s|refs/heads/\(.*\):|\1|")" &&
-+	reflist=3D"$(get_remote_merge_branch "$@" 2>/dev/null)" &&
- 	oldremoteref=3D"$(git rev-parse -q --verify \
--		"refs/remotes/$origin/$reflist")"
-+		"$reflist")"
- }
- orig_head=3D$(git rev-parse -q --verify HEAD)
- git fetch $verbosity --update-head-ok "$@" || exit 1
 --=20
-1.6.3.1.308.g426b5
+Cheers,
+Ray Chuan
