@@ -1,303 +1,124 @@
 From: =?utf-8?q?Santi=20B=C3=A9jar?= <santi@agolina.net>
-Subject: [PATCHv2 3/3] parse-remote: remove unused functions
-Date: Sun,  7 Jun 2009 11:44:22 +0200
-Message-ID: <1244367862-6306-3-git-send-email-santi@agolina.net>
+Subject: [PATCHv2 1/3] parse-remote: function to get the tracking branch to be merge
+Date: Sun,  7 Jun 2009 11:44:20 +0200
+Message-ID: <1244367862-6306-1-git-send-email-santi@agolina.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jun 07 11:44:52 2009
+X-From: git-owner@vger.kernel.org Sun Jun 07 11:44:51 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MDEvp-000847-8f
-	for gcvg-git-2@gmane.org; Sun, 07 Jun 2009 11:44:49 +0200
+	id 1MDEvn-000847-RS
+	for gcvg-git-2@gmane.org; Sun, 07 Jun 2009 11:44:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755271AbZFGJoS convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 7 Jun 2009 05:44:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755263AbZFGJoR
-	(ORCPT <rfc822;git-outgoing>); Sun, 7 Jun 2009 05:44:17 -0400
+	id S1755048AbZFGJoK convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 7 Jun 2009 05:44:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754118AbZFGJoK
+	(ORCPT <rfc822;git-outgoing>); Sun, 7 Jun 2009 05:44:10 -0400
 Received: from mail-bw0-f213.google.com ([209.85.218.213]:59715 "EHLO
 	mail-bw0-f213.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753844AbZFGJoQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 7 Jun 2009 05:44:16 -0400
-Received: by mail-bw0-f213.google.com with SMTP id 9so2420856bwz.37
-        for <git@vger.kernel.org>; Sun, 07 Jun 2009 02:44:18 -0700 (PDT)
-Received: by 10.204.61.204 with SMTP id u12mr5232999bkh.149.1244367858564;
-        Sun, 07 Jun 2009 02:44:18 -0700 (PDT)
+	with ESMTP id S1753073AbZFGJoJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 7 Jun 2009 05:44:09 -0400
+Received: by bwz9 with SMTP id 9so2420856bwz.37
+        for <git@vger.kernel.org>; Sun, 07 Jun 2009 02:44:10 -0700 (PDT)
+Received: by 10.204.51.210 with SMTP id e18mr5295534bkg.69.1244367850060;
+        Sun, 07 Jun 2009 02:44:10 -0700 (PDT)
 Received: from localhost (p5B0D6736.dip.t-dialin.net [91.13.103.54])
-        by mx.google.com with ESMTPS id 21sm2105369fkx.14.2009.06.07.02.44.17
+        by mx.google.com with ESMTPS id 19sm2094308fkr.55.2009.06.07.02.44.09
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 07 Jun 2009 02:44:17 -0700 (PDT)
+        Sun, 07 Jun 2009 02:44:09 -0700 (PDT)
 X-Mailer: git-send-email 1.6.3.1.308.g426b5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120960>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120961>
+
+The only user of get_remote_refs_for_fetch was "git pull --rebase" and
+it only wanted the tracking branch to be merge. So, add a simple
+function with this new meaning.
+
+No behavior changes.
 
 Signed-off-by: Santi B=C3=A9jar <santi@agolina.net>
 ---
-Changes from v1:
-  - Only remove the functions documentation, not the whole file
-  - Do not remove git-parse-remote from .gitignore
+ git-parse-remote.sh |   33 +++++++++++++++++++++++++++++++++
+ git-pull.sh         |    7 ++-----
+ 2 files changed, 35 insertions(+), 5 deletions(-)
+ mode change 100755 =3D> 100644 git-parse-remote.sh
 
- Documentation/git-parse-remote.txt |   20 ----
- git-parse-remote.sh                |  204 ----------------------------=
---------
- 2 files changed, 0 insertions(+), 224 deletions(-)
-
-diff --git a/Documentation/git-parse-remote.txt b/Documentation/git-par=
-se-remote.txt
-index cd43069..39d9daa 100644
---- a/Documentation/git-parse-remote.txt
-+++ b/Documentation/git-parse-remote.txt
-@@ -17,26 +17,6 @@ routines to parse files under $GIT_DIR/remotes/ and
- $GIT_DIR/branches/ and configuration variables that are related
- to fetching, pulling and pushing.
-=20
--The primary entry points are:
--
--get_remote_refs_for_fetch::
--	Given the list of user-supplied `<repo> <refspec>...`,
--	return the list of refs to fetch after canonicalizing
--	them into `$GIT_DIR` relative paths
--	(e.g. `refs/heads/foo`).  When `<refspec>...` is empty
--	the returned list of refs consists of the defaults
--	for the given `<repo>`, if specified in
--	`$GIT_DIR/remotes/`, `$GIT_DIR/branches/`, or `remote.*.fetch`
--	configuration.
--
--get_remote_refs_for_push::
--	Given the list of user-supplied `<repo> <refspec>...`,
--	return the list of refs to push in a form suitable to be
--	fed to the 'git-send-pack' command.  When `<refspec>...`
--	is empty the returned list of refs consists of the
--	defaults for the given `<repo>`, if specified in
--	`$GIT_DIR/remotes/`.
--
- Author
- ------
- Written by Junio C Hamano.
 diff --git a/git-parse-remote.sh b/git-parse-remote.sh
-index 5df5689..34f4b36 100644
+old mode 100755
+new mode 100644
+index a296719..8b3ba72
 --- a/git-parse-remote.sh
 +++ b/git-parse-remote.sh
-@@ -60,175 +60,6 @@ get_default_remote () {
- 	echo ${origin:-origin}
- }
-=20
--get_remote_default_refs_for_push () {
--	data_source=3D$(get_data_source "$1")
--	case "$data_source" in
--	'' | branches | self)
--		;; # no default push mapping, just send matching refs.
--	config)
--		git config --get-all "remote.$1.push" ;;
--	remotes)
--		sed -ne '/^Push: */{
--			s///p
--		}' "$GIT_DIR/remotes/$1" ;;
--	*)
--		die "internal error: get-remote-default-ref-for-push $1" ;;
--	esac
--}
--
--# Called from canon_refs_list_for_fetch -d "$remote", which
--# is called from get_remote_default_refs_for_fetch to grok
--# refspecs that are retrieved from the configuration, but not
--# from get_remote_refs_for_fetch when it deals with refspecs
--# supplied on the command line.  $ls_remote_result has the list
--# of refs available at remote.
--#
--# The first token returned is either "explicit" or "glob"; this
--# is to help prevent randomly "globbed" ref from being chosen as
--# a merge candidate
--expand_refs_wildcard () {
--	echo "$ls_remote_result" |
--	git fetch--tool expand-refs-wildcard "-" "$@"
--}
--
--# Subroutine to canonicalize remote:local notation.
--canon_refs_list_for_fetch () {
--	# If called from get_remote_default_refs_for_fetch
--	# leave the branches in branch.${curr_branch}.merge alone,
--	# or the first one otherwise; add prefix . to the rest
--	# to prevent the secondary branches to be merged by default.
--	merge_branches=3D
--	curr_branch=3D
--	if test "$1" =3D "-d"
--	then
--		shift ; remote=3D"$1" ; shift
--		set $(expand_refs_wildcard "$remote" "$@")
--		is_explicit=3D"$1"
--		shift
--		if test "$remote" =3D "$(get_default_remote)"
--		then
--			curr_branch=3D$(git symbolic-ref -q HEAD | \
--			    sed -e 's|^refs/heads/||')
--			merge_branches=3D$(git config \
--			    --get-all "branch.${curr_branch}.merge")
--		fi
--		if test -z "$merge_branches" && test $is_explicit !=3D explicit
--		then
--			merge_branches=3D..this.will.never.match.any.ref..
--		fi
--	fi
--	for ref
--	do
--		force=3D
--		case "$ref" in
--		+*)
--			ref=3D$(expr "z$ref" : 'z+\(.*\)')
--			force=3D+
--			;;
--		esac
--		expr "z$ref" : 'z.*:' >/dev/null || ref=3D"${ref}:"
--		remote=3D$(expr "z$ref" : 'z\([^:]*\):')
--		local=3D$(expr "z$ref" : 'z[^:]*:\(.*\)')
--		dot_prefix=3D.
--		if test -z "$merge_branches"
--		then
--			merge_branches=3D$remote
--			dot_prefix=3D
--		else
--			for merge_branch in $merge_branches
--			do
--			    [ "$remote" =3D "$merge_branch" ] &&
--			    dot_prefix=3D && break
--			done
--		fi
--		case "$remote" in
--		'' | HEAD ) remote=3DHEAD ;;
--		refs/*) ;;
--		heads/* | tags/* | remotes/* ) remote=3D"refs/$remote" ;;
--		*) remote=3D"refs/heads/$remote" ;;
--		esac
--		case "$local" in
--		'') local=3D ;;
--		refs/*) ;;
--		heads/* | tags/* | remotes/* ) local=3D"refs/$local" ;;
--		*) local=3D"refs/heads/$local" ;;
--		esac
--
--		if local_ref_name=3D$(expr "z$local" : 'zrefs/\(.*\)')
--		then
--		   git check-ref-format "$local_ref_name" ||
--		   die "* refusing to create funny ref '$local_ref_name' locally"
--		fi
--		echo "${dot_prefix}${force}${remote}:${local}"
--	done
--}
--
--# Returns list of src: (no store), or src:dst (store)
--get_remote_default_refs_for_fetch () {
--	data_source=3D$(get_data_source "$1")
--	case "$data_source" in
--	'')
--		echo "HEAD:" ;;
--	self)
--	        canon_refs_list_for_fetch -d "$1" \
--			$(git for-each-ref --format=3D'%(refname):')
--		;;
--	config)
--		canon_refs_list_for_fetch -d "$1" \
--			$(git config --get-all "remote.$1.fetch") ;;
--	branches)
--		remote_branch=3D$(sed -ne '/#/s/.*#//p' "$GIT_DIR/branches/$1")
--		case "$remote_branch" in '') remote_branch=3Dmaster ;; esac
--		echo "refs/heads/${remote_branch}:refs/heads/$1"
--		;;
--	remotes)
--		canon_refs_list_for_fetch -d "$1" $(sed -ne '/^Pull: */{
--						s///p
--					}' "$GIT_DIR/remotes/$1")
--		;;
--	*)
--		die "internal error: get-remote-default-ref-for-fetch $1" ;;
--	esac
--}
--
--get_remote_refs_for_push () {
--	case "$#" in
--	0) die "internal error: get-remote-refs-for-push." ;;
--	1) get_remote_default_refs_for_push "$@" ;;
--	*) shift; echo "$@" ;;
--	esac
--}
--
--get_remote_refs_for_fetch () {
--	case "$#" in
--	0)
--	    die "internal error: get-remote-refs-for-fetch." ;;
--	1)
--	    get_remote_default_refs_for_fetch "$@" ;;
--	*)
--	    shift
--	    tag_just_seen=3D
--	    for ref
--	    do
--		if test "$tag_just_seen"
--		then
--		    echo "refs/tags/${ref}:refs/tags/${ref}"
--		    tag_just_seen=3D
--		    continue
--		else
--		    case "$ref" in
--		    tag)
--			tag_just_seen=3Dyes
--			continue
--			;;
--		    esac
--		fi
--		canon_refs_list_for_fetch "$ref"
--	    done
--	    ;;
--	esac
--}
--
- get_remote_merge_branch () {
- 	case "$#" in
- 	0|1)
-@@ -266,38 +97,3 @@ get_remote_merge_branch () {
- 	    ;;
+@@ -229,6 +229,38 @@ get_remote_refs_for_fetch () {
  	esac
  }
--
--resolve_alternates () {
--	# original URL (xxx.git)
--	top_=3D`expr "z$1" : 'z\([^:]*:/*[^/]*\)/'`
--	while read path
--	do
--		case "$path" in
--		\#* | '')
--			continue ;;
--		/*)
--			echo "$top_$path/" ;;
--		../*)
--			# relative -- ugly but seems to work.
--			echo "$1/objects/$path/" ;;
--		*)
--			# exit code may not be caught by the reader.
--			echo "bad alternate: $path"
--			exit 1 ;;
--		esac
--	done
--}
--
--get_uploadpack () {
--	data_source=3D$(get_data_source "$1")
--	case "$data_source" in
--	config)
--		uplp=3D$(git config --get "remote.$1.uploadpack")
--		echo ${uplp:-git-upload-pack}
--		;;
--	*)
--		echo "git-upload-pack"
--		;;
--	esac
--}
--
+=20
++get_remote_merge_branch () {
++	case "$#" in
++	0|1)
++	    die "internal error: get-remote-merge-branch." ;;
++	*)
++	    repo=3D$1
++	    shift
++	    # FIXME: It should return the tracking branch
++	    #        Currently only works with the default mapping
++	    for ref
++	    do
++		case "$ref" in
++		+*)
++			ref=3D$(expr "z$ref" : 'z+\(.*\)')
++			;;
++		esac
++		expr "z$ref" : 'z.*:' >/dev/null || ref=3D"${ref}:"
++		remote=3D$(expr "z$ref" : 'z\([^:]*\):')
++		case "$remote" in
++		'' | HEAD ) remote=3DHEAD ;;
++		heads/*) remote=3D${remote#heads/} ;;
++		refs/heads/*) remote=3D${remote#refs/heads/} ;;
++		refs/* | tags/* | remotes/* ) break
++		esac
++
++		echo "refs/remotes/$repo/$remote"
++		break
++	    done
++	    ;;
++	esac
++}
++
+ resolve_alternates () {
+ 	# original URL (xxx.git)
+ 	top_=3D`expr "z$1" : 'z\([^:]*:/*[^/]*\)/'`
+@@ -262,3 +294,4 @@ get_uploadpack () {
+ 		;;
+ 	esac
+ }
++
+diff --git a/git-pull.sh b/git-pull.sh
+index 3526153..3cf2663 100755
+--- a/git-pull.sh
++++ b/git-pull.sh
+@@ -125,12 +125,9 @@ test true =3D "$rebase" && {
+ 	die "refusing to pull with rebase: your working tree is not up-to-dat=
+e"
+=20
+ 	. git-parse-remote &&
+-	origin=3D"$1"
+-	test -z "$origin" && origin=3D$(get_default_remote)
+-	reflist=3D"$(get_remote_refs_for_fetch "$@" 2>/dev/null |
+-		sed "s|refs/heads/\(.*\):|\1|")" &&
++	reflist=3D"$(get_remote_merge_branch "$@" 2>/dev/null)" &&
+ 	oldremoteref=3D"$(git rev-parse -q --verify \
+-		"refs/remotes/$origin/$reflist")"
++		"$reflist")"
+ }
+ orig_head=3D$(git rev-parse -q --verify HEAD)
+ git fetch $verbosity --update-head-ok "$@" || exit 1
 --=20
 1.6.3.1.308.g426b5
