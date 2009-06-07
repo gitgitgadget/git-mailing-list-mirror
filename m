@@ -1,151 +1,120 @@
-From: =?ISO-8859-1?Q?Santi_B=E9jar?= <santi@agolina.net>
-Subject: Re: [PATCHv2 2/3] parse-remote: support default reflist in 
-	get_remote_merge_branch
-Date: Sun, 7 Jun 2009 20:02:05 +0200
-Message-ID: <adf1fd3d0906071102v9c15517v8e7b41a6638a52bb@mail.gmail.com>
-References: <1244367862-6306-2-git-send-email-santi@agolina.net>
-	 <7vljo49e08.fsf@alter.siamese.dyndns.org>
+From: =?utf-8?q?Uwe=20Kleine-K=C3=B6nig?= 
+	<u.kleine-koenig@pengutronix.de>
+Subject: [RESEND PATCH] parse-opt: make PARSE_OPT_STOP_AT_NON_OPTION available to git rev-parse
+Date: Sun,  7 Jun 2009 20:19:48 +0200
+Message-ID: <1244398788-6777-1-git-send-email-u.kleine-koenig@pengutronix.de>
+References: <1240950564-15124-1-git-send-email-u.kleine-koenig@pengutronix.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Jun 07 20:02:25 2009
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Jun 07 20:20:05 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MDMhI-0004u5-W0
-	for gcvg-git-2@gmane.org; Sun, 07 Jun 2009 20:02:21 +0200
+	id 1MDMyS-0003ft-QS
+	for gcvg-git-2@gmane.org; Sun, 07 Jun 2009 20:20:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753063AbZFGSCJ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 7 Jun 2009 14:02:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752695AbZFGSCG
-	(ORCPT <rfc822;git-outgoing>); Sun, 7 Jun 2009 14:02:06 -0400
-Received: from mail-bw0-f213.google.com ([209.85.218.213]:51907 "EHLO
-	mail-bw0-f213.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752289AbZFGSCG convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 7 Jun 2009 14:02:06 -0400
-Received: by bwz9 with SMTP id 9so2589339bwz.37
-        for <git@vger.kernel.org>; Sun, 07 Jun 2009 11:02:06 -0700 (PDT)
-Received: by 10.204.112.11 with SMTP id u11mr5701594bkp.134.1244397725871; 
-	Sun, 07 Jun 2009 11:02:05 -0700 (PDT)
-In-Reply-To: <7vljo49e08.fsf@alter.siamese.dyndns.org>
+	id S1753837AbZFGSTx convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 7 Jun 2009 14:19:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753676AbZFGSTw
+	(ORCPT <rfc822;git-outgoing>); Sun, 7 Jun 2009 14:19:52 -0400
+Received: from metis.ext.pengutronix.de ([92.198.50.35]:50890 "EHLO
+	metis.ext.pengutronix.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753290AbZFGSTw (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 7 Jun 2009 14:19:52 -0400
+Received: from ukl by metis.ext.pengutronix.de with local (Exim 4.63)
+	(envelope-from <ukl@pengutronix.de>)
+	id 1MDMyE-0005Dd-8Q; Sun, 07 Jun 2009 20:19:53 +0200
+X-Mailer: git-send-email 1.6.3.1
+In-Reply-To: <1240950564-15124-1-git-send-email-u.kleine-koenig@pengutronix.de>
+X-SA-Exim-Connect-IP: <locally generated>
+X-SA-Exim-Mail-From: ukl@pengutronix.de
+X-Spam-Checker-Version: SpamAssassin 3.2.4 (2008-01-01) on
+	metis.extern.pengutronix.de
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.6 required=4.5 tests=BAYES_00,NO_RELAYS
+	shortcircuit=no autolearn=ham version=3.2.4
+X-SA-Exim-Version: 4.2.1 (built Tue, 09 Jan 2007 17:23:22 +0000)
+X-SA-Exim-Scanned: Yes (on metis.ext.pengutronix.de)
+X-PTX-Original-Recipient: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120989>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120990>
 
-2009/6/7 Junio C Hamano <gitster@pobox.com>:
-> Santi B=E9jar <santi@agolina.net> writes:
->
->> Expand get_remote_merge_branch to compute the tracking branch to mer=
-ge
->> when called without arguments (or only the remote name). This allows
->> "git pull --rebase" without arguments (default upstream branch) to
->> work with a rebased upstream.
->
-> The last sentence leaves readers wondering... =A0"Ok, with this patch=
-, X
-> without Y now works. =A0What about X _with_ Y? =A0Is it left unfixed?=
- =A0Was it
-> already working before this patch? =A0What is going on???"
+Signed-off-by: Uwe Kleine-K=C3=B6nig <u.kleine-koenig@pengutronix.de>
+---
+Hello,
 
-No changes in the "with Y" case, so working.
+there is no caller for --stop-at-non-option in git-core itself.  This i=
+s
+mainly targeted for topgit and its successor I currently code up.
 
-Maybe add the sentence "( with explicit arguments it already worked)".
+Since the last post I only updated it because the old patch resulted in
+two merge conflicts (git-rev-parse learned "--sq-quote" and parse_optio=
+ns
+got a new argument "prefix")
 
->
->> Also add a test to check for this case and another one (failing) to
->> test rebasing two branches on top of a rebased upstream using just
->> 'git pull --rebase'.
->
-> "test doing X using just Y" _sounds as if_ you are implying
->
-> =A0 =A0 =A0 =A0Doing X using Z (that is more cumbersome to type than =
-Y) works but
-> =A0 =A0 =A0 =A0doing X using Y (that ought to be the equivalent to Z)=
- does not.
-> =A0 =A0 =A0 =A0Let's expose this inconsistent breakage.
->
-> without saying what Z is, and/or why Y is preferred. =A0So if that is=
- what
-> is going on, please spell these out.
+ Documentation/git-rev-parse.txt |    5 +++++
+ builtin-rev-parse.c             |    8 ++++++--
+ 2 files changed, 11 insertions(+), 2 deletions(-)
 
-If you have two branches tracking an upstream that is rebased,
-currently you have to do:
-
-git checkout branch1
-git pull --rebase remote branch
-git checkout branch2
-git pull --rebase remote branch
-
-The second rebase works because the first "git pull --rebase" does not
-store in the local tracking branch the new value, so the second rebase
-detects that it is rebased.
-
-I think one should be able to do the same without the explicit
-arguments to "git pull --rebase", but without arguments it stores the
-new state of the remote branch so the second "git pull --rebase" does
-not work.
-
-I just wanted to single out that it does not currently works.
-
-I see two solutions for this: 1) declare that it is not going to work
-and to do it you have to do the explicit invocation or 2) examine the
-reflog of the remote tracking branch.
-
-> If that is not the case please drop "just"; it is confusing.
-
-I'll add some of this explanation to the commit message, and keep the
-"just" (they should be equivalent, but are not).
-
->
->> +test_expect_success '--rebase with rebased default upstream' '
->> +
->> + =A0 =A0 git update-ref refs/remotes/me/copy copy-orig &&
->> + =A0 =A0 git checkout --track -b to-rebase2 me/copy &&
->> + =A0 =A0 git reset --hard to-rebase-orig &&
->> + =A0 =A0 git pull --rebase &&
->> + =A0 =A0 test "conflicting modification" =3D "$(cat file)" &&
->> + =A0 =A0 test file =3D $(cat file2)
->> +
->> +'
->> +
->> +test_expect_failure '--rebase with rebased upstream and two branche=
-s' '
->> +
->> + =A0 =A0 git update-ref refs/remotes/me/copy copy-orig &&
->> + =A0 =A0 git reset --hard to-rebase-orig &&
->> + =A0 =A0 git checkout --track -b to-rebase3 me/copy &&
->> + =A0 =A0 git reset --hard to-rebase-orig &&
->> + =A0 =A0 git pull --rebase &&
->> + =A0 =A0 test "conflicting modification" =3D "$(cat file)" &&
->> + =A0 =A0 test file =3D $(cat file2) &&
->> + =A0 =A0 git checkout to-rebase2 &&
->> + =A0 =A0 git pull --rebase me copy
->> +
->> +'
->> +
->> =A0test_expect_success 'pull --rebase dies early with dirty working =
-directory' '
->>
->> + =A0 =A0 git rebase --abort &&
->> + =A0 =A0 git checkout to-rebase &&
->
-> Hmm, saying "--abort" when rebase is not in progress
-
-The rebase is in progress (the last test failed)
-
-> (i.e. after your next
-> patch fixes the above "expect_failure" to pass) does not error out? =A0=
-It is
-> not very nice...
-
-My next patch does not fix the expect_failure, I only wanted to make
-this behavior explicit. But if at the end this is the prefered
-behavior (fail rebasing two branches with a rebased upstream) I'll
-drop this test.
-
-Santi
+diff --git a/Documentation/git-rev-parse.txt b/Documentation/git-rev-pa=
+rse.txt
+index 4bbdd05..82045a2 100644
+--- a/Documentation/git-rev-parse.txt
++++ b/Documentation/git-rev-parse.txt
+@@ -30,6 +30,11 @@ OPTIONS
+ 	Only meaningful in `--parseopt` mode. Tells the option parser to echo
+ 	out the first `--` met instead of skipping it.
+=20
++--stop-at-non-option::
++	Only meaningful in `--parseopt` mode.  Lets the option parser stop at
++	the first non-option argument.  This can be used to parse sub-command=
+s
++	that take options themself.
++
+ --sq-quote::
+ 	Use 'git-rev-parse' in shell quoting mode (see SQ-QUOTE
+ 	section below). In contrast to the `--sq` option below, this
+diff --git a/builtin-rev-parse.c b/builtin-rev-parse.c
+index 112d622..5ea7518 100644
+--- a/builtin-rev-parse.c
++++ b/builtin-rev-parse.c
+@@ -301,7 +301,7 @@ static const char *skipspaces(const char *s)
+=20
+ static int cmd_parseopt(int argc, const char **argv, const char *prefi=
+x)
+ {
+-	static int keep_dashdash =3D 0;
++	static int keep_dashdash =3D 0, stop_at_non_option =3D 0;
+ 	static char const * const parseopt_usage[] =3D {
+ 		"git rev-parse --parseopt [options] -- [<args>...]",
+ 		NULL
+@@ -309,6 +309,9 @@ static int cmd_parseopt(int argc, const char **argv=
+, const char *prefix)
+ 	static struct option parseopt_opts[] =3D {
+ 		OPT_BOOLEAN(0, "keep-dashdash", &keep_dashdash,
+ 					"keep the `--` passed as an arg"),
++		OPT_BOOLEAN(0, "stop-at-non-option", &stop_at_non_option,
++					"stop parsing after the "
++					"first non-option argument"),
+ 		OPT_END(),
+ 	};
+=20
+@@ -394,7 +397,8 @@ static int cmd_parseopt(int argc, const char **argv=
+, const char *prefix)
+ 	ALLOC_GROW(opts, onb + 1, osz);
+ 	memset(opts + onb, 0, sizeof(opts[onb]));
+ 	argc =3D parse_options(argc, argv, prefix, opts, usage,
+-	                     keep_dashdash ? PARSE_OPT_KEEP_DASHDASH : 0);
++			keep_dashdash ? PARSE_OPT_KEEP_DASHDASH : 0 |
++			stop_at_non_option ? PARSE_OPT_STOP_AT_NON_OPTION : 0);
+=20
+ 	strbuf_addf(&parsed, " --");
+ 	sq_quote_argv(&parsed, argv, 0);
+--=20
+1.6.3.1
