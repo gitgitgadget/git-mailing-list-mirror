@@ -1,58 +1,77 @@
-From: Soham Mehta <soham@box.net>
-Subject: post-rebase hook (correction from Re: post-update hook)
-Date: Sun, 07 Jun 2009 06:40:55 -0700
-Message-ID: <4A2BC367.7020309@box.net>
-References: <4A2BC306.3000001@box.net>
+From: Mark Lodato <lodatom@gmail.com>
+Subject: Re: [PATCH 1/2] http.c: prompt for SSL client certificate password
+Date: Sun, 7 Jun 2009 10:10:04 -0400
+Message-ID: <ca433830906070710k61705903ydf985d198e9ea318@mail.gmail.com>
+References: <1243480563-5954-1-git-send-email-lodatom@gmail.com>
+	 <ca433830906041944s1a2b12en36eb88b23cb93a7c@mail.gmail.com>
+	 <85647ef50906050120p6dd65b61g9e82b5c14b098246@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jun 07 16:06:41 2009
+Cc: git@vger.kernel.org
+To: Constantine Plotnikov <constantine.plotnikov@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Jun 07 16:10:41 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MDJ1D-0007jL-7L
-	for gcvg-git-2@gmane.org; Sun, 07 Jun 2009 16:06:39 +0200
+	id 1MDJ4g-00014z-KW
+	for gcvg-git-2@gmane.org; Sun, 07 Jun 2009 16:10:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751879AbZFGOGa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 7 Jun 2009 10:06:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752466AbZFGOG2
-	(ORCPT <rfc822;git-outgoing>); Sun, 7 Jun 2009 10:06:28 -0400
-Received: from mailrelay.ve.box.net ([209.249.140.142]:63807 "EHLO
-	corpmail.ve.box.net" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751680AbZFGOG0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 7 Jun 2009 10:06:26 -0400
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by corpmail.ve.box.net (Postfix) with ESMTP id A26373B1891
-	for <git@vger.kernel.org>; Sun,  7 Jun 2009 06:41:00 -0700 (PDT)
-X-Virus-Scanned: amavisd-new at box.net
-Received: from corpmail.ve.box.net ([127.0.0.1])
-	by localhost (mail.box.net [127.0.0.1]) (amavisd-new, port 10024)
-	with LMTP id knOUR0cOp1qI for <git@vger.kernel.org>;
-	Sun,  7 Jun 2009 06:41:00 -0700 (PDT)
-Received: from [192.168.1.67] (host86-159-220-197.range86-159.btcentralplus.com [86.159.220.197])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by corpmail.ve.box.net (Postfix) with ESMTP id F00BD3B1890
-	for <git@vger.kernel.org>; Sun,  7 Jun 2009 06:40:59 -0700 (PDT)
-User-Agent: Thunderbird 2.0.0.21 (Windows/20090302)
-In-Reply-To: <4A2BC306.3000001@box.net>
-X-Brightmail-Tracker: AAAAAA==
+	id S1752886AbZFGOKG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 7 Jun 2009 10:10:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752466AbZFGOKF
+	(ORCPT <rfc822;git-outgoing>); Sun, 7 Jun 2009 10:10:05 -0400
+Received: from mail-bw0-f213.google.com ([209.85.218.213]:53288 "EHLO
+	mail-bw0-f213.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751993AbZFGOKD (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 7 Jun 2009 10:10:03 -0400
+Received: by bwz9 with SMTP id 9so2506092bwz.37
+        for <git@vger.kernel.org>; Sun, 07 Jun 2009 07:10:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=gTC67ol4caTP0qR06/4Z8YmBLpuxoQaA3CQRGwzpxSQ=;
+        b=HD4QVUL6lYrIREgvup4eKQMSPO/MHvkShhCqvXZ/d2oPKO1ENjC/NyutxDlsKAy4qf
+         rrdhPhFPELvymTRLnNDPDDCX03I9Ai+BpvZ3zUrcqLuqD7BOUpE9kFhOXCajDOaMMGMK
+         jw47x/WVYg5WYZhR+psbOfLNBpisf7B6aRjTk=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=JnBMMuZ3UTPbxJ5hAaz+3yqzzPyXqZ/I7sweCyy3E7j2qpxSdId8lBL17IWBnbw739
+         Z1MxZaaJX7sxEZbT0/hOeL7fNjP5L1KoRQlj+3uw8+FoVHccQ946ajjW11lpY9u1lj5V
+         j0xJV8Fm+wbsSpevoMzWc36h5hc5TE9QV0bs0=
+Received: by 10.223.116.205 with SMTP id n13mr3054319faq.103.1244383804802; 
+	Sun, 07 Jun 2009 07:10:04 -0700 (PDT)
+In-Reply-To: <85647ef50906050120p6dd65b61g9e82b5c14b098246@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120972>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/120973>
 
-Oops, I meant post-rebase hook
+On Fri, Jun 5, 2009 at 4:20 AM, Constantine
+Plotnikov<constantine.plotnikov@gmail.com> wrote:
+> How it works if git is run from IDEs (no tty will be available)?
 
-thus spake Soham Mehta , On 6/7/2009 6:39 AM:
-> Wondering why there isn't a post-update (post-reset, post-cherrypick 
-> etc) hook in git? Is it only a matter of creating one, or is there a 
-> reason?
->
-> Thanks.
-> -Soham
->
->
+Then this will be no worse than the current situation, which also uses
+standard input to prompt for the password.  Note that a TTY is also
+required if an HTTP password is requested.
+
+> Is there a way to redefine the way the password is got?
+
+No.  This may be nice, but it would be much more complicated to implement.
+
+> What about scripting scenarios where passwordless certificates are
+> likely to be used?
+
+If you wish to use a client certificate without a password, then you
+need the second patch in this series, which adds an option to disable
+the password prompt.
+
+
+Thanks for your input,
+Mark
