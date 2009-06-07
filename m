@@ -1,66 +1,76 @@
-From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
-Subject: Re: [EGIT PATCH 05/10] Do not write to the reflog unless the refupdate logmessage is set
-Date: Mon, 8 Jun 2009 00:27:16 +0200
-Message-ID: <200906080027.16338.robin.rosenberg.lists@dewire.com>
-References: <20090520221651.GR30527@spearce.org> <1243462137-24133-6-git-send-email-robin.rosenberg@dewire.com> <20090603154129.GG3355@spearce.org>
-Mime-Version: 1.0
-Content-Type: Text/Plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: [JGIT PATCH] Don't log TransportGitSsh error stream to JVM stderr
+Date: Sun,  7 Jun 2009 15:31:24 -0700
+Message-ID: <1244413884-17241-1-git-send-email-spearce@spearce.org>
 Cc: git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Mon Jun 08 00:27:36 2009
+To: Robin Rosenberg <robin.rosenberg@dewire.com>
+X-From: git-owner@vger.kernel.org Mon Jun 08 00:31:34 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MDQpw-0008Vh-Mx
-	for gcvg-git-2@gmane.org; Mon, 08 Jun 2009 00:27:33 +0200
+	id 1MDQtp-0000vw-Cj
+	for gcvg-git-2@gmane.org; Mon, 08 Jun 2009 00:31:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752401AbZFGW1W (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 7 Jun 2009 18:27:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752213AbZFGW1V
-	(ORCPT <rfc822;git-outgoing>); Sun, 7 Jun 2009 18:27:21 -0400
-Received: from mail.dewire.com ([83.140.172.130]:20147 "EHLO dewire.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751211AbZFGW1V (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 7 Jun 2009 18:27:21 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by dewire.com (Postfix) with ESMTP id 2CADE146D03E;
-	Mon,  8 Jun 2009 00:27:18 +0200 (CEST)
-X-Virus-Scanned: by amavisd-new at dewire.com
-Received: from dewire.com ([127.0.0.1])
-	by localhost (torino.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 4IaLe7TQ2uAd; Mon,  8 Jun 2009 00:27:17 +0200 (CEST)
-Received: from sleipner.localnet (unknown [10.9.0.5])
-	by dewire.com (Postfix) with ESMTP id 7AB86146D027;
-	Mon,  8 Jun 2009 00:27:17 +0200 (CEST)
-User-Agent: KMail/1.11.2 (Linux/2.6.28-11-generic; KDE/4.2.2; i686; ; )
-In-Reply-To: <20090603154129.GG3355@spearce.org>
-Content-Disposition: inline
+	id S1755698AbZFGWbX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 7 Jun 2009 18:31:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755083AbZFGWbX
+	(ORCPT <rfc822;git-outgoing>); Sun, 7 Jun 2009 18:31:23 -0400
+Received: from george.spearce.org ([209.20.77.23]:55011 "EHLO
+	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754105AbZFGWbW (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 7 Jun 2009 18:31:22 -0400
+Received: by george.spearce.org (Postfix, from userid 1000)
+	id 259D8381FE; Sun,  7 Jun 2009 22:31:25 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.2.4 (2008-01-01) on george.spearce.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-4.4 required=4.0 tests=ALL_TRUSTED,BAYES_00
+	autolearn=ham version=3.2.4
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by george.spearce.org (Postfix) with ESMTP id AE875381D6;
+	Sun,  7 Jun 2009 22:31:24 +0000 (UTC)
+X-Mailer: git-send-email 1.6.3.2.322.g117de
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121015>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121016>
 
-onsdag 03 juni 2009 17:41:29 skrev "Shawn O. Pearce" <spearce@spearce.org>:
-> Robin Rosenberg <robin.rosenberg@dewire.com> wrote:
-> > Do not write to the reflog unless the refupdate logmessage is set
-> 
-> Why not?  What is the justification for this?  Isn't a reflog record
-> still useful, at least to point out that something happened at this
-> point in time, and here's the old/new values?
+This is an API function, not a user interface routine.  We should not
+be printing messages from the remote side to our console.  Instead we
+should buffer them, and allow a TransportException to be thrown which
+contains the message data.  Higher level user interface routines
+can then catch that exception, and display the message, if any, in
+a form that is appropriate to the context.
 
-I need to do an update without logging to avoid a "dummy" entry in the
-reflog since I use the RefUpdate mechanism. Since this is an API and
-not and end user function, I was thinking this might be ok after all.
+Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
+---
+ .../spearce/jgit/transport/TransportGitSsh.java    |    7 ++-----
+ 1 files changed, 2 insertions(+), 5 deletions(-)
 
-Some other optione are:
-1) set a special flag.
-2) set a default message and allow the caller to set it to null and
-not write if null. Today the default message is null leading to the
-message "null" in the log, which is kind of ugly so we should
-probably change this in any case.
-
--- robin
+diff --git a/org.spearce.jgit/src/org/spearce/jgit/transport/TransportGitSsh.java b/org.spearce.jgit/src/org/spearce/jgit/transport/TransportGitSsh.java
+index 2e9e0be..de72d02 100644
+--- a/org.spearce.jgit/src/org/spearce/jgit/transport/TransportGitSsh.java
++++ b/org.spearce.jgit/src/org/spearce/jgit/transport/TransportGitSsh.java
+@@ -166,17 +166,14 @@ public String toString() {
+ 			@Override
+ 			public void write(final int b) throws IOException {
+ 				if (b == '\r') {
+-					System.err.print('\r');
+ 					return;
+ 				}
+ 
+ 				sb.append((char) b);
+ 
+ 				if (b == '\n') {
+-					final String line = sb.toString();
+-					System.err.print(line);
+-					all.append(line);
+-					sb = new StringBuilder();
++					all.append(sb);
++					sb.setLength(0);
+ 				}
+ 			}
+ 		};
+-- 
+1.6.3.2.322.g117de
