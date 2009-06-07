@@ -1,312 +1,324 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: [JGIT PATCH] Fix CanonicalTreeParser.back to parse all trees correctly
-Date: Sun,  7 Jun 2009 15:01:56 -0700
-Message-ID: <1244412116-13294-1-git-send-email-spearce@spearce.org>
-Cc: git@vger.kernel.org
-To: Robin Rosenberg <robin.rosenberg@dewire.com>
-X-From: git-owner@vger.kernel.org Mon Jun 08 00:02:21 2009
+From: Nick Edelen <sirnot@gmail.com>
+Subject: Re: [WIP] Shift rev-list enumeration from upload-pack to pack-objects
+Date: Mon, 8 Jun 2009 00:04:57 +0200
+Message-ID: <c77435a80906071504u16a46e03w6dfde9a3e694a5ec@mail.gmail.com>
+References: <20090605054500.06A9D21C3F4@mail.utsl.gen.nz>
+	 <alpine.LFD.2.00.0906051224510.3906@xanadu.home>
+	 <c77435a80906070625i4daaa69bi134df765d7a77cdf@mail.gmail.com>
+	 <alpine.LFD.2.00.0906071225060.3906@xanadu.home>
+	 <c77435a80906070947u9bf8ce9m9d59f86e5a5f18ab@mail.gmail.com>
+	 <c77435a80906071155g5530ccdel286907b7c6022838@mail.gmail.com>
+	 <alpine.LFD.2.00.0906071637530.3906@xanadu.home>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: sam@vilain.net, git@vger.kernel.org,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Andreas Ericsson <exon@op5.se>,
+	Christian Couder <christian@couder.net>,
+	Jeff King <peff@peff.net>
+To: Nicolas Pitre <nico@cam.org>
+X-From: git-owner@vger.kernel.org Mon Jun 08 00:05:11 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MDQRX-0001it-Oq
-	for gcvg-git-2@gmane.org; Mon, 08 Jun 2009 00:02:20 +0200
+	id 1MDQUF-0002iD-8Q
+	for gcvg-git-2@gmane.org; Mon, 08 Jun 2009 00:05:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754156AbZFGWB5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 7 Jun 2009 18:01:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754105AbZFGWB4
-	(ORCPT <rfc822;git-outgoing>); Sun, 7 Jun 2009 18:01:56 -0400
-Received: from george.spearce.org ([209.20.77.23]:51627 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753692AbZFGWBz (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 7 Jun 2009 18:01:55 -0400
-Received: by george.spearce.org (Postfix, from userid 1000)
-	id C95E7381D6; Sun,  7 Jun 2009 22:01:57 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.2.4 (2008-01-01) on george.spearce.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-4.4 required=4.0 tests=ALL_TRUSTED,BAYES_00
-	autolearn=ham version=3.2.4
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by george.spearce.org (Postfix) with ESMTP id D6262381D6;
-	Sun,  7 Jun 2009 22:01:56 +0000 (UTC)
-X-Mailer: git-send-email 1.6.3.2.322.g117de
+	id S1756210AbZFGWE7 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 7 Jun 2009 18:04:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755645AbZFGWE7
+	(ORCPT <rfc822;git-outgoing>); Sun, 7 Jun 2009 18:04:59 -0400
+Received: from mail-ew0-f210.google.com ([209.85.219.210]:49827 "EHLO
+	mail-ew0-f210.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756147AbZFGWE6 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 7 Jun 2009 18:04:58 -0400
+Received: by ewy6 with SMTP id 6so3686357ewy.37
+        for <git@vger.kernel.org>; Sun, 07 Jun 2009 15:04:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=ikPmkzn+3lOxdDS512I4g7IGCYPe7Dzjdc86/Jnugxg=;
+        b=Uup5jLq6DODL9LL32kr3J2o8tIjwUQk7cMovNCDbvPkf5oKojma9CX1NF2+LM1vtz0
+         mRmKD1TW+J/BIMXZl7PPGxQ/Xdu3oTsRt0nRLnRkfK7bfrIgZ840s1OjGMdxZmgIjLg1
+         RD24C5/ERLtttEmbP2YaQqh0eSJyq5zGmTZvg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=QVD7NiRMs+VjlWpjdD87vvIduwffd8rjZ4nSV4h6jWApyFkDGVTwY/SBCXklbyoPii
+         HxHyDPbhu2YoPwkyAM1ZVJtzyie+2QYK1+OfhlXB4eEDg0TOJdvF8wwRhWT3XD/P7VwP
+         nqtuQ2Sl9xfjtX2FkZp/kCD00Ln9d80Ik+ljo=
+Received: by 10.216.29.213 with SMTP id i63mr2086138wea.90.1244412297684; Sun, 
+	07 Jun 2009 15:04:57 -0700 (PDT)
+In-Reply-To: <alpine.LFD.2.00.0906071637530.3906@xanadu.home>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121012>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121013>
 
-The back(int delta) method needs to walk backwards delta entries in
-the tree we are iterating.  Unfortunately, despite my attempts to do
-so, there is no reliable way to parse a canonical tree in reverse.
+man I can sure be blind at times...  alright fixed the latter two
+comments.  I changed the test file because that particular test wanted
+upload-pack to fail through the revision walker, which it could only
+now do if shallow objects were involved.
 
-New test cases testBackwords_Prebuilts1 and testBackwords_Prebuilts2
-show trees where the parser silently fails and jumps over an entry
-it should not have skipped.  These came from real world trees that
-caused NameConflictTreeWalk to get stuck in an infinite loop.
+@sam: oops, sorry about that.
 
-The only reliable way to parse a canonical tree backwards is to
-actually do a parse from the beginning, and keeping track of the N
-prior positions in the tree, until we reach the current position,
-and then use the 0th index from that temporary N position buffer.
+=46rom: Nick Edelen <sirnot@gmail.com>
+Subject: [PATCH] Shift object enumeration out of upload-pack
 
-Most of the time, we only need to walk a parser back 1 entry, to
-examine the last path name it produced, before deciding we don't
-need to handle a D/F conflict, and walk the parser forward again.
+Offload object enumeration in upload-pack to pack-objects, but fall
+back on internal revision walker for shallow interaction.  Test t5530
+updated to reflect mechanism change.
 
-This is typical because most Git trees do not have a potential D/F
-conflict looming during a NameConflictTreeWalk, as it is rare that
-tree entries have the same leading base name such that a directory
-could appear between two files.  Usually stepping back just one
-entry is sufficient to detemine a D/F conflict can't happen, and
-the parser runs forward again.  So we optimize for this delta = 1
-case by saving a prevPtr field.
+Signed-off-by: Nick Edelen <sirnot@gmail.com>
 
-Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
 ---
+ t/t5530-upload-pack-error.sh |    2 +-
+ upload-pack.c                |   49 +++++++++++++++++++++++++++++++++-=
+-------
+ 2 files changed, 40 insertions(+), 11 deletions(-)
 
- I should have listened to Dscho.  Last fall during GitTogether '08
- he argued you can't walk a tree backwards.  He was right.  :-)
+diff --git a/t/t5530-upload-pack-error.sh b/t/t5530-upload-pack-error.s=
+h
+index f5102b9..26bcd1e 100755
+--- a/t/t5530-upload-pack-error.sh
++++ b/t/t5530-upload-pack-error.sh
+@@ -51,7 +51,7 @@ test_expect_success 'fsck fails' '
+ test_expect_success 'upload-pack fails due to error in rev-list' '
 
- .../jgit/treewalk/CanonicalTreeParserTest.java     |   78 ++++++++++++++++++-
- .../spearce/jgit/treewalk/CanonicalTreeParser.java |   74 +++++++++---------
- 2 files changed, 110 insertions(+), 42 deletions(-)
+ 	! echo "0032want $(git rev-parse HEAD)
+-00000009done
++0034shallow $(git rev-parse HEAD^)00000009done
+ 0000" | git upload-pack . > /dev/null 2> output.err &&
+ 	grep "waitpid (async) failed" output.err
+ '
+diff --git a/upload-pack.c b/upload-pack.c
+index edc7861..397cada 100644
+--- a/upload-pack.c
++++ b/upload-pack.c
+@@ -29,6 +29,7 @@ static unsigned long oldest_have;
+ static int multi_ack, nr_our_refs;
+ static int use_thin_pack, use_ofs_delta, use_include_tag;
+ static int no_progress;
++static int shallow_nr;
+ static struct object_array have_obj;
+ static struct object_array want_obj;
+ static unsigned int timeout;
+@@ -107,8 +108,6 @@ static int do_rev_list(int fd, void *create_full_pa=
+ck)
+ 	struct rev_info revs;
 
-diff --git a/org.spearce.jgit.test/tst/org/spearce/jgit/treewalk/CanonicalTreeParserTest.java b/org.spearce.jgit.test/tst/org/spearce/jgit/treewalk/CanonicalTreeParserTest.java
-index ed3478c..8ab2fc9 100644
---- a/org.spearce.jgit.test/tst/org/spearce/jgit/treewalk/CanonicalTreeParserTest.java
-+++ b/org.spearce.jgit.test/tst/org/spearce/jgit/treewalk/CanonicalTreeParserTest.java
-@@ -71,13 +71,13 @@
- 	public void setUp() throws Exception {
- 		super.setUp();
- 
--		tree1 = mkree(entry(m644, "a", hash_a));
--		tree2 = mkree(entry(m644, "a", hash_a), entry(m644, "foo", hash_foo));
--		tree3 = mkree(entry(m644, "a", hash_a), entry(mt, "b_sometree",
-+		tree1 = mktree(entry(m644, "a", hash_a));
-+		tree2 = mktree(entry(m644, "a", hash_a), entry(m644, "foo", hash_foo));
-+		tree3 = mktree(entry(m644, "a", hash_a), entry(mt, "b_sometree",
- 				hash_sometree), entry(m644, "foo", hash_foo));
- 	}
- 
--	private static byte[] mkree(final byte[]... data) throws Exception {
-+	private static byte[] mktree(final byte[]... data) throws Exception {
- 		final ByteArrayOutputStream out = new ByteArrayOutputStream();
- 		for (final byte[] e : data)
- 			out.write(e);
-@@ -247,7 +247,7 @@ public void testThreeEntries_BackwardsTwo() throws Exception {
- 
- 	public void testBackwards_ConfusingPathName() throws Exception {
- 		final String aVeryConfusingName = "confusing 644 entry 755 and others";
--		ctp.reset(mkree(entry(m644, "a", hash_a), entry(mt, aVeryConfusingName,
-+		ctp.reset(mktree(entry(m644, "a", hash_a), entry(mt, aVeryConfusingName,
- 				hash_sometree), entry(m644, "foo", hash_foo)));
- 		ctp.next(3);
- 		assertTrue(ctp.eof());
-@@ -265,6 +265,74 @@ public void testBackwards_ConfusingPathName() throws Exception {
- 		assertEquals(hash_a, ctp.getEntryObjectId());
- 	}
- 
-+	public void testBackwords_Prebuilts1() throws Exception {
-+		// What is interesting about this test is the ObjectId for the
-+		// "darwin-x86" path entry ends in an octal digit (37 == '7').
-+		// Thus when scanning backwards we could over scan and consume
-+		// part of the SHA-1, and miss the path terminator.
-+		//
-+		final ObjectId common = ObjectId
-+				.fromString("af7bf97cb9bce3f60f1d651a0ef862e9447dd8bc");
-+		final ObjectId darwinx86 = ObjectId
-+				.fromString("e927f7398240f78face99e1a738dac54ef738e37");
-+		final ObjectId linuxx86 = ObjectId
-+				.fromString("ac08dd97120c7cb7d06e98cd5b152011183baf21");
-+		final ObjectId windows = ObjectId
-+				.fromString("6c4c64c221a022bb973165192cca4812033479df");
+ 	pack_pipe =3D fdopen(fd, "w");
+-	if (create_full_pack)
+-		use_thin_pack =3D 0; /* no point doing it */
+ 	init_revisions(&revs, NULL);
+ 	revs.tag_objects =3D 1;
+ 	revs.tree_objects =3D 1;
+@@ -155,13 +154,21 @@ static void create_pack_file(void)
+ 	const char *argv[10];
+ 	int arg =3D 0;
+
+-	rev_list.proc =3D do_rev_list;
+-	/* .data is just a boolean: any non-NULL value will do */
+-	rev_list.data =3D create_full_pack ? &rev_list : NULL;
+-	if (start_async(&rev_list))
+-		die("git upload-pack: unable to fork git-rev-list");
++	if (shallow_nr) {
++		rev_list.proc =3D do_rev_list;
++		rev_list.data =3D 0;
++		if (start_async(&rev_list))
++			die("git upload-pack: unable to fork git-rev-list");
++		argv[arg++] =3D "pack-objects";
++	} else {
++		argv[arg++] =3D "pack-objects";
++		argv[arg++] =3D "--revs";
++		if (create_full_pack)
++			argv[arg++] =3D "--all";
++		else if (use_thin_pack)
++			argv[arg++] =3D "--thin";
++	}
+
+-	argv[arg++] =3D "pack-objects";
+ 	argv[arg++] =3D "--stdout";
+ 	if (!no_progress)
+ 		argv[arg++] =3D "--progress";
+@@ -172,7 +179,7 @@ static void create_pack_file(void)
+ 	argv[arg++] =3D NULL;
+
+ 	memset(&pack_objects, 0, sizeof(pack_objects));
+-	pack_objects.in =3D rev_list.out;	/* start_command closes it */
++	pack_objects.in =3D shallow_nr ? rev_list.out : -1;
+ 	pack_objects.out =3D -1;
+ 	pack_objects.err =3D -1;
+ 	pack_objects.git_cmd =3D 1;
+@@ -181,6 +188,24 @@ static void create_pack_file(void)
+ 	if (start_command(&pack_objects))
+ 		die("git upload-pack: unable to fork git-pack-objects");
+
++	/* pass on revisions we (don't) want */
++	if (!shallow_nr) {
++		FILE *pipe_fd =3D fdopen(pack_objects.in, "w");
++		if (!create_full_pack) {
++			int i;
++			for (i =3D 0; i < want_obj.nr; i++)
++				fprintf(pipe_fd, "%s\n", sha1_to_hex(want_obj.objects[i].item->sha=
+1));
++			fprintf(pipe_fd, "--not\n");
++			for (i =3D 0; i < have_obj.nr; i++)
++				fprintf(pipe_fd, "%s\n", sha1_to_hex(have_obj.objects[i].item->sha=
+1));
++		}
 +
-+		ctp.reset(mktree(entry(mt, "common", common), entry(mt, "darwin-x86",
-+				darwinx86), entry(mt, "linux-x86", linuxx86), entry(mt,
-+				"windows", windows)));
-+		ctp.next(3);
-+		assertEquals("windows", ctp.getEntryPathString());
-+		assertSame(mt, ctp.getEntryFileMode());
-+		assertEquals(windows, ctp.getEntryObjectId());
-+
-+		ctp.back(1);
-+		assertEquals("linux-x86", ctp.getEntryPathString());
-+		assertSame(mt, ctp.getEntryFileMode());
-+		assertEquals(linuxx86, ctp.getEntryObjectId());
-+
-+		ctp.next(1);
-+		assertEquals("windows", ctp.getEntryPathString());
-+		assertSame(mt, ctp.getEntryFileMode());
-+		assertEquals(windows, ctp.getEntryObjectId());
++		fprintf(pipe_fd, "\n");
++		fflush(pipe_fd);
++		fclose(pipe_fd);
 +	}
 +
-+	public void testBackwords_Prebuilts2() throws Exception {
-+		// What is interesting about this test is the ObjectId for the
-+		// "darwin-x86" path entry ends in an octal digit (37 == '7').
-+		// Thus when scanning backwards we could over scan and consume
-+		// part of the SHA-1, and miss the path terminator.
-+		//
-+		final ObjectId common = ObjectId
-+				.fromString("af7bf97cb9bce3f60f1d651a0ef862e9447dd8bc");
-+		final ObjectId darwinx86 = ObjectId
-+				.fromString("0000000000000000000000000000000000000037");
-+		final ObjectId linuxx86 = ObjectId
-+				.fromString("ac08dd97120c7cb7d06e98cd5b152011183baf21");
-+		final ObjectId windows = ObjectId
-+				.fromString("6c4c64c221a022bb973165192cca4812033479df");
 +
-+		ctp.reset(mktree(entry(mt, "common", common), entry(mt, "darwin-x86",
-+				darwinx86), entry(mt, "linux-x86", linuxx86), entry(mt,
-+				"windows", windows)));
-+		ctp.next(3);
-+		assertEquals("windows", ctp.getEntryPathString());
-+		assertSame(mt, ctp.getEntryFileMode());
-+		assertEquals(windows, ctp.getEntryObjectId());
-+
-+		ctp.back(1);
-+		assertEquals("linux-x86", ctp.getEntryPathString());
-+		assertSame(mt, ctp.getEntryFileMode());
-+		assertEquals(linuxx86, ctp.getEntryObjectId());
-+
-+		ctp.next(1);
-+		assertEquals("windows", ctp.getEntryPathString());
-+		assertSame(mt, ctp.getEntryFileMode());
-+		assertEquals(windows, ctp.getEntryObjectId());
-+	}
-+
- 	public void testFreakingHugePathName() throws Exception {
- 		final int n = AbstractTreeIterator.DEFAULT_PATH_SIZE * 4;
- 		final StringBuilder b = new StringBuilder(n);
-diff --git a/org.spearce.jgit/src/org/spearce/jgit/treewalk/CanonicalTreeParser.java b/org.spearce.jgit/src/org/spearce/jgit/treewalk/CanonicalTreeParser.java
-index ec1cf10..47c3a77 100644
---- a/org.spearce.jgit/src/org/spearce/jgit/treewalk/CanonicalTreeParser.java
-+++ b/org.spearce.jgit/src/org/spearce/jgit/treewalk/CanonicalTreeParser.java
-@@ -38,6 +38,7 @@
- package org.spearce.jgit.treewalk;
- 
- import java.io.IOException;
-+import java.util.Arrays;
- 
- import org.spearce.jgit.errors.IncorrectObjectTypeException;
- import org.spearce.jgit.errors.MissingObjectException;
-@@ -56,15 +57,18 @@
- 
- 	private byte[] raw;
- 
-+	/** First offset within {@link #raw} of the prior entry. */
-+	private int prevPtr;
-+
- 	/** First offset within {@link #raw} of the current entry's data. */
- 	private int currPtr;
- 
--	/** Offset one past the current entry (first byte of next entry. */
-+	/** Offset one past the current entry (first byte of next entry). */
- 	private int nextPtr;
- 
- 	/** Create a new parser. */
- 	public CanonicalTreeParser() {
--		raw = EMPTY;
-+		reset(EMPTY);
- 	}
- 
- 	/**
-@@ -109,6 +113,7 @@ private CanonicalTreeParser(final CanonicalTreeParser p) {
+ 	/* We read from pack_objects.err to capture stderr output for
+ 	 * progress bar, and pack_objects.out to capture the pack data.
  	 */
- 	public void reset(final byte[] treeData) {
- 		raw = treeData;
-+		prevPtr = -1;
- 		currPtr = 0;
- 		if (!eof())
- 			parseEntry();
-@@ -265,6 +270,7 @@ public void next(int delta) {
- 		if (delta == 1) {
- 			// Moving forward one is the most common case.
- 			//
-+			prevPtr = currPtr;
- 			currPtr = nextPtr;
- 			if (!eof())
- 				parseEntry();
-@@ -276,6 +282,7 @@ public void next(int delta) {
- 		final int end = raw.length;
- 		int ptr = nextPtr;
- 		while (--delta > 0 && ptr != end) {
-+			prevPtr = ptr;
- 			while (raw[ptr] != 0)
- 				ptr++;
- 			ptr += Constants.OBJECT_ID_LENGTH + 1;
-@@ -289,44 +296,37 @@ public void next(int delta) {
- 
- 	@Override
- 	public void back(int delta) {
--		int ptr = currPtr;
--		while (--delta >= 0) {
--			if (ptr == 0)
--				throw new ArrayIndexOutOfBoundsException(delta);
--
--			// Rewind back beyond the id and the null byte. Find the
--			// last space, this _might_ be the split between the mode
--			// and the path. Most paths in most trees do not contain a
--			// space so this prunes our search more quickly.
-+		if (delta == 1 && 0 <= prevPtr) {
-+			// Moving back one is common in NameTreeWalk, as the average tree
-+			// won't have D/F type conflicts to study.
- 			//
--			ptr -= Constants.OBJECT_ID_LENGTH;
--			while (raw[--ptr] != ' ') {
--				/* nothing */
--			}
--			if (--ptr < Constants.OBJECT_ID_LENGTH) {
--				if (delta != 0)
--					throw new ArrayIndexOutOfBoundsException(delta);
--				ptr = 0;
--				break;
--			}
-+			currPtr = prevPtr;
-+			prevPtr = -1;
-+			if (!eof())
-+				parseEntry();
-+			return;
-+		} else if (delta <= 0)
-+			throw new ArrayIndexOutOfBoundsException(delta);
- 
--			// Locate a position that matches "\0.{20}[0-7]" such that
--			// the ptr will rest on the [0-7]. This must be the first
--			// byte of the mode. This search works because the path in
--			// the prior record must have a non-zero length and must not
--			// contain a null byte.
--			//
--			for (int n;; ptr = n) {
--				n = ptr - 1;
--				final byte b = raw[n];
--				if ('0' <= b && b <= '7')
--					continue;
--				if (raw[n - Constants.OBJECT_ID_LENGTH] != 0)
--					continue;
--				break;
--			}
-+		// Fast skip through the records, from the beginning of the tree.
-+		// There is no reliable way to read the tree backwards, so we must
-+		// parse all over again from the beginning. We hold the last "delta"
-+		// positions in a buffer, so we can find the correct position later.
-+		//
-+		final int[] trace = new int[delta + 1];
-+		Arrays.fill(trace, -1);
-+		int ptr = 0;
-+		while (ptr != currPtr) {
-+			System.arraycopy(trace, 1, trace, 0, delta);
-+			trace[delta] = ptr;
-+			while (raw[ptr] != 0)
-+				ptr++;
-+			ptr += Constants.OBJECT_ID_LENGTH + 1;
- 		}
--		currPtr = ptr;
-+		if (trace[1] == -1)
-+			throw new ArrayIndexOutOfBoundsException(delta);
-+		prevPtr = trace[0];
-+		currPtr = trace[1];
- 		parseEntry();
+@@ -276,7 +301,7 @@ static void create_pack_file(void)
+ 		error("git upload-pack: git-pack-objects died with error.");
+ 		goto fail;
  	}
- 
--- 
-1.6.3.2.322.g117de
+-	if (finish_async(&rev_list))
++	if (shallow_nr && finish_async(&rev_list))
+ 		goto fail;	/* error was already reported */
+
+ 	/* flush the data */
+@@ -451,6 +476,7 @@ static void receive_needs(void)
+ 	static char line[1000];
+ 	int len, depth =3D 0;
+
++	shallow_nr =3D 0;
+ 	if (debug_fd)
+ 		write_in_full(debug_fd, "#S\n", 3);
+ 	for (;;) {
+@@ -534,6 +560,7 @@ static void receive_needs(void)
+ 				packet_write(1, "shallow %s",
+ 						sha1_to_hex(object->sha1));
+ 				register_shallow(object->sha1);
++				shallow_nr++;
+ 			}
+ 			result =3D result->next;
+ 		}
+@@ -567,6 +594,8 @@ static void receive_needs(void)
+ 			for (i =3D 0; i < shallows.nr; i++)
+ 				register_shallow(shallows.objects[i].item->sha1);
+ 		}
++
++	shallow_nr +=3D shallows.nr;
+ 	free(shallows.objects);
+ }
+
+--=20
+tg: (503f464..) t/revcache/upload-pack-dont-enumerate (depends on: mast=
+er)
+
+
+On Sun, Jun 7, 2009 at 10:48 PM, Nicolas Pitre<nico@cam.org> wrote:
+> On Sun, 7 Jun 2009, Nick Edelen wrote:
+>
+>> how does this look?
+>
+> Comments below.
+>
+>> Signed-off-by: Nick Edelen <sirnot@gmail.com>
+>>
+>> ---
+>> =A0t/t5530-upload-pack-error.sh | =A0 =A02 +-
+>> =A0upload-pack.c =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0| =A0 50 +++++++++++=
+++++++++++++++++++++++--------
+>> =A02 files changed, 41 insertions(+), 11 deletions(-)
+>>
+>> diff --git a/t/t5530-upload-pack-error.sh b/t/t5530-upload-pack-erro=
+r.sh
+>> index f5102b9..26bcd1e 100755
+>> --- a/t/t5530-upload-pack-error.sh
+>> +++ b/t/t5530-upload-pack-error.sh
+>> @@ -51,7 +51,7 @@ test_expect_success 'fsck fails' '
+>> =A0test_expect_success 'upload-pack fails due to error in rev-list' =
+'
+>>
+>> =A0 =A0 =A0 ! echo "0032want $(git rev-parse HEAD)
+>> -00000009done
+>> +0034shallow $(git rev-parse HEAD^)00000009done
+>
+> Why did you modify this?
+>
+>> =A00000" | git upload-pack . > /dev/null 2> output.err &&
+>> =A0 =A0 =A0 grep "waitpid (async) failed" output.err
+>> =A0'
+>> diff --git a/upload-pack.c b/upload-pack.c
+>> index edc7861..c8f2dca 100644
+>> --- a/upload-pack.c
+>> +++ b/upload-pack.c
+>> @@ -29,6 +29,7 @@ static unsigned long oldest_have;
+>> =A0static int multi_ack, nr_our_refs;
+>> =A0static int use_thin_pack, use_ofs_delta, use_include_tag;
+>> =A0static int no_progress;
+>> +static int shallow_nr;
+>> =A0static struct object_array have_obj;
+>> =A0static struct object_array want_obj;
+>> =A0static unsigned int timeout;
+>> @@ -107,8 +108,6 @@ static int do_rev_list(int fd, void *create_full=
+_pack)
+>> =A0 =A0 =A0 struct rev_info revs;
+>>
+>> =A0 =A0 =A0 pack_pipe =3D fdopen(fd, "w");
+>> - =A0 =A0 if (create_full_pack)
+>> - =A0 =A0 =A0 =A0 =A0 =A0 use_thin_pack =3D 0; /* no point doing it =
+*/
+>> =A0 =A0 =A0 init_revisions(&revs, NULL);
+>> =A0 =A0 =A0 revs.tag_objects =3D 1;
+>> =A0 =A0 =A0 revs.tree_objects =3D 1;
+>> @@ -155,13 +154,22 @@ static void create_pack_file(void)
+>> =A0 =A0 =A0 const char *argv[10];
+>> =A0 =A0 =A0 int arg =3D 0;
+>>
+>> - =A0 =A0 rev_list.proc =3D do_rev_list;
+>> - =A0 =A0 /* .data is just a boolean: any non-NULL value will do */
+>> - =A0 =A0 rev_list.data =3D create_full_pack ? &rev_list : NULL;
+>
+> I'm glad you got rid of that.
+>
+>> - =A0 =A0 if (start_async(&rev_list))
+>> - =A0 =A0 =A0 =A0 =A0 =A0 die("git upload-pack: unable to fork git-r=
+ev-list");
+>> + =A0 =A0 if (shallow_nr) {
+>> + =A0 =A0 =A0 =A0 =A0 =A0 rev_list.proc =3D do_rev_list;
+>> + =A0 =A0 =A0 =A0 =A0 =A0 rev_list.data =3D 0;
+>> + =A0 =A0 =A0 =A0 =A0 =A0 if (start_async(&rev_list))
+>> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 die("git upload-pack: unab=
+le to fork git-rev-list");
+>> + =A0 =A0 =A0 =A0 =A0 =A0 argv[arg++] =3D "pack-objects";
+>> + =A0 =A0 } else {
+>> + =A0 =A0 =A0 =A0 =A0 =A0 argv[arg++] =3D "pack-objects";
+>> + =A0 =A0 =A0 =A0 =A0 =A0 argv[arg++] =3D "--revs";
+>> + =A0 =A0 =A0 =A0 =A0 =A0 argv[arg++] =3D "--include-tag";
+>
+> Why this unconditional --include-tags here? =A0Isn't it handled alrea=
+dy a
+> couple lines down already?
+>
+>> + =A0 =A0 =A0 =A0 =A0 =A0 if (create_full_pack)
+>> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 argv[arg++] =3D "--all";
+>> + =A0 =A0 =A0 =A0 =A0 =A0 if (use_thin_pack)
+>> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 argv[arg++] =3D "--thin";
+>
+> Please turn this "if (use_thin_pack)" into an "else if (use_thin_pack=
+)"
+> instead. =A0No point using --thin for a full pack.
+>
+> The rest looks fine to me.
+>
+>
+> Nicolas
+>
