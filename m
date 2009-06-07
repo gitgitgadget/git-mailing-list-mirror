@@ -1,72 +1,64 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [EGIT PATCH 3/3] Add a ref log reader class
-Date: Sun, 7 Jun 2009 15:47:54 -0700
-Message-ID: <20090607224754.GF16497@spearce.org>
-References: <1244405951-21808-1-git-send-email-robin.rosenberg@dewire.com> <1244405951-21808-4-git-send-email-robin.rosenberg@dewire.com> <20090607222154.GD16497@spearce.org> <200906080045.26927.robin.rosenberg.lists@dewire.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/6] add a test for git-send-email for threaded mails without chain-reply-to
+Date: Sun, 07 Jun 2009 16:28:33 -0700
+Message-ID: <7v7hznaaji.fsf@alter.siamese.dyndns.org>
+References: <1244410857-920-1-git-send-email-markus.heidelberg@web.de>
+	<1244410857-920-3-git-send-email-markus.heidelberg@web.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
-X-From: git-owner@vger.kernel.org Mon Jun 08 00:48:04 2009
+Cc: git@vger.kernel.org, Michael Witten <mfwitten@gmail.com>
+To: Markus Heidelberg <markus.heidelberg@web.de>
+X-From: git-owner@vger.kernel.org Mon Jun 08 01:29:39 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MDR9l-0005sm-Te
-	for gcvg-git-2@gmane.org; Mon, 08 Jun 2009 00:48:02 +0200
+	id 1MDRnw-0000NS-UN
+	for gcvg-git-2@gmane.org; Mon, 08 Jun 2009 01:29:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755915AbZFGWrx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 7 Jun 2009 18:47:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755284AbZFGWrw
-	(ORCPT <rfc822;git-outgoing>); Sun, 7 Jun 2009 18:47:52 -0400
-Received: from george.spearce.org ([209.20.77.23]:44530 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754173AbZFGWrv (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 7 Jun 2009 18:47:51 -0400
-Received: by george.spearce.org (Postfix, from userid 1001)
-	id 4EE27381FD; Sun,  7 Jun 2009 22:47:54 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <200906080045.26927.robin.rosenberg.lists@dewire.com>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1752546AbZFGX2d (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 7 Jun 2009 19:28:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752274AbZFGX2c
+	(ORCPT <rfc822;git-outgoing>); Sun, 7 Jun 2009 19:28:32 -0400
+Received: from fed1rmmtao106.cox.net ([68.230.241.40]:34903 "EHLO
+	fed1rmmtao106.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752215AbZFGX2c (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 7 Jun 2009 19:28:32 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao106.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20090607232833.KYRH25927.fed1rmmtao106.cox.net@fed1rmimpo01.cox.net>;
+          Sun, 7 Jun 2009 19:28:33 -0400
+Received: from localhost ([68.225.240.211])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id 1BUZ1c00Q4aMwMQ03BUZvH; Sun, 07 Jun 2009 19:28:34 -0400
+X-VR-Score: -100.00
+X-Authority-Analysis: v=1.0 c=1 a=_6l4x9DqFpAA:10 a=FbKS86_9VuwA:10
+ a=A1X0JdhQAAAA:8 a=Zf9CqPgyr4rt7w9_WtYA:9 a=sd0oS9pjFTe4yz62nzJ6LANWGoMA:4
+ a=XTUYKXyG0EEA:10 a=5KVauyKsRKMA:10 a=Y6qChIQXU1wA:10
+X-CM-Score: 0.00
+In-Reply-To: <1244410857-920-3-git-send-email-markus.heidelberg@web.de> (Markus Heidelberg's message of "Sun\,  7 Jun 2009 23\:40\:53 +0200")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121020>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121021>
 
-Robin Rosenberg <robin.rosenberg.lists@dewire.com> wrote:
-> m?ndag 08 juni 2009 00:21:54 skrev "Shawn O. Pearce" <spearce@spearce.org>:
-> > Robin Rosenberg <robin.rosenberg@dewire.com> wrote:
-> ...
-> > > +			int p1 = RawParseUtils.next(raw, p0 + 1, ':');
-> > > +			if (p1 == -1)
-> > > +				throw new IllegalArgumentException(
-> > > +						"Raw log message does not parse as log entry");
-> > 
-> > Technically, missing a ':' is legal.  Everything after the '\t'
-> > is the comment.  It may be splittable into an action/comment,
-> > it might not be.
-> 
-> Do you think I should just skip parsing out action? I don't really need it. I can
-> go with everything after tab as one string for my purposes, i.e. reading reflogs
-> in JUnit tests.
+Markus Heidelberg <markus.heidelberg@web.de> writes:
 
-Yea, just skip it.
- 
-> As for optimized reading, I'd rather spend my time on something else. Reading
-> reflogs won't likely be a real problem and I think the interface will be stable
-> even if it needs to be optimized.
-> 
-> The other stuff I'll fix.
+> +test_expect_failure 'threading but no chain-reply-to' '
+> +	git send-email \
+> +		--dry-run \
+> +		--from="Example <nobody@example.com>" \
+> +		--to=nobody@example.com \
+> +		--thread \
+> +		--nochain-reply-to \
+> +		$patches $patches |
+> +	grep "In-Reply-To: "
+> +'
 
-OK, sounds fine to me.
+Thanks, but this is not a very good style, as it won't catch if "git
+send-email" dumps core or otherwise fails, exiting with a non-zero status.
 
-Maybe we should cap the limit at say 20 MiB of log or something, and
-refuse to read anything more than that, rather than allowing 2 GiB.
-
-Or, since we most likely only care about the tail, if its over 5
-MiB, skip through to the end and then read the last 5 MiB, and if we
-have a partial entry left over at the start of the buffer, ignore it.
-
--- 
-Shawn.
+Same comments applies to [PATCH 4/6] as well.
