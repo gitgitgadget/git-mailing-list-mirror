@@ -1,73 +1,72 @@
-From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+From: "Shawn O. Pearce" <spearce@spearce.org>
 Subject: Re: [EGIT PATCH 3/3] Add a ref log reader class
-Date: Mon, 8 Jun 2009 00:45:26 +0200
-Message-ID: <200906080045.26927.robin.rosenberg.lists@dewire.com>
-References: <1244405951-21808-1-git-send-email-robin.rosenberg@dewire.com> <1244405951-21808-4-git-send-email-robin.rosenberg@dewire.com> <20090607222154.GD16497@spearce.org>
+Date: Sun, 7 Jun 2009 15:47:54 -0700
+Message-ID: <20090607224754.GF16497@spearce.org>
+References: <1244405951-21808-1-git-send-email-robin.rosenberg@dewire.com> <1244405951-21808-4-git-send-email-robin.rosenberg@dewire.com> <20090607222154.GD16497@spearce.org> <200906080045.26927.robin.rosenberg.lists@dewire.com>
 Mime-Version: 1.0
-Content-Type: Text/Plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Mon Jun 08 00:45:55 2009
+To: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+X-From: git-owner@vger.kernel.org Mon Jun 08 00:48:04 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MDR7i-00053O-Fv
-	for gcvg-git-2@gmane.org; Mon, 08 Jun 2009 00:45:55 +0200
+	id 1MDR9l-0005sm-Te
+	for gcvg-git-2@gmane.org; Mon, 08 Jun 2009 00:48:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755088AbZFGWpd convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 7 Jun 2009 18:45:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756477AbZFGWpd
-	(ORCPT <rfc822;git-outgoing>); Sun, 7 Jun 2009 18:45:33 -0400
-Received: from mail.dewire.com ([83.140.172.130]:20470 "EHLO dewire.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756475AbZFGWpb convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 7 Jun 2009 18:45:31 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by dewire.com (Postfix) with ESMTP id 08C9C146D03B;
-	Mon,  8 Jun 2009 00:45:29 +0200 (CEST)
-X-Virus-Scanned: by amavisd-new at dewire.com
-Received: from dewire.com ([127.0.0.1])
-	by localhost (torino.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id TFpC8QLRFrrx; Mon,  8 Jun 2009 00:45:28 +0200 (CEST)
-Received: from sleipner.localnet (unknown [10.9.0.5])
-	by dewire.com (Postfix) with ESMTP id 6DC2D146D027;
-	Mon,  8 Jun 2009 00:45:28 +0200 (CEST)
-User-Agent: KMail/1.11.2 (Linux/2.6.28-11-generic; KDE/4.2.2; i686; ; )
-In-Reply-To: <20090607222154.GD16497@spearce.org>
+	id S1755915AbZFGWrx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 7 Jun 2009 18:47:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755284AbZFGWrw
+	(ORCPT <rfc822;git-outgoing>); Sun, 7 Jun 2009 18:47:52 -0400
+Received: from george.spearce.org ([209.20.77.23]:44530 "EHLO
+	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754173AbZFGWrv (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 7 Jun 2009 18:47:51 -0400
+Received: by george.spearce.org (Postfix, from userid 1001)
+	id 4EE27381FD; Sun,  7 Jun 2009 22:47:54 +0000 (UTC)
 Content-Disposition: inline
+In-Reply-To: <200906080045.26927.robin.rosenberg.lists@dewire.com>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121019>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121020>
 
-m=E5ndag 08 juni 2009 00:21:54 skrev "Shawn O. Pearce" <spearce@spearce=
-=2Eorg>:
-> Robin Rosenberg <robin.rosenberg@dewire.com> wrote:
-=2E..
-> > +			int p1 =3D RawParseUtils.next(raw, p0 + 1, ':');
-> > +			if (p1 =3D=3D -1)
-> > +				throw new IllegalArgumentException(
-> > +						"Raw log message does not parse as log entry");
->=20
-> Technically, missing a ':' is legal.  Everything after the '\t'
-> is the comment.  It may be splittable into an action/comment,
-> it might not be.
+Robin Rosenberg <robin.rosenberg.lists@dewire.com> wrote:
+> m?ndag 08 juni 2009 00:21:54 skrev "Shawn O. Pearce" <spearce@spearce.org>:
+> > Robin Rosenberg <robin.rosenberg@dewire.com> wrote:
+> ...
+> > > +			int p1 = RawParseUtils.next(raw, p0 + 1, ':');
+> > > +			if (p1 == -1)
+> > > +				throw new IllegalArgumentException(
+> > > +						"Raw log message does not parse as log entry");
+> > 
+> > Technically, missing a ':' is legal.  Everything after the '\t'
+> > is the comment.  It may be splittable into an action/comment,
+> > it might not be.
+> 
+> Do you think I should just skip parsing out action? I don't really need it. I can
+> go with everything after tab as one string for my purposes, i.e. reading reflogs
+> in JUnit tests.
 
-Do you think I should just skip parsing out action? I don't really need=
- it. I can
-go with everything after tab as one string for my purposes, i.e. readin=
-g reflogs
-in JUnit tests.
+Yea, just skip it.
+ 
+> As for optimized reading, I'd rather spend my time on something else. Reading
+> reflogs won't likely be a real problem and I think the interface will be stable
+> even if it needs to be optimized.
+> 
+> The other stuff I'll fix.
 
-As for optimized reading, I'd rather spend my time on something else. R=
-eading
-reflogs won't likely be a real problem and I think the interface will b=
-e stable
-even if it needs to be optimized.
+OK, sounds fine to me.
 
-The other stuff I'll fix.
+Maybe we should cap the limit at say 20 MiB of log or something, and
+refuse to read anything more than that, rather than allowing 2 GiB.
 
--- robin
+Or, since we most likely only care about the tail, if its over 5
+MiB, skip through to the end and then read the last 5 MiB, and if we
+have a partial entry left over at the start of the buffer, ignore it.
+
+-- 
+Shawn.
