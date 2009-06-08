@@ -1,75 +1,109 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 7/8] Makefile: introduce SANE_TOOL_PATH for prepending
-	required elements to PATH
-Date: Mon, 8 Jun 2009 18:11:17 -0400
-Message-ID: <20090608221117.GC29942@sigill.intra.peff.net>
-References: <67hZHClrEWQHxCRdWosE25_CVQVNIYpTaeW2DKuCCDfW4h-jHQ82zlGcCNn49KcxUKsj-TSJSVQ@cipher.nrlssc.navy.mil> <67hZHClrEWQHxCRdWosE24eNsO0do05033zPcGsXrwIRCoU8GtXor_XD8ayKlybu-V7PGeTC_PA@cipher.nrlssc.navy.mil> <67hZHClrEWQHxCRdWosE21Y219yACHqb_DoUmykc1kiOxwRuziSDMczTdmGkyEob9g6DVoIraR4@cipher.nrlssc.navy.mil> <67hZHClrEWQHxCRdWosE24FbCSWPktK230jx86LzLj0Aqa5g5XoJb3Iv805pzfx5wCPameuSp6M@cipher.nrlssc.navy.mil> <67hZHClrEWQHxCRdWosE28bOBU_EdMUdyv6uENKCaQfOLQjhGBq3kLwxe6mMrfW4HauaUwWt5eM@cipher.nrlssc.navy.mil> <67hZHClrEWQHxCRdWosE26gwuGblUI8bcWLxyoPZhmfzJAibRVMtix-zkRUKYe5Y8R8-GRcIkUI@cipher.nrlssc.navy.mil> <67hZHClrEWQHxCRdWosE2-yxscBzIn8DiQogVPM7EAgcGyYg61V8vYLxFiW6A4ovZp6SOuP0pDM@cipher.nrlssc.navy.mil> <67hZHClrEWQHxCRdWosE2_PLKo8HHFSCQIZrHMfucFNo_Bdy4p79XNP-MU8gnsUflWndiCqfhFM@ciph
- er.nrlssc.navy.mil> <20090608114351.GA13775@coredump.intra.peff.net> <7v4ouq1xv6.fsf@alter.siamese.dyndns.org>
+From: Johan Herland <johan@herland.net>
+Subject: Re: Merge into locally modified files?
+Date: Tue, 09 Jun 2009 00:36:43 +0200
+Message-ID: <200906090036.43492.johan@herland.net>
+References: <2729632a0906081030k5048cb27p6950a0decaa7396a@mail.gmail.com>
+ <200906082022.09936.johan@herland.net>
+ <2729632a0906081214q43e45ce7p812bd02f34934691@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Brandon Casey <casey@nrlssc.navy.mil>, git@vger.kernel.org,
-	Brandon Casey <drafnel@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jun 09 00:11:34 2009
+Content-Type: Text/Plain; charset=utf-8
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org
+To: skillzero@gmail.com
+X-From: git-owner@vger.kernel.org Tue Jun 09 00:37:00 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MDn41-000490-Qf
-	for gcvg-git-2@gmane.org; Tue, 09 Jun 2009 00:11:34 +0200
+	id 1MDnSb-0004Kj-Aw
+	for gcvg-git-2@gmane.org; Tue, 09 Jun 2009 00:36:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750705AbZFHWLS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 8 Jun 2009 18:11:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756564AbZFHWLR
-	(ORCPT <rfc822;git-outgoing>); Mon, 8 Jun 2009 18:11:17 -0400
-Received: from peff.net ([208.65.91.99]:36451 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755889AbZFHWLQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 Jun 2009 18:11:16 -0400
-Received: (qmail 24471 invoked by uid 107); 8 Jun 2009 22:11:27 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.40) with ESMTPA; Mon, 08 Jun 2009 18:11:27 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 08 Jun 2009 18:11:17 -0400
-Content-Disposition: inline
-In-Reply-To: <7v4ouq1xv6.fsf@alter.siamese.dyndns.org>
+	id S1755732AbZFHWgs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 8 Jun 2009 18:36:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755603AbZFHWgr
+	(ORCPT <rfc822;git-outgoing>); Mon, 8 Jun 2009 18:36:47 -0400
+Received: from mx.getmail.no ([84.208.15.66]:47527 "EHLO
+	get-mta-out01.get.basefarm.net" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1755442AbZFHWgr (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 8 Jun 2009 18:36:47 -0400
+Content-disposition: inline
+Received: from mx.getmail.no ([10.5.16.4]) by get-mta-out01.get.basefarm.net
+ (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
+ with ESMTP id <0KKX00KXVYT9ZM90@get-mta-out01.get.basefarm.net> for
+ git@vger.kernel.org; Tue, 09 Jun 2009 00:36:45 +0200 (MEST)
+Received: from alpha.localnet ([84.215.102.95])
+ by get-mta-in01.get.basefarm.net
+ (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
+ with ESMTP id <0KKX006AXYT89NF0@get-mta-in01.get.basefarm.net> for
+ git@vger.kernel.org; Tue, 09 Jun 2009 00:36:45 +0200 (MEST)
+X-PMX-Version: 5.5.3.366731, Antispam-Engine: 2.7.0.366912,
+ Antispam-Data: 2009.6.8.222228
+User-Agent: KMail/1.11.4 (Linux/2.6.29-ARCH; KDE/4.2.4; x86_64; ; )
+In-reply-to: <2729632a0906081214q43e45ce7p812bd02f34934691@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121123>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121124>
 
-On Mon, Jun 08, 2009 at 09:41:49AM -0700, Junio C Hamano wrote:
+On Monday 08 June 2009, skillzero@gmail.com wrote:
+> On Mon, Jun 8, 2009 at 11:22 AM, Johan Herland <johan@herland.net> wrote:
+> > Git, instead encourages you to commit your changes _first_
+> > (aka. "commit-before-merge"), so that your changes are not necessarily
+> > affected by the updated changes from the server.
+>
+> The problem I have with this is that it's a lot of extra work to
+> commit, pull (which will create a merge commit), then back out the
+> merge commit git pull did, back out my local commit, then re-apply my
+> local changes.
 
-> We could further uglify the patch like this.
-> [...]
-> +git_broken_path_fix () {
-> +	case ":$PATH:" in
-> +	*:$1:*) : ok ;;
-> +	*)
-> +		PATH=$(
-> +			SANE_TOOL_PATH="$1"
-> +			IFS=: path= sep=
-> +			set x $PATH
-> +			shift
-> +			for elem
-> +			do
-> +				case "$SANE_TOOL_PATH:$elem" in
-> +				(?*:/bin | ?*:/usr/bin)
-> +					path="$path$sep$SANE_TOOL_PATH"
-> +					sep=:
-> +					SANE_TOOL_PATH=
-> +				esac
-> +				path="$path$sep$elem"
-> +				sep=:
-> +			done
-> +			echo "$path"
-> +		)
-> +		;;
-> +	esac
-> +}
+I never suggested you do something convoluted like that. What I suggested 
+was:
 
-Wow. That _is_ ugly, but it actually addresses exactly both my concern
-and Brandon's. I kind of like it.
+1. "git commit" your local changes
+2. "git pull --rebase"
 
--Peff
+After this, your local changes will be on top of the pulled changes. (Then 
+you can put them on a separate branch, if you're paranoid about accidentally 
+pushing them to the server.)
+
+> I typically always have some modified files in my tree
+> for little things I may never want to commit. I'll tweak some build
+> Makefile build setting (e.g. enable extra logging, some debug printfs,
+> etc.). These changes are very transient. We tend to pull in changes
+> several times a day as people change stuff.
+
+Yes, and that's why I suggest you keep your debug stuff on a separate 
+branch, so that it's easily separated from the mainline development.
+
+> It looks like I can use git stash to help here. If I do 'git stash &&
+> git pull && git stash pop', it seemed to work in a simple example.
+
+Yes, that's another way of doing it; possibly better than my suggestion.
+
+> If I had no changes, I'd need to be careful to not try to do a git stash
+> pop since it would haven't stashed anything.
+
+If this is the only thing you use 'git stash' for, you could start off with 
+a 'git stash clear'. That way, there would be nothing to 'pop' if there was 
+nothing to 'stash'.
+
+> Is this something that would be pretty easy to add to git pull (or I
+> guess really to git merge since pull is just fetch+merge)? Maybe
+> something like a 'git pull --rebase-local'? If I wanted to add
+> something like this, should I just start by looking at git stash and
+> see how it does it and try to integrate support for that into git
+> merge (and make sure git pull will pass that option through to git
+> merge)? Conceptually, it seems easy, but I don't know how hard it
+> would be to get it into the code.
+
+Feel free to whip up a patch. I can't say whether it'll be accepted or not.
+
+
+Have fun! :)
+
+...Johan
+
+-- 
+Johan Herland, <johan@herland.net>
+www.herland.net
