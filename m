@@ -1,80 +1,107 @@
-From: "H. Peter Anvin" <hpa@zytor.com>
-Subject: Re: [PATCH v3 0/3] automatically skip away from broken commits
-Date: Sun, 07 Jun 2009 23:06:14 -0700
-Message-ID: <4A2CAA56.1030707@zytor.com>
-References: <20090606043853.4031.78284.chriscool@tuxfamily.org> <7vskidcf9s.fsf@alter.siamese.dyndns.org> <200906070932.36913.chriscool@tuxfamily.org>
+From: Markus Heidelberg <markus.heidelberg@web.de>
+Subject: [PATCH v2 2/6] add a test for git-send-email for threaded mails without chain-reply-to
+Date: Mon, 8 Jun 2009 08:37:31 +0200
+Message-ID: <200906080837.31548.markus.heidelberg@web.de>
+References: <1244410857-920-1-git-send-email-markus.heidelberg@web.de> <7v7hznaaji.fsf@alter.siamese.dyndns.org> <200906080747.18233.markus.heidelberg@web.de>
+Reply-To: markus.heidelberg@web.de
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain;
+  charset="iso-8859-1"
 Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Sam Vilain <sam@vilain.net>, Ingo Molnar <mingo@elte.hu>
-To: Christian Couder <chriscool@tuxfamily.org>
-X-From: git-owner@vger.kernel.org Mon Jun 08 08:06:42 2009
+Cc: git@vger.kernel.org, Michael Witten <mfwitten@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Jun 08 08:37:51 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MDY0I-000643-Es
-	for gcvg-git-2@gmane.org; Mon, 08 Jun 2009 08:06:42 +0200
+	id 1MDYUM-0000Ia-Li
+	for gcvg-git-2@gmane.org; Mon, 08 Jun 2009 08:37:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751895AbZFHGGc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 8 Jun 2009 02:06:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751804AbZFHGGb
-	(ORCPT <rfc822;git-outgoing>); Mon, 8 Jun 2009 02:06:31 -0400
-Received: from terminus.zytor.com ([198.137.202.10]:58063 "EHLO
-	terminus.zytor.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751579AbZFHGGa (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 Jun 2009 02:06:30 -0400
-Received: from mail.hos.anvin.org (c-98-210-181-100.hsd1.ca.comcast.net [98.210.181.100])
-	(authenticated bits=0)
-	by terminus.zytor.com (8.14.3/8.14.1) with ESMTP id n5866IFm022258
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Sun, 7 Jun 2009 23:06:19 -0700
-Received: from tazenda.hos.anvin.org (tazenda.hos.anvin.org [172.27.0.16])
-	by mail.hos.anvin.org (8.14.3/8.14.3) with ESMTP id n5866IBv003980;
-	Sun, 7 Jun 2009 23:06:18 -0700
-Received: from tazenda.hos.anvin.org (localhost.localdomain [127.0.0.1])
-	by tazenda.hos.anvin.org (8.14.3/8.13.6) with ESMTP id n5866EII002745;
-	Sun, 7 Jun 2009 23:06:15 -0700
-User-Agent: Thunderbird 2.0.0.14 (X11/20080501)
-In-Reply-To: <200906070932.36913.chriscool@tuxfamily.org>
-X-Virus-Scanned: ClamAV 0.94.2/9436/Sun Jun  7 17:21:18 2009 on terminus.zytor.com
-X-Virus-Status: Clean
+	id S1751629AbZFHGha (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 8 Jun 2009 02:37:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750911AbZFHGh3
+	(ORCPT <rfc822;git-outgoing>); Mon, 8 Jun 2009 02:37:29 -0400
+Received: from fmmailgate01.web.de ([217.72.192.221]:48171 "EHLO
+	fmmailgate01.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751383AbZFHGh2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Jun 2009 02:37:28 -0400
+Received: from smtp05.web.de (fmsmtp05.dlan.cinetic.de [172.20.4.166])
+	by fmmailgate01.web.de (Postfix) with ESMTP id 33BEF104BB1A5;
+	Mon,  8 Jun 2009 08:37:30 +0200 (CEST)
+Received: from [89.59.71.255] (helo=.)
+	by smtp05.web.de with asmtp (TLSv1:AES256-SHA:256)
+	(WEB.DE 4.110 #277)
+	id 1MDYU5-0002c9-00; Mon, 08 Jun 2009 08:37:30 +0200
+User-Agent: KMail/1.9.9
+In-Reply-To: <200906080747.18233.markus.heidelberg@web.de>
+Jabber-ID: markus.heidelberg@web.de
+Content-Disposition: inline
+X-Sender: markus.heidelberg@web.de
+X-Provags-ID: V01U2FsdGVkX18dI+JZBcsvUoEFsfhA4/mK+lKRSPNB/XqQbCz8
+	oiilrC3XN/LaYtNSScFmMbuAkwBzeoByj4D2EI8G22Q+ENXbf/
+	rLRTy1klfkHAOgFak9Cg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121035>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121036>
 
-Christian Couder wrote:
->>
->> I think this shows that the "skip ratio" heuristics based on the distance
->> in the "goodness scale" space does not help in avoiding commits that are
->> close in topological space.  There may be cases where the version with
->> patch gives fewer rounds especially when the history is very linear, but
->> I was mostly interested in the number of commits at least in the
->> thousands, which I think is what we should optimize things for, not a toy
->> history of linear 100 commits.
+
+Signed-off-by: Markus Heidelberg <markus.heidelberg@web.de>
+---
+
+Markus Heidelberg, 08.06.2009:
+> Junio C Hamano, 08.06.2009:
+> > Markus Heidelberg <markus.heidelberg@web.de> writes:
+> > 
+> > > +test_expect_failure 'threading but no chain-reply-to' '
+> > > +	git send-email \
+> > > +		--dry-run \
+> > > +		--from="Example <nobody@example.com>" \
+> > > +		--to=nobody@example.com \
+> > > +		--thread \
+> > > +		--nochain-reply-to \
+> > > +		$patches $patches |
+> > > +	grep "In-Reply-To: "
+> > > +'
+> > 
+> > Thanks, but this is not a very good style, as it won't catch if "git
+> > send-email" dumps core or otherwise fails, exiting with a non-zero status.
+> > 
+> > Same comments applies to [PATCH 4/6] as well.
 > 
-> I get the same results as yours, and I think that in these tests cases "git 
-> bisect" was not stuck with having only untestable commits with the 
-> highest "goodness" values. So in these cases the original behavior does 
-> quite well and that's why the updated behavior can't do better.
+> OK, this was my first attempt in writing a test and I just used the last
+> test 'in-reply-to but no threading' as template.
 > 
+> What can be done to make the test better?
 
-It's not entirely clear to me that this is any better than simply
-randomly picking a commit from the list of plausible commits -- in other
-words, eliminate the commits we can totally rule out, and then just pick
-a random commit among the list of plausible commits.  This is not
-*quite* as crazy as it sounds; it has the advantage of being an
-extremely simple algorithm which shouldn't have any pathological behaviours.
+Is this change sufficient? Dumping the stdout into a file and grepping
+this.
 
-The average information gain for a randomly picked commit is 1/(2 ln 2)
-=~ 0.7213 bits, or an increase in the total bisect time by 39% over a
-pure binary search.
 
-	-hpa
+ t/t9001-send-email.sh |   11 +++++++++++
+ 1 files changed, 11 insertions(+), 0 deletions(-)
 
+diff --git a/t/t9001-send-email.sh b/t/t9001-send-email.sh
+index ce26ea4..8f810ab 100755
+--- a/t/t9001-send-email.sh
++++ b/t/t9001-send-email.sh
+@@ -621,4 +621,15 @@ test_expect_success 'in-reply-to but no threading' '
+ 	grep "In-Reply-To: <in-reply-id@example.com>"
+ '
+ 
++test_expect_failure 'threading but no chain-reply-to' '
++	git send-email \
++		--dry-run \
++		--from="Example <nobody@example.com>" \
++		--to=nobody@example.com \
++		--thread \
++		--nochain-reply-to \
++		$patches $patches >stdout &&
++	grep "In-Reply-To: " stdout
++'
++
+ test_done
 -- 
-H. Peter Anvin, Intel Open Source Technology Center
-I work for Intel.  I don't speak on their behalf.
+1.6.3.2.220.gb421
