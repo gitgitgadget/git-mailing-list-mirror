@@ -1,51 +1,55 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 0/2] *** SUBJECT HERE ***
-Date: Sun,  7 Jun 2009 21:31:20 -0700
-Message-ID: <1244435480-27812-1-git-send-email-gitster@pobox.com>
+From: skillzero@gmail.com
+Subject: Per-branch receive.denyNonFastForwards?
+Date: Sun, 7 Jun 2009 22:20:44 -0700
+Message-ID: <2729632a0906072220n4dff5d39vaa863401c136c3c5@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jun 08 06:31:34 2009
+X-From: git-owner@vger.kernel.org Mon Jun 08 07:20:53 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MDWWD-0007zZ-1U
-	for gcvg-git-2@gmane.org; Mon, 08 Jun 2009 06:31:33 +0200
+	id 1MDXHw-0003ct-Pb
+	for gcvg-git-2@gmane.org; Mon, 08 Jun 2009 07:20:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750799AbZFHEbX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 8 Jun 2009 00:31:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750757AbZFHEbW
-	(ORCPT <rfc822;git-outgoing>); Mon, 8 Jun 2009 00:31:22 -0400
-Received: from fed1rmmtao104.cox.net ([68.230.241.42]:39936 "EHLO
-	fed1rmmtao104.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750711AbZFHEbW (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 Jun 2009 00:31:22 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao104.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20090608043124.EDLY17135.fed1rmmtao104.cox.net@fed1rmimpo01.cox.net>
-          for <git@vger.kernel.org>; Mon, 8 Jun 2009 00:31:24 -0400
-Received: from localhost ([68.225.240.211])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id 1GXQ1c0034aMwMQ03GXQo6; Mon, 08 Jun 2009 00:31:24 -0400
-X-VR-Score: 0.00
-X-Authority-Analysis: v=1.0 c=1 a=hyUMmG9aBuQA:10 a=i1ru0QFz-EA5crBrFWYA:9
- a=_DZ4wT6TFkVQLdNb_hYckxeuC_IA:4
-X-CM-Score: 0.00
-X-Mailer: git-send-email 1.6.3.2.202.g26c11
+	id S1751428AbZFHFUo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 8 Jun 2009 01:20:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751269AbZFHFUn
+	(ORCPT <rfc822;git-outgoing>); Mon, 8 Jun 2009 01:20:43 -0400
+Received: from yw-out-2324.google.com ([74.125.46.28]:58156 "EHLO
+	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750711AbZFHFUm (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Jun 2009 01:20:42 -0400
+Received: by yw-out-2324.google.com with SMTP id 5so1929622ywb.1
+        for <git@vger.kernel.org>; Sun, 07 Jun 2009 22:20:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:date:message-id:subject
+         :from:to:content-type:content-transfer-encoding;
+        bh=nU7pmu5pGRG/vIt+0/z+GF57T/H9sX3eioDUVy6Ep7U=;
+        b=q9wdQtk4krDkbzlqmYP90E6EvPOPhyZBnB1zeWAZkZYACVQt5FrgcCigrqKa9im4xB
+         vAvYxN0tOzDjfEybCDyiy0RH8wrj5VGdbNMuhsAbrm2jOImT6nWxHExZDGS1Z6ttJrpL
+         YHyN0JuZWeFxTa158woGzCSCq+R8KtZUenEwc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:date:message-id:subject:from:to:content-type
+         :content-transfer-encoding;
+        b=SzolAm74pOMB5BbN23NitgvzuVlcjA31OEmIela2NRaVnSEqmnuX/hgWsj658vaNak
+         O46X4uYwLDYEyf1Lc9OIM7Dt87BBRL/PjvwfVyF6pLYAvmUfLDywSvNCiqhSGSVYXcwO
+         m0WcWSKDa7GUOODRX3fPZx+6dGsHr78cFCetw=
+Received: by 10.100.12.17 with SMTP id 17mr5669549anl.2.1244438444450; Sun, 07 
+	Jun 2009 22:20:44 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121032>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121033>
 
-*** BLURB HERE ***
-
-Junio C Hamano (1):
-  Makefile: test-parse-options depends on parse-options.h
-
-Kjetil Barvik (1):
-  symlinks.c: small style cleanup
-
- Makefile   |    2 ++
- symlinks.c |    6 ++----
- 2 files changed, 4 insertions(+), 4 deletions(-)
+Is there a way to deny non-fast forward pushes to only certain
+branches? I'd like for people to be able to force push to their own
+branches on the server, but for the master branch (and maybe a couple
+other important branches), I want to prevent it. I basically want a
+per-branch version of receive.denyNonFastForwards. Is there a way to
+do this?
