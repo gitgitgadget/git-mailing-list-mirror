@@ -1,102 +1,67 @@
-From: Jon Smirl <jonsmirl@gmail.com>
-Subject: Re: Merge into locally modified files?
-Date: Mon, 8 Jun 2009 19:19:37 -0400
-Message-ID: <9e4733910906081619u19f12220g7fab11c94b9aa8a5@mail.gmail.com>
-References: <2729632a0906081030k5048cb27p6950a0decaa7396a@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCHv3 1/4] parse-remote: function to get the tracking branch to be merge
+Date: Mon, 08 Jun 2009 16:30:31 -0700
+Message-ID: <7v8wk2wbfs.fsf@alter.siamese.dyndns.org>
+References: <1244451651-22651-2-git-send-email-santi@agolina.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: skillzero@gmail.com
-X-From: git-owner@vger.kernel.org Tue Jun 09 01:19:47 2009
+To: Santi =?utf-8?Q?B=C3=A9jar?= <santi@agolina.net>
+X-From: git-owner@vger.kernel.org Tue Jun 09 01:30:42 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MDo82-0007Do-UP
-	for gcvg-git-2@gmane.org; Tue, 09 Jun 2009 01:19:47 +0200
+	id 1MDoIa-0001Jy-Qq
+	for gcvg-git-2@gmane.org; Tue, 09 Jun 2009 01:30:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755003AbZFHXTh convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 8 Jun 2009 19:19:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754064AbZFHXTg
-	(ORCPT <rfc822;git-outgoing>); Mon, 8 Jun 2009 19:19:36 -0400
-Received: from mail-qy0-f173.google.com ([209.85.221.173]:62258 "EHLO
-	mail-qy0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753939AbZFHXTg convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 8 Jun 2009 19:19:36 -0400
-Received: by qyk3 with SMTP id 3so190942qyk.33
-        for <git@vger.kernel.org>; Mon, 08 Jun 2009 16:19:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=vmsJyOuUMXPEDj1weOQEqoTHcKPqqITkT5gFFMgWk0A=;
-        b=IN3h24qMPvRHHq5PF0B5eASCEcvW0Zx1cA3tXIK4gqaTbCoDUemcmk/1tXhbeI+jiJ
-         OjEqVmOlFvPejCLzrQ0peKztA2Ku4jwoiGUUAyKiz//Hut5Z54uTRWNapWc/8TnRZfp4
-         OuSusWMexI60CvLRk5AtxdrkeSy+njoZos7qA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=MX3V+MuHD6v/HlYeb5IisJLAmD7T1nVfwfx1YkJbApBiIOzzK/n6Ty1gYQ2u372IE4
-         HlqewdTEb/o9/9dZKmIoouf9I/qYecYhbbBKGgo1J2N3FC+AjOBNZmAbrNXAL7rCd02s
-         EllBgXDy8PsgCGkIHZNSccPgJ3QpSpo6w+pKU=
-Received: by 10.220.90.144 with SMTP id i16mr4197887vcm.14.1244503178015; Mon, 
-	08 Jun 2009 16:19:38 -0700 (PDT)
-In-Reply-To: <2729632a0906081030k5048cb27p6950a0decaa7396a@mail.gmail.com>
+	id S1753105AbZFHXab convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 8 Jun 2009 19:30:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751858AbZFHXaa
+	(ORCPT <rfc822;git-outgoing>); Mon, 8 Jun 2009 19:30:30 -0400
+Received: from fed1rmmtao107.cox.net ([68.230.241.39]:58659 "EHLO
+	fed1rmmtao107.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751404AbZFHXaa (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Jun 2009 19:30:30 -0400
+Received: from fed1rmimpo03.cox.net ([70.169.32.75])
+          by fed1rmmtao107.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20090608233033.XEVN18948.fed1rmmtao107.cox.net@fed1rmimpo03.cox.net>;
+          Mon, 8 Jun 2009 19:30:33 -0400
+Received: from localhost ([68.225.240.211])
+	by fed1rmimpo03.cox.net with bizsmtp
+	id 1bWY1c0034aMwMQ04bWYdD; Mon, 08 Jun 2009 19:30:32 -0400
+X-VR-Score: -100.00
+X-Authority-Analysis: v=1.0 c=1 a=RAp76dD47iIA:10 a=eDh-fbTsmFgA:10
+ a=3yCQnsJiAAAA:8 a=IlVFgqLpY9YpfdnFHpkA:9 a=BCxkenqJmfbLZSXIkXgA:7
+ a=KlV15RXvdILgpxQPYb1dLhnN2kMA:4 a=cdoSpQTWPqQA:10
+X-CM-Score: 0.00
+In-Reply-To: <1244451651-22651-2-git-send-email-santi@agolina.net> ("Santi
+ =?utf-8?Q?B=C3=A9jar=22's?= message of "Mon\,  8 Jun 2009 11\:00\:48
+ +0200")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121129>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121130>
 
-On Mon, Jun 8, 2009 at 1:30 PM, <skillzero@gmail.com> wrote:
-> If I have some local changes to a file that I don't want to commit
-> (e.g. temp debug changes like printf's) and I see somebody else has
-> pushed some changes to that file, how do I merge their changes to the
-> file while trying to preserve my local changes (and conflicting if
-> it's not possible)?
+Santi B=C3=A9jar <santi@agolina.net> writes:
+
+> The only user of get_remote_refs_for_fetch was "git pull --rebase" an=
+d
+> it only wanted the tracking branch to be merge. So, add a simple
+> function with this new meaning.
 >
-> After a git fetch, I tried 'git checkout --merge origin/master <path
-> to my locally modified file>', but that just overwrote my local
-> changes.
+> No behavior changes.
 
-I use stgit to do this all of the time. stgit is all about patch
-stacks. You just add your debug stuff to a stgit patch and then you
-can push/pop it.
-
-stg new debug-patch
-=2E.make debug edits..
-stg refresh
-
-git fetch origin
-stg rebase origin/master
-=2E.. fix conflicts, you get prompted...
-
-you're done.
-
-
->
-> I'm converting people from CVS to git and this is a common thing
-> people do with CVS. They have some local changes and see that the
-> server has some other changes so they do 'cvs up' and it tries to
-> merge changes from the server into the locally modified file. The
-> local changes are often things that will never be committed. I know
-> git tries to avoid things you can't undo, but like a 'git checkout
-> <file>' that can't be undone, is there a way to say "merge what you
-> can and generate conflict markers for things you can't?".
->
-> I think what I want to do is the equivalent of rebasing for local
-> modified files rather than committed files.
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at =A0http://vger.kernel.org/majordomo-info.html
->
-
-
-
---=20
-Jon Smirl
-jonsmirl@gmail.com
+I am all for code reduction, but after following the original logic tha=
+t
+uses remote_refs_for_fetch (which knows about things like "git pull the=
+re
++refs/heads/master:refs/heads/origin tag v1.6.0" from the command line)
+that in turn calls canon_refs_list_for_fetch (which returns a list e.g.
++refs/heads/master:refs/heads/origin refs/tags/v1.6.0:refs/tags/v1.6.0)=
+,
+and do not quite see how you can casually say "No behaviour changes."
