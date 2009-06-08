@@ -1,82 +1,61 @@
-From: Brandon Casey <casey@nrlssc.navy.mil>
-Subject: [PATCH] git-compat-util.h: avoid using c99 flex array feature with Sun compiler 5.8
-Date: Mon,  8 Jun 2009 18:53:48 -0500
-Message-ID: <nYAkmarcGRBhYLHbnRiCZXL6usjjeB6-Ay5jvqc8d36t-A-gMf9kF8a87yc3WwoOoSuGBCYDVLg@cipher.nrlssc.navy.mil>
-References: <ee63ef30906052056le082bffrec078981dddaa013@mail.gmail.com>
-Cc: nico@cam.org, git@vger.kernel.org, peff@peff.net,
-	Brandon Casey <drafnel@gmail.com>
-To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Tue Jun 09 01:55:19 2009
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] send-email: Refuse to send cover-letter template subject
+Date: Mon, 08 Jun 2009 16:59:09 -0700
+Message-ID: <7v4ouqwa42.fsf@alter.siamese.dyndns.org>
+References: <7fedc4b76fed03e4db6a2bb7453609c9cd02928a.1244496564.git.trast@student.ethz.ch>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Thomas Rast <trast@student.ethz.ch>
+X-From: git-owner@vger.kernel.org Tue Jun 09 01:59:22 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MDogR-0007m1-6F
-	for gcvg-git-2@gmane.org; Tue, 09 Jun 2009 01:55:19 +0200
+	id 1MDokH-0000k1-Uk
+	for gcvg-git-2@gmane.org; Tue, 09 Jun 2009 01:59:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752850AbZFHXzK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 8 Jun 2009 19:55:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751847AbZFHXzK
-	(ORCPT <rfc822;git-outgoing>); Mon, 8 Jun 2009 19:55:10 -0400
-Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:55197 "EHLO
-	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751782AbZFHXzJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 Jun 2009 19:55:09 -0400
-Received: by mail.nrlssc.navy.mil id n58NsFqB023320; Mon, 8 Jun 2009 18:54:15 -0500
-In-Reply-To: <ee63ef30906052056le082bffrec078981dddaa013@mail.gmail.com>
-X-OriginalArrivalTime: 08 Jun 2009 23:54:14.0126 (UTC) FILETIME=[6D2D50E0:01C9E894]
+	id S1753392AbZFHX7J (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 8 Jun 2009 19:59:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753146AbZFHX7I
+	(ORCPT <rfc822;git-outgoing>); Mon, 8 Jun 2009 19:59:08 -0400
+Received: from fed1rmmtao107.cox.net ([68.230.241.39]:40707 "EHLO
+	fed1rmmtao107.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751847AbZFHX7H (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Jun 2009 19:59:07 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao107.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20090608235909.YRMN18948.fed1rmmtao107.cox.net@fed1rmimpo01.cox.net>;
+          Mon, 8 Jun 2009 19:59:09 -0400
+Received: from localhost ([68.225.240.211])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id 1bz91c00A4aMwMQ03bz9gs; Mon, 08 Jun 2009 19:59:09 -0400
+X-VR-Score: -100.00
+X-Authority-Analysis: v=1.0 c=1 a=fC4PegqPu0EA:10 a=rURELfc3W64A:10
+ a=wsEszfqlzf6qkVSM4QcA:9 a=YMC2T0Ly_rLOkTmFX9gA:7
+ a=pm8I3FZK04FIa2j70h8FsQ9mxEwA:4
+X-CM-Score: 0.00
+In-Reply-To: <7fedc4b76fed03e4db6a2bb7453609c9cd02928a.1244496564.git.trast@student.ethz.ch> (Thomas Rast's message of "Mon\,  8 Jun 2009 23\:34\:12 +0200")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121133>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121134>
 
-From: Brandon Casey <drafnel@gmail.com>
+Thomas Rast <trast@student.ethz.ch> writes:
 
-The Sun c99 compiler as recent as version 5.8 Patch 121016-06 2007/08/01
-produces an error when compiling diff-delta.c.  This source file #includes
-the delta.h header file which pre-declares a struct which is later defined
-to contain a flex array member.  The Sun c99 compiler fails to compile
-diff-delta.c and gives the following error:
+> Every so often, someone sends out an unedited cover-letter template.
+> Add a simple check to send-email that refuses to send if the subject
+> contains "*** SUBJECT HERE ***", with an option --force to override.
 
-  "diff-delta.c", line 314: identifier redeclared: create_delta
-          current : function(pointer to const struct delta_index {unsigned long memsize, pointer to const void src_buf, unsigned long src_size, unsigned int hash_mask, array[-1] of pointer to struct index_entry {..} hash}, pointer to const void, unsigned long, pointer to unsigned long, unsigned long) returning pointer to void
-          previous: function(pointer to const struct delta_index {unsigned long memsize, pointer to const void src_buf, unsigned long src_size, unsigned int hash_mask, array[-1] of pointer to struct index_entry {..} hash}, pointer to const void, unsigned long, pointer to unsigned long, unsigned long) returning pointer to void : "delta.h", line 44
-  c99: acomp failed for diff-delta.c
+Good ;-).  More valuable to detect would be an empty "blurb" section
+(i.e. not "unedited *** BLURB HERE ***" string, but literally, there is
+nothing said in the message other than the shortstat).
 
-So, avoid using this c99 feature when compiling with the Sun c compilers
-version 5.8 and older (the most recent version tested).
-
-Signed-off-by: Brandon Casey <drafnel@gmail.com>
----
-
-
-This should avoid the flex array problems when using the Sun c99 compiler.
-
-This patch is on top of the new bc/solaris (a7a24ee7).
-
-Since this checks the version of the Sun compiler, it should give Sun the
-opportunity to fix the compiler in newer releases.  If someone has Sun
-Studio 12? where __SUNPRO_C is set to 0x590, maybe they can test.
-
--brandon
-
-
- git-compat-util.h |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
-
-diff --git a/git-compat-util.h b/git-compat-util.h
-index 71197d9..48d99fa 100644
---- a/git-compat-util.h
-+++ b/git-compat-util.h
-@@ -7,7 +7,7 @@
- /*
-  * See if our compiler is known to support flexible array members.
-  */
--#if defined(__STDC_VERSION__) && (__STDC_VERSION__ >= 199901L)
-+#if defined(__STDC_VERSION__) && (__STDC_VERSION__ >= 199901L) && (!defined(__SUNPRO_C) || (__SUNPRO_C > 0x580))
- # define FLEX_ARRAY /* empty */
- #elif defined(__GNUC__)
- # if (__GNUC__ >= 3)
--- 
-1.6.3.1.24.g152f4
+One twist is that I am reasonably sure that somebody will soon fix the
+shortstat part of the cover letter with something more reasonable
+(i.e. not categorized by author, but instead retaining the order of
+patches, and for an added bonus, append names of authors other than
+yourself at the end of the line in parentheses, or something).
