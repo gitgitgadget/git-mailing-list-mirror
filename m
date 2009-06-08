@@ -1,80 +1,99 @@
-From: Brandon Casey <casey@nrlssc.navy.mil>
-Subject: Re: [PATCH 7/8] Makefile: introduce SANE_TOOL_PATH for prepending
- required elements to PATH
-Date: Mon, 08 Jun 2009 18:39:40 -0500
-Message-ID: <fzqJj0x9YB8Uli2Fx2vePY55fbueEEY-IiruKI-uLEgS08KF5M8miw@cipher.nrlssc.navy.mil>
-References: <67hZHClrEWQHxCRdWosE25_CVQVNIYpTaeW2DKuCCDfW4h-jHQ82zlGcCNn49KcxUKsj-TSJSVQ@cipher.nrlssc.navy.mil> <67hZHClrEWQHxCRdWosE24eNsO0do05033zPcGsXrwIRCoU8GtXor_XD8ayKlybu-V7PGeTC_PA@cipher.nrlssc.navy.mil> <67hZHClrEWQHxCRdWosE21Y219yACHqb_DoUmykc1kiOxwRuziSDMczTdmGkyEob9g6DVoIraR4@cipher.nrlssc.navy.mil> <67hZHClrEWQHxCRdWosE24FbCSWPktK230jx86LzLj0Aqa5g5XoJb3Iv805pzfx5wCPameuSp6M@cipher.nrlssc.navy.mil> <67hZHClrEWQHxCRdWosE28bOBU_EdMUdyv6uENKCaQfOLQjhGBq3kLwxe6mMrfW4HauaUwWt5eM@cipher.nrlssc.navy.mil> <67hZHClrEWQHxCRdWosE26gwuGblUI8bcWLxyoPZhmfzJAibRVMtix-zkRUKYe5Y8R8-GRcIkUI@cipher.nrlssc.navy.mil> <67hZHClrEWQHxCRdWosE2-yxscBzIn8DiQogVPM7EAgcGyYg61V8vYLxFiW6A4ovZp6SOuP0pDM@cipher.nrlssc.navy.mil> <67hZHClrEWQHxCRdWosE2_PLKo8HHFSCQIZrHMfucFNo_Bdy4p79XNP-MU8gnsUflWndiCqfhFM@ciph
- er.nrlssc.navy.mil> <20090608114351.GA13775@coredump.intra.peff.net> <7v4ouq1xv6.fsf@alter.siamese.dyndns.org> <20090608221117.GC29942@sigill.intra.peff.net>
+From: Marco Nelissen <marcone@xs4all.nl>
+Subject: Re: [PATCH] fix handling of iconv configuration options
+Date: Mon, 8 Jun 2009 16:51:18 -0700
+Message-ID: <3a3d9e520906081651r33b485c2v745c4275a25c0f58@mail.gmail.com>
+References: <3a3d9e520906071745k1fde4215xba310d945db37979@mail.gmail.com>
+	 <7vhbyqwg2y.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Brandon Casey <drafnel@gmail.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Jun 09 01:40:00 2009
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jun 09 01:51:28 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MDoRX-0003dc-Cn
-	for gcvg-git-2@gmane.org; Tue, 09 Jun 2009 01:39:55 +0200
+	id 1MDoch-0006K0-9J
+	for gcvg-git-2@gmane.org; Tue, 09 Jun 2009 01:51:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757384AbZFHXjo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 8 Jun 2009 19:39:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757367AbZFHXjo
-	(ORCPT <rfc822;git-outgoing>); Mon, 8 Jun 2009 19:39:44 -0400
-Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:60205 "EHLO
-	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757358AbZFHXjn (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 Jun 2009 19:39:43 -0400
-Received: by mail.nrlssc.navy.mil id n58Ndehe021333; Mon, 8 Jun 2009 18:39:40 -0500
-In-Reply-To: <20090608221117.GC29942@sigill.intra.peff.net>
-X-OriginalArrivalTime: 08 Jun 2009 23:39:40.0536 (UTC) FILETIME=[647A0F80:01C9E892]
+	id S1752843AbZFHXvS convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 8 Jun 2009 19:51:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751858AbZFHXvR
+	(ORCPT <rfc822;git-outgoing>); Mon, 8 Jun 2009 19:51:17 -0400
+Received: from an-out-0708.google.com ([209.85.132.247]:52127 "EHLO
+	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751456AbZFHXvQ convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 8 Jun 2009 19:51:16 -0400
+Received: by an-out-0708.google.com with SMTP id d40so6378738and.1
+        for <git@vger.kernel.org>; Mon, 08 Jun 2009 16:51:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:sender:received:in-reply-to
+         :references:date:x-google-sender-auth:message-id:subject:from:to:cc
+         :content-type:content-transfer-encoding;
+        bh=qsXmuu0ZP8VSXXrqDy4LX+vENGv5c/BYTGtFAbPTll8=;
+        b=CjhL74IE+S3ZVX0s1GLiIPpJF4pm6FpLRlJQBsEROoQpJhuHKQmzExa5eJ4ue2zzhP
+         rjKw0tzvwZ2DuC0HKyOR/0yBe5wuXorQ3TtPmZl/8arDoYPwzvXtD3YgE/PVoidaRh7e
+         So0SXN9gWUM+m2q47s0KZ49xx1xUFdoc33uBA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:sender:in-reply-to:references:date
+         :x-google-sender-auth:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        b=aQzHbP4ICLfXgsqB9Uf4LqZQoUaRYCGSYTGDFQmfDDlRdsIbu/CKcE21XqgIAroLaz
+         G6ZIUGX2r9DEmy2aQbuXZWdhMtwHl9DJ06SzwhNulSbDfMbH0SbLhdqWB0dTve5eby2o
+         3ySl/wV2L6KnSt2CXEjYUV0A1qnM7UqULBTY4=
+Received: by 10.100.96.12 with SMTP id t12mr884020anb.4.1244505078439; Mon, 08 
+	Jun 2009 16:51:18 -0700 (PDT)
+In-Reply-To: <7vhbyqwg2y.fsf@alter.siamese.dyndns.org>
+X-Google-Sender-Auth: 4c72ffb2079b75ec
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121131>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121132>
 
+On Mon, Jun 8, 2009 at 2:50 PM, Junio C Hamano<gitster@pobox.com> wrote=
+:
+> Marco Nelissen <marcone@xs4all.nl> writes:
+>
+>> diff --git a/configure.ac b/configure.ac
+>> index 108a97f..3388036 100644
+>> --- a/configure.ac
+>> +++ b/configure.ac
+>> @@ -385,6 +385,8 @@ AC_SUBST(NO_EXPAT)
+>> =C2=A0# some Solaris installations).
+>> =C2=A0# Define NO_ICONV if neither libc nor libiconv support iconv.
+>>
+>> +if test -z $NO_ICONV; then
+>> +
+>> =C2=A0GIT_STASH_FLAGS($ICONVDIR)
+>>
+>> =C2=A0AC_DEFUN([ICONVTEST_SRC], [
+>> @@ -431,6 +433,12 @@ GIT_UNSTASH_FLAGS($ICONVDIR)
+>> =C2=A0AC_SUBST(NEEDS_LIBICONV)
+>> =C2=A0AC_SUBST(NO_ICONV)
+>>
+>> +if test -n $NO_ICONV; then
+>> + =C2=A0 =C2=A0NEEDS_LIBICONV=3D
+>> +fi
+>> +
+>> +fi
+>> +
+>
+> Hmm, have you tested this with both NO_ICONV defined and undefined?
+>
+> Because ...
+>
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0$ test -z ; echo $?
+> =C2=A0 =C2=A0 =C2=A0 =C2=A00
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0$ test -n ; echo $?
+> =C2=A0 =C2=A0 =C2=A0 =C2=A00
+>
+> ... I would feel better if you had dq around $NO_ICONV in both tests.
 
-I never received the referenced email.  I'll try to extract from gmane
-and test.
-
--brandon
-
-
-Jeff King wrote:
-> On Mon, Jun 08, 2009 at 09:41:49AM -0700, Junio C Hamano wrote:
-> 
->> We could further uglify the patch like this.
->> [...]
->> +git_broken_path_fix () {
->> +	case ":$PATH:" in
->> +	*:$1:*) : ok ;;
->> +	*)
->> +		PATH=$(
->> +			SANE_TOOL_PATH="$1"
->> +			IFS=: path= sep=
->> +			set x $PATH
->> +			shift
->> +			for elem
->> +			do
->> +				case "$SANE_TOOL_PATH:$elem" in
->> +				(?*:/bin | ?*:/usr/bin)
->> +					path="$path$sep$SANE_TOOL_PATH"
->> +					sep=:
->> +					SANE_TOOL_PATH=
->> +				esac
->> +				path="$path$sep$elem"
->> +				sep=:
->> +			done
->> +			echo "$path"
->> +		)
->> +		;;
->> +	esac
->> +}
-> 
-> Wow. That _is_ ugly, but it actually addresses exactly both my concern
-> and Brandon's. I kind of like it.
-> 
-> -Peff
+Ah, you're right. I tested that it didn't incorrectly set
+NEEDS_LIBICONV on a system that doesn't have/need it, but didn't test
+that it doesn't unset it on a system that does need it (because I
+don't have such a system).
