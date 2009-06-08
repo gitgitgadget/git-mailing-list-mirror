@@ -1,64 +1,56 @@
-From: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
-	<u.kleine-koenig@pengutronix.de>
-Subject: TopGit successor
-Date: Mon, 8 Jun 2009 09:44:37 +0200
-Message-ID: <20090608074437.GA12109@pengutronix.de>
-References: <1244148073-2313-1-git-send-email-bert.wesarg@googlemail.com> <20090605202526.GB671@pengutronix.de> <36ca99e90906080031r3f5f545eo26c077e1966bf67@mail.gmail.com>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: Per-branch receive.denyNonFastForwards?
+Date: Mon, 08 Jun 2009 10:43:05 +0200
+Message-ID: <4A2CCF19.9000405@drmicha.warpmail.net>
+References: <2729632a0906072220n4dff5d39vaa863401c136c3c5@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Bert Wesarg <bert.wesarg@googlemail.com>
-X-From: git-owner@vger.kernel.org Mon Jun 08 09:45:10 2009
+To: skillzero@gmail.com
+X-From: git-owner@vger.kernel.org Mon Jun 08 10:43:26 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MDZXB-0007no-2U
-	for gcvg-git-2@gmane.org; Mon, 08 Jun 2009 09:44:45 +0200
+	id 1MDaRw-0004Uj-TQ
+	for gcvg-git-2@gmane.org; Mon, 08 Jun 2009 10:43:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752330AbZFHHoh convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 8 Jun 2009 03:44:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751748AbZFHHog
-	(ORCPT <rfc822;git-outgoing>); Mon, 8 Jun 2009 03:44:36 -0400
-Received: from metis.ext.pengutronix.de ([92.198.50.35]:35696 "EHLO
-	metis.ext.pengutronix.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750725AbZFHHog (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 Jun 2009 03:44:36 -0400
-Received: from octopus.hi.pengutronix.de ([2001:6f8:1178:2:215:17ff:fe12:23b0])
-	by metis.ext.pengutronix.de with esmtp (Exim 4.63)
-	(envelope-from <ukl@pengutronix.de>)
-	id 1MDZX3-0003Ne-T0; Mon, 08 Jun 2009 09:44:37 +0200
-Received: from ukl by octopus.hi.pengutronix.de with local (Exim 4.69)
-	(envelope-from <ukl@pengutronix.de>)
-	id 1MDZX3-00039i-6s; Mon, 08 Jun 2009 09:44:37 +0200
-Content-Disposition: inline
-In-Reply-To: <36ca99e90906080031r3f5f545eo26c077e1966bf67@mail.gmail.com>
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-SA-Exim-Connect-IP: 2001:6f8:1178:2:215:17ff:fe12:23b0
-X-SA-Exim-Mail-From: ukl@pengutronix.de
-X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
-X-PTX-Original-Recipient: git@vger.kernel.org
+	id S1753712AbZFHInJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 8 Jun 2009 04:43:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752504AbZFHInI
+	(ORCPT <rfc822;git-outgoing>); Mon, 8 Jun 2009 04:43:08 -0400
+Received: from out5.smtp.messagingengine.com ([66.111.4.29]:52912 "EHLO
+	out5.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753277AbZFHInI (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 8 Jun 2009 04:43:08 -0400
+Received: from compute2.internal (compute2.internal [10.202.2.42])
+	by out1.messagingengine.com (Postfix) with ESMTP id 187EB35D90B;
+	Mon,  8 Jun 2009 04:43:10 -0400 (EDT)
+Received: from heartbeat2.messagingengine.com ([10.202.2.161])
+  by compute2.internal (MEProxy); Mon, 08 Jun 2009 04:43:10 -0400
+X-Sasl-enc: dhZYwoC4xA/adIoWtSO2Z6FbAxiWSfxnCuBCYRsjC60D 1244450589
+Received: from localhost.localdomain (p54859B76.dip0.t-ipconnect.de [84.133.155.118])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 71FE05A1C1;
+	Mon,  8 Jun 2009 04:43:09 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1pre) Gecko/20090606 Lightning/1.0pre Shredder/3.0b3pre
+In-Reply-To: <2729632a0906072220n4dff5d39vaa863401c136c3c5@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121046>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121047>
 
-Hello Bert,
+skillzero@gmail.com venit, vidit, dixit 08.06.2009 07:20:
+> Is there a way to deny non-fast forward pushes to only certain
+> branches? I'd like for people to be able to force push to their own
+> branches on the server, but for the master branch (and maybe a couple
+> other important branches), I want to prevent it. I basically want a
+> per-branch version of receive.denyNonFastForwards. Is there a way to
+> do this?
 
-On Mon, Jun 08, 2009 at 09:31:01AM +0200, Bert Wesarg wrote:
-> BTW: Do you have any infos or need help on your TopGit successor?
-I want to get running at least the patch command, then I'm willing to
-share it.  The key difference to topgit is that it doesn't use branches
-to track dependencies only commits.  I hope this will make some things
-easier and cleaner.
+The update-hook example should shows how you could guard specific
+branches. If you want to make this user-dependent you may need to look
+at gitosis.
 
-Best regards
-Uwe
-
---=20
-Pengutronix e.K.                              | Uwe Kleine-K=F6nig     =
-       |
-Industrial Linux Solutions                    | http://www.pengutronix.=
-de/  |
+Michael
