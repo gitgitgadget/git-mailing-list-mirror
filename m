@@ -1,103 +1,85 @@
-From: Markus Heidelberg <markus.heidelberg@web.de>
-Subject: [PATCH v2 5/6] send-email: fix non-threaded mails
-Date: Mon, 8 Jun 2009 08:43:56 +0200
-Message-ID: <200906080843.57069.markus.heidelberg@web.de>
-References: <1244410857-920-1-git-send-email-markus.heidelberg@web.de> <1244410857-920-6-git-send-email-markus.heidelberg@web.de>
-Reply-To: markus.heidelberg@web.de
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 2/6] add a test for git-send-email for threaded mails without chain-reply-to
+Date: Sun, 07 Jun 2009 23:57:01 -0700
+Message-ID: <7vhbyr8b7m.fsf@alter.siamese.dyndns.org>
+References: <1244410857-920-1-git-send-email-markus.heidelberg@web.de>
+	<7v7hznaaji.fsf@alter.siamese.dyndns.org>
+	<200906080747.18233.markus.heidelberg@web.de>
+	<200906080837.31548.markus.heidelberg@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Thomas Rast <trast@student.ethz.ch>,
-	Michael Witten <mfwitten@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jun 08 08:45:22 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Michael Witten <mfwitten@gmail.com>
+To: markus.heidelberg@web.de
+X-From: git-owner@vger.kernel.org Mon Jun 08 08:57:13 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MDYbe-0004RJ-MK
-	for gcvg-git-2@gmane.org; Mon, 08 Jun 2009 08:45:19 +0200
+	id 1MDYn9-0007gk-Gs
+	for gcvg-git-2@gmane.org; Mon, 08 Jun 2009 08:57:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751146AbZFHGpK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 8 Jun 2009 02:45:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750782AbZFHGpJ
-	(ORCPT <rfc822;git-outgoing>); Mon, 8 Jun 2009 02:45:09 -0400
-Received: from fmmailgate03.web.de ([217.72.192.234]:50198 "EHLO
-	fmmailgate03.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750758AbZFHGpI (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 Jun 2009 02:45:08 -0400
-Received: from smtp08.web.de (fmsmtp08.dlan.cinetic.de [172.20.5.216])
-	by fmmailgate03.web.de (Postfix) with ESMTP id 5DC2AFF07C4E;
-	Mon,  8 Jun 2009 08:43:55 +0200 (CEST)
-Received: from [89.59.71.255] (helo=.)
-	by smtp08.web.de with asmtp (TLSv1:AES256-SHA:256)
-	(WEB.DE 4.110 #277)
-	id 1MDYaJ-0008Dp-00; Mon, 08 Jun 2009 08:43:55 +0200
-User-Agent: KMail/1.9.9
-In-Reply-To: <1244410857-920-6-git-send-email-markus.heidelberg@web.de>
-Jabber-ID: markus.heidelberg@web.de
-Content-Disposition: inline
-X-Sender: markus.heidelberg@web.de
-X-Provags-ID: V01U2FsdGVkX195FyKhFli0JnDK0riY50OyuuLc9P6iLPSn2QRs
-	G/Z31FRoURAKhTlbF8S/c1Wi7TfZWgZDPr5qmHvoVfVRKAj+KB
-	+IJRYdkhBWc1WVB6K6eA==
+	id S1751806AbZFHG5B (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 8 Jun 2009 02:57:01 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751693AbZFHG5A
+	(ORCPT <rfc822;git-outgoing>); Mon, 8 Jun 2009 02:57:00 -0400
+Received: from fed1rmmtao105.cox.net ([68.230.241.41]:52158 "EHLO
+	fed1rmmtao105.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751493AbZFHG5A (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Jun 2009 02:57:00 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao105.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20090608065702.NNXR20430.fed1rmmtao105.cox.net@fed1rmimpo01.cox.net>;
+          Mon, 8 Jun 2009 02:57:02 -0400
+Received: from localhost ([68.225.240.211])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id 1Jx21c0014aMwMQ03Jx2TK; Mon, 08 Jun 2009 02:57:02 -0400
+X-VR-Score: -100.00
+X-Authority-Analysis: v=1.0 c=1 a=y8DKxdtP650A:10 a=Ze1UVqwS1wEA:10
+ a=A1X0JdhQAAAA:8 a=9whKkZ9wrTmWbDE0AjsA:9 a=g6YOQahDrlq-sPDAQ7LM8-0BA3YA:4
+ a=5N_Nib3jKbIA:10 a=XTUYKXyG0EEA:10 a=5KVauyKsRKMA:10 a=Y6qChIQXU1wA:10
+X-CM-Score: 0.00
+In-Reply-To: <200906080837.31548.markus.heidelberg@web.de> (Markus Heidelberg's message of "Mon\, 8 Jun 2009 08\:37\:31 +0200")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121038>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121039>
 
-After commit 3e0c4ff (send-email: respect in-reply-to regardless of
-threading, 2009-03-01) the variable $thread was only used for prompting
-for an "In-Reply-To", but not for controlling whether the "In-Reply-To"
-and "References" fields should be written into the email.
+Markus Heidelberg <markus.heidelberg@web.de> writes:
 
-Thus these fields were always used beginning with the second mail and it
-was not possible to produce non-threaded mails anymore until commit
-15da108 ("send-email: 'References:' should only reference what is sent",
-2009-04-13), which introduced a regression with the side effect to make
-it possible again when --no-chain-reply-to was set.
+>> What can be done to make the test better?
+>
+> Is this change sufficient? Dumping the stdout into a file and grepping
+> this.
 
-Signed-off-by: Markus Heidelberg <markus.heidelberg@web.de>
----
+Yup, that is better for test scripts.
 
-Differences to v1:
-* patch context in the test:
-  "git send-email" instead of "!git send-email"
-
- git-send-email.perl   |    5 ++++-
- t/t9001-send-email.sh |    2 +-
- 2 files changed, 5 insertions(+), 2 deletions(-)
-
-diff --git a/git-send-email.perl b/git-send-email.perl
-index c11a245..be63ea7 100755
---- a/git-send-email.perl
-+++ b/git-send-email.perl
-@@ -1142,7 +1142,10 @@ foreach my $t (@files) {
- 	my $message_was_sent = send_message();
- 
- 	# set up for the next message
--	if ($message_was_sent and $chain_reply_to || !defined $reply_to || length($reply_to) == 0) {
-+	if ($message_was_sent and $thread and
-+			$chain_reply_to || !defined $reply_to || length($reply_to) == 0) {
-+		# with --chain-reply-to every time
-+		# else only after the first mail (and only if --in-reply-to was not specified)
- 		$reply_to = $message_id;
- 		if (length $references > 0) {
- 			$references .= "\n $message_id";
-diff --git a/t/t9001-send-email.sh b/t/t9001-send-email.sh
-index 4a4fa7f..87bbbe7 100755
---- a/t/t9001-send-email.sh
-+++ b/t/t9001-send-email.sh
-@@ -621,7 +621,7 @@ test_expect_success 'in-reply-to but no threading' '
- 	grep "In-Reply-To: <in-reply-id@example.com>"
- '
- 
--test_expect_failure 'no in-reply-to and no threading' '
-+test_expect_success 'no in-reply-to and no threading' '
- 	git send-email \
- 		--dry-run \
- 		--from="Example <nobody@example.com>" \
--- 
-1.6.3.2.220.gb421
+>
+>
+>  t/t9001-send-email.sh |   11 +++++++++++
+>  1 files changed, 11 insertions(+), 0 deletions(-)
+>
+> diff --git a/t/t9001-send-email.sh b/t/t9001-send-email.sh
+> index ce26ea4..8f810ab 100755
+> --- a/t/t9001-send-email.sh
+> +++ b/t/t9001-send-email.sh
+> @@ -621,4 +621,15 @@ test_expect_success 'in-reply-to but no threading' '
+>  	grep "In-Reply-To: <in-reply-id@example.com>"
+>  '
+>  
+> +test_expect_failure 'threading but no chain-reply-to' '
+> +	git send-email \
+> +		--dry-run \
+> +		--from="Example <nobody@example.com>" \
+> +		--to=nobody@example.com \
+> +		--thread \
+> +		--nochain-reply-to \
+> +		$patches $patches >stdout &&
+> +	grep "In-Reply-To: " stdout
+> +'
+> +
+>  test_done
+> -- 
+> 1.6.3.2.220.gb421
