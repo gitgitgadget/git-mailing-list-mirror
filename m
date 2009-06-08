@@ -1,61 +1,142 @@
-From: Alex K <spaceoutlet@gmail.com>
-Subject: deleting / adding files throughout the repository
-Date: Mon, 8 Jun 2009 18:25:00 +0100
-Message-ID: <e4a904790906081025s76bdd1a0k73003e861da98371@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jun 08 19:27:27 2009
+From: Robin Rosenberg <robin.rosenberg@dewire.com>
+Subject: [EGIT PATCH 1/2] Add methods to RawParseUtils for scanning backwards.
+Date: Mon,  8 Jun 2009 19:28:31 +0200
+Message-ID: <1244482112-5935-1-git-send-email-robin.rosenberg@dewire.com>
+References: <20090607224754.GF16497@spearce.org>
+Cc: git@vger.kernel.org, Robin Rosenberg <robin.rosenberg@dewire.com>
+To: spearce@spearce.org
+X-From: git-owner@vger.kernel.org Mon Jun 08 19:28:44 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MDid5-0006CF-1F
-	for gcvg-git-2@gmane.org; Mon, 08 Jun 2009 19:27:27 +0200
+	id 1MDieJ-0006im-Jq
+	for gcvg-git-2@gmane.org; Mon, 08 Jun 2009 19:28:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752738AbZFHRZB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 8 Jun 2009 13:25:01 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751872AbZFHRZA
-	(ORCPT <rfc822;git-outgoing>); Mon, 8 Jun 2009 13:25:00 -0400
-Received: from mail-fx0-f213.google.com ([209.85.220.213]:61421 "EHLO
-	mail-fx0-f213.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751776AbZFHRY7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 Jun 2009 13:24:59 -0400
-Received: by fxm9 with SMTP id 9so2354392fxm.37
-        for <git@vger.kernel.org>; Mon, 08 Jun 2009 10:25:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:sender:received:date
-         :x-google-sender-auth:message-id:subject:from:to:content-type
-         :content-transfer-encoding;
-        bh=GAoyoJGmnmpVSaoRiZ4VROtSAkbaC+nm4Qcs3K3M8KM=;
-        b=ErODHMWxqD0CJNLfGU7GDBYxkpWGrIZF/e0FTWWkv9NPfQknTnbrocESqe4/cREhkc
-         QODSSZESiIwuhZiBbN6pY5xQtKi+kOhNpMsNSKahADtviSEpm4lS4T0lE2l62lAIeJvj
-         ++0RHychfnlUhnAyFpH1VcAGzMaLrrqvT7IcE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:sender:date:x-google-sender-auth:message-id:subject
-         :from:to:content-type:content-transfer-encoding;
-        b=i9eEgCIdo9ACyETa8lkzCzVKXH0mgadf1WJwun1q6pH0NgjwgyLJJPIcHr3nub7mIs
-         mZr44GEcD/ZgQj5KluoYERr42chpa4bbm9dAGn7tqUgvULGyqUsjvbmZ3JV2BrsCijlU
-         UsJ+NQ+Igj9SHjj/iF7YbqeLBzxmotoQCwV8w=
-Received: by 10.204.116.8 with SMTP id k8mr6895643bkq.117.1244481900582; Mon, 
-	08 Jun 2009 10:25:00 -0700 (PDT)
-X-Google-Sender-Auth: 1b8f01657ad2452d
+	id S1752935AbZFHR2i (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 8 Jun 2009 13:28:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752843AbZFHR2i
+	(ORCPT <rfc822;git-outgoing>); Mon, 8 Jun 2009 13:28:38 -0400
+Received: from pne-smtpout2-sn1.fre.skanova.net ([81.228.11.159]:44698 "EHLO
+	pne-smtpout2-sn1.fre.skanova.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752466AbZFHR2h (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 8 Jun 2009 13:28:37 -0400
+Received: from localhost.localdomain (90.232.228.5) by pne-smtpout2-sn1.fre.skanova.net (7.3.140)
+        id 4A291C060004B3BB; Mon, 8 Jun 2009 19:28:38 +0200
+X-Mailer: git-send-email 1.6.3.2.199.g7340d
+In-Reply-To: <20090607224754.GF16497@spearce.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121091>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121092>
 
-Hello,
+Signed-off-by: Robin Rosenberg <robin.rosenberg@dewire.com>
+---
+ .../src/org/spearce/jgit/util/RawParseUtils.java   |   84 +++++++++++++++++++-
+ 1 files changed, 83 insertions(+), 1 deletions(-)
 
-Suppose I made a mistake in my repository. There is a file that should
-never have been there. How do I delete this file from the entire
-repository history? How do I add a file throughout the entire
-repository history as if this later file had always been there?
-
-Thank you,
-
-Alex
+diff --git a/org.spearce.jgit/src/org/spearce/jgit/util/RawParseUtils.java b/org.spearce.jgit/src/org/spearce/jgit/util/RawParseUtils.java
+index 79ebe41..bdd6a11 100644
+--- a/org.spearce.jgit/src/org/spearce/jgit/util/RawParseUtils.java
++++ b/org.spearce.jgit/src/org/spearce/jgit/util/RawParseUtils.java
+@@ -321,6 +321,67 @@ public static final int nextLF(final byte[] b, int ptr, final char chrA) {
+ 	}
+ 
+ 	/**
++	 * Locate the first position before a given character.
++	 * 
++	 * @param b
++	 *            buffer to scan.
++	 * @param ptr
++	 *            position within buffer to start looking for chrA at.
++	 * @param chrA
++	 *            character to find.
++	 * @return new position just before chrA, -1 for not found
++	 */
++	public static final int prev(final byte[] b, int ptr, final char chrA) {
++		if (ptr == b.length)
++			--ptr;
++		while (ptr >= 0) {
++			if (b[ptr--] == chrA)
++				return ptr;
++		}
++		return ptr;
++	}
++
++	/**
++	 * Locate the first position before the previous LF.
++	 * <p>
++	 * This method stops on the first '\n' it finds.
++	 * 
++	 * @param b
++	 *            buffer to scan.
++	 * @param ptr
++	 *            position within buffer to start looking for LF at.
++	 * @return new position just before the first LF found, -1 for not found
++	 */
++	public static final int prevLF(final byte[] b, int ptr) {
++		return prev(b, ptr, '\n');
++	}
++
++	/**
++	 * Locate the previous position before either the given character or LF.
++	 * <p>
++	 * This method stops on the first match it finds from either chrA or '\n'.
++	 * 
++	 * @param b
++	 *            buffer to scan.
++	 * @param ptr
++	 *            position within buffer to start looking for chrA or LF at.
++	 * @param chrA
++	 *            character to find.
++	 * @return new position just before the first chrA or LF to be found, -1 for
++	 *         not found
++	 */
++	public static final int prevLF(final byte[] b, int ptr, final char chrA) {
++		if (ptr == b.length)
++			--ptr;
++		while (ptr >= 0) {
++			final byte c = b[ptr--];
++			if (c == chrA || c == '\n')
++				return ptr;
++		}
++		return ptr;
++	}
++
++	/**
+ 	 * Index the region between <code>[ptr, end)</code> to find line starts.
+ 	 * <p>
+ 	 * The returned list is 1 indexed. Index 0 contains
+@@ -519,7 +580,28 @@ public static PersonIdent parsePersonIdent(final byte[] raw, final int nameB) {
+ 	 *         after decoding the region through the specified character set.
+ 	 */
+ 	public static String decode(final byte[] buffer) {
+-		return decode(Constants.CHARSET, buffer, 0, buffer.length);
++		return decode(buffer, 0, buffer.length);
++	}
++
++	/**
++	 * Decode a buffer under UTF-8, if possible.
++	 * 
++	 * If the byte stream cannot be decoded that way, the platform default is
++	 * tried and if that too fails, the fail-safe ISO-8859-1 encoding is tried.
++	 * 
++	 * @param buffer
++	 *            buffer to pull raw bytes from.
++	 * @param start
++	 *            start position in buffer
++	 * @param end
++	 *            one position past the last location within the buffer to take
++	 *            data from.
++	 * @return a string representation of the range <code>[start,end)</code>,
++	 *         after decoding the region through the specified character set.
++	 */
++	public static String decode(final byte[] buffer, final int start,
++			final int end) {
++		return decode(Constants.CHARSET, buffer, start, end);
+ 	}
+ 
+ 	/**
+-- 
+1.6.3.2.199.g7340d
