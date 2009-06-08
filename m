@@ -1,68 +1,118 @@
-From: Brandon Casey <casey@nrlssc.navy.mil>
-Subject: Re: [PATCH 7/8] Makefile: introduce SANE_TOOL_PATH for prepending
- required elements to PATH
-Date: Mon, 08 Jun 2009 10:59:25 -0500
-Message-ID: <2wHNa8FCu6W1VZWGrFNwPMPjwGdeMbg-cGV8PklqUEiQNAqjlIVBIw@cipher.nrlssc.navy.mil>
-References: <67hZHClrEWQHxCRdWosE25_CVQVNIYpTaeW2DKuCCDfW4h-jHQ82zlGcCNn49KcxUKsj-TSJSVQ@cipher.nrlssc.navy.mil> <67hZHClrEWQHxCRdWosE24eNsO0do05033zPcGsXrwIRCoU8GtXor_XD8ayKlybu-V7PGeTC_PA@cipher.nrlssc.navy.mil> <67hZHClrEWQHxCRdWosE21Y219yACHqb_DoUmykc1kiOxwRuziSDMczTdmGkyEob9g6DVoIraR4@cipher.nrlssc.navy.mil> <67hZHClrEWQHxCRdWosE24FbCSWPktK230jx86LzLj0Aqa5g5XoJb3Iv805pzfx5wCPameuSp6M@cipher.nrlssc.navy.mil> <67hZHClrEWQHxCRdWosE28bOBU_EdMUdyv6uENKCaQfOLQjhGBq3kLwxe6mMrfW4HauaUwWt5eM@cipher.nrlssc.navy.mil> <67hZHClrEWQHxCRdWosE26gwuGblUI8bcWLxyoPZhmfzJAibRVMtix-zkRUKYe5Y8R8-GRcIkUI@cipher.nrlssc.navy.mil> <67hZHClrEWQHxCRdWosE2-yxscBzIn8DiQogVPM7EAgcGyYg61V8vYLxFiW6A4ovZp6SOuP0pDM@cipher.nrlssc.navy.mil> <67hZHClrEWQHxCRdWosE2_PLKo8HHFSCQIZrHMfucFNo_Bdy4p79XNP-MU8gnsUflWndiCqfhFM@ciph
- er.nrlssc.navy.mil> <20090608114351.GA13775@coredump.intra.peff.net> <nwND53LJ3yJOus0fY2Tjm-DbTAR8lJKtmBZRYJ4EcvNx7qWStwbs9w@cipher.nrlssc.navy.mil> <20090608135047.GB28101@sigill.intra.pef!
- f.net>
+From: =?utf-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>
+Subject: [PATCH 1/2] Documentation: mention 'git stash pop --index' option
+	explicitly
+Date: Mon,  8 Jun 2009 18:27:52 +0200
+Message-ID: <27f7124b574aa6ac4391b9bd029242ceb5874447.1244475542.git.szeder@ira.uka.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, gitster@pobox.com,
-	Brandon Casey <drafnel@gmail.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Jun 08 17:59:42 2009
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org,
+	=?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Jun 08 18:28:46 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MDhG9-0003jz-L5
-	for gcvg-git-2@gmane.org; Mon, 08 Jun 2009 17:59:42 +0200
+	id 1MDhiD-0001Lc-VW
+	for gcvg-git-2@gmane.org; Mon, 08 Jun 2009 18:28:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755241AbZFHP7b (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 8 Jun 2009 11:59:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754270AbZFHP7a
-	(ORCPT <rfc822;git-outgoing>); Mon, 8 Jun 2009 11:59:30 -0400
-Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:33375 "EHLO
-	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753436AbZFHP7a (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 Jun 2009 11:59:30 -0400
-Received: by mail.nrlssc.navy.mil id n58FxQ9q017832; Mon, 8 Jun 2009 10:59:27 -0500
-In-Reply-To: <20090608135047.GB28101@sigill.intra.peff.net>
-X-OriginalArrivalTime: 08 Jun 2009 15:59:26.0511 (UTC) FILETIME=[193C3BF0:01C9E852]
+	id S1755788AbZFHQ2S convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 8 Jun 2009 12:28:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754419AbZFHQ2R
+	(ORCPT <rfc822;git-outgoing>); Mon, 8 Jun 2009 12:28:17 -0400
+Received: from francis.fzi.de ([141.21.7.5]:59187 "EHLO exchange.fzi.de"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1754860AbZFHQ2R (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Jun 2009 12:28:17 -0400
+Received: from [127.0.1.1] ([141.21.4.196]) by exchange.fzi.de over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
+	 Mon, 8 Jun 2009 18:28:14 +0200
+X-Mailer: git-send-email 1.6.3.2.247.gc361f.dirty
+X-OriginalArrivalTime: 08 Jun 2009 16:28:15.0004 (UTC) FILETIME=[1F7F55C0:01C9E856]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121082>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121083>
 
-Jeff King wrote:
-> On Mon, Jun 08, 2009 at 08:39:50AM -0500, Brandon Casey wrote:
-> 
->>> Am I crazy for not having EDITOR=vim instead of EDITOR=vi? Perhaps. But
->>> I wanted to point out that tweaking the PATH behind the user's back does
->>> cause surprises in the real world.
->> Good points.  I'm fine with dropping this patch, especially when it causes
->> problems for a real Solaris user, which I'm not.
-> 
-> Let me point out that I'm also not a real Solaris user. These days all I
-> use it for is test-compiling git. So you can take my report with a grain
-> of salt.
+'git stash pop' supports the '--index' option since its initial
+implementation (bd56ff54, git-stash: add new 'pop' subcommand,
+2008-02-22), but its documentation does not mention it explicitly.
+Moreover, both the usage shown by 'git stash -h' and the synopsis
+section in the man page imply that 'git stash pop' does not have any
+options besides the stash to pop.
 
-heh.
+=46irst, this patch corrects the usage and the synopsis section by list=
+ing
+the '--index' option for the 'pop' subcommand explicitly.
 
->> I don't like that git has a dependency on the user's PATH being set
->> correctly though.  That's why I liked the patch.  I guess I could modify
->> all the uses of sed and friends to look like $SED and then set SED to
->> /usr/xpg4/bin/sed on Solaris.  It doesn't sound like that is necessary
->> in practice though.
-> 
-> Yeah, I think requiring the user's PATH to be set correctly and tweaking
-> the PATH behind the user's back are both unsatisfactory solutions. Using
-> $SED everywhere solves both problems, but would probably be quite
-> annoying to maintain. So I guess it is a matter of picking our poison.
+Second, the patch moves the description of the '--index' option to the
+'git stash pop' section in the documentation, and refers to it from
+the 'git stash apply' section.  This way it follows the intentions of
+commit d1836637 (Documentation: teach stash/pop workflow instead of
+stash/apply, 2009-05-28), as all 'git stash pop'-related documentation
+will be in one place without references to 'git stash apply'.
 
-agreed.
+Signed-off-by: SZEDER G=C3=A1bor <szeder@ira.uka.de>
+---
+ Documentation/git-stash.txt |   15 ++++++++-------
+ git-stash.sh                |    3 ++-
+ 2 files changed, 10 insertions(+), 8 deletions(-)
 
--brandon
+diff --git a/Documentation/git-stash.txt b/Documentation/git-stash.txt
+index 1cc24cc..de90550 100644
+--- a/Documentation/git-stash.txt
++++ b/Documentation/git-stash.txt
+@@ -9,7 +9,8 @@ SYNOPSIS
+ --------
+ [verse]
+ 'git stash' list [<options>]
+-'git stash' (show | drop | pop ) [<stash>]
++'git stash' (show | drop ) [<stash>]
++'git stash' pop [--index] [<stash>]
+ 'git stash' apply [--index] [<stash>]
+ 'git stash' branch <branchname> [<stash>]
+ 'git stash' [save [--keep-index] [<message>]]
+@@ -86,16 +87,16 @@ Applying the state can fail with conflicts; in this=
+ case, it is not
+ removed from the stash list. You need to resolve the conflicts by hand
+ and call `git stash drop` manually afterwards.
+ +
+-When no `<stash>` is given, `stash@\{0}` is assumed. See also `apply`.
+-
+-apply [--index] [<stash>]::
+-
+-	Like `pop`, but do not remove the state from the stash list.
+-+
+ If the `--index` option is used, then tries to reinstate not only the =
+working
+ tree's changes, but also the index's ones. However, this can fail, whe=
+n you
+ have conflicts (which are stored in the index, where you therefore can=
+ no
+ longer apply the changes as they were originally).
+++
++When no `<stash>` is given, `stash@\{0}` is assumed.
++
++apply [--index] [<stash>]::
++
++	Like `pop`, but do not remove the state from the stash list.
+=20
+ branch <branchname> [<stash>]::
+=20
+diff --git a/git-stash.sh b/git-stash.sh
+index b9ace99..94f1d3a 100755
+--- a/git-stash.sh
++++ b/git-stash.sh
+@@ -3,7 +3,8 @@
+=20
+ dashless=3D$(basename "$0" | sed -e 's/-/ /')
+ USAGE=3D"list [<options>]
+-   or: $dashless (show | drop | pop ) [<stash>]
++   or: $dashless (show | drop ) [<stash>]
++   or: $dashless pop [--index] [<stash>]
+    or: $dashless apply [--index] [<stash>]
+    or: $dashless branch <branchname> [<stash>]
+    or: $dashless [save [--keep-index] [<message>]]
+--=20
+1.6.3.2.247.gc361f.dirty
