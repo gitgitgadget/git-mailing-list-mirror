@@ -1,76 +1,108 @@
-From: Eric Raible <raible@gmail.com>
-Subject: Re: How to connect remotely with Git machine
-Date: Mon, 8 Jun 2009 15:25:32 +0000 (UTC)
-Message-ID: <loom.20090608T151053-794@post.gmane.org>
-References: <23920805.post@talk.nabble.com>
+From: Alexander Potashev <aspotashev@gmail.com>
+Subject: Re: [PATCH v2 1/3] Introduce die_errno() that appends strerror(errno) 
+	to die()
+Date: Mon, 8 Jun 2009 19:35:55 +0400
+Message-ID: <2325a7950906080835h6d6d2d28j2c7261f2296a3da6@mail.gmail.com>
+References: <200906061509.15870.trast@student.ethz.ch>
+	 <cover.1244299302.git.trast@student.ethz.ch>
+	 <3672f22723a4c14c4a6d67278e9865424c0c68dc.1244299302.git.trast@student.ethz.ch>
+	 <20090606221320.GB30064@coredump.intra.peff.net>
+	 <2325a7950906070412k3a440558h35db7511cc390e4b@mail.gmail.com>
+	 <7vzlck9e3j.fsf@alter.siamese.dyndns.org>
+	 <20090608123608.GG13775@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jun 08 17:26:02 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Thomas Rast <trast@student.ethz.ch>, git@vger.kernel.org,
+	Johannes Sixt <j6t@kdbg.org>, Petr Baudis <pasky@suse.cz>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Jun 08 17:36:17 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MDgjX-0002n7-Am
-	for gcvg-git-2@gmane.org; Mon, 08 Jun 2009 17:25:59 +0200
+	id 1MDgtJ-0000ai-AE
+	for gcvg-git-2@gmane.org; Mon, 08 Jun 2009 17:36:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755759AbZFHPZp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 8 Jun 2009 11:25:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755578AbZFHPZp
-	(ORCPT <rfc822;git-outgoing>); Mon, 8 Jun 2009 11:25:45 -0400
-Received: from main.gmane.org ([80.91.229.2]:42276 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755357AbZFHPZo (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 Jun 2009 11:25:44 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1MDgjI-00038Z-At
-	for git@vger.kernel.org; Mon, 08 Jun 2009 15:25:44 +0000
-Received: from nmd.sbx07304.ardslny.wayport.net ([98.96.132.70])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 08 Jun 2009 15:25:44 +0000
-Received: from raible by nmd.sbx07304.ardslny.wayport.net with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 08 Jun 2009 15:25:44 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: main.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 98.96.132.70 (Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US) AppleWebKit/525.19 (KHTML, like Gecko) Chrome/1.0.154.65 Safari/525.19)
+	id S1754633AbZFHPfz convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 8 Jun 2009 11:35:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754537AbZFHPfz
+	(ORCPT <rfc822;git-outgoing>); Mon, 8 Jun 2009 11:35:55 -0400
+Received: from mail-bw0-f213.google.com ([209.85.218.213]:51900 "EHLO
+	mail-bw0-f213.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750904AbZFHPfz convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 8 Jun 2009 11:35:55 -0400
+Received: by bwz9 with SMTP id 9so3146874bwz.37
+        for <git@vger.kernel.org>; Mon, 08 Jun 2009 08:35:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=dv9C/I5qPMbgvsBhYhJ1M+YGN63TEOyZzWbCnuc5m24=;
+        b=bZ/f7weIrJe740Ldq88sScpdBGxv76CzGteISS8J5b2HRrTk7fji8OOk3oPMSE8Qvw
+         ZtM+IWAjyaDrT+AZZkIfkGjBF5RqnyaSBdA0DymfbMvaDaDY6vw6Ql0pnL60rNP/R2JM
+         UjJ+Y9ny3MKVta/spC7EbJz3Tjj1J6MWy66g0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=X3CivHGBfUBpYc9R+jZZevOveOMYFI8nmlAEvXLVuY0FVqZDJ9JSzESiFJo4S/nqpG
+         IPH2agxOLpJ78iADAY+C/BYiA9O7RsrckIlkfnA1dUXLp9emZGpZYUkO8nlf/Mkkxubk
+         2GXt/ng2mnRIjrLCem2hl8NmnbRCc/iTqx/D0=
+Received: by 10.223.112.204 with SMTP id x12mr4327022fap.70.1244475355185; 
+	Mon, 08 Jun 2009 08:35:55 -0700 (PDT)
+In-Reply-To: <20090608123608.GG13775@coredump.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121080>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121081>
 
-stpl_nk <nkjha <at> systematixtechnocrates.com> writes:
+2009/6/8 Jeff King <peff@peff.net>:
+> On Sun, Jun 07, 2009 at 09:57:04AM -0700, Junio C Hamano wrote:
+>
+>> > This breaks theoretical usage of custom format string in custom di=
+e
+>> > routines:
+>> > =C2=A0 =C2=A0 =C2=A0 =C2=A0 1. A custom die routine might not supp=
+ort %s.
+>> > =C2=A0 =C2=A0 =C2=A0 =C2=A0 2. If the die routine adds a custom fo=
+rmat specifier, vsnprintf
+>> > =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 will fail.
+>>
+>> I do not think that flies even as a theory. =C2=A0The "custom" 39a3f=
+5ea talks
+>> about is more about "Instead of sending it to stderr, let's pop up a=
+n info
+>> window and give the message there" kind of customization.
+>>
+>> Existing die() that prints errno does so by giving strerror() to "%s=
+", so
+>> no matter how custom your die routine is, you must support '%s' for =
+its
+>> output to make sense to humans. =C2=A0If you "not support %s", then =
+you will
+>> ignore (or choke at) such strerror() result without this patch anywa=
+y.
+>
+> More than that, you must support arbitrary printf format strings,
+> because the die routine is passed whatever goes to die() (a quick gre=
+p
+> revealed that we use at least %u and %c at various points). So it is =
+an
+> undocumented requirement that the die routine process its parameters =
+as
+> if it were from the printf family.
 
-> 
-> 
-> Hello all ,
-> I am new in using Git . I have a small network , all the machine in LAN . I
-> install Git in my windows machine (Windows XP sp2) in a central location .
-> Now how to connect other hosts to central windows machine with the help of
-> Git .
-> 
-> Thanks .
+Your last statement is not quite true. A custom die routine may
+support all printf specifiers and some additional ones, but Thomas'
+die_errno passes the format string (and arguments list) to vsnprintf
+anyway, so the additional specifiers would be lost.
 
-We have a similar situation at $dayjob.
-Each developer who is ot use git installs it locally.
-Each developer has their own local repo.
-The shared (bare) repo is on a network drive, and that drive is mapped:
-
-c:> net use g: \\server1\Engineering
-
-Then individual developers can clone do something like this from bash:
-
-$ git clone file://g:/path/to/repo/on/G
-
-The only real hitch is that (in the largest single fustercluck
-or all time) windows likes using backslash as a path separator.
-
-But mapping the network drive to a drive letter allows you to avoid
-almost all of the pain.
-
-- Eric
+>
+> I think what Thomas posted is fine.
+>
+> -Peff
+>
