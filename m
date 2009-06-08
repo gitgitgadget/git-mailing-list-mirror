@@ -1,55 +1,72 @@
-From: skillzero@gmail.com
-Subject: Per-branch receive.denyNonFastForwards?
-Date: Sun, 7 Jun 2009 22:20:44 -0700
-Message-ID: <2729632a0906072220n4dff5d39vaa863401c136c3c5@mail.gmail.com>
+From: Markus Heidelberg <markus.heidelberg@web.de>
+Subject: Re: [PATCH 2/6] add a test for git-send-email for threaded mails without chain-reply-to
+Date: Mon, 8 Jun 2009 07:47:17 +0200
+Message-ID: <200906080747.18233.markus.heidelberg@web.de>
+References: <1244410857-920-1-git-send-email-markus.heidelberg@web.de> <1244410857-920-3-git-send-email-markus.heidelberg@web.de> <7v7hznaaji.fsf@alter.siamese.dyndns.org>
+Reply-To: markus.heidelberg@web.de
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain;
+  charset="iso-8859-1"
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jun 08 07:20:53 2009
+Cc: git@vger.kernel.org, Michael Witten <mfwitten@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Jun 08 07:47:25 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MDXHw-0003ct-Pb
-	for gcvg-git-2@gmane.org; Mon, 08 Jun 2009 07:20:53 +0200
+	id 1MDXhc-00010k-UM
+	for gcvg-git-2@gmane.org; Mon, 08 Jun 2009 07:47:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751428AbZFHFUo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 8 Jun 2009 01:20:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751269AbZFHFUn
-	(ORCPT <rfc822;git-outgoing>); Mon, 8 Jun 2009 01:20:43 -0400
-Received: from yw-out-2324.google.com ([74.125.46.28]:58156 "EHLO
-	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750711AbZFHFUm (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 Jun 2009 01:20:42 -0400
-Received: by yw-out-2324.google.com with SMTP id 5so1929622ywb.1
-        for <git@vger.kernel.org>; Sun, 07 Jun 2009 22:20:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:date:message-id:subject
-         :from:to:content-type:content-transfer-encoding;
-        bh=nU7pmu5pGRG/vIt+0/z+GF57T/H9sX3eioDUVy6Ep7U=;
-        b=q9wdQtk4krDkbzlqmYP90E6EvPOPhyZBnB1zeWAZkZYACVQt5FrgcCigrqKa9im4xB
-         vAvYxN0tOzDjfEybCDyiy0RH8wrj5VGdbNMuhsAbrm2jOImT6nWxHExZDGS1Z6ttJrpL
-         YHyN0JuZWeFxTa158woGzCSCq+R8KtZUenEwc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type
-         :content-transfer-encoding;
-        b=SzolAm74pOMB5BbN23NitgvzuVlcjA31OEmIela2NRaVnSEqmnuX/hgWsj658vaNak
-         O46X4uYwLDYEyf1Lc9OIM7Dt87BBRL/PjvwfVyF6pLYAvmUfLDywSvNCiqhSGSVYXcwO
-         m0WcWSKDa7GUOODRX3fPZx+6dGsHr78cFCetw=
-Received: by 10.100.12.17 with SMTP id 17mr5669549anl.2.1244438444450; Sun, 07 
-	Jun 2009 22:20:44 -0700 (PDT)
+	id S1751407AbZFHFrQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 8 Jun 2009 01:47:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751386AbZFHFrP
+	(ORCPT <rfc822;git-outgoing>); Mon, 8 Jun 2009 01:47:15 -0400
+Received: from fmmailgate03.web.de ([217.72.192.234]:35592 "EHLO
+	fmmailgate03.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750988AbZFHFrP (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Jun 2009 01:47:15 -0400
+Received: from smtp07.web.de (fmsmtp07.dlan.cinetic.de [172.20.5.215])
+	by fmmailgate03.web.de (Postfix) with ESMTP id 37629FF09999;
+	Mon,  8 Jun 2009 07:47:17 +0200 (CEST)
+Received: from [89.59.71.255] (helo=.)
+	by smtp07.web.de with asmtp (TLSv1:AES256-SHA:256)
+	(WEB.DE 4.110 #277)
+	id 1MDXhU-0002OZ-00; Mon, 08 Jun 2009 07:47:17 +0200
+User-Agent: KMail/1.9.9
+In-Reply-To: <7v7hznaaji.fsf@alter.siamese.dyndns.org>
+Jabber-ID: markus.heidelberg@web.de
+Content-Disposition: inline
+X-Sender: markus.heidelberg@web.de
+X-Provags-ID: V01U2FsdGVkX19pbgweAELouMsN7GjKxCqQvMej8zmeEW4vpXic
+	xxtPWqq/0xuTSwJ3ITNJj77CuHyMXNwVXsdVS9ue33BCpjDnho
+	IDbe2OiL4f2r1Sb6JaxA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121033>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121034>
 
-Is there a way to deny non-fast forward pushes to only certain
-branches? I'd like for people to be able to force push to their own
-branches on the server, but for the master branch (and maybe a couple
-other important branches), I want to prevent it. I basically want a
-per-branch version of receive.denyNonFastForwards. Is there a way to
-do this?
+Junio C Hamano, 08.06.2009:
+> Markus Heidelberg <markus.heidelberg@web.de> writes:
+> 
+> > +test_expect_failure 'threading but no chain-reply-to' '
+> > +	git send-email \
+> > +		--dry-run \
+> > +		--from="Example <nobody@example.com>" \
+> > +		--to=nobody@example.com \
+> > +		--thread \
+> > +		--nochain-reply-to \
+> > +		$patches $patches |
+> > +	grep "In-Reply-To: "
+> > +'
+> 
+> Thanks, but this is not a very good style, as it won't catch if "git
+> send-email" dumps core or otherwise fails, exiting with a non-zero status.
+> 
+> Same comments applies to [PATCH 4/6] as well.
+
+OK, this was my first attempt in writing a test and I just used the last
+test 'in-reply-to but no threading' as template.
+
+What can be done to make the test better?
