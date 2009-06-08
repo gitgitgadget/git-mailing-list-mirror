@@ -1,78 +1,75 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: [PATCH] Expand the rename(2) workaround in mingw to cover case 
-	change in filename
-Date: Tue, 9 Jun 2009 00:08:09 +0200
-Message-ID: <81b0412b0906081508v5435c59cm3faf3ac92a56578c@mail.gmail.com>
-References: <20090608203248.GA22972@blimp.localdomain>
-	 <alpine.DEB.1.00.0906082355350.26154@pacific.mpi-cbg.de>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 7/8] Makefile: introduce SANE_TOOL_PATH for prepending
+	required elements to PATH
+Date: Mon, 8 Jun 2009 18:11:17 -0400
+Message-ID: <20090608221117.GC29942@sigill.intra.peff.net>
+References: <67hZHClrEWQHxCRdWosE25_CVQVNIYpTaeW2DKuCCDfW4h-jHQ82zlGcCNn49KcxUKsj-TSJSVQ@cipher.nrlssc.navy.mil> <67hZHClrEWQHxCRdWosE24eNsO0do05033zPcGsXrwIRCoU8GtXor_XD8ayKlybu-V7PGeTC_PA@cipher.nrlssc.navy.mil> <67hZHClrEWQHxCRdWosE21Y219yACHqb_DoUmykc1kiOxwRuziSDMczTdmGkyEob9g6DVoIraR4@cipher.nrlssc.navy.mil> <67hZHClrEWQHxCRdWosE24FbCSWPktK230jx86LzLj0Aqa5g5XoJb3Iv805pzfx5wCPameuSp6M@cipher.nrlssc.navy.mil> <67hZHClrEWQHxCRdWosE28bOBU_EdMUdyv6uENKCaQfOLQjhGBq3kLwxe6mMrfW4HauaUwWt5eM@cipher.nrlssc.navy.mil> <67hZHClrEWQHxCRdWosE26gwuGblUI8bcWLxyoPZhmfzJAibRVMtix-zkRUKYe5Y8R8-GRcIkUI@cipher.nrlssc.navy.mil> <67hZHClrEWQHxCRdWosE2-yxscBzIn8DiQogVPM7EAgcGyYg61V8vYLxFiW6A4ovZp6SOuP0pDM@cipher.nrlssc.navy.mil> <67hZHClrEWQHxCRdWosE2_PLKo8HHFSCQIZrHMfucFNo_Bdy4p79XNP-MU8gnsUflWndiCqfhFM@ciph
+ er.nrlssc.navy.mil> <20090608114351.GA13775@coredump.intra.peff.net> <7v4ouq1xv6.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Johannes Sixt <j.sixt@viscovery.net>,
-	Dmitry Potapov <dpotapov@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Jun 09 00:08:56 2009
+Content-Type: text/plain; charset=utf-8
+Cc: Brandon Casey <casey@nrlssc.navy.mil>, git@vger.kernel.org,
+	Brandon Casey <drafnel@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jun 09 00:11:34 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MDn1S-0003Cw-Nn
-	for gcvg-git-2@gmane.org; Tue, 09 Jun 2009 00:08:55 +0200
+	id 1MDn41-000490-Qf
+	for gcvg-git-2@gmane.org; Tue, 09 Jun 2009 00:11:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756313AbZFHWIK convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 8 Jun 2009 18:08:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753962AbZFHWIJ
-	(ORCPT <rfc822;git-outgoing>); Mon, 8 Jun 2009 18:08:09 -0400
-Received: from mail-bw0-f213.google.com ([209.85.218.213]:63614 "EHLO
-	mail-bw0-f213.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756605AbZFHWII convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 8 Jun 2009 18:08:08 -0400
-Received: by bwz9 with SMTP id 9so3431854bwz.37
-        for <git@vger.kernel.org>; Mon, 08 Jun 2009 15:08:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=a1K7q0BdRWljk2yQIEhQKsU9ZbbUavL0LASIUZsnbpg=;
-        b=x88DQgohucwEEv19++++/16TuGjUXsRno7/U/pKM4jXi7Pp1kkb39UiPgIxCfN75NG
-         oU20ndI4rnuzdpiWw+PaXQGhrNN9DkWt4/dlATiIe4MOGbJd6ANF5sFXveQzkc6JFijf
-         9YvXAKAq8tvDsLVk+FLBxyboi9O26F9E488T8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=EfZNkZg25+D+cLNK7RDJY2v3fgXed2h9ro0cYJldb58CSbuJdPEZVYb09XrONJApon
-         AqibU9MjWQ9cnMJqFmQR3WRkGytdITIlxpCl7SL2SKNF0mmiCa+gNv0ICJv9wD5l5M0P
-         81t0Lp9CqypHkwmRcMrZ1fR0m7oC5wmxT/Oik=
-Received: by 10.204.113.198 with SMTP id b6mr7122568bkq.108.1244498889057; 
-	Mon, 08 Jun 2009 15:08:09 -0700 (PDT)
-In-Reply-To: <alpine.DEB.1.00.0906082355350.26154@pacific.mpi-cbg.de>
+	id S1750705AbZFHWLS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 8 Jun 2009 18:11:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756564AbZFHWLR
+	(ORCPT <rfc822;git-outgoing>); Mon, 8 Jun 2009 18:11:17 -0400
+Received: from peff.net ([208.65.91.99]:36451 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755889AbZFHWLQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Jun 2009 18:11:16 -0400
+Received: (qmail 24471 invoked by uid 107); 8 Jun 2009 22:11:27 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.40) with ESMTPA; Mon, 08 Jun 2009 18:11:27 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 08 Jun 2009 18:11:17 -0400
+Content-Disposition: inline
+In-Reply-To: <7v4ouq1xv6.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121122>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121123>
 
-2009/6/8 Johannes Schindelin <Johannes.Schindelin@gmx.de>:
-> On Mon, 8 Jun 2009, Alex Riesen wrote:
->> NOT TESTED. Can't. My Windows broke again. Not even compile-tested.
->
-> Yes, that is pretty easy to see as you first used pold/pnew and then
-> src/dst.
+On Mon, Jun 08, 2009 at 09:41:49AM -0700, Junio C Hamano wrote:
 
-Yep.
+> We could further uglify the patch like this.
+> [...]
+> +git_broken_path_fix () {
+> +	case ":$PATH:" in
+> +	*:$1:*) : ok ;;
+> +	*)
+> +		PATH=$(
+> +			SANE_TOOL_PATH="$1"
+> +			IFS=: path= sep=
+> +			set x $PATH
+> +			shift
+> +			for elem
+> +			do
+> +				case "$SANE_TOOL_PATH:$elem" in
+> +				(?*:/bin | ?*:/usr/bin)
+> +					path="$path$sep$SANE_TOOL_PATH"
+> +					sep=:
+> +					SANE_TOOL_PATH=
+> +				esac
+> +				path="$path$sep$elem"
+> +				sep=:
+> +			done
+> +			echo "$path"
+> +		)
+> +		;;
+> +	esac
+> +}
 
-> I minimally fixed up your patch (it now uses strbuf), and added a
-> test-case.
->
-> This test-case is actually crucial: it shows that your patch is not
-> enough: the culprit is this code in builtin-mv.c:167--168:
->
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0else if (lstat=
-(dst, &st) =3D=3D 0) {
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0bad =3D "destination exists";
+Wow. That _is_ ugly, but it actually addresses exactly both my concern
+and Brandon's. I kind of like it.
 
-Ah, thanks. Missed that completely.
+-Peff
