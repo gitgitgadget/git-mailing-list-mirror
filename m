@@ -1,129 +1,82 @@
-From: Brandon Casey <casey@nrlssc.navy.mil>
-Subject: Re: [PATCH 1/2] Documentation: mention 'git stash pop --index' option
- explicitly
-Date: Mon, 08 Jun 2009 13:24:56 -0500
-Message-ID: <sHD5HzzlpP8aQrH5W2epWAWTSUBcvKbn_nPuGJaIzd_TgO7ILnnVDQ@cipher.nrlssc.navy.mil>
-References: <27f7124b574aa6ac4391b9bd029242ceb5874447.1244475542.git.szeder@ira.uka.de>
+From: skillzero@gmail.com
+Subject: Re: Merge into locally modified files?
+Date: Mon, 8 Jun 2009 12:14:38 -0700
+Message-ID: <2729632a0906081214q43e45ce7p812bd02f34934691@mail.gmail.com>
+References: <2729632a0906081030k5048cb27p6950a0decaa7396a@mail.gmail.com>
+	 <200906082022.09936.johan@herland.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: =?UTF-8?B?U1pFREVSIEfDoWJvcg==?= <szeder@ira.uka.de>
-X-From: git-owner@vger.kernel.org Mon Jun 08 20:25:27 2009
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Johan Herland <johan@herland.net>
+X-From: git-owner@vger.kernel.org Mon Jun 08 21:14:52 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MDjXA-00062Q-MN
-	for gcvg-git-2@gmane.org; Mon, 08 Jun 2009 20:25:25 +0200
+	id 1MDkIx-0000PU-Qt
+	for gcvg-git-2@gmane.org; Mon, 08 Jun 2009 21:14:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751565AbZFHSZO convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 8 Jun 2009 14:25:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751377AbZFHSZO
-	(ORCPT <rfc822;git-outgoing>); Mon, 8 Jun 2009 14:25:14 -0400
-Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:44908 "EHLO
-	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751292AbZFHSZN (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 Jun 2009 14:25:13 -0400
-Received: by mail.nrlssc.navy.mil id n58IOwsK008445; Mon, 8 Jun 2009 13:24:58 -0500
-In-Reply-To: <27f7124b574aa6ac4391b9bd029242ceb5874447.1244475542.git.szeder@ira.uka.de>
-X-OriginalArrivalTime: 08 Jun 2009 18:24:56.0416 (UTC) FILETIME=[6CAA0600:01C9E866]
+	id S1751753AbZFHTOi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 8 Jun 2009 15:14:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752275AbZFHTOh
+	(ORCPT <rfc822;git-outgoing>); Mon, 8 Jun 2009 15:14:37 -0400
+Received: from an-out-0708.google.com ([209.85.132.243]:29507 "EHLO
+	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751883AbZFHTOg (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Jun 2009 15:14:36 -0400
+Received: by an-out-0708.google.com with SMTP id d40so6133978and.1
+        for <git@vger.kernel.org>; Mon, 08 Jun 2009 12:14:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=zOI9MlGve9DdjphlTNWLhfeWonW9VjXfx33vTbakvCo=;
+        b=pwHfpZJzbd733CoFxYrUG0xTVUidqTEkLsjLi99hhpGt9OPrstTvoslIvQPT70HNea
+         QCvfRFSLISLOWu+NhTuYDFJhsDnRJoLlBb37e9i+LaxI5lhr6G0fR28lTQvmDUsUwNNK
+         cY1uE54GGsbIxH36Q2VsW+pUZsCVyY0Vpmp80=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=DGnsAHgfUviWLugU6XaJjZj8Of14NXLFIDQCkMYldyOIMaPpEhoQ2sf2OtsU0HOMIt
+         8G7Or2gpqnsmn0z6Xs+Nqh4TQNzMA0sLHS2P+dBbHOOhl05TgjGRmHDkN7ohXmkt9eQm
+         14qiNDKtdAsaIlCyP9BhUZgADvdXY5GlCdD1Q=
+Received: by 10.100.120.10 with SMTP id s10mr523397anc.86.1244488478277; Mon, 
+	08 Jun 2009 12:14:38 -0700 (PDT)
+In-Reply-To: <200906082022.09936.johan@herland.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121097>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121098>
 
+On Mon, Jun 8, 2009 at 11:22 AM, Johan Herland <johan@herland.net> wrote:
+>
+> Git, instead encourages you to commit your changes _first_
+> (aka. "commit-before-merge"), so that your changes are not necessarily
+> affected by the updated changes from the server.
 
-Sorry, I didn't read this first patch of yours before I submitted my
-own patch to do basically the same thing.  I wasn't trying to trump
-you.
+The problem I have with this is that it's a lot of extra work to
+commit, pull (which will create a merge commit), then back out the
+merge commit git pull did, back out my local commit, then re-apply my
+local changes. I typically always have some modified files in my tree
+for little things I may never want to commit. I'll tweak some build
+Makefile build setting (e.g. enable extra logging, some debug printfs,
+etc.). These changes are very transient. We tend to pull in changes
+several times a day as people change stuff.
 
--brandon
+It looks like I can use git stash to help here. If I do 'git stash &&
+git pull && git stash pop', it seemed to work in a simple example. If
+I had no changes, I'd need to be careful to not try to do a git stash
+pop since it would haven't stashed anything.
 
-
-SZEDER G=C3=A1bor wrote:
-> 'git stash pop' supports the '--index' option since its initial
-> implementation (bd56ff54, git-stash: add new 'pop' subcommand,
-> 2008-02-22), but its documentation does not mention it explicitly.
-> Moreover, both the usage shown by 'git stash -h' and the synopsis
-> section in the man page imply that 'git stash pop' does not have any
-> options besides the stash to pop.
->=20
-> First, this patch corrects the usage and the synopsis section by list=
-ing
-> the '--index' option for the 'pop' subcommand explicitly.
->=20
-> Second, the patch moves the description of the '--index' option to th=
-e
-> 'git stash pop' section in the documentation, and refers to it from
-> the 'git stash apply' section.  This way it follows the intentions of
-> commit d1836637 (Documentation: teach stash/pop workflow instead of
-> stash/apply, 2009-05-28), as all 'git stash pop'-related documentatio=
-n
-> will be in one place without references to 'git stash apply'.
->=20
-> Signed-off-by: SZEDER G=C3=A1bor <szeder@ira.uka.de>
-> ---
->  Documentation/git-stash.txt |   15 ++++++++-------
->  git-stash.sh                |    3 ++-
->  2 files changed, 10 insertions(+), 8 deletions(-)
->=20
-> diff --git a/Documentation/git-stash.txt b/Documentation/git-stash.tx=
-t
-> index 1cc24cc..de90550 100644
-> --- a/Documentation/git-stash.txt
-> +++ b/Documentation/git-stash.txt
-> @@ -9,7 +9,8 @@ SYNOPSIS
->  --------
->  [verse]
->  'git stash' list [<options>]
-> -'git stash' (show | drop | pop ) [<stash>]
-> +'git stash' (show | drop ) [<stash>]
-> +'git stash' pop [--index] [<stash>]
->  'git stash' apply [--index] [<stash>]
->  'git stash' branch <branchname> [<stash>]
->  'git stash' [save [--keep-index] [<message>]]
-> @@ -86,16 +87,16 @@ Applying the state can fail with conflicts; in th=
-is case, it is not
->  removed from the stash list. You need to resolve the conflicts by ha=
-nd
->  and call `git stash drop` manually afterwards.
->  +
-> -When no `<stash>` is given, `stash@\{0}` is assumed. See also `apply=
-`.
-> -
-> -apply [--index] [<stash>]::
-> -
-> -	Like `pop`, but do not remove the state from the stash list.
-> -+
->  If the `--index` option is used, then tries to reinstate not only th=
-e working
->  tree's changes, but also the index's ones. However, this can fail, w=
-hen you
->  have conflicts (which are stored in the index, where you therefore c=
-an no
->  longer apply the changes as they were originally).
-> ++
-> +When no `<stash>` is given, `stash@\{0}` is assumed.
-> +
-> +apply [--index] [<stash>]::
-> +
-> +	Like `pop`, but do not remove the state from the stash list.
-> =20
->  branch <branchname> [<stash>]::
-> =20
-> diff --git a/git-stash.sh b/git-stash.sh
-> index b9ace99..94f1d3a 100755
-> --- a/git-stash.sh
-> +++ b/git-stash.sh
-> @@ -3,7 +3,8 @@
-> =20
->  dashless=3D$(basename "$0" | sed -e 's/-/ /')
->  USAGE=3D"list [<options>]
-> -   or: $dashless (show | drop | pop ) [<stash>]
-> +   or: $dashless (show | drop ) [<stash>]
-> +   or: $dashless pop [--index] [<stash>]
->     or: $dashless apply [--index] [<stash>]
->     or: $dashless branch <branchname> [<stash>]
->     or: $dashless [save [--keep-index] [<message>]]
+Is this something that would be pretty easy to add to git pull (or I
+guess really to git merge since pull is just fetch+merge)? Maybe
+something like a 'git pull --rebase-local'? If I wanted to add
+something like this, should I just start by looking at git stash and
+see how it does it and try to integrate support for that into git
+merge (and make sure git pull will pass that option through to git
+merge)? Conceptually, it seems easy, but I don't know how hard it
+would be to get it into the code.
