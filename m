@@ -1,67 +1,80 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCHv3 1/4] parse-remote: function to get the tracking branch to be merge
-Date: Mon, 08 Jun 2009 16:30:31 -0700
-Message-ID: <7v8wk2wbfs.fsf@alter.siamese.dyndns.org>
-References: <1244451651-22651-2-git-send-email-santi@agolina.net>
+From: Brandon Casey <casey@nrlssc.navy.mil>
+Subject: Re: [PATCH 7/8] Makefile: introduce SANE_TOOL_PATH for prepending
+ required elements to PATH
+Date: Mon, 08 Jun 2009 18:39:40 -0500
+Message-ID: <fzqJj0x9YB8Uli2Fx2vePY55fbueEEY-IiruKI-uLEgS08KF5M8miw@cipher.nrlssc.navy.mil>
+References: <67hZHClrEWQHxCRdWosE25_CVQVNIYpTaeW2DKuCCDfW4h-jHQ82zlGcCNn49KcxUKsj-TSJSVQ@cipher.nrlssc.navy.mil> <67hZHClrEWQHxCRdWosE24eNsO0do05033zPcGsXrwIRCoU8GtXor_XD8ayKlybu-V7PGeTC_PA@cipher.nrlssc.navy.mil> <67hZHClrEWQHxCRdWosE21Y219yACHqb_DoUmykc1kiOxwRuziSDMczTdmGkyEob9g6DVoIraR4@cipher.nrlssc.navy.mil> <67hZHClrEWQHxCRdWosE24FbCSWPktK230jx86LzLj0Aqa5g5XoJb3Iv805pzfx5wCPameuSp6M@cipher.nrlssc.navy.mil> <67hZHClrEWQHxCRdWosE28bOBU_EdMUdyv6uENKCaQfOLQjhGBq3kLwxe6mMrfW4HauaUwWt5eM@cipher.nrlssc.navy.mil> <67hZHClrEWQHxCRdWosE26gwuGblUI8bcWLxyoPZhmfzJAibRVMtix-zkRUKYe5Y8R8-GRcIkUI@cipher.nrlssc.navy.mil> <67hZHClrEWQHxCRdWosE2-yxscBzIn8DiQogVPM7EAgcGyYg61V8vYLxFiW6A4ovZp6SOuP0pDM@cipher.nrlssc.navy.mil> <67hZHClrEWQHxCRdWosE2_PLKo8HHFSCQIZrHMfucFNo_Bdy4p79XNP-MU8gnsUflWndiCqfhFM@ciph
+ er.nrlssc.navy.mil> <20090608114351.GA13775@coredump.intra.peff.net> <7v4ouq1xv6.fsf@alter.siamese.dyndns.org> <20090608221117.GC29942@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Santi =?utf-8?Q?B=C3=A9jar?= <santi@agolina.net>
-X-From: git-owner@vger.kernel.org Tue Jun 09 01:30:42 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Brandon Casey <drafnel@gmail.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Jun 09 01:40:00 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MDoIa-0001Jy-Qq
-	for gcvg-git-2@gmane.org; Tue, 09 Jun 2009 01:30:41 +0200
+	id 1MDoRX-0003dc-Cn
+	for gcvg-git-2@gmane.org; Tue, 09 Jun 2009 01:39:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753105AbZFHXab convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 8 Jun 2009 19:30:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751858AbZFHXaa
-	(ORCPT <rfc822;git-outgoing>); Mon, 8 Jun 2009 19:30:30 -0400
-Received: from fed1rmmtao107.cox.net ([68.230.241.39]:58659 "EHLO
-	fed1rmmtao107.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751404AbZFHXaa (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 Jun 2009 19:30:30 -0400
-Received: from fed1rmimpo03.cox.net ([70.169.32.75])
-          by fed1rmmtao107.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20090608233033.XEVN18948.fed1rmmtao107.cox.net@fed1rmimpo03.cox.net>;
-          Mon, 8 Jun 2009 19:30:33 -0400
-Received: from localhost ([68.225.240.211])
-	by fed1rmimpo03.cox.net with bizsmtp
-	id 1bWY1c0034aMwMQ04bWYdD; Mon, 08 Jun 2009 19:30:32 -0400
-X-VR-Score: -100.00
-X-Authority-Analysis: v=1.0 c=1 a=RAp76dD47iIA:10 a=eDh-fbTsmFgA:10
- a=3yCQnsJiAAAA:8 a=IlVFgqLpY9YpfdnFHpkA:9 a=BCxkenqJmfbLZSXIkXgA:7
- a=KlV15RXvdILgpxQPYb1dLhnN2kMA:4 a=cdoSpQTWPqQA:10
-X-CM-Score: 0.00
-In-Reply-To: <1244451651-22651-2-git-send-email-santi@agolina.net> ("Santi
- =?utf-8?Q?B=C3=A9jar=22's?= message of "Mon\,  8 Jun 2009 11\:00\:48
- +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+	id S1757384AbZFHXjo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 8 Jun 2009 19:39:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757367AbZFHXjo
+	(ORCPT <rfc822;git-outgoing>); Mon, 8 Jun 2009 19:39:44 -0400
+Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:60205 "EHLO
+	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757358AbZFHXjn (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Jun 2009 19:39:43 -0400
+Received: by mail.nrlssc.navy.mil id n58Ndehe021333; Mon, 8 Jun 2009 18:39:40 -0500
+In-Reply-To: <20090608221117.GC29942@sigill.intra.peff.net>
+X-OriginalArrivalTime: 08 Jun 2009 23:39:40.0536 (UTC) FILETIME=[647A0F80:01C9E892]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121130>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121131>
 
-Santi B=C3=A9jar <santi@agolina.net> writes:
 
-> The only user of get_remote_refs_for_fetch was "git pull --rebase" an=
-d
-> it only wanted the tracking branch to be merge. So, add a simple
-> function with this new meaning.
->
-> No behavior changes.
+I never received the referenced email.  I'll try to extract from gmane
+and test.
 
-I am all for code reduction, but after following the original logic tha=
-t
-uses remote_refs_for_fetch (which knows about things like "git pull the=
-re
-+refs/heads/master:refs/heads/origin tag v1.6.0" from the command line)
-that in turn calls canon_refs_list_for_fetch (which returns a list e.g.
-+refs/heads/master:refs/heads/origin refs/tags/v1.6.0:refs/tags/v1.6.0)=
-,
-and do not quite see how you can casually say "No behaviour changes."
+-brandon
+
+
+Jeff King wrote:
+> On Mon, Jun 08, 2009 at 09:41:49AM -0700, Junio C Hamano wrote:
+> 
+>> We could further uglify the patch like this.
+>> [...]
+>> +git_broken_path_fix () {
+>> +	case ":$PATH:" in
+>> +	*:$1:*) : ok ;;
+>> +	*)
+>> +		PATH=$(
+>> +			SANE_TOOL_PATH="$1"
+>> +			IFS=: path= sep=
+>> +			set x $PATH
+>> +			shift
+>> +			for elem
+>> +			do
+>> +				case "$SANE_TOOL_PATH:$elem" in
+>> +				(?*:/bin | ?*:/usr/bin)
+>> +					path="$path$sep$SANE_TOOL_PATH"
+>> +					sep=:
+>> +					SANE_TOOL_PATH=
+>> +				esac
+>> +				path="$path$sep$elem"
+>> +				sep=:
+>> +			done
+>> +			echo "$path"
+>> +		)
+>> +		;;
+>> +	esac
+>> +}
+> 
+> Wow. That _is_ ugly, but it actually addresses exactly both my concern
+> and Brandon's. I kind of like it.
+> 
+> -Peff
