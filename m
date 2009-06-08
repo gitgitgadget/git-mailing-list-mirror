@@ -1,62 +1,58 @@
-From: "H. Peter Anvin" <hpa@zytor.com>
-Subject: Re: [PATCH v3 0/3] automatically skip away from broken commits
-Date: Mon, 08 Jun 2009 14:10:18 -0700
-Message-ID: <4A2D7E3A.9060701@zytor.com>
-References: <20090606043853.4031.78284.chriscool@tuxfamily.org>	<7vskidcf9s.fsf@alter.siamese.dyndns.org>	<200906070932.36913.chriscool@tuxfamily.org>	<4A2CAA56.1030707@zytor.com> <7vws7n6vcf.fsf@alter.siamese.dyndns.org>	<4A2D337C.70203@zytor.com> <7vzlcixwue.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/2] Documentation: mention 'git stash pop --index' option explicitly
+Date: Mon, 08 Jun 2009 14:23:55 -0700
+Message-ID: <7viqj6xvv8.fsf@alter.siamese.dyndns.org>
+References: <27f7124b574aa6ac4391b9bd029242ceb5874447.1244475542.git.szeder@ira.uka.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Christian Couder <chriscool@tuxfamily.org>, git@vger.kernel.org,
-	Sam Vilain <sam@vilain.net>, Ingo Molnar <mingo@elte.hu>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jun 08 23:10:47 2009
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder@ira.uka.de>
+X-From: git-owner@vger.kernel.org Mon Jun 08 23:24:22 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MDm7A-0006IP-MN
-	for gcvg-git-2@gmane.org; Mon, 08 Jun 2009 23:10:45 +0200
+	id 1MDmKL-0003Tp-Ob
+	for gcvg-git-2@gmane.org; Mon, 08 Jun 2009 23:24:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753357AbZFHVKd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 8 Jun 2009 17:10:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752348AbZFHVKd
-	(ORCPT <rfc822;git-outgoing>); Mon, 8 Jun 2009 17:10:33 -0400
-Received: from terminus.zytor.com ([198.137.202.10]:54711 "EHLO
-	terminus.zytor.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752038AbZFHVKd (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 Jun 2009 17:10:33 -0400
-Received: from anacreon.sc.intel.com (hpa@localhost [127.0.0.1])
-	(authenticated bits=0)
-	by terminus.zytor.com (8.14.3/8.14.1) with ESMTP id n58LAI1K031560
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Mon, 8 Jun 2009 14:10:18 -0700
-User-Agent: Thunderbird 2.0.0.21 (X11/20090320)
-In-Reply-To: <7vzlcixwue.fsf@alter.siamese.dyndns.org>
-X-Virus-Scanned: ClamAV 0.94.2/9439/Mon Jun  8 09:12:27 2009 on terminus.zytor.com
-X-Virus-Status: Clean
+	id S1754606AbZFHVXz convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 8 Jun 2009 17:23:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754082AbZFHVXy
+	(ORCPT <rfc822;git-outgoing>); Mon, 8 Jun 2009 17:23:54 -0400
+Received: from fed1rmmtao104.cox.net ([68.230.241.42]:52396 "EHLO
+	fed1rmmtao104.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753237AbZFHVXx (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Jun 2009 17:23:53 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao104.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20090608212356.TNQU17135.fed1rmmtao104.cox.net@fed1rmimpo01.cox.net>;
+          Mon, 8 Jun 2009 17:23:56 -0400
+Received: from localhost ([68.225.240.211])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id 1ZPv1c0094aMwMQ03ZPvDe; Mon, 08 Jun 2009 17:23:55 -0400
+X-VR-Score: -100.00
+X-Authority-Analysis: v=1.0 c=1 a=G6np98s7CV4A:10 a=pyTkBgOdRj8A:10
+ a=5w6XAim6vY1Y-JBLhEEA:9 a=EUvvGHY2U4PvY0N3B_7bTZCgXPQA:4
+X-CM-Score: 0.00
+In-Reply-To: <27f7124b574aa6ac4391b9bd029242ceb5874447.1244475542.git.szeder@ira.uka.de>
+ ("SZEDER =?utf-8?Q?G=C3=A1bor=22's?= message of "Mon\,  8 Jun 2009
+ 18\:27\:52 +0200")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121110>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121111>
 
-Junio C Hamano wrote:
-> "H. Peter Anvin" <hpa@zytor.com> writes:
-> 
->> The advantage of that -- and I have to admit I don't know if it will
->> ever matter in practice -- is that using an actual PRNG:
->>
->> a) is less likely to get into pathological capture behaviors.
->> b) doesn't make people think later that there is something magic to the
->>    arbitrary chosen numbers.
-> 
-> My gut feeling agrees with you that both are likely to be true; these are
-> good points.
-> 
-> Christian, what do you think?
+SZEDER G=C3=A1bor <szeder@ira.uka.de> writes:
 
-Note: I do believe we should keep the obvious optimization of "if there
-are no skip points in the plausible range, use the best point."  We
-don't want a 39% increase in bisect time when not using skip.
+> -'git stash' (show | drop | pop ) [<stash>]
+> +'git stash' (show | drop ) [<stash>]
+> +'git stash' pop [--index] [<stash>]
+>  'git stash' apply [--index] [<stash>]
 
-	-hpa
+Why not "(pop | apply) [--index]"?
+
+Other than that looks sensible.
