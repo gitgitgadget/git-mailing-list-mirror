@@ -1,72 +1,111 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3 0/3] automatically skip away from broken commits
-Date: Mon, 08 Jun 2009 00:25:04 -0700
-Message-ID: <7vws7n6vcf.fsf@alter.siamese.dyndns.org>
-References: <20090606043853.4031.78284.chriscool@tuxfamily.org>
-	<7vskidcf9s.fsf@alter.siamese.dyndns.org>
-	<200906070932.36913.chriscool@tuxfamily.org>
-	<4A2CAA56.1030707@zytor.com>
+From: Bert Wesarg <bert.wesarg@googlemail.com>
+Subject: Re: [TopGit PATCH] hooks/pre-commit: check for cycles in dependencies
+Date: Mon, 8 Jun 2009 09:31:01 +0200
+Message-ID: <36ca99e90906080031r3f5f545eo26c077e1966bf67@mail.gmail.com>
+References: <1244148073-2313-1-git-send-email-bert.wesarg@googlemail.com>
+	 <20090605202526.GB671@pengutronix.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Christian Couder <chriscool@tuxfamily.org>, git@vger.kernel.org,
-	Sam Vilain <sam@vilain.net>, Ingo Molnar <mingo@elte.hu>
-To: "H. Peter Anvin" <hpa@zytor.com>
-X-From: git-owner@vger.kernel.org Mon Jun 08 09:25:17 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: =?UTF-8?Q?Uwe_Kleine=2DK=C3=B6nig?= 
+	<u.kleine-koenig@pengutronix.de>
+X-From: git-owner@vger.kernel.org Mon Jun 08 09:31:22 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MDZEH-0000Tk-H3
-	for gcvg-git-2@gmane.org; Mon, 08 Jun 2009 09:25:13 +0200
+	id 1MDZKB-0002bH-UN
+	for gcvg-git-2@gmane.org; Mon, 08 Jun 2009 09:31:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751259AbZFHHZE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 8 Jun 2009 03:25:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750924AbZFHHZD
-	(ORCPT <rfc822;git-outgoing>); Mon, 8 Jun 2009 03:25:03 -0400
-Received: from fed1rmmtao103.cox.net ([68.230.241.43]:61003 "EHLO
-	fed1rmmtao103.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750815AbZFHHZD (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 Jun 2009 03:25:03 -0400
-Received: from fed1rmimpo03.cox.net ([70.169.32.75])
-          by fed1rmmtao103.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20090608072505.ZGBV2915.fed1rmmtao103.cox.net@fed1rmimpo03.cox.net>;
-          Mon, 8 Jun 2009 03:25:05 -0400
-Received: from localhost ([68.225.240.211])
-	by fed1rmimpo03.cox.net with bizsmtp
-	id 1KR41c0034aMwMQ04KR4BE; Mon, 08 Jun 2009 03:25:04 -0400
-X-VR-Score: -100.00
-X-Authority-Analysis: v=1.0 c=1 a=ZlvubiwuF4QA:10 a=BRJNLUJM0I0A:10
- a=oGMlB6cnAAAA:8 a=Z7UACj7Gs9QRIPW5BzYA:9 a=2kjZcLjsAdBid0LFXdAA:7
- a=GrNyyw2YNXhQy7jp6uRD3K4JxeEA:4 a=CY6gl2JlH4YA:10
-X-CM-Score: 0.00
-In-Reply-To: <4A2CAA56.1030707@zytor.com> (H. Peter Anvin's message of "Sun\, 07 Jun 2009 23\:06\:14 -0700")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+	id S1753575AbZFHHbB convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 8 Jun 2009 03:31:01 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753374AbZFHHbB
+	(ORCPT <rfc822;git-outgoing>); Mon, 8 Jun 2009 03:31:01 -0400
+Received: from mail-bw0-f213.google.com ([209.85.218.213]:49378 "EHLO
+	mail-bw0-f213.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753390AbZFHHbA convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 8 Jun 2009 03:31:00 -0400
+Received: by bwz9 with SMTP id 9so2828788bwz.37
+        for <git@vger.kernel.org>; Mon, 08 Jun 2009 00:31:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=z2/oBErC3R5NSmTksk3AoEB3x9DfEhdzdyvAzj6+pcE=;
+        b=exVTIcE54g/Q/U6h2mDow47tkAxFDnpGNhK6giQcu/O6CNSPmg9BtkZzRQq12UohGb
+         opqRJpSRhYj0/6AXRmAB11LiRHcMN9ty7aFJ6JSxbRMTqQbnPtpeGU2Fk3O3+j93FKsL
+         nXHWB/ur7XF258otH3iDQVCZbnLGAz9JpFoR8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlemail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=OQG+VXkExDwiRkB56LSvKRiQ45lLrd72ecak+hs/ly1ryRNS5akePZJ4n6WEdGuCta
+         5UwK0/ox0M9Hz7sr9Y6FEOWMn7guea/NA+fPMtrCZ7kpdukuATKGengUzQKs74f0O8kK
+         XpuK0V1Hz7CD3rVbEhNYcX4ETalwYOUmuDFAM=
+Received: by 10.223.105.75 with SMTP id s11mr3565694fao.4.1244446261103; Mon, 
+	08 Jun 2009 00:31:01 -0700 (PDT)
+In-Reply-To: <20090605202526.GB671@pengutronix.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121043>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121044>
 
-"H. Peter Anvin" <hpa@zytor.com> writes:
+2009/6/5 Uwe Kleine-K=C3=B6nig <u.kleine-koenig@pengutronix.de>:
+> Hi Bert,
+Hi, Uwe,
 
-> It's not entirely clear to me that this is any better than simply
-> randomly picking a commit from the list of plausible commits -- in other
-> words, eliminate the commits we can totally rule out, and then just pick
-> a random commit among the list of plausible commits.  This is not
-> *quite* as crazy as it sounds; it has the advantage of being an
-> extremely simple algorithm which shouldn't have any pathological behaviours.
+>
+> On Thu, Jun 04, 2009 at 10:41:13PM +0200, Bert Wesarg wrote:
+>> Only newly added dependencies needs to be considered. =C2=A0For each=
+ of these deps
+>> check if there is a path from this dep to the current HEAD.
+>>
+>> Use recursive_dep() for this task. =C2=A0Even if recursive_dep() use=
+s a DFS-like
+>> traversal it will not run into an infty-loop if there would be a cyc=
+le, because
+> I'm not sure how understandable this is. =C2=A0After some thinking I
+> understood DFS. =C2=A0Up to now I thought infty is just the LaTeX mac=
+ro name
+> for "infinity", but apart of this, is this really the right term here=
+?
+> endless loop?
+Yeah, 'endless loop' is the right term here.
 
-That is essentially what Christian's patch does.  It does not try to go
-away from untestable commits in topological space.  Instead, when we find
-that the commit with the best "goodness" value is known to be untestable,
-we step away from that commit by some alternating distance _in the
-goodness value space_ (which does not have much to do with how commit
-ancestry topology is laid out).  Viewed in the topology space, it is quite
-similar to picking a different commit randomly, except for a very special
-case where the remaining history is completely linear, in which case the
-goodness value space and ancestry topology have a direct correlation.
+>
+>> recursive_dep() takes .topdeps only from committed trees. =C2=A0And =
+it is required
+>> that the committed dependency graph is acyclic.
+>
+> I didn't check the implementation deeply. =C2=A0But all in all I don'=
+t have
+> the usual warm and fuzzy feeling about it. =C2=A0What happens during =
+a remote
+> update if only the merged dependency graph has a cycle[1]?
+I suspect the merge commit, which would introduce this cycle, will abor=
+t.
 
-That special case, and the deterministic hence repeatable nature of the
-algorithm, are the two main advantages over picking a completely random
-commit among the list of plausible commits.
+BTW: Do you have any infos or need help on your TopGit successor?
+
+Bye,
+Bert
+
+>
+> Best regards
+> Uwe
+>
+> [1] The question is a bit theoretic because remote updating is broken
+> here. =C2=A0If you are my remote and changed a .topdep file, my updat=
+e simply
+> discards your change.
+>
+> --
+> Pengutronix e.K. =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0| Uwe Kleine-K=C3=B6=
+nig =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0|
+> Industrial Linux Solutions =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0| http://www.pengutronix.de/ =C2=A0|
+>
