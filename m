@@ -1,93 +1,72 @@
-From: Markus Heidelberg <markus.heidelberg@web.de>
-Subject: [PATCH v3 4/6] add a test for git-send-email for non-threaded mails
-Date: Mon, 8 Jun 2009 09:13:16 +0200
-Message-ID: <200906080913.16894.markus.heidelberg@web.de>
-References: <1244410857-920-1-git-send-email-markus.heidelberg@web.de> <200906080842.00357.markus.heidelberg@web.de> <7vd49f8b1f.fsf@alter.siamese.dyndns.org>
-Reply-To: markus.heidelberg@web.de
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v3 0/3] automatically skip away from broken commits
+Date: Mon, 08 Jun 2009 00:25:04 -0700
+Message-ID: <7vws7n6vcf.fsf@alter.siamese.dyndns.org>
+References: <20090606043853.4031.78284.chriscool@tuxfamily.org>
+	<7vskidcf9s.fsf@alter.siamese.dyndns.org>
+	<200906070932.36913.chriscool@tuxfamily.org>
+	<4A2CAA56.1030707@zytor.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Michael Witten <mfwitten@gmail.com>,
-	Thomas Rast <trast@student.ethz.ch>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jun 08 09:13:28 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Christian Couder <chriscool@tuxfamily.org>, git@vger.kernel.org,
+	Sam Vilain <sam@vilain.net>, Ingo Molnar <mingo@elte.hu>
+To: "H. Peter Anvin" <hpa@zytor.com>
+X-From: git-owner@vger.kernel.org Mon Jun 08 09:25:17 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MDZ2r-00052t-R8
-	for gcvg-git-2@gmane.org; Mon, 08 Jun 2009 09:13:26 +0200
+	id 1MDZEH-0000Tk-H3
+	for gcvg-git-2@gmane.org; Mon, 08 Jun 2009 09:25:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751937AbZFHHNP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 8 Jun 2009 03:13:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752171AbZFHHNO
-	(ORCPT <rfc822;git-outgoing>); Mon, 8 Jun 2009 03:13:14 -0400
-Received: from fmmailgate03.web.de ([217.72.192.234]:47360 "EHLO
-	fmmailgate03.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751067AbZFHHNN (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 Jun 2009 03:13:13 -0400
-Received: from smtp07.web.de (fmsmtp07.dlan.cinetic.de [172.20.5.215])
-	by fmmailgate03.web.de (Postfix) with ESMTP id 97EC1FF0AC27;
-	Mon,  8 Jun 2009 09:13:15 +0200 (CEST)
-Received: from [89.59.71.255] (helo=.)
-	by smtp07.web.de with asmtp (TLSv1:AES256-SHA:256)
-	(WEB.DE 4.110 #277)
-	id 1MDZ2h-0002SB-00; Mon, 08 Jun 2009 09:13:15 +0200
-User-Agent: KMail/1.9.9
-In-Reply-To: <7vd49f8b1f.fsf@alter.siamese.dyndns.org>
-Jabber-ID: markus.heidelberg@web.de
-Content-Disposition: inline
-X-Sender: markus.heidelberg@web.de
-X-Provags-ID: V01U2FsdGVkX19i8SKS/A2OP/vsTxPs+5k/NmSqp4X1S4baTgDx
-	C5ayNuynPYV10b1YqcNDT5ZLdq9/EXtGcu5/Svf2Nz8MJq8/cL
-	JQ5IG5VW1k5AW1HnpsRg==
+	id S1751259AbZFHHZE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 8 Jun 2009 03:25:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750924AbZFHHZD
+	(ORCPT <rfc822;git-outgoing>); Mon, 8 Jun 2009 03:25:03 -0400
+Received: from fed1rmmtao103.cox.net ([68.230.241.43]:61003 "EHLO
+	fed1rmmtao103.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750815AbZFHHZD (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Jun 2009 03:25:03 -0400
+Received: from fed1rmimpo03.cox.net ([70.169.32.75])
+          by fed1rmmtao103.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20090608072505.ZGBV2915.fed1rmmtao103.cox.net@fed1rmimpo03.cox.net>;
+          Mon, 8 Jun 2009 03:25:05 -0400
+Received: from localhost ([68.225.240.211])
+	by fed1rmimpo03.cox.net with bizsmtp
+	id 1KR41c0034aMwMQ04KR4BE; Mon, 08 Jun 2009 03:25:04 -0400
+X-VR-Score: -100.00
+X-Authority-Analysis: v=1.0 c=1 a=ZlvubiwuF4QA:10 a=BRJNLUJM0I0A:10
+ a=oGMlB6cnAAAA:8 a=Z7UACj7Gs9QRIPW5BzYA:9 a=2kjZcLjsAdBid0LFXdAA:7
+ a=GrNyyw2YNXhQy7jp6uRD3K4JxeEA:4 a=CY6gl2JlH4YA:10
+X-CM-Score: 0.00
+In-Reply-To: <4A2CAA56.1030707@zytor.com> (H. Peter Anvin's message of "Sun\, 07 Jun 2009 23\:06\:14 -0700")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121042>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121043>
 
+"H. Peter Anvin" <hpa@zytor.com> writes:
 
-Signed-off-by: Markus Heidelberg <markus.heidelberg@web.de>
----
+> It's not entirely clear to me that this is any better than simply
+> randomly picking a commit from the list of plausible commits -- in other
+> words, eliminate the commits we can totally rule out, and then just pick
+> a random commit among the list of plausible commits.  This is not
+> *quite* as crazy as it sounds; it has the advantage of being an
+> extremely simple algorithm which shouldn't have any pathological behaviours.
 
-Junio C Hamano, 08.06.2009:
-> Generally, we protect "git" (i.e. what we write ourselves) with test_must_fail
-> so that we can catch stupid segfaulting crash we introduce ourselves
-> (unlike "! git foo", "test_must_fail git foo" says "oh, no, it did not
-> correctly fail" if git segfaults).  We do not expect "grep" to segfault
-> (iow we are not testing "grep"), so it is customary to say "! grep".
+That is essentially what Christian's patch does.  It does not try to go
+away from untestable commits in topological space.  Instead, when we find
+that the commit with the best "goodness" value is known to be untestable,
+we step away from that commit by some alternating distance _in the
+goodness value space_ (which does not have much to do with how commit
+ancestry topology is laid out).  Viewed in the topology space, it is quite
+similar to picking a different commit randomly, except for a very special
+case where the remaining history is completely linear, in which case the
+goodness value space and ancestry topology have a direct correlation.
 
-Thanks for the explanation.
-
-Differences to v2:
-* "! grep" instead of "test_must_fail grep"
-
-
- t/t9001-send-email.sh |   10 ++++++++++
- 1 files changed, 10 insertions(+), 0 deletions(-)
-
-diff --git a/t/t9001-send-email.sh b/t/t9001-send-email.sh
-index 990dd1a..20efdc1 100755
---- a/t/t9001-send-email.sh
-+++ b/t/t9001-send-email.sh
-@@ -621,6 +621,16 @@ test_expect_success 'in-reply-to but no threading' '
- 	grep "In-Reply-To: <in-reply-id@example.com>"
- '
- 
-+test_expect_failure 'no in-reply-to and no threading' '
-+	git send-email \
-+		--dry-run \
-+		--from="Example <nobody@example.com>" \
-+		--to=nobody@example.com \
-+		--nothread \
-+		$patches $patches >stdout &&
-+	! grep "In-Reply-To: " stdout
-+'
-+
- test_expect_success 'threading but no chain-reply-to' '
- 	git send-email \
- 		--dry-run \
--- 
-1.6.3.2.224.gaa543
+That special case, and the deterministic hence repeatable nature of the
+algorithm, are the two main advantages over picking a completely random
+commit among the list of plausible commits.
