@@ -1,68 +1,90 @@
-From: Brandon Casey <casey@nrlssc.navy.mil>
-Subject: [PATCH] git-stash.txt: update synopsis, pop description
-Date: Mon,  8 Jun 2009 11:56:05 -0500
-Message-ID: <bJxDhbQFsPIm1ZUO8mSkwwlB-otpEtzhr6sRzDVsNjTkeMld-7T4NskTGr48iYOe3w8KU1kPuDA@cipher.nrlssc.navy.mil>
-Cc: gitster@pobox.com, Brandon Casey <drafnel@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jun 08 18:56:37 2009
+From: "Kelly F. Hickel" <kfh@mqsoftware.com>
+Subject: Question about fixing windows bug reading graft data
+Date: Mon, 8 Jun 2009 12:19:37 -0500
+Message-ID: <63BEA5E623E09F4D92233FB12A9F794303117E06@emailmn.mqsoftware.com>
+Mime-Version: 1.0
+Content-Type: text/plain;
+	charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Jun 08 19:19:52 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MDi97-0000DH-Jp
-	for gcvg-git-2@gmane.org; Mon, 08 Jun 2009 18:56:30 +0200
+	id 1MDiVk-0002ep-0c
+	for gcvg-git-2@gmane.org; Mon, 08 Jun 2009 19:19:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755332AbZFHQ4V (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 8 Jun 2009 12:56:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755293AbZFHQ4U
-	(ORCPT <rfc822;git-outgoing>); Mon, 8 Jun 2009 12:56:20 -0400
-Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:57804 "EHLO
-	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755078AbZFHQ4T (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 Jun 2009 12:56:19 -0400
-Received: by mail.nrlssc.navy.mil id n58GuGYD027107; Mon, 8 Jun 2009 11:56:16 -0500
-X-OriginalArrivalTime: 08 Jun 2009 16:56:16.0496 (UTC) FILETIME=[09BEA700:01C9E85A]
+	id S1751827AbZFHRTi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 8 Jun 2009 13:19:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750894AbZFHRTh
+	(ORCPT <rfc822;git-outgoing>); Mon, 8 Jun 2009 13:19:37 -0400
+Received: from mail.de.mqsoftware.com ([66.192.70.108]:7348 "EHLO
+	emailmn.mqsoftware.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750784AbZFHRTg convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 8 Jun 2009 13:19:36 -0400
+X-MimeOLE: Produced By Microsoft Exchange V6.5
+Content-class: urn:content-classes:message
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+Thread-Topic: Question about fixing windows bug reading graft data
+Thread-Index: AcnoXU0XuqTBhzgZRw2U6H6CLjOnfA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121088>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121089>
 
-From: Brandon Casey <drafnel@gmail.com>
+Hi All,
+	Ran into a bug trying to use grafts on windows with cygwin git
+version 1.6.1.2.  I've verified that the bug is still there in the
+latest source, and was going to submit a patch, but then I noticed that
+there seem to be more occurrences in commit.c, and wondered if there was
+a better way to fix it than what I had first come up with.
 
-Internally, the 'pop' subcommand of git-stash calls the 'apply' subcommand.
-Hence, 'pop' accepts the same options as 'apply'.  Make this clear by
-placing 'apply' and 'pop' next to each other in the synopsis, and state it
-explicitly in the description of 'pop'.
+The bug, is that in in commit.c, the code strips '\n', but not '\r', so
+the code says the graft data is bad:
+struct commit_graft *read_graft_line(char *buf, int len) {
+        /* The format is just "Commit Parent1 Parent2 ...\n" */
+        int i;
+        struct commit_graft *graft = NULL;
 
-Signed-off-by: Brandon Casey <drafnel@gmail.com>
----
- Documentation/git-stash.txt |    6 +++---
- 1 files changed, 3 insertions(+), 3 deletions(-)
+        if (buf[len-1] == '\n')
+                buf[--len] = 0;
+        if (buf[0] == '#' || buf[0] == '\0')
+                return NULL;
+        if ((len + 1) % 41) {
+        bad_graft_data:
+                error("bad graft data: %s", buf);
+                free(graft);
+                return NULL;
+        }
 
-diff --git a/Documentation/git-stash.txt b/Documentation/git-stash.txt
-index 1cc24cc..7dda416 100644
---- a/Documentation/git-stash.txt
-+++ b/Documentation/git-stash.txt
-@@ -9,8 +9,8 @@ SYNOPSIS
- --------
- [verse]
- 'git stash' list [<options>]
--'git stash' (show | drop | pop ) [<stash>]
--'git stash' apply [--index] [<stash>]
-+'git stash' (show | drop) [<stash>]
-+'git stash' (apply | pop) [--index] [<stash>]
- 'git stash' branch <branchname> [<stash>]
- 'git stash' [save [--keep-index] [<message>]]
- 'git stash' clear
-@@ -80,7 +80,7 @@ pop [<stash>]::
- 	Remove a single stashed state from the stash list and apply it
- 	on top of the current working tree state, i.e., do the inverse
- 	operation of `git stash save`. The working directory must
--	match the index.
-+	match the index.  `pop` accepts the same options as `apply`.
- +
- Applying the state can fail with conflicts; in this case, it is not
- removed from the stash list. You need to resolve the conflicts by hand
--- 
-1.6.3.1.24.g152f4
+My first plan was to fix it the way that xdiff-interface.c handles it,
+assuming that was "the Git way" to deal with CRLF:
+        /* Exclude terminating newline (and cr) from matching */
+        if (len > 0 && line[len-1] == '\n') {
+                if (len > 1 && line[len-2] == '\r')
+                        len -= 2;
+                else
+                        len--;
+        }
+
+But I noticed that there seemed to be several checks for '\n' in
+commit.c that didn't check for '\r', and wondered if there was a reason,
+or if there'd be a better way to handle it.....
+
+
+
+--
+ 
+Kelly F. Hickel
+Senior Product Architect
+MQSoftware, Inc.
+952-345-8677 Office
+952-345-8721 Fax
+kfh@mqsoftware.com
+www.mqsoftware.com
+Certified IBM SOA Specialty
+Your Full Service Provider for IBM WebSphere Learn more at
+www.mqsoftware.com 
