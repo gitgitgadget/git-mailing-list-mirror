@@ -1,98 +1,144 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Git for Windows 1.6.3.2
-Date: Mon, 8 Jun 2009 14:03:58 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.0906081403390.4461@intel-tinevez-2-302>
-References: <alpine.DEB.1.00.0906071629460.26154@pacific.mpi-cbg.de>    <26984.77.61.241.211.1244457815.squirrel@hupie.xs4all.nl>    <fabb9a1e0906080351hbfe7ab7w2016a030ef1bde7@mail.gmail.com>    <alpine.DEB.1.00.0906081255530.4461@intel-tinevez-2-302> <34357.77.61.241.211.1244459143.squirrel@hupie.xs4all.nl>
+From: Jeff King <peff@peff.net>
+Subject: Re: [Patch] Prevent cloning over http from spewing
+Date: Mon, 8 Jun 2009 08:24:30 -0400
+Message-ID: <20090608122430.GD13775@coredump.intra.peff.net>
+References: <20090602174229.GA14455@infidigm.net> <m3vdnda9f7.fsf@localhost.localdomain> <7vmy8p8947.fsf@alter.siamese.dyndns.org> <20090603191050.GB29564@coredump.intra.peff.net> <20090603191555.GL3355@spearce.org> <be6fef0d0906040545j7bd754e0j2c60af833e2ac4a4@mail.gmail.com> <20090604160152.GA13984@sigill.intra.peff.net> <be6fef0d0906070331y5fd596d1k67893a96a4d872ac@mail.gmail.com> <be6fef0d0906070421j7913b0d7w6f7bb97aa7fd6814@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Sverre Rabbelier <srabbelier@gmail.com>, msysgit@googlegroups.com,  git@vger.kernel.org
-To: Ferry Huberts <ferry.huberts@pelagic.nl>
-X-From: grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org@googlegroups.com Mon Jun 08 14:04:23 2009
-Return-path: <grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-gx0-f187.google.com ([209.85.217.187])
+Content-Type: text/plain; charset=utf-8
+Cc: "Shawn O. Pearce" <spearce@spearce.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Jakub Narebski <jnareb@gmail.com>, sparse@infidigm.net,
+	git@vger.kernel.org
+To: Tay Ray Chuan <rctay89@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jun 08 14:24:49 2009
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@gmane.org
+Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MDdaM-0004wL-Tp
-	for gcvm-msysgit@m.gmane.org; Mon, 08 Jun 2009 14:04:19 +0200
-Received: by mail-gx0-f187.google.com with SMTP id 7so3391604gxk.21
-        for <gcvm-msysgit@m.gmane.org>; Mon, 08 Jun 2009 05:04:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=beta;
-        h=domainkey-signature:received:received:x-sender:x-apparently-to
-         :received:received:received-spf:authentication-results:received
-         :received:x-authenticated:x-provags-id:date:from:x-x-sender:to:cc
-         :subject:in-reply-to:message-id:references:user-agent:mime-version
-         :content-type:x-y-gmx-trusted:x-fuhafi:sender:precedence
-         :x-google-loop:mailing-list:list-id:list-post:list-help
-         :list-unsubscribe:x-beenthere-env:x-beenthere;
-        bh=jtif0VpUFbTd18xb2Q62el6Ti77Rjm8y6V3dsTSffSU=;
-        b=3CC3RCq9hZbkAX26BrWodUxPkhIBak3LTQuxl1+Z0MzsVAW45x0BkWO5ChGAJe59U5
-         vtLJ7RtR8d0T5Z3DzuEyIU8f7DUN6+KI4ReDrSiEnaADTr8z2Yi0MMxJtBq6+gPB9jEO
-         l/kZyEgvTwJGAyZbLxeoyQicqiQUfN5oHg8K4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlegroups.com; s=beta;
-        h=x-sender:x-apparently-to:received-spf:authentication-results
-         :x-authenticated:x-provags-id:date:from:x-x-sender:to:cc:subject
-         :in-reply-to:message-id:references:user-agent:mime-version
-         :content-type:x-y-gmx-trusted:x-fuhafi:sender:precedence
-         :x-google-loop:mailing-list:list-id:list-post:list-help
-         :list-unsubscribe:x-beenthere-env:x-beenthere;
-        b=NmALibWQ/IHgE6AE7e4GJcUrwJYSdMYtAZURYS3Vug6X1LvjlDEqG92+PMTQa8qKwi
-         4JU7twwF+TjoS1V1zzkK38rYke6pT+DitgtrModjxvryiOJ+yRSKVooES5uZCVq71tj/
-         kGUXWhusbDwZicsaZrVUjokSRGBttJ0123Sv4=
-Received: by 10.220.99.12 with SMTP id s12mr2237036vcn.11.1244462640666;
-        Mon, 08 Jun 2009 05:04:00 -0700 (PDT)
-Received: by 10.230.110.28 with SMTP id l28gr5511vbp.0;
-	Mon, 08 Jun 2009 05:04:00 -0700 (PDT)
-X-Sender: Johannes.Schindelin@gmx.de
-X-Apparently-To: msysgit@googlegroups.com
-Received: by 10.86.68.10 with SMTP id q10mr108777fga.4.1244462639694; Mon, 08 Jun 2009 05:03:59 -0700 (PDT)
-Received: from mail.gmx.net (mail.gmx.net [213.165.64.20]) by gmr-mx.google.com with SMTP id d8si156101fga.0.2009.06.08.05.03.59; Mon, 08 Jun 2009 05:03:59 -0700 (PDT)
-Received-SPF: pass (google.com: domain of Johannes.Schindelin@gmx.de designates 213.165.64.20 as permitted sender) client-ip=213.165.64.20;
-Authentication-Results: gmr-mx.google.com; spf=pass (google.com: domain of Johannes.Schindelin@gmx.de designates 213.165.64.20 as permitted sender) smtp.mail=Johannes.Schindelin@gmx.de
-Received: (qmail invoked by alias); 08 Jun 2009 12:03:59 -0000
-Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5] by mail.gmx.net (mp008) with SMTP; 08 Jun 2009 14:03:59 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19x2EMfGmNxwKanRWGpYJCf52wlbTcvtMAzw9NRYC qkAv593axGu/EU
-X-X-Sender: schindel@intel-tinevez-2-302
-In-Reply-To: <34357.77.61.241.211.1244459143.squirrel@hupie.xs4all.nl>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.67
-Sender: msysgit@googlegroups.com
+	id 1MDduC-0004TV-Tj
+	for gcvg-git-2@gmane.org; Mon, 08 Jun 2009 14:24:49 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1755249AbZFHMYk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 8 Jun 2009 08:24:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755189AbZFHMYj
+	(ORCPT <rfc822;git-outgoing>); Mon, 8 Jun 2009 08:24:39 -0400
+Received: from peff.net ([208.65.91.99]:44028 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755045AbZFHMYi (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Jun 2009 08:24:38 -0400
+Received: (qmail 21342 invoked by uid 107); 8 Jun 2009 12:24:48 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Mon, 08 Jun 2009 08:24:48 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Mon, 08 Jun 2009 08:24:30 -0400
+Content-Disposition: inline
+In-Reply-To: <be6fef0d0906070421j7913b0d7w6f7bb97aa7fd6814@mail.gmail.com>
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-X-Google-Loop: groups
-Mailing-List: list msysgit@googlegroups.com;
-	contact msysgit+owner@googlegroups.com
-List-Id: <msysgit.googlegroups.com>
-List-Post: <mailto:msysgit@googlegroups.com>
-List-Help: <mailto:msysgit+help@googlegroups.com>
-List-Unsubscribe: <http://googlegroups.com/group/msysgit/subscribe>,
-	<mailto:msysgit+unsubscribe@googlegroups.com>
-X-BeenThere-Env: msysgit@googlegroups.com
-X-BeenThere: msysgit@googlegroups.com
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121066>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121067>
 
+On Sun, Jun 07, 2009 at 07:21:13PM +0800, Tay Ray Chuan wrote:
 
-Hi,
+> by the way, I have updated http-progress-indicators based on your suggestions.
 
-On Mon, 8 Jun 2009, Ferry Huberts wrote:
+Thanks, I just looked at it (though sadly it does not merge into what is
+in 'next' right now).
 
-> > The original fix was indeed done for a reason.
-> >
-> > My best guess (as I said in another email on the msysgit list today, 
-> > where Ferry probably did not expect helpful information): msys-1.0.dll 
-> > was not properly updated.
+> What I have now is:
 > 
-> sorry for that, I am subscribed to git.devel only. probably should have 
-> checked the msysgit list
-> 
-> > I worked on a check for this some time ago, but I forgot to finish and 
-> > include it in our official 'devel'.
-> 
-> does this mean that we can expect a '-2' msysgit release soon?
+>  Fetching %d objects (got %d of %d, %d alt)[, and %s]: 100%
+> (32077585/32077585), 30.59 MiB, done.
 
-No.
+I tried to fetch linux-2.6, and it left me pretty confused.
 
-Ciao,
-Dscho
+My first complaint is that it is way too long. It wrapped in my
+80-column terminal, causing all sorts of visual confusion.
+
+> 1. %d objects = number of concurrent objects being fetched, usually
+> around 4-5. Since objects are fetched alongside other files like packs
+> and pack indices, I separated this from (4).
+
+This did at times say '4' for me, but just as often it said '0' (even
+when stuff was obviously downloading). I hadn't thought about the fact
+that we have concurrent downloads. That really makes things harder.
+Though it seems like we only do one pack file at a time (so maybe that
+is the reason for the '0' -- we are downloading a pack).
+
+In fact, while watching the progress go for the linux-2.6 download, it
+is really hard to tell what is going on. The "% completed" number jumps
+around between multiple values, even showing what appears to be
+nonsense:
+
+  Fetching 0 objects (got 2 of 320, 0 alt) and pack:   8%
+  (241096602/302989431), 229.78 MiB | 668 KiB/s
+  ...
+  Fetching 0 objects (got 2 of 320, 0 alt) and pack:   4%
+  (270741882/302989431), 257.93 MiB | 690 KiB/s
+
+Those are two cut-and-pastes from the same fetch. You can see it
+progressing in terms of absolute numbers, but the percentage values make
+no sense. The "total downloaded" and throughput numbers look roughly
+correct. I don't know if this is caused by multiple simultaenous
+downloads.
+
+> 2. got %d of %d = a count of loose objects. I haven't done counting of
+> packs yet, but it shouldn't be very hard.
+
+Fetching linux-2.6, I spent a very long time on "got 2 of 320" which
+really wasn't all that helpful (because almost the whole thing is in
+packs). Probably a pack count would be useful there. Though I wonder if
+there is some shorter way to summarize what is going on to keep the line
+smaller.
+
+But somewhat worse is that we start at '320', spend a lot of time, and
+then magically it ends up at 1182387 at the end. So it is not all that
+useful as a progress counter, because we don't actually know the total.
+So we can show that we are progressing, but the end keeps getting
+farther away. :)
+
+> 3. %d alt = number of alternate objects. The way I'm counting them now
+> is very inaccurate; I may drop this if it's too complicated to do an
+> accurate count. I added this because some people use forked repos, and
+> they may wonder why after some time, the number of objects fetched
+> doesn't increase. (The time was spent on waiting for the server, only
+> for it to return a 404).
+
+In the name of conserving space on the line, perhaps you should just
+count this as a "fetched" object and increment the fetched count by one.
+The user doesn't have to care which were alt and which were not, as long
+as they see a counter progressing towards completion.
+
+> How about pack file verification? Some pack files are monstrous, and
+> can take some time to verify. Is it desirable to fit in pack file
+> verification into the same "Fetching..." line? Verification is a
+> per-file thing, so it should deserve the same treatment that "Getting
+> pack ..." lines got.
+
+It does take a while on big packs, so I think it makes sense to show
+some eye candy. You can always use the "show only after 2 seconds"
+feature of the progress meter if you are concerned about too much
+information for quick verifications.
+
+It probably makes sense to actually do a stop_progress() after the
+fetching and before the verifying. Otherwise you get the cruft from the
+fetch on the line, but it is not covered up by the verify. Like:
+
+  Verifying pack file: 100% (1180771/1180771), done.   0%
+  (302915802/302989431), 288.72 MiB | 752 KiB/s
+
+I wonder if you should start a newline every time we get to a new
+"phase". So you might see:
+
+ Downloading %d loose objects: Z% (X/Y), x MiB | y KiB/s, done
+ Fetching pack 1 of 2: Z% (X/Y), x MiB | y KiB/s, done
+ Verifying pack 1 of 2: Z% (X/Y)
+ Fetching pack 2 of 2: Z% (X/Y), x MiB | y KiB/s, done
+ Verifying pack 2 of 2: Z% (X/Y)
+
+That assumes we download packs one at a time (is that right?). It does take
+a couple of lines to show what is going on, but I think most repos are
+only going to have a couple of packs (though in theory, you could have
+more "loose objects" lines interspersed with your packs).
+
+-Peff
