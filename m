@@ -1,48 +1,61 @@
-From: =?ISO-8859-15?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
-Subject: Re: [PATCH] show-branch: don't use LASTARG_DEFAULT with OPTARG
-Date: Mon, 08 Jun 2009 19:24:30 +0200
-Message-ID: <4A2D494E.3030803@lsrfire.ath.cx>
-References: <4A2ACE32.8080504@gmail.com> <1244417955-21226-1-git-send-email-bebarino@gmail.com>
+From: Alex K <spaceoutlet@gmail.com>
+Subject: deleting / adding files throughout the repository
+Date: Mon, 8 Jun 2009 18:25:00 +0100
+Message-ID: <e4a904790906081025s76bdd1a0k73003e861da98371@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git list <git@vger.kernel.org>,
-	Pierre Habouzit <madcoder@madism.org>
-To: Stephen Boyd <bebarino@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jun 08 19:25:02 2009
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jun 08 19:27:27 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MDiad-00051n-U2
-	for gcvg-git-2@gmane.org; Mon, 08 Jun 2009 19:24:56 +0200
+	id 1MDid5-0006CF-1F
+	for gcvg-git-2@gmane.org; Mon, 08 Jun 2009 19:27:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752082AbZFHRYr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 8 Jun 2009 13:24:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751872AbZFHRYq
-	(ORCPT <rfc822;git-outgoing>); Mon, 8 Jun 2009 13:24:46 -0400
-Received: from india601.server4you.de ([85.25.151.105]:37200 "EHLO
-	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751946AbZFHRYq (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 Jun 2009 13:24:46 -0400
-Received: from [10.0.1.101] (p57B7D4B6.dip.t-dialin.net [87.183.212.182])
-	by india601.server4you.de (Postfix) with ESMTPSA id F2B502F8055;
-	Mon,  8 Jun 2009 19:24:46 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.21 (Windows/20090302)
-In-Reply-To: <1244417955-21226-1-git-send-email-bebarino@gmail.com>
+	id S1752738AbZFHRZB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 8 Jun 2009 13:25:01 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751872AbZFHRZA
+	(ORCPT <rfc822;git-outgoing>); Mon, 8 Jun 2009 13:25:00 -0400
+Received: from mail-fx0-f213.google.com ([209.85.220.213]:61421 "EHLO
+	mail-fx0-f213.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751776AbZFHRY7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Jun 2009 13:24:59 -0400
+Received: by fxm9 with SMTP id 9so2354392fxm.37
+        for <git@vger.kernel.org>; Mon, 08 Jun 2009 10:25:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:sender:received:date
+         :x-google-sender-auth:message-id:subject:from:to:content-type
+         :content-transfer-encoding;
+        bh=GAoyoJGmnmpVSaoRiZ4VROtSAkbaC+nm4Qcs3K3M8KM=;
+        b=ErODHMWxqD0CJNLfGU7GDBYxkpWGrIZF/e0FTWWkv9NPfQknTnbrocESqe4/cREhkc
+         QODSSZESiIwuhZiBbN6pY5xQtKi+kOhNpMsNSKahADtviSEpm4lS4T0lE2l62lAIeJvj
+         ++0RHychfnlUhnAyFpH1VcAGzMaLrrqvT7IcE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:sender:date:x-google-sender-auth:message-id:subject
+         :from:to:content-type:content-transfer-encoding;
+        b=i9eEgCIdo9ACyETa8lkzCzVKXH0mgadf1WJwun1q6pH0NgjwgyLJJPIcHr3nub7mIs
+         mZr44GEcD/ZgQj5KluoYERr42chpa4bbm9dAGn7tqUgvULGyqUsjvbmZ3JV2BrsCijlU
+         UsJ+NQ+Igj9SHjj/iF7YbqeLBzxmotoQCwV8w=
+Received: by 10.204.116.8 with SMTP id k8mr6895643bkq.117.1244481900582; Mon, 
+	08 Jun 2009 10:25:00 -0700 (PDT)
+X-Google-Sender-Auth: 1b8f01657ad2452d
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121090>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121091>
 
-Stephen Boyd schrieb:
-> 5734365 (show-branch: migrate to parse-options API 2009-05-21)
-> incorrectly set the --more option's flags to be
-> PARSE_OPT_LASTARG_DEFAULT and PARSE_OPT_OPTARG. These two flags
-> shouldn't be used together. An option taking a default should just set
-> the default value desired and parse options will take care of the rest.
-> 
-> Update the header comment to better convey this information.
+Hello,
 
-Thank you!
+Suppose I made a mistake in my repository. There is a file that should
+never have been there. How do I delete this file from the entire
+repository history? How do I add a file throughout the entire
+repository history as if this later file had always been there?
+
+Thank you,
+
+Alex
