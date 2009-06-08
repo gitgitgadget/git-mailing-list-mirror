@@ -1,104 +1,126 @@
-From: Stephen Boyd <bebarino@gmail.com>
-Subject: [PATCH] show-branch: don't use LASTARG_DEFAULT with OPTARG
-Date: Sun,  7 Jun 2009 16:39:15 -0700
-Message-ID: <1244417955-21226-1-git-send-email-bebarino@gmail.com>
-References: <4A2ACE32.8080504@gmail.com>
-Cc: git list <git@vger.kernel.org>,
-	=?utf-8?q?Ren=C3=A9=20Scharfe?= <rene.scharfe@lsrfire.ath.cx>,
-	Pierre Habouzit <madcoder@madism.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jun 08 01:39:31 2009
+From: Brandon Casey <drafnel@gmail.com>
+Subject: [PATCH v2] git-send-email.perl: improve detection of MIME encoded-words
+Date: Sun,  7 Jun 2009 19:25:58 -0500
+Message-ID: <1244420758-5604-1-git-send-email-drafnel@gmail.com>
+References: <ee63ef30906070945g62e94313r8b2a7128bde16f9d@mail.gmail.com>
+Cc: gitster@pobox.com, Brandon Casey <drafnel@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jun 08 02:23:06 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MDRxZ-0002TL-UX
-	for gcvg-git-2@gmane.org; Mon, 08 Jun 2009 01:39:30 +0200
+	id 1MDSdl-0002MT-Qg
+	for gcvg-git-2@gmane.org; Mon, 08 Jun 2009 02:23:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752714AbZFGXjV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 7 Jun 2009 19:39:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752692AbZFGXjU
-	(ORCPT <rfc822;git-outgoing>); Sun, 7 Jun 2009 19:39:20 -0400
-Received: from yw-out-2324.google.com ([74.125.46.28]:23483 "EHLO
-	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752274AbZFGXjT (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 7 Jun 2009 19:39:19 -0400
-Received: by yw-out-2324.google.com with SMTP id 5so1823958ywb.1
-        for <git@vger.kernel.org>; Sun, 07 Jun 2009 16:39:21 -0700 (PDT)
+	id S1753253AbZFHAWz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 7 Jun 2009 20:22:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753217AbZFHAWy
+	(ORCPT <rfc822;git-outgoing>); Sun, 7 Jun 2009 20:22:54 -0400
+Received: from mail-gx0-f214.google.com ([209.85.217.214]:62040 "EHLO
+	mail-gx0-f214.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752571AbZFHAWx (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 7 Jun 2009 20:22:53 -0400
+Received: by gxk10 with SMTP id 10so1148974gxk.13
+        for <git@vger.kernel.org>; Sun, 07 Jun 2009 17:22:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:from:to:cc:subject
-         :date:message-id:x-mailer:in-reply-to:references;
-        bh=kOco384OBHIbpjBLZaCQZdGaB1VPi5M6nOUu/aN3G+A=;
-        b=Hd8SntaDHT5bS4L6pi9EaYioacIUI3xuZCYo4t2ePAAC1mW2fyKoPeAsDjd+oBwWK1
-         gdJu/9kTlKtstHW6Wy+h89Xk2FqXOQ7UmQSOCExeVK9j4/b8g1TUoC79S5oeiXi+ez2/
-         VJndlhtU2wEOhLxlM9FwlrjWM4GrqcfvIoT88=
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer:in-reply-to:references;
+        bh=XyJ1ecz3af0lZIbel0qNER2bs/4T38h0HXJ10Of75Dw=;
+        b=YsPK9WHRuiPUltRM6YnApFBex7z/woqCqA3/+ZLhs7zqYtkEJd+8LDlUvDkFnYmVrV
+         il9ZdhffkawcXUga4ElGGmQRbyoor2KUp7eGHlM4UJfnxdRhqVIwOP21OqSMqegETOd5
+         5B9e9yCl3ucR0+1OfCNbAKtJSmYW7V/GATrQM=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=cMrsbXSiqCNg6DfuSJfVhGIkPk1I2V4ICN4GVkqFpUC9vDTRpKZ/R0jrLvsmXR4e5G
-         Be2EkmW4ZNCBoH1AztWMJDtXPAziWkhiQg6r09zipLzrjzqCKQtJMY8vWB0sMnoXHmQK
-         A4ajh89QCUl4KQU5FIHDFPxmBsnwsnb47sc8k=
-Received: by 10.90.105.17 with SMTP id d17mr5282717agc.68.1244417961156;
-        Sun, 07 Jun 2009 16:39:21 -0700 (PDT)
-Received: from earth ([76.89.212.195])
-        by mx.google.com with ESMTPS id 39sm6514115agb.31.2009.06.07.16.39.18
-        (version=SSLv3 cipher=RC4-MD5);
-        Sun, 07 Jun 2009 16:39:20 -0700 (PDT)
-Received: by earth (sSMTP sendmail emulation); Sun, 07 Jun 2009 16:39:16 -0700
-X-Mailer: git-send-email 1.6.3.2.202.g26c11
-In-Reply-To: <4A2ACE32.8080504@gmail.com>
+        b=SU740tOMG9+5hHLXAzqFso0vQ1MAjqiXrUDShyS4kRh/OUSFzsBWdEc/xweCIquM89
+         udxzJSlHFro7XX99ohnnFBpgrOPkGjIdEHLrp1OA4pgz+LvQQhVOzjv/tPLLeRr3xIt/
+         ALZ/H7Qu34M7UzWWRBbtlUSFui+aS0ygwvxHY=
+Received: by 10.90.101.17 with SMTP id y17mr1990373agb.97.1244420575548;
+        Sun, 07 Jun 2009 17:22:55 -0700 (PDT)
+Received: from localhost.localdomain ([96.19.141.3])
+        by mx.google.com with ESMTPS id 10sm6521169agb.76.2009.06.07.17.22.54
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sun, 07 Jun 2009 17:22:54 -0700 (PDT)
+X-Mailer: git-send-email 1.6.3.1.9.g95405b
+In-Reply-To: <ee63ef30906070945g62e94313r8b2a7128bde16f9d@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121022>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121023>
 
-5734365 (show-branch: migrate to parse-options API 2009-05-21)
-incorrectly set the --more option's flags to be
-PARSE_OPT_LASTARG_DEFAULT and PARSE_OPT_OPTARG. These two flags
-shouldn't be used together. An option taking a default should just set
-the default value desired and parse options will take care of the rest.
+According to rfc2047, an encoded word has the following form:
 
-Update the header comment to better convey this information.
+   encoded-word = "=?" charset "?" encoding "?" encoded-text "?="
 
-Signed-off-by: Stephen Boyd <bebarino@gmail.com>
+   charset = token
+
+   encoding = token
+
+   token = <Any CHAR except SPACE, CTLs, and especials>
+
+   especials = "(" / ")" / "<" / ">" / "@" / "," / ";" / ":" / "
+               <"> / "/" / "[" / "]" / "?" / "." / "="
+
+   encoded-text = <Any printable ASCII character other than "?"
+                     or SPACE>
+
+And rfc822 defines CHARs and CTLs as:
+
+    CHAR = <any ASCII character> ; (  0-177,  0.-127.)
+
+    CTL = <any ASCII control     ; (  0- 37,  0.- 31.)
+           character and DEL>    ; (    177,     127.)
+
+The original code only detected rfc2047 encoded strings when the charset
+was UTF-8.  This patch generalizes the matching expression and breaks the
+check for an rfc2047 encoded string into its own function.  There's no real
+functional change, since any properly rfc2047 encoded string would have
+fallen through the remaining 'if' statements and been returned unchanged.
+
+Signed-off-by: Brandon Casey <drafnel@gmail.com>
 ---
- builtin-show-branch.c |    3 +--
- parse-options.h       |    7 +++++--
- 2 files changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/builtin-show-branch.c b/builtin-show-branch.c
-index 9433811..01bea3b 100644
---- a/builtin-show-branch.c
-+++ b/builtin-show-branch.c
-@@ -657,8 +657,7 @@ int cmd_show_branch(int ac, const char **av, const char *prefix)
- 			    "color '*!+-' corresponding to the branch"),
- 		{ OPTION_INTEGER, 0, "more", &extra, "n",
- 			    "show <n> more commits after the common ancestor",
--			    PARSE_OPT_OPTARG | PARSE_OPT_LASTARG_DEFAULT,
--			    NULL, (intptr_t)1 },
-+			    PARSE_OPT_OPTARG, NULL, (intptr_t)1 },
- 		OPT_SET_INT(0, "list", &extra, "synonym to more=-1", -1),
- 		OPT_BOOLEAN(0, "no-name", &no_name, "suppress naming strings"),
- 		OPT_BOOLEAN(0, "current", &with_current_branch,
-diff --git a/parse-options.h b/parse-options.h
-index b374ade..5653dba 100644
---- a/parse-options.h
-+++ b/parse-options.h
-@@ -71,8 +71,11 @@ typedef int parse_opt_cb(const struct option *, const char *arg, int unset);
-  *   PARSE_OPT_NONEG: says that this option cannot be negated
-  *   PARSE_OPT_HIDDEN: this option is skipped in the default usage, and
-  *                     shown only in the full usage.
-- *   PARSE_OPT_LASTARG_DEFAULT: if no argument is given, the default value
-- *                              is used.
-+ *   PARSE_OPT_LASTARG_DEFAULT: says that this option will take the default
-+ *				value if no argument is given when the option
-+ *				is last on the command line. If the option is
-+ *				not last it will require an argument.
-+ *				Should not be used with PARSE_OPT_OPTARG.
-  *   PARSE_OPT_NODASH: this option doesn't start with a dash.
-  *   PARSE_OPT_LITERAL_ARGHELP: says that argh shouldn't be enclosed in brackets
-  *				(i.e. '<argh>') in the help message.
+
+Here's a replacement patch which increases the range of excluded characters
+allowed as tokens so only ASCII characters are allowed (minus the other
+exclusions).
+
+-brandon
+
+
+ git-send-email.perl |   10 +++++++++-
+ 1 files changed, 9 insertions(+), 1 deletions(-)
+
+diff --git a/git-send-email.perl b/git-send-email.perl
+index 3d6a982..8a1a40d 100755
+--- a/git-send-email.perl
++++ b/git-send-email.perl
+@@ -772,6 +772,14 @@ sub quote_rfc2047 {
+ 	return $_;
+ }
+ 
++sub is_rfc2047_quoted {
++	my $s = shift;
++	my $token = '[^][()<>@,;:"\/?.= \000-\037\177-\377]+';
++	my $encoded_text = '[!->@-~]+';
++	length($s) <= 75 &&
++	$s =~ m/^(?:"[[:ascii:]]*"|=\?$token\?$token\?$encoded_text\?=)$/o;
++}
++
+ # use the simplest quoting being able to handle the recipient
+ sub sanitize_address
+ {
+@@ -783,7 +791,7 @@ sub sanitize_address
+ 	}
+ 
+ 	# if recipient_name is already quoted, do nothing
+-	if ($recipient_name =~ /^("[[:ascii:]]*"|=\?utf-8\?q\?.*\?=)$/) {
++	if (is_rfc2047_quoted($recipient_name)) {
+ 		return $recipient;
+ 	}
+ 
 -- 
-1.6.3.2.202.g26c11
+1.6.3.1.9.g95405b
