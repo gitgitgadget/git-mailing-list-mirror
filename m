@@ -1,57 +1,101 @@
-From: Steffen Prohaska <prohaska@zib.de>
-Subject: Re: [PATCH 10/11 v2] Fix warnings in nedmalloc when compiling with GCC 4.4.0
-Date: Tue, 9 Jun 2009 08:06:51 +0200
-Message-ID: <CD46A3E1-A85C-4D03-854C-973B91ACC506@zib.de>
-References: <1243786525-4493-1-git-send-email-prohaska@zib.de> <1243786525-4493-2-git-send-email-prohaska@zib.de> <1243786525-4493-3-git-send-email-prohaska@zib.de> <1243786525-4493-4-git-send-email-prohaska@zib.de> <1243786525-4493-5-git-send-email-prohaska@zib.de> <1243786525-4493-6-git-send-email-prohaska@zib.de> <1243786525-4493-7-git-send-email-prohaska@zib.de> <1243786525-4493-8-git-send-email-prohaska@zib.de> <1243786525-4493-9-git-send-email-prohaska@zib.de> <1243786525-4493-10-git-send-email-prohaska@zib.de> <1243786525-4493-11-git-send-email-prohaska@zib.de> <7vhbz0mmai.fsf@alter.siamese.dyndns.org> <alpine.DEB.1.00.0906011054410.26154@pacific.mpi-cbg.de> <7vr5y3lxrj.fsf@alter.siamese.dyndns.org> <alpine.DEB.1.00.0906021448300.4440@intel-tinevez-2-302> <7viqjefxcv.fsf@alter.siame
- se.dyndns.org> <alpine.DEB.1.00.0906031455520.10241@intel-tinevez-2-302> <7vprdl9qon.fsf@alter.siamese.dyndns.org> <alpine.DEB.1.00.0906081645490.4461@intel-tinevez-2-302> <7vzlcizn3w.fsf@a!
- lter.siamese.dyndns.org>
-Mime-Version: 1.0 (Apple Message framework v930.3)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
-Content-Transfer-Encoding: 7bit
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org, Johannes Sixt <j6t@kdbg.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jun 09 08:07:23 2009
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH] show-branch: fix segfault when showbranch.default exists
+Date: Mon, 08 Jun 2009 23:26:44 -0700
+Message-ID: <7vfxe9udln.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Stephen Boyd <bebarino@gmail.com>,
+	Pierre Habouzit <madcoder@debian.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jun 09 08:26:57 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MDuUS-0000OA-8X
-	for gcvg-git-2@gmane.org; Tue, 09 Jun 2009 08:07:20 +0200
+	id 1MDunO-0005I8-7d
+	for gcvg-git-2@gmane.org; Tue, 09 Jun 2009 08:26:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753264AbZFIGHL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 9 Jun 2009 02:07:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753248AbZFIGHL
-	(ORCPT <rfc822;git-outgoing>); Tue, 9 Jun 2009 02:07:11 -0400
-Received: from mailer.zib.de ([130.73.108.11]:42184 "EHLO mailer.zib.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752386AbZFIGHK (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Jun 2009 02:07:10 -0400
-Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
-	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id n5966wK3008277;
-	Tue, 9 Jun 2009 08:07:03 +0200 (CEST)
-Received: from [192.168.178.21] (brln-4db94a6f.pool.einsundeins.de [77.185.74.111])
-	(authenticated bits=0)
-	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id n5966vBq023670
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
-	Tue, 9 Jun 2009 08:06:57 +0200 (MEST)
-In-Reply-To: <7vzlcizn3w.fsf@alter.siamese.dyndns.org>
-X-Mailer: Apple Mail (2.930.3)
+	id S1754201AbZFIG0o (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 9 Jun 2009 02:26:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753441AbZFIG0n
+	(ORCPT <rfc822;git-outgoing>); Tue, 9 Jun 2009 02:26:43 -0400
+Received: from fed1rmmtao107.cox.net ([68.230.241.39]:64669 "EHLO
+	fed1rmmtao107.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752914AbZFIG0m (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Jun 2009 02:26:42 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao107.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20090609062644.OZEO18948.fed1rmmtao107.cox.net@fed1rmimpo02.cox.net>;
+          Tue, 9 Jun 2009 02:26:44 -0400
+Received: from localhost ([68.225.240.211])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id 1iSk1c0044aMwMQ04iSkND; Tue, 09 Jun 2009 02:26:44 -0400
+X-VR-Score: -200.00
+X-Authority-Analysis: v=1.0 c=1 a=peqd20d9aYoA:10 a=K3128E0kj6wA:10
+ a=ybZZDoGAAAAA:8 a=3HqTN-wNYG9LWAGDqkcA:9 a=DN2aKf4sicsS5yREyzMA:7
+ a=fZCZQK-bNrfNWIrM2X4l6p90KEoA:4 a=qIVjreYYsbEA:10 a=Nj9nSCg5LJp6YWzr:21
+ a=OQNFo6sxkL0u_7-0:21
+X-CM-Score: 0.00
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121141>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121142>
 
+When running "git show-branch" without any parameter in a repository that
+has showbranch.default defined, we used to rely on the fact that our
+handcrafted option parsing loop never looked at av[0].
 
-On Jun 8, 2009, at 6:50 PM, Junio C Hamano wrote:
+The array of default strings had the first real command line argument in
+default_arg[0], but the option parser wanted to look at the array starting
+at av[1], so we assigned the address of -1th element to av to force the
+loop start working from default_arg[0].
 
-> Steffen, can we move the series, with this patch replaced, to 'next'  
-> now?
-> I think it looks good (thanks!) but again it would not hurt to ask  
-> just to
-> make sure ;-).
+This no longer worked since 5734365 (show-branch: migrate to parse-options
+API, 2009-05-21), as parse_options_start() saved the incoming &av[0] in
+its ctx->out and later in parse_options_end() it did memmove to ctx->out
+(with ctx->cpidx == 0), overwriting the memory before default_arg[] array.
 
-I agree, it looks good.  Thanks.
+I am not sure if this is a bug in parse_options(), or a bug in the caller,
+and tonight I do not have enough concentration to figure out which.  In
+any case, this patch works the issue around.
 
-	Steffen
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ builtin-show-branch.c |   14 +++++++++++---
+ 1 files changed, 11 insertions(+), 3 deletions(-)
+
+diff --git a/builtin-show-branch.c b/builtin-show-branch.c
+index 01bea3b..baec9ed 100644
+--- a/builtin-show-branch.c
++++ b/builtin-show-branch.c
+@@ -565,7 +565,15 @@ static int git_show_branch_config(const char *var, const char *value, void *cb)
+ 	if (!strcmp(var, "showbranch.default")) {
+ 		if (!value)
+ 			return config_error_nonbool(var);
+-		if (default_alloc <= default_num + 1) {
++		/*
++		 * default_arg is now passed to parse_options(), so we need to
++		 * mimick the real argv a bit better.
++		 */
++		if (!default_num) {
++			default_alloc = 20;
++			default_arg = xcalloc(default_alloc, sizeof(*default_arg));
++			default_arg[default_num++] = "show-branch";
++		} else if (default_alloc <= default_num + 1) {
+ 			default_alloc = default_alloc * 3 / 2 + 20;
+ 			default_arg = xrealloc(default_arg, sizeof *default_arg * default_alloc);
+ 		}
+@@ -692,8 +700,8 @@ int cmd_show_branch(int ac, const char **av, const char *prefix)
+ 
+ 	/* If nothing is specified, try the default first */
+ 	if (ac == 1 && default_num) {
+-		ac = default_num + 1;
+-		av = default_arg - 1; /* ick; we would not address av[0] */
++		ac = default_num;
++		av = default_arg;
+ 	}
+ 
+ 	ac = parse_options(ac, av, prefix, builtin_show_branch_options,
