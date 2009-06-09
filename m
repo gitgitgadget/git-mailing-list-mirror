@@ -1,70 +1,90 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH v3 1/3] Introduce die_errno() that appends
-	strerror(errno) to die()
-Date: Tue, 9 Jun 2009 04:53:28 -0400
-Message-ID: <20090609085328.GA25721@coredump.intra.peff.net>
-References: <cover.1244299302.git.trast@student.ethz.ch> <5f43aa9d0b69e99600a73bddd4c93217608ab661.1244494647.git.trast@student.ethz.ch> <20090608220713.GB29942@sigill.intra.peff.net> <200906091022.31738.trast@student.ethz.ch>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Johannes Sixt <j6t@kdbg.org>,
-	Alexander Potashev <aspotashev@gmail.com>
-To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Tue Jun 09 10:53:58 2009
+From: Pierre Habouzit <madcoder@debian.org>
+Subject: [PATCH] parse-options: add parse_options_check to validate option specs.
+Date: Tue,  9 Jun 2009 10:23:44 +0200
+Message-ID: <1244535824-11970-1-git-send-email-madcoder@debian.org>
+References: <7vd49ewfsi.fsf@alter.siamese.dyndns.org>
+Cc: Pierre Habouzit <madcoder@debian.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	=?utf-8?q?Ren=C3=A9=20Scharfe?= <rene.scharfe@lsrfire.ath.cx>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jun 09 11:27:27 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MDx5h-00045l-QM
-	for gcvg-git-2@gmane.org; Tue, 09 Jun 2009 10:53:58 +0200
+	id 1MDxc6-0006oI-6J
+	for gcvg-git-2@gmane.org; Tue, 09 Jun 2009 11:27:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758672AbZFIIxg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 9 Jun 2009 04:53:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758553AbZFIIxg
-	(ORCPT <rfc822;git-outgoing>); Tue, 9 Jun 2009 04:53:36 -0400
-Received: from peff.net ([208.65.91.99]:40750 "EHLO peff.net"
+	id S1756638AbZFIJ1P (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 9 Jun 2009 05:27:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754571AbZFIJ1O
+	(ORCPT <rfc822;git-outgoing>); Tue, 9 Jun 2009 05:27:14 -0400
+Received: from pan.madism.org ([88.191.52.104]:33159 "EHLO hermes.madism.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753007AbZFIIxf (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Jun 2009 04:53:35 -0400
-Received: (qmail 26881 invoked by uid 107); 9 Jun 2009 08:53:46 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Tue, 09 Jun 2009 04:53:46 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 09 Jun 2009 04:53:28 -0400
-Content-Disposition: inline
-In-Reply-To: <200906091022.31738.trast@student.ethz.ch>
+	id S1754154AbZFIJ1O (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Jun 2009 05:27:14 -0400
+Received: by hermes.madism.org (Postfix, from userid 1000)
+	id 4731D3C8FD; Tue,  9 Jun 2009 11:27:15 +0200 (CEST)
+X-Mailer: git-send-email 1.6.3.2.323.gcd28f
+In-Reply-To: <7vd49ewfsi.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121158>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121159>
 
-On Tue, Jun 09, 2009 at 10:22:30AM +0200, Thomas Rast wrote:
+It only searches for now for the dreaded LASTARG_DEFAULT | OPTARG
+combination, but can be extended to check for any other forbidden
+combination.
 
-> > Aren't you assuming that strerror(errno) has no '%'-signs here, which is
-> > what kicked off the whole discussion?
-> 
-> True, of course.  Hrm.
-> 
-> So do we go back to v2 (for 1/3) and ask future callers to never use
-> custom formats with die_errno, or should I write a version that
-> doubles the % characters while tacking the error message onto the
-> format?
+Options are checked each time we call parse_options_start.
 
-Personally, I think it is fine to assume that the format and arguments
-to die(), die_errno(), and to the die_routine() are all
-printf-compatible. That is how it has always been until now, and I don't
-see any callers who would want to change that.
+Signed-off-by: Pierre Habouzit <madcoder@debian.org>
+---
+ parse-options.c |   24 ++++++++++++++++++++++++
+ 1 files changed, 24 insertions(+), 0 deletions(-)
 
-This is all internal to git.  It's not as if we are talking about a
-library being called by arbitrary code, and we want to leave doors open
-for arbitrary clients. libgit2 would probably take a different approach
-(though I imagine their general strategy is never to die(), but to
-always return an error condition, anyway).
-
-> [It's a pity that it seems impossible to add an extra argument to the
-> va_args...]
-
-Agreed, but I think we are out of luck short of variadic macros (which
-are a C99-ism, and even then have some issues).
-
--Peff
+diff --git a/parse-options.c b/parse-options.c
+index e469fc0..34282ad 100644
+--- a/parse-options.c
++++ b/parse-options.c
+@@ -306,6 +306,28 @@ static void check_typos(const char *arg, const struct option *options)
+ 	}
+ }
+ 
++static void parse_options_check(const struct option *opts)
++{
++	int err = 0;
++
++	for (; opts->type != OPTION_END; opts++) {
++		if ((opts->flags & PARSE_OPT_LASTARG_DEFAULT) &&
++		    (opts->flags & PARSE_OPT_OPTARG)) {
++			if (opts->long_name) {
++				error("`--%s` uses incompatible flags "
++				      "LASTARG_DEFAULT and OPTARG", opts->long_name);
++			} else {
++				error("`-%c` uses incompatible flags "
++				      "LASTARG_DEFAULT and OPTARG", opts->short_name);
++			}
++			err |= 1;
++		}
++	}
++
++	if (err)
++		exit(129);
++}
++
+ void parse_options_start(struct parse_opt_ctx_t *ctx,
+ 			 int argc, const char **argv, const char *prefix,
+ 			 int flags)
+@@ -331,6 +353,8 @@ int parse_options_step(struct parse_opt_ctx_t *ctx,
+ {
+ 	int internal_help = !(ctx->flags & PARSE_OPT_NO_INTERNAL_HELP);
+ 
++	parse_options_check(options);
++
+ 	/* we must reset ->opt, unknown short option leave it dangling */
+ 	ctx->opt = NULL;
+ 
+-- 
+1.6.3.2.323.gcd28f
