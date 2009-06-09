@@ -1,56 +1,135 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: notice: pu broken tonight
-Date: Tue, 09 Jun 2009 01:36:20 -0700
-Message-ID: <7vy6s1pzwb.fsf@alter.siamese.dyndns.org>
+From: =?ISO-8859-1?Q?Santi_B=E9jar?= <santi@agolina.net>
+Subject: Re: [PATCHv3 1/4] parse-remote: function to get the tracking branch 
+	to be merge
+Date: Tue, 9 Jun 2009 10:50:12 +0200
+Message-ID: <adf1fd3d0906090150k575c538ds28cd8c1a96909e9e@mail.gmail.com>
+References: <1244451651-22651-2-git-send-email-santi@agolina.net>
+	 <7v8wk2wbfs.fsf@alter.siamese.dyndns.org>
+	 <adf1fd3d0906090029s2aa7fe19j7b1005997d70b92c@mail.gmail.com>
+	 <adf1fd3d0906090107w994de3chb39071e5911a59ae@mail.gmail.com>
+	 <7veittrete.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jun 09 10:36:30 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jun 09 10:50:23 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MDwon-00066W-MN
-	for gcvg-git-2@gmane.org; Tue, 09 Jun 2009 10:36:30 +0200
+	id 1MDx2F-0002xV-5D
+	for gcvg-git-2@gmane.org; Tue, 09 Jun 2009 10:50:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758459AbZFIIgT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 9 Jun 2009 04:36:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757175AbZFIIgT
-	(ORCPT <rfc822;git-outgoing>); Tue, 9 Jun 2009 04:36:19 -0400
-Received: from fed1rmmtao101.cox.net ([68.230.241.45]:52845 "EHLO
-	fed1rmmtao101.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755158AbZFIIgT (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Jun 2009 04:36:19 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao101.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20090609083620.LGET17670.fed1rmmtao101.cox.net@fed1rmimpo01.cox.net>;
-          Tue, 9 Jun 2009 04:36:20 -0400
-Received: from localhost ([68.225.240.211])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id 1kcL1c0034aMwMQ03kcLL5; Tue, 09 Jun 2009 04:36:20 -0400
-X-VR-Score: 0.00
-X-Authority-Analysis: v=1.0 c=1 a=LyMkAgo1seGUXlHPiS8A:9
- a=bxr-91cR7NYkGHgFaobeJX5SElsA:4
-X-CM-Score: 0.00
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+	id S1757658AbZFIIuN convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 9 Jun 2009 04:50:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757589AbZFIIuN
+	(ORCPT <rfc822;git-outgoing>); Tue, 9 Jun 2009 04:50:13 -0400
+Received: from mail-bw0-f213.google.com ([209.85.218.213]:37187 "EHLO
+	mail-bw0-f213.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756461AbZFIIuM convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 9 Jun 2009 04:50:12 -0400
+Received: by bwz9 with SMTP id 9so3638541bwz.37
+        for <git@vger.kernel.org>; Tue, 09 Jun 2009 01:50:12 -0700 (PDT)
+Received: by 10.204.70.135 with SMTP id d7mr7629455bkj.87.1244537412157; Tue, 
+	09 Jun 2009 01:50:12 -0700 (PDT)
+In-Reply-To: <7veittrete.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121156>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121157>
 
-I've queued a handful of patches from yesterday on maint and master,
-advanced sp/msysgit topic to next, and queued the remaining new patches
-along with the old topics on pu.
+2009/6/9 Junio C Hamano <gitster@pobox.com>:
+> Santi B=E9jar <santi@agolina.net> writes:
+>
+>>> git pull --rebase tags v1.6.0
+>>
+>> In fact: git pull --rebase remote tags v1.6.0
+>>
+>> But this still works because oldremoteref defaults to defaults_merge=
+=2E
+>> So the only behavior change is when a remote branch is
+>> rebased/retagged, and you have worst problems then. I think noone us=
+ed
+>> the rebased functionality in this way, so I don't think it is worth =
+to
+>> support it. But if someone think it is important I'll do it.
+>
+> I personally do not think supporting such a form of input is absolute=
+ly
+> necessary. =A0Even though technically it might be a regression, if it=
+ is so
+> rare a form, we can simply say "this strange form used to work, but n=
+ow it
+> does not; you can use this form instead to do the same thing", and mo=
+ve
+> on.
 
-I added "just in case output from strerror() had % in it" patch to
-tr/die_errno topic when I queued it, but I didn't look at the conversion
-from die() to die_errno().
+OK.
 
-Also I didn't queue the show-branch default_arg patch.  Other than that I
-do not think I forgot to queue any patch I saw on the list.
+>
+> However, at least we should describe the change, both in the commit l=
+og
+> and documentation. =A0Simply saying "No behaviour change" is not acce=
+ptable,
+> when the code clearly is doing something else. =A0It needs to be back=
+ed by
+> some explanation, e.g. "Even though this returns different results fr=
+om
+> the original, the caller behaves the same because of such and such
+> reasons".
 
-I usually make sure all four branches pass the tests before pushing them
-out, but in tonight's integration, the tip of 'pu' does not pass test for
-me, hence this notice.
+OK.
+
+>
+> What caught my attention was not the difference between the new code =
+and
+> the original codepath, but your "FIXME" comment that said "Currently =
+only
+> works with the default mapping". =A0My initial reaction was "What? =A0=
+The new
+> code that introduces a function for the specific task of figuring out=
+ the
+> mapping does not work if the user uses a custom mapping? =A0What kind=
+ of
+> improvement is that???".
+
+The original code (in git-pull.sh) behaves like this, I only made it
+more explicit.
+
+>
+> The reaction was followed by "Even if that were the case, if the orig=
+inal
+> code did not work in the case anyway, then it is not a regression. =A0=
+The
+> proposed commit log message claims that there is no behaviour change,=
+ so
+> that FIXME might not be so grave an offense. =A0Is it really the case=
+? =A0Was
+> the original broken?"
+
+Yes, the original is broken.
+
+>
+> While trying to figure it out, I noticed that the new code does quite=
+ a
+> different thing (I still haven't figured out the answer to my origina=
+l
+> question about FIXME, by the way).
+>
+> In any case, if we were changing behaviour by deprecating support for=
+ a
+> rarely-if-ever used syntax, it would be nice if we at least diagnosed=
+ it,
+> instead of failing, or worse yet, silently doing something different =
+from
+> the old behaviour.
+
+I am not changing the behaviour. The old code worked exactly like the n=
+ew one.
+But I agree that this has to be documented(/deprecated?) somewhere.
+
+The only change in behavior is when a remote tag is rebased/retagged.
+
+Santi
