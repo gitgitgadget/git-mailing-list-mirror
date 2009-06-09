@@ -1,71 +1,68 @@
-From: Avery Pennarun <apenwarr@gmail.com>
-Subject: Re: Git merge selective files
-Date: Tue, 9 Jun 2009 14:32:14 -0400
-Message-ID: <32541b130906091132sc5a647cn5fe0289ff9793cc3@mail.gmail.com>
-References: <34b359190906090253v653ecc71q6684f4ebff2be59d@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v3 0/3] automatically skip away from broken commits
+Date: Tue, 09 Jun 2009 11:35:50 -0700
+Message-ID: <7vljo1mf09.fsf@alter.siamese.dyndns.org>
+References: <20090606043853.4031.78284.chriscool@tuxfamily.org>
+	<7vskidcf9s.fsf@alter.siamese.dyndns.org>
+	<200906070932.36913.chriscool@tuxfamily.org>
+	<4A2CAA56.1030707@zytor.com> <7vws7n6vcf.fsf@alter.siamese.dyndns.org>
+	<4A2D337C.70203@zytor.com> <7vzlcixwue.fsf@alter.siamese.dyndns.org>
+	<c07716ae0906082124n4a5bfe88md80ba8076c928b76@mail.gmail.com>
+	<c07716ae0906090526i714bb6c9g4e3d8cf61021af77@mail.gmail.com>
+	<4A2E7EEC.2050807@zytor.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: joe higton <draxil@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jun 09 20:33:21 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Christian Couder <christian.couder@gmail.com>,
+	Christian Couder <chriscool@tuxfamily.org>,
+	git@vger.kernel.org, Sam Vilain <sam@vilain.net>,
+	Ingo Molnar <mingo@elte.hu>
+To: "H. Peter Anvin" <hpa@zytor.com>
+X-From: git-owner@vger.kernel.org Tue Jun 09 20:36:01 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ME68N-0007Hn-Uc
-	for gcvg-git-2@gmane.org; Tue, 09 Jun 2009 20:33:20 +0200
+	id 1ME6Ay-0008Jp-MT
+	for gcvg-git-2@gmane.org; Tue, 09 Jun 2009 20:36:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752987AbZFIScd convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 9 Jun 2009 14:32:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752950AbZFIScd
-	(ORCPT <rfc822;git-outgoing>); Tue, 9 Jun 2009 14:32:33 -0400
-Received: from mail-gx0-f214.google.com ([209.85.217.214]:57893 "EHLO
-	mail-gx0-f214.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752386AbZFIScc convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 9 Jun 2009 14:32:32 -0400
-Received: by gxk10 with SMTP id 10so209735gxk.13
-        for <git@vger.kernel.org>; Tue, 09 Jun 2009 11:32:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=XsTDHK9odJ9GBXJk2k3KTwXYgx6QxTQSXf3YZpt6yKE=;
-        b=x/ewd1l4p1v+wOGdAoXF3Am0C27SKLKbSHanEhnBWzH+CVZlYDCg/QVIWGYkDEW28u
-         wz2BAiK5R8X005tmHTekA/KdPEk2eiFhqBzBaXsrBZrwbWGZDlVJBbY94LcYIHxDLCkN
-         a8C2WVuKF4ZbyUQQvuqLDDjE6Hog/F4iLQgzA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=vH1sk5ppG2TXhX1objcw6niginBZuFHgbqt8btB1PEvQRB0wWJtB27FP0TZpfauMNj
-         oOWP016bsDNuYaDTn0762tE2qRZ/J9LLifUgge23drC3uRe3nqPh81DFdEK2KF5p+1L2
-         vDBgZMBkbhXNwpbxh0YKa43a0zttWfBwvI8W8=
-Received: by 10.151.69.9 with SMTP id w9mr948266ybk.49.1244572354315; Tue, 09 
-	Jun 2009 11:32:34 -0700 (PDT)
-In-Reply-To: <34b359190906090253v653ecc71q6684f4ebff2be59d@mail.gmail.com>
+	id S1754070AbZFISfu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 9 Jun 2009 14:35:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753761AbZFISft
+	(ORCPT <rfc822;git-outgoing>); Tue, 9 Jun 2009 14:35:49 -0400
+Received: from fed1rmmtao103.cox.net ([68.230.241.43]:50020 "EHLO
+	fed1rmmtao103.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753528AbZFISft (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Jun 2009 14:35:49 -0400
+Received: from fed1rmimpo03.cox.net ([70.169.32.75])
+          by fed1rmmtao103.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20090609183551.KEKK2915.fed1rmmtao103.cox.net@fed1rmimpo03.cox.net>;
+          Tue, 9 Jun 2009 14:35:51 -0400
+Received: from localhost ([68.225.240.211])
+	by fed1rmimpo03.cox.net with bizsmtp
+	id 1ubr1c0044aMwMQ04ubrj8; Tue, 09 Jun 2009 14:35:51 -0400
+X-VR-Score: -100.00
+X-Authority-Analysis: v=1.0 c=1 a=ZlvubiwuF4QA:10 a=BRJNLUJM0I0A:10
+ a=oGMlB6cnAAAA:8 a=zwRR5x3o4JkwMWB41OEA:9 a=T1_1D57_KFEquJzk2dfOLD3_17QA:4
+ a=CY6gl2JlH4YA:10 a=p6VVfPvSLIypP3EF:21 a=Tuj_BnhgsaliMuC0:21
+X-CM-Score: 0.00
+In-Reply-To: <4A2E7EEC.2050807@zytor.com> (H. Peter Anvin's message of "Tue\, 09 Jun 2009 08\:25\:32 -0700")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121200>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121201>
 
-On Tue, Jun 9, 2009 at 5:53 AM, joe higton<draxil@gmail.com> wrote:
-> =A0 =A0 I want to merge changes from a branch but only to one file, I
-> don't want to pick up the changes from other files. I've scoured
-> google and the docs a bit but I can't find anything useful. Is this
-> possible?
+"H. Peter Anvin" <hpa@zytor.com> writes:
 
-You might want to try just using
+> My main objection to the "skip in goodness space" is exactly the same as
+> Junio's... it doesn't really buy you what it claims to sell.
 
-    git diff old-version new-version | patch -p1
+It is no worse than the original "pick the next best in goodness space";
+neither try to avoid the ones close to untestable ones.
 
-(where old-version and new-version are the appropriate commit ids or
-branch names or whatever)
-
-And then committing the results.
-
-Have fun,
-
-Avery
+So as long as it does not claim "we intelligently try to skip away from
+untestable ones", I am actually Ok with Christian's patch.  It might do
+worse than the random walk in pathological cases, but I suspect not by a
+big margin.
