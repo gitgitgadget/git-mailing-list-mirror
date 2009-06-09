@@ -1,144 +1,76 @@
-From: Bert Wesarg <bert.wesarg@googlemail.com>
-Subject: Re: [PATCH 5/5] builtin-remote: Make "remote -v" display push urls
-Date: Tue, 9 Jun 2009 18:25:41 +0200
-Message-ID: <36ca99e90906090925q71ed98f4j23336dabbe199bd8@mail.gmail.com>
-References: <1244563298-15479-1-git-send-email-git@drmicha.warpmail.net>
-	 <1244563298-15479-2-git-send-email-git@drmicha.warpmail.net>
-	 <1244563298-15479-3-git-send-email-git@drmicha.warpmail.net>
-	 <1244563298-15479-4-git-send-email-git@drmicha.warpmail.net>
-	 <1244563298-15479-5-git-send-email-git@drmicha.warpmail.net>
-	 <1244563298-15479-6-git-send-email-git@drmicha.warpmail.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] show-branch: fix segfault when showbranch.default exists
+Date: Tue, 09 Jun 2009 09:28:28 -0700
+Message-ID: <7viqj5nzgz.fsf@alter.siamese.dyndns.org>
+References: <7vfxe9udln.fsf@alter.siamese.dyndns.org>
+	<4A2E0C88.70805@gmail.com> <20090609080612.GG9993@laphroaig.corp>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Tue Jun 09 18:25:54 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Stephen Boyd <bebarino@gmail.com>, git@vger.kernel.org,
+	Pierre Habouzit <madcoder@debian.org>
+To: Pierre Habouzit <madcoder@madism.org>
+X-From: git-owner@vger.kernel.org Tue Jun 09 18:28:38 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ME492-0005RX-74
-	for gcvg-git-2@gmane.org; Tue, 09 Jun 2009 18:25:52 +0200
+	id 1ME4Be-0006jR-TI
+	for gcvg-git-2@gmane.org; Tue, 09 Jun 2009 18:28:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756037AbZFIQZn convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 9 Jun 2009 12:25:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753338AbZFIQZm
-	(ORCPT <rfc822;git-outgoing>); Tue, 9 Jun 2009 12:25:42 -0400
-Received: from mail-fx0-f213.google.com ([209.85.220.213]:44871 "EHLO
-	mail-fx0-f213.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753173AbZFIQZl convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 9 Jun 2009 12:25:41 -0400
-Received: by fxm9 with SMTP id 9so114996fxm.37
-        for <git@vger.kernel.org>; Tue, 09 Jun 2009 09:25:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=FzB/jPsnbVHXCHgJU3YM6k3sLWps7gl34OLCkYdT2wY=;
-        b=n65sGlKg5DgdrNy1eCy+s8K1QlbfbVcyUhaec5VasegyykpbI0O+j7BrxoWSAnYEip
-         9y4mQPJyA9BV0/0RdRr4uGzj4AdRmSXPTa4Pm8idxgLv6xUfE31AyoOvWgPUbdGni8hQ
-         6kVqu6XYVdm3R41zqtt+J6+QLQKgRWON4OIvU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=wrJMhotlsuUA8KjLXzByd5WuIqh0PoefJNquvva1yH0zuTps7Fc6mN0+jq3/KT/pFy
-         z8gl99tytWshOD48Cjo+OPcBkpdqXGVf7cuqQ2ERrybD7ZGjCKUWy5ci84SvNlA8amKr
-         w8whCl0tJD3AWL5kevNu2vfDom4Ti/GGY3KNo=
-Received: by 10.223.104.74 with SMTP id n10mr349800fao.5.1244564741942; Tue, 
-	09 Jun 2009 09:25:41 -0700 (PDT)
-In-Reply-To: <1244563298-15479-6-git-send-email-git@drmicha.warpmail.net>
+	id S1755947AbZFIQ22 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 9 Jun 2009 12:28:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755577AbZFIQ21
+	(ORCPT <rfc822;git-outgoing>); Tue, 9 Jun 2009 12:28:27 -0400
+Received: from fed1rmmtao101.cox.net ([68.230.241.45]:34717 "EHLO
+	fed1rmmtao101.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753829AbZFIQ21 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Jun 2009 12:28:27 -0400
+Received: from fed1rmimpo03.cox.net ([70.169.32.75])
+          by fed1rmmtao101.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20090609162829.JET17670.fed1rmmtao101.cox.net@fed1rmimpo03.cox.net>;
+          Tue, 9 Jun 2009 12:28:29 -0400
+Received: from localhost ([68.225.240.211])
+	by fed1rmimpo03.cox.net with bizsmtp
+	id 1sUU1c00k4aMwMQ04sUURM; Tue, 09 Jun 2009 12:28:29 -0400
+X-VR-Score: -130.00
+X-Authority-Analysis: v=1.0 c=1 a=IsGRFJ6KzkAA:10 a=_XXy0EWxoj8A:10
+ a=ZtsLtc1TAAAA:8 a=IcTmkirJ76_eHVicv_UA:9 a=c_6I5l7cjw7Iw1t55sMA:7
+ a=eCm58g6t7GlYnTbts2ClbDQ-r_kA:4 a=OH9CTqYB3BAA:10
+X-CM-Score: 0.00
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121187>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121188>
 
-Hi,
+Pierre Habouzit <madcoder@madism.org> writes:
 
-On Tue, Jun 9, 2009 at 18:01, Michael J Gruber<git@drmicha.warpmail.net=
-> wrote:
-> Currently, "remote -v" simply lists all urls so that one has to remem=
-ber
-> that only the first one is used for fetches, and all are used for
-> pushes.
+> On Tue, Jun 09, 2009 at 12:17:28AM -0700, Stephen Boyd wrote:
+>> Junio C Hamano wrote:
+>> > I am not sure if this is a bug in parse_options(), or a bug in the caller,
+>> > and tonight I do not have enough concentration to figure out which.  In
+>> > any case, this patch works the issue around.
+>> 
+>> I am low on concentration tonight as well, but this looks right to me.
+>> Parse options is expecting the regular old argv and argc. I overlooked
+>> this code path during the conversion (though I remember figuring out
+>> what this path was doing). Faking the argv and argc a little more
+>> accurately, like you do, should work fine.
 >
-> Change this so that the role of an url is displayed in parentheses, a=
-nd
-> also display push urls.
->
-> Example with "mjg" having 1 url and 1 pushurl, "origin" having 3 urls=
-,
-> sb having 1 url:
->
-> mjg =C2=A0 =C2=A0 git://repo.or.cz/git/mjg.git (fetch)
-> mjg =C2=A0 =C2=A0 repoor:/srv/git/git/mjg.git (push)
-> origin =C2=A0git://repo.or.cz/git.git (fetch)
-> origin =C2=A0git://repo.or.cz/git.git (push)
-> origin =C2=A0git://git2.kernel.org/pub/scm/git/git.git (push)
-> origin =C2=A0git://repo.or.cz/alt-git.git (push)
-> sb =C2=A0 =C2=A0 =C2=A0git://repo.or.cz/git/sbeyer.git (fetch)
-> sb =C2=A0 =C2=A0 =C2=A0git://repo.or.cz/git/sbeyer.git (push)
+> yes, that's it.
 
-Wouldn't it be more readable if push|fetch comes first?
+Wait a minute, please.
 
-mjg     (fetch) git://repo.or.cz/git/mjg.git
-mjg     (push)  repoor:/srv/git/git/mjg.git
-origin  (fetch) git://repo.or.cz/git.git
-origin  (push)  git://repo.or.cz/git.git
-origin  (push)  git://git2.kernel.org/pub/scm/git/git.git
-origin  (push)  git://repo.or.cz/alt-git.git
-sb      (fetch) git://repo.or.cz/git/sbeyer.git
-sb      (push)  git://repo.or.cz/git/sbeyer.git
+Why is parse_options() allowed to clobber argv[0] in parse_options_end()
+in the first place?
 
-And how about to print only one line for (url_nr =3D=3D 1 && pushurl_nr=
- =3D=3D 0):
+I think the memmove() is there to allow the caller to find the remaining
+arguments after the library parsed out the options in argv[], but wouldn't
+the caller be expecting to inspect argv[] starting from position 1?
 
-mjg     (fetch) git://repo.or.cz/git/mjg.git
-mjg     (push)  repoor:/srv/git/git/mjg.git
-origin  (fetch) git://repo.or.cz/git.git
-origin  (push)  git://repo.or.cz/git.git
-origin  (push)  git://git2.kernel.org/pub/scm/git/git.git
-origin  (push)  git://repo.or.cz/alt-git.git
-sb              git://repo.or.cz/git/sbeyer.git
-
->
-> Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
-> ---
-> =C2=A0builtin-remote.c | =C2=A0 27 +++++++++++++++++++++++----
-> =C2=A01 files changed, 23 insertions(+), 4 deletions(-)
->
-> diff --git a/builtin-remote.c b/builtin-remote.c
-> index b350b18..80b2536 100644
-> --- a/builtin-remote.c
-> +++ b/builtin-remote.c
-> @@ -1276,14 +1276,31 @@ static int update(int argc, const char **argv=
-)
-> =C2=A0static int get_one_entry(struct remote *remote, void *priv)
-> =C2=A0{
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0struct string_list *list =3D priv;
-> + =C2=A0 =C2=A0 =C2=A0 const char **url;
-> + =C2=A0 =C2=A0 =C2=A0 int i, url_nr;
-> + =C2=A0 =C2=A0 =C2=A0 void **utilp;
->
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0if (remote->url_nr > 0) {
-> - =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 int i;
-> -
-> - =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 for (i =3D 0; i < =
-remote->url_nr; i++)
-> - =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 string_list_append(remote->name, list)->util =3D (void *)remote=
-->url[i];
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 utilp =3D &(string=
-_list_append(remote->name, list)->util);
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 *utilp =3D malloc(=
-strlen(remote->url[0])+strlen(" (fetch)")+1);
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 strcpy((char *) *u=
-tilp, remote->url[0]);
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 strcat((char *) *u=
-tilp, " (fetch)");
-How about using struct strbuf?
-
-Bert
+In other words, anything moved to the position of original argv[0] would
+be lost, and the problem I stumbled upon was exactly that (it triggered
+because the location of argv[0] was invalid and parse_options_end() wrote
+into it).
