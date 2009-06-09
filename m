@@ -1,81 +1,86 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: EasyGit Integration
-Date: Tue, 9 Jun 2009 15:40:35 -0700 (PDT)
-Message-ID: <alpine.LFD.2.01.0906091535410.6847@localhost.localdomain>
-References: <d411cc4a0906091159r51e7d16t4d66c6225322fb60@mail.gmail.com>  <alpine.LFD.2.01.0906091512350.6847@localhost.localdomain> <51419b2c0906091530t3dfa5267s2262f979f1e9982a@mail.gmail.com>
+From: "H. Peter Anvin" <hpa@zytor.com>
+Subject: Re: [PATCH v3 0/3] automatically skip away from broken commits
+Date: Tue, 09 Jun 2009 15:54:29 -0700
+Message-ID: <4A2EE825.1020200@zytor.com>
+References: <20090606043853.4031.78284.chriscool@tuxfamily.org> <m3prdd4t6s.fsf@localhost.localdomain> <4A2E7BA7.8000901@zytor.com> <200906092355.51244.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Scott Chacon <schacon@gmail.com>, git list <git@vger.kernel.org>
-To: Elijah Newren <newren@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jun 10 00:44:45 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Christian Couder <christian.couder@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Christian Couder <chriscool@tuxfamily.org>,
+	git@vger.kernel.org, Sam Vilain <sam@vilain.net>,
+	Ingo Molnar <mingo@elte.hu>
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jun 10 00:55:28 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MEA3h-0004LP-1h
-	for gcvg-git-2@gmane.org; Wed, 10 Jun 2009 00:44:45 +0200
+	id 1MEAE0-0007Oh-1O
+	for gcvg-git-2@gmane.org; Wed, 10 Jun 2009 00:55:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751589AbZFIWog (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 9 Jun 2009 18:44:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751506AbZFIWof
-	(ORCPT <rfc822;git-outgoing>); Tue, 9 Jun 2009 18:44:35 -0400
-Received: from smtp1.linux-foundation.org ([140.211.169.13]:50350 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750990AbZFIWof (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 9 Jun 2009 18:44:35 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
-	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id n59MiXkb002122
+	id S1753561AbZFIWyr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 9 Jun 2009 18:54:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753069AbZFIWyr
+	(ORCPT <rfc822;git-outgoing>); Tue, 9 Jun 2009 18:54:47 -0400
+Received: from terminus.zytor.com ([198.137.202.10]:60026 "EHLO
+	terminus.zytor.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751000AbZFIWyq (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Jun 2009 18:54:46 -0400
+Received: from anacreon.sc.intel.com (hpa@localhost [127.0.0.1])
+	(authenticated bits=0)
+	by terminus.zytor.com (8.14.3/8.14.1) with ESMTP id n59MsTZb024638
 	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Tue, 9 Jun 2009 15:44:36 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id n59MeZ1K009758;
-	Tue, 9 Jun 2009 15:40:35 -0700
-X-X-Sender: torvalds@localhost.localdomain
-In-Reply-To: <51419b2c0906091530t3dfa5267s2262f979f1e9982a@mail.gmail.com>
-User-Agent: Alpine 2.01 (LFD 1184 2008-12-16)
-X-Spam-Status: No, hits=-3.468 required=5 tests=AWL,BAYES_00
-X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
+	Tue, 9 Jun 2009 15:54:30 -0700
+User-Agent: Thunderbird 2.0.0.21 (X11/20090320)
+In-Reply-To: <200906092355.51244.jnareb@gmail.com>
+X-Virus-Scanned: ClamAV 0.94.2/9447/Tue Jun  9 12:54:17 2009 on terminus.zytor.com
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121233>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121234>
 
-
-
-On Tue, 9 Jun 2009, Elijah Newren wrote:
+Jakub Narebski wrote:
 > 
-> Do you object to using 'revert' in the name of the new command or just
-> to having the new command take over the exact name 'revert'?
+> Let us also assume that we have some model of probability that a commit
+> is untestable. In the example below numbers are ad hoc, and unrealistic.
+> 
 
-I object to changing existing meaning.
+What I mostly meant was that there simply is no such model that will be
+ideal (since we simply don't have that information, almost by
+definition), so therefore the overall algorithm can't be ideal, either.
 
-> I'd like to propose making the reverting of edits functionality 
-> available under the command name 'revert-edits'
+However, Christian and you do make a very good point that instead of a
+linear-probability random selection, it probably makes sense to bias the
+randomness in favor of the commits that are more likely to provide
+higher information gain.  This is effectively what Christian's patch
+does in a somewhat clumsy way.
 
-That's fine.
+One of the nice things about combining a random algorithm with bias is
+that the bias doesn't have to be perfect, it just have to be good
+enough.  For example, we can take dramatic shortcuts like not taking
+topology into accounts.
 
-I also don't mind per se having the "git checkout" kind of semantics, 
-where different kinds of arguments result in different kinds of behavior. 
-I'm not convinced it's a wonderful design, but I would not object to
+A logical bias function would indeed be an estimate of the information
+gain.  One way we can calculate the effective information gain is by
+take the list in "goodness order" that we already have, and treat it as
+if it had originally been a linear history -- this will usually not be
+the case, but we're probabilistically getting away with murder here.
 
- - old behavior: revert the commit by creating an "anti-commit":
+The sorting in "goodness order" of a linear history means sorting
+middlemost first, so the modified information density function with x
+being the position in the list (x = 0 for best, x = 1 for worst) looks like:
 
-	git revert <cmit-name>
+- 1/(2 ln 2) * [ (1-x) ln (1-x) + (1+x) ln (1+x) - 2 ln 2 ]
 
- - new extension: revert the state of the working tree to the HEAD:
+I'd have to brush up some more of my calculus in order to remember how
+to come up with a transformation function which would take a random
+number and give us this exact probability distribution, but again, I
+don't think it's hugely important; I suspect any function which gives us
+a probability distribution that's even in the right neighborhood would
+give us excellent results.
 
-	git revert [--] pathspec
-
-which would kind of match the semantics of "git checkout" does.
-
-So it's not that I object to "git revert" as a name. I just object to 
-changing existing (and sane) semantics just for some silly person who 
-thinks that git is just "SVN done right". 
-
-Git is _soo_ much more than just that. People need to live with the fact 
-that it's not just a SVN clone.
-
-		Linus
+	-hpa
