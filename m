@@ -1,76 +1,92 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: Git for Windows 1.6.3.2
-Date: Tue, 9 Jun 2009 22:34:14 +0200
-Message-ID: <fabb9a1e0906091334r33dc5eev225c48e660bf65ca@mail.gmail.com>
-References: <alpine.DEB.1.00.0906071629460.26154@pacific.mpi-cbg.de> 
-	<26984.77.61.241.211.1244457815.squirrel@hupie.xs4all.nl> 
-	<fabb9a1e0906080351hbfe7ab7w2016a030ef1bde7@mail.gmail.com> 
-	<alpine.DEB.1.00.0906081255530.4461@intel-tinevez-2-302> <4A2EB57D.9010705@dirk.my1.cc>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v3 0/3] automatically skip away from broken commits
+Date: Tue, 09 Jun 2009 13:37:10 -0700
+Message-ID: <7viqj5kutl.fsf@alter.siamese.dyndns.org>
+References: <20090606043853.4031.78284.chriscool@tuxfamily.org>
+	<7vskidcf9s.fsf@alter.siamese.dyndns.org>
+	<200906070932.36913.chriscool@tuxfamily.org>
+	<4A2CAA56.1030707@zytor.com> <7vws7n6vcf.fsf@alter.siamese.dyndns.org>
+	<4A2D337C.70203@zytor.com> <7vzlcixwue.fsf@alter.siamese.dyndns.org>
+	<c07716ae0906082124n4a5bfe88md80ba8076c928b76@mail.gmail.com>
+	<c07716ae0906090526i714bb6c9g4e3d8cf61021af77@mail.gmail.com>
+	<4A2E7EEC.2050807@zytor.com>
+	<c07716ae0906091228s708058d4vea986239a6b458de@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	msysgit@googlegroups.com, git@vger.kernel.org
-To: =?ISO-8859-1?Q?Dirk_S=FCsserott?= <newsletter@dirk.my1.cc>
-X-From: git-owner@vger.kernel.org Tue Jun 09 22:35:04 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: "H. Peter Anvin" <hpa@zytor.com>,
+	Christian Couder <chriscool@tuxfamily.org>,
+	git@vger.kernel.org, Sam Vilain <sam@vilain.net>,
+	Ingo Molnar <mingo@elte.hu>
+To: Christian Couder <christian.couder@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jun 09 22:37:27 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ME81r-0004L0-8f
-	for gcvg-git-2@gmane.org; Tue, 09 Jun 2009 22:34:43 +0200
+	id 1ME84M-0007FM-Ke
+	for gcvg-git-2@gmane.org; Tue, 09 Jun 2009 22:37:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755431AbZFIUee convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 9 Jun 2009 16:34:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755421AbZFIUed
-	(ORCPT <rfc822;git-outgoing>); Tue, 9 Jun 2009 16:34:33 -0400
-Received: from mail-ew0-f210.google.com ([209.85.219.210]:48478 "EHLO
-	mail-ew0-f210.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755051AbZFIUed convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 9 Jun 2009 16:34:33 -0400
-Received: by ewy6 with SMTP id 6so308062ewy.37
-        for <git@vger.kernel.org>; Tue, 09 Jun 2009 13:34:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=Gzg65fHQ5I8YSTx1iV3jHbTgvl//0RWc/HWwHklkuik=;
-        b=c38L20pwi3kLIoDqcxZC6WhioDxAWmByKzaWXP3C//HFqJslo8rOs4Q7dAQQ9IC1la
-         ijwa/Asx4aYyJ0WX6/AGs8YBnqCxMbZc6F4JOoUqV6K4UUpUmV5NP8PT0gKOmQMERhXm
-         b+E9Rn1h00bc+JwDDfwcghQHjYY+OoOsXceYg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=CSbozaEE9ZN9gTZ/51x8Klj4Cu2vyLvAf0A8+9xtB9xg/yJQPLwh6uH2gY3OKQlPWv
-         vVS7Cz9B7l1bHWd5V2F1KFR420HCKIC6VWLg/sblv9zBv655AENRybKYEZ5GFGwQgKux
-         LcBr8lnF/SCyIJed9T1k2Oz1CWQNwS/54VDb0=
-Received: by 10.216.19.68 with SMTP id m46mr203110wem.7.1244579674084; Tue, 09 
-	Jun 2009 13:34:34 -0700 (PDT)
-In-Reply-To: <4A2EB57D.9010705@dirk.my1.cc>
+	id S1755051AbZFIUhK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 9 Jun 2009 16:37:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753979AbZFIUhJ
+	(ORCPT <rfc822;git-outgoing>); Tue, 9 Jun 2009 16:37:09 -0400
+Received: from fed1rmmtao105.cox.net ([68.230.241.41]:33945 "EHLO
+	fed1rmmtao105.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753891AbZFIUhI (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Jun 2009 16:37:08 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao105.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20090609203710.DZRS20430.fed1rmmtao105.cox.net@fed1rmimpo01.cox.net>;
+          Tue, 9 Jun 2009 16:37:10 -0400
+Received: from localhost ([68.225.240.211])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id 1wdA1c0064aMwMQ03wdAmr; Tue, 09 Jun 2009 16:37:10 -0400
+X-VR-Score: -100.00
+X-Authority-Analysis: v=1.0 c=1 a=ZlvubiwuF4QA:10 a=BRJNLUJM0I0A:10
+ a=pGLkceISAAAA:8 a=_e_ud7BRRk9EjGqHD7gA:9 a=z5k_0z2m9mUiKoydRuAA:7
+ a=0TQKDX80c-Km_rxyDXYCjhlXBzUA:4 a=MSl-tDqOz04A:10
+X-CM-Score: 0.00
+In-Reply-To: <c07716ae0906091228s708058d4vea986239a6b458de@mail.gmail.com> (Christian Couder's message of "Tue\, 9 Jun 2009 21\:28\:25 +0200")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121218>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121219>
 
-Heya,
+Christian Couder <christian.couder@gmail.com> writes:
 
-2009/6/9 Dirk S=FCsserott <newsletter@dirk.my1.cc>:
-> I *knew* there must be a mailing list for msysgit only, but I couldn'=
-t
-> figure out where. Can you please give me a pointer where to register?=
- I'm
-> registered with Junios list, but as a windows user I'd like to read a=
-nd
-> participate with your's as well.
+> My opinion is that we should not penalize all the people working on
+> "quite clean" projects and also people working on "not clean" projects
+> who are able to recover, on the pretence that there are other people
+> on these "not clean" projects who are not.
+>
+> I think it's the projects maintainers' responsibility to keep their
+> projects graphs quite clean (and they have the right to ask git
+> developers for the tools to do that).
 
-Try Google groups [0].
+You seem to be saying that a completely linear history is the only one
+that is clean.
 
-[0] http://groups.google.com/group/msysgit
+In an earlier message, I illustrated a case where two people independently
+worked on unrelated topic and ended up merging their branches together, to
+illustrate why your "not adjacent in goodness space" algorithm does not
+give "away from untestable ones in topology space".
 
---=20
-Cheers,
+With your definition, that history is _not_ clean.  I do not think any
+project wnats that kind of cleanness in their history.  You just made the
+word "clean" to describe the history meaningless.
 
-Sverre Rabbelier
+My take on the issue you mentioned above is that we should not penalize
+the codepath's simplicity too much, only to cater to pathological
+behaviour exhibited on an uninteresting special case of competely linear
+history.
+
+Your algorithm is Ok as an initial cut, in that it is an improvement over
+the "next in goodness space, not even bother to avoid the pathological
+case" algorithm.  But I do not think it is much better than HPA's "try the
+best one if it is not skipped, otherwise pick one randomly", and if we
+wanted to do better and to claim that we pick ones that are _away_ from
+untestable ones, we do need to take topology into account.  That is all I
+am saying.
