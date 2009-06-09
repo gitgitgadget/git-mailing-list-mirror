@@ -1,71 +1,68 @@
-From: Markus Heidelberg <markus.heidelberg@web.de>
-Subject: Re: [PATCH] send-email: Refuse to send cover-letter template subject
-Date: Tue, 9 Jun 2009 21:32:09 +0200
-Message-ID: <200906092132.10256.markus.heidelberg@web.de>
-References: <7fedc4b76fed03e4db6a2bb7453609c9cd02928a.1244496564.git.trast@student.ethz.ch> <200906092025.18643.markus.heidelberg@web.de> <7v4oupmdv5.fsf@alter.siamese.dyndns.org>
-Reply-To: markus.heidelberg@web.de
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: Git merge selective files
+Date: Tue, 9 Jun 2009 21:35:58 +0200
+Message-ID: <81b0412b0906091235g7a65d076l145c3eb3cbbdce3@mail.gmail.com>
+References: <34b359190906090253v653ecc71q6684f4ebff2be59d@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: Thomas Rast <trast@student.ethz.ch>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jun 09 21:32:17 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: joe higton <draxil@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jun 09 21:36:51 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ME73Q-0004r9-TJ
-	for gcvg-git-2@gmane.org; Tue, 09 Jun 2009 21:32:17 +0200
+	id 1ME77r-0006eh-Cp
+	for gcvg-git-2@gmane.org; Tue, 09 Jun 2009 21:36:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753336AbZFITcI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 9 Jun 2009 15:32:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752029AbZFITcG
-	(ORCPT <rfc822;git-outgoing>); Tue, 9 Jun 2009 15:32:06 -0400
-Received: from fmmailgate02.web.de ([217.72.192.227]:51250 "EHLO
-	fmmailgate02.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751885AbZFITcG (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Jun 2009 15:32:06 -0400
-Received: from smtp06.web.de (fmsmtp06.dlan.cinetic.de [172.20.5.172])
-	by fmmailgate02.web.de (Postfix) with ESMTP id 001B01025C397;
-	Tue,  9 Jun 2009 21:32:06 +0200 (CEST)
-Received: from [89.59.118.0] (helo=.)
-	by smtp06.web.de with asmtp (TLSv1:AES256-SHA:256)
-	(WEB.DE 4.110 #277)
-	id 1ME73A-0002mK-00; Tue, 09 Jun 2009 21:32:01 +0200
-User-Agent: KMail/1.9.9
-In-Reply-To: <7v4oupmdv5.fsf@alter.siamese.dyndns.org>
-Jabber-ID: markus.heidelberg@web.de
-Content-Disposition: inline
-X-Sender: markus.heidelberg@web.de
-X-Provags-ID: V01U2FsdGVkX18F2E7c/3kmg61JKUCU5jweMM1147kIDCR94Ag1
-	zpqlU0nVLFhwnW5FvzCOngvy28t8OUTj6tk2UVJ1hUq3LUeFOm
-	xJHcqYnysCIAiSwjhv2A==
+	id S1755474AbZFITgA convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 9 Jun 2009 15:36:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755326AbZFITgA
+	(ORCPT <rfc822;git-outgoing>); Tue, 9 Jun 2009 15:36:00 -0400
+Received: from mail-bw0-f213.google.com ([209.85.218.213]:50712 "EHLO
+	mail-bw0-f213.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755051AbZFITf7 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 9 Jun 2009 15:35:59 -0400
+Received: by bwz9 with SMTP id 9so243826bwz.37
+        for <git@vger.kernel.org>; Tue, 09 Jun 2009 12:36:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=LckphMfwbhP7oMSGrqMjFViwMjXlRWVPNciLojxwsuU=;
+        b=QX01iCT3EgZNUBQV8mFMFfMBU+N7gij1kIMDEJLgUfMAMf3PhVBP9AoznK1BpDKdNe
+         nXJxaQPtGLxyd7zIxyDJoeT/JTVLKdfJMviwkVF37hjkhsm2/7moxRqnL0+mrhgYA9pc
+         HhCgIQKk7xO/i9x4ThEfbfCnSzhW/BfkHnBQw=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=aHI7G6Xk7VcQLR+xr1FyFLeL4IjzumqWHc8nN5a2+c5WrkadST8QeyVVWJQ624Wjut
+         cn5L6tteHw6Dgzq8pj/DDEFpPYLDrbghanr2wqkJ57E5z2DCaYwSbLyiw8CmXKbd2p9r
+         FDpCvZviy/F7a/cj6msCARdYIB31WxLc4VSSk=
+Received: by 10.204.124.10 with SMTP id s10mr447002bkr.34.1244576158298; Tue, 
+	09 Jun 2009 12:35:58 -0700 (PDT)
+In-Reply-To: <34b359190906090253v653ecc71q6684f4ebff2be59d@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121210>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121211>
 
-Junio C Hamano, 09.06.2009:
-> Markus Heidelberg <markus.heidelberg@web.de> writes:
-> >
-> > My mail "[PATCH 0/6] fixes for git-send-email" had an empty blurb
-> > section because it didn't need any additional description.
-> > I wouldn't want git to refuse sending it.
-> 
-> I actually wouldn't have wanted to see that [0/6] with empty description.
+2009/6/9 joe higton <draxil@gmail.com>:
+> Hi,
+> =C2=A0 =C2=A0 I want to merge changes from a branch but only to one f=
+ile, I
+> don't want to pick up the changes from other files. I've scoured
+> google and the docs a bit but I can't find anything useful. Is this
+> possible?
 
-I thought the diffstat is a nice overview as well. So there is at least
-some value in a blurb-less cover letter. But I guess they are debatable.
+Generally - no. But you can have a merge with only the content
+of your choice:
 
-> If the list of 6 patch titles give clear enough description of the theme
-> of the whole series, you would not need [0/6] to set the stage,
+  git merge -s ours --no-commit other
 
-I prefer --thread --no-chain-reply-to for more than 2 patches, so it
-seems I sometimes only abuse the 0/X as a common anchor for 1..X/X. I'd
-find it strange to use 1/X for that.
-
-> and that is the best kind of series.
-
-Hmm, so then you prefer no 0/X at all.
+then copy the changes you need manually, and commit.
+See the manpage of git merge about "ours" merge strategy.
