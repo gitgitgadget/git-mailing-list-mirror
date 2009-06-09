@@ -1,76 +1,67 @@
-From: Avery Pennarun <apenwarr@gmail.com>
-Subject: Re: Git merge selective files
-Date: Tue, 9 Jun 2009 15:39:31 -0400
-Message-ID: <32541b130906091239x1c92a1caxd260983a66e8025f@mail.gmail.com>
-References: <34b359190906090253v653ecc71q6684f4ebff2be59d@mail.gmail.com> 
-	<32541b130906091132sc5a647cn5fe0289ff9793cc3@mail.gmail.com> 
-	<4A2EB575.8050107@workspacewhiz.com>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: EasyGit Integration
+Date: Tue, 09 Jun 2009 15:43:32 -0400 (EDT)
+Message-ID: <alpine.LFD.2.00.0906091535520.31536@xanadu.home>
+References: <d411cc4a0906091159r51e7d16t4d66c6225322fb60@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: joe higton <draxil@gmail.com>, git@vger.kernel.org
-To: Joshua Jensen <jjensen@workspacewhiz.com>
-X-From: git-owner@vger.kernel.org Tue Jun 09 21:40:05 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: git list <git@vger.kernel.org>
+To: Scott Chacon <schacon@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jun 09 21:44:09 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ME7Ay-0007yZ-KE
-	for gcvg-git-2@gmane.org; Tue, 09 Jun 2009 21:40:05 +0200
+	id 1ME7Et-0000z5-JS
+	for gcvg-git-2@gmane.org; Tue, 09 Jun 2009 21:44:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757807AbZFITjw convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 9 Jun 2009 15:39:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756983AbZFITjw
-	(ORCPT <rfc822;git-outgoing>); Tue, 9 Jun 2009 15:39:52 -0400
-Received: from mail-gx0-f214.google.com ([209.85.217.214]:58451 "EHLO
-	mail-gx0-f214.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755999AbZFITjv convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 9 Jun 2009 15:39:51 -0400
-Received: by gxk10 with SMTP id 10so280937gxk.13
-        for <git@vger.kernel.org>; Tue, 09 Jun 2009 12:39:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=08cpxKrzIAGKyw7QRvQ4tpXFVfOStm3AqucAbsft0fU=;
-        b=PDK8I8Z9TCYBhfEEixwQdTwmCN+EiGPwqYXf6/8bR8UxzavLGPA0T8D3/UrjBKETZO
-         y49tpg9EaMr+qMYHvBwdB7HFepmuPCvZtDcOQwZiX8yemvlxDMfJKrtY39KvawnXTEag
-         gLa5WtkIJ3+UwOtsFKmUNwI0yd6DYQw7o/T/4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=FPBzjty3/J7D3FvUxRMe3FHvzX/fnLPZ7YEgOyxddfgnW6C0p928kA/IwtWliQAjWm
-         kGEexwa7q+ZPRU0a1tsrMNP+spvkkURXZBb46B7pTHED2WfUgpujyvGNKhfA3QgwUm0x
-         pE1quY0Ljpu2K7tu9npixCkVmynhwpUK/1C6g=
-Received: by 10.151.68.2 with SMTP id v2mr1067998ybk.30.1244576391178; Tue, 09 
-	Jun 2009 12:39:51 -0700 (PDT)
-In-Reply-To: <4A2EB575.8050107@workspacewhiz.com>
+	id S1752390AbZFITn7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 9 Jun 2009 15:43:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752303AbZFITn6
+	(ORCPT <rfc822;git-outgoing>); Tue, 9 Jun 2009 15:43:58 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:35130 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751749AbZFITn6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Jun 2009 15:43:58 -0400
+Received: from xanadu.home ([66.131.194.97]) by VL-MO-MR001.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
+ with ESMTP id <0KKZ00LEULGKAS00@VL-MO-MR001.ip.videotron.ca> for
+ git@vger.kernel.org; Tue, 09 Jun 2009 15:43:34 -0400 (EDT)
+X-X-Sender: nico@xanadu.home
+In-reply-to: <d411cc4a0906091159r51e7d16t4d66c6225322fb60@mail.gmail.com>
+User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121213>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121214>
 
-On Tue, Jun 9, 2009 at 3:18 PM, Joshua Jensen<jjensen@workspacewhiz.com=
-> wrote:
-> On Tue, Jun 9, 2009 at 5:53 AM, joe higton<draxil@gmail.com> wrote:
->> =A0 =A0 I want to merge changes from a branch but only to one file, =
-I
->> don't want to pick up the changes from other files. I've scoured
->> google and the docs a bit but I can't find anything useful. Is this
->> possible?
->
-> I like this one:
->
-> http://jasonrudolph.com/blog/2009/02/25/git-tip-how-to-merge-specific=
--files-from-another-branch/
+On Tue, 9 Jun 2009, Scott Chacon wrote:
 
-Careful... that *replaces* the files with the ones from the branch.
-It doesn't *merge* them.  Although that may be exactly what you want.
+> Hey all,
+> 
+> I have been playing with the EasyGit project lately and I have been
+> really impressed.  I looked back to the last announcement here and the
+> conversation didn't really go anywhere, sadly.  I thought it might be
+> nice to adopt or at least consider a number of the design decisions
+> they made in modifying the defaults and commands available.  Perhaps
+> as a 1.7 goal or something?  I like it because it addresses a lot of
+> the issues that I hear from beginning users:
+[...]
+> Does this resonate with anyone else?  Does 1.7 seem like a good goal
+> for amending some of these things?  Completely redefining 'revert'
+> seems like the only backward incompatible change - everything else is
+> just wrappers and whatnot, I think.
 
-And the "'merge --squash' and don't commit the changes you don't want"
-option looks okay to me too.
+Completely agreed.
 
-Avery
+This is indeed refreshing to see some of the git UI warts being 
+addressed by people who simply aren't too used to them like I am.
+
+And like you said, most of those changes don't create any 
+incompatibilities and therefore could be fed back _piecemeal_ into the 
+main git repository today without even requiring a major version bump.
+
+
+Nicolas
