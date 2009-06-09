@@ -1,89 +1,96 @@
-From: Elijah Newren <newren@gmail.com>
+From: Avery Pennarun <apenwarr@gmail.com>
 Subject: Re: EasyGit Integration
-Date: Tue, 9 Jun 2009 14:40:33 -0600
-Message-ID: <51419b2c0906091340i11965efcr5cf5bb4a71108fa6@mail.gmail.com>
-References: <d411cc4a0906091159r51e7d16t4d66c6225322fb60@mail.gmail.com>
-	 <20090609201200.GA13781@atjola.homenet>
+Date: Tue, 9 Jun 2009 16:42:33 -0400
+Message-ID: <32541b130906091342s7dd6064fud2205bee8af95aab@mail.gmail.com>
+References: <d411cc4a0906091159r51e7d16t4d66c6225322fb60@mail.gmail.com> 
+	<32541b130906091252i6c96c44buc148bb525d7cde14@mail.gmail.com> 
+	<20090609203747.GB13781@atjola.homenet>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Scott Chacon <schacon@gmail.com>, git list <git@vger.kernel.org>
-To: =?UTF-8?Q?Bj=C3=B6rn_Steinbrink?= <B.Steinbrink@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Jun 09 22:40:46 2009
+To: =?ISO-8859-1?Q?Bj=F6rn_Steinbrink?= <B.Steinbrink@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Jun 09 22:43:01 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ME87d-0001K2-E1
-	for gcvg-git-2@gmane.org; Tue, 09 Jun 2009 22:40:41 +0200
+	id 1ME89s-0002Og-IN
+	for gcvg-git-2@gmane.org; Tue, 09 Jun 2009 22:43:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756061AbZFIUkd convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 9 Jun 2009 16:40:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755421AbZFIUkc
-	(ORCPT <rfc822;git-outgoing>); Tue, 9 Jun 2009 16:40:32 -0400
-Received: from qw-out-2122.google.com ([74.125.92.25]:19142 "EHLO
-	qw-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753891AbZFIUkb convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 9 Jun 2009 16:40:31 -0400
-Received: by qw-out-2122.google.com with SMTP id 5so181237qwd.37
-        for <git@vger.kernel.org>; Tue, 09 Jun 2009 13:40:33 -0700 (PDT)
+	id S1756293AbZFIUmw convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 9 Jun 2009 16:42:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756165AbZFIUmv
+	(ORCPT <rfc822;git-outgoing>); Tue, 9 Jun 2009 16:42:51 -0400
+Received: from mail-gx0-f214.google.com ([209.85.217.214]:50090 "EHLO
+	mail-gx0-f214.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755777AbZFIUmv convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 9 Jun 2009 16:42:51 -0400
+Received: by gxk10 with SMTP id 10so348854gxk.13
+        for <git@vger.kernel.org>; Tue, 09 Jun 2009 13:42:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
+         :from:date:message-id:subject:to:cc:content-type
          :content-transfer-encoding;
-        bh=flcJ1mDur972HYMBHUO9pkchTVgW7NtQflAeyqg2UH4=;
-        b=QhvBAn1o8ivTcx/a47hiic4bn+1GEwiTBipLBK43KAx4xKDApZbcPWYEO7wr3O3E+/
-         gNN7b7BfGFq+9JK+B+VW9rEHvv8oegpFfop3vKNEv0xvYQQJYs4rjjodpZUs0mzeR6Si
-         BDX5LykwiJOH9nLKb+gahUIjCJNmcz/XmLvUw=
+        bh=ElJvyM1QfxksycN5IMPcnX3pdbXFa9XFCQPXDEmg8Yo=;
+        b=kogM1HISJlabll0zkm7HiMx8/Pto1kXhsL3gee5XcNKoDt+nwktHgfZjVkDNERQhPc
+         9FnlYrssJtpYQLDvEi15NThIxBxKHISL/oabyMiY2Ze7upqVuXT8kHb122XcE8bgPmyD
+         Z5lXbkzepTGJprOAw28Rqn/KpC3vTEAwFx7R4=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc:content-type:content-transfer-encoding;
-        b=fBaxEKr3d+Wy5HbN2KY/y72Ig/yWR6TIK0x5ydN00qbuAzWJ8MA8s8a5WHrGdqldSY
-         0nTvap4JbcYOMa24EW9gUC2Yg1mIt2ZEQl8ae+f8RoyumXBGwO+ogfwakGTyAI/VqYP6
-         9FZabbMOvtCxBllfLfr+xVpZ5Mk/L5KcBMnmg=
-Received: by 10.229.99.135 with SMTP id u7mr133170qcn.44.1244580033542; Tue, 
-	09 Jun 2009 13:40:33 -0700 (PDT)
-In-Reply-To: <20090609201200.GA13781@atjola.homenet>
+        b=ActA0N3ACmm3u29foNVpIo+yMjhmtl8VbHQ1ki7nn2dkB0lMAcHpJ8H3NftNjhu8Cb
+         iWs5JmeXgTwJazNViG1G0jR75Pbv6NplZ4SJkICse7/MdzsAy6wr/gyue9uqzrNB80Xh
+         JW6r+TesX+hYRDOrfxA7jGqU9HF4Jtz5+5XeY=
+Received: by 10.151.136.6 with SMTP id o6mr1178997ybn.32.1244580173145; Tue, 
+	09 Jun 2009 13:42:53 -0700 (PDT)
+In-Reply-To: <20090609203747.GB13781@atjola.homenet>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121221>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121222>
 
-Hi,
-
-2009/6/9 Bj=C3=B6rn Steinbrink <B.Steinbrink@gmx.de>:
-> On 2009.06.09 11:59:08 -0700, Scott Chacon wrote:
->> * breaks the various things that 'checkout' does into separate
->> commands - moves 'revert' to doing what 'checkout -- path' does
->
-> Looking through the "eg revert" docs [1], I can't seem to find how yo=
-u can
-> do "checkout -- path" with it at all. "eg revert foo" seems to be "gi=
+2009/6/9 Bj=F6rn Steinbrink <B.Steinbrink@gmx.de>:
+> On 2009.06.09 15:52:46 -0400, Avery Pennarun wrote:
+>> To be honest, I'm not convinced svn's use of the word "revert" is
+>> really right, though. =A0Git's isn't *really* right either, since it
+>> actually makes a new commit, it doesn't remove the old one like it
+>> sounds like it does. =A0Maybe 'reverse' would be a better name for w=
+hat
+>> git does, and we should just introduce another word for what svn doe=
+s.
+>> =A0(With CVS, you just deleted the file and then did a checkout/upda=
+te
+>> on it again, which made sense to me. =A0That works in git too.)
+>>
+>> Crazy idea: we could actually make 'git revert' do both: given a
+>> commit, it applies the reverse as it does now. =A0Given filenames, i=
 t
-> checkout HEAD -- foo".
+>> simply brings them back to HEAD. =A0But maybe that's too crazy.
+>
+> Doesn't seem that crazy to me. But maybe a bit problematic if you wan=
+t
+> to support both, "git checkout -- ." and "git checkout HEAD -- .". An=
+d
+> adding DWIMmery there seems dangerous, as in:
+>
+> git revert =3D=3D git checkout -- .
+>
+> git revert HEAD =3D=3D
+> =A0no uncommitted changes =3D revert commit HEAD
+> =A0uncommitted changes =3D revert to HEAD
 
-If you want to revert only the unstaged changes to path:
-  "checkout -- path" OR "revert --unstaged path"
-If you want to revert both staged and unstaged changes to foo:
-  "checkout HEAD -- foo" OR "revert foo"
+Well, that's what I meant by "crazy" :)
 
-> The "eg revert" looks really confusing to me.
-> "eg revert --unstaged --in HEAD~8". Hu? Revert unstaged changes in
-> HEAD~8? Am I missing something?
+Since so many of the other suggestions in eg are so simple and
+non-conflicting, perhaps it's best to drop this branch of discussion
+until the non-controversial bits are adopted.  It would be bad to lose
+other great improvements just because this one command is
+problematic...
 
-Hmm.  Bad ordering, I guess -- it's revert changes in HEAD~8 to the
-working copy only (by default, revert tries to apply changes to both
-the working copy and the index).  Yeah, it doesn't read very well.
+Have fun,
 
-I'm not sure I like having "--in" as part of revert, partially because
-of this confusion (and partially because I don't think it's
-implementation is correct anyway).  However, I do occasionally really
-like being able to revert the change _to a single file_ made in some
-previous commit, so I haven't removed it from eg (yet?).  *shrug*
-
-
-
-Elijah
+Avery
