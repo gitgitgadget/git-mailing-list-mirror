@@ -1,85 +1,82 @@
-From: Christian Couder <christian.couder@gmail.com>
-Subject: Re: [PATCH v3 0/3] automatically skip away from broken commits
-Date: Tue, 9 Jun 2009 14:26:15 +0200
-Message-ID: <c07716ae0906090526i714bb6c9g4e3d8cf61021af77@mail.gmail.com>
-References: <20090606043853.4031.78284.chriscool@tuxfamily.org>
-	 <7vskidcf9s.fsf@alter.siamese.dyndns.org>
-	 <200906070932.36913.chriscool@tuxfamily.org>
-	 <4A2CAA56.1030707@zytor.com> <7vws7n6vcf.fsf@alter.siamese.dyndns.org>
-	 <4A2D337C.70203@zytor.com> <7vzlcixwue.fsf@alter.siamese.dyndns.org>
-	 <c07716ae0906082124n4a5bfe88md80ba8076c928b76@mail.gmail.com>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: [PATCH] format-patch: add --prefix to prepend a prefix to output
+ file names
+Date: Tue, 09 Jun 2009 14:37:01 +0200
+Message-ID: <4A2E576D.704@op5.se>
+References: <1244547227-6466-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "H. Peter Anvin" <hpa@zytor.com>,
-	Christian Couder <chriscool@tuxfamily.org>,
-	git@vger.kernel.org, Sam Vilain <sam@vilain.net>,
-	Ingo Molnar <mingo@elte.hu>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jun 09 14:26:24 2009
+Content-Type: text/plain; charset=UTF-8;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+	<pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jun 09 14:37:44 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ME0PI-0001Nz-04
-	for gcvg-git-2@gmane.org; Tue, 09 Jun 2009 14:26:24 +0200
+	id 1ME0aE-0005jI-2l
+	for gcvg-git-2@gmane.org; Tue, 09 Jun 2009 14:37:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758621AbZFIM0Q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 9 Jun 2009 08:26:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758391AbZFIM0P
-	(ORCPT <rfc822;git-outgoing>); Tue, 9 Jun 2009 08:26:15 -0400
-Received: from mail-fx0-f213.google.com ([209.85.220.213]:55818 "EHLO
-	mail-fx0-f213.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759560AbZFIM0O (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Jun 2009 08:26:14 -0400
-Received: by fxm9 with SMTP id 9so2927340fxm.37
-        for <git@vger.kernel.org>; Tue, 09 Jun 2009 05:26:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=m1zddJe02oXskYD5evrYN+a2b3IhdKA/Nox3f086Gpo=;
-        b=T0wfc/c2+Ojk5gWeDJ7Rbhpx6IU5QVE/+jRDObJsJkqsXbwryiYd+PBVf9vNMrjMAV
-         y5w/eApJ/HbHyha+THxBLbFq/14Dms4EV18hk72fYnF9xoI9XFWaXr4xpUTl9JvAuONA
-         VJg+3Wk0CaVZJcOnHCHsBKwmzjqoqgqHU1Bl0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=BOAf67VeI3GVCKpo5yfP3jD05VW/pB3sTsyeNjC3SVC959gDp3L5g+Ldlob0B+42R+
-         U26XFtWwahgzBLoLWiaWta8iio285DvldAr2e+ruHhciK9yq7zeDUHepho6WV2+1HDd6
-         6lPQQiMpEFOF2h8txNf86Bnwl1QJE4qCPNsp4=
-Received: by 10.103.214.8 with SMTP id r8mr39277muq.12.1244550375938; Tue, 09 
-	Jun 2009 05:26:15 -0700 (PDT)
-In-Reply-To: <c07716ae0906082124n4a5bfe88md80ba8076c928b76@mail.gmail.com>
+	id S1760879AbZFIMhE convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 9 Jun 2009 08:37:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760804AbZFIMhD
+	(ORCPT <rfc822;git-outgoing>); Tue, 9 Jun 2009 08:37:03 -0400
+Received: from na3sys009aog106.obsmtp.com ([74.125.149.77]:54291 "HELO
+	na3sys009aog106.obsmtp.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with SMTP id S1759329AbZFIMhC (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 9 Jun 2009 08:37:02 -0400
+Received: from source ([72.14.220.152]) by na3sys009aob106.postini.com ([74.125.148.12]) with SMTP
+	ID DSNKSi5XcHpDgeD0xDKKtEyMTHTEIMzxKEZl@postini.com; Tue, 09 Jun 2009 05:37:05 PDT
+Received: by fg-out-1718.google.com with SMTP id 13so1466627fge.5
+        for <git@vger.kernel.org>; Tue, 09 Jun 2009 05:37:03 -0700 (PDT)
+Received: by 10.86.23.20 with SMTP id 20mr94903fgw.49.1244551023587;
+        Tue, 09 Jun 2009 05:37:03 -0700 (PDT)
+Received: from clix.int.op5.se ([212.112.174.166])
+        by mx.google.com with ESMTPS id 4sm1600518fgg.18.2009.06.09.05.37.02
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Tue, 09 Jun 2009 05:37:03 -0700 (PDT)
+User-Agent: Thunderbird 2.0.0.21 (X11/20090320)
+In-Reply-To: <1244547227-6466-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121171>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121172>
 
-On Tue, Jun 9, 2009 at 6:24 AM, Christian
-Couder<christian.couder@gmail.com> wrote:
->
-> So I would be ok to implement a config option or a switch to "git
-> bisect start" to let people use a PRNG instead of my algorithm but I
-> think something like my algorithm should be the default.
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote:
+> I use git to manages patches in my Gentoo development. In Gentoo,
+> all ebuilds (another form of RPM spec) corresponding to different
+> versions of the same package are grouped into one directory. So patch=
+es
+> for each versions usually have a prefix to separate them from the one=
+s
+> for other versions. With --prefix it comes handy to produce such patc=
+hes,
+> for example:
+>=20
+> git format-patch --prefix dbus-1.2.3- HEAD~5
+>=20
+> will generate patches for dbus-1.2.3 for me, all starting with "dbus-=
+1.2.3-".
+>=20
+> This might be handy for RPM developers as well.
+>=20
 
-Another reason to have 2 algorithms is that when you use "git bisect
-run" you might want to use the PRNG one because:
+I'm thinking this could be confused with '--subject-prefix' which was
+given the long option to *not* confuse it with cover-letters and filena=
+me
+prefixes. Any chance you could make it --filename-prefix instead? Since
+it already lacks a short option, the extra typing will probably be wort=
+h
+it to avoid unnecessary confusion.
 
-- you don't care much if the bisection use some more steps (as long as
-it does not get stuck)
-- you can't do much if it get stuck
+--=20
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
 
-On the other hand, when you bisect manually:
-
-- you probably won't like it if you are asked to test some commits
-that won't give a lot of information
-- if it get stuck, you can manually use "git bisect visualize" and/or
-"git bisect skip <range>" and/or some other manual commands to do
-something about it
-
-Regards,
-Christian.
+Considering the successes of the wars on alcohol, poverty, drugs and
+terror, I think we should give some serious thought to declaring war
+on peace.
