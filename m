@@ -1,68 +1,60 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3 0/3] automatically skip away from broken commits
-Date: Tue, 09 Jun 2009 11:35:50 -0700
-Message-ID: <7vljo1mf09.fsf@alter.siamese.dyndns.org>
-References: <20090606043853.4031.78284.chriscool@tuxfamily.org>
-	<7vskidcf9s.fsf@alter.siamese.dyndns.org>
-	<200906070932.36913.chriscool@tuxfamily.org>
-	<4A2CAA56.1030707@zytor.com> <7vws7n6vcf.fsf@alter.siamese.dyndns.org>
-	<4A2D337C.70203@zytor.com> <7vzlcixwue.fsf@alter.siamese.dyndns.org>
-	<c07716ae0906082124n4a5bfe88md80ba8076c928b76@mail.gmail.com>
-	<c07716ae0906090526i714bb6c9g4e3d8cf61021af77@mail.gmail.com>
-	<4A2E7EEC.2050807@zytor.com>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: git clone failing over slow links?
+Date: Tue, 09 Jun 2009 14:42:46 -0400 (EDT)
+Message-ID: <alpine.LFD.2.00.0906091440100.31536@xanadu.home>
+References: <2729632a0906090852r124eff8eo8391ae90cbda5872@mail.gmail.com>
+ <robbat2-20090609T171032-419739557Z@orbis-terrarum.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Christian Couder <christian.couder@gmail.com>,
-	Christian Couder <chriscool@tuxfamily.org>,
-	git@vger.kernel.org, Sam Vilain <sam@vilain.net>,
-	Ingo Molnar <mingo@elte.hu>
-To: "H. Peter Anvin" <hpa@zytor.com>
-X-From: git-owner@vger.kernel.org Tue Jun 09 20:36:01 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Git Mailing List <git@vger.kernel.org>
+To: "Robin H. Johnson" <robbat2@gentoo.org>
+X-From: git-owner@vger.kernel.org Tue Jun 09 20:43:38 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ME6Ay-0008Jp-MT
-	for gcvg-git-2@gmane.org; Tue, 09 Jun 2009 20:36:01 +0200
+	id 1ME6IE-0002s3-Al
+	for gcvg-git-2@gmane.org; Tue, 09 Jun 2009 20:43:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754070AbZFISfu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 9 Jun 2009 14:35:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753761AbZFISft
-	(ORCPT <rfc822;git-outgoing>); Tue, 9 Jun 2009 14:35:49 -0400
-Received: from fed1rmmtao103.cox.net ([68.230.241.43]:50020 "EHLO
-	fed1rmmtao103.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753528AbZFISft (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Jun 2009 14:35:49 -0400
-Received: from fed1rmimpo03.cox.net ([70.169.32.75])
-          by fed1rmmtao103.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20090609183551.KEKK2915.fed1rmmtao103.cox.net@fed1rmimpo03.cox.net>;
-          Tue, 9 Jun 2009 14:35:51 -0400
-Received: from localhost ([68.225.240.211])
-	by fed1rmimpo03.cox.net with bizsmtp
-	id 1ubr1c0044aMwMQ04ubrj8; Tue, 09 Jun 2009 14:35:51 -0400
-X-VR-Score: -100.00
-X-Authority-Analysis: v=1.0 c=1 a=ZlvubiwuF4QA:10 a=BRJNLUJM0I0A:10
- a=oGMlB6cnAAAA:8 a=zwRR5x3o4JkwMWB41OEA:9 a=T1_1D57_KFEquJzk2dfOLD3_17QA:4
- a=CY6gl2JlH4YA:10 a=p6VVfPvSLIypP3EF:21 a=Tuj_BnhgsaliMuC0:21
-X-CM-Score: 0.00
-In-Reply-To: <4A2E7EEC.2050807@zytor.com> (H. Peter Anvin's message of "Tue\, 09 Jun 2009 08\:25\:32 -0700")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+	id S1757517AbZFISnN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 9 Jun 2009 14:43:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756850AbZFISnL
+	(ORCPT <rfc822;git-outgoing>); Tue, 9 Jun 2009 14:43:11 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:15637 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754184AbZFISnK (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Jun 2009 14:43:10 -0400
+Received: from xanadu.home ([66.131.194.97]) by VL-MO-MR005.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
+ with ESMTP id <0KKZ00FLIIL9N421@VL-MO-MR005.ip.videotron.ca> for
+ git@vger.kernel.org; Tue, 09 Jun 2009 14:41:34 -0400 (EDT)
+X-X-Sender: nico@xanadu.home
+In-reply-to: <robbat2-20090609T171032-419739557Z@orbis-terrarum.net>
+User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121201>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121202>
 
-"H. Peter Anvin" <hpa@zytor.com> writes:
+On Tue, 9 Jun 2009, Robin H. Johnson wrote:
 
-> My main objection to the "skip in goodness space" is exactly the same as
-> Junio's... it doesn't really buy you what it claims to sell.
+> On Tue, Jun 09, 2009 at 08:52:10AM -0700, skillzero@gmail.com wrote:
+> > People with slower connections are having problems cloning my
+> > repository. The server seems to just drop the connection. This
+> > repository is about 300 MB. The server is using git 1.6.1. This is
+> > using an ssh URL. They've tried many times and it usually dies at
+> > different places in the clone (5%, 80%, etc., with one successful
+> > clone so far for them).
+> For Gentoo, we saw what I think was same problem early on with our
+> conversion experiments. In our case however, it's going to be a
+> non-problem as we intend on disabling initial clone and requiring use of
+> a bundle.
 
-It is no worse than the original "pick the next best in goodness space";
-neither try to avoid the ones close to untestable ones.
+In the Gentoo case, I think your problem was rather about the memory 
+usage impact of an initial clone and nothing to do with the speed of the 
+connection.
 
-So as long as it does not claim "we intelligently try to skip away from
-untestable ones", I am actually Ok with Christian's patch.  It might do
-worse than the random walk in pathological cases, but I suspect not by a
-big margin.
+
+Nicolas
