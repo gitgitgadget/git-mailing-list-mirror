@@ -1,54 +1,58 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: Elijah Newren <newren@gmail.com>
 Subject: Re: EasyGit Integration
-Date: Tue, 09 Jun 2009 14:36:09 -0700
-Message-ID: <7veittjdiu.fsf@alter.siamese.dyndns.org>
+Date: Tue, 9 Jun 2009 15:48:43 -0600
+Message-ID: <51419b2c0906091448r1d45705he06f34bf9da1f797@mail.gmail.com>
 References: <d411cc4a0906091159r51e7d16t4d66c6225322fb60@mail.gmail.com>
-	<20090609212748.GD13781@atjola.homenet>
+	 <20090609212748.GD13781@atjola.homenet>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Scott Chacon <schacon@gmail.com>, git list <git@vger.kernel.org>
-To: =?utf-8?Q?Bj=C3=B6rn?= Steinbrink <B.Steinbrink@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Jun 09 23:36:19 2009
+To: =?UTF-8?Q?Bj=C3=B6rn_Steinbrink?= <B.Steinbrink@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Jun 09 23:48:55 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ME8zT-00075o-0E
-	for gcvg-git-2@gmane.org; Tue, 09 Jun 2009 23:36:19 +0200
+	id 1ME9Bc-0002mF-GC
+	for gcvg-git-2@gmane.org; Tue, 09 Jun 2009 23:48:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754189AbZFIVgK convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 9 Jun 2009 17:36:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755749AbZFIVgJ
-	(ORCPT <rfc822;git-outgoing>); Tue, 9 Jun 2009 17:36:09 -0400
-Received: from fed1rmmtao106.cox.net ([68.230.241.40]:65438 "EHLO
-	fed1rmmtao106.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754856AbZFIVgI (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Jun 2009 17:36:08 -0400
-Received: from fed1rmimpo03.cox.net ([70.169.32.75])
-          by fed1rmmtao106.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20090609213611.JLBY25927.fed1rmmtao106.cox.net@fed1rmimpo03.cox.net>;
-          Tue, 9 Jun 2009 17:36:11 -0400
-Received: from localhost ([68.225.240.211])
-	by fed1rmimpo03.cox.net with bizsmtp
-	id 1xc91c00M4aMwMQ04xc9jB; Tue, 09 Jun 2009 17:36:10 -0400
-X-VR-Score: -200.00
-X-Authority-Analysis: v=1.0 c=1 a=609rUi2NPo9pCix4vm0A:9
- a=wOCZITAad_ks5sdA-uzkLgQHawMA:4 a=_RhRFcbxBZMA:10
-X-CM-Score: 0.00
-In-Reply-To: <20090609212748.GD13781@atjola.homenet> (=?utf-8?Q?=22Bj?=
- =?utf-8?Q?=C3=B6rn?= Steinbrink"'s message of "Tue\, 9 Jun 2009 23\:27\:48
- +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+	id S1754750AbZFIVsm convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 9 Jun 2009 17:48:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754693AbZFIVsm
+	(ORCPT <rfc822;git-outgoing>); Tue, 9 Jun 2009 17:48:42 -0400
+Received: from qw-out-2122.google.com ([74.125.92.24]:43133 "EHLO
+	qw-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754549AbZFIVsm convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 9 Jun 2009 17:48:42 -0400
+Received: by qw-out-2122.google.com with SMTP id 5so213391qwd.37
+        for <git@vger.kernel.org>; Tue, 09 Jun 2009 14:48:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=aaV9wC6cs3GgNQUL3OIs1AjQ6dsmNoSgLfg+lYMnUaI=;
+        b=ir0iY9aiGGP0PvjLCI5yUCcRps62uwcWkCC0MAFXH0KEd5UHzXDL/JuLO4TGP1YOcy
+         aLzPYcnCYHg0cI5kdbZbX76XqoKEoH7B/ifxKsj8ALHjF8KMSFmDiVqCmJ3ttxBLt83P
+         0yBtlW95X9Z8VyG79vwJBOCy1vK4oniqXakwg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=Iamp63C1UbI7Mbv6VPtfDHrI9kNU/X7/fJjQzldIO+VFjQazNp7vZKQBCtDEEhlBJq
+         eF8KmvcfQVxxbKXKheoifGT3xu3C5+n7nELPN2kI2rvEeTYvZNrgHDdtzjMdsuWv0HOX
+         dpTcywDxErZhMoK+yqhlDeRJDrT0kgv7jRuHA=
+Received: by 10.229.79.19 with SMTP id n19mr144721qck.74.1244584123630; Tue, 
+	09 Jun 2009 14:48:43 -0700 (PDT)
+In-Reply-To: <20090609212748.GD13781@atjola.homenet>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121227>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121228>
 
-Bj=C3=B6rn Steinbrink <B.Steinbrink@gmx.de> writes:
-
+2009/6/9 Bj=C3=B6rn Steinbrink <B.Steinbrink@gmx.de>:
 > On 2009.06.09 11:59:08 -0700, Scott Chacon wrote:
 >> * adds 'git resolved' for 'git add', which I hear all the time as
 >> being confusing
@@ -57,9 +61,22 @@ Bj=C3=B6rn Steinbrink <B.Steinbrink@gmx.de> writes:
 > files it accepts? My gut feeling is that a plain alias might cause
 > trouble again when users get lazy and start to do "git resolve ." and
 > wonder why that adds new files.
->
+
+In eg it's currently a plain alias, but I like your arguments for
+making it only handle unmerged entries.
+
 > Iff such a "resolve" command is added, it should IMHO only serve the
 > purpose of changing the status of index entries marked as "unstaged",
-> and do nothing else that "add" can do.
-
-Very good point (modulo s/unstaged/unmerged/ I think).
+> and do nothing else that "add" can do. When someone asks why "git add=
+"
+> is used for telling git that a conflict was resolved, I can say that
+> "git add" means "add this to the things to be committed" and that tha=
+t
+> implies that conflicts have been resolved (I like to describe "git ad=
+d"
+> as "tell git that 'this is good to commit'"). So I can give some logi=
+cal
+> explanation. But if someone would ask me why "git resolve" can add ne=
+w
+> files, which never had a merge conflict, to the index, I'd be pretty
+> stumped.
