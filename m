@@ -1,101 +1,73 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH] show-branch: fix segfault when showbranch.default exists
-Date: Mon, 08 Jun 2009 23:26:44 -0700
-Message-ID: <7vfxe9udln.fsf@alter.siamese.dyndns.org>
+From: Markus Heidelberg <markus.heidelberg@web.de>
+Subject: Re: [PATCH 1/6] send-email: fix a typo in a comment
+Date: Tue, 9 Jun 2009 09:05:57 +0200
+Message-ID: <200906090905.58446.markus.heidelberg@web.de>
+References: <1244410857-920-1-git-send-email-markus.heidelberg@web.de> <1244410857-920-2-git-send-email-markus.heidelberg@web.de> <7vljo2wgco.fsf@alter.siamese.dyndns.org>
+Reply-To: markus.heidelberg@web.de
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Stephen Boyd <bebarino@gmail.com>,
-	Pierre Habouzit <madcoder@debian.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jun 09 08:26:57 2009
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jun 09 09:06:24 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MDunO-0005I8-7d
-	for gcvg-git-2@gmane.org; Tue, 09 Jun 2009 08:26:54 +0200
+	id 1MDvPV-0002gX-H4
+	for gcvg-git-2@gmane.org; Tue, 09 Jun 2009 09:06:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754201AbZFIG0o (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 9 Jun 2009 02:26:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753441AbZFIG0n
-	(ORCPT <rfc822;git-outgoing>); Tue, 9 Jun 2009 02:26:43 -0400
-Received: from fed1rmmtao107.cox.net ([68.230.241.39]:64669 "EHLO
-	fed1rmmtao107.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752914AbZFIG0m (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Jun 2009 02:26:42 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao107.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20090609062644.OZEO18948.fed1rmmtao107.cox.net@fed1rmimpo02.cox.net>;
-          Tue, 9 Jun 2009 02:26:44 -0400
-Received: from localhost ([68.225.240.211])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id 1iSk1c0044aMwMQ04iSkND; Tue, 09 Jun 2009 02:26:44 -0400
-X-VR-Score: -200.00
-X-Authority-Analysis: v=1.0 c=1 a=peqd20d9aYoA:10 a=K3128E0kj6wA:10
- a=ybZZDoGAAAAA:8 a=3HqTN-wNYG9LWAGDqkcA:9 a=DN2aKf4sicsS5yREyzMA:7
- a=fZCZQK-bNrfNWIrM2X4l6p90KEoA:4 a=qIVjreYYsbEA:10 a=Nj9nSCg5LJp6YWzr:21
- a=OQNFo6sxkL0u_7-0:21
-X-CM-Score: 0.00
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+	id S1755617AbZFIHGG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 9 Jun 2009 03:06:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754276AbZFIHGF
+	(ORCPT <rfc822;git-outgoing>); Tue, 9 Jun 2009 03:06:05 -0400
+Received: from fmmailgate01.web.de ([217.72.192.221]:41639 "EHLO
+	fmmailgate01.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754020AbZFIHGE (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Jun 2009 03:06:04 -0400
+Received: from smtp05.web.de (fmsmtp05.dlan.cinetic.de [172.20.4.166])
+	by fmmailgate01.web.de (Postfix) with ESMTP id DC609104D103F;
+	Tue,  9 Jun 2009 09:05:52 +0200 (CEST)
+Received: from [89.59.118.0] (helo=.)
+	by smtp05.web.de with asmtp (TLSv1:AES256-SHA:256)
+	(WEB.DE 4.110 #277)
+	id 1MDvP5-0006Gj-00; Tue, 09 Jun 2009 09:05:51 +0200
+User-Agent: KMail/1.9.9
+In-Reply-To: <7vljo2wgco.fsf@alter.siamese.dyndns.org>
+Jabber-ID: markus.heidelberg@web.de
+Content-Disposition: inline
+X-Sender: markus.heidelberg@web.de
+X-Provags-ID: V01U2FsdGVkX1/sQ7kmNIhMf+NR+4YBFVLcoy+yVVS3XjRLfpum
+	fP0Gi1PbN8p4IXJ1iY/waAMXiMDGimeLz035tG86vA+FVVf6qw
+	lk1q9ykn5b0N7MIvJX7Q==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121142>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121143>
 
-When running "git show-branch" without any parameter in a repository that
-has showbranch.default defined, we used to rely on the fact that our
-handcrafted option parsing loop never looked at av[0].
+Junio C Hamano, 08.06.2009:
+> Thanks; is there any patch among the six that should go to 'maint' (aka
+> 1.6.3.X)?
 
-The array of default strings had the first real command line argument in
-default_arg[0], but the option parser wanted to look at the array starting
-at av[1], so we assigned the address of -1th element to av to force the
-loop start working from default_arg[0].
+[PATCH 4/6] add a test for git-send-email for non-threaded mails
+[PATCH 5/6] send-email: fix non-threaded mails
 
-This no longer worked since 5734365 (show-branch: migrate to parse-options
-API, 2009-05-21), as parse_options_start() saved the incoming &av[0] in
-its ctx->out and later in parse_options_end() it did memmove to ctx->out
-(with ctx->cpidx == 0), overwriting the memory before default_arg[] array.
+fix the regression from commit 3e0c4ff (send-email: respect in-reply-to
+regardless of threading, 2009-03-01), which was included before 1.6.3
+and so is included in 'maint', so they should go to 'maint'. I'll resend
+rebased.
 
-I am not sure if this is a bug in parse_options(), or a bug in the caller,
-and tonight I do not have enough concentration to figure out which.  In
-any case, this patch works the issue around.
+[PATCH 1/6] send-email: fix a typo in a comment
+[PATCH 2/6] add a test for git-send-email for threaded mails without chain-reply-to
+[PATCH 3/6] send-email: fix threaded mails without chain-reply-to
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- builtin-show-branch.c |   14 +++++++++++---
- 1 files changed, 11 insertions(+), 3 deletions(-)
+fix commit 15da108 ("send-email: 'References:' should only reference
+what is sent", 2009-04-13), which was included after 1.6.3 directly to
+'master', so they don't go to 'maint'.
 
-diff --git a/builtin-show-branch.c b/builtin-show-branch.c
-index 01bea3b..baec9ed 100644
---- a/builtin-show-branch.c
-+++ b/builtin-show-branch.c
-@@ -565,7 +565,15 @@ static int git_show_branch_config(const char *var, const char *value, void *cb)
- 	if (!strcmp(var, "showbranch.default")) {
- 		if (!value)
- 			return config_error_nonbool(var);
--		if (default_alloc <= default_num + 1) {
-+		/*
-+		 * default_arg is now passed to parse_options(), so we need to
-+		 * mimick the real argv a bit better.
-+		 */
-+		if (!default_num) {
-+			default_alloc = 20;
-+			default_arg = xcalloc(default_alloc, sizeof(*default_arg));
-+			default_arg[default_num++] = "show-branch";
-+		} else if (default_alloc <= default_num + 1) {
- 			default_alloc = default_alloc * 3 / 2 + 20;
- 			default_arg = xrealloc(default_arg, sizeof *default_arg * default_alloc);
- 		}
-@@ -692,8 +700,8 @@ int cmd_show_branch(int ac, const char **av, const char *prefix)
- 
- 	/* If nothing is specified, try the default first */
- 	if (ac == 1 && default_num) {
--		ac = default_num + 1;
--		av = default_arg - 1; /* ick; we would not address av[0] */
-+		ac = default_num;
-+		av = default_arg;
- 	}
- 
- 	ac = parse_options(ac, av, prefix, builtin_show_branch_options,
+I don't know how documentation fixes are handled for inclusion to
+'maint', but this could apply to 'maint' as well:
+
+[PATCH 6/6] doc/send-email: clarify the behavior of --in-reply-to with --no-thread
