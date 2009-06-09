@@ -1,76 +1,87 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] show-branch: fix segfault when showbranch.default exists
-Date: Tue, 09 Jun 2009 09:28:28 -0700
-Message-ID: <7viqj5nzgz.fsf@alter.siamese.dyndns.org>
-References: <7vfxe9udln.fsf@alter.siamese.dyndns.org>
-	<4A2E0C88.70805@gmail.com> <20090609080612.GG9993@laphroaig.corp>
+From: Brandon Casey <casey@nrlssc.navy.mil>
+Subject: Re: [PATCH 7/8] Makefile: introduce SANE_TOOL_PATH for prepending
+ required elements to PATH
+Date: Tue, 09 Jun 2009 11:31:25 -0500
+Message-ID: <wc0tJnw_v48859mPtdiAsOp4fUfXkMF0vWRS0PSaU3M4DwNh5kkG_Q@cipher.nrlssc.navy.mil>
+References: <67hZHClrEWQHxCRdWosE25_CVQVNIYpTaeW2DKuCCDfW4h-jHQ82zlGcCNn49KcxUKsj-TSJSVQ@cipher.nrlssc.navy.mil> <67hZHClrEWQHxCRdWosE24eNsO0do05033zPcGsXrwIRCoU8GtXor_XD8ayKlybu-V7PGeTC_PA@cipher.nrlssc.navy.mil> <67hZHClrEWQHxCRdWosE21Y219yACHqb_DoUmykc1kiOxwRuziSDMczTdmGkyEob9g6DVoIraR4@cipher.nrlssc.navy.mil> <67hZHClrEWQHxCRdWosE24FbCSWPktK230jx86LzLj0Aqa5g5XoJb3Iv805pzfx5wCPameuSp6M@cipher.nrlssc.navy.mil> <67hZHClrEWQHxCRdWosE28bOBU_EdMUdyv6uENKCaQfOLQjhGBq3kLwxe6mMrfW4HauaUwWt5eM@cipher.nrlssc.navy.mil> <67hZHClrEWQHxCRdWosE26gwuGblUI8bcWLxyoPZhmfzJAibRVMtix-zkRUKYe5Y8R8-GRcIkUI@cipher.nrlssc.navy.mil> <67hZHClrEWQHxCRdWosE2-yxscBzIn8DiQogVPM7EAgcGyYg61V8vYLxFiW6A4ovZp6SOuP0pDM@cipher.nrlssc.navy.mil> <67hZHClrEWQHxCRdWosE2_PLKo8HHFSCQIZrHMfucFNo_Bdy4p79XNP-MU8gnsUflWndiCqfhFM@ciph
+ er.nrlssc.navy.mil> <20090608114351.GA13775@coredump.intra.peff.net> <7v4ouq1xv6.fsf@alter.siamese.dyndns.org> <20090608221117.GC29942@sigill.intra.peff.net> <fzqJj0x9YB8Uli2Fx2vePY55fbueEE!
+ Y-IiruKI-uLEgS08KF5M8miw@cipher.nrlssc.navy.mil>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Stephen Boyd <bebarino@gmail.com>, git@vger.kernel.org,
-	Pierre Habouzit <madcoder@debian.org>
-To: Pierre Habouzit <madcoder@madism.org>
-X-From: git-owner@vger.kernel.org Tue Jun 09 18:28:38 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Brandon Casey <drafnel@gmail.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Jun 09 18:34:59 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ME4Be-0006jR-TI
-	for gcvg-git-2@gmane.org; Tue, 09 Jun 2009 18:28:35 +0200
+	id 1ME4Ho-0001qD-0E
+	for gcvg-git-2@gmane.org; Tue, 09 Jun 2009 18:34:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755947AbZFIQ22 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 9 Jun 2009 12:28:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755577AbZFIQ21
-	(ORCPT <rfc822;git-outgoing>); Tue, 9 Jun 2009 12:28:27 -0400
-Received: from fed1rmmtao101.cox.net ([68.230.241.45]:34717 "EHLO
-	fed1rmmtao101.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753829AbZFIQ21 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Jun 2009 12:28:27 -0400
-Received: from fed1rmimpo03.cox.net ([70.169.32.75])
-          by fed1rmmtao101.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20090609162829.JET17670.fed1rmmtao101.cox.net@fed1rmimpo03.cox.net>;
-          Tue, 9 Jun 2009 12:28:29 -0400
-Received: from localhost ([68.225.240.211])
-	by fed1rmimpo03.cox.net with bizsmtp
-	id 1sUU1c00k4aMwMQ04sUURM; Tue, 09 Jun 2009 12:28:29 -0400
-X-VR-Score: -130.00
-X-Authority-Analysis: v=1.0 c=1 a=IsGRFJ6KzkAA:10 a=_XXy0EWxoj8A:10
- a=ZtsLtc1TAAAA:8 a=IcTmkirJ76_eHVicv_UA:9 a=c_6I5l7cjw7Iw1t55sMA:7
- a=eCm58g6t7GlYnTbts2ClbDQ-r_kA:4 a=OH9CTqYB3BAA:10
-X-CM-Score: 0.00
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+	id S1756536AbZFIQer (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 9 Jun 2009 12:34:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756095AbZFIQeq
+	(ORCPT <rfc822;git-outgoing>); Tue, 9 Jun 2009 12:34:46 -0400
+Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:56849 "EHLO
+	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756043AbZFIQeq (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Jun 2009 12:34:46 -0400
+Received: by mail.nrlssc.navy.mil id n59GVPTh023743; Tue, 9 Jun 2009 11:31:25 -0500
+In-Reply-To: <fzqJj0x9YB8Uli2Fx2vePY55fbueEEY-IiruKI-uLEgS08KF5M8miw@cipher.nrlssc.navy.mil>
+X-OriginalArrivalTime: 09 Jun 2009 16:31:25.0725 (UTC) FILETIME=[BB96CCD0:01C9E91F]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121188>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121189>
 
-Pierre Habouzit <madcoder@madism.org> writes:
+Brandon Casey wrote:
+> I never received the referenced email.  I'll try to extract from gmane
+> and test.
 
-> On Tue, Jun 09, 2009 at 12:17:28AM -0700, Stephen Boyd wrote:
->> Junio C Hamano wrote:
->> > I am not sure if this is a bug in parse_options(), or a bug in the caller,
->> > and tonight I do not have enough concentration to figure out which.  In
->> > any case, this patch works the issue around.
->> 
->> I am low on concentration tonight as well, but this looks right to me.
->> Parse options is expecting the regular old argv and argc. I overlooked
->> this code path during the conversion (though I remember figuring out
->> what this path was doing). Faking the argv and argc a little more
->> accurately, like you do, should work fine.
->
-> yes, that's it.
+This patch works for me.
 
-Wait a minute, please.
+-brandon
 
-Why is parse_options() allowed to clobber argv[0] in parse_options_end()
-in the first place?
 
-I think the memmove() is there to allow the caller to find the remaining
-arguments after the library parsed out the options in argv[], but wouldn't
-the caller be expecting to inspect argv[] starting from position 1?
-
-In other words, anything moved to the position of original argv[0] would
-be lost, and the problem I stumbled upon was exactly that (it triggered
-because the location of argv[0] was invalid and parse_options_end() wrote
-into it).
+> Jeff King wrote:
+>> On Mon, Jun 08, 2009 at 09:41:49AM -0700, Junio C Hamano wrote:
+>>
+>>> We could further uglify the patch like this.
+>>> [...]
+>>> +git_broken_path_fix () {
+>>> +	case ":$PATH:" in
+>>> +	*:$1:*) : ok ;;
+>>> +	*)
+>>> +		PATH=$(
+>>> +			SANE_TOOL_PATH="$1"
+>>> +			IFS=: path= sep=
+>>> +			set x $PATH
+>>> +			shift
+>>> +			for elem
+>>> +			do
+>>> +				case "$SANE_TOOL_PATH:$elem" in
+>>> +				(?*:/bin | ?*:/usr/bin)
+>>> +					path="$path$sep$SANE_TOOL_PATH"
+>>> +					sep=:
+>>> +					SANE_TOOL_PATH=
+>>> +				esac
+>>> +				path="$path$sep$elem"
+>>> +				sep=:
+>>> +			done
+>>> +			echo "$path"
+>>> +		)
+>>> +		;;
+>>> +	esac
+>>> +}
+>> Wow. That _is_ ugly, but it actually addresses exactly both my concern
+>> and Brandon's. I kind of like it.
+>>
+>> -Peff
+> 
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
