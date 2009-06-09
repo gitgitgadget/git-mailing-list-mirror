@@ -1,117 +1,92 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH v3 0/3] automatically skip away from broken commits
-Date: Tue, 09 Jun 2009 03:02:02 -0700 (PDT)
-Message-ID: <m3prdd4t6s.fsf@localhost.localdomain>
-References: <20090606043853.4031.78284.chriscool@tuxfamily.org>
-	<7vskidcf9s.fsf@alter.siamese.dyndns.org>
-	<200906070932.36913.chriscool@tuxfamily.org>
-	<4A2CAA56.1030707@zytor.com> <7vws7n6vcf.fsf@alter.siamese.dyndns.org>
-	<4A2D337C.70203@zytor.com> <7vzlcixwue.fsf@alter.siamese.dyndns.org>
-	<c07716ae0906082124n4a5bfe88md80ba8076c928b76@mail.gmail.com>
+From: Yakup Akbay <yakbay@ubicom.com>
+Subject: Confused about `git gc`
+Date: Tue, 09 Jun 2009 11:28:39 +0300
+Message-ID: <4A2E1D37.9010909@ubicom.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-15
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	"H. Peter Anvin" <hpa@zytor.com>,
-	Christian Couder <chriscool@tuxfamily.org>,
-	git@vger.kernel.org, Sam Vilain <sam@vilain.net>,
-	Ingo Molnar <mingo@elte.hu>
-To: Christian Couder <christian.couder@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jun 09 12:02:16 2009
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jun 09 12:32:23 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MDy9l-0001l5-50
-	for gcvg-git-2@gmane.org; Tue, 09 Jun 2009 12:02:13 +0200
+	id 1MDycp-000396-A6
+	for gcvg-git-2@gmane.org; Tue, 09 Jun 2009 12:32:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757991AbZFIKCF convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 9 Jun 2009 06:02:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757279AbZFIKCE
-	(ORCPT <rfc822;git-outgoing>); Tue, 9 Jun 2009 06:02:04 -0400
-Received: from mail-ew0-f210.google.com ([209.85.219.210]:35844 "EHLO
-	mail-ew0-f210.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755168AbZFIKCC convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 9 Jun 2009 06:02:02 -0400
-Received: by ewy6 with SMTP id 6so5020236ewy.37
-        for <git@vger.kernel.org>; Tue, 09 Jun 2009 03:02:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received
-         :x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type
-         :content-transfer-encoding;
-        bh=iSdFJZKFZTysr/yvLlVAsepkSb6GrTJjoVevD5yDcvA=;
-        b=FfNd1Ta4P1ZS32u8MWE94X3e2aVLsLiswErARf06oYBrAEQ2sdkRS0LS8o3SF+JPs8
-         SxEI0ZZSXooP7OGMSmmKhvskhIZcDKzaft8PMx+Jdo3k5d91R/a9HnjyGU1UD19IHqx8
-         KEyALLtT/iyKLwmg8JW4mXvFDB3YOaaXK57SY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type
-         :content-transfer-encoding;
-        b=sGOPiEerp536FXv/c2Yi+Amr82ZWIM2PfIEUODEEkslqNrAaUBm+ybkR3ZocOvvR1O
-         v+ooprAc9r796IcmgS/MY/gldsujQY/N7A40ubQl52SpjgbpQvTCp8STM1OU40WosWr9
-         OcGUNGT7NvRoSVIv95hgvrcYUhEU7TKY139QA=
-Received: by 10.210.36.8 with SMTP id j8mr2165241ebj.40.1244541723323;
-        Tue, 09 Jun 2009 03:02:03 -0700 (PDT)
-Received: from localhost.localdomain (abvq34.neoplus.adsl.tpnet.pl [83.8.214.34])
-        by mx.google.com with ESMTPS id 28sm1482476eyg.54.2009.06.09.03.02.01
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 09 Jun 2009 03:02:02 -0700 (PDT)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id n59A6rfo008006;
-	Tue, 9 Jun 2009 12:06:54 +0200
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id n59A6poA008003;
-	Tue, 9 Jun 2009 12:06:51 +0200
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <c07716ae0906082124n4a5bfe88md80ba8076c928b76@mail.gmail.com>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+	id S1761651AbZFIK2v (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 9 Jun 2009 06:28:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761643AbZFIK2u
+	(ORCPT <rfc822;git-outgoing>); Tue, 9 Jun 2009 06:28:50 -0400
+Received: from server70b.appriver.com ([74.205.4.150]:3379 "EHLO
+	server70.appriver.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1761662AbZFIK2t (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Jun 2009 06:28:49 -0400
+X-Greylist: delayed 3600 seconds by postgrey-1.27 at vger.kernel.org; Tue, 09 Jun 2009 06:28:49 EDT
+Received: by server70.appriver.com (CommuniGate Pro PIPE 5.2.13)
+  with PIPE id 95220257; Tue, 09 Jun 2009 04:28:52 -0400
+Received: from [216.112.109.98] (HELO stork.scenix.com)
+  by server70.appriver.com (CommuniGate Pro SMTP 5.2.13)
+  with ESMTP id 95220252 for git@vger.kernel.org; Tue, 09 Jun 2009 04:28:48 -0400
+Received: from [172.18.200.101] ([172.18.200.101]) by stork.scenix.com with Microsoft SMTPSVC(6.0.3790.3959);
+	 Tue, 9 Jun 2009 01:26:56 -0700
+User-Agent: Thunderbird 2.0.0.21 (X11/20090409)
+X-OriginalArrivalTime: 09 Jun 2009 08:26:57.0265 (UTC) FILETIME=[0D6FCE10:01C9E8DC]
+X-Policy: GLOBAL - ubicom.com
+X-Primary: yakbay@ubicom.com
+X-Note: This Email was scanned by AppRiver SecureTide
+X-Virus-Scan: V-
+X-Note: TCH-CT/SI:0-18/SG:2 6/9/2009 4:27:49 AM
+X-GBUdb-Analysis: 0, 216.112.109.98, Ugly c=0.573425 p=-0.800766 Source Normal
+X-Signature-Violations: 0-0-0-3228-c
+X-Note: Spam Tests Failed: 
+X-Country-Path: PRIVATE->UNITED STATES->UNITED STATES
+X-Note-Sending-IP: 216.112.109.98
+X-Note-Reverse-DNS: 216.112.109.98.ptr.us.xo.net
+X-Note-WHTLIST: yakbay@ubicom.com
+X-Note: User Rule Hits: 
+X-Note: Global Rule Hits: 112 113 114 115 119 120 210 
+X-Note: Mail Class: VALID
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121163>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121164>
 
-Christian Couder <christian.couder@gmail.com> writes:
-> On Mon, Jun 8, 2009 at 11:02 PM, Junio C Hamano<gitster@pobox.com> wr=
-ote:
->> "H. Peter Anvin" <hpa@zytor.com> writes:
->>
->>> The advantage of that -- and I have to admit I don't know if it wil=
-l
->>> ever matter in practice -- is that using an actual PRNG:
->>>
->>> a) is less likely to get into pathological capture behaviors.
->>> b) doesn't make people think later that there is something magic to=
- the
->>> =A0 =A0arbitrary chosen numbers.
->>
->> My gut feeling agrees with you that both are likely to be true; thes=
-e are
->> good points.
->>
->> Christian, what do you think?
->=20
-> Here are some reasons why I think my algorithm might be better:
->=20
-> - using HPA's formula I get on average 0.86 bits of information at
-> each step when alternating (against 0.72 when using a PRNG)
-> - I think that if the branches in the graph merge often between each
-> other, then on a big scale it's like when you are on the linear case
-> - I don't think we should try too hard to avoid pathological capture
-> behaviors, because I think we can't avoid them anyway in some cases,
-> like if the first bad commit is near many untestable commits
+Looks like I didn't quite understand the actual role of `git gc`. I just 
+thought that `git gc` would remove all unreferenced objects during the 
+unpack-pack process. However, I'm not seeing the result what I was 
+expecting from `git gc`.
+
+I'm adding an object into the database, which is ignored by git. Then I 
+expect the object to be removed after `git gc`. But, it's still there.
+
+Please follow:
+
+$ echo "/ignored_file" > .gitignore
+$ echo "This file is ignored by git. I'm sure that this content has 
+never been existed in the repository before." > ignored_file
+$ git hash-object -w ignored_file
+39cd40a92c0a92bbcbd74ec6879b4936212beebd
+$ ls .git/objects/
+07  39  9f  b9  d0  fa  info  pack
+$ ls .git/objects/39/
+cd40a92c0a92bbcbd74ec6879b4936212beebd
+$ git gc
+Counting objects: 319, done.
+Delta compression using up to 2 threads.
+Compressing objects: 100% (147/147), done.
+Writing objects: 100% (319/319), done.
+Total 319 (delta 124), reused 319 (delta 124)
+$ ls .git/objects/39/
+cd40a92c0a92bbcbd74ec6879b4936212beebd
 
 
-By the way, I have asked question about best algorithm for "bisect skip=
-"
-on StackOverflow[1], but didn't get (yet) any good responses...
+As you see, 39cd40a92c0a92bbcbd74ec6879b4936212beebd is still there. 
+Shouldn't it be removed by `git gc`?
 
-[1]: http://stackoverflow.com/questions/959324/
+What am I overlooking?
 
---=20
-Jakub Narebski
-Poland
-ShadeHawk on #git
+
+Regards,
+Yakup
