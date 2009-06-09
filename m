@@ -1,55 +1,98 @@
-From: "Robin H. Johnson" <robbat2@gentoo.org>
-Subject: Re: git clone failing over slow links?
-Date: Tue, 9 Jun 2009 10:12:32 -0700
-Message-ID: <robbat2-20090609T171032-419739557Z@orbis-terrarum.net>
-References: <2729632a0906090852r124eff8eo8391ae90cbda5872@mail.gmail.com>
+From: Pierre Habouzit <madcoder@madism.org>
+Subject: Re: [PATCH] show-branch: fix segfault when showbranch.default
+	exists
+Date: Tue, 9 Jun 2009 19:23:02 +0200
+Message-ID: <20090609172302.GH9993@laphroaig.corp>
+References: <7vfxe9udln.fsf@alter.siamese.dyndns.org> <4A2E0C88.70805@gmail.com> <20090609080612.GG9993@laphroaig.corp> <7viqj5nzgz.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Jun 09 19:12:50 2009
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Stephen Boyd <bebarino@gmail.com>, git@vger.kernel.org,
+	Pierre Habouzit <madcoder@debian.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jun 09 19:23:15 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ME4sR-0008S8-Sj
-	for gcvg-git-2@gmane.org; Tue, 09 Jun 2009 19:12:48 +0200
+	id 1ME52Z-0004Hf-8n
+	for gcvg-git-2@gmane.org; Tue, 09 Jun 2009 19:23:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755248AbZFIRMg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 9 Jun 2009 13:12:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755025AbZFIRMg
-	(ORCPT <rfc822;git-outgoing>); Tue, 9 Jun 2009 13:12:36 -0400
-Received: from b01.ext.isohunt.com ([208.71.112.51]:44494 "EHLO
-	mail.isohunt.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1754332AbZFIRMg (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Jun 2009 13:12:36 -0400
-Received: (qmail 14434 invoked from network); 9 Jun 2009 17:12:35 -0000
-Received: from tsi-static.orbis-terrarum.net (HELO curie.orbis-terrarum.net) (76.10.188.108)
-  (smtp-auth username robbat2@isohunt.com, mechanism login)
-  by mail.isohunt.com (qpsmtpd/0.33-dev on beta01) with (AES256-SHA encrypted) ESMTPSA; Tue, 09 Jun 2009 17:12:35 +0000
-Received: (qmail 5093 invoked by uid 10000); 9 Jun 2009 10:12:32 -0700
+	id S1753747AbZFIRXG convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 9 Jun 2009 13:23:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754219AbZFIRXF
+	(ORCPT <rfc822;git-outgoing>); Tue, 9 Jun 2009 13:23:05 -0400
+Received: from pan.madism.org ([88.191.52.104]:43905 "EHLO hermes.madism.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752749AbZFIRXE (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Jun 2009 13:23:04 -0400
+Received: from laphroaig.corp (def92-12-88-177-251-208.fbx.proxad.net [88.177.251.208])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(Client did not present a certificate)
+	by hermes.madism.org (Postfix) with ESMTPSA id 40EED3DCFE;
+	Tue,  9 Jun 2009 19:23:05 +0200 (CEST)
 Content-Disposition: inline
-In-Reply-To: <2729632a0906090852r124eff8eo8391ae90cbda5872@mail.gmail.com>
-User-Agent: Mutt/1.5.16 (2007-06-09)
+In-Reply-To: <7viqj5nzgz.fsf@alter.siamese.dyndns.org>
+X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<
+	;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u
+	*\.dJ8G!N&=EvlD
+User-Agent: Mutt/1.5.19 (2009-01-05)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121191>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121192>
 
-On Tue, Jun 09, 2009 at 08:52:10AM -0700, skillzero@gmail.com wrote:
-> People with slower connections are having problems cloning my
-> repository. The server seems to just drop the connection. This
-> repository is about 300 MB. The server is using git 1.6.1. This is
-> using an ssh URL. They've tried many times and it usually dies at
-> different places in the clone (5%, 80%, etc., with one successful
-> clone so far for them).
-For Gentoo, we saw what I think was same problem early on with our
-conversion experiments. In our case however, it's going to be a
-non-problem as we intend on disabling initial clone and requiring use of
-a bundle.
+On Tue, Jun 09, 2009 at 09:28:28AM -0700, Junio C Hamano wrote:
+> Pierre Habouzit <madcoder@madism.org> writes:
+>=20
+> > On Tue, Jun 09, 2009 at 12:17:28AM -0700, Stephen Boyd wrote:
+> >> Junio C Hamano wrote:
+> >> > I am not sure if this is a bug in parse_options(), or a bug in t=
+he caller,
+> >> > and tonight I do not have enough concentration to figure out whi=
+ch.  In
+> >> > any case, this patch works the issue around.
+> >>=20
+> >> I am low on concentration tonight as well, but this looks right to=
+ me.
+> >> Parse options is expecting the regular old argv and argc. I overlo=
+oked
+> >> this code path during the conversion (though I remember figuring o=
+ut
+> >> what this path was doing). Faking the argv and argc a little more
+> >> accurately, like you do, should work fine.
+> >
+> > yes, that's it.
+>=20
+> Wait a minute, please.
+>=20
+> Why is parse_options() allowed to clobber argv[0] in parse_options_en=
+d()
+> in the first place?
+>=20
+> I think the memmove() is there to allow the caller to find the remain=
+ing
+> arguments after the library parsed out the options in argv[], but wou=
+ldn't
+> the caller be expecting to inspect argv[] starting from position 1?
+>=20
+> In other words, anything moved to the position of original argv[0] wo=
+uld
+> be lost, and the problem I stumbled upon was exactly that (it trigger=
+ed
+> because the location of argv[0] was invalid and parse_options_end() w=
+rote
+> into it).
 
--- 
-Robin Hugh Johnson
-Gentoo Linux Developer & Infra Guy
-E-Mail     : robbat2@gentoo.org
-GnuPG FP   : 11AC BA4F 4778 E3F6 E4ED  F38E B27B 944E 3488 4E85
+it does because it supposes that the command is there, and that when I
+ported the old parsing stuff it's what it was doing.
+
+=46WIW I believe it's a misfeature.
+
+--=20
+=C2=B7O=C2=B7  Pierre Habouzit
+=C2=B7=C2=B7O                                                madcoder@d=
+ebian.org
+OOO                                                http://www.madism.or=
+g
