@@ -1,96 +1,57 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: [PATCH] Expand the rename(2) workaround in mingw to cover case 
-	change in filename
-Date: Tue, 9 Jun 2009 08:04:25 +0200
-Message-ID: <81b0412b0906082304x750eb8cif3356458829de3bc@mail.gmail.com>
-References: <20090608203248.GA22972@blimp.localdomain>
-	 <alpine.DEB.1.00.0906082355350.26154@pacific.mpi-cbg.de>
-	 <81b0412b0906081508v5435c59cm3faf3ac92a56578c@mail.gmail.com>
-	 <4A2DF92D.1080605@viscovery.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+From: Steffen Prohaska <prohaska@zib.de>
+Subject: Re: [PATCH 10/11 v2] Fix warnings in nedmalloc when compiling with GCC 4.4.0
+Date: Tue, 9 Jun 2009 08:06:51 +0200
+Message-ID: <CD46A3E1-A85C-4D03-854C-973B91ACC506@zib.de>
+References: <1243786525-4493-1-git-send-email-prohaska@zib.de> <1243786525-4493-2-git-send-email-prohaska@zib.de> <1243786525-4493-3-git-send-email-prohaska@zib.de> <1243786525-4493-4-git-send-email-prohaska@zib.de> <1243786525-4493-5-git-send-email-prohaska@zib.de> <1243786525-4493-6-git-send-email-prohaska@zib.de> <1243786525-4493-7-git-send-email-prohaska@zib.de> <1243786525-4493-8-git-send-email-prohaska@zib.de> <1243786525-4493-9-git-send-email-prohaska@zib.de> <1243786525-4493-10-git-send-email-prohaska@zib.de> <1243786525-4493-11-git-send-email-prohaska@zib.de> <7vhbz0mmai.fsf@alter.siamese.dyndns.org> <alpine.DEB.1.00.0906011054410.26154@pacific.mpi-cbg.de> <7vr5y3lxrj.fsf@alter.siamese.dyndns.org> <alpine.DEB.1.00.0906021448300.4440@intel-tinevez-2-302> <7viqjefxcv.fsf@alter.siame
+ se.dyndns.org> <alpine.DEB.1.00.0906031455520.10241@intel-tinevez-2-302> <7vprdl9qon.fsf@alter.siamese.dyndns.org> <alpine.DEB.1.00.0906081645490.4461@intel-tinevez-2-302> <7vzlcizn3w.fsf@a!
+ lter.siamese.dyndns.org>
+Mime-Version: 1.0 (Apple Message framework v930.3)
+Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
+Content-Transfer-Encoding: 7bit
 Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org, Dmitry Potapov <dpotapov@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Tue Jun 09 08:04:36 2009
+	git@vger.kernel.org, Johannes Sixt <j6t@kdbg.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jun 09 08:07:23 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MDuRm-00087M-Um
-	for gcvg-git-2@gmane.org; Tue, 09 Jun 2009 08:04:35 +0200
+	id 1MDuUS-0000OA-8X
+	for gcvg-git-2@gmane.org; Tue, 09 Jun 2009 08:07:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753163AbZFIGE0 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 9 Jun 2009 02:04:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752914AbZFIGEZ
-	(ORCPT <rfc822;git-outgoing>); Tue, 9 Jun 2009 02:04:25 -0400
-Received: from mail-fx0-f213.google.com ([209.85.220.213]:34763 "EHLO
-	mail-fx0-f213.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752496AbZFIGEY convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 9 Jun 2009 02:04:24 -0400
-Received: by fxm9 with SMTP id 9so2700862fxm.37
-        for <git@vger.kernel.org>; Mon, 08 Jun 2009 23:04:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=D5pSM7B3tMhEaqsZqnZRd8OdQBos0/XYPpKZgnoqgio=;
-        b=ZILp9CIjYftWuzsWmTq/5gfqim5NqL2CPh9Vypz6q86LjiuRz8fO2c+3VoAuUpIziS
-         2RCa0Imem+SUC68yVscgpDzo73l3Flf/Qlynwxub9DMOVxe2FsRpJR88SUWhBsG2CDko
-         StTvDMqwhtJK5h2me4qIOR/73FofmGDmIZauU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=QXZXh9qOn5ZNdji6u65mokJb2x6ibv7W0AJkAFFGUMxqGneaVPWbkFQM4pZzO/d69K
-         vkphV/tpqlUV6QiCJ9aKclETQzcH/yjU7kWmWv30aqr1CZL1hVQizvcCWkO6s92b43Sl
-         0DpyeMyxbazyBtw8nruy/aFtPOflkYMXkCTrI=
-Received: by 10.204.120.201 with SMTP id e9mr7371915bkr.187.1244527465746; 
-	Mon, 08 Jun 2009 23:04:25 -0700 (PDT)
-In-Reply-To: <4A2DF92D.1080605@viscovery.net>
+	id S1753264AbZFIGHL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 9 Jun 2009 02:07:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753248AbZFIGHL
+	(ORCPT <rfc822;git-outgoing>); Tue, 9 Jun 2009 02:07:11 -0400
+Received: from mailer.zib.de ([130.73.108.11]:42184 "EHLO mailer.zib.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752386AbZFIGHK (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Jun 2009 02:07:10 -0400
+Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
+	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id n5966wK3008277;
+	Tue, 9 Jun 2009 08:07:03 +0200 (CEST)
+Received: from [192.168.178.21] (brln-4db94a6f.pool.einsundeins.de [77.185.74.111])
+	(authenticated bits=0)
+	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id n5966vBq023670
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
+	Tue, 9 Jun 2009 08:06:57 +0200 (MEST)
+In-Reply-To: <7vzlcizn3w.fsf@alter.siamese.dyndns.org>
+X-Mailer: Apple Mail (2.930.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121140>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121141>
 
-2009/6/9 Johannes Sixt <j.sixt@viscovery.net>:
-> Alex Riesen schrieb:
->> 2009/6/8 Johannes Schindelin <Johannes.Schindelin@gmx.de>:
->>> On Mon, 8 Jun 2009, Alex Riesen wrote:
->>>> NOT TESTED. Can't. My Windows broke again. Not even compile-tested=
-=2E
->>> Yes, that is pretty easy to see as you first used pold/pnew and the=
-n
->>> src/dst.
->>
->> Yep.
->>
->>> I minimally fixed up your patch (it now uses strbuf), and added a
->>> test-case.
->>>
->>> This test-case is actually crucial: it shows that your patch is not
->>> enough: the culprit is this code in builtin-mv.c:167--168:
->>>
->>> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0else if (lst=
-at(dst, &st) =3D=3D 0) {
->>> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0bad =3D "destination exists";
->>
->> Ah, thanks. Missed that completely.
->
-> That's the reason why I think any work-around for this problem is not
-> worth it.
 
-What is the lstat is for, anyway?
+On Jun 8, 2009, at 6:50 PM, Junio C Hamano wrote:
 
-> If you want to be cross-platfrom, make up your mind about file names =
-in
-> advance.
+> Steffen, can we move the series, with this patch replaced, to 'next'  
+> now?
+> I think it looks good (thanks!) but again it would not hurt to ask  
+> just to
+> make sure ;-).
 
-I suspect it is the other way around. Some platforms just hate the idea
-of being ported to. Or its designers have poor imagination and never
-though about the fact that other platforms exist.
+I agree, it looks good.  Thanks.
+
+	Steffen
