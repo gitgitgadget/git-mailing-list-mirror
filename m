@@ -1,87 +1,62 @@
-From: Brandon Casey <casey@nrlssc.navy.mil>
-Subject: Re: [PATCH 7/8] Makefile: introduce SANE_TOOL_PATH for prepending
- required elements to PATH
-Date: Tue, 09 Jun 2009 11:31:25 -0500
-Message-ID: <wc0tJnw_v48859mPtdiAsOp4fUfXkMF0vWRS0PSaU3M4DwNh5kkG_Q@cipher.nrlssc.navy.mil>
-References: <67hZHClrEWQHxCRdWosE25_CVQVNIYpTaeW2DKuCCDfW4h-jHQ82zlGcCNn49KcxUKsj-TSJSVQ@cipher.nrlssc.navy.mil> <67hZHClrEWQHxCRdWosE24eNsO0do05033zPcGsXrwIRCoU8GtXor_XD8ayKlybu-V7PGeTC_PA@cipher.nrlssc.navy.mil> <67hZHClrEWQHxCRdWosE21Y219yACHqb_DoUmykc1kiOxwRuziSDMczTdmGkyEob9g6DVoIraR4@cipher.nrlssc.navy.mil> <67hZHClrEWQHxCRdWosE24FbCSWPktK230jx86LzLj0Aqa5g5XoJb3Iv805pzfx5wCPameuSp6M@cipher.nrlssc.navy.mil> <67hZHClrEWQHxCRdWosE28bOBU_EdMUdyv6uENKCaQfOLQjhGBq3kLwxe6mMrfW4HauaUwWt5eM@cipher.nrlssc.navy.mil> <67hZHClrEWQHxCRdWosE26gwuGblUI8bcWLxyoPZhmfzJAibRVMtix-zkRUKYe5Y8R8-GRcIkUI@cipher.nrlssc.navy.mil> <67hZHClrEWQHxCRdWosE2-yxscBzIn8DiQogVPM7EAgcGyYg61V8vYLxFiW6A4ovZp6SOuP0pDM@cipher.nrlssc.navy.mil> <67hZHClrEWQHxCRdWosE2_PLKo8HHFSCQIZrHMfucFNo_Bdy4p79XNP-MU8gnsUflWndiCqfhFM@ciph
- er.nrlssc.navy.mil> <20090608114351.GA13775@coredump.intra.peff.net> <7v4ouq1xv6.fsf@alter.siamese.dyndns.org> <20090608221117.GC29942@sigill.intra.peff.net> <fzqJj0x9YB8Uli2Fx2vePY55fbueEE!
- Y-IiruKI-uLEgS08KF5M8miw@cipher.nrlssc.navy.mil>
+From: =?ISO-8859-1?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
+Subject: Re: notice: pu broken tonight
+Date: Tue, 09 Jun 2009 19:11:05 +0200
+Message-ID: <4A2E97A9.7040906@lsrfire.ath.cx>
+References: <7vy6s1pzwb.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Brandon Casey <drafnel@gmail.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Jun 09 18:34:59 2009
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jun 09 19:11:36 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ME4Ho-0001qD-0E
-	for gcvg-git-2@gmane.org; Tue, 09 Jun 2009 18:34:56 +0200
+	id 1ME4rH-0007xL-7l
+	for gcvg-git-2@gmane.org; Tue, 09 Jun 2009 19:11:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756536AbZFIQer (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 9 Jun 2009 12:34:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756095AbZFIQeq
-	(ORCPT <rfc822;git-outgoing>); Tue, 9 Jun 2009 12:34:46 -0400
-Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:56849 "EHLO
-	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756043AbZFIQeq (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Jun 2009 12:34:46 -0400
-Received: by mail.nrlssc.navy.mil id n59GVPTh023743; Tue, 9 Jun 2009 11:31:25 -0500
-In-Reply-To: <fzqJj0x9YB8Uli2Fx2vePY55fbueEEY-IiruKI-uLEgS08KF5M8miw@cipher.nrlssc.navy.mil>
-X-OriginalArrivalTime: 09 Jun 2009 16:31:25.0725 (UTC) FILETIME=[BB96CCD0:01C9E91F]
+	id S1754005AbZFIRLX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 9 Jun 2009 13:11:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753321AbZFIRLW
+	(ORCPT <rfc822;git-outgoing>); Tue, 9 Jun 2009 13:11:22 -0400
+Received: from india601.server4you.de ([85.25.151.105]:56156 "EHLO
+	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752304AbZFIRLV (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Jun 2009 13:11:21 -0400
+Received: from [10.0.1.101] (p57B7F69F.dip.t-dialin.net [87.183.246.159])
+	by india601.server4you.de (Postfix) with ESMTPSA id AA7812F8055;
+	Tue,  9 Jun 2009 19:11:22 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.21 (Windows/20090302)
+In-Reply-To: <7vy6s1pzwb.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121189>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121190>
 
-Brandon Casey wrote:
-> I never received the referenced email.  I'll try to extract from gmane
-> and test.
+Junio C Hamano schrieb:
+> I usually make sure all four branches pass the tests before pushing them
+> out, but in tonight's integration, the tip of 'pu' does not pass test for
+> me, hence this notice.
 
-This patch works for me.
+The following patch makes the tests pass again for me.  Feel free to squash
+it into 10c29915.
 
--brandon
 
+ Makefile |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-> Jeff King wrote:
->> On Mon, Jun 08, 2009 at 09:41:49AM -0700, Junio C Hamano wrote:
->>
->>> We could further uglify the patch like this.
->>> [...]
->>> +git_broken_path_fix () {
->>> +	case ":$PATH:" in
->>> +	*:$1:*) : ok ;;
->>> +	*)
->>> +		PATH=$(
->>> +			SANE_TOOL_PATH="$1"
->>> +			IFS=: path= sep=
->>> +			set x $PATH
->>> +			shift
->>> +			for elem
->>> +			do
->>> +				case "$SANE_TOOL_PATH:$elem" in
->>> +				(?*:/bin | ?*:/usr/bin)
->>> +					path="$path$sep$SANE_TOOL_PATH"
->>> +					sep=:
->>> +					SANE_TOOL_PATH=
->>> +				esac
->>> +				path="$path$sep$elem"
->>> +				sep=:
->>> +			done
->>> +			echo "$path"
->>> +		)
->>> +		;;
->>> +	esac
->>> +}
->> Wow. That _is_ ugly, but it actually addresses exactly both my concern
->> and Brandon's. I kind of like it.
->>
->> -Peff
-> 
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+diff --git a/Makefile b/Makefile
+index 2d36f78..25029a9 100644
+--- a/Makefile
++++ b/Makefile
+@@ -921,7 +921,7 @@ SANE_TOOL_PATH_SQ = $(subst ','\'',$(SANE_TOOL_PATH))
+ BROKEN_PATH_FIX = 's|^\# @@BROKEN_PATH_FIX@@$$|git_broken_path_fix $(SANE_TOOL_PATH_SQ)|'
+ PATH := $(SANE_TOOL_PATH):${PATH}
+ else
+-BROKEN_PATH_FIX = d
++BROKEN_PATH_FIX = '/^\# @@BROKEN_PATH_FIX@@$$/d'
+ endif
+ 
+ ifeq ($(uname_S),Darwin)
