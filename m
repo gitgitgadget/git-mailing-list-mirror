@@ -1,121 +1,85 @@
-From: =?ISO-8859-1?Q?Santi_B=E9jar?= <santi@agolina.net>
-Subject: Re: [PATCHv3 1/4] parse-remote: function to get the tracking branch 
-	to be merge
-Date: Tue, 9 Jun 2009 14:16:03 +0200
-Message-ID: <adf1fd3d0906090516l6b1d5ec1rdc78ffffa116b765@mail.gmail.com>
-References: <1244451651-22651-2-git-send-email-santi@agolina.net>
-	 <7v8wk2wbfs.fsf@alter.siamese.dyndns.org>
-	 <adf1fd3d0906090029s2aa7fe19j7b1005997d70b92c@mail.gmail.com>
-	 <adf1fd3d0906090107w994de3chb39071e5911a59ae@mail.gmail.com>
-	 <7veittrete.fsf@alter.siamese.dyndns.org>
-	 <adf1fd3d0906090150k575c538ds28cd8c1a96909e9e@mail.gmail.com>
+From: Christian Couder <christian.couder@gmail.com>
+Subject: Re: [PATCH v3 0/3] automatically skip away from broken commits
+Date: Tue, 9 Jun 2009 14:26:15 +0200
+Message-ID: <c07716ae0906090526i714bb6c9g4e3d8cf61021af77@mail.gmail.com>
+References: <20090606043853.4031.78284.chriscool@tuxfamily.org>
+	 <7vskidcf9s.fsf@alter.siamese.dyndns.org>
+	 <200906070932.36913.chriscool@tuxfamily.org>
+	 <4A2CAA56.1030707@zytor.com> <7vws7n6vcf.fsf@alter.siamese.dyndns.org>
+	 <4A2D337C.70203@zytor.com> <7vzlcixwue.fsf@alter.siamese.dyndns.org>
+	 <c07716ae0906082124n4a5bfe88md80ba8076c928b76@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
+Content-Transfer-Encoding: 7bit
+Cc: "H. Peter Anvin" <hpa@zytor.com>,
+	Christian Couder <chriscool@tuxfamily.org>,
+	git@vger.kernel.org, Sam Vilain <sam@vilain.net>,
+	Ingo Molnar <mingo@elte.hu>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jun 09 14:16:54 2009
+X-From: git-owner@vger.kernel.org Tue Jun 09 14:26:24 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ME0G1-0005Se-2s
-	for gcvg-git-2@gmane.org; Tue, 09 Jun 2009 14:16:49 +0200
+	id 1ME0PI-0001Nz-04
+	for gcvg-git-2@gmane.org; Tue, 09 Jun 2009 14:26:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754867AbZFIMQF convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 9 Jun 2009 08:16:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754510AbZFIMQE
-	(ORCPT <rfc822;git-outgoing>); Tue, 9 Jun 2009 08:16:04 -0400
-Received: from mail-bw0-f213.google.com ([209.85.218.213]:58131 "EHLO
-	mail-bw0-f213.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752927AbZFIMQC convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 9 Jun 2009 08:16:02 -0400
-Received: by bwz9 with SMTP id 9so3768346bwz.37
-        for <git@vger.kernel.org>; Tue, 09 Jun 2009 05:16:03 -0700 (PDT)
-Received: by 10.204.103.129 with SMTP id k1mr13835bko.22.1244549763028; Tue, 
-	09 Jun 2009 05:16:03 -0700 (PDT)
-In-Reply-To: <adf1fd3d0906090150k575c538ds28cd8c1a96909e9e@mail.gmail.com>
+	id S1758621AbZFIM0Q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 9 Jun 2009 08:26:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758391AbZFIM0P
+	(ORCPT <rfc822;git-outgoing>); Tue, 9 Jun 2009 08:26:15 -0400
+Received: from mail-fx0-f213.google.com ([209.85.220.213]:55818 "EHLO
+	mail-fx0-f213.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759560AbZFIM0O (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Jun 2009 08:26:14 -0400
+Received: by fxm9 with SMTP id 9so2927340fxm.37
+        for <git@vger.kernel.org>; Tue, 09 Jun 2009 05:26:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=m1zddJe02oXskYD5evrYN+a2b3IhdKA/Nox3f086Gpo=;
+        b=T0wfc/c2+Ojk5gWeDJ7Rbhpx6IU5QVE/+jRDObJsJkqsXbwryiYd+PBVf9vNMrjMAV
+         y5w/eApJ/HbHyha+THxBLbFq/14Dms4EV18hk72fYnF9xoI9XFWaXr4xpUTl9JvAuONA
+         VJg+3Wk0CaVZJcOnHCHsBKwmzjqoqgqHU1Bl0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=BOAf67VeI3GVCKpo5yfP3jD05VW/pB3sTsyeNjC3SVC959gDp3L5g+Ldlob0B+42R+
+         U26XFtWwahgzBLoLWiaWta8iio285DvldAr2e+ruHhciK9yq7zeDUHepho6WV2+1HDd6
+         6lPQQiMpEFOF2h8txNf86Bnwl1QJE4qCPNsp4=
+Received: by 10.103.214.8 with SMTP id r8mr39277muq.12.1244550375938; Tue, 09 
+	Jun 2009 05:26:15 -0700 (PDT)
+In-Reply-To: <c07716ae0906082124n4a5bfe88md80ba8076c928b76@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121170>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121171>
 
-2009/6/9 Santi B=E9jar <santi@agolina.net>:
-> 2009/6/9 Junio C Hamano <gitster@pobox.com>:
->> Santi B=E9jar <santi@agolina.net> writes:
->>
->>>> git pull --rebase tags v1.6.0
->>>
->>> In fact: git pull --rebase remote tags v1.6.0
->>>
->>> But this still works because oldremoteref defaults to defaults_merg=
-e.
->>> So the only behavior change is when a remote branch is
->>> rebased/retagged, and you have worst problems then. I think noone u=
-sed
->>> the rebased functionality in this way, so I don't think it is worth=
- to
->>> support it. But if someone think it is important I'll do it.
->>
->> I personally do not think supporting such a form of input is absolut=
-ely
->> necessary. =A0Even though technically it might be a regression, if i=
-t is so
->> rare a form, we can simply say "this strange form used to work, but =
-now it
->> does not; you can use this form instead to do the same thing", and m=
-ove
->> on.
+On Tue, Jun 9, 2009 at 6:24 AM, Christian
+Couder<christian.couder@gmail.com> wrote:
 >
-> OK.
->
+> So I would be ok to implement a config option or a switch to "git
+> bisect start" to let people use a PRNG instead of my algorithm but I
+> think something like my algorithm should be the default.
 
-At the end it was a little patch to get this corner case working. Here
-it is the patch to squash (I'll send later a proper patch mail, with a
-test).
+Another reason to have 2 algorithms is that when you use "git bisect
+run" you might want to use the PRNG one because:
 
-And this additional sentence in the commit log:
+- you don't care much if the bisection use some more steps (as long as
+it does not get stuck)
+- you can't do much if it get stuck
 
-No behavior changes. The new function behaves like the old code used in
-"git pull --rebase".
+On the other hand, when you bisect manually:
 
-diff --git i/git-parse-remote.sh w/git-parse-remote.sh
-index 8b3ba72..4ac277f 100755
---- i/git-parse-remote.sh
-+++ w/git-parse-remote.sh
-@@ -238,8 +238,12 @@ get_remote_merge_branch () {
- 	    shift
- 	    # FIXME: It should return the tracking branch
- 	    #        Currently only works with the default mapping
--	    for ref
--	    do
-+	    case "$1" in
-+	    tag)
-+		[ -n "$2" ] && echo "refs/tags/${ref}"
-+		;;
-+	    *)
-+		ref=3D$1
- 		case "$ref" in
- 		+*)
- 			ref=3D$(expr "z$ref" : 'z+\(.*\)')
-@@ -251,12 +255,11 @@ get_remote_merge_branch () {
- 		'' | HEAD ) remote=3DHEAD ;;
- 		heads/*) remote=3D${remote#heads/} ;;
- 		refs/heads/*) remote=3D${remote#refs/heads/} ;;
--		refs/* | tags/* | remotes/* ) break
-+		refs/* | tags/* | remotes/* ) remote=3D
- 		esac
+- you probably won't like it if you are asked to test some commits
+that won't give a lot of information
+- if it get stuck, you can manually use "git bisect visualize" and/or
+"git bisect skip <range>" and/or some other manual commands to do
+something about it
 
--		echo "refs/remotes/$repo/$remote"
--		break
--	    done
-+		[ -n "$remote" ] && echo "refs/remotes/$repo/$remote"
-+	    esac
- 	    ;;
- 	esac
- }
-
-(Sorry, if it gets corrupted)
-
-Santi
+Regards,
+Christian.
