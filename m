@@ -1,104 +1,70 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Expand the rename(2) workaround in mingw to cover case
-  change in filename
-Date: Tue, 9 Jun 2009 09:27:34 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.0906090924170.26154@pacific.mpi-cbg.de>
-References: <20090608203248.GA22972@blimp.localdomain>  <alpine.DEB.1.00.0906082355350.26154@pacific.mpi-cbg.de>  <81b0412b0906081508v5435c59cm3faf3ac92a56578c@mail.gmail.com>  <4A2DF92D.1080605@viscovery.net>
- <81b0412b0906082304x750eb8cif3356458829de3bc@mail.gmail.com>
+From: =?ISO-8859-1?Q?Santi_B=E9jar?= <santi@agolina.net>
+Subject: Re: [PATCHv3 1/4] parse-remote: function to get the tracking branch 
+	to be merge
+Date: Tue, 9 Jun 2009 09:29:28 +0200
+Message-ID: <adf1fd3d0906090029s2aa7fe19j7b1005997d70b92c@mail.gmail.com>
+References: <1244451651-22651-2-git-send-email-santi@agolina.net>
+	 <7v8wk2wbfs.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="8323328-100354873-1244532455=:26154"
-Cc: Johannes Sixt <j.sixt@viscovery.net>, git@vger.kernel.org,
-	Dmitry Potapov <dpotapov@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-To: Alex Riesen <raa.lkml@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jun 09 09:26:50 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jun 09 09:29:37 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MDvjN-0003l4-Id
-	for gcvg-git-2@gmane.org; Tue, 09 Jun 2009 09:26:49 +0200
+	id 1MDvm4-0005CZ-9Z
+	for gcvg-git-2@gmane.org; Tue, 09 Jun 2009 09:29:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757435AbZFIH0h (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 9 Jun 2009 03:26:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755834AbZFIH0g
-	(ORCPT <rfc822;git-outgoing>); Tue, 9 Jun 2009 03:26:36 -0400
-Received: from mail.gmx.net ([213.165.64.20]:41843 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752295AbZFIH0g (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Jun 2009 03:26:36 -0400
-Received: (qmail invoked by alias); 09 Jun 2009 07:26:36 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp014) with SMTP; 09 Jun 2009 09:26:36 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19Wrskxe9dWFsbKtbY0cjALXl1tawB0P4ZzDJN5IW
-	DRaGuZaqMkfgxg
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <81b0412b0906082304x750eb8cif3356458829de3bc@mail.gmail.com>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.53
+	id S1757177AbZFIH32 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 9 Jun 2009 03:29:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756820AbZFIH31
+	(ORCPT <rfc822;git-outgoing>); Tue, 9 Jun 2009 03:29:27 -0400
+Received: from mail-bw0-f213.google.com ([209.85.218.213]:54427 "EHLO
+	mail-bw0-f213.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756697AbZFIH31 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 9 Jun 2009 03:29:27 -0400
+Received: by bwz9 with SMTP id 9so3593868bwz.37
+        for <git@vger.kernel.org>; Tue, 09 Jun 2009 00:29:28 -0700 (PDT)
+Received: by 10.204.63.208 with SMTP id c16mr7105367bki.131.1244532568205; 
+	Tue, 09 Jun 2009 00:29:28 -0700 (PDT)
+In-Reply-To: <7v8wk2wbfs.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121148>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121149>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+2009/6/9 Junio C Hamano <gitster@pobox.com>:
+> Santi B=E9jar <santi@agolina.net> writes:
+>
+>> The only user of get_remote_refs_for_fetch was "git pull --rebase" a=
+nd
+>> it only wanted the tracking branch to be merge. So, add a simple
+>> function with this new meaning.
+>>
+>> No behavior changes.
+>
+> I am all for code reduction, but after following the original logic t=
+hat
+> uses remote_refs_for_fetch (which knows about things like "git pull t=
+here
+> +refs/heads/master:refs/heads/origin tag v1.6.0" from the command lin=
+e)
+> that in turn calls canon_refs_list_for_fetch (which returns a list e.=
+g.
+> +refs/heads/master:refs/heads/origin refs/tags/v1.6.0:refs/tags/v1.6.=
+0),
+> and do not quite see how you can casually say "No behaviour changes."
 
---8323328-100354873-1244532455=:26154
-Content-Type: TEXT/PLAIN; charset=UTF-8
-Content-Transfer-Encoding: 8BIT
+Ups, you are right. But even in you case the only important branch is
+the first, so the only possible change in behavior is:
 
-Hi,
+git pull --rebase tags v1.6.0
 
-On Tue, 9 Jun 2009, Alex Riesen wrote:
+I'll see what I can do.
 
-> 2009/6/9 Johannes Sixt <j.sixt@viscovery.net>:
-> > Alex Riesen schrieb:
-> >> 2009/6/8 Johannes Schindelin <Johannes.Schindelin@gmx.de>:
-> >>> On Mon, 8 Jun 2009, Alex Riesen wrote:
-> >>>> NOT TESTED. Can't. My Windows broke again. Not even compile-tested.
-> >>> Yes, that is pretty easy to see as you first used pold/pnew and then
-> >>> src/dst.
-> >>
-> >> Yep.
-> >>
-> >>> I minimally fixed up your patch (it now uses strbuf), and added a
-> >>> test-case.
-> >>>
-> >>> This test-case is actually crucial: it shows that your patch is not
-> >>> enough: the culprit is this code in builtin-mv.c:167--168:
-> >>>
-> >>>                else if (lstat(dst, &st) == 0) {
-> >>>                        bad = "destination exists";
-> >>
-> >> Ah, thanks. Missed that completely.
-> >
-> > That's the reason why I think any work-around for this problem is not
-> > worth it.
-> 
-> What is the lstat is for, anyway?
-
-It is to avoid overwriting existing files.
-
-> > If you want to be cross-platfrom, make up your mind about file names 
-> > in advance.
-> 
-> I suspect it is the other way around. Some platforms just hate the idea 
-> of being ported to. Or its designers have poor imagination and never 
-> though about the fact that other platforms exist.
-
-Actually, think about it as a brilliant business plan: make developers be 
-stuck with developing for your platform, then they lack the time to take 
-care of other platforms.
-
-The bigger question with the patch is if the lstat() call can tell us 
-if this is the same file (really the same, not just a hardlink (= same 
-contents)).
-
-Ciao,
-Dscho
-
---8323328-100354873-1244532455=:26154--
+Thanks for the review,
+Santi
