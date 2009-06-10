@@ -1,213 +1,90 @@
-From: Paolo Bonzini <bonzini@gnu.org>
-Subject: [PATCH] Test cccmd in t9001-send-email.sh and fix two bugs
-Date: Wed, 10 Jun 2009 13:34:03 -0400
-Message-ID: <1244655243-12914-1-git-send-email-bonzini@gnu.org>
-Cc: Paolo Bonzini <bonzini@gnu.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jun 10 19:34:27 2009
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: branch management
+Date: Wed, 10 Jun 2009 10:37:16 -0700 (PDT)
+Message-ID: <alpine.LFD.2.01.0906101026121.6847@localhost.localdomain>
+References: <7vfxe9udln.fsf@alter.siamese.dyndns.org> <4A2E0C88.70805@gmail.com> <20090609080612.GG9993@laphroaig.corp> <7viqj5nzgz.fsf@alter.siamese.dyndns.org> <20090609172302.GH9993@laphroaig.corp> <08614AC584A6ED42BD836DE9286376E12A211FA9CA@spswchi6mail1.peak6.net>
+ <20090609195018.GA17848@blimp.localdomain> <08614AC584A6ED42BD836DE9286376E12A211FA9D0@spswchi6mail1.peak6.net> <m3d49c40ai.fsf@localhost.localdomain> <alpine.LFD.2.00.0906101118070.31536@xanadu.home>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Jakub Narebski <jnareb@gmail.com>,
+	Harry Duin <hduin@optionshouse.com>,
+	"'Alex Riesen'" <raa.lkml@gmail.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Nicolas Pitre <nico@cam.org>
+X-From: git-owner@vger.kernel.org Wed Jun 10 19:38:10 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MERgw-0001GE-Cp
-	for gcvg-git-2@gmane.org; Wed, 10 Jun 2009 19:34:27 +0200
+	id 1MERkT-0003Hb-Hl
+	for gcvg-git-2@gmane.org; Wed, 10 Jun 2009 19:38:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757666AbZFJReF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 10 Jun 2009 13:34:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757522AbZFJReF
-	(ORCPT <rfc822;git-outgoing>); Wed, 10 Jun 2009 13:34:05 -0400
-Received: from fencepost.gnu.org ([140.186.70.10]:43243 "EHLO
-	fencepost.gnu.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757348AbZFJReC (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 Jun 2009 13:34:02 -0400
-Received: from bonzini by fencepost.gnu.org with local (Exim 4.67)
-	(envelope-from <bonzini@gnu.org>)
-	id 1MERgZ-0003Mi-ST; Wed, 10 Jun 2009 13:34:03 -0400
-X-Mailer: git-send-email 1.6.0.3
+	id S1754802AbZFJRh5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 10 Jun 2009 13:37:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754674AbZFJRh4
+	(ORCPT <rfc822;git-outgoing>); Wed, 10 Jun 2009 13:37:56 -0400
+Received: from smtp1.linux-foundation.org ([140.211.169.13]:41625 "EHLO
+	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754208AbZFJRh4 (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 10 Jun 2009 13:37:56 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
+	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id n5AHbH93017159
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Wed, 10 Jun 2009 10:37:19 -0700
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id n5AHbGgI025310;
+	Wed, 10 Jun 2009 10:37:16 -0700
+X-X-Sender: torvalds@localhost.localdomain
+In-Reply-To: <alpine.LFD.2.00.0906101118070.31536@xanadu.home>
+User-Agent: Alpine 2.01 (LFD 1184 2008-12-16)
+X-Spam-Status: No, hits=-3.466 required=5 tests=AWL,BAYES_00
+X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121287>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121288>
 
-For another patch series I'm working on I needed some tests
-for the cc-cmd feature of git-send-email.
 
-This patch adds 3 tests for the feature, and fix two bugs.
-The first bug is that the --suppress-cc option for `cccmd' was
-misspelled as `ccmd' in the code.  The second bug, which is
-actually found only with my other series, is that the argument
-to the cccmd is never quoted, so the cccmd would fail with
-patch file names containing a space.
 
-I also test the possibility to specify --suppress-cc
-multiple times.
----
- git-send-email.perl   |    4 +-
- t/t9001-send-email.sh |   80 +++++++++++++++++++++++++++++++++++++++++++++---
- 2 files changed, 77 insertions(+), 7 deletions(-)
+On Wed, 10 Jun 2009, Nicolas Pitre wrote:
 
-	The patch is on top of maint, but it applies everywhere.
+> On Wed, 10 Jun 2009, Jakub Narebski wrote:
+> 
+> > Harry Duin <hduin@optionshouse.com> writes:
+> > 
+> > > 2. show list of files/directories touched by a branch (useful when
+> > >    looking for past fixes, but are unsure where the fix was done)
+> > 
+> > If you can use pickaxe search (git log -S...), or git-blame, or just
+> > looking throught "git log ... -- <path>", you can use
+> > 
+> > $ git rev-list master..branch | 
+> >   git diff-tree --stdin -r --name-only |
+> >   sort -u
+> 
+> What I use in that case is simply
+> 
+> 	git diff --stat master...branch
 
-diff --git a/git-send-email.perl b/git-send-email.perl
-index cccbf45..65a86d9 100755
---- a/git-send-email.perl
-+++ b/git-send-email.perl
-@@ -333,7 +333,7 @@ if (@suppress_cc) {
- }
- 
- if ($suppress_cc{'all'}) {
--	foreach my $entry (qw (ccmd cc author self sob body bodycc)) {
-+	foreach my $entry (qw (cccmd cc author self sob body bodyccc)) {
- 		$suppress_cc{$entry} = 1;
- 	}
- 	delete $suppress_cc{'all'};
-@@ -1091,7 +1091,7 @@ foreach my $t (@files) {
- 	close F;
- 
- 	if (defined $cc_cmd && !$suppress_cc{'cccmd'}) {
--		open(F, "$cc_cmd $t |")
-+		open(F, "$cc_cmd \Q$t\E |")
- 			or die "(cc-cmd) Could not execute '$cc_cmd'";
- 		while(<F>) {
- 			my $c = $_;
-diff --git a/t/t9001-send-email.sh b/t/t9001-send-email.sh
-index ce26ea4..00375f3 100755
---- a/t/t9001-send-email.sh
-+++ b/t/t9001-send-email.sh
-@@ -148,6 +148,22 @@ test_expect_success 'Prompting works' '
- 		grep "^To: to@example.com$" msgtxt1
- '
- 
-+test_expect_success 'cccmd works' '
-+	clean_fake_sendmail &&
-+	cp $patches cccmd.patch &&
-+	echo cccmd--cccmd@example.com >>cccmd.patch &&
-+	echo sed -n s/^cccmd--//p \"\$1\" > cccmd-sed &&
-+	chmod +x cccmd-sed &&
-+	git send-email \
-+		--from="Example <nobody@example.com>" \
-+		--to=nobody@example.com \
-+		--cc-cmd=./cccmd-sed \
-+		--smtp-server="$(pwd)/fake.sendmail" \
-+		cccmd.patch \
-+		&&
-+	grep ^Cc:.*cccmd@example.com msgtxt1
-+'
-+
- z8=zzzzzzzz
- z64=$z8$z8$z8$z8$z8$z8$z8$z8
- z512=$z64$z64$z64$z64$z64$z64$z64$z64
-@@ -274,7 +290,7 @@ EOF
- test_suppression () {
- 	git send-email \
- 		--dry-run \
--		--suppress-cc=$1 \
-+		--suppress-cc=$1 ${2+"--suppress-cc=$2"} \
- 		--from="Example <from@example.com>" \
- 		--to=to@example.com \
- 		--smtp-server relay.example.com \
-@@ -282,8 +298,8 @@ test_suppression () {
- 	sed	-e "s/^\(Date:\).*/\1 DATE-STRING/" \
- 		-e "s/^\(Message-Id:\).*/\1 MESSAGE-ID-STRING/" \
- 		-e "s/^\(X-Mailer:\).*/\1 X-MAILER-STRING/" \
--		>actual-suppress-$1 &&
--	test_cmp expected-suppress-$1 actual-suppress-$1
-+		>actual-suppress-$1${2+"-$2"} &&
-+	test_cmp expected-suppress-$1${2+"-$2"} actual-suppress-$1${2+"-$2"}
- }
- 
- test_expect_success 'sendemail.cc set' '
-@@ -316,6 +332,34 @@ test_expect_success 'sendemail.cc unset' '
- 	test_suppression sob
- '
- 
-+cat >expected-suppress-cccmd <<\EOF
-+0001-Second.patch
-+(mbox) Adding cc: A <author@example.com> from line 'From: A <author@example.com>'
-+(mbox) Adding cc: One <one@example.com> from line 'Cc: One <one@example.com>, two@example.com'
-+(mbox) Adding cc: two@example.com from line 'Cc: One <one@example.com>, two@example.com'
-+(body) Adding cc: C O Mitter <committer@example.com> from line 'Signed-off-by: C O Mitter <committer@example.com>'
-+Dry-OK. Log says:
-+Server: relay.example.com
-+MAIL FROM:<from@example.com>
-+RCPT TO:<to@example.com>,<author@example.com>,<one@example.com>,<two@example.com>,<committer@example.com>
-+From: Example <from@example.com>
-+To: to@example.com
-+Cc: A <author@example.com>, One <one@example.com>, two@example.com, C O Mitter <committer@example.com>
-+Subject: [PATCH 1/1] Second.
-+Date: DATE-STRING
-+Message-Id: MESSAGE-ID-STRING
-+X-Mailer: X-MAILER-STRING
-+
-+Result: OK
-+EOF
-+
-+test_expect_success 'sendemail.cccmd' '
-+	echo echo cc-cmd@example.com > cccmd &&
-+	chmod +x cccmd &&
-+	git config sendemail.cccmd ./cccmd &&
-+	test_suppression cccmd
-+'
-+
- cat >expected-suppress-all <<\EOF
- 0001-Second.patch
- Dry-OK. Log says:
-@@ -341,13 +385,14 @@ cat >expected-suppress-body <<\EOF
- (mbox) Adding cc: A <author@example.com> from line 'From: A <author@example.com>'
- (mbox) Adding cc: One <one@example.com> from line 'Cc: One <one@example.com>, two@example.com'
- (mbox) Adding cc: two@example.com from line 'Cc: One <one@example.com>, two@example.com'
-+(cc-cmd) Adding cc: cc-cmd@example.com from: './cccmd'
- Dry-OK. Log says:
- Server: relay.example.com
- MAIL FROM:<from@example.com>
--RCPT TO:<to@example.com>,<author@example.com>,<one@example.com>,<two@example.com>
-+RCPT TO:<to@example.com>,<author@example.com>,<one@example.com>,<two@example.com>,<cc-cmd@example.com>
- From: Example <from@example.com>
- To: to@example.com
--Cc: A <author@example.com>, One <one@example.com>, two@example.com
-+Cc: A <author@example.com>, One <one@example.com>, two@example.com, cc-cmd@example.com
- Subject: [PATCH 1/1] Second.
- Date: DATE-STRING
- Message-Id: MESSAGE-ID-STRING
-@@ -360,6 +405,30 @@ test_expect_success '--suppress-cc=body' '
- 	test_suppression body
- '
- 
-+cat >expected-suppress-body-cccmd <<\EOF
-+0001-Second.patch
-+(mbox) Adding cc: A <author@example.com> from line 'From: A <author@example.com>'
-+(mbox) Adding cc: One <one@example.com> from line 'Cc: One <one@example.com>, two@example.com'
-+(mbox) Adding cc: two@example.com from line 'Cc: One <one@example.com>, two@example.com'
-+Dry-OK. Log says:
-+Server: relay.example.com
-+MAIL FROM:<from@example.com>
-+RCPT TO:<to@example.com>,<author@example.com>,<one@example.com>,<two@example.com>
-+From: Example <from@example.com>
-+To: to@example.com
-+Cc: A <author@example.com>, One <one@example.com>, two@example.com
-+Subject: [PATCH 1/1] Second.
-+Date: DATE-STRING
-+Message-Id: MESSAGE-ID-STRING
-+X-Mailer: X-MAILER-STRING
-+
-+Result: OK
-+EOF
-+
-+test_expect_success '--suppress-cc=body --suppress-cc=cccmd' '
-+	test_suppression body cccmd
-+'
-+
- cat >expected-suppress-sob <<\EOF
- 0001-Second.patch
- (mbox) Adding cc: A <author@example.com> from line 'From: A <author@example.com>'
-@@ -381,6 +450,7 @@ Result: OK
- EOF
- 
- test_expect_success '--suppress-cc=sob' '
-+	git config --unset sendemail.cccmd
- 	test_suppression sob
- '
- 
--- 
-1.6.0.3
+No, that's not going to work in general. The "master...branch" thing works 
+most of the time, but there isn't always a single merge-point, and in the 
+case of criss-cross merges, you'll get it wrong.
+
+It will also hide changes that got reverted (or undone some other way), 
+which can be relevant.
+
+That said, the "git rev-list | git diff-tree" thing has a new name. We 
+call it "git log". 
+
+So what Jakub wrote can generally be written as
+
+	git log --name-only --pretty=format:'' master..branch | sort -u
+
+if you're willing to accept the empty line from all the suppressed commit 
+messages (with that "git diff-tree" he'll see all the commit numbers, 
+though, so I guess the 'git log' thing is still better)
+
+			Linus
