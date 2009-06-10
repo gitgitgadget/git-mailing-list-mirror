@@ -1,95 +1,68 @@
-From: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
 Subject: Re: EasyGit Integration
-Date: Wed, 10 Jun 2009 14:13:49 +0200
-Message-ID: <20090610121349.GA27679@atjola.homenet>
-References: <d411cc4a0906091159r51e7d16t4d66c6225322fb60@mail.gmail.com> <32541b130906091252i6c96c44buc148bb525d7cde14@mail.gmail.com> <20090609203747.GB13781@atjola.homenet> <32541b130906091342s7dd6064fud2205bee8af95aab@mail.gmail.com>
+Date: Wed, 10 Jun 2009 14:52:38 +0200
+Message-ID: <vpqljo045ex.fsf@bauges.imag.fr>
+References: <d411cc4a0906091159r51e7d16t4d66c6225322fb60@mail.gmail.com>
+	<51419b2c0906091500q6aaff225q42bd79e6349a1143@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=us-ascii
 Cc: Scott Chacon <schacon@gmail.com>, git list <git@vger.kernel.org>
-To: Avery Pennarun <apenwarr@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jun 10 14:14:10 2009
+To: Elijah Newren <newren@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jun 10 14:56:18 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MEMgz-0005hq-IH
-	for gcvg-git-2@gmane.org; Wed, 10 Jun 2009 14:14:09 +0200
+	id 1MENLl-0001iU-QM
+	for gcvg-git-2@gmane.org; Wed, 10 Jun 2009 14:56:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757172AbZFJMNv convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 10 Jun 2009 08:13:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755967AbZFJMNu
-	(ORCPT <rfc822;git-outgoing>); Wed, 10 Jun 2009 08:13:50 -0400
-Received: from mail.gmx.net ([213.165.64.20]:54851 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753662AbZFJMNu (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 Jun 2009 08:13:50 -0400
-Received: (qmail invoked by alias); 10 Jun 2009 12:13:50 -0000
-Received: from i59F575EB.versanet.de (EHLO atjola.local) [89.245.117.235]
-  by mail.gmx.net (mp053) with SMTP; 10 Jun 2009 14:13:50 +0200
-X-Authenticated: #5039886
-X-Provags-ID: V01U2FsdGVkX19J79049UdJ68QBbwuhByBVXParlkwJ0ewfLxXIpa
-	xRVlw4I8II+SNF
-Content-Disposition: inline
-In-Reply-To: <32541b130906091342s7dd6064fud2205bee8af95aab@mail.gmail.com>
-User-Agent: Mutt/1.5.19 (2009-01-05)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.5600000000000001
+	id S1757325AbZFJMzg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 10 Jun 2009 08:55:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755373AbZFJMzg
+	(ORCPT <rfc822;git-outgoing>); Wed, 10 Jun 2009 08:55:36 -0400
+Received: from imag.imag.fr ([129.88.30.1]:39670 "EHLO imag.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755323AbZFJMzg (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Jun 2009 08:55:36 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id n5ACqdbw023649
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Wed, 10 Jun 2009 14:52:39 +0200 (CEST)
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
+	(Exim 4.50)
+	id 1MENIE-00070I-KI; Wed, 10 Jun 2009 14:52:38 +0200
+Received: from moy by bauges.imag.fr with local (Exim 4.63)
+	(envelope-from <moy@imag.fr>)
+	id 1MENIE-00044Y-Iu; Wed, 10 Jun 2009 14:52:38 +0200
+In-Reply-To: <51419b2c0906091500q6aaff225q42bd79e6349a1143@mail.gmail.com> (Elijah Newren's message of "Tue\, 9 Jun 2009 16\:00\:14 -0600")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.0.91 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Wed, 10 Jun 2009 14:52:39 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121273>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121274>
 
-On 2009.06.09 16:42:33 -0400, Avery Pennarun wrote:
-> 2009/6/9 Bj=F6rn Steinbrink <B.Steinbrink@gmx.de>:
-> > On 2009.06.09 15:52:46 -0400, Avery Pennarun wrote:
-> >> To be honest, I'm not convinced svn's use of the word "revert" is
-> >> really right, though. =A0Git's isn't *really* right either, since =
-it
-> >> actually makes a new commit, it doesn't remove the old one like it
-> >> sounds like it does. =A0Maybe 'reverse' would be a better name for=
- what
-> >> git does, and we should just introduce another word for what svn d=
-oes.
-> >> =A0(With CVS, you just deleted the file and then did a checkout/up=
-date
-> >> on it again, which made sense to me. =A0That works in git too.)
-> >>
-> >> Crazy idea: we could actually make 'git revert' do both: given a
-> >> commit, it applies the reverse as it does now. =A0Given filenames,=
- it
-> >> simply brings them back to HEAD. =A0But maybe that's too crazy.
-> >
-> > Doesn't seem that crazy to me. But maybe a bit problematic if you w=
-ant
-> > to support both, "git checkout -- ." and "git checkout HEAD -- .". =
-And
-> > adding DWIMmery there seems dangerous, as in:
-> >
-> > git revert =3D=3D git checkout -- .
-> >
-> > git revert HEAD =3D=3D
-> > =A0no uncommitted changes =3D revert commit HEAD
-> > =A0uncommitted changes =3D revert to HEAD
->=20
-> Well, that's what I meant by "crazy" :)
+Elijah Newren <newren@gmail.com> writes:
 
-OK, thinking about it, I really dislike the idea of "revert --since",
-as that is IMHO better thought of as "get the old version back", and fo=
-r
-"get something out of the repo" we have checkout. That would leave us
-with "revert changes from a commit" and "revert uncommitted/unstaged
-changes". For that "limited" thing, I could live with:
+>> Some other things that might be nice:
+>>
+>> * 'git backout' for 'git reset HEAD^'
+>
+> May cause confusion for mercurial users (hg backout == current git
+> revert).
 
-git revert <commit> # As is
-git revert --unstaged # git checkout --=20
-git revert --uncommitted # git checkout HEAD -- / git rm --cached
+Yes, and a bit of consistency between the various (D)VCS would be good
+(for regular-hg-users which are also occasional-git-users and so).
 
-IOW: Mode of operation is chosen by a flag, which has a meaning that is
-somewhat similar to --cached for diff/rm, it chooses what to use as the
-source for the operation. And as at least "revert --uncommitted" isn't
-100% the same as "checkout HEAD --", I think the overlap that we'd have
-with a small subset of the checkout functionality might be ok.
+> I don't have a better proposal, though. 'uncommit'?
 
-Bj=F6rn
+I like 'uncommit'. That's what bzr uses.
+
+-- 
+Matthieu
