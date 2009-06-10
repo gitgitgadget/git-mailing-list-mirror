@@ -1,80 +1,109 @@
-From: "H. Peter Anvin" <hpa@zytor.com>
-Subject: Re: [PATCH v3 0/3] automatically skip away from broken commits
-Date: Wed, 10 Jun 2009 15:43:47 -0700
-Message-ID: <4A303723.4060805@zytor.com>
-References: <20090606043853.4031.78284.chriscool@tuxfamily.org>	<4A2CAA56.1030707@zytor.com> <7vws7n6vcf.fsf@alter.siamese.dyndns.org>	<4A2D337C.70203@zytor.com> <7vzlcixwue.fsf@alter.siamese.dyndns.org>	<c07716ae0906082124n4a5bfe88md80ba8076c928b76@mail.gmail.com>	<c07716ae0906090526i714bb6c9g4e3d8cf61021af77@mail.gmail.com>	<4A2E7EEC.2050807@zytor.com>	<c07716ae0906091228s708058d4vea986239a6b458de@mail.gmail.com>	<7viqj5kutl.fsf@alter.siamese.dyndns.org>	<c07716ae0906101237o5038fc4dle9f11b6f2216652a@mail.gmail.com> <7vtz2nlrfs.fsf@alter.siamese.dyndns.org>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: EasyGit Integration
+Date: Wed, 10 Jun 2009 16:04:49 -0700 (PDT)
+Message-ID: <alpine.LFD.2.01.0906101555590.6847@localhost.localdomain>
+References: <d411cc4a0906091159r51e7d16t4d66c6225322fb60@mail.gmail.com>  <alpine.LFD.2.01.0906091512350.6847@localhost.localdomain>  <51419b2c0906091530t3dfa5267s2262f979f1e9982a@mail.gmail.com>  <alpine.LFD.2.01.0906091535410.6847@localhost.localdomain> 
+ <20090610033211.GA7411@mit.edu>  <alpine.LFD.2.01.0906092058430.6847@localhost.localdomain> <94a0d4530906101531ja6f1deeob703f546d62e7599@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Christian Couder <christian.couder@gmail.com>,
-	Christian Couder <chriscool@tuxfamily.org>,
-	git@vger.kernel.org, Sam Vilain <sam@vilain.net>,
-	Ingo Molnar <mingo@elte.hu>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jun 11 00:50:42 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Theodore Tso <tytso@mit.edu>, Elijah Newren <newren@gmail.com>,
+	Scott Chacon <schacon@gmail.com>,
+	git list <git@vger.kernel.org>
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jun 11 01:06:04 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MEWcz-0004eD-UE
-	for gcvg-git-2@gmane.org; Thu, 11 Jun 2009 00:50:42 +0200
+	id 1MEWrn-0000l1-UL
+	for gcvg-git-2@gmane.org; Thu, 11 Jun 2009 01:06:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756437AbZFJWu3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 10 Jun 2009 18:50:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756766AbZFJWu2
-	(ORCPT <rfc822;git-outgoing>); Wed, 10 Jun 2009 18:50:28 -0400
-Received: from terminus.zytor.com ([198.137.202.10]:33493 "EHLO
-	terminus.zytor.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756437AbZFJWu0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 Jun 2009 18:50:26 -0400
-Received: from anacreon.sc.intel.com (hpa@localhost [127.0.0.1])
-	(authenticated bits=0)
-	by terminus.zytor.com (8.14.3/8.14.1) with ESMTP id n5AMhl7a004850
+	id S1759532AbZFJXFV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 10 Jun 2009 19:05:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758509AbZFJXFV
+	(ORCPT <rfc822;git-outgoing>); Wed, 10 Jun 2009 19:05:21 -0400
+Received: from smtp1.linux-foundation.org ([140.211.169.13]:51394 "EHLO
+	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1757305AbZFJXFU (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 10 Jun 2009 19:05:20 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
+	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id n5AN4oqJ012987
 	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Wed, 10 Jun 2009 15:43:48 -0700
-User-Agent: Thunderbird 2.0.0.21 (X11/20090320)
-In-Reply-To: <7vtz2nlrfs.fsf@alter.siamese.dyndns.org>
-X-Virus-Scanned: ClamAV 0.94.2/9451/Wed Jun 10 11:05:54 2009 on terminus.zytor.com
-X-Virus-Status: Clean
+	Wed, 10 Jun 2009 16:04:51 -0700
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id n5AN4nq1001219;
+	Wed, 10 Jun 2009 16:04:49 -0700
+X-X-Sender: torvalds@localhost.localdomain
+In-Reply-To: <94a0d4530906101531ja6f1deeob703f546d62e7599@mail.gmail.com>
+User-Agent: Alpine 2.01 (LFD 1184 2008-12-16)
+X-Spam-Status: No, hits=-3.466 required=5 tests=AWL,BAYES_00
+X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121315>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121316>
 
-Junio C Hamano wrote:
-> Christian Couder <christian.couder@gmail.com> writes:
-> 
->> On Tue, Jun 9, 2009 at 10:37 PM, Junio C Hamano<gitster@pobox.com> wrote:
->>> Christian Couder <christian.couder@gmail.com> writes:
->>>
->>>> My opinion is that we should not penalize all the people working on
->>>> "quite clean" projects and also people working on "not clean" projects
->>>> who are able to recover, on the pretence that there are other people
->>>> on these "not clean" projects who are not.
->> ...
->> When I wrote "clean", I just mean with not too many untestable commits.
-> 
-> Ok, then the "opinion" in the above paragraph was simply stating the
-> obvious: we should have a good "bisect skip".  I obviously agree with that
-> ;-).
-> 
-> In other words, you were not arguing against my observation that your
-> algorithm would not be much better than randomly picking the next commit
-> when the best one is untestable, unless the history is linear.  I guess
-> that was what I was confused with.  I thought you were saying that we
-> should give preferential treatment to people with linear history. 
-> 
->> Ok. I started working on optionaly using a PRNG but I am not sure that
->> you will want to add another one.
-> 
-> It may still make sense to replace, not add to, that "fixed alternating
-> distance in goodness space" with a randomized one, for the reasons HPA
-> stated, especially for avoiding to give a false impression that the magic
-> constants are picked for some reason.
-> 
 
-That being said, Christian's observation that a biased selection would
-be better than a linear random pick is a good one.
 
-	-hpa
+On Thu, 11 Jun 2009, Felipe Contreras wrote:
+
+> On Wed, Jun 10, 2009 at 7:03 AM, Linus
+> Torvalds<torvalds@linux-foundation.org> wrote:
+> >
+> >
+> > On Tue, 9 Jun 2009, Theodore Tso wrote:
+> >>
+> >> My personal opinion is this kind of overloading is actually more
+> >> confusing than simply adding a new name, such as "git revert-file".
+> >
+> > I'd agree, except I think it actually worked pretty well in "git
+> > checkout".
+> >
+> > The alternative was to add yet another command for that, or to teach
+> > people about the internal commands we did have. Adding the capability for
+> > checkout to check out individual files - in addition to commits and
+> > branches - I think worked pretty well.
+> 
+> Why? What makes 'git checkout <commit>' and 'git checkout <commit> --
+> <path>' similar at all? I would expect 'git checkout <commit>' to be
+> the same as 'git checkout <commit> -- .'
+
+You don't understand.
+
+"git checkout" would be similar to "git revert", if we did that change. 
+
+IOW, both would be "if you give it a commit, it acts at a commit level", 
+and "if you give it pathnames, it acts on a pathname level".
+
+That is totally obvious, and not in the least confusing. They are two 
+different things, but at the same time, there is no question about which 
+is which. 
+
+> In my mind these are 2 completely different commands.
+
+They are two different things, but they both make sense within the 
+_context_.
+
+Only earthworms and FOX news have no concept of "in context". So it does 
+make sense to say "git checkout filename" (and expect it to check out that 
+_filename_ - surprise surprise), and also say "git checkout branch" (and 
+expect it to check out that branch - again, big surprise).
+
+Humans are generally _very_ good at seeing the same word in two different 
+contexts, and not being confused at all. There is no confusion when I talk 
+about SCM's in the context of git, even though "SCM" could also mean a 
+Sceme interpreter, or "Saskatchewan College of Midwives".
+
+In fact, it is often *much* better to accept context-awareness, than to 
+try too hard to be "uniquely identifying" even without context. 
+
+Of course, you do want things to also be unambiguous. But that's why we 
+have things like that "--" thing, when we want to specify pathspecs 
+explicitly and don't want to accept any kind of ambiguity. Most humans 
+tend to leave them out, and that "--" thing shows up mostly in git 
+scripts.
+
+			Linus
