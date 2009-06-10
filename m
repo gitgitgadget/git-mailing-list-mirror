@@ -1,62 +1,136 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH 10/11 v2] Fix warnings in nedmalloc when compiling with
- GCC 4.4.0
-Date: Wed, 10 Jun 2009 11:27:28 +0200
-Message-ID: <4A2F7C80.1090807@viscovery.net>
-References: <1243786525-4493-1-git-send-email-prohaska@zib.de> <1243786525-4493-4-git-send-email-prohaska@zib.de> <1243786525-4493-5-git-send-email-prohaska@zib.de> <1243786525-4493-6-git-send-email-prohaska@zib.de> <1243786525-4493-7-git-send-email-prohaska@zib.de> <1243786525-4493-8-git-send-email-prohaska@zib.de> <1243786525-4493-9-git-send-email-prohaska@zib.de> <1243786525-4493-10-git-send-email-prohaska@zib.de> <1243786525-4493-11-git-send-email-prohaska@zib.de> <7vhbz0mmai.fsf@alter.siamese.dyndns.org> <alpine.DEB.1.00.0906011054410.26154@pacific.mpi-cbg.de> <7vr5y3lxrj.fsf@alter.siamese.dyndns.org> <alpine.DEB.1.00.0906021448300.4440@intel-tinevez-2-302> <7viqjefxcv.fsf@alter.siame se.dyndns.org> <alpine.DEB.1.00.0906031455520.10241@intel-tinevez-2-302> <7vprdl9qon.fsf@alter.siames
- e.dyndns.org> <alpine.DEB.1.00.0906081645490.4461@intel-tinevez-2-302> <7vzlcizn3w.fsf@a! lter.siamese.dyndns.org> <CD46A3E1-A85C-4D03-854C-973B91ACC506@zib.de>
+From: =?utf-8?q?Uwe=20Kleine-K=C3=B6nig?= 
+	<u.kleine-koenig@pengutronix.de>
+Subject: [PATCH 1/2] more tests for git rev-parse --parse-opt
+Date: Wed, 10 Jun 2009 11:42:05 +0200
+Message-ID: <1244626926-19841-1-git-send-email-u.kleine-koenig@pengutronix.de>
+References: <7vzlcgr088.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Steffen Prohaska <prohaska@zib.de>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jun 10 11:27:44 2009
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jun 10 11:47:46 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MEK5u-0005ZQ-4j
-	for gcvg-git-2@gmane.org; Wed, 10 Jun 2009 11:27:42 +0200
+	id 1MEKPH-0004Rg-VI
+	for gcvg-git-2@gmane.org; Wed, 10 Jun 2009 11:47:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755766AbZFJJ1c (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 10 Jun 2009 05:27:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755499AbZFJJ1b
-	(ORCPT <rfc822;git-outgoing>); Wed, 10 Jun 2009 05:27:31 -0400
-Received: from lilzmailso02.liwest.at ([212.33.55.13]:12604 "EHLO
-	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753651AbZFJJ1b (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 Jun 2009 05:27:31 -0400
-Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
-	by lilzmailso02.liwest.at with esmtpa (Exim 4.69)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1MEK5h-00014P-VX; Wed, 10 Jun 2009 11:27:30 +0200
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.96])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id AC4F5C6C1; Wed, 10 Jun 2009 11:27:29 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.21 (Windows/20090302)
-In-Reply-To: <CD46A3E1-A85C-4D03-854C-973B91ACC506@zib.de>
-X-Spam-Score: -1.4 (-)
+	id S1760167AbZFJJmt convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 10 Jun 2009 05:42:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932100AbZFJJms
+	(ORCPT <rfc822;git-outgoing>); Wed, 10 Jun 2009 05:42:48 -0400
+Received: from metis.ext.pengutronix.de ([92.198.50.35]:34915 "EHLO
+	metis.ext.pengutronix.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1760167AbZFJJmq (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Jun 2009 05:42:46 -0400
+Received: from ukl by metis.ext.pengutronix.de with local (Exim 4.63)
+	(envelope-from <ukl@pengutronix.de>)
+	id 1MEKJr-0000Wx-QD; Wed, 10 Jun 2009 11:42:45 +0200
+X-Mailer: git-send-email 1.6.3.1
+In-Reply-To: <7vzlcgr088.fsf@alter.siamese.dyndns.org>
+X-SA-Exim-Connect-IP: <locally generated>
+X-SA-Exim-Mail-From: ukl@pengutronix.de
+X-Spam-Checker-Version: SpamAssassin 3.2.4 (2008-01-01) on
+	metis.extern.pengutronix.de
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.6 required=4.5 tests=BAYES_00,NO_RELAYS
+	shortcircuit=no autolearn=ham version=3.2.4
+X-SA-Exim-Version: 4.2.1 (built Tue, 09 Jan 2007 17:23:22 +0000)
+X-SA-Exim-Scanned: Yes (on metis.ext.pengutronix.de)
+X-PTX-Original-Recipient: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121265>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121266>
 
-Steffen Prohaska schrieb:
-> 
-> On Jun 8, 2009, at 6:50 PM, Junio C Hamano wrote:
-> 
->> Steffen, can we move the series, with this patch replaced, to 'next' now?
->> I think it looks good (thanks!) but again it would not hurt to ask
->> just to
->> make sure ;-).
-> 
-> I agree, it looks good.  Thanks.
+Signed-off-by: Uwe Kleine-K=C3=B6nig <u.kleine-koenig@pengutronix.de>
+---
+Hello,
 
-Please don't advance this series to master just yet: I see severe breakage
-with the nedmalloc patch on one of my systems, but I ran out of time to
-investigate further. (And I'm afraid I can continue only next Monday.)
+I'm not completely sure that it's portable to use input redirection and
+&& together---at least it looks a bit ugly.  Probably you know better.
 
--- Hannes
+Best regards
+Uwe
+
+ t/t1502-rev-parse-parseopt.sh |   48 +++++++++++++++++++++++++++++++++=
+++++++-
+ 1 files changed, 46 insertions(+), 2 deletions(-)
+
+diff --git a/t/t1502-rev-parse-parseopt.sh b/t/t1502-rev-parse-parseopt=
+=2Esh
+index 997002d..081812b 100755
+--- a/t/t1502-rev-parse-parseopt.sh
++++ b/t/t1502-rev-parse-parseopt.sh
+@@ -20,8 +20,7 @@ Extras
+=20
+ EOF
+=20
+-test_expect_success 'test --parseopt help output' '
+-	git rev-parse --parseopt -- -h 2> output.err <<EOF
++OPTION_SPEC=3D"\
+ some-command [options] <args>...
+=20
+ some-command does foo and bar!
+@@ -36,8 +35,53 @@ C?        option C with an optional argument
+=20
+ Extras
+ extra1    line above used to cause a segfault but no longer does
++"
++
++test_expect_success 'test --parseopt help output' '
++	git rev-parse --parseopt -- -h 2> output.err <<EOF
++$OPTION_SPEC
+ EOF
+ 	test_cmp expect.err output.err
+ '
+=20
++cat > expect <<EOF
++set -- --foo --bar 'ham' -- 'arg'
++EOF
++
++test_expect_success 'test --parseopt' '
++	git rev-parse --parseopt -- --foo --bar=3Dham arg << EOF > output &&
++$OPTION_SPEC
++EOF
++	test_cmp expect output
++'
++
++test_expect_success 'test --parseopt with mixed options and arguments'=
+ '
++	git rev-parse --parseopt -- --foo arg --bar=3Dham << EOF > output &&
++$OPTION_SPEC
++EOF
++	test_cmp expect output
++'
++
++cat > expect <<EOF
++set -- --foo -- 'arg' '--bar=3Dham'
++EOF
++
++test_expect_success 'test --parseopt with --' '
++	git rev-parse --parseopt -- --foo -- arg --bar=3Dham << EOF > output =
+&&
++$OPTION_SPEC
++EOF
++	test_cmp expect output
++'
++
++cat > expect <<EOF
++set -- --foo -- '--' 'arg' '--bar=3Dham'
++EOF
++
++test_expect_success 'test --parseopt --keep-dashdash' '
++	git rev-parse --parseopt --keep-dashdash -- --foo -- arg --bar=3Dham =
+<< EOF > output &&
++$OPTION_SPEC
++EOF
++	test_cmp expect output
++'
++
+ test_done
+--=20
+1.6.3.1
