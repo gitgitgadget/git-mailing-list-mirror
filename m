@@ -1,113 +1,93 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: branch management
-Date: Wed, 10 Jun 2009 07:43:25 -0700 (PDT)
-Message-ID: <m3d49c40ai.fsf@localhost.localdomain>
-References: <7vfxe9udln.fsf@alter.siamese.dyndns.org>
-	<4A2E0C88.70805@gmail.com> <20090609080612.GG9993@laphroaig.corp>
-	<7viqj5nzgz.fsf@alter.siamese.dyndns.org>
-	<20090609172302.GH9993@laphroaig.corp>
-	<08614AC584A6ED42BD836DE9286376E12A211FA9CA@spswchi6mail1.peak6.net>
-	<20090609195018.GA17848@blimp.localdomain>
-	<08614AC584A6ED42BD836DE9286376E12A211FA9D0@spswchi6mail1.peak6.net>
+From: Reto Glauser <linux@blinkeye.ch>
+Subject: [BUG] git cvsexportcommit -W
+Date: Wed, 10 Jun 2009 16:38:58 +0200
+Message-ID: <ea9100509a9a5e21b9dc193cd34f812b@blinkeye.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "'Alex Riesen'" <raa.lkml@gmail.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Harry Duin <hduin@optionshouse.com>
-X-From: git-owner@vger.kernel.org Wed Jun 10 16:43:47 2009
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Jun 10 16:45:30 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MEP1m-0002aO-MS
-	for gcvg-git-2@gmane.org; Wed, 10 Jun 2009 16:43:47 +0200
+	id 1MEP3R-0003Gu-QV
+	for gcvg-git-2@gmane.org; Wed, 10 Jun 2009 16:45:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758022AbZFJOn0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 10 Jun 2009 10:43:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757114AbZFJOnZ
-	(ORCPT <rfc822;git-outgoing>); Wed, 10 Jun 2009 10:43:25 -0400
-Received: from mail-ew0-f210.google.com ([209.85.219.210]:42381 "EHLO
-	mail-ew0-f210.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757329AbZFJOnY (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 Jun 2009 10:43:24 -0400
-Received: by ewy6 with SMTP id 6so1058429ewy.37
-        for <git@vger.kernel.org>; Wed, 10 Jun 2009 07:43:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received
-         :x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        bh=eKTJ/jF7WK3NYuTBAcwPEh1XgJUG9YTfgtcFZd47cKE=;
-        b=BxdbdVDysZOikoOn5aujOLvDvt0RV0QxNoRG/aqLRp0O1pPUCOSXeyo09mMIYgbIpD
-         4KAFqLAZFlEeQERURDl5+1NiYuWNaFjuCeCoTige4oU2kbqrOb9BoSBxBfQaK5zGUU6e
-         SZPbfGGBdVVgp11jUNMeAE9Nwzas0FC5K4MsI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        b=rSi3uxxRhYdEaz/wCjNsTDJgOJN0N0hHx+ttxnypmV12GhKHTovWKhh3h3ALfwF1H6
-         2zWh7VMUod1fmlFgubZL8oB2VoJEmndRS0ZLGFpS159FvaKfxlmpLslbqmvzf6M7Eqqo
-         xZdn0k1ovpEZwBdOjRATqOEPn/yzsr1wVvF8M=
-Received: by 10.210.130.14 with SMTP id c14mr547889ebd.55.1244645005923;
-        Wed, 10 Jun 2009 07:43:25 -0700 (PDT)
-Received: from localhost.localdomain (abvn21.neoplus.adsl.tpnet.pl [83.8.211.21])
-        by mx.google.com with ESMTPS id 28sm147056eyg.44.2009.06.10.07.43.24
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 10 Jun 2009 07:43:25 -0700 (PDT)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id n5AEhLko028062;
-	Wed, 10 Jun 2009 16:43:21 +0200
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id n5AEhIhT028059;
-	Wed, 10 Jun 2009 16:43:18 +0200
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <08614AC584A6ED42BD836DE9286376E12A211FA9D0@spswchi6mail1.peak6.net>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+	id S1757501AbZFJOpU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 10 Jun 2009 10:45:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757000AbZFJOpT
+	(ORCPT <rfc822;git-outgoing>); Wed, 10 Jun 2009 10:45:19 -0400
+Received: from mail.blinkeye.ch ([78.46.102.7]:38393 "EHLO mail.blinkeye.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756700AbZFJOpT (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Jun 2009 10:45:19 -0400
+X-Greylist: delayed 382 seconds by postgrey-1.27 at vger.kernel.org; Wed, 10 Jun 2009 10:45:18 EDT
+Received: from localhost (localhost [127.0.0.1])
+	by mail.blinkeye.ch (Postfix) with ESMTP id 1B3A1818D0
+	for <git@vger.kernel.org>; Wed, 10 Jun 2009 16:38:59 +0200 (CEST)
+Received: from blinkeye.ch (blinkeye.ch [78.46.102.7])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client did not present a certificate)
+	by mail.blinkeye.ch (Postfix) with ESMTPSA id 05C6A818CF
+	for <git@vger.kernel.org>; Wed, 10 Jun 2009 16:38:59 +0200 (CEST)
+X-Sender: linux@blinkeye.ch
+User-Agent: RoundCube Webmail/0.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121281>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121282>
 
-Harry Duin <hduin@optionshouse.com> writes:
+I followed a tutorial about bi-directional git-cvs usage:
 
-> Yes, I am aware that branching is different in git than what I have
-> used so far with SVN. But apart from the implementation, I have some
-> information that I want to gather about work done on a branch. Here
-> are a few questions/scenarios that I want to make sure we can
-> handle. Remember that our branches are mapped one to one to a Jira
-> ticket.
->
+http://blogs.frugalware.org/vmiklos/2008/06/14/new_in_git_1_5_6_git_cvsexportcommit_w?blog=7&c=1&page=1&more=1&title=new_in_git_1_5_6_git_cvsexportcommit_w&tb=1&pb=1&disp=single
 
-First, the syntax to get all commits in a branch 'branch' which was
-created ffrom trunk, i.e. branch named 'master' would be
+The new git cvsexportcommit option '-W' allows to use the same directory
+for a CSV checkout and git checkout. But it doesn't work with the
+autocommit feature '-c':
 
-  master..branch
+# git cvsexportcommit -v -W -c -p -u 65f12da
+Resetting to 88de7d44a6d6343077645fb43b63e3f2907d6fdd
+Applying to CVS commit 65f12da1b98c5a3546356a8c42b6aff005531cd7 from parent
+88de7d44a6d6343077645fb43b63e3f2907d6fdd
+Checking if patch will apply
+Applying
+Patch applied successfully. Adding new files and directories to CVS
+Commit to CVS
+Patch title (first comment line): add content to file4
+Autocommit
+  cvs commit -F .msg 'file4'
+Committed successfully to CVS
+HEAD is now at 65f12da... add content to file4
 
-See git-rev-list(1), git-rev-parse(1) and git-log(1) for details
-of A..B syntax.
+Now, even though everything looks OK, the CVS is not up-to-date. Removing
+the autocommit feature (-c) reveals the problem:
 
-> 1. show all code changes performed on a branch (for code review)
+# git cvsexportcommit -v -W -p -u 65f12da
+Resetting to 88de7d44a6d6343077645fb43b63e3f2907d6fdd
+Applying to CVS commit 65f12da1b98c5a3546356a8c42b6aff005531cd7 from parent
+88de7d44a6d6343077645fb43b63e3f2907d6fdd
+Checking if patch will apply
+Applying
+Patch applied successfully. Adding new files and directories to CVS
+Commit to CVS
+Patch title (first comment line): add content to file4
+Ready for you to commit, just run:
 
-$ git log -p master..branch
+   cvs commit -F .msg 'file4'
+HEAD is now at 65f12da... add content to file4
 
-> 2. show list of files/directories touched by a branch (useful when
->    looking for past fixes, but are unsure where the fix was done)
+Now, 
 
-If you can use pickaxe search (git log -S...), or git-blame, or just
-looking throught "git log ... -- <path>", you can use
+# cvs commit -F .msg 'file4'
 
-$ git rev-list master..branch | 
-  git diff-tree --stdin -r --name-only |
-  sort -u
+doesn't do anything (but return value is 0).
 
-(excluding sha1 hashes).
+You need to use '-f' to force the update:
 
-> 
-> So far I have not found the exact syntax to get this information,
-> but am convinced that git can provide it!
+# cvs commit -f -F .msg 'file4'
+/tmp/CVS/project1/file4,v  <--  file4
+new revision: 1.2; previous revision: 1.1
 
--- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+I'm using git-1.6.3.1.
