@@ -1,81 +1,80 @@
-From: Elijah Newren <newren@gmail.com>
-Subject: Re: EasyGit Integration
-Date: Wed, 10 Jun 2009 16:28:35 -0600
-Message-ID: <51419b2c0906101528k66d99f7avfbb5adb8972a6fe1@mail.gmail.com>
-References: <d411cc4a0906091159r51e7d16t4d66c6225322fb60@mail.gmail.com>
-	 <alpine.LFD.2.01.0906091512350.6847@localhost.localdomain>
-	 <4A2F0B8A.9010203@vilain.net>
-	 <7vws7khlvj.fsf@alter.siamese.dyndns.org>
-	 <alpine.LFD.2.00.0906092252210.31536@xanadu.home>
-	 <7vab4fn7dm.fsf@alter.siamese.dyndns.org>
+From: "H. Peter Anvin" <hpa@zytor.com>
+Subject: Re: [PATCH v3 0/3] automatically skip away from broken commits
+Date: Wed, 10 Jun 2009 15:43:47 -0700
+Message-ID: <4A303723.4060805@zytor.com>
+References: <20090606043853.4031.78284.chriscool@tuxfamily.org>	<4A2CAA56.1030707@zytor.com> <7vws7n6vcf.fsf@alter.siamese.dyndns.org>	<4A2D337C.70203@zytor.com> <7vzlcixwue.fsf@alter.siamese.dyndns.org>	<c07716ae0906082124n4a5bfe88md80ba8076c928b76@mail.gmail.com>	<c07716ae0906090526i714bb6c9g4e3d8cf61021af77@mail.gmail.com>	<4A2E7EEC.2050807@zytor.com>	<c07716ae0906091228s708058d4vea986239a6b458de@mail.gmail.com>	<7viqj5kutl.fsf@alter.siamese.dyndns.org>	<c07716ae0906101237o5038fc4dle9f11b6f2216652a@mail.gmail.com> <7vtz2nlrfs.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Nicolas Pitre <nico@cam.org>, Sam Vilain <sam@vilain.net>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Scott Chacon <schacon@gmail.com>,
-	git list <git@vger.kernel.org>
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Christian Couder <christian.couder@gmail.com>,
+	Christian Couder <chriscool@tuxfamily.org>,
+	git@vger.kernel.org, Sam Vilain <sam@vilain.net>,
+	Ingo Molnar <mingo@elte.hu>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jun 11 00:34:10 2009
+X-From: git-owner@vger.kernel.org Thu Jun 11 00:50:42 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MEWMv-0008LD-TE
-	for gcvg-git-2@gmane.org; Thu, 11 Jun 2009 00:34:06 +0200
+	id 1MEWcz-0004eD-UE
+	for gcvg-git-2@gmane.org; Thu, 11 Jun 2009 00:50:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757371AbZFJWdi convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 10 Jun 2009 18:33:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757231AbZFJWdi
-	(ORCPT <rfc822;git-outgoing>); Wed, 10 Jun 2009 18:33:38 -0400
-Received: from mail-qy0-f191.google.com ([209.85.221.191]:63040 "EHLO
-	mail-qy0-f191.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757206AbZFJWdi convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 10 Jun 2009 18:33:38 -0400
-X-Greylist: delayed 304 seconds by postgrey-1.27 at vger.kernel.org; Wed, 10 Jun 2009 18:33:37 EDT
-Received: by qyk29 with SMTP id 29so1577135qyk.4
-        for <git@vger.kernel.org>; Wed, 10 Jun 2009 15:33:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=vL9vlNhNWjEhHtgbei4yHuffPgZ4exPigQBzbZ3SAJc=;
-        b=P/L/Q6XjA3WK7zyU3STm9MmNGe9CYW06rdq2WgEaZdYIytWNCaHszMaDNNyszrYc0F
-         gEfT3p0CZcegxv/VkXUs9r361qZG+hfX0BudvQh2Q4k4BiqDILeBsSerSDPY1Jv9dXo3
-         QwbraxtODbksXNpZqNbp1bDJ6LugXb9aYw2Pk=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=vQyJU78ff8dFge3PUNaheEeghts/86rCnvyvXf8RzsiH9tJAWMnLPI6ar6Iqfbchle
-         tXCbx/+1Mpe88LWJqfUccs++XyulM3j/DRRuIr8k+jOgRamQAYZqsGCthjt+MXYu5jsX
-         Y09itp6Xiqutyp7rBw1AO1raPYcnBGqugsJH4=
-Received: by 10.231.17.199 with SMTP id t7mr866896iba.46.1244672915776; Wed, 
-	10 Jun 2009 15:28:35 -0700 (PDT)
-In-Reply-To: <7vab4fn7dm.fsf@alter.siamese.dyndns.org>
+	id S1756437AbZFJWu3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 10 Jun 2009 18:50:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756766AbZFJWu2
+	(ORCPT <rfc822;git-outgoing>); Wed, 10 Jun 2009 18:50:28 -0400
+Received: from terminus.zytor.com ([198.137.202.10]:33493 "EHLO
+	terminus.zytor.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756437AbZFJWu0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Jun 2009 18:50:26 -0400
+Received: from anacreon.sc.intel.com (hpa@localhost [127.0.0.1])
+	(authenticated bits=0)
+	by terminus.zytor.com (8.14.3/8.14.1) with ESMTP id n5AMhl7a004850
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Wed, 10 Jun 2009 15:43:48 -0700
+User-Agent: Thunderbird 2.0.0.21 (X11/20090320)
+In-Reply-To: <7vtz2nlrfs.fsf@alter.siamese.dyndns.org>
+X-Virus-Scanned: ClamAV 0.94.2/9451/Wed Jun 10 11:05:54 2009 on terminus.zytor.com
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121314>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121315>
 
-On Wed, Jun 10, 2009 at 2:47 PM, Junio C Hamano<gitster@pobox.com> wrot=
-e:
-> As long as the "fork" is feature complete and the user does not have =
-to
-> resort to git-core, even though it may share the same issue of user b=
-ase
-> division, at least that would _help_ the users who choose the forked =
-one,
-> who does not have to know the old-timer lingo and concepts. =C2=A0It =
-would be a
-> much better solution than adding stupid synonyms to the existing syst=
-em.
->
-> But coming up with a consistent and complete fork that does not show
-> git-core (not just phrases but also underlying concepts) is a lot of =
-work.
-> That is the primary reason why nobody did "gh".
+Junio C Hamano wrote:
+> Christian Couder <christian.couder@gmail.com> writes:
+> 
+>> On Tue, Jun 9, 2009 at 10:37 PM, Junio C Hamano<gitster@pobox.com> wrote:
+>>> Christian Couder <christian.couder@gmail.com> writes:
+>>>
+>>>> My opinion is that we should not penalize all the people working on
+>>>> "quite clean" projects and also people working on "not clean" projects
+>>>> who are able to recover, on the pretence that there are other people
+>>>> on these "not clean" projects who are not.
+>> ...
+>> When I wrote "clean", I just mean with not too many untestable commits.
+> 
+> Ok, then the "opinion" in the above paragraph was simply stating the
+> obvious: we should have a good "bisect skip".  I obviously agree with that
+> ;-).
+> 
+> In other words, you were not arguing against my observation that your
+> algorithm would not be much better than randomly picking the next commit
+> when the best one is untestable, unless the history is linear.  I guess
+> that was what I was confused with.  I thought you were saying that we
+> should give preferential treatment to people with linear history. 
+> 
+>> Ok. I started working on optionaly using a PRNG but I am not sure that
+>> you will want to add another one.
+> 
+> It may still make sense to replace, not add to, that "fixed alternating
+> distance in goodness space" with a randomized one, for the reasons HPA
+> stated, especially for avoiding to give a false impression that the magic
+> constants are picked for some reason.
+> 
 
-What would you think of adding eg to contrib?
+That being said, Christian's observation that a biased selection would
+be better than a linear random pick is a good one.
+
+	-hpa
