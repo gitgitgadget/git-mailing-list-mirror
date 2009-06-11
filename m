@@ -1,113 +1,77 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Mercurial on BigTable
-Date: Thu, 11 Jun 2009 01:24:48 -0700 (PDT)
-Message-ID: <m34oun41pz.fsf@localhost.localdomain>
-References: <d411cc4a0906101215t313b2037k713aa1ce974c30cc@mail.gmail.com>
-	<4A3065C5.3070203@op5.se>
+From: Karsten Weiss <knweiss@gmx.de>
+Subject: https, client certificate, pem pass phrase
+Date: Thu, 11 Jun 2009 10:36:14 +0200 (CEST)
+Message-ID: <alpine.OSX.2.00.0906110956370.945@xor.localnet>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Scott Chacon <schacon@gmail.com>, git list <git@vger.kernel.org>
-To: Andreas Ericsson <ae@op5.se>
-X-From: git-owner@vger.kernel.org Thu Jun 11 10:25:09 2009
+Content-Type: TEXT/PLAIN; format=flowed; charset=US-ASCII
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jun 11 10:37:05 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MEfat-0005al-BZ
-	for gcvg-git-2@gmane.org; Thu, 11 Jun 2009 10:25:07 +0200
+	id 1MEfmS-0001bp-Na
+	for gcvg-git-2@gmane.org; Thu, 11 Jun 2009 10:37:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757041AbZFKIY4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Jun 2009 04:24:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753171AbZFKIYy
-	(ORCPT <rfc822;git-outgoing>); Thu, 11 Jun 2009 04:24:54 -0400
-Received: from fg-out-1718.google.com ([72.14.220.155]:12147 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755949AbZFKIYw (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Jun 2009 04:24:52 -0400
-Received: by fg-out-1718.google.com with SMTP id d23so1438451fga.17
-        for <git@vger.kernel.org>; Thu, 11 Jun 2009 01:24:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received
-         :x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        bh=TbGE37/Xe3umS0qg8qNFFvjZlwSBuQAR0Bq0EJHwwdg=;
-        b=GFqIhP4Ji8HSdLNKcF+Uox/0Lx/OD1i/NOQsYm79Hgr5FqsLBs5gbFS7BbJZcFySog
-         osYNfIA/pW6O+7YmEjdE1qvk/ZuJnih3IkswDG0B1GcWIo0IKLwIiVs0zAd192YiUJ5Q
-         0NAVOP5FTetAGEycLOhNYKPWajrfYdJe713uk=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        b=mf1cggkewCSF7MzpWo1JFX56UTEpXpI0V0qq82zop3lbwTPXMe6Uy9vwOWtHQDTOSz
-         d7FFU45NpfVgRE6ng5IoMlnRLXY+cRoUevs7ybkH+5IXYzKa05Pb9B0pWjffrvle38tK
-         bYF19/4qu/WYQjR6NQPfeTEmF44Jfo8CdhSWg=
-Received: by 10.86.49.13 with SMTP id w13mr1969105fgw.31.1244708691097;
-        Thu, 11 Jun 2009 01:24:51 -0700 (PDT)
-Received: from localhost.localdomain (abwl198.neoplus.adsl.tpnet.pl [83.8.235.198])
-        by mx.google.com with ESMTPS id l19sm1457809fgb.17.2009.06.11.01.24.47
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 11 Jun 2009 01:24:48 -0700 (PDT)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id n5B8OhNl007193;
-	Thu, 11 Jun 2009 10:24:45 +0200
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id n5B8OfRH007190;
-	Thu, 11 Jun 2009 10:24:41 +0200
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <4A3065C5.3070203@op5.se>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+	id S1758968AbZFKIgz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Jun 2009 04:36:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758852AbZFKIgy
+	(ORCPT <rfc822;git-outgoing>); Thu, 11 Jun 2009 04:36:54 -0400
+Received: from mail.gmx.net ([213.165.64.20]:35867 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1758478AbZFKIgx (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Jun 2009 04:36:53 -0400
+Received: (qmail invoked by alias); 11 Jun 2009 08:36:54 -0000
+Received: from port-92-200-99-90.dynamic.qsc.de (EHLO mail.localnet) [92.200.99.90]
+  by mail.gmx.net (mp038) with SMTP; 11 Jun 2009 10:36:54 +0200
+X-Authenticated: #3612999
+X-Provags-ID: V01U2FsdGVkX1+fyuoUvVSftqXlNEgOwJUusV5C2tRV/4Z4/hvOKB
+	MRBh36OY7gonBP
+Received: by mail.localnet (Postfix, from userid 502)
+	id D8865B71413; Thu, 11 Jun 2009 10:36:14 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by mail.localnet (Postfix) with ESMTP id CF3E8B71407
+	for <git@vger.kernel.org>; Thu, 11 Jun 2009 10:36:14 +0200 (CEST)
+User-Agent: Alpine 2.00 (OSX 1167 2008-08-23)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.55
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121330>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121331>
 
-Andreas Ericsson <ae@op5.se> writes:
+Hi,
 
-> I'm more curious as to why they didn't choose git. The only explanation
-> that was actually true is that hg works well over HTTP (if you can call
-> 3 network requests per not-up-to-date head "well"). Since I can't imagine
-> them not doing proper research before launching a project that almost
-> certainly cost quite a lot of money, and I personally think that the
-> "http rules all" explanation sounded weak, I'm guessing there were other
-> reasons as to why they didn't go with git instead, and I'm fairly curious
-> to hear them. If I was to take a guess, I'd say git is written in a pretty
-> unfriendly way for implementing other storage engines.
+I'm using git-1.6.3.2 (with curl-7.19.5) and would like to configure a 
+private git server to be used over https with client-side certificate and 
+BasicAuth authentication because I want to restrict access to selective 
+and authenticated clients from the Internet which connect to the server 
+through a firewall and web proxy.
 
-Well, Google App Engine was in Python, so it follows that the crew
-would have it easier understanding Mercurial code (which is written in
-Python with parts in C for performance), and in moving it to BigTable.
-Adding Java to Gogle App Engine is, as far as I know, fairly recent;
-additionally JGit (git implementation in Java) is not yet full
-implementation.
+So far my test setup works fine. Using SSL FakeBasicAuth I can even access 
+the git server without storing the BasicAuth password unencrypted in 
+~/.netrc (and there are also no git password prompts).
 
-I don't know if Git would be easy to implement on BigTable, and
-whether it wouldn't be better for performance to try to implement it
-on top of underlying Google File System (GFS) and Chubby Lock Service
-_directly_...
+However, it only works as long as I do *not* protect the client's private 
+key (PEM) with a pass phrase which is not secure (especially when using 
+FakeBasicAuth!). When I do protect the private key with a pass phrase 
+*each* git fetch/pull/push prompts the user *several* times with "Enter 
+PEM pass phrase:". Thus, it's not usable (even though it works).
 
+Is there any way I can prevent this? Ideally, I want to be prompted for 
+the PEM pass phrase once and only once for each git command which uses a 
+secure network connection.
 
-Sidenote: lack of good HTTP protocol support (there are some numbers
-at the bottom of comparison[1], but not enough detail to satisfy) as a
-reason is especially strange now that there was quite long discussion
-designing git-over-HTTP ("smart" HTTP protocol); cleaning warts in git
-pack protocol, working around HTTP being stateless, ensuring backward
-compatibility, ensuring that it would work well with HTTP caches...
+Searching the git mailing list archive I found this thread from February 
+09 which seems to indicate
 
-But that is the problem with detailed research for "fast moving
-target". Good research takes time, and by the time you finished it its
-results are already obsolete...
+git with https and client cert asks for password repeatedly
+http://marc.info/?l=git&m=123553151323420&w=2
 
-[1] http://code.google.com/p/support/wiki/DVCSAnalysis
-
-> 
-> Ah well. In a year or two they'll probably support git as well. One can
-> hope at least ;-)
-
-Let's hope to that...
+that this really does not work with git's current http code. Can anyone 
+confirm that this is still the case? I'm willing to test patches if 
+somebody is working on this problem.
 
 -- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+Karsten Weiss
