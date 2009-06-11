@@ -1,7 +1,7 @@
 From: Felipe Contreras <felipe.contreras@gmail.com>
 Subject: Re: EasyGit Integration
-Date: Thu, 11 Jun 2009 03:18:47 +0300
-Message-ID: <94a0d4530906101718r4bd6b127y40e6e524afc5f38f@mail.gmail.com>
+Date: Thu, 11 Jun 2009 03:30:36 +0300
+Message-ID: <94a0d4530906101730p22053cbbl347eddd31b347c3c@mail.gmail.com>
 References: <d411cc4a0906091159r51e7d16t4d66c6225322fb60@mail.gmail.com>
 	 <alpine.LFD.2.01.0906091512350.6847@localhost.localdomain>
 	 <51419b2c0906091530t3dfa5267s2262f979f1e9982a@mail.gmail.com>
@@ -10,143 +10,126 @@ References: <d411cc4a0906091159r51e7d16t4d66c6225322fb60@mail.gmail.com>
 	 <alpine.LFD.2.01.0906092058430.6847@localhost.localdomain>
 	 <94a0d4530906101531ja6f1deeob703f546d62e7599@mail.gmail.com>
 	 <alpine.LFD.2.01.0906101555590.6847@localhost.localdomain>
+	 <d411cc4a0906101657v601aba20q5708e114fc7d4bca@mail.gmail.com>
+	 <m38wjz4odq.fsf@localhost.localdomain>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Theodore Tso <tytso@mit.edu>, Elijah Newren <newren@gmail.com>,
-	Scott Chacon <schacon@gmail.com>,
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Scott Chacon <schacon@gmail.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Theodore Tso <tytso@mit.edu>, Elijah Newren <newren@gmail.com>,
 	git list <git@vger.kernel.org>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Thu Jun 11 02:18:57 2009
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jun 11 02:31:28 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MEY0O-0007Pf-Mr
-	for gcvg-git-2@gmane.org; Thu, 11 Jun 2009 02:18:57 +0200
+	id 1MEYCS-0001ub-8O
+	for gcvg-git-2@gmane.org; Thu, 11 Jun 2009 02:31:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759019AbZFKASr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 10 Jun 2009 20:18:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758861AbZFKASq
-	(ORCPT <rfc822;git-outgoing>); Wed, 10 Jun 2009 20:18:46 -0400
-Received: from fg-out-1718.google.com ([72.14.220.158]:12961 "EHLO
+	id S1756256AbZFKAai convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 10 Jun 2009 20:30:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754179AbZFKAah
+	(ORCPT <rfc822;git-outgoing>); Wed, 10 Jun 2009 20:30:37 -0400
+Received: from fg-out-1718.google.com ([72.14.220.154]:6266 "EHLO
 	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758653AbZFKASq (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 Jun 2009 20:18:46 -0400
-Received: by fg-out-1718.google.com with SMTP id 16so358641fgg.17
-        for <git@vger.kernel.org>; Wed, 10 Jun 2009 17:18:47 -0700 (PDT)
+	with ESMTP id S1753959AbZFKAag convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 10 Jun 2009 20:30:36 -0400
+Received: by fg-out-1718.google.com with SMTP id 16so359562fgg.17
+        for <git@vger.kernel.org>; Wed, 10 Jun 2009 17:30:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:mime-version:received:in-reply-to:references
          :date:message-id:subject:from:to:cc:content-type
          :content-transfer-encoding;
-        bh=0OCChMbuBJMy4/f+hWvw1RsnwjBCofEuMR7zKAGDUdQ=;
-        b=XOyI5h6B92bN3jiqewyPqbJPzCPdKrAisidGNHtinjCRB6nInEV+7AWyNabRix7ltC
-         4ba4Kqn6ZLxc4wUsFo31/DEvP89dMjNGe4vMPzb9ZByYflDO/BEqkx/aPNXSisFlkmX/
-         8PCUkdm9fQTox9sZQqZie/KisKDPSiB2hgGVQ=
+        bh=RPUf/5vDo8Gz++kGOn7Y4BFlMSM9MFFGiwkicA53wWo=;
+        b=wsaekShEJwvFOyVhksOMVe6R5X6aVce8A/+2Fd4L+8qPTTz3Q01R2w0RImjMGj1GZf
+         XfFAi6fxCEp/wV3flbNkfQw06G9MY3wAbFaJ3y6An4U2882aLBEfJkioNdMARI5HvK18
+         SAltq1vgTcBBk715k+oQ2ij7K7jyC/9ycQLCw=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type:content-transfer-encoding;
-        b=tOLqYZGtpwAuFXv0/ukkhgJX+ivF9w5qf23v7Gf/rCJFDLrDGLEZ8HnorS2Rcfd0u3
-         /klmnI5ZxAPguyc68nlC+HkXU2dsvEpYJwfgwtPMbAkEXee2Of7GNC4fx2DdVfsb2Pbf
-         482RaNXJGy5lKkssnDlNWSIRk3PqV2WKnES/A=
-Received: by 10.86.23.20 with SMTP id 20mr1667332fgw.17.1244679527420; Wed, 10 
-	Jun 2009 17:18:47 -0700 (PDT)
-In-Reply-To: <alpine.LFD.2.01.0906101555590.6847@localhost.localdomain>
+        b=dtvVJ3nqjQJI9SL77K4yGSHUrYVKfNAh2uu64zS6evgWLgZIbaxjElPYUwnaXDRIjU
+         dmp0WPMbNdDXDu3UNS1gItmX0LFG/6FBP3zdx40W5xn71QLHmVeEn6AsGOa+tU7hSGYx
+         djlIJrSJtxQes+R2xop9G4qc3P7lQZRFcALcY=
+Received: by 10.86.23.20 with SMTP id 20mr1676493fgw.17.1244680237664; Wed, 10 
+	Jun 2009 17:30:37 -0700 (PDT)
+In-Reply-To: <m38wjz4odq.fsf@localhost.localdomain>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121320>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121321>
 
-On Thu, Jun 11, 2009 at 2:04 AM, Linus
-Torvalds<torvalds@linux-foundation.org> wrote:
->
->
-> On Thu, 11 Jun 2009, Felipe Contreras wrote:
->
->> On Wed, Jun 10, 2009 at 7:03 AM, Linus
+On Thu, Jun 11, 2009 at 3:15 AM, Jakub Narebski<jnareb@gmail.com> wrote=
+:
+> Scott Chacon <schacon@gmail.com> writes:
+>> On Wed, Jun 10, 2009 at 4:04 PM, Linus
 >> Torvalds<torvalds@linux-foundation.org> wrote:
 >> >
+>> > IOW, both would be "if you give it a commit, it acts at a commit l=
+evel",
+>> > and "if you give it pathnames, it acts on a pathname level".
 >> >
->> > On Tue, 9 Jun 2009, Theodore Tso wrote:
->> >>
->> >> My personal opinion is this kind of overloading is actually more
->> >> confusing than simply adding a new name, such as "git revert-file".
+>> > That is totally obvious, and not in the least confusing. They are =
+two
+>> > different things, but at the same time, there is no question about=
+ which
+>> > is which.
 >> >
->> > I'd agree, except I think it actually worked pretty well in "git
->> > checkout".
+>> >> In my mind these are 2 completely different commands.
 >> >
->> > The alternative was to add yet another command for that, or to teach
->> > people about the internal commands we did have. Adding the capability for
->> > checkout to check out individual files - in addition to commits and
->> > branches - I think worked pretty well.
+>> > They are two different things, but they both make sense within the
+>> > _context_.
+>> >
+>> > Only earthworms and FOX news have no concept of "in context". So i=
+t does
+>> > make sense to say "git checkout filename" (and expect it to check =
+out that
+>> > _filename_ - surprise surprise), and also say "git checkout branch=
+" (and
+>> > expect it to check out that branch - again, big surprise).
 >>
->> Why? What makes 'git checkout <commit>' and 'git checkout <commit> --
->> <path>' similar at all? I would expect 'git checkout <commit>' to be
->> the same as 'git checkout <commit> -- .'
+>> The problem here is that you're using 'check out' in your descriptio=
+ns
+>> of the expectations to mean two different things. =C2=A0One means 's=
+witch
+>> branches' and the other means 'extract content'.
 >
-> You don't understand.
+> In both cases it means getting something out of repository (checking
+> out) and into working area.
+
+'git reset' also gets something out of the repository and into the
+working area, that's not reason enough to put them under the same
+'checkout' command, is it?
+
+> [...]
+>> I understand that clarity and ease of use is not really of primary
+>> importance to this project. =C2=A0However, is it not slightly ironic=
+ that
+>> the Git project is so obsessed with squeezing 5% or 10% of raw speed
+>> out of each command, yet feels that the onus should be on each user =
+to
+>> study for hours to memorize a bunch of arbitrary idiosyncrasies of t=
+he
+>> tool? =C2=A0Can we not obsess a little about flattening the learning=
+ curve
+>> 10% as well (possibly at the slight expense of command normalization
+>> or verb bloat)?
 >
-> "git checkout" would be similar to "git revert", if we did that change.
->
-> IOW, both would be "if you give it a commit, it acts at a commit level",
-> and "if you give it pathnames, it acts on a pathname level".
->
-> That is totally obvious, and not in the least confusing. They are two
-> different things, but at the same time, there is no question about which
-> is which.
+> The problem is bakcward compatibility and the fact that git was not a=
+s
+> much as designed, as it has grown. =C2=A0Which is very good solution =
+for
+> getting good feature set, but not so much for an UI...
 
-I'm opposed to 'git revert -- <path>' for many reasons, one of which
-is; you might want to grab some files that are in a future commit.
-Reverting to the future is weird, unless you did a previous revert
-backwards.
+Backwards compatibility must be broken at some point or another,
+otherwise people will start to create their own aliases, alternative
+UI's and even forks. Sure, it must be done carefully and planned in
+advance, that's why it's a good idea to keep a list of things to
+change in the next interface break.
 
-I do understand the two different 'git checkout' modes, that's not the
-point, my point is the question you didn't answer; what does 'git
-checkout <commit>' and 'git checkout -- <path>' have in common?
-
-To me it seems the only thing they have in common is the name.
-
->> In my mind these are 2 completely different commands.
->
-> They are two different things, but they both make sense within the
-> _context_.
->
-> Only earthworms and FOX news have no concept of "in context". So it does
-> make sense to say "git checkout filename" (and expect it to check out that
-> _filename_ - surprise surprise), and also say "git checkout branch" (and
-> expect it to check out that branch - again, big surprise).
->
-> Humans are generally _very_ good at seeing the same word in two different
-> contexts, and not being confused at all. There is no confusion when I talk
-> about SCM's in the context of git, even though "SCM" could also mean a
-> Sceme interpreter, or "Saskatchewan College of Midwives".
-
-Suppose you have a 'debian' branch, and a 'debian' directory, what
-does this command do?
-git checkout debian
-
-Sure, I'm not an earthworm, so I can guess that command means checkout
-the debian branch because it's a much more common action. But git
-doesn't know that, you need to do:
-git checkout debian --
-
-If I know I want to checkout a branch I would like to do:
-git <command to checkout a branch> debian
-
-> In fact, it is often *much* better to accept context-awareness, than to
-> try too hard to be "uniquely identifying" even without context.
->
-> Of course, you do want things to also be unambiguous. But that's why we
-> have things like that "--" thing, when we want to specify pathspecs
-> explicitly and don't want to accept any kind of ambiguity. Most humans
-> tend to leave them out, and that "--" thing shows up mostly in git
-> scripts.
-
-Yeah, unless git finds it ambiguous and the user is forced to learn a
-new idiom in order to get rid of the ambiguity.
-
--- 
-Felipe Contreras
+--=20
+=46elipe Contreras
