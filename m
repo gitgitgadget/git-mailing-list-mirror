@@ -1,114 +1,104 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: Mercurial on BigTable
-Date: Thu, 11 Jun 2009 04:02:45 +0200
-Message-ID: <4A3065C5.3070203@op5.se>
-References: <d411cc4a0906101215t313b2037k713aa1ce974c30cc@mail.gmail.com>
+From: Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [PATCH v3 0/3] automatically skip away from broken commits
+Date: Thu, 11 Jun 2009 06:02:54 +0200
+Message-ID: <200906110602.54861.chriscool@tuxfamily.org>
+References: <20090606043853.4031.78284.chriscool@tuxfamily.org> <c07716ae0906101237o5038fc4dle9f11b6f2216652a@mail.gmail.com> <7vtz2nlrfs.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git list <git@vger.kernel.org>
-To: Scott Chacon <schacon@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jun 11 04:03:00 2009
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Christian Couder <christian.couder@gmail.com>,
+	"H. Peter Anvin" <hpa@zytor.com>, git@vger.kernel.org,
+	Sam Vilain <sam@vilain.net>, Ingo Molnar <mingo@elte.hu>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jun 11 06:03:51 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MEZd4-00061Y-GS
-	for gcvg-git-2@gmane.org; Thu, 11 Jun 2009 04:02:58 +0200
+	id 1MEbW2-00005e-KE
+	for gcvg-git-2@gmane.org; Thu, 11 Jun 2009 06:03:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755944AbZFKCCs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 10 Jun 2009 22:02:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754949AbZFKCCr
-	(ORCPT <rfc822;git-outgoing>); Wed, 10 Jun 2009 22:02:47 -0400
-Received: from na3sys009aog110.obsmtp.com ([74.125.149.203]:47246 "HELO
-	na3sys009aog110.obsmtp.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with SMTP id S1754873AbZFKCCr (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 10 Jun 2009 22:02:47 -0400
-Received: from source ([209.85.220.207]) by na3sys009aob110.postini.com ([74.125.148.12]) with SMTP
-	ID DSNKSjBlx+kZnaYxJzH1w3acQxT4+UVRAdrD@postini.com; Wed, 10 Jun 2009 19:02:50 PDT
-Received: by fxm3 with SMTP id 3so1279821fxm.28
-        for <git@vger.kernel.org>; Wed, 10 Jun 2009 19:02:47 -0700 (PDT)
-Received: by 10.86.31.18 with SMTP id e18mr1720124fge.72.1244685767088;
-        Wed, 10 Jun 2009 19:02:47 -0700 (PDT)
-Received: from clix.int.op5.se ([212.112.163.94])
-        by mx.google.com with ESMTPS id 4sm4939651fgg.18.2009.06.10.19.02.45
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 10 Jun 2009 19:02:46 -0700 (PDT)
-User-Agent: Thunderbird 2.0.0.21 (X11/20090320)
-In-Reply-To: <d411cc4a0906101215t313b2037k713aa1ce974c30cc@mail.gmail.com>
+	id S1762397AbZFKEC4 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 11 Jun 2009 00:02:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762393AbZFKECy
+	(ORCPT <rfc822;git-outgoing>); Thu, 11 Jun 2009 00:02:54 -0400
+Received: from smtp5-g21.free.fr ([212.27.42.5]:37808 "EHLO smtp5-g21.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1762381AbZFKECx convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 11 Jun 2009 00:02:53 -0400
+Received: from smtp5-g21.free.fr (localhost [127.0.0.1])
+	by smtp5-g21.free.fr (Postfix) with ESMTP id F1EBED48015;
+	Thu, 11 Jun 2009 06:02:46 +0200 (CEST)
+Received: from bureau.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
+	by smtp5-g21.free.fr (Postfix) with ESMTP id D825FD4806E;
+	Thu, 11 Jun 2009 06:02:43 +0200 (CEST)
+User-Agent: KMail/1.9.9
+In-Reply-To: <7vtz2nlrfs.fsf@alter.siamese.dyndns.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121324>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121325>
 
-Scott Chacon wrote:
-> Has anyone watched this yet?
-> 
-> http://code.google.com/events/io/sessions/MercurialBigTable.html
-> 
-> It's kind of interesting - a Googler talks about getting Mercurial
-> running on BigTable.  What fascinates me is that if I'm not horribly
-> mistaken, it seems like they just threw out the revlog format entirely
-> and just store the data in a key-value store as sort of a Git-like
-> content addressable filesystem.
+Le Wednesday 10 June 2009, Junio C Hamano a =E9crit :
+> Christian Couder <christian.couder@gmail.com> writes:
+> > On Tue, Jun 9, 2009 at 10:37 PM, Junio C Hamano<gitster@pobox.com>=20
+wrote:
+> >> Christian Couder <christian.couder@gmail.com> writes:
+> >>> My opinion is that we should not penalize all the people working =
+on
+> >>> "quite clean" projects and also people working on "not clean"
+> >>> projects who are able to recover, on the pretence that there are
+> >>> other people on these "not clean" projects who are not.
+> >
+> > ...
+> > When I wrote "clean", I just mean with not too many untestable comm=
+its.
+>
+> Ok, then the "opinion" in the above paragraph was simply stating the
+> obvious: we should have a good "bisect skip".  I obviously agree with
+> that ;-).
+>
+> In other words, you were not arguing against my observation that your
+> algorithm would not be much better than randomly picking the next com=
+mit
+> when the best one is untestable, unless the history is linear.
 
-It does indeed seem like that, yes. Would have been fun to be there to
-congratulate him on implementing something that's already existed for
-about three years ;-)
+I think my algorithm is better enough than a random one to be worth usi=
+ng by=20
+default. Like HPA says it's in practice like a random one with a bias.
 
->  I had thought they were taking
-> advantage of the revlog structure somehow, but it appears like they
-> basically just changed the underlying data format to be much more like
-> Git and rewrote ah Hg speaking server on top of that.  They even
-> explicitly store the head values like refs instead of reading
-> childless nodes out of the revlog, which is what I thought Hg did.
-> 
+That's because the "goodness" value is something that has a relationshi=
+p=20
+with the graph topology. The "goodness" value is some kind of distance =
+from=20
+either the good or the bad commits. The farther from the good and bad=20
+commits the higher is the "goodness" value. And my algorithm tries to a=
+void=20
+commits with low "goodness" value because they should be those near the=
+=20
+good and bad commits and we know that those near the good and bad commi=
+ts=20
+wont give a lot of information.
 
-Well, storing the head values as refs is the only thing that makes
-sense if you're using a database to track things, since you'd otherwise
-have to map in too much data to get any sort of performance at all
-out of it.
+> I guess=20
+> that was what I was confused with.  I thought you were saying that we
+> should give preferential treatment to people with linear history.
+>
+> > Ok. I started working on optionaly using a PRNG but I am not sure t=
+hat
+> > you will want to add another one.
+>
+> It may still make sense to replace, not add to, that "fixed alternati=
+ng
+> distance in goodness space" with a randomized one, for the reasons HP=
+A
+> stated, especially for avoiding to give a false impression that the m=
+agic
+> constants are picked for some reason.
 
-> Does anyone know how they do the graph walking efficiently with this
-> structure?  He mentioned it was about half as fast as native Hg, but
-> that seemed to be acceptable.
+But there _is_ a reason.
 
-Yes, so they don't. DAG walking means they have to look up several
-changesets in a linear fashion, but if they don't know the order
-up front they'll have to suffer the penalty of actually fetching
-each commit from the bigtable database over the network. It would
-be similar to storing git objects in a database on a different
-host, which would also be quite a lot slower than just hitting an
-mmap()'ed file in binary form.
-
->  Curious if anyone had any thoughts or
-> information on this.  Shawn, are there technical reasons why this
-> works well the way they're doing it for Hg but would not for Git (like
-> in the repo MINA based server)?  It looks like the data structure and
-> protocol exchange are incredibly similar after they threw away all the
-> revlog stuff.  Or is it just that they're fine with the speed loss and
-> the Android project would not be?
-> 
-
-I'm more curious as to why they didn't choose git. The only explanation
-that was actually true is that hg works well over HTTP (if you can call
-3 network requests per not-up-to-date head "well"). Since I can't imagine
-them not doing proper research before launching a project that almost
-certainly cost quite a lot of money, and I personally think that the
-"http rules all" explanation sounded weak, I'm guessing there were other
-reasons as to why they didn't go with git instead, and I'm fairly curious
-to hear them. If I was to take a guess, I'd say git is written in a pretty
-unfriendly way for implementing other storage engines.
-
-Ah well. In a year or two they'll probably support git as well. One can
-hope at least ;-)
-
--- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
-
-Considering the successes of the wars on alcohol, poverty, drugs and
-terror, I think we should give some serious thought to declaring war
-on peace.
+Best regards,
+Christian.
