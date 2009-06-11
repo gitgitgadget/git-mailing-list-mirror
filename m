@@ -1,64 +1,107 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] git-cvsexportcommit can't commit files which have been removed from CVS
-Date: Thu, 11 Jun 2009 10:04:54 -0700
-Message-ID: <7vzlcehfbd.fsf@alter.siamese.dyndns.org>
-References: <4A1F1CF5.8030002@yahoo.co.uk>
-	<e2b179460906100106x2b9c0bb4r931b0a12959d4314@mail.gmail.com>
-	<4A311053.5060802@yahoo.co.uk>
-	<7vr5xqixd1.fsf@alter.siamese.dyndns.org>
+From: Brandon Casey <casey@nrlssc.navy.mil>
+Subject: Re: [RFC/PATCH 1/2] Teach Solaris that _XOPEN_SOURCE=600 really menas
+ XPG6
+Date: Thu, 11 Jun 2009 12:13:51 -0500
+Message-ID: <UBftUjN2Jk2tj73et7i3WvuSUhtOiNjPVjmux6IKeXOo0Zs8KHgrOA@cipher.nrlssc.navy.mil>
+References: <1243106697-6424-1-git-send-email-gitster@pobox.com> <1243106697-6424-2-git-send-email-gitster@pobox.com> <B96700A1-EC8C-4DDE-A158-CE298FCCA09F@dbservice.com> <bUVdoksYaP8iWWwjmEaaKuJWLMjhg9vaKu35QNnhoSMM0G7B3XoanQ@cipher.nrlssc.navy.mil> <BDDDCC14-2EC0-4F34-AACE-0B0A3D8481B8@dbservice.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Nick Woolley <nickwoolley@yahoo.co.uk>,
-	Mike Ralphson <mike.ralphson@gmail.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Jeff King <peff@peff.net>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jun 11 19:05:12 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git mailing list <git@vger.kernel.org>
+To: Tomas Carnecky <tom@dbservice.com>
+X-From: git-owner@vger.kernel.org Thu Jun 11 19:14:38 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MEni9-000205-Hq
-	for gcvg-git-2@gmane.org; Thu, 11 Jun 2009 19:05:09 +0200
+	id 1MEnrG-00060E-BO
+	for gcvg-git-2@gmane.org; Thu, 11 Jun 2009 19:14:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752395AbZFKREx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Jun 2009 13:04:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752256AbZFKREx
-	(ORCPT <rfc822;git-outgoing>); Thu, 11 Jun 2009 13:04:53 -0400
-Received: from fed1rmmtao101.cox.net ([68.230.241.45]:52928 "EHLO
-	fed1rmmtao101.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751042AbZFKREw (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Jun 2009 13:04:52 -0400
-Received: from fed1rmimpo03.cox.net ([70.169.32.75])
-          by fed1rmmtao101.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20090611170455.VOMP17670.fed1rmmtao101.cox.net@fed1rmimpo03.cox.net>;
-          Thu, 11 Jun 2009 13:04:55 -0400
-Received: from localhost ([68.225.240.211])
-	by fed1rmimpo03.cox.net with bizsmtp
-	id 2h4u1c0054aMwMQ04h4u73; Thu, 11 Jun 2009 13:04:54 -0400
-X-VR-Score: -200.00
-X-Authority-Analysis: v=1.0 c=1 a=BAjMoHc70cUA:10 a=UCtxeOKJ4AkA:10
- a=ybZZDoGAAAAA:8 a=BrDiTsk0AAAA:8 a=HicG_C9RLb5HKpLDdNsA:9
- a=MGjA21EUCEZpExFOYRWQSM2Djl4A:4 a=qIVjreYYsbEA:10 a=-hJg1tCh9CgA:10
-X-CM-Score: 0.00
-In-Reply-To: <7vr5xqixd1.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's message of "Thu\, 11 Jun 2009 08\:49\:46 -0700")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+	id S1752641AbZFKROW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Jun 2009 13:14:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752143AbZFKROW
+	(ORCPT <rfc822;git-outgoing>); Thu, 11 Jun 2009 13:14:22 -0400
+Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:54183 "EHLO
+	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751852AbZFKROV (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Jun 2009 13:14:21 -0400
+Received: by mail.nrlssc.navy.mil id n5BHDrox029619; Thu, 11 Jun 2009 12:13:53 -0500
+In-Reply-To: <BDDDCC14-2EC0-4F34-AACE-0B0A3D8481B8@dbservice.com>
+X-OriginalArrivalTime: 11 Jun 2009 17:13:51.0865 (UTC) FILETIME=[FE086E90:01C9EAB7]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121351>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121352>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Tomas Carnecky wrote:
+> 
+> On Jun 11, 2009, at 5:50 PM, Brandon Casey wrote:
+>>
+>> There are additionally patches on 'next' and more in the pipeline on 'pu'
+>> which adjust these feature macros when compiling on Solaris.  See the
+>> bc/solaris series 8fccb00 which was merged to 'pu'.
+> 
+> Alright, just wanted to make sure that issue is known.
+> 
+>> Also, if you happen to be using the Sun Studio suite 12 with c-compiler
+>> version 5.9, I'd be interested to know whether you can compile
+>> diff-delta.c,
+>> or whether you get an error (see commit 203ee91f).
+> 
+> 
+> I happen to have access to some of my university's solaris boxes with
+> the following compiler: Sun C 5.9 SunOS_sparc Patch 124867-02
+> 2007/11/27, I hope that is good enough.
+> 
+> $ gmake CC=/opt/SUNWspro/bin/c99 CFLAGS="" OPENSSLDIR=/usr/sfw V=1
+> diff-delta.o
+> GIT_VERSION = 1.6.3.2.354.g5787c
+>     * new build flags or prefix
+> /opt/SUNWspro/bin/c99 -o diff-delta.o -c   -D__EXTENSIONS__ -D__sun__
+> -I/usr/sfw/include -DSHA1_HEADER='<openssl/sha.h>'  -DNO_STRCASESTR
+> -DNO_MKDTEMP -DNO_MKSTEMPS -DNO_MEMMEM diff-delta.c
+> $ echo $?
+> 0
 
-> Nick Woolley <nickwoolley@yahoo.co.uk> writes:
->> Mike Ralphson wrote:
->>> cvs commit: Up-to-date check failed for ` space'
->>> cvs [commit aborted]: correct above errors first!
->>> * FAIL 15: re-commit a removed filename which remains in CVS attic
->>> * failed 1 among 15 test(s)
-> But it does seem to be repeatable; I wouldn't rule out a race condition.
+Ok, great.  Looks like Sun fixed the flaw that was present in the 5.8
+compiler, and no other changes need to be made to git.  To be absolutely
+sure, and if you have a moment, can you try to compile the code snippet at
+the end of this email?
 
-Ehh, sorry, it "does not" seem to be repeatable.  Sometimes and only
-sometimes it fails...
+If you name the saved the code "test.c", then just compile with
+
+   /opt/SUNWspro/bin/c99 -c test.c
+
+The Sun C 5.8 compiler complains like this for me:
+
+   "test.c", line 12: identifier redeclared: test_func
+           current : function(pointer to const struct a_struct {int b, array[-1] of pointer to char c}) returning pointer to void
+           previous: function(pointer to const struct a_struct {int b, array[-1] of pointer to char c}) returning pointer to void : "test.c", line 4
+   c99: acomp failed for test.c
+
+If the 5.9 compiler successfully compiles it, then this new version of Sun's
+compiler correctly handles c99 flex arrays.
+
+> (btw, I have to clear CFLAGS when compiling with the sun compiler, as it
+> doesn't understand -Wall)
+
+Yes, that's correct.
+
+-brandon
+
+
+--->8--- test.c --->8---
+struct a_struct;
+
+extern void *test_func(const struct a_struct *f);
+
+struct a_struct {
+        int b;
+        char* c[];
+};
+
+void *test_func(const struct a_struct *f)
+{
+        return 0;
+}
