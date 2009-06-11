@@ -1,123 +1,130 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [RFH] Questions for Git User's Survey 2009
-Date: Thu, 11 Jun 2009 11:43:14 +0200
-Message-ID: <200906111143.15980.jnareb@gmail.com>
-References: <200905291855.03328.jnareb@gmail.com> <200906102042.15119.jnareb@gmail.com> <20090611085744.GA36556@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: David Aguilar <davvid@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jun 11 11:43:36 2009
+From: Paolo Bonzini <bonzini@gnu.org>
+Subject: [PATCH] git-format-patch, git-send-email: generate/handle escaped >From
+Date: Thu, 11 Jun 2009 12:00:34 +0200
+Message-ID: <1244714434-20794-1-git-send-email-bonzini@gnu.org>
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Jun 11 12:02:08 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MEgop-0002RV-FS
-	for gcvg-git-2@gmane.org; Thu, 11 Jun 2009 11:43:35 +0200
+	id 1MEh6l-0000YR-CQ
+	for gcvg-git-2@gmane.org; Thu, 11 Jun 2009 12:02:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760521AbZFKJnW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Jun 2009 05:43:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760643AbZFKJnV
-	(ORCPT <rfc822;git-outgoing>); Thu, 11 Jun 2009 05:43:21 -0400
-Received: from fg-out-1718.google.com ([72.14.220.159]:13178 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1761714AbZFKJnT (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Jun 2009 05:43:19 -0400
-Received: by fg-out-1718.google.com with SMTP id d23so1451311fga.17
-        for <git@vger.kernel.org>; Thu, 11 Jun 2009 02:43:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=ZSEoc06Y7TuHYb8+Y/bovE+xflP8nrIGhYaAITRYOwU=;
-        b=RUt+mcOqlGRRx54lI87pqRmsRFj0ypH+JprotvZ6D96Xrhqe+xNw5tCWqVPZKmUOs3
-         fLdtxWxSVGwbpAaWXKaDl/LCGfptETUb70WIQzHBbEPm7E6IVgZS0kYYl2p4hU71WlPp
-         M0QkhLRV1BXqMzT32O5KN62hPEFPp01e+D15A=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=YNN+k3/8binurpwGK0xjtCU1iYTZWuDlsNNGjQuqD7/q8y6/uBfNl5wyfaLBnqRRUy
-         8HzJRrjVBM97o14FYnsHHk1S6RT92lwU8fic5IQuwiLiC/Ixu8ZcQb08DSOdrTG+U9CI
-         hlQqutssHBwtvljKB9v17uUEeR8ASIGc3oz3M=
-Received: by 10.86.35.8 with SMTP id i8mr2051420fgi.42.1244713400510;
-        Thu, 11 Jun 2009 02:43:20 -0700 (PDT)
-Received: from ?192.168.1.13? (abwl198.neoplus.adsl.tpnet.pl [83.8.235.198])
-        by mx.google.com with ESMTPS id l19sm1600641fgb.22.2009.06.11.02.43.18
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 11 Jun 2009 02:43:19 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <20090611085744.GA36556@gmail.com>
-Content-Disposition: inline
+	id S1762076AbZFKKAs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Jun 2009 06:00:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762031AbZFKKAr
+	(ORCPT <rfc822;git-outgoing>); Thu, 11 Jun 2009 06:00:47 -0400
+Received: from fencepost.gnu.org ([140.186.70.10]:41871 "EHLO
+	fencepost.gnu.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1761868AbZFKKAq (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Jun 2009 06:00:46 -0400
+Received: from bonzini by fencepost.gnu.org with local (Exim 4.67)
+	(envelope-from <bonzini@gnu.org>)
+	id 1MEh5T-0007wm-MC
+	for git@vger.kernel.org; Thu, 11 Jun 2009 06:00:47 -0400
+X-Mailer: git-send-email 1.6.0.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121332>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121333>
 
-On Thu, 11 June 2009, David Aguilar wrote:
-> On Wed, Jun 10, 2009 at 08:42:13PM +0200, Jakub Narebski wrote:
-> > 
-> > 11.*Which porcelains / interfaces / implementations do you use?
-> >     (multiple choice: git (core), JGit, Cogito, pg, StGIT, Guilt,
-> >     Easy Git, Pyrite, TopGit, other - please specify)
-> > 12. Which of the following git tools do you use?
-> >     (multiple choice: JGit (EGit etc.), Cogito, pg, StGIT, Guilt,
-> >     TopGit, Easy Git, editor/IDE VC integration, gitk, git-gui,
-> >     QGit, GitView, Giggle, tig, git-sh, instaweb, git-cola / ugit,
-> >     GitNub, GitX, GitTortoise, Git Extensions, git-cheetah, Gitosis,
-> >     graphical diff tool, graphical merge tool, other - please specify)
-> 
-> Can you not mention ugit?
-> Less is more.  I really hope it has 0 users.
-> 
-> As you're well aware, git-cola is how most people know it.
-> 
-> My reason for wanting to strike it from the record is to make
-> things simpler for users.  If someone went looking for ugit these
-> days they'd be redirected to git-cola.
+I noticed that the mbox files generated by git-format-patch (especially
+with --stdout) are not proper in the sense that the lines starting with
+"From " are not escaped with a > sign.  This is unlikely to cause problems
+with mail clients such as mutt, but many scripts designed to work on
+mbox files will fumble in this case.
 
-O.K.
+This patch fixes it and dually unescapes the lines in git-send-email.
 
-I wonder if I should do the same for Guilt (formerly gq = Git Queues)...
+Signed-off-by: Paolo Bonzini <bonzini@gnu.org>
+---
+ git-send-email.perl     |    1 +
+ pretty.c                |    2 ++
+ t/t4014-format-patch.sh |   13 +++++++++++++
+ t/t9001-send-email.sh   |   15 +++++++++++++++
+ 4 files changed, 31 insertions(+), 0 deletions(-)
 
-> I have a similar feeling about cogito, but I didn't write it.
-> Since cogito is dead, it's best to let it rest, otherwise new
-> users waste time wondering what it is, no?
-> 
-> It's kinda like rewriting history... ;-)
-
-The goal of including Cogito and pg (Patchy Git), of course with strong
-warning about it being DEPRECATED, was to check if many people use it,
-even when they should not (because it is unmaintained).
-
-Cogito had 14 replies, and pg 2 replies last survey (for 2681 responders).
-
-Put perhaps it is time to lay this answer to rest...
-
-> 
-> 
-> Thanks for the survey.
-> I'll be forwarding to all my co-workers.
-
-It would be a bit before starting survey.  Most work would be announcing
-the survey, I think.  Any ideas for channels I forgot last year?
-
-> 
-> > 16. Which of the following features do (or did) you use?
-> >     (multiple choice: non-default hooks, working with dirty tree,
-> 
-> fwiw, the number one thing cvs users ask me for is the
-> ugly+dirty cvs update-before-commit/merge workflow...
-
-Well, perhaps I should add "What features would you like to see in Git?"
-free-form question.  Mind you, I don't guarantee that it would be ever
-analyzed... :-)
-
+diff --git a/git-send-email.perl b/git-send-email.perl
+index 4c795a4..de57303 100755
+--- a/git-send-email.perl
++++ b/git-send-email.perl
+@@ -1085,6 +1085,7 @@ foreach my $t (@files) {
+ 	}
+ 	# Now parse the message body
+ 	while(<F>) {
++		s/^>From /From /;
+ 		$message .=  $_;
+ 		if (/^(Signed-off-by|Cc): (.*)$/i) {
+ 			chomp;
+diff --git a/pretty.c b/pretty.c
+index e5328da..d7f8228 100644
+--- a/pretty.c
++++ b/pretty.c
+@@ -868,6 +868,8 @@ void pp_remainder(enum cmit_fmt fmt,
+ 			memset(sb->buf + sb->len, ' ', indent);
+ 			strbuf_setlen(sb, sb->len + indent);
+ 		}
++		if (fmt == CMIT_FMT_EMAIL && !prefixcmp(line, "From "))
++			strbuf_addch(sb, '>');
+ 		strbuf_add(sb, line, linelen);
+ 		strbuf_addch(sb, '\n');
+ 	}
+diff --git a/t/t4014-format-patch.sh b/t/t4014-format-patch.sh
+index 922a894..8474718 100755
+--- a/t/t4014-format-patch.sh
++++ b/t/t4014-format-patch.sh
+@@ -28,6 +28,13 @@ test_expect_success setup '
+ 	git update-index file &&
+ 	git commit -m "Side changes #3 with \\n backslash-n in it." &&
+ 
++	git checkout -b more &&
++	for i in A B C; do echo "$i"; done >>file &&
++	git update-index file &&
++	git commit -m "More changes
++
++From this point on..." &&
++
+ 	git checkout master &&
+ 	git diff-tree -p C2 | git apply --index &&
+ 	git commit -m "Master accepts moral equivalent of #2"
+@@ -516,4 +523,10 @@ test_expect_success 'format-patch --signoff' '
+ 	grep "^Signed-off-by: $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL>"
+ '
+ 
++test_expect_success 'format-patch escapes From' '
++	git format-patch more^..more --stdout > patch9 &&
++	grep "^>From this" patch9 &&
++	! grep "^From this" patch9
++'
++
+ test_done
+diff --git a/t/t9001-send-email.sh b/t/t9001-send-email.sh
+index 2ce24cd..5c6f0f4 100755
+--- a/t/t9001-send-email.sh
++++ b/t/t9001-send-email.sh
+@@ -168,6 +168,21 @@ test_expect_success 'no patch was sent' '
+ 	! test -e commandline1
+ '
+ 
++test_expect_success 'fix >From lines' '
++	clean_fake_sendmail &&
++	cp $patches gt-from.patch &&
++	echo ">From abcdef" >>gt-from.patch &&
++	git send-email \
++		--from="Example <nobody@example.com>" \
++		--to=nobody@example.com \
++		--smtp-server="$(pwd)/fake.sendmail" \
++		gt-from.patch \
++		2>errors &&
++	test -e msgtxt1 &&
++	! grep "^>From abcdef" msgtxt1 &&
++	grep "^From abcdef" msgtxt1
++'
++
+ test_expect_success 'Author From: in message body' '
+ 	clean_fake_sendmail &&
+ 	git send-email \
 -- 
-Jakub Narebski
-Poland
+1.6.0.3
