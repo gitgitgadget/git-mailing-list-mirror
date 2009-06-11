@@ -1,61 +1,74 @@
-From: Paolo Bonzini <bonzini@gnu.org>
-Subject: [PATCH v2] doc tweak for git-send-email
-Date: Thu, 11 Jun 2009 09:30:27 +0200
-Message-ID: <1244705427-3376-1-git-send-email-bonzini@gnu.org>
-References: <4A30568E.7060503@gmail.com>
-Cc: bebarino@gmail.com
-To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Jun 11 09:30:50 2009
+From: Pascal Obry <pascal@obry.net>
+Subject: Re: git-svn and *lots* of ssh connections
+Date: Thu, 11 Jun 2009 09:52:02 +0200
+Organization: Home - http://www.obry.net
+Message-ID: <4A30B7A2.709@obry.net>
+References: <cccedfc60906100709r18364bc2h82d8e1a7ee0b8fd1@mail.gmail.com>
+Reply-To: pascal@obry.net
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Jon Nelson <jnelson@jamponi.net>
+X-From: git-owner@vger.kernel.org Thu Jun 11 09:52:13 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MEekL-0007qh-VD
-	for gcvg-git-2@gmane.org; Thu, 11 Jun 2009 09:30:50 +0200
+	id 1MEf52-0007jy-5P
+	for gcvg-git-2@gmane.org; Thu, 11 Jun 2009 09:52:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754809AbZFKHal (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Jun 2009 03:30:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754770AbZFKHak
-	(ORCPT <rfc822;git-outgoing>); Thu, 11 Jun 2009 03:30:40 -0400
-Received: from fencepost.gnu.org ([140.186.70.10]:52765 "EHLO
-	fencepost.gnu.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754285AbZFKHaj (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Jun 2009 03:30:39 -0400
-Received: from bonzini by fencepost.gnu.org with local (Exim 4.67)
-	(envelope-from <bonzini@gnu.org>)
-	id 1MEekC-0004ek-GV; Thu, 11 Jun 2009 03:30:40 -0400
-X-Mailer: git-send-email 1.6.0.3
-In-Reply-To: <4A30568E.7060503@gmail.com>
+	id S1755872AbZFKHwC convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 11 Jun 2009 03:52:02 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753861AbZFKHwA
+	(ORCPT <rfc822;git-outgoing>); Thu, 11 Jun 2009 03:52:00 -0400
+Received: from mail-fx0-f213.google.com ([209.85.220.213]:51817 "EHLO
+	mail-fx0-f213.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751177AbZFKHwA (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Jun 2009 03:52:00 -0400
+Received: by fxm9 with SMTP id 9so1332006fxm.37
+        for <git@vger.kernel.org>; Thu, 11 Jun 2009 00:52:01 -0700 (PDT)
+Received: by 10.103.229.12 with SMTP id g12mr1151461mur.87.1244706721193;
+        Thu, 11 Jun 2009 00:52:01 -0700 (PDT)
+Received: from ?192.168.0.113? (629648585p001.rain.fr [81.80.241.97])
+        by mx.google.com with ESMTPS id b9sm16634884mug.39.2009.06.11.00.52.00
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Thu, 11 Jun 2009 00:52:00 -0700 (PDT)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 6.0; fr-FR; rv:1.8.1.21) Gecko/20090302 Thunderbird/2.0.0.21 Mnenhy/0.7.5.0
+In-Reply-To: <cccedfc60906100709r18364bc2h82d8e1a7ee0b8fd1@mail.gmail.com>
+X-Enigmail-Version: 0.95.7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121328>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121329>
 
-The git-send-email docs do not mention except in the usage lines
-the combined patch formatting/sending ability of git-send-email.
-This patch expands on the possible arguments to git-send-email
-and explains the meaning of the rev-list argument.
+Jon Nelson a =E9crit :
+> Basically, during the fetch stage (or clone) git-svn uses a *ton* of
+> ssh connections. Many dozens and in even with smaller projects well
+> over a hundred. By "small" I mean a .git of less than 6MB and less
+> than 60 files in the checkout. I've got 4MBit bandwidth available but
+> frequently see only a single digit fraction of that going to the
+> fetch/clone process. Is there anything that can be done to reduce the
+> number of ssh connections involved? Why can't a single connection
+> simple be re-used? I can't use "ssh connection sharing" for a variety
+> of reasons that aren't relevant here.
 
-Signed-off-by: Paolo Bonzini <bonzini@gnu.org>
----
- Documentation/git-send-email.txt |    4 ++++
- 1 files changed, 4 insertions(+), 0 deletions(-)
+I don't know if git-svn can be improved but I would go with a reusable
+ssh connection (this is not working with Cygwin though).
 
-diff --git a/Documentation/git-send-email.txt b/Documentation/git-send-email.txt
-index 794224b..a282190 100644
---- a/Documentation/git-send-email.txt
-+++ b/Documentation/git-send-email.txt
-@@ -14,6 +14,10 @@ SYNOPSIS
- DESCRIPTION
- -----------
- Takes the patches given on the command line and emails them out.
-+Patches can be specified as files, directories (which will send all
-+files in the directory), or directly as a revision list.  In the
-+last case, any format accepted by linkgit:git-format-patch[1] can
-+be passed to git send-email.
- 
- The header of the email is configurable by command line options.  If not
- specified on the command line, the user will be prompted with a ReadLine
--- 
-1.6.0.3
+See for example (but lot of web site talk about this):
+http://www.cyberciti.biz/faq/linux-unix-reuse-openssh-connection/
+
+Pascal.
+
+--=20
+
+--|------------------------------------------------------
+--| Pascal Obry                           Team-Ada Member
+--| 45, rue Gabriel Peri - 78114 Magny Les Hameaux FRANCE
+--|------------------------------------------------------
+--|    http://www.obry.net  -  http://v2p.fr.eu.org
+--| "The best way to travel is by means of imagination"
+--|
+--| gpg --keyserver keys.gnupg.net --recv-key F949BD3B
