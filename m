@@ -1,63 +1,75 @@
-From: Jan Klod <janklodvan@gmail.com>
-Subject: chrooting git daemon?
-Date: Thu, 11 Jun 2009 15:30:31 +0000
-Message-ID: <200906111530.31160.janklodvan@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] git-cvsexportcommit can't commit files which have been removed from CVS
+Date: Thu, 11 Jun 2009 08:49:46 -0700
+Message-ID: <7vr5xqixd1.fsf@alter.siamese.dyndns.org>
+References: <4A1F1CF5.8030002@yahoo.co.uk>
+	<e2b179460906100106x2b9c0bb4r931b0a12959d4314@mail.gmail.com>
+	<4A311053.5060802@yahoo.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="utf-8"
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jun 11 17:30:44 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Mike Ralphson <mike.ralphson@gmail.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Jeff King <peff@peff.net>, git@vger.kernel.org
+To: Nick Woolley <nickwoolley@yahoo.co.uk>
+X-From: git-owner@vger.kernel.org Thu Jun 11 17:50:06 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MEmEk-00016g-BU
-	for gcvg-git-2@gmane.org; Thu, 11 Jun 2009 17:30:42 +0200
+	id 1MEmXT-0001Mg-OG
+	for gcvg-git-2@gmane.org; Thu, 11 Jun 2009 17:50:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761275AbZFKPag (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Jun 2009 11:30:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761252AbZFKPaf
-	(ORCPT <rfc822;git-outgoing>); Thu, 11 Jun 2009 11:30:35 -0400
-Received: from mail-bw0-f213.google.com ([209.85.218.213]:56898 "EHLO
-	mail-bw0-f213.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759151AbZFKPac (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Jun 2009 11:30:32 -0400
-Received: by bwz9 with SMTP id 9so1536481bwz.37
-        for <git@vger.kernel.org>; Thu, 11 Jun 2009 08:30:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        bh=OHlous4e/q7mu0cdWzWra78L8xgN7AL++bwIqXMehk4=;
-        b=HixwXjR5b0Dq4RDYQaU9K1ayTNnLntEqTzrO6OajykuEPVzsOR4CC0nZlopaVi2StL
-         p7/g0IfO0UNs658/CMZwRuNme8+zsJQty1W6EPGZHjRErpBYcCTM624g5BMGHCcmdtkd
-         TTO/vLt4UQG1W0Aaz3wZI5/dmKgH4UpQrNz+c=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        b=tegP4BSna70KiGCu3LxHO8VDLqauQ8aPGtPX1ewuTG8v9vHLgpQlQ8XgklQkVyQzpD
-         5g4bcFUUnICetGJ2eyGi544EGUPJDBMpjplJKVercT8BU6SwBc/llbD+rviVGwC1FOAJ
-         Lo+nKkh7syNpxCeCUetziA2pnYVBQi4NMlItM=
-Received: by 10.103.179.1 with SMTP id g1mr1383084mup.48.1244734233611;
-        Thu, 11 Jun 2009 08:30:33 -0700 (PDT)
-Received: from ?192.168.7.93? ([85.15.210.9])
-        by mx.google.com with ESMTPS id 12sm127135muq.53.2009.06.11.08.30.32
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 11 Jun 2009 08:30:33 -0700 (PDT)
-User-Agent: KMail/1.9.9
-Content-Disposition: inline
+	id S1759023AbZFKPtq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Jun 2009 11:49:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754376AbZFKPtq
+	(ORCPT <rfc822;git-outgoing>); Thu, 11 Jun 2009 11:49:46 -0400
+Received: from fed1rmmtao105.cox.net ([68.230.241.41]:59937 "EHLO
+	fed1rmmtao105.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751621AbZFKPtp (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Jun 2009 11:49:45 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao105.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20090611154948.NNFW20430.fed1rmmtao105.cox.net@fed1rmimpo02.cox.net>;
+          Thu, 11 Jun 2009 11:49:48 -0400
+Received: from localhost ([68.225.240.211])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id 2fpn1c0024aMwMQ04fpnk8; Thu, 11 Jun 2009 11:49:47 -0400
+X-VR-Score: -200.00
+X-Authority-Analysis: v=1.0 c=1 a=BAjMoHc70cUA:10 a=UCtxeOKJ4AkA:10
+ a=BrDiTsk0AAAA:8 a=zBK5yZjOAAAA:8 a=DQq1zK7Z02fwcaArBRQA:9
+ a=u_7ALdtO300zZUSXfeQ8tZcC6PIA:4 a=jCX6CI3P4pcA:10 a=-hJg1tCh9CgA:10
+X-CM-Score: 0.00
+In-Reply-To: <4A311053.5060802@yahoo.co.uk> (Nick Woolley's message of "Thu\, 11 Jun 2009 15\:10\:27 +0100")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121343>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121344>
 
-Hello,
-please, is that hard / complicated to run git daemon in chroot and what are 
-the steps to do it best?
-Do you consider it useless precaution there? 
+Nick Woolley <nickwoolley@yahoo.co.uk> writes:
 
-Jan
+> Mike Ralphson wrote:
+>> Hi Nick, I'm seeing intermittent failures since your new test was
+>> added to 'next' on AIX 5.3
+>> 
+>> cvs commit: Up-to-date check failed for ` space'
+>> cvs [commit aborted]: correct above errors first!
+>> * FAIL 15: re-commit a removed filename which remains in CVS attic
+>> * failed 1 among 15 test(s)
+>> 
+>> Is there a possibility this test has a race condition?
+>
+> Hm, I have thought not, but what sort of a race condition did you have in mind?
+>
+>> Let me know if there's anything I can do to help debug it.
+>> 
+>> It could be a bug in the ancient CVS I have here (1.11.1p1) though.
+>
+> I wouldn't be surprised.
+
+I just saw this on a k.org machine that runs Fedora 9 (Sulphur); 1.11.22
+is the version of CVS that comes with it.
+
+But it does seem to be repeatable; I wouldn't rule out a race condition.
