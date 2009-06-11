@@ -1,88 +1,87 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Troubles when directory is replaced by symlink
-Date: Thu, 11 Jun 2009 07:48:46 -0400
-Message-ID: <20090611114846.GC4409@coredump.intra.peff.net>
-References: <c6c947f60906042243v2e36251dn9a46343cf6b8a2f4@mail.gmail.com> <c6c947f60906090118n78d3c40fq11d1390f8776c2c0@mail.gmail.com>
+From: Paolo Bonzini <paolo.bonzini@gmail.com>
+Subject: Re: [PATCH] git-format-patch, git-send-email: generate/handle escaped
+ >From
+Date: Thu, 11 Jun 2009 13:58:36 +0200
+Message-ID: <4A30F16C.5040207@gmail.com>
+References: <1244714434-20794-1-git-send-email-bonzini@gnu.org> <20090611105538.GA4409@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Kjetil Barvik <barvik@broadpark.no>, git@vger.kernel.org
-To: Alexander Gladysh <agladysh@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jun 11 13:49:02 2009
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Paolo Bonzini <bonzini@gnu.org>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Jun 11 13:59:04 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MEimD-0005IP-G4
-	for gcvg-git-2@gmane.org; Thu, 11 Jun 2009 13:49:01 +0200
+	id 1MEivu-0001gP-Oi
+	for gcvg-git-2@gmane.org; Thu, 11 Jun 2009 13:59:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761668AbZFKLsy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Jun 2009 07:48:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760959AbZFKLsx
-	(ORCPT <rfc822;git-outgoing>); Thu, 11 Jun 2009 07:48:53 -0400
-Received: from peff.net ([208.65.91.99]:57294 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756722AbZFKLsx (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Jun 2009 07:48:53 -0400
-Received: (qmail 9211 invoked by uid 107); 11 Jun 2009 11:49:05 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Thu, 11 Jun 2009 07:49:05 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Thu, 11 Jun 2009 07:48:46 -0400
-Content-Disposition: inline
-In-Reply-To: <c6c947f60906090118n78d3c40fq11d1390f8776c2c0@mail.gmail.com>
+	id S1753421AbZFKL6u (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Jun 2009 07:58:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753363AbZFKL6t
+	(ORCPT <rfc822;git-outgoing>); Thu, 11 Jun 2009 07:58:49 -0400
+Received: from mail-ew0-f210.google.com ([209.85.219.210]:64194 "EHLO
+	mail-ew0-f210.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752462AbZFKL6s (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Jun 2009 07:58:48 -0400
+Received: by ewy6 with SMTP id 6so1944661ewy.37
+        for <git@vger.kernel.org>; Thu, 11 Jun 2009 04:58:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from
+         :user-agent:mime-version:to:cc:subject:references:in-reply-to
+         :content-type:content-transfer-encoding;
+        bh=+ZQQZIecqRtDmWWKKKBRE431eM12PY5dj9KhAC1+eNM=;
+        b=Lud/49yQYRlPqM/ls3Fhyyf+m2IDCb6zkPiu4FXQ+2jqpMUgFE9yxN+OEWi6/O3gSi
+         K83Z8Rn0TM5/tOG7H2pNte/kd3WQ4f7Cl+zAZDZFMM9O9L8tfJ1FLYrOwZuixq1QLp3a
+         ag3xIxSLuDLOgVsfYdHxWXFMpG8W6AL7Z9YI8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        b=PINtZj1VMhTwh5dLHIe9CYsE3pd4MzvgXqkBPg4fBxvxsGN7c+bQr6/iUjKIP5HuTN
+         6qIgr39dOHOnC7lgt8/O3YGT+D2qVaytge+eYq11+zW9ymmKox6U7Jt5uZ9oNLcYKwVH
+         f9xqKnJPGbYvGnmqh2io/luSHIFrHnR7DxObk=
+Received: by 10.210.78.7 with SMTP id a7mr5597267ebb.65.1244721529092;
+        Thu, 11 Jun 2009 04:58:49 -0700 (PDT)
+Received: from yakj.usersys.redhat.com (nat-pool-brq.redhat.com [62.40.79.66])
+        by mx.google.com with ESMTPS id 10sm117121eyd.12.2009.06.11.04.58.48
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Thu, 11 Jun 2009 04:58:48 -0700 (PDT)
+User-Agent: Thunderbird 2.0.0.17 (X11/20081009)
+In-Reply-To: <20090611105538.GA4409@coredump.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121337>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121338>
 
-[Kjetil: I bisected this bug to your 92604b4. Details below.]
 
-On Tue, Jun 09, 2009 at 12:18:16PM +0400, Alexander Gladysh wrote:
-
-> Any help here? This bug is pretty annoying (especially that it
-> requires double hard resets).
+> But of course, which conversion you want depends entirely on what you
+> are going to feed it to, and which mbox they are expecting. Which is why
+> it really should be configurable.
 > 
-> Should I provide any extra information?
+> Your use case looks to be feeding it to send-email
 
-Actually, I think the problem happens earlier than you realize; I see
-problems when switching back to master:
+Almost, :-) because git-send-email does not support sending multiple 
+messages out of one mbox file.  I have an upcoming patch to add this 
+support, and I was just "feeling the waters" before posting it.
 
--- >8 --
-# make a repo
-mkdir repo && cd repo && git init
+> I suspect you would
+> be better served by improving the 'From ' detection in send-email,
+> probably to something like:
+> 
+>   /^From \S+ \w{3} \w{3} \d+ \d\d:\d\d:\d\d \d+/
+> 
+> though that may be too strict. It would probably make sense to steal one
+> from one of the many mbox-reading CPAN modules.
 
-# content in alpha
-mkdir alpha && echo content >alpha/file && git add . && git commit -m one
-# and duplicate content inside beta
-mkdir beta && cp -R alpha beta && git add . && git commit -m two
+Good idea.  I'll let others speak and can make this configurable (as 
+well as use the s/^>*From />&/ conversion), but if no one speaks, I'll 
+change my git-send-email patch to use the above regex or a similar one, 
+and withdraw this patch.
 
-# now replace the duplicate with a symlink
-git checkout -b branch
-rm -rf beta/alpha && git add -u && git commit -m deleted
-ln -s ../alpha beta/alpha && git add . && git commit -m symlink
+Thanks for the prompt remark!
 
-# now checkout master again; alpha/file will be missing, even
-# though it wasn't touched at all
-git checkout master
-git status
--- 8< --
-
-We handled this correctly in v1.6.1, so I was able to bisect it down to:
-
-    commit 92604b466344b2157efc42ef3521dac22d7906a2
-    Author: Kjetil Barvik <barvik@broadpark.no>
-    Date:   Sun Jan 18 16:14:50 2009 +0100
-
-        lstat_cache(): more cache effective symlink/directory detection
-
-        Make the cache functionality more effective.  Previously when
-        A/B/C/D was in the cache and A/B/C/E/file.c was called for,
-        there was no match at all from the cache.  Now we use the fact
-        that the paths "A", "A/B" and "A/B/C" are already tested, and we
-        only need to do an lstat() call on "A/B/C/E".
-
-I don't have time to look more closely now, but I'm guessing we are
-treating the symlink to the directory like the directory itself in a
-place that we shouldn't.
-
--Peff
+Paolo
