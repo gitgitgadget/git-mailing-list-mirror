@@ -3,70 +3,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: *
 X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=1.5 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	LIST_MIRROR_RECEIVED,RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
-Received: (qmail 9880 invoked by uid 107); 10 Mar 2009 11:01:20 -0000
+	HEADER_FROM_DIFFERENT_DOMAINS,LIST_MIRROR_RECEIVED,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+Received: (qmail 10327 invoked by uid 107); 11 Jun 2009 15:46:17 -0000
 Received: from vger.kernel.org (HELO vger.kernel.org) (209.132.176.167)
-    by peff.net (qpsmtpd/0.40) with ESMTP; Tue, 10 Mar 2009 07:01:19 -0400
+    by peff.net (qpsmtpd/0.40) with ESMTP; Thu, 11 Jun 2009 11:46:15 -0400
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754223AbZCJLBJ (ORCPT <rfc822;peff@peff.net>);
-	Tue, 10 Mar 2009 07:01:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754106AbZCJLBJ
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 Mar 2009 07:01:09 -0400
-Received: from mail.gmx.net ([213.165.64.20]:50530 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754032AbZCJLBH (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Mar 2009 07:01:07 -0400
-Received: (qmail invoked by alias); 10 Mar 2009 11:01:00 -0000
-Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
-  by mail.gmx.net (mp069) with SMTP; 10 Mar 2009 12:01:00 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/QIl5DO6zQ/pjd0pYvTyB/SwOepmS2RDeCeqgWgO
-	EpqHiRH+B6yF7i
-Date:	Tue, 10 Mar 2009 12:01:00 +0100 (CET)
-From:	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: schindel@intel-tinevez-2-302
-To:	Finn Arne Gangstad <finnag@pvv.org>
-cc:	git@vger.kernel.org
-Subject: Re: [RFC/PATCH] git push usability improvements and default change
-In-Reply-To: <20090310084615.GA11448@pvv.org>
-Message-ID: <alpine.DEB.1.00.0903101159530.14295@intel-tinevez-2-302>
-References: <1236638151-6465-1-git-send-email-finnag@pvv.org> <alpine.DEB.1.00.0903100033400.6358@intel-tinevez-2-302> <20090310084615.GA11448@pvv.org>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+	id S1753246AbZFKPp5 (ORCPT <rfc822;peff@peff.net>);
+	Thu, 11 Jun 2009 11:45:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752413AbZFKPp5
+	(ORCPT <rfc822;git-outgoing>); Thu, 11 Jun 2009 11:45:57 -0400
+Received: from fed1rmmtao101.cox.net ([68.230.241.45]:42956 "EHLO
+	fed1rmmtao101.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751972AbZFKPp4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Jun 2009 11:45:56 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao101.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20090611154559.SOBH17670.fed1rmmtao101.cox.net@fed1rmimpo02.cox.net>;
+          Thu, 11 Jun 2009 11:45:59 -0400
+Received: from localhost ([68.225.240.211])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id 2fly1c00G4aMwMQ04flyZy; Thu, 11 Jun 2009 11:45:59 -0400
+X-VR-Score: -10.00
+X-Authority-Analysis: v=1.0 c=1 a=BAjMoHc70cUA:10 a=UCtxeOKJ4AkA:10
+X-CM-Score: 0.00
+To:	Nick Woolley <nickwoolley@yahoo.co.uk>
+Cc:	Mike Ralphson <mike.ralphson@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Jeff King <peff@peff.net>, git@vger.kernel.org
+Subject: Re: [PATCH] git-cvsexportcommit can't commit files which have been removed from CVS
+References: <4A1F1CF5.8030002@yahoo.co.uk>
+	<e2b179460906100106x2b9c0bb4r931b0a12959d4314@mail.gmail.com>
+	<4A311053.5060802@yahoo.co.uk>
+From:	Junio C Hamano <gitster@pobox.com>
+Date:	Thu, 11 Jun 2009 08:45:58 -0700
+In-Reply-To: <4A311053.5060802@yahoo.co.uk> (Nick Woolley's message of "Thu\, 11 Jun 2009 15\:10\:27 +0100")
+Message-ID: <7vy6ryixjd.fsf@alter.siamese.dyndns.org>
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.67
+Content-Type: text/plain; charset=us-ascii
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
-
-Hi,
-
-On Tue, 10 Mar 2009, Finn Arne Gangstad wrote:
-
-> On Tue, Mar 10, 2009 at 12:35:12AM +0100, Johannes Schindelin wrote:
-> 
-> > On Mon, 9 Mar 2009, Finn Arne Gangstad wrote:
-> > 
-> > > git push default change:
-> > > 
-> > > git push will by default push "nothing" instead of "matching".
-> > 
-> > Hasn't this been shot down already?  I do not want that change.  I 
-> > think it is harmful.
-> > 
-> > At least without a proper way to prepare existing users for the end of 
-> > the world.
-> 
-> That is pretty much what patches 4 and 5 are about - add nice warnings, 
-> but do not change behavior. 6 introduces the changed default.
-
-Ah, so you meant that 1-5 should be committed right away, and 6 in one 
-year?
-
-Ciao,
-Dscho
 
