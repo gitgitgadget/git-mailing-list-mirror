@@ -1,77 +1,123 @@
-From: Karsten Weiss <knweiss@gmx.de>
-Subject: https, client certificate, pem pass phrase
-Date: Thu, 11 Jun 2009 10:36:14 +0200 (CEST)
-Message-ID: <alpine.OSX.2.00.0906110956370.945@xor.localnet>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [RFH] Questions for Git User's Survey 2009
+Date: Thu, 11 Jun 2009 11:43:14 +0200
+Message-ID: <200906111143.15980.jnareb@gmail.com>
+References: <200905291855.03328.jnareb@gmail.com> <200906102042.15119.jnareb@gmail.com> <20090611085744.GA36556@gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; format=flowed; charset=US-ASCII
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jun 11 10:37:05 2009
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: David Aguilar <davvid@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jun 11 11:43:36 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MEfmS-0001bp-Na
-	for gcvg-git-2@gmane.org; Thu, 11 Jun 2009 10:37:05 +0200
+	id 1MEgop-0002RV-FS
+	for gcvg-git-2@gmane.org; Thu, 11 Jun 2009 11:43:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758968AbZFKIgz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Jun 2009 04:36:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758852AbZFKIgy
-	(ORCPT <rfc822;git-outgoing>); Thu, 11 Jun 2009 04:36:54 -0400
-Received: from mail.gmx.net ([213.165.64.20]:35867 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1758478AbZFKIgx (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Jun 2009 04:36:53 -0400
-Received: (qmail invoked by alias); 11 Jun 2009 08:36:54 -0000
-Received: from port-92-200-99-90.dynamic.qsc.de (EHLO mail.localnet) [92.200.99.90]
-  by mail.gmx.net (mp038) with SMTP; 11 Jun 2009 10:36:54 +0200
-X-Authenticated: #3612999
-X-Provags-ID: V01U2FsdGVkX1+fyuoUvVSftqXlNEgOwJUusV5C2tRV/4Z4/hvOKB
-	MRBh36OY7gonBP
-Received: by mail.localnet (Postfix, from userid 502)
-	id D8865B71413; Thu, 11 Jun 2009 10:36:14 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
-	by mail.localnet (Postfix) with ESMTP id CF3E8B71407
-	for <git@vger.kernel.org>; Thu, 11 Jun 2009 10:36:14 +0200 (CEST)
-User-Agent: Alpine 2.00 (OSX 1167 2008-08-23)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.55
+	id S1760521AbZFKJnW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Jun 2009 05:43:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760643AbZFKJnV
+	(ORCPT <rfc822;git-outgoing>); Thu, 11 Jun 2009 05:43:21 -0400
+Received: from fg-out-1718.google.com ([72.14.220.159]:13178 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1761714AbZFKJnT (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Jun 2009 05:43:19 -0400
+Received: by fg-out-1718.google.com with SMTP id d23so1451311fga.17
+        for <git@vger.kernel.org>; Thu, 11 Jun 2009 02:43:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=ZSEoc06Y7TuHYb8+Y/bovE+xflP8nrIGhYaAITRYOwU=;
+        b=RUt+mcOqlGRRx54lI87pqRmsRFj0ypH+JprotvZ6D96Xrhqe+xNw5tCWqVPZKmUOs3
+         fLdtxWxSVGwbpAaWXKaDl/LCGfptETUb70WIQzHBbEPm7E6IVgZS0kYYl2p4hU71WlPp
+         M0QkhLRV1BXqMzT32O5KN62hPEFPp01e+D15A=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=YNN+k3/8binurpwGK0xjtCU1iYTZWuDlsNNGjQuqD7/q8y6/uBfNl5wyfaLBnqRRUy
+         8HzJRrjVBM97o14FYnsHHk1S6RT92lwU8fic5IQuwiLiC/Ixu8ZcQb08DSOdrTG+U9CI
+         hlQqutssHBwtvljKB9v17uUEeR8ASIGc3oz3M=
+Received: by 10.86.35.8 with SMTP id i8mr2051420fgi.42.1244713400510;
+        Thu, 11 Jun 2009 02:43:20 -0700 (PDT)
+Received: from ?192.168.1.13? (abwl198.neoplus.adsl.tpnet.pl [83.8.235.198])
+        by mx.google.com with ESMTPS id l19sm1600641fgb.22.2009.06.11.02.43.18
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Thu, 11 Jun 2009 02:43:19 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <20090611085744.GA36556@gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121331>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121332>
 
-Hi,
+On Thu, 11 June 2009, David Aguilar wrote:
+> On Wed, Jun 10, 2009 at 08:42:13PM +0200, Jakub Narebski wrote:
+> > 
+> > 11.*Which porcelains / interfaces / implementations do you use?
+> >     (multiple choice: git (core), JGit, Cogito, pg, StGIT, Guilt,
+> >     Easy Git, Pyrite, TopGit, other - please specify)
+> > 12. Which of the following git tools do you use?
+> >     (multiple choice: JGit (EGit etc.), Cogito, pg, StGIT, Guilt,
+> >     TopGit, Easy Git, editor/IDE VC integration, gitk, git-gui,
+> >     QGit, GitView, Giggle, tig, git-sh, instaweb, git-cola / ugit,
+> >     GitNub, GitX, GitTortoise, Git Extensions, git-cheetah, Gitosis,
+> >     graphical diff tool, graphical merge tool, other - please specify)
+> 
+> Can you not mention ugit?
+> Less is more.  I really hope it has 0 users.
+> 
+> As you're well aware, git-cola is how most people know it.
+> 
+> My reason for wanting to strike it from the record is to make
+> things simpler for users.  If someone went looking for ugit these
+> days they'd be redirected to git-cola.
 
-I'm using git-1.6.3.2 (with curl-7.19.5) and would like to configure a 
-private git server to be used over https with client-side certificate and 
-BasicAuth authentication because I want to restrict access to selective 
-and authenticated clients from the Internet which connect to the server 
-through a firewall and web proxy.
+O.K.
 
-So far my test setup works fine. Using SSL FakeBasicAuth I can even access 
-the git server without storing the BasicAuth password unencrypted in 
-~/.netrc (and there are also no git password prompts).
+I wonder if I should do the same for Guilt (formerly gq = Git Queues)...
 
-However, it only works as long as I do *not* protect the client's private 
-key (PEM) with a pass phrase which is not secure (especially when using 
-FakeBasicAuth!). When I do protect the private key with a pass phrase 
-*each* git fetch/pull/push prompts the user *several* times with "Enter 
-PEM pass phrase:". Thus, it's not usable (even though it works).
+> I have a similar feeling about cogito, but I didn't write it.
+> Since cogito is dead, it's best to let it rest, otherwise new
+> users waste time wondering what it is, no?
+> 
+> It's kinda like rewriting history... ;-)
 
-Is there any way I can prevent this? Ideally, I want to be prompted for 
-the PEM pass phrase once and only once for each git command which uses a 
-secure network connection.
+The goal of including Cogito and pg (Patchy Git), of course with strong
+warning about it being DEPRECATED, was to check if many people use it,
+even when they should not (because it is unmaintained).
 
-Searching the git mailing list archive I found this thread from February 
-09 which seems to indicate
+Cogito had 14 replies, and pg 2 replies last survey (for 2681 responders).
 
-git with https and client cert asks for password repeatedly
-http://marc.info/?l=git&m=123553151323420&w=2
+Put perhaps it is time to lay this answer to rest...
 
-that this really does not work with git's current http code. Can anyone 
-confirm that this is still the case? I'm willing to test patches if 
-somebody is working on this problem.
+> 
+> 
+> Thanks for the survey.
+> I'll be forwarding to all my co-workers.
+
+It would be a bit before starting survey.  Most work would be announcing
+the survey, I think.  Any ideas for channels I forgot last year?
+
+> 
+> > 16. Which of the following features do (or did) you use?
+> >     (multiple choice: non-default hooks, working with dirty tree,
+> 
+> fwiw, the number one thing cvs users ask me for is the
+> ugly+dirty cvs update-before-commit/merge workflow...
+
+Well, perhaps I should add "What features would you like to see in Git?"
+free-form question.  Mind you, I don't guarantee that it would be ever
+analyzed... :-)
 
 -- 
-Karsten Weiss
+Jakub Narebski
+Poland
