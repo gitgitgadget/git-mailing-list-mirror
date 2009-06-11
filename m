@@ -1,76 +1,94 @@
-From: Klas Lindberg <klas.lindberg@gmail.com>
-Subject: Re: chrooting git daemon?
-Date: Thu, 11 Jun 2009 23:27:08 +0200
-Message-ID: <37C1FAEE-FCE3-4A38-AC89-0AAF3B1174DF@gmail.com>
-References: <200906111530.31160.janklodvan@gmail.com>
-Mime-Version: 1.0 (Apple Message framework v935.3)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
-Content-Transfer-Encoding: 7bit
+From: =?ISO-8859-1?Q?Santi_B=E9jar?= <santi@agolina.net>
+Subject: Re: [PATCHv3 1/4] parse-remote: function to get the tracking branch 
+	to be merge
+Date: Thu, 11 Jun 2009 23:30:50 +0200
+Message-ID: <adf1fd3d0906111430m28ef712axd55942b19505a5b3@mail.gmail.com>
+References: <1244451651-22651-2-git-send-email-santi@agolina.net>
+	 <7v8wk2wbfs.fsf@alter.siamese.dyndns.org>
+	 <adf1fd3d0906090029s2aa7fe19j7b1005997d70b92c@mail.gmail.com>
+	 <adf1fd3d0906090107w994de3chb39071e5911a59ae@mail.gmail.com>
+	 <7veittrete.fsf@alter.siamese.dyndns.org>
+	 <adf1fd3d0906090150k575c538ds28cd8c1a96909e9e@mail.gmail.com>
+	 <adf1fd3d0906090516l6b1d5ec1rdc78ffffa116b765@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: Jan Klod <janklodvan@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jun 11 23:27:27 2009
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jun 11 23:31:06 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MErnt-0002ct-7h
-	for gcvg-git-2@gmane.org; Thu, 11 Jun 2009 23:27:21 +0200
+	id 1MErrO-0003vX-Sd
+	for gcvg-git-2@gmane.org; Thu, 11 Jun 2009 23:30:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752011AbZFKV1M (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Jun 2009 17:27:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751912AbZFKV1L
-	(ORCPT <rfc822;git-outgoing>); Thu, 11 Jun 2009 17:27:11 -0400
-Received: from ey-out-1920.google.com ([74.125.78.146]:23237 "EHLO
-	ey-out-1920.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751090AbZFKV1K (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Jun 2009 17:27:10 -0400
-Received: by ey-out-1920.google.com with SMTP id 3so206795eyh.26
-        for <git@vger.kernel.org>; Thu, 11 Jun 2009 14:27:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:cc:message-id:from:to
-         :in-reply-to:content-type:content-transfer-encoding:mime-version
-         :subject:date:references:x-mailer;
-        bh=M+G/LEWyrE5UXz2ca7OEVjfffv+hMlupIVVKel22fQE=;
-        b=epv0v+rSNkkodLgQYIwgzvoUm4v3ulh7YL8AifRRYOIBs640Goaj1CFYxoDI0V+hni
-         KyUJ5+CrQS6GRQThnWnivoTaJS8i66vLr2FidAsIJ5yPzDcpqH0PUEbVm9Yb0Y38F5uo
-         iQU48ylcWP0o6CSwO2yz0vFE7zKTQlFJUo+RQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=cc:message-id:from:to:in-reply-to:content-type
-         :content-transfer-encoding:mime-version:subject:date:references
-         :x-mailer;
-        b=XKro//gnW0ptduxxWuWmxEgFHcM3eKGU5uLcGXGn3uZ3MKOkswWSzmz1t8vnGHNN/l
-         Kv2d9mmtfmstanr7YaSQ8bGsqpFLW6ztdKWP423eYSXf1M/8lc8bzVxWOLxNi0QE4qCD
-         1YPOcd0OeKFRky1IqScfFEQQ9WggkF685xFSQ=
-Received: by 10.210.44.12 with SMTP id r12mr118322ebr.92.1244755631926;
-        Thu, 11 Jun 2009 14:27:11 -0700 (PDT)
-Received: from ?192.168.1.103? (90-228-223-91-no119.tbcn.telia.com [90.228.223.91])
-        by mx.google.com with ESMTPS id 28sm119702eyg.14.2009.06.11.14.27.10
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 11 Jun 2009 14:27:11 -0700 (PDT)
-In-Reply-To: <200906111530.31160.janklodvan@gmail.com>
-X-Mailer: Apple Mail (2.935.3)
+	id S1752065AbZFKVav convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 11 Jun 2009 17:30:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752195AbZFKVau
+	(ORCPT <rfc822;git-outgoing>); Thu, 11 Jun 2009 17:30:50 -0400
+Received: from mail-bw0-f213.google.com ([209.85.218.213]:63336 "EHLO
+	mail-bw0-f213.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753451AbZFKVat convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 11 Jun 2009 17:30:49 -0400
+Received: by bwz9 with SMTP id 9so1737701bwz.37
+        for <git@vger.kernel.org>; Thu, 11 Jun 2009 14:30:50 -0700 (PDT)
+Received: by 10.204.63.143 with SMTP id b15mr2932545bki.8.1244755850631; Thu, 
+	11 Jun 2009 14:30:50 -0700 (PDT)
+In-Reply-To: <adf1fd3d0906090516l6b1d5ec1rdc78ffffa116b765@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121363>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121364>
 
-11 jun 2009 kl. 17.30 skrev Jan Klod:
+2009/6/9 Santi B=E9jar <santi@agolina.net>:
+> 2009/6/9 Santi B=E9jar <santi@agolina.net>:
+>> 2009/6/9 Junio C Hamano <gitster@pobox.com>:
+>>> Santi B=E9jar <santi@agolina.net> writes:
+>>>
+>>>>> git pull --rebase tags v1.6.0
+>>>>
+>>>> In fact: git pull --rebase remote tags v1.6.0
+>>>>
+>>>> But this still works because oldremoteref defaults to defaults_mer=
+ge.
+>>>> So the only behavior change is when a remote branch is
+>>>> rebased/retagged, and you have worst problems then. I think noone =
+used
+>>>> the rebased functionality in this way, so I don't think it is wort=
+h to
+>>>> support it. But if someone think it is important I'll do it.
+>>>
+>>> I personally do not think supporting such a form of input is absolu=
+tely
+>>> necessary. =A0Even though technically it might be a regression, if =
+it is so
+>>> rare a form, we can simply say "this strange form used to work, but=
+ now it
+>>> does not; you can use this form instead to do the same thing", and =
+move
+>>> on.
+>>
+>> OK.
+>>
+>
+> At the end it was a little patch to get this corner case working. Her=
+e
+> it is the patch to squash (I'll send later a proper patch mail, with =
+a
+> test).
+>
+> And this additional sentence in the commit log:
+>
+> No behavior changes. The new function behaves like the old code used =
+in
+> "git pull --rebase".
+>
 
-> Hello,
-> please, is that hard / complicated to run git daemon in chroot and  
-> what are
-> the steps to do it best?
-> Do you consider it useless precaution there?
+At the end the original code does not handle this case, as it asumes
+that the rebase ref is a remote commit in refs/remotes/$origin/$ref.
+So the new code behaves exactly like the old one. I'll send all again
+with an updated commit message explaining all this.
 
-You do know that chroot is not a security tool, right? If you do want  
-security measures, I'd suggest setting up SSH accounts with the login  
-shell set to git-shell. The main difference is that you can have any  
-number of trees served from the same machine without handling them all  
-by the same service instance. If you wanted to accomplish the same  
-with git-daemon, you'd have to let all of them listen to different  
-ports. At least that's how I understand it.
-
-BR / Klas
+Santi
