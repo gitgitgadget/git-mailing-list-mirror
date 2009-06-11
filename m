@@ -1,125 +1,66 @@
-From: Mark Lodato <lodatom@gmail.com>
-Subject: Re: https, client certificate, pem pass phrase
-Date: Thu, 11 Jun 2009 19:54:58 -0400
-Message-ID: <ca433830906111654g629429d1j73722baf7ab02fc2@mail.gmail.com>
-References: <alpine.OSX.2.00.0906110956370.945@xor.localnet>
-	 <alpine.OSX.2.00.0906111801400.67531@xor.localnet>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/2] http.c: prompt for SSL client certificate password
+Date: Thu, 11 Jun 2009 16:56:07 -0700
+Message-ID: <7vocsue354.fsf@alter.siamese.dyndns.org>
+References: <1243480563-5954-1-git-send-email-lodatom@gmail.com>
+	<ca433830906111600n2d45b5bdg3fb6e7c0a537ec78@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Karsten Weiss <knweiss@gmx.de>
-X-From: git-owner@vger.kernel.org Fri Jun 12 01:55:09 2009
+To: Mark Lodato <lodatom@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jun 12 01:56:20 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MEu6u-0003sR-Pc
-	for gcvg-git-2@gmane.org; Fri, 12 Jun 2009 01:55:09 +0200
+	id 1MEu81-0004FV-7h
+	for gcvg-git-2@gmane.org; Fri, 12 Jun 2009 01:56:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754730AbZFKXy7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Jun 2009 19:54:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753567AbZFKXy6
-	(ORCPT <rfc822;git-outgoing>); Thu, 11 Jun 2009 19:54:58 -0400
-Received: from mail-fx0-f216.google.com ([209.85.220.216]:61900 "EHLO
-	mail-fx0-f216.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753207AbZFKXy5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Jun 2009 19:54:57 -0400
-Received: by fxm12 with SMTP id 12so314505fxm.37
-        for <git@vger.kernel.org>; Thu, 11 Jun 2009 16:54:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=6SvD06XJNZnphtoaIDbpRyan1UiPTCobMWSJbc+vUAY=;
-        b=Jq49T9a9TdNZB2sdhnUlQXFNrKDEZ8S9diD9pW8UZNj3kuhoPL3UoqQNaJx3WB8PYX
-         9lXzNpVrFFlPhJMwiSh5um5vAh10uNvJ8iOfTq8L6qnA8g7PCgxkff0Y5RYummterJub
-         FJQgpX4I4pblEvkj0+ndY9VfR6qORneTzHwBo=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=bG3w0BqWQtvP+F6tblnUpMIQLzFT72sQkpc3G/qLG3eKb89kNnckNR8gaqXQunnnwM
-         TFMWULpVvXdSc0YDW27ocoYJDZFOUhP3ZrSAAagGxmUYTWKl05Mv6gpofyqhO7WH7cYS
-         w+xSkllGO8wR/1NJPfjeA9RLkG0xp6Yj35Ghg=
-Received: by 10.223.118.141 with SMTP id v13mr2451499faq.26.1244764499014; 
-	Thu, 11 Jun 2009 16:54:59 -0700 (PDT)
-In-Reply-To: <alpine.OSX.2.00.0906111801400.67531@xor.localnet>
+	id S1758721AbZFKX4J (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Jun 2009 19:56:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756954AbZFKX4H
+	(ORCPT <rfc822;git-outgoing>); Thu, 11 Jun 2009 19:56:07 -0400
+Received: from fed1rmmtao107.cox.net ([68.230.241.39]:57281 "EHLO
+	fed1rmmtao107.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754152AbZFKX4G (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Jun 2009 19:56:06 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao107.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20090611235606.WFZO18948.fed1rmmtao107.cox.net@fed1rmimpo02.cox.net>;
+          Thu, 11 Jun 2009 19:56:06 -0400
+Received: from localhost ([68.225.240.211])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id 2nw71c0064aMwMQ04nw7iU; Thu, 11 Jun 2009 19:56:07 -0400
+X-VR-Score: -130.00
+X-Authority-Analysis: v=1.0 c=1 a=ZkqYN0c8iNwA:10 a=Z2nhhV3jvI0A:10
+ a=pGLkceISAAAA:8 a=F6dkZquyb0_Px09vLhsA:9 a=OMl7GAiVcLpi38bYzPpd4lOtfk4A:4
+ a=MSl-tDqOz04A:10
+X-CM-Score: 0.00
+In-Reply-To: <ca433830906111600n2d45b5bdg3fb6e7c0a537ec78@mail.gmail.com> (Mark Lodato's message of "Thu\, 11 Jun 2009 19\:00\:43 -0400")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121377>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121378>
 
-On Thu, Jun 11, 2009 at 12:43 PM, Karsten Weiss<knweiss@gmx.de> wrote:
-> On Thu, 11 Jun 2009, Karsten Weiss wrote:
->
->> However, it only works as long as I do *not* protect the client's private
->> key (PEM) with a pass phrase which is not secure (especially when using
->> FakeBasicAuth!). When I do protect the private key with a pass phrase *each*
->> git fetch/pull/push prompts the user *several* times with "Enter PEM pass
->> phrase:". Thus, it's not usable (even though it works).
->
-> Somehow I managed to miss Mark Lodato's posting from 2009-05-28 before:
->
-> [PATCH 1/2] http.c: prompt for SSL client certificate password
-> http://marc.info/?l=git&m=124348062226665&w=4
-> [PATCH 2/2] http.c: add http.sslCertNoPass option
-> http://marc.info/?l=git&m=124348062326671&w=4
->
-> I can confirm that his two patches solve the problem. I.e. there is now only
-> a single passphrase prompt during each Git invocation that involves the
-> https protocol. Great!
+Mark Lodato <lodatom@gmail.com> writes:
 
-Glad to hear this works for you, and that there is interest in this
-patch series!
+>> The user is always prompted, even if the certificate is not encrypted.
+>> This should be fine; unencrypted certificates are rare and a security
+>> risk anyway.
 
-> However, I want to add two additional suggestions:
->
-> With the patch Git prompts for a "Certificate Password". IMHO it would be
-> better to prompt for the "Certificate private key passphrase" because it's
-> the private key which is protected and not the certificate itself.
+Hmm, "rare" is in the eyes of beholder.  For automated settings, I would
+imagine that it is a necessary feature that we need to keep working.  Of
+course the local box that keeps an unencrypted certificate used this way
+must be well protected to make it _not_ a security risk, but that is not
+an issue you are addressing with your patch anyway, so it is not nice to
+dismiss possible usability issues like this.
 
-I realize this is the case, but here's my reasoning for the wording:
-The user is trying to use a client-side certificate, and a password is
-needed for that certificate.  It doesn't really matter whether it's
-the private key or the certificate itself - a password is needed to
-perform this operation, thus the name "Certificate Password."
-Furthermore, if only http.sslCert is given, asking for the "private
-key" pass phrase might be confusing since http.sslKey was not set.
-(Note that if *only* http.sslKey is set, it is ignored.)  I'm not
-strongly tied to this wording, but I'd be interested to hear other
-input on this.
+>> I did not create any tests because the existing http.sslcert option has
+>> no tests to begin with.
 
-On "password" vs "passphrase" vs "pass phrase", it should perhaps be
-"pass phrase," since that's the term OpenSSL uses.
-
-> The
-> config flag IMHO also should be renamed from http.sslCertNoPass to
-> http.sslKeyNoPassphrase.
-
-I used "NoPass" to keep the name short.  I'm not tied to this, but I
-prefer the shorter "NoPass," if there are no other opinions.
-
-> (Of course it would be even nicer if the code could
-> detect if the key has a passphrase and only prompt for it when really
-> necessary)
-
-I agree, this would really be best, but I do not think this is
-possible without modifying libcurl or implementing our own,
-OpenSSL-specific engine to open the key.  Neither seems worth the
-effort to me.
-
-> Regarding the caching of the passphrase in memory: Maybe the passphrase
-> memory region could be mlock()ed to prevent the kernel from paging it to
-> disk? But I'm not sure if this is worth effort.
-
-Libcurl doesn't do this, so I didn't bother to either.  Like above, I
-don't think it's worth the effort to do it now.  But I didn't know
-about mlock(), so thanks for that tip!
-
-
-Anyway, thanks for the feedback on the patch!
-
-Mark
+Again, not nice.  Not having tests in this particular patch may be Ok, as
+long as you or other people fix that deficiency with follow-up patches,
+but please don't be proud that you are following a bad example.
