@@ -1,59 +1,74 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: Tomas Carnecky <tom@dbservice.com>
 Subject: Re: [RFC/PATCH 1/2] Teach Solaris that _XOPEN_SOURCE=600 really menas XPG6
-Date: Thu, 11 Jun 2009 08:58:46 -0700
-Message-ID: <7vmy8eiwy1.fsf@alter.siamese.dyndns.org>
-References: <1243106697-6424-1-git-send-email-gitster@pobox.com>
-	<1243106697-6424-2-git-send-email-gitster@pobox.com>
-	<B96700A1-EC8C-4DDE-A158-CE298FCCA09F@dbservice.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Tomas Carnecky <tom@dbservice.com>
-X-From: git-owner@vger.kernel.org Thu Jun 11 17:59:30 2009
+Date: Thu, 11 Jun 2009 18:42:01 +0200
+Message-ID: <BDDDCC14-2EC0-4F34-AACE-0B0A3D8481B8@dbservice.com>
+References: <1243106697-6424-1-git-send-email-gitster@pobox.com> <1243106697-6424-2-git-send-email-gitster@pobox.com> <B96700A1-EC8C-4DDE-A158-CE298FCCA09F@dbservice.com> <bUVdoksYaP8iWWwjmEaaKuJWLMjhg9vaKu35QNnhoSMM0G7B3XoanQ@cipher.nrlssc.navy.mil>
+Mime-Version: 1.0 (Apple Message framework v935.3)
+Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
+Content-Transfer-Encoding: 7bit
+Cc: git mailing list <git@vger.kernel.org>
+To: Brandon Casey <casey@nrlssc.navy.mil>
+X-From: git-owner@vger.kernel.org Thu Jun 11 18:42:40 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MEmgc-0005bw-7M
-	for gcvg-git-2@gmane.org; Thu, 11 Jun 2009 17:59:30 +0200
+	id 1MEnMN-0007jq-Sa
+	for gcvg-git-2@gmane.org; Thu, 11 Jun 2009 18:42:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757415AbZFKP6p (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Jun 2009 11:58:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756968AbZFKP6p
-	(ORCPT <rfc822;git-outgoing>); Thu, 11 Jun 2009 11:58:45 -0400
-Received: from fed1rmmtao105.cox.net ([68.230.241.41]:64559 "EHLO
-	fed1rmmtao105.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751972AbZFKP6o (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Jun 2009 11:58:44 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao105.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20090611155847.NYZM20430.fed1rmmtao105.cox.net@fed1rmimpo01.cox.net>;
-          Thu, 11 Jun 2009 11:58:47 -0400
-Received: from localhost ([68.225.240.211])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id 2fym1c0054aMwMQ03fymVw; Thu, 11 Jun 2009 11:58:46 -0400
-X-VR-Score: 0.00
-X-Authority-Analysis: v=1.0 c=1 a=UYOYdknvHTQA:10 a=aXQZQtK9SsAA:10
- a=bsX3JSduAAAA:8 a=O-ILPTpbCTr_fC8KXhcA:9 a=pK8KfMk50myrLOfS_i0LQbETZRgA:4
- a=2yHT65ZCHLwA:10
-X-CM-Score: 0.00
-In-Reply-To: <B96700A1-EC8C-4DDE-A158-CE298FCCA09F@dbservice.com> (Tomas Carnecky's message of "Thu\, 11 Jun 2009 17\:06\:00 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+	id S1754742AbZFKQm3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Jun 2009 12:42:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754244AbZFKQm3
+	(ORCPT <rfc822;git-outgoing>); Thu, 11 Jun 2009 12:42:29 -0400
+Received: from office.neopsis.com ([78.46.209.98]:54384 "EHLO
+	office.neopsis.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754196AbZFKQm2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Jun 2009 12:42:28 -0400
+Received: from calvin.emmen.dbservice.com ([62.65.141.13])
+	(authenticated user tom@dbservice.com)
+	by office.neopsis.com
+	(using TLSv1/SSLv3 with cipher AES128-SHA (128 bits));
+	Thu, 11 Jun 2009 18:42:28 +0200
+In-Reply-To: <bUVdoksYaP8iWWwjmEaaKuJWLMjhg9vaKu35QNnhoSMM0G7B3XoanQ@cipher.nrlssc.navy.mil>
+X-Mailer: Apple Mail (2.935.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121346>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121347>
 
-Tomas Carnecky <tom@dbservice.com> writes:
 
-> Until this commit a simple 'make prefix=...' worked just fine. Now I
-> have to explicitly add '-std=c99' to the gcc commandline. Is there a
-> reason why the makefile doesn't add this switch automatically?
+On Jun 11, 2009, at 5:50 PM, Brandon Casey wrote:
+>
+> There are additionally patches on 'next' and more in the pipeline on  
+> 'pu'
+> which adjust these feature macros when compiling on Solaris.  See the
+> bc/solaris series 8fccb00 which was merged to 'pu'.
 
-An extended "Solaris updates" series has been cooking in 'next' branch, I
-think, and does things a bit differently.
+Alright, just wanted to make sure that issue is known.
 
-4cb18a4 (git-compat-util.h: tweak the way _XOPEN_SOURCE is set on Solaris,
-2009-06-05) sets _XOPEN_SOURCE to 500 if you are not compiling with c99.
+> Also, if you happen to be using the Sun Studio suite 12 with c- 
+> compiler
+> version 5.9, I'd be interested to know whether you can compile diff- 
+> delta.c,
+> or whether you get an error (see commit 203ee91f).
+
+
+I happen to have access to some of my university's solaris boxes with  
+the following compiler: Sun C 5.9 SunOS_sparc Patch 124867-02  
+2007/11/27, I hope that is good enough.
+
+$ gmake CC=/opt/SUNWspro/bin/c99 CFLAGS="" OPENSSLDIR=/usr/sfw V=1  
+diff-delta.o
+GIT_VERSION = 1.6.3.2.354.g5787c
+     * new build flags or prefix
+/opt/SUNWspro/bin/c99 -o diff-delta.o -c   -D__EXTENSIONS__ -D__sun__ - 
+I/usr/sfw/include -DSHA1_HEADER='<openssl/sha.h>'  -DNO_STRCASESTR - 
+DNO_MKDTEMP -DNO_MKSTEMPS -DNO_MEMMEM diff-delta.c
+$ echo $?
+0
+
+(btw, I have to clear CFLAGS when compiling with the sun compiler, as  
+it doesn't understand -Wall)
+
+tom
