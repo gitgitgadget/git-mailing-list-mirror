@@ -1,67 +1,56 @@
-From: Markus Heidelberg <markus.heidelberg@web.de>
-Subject: Re: [RF sanity check] send-email threading fixes (was Re: [PATCH 3/6] send-email: fix threaded mails without chain-reply-to)
-Date: Thu, 11 Jun 2009 18:49:39 +0200
-Message-ID: <200906111849.40232.markus.heidelberg@web.de>
-References: <1244410857-920-1-git-send-email-markus.heidelberg@web.de> <7vhbyo1vr7.fsf@alter.siamese.dyndns.org> <7v63f4v9sl.fsf@alter.siamese.dyndns.org>
-Reply-To: markus.heidelberg@web.de
+From: =?utf-8?B?SsO2cmdlbg==?= =?utf-8?B?SMOkZ2c=?= 
+	<jorgen.hagg@axis.com>
+Subject: Copying files and keeping the history
+Date: Thu, 11 Jun 2009 15:20:05 +0200
+Message-ID: <18567.1244726405@zev.se.axis.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Michael Witten <mfwitten@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jun 11 18:49:36 2009
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jun 11 19:02:38 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MEnT3-0002mt-Kz
-	for gcvg-git-2@gmane.org; Thu, 11 Jun 2009 18:49:34 +0200
+	id 1MEnf8-0008U0-OV
+	for gcvg-git-2@gmane.org; Thu, 11 Jun 2009 19:02:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757173AbZFKQtX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Jun 2009 12:49:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760798AbZFKQtV
-	(ORCPT <rfc822;git-outgoing>); Thu, 11 Jun 2009 12:49:21 -0400
-Received: from fmmailgate03.web.de ([217.72.192.234]:58048 "EHLO
-	fmmailgate03.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757173AbZFKQtT (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Jun 2009 12:49:19 -0400
-Received: from smtp07.web.de (fmsmtp07.dlan.cinetic.de [172.20.5.215])
-	by fmmailgate03.web.de (Postfix) with ESMTP id D2C0FFF76C14;
-	Thu, 11 Jun 2009 18:49:21 +0200 (CEST)
-Received: from [89.59.73.219] (helo=.)
-	by smtp07.web.de with asmtp (TLSv1:AES256-SHA:256)
-	(WEB.DE 4.110 #277)
-	id 1MEnSr-0004ZR-00; Thu, 11 Jun 2009 18:49:21 +0200
-User-Agent: KMail/1.9.9
-In-Reply-To: <7v63f4v9sl.fsf@alter.siamese.dyndns.org>
-Jabber-ID: markus.heidelberg@web.de
+	id S1755346AbZFKRBO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Jun 2009 13:01:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755370AbZFKRBM
+	(ORCPT <rfc822;git-outgoing>); Thu, 11 Jun 2009 13:01:12 -0400
+Received: from miranda.se.axis.com ([193.13.178.8]:51496 "EHLO
+	miranda.se.axis.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752167AbZFKRBF (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Jun 2009 13:01:05 -0400
+X-Greylist: delayed 7201 seconds by postgrey-1.27 at vger.kernel.org; Thu, 11 Jun 2009 13:01:05 EDT
+Received: from zev.se.axis.com (zev.se.axis.com [10.0.1.13])
+	by miranda.se.axis.com (8.13.4/8.13.4/Debian-3sarge3) with ESMTP id n5BDK5UN001116
+	for <git@vger.kernel.org>; Thu, 11 Jun 2009 15:20:05 +0200
+Received: from zev.se.axis.com (localhost.localdomain [127.0.0.1])
+	by zev.se.axis.com (8.14.3/8.14.3/Debian-9) with ESMTP id n5BDK5G1018572
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT)
+	for <git@vger.kernel.org>; Thu, 11 Jun 2009 15:20:05 +0200
+Received: from zev.se.axis.com (jh@localhost)
+	by zev.se.axis.com (8.14.3/8.14.3/Submit) with ESMTP id n5BDK5hl018568
+	for <git@vger.kernel.org>; Thu, 11 Jun 2009 15:20:05 +0200
 Content-Disposition: inline
-X-Sender: markus.heidelberg@web.de
-X-Provags-ID: V01U2FsdGVkX18QHgkzFYZRNM/ZITswzG1siQTQgq8gNA/uZ1mM
-	A3Kw8sABrS9gCuVHrCdTsS+XOUYsnr1Mu2t9rpqqpq9bL+Jmn8
-	YUeCeNMQVpLgMt+4jZCA==
+X-Mailer: jevim v3.34
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121349>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121350>
 
-Junio C Hamano, 10.06.2009:
-> In any case, here is what I came up with by reshuffling your six patches.
-> 
-> [PATCH 1/6] add a test for git-send-email for non-threaded mails
-> [PATCH 2/6] send-email: fix non-threaded mails
-> [PATCH 3/6] doc/send-email: clarify the behavior of --in-reply-to with --no-thread
-> [PATCH 4/6] send-email: fix threaded mails without chain-reply-to
-> [PATCH 5/6] add a test for git-send-email for threaded mails without chain-reply-to
-> [PATCH 6/6] send-email: fix a typo in a comment
-> 
-> Patch 4/6 applies on top of 15da108 to fix a breakage introduced by that
-> commit.  Together with the result of applying the first three patches to
-> maint, they fix --no-thread and --thread (without --chain-reply-to) cases.
-> The result can be verified by applying Patch 5/6 on top of them.
-
-Out of curiosity: why are 4/6 and 5/6 applied on different branches
-without the usual commits first "test with test_expect_fail" then "fix +
-test changed to test_expect_success"?
+CkkgaGF2ZSB0d28gY29tcGxldGVseSBkaWZmZXJlbnQgZ2l0IHJlcG9zaXRvcmllcywgQSBhbmQg
+Qi4KCkkgd2FudCB0byBtb3ZlIGEgZmlsZSBmcm9tIHJlcG8gQSB0byBCIHdpdGhvdXQgbG9zaW5n
+IHRoZSBmaWxlcyBoaXN0b3J5LgpUaGF0IGlzLCBJIHdhbnQgdGhlIGNvbW1pdCBtZXNzYWdlIGFu
+ZCBhbGwgb3RoZXIgaW5mbyBmcm9tCmVhY2ggY29tbWl0IHdoZXJlIHRoZSBmaWxlIHdhcyBpbmNs
+dWRlZCB0byBnZW5lcmF0ZSBuZXcKY29tbWl0cyBpbiByZXBvIEIuCihZZXMsIEkga25vdyBnaXQg
+bWFuYWdlcyBjb250ZW50LCBub3QgZmlsZXMuIDotKQoKSW4gb3RoZXIgd29yZHMsIGV4cG9ydCBh
+IGJ1bmNoIG9mIGNvbW1pdHMsIGZpbHRlcmluZyBvdXQgdGhlCnBhdGNoZXMgZm9yIHRoZSBmaWxl
+IGFuZCBpbXBvcnQgdGhlc2UgaW4gYW5vdGhlciByZXBvLgoKU29ydCBvZiBpbXBvcnRpbmcgZnJv
+bSBjdnMgdG8gZ2l0LCBvbmx5IHRoZSBzb3VyY2UgYW5kIGRlc3RpbmF0aW9uCmFyZSBib3RoIGdp
+dCByZXBvc2l0b3JpZXMuCgpJIHRyaWVkIHRhaWxvciBmcm9tIGdpdCB0byBnaXQsIGJ1dCB0aGF0
+IHdhcyBwcm9iYWJseSBub3Qgd2hhdCB0YWlsb3IKd2FudGVkIHRvIGRvLiA6LSkKCklzIHRoaXMg
+c29tZWhvdyBwb3NzaWJsZT8KCg==
