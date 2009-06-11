@@ -1,113 +1,207 @@
-From: Markus Heidelberg <markus.heidelberg@web.de>
-Subject: Re: [RF sanity check] send-email threading fixes
-Date: Fri, 12 Jun 2009 00:49:01 +0200
-Message-ID: <200906120049.02368.markus.heidelberg@web.de>
-References: <1244410857-920-1-git-send-email-markus.heidelberg@web.de> <200906111849.40232.markus.heidelberg@web.de> <7vprdah5es.fsf@alter.siamese.dyndns.org>
-Reply-To: markus.heidelberg@web.de
+From: Mark Lodato <lodatom@gmail.com>
+Subject: Re: [PATCH 1/2] http.c: prompt for SSL client certificate password
+Date: Thu, 11 Jun 2009 19:00:43 -0400
+Message-ID: <ca433830906111600n2d45b5bdg3fb6e7c0a537ec78@mail.gmail.com>
+References: <1243480563-5954-1-git-send-email-lodatom@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Michael Witten <mfwitten@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jun 12 00:48:52 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jun 12 01:03:18 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MEt4l-00017T-Et
-	for gcvg-git-2@gmane.org; Fri, 12 Jun 2009 00:48:51 +0200
+	id 1MEtIi-0005xj-Er
+	for gcvg-git-2@gmane.org; Fri, 12 Jun 2009 01:03:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758523AbZFKWsn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Jun 2009 18:48:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758212AbZFKWsm
-	(ORCPT <rfc822;git-outgoing>); Thu, 11 Jun 2009 18:48:42 -0400
-Received: from fmmailgate01.web.de ([217.72.192.221]:59886 "EHLO
-	fmmailgate01.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758019AbZFKWsl (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Jun 2009 18:48:41 -0400
-Received: from smtp07.web.de (fmsmtp07.dlan.cinetic.de [172.20.5.215])
-	by fmmailgate01.web.de (Postfix) with ESMTP id 229B61052646C;
-	Fri, 12 Jun 2009 00:48:43 +0200 (CEST)
-Received: from [89.59.73.219] (helo=.)
-	by smtp07.web.de with asmtp (TLSv1:AES256-SHA:256)
-	(WEB.DE 4.110 #277)
-	id 1MEt4c-0005EQ-00; Fri, 12 Jun 2009 00:48:43 +0200
-User-Agent: KMail/1.9.9
-In-Reply-To: <7vprdah5es.fsf@alter.siamese.dyndns.org>
-Jabber-ID: markus.heidelberg@web.de
-Content-Disposition: inline
-X-Sender: markus.heidelberg@web.de
-X-Provags-ID: V01U2FsdGVkX19ehvYkv8U61Sn3D+goJXasyUnETArWV3zhqOQy
-	cpx28LeyCE9HCIzT6LldN/bvITzkbkq/aDyPNexINXQkUfMNXs
-	ARjgkiUhqiutKA4Tx5TQ==
+	id S1763561AbZFKXAq convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 11 Jun 2009 19:00:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1763007AbZFKXAp
+	(ORCPT <rfc822;git-outgoing>); Thu, 11 Jun 2009 19:00:45 -0400
+Received: from mail-fx0-f216.google.com ([209.85.220.216]:34618 "EHLO
+	mail-fx0-f216.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1763665AbZFKXAn convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 11 Jun 2009 19:00:43 -0400
+Received: by fxm12 with SMTP id 12so296352fxm.37
+        for <git@vger.kernel.org>; Thu, 11 Jun 2009 16:00:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:content-type
+         :content-transfer-encoding;
+        bh=kErCj0NIQlqNFxDqZWG0RUlUW5pqypMb5YDDRB/hndo=;
+        b=yCYhTHnxF+18R+aRq6am7esKOC2iF7LfIM112k8fQhzUGautckDdNQ9DmnRiHzOhji
+         4Fbo2It6EQHmz9NAZH9BaWl/EEaBEcAzY+sQGPezdvwD4DmJK0M25N9sR+H+kOWgfW3F
+         cpsj8wNNuASfh3FF+UrfSomiHlvd9ywEBknU8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :content-type:content-transfer-encoding;
+        b=fOVsouNa6B9/gHfAWGpZ+T9ESAfrXSi1SpOLmaPSHZn5RTgDR50xdTFX16Ocyz8DU+
+         bpmnIx/L++nM7Y6yx9sZh2xFlevbde6QVG4GeCxlC1/qWgc0JHvof1l0XFBcPRWiHj4U
+         mDzptNmXsdTilGzARxhJN51kaiWieG+HMsVx8=
+Received: by 10.223.126.69 with SMTP id b5mr2449556fas.107.1244761243483; Thu, 
+	11 Jun 2009 16:00:43 -0700 (PDT)
+In-Reply-To: <1243480563-5954-1-git-send-email-lodatom@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121371>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121372>
 
-Junio C Hamano, 11.06.2009:
-> Markus Heidelberg <markus.heidelberg@web.de> writes:
-> 
-> >> [PATCH 4/6] send-email: fix threaded mails without chain-reply-to
-> >> [PATCH 5/6] add a test for git-send-email for threaded mails without chain-reply-to
-> >> [PATCH 6/6] send-email: fix a typo in a comment
-> >> 
-> >> Patch 4/6 applies on top of 15da108 to fix a breakage introduced by that
-> >> commit.  Together with the result of applying the first three patches to
-> >> maint, they fix --no-thread and --thread (without --chain-reply-to) cases.
-> >> The result can be verified by applying Patch 5/6 on top of them.
-> >
-> > Out of curiosity: why are 4/6 and 5/6 applied on different branches
-> > without the usual commits first "test with test_expect_fail" then "fix +
-> > test changed to test_expect_success"?
-> 
-> Maybe I misunderstood your problem description, but my impression from it
-> was that 4/6 is a fix to a latent bug in 15da108
+Any other thoughts, one way or the other?  Adding proper SSL/PKI
+support would really help git adoption in the corporate world.  I am
+willing to make any changes necessary to get this into git.git.
 
-Right, ...
+~ Mark
 
-> that later affected what
-
-... but the bug was immediately noticable.
-
-> was done by new code that appeard somewhere between 15da108 and 'master',
-
-The other regression from 3e0c4ff appeared before 15da108, not after it.
-This regression was immediately noticable as well.
-
-> and the test 5/6 was about that breakage.
-
-No, 5/6 was only about the breakage in 15da108 fixed by 4/6. I noticed
-the regression in 3e0c4ff after it.
-
-> IOW, root cause was older than
-> the symptom.
-
-Since it's a bit confusing, I'll try to clarify:
-
-* 3e0c4ff (2009-03-01) broke non-threaded
-  This sent threaded mails instead of non-threaded:
-    $ git send-email --no-thread --no-chain-reply-to
-    $ git send-email --no-thread --chain-reply-to
-* 1/6 tests this
-* 2/6 fixes this
-
-* 15da108 (2009-04-13) broke threaded without chain-reply
-  This sent non-threaded mails instead of threaded:
-    $ git send-email --thread --no-chain-reply-to
-  This correctly sent threaded mails:
-    $ git send-email --thread --chain-reply-to
-* 4/6 fixes this
-* 5/6 tests this
-* 15da108 additionally changed another behaviour
-  (this is the side effect from the 2/6 description, which is
-   anticipating in view of the reordered patch sequence):
-  This now sent non-threaded mails again, which has been broken by 3e0c4ff:
-    $ git send-email --no-thread --no-chain-reply-to
-  This still sent threaded mails instead of non-threaded, it was still
-  broken since 3e0c4ff:
-    $ git send-email --no-thread --chain-reply-to
-
-HTH and I got everything explained correctly.
+On Wed, May 27, 2009 at 11:16 PM, Mark Lodato<lodatom@gmail.com> wrote:
+> If an SSL client certificate is enabled (via http.sslcert or
+> GIT_SSL_CERT), prompt for the certificate password rather than
+> defaulting to OpenSSL's password prompt. =C2=A0This causes the prompt=
+ to only
+> appear once each run. =C2=A0Previously, OpenSSL prompted the user *ma=
+ny*
+> times, causing git to be unusable over HTTPS with client-side
+> certificates.
+>
+> Note that the password is stored in memory in the clear while the
+> program is running. =C2=A0This may be a security problem if git crash=
+es and
+> core dumps.
+>
+> The user is always prompted, even if the certificate is not encrypted=
+=2E
+> This should be fine; unencrypted certificates are rare and a security
+> risk anyway.
+>
+> Signed-off-by: Mark Lodato <lodatom@gmail.com>
+> ---
+>
+> See http://osdir.com/ml/git/2009-02/msg03402.html for a discussion of
+> this topic and an example showing how horrible the current password
+> prompts are.
+>
+> The next patch adds an option to disable this feature. =C2=A0I split =
+it into
+> two commits in case the configuration option is not wanted.
+>
+> I did not create any tests because the existing http.sslcert option h=
+as
+> no tests to begin with.
+>
+> I would really like to use git over HTTPS with client certs, but the
+> current situation is just unusable. =C2=A0So, I'm hoping this gets in=
+cluded
+> in git.git at some point. =C2=A0I would be happy to hear any comments=
+ people
+> have about this patch series. =C2=A0Thanks!
+>
+>
+> =C2=A0http.c | =C2=A0 40 +++++++++++++++++++++++++++++++++++++++-
+> =C2=A01 files changed, 39 insertions(+), 1 deletions(-)
+>
+> diff --git a/http.c b/http.c
+> index 2e3d649..1fc3444 100644
+> --- a/http.c
+> +++ b/http.c
+> @@ -26,6 +26,8 @@ static long curl_low_speed_time =3D -1;
+> =C2=A0static int curl_ftp_no_epsv;
+> =C2=A0static const char *curl_http_proxy;
+> =C2=A0static char *user_name, *user_pass;
+> +static char *ssl_cert_password;
+> +static int ssl_cert_password_required;
+>
+> =C2=A0static struct curl_slist *pragma_header;
+>
+> @@ -167,6 +169,22 @@ static void init_curl_http_auth(CURL *result)
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0}
+> =C2=A0}
+>
+> +static int has_cert_password(void)
+> +{
+> + =C2=A0 =C2=A0 =C2=A0 if (ssl_cert_password !=3D NULL)
+> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return 1;
+> + =C2=A0 =C2=A0 =C2=A0 if (ssl_cert =3D=3D NULL || ssl_cert_password_=
+required !=3D 1)
+> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return 0;
+> + =C2=A0 =C2=A0 =C2=A0 /* Only prompt the user once. */
+> + =C2=A0 =C2=A0 =C2=A0 ssl_cert_password_required =3D -1;
+> + =C2=A0 =C2=A0 =C2=A0 ssl_cert_password =3D getpass("Certificate Pas=
+sword: ");
+> + =C2=A0 =C2=A0 =C2=A0 if (ssl_cert_password !=3D NULL) {
+> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 ssl_cert_password =
+=3D xstrdup(ssl_cert_password);
+> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return 1;
+> + =C2=A0 =C2=A0 =C2=A0 } else
+> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return 0;
+> +}
+> +
+> =C2=A0static CURL *get_curl_handle(void)
+> =C2=A0{
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0CURL *result =3D curl_easy_init();
+> @@ -189,6 +207,16 @@ static CURL *get_curl_handle(void)
+>
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0if (ssl_cert !=3D NULL)
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0curl_easy_seto=
+pt(result, CURLOPT_SSLCERT, ssl_cert);
+> + =C2=A0 =C2=A0 =C2=A0 if (has_cert_password())
+> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 curl_easy_setopt(r=
+esult,
+> +#if LIBCURL_VERSION_NUM >=3D 0x071700
+> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0CURLOPT_KEYPASSWD,
+> +#elif LIBCURL_VERSION_NUM >=3D 0x070903
+> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0CURLOPT_SSLKEYPASSWD,
+> +#else
+> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0CURLOPT_SSLCERTPASSWD,
+> +#endif
+> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0ssl_cert_password);
+> =C2=A0#if LIBCURL_VERSION_NUM >=3D 0x070902
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0if (ssl_key !=3D NULL)
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0curl_easy_seto=
+pt(result, CURLOPT_SSLKEY, ssl_key);
+> @@ -329,8 +357,11 @@ void http_init(struct remote *remote)
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0if (getenv("GIT_CURL_FTP_NO_EPSV"))
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0curl_ftp_no_ep=
+sv =3D 1;
+>
+> - =C2=A0 =C2=A0 =C2=A0 if (remote && remote->url && remote->url[0])
+> + =C2=A0 =C2=A0 =C2=A0 if (remote && remote->url && remote->url[0]) {
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0http_auth_init=
+(remote->url[0]);
+> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (!prefixcmp(rem=
+ote->url[0], "https://"))
+> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 ssl_cert_password_required =3D 1;
+> + =C2=A0 =C2=A0 =C2=A0 }
+>
+> =C2=A0#ifndef NO_CURL_EASY_DUPHANDLE
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0curl_default =3D get_curl_handle();
+> @@ -370,6 +401,13 @@ void http_cleanup(void)
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0free((void *)c=
+url_http_proxy);
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0curl_http_prox=
+y =3D NULL;
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0}
+> +
+> + =C2=A0 =C2=A0 =C2=A0 if (ssl_cert_password !=3D NULL) {
+> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 memset(ssl_cert_pa=
+ssword, 0, strlen(ssl_cert_password));
+> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 free(ssl_cert_pass=
+word);
+> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 ssl_cert_password =
+=3D NULL;
+> + =C2=A0 =C2=A0 =C2=A0 }
+> + =C2=A0 =C2=A0 =C2=A0 ssl_cert_password_required =3D 0;
+> =C2=A0}
+>
+> =C2=A0struct active_request_slot *get_active_slot(void)
+> --
+> 1.6.3.1
+>
+>
