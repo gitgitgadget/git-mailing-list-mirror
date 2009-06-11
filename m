@@ -1,74 +1,78 @@
-From: Tomas Carnecky <tom@dbservice.com>
-Subject: Re: [RFC/PATCH 1/2] Teach Solaris that _XOPEN_SOURCE=600 really menas XPG6
-Date: Thu, 11 Jun 2009 18:42:01 +0200
-Message-ID: <BDDDCC14-2EC0-4F34-AACE-0B0A3D8481B8@dbservice.com>
-References: <1243106697-6424-1-git-send-email-gitster@pobox.com> <1243106697-6424-2-git-send-email-gitster@pobox.com> <B96700A1-EC8C-4DDE-A158-CE298FCCA09F@dbservice.com> <bUVdoksYaP8iWWwjmEaaKuJWLMjhg9vaKu35QNnhoSMM0G7B3XoanQ@cipher.nrlssc.navy.mil>
-Mime-Version: 1.0 (Apple Message framework v935.3)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
-Content-Transfer-Encoding: 7bit
-Cc: git mailing list <git@vger.kernel.org>
-To: Brandon Casey <casey@nrlssc.navy.mil>
-X-From: git-owner@vger.kernel.org Thu Jun 11 18:42:40 2009
+From: Karsten Weiss <knweiss@gmx.de>
+Subject: Re: https, client certificate, pem pass phrase
+Date: Thu, 11 Jun 2009 18:43:50 +0200 (CEST)
+Message-ID: <alpine.OSX.2.00.0906111801400.67531@xor.localnet>
+References: <alpine.OSX.2.00.0906110956370.945@xor.localnet>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Cc: Mark Lodato <lodatom@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jun 11 18:45:08 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MEnMN-0007jq-Sa
-	for gcvg-git-2@gmane.org; Thu, 11 Jun 2009 18:42:40 +0200
+	id 1MEnOh-0000U1-V3
+	for gcvg-git-2@gmane.org; Thu, 11 Jun 2009 18:45:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754742AbZFKQm3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Jun 2009 12:42:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754244AbZFKQm3
-	(ORCPT <rfc822;git-outgoing>); Thu, 11 Jun 2009 12:42:29 -0400
-Received: from office.neopsis.com ([78.46.209.98]:54384 "EHLO
-	office.neopsis.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754196AbZFKQm2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Jun 2009 12:42:28 -0400
-Received: from calvin.emmen.dbservice.com ([62.65.141.13])
-	(authenticated user tom@dbservice.com)
-	by office.neopsis.com
-	(using TLSv1/SSLv3 with cipher AES128-SHA (128 bits));
-	Thu, 11 Jun 2009 18:42:28 +0200
-In-Reply-To: <bUVdoksYaP8iWWwjmEaaKuJWLMjhg9vaKu35QNnhoSMM0G7B3XoanQ@cipher.nrlssc.navy.mil>
-X-Mailer: Apple Mail (2.935.3)
+	id S1758457AbZFKQoe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Jun 2009 12:44:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756803AbZFKQoe
+	(ORCPT <rfc822;git-outgoing>); Thu, 11 Jun 2009 12:44:34 -0400
+Received: from mail.gmx.net ([213.165.64.20]:38527 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1755453AbZFKQod (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Jun 2009 12:44:33 -0400
+Received: (qmail invoked by alias); 11 Jun 2009 16:44:33 -0000
+Received: from port-92-200-99-90.dynamic.qsc.de (EHLO mail.localnet) [92.200.99.90]
+  by mail.gmx.net (mp012) with SMTP; 11 Jun 2009 18:44:33 +0200
+X-Authenticated: #3612999
+X-Provags-ID: V01U2FsdGVkX19+YTRVxDd+We/8YBqAWgOc9Cxqp/1HCx1KW0w8C6
+	Rb6KELFw92sdiO
+Received: by mail.localnet (Postfix, from userid 502)
+	id E1680B863B7; Thu, 11 Jun 2009 18:43:50 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by mail.localnet (Postfix) with ESMTP id CE576B863A8;
+	Thu, 11 Jun 2009 18:43:50 +0200 (CEST)
+In-Reply-To: <alpine.OSX.2.00.0906110956370.945@xor.localnet>
+User-Agent: Alpine 2.00 (OSX 1167 2008-08-23)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.53
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121347>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121348>
 
+On Thu, 11 Jun 2009, Karsten Weiss wrote:
 
-On Jun 11, 2009, at 5:50 PM, Brandon Casey wrote:
->
-> There are additionally patches on 'next' and more in the pipeline on  
-> 'pu'
-> which adjust these feature macros when compiling on Solaris.  See the
-> bc/solaris series 8fccb00 which was merged to 'pu'.
+> However, it only works as long as I do *not* protect the client's private key 
+> (PEM) with a pass phrase which is not secure (especially when using 
+> FakeBasicAuth!). When I do protect the private key with a pass phrase *each* 
+> git fetch/pull/push prompts the user *several* times with "Enter PEM pass 
+> phrase:". Thus, it's not usable (even though it works).
 
-Alright, just wanted to make sure that issue is known.
+Somehow I managed to miss Mark Lodato's posting from 2009-05-28 before:
 
-> Also, if you happen to be using the Sun Studio suite 12 with c- 
-> compiler
-> version 5.9, I'd be interested to know whether you can compile diff- 
-> delta.c,
-> or whether you get an error (see commit 203ee91f).
+[PATCH 1/2] http.c: prompt for SSL client certificate password
+http://marc.info/?l=git&m=124348062226665&w=4
+[PATCH 2/2] http.c: add http.sslCertNoPass option
+http://marc.info/?l=git&m=124348062326671&w=4
 
+I can confirm that his two patches solve the problem. I.e. there is now 
+only a single passphrase prompt during each Git invocation that involves 
+the https protocol. Great!
 
-I happen to have access to some of my university's solaris boxes with  
-the following compiler: Sun C 5.9 SunOS_sparc Patch 124867-02  
-2007/11/27, I hope that is good enough.
+However, I want to add two additional suggestions:
 
-$ gmake CC=/opt/SUNWspro/bin/c99 CFLAGS="" OPENSSLDIR=/usr/sfw V=1  
-diff-delta.o
-GIT_VERSION = 1.6.3.2.354.g5787c
-     * new build flags or prefix
-/opt/SUNWspro/bin/c99 -o diff-delta.o -c   -D__EXTENSIONS__ -D__sun__ - 
-I/usr/sfw/include -DSHA1_HEADER='<openssl/sha.h>'  -DNO_STRCASESTR - 
-DNO_MKDTEMP -DNO_MKSTEMPS -DNO_MEMMEM diff-delta.c
-$ echo $?
-0
+With the patch Git prompts for a "Certificate Password". IMHO it would be 
+better to prompt for the "Certificate private key passphrase" because it's 
+the private key which is protected and not the certificate itself. The 
+config flag IMHO also should be renamed from http.sslCertNoPass to 
+http.sslKeyNoPassphrase. (Of course it would be even nicer if the code 
+could detect if the key has a passphrase and only prompt for it when 
+really necessary)
 
-(btw, I have to clear CFLAGS when compiling with the sun compiler, as  
-it doesn't understand -Wall)
-
-tom
+Regarding the caching of the passphrase in memory: Maybe the passphrase 
+memory region could be mlock()ed to prevent the kernel from paging it to 
+disk? But I'm not sure if this is worth effort.
