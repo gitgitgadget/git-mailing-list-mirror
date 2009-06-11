@@ -1,68 +1,55 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: Copying files and keeping the history
-Date: Thu, 11 Jun 2009 20:29:47 +0200
-Message-ID: <fabb9a1e0906111129x53a6d90p15a97d958a2d2f63@mail.gmail.com>
-References: <18567.1244726405@zev.se.axis.com>
+From: E R <pc88mxer@gmail.com>
+Subject: side-by-side diff for gitweb?
+Date: Thu, 11 Jun 2009 14:41:38 -0500
+Message-ID: <3a69fa7c0906111241w3d105003xecb44125822ac501@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: =?ISO-8859-1?Q?J=F6rgenH=E4gg?= <jorgen.hagg@axis.com>
-X-From: git-owner@vger.kernel.org Thu Jun 11 20:30:28 2009
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jun 11 21:48:32 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MEp2h-0006K5-UN
-	for gcvg-git-2@gmane.org; Thu, 11 Jun 2009 20:30:28 +0200
+	id 1MEqGF-0005CT-Sv
+	for gcvg-git-2@gmane.org; Thu, 11 Jun 2009 21:48:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757057AbZFKSaH convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 11 Jun 2009 14:30:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756978AbZFKSaG
-	(ORCPT <rfc822;git-outgoing>); Thu, 11 Jun 2009 14:30:06 -0400
-Received: from mail-ew0-f210.google.com ([209.85.219.210]:41638 "EHLO
-	mail-ew0-f210.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756372AbZFKSaF convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 11 Jun 2009 14:30:05 -0400
-Received: by ewy6 with SMTP id 6so2263879ewy.37
-        for <git@vger.kernel.org>; Thu, 11 Jun 2009 11:30:07 -0700 (PDT)
+	id S1754856AbZFKTsW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Jun 2009 15:48:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753808AbZFKTsW
+	(ORCPT <rfc822;git-outgoing>); Thu, 11 Jun 2009 15:48:22 -0400
+Received: from qw-out-2122.google.com ([74.125.92.25]:39326 "EHLO
+	qw-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752904AbZFKTsV (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Jun 2009 15:48:21 -0400
+Received: by qw-out-2122.google.com with SMTP id 5so1150803qwd.37
+        for <git@vger.kernel.org>; Thu, 11 Jun 2009 12:48:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=AnuI9EWl2dI06Z7pzgxt9hpoCTH/aeDR2o3OvyFXtPM=;
-        b=ZepcSW0H0otiZs3XWHPrztCxUN7YeQTfDzRfuWfoX+KahcAsjCaj5QwiGXMWP7JtNG
-         YXx3JkJl0Yzus1pDpKcQCkWteL8XeDod+EAYvGaGqCnxkNkD9if8+15KBqpSH9/0UcQk
-         E77UNfF1DuEMKIop44fy5fal6xb4Fcp7tQlmg=
+        h=domainkey-signature:mime-version:received:date:message-id:subject
+         :from:to:content-type:content-transfer-encoding;
+        bh=g1LagPDLRL7SVYcDTTZTGRArN7Ezzx9R09YvINgsKx0=;
+        b=lS/QVp/f5QtpMRiEypWlFKLf56gIWffSZwRY9+5DGo2NHmkpuhHlkvHko9A6Qhxjl1
+         6i2m9bkRBYXLBCuLdDlwP0Py/3hNQQHNddgONfJUYNGnA3Fg79nL85AhIaqcQRIYn0kk
+         IUkfCVuuD0Hy7YqobzHdAZkglb5JMiYc3J2kc=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=Win0JPfWSrWZ9QPvva2PbvrIUnSE6ZYANc4xM2GIMMPzItRHdYfN9rfhggO3eN2W5W
-         +hpkbVZkF7r40a7xaTp8gxJFJbYy0AlsOH405q/lQKwS39dlfk7ewVCQWG7F/GdYegdN
-         p4HoYEkQQ1pHUoSytEtW3L0RSTQZkLnOiZZsw=
-Received: by 10.216.11.212 with SMTP id 62mr1020813wex.186.1244745007125; Thu, 
-	11 Jun 2009 11:30:07 -0700 (PDT)
-In-Reply-To: <18567.1244726405@zev.se.axis.com>
+        h=mime-version:date:message-id:subject:from:to:content-type
+         :content-transfer-encoding;
+        b=UA1e9UPCrfygxxXK45hwQDb082AyzgtVLI6XDTB27KSSuORr0fhv6r6hh7aPm/q47R
+         yEXaRigdkwpuzlMuZbYT46SeqKMypD8Cd1yuUwSMqaDKco9XoRU3IGkilsnPWILZyyCR
+         m9IZ9rgFhXkQ/+41ODsYGpqNkAgIRiuH4hPGU=
+Received: by 10.220.72.78 with SMTP id l14mr2634877vcj.81.1244749298300; Thu, 
+	11 Jun 2009 12:41:38 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121355>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121356>
 
-Heya,
+Is there a a side-by-side diff viewer for gitweb?
 
-On Thu, Jun 11, 2009 at 15:20, J=F6rgenH=E4gg<jorgen.hagg@axis.com> wro=
-te:
-> Is this somehow possible?
+If not, any suggestions for the best way to go about implementing one?
 
-Try git filter-branch to get just the commits you want and nudge them
-to contain what you want (do this in a seperate branch/copy of
-repository A). When you're done, pull the branch into B and merge it.
-Instant win?
-
---=20
-Cheers,
-
-Sverre Rabbelier
+Thanks,
+ER
