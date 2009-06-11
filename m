@@ -1,305 +1,113 @@
-From: =?UTF-8?q?Santi=20B=C3=A9jar?= <santi@agolina.net>
-Subject: [PATCHv4 4/4] parse-remote: remove unused functions
-Date: Fri, 12 Jun 2009 00:39:21 +0200
-Message-ID: <1244759961-4750-5-git-send-email-santi@agolina.net>
-References: <1244759961-4750-1-git-send-email-santi@agolina.net>
+From: Markus Heidelberg <markus.heidelberg@web.de>
+Subject: Re: [RF sanity check] send-email threading fixes
+Date: Fri, 12 Jun 2009 00:49:01 +0200
+Message-ID: <200906120049.02368.markus.heidelberg@web.de>
+References: <1244410857-920-1-git-send-email-markus.heidelberg@web.de> <200906111849.40232.markus.heidelberg@web.de> <7vprdah5es.fsf@alter.siamese.dyndns.org>
+Reply-To: markus.heidelberg@web.de
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jun 12 00:39:54 2009
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Michael Witten <mfwitten@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jun 12 00:48:52 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MEsw4-00070r-Vw
-	for gcvg-git-2@gmane.org; Fri, 12 Jun 2009 00:39:53 +0200
+	id 1MEt4l-00017T-Et
+	for gcvg-git-2@gmane.org; Fri, 12 Jun 2009 00:48:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1763011AbZFKWja convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 11 Jun 2009 18:39:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762911AbZFKWj3
-	(ORCPT <rfc822;git-outgoing>); Thu, 11 Jun 2009 18:39:29 -0400
-Received: from fg-out-1718.google.com ([72.14.220.158]:24417 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1762068AbZFKWj2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Jun 2009 18:39:28 -0400
-Received: by fg-out-1718.google.com with SMTP id 16so558509fgg.17
-        for <git@vger.kernel.org>; Thu, 11 Jun 2009 15:39:28 -0700 (PDT)
-Received: by 10.86.30.5 with SMTP id d5mr2884778fgd.26.1244759968589;
-        Thu, 11 Jun 2009 15:39:28 -0700 (PDT)
-Received: from localhost (p5B0D383D.dip.t-dialin.net [91.13.56.61])
-        by mx.google.com with ESMTPS id d4sm1469047fga.1.2009.06.11.15.39.27
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 11 Jun 2009 15:39:28 -0700 (PDT)
-X-Mailer: git-send-email 1.6.3.2.222.g479ad6
-In-Reply-To: <1244759961-4750-1-git-send-email-santi@agolina.net>
+	id S1758523AbZFKWsn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Jun 2009 18:48:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758212AbZFKWsm
+	(ORCPT <rfc822;git-outgoing>); Thu, 11 Jun 2009 18:48:42 -0400
+Received: from fmmailgate01.web.de ([217.72.192.221]:59886 "EHLO
+	fmmailgate01.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758019AbZFKWsl (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Jun 2009 18:48:41 -0400
+Received: from smtp07.web.de (fmsmtp07.dlan.cinetic.de [172.20.5.215])
+	by fmmailgate01.web.de (Postfix) with ESMTP id 229B61052646C;
+	Fri, 12 Jun 2009 00:48:43 +0200 (CEST)
+Received: from [89.59.73.219] (helo=.)
+	by smtp07.web.de with asmtp (TLSv1:AES256-SHA:256)
+	(WEB.DE 4.110 #277)
+	id 1MEt4c-0005EQ-00; Fri, 12 Jun 2009 00:48:43 +0200
+User-Agent: KMail/1.9.9
+In-Reply-To: <7vprdah5es.fsf@alter.siamese.dyndns.org>
+Jabber-ID: markus.heidelberg@web.de
+Content-Disposition: inline
+X-Sender: markus.heidelberg@web.de
+X-Provags-ID: V01U2FsdGVkX19ehvYkv8U61Sn3D+goJXasyUnETArWV3zhqOQy
+	cpx28LeyCE9HCIzT6LldN/bvITzkbkq/aDyPNexINXQkUfMNXs
+	ARjgkiUhqiutKA4Tx5TQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121370>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121371>
 
-Signed-off-by: Santi B=C3=A9jar <santi@agolina.net>
----
-Changes from v1:
-  - Only remove the functions documentation, not the whole file
-  - Do not remove git-parse-remote from .gitignore
+Junio C Hamano, 11.06.2009:
+> Markus Heidelberg <markus.heidelberg@web.de> writes:
+> 
+> >> [PATCH 4/6] send-email: fix threaded mails without chain-reply-to
+> >> [PATCH 5/6] add a test for git-send-email for threaded mails without chain-reply-to
+> >> [PATCH 6/6] send-email: fix a typo in a comment
+> >> 
+> >> Patch 4/6 applies on top of 15da108 to fix a breakage introduced by that
+> >> commit.  Together with the result of applying the first three patches to
+> >> maint, they fix --no-thread and --thread (without --chain-reply-to) cases.
+> >> The result can be verified by applying Patch 5/6 on top of them.
+> >
+> > Out of curiosity: why are 4/6 and 5/6 applied on different branches
+> > without the usual commits first "test with test_expect_fail" then "fix +
+> > test changed to test_expect_success"?
+> 
+> Maybe I misunderstood your problem description, but my impression from it
+> was that 4/6 is a fix to a latent bug in 15da108
 
- Documentation/git-parse-remote.txt |   20 ----
- git-parse-remote.sh                |  204 ----------------------------=
---------
- 2 files changed, 0 insertions(+), 224 deletions(-)
+Right, ...
 
-diff --git a/Documentation/git-parse-remote.txt b/Documentation/git-par=
-se-remote.txt
-index cd43069..39d9daa 100644
---- a/Documentation/git-parse-remote.txt
-+++ b/Documentation/git-parse-remote.txt
-@@ -17,26 +17,6 @@ routines to parse files under $GIT_DIR/remotes/ and
- $GIT_DIR/branches/ and configuration variables that are related
- to fetching, pulling and pushing.
-=20
--The primary entry points are:
--
--get_remote_refs_for_fetch::
--	Given the list of user-supplied `<repo> <refspec>...`,
--	return the list of refs to fetch after canonicalizing
--	them into `$GIT_DIR` relative paths
--	(e.g. `refs/heads/foo`).  When `<refspec>...` is empty
--	the returned list of refs consists of the defaults
--	for the given `<repo>`, if specified in
--	`$GIT_DIR/remotes/`, `$GIT_DIR/branches/`, or `remote.*.fetch`
--	configuration.
--
--get_remote_refs_for_push::
--	Given the list of user-supplied `<repo> <refspec>...`,
--	return the list of refs to push in a form suitable to be
--	fed to the 'git-send-pack' command.  When `<refspec>...`
--	is empty the returned list of refs consists of the
--	defaults for the given `<repo>`, if specified in
--	`$GIT_DIR/remotes/`.
--
- Author
- ------
- Written by Junio C Hamano.
-diff --git a/git-parse-remote.sh b/git-parse-remote.sh
-index 75e1254..5f47b18 100755
---- a/git-parse-remote.sh
-+++ b/git-parse-remote.sh
-@@ -60,175 +60,6 @@ get_default_remote () {
- 	echo ${origin:-origin}
- }
-=20
--get_remote_default_refs_for_push () {
--	data_source=3D$(get_data_source "$1")
--	case "$data_source" in
--	'' | branches | self)
--		;; # no default push mapping, just send matching refs.
--	config)
--		git config --get-all "remote.$1.push" ;;
--	remotes)
--		sed -ne '/^Push: */{
--			s///p
--		}' "$GIT_DIR/remotes/$1" ;;
--	*)
--		die "internal error: get-remote-default-ref-for-push $1" ;;
--	esac
--}
--
--# Called from canon_refs_list_for_fetch -d "$remote", which
--# is called from get_remote_default_refs_for_fetch to grok
--# refspecs that are retrieved from the configuration, but not
--# from get_remote_refs_for_fetch when it deals with refspecs
--# supplied on the command line.  $ls_remote_result has the list
--# of refs available at remote.
--#
--# The first token returned is either "explicit" or "glob"; this
--# is to help prevent randomly "globbed" ref from being chosen as
--# a merge candidate
--expand_refs_wildcard () {
--	echo "$ls_remote_result" |
--	git fetch--tool expand-refs-wildcard "-" "$@"
--}
--
--# Subroutine to canonicalize remote:local notation.
--canon_refs_list_for_fetch () {
--	# If called from get_remote_default_refs_for_fetch
--	# leave the branches in branch.${curr_branch}.merge alone,
--	# or the first one otherwise; add prefix . to the rest
--	# to prevent the secondary branches to be merged by default.
--	merge_branches=3D
--	curr_branch=3D
--	if test "$1" =3D "-d"
--	then
--		shift ; remote=3D"$1" ; shift
--		set $(expand_refs_wildcard "$remote" "$@")
--		is_explicit=3D"$1"
--		shift
--		if test "$remote" =3D "$(get_default_remote)"
--		then
--			curr_branch=3D$(git symbolic-ref -q HEAD | \
--			    sed -e 's|^refs/heads/||')
--			merge_branches=3D$(git config \
--			    --get-all "branch.${curr_branch}.merge")
--		fi
--		if test -z "$merge_branches" && test $is_explicit !=3D explicit
--		then
--			merge_branches=3D..this.will.never.match.any.ref..
--		fi
--	fi
--	for ref
--	do
--		force=3D
--		case "$ref" in
--		+*)
--			ref=3D$(expr "z$ref" : 'z+\(.*\)')
--			force=3D+
--			;;
--		esac
--		expr "z$ref" : 'z.*:' >/dev/null || ref=3D"${ref}:"
--		remote=3D$(expr "z$ref" : 'z\([^:]*\):')
--		local=3D$(expr "z$ref" : 'z[^:]*:\(.*\)')
--		dot_prefix=3D.
--		if test -z "$merge_branches"
--		then
--			merge_branches=3D$remote
--			dot_prefix=3D
--		else
--			for merge_branch in $merge_branches
--			do
--			    [ "$remote" =3D "$merge_branch" ] &&
--			    dot_prefix=3D && break
--			done
--		fi
--		case "$remote" in
--		'' | HEAD ) remote=3DHEAD ;;
--		refs/*) ;;
--		heads/* | tags/* | remotes/* ) remote=3D"refs/$remote" ;;
--		*) remote=3D"refs/heads/$remote" ;;
--		esac
--		case "$local" in
--		'') local=3D ;;
--		refs/*) ;;
--		heads/* | tags/* | remotes/* ) local=3D"refs/$local" ;;
--		*) local=3D"refs/heads/$local" ;;
--		esac
--
--		if local_ref_name=3D$(expr "z$local" : 'zrefs/\(.*\)')
--		then
--		   git check-ref-format "$local_ref_name" ||
--		   die "* refusing to create funny ref '$local_ref_name' locally"
--		fi
--		echo "${dot_prefix}${force}${remote}:${local}"
--	done
--}
--
--# Returns list of src: (no store), or src:dst (store)
--get_remote_default_refs_for_fetch () {
--	data_source=3D$(get_data_source "$1")
--	case "$data_source" in
--	'')
--		echo "HEAD:" ;;
--	self)
--	        canon_refs_list_for_fetch -d "$1" \
--			$(git for-each-ref --format=3D'%(refname):')
--		;;
--	config)
--		canon_refs_list_for_fetch -d "$1" \
--			$(git config --get-all "remote.$1.fetch") ;;
--	branches)
--		remote_branch=3D$(sed -ne '/#/s/.*#//p' "$GIT_DIR/branches/$1")
--		case "$remote_branch" in '') remote_branch=3Dmaster ;; esac
--		echo "refs/heads/${remote_branch}:refs/heads/$1"
--		;;
--	remotes)
--		canon_refs_list_for_fetch -d "$1" $(sed -ne '/^Pull: */{
--						s///p
--					}' "$GIT_DIR/remotes/$1")
--		;;
--	*)
--		die "internal error: get-remote-default-ref-for-fetch $1" ;;
--	esac
--}
--
--get_remote_refs_for_push () {
--	case "$#" in
--	0) die "internal error: get-remote-refs-for-push." ;;
--	1) get_remote_default_refs_for_push "$@" ;;
--	*) shift; echo "$@" ;;
--	esac
--}
--
--get_remote_refs_for_fetch () {
--	case "$#" in
--	0)
--	    die "internal error: get-remote-refs-for-fetch." ;;
--	1)
--	    get_remote_default_refs_for_fetch "$@" ;;
--	*)
--	    shift
--	    tag_just_seen=3D
--	    for ref
--	    do
--		if test "$tag_just_seen"
--		then
--		    echo "refs/tags/${ref}:refs/tags/${ref}"
--		    tag_just_seen=3D
--		    continue
--		else
--		    case "$ref" in
--		    tag)
--			tag_just_seen=3Dyes
--			continue
--			;;
--		    esac
--		fi
--		canon_refs_list_for_fetch "$ref"
--	    done
--	    ;;
--	esac
--}
--
- get_remote_merge_branch () {
- 	case "$#" in
- 	0|1)
-@@ -262,38 +93,3 @@ get_remote_merge_branch () {
- 	    [ -n "$remote" ] && echo "refs/remotes/$repo/$remote"
- 	esac
- }
--
--resolve_alternates () {
--	# original URL (xxx.git)
--	top_=3D`expr "z$1" : 'z\([^:]*:/*[^/]*\)/'`
--	while read path
--	do
--		case "$path" in
--		\#* | '')
--			continue ;;
--		/*)
--			echo "$top_$path/" ;;
--		../*)
--			# relative -- ugly but seems to work.
--			echo "$1/objects/$path/" ;;
--		*)
--			# exit code may not be caught by the reader.
--			echo "bad alternate: $path"
--			exit 1 ;;
--		esac
--	done
--}
--
--get_uploadpack () {
--	data_source=3D$(get_data_source "$1")
--	case "$data_source" in
--	config)
--		uplp=3D$(git config --get "remote.$1.uploadpack")
--		echo ${uplp:-git-upload-pack}
--		;;
--	*)
--		echo "git-upload-pack"
--		;;
--	esac
--}
--
---=20
-1.6.3.2.206.g417f7
+> that later affected what
+
+... but the bug was immediately noticable.
+
+> was done by new code that appeard somewhere between 15da108 and 'master',
+
+The other regression from 3e0c4ff appeared before 15da108, not after it.
+This regression was immediately noticable as well.
+
+> and the test 5/6 was about that breakage.
+
+No, 5/6 was only about the breakage in 15da108 fixed by 4/6. I noticed
+the regression in 3e0c4ff after it.
+
+> IOW, root cause was older than
+> the symptom.
+
+Since it's a bit confusing, I'll try to clarify:
+
+* 3e0c4ff (2009-03-01) broke non-threaded
+  This sent threaded mails instead of non-threaded:
+    $ git send-email --no-thread --no-chain-reply-to
+    $ git send-email --no-thread --chain-reply-to
+* 1/6 tests this
+* 2/6 fixes this
+
+* 15da108 (2009-04-13) broke threaded without chain-reply
+  This sent non-threaded mails instead of threaded:
+    $ git send-email --thread --no-chain-reply-to
+  This correctly sent threaded mails:
+    $ git send-email --thread --chain-reply-to
+* 4/6 fixes this
+* 5/6 tests this
+* 15da108 additionally changed another behaviour
+  (this is the side effect from the 2/6 description, which is
+   anticipating in view of the reordered patch sequence):
+  This now sent non-threaded mails again, which has been broken by 3e0c4ff:
+    $ git send-email --no-thread --no-chain-reply-to
+  This still sent threaded mails instead of non-threaded, it was still
+  broken since 3e0c4ff:
+    $ git send-email --no-thread --chain-reply-to
+
+HTH and I got everything explained correctly.
