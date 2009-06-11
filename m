@@ -1,78 +1,67 @@
-From: Karsten Weiss <knweiss@gmx.de>
-Subject: Re: https, client certificate, pem pass phrase
-Date: Thu, 11 Jun 2009 18:43:50 +0200 (CEST)
-Message-ID: <alpine.OSX.2.00.0906111801400.67531@xor.localnet>
-References: <alpine.OSX.2.00.0906110956370.945@xor.localnet>
+From: Markus Heidelberg <markus.heidelberg@web.de>
+Subject: Re: [RF sanity check] send-email threading fixes (was Re: [PATCH 3/6] send-email: fix threaded mails without chain-reply-to)
+Date: Thu, 11 Jun 2009 18:49:39 +0200
+Message-ID: <200906111849.40232.markus.heidelberg@web.de>
+References: <1244410857-920-1-git-send-email-markus.heidelberg@web.de> <7vhbyo1vr7.fsf@alter.siamese.dyndns.org> <7v63f4v9sl.fsf@alter.siamese.dyndns.org>
+Reply-To: markus.heidelberg@web.de
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-Cc: Mark Lodato <lodatom@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jun 11 18:45:08 2009
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Michael Witten <mfwitten@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jun 11 18:49:36 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MEnOh-0000U1-V3
-	for gcvg-git-2@gmane.org; Thu, 11 Jun 2009 18:45:04 +0200
+	id 1MEnT3-0002mt-Kz
+	for gcvg-git-2@gmane.org; Thu, 11 Jun 2009 18:49:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758457AbZFKQoe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Jun 2009 12:44:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756803AbZFKQoe
-	(ORCPT <rfc822;git-outgoing>); Thu, 11 Jun 2009 12:44:34 -0400
-Received: from mail.gmx.net ([213.165.64.20]:38527 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1755453AbZFKQod (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Jun 2009 12:44:33 -0400
-Received: (qmail invoked by alias); 11 Jun 2009 16:44:33 -0000
-Received: from port-92-200-99-90.dynamic.qsc.de (EHLO mail.localnet) [92.200.99.90]
-  by mail.gmx.net (mp012) with SMTP; 11 Jun 2009 18:44:33 +0200
-X-Authenticated: #3612999
-X-Provags-ID: V01U2FsdGVkX19+YTRVxDd+We/8YBqAWgOc9Cxqp/1HCx1KW0w8C6
-	Rb6KELFw92sdiO
-Received: by mail.localnet (Postfix, from userid 502)
-	id E1680B863B7; Thu, 11 Jun 2009 18:43:50 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
-	by mail.localnet (Postfix) with ESMTP id CE576B863A8;
-	Thu, 11 Jun 2009 18:43:50 +0200 (CEST)
-In-Reply-To: <alpine.OSX.2.00.0906110956370.945@xor.localnet>
-User-Agent: Alpine 2.00 (OSX 1167 2008-08-23)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.53
+	id S1757173AbZFKQtX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Jun 2009 12:49:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760798AbZFKQtV
+	(ORCPT <rfc822;git-outgoing>); Thu, 11 Jun 2009 12:49:21 -0400
+Received: from fmmailgate03.web.de ([217.72.192.234]:58048 "EHLO
+	fmmailgate03.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757173AbZFKQtT (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Jun 2009 12:49:19 -0400
+Received: from smtp07.web.de (fmsmtp07.dlan.cinetic.de [172.20.5.215])
+	by fmmailgate03.web.de (Postfix) with ESMTP id D2C0FFF76C14;
+	Thu, 11 Jun 2009 18:49:21 +0200 (CEST)
+Received: from [89.59.73.219] (helo=.)
+	by smtp07.web.de with asmtp (TLSv1:AES256-SHA:256)
+	(WEB.DE 4.110 #277)
+	id 1MEnSr-0004ZR-00; Thu, 11 Jun 2009 18:49:21 +0200
+User-Agent: KMail/1.9.9
+In-Reply-To: <7v63f4v9sl.fsf@alter.siamese.dyndns.org>
+Jabber-ID: markus.heidelberg@web.de
+Content-Disposition: inline
+X-Sender: markus.heidelberg@web.de
+X-Provags-ID: V01U2FsdGVkX18QHgkzFYZRNM/ZITswzG1siQTQgq8gNA/uZ1mM
+	A3Kw8sABrS9gCuVHrCdTsS+XOUYsnr1Mu2t9rpqqpq9bL+Jmn8
+	YUeCeNMQVpLgMt+4jZCA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121348>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121349>
 
-On Thu, 11 Jun 2009, Karsten Weiss wrote:
+Junio C Hamano, 10.06.2009:
+> In any case, here is what I came up with by reshuffling your six patches.
+> 
+> [PATCH 1/6] add a test for git-send-email for non-threaded mails
+> [PATCH 2/6] send-email: fix non-threaded mails
+> [PATCH 3/6] doc/send-email: clarify the behavior of --in-reply-to with --no-thread
+> [PATCH 4/6] send-email: fix threaded mails without chain-reply-to
+> [PATCH 5/6] add a test for git-send-email for threaded mails without chain-reply-to
+> [PATCH 6/6] send-email: fix a typo in a comment
+> 
+> Patch 4/6 applies on top of 15da108 to fix a breakage introduced by that
+> commit.  Together with the result of applying the first three patches to
+> maint, they fix --no-thread and --thread (without --chain-reply-to) cases.
+> The result can be verified by applying Patch 5/6 on top of them.
 
-> However, it only works as long as I do *not* protect the client's private key 
-> (PEM) with a pass phrase which is not secure (especially when using 
-> FakeBasicAuth!). When I do protect the private key with a pass phrase *each* 
-> git fetch/pull/push prompts the user *several* times with "Enter PEM pass 
-> phrase:". Thus, it's not usable (even though it works).
-
-Somehow I managed to miss Mark Lodato's posting from 2009-05-28 before:
-
-[PATCH 1/2] http.c: prompt for SSL client certificate password
-http://marc.info/?l=git&m=124348062226665&w=4
-[PATCH 2/2] http.c: add http.sslCertNoPass option
-http://marc.info/?l=git&m=124348062326671&w=4
-
-I can confirm that his two patches solve the problem. I.e. there is now 
-only a single passphrase prompt during each Git invocation that involves 
-the https protocol. Great!
-
-However, I want to add two additional suggestions:
-
-With the patch Git prompts for a "Certificate Password". IMHO it would be 
-better to prompt for the "Certificate private key passphrase" because it's 
-the private key which is protected and not the certificate itself. The 
-config flag IMHO also should be renamed from http.sslCertNoPass to 
-http.sslKeyNoPassphrase. (Of course it would be even nicer if the code 
-could detect if the key has a passphrase and only prompt for it when 
-really necessary)
-
-Regarding the caching of the passphrase in memory: Maybe the passphrase 
-memory region could be mlock()ed to prevent the kernel from paging it to 
-disk? But I'm not sure if this is worth effort.
+Out of curiosity: why are 4/6 and 5/6 applied on different branches
+without the usual commits first "test with test_expect_fail" then "fix +
+test changed to test_expect_success"?
