@@ -1,103 +1,112 @@
-From: Kjetil Barvik <barvik@broadpark.no>
-Subject: Re: Troubles when directory is replaced by symlink
-Date: Thu, 11 Jun 2009 16:37:49 +0200
-Organization: private
-Message-ID: <86ab4erg3m.fsf@broadpark.no>
-References: <c6c947f60906042243v2e36251dn9a46343cf6b8a2f4@mail.gmail.com>
- <c6c947f60906090118n78d3c40fq11d1390f8776c2c0@mail.gmail.com>
- <20090611114846.GC4409@coredump.intra.peff.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7BIT
-Cc: Alexander Gladysh <agladysh@gmail.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Jun 11 16:39:12 2009
+From: Tomas Carnecky <tom@dbservice.com>
+Subject: Re: [RFC/PATCH 1/2] Teach Solaris that _XOPEN_SOURCE=600 really menas XPG6
+Date: Thu, 11 Jun 2009 17:06:00 +0200
+Message-ID: <B96700A1-EC8C-4DDE-A158-CE298FCCA09F@dbservice.com>
+References: <1243106697-6424-1-git-send-email-gitster@pobox.com> <1243106697-6424-2-git-send-email-gitster@pobox.com>
+Mime-Version: 1.0 (Apple Message framework v935.3)
+Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jun 11 17:06:43 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MElQs-0001JK-4j
-	for gcvg-git-2@gmane.org; Thu, 11 Jun 2009 16:39:10 +0200
+	id 1MElrS-0006KT-JA
+	for gcvg-git-2@gmane.org; Thu, 11 Jun 2009 17:06:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752618AbZFKOjB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Jun 2009 10:39:01 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752387AbZFKOjB
-	(ORCPT <rfc822;git-outgoing>); Thu, 11 Jun 2009 10:39:01 -0400
-Received: from osl1smout1.broadpark.no ([80.202.4.58]:41931 "EHLO
-	osl1smout1.broadpark.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751516AbZFKOjA (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Jun 2009 10:39:00 -0400
-Received: from osl1sminn1.broadpark.no ([80.202.4.59])
- by osl1smout1.broadpark.no
- (Sun Java(tm) System Messaging Server 6.3-3.01 (built Jul 12 2007; 32bit))
- with ESMTP id <0KL2006BFWP1PFA0@osl1smout1.broadpark.no> for
- git@vger.kernel.org; Thu, 11 Jun 2009 16:39:01 +0200 (CEST)
-Received: from localhost ([80.202.166.19]) by osl1sminn1.broadpark.no
- (Sun Java(tm) System Messaging Server 6.3-3.01 (built Jul 12 2007; 32bit))
- with ESMTP id <0KL2005MEWP03680@osl1sminn1.broadpark.no> for
- git@vger.kernel.org; Thu, 11 Jun 2009 16:39:01 +0200 (CEST)
-In-reply-to: <20090611114846.GC4409@coredump.intra.peff.net>
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.3 (gnu/linux)
+	id S1754775AbZFKPG0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Jun 2009 11:06:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754382AbZFKPG0
+	(ORCPT <rfc822;git-outgoing>); Thu, 11 Jun 2009 11:06:26 -0400
+Received: from office.neopsis.com ([78.46.209.98]:51246 "EHLO
+	office.neopsis.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753778AbZFKPGZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Jun 2009 11:06:25 -0400
+Received: from calvin.emmen.dbservice.com ([62.65.141.13])
+	(authenticated user tom@dbservice.com)
+	by office.neopsis.com
+	(using TLSv1/SSLv3 with cipher AES128-SHA (128 bits));
+	Thu, 11 Jun 2009 17:06:25 +0200
+In-Reply-To: <1243106697-6424-2-git-send-email-gitster@pobox.com>
+X-Mailer: Apple Mail (2.935.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121341>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121342>
 
-Jeff King <peff@peff.net> writes:
 
-> [Kjetil: I bisected this bug to your 92604b4. Details below.]
->
-> On Tue, Jun 09, 2009 at 12:18:16PM +0400, Alexander Gladysh wrote:
->
->> Any help here? This bug is pretty annoying (especially that it
->> requires double hard resets).
->> 
->> Should I provide any extra information?
->
-> Actually, I think the problem happens earlier than you realize; I see
-> problems when switching back to master:
->
-> -- >8 --
-> # make a repo
-> mkdir repo && cd repo && git init
->
-> # content in alpha
-> mkdir alpha && echo content >alpha/file && git add . && git commit -m one
-> # and duplicate content inside beta
-> mkdir beta && cp -R alpha beta && git add . && git commit -m two
->
-> # now replace the duplicate with a symlink
-> git checkout -b branch
-> rm -rf beta/alpha && git add -u && git commit -m deleted
-> ln -s ../alpha beta/alpha && git add . && git commit -m symlink
->
-> # now checkout master again; alpha/file will be missing, even
-> # though it wasn't touched at all
-> git checkout master
-> git status
-> -- 8< --
->
-> We handled this correctly in v1.6.1, so I was able to bisect it down to:
->
->     commit 92604b466344b2157efc42ef3521dac22d7906a2
->     Author: Kjetil Barvik <barvik@broadpark.no>
->     Date:   Sun Jan 18 16:14:50 2009 +0100
->
->         lstat_cache(): more cache effective symlink/directory detection
->
->         Make the cache functionality more effective.  Previously when
->         A/B/C/D was in the cache and A/B/C/E/file.c was called for,
->         there was no match at all from the cache.  Now we use the fact
->         that the paths "A", "A/B" and "A/B/C" are already tested, and we
->         only need to do an lstat() call on "A/B/C/E".
->
-> I don't have time to look more closely now, but I'm guessing we are
-> treating the symlink to the directory like the directory itself in a
-> place that we shouldn't.
->
-> -Peff
+On May 23, 2009, at 9:24 PM, Junio C Hamano wrote:
 
-  OK, I start debuging in a few minutes.  Thanks for mail!
+> In git-compat-util.h, we do
+>
+>    #define _XOPEN_SOURCE 600
+>    #define _XOPEN_SOURCE_EXTENDED 1
+>
+> unless we are on BSD or SCO.
+>
+> On OpenSolaris (200811), /usr/include/sys/feature_tests.h has this  
+> nice
+> table:
+>
+>    Feature Test Macro				     Specification
+>    ------------------------------------------------  -------------
+>    _XOPEN_SOURCE                                         XPG3
+>    _XOPEN_SOURCE && _XOPEN_VERSION = 4                   XPG4
+>    _XOPEN_SOURCE && _XOPEN_SOURCE_EXTENDED = 1           XPG4v2
+>    _XOPEN_SOURCE = 500                                   XPG5
+>    _XOPEN_SOURCE = 600  (or POSIX_C_SOURCE=200112L)      XPG6
+>
+> Later in the same header, compilation with -c99 is made to fail if  
+> _XPG6 is
+> not set, like this:
+>
+>    #if defined(_STDC_C99) && (defined(__XOPEN_OR_POSIX) && ! 
+> defined(_XPG6))
+>    #error "Compiler or options invalid for pre-UNIX 03 X/Open  
+> applications \
+>            and pre-2001 POSIX applications"
+>    #elif ...
+>
+> The problem is that they check things in an order that is  
+> inconvenient for
+> us.  When they see _XOPEN_SOURCE_EXTENDED, they declare that we are  
+> XPG4v2,
+> regardless of the value of _XOPEN_SOURCE.
+>
+> To work around this problem, do not define _XOPEN_SOURCE_EXTENDED on
+> Sun's.
+>
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> ---
+> git-compat-util.h |    2 ++
+> 1 files changed, 2 insertions(+), 0 deletions(-)
+>
+> diff --git a/git-compat-util.h b/git-compat-util.h
+> index c7cf2d5..4236647 100644
+> --- a/git-compat-util.h
+> +++ b/git-compat-util.h
+> @@ -41,8 +41,10 @@
+>
+> #if !defined(__APPLE__) && !defined(__FreeBSD__)  && ! 
+> defined(__USLC__) && !defined(_M_UNIX)
+> #define _XOPEN_SOURCE 600 /* glibc2 and AIX 5.3L need 500, OpenBSD  
+> needs 600 for S_ISLNK() */
+> +#ifndef __sun__
+> #define _XOPEN_SOURCE_EXTENDED 1 /* AIX 5.3L needs this */
+> #endif
+> +#endif
+> #define _ALL_SOURCE 1
+> #define _GNU_SOURCE 1
+> #define _BSD_SOURCE 1
+> -- 
+> 1.6.3.1.145.gb74d77
+>
 
-  -- kjetil
+Until this commit a simple 'make prefix=...' worked just fine. Now I  
+have to explicitly add '-std=c99' to the gcc commandline. Is there a  
+reason why the makefile doesn't add this switch automatically?
+
+tom
