@@ -1,105 +1,68 @@
-From: Markus Heidelberg <markus.heidelberg@web.de>
-Subject: [PATCH 5/6] send-email: fix threaded mails without chain-reply-to
-Date: Fri, 12 Jun 2009 12:51:41 +0200
-Message-ID: <1244803902-8068-5-git-send-email-markus.heidelberg@web.de>
-References: <1244803766-7785-1-git-send-email-markus.heidelberg@web.de>
-Cc: git@vger.kernel.org, Michael Witten <mfwitten@gmail.com>,
-	Thomas Rast <trast@student.ethz.ch>,
-	Markus Heidelberg <markus.heidelberg@web.de>,
-	Junio C Hamano <gitster@pobox.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jun 12 12:52:31 2009
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: Who uses Signed-off-by and DCO?
+Date: Fri, 12 Jun 2009 13:05:14 +0200
+Message-ID: <4A32366A.6090608@op5.se>
+References: <20090612084207.6117@nanako3.lavabit.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Nanako Shiraishi <nanako3@lavabit.com>
+X-From: git-owner@vger.kernel.org Fri Jun 12 13:05:33 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MF4N3-0002Bm-LK
-	for gcvg-git-2@gmane.org; Fri, 12 Jun 2009 12:52:30 +0200
+	id 1MF4Ze-0006sl-LJ
+	for gcvg-git-2@gmane.org; Fri, 12 Jun 2009 13:05:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933744AbZFLKvz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 12 Jun 2009 06:51:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933709AbZFLKvy
-	(ORCPT <rfc822;git-outgoing>); Fri, 12 Jun 2009 06:51:54 -0400
-Received: from fmmailgate01.web.de ([217.72.192.221]:41115 "EHLO
-	fmmailgate01.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933680AbZFLKvq (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Jun 2009 06:51:46 -0400
-Received: from smtp08.web.de (fmsmtp08.dlan.cinetic.de [172.20.5.216])
-	by fmmailgate01.web.de (Postfix) with ESMTP id C55671053DC6C;
-	Fri, 12 Jun 2009 12:51:48 +0200 (CEST)
-Received: from [89.59.124.123] (helo=localhost.localdomain)
-	by smtp08.web.de with asmtp (TLSv1:AES256-SHA:256)
-	(WEB.DE 4.110 #277)
-	id 1MF4MO-00044V-01; Fri, 12 Jun 2009 12:51:48 +0200
-X-Mailer: git-send-email 1.6.3.2.236.ge505d
-In-Reply-To: <1244803766-7785-1-git-send-email-markus.heidelberg@web.de>
-X-Sender: markus.heidelberg@web.de
-X-Provags-ID: V01U2FsdGVkX19j47tEBjkU1eQ+cwkT0eDCDD+/kmGVLvv8GWhC
-	zCGA4ulpqtclWVvvUjdYQ4lauC31lHXJ/OkBm++aGYS6oLyGpf
-	m/GvVJiK3xWUcxR5DqHg==
+	id S1757383AbZFLLFS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 12 Jun 2009 07:05:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758922AbZFLLFR
+	(ORCPT <rfc822;git-outgoing>); Fri, 12 Jun 2009 07:05:17 -0400
+Received: from na3sys009aog109.obsmtp.com ([74.125.149.201]:41830 "HELO
+	na3sys009aog109.obsmtp.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with SMTP id S1755513AbZFLLFP (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 12 Jun 2009 07:05:15 -0400
+Received: from source ([72.14.220.157]) by na3sys009aob109.postini.com ([74.125.148.12]) with SMTP
+	ID DSNKSjI2bdLIyA702M3QPLIRenEHw5k28AiI@postini.com; Fri, 12 Jun 2009 04:05:18 PDT
+Received: by fg-out-1718.google.com with SMTP id 13so725355fge.5
+        for <git@vger.kernel.org>; Fri, 12 Jun 2009 04:05:16 -0700 (PDT)
+Received: by 10.86.53.8 with SMTP id b8mr3594875fga.32.1244804716422;
+        Fri, 12 Jun 2009 04:05:16 -0700 (PDT)
+Received: from clix.int.op5.se ([212.112.163.94])
+        by mx.google.com with ESMTPS id e20sm2041954fga.25.2009.06.12.04.05.15
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 12 Jun 2009 04:05:15 -0700 (PDT)
+User-Agent: Thunderbird 2.0.0.21 (X11/20090320)
+In-Reply-To: <20090612084207.6117@nanako3.lavabit.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121406>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121407>
 
-An earlier commit 15da108 ("send-email: 'References:' should only
-reference what is sent", 2009-04-13) broke logic to set up threading
-information for the next message by rewriting "!" to "not" without
-understanding the precedence rules of the language.
+Nanako Shiraishi wrote:
+> git provides options and configuration variables to easily handle the
+> Signed-off-by tag line. It is used to certify that the sender
+> certifies the patch with the Developer's Certificate of Origin.
+> 
+> I have read SubmittingPatches document and understand this convention
+> is used by the Linux Kernel Project.
+> 
+> I was giving a git introduction to students in my lab, and this
+> question came up from one of them. How widely is this convention
+> used? Are there projects other than the Linux Kernel and git itself?
+> 
 
-Namely,
+We use it for our own opensource projects, though I must admit we
+stole the idea from git.git.
 
-    ! defined $reply_to || length($reply_to) == 0
-
-was changed to
-
-    not defined $reply_to || length($reply_to) == 0
-
-which is
-
-    not (defined $reply_to || length($reply_to) == 0)
-
-and different from what was intended, which is
-
-    (not defined $reply_to) || (length($reply_to) == 0)
-
-Signed-off-by: Markus Heidelberg <markus.heidelberg@web.de>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
-
- * Applies on top of [4/6]
-
- git-send-email.perl   |    3 ++-
- t/t9001-send-email.sh |    2 +-
- 2 files changed, 3 insertions(+), 2 deletions(-)
-
-diff --git a/git-send-email.perl b/git-send-email.perl
-index 4c795a4..16d12e0 100755
---- a/git-send-email.perl
-+++ b/git-send-email.perl
-@@ -1150,7 +1150,8 @@ foreach my $t (@files) {
- 	my $message_was_sent = send_message();
- 
- 	# set up for the next message
--	if ($message_was_sent and $chain_reply_to || not defined $reply_to || length($reply_to) == 0) {
-+	if ($message_was_sent &&
-+		($chain_reply_to || !defined $reply_to || length($reply_to) == 0)) {
- 		$reply_to = $message_id;
- 		if (length $references > 0) {
- 			$references .= "\n $message_id";
-diff --git a/t/t9001-send-email.sh b/t/t9001-send-email.sh
-index 4f67de3..8ab1a78 100755
---- a/t/t9001-send-email.sh
-+++ b/t/t9001-send-email.sh
-@@ -621,7 +621,7 @@ test_expect_success 'in-reply-to but no threading' '
- 	grep "In-Reply-To: <in-reply-id@example.com>"
- '
- 
--test_expect_failure 'threading but no chain-reply-to' '
-+test_expect_success 'threading but no chain-reply-to' '
- 	git send-email \
- 		--dry-run \
- 		--from="Example <nobody@example.com>" \
 -- 
-1.6.3.2.236.ge505d
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
+
+Considering the successes of the wars on alcohol, poverty, drugs and
+terror, I think we should give some serious thought to declaring war
+on peace.
