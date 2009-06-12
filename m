@@ -1,105 +1,68 @@
-From: Mark Lodato <lodatom@gmail.com>
-Subject: Re: [PATCH 1/2] http.c: prompt for SSL client certificate password
-Date: Fri, 12 Jun 2009 18:31:11 -0400
-Message-ID: <ca433830906121531m6955da77we455136c6e9d0785@mail.gmail.com>
-References: <1243480563-5954-1-git-send-email-lodatom@gmail.com>
-	 <ca433830906111600n2d45b5bdg3fb6e7c0a537ec78@mail.gmail.com>
-	 <7vocsue354.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: [JGIT PATCH 0/5] Fix major performance problems in UploadPack
+Date: Fri, 12 Jun 2009 16:00:14 -0700
+Message-ID: <1244847619-7364-1-git-send-email-spearce@spearce.org>
 Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Jun 13 00:31:20 2009
+To: Robin Rosenberg <robin.rosenberg@dewire.com>
+X-From: git-owner@vger.kernel.org Sat Jun 13 01:00:41 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MFFHL-0003kO-VN
-	for gcvg-git-2@gmane.org; Sat, 13 Jun 2009 00:31:20 +0200
+	id 1MFFjk-000336-RP
+	for gcvg-git-2@gmane.org; Sat, 13 Jun 2009 01:00:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752654AbZFLWbL convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 12 Jun 2009 18:31:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752401AbZFLWbL
-	(ORCPT <rfc822;git-outgoing>); Fri, 12 Jun 2009 18:31:11 -0400
-Received: from mail-bw0-f213.google.com ([209.85.218.213]:36041 "EHLO
-	mail-bw0-f213.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752253AbZFLWbK convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 12 Jun 2009 18:31:10 -0400
-Received: by bwz9 with SMTP id 9so2355275bwz.37
-        for <git@vger.kernel.org>; Fri, 12 Jun 2009 15:31:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=lHJTl4FaK2DdgQvhfvmpVIw0fcqRaPN7TPOQbKijF0Q=;
-        b=LSmFIef2yXzZ+0plCBh0E/vbXk7FiQLonrOxJQ6oXfegk5O7g9lSgsSZt+mKTQXncF
-         /DKXGIx8YKFZ4jFW5+4X7ng8C8cERIPFMsKkN5tmfws7WyhN5x+j3wnUdVOPcSgnf4Y9
-         cHYdu3NqZEcKFupZH3pIvFwZkuf/WgowDSTy8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=q55bUjvMwMeVR6eyJu0SD4vgodt8ltWUIxcbXOMcqi3nQqj0Yjrg12GKMWLLcV+YMR
-         hmBQBPLcnTWyD4GdMwH5SPomq7QactBJd1UlvFprCccJnx8Exi7aBVIrjfHSOeJcXnts
-         0w9KbvP2UDWFYIU/9LxnUsAvPkbOevVqk6meY=
-Received: by 10.223.111.211 with SMTP id t19mr3046432fap.64.1244845871129; 
-	Fri, 12 Jun 2009 15:31:11 -0700 (PDT)
-In-Reply-To: <7vocsue354.fsf@alter.siamese.dyndns.org>
+	id S1753273AbZFLXAY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 12 Jun 2009 19:00:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751742AbZFLXAX
+	(ORCPT <rfc822;git-outgoing>); Fri, 12 Jun 2009 19:00:23 -0400
+Received: from george.spearce.org ([209.20.77.23]:40044 "EHLO
+	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751423AbZFLXAW (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 12 Jun 2009 19:00:22 -0400
+Received: by george.spearce.org (Postfix, from userid 1000)
+	id E1A3F38221; Fri, 12 Jun 2009 23:00:23 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.2.4 (2008-01-01) on george.spearce.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-4.4 required=4.0 tests=ALL_TRUSTED,BAYES_00
+	autolearn=ham version=3.2.4
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by george.spearce.org (Postfix) with ESMTP id D0834381D6;
+	Fri, 12 Jun 2009 23:00:19 +0000 (UTC)
+X-Mailer: git-send-email 1.6.3.2.367.gf0de
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121459>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121460>
 
-Thanks for reviewing the patch.
+If the client is really far ahead of the server, JGit's UploadPack
+can spend a massive amount of CPU time on the server just doing the
+same work over and over again.  This series addresses the issue by
+taking advantage of cached data more frequently.
 
-On Thu, Jun 11, 2009 at 7:56 PM, Junio C Hamano<gitster@pobox.com> wrot=
-e:
-> Mark Lodato <lodatom@gmail.com> writes:
->
->>> The user is always prompted, even if the certificate is not encrypt=
-ed.
->>> This should be fine; unencrypted certificates are rare and a securi=
-ty
->>> risk anyway.
->
-> Hmm, "rare" is in the eyes of beholder. =C2=A0For automated settings,=
- I would
-> imagine that it is a necessary feature that we need to keep working. =
-=C2=A0Of
-> course the local box that keeps an unencrypted certificate used this =
-way
-> must be well protected to make it _not_ a security risk, but that is =
-not
-> an issue you are addressing with your patch anyway, so it is not nice=
- to
-> dismiss possible usability issues like this.
+Shawn O. Pearce (5):
+  Make RevTag getObject(), getName() final to prevent overrides
+  Allow exceptions to be created with integer type codes
+  Unify RevWalk parsing code to be more consistent across types
+  Change RevObject dispose() semantics to avoid reparses
+  UploadPack: Only recompute okToGiveUp() if bases changed
 
-Sorry about that wording - it probably is a more common case than I
-imagine.  But patch 2/2 addresses this issue with an option to disable
-the password prompt.  This does require one-time work for existing
-users who use an unencrypted certificate, but overall I think the
-patch series is a big win since encrypted certificates are not usable
-at all currently.
-
->>> I did not create any tests because the existing http.sslcert option=
- has
->>> no tests to begin with.
->
-> Again, not nice. =C2=A0Not having tests in this particular patch may =
-be Ok, as
-> long as you or other people fix that deficiency with follow-up patche=
-s,
-> but please don't be proud that you are following a bad example.
-
-
-Again, sorry about the wording.  I meant the above as an explanation
-of why I did not include a test - I was not sure how to write one.  I
-would be happy to write such a test if someone could give me some
-guidance.
-
-
-Thanks again!
-Mark
+ .../org/spearce/jgit/revwalk/RevWalkTestCase.java  |    2 +-
+ .../jgit/errors/IncorrectObjectTypeException.java  |   13 +++
+ .../jgit/errors/MissingObjectException.java        |   12 +++
+ .../src/org/spearce/jgit/lib/PackWriter.java       |    3 +-
+ .../spearce/jgit/revwalk/BoundaryGenerator.java    |    2 +-
+ .../spearce/jgit/revwalk/MergeBaseGenerator.java   |    2 +-
+ .../src/org/spearce/jgit/revwalk/ObjectWalk.java   |    4 +-
+ .../org/spearce/jgit/revwalk/PendingGenerator.java |    6 +-
+ .../src/org/spearce/jgit/revwalk/RevBlob.java      |    5 -
+ .../src/org/spearce/jgit/revwalk/RevCommit.java    |   29 ++++----
+ .../src/org/spearce/jgit/revwalk/RevObject.java    |   34 ++++++--
+ .../src/org/spearce/jgit/revwalk/RevTag.java       |   32 ++++----
+ .../src/org/spearce/jgit/revwalk/RevTree.java      |    5 -
+ .../src/org/spearce/jgit/revwalk/RevWalk.java      |   82 ++++++++++++++-----
+ .../spearce/jgit/revwalk/RewriteTreeFilter.java    |    2 +-
+ .../src/org/spearce/jgit/transport/UploadPack.java |   31 +++++---
+ .../jgit/transport/WalkFetchConnection.java        |   15 +---
+ 17 files changed, 179 insertions(+), 100 deletions(-)
