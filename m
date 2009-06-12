@@ -1,85 +1,127 @@
-From: Christian Couder <christian.couder@gmail.com>
-Subject: Re: [PATCH v3 0/3] automatically skip away from broken commits
-Date: Fri, 12 Jun 2009 13:56:29 +0200
-Message-ID: <c07716ae0906120456j1a14af52n47c3a3542201aaf@mail.gmail.com>
-References: <20090606043853.4031.78284.chriscool@tuxfamily.org>
-	 <c07716ae0906101237o5038fc4dle9f11b6f2216652a@mail.gmail.com>
-	 <7vtz2nlrfs.fsf@alter.siamese.dyndns.org>
-	 <200906110602.54861.chriscool@tuxfamily.org>
-	 <4A308B5D.2010704@zytor.com> <4A309083.9090907@zytor.com>
+From: Allan Kelly <allankelly@gmail.com>
+Subject: sub-directory repo technique
+Date: Fri, 12 Jun 2009 13:07:20 +0100
+Message-ID: <9586f3420906120507o194fc459l5fbdcd14a7095ae8@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Christian Couder <chriscool@tuxfamily.org>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Sam Vilain <sam@vilain.net>, Ingo Molnar <mingo@elte.hu>
-To: "H. Peter Anvin" <hpa@zytor.com>
-X-From: git-owner@vger.kernel.org Fri Jun 12 13:56:46 2009
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jun 12 14:07:52 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MF5NF-0001zz-F2
-	for gcvg-git-2@gmane.org; Fri, 12 Jun 2009 13:56:45 +0200
+	id 1MF5Xz-0006xi-Og
+	for gcvg-git-2@gmane.org; Fri, 12 Jun 2009 14:07:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755238AbZFLL4g convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 12 Jun 2009 07:56:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754745AbZFLL4f
-	(ORCPT <rfc822;git-outgoing>); Fri, 12 Jun 2009 07:56:35 -0400
-Received: from mail-fx0-f216.google.com ([209.85.220.216]:53043 "EHLO
-	mail-fx0-f216.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753487AbZFLL4e convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 12 Jun 2009 07:56:34 -0400
-Received: by fxm12 with SMTP id 12so566258fxm.37
-        for <git@vger.kernel.org>; Fri, 12 Jun 2009 04:56:36 -0700 (PDT)
+	id S1755379AbZFLMHY convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 12 Jun 2009 08:07:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753376AbZFLMHX
+	(ORCPT <rfc822;git-outgoing>); Fri, 12 Jun 2009 08:07:23 -0400
+Received: from mail-ew0-f210.google.com ([209.85.219.210]:39284 "EHLO
+	mail-ew0-f210.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754041AbZFLMHW convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 12 Jun 2009 08:07:22 -0400
+Received: by ewy6 with SMTP id 6so2922891ewy.37
+        for <git@vger.kernel.org>; Fri, 12 Jun 2009 05:07:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=koX+i1I7zo04ANsHsLKAYVrvANZguwTShCGe+lCRsvE=;
-        b=qiz6FG7gomW3+bP9azCU+Xtf0jyL4joDqju3du5SmTj4g+xJdcxze4iJqHJlLs5r7R
-         ICfat7VdmnDdtSiWB1MkYzJl9moPjNH2OQzPHSW5fFiztZypltBY5oSclTyYl4Cey7au
-         wgkWQ799m31DBmRmdSENHzRG2BGe4HYKIViuo=
+        h=domainkey-signature:mime-version:received:date:message-id:subject
+         :from:to:content-type:content-transfer-encoding;
+        bh=9wQ5HSAwYdNw8cXPDGosDQgDA7zI+2C50kWy3tAp+Ug=;
+        b=wvfyBkfZ5Pwa0bHB47hKq26lyExt4aOommCmlXcqZ9u124O+TyMrQHwSsnnuNHY99o
+         5PMB+hCozVr2vnBcIkIKIuiz2akUmY2XyDGNE8yWUslQKI9WxViMqcEQwE6SH9czGIo3
+         TockgcCpSpuQNxOoKuRQ6RL9lE90UneyAo/Ng=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=V7Rl8VdjIed07mE3SwLdUa0F5bbmqpbkqTL/k/ohrYgICdx9c7z+XIab8c19C73DWq
-         ZAGcDUKa4DeouFo5xzpPnNl0AbhLihZcxUIlYqtlrsbpPQVsv58g1F4GvhJ2k+wg3ciD
-         RPmWElFuBf7FZ9sg2MrDZq+yCwJ/H4bBnWj8Q=
-Received: by 10.103.181.20 with SMTP id i20mr1833190mup.62.1244807795467; Fri, 
-	12 Jun 2009 04:56:35 -0700 (PDT)
-In-Reply-To: <4A309083.9090907@zytor.com>
+        h=mime-version:date:message-id:subject:from:to:content-type
+         :content-transfer-encoding;
+        b=JuSjgffX3v2A5glXapUk0HLmq2T/Cp3rE4zfD1PoQ+acNW4JmsSfWKRNR3CKoXVEjE
+         1qiAicc/ilrjPOExj5RxF8Zshquo4WhrULdtZ1d3V/IBrNySaldZuryDnbbys31TxjrJ
+         zH/LI3/OqsbzC6YbfPLFXcas2cVa9gTmcqN5c=
+Received: by 10.216.0.208 with SMTP id 58mr1293764web.216.1244808440734; Fri, 
+	12 Jun 2009 05:07:20 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121410>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121411>
 
-On Thu, Jun 11, 2009 at 7:05 AM, H. Peter Anvin<hpa@zytor.com> wrote:
->
-> Urk, I managed to get myself completely confused -- I did the series
-> approximation on the wrong side of inverting the function. =A0The cor=
-rect
-> power is actually 1.5 (over the range 0 to 1), a value > 1 is necessa=
-ry
-> to bias the PRNG toward the beginning (x =3D 0) of the list.
+Hi,
 
-I started working on this, but I wonder if it's better to add a
-#include <math.h> and link with -lm than to provide a custom sqrt
-implementation. Too bad the best power is not 2.
+I'm quite new to git, but it is serving me well.=A0 The main scenario I
+am working with is my own code bases with several centralised repos on
+a server. I clone, develop and push from a various machines, rather
+than working on the server. Great!
 
-To implement the PRNG, I guess that using something based on the
-function given by "man 3 rand" should be ok:
+However, for one of my projects I have the following:
 
-int get_prn(int count) {
-    count =3D count * 1103515245 + 12345;
-    return((unsigned)(count/65536) % 32768);
-}
+* xidebar repo contains perl programs & modules, and a projects/ direct=
+ory
+* Under projects/ are self-contained project trees, eg
+projects/westbarnsgala.info
+* The total size is quite large and it's undesirable to clone the
+whole thing remotely
+* I want to be able to remote clone, edit, and push just a specific
+projects/westbarnsgala.info tree
 
-where the "count" we pass is the count of elements in the list rather
-than the static seed.
+I have a solution which works fine for me below. I wonder if this is
+recommended however, or whether there's "another way to do it"?
+Probably!
 
-Best regards,
-Christian.
+With xidebar as the 'parent' repo on the "rss_rand" server for
+tracking all xidebar contant together, I then go into the individual
+project/proj1 dirs and create a repo there. I can then remotely clone
+this repo, edit and push as below.
+
+Here's the blow-by-blow description.
+
+(I need the top-level .gitignore to contain a line '.gitignore' to
+avoid reporting the "sub-repo" .gitignore as untracked - which is
+correct but not of interest. It appears that git automatically ignores
+the .git dir for the westbarnsgala.info repo created below)
+
+On rss_rand server:
+With previously created xidebar/ repo:
+* add line '.gitignore' in xidebar/.gitignore
+1. Create westbarnsgala.info repo
+* cd projects/westbarnsgala.info
+* git init
+* git add .
+* git commit -a -m 'initial commit'
+2. On other machine: Clone, edit, commit locally and push changes remot=
+ely
+* cd projects
+* git clone rss_rand:~/xidebar/projects/westbarnsgala.info/ wbg
+* cd wbg
+* vi htmlgen.xml
+* commit -a -m 'a smalll update'
+* git push origin
+3. On rss_rand: Update local files with remote changes from local repo
+* =3D> The git repo is up to date with the remote edit.
+* =3D> The files are not.
+* =3D> A checkout reports the mis-match and bails.
+* =3D> So force it.
+* git checkout -f
+* =3D> Now the files are up to date!
+Now 'git status' on either machine shows things are up to date.
+4. Now, back to the rss_rand xidebar repo: commit changes.
+* cd ../..
+* git status =3D> Shows changes detected correctly
+* git commit -a -m 'update to westbarnsgala.info'
+
+Routine of work is now:
+Edit on laptop.
+* =3D> If in doubt, start with a 'git pull' (Which does both fetch and =
+merge).
+* commit -a -m 'a message'
+* git push
+Publish from rss_rand (overnight cron script):
+* cd xidebar/projects/westbarnsgala.info
+* git status =3D> Just to check
+* git checkout -f
+* cd ../..
+* ./xidebar westbarnsgala.info && ftp_dir_diff westbarnsgala.info
+
+
+Cheers, al.
