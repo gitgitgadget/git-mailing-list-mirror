@@ -1,69 +1,96 @@
-From: Reece Dunn <msclrhd@googlemail.com>
-Subject: Re: Native Windows implementation of GIT ?
-Date: Fri, 12 Jun 2009 23:12:03 +0100
-Message-ID: <3f4fd2640906121512rdede623k7d08ef9785b8bc5a@mail.gmail.com>
-References: <2A554044B82841D594338E2E096804BC@HPLAPTOP>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: EasyGit Integration
+Date: Sat, 13 Jun 2009 01:30:38 +0300
+Message-ID: <94a0d4530906121530m22dbfcb5ye63a0ecb400c4a59@mail.gmail.com>
+References: <d411cc4a0906091159r51e7d16t4d66c6225322fb60@mail.gmail.com>
+	 <200906122321.57479.jnareb@gmail.com>
+	 <94a0d4530906121448m57f272eej32e8d57e48002f1f@mail.gmail.com>
+	 <200906130005.20790.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Aaron Gray <aaronngray.lists@googlemail.com>
-X-From: git-owner@vger.kernel.org Sat Jun 13 00:12:59 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Scott Chacon <schacon@gmail.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Theodore Tso <tytso@mit.edu>, Elijah Newren <newren@gmail.com>,
+	git list <git@vger.kernel.org>
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Jun 13 00:30:49 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MFEzb-00076q-5m
-	for gcvg-git-2@gmane.org; Sat, 13 Jun 2009 00:12:59 +0200
+	id 1MFFGq-0003e0-Ua
+	for gcvg-git-2@gmane.org; Sat, 13 Jun 2009 00:30:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1764702AbZFLWMG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 12 Jun 2009 18:12:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760857AbZFLWME
-	(ORCPT <rfc822;git-outgoing>); Fri, 12 Jun 2009 18:12:04 -0400
-Received: from mail-qy0-f177.google.com ([209.85.221.177]:32860 "EHLO
-	mail-qy0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1760125AbZFLWMB (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Jun 2009 18:12:01 -0400
-Received: by qyk7 with SMTP id 7so364010qyk.33
-        for <git@vger.kernel.org>; Fri, 12 Jun 2009 15:12:03 -0700 (PDT)
+	id S1752836AbZFLWaj convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 12 Jun 2009 18:30:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753559AbZFLWai
+	(ORCPT <rfc822;git-outgoing>); Fri, 12 Jun 2009 18:30:38 -0400
+Received: from fg-out-1718.google.com ([72.14.220.159]:12086 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752089AbZFLWah convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 12 Jun 2009 18:30:37 -0400
+Received: by fg-out-1718.google.com with SMTP id 16so759167fgg.17
+        for <git@vger.kernel.org>; Fri, 12 Jun 2009 15:30:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
+        d=gmail.com; s=gamma;
         h=domainkey-signature:mime-version:received:in-reply-to:references
          :date:message-id:subject:from:to:cc:content-type
          :content-transfer-encoding;
-        bh=LP2WDOTuj34ulMSRkda4k4eDrMdgg//M2FlTy1fjA0k=;
-        b=rQAI2voWbzxDTlK7Sj4CLjOu/yXTXrpiLM6DnhuFR4f06pBXNfhr4byasSkg1JKrdi
-         vey1bT5kXiXf/WzS0+PKqE7UoJQXc+pqR4yy3SVZ0Rz2ZGVlzzDj33Fbcz6GfyHE1khX
-         il0vXqehzfE7x8hD/jqqOHHwY31AvBjnRUiPw=
+        bh=S7o3S6nXjbWqMs4c98AnLThRkBpJnp7u+vYBqqLG/OI=;
+        b=BBerPF+OwxHL7J9LgUiuGum+6rAmbAOnx3haVd1GGpPVZxYazqYhxo5AXxS5NoAIry
+         4Ypnv8XyH/q6Q58EVF7ATWWsXN/OPRKrmZth9JOEJXgacNlgGU+AqjharKKGiOi+hKkk
+         yhBkTEd8+B5uU93i1tYilyzf/yTSwokfvZCXA=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
+        d=gmail.com; s=gamma;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type:content-transfer-encoding;
-        b=CHmFRO6XDNdl0cRiiK1jwddKtFfu63tcd4qVlbXRBAbBAN+hnpPlndT9tWsPdMJCVe
-         QfqL3dVfxOJ07eqfAQkZ6K9s2aMAg7TewJd26U8hB6oD3eWpLnhreNbXteefYxjnXcgF
-         H1mBEm6BWiXaVdnbClaFbZib/jZqtT9uLcwtI=
-Received: by 10.220.92.212 with SMTP id s20mr3947620vcm.91.1244844723172; Fri, 
-	12 Jun 2009 15:12:03 -0700 (PDT)
-In-Reply-To: <2A554044B82841D594338E2E096804BC@HPLAPTOP>
+        b=pdMttq3t2NA3a4JwLIayF4I2dB4h0ppI0ABVmt4RrJkYdpBVqVtIry5Y6qsbv7n8Fc
+         lppou1X3CjCWSm+oCo4BPi0sPYXqrQCSflulF2Lcv2R2sQHLPUopsZCPsXNVkStFR/Gu
+         2K2qhKzVY4yg1OqKCm9qw51QxiwaW3BfOKIMg=
+Received: by 10.86.49.16 with SMTP id w16mr4454150fgw.4.1244845838750; Fri, 12 
+	Jun 2009 15:30:38 -0700 (PDT)
+In-Reply-To: <200906130005.20790.jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121457>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121458>
 
-2009/6/12 Aaron Gray <aaronngray.lists@googlemail.com>:
-> Is there going to be a native Windows implementation of GIT ?
+On Sat, Jun 13, 2009 at 1:05 AM, Jakub Narebski<jnareb@gmail.com> wrote=
+:
+> On Fri, 12 Jun 2009, Felipe Contreras wrote:
+>> On Sat, Jun 13, 2009 at 12:21 AM, Jakub Narebski<jnareb@gmail.com> w=
+rote:
 >
-> i.e. not MSYS or Cygwin based.
+>>> Nope. 'git reset' always reset some part of state to a given commit=
+,
+>>> HEAD by default. =C2=A0It can reset current branch with --soft, bra=
+nch plus
+>>> index with --mixed (default), and branch plus index plus working
+>>> directory with --hard. =C2=A0Source is always commit.
+>>
+>> You said it: 'git reset --hard' gets something out of the repository
+>> and into the working directory.
+>>
+>> Try this:
+>> git checkout <random sha-1 with no ref>
+>>
+>> Then what is the difference between:
+>> git checkout HEAD^
+>> git reset --hard HEAD^
+>>
+>> In this case they do exactly the same thing, don't they?
 >
-> Many thanks in advance,
+> No, they don't. =C2=A0"git checkout HEAD^" modifies HEAD detaching it=
+=2E
+> "git reset --hard HEAD^" modifies branch that HEAD points to (well,
+> unless HEAD is detached).
 
-Cygwin is an adapter layer that maps posix calls to the Windows Win32
-API, so is not a native implementation.
+Read again:
+>> git checkout <random sha-1 with no ref>
 
-MSYS uses the MinGW (gcc) compiler uses the native Windows Win32 API,
-so the MSYS version *is* native.
+The HEAD is detached, so they do exactly the same in this case.
 
-Unless by native you mean using Visual Studio?
-
-- Reece
+--=20
+=46elipe Contreras
