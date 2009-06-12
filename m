@@ -1,77 +1,80 @@
-From: "J.H." <warthog19@eaglescrag.net>
-Subject: Re: [bug] git cannot find "git pull"?
-Date: Thu, 11 Jun 2009 23:52:18 -0700
-Message-ID: <4A31FB22.7030500@eaglescrag.net>
-References: <4A319CE1.6040201@garzik.org>	<20090612011737.GB5076@inocybe.localdomain>	<7v7hzidvcj.fsf@alter.siamese.dyndns.org>	<20090612031853.GC5076@inocybe.localdomain> <7viqj2c9rs.fsf@alter.siamese.dyndns.org>
+From: =?ISO-8859-1?Q?Santi_B=E9jar?= <santi@agolina.net>
+Subject: Re: [PATCHv4 2/4] parse-remote: support default reflist in 
+	get_remote_merge_branch
+Date: Fri, 12 Jun 2009 08:58:07 +0200
+Message-ID: <adf1fd3d0906112358oad66387u46765919b63af816@mail.gmail.com>
+References: <1244759961-4750-1-git-send-email-santi@agolina.net>
+	 <1244759961-4750-3-git-send-email-santi@agolina.net>
+	 <7vocsucfn7.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Todd Zullinger <tmz@pobox.com>, Jeff Garzik <jeff@garzik.org>,
-	Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jun 12 08:53:59 2009
+X-From: git-owner@vger.kernel.org Fri Jun 12 08:58:19 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MF0e0-0006KN-OU
-	for gcvg-git-2@gmane.org; Fri, 12 Jun 2009 08:53:45 +0200
+	id 1MF0iQ-00007H-V4
+	for gcvg-git-2@gmane.org; Fri, 12 Jun 2009 08:58:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753689AbZFLGxg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 12 Jun 2009 02:53:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753040AbZFLGxf
-	(ORCPT <rfc822;git-outgoing>); Fri, 12 Jun 2009 02:53:35 -0400
-Received: from shards.monkeyblade.net ([198.137.202.13]:55103 "EHLO
-	shards.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751360AbZFLGxe (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Jun 2009 02:53:34 -0400
-Received: from voot-cruiser.eaglescrag.net (173-19-86-210.client.mchsi.com [173.19.86.210])
-	(authenticated bits=0)
-	by shards.monkeyblade.net (8.14.1/8.14.1) with ESMTP id n5C6qNSH013071
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Thu, 11 Jun 2009 23:52:24 -0700
-User-Agent: Thunderbird 2.0.0.21 (X11/20090320)
-In-Reply-To: <7viqj2c9rs.fsf@alter.siamese.dyndns.org>
-X-Enigmail-Version: 0.95.6
-X-Virus-Scanned: ClamAV 0.88.7/9458/Thu Jun 11 17:47:06 2009 on shards.monkeyblade.net
-X-Virus-Status: Clean
-X-Greylist: Sender succeeded SMTP AUTH, not delayed by milter-greylist-4.1.1 (shards.monkeyblade.net [198.137.202.13]); Thu, 11 Jun 2009 23:52:27 -0700 (PDT)
+	id S1753800AbZFLG6K convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 12 Jun 2009 02:58:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752933AbZFLG6I
+	(ORCPT <rfc822;git-outgoing>); Fri, 12 Jun 2009 02:58:08 -0400
+Received: from mail-bw0-f213.google.com ([209.85.218.213]:64247 "EHLO
+	mail-bw0-f213.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751488AbZFLG6G convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 12 Jun 2009 02:58:06 -0400
+Received: by bwz9 with SMTP id 9so1889575bwz.37
+        for <git@vger.kernel.org>; Thu, 11 Jun 2009 23:58:08 -0700 (PDT)
+Received: by 10.204.113.12 with SMTP id y12mr3275889bkp.214.1244789887845; 
+	Thu, 11 Jun 2009 23:58:07 -0700 (PDT)
+In-Reply-To: <7vocsucfn7.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121392>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121393>
 
-Junio C Hamano wrote:
-> Todd Zullinger <tmz@pobox.com> writes:
-> 
->> Chris has been busy with other things for a while.  I started helping
->> with git package maintenance only in the last 6 months or so.  Over
->> time, the spec file we have has drifted a bit from what is in git.git,
->> though not terribly so.  I need to spend some time and look at what,
->> if any, changes in the Fedora spec file would be good candidates for
->> submitting to git.git.  I have been primarily concerned with making
->> things work cleanly on Fedora and RHEL/CentOS though, so some of the
->> changes may not be as generic as they ought to be if they are to be
->> included in git.git.
-> 
-> I use the one in git.git only to cut the Fedora 9 packages for consumption
-> by k.org people.  I do not know what their upgrade plans are, but last
-> time they upgraded from FC 5 to Fedora 9 I had to scramble around and find
-> an i386 box to produce binaries (the machine available to me at k.org is
-> amd64).  Perhaps I should start preparing Fedora 11 environment now it is
-> finally released, but before that I need to procure a new development box
-> to host it in a vm, as the current box that is the primary integration
-> machine for git and that hosts the Fedora 9 i386 vm has got too tight and
-> I've been limping along; it does not have enough room to host another vm
-> (and it is not even hardware vm capable)...
+2009/6/12 Junio C Hamano <gitster@pobox.com>:
+> Santi B=E9jar <santi@agolina.net> writes:
+>
+>> Expand get_remote_merge_branch to compute the tracking branch to mer=
+ge
+>> when called without arguments (or only the remote name).
+>
+> I've queued this series (sans 3/4--see other message), but I am wonde=
+ring
+> if this has the same "only works with the defeault layout" issue and =
+if so
+> if it should be documented more clearly.
 
-The general idea is when we aren't getting security updates for our 
-current install base, that is when we (k.org) will make the move to upgrade.
+As it uses:
 
-That said, since 11 just came out I'm going to have to start considering 
-and working on an upgrade plan, but I wouldn't expect that to be getting 
-to a point where it would affect you for a few months yet, and I would 
-hate to upgrade to Fedora 11 before it's had a chance to settle and stew.
+git for-each-ref --format=3D'%(upstream)' $curr_branch
 
-- John 'Warthog9' Hawley
+it works with any layout, AFAICS.
+
+>
+> What plumbing support do you need to get the information in a more pr=
+ecise
+> way in the scripted Porcelain? =A0Is exposing branch_get() from remot=
+e.c
+> enough? =A0That is what is used by fill_tracking_info() in builtin-br=
+anch.c
+> and the call to format_tracking_info() remote.c made by report_tracki=
+ng()
+> in builtin-checkout.c --- they are used to produce the "Your branch i=
+s
+> ahead of that branch you are tracking" messages.
+
+=46or the explicit case I would need something similar, given the remot=
+e
+name and the remote branch return the tracking branch, as is currently
+done in branch_get() but with the remote.$branch.remote and
+remote.$branch.merge as input.
+
+Thanks,
+Santi
