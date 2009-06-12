@@ -1,108 +1,68 @@
-From: Todd Zullinger <tmz@pobox.com>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: [bug] git cannot find "git pull"?
-Date: Thu, 11 Jun 2009 21:17:38 -0400
-Message-ID: <20090612011737.GB5076@inocybe.localdomain>
+Date: Thu, 11 Jun 2009 19:44:28 -0700
+Message-ID: <7v7hzidvcj.fsf@alter.siamese.dyndns.org>
 References: <4A319CE1.6040201@garzik.org>
+	<20090612011737.GB5076@inocybe.localdomain>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256; protocol="application/pgp-signature"; boundary="Bn2rw/3z4jIqBvZU"
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Jeff Garzik <jeff@garzik.org>
-X-From: git-owner@vger.kernel.org Fri Jun 12 03:17:51 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Jeff Garzik <jeff@garzik.org>,
+	Git Mailing List <git@vger.kernel.org>
+To: Todd Zullinger <tmz@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jun 12 04:45:26 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MEvOw-0007Ec-Po
-	for gcvg-git-2@gmane.org; Fri, 12 Jun 2009 03:17:51 +0200
+	id 1MEwli-00014A-3K
+	for gcvg-git-2@gmane.org; Fri, 12 Jun 2009 04:45:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756110AbZFLBRm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Jun 2009 21:17:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754038AbZFLBRl
-	(ORCPT <rfc822;git-outgoing>); Thu, 11 Jun 2009 21:17:41 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:33460 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753327AbZFLBRk (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Jun 2009 21:17:40 -0400
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id 692FEBA819;
-	Thu, 11 Jun 2009 21:17:41 -0400 (EDT)
-Received: from inocybe.localdomain (unknown [173.67.155.244]) (using TLSv1
- with cipher AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id BC135BA815; Thu,
- 11 Jun 2009 21:17:39 -0400 (EDT)
-Content-Disposition: inline
-In-Reply-To: <4A319CE1.6040201@garzik.org>
-User-Agent: Mutt/1.5.19 (2009-01-05)
-X-Pobox-Relay-ID: D33E6EE6-56EE-11DE-AB19-97731A10BFE7-09356542!a-sasl-fastnet.pobox.com
+	id S1756364AbZFLCoi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Jun 2009 22:44:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753461AbZFLCoh
+	(ORCPT <rfc822;git-outgoing>); Thu, 11 Jun 2009 22:44:37 -0400
+Received: from fed1rmmtao104.cox.net ([68.230.241.42]:49114 "EHLO
+	fed1rmmtao104.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752723AbZFLCoh (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Jun 2009 22:44:37 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao104.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20090612024439.RBLR17135.fed1rmmtao104.cox.net@fed1rmimpo01.cox.net>;
+          Thu, 11 Jun 2009 22:44:39 -0400
+Received: from localhost ([68.225.240.211])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id 2qkU1c00E4aMwMQ03qkfXV; Thu, 11 Jun 2009 22:44:39 -0400
+X-VR-Score: -100.00
+X-Authority-Analysis: v=1.0 c=1 a=0MMDW3Mb48cA:10 a=F1brEb3fTY8A:10
+ a=ybZZDoGAAAAA:8 a=Q3xF5HEJDsvBGoBtwOMA:9 a=9tUPXbXGww7tnBATU7HmQ-OuyScA:4
+ a=qIVjreYYsbEA:10
+X-CM-Score: 0.00
+In-Reply-To: <20090612011737.GB5076@inocybe.localdomain> (Todd Zullinger's message of "Thu\, 11 Jun 2009 21\:17\:38 -0400")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121381>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121382>
 
+Todd Zullinger <tmz@pobox.com> writes:
 
---Bn2rw/3z4jIqBvZU
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> It is notable that Fedora 11 is the first Fedora release that follows
+> the git 1.6.x defaults and installs most git binaries outside of PATH.
+> I don't think that would cause this, and I haven't had any troubles
+> running these packages for many months, but that's never stopped
+> really obvious bugs in the past...
 
-Hi Jeff,
+I do not follow distro packaged versions of git, but it may help to double
+check your spec changes against the output of
 
-Jeff Garzik wrote:
-> I just upgraded to Fedora 11 (git-1.6.2.2-1.fc11.x86_64), and see
-> the following:
->
->> [jgarzik@viper linux-2.6]$ git pull
->> git: 'pull' is not a git-command. See 'git --help'.
->>
->> Did you mean this?
->> 	shell
->
->
-> Bleh...  :)  "git --help" indicates that "git pull" still exists.
+    $ git log -p v1.5.6..v1.6.2.2 -- git.spec.in
 
-Yuck.  I can't reproduce this (and I would hope that if the Fedora
-packages have been broken for many weeks that someone would have
-noticed and complained loudly before the release...).  Of course, if
-there is something horribly wrong with the Fedora packages, I'll try
-to get it fixed as quickly as possible.
+to see which paths need to be updated.
 
-Do you happen to have any strange PATH set, other non-packaged git
-binaries installed, or funky aliases/settings in your git config?
-Does the problem occur after an upgrade or clean install?  For all
-users?
-
-It is notable that Fedora 11 is the first Fedora release that follows
-the git 1.6.x defaults and installs most git binaries outside of PATH.
-I don't think that would cause this, and I haven't had any troubles
-running these packages for many months, but that's never stopped
-really obvious bugs in the past...
-
-(Apologies for the obscenely silly questions.  I'm just hoping they
-might help lead to the root cause so we can make sure it's fixed. ;)
-
---=20
-Todd        OpenPGP -> KeyID: 0xBEAF0CE3 | URL: www.pobox.com/~tmz/pgp
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-If the triangles were to make a God they would give him three sides.
-    -- Montesquieu
-
-
---Bn2rw/3z4jIqBvZU
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
-
-iQFDBAEBCAAtBQJKMaysJhhodHRwOi8vd3d3LnBvYm94LmNvbS9+dG16L3BncC90
-bXouYXNjAAoJEEMlk4u+rwzj6EgIAIE89MaASw38Wc34++DuuJGxatAZQRoHaBHk
-vH34L0EHtQbreGd3Ph/CuA+rowSMIYwknhgxSkQNzE4nBI8kuyk9VsAiLUIpLgId
-IeIHnpNCrQzBaNQQXxBIc/nBz7cUk9T9f7qOCzSbcIMJDigD/WEdtbEJJiBAm6zk
-dBk6NV6hof+JKPIKQ7p7cJ/O5uI0wAzK/nmH2wpqm7nm3YyPOGtDbKbcUpKRG1Bb
-9CMufREKSsxycRvR7grNgFsnTJvLDUWui5vY5oUIxKbRFpK5W3IeuvVo3tmuMPWq
-wBRH2Ua5AseeDESBlNT82ONHyMWxdzdYf43v+t/Cp0diISpHKl0=
-=C/L/
------END PGP SIGNATURE-----
-
---Bn2rw/3z4jIqBvZU--
+Of course, you might not be using a specfile remotely similar to what we
+have in-tree (I believe it was originally done by Chris Wright who is
+listed as one of the persons who have something to do with Fedora packaged
+versions of git in your maintainers list), so this may not be a helpful
+tip at all, in which case I apologize...
