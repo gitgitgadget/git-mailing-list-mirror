@@ -1,55 +1,59 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: use git-daemon by git://IP/path?
-Date: Fri, 12 Jun 2009 10:16:02 -0400
-Message-ID: <20090612141602.GB14628@coredump.intra.peff.net>
-References: <200906121213.13365.Karlis.Repsons@gmail.com> <4A325E00.6050504@dirk.my1.cc>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: What's cooking in git.git (Jun 2009, #01; Fri, 12)
+Date: Fri, 12 Jun 2009 16:19:01 +0200
+Message-ID: <4A3263D5.7030704@drmicha.warpmail.net>
+References: <7v1vppbyud.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Ka-rlis Repsons <karlis.repsons@gmail.com>, git@vger.kernel.org
-To: Dirk =?utf-8?Q?S=C3=BCsserott?= <newsletter@dirk.my1.cc>
-X-From: git-owner@vger.kernel.org Fri Jun 12 16:16:42 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jun 12 16:20:08 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MF7YN-00044S-VO
-	for gcvg-git-2@gmane.org; Fri, 12 Jun 2009 16:16:24 +0200
+	id 1MF7by-0007Ff-8D
+	for gcvg-git-2@gmane.org; Fri, 12 Jun 2009 16:20:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753124AbZFLOQL convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 12 Jun 2009 10:16:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751384AbZFLOQJ
-	(ORCPT <rfc822;git-outgoing>); Fri, 12 Jun 2009 10:16:09 -0400
-Received: from peff.net ([208.65.91.99]:44487 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751376AbZFLOQI (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Jun 2009 10:16:08 -0400
-Received: (qmail 19495 invoked by uid 107); 12 Jun 2009 14:16:21 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Fri, 12 Jun 2009 10:16:21 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Fri, 12 Jun 2009 10:16:02 -0400
-Content-Disposition: inline
-In-Reply-To: <4A325E00.6050504@dirk.my1.cc>
+	id S1757010AbZFLOT5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 12 Jun 2009 10:19:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754550AbZFLOT5
+	(ORCPT <rfc822;git-outgoing>); Fri, 12 Jun 2009 10:19:57 -0400
+Received: from out2.smtp.messagingengine.com ([66.111.4.26]:58399 "EHLO
+	out2.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1756592AbZFLOT4 (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 12 Jun 2009 10:19:56 -0400
+Received: from compute1.internal (compute1.internal [10.202.2.41])
+	by out1.messagingengine.com (Postfix) with ESMTP id CA856360268;
+	Fri, 12 Jun 2009 10:19:57 -0400 (EDT)
+Received: from heartbeat1.messagingengine.com ([10.202.2.160])
+  by compute1.internal (MEProxy); Fri, 12 Jun 2009 10:19:57 -0400
+X-Sasl-enc: 7SvDAmTqgAlnH/g6yYymea6SMxRwkqzEwF5xordAJn4Q 1244816397
+Received: from localhost.localdomain (p5485995C.dip0.t-ipconnect.de [84.133.153.92])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 21A5A18DCB;
+	Fri, 12 Jun 2009 10:19:56 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1pre) Gecko/20090609 Lightning/1.0pre Shredder/3.0b3pre
+In-Reply-To: <7v1vppbyud.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121423>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121424>
 
-On Fri, Jun 12, 2009 at 03:54:08PM +0200, Dirk S=C3=BCsserott wrote:
+Junio C Hamano venit, vidit, dixit 12.06.2009 11:11:
 
->> Also, in general, how can it be set up, that >1 people have a write=20
->> access to the same repository? Only by using the same login?=20
->
-> Have a look at the "--shared" option of "git init". That's supposed t=
-o =20
+> * mg/pushurl (Tue Jun 9 18:01:38 2009 +0200) 5 commits
+>  - builtin-remote: Make "remote -v" display push urls
+>  - builtin-remote: Show push urls as well
+>  - technical/api-remote: Describe new struct remote member pushurl
+>  - t5516: Check pushurl config setting
+>  - Allow push and fetch urls to be different
+> 
+> Will merge to 'next' soon.
 
-I have also had good experiences with POSIX ACLs for sharing
-repositories:
+I'll rewrite the commit message of 5/5 as we discussed. Sorry for the
+lag, I'm in the middle of switching from Fedora 10 to 11 (while being
+sick for other reasons) ...
 
-  setfacl -R -m d:u:$user:rwX -m u:$user:rwX /path/to/repo
-
-which gets rid of dealing with group management.  Of course your
-filesystem has to support them. :)
-
--Peff
+Michael
