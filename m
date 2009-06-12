@@ -1,70 +1,68 @@
-From: Avery Pennarun <apenwarr@gmail.com>
-Subject: Re: Copying files and keeping the history
-Date: Thu, 11 Jun 2009 23:44:15 -0400
-Message-ID: <32541b130906112044m7cf2c0e9s2ba4815a31e534a@mail.gmail.com>
-References: <18567.1244726405@zev.se.axis.com> <fabb9a1e0906111129x53a6d90p15a97d958a2d2f63@mail.gmail.com>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: Mercurial on BigTable
+Date: Thu, 11 Jun 2009 20:46:45 -0700
+Message-ID: <20090612034645.GO16497@spearce.org>
+References: <d411cc4a0906101215t313b2037k713aa1ce974c30cc@mail.gmail.com> <4A3065C5.3070203@op5.se> <m34oun41pz.fsf@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?ISO-8859-1?Q?J=F6rgenH=E4gg?= <jorgen.hagg@axis.com>,
-	git@vger.kernel.org
-To: Sverre Rabbelier <srabbelier@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jun 12 05:44:47 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Andreas Ericsson <ae@op5.se>, Scott Chacon <schacon@gmail.com>,
+	git list <git@vger.kernel.org>
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jun 12 05:47:00 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MExh7-00052P-BE
-	for gcvg-git-2@gmane.org; Fri, 12 Jun 2009 05:44:45 +0200
+	id 1MExjF-0005Vd-9u
+	for gcvg-git-2@gmane.org; Fri, 12 Jun 2009 05:46:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754005AbZFLDof convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 11 Jun 2009 23:44:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751767AbZFLDoe
-	(ORCPT <rfc822;git-outgoing>); Thu, 11 Jun 2009 23:44:34 -0400
-Received: from rv-out-0506.google.com ([209.85.198.229]:11741 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750744AbZFLDod convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 11 Jun 2009 23:44:33 -0400
-Received: by rv-out-0506.google.com with SMTP id f9so570247rvb.1
-        for <git@vger.kernel.org>; Thu, 11 Jun 2009 20:44:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=f747xwTd5TxG8MOvsKVxTx0TbkWga4MLO84PhURKGRM=;
-        b=Cme5eoJJLBN3TsW2vPLBne4xzgtrblmAplWsdM3IQawdihrTif4LOc6UIOlYqhOwuU
-         Ed43OMSJSDB7ze4Cc/JnY52P61i9rFkMyJsgF+JpcQiN5kiuCEnC81pweRT7BW5fJrB2
-         2ebGdJEqVGuYr6M519DI6/YSS7d9zf8d8NpVA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=iGrF3BSSEbwsiVe2FTLrVk2DC49kl0v7Vly6DE7L/8UHweTrbu+L2bVkGlMnWi6s+d
-         UDxeDgdiB346hhtLSJGPKvy5DHYPBAsaeKiV6+esvDa2JsC77RCeQI3nE+HD5xg7rkEK
-         7x7GbcvFLErB0O2ga9esn3fehmDTF3HW5xJ0k=
-Received: by 10.140.164.1 with SMTP id m1mr2518931rve.39.1244778275053; Thu, 
-	11 Jun 2009 20:44:35 -0700 (PDT)
-In-Reply-To: <fabb9a1e0906111129x53a6d90p15a97d958a2d2f63@mail.gmail.com>
+	id S1755944AbZFLDqo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Jun 2009 23:46:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754639AbZFLDqn
+	(ORCPT <rfc822;git-outgoing>); Thu, 11 Jun 2009 23:46:43 -0400
+Received: from george.spearce.org ([209.20.77.23]:59012 "EHLO
+	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753164AbZFLDqm (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Jun 2009 23:46:42 -0400
+Received: by george.spearce.org (Postfix, from userid 1001)
+	id 62477381FD; Fri, 12 Jun 2009 03:46:45 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <m34oun41pz.fsf@localhost.localdomain>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121386>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121387>
 
-On Thu, Jun 11, 2009 at 2:29 PM, Sverre Rabbelier<srabbelier@gmail.com>=
- wrote:
-> On Thu, Jun 11, 2009 at 15:20, J=F6rgenH=E4gg<jorgen.hagg@axis.com> w=
-rote:
->> Is this somehow possible?
->
-> Try git filter-branch to get just the commits you want and nudge them
-> to contain what you want (do this in a seperate branch/copy of
-> repository A). When you're done, pull the branch into B and merge it.
-> Instant win?
+Jakub Narebski <jnareb@gmail.com> wrote:
+> Andreas Ericsson <ae@op5.se> writes:
+> 
+> > I'm more curious as to why they didn't choose git. The only explanation
+> > that was actually true is that hg works well over HTTP 
+> 
+> Well, Google App Engine was in Python, so it follows that the crew
+> would have it easier understanding Mercurial code (which is written in
+> Python with parts in C for performance), and in moving it to BigTable.
 
-You could also consider 'git subtree'
-(http://github.com/apenwarr/git-subtree) to merge the other tree
-(including its history) in as a subdirectory.
+This has nothing to do with Google AppEngine.  GAE has CPU and
+bandwidth limitations in place that make running a source code server
+like Hg on it impossible.  E.g. the maximum size you could download
+in a single HTTP request was 1 MB, now its up to 10 MB (IIRC).
+The Hg hosting runs in a different cluster than the GAE hosting does,
+and are managed by different teams.
 
-Avery
+> Adding Java to Gogle App Engine is, as far as I know, fairly recent;
+
+True, yes, GAE Java support is fairly new.
+
+> additionally JGit (git implementation in Java) is not yet full
+> implementation.
+
+JGit implements sufficient parts of Git to be a full server, and
+could power a hosting site... indeed it powers Gerrit Code Review,
+which some companies do use as their entire Git server solution,
+rather than e.g. Gitosis.
+ 
+-- 
+Shawn.
