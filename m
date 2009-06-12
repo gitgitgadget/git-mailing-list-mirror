@@ -1,92 +1,77 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/2] http.c: prompt for SSL client certificate password
-Date: Thu, 11 Jun 2009 23:34:29 -0700
-Message-ID: <7vprdaarka.fsf@alter.siamese.dyndns.org>
-References: <1243480563-5954-1-git-send-email-lodatom@gmail.com>
+From: "J.H." <warthog19@eaglescrag.net>
+Subject: Re: [bug] git cannot find "git pull"?
+Date: Thu, 11 Jun 2009 23:52:18 -0700
+Message-ID: <4A31FB22.7030500@eaglescrag.net>
+References: <4A319CE1.6040201@garzik.org>	<20090612011737.GB5076@inocybe.localdomain>	<7v7hzidvcj.fsf@alter.siamese.dyndns.org>	<20090612031853.GC5076@inocybe.localdomain> <7viqj2c9rs.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Mark Lodato <lodatom@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jun 12 08:35:15 2009
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Todd Zullinger <tmz@pobox.com>, Jeff Garzik <jeff@garzik.org>,
+	Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jun 12 08:53:59 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MF0M6-0007N6-GF
-	for gcvg-git-2@gmane.org; Fri, 12 Jun 2009 08:35:14 +0200
+	id 1MF0e0-0006KN-OU
+	for gcvg-git-2@gmane.org; Fri, 12 Jun 2009 08:53:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760385AbZFLGe2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 12 Jun 2009 02:34:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755067AbZFLGe2
-	(ORCPT <rfc822;git-outgoing>); Fri, 12 Jun 2009 02:34:28 -0400
-Received: from fed1rmmtao107.cox.net ([68.230.241.39]:64094 "EHLO
-	fed1rmmtao107.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754210AbZFLGe1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Jun 2009 02:34:27 -0400
-Received: from fed1rmimpo03.cox.net ([70.169.32.75])
-          by fed1rmmtao107.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20090612063429.ODIS18948.fed1rmmtao107.cox.net@fed1rmimpo03.cox.net>;
-          Fri, 12 Jun 2009 02:34:29 -0400
-Received: from localhost ([68.225.240.211])
-	by fed1rmimpo03.cox.net with bizsmtp
-	id 2uaV1c0014aMwMQ04uaVKH; Fri, 12 Jun 2009 02:34:29 -0400
-X-VR-Score: -100.00
-X-Authority-Analysis: v=1.0 c=1 a=ZkqYN0c8iNwA:10 a=Z2nhhV3jvI0A:10
- a=pGLkceISAAAA:8 a=UJ5Y5Z__AAAA:8 a=n9YbafbBx1sS-NnOzmgA:9
- a=ACehhkqETxRO8-Q40QAeOiP22Q0A:4 a=MSl-tDqOz04A:10 a=s17DTO1fMklqcZH9:21
- a=zFdEVguwP115F5fT:21
-X-CM-Score: 0.00
-In-Reply-To: <1243480563-5954-1-git-send-email-lodatom@gmail.com> (Mark Lodato's message of "Wed\, 27 May 2009 23\:16\:02 -0400")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+	id S1753689AbZFLGxg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 12 Jun 2009 02:53:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753040AbZFLGxf
+	(ORCPT <rfc822;git-outgoing>); Fri, 12 Jun 2009 02:53:35 -0400
+Received: from shards.monkeyblade.net ([198.137.202.13]:55103 "EHLO
+	shards.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751360AbZFLGxe (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 12 Jun 2009 02:53:34 -0400
+Received: from voot-cruiser.eaglescrag.net (173-19-86-210.client.mchsi.com [173.19.86.210])
+	(authenticated bits=0)
+	by shards.monkeyblade.net (8.14.1/8.14.1) with ESMTP id n5C6qNSH013071
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Thu, 11 Jun 2009 23:52:24 -0700
+User-Agent: Thunderbird 2.0.0.21 (X11/20090320)
+In-Reply-To: <7viqj2c9rs.fsf@alter.siamese.dyndns.org>
+X-Enigmail-Version: 0.95.6
+X-Virus-Scanned: ClamAV 0.88.7/9458/Thu Jun 11 17:47:06 2009 on shards.monkeyblade.net
+X-Virus-Status: Clean
+X-Greylist: Sender succeeded SMTP AUTH, not delayed by milter-greylist-4.1.1 (shards.monkeyblade.net [198.137.202.13]); Thu, 11 Jun 2009 23:52:27 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121391>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121392>
 
-Mark Lodato <lodatom@gmail.com> writes:
+Junio C Hamano wrote:
+> Todd Zullinger <tmz@pobox.com> writes:
+> 
+>> Chris has been busy with other things for a while.  I started helping
+>> with git package maintenance only in the last 6 months or so.  Over
+>> time, the spec file we have has drifted a bit from what is in git.git,
+>> though not terribly so.  I need to spend some time and look at what,
+>> if any, changes in the Fedora spec file would be good candidates for
+>> submitting to git.git.  I have been primarily concerned with making
+>> things work cleanly on Fedora and RHEL/CentOS though, so some of the
+>> changes may not be as generic as they ought to be if they are to be
+>> included in git.git.
+> 
+> I use the one in git.git only to cut the Fedora 9 packages for consumption
+> by k.org people.  I do not know what their upgrade plans are, but last
+> time they upgraded from FC 5 to Fedora 9 I had to scramble around and find
+> an i386 box to produce binaries (the machine available to me at k.org is
+> amd64).  Perhaps I should start preparing Fedora 11 environment now it is
+> finally released, but before that I need to procure a new development box
+> to host it in a vm, as the current box that is the primary integration
+> machine for git and that hosts the Fedora 9 i386 vm has got too tight and
+> I've been limping along; it does not have enough room to host another vm
+> (and it is not even hardware vm capable)...
 
-> @@ -189,6 +207,16 @@ static CURL *get_curl_handle(void)
->  
->  	if (ssl_cert != NULL)
->  		curl_easy_setopt(result, CURLOPT_SSLCERT, ssl_cert);
-> +	if (has_cert_password())
-> +		curl_easy_setopt(result,
-> +#if LIBCURL_VERSION_NUM >= 0x071700
-> +				 CURLOPT_KEYPASSWD,
-> +#elif LIBCURL_VERSION_NUM >= 0x070903
-> +				 CURLOPT_SSLKEYPASSWD,
-> +#else
-> +				 CURLOPT_SSLCERTPASSWD,
-> +#endif
-> +				 ssl_cert_password);
+The general idea is when we aren't getting security updates for our 
+current install base, that is when we (k.org) will make the move to upgrade.
 
-This is purely style and readability, but if you do something like this
-much earlier in the file:
+That said, since 11 just came out I'm going to have to start considering 
+and working on an upgrade plan, but I wouldn't expect that to be getting 
+to a point where it would affect you for a few months yet, and I would 
+hate to upgrade to Fedora 11 before it's had a chance to settle and stew.
 
-    #if !defined(CURLOPT_KEYPASSWD)
-    # if defined(CURLOPT_SSLKEYPASSWD)
-    #  define CURLOPT_KEYTPASSWD CURLOPT_SSLKEYPASSWD
-    # elif defined(CURLOPT_SSLCERTPASSWD
-    #  define CURLOPT_KEYTPASSWD CURLOPT_SSLCERTPASSWD
-    # endif
-    #endif
-
-you can write your main codepath using the latest cURL API without ifdef.
-The callsite can simply say:
-
-	if (must_set_cert_password())
-        	curl_easy_setopt(result, CURLOPT_KEYPASSWD, ssl_cert_password);
-
-which I think would be much easier to follow.
-
-This assumes that KEYPASSWD is the latest API, and in older versions only
-names are different, which your code implies.  I have a vague recollection
-that SSLCERTPASSWD actually deprecated KEYPASSWD (i.e. your #if...#endif
-chain is wrong), but I didn't actually check the cURL documentation [*1*]
-to see if that is the case.
-
-[Reference]
-
-*1* http://cool.haxx.se/cvs.cgi/curl/docs/libcurl/symbols-in-versions?rev=HEAD
+- John 'Warthog9' Hawley
