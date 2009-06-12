@@ -1,69 +1,53 @@
-From: =?ISO-8859-15?Q?Dirk_S=FCsserott?= <newsletter@dirk.my1.cc>
-Subject: Re: use git-daemon by git://IP/path?
-Date: Fri, 12 Jun 2009 15:54:08 +0200
-Message-ID: <4A325E00.6050504@dirk.my1.cc>
-References: <200906121213.13365.Karlis.Repsons@gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: Who uses Signed-off-by and DCO?
+Date: Fri, 12 Jun 2009 10:02:29 -0400
+Message-ID: <20090612140229.GA14628@coredump.intra.peff.net>
+References: <20090612084207.6117@nanako3.lavabit.com> <4A32366A.6090608@op5.se> <1244807741-sup-7206@ntdws12.chass.utoronto.ca>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
-	format=flowed
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org
-To: =?ISO-8859-15?Q?Ka-rlis_Repsons?= <karlis.repsons@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jun 12 15:55:54 2009
+Content-Type: text/plain; charset=utf-8
+Cc: Nanako Shiraishi <nanako3@lavabit.com>, git <git@vger.kernel.org>
+To: Ben Walton <bwalton@artsci.utoronto.ca>
+X-From: git-owner@vger.kernel.org Fri Jun 12 16:04:04 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MF7EX-0002VM-OH
-	for gcvg-git-2@gmane.org; Fri, 12 Jun 2009 15:55:54 +0200
+	id 1MF7MP-00063y-Mq
+	for gcvg-git-2@gmane.org; Fri, 12 Jun 2009 16:04:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755598AbZFLNyL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 12 Jun 2009 09:54:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754745AbZFLNyJ
-	(ORCPT <rfc822;git-outgoing>); Fri, 12 Jun 2009 09:54:09 -0400
-Received: from smtprelay08.ispgateway.de ([80.67.31.31]:49720 "EHLO
-	smtprelay08.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754730AbZFLNyJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Jun 2009 09:54:09 -0400
-Received: from [84.176.67.51] (helo=[192.168.2.100])
-	by smtprelay08.ispgateway.de with esmtpa (Exim 4.68)
-	(envelope-from <newsletter@dirk.my1.cc>)
-	id 1MF7Cq-0006qP-V0; Fri, 12 Jun 2009 15:54:09 +0200
-User-Agent: Thunderbird 2.0.0.21 (Windows/20090302)
-In-Reply-To: <200906121213.13365.Karlis.Repsons@gmail.com>
-X-Df-Sender: 757646
+	id S1758410AbZFLOCg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 12 Jun 2009 10:02:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755158AbZFLOCg
+	(ORCPT <rfc822;git-outgoing>); Fri, 12 Jun 2009 10:02:36 -0400
+Received: from peff.net ([208.65.91.99]:58656 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753382AbZFLOCf (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 12 Jun 2009 10:02:35 -0400
+Received: (qmail 19431 invoked by uid 107); 12 Jun 2009 14:02:48 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Fri, 12 Jun 2009 10:02:48 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Fri, 12 Jun 2009 10:02:29 -0400
+Content-Disposition: inline
+In-Reply-To: <1244807741-sup-7206@ntdws12.chass.utoronto.ca>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121421>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121422>
 
-Am 12.06.2009 14:13 schrieb Ka-rlis Repsons:
-> Hello git users and writers!
-> 
-> I am new to git, but, having read manuals and grasping the concepts of it, I 
-> would like to first say thanks to all those, who created it!
-> 
-> Things would be fine, but I am having really bad ssh permission problems in 
-> here: for example, if there is an empty, initialised git archive and it is 
-> pulled to over ssh, the created files have permissions only u=rwX, no more. 
-> Then subsequently git pulling doesn't work. Maybe you know how to solve it?
+On Fri, Jun 12, 2009 at 07:58:50AM -0400, Ben Walton wrote:
 
-Probably your umask is doing this? When you locally create a file (e.g. 
-"touch foo"), does it then only have "-rwx------" as well?
+> We're using it for shared admin edits.  The author is root (or
+> whatever the shared account happens to be in other cases) and the SoB
+> is the admin that made the change.  It's not enforced by anything
+> other than convention, but it's still helpful for us.
 
-> Also, in general, how can it be set up, that >1 people have a write access to 
-> the same repository? Only by using the same login? 
+Out of curiosity, how do you set the SoB? Does each user do it manually
+when making a commit?
 
-Have a look at the "--shared" option of "git init". That's supposed to 
-create shared repositories, i.e. all users of the same group have write 
-access. I'm not exactly sure how to make an existing repo "shared" after 
-it's been created, but
+Is there a particular reason to favor this over setting GIT_AUTHOR_NAME
+and GIT_AUTHOR_EMAIL (this would lose the fact that the commit was made
+from the shared account, but has better tool support for finding changes
+by a given author)?
 
-$ git config core.sharedrepository 1
-
-(which modifies .git/config) and a reasonable chown/chmod -R afterwards 
-should work.
-
-Hope this helps,
-     Dirk
+-Peff
