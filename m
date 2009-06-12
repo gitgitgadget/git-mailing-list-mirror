@@ -1,98 +1,107 @@
 From: Mark Lodato <lodatom@gmail.com>
 Subject: Re: [PATCH 1/2] http.c: prompt for SSL client certificate password
-Date: Fri, 12 Jun 2009 19:11:36 -0400
-Message-ID: <ca433830906121611g5d079908ycc714adcc30c9aa@mail.gmail.com>
+Date: Fri, 12 Jun 2009 19:13:32 -0400
+Message-ID: <ca433830906121613y68e5bdax5778867c41b00339@mail.gmail.com>
 References: <1243480563-5954-1-git-send-email-lodatom@gmail.com>
-	 <ca433830906111600n2d45b5bdg3fb6e7c0a537ec78@mail.gmail.com>
-	 <20090612084209.6117@nanako3.lavabit.com>
-	 <alpine.DEB.2.00.0906120943560.5566@yvahk2.pbagnpgbe.fr>
-	 <85647ef50906120838s37c186a9mec301e880b1a8a4e@mail.gmail.com>
-	 <m3vdn12y6y.fsf@localhost.localdomain>
+	 <7vprdaarka.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Constantine Plotnikov <constantine.plotnikov@gmail.com>,
-	Daniel Stenberg <daniel@haxx.se>,
-	Nanako Shiraishi <nanako3@lavabit.com>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Jun 13 01:11:47 2009
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Jun 13 01:13:42 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MFFuT-0006Vz-CD
-	for gcvg-git-2@gmane.org; Sat, 13 Jun 2009 01:11:45 +0200
+	id 1MFFwL-0006sh-Pm
+	for gcvg-git-2@gmane.org; Sat, 13 Jun 2009 01:13:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754345AbZFLXLh convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 12 Jun 2009 19:11:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753220AbZFLXLg
-	(ORCPT <rfc822;git-outgoing>); Fri, 12 Jun 2009 19:11:36 -0400
-Received: from mail-fx0-f216.google.com ([209.85.220.216]:53443 "EHLO
-	mail-fx0-f216.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751232AbZFLXLf convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 12 Jun 2009 19:11:35 -0400
-Received: by fxm12 with SMTP id 12so922221fxm.37
-        for <git@vger.kernel.org>; Fri, 12 Jun 2009 16:11:37 -0700 (PDT)
+	id S1753559AbZFLXNd convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 12 Jun 2009 19:13:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752098AbZFLXNc
+	(ORCPT <rfc822;git-outgoing>); Fri, 12 Jun 2009 19:13:32 -0400
+Received: from mail-bw0-f213.google.com ([209.85.218.213]:57492 "EHLO
+	mail-bw0-f213.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751423AbZFLXNb convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 12 Jun 2009 19:13:31 -0400
+Received: by bwz9 with SMTP id 9so2366399bwz.37
+        for <git@vger.kernel.org>; Fri, 12 Jun 2009 16:13:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:mime-version:received:in-reply-to:references
          :date:message-id:subject:from:to:cc:content-type
          :content-transfer-encoding;
-        bh=FELsCHTEkJc2IAwhjUzHN08H73Xnwrfgln90PQKZeMs=;
-        b=nzM49XgbPf+Eyl6ox1Px/sNmQ0RCvBkGiant2ZmZyoI5j+IBhDHRXxjUjr0EB9cj82
-         tVncls3klW8Vv4s9XNseTfF/8KgOVtAktkAyEFxghpmxjXQE21mhC958X8eErjHaX2Ou
-         FY9eQ73KuNH919nIoSaP80FDXcTcaBO00qOOw=
+        bh=6qr284cDXSCC997x8V+hSfEEhzy+F5QsLYL4CAt62fM=;
+        b=bCBiooWEBHDjo1VqEb2wl62setPKuXWQ/zHA6rXvy/v256m1IUlEEyKeSF2UFPWQXn
+         l1VCeK0coL/4jMgs2ZuGv7/BNckjXrD52C0fE4m6eVy0u25H0JYb++x/1a7rGvWkJET9
+         UJZl11r0OigCsobCcPyid/xRKpMIEAD709K4E=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type:content-transfer-encoding;
-        b=oCTm2+RH0tZXbah3Pn+Jh6CmU5nqwOJM8J3npjHaWazFeYD4LfMVLG45cl1S0KWhy0
-         HaR2GatOG/49A14sIf/5OuuzJvxzjPPpH99bb29w11ABf2OiRgmA5bMs62v2GPDFkeib
-         0cEnhESUeD3odjX+ROYeL1fnppmHOxOVQsvow=
-Received: by 10.223.113.199 with SMTP id b7mr3049404faq.82.1244848296993; Fri, 
-	12 Jun 2009 16:11:36 -0700 (PDT)
-In-Reply-To: <m3vdn12y6y.fsf@localhost.localdomain>
+        b=tFUahhidLhjTnw2JJTXBPzVq1iJ1oXBlk7j79NU/xK3RYxnb3Fns/+UBQA9v5WamyC
+         oGFjBFsd/YnGWD8OeRTAj8FREbFOAPnqu5z5Il74Wmh51TT4b/NQanZVlP40xCvcQ+KG
+         +ebTNKFjDSbZlD1NbfMbjEwV6AfWeRGINpxes=
+Received: by 10.223.104.74 with SMTP id n10mr3111002fao.5.1244848412936; Fri, 
+	12 Jun 2009 16:13:32 -0700 (PDT)
+In-Reply-To: <7vprdaarka.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121466>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121467>
 
-On Fri, Jun 12, 2009 at 12:50 PM, Jakub Narebski<jnareb@gmail.com> wrot=
+On Fri, Jun 12, 2009 at 2:34 AM, Junio C Hamano<gitster@pobox.com> wrot=
 e:
-> Constantine Plotnikov <constantine.plotnikov@gmail.com> writes:
->> On Fri, Jun 12, 2009 at 11:56 AM, Daniel Stenberg<daniel@haxx.se> wr=
-ote:
->>> On Fri, 12 Jun 2009, Nanako Shiraishi wrote:
->>>
->>>> It would be ideal if you can inspect the certificate and decide if=
- you
->>>> need to ask for decrypting password before using it (and otherwise=
- you don't
->>>> ask). If you can't do that, probably you can introduce a config va=
-r that
->>>> says "this certificate is encrypted", and bypass your new code if =
-that
->>>> config var isn't set.
->>>
->>> Is this really a common setup? Using an unencrypted private key sou=
-nds like
->>> a really bad security situation to me. The certificate is never enc=
-rupted,
->>> the passphrase is for the key.
->>>
->> For SSH using unencrypted private key is very common for scripting a=
-nd
->> cron jobs. For HTTPS situation looks like being worse since there is
->> no analog of ssh-agent that covers at least some of scripting
->> scenarios. Do we want to disable scripting for HTTPS?
+> Mark Lodato <lodatom@gmail.com> writes:
 >
-> Actually you can use _encrypted_ private keys together with ssh-agent
-> and for example keychain helper for scripting. =C2=A0You have to prov=
-ide
-> password to all listed private keys only once at login. =C2=A0I wonde=
-r if
-> something like this would be possible for HTTP certificates...
+>> @@ -189,6 +207,16 @@ static CURL *get_curl_handle(void)
+>>
+>> =C2=A0 =C2=A0 =C2=A0 if (ssl_cert !=3D NULL)
+>> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 curl_easy_setopt(re=
+sult, CURLOPT_SSLCERT, ssl_cert);
+>> + =C2=A0 =C2=A0 if (has_cert_password())
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 curl_easy_setopt(result,
+>> +#if LIBCURL_VERSION_NUM >=3D 0x071700
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0CURLOPT_KEYPASSWD,
+>> +#elif LIBCURL_VERSION_NUM >=3D 0x070903
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0CURLOPT_SSLKEYPASSWD,
+>> +#else
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0CURLOPT_SSLCERTPASSWD,
+>> +#endif
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0ssl_cert_password);
+>
+> This is purely style and readability, but if you do something like th=
+is
+> much earlier in the file:
+>
+> =C2=A0 =C2=A0#if !defined(CURLOPT_KEYPASSWD)
+> =C2=A0 =C2=A0# if defined(CURLOPT_SSLKEYPASSWD)
+> =C2=A0 =C2=A0# =C2=A0define CURLOPT_KEYTPASSWD CURLOPT_SSLKEYPASSWD
+> =C2=A0 =C2=A0# elif defined(CURLOPT_SSLCERTPASSWD
+> =C2=A0 =C2=A0# =C2=A0define CURLOPT_KEYTPASSWD CURLOPT_SSLCERTPASSWD
+> =C2=A0 =C2=A0# endif
+> =C2=A0 =C2=A0#endif
+>
+> you can write your main codepath using the latest cURL API without if=
+def.
+> The callsite can simply say:
+>
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0if (must_set_cert_password())
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0curl_easy_seto=
+pt(result, CURLOPT_KEYPASSWD, ssl_cert_password);
+>
+> which I think would be much easier to follow.
 
-I would love something like this - it would be useful for SVN as well.
+I realized this after I submitted the patch.  Locally I have modified
+my version to do something similar to the above, but checking libcurl
+versions rather than checking the existence of the macros (which don't
+exist, as Daniel pointed out.)  If this patch series is accepted, I
+will make a cleaner version that includes this change.
+
+Mark
