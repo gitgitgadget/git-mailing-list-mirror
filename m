@@ -1,52 +1,117 @@
-From: Jeff Garzik <jeff@garzik.org>
-Subject: Re: [bug] git cannot find "git pull"?
-Date: Fri, 12 Jun 2009 15:10:12 -0400
-Message-ID: <4A32A814.5050802@garzik.org>
-References: <4A319CE1.6040201@garzik.org> <20090612011737.GB5076@inocybe.localdomain> <4A323C56.1090703@garzik.org>
+From: Brandon Casey <casey@nrlssc.navy.mil>
+Subject: Re: Who uses Signed-off-by and DCO?
+Date: Fri, 12 Jun 2009 14:18:43 -0500
+Message-ID: <zcwHUAotNPBrTDFNEkfJbIprL0vwx_PJ65xUGwV0moW81e1bhyxgMg@cipher.nrlssc.navy.mil>
+References: <20090612084207.6117@nanako3.lavabit.com> <4A32366A.6090608@op5.se> <1244807741-sup-7206@ntdws12.chass.utoronto.ca> <20090612140229.GA14628@coredump.intra.peff.net> <1244817396-sup-7368@ntdws12.chass.utoronto.ca> <20090612144857.GA20691@coredump.intra.peff.net> <1244818580-sup-60@ntdws12.chass.utoronto.ca>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: Todd Zullinger <tmz@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jun 12 21:10:29 2009
+Cc: Jeff King <peff@peff.net>, GIT List <git@vger.kernel.org>
+To: Ben Walton <bwalton@artsci.utoronto.ca>
+X-From: git-owner@vger.kernel.org Fri Jun 12 21:19:35 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MFC8y-0002aR-JM
-	for gcvg-git-2@gmane.org; Fri, 12 Jun 2009 21:10:29 +0200
+	id 1MFCHm-0005sT-Eq
+	for gcvg-git-2@gmane.org; Fri, 12 Jun 2009 21:19:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760141AbZFLTKO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 12 Jun 2009 15:10:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757520AbZFLTKO
-	(ORCPT <rfc822;git-outgoing>); Fri, 12 Jun 2009 15:10:14 -0400
-Received: from srv5.dvmed.net ([207.36.208.214]:43611 "EHLO mail.dvmed.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757167AbZFLTKN (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Jun 2009 15:10:13 -0400
-Received: from cpe-069-134-158-197.nc.res.rr.com ([69.134.158.197] helo=bd.yyz.us)
-	by mail.dvmed.net with esmtpsa (Exim 4.69 #1 (Red Hat Linux))
-	id 1MFC8k-00053h-Vd; Fri, 12 Jun 2009 19:10:15 +0000
-User-Agent: Thunderbird 2.0.0.21 (X11/20090320)
-In-Reply-To: <4A323C56.1090703@garzik.org>
-X-Spam-Score: -4.4 (----)
-X-Spam-Report: SpamAssassin version 3.2.5 on srv5.dvmed.net summary:
-	Content analysis details:   (-4.4 points, 5.0 required)
+	id S1758182AbZFLTTY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 12 Jun 2009 15:19:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757378AbZFLTTX
+	(ORCPT <rfc822;git-outgoing>); Fri, 12 Jun 2009 15:19:23 -0400
+Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:58328 "EHLO
+	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756696AbZFLTTX (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 12 Jun 2009 15:19:23 -0400
+Received: by mail.nrlssc.navy.mil id n5CJIi5e003475; Fri, 12 Jun 2009 14:18:44 -0500
+In-Reply-To: <1244818580-sup-60@ntdws12.chass.utoronto.ca>
+X-OriginalArrivalTime: 12 Jun 2009 19:18:43.0443 (UTC) FILETIME=[99C64430:01C9EB92]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121441>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121442>
 
-Jeff Garzik wrote:
-> No strange PATH settings, and this was a completely fresh 
-> Fedora-11/x86-64 reformat and reinstall...
+Ben Walton wrote:
+> Excerpts from Jeff King's message of Fri Jun 12 10:48:57 -0400 2009:
+>> [any reason not to keep this on the git list?]
 > 
-> Adding "--exec-path=/usr/libexec/git-core" seems to work.
+> ...no, I just forget to set the CC.
 > 
-> I wonder if it is looking for /usr/libexec64/git-core or something?
+>> On Fri, Jun 12, 2009 at 10:36:46AM -0400, Ben Walton wrote:
+>>
+>>> I've aliased 'ci' to 'commit -s', and people either use the alias or
+>>> are encouraged to add the -s (it is by convention only, after all).
+>>> We've then setup the root shell such that $USER is leveraged to source
+>>> in some personalized shell when su is used.  This is where we set
+>>> GIT_COMMITTER_* on a per-admin basis.  People not doing that edit the
+>>> SoB line while editing the commit message...this fails with 'ci -m'.
+>> Makes sense. I have a similar setup where people could be identified by
+>> the ssh keys they use to log in, but I have never gotten around to
+>> setting up something automated.
+>>
+>> I suspect SoB may be more convenient than GIT_AUTHOR_* in your scenario
+>> just because you can tweak the former in the editor, as you note (and it
+>> sounds like it's possible to not have the other variables set up
+>> properly in your setup).
+> 
+> It is easier from that perspective, but since nothing is forcing the
+> use of -s, we'd have the same compliance if we wanted to ask people to
+> use --author (or set the proper environment).
+> 
+>>> Actually, I'm still wavering on which I'd prefer.  At this point,
+>>> since git is still fairly new for us in this capacity, we're feeling
+>>> our way through things.  I went with COMMITTER instead of AUTHOR
+>>> though since that tends to stand out more in `git log` (at least to my
+>>> eyes).  Since we're not a finger pointing group :), things like `git
+>> I would argue that you should do the opposite. AUTHOR is really about
+>> "who wrote this change" and COMMITTER is about "who put this change into
+>> the repo". So to me, "Bob wrote the change, logged in as root@box2, and
+>> committed" should be AUTHOR=Bob, COMMITTER=root@box2.
+> 
+> Your described usage is more semantically correct.  It may make sense
+> for us to switch to AUTHOR, so that in the future we could pinpoint
+> changes with less hassle.  I'll be discussing this with my colleagues
+> shortly.
 
-Same failure (with same workaround) on Fedora 11/i386, fresh install.
+We use a shared account for updating a specific git repository.  I have
+this bit of shell in the .bash_profile of that account to automatically
+prompt and set GIT_AUTHOR_NAME and GIT_AUTHOR_EMAIL when someone tries
+"git commit':
 
-	Jeff
+
+_setup_git_ident ()
+{
+   local userid
+   local ypentry
+
+   while read -p "Your Real Login ID (not \"$LOGNAME\")> " userid
+   do
+       ypentry=$(ypmatch "$userid" passwd) || continue
+       break
+   done
+
+   oldIFS=$IFS
+   IFS=:
+   set -- $ypentry
+   IFS=$oldIFS
+
+   GIT_AUTHOR_NAME=${GIT_AUTHOR_NAME:-"$5"}
+   GIT_AUTHOR_EMAIL=${GIT_AUTHOR_EMAIL:-"$1@"$(dnsdomainname)}
+
+   export GIT_AUTHOR_NAME GIT_AUTHOR_EMAIL
+}
+
+_run_git ()
+{
+   if [ "x$1" = "xcommit" ] &&
+      [ -z "$GIT_AUTHOR_NAME" -o -z "$GIT_AUTHOR_EMAIL" ]
+   then
+       _setup_git_ident
+   fi
+
+   git "$@"
+}
+
+alias git=_run_git
