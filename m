@@ -1,114 +1,78 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: Re: What's cooking in git.git (Jun 2009, #01; Fri, 12)
-Date: Fri, 12 Jun 2009 12:04:35 +0200
-Message-ID: <200906121204.37752.trast@student.ethz.ch>
-References: <7v1vppbyud.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: Text/Plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
-	Alexander Potashev <aspotashev@gmail.com>,
-	Johannes Sixt <johannes.sixt@telecom.at>
+From: Markus Heidelberg <markus.heidelberg@web.de>
+Subject: [PATCH 0/6] send-email threading fixes
+Date: Fri, 12 Jun 2009 12:49:26 +0200
+Message-ID: <1244803766-7785-1-git-send-email-markus.heidelberg@web.de>
+References: <7vd49afjbv.fsf@alter.siamese.dyndns.org>
+Cc: git@vger.kernel.org, Michael Witten <mfwitten@gmail.com>,
+	Thomas Rast <trast@student.ethz.ch>,
+	Markus Heidelberg <markus.heidelberg@web.de>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jun 12 12:04:55 2009
+X-From: git-owner@vger.kernel.org Fri Jun 12 12:49:50 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MF3cy-0007Km-HI
-	for gcvg-git-2@gmane.org; Fri, 12 Jun 2009 12:04:52 +0200
+	id 1MF4KU-0001Hm-Ba
+	for gcvg-git-2@gmane.org; Fri, 12 Jun 2009 12:49:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933288AbZFLKEl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 12 Jun 2009 06:04:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757524AbZFLKEl
-	(ORCPT <rfc822;git-outgoing>); Fri, 12 Jun 2009 06:04:41 -0400
-Received: from xsmtp1.ethz.ch ([82.130.70.13]:12427 "EHLO xsmtp1.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753180AbZFLKEk (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Jun 2009 06:04:40 -0400
-Received: from xfe0.d.ethz.ch ([82.130.124.40]) by xsmtp1.ethz.ch with Microsoft SMTPSVC(6.0.3790.3959);
-	 Fri, 12 Jun 2009 12:04:41 +0200
-Received: from thomas.localnet ([129.132.153.233]) by xfe0.d.ethz.ch over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
-	 Fri, 12 Jun 2009 12:04:41 +0200
-User-Agent: KMail/1.11.90 (Linux/2.6.27.23-0.1-default; KDE/4.2.90; x86_64; ; )
-In-Reply-To: <7v1vppbyud.fsf@alter.siamese.dyndns.org>
-X-OriginalArrivalTime: 12 Jun 2009 10:04:41.0169 (UTC) FILETIME=[33D5CC10:01C9EB45]
+	id S1754852AbZFLKtk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 12 Jun 2009 06:49:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753944AbZFLKtk
+	(ORCPT <rfc822;git-outgoing>); Fri, 12 Jun 2009 06:49:40 -0400
+Received: from fmmailgate01.web.de ([217.72.192.221]:39387 "EHLO
+	fmmailgate01.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752548AbZFLKtj (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 12 Jun 2009 06:49:39 -0400
+Received: from smtp08.web.de (fmsmtp08.dlan.cinetic.de [172.20.5.216])
+	by fmmailgate01.web.de (Postfix) with ESMTP id C6AC81053DC41;
+	Fri, 12 Jun 2009 12:49:40 +0200 (CEST)
+Received: from [89.59.124.123] (helo=localhost.localdomain)
+	by smtp08.web.de with asmtp (TLSv1:AES256-SHA:256)
+	(WEB.DE 4.110 #277)
+	id 1MF4KK-0003TK-00; Fri, 12 Jun 2009 12:49:40 +0200
+X-Mailer: git-send-email 1.6.3.2.236.ge505d
+In-Reply-To: <7vd49afjbv.fsf@alter.siamese.dyndns.org>
+X-Sender: markus.heidelberg@web.de
+X-Provags-ID: V01U2FsdGVkX19SJms28bUvSUcO27cmk7HggMKGiyjTAHQP//Fq
+	AJjkyvG8+oEDG4UULxyh15CmdVgCM1fJrfsr9qWoL2cr9nisql
+	t27ouE1DhCehChRq3iCQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121399>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121400>
 
-Junio C Hamano wrote:
-> * tr/die_errno (Mon Jun 8 23:02:20 2009 +0200) 4 commits
->  - Use die_errno() instead of die() when checking syscalls
->  - Convert existing die(..., strerror(errno)) to die_errno()
->  - die_errno(): double % in strerror() output just in case
->  - Introduce die_errno() that appends strerror(errno) to die()
+Junio C Hamano, 12.06.2009:
+> Markus Heidelberg <markus.heidelberg@web.de> writes:
+> 
+> > HTH and I got everything explained correctly.
+> 
+> Now, you can summarize the series with a proper [0/6], perhaps modelling
+> after how I explained the order of application and merge structure ;-).
 
-I had a look at your
+OK, I'll try :)
+For easier understanding I kept the wording from your reshuffled series.
 
-  [526abe63] die_errno(): double % in strerror() output just in case
+[PATCH 1/6] add a test for git-send-email for non-threaded mails
+[PATCH 2/6] send-email: fix non-threaded mails
+[PATCH 3/6] doc/send-email: clarify the behavior of --in-reply-to with --no-thread
+[PATCH 4/6] add a test for git-send-email for threaded mails without chain-reply-to
+[PATCH 5/6] send-email: fix threaded mails without chain-reply-to
+[PATCH 6/6] send-email: fix a typo in a comment
 
-and it seems it doesn't cover all corner cases:
+The first three patches apply to the tip of 'maint', which is currently at
+94af7c3 (Documentation: git-send-mail can take rev-list arg to drive
+format-patch, 2009-06-11).  The first one exposes breakage introduced by
+3e0c4ff and then the second one fixes it.
 
-> @@ -64,8 +64,20 @@ void die_errno(const char *fmt, ...)
->  {
->  	va_list params;
->  	char fmt_with_err[1024];
-> -
-> -	snprintf(fmt_with_err, sizeof(fmt_with_err), "%s: %s", fmt, strerror(errno));
-> +	char str_error[256], *err;
-> +	int i, j;
-> +
-> +	err = strerror(errno);
-> +	for (i = j = 0; err[i] && j < sizeof(str_error) - 1; ) {
-> +		if ((str_error[j++] = err[i++]) != '%')
-> +			continue;
+The last three patches apply to the tip of 'master'. Patch 4/6 exposes
+breakage introduced by 15da108, patch 5/6 fixes it.
 
-If we copied a '%' here, but filled 'str_error', then
+Changes compared to 'pu':
 
-> +		if (j < sizeof(str_error) - 1)
-> +			str_error[j++] = '%';
-> +		else
-> +			break;
-
-we 'break' here, instead of tacking on another '%'.  This subsequently
-leaves a single trailing '%' at the end of the string.  A possible fix
-would be to use
-
-+		else {
-+			j--;
-+			break;
-+		}
-
-instead, so that the terminator ends up on the second-to-last position
-in the string, overwriting the lonely '%'.
-
-> +	}
-> +	str_error[j] = 0;
-> +	snprintf(fmt_with_err, sizeof(fmt_with_err), "%s: %s", fmt, str_error);
->  
->  	va_start(params, fmt);
->  	die_routine(fmt_with_err, params);
-
-
-I cannot find an explicit mention that trailing '%'s are bad, and my
-printf() just ignores them, but 'man 3p printf' (showing a "POSIX
-Programmer's Manual" entry that I can't seem to find on the web...) at
-least states
-
-  [after explaining all conversion specifiers]
-
-  If a conversion specification does not match one of the above forms,
-  the behavior is undefined. If any argument is not the correct type
-  for the corresponding conversion specification, the behavior is
-  undefined.
-
-
-[I still like v2 better because it's far less complicated...]
-
--- 
-Thomas Rast
-trast@{inf,student}.ethz.ch
+ * adjusted the description of 2/6 to hopefully add less confusion
+ * changed the order of 4/6 and 5/6 and applied 5/6 directly on top of 4/6,
+   since the regression was immediately noticable
+ * also change test_expect_failure to test_expect_success in 5/6 then
+ * instead of in the former merge commit a6f8abc "Merge branch
+   'mh/master-send-email-threaded-fix' into mh/master-send-email"
