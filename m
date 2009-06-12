@@ -1,77 +1,99 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] send-email: Refuse to send cover-letter template subject
-Date: Fri, 12 Jun 2009 09:06:51 -0700
-Message-ID: <7vr5xp8mhw.fsf@alter.siamese.dyndns.org>
-References: <7fedc4b76fed03e4db6a2bb7453609c9cd02928a.1244496564.git.trast@student.ethz.ch>
-	<7v4ouqwa42.fsf@alter.siamese.dyndns.org>
-	<200906091019.11000.trast@student.ethz.ch>
-	<200906121348.19103.trast@student.ethz.ch>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH 1/2] http.c: prompt for SSL client certificate password
+Date: Fri, 12 Jun 2009 09:50:48 -0700 (PDT)
+Message-ID: <m3vdn12y6y.fsf@localhost.localdomain>
+References: <1243480563-5954-1-git-send-email-lodatom@gmail.com>
+	<ca433830906111600n2d45b5bdg3fb6e7c0a537ec78@mail.gmail.com>
+	<20090612084209.6117@nanako3.lavabit.com>
+	<alpine.DEB.2.00.0906120943560.5566@yvahk2.pbagnpgbe.fr>
+	<85647ef50906120838s37c186a9mec301e880b1a8a4e@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Fri Jun 12 18:07:14 2009
+Cc: Daniel Stenberg <daniel@haxx.se>,
+	Nanako Shiraishi <nanako3@lavabit.com>,
+	Mark Lodato <lodatom@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Constantine Plotnikov <constantine.plotnikov@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jun 12 18:52:07 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MF9Hd-0007LV-EO
-	for gcvg-git-2@gmane.org; Fri, 12 Jun 2009 18:07:13 +0200
+	id 1MF9z1-00032B-U3
+	for gcvg-git-2@gmane.org; Fri, 12 Jun 2009 18:52:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757546AbZFLQHB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 12 Jun 2009 12:07:01 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757852AbZFLQHB
-	(ORCPT <rfc822;git-outgoing>); Fri, 12 Jun 2009 12:07:01 -0400
-Received: from fed1rmmtao103.cox.net ([68.230.241.43]:47031 "EHLO
-	fed1rmmtao103.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757523AbZFLQHA (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Jun 2009 12:07:00 -0400
-Received: from fed1rmimpo03.cox.net ([70.169.32.75])
-          by fed1rmmtao103.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20090612160651.LSJP2915.fed1rmmtao103.cox.net@fed1rmimpo03.cox.net>;
-          Fri, 12 Jun 2009 12:06:51 -0400
-Received: from localhost ([68.225.240.211])
-	by fed1rmimpo03.cox.net with bizsmtp
-	id 346r1c00K4aMwMQ0446ryl; Fri, 12 Jun 2009 12:06:52 -0400
-X-VR-Score: -200.00
-X-Authority-Analysis: v=1.0 c=1 a=fC4PegqPu0EA:10 a=rURELfc3W64A:10
- a=JkNo4gaa03tFM0lBXnoA:9 a=PjioW1H0va0fL0lWHCcA:7
- a=ffdmnF6WyO8SgRJVIFkUM2HKw4cA:4
-X-CM-Score: 0.00
-In-Reply-To: <200906121348.19103.trast@student.ethz.ch> (Thomas Rast's message of "Fri\, 12 Jun 2009 13\:48\:16 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+	id S1754205AbZFLQut (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 12 Jun 2009 12:50:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751545AbZFLQut
+	(ORCPT <rfc822;git-outgoing>); Fri, 12 Jun 2009 12:50:49 -0400
+Received: from fg-out-1718.google.com ([72.14.220.159]:8881 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751493AbZFLQus (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 12 Jun 2009 12:50:48 -0400
+Received: by fg-out-1718.google.com with SMTP id d23so184930fga.17
+        for <git@vger.kernel.org>; Fri, 12 Jun 2009 09:50:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:received
+         :x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        bh=lRIpY6Z5C2G5Gqf8BsLBQr8wOTQzKRKtftevC1yXkIA=;
+        b=q3xZPdeDaBQxl4VQS/B43Y8A8ZUa1nH6sR0Jn5jpDQ4ylg+M5WehIsIMFkGiy9mPUh
+         UF/S72NjdCbSd9ZGHtZmjSD5X3yui9BB4rQ3B+9GNyIona3dHg1gMshsz4kNdBbQKJGM
+         In+UmJhqZPzQz551LamFZxHH5Q8gkiM3Xn2RE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        b=d6DloC7Vqbk1vXeg/JbuJRAJyhFGcyauZtgGelUPuPanP0Vtt8sdpdv5yIgCoEmJP0
+         KsI6UQ0j2K3e3xGv/qwXbimebQ3fdYsZjDo+YMee+2uQRA2/b9AovUl09nSIygvA4pcE
+         93h3rTNHEwvCyzrcRZKFwwDJK2j7aVlupfM/Q=
+Received: by 10.86.49.16 with SMTP id w16mr3985401fgw.67.1244825450134;
+        Fri, 12 Jun 2009 09:50:50 -0700 (PDT)
+Received: from localhost.localdomain (abwj246.neoplus.adsl.tpnet.pl [83.8.233.246])
+        by mx.google.com with ESMTPS id 12sm4347868fgg.5.2009.06.12.09.50.47
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 12 Jun 2009 09:50:48 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id n5CGolt5028953;
+	Fri, 12 Jun 2009 18:50:47 +0200
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id n5CGojeN028950;
+	Fri, 12 Jun 2009 18:50:45 +0200
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <85647ef50906120838s37c186a9mec301e880b1a8a4e@mail.gmail.com>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121434>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121435>
 
-Thomas Rast <trast@student.ethz.ch> writes:
+Constantine Plotnikov <constantine.plotnikov@gmail.com> writes:
+> On Fri, Jun 12, 2009 at 11:56 AM, Daniel Stenberg<daniel@haxx.se> wrote:
+>> On Fri, 12 Jun 2009, Nanako Shiraishi wrote:
+>>
+>>> It would be ideal if you can inspect the certificate and decide if you
+>>> need to ask for decrypting password before using it (and otherwise you don't
+>>> ask). If you can't do that, probably you can introduce a config var that
+>>> says "this certificate is encrypted", and bypass your new code if that
+>>> config var isn't set.
+>>
+>> Is this really a common setup? Using an unencrypted private key sounds like
+>> a really bad security situation to me. The certificate is never encrupted,
+>> the passphrase is for the key.
+>>
+> For SSH using unencrypted private key is very common for scripting and
+> cron jobs. For HTTPS situation looks like being worse since there is
+> no analog of ssh-agent that covers at least some of scripting
+> scenarios. Do we want to disable scripting for HTTPS?
 
-> Thomas Rast wrote:
->> Junio C Hamano wrote:
->> > Thomas Rast <trast@student.ethz.ch> writes:
->> > 
->> > > Every so often, someone sends out an unedited cover-letter template.
->> > > Add a simple check to send-email that refuses to send if the subject
->> > > contains "*** SUBJECT HERE ***", with an option --force to override.
->> > 
->> > Good ;-).  More valuable to detect would be an empty "blurb" section
->> > (i.e. not "unedited *** BLURB HERE ***" string, but literally, there is
->> > nothing said in the message other than the shortstat).
-> ...
-> What do you want me to do about the patch?  Should I extend it so that
-> it traps both "*** BLURB HERE ***" and "*** SUBJECT HERE ***"?
+Actually you can use _encrypted_ private keys together with ssh-agent
+and for example keychain helper for scripting.  You have to provide
+password to all listed private keys only once at login.  I wonder if
+something like this would be possible for HTTP certificates...
 
-Oh, nothing.
-
-I did not mean to say "if you do not add this unrelated thing, your patch
-is not acceptable."  Please take my "oh I wish there is another feature to
-do this similar but different thing" as a hint for possible follow-up
-patches, and they do not necessarily have to be done by you but can be
-done by anybody, or for that matter they do not have to be done by anybody
-like this particular case where it turns out to be "why bother?  it cannot
-be done sensibly and usefully".
-
-Thanks, and sorry.  I'll try to be more explicit next time.
+-- 
+Jakub Narebski
+Poland
+ShadeHawk on #git
