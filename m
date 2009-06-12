@@ -1,98 +1,87 @@
-From: "=?utf-8?q?K=C4=81rlis_Repsons?=" <karlis.repsons@gmail.com>
-Subject: use git-daemon by git://IP/path?
-Date: Fri, 12 Jun 2009 12:13:08 +0000
-Message-ID: <200906121213.13365.Karlis.Repsons@gmail.com>
+From: Ben Walton <bwalton@artsci.utoronto.ca>
+Subject: Re: Who uses Signed-off-by and DCO?
+Date: Fri, 12 Jun 2009 07:58:50 -0400
+Message-ID: <1244807741-sup-7206@ntdws12.chass.utoronto.ca>
+References: <20090612084207.6117@nanako3.lavabit.com> <4A32366A.6090608@op5.se>
 Mime-Version: 1.0
-Content-Type: multipart/signed;
-  boundary="nextPart1578321.0nJ74ZItMs";
-  protocol="application/pgp-signature";
-  micalg=pgp-sha1
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jun 12 14:13:26 2009
+Content-Type: multipart/signed; protocol="application/pgp-signature"; boundary="=-1244807935-73399-6403-5519-5-="; micalg="pgp-sha1"
+Content-Transfer-Encoding: 8bit
+To: Nanako Shiraishi <nanako3@lavabit.com>, git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Jun 12 15:10:34 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MF5dN-0000ik-Cr
-	for gcvg-git-2@gmane.org; Fri, 12 Jun 2009 14:13:25 +0200
+	id 1MF6Wg-0007oD-4I
+	for gcvg-git-2@gmane.org; Fri, 12 Jun 2009 15:10:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754491AbZFLMNP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 12 Jun 2009 08:13:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753058AbZFLMNP
-	(ORCPT <rfc822;git-outgoing>); Fri, 12 Jun 2009 08:13:15 -0400
-Received: from mail-fx0-f216.google.com ([209.85.220.216]:42886 "EHLO
-	mail-fx0-f216.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753436AbZFLMNO (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Jun 2009 08:13:14 -0400
-Received: by fxm12 with SMTP id 12so575157fxm.37
-        for <git@vger.kernel.org>; Fri, 12 Jun 2009 05:13:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:mime-version:content-type:content-transfer-encoding
-         :message-id;
-        bh=B2MK+VRhkZT+zaSuB+fx9KWPzvjRWcAN0SWTXBJ7u/4=;
-        b=DYyLBoKAkhBR5vWxCMRw8RXxGD0b6GNG/T+8DMsONhCU1Kxdr+KRm2NvQuUorGzJoK
-         NIjO+/pnRPuE6eUIyltlIn4NQZayC/Utla3YoeJvn3tV9Y/ntYBPj9bTj2j/UACjyZa6
-         sEkpRh2NJE65zXp+L4vsXjMSTEammqve7unVs=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:mime-version:content-type
-         :content-transfer-encoding:message-id;
-        b=OxNdsKIpyPb4ppijvY3ezVkQc4KUHe/HrA5fLBTsXq920CTYVrcWn3SUjM18LP2Po+
-         8YfX+OHDEVhEQp8dwPOgPs0W9rzHGnBWGx37u7sZDkgjbZyYEhUOkDEZt55EWMRoN/5S
-         TDP9zhNE1i1UVrz/U32yDokINiZ/0pQDyccLY=
-Received: by 10.103.1.5 with SMTP id d5mr1838981mui.113.1244808795363;
-        Fri, 12 Jun 2009 05:13:15 -0700 (PDT)
-Received: from ?192.168.7.93? ([85.15.210.9])
-        by mx.google.com with ESMTPS id n7sm156395mue.28.2009.06.12.05.13.14
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 12 Jun 2009 05:13:15 -0700 (PDT)
-User-Agent: KMail/1.9.9
+	id S1751696AbZFLNJG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 12 Jun 2009 09:09:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751471AbZFLNJF
+	(ORCPT <rfc822;git-outgoing>); Fri, 12 Jun 2009 09:09:05 -0400
+Received: from www.cquest.utoronto.ca ([192.82.128.5]:35185 "EHLO
+	www.cquest.utoronto.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751089AbZFLNJE (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 12 Jun 2009 09:09:04 -0400
+X-Greylist: delayed 4212 seconds by postgrey-1.27 at vger.kernel.org; Fri, 12 Jun 2009 09:09:04 EDT
+Received: from ntdws12.chass.utoronto.ca ([128.100.160.253]:53644 ident=93)
+	by www.cquest.utoronto.ca with esmtp (Exim 4.43)
+	id 1MF5PL-0000jg-BX; Fri, 12 Jun 2009 07:58:55 -0400
+Received: from localhost
+	([127.0.0.1] helo=ntdws12.chass.utoronto.ca ident=505)
+	by ntdws12.chass.utoronto.ca with esmtp (Exim 4.63)
+	(envelope-from <bwalton@cquest.utoronto.ca>)
+	id 1MF5PL-0006a1-9D; Fri, 12 Jun 2009 07:58:55 -0400
+Received: (from bwalton@localhost)
+	by ntdws12.chass.utoronto.ca (8.13.8/8.13.8/Submit) id n5CBwteV025293;
+	Fri, 12 Jun 2009 07:58:55 -0400
+In-reply-to: <4A32366A.6090608@op5.se>
+User-Agent: Sup/git
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121419>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121420>
 
---nextPart1578321.0nJ74ZItMs
-Content-Type: text/plain;
-  charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
-Content-Disposition: inline
 
-Hello git users and writers!
+--=-1244807935-73399-6403-5519-5-=
+Content-Type: text/plain; charset=UTF-8
 
-I am new to git, but, having read manuals and grasping the concepts of it, =
-I=20
-would like to first say thanks to all those, who created it!
+Excerpts from Andreas Ericsson's message of Fri Jun 12 07:05:14 -0400 2009:
+> > I was giving a git introduction to students in my lab, and this
+> > question came up from one of them. How widely is this convention
+> > used? Are there projects other than the Linux Kernel and git itself?
+> > 
+> 
+> We use it for our own opensource projects, though I must admit we
+> stole the idea from git.git.
 
-Things would be fine, but I am having really bad ssh permission problems in=
-=20
-here: for example, if there is an empty, initialised git archive and it is=
-=20
-pulled to over ssh, the created files have permissions only u=3DrwX, no mor=
-e.=20
-Then subsequently git pulling doesn't work. Maybe you know how to solve it?
+We're using it for shared admin edits.  The author is root (or
+whatever the shared account happens to be in other cases) and the SoB
+is the admin that made the change.  It's not enforced by anything
+other than convention, but it's still helpful for us.
 
-Also, in general, how can it be set up, that >1 people have a write access =
-to=20
-the same repository? Only by using the same login?=20
+-Ben
 
-Kind regards,
-K=C4=81rlis
+-- 
+Ben Walton
+Systems Programmer - CHASS
+University of Toronto
+C:416.407.5610 | W:416.978.4302
 
---nextPart1578321.0nJ74ZItMs
-Content-Type: application/pgp-signature; name=signature.asc 
-Content-Description: This is a digitally signed message part.
+GPG Key Id: 8E89F6D2; Key Server: pgp.mit.edu
+Contact me to arrange for a CAcert assurance meeting.
+
+--=-1244807935-73399-6403-5519-5-=
+Content-Disposition: attachment; filename="signature.asc"
+Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.11 (GNU/Linux)
+Version: GnuPG v1.4.5 (GNU/Linux)
 
-iEYEABECAAYFAkoyRlkACgkQHuSu329e3GHF2ACgkWqq3HvTD4+U9AIv9RnBPVGP
-IrgAoLrXR1eQ40R7ej/Pb4HWk03Wnpj0
-=eehI
+iD8DBQFKMkL+8vuMHY6J9tIRAhubAJ9OeaVzculH2DjUEoS9sF9SV5ib6wCfSoyP
+viewgmLXO8SkKGCcfNpgUmo=
+=nsN2
 -----END PGP SIGNATURE-----
 
---nextPart1578321.0nJ74ZItMs--
+--=-1244807935-73399-6403-5519-5-=--
