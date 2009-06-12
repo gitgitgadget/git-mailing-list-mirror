@@ -1,130 +1,112 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
 Subject: Re: EasyGit Integration
-Date: Fri, 12 Jun 2009 23:57:44 +0300
-Message-ID: <94a0d4530906121357h63723278i7663c25707d3c754@mail.gmail.com>
-References: <d411cc4a0906091159r51e7d16t4d66c6225322fb60@mail.gmail.com>
-	 <m38wjz4odq.fsf@localhost.localdomain>
-	 <94a0d4530906101730p22053cbbl347eddd31b347c3c@mail.gmail.com>
-	 <200906110242.57475.jnareb@gmail.com>
+Date: Fri, 12 Jun 2009 23:21:55 +0200
+Message-ID: <200906122321.57479.jnareb@gmail.com>
+References: <d411cc4a0906091159r51e7d16t4d66c6225322fb60@mail.gmail.com> <200906110242.57475.jnareb@gmail.com> <94a0d4530906121357h63723278i7663c25707d3c754@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Scott Chacon <schacon@gmail.com>,
 	Linus Torvalds <torvalds@linux-foundation.org>,
 	Theodore Tso <tytso@mit.edu>, Elijah Newren <newren@gmail.com>,
 	git list <git@vger.kernel.org>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jun 12 22:57:56 2009
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jun 12 23:22:27 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MFDow-0004z2-1t
-	for gcvg-git-2@gmane.org; Fri, 12 Jun 2009 22:57:54 +0200
+	id 1MFECg-0007pd-Bw
+	for gcvg-git-2@gmane.org; Fri, 12 Jun 2009 23:22:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756202AbZFLU5p convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 12 Jun 2009 16:57:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754660AbZFLU5o
-	(ORCPT <rfc822;git-outgoing>); Fri, 12 Jun 2009 16:57:44 -0400
-Received: from fg-out-1718.google.com ([72.14.220.159]:61523 "EHLO
+	id S1755154AbZFLVWO convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 12 Jun 2009 17:22:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752987AbZFLVWN
+	(ORCPT <rfc822;git-outgoing>); Fri, 12 Jun 2009 17:22:13 -0400
+Received: from fg-out-1718.google.com ([72.14.220.152]:61449 "EHLO
 	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751952AbZFLU5n convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 12 Jun 2009 16:57:43 -0400
-Received: by fg-out-1718.google.com with SMTP id 16so747404fgg.17
-        for <git@vger.kernel.org>; Fri, 12 Jun 2009 13:57:44 -0700 (PDT)
+	with ESMTP id S1752830AbZFLVWM (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 12 Jun 2009 17:22:12 -0400
+Received: by fg-out-1718.google.com with SMTP id d23so36067fga.17
+        for <git@vger.kernel.org>; Fri, 12 Jun 2009 14:22:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=OD0ulB54LqdE6mx8MAWe4zUbQ8HIon1o27aa16TQ3bA=;
-        b=en1+qmI9Th9ywBaazQIHuuP/Qsdr3O1fR7GMb25ZGwI6Subt1pBCVHthEi8UD5X6PB
-         5p+tO0n1xbc2VN0c7y2hu+fo16qu3cRT7SPBNr4gM85w2m57UmRVd/mkDPXAXH6wy8vg
-         Max3bZp8iCpblbzoldxdFhABq5VoV9CYGvKy8=
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=IkF9CXswbwXY5EjL3NEuUflDrZpL5YYD0iOorASYo64=;
+        b=R3uaBEoYW/JaDtoA9SrT6l8fd9t/uAL9vSL5HzgaNKbhLugdL62zJinx9LFiAsSBIK
+         CB8vp+37/8/OYpiZAv/d9fn6K4ayrWM2XwhoHKmAOHI4WhBWf9SZs3AkxZIVinRevF1d
+         oVNLo+guVBEHmDuvwveo5vhe2M8ZEGvG6mNRc=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=eua9eXOFEuhQ3Pxnj0WMwraWWpp92iMhH/5m36wu1RmfAuI9XrfOY8H1iPdppljVLm
-         0X4qMVt/LsUjrjru5u6appn06VlLFrreNQPlCtcUsF+3pmzprqHf+t0CDp/0S+1HO4RQ
-         kBRvFVE64sAQX2Q4ZhYHfzjedSROR53lCo/8Y=
-Received: by 10.86.71.8 with SMTP id t8mr4323718fga.60.1244840264575; Fri, 12 
-	Jun 2009 13:57:44 -0700 (PDT)
-In-Reply-To: <200906110242.57475.jnareb@gmail.com>
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=HdqPqCGCUJ9ITiKsMs4IhsS9i2kEIVUSPFlVHpwAHU1vBzC1Q0qkQBw4Qnd/hdk589
+         rYuHNF6cXB0jTnny3u4H14KVmqf2q10pmjcsxjdmlnV6saqwH1NdBLdKunJwHbTQ/R83
+         2SoWh3nfBysvY86kVt5eYd04rZHd4/aCpI74g=
+Received: by 10.86.23.20 with SMTP id 20mr4381155fgw.17.1244841733637;
+        Fri, 12 Jun 2009 14:22:13 -0700 (PDT)
+Received: from ?192.168.1.13? (abwe201.neoplus.adsl.tpnet.pl [83.8.228.201])
+        by mx.google.com with ESMTPS id 12sm5097806fgg.15.2009.06.12.14.22.09
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 12 Jun 2009 14:22:12 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <94a0d4530906121357h63723278i7663c25707d3c754@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121449>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121450>
 
-On Thu, Jun 11, 2009 at 3:42 AM, Jakub Narebski<jnareb@gmail.com> wrote=
-:
-> On Thu, 11 June 2009, Felipe Contreras wrote:
->> On Thu, Jun 11, 2009 at 3:15 AM, Jakub Narebski<jnareb@gmail.com> wr=
-ote:
->>> Scott Chacon <schacon@gmail.com> writes:
->>>> On Wed, Jun 10, 2009 at 4:04 PM, Linus
->>>> Torvalds<torvalds@linux-foundation.org> wrote:
->>>>>
->>>>> IOW, both would be "if you give it a commit, it acts at a commit =
-level",
->>>>> and "if you give it pathnames, it acts on a pathname level".
->>>>>
->>>>> That is totally obvious, and not in the least confusing. They are=
- two
->>>>> different things, but at the same time, there is no question abou=
-t which
->>>>> is which.
->>>>>
->>>>>> In my mind these are 2 completely different commands.
->>>>>
->>>>> They are two different things, but they both make sense within th=
-e
->>>>> _context_.
->>>>>
->>>>> Only earthworms and FOX news have no concept of "in context". So =
-it does
->>>>> make sense to say "git checkout filename" (and expect it to check=
- out that
->>>>> _filename_ - surprise surprise), and also say "git checkout branc=
-h" (and
->>>>> expect it to check out that branch - again, big surprise).
->>>>
->>>> The problem here is that you're using 'check out' in your descript=
-ions
->>>> of the expectations to mean two different things. =C2=A0One means =
-'switch
->>>> branches' and the other means 'extract content'.
->>>
->>> In both cases it means getting something out of repository (checkin=
-g
->>> out) and into working area.
+On Fri, 12 Jun 2009, Felipe Contreras wrote:
+> On Thu, Jun 11, 2009 at 3:42 AM, Jakub Narebski<jnareb@gmail.com> wro=
+te:
+>> On Thu, 11 June 2009, Felipe Contreras wrote:
+
+>>> 'git reset' also gets something out of the repository and into the
+>>> working area, that's not reason enough to put them under the same
+>>> 'checkout' command, is it?
 >>
->> 'git reset' also gets something out of the repository and into the
->> working area, that's not reason enough to put them under the same
->> 'checkout' command, is it?
->
-> Nope. 'git reset' resets something to the state in repository (to giv=
-en
-> commit). =C2=A0The fact that some combination of options for 'git res=
-et' gives
-> the same result as some specific combination of options of 'git check=
-out'
-> means only that one can arrive at some destination in two different w=
-ays.
+>> Nope. 'git reset' resets something to the state in repository (to gi=
+ven
+>> commit). =C2=A0The fact that some combination of options for 'git re=
+set' gives
+>> the same result as some specific combination of options of 'git chec=
+kout'
+>> means only that one can arrive at some destination in two different =
+ways.
+>=20
+> You can describe what 'git reset' does in many ways, but in the
+> process it's still getting something out of the repository and into
+> the working directory, does it not? 'git checkout <commitish>' and
+> 'git checkout <commitish> -- <path>' also do that.
 
-You can describe what 'git reset' does in many ways, but in the
-process it's still getting something out of the repository and into
-the working directory, does it not? 'git checkout <commitish>' and
-'git checkout <commitish> -- <path>' also do that.
+Nope. 'git reset' always reset some part of state to a given commit,
+HEAD by default.  It can reset current branch with --soft, branch plus
+index with --mixed (default), and branch plus index plus working=20
+directory with --hard.  Source is always commit.
 
-Is that relevant? No. What is relevant is the final action the user is
-expecting to achieve.
+'git checkout' however checks out something into working directory.
+It can be branch, in which turns it sets HEAD to point to it, and
+index too.  It can be file, in which it gets version of file from
+index or (if specified) from given commit.  Destination is always
+working area (and sometimes something else beside it).
 
-Therefore, the fact that 'git checkout <commitish>' modifies the
-working directory is irrelevant, it's still doing an extra step;
-update HEAD, and that final action is what is important for this
-particular command; it switches to another commitish.
+>=20
+> Is that relevant? No. What is relevant is the final action the user i=
+s
+> expecting to achieve.
+>=20
+> Therefore, the fact that 'git checkout <commitish>' modifies the
+> working directory is irrelevant, it's still doing an extra step;
+> update HEAD, and that final action is what is important for this
+> particular command; it switches to another commitish.
 
+It is not uncommon for a word to have different meaning depending on
+context, or on some auxiliary word used in addition...
 --=20
-=46elipe Contreras
+Jakub Narebski
+Poland
