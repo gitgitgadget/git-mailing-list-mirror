@@ -1,87 +1,69 @@
-From: Ben Walton <bwalton@artsci.utoronto.ca>
-Subject: Re: Who uses Signed-off-by and DCO?
-Date: Fri, 12 Jun 2009 07:58:50 -0400
-Message-ID: <1244807741-sup-7206@ntdws12.chass.utoronto.ca>
-References: <20090612084207.6117@nanako3.lavabit.com> <4A32366A.6090608@op5.se>
+From: =?ISO-8859-15?Q?Dirk_S=FCsserott?= <newsletter@dirk.my1.cc>
+Subject: Re: use git-daemon by git://IP/path?
+Date: Fri, 12 Jun 2009 15:54:08 +0200
+Message-ID: <4A325E00.6050504@dirk.my1.cc>
+References: <200906121213.13365.Karlis.Repsons@gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; protocol="application/pgp-signature"; boundary="=-1244807935-73399-6403-5519-5-="; micalg="pgp-sha1"
-Content-Transfer-Encoding: 8bit
-To: Nanako Shiraishi <nanako3@lavabit.com>, git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Jun 12 15:10:34 2009
+Content-Type: text/plain; charset=US-ASCII;
+	format=flowed
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org
+To: =?ISO-8859-15?Q?Ka-rlis_Repsons?= <karlis.repsons@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jun 12 15:55:54 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MF6Wg-0007oD-4I
-	for gcvg-git-2@gmane.org; Fri, 12 Jun 2009 15:10:34 +0200
+	id 1MF7EX-0002VM-OH
+	for gcvg-git-2@gmane.org; Fri, 12 Jun 2009 15:55:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751696AbZFLNJG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 12 Jun 2009 09:09:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751471AbZFLNJF
-	(ORCPT <rfc822;git-outgoing>); Fri, 12 Jun 2009 09:09:05 -0400
-Received: from www.cquest.utoronto.ca ([192.82.128.5]:35185 "EHLO
-	www.cquest.utoronto.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751089AbZFLNJE (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Jun 2009 09:09:04 -0400
-X-Greylist: delayed 4212 seconds by postgrey-1.27 at vger.kernel.org; Fri, 12 Jun 2009 09:09:04 EDT
-Received: from ntdws12.chass.utoronto.ca ([128.100.160.253]:53644 ident=93)
-	by www.cquest.utoronto.ca with esmtp (Exim 4.43)
-	id 1MF5PL-0000jg-BX; Fri, 12 Jun 2009 07:58:55 -0400
-Received: from localhost
-	([127.0.0.1] helo=ntdws12.chass.utoronto.ca ident=505)
-	by ntdws12.chass.utoronto.ca with esmtp (Exim 4.63)
-	(envelope-from <bwalton@cquest.utoronto.ca>)
-	id 1MF5PL-0006a1-9D; Fri, 12 Jun 2009 07:58:55 -0400
-Received: (from bwalton@localhost)
-	by ntdws12.chass.utoronto.ca (8.13.8/8.13.8/Submit) id n5CBwteV025293;
-	Fri, 12 Jun 2009 07:58:55 -0400
-In-reply-to: <4A32366A.6090608@op5.se>
-User-Agent: Sup/git
+	id S1755598AbZFLNyL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 12 Jun 2009 09:54:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754745AbZFLNyJ
+	(ORCPT <rfc822;git-outgoing>); Fri, 12 Jun 2009 09:54:09 -0400
+Received: from smtprelay08.ispgateway.de ([80.67.31.31]:49720 "EHLO
+	smtprelay08.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754730AbZFLNyJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 12 Jun 2009 09:54:09 -0400
+Received: from [84.176.67.51] (helo=[192.168.2.100])
+	by smtprelay08.ispgateway.de with esmtpa (Exim 4.68)
+	(envelope-from <newsletter@dirk.my1.cc>)
+	id 1MF7Cq-0006qP-V0; Fri, 12 Jun 2009 15:54:09 +0200
+User-Agent: Thunderbird 2.0.0.21 (Windows/20090302)
+In-Reply-To: <200906121213.13365.Karlis.Repsons@gmail.com>
+X-Df-Sender: 757646
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121420>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121421>
 
-
---=-1244807935-73399-6403-5519-5-=
-Content-Type: text/plain; charset=UTF-8
-
-Excerpts from Andreas Ericsson's message of Fri Jun 12 07:05:14 -0400 2009:
-> > I was giving a git introduction to students in my lab, and this
-> > question came up from one of them. How widely is this convention
-> > used? Are there projects other than the Linux Kernel and git itself?
-> > 
+Am 12.06.2009 14:13 schrieb Ka-rlis Repsons:
+> Hello git users and writers!
 > 
-> We use it for our own opensource projects, though I must admit we
-> stole the idea from git.git.
+> I am new to git, but, having read manuals and grasping the concepts of it, I 
+> would like to first say thanks to all those, who created it!
+> 
+> Things would be fine, but I am having really bad ssh permission problems in 
+> here: for example, if there is an empty, initialised git archive and it is 
+> pulled to over ssh, the created files have permissions only u=rwX, no more. 
+> Then subsequently git pulling doesn't work. Maybe you know how to solve it?
 
-We're using it for shared admin edits.  The author is root (or
-whatever the shared account happens to be in other cases) and the SoB
-is the admin that made the change.  It's not enforced by anything
-other than convention, but it's still helpful for us.
+Probably your umask is doing this? When you locally create a file (e.g. 
+"touch foo"), does it then only have "-rwx------" as well?
 
--Ben
+> Also, in general, how can it be set up, that >1 people have a write access to 
+> the same repository? Only by using the same login? 
 
--- 
-Ben Walton
-Systems Programmer - CHASS
-University of Toronto
-C:416.407.5610 | W:416.978.4302
+Have a look at the "--shared" option of "git init". That's supposed to 
+create shared repositories, i.e. all users of the same group have write 
+access. I'm not exactly sure how to make an existing repo "shared" after 
+it's been created, but
 
-GPG Key Id: 8E89F6D2; Key Server: pgp.mit.edu
-Contact me to arrange for a CAcert assurance meeting.
+$ git config core.sharedrepository 1
 
---=-1244807935-73399-6403-5519-5-=
-Content-Disposition: attachment; filename="signature.asc"
-Content-Type: application/pgp-signature; name="signature.asc"
+(which modifies .git/config) and a reasonable chown/chmod -R afterwards 
+should work.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.5 (GNU/Linux)
-
-iD8DBQFKMkL+8vuMHY6J9tIRAhubAJ9OeaVzculH2DjUEoS9sF9SV5ib6wCfSoyP
-viewgmLXO8SkKGCcfNpgUmo=
-=nsN2
------END PGP SIGNATURE-----
-
---=-1244807935-73399-6403-5519-5-=--
+Hope this helps,
+     Dirk
