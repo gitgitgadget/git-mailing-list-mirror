@@ -1,125 +1,98 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: [JGIT PATCH 5/5] UploadPack: Only recompute okToGiveUp() if bases changed
-Date: Fri, 12 Jun 2009 16:00:19 -0700
-Message-ID: <1244847619-7364-6-git-send-email-spearce@spearce.org>
-References: <1244847619-7364-1-git-send-email-spearce@spearce.org>
- <1244847619-7364-2-git-send-email-spearce@spearce.org>
- <1244847619-7364-3-git-send-email-spearce@spearce.org>
- <1244847619-7364-4-git-send-email-spearce@spearce.org>
- <1244847619-7364-5-git-send-email-spearce@spearce.org>
-Cc: git@vger.kernel.org
-To: Robin Rosenberg <robin.rosenberg@dewire.com>
-X-From: git-owner@vger.kernel.org Sat Jun 13 01:00:44 2009
+From: Mark Lodato <lodatom@gmail.com>
+Subject: Re: [PATCH 1/2] http.c: prompt for SSL client certificate password
+Date: Fri, 12 Jun 2009 19:11:36 -0400
+Message-ID: <ca433830906121611g5d079908ycc714adcc30c9aa@mail.gmail.com>
+References: <1243480563-5954-1-git-send-email-lodatom@gmail.com>
+	 <ca433830906111600n2d45b5bdg3fb6e7c0a537ec78@mail.gmail.com>
+	 <20090612084209.6117@nanako3.lavabit.com>
+	 <alpine.DEB.2.00.0906120943560.5566@yvahk2.pbagnpgbe.fr>
+	 <85647ef50906120838s37c186a9mec301e880b1a8a4e@mail.gmail.com>
+	 <m3vdn12y6y.fsf@localhost.localdomain>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Constantine Plotnikov <constantine.plotnikov@gmail.com>,
+	Daniel Stenberg <daniel@haxx.se>,
+	Nanako Shiraishi <nanako3@lavabit.com>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Jun 13 01:11:47 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MFFjo-000336-9O
-	for gcvg-git-2@gmane.org; Sat, 13 Jun 2009 01:00:44 +0200
+	id 1MFFuT-0006Vz-CD
+	for gcvg-git-2@gmane.org; Sat, 13 Jun 2009 01:11:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756049AbZFLXAh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 12 Jun 2009 19:00:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755820AbZFLXAf
-	(ORCPT <rfc822;git-outgoing>); Fri, 12 Jun 2009 19:00:35 -0400
-Received: from george.spearce.org ([209.20.77.23]:40058 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755418AbZFLXA2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Jun 2009 19:00:28 -0400
-Received: by george.spearce.org (Postfix, from userid 1000)
-	id B48FC381FE; Fri, 12 Jun 2009 23:00:30 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.2.4 (2008-01-01) on george.spearce.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-4.4 required=4.0 tests=ALL_TRUSTED,BAYES_00
-	autolearn=ham version=3.2.4
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by george.spearce.org (Postfix) with ESMTP id 9C14B38215;
-	Fri, 12 Jun 2009 23:00:22 +0000 (UTC)
-X-Mailer: git-send-email 1.6.3.2.367.gf0de
-In-Reply-To: <1244847619-7364-5-git-send-email-spearce@spearce.org>
+	id S1754345AbZFLXLh convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 12 Jun 2009 19:11:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753220AbZFLXLg
+	(ORCPT <rfc822;git-outgoing>); Fri, 12 Jun 2009 19:11:36 -0400
+Received: from mail-fx0-f216.google.com ([209.85.220.216]:53443 "EHLO
+	mail-fx0-f216.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751232AbZFLXLf convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 12 Jun 2009 19:11:35 -0400
+Received: by fxm12 with SMTP id 12so922221fxm.37
+        for <git@vger.kernel.org>; Fri, 12 Jun 2009 16:11:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=FELsCHTEkJc2IAwhjUzHN08H73Xnwrfgln90PQKZeMs=;
+        b=nzM49XgbPf+Eyl6ox1Px/sNmQ0RCvBkGiant2ZmZyoI5j+IBhDHRXxjUjr0EB9cj82
+         tVncls3klW8Vv4s9XNseTfF/8KgOVtAktkAyEFxghpmxjXQE21mhC958X8eErjHaX2Ou
+         FY9eQ73KuNH919nIoSaP80FDXcTcaBO00qOOw=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=oCTm2+RH0tZXbah3Pn+Jh6CmU5nqwOJM8J3npjHaWazFeYD4LfMVLG45cl1S0KWhy0
+         HaR2GatOG/49A14sIf/5OuuzJvxzjPPpH99bb29w11ABf2OiRgmA5bMs62v2GPDFkeib
+         0cEnhESUeD3odjX+ROYeL1fnppmHOxOVQsvow=
+Received: by 10.223.113.199 with SMTP id b7mr3049404faq.82.1244848296993; Fri, 
+	12 Jun 2009 16:11:36 -0700 (PDT)
+In-Reply-To: <m3vdn12y6y.fsf@localhost.localdomain>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121465>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121466>
 
-If we get a commit we don't recognize, but we haven't added any new
-common bases to the commonBase set since the last time we ran the
-okToGiveUp() algorithm, then there is no point in running it again,
-as the result will not change.  Instead we cache the result in a
-Boolean and just return the cached result until another common base
-can be found and added to the set.
+On Fri, Jun 12, 2009 at 12:50 PM, Jakub Narebski<jnareb@gmail.com> wrot=
+e:
+> Constantine Plotnikov <constantine.plotnikov@gmail.com> writes:
+>> On Fri, Jun 12, 2009 at 11:56 AM, Daniel Stenberg<daniel@haxx.se> wr=
+ote:
+>>> On Fri, 12 Jun 2009, Nanako Shiraishi wrote:
+>>>
+>>>> It would be ideal if you can inspect the certificate and decide if=
+ you
+>>>> need to ask for decrypting password before using it (and otherwise=
+ you don't
+>>>> ask). If you can't do that, probably you can introduce a config va=
+r that
+>>>> says "this certificate is encrypted", and bypass your new code if =
+that
+>>>> config var isn't set.
+>>>
+>>> Is this really a common setup? Using an unencrypted private key sou=
+nds like
+>>> a really bad security situation to me. The certificate is never enc=
+rupted,
+>>> the passphrase is for the key.
+>>>
+>> For SSH using unencrypted private key is very common for scripting a=
+nd
+>> cron jobs. For HTTPS situation looks like being worse since there is
+>> no analog of ssh-agent that covers at least some of scripting
+>> scenarios. Do we want to disable scripting for HTTPS?
+>
+> Actually you can use _encrypted_ private keys together with ssh-agent
+> and for example keychain helper for scripting. =C2=A0You have to prov=
+ide
+> password to all listed private keys only once at login. =C2=A0I wonde=
+r if
+> something like this would be possible for HTTP certificates...
 
-This helps to fix a performance problem when the client is 50,000
-commits ahead of the server, and keeps sending them in "have"
-lines, but the server doesn't recognize them.  On every "have"
-line we will not have updated the common base, but we also aren't
-yet satisfied that it is OK to give up negotiation.
-
-Between the changes introduced by the parent commit and this commit,
-negotiation in this case of 50,000 ahead now completes instantly,
-instead of taking hours.
-
-Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
----
- .../src/org/spearce/jgit/transport/UploadPack.java |   27 ++++++++++++++------
- 1 files changed, 19 insertions(+), 8 deletions(-)
-
-diff --git a/org.spearce.jgit/src/org/spearce/jgit/transport/UploadPack.java b/org.spearce.jgit/src/org/spearce/jgit/transport/UploadPack.java
-index 5127dad..5c8df62 100644
---- a/org.spearce.jgit/src/org/spearce/jgit/transport/UploadPack.java
-+++ b/org.spearce.jgit/src/org/spearce/jgit/transport/UploadPack.java
-@@ -112,6 +112,9 @@
- 	/** Objects on both sides, these don't have to be sent. */
- 	private final List<RevObject> commonBase = new ArrayList<RevObject>();
- 
-+	/** null if {@link #commonBase} should be examined again. */
-+	private Boolean okToGiveUp;
-+
- 	/** Marked on objects we sent in our advertisement list. */
- 	private final RevFlag ADVERTISED;
- 
-@@ -396,15 +399,26 @@ private boolean matchHave(final ObjectId id) {
- 			o.add(PEER_HAS);
- 			if (o instanceof RevCommit)
- 				((RevCommit) o).carry(PEER_HAS);
--			if (!o.has(COMMON)) {
--				o.add(COMMON);
--				commonBase.add(o);
--			}
-+			addCommonBase(o);
- 		}
- 		return true;
- 	}
- 
-+	private void addCommonBase(final RevObject o) {
-+		if (!o.has(COMMON)) {
-+			o.add(COMMON);
-+			commonBase.add(o);
-+			okToGiveUp = null;
-+		}
-+	}
-+
- 	private boolean okToGiveUp() throws PackProtocolException {
-+		if (okToGiveUp == null)
-+			okToGiveUp = Boolean.valueOf(okToGiveUpImp());
-+		return okToGiveUp.booleanValue();
-+	}
-+
-+	private boolean okToGiveUpImp() throws PackProtocolException {
- 		if (commonBase.isEmpty())
- 			return false;
- 
-@@ -429,10 +443,7 @@ private boolean wantSatisfied(final RevCommit want) throws IOException {
- 			if (c == null)
- 				break;
- 			if (c.has(PEER_HAS)) {
--				if (!c.has(COMMON)) {
--					c.add(COMMON);
--					commonBase.add(c);
--				}
-+				addCommonBase(c);
- 				return true;
- 			}
- 		}
--- 
-1.6.3.2.367.gf0de
+I would love something like this - it would be useful for SVN as well.
