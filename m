@@ -1,81 +1,119 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: Mark Lodato <lodatom@gmail.com>
 Subject: Re: [PATCH 1/2] http.c: prompt for SSL client certificate password
-Date: Fri, 12 Jun 2009 17:31:49 -0700
-Message-ID: <7vk53h3rey.fsf@alter.siamese.dyndns.org>
+Date: Fri, 12 Jun 2009 20:33:23 -0400
+Message-ID: <ca433830906121733w7c88dfd4w1025b7b936e48e95@mail.gmail.com>
 References: <1243480563-5954-1-git-send-email-lodatom@gmail.com>
-	<ca433830906111600n2d45b5bdg3fb6e7c0a537ec78@mail.gmail.com>
-	<20090612084209.6117@nanako3.lavabit.com>
-	<alpine.DEB.2.00.0906120943560.5566@yvahk2.pbagnpgbe.fr>
-	<ca433830906121626q52c15f6cjdb91ffee1f2d8652@mail.gmail.com>
+	 <7vprdaarka.fsf@alter.siamese.dyndns.org>
+	 <ca433830906121613y68e5bdax5778867c41b00339@mail.gmail.com>
+	 <7vocst3s8n.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Daniel Stenberg <daniel@haxx.se>,
-	Nanako Shiraishi <nanako3@lavabit.com>, git@vger.kernel.org
-To: Mark Lodato <lodatom@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Jun 13 02:32:40 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Jun 13 02:33:34 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MFHAl-0001K1-1y
-	for gcvg-git-2@gmane.org; Sat, 13 Jun 2009 02:32:39 +0200
+	id 1MFHBd-0001XL-2D
+	for gcvg-git-2@gmane.org; Sat, 13 Jun 2009 02:33:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757986AbZFMAbs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 12 Jun 2009 20:31:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755090AbZFMAbs
-	(ORCPT <rfc822;git-outgoing>); Fri, 12 Jun 2009 20:31:48 -0400
-Received: from fed1rmmtao105.cox.net ([68.230.241.41]:46597 "EHLO
-	fed1rmmtao105.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752714AbZFMAbs (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Jun 2009 20:31:48 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao105.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20090613003149.WNXW20430.fed1rmmtao105.cox.net@fed1rmimpo01.cox.net>;
-          Fri, 12 Jun 2009 20:31:49 -0400
-Received: from localhost ([68.225.240.211])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id 3CXp1c00E4aMwMQ03CXpRQ; Fri, 12 Jun 2009 20:31:49 -0400
-X-VR-Score: -100.00
-X-Authority-Analysis: v=1.0 c=1 a=ZkqYN0c8iNwA:10 a=Z2nhhV3jvI0A:10
- a=pGLkceISAAAA:8 a=-fFU1-8EK4uGshFYZh0A:9 a=8JyYGRHLt3Vq0k5-2TYV_Qf0Z7cA:4
- a=MSl-tDqOz04A:10
-X-CM-Score: 0.00
-In-Reply-To: <ca433830906121626q52c15f6cjdb91ffee1f2d8652@mail.gmail.com> (Mark Lodato's message of "Fri\, 12 Jun 2009 19\:26\:45 -0400")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+	id S1755950AbZFMAdY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 12 Jun 2009 20:33:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755331AbZFMAdX
+	(ORCPT <rfc822;git-outgoing>); Fri, 12 Jun 2009 20:33:23 -0400
+Received: from mail-bw0-f213.google.com ([209.85.218.213]:55129 "EHLO
+	mail-bw0-f213.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753701AbZFMAdX (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 12 Jun 2009 20:33:23 -0400
+Received: by bwz9 with SMTP id 9so2384036bwz.37
+        for <git@vger.kernel.org>; Fri, 12 Jun 2009 17:33:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=TIR4vCgEXbks5HowsXTaNWb1CESXxHjL2iHNRNYgbTo=;
+        b=fNOoRBl8GdtMEGBiBaAe0dneyaO23l7JFAkn4dXfuDvuVYXjTbErpbBkBOqyYRvRFK
+         SVXH7ID7ueZxLRapplNFi/tvH3F5ANmhTFFvTTsojd79ZceDOCdwnkzf/GbsWXbMfmlK
+         KU83cl8iMrHS6PoANsVKPI1d+JdYh8aHUzgkE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=bfeog7WsE63vQPQvkOFc242svU+RQOK9sL5RquetQpqLFyJv//Wk+0cX/yxoRc25iJ
+         5dm+OUPEggFTPpmWtL/DjznCggzfPy+GnipaKpYFpfKBVpnzrCWkJNwGZv/laGMfdNhX
+         Vy97vQT5u6c5ChMn2vNOtxi1kr1msRBRA0AxU=
+Received: by 10.223.113.199 with SMTP id b7mr3059068faq.82.1244853204029; Fri, 
+	12 Jun 2009 17:33:24 -0700 (PDT)
+In-Reply-To: <7vocst3s8n.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121474>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121475>
 
-Mark Lodato <lodatom@gmail.com> writes:
-
->> And for the libcurl not supporting this, I figure it _could_ be done by
->> simply letting libcurl prope the remote and see if it can access it without
->> a passphrase as that would then imply that isn't necessary.
->>
->> I'm not familiar enough with the code and architecture to deem how suitable
->> such an action would be.
+On Fri, Jun 12, 2009 at 8:14 PM, Junio C Hamano<gitster@pobox.com> wrote:
+> Mark Lodato <lodatom@gmail.com> writes:
 >
-> I don't think it is possible to check to see if it is encrypted from
-> within git (without calling OpenSSL directly).
+>> If this patch series is accepted, I
+>> will make a cleaner version that includes this change.
+>
+> Sorry, but I do not understand this part of your message.
+>
 
-I think what Daniel is suggesting is to attempt making a test connection
-(that does not have to have anything to do with the real object transfer)
-without passphrase to see if it fails.  If it doesn't, you know you do not
-need a passphrase to unlock the key/cert.
+Sorry about that.  I meant that I have cleaned up the code as you
+suggested (see diff below), and that if you decide to include the
+patch series into git.git (I see now you included it in pu), I can
+either submit an additional patch to perform the cleanup, or submit a
+new "v2" patch series incorporating these changes.  Is one preferred
+over the other?
 
-While I still think that kind of automated detection would be necessary in
-the longer term (in other words, we do not necessarily have to have it in
-the initial implementation that appears in our official release), until that
-materializes, I think it is more prudent to follow the approach below.
+Also, I wasn't sure where to put the #defines; I chose to put them in
+http.h, but should they go in http.c?
 
->> <snip...> If you can't do that, probably you can introduce a config var that says
->> "this certificate is encrypted", and bypass your new code if that config var isn't set.
+Thanks for the feedback!
+Mark
 
-I think I've said this already in another message, but "I break your
-working setup with my patch, but you can add this configuration to unbreak
-it" should not be done lightly, certainly without a good reason.  And the
-reason here as far as I can see is that the code chooses not to bother
-with the autodetection of encryptedness of the cert/key.  So...
+
+diff --git c/http.c i/http.c
+index 6ae59b6..7659ef4 100644
+--- c/http.c
++++ i/http.c
+@@ -213,16 +213,8 @@ static CURL *get_curl_handle(void)
+        if (ssl_cert != NULL)
+                curl_easy_setopt(result, CURLOPT_SSLCERT, ssl_cert);
+        if (has_cert_password())
+-               curl_easy_setopt(result,
+-#if LIBCURL_VERSION_NUM >= 0x071700
+-                                CURLOPT_KEYPASSWD,
+-#elif LIBCURL_VERSION_NUM >= 0x070903
+-                                CURLOPT_SSLKEYPASSWD,
+-#else
+-                                CURLOPT_SSLCERTPASSWD,
+-#endif
+-                                ssl_cert_password);
+-#if LIBCURL_VERSION_NUM >= 0x070902
++               curl_easy_setopt(result, CURLOPT_KEYPASSWD, ssl_cert_password);
++#ifndef NO_CURLOPT_SSLKEY
+        if (ssl_key != NULL)
+                curl_easy_setopt(result, CURLOPT_SSLKEY, ssl_key);
+ #endif
+diff --git c/http.h i/http.h
+index 26abebe..b49c280 100644
+--- c/http.h
++++ i/http.h
+@@ -29,6 +29,12 @@
+ #define curl_global_init(a) do { /* nothing */ } while(0)
+ #endif
+
++#if LIBCURL_VERSION_NUM < 0x070903
++#define CURLOPT_KEYPASSWD CURLOPT_SSLCERTPASSWD
++#elif LIBCURL_VERSION_NUM < 0x071700
++#define CURLOPT_KEYPASSWD CURLOPT_SSLKEYPASSWD
++#endif
++
+ #if (LIBCURL_VERSION_NUM < 0x070c04) || (LIBCURL_VERSION_NUM == 0x071000)
+ #define NO_CURL_EASY_DUPHANDLE
+ #endif
