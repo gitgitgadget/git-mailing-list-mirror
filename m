@@ -1,110 +1,151 @@
-From: Reece Dunn <msclrhd@googlemail.com>
-Subject: Fwd: Native Windows implementation of GIT ?
-Date: Sat, 13 Jun 2009 17:12:07 +0100
-Message-ID: <3f4fd2640906130912l6cf050bct7d4313bd3d546908@mail.gmail.com>
-References: <2A554044B82841D594338E2E096804BC@HPLAPTOP>
-	 <3f4fd2640906121512rdede623k7d08ef9785b8bc5a@mail.gmail.com>
-	 <9719867c0906130832y491daa8eq1a684051f2268d1e@mail.gmail.com>
-	 <3f4fd2640906130909x6184f06bl5b6369e6e280426c@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Aaron Gray <aaronngray.lists@googlemail.com>
-To: Git List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Jun 13 18:20:20 2009
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: [PATCHv2 4/5] builtin-remote: Show push urls as well
+Date: Sat, 13 Jun 2009 18:29:10 +0200
+Message-ID: <1244910551-4420-2-git-send-email-git@drmicha.warpmail.net>
+References: <7vtz2pmf98.fsf@alter.siamese.dyndns.org>
+ <1244910551-4420-1-git-send-email-git@drmicha.warpmail.net>
+Cc: Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Jun 13 18:30:22 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MFVxr-0001b6-AI
-	for gcvg-git-2@gmane.org; Sat, 13 Jun 2009 18:20:19 +0200
+	id 1MFW7a-00067D-2Y
+	for gcvg-git-2@gmane.org; Sat, 13 Jun 2009 18:30:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757593AbZFMQUB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 13 Jun 2009 12:20:01 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755055AbZFMQUA
-	(ORCPT <rfc822;git-outgoing>); Sat, 13 Jun 2009 12:20:00 -0400
-Received: from qw-out-2122.google.com ([74.125.92.24]:60247 "EHLO
-	qw-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753046AbZFMQT7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 13 Jun 2009 12:19:59 -0400
-Received: by qw-out-2122.google.com with SMTP id 5so1823849qwd.37
-        for <git@vger.kernel.org>; Sat, 13 Jun 2009 09:20:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=KuTWU1ue4Qnzb7HApu0NXlHXgqrSpxwgbhzArqyfuaw=;
-        b=WJXOHItbleLggOexRNwaAyBShka5w1yeiur2Zl51rEPyENtye+Buk0k50stBL8wRs2
-         smDWxCNIbCJ1tkEXL8NOVc56nM63eFBbg7OCOjUeIQQ4SuWdGrkLQQiDyM3OpOOP+sd1
-         9xGUpbZLNybETIjOZrCpApYkh2NODP+K1hsMg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=h8+LO6qvMEwQ+kcD+gj+So9o3u+eqXbSjyCZ8t330Co6UK+yKrVLAzHl/JwI++cWIR
-         /jKXY2JA6wQcSdgLG5HgEBs697Fcy/sqzpaWaRWwmntJoy+hnf9cCNlsKZ/AuJ5oSXTg
-         Dd83pt5qXFvV3Q8iZFA/NVvubz1W1XgR3tiec=
-Received: by 10.220.91.203 with SMTP id o11mr4043407vcm.95.1244909527615; Sat, 
-	13 Jun 2009 09:12:07 -0700 (PDT)
-In-Reply-To: <3f4fd2640906130909x6184f06bl5b6369e6e280426c@mail.gmail.com>
+	id S1760302AbZFMQaP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 13 Jun 2009 12:30:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760172AbZFMQaO
+	(ORCPT <rfc822;git-outgoing>); Sat, 13 Jun 2009 12:30:14 -0400
+Received: from out2.smtp.messagingengine.com ([66.111.4.26]:57307 "EHLO
+	out2.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1755575AbZFMQaI (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 13 Jun 2009 12:30:08 -0400
+Received: from compute1.internal (compute1.internal [10.202.2.41])
+	by out1.messagingengine.com (Postfix) with ESMTP id 250AA35FA85;
+	Sat, 13 Jun 2009 12:30:11 -0400 (EDT)
+Received: from heartbeat1.messagingengine.com ([10.202.2.160])
+  by compute1.internal (MEProxy); Sat, 13 Jun 2009 12:30:11 -0400
+X-Sasl-enc: 2BrQU/zVopqG2xzSyoh+22Ll1fsG8XZWzYG1QSc19B6k 1244910610
+Received: from localhost (p5485A135.dip0.t-ipconnect.de [84.133.161.53])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 29D2639C03;
+	Sat, 13 Jun 2009 12:30:10 -0400 (EDT)
+X-Mailer: git-send-email 1.6.3.2.367.gf0de
+In-Reply-To: <1244910551-4420-1-git-send-email-git@drmicha.warpmail.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121506>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121507>
 
-Forwarding to the git mailing list (Aaron: could you keep the mailing
-list in the CC, thanks).
+Teach builtin remote to show push urls also when asked to
+"show" a specific remote.
 
-- Reece
+This improves upon the standard display mode: multiple specified "url"s
+mean that the first one is for fetching, all are used for pushing. We
+make this clearer now by displaying the first one prefixed with "Fetch
+URL", and all "url"s (or, if present, all "pushurl"s) prefixed with
+"Push  URL".
 
----------- Forwarded message ----------
-From: Reece Dunn <msclrhd@googlemail.com>
-Date: 2009/6/13
-Subject: Re: Native Windows implementation of GIT ?
-To: Aaron Gray <aaronngray.lists@googlemail.com>
+Example with "one" having one url, "two" two urls, "three" one url and
+one pushurl (URL part only):
 
+* remote one
+  Fetch URL: hostone.com:/somepath/repoone.git
+  Push  URL: hostone.com:/somepath/repoone.git
+* remote two
+  Fetch URL: hosttwo.com:/somepath/repotwo.git
+  Push  URL: hosttwo.com:/somepath/repotwo.git
+  Push  URL: hosttwobackup.com:/somewheresafe/repotwo.git
+* remote three
+  Fetch URL: http://hostthree.com/otherpath/repothree.git
+  Push  URL: hostthree.com:/pathforpushes/repothree.git
 
-2009/6/13 Aaron Gray <aaronngray.lists@googlemail.com>:
->>Unless by native you mean using Visual Studio?
->
-> Yes built on Visual Studio or other native Windows compiler.
+Also, adjust t5505 accordingly and make it test for the new output.
 
-mingw (using gcc) is a native Windows compiler (it goes directly
-through the Win32 API, except for the portability wrappers in git
-itself).
+Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
+---
+ builtin-remote.c  |   20 +++++++++++++++-----
+ t/t5505-remote.sh |   10 +++++++---
+ 2 files changed, 22 insertions(+), 8 deletions(-)
 
-> A GIT that runs natively on Windows, using Windows paths, etc
-
-The MSYS/mingw port of git does run natively on Windows. I haven't
-used it recently (I have switched to using Linux), so I don't know
-about how well it copes with Windows paths.
-
-If you have any issues with msysgit (or git on Windows in general) in
-regard to functionality (e.g. ".gitignore does not work with Windows
-paths"), I would suggest raising these issues. Problems that are not
-reported cannot be fixed.
-
-- Reece
-
-> Aaron
->
-> 2009/6/12 Reece Dunn <msclrhd@googlemail.com>
->>
->> 2009/6/12 Aaron Gray <aaronngray.lists@googlemail.com>:
->> > Is there going to be a native Windows implementation of GIT ?
->> >
->> > i.e. not MSYS or Cygwin based.
->> >
->> > Many thanks in advance,
->>
->> Cygwin is an adapter layer that maps posix calls to the Windows Win32
->> API, so is not a native implementation.
->>
->> MSYS uses the MinGW (gcc) compiler uses the native Windows Win32 API,
->> so the MSYS version *is* native.
->>
->> Unless by native you mean using Visual Studio?
->>
->> - Reece
+diff --git a/builtin-remote.c b/builtin-remote.c
+index dfc0b9e..b350b18 100644
+--- a/builtin-remote.c
++++ b/builtin-remote.c
+@@ -999,15 +999,25 @@ static int show(int argc, const char **argv)
+ 	info.list = &info_list;
+ 	for (; argc; argc--, argv++) {
+ 		int i;
++		const char **url;
++		int url_nr;
+ 
+ 		get_remote_ref_states(*argv, &states, query_flag);
+ 
+ 		printf("* remote %s\n", *argv);
+-		if (states.remote->url_nr) {
+-			for (i=0; i < states.remote->url_nr; i++)
+-				printf("  URL: %s\n", states.remote->url[i]);
+-		} else
+-			printf("  URL: %s\n", "(no URL)");
++		printf("  Fetch URL: %s\n", states.remote->url_nr > 0 ?
++			states.remote->url[0] : "(no URL)");
++		if (states.remote->pushurl_nr) {
++			url = states.remote->pushurl;
++			url_nr = states.remote->pushurl_nr;
++		} else {
++			url = states.remote->url;
++			url_nr = states.remote->url_nr;
++		}
++		for (i=0; i < url_nr; i++)
++			printf("  Push  URL: %s\n", url[i]);
++		if (!i)
++			printf("  Push  URL: %s\n", "(no URL)");
+ 		if (no_query)
+ 			printf("  HEAD branch: (not queried)\n");
+ 		else if (!states.heads.nr)
+diff --git a/t/t5505-remote.sh b/t/t5505-remote.sh
+index e70246b..852ccb5 100755
+--- a/t/t5505-remote.sh
++++ b/t/t5505-remote.sh
+@@ -135,7 +135,8 @@ EOF
+ 
+ cat > test/expect << EOF
+ * remote origin
+-  URL: $(pwd)/one
++  Fetch URL: $(pwd)/one
++  Push  URL: $(pwd)/one
+   HEAD branch: master
+   Remote branches:
+     master new (next fetch will store in remotes/origin)
+@@ -151,7 +152,8 @@ cat > test/expect << EOF
+     master pushes to master   (local out of date)
+     master pushes to upstream (create)
+ * remote two
+-  URL: ../two
++  Fetch URL: ../two
++  Push  URL: ../three
+   HEAD branch (remote HEAD is ambiguous, may be one of the following):
+     another
+     master
+@@ -173,6 +175,7 @@ test_expect_success 'show' '
+ 	 git branch --track rebase origin/master &&
+ 	 git branch -d -r origin/master &&
+ 	 git config --add remote.two.url ../two &&
++	 git config --add remote.two.pushurl ../three &&
+ 	 git config branch.rebase.rebase true &&
+ 	 git config branch.octopus.merge "topic-a topic-b topic-c" &&
+ 	 (cd ../one &&
+@@ -191,7 +194,8 @@ test_expect_success 'show' '
+ 
+ cat > test/expect << EOF
+ * remote origin
+-  URL: $(pwd)/one
++  Fetch URL: $(pwd)/one
++  Push  URL: $(pwd)/one
+   HEAD branch: (not queried)
+   Remote branches: (status not queried)
+     master
+-- 
+1.6.3.2.367.gf0de
