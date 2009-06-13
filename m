@@ -1,64 +1,158 @@
-From: Theodore Tso <tytso@mit.edu>
-Subject: Re: Who uses Signed-off-by and DCO?
-Date: Fri, 12 Jun 2009 23:00:09 -0400
-Message-ID: <20090613030009.GF24336@mit.edu>
-References: <20090612084207.6117@nanako3.lavabit.com> <20090612175105.GD6417@mit.edu> <7vfxe52bk3.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Nanako Shiraishi <nanako3@lavabit.com>, git@vger.kernel.org
+From: Christian Couder <chriscool@tuxfamily.org>
+Subject: [PATCH] bisect: use a PRNG with a bias when skipping away from
+	untestable commits
+Date: Sat, 13 Jun 2009 07:21:06 +0200
+Message-ID: <20090613052107.4190.71471.chriscool@tuxfamily.org>
+Cc: git@vger.kernel.org, Sam Vilain <sam@vilain.net>,
+	"H. Peter Anvin" <hpa@zytor.com>, Ingo Molnar <mingo@elte.hu>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Jun 13 05:00:33 2009
+X-From: git-owner@vger.kernel.org Sat Jun 13 07:22:31 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MFJTs-0003eW-C6
-	for gcvg-git-2@gmane.org; Sat, 13 Jun 2009 05:00:32 +0200
+	id 1MFLhG-0004uJ-Q8
+	for gcvg-git-2@gmane.org; Sat, 13 Jun 2009 07:22:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752067AbZFMDAT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 12 Jun 2009 23:00:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751996AbZFMDAS
-	(ORCPT <rfc822;git-outgoing>); Fri, 12 Jun 2009 23:00:18 -0400
-Received: from thunk.org ([69.25.196.29]:55040 "EHLO thunker.thunk.org"
+	id S1752382AbZFMFWS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 13 Jun 2009 01:22:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751866AbZFMFWR
+	(ORCPT <rfc822;git-outgoing>); Sat, 13 Jun 2009 01:22:17 -0400
+Received: from smtp4-g21.free.fr ([212.27.42.4]:48724 "EHLO smtp4-g21.free.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751775AbZFMDAR (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Jun 2009 23:00:17 -0400
-Received: from root (helo=closure.thunk.org)
-	by thunker.thunk.org with local-esmtp   (Exim 4.50 #1 (Debian))
-	id 1MFJTY-0004o0-4J; Fri, 12 Jun 2009 23:00:12 -0400
-Received: from tytso by closure.thunk.org with local (Exim 4.69)
-	(envelope-from <tytso@mit.edu>)
-	id 1MFJTV-0001Kg-O2; Fri, 12 Jun 2009 23:00:09 -0400
-Content-Disposition: inline
-In-Reply-To: <7vfxe52bk3.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-SA-Exim-Connect-IP: <locally generated>
-X-SA-Exim-Mail-From: tytso@mit.edu
-X-SA-Exim-Scanned: No (on thunker.thunk.org); SAEximRunCond expanded to false
+	id S1751698AbZFMFWQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 13 Jun 2009 01:22:16 -0400
+Received: from smtp4-g21.free.fr (localhost [127.0.0.1])
+	by smtp4-g21.free.fr (Postfix) with ESMTP id 713FF4C802F;
+	Sat, 13 Jun 2009 07:22:09 +0200 (CEST)
+Received: from bureau.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
+	by smtp4-g21.free.fr (Postfix) with ESMTP id 0BC094C8079;
+	Sat, 13 Jun 2009 07:22:06 +0200 (CEST)
+X-git-sha1: a1559db439f59cf44356d84ecd57a5ae6de8bae4 
+X-Mailer: git-mail-commits v0.5.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121480>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121481>
 
-On Fri, Jun 12, 2009 at 05:59:40PM -0700, Junio C Hamano wrote:
-> >
-> > E2fsprogs uses the DCO convetion as well.
-> 
-> True; I do not know if it counts as "other than the Kernel project"
-> in the original question, though.
+Using a PRNG (pseudo random number generator) with a bias should be better
+than alternating between 3 fixed ratios.
 
-It depends on how you define "the Kernel project", I suppose.
-E2fsprogs is built on a wide variety of platforms, including the GNU
-Hurd, FreeBSD, Solaris, and others.  So is it part of the "[Linux]
-Kernel project"?
+In repositories with many untestable commits it should prevent alternating
+between areas where many commits are untestable. The bias should favor
+commits that can give more information, so that the bisection process
+should not loose much efficiency.
 
-I suppose util-linux-ng might be a closer call (it also uses the DCO
-convention) as it is pretty well Linux-specific.  The developer
-community of util-linux-ng is primarily not composed of kernel
-developers, however, although there is some overlap.
+HPA suggested to use a PRNG and found that the best bias is to raise a
+ratio between 0 and 1 given by the PRNG to the power 1.5.
 
-BTW, some of the X.org git repositories also seem to be using DCO,
-although its usage seems to be a bit spotty.
+An integer square root function is implemented to avoid including
+<math.h> and linking with -lm.
 
-					- Ted
+A PRNG function is implemented to get the same number sequence on
+different machines as suggested by "man 3 rand".
+
+Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+---
+ bisect.c                    |   50 +++++++++++++++++++++++++++++++++---------
+ t/t6030-bisect-porcelain.sh |    4 +-
+ 2 files changed, 41 insertions(+), 13 deletions(-)
+
+diff --git a/bisect.c b/bisect.c
+index 6fdff05..095b55e 100644
+--- a/bisect.c
++++ b/bisect.c
+@@ -585,16 +585,49 @@ struct commit_list *filter_skipped(struct commit_list *list,
+ 	return filtered;
+ }
+ 
+-static struct commit_list *apply_skip_ratio(struct commit_list *list,
+-					    int count,
+-					    int skip_num, int skip_denom)
++#define PRN_MODULO 32768
++
++/*
++ * This is a pseudo random number generator based on "man 3 rand".
++ * It is not used properly because the seed is the argument and it
++ * is increased by one between each call, but that should not matter
++ * for this application.
++ */
++int get_prn(int count) {
++	count = count * 1103515245 + 12345;
++	return ((unsigned)(count/65536) % PRN_MODULO);
++}
++
++/*
++ * Custom integer square root from
++ * http://en.wikipedia.org/wiki/Integer_square_root
++ */
++static int sqrti(int val)
++{
++	float d, x = val;
++
++	if (val == 0)
++		return 0;
++
++	do {
++		float y = (x + (float)val / x) / 2;
++		d = (y > x) ? y - x : x - y;
++		x = y;
++	} while (d >= 0.5);
++
++	return (int)x;
++}
++
++static struct commit_list *skip_away(struct commit_list *list, int count)
+ {
+-	int index, i;
+ 	struct commit_list *cur, *previous;
++	int prn, index, i;
++
++	prn = get_prn(count);
++	index = (count * prn / PRN_MODULO) * sqrti(prn) / sqrti(PRN_MODULO);
+ 
+ 	cur = list;
+ 	previous = NULL;
+-	index = count * skip_num / skip_denom;
+ 
+ 	for (i = 0; cur; cur = cur->next, i++) {
+ 		if (i == index) {
+@@ -614,7 +647,6 @@ static struct commit_list *managed_skipped(struct commit_list *list,
+ 					   struct commit_list **tried)
+ {
+ 	int count, skipped_first;
+-	int skip_num, skip_denom;
+ 
+ 	*tried = NULL;
+ 
+@@ -626,11 +658,7 @@ static struct commit_list *managed_skipped(struct commit_list *list,
+ 	if (!skipped_first)
+ 		return list;
+ 
+-	/* Use alternatively 1/5, 2/5 and 3/5 as skip ratio. */
+-	skip_num = count % 3 + 1;
+-	skip_denom = 5;
+-
+-	return apply_skip_ratio(list, count, skip_num, skip_denom);
++	return skip_away(list, count);
+ }
+ 
+ static void bisect_rev_setup(struct rev_info *revs, const char *prefix,
+diff --git a/t/t6030-bisect-porcelain.sh b/t/t6030-bisect-porcelain.sh
+index 4556cdd..1315bab 100755
+--- a/t/t6030-bisect-porcelain.sh
++++ b/t/t6030-bisect-porcelain.sh
+@@ -563,8 +563,8 @@ test_expect_success 'skipping away from skipped commit' '
+ 	hash7=$(git rev-parse --verify HEAD) &&
+ 	test "$hash7" = "$HASH7" &&
+         git bisect skip &&
+-	hash3=$(git rev-parse --verify HEAD) &&
+-	test "$hash3" = "$HASH3"
++	para3=$(git rev-parse --verify HEAD) &&
++	test "$para3" = "$PARA_HASH3"
+ '
+ 
+ #
+-- 
+1.6.3.GIT
