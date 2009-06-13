@@ -1,102 +1,67 @@
-From: Todd Zullinger <tmz@pobox.com>
-Subject: Re: [bug] git cannot find "git pull"?
-Date: Sat, 13 Jun 2009 13:36:00 -0400
-Message-ID: <20090613173600.GL5076@inocybe.localdomain>
-References: <4A319CE1.6040201@garzik.org>
- <20090612011737.GB5076@inocybe.localdomain> <4A323C56.1090703@garzik.org>
- <4A32A814.5050802@garzik.org> <20090612202642.GI5076@inocybe.localdomain>
- <4A32BF52.50603@garzik.org> <20090613150451.GK5076@inocybe.localdomain>
- <4A33E069.4050401@garzik.org>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: running git as root
+Date: Sat, 13 Jun 2009 19:49:07 +0200
+Message-ID: <81b0412b0906131049v60cfbc9bm3fd26cc25acc2cd4@mail.gmail.com>
+References: <3a3d9e520906130825k25815c9atafde301d9fbc1da2@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256; protocol="application/pgp-signature"; boundary="O8/n5iBOhiUtMkxf"
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: Jeff Garzik <jeff@garzik.org>
-X-From: git-owner@vger.kernel.org Sat Jun 13 19:36:22 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Marco Nelissen <marcone@xs4all.nl>
+X-From: git-owner@vger.kernel.org Sat Jun 13 19:49:20 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MFX9S-0007Ud-0f
-	for gcvg-git-2@gmane.org; Sat, 13 Jun 2009 19:36:22 +0200
+	id 1MFXLz-0003j4-Aa
+	for gcvg-git-2@gmane.org; Sat, 13 Jun 2009 19:49:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755332AbZFMRgG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 13 Jun 2009 13:36:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753641AbZFMRgE
-	(ORCPT <rfc822;git-outgoing>); Sat, 13 Jun 2009 13:36:04 -0400
-Received: from a-sasl-fastnet.sasl.smtp.pobox.com ([207.106.133.19]:47508 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752738AbZFMRgD (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 13 Jun 2009 13:36:03 -0400
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTP id DEA56BB7A0;
-	Sat, 13 Jun 2009 13:36:04 -0400 (EDT)
-Received: from inocybe.localdomain (unknown [173.67.155.244]) (using TLSv1
- with cipher AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-sasl-fastnet.sasl.smtp.pobox.com (Postfix) with ESMTPSA id EC32EBB79F; Sat,
- 13 Jun 2009 13:36:01 -0400 (EDT)
-Content-Disposition: inline
-In-Reply-To: <4A33E069.4050401@garzik.org>
-User-Agent: Mutt/1.5.19 (2009-01-05)
-X-Pobox-Relay-ID: ABA899BC-5840-11DE-B798-97731A10BFE7-09356542!a-sasl-fastnet.pobox.com
+	id S1754985AbZFMRtJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 13 Jun 2009 13:49:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754518AbZFMRtI
+	(ORCPT <rfc822;git-outgoing>); Sat, 13 Jun 2009 13:49:08 -0400
+Received: from mail-bw0-f213.google.com ([209.85.218.213]:47218 "EHLO
+	mail-bw0-f213.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754178AbZFMRtH (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 13 Jun 2009 13:49:07 -0400
+Received: by bwz9 with SMTP id 9so2614803bwz.37
+        for <git@vger.kernel.org>; Sat, 13 Jun 2009 10:49:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=NiFi66GmGavRmvq2C5paQ3TpqvMraIFVQxYswF6dVsw=;
+        b=RCcICdq4ojb2Nyjq67PSLFXXT22TfReyecDhvgOYG1E9KYJT5umv2GS4rxr5j4liGQ
+         JjDuaedF7JcGmUyyDuq+2dT7pQcj1hpgb+EeBjRPhskTs8L+TDjcVubWpdSbndzuig5m
+         3ZMhASRGEN0sV7me4vXuQ/WokBqAWEzqJ1HT4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=SEdhhpcO3FZsEHiDsL41ZFhu1tsg0/SM7APK6ROjpMrnC1Un3M/0zbXJzf0gLq6JlO
+         UXhrD6Y7vJZsMBN9i888QzUqK905ebs5d5KJnRWttODhWX573LarQ/RktUg2FL8Q9yD3
+         nUz6yGFDnoGLyY/M5kYCTc+VihlHvdXEn0AAs=
+Received: by 10.204.72.129 with SMTP id m1mr4971716bkj.61.1244915347595; Sat, 
+	13 Jun 2009 10:49:07 -0700 (PDT)
+In-Reply-To: <3a3d9e520906130825k25815c9atafde301d9fbc1da2@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121511>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121512>
 
+2009/6/13 Marco Nelissen <marcone@xs4all.nl>:
+> When running as root, git fails a number of test cases that expect it
+> to fail on read-only repositories (for example 't0004-unwritable.sh').
+> I was thinking of either changing the code so that it checks
+> permissions itself when opening files as root, or add a prerequisite
+> to those test cases so that they are skipped when running as root.
 
---O8/n5iBOhiUtMkxf
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+There is such a prerequisite already (POSIXPERM), but what caused
+you to run the _tests_ as root?
 
-Jeff Garzik wrote:
-> Found it!  A forgotten package I created, a collective of shell
-> scripts, was setting GIT_EXEC_PATH=3D/usr/local/bin.
+> What would be the preferred way?
 
-Phew.  I was worried I might have to start drinking much earlier than
-usual today. ;)
-
-> Given that /usr/local/bin/*git* has not existed on my systems for a
-> long time, it appears that this is a new behavior, being a bit more
-> strict in complaining about an invalid GIT_EXEC_PATH, rather than
-> simply falling back to the internal compiled default
-> (/usr/libexec/git-core).
-
-Without looking closely at the make files and build logic, is it
-perhaps something caused by the previous Fedora git-1.6.0.x packages
-passing gitexecdir=3D%{_bindir} to make, while the F-11 and newer
-packages do not set any gitexecdir?
-
-> Things are working again now that the local GIT_EXEC_PATH export is
-> removed.
-
-Glad you found the culprit.
-
---=20
-Todd        OpenPGP -> KeyID: 0xBEAF0CE3 | URL: www.pobox.com/~tmz/pgp
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-I always keep a supply of stimulant handy in case I see a snake -
-which I also keep handy.
-    -- W. C. Fields
-
-
---O8/n5iBOhiUtMkxf
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
-
-iQFDBAEBCAAtBQJKM+N1JhhodHRwOi8vd3d3LnBvYm94LmNvbS9+dG16L3BncC90
-bXouYXNjAAoJEEMlk4u+rwzjCe0IAIvNMdffoRtv2V1iyuI0g+5phi8YVycETwcY
-N60P/ob6pm4PRnx1QvwOEAPy7oYcRkcL+LJ+/7oGRrt0sUuufAiKBCRwAIPS/F8E
-X50/qv/RGuoTXaUyZgOfVmRPCk72G0q4JK02g7At1EjZ+BtRArBgTrbY/9ukGYJa
-n1JP5V2PmNz48FG+m1nGL7gkRkxQwuCxiFVu0CFlPQ42/GkB3xWbW0iQPQGy4mh7
-gIAUO5YZ7pvVh/APyPbNqgyavNlHJ4caQEPjhihDRyyy3Q1PgVttqi5Iffznx7+s
-sZ40rQwgFjBQC6nVYoHgegXFBLDf1VLiZiA+Ewr1byHN/fyiLJQ=
-=Uk9N
------END PGP SIGNATURE-----
-
---O8/n5iBOhiUtMkxf--
+Use the prerequisite would sound right when not the
+strangeness of the idea.
