@@ -1,98 +1,97 @@
-From: Markus Heidelberg <markus.heidelberg@web.de>
-Subject: Re: [PATCH QGit RFC] Fix "Save patch..." on a commit range
-Date: Sat, 13 Jun 2009 13:33:57 +0200
-Message-ID: <200906131333.57725.markus.heidelberg@web.de>
-References: <1244849357-31166-1-git-send-email-markus.heidelberg@web.de> <200906131302.43091.markus.heidelberg@web.de> <e5bfff550906130412v6e223511tf0e20c685b21c490@mail.gmail.com>
-Reply-To: markus.heidelberg@web.de
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: git svn: Supporting multiple branch subdirs?
+Date: Sat, 13 Jun 2009 13:46:10 +0200
+Message-ID: <4A339182.1090204@drmicha.warpmail.net>
+References: <4A32CCA5.7040404@xiplink.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="utf-8"
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Marco Costalba <mcostalba@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Jun 13 13:36:28 2009
+Cc: git list <git@vger.kernel.org>, normalperson@yhbt.net
+To: Marc Branchaud <marcnarc@xiplink.com>
+X-From: git-owner@vger.kernel.org Sat Jun 13 13:47:22 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MFRXA-000323-90
-	for gcvg-git-2@gmane.org; Sat, 13 Jun 2009 13:36:28 +0200
+	id 1MFRhh-0005qK-2h
+	for gcvg-git-2@gmane.org; Sat, 13 Jun 2009 13:47:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751375AbZFMLdz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 13 Jun 2009 07:33:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751098AbZFMLdy
-	(ORCPT <rfc822;git-outgoing>); Sat, 13 Jun 2009 07:33:54 -0400
-Received: from fmmailgate03.web.de ([217.72.192.234]:53917 "EHLO
-	fmmailgate03.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750896AbZFMLdx (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 13 Jun 2009 07:33:53 -0400
-Received: from smtp07.web.de (fmsmtp07.dlan.cinetic.de [172.20.5.215])
-	by fmmailgate03.web.de (Postfix) with ESMTP id 6EBA0FFD5D18;
-	Sat, 13 Jun 2009 13:33:55 +0200 (CEST)
-Received: from [89.59.112.3] (helo=.)
-	by smtp07.web.de with asmtp (TLSv1:AES256-SHA:256)
-	(WEB.DE 4.110 #277)
-	id 1MFRUh-0002rO-00; Sat, 13 Jun 2009 13:33:55 +0200
-User-Agent: KMail/1.9.9
-In-Reply-To: <e5bfff550906130412v6e223511tf0e20c685b21c490@mail.gmail.com>
-Jabber-ID: markus.heidelberg@web.de
-Content-Disposition: inline
-X-Sender: markus.heidelberg@web.de
-X-Provags-ID: V01U2FsdGVkX1/T9kpIoKjHSJ3/Gjv2GNTVL9nClFV6DCc7/BlO
-	ha6hsn7VZqKIPZgx6ZT6x7wtEwRU5il1aimiTtxQ09Lma8KXE7
-	fXFGzBkbCV52reO1Qgfg==
+	id S1752023AbZFMLrI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 13 Jun 2009 07:47:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751759AbZFMLrG
+	(ORCPT <rfc822;git-outgoing>); Sat, 13 Jun 2009 07:47:06 -0400
+Received: from out2.smtp.messagingengine.com ([66.111.4.26]:47379 "EHLO
+	out2.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751255AbZFMLrF (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 13 Jun 2009 07:47:05 -0400
+Received: from compute1.internal (compute1.internal [10.202.2.41])
+	by out1.messagingengine.com (Postfix) with ESMTP id AD748357333;
+	Sat, 13 Jun 2009 07:47:06 -0400 (EDT)
+Received: from heartbeat1.messagingengine.com ([10.202.2.160])
+  by compute1.internal (MEProxy); Sat, 13 Jun 2009 07:47:06 -0400
+X-Sasl-enc: cElGPBW9o4fKkfJjZe3N16HShLMrc1S1eTxg7a85hc5N 1244893626
+Received: from localhost.localdomain (p5485A135.dip0.t-ipconnect.de [84.133.161.53])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id C851C39B67;
+	Sat, 13 Jun 2009 07:47:05 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1pre) Gecko/20090609 Lightning/1.0pre Shredder/3.0b3pre
+In-Reply-To: <4A32CCA5.7040404@xiplink.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121498>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121499>
 
-Marco Costalba, 13.06.2009:
-> On Sat, Jun 13, 2009 at 12:02, Markus
-> Heidelberg<markus.heidelberg@web.de> wrote:
-> >
-> > OK, if I now disable "All branches" in "View->Select range...", I get
-> > the 2 patches from above again.
-> > But in my git repo with local branches, it's the other way round...
-> >
-> > Markus
-> >
+Marc Branchaud venit, vidit, dixit 12.06.2009 23:46:
+> Hi,
 > 
-> Ok. The point is that if I select 4 _consecutive_ revisions from any
-> repo and do "Save as..." then I see the 4 patches created in reverse
-> cronoligical order as it should be.
+> I believe I need git-svn to support multiple branch subdirectories.
+> 
+> The motivation for this is the (partial) gitification of the FreeBSD subversion repository.  FreeBSD doesn't follow the usual branches/tags/trunk pattern.  Instead:
+> 
+> - FreeBSD's /trunk is called /head.
+> 
+> - /head is branched into /stable/X subdirs.
+> 
+> - Each /stable/X branch is sub-branched into /releng/X.Y subirs.
+> 
+> - /releng/X.Y.Z branches are tagged under /release/foo.
+> 
+> I'm only looking to get an updatable mirror of their repo -- I don't (yet) need to push changes back to FreeBSD.
+> 
+> I'd like to modify git-svn to support multiple (at least two) -b parameters, so I could import the FreeBSD repo with something like
+> 	git svn init --trunk=head \
+> 		--branches=stable \
+> 		--branches=releng \
+> 		--tags=release \
+> 		file:///local/mirror/of/svn.freebsd.org/base/
+> 	git svn fetch
+> 
+> Is this approach wise or even feasible?  A couple of possible show-stoppers I see are:
 
-I did the same as you: selected the 4 consecutive revisions. But I
-didn't get 4 patches. Dependent on the state of the "All branches"
-checkbox of the "Range select", I get 2 or 0 patches. The QStringList
-shaList is set wrong for me.
+After doing the init with "--branches=stable" (without releng), do
+git config --add svn-remote.svn.branches 'releng/*:refs/remotes/*'
 
-> If I select only two patches _non_ consecutives and I do "Save as..."
-> I get the two patches + all the pacthes in between still in reverse
-> cronological order.
+This gives you two branches refspecs in .git/config (feel free to put
+them in different dirs under remotes if there may be name clashes
+between stable and releng branches).
 
-Yes, I'm aware of that. It shouldn't make a difference if I only select
-start end end revision or if I select all revisions including the
-revisions between start and end.
-And as I said earlier: the order of the patches is not my problem.
+> 
+> - The releng/X.Y branches are created from the stable/X  tree, where X itself doesn't exist from the start.
 
-> This is with stock QGit 2.3, Windows version.
+Well, I assume X exists at the time of creation of X.Y. That's all that
+is needed.
 
-I tested with the latest qgit.git and with QGit 2.2 from my
-distribution. All on Gentoo Linux.
+> 
+> - FreeBSD likes to make single commits that spans multiple branches.  This is usually done as a security patch: One commit can, for example, touch /head, /stable/X, /stable/W, and several branches under /releng.
 
-I just built QGit 2.3, this has the same problems.
+I assume that git-svn converts such an svn commit into several git
+commits, one for each affected branch. Since you have a local mirror
+it's easy to try out.
 
-> Have you some problem to reproduce this behavior (that is intended to
-> be the correct one BTW) ?
+> 
+> If this isn't completely off the wall, I'd appreciate some pointers on the git-svn.perl code.  I've tried searching through the code to see how the -b parameter is handled, but I got lost pretty quickly.  How does the fetch command deal with branches?
 
-Yes, I have :)
+I think there's no need to hack git-svn. Let us know how it goes with
+the two branches configs.
 
-Can you please try, if enabling/disabling the "All branches" checkbox
-makes a difference for you?
-
-I have few time this weekend to respond. Have to play a concert with my
-band today and clean my bike for a triathlon tomorrow. I will try to
-reproduce on Windows, probably after this weekend.
-
-Thanks, Markus
+Michael
