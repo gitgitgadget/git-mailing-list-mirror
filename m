@@ -1,100 +1,118 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] fix show_entry() in tree-diff.c for TREE_IN_RECURSIVE
-Date: Sat, 13 Jun 2009 16:42:23 -0700
-Message-ID: <7v63ezvgyo.fsf@alter.siamese.dyndns.org>
-References: <op.uvhcoii8tdk399@sirnot.private>
+From: =?utf-8?q?Uwe=20Kleine-K=C3=B6nig?= 
+	<u.kleine-koenig@pengutronix.de>
+Subject: [PATCH 1/2] more tests for git rev-parse --parse-opt
+Date: Sun, 14 Jun 2009 01:58:42 +0200
+Message-ID: <1244937523-6194-1-git-send-email-u.kleine-koenig@pengutronix.de>
+References: <20090610141614.GA20299@pengutronix.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: "Nick Edelen" <sirnot@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Jun 14 01:50:20 2009
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Jun 14 01:59:27 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MFczL-00013i-Mv
-	for gcvg-git-2@gmane.org; Sun, 14 Jun 2009 01:50:20 +0200
+	id 1MFd87-0002il-CR
+	for gcvg-git-2@gmane.org; Sun, 14 Jun 2009 01:59:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754064AbZFMXm2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 13 Jun 2009 19:42:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753105AbZFMXm1
-	(ORCPT <rfc822;git-outgoing>); Sat, 13 Jun 2009 19:42:27 -0400
-Received: from fed1rmmtao102.cox.net ([68.230.241.44]:59040 "EHLO
-	fed1rmmtao102.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752671AbZFMXm0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 13 Jun 2009 19:42:26 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao102.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20090613234222.WGDF20976.fed1rmmtao102.cox.net@fed1rmimpo01.cox.net>;
-          Sat, 13 Jun 2009 19:42:22 -0400
-Received: from localhost ([68.225.240.211])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id 3biP1c00B4aMwMQ03biPWC; Sat, 13 Jun 2009 19:42:23 -0400
-X-VR-Score: 0.00
-X-Authority-Analysis: v=1.0 c=1 a=J_NeQprUbJUA:10 a=lrbLnaca2U4A:10
- a=pGLkceISAAAA:8 a=HKzFpXsutjY_zaJtbSAA:9 a=4hgAmI2LBiHBXmH3FTP0Hoz9zS4A:4
- a=MSl-tDqOz04A:10
-X-CM-Score: 0.00
-In-Reply-To: <op.uvhcoii8tdk399@sirnot.private> (Nick Edelen's message of "Sat\, 13 Jun 2009 22\:32\:33 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+	id S1754504AbZFMX7M convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 13 Jun 2009 19:59:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754232AbZFMX7M
+	(ORCPT <rfc822;git-outgoing>); Sat, 13 Jun 2009 19:59:12 -0400
+Received: from metis.ext.pengutronix.de ([92.198.50.35]:46766 "EHLO
+	metis.ext.pengutronix.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751748AbZFMX7L (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 13 Jun 2009 19:59:11 -0400
+Received: from ukl by metis.ext.pengutronix.de with local (Exim 4.63)
+	(envelope-from <ukl@pengutronix.de>)
+	id 1MFd7V-0001Of-Cq; Sun, 14 Jun 2009 01:59:12 +0200
+X-Mailer: git-send-email 1.6.3.1
+In-Reply-To: <20090610141614.GA20299@pengutronix.de>
+X-SA-Exim-Connect-IP: <locally generated>
+X-SA-Exim-Mail-From: ukl@pengutronix.de
+X-Spam-Checker-Version: SpamAssassin 3.2.4 (2008-01-01) on
+	metis.extern.pengutronix.de
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.6 required=4.5 tests=BAYES_00,NO_RELAYS
+	shortcircuit=no autolearn=ham version=3.2.4
+X-SA-Exim-Version: 4.2.1 (built Tue, 09 Jan 2007 17:23:22 +0000)
+X-SA-Exim-Scanned: Yes (on metis.ext.pengutronix.de)
+X-PTX-Original-Recipient: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121527>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121528>
 
-"Nick Edelen" <sirnot@gmail.com> writes:
+Signed-off-by: Uwe Kleine-K=C3=B6nig <u.kleine-koenig@pengutronix.de>
+---
+ t/t1502-rev-parse-parseopt.sh |   38 +++++++++++++++++++++++++++++++++=
++++--
+ 1 files changed, 36 insertions(+), 2 deletions(-)
 
-> fix show_entry() in tree_diff.c to display tree entries on TREE_IN_RECURSIVE
-
-s/fix/Fix/; s/$/./;
-
-> Signed-off-by: Nick Edelen <sirnot@gmail.com>
-
-> this seems like how it should act: trees are shown under this option for
-> changes,...
-
-Please show a sample input, the output you expect and the output from the
-current code, to illustrate the alleged breakage better.
-
-For example. if you used to have files dc/1, dr/2, dt/3, fc, fr and ft and
-then removed dr/2, dt/3, fr, ft and added da/5, fa, dt and ft/4, you
-expect this output.
-
-$ git diff -t -r --raw HEAD^ HEAD
-:000000 040000 0000000... a13e5ad... A	da
-:000000 100644 0000000... ce01362... A	da/5
-:040000 040000 8dc877a... 40b5137... M	dc
-:100644 100644 e69de29... ce01362... M	dc/1
-:040000 000000 f84fc27... 0000000... D	dr
-:100644 000000 e69de29... 0000000... D	dr/2
-:000000 100644 0000000... ce01362... A	dt
-:040000 000000 6e36c7d... 0000000... D	dt
-:100644 000000 e69de29... 0000000... D	dt/3
-:000000 100644 0000000... ce01362... A	fa
-:100644 100644 e69de29... ce01362... M	fc
-:100644 000000 e69de29... 0000000... D	fr
-:100644 000000 e69de29... 0000000... D	ft
-:000000 040000 0000000... 9a1efba... A	ft
-:000000 100644 0000000... ce01362... A	ft/4
-
-But because we show 040000 entries only for changed and typechange cases, 
-we currently get this.
-
-$ git diff -t -r --raw HEAD^ HEAD
-:000000 100644 0000000... ce01362... A	da/5
-:040000 040000 8dc877a... 40b5137... M	dc
-:100644 100644 e69de29... ce01362... M	dc/1
-:100644 000000 e69de29... 0000000... D	dr/2
-:000000 100644 0000000... ce01362... A	dt
-:100644 000000 e69de29... 0000000... D	dt/3
-:000000 100644 0000000... ce01362... A	fa
-:100644 100644 e69de29... ce01362... M	fc
-:100644 000000 e69de29... 0000000... D	fr
-:100644 000000 e69de29... 0000000... D	ft
-:000000 100644 0000000... ce01362... A	ft/4
-
-I think the output from the code after your change is more consistent, but
-I somehow suspect that this might break people's script, like gitweb,
-rather badly, if they depended on the existing behaviour.
+diff --git a/t/t1502-rev-parse-parseopt.sh b/t/t1502-rev-parse-parseopt=
+=2Esh
+index 997002d..be0959e 100755
+--- a/t/t1502-rev-parse-parseopt.sh
++++ b/t/t1502-rev-parse-parseopt.sh
+@@ -20,8 +20,7 @@ Extras
+=20
+ EOF
+=20
+-test_expect_success 'test --parseopt help output' '
+-	git rev-parse --parseopt -- -h 2> output.err <<EOF
++cat > optionspec << EOF
+ some-command [options] <args>...
+=20
+ some-command does foo and bar!
+@@ -37,7 +36,42 @@ C?        option C with an optional argument
+ Extras
+ extra1    line above used to cause a segfault but no longer does
+ EOF
++
++test_expect_success 'test --parseopt help output' '
++	git rev-parse --parseopt -- -h 2> output.err < optionspec
+ 	test_cmp expect.err output.err
+ '
+=20
++cat > expect <<EOF
++set -- --foo --bar 'ham' -- 'arg'
++EOF
++
++test_expect_success 'test --parseopt' '
++	git rev-parse --parseopt -- --foo --bar=3Dham arg < optionspec > outp=
+ut &&
++	test_cmp expect output
++'
++
++test_expect_success 'test --parseopt with mixed options and arguments'=
+ '
++	git rev-parse --parseopt -- --foo arg --bar=3Dham < optionspec > outp=
+ut &&
++	test_cmp expect output
++'
++
++cat > expect <<EOF
++set -- --foo -- 'arg' '--bar=3Dham'
++EOF
++
++test_expect_success 'test --parseopt with --' '
++	git rev-parse --parseopt -- --foo -- arg --bar=3Dham < optionspec > o=
+utput &&
++	test_cmp expect output
++'
++
++cat > expect <<EOF
++set -- --foo -- '--' 'arg' '--bar=3Dham'
++EOF
++
++test_expect_success 'test --parseopt --keep-dashdash' '
++	git rev-parse --parseopt --keep-dashdash -- --foo -- arg --bar=3Dham =
+< optionspec > output &&
++	test_cmp expect output
++'
++
+ test_done
+--=20
+1.6.3.1
