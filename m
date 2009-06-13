@@ -1,65 +1,79 @@
-From: Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH] Documentation: remove warning that "git bisect skip" may slow
-	bisection
-Date: Sat, 13 Jun 2009 07:22:57 +0200
-Message-ID: <20090613052258.4209.23374.chriscool@tuxfamily.org>
-Cc: git@vger.kernel.org, Sam Vilain <sam@vilain.net>,
-	"H. Peter Anvin" <hpa@zytor.com>, Ingo Molnar <mingo@elte.hu>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Jun 13 07:23:50 2009
+From: Marco Costalba <mcostalba@gmail.com>
+Subject: Re: [PATCH QGit RFC] Fix "Save patch..." on a commit range
+Date: Sat, 13 Jun 2009 08:13:55 +0100
+Message-ID: <e5bfff550906130013j3a9802cen48ac5828a2357bf1@mail.gmail.com>
+References: <1244849357-31166-1-git-send-email-markus.heidelberg@web.de>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Markus Heidelberg <markus.heidelberg@web.de>
+X-From: git-owner@vger.kernel.org Sat Jun 13 09:14:16 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MFLiY-0005BK-AN
-	for gcvg-git-2@gmane.org; Sat, 13 Jun 2009 07:23:50 +0200
+	id 1MFNRP-0006m4-U2
+	for gcvg-git-2@gmane.org; Sat, 13 Jun 2009 09:14:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753517AbZFMFXl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 13 Jun 2009 01:23:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753372AbZFMFXl
-	(ORCPT <rfc822;git-outgoing>); Sat, 13 Jun 2009 01:23:41 -0400
-Received: from smtp4-g21.free.fr ([212.27.42.4]:48974 "EHLO smtp4-g21.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752070AbZFMFXk (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 13 Jun 2009 01:23:40 -0400
-Received: from smtp4-g21.free.fr (localhost [127.0.0.1])
-	by smtp4-g21.free.fr (Postfix) with ESMTP id BCC6C4C8068;
-	Sat, 13 Jun 2009 07:23:35 +0200 (CEST)
-Received: from bureau.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
-	by smtp4-g21.free.fr (Postfix) with ESMTP id AF9234C8032;
-	Sat, 13 Jun 2009 07:23:32 +0200 (CEST)
-X-git-sha1: b71d97980e3652d5f1e85a3ab924f0b65b060e4c 
-X-Mailer: git-mail-commits v0.5.0
+	id S1756881AbZFMHN4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 13 Jun 2009 03:13:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758168AbZFMHNz
+	(ORCPT <rfc822;git-outgoing>); Sat, 13 Jun 2009 03:13:55 -0400
+Received: from mail-ew0-f210.google.com ([209.85.219.210]:41764 "EHLO
+	mail-ew0-f210.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759783AbZFMHNy (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 13 Jun 2009 03:13:54 -0400
+Received: by ewy6 with SMTP id 6so3587980ewy.37
+        for <git@vger.kernel.org>; Sat, 13 Jun 2009 00:13:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=jX+dRPvcniklMNy0ztKCGF/3VPDIRGhTGLVghwvf+SA=;
+        b=iLpHbmmHZawP2LCd6rW+CtLgg9daM7R8zGSyXPtMBqMQpRX9xvEDOhgjlXkeZm5iG2
+         CNfPyS+Ya99pI5itEZrtjGYWPEwYqk/hdbJsOKi1ztlbIkKX/wxAjo7aoN69Na9TufwG
+         DAW/wUifNRzdokeap0orO3g6oioyctR06WVSY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=HBTvVuTa/Bwa5qSvu4aitZ9f6Xyyp6EFMbSN+ySmrWDYz28CWTKvOWrCwlS4FU5aDX
+         9CVn1ZYE4wQLLqtZUDyKJgFGSDawDwXbFZ20h2kNyI40FFJOCa7dycgNKAu5gw+PVe5n
+         vE9mfQi030GdCYwvc2UcR5HNBGX5qq4xdFbsg=
+Received: by 10.216.71.83 with SMTP id q61mr1629420wed.14.1244877235402; Sat, 
+	13 Jun 2009 00:13:55 -0700 (PDT)
+In-Reply-To: <1244849357-31166-1-git-send-email-markus.heidelberg@web.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121482>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121483>
 
-This warning was probably useless anyway, but it is even more so now
-that filtering of skipped commits is done in C and that there is a
-mechanism to skip away from broken commits.
+On Sat, Jun 13, 2009 at 00:29, Markus
+Heidelberg<markus.heidelberg@web.de> wrote:
+> Creating a patch series didn't work, because the SHA1 list was
+> interpreted in the wrong order.
+>
+> Signed-off-by: Markus Heidelberg <markus.heidelberg@web.de>
+> ---
 
-Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
----
- Documentation/git-bisect.txt |    5 ++---
- 1 files changed, 2 insertions(+), 3 deletions(-)
+I think they are generated in apply order as should be.
 
-diff --git a/Documentation/git-bisect.txt b/Documentation/git-bisect.txt
-index ffc02c7..5d015fc 100644
---- a/Documentation/git-bisect.txt
-+++ b/Documentation/git-bisect.txt
-@@ -164,9 +164,8 @@ to do it for you by issuing the command:
- $ git bisect skip                 # Current version cannot be tested
- ------------
- 
--But computing the commit to test may be slower afterwards and git may
--eventually not be able to tell the first bad commit among a bad commit
--and one or more skipped commits.
-+But git may eventually not be able to tell the first bad commit among
-+a bad commit and one or more skipped commits.
- 
- You can even skip a range of commits, instead of just one commit,
- using the "'<commit1>'..'<commit2>'" notation. For example:
--- 
-1.6.3.GIT
+As example, from git repo we have the following revisions:
+
+GIT 1.6.3
+t4029: use sh instead of bash
+t4200: convert sed expression which operates on non-text file to perl
+t4200: remove two unnecessary lines
+
+Now if I select the 4 revisions and use "Save patch..." I have
+
+0001-t4200-remove-two-unnecessary-lines.patch
+0002-t4200-convert-sed-expression-which-operates-on-non.patch
+0003-t4029-use-sh-instead-of-bash.patch
+0004-GIT-1.6.3.patch
+
+That is correct because if I go to apply the patches I have to apply
+in the reverse cronological order, from the oldest to the newest.
