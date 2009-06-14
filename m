@@ -1,86 +1,66 @@
-From: Marco Nelissen <marcone@xs4all.nl>
-Subject: Re: running git as root
-Date: Sun, 14 Jun 2009 14:40:19 -0700
-Message-ID: <3a3d9e520906141440p720df7c1l6e25b71899daaa7c@mail.gmail.com>
-References: <3a3d9e520906130825k25815c9atafde301d9fbc1da2@mail.gmail.com>
-	 <81b0412b0906131049v60cfbc9bm3fd26cc25acc2cd4@mail.gmail.com>
-	 <20090614150851.6117@nanako3.lavabit.com>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: [PATCH] use xstrdup, not strdup in ll-merge.c
+Date: Mon, 15 Jun 2009 00:03:27 +0200
+Message-ID: <81b0412b0906141503v14484d9fyea56198910305bfc@mail.gmail.com>
+References: <87bpoqoavp.fsf@meyering.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Alex Riesen <raa.lkml@gmail.com>, git@vger.kernel.org
-To: Nanako Shiraishi <nanako3@lavabit.com>
-X-From: git-owner@vger.kernel.org Sun Jun 14 23:40:33 2009
+Cc: git list <git@vger.kernel.org>
+To: Jim Meyering <jim@meyering.net>
+X-From: git-owner@vger.kernel.org Mon Jun 15 00:03:45 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MFxRE-00067D-Ul
-	for gcvg-git-2@gmane.org; Sun, 14 Jun 2009 23:40:29 +0200
+	id 1MFxnZ-0003Fu-TP
+	for gcvg-git-2@gmane.org; Mon, 15 Jun 2009 00:03:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757049AbZFNVkU convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 14 Jun 2009 17:40:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756442AbZFNVkT
-	(ORCPT <rfc822;git-outgoing>); Sun, 14 Jun 2009 17:40:19 -0400
-Received: from an-out-0708.google.com ([209.85.132.247]:57324 "EHLO
-	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755453AbZFNVkR convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 14 Jun 2009 17:40:17 -0400
-Received: by an-out-0708.google.com with SMTP id d40so7778379and.1
-        for <git@vger.kernel.org>; Sun, 14 Jun 2009 14:40:19 -0700 (PDT)
+	id S1764715AbZFNWD1 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 14 Jun 2009 18:03:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1764716AbZFNWD1
+	(ORCPT <rfc822;git-outgoing>); Sun, 14 Jun 2009 18:03:27 -0400
+Received: from mail-fx0-f207.google.com ([209.85.220.207]:41439 "EHLO
+	mail-fx0-f207.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1764713AbZFNWD0 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 14 Jun 2009 18:03:26 -0400
+Received: by fxm3 with SMTP id 3so258359fxm.37
+        for <git@vger.kernel.org>; Sun, 14 Jun 2009 15:03:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:sender:received:in-reply-to
-         :references:date:x-google-sender-auth:message-id:subject:from:to:cc
-         :content-type:content-transfer-encoding;
-        bh=9FzFX1FLvNbYWVFj4djiqu3qAydgjwNuY2j5vnL0iDM=;
-        b=l7xB9eBQqxeMlBRhJjuxQAhdtHt0QsISI6SjtlEoljY22vFdqze6rf2rYZWqLle0wo
-         1HelZhAxaOrTatCMUYSPQ+rmWQYuNT83XyQELEBhx3v13sM9uXlAhB90nWI5JVOWiNgz
-         RJJhlBlAUs+mh9GX2Ze9sOehowi6rvsOPB4W0=
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=3WaHiAj73/8a9y5ihhVFR+uD9iG6wccXW+BMehJY6jc=;
+        b=voo9xlg01gOdO30DSEbOqfxmPTTP8YYE7DARhInf3Q25HwQB7QHFAW3RU9J4mM3oXU
+         uAHxe1e6t9RAorm4NYt0WJ+h9VABHHP/8Tp/BkD60oJcqN097PBivrw3UTREAZ/GOH9T
+         C21tRBYWxg0QeUYtunzcrxwdBNdvKi/8iLKSI=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:sender:in-reply-to:references:date
-         :x-google-sender-auth:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        b=AX1cVQLF8X418Xc0StufEdgv0FKhs4rLeyXTqvSWgEcYESRkiYgj0cP4/nvp4hus1d
-         JbXG1niocPd3icJdsaFqEVZ1eEnJYVYOEDFUsjPcpVo6mph45rEej1p6qzRAGjblB7jM
-         RzSFM9h5YFtnQfcm1OqZ87W1iFZLvZmBhMB84=
-Received: by 10.100.138.10 with SMTP id l10mr7860637and.61.1245015619402; Sun, 
-	14 Jun 2009 14:40:19 -0700 (PDT)
-In-Reply-To: <20090614150851.6117@nanako3.lavabit.com>
-X-Google-Sender-Auth: f8f92bc48552fecb
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=W3+QMTBgufZwRCoLTpq2TXOUGcNAYEStSLt2LHlZq6rNcJRUfH17f9of3ZUkoxYMKy
+         WZWnMBTQgE69saoxCNsWomyv+20/FF41VwZsbRpEQ70Ls7H+cJU/XOyYQLGi3P23FoPW
+         Bg49vi++KCJMbNspjba+2Mw3xVF6AwA0oCwHQ=
+Received: by 10.204.65.65 with SMTP id h1mr6338229bki.26.1245017007390; Sun, 
+	14 Jun 2009 15:03:27 -0700 (PDT)
+In-Reply-To: <87bpoqoavp.fsf@meyering.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121564>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121565>
 
-On Sat, Jun 13, 2009 at 11:08 PM, Nanako Shiraishi<nanako3@lavabit.com>=
- wrote:
-> Quoting Alex Riesen <raa.lkml@gmail.com>:
+2009/6/14 Jim Meyering <jim@meyering.net>:
+> @@ -231,7 +231,7 @@ static int read_merge_config(const char *var, con=
+st char *value, void *cb)
 >
->> 2009/6/13 Marco Nelissen <marcone@xs4all.nl>:
->>> When running as root, git fails a number of test cases that expect =
-it
->>> to fail on read-only repositories (for example 't0004-unwritable.sh=
-').
->>> I was thinking of either changing the code so that it checks
->>> permissions itself when opening files as root, or add a prerequisit=
-e
->>> to those test cases so that they are skipped when running as root.
->>
->> There is such a prerequisite already (POSIXPERM), but what caused
->> you to run the _tests_ as root?
->>
->>> What would be the preferred way?
->>
->> Use the prerequisite would sound right when not the
->> strangeness of the idea.
->
-> I think somebody needs to repost an old patch from the archive.
->
-> =C2=A0 =C2=A0http://thread.gmane.org/gmane.comp.version-control.git/1=
-16729/focus=3D118385
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0if (!strcmp(var, "merge.default")) {
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0if (value)
+> - =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 default_ll_merge =3D strdup(value);
+> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 default_ll_merge =3D xstrdup(value);
 
-That's almost identical to the patch I wanted to submit, except for
-the name 'SANITY', which doesn't make much sense I think.
+read_merge_config has a failure mode (where it returns -1), why not use=
+ it?
