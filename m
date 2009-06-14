@@ -1,66 +1,75 @@
-From: Nanako Shiraishi <nanako3@lavabit.com>
-Subject: Re: running git as root
-Date: Sun, 14 Jun 2009 15:08:51 +0900
-Message-ID: <20090614150851.6117@nanako3.lavabit.com>
-References: <3a3d9e520906130825k25815c9atafde301d9fbc1da2@mail.gmail.com>
-	<81b0412b0906131049v60cfbc9bm3fd26cc25acc2cd4@mail.gmail.com>
+From: Stephen Boyd <bebarino@gmail.com>
+Subject: Re: [PATCH 0/2] teach am and rebase -q/--quiet
+Date: Sun, 14 Jun 2009 00:07:24 -0700
+Message-ID: <4A34A1AC.2070808@gmail.com>
+References: <1244924500-27391-1-git-send-email-bebarino@gmail.com> <7vk53fvini.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Cc: Marco Nelissen <marcone@xs4all.nl>, git@vger.kernel.org
-To: Alex Riesen <raa.lkml@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Jun 14 08:10:29 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Jun 14 09:08:55 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MFivE-0006hW-UM
-	for gcvg-git-2@gmane.org; Sun, 14 Jun 2009 08:10:29 +0200
+	id 1MFjpm-0001zQ-Fh
+	for gcvg-git-2@gmane.org; Sun, 14 Jun 2009 09:08:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751536AbZFNGKT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 14 Jun 2009 02:10:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751422AbZFNGKT
-	(ORCPT <rfc822;git-outgoing>); Sun, 14 Jun 2009 02:10:19 -0400
-Received: from karen.lavabit.com ([72.249.41.33]:39070 "EHLO karen.lavabit.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751321AbZFNGKS (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 14 Jun 2009 02:10:18 -0400
-Received: from c.earth.lavabit.com (c.earth.lavabit.com [192.168.111.12])
-	by karen.lavabit.com (Postfix) with ESMTP id 4FD4011B7E1;
-	Sun, 14 Jun 2009 01:10:20 -0500 (CDT)
-Received: from 5306.lavabit.com (212.62.97.20)
-	by lavabit.com with ESMTP id GZQF2KQT1BZN; Sun, 14 Jun 2009 01:10:20 -0500
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws; s=lavabit; d=lavabit.com;
-  b=YP1LxuF8ErppUpY9hyHAHiYSUipG5wwO+3ngke79dCaKPZLgWWMhTjQzPDFxQe4REC5FRSGEx51HYHakGKZ4/FhQ8gqMGekXgEQhEig3fNk92lsGjT+if0FbSHIkccvIyHV25VCmzbFtJq++Q/GlDLxugfGQjJZ1S6kQ6/adcMk=;
-  h=From:To:Cc:Subject:In-Reply-To:References:Date:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id;
-In-Reply-To: <81b0412b0906131049v60cfbc9bm3fd26cc25acc2cd4@mail.gmail.com>
+	id S1752281AbZFNHH0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 14 Jun 2009 03:07:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752152AbZFNHHZ
+	(ORCPT <rfc822;git-outgoing>); Sun, 14 Jun 2009 03:07:25 -0400
+Received: from mail-pz0-f187.google.com ([209.85.222.187]:58047 "EHLO
+	mail-pz0-f187.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752109AbZFNHHZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 14 Jun 2009 03:07:25 -0400
+Received: by pzk17 with SMTP id 17so1353265pzk.33
+        for <git@vger.kernel.org>; Sun, 14 Jun 2009 00:07:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from
+         :user-agent:mime-version:to:cc:subject:references:in-reply-to
+         :content-type:content-transfer-encoding;
+        bh=lJ8N+LFOLFAst3fWxyIpy4b0q6ymGgjLmqBkrFzNRvE=;
+        b=Psxm1Pfm0nftg6wEtsfvGiMeoPAKtA8TKABdftL74xPaOS8xcx16e3dkB9q/qW90vt
+         MG4KYKMbXpBcFSBmA2aMYzIbuQbdbi4MyNTIO5r/YZ/0x7L1ryn66I6u9xw+fueP0G6A
+         +BDYEoyUcWQgy+WSEWhCFxcd6JcaOYn46/SbA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        b=HokbVo9JpE0zDS8+1hzho6Jz2ghI8O1rG9RveKT9lFSlZxmDyIcQaVN7ob94r4khs5
+         vBawFqHozfXnuMegIye6EcjPNBD0xBYmafzDabLxe1bNXOA99o5t1JCbcDw+qYd8XPqG
+         DwthdSV1bXI4LAQ5pKwELDNVNzpqcC1LNQ8wE=
+Received: by 10.114.190.6 with SMTP id n6mr9224817waf.133.1244963247140;
+        Sun, 14 Jun 2009 00:07:27 -0700 (PDT)
+Received: from ?192.168.1.2? ([76.89.212.195])
+        by mx.google.com with ESMTPS id n30sm3911150wag.6.2009.06.14.00.07.25
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sun, 14 Jun 2009 00:07:26 -0700 (PDT)
+User-Agent: Thunderbird 2.0.0.21 (X11/20090429)
+In-Reply-To: <7vk53fvini.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121536>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121537>
 
-Quoting Alex Riesen <raa.lkml@gmail.com>:
-
-> 2009/6/13 Marco Nelissen <marcone@xs4all.nl>:
->> When running as root, git fails a number of test cases that expect it
->> to fail on read-only repositories (for example 't0004-unwritable.sh').
->> I was thinking of either changing the code so that it checks
->> permissions itself when opening files as root, or add a prerequisite
->> to those test cases so that they are skipped when running as root.
+Junio C Hamano wrote:
+> There are many valid cases where it makes sense to use stderr for messages
+> that are not errors (e.g. diagnostics, prompts, progress reports, and
+> informational messages that otherwise would clutter machine parsable
+> output meant to go to stdout).
 >
-> There is such a prerequisite already (POSIXPERM), but what caused
-> you to run the _tests_ as root?
+> I do not understand why some people seem to think stderr is only for
+> errors.  I think we even saw a broken interpretive language environment
+> where the system considers it an error if a program it launched said
+> anything to stderr, instead of correctly diagnosing the exit status from
+> it?
 >
->> What would be the preferred way?
->
-> Use the prerequisite would sound right when not the
-> strangeness of the idea.
+> It is a disease.
+>   
 
-I think somebody needs to repost an old patch from the archive.
-
-    http://thread.gmane.org/gmane.comp.version-control.git/116729/focus=118385
-
--- 
-Nanako Shiraishi
-http://ivory.ap.teacup.com/nanako3/
+If I understand you correctly, wrapping them in quiet checks is fine.
+Also, thanks for the explanation. I'll consider my self inoculated.
