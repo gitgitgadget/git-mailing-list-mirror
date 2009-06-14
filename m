@@ -1,71 +1,66 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCHv2 5/5] builtin-remote: Make "remote -v" display push urls
-Date: Sat, 13 Jun 2009 22:54:36 -0700
-Message-ID: <7vprd7s6lf.fsf@alter.siamese.dyndns.org>
-References: <7vtz2pmf98.fsf@alter.siamese.dyndns.org>
-	<1244910551-4420-1-git-send-email-git@drmicha.warpmail.net>
-	<1244910551-4420-2-git-send-email-git@drmicha.warpmail.net>
-	<1244910551-4420-3-git-send-email-git@drmicha.warpmail.net>
+From: Nanako Shiraishi <nanako3@lavabit.com>
+Subject: Re: running git as root
+Date: Sun, 14 Jun 2009 15:08:51 +0900
+Message-ID: <20090614150851.6117@nanako3.lavabit.com>
+References: <3a3d9e520906130825k25815c9atafde301d9fbc1da2@mail.gmail.com>
+	<81b0412b0906131049v60cfbc9bm3fd26cc25acc2cd4@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Sun Jun 14 07:54:57 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Cc: Marco Nelissen <marcone@xs4all.nl>, git@vger.kernel.org
+To: Alex Riesen <raa.lkml@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Jun 14 08:10:29 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MFigC-00042L-4g
-	for gcvg-git-2@gmane.org; Sun, 14 Jun 2009 07:54:56 +0200
+	id 1MFivE-0006hW-UM
+	for gcvg-git-2@gmane.org; Sun, 14 Jun 2009 08:10:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752042AbZFNFyj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 14 Jun 2009 01:54:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751974AbZFNFyi
-	(ORCPT <rfc822;git-outgoing>); Sun, 14 Jun 2009 01:54:38 -0400
-Received: from fed1rmmtao104.cox.net ([68.230.241.42]:34952 "EHLO
-	fed1rmmtao104.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751321AbZFNFye (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 14 Jun 2009 01:54:34 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao104.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20090614055436.GCQO17135.fed1rmmtao104.cox.net@fed1rmimpo01.cox.net>;
-          Sun, 14 Jun 2009 01:54:36 -0400
-Received: from localhost ([68.225.240.211])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id 3huc1c0084aMwMQ03hucup; Sun, 14 Jun 2009 01:54:36 -0400
-X-VR-Score: -100.00
-X-Authority-Analysis: v=1.0 c=1 a=nk911WzMAd0A:10 a=TKBN_dRqgKkA:10
- a=7FkD_oE4Pn_JQwgeWdoA:9 a=WVDSiSt-hT7grDG0K6EI5bwf6bcA:4
-X-CM-Score: 0.00
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+	id S1751536AbZFNGKT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 14 Jun 2009 02:10:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751422AbZFNGKT
+	(ORCPT <rfc822;git-outgoing>); Sun, 14 Jun 2009 02:10:19 -0400
+Received: from karen.lavabit.com ([72.249.41.33]:39070 "EHLO karen.lavabit.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751321AbZFNGKS (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 14 Jun 2009 02:10:18 -0400
+Received: from c.earth.lavabit.com (c.earth.lavabit.com [192.168.111.12])
+	by karen.lavabit.com (Postfix) with ESMTP id 4FD4011B7E1;
+	Sun, 14 Jun 2009 01:10:20 -0500 (CDT)
+Received: from 5306.lavabit.com (212.62.97.20)
+	by lavabit.com with ESMTP id GZQF2KQT1BZN; Sun, 14 Jun 2009 01:10:20 -0500
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws; s=lavabit; d=lavabit.com;
+  b=YP1LxuF8ErppUpY9hyHAHiYSUipG5wwO+3ngke79dCaKPZLgWWMhTjQzPDFxQe4REC5FRSGEx51HYHakGKZ4/FhQ8gqMGekXgEQhEig3fNk92lsGjT+if0FbSHIkccvIyHV25VCmzbFtJq++Q/GlDLxugfGQjJZ1S6kQ6/adcMk=;
+  h=From:To:Cc:Subject:In-Reply-To:References:Date:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id;
+In-Reply-To: <81b0412b0906131049v60cfbc9bm3fd26cc25acc2cd4@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121535>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121536>
 
-Thanks, will replace with these two and merge to 'next'.
+Quoting Alex Riesen <raa.lkml@gmail.com>:
 
-I'll squash this in to [5/5], which is the same fix-up as I queued the
-previous round to 'pu', to avoid decl-after-statement, by the way.
+> 2009/6/13 Marco Nelissen <marcone@xs4all.nl>:
+>> When running as root, git fails a number of test cases that expect it
+>> to fail on read-only repositories (for example 't0004-unwritable.sh').
+>> I was thinking of either changing the code so that it checks
+>> permissions itself when opening files as root, or add a prerequisite
+>> to those test cases so that they are skipped when running as root.
+>
+> There is such a prerequisite already (POSIXPERM), but what caused
+> you to run the _tests_ as root?
+>
+>> What would be the preferred way?
+>
+> Use the prerequisite would sound right when not the
+> strangeness of the idea.
 
- builtin-remote.c |    4 +++-
- 1 files changed, 3 insertions(+), 1 deletions(-)
+I think somebody needs to repost an old patch from the archive.
 
-diff --git a/builtin-remote.c b/builtin-remote.c
-index f377722..3f6f5c2 100644
---- a/builtin-remote.c
-+++ b/builtin-remote.c
-@@ -1311,8 +1311,10 @@ static int get_one_entry(struct remote *remote, void *priv)
- static int show_all(void)
- {
- 	struct string_list list = { NULL, 0, 0 };
-+	int result;
-+
- 	list.strdup_strings = 1;
--	int result = for_each_remote(get_one_entry, &list);
-+	result = for_each_remote(get_one_entry, &list);
- 
- 	if (!result) {
- 		int i;
+    http://thread.gmane.org/gmane.comp.version-control.git/116729/focus=118385
+
+-- 
+Nanako Shiraishi
+http://ivory.ap.teacup.com/nanako3/
