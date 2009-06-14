@@ -1,89 +1,86 @@
-From: Marcin Owsiany <marcin@owsiany.pl>
-Subject: Re: git-svn stubbornly re-creating branch "master"
-Date: Sun, 14 Jun 2009 22:16:16 +0100
-Message-ID: <20090614211616.GA29742@beczulka>
-References: <20090329171347.GA26866@beczulka> <37fcd2780903291252i19bba8ccx9dfb73e763d95b15@mail.gmail.com> <237967ef0904030357u15ef77f2rb3299b6f6c651404@mail.gmail.com> <20090606105501.GA29758@beczulka> <20090614155205.GC11730@beczulka> <4A353486.2060900@op5.se>
+From: Marco Nelissen <marcone@xs4all.nl>
+Subject: Re: running git as root
+Date: Sun, 14 Jun 2009 14:40:19 -0700
+Message-ID: <3a3d9e520906141440p720df7c1l6e25b71899daaa7c@mail.gmail.com>
+References: <3a3d9e520906130825k25815c9atafde301d9fbc1da2@mail.gmail.com>
+	 <81b0412b0906131049v60cfbc9bm3fd26cc25acc2cd4@mail.gmail.com>
+	 <20090614150851.6117@nanako3.lavabit.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jun 14 23:16:40 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Alex Riesen <raa.lkml@gmail.com>, git@vger.kernel.org
+To: Nanako Shiraishi <nanako3@lavabit.com>
+X-From: git-owner@vger.kernel.org Sun Jun 14 23:40:33 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MFx4B-0008Ug-PX
-	for gcvg-git-2@gmane.org; Sun, 14 Jun 2009 23:16:40 +0200
+	id 1MFxRE-00067D-Ul
+	for gcvg-git-2@gmane.org; Sun, 14 Jun 2009 23:40:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754561AbZFNVQL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 14 Jun 2009 17:16:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754031AbZFNVQL
-	(ORCPT <rfc822;git-outgoing>); Sun, 14 Jun 2009 17:16:11 -0400
-Received: from mail-ew0-f210.google.com ([209.85.219.210]:50157 "EHLO
-	mail-ew0-f210.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752221AbZFNVQK (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 14 Jun 2009 17:16:10 -0400
-Received: by ewy6 with SMTP id 6so4507566ewy.37
-        for <git@vger.kernel.org>; Sun, 14 Jun 2009 14:16:11 -0700 (PDT)
-Received: by 10.216.36.73 with SMTP id v51mr2106711wea.215.1245014171114;
-        Sun, 14 Jun 2009 14:16:11 -0700 (PDT)
-Received: from beczulka (dsl-49-57.dsl.netsource.ie [213.79.49.57])
-        by mx.google.com with ESMTPS id i34sm9128482gve.13.2009.06.14.14.16.10
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 14 Jun 2009 14:16:10 -0700 (PDT)
-Received: from mowsiany by beczulka with local (Exim 4.69)
-	(envelope-from <marcin@owsiany.pl>)
-	id 1MFx3o-00083B-Q7
-	for git@vger.kernel.org; Sun, 14 Jun 2009 22:16:16 +0100
-Content-Disposition: inline
-In-Reply-To: <4A353486.2060900@op5.se>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1757049AbZFNVkU convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 14 Jun 2009 17:40:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756442AbZFNVkT
+	(ORCPT <rfc822;git-outgoing>); Sun, 14 Jun 2009 17:40:19 -0400
+Received: from an-out-0708.google.com ([209.85.132.247]:57324 "EHLO
+	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755453AbZFNVkR convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 14 Jun 2009 17:40:17 -0400
+Received: by an-out-0708.google.com with SMTP id d40so7778379and.1
+        for <git@vger.kernel.org>; Sun, 14 Jun 2009 14:40:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:sender:received:in-reply-to
+         :references:date:x-google-sender-auth:message-id:subject:from:to:cc
+         :content-type:content-transfer-encoding;
+        bh=9FzFX1FLvNbYWVFj4djiqu3qAydgjwNuY2j5vnL0iDM=;
+        b=l7xB9eBQqxeMlBRhJjuxQAhdtHt0QsISI6SjtlEoljY22vFdqze6rf2rYZWqLle0wo
+         1HelZhAxaOrTatCMUYSPQ+rmWQYuNT83XyQELEBhx3v13sM9uXlAhB90nWI5JVOWiNgz
+         RJJhlBlAUs+mh9GX2Ze9sOehowi6rvsOPB4W0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:sender:in-reply-to:references:date
+         :x-google-sender-auth:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        b=AX1cVQLF8X418Xc0StufEdgv0FKhs4rLeyXTqvSWgEcYESRkiYgj0cP4/nvp4hus1d
+         JbXG1niocPd3icJdsaFqEVZ1eEnJYVYOEDFUsjPcpVo6mph45rEej1p6qzRAGjblB7jM
+         RzSFM9h5YFtnQfcm1OqZ87W1iFZLvZmBhMB84=
+Received: by 10.100.138.10 with SMTP id l10mr7860637and.61.1245015619402; Sun, 
+	14 Jun 2009 14:40:19 -0700 (PDT)
+In-Reply-To: <20090614150851.6117@nanako3.lavabit.com>
+X-Google-Sender-Auth: f8f92bc48552fecb
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121563>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121564>
 
-On Sun, Jun 14, 2009 at 07:33:58PM +0200, Andreas Ericsson wrote:
-> Marcin Owsiany wrote:
->> On Sat, Jun 06, 2009 at 11:55:01AM +0100, Marcin Owsiany wrote:
->>> This discussion seems to have stalled...
->>>
->>> On Fri, Apr 03, 2009 at 12:57:52PM +0200, Mikael Magnusson wrote:
->>>> 2009/3/29 Dmitry Potapov <dpotapov@gmail.com>:
->>>>> On Sun, Mar 29, 2009 at 18:13:47 +0100, Marcin Owsiany
->>>>> <porridge@debian.org> wrote:
->>>>>> As you can see, "master" sprang back to life after the last command.
->>>>> It looks like git-svn does not like a repo without 'master'. It seems
->>>>> the problem was caused by this patch:
->>>>> http://git.kernel.org/?p=git/git.git;a=commit;h=1e889ef36c45b5554f7e317493ed3f4f901f8d9f
->>>>>
->>>>> I have added Eric to CC...
->>>> Why not just check if HEAD points to a valid commit, rather than
->>>> master? It should do the same
->>>> in the newly created repo case, and stop annoying people on updates.
->>> There seems to be agreement that while conventions are nice, git should
->>> not force branch names on people. Can someone implement Mikael's
->>> suggestion?
->>
->> [silence]
->>
->> OK, a different question, then: if I wrote a patch to implement the
->> behaviour described by Mikael, would you consider including it?
->>
+On Sat, Jun 13, 2009 at 11:08 PM, Nanako Shiraishi<nanako3@lavabit.com>=
+ wrote:
+> Quoting Alex Riesen <raa.lkml@gmail.com>:
 >
-> Patches are always considered, but asking about inclusion before the
-> code is written doesn't really work. If you care about this feature
-> and really want it, you should write the patch and submit it to the
-> mailing list for discussion. It might get dropped on the floor or it
-> might get accepted, but without you actually showing that you want
-> it, nothing at all will happen.
+>> 2009/6/13 Marco Nelissen <marcone@xs4all.nl>:
+>>> When running as root, git fails a number of test cases that expect =
+it
+>>> to fail on read-only repositories (for example 't0004-unwritable.sh=
+').
+>>> I was thinking of either changing the code so that it checks
+>>> permissions itself when opening files as root, or add a prerequisit=
+e
+>>> to those test cases so that they are skipped when running as root.
+>>
+>> There is such a prerequisite already (POSIXPERM), but what caused
+>> you to run the _tests_ as root?
+>>
+>>> What would be the preferred way?
+>>
+>> Use the prerequisite would sound right when not the
+>> strangeness of the idea.
+>
+> I think somebody needs to repost an old patch from the archive.
+>
+> =C2=A0 =C2=A0http://thread.gmane.org/gmane.comp.version-control.git/1=
+16729/focus=3D118385
 
-Yes, I understand that. I was more looking for some guidance on whether
-working in that direction makes sense. I'm still a git newbie :-)
-
--- 
-Marcin Owsiany <marcin@owsiany.pl>              http://marcin.owsiany.pl/
-GnuPG: 1024D/60F41216  FE67 DA2D 0ACA FC5E 3F75  D6F6 3A0D 8AA0 60F4 1216
- 
-"Every program in development at MIT expands until it can read mail."
-                                                              -- Unknown
+That's almost identical to the patch I wanted to submit, except for
+the name 'SANITY', which doesn't make much sense I think.
