@@ -1,70 +1,93 @@
-From: Marco Nelissen <marcone@xs4all.nl>
-Subject: Re: running git as root
-Date: Sat, 13 Jun 2009 18:42:44 -0700
-Message-ID: <3a3d9e520906131842j6754bda1yaf6ecb2b24320260@mail.gmail.com>
-References: <3a3d9e520906130825k25815c9atafde301d9fbc1da2@mail.gmail.com>
-	 <4A33C8D2.5080808@drmicha.warpmail.net>
+From: David Aguilar <davvid@gmail.com>
+Subject: Re: Who uses Signed-off-by and DCO?
+Date: Sat, 13 Jun 2009 20:55:20 -0700
+Message-ID: <20090614035519.GA3963@gmail.com>
+References: <20090612084207.6117@nanako3.lavabit.com> <20090613180018.GB23007@pengutronix.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jun 14 03:43:15 2009
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Nanako Shiraishi <nanako3@lavabit.com>, git@vger.kernel.org
+To: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
+	<u.kleine-koenig@pengutronix.de>
+X-From: git-owner@vger.kernel.org Sun Jun 14 05:57:40 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MFekc-0005VB-OQ
-	for gcvg-git-2@gmane.org; Sun, 14 Jun 2009 03:43:15 +0200
+	id 1MFgqh-0002Bx-ED
+	for gcvg-git-2@gmane.org; Sun, 14 Jun 2009 05:57:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754168AbZFNBmo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 13 Jun 2009 21:42:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753958AbZFNBmn
-	(ORCPT <rfc822;git-outgoing>); Sat, 13 Jun 2009 21:42:43 -0400
-Received: from an-out-0708.google.com ([209.85.132.246]:10535 "EHLO
-	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753952AbZFNBmn (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 13 Jun 2009 21:42:43 -0400
-Received: by an-out-0708.google.com with SMTP id d40so6548308and.1
-        for <git@vger.kernel.org>; Sat, 13 Jun 2009 18:42:45 -0700 (PDT)
+	id S1753243AbZFNDz1 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 13 Jun 2009 23:55:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752984AbZFNDz0
+	(ORCPT <rfc822;git-outgoing>); Sat, 13 Jun 2009 23:55:26 -0400
+Received: from mail-px0-f187.google.com ([209.85.216.187]:59993 "EHLO
+	mail-px0-f187.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752767AbZFNDzZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 13 Jun 2009 23:55:25 -0400
+Received: by pxi17 with SMTP id 17so1352750pxi.33
+        for <git@vger.kernel.org>; Sat, 13 Jun 2009 20:55:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:sender:received:in-reply-to
-         :references:date:x-google-sender-auth:message-id:subject:from:to
-         :content-type:content-transfer-encoding;
-        bh=tdtsIEzWn7U4J/1SGKw0wE02/CEjf9YrUwfBzexJU9M=;
-        b=kOpeTBGdRGMz89XAkreovH11LyLqLFy7q/s7vd/1iPXrzhTZ0K42jVCtTwx2rFzI5g
-         2UZmOZsQI71qqWfaJOUfyfq+U0/bhWFDwGIHZ7sasne68JL+u7ySjCrl5lOGi0VpbvTO
-         sAoSXLCsnhRHp+ufMIt7xctwDt9Wujr7eMmuU=
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=BpJtSCY2BvKotZk21sbO+wiVGQMk3wQUno6bttKh3Yg=;
+        b=pH00LakiUIMD7RwwiKn39/xGpfJVvGNFUb3FlHHKzuduY4OAaA+cqBiC2r3sBgBSBD
+         xFoBvcTfWSYashDJUeFw1Wq6HCIIFQKqdXCKxfjvwFe+COr0gxxHax0M6zt+fOfXTw+U
+         kGH9lBMYaeHL8WJwXpThZ0+1QRK3PuQULsJIM=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:sender:in-reply-to:references:date
-         :x-google-sender-auth:message-id:subject:from:to:content-type
-         :content-transfer-encoding;
-        b=Rn51D16cLIQ35s7fqtn08L3fJLtXQvmLFEF0j/LAipyl0+kPAt9KJu1FRleH3qiOBG
-         pu7YQH9MbhHBifWx3X9JZETwvKx2yKLGkNZK0+kheVRoyYZf2wj8RtA9HP5V4ihTAT3g
-         LRmL4d8Ky+MBTQa680XqRlqOkiJFHFNUxsEFU=
-Received: by 10.100.4.8 with SMTP id 8mr6955483and.180.1244943764925; Sat, 13 
-	Jun 2009 18:42:44 -0700 (PDT)
-In-Reply-To: <4A33C8D2.5080808@drmicha.warpmail.net>
-X-Google-Sender-Auth: c788c086ce031142
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        b=vIpTZqQKLwLPcY3kJ7T9Yfsd8VmMz1nZJ5UAt+ru6n1+d8docfuz+uN0RHxY3rQe5Q
+         jqZAc98dYKbgMBhBP4TRyv6/F/M60ppTGztpM8HRXqWkiYqWzfoveT4Zmy0JFfkKtxIf
+         PVxUIfdSKl+hkcvfP04opsi63Sl8In4VejAM8=
+Received: by 10.114.181.6 with SMTP id d6mr9146612waf.8.1244951726241;
+        Sat, 13 Jun 2009 20:55:26 -0700 (PDT)
+Received: from gmail.com (cpe-76-87-90-126.socal.res.rr.com [76.87.90.126])
+        by mx.google.com with ESMTPS id n9sm3704620wag.26.2009.06.13.20.55.24
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sat, 13 Jun 2009 20:55:24 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <20090613180018.GB23007@pengutronix.de>
+User-Agent: Mutt/1.5.19 (2009-01-05)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121532>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121533>
 
-On Sat, Jun 13, 2009 at 8:42 AM, Michael J
-Gruber<git@drmicha.warpmail.net> wrote:
-> Marco Nelissen venit, vidit, dixit 13.06.2009 17:25:
->> When running as root, git fails a number of test cases that expect it
->> to fail on read-only repositories (for example 't0004-unwritable.sh').
->> I was thinking of either changing the code so that it checks
->> permissions itself when opening files as root, or add a prerequisite
->> to those test cases so that they are skipped when running as root.
->> What would be the preferred way?
->
-> The preferred ways is to build git as non-root user. This is true even
-> more so for running the test suite.
+On Sat, Jun 13, 2009 at 08:00:18PM +0200, Uwe Kleine-K=F6nig wrote:
+> On Fri, Jun 12, 2009 at 08:42:07AM +0900, Nanako Shiraishi wrote:
+> > I was giving a git introduction to students in my lab, and this
+> > question came up from one of them. How widely is this convention us=
+ed?
+> > Are there projects other than the Linux Kernel and git itself?
+> I know ptxdist[1] and topgit[2].
+>=20
+> Best regards
+> Uwe
+>=20
+> [1] http://pengutronix.de/software/ptxdist/index_en.html
+> [2] http://repo.or.cz/w/topgit.git
 
-This is not possible on BeOS, where there is only one user, and it is
-the super user.
+git-cola [1] does.
+
+I learned it by watching git ;-)
+
+Multiple sign-off lines are useful for tracking code
+reviews as well, as it's done on git and the kernel.
+
+I've seen various flavors along those lines:
+
+	Signed-Off-By: ...
+	Tested-By: ... ($platform)
+	Acked-By: ...
+	Reviewed-By: ...
+
+[1] http://cola.tuxfamily.org/
+
+--=20
+		David
