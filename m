@@ -1,88 +1,69 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: git-svn stubbornly re-creating branch "master"
-Date: Sun, 14 Jun 2009 19:33:58 +0200
-Message-ID: <4A353486.2060900@op5.se>
-References: <20090329171347.GA26866@beczulka> <37fcd2780903291252i19bba8ccx9dfb73e763d95b15@mail.gmail.com> <237967ef0904030357u15ef77f2rb3299b6f6c651404@mail.gmail.com> <20090606105501.GA29758@beczulka> <20090614155205.GC11730@beczulka>
+From: Jim Meyering <jim@meyering.net>
+Subject: [PATCH] avoid NULL dereference on failed malloc
+Date: Sun, 14 Jun 2009 21:46:10 +0200
+Message-ID: <87hbyioayl.fsf@meyering.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Mikael Magnusson <mikachu@gmail.com>,
-	Dmitry Potapov <dpotapov@gmail.com>, git@vger.kernel.org,
-	Eric Wong <normalperson@yhbt.net>
-To: Marcin Owsiany <marcin@owsiany.pl>
-X-From: git-owner@vger.kernel.org Sun Jun 14 19:40:38 2009
+Content-Type: text/plain; charset=us-ascii
+To: git list <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun Jun 14 21:46:41 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MFth7-000658-Od
-	for gcvg-git-2@gmane.org; Sun, 14 Jun 2009 19:40:38 +0200
+	id 1MFvet-0003Z6-Us
+	for gcvg-git-2@gmane.org; Sun, 14 Jun 2009 21:46:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753777AbZFNReE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 14 Jun 2009 13:34:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753560AbZFNReC
-	(ORCPT <rfc822;git-outgoing>); Sun, 14 Jun 2009 13:34:02 -0400
-Received: from na3sys009aog111.obsmtp.com ([74.125.149.205]:45956 "HELO
-	na3sys009aog111.obsmtp.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with SMTP id S1752975AbZFNReB (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 14 Jun 2009 13:34:01 -0400
-Received: from source ([74.125.78.25]) by na3sys009aob111.postini.com ([74.125.148.12]) with SMTP
-	ID DSNKSjU0ibdnejKSPPyCKMTHIdJ6+bJh9fgy@postini.com; Sun, 14 Jun 2009 10:34:04 PDT
-Received: by ey-out-2122.google.com with SMTP id d26so21856eyd.63
-        for <git@vger.kernel.org>; Sun, 14 Jun 2009 10:34:01 -0700 (PDT)
-Received: by 10.210.91.17 with SMTP id o17mr2187047ebb.74.1245000840859;
-        Sun, 14 Jun 2009 10:34:00 -0700 (PDT)
-Received: from clix.int.op5.se (90-227-179-205-no128.tbcn.telia.com [90.227.179.205])
-        by mx.google.com with ESMTPS id 28sm625651eyg.24.2009.06.14.10.33.59
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 14 Jun 2009 10:33:59 -0700 (PDT)
-User-Agent: Thunderbird 2.0.0.21 (X11/20090320)
-In-Reply-To: <20090614155205.GC11730@beczulka>
+	id S1758636AbZFNTqQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 14 Jun 2009 15:46:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752221AbZFNTqQ
+	(ORCPT <rfc822;git-outgoing>); Sun, 14 Jun 2009 15:46:16 -0400
+Received: from smtp1-g21.free.fr ([212.27.42.1]:56777 "EHLO smtp1-g21.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751951AbZFNTqQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 14 Jun 2009 15:46:16 -0400
+Received: from smtp1-g21.free.fr (localhost [127.0.0.1])
+	by smtp1-g21.free.fr (Postfix) with ESMTP id B47D1940134
+	for <git@vger.kernel.org>; Sun, 14 Jun 2009 21:46:13 +0200 (CEST)
+Received: from mx.meyering.net (mx.meyering.net [82.230.74.64])
+	by smtp1-g21.free.fr (Postfix) with ESMTP id D6536940151
+	for <git@vger.kernel.org>; Sun, 14 Jun 2009 21:46:10 +0200 (CEST)
+Received: by rho.meyering.net (Acme Bit-Twister, from userid 1000)
+	id B6EFC3B57E; Sun, 14 Jun 2009 21:46:10 +0200 (CEST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121553>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121554>
 
-Marcin Owsiany wrote:
-> On Sat, Jun 06, 2009 at 11:55:01AM +0100, Marcin Owsiany wrote:
->> This discussion seems to have stalled...
->>
->> On Fri, Apr 03, 2009 at 12:57:52PM +0200, Mikael Magnusson wrote:
->>> 2009/3/29 Dmitry Potapov <dpotapov@gmail.com>:
->>>> On Sun, Mar 29, 2009 at 18:13:47 +0100, Marcin Owsiany
->>>> <porridge@debian.org> wrote:
->>>>> As you can see, "master" sprang back to life after the last command.
->>>> It looks like git-svn does not like a repo without 'master'. It seems
->>>> the problem was caused by this patch:
->>>> http://git.kernel.org/?p=git/git.git;a=commit;h=1e889ef36c45b5554f7e317493ed3f4f901f8d9f
->>>>
->>>> I have added Eric to CC...
->>> Why not just check if HEAD points to a valid commit, rather than
->>> master? It should do the same
->>> in the newly created repo case, and stop annoying people on updates.
->> There seems to be agreement that while conventions are nice, git should
->> not force branch names on people. Can someone implement Mikael's
->> suggestion?
-> 
-> [silence]
-> 
-> OK, a different question, then: if I wrote a patch to implement the
-> behaviour described by Mikael, would you consider including it?
-> 
 
-Patches are always considered, but asking about inclusion before the
-code is written doesn't really work. If you care about this feature
-and really want it, you should write the patch and submit it to the
-mailing list for discussion. It might get dropped on the floor or it
-might get accepted, but without you actually showing that you want
-it, nothing at all will happen.
+* builtin-remote.c (get_one_entry): Use xmalloc, not malloc.
 
--- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+Signed-off-by: Jim Meyering <meyering@redhat.com>
+---
+ builtin-remote.c |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
 
-Considering the successes of the wars on alcohol, poverty, drugs and
-terror, I think we should give some serious thought to declaring war
-on peace.
+diff --git a/builtin-remote.c b/builtin-remote.c
+index 709f8a6..406fb85 100644
+--- a/builtin-remote.c
++++ b/builtin-remote.c
+@@ -1282,7 +1282,7 @@ static int get_one_entry(struct remote *remote, void *priv)
+
+ 	if (remote->url_nr > 0) {
+ 		utilp = &(string_list_append(remote->name, list)->util);
+-		*utilp = malloc(strlen(remote->url[0])+strlen(" (fetch)")+1);
++		*utilp = xmalloc(strlen(remote->url[0])+strlen(" (fetch)")+1);
+ 		strcpy((char *) *utilp, remote->url[0]);
+ 		strcat((char *) *utilp, " (fetch)");
+ 	} else
+@@ -1297,7 +1297,7 @@ static int get_one_entry(struct remote *remote, void *priv)
+ 	for (i = 0; i < url_nr; i++)
+ 	{
+ 		utilp = &(string_list_append(remote->name, list)->util);
+-		*utilp = malloc(strlen(url[i])+strlen(" (push)")+1);
++		*utilp = xmalloc(strlen(url[i])+strlen(" (push)")+1);
+ 		strcpy((char *) *utilp, url[i]);
+ 		strcat((char *) *utilp, " (push)");
+ 	}
+--
+1.6.3.2.406.gd6a466
