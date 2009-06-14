@@ -1,373 +1,250 @@
-From: =?utf-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-Subject: [PATCH] format-patch: add --filename-prefix to prepend a prefix to output file names
-Date: Sun, 14 Jun 2009 17:10:00 +1000
-Message-ID: <1244963400-1739-1-git-send-email-pclouds@gmail.com>
-References: <7vr5xsozcm.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: What's in git.git (Jun 2009, #01; Sun, 14)
+Date: Sun, 14 Jun 2009 00:12:27 -0700
+Message-ID: <7vtz2jqof8.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-To: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Jakub Narebski <jnareb@gmail.com>, Andreas Ericsson <ae@op5.se>
-X-From: git-owner@vger.kernel.org Sun Jun 14 09:10:40 2009
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Jun 14 09:12:38 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MFjrT-0002J7-12
-	for gcvg-git-2@gmane.org; Sun, 14 Jun 2009 09:10:39 +0200
+	id 1MFjtM-0002eo-Ky
+	for gcvg-git-2@gmane.org; Sun, 14 Jun 2009 09:12:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753735AbZFNHKZ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 14 Jun 2009 03:10:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754060AbZFNHKZ
-	(ORCPT <rfc822;git-outgoing>); Sun, 14 Jun 2009 03:10:25 -0400
-Received: from wa-out-1112.google.com ([209.85.146.177]:18001 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753690AbZFNHKU (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 14 Jun 2009 03:10:20 -0400
-Received: by wa-out-1112.google.com with SMTP id j5so622988wah.21
-        for <git@vger.kernel.org>; Sun, 14 Jun 2009 00:10:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:from:to:cc:subject
-         :date:message-id:x-mailer:in-reply-to:references:mime-version
-         :content-type:content-transfer-encoding;
-        bh=GcnmKsB03pC3FEjTvcwH/eaQYWxA0FJFBQjq6+kOOQw=;
-        b=o/H08Sp0QwXYlP5LovykXaYGhjQPiL1sD1Nz4kD7vbXYeou45RYba6mTjmLfIfljl7
-         +GgJKrkSzWzksoM5lWJdUj1sRMzWYHkR5+o9s5VJbpeD3TqDdjI6VnD/sLLyYJg+XVFE
-         5Z32WVzaKR3SstzsDNfGn+qmT4TUPO6U8QaCY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
-         :mime-version:content-type:content-transfer-encoding;
-        b=wjwIIVVvD06ym4VYPf+psxSZqyA11TOD2ldkLHKvmaGcVB//TwjIxYwH2BDxBDooGo
-         Cv0MKsN3KNPRvBMIpPPe1KW0Nzq3iO6ESaeKoX48G62XiVPqEy+tW4YBx6lBDMDxYpmF
-         MzGd8Ba289GAlpueuIwHnRuznNdK62SzmPylY=
-Received: by 10.114.202.15 with SMTP id z15mr9318454waf.67.1244963422880;
-        Sun, 14 Jun 2009 00:10:22 -0700 (PDT)
-Received: from dektop ([121.91.203.177])
-        by mx.google.com with ESMTPS id m30sm3884107wag.18.2009.06.14.00.10.07
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 14 Jun 2009 00:10:21 -0700 (PDT)
-Received: by dektop (sSMTP sendmail emulation); Sun, 14 Jun 2009 17:10:02 +1000
-X-Mailer: git-send-email 1.6.3.2.318.g2fd57
-In-Reply-To: <7vr5xsozcm.fsf@alter.siamese.dyndns.org>
+	id S1752708AbZFNHM1 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 14 Jun 2009 03:12:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752200AbZFNHM0
+	(ORCPT <rfc822;git-outgoing>); Sun, 14 Jun 2009 03:12:26 -0400
+Received: from fed1rmmtao102.cox.net ([68.230.241.44]:53252 "EHLO
+	fed1rmmtao102.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751802AbZFNHMZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 14 Jun 2009 03:12:25 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao102.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20090614071228.MHXT20976.fed1rmmtao102.cox.net@fed1rmimpo02.cox.net>;
+          Sun, 14 Jun 2009 03:12:28 -0400
+Received: from localhost ([68.225.240.211])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id 3jCT1c0024aMwMQ04jCTvC; Sun, 14 Jun 2009 03:12:27 -0400
+X-VR-Score: -80.00
+X-Authority-Analysis: v=1.0 c=1 a=KWHYVSmsEd0A:10 a=7dnsAxWBJxYA:10
+ a=upk3KiDiwsLC9TpYcxwA:9 a=OvviaRRc6lKYXxJOqLIA:7
+ a=BB8VRXJQp-FgpSOlzn_lTyTRwU8A:4
+X-CM-Score: 0.00
+X-maint-at: 50a991ec46d57ffc4b7fbd0e8a13182dab3cd5de
+X-master-at: 4f4fa9c228a1ac2854c0814b5b23df43b8d98203
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121539>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121540>
 
-In Linux packaging, patches are usually saved along with the "package
-spec" (to suit distro specific needs or just to back port some
-fixes). Those patches are usually prefixed with either the package
-name, or package version for various reasons. With --filename-prefix
-it comes handy to produce such patches, for example:
+Here is what we have as of tonight.  We'd probably want 1.6.3.2 soon to
+flush these accumulated small fixes, and start making noises about -rc
+freeze for 1.6.4 soon.
 
-git format-patch --filename-prefix dbus-1.2.3- HEAD~5
+* The 'maint' branch has these fixes since the last announcement.
 
-will generate patches for dbus-1.2.3 for me, all starting with "dbus-1.=
-2.3-".
+Charles Bailey (2):
+  t6023: merge-file fails to output anything for a degenerate merge
+  Change xdl_merge to generate output even for null merges
 
-Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-=2Ecom>
----
- On Wed, Jun 10, 2009 at 08:58:01AM -0700, Junio C Hamano wrote:
- > Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> write=
-s:
- >=20
- > > I use git to manage patches in my Gentoo development. In Gentoo, a=
-ll
- > > ebuilds (another form of RPM spec) corresponding to different vers=
-ions
- > > of the same package are grouped into one directory. So patches for
- > > each version usually have a prefix to separate them from ones for
- > > other versions. With --filename-prefix it comes handy to produce s=
-uch
- > > patches, for example:
- > >
- > > git format-patch --filename-prefix dbus-1.2.3- HEAD~5
- > >
- > > will generate patches for dbus-1.2.3 for me, all starting with "db=
-us-1.2.3-".
- > >
- > > This might be handy for RPM developers as well.
- >=20
- > If this patch needs another round, I would prefer seeing the explana=
-tion
- > done in a different order.  When a busy person who is uninterested i=
-n
- > Gentoo starts reading the above paragraph, the patch will (incorrect=
-ly) be
- > dismissed with an "Ah, Gentoo specific feature?  Not interesting." a=
-fter
- > reading the first two lines.  I.e. "Add X that does Y.  This is usef=
-ul in
- > such and such situations because ...".
+Johannes Sixt (3):
+  t3701: ensure correctly set up repository after skipped tests
+  fetch-pack: close output channel after sideband demultiplexer termina=
+tes
+  diff.c: plug a memory leak in an error path
 
- Done
+Junio C Hamano (4):
+  Revert "git-add--interactive: remove hunk coalescing"
+  Update draft release notes for 1.6.3.2
+  blame: correctly handle a path that used to be a directory
+  GIT 1.6.3.2
 
- >=20
- > > +--filename-prefix=3D.<pfx>::
- > > +	Prepend specified prefix in front of generated filenames.
- >=20
- > Hmm... ;-)
- >=20
- > What happens when I feed a path with a slash in it with --filename-p=
-refix?
- > We will fail in open/creat if the leading path does not exist?
- >=20
- > I am not saying we must allow a slash in the prefix and create neces=
-sary
- > leading paths ourselves, nor we must check for a slash and fail in t=
-he
- > input validation phase, but I am wondering if we can have some cleve=
-r way
- > to internally unify the handling of this new option with --outdir.
+Matt Graham (1):
+  Splitting a hunk that adds a line at the top fails in "add -p"
 
- Hardly, the way it is handled now (chdir()ing to --outdir, then write =
-patches)
+Michael J Gruber (1):
+  builtin-remote: Make "remote show" display all urls
 
- Documentation/git-format-patch.txt                 |    6 ++-
- builtin-log.c                                      |    9 ++-
- log-tree.c                                         |   10 ++-
- log-tree.h                                         |    4 +-
- revision.h                                         |    1 +
- t/t4013-diff-various.sh                            |    1 +
- ...h_--stdout_--filename-prefix=3Dfoo-_initial..side |   61 ++++++++++=
-++++++++++
- 7 files changed, 83 insertions(+), 9 deletions(-)
- create mode 100644 t/t4013/diff.format-patch_--attach_--stdout_--filen=
-ame-prefix=3Dfoo-_initial..side
+Paolo Bonzini (1):
+  Documentation: git-send-mail can take rev-list arg to drive format-pa=
+tch
 
-diff --git a/Documentation/git-format-patch.txt b/Documentation/git-for=
-mat-patch.txt
-index 6f1fc80..052a3b8 100644
---- a/Documentation/git-format-patch.txt
-+++ b/Documentation/git-format-patch.txt
-@@ -15,7 +15,8 @@ SYNOPSIS
- 		   [-s | --signoff]
- 		   [-n | --numbered | -N | --no-numbered]
- 		   [--start-number <n>] [--numbered-files]
--		   [--in-reply-to=3DMessage-Id] [--suffix=3D.<sfx>]
-+		   [--in-reply-to=3DMessage-Id]
-+		   [--filename-prefix=3D<pfx>] [--suffix=3D.<sfx>]
- 		   [--ignore-if-in-upstream]
- 		   [--subject-prefix=3DSubject-Prefix]
- 		   [--cc=3D<email>]
-@@ -168,6 +169,9 @@ if that is not set.
- 	containing the shortlog and the overall diffstat.  You can
- 	fill in a description in the file before sending it out.
-=20
-+--filename-prefix=3D<pfx>::
-+	Prepend specified prefix in front of generated filenames.
-+
- --suffix=3D.<sfx>::
- 	Instead of using `.patch` as the suffix for generated
- 	filenames, use specified suffix.  A common alternative is
-diff --git a/builtin-log.c b/builtin-log.c
-index 0d34050..d458753 100644
---- a/builtin-log.c
-+++ b/builtin-log.c
-@@ -419,6 +419,7 @@ int cmd_log(int argc, const char **argv, const char=
- *prefix)
-=20
- /* format-patch */
-=20
-+static const char *fmt_patch_prefix =3D "";
- static const char *fmt_patch_suffix =3D ".patch";
- static int numbered =3D 0;
- static int auto_number =3D 1;
-@@ -524,18 +525,19 @@ static int outdir_offset;
- static int reopen_stdout(struct commit *commit, struct rev_info *rev)
- {
- 	struct strbuf filename =3D STRBUF_INIT;
-+	int prefix_len =3D strlen(fmt_patch_prefix);
- 	int suffix_len =3D strlen(fmt_patch_suffix) + 1;
-=20
- 	if (output_directory) {
- 		strbuf_addstr(&filename, output_directory);
- 		if (filename.len >=3D
--		    PATH_MAX - FORMAT_PATCH_NAME_MAX - suffix_len)
-+		    PATH_MAX - FORMAT_PATCH_NAME_MAX - prefix_len - suffix_len)
- 			return error("name of output directory is too long");
- 		if (filename.buf[filename.len - 1] !=3D '/')
- 			strbuf_addch(&filename, '/');
- 	}
-=20
--	get_patch_filename(commit, rev->nr, fmt_patch_suffix, &filename);
-+	get_patch_filename(commit, rev->nr, fmt_patch_prefix, fmt_patch_suffi=
-x, &filename);
-=20
- 	if (!DIFF_OPT_TST(&rev->diffopt, QUIET))
- 		fprintf(realstdout, "%s\n", filename.buf + outdir_offset);
-@@ -877,6 +879,8 @@ int cmd_format_patch(int argc, const char **argv, c=
-onst char *prefix)
- 			    "generate a cover letter"),
- 		OPT_BOOLEAN(0, "numbered-files", &numbered_files,
- 			    "use simple number sequence for output file names"),
-+		OPT_STRING(0, "filename-prefix", &fmt_patch_prefix, "pfx",
-+			    "prepend <pfx> to output file names"),
- 		OPT_STRING(0, "suffix", &fmt_patch_suffix, "sfx",
- 			    "use <sfx> instead of '.patch'"),
- 		OPT_INTEGER(0, "start-number", &start_number,
-@@ -1093,6 +1097,7 @@ int cmd_format_patch(int argc, const char **argv,=
- const char *prefix)
- 		string_list_append(msgid, rev.ref_message_ids);
- 	}
- 	rev.numbered_files =3D numbered_files;
-+	rev.patch_prefix =3D fmt_patch_prefix;
- 	rev.patch_suffix =3D fmt_patch_suffix;
- 	if (cover_letter) {
- 		if (thread)
-diff --git a/log-tree.c b/log-tree.c
-index 59d63eb..139c8b5 100644
---- a/log-tree.c
-+++ b/log-tree.c
-@@ -180,12 +180,13 @@ static int has_non_ascii(const char *s)
- 	return 0;
- }
-=20
--void get_patch_filename(struct commit *commit, int nr, const char *suf=
-fix,
--			struct strbuf *buf)
-+void get_patch_filename(struct commit *commit, int nr, const char *pre=
-fix,
-+			const char *suffix, struct strbuf *buf)
- {
- 	int suffix_len =3D strlen(suffix) + 1;
--	int start_len =3D buf->len;
-+	int start_len =3D buf->len + strlen(prefix);
-=20
-+	strbuf_addstr(buf, prefix);
- 	strbuf_addf(buf, commit ? "%04d-" : "%d", nr);
- 	if (commit) {
- 		int max_len =3D start_len + FORMAT_PATCH_NAME_MAX - suffix_len;
-@@ -263,7 +264,8 @@ void log_write_email_headers(struct rev_info *opt, =
-struct commit *commit,
- 		extra_headers =3D subject_buffer;
-=20
- 		get_patch_filename(opt->numbered_files ? NULL : commit, opt->nr,
--				    opt->patch_suffix, &filename);
-+				    opt->patch_prefix, opt->patch_suffix,
-+				    &filename);
- 		snprintf(buffer, sizeof(buffer) - 1,
- 			 "\n--%s%s\n"
- 			 "Content-Type: text/x-patch;"
-diff --git a/log-tree.h b/log-tree.h
-index 20b5caf..566c85d 100644
---- a/log-tree.h
-+++ b/log-tree.h
-@@ -20,7 +20,7 @@ void log_write_email_headers(struct rev_info *opt, st=
-ruct commit *commit,
- void load_ref_decorations(void);
-=20
- #define FORMAT_PATCH_NAME_MAX 64
--void get_patch_filename(struct commit *commit, int nr, const char *suf=
-fix,
--			struct strbuf *buf);
-+void get_patch_filename(struct commit *commit, int nr, const char *pre=
-fix,
-+			const char *suffix, struct strbuf *buf);
-=20
- #endif
-diff --git a/revision.h b/revision.h
-index 227164c..b35c038 100644
---- a/revision.h
-+++ b/revision.h
-@@ -85,6 +85,7 @@ struct rev_info {
- 	struct log_info *loginfo;
- 	int		nr, total;
- 	const char	*mime_boundary;
-+	const char	*patch_prefix;
- 	const char	*patch_suffix;
- 	int		numbered_files;
- 	char		*message_id;
-diff --git a/t/t4013-diff-various.sh b/t/t4013-diff-various.sh
-index 8b33321..cf16c0a 100755
---- a/t/t4013-diff-various.sh
-+++ b/t/t4013-diff-various.sh
-@@ -246,6 +246,7 @@ format-patch --stdout initial..master
- format-patch --stdout --no-numbered initial..master
- format-patch --stdout --numbered initial..master
- format-patch --attach --stdout initial..side
-+format-patch --attach --stdout --filename-prefix=3Dfoo- initial..side
- format-patch --attach --stdout --suffix=3D.diff initial..side
- format-patch --attach --stdout initial..master^
- format-patch --attach --stdout initial..master
-diff --git a/t/t4013/diff.format-patch_--attach_--stdout_--filename-pre=
-fix=3Dfoo-_initial..side b/t/t4013/diff.format-patch_--attach_--stdout_=
---filename-prefix=3Dfoo-_initial..side
-new file mode 100644
-index 0000000..72127eb
---- /dev/null
-+++ b/t/t4013/diff.format-patch_--attach_--stdout_--filename-prefix=3Df=
-oo-_initial..side
-@@ -0,0 +1,61 @@
-+$ git format-patch --attach --stdout --filename-prefix=3Dfoo- initial.=
-=2Eside
-+From c7a2ab9e8eac7b117442a607d5a9b3950ae34d5a Mon Sep 17 00:00:00 2001
-+From: A U Thor <author@example.com>
-+Date: Mon, 26 Jun 2006 00:03:00 +0000
-+Subject: [PATCH] Side
-+MIME-Version: 1.0
-+Content-Type: multipart/mixed; boundary=3D"------------g-i-t--v-e-r-s-=
-i-o-n"
-+
-+This is a multi-part message in MIME format.
-+--------------g-i-t--v-e-r-s-i-o-n
-+Content-Type: text/plain; charset=3DUTF-8; format=3Dfixed
-+Content-Transfer-Encoding: 8bit
-+
-+---
-+ dir/sub |    2 ++
-+ file0   |    3 +++
-+ file3   |    4 ++++
-+ 3 files changed, 9 insertions(+), 0 deletions(-)
-+ create mode 100644 file3
-+
-+
-+--------------g-i-t--v-e-r-s-i-o-n
-+Content-Type: text/x-patch; name=3D"foo-0001-Side.patch"
-+Content-Transfer-Encoding: 8bit
-+Content-Disposition: attachment; filename=3D"foo-0001-Side.patch"
-+
-+diff --git a/dir/sub b/dir/sub
-+index 35d242b..7289e35 100644
-+--- a/dir/sub
-++++ b/dir/sub
-+@@ -1,2 +1,4 @@
-+ A
-+ B
-++1
-++2
-+diff --git a/file0 b/file0
-+index 01e79c3..f4615da 100644
-+--- a/file0
-++++ b/file0
-+@@ -1,3 +1,6 @@
-+ 1
-+ 2
-+ 3
-++A
-++B
-++C
-+diff --git a/file3 b/file3
-+new file mode 100644
-+index 0000000..7289e35
-+--- /dev/null
-++++ b/file3
-+@@ -0,0 +1,4 @@
-++A
-++B
-++1
-++2
-+
-+--------------g-i-t--v-e-r-s-i-o-n--
-+
-+
-+$
---=20
-1.6.3.2.318.g2fd57
+Ren=C3=A9 Scharfe (3):
+  grep: fix word-regexp at the beginning of lines
+  grep: fix colouring of matches with zero length
+  grep: fix empty word-regexp matches
+
+Shawn O. Pearce (1):
+  daemon: Strictly parse the "extra arg" part of the command
+
+Stephen Boyd (3):
+  commit: -F overrides -t
+  apply, fmt-merge-msg: use relative filenames
+  git-rerere.txt: grammatical fixups and cleanups
+
+Thomas Rast (3):
+  Documentation: teach stash/pop workflow instead of stash/apply
+  add -i: do not dump patch during application
+  Documentation: refer to gitworkflows(7) from tutorial and git(1)
+
+Uwe Kleine-K=C3=B6nig (1):
+  rebase--interactive: remote stray closing parenthesis
+
+
+* The 'master' branch has these since the last announcement
+  in addition to the above.
+
+Brandon Casey (9):
+  Makefile: use /usr/ucb/install on SunOS platforms rather than ginstal=
+l
+  Makefile: add NEEDS_RESOLV to optionally add -lresolv to compile
+    arguments
+  On Solaris choose the OLD_ICONV iconv() declaration based on the UNIX
+    spec
+  git-compat-util.h: tweak the way _XOPEN_SOURCE is set on Solaris
+  Makefile: define __sun__ on SunOS
+  Makefile: add section for SunOS 5.7
+  git-compat-util.h: avoid using c99 flex array feature with Sun compil=
+er
+    5.8
+  git-send-email.perl: improve detection of MIME encoded-words
+  send-email: use UTF-8 rather than utf-8 for consistency
+
+Christian Couder (5):
+  bisect: drop unparse_commit() and use clear_commit_marks()
+  bisect: display first bad commit without forking a new process
+  bisect: add parameters to "filter_skipped"
+  bisect: when skipping, choose a commit away from a skipped commit
+  t6030: test skipping away from an already skipped commit
+
+Clemens Buchacher (5):
+  match_refs: search ref list tail internally
+  refuse to merge during a merge
+  test-lib: fail if invalid options are passed
+  test-lib: allow exit trap to be used for cleanup by tests
+  test-lib: fix http exit codes
+
+Daniel Trstenjak (1):
+  Show presence of stashed changes in bash prompt.
+
+David Aguilar (4):
+  mergetool--lib: add support for araxis merge
+  compat: add a mkstemps() compatibility function
+  compat: add a basename() compatibility function
+  diff: generate pretty filenames in prep_temp_blob()
+
+Edward Z. Yang (1):
+  connect.c: Support PuTTY plink and TortoisePlink as SSH on Windows
+
+Johan Herland (1):
+  Rename submodule.<name>.rebase to submodule.<name>.update
+
+Johannes Schindelin (6):
+  MinGW: GCC >=3D 4 does not need SNPRINTF_SIZE_CORR anymore
+  Quiet make: do not leave Windows behind
+  Work around a regression in Windows 7, causing erase_in_line() to cra=
+sh
+    sometimes
+  test-chmtime: work around Windows limitation
+  MinGW: fix warning about implicit declaration of _getch()
+  Fix warnings in nedmalloc when compiling with GCC 4.4.0
+
+Johannes Sixt (4):
+  Simplify some instances of run_command() by using run_command_v_opt()=
+=2E
+  Simplify some 'fprintf(stderr); return -1;' by using 'return error()'
+  Fix typo in nedmalloc warning fix
+  compat/ has subdirectories: do not omit them in 'make clean'
+
+Junio C Hamano (4):
+  Documentation/git.txt: update links to release notes
+  Makefile: introduce SANE_TOOL_PATH for prepending required elements t=
+o
+    PATH
+  Makefile: test-parse-options depends on parse-options.h
+  Makefile: insert SANE_TOOL_PATH to PATH before /bin or /usr/bin
+
+Kjetil Barvik (1):
+  symlinks.c: small style cleanup
+
+Linus Torvalds (1):
+  Clean up and simplify rev_compare_tree()
+
+Marius Storm-Olsen (2):
+  MinGW readdir reimplementation to support d_type
+  Add custom memory allocator to MinGW and MacOS builds
+
+Markus Heidelberg (6):
+  add a test for git-send-email for non-threaded mails
+  send-email: fix non-threaded mails
+  doc/send-email: clarify the behavior of --in-reply-to with --no-threa=
+d
+  add a test for git-send-email for threaded mails without chain-reply-=
+to
+  send-email: fix threaded mails without chain-reply-to
+  send-email: fix a typo in a comment
+
+Michael J Gruber (1):
+  git-repack.txt: Clarify implications of -a for dumb protocols
+
+Mike Hommey (7):
+  Don't expect verify_pack() callers to set pack_size
+  transport.c::get_refs_via_curl(): do not leak refs_url
+  http.c: new functions for the http API
+  transport.c::get_refs_via_curl(): use the new http API
+  http.c::http_fetch_ref(): use the new http API
+  http-push.c::remote_exists(): use the new http API
+  http-push.c::fetch_symref(): use the new http API
+
+Nick Woolley (1):
+  git-cvsexportcommit can't commit files which have been removed from C=
+VS
+
+Pat Thoyts (1):
+  git: browsing paths with spaces when using the start command
+
+Peter Hutterer (1):
+  git-submodule: add support for --rebase.
+
+Pierre Habouzit (1):
+  parse-options: add parse_options_check to validate option specs.
+
+Ralf Wildenhues (1):
+  configure: test whether -lresolv is needed
+
+SZEDER G=C3=A1bor (2):
+  Documentation: mention 'git stash pop --index' option explicitly
+  bash: add support for 'git stash pop --index' option
+
+Steffen Prohaska (1):
+  MinGW: Teach Makefile to detect msysgit and apply specific settings
+
+Stephen Boyd (2):
+  git-show-branch.txt: document --date-order option
+  show-branch: don't use LASTARG_DEFAULT with OPTARG
+
+Tay Ray Chuan (16):
+  http*: cleanup slot->local after fclose
+  t5540-http-push: test fetching of loose objects
+  t5540-http-push: test fetching of packed objects
+  http-push: send out fetch requests on queue
+  http-push: fix missing "#ifdef USE_CURL_MULTI" around "is_running_que=
+ue"
+  t5550-http-fetch: test fetching of packed objects
+  http-push, http-walker: style fixes
+  http-walker: verify remote packs
+  http*: copy string returned by sha1_to_hex
+  http-push: do not SEGV after fetching a bad pack idx file
+  http*: move common variables and macros to http.[ch]
+  http: create function end_url_with_slash
+  http*: add http_get_info_packs
+  http: use new http API in fetch_index()
+  http*: add helper methods for fetching packs
+  http*: add helper methods for fetching objects (loose)
