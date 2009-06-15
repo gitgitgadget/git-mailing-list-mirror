@@ -1,119 +1,120 @@
-From: Christian Couder <christian.couder@gmail.com>
-Subject: Re: [PATCH v3 0/3] automatically skip away from broken commits
-Date: Mon, 15 Jun 2009 09:59:57 +0200
-Message-ID: <c07716ae0906150059m7f9706x6f9022afde15d3b0@mail.gmail.com>
-References: <20090606043853.4031.78284.chriscool@tuxfamily.org>
-	 <c07716ae0906101237o5038fc4dle9f11b6f2216652a@mail.gmail.com>
-	 <7vtz2nlrfs.fsf@alter.siamese.dyndns.org>
-	 <200906110602.54861.chriscool@tuxfamily.org>
-	 <4A308B5D.2010704@zytor.com> <4A309083.9090907@zytor.com>
-	 <c07716ae0906120456j1a14af52n47c3a3542201aaf@mail.gmail.com>
-	 <4A33F7E4.4020201@zytor.com>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: [PATCH] use xstrdup, not strdup in ll-merge.c
+Date: Mon, 15 Jun 2009 10:45:22 +0200
+Message-ID: <81b0412b0906150145j7c717a6ar33bb4f2ebd6095e1@mail.gmail.com>
+References: <87bpoqoavp.fsf@meyering.net>
+	 <81b0412b0906141503v14484d9fyea56198910305bfc@mail.gmail.com>
+	 <87fxe2lybr.fsf@meyering.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Christian Couder <chriscool@tuxfamily.org>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Sam Vilain <sam@vilain.net>, Ingo Molnar <mingo@elte.hu>
-To: "H. Peter Anvin" <hpa@zytor.com>
-X-From: git-owner@vger.kernel.org Mon Jun 15 10:06:22 2009
+Cc: git list <git@vger.kernel.org>
+To: Jim Meyering <jim@meyering.net>
+X-From: git-owner@vger.kernel.org Mon Jun 15 10:45:39 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MG7Cw-0007lQ-0n
-	for gcvg-git-2@gmane.org; Mon, 15 Jun 2009 10:06:22 +0200
+	id 1MG7ov-0000HD-I3
+	for gcvg-git-2@gmane.org; Mon, 15 Jun 2009 10:45:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752586AbZFOIF4 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 15 Jun 2009 04:05:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752301AbZFOIFz
-	(ORCPT <rfc822;git-outgoing>); Mon, 15 Jun 2009 04:05:55 -0400
-Received: from mail-bw0-f213.google.com ([209.85.218.213]:54763 "EHLO
-	mail-bw0-f213.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751229AbZFOIFx convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 15 Jun 2009 04:05:53 -0400
-Received: by bwz9 with SMTP id 9so3146220bwz.37
-        for <git@vger.kernel.org>; Mon, 15 Jun 2009 01:05:55 -0700 (PDT)
+	id S1758660AbZFOIpX convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 15 Jun 2009 04:45:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752366AbZFOIpX
+	(ORCPT <rfc822;git-outgoing>); Mon, 15 Jun 2009 04:45:23 -0400
+Received: from mail-fx0-f206.google.com ([209.85.220.206]:64871 "EHLO
+	mail-fx0-f206.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758256AbZFOIpW convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 15 Jun 2009 04:45:22 -0400
+Received: by fxm2 with SMTP id 2so119290fxm.37
+        for <git@vger.kernel.org>; Mon, 15 Jun 2009 01:45:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:mime-version:received:in-reply-to:references
          :date:message-id:subject:from:to:cc:content-type
          :content-transfer-encoding;
-        bh=fvNW5G0pjP01WRP80ImyqEumaZaKQMsOPWdEY2LMziA=;
-        b=e7XFtLT9pycVBAiCnd6H3HQ6nci1cR4we80fOdUYNgAnec28EHr5fEVRKUOJVaYwbg
-         XmQ9UvCHts/HWcz8MTONkxKJmvZshnKE6ZVlOVyx1RR0py1gXBRaNkO3DuCHNO//TCI6
-         G92lHsi25mvqkVpM0G076w4cuc6AqUG56D7E8=
+        bh=7RCXSmgU9VeARKLwF9GDnvit4kEaiGr0IOnEiITACkY=;
+        b=I5JLIQMmF5sPi5O4o/QINUFbbJxvxMTP35PG7gH5TFTUFlyPC8FdtGyks8g95+wGYH
+         fExK99zqjE9Zm/ebkVsjhyfpKI+NLB4OTa8Ib4Cj934rhwbd7W9rYTPxPj2eaNb687qQ
+         hZZrX7yE+c8NdVIUNRuTUfA0pBwVVIoLopa3Y=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type:content-transfer-encoding;
-        b=Rbl9BHGP48w2Pasi4KuUwRIYfKA7LId2wG3O4/FOtO8MMEpkuhCF7feRPtdCzRpUwQ
-         GrazICQeTR4ebMXwvBxMlCPRPI772hjxWPK4CXBW+HnEQDTfuN5tU/F18EtCzWK1jzRm
-         yDrFDiUAkBxL1/+G3x2jlP+M6N1XrruH6pkQw=
-Received: by 10.103.131.18 with SMTP id i18mr3486112mun.107.1245052797167; 
-	Mon, 15 Jun 2009 00:59:57 -0700 (PDT)
-In-Reply-To: <4A33F7E4.4020201@zytor.com>
+        b=szkKLE5nTEIqudgY1PKQfrJNRJBSbMu9u66U9SyRPRTutu6SbYgIR8JZUhai6Ocwlp
+         fS12NdbmCUVgLpccMcmOfG18Xu0JAdniPLBx6xzbcxPyANhEKkGpRyiVbT2sm2wuMRMf
+         vKFojy4d/D3nGrzEotksr9a1BnKJbbyuiuw1g=
+Received: by 10.204.69.66 with SMTP id y2mr6848161bki.49.1245055522949; Mon, 
+	15 Jun 2009 01:45:22 -0700 (PDT)
+In-Reply-To: <87fxe2lybr.fsf@meyering.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121591>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121592>
 
-On Sat, Jun 13, 2009 at 9:03 PM, H. Peter Anvin<hpa@zytor.com> wrote:
-> Christian Couder wrote:
->> On Thu, Jun 11, 2009 at 7:05 AM, H. Peter Anvin<hpa@zytor.com> wrote=
-:
->>> Urk, I managed to get myself completely confused -- I did the serie=
-s
->>> approximation on the wrong side of inverting the function. =A0The c=
-orrect
->>> power is actually 1.5 (over the range 0 to 1), a value > 1 is neces=
-sary
->>> to bias the PRNG toward the beginning (x =3D 0) of the list.
+2009/6/15 Jim Meyering <jim@meyering.net>:
+> Alex Riesen wrote:
+>> 2009/6/14 Jim Meyering <jim@meyering.net>:
+>>> @@ -231,7 +231,7 @@ static int read_merge_config(const char *var, c=
+onst char *value, void *cb)
+>>>
+>>> =C2=A0 =C2=A0 =C2=A0 =C2=A0if (!strcmp(var, "merge.default")) {
+>>> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0if (value)
+>>> - =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 default_ll_merge =3D strdup(value);
+>>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 default_ll_merge =3D xstrdup(value);
 >>
->> I started working on this, but I wonder if it's better to add a
->> #include <math.h> and link with -lm than to provide a custom sqrt
->> implementation. Too bad the best power is not 2.
->>
+>> read_merge_config has a failure mode (where it returns -1), why not =
+use it?
 >
-> That's what I would do. =A0It's not like sqrt() is a strange, unporta=
-ble
-> function.
-
-Yes, but I feared that there could be rounding related differences
-between platforms.
-
-By the way, could you explain why power 1.5 is better than 2? It would
-be much simpler if we could avoid square rooting anything in the first
-place.
-
->> To implement the PRNG, I guess that using something based on the
->> function given by "man 3 rand" should be ok:
->>
->> int get_prn(int count) {
->> =A0 =A0 count =3D count * 1103515245 + 12345;
->> =A0 =A0 return((unsigned)(count/65536) % 32768);
->> }
->>
->> where the "count" we pass is the count of elements in the list rathe=
-r
->> than the static seed.
+> I didn't even consider it, because it would be inconsistent with
+> the other heap-allocation functions used there (xcalloc, xmemdupz).
 >
-> Yes, or perhaps better we could use some combination of the SHA-1s
-> involved as seeds... they are rather nice for this as they are wide a=
-nd
-> much better PRNGs than most classical algorithms.
->
-> The main problem with the above algorithm is that it only produces 16
-> bits of output, which when biased can turn into a fairly significant
-> granularity.
+> However, now that I do, it looks like that would mean adding four tim=
+es
+> the same code (including conditionals and code to generate a diagnost=
+ic via
+> a call to error -- or a goto). Why bother, when all of that is alread=
+y
+> encapsulated in xmalloc?
 
-I don't think this is a real problem for this application. In fact I
-think it's already quite overkill and there are better things to do,
-like looking for a commit on a different branch among the first ones
-in the list, if we want to improve the current behavior.
+So that a useful error message can be given in the _caller_ (it knows
+more about context)?
 
-So unless there is a real flaw, I am going to work on something else.
+Otherwise the error message ("Out of memory, strdup failed") does not
+have anything about the place nor situation in it. As the situations
+when a modern system really runs out of memory are very rare,
+mostly such reports just point at some inconsistency elsewhere
+(like bloody stupid memory management in system support libraries
+on an OS-not-to-be-named-again or the usual corruption of heap
+control structures).
 
-Best regards,
-Christian.
+Besides, xstrdup does more then just allocation: it tries to free globa=
+l
+list of cached pack chunks. This does not play very well with the effor=
+ts
+to make a library out of the modern Git code.
+
+> Maybe because you want to be able to continue after an allocation fai=
+lure?
+
+No.
+
+> If a small strdup allocation fails, odds are good that the code won't
+> be able to do anything useful, so when not in library code, cleanest =
+is
+> simply to exit.
+
+Doubt it (because you better describe _why_ you "simply" interrupted
+users workflow, so the said user can do something about it).
+
+> In addition, if you insist on using strdup, you'll probably want to
+> be consistent and use calloc and memdupz, too. =C2=A0Adding all of th=
+e code
+> required to recover from those failures and to avoid leaks would be m=
+essy.
+
+I don't insist on that. I should have said in the first message about
+more elaborate explanation of the error to user. Sorry.
