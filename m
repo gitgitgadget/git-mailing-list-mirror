@@ -1,78 +1,88 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: [PATCH] Cast things properly to handle >2G files.
-Date: Sun, 14 Jun 2009 21:25:34 -0700 (PDT)
-Message-ID: <alpine.LFD.2.01.0906142118250.3305@localhost.localdomain>
-References: <E1MFvux-0001ix-I7@fencepost.gnu.org> <alpine.DEB.1.00.0906142215560.26154@pacific.mpi-cbg.de> <E1MG32S-0004C6-8A@fencepost.gnu.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/2] http.c: fix compiling with libcurl 7.9.2
+Date: Sun, 14 Jun 2009 21:35:37 -0700
+Message-ID: <7v63eyp10m.fsf@alter.siamese.dyndns.org>
+References: <1245033541-15558-1-git-send-email-lodatom@gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: "Alfred M. Szmidt" <ams@gnu.org>
-X-From: git-owner@vger.kernel.org Mon Jun 15 06:26:41 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Tay Ray Chuan <rctay89@gmail.com>, git@vger.kernel.org,
+	Mike Ralphson <mike@abacus.co.uk>,
+	Mike Hommey <mh@glandium.org>
+To: Mark Lodato <lodatom@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jun 15 06:36:04 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MG3mJ-00043K-Nd
-	for gcvg-git-2@gmane.org; Mon, 15 Jun 2009 06:26:40 +0200
+	id 1MG3vO-0005pJ-EZ
+	for gcvg-git-2@gmane.org; Mon, 15 Jun 2009 06:36:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751322AbZFOEZm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Jun 2009 00:25:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751397AbZFOEZm
-	(ORCPT <rfc822;git-outgoing>); Mon, 15 Jun 2009 00:25:42 -0400
-Received: from smtp1.linux-foundation.org ([140.211.169.13]:51517 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750870AbZFOEZl (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 15 Jun 2009 00:25:41 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
-	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id n5F4PYqL032158
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Sun, 14 Jun 2009 21:25:35 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id n5F4PYjl029429;
-	Sun, 14 Jun 2009 21:25:34 -0700
-X-X-Sender: torvalds@localhost.localdomain
-In-Reply-To: <E1MG32S-0004C6-8A@fencepost.gnu.org>
-User-Agent: Alpine 2.01 (LFD 1184 2008-12-16)
-X-Spam-Status: No, hits=-5.467 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED,PATCH_SUBJECT_OSDL
-X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
+	id S1751355AbZFOEfg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Jun 2009 00:35:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750966AbZFOEfg
+	(ORCPT <rfc822;git-outgoing>); Mon, 15 Jun 2009 00:35:36 -0400
+Received: from fed1rmmtao106.cox.net ([68.230.241.40]:50571 "EHLO
+	fed1rmmtao106.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750732AbZFOEfg (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Jun 2009 00:35:36 -0400
+Received: from fed1rmimpo03.cox.net ([70.169.32.75])
+          by fed1rmmtao106.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20090615043538.PFCK25927.fed1rmmtao106.cox.net@fed1rmimpo03.cox.net>;
+          Mon, 15 Jun 2009 00:35:38 -0400
+Received: from localhost ([68.225.240.211])
+	by fed1rmimpo03.cox.net with bizsmtp
+	id 44bd1c00C4aMwMQ044bdos; Mon, 15 Jun 2009 00:35:37 -0400
+X-VR-Score: -80.00
+X-Authority-Analysis: v=1.0 c=1 a=1syxHTCHuFQA:10 a=ddArZceFCXsA:10
+ a=pGLkceISAAAA:8 a=TSbVqHtbAAAA:8 a=YFSDL6jICiKw2ZE9QX4A:9
+ a=IRwDjPlltdcfp2AxTGfYmYCkOE0A:4 a=MSl-tDqOz04A:10
+X-CM-Score: 0.00
+In-Reply-To: <1245033541-15558-1-git-send-email-lodatom@gmail.com> (Mark Lodato's message of "Sun\, 14 Jun 2009 22\:39\:00 -0400")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121581>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121582>
 
+Mark Lodato <lodatom@gmail.com> writes:
 
+> Change the minimimum required libcurl version for the http.sslKey option
+> to 7.9.3.  Previously, preprocessor macros checked for >= 7.9.2, which
+> is incorrect because CURLOPT_SSLKEY was introduced in 7.9.3.  This now
+> allows git to compile with libcurl 7.9.2.
+>
+> Signed-off-by: Mark Lodato <lodatom@gmail.com>
+> ---
+>
+> This patch series is independent of my other password prompting patch
+> series, and is based off 'next', which includes Tay Ray Chuan's recent
+> http changes.
 
-On Sun, 14 Jun 2009, Alfred M. Szmidt wrote:
-> 
-> I cannot agree to the D-C-O in good faith, since it speaks of open
-> source licenses, a group of licenses that include non-free software
-> licenses, something which I cannot support.
+In other words, this needs to be queued on top of rc/http-push series, and
+the review process should involve the original author (Cc'ed).
 
-If you can't sign off on it, then Junio shouldn't take it, since you're 
-basically saying that you cannot say that you own the copyrights or cannot 
-license it under the appropriate copyright.
+Tay, comments?
 
-Yes, it speaks of "open source licenses", but it says: "under the open 
-source license indicated in the file", and "appropriate open source
-license".
+> Note that git still does not compile on libcurl before 7.9.1 or below,
+> since CURLOPT_FTP_USE_EPSV (http.c:236) is defined in libcurl 7.9.2.
 
-For git, that's GPLv2 (or GPLv2-compatible, ie something like the 
-simplified BSD license that can just be converted to GPLv2).
+I think we didn't quite follow an old thread through, then.  
 
-The DCO is phrased that way so that other projects that use things like 
-the BSD or Apache license can still use the DCO as-is.
+Cf. http://thread.gmane.org/gmane.comp.version-control.git/113985/focus=114014
 
-Side note: for somebody with a "gnu.org" address, you're showing some 
-really bad taste. Do you know that the FSF ends up asking for a hell of a 
-lot of paperwork and other crazy things to take peoples submissions. And 
-they actually want the copyrights signed over, so that they can change it 
-to _any_ license.
+Both Mike's in the thread Cc'ed.
 
-The DCO, in contrast, is a paragon of simplicity and clarity, and doesn't 
-ask you to sign away any rights.
+> One question: In http.c, there are unnecessary #if LIBCURL_VERSION_NUM's
+> surrounding the global variable declarations, in http_options(), and in
+> http_init().  Is there a reason why these exist?  If not, I think
+> removing them would make the code easier to read.
 
-			Linus
+Yeah, as long as get_curl_handle() is still protected not to call
+curl_easy_setopt() with an option that is unknown to the version of
+libcURL, I think the config reader and variable declarations, and
+definitions can lose conditional compilation and it would make the overall
+code easier to read.
+
+Thanks.
