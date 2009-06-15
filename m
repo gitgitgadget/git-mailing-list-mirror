@@ -1,66 +1,77 @@
-From: Kristian Amlie <kristian.amlie@nokia.com>
+From: Dotan Barak <dotanba@gmail.com>
 Subject: Re: How can i find the origin of a branch?
-Date: Mon, 15 Jun 2009 13:57:53 +0200
-Message-ID: <4A363741.9030604@nokia.com>
+Date: Mon, 15 Jun 2009 15:03:57 +0300
+Message-ID: <2f3bf9a60906150503p69e992b4m18bdc2cc842b933e@mail.gmail.com>
 References: <2f3bf9a60906150437v765c2cecva61307ae9cf0cec7@mail.gmail.com>
+	 <4A363741.9030604@nokia.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="US-ASCII"
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
 Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Dotan Barak <dotanba@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jun 15 14:08:16 2009
+To: Kristian Amlie <kristian.amlie@nokia.com>
+X-From: git-owner@vger.kernel.org Mon Jun 15 14:09:42 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MGAys-0002lM-Lf
-	for gcvg-git-2@gmane.org; Mon, 15 Jun 2009 14:08:07 +0200
+	id 1MGB0M-0003gQ-EE
+	for gcvg-git-2@gmane.org; Mon, 15 Jun 2009 14:09:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759849AbZFOMGx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Jun 2009 08:06:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757906AbZFOMGw
-	(ORCPT <rfc822;git-outgoing>); Mon, 15 Jun 2009 08:06:52 -0400
-Received: from hoat.troll.no ([62.70.27.150]:40579 "EHLO hoat.troll.no"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755063AbZFOMGw (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Jun 2009 08:06:52 -0400
-X-Greylist: delayed 534 seconds by postgrey-1.27 at vger.kernel.org; Mon, 15 Jun 2009 08:06:51 EDT
-Received: from hoat.troll.no (tedur.troll.no [62.70.27.154])
-	by hoat.troll.no (Postfix) with SMTP id 0359B20F7F;
-	Mon, 15 Jun 2009 13:57:58 +0200 (CEST)
-Received: from sx01.troll.no (sx01.troll.no [62.70.27.21])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by hoat.troll.no (Postfix) with ESMTP id E62E120F67;
-	Mon, 15 Jun 2009 13:57:57 +0200 (CEST)
-Received: from sx01.troll.no (localhost.localdomain [127.0.0.1])
-	by sx01.troll.no (8.13.8/8.13.8) with ESMTP id n5FBvrN4008373;
-	Mon, 15 Jun 2009 13:57:57 +0200
-Received: from [172.24.90.99] ( [172.24.90.99])
-    by sx01.troll.no (Scalix SMTP Relay 11.4.1.11929)
-    via ESMTP; Mon, 15 Jun 2009 13:57:53 +0200 (CEST)
-In-Reply-To: <2f3bf9a60906150437v765c2cecva61307ae9cf0cec7@mail.gmail.com>
-x-scalix-Hops: 1
-User-Agent: Thunderbird 2.0.0.21 (X11/20090609)
-Content-Disposition: inline
+	id S1754584AbZFOMJY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Jun 2009 08:09:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754436AbZFOMJX
+	(ORCPT <rfc822;git-outgoing>); Mon, 15 Jun 2009 08:09:23 -0400
+Received: from fg-out-1718.google.com ([72.14.220.155]:37999 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752386AbZFOMJX (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Jun 2009 08:09:23 -0400
+Received: by fg-out-1718.google.com with SMTP id 16so1084667fgg.17
+        for <git@vger.kernel.org>; Mon, 15 Jun 2009 05:09:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=+xJiRUwTDWX2e36qNSy1Et4X10XLyxMUsyivx3bttNY=;
+        b=ofKaXtziuklq9DuPQTZ6IAXyinYbs+T/Edvw8HElfUDqLc8w/gGWimLHV0VtKn0v9e
+         WOtjkq2QJLBg+9TlM5NvY3MXnsQWMDbxltpc9O0HnmJPUMeRQUbNQmE98KKEnI/+8PLf
+         Ui8V2y/wLeR0alOvZz5S23ocdCfsjlWMe1AHY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=qFqa3MbfKU18RAuMmCydD5I01W5TR+QBFhaixPrj/dp47/chQu2E5eRei8h/mk6qdo
+         zr6rDVNZ7wJHFmMCjLjqVbh4vtgnibaxBY5Hr1l0TaiDbt5fMpvo3WHUFMtcwG53HT/P
+         A0su85pH8zOqgaL/WwyATgG5EoFWrEyeusr6k=
+Received: by 10.86.95.8 with SMTP id s8mr6608652fgb.2.1245067437112; Mon, 15 
+	Jun 2009 05:03:57 -0700 (PDT)
+In-Reply-To: <4A363741.9030604@nokia.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121600>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121601>
 
-ext Dotan Barak wrote:
-> Hi.
-> 
-> Is it possible to find the origin of a branch?
-> (the remote repository that this branch was cloned and checked out from)
+Thank you very much for a quick and exact answer
+:)
 
-git config -l
+Dotan
 
-Assuming you're on the master branch, branch.master.remote and
-branch.master.merge will tell you which remote and which branch you are
-tracking. Assuming that the remote is origin, you can check
-remote.origin.url to see the URL of the repo.
 
---
-Kristian
+On Mon, Jun 15, 2009 at 2:57 PM, Kristian Amlie<kristian.amlie@nokia.com> wrote:
+> ext Dotan Barak wrote:
+>> Hi.
+>>
+>> Is it possible to find the origin of a branch?
+>> (the remote repository that this branch was cloned and checked out from)
+>
+> git config -l
+>
+> Assuming you're on the master branch, branch.master.remote and
+> branch.master.merge will tell you which remote and which branch you are
+> tracking. Assuming that the remote is origin, you can check
+> remote.origin.url to see the URL of the repo.
+>
+> --
+> Kristian
+>
