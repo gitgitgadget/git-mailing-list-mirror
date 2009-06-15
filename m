@@ -1,50 +1,76 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: [PATCH] avoid NULL dereference on failed malloc
-Date: Mon, 15 Jun 2009 09:49:15 +0200
-Message-ID: <4A35FCFB.1080000@drmicha.warpmail.net>
-References: <87hbyioayl.fsf@meyering.net>
+From: Jim Meyering <jim@meyering.net>
+Subject: Re: [PATCH] use xstrdup, not strdup in ll-merge.c
+Date: Mon, 15 Jun 2009 10:02:00 +0200
+Message-ID: <87fxe2lybr.fsf@meyering.net>
+References: <87bpoqoavp.fsf@meyering.net>
+	<81b0412b0906141503v14484d9fyea56198910305bfc@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git list <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-To: Jim Meyering <jim@meyering.net>
-X-From: git-owner@vger.kernel.org Mon Jun 15 09:49:46 2009
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git list <git@vger.kernel.org>
+To: Alex Riesen <raa.lkml@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jun 15 10:02:19 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MG6wr-00082z-GB
-	for gcvg-git-2@gmane.org; Mon, 15 Jun 2009 09:49:45 +0200
+	id 1MG790-0006E0-Dh
+	for gcvg-git-2@gmane.org; Mon, 15 Jun 2009 10:02:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752409AbZFOHtf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Jun 2009 03:49:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751863AbZFOHte
-	(ORCPT <rfc822;git-outgoing>); Mon, 15 Jun 2009 03:49:34 -0400
-Received: from out2.smtp.messagingengine.com ([66.111.4.26]:59102 "EHLO
-	out2.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751478AbZFOHtd (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 15 Jun 2009 03:49:33 -0400
-Received: from compute1.internal (compute1.internal [10.202.2.41])
-	by out1.messagingengine.com (Postfix) with ESMTP id 249D6360E51;
-	Mon, 15 Jun 2009 03:49:34 -0400 (EDT)
-Received: from heartbeat2.messagingengine.com ([10.202.2.161])
-  by compute1.internal (MEProxy); Mon, 15 Jun 2009 03:49:34 -0400
-X-Sasl-enc: bSoOYa7aMeUhdYUyaT7DlLSLM9BdPs4zPmvXqsHhFcz4 1245052173
-Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.12])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 7DD1F2B2A4;
-	Mon, 15 Jun 2009 03:49:33 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1pre) Gecko/20090609 Lightning/1.0pre Shredder/3.0b3pre
-In-Reply-To: <87hbyioayl.fsf@meyering.net>
+	id S1752051AbZFOICI convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 15 Jun 2009 04:02:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751930AbZFOICH
+	(ORCPT <rfc822;git-outgoing>); Mon, 15 Jun 2009 04:02:07 -0400
+Received: from smtp2-g21.free.fr ([212.27.42.2]:59143 "EHLO smtp2-g21.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751229AbZFOICG convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 15 Jun 2009 04:02:06 -0400
+Received: from smtp2-g21.free.fr (localhost [127.0.0.1])
+	by smtp2-g21.free.fr (Postfix) with ESMTP id C8A6F4B007E
+	for <git@vger.kernel.org>; Mon, 15 Jun 2009 10:02:03 +0200 (CEST)
+Received: from mx.meyering.net (mx.meyering.net [82.230.74.64])
+	by smtp2-g21.free.fr (Postfix) with ESMTP id ACD824B00BB
+	for <git@vger.kernel.org>; Mon, 15 Jun 2009 10:02:00 +0200 (CEST)
+Received: by rho.meyering.net (Acme Bit-Twister, from userid 1000)
+	id 29BB4364FE; Mon, 15 Jun 2009 10:02:00 +0200 (CEST)
+In-Reply-To: <81b0412b0906141503v14484d9fyea56198910305bfc@mail.gmail.com>
+	(Alex Riesen's message of "Mon, 15 Jun 2009 00:03:27 +0200")
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121589>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121590>
 
-Jim Meyering venit, vidit, dixit 14.06.2009 21:46:
-> 
-> * builtin-remote.c (get_one_entry): Use xmalloc, not malloc.
+Alex Riesen wrote:
+> 2009/6/14 Jim Meyering <jim@meyering.net>:
+>> @@ -231,7 +231,7 @@ static int read_merge_config(const char *var, co=
+nst char *value, void *cb)
+>>
+>> =C2=A0 =C2=A0 =C2=A0 =C2=A0if (!strcmp(var, "merge.default")) {
+>> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0if (value)
+>> - =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 default_ll_merge =3D strdup(value);
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 default_ll_merge =3D xstrdup(value);
+>
+> read_merge_config has a failure mode (where it returns -1), why not u=
+se it?
 
-Learning something new with every patch... Sorry, Junio; thanks, Jim!
+I didn't even consider it, because it would be inconsistent with
+the other heap-allocation functions used there (xcalloc, xmemdupz).
 
-Michael
+However, now that I do, it looks like that would mean adding four times
+the same code (including conditionals and code to generate a diagnostic=
+ via
+a call to error -- or a goto). Why bother, when all of that is already
+encapsulated in xmalloc?
+Maybe because you want to be able to continue after an allocation failu=
+re?
+If a small strdup allocation fails, odds are good that the code won't
+be able to do anything useful, so when not in library code, cleanest is
+simply to exit.
+
+In addition, if you insist on using strdup, you'll probably want to
+be consistent and use calloc and memdupz, too.  Adding all of the code
+required to recover from those failures and to avoid leaks would be mes=
+sy.
