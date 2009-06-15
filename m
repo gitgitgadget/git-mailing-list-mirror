@@ -1,58 +1,76 @@
 From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [JGIT PATCH 1/7] Move hex parsing functions to RawParseUtil,
-	accept upper case
-Date: Mon, 15 Jun 2009 07:36:04 -0700
-Message-ID: <20090615143604.GA10817@spearce.org>
-References: <1244151843-26954-1-git-send-email-spearce@spearce.org> <1244151843-26954-2-git-send-email-spearce@spearce.org>
+Subject: Re: [PATCH] daemon: send stderr of service programs to the syslog
+Date: Mon, 15 Jun 2009 07:57:16 -0700
+Message-ID: <20090615145716.GW16497@spearce.org>
+References: <200906142238.51725.j6t@kdbg.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Robin Rosenberg <robin.rosenberg@dewire.com>
-X-From: git-owner@vger.kernel.org Mon Jun 15 16:36:26 2009
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	"H. Peter Anvin" <hpa@zytor.com>
+To: Johannes Sixt <j6t@kdbg.org>
+X-From: git-owner@vger.kernel.org Mon Jun 15 16:57:34 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MGDIP-0001mq-7w
-	for gcvg-git-2@gmane.org; Mon, 15 Jun 2009 16:36:25 +0200
+	id 1MGDck-0005GF-DQ
+	for gcvg-git-2@gmane.org; Mon, 15 Jun 2009 16:57:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758067AbZFOOgE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Jun 2009 10:36:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757398AbZFOOgD
-	(ORCPT <rfc822;git-outgoing>); Mon, 15 Jun 2009 10:36:03 -0400
-Received: from george.spearce.org ([209.20.77.23]:47174 "EHLO
+	id S1753319AbZFOO5O (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Jun 2009 10:57:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752010AbZFOO5N
+	(ORCPT <rfc822;git-outgoing>); Mon, 15 Jun 2009 10:57:13 -0400
+Received: from george.spearce.org ([209.20.77.23]:36324 "EHLO
 	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755414AbZFOOgC (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Jun 2009 10:36:02 -0400
+	with ESMTP id S1751943AbZFOO5N (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Jun 2009 10:57:13 -0400
 Received: by george.spearce.org (Postfix, from userid 1001)
-	id AB67F381FE; Mon, 15 Jun 2009 14:36:04 +0000 (UTC)
+	id 0ADA5381FE; Mon, 15 Jun 2009 14:57:16 +0000 (UTC)
 Content-Disposition: inline
-In-Reply-To: <1244151843-26954-2-git-send-email-spearce@spearce.org>
+In-Reply-To: <200906142238.51725.j6t@kdbg.org>
 User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121610>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121611>
 
-"Shawn O. Pearce" <spearce@spearce.org> wrote:
-> This way we can reuse them beyond just the ObjectId family of classes.
+Johannes Sixt <j6t@kdbg.org> wrote:
+> If git-daemon is run with --detach or --inetd, then stderr is explicitly
+> redirected to /dev/null. But notice that the service programs were spawned
+> via execl_git_cmd(), in particular, the stderr channel is inherited from
+> the daemon. This means that errors that the programs wrote to stderr (for
+> example, via die()), went to /dev/null.
 > 
-> We also now accept upper case hex digits in object ids.
+> This patch arranges that the daemon does not merely exec the service
+> program, but forks it and monitors stderr of the child; it writes the
+> errors that it produces to the daemons log via logerror().
 > 
-> Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
+> A consequence is that the daemon process remains in memory for the full
+> duration of the service program, but this cannot be avoided.
+> 
+> Signed-off-by: Johannes Sixt <j6t@kdbg.org>
 > ---
->  .../tst/org/spearce/jgit/lib/T0001_ObjectId.java   |   10 ++-
->  .../org/spearce/jgit/lib/AbbreviatedObjectId.java  |    8 +-
->  .../src/org/spearce/jgit/lib/AnyObjectId.java      |   36 ---------
->  .../src/org/spearce/jgit/lib/MutableObjectId.java  |   11 ++-
->  .../src/org/spearce/jgit/lib/ObjectId.java         |   19 +++--
->  .../src/org/spearce/jgit/util/RawParseUtils.java   |   80 ++++++++++++++++++--
->  6 files changed, 101 insertions(+), 63 deletions(-)
+>  I don't know whether service programs like upload-archive or upload-pack
+>  write progress report to stderr or not, for example, if a client does not
+>  support side-bands. In this case this patch is probably not enough since
+>  this would fill the log with unneeded progress information. Any hints
+>  are appreciated.
 
-Ping on this 7 patch series?  Looks like it got dropped?  Its the
-last outstanding current work I have that I think is ready for
-merging to master.
+They could, if they were broken.  :-)
+
+IIRC only upload-pack produces progress (from pack-objects).
+It does so by using a pipe on fd 2, and either copying it down
+to the client via side-band, or discarding it.  So progress data
+shouldn't ever appear on upload-pack's own fd 2, which means you
+won't get it in this syslog thing.
+
+But I have to wonder, why are we doing this?  Why can't we teach the
+individual server program to record its error to the syslog before
+it aborts?  Are we looking for SIGSEGV or something?  Its only the
+daemon program staying around in memory, but that's a lot of little
+daemons doing nothing waiting for their children to terminate.
+Seems like a waste to me.
  
 -- 
 Shawn.
