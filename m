@@ -1,65 +1,74 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Cast things properly to handle >2G files.
-Date: Mon, 15 Jun 2009 10:45:37 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.0906151043180.4245@intel-tinevez-2-302>
-References: <E1MFvux-0001ix-I7@fencepost.gnu.org> <alpine.DEB.1.00.0906142215560.26154@pacific.mpi-cbg.de> <E1MG32S-0004C6-8A@fencepost.gnu.org> <7vmy8ap2cq.fsf@alter.siamese.dyndns.org>
+From: Ping Yin <pkufranky@gmail.com>
+Subject: Re: A question about using 'add -p' to split the patch
+Date: Mon, 15 Jun 2009 16:56:40 +0800
+Message-ID: <46dff0320906150156mf9ac4dek99c94a6cc59e1db@mail.gmail.com>
+References: <46dff0320906142008v4f278d3ek3eebfa36f7fcf06a@mail.gmail.com>
+	 <20090615061211.GA53136@gmail.com>
+	 <46dff0320906142324i191e50d5v1e89ba6311377a47@mail.gmail.com>
+	 <20090615073635.GA53643@gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: ams@gnu.org, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jun 15 10:46:37 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git mailing list <git@vger.kernel.org>
+To: David Aguilar <davvid@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jun 15 10:57:01 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MG7pp-0000eG-LO
-	for gcvg-git-2@gmane.org; Mon, 15 Jun 2009 10:46:34 +0200
+	id 1MG7zr-0004AQ-Im
+	for gcvg-git-2@gmane.org; Mon, 15 Jun 2009 10:56:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756031AbZFOIpj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Jun 2009 04:45:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752366AbZFOIpi
-	(ORCPT <rfc822;git-outgoing>); Mon, 15 Jun 2009 04:45:38 -0400
-Received: from mail.gmx.net ([213.165.64.20]:53868 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752453AbZFOIph (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Jun 2009 04:45:37 -0400
-Received: (qmail invoked by alias); 15 Jun 2009 08:45:38 -0000
-Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
-  by mail.gmx.net (mp006) with SMTP; 15 Jun 2009 10:45:38 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18gMZdMORUgyULDYhBOTC2s0Ypq4SDNK2zDf0cZmA
-	Zdnu7dln3cv/jw
-X-X-Sender: schindel@intel-tinevez-2-302
-In-Reply-To: <7vmy8ap2cq.fsf@alter.siamese.dyndns.org>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.63
+	id S1752499AbZFOI4o convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 15 Jun 2009 04:56:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752467AbZFOI4o
+	(ORCPT <rfc822;git-outgoing>); Mon, 15 Jun 2009 04:56:44 -0400
+Received: from mail-gx0-f214.google.com ([209.85.217.214]:59373 "EHLO
+	mail-gx0-f214.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751521AbZFOI4n convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 15 Jun 2009 04:56:43 -0400
+Received: by gxk10 with SMTP id 10so6274962gxk.13
+        for <git@vger.kernel.org>; Mon, 15 Jun 2009 01:56:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=GWemgluAhY5vjKRzq7Fy2L47GpWCmlvhNjhYz+WV2+E=;
+        b=SY1e9pRAl/ZYufpRGoYXrp3AfatkVrx9Sndpyvjxdq8C+6aIU5rY65VQ4z4Kd7DwSj
+         /WD3TRCgABu0mK7h1pJ/mbARpJEcq4kQVQQRHx4SbAiFVKeN27HMUTyBEYMrt4eI1woe
+         TCqfHXV1JUBZ/Jhlll7PYuQWWKrwFCgGeha0w=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=L+HnbJI7yq/S/9Px+GwkuxDtlEmgGXdKfcVYO+0e33JMNo619Otk8k18KDw+7cJg8K
+         FvkxwCOJwQsFVDXRHdI92pqUScr3aU3SHuNosj51vFvkawNmnsKwKBvCjoTuHPsUbNi4
+         jEySVqCDpNnXW2i4TXEVJRVU36Wpag0zCApDU=
+Received: by 10.90.56.17 with SMTP id e17mr6083368aga.4.1245056205544; Mon, 15 
+	Jun 2009 01:56:45 -0700 (PDT)
+In-Reply-To: <20090615073635.GA53643@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121593>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121594>
 
-Hi,
+>
+> For add -e I got it to work by editing the patch to;
+>
+> +function bt_move($path, $pos) {
+> + =C2=A0return;
+> +}
+> =C2=A0function bt_add($path) {
+> =C2=A0 =C2=A0return;
+> =C2=A0}
+>
+> The reason it's hard to get right is that you have to
+> reconstruct the context of the original content for the
+> adds/removes and remember to add the space before the
+> reconstructed bt_add($path).
+>
 
-On Sun, 14 Jun 2009, Junio C Hamano wrote:
-
-> "Alfred M. Szmidt" <ams@gnu.org> writes:
-> 
-> >    Oh, and maybe add a test like t/t5705-clone-2gb.sh?
-> >
-> > Thank you, that is a very good idea.
-> 
-> Nah, one blob that is over 2gb, deltified against something else?  
-> That's a bit too much for a test script.
-
-Why not?  It's not a difficult thing to come up with such a test.  And 
-just like t5705, it can be hidden behind an "EXPENSIVE_TEST=YesPlease" 
-environment variable.  Maybe I should have spelt that out loud instead of 
-relying on interested parties to know t5705.
-
-And just like t5705 it should help people to verify that the patch solves 
-the problems indeed.
-
-Ciao,
-Dscho
+Thanks very much, i forgot the space before the reconstructed bt_add($p=
+ath) :-)
