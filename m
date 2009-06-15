@@ -1,103 +1,64 @@
-From: Ping Yin <pkufranky@gmail.com>
-Subject: Re: A question about using 'add -p' to split the patch
-Date: Mon, 15 Jun 2009 14:24:39 +0800
-Message-ID: <46dff0320906142324i191e50d5v1e89ba6311377a47@mail.gmail.com>
-References: <46dff0320906142008v4f278d3ek3eebfa36f7fcf06a@mail.gmail.com>
-	 <20090615061211.GA53136@gmail.com>
+From: Stephen Boyd <bebarino@gmail.com>
+Subject: Re: [PATCHv2 1/3] git-sh-setup: introduce say() for quiet options
+Date: Sun, 14 Jun 2009 23:33:46 -0700
+Message-ID: <780e0a6b0906142333q72d2cdefh9db60ffdb0babc25@mail.gmail.com>
+References: <1244924500-27391-1-git-send-email-bebarino@gmail.com> 
+	<1245021374-8430-1-git-send-email-bebarino@gmail.com> <1245021374-8430-2-git-send-email-bebarino@gmail.com> 
+	<4A35E970.8080406@viscovery.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git mailing list <git@vger.kernel.org>
-To: David Aguilar <davvid@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jun 15 08:30:46 2009
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Mon Jun 15 08:34:17 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MG5iO-0005Y4-Hh
-	for gcvg-git-2@gmane.org; Mon, 15 Jun 2009 08:30:44 +0200
+	id 1MG5ln-0006Fs-Vy
+	for gcvg-git-2@gmane.org; Mon, 15 Jun 2009 08:34:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752816AbZFOGag convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 15 Jun 2009 02:30:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752657AbZFOGaf
-	(ORCPT <rfc822;git-outgoing>); Mon, 15 Jun 2009 02:30:35 -0400
-Received: from yw-out-2324.google.com ([74.125.46.31]:35184 "EHLO
-	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752538AbZFOGaf convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 15 Jun 2009 02:30:35 -0400
-Received: by yw-out-2324.google.com with SMTP id 5so2431983ywb.1
-        for <git@vger.kernel.org>; Sun, 14 Jun 2009 23:30:37 -0700 (PDT)
+	id S1750888AbZFOGeH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Jun 2009 02:34:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750837AbZFOGeF
+	(ORCPT <rfc822;git-outgoing>); Mon, 15 Jun 2009 02:34:05 -0400
+Received: from an-out-0708.google.com ([209.85.132.248]:9043 "EHLO
+	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750796AbZFOGeE (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Jun 2009 02:34:04 -0400
+Received: by an-out-0708.google.com with SMTP id d40so8353071and.1
+        for <git@vger.kernel.org>; Sun, 14 Jun 2009 23:34:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
+         :from:date:message-id:subject:to:cc:content-type
          :content-transfer-encoding;
-        bh=5wc3ptFB9bEAEGvhR6uThGbOk+aE289O+A600/uktXU=;
-        b=Z3eCJbxdMO6s8ZgjTz2lPP/dRISTSh/TDck6+ph9FoGW0xX/SW+67HiauJSJZopDxH
-         bzW/jV9/G9kmJL2q1sqWvOj4N7eBl/eKKNO3s++f4WLngTWxgzO7SIFZT1j/o7xQjHrH
-         KOtk7McP9UuTc/o18PwrWePR1tjZBMYc6E3nQ=
+        bh=tThuNoTFC1vIxWZOKTMgjUARVgPWbF40fn8XaEEf1PY=;
+        b=RYz3ABvYKcYeeMx+pymuuklR3uUIZVwUopIuUa7CEs5oSD7EXdZDLQwFJz/U9WzEiG
+         3cGKoXwgExl2wkKzy0sYkV1RTpPC0aN74CnHCt7KcqxP8XzqjbFfj4x4nxeJoGnjW4JO
+         uqg9g6fPBn6zDNOm9wsxyf1VYr6EpbJPN82yE=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc:content-type:content-transfer-encoding;
-        b=FTw/Man0sSkYk36ddQiCedsEtO+sDnyfY36SoHQSw5r1iPueHONxj7Vanh4LtJ5FQh
-         3B58z1mv01dOMa4gc8Krj7bKBHVKlzjc323jlhZ1k1XH5t/9rocgvbm9PzwkJZY+4qWr
-         vj7L3m2x3BcHKijn182BEwVk543ktCJrI2AfY=
-Received: by 10.90.35.9 with SMTP id i9mr1856569agi.58.1245047079350; Sun, 14 
-	Jun 2009 23:24:39 -0700 (PDT)
-In-Reply-To: <20090615061211.GA53136@gmail.com>
+        b=eosVtN4GUa8A8Vm/T8Ncc6zD06Jl3Mv5yr9DO63KbBmVbkOUgSAZ49huzTxS8PqzgT
+         ZVa35CLzt4+TMYOPSb7tpcuz7f5r6LrtdWHFnqicFPMl5vqwiro6LL6T0uGYZoJZY7UL
+         yjh2r5eOt2oXfr6HCkyjBLdkpwGKhHH8a63rc=
+Received: by 10.100.153.12 with SMTP id a12mr8275845ane.191.1245047646127; 
+	Sun, 14 Jun 2009 23:34:06 -0700 (PDT)
+In-Reply-To: <4A35E970.8080406@viscovery.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121586>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121587>
 
-On Mon, Jun 15, 2009 at 2:12 PM, David Aguilar<davvid@gmail.com> wrote:
-> On Mon, Jun 15, 2009 at 11:08:51AM +0800, Ping Yin wrote:
->> file bt.php in the HEAD:
->>
->> function bt_add($path) {
->> =C2=A0return;
->> }
->>
->> file bt.php in the working directory:
->>
->> function bt_move($path, $pos) {
->> =C2=A0 return;
->> }
->> function bt_add($path, $pos) {
->> =C2=A0 bt_move($path, $pos)
->> =C2=A0 return;
->> }
->>
->> Now i want to split the change into two parts:
->> First introduce bt_move
->> Then add a param pos to bt_add and call bt_move
->>
->> With the 'e' action of 'add -p', i got
->>
->> -function bt_add($path) {
->> +function bt_move($path, $pos) {
->> + =C2=A0return;
->> +}
->> +function bt_add($path, $pos) {
->> + =C2=A0bt_move($path, $pos)
->> =C2=A0 =C2=A0return;
->> =C2=A0}
->>
->> Then, i want to edit the patch to get
->>
->>
->> function bt_move($path, $pos) {
->> =C2=A0 return;
->> }
->> function bt_add($path) {
->> =C2=A0 return;
->> }
->>
->> However, whatever i do, the patch fails to apply. Any suggestion?
+On Sun, Jun 14, 2009 at 11:25 PM, Johannes Sixt<j.sixt@viscovery.net> wrote:
 >
-> Use git-gui or git-cola to select just bt_move() for addition.
-> You can stage specific lines.
+> Is it intended that this obeys any GIT_QUIET that appears in the
+> environment?
 
-Doesn't the 'e' action of 'add -p' do the same job with git-gui?
+I wasn't sure, therefore I left it up to interpretation. It's probably
+better to just override the environment though.
+
+Thanks.
