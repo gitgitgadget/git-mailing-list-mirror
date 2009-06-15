@@ -1,100 +1,71 @@
-From: Marc Branchaud <marcnarc@xiplink.com>
-Subject: Re: git svn: Supporting multiple branch subdirs?
-Date: Mon, 15 Jun 2009 13:29:45 -0400
-Message-ID: <4A368509.9070801@xiplink.com>
-References: <4A32CCA5.7040404@xiplink.com> <4A339182.1090204@drmicha.warpmail.net>
+From: Karsten Weiss <knweiss@gmx.de>
+Subject: Re: [PATCH 2/2] http.c: add http.sslCertType and http.sslKeyType
+Date: Mon, 15 Jun 2009 19:43:52 +0200 (CEST)
+Message-ID: <alpine.OSX.2.00.0906151927010.816@xor.localnet>
+References: <1245033541-15558-1-git-send-email-lodatom@gmail.com> <1245033541-15558-2-git-send-email-lodatom@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git list <git@vger.kernel.org>, normalperson@yhbt.net
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Mon Jun 15 19:30:17 2009
+Content-Type: TEXT/PLAIN; format=flowed; charset=US-ASCII
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Mark Lodato <lodatom@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jun 15 19:44:54 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MGG0f-0007il-3h
-	for gcvg-git-2@gmane.org; Mon, 15 Jun 2009 19:30:17 +0200
+	id 1MGGEk-0006Bx-UW
+	for gcvg-git-2@gmane.org; Mon, 15 Jun 2009 19:44:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757279AbZFORaD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Jun 2009 13:30:03 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752942AbZFORaD
-	(ORCPT <rfc822;git-outgoing>); Mon, 15 Jun 2009 13:30:03 -0400
-Received: from smtp142.dfw.emailsrvr.com ([67.192.241.142]:57186 "EHLO
-	smtp142.dfw.emailsrvr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752090AbZFORaC (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Jun 2009 13:30:02 -0400
-Received: from relay4.relay.dfw.mlsrvr.com (localhost [127.0.0.1])
-	by relay4.relay.dfw.mlsrvr.com (SMTP Server) with ESMTP id 5205B10CC063
-	for <git@vger.kernel.org>; Mon, 15 Jun 2009 13:29:59 -0400 (EDT)
-Received: by relay4.relay.dfw.mlsrvr.com (Authenticated sender: mbranchaud-AT-xiplink.com) with ESMTPSA id D62CD10CBE24;
-	Mon, 15 Jun 2009 13:29:54 -0400 (EDT)
-User-Agent: Thunderbird 2.0.0.21 (X11/20090409)
-In-Reply-To: <4A339182.1090204@drmicha.warpmail.net>
+	id S1762225AbZFORok (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Jun 2009 13:44:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760318AbZFORoj
+	(ORCPT <rfc822;git-outgoing>); Mon, 15 Jun 2009 13:44:39 -0400
+Received: from mail.gmx.net ([213.165.64.20]:45859 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1754462AbZFORoi (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Jun 2009 13:44:38 -0400
+Received: (qmail invoked by alias); 15 Jun 2009 17:44:39 -0000
+Received: from port-92-200-94-69.dynamic.qsc.de (EHLO mail.localnet) [92.200.94.69]
+  by mail.gmx.net (mp013) with SMTP; 15 Jun 2009 19:44:39 +0200
+X-Authenticated: #3612999
+X-Provags-ID: V01U2FsdGVkX1/AJbdjUtPAVTd5JQ4Er4084u3eLz4zwU407Hs8vH
+	uWiS3tuOLyxoVZ
+Received: by mail.localnet (Postfix, from userid 502)
+	id 115F2B8B2F9; Mon, 15 Jun 2009 19:43:52 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by mail.localnet (Postfix) with ESMTP id E1F33B8B2EA;
+	Mon, 15 Jun 2009 19:43:52 +0200 (CEST)
+In-Reply-To: <1245033541-15558-2-git-send-email-lodatom@gmail.com>
+User-Agent: Alpine 2.00 (OSX 1167 2008-08-23)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.57
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121618>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121619>
 
-Michael J Gruber wrote:
-> 
-> After doing the init with "--branches=stable" (without releng), do
-> git config --add svn-remote.svn.branches 'releng/*:refs/remotes/*'
-> 
-> This gives you two branches refspecs in .git/config (feel free to put
-> them in different dirs under remotes if there may be name clashes
-> between stable and releng branches).
+Hi Mark!
 
-That doesn't seem to work...
+On Sun, 14 Jun 2009, Mark Lodato wrote:
 
-Here's my .git/config file before the first fetch:
+> Add two new configuration variables, http.sslCertType and
+> http.sslKeyType, which tell libcurl the filetype for the SSL client
+> certificate and private key, respectively.  The main benefit is to allow
+> PKCS12 certificates for users with libcurl >= 7.13.0.
 
-[svn-remote "svn"]
-        useSvnsyncProps = 1
-        ignore-paths = ^[^/]+/(?:cvs2svn|projects|svnadmin|user|vendor.*)
-        url = file:///home/marcnarc/Code/FreeBSD-all-mirror/base
-        fetch = head:refs/remotes/trunk
-        branches = stable/*:refs/remotes/stable/*
-        branches = releng/*:refs/remotes/releng/*
-        tags = release/*:refs/remotes/tags/*
+This is interesting. Thanks for working on that!
 
-(Shouldn't that fetch line be head:refs/remots/head, since there's nothing called "trunk" in the svn repo?  I used git-svn init --trunk=head ...)
+(However, it's a similar issue like the question whether the private key 
+is encrypted or not: Usability would be better if the certificate type 
+could be determined automatically (without having to violate the 
+layering)).
 
-With this, git-svn seems to be (mostly) ignoring the branches in stable/.  I've run the first fetch past the point where the first stable/ branch is created ("stable/2.0.5"), but in the repository (while the fetch command is still going, BTW, currently somewhere around commit 15,000), I get:
+>> +http.sslKeyType::
+> +	Filetype for SSL private key.  Must be "PEM" (default), "DER", or
+> +	(if libcurl >= 7.13.0) "P12".  Can be overridden by the
+> +	'GIT_SSL_CERT_TYPE' environment variable.
+                  ^^^^
+                  KEY
 
-	$ git branch -a
-	  remotes/releng/2.0.5
-	  remotes/releng/ALPHA_2_0
-	  remotes/releng/BETA_2_0
-	  remotes/tags/2.0
-	  remotes/tags/2.0.5
-	  remotes/tags/2.1.0
-	  remotes/tags/2.1.0@12369
-	  remotes/trunk
-
-At this point, git-svn has passed the commit that created the stable/2.0.5 branch (8869).  Mind you, nothing was ever committed to that branch, so it's basically a tag.  However, remotes/tags/2.0.5 is at svn commit 9201, which is the correct for the releases/2.0.5 tag.  remotes/tags/2.1.0 is also correct for the tagging of the 2.1.0 release.
-
-git-svn has also passed the commit that created the stable/2.1 branch (9211), as well as later commits that only apply to that branch.  AFAICT, remotes/tags/2.1.0@12369 (which is not an actual tag or branch in the svn repo) is the stable/2.1 branch up to commit 12369, but there have been later commits to stable/2.1 since then that git-svn has seen.  Those later commits don't seem to be in the git repository at all.
-
-The releng/* branches look fine, though.
-
->> - The releng/X.Y branches are created from the stable/X  tree, where X
->> itself doesn't exist from the start.
-> 
-> Well, I assume X exists at the time of creation of X.Y. That's all that
-> is needed.
-
-Yes, that assumption is correct (it seems the 2.x releng branches were created off the trunk, not from a stable/ branch).
-
->> - FreeBSD likes to make single commits that spans multiple branches.
->> This is usually done as a security patch: One commit can, for example,
->> touch /head, /stable/X, /stable/W, and several branches under /releng.
-> 
-> I assume that git-svn converts such an svn commit into several git
-> commits, one for each affected branch. Since you have a local mirror
-> it's easy to try out.
-
-Yep, git-svn does just that.  Nice!
-
-		M.
+Regards,
+Karsten
