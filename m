@@ -1,69 +1,86 @@
-From: "H. Peter Anvin" <hpa@zytor.com>
-Subject: Re: [PATCH] daemon: send stderr of service programs to the syslog
-Date: Mon, 15 Jun 2009 14:43:34 -0700
-Message-ID: <4A36C086.5010306@zytor.com>
-References: <200906142238.51725.j6t@kdbg.org> <200906152339.43607.j6t@kdbg.org>
+From: Marco Costalba <mcostalba@gmail.com>
+Subject: Re: [PATCH QGit RFC] Fix "Save patch..." on a commit range
+Date: Mon, 15 Jun 2009 22:45:45 +0100
+Message-ID: <e5bfff550906151445m2f38c3fw964e01251d9568b9@mail.gmail.com>
+References: <1244849357-31166-1-git-send-email-markus.heidelberg@web.de>
+	 <e5bfff550906130412v6e223511tf0e20c685b21c490@mail.gmail.com>
+	 <200906131333.57725.markus.heidelberg@web.de>
+	 <200906152313.20002.markus.heidelberg@web.de>
+	 <e5bfff550906151425p2dacdcdasbae09af4ce34813d@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Johannes Sixt <j6t@kdbg.org>
-X-From: git-owner@vger.kernel.org Mon Jun 15 23:44:26 2009
+Cc: git@vger.kernel.org
+To: markus.heidelberg@web.de
+X-From: git-owner@vger.kernel.org Mon Jun 15 23:45:55 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MGJyX-0007eb-8C
-	for gcvg-git-2@gmane.org; Mon, 15 Jun 2009 23:44:21 +0200
+	id 1MGK03-0008LL-4f
+	for gcvg-git-2@gmane.org; Mon, 15 Jun 2009 23:45:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934512AbZFOVnj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Jun 2009 17:43:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755216AbZFOVnj
-	(ORCPT <rfc822;git-outgoing>); Mon, 15 Jun 2009 17:43:39 -0400
-Received: from terminus.zytor.com ([198.137.202.10]:50864 "EHLO
-	terminus.zytor.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752667AbZFOVni (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Jun 2009 17:43:38 -0400
-Received: from anacreon.sc.intel.com (hpa@localhost [127.0.0.1])
-	(authenticated bits=0)
-	by terminus.zytor.com (8.14.3/8.14.1) with ESMTP id n5FLhYGX028256
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Mon, 15 Jun 2009 14:43:34 -0700
-User-Agent: Thunderbird 2.0.0.21 (X11/20090320)
-In-Reply-To: <200906152339.43607.j6t@kdbg.org>
-X-Virus-Scanned: ClamAV 0.94.2/9467/Mon Jun 15 01:11:58 2009 on terminus.zytor.com
-X-Virus-Status: Clean
+	id S934545AbZFOVpo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Jun 2009 17:45:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760355AbZFOVpo
+	(ORCPT <rfc822;git-outgoing>); Mon, 15 Jun 2009 17:45:44 -0400
+Received: from mail-ew0-f210.google.com ([209.85.219.210]:46255 "EHLO
+	mail-ew0-f210.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755793AbZFOVpn (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Jun 2009 17:45:43 -0400
+Received: by ewy6 with SMTP id 6so5415912ewy.37
+        for <git@vger.kernel.org>; Mon, 15 Jun 2009 14:45:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=nyB1Zl4J5roAlee/uq2Y1Wg8RTdSwwGdgyY6ouTa2vA=;
+        b=iDp/+5FdZPiACE4Kfc8aNq4gvFkMXPP8nd7lYHenl5FI5/jCycWZN19BkNHGdfKvRN
+         3AkU9lvttUlLTcIzBc84dlUWGRvWp70bIpvGabd6tz1tAQ/ItWxV1K/16XdaQFvkcRNk
+         Jh/aAp1m4DVOm5IUMq2WDhdsdwtNMA1/hblAc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=sTOotFsmFEhVRN/Hfiaj1wGI0hQCRof6q5ESxg5ZwkZQ86bNMt6S9ydtvbjI4qdl4q
+         p7AxovWb0gUD7YdIthOTMWimPYiQ0bj0s1K8vU0WPOAGj1TBVy5CFXlf9KTHlUfguk70
+         pK6EgIaxYyX8v2PKHAipviiLInrJ3YnnlDmW4=
+Received: by 10.216.21.211 with SMTP id r61mr2498272wer.211.1245102345205; 
+	Mon, 15 Jun 2009 14:45:45 -0700 (PDT)
+In-Reply-To: <e5bfff550906151425p2dacdcdasbae09af4ce34813d@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121632>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121633>
 
-Johannes Sixt wrote:
-> On Sonntag, 14. Juni 2009, Johannes Sixt wrote:
->>  I don't know whether service programs like upload-archive or upload-pack
->>  write progress report to stderr or not, for example, if a client does not
->>  support side-bands. In this case this patch is probably not enough since
->>  this would fill the log with unneeded progress information. Any hints
->>  are appreciated.
-> 
-> The progress indicator can be helped . But there is now another anoyance: If 
-> the client terminates the connection early, this is now logged as:
-> 
-> fatal: unable to run 'git-upload-pack'
-> 
-> The reason for this is that upload-pack is run as 'git upload-pack', which 
-> itself spawns the external 'git-upload-pack'. The latter dies from a SIGPIPE, 
-> and the former, in execv_dashed_external(), dutyfully writes this down.
-> 
-> The easiest solution is perhaps to make upload-pack a builtin.
-> 
-> BUT... The motivation, of which this patch is actually a fall-out, is to clean 
-> up the messy error behavor of the start,finish,run_command family. To take 
-> care of this error message is just one more (hopefully small) point on my 
-> agenda.
-> 
+On Mon, Jun 15, 2009 at 22:25, Marco Costalba<mcostalba@gmail.com> wrote:
+>
+> This is really strange !
+>
 
-We probably do want to log that the client has disconnected.
+Ok. This is a quick test that perhaps you could do.
 
-	-hpa
+Git::formatPatch() get the list of selected revisions already ordered
+by its caller, MainImpl::ActMailFormatPatch_activated() in
+mainimpl.cpp, in this function the selected items are retrieved
+calling ListView::getSelectedItems() in listview.cpp
+
+There, finally, there is the call to the native Qt function that
+collects the selected rows, QItemSelectionModel::selectedRows()
+
+The returned list is takes as is by QGit and nevere reordered or
+touched, so the order of the revisions belong directly on how
+QItemSelectionModel::selectedRows() returns the rows.
+
+Now the published windows version (and also teh Linux one) is compiled
+against Qt4.3.3, while you are using Qt4.4.1
+
+
+I have checked in the Qt documentation and I didn't found any point
+where the order of the returned rows is specified, I know in Qt4.3.3
+is from the top toward the bottom of the list, but perhaps in Qt4.4.1
+it has been changed.
+
+So you could check, in ListView::getSelectedItems() how the rows are returned.
