@@ -1,79 +1,103 @@
-From: Ingo Oeser <ioe-git@rameria.de>
-Subject: Using git for code deployment on webservers?
-Date: Tue, 16 Jun 2009 01:11:47 +0200
-Message-ID: <200906160111.47325.ioe-git@rameria.de>
+From: Markus Heidelberg <markus.heidelberg@web.de>
+Subject: Re: [PATCH QGit RFC] Fix "Save patch..." on a commit range
+Date: Tue, 16 Jun 2009 01:44:01 +0200
+Message-ID: <200906160144.02320.markus.heidelberg@web.de>
+References: <1244849357-31166-1-git-send-email-markus.heidelberg@web.de> <e5bfff550906151425p2dacdcdasbae09af4ce34813d@mail.gmail.com> <e5bfff550906151445m2f38c3fw964e01251d9568b9@mail.gmail.com>
+Reply-To: markus.heidelberg@web.de
 Mime-Version: 1.0
-Content-Type: Text/Plain;
-  charset="us-ascii"
+Content-Type: text/plain;
+  charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Cc: Ingo Oeser <ioe-git@rameria.de>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jun 16 01:15:36 2009
+Cc: git@vger.kernel.org
+To: Marco Costalba <mcostalba@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jun 16 01:44:15 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MGLOq-00036K-G4
-	for gcvg-git-2@gmane.org; Tue, 16 Jun 2009 01:15:36 +0200
+	id 1MGLqY-00020B-Mq
+	for gcvg-git-2@gmane.org; Tue, 16 Jun 2009 01:44:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751604AbZFOXP1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Jun 2009 19:15:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751299AbZFOXP0
-	(ORCPT <rfc822;git-outgoing>); Mon, 15 Jun 2009 19:15:26 -0400
-Received: from smtprelay07.ispgateway.de ([80.67.31.41]:35061 "EHLO
-	smtprelay07.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751274AbZFOXPZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Jun 2009 19:15:25 -0400
-X-Greylist: delayed 360 seconds by postgrey-1.27 at vger.kernel.org; Mon, 15 Jun 2009 19:15:25 EDT
-Received: from [91.62.57.216] (helo=axel.localnet)
-	by smtprelay07.ispgateway.de with esmtpsa (TLSv1:AES256-SHA:256)
-	(Exim 4.68)
-	(envelope-from <ioe-git@rameria.de>)
-	id 1MGLIt-0004oH-0w; Tue, 16 Jun 2009 01:09:27 +0200
-User-Agent: KMail/1.11.2 (Linux/2.6.28-11-generic; KDE/4.2.2; x86_64; ; )
+	id S1751501AbZFOXoE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Jun 2009 19:44:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751372AbZFOXoC
+	(ORCPT <rfc822;git-outgoing>); Mon, 15 Jun 2009 19:44:02 -0400
+Received: from fmmailgate02.web.de ([217.72.192.227]:51618 "EHLO
+	fmmailgate02.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751179AbZFOXoB (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Jun 2009 19:44:01 -0400
+Received: from smtp08.web.de (fmsmtp08.dlan.cinetic.de [172.20.5.216])
+	by fmmailgate02.web.de (Postfix) with ESMTP id A6D861038B16A;
+	Tue, 16 Jun 2009 01:44:00 +0200 (CEST)
+Received: from [89.59.70.41] (helo=.)
+	by smtp08.web.de with asmtp (TLSv1:AES256-SHA:256)
+	(WEB.DE 4.110 #277)
+	id 1MGLqK-0005OC-00; Tue, 16 Jun 2009 01:44:00 +0200
+User-Agent: KMail/1.9.9
+In-Reply-To: <e5bfff550906151445m2f38c3fw964e01251d9568b9@mail.gmail.com>
+Jabber-ID: markus.heidelberg@web.de
 Content-Disposition: inline
-X-Df-Sender: 849595
+X-Sender: markus.heidelberg@web.de
+X-Provags-ID: V01U2FsdGVkX19fwHgVMbyDTwFdAdrCuBR8SrZPs4dSUIR/4QSO
+	FKn3/s0Rb2f5MpUEtC7iA3X6Buvt+U/M6AZHOmZGTOyPT5TC00
+	aqnoJ0i8viKtzHWUaTrw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121638>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121639>
 
-[please CC me, as I'm not subscribed]
+Marco Costalba, 15.06.2009:
+> So you could check, in ListView::getSelectedItems() how the rows are returned.
 
-Hi there,
+I added this snippet:
 
-I try to use git in a quite unusual way.
+-->8--
 
-I have a bunch of servers (hundreds), which get regular pulls of web developer code.
-The code consists of images, flash files, scripting language files, you name it.
-An exported repo (just the files, no SCM metadata) contains up to 4GB of files.
+diff --git a/src/listview.cpp b/src/listview.cpp
+index b2f4915..5bd1ee6 100644
+--- a/src/listview.cpp
++++ b/src/listview.cpp
+@@ -171,10 +171,12 @@ void ListView::showIdValues() {
+ 	viewport()->update();
+ }
+ 
++#include <QtDebug>
+ void ListView::getSelectedItems(QStringList& selectedItems) {
+ 
+ 	selectedItems.clear();
+ 	QModelIndexList ml = selectionModel()->selectedRows();
++	qDebug() << ml;
+ 	FOREACH (QModelIndexList, it, ml)
+ 		selectedItems.append(sha((*it).row()));
+ }
 
-No I want to distribute changes the developers made in a tree like structure:
+--8<--
 
-main server --> slave_1 --> webserver_0815
-            |-> slave_2 --> webserver_2342
-                        |-> webserver_4711
+and got the following for the 4 commits around v1.6.3 in git.git when
+enabled "All branches" (output prettified, was one line):
 
-But with the following contraints:
-- Store as little as possible on the webservers.
-  One selected revision/tag is enough.
-- Transfer as little as possible data.
-  Cancel out addition and deletion on the fly.
-- Nearly atomic update of file tree (easy to implement outside git)
+(QModelIndex(2554,0,0x0,FileHistory(0xa06bfe8) )  ,
+ QModelIndex(2553,0,0x0,FileHistory(0xa06bfe8) )  ,
+ QModelIndex(2552,0,0x0,FileHistory(0xa06bfe8) )  ,
+ QModelIndex(2551,0,0x0,FileHistory(0xa06bfe8) )  )
 
-Nice to have:
-- Instead of copying the files to their proper names, 
-  hardlink them to their git objects.
+Here it is ordered from oldest to newest. The newest commit (HEAD or
+working tree) has '0'.
 
-At the moment I always get more data than I need and have to store
-the repository AND the checked out data.
+The same with "All branches" unchecked, just a bit smaller values:
 
-I couldn't find a way so far to get around this. Is this possible? 
-Any ideas are welcome.
+(QModelIndex(404,0,0x0,FileHistory(0xa06bfe8) )  ,
+ QModelIndex(403,0,0x0,FileHistory(0xa06bfe8) )  ,
+ QModelIndex(402,0,0x0,FileHistory(0xa06bfe8) )  ,
+ QModelIndex(401,0,0x0,FileHistory(0xa06bfe8) )  )
 
-Many Thanks in Advance!
+But try with selecting many commits, for example v1.6.3..origin/master
+(fewer are sufficient). The order has a pattern, but it's not sorted at
+all.
 
-Best Regards
+Or selecting only two commits v1.6.3 and origin/master prints this for
+me, ordered from newest to oldest this time:
 
-Ingo Oeser
+(QModelIndex(16,0,0x0,FileHistory(0xa06bfe8) )  ,
+ QModelIndex(401,0,0x0,FileHistory(0xa06bfe8) )  )
