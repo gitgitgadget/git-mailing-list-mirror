@@ -1,72 +1,69 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: [PATCH] upload-pack: squelch progress indicator if client does not
- request sideband
-Date: Tue, 16 Jun 2009 15:46:46 -0400 (EDT)
-Message-ID: <alpine.LFD.2.00.0906161542590.16467@xanadu.home>
-References: <200906142238.51725.j6t@kdbg.org>
- <7vprd4hito.fsf@alter.siamese.dyndns.org>
- <alpine.LFD.2.00.0906161354010.16467@xanadu.home>
- <200906162041.16608.j6t@kdbg.org>
+From: Brandon Casey <casey@nrlssc.navy.mil>
+Subject: Re: [PATCH v2 2/2] Makefile: use compat regex on Solaris
+Date: Tue, 16 Jun 2009 15:07:40 -0500
+Message-ID: <v5GZyk1pvyw2mnFGX-8GiCIBKzquUZb5YYcjHNvgkczpXD2vQ4qdjg@cipher.nrlssc.navy.mil>
+References: <20090616190550.GA22905@coredump.intra.peff.net> <20090616190821.GB23197@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Junio C Hamano <gitster@pobox.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org,
-	"H. Peter Anvin" <hpa@zytor.com>
-To: Johannes Sixt <j6t@kdbg.org>
-X-From: git-owner@vger.kernel.org Tue Jun 16 21:47:23 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Johannes Sixt <j6t@kdbg.org>, John Bito <jwbito@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Jun 16 22:08:03 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MGecs-0006WN-16
-	for gcvg-git-2@gmane.org; Tue, 16 Jun 2009 21:47:22 +0200
+	id 1MGewr-0007tt-RA
+	for gcvg-git-2@gmane.org; Tue, 16 Jun 2009 22:08:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757127AbZFPTrI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Jun 2009 15:47:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756770AbZFPTrH
-	(ORCPT <rfc822;git-outgoing>); Tue, 16 Jun 2009 15:47:07 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:20214 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755287AbZFPTrG (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Jun 2009 15:47:06 -0400
-Received: from xanadu.home ([66.131.194.97]) by VL-MO-MR004.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
- with ESMTP id <0KLC00LVPK9Y6O30@VL-MO-MR004.ip.videotron.ca> for
- git@vger.kernel.org; Tue, 16 Jun 2009 15:46:46 -0400 (EDT)
-X-X-Sender: nico@xanadu.home
-In-reply-to: <200906162041.16608.j6t@kdbg.org>
-User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
+	id S1753381AbZFPUHr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Jun 2009 16:07:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753335AbZFPUHr
+	(ORCPT <rfc822;git-outgoing>); Tue, 16 Jun 2009 16:07:47 -0400
+Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:33971 "EHLO
+	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752904AbZFPUHq (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Jun 2009 16:07:46 -0400
+Received: by mail.nrlssc.navy.mil id n5GK7eYc007576; Tue, 16 Jun 2009 15:07:41 -0500
+In-Reply-To: <20090616190821.GB23197@coredump.intra.peff.net>
+X-OriginalArrivalTime: 16 Jun 2009 20:07:40.0821 (UTC) FILETIME=[1A3D9450:01C9EEBE]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121708>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121709>
 
-On Tue, 16 Jun 2009, Johannes Sixt wrote:
-
-> On Dienstag, 16. Juni 2009, Nicolas Pitre wrote:
-> > On Mon, 15 Jun 2009, Junio C Hamano wrote:
-> > > Stated differently, I think "not using sideband _and_ spawned via daemon"
-> > > would be an indication that "the client won't see the progress anyway
-> > > even if it were sent."  So the question becomes "will it be a small
-> > > enough change to detect if the upload-pack is driven by the daemon in the
-> > > codepath J6t added 'if (!use_sideband)' to, and if so shouldn't we do
-> > > so?"
-> >
-> > I don't think it is worth it at all.  The regression is purely cosmetic,
-> > and I suspect you'll have a really hard time finding someone still using
-> > those ancient git clients anyway.  Remember that such clients are unable
-> > to fetch with HTTP from repositories using version 2 of the pack index
-> > by default already.  That's why we created version 1.4.4.5.
+Jeff King wrote:
+> The system regex is either slow or buggy for complex
+> patterns, like the built-in xfuncname pattern for java
+> files.
 > 
-> Keep in mind that there could exist clients outside git.git that use modern
-> pack-index or unpack-objects, but omit sideband support.
+> Signed-off-by: Jeff King <peff@peff.net>
+> ---
+> Rebased to today's master to resolve textual conflicts.
+> 
+>  Makefile |    1 +
+>  1 files changed, 1 insertions(+), 0 deletions(-)
+> 
+> diff --git a/Makefile b/Makefile
+> index 0cb21da..3bd0c08 100644
+> --- a/Makefile
+> +++ b/Makefile
+> @@ -725,6 +725,7 @@ ifeq ($(uname_S),SunOS)
+>  	NO_MEMMEM = YesPlease
+>  	NO_MKDTEMP = YesPlease
+>  	NO_MKSTEMPS = YesPlease
+> +	NO_REGEX = YesPlease
+>  	ifeq ($(uname_R),5.7)
+>  		NEEDS_RESOLV = YesPlease
+>  		NO_IPV6 = YesPlease
 
-And that would be an abominable thing to make special support for such 
-clients.  If they're fancy enough to want progress display, they should 
-comply with what moderately recent native git clients do and get 
-sideband support.
 
+You need to add -DHAVE_ALLOCA_H to the BASIC_CFLAGS statement in
+the SunOS section of the Makefile so that alloca.h will be included
+in compat/regex/regex.c.  This is necessary for the SUNWspro compiler.
+It takes me a long time to compile, so I haven't checked yet whether
+this causes any problems for the GNU compiler.
 
-Nicolas
+-brandon
