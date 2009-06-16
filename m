@@ -1,63 +1,67 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH v2 2/2] Makefile: use compat regex on Solaris
-Date: Tue, 16 Jun 2009 15:08:21 -0400
-Message-ID: <20090616190821.GB23197@coredump.intra.peff.net>
-References: <20090616190550.GA22905@coredump.intra.peff.net>
+From: Martin Nordholts <enselic@gmail.com>
+Subject: git-branch: Actually using the current branch as default start-point
+Date: Tue, 16 Jun 2009 21:13:09 +0200
+Message-ID: <4A37EEC5.4020007@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: John Bito <jwbito@gmail.com>, Junio C Hamano <gitster@pobox.com>,
-	git <git@vger.kernel.org>
-To: Johannes Sixt <j6t@kdbg.org>
-X-From: git-owner@vger.kernel.org Tue Jun 16 21:08:32 2009
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jun 16 21:21:10 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MGe1H-0007ir-MB
-	for gcvg-git-2@gmane.org; Tue, 16 Jun 2009 21:08:32 +0200
+	id 1MGeDP-0003mp-85
+	for gcvg-git-2@gmane.org; Tue, 16 Jun 2009 21:21:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760846AbZFPTIX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Jun 2009 15:08:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760418AbZFPTIW
-	(ORCPT <rfc822;git-outgoing>); Tue, 16 Jun 2009 15:08:22 -0400
-Received: from peff.net ([208.65.91.99]:33638 "EHLO peff.net"
+	id S1759536AbZFPTU4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Jun 2009 15:20:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758489AbZFPTUy
+	(ORCPT <rfc822;git-outgoing>); Tue, 16 Jun 2009 15:20:54 -0400
+Received: from iph2.telenor.se ([195.54.127.133]:38215 "EHLO iph2.telenor.se"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1759965AbZFPTIV (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Jun 2009 15:08:21 -0400
-Received: (qmail 5945 invoked by uid 107); 16 Jun 2009 19:10:07 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Tue, 16 Jun 2009 15:10:07 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 16 Jun 2009 15:08:21 -0400
-Content-Disposition: inline
-In-Reply-To: <20090616190550.GA22905@coredump.intra.peff.net>
+	id S1757488AbZFPTUy (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Jun 2009 15:20:54 -0400
+X-Greylist: delayed 588 seconds by postgrey-1.27 at vger.kernel.org; Tue, 16 Jun 2009 15:20:53 EDT
+X-SMTPAUTH: 
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: AuoCACOLN0rDNmV6hWdsb2JhbACYUgEBAQoLCgUVrAOQeoQLBQ
+X-IronPort-AV: E=Sophos;i="4.42,231,1243807200"; 
+   d="scan'208";a="21234803"
+Received: from ironport2.bredband.com ([195.54.101.122])
+  by iph2.telenor.se with ESMTP; 16 Jun 2009 21:11:06 +0200
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: ArtSACOLN0rVcX8QPGdsb2JhbAAImEABAQEBN6wOkHqECwU
+X-IronPort-AV: E=Sophos;i="4.42,231,1243807200"; 
+   d="scan'208";a="502919330"
+Received: from c-107f71d5.017-113-6c756e10.cust.bredbandsbolaget.se (HELO [192.168.1.2]) ([213.113.127.16])
+  by ironport2.bredband.com with ESMTP; 16 Jun 2009 21:11:06 +0200
+User-Agent: Thunderbird 2.0.0.21 (X11/20090320)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121706>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121707>
 
-The system regex is either slow or buggy for complex
-patterns, like the built-in xfuncname pattern for java
-files.
+Hi
 
-Signed-off-by: Jeff King <peff@peff.net>
----
-Rebased to today's master to resolve textual conflicts.
+The git-branch documentation states that the start-point defaults to
+the current branch if omitted. I interpret that to mean that
 
- Makefile |    1 +
- 1 files changed, 1 insertions(+), 0 deletions(-)
+  git checkout origin/somebranch
+  git branch newbranch
 
-diff --git a/Makefile b/Makefile
-index 0cb21da..3bd0c08 100644
---- a/Makefile
-+++ b/Makefile
-@@ -725,6 +725,7 @@ ifeq ($(uname_S),SunOS)
- 	NO_MEMMEM = YesPlease
- 	NO_MKDTEMP = YesPlease
- 	NO_MKSTEMPS = YesPlease
-+	NO_REGEX = YesPlease
- 	ifeq ($(uname_R),5.7)
- 		NEEDS_RESOLV = YesPlease
- 		NO_IPV6 = YesPlease
--- 
-1.6.3.2.411.gffb5
+is equivalent to
+
+  git branch newbranch origin/somebranch
+
+but that is currently not the case. If you checkout a remote branch
+then you are not considered to _be_ on the remote branch, so the
+start-point will behave as if an arbitrary commit was specified,
+i.e. tracking will not be setup correctly.
+
+This is an easy patch and I have something working, I just need to 
+finalize it. Does this sound like a sane patch to you?
+
+Best regards,
+Martin Nordholts
