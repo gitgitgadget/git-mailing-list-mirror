@@ -1,94 +1,166 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCHv3 3/4] submodule, repack: migrate to git-sh-setup's say()
-Date: Mon, 15 Jun 2009 22:56:30 -0700
-Message-ID: <7viqiwg1rl.fsf@alter.siamese.dyndns.org>
+Subject: Re: [PATCHv3 4/4] am, rebase: teach quiet option
+Date: Mon, 15 Jun 2009 22:57:29 -0700
+Message-ID: <7vbpoog1py.fsf@alter.siamese.dyndns.org>
 References: <1245117905-19351-1-git-send-email-bebarino@gmail.com>
 	<1245117905-19351-2-git-send-email-bebarino@gmail.com>
 	<1245117905-19351-3-git-send-email-bebarino@gmail.com>
 	<1245117905-19351-4-git-send-email-bebarino@gmail.com>
+	<1245117905-19351-5-git-send-email-bebarino@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org, Thomas Adam <thomas.adam22@gmail.com>,
 	Johannes Sixt <j.sixt@viscovery.net>
 To: Stephen Boyd <bebarino@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jun 16 08:01:07 2009
+X-From: git-owner@vger.kernel.org Tue Jun 16 08:01:12 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MGRjG-000770-Mi
-	for gcvg-git-2@gmane.org; Tue, 16 Jun 2009 08:01:07 +0200
+	id 1MGRjK-000770-2F
+	for gcvg-git-2@gmane.org; Tue, 16 Jun 2009 08:01:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S936305AbZFPF4a (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Jun 2009 01:56:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753108AbZFPF4a
-	(ORCPT <rfc822;git-outgoing>); Tue, 16 Jun 2009 01:56:30 -0400
-Received: from fed1rmmtao105.cox.net ([68.230.241.41]:45155 "EHLO
-	fed1rmmtao105.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S936344AbZFPF43 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Jun 2009 01:56:29 -0400
+	id S936563AbZFPF5a (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Jun 2009 01:57:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S935591AbZFPF5a
+	(ORCPT <rfc822;git-outgoing>); Tue, 16 Jun 2009 01:57:30 -0400
+Received: from fed1rmmtao102.cox.net ([68.230.241.44]:33345 "EHLO
+	fed1rmmtao102.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S936562AbZFPF52 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Jun 2009 01:57:28 -0400
 Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao105.cox.net
+          by fed1rmmtao102.cox.net
           (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20090616055630.KXRA20430.fed1rmmtao105.cox.net@fed1rmimpo02.cox.net>;
-          Tue, 16 Jun 2009 01:56:30 -0400
+          id <20090616055729.RQGZ20976.fed1rmmtao102.cox.net@fed1rmimpo02.cox.net>;
+          Tue, 16 Jun 2009 01:57:29 -0400
 Received: from localhost ([68.225.240.211])
 	by fed1rmimpo02.cox.net with bizsmtp
-	id 4VwW1c0064aMwMQ04VwWEL; Tue, 16 Jun 2009 01:56:30 -0400
+	id 4VxV1c0074aMwMQ04VxVQN; Tue, 16 Jun 2009 01:57:29 -0400
 X-VR-Score: -100.00
-X-Authority-Analysis: v=1.0 c=1 a=H7danD3z24sA:10 a=pGLkceISAAAA:8
- a=rAtSQuJodP8Eo4tgrzQA:9 a=13KY01qu-Kalgtgd-oBDHKzoVgUA:4 a=MSl-tDqOz04A:10
+X-Authority-Analysis: v=1.0 c=1 a=HfqTPdwKAEAA:10 a=pGLkceISAAAA:8
+ a=unZsplQpVa3h8eyx0lAA:9 a=iNqNWkjFE38j55sqc68A:7
+ a=PDUhBmrVo2IK_FM3bubkNSuTG2cA:4 a=MSl-tDqOz04A:10
 X-CM-Score: 0.00
 User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121655>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121656>
 
 Stephen Boyd <bebarino@gmail.com> writes:
 
-> Now that there is say() in git-sh-setup, these scripts don't need to use
-> their own. Migrate them over by setting GIT_QUIET and removing their
-> custom say() functions.
+> git-rebase and git-am are talkative scripts. This option will quiet
+> them and allow them to speak only when they fail or experience errors.
+>
+> Note that git-am with 3way will output errors when applying, even though
+> the 3way will usually be successfull. We suppress these errors from
+> git-apply because they are not "true" errors until the 3way has been
+> attempted.
 
-This is not exactly a very nice style.
+Thanks.
 
-The contract between the callers of say() and its implementation is that
-it does not matter what value is set to GIT_QUIET.  The only thing that
-matters is if it is set to empty string or not.  And ...
+> @@ -498,11 +505,18 @@ do
+> ...
+>  	case "$resolved" in
+>  	'')
+> -		eval 'git apply '"$git_apply_opt"' --index "$dotest/patch"'
+> +		if test "$threeway" = t && test -n "$GIT_QUIET"
+> +		then
+> +			eval 'git apply '"$git_apply_opt" \
+> +			' --index "$dotest/patch" > /dev/null 2>&1'
+> +		else
+> +			eval 'git apply '"$git_apply_opt" \
+> +			' --index "$dotest/patch"'
+> +		fi
+>  		apply_status=$?
 
-> @@ -33,7 +33,7 @@ do
->  	-A)	all_into_one=t
->  		unpack_unreachable=--unpack-unreachable ;;
->  	-d)	remove_redundant=t ;;
-> -	-q)	quiet=-q ;;
-> +	-q)	GIT_QUIET=-q ;;
+Hmm, this long conditional body looks ugly, and I suspect it is harder to
+maintain than necessary.  Can we do something about it?
 
-... this one takes advantage of it to set GIT_QUIET to -q, so that it can
-be directly passed to another command that happens to use -q as "quiet"
-option, like this ...
+	# When we are allowed to fall back to 3-way later, don't give
+        # false errors during the initial attempt.
+	squelch=
+	if test "$threeway" = t && test -n "$GIT_QUIET"
+	then
+		squelch='>/dev/null 2>&1 '
+	fi
+        eval "git apply $squelch$git_apply_opt"' --index "$dotest/patch"'
 
-> -	git prune-packed $quiet
-> +	git prune-packed $GIT_QUIET
->  fi
+> @@ -72,11 +72,20 @@ continue_merge () {
+>  			echo "directly, but instead do one of the following: "
+>  			die "$RESOLVEMSG"
+>  		fi
+> -		printf "Committed: %0${prec}d " $msgnum
+> +		if test -z "$GIT_QUIET"
+> +		then
+> +			printf "Committed: %0${prec}d " $msgnum
+> +		fi
+>  	else
+> -		printf "Already applied: %0${prec}d " $msgnum
+> +		if test -z "$GIT_QUIET"
+> +		then
+> +			printf "Already applied: %0${prec}d " $msgnum
+> +		fi
+> +	fi
+> +	if test -z "$GIT_QUIET"
+> +	then
+> +		git rev-list --pretty=oneline -1 "$cmt" | sed -e 's/^[^ ]* //'
+>  	fi
+> -	git rev-list --pretty=oneline -1 "$cmt" | sed -e 's/^[^ ]* //'
 
-... while the other one does not have a callout to command that takes -q
-at all, and does this ...
+This is very good, because a straightforward translation is what we want
+in this particular patch.
 
->  		-q|--quiet)
-> -			quiet=1
-> +			GIT_QUIET=1
+We however would want to update this using
 
-If the convention is "GIT_QUIET, when set to non-empty string, squelches
-the output", then I think the callers should be more consistent and the
-call to prune-packed should say something like this, which is admittedly a
-roundabout way:
+	git show -s --oneline
 
-	git prune-packed ${GIT_QUIET:+-q}
+or something, perhaps even with a custom --format='...', in a follow-up
+patch.  This "rev-list --pretty=oneline" piped to sed looks very much
+antiquated.
 
-for consistency (and then what you set to GIT_QUIET in the first hunk I
-quoted does not matter anymore---it can even be t or 1 or whatever).
+> @@ -445,15 +460,15 @@ then
+>  	then
+>  		# Lazily switch to the target branch if needed...
+>  		test -z "$switch_to" || git checkout "$switch_to"
+> -		echo >&2 "Current branch $branch_name is up to date."
+> +		say >&2 "Current branch $branch_name is up to date."
+>  		exit 0
 
-I think this does not matter too much, because I suspect that in the
-longer term scripted Porcelains are going away, but still...
+Ah, I was blind.
+
+While sending non-error messages to stderr is justifiable, I do not think
+this one is, because all the other progress-y message in this program we
+reviewed so far go to stdout.  I think we should drop >&2 here.
+
+> @@ -471,7 +486,7 @@ fi
+>  # we just fast forwarded.
+>  if test "$mb" = "$branch"
+>  then
+> -	echo >&2 "Fast-forwarded $branch_name to $onto_name."
+> +	say >&2 "Fast-forwarded $branch_name to $onto_name."
+
+Ditto.
+
+There is one more thing to think about in git-am, which I do not think you
+addressed.  Consider this scenario.
+
+    (1) Tell am to run quietly, feeding a four-patch series.
+
+	$ git am -q -3 mbox
+
+    (2) The first patch applies cleanly; the second one does not apply,
+        even with -3, and leaves conflict (you did the right thing not to
+        squelch the message when this happens).
+
+    (3) You fix it up, and save the result from your editor, and tell it
+        to continue.
+
+	$ git am --resolved
+
+Now, should the second invocation be also quiet, or talkative as default?
+
+Note that the third and fourth patch are applied with -3 option in effect,
+even though you did not say -3 when you restarted "am" with --resolved
+(cf. ll.280-340 in git-am.sh).
