@@ -1,107 +1,118 @@
-From: Mark Lodato <lodatom@gmail.com>
-Subject: Re: [PATCH 2/2] http.c: add http.sslCertType and http.sslKeyType
-Date: Mon, 15 Jun 2009 20:55:10 -0400
-Message-ID: <ca433830906151755t783fbf98k3fd09e4bdd6781e8@mail.gmail.com>
-References: <1245033541-15558-1-git-send-email-lodatom@gmail.com>
-	 <1245033541-15558-2-git-send-email-lodatom@gmail.com>
-	 <alpine.OSX.2.00.0906151927010.816@xor.localnet>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: egit and RSA keys for SSH
+Date: Mon, 15 Jun 2009 18:03:06 -0700
+Message-ID: <20090616010306.GA11191@spearce.org>
+References: <F2969C1B08CBEE42B78C04C280D578E72CAF41E19B@donkey.landcare.ad.landcareresearch.co.nz> <20090615150341.GX16497@spearce.org> <F2969C1B08CBEE42B78C04C280D578E72CAF41E46A@donkey.landcare.ad.landcareresearch.co.nz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Daniel Stenberg <daniel@haxx.se>
-To: Karsten Weiss <knweiss@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Jun 16 03:02:10 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Aaron Hicks <HicksA@landcareresearch.co.nz>
+X-From: git-owner@vger.kernel.org Tue Jun 16 03:03:24 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MGN3y-0001wz-3V
-	for gcvg-git-2@gmane.org; Tue, 16 Jun 2009 03:02:10 +0200
+	id 1MGN57-0002JS-VN
+	for gcvg-git-2@gmane.org; Tue, 16 Jun 2009 03:03:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752561AbZFPBBw convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 15 Jun 2009 21:01:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752046AbZFPBBv
-	(ORCPT <rfc822;git-outgoing>); Mon, 15 Jun 2009 21:01:51 -0400
-Received: from mail-fx0-f211.google.com ([209.85.220.211]:62262 "EHLO
-	mail-fx0-f211.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751709AbZFPBBv convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 15 Jun 2009 21:01:51 -0400
-X-Greylist: delayed 402 seconds by postgrey-1.27 at vger.kernel.org; Mon, 15 Jun 2009 21:01:50 EDT
-Received: by fxm7 with SMTP id 7so303771fxm.37
-        for <git@vger.kernel.org>; Mon, 15 Jun 2009 18:01:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=PFoZDEr9Wn1WvUywxVX6qkPDzn+qu6/4DUVoP/c8s1I=;
-        b=LBXewgc9mOfgGfeFn3pyRbcC36AB5xK7ESGt2p9beDSZGENj8O4N01xwWveODSD5hO
-         n3/3wKMCARLJUiincYR+brDkr4V+W3+z4AxAx2DUyjYeX+E8keUSk6emYf4kK6MKuBpd
-         LK8iYe4zM29nzthAxxXtzUhpVm9nkWZrCon1Y=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=sAqTF9fcVvbwX2e/gAq5i+gz287CDi8TAnzlOMzpFc/gTkU+Ul/7sK6RZTKtpQXgBj
-         bPhANe3g/+nKJn3ZDbdMv8yT++FDCDBKp95nuqbWVq00rA1xO5VXWmzjUkHYDNB5fmMS
-         ODYg0qWNhEpkURhZsEBtUbAQ3pneDQP45vy+c=
-Received: by 10.223.108.75 with SMTP id e11mr4768227fap.97.1245113710168; Mon, 
-	15 Jun 2009 17:55:10 -0700 (PDT)
-In-Reply-To: <alpine.OSX.2.00.0906151927010.816@xor.localnet>
+	id S1757439AbZFPBDI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Jun 2009 21:03:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754463AbZFPBDG
+	(ORCPT <rfc822;git-outgoing>); Mon, 15 Jun 2009 21:03:06 -0400
+Received: from george.spearce.org ([209.20.77.23]:34208 "EHLO
+	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755223AbZFPBDF (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Jun 2009 21:03:05 -0400
+Received: by george.spearce.org (Postfix, from userid 1001)
+	id F292E381FD; Tue, 16 Jun 2009 01:03:06 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <F2969C1B08CBEE42B78C04C280D578E72CAF41E46A@donkey.landcare.ad.landcareresearch.co.nz>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121641>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121642>
 
-On Mon, Jun 15, 2009 at 1:43 PM, Karsten Weiss<knweiss@gmx.de> wrote:
-> Hi Mark!
->
-> On Sun, 14 Jun 2009, Mark Lodato wrote:
->
->> Add two new configuration variables, http.sslCertType and
->> http.sslKeyType, which tell libcurl the filetype for the SSL client
->> certificate and private key, respectively. =C2=A0The main benefit is=
- to allow
->> PKCS12 certificates for users with libcurl >=3D 7.13.0.
->
-> This is interesting. Thanks for working on that!
->
-> (However, it's a similar issue like the question whether the private =
-key is
-> encrypted or not: Usability would be better if the certificate type c=
-ould be
-> determined automatically (without having to violate the layering)).
+Aaron Hicks <HicksA@landcareresearch.co.nz> wrote:
+> Hi Shawn,
+> 
+> I've followed your instructions, and added the same RSA key that I use with Git and Git Extensions (using Windows here), but eGit still asks for a password for a the git user (which is password disabled, and requires RSA). I'm telling eGit to access via "git + SSH".
+> 
+> I'm assuming for windows the ~/.ssh should be in C:\path\to\profile\username\.ssh ?
 
-Just as with determining if the certificate is password protected, it
-is equally difficult to tell what type of file it is without calling
-OpenSSL directly.
+Unless Cygwin is installed, in which case its likely in Cygwin.
 
-This brings up a good point: Should we (I) try to implement (client
-certificate) usability features in git to work around deficiencies in
-libcurl, or should we (I) write patches to fix/enhance libcurl
-directly?  The latter would be much easier (though I could be wrong)
-and would benefit other programs using libcurl, but would require
-users to upgrade libcurl to get these new features, and of course
-would rely on the libcurl developers accepting the patches.  I am
-willing to do either, but I think the libcurl route would be better.
-Any thoughts?
+Technically EGit uses user.home property from Java, which should
+be the profile directory, or %HOME% in cmd.  Not sure.
 
+ 
+> I'm not 100% that eGit has installed correctly in Eclipse (3.4.2 Ganymede, Windows XP SP3, Java 1.6.0_13) either. I can't see many git-like commands in the context menus for files and projects.
+> 
+> Regards,
+> 
+> Aaron Hicks
+> 
+> > -----Original Message-----
+> > From: spearce@spearce.org [mailto:spearce@spearce.org]
+> > Sent: Tuesday, 16 June 2009 3:04 a.m.
+> > To: Aaron Hicks
+> > Cc: git@vger.kernel.org
+> > Subject: Re: egit and RSA keys for SSH
+> >
+> > Aaron Hicks <HicksA@landcareresearch.co.nz> wrote:
+> > > We have a git repository set up with gitosis and it requires RSA
+> > > keys to authenticate developers who have rights to push to this
+> > > repository. i.e. they are blessed with write privileges. Github
+> > > uses a similar method.
+> > >
+> > > We use Eclipse, so we would like Eclipse to integrate with Git. So
+> > > we grabbed egit from http://www.jgit.org/update-site and used the
+> > > Eclipse installer (Like we do all the other Eclipse plug-in, given
+> > > that the egit/jgit sites don't give instructions otherwise it seems
+> > > to be the thing to do).
+> > >
+> > > The problem is I can't see how to associate an RSA key in order
+> > > to authenticate the SSH login with our gitosis repository (or
+> > > GitHub). We have PuTTY installed and use Pageant to manage keys, and
+> > > the required key is already loaded.
+> >
+> > Unfortunately both PuTTY's Pageant and OpenSSH's ssh-agent are
+> > not supported from JSch, which is the SSH client used within JGit,
+> > which is what is underneath EGit.  Consequently, you can't use the
+> > agent to manage your keys.
+> >
+> > From within Eclipse, if you go to Window > Preferences > General >
+> > Network Connections > SSH2 you can configure your RSA keys.  But,
+> > these keys are configured globally for the workspace, i.e. its
+> > more like loading the key into the agent than it is about binding
+> > a particular key to a particular host.
+> >
+> > To force binding a key to a host, use ~/.ssh/config.  JGit knows
+> > how to read this file on startup and uses the Host blocks to do
+> > some configuration control over the connection.
+> >
+> > E.g. if you use a URL like "git@gitserver.example.com:foo.git"
+> > then you can put the following in your ~/.ssh/config to force using
+> > a specific SSH key:
+> >
+> >   Host gitserver.example.com
+> >     IdentityFile .ssh/id_gitkey
+> >
+> > Note that ~/.ssh/config is cached on startup of EGit, so you'll
+> > need to completely restart the Eclipse workspace after making any
+> > changes to it.
+> >
+> > --
+> > Shawn.
+> 
+> Please consider the environment before printing this email
+> Warning:  This electronic message together with any attachments is confidential. If you receive it in error: (i) you must not read, use, disclose, copy or retain it; (ii) please contact the sender immediately by reply email and then delete the emails.
+> The views expressed in this email may not be those of Landcare Research New Zealand Limited. http://www.landcareresearch.co.nz
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
 
-Anyway, to implement this in git, the algorithm would be something like=
-:
-
-for password in [None, "", prompt()]:
- for type in ["PEM", "DER", (if libcurl >=3D 7.13.0) "P12"]:
-  try to make a connection with password and type
-  if not certificate error:
-   return success
-else:
- return failure
-
-This is much more difficult than it may at first appear.  I'm sure it
-can be done, but it will take a while to get it right.
-
-
-Mark
+-- 
+Shawn.
