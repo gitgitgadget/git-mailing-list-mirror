@@ -1,72 +1,68 @@
-From: Aneurin Price <aneurin.price@gmail.com>
-Subject: Transplant branch from one repo to another
-Date: Tue, 16 Jun 2009 22:30:34 +0100
-Message-ID: <501db8660906161430o25a0c18aw41758390dc171702@mail.gmail.com>
+From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+Subject: Re: [EGIT PATCH2/2] fixed-toString-for-CommitTimeRevFilter-wrote-JUnit-tests
+Date: Wed, 17 Jun 2009 00:19:08 +0200
+Message-ID: <200906170019.11627.robin.rosenberg.lists@dewire.com>
+References: <168892.81103.qm@web27804.mail.ukl.yahoo.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jun 16 23:31:49 2009
+Content-Type: Text/Plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>
+To: Mark Struberg <struberg@yahoo.de>
+X-From: git-owner@vger.kernel.org Wed Jun 17 00:19:31 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MGgFs-0005sa-NV
-	for gcvg-git-2@gmane.org; Tue, 16 Jun 2009 23:31:45 +0200
+	id 1MGh06-0003u9-PT
+	for gcvg-git-2@gmane.org; Wed, 17 Jun 2009 00:19:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1763908AbZFPVaf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Jun 2009 17:30:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1763836AbZFPVad
-	(ORCPT <rfc822;git-outgoing>); Tue, 16 Jun 2009 17:30:33 -0400
-Received: from yw-out-2324.google.com ([74.125.46.30]:55353 "EHLO
-	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1763675AbZFPVac (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Jun 2009 17:30:32 -0400
-Received: by yw-out-2324.google.com with SMTP id 5so3133734ywb.1
-        for <git@vger.kernel.org>; Tue, 16 Jun 2009 14:30:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:date:message-id:subject
-         :from:to:content-type:content-transfer-encoding;
-        bh=x1qJv+n5oTnqPRlZcp19qd6aWS6idUrrERnxtwPQuHs=;
-        b=SBC+sDzpAV2ro1Y5qhU6y8nSnlhreaoPrOcVg/waRFVVIy80eJm9tNdVuVndyjYQkc
-         3eAeZIV52XVfxfoxpBLENkvUyKLE+1f30HW/HLr88ajKXfxb0VGKPMCY1MYNuYELLimx
-         fdHJKPvCm6/lUt4sPW6roXAyK6xgkBRvwGkf4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type
-         :content-transfer-encoding;
-        b=oRPjykBZ4ZBtfmpMIFIFZ5Eyqg+PSiumMivGzXy58vWtNF2LuB4RrNaYsCgKauGhP/
-         CNh6W/UW/ZpumO/tRB6o4M9fMD2gH0HnllD646WxyD2FVjeS5lKv2b4SddK/t3J9hNDA
-         pU724r4lxgcbo9TPWGH/ovE2jRze7s5w/PEbE=
-Received: by 10.151.6.17 with SMTP id j17mr16467913ybi.318.1245187834435; Tue, 
-	16 Jun 2009 14:30:34 -0700 (PDT)
+	id S1757288AbZFPWTV convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 16 Jun 2009 18:19:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756593AbZFPWTU
+	(ORCPT <rfc822;git-outgoing>); Tue, 16 Jun 2009 18:19:20 -0400
+Received: from mail.dewire.com ([83.140.172.130]:18659 "EHLO dewire.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756528AbZFPWTT convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 16 Jun 2009 18:19:19 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by dewire.com (Postfix) with ESMTP id C3534146D00E;
+	Wed, 17 Jun 2009 00:19:16 +0200 (CEST)
+X-Virus-Scanned: by amavisd-new at dewire.com
+Received: from dewire.com ([127.0.0.1])
+	by localhost (torino.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id Rr6DuQ5WrAv8; Wed, 17 Jun 2009 00:19:13 +0200 (CEST)
+Received: from sleipner.localnet (unknown [10.9.0.2])
+	by dewire.com (Postfix) with ESMTP id 2939A1023455;
+	Wed, 17 Jun 2009 00:19:13 +0200 (CEST)
+User-Agent: KMail/1.11.2 (Linux/2.6.28-11-generic; KDE/4.2.2; i686; ; )
+In-Reply-To: <168892.81103.qm@web27804.mail.ukl.yahoo.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121715>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121716>
 
-Hello all,
+m=C3=A5ndag 15 juni 2009 23:36:35 skrev Mark Struberg <struberg@yahoo.d=
+e>:
+>=20
+> From 72dd9d071ce140f267b8b4effd34d122627135e6 Mon Sep 17 00:00:00 200=
+1
+> From: Mark Struberg <struberg@yahoo.de>
+> Date: Mon, 15 Jun 2009 08:07:53 +0200
+> Subject: [PATCH] fixed toString for CommitTimeRevFilter + wrote JUnit=
+ tests for after, before and between walks
 
-I have a repository cloned from SVN using 'git svn clone http://servername/path
--T trunk -b branches -t tags', or thereabouts, and I've since realised that I
-would have been better off with 'git svn clone
-http://servername/path/trunk/subdir', as I don't really care about any other
-branches, or about the contents of the svn repository outside of 'subdir'.
+What is the connection between the toString and the rest of the patch? =
+Should be
+separate patches.
 
-I have one branch from trunk in which I've been working, which includes one
-merge from trunk. I'm interested in how I might be able to get the content of
-that branch and transplant it onto the new svn clone, starting at the equivalent
-parent commit (ie. the same svn revision). The merge was only a few commits away
-from HEAD, so I can manually redo that last part if it complicates things too
-much.
+You should sign off the patches.
 
-I've been thinking about something involving 'filter-branch
---subdirectory-filter' followed by a fast-export on the source, and then a
-fast-import on the destination, but I'm not sure I'm going about this the right
-way and would appreciate any advice anyone can give me.
+Start the subject with a capital letter.
 
-So, does anybody have any suggestions for how I should do this?
-Thank you for your time,
-Nye
+Technically it seemed ok, but I shouldn't have pushed them, as I did, b=
+y mistake when pusing
+Shawn's latest patch. The formal errors should have been fixed firsts.
+
+-- robin
