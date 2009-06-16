@@ -1,67 +1,72 @@
-From: Martin Nordholts <enselic@gmail.com>
-Subject: git-branch: Actually using the current branch as default start-point
-Date: Tue, 16 Jun 2009 21:13:09 +0200
-Message-ID: <4A37EEC5.4020007@gmail.com>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: [PATCH] upload-pack: squelch progress indicator if client does not
+ request sideband
+Date: Tue, 16 Jun 2009 15:46:46 -0400 (EDT)
+Message-ID: <alpine.LFD.2.00.0906161542590.16467@xanadu.home>
+References: <200906142238.51725.j6t@kdbg.org>
+ <7vprd4hito.fsf@alter.siamese.dyndns.org>
+ <alpine.LFD.2.00.0906161354010.16467@xanadu.home>
+ <200906162041.16608.j6t@kdbg.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jun 16 21:21:10 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Junio C Hamano <gitster@pobox.com>,
+	"Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org,
+	"H. Peter Anvin" <hpa@zytor.com>
+To: Johannes Sixt <j6t@kdbg.org>
+X-From: git-owner@vger.kernel.org Tue Jun 16 21:47:23 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MGeDP-0003mp-85
-	for gcvg-git-2@gmane.org; Tue, 16 Jun 2009 21:21:03 +0200
+	id 1MGecs-0006WN-16
+	for gcvg-git-2@gmane.org; Tue, 16 Jun 2009 21:47:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759536AbZFPTU4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Jun 2009 15:20:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758489AbZFPTUy
-	(ORCPT <rfc822;git-outgoing>); Tue, 16 Jun 2009 15:20:54 -0400
-Received: from iph2.telenor.se ([195.54.127.133]:38215 "EHLO iph2.telenor.se"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757488AbZFPTUy (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Jun 2009 15:20:54 -0400
-X-Greylist: delayed 588 seconds by postgrey-1.27 at vger.kernel.org; Tue, 16 Jun 2009 15:20:53 EDT
-X-SMTPAUTH: 
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: AuoCACOLN0rDNmV6hWdsb2JhbACYUgEBAQoLCgUVrAOQeoQLBQ
-X-IronPort-AV: E=Sophos;i="4.42,231,1243807200"; 
-   d="scan'208";a="21234803"
-Received: from ironport2.bredband.com ([195.54.101.122])
-  by iph2.telenor.se with ESMTP; 16 Jun 2009 21:11:06 +0200
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: ArtSACOLN0rVcX8QPGdsb2JhbAAImEABAQEBN6wOkHqECwU
-X-IronPort-AV: E=Sophos;i="4.42,231,1243807200"; 
-   d="scan'208";a="502919330"
-Received: from c-107f71d5.017-113-6c756e10.cust.bredbandsbolaget.se (HELO [192.168.1.2]) ([213.113.127.16])
-  by ironport2.bredband.com with ESMTP; 16 Jun 2009 21:11:06 +0200
-User-Agent: Thunderbird 2.0.0.21 (X11/20090320)
+	id S1757127AbZFPTrI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Jun 2009 15:47:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756770AbZFPTrH
+	(ORCPT <rfc822;git-outgoing>); Tue, 16 Jun 2009 15:47:07 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:20214 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755287AbZFPTrG (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Jun 2009 15:47:06 -0400
+Received: from xanadu.home ([66.131.194.97]) by VL-MO-MR004.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
+ with ESMTP id <0KLC00LVPK9Y6O30@VL-MO-MR004.ip.videotron.ca> for
+ git@vger.kernel.org; Tue, 16 Jun 2009 15:46:46 -0400 (EDT)
+X-X-Sender: nico@xanadu.home
+In-reply-to: <200906162041.16608.j6t@kdbg.org>
+User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121707>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121708>
 
-Hi
+On Tue, 16 Jun 2009, Johannes Sixt wrote:
 
-The git-branch documentation states that the start-point defaults to
-the current branch if omitted. I interpret that to mean that
+> On Dienstag, 16. Juni 2009, Nicolas Pitre wrote:
+> > On Mon, 15 Jun 2009, Junio C Hamano wrote:
+> > > Stated differently, I think "not using sideband _and_ spawned via daemon"
+> > > would be an indication that "the client won't see the progress anyway
+> > > even if it were sent."  So the question becomes "will it be a small
+> > > enough change to detect if the upload-pack is driven by the daemon in the
+> > > codepath J6t added 'if (!use_sideband)' to, and if so shouldn't we do
+> > > so?"
+> >
+> > I don't think it is worth it at all.  The regression is purely cosmetic,
+> > and I suspect you'll have a really hard time finding someone still using
+> > those ancient git clients anyway.  Remember that such clients are unable
+> > to fetch with HTTP from repositories using version 2 of the pack index
+> > by default already.  That's why we created version 1.4.4.5.
+> 
+> Keep in mind that there could exist clients outside git.git that use modern
+> pack-index or unpack-objects, but omit sideband support.
 
-  git checkout origin/somebranch
-  git branch newbranch
+And that would be an abominable thing to make special support for such 
+clients.  If they're fancy enough to want progress display, they should 
+comply with what moderately recent native git clients do and get 
+sideband support.
 
-is equivalent to
 
-  git branch newbranch origin/somebranch
-
-but that is currently not the case. If you checkout a remote branch
-then you are not considered to _be_ on the remote branch, so the
-start-point will behave as if an arbitrary commit was specified,
-i.e. tracking will not be setup correctly.
-
-This is an easy patch and I have something working, I just need to 
-finalize it. Does this sound like a sane patch to you?
-
-Best regards,
-Martin Nordholts
+Nicolas
