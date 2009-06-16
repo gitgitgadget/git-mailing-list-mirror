@@ -1,62 +1,53 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: git diff looping?
-Date: Tue, 16 Jun 2009 08:07:37 -0400
-Message-ID: <20090616120737.GA5227@coredump.intra.peff.net>
-References: <3ae83b000906151837r186221f2q1f8a670f13841877@mail.gmail.com> <20090616114726.GA4343@coredump.intra.peff.net>
+From: Daniel Stenberg <dast@haxx.se>
+Subject: Re: compiling git on debian
+Date: Tue, 16 Jun 2009 13:57:59 +0200 (CEST)
+Message-ID: <alpine.DEB.2.00.0906161353290.26547@yvahk2.pbagnpgbe.fr>
+References: <f46c52560906160406t910f5f3v4040525531ad78c4@mail.gmail.com>  <alpine.DEB.2.00.0906161309370.14053@yvahk2.pbagnpgbe.fr> <f46c52560906160419g25f43ed0g253aff35031faf2d@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>
-To: John Bito <jwbito@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jun 16 14:07:55 2009
+Content-Type: TEXT/PLAIN; format=flowed; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Rustom Mody <rustompmody@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jun 16 14:09:54 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MGXS9-0002tn-Q9
-	for gcvg-git-2@gmane.org; Tue, 16 Jun 2009 14:07:50 +0200
+	id 1MGXU9-0003fb-LR
+	for gcvg-git-2@gmane.org; Tue, 16 Jun 2009 14:09:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756129AbZFPMHi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Jun 2009 08:07:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755619AbZFPMHh
-	(ORCPT <rfc822;git-outgoing>); Tue, 16 Jun 2009 08:07:37 -0400
-Received: from peff.net ([208.65.91.99]:55174 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755470AbZFPMHh (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Jun 2009 08:07:37 -0400
-Received: (qmail 4082 invoked by uid 107); 16 Jun 2009 12:09:22 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Tue, 16 Jun 2009 08:09:22 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 16 Jun 2009 08:07:37 -0400
-Content-Disposition: inline
-In-Reply-To: <20090616114726.GA4343@coredump.intra.peff.net>
+	id S1757394AbZFPMJR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Jun 2009 08:09:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755619AbZFPMJQ
+	(ORCPT <rfc822;git-outgoing>); Tue, 16 Jun 2009 08:09:16 -0400
+Received: from kluster1.contactor.se ([91.191.140.11]:52481 "EHLO
+	kluster1.contactor.se" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751622AbZFPMJQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Jun 2009 08:09:16 -0400
+X-Greylist: delayed 806 seconds by postgrey-1.27 at vger.kernel.org; Tue, 16 Jun 2009 08:09:15 EDT
+Received: from linux2.contactor.se (linux2.contactor.se [91.191.140.14])
+	by kluster1.contactor.se (8.13.8/8.13.8/Debian-3) with ESMTP id n5GBtmnI030833;
+	Tue, 16 Jun 2009 13:55:48 +0200
+X-X-Sender: dast@linux2.contactor.se
+In-Reply-To: <f46c52560906160419g25f43ed0g253aff35031faf2d@mail.gmail.com>
+User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
+X-fromdanielhimself: yes
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121675>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121676>
 
-On Tue, Jun 16, 2009 at 07:47:26AM -0400, Jeff King wrote:
+On Tue, 16 Jun 2009, Rustom Mody wrote:
 
->   $ git clone git://repo.or.cz/egit.git
->   $ git diff v0.4.0 -- \
->     org.spearce.egit.core.test/src/org/spearce/egit/core/op/T0001_ConnectProviderOperationTest.java
-> 
-> which isn't even all that big a file, but it is either causing some
-> horrible algorithmic behavior in the regex library, or is outright
-> sending it into an infinite loop.
-> 
-> I tried building against the code in compat/regex; it completes in a
-> reasonable amount of time, though it is still noticeably slow. With
-> system regex, the diff given above doesn't complete in less than 90
-> seconds (at which I get bored and kill it). With compat/regex, it
-> completes in about 2.2 seconds. Disabling the xfuncname, it completes in
-> 0.14 seconds.
+>> libcurl4-openssl-dev: /usr/bin/curl-config
+>>
+>> (or you can opt to get the gnutls version if you prefer that)
+>
+> Ja Thats what I observed that libcurl-openssl-dev, libcurl-gnutls-dev both 
+> seem to supply curl-config. So are both interchangeable?
 
-And here is a patch series to use compat/regex on Solaris. I think the
-first one should be non-controversial, as it just makes the knob more
-convenient to turn. The second one is up for debate.
+I believe that's the idea, yes.
 
-  1/2: Makefile: refactor regex compat support
-  2/2: Makefile: use compat regex on Solaris
+-- 
 
--Peff
+  / daniel.haxx.se
