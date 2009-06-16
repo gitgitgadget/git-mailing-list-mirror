@@ -1,68 +1,81 @@
-From: Rustom Mody <rustompmody@gmail.com>
-Subject: Re: compiling git on debian
-Date: Tue, 16 Jun 2009 16:49:26 +0530
-Message-ID: <f46c52560906160419g25f43ed0g253aff35031faf2d@mail.gmail.com>
-References: <f46c52560906160406t910f5f3v4040525531ad78c4@mail.gmail.com>
-	 <alpine.DEB.2.00.0906161309370.14053@yvahk2.pbagnpgbe.fr>
+From: Jeff King <peff@peff.net>
+Subject: Re: git diff looping?
+Date: Tue, 16 Jun 2009 07:47:26 -0400
+Message-ID: <20090616114726.GA4343@coredump.intra.peff.net>
+References: <3ae83b000906151837r186221f2q1f8a670f13841877@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jun 16 13:19:49 2009
+Content-Type: text/plain; charset=utf-8
+Cc: git <git@vger.kernel.org>
+To: John Bito <jwbito@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jun 16 13:47:39 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MGWhd-00032a-Pb
-	for gcvg-git-2@gmane.org; Tue, 16 Jun 2009 13:19:46 +0200
+	id 1MGX8Y-000438-K8
+	for gcvg-git-2@gmane.org; Tue, 16 Jun 2009 13:47:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757272AbZFPLTZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Jun 2009 07:19:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755467AbZFPLTZ
-	(ORCPT <rfc822;git-outgoing>); Tue, 16 Jun 2009 07:19:25 -0400
-Received: from wa-out-1112.google.com ([209.85.146.183]:54477 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757238AbZFPLTY (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Jun 2009 07:19:24 -0400
-Received: by wa-out-1112.google.com with SMTP id j5so898725wah.21
-        for <git@vger.kernel.org>; Tue, 16 Jun 2009 04:19:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:content-type
-         :content-transfer-encoding;
-        bh=ezlgU99uaYCkl8RaiibKm/R4/DZQD+7Nrj82ktwBXjE=;
-        b=KXYc+/cifraIXSbhfPYobRplHNKONAFVQjHKE2Q3QhPEZmQHZ+rJYaFO2AU9pPhTn6
-         WDwEa++ZapzbJlJ6rS4+ldPsF6NBmG4LzOzw3Sh2Oq7QKPQ315QD0SJzJwC6D/5RZ7n9
-         BneIym2dCdiKYV/L2MH01dDiwVMx1CArYsOyg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :content-type:content-transfer-encoding;
-        b=JSRnZC35T/8H23Iwu41ct+0GXz9U+jb4EqEdX0lyJxnALqe+8AlXqHjWnoBzl9m2Vv
-         lADCzIhIs0u3YtMp1qm/ZgZ2TPHdMP8SlyG220eUWF9yRNV1/T74CRDFw0Vqt73+qQUf
-         LSi0vhLbBpfGc8T7PWh8ttpIO8D2NXbPYqhNg=
-Received: by 10.114.88.19 with SMTP id l19mr13329993wab.208.1245151166883; 
-	Tue, 16 Jun 2009 04:19:26 -0700 (PDT)
-In-Reply-To: <alpine.DEB.2.00.0906161309370.14053@yvahk2.pbagnpgbe.fr>
+	id S1755677AbZFPLr1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Jun 2009 07:47:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755470AbZFPLr1
+	(ORCPT <rfc822;git-outgoing>); Tue, 16 Jun 2009 07:47:27 -0400
+Received: from peff.net ([208.65.91.99]:40552 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751889AbZFPLr1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Jun 2009 07:47:27 -0400
+Received: (qmail 3957 invoked by uid 107); 16 Jun 2009 11:49:11 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Tue, 16 Jun 2009 07:49:11 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 16 Jun 2009 07:47:26 -0400
+Content-Disposition: inline
+In-Reply-To: <3ae83b000906151837r186221f2q1f8a670f13841877@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121673>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121674>
 
-On Tue, Jun 16, 2009 at 4:42 PM, Daniel Stenberg<daniel@haxx.se> wrote:
-> On Tue, 16 Jun 2009, Rustom Mody wrote:
->
->> Im trying to compile git on debian etch and get a problem with curl-config
->> not found. I gather curl-config is in a number of debian dev packages.
->
->> Can someone tell me which which package?
->
-> $ dpkg -S /usr/bin/curl-config
-> libcurl4-openssl-dev: /usr/bin/curl-config
->
-> (or you can opt to get the gnutls version if you prefer that)
+On Mon, Jun 15, 2009 at 06:37:21PM -0700, John Bito wrote:
 
-Ja Thats what I observed that libcurl-openssl-dev, libcurl-gnutls-dev
-both seem to supply curl-config. So are both interchangeable?
+> Running Git 1.6.1 on Solaris 10, git diff seems to go into a loop -
+> consuming CPU and producing no output after a little bit.  While the
+> repository isn't small, it's not huge (it's
+> http://repo.or.cz/w/egit.git). I've tried the following:
+
+I can reproduce the problem on Solaris 8 using git v1.6.3. It seems to
+be caused by a horribly slow system regex implementation; it really
+chokes on the regex we use to find the "funcname" line for java files. I
+tried running "git diff v0.4.0" and it still hadn't finished after 90
+seconds. Then I did:
+
+  git config diff.java.xfuncname foo ;# some garbage regex
+  git diff v0.4.0
+
+and it completed in about 2.5 seconds.
+
+Can you try that and see if it works around the problem for you?
+
+If anybody wants to look further into the problem, I think it is
+specifically triggered by this file (and the built-in xfuncname for java
+files):
+
+  $ git clone git://repo.or.cz/egit.git
+  $ git diff v0.4.0 -- \
+    org.spearce.egit.core.test/src/org/spearce/egit/core/op/T0001_ConnectProviderOperationTest.java
+
+which isn't even all that big a file, but it is either causing some
+horrible algorithmic behavior in the regex library, or is outright
+sending it into an infinite loop.
+
+I tried building against the code in compat/regex; it completes in a
+reasonable amount of time, though it is still noticeably slow. With
+system regex, the diff given above doesn't complete in less than 90
+seconds (at which I get bored and kill it). With compat/regex, it
+completes in about 2.2 seconds. Disabling the xfuncname, it completes in
+0.14 seconds.
+
+So I think it is a viable solution to recommend building against
+compat/regex on Solaris, but I think there is still room for improvement
+in what we ship in compat/.
+
+-Peff
