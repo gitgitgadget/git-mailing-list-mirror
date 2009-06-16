@@ -1,87 +1,63 @@
-From: Karsten Weiss <knweiss@gmx.de>
-Subject: Re: [PATCH 2/2] http.c: add http.sslCertType and http.sslKeyType
-Date: Tue, 16 Jun 2009 22:07:34 +0200 (CEST)
-Message-ID: <alpine.OSX.2.00.0906162137100.80034@xor.localnet>
-References: <1245033541-15558-1-git-send-email-lodatom@gmail.com>  <1245033541-15558-2-git-send-email-lodatom@gmail.com>  <alpine.OSX.2.00.0906151927010.816@xor.localnet> <ca433830906151755t783fbf98k3fd09e4bdd6781e8@mail.gmail.com>
+From: Brandon Casey <casey@nrlssc.navy.mil>
+Subject: Re: git diff looping?
+Date: Tue, 16 Jun 2009 15:22:53 -0500
+Message-ID: <ewZ5ok_uS4Wg9yUHVY7a_6-lG5HI1Uq4csZRDyqCMDgtwGkWzQVNCw@cipher.nrlssc.navy.mil>
+References: <3ae83b000906151837r186221f2q1f8a670f13841877@mail.gmail.com> <20090616114726.GA4343@coredump.intra.peff.net> <7v3aa0dsvn.fsf@alter.siamese.dyndns.org> <20090616171531.GA17538@coredump.intra.peff.net> <RFQLUdKWnVWgwwX0qsqUhC-pl9v39aFOKMpTbbABiCEXczTo26fVow@cipher.nrlssc.navy.mil>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; format=flowed; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Daniel Stenberg <daniel@haxx.se>
-To: Mark Lodato <lodatom@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jun 16 22:09:19 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, John Bito <jwbito@gmail.com>,
+	git <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Jun 16 22:24:01 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MGey6-0000GT-LE
-	for gcvg-git-2@gmane.org; Tue, 16 Jun 2009 22:09:19 +0200
+	id 1MGfCH-0006hR-24
+	for gcvg-git-2@gmane.org; Tue, 16 Jun 2009 22:23:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754582AbZFPUIo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Jun 2009 16:08:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753962AbZFPUIo
-	(ORCPT <rfc822;git-outgoing>); Tue, 16 Jun 2009 16:08:44 -0400
-Received: from mail.gmx.net ([213.165.64.20]:54537 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753081AbZFPUIn (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Jun 2009 16:08:43 -0400
-Received: (qmail invoked by alias); 16 Jun 2009 20:08:39 -0000
-Received: from port-92-200-104-104.dynamic.qsc.de (EHLO mail.localnet) [92.200.104.104]
-  by mail.gmx.net (mp041) with SMTP; 16 Jun 2009 22:08:39 +0200
-X-Authenticated: #3612999
-X-Provags-ID: V01U2FsdGVkX1+q2XA3kk+qrY7jH8EQBMrG0lRmGJrIlj2QrAKF68
-	GdC6Q0oivn4Jpw
-Received: by mail.localnet (Postfix, from userid 502)
-	id 89F3ABAB805; Tue, 16 Jun 2009 22:07:34 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
-	by mail.localnet (Postfix) with ESMTP id 830FEBAB7F9;
-	Tue, 16 Jun 2009 22:07:34 +0200 (CEST)
-In-Reply-To: <ca433830906151755t783fbf98k3fd09e4bdd6781e8@mail.gmail.com>
-User-Agent: Alpine 2.00 (OSX 1167 2008-08-23)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.5600000000000001
+	id S1758629AbZFPUXB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Jun 2009 16:23:01 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757731AbZFPUXA
+	(ORCPT <rfc822;git-outgoing>); Tue, 16 Jun 2009 16:23:00 -0400
+Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:42946 "EHLO
+	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752121AbZFPUXA (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Jun 2009 16:23:00 -0400
+Received: by mail.nrlssc.navy.mil id n5GKMrJY010412; Tue, 16 Jun 2009 15:22:54 -0500
+In-Reply-To: <RFQLUdKWnVWgwwX0qsqUhC-pl9v39aFOKMpTbbABiCEXczTo26fVow@cipher.nrlssc.navy.mil>
+X-OriginalArrivalTime: 16 Jun 2009 20:22:53.0747 (UTC) FILETIME=[3A630830:01C9EEC0]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121710>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121711>
 
-On Mon, 15 Jun 2009, Mark Lodato wrote:
+Brandon Casey wrote:
+> Jeff King wrote:
+>> On Tue, Jun 16, 2009 at 09:51:24AM -0700, Junio C Hamano wrote:
+>>
+>>>> I can reproduce the problem on Solaris 8 using git v1.6.3. It seems to
+>>>> be caused by a horribly slow system regex implementation; it really
+>>>> chokes on the regex we use to find the "funcname" line for java files.
+>>> Hmm.  Is running under LC_ALL=C LANG=C _with_ the slow system regex help?
+>> No, it remains extremely slow (it is possible that it _is_ faster,
+>> though, but I never managed to run either case to completion; they are
+>> both clearly orders of magnitude off of acceptable).
+> 
+> I haven't tried setting LC_ALL, LANG, but this Solaris regex is MANY orders
+> of magnitude slower.  I've been running your example diff on the egit
+> repository for 2 hours and it still hasn't finished.  The compat/regex
+> version finished in 3 seconds.  Solaris 10 x86.
 
->> (However, it's a similar issue like the question whether the private key is
->> encrypted or not: Usability would be better if the certificate type could be
->> determined automatically (without having to violate the layering)).
->
-> Just as with determining if the certificate is password protected, it
-> is equally difficult to tell what type of file it is without calling
-> OpenSSL directly.
+Ok, I don't think this call is going to finish.  'git diff v0.4.0' on
+Solaris 10 x86 using the native regex library.  It has been running now
+for over 4.5 hours.
 
-Hm, thinking about the encryption case: Maybe I'm missing something but 
-wouldn't it be enough to simply peek at the key file and look for the 
-string "ENCRYPTED" in a header like this?
+If you're interested in a data point from another non-gnu regex library,
+I ran the same test on a mips IRIX6.5.  It took 19.5 secs, and this is
+not a young machine.  It takes 4 secs when diff.java.xfuncname is set
+to 'foo'.
 
------BEGIN RSA PRIVATE KEY-----
-Proc-Type: 4,ENCRYPTED
-
-I.e. a simple, temporary solution that does not depend on OpenSSL to 
-prevent the introduction of the new http.sslCertNoPass flag?
-
-(But now that you've also created patches for PKCS12 support this might 
-not be feasible anymore?)
-
-> This brings up a good point: Should we (I) try to implement (client
-> certificate) usability features in git to work around deficiencies in
-> libcurl, or should we (I) write patches to fix/enhance libcurl
-> directly?  The latter would be much easier (though I could be wrong)
-> and would benefit other programs using libcurl, but would require
-> users to upgrade libcurl to get these new features, and of course
-> would rely on the libcurl developers accepting the patches.  I am
-> willing to do either, but I think the libcurl route would be better.
-> Any thoughts?
-
-(As a git user without libcurl insights) I think that such query functions 
-about private keys (Is it encrypted?) or certificates (What type is it?) 
-would make sense and belong into libcurl. (And it would be great if these 
-queries could be answered *without* performing actual trial network 
-connections just by looking into the respective key/certificate files.)
-
-Karsten
+-brandon
