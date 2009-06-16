@@ -1,129 +1,71 @@
-From: Alex Bennee <kernel-hacker@bennee.com>
-Subject: [PATCH] Add -k option to cvsexportcommit to revert expanded CVS 
-	keywords in CVS working tree before applying commit patch
-Date: Tue, 16 Jun 2009 15:21:04 +0100
-Message-ID: <b2cdc9f30906160721re87e2efvd342dc60e0f24c75@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: branch.<branch>.merge and --format='%(upstream)'
+Date: Tue, 16 Jun 2009 08:46:32 -0700
+Message-ID: <7v7hzcdvvr.fsf@alter.siamese.dyndns.org>
+References: <adf1fd3d0906160408s668f7a3fj5725cc4e98b317fc@mail.gmail.com>
+	<20090616122312.GB5227@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jun 16 16:21:27 2009
+Cc: Santi =?utf-8?Q?B=C3=A9jar?= <santi@agolina.net>,
+	Git Mailing List <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Jun 16 17:46:43 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MGZXS-0000Hj-Jf
-	for gcvg-git-2@gmane.org; Tue, 16 Jun 2009 16:21:27 +0200
+	id 1MGary-0004iH-UT
+	for gcvg-git-2@gmane.org; Tue, 16 Jun 2009 17:46:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755337AbZFPOVH convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 16 Jun 2009 10:21:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753063AbZFPOVG
-	(ORCPT <rfc822;git-outgoing>); Tue, 16 Jun 2009 10:21:06 -0400
-Received: from mail-bw0-f213.google.com ([209.85.218.213]:36549 "EHLO
-	mail-bw0-f213.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751023AbZFPOVE convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 16 Jun 2009 10:21:04 -0400
-Received: by bwz9 with SMTP id 9so4084691bwz.37
-        for <git@vger.kernel.org>; Tue, 16 Jun 2009 07:21:05 -0700 (PDT)
-Received: by 10.103.240.15 with SMTP id s15mr4502819mur.102.1245162064904; 
-	Tue, 16 Jun 2009 07:21:04 -0700 (PDT)
-X-Google-Sender-Auth: f0f728094bd9db87
+	id S1754843AbZFPPqc convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 16 Jun 2009 11:46:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753773AbZFPPqb
+	(ORCPT <rfc822;git-outgoing>); Tue, 16 Jun 2009 11:46:31 -0400
+Received: from fed1rmmtao106.cox.net ([68.230.241.40]:44313 "EHLO
+	fed1rmmtao106.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753381AbZFPPqb (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Jun 2009 11:46:31 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao106.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20090616154632.UCKF25927.fed1rmmtao106.cox.net@fed1rmimpo01.cox.net>;
+          Tue, 16 Jun 2009 11:46:32 -0400
+Received: from localhost ([68.225.240.211])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id 4fmZ1c0034aMwMQ03fmZ73; Tue, 16 Jun 2009 11:46:33 -0400
+X-VR-Score: -200.00
+X-Authority-Analysis: v=1.0 c=1 a=dvchac0stc0A:10 a=PKzvZo6CAAAA:8
+ a=2aWxOXLf1nzaj67AxpAA:9 a=0_AtEUG2xQHMdjeAXjm7fO5yxQsA:4 a=OdWmie4EkE0A:10
+X-CM-Score: 0.00
+In-Reply-To: <20090616122312.GB5227@coredump.intra.peff.net> (Jeff King's message of "Tue\, 16 Jun 2009 08\:23\:12 -0400")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121684>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121685>
 
-Depending on how your CVS->GIT conversion went you will have some
-unexpanded CVS keywords in your GIT repo. If any of your git commits
-touch these lines then the patch application will fail. This patch
-addresses that by adding an option that will revert and expanded CVS
-keywords to files in the working CVS directory that are affected by
-the commit being applied.
+Jeff King <peff@peff.net> writes:
 
-Signed-off-by: Alex Benn=EF=BF=BDe <alex@bennee.com>
----
- Documentation/git-cvsexportcommit.txt |    4 ++++
- git-cvsexportcommit.perl              |   25 ++++++++++++++++++++++---
- 2 files changed, 26 insertions(+), 3 deletions(-)
+> On Tue, Jun 16, 2009 at 01:08:02PM +0200, Santi B=C3=A9jar wrote:
+>
+>>   I've noticed that having branch.<branch>.merge set with the branch
+>> name, and not with the full ref, cause problems with
+>> --format=3D'%(upstream)'  and also with the "branch -av" and "git
+>> status" upstream branch outputs. But git-fetch and git-pull works ok=
+,
+>> so it is a valid setting.
+>
+> Actually, it is broken in a lot of places. for-each-ref relies on the
+> same code as "git status", "git checkout", etc, which will all fail t=
+o
+> display tracking info. I believe the same code is also used for updat=
+ing
+> tracking branches on push. So I'm not sure if it was ever intended to=
+ be
+> a valid setting.
 
-diff --git a/Documentation/git-cvsexportcommit.txt
-b/Documentation/git-cvsexportcommit.txt
-index 2da8588..7488b6d 100644
---- a/Documentation/git-cvsexportcommit.txt
-+++ b/Documentation/git-cvsexportcommit.txt
-@@ -63,6 +63,10 @@ OPTIONS
- -u::
- 	Update affected files from CVS repository before attempting export.
-
-+-k::
-+	Reverse CVS keyword expansion (e.g. $Revision: 1.2.3.4$
-+	becomes $Revision$) in working CVS checkout before applying patch.
-+=09
- -w::
- 	Specify the location of the CVS checkout to use for the export. This
- 	option does not require GIT_DIR to be set before execution if the
-diff --git a/git-cvsexportcommit.perl b/git-cvsexportcommit.perl
-index 6d9f0ef..c3ebeac 100755
---- a/git-cvsexportcommit.perl
-+++ b/git-cvsexportcommit.perl
-@@ -8,9 +8,9 @@ use File::Basename qw(basename dirname);
- use File::Spec;
- use Git;
-
--our ($opt_h, $opt_P, $opt_p, $opt_v, $opt_c, $opt_f, $opt_a, $opt_m,
-$opt_d, $opt_u, $opt_w, $opt_W);
-+our ($opt_h, $opt_P, $opt_p, $opt_v, $opt_c, $opt_f, $opt_a, $opt_m,
-$opt_d, $opt_u, $opt_w, $opt_W, $opt_k);
-
--getopts('uhPpvcfam:d:w:W');
-+getopts('uhPpvcfkam:d:w:W');
-
- $opt_h && usage();
-
-@@ -266,7 +266,26 @@ foreach my $f (@files) {
- 	$dirty =3D 1;
- 	warn "File $f not up to date but has status '$cvsstat{$f}' in your
-CVS checkout!\n";
-     }
-+
-+    # Depending on how your GIT tree got imported from CVS you may
-+    # have a conflict between expanded keywords in your CVS tree and
-+    # unexpanded keywords in the patch about to be applied.
-+    if ($opt_k) {
-+	my $orig_file =3D"$f.orig";
-+	rename $f, $orig_file;
-+	open(FILTER_IN, "<$orig_file") or die "Cannot open $orig_file\n";
-+	open(FILTER_OUT, ">$f") or die "Cannot open $f\n";
-+	while (<FILTER_IN>)
-+	{
-+	    my $line =3D $_;
-+	    $line =3D~ s/\$([A-Z][a-z]+):[^\$]+\$/\$\1\$/g;
-+	    print FILTER_OUT $line;
-+	}
-+	close FILTER_IN;
-+	close FILTER_OUT;
-+    }
- }
-+
- if ($dirty) {
-     if ($opt_f) {	warn "The tree is not clean -- forced merge\n";
- 	$dirty =3D 0;
-@@ -370,7 +389,7 @@ sleep(1);
-
- sub usage {
- 	print STDERR <<END;
--Usage: GIT_DIR=3D/path/to/.git git cvsexportcommit [-h] [-p] [-v] [-c]
-[-f] [-u] [-w cvsworkdir] [-m msgprefix] [ parent ] commit
-+Usage: GIT_DIR=3D/path/to/.git git cvsexportcommit [-h] [-p] [-v] [-c]
-[-f] [-u] [-k] [-w cvsworkdir] [-m msgprefix] [ parent ] commit
- END
- 	exit(1);
- }
---=20
-1.6.0.2.95.g72d40
-
-
---
-Alex, homepage: http://www.bennee.com/~alex/
-http://www.half-llama.co.uk
+It wasn't.  Some places may accept them gracefully by either being extr=
+a
+nice or by accident.
