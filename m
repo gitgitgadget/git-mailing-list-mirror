@@ -1,109 +1,113 @@
-From: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <rene.scharfe@lsrfire.ath.cx>
-Subject: [PATCH] upload-archive: fix infinite loop on Cygwin
-Date: Wed, 17 Jun 2009 12:11:10 +0200
-Message-ID: <4A38C13E.6050800@lsrfire.ath.cx>
-References: <e664dae0905180737mae29811ie4cae889b3e3904f@mail.gmail.com> <4A151A15.6040609@lsrfire.ath.cx> <alpine.LSU.2.00.0905211431060.23478@hermes-2.csi.cam.ac.uk> <4A156556.900@lsrfire.ath.cx>
+From: Jeff King <peff@peff.net>
+Subject: Re: git diff looping?
+Date: Wed, 17 Jun 2009 06:23:33 -0400
+Message-ID: <20090617102332.GA32353@coredump.intra.peff.net>
+References: <3ae83b000906151837r186221f2q1f8a670f13841877@mail.gmail.com> <20090616114726.GA4343@coredump.intra.peff.net> <7v3aa0dsvn.fsf@alter.siamese.dyndns.org> <20090616171531.GA17538@coredump.intra.peff.net> <4A38AD5D.6010404@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Tony Finch <dot@dotat.at>, Bob Kagy <bobkagy@gmail.com>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jun 17 12:11:30 2009
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>, John Bito <jwbito@gmail.com>,
+	git <git@vger.kernel.org>
+To: Paolo Bonzini <paolo.bonzini@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jun 17 12:23:46 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MGs74-0001MS-1a
-	for gcvg-git-2@gmane.org; Wed, 17 Jun 2009 12:11:26 +0200
+	id 1MGsIx-000668-L6
+	for gcvg-git-2@gmane.org; Wed, 17 Jun 2009 12:23:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756275AbZFQKLQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 17 Jun 2009 06:11:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752366AbZFQKLP
-	(ORCPT <rfc822;git-outgoing>); Wed, 17 Jun 2009 06:11:15 -0400
-Received: from india601.server4you.de ([85.25.151.105]:59794 "EHLO
-	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750959AbZFQKLP (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Jun 2009 06:11:15 -0400
-Received: from [10.0.1.101] (p57B7DCAF.dip.t-dialin.net [87.183.220.175])
-	by india601.server4you.de (Postfix) with ESMTPSA id 2B95D2F8040;
-	Wed, 17 Jun 2009 12:11:16 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.21 (Windows/20090302)
-In-Reply-To: <4A156556.900@lsrfire.ath.cx>
+	id S1758850AbZFQKXe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 17 Jun 2009 06:23:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758672AbZFQKXd
+	(ORCPT <rfc822;git-outgoing>); Wed, 17 Jun 2009 06:23:33 -0400
+Received: from peff.net ([208.65.91.99]:38058 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1758616AbZFQKXc (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Jun 2009 06:23:32 -0400
+Received: (qmail 8742 invoked by uid 107); 17 Jun 2009 10:25:18 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Wed, 17 Jun 2009 06:25:18 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 17 Jun 2009 06:23:33 -0400
+Content-Disposition: inline
+In-Reply-To: <4A38AD5D.6010404@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121732>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121733>
 
-On Cygwin, poll() reports POLLIN even for file descriptors that have
-reached their end.  This caused git upload-archive to be stuck in an
-infinite loop, as it only looked at the POLLIN flag.
+On Wed, Jun 17, 2009 at 10:46:21AM +0200, Paolo Bonzini wrote:
 
-In addition to POLLIN, check if read() returned 0, which indicates
-end-of-file, and keep looping only as long as at least one of the file
-descriptors has input.  This lets the following command finish on its
-own when run in a git repository on Cygwin, instead of it getting stuck
-after printing all file names:
+> 2) make sure that at least one space/tab is eaten on all but the last  
+> occurrence of the repeated subexpression.  To this end the LHS of {2,} is 
+> duplicated, once with [ \t]+ and once with [ \t]*.  The repetition itself 
+> becomes a + since the last occurrence is now separately handled:
+>
+> ^[ \t]*(([A-Za-z_][A-Za-z_0-9]*[ \t]+)+[A-Za-z_][A-Za-z_0-9]*
+> [ \t]*\([^;]*)$
 
-	$ git archive -v --remote . HEAD >/dev/null
+Thanks, I can confirm that this is _much_ faster. Here are some timings
+from my Solaris 8 box for the "git diff v0.4.0" case using the system
+and compat engines, and using three regexes: the original that git is
+using now, an updated one with your regex above[1] replacing the second
+line of the stock pattern, and a baseline regex of "." which should take
+virtually no time at all.
 
-Reported-by: Bob Kagy <bobkagy@gmail.com>
-Signed-off-by: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
----
-This version of the patch has been cleaned up a bit compared to the
-previous one and is slightly shorter, but does the same.
+  system,  orig: infinite
+  system, paolo:   2.5s
+  system,   ".":   0.6s
+  compat,  orig: 288.0s
+  compat, paolo:   1.5s
+  compat,   ".":   0.6s
 
- builtin-upload-archive.c |   12 +++++++-----
- 1 files changed, 7 insertions(+), 5 deletions(-)
+So it goes from infinite to 2.5s. Which still spends 3 times as long
+matching funcname regexes as it does actually calculating the diff. The
+compat library is a little better, but still chokes pretty badly on the
+original regex.
 
-diff --git a/builtin-upload-archive.c b/builtin-upload-archive.c
-index 0206b41..c4cd1e1 100644
---- a/builtin-upload-archive.c
-+++ b/builtin-upload-archive.c
-@@ -80,16 +80,17 @@ static void error_clnt(const char *fmt, ...)
- 	die("sent error to the client: %s", buf);
- }
- 
--static void process_input(int child_fd, int band)
-+static ssize_t process_input(int child_fd, int band)
- {
- 	char buf[16384];
- 	ssize_t sz = read(child_fd, buf, sizeof(buf));
- 	if (sz < 0) {
- 		if (errno != EAGAIN && errno != EINTR)
- 			error_clnt("read error: %s\n", strerror(errno));
--		return;
-+		return sz;
- 	}
- 	send_sideband(1, band, buf, sz, LARGE_PACKET_MAX);
-+	return sz;
- }
- 
- int cmd_upload_archive(int argc, const char **argv, const char *prefix)
-@@ -131,6 +132,7 @@ int cmd_upload_archive(int argc, const char **argv, const char *prefix)
- 
- 	while (1) {
- 		struct pollfd pfd[2];
-+		ssize_t processed[2] = { 0, 0 };
- 		int status;
- 
- 		pfd[0].fd = fd1[0];
-@@ -147,12 +149,12 @@ int cmd_upload_archive(int argc, const char **argv, const char *prefix)
- 		}
- 		if (pfd[0].revents & POLLIN)
- 			/* Data stream ready */
--			process_input(pfd[0].fd, 1);
-+			processed[0] = process_input(pfd[0].fd, 1);
- 		if (pfd[1].revents & POLLIN)
- 			/* Status stream ready */
--			process_input(pfd[1].fd, 2);
-+			processed[1] = process_input(pfd[1].fd, 2);
- 		/* Always finish to read data when available */
--		if ((pfd[0].revents | pfd[1].revents) & POLLIN)
-+		if (processed[0] || processed[1])
- 			continue;
- 
- 		if (waitpid(writer, &status, 0) < 0)
--- 
-1.6.3.2.307.g21cd0
+Let's compare compat to the glibc implementation on my Debian box:
+
+  system,  orig:   0.22s
+  system, paolo:   0.22s
+  system,   ".":   0.15s
+  compat,  orig: 150.88s
+  compat, paolo:   0.43s
+  compat,   ".":   0.15s
+
+Besides the exponential behavior on the original regex, it is still
+about twice as slow as the system one.
+
+So I think there are three possible optimizations worth considering:
+
+  1. Replace the builtin diff.java.xfuncname pattern with what Paolo
+     suggested (though I haven't verified its correctness beyond a
+     cursory look at the results). This is easy to do, and will help
+     people with crappy system regex libraries and people on
+     compat/regex/ (right now just mingw) a _lot_. The downside is that
+     it's a little harder to read the regex, but not terribly so.
+
+  2. Recommend NO_REGEX for people with slow system regex libraries.
+     This is also easy to do, and will help people even if we do (1) for
+     two reasons:
+
+       a. we process user-defined regexes through diff.*.xfuncname
+          patterns, as well as through "git grep"; so we are protecting
+          against poor performance when they give us a complex regex
+
+       b. even on more reasonable regexps like Paolo's, we seem to get a
+          2:1 speedup over the Solaris system library
+
+  3. Replace compat/regex with something faster. It still produces
+     exponential behavior in complex cases where glibc does not, and it
+     seems to be about 1/3 as fast on Paolo's regex.
+
+     I haven't looked at how large or how portable the glibc
+     implementation is. Another alternative is that we could provide a
+     simple compat/ as now, and have better support for linking against
+     an external library like pcre, if it is available.
+
+-Peff
+
+[1] Note if you are cutting and pasting Paolo's regex into the C code,
+    the "\(" needs to be "\\(", which I screwed up in my initial
+    timings. :)
