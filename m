@@ -1,98 +1,73 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] avoid exponential regex match for java and objc function names
-Date: Wed, 17 Jun 2009 09:42:43 -0700
-Message-ID: <7vab46rev0.fsf@alter.siamese.dyndns.org>
-References: <20090617102332.GA32353@coredump.intra.peff.net>
-	<1245248766-14867-1-git-send-email-bonzini@gnu.org>
+From: Paolo Bonzini <paolo.bonzini@gmail.com>
+Subject: Re: git rebase --interactive squash/squish/fold/rollup
+Date: Wed, 17 Jun 2009 18:48:35 +0200
+Message-ID: <4A391E63.6000206@gmail.com>
+References: <e1868cfe0906170506o37a75c35m47f9456bf8ae47c1@mail.gmail.com>	<43d8ce650906170555m644564b3v3722168f7217c326@mail.gmail.com> <7vvdmurfao.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: <git@vger.kernel.org>, peff@peff.net
-To: Paolo Bonzini <bonzini@gnu.org>
-X-From: git-owner@vger.kernel.org Wed Jun 17 18:42:55 2009
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: John Tapsell <johnflux@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jun 17 18:49:00 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MGyDu-00069U-5O
-	for gcvg-git-2@gmane.org; Wed, 17 Jun 2009 18:42:54 +0200
+	id 1MGyJk-0000pN-0v
+	for gcvg-git-2@gmane.org; Wed, 17 Jun 2009 18:48:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754597AbZFQQmn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 17 Jun 2009 12:42:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754757AbZFQQmm
-	(ORCPT <rfc822;git-outgoing>); Wed, 17 Jun 2009 12:42:42 -0400
-Received: from fed1rmmtao103.cox.net ([68.230.241.43]:38881 "EHLO
-	fed1rmmtao103.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751705AbZFQQml (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Jun 2009 12:42:41 -0400
-Received: from fed1rmimpo03.cox.net ([70.169.32.75])
-          by fed1rmmtao103.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20090617164244.FHCL2915.fed1rmmtao103.cox.net@fed1rmimpo03.cox.net>;
-          Wed, 17 Jun 2009 12:42:44 -0400
-Received: from localhost ([68.225.240.211])
-	by fed1rmimpo03.cox.net with bizsmtp
-	id 54ij1c00M4aMwMQ044ijyY; Wed, 17 Jun 2009 12:42:43 -0400
-X-VR-Score: -100.00
-X-Authority-Analysis: v=1.0 c=1 a=4bDDxhUQmTcA:10 a=mDV3o1hIAAAA:8
- a=Tj2VEP4F-haZHRVkptEA:9 a=xAMjntMCP5_qyC3HHoVxlxYhrc0A:4 a=ii61gXl28gQA:10
-X-CM-Score: 0.00
-In-Reply-To: <1245248766-14867-1-git-send-email-bonzini@gnu.org> (Paolo Bonzini's message of "Wed\, 17 Jun 2009 16\:26\:06 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+	id S1754355AbZFQQsq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 17 Jun 2009 12:48:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753550AbZFQQsp
+	(ORCPT <rfc822;git-outgoing>); Wed, 17 Jun 2009 12:48:45 -0400
+Received: from mail-ew0-f210.google.com ([209.85.219.210]:52536 "EHLO
+	mail-ew0-f210.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751729AbZFQQsp (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Jun 2009 12:48:45 -0400
+Received: by ewy6 with SMTP id 6so672382ewy.37
+        for <git@vger.kernel.org>; Wed, 17 Jun 2009 09:48:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from
+         :user-agent:mime-version:to:cc:subject:references:in-reply-to
+         :content-type:content-transfer-encoding;
+        bh=b3s1O9zxtbhNwptfOwbWfy5GjS9Snc4zHKi1RIH86m0=;
+        b=dFW5ghOGFKLpQ+rn2GFH/+QHxlsgH3oMEZL06NJKypCx2dGD7RRXyW8NSjudcYgD6u
+         M9WDELmtSsCvK48i4uGG7rtsOLub6w1GM8AbF+bXX92Au7h5X2xsbDL4+3bUNRBBEZon
+         UZwpjVhIstNiKq6Cr5wG87CzHU34Ag4SBcUo4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        b=KHmtrjHP3uWHbCR5D8r40kWODV0lc8DUYrjTj5r4bLg9+p3vl8xUTliIN0R1y7aw4d
+         qxioO7VamFAV4yM+mPdHKjgOQkjJiRBUt0PswwgnTNlbbAj2v4ImeIqX0JNPvBQsyLy+
+         Ecfuq12q5T+q+2fH5PAEaL1GPOXDWfr1A/U34=
+Received: by 10.210.56.2 with SMTP id e2mr3133381eba.42.1245257326719;
+        Wed, 17 Jun 2009 09:48:46 -0700 (PDT)
+Received: from yakj.usersys.redhat.com (nat-pool-brq.redhat.com [62.40.79.66])
+        by mx.google.com with ESMTPS id 10sm111702eyz.21.2009.06.17.09.48.45
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 17 Jun 2009 09:48:46 -0700 (PDT)
+User-Agent: Thunderbird 2.0.0.17 (X11/20081009)
+In-Reply-To: <7vvdmurfao.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121759>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121760>
 
-Paolo Bonzini <bonzini@gnu.org> writes:
 
-> In the old regex
->
-> ^[ \t]*(([ \t]*[A-Za-z_][A-Za-z_0-9]*){2,}[ \t]*\([^;]*)$
->         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
->
-> you can backtrack arbitrarily from [A-Za-z_0-9]* into [A-Za-z_], thus
-> causing an exponential number of backtracks.  Ironically it also causes
-> the regex not to work as intended; for example "catch" can match the
-> underlined part of the regex, the first repetition matching "c" and
-> the second matching "atch".
->
-> The replacement regex avoids this problem, because it makes sure that
-> at least a space/tab is eaten on each repetition.  In other words,
-> a suffix of a repetition can never be a prefix of the next repetition.
+> So I can see why a variant of "squash" that does not change (nor even ask
+> for a replacement of) the commit log message from the one that is being
+> amended could be useful.
 
-Thanks; nicely done.
+One way could be to have arguments to squash in a way that was proposed 
+for the sequencer GSOC project last year.  For example,
 
-Should I remove the "/* -- */" or is it for better readability I should
-keep?
+commit 123456
+squash -C HEAD abcdef
 
-> Signed-off-by: Paolo Bonzini <bonzini@gnu.org>
-> ---
->  userdiff.c |    5 +++--
->  1 files changed, 3 insertions(+), 2 deletions(-)
->
-> diff --git a/userdiff.c b/userdiff.c
-> index d556da9..57529ae 100644
-> --- a/userdiff.c
-> +++ b/userdiff.c
-> @@ -13,7 +13,8 @@ PATTERNS("html", "^[ \t]*(<[Hh][1-6][ \t].*>.*)$",
->  	 "[^<>= \t]+|[^[:space:]]|[\x80-\xff]+"),
->  PATTERNS("java",
->  	 "!^[ \t]*(catch|do|for|if|instanceof|new|return|switch|throw|while)\n"
-> -	 "^[ \t]*(([ \t]*[A-Za-z_][A-Za-z_0-9]*){2,}[ \t]*\\([^;]*)$",
-> +	 "^[ \t]*(([A-Za-z_][A-Za-z_0-9]*[ \t]+)+[A-Za-z_][A-Za-z_0-9]*[ \t]*\\([^;]*)$",
-> +	 /* -- */
->  	 "[a-zA-Z_][a-zA-Z0-9_]*"
->  	 "|[-+0-9.e]+[fFlL]?|0[xXbB]?[0-9a-fA-F]+[lL]?"
->  	 "|[-+*/<>%&^|=!]="
-> @@ -25,7 +26,7 @@ PATTERNS("objc",
->  	 /* Objective-C methods */
->  	 "^[ \t]*([-+][ \t]*\\([ \t]*[A-Za-z_][A-Za-z_0-9* \t]*\\)[ \t]*[A-Za-z_].*)$\n"
->  	 /* C functions */
-> -	 "^[ \t]*(([ \t]*[A-Za-z_][A-Za-z_0-9]*){2,}[ \t]*\\([^;]*)$\n"
-> +	 "^[ \t]*(([A-Za-z_][A-Za-z_0-9]*[ \t]+)+[A-Za-z_][A-Za-z_0-9]*[ \t]*\\([^;]*)$\n"
->  	 /* Objective-C class/protocol definitions */
->  	 "^(@(implementation|interface|protocol)[ \t].*)$",
->  	 /* -- */
-> -- 
-> 1.6.0.3
+would just proceed with the commit of HEAD, and since squash is 
+basically apply-to-index + commit, the HEAD would still be 123456.
+
+Paolo
