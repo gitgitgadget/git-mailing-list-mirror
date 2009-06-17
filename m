@@ -1,107 +1,98 @@
-From: John Tapsell <johnflux@gmail.com>
-Subject: Re: git rebase --interactive squash/squish/fold/rollup
-Date: Wed, 17 Jun 2009 17:40:06 +0100
-Message-ID: <43d8ce650906170940m17942793xe0cd88ae372ff8f2@mail.gmail.com>
-References: <e1868cfe0906170506o37a75c35m47f9456bf8ae47c1@mail.gmail.com>
-	 <43d8ce650906170555m644564b3v3722168f7217c326@mail.gmail.com>
-	 <7vvdmurfao.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] avoid exponential regex match for java and objc function names
+Date: Wed, 17 Jun 2009 09:42:43 -0700
+Message-ID: <7vab46rev0.fsf@alter.siamese.dyndns.org>
+References: <20090617102332.GA32353@coredump.intra.peff.net>
+	<1245248766-14867-1-git-send-email-bonzini@gnu.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jun 17 18:40:29 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: <git@vger.kernel.org>, peff@peff.net
+To: Paolo Bonzini <bonzini@gnu.org>
+X-From: git-owner@vger.kernel.org Wed Jun 17 18:42:55 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MGyBY-0004nS-0T
-	for gcvg-git-2@gmane.org; Wed, 17 Jun 2009 18:40:28 +0200
+	id 1MGyDu-00069U-5O
+	for gcvg-git-2@gmane.org; Wed, 17 Jun 2009 18:42:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752984AbZFQQkG convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 17 Jun 2009 12:40:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751862AbZFQQkF
-	(ORCPT <rfc822;git-outgoing>); Wed, 17 Jun 2009 12:40:05 -0400
-Received: from yw-out-2324.google.com ([74.125.46.29]:40583 "EHLO
-	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751835AbZFQQkE convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 17 Jun 2009 12:40:04 -0400
-Received: by yw-out-2324.google.com with SMTP id 5so237792ywb.1
-        for <git@vger.kernel.org>; Wed, 17 Jun 2009 09:40:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:content-type
-         :content-transfer-encoding;
-        bh=MrnvHTjo8rM++inmPY8jeVY8zp/ctWOg/dPrd/acrNU=;
-        b=nfEzi89R+bPCQYQosyAjm2B5HDegqh0boWXLFcElFLpN+hw3O750Y7MW3Y3sPLV0LZ
-         nvTtgCk1B69Q8z1kr8X53DgXV7wysLohlBo3hyki8F6EZjYdC3gMrm2wHKljJ7jPUy+i
-         40JJEhd4LESM5qSzIP+CkDH7F7okYAvqkkJxg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :content-type:content-transfer-encoding;
-        b=ACuy4JN8HXLqXB7VTjXeFoY0fQKia+2CQHKF8ctY6m2xxTGTj+Og7QlnsRGgGlOdXa
-         DPAI3bzXmzhD0nlTlGo12Iomw3saDGvr48UxK3zIIfRt5SIoUEjKpjhePrfpBN3jI7GK
-         oaUM95o8dMRzHXtiVt0rq66UhV4Ezw8tQDB2w=
-Received: by 10.151.125.6 with SMTP id c6mr1548226ybn.144.1245256806397; Wed, 
-	17 Jun 2009 09:40:06 -0700 (PDT)
-In-Reply-To: <7vvdmurfao.fsf@alter.siamese.dyndns.org>
+	id S1754597AbZFQQmn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 17 Jun 2009 12:42:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754757AbZFQQmm
+	(ORCPT <rfc822;git-outgoing>); Wed, 17 Jun 2009 12:42:42 -0400
+Received: from fed1rmmtao103.cox.net ([68.230.241.43]:38881 "EHLO
+	fed1rmmtao103.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751705AbZFQQml (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Jun 2009 12:42:41 -0400
+Received: from fed1rmimpo03.cox.net ([70.169.32.75])
+          by fed1rmmtao103.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20090617164244.FHCL2915.fed1rmmtao103.cox.net@fed1rmimpo03.cox.net>;
+          Wed, 17 Jun 2009 12:42:44 -0400
+Received: from localhost ([68.225.240.211])
+	by fed1rmimpo03.cox.net with bizsmtp
+	id 54ij1c00M4aMwMQ044ijyY; Wed, 17 Jun 2009 12:42:43 -0400
+X-VR-Score: -100.00
+X-Authority-Analysis: v=1.0 c=1 a=4bDDxhUQmTcA:10 a=mDV3o1hIAAAA:8
+ a=Tj2VEP4F-haZHRVkptEA:9 a=xAMjntMCP5_qyC3HHoVxlxYhrc0A:4 a=ii61gXl28gQA:10
+X-CM-Score: 0.00
+In-Reply-To: <1245248766-14867-1-git-send-email-bonzini@gnu.org> (Paolo Bonzini's message of "Wed\, 17 Jun 2009 16\:26\:06 +0200")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121758>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121759>
 
-2009/6/17 Junio C Hamano <gitster@pobox.com>:
-> John Tapsell <johnflux@gmail.com> writes:
->
->>> branch, hack, commit.
->>> hack, commit, hack, commit
->>
->> What if you used =C2=A0commit --append =C2=A0instead?
->>
->> The trouble though of squashing all the commits into one is that it
->> makes it impossible to bisect later. =C2=A0Are you really sure that =
-your
->> final commit cannot be broken into small commits? =C2=A0Ideally each=
- commit
->> is small but self contained. =C2=A0Squashing should be done only to =
-fix
->> cases where you introduced a bug then fixed it, or to fix a partial
->> implementation etc.
->
-> I think you meant --amend, but it often happens to me that after prep=
-aring
-> a three-patch series:
->
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0[1/3] Clean up the surrounding code I will=
- touch
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0[2/3] Lay the groundwork
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0[3/3] Implement a cool new feature
->
-> I find that there are more clean-up that should have been done in [1/=
-3].
-> The way "rebase -i" expects me to work is:
->
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0$ edit ;# more clean-ups
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0$ git commit -a -m 'squash to "clean up"'
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0$ git rebase -i HEAD~5
->
-> which will give me
->
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0pick 1/3 Clean up ...
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0pick 2/3 Lay the groundwork
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0pick 3/3 Implement
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0pick 4/3 squash to "clean up"
->
-> that I'll change to
->
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0pick 1/3 Clean up ...
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0squash 4/3 squash to "clean up"
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0pick 2/3 Lay the groundwork
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0pick 3/3 Implement
+Paolo Bonzini <bonzini@gnu.org> writes:
 
-Yeah.  It would be nice to have a 'crush' or something here.
-It's similar to the arguments to have a command to just edit the
-commit message in a single go, rather than the rather long way of
-using edit.
+> In the old regex
+>
+> ^[ \t]*(([ \t]*[A-Za-z_][A-Za-z_0-9]*){2,}[ \t]*\([^;]*)$
+>         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+>
+> you can backtrack arbitrarily from [A-Za-z_0-9]* into [A-Za-z_], thus
+> causing an exponential number of backtracks.  Ironically it also causes
+> the regex not to work as intended; for example "catch" can match the
+> underlined part of the regex, the first repetition matching "c" and
+> the second matching "atch".
+>
+> The replacement regex avoids this problem, because it makes sure that
+> at least a space/tab is eaten on each repetition.  In other words,
+> a suffix of a repetition can never be a prefix of the next repetition.
+
+Thanks; nicely done.
+
+Should I remove the "/* -- */" or is it for better readability I should
+keep?
+
+> Signed-off-by: Paolo Bonzini <bonzini@gnu.org>
+> ---
+>  userdiff.c |    5 +++--
+>  1 files changed, 3 insertions(+), 2 deletions(-)
+>
+> diff --git a/userdiff.c b/userdiff.c
+> index d556da9..57529ae 100644
+> --- a/userdiff.c
+> +++ b/userdiff.c
+> @@ -13,7 +13,8 @@ PATTERNS("html", "^[ \t]*(<[Hh][1-6][ \t].*>.*)$",
+>  	 "[^<>= \t]+|[^[:space:]]|[\x80-\xff]+"),
+>  PATTERNS("java",
+>  	 "!^[ \t]*(catch|do|for|if|instanceof|new|return|switch|throw|while)\n"
+> -	 "^[ \t]*(([ \t]*[A-Za-z_][A-Za-z_0-9]*){2,}[ \t]*\\([^;]*)$",
+> +	 "^[ \t]*(([A-Za-z_][A-Za-z_0-9]*[ \t]+)+[A-Za-z_][A-Za-z_0-9]*[ \t]*\\([^;]*)$",
+> +	 /* -- */
+>  	 "[a-zA-Z_][a-zA-Z0-9_]*"
+>  	 "|[-+0-9.e]+[fFlL]?|0[xXbB]?[0-9a-fA-F]+[lL]?"
+>  	 "|[-+*/<>%&^|=!]="
+> @@ -25,7 +26,7 @@ PATTERNS("objc",
+>  	 /* Objective-C methods */
+>  	 "^[ \t]*([-+][ \t]*\\([ \t]*[A-Za-z_][A-Za-z_0-9* \t]*\\)[ \t]*[A-Za-z_].*)$\n"
+>  	 /* C functions */
+> -	 "^[ \t]*(([ \t]*[A-Za-z_][A-Za-z_0-9]*){2,}[ \t]*\\([^;]*)$\n"
+> +	 "^[ \t]*(([A-Za-z_][A-Za-z_0-9]*[ \t]+)+[A-Za-z_][A-Za-z_0-9]*[ \t]*\\([^;]*)$\n"
+>  	 /* Objective-C class/protocol definitions */
+>  	 "^(@(implementation|interface|protocol)[ \t].*)$",
+>  	 /* -- */
+> -- 
+> 1.6.0.3
