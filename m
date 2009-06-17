@@ -1,55 +1,75 @@
-From: John Koleszar <john.koleszar@on2.com>
-Subject: Re: git rebase --interactive squash/squish/fold/rollup
-Date: Wed, 17 Jun 2009 13:05:51 -0400
-Organization: On2 Technologies
-Message-ID: <1245258351.24610.32.camel@cp-jk-linux.corp.on2.com>
-References: <e1868cfe0906170506o37a75c35m47f9456bf8ae47c1@mail.gmail.com>
-	 <43d8ce650906170555m644564b3v3722168f7217c326@mail.gmail.com>
-	 <7vvdmurfao.fsf@alter.siamese.dyndns.org>
-Reply-To: john.koleszar@on2.com
+From: Ingo Oeser <ioe-git@rameria.de>
+Subject: Re: Using git for code deployment on webservers?
+Date: Wed, 17 Jun 2009 19:23:07 +0200
+Message-ID: <200906171923.08034.ioe-git@rameria.de>
+References: <200906160111.47325.ioe-git@rameria.de> <alpine.LNX.2.00.0906161332080.2147@iabervon.org>
 Mime-Version: 1.0
-Content-Type: text/plain
+Content-Type: Text/Plain;
+  charset="iso-8859-1"
 Content-Transfer-Encoding: 7bit
-Cc: John Tapsell <johnflux@gmail.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jun 17 19:06:51 2009
+Cc: Ingo Oeser <ioe-git@rameria.de>, git@vger.kernel.org
+To: Daniel Barkalow <barkalow@iabervon.org>
+X-From: git-owner@vger.kernel.org Wed Jun 17 19:20:52 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MGyb4-0002TE-AJ
-	for gcvg-git-2@gmane.org; Wed, 17 Jun 2009 19:06:50 +0200
+	id 1MGyoc-0000VS-By
+	for gcvg-git-2@gmane.org; Wed, 17 Jun 2009 19:20:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754941AbZFQRGj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 17 Jun 2009 13:06:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754560AbZFQRGj
-	(ORCPT <rfc822;git-outgoing>); Wed, 17 Jun 2009 13:06:39 -0400
-Received: from mail.on2.com ([66.162.65.131]:57206 "EHLO on2.com"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1753651AbZFQRGi (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Jun 2009 13:06:38 -0400
-In-Reply-To: <7vvdmurfao.fsf@alter.siamese.dyndns.org>
-X-Mailer: Evolution 2.24.5 
-X-On2-MailScanner-i: Found to be clean
-X-On2-MailScanner-From: john.koleszar@on2.com
+	id S1755321AbZFQRUh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 17 Jun 2009 13:20:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753697AbZFQRUg
+	(ORCPT <rfc822;git-outgoing>); Wed, 17 Jun 2009 13:20:36 -0400
+Received: from smtprelay10.ispgateway.de ([80.67.29.24]:36082 "EHLO
+	smtprelay10.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751293AbZFQRUf (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Jun 2009 13:20:35 -0400
+Received: from [91.62.59.75] (helo=axel.localnet)
+	by smtprelay10.ispgateway.de with esmtpsa (TLSv1:AES256-SHA:256)
+	(Exim 4.68)
+	(envelope-from <ioe-git@rameria.de>)
+	id 1MGyoO-0002Wx-5i; Wed, 17 Jun 2009 19:20:36 +0200
+User-Agent: KMail/1.11.2 (Linux/2.6.28-11-generic; KDE/4.2.2; x86_64; ; )
+In-Reply-To: <alpine.LNX.2.00.0906161332080.2147@iabervon.org>
+Content-Disposition: inline
+X-Df-Sender: 849595
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121761>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121762>
 
-On Wed, 2009-06-17 at 12:33 -0400, Junio C Hamano wrote:
-> So I can see why a variant of "squash" that does not change (nor even ask
-> for a replacement of) the commit log message from the one that is being
-> amended could be useful.  I am tempted to suggest calling that a "fixup"
-> operation, but some people may expect "fixup" to mean a variant of "edit"
-> that does not bother you by dropping you back to the shell to touch the
-> tree that is recorded (i.e. "fixing up the commit log message only"), so
-> it is not a very good word.
+Hi Daniel,
 
-I wonder if a better approach might be to add an operator to squash
-rather than another verb. "squash!" maybe? This has the nice property
-that future verbs that have both interactive and non-interactive modes
-could be made consistent with squash easily, rather than having to think
-of another synonym.
+On Tuesday 16 June 2009, Daniel Barkalow wrote:
+> You should be able to have the slave repositories store tags for tree 
+> objects (instead of commit objects), and have the webservers fetch those. 
+> You'll still have the object database, but it will only contain stuff 
+> that's been deployed to that webserver, not intermediate versions or 
+> historical versions.
+
+Ah, that sound like a great solution. I'll try that.
+
+> You'll still have to store both the repo and the checked out data 
+> (but git stores the content delta-compressed against each 
+> other in one big file, normally, so there really aren't files to hard link 
+> to.
+
+Ok. That was under the assumption, that the core of git is basically a 
+content addressable file system. But that seems to be history :-)
+
+> Of course, the other possibility is to check out versions on the slaves, 
+> and rsync that to the webservers, which is probably the optimal method if 
+> you're not in a situation where you benefit from anything git does in 
+> transit.
+
+I would benefit from noticing local changes. But simple rsync is what is tried now.
+Problem is, we get no de-duplication from rsync, which git could do.
+
+Many thanks for your suggestions!
+
+
+Best Regards 
+
+Ingo Oeser
