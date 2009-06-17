@@ -1,54 +1,74 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] rebase -i: auto-squash commits
-Date: Thu, 18 Jun 2009 00:08:18 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.0906180007370.26154@pacific.mpi-cbg.de>
-References: <e1868cfe0906170506o37a75c35m47f9456bf8ae47c1@mail.gmail.com> <43d8ce650906170555m644564b3v3722168f7217c326@mail.gmail.com> <7vvdmurfao.fsf@alter.siamese.dyndns.org> <20090618063348.6117@nanako3.lavabit.com>
+From: Marc Branchaud <marcnarc@xiplink.com>
+Subject: hooks/post-receive-email bug?
+Date: Wed, 17 Jun 2009 18:21:34 -0400
+Message-ID: <4A396C6E.2050600@xiplink.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>,
-	John Tapsell <johnflux@gmail.com>, git@vger.kernel.org
-To: Nanako Shiraishi <nanako3@lavabit.com>
-X-From: git-owner@vger.kernel.org Thu Jun 18 00:07:17 2009
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git list <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Jun 18 00:21:50 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MH3Hn-0001LC-Fa
-	for gcvg-git-2@gmane.org; Thu, 18 Jun 2009 00:07:15 +0200
+	id 1MH3Vu-0006Mo-3z
+	for gcvg-git-2@gmane.org; Thu, 18 Jun 2009 00:21:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754466AbZFQWHG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 17 Jun 2009 18:07:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753840AbZFQWHF
-	(ORCPT <rfc822;git-outgoing>); Wed, 17 Jun 2009 18:07:05 -0400
-Received: from mail.gmx.net ([213.165.64.20]:53989 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753345AbZFQWHF (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Jun 2009 18:07:05 -0400
-Received: (qmail invoked by alias); 17 Jun 2009 22:07:05 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp057) with SMTP; 18 Jun 2009 00:07:05 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18jJIFmPAcjFJcv3T6w+NLapZqJhSiUoopt53fL8i
-	MNvUbHoPJ8LMRG
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <20090618063348.6117@nanako3.lavabit.com>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.75
+	id S1755641AbZFQWVl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 17 Jun 2009 18:21:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755426AbZFQWVk
+	(ORCPT <rfc822;git-outgoing>); Wed, 17 Jun 2009 18:21:40 -0400
+Received: from smtp142.dfw.emailsrvr.com ([67.192.241.142]:38085 "EHLO
+	smtp142.dfw.emailsrvr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752700AbZFQWVk (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Jun 2009 18:21:40 -0400
+Received: from relay4.relay.dfw.mlsrvr.com (localhost [127.0.0.1])
+	by relay4.relay.dfw.mlsrvr.com (SMTP Server) with ESMTP id ED32910CBF56
+	for <git@vger.kernel.org>; Wed, 17 Jun 2009 18:21:42 -0400 (EDT)
+Received: by relay4.relay.dfw.mlsrvr.com (Authenticated sender: mbranchaud-AT-xiplink.com) with ESMTPSA id 4766510CBF55;
+	Wed, 17 Jun 2009 18:21:34 -0400 (EDT)
+User-Agent: Thunderbird 2.0.0.21 (X11/20090409)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121779>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121780>
 
-Hi,
+Hi all,
 
-On Thu, 18 Jun 2009, Nanako Shiraishi wrote:
+We currently have two main development branches: master and release.  These branches exist on our shared git server.  I had to make a change in both branches, so I made a topic branch off of their merge-base and did the work:
 
-> When the commit log message begins with "squash to ...", and there
+  o--o--A--B--C		<-- origin/master
+     |\
+     | X--Y		<-- origin/release
+      \
+       1--2--3		<-- topic
 
-I do not like this at all.  It assumes that you never have valid commit 
-messages starting with "squash to".
+I then merged topic into both master and release.  The merges were clean:
 
-Ciao,
-Dscho
+  o--o--A--B--C---D	<-- master
+     |\           |
+     | X--Y----Z /	<-- release
+      \       / /
+       1--2--3--	<-- topic
+
+Then I did
+	git push origin
+to push matching refspecs to the origin repo.
+
+port-receive-email sent two messages for that push, one for each branch.  Each message showed that commits 1, 2 and 3 were applied to the appropriate branch:
+
+	The branch, release has been updated
+	       via  hash for Z (commit)
+	       via  hash for 3 (commit)
+	       via  hash for 2 (commit)
+	       via  hash for 1 (commit)
+	      from  hash for Y (commit)
+
+However, the details of the topic commits were missing from both messages.  Instead, both only contained the details of the merge commits D and Z.
+
+I was expecting at least one of the messages to have the details of commits 1, 2 and 3.  Was I wrong to expect that?
+
+Thanks,
+
+		M.
