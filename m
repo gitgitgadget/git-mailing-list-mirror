@@ -1,71 +1,66 @@
-From: Martin Langhoff <martin.langhoff@gmail.com>
-Subject: Re: Issues with file status over samba
-Date: Wed, 17 Jun 2009 22:45:25 +0200
-Message-ID: <46a038f90906171345n5a248d1bl253bc49baa819cd8@mail.gmail.com>
-References: <3A1A5212-FFB4-4B0D-A972-C90EA336F5D9@gmail.com>
-	 <3dfcd29f-a1cd-4007-b962-2cf5156ab708@g19g2000yql.googlegroups.com>
+From: John Tapsell <johnflux@gmail.com>
+Subject: Re: git rebase --interactive squash/squish/fold/rollup
+Date: Wed, 17 Jun 2009 21:50:50 +0100
+Message-ID: <43d8ce650906171350l52256149m4e7f9cd5cd946ad8@mail.gmail.com>
+References: <e1868cfe0906170506o37a75c35m47f9456bf8ae47c1@mail.gmail.com>
+	 <43d8ce650906170555m644564b3v3722168f7217c326@mail.gmail.com>
+	 <7vvdmurfao.fsf@alter.siamese.dyndns.org>
+	 <1245258351.24610.32.camel@cp-jk-linux.corp.on2.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: jiho <jo.lists@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jun 17 22:45:53 2009
+Cc: Junio C Hamano <gitster@pobox.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: john.koleszar@on2.com
+X-From: git-owner@vger.kernel.org Wed Jun 17 22:51:03 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MH210-0002dJ-Cn
-	for gcvg-git-2@gmane.org; Wed, 17 Jun 2009 22:45:50 +0200
+	id 1MH260-0004mO-Sa
+	for gcvg-git-2@gmane.org; Wed, 17 Jun 2009 22:51:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757503AbZFQUpc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 17 Jun 2009 16:45:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753560AbZFQUpb
-	(ORCPT <rfc822;git-outgoing>); Wed, 17 Jun 2009 16:45:31 -0400
-Received: from mail-bw0-f213.google.com ([209.85.218.213]:52209 "EHLO
-	mail-bw0-f213.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1760175AbZFQUpY (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Jun 2009 16:45:24 -0400
-Received: by bwz9 with SMTP id 9so646836bwz.37
-        for <git@vger.kernel.org>; Wed, 17 Jun 2009 13:45:25 -0700 (PDT)
+	id S1752058AbZFQUuu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 17 Jun 2009 16:50:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751419AbZFQUut
+	(ORCPT <rfc822;git-outgoing>); Wed, 17 Jun 2009 16:50:49 -0400
+Received: from mail-gx0-f214.google.com ([209.85.217.214]:40413 "EHLO
+	mail-gx0-f214.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751120AbZFQUut (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Jun 2009 16:50:49 -0400
+Received: by gxk10 with SMTP id 10so960294gxk.13
+        for <git@vger.kernel.org>; Wed, 17 Jun 2009 13:50:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:mime-version:received:in-reply-to:references
          :date:message-id:subject:from:to:cc:content-type
          :content-transfer-encoding;
-        bh=z0FyObq5yMhwsqBRvMzQ+jHPlpgJu65OBHZpLNuhkcw=;
-        b=XtwiGm0bP6tzMUR/bP3YtQ1MjwgE+yYPFa9W8tqF5dM0dapVcLUJcZEKqxgFHvWS15
-         DnF+uCWVFZ4Tz/ToQ3myVDDjbvv+QeCX/nwJE/rkXsYqSvHp+p65UePu8xnKkWaRN17z
-         jxtalrFHzw9hlr+EKlPJheYpnPe5zvNMGQPZM=
+        bh=1ylfQmCRsjLmfd7E5hU0ZrcdSspNH9pSlRCB56neo4k=;
+        b=hPACt4avS6Cn4KmTji99bmzBXQhwWKuWGFdoRSDrfhnfDlCRpzTlJheAax0RubeukB
+         wp8pWdaKXcWXphaHKjJGn7A+aSKqJmNzFXuGa6BET/My3fbbnH+s53txhRTPp6JXz6Fz
+         cXSuqRl9gMZxg78DUFJzWpBLDvNExERZyfsmA=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type:content-transfer-encoding;
-        b=B/OSkMBpHg5NUA17Wvm0xlwtB+EKKKLmKIzZH7zo2oSUMgS2+4qmb4MplQYd58dmOo
-         mTPt76rmyvPY9hwKLR/J03vadthzFLE4U6EM4UD2TuYjH1Rzk216AwKxq83aeEu9oMVN
-         zpLxx7jgKLblx/L4HmN065U+Rcx1x6ehba5t0=
-Received: by 10.204.50.195 with SMTP id a3mr507017bkg.94.1245271525654; Wed, 
-	17 Jun 2009 13:45:25 -0700 (PDT)
-In-Reply-To: <3dfcd29f-a1cd-4007-b962-2cf5156ab708@g19g2000yql.googlegroups.com>
+        b=BnhC2oZn4Gw3ejBNk4cnk9tiY1HXAVkgFXIUX7df2lXgKouYigAGdK8TvGGmpDRnmG
+         2bA5QlpNADqQXnT4x6fwAL6XZQ+gn+Gjtlw1oKvLz9ammfrKpmk1Ir3VS0pbqOfGXxrh
+         4FiOPlYqiUeADAtspC+4V83xDyL1b0TsuA9WA=
+Received: by 10.151.9.17 with SMTP id m17mr2019023ybi.23.1245271850804; Wed, 
+	17 Jun 2009 13:50:50 -0700 (PDT)
+In-Reply-To: <1245258351.24610.32.camel@cp-jk-linux.corp.on2.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121772>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121773>
 
-On Wed, Jun 17, 2009 at 8:51 PM, jiho<jo.lists@gmail.com> wrote:
-> This is not an issue of clock differences betweent eh two computer
-> because setting the time on the server to -1h does not help.
-
-How about having ntp running on both?
-
-cheers,
+> I wonder if a better approach might be to add an operator to squash
+> rather than another verb. "squash!" maybe? This has the nice property
+> that future verbs that have both interactive and non-interactive modes
+> could be made consistent with squash easily, rather than having to think
+> of another synonym.
 
 
-
-m
--- 
- martin.langhoff@gmail.com
- martin@laptop.org -- School Server Architect
- - ask interesting questions
- - don't get distracted with shiny stuff  - working code first
- - http://wiki.laptop.org/go/User:Martinlanghoff
+We could also have   edit!  to just straight the commit message stage,
+and then automatically continue.
