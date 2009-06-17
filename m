@@ -1,81 +1,87 @@
-From: Clemens Buchacher <drizzd@aon.at>
-Subject: [PATCH] fetch: do not create ref from empty name
-Date: Wed, 17 Jun 2009 15:38:36 +0200
-Message-ID: <20090617133836.GA25155@localhost>
-References: <2cfc40320906170508o4fc0fc14sca511742be03ee5@mail.gmail.com>
+From: Minty <mintywalker@gmail.com>
+Subject: Re: git rebase --interactive squash/squish/fold/rollup
+Date: Wed, 17 Jun 2009 14:45:36 +0100
+Message-ID: <e1868cfe0906170645h2629e6f5v6dfe10d0cb909f77@mail.gmail.com>
+References: <e1868cfe0906170506o37a75c35m47f9456bf8ae47c1@mail.gmail.com>
+	 <43d8ce650906170555m644564b3v3722168f7217c326@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: Jon Seymour <jon.seymour@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jun 17 15:38:55 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jun 17 15:45:47 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MGvLm-0002Mn-6H
-	for gcvg-git-2@gmane.org; Wed, 17 Jun 2009 15:38:50 +0200
+	id 1MGvSU-0005Jq-DC
+	for gcvg-git-2@gmane.org; Wed, 17 Jun 2009 15:45:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758475AbZFQNij (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 17 Jun 2009 09:38:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754837AbZFQNij
-	(ORCPT <rfc822;git-outgoing>); Wed, 17 Jun 2009 09:38:39 -0400
-Received: from postman.fh-hagenberg.at ([193.170.124.96]:29953 "EHLO
-	mail.fh-hagenberg.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754779AbZFQNii (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Jun 2009 09:38:38 -0400
-Received: from darc.dnsalias.org ([84.154.66.80]) by mail.fh-hagenberg.at over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
-	 Wed, 17 Jun 2009 15:38:38 +0200
-Received: from drizzd by darc.dnsalias.org with local (Exim 4.69)
-	(envelope-from <drizzd@aon.at>)
-	id 1MGvLY-0007dh-CH; Wed, 17 Jun 2009 15:38:36 +0200
-Content-Disposition: inline
-In-Reply-To: <2cfc40320906170508o4fc0fc14sca511742be03ee5@mail.gmail.com>
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-OriginalArrivalTime: 17 Jun 2009 13:38:38.0911 (UTC) FILETIME=[EBCA84F0:01C9EF50]
+	id S1757152AbZFQNph convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 17 Jun 2009 09:45:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754779AbZFQNpg
+	(ORCPT <rfc822;git-outgoing>); Wed, 17 Jun 2009 09:45:36 -0400
+Received: from mail-fx0-f212.google.com ([209.85.220.212]:61596 "EHLO
+	mail-fx0-f212.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753814AbZFQNpg convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 17 Jun 2009 09:45:36 -0400
+X-Greylist: delayed 5923 seconds by postgrey-1.27 at vger.kernel.org; Wed, 17 Jun 2009 09:45:35 EDT
+Received: by fxm8 with SMTP id 8so310184fxm.37
+        for <git@vger.kernel.org>; Wed, 17 Jun 2009 06:45:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:content-type
+         :content-transfer-encoding;
+        bh=vP1dnqX3VF/xkDVq00zMQjFmchLT4Ly2TVz5WqRyCCs=;
+        b=aqZHf/REeD6KgEvm+u1dAHc4ah62qhqi6DhCOSbM2zGPNwfb5OONJbd1Pshw84NXGA
+         cJdG2/cc1KidUTh9PlVOiIWVPiMuaHpK4kYSw198QiytNtwJ0s98EixkzReE5j5jNcyg
+         ShD5sMspLcfikQ1VRX+scgNgFwEginFIZAkw0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :content-type:content-transfer-encoding;
+        b=KaPXrBAFbUTIJY3ItWvew5iTdV/vWYafoZscHUaMLue9ru10sXVY1msCEjohfz+ahd
+         tXXU7cqQAT3h3VgnAoeyY88y1mUVPjLfwLNvJ5hxYGHnLei1YY4RpPXHPHBK+ytz2ZCg
+         Nl3fX+uSj8tzqrxEu1vvjC/D5sSnVxTp+S4oI=
+Received: by 10.204.65.17 with SMTP id g17mr131221bki.193.1245246337004; Wed, 
+	17 Jun 2009 06:45:37 -0700 (PDT)
+In-Reply-To: <43d8ce650906170555m644564b3v3722168f7217c326@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121744>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121745>
 
-Previously, the refspec "<src>:" would be expanded to
-"<src>:refs/heads/". Instead, treat an empty <dst> just like refspecs
-without a colon.
+On Wed, Jun 17, 2009 at 1:55 PM, John Tapsell <johnflux@gmail.com> wrot=
+e:
+>
+> > branch, hack, commit.
+> > hack, commit, hack, commit
+>
+> What if you used =A0commit --append =A0instead?
 
-Signed-off-by: Clemens Buchacher <drizzd@aon.at>
----
+That appears to be a switch I don't have, nor is documented
 
-On Wed, Jun 17, 2009 at 10:08:25PM +1000, Jon Seymour wrote:
-> Can someone tell me why this happens?
-> 
->     error: * Ignoring funny ref 'refs/heads/' locally
+http://www.kernel.org/pub/software/scm/git/docs/git-commit.html
 
-This fixes it.
+Did you perhaps mean --amend?  Or have I missed something?
 
-Note that "git fetch origin :" is short for "git fetch origin
-HEAD", which stores the remote HEAD in FETCH_HEAD. You probably want "git
-fetch origin", without an explicit refspec, which defaults to "git fetch
-origin 'refs/heads/*:refs/remotes/origin/*'", i.e. store remote branches in
-the namespace for tracking branches.
+--amend is not really a solution for me - it is perhaps a quirk of my
+working pattern, but I typically (on the branch) commit tiny tiny bits
+of a (possibly incomplete) feature, then want to merge them back into
+a single "feature commit" to merge with trunk.  It's a case of
+building up a feature commit one step at a time.
 
-Clemens
+Perhaps I'm not normal or going about it wrong, in that I'm happy to
+commit (on a branch) an incomplete bit of code ... pop off to do
+something else, come back, hack a little more ... go off, come back
+=2E.. eventually ending up with a bunch of commits I want to merge down
+into a smaller set of (combined) commits which to then merge with
+master/trunk.
 
- remote.c |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
-
-diff --git a/remote.c b/remote.c
-index 08a5964..99e7797 100644
---- a/remote.c
-+++ b/remote.c
-@@ -1263,7 +1263,7 @@ struct ref *get_remote_ref(const struct ref *remote_refs, const char *name)
- 
- static struct ref *get_local_ref(const char *name)
- {
--	if (!name)
-+	if (!name || name[0] == '\0')
- 		return NULL;
- 
- 	if (!prefixcmp(name, "refs/"))
--- 
-1.6.3.1.147.g637c3
+fwiw, I didn't set out with this pattern in mind, it's rather one I
+have noticed myself being in frequently.  It seems quite natural to
+me, except for this repeated squashing mini commits down.  I'm not
+squashing ALL commits down into one single commit.  Rather many
+commits down into a few commits, which then get merged with
+master/trunk.
