@@ -1,67 +1,69 @@
-From: Mike Ralphson <mike.ralphson@gmail.com>
-Subject: Re: [PATCH v2 2/2] Makefile: use compat regex on Solaris
-Date: Wed, 17 Jun 2009 14:55:40 +0100
-Message-ID: <e2b179460906170655t6ae0f188t88a01cc14bc79135@mail.gmail.com>
-References: <20090616190550.GA22905@coredump.intra.peff.net>
-	 <20090616190821.GB23197@coredump.intra.peff.net>
-	 <e2b179460906170615u46a71241wf012d98020ef91e0@mail.gmail.com>
+From: Paolo Bonzini <paolo.bonzini@gmail.com>
+Subject: Re: git diff looping?
+Date: Wed, 17 Jun 2009 15:58:03 +0200
+Message-ID: <4A38F66B.4050604@gmail.com>
+References: <3ae83b000906151837r186221f2q1f8a670f13841877@mail.gmail.com> <20090616114726.GA4343@coredump.intra.peff.net> <7v3aa0dsvn.fsf@alter.siamese.dyndns.org> <20090616171531.GA17538@coredump.intra.peff.net> <4A38AD5D.6010404@gmail.com> <20090617102332.GA32353@coredump.intra.peff.net> <4A38D408.7000302@op5.se> <4A38EACD.3050602@gmail.com> <4A38ECB2.6010100@op5.se>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: Johannes Sixt <j6t@kdbg.org>, John Bito <jwbito@gmail.com>,
-	git <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-	Paolo Bonzini <paolo.bonzini@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jun 17 15:56:00 2009
+Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+	John Bito <jwbito@gmail.com>, git <git@vger.kernel.org>
+To: Andreas Ericsson <ae@op5.se>
+X-From: git-owner@vger.kernel.org Wed Jun 17 15:59:09 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MGvcN-0001a1-34
-	for gcvg-git-2@gmane.org; Wed, 17 Jun 2009 15:55:59 +0200
+	id 1MGvfN-0002vU-0l
+	for gcvg-git-2@gmane.org; Wed, 17 Jun 2009 15:59:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933214AbZFQNzk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 17 Jun 2009 09:55:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932412AbZFQNzk
-	(ORCPT <rfc822;git-outgoing>); Wed, 17 Jun 2009 09:55:40 -0400
-Received: from mail-bw0-f213.google.com ([209.85.218.213]:34211 "EHLO
-	mail-bw0-f213.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932355AbZFQNzj (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Jun 2009 09:55:39 -0400
-Received: by bwz9 with SMTP id 9so341067bwz.37
-        for <git@vger.kernel.org>; Wed, 17 Jun 2009 06:55:41 -0700 (PDT)
+	id S933635AbZFQN6Q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 17 Jun 2009 09:58:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933630AbZFQN6P
+	(ORCPT <rfc822;git-outgoing>); Wed, 17 Jun 2009 09:58:15 -0400
+Received: from fg-out-1718.google.com ([72.14.220.154]:24079 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933601AbZFQN6O (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Jun 2009 09:58:14 -0400
+Received: by fg-out-1718.google.com with SMTP id 16so113424fgg.17
+        for <git@vger.kernel.org>; Wed, 17 Jun 2009 06:58:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=a+KCiiwjtugy8c+qQ0NFJTrTi5bZVByqEIzVnQGDg9Y=;
-        b=pyEmenrReeOfsIVLqAzBg8KWunKwye0xgliD9Cpaq5MIYP2Cfu48mzbdZQOgzvp1zI
-         x1Dp0Sx1xNpwrX5nA9GigmbQ9PK5ipid1N4ftsGeJMjY/H9gtHoD3xbp93khkyqv1Mj1
-         nC10NOpGAvFaC+DziKa+SXFC61BCR9Mg4GLBA=
+        h=domainkey-signature:received:received:message-id:date:from
+         :user-agent:mime-version:to:cc:subject:references:in-reply-to
+         :content-type:content-transfer-encoding;
+        bh=dKbbIoUAdQKze6d7c4D+zlQk9j03btqjz5Ukn2N68hA=;
+        b=VDvcTMk9XHIouqNeZo2HBxl/Fsa1DD0uP/FMH/OkYyv6fzyB6ZP2Uh3mYu5cYgvrS5
+         x7FuXbKhRbCK7sIOFCqgSvQJbdEC4+sx3DE9LutTVtWxwmwNq4/ubZXZq5Mmy7kRGGKm
+         paJw6SDfYL1Y+lfuK39HExskvsvDjeozz6M/8=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=egCEBo71AyPkxbxSLwpaHblY4P5TxxD0J+ZMySvGciSEdFvfRUEcoPwIwluwGmsJ0k
-         t6E9Q5DB4EBIqpPlf/j7n7ITmYcVZGBU3rfLJt6yXEmtvf0kd0/GFjtdu6aA0yo8zpSL
-         RNGVmrHHJ8g+j8q+29FZnPD3QI9q/hx6rGdxY=
-Received: by 10.223.105.72 with SMTP id s8mr297383fao.9.1245246940088; Wed, 17 
-	Jun 2009 06:55:40 -0700 (PDT)
-In-Reply-To: <e2b179460906170615u46a71241wf012d98020ef91e0@mail.gmail.com>
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        b=fa3C8TGMJTrLisezlUJTm09Jc9XgVxjqyNbhwszVdTRe4VvC1pk8GKxFY/n0QxFv6D
+         sns524Feol0FXxgpJ8D69yFn4alAQ46WhKgLfX8NbahBnLdgEHgIPVn7w3JTB2x5i+/J
+         bYMm8d9/RAqnLOcRYc1lWwb6/FOdN84XHPMJU=
+Received: by 10.86.68.10 with SMTP id q10mr553354fga.78.1245247094886;
+        Wed, 17 Jun 2009 06:58:14 -0700 (PDT)
+Received: from yakj.usersys.redhat.com (nat-pool-brq.redhat.com [62.40.79.66])
+        by mx.google.com with ESMTPS id d6sm1645640fga.27.2009.06.17.06.58.13
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 17 Jun 2009 06:58:14 -0700 (PDT)
+User-Agent: Thunderbird 2.0.0.17 (X11/20081009)
+In-Reply-To: <4A38ECB2.6010100@op5.se>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121746>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121747>
 
-2009/6/17 Mike Ralphson <mike.ralphson@gmail.com>:
-> Also required on AIX (5.3).
 
-Scratch that, sorry - I hadn't seen the related thread (git diff looping?)
+> Sounds neat. Do you by any chance have some performance measurements
+> for it? If the work's already done and it provides a significant
+> improvement I'm all for it ;-)
 
-Paolo's fix is the only one required for AIX.
+It's very very fast, but only as fast as a backtracking matcher can be. 
+  I think it would trounce glibc on my regex but probably not on the 
+buggy one.
 
-Sorry for the noise.
-
-Mike
+Paolo
