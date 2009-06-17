@@ -1,81 +1,84 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: Using git for code deployment on webservers?
-Date: Wed, 17 Jun 2009 15:26:04 -0400 (EDT)
-Message-ID: <alpine.LNX.2.00.0906171328080.2147@iabervon.org>
-References: <200906160111.47325.ioe-git@rameria.de> <alpine.LNX.2.00.0906161332080.2147@iabervon.org> <200906171923.08034.ioe-git@rameria.de>
+From: Yann Dirson <ydirson@altern.org>
+Subject: Improving git-svn documentation
+Date: Wed, 17 Jun 2009 22:18:51 +0200
+Message-ID: <20090617201851.GA6123@nan92-1-81-57-214-146.fbx.proxad.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Ingo Oeser <ioe-git@rameria.de>
-X-From: git-owner@vger.kernel.org Wed Jun 17 21:26:17 2009
+Content-Type: text/plain; charset=us-ascii
+To: GIT list <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Jun 17 22:19:09 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MH0m0-0007Gm-74
-	for gcvg-git-2@gmane.org; Wed, 17 Jun 2009 21:26:16 +0200
+	id 1MH1bB-0007RX-24
+	for gcvg-git-2@gmane.org; Wed, 17 Jun 2009 22:19:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754221AbZFQT0G (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 17 Jun 2009 15:26:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753832AbZFQT0E
-	(ORCPT <rfc822;git-outgoing>); Wed, 17 Jun 2009 15:26:04 -0400
-Received: from iabervon.org ([66.92.72.58]:57303 "EHLO iabervon.org"
+	id S1756168AbZFQUS7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 17 Jun 2009 16:18:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756024AbZFQUS6
+	(ORCPT <rfc822;git-outgoing>); Wed, 17 Jun 2009 16:18:58 -0400
+Received: from smtp6-g21.free.fr ([212.27.42.6]:37326 "EHLO smtp6-g21.free.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752770AbZFQT0D (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Jun 2009 15:26:03 -0400
-Received: (qmail 30541 invoked by uid 1000); 17 Jun 2009 19:26:04 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 17 Jun 2009 19:26:04 -0000
-In-Reply-To: <200906171923.08034.ioe-git@rameria.de>
-User-Agent: Alpine 2.00 (LNX 1167 2008-08-23)
+	id S1754996AbZFQUS6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Jun 2009 16:18:58 -0400
+Received: from smtp6-g21.free.fr (localhost [127.0.0.1])
+	by smtp6-g21.free.fr (Postfix) with ESMTP id 440E0E0816B
+	for <git@vger.kernel.org>; Wed, 17 Jun 2009 22:18:53 +0200 (CEST)
+Received: from gandelf.nowhere.earth (nan92-1-81-57-214-146.fbx.proxad.net [81.57.214.146])
+	by smtp6-g21.free.fr (Postfix) with ESMTP id 1EBD4E08175
+	for <git@vger.kernel.org>; Wed, 17 Jun 2009 22:18:50 +0200 (CEST)
+Received: by gandelf.nowhere.earth (Postfix, from userid 1000)
+	id D4CD41F0FB; Wed, 17 Jun 2009 22:18:51 +0200 (CEST)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121768>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121769>
 
-On Wed, 17 Jun 2009, Ingo Oeser wrote:
+While diving into the git-svn code, I realized that many things could
+be done to make it more documented/understundable.  I need to get more
+understanding of it, so I'd like to improve this state of things.  But
+first, I'd like to be sure there is a consensus on what is a good idea
+to do, since that could easily turn up into a lot of textual change.
 
-> Hi Daniel,
-> 
-> On Tuesday 16 June 2009, Daniel Barkalow wrote:
-> > You should be able to have the slave repositories store tags for tree 
-> > objects (instead of commit objects), and have the webservers fetch those. 
-> > You'll still have the object database, but it will only contain stuff 
-> > that's been deployed to that webserver, not intermediate versions or 
-> > historical versions.
-> 
-> Ah, that sound like a great solution. I'll try that.
-> 
-> > You'll still have to store both the repo and the checked out data 
-> > (but git stores the content delta-compressed against each 
-> > other in one big file, normally, so there really aren't files to hard link 
-> > to.
-> 
-> Ok. That was under the assumption, that the core of git is basically a 
-> content addressable file system. But that seems to be history :-)
+- (on the user doc side of things) some options appear not to be
+  documented (I spotted --parent for 'clone' and --revision for
+  'dcommit').  But looking at where to document them, I found it not
+  always easy, since some options are documented together with the
+  command they modify, some others in the "options" section (even when
+  they are documented as applying to a single command, like --shared
+  or --stdin).  This IMHO leads to confusion for the user looking for
+  information, as well as to the reviewer trying to check that nothing
+  was forgotten.  I would rather make that only very commons are
+  described in a common "options" section, and that all commands using
+  them explicitely say so in their descriptions (with xref).
 
-It is (based on) a content-addressable file system, but it's not a host 
-file system. It's a file system in the sense that you can put octet 
-sequences into it and lookup them up by their names, but you can't mount 
-it from the kernel and link to it. It's like a tar file, although it's 
-more limited in that it doesn't provide a "list" operation.
+- (on the code side of things) git-svn.perl weights more than 5500
+  lines, most classes functions and methods severely lack
+  documentation, and some extensively-used variable names are so short
+  they make the code harder to grasp
 
-There's no fundamental reason there couldn't be a kernel driver (or, 
-more likely, FUSE helper) which could mount it, but that's not the normal 
-method.
+  Eg. $gs to refer to an instance of the Git::SVN class, which I would
+  suggest to change to something like $gsrepo, while at the same time
+  renaming Git::SVN to eg. Git::SVN::Repository - which would make it
+  much easier for a newcomer to grasp what this is supposed to
+  represent - supposing, that is, that my understunding of this part
+  is accurate enough, which it is probably not after spending many
+  hours in there :)
 
-> > Of course, the other possibility is to check out versions on the slaves, 
-> > and rsync that to the webservers, which is probably the optimal method if 
-> > you're not in a situation where you benefit from anything git does in 
-> > transit.
-> 
-> I would benefit from noticing local changes. But simple rsync is what is tried now.
-> Problem is, we get no de-duplication from rsync, which git could do.
+  As to the size of the file, it seems natural to me to split the
+  classes into their own files.  That would still let git-svn.perl and
+  the Git::SVN class to be 1500-lines tall, the largest others
+  achieving around 500 lines.  That should be much more manageable
+  pieces, and would require some refactoring wrt a couple of global
+  variables used throughout the script; which, incidentally, could
+  make it much easier to simultanously look at several git-svn
+  repositories (for my work on mapping externals to submodules), and
+  to allow reusing the existing code, eg. as a git-vcs backend.
 
-In that case, fetching trees is probably the right thing; that should give 
-you a point-to-point de-duplication without any history (although you may 
-also turn up git bugs, since this isn't how git is normally used).
+How are you people feeling about this rough plans ?
 
-	-Daniel
-*This .sig left intentionally blank*
+-- 
+Yann
