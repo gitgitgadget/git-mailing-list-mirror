@@ -1,215 +1,104 @@
-From: Paolo Bonzini <bonzini@gnu.org>
-Subject: [PATCH resend] Test cccmd in t9001-send-email.sh and fix two bugs
-Date: Wed, 17 Jun 2009 09:17:42 +0200
-Message-ID: <1245223062-27132-1-git-send-email-bonzini@gnu.org>
-Cc: gitster@pobox.com
-To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Jun 17 09:18:07 2009
+From: "=?utf-8?q?K=C4=81rlis_Repsons?=" <karlis.repsons@gmail.com>
+Subject: Re: Repository authenticity question
+Date: Wed, 17 Jun 2009 07:57:51 +0000
+Message-ID: <200906170757.59476.Karlis.Repsons@gmail.com>
+References: <200906131527.03450.Karlis.Repsons@gmail.com> <4A33C980.40003@drmicha.warpmail.net>
+Mime-Version: 1.0
+Content-Type: multipart/signed;
+  boundary="nextPart1408173.FLWQk0zBvq";
+  protocol="application/pgp-signature";
+  micalg=pgp-sha1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Wed Jun 17 09:58:15 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MGpPK-0008P8-62
-	for gcvg-git-2@gmane.org; Wed, 17 Jun 2009 09:18:06 +0200
+	id 1MGq27-0008Fv-Ql
+	for gcvg-git-2@gmane.org; Wed, 17 Jun 2009 09:58:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752986AbZFQHRz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 17 Jun 2009 03:17:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752316AbZFQHRy
-	(ORCPT <rfc822;git-outgoing>); Wed, 17 Jun 2009 03:17:54 -0400
-Received: from fencepost.gnu.org ([140.186.70.10]:37276 "EHLO
-	fencepost.gnu.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751895AbZFQHRx (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Jun 2009 03:17:53 -0400
-Received: from bonzini by fencepost.gnu.org with local (Exim 4.67)
-	(envelope-from <bonzini@gnu.org>)
-	id 1MGpP8-0007M9-Jm; Wed, 17 Jun 2009 03:17:54 -0400
-X-Mailer: git-send-email 1.6.0.3
+	id S1751982AbZFQH6B (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 17 Jun 2009 03:58:01 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751941AbZFQH6A
+	(ORCPT <rfc822;git-outgoing>); Wed, 17 Jun 2009 03:58:00 -0400
+Received: from mail-bw0-f213.google.com ([209.85.218.213]:52482 "EHLO
+	mail-bw0-f213.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751727AbZFQH57 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Jun 2009 03:57:59 -0400
+Received: by bwz9 with SMTP id 9so119775bwz.37
+        for <git@vger.kernel.org>; Wed, 17 Jun 2009 00:58:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:references:in-reply-to:cc:mime-version:content-type
+         :content-transfer-encoding:message-id;
+        bh=pPBzfzHZFjOKn89Kgm0y6JTEBVvOVzkwnocq/LkWPLU=;
+        b=vT1QJpg+3/XGDVHlCxvBKd9raV37/QMTT/GAsM38tm7HZYKIn6ly/BQ2RZdeeRkLE5
+         +3f4Efz8Qe9b8dLNhmFF9kiqFHo/ifM3wjPqLKVxA38OQ/7mhn/SObP+qan+SuUXY064
+         HrNa9BGkX1/FgQaxt2Y9IbxSSuJluGC5Hvrlc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:references:in-reply-to:cc
+         :mime-version:content-type:content-transfer-encoding:message-id;
+        b=qISISjQ6ALEGCAuT17OUqjXvH5wM4omgmVWPveZybmzYsRTs1AHkuacvJD86SioegW
+         nP2yVhMai9uW0mR7VNPKXzQwSYpNV9SRww+99JRN7vEvAL0ReWF2GMjHvYhoMyYFfJ1v
+         ahCK8TUTVv+bYdakcGVC0KguamGN97kZ5v/9Y=
+Received: by 10.204.77.102 with SMTP id f38mr9121162bkk.62.1245225480990;
+        Wed, 17 Jun 2009 00:58:00 -0700 (PDT)
+Received: from ?192.168.7.93? ([85.15.210.9])
+        by mx.google.com with ESMTPS id 28sm328294bwz.116.2009.06.17.00.58.00
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 17 Jun 2009 00:58:00 -0700 (PDT)
+User-Agent: KMail/1.9.9
+In-Reply-To: <4A33C980.40003@drmicha.warpmail.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121726>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121727>
 
-For another patch series I'm working on I needed some tests
-for the cc-cmd feature of git-send-email.
+--nextPart1408173.FLWQk0zBvq
+Content-Type: text/plain;
+  charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
 
-This patch adds 3 tests for the feature, and fixes two bugs.
-The first bug is that the --suppress-cc option for `cccmd' was
-misspelled as `ccmd' in the code.  The second bug, which is
-actually found only with my other series, is that the argument
-to the cccmd is never quoted, so the cccmd would fail with
-patch file names containing a space.
+On Saturday 13 June 2009 15:45:04 you wrote:
+> K=C4=81rlis Repsons venit, vidit, dixit 13.06.2009 17:26:
+> > Hi,
+> > It would be good to know what did Linus meant, when he said "and they
+> > will fail" about people, who would try changing some git projects'
+> > history (that is, the content, that is added already)? If I loose my
+> > repository completely, can I still know, that those contributions there
+> > are the same after I pull and how? What contents can be deleted, while
+> > still retaining consistency?
+> >
+> > Regards,
+> > K=C4=81rlis
+>
+> The sha1 ("object name") of a commit depends not only on its contents,
+> but on all its predecessors. So if you know one commit's sha1 to be
+> "original" you know for all its ancestors.
+>
+> Michael
 
-I also test the possibility to specify --suppress-cc
-multiple times.
+So, if I clone someone else's git archive, sha1 of a known commit must be=20
+compared and what else? How to check if all of archive's sha1-s are identic=
+al=20
+to its contents and every content is included?
 
-Signed-Off-By: Paolo Bonzini  <bonzini@gnu.org>
----
- git-send-email.perl   |    4 +-
- t/t9001-send-email.sh |   80 +++++++++++++++++++++++++++++++++++++++++++++---
- 2 files changed, 77 insertions(+), 7 deletions(-)
+--nextPart1408173.FLWQk0zBvq
+Content-Type: application/pgp-signature; name=signature.asc 
+Content-Description: This is a digitally signed message part.
 
-	The patch was sent first a week ago with no remarks.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.11 (GNU/Linux)
 
-diff --git a/git-send-email.perl b/git-send-email.perl
-index 303e03a..7ae1f29 100755
---- a/git-send-email.perl
-+++ b/git-send-email.perl
-@@ -334,7 +334,7 @@ if (@suppress_cc) {
- }
- 
- if ($suppress_cc{'all'}) {
--	foreach my $entry (qw (ccmd cc author self sob body bodycc)) {
-+	foreach my $entry (qw (cccmd cc author self sob body bodyccc)) {
- 		$suppress_cc{$entry} = 1;
- 	}
- 	delete $suppress_cc{'all'};
-@@ -1104,7 +1104,7 @@ foreach my $t (@files) {
- 	close F;
- 
- 	if (defined $cc_cmd && !$suppress_cc{'cccmd'}) {
--		open(F, "$cc_cmd $t |")
-+		open(F, "$cc_cmd \Q$t\E |")
- 			or die "(cc-cmd) Could not execute '$cc_cmd'";
- 		while(<F>) {
- 			my $c = $_;
-diff --git a/t/t9001-send-email.sh b/t/t9001-send-email.sh
-index 9ce04fd..fb7d9f3 100755
---- a/t/t9001-send-email.sh
-+++ b/t/t9001-send-email.sh
-@@ -148,6 +148,22 @@ test_expect_success 'Prompting works' '
- 		grep "^To: to@example.com$" msgtxt1
- '
- 
-+test_expect_success 'cccmd works' '
-+	clean_fake_sendmail &&
-+	cp $patches cccmd.patch &&
-+	echo cccmd--cccmd@example.com >>cccmd.patch &&
-+	echo sed -n s/^cccmd--//p \"\$1\" > cccmd-sed &&
-+	chmod +x cccmd-sed &&
-+	git send-email \
-+		--from="Example <nobody@example.com>" \
-+		--to=nobody@example.com \
-+		--cc-cmd=./cccmd-sed \
-+		--smtp-server="$(pwd)/fake.sendmail" \
-+		cccmd.patch \
-+		&&
-+	grep ^Cc:.*cccmd@example.com msgtxt1
-+'
-+
- z8=zzzzzzzz
- z64=$z8$z8$z8$z8$z8$z8$z8$z8
- z512=$z64$z64$z64$z64$z64$z64$z64$z64
-@@ -274,7 +290,7 @@ EOF
- test_suppression () {
- 	git send-email \
- 		--dry-run \
--		--suppress-cc=$1 \
-+		--suppress-cc=$1 ${2+"--suppress-cc=$2"} \
- 		--from="Example <from@example.com>" \
- 		--to=to@example.com \
- 		--smtp-server relay.example.com \
-@@ -282,8 +298,8 @@ test_suppression () {
- 	sed	-e "s/^\(Date:\).*/\1 DATE-STRING/" \
- 		-e "s/^\(Message-Id:\).*/\1 MESSAGE-ID-STRING/" \
- 		-e "s/^\(X-Mailer:\).*/\1 X-MAILER-STRING/" \
--		>actual-suppress-$1 &&
--	test_cmp expected-suppress-$1 actual-suppress-$1
-+		>actual-suppress-$1${2+"-$2"} &&
-+	test_cmp expected-suppress-$1${2+"-$2"} actual-suppress-$1${2+"-$2"}
- }
- 
- test_expect_success 'sendemail.cc set' '
-@@ -316,6 +332,34 @@ test_expect_success 'sendemail.cc unset' '
- 	test_suppression sob
- '
- 
-+cat >expected-suppress-cccmd <<\EOF
-+0001-Second.patch
-+(mbox) Adding cc: A <author@example.com> from line 'From: A <author@example.com>'
-+(mbox) Adding cc: One <one@example.com> from line 'Cc: One <one@example.com>, two@example.com'
-+(mbox) Adding cc: two@example.com from line 'Cc: One <one@example.com>, two@example.com'
-+(body) Adding cc: C O Mitter <committer@example.com> from line 'Signed-off-by: C O Mitter <committer@example.com>'
-+Dry-OK. Log says:
-+Server: relay.example.com
-+MAIL FROM:<from@example.com>
-+RCPT TO:<to@example.com>,<author@example.com>,<one@example.com>,<two@example.com>,<committer@example.com>
-+From: Example <from@example.com>
-+To: to@example.com
-+Cc: A <author@example.com>, One <one@example.com>, two@example.com, C O Mitter <committer@example.com>
-+Subject: [PATCH 1/1] Second.
-+Date: DATE-STRING
-+Message-Id: MESSAGE-ID-STRING
-+X-Mailer: X-MAILER-STRING
-+
-+Result: OK
-+EOF
-+
-+test_expect_success 'sendemail.cccmd' '
-+	echo echo cc-cmd@example.com > cccmd &&
-+	chmod +x cccmd &&
-+	git config sendemail.cccmd ./cccmd &&
-+	test_suppression cccmd
-+'
-+
- cat >expected-suppress-all <<\EOF
- 0001-Second.patch
- Dry-OK. Log says:
-@@ -341,13 +385,14 @@ cat >expected-suppress-body <<\EOF
- (mbox) Adding cc: A <author@example.com> from line 'From: A <author@example.com>'
- (mbox) Adding cc: One <one@example.com> from line 'Cc: One <one@example.com>, two@example.com'
- (mbox) Adding cc: two@example.com from line 'Cc: One <one@example.com>, two@example.com'
-+(cc-cmd) Adding cc: cc-cmd@example.com from: './cccmd'
- Dry-OK. Log says:
- Server: relay.example.com
- MAIL FROM:<from@example.com>
--RCPT TO:<to@example.com>,<author@example.com>,<one@example.com>,<two@example.com>
-+RCPT TO:<to@example.com>,<author@example.com>,<one@example.com>,<two@example.com>,<cc-cmd@example.com>
- From: Example <from@example.com>
- To: to@example.com
--Cc: A <author@example.com>, One <one@example.com>, two@example.com
-+Cc: A <author@example.com>, One <one@example.com>, two@example.com, cc-cmd@example.com
- Subject: [PATCH 1/1] Second.
- Date: DATE-STRING
- Message-Id: MESSAGE-ID-STRING
-@@ -360,6 +405,30 @@ test_expect_success '--suppress-cc=body' '
- 	test_suppression body
- '
- 
-+cat >expected-suppress-body-cccmd <<\EOF
-+0001-Second.patch
-+(mbox) Adding cc: A <author@example.com> from line 'From: A <author@example.com>'
-+(mbox) Adding cc: One <one@example.com> from line 'Cc: One <one@example.com>, two@example.com'
-+(mbox) Adding cc: two@example.com from line 'Cc: One <one@example.com>, two@example.com'
-+Dry-OK. Log says:
-+Server: relay.example.com
-+MAIL FROM:<from@example.com>
-+RCPT TO:<to@example.com>,<author@example.com>,<one@example.com>,<two@example.com>
-+From: Example <from@example.com>
-+To: to@example.com
-+Cc: A <author@example.com>, One <one@example.com>, two@example.com
-+Subject: [PATCH 1/1] Second.
-+Date: DATE-STRING
-+Message-Id: MESSAGE-ID-STRING
-+X-Mailer: X-MAILER-STRING
-+
-+Result: OK
-+EOF
-+
-+test_expect_success '--suppress-cc=body --suppress-cc=cccmd' '
-+	test_suppression body cccmd
-+'
-+
- cat >expected-suppress-sob <<\EOF
- 0001-Second.patch
- (mbox) Adding cc: A <author@example.com> from line 'From: A <author@example.com>'
-@@ -381,6 +450,7 @@ Result: OK
- EOF
- 
- test_expect_success '--suppress-cc=sob' '
-+	git config --unset sendemail.cccmd
- 	test_suppression sob
- '
- 
--- 
-1.6.0.3
+iEYEABECAAYFAko4ogcACgkQHuSu329e3GHFuwCeKokXqg40lHmBQhOYprWU5XEp
+QIoAoOQa5Oe7xilRWrSFiA9BeJkk8Z5R
+=jXxM
+-----END PGP SIGNATURE-----
+
+--nextPart1408173.FLWQk0zBvq--
