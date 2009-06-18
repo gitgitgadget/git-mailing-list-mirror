@@ -1,93 +1,112 @@
-From: John Koleszar <john.koleszar@on2.com>
-Subject: Re: [PATCH] Re: rebase -i: auto-squash commits
-Date: Thu, 18 Jun 2009 10:04:55 -0400
-Organization: On2 Technologies
-Message-ID: <1245333895.30640.28.camel@cp-jk-linux.corp.on2.com>
-References: <e1868cfe0906170506o37a75c35m47f9456bf8ae47c1@mail.gmail.com>
-	 <43d8ce650906170555m644564b3v3722168f7217c326@mail.gmail.com>
-	 <7vvdmurfao.fsf@alter.siamese.dyndns.org>
-	 <20090618063348.6117@nanako3.lavabit.com>
-	 <alpine.DEB.1.00.0906180007370.26154@pacific.mpi-cbg.de>
-	 <20090618001111.GB12954@vidovic> <7v8wjq2kqc.fsf@alter.siamese.dyndns.org>
-	 <alpine.DEB.1.00.0906181003300.4848@intel-tinevez-2-302>
-	 <87vdmuhs75.fsf@iki.fi>
-	 <alpine.DEB.1.00.0906181028140.4848@intel-tinevez-2-302>
-Reply-To: john.koleszar@on2.com
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [RFC/PATCH 1/2] remote tracking: return the tracking branch for  the given branches
+Date: Thu, 18 Jun 2009 16:17:06 +0200
+Message-ID: <200906181617.07802.jnareb@gmail.com>
+References: <1245311834-5290-1-git-send-email-santi@agolina.net> <m3iqithd24.fsf@localhost.localdomain> <adf1fd3d0906180655q5c142889r3375169b6cf1f8b0@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: Teemu Likonen <tlikonen@iki.fi>,
-	Junio C Hamano <gitster@pobox.com>,
-	Nicolas Sebrecht <nicolas.s.dev@gmx.fr>,
-	Nanako Shiraishi <nanako3@lavabit.com>,
-	John Tapsell <johnflux@gmail.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Jun 18 16:05:49 2009
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: Santi =?iso-8859-1?q?B=E9jar?= <santi@agolina.net>
+X-From: git-owner@vger.kernel.org Thu Jun 18 16:17:39 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MHIFQ-0001Uv-1q
-	for gcvg-git-2@gmane.org; Thu, 18 Jun 2009 16:05:48 +0200
+	id 1MHIQs-00078A-TU
+	for gcvg-git-2@gmane.org; Thu, 18 Jun 2009 16:17:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756002AbZFROFc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Jun 2009 10:05:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753419AbZFROFb
-	(ORCPT <rfc822;git-outgoing>); Thu, 18 Jun 2009 10:05:31 -0400
-Received: from mail.on2.com ([66.162.65.131]:59906 "EHLO on2.com"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1751552AbZFROFb (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Jun 2009 10:05:31 -0400
-In-Reply-To: <alpine.DEB.1.00.0906181028140.4848@intel-tinevez-2-302>
-X-Mailer: Evolution 2.24.5 
-X-On2-MailScanner-i: Found to be clean
-X-On2-MailScanner-From: john.koleszar@on2.com
+	id S1753485AbZFRORW convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 18 Jun 2009 10:17:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761352AbZFRORV
+	(ORCPT <rfc822;git-outgoing>); Thu, 18 Jun 2009 10:17:21 -0400
+Received: from fg-out-1718.google.com ([72.14.220.155]:49208 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1760067AbZFRORQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Jun 2009 10:17:16 -0400
+Received: by fg-out-1718.google.com with SMTP id d23so1127732fga.17
+        for <git@vger.kernel.org>; Thu, 18 Jun 2009 07:17:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=qfBkZsBhOt3ZKtS6wHIgZJ48dQotTqalcYiIHH+oKvc=;
+        b=isBgBDJWpHGJWtsQmlITTerQrhtKtzuhZWfyDb4lS9t8LTn7QR8I+hVfbBP2EEhQtm
+         CiigaIlpJNDZtauviH4qAZPbTFkbpqXEJS+kraXS7eUk0ZQV+GBHz36dhDumajyeABLH
+         kFirDheLZa1Sn1xznJ/CntxNP9uIOFHk3TvGY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=t7wqs5DN5vFH57Jfaj+HX5Dj+Dg6iLkw2bpK1kpbyWD7IuqzVcvLkeGe6ip6XjNpAN
+         y29n+88H5HDfM/v1oLre8B+XUj8vCsMdb05qMs9YExZhYZCzLBubAr3EzuQOKCZDosSh
+         cWRTrBD3PiMKRQHClJQ90H6wCWhAlNiO0WmQw=
+Received: by 10.86.90.2 with SMTP id n2mr2016665fgb.39.1245334637224;
+        Thu, 18 Jun 2009 07:17:17 -0700 (PDT)
+Received: from ?192.168.1.13? (abvq34.neoplus.adsl.tpnet.pl [83.8.214.34])
+        by mx.google.com with ESMTPS id 4sm4534881fgg.18.2009.06.18.07.17.16
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Thu, 18 Jun 2009 07:17:16 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <adf1fd3d0906180655q5c142889r3375169b6cf1f8b0@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121844>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121845>
 
-On Thu, 2009-06-18 at 04:29 -0400, Johannes Schindelin wrote:
-> Hi,
-> 
-> On Thu, 18 Jun 2009, Teemu Likonen wrote:
-> 
-> > On 2009-06-18 10:06 (+0200), Johannes Schindelin wrote:
-> > 
-> > > I'd really rather stay with "fixup". And as I use single-letter
-> > > commands quite often, I'd also rather stay away from that magic "!".
-> > > And by "magic" I really mean that: people will not find that magic
-> > > intuitive at all.
-> > 
-> > I don't know about people but I do find "!" intuitive. It is squash
-> > after all so I like the idea of using small modifier character.
-> 
-> Mhm.
-> 
-> So let's just interpret the "!" in the most common meaning, namely to add 
-> an imperative.  Then it means "yes, I do want to squash".  Not 
-> "squash, but oh, BTW, I want to lose the second commit message 
-> completely, and I do not want to edit the commit message either".
-> 
-> Really, I do not see how anybody could find this intuitive at all.  Maybe 
-> after reading the manual, but kinda defeats the meaning of the word 
-> "intuitive".
+On Thu, 18 June 2009, Santi B=E9jar wrote:
+> 2009/6/18 Jakub Narebski <jnareb@gmail.com>:
 
-The imperative is actually the reason I picked that modifier, as in
-"yes, I /really/ do want to squash. Don't ask me, just do it!" Something
-akin to -f. I think it makes sense here, but not in the case someone
-else mentioned of a commit message only edit. ("recommit" for that
-case?) 
+[cut]
+> >
+> >  $ git remote tracking <remote> <remote branch>
+> >
+> > would show all local branches that track <remote branch>, and have
+> > <remote> as default remote,
+>=20
+> Maybe my description is unclear, but it's not about local branches
+> which track <branch> on <remote>, it is about the local branch
+> representation of the remote branch, i.e. not 'master' but
+> origin/master (git remote tracking origin master in a default clone).
 
-In any case, I think this non-interactive squash is orthagonal to being
-able to automatically rearrange the commits by "squash to ...". I think
-that's a cool idea, but I know that I often don't remember the text of
-the commit I want to squash into. So in my case I prefer rearranging
-manually and squashing non-interactively. If I planned ahead, I could
-pick a prefix for each "class" of commit, and then "squash to prefix",
-but I'd want to be able to edit the original commit to remove the
-prefix. Sure, I could look at the log, but if I'm just writing a
-nonsense message to remind myself where to squash to, I think it would
-get in the way of my flow.
+Ah, the problem with the same (or similar) name for two different=20
+things.  If we have local branch 'local' set to track branch 'master'
+on remote 'origin', we have:
+
+   /------- local repository ------\            /- origin -\
+  /                                 \          /            \
+  |                                 |          |            |
+  'local'  -------->  'origin/master' -----------> 'master'=20
+  refs/heads/local    refs/remotes/origin/master   refs/heads/master   =
+            =20
+
+  branch.local.remote =3D origin
+  branch.local.merge  =3D refs/heads/master
+
+  remote.origin.fetch =3D +refs/heads/*:refs/remotes/origin/*
+
+'origin/master' is called remote-TRACKING branch (for 'master' branch
+on remote 'origin').  Setting up automerge information for local branch
+'local' which _follows_ branch 'master' on remote 'origin' is done=20
+using --TRACK option to git-branch.
+
+Therefore the confusion.
+
+
+Do I understand correctly that you want for
+
+  $ git remote tracking origin master
+
+to return
+
+  origin/master
+
+(and perhaps also origin/HEAD?).
+--=20
+Jakub Narebski
+Poland
