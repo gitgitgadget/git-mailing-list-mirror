@@ -1,97 +1,140 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] rebase -i: auto-squash commits
-Date: Thu, 18 Jun 2009 00:54:47 -0700
-Message-ID: <7vws7ayo1k.fsf@alter.siamese.dyndns.org>
-References: <e1868cfe0906170506o37a75c35m47f9456bf8ae47c1@mail.gmail.com>
-	<43d8ce650906170555m644564b3v3722168f7217c326@mail.gmail.com>
-	<7vvdmurfao.fsf@alter.siamese.dyndns.org>
-	<20090618063348.6117@nanako3.lavabit.com>
-	<4A39EAAB.70402@alum.mit.edu>
+From: =?UTF-8?q?Santi=20B=C3=A9jar?= <santi@agolina.net>
+Subject: [RFC/PATCH 1/2] remote tracking: return the tracking branch for the given branches
+Date: Thu, 18 Jun 2009 09:57:12 +0200
+Message-ID: <1245311834-5290-2-git-send-email-santi@agolina.net>
+References: <1245311834-5290-1-git-send-email-santi@agolina.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Nanako Shiraishi <nanako3@lavabit.com>,
-	John Tapsell <johnflux@gmail.com>, git@vger.kernel.org
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Thu Jun 18 09:55:01 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jun 18 09:57:05 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MHCSZ-0001MJ-Lg
-	for gcvg-git-2@gmane.org; Thu, 18 Jun 2009 09:55:00 +0200
+	id 1MHCUa-00026h-Lj
+	for gcvg-git-2@gmane.org; Thu, 18 Jun 2009 09:57:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754591AbZFRHyq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Jun 2009 03:54:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754327AbZFRHyp
-	(ORCPT <rfc822;git-outgoing>); Thu, 18 Jun 2009 03:54:45 -0400
-Received: from fed1rmmtao107.cox.net ([68.230.241.39]:33920 "EHLO
-	fed1rmmtao107.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754261AbZFRHyo (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Jun 2009 03:54:44 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao107.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20090618075448.IKHP18948.fed1rmmtao107.cox.net@fed1rmimpo02.cox.net>;
-          Thu, 18 Jun 2009 03:54:48 -0400
-Received: from localhost ([68.225.240.211])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id 5Kun1c0014aMwMQ04Kun9W; Thu, 18 Jun 2009 03:54:47 -0400
-X-VR-Score: -120.00
-X-Authority-Analysis: v=1.0 c=1 a=y44SSOj0rWsA:10 a=m7EVdoU-gkeU-PtthwEA:9
- a=htTOtrU2ax4PFmW8ZQ84O6vXgtUA:4 a=i30y-_3cDNMwcNAW:21 a=p7IkTTWt-CPJ5MlN:21
-X-CM-Score: 0.00
-In-Reply-To: <4A39EAAB.70402@alum.mit.edu> (Michael Haggerty's message of "Thu\, 18 Jun 2009 09\:20\:11 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+	id S1756120AbZFRH44 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 18 Jun 2009 03:56:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756074AbZFRH44
+	(ORCPT <rfc822;git-outgoing>); Thu, 18 Jun 2009 03:56:56 -0400
+Received: from mail-bw0-f213.google.com ([209.85.218.213]:37467 "EHLO
+	mail-bw0-f213.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755816AbZFRH4z (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Jun 2009 03:56:55 -0400
+Received: by mail-bw0-f213.google.com with SMTP id 9so868030bwz.37
+        for <git@vger.kernel.org>; Thu, 18 Jun 2009 00:56:57 -0700 (PDT)
+Received: by 10.103.167.14 with SMTP id u14mr847890muo.38.1245311817571;
+        Thu, 18 Jun 2009 00:56:57 -0700 (PDT)
+Received: from localhost (p5B0D73A2.dip.t-dialin.net [91.13.115.162])
+        by mx.google.com with ESMTPS id u26sm258567mug.22.2009.06.18.00.56.56
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Thu, 18 Jun 2009 00:56:57 -0700 (PDT)
+X-Mailer: git-send-email 1.6.3.2.406.gd6a466
+In-Reply-To: <1245311834-5290-1-git-send-email-santi@agolina.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121800>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121801>
 
-Michael Haggerty <mhagger@alum.mit.edu> writes:
+Signed-off-by: Santi B=C3=A9jar <santi@agolina.net>
+---
+ Documentation/git-remote.txt |    7 +++++++
+ builtin-remote.c             |   35 ++++++++++++++++++++++++++++++++++=
++
+ 2 files changed, 42 insertions(+), 0 deletions(-)
 
-> It seems to me that even this requires more steps than strictly
-> necessary, namely a commit then a rebase, and conveying the information
-> from the commit step to the rebase step is somewhat awkward.  Since I
-> have to specify a magic commit message to trigger this behavior, I
-> obviously know at the time of the commit that I want to squash the new
-> changes onto an older commit.  So why not implement this functionality
-> as a variant of "commit"?
-
-That may be a good feature, but that won't work as well as the patch being
-discussed for _me_.
-
-IOW, I think what you are suggesting is a different feature.
-
-It largely depends on how you work.  I do not function well when I get
-interrupted and/or disrupted often, and I would prefer the convenience of
-being able to simply queue a trivial patch with a minimum amount of fuss
-(e.g. just leave a note that says "to be squashed to that other one" and
-nothing else) when I find a trivial breakage that is unrelated to what I
-am concentrating on.
-
-Imagine the "Clean up the surrounding code" then "Lay the groundwork" and
-finally "Implement a cool new feature" sequence I outlined in the message
-the patch was response to.  When I thought I am finished cleaning up the
-surrounding code and laid the groundwork, and finally concentrating on
-implementing the new feature (which is the fun part), I may notice small
-breakages and untidiness I could squash into earlier commits.
-
-It is very distracting, however, if I have to go back to the state _before
-I wrote all the fun code for the new feature_ to fix the breakage right
-there.  Once I go back, the surrounding code would look all different, and
-I may even be tempted to do the full test cycle before finishing your
-"amend in the past" operation.  The distraction will destroy my momentum
-and concentration.
-
-It's much more easier on my brain to commit the fix-up to be later
-squashed (use "add -p then commit" for that) and continue.  I can keep the
-momentum going that way.
-
-But that is how _I_ work.  You may well work differently, and for you
-"stop, switch brain back to the state before all these fun work and amend,
-then finally come back" workflow may work better.
-
-What I am saying is that "a variant of commit" you talk may be good but it
-won't be a _replacement_ for the effort to make squash easier to do while
-running "rebase -i".
+diff --git a/Documentation/git-remote.txt b/Documentation/git-remote.tx=
+t
+index 9e2b4ea..e444899 100644
+--- a/Documentation/git-remote.txt
++++ b/Documentation/git-remote.txt
+@@ -17,6 +17,7 @@ SYNOPSIS
+ 'git remote show' [-n] <name>
+ 'git remote prune' [-n | --dry-run] <name>
+ 'git remote update' [-p | --prune] [group | remote]...
++'git remote tracking' <name> <branch>...
+=20
+ DESCRIPTION
+ -----------
+@@ -128,6 +129,12 @@ be updated.  (See linkgit:git-config[1]).
+ +
+ With `--prune` option, prune all the remotes that are updated.
+=20
++'tracking'::
++
++Returns the tracking branch for the given remote (<name>) and branch
++(<branch>). Note that <branch> must exactly match the left hand side o=
+f
++the refspec of the given remote.
++
+=20
+ DISCUSSION
+ ----------
+diff --git a/builtin-remote.c b/builtin-remote.c
+index 709f8a6..bb8e73b 100644
+--- a/builtin-remote.c
++++ b/builtin-remote.c
+@@ -16,6 +16,7 @@ static const char * const builtin_remote_usage[] =3D =
+{
+ 	"git remote show [-n] <name>",
+ 	"git remote prune [-n | --dry-run] <name>",
+ 	"git remote [-v | --verbose] update [-p | --prune] [group]",
++	"git remote tracking <name> <branch>...",
+ 	NULL
+ };
+=20
+@@ -665,6 +666,38 @@ static int remove_branches(struct string_list *bra=
+nches)
+ 	return result;
+ }
+=20
++static int tracking(int argc, const char **argv)
++{
++	struct option options[] =3D {
++		OPT_END()
++	};
++	struct remote *remote;
++	static const char **refs =3D NULL;
++	int ref_nr =3D 0;
++	int i =3D 0;
++	struct refspec *refspec;
++
++	if (argc < 3)
++		usage_with_options(builtin_remote_usage, options);
++	remote =3D remote_get(argv[1]);
++	if (!remote)
++		die("No such remote: %s", argv[1]);
++	refs =3D xcalloc(argc + 1, sizeof(const char *));
++	for (i =3D 2; i < argc; i++) {
++		refs[ref_nr++] =3D argv[i];
++	}
++	refs[ref_nr] =3D NULL;
++	memset(&refspec, 0, sizeof(*refspec));
++	refspec =3D parse_fetch_refspec(ref_nr, refs);
++	for (i =3D 0; i < ref_nr ; i++) {
++		if (!remote_find_tracking(remote, &refspec[i]))
++			printf("%s\n", refspec[i].dst);
++		else
++			return 1;
++	}
++	return 0;
++}
++
+ static int rm(int argc, const char **argv)
+ {
+ 	struct option options[] =3D {
+@@ -1348,6 +1381,8 @@ int cmd_remote(int argc, const char **argv, const=
+ char *prefix)
+ 		result =3D show_all();
+ 	else if (!strcmp(argv[0], "add"))
+ 		result =3D add(argc, argv);
++	else if (!strcmp(argv[0], "tracking"))
++		result =3D tracking(argc, argv);
+ 	else if (!strcmp(argv[0], "rename"))
+ 		result =3D mv(argc, argv);
+ 	else if (!strcmp(argv[0], "rm"))
+--=20
+1.6.3.2.406.gd6a466
