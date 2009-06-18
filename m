@@ -1,80 +1,70 @@
-From: Paolo Bonzini <paolo.bonzini@gmail.com>
-Subject: Re: [PATCH] avoid exponential regex match for java and objc function
- names
-Date: Thu, 18 Jun 2009 08:45:37 +0200
-Message-ID: <4A39E291.8030207@gmail.com>
-References: <20090617102332.GA32353@coredump.intra.peff.net>	<1245248766-14867-1-git-send-email-bonzini@gnu.org> <7vab46rev0.fsf@alter.siamese.dyndns.org>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: [PATCH] rebase -i: auto-squash commits
+Date: Thu, 18 Jun 2009 09:20:11 +0200
+Message-ID: <4A39EAAB.70402@alum.mit.edu>
+References: <e1868cfe0906170506o37a75c35m47f9456bf8ae47c1@mail.gmail.com>	<43d8ce650906170555m644564b3v3722168f7217c326@mail.gmail.com>	<7vvdmurfao.fsf@alter.siamese.dyndns.org> <20090618063348.6117@nanako3.lavabit.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Cc: Paolo Bonzini <bonzini@gnu.org>, git@vger.kernel.org, peff@peff.net
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jun 18 08:46:00 2009
+Cc: Junio C Hamano <gitster@pobox.com>,
+	John Tapsell <johnflux@gmail.com>, git@vger.kernel.org
+To: Nanako Shiraishi <nanako3@lavabit.com>
+X-From: git-owner@vger.kernel.org Thu Jun 18 09:21:00 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MHBNn-0007Gg-Ka
-	for gcvg-git-2@gmane.org; Thu, 18 Jun 2009 08:46:00 +0200
+	id 1MHBvf-0005mr-3G
+	for gcvg-git-2@gmane.org; Thu, 18 Jun 2009 09:20:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753960AbZFRGps (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Jun 2009 02:45:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753136AbZFRGpr
-	(ORCPT <rfc822;git-outgoing>); Thu, 18 Jun 2009 02:45:47 -0400
-Received: from ey-out-2122.google.com ([74.125.78.27]:21672 "EHLO
-	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752200AbZFRGpr (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Jun 2009 02:45:47 -0400
-Received: by ey-out-2122.google.com with SMTP id d26so142066eyd.37
-        for <git@vger.kernel.org>; Wed, 17 Jun 2009 23:45:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from
-         :user-agent:mime-version:to:cc:subject:references:in-reply-to
-         :content-type:content-transfer-encoding;
-        bh=Bnz81vboYj/Z4uTANqa8wXIBqEAM5vIWKjtkBs7zLrU=;
-        b=xElabaOkY6n6MKP6VsZVn9QSVUlYHlDbomiHM3BbQb5PLthZTHRYE7pYEUt6BkjZi7
-         rrLb9K34FccMBOD14lQiMCHNGU50nmvpYWUqvGiqcmk6GPvt81pt2a0w/NT2jOqDiEXE
-         w1bq5hJp7+GvrwSwOTqRVP8YuRnaHCimUkx80=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        b=ESROd9AUudKYom7WHziJWT02IpxIwvehUhg0z1gc/0P+TPg2du4dZofxLPy/da8Nhs
-         BVq4W7rchIay6VECXPCGFfZoM3zqsLKlaf+xxFDJvfx6n5/+0oW+Ha5oCkJYTtvpAJ/j
-         ++oMokdAmx58ri4iR8vfKKtfFwhX+noWAyKPs=
-Received: by 10.210.42.20 with SMTP id p20mr1299842ebp.92.1245307548395;
-        Wed, 17 Jun 2009 23:45:48 -0700 (PDT)
-Received: from yakj.usersys.redhat.com (nat-pool-brq.redhat.com [62.40.79.66])
-        by mx.google.com with ESMTPS id 10sm590425eyz.41.2009.06.17.23.45.47
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 17 Jun 2009 23:45:47 -0700 (PDT)
-User-Agent: Thunderbird 2.0.0.17 (X11/20081009)
-In-Reply-To: <7vab46rev0.fsf@alter.siamese.dyndns.org>
+	id S1753474AbZFRHUt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Jun 2009 03:20:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753429AbZFRHUs
+	(ORCPT <rfc822;git-outgoing>); Thu, 18 Jun 2009 03:20:48 -0400
+Received: from einhorn.in-berlin.de ([192.109.42.8]:35838 "EHLO
+	einhorn.in-berlin.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753034AbZFRHUs (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Jun 2009 03:20:48 -0400
+X-Envelope-From: mhagger@alum.mit.edu
+Received: from [192.168.100.152] (ssh.berlin.jpk.com [212.222.128.135])
+	(authenticated bits=0)
+	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id n5I7KEbD027049
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Thu, 18 Jun 2009 09:20:15 +0200
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.1.21) Gecko/20090318 Thunderbird/2.0.0.21 Mnenhy/0.7.6.666
+In-Reply-To: <20090618063348.6117@nanako3.lavabit.com>
+X-Enigmail-Version: 0.95.0
+X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121797>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121798>
 
+Nanako Shiraishi wrote:
+> When the commit log message begins with "squash to ...", and there
+> is a commit whose title begins with the same ..., automatically
+> modify the todo list of rebase -i so that the commit marked for
+> squashing come right after the commit to be modified, and change
+> the action of the moved commit from pick to squash.
 
-> Should I remove the "/* -- */" or is it for better readability I should
-> keep?
+It seems to me that even this requires more steps than strictly
+necessary, namely a commit then a rebase, and conveying the information
+from the commit step to the rebase step is somewhat awkward.  Since I
+have to specify a magic commit message to trigger this behavior, I
+obviously know at the time of the commit that I want to squash the new
+changes onto an older commit.  So why not implement this functionality
+as a variant of "commit"?  Something like:
 
-It helps detecting the separation between the function regex and the 
-word regex:
+git commit --fix=old-commit
 
->> -	 "^[ \t]*(([ \t]*[A-Za-z_][A-Za-z_0-9]*){2,}[ \t]*\\([^;]*)$",
->> +	 "^[ \t]*(([A-Za-z_][A-Za-z_0-9]*[ \t]+)+[A-Za-z_][A-Za-z_0-9]*[ \t]*\\([^;]*)$",
->> +	 /* -- */
+which would commit the changes in index as an amendment to the specified
+old-commit (requiring no new log message) and then rebase later commits
+on top of the new (combined) commit.
 
-I stole the idea from the Objective-C part:
+If a conflict arises while applying the changes in index to old-commit,
+then probably the whole process should be undone and aborted.  If a
+conflict arises while rebasing later commits on top of the combined
+commit, then the usual rebase conflict-handling machinery would be invoked.
 
->>  	 /* C functions */
->> -	 "^[ \t]*(([ \t]*[A-Za-z_][A-Za-z_0-9]*){2,}[ \t]*\\([^;]*)$\n"
->> +	 "^[ \t]*(([A-Za-z_][A-Za-z_0-9]*[ \t]+)+[A-Za-z_][A-Za-z_0-9]*[ \t]*\\([^;]*)$\n"
->>  	 /* Objective-C class/protocol definitions */
->>  	 "^(@(implementation|interface|protocol)[ \t].*)$",
->>  	 /* -- */
-
-Paolo
+Michael
