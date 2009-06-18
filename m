@@ -1,73 +1,61 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: Re: [PATCH] Re: rebase -i: auto-squash commits
-Date: Thu, 18 Jun 2009 10:34:59 +0200
-Message-ID: <vpqbpomey8c.fsf@bauges.imag.fr>
-References: <e1868cfe0906170506o37a75c35m47f9456bf8ae47c1@mail.gmail.com>
-	<43d8ce650906170555m644564b3v3722168f7217c326@mail.gmail.com>
-	<7vvdmurfao.fsf@alter.siamese.dyndns.org>
-	<20090618063348.6117@nanako3.lavabit.com>
-	<alpine.DEB.1.00.0906180007370.26154@pacific.mpi-cbg.de>
-	<20090618001111.GB12954@vidovic>
-	<7v8wjq2kqc.fsf@alter.siamese.dyndns.org>
-	<alpine.DEB.1.00.0906181003300.4848@intel-tinevez-2-302>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [RFC/PATCH 0/2] Support for arbitrary mapping for "git pull
+ --rebase"
+Date: Thu, 18 Jun 2009 10:41:05 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.0906181040320.4848@intel-tinevez-2-302>
+References: <1245311834-5290-1-git-send-email-santi@agolina.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Nicolas Sebrecht <nicolas.s.dev@gmx.fr>,
-	Nanako Shiraishi <nanako3@lavabit.com>,
-	John Tapsell <johnflux@gmail.com>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Jun 18 10:35:31 2009
+Content-Type: MULTIPART/MIXED; BOUNDARY="8323329-186749185-1245314466=:4848"
+Cc: git@vger.kernel.org
+To: =?ISO-8859-15?Q?Santi_B=E9jar?= <santi@agolina.net>
+X-From: git-owner@vger.kernel.org Thu Jun 18 10:41:18 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MHD5m-0007Dd-Fl
-	for gcvg-git-2@gmane.org; Thu, 18 Jun 2009 10:35:30 +0200
+	id 1MHDBN-0001Ve-GM
+	for gcvg-git-2@gmane.org; Thu, 18 Jun 2009 10:41:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752901AbZFRIfT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Jun 2009 04:35:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752856AbZFRIfT
-	(ORCPT <rfc822;git-outgoing>); Thu, 18 Jun 2009 04:35:19 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:35705 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752816AbZFRIfS (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Jun 2009 04:35:18 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id n5I8TkNx019377
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Thu, 18 Jun 2009 10:29:46 +0200
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
-	(Exim 4.50)
-	id 1MHD5H-0001Uo-IT; Thu, 18 Jun 2009 10:34:59 +0200
-Received: from moy by bauges.imag.fr with local (Exim 4.63)
-	(envelope-from <moy@imag.fr>)
-	id 1MHD5H-000392-G0; Thu, 18 Jun 2009 10:34:59 +0200
-In-Reply-To: <alpine.DEB.1.00.0906181003300.4848@intel-tinevez-2-302> (Johannes Schindelin's message of "Thu\, 18 Jun 2009 10\:06\:07 +0200 \(CEST\)")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.0.91 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Thu, 18 Jun 2009 10:29:46 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: n5I8TkNx019377
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
-MailScanner-NULL-Check: 1245918587.53827@mHq2K06Uo7Xj/45k606TJA
+	id S1752816AbZFRIlI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Jun 2009 04:41:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752426AbZFRIlG
+	(ORCPT <rfc822;git-outgoing>); Thu, 18 Jun 2009 04:41:06 -0400
+Received: from mail.gmx.net ([213.165.64.20]:40357 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752386AbZFRIlF (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Jun 2009 04:41:05 -0400
+Received: (qmail invoked by alias); 18 Jun 2009 08:41:06 -0000
+Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
+  by mail.gmx.net (mp057) with SMTP; 18 Jun 2009 10:41:06 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19h8EI0aXNhkKfxB73rnAQ0SNyjbS1FXQFXEFHMMM
+	n4LbYTGf/Tpx11
+X-X-Sender: schindel@intel-tinevez-2-302
+In-Reply-To: <1245311834-5290-1-git-send-email-santi@agolina.net>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.74
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121816>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121817>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-> I'd really rather stay with "fixup".
+--8323329-186749185-1245314466=:4848
+Content-Type: TEXT/PLAIN; charset=X-UNKNOWN
+Content-Transfer-Encoding: 8BIT
 
-I like fixup. I'd say "fixup: <message>" so that the thing actually
-looks like a program directive rather than natural language.
+Hi,
 
-(I disliked this at first, but I may actually like it if it gets into
-Git!)
+On Thu, 18 Jun 2009, Santi Béjar wrote:
 
--- 
-Matthieu
+> Santi B??jar (2):
+
+Seems something is wrong in the --cover-letter utf-8 handlin, no?
+
+Ciao,
+Dscho
+--8323329-186749185-1245314466=:4848--
