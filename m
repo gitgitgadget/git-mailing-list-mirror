@@ -1,76 +1,80 @@
-From: Martin Nordholts <enselic@gmail.com>
-Subject: Re: [PATCH] Clarify the git-branch documentation of default
- start-point
-Date: Thu, 18 Jun 2009 08:04:21 +0200
-Message-ID: <1245305061.24201.12.camel@localhost.localdomain>
-References: <1245303673.24201.3.camel@localhost.localdomain>
-	 <7vprd2148u.fsf@alter.siamese.dyndns.org>
+From: Paolo Bonzini <paolo.bonzini@gmail.com>
+Subject: Re: [PATCH] avoid exponential regex match for java and objc function
+ names
+Date: Thu, 18 Jun 2009 08:45:37 +0200
+Message-ID: <4A39E291.8030207@gmail.com>
+References: <20090617102332.GA32353@coredump.intra.peff.net>	<1245248766-14867-1-git-send-email-bonzini@gnu.org> <7vab46rev0.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
+Cc: Paolo Bonzini <bonzini@gnu.org>, git@vger.kernel.org, peff@peff.net
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jun 18 08:02:30 2009
+X-From: git-owner@vger.kernel.org Thu Jun 18 08:46:00 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MHAhi-0003eq-4H
-	for gcvg-git-2@gmane.org; Thu, 18 Jun 2009 08:02:30 +0200
+	id 1MHBNn-0007Gg-Ka
+	for gcvg-git-2@gmane.org; Thu, 18 Jun 2009 08:46:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757764AbZFRGCR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Jun 2009 02:02:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756160AbZFRGCQ
-	(ORCPT <rfc822;git-outgoing>); Thu, 18 Jun 2009 02:02:16 -0400
-Received: from iph2.telenor.se ([195.54.127.133]:21287 "EHLO iph2.telenor.se"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756061AbZFRGCQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Jun 2009 02:02:16 -0400
-X-SMTPAUTH: 
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: ArMCAPt0OUrDNmV4mWdsb2JhbACYYAEBAQEBCAsKBxOmPJImhAgF
-X-IronPort-AV: E=Sophos;i="4.42,242,1243807200"; 
-   d="scan'208";a="21749022"
-Received: from ironport.bredband.com ([195.54.101.120])
-  by iph2.telenor.se with ESMTP; 18 Jun 2009 08:02:16 +0200
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: AlleAHx1OUrVcX8QPGdsb2JhbAAIiVSOegEBAQE3pkmSJYQIBQ
-X-IronPort-AV: E=Sophos;i="4.42,242,1243807200"; 
-   d="scan'208";a="538403509"
-Received: from c-107f71d5.017-113-6c756e10.cust.bredbandsbolaget.se (HELO [192.168.1.2]) ([213.113.127.16])
-  by ironport1.bredband.com with ESMTP; 18 Jun 2009 08:02:16 +0200
-In-Reply-To: <7vprd2148u.fsf@alter.siamese.dyndns.org>
-X-Mailer: Evolution 2.24.5 (2.24.5-1.fc10) 
+	id S1753960AbZFRGps (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Jun 2009 02:45:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753136AbZFRGpr
+	(ORCPT <rfc822;git-outgoing>); Thu, 18 Jun 2009 02:45:47 -0400
+Received: from ey-out-2122.google.com ([74.125.78.27]:21672 "EHLO
+	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752200AbZFRGpr (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Jun 2009 02:45:47 -0400
+Received: by ey-out-2122.google.com with SMTP id d26so142066eyd.37
+        for <git@vger.kernel.org>; Wed, 17 Jun 2009 23:45:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from
+         :user-agent:mime-version:to:cc:subject:references:in-reply-to
+         :content-type:content-transfer-encoding;
+        bh=Bnz81vboYj/Z4uTANqa8wXIBqEAM5vIWKjtkBs7zLrU=;
+        b=xElabaOkY6n6MKP6VsZVn9QSVUlYHlDbomiHM3BbQb5PLthZTHRYE7pYEUt6BkjZi7
+         rrLb9K34FccMBOD14lQiMCHNGU50nmvpYWUqvGiqcmk6GPvt81pt2a0w/NT2jOqDiEXE
+         w1bq5hJp7+GvrwSwOTqRVP8YuRnaHCimUkx80=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        b=ESROd9AUudKYom7WHziJWT02IpxIwvehUhg0z1gc/0P+TPg2du4dZofxLPy/da8Nhs
+         BVq4W7rchIay6VECXPCGFfZoM3zqsLKlaf+xxFDJvfx6n5/+0oW+Ha5oCkJYTtvpAJ/j
+         ++oMokdAmx58ri4iR8vfKKtfFwhX+noWAyKPs=
+Received: by 10.210.42.20 with SMTP id p20mr1299842ebp.92.1245307548395;
+        Wed, 17 Jun 2009 23:45:48 -0700 (PDT)
+Received: from yakj.usersys.redhat.com (nat-pool-brq.redhat.com [62.40.79.66])
+        by mx.google.com with ESMTPS id 10sm590425eyz.41.2009.06.17.23.45.47
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 17 Jun 2009 23:45:47 -0700 (PDT)
+User-Agent: Thunderbird 2.0.0.17 (X11/20081009)
+In-Reply-To: <7vab46rev0.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121796>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121797>
 
-On Wed, 2009-06-17 at 22:48 -0700, Junio C Hamano wrote:
-> Martin Nordholts <enselic@gmail.com> writes:
-> 
-> > -	is omitted, the current branch is assumed.
-> > +	is omitted, the current branch is assumed.  Note that checking
-> > +	out a remote branch does not make it the current branch.  If a
-> > +	remote branch is desired as start-point it must be an explicity
-> > +	specified.
-> 
-> [...] "it" in the second new sentence is unclear.
-> 
-> You probably wanted to answer "If I wanted to have _my own 'next' branch_
-> that tracks 'next' from the remote, what should I do?"
 
-What I am trying to clarify is that a remote branch will never be the
-default for the start-point argument to git-branch, so if someone wants
-a remote branch as start-point, then the branch must be explicitly
-specified.
+> Should I remove the "/* -- */" or is it for better readability I should
+> keep?
 
-For this, the first sentence might actually be enough. If a remote
-branch never is the current branch, and if start-point defaults to the
-current branch, then the start-point can never default to a remote
-branch.
+It helps detecting the separation between the function regex and the 
+word regex:
 
-Should we just stick to the first sentence then perhaps?
+>> -	 "^[ \t]*(([ \t]*[A-Za-z_][A-Za-z_0-9]*){2,}[ \t]*\\([^;]*)$",
+>> +	 "^[ \t]*(([A-Za-z_][A-Za-z_0-9]*[ \t]+)+[A-Za-z_][A-Za-z_0-9]*[ \t]*\\([^;]*)$",
+>> +	 /* -- */
 
- / Martin
+I stole the idea from the Objective-C part:
+
+>>  	 /* C functions */
+>> -	 "^[ \t]*(([ \t]*[A-Za-z_][A-Za-z_0-9]*){2,}[ \t]*\\([^;]*)$\n"
+>> +	 "^[ \t]*(([A-Za-z_][A-Za-z_0-9]*[ \t]+)+[A-Za-z_][A-Za-z_0-9]*[ \t]*\\([^;]*)$\n"
+>>  	 /* Objective-C class/protocol definitions */
+>>  	 "^(@(implementation|interface|protocol)[ \t].*)$",
+>>  	 /* -- */
+
+Paolo
