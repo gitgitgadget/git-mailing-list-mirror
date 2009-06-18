@@ -1,67 +1,66 @@
-From: Tony Finch <dot@dotat.at>
-Subject: Re: [PATCH] upload-archive: fix infinite loop on Cygwin
-Date: Thu, 18 Jun 2009 18:18:16 +0100
-Message-ID: <alpine.LSU.2.00.0906181817400.2474@hermes-2.csi.cam.ac.uk>
-References: <e664dae0905180737mae29811ie4cae889b3e3904f@mail.gmail.com> <4A151A15.6040609@lsrfire.ath.cx> <alpine.LSU.2.00.0905211431060.23478@hermes-2.csi.cam.ac.uk> <4A156556.900@lsrfire.ath.cx> <4A38C13E.6050800@lsrfire.ath.cx>
+From: Martin Nordholts <enselic@gmail.com>
+Subject: Re: [PATCH] Clarify the git-branch documentation of default start-point
+Date: Thu, 18 Jun 2009 19:21:55 +0200
+Message-ID: <4A3A77B3.8070502@gmail.com>
+References: <1245303673.24201.3.camel@localhost.localdomain>	<7vprd2148u.fsf@alter.siamese.dyndns.org>	<1245305061.24201.12.camel@localhost.localdomain> <7v63eu0ze4.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="1870870024-1535096171-1245345496=:2474"
-Cc: Junio C Hamano <gitster@pobox.com>, Bob Kagy <bobkagy@gmail.com>,
-	git@vger.kernel.org
-To: =?ISO-8859-15?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
-X-From: git-owner@vger.kernel.org Thu Jun 18 19:18:33 2009
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jun 18 19:20:01 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MHLFq-0001DL-Rh
-	for gcvg-git-2@gmane.org; Thu, 18 Jun 2009 19:18:27 +0200
+	id 1MHLHM-0001n1-0X
+	for gcvg-git-2@gmane.org; Thu, 18 Jun 2009 19:20:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752885AbZFRRSS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Jun 2009 13:18:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753848AbZFRRSR
-	(ORCPT <rfc822;git-outgoing>); Thu, 18 Jun 2009 13:18:17 -0400
-Received: from ppsw-0.csi.cam.ac.uk ([131.111.8.130]:56464 "EHLO
-	ppsw-0.csi.cam.ac.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753426AbZFRRSR (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Jun 2009 13:18:17 -0400
-X-Cam-AntiVirus: no malware found
-X-Cam-SpamDetails: not scanned
-X-Cam-ScannerInfo: http://www.cam.ac.uk/cs/email/scanner/
-Received: from hermes-2.csi.cam.ac.uk ([131.111.8.54]:53029)
-	by ppsw-0.csi.cam.ac.uk (smtp.hermes.cam.ac.uk [131.111.8.150]:25)
-	with esmtpa (EXTERNAL:fanf2) id 1MHLFg-0003Kb-2V (Exim 4.70)
-	(return-path <fanf2@hermes.cam.ac.uk>); Thu, 18 Jun 2009 18:18:16 +0100
-Received: from fanf2 (helo=localhost) by hermes-2.csi.cam.ac.uk (hermes.cam.ac.uk)
-	with local-esmtp id 1MHLFg-00036Z-OV (Exim 4.67)
-	(return-path <fanf2@hermes.cam.ac.uk>); Thu, 18 Jun 2009 18:18:16 +0100
-X-X-Sender: fanf2@hermes-2.csi.cam.ac.uk
-In-Reply-To: <4A38C13E.6050800@lsrfire.ath.cx>
-User-Agent: Alpine 2.00 (LSU 1167 2008-08-23)
+	id S1753460AbZFRRTv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Jun 2009 13:19:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753340AbZFRRTu
+	(ORCPT <rfc822;git-outgoing>); Thu, 18 Jun 2009 13:19:50 -0400
+Received: from iph1.telenor.se ([195.54.127.132]:45644 "EHLO iph1.telenor.se"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752871AbZFRRTt (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Jun 2009 13:19:49 -0400
+X-SMTPAUTH: 
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: AtQCAB8UOkrDNmV6mWdsb2JhbACYZQEBAQEBCAsKBxOnEpIEhAgF
+X-IronPort-AV: E=Sophos;i="4.42,245,1243807200"; 
+   d="scan'208";a="22186565"
+Received: from ironport2.bredband.com ([195.54.101.122])
+  by iph1.telenor.se with ESMTP; 18 Jun 2009 19:19:49 +0200
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: AtVfAFsUOkrVcX8QPGdsb2JhbAAIiVWOfgEBAQE3pyaSBIQIBQ
+X-IronPort-AV: E=Sophos;i="4.42,245,1243807200"; 
+   d="scan'208";a="503585557"
+Received: from c-107f71d5.017-113-6c756e10.cust.bredbandsbolaget.se (HELO [192.168.1.2]) ([213.113.127.16])
+  by ironport2.bredband.com with ESMTP; 18 Jun 2009 19:19:49 +0200
+User-Agent: Thunderbird 2.0.0.21 (X11/20090320)
+In-Reply-To: <7v63eu0ze4.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121859>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121860>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Junio C Hamano wrote:
+>> What I am trying to clarify is that a remote branch will never be the
+>> default for the start-point argument to git-branch, so if someone wants
+>> a remote branch as start-point, then the branch must be explicitly
+>> specified.
+>>     
+>
+> Because I misread your updated documentation, somehow I thought you were
+> talking about "checkout -b".  Sorry for getting confused (and perhaps
+> giving a confusing answer).
+>
+> There are two concepts you seem to be confused about: <start-point> and
+> branch tracking.
+>   
 
---1870870024-1535096171-1245345496=:2474
-Content-Type: TEXT/PLAIN; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+I indeed confused these concepts and I think your patch makes the 
+documentation clearer here
 
-On Wed, 17 Jun 2009, Ren=C3=A9 Scharfe wrote:
-
-> On Cygwin, poll() reports POLLIN even for file descriptors that have
-> reached their end.  This caused git upload-archive to be stuck in an
-> infinite loop, as it only looked at the POLLIN flag.
-
-I think it isn't just Cygwin that does this - see
-http://www.greenend.org.uk/rjk/2001/06/poll.html
-
-Tony.
---=20
-f.anthony.n.finch  <dot@dotat.at>  http://dotat.at/
-GERMAN BIGHT HUMBER: SOUTHWEST 5 TO 7. MODERATE OR ROUGH. SQUALLY SHOWERS.
-MODERATE OR GOOD.
---1870870024-1535096171-1245345496=:2474--
+ / Martin
