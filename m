@@ -1,63 +1,67 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: Fix big left-shifts of unsigned char
-Date: Thu, 18 Jun 2009 10:15:17 -0700 (PDT)
-Message-ID: <alpine.LFD.2.01.0906181013390.16802@localhost.localdomain>
-References: <E1MFvux-0001ix-I7@fencepost.gnu.org> <alpine.DEB.1.00.0906142215560.26154@pacific.mpi-cbg.de> <E1MG32S-0004C6-8A@fencepost.gnu.org> <alpine.LFD.2.01.0906142118250.3305@localhost.localdomain> <E1MH3bD-0004g2-97@fencepost.gnu.org>
- <alpine.LFD.2.01.0906171543120.16802@localhost.localdomain> <alpine.LFD.2.01.0906171654310.16802@localhost.localdomain> <alpine.DEB.1.00.0906181012050.4848@intel-tinevez-2-302> <alpine.LFD.2.01.0906180856420.16802@localhost.localdomain>
- <alpine.DEB.1.00.0906181845020.4297@intel-tinevez-2-302>
+From: Tony Finch <dot@dotat.at>
+Subject: Re: [PATCH] upload-archive: fix infinite loop on Cygwin
+Date: Thu, 18 Jun 2009 18:18:16 +0100
+Message-ID: <alpine.LSU.2.00.0906181817400.2474@hermes-2.csi.cam.ac.uk>
+References: <e664dae0905180737mae29811ie4cae889b3e3904f@mail.gmail.com> <4A151A15.6040609@lsrfire.ath.cx> <alpine.LSU.2.00.0905211431060.23478@hermes-2.csi.cam.ac.uk> <4A156556.900@lsrfire.ath.cx> <4A38C13E.6050800@lsrfire.ath.cx>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Jun 18 19:16:01 2009
+Content-Type: MULTIPART/MIXED; BOUNDARY="1870870024-1535096171-1245345496=:2474"
+Cc: Junio C Hamano <gitster@pobox.com>, Bob Kagy <bobkagy@gmail.com>,
+	git@vger.kernel.org
+To: =?ISO-8859-15?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
+X-From: git-owner@vger.kernel.org Thu Jun 18 19:18:33 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MHLDT-0008SR-6Y
-	for gcvg-git-2@gmane.org; Thu, 18 Jun 2009 19:15:59 +0200
+	id 1MHLFq-0001DL-Rh
+	for gcvg-git-2@gmane.org; Thu, 18 Jun 2009 19:18:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753693AbZFRRPt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Jun 2009 13:15:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752951AbZFRRPs
-	(ORCPT <rfc822;git-outgoing>); Thu, 18 Jun 2009 13:15:48 -0400
-Received: from smtp1.linux-foundation.org ([140.211.169.13]:41055 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752926AbZFRRPr (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 18 Jun 2009 13:15:47 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
-	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id n5IHFIba010432
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Thu, 18 Jun 2009 10:15:19 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id n5IHFHJ2022429;
-	Thu, 18 Jun 2009 10:15:18 -0700
-X-X-Sender: torvalds@localhost.localdomain
-In-Reply-To: <alpine.DEB.1.00.0906181845020.4297@intel-tinevez-2-302>
-User-Agent: Alpine 2.01 (LFD 1184 2008-12-16)
-X-Spam-Status: No, hits=-3.472 required=5 tests=AWL,BAYES_00
-X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
+	id S1752885AbZFRRSS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Jun 2009 13:18:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753848AbZFRRSR
+	(ORCPT <rfc822;git-outgoing>); Thu, 18 Jun 2009 13:18:17 -0400
+Received: from ppsw-0.csi.cam.ac.uk ([131.111.8.130]:56464 "EHLO
+	ppsw-0.csi.cam.ac.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753426AbZFRRSR (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Jun 2009 13:18:17 -0400
+X-Cam-AntiVirus: no malware found
+X-Cam-SpamDetails: not scanned
+X-Cam-ScannerInfo: http://www.cam.ac.uk/cs/email/scanner/
+Received: from hermes-2.csi.cam.ac.uk ([131.111.8.54]:53029)
+	by ppsw-0.csi.cam.ac.uk (smtp.hermes.cam.ac.uk [131.111.8.150]:25)
+	with esmtpa (EXTERNAL:fanf2) id 1MHLFg-0003Kb-2V (Exim 4.70)
+	(return-path <fanf2@hermes.cam.ac.uk>); Thu, 18 Jun 2009 18:18:16 +0100
+Received: from fanf2 (helo=localhost) by hermes-2.csi.cam.ac.uk (hermes.cam.ac.uk)
+	with local-esmtp id 1MHLFg-00036Z-OV (Exim 4.67)
+	(return-path <fanf2@hermes.cam.ac.uk>); Thu, 18 Jun 2009 18:18:16 +0100
+X-X-Sender: fanf2@hermes-2.csi.cam.ac.uk
+In-Reply-To: <4A38C13E.6050800@lsrfire.ath.cx>
+User-Agent: Alpine 2.00 (LSU 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121858>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121859>
 
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
+--1870870024-1535096171-1245345496=:2474
+Content-Type: TEXT/PLAIN; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 
-On Thu, 18 Jun 2009, Johannes Schindelin wrote:
-> 
-> The quick hack is not going to be part of sparse.git, I take it?
+On Wed, 17 Jun 2009, Ren=C3=A9 Scharfe wrote:
 
-Not clear yet. I sent a couple of patches to the sparse list already to 
-make things go better in general with running sparse on git. I can now do
+> On Cygwin, poll() reports POLLIN even for file descriptors that have
+> reached their end.  This caused git upload-archive to be stuck in an
+> infinite loop, as it only looked at the POLLIN flag.
 
-	make "CC=cgcc -m64"
+I think it isn't just Cygwin that does this - see
+http://www.greenend.org.uk/rjk/2001/06/poll.html
 
-on my git tree, and get reasonable warnings. I'll play around with it 
-that whole left-shift thing a bit more, but before I do that I'll post a 
-patch for all the _other_ things sparse found in git.
-
-		Linus
+Tony.
+--=20
+f.anthony.n.finch  <dot@dotat.at>  http://dotat.at/
+GERMAN BIGHT HUMBER: SOUTHWEST 5 TO 7. MODERATE OR ROUGH. SQUALLY SHOWERS.
+MODERATE OR GOOD.
+--1870870024-1535096171-1245345496=:2474--
