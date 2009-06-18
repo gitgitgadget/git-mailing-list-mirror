@@ -1,156 +1,119 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: [MONKEY PATCH] git-svn: allow two branch configurations
-Date: Thu, 18 Jun 2009 16:31:03 +0200
-Message-ID: <1245335463-4488-1-git-send-email-git@drmicha.warpmail.net>
-References: <4A3A4945.6050307@drmicha.warpmail.net>
-Cc: Marc Branchaud <marcnarc@xiplink.com>,
-	Eric Wong <normalperson@yhbt.net>,
-	Michael J Gruber <git@drmicha.warpmail.net>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jun 18 16:31:45 2009
+From: =?ISO-8859-1?Q?Santi_B=E9jar?= <santi@agolina.net>
+Subject: Re: [RFC/PATCH 1/2] remote tracking: return the tracking branch for 
+	the given branches
+Date: Thu, 18 Jun 2009 16:40:50 +0200
+Message-ID: <adf1fd3d0906180740t637da9braea02deb3cba2680@mail.gmail.com>
+References: <1245311834-5290-1-git-send-email-santi@agolina.net>
+	 <m3iqithd24.fsf@localhost.localdomain>
+	 <adf1fd3d0906180655q5c142889r3375169b6cf1f8b0@mail.gmail.com>
+	 <200906181617.07802.jnareb@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jun 18 16:41:00 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MHIeT-0004qv-89
-	for gcvg-git-2@gmane.org; Thu, 18 Jun 2009 16:31:43 +0200
+	id 1MHInU-0000Lz-5U
+	for gcvg-git-2@gmane.org; Thu, 18 Jun 2009 16:41:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761790AbZFROba (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Jun 2009 10:31:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760016AbZFROb3
-	(ORCPT <rfc822;git-outgoing>); Thu, 18 Jun 2009 10:31:29 -0400
-Received: from out1.smtp.messagingengine.com ([66.111.4.25]:60272 "EHLO
-	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1759599AbZFROb2 (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 18 Jun 2009 10:31:28 -0400
-Received: from compute2.internal (compute2.internal [10.202.2.42])
-	by out1.messagingengine.com (Postfix) with ESMTP id EFC2F35E535;
-	Thu, 18 Jun 2009 10:31:30 -0400 (EDT)
-Received: from heartbeat1.messagingengine.com ([10.202.2.160])
-  by compute2.internal (MEProxy); Thu, 18 Jun 2009 10:31:31 -0400
-X-Sasl-enc: myHZ+yM618Mh0VKJnZGbMKxvxKON9SVjkbdwIPk2USUM 1245335490
-Received: from localhost (whitehead.math.tu-clausthal.de [139.174.44.12])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 4467128382;
-	Thu, 18 Jun 2009 10:31:30 -0400 (EDT)
-X-Mailer: git-send-email 1.6.3.2.406.gd6a466
-In-Reply-To: <4A3A4945.6050307@drmicha.warpmail.net>
+	id S1757828AbZFROkv convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 18 Jun 2009 10:40:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757407AbZFROku
+	(ORCPT <rfc822;git-outgoing>); Thu, 18 Jun 2009 10:40:50 -0400
+Received: from mail-fx0-f212.google.com ([209.85.220.212]:36481 "EHLO
+	mail-fx0-f212.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753966AbZFROkt convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 18 Jun 2009 10:40:49 -0400
+Received: by fxm8 with SMTP id 8so1102661fxm.37
+        for <git@vger.kernel.org>; Thu, 18 Jun 2009 07:40:51 -0700 (PDT)
+Received: by 10.204.118.207 with SMTP id w15mr1414351bkq.126.1245336050847; 
+	Thu, 18 Jun 2009 07:40:50 -0700 (PDT)
+In-Reply-To: <200906181617.07802.jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121847>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121848>
 
-This is a MONKEY PATCH which introduces a long option and config
-variable "branchse" analogous to "branches", with a short option "-B".
-It has the same meaning and can be used to accomadate svn repos with two
-different branches subdirectories.
+2009/6/18 Jakub Narebski <jnareb@gmail.com>:
+> On Thu, 18 June 2009, Santi B=E9jar wrote:
+>> 2009/6/18 Jakub Narebski <jnareb@gmail.com>:
+>
+> [cut]
+>> >
+>> > =A0$ git remote tracking <remote> <remote branch>
+>> >
+>> > would show all local branches that track <remote branch>, and have
+>> > <remote> as default remote,
+>>
+>> Maybe my description is unclear, but it's not about local branches
+>> which track <branch> on <remote>, it is about the local branch
+>> representation of the remote branch, i.e. not 'master' but
+>> origin/master (git remote tracking origin master in a default clone)=
+=2E
+>
+> Ah, the problem with the same (or similar) name for two different
+> things. =A0If we have local branch 'local' set to track branch 'maste=
+r'
+> on remote 'origin', we have:
+>
+> =A0 /------- local repository ------\ =A0 =A0 =A0 =A0 =A0 =A0/- origi=
+n -\
+> =A0/ =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =
+\ =A0 =A0 =A0 =A0 =A0/ =A0 =A0 =A0 =A0 =A0 =A0\
+> =A0| =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =
+| =A0 =A0 =A0 =A0 =A0| =A0 =A0 =A0 =A0 =A0 =A0|
+> =A0'local' =A0--------> =A0'origin/master' -----------> 'master'
+> =A0refs/heads/local =A0 =A0refs/remotes/origin/master =A0 refs/heads/=
+master
+>
+> =A0branch.local.remote =3D origin
+> =A0branch.local.merge =A0=3D refs/heads/master
+>
+> =A0remote.origin.fetch =3D +refs/heads/*:refs/remotes/origin/*
+>
+> 'origin/master' is called remote-TRACKING branch (for 'master' branch
+> on remote 'origin'). =A0Setting up automerge information for local br=
+anch
+> 'local' which _follows_ branch 'master' on remote 'origin' is done
+> using --TRACK option to git-branch.
+>
+> Therefore the confusion.
 
-Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
----
- git-svn.perl |   18 ++++++++++--------
- 1 files changed, 10 insertions(+), 8 deletions(-)
+OK, but I wonder if the documentation for the new command is clear
+enough or can be improved.
 
-Well, this is not a serious patch per se, but it shows that git-svn can
-very well handle multiple branches configs once it is told to read and
-use them. I don't think it's possible to do this with globs, and
-extending globs to regexps looks like a more complicated approach
-(although they are used internally).
+>
+>
+> Do I understand correctly that you want for
+>
+> =A0$ git remote tracking origin master
+>
+> to return
+>
+> =A0origin/master
 
-I see two viable options for a real patch now:
-- Extend $remote->branches to be an array and use "config --get-all" to
-  read the config; do the same for tags.
-- Use one single array for branches as well as tags.
+In this particular case (the above settings) not exactly, as master
+does not match exactly the lhs of the refspec. It would be:
 
-Eric, which way do you prefer? The first one is simpler and may be even
-doable for me. The second looks more complicated mainly because of "git
-svn branch -t" (which element of the combined array is tags?), even
-though it's more natural if one thinks about the way svn works.
+$ git remote tracking origin refs/heads/master
+refs/remotes/origin/master
 
-Michael
+>
+> (and perhaps also origin/HEAD?).
 
-diff --git a/git-svn.perl b/git-svn.perl
-index 3301797..e6a9422 100755
---- a/git-svn.perl
-+++ b/git-svn.perl
-@@ -92,11 +92,12 @@ my %fc_opts = ( 'follow-parent|follow!' => \$Git::SVN::_follow_parent,
- 		'localtime' => \$Git::SVN::_localtime,
- 		%remote_opts );
- 
--my ($_trunk, $_tags, $_branches, $_stdlayout);
-+my ($_trunk, $_tags, $_branches, $_branchse, $_stdlayout);
- my %icv;
- my %init_opts = ( 'template=s' => \$_template, 'shared:s' => \$_shared,
-                   'trunk|T=s' => \$_trunk, 'tags|t=s' => \$_tags,
-                   'branches|b=s' => \$_branches, 'prefix=s' => \$_prefix,
-+                  'branchse|B=s' => \$_branchse,
-                   'stdlayout|s' => \$_stdlayout,
-                   'minimize-url|m' => \$Git::SVN::_minimize_url,
- 		  'no-metadata' => sub { $icv{noMetadata} = 1 },
-@@ -358,7 +359,7 @@ sub init_subdir {
- sub cmd_clone {
- 	my ($url, $path) = @_;
- 	if (!defined $path &&
--	    (defined $_trunk || defined $_branches || defined $_tags ||
-+	    (defined $_trunk || defined $_branches || defined $_branchse || defined $_tags ||
- 	     defined $_stdlayout) &&
- 	    $url !~ m#^[a-z\+]+://#) {
- 		$path = $url;
-@@ -375,7 +376,7 @@ sub cmd_init {
- 		$_tags = 'tags' if (!defined $_tags);
- 		$_branches = 'branches' if (!defined $_branches);
- 	}
--	if (defined $_trunk || defined $_branches || defined $_tags) {
-+	if (defined $_trunk || defined $_branches || defined $_branchse || defined $_tags) {
- 		return cmd_multi_init(@_);
- 	}
- 	my $url = shift or die "SVN repository location required ",
-@@ -800,7 +801,7 @@ sub cmd_proplist {
- 
- sub cmd_multi_init {
- 	my $url = shift;
--	unless (defined $_trunk || defined $_branches || defined $_tags) {
-+	unless (defined $_trunk || defined $_branches || defined $_branchse || defined $_tags) {
- 		usage(1);
- 	}
- 
-@@ -825,9 +826,10 @@ sub cmd_multi_init {
- 						   undef, $trunk_ref);
- 		}
- 	}
--	return unless defined $_branches || defined $_tags;
-+	return unless defined $_branches || defined $_branchse || defined $_tags;
- 	my $ra = $url ? Git::SVN::Ra->new($url) : undef;
- 	complete_url_ls_init($ra, $_branches, '--branches/-b', $_prefix);
-+	complete_url_ls_init($ra, $_branchse, '--branchse/-B', $_prefix);
- 	complete_url_ls_init($ra, $_tags, '--tags/-t', $_prefix . 'tags/');
- }
- 
-@@ -1563,7 +1565,7 @@ sub fetch_all {
- 	my $base = defined $fetch ? $head : 0;
- 
- 	# read the max revs for wildcard expansion (branches/*, tags/*)
--	foreach my $t (qw/branches tags/) {
-+	foreach my $t (qw/branches branchse tags/) {
- 		defined $remote->{$t} or next;
- 		push @globs, $remote->{$t};
- 		my $max_rev = eval { tmp_config(qw/--int --get/,
-@@ -1609,7 +1611,7 @@ sub read_all_remotes {
- 			$r->{$1}->{svm} = {};
- 		} elsif (m!^(.+)\.url=\s*(.*)\s*$!) {
- 			$r->{$1}->{url} = $2;
--		} elsif (m!^(.+)\.(branches|tags)=
-+		} elsif (m!^(.+)\.(branches|branchse|tags)=
- 		           (.*):refs/remotes/(.+)\s*$/!x) {
- 			my ($p, $g) = ($3, $4);
- 			my $rs = $r->{$1}->{$2} = {
-@@ -1760,7 +1762,7 @@ sub find_by_url { # repos_root and, path are optional
- 		next if defined $repos_root && $repos_root ne $u;
- 
- 		my $fetch = $remotes->{$repo_id}->{fetch} || {};
--		foreach (qw/branches tags/) {
-+		foreach (qw/branches branchse tags/) {
- 			resolve_local_globs($u, $fetch,
- 			                    $remotes->{$repo_id}->{$_});
- 		}
--- 
-1.6.3.2.406.gd6a466
+HEAD is another beast, as the local HEAD symlink is a local config,
+that defaults to the remote default branch, but that you can change
+with "git remote set-head".
+
+Ops, you are saying to return origin/HEAD for "git remote tracking
+origin master", no? I don't think it makes sense, I think of "git
+remote tracking" more as a mapping function, it applies the map (the
+refspec) to the given argument.
+
+Santi
