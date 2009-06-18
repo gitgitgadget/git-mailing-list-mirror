@@ -1,98 +1,93 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: git svn: Supporting multiple branch subdirs?
-Date: Thu, 18 Jun 2009 16:03:49 +0200
-Message-ID: <4A3A4945.6050307@drmicha.warpmail.net>
-References: <4A32CCA5.7040404@xiplink.com> <4A339182.1090204@drmicha.warpmail.net> <4A368509.9070801@xiplink.com> <4A38FCEE.2020002@drmicha.warpmail.net> <4A390AFE.5070703@xiplink.com>
+From: John Koleszar <john.koleszar@on2.com>
+Subject: Re: [PATCH] Re: rebase -i: auto-squash commits
+Date: Thu, 18 Jun 2009 10:04:55 -0400
+Organization: On2 Technologies
+Message-ID: <1245333895.30640.28.camel@cp-jk-linux.corp.on2.com>
+References: <e1868cfe0906170506o37a75c35m47f9456bf8ae47c1@mail.gmail.com>
+	 <43d8ce650906170555m644564b3v3722168f7217c326@mail.gmail.com>
+	 <7vvdmurfao.fsf@alter.siamese.dyndns.org>
+	 <20090618063348.6117@nanako3.lavabit.com>
+	 <alpine.DEB.1.00.0906180007370.26154@pacific.mpi-cbg.de>
+	 <20090618001111.GB12954@vidovic> <7v8wjq2kqc.fsf@alter.siamese.dyndns.org>
+	 <alpine.DEB.1.00.0906181003300.4848@intel-tinevez-2-302>
+	 <87vdmuhs75.fsf@iki.fi>
+	 <alpine.DEB.1.00.0906181028140.4848@intel-tinevez-2-302>
+Reply-To: john.koleszar@on2.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain
 Content-Transfer-Encoding: 7bit
-Cc: git list <git@vger.kernel.org>, normalperson@yhbt.net
-To: Marc Branchaud <marcnarc@xiplink.com>
-X-From: git-owner@vger.kernel.org Thu Jun 18 16:04:47 2009
+Cc: Teemu Likonen <tlikonen@iki.fi>,
+	Junio C Hamano <gitster@pobox.com>,
+	Nicolas Sebrecht <nicolas.s.dev@gmx.fr>,
+	Nanako Shiraishi <nanako3@lavabit.com>,
+	John Tapsell <johnflux@gmail.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Thu Jun 18 16:05:49 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MHIEN-0000vu-Jl
-	for gcvg-git-2@gmane.org; Thu, 18 Jun 2009 16:04:44 +0200
+	id 1MHIFQ-0001Uv-1q
+	for gcvg-git-2@gmane.org; Thu, 18 Jun 2009 16:05:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760509AbZFROEQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Jun 2009 10:04:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759847AbZFROEP
-	(ORCPT <rfc822;git-outgoing>); Thu, 18 Jun 2009 10:04:15 -0400
-Received: from out1.smtp.messagingengine.com ([66.111.4.25]:55143 "EHLO
-	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1757691AbZFROEO (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 18 Jun 2009 10:04:14 -0400
-Received: from compute1.internal (compute1.internal [10.202.2.41])
-	by out1.messagingengine.com (Postfix) with ESMTP id 1F127361B56;
-	Thu, 18 Jun 2009 10:04:16 -0400 (EDT)
-Received: from heartbeat2.messagingengine.com ([10.202.2.161])
-  by compute1.internal (MEProxy); Thu, 18 Jun 2009 10:04:16 -0400
-X-Sasl-enc: IRmUvSXa/QUfYdJeM7L+YQQhn4aKIdabSsOhTH/WEcm4 1245333855
-Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.12])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 65B382D901;
-	Thu, 18 Jun 2009 10:04:15 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1pre) Gecko/20090617 Lightning/1.0pre Shredder/3.0b3pre
-In-Reply-To: <4A390AFE.5070703@xiplink.com>
+	id S1756002AbZFROFc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Jun 2009 10:05:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753419AbZFROFb
+	(ORCPT <rfc822;git-outgoing>); Thu, 18 Jun 2009 10:05:31 -0400
+Received: from mail.on2.com ([66.162.65.131]:59906 "EHLO on2.com"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1751552AbZFROFb (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Jun 2009 10:05:31 -0400
+In-Reply-To: <alpine.DEB.1.00.0906181028140.4848@intel-tinevez-2-302>
+X-Mailer: Evolution 2.24.5 
+X-On2-MailScanner-i: Found to be clean
+X-On2-MailScanner-From: john.koleszar@on2.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121843>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121844>
 
-Marc Branchaud venit, vidit, dixit 17.06.2009 17:25:
-> Michael J Gruber wrote:
->>
->>> (Shouldn't that fetch line be head:refs/remots/head, since there's nothing called
->>> "trunk" in the svn repo?  I used git-svn init --trunk=head ...)
->>
->> The left hand side of the refspec refers to the svn repo, the right hand
->> side only names your local ref. Feel free to put "head" there, although
->> this can be confused very easily with "HEAD" which has special meaning
->> in git.
+On Thu, 2009-06-18 at 04:29 -0400, Johannes Schindelin wrote:
+> Hi,
 > 
-> Sure.  I was mostly wondering why --trunk=head didn't just reuse the name in my local ref.  A minor bug, perhaps?
+> On Thu, 18 Jun 2009, Teemu Likonen wrote:
 > 
-> (And the FreeBSD community commonly refers to that branch as "current", so that's a name I can use locally.)
+> > On 2009-06-18 10:06 (+0200), Johannes Schindelin wrote:
+> > 
+> > > I'd really rather stay with "fixup". And as I use single-letter
+> > > commands quite often, I'd also rather stay away from that magic "!".
+> > > And by "magic" I really mean that: people will not find that magic
+> > > intuitive at all.
+> > 
+> > I don't know about people but I do find "!" intuitive. It is squash
+> > after all so I like the idea of using small modifier character.
 > 
->> P.S.: Let me know if you give it a shot, so that we don't duplicate our
->> waste of time...
+> Mhm.
 > 
-> I have some cycles to work on this, but I'd need some guidance around git-svn's internals.  I'm not even sure where to start implementing the "branches2" hack you described...
+> So let's just interpret the "!" in the most common meaning, namely to add 
+> an imperative.  Then it means "yes, I do want to squash".  Not 
+> "squash, but oh, BTW, I want to lose the second commit message 
+> completely, and I do not want to edit the commit message either".
+> 
+> Really, I do not see how anybody could find this intuitive at all.  Maybe 
+> after reading the manual, but kinda defeats the meaning of the word 
+> "intuitive".
 
-Heck it's perl, so don't even try to understand the code - after all,
-perl only barely missed the final round in the last competition for the
-next cryptographic algorithm!
+The imperative is actually the reason I picked that modifier, as in
+"yes, I /really/ do want to squash. Don't ask me, just do it!" Something
+akin to -f. I think it makes sense here, but not in the case someone
+else mentioned of a commit message only edit. ("recommit" for that
+case?) 
 
-That being said, I did some clueless hacking in git-svn.perl and let it
-run against the freebsd repo. Now, how's that:
-
-~/src/git/git-svn fetch -r1:10000
-
-git branch -r
-  releng/2.0.5
-  releng/ALPHA_2_0
-  releng/BETA_2_0
-  stable/2.0.5
-  stable/2.1
-  tags/2.0
-  tags/2.0.5
-  trunk
-
-The revision graph looks OK as well. The git-svn config which I used is:
-
-[svn-remote "svn"]
-        url = svn://svn.freebsd.org/base
-        fetch = head:refs/remotes/trunk
-        branches = releng/*:refs/remotes/releng/*
-        branchse = stable/*:refs/remotes/stable/*
-        tags = release/*:refs/remotes/tags/*
-
-No typo there, my git svn knows about "branches" and "branchse" now ;)
-BTW: In fact there is overlap between releng and stable branches in the
-feebsd repo, see 2.0.5.
-
-I'll send a monkey patch in a minute.
-
-Michael
+In any case, I think this non-interactive squash is orthagonal to being
+able to automatically rearrange the commits by "squash to ...". I think
+that's a cool idea, but I know that I often don't remember the text of
+the commit I want to squash into. So in my case I prefer rearranging
+manually and squashing non-interactively. If I planned ahead, I could
+pick a prefix for each "class" of commit, and then "squash to prefix",
+but I'd want to be able to edit the original commit to remove the
+prefix. Sure, I could look at the log, but if I'm just writing a
+nonsense message to remind myself where to squash to, I think it would
+get in the way of my flow.
