@@ -1,66 +1,73 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Subject: Re: [PATCH] Re: rebase -i: auto-squash commits
-Date: Thu, 18 Jun 2009 10:26:23 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.0906181025460.4848@intel-tinevez-2-302>
+Date: Thu, 18 Jun 2009 10:29:58 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.0906181028140.4848@intel-tinevez-2-302>
 References: <e1868cfe0906170506o37a75c35m47f9456bf8ae47c1@mail.gmail.com> <43d8ce650906170555m644564b3v3722168f7217c326@mail.gmail.com> <7vvdmurfao.fsf@alter.siamese.dyndns.org> <20090618063348.6117@nanako3.lavabit.com> <alpine.DEB.1.00.0906180007370.26154@pacific.mpi-cbg.de>
- <20090618001111.GB12954@vidovic> <7v8wjq2kqc.fsf@alter.siamese.dyndns.org> <alpine.DEB.1.00.0906181003300.4848@intel-tinevez-2-302> <m3r5xigdvn.fsf@localhost.localdomain> <7vfxdyymtd.fsf@alter.siamese.dyndns.org>
+ <20090618001111.GB12954@vidovic> <7v8wjq2kqc.fsf@alter.siamese.dyndns.org> <alpine.DEB.1.00.0906181003300.4848@intel-tinevez-2-302> <87vdmuhs75.fsf@iki.fi>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Jakub Narebski <jnareb@gmail.com>,
+Cc: Junio C Hamano <gitster@pobox.com>,
 	Nicolas Sebrecht <nicolas.s.dev@gmx.fr>,
 	Nanako Shiraishi <nanako3@lavabit.com>,
 	John Tapsell <johnflux@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jun 18 10:26:35 2009
+To: Teemu Likonen <tlikonen@iki.fi>
+X-From: git-owner@vger.kernel.org Thu Jun 18 10:30:14 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MHCx9-00049u-0K
-	for gcvg-git-2@gmane.org; Thu, 18 Jun 2009 10:26:35 +0200
+	id 1MHD0g-0005In-3x
+	for gcvg-git-2@gmane.org; Thu, 18 Jun 2009 10:30:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751451AbZFRI0Z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Jun 2009 04:26:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751363AbZFRI0Y
-	(ORCPT <rfc822;git-outgoing>); Thu, 18 Jun 2009 04:26:24 -0400
-Received: from mail.gmx.net ([213.165.64.20]:33678 "HELO mail.gmx.net"
+	id S1751767AbZFRIaD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Jun 2009 04:30:03 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751454AbZFRIaC
+	(ORCPT <rfc822;git-outgoing>); Thu, 18 Jun 2009 04:30:02 -0400
+Received: from mail.gmx.net ([213.165.64.20]:56853 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750978AbZFRI0X (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Jun 2009 04:26:23 -0400
-Received: (qmail invoked by alias); 18 Jun 2009 08:26:24 -0000
+	id S1750978AbZFRIaB (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Jun 2009 04:30:01 -0400
+Received: (qmail invoked by alias); 18 Jun 2009 08:29:59 -0000
 Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
-  by mail.gmx.net (mp050) with SMTP; 18 Jun 2009 10:26:24 +0200
+  by mail.gmx.net (mp009) with SMTP; 18 Jun 2009 10:29:59 +0200
 X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18tE6Jgz0st372cmg+zE5MZAkKjkLYn8YcExhZ6q7
-	THYBIwbbBIzm3h
+X-Provags-ID: V01U2FsdGVkX1/GUGw50sfGyJik4Fo4D3ryjPR+K0KvuauEOKbQfE
+	D+xLyQx/LCsD4R
 X-X-Sender: schindel@intel-tinevez-2-302
-In-Reply-To: <7vfxdyymtd.fsf@alter.siamese.dyndns.org>
+In-Reply-To: <87vdmuhs75.fsf@iki.fi>
 User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
 X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.67
+X-FuHaFi: 0.59
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121813>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121814>
 
 Hi,
 
-On Thu, 18 Jun 2009, Junio C Hamano wrote:
+On Thu, 18 Jun 2009, Teemu Likonen wrote:
 
-> Jakub Narebski <jnareb@gmail.com> writes:
+> On 2009-06-18 10:06 (+0200), Johannes Schindelin wrote:
 > 
-> > A bit off-topic: I wonder if there is an easy way to make rebase run 
-> > testsuite for the each commit it rebases, or even simple compile test, 
-> > to not introduce untestable commits when rebasing by mistake...
+> > I'd really rather stay with "fixup". And as I use single-letter
+> > commands quite often, I'd also rather stay away from that magic "!".
+> > And by "magic" I really mean that: people will not find that magic
+> > intuitive at all.
 > 
-> I used to do that manually, i.e. s/^pick /edit /;
+> I don't know about people but I do find "!" intuitive. It is squash
+> after all so I like the idea of using small modifier character.
 
-This could be a command
+Mhm.
 
-	run-foreach (cd t && make)
+So let's just interpret the "!" in the most common meaning, namely to add 
+an imperative.  Then it means "yes, I do want to squash".  Not 
+"squash, but oh, BTW, I want to lose the second commit message 
+completely, and I do not want to edit the commit message either".
 
-Hmm?
+Really, I do not see how anybody could find this intuitive at all.  Maybe 
+after reading the manual, but kinda defeats the meaning of the word 
+"intuitive".
 
 Ciao,
 Dscho
