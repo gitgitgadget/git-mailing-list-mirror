@@ -1,94 +1,105 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: Re: [PATCH] Re: rebase -i: auto-squash commits
-Date: Thu, 18 Jun 2009 10:59:32 +0200
-Message-ID: <vpqws79c3yj.fsf@bauges.imag.fr>
-References: <e1868cfe0906170506o37a75c35m47f9456bf8ae47c1@mail.gmail.com>
-	<43d8ce650906170555m644564b3v3722168f7217c326@mail.gmail.com>
-	<7vvdmurfao.fsf@alter.siamese.dyndns.org>
-	<20090618063348.6117@nanako3.lavabit.com>
-	<alpine.DEB.1.00.0906180007370.26154@pacific.mpi-cbg.de>
-	<20090618001111.GB12954@vidovic>
-	<7v8wjq2kqc.fsf@alter.siamese.dyndns.org>
-	<alpine.DEB.1.00.0906181003300.4848@intel-tinevez-2-302>
-	<vpqbpomey8c.fsf@bauges.imag.fr>
-	<alpine.DEB.1.00.0906181042270.4848@intel-tinevez-2-302>
+From: Eric Raible <raible@gmail.com>
+Subject: Bug: "LF will be replaced by CRLF" warning duplicated two (or three) times
+Date: Thu, 18 Jun 2009 09:17:14 +0000 (UTC)
+Message-ID: <loom.20090618T084545-442@post.gmane.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Nicolas Sebrecht <nicolas.s.dev@gmx.fr>,
-	Nanako Shiraishi <nanako3@lavabit.com>,
-	John Tapsell <johnflux@gmail.com>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Jun 18 11:06:13 2009
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jun 18 11:17:36 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MHDZU-0002qE-C5
-	for gcvg-git-2@gmane.org; Thu, 18 Jun 2009 11:06:12 +0200
+	id 1MHDkW-00071K-5y
+	for gcvg-git-2@gmane.org; Thu, 18 Jun 2009 11:17:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755366AbZFRJGB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Jun 2009 05:06:01 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754807AbZFRJGA
-	(ORCPT <rfc822;git-outgoing>); Thu, 18 Jun 2009 05:06:00 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:48357 "EHLO shiva.imag.fr"
+	id S1754252AbZFRJR1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Jun 2009 05:17:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753836AbZFRJR0
+	(ORCPT <rfc822;git-outgoing>); Thu, 18 Jun 2009 05:17:26 -0400
+Received: from main.gmane.org ([80.91.229.2]:36384 "EHLO ciao.gmane.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754305AbZFRJF7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Jun 2009 05:05:59 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id n5I8sJPt027604
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Thu, 18 Jun 2009 10:54:19 +0200
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
-	(Exim 4.50)
-	id 1MHDT2-0002Bk-Qr; Thu, 18 Jun 2009 10:59:32 +0200
-Received: from moy by bauges.imag.fr with local (Exim 4.63)
-	(envelope-from <moy@imag.fr>)
-	id 1MHDT2-0003GF-PO; Thu, 18 Jun 2009 10:59:32 +0200
-In-Reply-To: <alpine.DEB.1.00.0906181042270.4848@intel-tinevez-2-302> (Johannes Schindelin's message of "Thu\, 18 Jun 2009 10\:44\:36 +0200 \(CEST\)")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.0.91 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Thu, 18 Jun 2009 10:54:20 +0200 (CEST)
+	id S1753560AbZFRJRZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Jun 2009 05:17:25 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1MHDkN-0001d9-2w
+	for git@vger.kernel.org; Thu, 18 Jun 2009 09:17:27 +0000
+Received: from adsl-64-175-41-77.dsl.pltn13.pacbell.net ([64.175.41.77])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 18 Jun 2009 09:17:27 +0000
+Received: from raible by adsl-64-175-41-77.dsl.pltn13.pacbell.net with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 18 Jun 2009 09:17:27 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: main.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 64.175.41.77 (Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US) AppleWebKit/530.5 (KHTML, like Gecko) Chrome/2.0.172.31 Safari/530.5)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121821>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121822>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+A single "LF will be replaced by CRLF" message is expected in certain cases.
+But two warnings per file are produced with git-diff --patch-with-stat.
+Posted here rather than to the msysgit list b.c. I'm guessing it's not
+msysgit-specific.
 
-> Hi,
->
-> On Thu, 18 Jun 2009, Matthieu Moy wrote:
->
->> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
->> 
->> > I'd really rather stay with "fixup".
->> 
->> I like fixup. I'd say "fixup: <message>" so that the thing actually
->> looks like a program directive rather than natural language.
+$ git --version
+git version 1.6.3.msysgit.0
+$ mkdir auto-crlf-bug
+$ cd auto-crlf-bug/
+$ git init
+Initialized empty Git repository in d:/auto-crlf-bug/.git/
+$ git config core.autocrlf
+true
+$ touch file42
+$ git add file42
+$ git commit -m initial
+[master (root-commit) 6c22784] initial
+ 0 files changed, 0 insertions(+), 0 deletions(-)
+ create mode 100644 file42
+$ echo something > file42
+$ git diff
+diff --git a/file42 b/file42
+index e69de29..deba01f 100644
+--- a/file42
++++ b/file42
+@@ -0,0 +1 @@
++something
+warning: LF will be replaced by CRLF in file42
+$ git diff --patch-with-stat
+ file42 |    1 +
+ 1 files changed, 1 insertions(+), 0 deletions(-)
 
-[...]
+diff --git a/file42 b/file42
+index e69de29..deba01f 100644
+--- a/file42
++++ b/file42
+@@ -0,0 +1 @@
++something
+warning: LF will be replaced by CRLF in file42
+warning: LF will be replaced by CRLF in file42
+$
 
-> edited edit list:
->
-> 	pick b1ab1ab First commit
-> 	fixup 0123456 This is a fixup for the first commit
-> 	pick deafbee Second commit
 
-Sorry, we were not talking about the same thing: I was still talking
-about the dwimery in the commit message. So, yes, your "fixup" (that
-could be abbreviated by "f") sounds good to me.
+It's even possible to trigger three identical warnings:
+$ git add -p
+warning: LF will be replaced by CRLF in file42
+warning: LF will be replaced by CRLF in file42
+warning: LF will be replaced by CRLF in file42
+diff --git a/file42 b/file42
+index e69de29..deba01f 100644
+--- a/file42
++++ b/file42
+@@ -0,0 +1 @@
++something
+Stage this hunk [y,n,q,a,d,/,e,?]? q
+$
 
-But some (optional) magic to get the edited list by default could be
-nice in addition, and that could be triggered by "fixup: ..." in the
-commit message.
+This is obviously not a show-stopper, but I thought it worth reporting anyway.
 
-I do often find myself commiting something knowing that the commit is
-meant for rebase+squash-ing (i.e. I know that at commit time more
-often than at rebase time).
-
-(not yet 100% convinced myself, and I can sure do without)
-
--- 
-Matthieu
+- Eric
