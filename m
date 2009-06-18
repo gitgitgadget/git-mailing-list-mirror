@@ -1,55 +1,63 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Fix big left-shifts of unsigned char
-Date: Thu, 18 Jun 2009 10:12:37 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.0906181012050.4848@intel-tinevez-2-302>
-References: <E1MFvux-0001ix-I7@fencepost.gnu.org> <alpine.DEB.1.00.0906142215560.26154@pacific.mpi-cbg.de> <E1MG32S-0004C6-8A@fencepost.gnu.org> <alpine.LFD.2.01.0906142118250.3305@localhost.localdomain> <E1MH3bD-0004g2-97@fencepost.gnu.org>
- <alpine.LFD.2.01.0906171543120.16802@localhost.localdomain> <alpine.LFD.2.01.0906171654310.16802@localhost.localdomain>
+From: Teemu Likonen <tlikonen@iki.fi>
+Subject: Re: [PATCH] Re: rebase -i: auto-squash commits
+Date: Thu, 18 Jun 2009 11:17:02 +0300
+Message-ID: <87vdmuhs75.fsf@iki.fi>
+References: <e1868cfe0906170506o37a75c35m47f9456bf8ae47c1@mail.gmail.com>
+	<43d8ce650906170555m644564b3v3722168f7217c326@mail.gmail.com>
+	<7vvdmurfao.fsf@alter.siamese.dyndns.org>
+	<20090618063348.6117@nanako3.lavabit.com>
+	<alpine.DEB.1.00.0906180007370.26154@pacific.mpi-cbg.de>
+	<20090618001111.GB12954@vidovic>
+	<7v8wjq2kqc.fsf@alter.siamese.dyndns.org>
+	<alpine.DEB.1.00.0906181003300.4848@intel-tinevez-2-302>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Thu Jun 18 10:12:48 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Nicolas Sebrecht <nicolas.s.dev@gmx.fr>,
+	Nanako Shiraishi <nanako3@lavabit.com>,
+	John Tapsell <johnflux@gmail.com>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Thu Jun 18 10:17:51 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MHCjn-0007bI-6c
-	for gcvg-git-2@gmane.org; Thu, 18 Jun 2009 10:12:47 +0200
+	id 1MHCoe-00017L-4U
+	for gcvg-git-2@gmane.org; Thu, 18 Jun 2009 10:17:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755314AbZFRIMi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Jun 2009 04:12:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755267AbZFRIMh
-	(ORCPT <rfc822;git-outgoing>); Thu, 18 Jun 2009 04:12:37 -0400
-Received: from mail.gmx.net ([213.165.64.20]:47670 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754965AbZFRIMg (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Jun 2009 04:12:36 -0400
-Received: (qmail invoked by alias); 18 Jun 2009 08:12:37 -0000
-Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
-  by mail.gmx.net (mp006) with SMTP; 18 Jun 2009 10:12:37 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/87KQmGK/8yByBZpGsu9ItCorK9FN+kc7bPPG3F2
-	z5PPNF974pkWoq
-X-X-Sender: schindel@intel-tinevez-2-302
-In-Reply-To: <alpine.LFD.2.01.0906171654310.16802@localhost.localdomain>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.73
+	id S1753034AbZFRIRe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Jun 2009 04:17:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752429AbZFRIRd
+	(ORCPT <rfc822;git-outgoing>); Thu, 18 Jun 2009 04:17:33 -0400
+Received: from mta-out.inet.fi ([195.156.147.13]:48321 "EHLO jenni1.inet.fi"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752547AbZFRIRc (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Jun 2009 04:17:32 -0400
+Received: from mithlond.arda.local (80.220.180.181) by jenni1.inet.fi (8.5.014)
+        id 49F5976601EF58B4; Thu, 18 Jun 2009 11:17:27 +0300
+Received: from dtw by mithlond.arda.local with local (Exim 4.69)
+	(envelope-from <tlikonen@iki.fi>)
+	id 1MHCnu-0006Cd-4H; Thu, 18 Jun 2009 11:17:02 +0300
+In-Reply-To: <alpine.DEB.1.00.0906181003300.4848@intel-tinevez-2-302>
+	(Johannes Schindelin's message of "Thu, 18 Jun 2009 10:06:07 +0200
+	(CEST)")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.0.94 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121808>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121809>
 
-Hi,
+On 2009-06-18 10:06 (+0200), Johannes Schindelin wrote:
 
-On Wed, 17 Jun 2009, Linus Torvalds wrote:
+> I'd really rather stay with "fixup". And as I use single-letter
+> commands quite often, I'd also rather stay away from that magic "!".
+> And by "magic" I really mean that: people will not find that magic
+> intuitive at all.
 
-> This is _not_ tested in any way. And I got bored with getting rid of 
-> 'unsigned char' variables, so I by no means did all of them, just the 
-> first few that caugth my grepping eye.
+I don't know about people but I do find "!" intuitive. It is squash
+after all so I like the idea of using small modifier character.
 
-I wonder if there is a mode of 'sparse' which could spot these buggers.
+> My vote is for "fixup".
 
-Ciao,
-Dscho
+Mine is for "squash!".
