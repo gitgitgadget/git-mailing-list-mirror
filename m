@@ -1,59 +1,67 @@
-From: Teemu Likonen <tlikonen@iki.fi>
+From: Wincent Colaiuta <win@wincent.com>
 Subject: Re: visualise the output of git-diff?
-Date: Fri, 19 Jun 2009 10:52:08 +0300
-Message-ID: <87r5xgpsnr.fsf@iki.fi>
+Date: Fri, 19 Jun 2009 10:42:13 +0200
+Message-ID: <9553BA37-1651-4A83-90E8-56EB4583F0D8@wincent.com>
 References: <200906190732.24455.Karlis.Repsons@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Mime-Version: 1.0 (Apple Message framework v935.3)
+Content-Type: text/plain; charset=UTF-8;
+	format=flowed	delsp=yes
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: =?utf-8?Q?K=C4=81rlis_Repsons?= <karlis.repsons@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jun 19 09:52:21 2009
+To: =?UTF-8?Q?=22K=C4=81rlis_Repsons=22?= <karlis.repsons@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jun 19 10:42:29 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MHYtY-0002ZS-3q
-	for gcvg-git-2@gmane.org; Fri, 19 Jun 2009 09:52:20 +0200
+	id 1MHZg4-0006XK-TZ
+	for gcvg-git-2@gmane.org; Fri, 19 Jun 2009 10:42:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755158AbZFSHwJ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 19 Jun 2009 03:52:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751574AbZFSHwI
-	(ORCPT <rfc822;git-outgoing>); Fri, 19 Jun 2009 03:52:08 -0400
-Received: from mta-out.inet.fi ([195.156.147.13]:39369 "EHLO kirsi1.inet.fi"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755070AbZFSHwH (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Jun 2009 03:52:07 -0400
-Received: from mithlond.arda.local (80.220.180.181) by kirsi1.inet.fi (8.5.014)
-        id 49F6055A01F415A9; Fri, 19 Jun 2009 10:52:08 +0300
-Received: from dtw by mithlond.arda.local with local (Exim 4.69)
-	(envelope-from <tlikonen@iki.fi>)
-	id 1MHYtM-0001HM-2j; Fri, 19 Jun 2009 10:52:08 +0300
-In-Reply-To: <200906190732.24455.Karlis.Repsons@gmail.com> (=?utf-8?Q?=22K?=
- =?utf-8?Q?=C4=81rlis?= Repsons"'s
-	message of "Fri, 19 Jun 2009 07:32:15 +0000")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.0.94 (gnu/linux)
+	id S1752929AbZFSImS convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 19 Jun 2009 04:42:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752886AbZFSImR
+	(ORCPT <rfc822;git-outgoing>); Fri, 19 Jun 2009 04:42:17 -0400
+Received: from wincent1.inetu.net ([209.235.192.161]:60243 "EHLO
+	wincent1.inetu.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752278AbZFSImQ convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 19 Jun 2009 04:42:16 -0400
+Received: from [192.168.1.33] (195.Red-88-5-254.dynamicIP.rima-tde.net [88.5.254.195])
+	(authenticated bits=0)
+	by wincent1.inetu.net (8.13.8/8.13.8) with ESMTP id n5J8gEF6018503
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
+	Fri, 19 Jun 2009 04:42:17 -0400
+In-Reply-To: <200906190732.24455.Karlis.Repsons@gmail.com>
+X-Mailer: Apple Mail (2.935.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121886>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121887>
 
-On 2009-06-19 07:32 (UTC), K=C4=81rlis Repsons wrote:
+El 19/6/2009, a las 9:32, K=C4=81rlis Repsons escribi=C3=B3:
 
-> this is about displaying git-diff results: in case of long text lines=
-,
-> where only a single word may be changed, it would be useful, if that
-> single difference would be displayed in a different colour, but is it
-> possible?
+> Hi,
+> this is about displaying git-diff results:
+> in case of long text lines, where only a single word may be changed, =
+=20
+> it would
+> be useful, if that single difference would be displayed in a differen=
+t
+> colour, but is it possible?
 
-At least there is "git diff --color-words" but it may not be what you
-want.
 
-> And about pager - are you people all using less or there are also som=
-e
-> non-console viewers available?
+I started working on a patch for that feature a while back and then =20
+got snowed under by other work, but it's still on my TODO list. There =20
+was some discussion on the list about the idea.
 
-I mostly use "less" but sometimes also "kompare" which is excellent:
+The relevant thread starts with
+=09
+	Message-ID: <53497057-1ADE-4300-9F35-B218959606FE@wincent.com>
+	Subject: RFC: git diff colorization idea
 
-    git diff | kompare -
+Browsable copy here:
+
+	http://article.gmane.org/gmane.comp.version-control.git/106805
+
+Cheers,
+Wincent
