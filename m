@@ -1,97 +1,167 @@
-From: David Aguilar <davvid@gmail.com>
-Subject: Re: visualise the output of git-diff?
-Date: Thu, 18 Jun 2009 22:47:31 -1000
-Message-ID: <20090619084731.GB46896@gmail.com>
-References: <200906190732.24455.Karlis.Repsons@gmail.com> <87r5xgpsnr.fsf@iki.fi>
+From: Mark Struberg <struberg@yahoo.de>
+Subject: Re: [egit-dev] Re: [EGIT PATCH] Rename org.spearce.egit -> org.eclipse.egit
+Date: Fri, 19 Jun 2009 09:24:06 +0000 (GMT)
+Message-ID: <486798.37022.qm@web27802.mail.ukl.yahoo.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=iso-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?utf-8?Q?K=C4=81rlis?= Repsons <karlis.repsons@gmail.com>,
-	git@vger.kernel.org
-To: Teemu Likonen <tlikonen@iki.fi>
-X-From: git-owner@vger.kernel.org Fri Jun 19 10:47:45 2009
+Cc: Robin Rosenberg <robin.rosenberg@dewire.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>,
+	"egit-dev@eclipse.org" <egit-dev@eclipse.org>
+To: EGit developer discussion <egit-dev@eclipse.org>,
+	Alex Blewitt <alex.blewitt@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jun 19 11:24:30 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MHZlA-0008I7-VA
-	for gcvg-git-2@gmane.org; Fri, 19 Jun 2009 10:47:45 +0200
+	id 1MHaKi-0004QC-SG
+	for gcvg-git-2@gmane.org; Fri, 19 Jun 2009 11:24:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752974AbZFSIrf convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 19 Jun 2009 04:47:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752886AbZFSIre
-	(ORCPT <rfc822;git-outgoing>); Fri, 19 Jun 2009 04:47:34 -0400
-Received: from wf-out-1314.google.com ([209.85.200.174]:39379 "EHLO
-	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752205AbZFSIrd (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Jun 2009 04:47:33 -0400
-Received: by wf-out-1314.google.com with SMTP id 26so797806wfd.4
-        for <git@vger.kernel.org>; Fri, 19 Jun 2009 01:47:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=MhMmDZr4DExL6cf6PxlVOnVFuem4KPMcSvxuEz1JFbg=;
-        b=JM8/3iFCORMiDlv2Xs2cqFT5wLwcgmqyxWp+oDZPoZYbjKGxyJmFT2NWKPtdpGuhf8
-         1ieDX0u4wn7z+FznZlYxEJ0t4qzNieMi9WVDUAeb3h2jOC95sBAPpdj2RWSrc3H5TjUj
-         KJ8zH9qvJh39YErIXzPnKpGvwLnfh6wouAFro=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=Q902K+WDsfREDk8lwY8qQjZYvQQ2Q8C9HxpHCJsTW/atM4CjfzpPLAhubcxIG/pFvc
-         CeT8eHx8ec6jGvxvSuKfml0PuwwnJKryohG7X122pbAJ7g4UwGq5MXXJgO2myxTDj6f5
-         kG7h1pYeMUGE0oa6vORer8iLrtABB+mIe0CG0=
-Received: by 10.142.174.20 with SMTP id w20mr1304774wfe.285.1245401255688;
-        Fri, 19 Jun 2009 01:47:35 -0700 (PDT)
-Received: from gmail.com ([66.37.169.172])
-        by mx.google.com with ESMTPS id 28sm238743wfg.5.2009.06.19.01.47.34
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 19 Jun 2009 01:47:35 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <87r5xgpsnr.fsf@iki.fi>
-User-Agent: Mutt/1.5.19 (2009-01-05)
+	id S1754237AbZFSJYJ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 19 Jun 2009 05:24:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754136AbZFSJYG
+	(ORCPT <rfc822;git-outgoing>); Fri, 19 Jun 2009 05:24:06 -0400
+Received: from web27802.mail.ukl.yahoo.com ([217.146.182.7]:48730 "HELO
+	web27802.mail.ukl.yahoo.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with SMTP id S1753712AbZFSJYF convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Jun 2009 05:24:05 -0400
+Received: (qmail 38084 invoked by uid 60001); 19 Jun 2009 09:24:06 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.de; s=s1024; t=1245403446; bh=yTtEoygTVldFrVVw+dpw/BYRDQQJRj+CwQdRjdLXYnU=; h=Message-ID:X-YMail-OSG:Received:X-Mailer:Date:From:Subject:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding; b=tYyOKsN3wOiNJ0jDeSxzKef1MhxbFW7DTqu0eAj9gS+z8fUw1huaDqF9/lHqPfL87XrT3uYAz8ET9YzwBBlkibjHxrzL6EhQgTddAz/UCv7b2O5Kdm3WJcpqyf5FtM5OJr3s+j9GRlhTbcTWTE1ItxuVFtlxiicmTKwwmi9citk=
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=s1024; d=yahoo.de;
+  h=Message-ID:X-YMail-OSG:Received:X-Mailer:Date:From:Subject:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding;
+  b=gYjm0qff1fT1Vbw4+5htORkGN3+1frdb/W1KyySaPmZQpp3eFP4BUywM10wItdvUvXqHTFiQjIKddInbZAb4GsLhL8uSbnj0neQ7GSPKWhUmPan3Aj/llqLHItrp6h/USg2+U989dn8XsZP3aWW6lpGKL02COeLlpemSVJk/ka8=;
+X-YMail-OSG: 8.AzNTIVM1lA1KMwEaQHxSb93B3hpjGsFmTS1q.Z_1tYGcfx4vi2x2zCG_78GTq53gMDDa7dBWxMO1bPRCc3Bih6rsWkozcJsiILmKxW7WY.fLiNq1JinokXgzmXAFHPp7xhibZShN5sH3VQj8YPjK8HjF8.M731mpqtriuj90KNRsCcjL1h5iDCdLb5Fm0fZGVgwg4_jC77iVFxQ0XOtoZgNIIT9U_WM0sXFyhl_MAqOtBoyzKL.yyZzi8bp3jxLZuOEaFwP8VRqnQ6jmRpDvNrvkQoKj5gvFTyQDAJRgPRoJvesQQSOjPV47jHRe7_m6EiJd86gFerL7SFgvr5b7aQpm5_
+Received: from [213.235.230.200] by web27802.mail.ukl.yahoo.com via HTTP; Fri, 19 Jun 2009 09:24:06 GMT
+X-Mailer: YahooMailClassic/5.4.17 YahooMailWebService/0.7.289.15
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121889>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121890>
 
-On Fri, Jun 19, 2009 at 10:52:08AM +0300, Teemu Likonen wrote:
-> On 2009-06-19 07:32 (UTC), K=C4=81rlis Repsons wrote:
+
+Hmm, as an eclipse-plugin-prog dummy, I can't see so much problems arou=
+nd.
+
+The old binaries are still there.
+The new binaries are essentially a new scm plugin. Where do they interf=
+ere? They will have new names, config sections, etc isn't? We could als=
+o ship an update to the old plugin introducing a clear name 'SpearceGit=
+' or something. So it can easily be distinguished for those who need ol=
+d projects in parallel.
+
+In a few months time from now, almost all people will only have the new=
+ org.eclipse plugin installed. And thus who have both old and new plugi=
+ns installed should know how to select the proper one that way.
+
+LieGrue,
+strub
+
+--- Alex Blewitt <alex.blewitt@gmail.com> schrieb am Fr, 19.6.2009:
+
+> Von: Alex Blewitt <alex.blewitt@gmail.com>
+> Betreff: Re: [egit-dev] Re: [EGIT PATCH] Rename org.spearce.egit -> o=
+rg.eclipse.egit
+> An: "EGit developer discussion" <egit-dev@eclipse.org>
+> CC: "Robin Rosenberg" <robin.rosenberg@dewire.com>, "git@vger.kernel.=
+org" <git@vger.kernel.org>, "egit-dev@eclipse.org" <egit-dev@eclipse.or=
+g>
+> Datum: Freitag, 19. Juni 2009, 10:47
+> One possibility is to provide a
+> compatibility bundle such that the old API subclasses the
+> refactored classses. That way, existing projects will
+> continue to work.
 >=20
-> At least there is "git diff --color-words" but it may not be what you
-> want.
+> However, it is quite likely to be difficult to do it with
+> 100% success so another option might be to provide an
+> upgrade option, only visible to the older projects , which
+> will do the change in place.
 >=20
-> > And about pager - are you people all using less or there are also s=
-ome
-> > non-console viewers available?
+> But since it's a fairly major change, and that people will
+> have to go somewhere else to get the plugins etc, it is
+> probably a more efficient use of time to just make a note in
+> the release notes about the change and let people upgrade
+> themselves.
 >=20
-> I mostly use "less" but sometimes also "kompare" which is excellent:
+> Alex
 >=20
->     git diff | kompare -
+> Sent from my (new) iPhone
+>=20
+> On 19 Jun 2009, at 00:24, "Shawn O. Pearce" <spearce@spearce.org>
+> wrote:
+>=20
+> > Robin Rosenberg <robin.rosenberg@dewire.com>
+> wrote:
+> >>=20
+> >> Need an idea on how to proceed here. There is a
+> problem related to updating
+> >> plugins here. We have renamed feature with one
+> unrenamed plugin. How
+> >> to we avoid problem when switching from
+> org.spearce to org.eclipse
+> >>=20
+> >> One option is to release a v0.4.1 (which we should
+> do anyway), which is the last
+> >> version from master before the split. For
+> technical reasons this will be
+> >> a branch since the split occurred already.
+> >>=20
+> >> That 0.4.1 feature should require jgit < 0.5.
+> Then we jgit to v0.5 and
+> >> make org.eclipse.egit require jgit >=3D 0.5
+> >>=20
+> >> Having two EGit features will be confusing. You
+> get two of everything. E.g.
+> >> Team>Share will have two Git's to choose from,
+> but you cannot tell which
+> >> is which.
+> >>=20
+> >> That said, having both could be a feature, since
+> it (didn't really try it), would
+> >> be possible to switch between new and old
+> workspaces and get the plugin
+> >> configured for that workspace. The wierdness make
+> me suggest we do
+> >> not do this. If we really want it we could choose
+> to create a proxy plugin
+> >> for attaching old workspaces to the new plugins.
+> >=20
+> > Yikes.=A0 I didn't even consider this.=A0 My own
+> workspaces freaked out
+> > at the change, but I just deleted the projects from
+> the workspace,
+> > re-imported them, and re-attached them to the new team
+> provider.
+> > I never even gave it a second thought.
+> >=20
+> > You're right, we should have a better plan for
+> existing deployments.
+> >=20
+> > Its a good thing I didn't just shove this into the
+> tree, even though
+> > it seemed simple on the surface.=A0 Too
+> simple.=A0 :-)
+> >=20
+> > I like the 0.5 cut to define jgit versions pre/post
+> split.=A0 But I'm
+> > really not sure what to do about the rename on the
+> EGit team provider
+> > for existing workspaces.
+> >=20
+> > --Shawn.
+> > _______________________________________________
+> > egit-dev mailing list
+> > egit-dev@eclipse.org
+> > https://dev.eclipse.org/mailman/listinfo/egit-dev
+> --
+> To unsubscribe from this list: send the line "unsubscribe
+> git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at=A0 http://vger.kernel.org/majordomo-info.html
+>=20
 
-And of course.. don't forget about git-difftool =3D)
-http://kernel.org/pub/software/scm/git/docs/git-difftool.html
 
-	$ git difftool -t kompare
-	$ git difftool -t diffuse
-	$ git difftool -t xxdiff
-
-The quality of the visualization is only limited by the quality
-of your difftool.  We support lots of them.  From the docs:
-
-"Valid merge toosl are: kdiff3, kompare, tkdiff, meld,
-xxdiff, emerge, vimdiff, gvimdiff, ecmerge, diffuse,
-opendiff and araxis."
-
-Like mergetool, difftool has an extension mechanism in case the
-built-ins are not sufficient.
-
-
-Have fun,
-
---=20
-		David
+     =20
