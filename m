@@ -1,54 +1,87 @@
-From: Pat Thoyts <patthoyts@users.sourceforge.net>
-Subject: Re: Windows 7 and git-gui/gitk language
-Date: 19 Jun 2009 21:43:58 +0100
-Message-ID: <873a9w0x9t.fsf@users.sourceforge.net>
-References: <alpine.DEB.2.00.0906181200460.23400@ds9.cixit.se>
-	<87fxdw0zin.fsf@users.sourceforge.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Peter Krefting <peter@softwolves.pp.se>
-X-From: git-owner@vger.kernel.org Fri Jun 19 22:47:20 2009
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: [JGIT PATCH 0/6] Add timeouts to network IO
+Date: Fri, 19 Jun 2009 14:27:49 -0700
+Message-ID: <1245446875-31102-1-git-send-email-spearce@spearce.org>
+Cc: git@vger.kernel.org
+To: Robin Rosenberg <robin.rosenberg@dewire.com>
+X-From: git-owner@vger.kernel.org Fri Jun 19 23:28:05 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MHkzV-0004jL-Ga
-	for gcvg-git-2@gmane.org; Fri, 19 Jun 2009 22:47:18 +0200
+	id 1MHlcz-0002NZ-13
+	for gcvg-git-2@gmane.org; Fri, 19 Jun 2009 23:28:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760546AbZFSUoB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 19 Jun 2009 16:44:01 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760543AbZFSUn7
-	(ORCPT <rfc822;git-outgoing>); Fri, 19 Jun 2009 16:43:59 -0400
-Received: from smtp-out3.blueyonder.co.uk ([195.188.213.6]:32912 "EHLO
-	smtp-out3.blueyonder.co.uk" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1760381AbZFSUn6 (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 19 Jun 2009 16:43:58 -0400
-Received: from [172.23.170.144] (helo=anti-virus03-07)
-	by smtp-out3.blueyonder.co.uk with smtp (Exim 4.52)
-	id 1MHkwK-0008FA-9K; Fri, 19 Jun 2009 21:44:00 +0100
-Received: from [92.238.221.8] (helo=badger.patthoyts.tk)
-	by asmtp-out2.blueyonder.co.uk with esmtp (Exim 4.52)
-	id 1MHkwJ-000361-Rm; Fri, 19 Jun 2009 21:43:59 +0100
-Received: by badger.patthoyts.tk (Postfix, from userid 1000)
-	id 5B50D51842; Fri, 19 Jun 2009 21:43:59 +0100 (BST)
-X-Face: .`d#euqz@6H{";Ysmx2IVe_7M3vA+2w1X[QLk?ZO&QRauXQL{*L'$3getx}9+zK.-KWDx3.
- qrlR)76MFb`6bgoGvLpLtcQKB=X~;*<JKLtwLBM(IA'?rVjs1*tq\VHn?WMNsB,3XXWF@5.)4SRFa+
- '?a?.s#@hl7CiTo'F"O!fvbL0
-X-Url: http://www.patthoyts.tk/
-In-Reply-To: <87fxdw0zin.fsf@users.sourceforge.net>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.3
+	id S1753291AbZFSV1z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 19 Jun 2009 17:27:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752067AbZFSV1y
+	(ORCPT <rfc822;git-outgoing>); Fri, 19 Jun 2009 17:27:54 -0400
+Received: from george.spearce.org ([209.20.77.23]:42449 "EHLO
+	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751797AbZFSV1x (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Jun 2009 17:27:53 -0400
+Received: by george.spearce.org (Postfix, from userid 1000)
+	id 703A638200; Fri, 19 Jun 2009 21:27:56 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.2.4 (2008-01-01) on george.spearce.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-4.4 required=4.0 tests=ALL_TRUSTED,BAYES_00
+	autolearn=ham version=3.2.4
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by george.spearce.org (Postfix) with ESMTP id 812943819E;
+	Fri, 19 Jun 2009 21:27:55 +0000 (UTC)
+X-Mailer: git-send-email 1.6.3.2.416.g04d0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121910>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121911>
 
-Pat Thoyts <patthoyts@users.sourceforge.net> writes:
+If there's a bug in the remote peer software, or even just random
+network hardware/cable failures between us and the remote peer, we
+might block indefinitely waiting for more incoming data, or waiting
+for TCP ACKs necessary to release space in our transmit buffer.
 
-More follow-up -- it is actually the registry package missing from the
-msysGit version of tcl which causes the fault. msysGit issue 283 is
-now raised for this.
--- 
-Pat Thoyts                            http://www.patthoyts.tk/
-PGP fingerprint 2C 6E 98 07 2C 59 C8 97  10 CE 11 E6 04 E0 B9 DD
+This series adds a timeout to everything, allowing the caller to
+define some maximum waiting period before we abort and declare the
+remote peer to be unresponsive.  The default timeout of 0 will use
+the traditional "block indefinitely" behavior we have always had.
+
+
+Shawn O. Pearce (6):
+  Create input and output streams that have timeouts
+  Add remote.name.timeout to configure an IO timeout
+  Add timeouts to smart transport protocol clients
+  Add timeouts to smart transport protocol servers
+  Add timeouts to anonymous git:// daemon
+  Add --timeout command line options
+
+ .../src/org/spearce/jgit/pgm/Daemon.java           |    5 +
+ .../src/org/spearce/jgit/pgm/Fetch.java            |    5 +
+ .../src/org/spearce/jgit/pgm/LsRemote.java         |    6 +
+ .../src/org/spearce/jgit/pgm/Push.java             |    5 +
+ .../src/org/spearce/jgit/pgm/UploadPack.java       |    6 +
+ .../spearce/jgit/transport/RemoteConfigTest.java   |   26 ++
+ .../jgit/util/io/TimeoutInputStreamTest.java       |  187 +++++++++++++
+ .../jgit/util/io/TimeoutOutputStreamTest.java      |  286 ++++++++++++++++++++
+ .../spearce/jgit/transport/BasePackConnection.java |   36 +++-
+ .../jgit/transport/BasePackPushConnection.java     |   29 ++-
+ .../src/org/spearce/jgit/transport/Daemon.java     |   26 ++-
+ .../org/spearce/jgit/transport/DaemonClient.java   |   12 +-
+ .../org/spearce/jgit/transport/ReceivePack.java    |   57 ++++
+ .../org/spearce/jgit/transport/RemoteConfig.java   |   31 +++
+ .../org/spearce/jgit/transport/SshTransport.java   |    3 +-
+ .../src/org/spearce/jgit/transport/Transport.java  |   21 ++
+ .../spearce/jgit/transport/TransportGitAnon.java   |   13 +-
+ .../spearce/jgit/transport/TransportGitSsh.java    |  103 +++++++-
+ .../org/spearce/jgit/transport/TransportLocal.java |    9 +-
+ .../org/spearce/jgit/transport/TransportSftp.java  |    3 +-
+ .../src/org/spearce/jgit/transport/UploadPack.java |   59 ++++-
+ .../org/spearce/jgit/util/io/InterruptTimer.java   |  216 +++++++++++++++
+ .../spearce/jgit/util/io/TimeoutInputStream.java   |  133 +++++++++
+ .../spearce/jgit/util/io/TimeoutOutputStream.java  |  146 ++++++++++
+ 24 files changed, 1400 insertions(+), 23 deletions(-)
+ create mode 100644 org.spearce.jgit.test/tst/org/spearce/jgit/util/io/TimeoutInputStreamTest.java
+ create mode 100644 org.spearce.jgit.test/tst/org/spearce/jgit/util/io/TimeoutOutputStreamTest.java
+ create mode 100644 org.spearce.jgit/src/org/spearce/jgit/util/io/InterruptTimer.java
+ create mode 100644 org.spearce.jgit/src/org/spearce/jgit/util/io/TimeoutInputStream.java
+ create mode 100644 org.spearce.jgit/src/org/spearce/jgit/util/io/TimeoutOutputStream.java
