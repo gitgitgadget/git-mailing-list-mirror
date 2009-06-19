@@ -1,175 +1,133 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH] gitweb: gravatar support
-Date: Sat, 20 Jun 2009 00:31:53 +0200
-Message-ID: <200906200031.55576.jnareb@gmail.com>
-References: <1245405495-7712-1-git-send-email-giuseppe.bilotta@gmail.com> <200906191325.00248.jnareb@gmail.com> <cb7bb73a0906190757o4d083735t1a3f37396af76c2f@mail.gmail.com>
+From: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+Subject: Re: [PATCHv2] gitweb: gravatar support
+Date: Sat, 20 Jun 2009 00:43:46 +0200
+Message-ID: <cb7bb73a0906191543l75722b35xa1af532f4d8e1b76@mail.gmail.com>
+References: <1245435670-5688-1-git-send-email-giuseppe.bilotta@gmail.com>
+	 <7v63esklxh.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Jun 20 00:33:33 2009
+Cc: git@vger.kernel.org, Jakub Narebski <jnareb@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Jun 20 00:45:08 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MHmeE-0005rl-OU
-	for gcvg-git-2@gmane.org; Sat, 20 Jun 2009 00:33:27 +0200
+	id 1MHmpY-0000r4-3d
+	for gcvg-git-2@gmane.org; Sat, 20 Jun 2009 00:45:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759311AbZFSWcL convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 19 Jun 2009 18:32:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759324AbZFSWcK
-	(ORCPT <rfc822;git-outgoing>); Fri, 19 Jun 2009 18:32:10 -0400
-Received: from mail-bw0-f213.google.com ([209.85.218.213]:60852 "EHLO
+	id S1752698AbZFSWnq convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 19 Jun 2009 18:43:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752609AbZFSWnq
+	(ORCPT <rfc822;git-outgoing>); Fri, 19 Jun 2009 18:43:46 -0400
+Received: from mail-bw0-f213.google.com ([209.85.218.213]:42655 "EHLO
 	mail-bw0-f213.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759256AbZFSWcE (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Jun 2009 18:32:04 -0400
-Received: by bwz9 with SMTP id 9so2037388bwz.37
-        for <git@vger.kernel.org>; Fri, 19 Jun 2009 15:32:04 -0700 (PDT)
+	with ESMTP id S1751104AbZFSWnp convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 19 Jun 2009 18:43:45 -0400
+Received: by bwz9 with SMTP id 9so2040575bwz.37
+        for <git@vger.kernel.org>; Fri, 19 Jun 2009 15:43:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=tm0rC4D3/Wbsox0DVMYJ9rNNS1BslQ57iwv7Nlb+0m0=;
-        b=RnwgDrtFsBiiBGgiCoZpi6uyM4r48B9jn6VvpXwiYAOdSR0aOtWxSHdyhbUZ9cKkWI
-         LqYuxB/otV+nCOPD2FQu05jU8gshxYuA01cDue9IS4P5sqq7aRLCHOPnD8cmv0SoEsKy
-         RvhJk0yt4n19KRiyFnpL9QJpJxYLUXrz8FqEw=
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=8fIpb5wJZDKQ/5jPzozUCaJlE8gJbDyeBfqBfr1bnIg=;
+        b=NZbFVfY5XmjA80D7FooewbGt6OUf4+r8bT+TusEG5OQawUZPKxammpCENmWaKoEn5J
+         ZDzvv/a2I9BmcNoyoIvSdwZHww+dgUSAzr4TbGqPoGcu+gR8+hyGpGTOQarRZ9QiXBAf
+         VmEOpFyxXkPj+4MlgIy7XQfN0SYKsYCXH+Rlk=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=g7vpR+Uw842/nir8yTwlwsYDGmOABRTHhJHaAMcZ+kDtTRVtBDCIncGGar+ZtIpC4n
-         5RQ3o7tI/HXktwnPbBiJraRo9CNcER1h8C9skvlx409nGsM/P3m6LhuaTA447JIwBt02
-         AWiUrgDr1isgxI8g3QgQzoV3yIk3RvRMpD0Qc=
-Received: by 10.103.240.15 with SMTP id s15mr2153992mur.102.1245450723894;
-        Fri, 19 Jun 2009 15:32:03 -0700 (PDT)
-Received: from ?192.168.1.13? (abvl170.neoplus.adsl.tpnet.pl [83.8.209.170])
-        by mx.google.com with ESMTPS id g1sm10713522muf.56.2009.06.19.15.32.02
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 19 Jun 2009 15:32:03 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <cb7bb73a0906190757o4d083735t1a3f37396af76c2f@mail.gmail.com>
-Content-Disposition: inline
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=CroMTuebXwFqrArgf1Vk0FC4qVjIypWnUZhTlS2/nnKTF5hY51BL+PSC2tKSdkbKX1
+         864dSxwewc7Gol0cFWfZfkZaSw+TUzNncZTjN9YJc1+XVTTf9DtuX4dmXTwsz336gShr
+         lYIp/0gUuTza83HijqVj+v6OUZEvhCWJhWHL4=
+Received: by 10.204.115.139 with SMTP id i11mr3012865bkq.199.1245451426494; 
+	Fri, 19 Jun 2009 15:43:46 -0700 (PDT)
+In-Reply-To: <7v63esklxh.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121918>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121919>
 
-On Fri, 19 June 2009, Giuseppe Bilotta wrote:
+On Fri, Jun 19, 2009 at 10:28 PM, Junio C Hamano<gitster@pobox.com> wro=
+te:
+>
+> I see these repeated patterns in your patch.
+>
+>> @@ -4145,7 +4179,7 @@ sub git_shortlog_body {
+>> =A0 =A0 =A0 =A0 =A0 =A0 =A0 my $author =3D chop_and_escape_str($co{'=
+author_name'}, 10);
+>> =A0 =A0 =A0 =A0 =A0 =A0 =A0 # git_summary() used print "<td><i>$co{'=
+age_string'}</i></td>\n" .
+>> =A0 =A0 =A0 =A0 =A0 =A0 =A0 print "<td title=3D\"$co{'age_string_age=
+'}\"><i>$co{'age_string_date'}</i></td>\n" .
+>> - =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 "<td><i>" . $author . "</i></t=
+d>\n" .
+>> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 "<td>" . git_get_gravatar($co{=
+'author_email'}, 16, 1) . "<i>" . $author . "</i></td>\n" .
+>>...
+>> - =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 "<td><i>" . $author . "</i></t=
+d>\n" .
+>> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 "<td>" . git_get_gravatar($co{=
+'author_email'}, 16, 1) . "<i>" . $author . "</i></td>\n" .
+>>...
+>> - =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 "<td><i>" . $author . "</i></t=
+d>\n" .
+>> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 "<td>" . git_get_gravatar($co{=
+'author_email'}, 16, 1) . "<i>" . $author . "</i></td>\n" .
+>>...
+>> - =A0 =A0 print "<tr><td>author</td><td>" . esc_html($co{'author'}) =
+=2E "</td></tr>\n".
+>> + =A0 =A0 print "<tr><td>author</td><td>" . esc_html($co{'author'}) =
+=2E "</td>".
+>> + =A0 =A0 =A0 =A0 =A0 "<td rowspan=3D\"2\">" .git_get_gravatar($co{'=
+author_email'}) . "</td></tr>\n" .
+>>...
+>> - =A0 =A0 print "<tr><td>committer</td><td>" . esc_html($co{'committ=
+er'}) . "</td></tr>\n";
+>> + =A0 =A0 print "<tr><td>committer</td><td>" . esc_html($co{'committ=
+er'}) . "</td>".
+>> + =A0 =A0 =A0 =A0 =A0 "<td rowspan=3D\"2\">" .git_get_gravatar($co{'=
+committer_email'}) . "</td></tr>\n";
+>>...
+>
+> Doesn't it strike you as needing a bit more refactoring?
 
-> thanks for the comments, I'll send a new patch taking them into
-> consideration soon.
+I was having the same thoughts while writing v2 of the patch, indeed.
+However, I wasn't sure if it was appropriate to the refactoring in the
+same patch. A couple of places could be changed to use the existing
+git_print_authorship, others would need their own function, as you
+point out.
 
-Errr... I had a few additional comments to this reply, but I was a bit
-late I think with replying.
+> By the way, in the above example, I named the field 'smallicon', as u=
+se of
+> gravatar is merely an implementation detail. =A0It is plausible other=
+ people
+> may want to use picons instead.
 
->=20
-> A few additional replies:
->=20
->>> + =A0 =A0 # Gravatar support. When this feature is enabled, views s=
-uch as
->>> + =A0 =A0 # shortlog or commit will display the gravatar associated=
- with
->>> + =A0 =A0 # the email of the committer(s) and/or author(s). Please =
-note that
->>> + =A0 =A0 # the feature depends on Digest::MD5.
->>> +
->>> + =A0 =A0 # To enable system wide have in $GITWEB_CONFIG
->>> + =A0 =A0 # $feature{'gravatar'}{'default'} =3D [1];
->>> + =A0 =A0 # Project specific override is not supported.
->>> + =A0 =A0 'gravatar' =3D> {
->>> + =A0 =A0 =A0 =A0 =A0 =A0 'override' =3D> 0,
->>> + =A0 =A0 =A0 =A0 =A0 =A0 'default' =3D> [0]},
->>
->> Yet another global feature without project specific override. =A0Hmm=
-m...
->> I wonder if project specific and global (non-overridable) features
->> should be separated. =A0But it is question for a separate commit.
->>
->> Question: why it is not overridable (why project specific override
->> is not supported for this feature)? =A0Some projects may use Gravata=
-rs,
->> some might not, although I guess that usually it is deployment speci=
-fic
->> feature.
->=20
-> I see it as a deployment feature, and considering that it adds an
-> (admittedly small) extra load on the server, I thought it was sensibl=
-e
-> to make it non-overridable. OTOH, since the load is small, it might b=
-e
-> possible to make it per-project without big issues.
+I had to google for picons but yes, it makes sense.
 
-Well, I was not asking you to change it; I was asking about=20
-justification behind making it non-overridable.
+> I do not know about the following hunk (why does it have the icon at =
+the
+> end, unlike the other ones?), but I think you got the idea.
+>
+>> - =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 "<i>" . esc_html($co{'author_n=
+ame'}) . =A0" [$ad{'rfc2822'}]</i><br/>\n" .
+>> - =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 "</div>\n";
+>> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 "<i>" . esc_html($co{'author_n=
+ame'}) . =A0" [$ad{'rfc2822'}]</i>&nbsp;" .
+>> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 git_get_gravatar($co{'author_e=
+mail'}, 16) .
+>> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 "<br/>\n</div>\n";
 
->=20
->> You would probably want to protect against $size being undefined:
->>
->> =A0+ =A0 =A0 =A0 =A0 =A0 =A0 $size =3D 32 if (!defined($size) || $si=
-ze <=3D 0);
->>
->> Because currently when you are not passing size parameter to use
->> default size you would get the following warning:
->>
->> =A0Use of uninitialized value in numeric le (<=3D) ...
->=20
-> Oh right.
+I had the impression that in this case it made more aesthetical sense
+to have the icon on the other side. I'm not exactly a good designer
+though, so we might want to prefer consistency and keep it all the
+same way. This section would probably use git_print_authorship or at
+least share some code with that.
 
-Well, as you use 'undef' (do not pass parameter) for default value
-and you _do not_ use negative (or zero) value, then
-
-+             $size =3D 32 if !defined($size);
-
-would be enough (in Perl 6 / Perl 5.10 it would be "$size //=3D 32" ;-)
-
-The question is: does gravatar.com accepts any size?  What does it do
-if it gets negative size passed?  I have not used gravatar as=20
-developer...
-
->=20
->> Did you run the t9500, adding test enabling gravatars?
->=20
-> Ehrm, no 8-P
-
-Well, it is always nice to have test for new feature.  Unfortunately
-due to the smart way it is done currently unmodified (not extended)
-t9500 wouldn't catch above issue.
-
-[...]
-
->> Also gravatars are
->> not shown in 'history' view, but I guess that could wait for proper
->> refactoring of all log-like views/actions to use common infrastructu=
-re.
->=20
-> That's part of the reason, the other being that I couldn't find a
-> satisfactory way to do it 8-P
-
-What is the problem?
-
->=20
->> Those all look nice with the *default* font sizes. =A0But as the siz=
-e of
->> gravatar is used when constructing gravatar URL, to pass to gravatar=
-=2Ecom
->> I don't see how this problem can be resolved... =A0Beside making it
->> configurable, I guess...
->=20
-> That's something I hadn't thought about, honestly. The problem of
-> course is that the font sizes get customized via CSS, but the gravata=
-r
-> size would get customized at the cgi level ... so unless we parse the
-> CSS from the cgi it cannot be done automatically.
-
-What I though here was to use %gravatar_size hash, with keys such as
-'default' and 'double' (for "double line height").  If you change or
-add CSS, changing configuration, you can change also this in config.
-
-More comments to follow in v2 and replies.
 --=20
-Jakub Narebski
-Poland
+Giuseppe "Oblomov" Bilotta
