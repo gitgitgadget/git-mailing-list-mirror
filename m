@@ -1,63 +1,65 @@
-From: Pat Thoyts <patthoyts@users.sourceforge.net>
-Subject: Re: Windows 7 and git-gui/gitk language
-Date: 19 Jun 2009 21:19:48 +0100
-Message-ID: <877hz80ye3.fsf@users.sourceforge.net>
-References: <alpine.DEB.2.00.0906181200460.23400@ds9.cixit.se>
-	<87fxdw0zin.fsf@users.sourceforge.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] daemon: send stderr of service programs to the syslog
+Date: Fri, 19 Jun 2009 13:26:53 -0700
+Message-ID: <7veitgkm0i.fsf@alter.siamese.dyndns.org>
+References: <200906142238.51725.j6t@kdbg.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Peter Krefting <peter@softwolves.pp.se>
-X-From: git-owner@vger.kernel.org Fri Jun 19 22:20:12 2009
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	"H. Peter Anvin" <hpa@zytor.com>
+To: Johannes Sixt <j6t@kdbg.org>
+X-From: git-owner@vger.kernel.org Fri Jun 19 22:27:11 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MHkZH-0002cC-CF
-	for gcvg-git-2@gmane.org; Fri, 19 Jun 2009 22:20:11 +0200
+	id 1MHkg2-0005kr-FY
+	for gcvg-git-2@gmane.org; Fri, 19 Jun 2009 22:27:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751616AbZFSUTy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 19 Jun 2009 16:19:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750777AbZFSUTy
-	(ORCPT <rfc822;git-outgoing>); Fri, 19 Jun 2009 16:19:54 -0400
-Received: from smtp-out2.blueyonder.co.uk ([195.188.213.5]:40116 "EHLO
-	smtp-out2.blueyonder.co.uk" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750728AbZFSUTx (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 19 Jun 2009 16:19:53 -0400
-Received: from [172.23.170.143] (helo=anti-virus02-10)
-	by smtp-out2.blueyonder.co.uk with smtp (Exim 4.52)
-	id 1MHkZ1-0000wv-G3; Fri, 19 Jun 2009 21:19:55 +0100
-Received: from [92.238.221.8] (helo=badger.patthoyts.tk)
-	by asmtp-out4.blueyonder.co.uk with esmtp (Exim 4.52)
-	id 1MHkZ0-0006h7-Uw; Fri, 19 Jun 2009 21:19:54 +0100
-Received: by badger.patthoyts.tk (Postfix, from userid 1000)
-	id 773E351842; Fri, 19 Jun 2009 21:19:49 +0100 (BST)
-X-Face: .`d#euqz@6H{";Ysmx2IVe_7M3vA+2w1X[QLk?ZO&QRauXQL{*L'$3getx}9+zK.-KWDx3.
- qrlR)76MFb`6bgoGvLpLtcQKB=X~;*<JKLtwLBM(IA'?rVjs1*tq\VHn?WMNsB,3XXWF@5.)4SRFa+
- '?a?.s#@hl7CiTo'F"O!fvbL0
-X-Url: http://www.patthoyts.tk/
-In-Reply-To: <87fxdw0zin.fsf@users.sourceforge.net>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.3
+	id S1751878AbZFSU0w (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 19 Jun 2009 16:26:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751616AbZFSU0w
+	(ORCPT <rfc822;git-outgoing>); Fri, 19 Jun 2009 16:26:52 -0400
+Received: from fed1rmmtao104.cox.net ([68.230.241.42]:56363 "EHLO
+	fed1rmmtao104.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750925AbZFSU0v (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Jun 2009 16:26:51 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao104.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20090619202653.ZJQ17135.fed1rmmtao104.cox.net@fed1rmimpo01.cox.net>;
+          Fri, 19 Jun 2009 16:26:53 -0400
+Received: from localhost ([68.225.240.211])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id 5wSt1c00C4aMwMQ03wStCP; Fri, 19 Jun 2009 16:26:53 -0400
+X-VR-Score: 0.00
+X-Authority-Analysis: v=1.0 c=1 a=4M1fZqYIV4cA:10 a=A9qS8gIqAAAA:8
+ a=896JPvTC-gRoVsA4fCcA:9 a=EyL2B4rQfVDML69MOkn5jVCcvBEA:4 a=Kj4G0JfAssAA:10
+X-CM-Score: 0.00
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121907>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121908>
 
-Pat Thoyts <patthoyts@users.sourceforge.net> writes:
+Johannes Sixt <j6t@kdbg.org> writes:
 
->If you fire up wish on its own (it is installed with msys Git) and
->enter 'package require msgcat; msgcat::mclocale' in the console window
->it should be showing something other than 'en' if your Windows
->installation is non-English. There might be a bug for the Tcl people
->here (comp.lang.tcl or the sourceforge bug tracker).
->
+> diff --git a/daemon.c b/daemon.c
+> index d7ceca4..3e1a354 100644
+> --- a/daemon.c
+> +++ b/daemon.c
+> @@ -1,6 +1,7 @@
+>  #include "cache.h"
+>  #include "pkt-line.h"
+> -#include "exec_cmd.h"
+> +#include "run-command.h"
+> +#include "strbuf.h"
 
-To follow-up on myself - the msgcat locale is set on Windows by
-reading a value out of the registry. This seems to have changed on
-Windows 7 now so the locale always gets defaulted to 'C'. I'll raise a
-bug with the tcl project and get a fix done.
+    CC daemon.o
+cc1: warnings being treated as errors
+daemon.c: In function 'main':
+daemon.c:981: error: implicit declaration of function 'git_extract_argv0_path'
+make: *** [daemon.o] Error 1
 
--- 
-Pat Thoyts                            http://www.patthoyts.tk/
-PGP fingerprint 2C 6E 98 07 2C 59 C8 97  10 CE 11 E6 04 E0 B9 DD
+I'll add the include back in the meantime.
