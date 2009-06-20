@@ -1,82 +1,65 @@
-From: Jon Seymour <jon.seymour@gmail.com>
-Subject: Specifying multiple refspecs in remote.{remote}.fetch
-Date: Sat, 20 Jun 2009 16:37:51 +1000
-Message-ID: <2cfc40320906192337g66db81f0w92e06adfc6a189c9@mail.gmail.com>
+From: Paul Mackerras <paulus@samba.org>
+Subject: Please pull gitk master branch
+Date: Sat, 20 Jun 2009 16:48:14 +1000
+Message-ID: <19004.34350.109422.730109@cargo.ozlabs.ibm.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Jun 20 08:38:07 2009
+Cc: git@vger.kernel.org, Elijah Newren <newren@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Jun 20 08:48:29 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MHuDC-0004IX-4a
-	for gcvg-git-2@gmane.org; Sat, 20 Jun 2009 08:38:02 +0200
+	id 1MHuNI-00073P-1M
+	for gcvg-git-2@gmane.org; Sat, 20 Jun 2009 08:48:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753627AbZFTGhu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 20 Jun 2009 02:37:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751878AbZFTGhu
-	(ORCPT <rfc822;git-outgoing>); Sat, 20 Jun 2009 02:37:50 -0400
-Received: from mail-gx0-f214.google.com ([209.85.217.214]:34658 "EHLO
-	mail-gx0-f214.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753460AbZFTGht (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 20 Jun 2009 02:37:49 -0400
-Received: by gxk10 with SMTP id 10so3623689gxk.13
-        for <git@vger.kernel.org>; Fri, 19 Jun 2009 23:37:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:date:message-id:subject
-         :from:to:content-type:content-transfer-encoding;
-        bh=O2Dr+rBNdrAE4aG92zyhnHXL/ljggN7GfXf7x63MDl8=;
-        b=mf7P1O2YqbUx9IySAV2CGfuCmPwQl1g4LMukwGEYoXoxmDYViLw59Cy28WSTJkR2a3
-         chNlheGW/h+iL5JaUNKGC0Upx0m7CcQ6g5wIqLr+vKGjChFKCK9nTVXa6ptnwf6X7wJH
-         +yGUr/PoVLAIR1NrJkRodENpVulEv4fQ0cogM=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type
-         :content-transfer-encoding;
-        b=LE21dWQfHXj667LsFLUa+hjHwTQGt38V18AIbSdRgAwRHxfu1lPxVus4HqC20IYMQB
-         QenDr2ao9X8oW+pcflTqjugq1OulXAYjy38/Ki3czvU6y110DyOYE5AlKlhbsjDlS3W/
-         GLu0ipuFnzzFfVk88zEGq1ZyaCbqmdB08bn6U=
-Received: by 10.151.141.15 with SMTP id t15mr7183781ybn.309.1245479871764; 
-	Fri, 19 Jun 2009 23:37:51 -0700 (PDT)
+	id S1751568AbZFTGsS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 20 Jun 2009 02:48:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751300AbZFTGsR
+	(ORCPT <rfc822;git-outgoing>); Sat, 20 Jun 2009 02:48:17 -0400
+Received: from bilbo.ozlabs.org ([203.10.76.25]:44352 "EHLO bilbo.ozlabs.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751108AbZFTGsQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 20 Jun 2009 02:48:16 -0400
+Received: by bilbo.ozlabs.org (Postfix, from userid 1003)
+	id E7F7CB7268; Sat, 20 Jun 2009 16:48:18 +1000 (EST)
+X-Mailer: VM 8.0.12 under 22.2.1 (i486-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121933>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121934>
 
-It doesn't seem to be possible to specify multiple refspecs in a git config.
+Junio,
 
-I want to do this:
+Please do a pull from my gitk repository master branch to get the
+following commits:
 
-remote.hub/pub/release.fetch=+refs/heads/*:refs/remotes/hub/pub/release/*
-+refs/tags/*:refs/tags/hub/pub/release/*
-remote.hub/pub/release.tagopt=--no-tags
+Christian Stimming (1):
+      gitk: Update German translation.
 
-but git fetch complains:
+Dirk Suesserott (1):
+      gitk: Add option 'Simple history' to the options menu
 
-fatal: Invalid refspec '+refs/heads/*:refs/remotes/hub/pub/release/*
-+refs/tags/*:refs/tags/hub/pub/release/*'
+Elijah Newren (1):
+      gitk: Make more options easily accessible from Edit View dialog
 
-Now, in theory, I could use a file in remotes/ to specify multiple
-Pull: lines. This works if my remote doesn't have slashes in its name,
-but it doesn't work if my remote does have slashes in its name since
-git doesn't recognize remote files located in sub-directories of
-${GIT_DIR}/remotes.
+Johannes Sixt (1):
+      gitk: Use --textconv to generate diff text
 
-Is it a reasonable expectation that:
+Markus Heidelberg (1):
+      gitk: Allow diff view without context lines
 
-* git should support multiple refspecs specified via git config?
-* git should support subdirectories in ${GIT_DIR}/remotes?
+Michele Ballabio (1):
+      gitk: Add another string to translation
 
-BTW: the reason I want to do this is that I need to namespace the tags
-and heads because I am using a "hub" repo to simplify a transport
-topology for distributing a number of different spoke repos via a
-smaller number of hub repos. Since I can't guarantee the branches and
-tags of each spoke repo will be globally unique, I need to namespace
-both the heads and the tags and a path-like naming convention for each
-spoke repo seems like the most natural way to do that.
+Pat Thoyts (1):
+      gitk: Handle msysGit version during version comparisons
 
-jon seymour.
+Paul Mackerras (1):
+      gitk: Check git version before using --textconv flag
+
+Thanks,
+Paul.
