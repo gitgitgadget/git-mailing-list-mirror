@@ -1,65 +1,61 @@
-From: Paul Mackerras <paulus@samba.org>
-Subject: Please pull gitk master branch
-Date: Sat, 20 Jun 2009 16:48:14 +1000
-Message-ID: <19004.34350.109422.730109@cargo.ozlabs.ibm.com>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: bug/feature request: apply textconv in "git add -p" diff output
+Date: Sat, 20 Jun 2009 17:17:41 +1000
+Message-ID: <fcaeb9bf0906200017x6cc63c29q5515c11c202e424e@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Elijah Newren <newren@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Jun 20 08:48:29 2009
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat Jun 20 09:18:59 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MHuNI-00073P-1M
-	for gcvg-git-2@gmane.org; Sat, 20 Jun 2009 08:48:28 +0200
+	id 1MHuqo-00060u-Ad
+	for gcvg-git-2@gmane.org; Sat, 20 Jun 2009 09:18:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751568AbZFTGsS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 20 Jun 2009 02:48:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751300AbZFTGsR
-	(ORCPT <rfc822;git-outgoing>); Sat, 20 Jun 2009 02:48:17 -0400
-Received: from bilbo.ozlabs.org ([203.10.76.25]:44352 "EHLO bilbo.ozlabs.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751108AbZFTGsQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 20 Jun 2009 02:48:16 -0400
-Received: by bilbo.ozlabs.org (Postfix, from userid 1003)
-	id E7F7CB7268; Sat, 20 Jun 2009 16:48:18 +1000 (EST)
-X-Mailer: VM 8.0.12 under 22.2.1 (i486-pc-linux-gnu)
+	id S1751761AbZFTHSB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 20 Jun 2009 03:18:01 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751249AbZFTHSB
+	(ORCPT <rfc822;git-outgoing>); Sat, 20 Jun 2009 03:18:01 -0400
+Received: from an-out-0708.google.com ([209.85.132.248]:44845 "EHLO
+	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754815AbZFTHSA (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 20 Jun 2009 03:18:00 -0400
+Received: by an-out-0708.google.com with SMTP id d40so3666639and.1
+        for <git@vger.kernel.org>; Sat, 20 Jun 2009 00:18:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:from:date:message-id
+         :subject:to:content-type:content-transfer-encoding;
+        bh=hjBAHtieAwDl/odBKHVIhq/ln21/hsBDbQlGiUhOOPk=;
+        b=MymmmJ+AS7uq8ydUISkRqJwz6bfbrBz6DAvoh9+PkN9YT+ooF18h4WLprENCWK5q6q
+         03k3wFl36BG4mKCSoZss0g2gNb4PkXeI3lEQIFaopHcbLqcdZQm1MAUC8J7+Qig62e8j
+         u7dHhF+F0e3zHPW66dnpU7O54CF+ISlz8/SUI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:from:date:message-id:subject:to:content-type
+         :content-transfer-encoding;
+        b=oJulEtm0/zN5jYW8yeEyTc/dEL4/FVVda92wajXkSVO15c3Y/8irhJnU/OL0cI53zK
+         YGPcWHDvSubpN+Jvy252dxiWDgaaVzOTbEGKQM7otZDa6sLq77uhjFoIuS/9U919JrzB
+         Oxw6NMAJfa2NmRGc8wAOje1wVMuquNYrmxalA=
+Received: by 10.100.10.15 with SMTP id 15mr5046944anj.8.1245482281166; Sat, 20 
+	Jun 2009 00:18:01 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121934>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121935>
 
-Junio,
+Hi,
 
-Please do a pull from my gitk repository master branch to get the
-following commits:
-
-Christian Stimming (1):
-      gitk: Update German translation.
-
-Dirk Suesserott (1):
-      gitk: Add option 'Simple history' to the options menu
-
-Elijah Newren (1):
-      gitk: Make more options easily accessible from Edit View dialog
-
-Johannes Sixt (1):
-      gitk: Use --textconv to generate diff text
-
-Markus Heidelberg (1):
-      gitk: Allow diff view without context lines
-
-Michele Ballabio (1):
-      gitk: Add another string to translation
-
-Pat Thoyts (1):
-      gitk: Handle msysGit version during version comparisons
-
-Paul Mackerras (1):
-      gitk: Check git version before using --textconv flag
+I use git to manage bdf font files. It it quite cryptic so textconv
+for diff output makes it much easier to keep track of changes. The
+only problem is that "git add -p" does not seems to use textconv, so I
+have to run in parallel "git diff" and "git add -p", then add chunks
+accordingly. Can somebody add textconv support to "git add -p" please?
+I'm not so good at Perl to do the job.
 
 Thanks,
-Paul.
+-- 
+Duy
