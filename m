@@ -1,71 +1,69 @@
-From: Jon Seymour <jon.seymour@gmail.com>
-Subject: Re: Specifying multiple refspecs in remote.{remote}.fetch
-Date: Sat, 20 Jun 2009 23:00:37 +1000
-Message-ID: <37955246-7ECC-4A98-82C7-33DA894C864A@gmail.com>
-References: <2cfc40320906192337g66db81f0w92e06adfc6a189c9@mail.gmail.com> <m3eitfgxln.fsf@localhost.localdomain>
-Mime-Version: 1.0 (iPhone Mail 7A341)
-Content-Type: text/plain;
-	charset=us-ascii;
-	format=flowed;
-	delsp=yes
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Jun 20 15:07:18 2009
+From: Aaron Crane <git@aaroncrane.co.uk>
+Subject: Re: [PATCHv2] gitweb: gravatar support
+Date: Sat, 20 Jun 2009 15:16:27 +0100
+Message-ID: <20090620141626.GK7675@aaroncrane.co.uk>
+References: <1245435670-5688-1-git-send-email-giuseppe.bilotta@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Jakub Narebski <jnareb@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+To: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Jun 20 16:40:30 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MI0Hs-0006TW-Tb
-	for gcvg-git-2@gmane.org; Sat, 20 Jun 2009 15:07:17 +0200
+	id 1MI1k3-0000DP-VH
+	for gcvg-git-2@gmane.org; Sat, 20 Jun 2009 16:40:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752087AbZFTNHE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 20 Jun 2009 09:07:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751980AbZFTNHE
-	(ORCPT <rfc822;git-outgoing>); Sat, 20 Jun 2009 09:07:04 -0400
-Received: from wf-out-1314.google.com ([209.85.200.168]:24566 "EHLO
-	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751939AbZFTNHC (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 20 Jun 2009 09:07:02 -0400
-Received: by wf-out-1314.google.com with SMTP id 26so1093202wfd.4
-        for <git@vger.kernel.org>; Sat, 20 Jun 2009 06:07:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:references:message-id:from:to
-         :in-reply-to:content-type:content-transfer-encoding:x-mailer
-         :mime-version:subject:date:cc;
-        bh=dhWmQJiFkSU7CrVyQK8g/Ha5QFDZKZOoLiH6fUVbAzg=;
-        b=jRK71W5coDozqTUcZyhycU+onqynXUpPngIcfqkWUfLJhM6C2NrvleTLvD9BvcFxfF
-         XvFIMrtOWVqtqFUvpXhmawulF0f/51cS3r1B5/Q20NWB1s+uBmwufM6Aaag5mfvXbCAx
-         bEhFxgUaYw1kAqmnj6oh2r+2szJSHRtfHz+40=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=references:message-id:from:to:in-reply-to:content-type
-         :content-transfer-encoding:x-mailer:mime-version:subject:date:cc;
-        b=N8d2CEY09eSkVblwKbtUXeTyLXVsGRba135hhlZQXKt94WEDqEyoV8ZfUs9eAGffKv
-         eBbTPkTSyhfOtwuoCAz8jLZbSeOkMQDivUvzOz/FDP44uLvVcQhJ80Ml2RomsJcILwQf
-         DhBhySSmwYbEL2DTPSpyEL8dZeKHfuHakWL00=
-Received: by 10.142.200.3 with SMTP id x3mr350737wff.122.1245502850627;
-        Sat, 20 Jun 2009 06:00:50 -0700 (PDT)
-Received: from ?10.213.19.15? ([123.208.165.25])
-        by mx.google.com with ESMTPS id 9sm562844wfc.36.2009.06.20.06.00.49
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sat, 20 Jun 2009 06:00:49 -0700 (PDT)
-In-Reply-To: <m3eitfgxln.fsf@localhost.localdomain>
-X-Mailer: iPhone Mail (7A341)
+	id S1752995AbZFTOkE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 20 Jun 2009 10:40:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752289AbZFTOkD
+	(ORCPT <rfc822;git-outgoing>); Sat, 20 Jun 2009 10:40:03 -0400
+Received: from bluebeard.laxan.co.uk ([81.21.79.10]:42099 "EHLO
+	bluebeard.laxan.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751939AbZFTOkC (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 20 Jun 2009 10:40:02 -0400
+X-Greylist: delayed 1414 seconds by postgrey-1.27 at vger.kernel.org; Sat, 20 Jun 2009 10:40:02 EDT
+Received: from marchmont.aaroncrane.co.uk ([87.194.157.167] helo=sunset)
+	by bluebeard.laxan.co.uk with esmtpa (Exim 4.63)
+	(envelope-from <git@aaroncrane.co.uk>)
+	id 1MI1Mp-0004ul-Q0; Sat, 20 Jun 2009 15:16:27 +0100
+Received: by sunset (Postfix, from userid 1000)
+	id 25E484F0502; Sat, 20 Jun 2009 15:16:27 +0100 (BST)
+Mail-Followup-To: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>,
+	git@vger.kernel.org, Jakub Narebski <jnareb@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+Content-Disposition: inline
+In-Reply-To: <1245435670-5688-1-git-send-email-giuseppe.bilotta@gmail.com>
+Mail-Copies-To: nobody
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121943>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121944>
 
-Jakub,
+Giuseppe Bilotta writes:
+> +# check if gravatars are enabled and dependencies are satisfied
+> +our $git_gravatar_enabled = gitweb_check_feature('gravatar') &&
+> +	(eval { use Digest::MD5 qw(md5_hex); 1; });
 
-Ah, thanks for that.
+This test for the availability of Digest::MD5 is broken: `use`
+statements are executed at compile time, so the whole program will
+fail if Digest::MD5 can't be loaded.
 
-I don't know why my attempt to use subdirs of remotes failed but if  
-you say it works I'll try it again.
+A possible fix would be to move the compile-time actions to run time:
 
-Anyway, thank you!
+    our $git_gravatar_enabled = gitweb_check_feature('gravatar') &&
+         (eval { require Digest::MD5; Digest::MD5->import('md5_hex'); 1 });
 
-jon.
+However, I don't recommend doing that.  Digest::MD5 is a core module
+in Perl 5.8.0 and later, so an installation of Perl 5.8 that doesn't
+have it is broken.  Since gitweb.perl already needs 5.8 (because of
+the `binmode STDOUT, ':utf8'` at the top, if nothing else) I see no
+value in jumping through hoops to make this work in the essentially
+impossible situation where Digest::MD5 is unavailable.
+
+-- 
+Aaron Crane ** http://aaroncrane.co.uk/
