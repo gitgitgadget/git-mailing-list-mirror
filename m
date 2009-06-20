@@ -1,104 +1,71 @@
-From: Heiko Voigt <hvoigt@hvoigt.net>
-Subject: [RFC PATCH] check for filenames that only differ in case to sample
-	pre-commit hook
-Date: Sat, 20 Jun 2009 14:14:39 +0200
-Message-ID: <20090620121427.GC4876@heiko-voigts-macbook.local>
-References: <419AD153-53B4-4DAB-AF72-4127C17B1CA0@gmail.com> <m3r5yukv6g.fsf@localhost.localdomain> <20090512214250.GA22974@macbook.lan> <200905122356.00659.jnareb@gmail.com> <20090514175850.GA26267@macbook.lan> <46a038f90905150352q76157227q24c6b8c0befa4108@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jakub Narebski <jnareb@gmail.com>,
-	Dmitry Potapov <dpotapov@gmail.com>,
-	Esko Luontola <esko.luontola@gmail.com>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>
-To: Martin Langhoff <martin.langhoff@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Jun 20 14:14:50 2009
+From: Jon Seymour <jon.seymour@gmail.com>
+Subject: Re: Specifying multiple refspecs in remote.{remote}.fetch
+Date: Sat, 20 Jun 2009 23:00:37 +1000
+Message-ID: <37955246-7ECC-4A98-82C7-33DA894C864A@gmail.com>
+References: <2cfc40320906192337g66db81f0w92e06adfc6a189c9@mail.gmail.com> <m3eitfgxln.fsf@localhost.localdomain>
+Mime-Version: 1.0 (iPhone Mail 7A341)
+Content-Type: text/plain;
+	charset=us-ascii;
+	format=flowed;
+	delsp=yes
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Jun 20 15:07:18 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MHzT8-0007zs-Ax
-	for gcvg-git-2@gmane.org; Sat, 20 Jun 2009 14:14:50 +0200
+	id 1MI0Hs-0006TW-Tb
+	for gcvg-git-2@gmane.org; Sat, 20 Jun 2009 15:07:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752152AbZFTMOl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 20 Jun 2009 08:14:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751826AbZFTMOk
-	(ORCPT <rfc822;git-outgoing>); Sat, 20 Jun 2009 08:14:40 -0400
-Received: from darksea.de ([83.133.111.250]:56769 "HELO darksea.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751383AbZFTMOj (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 20 Jun 2009 08:14:39 -0400
-Received: (qmail 30432 invoked from network); 20 Jun 2009 14:14:39 +0200
-Received: from unknown (HELO localhost) (127.0.0.1)
-  by localhost with SMTP; 20 Jun 2009 14:14:39 +0200
-Content-Disposition: inline
-In-Reply-To: <46a038f90905150352q76157227q24c6b8c0befa4108@mail.gmail.com>
-User-Agent: Mutt/1.5.19 (2009-01-05)
+	id S1752087AbZFTNHE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 20 Jun 2009 09:07:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751980AbZFTNHE
+	(ORCPT <rfc822;git-outgoing>); Sat, 20 Jun 2009 09:07:04 -0400
+Received: from wf-out-1314.google.com ([209.85.200.168]:24566 "EHLO
+	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751939AbZFTNHC (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 20 Jun 2009 09:07:02 -0400
+Received: by wf-out-1314.google.com with SMTP id 26so1093202wfd.4
+        for <git@vger.kernel.org>; Sat, 20 Jun 2009 06:07:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:references:message-id:from:to
+         :in-reply-to:content-type:content-transfer-encoding:x-mailer
+         :mime-version:subject:date:cc;
+        bh=dhWmQJiFkSU7CrVyQK8g/Ha5QFDZKZOoLiH6fUVbAzg=;
+        b=jRK71W5coDozqTUcZyhycU+onqynXUpPngIcfqkWUfLJhM6C2NrvleTLvD9BvcFxfF
+         XvFIMrtOWVqtqFUvpXhmawulF0f/51cS3r1B5/Q20NWB1s+uBmwufM6Aaag5mfvXbCAx
+         bEhFxgUaYw1kAqmnj6oh2r+2szJSHRtfHz+40=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=references:message-id:from:to:in-reply-to:content-type
+         :content-transfer-encoding:x-mailer:mime-version:subject:date:cc;
+        b=N8d2CEY09eSkVblwKbtUXeTyLXVsGRba135hhlZQXKt94WEDqEyoV8ZfUs9eAGffKv
+         eBbTPkTSyhfOtwuoCAz8jLZbSeOkMQDivUvzOz/FDP44uLvVcQhJ80Ml2RomsJcILwQf
+         DhBhySSmwYbEL2DTPSpyEL8dZeKHfuHakWL00=
+Received: by 10.142.200.3 with SMTP id x3mr350737wff.122.1245502850627;
+        Sat, 20 Jun 2009 06:00:50 -0700 (PDT)
+Received: from ?10.213.19.15? ([123.208.165.25])
+        by mx.google.com with ESMTPS id 9sm562844wfc.36.2009.06.20.06.00.49
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sat, 20 Jun 2009 06:00:49 -0700 (PDT)
+In-Reply-To: <m3eitfgxln.fsf@localhost.localdomain>
+X-Mailer: iPhone Mail (7A341)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121942>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121943>
 
-This helps cross-platform projects on the case-sensitive filename side
-of operating systems to use filenames that are nice for the
-case-insensitive side
+Jakub,
 
----
-On Fri, May 15, 2009 at 12:52:41PM +0200, Martin Langhoff wrote:
-> On Thu, May 14, 2009 at 7:59 PM, Heiko Voigt <hvoigt@hvoigt.net> wrote:
-> > At the moment non-ascii encodings of filenames are not portably converted
-> > between different filesystems by git. This will most likely change in the
-> > future but to allow repositories to be portable among different file/operating
-> > systems this check is enabled by default.
->  - It'd be a good idea to add to the mix a check for filenames that
-> are equivalent in case-insensitive FSs.
+Ah, thanks for that.
 
-Totally untested. Just to get feedback if someone has ideas how this can
-be solved more efficiently. I suspect that processing all files will
-yield an unbearable performance degradation on large projects.
+I don't know why my attempt to use subdirs of remotes failed but if  
+you say it works I'll try it again.
 
-Let me know what you think. The wording of the error message is not yet
-final.
+Anyway, thank you!
 
- templates/hooks--pre-commit.sample |   21 +++++++++++++++++++++
- 1 files changed, 21 insertions(+), 0 deletions(-)
-
-diff --git a/templates/hooks--pre-commit.sample b/templates/hooks--pre-commit.sample
-index b11ad6a..32d1809 100755
---- a/templates/hooks--pre-commit.sample
-+++ b/templates/hooks--pre-commit.sample
-@@ -9,6 +9,10 @@
- 
- # If you want to allow non-ascii filenames set this variable to true.
- allownonascii=$(git config hooks.allownonascii)
-+# If you want to allow filenames that only differ in case set this
-+# variable to true. NOTE: This can degrade performance on project with
-+# lots of files
-+allowcaseonly=$(git config hooks.allowcaseonly)
- 
- # Cross platform projects tend to avoid non-ascii filenames; prevent
- # them from being added to the repository. We exploit the fact that the
-@@ -32,6 +36,23 @@ then
- 	exit 1
- fi
- 
-+# check for names that already exist but only differ in case
-+# which can be problematic on non-casesensitive filesystems
-+if [ "$allowcaseonly" != "true" ] &&
-+	test -z "$(git ls-files | LC_ALL=C tr -s [A-Z] [a-z] | uniq -d)"
-+then
-+	echo "Error: Attempt to add file which already exists in different case"
-+	echo
-+	echo "If you know what you are doing you can disable this"
-+	echo "check using:"
-+	echo
-+	echo "  git config hooks.allowcaseonly true"
-+	echo
-+	exit 1
-+fi
-+
- if git-rev-parse --verify HEAD >/dev/null 2>&1
- then
- 	against=HEAD
--- 
-1.6.3.2.203.g9a122
+jon.
