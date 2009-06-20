@@ -1,57 +1,57 @@
 From: Matthieu Stigler <matthieu.stigler@gmail.com>
 Subject: Confusion using git on svn server
-Date: Sat, 20 Jun 2009 22:26:23 +0200
-Message-ID: <4A3D45EF.1000704@etu.unige.ch>
+Date: Sat, 20 Jun 2009 22:28:21 +0200
+Message-ID: <4A3D4665.9040003@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jun 20 22:27:24 2009
+X-From: git-owner@vger.kernel.org Sat Jun 20 22:28:54 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MI79n-0004n6-Jb
-	for gcvg-git-2@gmane.org; Sat, 20 Jun 2009 22:27:24 +0200
+	id 1MI7BF-000594-Ee
+	for gcvg-git-2@gmane.org; Sat, 20 Jun 2009 22:28:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752592AbZFTU0Z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 20 Jun 2009 16:26:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752156AbZFTU0Y
-	(ORCPT <rfc822;git-outgoing>); Sat, 20 Jun 2009 16:26:24 -0400
-Received: from mail-fx0-f214.google.com ([209.85.220.214]:36066 "EHLO
-	mail-fx0-f214.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752067AbZFTU0Y (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 20 Jun 2009 16:26:24 -0400
-Received: by fxm10 with SMTP id 10so277637fxm.37
-        for <git@vger.kernel.org>; Sat, 20 Jun 2009 13:26:25 -0700 (PDT)
+	id S1753136AbZFTU2X (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 20 Jun 2009 16:28:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753038AbZFTU2W
+	(ORCPT <rfc822;git-outgoing>); Sat, 20 Jun 2009 16:28:22 -0400
+Received: from fg-out-1718.google.com ([72.14.220.157]:31679 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752668AbZFTU2W (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 20 Jun 2009 16:28:22 -0400
+Received: by fg-out-1718.google.com with SMTP id d23so296153fga.17
+        for <git@vger.kernel.org>; Sat, 20 Jun 2009 13:28:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:message-id:date:from
          :user-agent:mime-version:to:subject:content-type
          :content-transfer-encoding;
         bh=pw4TcVuyRQGZ+OcPSiiu2Yn/EIm5f47FSQGcLQ0CzS8=;
-        b=gWKzLXum0yyIQfynyHCAgglQJ42bO83hjbp3WAr04yBUynIvV3m2NVezFitgadwLHM
-         FJLvEMnm/bC1evDqc7L67j0OeS3y2YF5DfvJq64kI4ClBUKrDnjvpL/bXXk/H3/g2ZiC
-         vcGa8V44370worEcCeDld48gKfFP98ZK63EMk=
+        b=nLXkmiDKSg6Ze5vGJFkJ/3uZKntr3kV4KCW5P/xA12DkrNFTQPssNoBoeiPqBago9+
+         GsIc5e6TfoVfmjP820Zyb8LCGmV3OkuxtbuEKEipzjIGUheY4MfiZzB6TPaqLge9fdgh
+         PqJGNBeVfli6GL22xeUPNptAOleNRKly75giI=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=message-id:date:from:user-agent:mime-version:to:subject
          :content-type:content-transfer-encoding;
-        b=sH9eXGIvvHhAi68ISSF2rKWkhyEusqolvkodGyDh3gmLoN7NTPqYq5OC5zAeDeTUwQ
-         aXXILCObM3EVIt/FNhSd0Z/cEmjl0D54Pmiq2M226BzgjrFDzg5IB7Nt2DI545ODwkUS
-         IHHpBspzCbA99I628UsTTx2w3gw68R+MfLhbA=
-Received: by 10.86.93.17 with SMTP id q17mr4552021fgb.75.1245529585860;
-        Sat, 20 Jun 2009 13:26:25 -0700 (PDT)
+        b=O8mbd6VBmPmeVNTGx/z5dPrEZuEYKYgOEvWQ+udfXyiGOpDFDktwh4M2OyeRtrF/Yh
+         SlDb5+bMAi0/fxHrTKqXvJLPlseNl1hEKOgNH1lc1qHlwAuabpijvPebgeJtdOlzuB5f
+         XJu/YVpnf6VPZjwtElvaHUopInbWk94UIGPO8=
+Received: by 10.86.91.10 with SMTP id o10mr4624234fgb.13.1245529703868;
+        Sat, 20 Jun 2009 13:28:23 -0700 (PDT)
 Received: from ?192.168.1.4? (adsl-188-155-122-1.adslplus.ch [188.155.122.1])
-        by mx.google.com with ESMTPS id e20sm3457364fga.5.2009.06.20.13.26.24
+        by mx.google.com with ESMTPS id e20sm3450015fga.0.2009.06.20.13.28.22
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sat, 20 Jun 2009 13:26:25 -0700 (PDT)
+        Sat, 20 Jun 2009 13:28:22 -0700 (PDT)
 User-Agent: Thunderbird 2.0.0.21 (X11/20090318)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121953>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121954>
 
 Hi
 
