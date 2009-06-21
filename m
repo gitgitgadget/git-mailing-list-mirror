@@ -1,87 +1,193 @@
-From: Stephen Boyd <bebarino@gmail.com>
-Subject: [PATCH 1/2] git-show-ref.txt: remove word and make consistent
-Date: Sat, 20 Jun 2009 21:40:45 -0700
-Message-ID: <1245559246-11039-1-git-send-email-bebarino@gmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jun 21 06:46:18 2009
+From: Christian Couder <chriscool@tuxfamily.org>
+Subject: [PATCH v2 2/2] rebase -i: use config file format to save author
+	information
+Date: Sun, 21 Jun 2009 07:08:45 +0200
+Message-ID: <20090621050846.3554.31660.chriscool@tuxfamily.org>
+Cc: git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Stephan Beyer <s-beyer@gmx.net>,
+	Daniel Barkalow <barkalow@iabervon.org>,
+	Jakub Narebski <jnareb@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Jun 21 07:12:28 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MIEwa-0006WR-CM
-	for gcvg-git-2@gmane.org; Sun, 21 Jun 2009 06:46:16 +0200
+	id 1MIFLv-0003gD-J5
+	for gcvg-git-2@gmane.org; Sun, 21 Jun 2009 07:12:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751382AbZFUEkt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 21 Jun 2009 00:40:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751354AbZFUEks
-	(ORCPT <rfc822;git-outgoing>); Sun, 21 Jun 2009 00:40:48 -0400
-Received: from wf-out-1314.google.com ([209.85.200.169]:39226 "EHLO
-	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750954AbZFUEkr (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 21 Jun 2009 00:40:47 -0400
-Received: by wf-out-1314.google.com with SMTP id 26so1204507wfd.4
-        for <git@vger.kernel.org>; Sat, 20 Jun 2009 21:40:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:from:to:cc:subject
-         :date:message-id:x-mailer;
-        bh=8L3laTn3wPh6UTxCpuZnuL+tWI9pdRc1fgte8TOAw98=;
-        b=G5ZPZmpKjuSJeFHhZ04YLAY9acd/IHnNG/QLrzKB12npIytNkW38gvr4n+SWzwR/bF
-         UTsJDvMtZrMG/JWnAC0wyTrJrCGKh0dKrZk/zZDPcXsr+48aHz/90yUixj0sP5AdPgpB
-         +cR7nm90agBETbh5ljXBKzgRJuHbadURZkdwo=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        b=KIuQWUAgUxiI0glJS0eD90F+/D61FrccnMxfJkwj42814jN0dxWlbbgSJ4Sqvc6BZg
-         665P94DBmkOO3KHVlBbYuymXN2BMHL5GhPzekwffHfe7wKQ5LvF8AP4UKiL/2p00A//y
-         Hu2gUUo5Tqe7CrNPp+oiQfIaOGjjKXCIGE8ZM=
-Received: by 10.142.246.19 with SMTP id t19mr2002643wfh.202.1245559250244;
-        Sat, 20 Jun 2009 21:40:50 -0700 (PDT)
-Received: from earth (cpe-66-75-25-79.san.res.rr.com [66.75.25.79])
-        by mx.google.com with ESMTPS id 22sm2971658wfg.7.2009.06.20.21.40.48
-        (version=SSLv3 cipher=RC4-MD5);
-        Sat, 20 Jun 2009 21:40:49 -0700 (PDT)
-Received: by earth (sSMTP sendmail emulation); Sat, 20 Jun 2009 21:40:46 -0700
-X-Mailer: git-send-email 1.6.3.2.316.gda4e
+	id S1751592AbZFUFMO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 21 Jun 2009 01:12:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751515AbZFUFMM
+	(ORCPT <rfc822;git-outgoing>); Sun, 21 Jun 2009 01:12:12 -0400
+Received: from smtp3-g21.free.fr ([212.27.42.3]:45482 "EHLO smtp3-g21.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751351AbZFUFMM (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 21 Jun 2009 01:12:12 -0400
+Received: from smtp3-g21.free.fr (localhost [127.0.0.1])
+	by smtp3-g21.free.fr (Postfix) with ESMTP id C87AD8180BC;
+	Sun, 21 Jun 2009 07:12:05 +0200 (CEST)
+Received: from bureau.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
+	by smtp3-g21.free.fr (Postfix) with ESMTP id 783568180A0;
+	Sun, 21 Jun 2009 07:12:02 +0200 (CEST)
+X-git-sha1: d4447d91a0802b62fdeaff8d3c2a09d76323f312 
+X-Mailer: git-mail-commits v0.5.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121961>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121962>
 
-Under is better than in because of the nested nature of the .git
-directory.
+This is better than saving in a shell script, because it will make
+it much easier to port "rebase -i" to C. This also removes some sed
+regexps and some "eval"s.
 
-"also using" sounds a little odd, plus we say combined with later on so
-just use that.
-
-Signed-off-by: Stephen Boyd <bebarino@gmail.com>
+Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- Documentation/git-show-ref.txt |    4 ++--
- 1 files changed, 2 insertions(+), 2 deletions(-)
+ git-rebase--interactive.sh |   78 +++++++++++++++++++++++---------------------
+ 1 files changed, 41 insertions(+), 37 deletions(-)
 
-diff --git a/Documentation/git-show-ref.txt b/Documentation/git-show-ref.txt
-index 2f173ff..98e294a 100644
---- a/Documentation/git-show-ref.txt
-+++ b/Documentation/git-show-ref.txt
-@@ -24,7 +24,7 @@ The --exclude-existing form is a filter that does the inverse, it shows the
- refs from stdin that don't exist in the local repository.
+diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
+index 92e2523..3be49dd 100755
+--- a/git-rebase--interactive.sh
++++ b/git-rebase--interactive.sh
+@@ -40,6 +40,7 @@ MSG="$DOTEST"/message
+ SQUASH_MSG="$DOTEST"/message-squash
+ REWRITTEN="$DOTEST"/rewritten
+ DROPPED="$DOTEST"/dropped
++SAVE_AUTHOR_INFO="$DOTEST"/save-author-info
+ PRESERVE_MERGES=
+ STRATEGY=
+ ONTO=
+@@ -117,30 +118,31 @@ mark_action_done () {
+ }
  
- Use of this utility is encouraged in favor of directly accessing files under
--in the `.git` directory.
-+the `.git` directory.
+ get_author_ident_from_commit () {
+-	pick_author_script='
+-	/^author /{
+-		s/'\''/'\''\\'\'\''/g
+-		h
+-		s/^author \([^<]*\) <[^>]*> .*$/\1/
+-		s/'\''/'\''\'\'\''/g
+-		s/.*/GIT_AUTHOR_NAME='\''&'\''/p
+-
+-		g
+-		s/^author [^<]* <\([^>]*\)> .*$/\1/
+-		s/'\''/'\''\'\'\''/g
+-		s/.*/GIT_AUTHOR_EMAIL='\''&'\''/p
+-
+-		g
+-		s/^author [^<]* <[^>]*> \(.*\)$/\1/
+-		s/'\''/'\''\'\'\''/g
+-		s/.*/GIT_AUTHOR_DATE='\''&'\''/p
+-
+-		q
+-	}
+-	'
+-	encoding=$(git config i18n.commitencoding || echo UTF-8)
+-	git show -s --pretty=raw --encoding="$encoding" "$1" -- |
+-	LANG=C LC_ALL=C sed -ne "$pick_author_script"
++	encoding=$(git config i18n.commitencoding || echo UTF-8) &&
++	author_ident_name=$(git show -s --pretty="format:%an" \
++		--encoding="$encoding" "$1" --) &&
++	author_ident_mail=$(git show -s --pretty="format:%ae" \
++		--encoding="$encoding" "$1" --) &&
++	author_ident_date=$(git show -s --pretty="format:%ai" \
++		--encoding="$encoding" "$1" --)
++}
++
++save_author_ident () {
++	git config --file="$SAVE_AUTHOR_INFO" rebase.author.name \
++		"$author_ident_name" &&
++	git config --file="$SAVE_AUTHOR_INFO" rebase.author.mail \
++		"$author_ident_mail" &&
++	git config --file="$SAVE_AUTHOR_INFO" rebase.author.date \
++		"$author_ident_date"
++}
++
++load_author_ident () {
++	GIT_AUTHOR_NAME=$(git config --file="$SAVE_AUTHOR_INFO" \
++		rebase.author.name) &&
++	GIT_AUTHOR_EMAIL=$(git config --file="$SAVE_AUTHOR_INFO" \
++		rebase.author.mail) &&
++	GIT_AUTHOR_DATE=$(git config --file="$SAVE_AUTHOR_INFO" \
++		rebase.author.date)
+ }
  
- OPTIONS
- -------
-@@ -50,7 +50,7 @@ OPTIONS
- -s::
- --hash::
+ make_patch () {
+@@ -158,8 +160,10 @@ make_patch () {
+ 	esac > "$DOTEST"/patch
+ 	test -f "$DOTEST"/message ||
+ 		git cat-file commit "$1" | sed "1,/^$/d" > "$DOTEST"/message
+-	test -f "$DOTEST"/author-script ||
+-		get_author_ident_from_commit "$1" > "$DOTEST"/author-script
++	test -f "$SAVE_AUTHOR_INFO" || {
++		get_author_ident_from_commit "$1"
++		save_author_ident
++	}
+ }
  
--	Only show the SHA1 hash, not the reference name. When also using
-+	Only show the SHA1 hash, not the reference name. When combined with
- 	--dereference the dereferenced tag will still be shown after the SHA1.
+ die_with_patch () {
+@@ -294,8 +298,10 @@ pick_one_preserving_merges () {
+ 			test "a$1" = a-n && die "Refusing to squash a merge: $sha1"
  
- --verify::
+ 			# redo merge
+-			author_script=$(get_author_ident_from_commit $sha1)
+-			eval "$author_script"
++			get_author_ident_from_commit $sha1
++			GIT_AUTHOR_NAME="$author_ident_name"
++			GIT_AUTHOR_EMAIL="$author_ident_mail"
++			GIT_AUTHOR_DATE="$author_ident_date"
+ 			msg="$(git cat-file commit $sha1 | sed -e '1,/^$/d')"
+ 			# No point in merging the first parent, that's HEAD
+ 			new_parents=${new_parents# $first_parent}
+@@ -353,8 +359,7 @@ peek_next_command () {
+ }
+ 
+ do_next () {
+-	rm -f "$DOTEST"/message "$DOTEST"/author-script \
+-		"$DOTEST"/amend || exit
++	rm -f "$DOTEST"/message "$DOTEST"/amend "$SAVE_AUTHOR_INFO" || exit
+ 	read command sha1 rest < "$TODO"
+ 	case "$command" in
+ 	'#'*|''|noop)
+@@ -395,7 +400,7 @@ do_next () {
+ 		mark_action_done
+ 		make_squash_message $sha1 > "$MSG"
+ 		failed=f
+-		author_script=$(get_author_ident_from_commit HEAD)
++		get_author_ident_from_commit HEAD
+ 		output git reset --soft HEAD^
+ 		pick_one -n $sha1 || failed=t
+ 		case "$(peek_next_command)" in
+@@ -414,14 +419,13 @@ do_next () {
+ 			rm -f "$GIT_DIR"/MERGE_MSG || exit
+ 			;;
+ 		esac
+-		echo "$author_script" > "$DOTEST"/author-script
++		save_author_ident
+ 		if test $failed = f
+ 		then
+ 			# This is like --amend, but with a different message
+-			eval "$author_script"
+-			GIT_AUTHOR_NAME="$GIT_AUTHOR_NAME" \
+-			GIT_AUTHOR_EMAIL="$GIT_AUTHOR_EMAIL" \
+-			GIT_AUTHOR_DATE="$GIT_AUTHOR_DATE" \
++			GIT_AUTHOR_NAME="$author_ident_name" \
++			GIT_AUTHOR_EMAIL="$author_ident_mail" \
++			GIT_AUTHOR_DATE="$author_ident_date" \
+ 			$USE_OUTPUT git commit --no-verify \
+ 				$MSG_OPT "$EDIT_OR_FILE" || failed=t
+ 		fi
+@@ -536,7 +540,7 @@ do
+ 		then
+ 			: Nothing to commit -- skip this
+ 		else
+-			. "$DOTEST"/author-script ||
++			load_author_ident ||
+ 				die "Cannot find the author identity"
+ 			amend=
+ 			if test -f "$DOTEST"/amend
 -- 
-1.6.3.2.316.gda4e
+1.6.3.GIT
