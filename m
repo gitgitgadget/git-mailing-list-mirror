@@ -1,382 +1,272 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: [JGIT PATCH 2/2] Add support for remote.name.pushurl
-Date: Sat, 20 Jun 2009 18:21:56 -0700
-Message-ID: <1245547316-10299-2-git-send-email-spearce@spearce.org>
-References: <1245547316-10299-1-git-send-email-spearce@spearce.org>
-Cc: git@vger.kernel.org
-To: Robin Rosenberg <robin.rosenberg@dewire.com>
-X-From: git-owner@vger.kernel.org Sun Jun 21 03:23:08 2009
+From: Stephen Boyd <bebarino@gmail.com>
+Subject: [PATCH 2/2] show-ref: migrate to parse-options
+Date: Sat, 20 Jun 2009 21:40:46 -0700
+Message-ID: <1245559246-11039-2-git-send-email-bebarino@gmail.com>
+References: <1245559246-11039-1-git-send-email-bebarino@gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Jun 21 06:46:18 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MIBlv-0004JE-QU
-	for gcvg-git-2@gmane.org; Sun, 21 Jun 2009 03:23:04 +0200
+	id 1MIEwb-0006WR-52
+	for gcvg-git-2@gmane.org; Sun, 21 Jun 2009 06:46:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753397AbZFUBV7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 20 Jun 2009 21:21:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753301AbZFUBV7
-	(ORCPT <rfc822;git-outgoing>); Sat, 20 Jun 2009 21:21:59 -0400
-Received: from george.spearce.org ([209.20.77.23]:39667 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753276AbZFUBVz (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 20 Jun 2009 21:21:55 -0400
-Received: by george.spearce.org (Postfix, from userid 1000)
-	id 22D49381FE; Sun, 21 Jun 2009 01:21:58 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.2.4 (2008-01-01) on george.spearce.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-4.4 required=4.0 tests=ALL_TRUSTED,BAYES_00
-	autolearn=ham version=3.2.4
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by george.spearce.org (Postfix) with ESMTP id AFA8D381FD;
-	Sun, 21 Jun 2009 01:21:56 +0000 (UTC)
-X-Mailer: git-send-email 1.6.3.2.416.g04d0
-In-Reply-To: <1245547316-10299-1-git-send-email-spearce@spearce.org>
+	id S1751500AbZFUEkw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 21 Jun 2009 00:40:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751481AbZFUEkw
+	(ORCPT <rfc822;git-outgoing>); Sun, 21 Jun 2009 00:40:52 -0400
+Received: from mail-pz0-f197.google.com ([209.85.222.197]:56989 "EHLO
+	mail-pz0-f197.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751354AbZFUEkv (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 21 Jun 2009 00:40:51 -0400
+Received: by pzk35 with SMTP id 35so85687pzk.33
+        for <git@vger.kernel.org>; Sat, 20 Jun 2009 21:40:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:from:to:cc:subject
+         :date:message-id:x-mailer:in-reply-to:references;
+        bh=0OHx21Yr4Cs1w5Jv7LPWF3S0DXBMdVK7bknTvZBWMqE=;
+        b=qnwBimN8wem5LT5oRViEP9+j3v7u+zbapbtIoZUYRTPO0DtuLm7hJibST+OwK5MbK9
+         Ood0Aw90mrp8Zm35ylSYeGk1ZM68v+MTu+tizNNCeDeVVszSxkHErx2A0IROnQZQdgmF
+         E9CQkeGWtDgd42OFGveE3Mve8A+ZaR6vInhfk=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        b=nIJSduYwY+Y8Z3iBaIBsyYImAK2eh83SQ4WvkTQ/ZuZ5ywDBkjLBm1pYx2ejHLyHRc
+         TBfOTHL/ezVo0SYtkUugwbw+Jq+Gub6s8QTPviPDukgHjh/Mhn1wBdUKLL5ucagczTeS
+         g8DbmqfhGQyhtk543COQM1UUv1tX8m7kDdJdw=
+Received: by 10.142.133.19 with SMTP id g19mr2064118wfd.126.1245559253669;
+        Sat, 20 Jun 2009 21:40:53 -0700 (PDT)
+Received: from earth (cpe-66-75-25-79.san.res.rr.com [66.75.25.79])
+        by mx.google.com with ESMTPS id 28sm164723wfg.25.2009.06.20.21.40.51
+        (version=SSLv3 cipher=RC4-MD5);
+        Sat, 20 Jun 2009 21:40:52 -0700 (PDT)
+Received: by earth (sSMTP sendmail emulation); Sat, 20 Jun 2009 21:40:50 -0700
+X-Mailer: git-send-email 1.6.3.2.316.gda4e
+In-Reply-To: <1245559246-11039-1-git-send-email-bebarino@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121959>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121960>
 
-In C Git commit 203462347fce Michael J Gruber added support for a
-new URL key within a remote block, permitting a different URL to
-be used for push than for fetch.  In the commit message he cites
-an example where fetch runs over git://, but push uses ssh://,
-as the git:// protocol has lower connection setup overheads.
+Also make the docs more consistent with the usage message. While we're
+here remove the zero initializers from the static variables as they're
+unnecessary.
 
-This change complicates the Transport API as now we must know
-in advance when the Transport.open() call is made what type of
-operation the caller wants to perform, so we know which config
-key to honor when constructing the Transport objects.
-
-Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
+Signed-off-by: Stephen Boyd <bebarino@gmail.com>
 ---
- .../src/org/spearce/jgit/pgm/Push.java             |    3 +-
- .../org/spearce/jgit/transport/RemoteConfig.java   |   47 ++++++
- .../src/org/spearce/jgit/transport/Transport.java  |  150 ++++++++++++++++++--
- 3 files changed, 190 insertions(+), 10 deletions(-)
+ Documentation/git-show-ref.txt |   15 ++---
+ builtin-show-ref.c             |  133 ++++++++++++++++++----------------------
+ 2 files changed, 67 insertions(+), 81 deletions(-)
 
-diff --git a/org.spearce.jgit.pgm/src/org/spearce/jgit/pgm/Push.java b/org.spearce.jgit.pgm/src/org/spearce/jgit/pgm/Push.java
-index 19d31a1..9364e4a 100644
---- a/org.spearce.jgit.pgm/src/org/spearce/jgit/pgm/Push.java
-+++ b/org.spearce.jgit.pgm/src/org/spearce/jgit/pgm/Push.java
-@@ -102,7 +102,8 @@ protected void run() throws Exception {
- 				refSpecs.add(spec.setForceUpdate(true));
- 		}
+diff --git a/Documentation/git-show-ref.txt b/Documentation/git-show-ref.txt
+index 98e294a..f4429bd 100644
+--- a/Documentation/git-show-ref.txt
++++ b/Documentation/git-show-ref.txt
+@@ -9,8 +9,9 @@ SYNOPSIS
+ --------
+ [verse]
+ 'git show-ref' [-q|--quiet] [--verify] [-h|--head] [-d|--dereference]
+-	     [-s|--hash] [--abbrev] [--tags] [--heads] [--] <pattern>...
+-'git show-ref' --exclude-existing[=pattern]
++	     [-s|--hash[=<n>]] [--abbrev[=<n>]] [--tags]
++	     [--heads] [--] <pattern>...
++'git show-ref' --exclude-existing[=<pattern>] < ref-list
  
--		final List<Transport> transports = Transport.openAll(db, remote);
-+		final List<Transport> transports;
-+		transports = Transport.openAll(db, remote, Transport.Operation.PUSH);
- 		for (final Transport transport : transports) {
- 			transport.setPushThin(thin);
- 			if (receivePack != null)
-diff --git a/org.spearce.jgit/src/org/spearce/jgit/transport/RemoteConfig.java b/org.spearce.jgit/src/org/spearce/jgit/transport/RemoteConfig.java
-index 519a8a5..f7ed2d7 100644
---- a/org.spearce.jgit/src/org/spearce/jgit/transport/RemoteConfig.java
-+++ b/org.spearce.jgit/src/org/spearce/jgit/transport/RemoteConfig.java
-@@ -58,6 +58,8 @@
+ DESCRIPTION
+ -----------
+@@ -48,7 +49,7 @@ OPTIONS
+ 	appended.
  
- 	private static final String KEY_URL = "url";
+ -s::
+---hash::
++--hash[=<n>]::
  
-+	private static final String KEY_PUSHURL = "pushurl";
-+
- 	private static final String KEY_FETCH = "fetch";
+ 	Only show the SHA1 hash, not the reference name. When combined with
+ 	--dereference the dereferenced tag will still be shown after the SHA1.
+@@ -59,11 +60,10 @@ OPTIONS
+ 	Aside from returning an error code of 1, it will also print an error
+ 	message if '--quiet' was not specified.
  
- 	private static final String KEY_PUSH = "push";
-@@ -108,6 +110,8 @@
+---abbrev::
+---abbrev=len::
++--abbrev[=<n>]::
  
- 	private List<URIish> uris;
+ 	Abbreviate the object name.  When using `--hash`, you do
+-	not have to say `--hash --abbrev`; `--hash=len` would do.
++	not have to say `--hash --abbrev`; `--hash=n` would do.
  
-+	private List<URIish> pushURIs;
-+
- 	private List<RefSpec> fetch;
+ -q::
+ --quiet::
+@@ -71,8 +71,7 @@ OPTIONS
+ 	Do not print any results to stdout. When combined with '--verify' this
+ 	can be used to silently check if a reference exists.
  
- 	private List<RefSpec> push;
-@@ -147,6 +151,11 @@ public RemoteConfig(final RepositoryConfig rc, final String remoteName)
- 		for (final String s : vlst)
- 			uris.add(new URIish(s));
+---exclude-existing::
+---exclude-existing=pattern::
++--exclude-existing[=<pattern>]::
  
-+		vlst = rc.getStringList(SECTION, name, KEY_PUSHURL);
-+		pushURIs = new ArrayList<URIish>(vlst.length);
-+		for (final String s : vlst)
-+			pushURIs.add(new URIish(s));
-+
- 		vlst = rc.getStringList(SECTION, name, KEY_FETCH);
- 		fetch = new ArrayList<RefSpec>(vlst.length);
- 		for (final String s : vlst)
-@@ -187,6 +196,11 @@ public void update(final RepositoryConfig rc) {
- 		rc.setStringList(SECTION, getName(), KEY_URL, vlst);
+ 	Make 'git-show-ref' act as a filter that reads refs from stdin of the
+ 	form "^(?:<anything>\s)?<refname>(?:\^\{\})?$" and performs the
+diff --git a/builtin-show-ref.c b/builtin-show-ref.c
+index dc76c50..c46550c 100644
+--- a/builtin-show-ref.c
++++ b/builtin-show-ref.c
+@@ -4,12 +4,18 @@
+ #include "object.h"
+ #include "tag.h"
+ #include "string-list.h"
++#include "parse-options.h"
  
- 		vlst.clear();
-+		for (final URIish u : getPushURIs())
-+			vlst.add(u.toPrivateString());
-+		rc.setStringList(SECTION, getName(), KEY_PUSHURL, vlst);
-+
-+		vlst.clear();
- 		for (final RefSpec u : getFetchRefSpecs())
- 			vlst.add(u.toString());
- 		rc.setStringList(SECTION, getName(), KEY_FETCH, vlst);
-@@ -265,6 +279,39 @@ public boolean removeURI(final URIish toRemove) {
- 	}
+-static const char show_ref_usage[] = "git show-ref [-q|--quiet] [--verify] [-h|--head] [-d|--dereference] [-s|--hash[=<length>]] [--abbrev[=<length>]] [--tags] [--heads] [--] [pattern*] < ref-list";
++static const char * const show_ref_usage[] = {
++	"git show-ref [-q|--quiet] [--verify] [-h|--head] [-d|--dereference] [-s|--hash[=<n>]] [--abbrev[=<n>]] [--tags] [--heads] [--] [pattern*] ",
++	"git show-ref --exclude-existing[=pattern] < ref-list",
++	NULL
++};
  
- 	/**
-+	 * Get all configured push-only URIs under this remote.
-+	 * 
-+	 * @return the set of URIs known to this remote.
-+	 */
-+	public List<URIish> getPushURIs() {
-+		return Collections.unmodifiableList(pushURIs);
-+	}
-+
-+	/**
-+	 * Add a new push-only URI to the end of the list of URIs.
-+	 * 
-+	 * @param toAdd
-+	 *            the new URI to add to this remote.
-+	 * @return true if the URI was added; false if it already exists.
-+	 */
-+	public boolean addPushURI(final URIish toAdd) {
-+		if (pushURIs.contains(toAdd))
-+			return false;
-+		return pushURIs.add(toAdd);
-+	}
-+
-+	/**
-+	 * Remove a push-only URI from the list of URIs.
-+	 * 
-+	 * @param toRemove
-+	 *            the URI to remove from this remote.
-+	 * @return true if the URI was added; false if it already exists.
-+	 */
-+	public boolean removePushURI(final URIish toRemove) {
-+		return pushURIs.remove(toRemove);
-+	}
-+
-+	/**
- 	 * Remembered specifications for fetching from a repository.
- 	 * 
- 	 * @return set of specs used by default when fetching.
-diff --git a/org.spearce.jgit/src/org/spearce/jgit/transport/Transport.java b/org.spearce.jgit/src/org/spearce/jgit/transport/Transport.java
-index c36ccdd..ac4807f 100644
---- a/org.spearce.jgit/src/org/spearce/jgit/transport/Transport.java
-+++ b/org.spearce.jgit/src/org/spearce/jgit/transport/Transport.java
-@@ -72,8 +72,18 @@
-  * Callers must ensure a transport is accessed by only one thread at a time.
-  */
- public abstract class Transport {
-+	/** Type of operation a Transport is being opened for. */
-+	public enum Operation {
-+		/** Transport is to fetch objects locally. */
-+		FETCH,
-+		/** Transport is to push objects remotely. */
-+		PUSH;
-+	}
-+
- 	/**
- 	 * Open a new transport instance to connect two repositories.
-+	 * <p>
-+	 * This method assumes {@link Operation#FETCH}.
- 	 * 
- 	 * @param local
- 	 *            existing local repository.
-@@ -90,15 +100,41 @@
- 	 */
- 	public static Transport open(final Repository local, final String remote)
- 			throws NotSupportedException, URISyntaxException {
-+		return open(local, remote, Operation.FETCH);
-+	}
-+
-+	/**
-+	 * Open a new transport instance to connect two repositories.
-+	 * 
-+	 * @param local
-+	 *            existing local repository.
-+	 * @param remote
-+	 *            location of the remote repository - may be URI or remote
-+	 *            configuration name.
-+	 * @param op
-+	 *            planned use of the returned Transport; the URI may differ
-+	 *            based on the type of connection desired.
-+	 * @return the new transport instance. Never null. In case of multiple URIs
-+	 *         in remote configuration, only the first is chosen.
-+	 * @throws URISyntaxException
-+	 *             the location is not a remote defined in the configuration
-+	 *             file and is not a well-formed URL.
-+	 * @throws NotSupportedException
-+	 *             the protocol specified is not supported.
-+	 */
-+	public static Transport open(final Repository local, final String remote,
-+			final Operation op) throws NotSupportedException,
-+			URISyntaxException {
- 		final RemoteConfig cfg = new RemoteConfig(local.getConfig(), remote);
--		final List<URIish> uris = cfg.getURIs();
--		if (uris.size() == 0)
-+		if (doesNotExist(cfg))
- 			return open(local, new URIish(remote));
--		return open(local, cfg);
-+		return open(local, cfg, op);
- 	}
+-static int deref_tags = 0, show_head = 0, tags_only = 0, heads_only = 0,
+-	found_match = 0, verify = 0, quiet = 0, hash_only = 0, abbrev = 0;
++static int deref_tags, show_head, tags_only, heads_only, found_match, verify,
++	   quiet, hash_only, abbrev, exclude_arg;
+ static const char **pattern;
++static const char *exclude_existing_arg;
  
- 	/**
- 	 * Open new transport instances to connect two repositories.
-+	 * <p>
-+	 * This method assumes {@link Operation#FETCH}.
- 	 *
- 	 * @param local
- 	 *            existing local repository.
-@@ -116,18 +152,44 @@ public static Transport open(final Repository local, final String remote)
- 	public static List<Transport> openAll(final Repository local,
- 			final String remote) throws NotSupportedException,
- 			URISyntaxException {
-+		return openAll(local, remote, Operation.FETCH);
-+	}
-+
-+	/**
-+	 * Open new transport instances to connect two repositories.
-+	 *
-+	 * @param local
-+	 *            existing local repository.
-+	 * @param remote
-+	 *            location of the remote repository - may be URI or remote
-+	 *            configuration name.
-+	 * @param op
-+	 *            planned use of the returned Transport; the URI may differ
-+	 *            based on the type of connection desired.
-+	 * @return the list of new transport instances for every URI in remote
-+	 *         configuration.
-+	 * @throws URISyntaxException
-+	 *             the location is not a remote defined in the configuration
-+	 *             file and is not a well-formed URL.
-+	 * @throws NotSupportedException
-+	 *             the protocol specified is not supported.
-+	 */
-+	public static List<Transport> openAll(final Repository local,
-+			final String remote, final Operation op)
-+			throws NotSupportedException, URISyntaxException {
- 		final RemoteConfig cfg = new RemoteConfig(local.getConfig(), remote);
--		final List<URIish> uris = cfg.getURIs();
--		if (uris.size() == 0) {
-+		if (doesNotExist(cfg)) {
- 			final ArrayList<Transport> transports = new ArrayList<Transport>(1);
- 			transports.add(open(local, new URIish(remote)));
- 			return transports;
- 		}
--		return openAll(local, cfg);
-+		return openAll(local, cfg, op);
- 	}
+ static void show_one(const char *refname, const unsigned char *sha1)
+ {
+@@ -150,79 +156,60 @@ static int exclude_existing(const char *match)
+ 	return 0;
+ }
  
- 	/**
- 	 * Open a new transport instance to connect two repositories.
-+	 * <p>
-+	 * This method assumes {@link Operation#FETCH}.
- 	 * 
- 	 * @param local
- 	 *            existing local repository.
-@@ -144,17 +206,45 @@ public static Transport open(final Repository local, final String remote)
- 	 */
- 	public static Transport open(final Repository local, final RemoteConfig cfg)
- 			throws NotSupportedException {
--		if (cfg.getURIs().isEmpty())
-+		return open(local, cfg, Operation.FETCH);
-+	}
++static int hash_callback(const struct option *opt, const char *arg, int unset)
++{
++	hash_only = 1;
++	/* Use full length SHA1 if no argument */
++	if (!arg)
++		return 0;
++	return parse_opt_abbrev_cb(opt, arg, unset);
++}
 +
-+	/**
-+	 * Open a new transport instance to connect two repositories.
-+	 * 
-+	 * @param local
-+	 *            existing local repository.
-+	 * @param cfg
-+	 *            configuration describing how to connect to the remote
-+	 *            repository.
-+	 * @param op
-+	 *            planned use of the returned Transport; the URI may differ
-+	 *            based on the type of connection desired.
-+	 * @return the new transport instance. Never null. In case of multiple URIs
-+	 *         in remote configuration, only the first is chosen.
-+	 * @throws NotSupportedException
-+	 *             the protocol specified is not supported.
-+	 * @throws IllegalArgumentException
-+	 *             if provided remote configuration doesn't have any URI
-+	 *             associated.
-+	 */
-+	public static Transport open(final Repository local,
-+			final RemoteConfig cfg, final Operation op)
-+			throws NotSupportedException {
-+		final List<URIish> uris = getURIs(cfg, op);
-+		if (uris.isEmpty())
- 			throw new IllegalArgumentException(
- 					"Remote config \""
- 					+ cfg.getName() + "\" has no URIs associated");
--		final Transport tn = open(local, cfg.getURIs().get(0));
-+		final Transport tn = open(local, uris.get(0));
- 		tn.applyConfig(cfg);
- 		return tn;
- 	}
++static int exclude_existing_callback(const struct option *opt, const char *arg,
++				     int unset)
++{
++	exclude_arg = 1;
++	*(const char **)opt->value = arg;
++	return 0;
++}
++
++static int help_callback(const struct option *opt, const char *arg, int unset)
++{
++	return -1;
++}
++
++static const struct option show_ref_options[] = {
++	OPT_BOOLEAN(0, "tags", &tags_only, "only show tags (can be combined with heads)"),
++	OPT_BOOLEAN(0, "heads", &heads_only, "only show heads (can be combined with tags)"),
++	OPT_BOOLEAN(0, "verify", &verify, "stricter reference checking, "
++		    "requires exact ref path"),
++	OPT_BOOLEAN('h', "head", &show_head, "show the HEAD reference"),
++	OPT_BOOLEAN('d', "dereference", &deref_tags,
++		    "dereference tags into object IDs"),
++	{ OPTION_CALLBACK, 's', "hash", &abbrev, "n",
++	  "only show SHA1 hash using <n> digits",
++	  PARSE_OPT_OPTARG, &hash_callback },
++	OPT__ABBREV(&abbrev),
++	OPT__QUIET(&quiet),
++	{ OPTION_CALLBACK, 0, "exclude-existing", &exclude_existing_arg,
++	  "pattern", "show refs from stdin that aren't in local repository",
++	  PARSE_OPT_OPTARG | PARSE_OPT_NONEG, exclude_existing_callback },
++	{ OPTION_CALLBACK, 0, "help-all", NULL, NULL, "show usage",
++	  PARSE_OPT_HIDDEN | PARSE_OPT_NOARG, help_callback },
++	OPT_END()
++};
++
+ int cmd_show_ref(int argc, const char **argv, const char *prefix)
+ {
+-	int i;
++	argc = parse_options(argc, argv, prefix, show_ref_options,
++			     show_ref_usage, PARSE_OPT_NO_INTERNAL_HELP);
  
- 	/**
- 	 * Open new transport instances to connect two repositories.
-+	 * <p>
-+	 * This method assumes {@link Operation#FETCH}.
- 	 *
- 	 * @param local
- 	 *            existing local repository.
-@@ -168,7 +258,29 @@ public static Transport open(final Repository local, final RemoteConfig cfg)
- 	 */
- 	public static List<Transport> openAll(final Repository local,
- 			final RemoteConfig cfg) throws NotSupportedException {
--		final List<URIish> uris = cfg.getURIs();
-+		return openAll(local, cfg, Operation.FETCH);
-+	}
+-	for (i = 1; i < argc; i++) {
+-		const char *arg = argv[i];
+-		if (*arg != '-') {
+-			pattern = argv + i;
+-			break;
+-		}
+-		if (!strcmp(arg, "--")) {
+-			pattern = argv + i + 1;
+-			if (!*pattern)
+-				pattern = NULL;
+-			break;
+-		}
+-		if (!strcmp(arg, "-q") || !strcmp(arg, "--quiet")) {
+-			quiet = 1;
+-			continue;
+-		}
+-		if (!strcmp(arg, "-h") || !strcmp(arg, "--head")) {
+-			show_head = 1;
+-			continue;
+-		}
+-		if (!strcmp(arg, "-d") || !strcmp(arg, "--dereference")) {
+-			deref_tags = 1;
+-			continue;
+-		}
+-		if (!strcmp(arg, "-s") || !strcmp(arg, "--hash")) {
+-			hash_only = 1;
+-			continue;
+-		}
+-		if (!prefixcmp(arg, "--hash=") ||
+-		    (!prefixcmp(arg, "--abbrev") &&
+-		     (arg[8] == '=' || arg[8] == '\0'))) {
+-			if (arg[2] != 'h' && !arg[8])
+-				/* --abbrev only */
+-				abbrev = DEFAULT_ABBREV;
+-			else {
+-				/* --hash= or --abbrev= */
+-				char *end;
+-				if (arg[2] == 'h') {
+-					hash_only = 1;
+-					arg += 7;
+-				}
+-				else
+-					arg += 9;
+-				abbrev = strtoul(arg, &end, 10);
+-				if (*end || abbrev > 40)
+-					usage(show_ref_usage);
+-				if (abbrev < MINIMUM_ABBREV)
+-					abbrev = MINIMUM_ABBREV;
+-			}
+-			continue;
+-		}
+-		if (!strcmp(arg, "--verify")) {
+-			verify = 1;
+-			continue;
+-		}
+-		if (!strcmp(arg, "--tags")) {
+-			tags_only = 1;
+-			continue;
+-		}
+-		if (!strcmp(arg, "--heads")) {
+-			heads_only = 1;
+-			continue;
+-		}
+-		if (!strcmp(arg, "--exclude-existing"))
+-			return exclude_existing(NULL);
+-		if (!prefixcmp(arg, "--exclude-existing="))
+-			return exclude_existing(arg + 19);
+-		usage(show_ref_usage);
+-	}
++	if (exclude_arg)
++		return exclude_existing(exclude_existing_arg);
 +
-+	/**
-+	 * Open new transport instances to connect two repositories.
-+	 *
-+	 * @param local
-+	 *            existing local repository.
-+	 * @param cfg
-+	 *            configuration describing how to connect to the remote
-+	 *            repository.
-+	 * @param op
-+	 *            planned use of the returned Transport; the URI may differ
-+	 *            based on the type of connection desired.
-+	 * @return the list of new transport instances for every URI in remote
-+	 *         configuration.
-+	 * @throws NotSupportedException
-+	 *             the protocol specified is not supported.
-+	 */
-+	public static List<Transport> openAll(final Repository local,
-+			final RemoteConfig cfg, final Operation op)
-+			throws NotSupportedException {
-+		final List<URIish> uris = getURIs(cfg, op);
- 		final List<Transport> transports = new ArrayList<Transport>(uris.size());
- 		for (final URIish uri : uris) {
- 			final Transport tn = open(local, uri);
-@@ -178,6 +290,26 @@ public static Transport open(final Repository local, final RemoteConfig cfg)
- 		return transports;
- 	}
++	pattern = argv;
++	if (!*pattern)
++		pattern = NULL;
  
-+	private static List<URIish> getURIs(final RemoteConfig cfg,
-+			final Operation op) {
-+		switch (op) {
-+		case FETCH:
-+			return cfg.getURIs();
-+		case PUSH: {
-+			List<URIish> uris = cfg.getPushURIs();
-+			if (uris.isEmpty())
-+				uris = cfg.getURIs();
-+			return uris;
-+		}
-+		default:
-+			throw new IllegalArgumentException(op.toString());
-+		}
-+	}
-+
-+	private static boolean doesNotExist(final RemoteConfig cfg) {
-+		return cfg.getURIs().isEmpty() && cfg.getPushURIs().isEmpty();
-+	}
-+
- 	/**
- 	 * Open a new transport instance to connect two repositories.
- 	 * 
+ 	if (verify) {
+ 		if (!pattern)
 -- 
-1.6.3.2.416.g04d0
+1.6.3.2.316.gda4e
