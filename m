@@ -1,116 +1,98 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/2] rebase -i: use some kind of config file to save author information
-Date: Sun, 21 Jun 2009 16:15:13 -0700
-Message-ID: <7v1vpdqiv2.fsf@alter.siamese.dyndns.org>
-References: <20090620023413.3995.3630.chriscool@tuxfamily.org>
-	<alpine.DEB.1.00.0906212354030.26154@pacific.mpi-cbg.de>
+Subject: Re: [PATCH] gitk: disable checkout of remote branch
+Date: Sun, 21 Jun 2009 16:27:13 -0700
+Message-ID: <7vtz29p3qm.fsf@alter.siamese.dyndns.org>
+References: <19004.34350.109422.730109@cargo.ozlabs.ibm.com>
+	<slrnh3ru9v.vgo.sitaramc@sitaramc.homelinux.net>
+	<7v3a9uszzl.fsf@alter.siamese.dyndns.org>
+	<20090622063405.6117@nanako3.lavabit.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Christian Couder <chriscool@tuxfamily.org>, git@vger.kernel.org,
-	Stephan Beyer <s-beyer@gmx.net>,
-	Daniel Barkalow <barkalow@iabervon.org>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Mon Jun 22 01:15:25 2009
+Cc: Sitaram Chamarty <sitaramc@gmail.com>, git@vger.kernel.org,
+	Paul Mackerras <paulus@samba.org>
+To: Nanako Shiraishi <nanako3@lavabit.com>
+X-From: git-owner@vger.kernel.org Mon Jun 22 01:37:17 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MIWFw-0002mg-VI
-	for gcvg-git-2@gmane.org; Mon, 22 Jun 2009 01:15:25 +0200
+	id 1MIWb6-0000t3-1F
+	for gcvg-git-2@gmane.org; Mon, 22 Jun 2009 01:37:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752384AbZFUXPN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 21 Jun 2009 19:15:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752054AbZFUXPM
-	(ORCPT <rfc822;git-outgoing>); Sun, 21 Jun 2009 19:15:12 -0400
-Received: from fed1rmmtao107.cox.net ([68.230.241.39]:60336 "EHLO
+	id S1752961AbZFUX1N (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 21 Jun 2009 19:27:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752707AbZFUX1M
+	(ORCPT <rfc822;git-outgoing>); Sun, 21 Jun 2009 19:27:12 -0400
+Received: from fed1rmmtao107.cox.net ([68.230.241.39]:63282 "EHLO
 	fed1rmmtao107.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751784AbZFUXPL (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 21 Jun 2009 19:15:11 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+	with ESMTP id S1752666AbZFUX1L (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 21 Jun 2009 19:27:11 -0400
+Received: from fed1rmimpo03.cox.net ([70.169.32.75])
           by fed1rmmtao107.cox.net
           (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20090621231515.JVUR18948.fed1rmmtao107.cox.net@fed1rmimpo02.cox.net>;
-          Sun, 21 Jun 2009 19:15:15 -0400
+          id <20090621232715.KEXE18948.fed1rmmtao107.cox.net@fed1rmimpo03.cox.net>;
+          Sun, 21 Jun 2009 19:27:15 -0400
 Received: from localhost ([68.225.240.211])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id 6nFD1c00C4aMwMQ04nFDgR; Sun, 21 Jun 2009 19:15:14 -0400
-X-VR-Score: -200.00
-X-Authority-Analysis: v=1.0 c=1 a=8s1IcQ_F8yQA:10 a=xgSZG-_MI1TkWf5j2yIA:9
- a=0qTCXRRFpBivaOmNuQ0A:7 a=uxEE9P3edzKRssHpjZRlahNM9ywA:4 a=_RhRFcbxBZMA:10
+	by fed1rmimpo03.cox.net with bizsmtp
+	id 6nTE1c0044aMwMQ04nTEud; Sun, 21 Jun 2009 19:27:14 -0400
+X-VR-Score: -100.00
+X-Authority-Analysis: v=1.0 c=1 a=abpcs_R5fxsA:10 a=UQnXkbzPAAAA:8
+ a=ybZZDoGAAAAA:8 a=pGLkceISAAAA:8 a=aE5LevW6fwYiF-tSB-cA:9
+ a=FyQPkjtItjoX3CiQYsZLPcZAsSwA:4 a=Q21-j9j7q-gA:10 a=qIVjreYYsbEA:10
+ a=MSl-tDqOz04A:10
 X-CM-Score: 0.00
-In-Reply-To: <alpine.DEB.1.00.0906212354030.26154@pacific.mpi-cbg.de> (Johannes Schindelin's message of "Sun\, 21 Jun 2009 23\:55\:16 +0200 \(CEST\)")
+In-Reply-To: <20090622063405.6117@nanako3.lavabit.com> (Nanako Shiraishi's message of "Mon\, 22 Jun 2009 06\:34\:05 +0900")
 User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122000>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122001>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Nanako Shiraishi <nanako3@lavabit.com> writes:
 
-> On Sat, 20 Jun 2009, Christian Couder wrote:
+> Quoting Junio C Hamano <gitster@pobox.com>:
 >
->> This is better than saving in a shell script, because it will make
->> it much easier to port "rebase -i" to C. This also removes some sed
->> regexps and some "eval"s.
+>> Sitaram Chamarty <sitaramc@gmail.com> writes:
+>>
+>>> At the command line, this gives you a detailed warning message, but the
+>>> GUI currently allows it without any fuss.
+>>>
+>>> Since the GUI is often used by people much less familiar with git, it
+>>> seems reasonable to make the GUI more restrictive than the command line,
+>>> not less.
+>>> ...
+>>> This patch helps me a lot.
+>>
+>> The patch seems to disable checkout unconditionally, but it at least needs
+>> an "expert mode" switch to bypass the patch's logic, or (better yet) a
+>> "training wheel" switch for you to set in repositories of the people you
+>> manage.
 >
-> It will not make it easier to port "rebase -i" to C, as this is an 
-> internal file.  The user is not supposed to touch it at all.  Only "rebase 
-> -i".  So it would be very easy to just use a different on-disk format when 
-> turning "rebase -i" into a builtin.
+> It will be more helpful if it checked out a new local branch that tracks
+> the remote branch, instead of refusing what the user asked to do. It may
+> need a new dialog that asks to confirm (and allows the user to change)
+> the name of the new branch.
 
-"This is an internal file" is just a declaration you are making, and the
-file is observable by anybody after "rebase -i" relinquishes the control
-to let the user sort out the mess.  The users do not have any obligation
-to honor your declaration, and strictly speaking it is a regression to
-change the file format.
+Heh, stop, step back and think a bit.  I admit that it wasn't just you; we
+were both blind.
 
-For example, when I realize I misspelt somebody's name (perhaps the
-mailpath between the sender and me mishandled the encoding headers), I
-could edit .git/rebase-merge/author-script and say "git rebase --continue"
-to let auto-amend to kick in, which would use the fixed author name from
-the file.
+If we unconditionally disable "check out this branch" from the context
+sensitive menu for the tip of a remote tracking branch, I do not think we
+lose anything.  If one wants to start a new local branch from there, one
+can use the context sensitive menu for an arbitrary commit (rowmenu) and
+say "Create new branch".
 
-	Side note.  The current "rebase --continue" behaviour is somewhat
-	inconsistent; if "edit" does not do anything to the tree, nor the
-	user runs "git commit --amend', the commit is untouched, but if
-	the user updates the index and says --continue without amending,
-	the authorship is not taken from the auto-amended commit but is
-	taken from the author-script file.  Perhaps something along the
-	line of untested patch attached at the end would remedy this a
-	bit? 
+If we wanted users of gitk to use it to detach HEAD, the current UI is not
+a good way to do so anyway --- it only allows detaching the tip of remote
+tracking branches and not an arbitrary commit.
 
-Having said that, if we were to change the way rebase-i leaves its state
-behind so that it can pick up from where it left off, I prefer Christian's
-later suggestion to leave the object name of the commit that is being
-rebased in the file.  Sure, it makes it harder to lie about the authorship,
-but my previous example was purely "I _could_ do this" and not "I rely on
-being able to do this".
+	Side note.  I am not arguing it is a good idea.  I am only saying
+	that if it were a good idea, such an action should be in rowmenu
+	that applies to any commit, not headmenu that applies only to the
+	tips of refs. 
 
-But I have this nagging feeling that we may be able to get rid of even the
-"current commit".
-
--- >8 --
-
-rebase -i: AUTHOR_{NAME,EMAIL,DATE} are already available in HEAD; use it.
-
-This only changes the codepath of "rebase -i --continue" that auto-amends
-the HEAD commit with the change user made but forgot to "commit --amend".
-
- git-rebase--interactive.sh |    3 +--
- 1 files changed, 1 insertions(+), 2 deletions(-)
-
-diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
-index f96d887..b8608be 100755
---- a/git-rebase--interactive.sh
-+++ b/git-rebase--interactive.sh
-@@ -522,8 +522,7 @@ first and then run 'git rebase --continue' again."
- 				git reset --soft HEAD^ ||
- 				die "Cannot rewind the HEAD"
- 			fi
--			export GIT_AUTHOR_NAME GIT_AUTHOR_EMAIL GIT_AUTHOR_DATE &&
--			git commit --no-verify -F "$DOTEST"/message -e || {
-+			git commit --no-verify -c HEAD || {
- 				test -n "$amend" && git reset --soft $amend
- 				die "Could not commit staged changes."
- 			}
+So I retract my earlier objection entirely.  I do not think the feature
+Sitaram is disabling was meant to allow detaching HEAD at all and it can
+be safely disabled for remote tracking branches to make the GUI experience
+safer.
