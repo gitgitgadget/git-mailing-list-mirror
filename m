@@ -1,71 +1,80 @@
-From: Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH v2 2/2] rebase -i: use config file format to save author information
-Date: Sun, 21 Jun 2009 11:53:03 +0200
-Message-ID: <200906211153.03969.chriscool@tuxfamily.org>
-References: <20090621050846.3554.31660.chriscool@tuxfamily.org> <alpine.LNX.2.00.0906210244510.2147@iabervon.org> <7vhbyat6qc.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH] t3505: fix abuse of test_expect_code
+Date: Sun, 21 Jun 2009 02:14:17 -0700
+Message-ID: <7v7hz6t0d2.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: Daniel Barkalow <barkalow@iabervon.org>, git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Stephan Beyer <s-beyer@gmx.net>,
-	Jakub Narebski <jnareb@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Jun 21 11:54:48 2009
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Jun 21 11:55:18 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MIJl9-00038c-UN
-	for gcvg-git-2@gmane.org; Sun, 21 Jun 2009 11:54:48 +0200
+	id 1MIJld-0003HI-Jy
+	for gcvg-git-2@gmane.org; Sun, 21 Jun 2009 11:55:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752749AbZFUJwx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 21 Jun 2009 05:52:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752239AbZFUJwx
-	(ORCPT <rfc822;git-outgoing>); Sun, 21 Jun 2009 05:52:53 -0400
-Received: from smtp3-g21.free.fr ([212.27.42.3]:55889 "EHLO smtp3-g21.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752083AbZFUJww (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 21 Jun 2009 05:52:52 -0400
-Received: from smtp3-g21.free.fr (localhost [127.0.0.1])
-	by smtp3-g21.free.fr (Postfix) with ESMTP id 63499818181;
-	Sun, 21 Jun 2009 11:52:46 +0200 (CEST)
-Received: from bureau.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
-	by smtp3-g21.free.fr (Postfix) with ESMTP id 1FAB68180B5;
-	Sun, 21 Jun 2009 11:52:44 +0200 (CEST)
-User-Agent: KMail/1.9.9
-In-Reply-To: <7vhbyat6qc.fsf@alter.siamese.dyndns.org>
-Content-Disposition: inline
+	id S1753141AbZFUJzA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 21 Jun 2009 05:55:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753203AbZFUJy7
+	(ORCPT <rfc822;git-outgoing>); Sun, 21 Jun 2009 05:54:59 -0400
+Received: from fed1rmmtai106.cox.net ([68.230.241.54]:54680 "EHLO
+	fed1rmmtai106.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753006AbZFUJy6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 21 Jun 2009 05:54:58 -0400
+Received: from fed1rmimpo03.cox.net ([70.169.32.75])
+          by fed1rmmtao103.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20090621091421.IJUN2915.fed1rmmtao103.cox.net@fed1rmimpo03.cox.net>;
+          Sun, 21 Jun 2009 05:14:21 -0400
+Received: from localhost ([68.225.240.211])
+	by fed1rmimpo03.cox.net with bizsmtp
+	id 6ZEJ1c0014aMwMQ04ZEMzS; Sun, 21 Jun 2009 05:14:21 -0400
+X-VR-Score: -20.00
+X-Authority-Analysis: v=1.0 c=1 a=e4e2083Et84A:10 a=ybZZDoGAAAAA:8
+ a=8dtxDd-mniZWJeb_h6YA:9 a=Z3SfWXGswb4F4Qkv9bIA:7
+ a=D0r62N36KXccEmeku5B3u-BPALAA:4 a=qIVjreYYsbEA:10
+X-CM-Score: 0.00
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121980>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121981>
 
-On Sunday 21 June 2009, Junio C Hamano wrote:
-> Daniel Barkalow <barkalow@iabervon.org> writes:
-> >> Why is this a good change?
-> >
-> > It was always using a temporary file; it just used to use a temporary
-> > file that was a shell script fragment and needed to be read with
-> > "eval". It can't be done entirely in core because it may be determined
-> > before a conflict and only used when run with --continue after the user
-> > resolves the conflict.
->
-> Ahh, Ok.
->
-> Using a _known_ and defined format, instead of ad-hoc scriptlet, is an
-> improvement.
->
-> I still wonder if we can avoid using three separate "git show" and "git
-> config" invocations, though.  But a half of that inefficiency will go
-> away when this is migrated to C, as a single git_config() will grab all
-> three, although the writing side is still very inefficient X-<.
+The test wanted to make sure that cherry-pick exits with status 1,
+but with the way it was placed after "git checkout master &&" meant
+that it could have misjudged success if checkout barfed with the
+same failure status.
 
-It may be possible to write a ref to the commit we need information from. 
-And then when "git rebase --continue" is called, we would read this ref and 
-then get information from the referenced commit?
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
 
-Best regards,
-Christian.
+ * Besides, /bin/sh (but not bash) on FreeBSD 7.2 does not seem to
+   evaluate "a && b" fed to test_expect_code correctly for me (eval_ret=0
+   for some reason, even though cherry-pick was failing), and this patch
+   incidentally fixes that issue.
+
+ t/t3505-cherry-pick-empty.sh |   10 +++++-----
+ 1 files changed, 5 insertions(+), 5 deletions(-)
+
+diff --git a/t/t3505-cherry-pick-empty.sh b/t/t3505-cherry-pick-empty.sh
+index 9aaeabd..e51e505 100755
+--- a/t/t3505-cherry-pick-empty.sh
++++ b/t/t3505-cherry-pick-empty.sh
+@@ -17,11 +17,11 @@ test_expect_success setup '
+ 
+ '
+ 
+-test_expect_code 1 'cherry-pick an empty commit' '
+-
+-	git checkout master &&
+-	git cherry-pick empty-branch
+-
++test_expect_success 'cherry-pick an empty commit' '
++	git checkout master && {
++		git cherry-pick empty-branch
++		test "$?" = 1
++	}
+ '
+ 
+ test_expect_success 'index lockfile was removed' '
