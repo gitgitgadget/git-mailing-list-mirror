@@ -1,123 +1,89 @@
-From: Sitaram Chamarty <sitaramc@gmail.com>
-Subject: Re: [PATCH] gitk: disable checkout of remote branch
-Date: Sun, 21 Jun 2009 19:50:29 +0530
-Message-ID: <2e24e5b90906210720h135b3386t6e7c0a8235fdae57@mail.gmail.com>
-References: <19004.34350.109422.730109@cargo.ozlabs.ibm.com>
-	 <slrnh3ru9v.vgo.sitaramc@sitaramc.homelinux.net>
-	 <7v3a9uszzl.fsf@alter.siamese.dyndns.org>
+From: Robin Rosenberg <robin.rosenberg@dewire.com>
+Subject: Re: [JGIT PATCH 2/2] Add support for remote.name.pushurl
+Date: Sun, 21 Jun 2009 19:30:43 +0200
+Message-ID: <200906211930.43809.robin.rosenberg@dewire.com>
+References: <1245547316-10299-1-git-send-email-spearce@spearce.org> <1245547316-10299-2-git-send-email-spearce@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: Text/Plain; charset=iso-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Paul Mackerras <paulus@samba.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Jun 21 16:20:39 2009
+Cc: git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Sun Jun 21 19:31:03 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MINuQ-0005jk-T8
-	for gcvg-git-2@gmane.org; Sun, 21 Jun 2009 16:20:39 +0200
+	id 1MIQsg-00071a-Fp
+	for gcvg-git-2@gmane.org; Sun, 21 Jun 2009 19:31:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751655AbZFUOU3 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 21 Jun 2009 10:20:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751555AbZFUOU2
-	(ORCPT <rfc822;git-outgoing>); Sun, 21 Jun 2009 10:20:28 -0400
-Received: from an-out-0708.google.com ([209.85.132.246]:23919 "EHLO
-	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751333AbZFUOU1 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 21 Jun 2009 10:20:27 -0400
-Received: by an-out-0708.google.com with SMTP id d40so5242213and.1
-        for <git@vger.kernel.org>; Sun, 21 Jun 2009 07:20:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=aZAvAHjwyveEruDlaP/LpzdmRGYqzcxvhsCkWndebXQ=;
-        b=GX9Aj3OSBFVLc7TFepao+ni54Iewu61No6dFD+lOPxH1qDdptMagDyOdM2FirXw11K
-         IGRgcfch8qPZ9PvA3sNBTdxzPydr0hAtnUmX50zMDwd5kxdaUOlSXX6t174yUyTdubZk
-         NZfCotqBTSkeVcJk1DMP2Sd1rYOwaKijstsZc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=f25egrfQftEGl0RRTzq3oIryjAyk3xjkD5oLTmGKjJMx5eNXFJH8c4lZtcVbhnE0+o
-         ZkBms1QTM4CfXndfRAqUJdWvuJ6lerJvNjpGNVrB5w8Y6qN41siXfWC+0VE8YebOheC0
-         eafCydZsITjuoZxFEFNjzuZh4IjvRejNCvQjM=
-Received: by 10.231.17.70 with SMTP id r6mr475508iba.37.1245594029839; Sun, 21 
-	Jun 2009 07:20:29 -0700 (PDT)
-In-Reply-To: <7v3a9uszzl.fsf@alter.siamese.dyndns.org>
+	id S1752003AbZFURav convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 21 Jun 2009 13:30:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751959AbZFURau
+	(ORCPT <rfc822;git-outgoing>); Sun, 21 Jun 2009 13:30:50 -0400
+Received: from mail.dewire.com ([83.140.172.130]:7681 "EHLO dewire.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751808AbZFURat convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 21 Jun 2009 13:30:49 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by dewire.com (Postfix) with ESMTP id 9A235147D72E;
+	Sun, 21 Jun 2009 19:30:46 +0200 (CEST)
+X-Virus-Scanned: by amavisd-new at dewire.com
+Received: from dewire.com ([127.0.0.1])
+	by localhost (torino.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id mtg80oszN0aC; Sun, 21 Jun 2009 19:30:45 +0200 (CEST)
+Received: from sleipner.localnet (unknown [10.9.0.2])
+	by dewire.com (Postfix) with ESMTP id 74330147D72C;
+	Sun, 21 Jun 2009 19:30:45 +0200 (CEST)
+User-Agent: KMail/1.11.2 (Linux/2.6.28-11-generic; KDE/4.2.2; i686; ; )
+In-Reply-To: <1245547316-10299-2-git-send-email-spearce@spearce.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121986>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121987>
 
-On Sun, Jun 21, 2009 at 2:52 PM, Junio C Hamano <gitster@pobox.com> wro=
-te:
->
-> Sitaram Chamarty <sitaramc@gmail.com> writes:
->
-> > At the command line, this gives you a detailed warning message, but=
- the
-> > GUI currently allows it without any fuss.
-> >
-> > Since the GUI is often used by people much less familiar with git, =
-it
-> > seems reasonable to make the GUI more restrictive than the command =
-line,
-> > not less.
-> > ...
-> > This patch helps me a lot.
->
-> The patch seems to disable checkout unconditionally, but it at least =
-needs
-> an "expert mode" switch to bypass the patch's logic, or (better yet) =
-a
-> "training wheel" switch for you to set in repositories of the people =
-you
-> manage.
+s=F6ndag 21 juni 2009 03:21:56 skrev "Shawn O. Pearce" <spearce@spearce=
+=2Eorg>:
+> In C Git commit 203462347fce Michael J Gruber added support for a
+> new URL key within a remote block, permitting a different URL to
+> be used for push than for fetch.  In the commit message he cites
+> an example where fetch runs over git://, but push uses ssh://,
+> as the git:// protocol has lower connection setup overheads.
+>=20
+> This change complicates the Transport API as now we must know
+> in advance when the Transport.open() call is made what type of
+> operation the caller wants to perform, so we know which config
+> key to honor when constructing the Transport objects.
+>=20
+> Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
+> ---
+>  .../src/org/spearce/jgit/pgm/Push.java             |    3 +-
+>  .../org/spearce/jgit/transport/RemoteConfig.java   |   47 ++++++
+>  .../src/org/spearce/jgit/transport/Transport.java  |  150 ++++++++++=
+++++++++--
+>  3 files changed, 190 insertions(+), 10 deletions(-)
+>=20
+> diff --git a/org.spearce.jgit.pgm/src/org/spearce/jgit/pgm/Push.java =
+b/org.spearce.jgit.pgm/src/org/spearce/jgit/pgm/Push.java
+> index 19d31a1..9364e4a 100644
+> --- a/org.spearce.jgit.pgm/src/org/spearce/jgit/pgm/Push.java
+> +++ b/org.spearce.jgit.pgm/src/org/spearce/jgit/pgm/Push.java
+> @@ -102,7 +102,8 @@ protected void run() throws Exception {
+>  				refSpecs.add(spec.setForceUpdate(true));
+>  		}
+> =20
+> -		final List<Transport> transports =3D Transport.openAll(db, remote)=
+;
+> +		final List<Transport> transports;
+> +		transports =3D Transport.openAll(db, remote, Transport.Operation.P=
+USH);
 
-Indeed it does disable checkout of a remote/* branch unconditionally.
+Nit-pick. We usually initialize in one statement. I'll squash that for =
+you.
 
-I'm not just thinking of people *I* teach when I say that the
-"training wheel" mode should be the default.
+Seems we need to consider the Eclipse UI, since that has only of only o=
+ne UI. Can we hold on to
+that or at least establish a related issue in the bug tracker for Egit.
 
-I believe that when someone does this _from the GUI_, it's 100%
-certain they intended something else.  My basis for saying so is (1)
-even from CLI, it is quite likely, which is why we have a warning, and
-(2) people who use GUI are often much less expert than people who use
-CLI.
-
-Actually, what are the odds that someone is expert enough to use a
-detached HEAD _properly_ (without shooting themselves in the foot),
-but is _not_ expert enough to just say "git checkout origin/master" at
-the CLI?=A0 I did not think that combination is worth bothering about.
-
-You're welcome to tell me I'm wrong and that there _are_ such people
--- you guys are the gurus here -- but this is what I believe :-)
-
-[Of course, I could just be trying to cover up the fact that those
-were literally the first 3 lines of Tcl I ever wrote in all my life,
-and the size and scope of gitk is well beyond my comprehension to do
-anything non-trivial :-)  I'll let you decide which it is, heh!]
-
->
-> The above should ideally read:
->
-> > diff --git a/gitk b/gitk
-> > index 8c66d17..411bc52
-> > --- a/gitk
-> > +++ b/gitk
->
-> if the patch goes to Paulus.
-
-Thanks -- I had not realised that subtlety.
-
-Will make that change and re-send after hearing from either of you
-about the above.=A0 Because if the decision is that the patch does need
-to be conditional etc., it'll take me a long while anyway :-(
-
-Regards,
-
-Sitaram
+-- robin
