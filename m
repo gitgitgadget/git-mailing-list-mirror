@@ -1,78 +1,126 @@
 From: Markus Heidelberg <markus.heidelberg@web.de>
-Subject: [PATCH] gitk: Adjust two equal strings which differed in whitespace
-Date: Sun, 21 Jun 2009 19:35:40 +0200
-Message-ID: <1245605740-27117-1-git-send-email-markus.heidelberg@web.de>
-Cc: Christian Stimming <stimming@tuhh.de>, git@vger.kernel.org,
-	Markus Heidelberg <markus.heidelberg@web.de>
+Subject: [PATCH] gitk: Fix "git gui blame" invocation when called from topdir
+Date: Sun, 21 Jun 2009 19:34:11 +0200
+Message-ID: <1245605651-27001-1-git-send-email-markus.heidelberg@web.de>
+Cc: git@vger.kernel.org, Markus Heidelberg <markus.heidelberg@web.de>
 To: Paul Mackerras <paulus@samba.org>
-X-From: git-owner@vger.kernel.org Sun Jun 21 19:35:58 2009
+X-From: git-owner@vger.kernel.org Sun Jun 21 19:36:16 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MIQxR-0000H4-Vm
-	for gcvg-git-2@gmane.org; Sun, 21 Jun 2009 19:35:58 +0200
+	id 1MIQxj-0000MK-Is
+	for gcvg-git-2@gmane.org; Sun, 21 Jun 2009 19:36:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752708AbZFURfs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 21 Jun 2009 13:35:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752391AbZFURfr
-	(ORCPT <rfc822;git-outgoing>); Sun, 21 Jun 2009 13:35:47 -0400
-Received: from fmmailgate03.web.de ([217.72.192.234]:53715 "EHLO
-	fmmailgate03.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751808AbZFURfq (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 21 Jun 2009 13:35:46 -0400
-Received: from smtp07.web.de (fmsmtp07.dlan.cinetic.de [172.20.5.215])
-	by fmmailgate03.web.de (Postfix) with ESMTP id 15819100BB102;
-	Sun, 21 Jun 2009 19:35:47 +0200 (CEST)
+	id S1752875AbZFURgF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 21 Jun 2009 13:36:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752391AbZFURgE
+	(ORCPT <rfc822;git-outgoing>); Sun, 21 Jun 2009 13:36:04 -0400
+Received: from fmmailgate02.web.de ([217.72.192.227]:52539 "EHLO
+	fmmailgate02.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752054AbZFURgD (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 21 Jun 2009 13:36:03 -0400
+Received: from smtp06.web.de (fmsmtp06.dlan.cinetic.de [172.20.5.172])
+	by fmmailgate02.web.de (Postfix) with ESMTP id AEA411042DA1D;
+	Sun, 21 Jun 2009 19:36:04 +0200 (CEST)
 Received: from [89.59.120.52] (helo=localhost.localdomain)
-	by smtp07.web.de with asmtp (TLSv1:AES256-SHA:256)
+	by smtp06.web.de with asmtp (TLSv1:AES256-SHA:256)
 	(WEB.DE 4.110 #277)
-	id 1MIQxG-0007uv-00; Sun, 21 Jun 2009 19:35:46 +0200
+	id 1MIQvp-0003A7-00; Sun, 21 Jun 2009 19:34:17 +0200
 X-Mailer: git-send-email 1.6.3.2.369.gdf06
-X-Sender: markus.heidelberg@web.de
-X-Provags-ID: V01U2FsdGVkX1+vS5lE2Rz/9FgRk8LaIUnz5dN7dZqmrAYOMPOs
-	/oGp4/vwuS7iEJHSBpbahd+zwGIBrf0MbFidK9A7t5/znS/hWv
-	/MwhO277PHTXuGc4pGmA==
+X-Provags-ID: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121988>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121989>
 
-This caused two entries for translation. Also change the German
-translation because the now used one is too long to be fully displayed.
+In this case "git rev-parse --git-dir" doesn't return an absolute path,
+but merely ".git", so the selected file has a relative path.
+The function make_relative then tries to make the already relative path
+relative, which results in a path like "../../../../Makefile" with as
+much ".." as the number of parts [pwd] consists of.
+
+This regression was introduced by commit 9712b81 (gitk: Fix bugs in
+blaming code, 2008-12-06), which fixed "git gui blame" when called from
+subdirs.
+
+This also fixes it for bare repositories.
 
 Signed-off-by: Markus Heidelberg <markus.heidelberg@web.de>
 ---
- gitk     |    2 +-
- po/de.po |    2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+
+    For convencience the output of diff -w:
+
+    @@ -3366,6 +3366,7 @@ proc index_sha1 {fname} {
+    
+     # Turn an absolute path into one relative to the current directory
+     proc make_relative {f} {
+    +    if {[file pathtype $f] ne "relative"} {
+         set elts [file split $f]
+         set here [file split [pwd]]
+         set ei 0
+    @@ -3381,6 +3382,9 @@ proc make_relative {f} {
+         }
+         set elts [concat $res [lrange $elts $ei end]]
+         return [eval file join $elts]
+    +    } else {
+    +       return $f
+    +    }
+     }
+    
+     proc external_blame {parent_idx {line {}}} {
+
+
+    While fixing this I also noticed that the tree view treats pwd as the
+    topdir, so it shows directly .gitignore instead of po/.gitignore for
+    example.
+
+ gitk |   30 +++++++++++++++++-------------
+ 1 files changed, 17 insertions(+), 13 deletions(-)
 
 diff --git a/gitk b/gitk
-index 46d7782..87e3b31 100755
+index 4604c83..46d7782 100755
 --- a/gitk
 +++ b/gitk
-@@ -2014,7 +2014,7 @@ proc makewindow {} {
-     set sha1entry .tf.bar.sha1
-     set entries $sha1entry
-     set sha1but .tf.bar.sha1label
--    button $sha1but -text [mc "SHA1 ID: "] -state disabled -relief flat \
-+    button $sha1but -text "[mc "SHA1 ID:"] " -state disabled -relief flat \
- 	-command gotocommit -width 8
-     $sha1but conf -disabledforeground [$sha1but cget -foreground]
-     pack .tf.bar.sha1label -side left
-diff --git a/po/de.po b/po/de.po
-index 53ef0d6..e224595 100644
---- a/po/de.po
-+++ b/po/de.po
-@@ -708,7 +708,7 @@ msgstr "Gehe zu:"
+@@ -3366,21 +3366,25 @@ proc index_sha1 {fname} {
  
- #: gitk:7821
- msgid "SHA1 ID:"
--msgstr "SHA1-Hashwert:"
-+msgstr "SHA1 ID:"
+ # Turn an absolute path into one relative to the current directory
+ proc make_relative {f} {
+-    set elts [file split $f]
+-    set here [file split [pwd]]
+-    set ei 0
+-    set hi 0
+-    set res {}
+-    foreach d $here {
+-	if {$ei < $hi || $ei >= [llength $elts] || [lindex $elts $ei] ne $d} {
+-	    lappend res ".."
+-	} else {
+-	    incr ei
++    if {[file pathtype $f] ne "relative"} {
++	set elts [file split $f]
++	set here [file split [pwd]]
++	set ei 0
++	set hi 0
++	set res {}
++	foreach d $here {
++	    if {$ei < $hi || $ei >= [llength $elts] || [lindex $elts $ei] ne $d} {
++		lappend res ".."
++	    } else {
++		incr ei
++	    }
++	    incr hi
+ 	}
+-	incr hi
++	set elts [concat $res [lrange $elts $ei end]]
++	return [eval file join $elts]
++    } else {
++	return $f
+     }
+-    set elts [concat $res [lrange $elts $ei end]]
+-    return [eval file join $elts]
+ }
  
- #: gitk:7840
- #, tcl-format
+ proc external_blame {parent_idx {line {}}} {
 -- 
 1.6.3.2.369.gdf06
