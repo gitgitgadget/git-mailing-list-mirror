@@ -1,62 +1,66 @@
 From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [JGIT PATCH 2/6] Add remote.name.timeout to configure an IO
-	timeout
-Date: Sat, 20 Jun 2009 15:54:04 -0700
-Message-ID: <20090620225404.GT11191@spearce.org>
-References: <1245446875-31102-1-git-send-email-spearce@spearce.org> <1245446875-31102-2-git-send-email-spearce@spearce.org> <1245446875-31102-3-git-send-email-spearce@spearce.org> <200906210028.48954.robin.rosenberg.lists@dewire.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Subject: [JGIT PATCH 1/2] Cleanup Transport.applyConfig to use setter methods more consistently
+Date: Sat, 20 Jun 2009 18:21:55 -0700
+Message-ID: <1245547316-10299-1-git-send-email-spearce@spearce.org>
 Cc: git@vger.kernel.org
-To: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
-X-From: git-owner@vger.kernel.org Sun Jun 21 00:54:17 2009
+To: Robin Rosenberg <robin.rosenberg@dewire.com>
+X-From: git-owner@vger.kernel.org Sun Jun 21 03:23:03 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MI9Rv-0006ss-Uf
-	for gcvg-git-2@gmane.org; Sun, 21 Jun 2009 00:54:16 +0200
+	id 1MIBlv-0004JE-1a
+	for gcvg-git-2@gmane.org; Sun, 21 Jun 2009 03:23:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751979AbZFTWyD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 20 Jun 2009 18:54:03 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751275AbZFTWyC
-	(ORCPT <rfc822;git-outgoing>); Sat, 20 Jun 2009 18:54:02 -0400
-Received: from george.spearce.org ([209.20.77.23]:36822 "EHLO
+	id S1753364AbZFUBVz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 20 Jun 2009 21:21:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753301AbZFUBVz
+	(ORCPT <rfc822;git-outgoing>); Sat, 20 Jun 2009 21:21:55 -0400
+Received: from george.spearce.org ([209.20.77.23]:39665 "EHLO
 	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751048AbZFTWyB (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 20 Jun 2009 18:54:01 -0400
-Received: by george.spearce.org (Postfix, from userid 1001)
-	id 8066E381FD; Sat, 20 Jun 2009 22:54:04 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <200906210028.48954.robin.rosenberg.lists@dewire.com>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	with ESMTP id S1753214AbZFUBVy (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 20 Jun 2009 21:21:54 -0400
+Received: by george.spearce.org (Postfix, from userid 1000)
+	id 5FBD9381FF; Sun, 21 Jun 2009 01:21:57 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.2.4 (2008-01-01) on george.spearce.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-4.4 required=4.0 tests=ALL_TRUSTED,BAYES_00
+	autolearn=ham version=3.2.4
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by george.spearce.org (Postfix) with ESMTP id 6B48B3819E;
+	Sun, 21 Jun 2009 01:21:56 +0000 (UTC)
+X-Mailer: git-send-email 1.6.3.2.416.g04d0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121957>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121958>
 
-Robin Rosenberg <robin.rosenberg.lists@dewire.com> wrote:
-> fredag 19 juni 2009 23:27:51 skrev "Shawn O. Pearce" <spearce@spearce.org>:
-> > An IO timeout can be useful if the remote peer stops responding,
-> > and the user wants the application to abort rather than block
-> > indefinitely waiting for more input.
-> > 
-> > This is a JGit specific extension to the standard remote format.
-> 
-> Can we we assume C Git won't implement the same thing with a different 
-> parameter name, or worse, the same name, but a different unit?
+This just struck me as odd that we sometimes used a setter method,
+and sometimes used direct assignment to the field.  Now we use the
+setter method if it is available.  The fetch and push refspecs do
+not have setters, so must still be done by direct field assignment.
 
-No, we can't assume anything.
+Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
+---
+ .../src/org/spearce/jgit/transport/Transport.java  |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
 
-I probably should add this to C Git too.  I think its the logical
-name and units, e.g `git daemon --timeout=` already exists and
-takes seconds as the unit.
-
-I wrote this series because I have a case where the remote server
-is sometimes not sending packets out... and the client just blocks.
-git fetch has the same issue.  Doing git fetch or jgit fetch from
-a cron against this server causes the fetch processes to just pile
-up indefiniately.  :-(
-
+diff --git a/org.spearce.jgit/src/org/spearce/jgit/transport/Transport.java b/org.spearce.jgit/src/org/spearce/jgit/transport/Transport.java
+index 1068f50..c36ccdd 100644
+--- a/org.spearce.jgit/src/org/spearce/jgit/transport/Transport.java
++++ b/org.spearce.jgit/src/org/spearce/jgit/transport/Transport.java
+@@ -568,9 +568,9 @@ public void setRemoveDeletedRefs(final boolean remove) {
+ 	 */
+ 	public void applyConfig(final RemoteConfig cfg) {
+ 		setOptionUploadPack(cfg.getUploadPack());
+-		fetch = cfg.getFetchRefSpecs();
++		setOptionReceivePack(cfg.getReceivePack());
+ 		setTagOpt(cfg.getTagOpt());
+-		optionReceivePack = cfg.getReceivePack();
++		fetch = cfg.getFetchRefSpecs();
+ 		push = cfg.getPushRefSpecs();
+ 	}
+ 
 -- 
-Shawn.
+1.6.3.2.416.g04d0
