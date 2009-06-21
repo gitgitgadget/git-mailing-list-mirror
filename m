@@ -1,227 +1,209 @@
-From: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-Subject: [PATCHv3 1/2] gitweb: gravatar support
-Date: Sun, 21 Jun 2009 19:57:04 +0200
-Message-ID: <1245607025-19296-2-git-send-email-giuseppe.bilotta@gmail.com>
-References: <1245607025-19296-1-git-send-email-giuseppe.bilotta@gmail.com>
-Cc: Jakub Narebski <jnareb@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Aaron Crane <git@aaroncrane.co.uk>,
-	Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jun 21 20:01:35 2009
+From: Johannes Sixt <j6t@kdbg.org>
+Subject: [PATCH js/daemon-log] receive-pack: do not send error details to the client
+Date: Sun, 21 Jun 2009 23:16:09 +0200
+Message-ID: <200906212316.09149.j6t@kdbg.org>
+Mime-Version: 1.0
+Content-Type: text/plain;
+  charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Jun 21 23:16:26 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MIRME-0000Ir-Ag
-	for gcvg-git-2@gmane.org; Sun, 21 Jun 2009 20:01:35 +0200
+	id 1MIUOm-0008Tg-PG
+	for gcvg-git-2@gmane.org; Sun, 21 Jun 2009 23:16:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753387AbZFUSBZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 21 Jun 2009 14:01:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753018AbZFUSBY
-	(ORCPT <rfc822;git-outgoing>); Sun, 21 Jun 2009 14:01:24 -0400
-Received: from mail-fx0-f224.google.com ([209.85.220.224]:61142 "EHLO
-	mail-fx0-f224.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752703AbZFUSBX (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 21 Jun 2009 14:01:23 -0400
-X-Greylist: delayed 316 seconds by postgrey-1.27 at vger.kernel.org; Sun, 21 Jun 2009 14:01:22 EDT
-Received: by fxm24 with SMTP id 24so215738fxm.37
-        for <git@vger.kernel.org>; Sun, 21 Jun 2009 11:01:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer:in-reply-to:references;
-        bh=1hMb3uWU5siWW4prLDATBhxLGkRFC+9Z8pm0IIIqGeo=;
-        b=VlDe2VMQBjdeC8hRbaAiVSB47YNPzaFVuXEyYzTPYYtMmCZc8TjMsh9FD0K/+7lF/u
-         8UUlzaDc58VHNVh1PrILp3Fu9yQCND+eoDhAuTGxqWS+tSFcvsif9p3APoaZWw1yuR5o
-         aMV2G0wqMr5VDaZYu7g0exuZpVq55dyC4Mv8s=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=QdKSb2FMK+t17V64CBA5nQzLeuRP1eBKnyJ0uhKb7B8lF94yYZT+QBDSj5r7hGXOLW
-         uMvnwmDGUeO99PWp0C3UGb/jRyOatWBj9tCJOHUsu10ngryaTqt7KoK/Ml0sTQn+fSsn
-         wQejcsZYyY7XGrMXlWUzRtoNreG3j+0D9+zO8=
-Received: by 10.204.66.2 with SMTP id l2mr5197123bki.177.1245606968627;
-        Sun, 21 Jun 2009 10:56:08 -0700 (PDT)
-Received: from localhost (host-78-15-4-45.cust-adsl.tiscali.it [78.15.4.45])
-        by mx.google.com with ESMTPS id b17sm10716918fka.36.2009.06.21.10.56.07
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 21 Jun 2009 10:56:07 -0700 (PDT)
-X-Mailer: git-send-email 1.6.3.rc1.192.gdbfcb
-In-Reply-To: <1245607025-19296-1-git-send-email-giuseppe.bilotta@gmail.com>
+	id S1753602AbZFUVQL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 21 Jun 2009 17:16:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752749AbZFUVQL
+	(ORCPT <rfc822;git-outgoing>); Sun, 21 Jun 2009 17:16:11 -0400
+Received: from bsmtp.bon.at ([213.33.87.14]:22073 "EHLO bsmtp.bon.at"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752745AbZFUVQK (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 21 Jun 2009 17:16:10 -0400
+Received: from dx.sixt.local (unknown [93.83.142.38])
+	by bsmtp.bon.at (Postfix) with ESMTP id 4368B2C4003;
+	Sun, 21 Jun 2009 23:16:09 +0200 (CEST)
+Received: from localhost (localhost [IPv6:::1])
+	by dx.sixt.local (Postfix) with ESMTP id A6FBC42763;
+	Sun, 21 Jun 2009 23:16:09 +0200 (CEST)
+User-Agent: KMail/1.9.9
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121992>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/121993>
 
-Introduce gravatar support by adding the appropriate img tag next to
-author and committer in commit(diff), history, shortlog and log view.
+If the objects that a client pushes to the server cannot be processed for
+any reason, an error is reported back to the client via the git protocol.
+We used to send quite detailed information if a system call failed if
+unpack-objects is run. This can be regarded as an information leak. Now we
+do not send any error details like we already do in the case where
+index-pack failed.
 
-The feature is disabled by default, and depends on Digest::MD5, which
-is a core package since Perl 5.8. If Digest::MD5 cannot be found,
-enabling this feature results in a no-op.
+Errors in system calls as well as the exit code of unpack-objects and
+index-pack are now reported to stderr; in the case of a local push or via
+ssh these messages still go to the client, but that is OK since these forms
+of access to the server assume that the client can be trusted. If
+receive-pack is run from git-daemon, then the daemon should put the error
+messages into the syslog.
 
-Signed-off-by: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+With this reasoning a new status report is added for the post-update-hook;
+untrusted (i.e. daemon's) clients cannot observe its status anyway, others
+may want to know failure details.
+
+Signed-off-by: Johannes Sixt <j6t@kdbg.org>
 ---
- gitweb/gitweb.css  |    4 +++
- gitweb/gitweb.perl |   60 +++++++++++++++++++++++++++++++++++++++++++++------
- 2 files changed, 57 insertions(+), 7 deletions(-)
+ Does this make sense?
 
-diff --git a/gitweb/gitweb.css b/gitweb/gitweb.css
-index a01eac8..eaf74c3 100644
---- a/gitweb/gitweb.css
-+++ b/gitweb/gitweb.css
-@@ -28,6 +28,10 @@ img.logo {
- 	border-width: 0px;
+ The motivation of this change is to ultimately get rid of error codes
+ for system call failures in start/finish/run_command functions and call
+ error() in these functions.
+
+ -- Hannes
+
+ builtin-receive-pack.c |   53 +++++++++++++++++++----------------------------
+ 1 files changed, 22 insertions(+), 31 deletions(-)
+
+diff --git a/builtin-receive-pack.c b/builtin-receive-pack.c
+index 33d345d..6ec1d05 100644
+--- a/builtin-receive-pack.c
++++ b/builtin-receive-pack.c
+@@ -123,27 +123,27 @@ static struct command *commands;
+ static const char pre_receive_hook[] = "hooks/pre-receive";
+ static const char post_receive_hook[] = "hooks/post-receive";
+ 
+-static int hook_status(int code, const char *hook_name)
++static int run_status(int code, const char *cmd_name)
+ {
+ 	switch (code) {
+ 	case 0:
+ 		return 0;
+ 	case -ERR_RUN_COMMAND_FORK:
+-		return error("hook fork failed");
++		return error("fork of %s failed", cmd_name);
+ 	case -ERR_RUN_COMMAND_EXEC:
+-		return error("hook execute failed");
++		return error("execute of %s failed", cmd_name);
+ 	case -ERR_RUN_COMMAND_PIPE:
+-		return error("hook pipe failed");
++		return error("pipe failed");
+ 	case -ERR_RUN_COMMAND_WAITPID:
+ 		return error("waitpid failed");
+ 	case -ERR_RUN_COMMAND_WAITPID_WRONG_PID:
+ 		return error("waitpid is confused");
+ 	case -ERR_RUN_COMMAND_WAITPID_SIGNAL:
+-		return error("%s died of signal", hook_name);
++		return error("%s died of signal", cmd_name);
+ 	case -ERR_RUN_COMMAND_WAITPID_NOEXIT:
+-		return error("%s died strangely", hook_name);
++		return error("%s died strangely", cmd_name);
+ 	default:
+-		error("%s exited with error code %d", hook_name, -code);
++		error("%s exited with error code %d", cmd_name, -code);
+ 		return -code;
+ 	}
+ }
+@@ -174,7 +174,7 @@ static int run_receive_hook(const char *hook_name)
+ 
+ 	code = start_command(&proc);
+ 	if (code)
+-		return hook_status(code, hook_name);
++		return run_status(code, hook_name);
+ 	for (cmd = commands; cmd; cmd = cmd->next) {
+ 		if (!cmd->error_string) {
+ 			size_t n = snprintf(buf, sizeof(buf), "%s %s %s\n",
+@@ -186,7 +186,7 @@ static int run_receive_hook(const char *hook_name)
+ 		}
+ 	}
+ 	close(proc.in);
+-	return hook_status(finish_command(&proc), hook_name);
++	return run_status(finish_command(&proc), hook_name);
  }
  
-+img.avatar {
-+	vertical-align:middle;
-+}
-+
- div.page_header {
- 	height: 25px;
- 	padding: 8px;
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index 1e7e2d8..f5654d7 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -195,6 +195,14 @@ our %known_snapshot_format_aliases = (
- 	'x-zip' => undef, '' => undef,
- );
+ static int run_update_hook(struct command *cmd)
+@@ -203,7 +203,7 @@ static int run_update_hook(struct command *cmd)
+ 	argv[3] = sha1_to_hex(cmd->new_sha1);
+ 	argv[4] = NULL;
  
-+# Pixel sizes for avatars. If the default font sizes or lineheights
-+# are changed, it may be appropriate to change these values too via
-+# $GITWEB_CONFIG.
-+our %avatar_size = (
-+	'default' => 16,
-+	'double'  => 32
-+) ;
-+
- # You define site-wide feature defaults here; override them with
- # $GITWEB_CONFIG as necessary.
- our %feature = (
-@@ -365,6 +373,21 @@ our %feature = (
- 		'sub' => \&feature_patches,
- 		'override' => 0,
- 		'default' => [16]},
-+
-+	# Gravatar support. When this feature is enabled, views such as
-+	# shortlog or commit will display the gravatar associated with
-+	# the email of the committer(s) and/or author(s). Please note that
-+	# the feature depends on Digest::MD5.
-+
-+	# To enable system wide have in $GITWEB_CONFIG
-+	# $feature{'gravatar'}{'default'} = [1];
-+	# To have project specific config enable override in $GITWEB_CONFIG
-+	# $feature{'gravatar'}{'override'} = 1;
-+	# and in project config gitweb.gravatar = 0|1;
-+	'gravatar' => {
-+		'sub' => sub { feature_bool('gravatar', @_) },
-+		'override' => 0,
-+		'default' => [0]},
- );
+-	return hook_status(run_command_v_opt(argv, RUN_COMMAND_NO_STDIN |
++	return run_status(run_command_v_opt(argv, RUN_COMMAND_NO_STDIN |
+ 					RUN_COMMAND_STDOUT_TO_STDERR),
+ 			update_hook);
+ }
+@@ -394,7 +394,7 @@ static char update_post_hook[] = "hooks/post-update";
+ static void run_update_post_hook(struct command *cmd)
+ {
+ 	struct command *cmd_p;
+-	int argc;
++	int argc, status;
+ 	const char **argv;
  
- sub gitweb_get_feature {
-@@ -814,6 +837,10 @@ $git_dir = "$projectroot/$project" if $project;
- our @snapshot_fmts = gitweb_get_feature('snapshot');
- @snapshot_fmts = filter_snapshot_fmts(@snapshot_fmts);
- 
-+# check if gravatars are enabled and dependencies are satisfied
-+our $git_gravatar_enabled = gitweb_check_feature('gravatar') &&
-+	(eval { require Digest::MD5; 1; });
-+
- # dispatch
- if (!defined $action) {
- 	if (defined $hash) {
-@@ -3214,12 +3241,28 @@ sub git_print_header_div {
- 	      "\n</div>\n";
+ 	for (argc = 0, cmd_p = cmd; cmd_p; cmd_p = cmd_p->next) {
+@@ -417,8 +417,9 @@ static void run_update_post_hook(struct command *cmd)
+ 		argc++;
+ 	}
+ 	argv[argc] = NULL;
+-	run_command_v_opt(argv, RUN_COMMAND_NO_STDIN
+-		| RUN_COMMAND_STDOUT_TO_STDERR);
++	status = run_command_v_opt(argv, RUN_COMMAND_NO_STDIN
++			| RUN_COMMAND_STDOUT_TO_STDERR);
++	run_status(status, update_post_hook);
  }
  
-+# insert a gravatar for the given $email at the given $size if the feature
-+# is enabled
-+sub git_get_gravatar {
-+	if ($git_gravatar_enabled) {
-+		my ($email, %params) = @_;
-+		my $pre_white = ($params{'space_before'} ? "&nbsp;" : "");
-+		my $post_white = ($params{'space_after'} ? "&nbsp;" : "");
-+		my $size = $avatar_size{$params{'size'}} || $avatar_size{'default'};
-+		return $pre_white . "<img class=\"avatar\" src=\"http://www.gravatar.com/avatar.php?gravatar_id=" .
-+		       Digest::MD5::md5_hex(lc $email) . "&amp;size=$size\" />" . $post_white;
-+	} else {
-+		return "";
-+	}
-+}
-+
- sub git_print_authorship {
- 	my $co = shift;
- 
- 	my %ad = parse_date($co->{'author_epoch'}, $co->{'author_tz'});
- 	print "<div class=\"author_date\">" .
- 	      esc_html($co->{'author_name'}) .
-+	      git_get_gravatar($co->{'author_email'}, 'space_before' => 1) .
- 	      " [$ad{'rfc2822'}";
- 	if ($ad{'hour_local'} < 6) {
- 		printf(" (<span class=\"atnight\">%02d:%02d</span> %s)",
-@@ -4145,7 +4188,7 @@ sub git_shortlog_body {
- 		my $author = chop_and_escape_str($co{'author_name'}, 10);
- 		# git_summary() used print "<td><i>$co{'age_string'}</i></td>\n" .
- 		print "<td title=\"$co{'age_string_age'}\"><i>$co{'age_string_date'}</i></td>\n" .
--		      "<td><i>" . $author . "</i></td>\n" .
-+		      "<td>" . git_get_gravatar($co{'author_email'}, 'space_after' => 1) . "<i>" . $author . "</i></td>\n" .
- 		      "<td>";
- 		print format_subject_html($co{'title'}, $co{'title_short'},
- 		                          href(action=>"commit", hash=>$commit), $ref);
-@@ -4196,7 +4239,7 @@ sub git_history_body {
- 	# shortlog uses      chop_str($co{'author_name'}, 10)
- 		my $author = chop_and_escape_str($co{'author_name'}, 15, 3);
- 		print "<td title=\"$co{'age_string_age'}\"><i>$co{'age_string_date'}</i></td>\n" .
--		      "<td><i>" . $author . "</i></td>\n" .
-+		      "<td>" . git_get_gravatar($co{'author_email'}, 'space_after' => 1) . "<i>" . $author . "</i></td>\n" .
- 		      "<td>";
- 		# originally git_history used chop_str($co{'title'}, 50)
- 		print format_subject_html($co{'title'}, $co{'title_short'},
-@@ -4352,7 +4395,7 @@ sub git_search_grep_body {
- 		$alternate ^= 1;
- 		my $author = chop_and_escape_str($co{'author_name'}, 15, 5);
- 		print "<td title=\"$co{'age_string_age'}\"><i>$co{'age_string_date'}</i></td>\n" .
--		      "<td><i>" . $author . "</i></td>\n" .
-+		      "<td>" . git_get_gravatar($co{'author_email'}, 'space_after' => 1) . "<i>" . $author . "</i></td>\n" .
- 		      "<td>" .
- 		      $cgi->a({-href => href(action=>"commit", hash=>$co{'id'}),
- 		               -class => "list subject"},
-@@ -5095,8 +5138,9 @@ sub git_log {
- 		      $cgi->a({-href => href(action=>"tree", hash=>$commit, hash_base=>$commit)}, "tree") .
- 		      "<br/>\n" .
- 		      "</div>\n" .
--		      "<i>" . esc_html($co{'author_name'}) .  " [$ad{'rfc2822'}]</i><br/>\n" .
--		      "</div>\n";
-+		      "<i>" . esc_html($co{'author_name'}) .  " [$ad{'rfc2822'}]</i>&nbsp;" .
-+		      git_get_gravatar($co{'author_email'}) .
-+		      "<br/>\n</div>\n";
- 
- 		print "<div class=\"log_body\">\n";
- 		git_print_log($co{'comment'}, -final_empty_line=> 1);
-@@ -5183,7 +5227,8 @@ sub git_commit {
+ static void execute_commands(const char *unpacker_error)
+@@ -534,24 +535,10 @@ static const char *unpack(void)
+ 		unpacker[i++] = hdr_arg;
+ 		unpacker[i++] = NULL;
+ 		code = run_command_v_opt(unpacker, RUN_GIT_CMD);
+-		switch (code) {
+-		case 0:
++		if (!code)
+ 			return NULL;
+-		case -ERR_RUN_COMMAND_FORK:
+-			return "unpack fork failed";
+-		case -ERR_RUN_COMMAND_EXEC:
+-			return "unpack execute failed";
+-		case -ERR_RUN_COMMAND_WAITPID:
+-			return "waitpid failed";
+-		case -ERR_RUN_COMMAND_WAITPID_WRONG_PID:
+-			return "waitpid is confused";
+-		case -ERR_RUN_COMMAND_WAITPID_SIGNAL:
+-			return "unpacker died of signal";
+-		case -ERR_RUN_COMMAND_WAITPID_NOEXIT:
+-			return "unpacker died strangely";
+-		default:
+-			return "unpacker exited with error code";
+-		}
++		run_status(code, unpacker[0]);
++		return "unpack-objects abnormal exit";
+ 	} else {
+ 		const char *keeper[7];
+ 		int s, status, i = 0;
+@@ -574,8 +561,11 @@ static const char *unpack(void)
+ 		ip.argv = keeper;
+ 		ip.out = -1;
+ 		ip.git_cmd = 1;
+-		if (start_command(&ip))
++		status = start_command(&ip);
++		if (status) {
++			run_status(status, keeper[0]);
+ 			return "index-pack fork failed";
++		}
+ 		pack_lockfile = index_pack_lockfile(ip.out);
+ 		close(ip.out);
+ 		status = finish_command(&ip);
+@@ -583,6 +573,7 @@ static const char *unpack(void)
+ 			reprepare_packed_git();
+ 			return NULL;
+ 		}
++		run_status(status, keeper[0]);
+ 		return "index-pack abnormal exit";
  	}
- 	print "<div class=\"title_text\">\n" .
- 	      "<table class=\"object_header\">\n";
--	print "<tr><td>author</td><td>" . esc_html($co{'author'}) . "</td></tr>\n".
-+	print "<tr><td>author</td><td>" . esc_html($co{'author'}) . "</td>".
-+	      "<td rowspan=\"2\">" .git_get_gravatar($co{'author_email'}, 'size' => 'double') . "</td></tr>\n" .
- 	      "<tr>" .
- 	      "<td></td><td> $ad{'rfc2822'}";
- 	if ($ad{'hour_local'} < 6) {
-@@ -5195,7 +5240,8 @@ sub git_commit {
- 	}
- 	print "</td>" .
- 	      "</tr>\n";
--	print "<tr><td>committer</td><td>" . esc_html($co{'committer'}) . "</td></tr>\n";
-+	print "<tr><td>committer</td><td>" . esc_html($co{'committer'}) . "</td>".
-+	      "<td rowspan=\"2\">" .git_get_gravatar($co{'committer_email'}, 'size' => 'double') . "</td></tr>\n";
- 	print "<tr><td></td><td> $cd{'rfc2822'}" .
- 	      sprintf(" (%02d:%02d %s)", $cd{'hour_local'}, $cd{'minute_local'}, $cd{'tz_local'}) .
- 	      "</td></tr>\n";
+ }
 -- 
-1.6.3.rc1.192.gdbfcb
+1.6.3.17.g1665f
