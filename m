@@ -1,69 +1,81 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: Problem packing repository
-Date: Mon, 22 Jun 2009 08:30:17 +0200
-Message-ID: <4A3F24F9.2060502@viscovery.net>
-References: <4A3EF989.4070101@lwfinger.net>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH v3 2/2] rebase -i: save only original commit sha1 to save author information
+Date: Mon, 22 Jun 2009 09:35:08 +0200
+Message-ID: <200906220935.11581.jnareb@gmail.com>
+References: <20090622042831.3858.67926.chriscool@tuxfamily.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Larry Finger <Larry.Finger@lwfinger.net>
-X-From: git-owner@vger.kernel.org Mon Jun 22 08:30:34 2009
+Content-Type: text/plain; charset=iso-8859-2
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Stephan Beyer <s-beyer@gmx.net>,
+	Daniel Barkalow <barkalow@iabervon.org>
+To: Christian Couder <chriscool@tuxfamily.org>
+X-From: git-owner@vger.kernel.org Mon Jun 22 09:30:09 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MId32-0002yC-DG
-	for gcvg-git-2@gmane.org; Mon, 22 Jun 2009 08:30:32 +0200
+	id 1MIdyi-0005ea-87
+	for gcvg-git-2@gmane.org; Mon, 22 Jun 2009 09:30:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752653AbZFVGaS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 22 Jun 2009 02:30:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751624AbZFVGaR
-	(ORCPT <rfc822;git-outgoing>); Mon, 22 Jun 2009 02:30:17 -0400
-Received: from lilzmailso01.liwest.at ([212.33.55.23]:32887 "EHLO
-	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751416AbZFVGaQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Jun 2009 02:30:16 -0400
-Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
-	by lilzmailso01.liwest.at with esmtpa (Exim 4.69)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1MId2n-0003Rc-Cd; Mon, 22 Jun 2009 08:30:17 +0200
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.96])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id 27EC7C6C1; Mon, 22 Jun 2009 08:30:17 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.21 (Windows/20090302)
-In-Reply-To: <4A3EF989.4070101@lwfinger.net>
-X-Spam-Score: -1.4 (-)
+	id S1752278AbZFVH35 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 22 Jun 2009 03:29:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751416AbZFVH34
+	(ORCPT <rfc822;git-outgoing>); Mon, 22 Jun 2009 03:29:56 -0400
+Received: from mail-bw0-f213.google.com ([209.85.218.213]:50706 "EHLO
+	mail-bw0-f213.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751169AbZFVH34 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Jun 2009 03:29:56 -0400
+Received: by bwz9 with SMTP id 9so2915590bwz.37
+        for <git@vger.kernel.org>; Mon, 22 Jun 2009 00:29:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=pZZCo9OeA+K/r4Qd/RoppEwQ0X/0ZfffYnm5Md/DA6g=;
+        b=kW4HnYmNuOcq7wlpnvChN5vP8e7qBHr1b1PCLML7f7kUbyrIw3c9kT49HpZcMACe4Y
+         dPQKFYUqhItbaKrGsE/28sp2CPARpOsgay/+2lPU1fNOCnk1n0HruuTckahasLoKZfsD
+         j6JsW7pn36HU3zoKGKKKnlWdwC0jEiYnUSG9E=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=usLnKDOXpAoKojI8NFBjxr6gO+9d7mkYZK9U6H8xLuwqYSKHWzFrAWccyIIP3LdNBB
+         3yILCs2kiIHN20Mq4Yv3MBcNc31S4Zjbc8u3/s7QswLXEGKDKXkD9odfb+fdHbYsELqC
+         809sazvN/2uPIlgXvCTR5sEajmKt52MJseAh4=
+Received: by 10.223.114.135 with SMTP id e7mr5480155faq.89.1245655797030;
+        Mon, 22 Jun 2009 00:29:57 -0700 (PDT)
+Received: from ?192.168.1.13? (abrz167.neoplus.adsl.tpnet.pl [83.8.119.167])
+        by mx.google.com with ESMTPS id 21sm11851796fks.39.2009.06.22.00.29.55
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 22 Jun 2009 00:29:55 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <20090622042831.3858.67926.chriscool@tuxfamily.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122012>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122013>
 
-Larry Finger schrieb:
-> For the past 2 weeks, every pull from the mainline kernel repository
-> has included the following message about "Auto packing" that fails to
-> complete.
-> 
-> git --version yields "git version 1.6.3.2.198.g6096d"
-> 
-> ================================================
-> 
-> Auto packing your repository for optimum performance. You may also
-> run "git gc" manually. See "git help gc" for more information.
-> usage: git-pack-objects [{ -q | --progress | --all-progress }]
->         [--max-pack-size=N] [--local] [--incremental]
->         [--window=N] [--window-memory=N] [--depth=N]
->         [--no-reuse-delta] [--no-reuse-object] [--delta-base-offset]
->         [--threads=N] [--non-empty] [--revs [--unpacked | --all]*]
-> [--reflog]
->         [--stdout | base-name] [--include-tag]
->         [--keep-unreachable | --unpack-unreachable]
->         [<ref-list | <object-list]
-> error: failed to run repack
+Christian Couder wrote:
 
-I'm pretty sure that you have inconsistent versions of git in your PATH.
-You can use GIT_TRACE=2 to debug this. I think that you should get the
-same error if you run 'git gc' manually.
+> +=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=
+GIT_AUTHOR_NAME=3D"$author_ident_name" \
+> +=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=
+GIT_AUTHOR_EMAIL=3D"$author_ident_email" \
+> +=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=
+GIT_AUTHOR_DATE=3D"$author_ident_date" \
+> =A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=
+=A0$USE_OUTPUT git commit --no-verify \
+> =A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=
+=A0=A0=A0=A0=A0=A0=A0=A0=A0$MSG_OPT "$EDIT_OR_FILE" || failed=3Dt
 
--- Hannes
+Why not use 'git commit -C $(cat "$SAVED_COMMIT") ...' ?
+
+--=20
+Jakub Narebski
+Poland
