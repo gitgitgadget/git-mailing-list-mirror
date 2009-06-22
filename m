@@ -1,89 +1,133 @@
-From: roel kluin <roel.kluin@gmail.com>
-Subject: Re: [PATCH] tools: fread does not return negative on error
-Date: Mon, 22 Jun 2009 17:47:07 +0200
-Message-ID: <25e057c00906220847t15425f38maf486c291d1d2468@mail.gmail.com>
-References: <4A3FB09D.9050903@gmail.com> <20090622153431.GA18466@elte.hu>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: push.default???
+Date: Mon, 22 Jun 2009 09:31:42 -0700
+Message-ID: <7vws74cjrl.fsf@alter.siamese.dyndns.org>
+References: <h1nks1$vdl$1@ger.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, LKML <linux-kernel@vger.kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>
-To: Ingo Molnar <mingo@elte.hu>
-X-From: git-owner@vger.kernel.org Mon Jun 22 17:47:40 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Paolo Bonzini <bonzini@gnu.org>
+X-From: git-owner@vger.kernel.org Mon Jun 22 18:31:59 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MIlkB-0002xH-Kv
-	for gcvg-git-2@gmane.org; Mon, 22 Jun 2009 17:47:40 +0200
+	id 1MImR4-00066u-28
+	for gcvg-git-2@gmane.org; Mon, 22 Jun 2009 18:31:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751929AbZFVPrK convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 22 Jun 2009 11:47:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751240AbZFVPrI
-	(ORCPT <rfc822;git-outgoing>); Mon, 22 Jun 2009 11:47:08 -0400
-Received: from mail-bw0-f213.google.com ([209.85.218.213]:63542 "EHLO
-	mail-bw0-f213.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751129AbZFVPrH convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 22 Jun 2009 11:47:07 -0400
-Received: by bwz9 with SMTP id 9so3253201bwz.37
-        for <multiple recipients>; Mon, 22 Jun 2009 08:47:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=lzSpnXjFU9q9iG68RFWOoPlJCWZDaU5beUJ29ohpXp4=;
-        b=Y6hldz7ZK0756D81Ym+pLcHhrTWdeOFlGzzg/Krxoe+HEs0968BjN2HcAYrwXaxZvO
-         YrYU0aXqi56tJrYvnhnmgdDoAmooie16w7Em9h048RQGEZ6ioNiZQIP0b03CbXRdbgZR
-         vsAAUolDPz0RzCGNGPLQUsimDC2DXZghjC2Z8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=wyh0gpoRNhdUwGrxy3ZurA0+wEHzjV8X0ZSj0HlC10wjUiKtpA1TWQxUfejQ8c2oZX
-         tPD8n+4Q0ZexUD+iDXvIEKG3NV7aU4kINLmhFJn/gquxw8ZOY8ePDMiJAg+jA4ByXd2g
-         t+nRTzw7zl4PJwrRTxWW0sU65fKENp/CjZuTI=
-Received: by 10.204.70.196 with SMTP id e4mr6400118bkj.107.1245685627889; Mon, 
-	22 Jun 2009 08:47:07 -0700 (PDT)
-In-Reply-To: <20090622153431.GA18466@elte.hu>
+	id S1757188AbZFVQbm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 22 Jun 2009 12:31:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757141AbZFVQbm
+	(ORCPT <rfc822;git-outgoing>); Mon, 22 Jun 2009 12:31:42 -0400
+Received: from fed1rmmtao105.cox.net ([68.230.241.41]:45466 "EHLO
+	fed1rmmtao105.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757529AbZFVQbk (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Jun 2009 12:31:40 -0400
+Received: from fed1rmimpo03.cox.net ([70.169.32.75])
+          by fed1rmmtao105.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20090622163143.PJYT20430.fed1rmmtao105.cox.net@fed1rmimpo03.cox.net>;
+          Mon, 22 Jun 2009 12:31:43 -0400
+Received: from localhost ([68.225.240.211])
+	by fed1rmimpo03.cox.net with bizsmtp
+	id 74Xi1c00L4aMwMQ044XiN3; Mon, 22 Jun 2009 12:31:42 -0400
+X-VR-Score: -100.00
+X-Authority-Analysis: v=1.0 c=1 a=mDV3o1hIAAAA:8 a=KjGjMYOz04QuZPh4kG0A:9
+ a=yzI5nd6kAm5fQmfBSGAA:7 a=Kn1tHH5SCAZjLq-NOrw0QSyOaYQA:4 a=P12RAKQObZoA:10
+ a=ii61gXl28gQA:10
+X-CM-Score: 0.00
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122046>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122047>
 
-On Mon, Jun 22, 2009 at 5:34 PM, Ingo Molnar<mingo@elte.hu> wrote:
->
-> * Roel Kluin <roel.kluin@gmail.com> wrote:
->
->> size_t res cannot be less than 0. fread returns 0 on error.
->>
->> Signed-off-by: Roel Kluin <roel.kluin@gmail.com>
->> ---
->> Is this correct? please review.
->>
->> diff --git a/tools/perf/util/strbuf.c b/tools/perf/util/strbuf.c
->> index eaba093..376a337 100644
->> --- a/tools/perf/util/strbuf.c
->> +++ b/tools/perf/util/strbuf.c
->> @@ -259,7 +259,7 @@ size_t strbuf_fread(struct strbuf *sb, size_t si=
-ze, FILE *f)
->> =A0 =A0 =A0 res =3D fread(sb->buf + sb->len, 1, size, f);
->> =A0 =A0 =A0 if (res > 0)
->> =A0 =A0 =A0 =A0 =A0 =A0 =A0 strbuf_setlen(sb, sb->len + res);
->> - =A0 =A0 else if (res < 0 && oldalloc =3D=3D 0)
->> + =A0 =A0 else if (res =3D=3D 0 && oldalloc =3D=3D 0)
->> =A0 =A0 =A0 =A0 =A0 =A0 =A0 strbuf_release(sb);
->> =A0 =A0 =A0 return res;
->
-> This comes straight from Git's strbuf.c so i've Cc:-ed the Git list.
->
-> Roel, did you get some compiler warning that made you look at this
-> code?
->
-> =A0 =A0 =A0 =A0Ingo
->
+Paolo Bonzini <bonzini@gnu.org> writes:
 
-No, I use sed to catch these bugs.
+> 1) Also in 1.6.3, invent a special refspec for "tracking", something
+> like "HEAD>" (of course this is not a special case; "refs/heads/*>"
+> would also work, yadda yadda)
 
-Roel
+You cannot do anything "in 1.6.3"; The ship has already left the port.
+
+You can set push.default to "tracking" and have it take effect for all
+remotes you interact with from your repository (set remote.$name.push for
+some remotes you do not want this to take effect).  Instead, you could
+leave push.default to "matching" and define remote.$name.push with the
+"push tracking" magic you are going to invent for a specific remote.
+
+Both arrangements can do the same thing, so even if your "HEAD>" is never
+supported, there is no functionality loss (similarly, if we did not have
+"push.default", we would be Ok if we had your "HEAD>" magic).  Depending
+on which one you would want to use for majority of remotes you interact
+with, you would want both.
+
+So in that sense, I do not think the current situation is such a "total
+nonsense" as you seem to be painting it [*1*].  It just does not have the
+other half of the story that you are bringing up now.
+
+In other words, I do not have objection to your "HEAD>" at the conceptual
+level.  At the syntax level, I suspect people will have suggestions for
+better alternatives.
+
+In retrospect, because a push refspec (or "magic" you will be adding) for
+a specific remote is called "remote.$name.push", it might have been a
+better idea to use "remote.push" instead of "push.default" as the name of
+the configuration variable.  Then the rules can become
+
+	* if you ask explicitly from the command line, it wins;
+	* otherwise, if you have remote.$name,push, it is used;
+        * otherwise, if you have remote.push, it is used;
+        * otherwise, the default is "matching".
+
+which is slightly nicer to read, than the current situation where the
+third rule talks about push.default instead.
+
+> 2) Also in 1.6.3, add a "--push={current,tracking,matching,mirror}"
+> option to "git remote add" that would set up a push refspec without
+> the need to actually know refspec syntax. (--mirror would become just
+> a synonym for --push=mirror).
+
+This is probably sensible if/when we do (1).  
+
+But here I have to qualify what I mean by (1).  I am not married to the
+idea of using remote.$name.push at all.  I view (1) as solving this issue:
+
+        Currently with push.default, we can only set push.default to
+        something other than "matching" and have specific remote override
+        that with remote.$name.push with a more concrete refspec, if we
+        want to have the magic 'tracking push' semantics.
+
+        We want to have a way to say "for this and that particular
+        remotes, use the magic tracking push" in a more direct way.
+
+And hiding the detail of how this "direct way" is implemented from the end
+user is a good idea.
+
+> 3) Possibly, in 1.6.3 make "git clone" add a "push = :" line for the
+> origin branch.  This was actually suggested in a patch by myself.
+
+This contradicts with (1), I think.  The default after cloning is
+"matching", and if one wants to change it to "track", one not just needs
+to set push.default but also needs to remove/twaek remote.origin.push
+if you add such a line.
+
+So I do not think this one makes much sense.
+
+> 4) in 1.6.4 or 1.7.0, make "git push" fail outright if there is no
+> push line, with text suggesting
+
+This was already part of one possible option for push.default (change the
+built-in default to 'nothing-and-warn') when it was introduced, wasn't it?
+Instead of suggesting to configure remote.$name.push, it would suggest to
+set push.default to a desired value, which I think is a more sensible
+thing to do.
+
+[Footnote]
+
+*1* ... even though I admit that I am not convinced 'push "tracking"'
+makes much sense for me to begin with, because pushing a branch to the
+branch it forked from rarely if ever makes sense in my workflow.  But I
+can see 'push "tracking"' makes sense in some situations and people seem
+to want to do this, so we have already added push.default.
