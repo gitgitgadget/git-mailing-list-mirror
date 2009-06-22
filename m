@@ -1,78 +1,69 @@
-From: Adam Petaccia <adam@tpetaccia.com>
-Subject: [PATCH] Add matchings for csharp
-Date: Sun, 21 Jun 2009 19:52:49 -0400
-Message-ID: <1245628369.15870.1.camel@belthazor>
+From: Sitaram Chamarty <sitaramc@gmail.com>
+Subject: Re: [PATCH] gitk: disable checkout of remote branch
+Date: Mon, 22 Jun 2009 01:59:06 +0000 (UTC)
+Organization: disorganised!
+Message-ID: <slrnh3tpb9.rhr.sitaramc@sitaramc.homelinux.net>
+References: <19004.34350.109422.730109@cargo.ozlabs.ibm.com>
+ <slrnh3ru9v.vgo.sitaramc@sitaramc.homelinux.net>
+ <7v3a9uszzl.fsf@alter.siamese.dyndns.org>
+ <20090622063405.6117@nanako3.lavabit.com>
+ <7vtz29p3qm.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jun 22 01:53:22 2009
+X-From: git-owner@vger.kernel.org Mon Jun 22 03:59:29 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MIWqf-0004KW-AK
-	for gcvg-git-2@gmane.org; Mon, 22 Jun 2009 01:53:21 +0200
+	id 1MIYoh-0005IX-6o
+	for gcvg-git-2@gmane.org; Mon, 22 Jun 2009 03:59:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754142AbZFUXw6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 21 Jun 2009 19:52:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753470AbZFUXw6
-	(ORCPT <rfc822;git-outgoing>); Sun, 21 Jun 2009 19:52:58 -0400
-Received: from cdptpa-omtalb.mail.rr.com ([75.180.132.120]:61429 "EHLO
-	cdptpa-omtalb.mail.rr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753962AbZFUXw6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 21 Jun 2009 19:52:58 -0400
-Received: from [192.168.1.5] (really [65.190.241.253])
-          by cdptpa-omta02.mail.rr.com with ESMTP
-          id <20090621235258526.LHRM22702@cdptpa-omta02.mail.rr.com>
-          for <git@vger.kernel.org>; Sun, 21 Jun 2009 23:52:58 +0000
-X-Mailer: Evolution 2.26.1 
+	id S1752348AbZFVB7S (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 21 Jun 2009 21:59:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752305AbZFVB7R
+	(ORCPT <rfc822;git-outgoing>); Sun, 21 Jun 2009 21:59:17 -0400
+Received: from main.gmane.org ([80.91.229.2]:44097 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752249AbZFVB7Q (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 21 Jun 2009 21:59:16 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1MIYoX-0006MZ-JH
+	for git@vger.kernel.org; Mon, 22 Jun 2009 01:59:17 +0000
+Received: from atcmail.atc.tcs.co.in ([203.200.212.145])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 22 Jun 2009 01:59:17 +0000
+Received: from sitaramc by atcmail.atc.tcs.co.in with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 22 Jun 2009 01:59:17 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: atcmail.atc.tcs.co.in
+User-Agent: slrn/0.9.9 (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122003>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122004>
 
-I'm not sure if this is the correct place to send patches, please direct 
-me if I've addressed the wrong list.
----
- t/t4018-diff-funcname.sh |    2 +-
- userdiff.c               |   10 ++++++++++
- 2 files changed, 11 insertions(+), 1 deletions(-)
+On 2009-06-21 23:27:13, Junio C Hamano <gitster@pobox.com> wrote:
 
-diff --git a/t/t4018-diff-funcname.sh b/t/t4018-diff-funcname.sh
-index 5b10e97..704dae8 100755
---- a/t/t4018-diff-funcname.sh
-+++ b/t/t4018-diff-funcname.sh
-@@ -32,7 +32,7 @@ EOF
- 
- sed 's/beer\\/beer,\\/' < Beer.java > Beer-correct.java
- 
--builtin_patterns="bibtex cpp html java objc pascal php python ruby tex"
-+builtin_patterns="bibtex csharp cpp html java objc pascal php python ruby tex"
- for p in $builtin_patterns
- do
- 	test_expect_success "builtin $p pattern compiles" '
-diff --git a/userdiff.c b/userdiff.c
-index 57529ae..d4151b2 100644
---- a/userdiff.c
-+++ b/userdiff.c
-@@ -79,6 +79,16 @@ PATTERNS("cpp",
- 	 "|[-+0-9.e]+[fFlL]?|0[xXbB]?[0-9a-fA-F]+[lL]?"
- 	 "|[-+*/<>%&^|=!]=|--|\\+\\+|<<=?|>>=?|&&|\\|\\||::|->"
- 	 "|[^[:space:]]|[\x80-\xff]+"),
-+PATTERNS("csharp",
-+	 "!^[ \t]*(catch|do|for|if|instanceof|new|return|switch|throw|while)\n"
-+	 "^([ \t]*(static|public|internal|private|protected|new|unsafe|readonly|volatile)[ \t]+(class|enum|interface|struct).*)$\n"
-+	 "^([ \t]*(namespace)[ \t]+.*)$"
-+	 ,
-+	 /* -- */
-+	 "[a-zA-Z_][a-zA-Z0-9_]*"
-+	 "|[-+0-9.e]+[fFlL]?|0[xXbB]?[0-9a-fA-F]+[lL]?"
-+	 "|[-+*/<>%&^|=!]=|--|\\+\\+|<<=?|>>=?|&&|\\|\\||::|->"
-+	 "|[^[:space:]]|[\x80-\xff]+"),
- { "default", NULL, -1, { NULL, 0 } },
- };
- #undef PATTERNS
--- 
-1.6.0.4
+> If we wanted users of gitk to use it to detach HEAD, the current UI is not
+> a good way to do so anyway --- it only allows detaching the tip of remote
+> tracking branches and not an arbitrary commit.
+
+Aaah -- excellent; wish I'd thought of it :-)  Thanks
+
+> So I retract my earlier objection entirely.  I do not think the feature
+> Sitaram is disabling was meant to allow detaching HEAD at all and it can
+> be safely disabled for remote tracking branches to make the GUI experience
+> safer.
+
+Thanks.  I will resubmit to you and Paul again with the diff
+header changed to suit his tree.
+
+Regards,
+
+Sitaram
