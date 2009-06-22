@@ -1,100 +1,129 @@
-From: Sitaram Chamarty <sitaramc@gmail.com>
-Subject: [PATCH] gitk: disable checkout of remote branch
-Date: Mon, 22 Jun 2009 09:12:04 +0530
-Message-ID: <2e24e5b90906212042l3182b634y2a51efb645e4bcf@mail.gmail.com>
-References: <19004.34350.109422.730109@cargo.ozlabs.ibm.com>
-	 <slrnh3ru9v.vgo.sitaramc@sitaramc.homelinux.net>
-	 <7v3a9uszzl.fsf@alter.siamese.dyndns.org>
-	 <20090622063405.6117@nanako3.lavabit.com>
-	 <7vtz29p3qm.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Nanako Shiraishi <nanako3@lavabit.com>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>
-To: Paul Mackerras <paulus@samba.org>
-X-From: git-owner@vger.kernel.org Mon Jun 22 05:42:17 2009
+From: Christian Couder <chriscool@tuxfamily.org>
+Subject: [PATCH v3 1/2] rebase -i: remove get_author_ident_from_commit() from
+	"git-sh-setup.sh"
+Date: Mon, 22 Jun 2009 06:28:29 +0200
+Message-ID: <20090622042831.3858.65608.chriscool@tuxfamily.org>
+Cc: git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Stephan Beyer <s-beyer@gmx.net>,
+	Daniel Barkalow <barkalow@iabervon.org>,
+	Jakub Narebski <jnareb@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Jun 22 06:34:42 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MIaQB-0007Fj-9x
-	for gcvg-git-2@gmane.org; Mon, 22 Jun 2009 05:42:15 +0200
+	id 1MIbEv-0001Ky-1z
+	for gcvg-git-2@gmane.org; Mon, 22 Jun 2009 06:34:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753041AbZFVDmG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 21 Jun 2009 23:42:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752766AbZFVDmE
-	(ORCPT <rfc822;git-outgoing>); Sun, 21 Jun 2009 23:42:04 -0400
-Received: from yw-out-2324.google.com ([74.125.46.31]:52415 "EHLO
-	yw-out-2324.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751636AbZFVDmD (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 21 Jun 2009 23:42:03 -0400
-Received: by yw-out-2324.google.com with SMTP id 5so1741895ywb.1
-        for <git@vger.kernel.org>; Sun, 21 Jun 2009 20:42:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=4R3bPtEXceW9mQZhyNiY/jKwDUqx6KzqQUrABmh2TTM=;
-        b=Xc0n/RTg//m1M7d4sYs8TNeibt6fjK3J2yF6XdO1r2F4e4horxr7VWMnGNP3MMILDM
-         A6UFv2aFh2vt/U7WP8MVux/WsY2uP0fySxFMxJ9+50WlWh4kCqd+UWNOX1A/+961Jajo
-         7XGsCD6+Jwj3d6IBdzVk/RKSMpA2KYhEMQ9eo=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=WDC6LMjjjvfGa8Ld1IXc+QTTvT02WxUARdhypi6K4EA0UJPUPCwdBkO61XJjs6ntHV
-         ECsma5UfoM3B8ixJhD4w0iJZZMAN4cCESL4hrKRfFzfHRHqby6QJkkSFyCyY0wyYdbjZ
-         P7RUxk48d1f41L/WXMkAnBH35X7EODsVac74M=
-Received: by 10.231.35.65 with SMTP id o1mr1777811ibd.7.1245642124880; Sun, 21 
-	Jun 2009 20:42:04 -0700 (PDT)
-In-Reply-To: <7vtz29p3qm.fsf@alter.siamese.dyndns.org>
+	id S1750872AbZFVEdh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 22 Jun 2009 00:33:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750814AbZFVEdg
+	(ORCPT <rfc822;git-outgoing>); Mon, 22 Jun 2009 00:33:36 -0400
+Received: from smtp3-g21.free.fr ([212.27.42.3]:37059 "EHLO smtp3-g21.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750774AbZFVEdf (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Jun 2009 00:33:35 -0400
+Received: from smtp3-g21.free.fr (localhost [127.0.0.1])
+	by smtp3-g21.free.fr (Postfix) with ESMTP id 4C4C781806B;
+	Mon, 22 Jun 2009 06:33:29 +0200 (CEST)
+Received: from bureau.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
+	by smtp3-g21.free.fr (Postfix) with ESMTP id D62B28180D5;
+	Mon, 22 Jun 2009 06:33:26 +0200 (CEST)
+X-git-sha1: 95958d23007b7274213c847f162e23de8ee41d82 
+X-Mailer: git-mail-commits v0.5.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122006>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122007>
 
-At the command line, this gives you a detailed warning message, but the
-GUI currently allows it without any fuss.
+The "get_author_ident_from_commit" function is only used in
+"git-rebase--interactive.sh" so there is no need for this function
+to be in "git-sh-setup.sh" anymore.
 
-Since the GUI is often used by people much less familiar with git, it
-seems reasonable to make the GUI more restrictive than the command line,
-not less.
-
-This prevents a lot of detached HEAD commits by new users.
-
-Signed-off-by: Sitaram Chamarty <sitaramc@gmail.com>
+Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
+ git-rebase--interactive.sh |   27 +++++++++++++++++++++++++++
+ git-sh-setup.sh            |   27 ---------------------------
+ 2 files changed, 27 insertions(+), 27 deletions(-)
 
-Paul,
-
-I have amended the diff header to fit the gitk repo as opposed to the
-git repo.  To summarise the email discussions, the feature that is
-being disabled gets you a detached HEAD, but if that were really the
-intent we should allow a detached HEAD from any commit, not just a
-head commit.  Therefore this particular disablement is useful and
-makes the GUI experience safer.
-
-Please accept.  Thanks.
-
- gitk |    3 +++
- 1 files changed, 3 insertions(+), 0 deletions(-)
-
-diff --git a/gitk b/gitk
-index 4604c83..70b6abc 100755
---- a/gitk
-+++ b/gitk
-@@ -8833,6 +8833,9 @@ proc headmenu {x y id head} {
-     set headmenuid $id
-     set headmenuhead $head
-     set state normal
-+    if {[string match "remotes/*" $head]} {
-+	set state disabled
-+    }
-     if {$head eq $mainhead} {
- 	set state disabled
-     }
+diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
+index f96d887..92e2523 100755
+--- a/git-rebase--interactive.sh
++++ b/git-rebase--interactive.sh
+@@ -116,6 +116,33 @@ mark_action_done () {
+ 	fi
+ }
+ 
++get_author_ident_from_commit () {
++	pick_author_script='
++	/^author /{
++		s/'\''/'\''\\'\'\''/g
++		h
++		s/^author \([^<]*\) <[^>]*> .*$/\1/
++		s/'\''/'\''\'\'\''/g
++		s/.*/GIT_AUTHOR_NAME='\''&'\''/p
++
++		g
++		s/^author [^<]* <\([^>]*\)> .*$/\1/
++		s/'\''/'\''\'\'\''/g
++		s/.*/GIT_AUTHOR_EMAIL='\''&'\''/p
++
++		g
++		s/^author [^<]* <[^>]*> \(.*\)$/\1/
++		s/'\''/'\''\'\'\''/g
++		s/.*/GIT_AUTHOR_DATE='\''&'\''/p
++
++		q
++	}
++	'
++	encoding=$(git config i18n.commitencoding || echo UTF-8)
++	git show -s --pretty=raw --encoding="$encoding" "$1" -- |
++	LANG=C LC_ALL=C sed -ne "$pick_author_script"
++}
++
+ make_patch () {
+ 	sha1_and_parents="$(git rev-list --parents -1 "$1")"
+ 	case "$sha1_and_parents" in
+diff --git a/git-sh-setup.sh b/git-sh-setup.sh
+index 80acb7d..b4624c5 100755
+--- a/git-sh-setup.sh
++++ b/git-sh-setup.sh
+@@ -131,33 +131,6 @@ require_work_tree () {
+ 	die "fatal: $0 cannot be used without a working tree."
+ }
+ 
+-get_author_ident_from_commit () {
+-	pick_author_script='
+-	/^author /{
+-		s/'\''/'\''\\'\'\''/g
+-		h
+-		s/^author \([^<]*\) <[^>]*> .*$/\1/
+-		s/'\''/'\''\'\'\''/g
+-		s/.*/GIT_AUTHOR_NAME='\''&'\''/p
+-
+-		g
+-		s/^author [^<]* <\([^>]*\)> .*$/\1/
+-		s/'\''/'\''\'\'\''/g
+-		s/.*/GIT_AUTHOR_EMAIL='\''&'\''/p
+-
+-		g
+-		s/^author [^<]* <[^>]*> \(.*\)$/\1/
+-		s/'\''/'\''\'\'\''/g
+-		s/.*/GIT_AUTHOR_DATE='\''&'\''/p
+-
+-		q
+-	}
+-	'
+-	encoding=$(git config i18n.commitencoding || echo UTF-8)
+-	git show -s --pretty=raw --encoding="$encoding" "$1" -- |
+-	LANG=C LC_ALL=C sed -ne "$pick_author_script"
+-}
+-
+ # Make sure we are in a valid repository of a vintage we understand,
+ # if we require to be in a git repository.
+ if test -z "$NONGIT_OK"
 -- 
-1.6.3.2
+1.6.3.GIT
