@@ -1,69 +1,62 @@
-From: Sitaram Chamarty <sitaramc@gmail.com>
-Subject: Re: [PATCH] gitk: disable checkout of remote branch
-Date: Mon, 22 Jun 2009 01:59:06 +0000 (UTC)
-Organization: disorganised!
-Message-ID: <slrnh3tpb9.rhr.sitaramc@sitaramc.homelinux.net>
-References: <19004.34350.109422.730109@cargo.ozlabs.ibm.com>
- <slrnh3ru9v.vgo.sitaramc@sitaramc.homelinux.net>
- <7v3a9uszzl.fsf@alter.siamese.dyndns.org>
- <20090622063405.6117@nanako3.lavabit.com>
- <7vtz29p3qm.fsf@alter.siamese.dyndns.org>
+From: Larry Finger <Larry.Finger@lwfinger.net>
+Subject: Problem packing repository
+Date: Sun, 21 Jun 2009 22:24:57 -0500
+Message-ID: <4A3EF989.4070101@lwfinger.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jun 22 03:59:29 2009
+X-From: git-owner@vger.kernel.org Mon Jun 22 05:30:15 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MIYoh-0005IX-6o
-	for gcvg-git-2@gmane.org; Mon, 22 Jun 2009 03:59:27 +0200
+	id 1MIaEZ-0004yG-0S
+	for gcvg-git-2@gmane.org; Mon, 22 Jun 2009 05:30:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752348AbZFVB7S (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 21 Jun 2009 21:59:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752305AbZFVB7R
-	(ORCPT <rfc822;git-outgoing>); Sun, 21 Jun 2009 21:59:17 -0400
-Received: from main.gmane.org ([80.91.229.2]:44097 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752249AbZFVB7Q (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 21 Jun 2009 21:59:16 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1MIYoX-0006MZ-JH
-	for git@vger.kernel.org; Mon, 22 Jun 2009 01:59:17 +0000
-Received: from atcmail.atc.tcs.co.in ([203.200.212.145])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 22 Jun 2009 01:59:17 +0000
-Received: from sitaramc by atcmail.atc.tcs.co.in with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 22 Jun 2009 01:59:17 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: atcmail.atc.tcs.co.in
-User-Agent: slrn/0.9.9 (Linux)
+	id S1752703AbZFVD3w (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 21 Jun 2009 23:29:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752281AbZFVD3w
+	(ORCPT <rfc822;git-outgoing>); Sun, 21 Jun 2009 23:29:52 -0400
+Received: from fmailhost04.isp.att.net ([204.127.217.104]:55192 "EHLO
+	fmailhost04.isp.att.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751896AbZFVD3v (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 21 Jun 2009 23:29:51 -0400
+X-Greylist: delayed 300 seconds by postgrey-1.27 at vger.kernel.org; Sun, 21 Jun 2009 23:29:51 EDT
+DKIM-Signature: v=1; q=dns/txt; d=att.net; s=dkim01;
+      i=larry.finger@att.net; a=rsa-sha256; c=relaxed/relaxed;
+      t=1245641395; h=Content-Transfer-Encoding:Content-Type:Subject:To:
+     MIME-Version:From:Date:Message-ID; bh=3mOOB9hGMWgf6njK5Gv9g28OstQVC
+     1rm6Ig3hbtj8lw=; b=mA1aPNpbZjiD+oI4fHQJV6ph6U3ruQzfHaJocEgKMkbPlFKh
+     Y4lWUpve4sNdXsx0vM+BS5aUgk0tzlkRUONzAA==
+Received: from [192.168.1.103] (cpe-65-28-94-183.kc.res.rr.com?[65.28.94.183])
+          by worldnet.att.net (frfwmhc04) with ESMTP
+          id <20090622032452H0400i5c9ve>; Mon, 22 Jun 2009 03:24:53 +0000
+X-Originating-IP: [65.28.94.183]
+User-Agent: Thunderbird 2.0.0.19 (X11/20081227)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122004>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122005>
 
-On 2009-06-21 23:27:13, Junio C Hamano <gitster@pobox.com> wrote:
+For the past 2 weeks, every pull from the mainline kernel repository
+has included the following message about "Auto packing" that fails to
+complete.
 
-> If we wanted users of gitk to use it to detach HEAD, the current UI is not
-> a good way to do so anyway --- it only allows detaching the tip of remote
-> tracking branches and not an arbitrary commit.
+git --version yields "git version 1.6.3.2.198.g6096d"
 
-Aaah -- excellent; wish I'd thought of it :-)  Thanks
+================================================
 
-> So I retract my earlier objection entirely.  I do not think the feature
-> Sitaram is disabling was meant to allow detaching HEAD at all and it can
-> be safely disabled for remote tracking branches to make the GUI experience
-> safer.
-
-Thanks.  I will resubmit to you and Paul again with the diff
-header changed to suit his tree.
-
-Regards,
-
-Sitaram
+Auto packing your repository for optimum performance. You may also
+run "git gc" manually. See "git help gc" for more information.
+usage: git-pack-objects [{ -q | --progress | --all-progress }]
+        [--max-pack-size=N] [--local] [--incremental]
+        [--window=N] [--window-memory=N] [--depth=N]
+        [--no-reuse-delta] [--no-reuse-object] [--delta-base-offset]
+        [--threads=N] [--non-empty] [--revs [--unpacked | --all]*]
+[--reflog]
+        [--stdout | base-name] [--include-tag]
+        [--keep-unreachable | --unpack-unreachable]
+        [<ref-list | <object-list]
+error: failed to run repack
