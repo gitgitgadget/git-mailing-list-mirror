@@ -1,171 +1,126 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: [ANNOUNCE] GIT 1.6.3.3
-Date: Mon, 22 Jun 2009 00:49:49 -0700
-Message-ID: <7vzlc0emhu.fsf@alter.siamese.dyndns.org>
+Subject: What's in git.git (Jun 2009, #02; Mon, 22)
+Date: Mon, 22 Jun 2009 00:57:05 -0700
+Message-ID: <7vvdmoem5q.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jun 22 09:50:31 2009
+X-From: git-owner@vger.kernel.org Mon Jun 22 09:57:35 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MIeIQ-0004LU-4P
-	for gcvg-git-2@gmane.org; Mon, 22 Jun 2009 09:50:30 +0200
+	id 1MIeOy-0008CL-TV
+	for gcvg-git-2@gmane.org; Mon, 22 Jun 2009 09:57:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755263AbZFVHtt convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 22 Jun 2009 03:49:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752804AbZFVHts
-	(ORCPT <rfc822;git-outgoing>); Mon, 22 Jun 2009 03:49:48 -0400
-Received: from fed1rmmtao107.cox.net ([68.230.241.39]:48575 "EHLO
-	fed1rmmtao107.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752420AbZFVHtr (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Jun 2009 03:49:47 -0400
+	id S1754243AbZFVH5H convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 22 Jun 2009 03:57:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753980AbZFVH5G
+	(ORCPT <rfc822;git-outgoing>); Mon, 22 Jun 2009 03:57:06 -0400
+Received: from fed1rmmtao101.cox.net ([68.230.241.45]:48652 "EHLO
+	fed1rmmtao101.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752435AbZFVH5F (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Jun 2009 03:57:05 -0400
 Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao107.cox.net
+          by fed1rmmtao101.cox.net
           (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20090622074951.DXZN18948.fed1rmmtao107.cox.net@fed1rmimpo02.cox.net>;
-          Mon, 22 Jun 2009 03:49:51 -0400
+          id <20090622075705.YRGD17670.fed1rmmtao101.cox.net@fed1rmimpo02.cox.net>;
+          Mon, 22 Jun 2009 03:57:05 -0400
 Received: from localhost ([68.225.240.211])
 	by fed1rmimpo02.cox.net with bizsmtp
-	id 6vpp1c0074aMwMQ04vppvH; Mon, 22 Jun 2009 03:49:50 -0400
-X-VR-Score: 20.00
-X-Authority-Analysis: v=1.0 c=1 a=VwQbUJbxAAAA:8 a=IzREjsFMYBAGxtjCVs0A:9
- a=WlHCVC5kzJDzdhl5l-cA:7 a=PJkv-vc8Ds409IVfBPYyxhixPGYA:4
+	id 6vx61c0014aMwMQ04vx6Y0; Mon, 22 Jun 2009 03:57:06 -0400
+X-VR-Score: 0.00
+X-Authority-Analysis: v=1.0 c=1 a=FNH49bf8C_0A:10 a=D7S3u2PffX5rOpQXkhEA:9
+ a=Z_4ur6Kcb2xAtJu9X--i7m0XozkA:4
 X-CM-Score: 0.00
+X-maint-at: 1ab012cf811abba5745fa0da70db963decd65f21
+X-master-at: 916e1373fb86db9d7019de4e7e74e39c9474a153
 User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122016>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122017>
 
-The latest maintenance release, GIT 1.6.3.3, is available at the usual
-places:
+The 'maint' branch gave birth to v1.6.3.3 tonight.  There are still
+a handful of fixes that are already in 'master' but have not been
+backmerged for v1.6.3.X series; hopefully we can flush them all and mak=
+e
+v1.6.3.4 the final one before 'master' starts the rc freeze for v1.6.4.
 
-  http://www.kernel.org/pub/software/scm/git/
+* The 'maint' branch has these fixes since v1.6.3.3.
 
-  git-1.6.3.3.tar.{gz,bz2}			(source tarball)
-  git-htmldocs-1.6.3.3.tar.{gz,bz2}		(preformatted docs)
-  git-manpages-1.6.3.3.tar.{gz,bz2}		(preformatted docs)
+Johannes Sixt (1):
+  t3700-add: add a POSIXPERM prerequisite to a new test
 
-The RPM binary packages for a few architectures are found in:
+Stephen Boyd (1):
+  add: allow configurations to be overriden by command line
 
-  RPMS/$arch/git-*-1.6.3.3-1.fc9.$arch.rpm	(RPM)
 
-GIT v1.6.3.3 Release Notes
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D
+* The 'master' branch has these since the last announcement
+  in addition to the above.
 
-=46ixes since v1.6.3.2
---------------------
+Alex Benn=C3=A9e (1):
+  Add -k option to cvsexportcommit to revert expanded CVS keywords in C=
+VS
+    working tree before applying commit patch
 
- * "git archive" running on Cygwin can get stuck in an infinite loop.
+Christian Stimming (1):
+  gitk: Update German translation.
 
- * "git daemon" did not correctly parse the initial line that carries
-   virtual host request information.
+Dirk S=C3=BCsserott (1):
+  gitk: Add option 'Simple history' to the options menu
 
- * "git diff --textconv" leaked memory badly when the textconv filter
-   errored out.
-
- * The built-in regular expressions to pick function names to put on
-   hunk header lines for java and objc were very inefficiently written.
-
- * in certain error situations git-fetch (and git-clone) on Windows did=
-n't
-   detect connection abort and ended up waiting indefinitely.
-
- * import-tars script (in contrib) did not import symbolic links correc=
-tly.
-
- * http.c used CURLOPT_SSLKEY even on libcURL version 7.9.2, even thoug=
-h
-   it was only available starting 7.9.3.
-
- * low-level filelevel merge driver used return value from strdup()
-   without checking if we ran out of memory.
-
- * "git rebase -i" left stray closing parenthesis in its reflog message=
-=2E
-
- * "git remote show" did not show all the URLs associated with the name=
-d
-   remote, even though "git remote -v" did.  Made them consistent by
-   making the former show all URLs.
-
- * "whitespace" attribute that is set was meant to detect all errors kn=
-own
-   to git, but it told git to ignore trailing carriage-returns.
-
-Includes other documentation fixes.
-
-----------------------------------------------------------------
-
-Changes since v1.6.3.2 are as follows:
-
-Anders Kaseorg (1):
-      for-each-ref: Do not lookup objects when they will not be used
-
-Clemens Buchacher (1):
-      refuse to merge during a merge
+Elijah Newren (1):
+  gitk: Make more options easily accessible from Edit View dialog
 
 Jim Meyering (1):
-      use xstrdup, not strdup in ll-merge.c
+  avoid NULL dereference on failed malloc
 
-Johannes Schindelin (1):
-      import-tars: support symlinks
+Johan Herland (1):
+  git-submodule: add support for --merge.
 
-Johannes Sixt (2):
-      fetch-pack: close output channel after sideband demultiplexer ter=
-minates
-      diff.c: plug a memory leak in an error path
+Johannes Sixt (1):
+  gitk: Use --textconv to generate diff text
 
-Junio C Hamano (3):
-      t3505: fix abuse of test_expect_code
-      attribute: whitespace set to true detects all errors known to git
-      GIT 1.6.3.3
+Junio C Hamano (5):
+  write-tree --ignore-cache-tree
+  cache-tree.c::cache_tree_find(): simplify internal API
+  t4007: modernize the style
+  Optimize "diff-index --cached" using cache-tree
+  Avoid "diff-index --cached" optimization under --find-copies-harder
 
 Linus Torvalds (1):
-      Fix big left-shifts of unsigned char
+  Fix various sparse warnings in the git source code
 
-Marco Nelissen (1):
-      fix handling of iconv configuration options
+Markus Heidelberg (1):
+  gitk: Allow diff view without context lines
 
-Mark Lodato (1):
-      http.c: fix compiling with libcurl 7.9.2
+Michael J Gruber (5):
+  Allow push and fetch urls to be different
+  t5516: Check pushurl config setting
+  technical/api-remote: Describe new struct remote member pushurl
+  builtin-remote: Show push urls as well
+  builtin-remote: Make "remote -v" display push urls
 
-Michael J Gruber (1):
-      builtin-remote: Make "remote show" display all urls
+Michele Ballabio (1):
+  gitk: Add another string to translation
 
-Miklos Vajna (1):
-      git-svn documentation: fix typo in 'rebase vs. pull/merge' sectio=
-n
+Paolo Bonzini (1):
+  Test cccmd in t9001-send-email.sh and fix some bugs
 
-Nanako Shiraishi (1):
-      .gitattributes: CR at the end of the line is an error
+Pat Thoyts (1):
+  gitk: Handle msysGit version during version comparisons
 
-Paolo Bonzini (2):
-      Documentation: git-send-mail can take rev-list arg to drive forma=
-t-patch
-      avoid exponential regex match for java and objc function names
+Paul Mackerras (1):
+  gitk: Check git version before using --textconv flag
 
-Ren=C3=A9 Scharfe (1):
-      upload-archive: fix infinite loop on Cygwin
+Santi B=C3=A9jar (3):
+  parse-remote: function to get the tracking branch to be merge
+  parse-remote: support default reflist in get_remote_merge_branch
+  parse-remote: remove unused functions
 
-Shawn O. Pearce (1):
-      daemon: Strictly parse the "extra arg" part of the command
-
-Stephen Boyd (3):
-      git-rerere.txt: grammatical fixups and cleanups
-      pull, rebase: simplify to use die()
-      git-show-ref.txt: remove word and make consistent
-v
-Tay Ray Chuan (1):
-      http*: cleanup slot->local after fclose
-
-Thomas Rast (1):
-      Documentation: refer to gitworkflows(7) from tutorial and git(1)
-
-Uwe Kleine-K=C3=B6nig (1):
-      rebase--interactive: remote stray closing parenthesis
+Stephen Boyd (2):
+  parse-options: make OPT_INTEGER's argh explicit
+  parse-options: simplify usage argh handling
