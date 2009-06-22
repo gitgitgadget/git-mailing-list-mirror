@@ -1,149 +1,84 @@
 Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
-X-Spam-Level: *
+X-Spam-Level: **
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=1.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INVALID_MSGID,MSGID_FROM_MTA_HEADER,
-	MSGID_NOFQDN1,RP_MATCHES_RCVD,UNPARSEABLE_RELAY shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
-Received: (qmail 2342 invoked by uid 111); 27 Jun 2008 15:50:33 -0000
+X-Spam-Status: No, score=2.4 required=3.0 tests=AWL,BAYES_00,INVALID_MSGID,
+	MSGID_NOFQDN1,RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.0
+Received: (qmail 5470 invoked by uid 107); 22 Jun 2009 11:52:06 -0000
 Received: from vger.kernel.org (HELO vger.kernel.org) (209.132.176.167)
-    by peff.net (qpsmtpd/0.32) with ESMTP; Fri, 27 Jun 2008 11:50:25 -0400
+    by peff.net (qpsmtpd/0.40) with ESMTP; Mon, 22 Jun 2009 07:52:04 -0400
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752151AbYF0PuV (ORCPT <rfc822;peff@peff.net>);
-	Fri, 27 Jun 2008 11:50:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751948AbYF0PuU
-	(ORCPT <rfc822;git-outgoing>); Fri, 27 Jun 2008 11:50:20 -0400
-Received: from w2.willowmail.com ([64.243.175.54]:33013 "HELO
-	w2.willowmail.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with SMTP id S1751328AbYF0PuT (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 Jun 2008 11:50:19 -0400
-Received: (qmail 24851 invoked by uid 90); 27 Jun 2008 15:50:16 -0000
-Content-Type: text/plain; charset="us-ascii"
+	id S1751999AbZFVLt6 (ORCPT <rfc822;peff@peff.net>);
+	Mon, 22 Jun 2009 07:49:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751184AbZFVLt6
+	(ORCPT <rfc822;git-outgoing>); Mon, 22 Jun 2009 07:49:58 -0400
+Received: from francis.fzi.de ([141.21.7.5]:14523 "EHLO exchange.fzi.de"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1750886AbZFVLt5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Jun 2009 07:49:57 -0400
+Received: from [127.0.1.1] ([141.21.4.196]) by exchange.fzi.de over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
+	 Mon, 22 Jun 2009 13:49:56 +0200
+From:	y@vger.kernel.org
+To:	git@vger.kernel.org
+Cc:	=?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>
+Subject: [BUG] apply: test for trailing whitespace & no new line bug
+Date:	Mon, 22 Jun 2009 13:49:26 +0200
+Message-Id: <1245671366-23528-1-git-send-email-y>
+X-Mailer: git-send-email 1.6.3.2.370.g6bb4.dirty
+In-Reply-To: <y>
+References: <y>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
-From:	"David Jeske" <jeske@willowmail.com>
-To:	Matthieu Moy <Matthieu.Moy@imag.fr>
-Cc:	"Junio C Hamano" <gitster@pobox.com>, git@vger.kernel.org
-Subject: Re: is rebase the same as merging every commit?
-X-Mailer: Willow v0.02
-Date:	Fri, 27 Jun 2008 15:39:03 -0000
-Message-ID: <willow-jeske-01l7T9zdFEDjCigG>
-Received: from 67.188.42.104 at Fri, 27 Jun 2008 15:39:03 -0000
-References: <vpqd4m349hk.fsf@bauges.imag.fr>
-	<willow-jeske-01l79c1jFEDjCWw6-01l7HsC6FEDjCV3k>
-In-Reply-To: <vpqd4m349hk.fsf@bauges.imag.fr>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-OriginalArrivalTime: 22 Jun 2009 11:49:56.0478 (UTC) FILETIME=[902EF9E0:01C9F32F]
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-This example you provided Matthieu is exactly my confusion with rebase..
+From: SZEDER Gábor <szeder@ira.uka.de>
 
-If I want to bring a 'broken feature-a' branch into my topic branch to build on
-it, one commit of which is this:
+If a patch adds a new line to the end of a file and this line ends
+with trailing whitespace but has no newline, then 'git apply
+--whitespace=fix' does not remove the trailing whitespace from that
+line.
 
-> +	int * x = malloc(sizeof(char));
+Signed-off-by: SZEDER Gábor <szeder@ira.uka.de>
+---
 
-if I merge, my tree looks like:
+Noticed last week, but couldn't fix it myself during the weekend.
 
-:         /<--G<--H<--Qj jeske/topic1
-:        /           /
-:       /<--P<------Q    feature-a
-:      /
-: -----A<---B<---C master
+ t/t4124-apply-ws-rule.sh |   18 ++++++++++++++++++
+ 1 files changed, 18 insertions(+), 0 deletions(-)
 
-or if I rebase, it looks like:
+diff --git a/t/t4124-apply-ws-rule.sh b/t/t4124-apply-ws-rule.sh
+index f83322e..0db9b59 100755
+--- a/t/t4124-apply-ws-rule.sh
++++ b/t/t4124-apply-ws-rule.sh
+@@ -148,4 +148,22 @@ do
+ 	done
+ done
+ 
++create_patch () {
++	sed -e "s/_/ /" <<-\EOF
++		diff --git a/target b/target
++		index e69de29..8bd6648 100644
++		--- a/target
++		+++ b/target
++		@@ -0,0 +1 @@
++		+A line with trailing whitespace and no newline_
++		\ No newline at end of file
++	EOF
++}
++
++test_expect_failure 'trailing whitespace & no newline at the end of file' '
++	>target &&
++	create_patch | git apply --whitespace=fix - &&
++	git diff --check -- target
++'
++
+ test_done
+-- 
+1.6.3.2.370.g6bb4.dirty
 
-:                  /<--G'<--H' jeske/topic1
-:                 /
-:       /<--P<---Q    feature-a
-:      /
-: -----A<---B<---C master
-
------
-
-..and then through 'fixing' the patch, it ends up rebased and accepted onto the
-mainline origin/master, as a single patch, which (among other things) changed
-this line to:
-
-> +	int * x = malloc(sizeof(int));
-
-...if I merged above, it will look like,
-
-:         /<--G<--H<--Qj jeske/topic1
-:        /           /
-:       /<--P<------Q    feature-a
-:      /
-: -----A<---B<---C<---Q' master
-
-...if I rebased above, it will look like:
-
-:                  /<--G'<--H' jeske/topic1
-:                 /
-:       /<--P<---Q    feature-a
-:      /
-: -----A<---B<---C<---Q' master
-
-
-However, in both cases, because Q' is not connected to Q, I don't see how git
-will do anything sane to help me accept Q' correctly.
-
-If I rebased my merge-q-branch against the master, I would expect to get this
-(which will cause a conflict I have to resolve):
-
-:           /<--G<--H<--Qj jeske/topic1
-:          /
-: <--C<---Q' master
-
-If I rebased my rebase-q-branch against master, I would expect to get this
-(which will cause a conflict I have to resolve):
-
-:                     /<--G'<--H' jeske/topic1
-:                    /
-:          /<--P<---Q    feature-a
-:         /
-: --C<---Q' master
-
-However, if that Q' rebase contained a link back to (P,Q), it would know that
-the Q' rebase was replacing (P,Q), and would know to back them out of my tree
-when I rebased back onto the head, producing this in BOTH cases above (whether
-I rebased or merged from the feature-a branch):
-
-
-:          /<--G'<--H' jeske/topic1
-:         /
-: --C<---Q' master
-
-This operation above of "working will pulling uncompleted patches into my tree"
-seems like a fairly common thing for developers. I've never provided any
-patches to linux-kernel, but when I did try hacking on it years ago, I was
-doing exactly this. (pulling unaccepted patches into my kernel, then building
-on those patches). When I read about the DAG and its universal naming, I always
-assumed that the above workflow was what it was DESIGNED to make automatic. I'm
-confused, how does this work in git?
-
-
-
--- Matthieu Moy wrote:
-> Well, look at the [PATCH] messages on this list, and how they evolve.
-> Patch series give a clean way to go from a point to another. That's
-> what you want to see in upstream history.
->
-> Then, patch series usually get reviewed, and the patches themselves
-> are modified. There's a kind of meta-history: the changes you make to
-> your own changes.
->
-> Suppose I send a patch containing
->
-> +	int * x = malloc(sizeof(char));
->
-> and someone notices how wrong it is. I send another patch with
->
-> +	int * x = malloc(sizeof(int));
->
-> The first version was basicaly a mistake, and if it hasn't been
-> released, no one want to bother with it longer that the time to resend
-> the patch. No one want to be hit by the bug while using bisect later
-> on the upstream repository. And no one wants to see both patches when
-> reviewing or "git blame"-ing.
