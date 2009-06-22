@@ -1,50 +1,80 @@
-From: Florian Weimer <fw@deneb.enyo.de>
-Subject: Re: Confusion using git on svn server
-Date: Mon, 22 Jun 2009 08:16:14 +0200
-Message-ID: <877hz4ssi9.fsf@mid.deneb.enyo.de>
-References: <4A3D4665.9040003@gmail.com> <87zlc258nj.fsf@mid.deneb.enyo.de>
-	<4A3DF8BE.2050504@gmail.com> <87ws763pa1.fsf@mid.deneb.enyo.de>
-	<fabb9a1e0906212304o2b61d081i4cf72300be8bd775@mail.gmail.com>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: [PATCH] Add matchings for csharp
+Date: Mon, 22 Jun 2009 08:24:11 +0200
+Message-ID: <4A3F238B.1020107@viscovery.net>
+References: <1245628369.15870.1.camel@belthazor>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Matthieu Stigler <matthieu.stigler@gmail.com>
-To: Sverre Rabbelier <srabbelier@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jun 22 08:16:26 2009
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Adam Petaccia <adam@tpetaccia.com>
+X-From: git-owner@vger.kernel.org Mon Jun 22 08:24:41 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MIcpM-0007m6-QN
-	for gcvg-git-2@gmane.org; Mon, 22 Jun 2009 08:16:25 +0200
+	id 1MIcxM-0001QB-TD
+	for gcvg-git-2@gmane.org; Mon, 22 Jun 2009 08:24:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752101AbZFVGQP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 22 Jun 2009 02:16:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752031AbZFVGQO
-	(ORCPT <rfc822;git-outgoing>); Mon, 22 Jun 2009 02:16:14 -0400
-Received: from mail.enyo.de ([212.9.189.167]:59970 "EHLO mail.enyo.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751917AbZFVGQN (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Jun 2009 02:16:13 -0400
-Received: from deneb.vpn.enyo.de ([212.9.189.177] helo=deneb.enyo.de)
-	by mail.enyo.de with esmtp id 1MIcpD-0003ov-1v; Mon, 22 Jun 2009 08:16:15 +0200
-Received: from fw by deneb.enyo.de with local (Exim 4.69)
-	(envelope-from <fw@deneb.enyo.de>)
-	id 1MIcpC-0001oj-Gk; Mon, 22 Jun 2009 08:16:14 +0200
-In-Reply-To: <fabb9a1e0906212304o2b61d081i4cf72300be8bd775@mail.gmail.com>
-	(Sverre Rabbelier's message of "Mon, 22 Jun 2009 08:04:55 +0200")
+	id S1753834AbZFVGYQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 22 Jun 2009 02:24:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752772AbZFVGYP
+	(ORCPT <rfc822;git-outgoing>); Mon, 22 Jun 2009 02:24:15 -0400
+Received: from lilzmailso02.liwest.at ([212.33.55.13]:45001 "EHLO
+	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752704AbZFVGYP (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Jun 2009 02:24:15 -0400
+Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
+	by lilzmailso02.liwest.at with esmtpa (Exim 4.69)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1MIcws-0005Mr-RQ; Mon, 22 Jun 2009 08:24:11 +0200
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.96])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id 8B420C6C1; Mon, 22 Jun 2009 08:24:10 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.21 (Windows/20090302)
+In-Reply-To: <1245628369.15870.1.camel@belthazor>
+X-Spam-Score: -0.7 (/)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122010>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122011>
 
-* Sverre Rabbelier:
+Thank you for you contribution.
 
-> It moves your tree only if you add --hard, although in case of a reverted
-> revert it doesn't matter.
+Adam Petaccia schrieb:
+> I'm not sure if this is the correct place to send patches, please direct 
+> me if I've addressed the wrong list.
 
-Well, this is part of the checkout/reset confusion.  Even without
---hard, reset changes where the working tree is located in the
-history.  But it doesn't perform a checkout.
+This part of a patch submission should contain a description *why* this
+patch is an improvement (and must include a Signed-off-by statement; see
+Documentation/SubmittingPatches). Perhaps you are aware of msysgit issue
+281[1], that you are addressing here, and you could mention it.
+Considering the complaint in that issue (that hunk headers always only
+mention the containing namespace), an example in the commit message would
+be useful.
 
-As you said, with a rever, this shouldn't matter.
+To answer you question: This is the right place.
+
+[1] http://code.google.com/p/msysgit/issues/detail?id=281
+
+> @@ -79,6 +79,16 @@ PATTERNS("cpp",
+>  	 "|[-+0-9.e]+[fFlL]?|0[xXbB]?[0-9a-fA-F]+[lL]?"
+>  	 "|[-+*/<>%&^|=!]=|--|\\+\\+|<<=?|>>=?|&&|\\|\\||::|->"
+>  	 "|[^[:space:]]|[\x80-\xff]+"),
+> +PATTERNS("csharp",
+> +	 "!^[ \t]*(catch|do|for|if|instanceof|new|return|switch|throw|while)\n"
+> +	 "^([ \t]*(static|public|internal|private|protected|new|unsafe|readonly|volatile)[ \t]+(class|enum|interface|struct).*)$\n"
+> +	 "^([ \t]*(namespace)[ \t]+.*)$"
+
+I think the placement of parentheses could be improved in these two
+expressions (but I don't know for sure because I don't know the code well
+enough). Looking at the other examples in userdiff.c, I infer that the
+*first* opening parentheses defines which part is copied to the hunk
+header. Since you placed everything into parentheses (unnecessarily, I
+think), the complete line would be copied to the hunk header, including
+leading whitespace.
+
+Disclaimer: I don't have C# source code to test this.
+
+-- Hannes
