@@ -1,66 +1,66 @@
-From: Filip Navara <filip.navara@gmail.com>
-Subject: git-mailsplit and TortoiseGit bugs
-Date: Mon, 22 Jun 2009 19:53:51 +0200
-Message-ID: <5b31733c0906221053k4b2659bev1da861b8e997eb5f@mail.gmail.com>
+From: Paolo Bonzini <bonzini@gnu.org>
+Subject: Re: push.default???
+Date: Mon, 22 Jun 2009 19:55:30 +0200
+Message-ID: <4A3FC592.10401@gnu.org>
+References: <h1nks1$vdl$1@ger.gmane.org> <7vws74cjrl.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: tortoisegit-dev@googlegroups.com
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jun 22 19:54:06 2009
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Jun 22 19:55:51 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MIniX-0005YT-D2
-	for gcvg-git-2@gmane.org; Mon, 22 Jun 2009 19:54:05 +0200
+	id 1MInkE-0006QU-3g
+	for gcvg-git-2@gmane.org; Mon, 22 Jun 2009 19:55:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752590AbZFVRxv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 22 Jun 2009 13:53:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752299AbZFVRxu
-	(ORCPT <rfc822;git-outgoing>); Mon, 22 Jun 2009 13:53:50 -0400
-Received: from mail-ew0-f210.google.com ([209.85.219.210]:45636 "EHLO
-	mail-ew0-f210.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751729AbZFVRxu (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Jun 2009 13:53:50 -0400
-Received: by ewy6 with SMTP id 6so4900735ewy.37
-        for <git@vger.kernel.org>; Mon, 22 Jun 2009 10:53:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:date:message-id:subject
-         :from:to:cc:content-type:content-transfer-encoding;
-        bh=gMBPWPH0XSoelvEhnpsLpQmat6vQAV41tX1XH1g/S7I=;
-        b=fQx+gHPLHZI7WKVHYSU15CojK974BwlUtYlvaoqRXQ+A2AcK3PffK/+909VRm5wH1O
-         K0/c5Zp/nwKTMpzjGGQKQPg1mVM4ug+qdtxCjPloix8LAsdwCb+0FqVUw+JdgL5QRfsn
-         +I7gySIRhe5iy93c823BFYCazWLTR9IRcQTLg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        b=sBStRrs8lHITsm1jcr8LP4TWaJi9mQkS3tmYf6hX0dRIk63tlTPYndBBhsInbkASSW
-         sWhLd7KDNMQe21O6PRhIA5gxjs5RvgS+RMKIIJtjmlamDLSbgVHSS7aLaZ9A3nZjuHdt
-         ApbSHBd6CQ20imCab7+UMUxxgBKgJReWvKmW4=
-Received: by 10.216.0.206 with SMTP id 56mr2271948web.102.1245693231273; Mon, 
-	22 Jun 2009 10:53:51 -0700 (PDT)
+	id S1752950AbZFVRzj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 22 Jun 2009 13:55:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752702AbZFVRzj
+	(ORCPT <rfc822;git-outgoing>); Mon, 22 Jun 2009 13:55:39 -0400
+Received: from mx2.redhat.com ([66.187.237.31]:52572 "EHLO mx2.redhat.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751551AbZFVRzj (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Jun 2009 13:55:39 -0400
+Received: from int-mx2.corp.redhat.com (int-mx2.corp.redhat.com [172.16.27.26])
+	by mx2.redhat.com (8.13.8/8.13.8) with ESMTP id n5MHte4G005354;
+	Mon, 22 Jun 2009 13:55:40 -0400
+Received: from ns3.rdu.redhat.com (ns3.rdu.redhat.com [10.11.255.199])
+	by int-mx2.corp.redhat.com (8.13.1/8.13.1) with ESMTP id n5MHtdEJ030197;
+	Mon, 22 Jun 2009 13:55:39 -0400
+Received: from yakj.usersys.redhat.com (dhcp-lab-149.englab.brq.redhat.com [10.34.33.149])
+	by ns3.rdu.redhat.com (8.13.8/8.13.8) with ESMTP id n5MHtcRA024994;
+	Mon, 22 Jun 2009 13:55:38 -0400
+User-Agent: Thunderbird 2.0.0.17 (X11/20081009)
+In-Reply-To: <7vws74cjrl.fsf@alter.siamese.dyndns.org>
+X-Scanned-By: MIMEDefang 2.58 on 172.16.27.26
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122050>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122051>
 
-Hello,
 
-I'd like to report a bug. There's an incompatibility between the way
-TortoiseGit sends patches by e-mail and their handling by
-git-mailsplit. The mail sent by TortoiseGit specifies the Content-Type
-header as "Content-Type: text/plain;
-boundary=WC_MAIL_PaRt_BoUnDaRy_05151998". git-mailsplit then
-misinterprets it and treats it as empty patch. While TortoiseGit
-should not be sending the boundary parameter, it is perfectly valid
-e-mail according to RFC 5322 and MIME RFCs. The "boundary" parameter
-should be ignored for anything but "multipart" Content-Types.
+> You cannot do anything "in 1.6.3"; The ship has already left the port.
 
-Best regards,
-Filip Navara
+Yes, that was me reasoning out loud.
 
-P.S. I'm not subscribed to the mailing lists, so please CC me if you reply.
+>> 4) in 1.6.4 or 1.7.0, make "git push" fail outright if there is no
+>> push line, with text suggesting
+> 
+> This was already part of one possible option for push.default (change the
+> built-in default to 'nothing-and-warn') when it was introduced, wasn't it?
+> Instead of suggesting to configure remote.$name.push, it would suggest to
+> set push.default to a desired value, which I think is a more sensible
+> thing to do.
+
+Yes, that was also reasoning out loud.  It makes sense.
+
+Anyway, suggestion will be helpful for the "tracking" behavior refspec 
+syntax.
+
+Thanks for the remarks,
+
+Paolo
