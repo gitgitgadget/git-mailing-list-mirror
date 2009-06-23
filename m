@@ -1,79 +1,77 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: most annoying thing in git-push
-Date: Mon, 22 Jun 2009 23:08:46 -0700
-Message-ID: <7vd48va3dd.fsf@alter.siamese.dyndns.org>
-References: <20090622192147.GE5743@altlinux.org>
+From: Emmanuel Puerto <emmanuel.puerto@maxim-ic.com>
+Subject: RE: [BUG] malloc error when using large file.
+Date: Tue, 23 Jun 2009 00:05:11 -0700
+Message-ID: <B03A893ADFE80748942D13AFAF2845190C2D5D3BDC@ITSVLEX06.it.maxim-ic.internal>
+References: <B03A893ADFE80748942D13AFAF2845190C2D5D388A@ITSVLEX06.it.maxim-ic.internal>
+ <20090622211542.GA19364@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: "Alexey I. Froloff" <raorn@altlinux.org>
-X-From: git-owner@vger.kernel.org Tue Jun 23 08:09:11 2009
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Jun 23 09:06:37 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MIzBs-0000XQ-3I
-	for gcvg-git-2@gmane.org; Tue, 23 Jun 2009 08:09:08 +0200
+	id 1MJ05R-0002AW-Sh
+	for gcvg-git-2@gmane.org; Tue, 23 Jun 2009 09:06:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756586AbZFWGIp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 23 Jun 2009 02:08:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755208AbZFWGIp
-	(ORCPT <rfc822;git-outgoing>); Tue, 23 Jun 2009 02:08:45 -0400
-Received: from fed1rmmtao101.cox.net ([68.230.241.45]:45742 "EHLO
-	fed1rmmtao101.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751576AbZFWGIo (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 23 Jun 2009 02:08:44 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao101.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20090623060846.JAZA17670.fed1rmmtao101.cox.net@fed1rmimpo01.cox.net>;
-          Tue, 23 Jun 2009 02:08:46 -0400
-Received: from localhost ([68.225.240.211])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id 7J8m1c00C4aMwMQ03J8mHa; Tue, 23 Jun 2009 02:08:47 -0400
-X-VR-Score: 0.00
-X-Authority-Analysis: v=1.0 c=1 a=7-TmW6R-vUMA:10 a=bH78PYQqAAAA:8
- a=FvxYKR-ZnENwd8SW-JUA:9 a=QJcRVk9_dJd55VhcDREA:7
- a=I9tXGDDl1E5AK9Q07KHEHASVwToA:4 a=OZAj1n7jCsAA:10
-X-CM-Score: 0.00
-In-Reply-To: <20090622192147.GE5743@altlinux.org> (Alexey I. Froloff's message of "Mon\, 22 Jun 2009 23\:21\:47 +0400")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+	id S1752250AbZFWHGX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 23 Jun 2009 03:06:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752162AbZFWHGW
+	(ORCPT <rfc822;git-outgoing>); Tue, 23 Jun 2009 03:06:22 -0400
+Received: from antispam01.maxim-ic.com ([205.153.101.182]:43470 "EHLO
+	antispam01.maxim-ic.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751965AbZFWHGV convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 23 Jun 2009 03:06:21 -0400
+X-ASG-Debug-ID: 1245740265-0f4801f60000-QuoKaX
+X-Barracuda-URL: http://AntiSpam01:8000/cgi-bin/mark.cgi
+Received: from terlingua.dalsemi.com (localhost [127.0.0.1])
+	by antispam01.maxim-ic.com (Spam Firewall) with ESMTP
+	id 3C805244FD6; Tue, 23 Jun 2009 01:57:45 -0500 (CDT)
+Received: from terlingua.dalsemi.com (terlingua.dalsemi.com [180.0.34.46]) by antispam01.maxim-ic.com with ESMTP id j8JI4rAPqFNpCvvO; Tue, 23 Jun 2009 01:57:45 -0500 (CDT)
+Received: from itdalex02.it.maxim-ic.internal (itdalex02.it.maxim-ic.internal [10.16.15.7])
+	by terlingua.dalsemi.com (8.10.2/8.10.2) with ESMTP id n5N76O801828;
+	Tue, 23 Jun 2009 02:06:24 -0500 (CDT)
+Received: from itdalias01.it.maxim-ic.internal ([10.16.15.60]) by itdalex02.it.maxim-ic.internal with Microsoft SMTPSVC(6.0.3790.3959);
+	 Tue, 23 Jun 2009 02:06:37 -0500
+Received: from maxdalex01.maxim-ic.internal (10.16.15.103) by
+ itdalias01.it.maxim-ic.internal (10.16.15.60) with Microsoft SMTP Server
+ (TLS) id 8.1.358.0; Tue, 23 Jun 2009 02:06:36 -0500
+Received: from maxsvlex01.maxim-ic.internal (172.18.47.212) by
+ maxdalex01.maxim-ic.internal (10.16.15.101) with Microsoft SMTP Server (TLS)
+ id 8.1.358.0; Tue, 23 Jun 2009 02:06:36 -0500
+Received: from ITSVLEX06.it.maxim-ic.internal ([172.18.41.168]) by
+ maxsvlex01.maxim-ic.internal ([::1]) with mapi; Tue, 23 Jun 2009 00:06:35
+ -0700
+X-ASG-Orig-Subj: RE: [BUG] malloc error when using large file.
+Thread-Topic: [BUG] malloc error when using large file.
+Thread-Index: AcnzfqWPj+5g7G6OTqSV7ex4mcua2AAUXt3A
+In-Reply-To: <20090622211542.GA19364@coredump.intra.peff.net>
+Accept-Language: fr-FR, en-US
+Content-Language: fr-FR
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+acceptlanguage: fr-FR, en-US
+X-OriginalArrivalTime: 23 Jun 2009 07:06:37.0492 (UTC) FILETIME=[26694F40:01C9F3D1]
+X-Barracuda-Connect: terlingua.dalsemi.com[180.0.34.46]
+X-Barracuda-Start-Time: 1245740265
+X-Barracuda-Virus-Scanned: by Barracuda Spam Firewall at maxim-ic.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122077>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122078>
 
-"Alexey I. Froloff" <raorn@altlinux.org> writes:
 
-> Is is possible to add such functionality to git-push, so it will
-> push tags that point at objects that were uploaded to the remote
-> repository?
 
-I think it is doable, because the protocol is for the receiver to first
-advertise all its existing refs, which means that the sender can learn
-what is missing by first enumerating the tags it has, subtracting what the
-receiver has, and then computing the ones that are missing from the
-receiver and are reachable from the commits it is pushing, before the
-sender has to respond which refs it wants to update with what object and
-then send the packfile to transfer necessary objects.  You do not need to
-change the protocol, nor what the receiving side does, to implement it.
-You only need to update what the push side does.
+> Many operations in git assume that a whole file can be held in memory at
+> once. Do you actually have 2G available on the machine? Are there any OS
+> limits that might be a problem?
 
-It however is entirely a different matter if it is a sensible thing to do.
+Thanks for your answer Jeff, 
 
-Often, a fetch is made from a public distribution point, which by
-definition has only branches and tags that are meant for public
-consumption.  It makes sense to auto-follow tags by default.
+Yes I have more that 2 Go available when a do it, and after this allocation error if I try to do a 'git add' with a 9Go file, I did not have any issue.
 
-On the other hand, a push is almost always made from a private working
-repository to a public distribution point, in order to update the latter
-with only refs and objects meant for public consumption.  A developer
-working in such a private working repository will use tags that are not
-meant for public consumption while developing, and pushing all tags that
-are reachable from the commits that are being pushed out to the public
-distribution point is not necessarily desirable, as it will push out many
-tags that are only private to the working repository.
-
-It certainly is not a sensible default behaviour, even though it might be
-handy as an option for special cases.
+Emmanuel.
