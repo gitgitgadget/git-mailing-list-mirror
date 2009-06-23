@@ -1,72 +1,79 @@
-From: Filip Navara <filip.navara@gmail.com>
-Subject: Re: git-mailsplit and TortoiseGit bugs
-Date: Tue, 23 Jun 2009 10:13:42 +0200
-Message-ID: <5b31733c0906230113u518cbd96t4ab825d83eafbe8a@mail.gmail.com>
-References: <5b31733c0906221053k4b2659bev1da861b8e997eb5f@mail.gmail.com>
-	 <20090622202939.GA11912@sigill.intra.peff.net>
-	 <5b31733c0906221446m1a82b39fkd5d25ea413697138@mail.gmail.com>
-	 <1976ea660906221826lfc074c2x6231dcae16535a9c@mail.gmail.com>
+From: Tzafrir Cohen <tzafrir.cohen@xorcom.com>
+Subject: git-svn with the asterisk svn repository
+Date: Tue, 23 Jun 2009 10:55:00 +0300
+Organization: Xorcom*
+Message-ID: <20090623075500.GR3311@xorcom.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-	git@vger.kernel.org, tortoisegit-dev@googlegroups.com
-To: Frank Li <lznuaa@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jun 23 10:13:58 2009
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jun 23 10:18:06 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MJ18a-0002tr-Vz
-	for gcvg-git-2@gmane.org; Tue, 23 Jun 2009 10:13:53 +0200
+	id 1MJ1Ce-0004TR-BJ
+	for gcvg-git-2@gmane.org; Tue, 23 Jun 2009 10:18:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752279AbZFWINn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 23 Jun 2009 04:13:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752169AbZFWINl
-	(ORCPT <rfc822;git-outgoing>); Tue, 23 Jun 2009 04:13:41 -0400
-Received: from mail-ew0-f210.google.com ([209.85.219.210]:46606 "EHLO
-	mail-ew0-f210.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751765AbZFWINk (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 23 Jun 2009 04:13:40 -0400
-Received: by ewy6 with SMTP id 6so5364056ewy.37
-        for <git@vger.kernel.org>; Tue, 23 Jun 2009 01:13:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=0VeSMYubRptljxiE6Wr1ku3aoM9aMHat/qGjSTKFTTM=;
-        b=n1T2l5kGUd4vEV/V/+B/i/n+Q2C6lH/9YCyb6xYebShXHaVx+8KP4Qoby3B7o4j/TI
-         U7gfAmzd96uy37VftY9umn5uTzNpO9C4tIq2Em/bnCzqCxPi5MmUGcuAGP+8k6tdmCHl
-         d+Gq+vnlLZoKWOqxub1auwXIRzuhSQVD+aExc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=YLzMEMU82i9XXKpqmAaxQLzn9LRXpqDWXiBBrvlr0GhG3IQskH8RwnpdW4tXO3G44I
-         NinMz+D3KyfST4u6yosnnfUjfQ98IKmNtmQUdyBh18ILBzIIr5rHERmyz11BsXO7qIVW
-         dBqes+gsoErR4GVhl1p+lD5P4xG1xmcFLHzcY=
-Received: by 10.216.23.72 with SMTP id u50mr2633456weu.178.1245744822623; Tue, 
-	23 Jun 2009 01:13:42 -0700 (PDT)
-In-Reply-To: <1976ea660906221826lfc074c2x6231dcae16535a9c@mail.gmail.com>
+	id S1756751AbZFWIRT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 23 Jun 2009 04:17:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756256AbZFWIRR
+	(ORCPT <rfc822;git-outgoing>); Tue, 23 Jun 2009 04:17:17 -0400
+Received: from local.xorcom.com ([62.90.10.53]:60113 "EHLO local.xorcom.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755641AbZFWIRO (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 23 Jun 2009 04:17:14 -0400
+X-Greylist: delayed 1335 seconds by postgrey-1.27 at vger.kernel.org; Tue, 23 Jun 2009 04:17:13 EDT
+Received: by local.xorcom.com (Postfix, from userid 1000)
+	id 573DF1D158; Tue, 23 Jun 2009 10:55:00 +0300 (IDT)
+Mail-Followup-To: git@vger.kernel.org
+Content-Disposition: inline
+X-Forced-Service: Sadly Using Gmail [tm]
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122080>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122081>
 
-On Tue, Jun 23, 2009 at 3:26 AM, Frank Li<lznuaa@gmail.com> wrote:
-> Do you means I should remove "boundary=WC_MAIL_PaRt_BoUnDaRy_05151998"
-> when send patch without attachment?
+Hi
 
-Yes, it's meaningless for text/plain mails.
+It took me quite a while to figure out how to use git-svn with the
+repositories of the Asterisk project (now: http://svn.asterisk.org/svn/
+). They have an extensive usage of svn:externals , which is changed from
+branch to branch (mostly: "tagged" on a release tag) and thus using
+submodules didn't seem useful.
 
->
-> Tortoisegit bug report:
-> http://code.google.com/p/tortoisegit/issues/list
->
-> best regards
-> Frank Li
+Here are some notes of my workarounds.
 
-Best regards,
-Filip Navara
+Generally I tried to keep my the branches clean of unnecessary changes.
+They need to build correctly without any need for extra changes. And for
+the sake of clarity: even the gitignore file shouldn't be part of a
+change. I want to be able to checkout a branch and just use it. Which
+means that the gitignore file had to be on the gitignore file as well
+and not checked in.
+
+BTW: I also included a simple script to update the git tags from the SVN
+"tags/*" branches (any such branch that matches a specific pattern and
+for which a tag doesn't exist).
+
+I also worked around the need of the svn:externals . Most of them were
+for a common part of the build system called menuselect. I reimplemented
+it in a single perl script and a very simple makefile (which are easy to
+copy around). One or two other svn:exterernals don't seen to change
+much, and I just used symlinks instead.
+
+Simple documentation and scripts are available at
+http://git.tzafrir.org.il/?p=asterisk-tools.git;a=tree
+
+(Please CC replies if you actually want me to read them, as I almost
+don't read this list)
+
+P.S.: Anybody had luck with git-svn and HTTPS certificates 
+authentication recently? I never tried to use git-svn to commit
+anything.
+
+-- 
+               Tzafrir Cohen
+icq#16849755              jabber:tzafrir.cohen@xorcom.com
++972-50-7952406           mailto:tzafrir.cohen@xorcom.com
+http://www.xorcom.com  iax:guest@local.xorcom.com/tzafrir
