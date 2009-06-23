@@ -1,284 +1,75 @@
-From: Larry D'Anna <larry@elder-gods.org>
-Subject: [PATCH] add --plumbing option to git-push
-Date: Tue, 23 Jun 2009 11:38:33 -0400
-Message-ID: <20090623153833.GA31853@cthulhu>
-References: <4A40EF9C.7000706@xiplink.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] add --porcelain option to git-push
+Date: Tue, 23 Jun 2009 08:50:13 -0700
+Message-ID: <7v4ou79cga.fsf@alter.siamese.dyndns.org>
+References: <20090622214032.GC19364@coredump.intra.peff.net>
+	<20090623011001.GA15352@cthulhu> <4A40EF9C.7000706@xiplink.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jun 23 17:39:05 2009
+Cc: Larry D'Anna <larry@elder-gods.org>, git@vger.kernel.org
+To: Marc Branchaud <marcnarc@xiplink.com>
+X-From: git-owner@vger.kernel.org Tue Jun 23 17:50:24 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MJ85K-0005XD-JH
-	for gcvg-git-2@gmane.org; Tue, 23 Jun 2009 17:38:59 +0200
+	id 1MJ8GN-0002Jm-7M
+	for gcvg-git-2@gmane.org; Tue, 23 Jun 2009 17:50:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757280AbZFWPig (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 23 Jun 2009 11:38:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756366AbZFWPif
-	(ORCPT <rfc822;git-outgoing>); Tue, 23 Jun 2009 11:38:35 -0400
-Received: from cthulhu.elder-gods.org ([140.239.99.253]:49155 "EHLO
-	cthulhu.elder-gods.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754729AbZFWPie (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 23 Jun 2009 11:38:34 -0400
-Received: by cthulhu.elder-gods.org (Postfix, from userid 1000)
-	id 55513822066; Tue, 23 Jun 2009 11:38:33 -0400 (EDT)
-Content-Disposition: inline
-In-Reply-To: <4A40EF9C.7000706@xiplink.com>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+	id S1751777AbZFWPuN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 23 Jun 2009 11:50:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754067AbZFWPuM
+	(ORCPT <rfc822;git-outgoing>); Tue, 23 Jun 2009 11:50:12 -0400
+Received: from fed1rmmtao106.cox.net ([68.230.241.40]:55671 "EHLO
+	fed1rmmtao106.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753793AbZFWPuL (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 23 Jun 2009 11:50:11 -0400
+Received: from fed1rmimpo03.cox.net ([70.169.32.75])
+          by fed1rmmtao106.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20090623155012.LNZD25927.fed1rmmtao106.cox.net@fed1rmimpo03.cox.net>;
+          Tue, 23 Jun 2009 11:50:12 -0400
+Received: from localhost ([68.225.240.211])
+	by fed1rmimpo03.cox.net with bizsmtp
+	id 7TqD1c0094aMwMQ04TqD86; Tue, 23 Jun 2009 11:50:13 -0400
+X-VR-Score: 0.00
+X-Authority-Analysis: v=1.0 c=1 a=thBImqoGNukA:10 a=8q6LdnVOAAAA:8
+ a=wwoviQxNuiOZ40WGPZUA:9 a=_Tqua5HZe7cK9Oygb5D93gWYmDMA:4 a=ACi2bg3fm-oA:10
+X-CM-Score: 0.00
+In-Reply-To: <4A40EF9C.7000706@xiplink.com> (Marc Branchaud's message of "Tue\, 23 Jun 2009 11\:07\:08 -0400")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122095>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122096>
 
-If --plumbing is used git-push will produce machine-readable output.  The
-output status line for each ref will be tab-separated and sent to stdout instead
-of stderr.  The full symbolic names of the refs will be given.  For example
+Marc Branchaud <marcnarc@xiplink.com> writes:
 
-$ git push --dry-run --plumbing master :foobar 2>/dev/null \
-  | perl -pe 's/\t/ TAB /g'
+> Shouldn't this option be named "--plumbing" since it's making 'git push'
+> act like plumbing?  Actually, neither name seems intuitively descriptive
+> to me...
 
-= TAB refs/heads/master:refs/heads/master TAB [up to date]
-- TAB :refs/heads/foobar TAB [deleted]
----
- Documentation/git-push.txt |   11 ++++++
- builtin-push.c             |    3 +-
- transport.c                |   75 +++++++++++++++++++++++++------------------
- transport.h                |    1 +
- 4 files changed, 58 insertions(+), 32 deletions(-)
+Perhaps.  But asking for output format designed for Porcelain
+implementions to read with --porcelain option has precedence.
 
-diff --git a/Documentation/git-push.txt b/Documentation/git-push.txt
-index fd53c49..9178145 100644
---- a/Documentation/git-push.txt
-+++ b/Documentation/git-push.txt
-@@ -85,6 +85,11 @@ nor in any Push line of the corresponding remotes file---see below).
- --dry-run::
- 	Do everything except actually send the updates.
- 
-+--plumbing::
-+	Produce machine-readable output.  The output status line for each ref
-+	will be tab-separated and sent to stdout instead of stderr.  The full
-+	symbolic names of the refs will be given.
-+
- --tags::
- 	All refs under `$GIT_DIR/refs/tags` are pushed, in
- 	addition to refspecs explicitly listed on the command
-@@ -148,6 +153,12 @@ representing the status of a single ref. Each line is of the form:
-  <flag> <summary> <from> -> <to> (<reason>)
- -------------------------------
- 
-+If --plumbing is used, then each line of the output is of the form:
-+
-+-------------------------------
-+ <flag> \t <from>:<to> \t <summary> (<reason>)
-+-------------------------------
-+
- flag::
- 	A single character indicating the status of the ref. This is
- 	blank for a successfully pushed ref, `!` for a ref that was
-diff --git a/builtin-push.c b/builtin-push.c
-index 7be1239..845db1b 100644
---- a/builtin-push.c
-+++ b/builtin-push.c
-@@ -10,7 +10,7 @@
- #include "parse-options.h"
- 
- static const char * const push_usage[] = {
--	"git push [--all | --mirror] [--dry-run] [--tags] [--receive-pack=<git-receive-pack>] [--repo=<repository>] [-f | --force] [-v] [<repository> <refspec>...]",
-+	"git push [--all | --mirror] [--dry-run] [--plumbing] [--tags] [--receive-pack=<git-receive-pack>] [--repo=<repository>] [-f | --force] [-v] [<repository> <refspec>...]",
- 	NULL,
- };
- 
-@@ -200,6 +200,7 @@ int cmd_push(int argc, const char **argv, const char *prefix)
- 			    (TRANSPORT_PUSH_MIRROR|TRANSPORT_PUSH_FORCE)),
- 		OPT_BOOLEAN( 0 , "tags", &tags, "push tags"),
- 		OPT_BIT( 0 , "dry-run", &flags, "dry run", TRANSPORT_PUSH_DRY_RUN),
-+		OPT_BIT( 0,  "plumbing", &flags, "machine-readable output", TRANSPORT_PUSH_PLUMBING),
- 		OPT_BIT('f', "force", &flags, "force updates", TRANSPORT_PUSH_FORCE),
- 		OPT_BOOLEAN( 0 , "thin", &thin, "use thin pack"),
- 		OPT_STRING( 0 , "receive-pack", &receivepack, "receive-pack", "receive pack program"),
-diff --git a/transport.c b/transport.c
-index 501a77b..09d9baa 100644
---- a/transport.c
-+++ b/transport.c
-@@ -719,19 +719,30 @@ static void update_tracking_ref(struct remote *remote, struct ref *ref, int verb
- 
- #define SUMMARY_WIDTH (2 * DEFAULT_ABBREV + 3)
- 
--static void print_ref_status(char flag, const char *summary, struct ref *to, struct ref *from, const char *msg)
-+static void print_ref_status(char flag, const char *summary, struct ref *to, struct ref *from, const char *msg, int plumbing)
- {
--	fprintf(stderr, " %c %-*s ", flag, SUMMARY_WIDTH, summary);
--	if (from)
--		fprintf(stderr, "%s -> %s", prettify_refname(from->name), prettify_refname(to->name));
--	else
--		fputs(prettify_refname(to->name), stderr);
--	if (msg) {
--		fputs(" (", stderr);
--		fputs(msg, stderr);
--		fputc(')', stderr);
-+	if (plumbing) {
-+		if (from)
-+			fprintf(stdout, "%c\t%s:%s\t", flag, from->name, to->name);
-+		else
-+			fprintf(stdout, "%c\t:%s\t", flag, to->name);
-+		if (msg)
-+			fprintf(stdout, "%s (%s)\n", summary, msg);
-+		else
-+			fprintf(stdout, "%s\n", summary);
-+	} else {
-+		fprintf(stderr, " %c %-*s ", flag, SUMMARY_WIDTH, summary);
-+		if (from)
-+			fprintf(stderr, "%s -> %s", prettify_refname(from->name), prettify_refname(to->name));
-+		else
-+			fputs(prettify_refname(to->name), stderr);
-+		if (msg) {
-+			fputs(" (", stderr);
-+			fputs(msg, stderr);
-+			fputc(')', stderr);
-+		}
-+		fputc('\n', stderr);
- 	}
--	fputc('\n', stderr);
- }
- 
- static const char *status_abbrev(unsigned char sha1[20])
-@@ -739,15 +750,15 @@ static const char *status_abbrev(unsigned char sha1[20])
- 	return find_unique_abbrev(sha1, DEFAULT_ABBREV);
- }
- 
--static void print_ok_ref_status(struct ref *ref)
-+static void print_ok_ref_status(struct ref *ref, int plumbing)
- {
- 	if (ref->deletion)
--		print_ref_status('-', "[deleted]", ref, NULL, NULL);
-+		print_ref_status('-', "[deleted]", ref, NULL, NULL, plumbing);
- 	else if (is_null_sha1(ref->old_sha1))
- 		print_ref_status('*',
- 			(!prefixcmp(ref->name, "refs/tags/") ? "[new tag]" :
--			  "[new branch]"),
--			ref, ref->peer_ref, NULL);
-+			"[new branch]"),
-+			ref, ref->peer_ref, NULL, plumbing);
- 	else {
- 		char quickref[84];
- 		char type;
-@@ -765,50 +776,51 @@ static void print_ok_ref_status(struct ref *ref)
- 		}
- 		strcat(quickref, status_abbrev(ref->new_sha1));
- 
--		print_ref_status(type, quickref, ref, ref->peer_ref, msg);
-+		print_ref_status(type, quickref, ref, ref->peer_ref, msg, plumbing);
- 	}
- }
- 
--static int print_one_push_status(struct ref *ref, const char *dest, int count)
-+static int print_one_push_status(struct ref *ref, const char *dest, int count, int plumbing)
- {
- 	if (!count)
- 		fprintf(stderr, "To %s\n", dest);
- 
- 	switch(ref->status) {
- 	case REF_STATUS_NONE:
--		print_ref_status('X', "[no match]", ref, NULL, NULL);
-+		print_ref_status('X', "[no match]", ref, NULL, NULL, plumbing);
- 		break;
- 	case REF_STATUS_REJECT_NODELETE:
- 		print_ref_status('!', "[rejected]", ref, NULL,
--				"remote does not support deleting refs");
-+						 "remote does not support deleting refs", plumbing);
- 		break;
- 	case REF_STATUS_UPTODATE:
- 		print_ref_status('=', "[up to date]", ref,
--				ref->peer_ref, NULL);
-+						 ref->peer_ref, NULL, plumbing);
- 		break;
- 	case REF_STATUS_REJECT_NONFASTFORWARD:
- 		print_ref_status('!', "[rejected]", ref, ref->peer_ref,
--				"non-fast forward");
-+						 "non-fast forward", plumbing);
- 		break;
- 	case REF_STATUS_REMOTE_REJECT:
- 		print_ref_status('!', "[remote rejected]", ref,
--				ref->deletion ? NULL : ref->peer_ref,
--				ref->remote_status);
-+						 ref->deletion ? NULL : ref->peer_ref,
-+						 ref->remote_status, plumbing);
- 		break;
- 	case REF_STATUS_EXPECTING_REPORT:
- 		print_ref_status('!', "[remote failure]", ref,
--				ref->deletion ? NULL : ref->peer_ref,
--				"remote failed to report status");
-+						 ref->deletion ? NULL : ref->peer_ref,
-+						 "remote failed to report status", plumbing);
- 		break;
- 	case REF_STATUS_OK:
--		print_ok_ref_status(ref);
-+		print_ok_ref_status(ref, plumbing);
- 		break;
- 	}
- 
- 	return 1;
- }
- 
--static void print_push_status(const char *dest, struct ref *refs, int verbose)
-+static void print_push_status(const char *dest, struct ref *refs,
-+							  int verbose, int plumbing)
- {
- 	struct ref *ref;
- 	int n = 0;
-@@ -816,18 +828,18 @@ static void print_push_status(const char *dest, struct ref *refs, int verbose)
- 	if (verbose) {
- 		for (ref = refs; ref; ref = ref->next)
- 			if (ref->status == REF_STATUS_UPTODATE)
--				n += print_one_push_status(ref, dest, n);
-+				n += print_one_push_status(ref, dest, n, plumbing);
- 	}
- 
- 	for (ref = refs; ref; ref = ref->next)
- 		if (ref->status == REF_STATUS_OK)
--			n += print_one_push_status(ref, dest, n);
-+			n += print_one_push_status(ref, dest, n, plumbing);
- 
- 	for (ref = refs; ref; ref = ref->next) {
- 		if (ref->status != REF_STATUS_NONE &&
- 		    ref->status != REF_STATUS_UPTODATE &&
- 		    ref->status != REF_STATUS_OK)
--			n += print_one_push_status(ref, dest, n);
-+			n += print_one_push_status(ref, dest, n, plumbing);
- 	}
- }
- 
-@@ -997,6 +1009,7 @@ int transport_push(struct transport *transport,
- 		struct ref *local_refs = get_local_heads();
- 		int match_flags = MATCH_REFS_NONE;
- 		int verbose = flags & TRANSPORT_PUSH_VERBOSE;
-+		int plumbing = flags & TRANSPORT_PUSH_PLUMBING;
- 		int ret;
- 
- 		if (flags & TRANSPORT_PUSH_ALL)
-@@ -1011,7 +1024,7 @@ int transport_push(struct transport *transport,
- 
- 		ret = transport->push_refs(transport, remote_refs, flags);
- 
--		print_push_status(transport->url, remote_refs, verbose);
-+		print_push_status(transport->url, remote_refs, verbose | plumbing, plumbing);
- 
- 		if (!(flags & TRANSPORT_PUSH_DRY_RUN)) {
- 			struct ref *ref;
-diff --git a/transport.h b/transport.h
-index 27bfc52..f1d8378 100644
---- a/transport.h
-+++ b/transport.h
-@@ -35,6 +35,7 @@ struct transport {
- #define TRANSPORT_PUSH_DRY_RUN 4
- #define TRANSPORT_PUSH_MIRROR 8
- #define TRANSPORT_PUSH_VERBOSE 16
-+#define TRANSPORT_PUSH_PLUMBING 32
- 
- /* Returns a transport suitable for the url */
- struct transport *transport_get(struct remote *, const char *);
--- 
-1.6.0.4
+> Why not teach 'git push' to change its output format if it's writing to a pipe?
+
+That is ugly.  Besides, "writing to a pipe" would not be a right criteria,
+if you want to do
+
+          git push >log
+          if grep blah log
+          then
+                do blah thing
+          fi
+          if grep baa log
+          then
+                do baa thing, too
+          fi
+
+When you make a program behave differently depending on where your stdout
+goes, typically you see if it is going to the terminal (e.g. isatty(3)),
+but even then you would need an explicit override from the command line
+when stdout is a tty and you do not want "for humans" frills (e.g. color),
+and when stdout is not a tty and you do want such frills.
