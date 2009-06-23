@@ -1,116 +1,294 @@
-From: Finn Arne Gangstad <finnag@pvv.org>
-Subject: Re: push.default???
-Date: Tue, 23 Jun 2009 16:48:05 +0200
-Message-ID: <20090623144805.GB24974@pvv.org>
-References: <h1nks1$vdl$1@ger.gmane.org> <20090623103428.GA4214@pvv.org> <4A40D19E.60606@gmail.com> <20090623131131.GA7011@pvv.org> <4A40D864.8040208@gmail.com>
+From: Marc Branchaud <marcnarc@xiplink.com>
+Subject: Re: [PATCH] add --porcelain option to git-push
+Date: Tue, 23 Jun 2009 11:07:08 -0400
+Message-ID: <4A40EF9C.7000706@xiplink.com>
+References: <20090622214032.GC19364@coredump.intra.peff.net> <20090623011001.GA15352@cthulhu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Paolo Bonzini <paolo.bonzini@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jun 23 16:48:18 2009
+To: Larry D'Anna <larry@elder-gods.org>
+X-From: git-owner@vger.kernel.org Tue Jun 23 17:08:30 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MJ7IE-0004cH-Vf
-	for gcvg-git-2@gmane.org; Tue, 23 Jun 2009 16:48:15 +0200
+	id 1MJ7bm-0006Yo-TX
+	for gcvg-git-2@gmane.org; Tue, 23 Jun 2009 17:08:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757553AbZFWOsF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 23 Jun 2009 10:48:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753442AbZFWOsE
-	(ORCPT <rfc822;git-outgoing>); Tue, 23 Jun 2009 10:48:04 -0400
-Received: from decibel.pvv.ntnu.no ([129.241.210.179]:57916 "EHLO
-	decibel.pvv.ntnu.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751676AbZFWOsD (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 23 Jun 2009 10:48:03 -0400
-Received: from finnag by decibel.pvv.ntnu.no with local (Exim 4.69)
-	(envelope-from <finnag@pvv.ntnu.no>)
-	id 1MJ7I5-0003ta-Nv; Tue, 23 Jun 2009 16:48:05 +0200
-Content-Disposition: inline
-In-Reply-To: <4A40D864.8040208@gmail.com>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1759949AbZFWPHV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 23 Jun 2009 11:07:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759747AbZFWPHU
+	(ORCPT <rfc822;git-outgoing>); Tue, 23 Jun 2009 11:07:20 -0400
+Received: from smtp162.dfw.emailsrvr.com ([67.192.241.162]:35627 "EHLO
+	smtp162.dfw.emailsrvr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759781AbZFWPHT (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 23 Jun 2009 11:07:19 -0400
+Received: from relay6.relay.dfw.mlsrvr.com (localhost [127.0.0.1])
+	by relay6.relay.dfw.mlsrvr.com (SMTP Server) with ESMTP id A455C3012C
+	for <git@vger.kernel.org>; Tue, 23 Jun 2009 11:07:21 -0400 (EDT)
+Received: by relay6.relay.dfw.mlsrvr.com (Authenticated sender: mbranchaud-AT-xiplink.com) with ESMTPSA id 55953300FA;
+	Tue, 23 Jun 2009 11:07:21 -0400 (EDT)
+User-Agent: Thunderbird 2.0.0.21 (X11/20090409)
+In-Reply-To: <20090623011001.GA15352@cthulhu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122092>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122093>
 
-On Tue, Jun 23, 2009 at 03:28:04PM +0200, Paolo Bonzini wrote:
-> Finn Arne Gangstad wrote:
->> On Tue, Jun 23, 2009 at 02:59:10PM +0200, Paolo Bonzini wrote:
->> [...]
->>> Before going on, can you explain your use case for --push=tracking 
->>> (in a  case where --push=current wouldn't do the same)?
->>
->> The idea with "tracking" is to push the current branch to wherever it
->> would pull from, making push & pull "equivalent" in some sense.
->>
->> This is different from "current" if you have/choose to name the local
->> branch something else than the remote branch. This happens a lot when
->> using multiple remotes.
->
-> Yes, but when using multiple remotes is it really common that:
->
-> 1) I have the permission to push to them (as opposed to sending a pull  
-> request)?  If I have permission to push only to the mob branch, for  
-> example, I would still set my tracking branch to the master branch.
+Shouldn't this option be named "--plumbing" since it's making 'git push' act like plumbing?  Actually, neither name seems intuitively descriptive to me...
 
-I don't know how common it is, but it is certainly not unheard of. You
-have a shared public server, and a group-shared public server and so
-on. You only need a single shared public server for this to make sense
-however.
+Why not teach 'git push' to change its output format if it's writing to a pipe?
 
-> 2) I *do* want to push to them often?  If I use tracking for my topic  
-> branches, push.default=tracking seems a sure way to big mess when I do  
-> "git push" on the wrong branch.
+		M.
 
-In our shared repositories, we have a few protected branches that only
-integrators can push to, so no one else can accidentally push to
-them. These are typically the branches that it makes sense to track
-"by default".
 
-If a group sets up a shared public branch, it is typically for
-working together on some feature. There are very few surprises if
-the group works like this:
-
- 1. Do some modifications
- 2. git commit
- 3. git pull [--rebase]
- 4. git push
- 5. goto 1 .. 
-
-For people used to CVS, this is a nice way to start working with git.
-It requires --tracking to work properly though (--current only works
-if you remember to use the same branch name).
-
-> Instead, with push.default=current "git  
-> push" would just tell me "new branch created" and then I can do "git  
-> push branch-name:" to delete the newly created branch.
-
-Well, you need to add the name of the remote. And while not exactly
-impossible to find, for the target audience it may be a bit more
-cumbersome than it should be:
-
-branch: git symbolic-ref HEAD | sed -e s=refs/heads/==
-remote: git config branch.<branch>.remote
-
-And if you want to figure out what the branch you pulled from is
-named, you have to do something like
-
-git config branch.<branch>.merge | sed -e s=refs/heads/==
-
-> I don't remember who it was, but when I tried changing the behavior for  
-> "git push" someone screamed loudly that fetching and pushing are two  
-> different things, and making things work uniformly across the two is not  
-> necessarily correct.  The details probably were different, but I think  
-> that I am saying the same now.
-
-Different use cases want different things from push. If you are the top
-level integrator of a project and are trying to keep 3 remotes in sync
-with your master repository, "matching" seems to be what you want.
-
-If you are a leaf-node worker pushing to a public repository, it
-isn't. But --tracking may be a valid choice sometimes (and is, in some
-sense, very close to SCMs people may be used to).
-
-- Finn Arne
+Larry D'Anna wrote:
+> If --porcelain is used git-push will produce machine-readable output.  The
+> output status line for each ref will be tab-separated and sent to stdout instead
+> of stderr.  The full symbolic names of the refs will be given.  For example
+> 
+> $ git push --dry-run --porcelain master :foobar 2>/dev/null \
+>   | perl -pe 's/\t/ TAB /g'
+> 
+> = TAB refs/heads/master:refs/heads/master TAB [up to date]
+> - TAB :refs/heads/foobar TAB [deleted]
+> ---
+>  Documentation/git-push.txt |   11 ++++++
+>  builtin-push.c             |    3 +-
+>  transport.c                |   75 +++++++++++++++++++++++++------------------
+>  transport.h                |    1 +
+>  4 files changed, 58 insertions(+), 32 deletions(-)
+> 
+> diff --git a/Documentation/git-push.txt b/Documentation/git-push.txt
+> index fd53c49..2653388 100644
+> --- a/Documentation/git-push.txt
+> +++ b/Documentation/git-push.txt
+> @@ -85,6 +85,11 @@ nor in any Push line of the corresponding remotes file---see below).
+>  --dry-run::
+>  	Do everything except actually send the updates.
+>  
+> +--porcelain::
+> +	Produce machine-readable output.  The output status line for each ref
+> +	will be tab-separated and sent to stdout instead of stderr.  The full
+> +	symbolic names of the refs will be given.
+> +
+>  --tags::
+>  	All refs under `$GIT_DIR/refs/tags` are pushed, in
+>  	addition to refspecs explicitly listed on the command
+> @@ -148,6 +153,12 @@ representing the status of a single ref. Each line is of the form:
+>   <flag> <summary> <from> -> <to> (<reason>)
+>  -------------------------------
+>  
+> +If --porcelain is used, then each line of the output is of the form:
+> +
+> +-------------------------------
+> + <flag> \t <from>:<to> \t <summary> (<reason>)
+> +-------------------------------
+> +
+>  flag::
+>  	A single character indicating the status of the ref. This is
+>  	blank for a successfully pushed ref, `!` for a ref that was
+> diff --git a/builtin-push.c b/builtin-push.c
+> index 7be1239..0a0297f 100644
+> --- a/builtin-push.c
+> +++ b/builtin-push.c
+> @@ -10,7 +10,7 @@
+>  #include "parse-options.h"
+>  
+>  static const char * const push_usage[] = {
+> -	"git push [--all | --mirror] [--dry-run] [--tags] [--receive-pack=<git-receive-pack>] [--repo=<repository>] [-f | --force] [-v] [<repository> <refspec>...]",
+> +	"git push [--all | --mirror] [--dry-run] [--porcelain] [--tags] [--receive-pack=<git-receive-pack>] [--repo=<repository>] [-f | --force] [-v] [<repository> <refspec>...]",
+>  	NULL,
+>  };
+>  
+> @@ -200,6 +200,7 @@ int cmd_push(int argc, const char **argv, const char *prefix)
+>  			    (TRANSPORT_PUSH_MIRROR|TRANSPORT_PUSH_FORCE)),
+>  		OPT_BOOLEAN( 0 , "tags", &tags, "push tags"),
+>  		OPT_BIT( 0 , "dry-run", &flags, "dry run", TRANSPORT_PUSH_DRY_RUN),
+> +		OPT_BIT( 0,  "porcelain", &flags, "machine-readable output", TRANSPORT_PUSH_PORCELAIN),
+>  		OPT_BIT('f', "force", &flags, "force updates", TRANSPORT_PUSH_FORCE),
+>  		OPT_BOOLEAN( 0 , "thin", &thin, "use thin pack"),
+>  		OPT_STRING( 0 , "receive-pack", &receivepack, "receive-pack", "receive pack program"),
+> diff --git a/transport.c b/transport.c
+> index 501a77b..b074067 100644
+> --- a/transport.c
+> +++ b/transport.c
+> @@ -719,19 +719,30 @@ static void update_tracking_ref(struct remote *remote, struct ref *ref, int verb
+>  
+>  #define SUMMARY_WIDTH (2 * DEFAULT_ABBREV + 3)
+>  
+> -static void print_ref_status(char flag, const char *summary, struct ref *to, struct ref *from, const char *msg)
+> +static void print_ref_status(char flag, const char *summary, struct ref *to, struct ref *from, const char *msg, int porcelain)
+>  {
+> -	fprintf(stderr, " %c %-*s ", flag, SUMMARY_WIDTH, summary);
+> -	if (from)
+> -		fprintf(stderr, "%s -> %s", prettify_refname(from->name), prettify_refname(to->name));
+> -	else
+> -		fputs(prettify_refname(to->name), stderr);
+> -	if (msg) {
+> -		fputs(" (", stderr);
+> -		fputs(msg, stderr);
+> -		fputc(')', stderr);
+> +	if (porcelain) {
+> +		if (from)
+> +			fprintf(stdout, "%c\t%s:%s\t", flag, from->name, to->name);
+> +		else
+> +			fprintf(stdout, "%c\t:%s\t", flag, to->name);
+> +		if (msg)
+> +			fprintf(stdout, "%s (%s)\n", summary, msg);
+> +		else
+> +			fprintf(stdout, "%s\n", summary);
+> +	} else {
+> +		fprintf(stderr, " %c %-*s ", flag, SUMMARY_WIDTH, summary);
+> +		if (from)
+> +			fprintf(stderr, "%s -> %s", prettify_refname(from->name), prettify_refname(to->name));
+> +		else
+> +			fputs(prettify_refname(to->name), stderr);
+> +		if (msg) {
+> +			fputs(" (", stderr);
+> +			fputs(msg, stderr);
+> +			fputc(')', stderr);
+> +		}
+> +		fputc('\n', stderr);
+>  	}
+> -	fputc('\n', stderr);
+>  }
+>  
+>  static const char *status_abbrev(unsigned char sha1[20])
+> @@ -739,15 +750,15 @@ static const char *status_abbrev(unsigned char sha1[20])
+>  	return find_unique_abbrev(sha1, DEFAULT_ABBREV);
+>  }
+>  
+> -static void print_ok_ref_status(struct ref *ref)
+> +static void print_ok_ref_status(struct ref *ref, int porcelain)
+>  {
+>  	if (ref->deletion)
+> -		print_ref_status('-', "[deleted]", ref, NULL, NULL);
+> +		print_ref_status('-', "[deleted]", ref, NULL, NULL, porcelain);
+>  	else if (is_null_sha1(ref->old_sha1))
+>  		print_ref_status('*',
+>  			(!prefixcmp(ref->name, "refs/tags/") ? "[new tag]" :
+> -			  "[new branch]"),
+> -			ref, ref->peer_ref, NULL);
+> +			"[new branch]"),
+> +			ref, ref->peer_ref, NULL, porcelain);
+>  	else {
+>  		char quickref[84];
+>  		char type;
+> @@ -765,50 +776,51 @@ static void print_ok_ref_status(struct ref *ref)
+>  		}
+>  		strcat(quickref, status_abbrev(ref->new_sha1));
+>  
+> -		print_ref_status(type, quickref, ref, ref->peer_ref, msg);
+> +		print_ref_status(type, quickref, ref, ref->peer_ref, msg, porcelain);
+>  	}
+>  }
+>  
+> -static int print_one_push_status(struct ref *ref, const char *dest, int count)
+> +static int print_one_push_status(struct ref *ref, const char *dest, int count, int porcelain)
+>  {
+>  	if (!count)
+>  		fprintf(stderr, "To %s\n", dest);
+>  
+>  	switch(ref->status) {
+>  	case REF_STATUS_NONE:
+> -		print_ref_status('X', "[no match]", ref, NULL, NULL);
+> +		print_ref_status('X', "[no match]", ref, NULL, NULL, porcelain);
+>  		break;
+>  	case REF_STATUS_REJECT_NODELETE:
+>  		print_ref_status('!', "[rejected]", ref, NULL,
+> -				"remote does not support deleting refs");
+> +						 "remote does not support deleting refs", porcelain);
+>  		break;
+>  	case REF_STATUS_UPTODATE:
+>  		print_ref_status('=', "[up to date]", ref,
+> -				ref->peer_ref, NULL);
+> +						 ref->peer_ref, NULL, porcelain);
+>  		break;
+>  	case REF_STATUS_REJECT_NONFASTFORWARD:
+>  		print_ref_status('!', "[rejected]", ref, ref->peer_ref,
+> -				"non-fast forward");
+> +						 "non-fast forward", porcelain);
+>  		break;
+>  	case REF_STATUS_REMOTE_REJECT:
+>  		print_ref_status('!', "[remote rejected]", ref,
+> -				ref->deletion ? NULL : ref->peer_ref,
+> -				ref->remote_status);
+> +						 ref->deletion ? NULL : ref->peer_ref,
+> +						 ref->remote_status, porcelain);
+>  		break;
+>  	case REF_STATUS_EXPECTING_REPORT:
+>  		print_ref_status('!', "[remote failure]", ref,
+> -				ref->deletion ? NULL : ref->peer_ref,
+> -				"remote failed to report status");
+> +						 ref->deletion ? NULL : ref->peer_ref,
+> +						 "remote failed to report status", porcelain);
+>  		break;
+>  	case REF_STATUS_OK:
+> -		print_ok_ref_status(ref);
+> +		print_ok_ref_status(ref, porcelain);
+>  		break;
+>  	}
+>  
+>  	return 1;
+>  }
+>  
+> -static void print_push_status(const char *dest, struct ref *refs, int verbose)
+> +static void print_push_status(const char *dest, struct ref *refs,
+> +							  int verbose, int porcelain)
+>  {
+>  	struct ref *ref;
+>  	int n = 0;
+> @@ -816,18 +828,18 @@ static void print_push_status(const char *dest, struct ref *refs, int verbose)
+>  	if (verbose) {
+>  		for (ref = refs; ref; ref = ref->next)
+>  			if (ref->status == REF_STATUS_UPTODATE)
+> -				n += print_one_push_status(ref, dest, n);
+> +				n += print_one_push_status(ref, dest, n, porcelain);
+>  	}
+>  
+>  	for (ref = refs; ref; ref = ref->next)
+>  		if (ref->status == REF_STATUS_OK)
+> -			n += print_one_push_status(ref, dest, n);
+> +			n += print_one_push_status(ref, dest, n, porcelain);
+>  
+>  	for (ref = refs; ref; ref = ref->next) {
+>  		if (ref->status != REF_STATUS_NONE &&
+>  		    ref->status != REF_STATUS_UPTODATE &&
+>  		    ref->status != REF_STATUS_OK)
+> -			n += print_one_push_status(ref, dest, n);
+> +			n += print_one_push_status(ref, dest, n, porcelain);
+>  	}
+>  }
+>  
+> @@ -997,6 +1009,7 @@ int transport_push(struct transport *transport,
+>  		struct ref *local_refs = get_local_heads();
+>  		int match_flags = MATCH_REFS_NONE;
+>  		int verbose = flags & TRANSPORT_PUSH_VERBOSE;
+> +		int porcelain = flags & TRANSPORT_PUSH_PORCELAIN;
+>  		int ret;
+>  
+>  		if (flags & TRANSPORT_PUSH_ALL)
+> @@ -1011,7 +1024,7 @@ int transport_push(struct transport *transport,
+>  
+>  		ret = transport->push_refs(transport, remote_refs, flags);
+>  
+> -		print_push_status(transport->url, remote_refs, verbose);
+> +		print_push_status(transport->url, remote_refs, verbose | porcelain, porcelain);
+>  
+>  		if (!(flags & TRANSPORT_PUSH_DRY_RUN)) {
+>  			struct ref *ref;
+> diff --git a/transport.h b/transport.h
+> index 27bfc52..51b5397 100644
+> --- a/transport.h
+> +++ b/transport.h
+> @@ -35,6 +35,7 @@ struct transport {
+>  #define TRANSPORT_PUSH_DRY_RUN 4
+>  #define TRANSPORT_PUSH_MIRROR 8
+>  #define TRANSPORT_PUSH_VERBOSE 16
+> +#define TRANSPORT_PUSH_PORCELAIN 32
+>  
+>  /* Returns a transport suitable for the url */
+>  struct transport *transport_get(struct remote *, const char *);
