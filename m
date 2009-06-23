@@ -1,83 +1,75 @@
-From: Finn Arne Gangstad <finnag@pvv.org>
-Subject: Re: push.default???
-Date: Tue, 23 Jun 2009 12:34:28 +0200
-Message-ID: <20090623103428.GA4214@pvv.org>
-References: <h1nks1$vdl$1@ger.gmane.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Paolo Bonzini <bonzini@gnu.org>
-X-From: git-owner@vger.kernel.org Tue Jun 23 12:57:04 2009
+From: Constantine Plotnikov <constantine.plotnikov@gmail.com>
+Subject: [JGIT PATCH] Fixed the test testUpdateRefLockFailureLocked broken on the Windows platform
+Date: Tue, 23 Jun 2009 16:01:35 +0400
+Message-ID: <1245758495-2212-1-git-send-email-constantine.plotnikov@gmail.com>
+Cc: Constantine Plotnikov <constantine.plotnikov@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jun 23 14:08:33 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MJ3gQ-0007FX-TG
-	for gcvg-git-2@gmane.org; Tue, 23 Jun 2009 12:56:59 +0200
+	id 1MJ4ng-00071u-9t
+	for gcvg-git-2@gmane.org; Tue, 23 Jun 2009 14:08:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756492AbZFWK4r (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 23 Jun 2009 06:56:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754605AbZFWK4r
-	(ORCPT <rfc822;git-outgoing>); Tue, 23 Jun 2009 06:56:47 -0400
-Received: from decibel.pvv.ntnu.no ([129.241.210.179]:53292 "EHLO
-	decibel.pvv.ntnu.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756036AbZFWK4p (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 23 Jun 2009 06:56:45 -0400
-X-Greylist: delayed 1340 seconds by postgrey-1.27 at vger.kernel.org; Tue, 23 Jun 2009 06:56:45 EDT
-Received: from finnag by decibel.pvv.ntnu.no with local (Exim 4.69)
-	(envelope-from <finnag@pvv.ntnu.no>)
-	id 1MJ3Ke-0005DF-FU; Tue, 23 Jun 2009 12:34:28 +0200
-Content-Disposition: inline
-In-Reply-To: <h1nks1$vdl$1@ger.gmane.org>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1752242AbZFWMIW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 23 Jun 2009 08:08:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752132AbZFWMIV
+	(ORCPT <rfc822;git-outgoing>); Tue, 23 Jun 2009 08:08:21 -0400
+Received: from mail.intellij.net ([213.182.181.98]:58347 "EHLO
+	mail.intellij.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751043AbZFWMIU (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 23 Jun 2009 08:08:20 -0400
+X-Greylist: delayed 400 seconds by postgrey-1.27 at vger.kernel.org; Tue, 23 Jun 2009 08:08:19 EDT
+Received: (qmail 17503 invoked by uid 89); 23 Jun 2009 12:01:36 -0000
+Received: by simscan 1.1.0 ppid: 17449, pid: 17495, t: 0.0039s
+         scanners: regex: 1.1.0
+Received: from unknown (HELO localhost.localdomain) (Constantine.Plotnikov@jetbrains.com@172.26.240.76)
+  by mail.intellij.net with ESMTPA; 23 Jun 2009 12:01:36 -0000
+X-Mailer: git-send-email 1.6.1.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122083>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122084>
 
-On Mon, Jun 22, 2009 at 12:02:33PM +0200, Paolo Bonzini wrote:
-> Hi all, I just upgraded to git 1.6.3 and found this new little gem  
-> called push.default...
-> [...]
+On Windows the lock is aquired in the test testUpdateRefLockFailureLocked
+(RefUpdateTest) for the file but it never released. This causes test
+failure during resource cleanup, since locked file could not be deleted
+on Windows. This commits adds unlock operation in the finally block,
+so there is no more cleanup problem.
 
-You should have been here when we discussed this! :)
+Signed-off-by: Constantine Plotnikov <constantine.plotnikov@gmail.com>
+---
+ .../tst/org/spearce/jgit/lib/RefUpdateTest.java    |   16 ++++++++++------
+ 1 files changed, 10 insertions(+), 6 deletions(-)
 
-> 1) Also in 1.6.3, invent a special refspec for "tracking", something  
-> like "HEAD>" (of course this is not a special case; "refs/heads/*>"  
-> would also work, yadda yadda)
-
-Yes, this is a weakness righ now - the only way to get tracking
-semantics is to set push.default. I could not find a very good way of
-specifying this. We currently have the magic refspecs : and
-HEAD. Adding a ">" to "HEAD>" would be annoying I think, since it has
-to be quoted in the shell.
-
-Maybe we can use ":" as an escape, it is not allowed in refspecs.
-Something like "::tracking" (and we cold also have "::matching",
-"::current" and so on for completeness)
-
-> 2) Also in 1.6.3, add a "--push={current,tracking,matching,mirror}"  
-> option to "git remote add" that would set up a push refspec without the  
-> need to actually know refspec syntax. (--mirror would become just a  
-> synonym for --push=mirror).
-
-Sounds like a good idea, the options would also make sense to push I think,
-so you can "git push [--current|tracking|...] ".
-
-> 3) Possibly, in 1.6.3 make "git clone" add a "push = :" line for the  
-> origin branch.  This was actually suggested in a patch by myself.
-
-This would destroy the intention of my patch, it would render the
-configuration variable pointless I think (and would also silently push
-matching).
-
-> 4) in 1.6.4 or 1.7.0, make "git push" fail outright if there is no push  
-> line, with text suggesting [...]
-
-Hopefully we can get to this stage, that a unconfigured "git push"
-gives a small message, indicating how to configure it, and not push
-anything. Most "oldtimers" should have configured this already, so it
-should not break many setups.
-
-- Finn Arne
+diff --git a/org.spearce.jgit.test/tst/org/spearce/jgit/lib/RefUpdateTest.java b/org.spearce.jgit.test/tst/org/spearce/jgit/lib/RefUpdateTest.java
+index 6b1975a..b14f19a 100644
+--- a/org.spearce.jgit.test/tst/org/spearce/jgit/lib/RefUpdateTest.java
++++ b/org.spearce.jgit.test/tst/org/spearce/jgit/lib/RefUpdateTest.java
+@@ -255,12 +255,16 @@ public void testUpdateRefLockFailureLocked() throws IOException {
+ 		RefUpdate updateRef = db.updateRef("refs/heads/master");
+ 		updateRef.setNewObjectId(pid);
+ 		LockFile lockFile1 = new LockFile(new File(db.getDirectory(),"refs/heads/master"));
+-		assertTrue(lockFile1.lock()); // precondition to test
+-		Result update = updateRef.update();
+-		assertEquals(Result.LOCK_FAILURE, update);
+-		assertEquals(opid, db.resolve("refs/heads/master"));
+-		LockFile lockFile2 = new LockFile(new File(db.getDirectory(),"refs/heads/master"));
+-		assertFalse(lockFile2.lock()); // was locked, still is
++		try {
++			assertTrue(lockFile1.lock()); // precondition to test
++			Result update = updateRef.update();
++			assertEquals(Result.LOCK_FAILURE, update);
++			assertEquals(opid, db.resolve("refs/heads/master"));
++			LockFile lockFile2 = new LockFile(new File(db.getDirectory(),"refs/heads/master"));
++			assertFalse(lockFile2.lock()); // was locked, still is
++		} finally {
++			lockFile1.unlock();
++		}
+ 	}
+ 
+ 	/**
+-- 
+1.6.1.2
