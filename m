@@ -1,78 +1,66 @@
-From: Marc Branchaud <marcnarc@xiplink.com>
-Subject: Re: [PATCH] add --porcelain option to git-push
-Date: Tue, 23 Jun 2009 13:09:56 -0400
-Message-ID: <4A410C64.9030903@xiplink.com>
-References: <20090622214032.GC19364@coredump.intra.peff.net>	<20090623011001.GA15352@cthulhu> <4A40EF9C.7000706@xiplink.com> <7v4ou79cga.fsf@alter.siamese.dyndns.org>
+From: kodenix <albertom@uci.cu>
+Subject: work git behind a proxy
+Date: Tue, 23 Jun 2009 13:15:32 -0400
+Organization: UCI
+Message-ID: <200906231315.33072.albertom@uci.cu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Larry D'Anna <larry@elder-gods.org>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jun 23 19:10:31 2009
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jun 23 19:23:31 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MJ9Vs-0003GD-KU
-	for gcvg-git-2@gmane.org; Tue, 23 Jun 2009 19:10:29 +0200
+	id 1MJ9iU-0008W4-3c
+	for gcvg-git-2@gmane.org; Tue, 23 Jun 2009 19:23:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752101AbZFWRKT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 23 Jun 2009 13:10:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752099AbZFWRKT
-	(ORCPT <rfc822;git-outgoing>); Tue, 23 Jun 2009 13:10:19 -0400
-Received: from smtp162.dfw.emailsrvr.com ([67.192.241.162]:39620 "EHLO
-	smtp162.dfw.emailsrvr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751643AbZFWRKR (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 23 Jun 2009 13:10:17 -0400
-Received: from relay6.relay.dfw.mlsrvr.com (localhost [127.0.0.1])
-	by relay6.relay.dfw.mlsrvr.com (SMTP Server) with ESMTP id BD7F9302BE
-	for <git@vger.kernel.org>; Tue, 23 Jun 2009 13:10:20 -0400 (EDT)
-Received: by relay6.relay.dfw.mlsrvr.com (Authenticated sender: mbranchaud-AT-xiplink.com) with ESMTPSA id 5014430165;
-	Tue, 23 Jun 2009 13:10:15 -0400 (EDT)
-User-Agent: Thunderbird 2.0.0.21 (X11/20090409)
-In-Reply-To: <7v4ou79cga.fsf@alter.siamese.dyndns.org>
+	id S1753691AbZFWRW7 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 23 Jun 2009 13:22:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752876AbZFWRW6
+	(ORCPT <rfc822;git-outgoing>); Tue, 23 Jun 2009 13:22:58 -0400
+Received: from ns3.uci.cu ([200.55.140.180]:60094 "HELO mx3.uci.cu"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with SMTP
+	id S1750818AbZFWRW5 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 23 Jun 2009 13:22:57 -0400
+X-Greylist: delayed 396 seconds by postgrey-1.27 at vger.kernel.org; Tue, 23 Jun 2009 13:22:54 EDT
+Received: (qmail 704 invoked by uid 507); 23 Jun 2009 17:16:12 -0000
+Received: from 10.0.0.182 by ns3.uci.cu (envelope-from <albertom@uci.cu>, uid 501) with qmail-scanner-2.01st 
+ (avp: 5.0.2.0. spamassassin: 3.0.6. perlscan: 2.01st.  
+ Clear:RC:1(10.0.0.182):. 
+ Processed in 0.61871 secs); 23 Jun 2009 17:16:12 -0000
+Received: from unknown (HELO ucimail1.uci.cu) (10.0.0.182)
+  by 0 with SMTP; 23 Jun 2009 17:16:11 -0000
+Received: from localhost (localhost [127.0.0.1])
+	by ucimail1.uci.cu (Postfix) with ESMTP id AB845175006D
+	for <git@vger.kernel.org>; Tue, 23 Jun 2009 13:16:11 -0400 (CDT)
+X-Virus-Scanned: amavisd-new at uci.cu
+Received: from ucimail1.uci.cu ([127.0.0.1])
+	by localhost (ucimail1.uci.cu [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id Hr8oAtCsSM6R for <git@vger.kernel.org>;
+	Tue, 23 Jun 2009 13:16:10 -0400 (CDT)
+Received: from netcat.local (unknown [10.31.60.116])
+	by ucimail1.uci.cu (Postfix) with ESMTP id 8E20F19240A1
+	for <git@vger.kernel.org>; Tue, 23 Jun 2009 13:16:10 -0400 (CDT)
+User-Agent: KMail/1.9.9
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122103>
-
-Both good points.  --porcelain is fine by me.
-
-		M.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122104>
 
 
-Junio C Hamano wrote:
-> Marc Branchaud <marcnarc@xiplink.com> writes:
-> 
->> Shouldn't this option be named "--plumbing" since it's making 'git push'
->> act like plumbing?  Actually, neither name seems intuitively descriptive
->> to me...
-> 
-> Perhaps.  But asking for output format designed for Porcelain
-> implementions to read with --porcelain option has precedence.
-> 
->> Why not teach 'git push' to change its output format if it's writing to a pipe?
-> 
-> That is ugly.  Besides, "writing to a pipe" would not be a right criteria,
-> if you want to do
-> 
->           git push >log
->           if grep blah log
->           then
->                 do blah thing
->           fi
->           if grep baa log
->           then
->                 do baa thing, too
->           fi
-> 
-> When you make a program behave differently depending on where your stdout
-> goes, typically you see if it is going to the terminal (e.g. isatty(3)),
-> but even then you would need an explicit override from the command line
-> when stdout is a tty and you do not want "for humans" frills (e.g. color),
-> and when stdout is not a tty and you do want such frills.
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+Hello friends!!!
+
+I,m new Git user , I need someone explain me how can I configure git to=
+ work=20
+behind a proxy =20
+
+--=20
+Saludos
+
+Alberto Morales Fernandez
+
+Grupo de Usuarios de Tecnolog=C3=ADas Libres
+http://aslcuba.wordpress.com
