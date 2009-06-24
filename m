@@ -1,94 +1,111 @@
 From: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-Subject: Re: [PATCHv5 3/3] gitweb: gravatar url cache
-Date: Thu, 25 Jun 2009 01:31:44 +0200
-Message-ID: <cb7bb73a0906241631h6ad03867i796b658abc425896@mail.gmail.com>
-References: <1245878183-2967-1-git-send-email-giuseppe.bilotta@gmail.com>
-	 <1245878183-2967-2-git-send-email-giuseppe.bilotta@gmail.com>
-	 <1245878183-2967-3-git-send-email-giuseppe.bilotta@gmail.com>
-	 <1245878183-2967-4-git-send-email-giuseppe.bilotta@gmail.com>
-	 <7v63elqoig.fsf@alter.siamese.dyndns.org>
-	 <cb7bb73a0906241546x6b6164e7w4e6c6601d1119032@mail.gmail.com>
-	 <8c9a060906241606x281f4d33ne5e4999a50ee8128@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Jakub Narebski <jnareb@gmail.com>,
+Subject: [PATCHv5bis 3/3] gitweb: gravatar url cache
+Date: Thu, 25 Jun 2009 01:41:24 +0200
+Message-ID: <1245886884-5730-1-git-send-email-giuseppe.bilotta@gmail.com>
+References: <cb7bb73a0906241631h6ad03867i796b658abc425896@mail.gmail.com>
+Cc: Jakub Narebski <jnareb@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
 	Aaron Crane <git@aaroncrane.co.uk>,
-	Nanako Shiraishi <nanako3@lavabit.com>
-To: Jacob Helwig <jacob.helwig@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jun 25 01:31:53 2009
+	Nanako Shiraishi <nanako3@lavabit.com>,
+	Jacob Helwig <jacob.helwig@gmail.com>,
+	Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jun 25 01:41:40 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MJbwX-0004Da-AX
-	for gcvg-git-2@gmane.org; Thu, 25 Jun 2009 01:31:53 +0200
+	id 1MJc5x-0006qZ-8b
+	for gcvg-git-2@gmane.org; Thu, 25 Jun 2009 01:41:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752495AbZFXXbm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 24 Jun 2009 19:31:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752308AbZFXXbm
-	(ORCPT <rfc822;git-outgoing>); Wed, 24 Jun 2009 19:31:42 -0400
-Received: from mail-bw0-f213.google.com ([209.85.218.213]:44041 "EHLO
-	mail-bw0-f213.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751898AbZFXXbm (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 24 Jun 2009 19:31:42 -0400
-Received: by bwz9 with SMTP id 9so1077495bwz.37
-        for <git@vger.kernel.org>; Wed, 24 Jun 2009 16:31:44 -0700 (PDT)
+	id S1752747AbZFXXl1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 24 Jun 2009 19:41:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752457AbZFXXl0
+	(ORCPT <rfc822;git-outgoing>); Wed, 24 Jun 2009 19:41:26 -0400
+Received: from fg-out-1718.google.com ([72.14.220.156]:16709 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752095AbZFXXl0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 24 Jun 2009 19:41:26 -0400
+Received: by fg-out-1718.google.com with SMTP id e21so166391fga.17
+        for <git@vger.kernel.org>; Wed, 24 Jun 2009 16:41:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=E0VUNS2ghhtIm73s0b2KTI+QsWeBkXpl7+Rf7XYU9lI=;
-        b=f+qRz49UMszFLcdS+U3zj973S+3xXqIZpKlHY4uOCnxQyhNFk1AdpY56Xt4qm+yD11
-         tqiXlospfvmJgVG1nCEBItY2TwyiOsTkJN0vt8WqQW1JCwP5Cd9E0iAthmG9SLsAPlHO
-         pAlnx8EWgjZbZCQT01RcUOZ6vLE8uWr4UGQKQ=
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer:in-reply-to:references;
+        bh=poyXIvB835xgzLigeYQJpasBLlxpY1qWq8vPP8mkm9o=;
+        b=pih6Tv9grfYqHE1rKqWWPQcUhFg4sLETVte0fZpvdYdWLRVXWmMaZE5t34aI2uP35k
+         KYrUI6fOHDedf39wL9bsuAIrETKpiIS8A35+GLYOMoJN4PQZKPyeTh8xTtSkFb/QKdFB
+         TRzPJg7DHKGKOZ7bVqcoCn8DTjZoxiSHcGjlk=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=Hx2hvmveQ6osAjg8sAH1oUvJuRgqxdkxjfbdNxzhY0/V2VtVfgKAFPVrsiQTlPDyNT
-         OGVR+FJp42C+OOglnbshqyOCKdQu++PXseyN17asTKvmz34G9gqexwoP/uuD6AgAKiU9
-         BUBRVDbcfbQvfGgS5MzfFdtI6PPEN8QYPWtPc=
-Received: by 10.204.59.14 with SMTP id j14mr1844814bkh.39.1245886304062; Wed, 
-	24 Jun 2009 16:31:44 -0700 (PDT)
-In-Reply-To: <8c9a060906241606x281f4d33ne5e4999a50ee8128@mail.gmail.com>
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        b=kfHZhlaWz1m3VyHvFsfM+QkPI3XlnR39qidWRcCypkbHvGvDuVnXrcA/Us0zlzWOVD
+         G6K7QXwHYIl1s02PT/QWvaYttSIqsFGhi7Y3FFzSlg3DOShueweoom5sdzeDVZe6i79X
+         LBPZZ1vDMxyazqE5FTnaX6nh8MNtJhXYDLJhs=
+Received: by 10.86.49.13 with SMTP id w13mr1942957fgw.31.1245886888132;
+        Wed, 24 Jun 2009 16:41:28 -0700 (PDT)
+Received: from localhost (dynamic-adsl-94-37-13-28.clienti.tiscali.it [94.37.13.28])
+        by mx.google.com with ESMTPS id l12sm1296037fgb.14.2009.06.24.16.41.26
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 24 Jun 2009 16:41:27 -0700 (PDT)
+X-Mailer: git-send-email 1.6.3.rc1.192.gdbfcb
+In-Reply-To: <cb7bb73a0906241631h6ad03867i796b658abc425896@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122168>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122169>
 
-On Thu, Jun 25, 2009 at 1:06 AM, Jacob Helwig<jacob.helwig@gmail.com> wrote:
-> On Wed, Jun 24, 2009 at 15:46, Giuseppe
-> Bilotta<giuseppe.bilotta@gmail.com> wrote:
->> On Thu, Jun 25, 2009 at 12:02 AM, Junio C Hamano<gitster@pobox.com> wrote:
->>
->>> I think the cache is placed at the wrong level (it doesn't have to be a
->>> GRavatar_url_cache, but can be a general avatar_url_cache).
->>
->> I'm not sure about it. The URL depends on email and size (can you use
->> arrays as hash keys in Perl?) , and the email part might be the same
->> but the size part might differ across separate calls (in theory; in
->> practice avatars in a view are presently all the same size; but for
->> example if we were to autodetect email addresses in commit messages,
->> we might have both single- and double- sided avatars in the same
->> page). By hashing on email+size only we would lose the benefit of
->> cache when using the same avatar at separate sizes.
->
-> You could have a hash key of "$email_$size", or something similar to
-> fake an array hash key.
+Views which contain many occurrences of the same email address (e.g.
+shortlog view) benefit from not having to recalculate the MD5 of the
+email address every time.
 
-The point is not so much the form to give to the key but rather the
-fact that hashing on both means the URL has to be recomputed when the
-same email appears with both sizes. Considering that (at least for
-gravatars) the computational intensive part comes from the MD5 of the
-email, this means a waste of cycles.
+Signed-off-by: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+---
+ gitweb/gitweb.perl |   24 ++++++++++++++++++++++--
+ 1 files changed, 22 insertions(+), 2 deletions(-)
 
-By letting the cache be per-avatar, each avatar kind can choose to
-hash on whatever it needs to. But I got an idea on how to improve on
-this.
-
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index 6e807fe..6771a9d 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -3249,6 +3249,27 @@ sub git_print_header_div {
+ 	      "\n</div>\n";
+ }
+ 
++# Rather than recomputing the url for an email multiple times, we cache it
++# after the first hit. This gives a visible benefit in views where the avatar
++# for the same email is used repeatedly (e.g. shortlog).
++# The cache is shared by all avatar engines (currently gravatar only), which
++# are free to use it as preferred. Since only one avatar engine is used for any
++# given page, there's no risk for cache conflicts.
++our %avatar_cache = ();
++
++# Compute the gravatar url for a given email, if it's not in the cache already.
++# Gravatar stores only the part of the URL before the size, since that's the
++# one computationally more expensive. This also allows reuse of the cache for
++# different sizes (for this particular engine).
++sub gravatar_url {
++	my $email = lc shift;
++	my $size = shift;
++	$avatar_cache{$email} ||=
++		"http://www.gravatar.com/avatar.php?gravatar_id=" .
++			Digest::MD5::md5_hex($email) . "&amp;size=";
++	return $avatar_cache{$email} . $size;
++}
++
+ # Insert an avatar for the given $email at the given $size if the feature
+ # is enabled.
+ sub git_get_avatar {
+@@ -3258,8 +3279,7 @@ sub git_get_avatar {
+ 	my $size = $avatar_size{$params{'size'}} || $avatar_size{'default'};
+ 	my $url = "";
+ 	if ($git_gravatar_enabled) {
+-		$url = "http://www.gravatar.com/avatar.php?gravatar_id=" .
+-			Digest::MD5::md5_hex(lc $email) . "&amp;size=$size";
++		$url = gravatar_url($email, $size);
+ 	}
+ 	# Currently only gravatars are supported, but other forms such as
+ 	# picons can be added by putting an else up here and defining $url
 -- 
-Giuseppe "Oblomov" Bilotta
+1.6.3.rc1.192.gdbfcb
