@@ -1,59 +1,68 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/2] read-tree: migrate to parse-options
-Date: Tue, 23 Jun 2009 22:08:06 -0700
-Message-ID: <7vws721ao9.fsf@alter.siamese.dyndns.org>
-References: <1245817672-25483-1-git-send-email-bebarino@gmail.com>
-	<1245817672-25483-2-git-send-email-bebarino@gmail.com>
+From: Miles Bader <miles@gnu.org>
+Subject: Re: push.default???
+Date: Wed, 24 Jun 2009 14:50:50 +0900
+Message-ID: <buoljniyybp.fsf@dhlpc061.dev.necel.com>
+References: <h1nks1$vdl$1@ger.gmane.org> <20090623103428.GA4214@pvv.org>
+	<4A40D19E.60606@gmail.com> <20090623131131.GA7011@pvv.org>
+	<4A40D864.8040208@gmail.com> <20090623144805.GB24974@pvv.org>
+	<f865508f0906230932n4a2f2b54s1e76ab1d70d95073@mail.gmail.com>
+	<7vprcu96td.fsf@alter.siamese.dyndns.org>
+Reply-To: Miles Bader <miles@gnu.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Stephen Boyd <bebarino@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jun 24 07:08:24 2009
+Cc: bonzini@gnu.org, Finn Arne Gangstad <finnag@pvv.org>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jun 24 07:57:48 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MJKib-0002Ly-It
-	for gcvg-git-2@gmane.org; Wed, 24 Jun 2009 07:08:22 +0200
+	id 1MJLUQ-0007GD-Vw
+	for gcvg-git-2@gmane.org; Wed, 24 Jun 2009 07:57:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751684AbZFXFIM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 24 Jun 2009 01:08:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751619AbZFXFIK
-	(ORCPT <rfc822;git-outgoing>); Wed, 24 Jun 2009 01:08:10 -0400
-Received: from fed1rmmtao105.cox.net ([68.230.241.41]:40323 "EHLO
-	fed1rmmtao105.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751424AbZFXFIJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 24 Jun 2009 01:08:09 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao105.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20090624050813.NRJR20430.fed1rmmtao105.cox.net@fed1rmimpo02.cox.net>;
-          Wed, 24 Jun 2009 01:08:13 -0400
-Received: from localhost ([68.225.240.211])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id 7h8C1c0034aMwMQ04h8C16; Wed, 24 Jun 2009 01:08:12 -0400
-X-VR-Score: 0.00
-X-Authority-Analysis: v=1.0 c=1 a=zKQtKpDWXuoA:10 a=pGLkceISAAAA:8
- a=Hs4Ol_0MEeltZlT5GioA:9 a=EG-VWBdHXNlAdlsf1obIlj0UKM8A:4 a=MSl-tDqOz04A:10
-X-CM-Score: 0.00
-In-Reply-To: <1245817672-25483-2-git-send-email-bebarino@gmail.com> (Stephen Boyd's message of "Tue\, 23 Jun 2009 21\:27\:52 -0700")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+	id S1751349AbZFXFxX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 24 Jun 2009 01:53:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751234AbZFXFxW
+	(ORCPT <rfc822;git-outgoing>); Wed, 24 Jun 2009 01:53:22 -0400
+Received: from TYO201.gate.nec.co.jp ([202.32.8.193]:48041 "EHLO
+	tyo201.gate.nec.co.jp" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751052AbZFXFxV (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 24 Jun 2009 01:53:21 -0400
+Received: from relay21.aps.necel.com ([10.29.19.50])
+	by tyo201.gate.nec.co.jp (8.13.8/8.13.4) with ESMTP id n5O5oesR015674;
+	Wed, 24 Jun 2009 14:50:51 +0900 (JST)
+Received: from relay21.aps.necel.com ([10.29.19.24] [10.29.19.24]) by relay21.aps.necel.com with ESMTP; Wed, 24 Jun 2009 14:50:51 +0900
+Received: from dhlpc061 ([10.114.112.173] [10.114.112.173]) by relay21.aps.necel.com with ESMTP; Wed, 24 Jun 2009 14:50:51 +0900
+Received: by dhlpc061 (Postfix, from userid 31295)
+	id 6406152E1E2; Wed, 24 Jun 2009 14:50:51 +0900 (JST)
+System-Type: x86_64-unknown-linux-gnu
+Blat: Foop
+In-Reply-To: <7vprcu96td.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+	message of "Tue, 23 Jun 2009 10:51:58 -0700")
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122124>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122125>
 
-Stephen Boyd <bebarino@gmail.com> writes:
+Junio C Hamano <gitster@pobox.com> writes:
+> However, when 'feature' is fully cooked, before pushing it back to be
+> shared with others in the group, don't you do any testing with the work
+> done by others while you were working on 'feature'?  That means you first
+> integrate your 'feature' locally into shared 'master' and make sure all
+> fits together well.
 
-> Cleanup the documentation to explicitly state that --exclude-directory
-> is only meaningful when used with -u. Also make the documentation more
-> consistent with the usage message printed with read-tree --help-all.
->
-> Signed-off-by: Stephen Boyd <bebarino@gmail.com>
-> ---
->  Documentation/git-read-tree.txt |    5 +-
->  builtin-read-tree.c             |  220 +++++++++++++++++++++-----------------
->  2 files changed, 126 insertions(+), 99 deletions(-)
+You seem to be making a lot of assumptions about workflows here.
 
-Sorry, but I have to ask: Why?
+It seems quite plausible to me that one might want to keep the remote
+branch separate, even after pushing.  It's very common to cooperatively
+develop feature branches for a very long time before merging to the
+"real" master, but it's still extremely useful to keep them as branches
+in the same local git directory.
+
+-Miles
+
+-- 
+Somebody has to do something, and it's just incredibly pathetic that it
+has to be us.  -- Jerry Garcia
