@@ -1,71 +1,106 @@
-From: =?ISO-8859-1?Q?Johan_S=F8rensen?= <johan@johansorensen.com>
-Subject: Re: Reason for objects still being written with a failing pre-receive 
-	hook?
-Date: Wed, 24 Jun 2009 16:36:38 +0200
-Message-ID: <9e0f31700906240736r50d2de51kc50822619ec619fa@mail.gmail.com>
-References: <9e0f31700906240621k314b4bbehc283c8a1c673a2f1@mail.gmail.com>
-	 <20090624135713.GE11191@spearce.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] fread does not return negative on error
+Date: Wed, 24 Jun 2009 09:15:20 -0700
+Message-ID: <7vws71wquf.fsf@alter.siamese.dyndns.org>
+References: <4A3FB09D.9050903@gmail.com> <20090622153431.GA18466@elte.hu>
+	<25e057c00906220847t15425f38maf486c291d1d2468@mail.gmail.com>
+	<4A3FB479.2090902@lsrfire.ath.cx>
+	<7vhby64i8f.fsf@alter.siamese.dyndns.org>
+	<20090624081819.GA10436@elte.hu>
+	<alpine.DEB.1.00.0906241201040.4773@pacific.mpi-cbg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Wed Jun 24 16:36:50 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Ingo Molnar <mingo@elte.hu>,
+	=?utf-8?Q?Ren=C3=A9?= Scharfe <rene.scharfe@lsrfire.ath.cx>,
+	roel kluin <roel.kluin@gmail.com>, git@vger.kernel.org,
+	LKML <linux-kernel@vger.kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Jun 24 18:15:34 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MJTai-0000Gq-Js
-	for gcvg-git-2@gmane.org; Wed, 24 Jun 2009 16:36:49 +0200
+	id 1MJV8F-0001bC-4N
+	for gcvg-git-2@gmane.org; Wed, 24 Jun 2009 18:15:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751555AbZFXOgj convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 24 Jun 2009 10:36:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751409AbZFXOgi
-	(ORCPT <rfc822;git-outgoing>); Wed, 24 Jun 2009 10:36:38 -0400
-Received: from mail-ew0-f210.google.com ([209.85.219.210]:40983 "EHLO
-	mail-ew0-f210.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751240AbZFXOgh convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 24 Jun 2009 10:36:37 -0400
-Received: by ewy6 with SMTP id 6so1240234ewy.37
-        for <git@vger.kernel.org>; Wed, 24 Jun 2009 07:36:38 -0700 (PDT)
-Received: by 10.210.59.14 with SMTP id h14mr1542821eba.63.1245854198862; Wed, 
-	24 Jun 2009 07:36:38 -0700 (PDT)
-In-Reply-To: <20090624135713.GE11191@spearce.org>
+	id S1753840AbZFXQPV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 24 Jun 2009 12:15:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752336AbZFXQPU
+	(ORCPT <rfc822;git-outgoing>); Wed, 24 Jun 2009 12:15:20 -0400
+Received: from fed1rmmtao104.cox.net ([68.230.241.42]:62603 "EHLO
+	fed1rmmtao104.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751238AbZFXQPT (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 24 Jun 2009 12:15:19 -0400
+Received: from fed1rmimpo03.cox.net ([70.169.32.75])
+          by fed1rmmtao104.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20090624161521.OQNU17135.fed1rmmtao104.cox.net@fed1rmimpo03.cox.net>;
+          Wed, 24 Jun 2009 12:15:21 -0400
+Received: from localhost ([68.225.240.211])
+	by fed1rmimpo03.cox.net with bizsmtp
+	id 7sFM1c0034aMwMQ04sFM9Q; Wed, 24 Jun 2009 12:15:21 -0400
+X-VR-Score: -100.00
+X-Authority-Analysis: v=1.0 c=1 a=F_o4wktclTQA:10 a=gA5Y4G7fYRxiLLm0FjAA:9
+ a=9tMDMil1Dg2kv_TpEFYsQ9AIYZwA:4 a=_RhRFcbxBZMA:10
+X-CM-Score: 0.00
+In-Reply-To: <alpine.DEB.1.00.0906241201040.4773@pacific.mpi-cbg.de> (Johannes Schindelin's message of "Wed\, 24 Jun 2009 12\:03\:29 +0200 \(CEST\)")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122140>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122141>
 
-On Wed, Jun 24, 2009 at 3:57 PM, Shawn O. Pearce<spearce@spearce.org> w=
-rote:
-> Johan S?rensen <johan@johansorensen.com> wrote:
->> I'm wondering what the reason is that objects are still being stored=
-,
->> despite a non-zero exit code from the pre-receive hook?
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+
+> This here script:
 >
-> The pre-receive hook is allowed to inspect the objects that have
-> been uploaded in order to make its access decision. =A0Thus those
-> objects must have been unpacked (or indexed into a new pack) so
-> git commands in the pre-receive hook can read them.
+> -- snip --
+> for file in abspath.c alias.c cache.h color.c color.h config.c ctype.c \
+> 	environment.c exec_cmd.c exec_cmd.h help.c help.h levenshtein.c \
+> 	levenshtein.h pager.c parse-options.c parse-options.h path.c \
+> 	quote.c quote.h run-command.c run-command.h sigchain.c sigchain.h \
+> 	strbuf.c strbuf.h string.c string.h symbol.c symbol.h usage.c \
+> 	util.h wrapper.c
+> do
+> 	echo $file
+> 	git shortlog -n -s $file | head -n 2
+> done
 
-Yeah, noticed that after I started digging into the code a bit
+I have thought about suggesting this myself, and your output for many of
+the files matched my intuition, but some were grossly off, so I checked.
 
->> If it's expected and accepted behaviour, what other options do I hav=
-e
->> to prevent a scenario like the above?
+The above procedure counts commits, and a one liner "s/char \*/const &/"
+weighs as heavily as the patch that implemented the whole thing, for a
+file that was done in one commit almost perfectly except that it needed a
+small constness fix.  Summarizing output from "blame" for each file may
+give you a more meaningful results:
+
+    # timestamp
+    ts='[12][0-9][0-9][0-9]-[0-9][0-9]-[0-3][0-9] ..:..:.. [-+]....'
+    # linenum
+    lno='[1-9][0-9]*'
+    git blame "$file" |
+    sed -e 's/^[^ ]*  *(\([^)]*[^ ]\)  *'"$ts  *$lno"').*/\1/' |
+    sort |
+    uniq -c |
+    sort -r -n
+
+For example, I do not think it is fair to credit me for abspath.c more
+than Dmitry like this:
+
+> outputs this (note that a few files you mentioned are not in git.git):
 >
-> There currently isn't a way to stop this, other than to use something
-> in front of git-receive-pack, e.g. Gitosis, to deny even forking
-> the receive-pack binary for the user.
+> abspath.c
+>      2	Junio C Hamano
+>      1	Dmitry Potapov
 
-Well, I already wrote such a thing (Gitorious.org) but I want to take
-the auth a little bit further and offer some more fine-grained
-access-controls and discovered the above during some smoke testing.
-
->
-> --
-> Shawn.
-
-Thanks
-JS
+Initially Dmitry introduced this file with 5b8e6f8 (shrink git-shell by
+avoiding redundant dependencies, 2008-06-28) at 68 lines.  J6t added 36
+lines for add_path() with 10c4c88 (Allow add_path() to add non-existent
+directories to the path, 2008-07-21), I added 12 lines to add a new
+function with 90b4a71 (is_directory(): a generic helper function,
+2008-09-09) and then added a two-liner out-of-bounds-then-die check in
+737e31a (make_absolute_path(): check bounds when seeing an overlong
+symlink, 2008-12-17).
