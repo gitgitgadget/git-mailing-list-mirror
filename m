@@ -1,88 +1,76 @@
-From: Stephen Boyd <bebarino@gmail.com>
-Subject: [PATCH 1/2] read-tree: convert unhelpful usage()'s to helpful die()'s
-Date: Tue, 23 Jun 2009 21:27:51 -0700
-Message-ID: <1245817672-25483-1-git-send-email-bebarino@gmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jun 24 06:30:01 2009
+From: Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [PATCH 2/2] rebase -i: use some kind of config file to save author information
+Date: Wed, 24 Jun 2009 06:29:39 +0200
+Message-ID: <200906240629.40138.chriscool@tuxfamily.org>
+References: <20090620023413.3995.3630.chriscool@tuxfamily.org> <200906230657.48627.chriscool@tuxfamily.org> <7vljnja5dv.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org, Stephan Beyer <s-beyer@gmx.net>,
+	Daniel Barkalow <barkalow@iabervon.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jun 24 06:30:03 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MJK7U-0001On-IJ
-	for gcvg-git-2@gmane.org; Wed, 24 Jun 2009 06:30:01 +0200
+	id 1MJK7W-0001On-Br
+	for gcvg-git-2@gmane.org; Wed, 24 Jun 2009 06:30:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751058AbZFXE1z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 24 Jun 2009 00:27:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750840AbZFXE1z
-	(ORCPT <rfc822;git-outgoing>); Wed, 24 Jun 2009 00:27:55 -0400
-Received: from mail-px0-f190.google.com ([209.85.216.190]:39591 "EHLO
-	mail-px0-f190.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750831AbZFXE1y (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 24 Jun 2009 00:27:54 -0400
-Received: by pxi28 with SMTP id 28so130579pxi.33
-        for <git@vger.kernel.org>; Tue, 23 Jun 2009 21:27:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:from:to:cc:subject
-         :date:message-id:x-mailer;
-        bh=eUWcanATRpf172t0ykT32O6OtwV0KFjiBoD9xKj+3zw=;
-        b=F6FmygJm016c+u3hi64bv0fQb8Ya8LEqrqZaLUhJ3uOaWein/9j0gsyEhh0e34nD3e
-         HJNfuHfgSkRkrApEyunGPeEjN2k383rHkTgsXkttCNVHivZqv7L8mcTDl1bJXqCalcem
-         9zCeRP9rbH2mM94xULWExmnNsSSnge2CMaMwc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        b=NQiO1jeqCDYBpnuAKb5xSF9aLygx1EC1D+ycgUzbTpz4Dp989kqN2ewRRmDTzeS0lJ
-         eoqkee7fUtXkvkbHvhcL59HOcMj2fS6GBzEIJkAZzlpnrFcCf9XDpwHDj09dRhvG3p75
-         OMFjidoGnXViRRySPzWXMqTo+H9wTIUNh3HG0=
-Received: by 10.114.149.2 with SMTP id w2mr1256344wad.182.1245817677201;
-        Tue, 23 Jun 2009 21:27:57 -0700 (PDT)
-Received: from earth (cpe-66-75-25-79.san.res.rr.com [66.75.25.79])
-        by mx.google.com with ESMTPS id j39sm1084585waf.10.2009.06.23.21.27.54
-        (version=SSLv3 cipher=RC4-MD5);
-        Tue, 23 Jun 2009 21:27:56 -0700 (PDT)
-Received: by earth (sSMTP sendmail emulation); Tue, 23 Jun 2009 21:27:52 -0700
-X-Mailer: git-send-email 1.6.3.3.334.g916e1
+	id S1751159AbZFXE32 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 24 Jun 2009 00:29:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751140AbZFXE31
+	(ORCPT <rfc822;git-outgoing>); Wed, 24 Jun 2009 00:29:27 -0400
+Received: from smtp3-g21.free.fr ([212.27.42.3]:38869 "EHLO smtp3-g21.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751131AbZFXE30 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 24 Jun 2009 00:29:26 -0400
+Received: from smtp3-g21.free.fr (localhost [127.0.0.1])
+	by smtp3-g21.free.fr (Postfix) with ESMTP id 867EB818076;
+	Wed, 24 Jun 2009 06:29:20 +0200 (CEST)
+Received: from bureau.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
+	by smtp3-g21.free.fr (Postfix) with ESMTP id 7C92C8180F5;
+	Wed, 24 Jun 2009 06:29:18 +0200 (CEST)
+User-Agent: KMail/1.9.9
+In-Reply-To: <7vljnja5dv.fsf@alter.siamese.dyndns.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122120>
 
-Printing the usage message when encountering bad option combinations is
-not very helpful. Instead, die with a message which tells the user
-exactly what combination is invalid.
+On Tuesday 23 June 2009, Junio C Hamano wrote:
+> Christian Couder <chriscool@tuxfamily.org> writes:
+> > This patch would use the message from HEAD instead of
+> > "$DOTEST"/message, but it looks like we are changing "$DOTEST"/message
+> > sometimes with the "make_squash_message" function.
+>
+> Heh, that is why it was "something along this line" patch ;-)
+>
+> Regarding the C rewrite vs rebase--i.sh update, I tend to agree with
+> Dscho that changing the scripted Porcelain is not worth it if we are
+> rewriting the whole thing in C soon.  But perhaps we can allow
+> combinations of the two options ("-[cC] commit" and "-F file") given to
+> "git commit"?
 
-Signed-off-by: Stephen Boyd <bebarino@gmail.com>
----
- builtin-read-tree.c |    6 +++---
- 1 files changed, 3 insertions(+), 3 deletions(-)
+I agree that it would be nice.
 
-diff --git a/builtin-read-tree.c b/builtin-read-tree.c
-index 82e25ea..887e177 100644
---- a/builtin-read-tree.c
-+++ b/builtin-read-tree.c
-@@ -145,9 +145,8 @@ int cmd_read_tree(int argc, const char **argv, const char *unused_prefix)
- 			continue;
- 		}
- 
--		/* using -u and -i at the same time makes no sense */
- 		if (1 < opts.index_only + opts.update)
--			usage(read_tree_usage);
-+			die("-u and -i at the same time makes no sense");
- 
- 		if (get_sha1(arg, sha1))
- 			die("Not a valid object name %s", arg);
-@@ -156,7 +155,8 @@ int cmd_read_tree(int argc, const char **argv, const char *unused_prefix)
- 		stage++;
- 	}
- 	if ((opts.update||opts.index_only) && !opts.merge)
--		usage(read_tree_usage);
-+		die("%s is meaningless without -m",
-+		    opts.update ? "-u" : "-i");
- 	if ((opts.dir && !opts.update))
- 		die("--exclude-per-directory is meaningless unless -u");
- 	if (opts.merge && !opts.index_only)
--- 
-1.6.3.3.334.g916e1
+> The intent of the caller in such a case is quite 
+> clear---use the authorship but do use the message from the other source
+> (if we do this, it would probably make sense to do that also for "-m
+> message").  The version entirely written in C obviously does not even
+> need such an option (it can read authorship from HEAD and use its own
+> message), but the point is if going that route would eliminate the need
+> to store "which commit were we dealing with when we gave the control
+> back" information on disk.  I suspect that the sequencing information is
+> already on disk (i.e. $TODO file) and author-script may be redundant
+> information.
+
+Yeah, perhaps we could ge this route, but I'd rather just port what I can 
+step by step first and then polish and/or rewrite some parts than the other 
+way around.
+
+Thanks,
+Christian.
