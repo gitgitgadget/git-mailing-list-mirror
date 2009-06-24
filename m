@@ -1,60 +1,58 @@
-From: Tom Lambda <tom.lambda@gmail.com>
-Subject: git pull merges current branch even when <dst> is specified
-Date: Wed, 24 Jun 2009 09:47:32 -0700 (PDT)
-Message-ID: <1245862052581-3149948.post@n2.nabble.com>
+From: Ryan <ryanphilips19@googlemail.com>
+Subject: names using git config
+Date: Wed, 24 Jun 2009 22:28:40 +0530
+Message-ID: <376636be0906240958l70c81b68g83340556f2bf4eca@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jun 24 18:48:58 2009
+X-From: git-owner@vger.kernel.org Wed Jun 24 18:58:53 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MJVeb-0000rf-19
-	for gcvg-git-2@gmane.org; Wed, 24 Jun 2009 18:48:57 +0200
+	id 1MJVo9-0005ob-JG
+	for gcvg-git-2@gmane.org; Wed, 24 Jun 2009 18:58:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761293AbZFXQra (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 24 Jun 2009 12:47:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759297AbZFXQra
-	(ORCPT <rfc822;git-outgoing>); Wed, 24 Jun 2009 12:47:30 -0400
-Received: from kuber.nabble.com ([216.139.236.158]:37236 "EHLO
-	kuber.nabble.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759788AbZFXQr3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 24 Jun 2009 12:47:29 -0400
-Received: from tervel.nabble.com ([192.168.236.150])
-	by kuber.nabble.com with esmtp (Exim 4.63)
-	(envelope-from <lists+1217463532682-661346@n2.nabble.com>)
-	id 1MJVdE-0003uI-JG
-	for git@vger.kernel.org; Wed, 24 Jun 2009 09:47:32 -0700
-X-Nabble-From: tom.lambda@gmail.com
+	id S1754294AbZFXQ6j (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 24 Jun 2009 12:58:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753370AbZFXQ6i
+	(ORCPT <rfc822;git-outgoing>); Wed, 24 Jun 2009 12:58:38 -0400
+Received: from mail-qy0-f193.google.com ([209.85.221.193]:41486 "EHLO
+	mail-qy0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753366AbZFXQ6i (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 24 Jun 2009 12:58:38 -0400
+Received: by qyk31 with SMTP id 31so1169883qyk.33
+        for <git@vger.kernel.org>; Wed, 24 Jun 2009 09:58:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:date:message-id:subject
+         :from:to:content-type:content-transfer-encoding;
+        bh=vYBBPoiIzLA2R2Grp/KGIqVrge8mmW1t8nPIG8ovYps=;
+        b=u0Ta6u0OrPyRfoMM94Y+2OVht2dDj06d1p56HMPrnBgby/yy5RUVRr78VNXmHAhGpr
+         /bKu3RGj0nFk3JbuUhIH8JR2u5ncqOmab2XIZRhtA7t64VUGvg/vMmi9/QKHxCo6YcV4
+         R5+48iwtkhNfW6jhK4v0lADYZnz1ICnNv6y3U=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlemail.com; s=gamma;
+        h=mime-version:date:message-id:subject:from:to:content-type
+         :content-transfer-encoding;
+        b=ZvetOR6gHJVJGew/yf51vllPTZ63vknHTjAvMCBK4beQf8cJgv4sYP4DvoJJXuf9z2
+         lEW7Bsi3CAyUHQwWay1apaZS28Ys1976UDYqWS8cjDUgg+mhYiVMCjJz79G8tMkXC10V
+         VEdPx83bLqpA94IMajFol9+Oh8bwVu7hNLW80=
+Received: by 10.231.10.134 with SMTP id p6mr499893ibp.36.1245862720345; Wed, 
+	24 Jun 2009 09:58:40 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122144>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122145>
+
+How do i select a Name which ends in a dot something like Ryan W.
+Philips in Git using  git config user.name
+
+Because when i do that "Ryan W. Philips" It just comes and Ryan W
+Philips in git log when i add a commit.
 
 
-If I am in 'master' and 'bugfix' is a remote branch in 'repo' which I do not
-have locally yet, running:
-
-git pull repo bugfix:bugfix
-
-creates a new local branch 'bugfix' equals to 'repo/bugfix' as expected.
-However, it also merges 'bugfix' into 'master', that surprises me since I
-explicitly specify that <dst> is 'bugfix'.
-
-I know that I can get what I want by running:
-
-git fetch repo bugfix:bugfix
-
-But the git-pull behavior looks odd to me. I thought that <dst> was the
-current branch by default and it could be overridden by specifying it in the
-command line.
-
-Thank you,
-Tom
-
--- 
-View this message in context: http://n2.nabble.com/git-pull-merges-current-branch-even-when-%3Cdst%3E-is-specified-tp3149948p3149948.html
-Sent from the git mailing list archive at Nabble.com.
+Thanks,
+Ryan
