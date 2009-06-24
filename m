@@ -1,81 +1,59 @@
-From: Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH 2/2] rebase -i: use some kind of config file to save author information
-Date: Wed, 24 Jun 2009 06:36:04 +0200
-Message-ID: <200906240636.04675.chriscool@tuxfamily.org>
-References: <20090620023413.3995.3630.chriscool@tuxfamily.org> <200906230730.01456.chriscool@tuxfamily.org> <alpine.DEB.1.00.0906231137220.5252@intel-tinevez-2-302>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/2] read-tree: migrate to parse-options
+Date: Tue, 23 Jun 2009 22:08:06 -0700
+Message-ID: <7vws721ao9.fsf@alter.siamese.dyndns.org>
+References: <1245817672-25483-1-git-send-email-bebarino@gmail.com>
+	<1245817672-25483-2-git-send-email-bebarino@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Stephan Beyer <s-beyer@gmx.net>,
-	Daniel Barkalow <barkalow@iabervon.org>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Jun 24 06:36:40 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Stephen Boyd <bebarino@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jun 24 07:08:24 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MJKDu-0002rY-QI
-	for gcvg-git-2@gmane.org; Wed, 24 Jun 2009 06:36:39 +0200
+	id 1MJKib-0002Ly-It
+	for gcvg-git-2@gmane.org; Wed, 24 Jun 2009 07:08:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751489AbZFXEfw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 24 Jun 2009 00:35:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751462AbZFXEfv
-	(ORCPT <rfc822;git-outgoing>); Wed, 24 Jun 2009 00:35:51 -0400
-Received: from smtp3-g21.free.fr ([212.27.42.3]:34980 "EHLO smtp3-g21.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751380AbZFXEfv (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 24 Jun 2009 00:35:51 -0400
-Received: from smtp3-g21.free.fr (localhost [127.0.0.1])
-	by smtp3-g21.free.fr (Postfix) with ESMTP id A159E818076;
-	Wed, 24 Jun 2009 06:35:45 +0200 (CEST)
-Received: from bureau.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
-	by smtp3-g21.free.fr (Postfix) with ESMTP id 84EBF8180CE;
-	Wed, 24 Jun 2009 06:35:42 +0200 (CEST)
-User-Agent: KMail/1.9.9
-In-Reply-To: <alpine.DEB.1.00.0906231137220.5252@intel-tinevez-2-302>
-Content-Disposition: inline
+	id S1751684AbZFXFIM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 24 Jun 2009 01:08:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751619AbZFXFIK
+	(ORCPT <rfc822;git-outgoing>); Wed, 24 Jun 2009 01:08:10 -0400
+Received: from fed1rmmtao105.cox.net ([68.230.241.41]:40323 "EHLO
+	fed1rmmtao105.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751424AbZFXFIJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 24 Jun 2009 01:08:09 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao105.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20090624050813.NRJR20430.fed1rmmtao105.cox.net@fed1rmimpo02.cox.net>;
+          Wed, 24 Jun 2009 01:08:13 -0400
+Received: from localhost ([68.225.240.211])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id 7h8C1c0034aMwMQ04h8C16; Wed, 24 Jun 2009 01:08:12 -0400
+X-VR-Score: 0.00
+X-Authority-Analysis: v=1.0 c=1 a=zKQtKpDWXuoA:10 a=pGLkceISAAAA:8
+ a=Hs4Ol_0MEeltZlT5GioA:9 a=EG-VWBdHXNlAdlsf1obIlj0UKM8A:4 a=MSl-tDqOz04A:10
+X-CM-Score: 0.00
+In-Reply-To: <1245817672-25483-2-git-send-email-bebarino@gmail.com> (Stephen Boyd's message of "Tue\, 23 Jun 2009 21\:27\:52 -0700")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122123>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122124>
 
-Hi,
+Stephen Boyd <bebarino@gmail.com> writes:
 
-On Tuesday 23 June 2009, Johannes Schindelin wrote:
-> Hi,
+> Cleanup the documentation to explicitly state that --exclude-directory
+> is only meaningful when used with -u. Also make the documentation more
+> consistent with the usage message printed with read-tree --help-all.
 >
-> On Tue, 23 Jun 2009, Christian Couder wrote:
-> > The problem with this is that it will take a lot of time to implement
-> > the features that have been added to rebase -i since the sequencer
-> > stalled, then to polish it, and to get it reviewed and so on, and
-> > during that time other features or changes may be implemented by other
-> > people.
-> >
-> > So I prefer to use code from the current sequencer (at
-> > http://repo.or.cz/w/git/sbeyer.git) to start porting step by step
-> > rebase -i to C.
->
-> I think that the best way to go forward would be to have something like
-> fetch--tool, i.e. a builtin helper that successively takes more and more
-> functionality into C.
+> Signed-off-by: Stephen Boyd <bebarino@gmail.com>
+> ---
+>  Documentation/git-read-tree.txt |    5 +-
+>  builtin-read-tree.c             |  220 +++++++++++++++++++++-----------------
+>  2 files changed, 126 insertions(+), 99 deletions(-)
 
-Yeah, I started working on something like that.
-
-> IMHO a first sensible step would be to implement the commands ("pick",
-> "squash", "edit") in such a helper, and call them from do_next().
->
-> That should take care of the most difficult part, getting the transition
-> started.
-
-I agree that it looks like a good way forward.
-
-> But I had the impression that the sequencer started out almost like this,
-> but then it also wanted to implement the do_next() and everything.
-
-Yeah, I think at some steps we got something close to that.
-
-Thanks,
-Christian.
+Sorry, but I have to ask: Why?
