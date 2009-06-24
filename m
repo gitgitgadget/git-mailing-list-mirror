@@ -1,158 +1,204 @@
-From: Paolo Bonzini <paolo.bonzini@gmail.com>
-Subject: Re: push.default???
-Date: Wed, 24 Jun 2009 10:50:00 +0200
-Message-ID: <4A41E8B8.8050803@gmail.com>
-References: <h1nks1$vdl$1@ger.gmane.org> <20090623103428.GA4214@pvv.org>	<4A40D19E.60606@gmail.com> <20090623131131.GA7011@pvv.org>	<4A40D864.8040208@gmail.com> <20090623144805.GB24974@pvv.org>	<f865508f0906230932n4a2f2b54s1e76ab1d70d95073@mail.gmail.com> <7vprcu96td.fsf@alter.siamese.dyndns.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] fread does not return negative on error
+Date: Wed, 24 Jun 2009 12:03:29 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.0906241201040.4773@pacific.mpi-cbg.de>
+References: <4A3FB09D.9050903@gmail.com> <20090622153431.GA18466@elte.hu> <25e057c00906220847t15425f38maf486c291d1d2468@mail.gmail.com> <4A3FB479.2090902@lsrfire.ath.cx> <7vhby64i8f.fsf@alter.siamese.dyndns.org> <20090624081819.GA10436@elte.hu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Finn Arne Gangstad <finnag@pvv.org>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jun 24 10:56:24 2009
+Content-Type: MULTIPART/MIXED; BOUNDARY="8323328-1678002513-1245837811=:4773"
+Cc: Junio C Hamano <gitster@pobox.com>,
+	=?ISO-8859-15?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>,
+	roel kluin <roel.kluin@gmail.com>, git@vger.kernel.org,
+	LKML <linux-kernel@vger.kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>
+To: Ingo Molnar <mingo@elte.hu>
+X-From: git-owner@vger.kernel.org Wed Jun 24 12:02:25 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MJOHC-00040L-M4
-	for gcvg-git-2@gmane.org; Wed, 24 Jun 2009 10:56:19 +0200
+	id 1MJPJ6-0004zt-OI
+	for gcvg-git-2@gmane.org; Wed, 24 Jun 2009 12:02:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752699AbZFXI4J (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 24 Jun 2009 04:56:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751893AbZFXI4H
-	(ORCPT <rfc822;git-outgoing>); Wed, 24 Jun 2009 04:56:07 -0400
-Received: from mail-qy0-f193.google.com ([209.85.221.193]:65401 "EHLO
-	mail-qy0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751897AbZFXI4G (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 24 Jun 2009 04:56:06 -0400
-X-Greylist: delayed 355 seconds by postgrey-1.27 at vger.kernel.org; Wed, 24 Jun 2009 04:56:05 EDT
-Received: by qyk31 with SMTP id 31so810970qyk.33
-        for <git@vger.kernel.org>; Wed, 24 Jun 2009 01:56:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from
-         :user-agent:mime-version:to:cc:subject:references:in-reply-to
-         :content-type:content-transfer-encoding;
-        bh=JbXageuivOekW4BoFCF5u9SiXkzFl9WNCuqyfX71sdc=;
-        b=Iuz/MT/Gm4rWfCRqc9ySwvNSCj++jbmuLxQWQlBxr050a5CFthIVe8uqi6yov2PYfa
-         /dPoKR5YgmdbLf7cxcrZepseS6GJBWNNKReAksdPVd3p6/5i3ioZO17mKAxBMdRzgBF/
-         R5/HDzZRC0Tg4eC0E1JkfOUCXwhCKysA9cw0A=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        b=euHFir8KFGDf4Yr5f2QIhWvN58K4taeMNbz107e9k9L1D7n3EjTzJ2c9G4bI7OjuTf
-         D1I8GyQ6OALEuHfmMiYBU/Yhzsw+yW7XzFoXxo9o5xj3B5E6BTHgFRvZtZUOX+8ujXIH
-         BwLdC5zOzu+hP88SXCnK/K9+7oXBRveJUsQeU=
-Received: by 10.224.60.149 with SMTP id p21mr841834qah.10.1245833412763;
-        Wed, 24 Jun 2009 01:50:12 -0700 (PDT)
-Received: from yakj.usersys.redhat.com (nat-pool-brq.redhat.com [62.40.79.66])
-        by mx.google.com with ESMTPS id 26sm1632507qwa.37.2009.06.24.01.50.10
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 24 Jun 2009 01:50:11 -0700 (PDT)
-User-Agent: Thunderbird 2.0.0.17 (X11/20081009)
-In-Reply-To: <7vprcu96td.fsf@alter.siamese.dyndns.org>
+	id S1752590AbZFXKCG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 24 Jun 2009 06:02:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752342AbZFXKCG
+	(ORCPT <rfc822;git-outgoing>); Wed, 24 Jun 2009 06:02:06 -0400
+Received: from mail.gmx.net ([213.165.64.20]:50326 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751602AbZFXKCF (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 24 Jun 2009 06:02:05 -0400
+Received: (qmail invoked by alias); 24 Jun 2009 10:02:05 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp021) with SMTP; 24 Jun 2009 12:02:05 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+htDFJ4O+h/JpKDnyg+E8ltONQMsj6BR+TJnGAtK
+	Uo/uFZmtfeHD/B
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <20090624081819.GA10436@elte.hu>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.54
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122133>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122134>
 
-> You are forking off of shared 'master', but you are developing a feature
-> on a separate branch 'feature'.
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
+
+--8323328-1678002513-1245837811=:4773
+Content-Type: TEXT/PLAIN; charset=iso-8859-1
+Content-Transfer-Encoding: 8BIT
+
+Hi,
+
+On Wed, 24 Jun 2009, Ingo Molnar wrote:
+
+> One bookeeping issue: i found few explicit credits in those files - 
+> so i noted in the changelog that i took them from Git and i noted 
+> the specific upstream Git sha1 when i copied them. Would be nice to 
+> update each file with names to make credit more explicit:
 > 
-> However, when 'feature' is fully cooked, before pushing it back to be
-> shared with others in the group, don't you do any testing with the work
-> done by others while you were working on 'feature'?  That means you first
-> integrate your 'feature' locally into shared 'master' and make sure all
-> fits together well.
-> 
-> Until you do that, you cannot be confident that the feature you developed
-> is fit for public consumption.  But if you test after merging 'feature'
-> into 'master', what you determined as good is in 'master', which you can
-> push back to the remote's 'master'.
+> -rw-rw-r-- 1 mingo mingo  2808 2009-06-23 10:49 abspath.c
+> -rw-rw-r-- 1 mingo mingo  1447 2009-06-23 10:49 alias.c
+> -rw-rw-r-- 1 mingo mingo  4660 2009-06-23 10:49 cache.h
+> -rw-rw-r-- 1 mingo mingo  4817 2009-06-23 10:49 color.c
+> -rw-rw-r-- 1 mingo mingo  1187 2009-06-23 10:49 color.h
+> -rw-rw-r-- 1 mingo mingo 19149 2009-06-23 10:49 config.c
+> -rw-rw-r-- 1 mingo mingo  1041 2009-06-23 10:52 ctype.c
+> -rw-rw-r-- 1 mingo mingo   256 2009-06-23 10:49 environment.c
+> -rw-rw-r-- 1 mingo mingo  3262 2009-06-23 10:49 exec_cmd.c
+> -rw-rw-r-- 1 mingo mingo   496 2009-06-23 10:49 exec_cmd.h
+> -rw-rw-r-- 1 mingo mingo  8515 2009-06-23 10:49 help.c
+> -rw-rw-r-- 1 mingo mingo   751 2009-06-23 10:49 help.h
+> -rw-rw-r-- 1 mingo mingo  2592 2009-06-23 10:49 levenshtein.c
+> -rw-rw-r-- 1 mingo mingo   201 2009-06-23 10:49 levenshtein.h
+> -rw-rw-r-- 1 mingo mingo  1909 2009-06-23 10:49 pager.c
+> -rw-rw-r-- 1 mingo mingo 12454 2009-06-23 10:49 parse-options.c
+> -rw-rw-r-- 1 mingo mingo  5693 2009-06-23 10:49 parse-options.h
+> -rw-rw-r-- 1 mingo mingo  7986 2009-06-23 10:49 path.c
+> -rw-rw-r-- 1 mingo mingo 10442 2009-06-23 10:49 quote.c
+> -rw-rw-r-- 1 mingo mingo  2667 2009-06-23 10:49 quote.h
+> -rw-rw-r-- 1 mingo mingo  7966 2009-06-23 10:49 run-command.c
+> -rw-rw-r-- 1 mingo mingo  2838 2009-06-23 10:49 run-command.h
+> -rw-rw-r-- 1 mingo mingo   969 2009-06-23 10:49 sigchain.c
+> -rw-rw-r-- 1 mingo mingo   215 2009-06-23 10:49 sigchain.h
+> -rw-rw-r-- 1 mingo mingo  7270 2009-06-23 10:49 strbuf.c
+> -rw-rw-r-- 1 mingo mingo  4995 2009-06-23 10:49 strbuf.h
+> -rw-rw-r-- 1 mingo mingo   556 2009-06-23 10:52 string.c
+> -rw-rw-r-- 1 mingo mingo   120 2009-06-23 10:52 string.h
+> -rw-rw-r-- 1 mingo mingo 13859 2009-06-24 10:01 symbol.c
+> -rw-rw-r-- 1 mingo mingo  1112 2009-06-23 10:52 symbol.h
+> -rw-rw-r-- 1 mingo mingo  1690 2009-06-23 10:49 usage.c
+> -rw-rw-r-- 1 mingo mingo  9878 2009-06-23 10:52 util.h
+> -rw-rw-r-- 1 mingo mingo  4249 2009-06-23 10:49 wrapper.c
 
-Here is what I think you are missing: in the proposed workflow, there is 
-an entire group working on one big feature, so there is effectively one 
-remote per feature.
+This here script:
 
-In fact, what was not clear to me before Finn explained it is the way 
-these remotes are configured and mapped to local branches.  In his 
-setup, your own master branch is tracking integration/master, but your 
-feature branch is tracking feature/master.  You're effectively using a 
-centralized repository but splitting it across several remotes, 
-presumably for two reasons: 1) access control, 2) so that people can 
-choose which parts of the repository to mirror.
+-- snip --
+for file in abspath.c alias.c cache.h color.c color.h config.c ctype.c \
+	environment.c exec_cmd.c exec_cmd.h help.c help.h levenshtein.c \
+	levenshtein.h pager.c parse-options.c parse-options.h path.c \
+	quote.c quote.h run-command.c run-command.h sigchain.c sigchain.h \
+	strbuf.c strbuf.h string.c string.h symbol.c symbol.h usage.c \
+	util.h wrapper.c
+do
+	echo $file
+	git shortlog -n -s $file | head -n 2
+done
+-- snap --
 
-Mind that this is quite a mangled DVCS workflow :-) since you're 
-distributing the centralized repository (!), so you're not using topic 
-branches and you're not committing very often; if you were using topic 
-branches you would have to use --no-track or risk pushing by mistake to 
-feature/master.  You just map "svn update" to "git pull --rebase" and 
-"svn commit" to "git commit + git push".
+outputs this (note that a few files you mentioned are not in git.git):
 
-So, every time you finish some aspect of 'feature', you rebase it on top 
-of the tracked branch feature/master to test it with the work done by 
-others, and then push.  The rebasing is taken care of by "git pull", so 
-it makes sense in this case that pushing to feature/master is done with 
-plain "git push".
+abspath.c
+     2	Junio C Hamano
+     1	Dmitry Potapov
+alias.c
+     2	Jeff King
+     1	Felipe Contreras
+cache.h
+   295	Junio C Hamano
+    98	Linus Torvalds
+color.c
+     4	Junio C Hamano
+     3	Jeff King
+color.h
+     2	Jeff King
+     2	Johannes Schindelin
+config.c
+    65	Junio C Hamano
+    20	Johannes Schindelin
+ctype.c
+     4	René Scharfe
+     2	Junio C Hamano
+environment.c
+    29	Junio C Hamano
+    11	Johannes Schindelin
+exec_cmd.c
+     8	Johannes Sixt
+     7	Junio C Hamano
+exec_cmd.h
+     2	Junio C Hamano
+     2	Scott R Parish
+help.c
+    18	Junio C Hamano
+    14	Christian Couder
+help.h
+     2	Miklos Vajna
+     1	Alex Riesen
+levenshtein.c
+     2	Johannes Schindelin
+     1	Mike Ralphson
+levenshtein.h
+     1	Johannes Schindelin
+pager.c
+     9	Junio C Hamano
+     4	Johannes Schindelin
+parse-options.c
+    18	Pierre Habouzit
+     8	Junio C Hamano
+parse-options.h
+    15	Pierre Habouzit
+     6	Stephen Boyd
+path.c
+    20	Junio C Hamano
+     5	Johannes Sixt
+quote.c
+    12	Junio C Hamano
+     5	Christian Couder
+quote.h
+     6	Junio C Hamano
+     5	Christian Couder
+run-command.c
+    11	Shawn O. Pearce
+     7	Johannes Sixt
+run-command.h
+    10	Shawn O. Pearce
+     5	Johannes Sixt
+sigchain.c
+     2	Jeff King
+sigchain.h
+     2	Jeff King
+strbuf.c
+     9	Pierre Habouzit
+     8	Junio C Hamano
+strbuf.h
+     9	Pierre Habouzit
+     4	Junio C Hamano
+string.c
+string.h
+symbol.c
+symbol.h
+usage.c
+     3	Linus Torvalds
+     2	Junio C Hamano
+util.h
+wrapper.c
+     4	Junio C Hamano
+     2	Linus Torvalds
 
-> Could it be possible that this desire to push "tracking" is not a cure for
-> anything real, but merely a kludge to work around a misfeature of "rebase"
-> UI that does not allow "integrate that branch here but do not merge it but
-> by first rebasing it"?  In other words, if we had "git merge --rebase feature"
-> [to merge rebased feature into master, then "git push origin HEAD"] becomes the
- > right thing to do, eliminating the need for "put my 'feature' into 
-their 'master'".
- >
-> For a group that sets up a shared public branch to be used for working
-> together on some feature, replace 'master' with 'some feature' above, and
-> 'feature' with 'your part of the work on the feature'; the story is the
-> same.
+Ciao,
+Dscho
 
-I think this makes sense, but it is not what Finn was going after.  In 
-his setup, there is no 'your part of the work on the feature', 
-everything is done in a single branch.
-
-
-Now, here is a plan to realize the same workflow with a different 
-implementation.
-
-1) introduce a new configuration key branch.autosetuppush that 
-automatically adds a remote.*.push entry whenever a tracking branch is 
-created.
-
-I think this is also the right time to introduce per-remote autosetup 
-keys remote.*.autosetup{merge,rebase,push}.  In fact I would introduce 
-these per-remote configurations before, as a kind of "step 0".
-
-2) introduce git push --current (or maybe --head-only) that uses 
-whatever refspec "git push" uses, but always restrict pushing to the 
-current branch.  This would only apply to "git push" without explicit 
-refspecs.
-
-3) introduce remote.*.pushHeadOnly to make "git push" always behave like 
-"git push --current".
-
-Note that the new command line option is not really needed, but it would 
-make testing harder if --current behavior could be specified only with 
-configuration keys.
-
-4) introduce a --push option for "git remote add".  Every push.default 
-configuration, thanks to steps 1 and 3, now maps to a simple configuration:
-
-  --push=current -> remote.*.push = HEAD
-  --push=tracking -> remote.*.autosetuppush=remote.*.pushHeadOnly=true
-  --push=matching -> remote.*.push = :
-
-In addition, --push=mirror could be implemented to do the same as --mirror.
-
-
-I have a rough draft of all but the last step already implemented (I 
-have not even compiled, but I wanted to measure roughly the complexity 
-of the features; unless I screwed up big, it seems like a "calm" patch 
-series).  I like this way more than the "magic refspec".  Unlike 
-push.default, it builds entirely on the concept of refspecs.  But unlike 
-the magic refspec, it fits with the rest of --track better, and it just 
-uses two easily understood knobs to achieve its objective.
-
-Paolo
+--8323328-1678002513-1245837811=:4773--
