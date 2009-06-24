@@ -1,136 +1,149 @@
-From: Ingo Molnar <mingo@elte.hu>
-Subject: Re: [PATCH] fread does not return negative on error
-Date: Wed, 24 Jun 2009 10:18:19 +0200
-Message-ID: <20090624081819.GA10436@elte.hu>
-References: <4A3FB09D.9050903@gmail.com> <20090622153431.GA18466@elte.hu> <25e057c00906220847t15425f38maf486c291d1d2468@mail.gmail.com> <4A3FB479.2090902@lsrfire.ath.cx> <7vhby64i8f.fsf@alter.siamese.dyndns.org>
+From: Brian Foster <brian.foster@innova-card.com>
+Subject: [Q] `git push', branch management, and "(forced update)"?
+Date: Wed, 24 Jun 2009 10:34:18 +0200
+Message-ID: <200906241034.18550.brian.foster@innova-card.com>
+Reply-To: Brian Foster <brian.foster@innova-card.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?iso-8859-1?Q?Ren=E9?= Scharfe <rene.scharfe@lsrfire.ath.cx>,
-	roel kluin <roel.kluin@gmail.com>, git@vger.kernel.org,
-	LKML <linux-kernel@vger.kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: linux-kernel-owner+glk-linux-kernel-3=40m.gmane.org-S1753477AbZFXISv@vger.kernel.org Wed Jun 24 10:19:26 2009
-Return-path: <linux-kernel-owner+glk-linux-kernel-3=40m.gmane.org-S1753477AbZFXISv@vger.kernel.org>
-Envelope-to: glk-linux-kernel-3@gmane.org
+To: git mailing list <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Jun 24 10:36:00 2009
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MJNhH-000514-6W
-	for glk-linux-kernel-3@gmane.org; Wed, 24 Jun 2009 10:19:11 +0200
+	id 1MJNxX-00043m-Qc
+	for gcvg-git-2@gmane.org; Wed, 24 Jun 2009 10:36:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753477AbZFXISv convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;glk-linux-kernel-3@m.gmane.org>);
-	Wed, 24 Jun 2009 04:18:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751428AbZFXISe
-	(ORCPT <rfc822;linux-kernel-outgoing>);
-	Wed, 24 Jun 2009 04:18:34 -0400
-Received: from mx2.mail.elte.hu ([157.181.151.9]:36485 "EHLO mx2.mail.elte.hu"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751131AbZFXISb (ORCPT <rfc822;linux-kernel@vger.kernel.org>);
-	Wed, 24 Jun 2009 04:18:31 -0400
-Received: from elvis.elte.hu ([157.181.1.14])
-	by mx2.mail.elte.hu with esmtp (Exim)
-	id 1MJNgX-0001Rd-5j
-	from <mingo@elte.hu>; Wed, 24 Jun 2009 10:18:30 +0200
-Received: by elvis.elte.hu (Postfix, from userid 1004)
-	id 3125F3E22B8; Wed, 24 Jun 2009 10:18:16 +0200 (CEST)
+	id S1752501AbZFXIfs convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 24 Jun 2009 04:35:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752247AbZFXIfs
+	(ORCPT <rfc822;git-outgoing>); Wed, 24 Jun 2009 04:35:48 -0400
+Received: from mail-bw0-f213.google.com ([209.85.218.213]:46026 "EHLO
+	mail-bw0-f213.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752104AbZFXIfp convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 24 Jun 2009 04:35:45 -0400
+Received: by bwz9 with SMTP id 9so567934bwz.37
+        for <git@vger.kernel.org>; Wed, 24 Jun 2009 01:35:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:sender:from:reply-to:to
+         :subject:date:user-agent:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=dIPJtL58Hm7bni8bgZuMChCJjHqxJtr/2f1+Pox+z4Q=;
+        b=GjohrVxqbFzZt1w3O6r2G9DXU5qcWENsYSW7g66Vv6oBU6K+C68tlexL1z4aGIGV7g
+         SoyYeYKDbJXtJyyNusO8nQWlJq5lgNZcuJYWvted2ZrraxjOuiQpm/NDNuVBOsiQ1RQk
+         taCjOO0EymXQMdyvIRQ6xPQLTmvc8C/lgaxAk=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=sender:from:reply-to:to:subject:date:user-agent:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :message-id;
+        b=K6oBjv9E90zJeL8ULkS6F8B7CAyMdSJCIDXckGFkAQW12g64JM1ssBnMOXBEDO9wMd
+         a8h9xwJy41qIjvgO9TdNwUDNj03OCtRg0oqrobcINr9ZaIaHuvEDq+rDlwRiKhKDNM2K
+         Dw37X8NPvO2VNoONMP5PjmO9E0NQryzs0kiho=
+Received: by 10.204.117.141 with SMTP id r13mr1012887bkq.207.1245832547232;
+        Wed, 24 Jun 2009 01:35:47 -0700 (PDT)
+Received: from innova-card.com (LRouen-152-82-23-47.w80-13.abo.wanadoo.fr [80.13.118.47])
+        by mx.google.com with ESMTPS id 1sm259970bwz.8.2009.06.24.01.35.44
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 24 Jun 2009 01:35:45 -0700 (PDT)
+User-Agent: KMail/1.10.4 (Linux/2.6.27-14-generic; KDE/4.1.4; x86_64; ; )
 Content-Disposition: inline
-In-Reply-To: <7vhby64i8f.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.18 (2008-05-17)
-Received-SPF: neutral (mx2.mail.elte.hu: 157.181.1.14 is neither permitted nor denied by domain of elte.hu) client-ip=157.181.1.14; envelope-from=mingo@elte.hu; helo=elvis.elte.hu;
-X-ELTE-SpamScore: -1.5
-X-ELTE-SpamLevel: 
-X-ELTE-SpamCheck: no
-X-ELTE-SpamVersion: ELTE 2.0 
-X-ELTE-SpamCheck-Details: score=-1.5 required=5.9 tests=BAYES_00 autolearn=no SpamAssassin version=3.2.5
-	-1.5 BAYES_00               BODY: Bayesian spam probability is 0 to 1%
-	[score: 0.0000]
-Sender: linux-kernel-owner@vger.kernel.org
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <linux-kernel.vger.kernel.org>
-X-Mailing-List: linux-kernel@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122130>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122131>
 
+Hello,
 
-* Junio C Hamano <gitster@pobox.com> wrote:
+   A colleague of mine will be asking for my help when he
+  returns later this week, and I'm not too certain what's
+  going on.  My instant reaction is what he's doing may not
+  be a good idea (an example of rebasing a branch that others
+  pull, which I understand should be avoided).  However, I'm
+  not a gitpert, and am also sufficiently confused it's worth
+  asking for help/advice.  My apologies for the length....
 
-> Ren=E9 Scharfe <rene.scharfe@lsrfire.ath.cx> writes:
->=20
-> > the following patch is for git.  I just removed the unneeded check =
-for
-> > res =3D=3D 0 from your version.  Does it look OK?
->=20
-> The patch looks good, and both of our in-tree users do error out=20
-> when the returned value is 0 (imap-send.c checks with "<=3D 0" which=20
-> looks a tad amateurish, though) correctly.
->=20
-> Funny, there is no caller of this function in the original context=20
-> this bug originally found, which I think is linux-2.6/tools/perf=20
-> ;-).
+   What we have is four (4) repositories, L, B, R, and M:
 
-Hehe, yes :-)
+     L is my colleague's (local) working repository.
+     B is a bare repository.
+     R is one (or more?) remote repositories.
+     M is a bare repository.
 
-Background: when creating tools/perf/ i cherry-picked all the nice=20
-Git libraries into tools/perf/util/, to give a standard environment=20
-for all tooling things that might come up in the future.
+  The model is work is done in R, patches are sent (by e-mail)
+  to my colleague, who applies them to L, often does some fixes
+  (in L), pushes the resultant applied-patch-plus-fixes to B;
+  and R pulls every now and then from B.  The cycle repeats.
+  (M, as such, does not enter the picture at this point.)
 
-Some of those are not used yet but it looked more logical to pick up=20
-whole pieces - some already gained uses. For example config.c is not=20
-truly used yet, but very much expected to have a role in the future.
+   More specifically, what my colleague does (I think, I may
+  not have this completely correct) is apply the patches to
+  a topic branch TOPIC.  His fixes are separate commits, also
+  on TOPIC, so (in theory) TOPIC grows in a nice linear manner
+  (`r' came from R via e-mail, `f' is a local fix):
 
-( The only invasive thing i had to do was the s/git_/perf_/ mass=20
-  rename across all the files - having 'git_' in perf looked
-  quite confusing. )
+     o--o--o--o master
+               \
+                r--r--f--f TOPIC
 
-And our general experience with the Git libraries in=20
-tools/perf/util/* is: we love them!
+   L is a clone of M, where other work has also been committed,
+   in master.  So now-and-then my colleague pulls M into L:
 
-=46or example parse-options.c is a striking improvement compared to=20
-getopt.h we used before, and all the other facilities are sane and=20
-straight to the point as well. So in this sense 'perf' is an ...=20
-interesting cross-discipline 'fork' of Git's generic libraries.
+     o--o--o--o--*--* master
+               \
+                r--r--f--f TOPIC
 
-The auto-generation of everything out of Documentation/*.txt is=20
-another thing we picked up, and that's very nice too.
+  My colleague then pushes the result to B.  End result is B
+  is essentially M plus TOPIC.
 
-One bookeeping issue: i found few explicit credits in those files -=20
-so i noted in the changelog that i took them from Git and i noted=20
-the specific upstream Git sha1 when i copied them. Would be nice to=20
-update each file with names to make credit more explicit:
+   As it happens (mostly by design), the changes on TOPIC
+  are independent of the `*' ones on master.  So, working
+  in L, my colleague often rebases, and this is (always?)
+  a fast-forward:
 
--rw-rw-r-- 1 mingo mingo  2808 2009-06-23 10:49 abspath.c
--rw-rw-r-- 1 mingo mingo  1447 2009-06-23 10:49 alias.c
--rw-rw-r-- 1 mingo mingo  4660 2009-06-23 10:49 cache.h
--rw-rw-r-- 1 mingo mingo  4817 2009-06-23 10:49 color.c
--rw-rw-r-- 1 mingo mingo  1187 2009-06-23 10:49 color.h
--rw-rw-r-- 1 mingo mingo 19149 2009-06-23 10:49 config.c
--rw-rw-r-- 1 mingo mingo  1041 2009-06-23 10:52 ctype.c
--rw-rw-r-- 1 mingo mingo   256 2009-06-23 10:49 environment.c
--rw-rw-r-- 1 mingo mingo  3262 2009-06-23 10:49 exec_cmd.c
--rw-rw-r-- 1 mingo mingo   496 2009-06-23 10:49 exec_cmd.h
--rw-rw-r-- 1 mingo mingo  8515 2009-06-23 10:49 help.c
--rw-rw-r-- 1 mingo mingo   751 2009-06-23 10:49 help.h
--rw-rw-r-- 1 mingo mingo  2592 2009-06-23 10:49 levenshtein.c
--rw-rw-r-- 1 mingo mingo   201 2009-06-23 10:49 levenshtein.h
--rw-rw-r-- 1 mingo mingo  1909 2009-06-23 10:49 pager.c
--rw-rw-r-- 1 mingo mingo 12454 2009-06-23 10:49 parse-options.c
--rw-rw-r-- 1 mingo mingo  5693 2009-06-23 10:49 parse-options.h
--rw-rw-r-- 1 mingo mingo  7986 2009-06-23 10:49 path.c
--rw-rw-r-- 1 mingo mingo 10442 2009-06-23 10:49 quote.c
--rw-rw-r-- 1 mingo mingo  2667 2009-06-23 10:49 quote.h
--rw-rw-r-- 1 mingo mingo  7966 2009-06-23 10:49 run-command.c
--rw-rw-r-- 1 mingo mingo  2838 2009-06-23 10:49 run-command.h
--rw-rw-r-- 1 mingo mingo   969 2009-06-23 10:49 sigchain.c
--rw-rw-r-- 1 mingo mingo   215 2009-06-23 10:49 sigchain.h
--rw-rw-r-- 1 mingo mingo  7270 2009-06-23 10:49 strbuf.c
--rw-rw-r-- 1 mingo mingo  4995 2009-06-23 10:49 strbuf.h
--rw-rw-r-- 1 mingo mingo   556 2009-06-23 10:52 string.c
--rw-rw-r-- 1 mingo mingo   120 2009-06-23 10:52 string.h
--rw-rw-r-- 1 mingo mingo 13859 2009-06-24 10:01 symbol.c
--rw-rw-r-- 1 mingo mingo  1112 2009-06-23 10:52 symbol.h
--rw-rw-r-- 1 mingo mingo  1690 2009-06-23 10:49 usage.c
--rw-rw-r-- 1 mingo mingo  9878 2009-06-23 10:52 util.h
--rw-rw-r-- 1 mingo mingo  4249 2009-06-23 10:49 wrapper.c
+     o--o--o--o--*--* master
+                     \
+                      r--r--f--f TOPIC
 
-	Ingo
+  He now wants to push that structure to B, so that R can
+  later pull the updated world.  Based on some experiments,
+  he does (in L):
+
+     $ git checkout master
+     $ git push --tags ssh://.../B.git  +:
+
+  (I'm not sure why he is using `--tags', or `+:' instead
+  of a simple `:') but reports what happens is the `push'
+  gets the error(?):
+
+     fatal: remote part of refspec is not a valid name in +:
+
+   Given that `git help push' (1.6.2.2) lists/describes the
+  `+:' <refspec>, I'm (extra) baffled.  What's going on?
+
+   Each of the repositories L, B, R, and M are on different
+  machines, and it is highly probable different versions of
+  git are being used.
+
+   In a simple simulation test I tried, it not only worked
+  for me, but the subsequent pull from simulated-B into
+  simulated-R said the TOPIC was a "(forced update)".
+  What does that mean?
+
+   And what is it my colleague should consider doing (or,
+  reading?)?
+
+  Again, apologies for the length!
+
+cheers,
+	-blf-
+
+--=20
+=E2=80=9CHow many surrealists does it take to   | Brian Foster
+ change a lightbulb? Three. One calms   | somewhere in south of France
+ the warthog, and two fill the bathtub  |   Stop E$$o (ExxonMobil)!
+ with brightly-coloured machine tools.=E2=80=9D |      http://www.stope=
+sso.com
