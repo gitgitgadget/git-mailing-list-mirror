@@ -1,56 +1,65 @@
-From: Sitaram Chamarty <sitaramc@gmail.com>
-Subject: Re: work git behind a proxy
-Date: Wed, 24 Jun 2009 00:11:36 +0000 (UTC)
-Organization: disorganised!
-Message-ID: <slrnh42rpo.cu4.sitaramc@sitaramc.homelinux.net>
-References: <200906231315.33072.albertom@uci.cu>
+From: Larry D'Anna <larry@elder-gods.org>
+Subject: Re: [PATCH] add --porcelain option to git-push
+Date: Tue, 23 Jun 2009 20:26:51 -0400
+Message-ID: <20090624002651.GA27460@cthulhu>
+References: <20090622214032.GC19364@coredump.intra.peff.net> <20090623011001.GA15352@cthulhu> <85647ef50906231538m118120adnd2292b65ec953baa@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jun 24 02:12:01 2009
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Constantine Plotnikov <constantine.plotnikov@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jun 24 02:27:05 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MJG5o-0003zu-Kg
-	for gcvg-git-2@gmane.org; Wed, 24 Jun 2009 02:12:01 +0200
+	id 1MJGKO-0007ir-QP
+	for gcvg-git-2@gmane.org; Wed, 24 Jun 2009 02:27:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756415AbZFXALu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 23 Jun 2009 20:11:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753385AbZFXALt
-	(ORCPT <rfc822;git-outgoing>); Tue, 23 Jun 2009 20:11:49 -0400
-Received: from main.gmane.org ([80.91.229.2]:53872 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751955AbZFXALt (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 23 Jun 2009 20:11:49 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1MJG5c-0005LO-N9
-	for git@vger.kernel.org; Wed, 24 Jun 2009 00:11:48 +0000
-Received: from atcmail.atc.tcs.co.in ([203.200.212.145])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 24 Jun 2009 00:11:48 +0000
-Received: from sitaramc by atcmail.atc.tcs.co.in with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 24 Jun 2009 00:11:48 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: atcmail.atc.tcs.co.in
-User-Agent: slrn/0.9.9 (Linux)
+	id S1750975AbZFXA0y convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 23 Jun 2009 20:26:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750800AbZFXA0x
+	(ORCPT <rfc822;git-outgoing>); Tue, 23 Jun 2009 20:26:53 -0400
+Received: from cthulhu.elder-gods.org ([140.239.99.253]:55028 "EHLO
+	cthulhu.elder-gods.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750739AbZFXA0w (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 23 Jun 2009 20:26:52 -0400
+Received: by cthulhu.elder-gods.org (Postfix, from userid 1000)
+	id 5632982207F; Tue, 23 Jun 2009 20:26:51 -0400 (EDT)
+Content-Disposition: inline
+In-Reply-To: <85647ef50906231538m118120adnd2292b65ec953baa@mail.gmail.com>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122116>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122117>
 
-On 2009-06-23 17:15:32, kodenix <albertom@uci.cu> wrote:
->
-> Hello friends!!!
->
-> I,m new Git user , I need someone explain me how can I configure git to work 
-> behind a proxy  
+* Constantine Plotnikov (constantine.plotnikov@gmail.com) [090623 18:38=
+]:
+> On Tue, Jun 23, 2009 at 5:10 AM, Larry D'Anna<larry@elder-gods.org> w=
+rote:
+> > If --porcelain is used git-push will produce machine-readable outpu=
+t. =A0The
+> > output status line for each ref will be tab-separated and sent to s=
+tdout instead
+> > of stderr. =A0The full symbolic names of the refs will be given. =A0=
+=46or example
+> >
+> BTW is it possible to have --porcelain + -v together. A machine
+> readable progress output would come very handy for IDEs and other GUI
+> tools that use command line tools.
 
-http://sitaramc.github.com/tips/git-over-proxy.html may be
-of some help, although there are better tutorials if you
-google around
+My patch makes --porcelain imply some of what -v does, but not all.
+Specifically --porcelain will output a status line for each ref that's =
+to be
+updated, weather -v is selected or not.  However -v enables some other =
+output
+besides that.  There's nothing stopping you from selecting -v and --por=
+celain.
+Basically --porcelain only affects the per-ref status lines.  All other=
+ aspects
+of git-push are the same.
+
+
+        --larry
