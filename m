@@ -1,91 +1,191 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: Re: names using git config
-Date: Wed, 24 Jun 2009 19:06:55 +0200
-Message-ID: <vpqljnhv9w0.fsf@bauges.imag.fr>
-References: <376636be0906240958l70c81b68g83340556f2bf4eca@mail.gmail.com>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: [JGIT PATCH 3/2] Support extracting emails from Signed-off-by lines
+Date: Wed, 24 Jun 2009 10:30:29 -0700
+Message-ID: <20090624173029.GF11191@spearce.org>
+References: <1245813109-29763-1-git-send-email-spearce@spearce.org> <1245813109-29763-2-git-send-email-spearce@spearce.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Ryan <ryanphilips19@googlemail.com>
-X-From: git-owner@vger.kernel.org Wed Jun 24 19:07:20 2009
+To: Robin Rosenberg <robin.rosenberg@dewire.com>
+X-From: git-owner@vger.kernel.org Wed Jun 24 19:30:39 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MJVwL-0001Yj-PV
-	for gcvg-git-2@gmane.org; Wed, 24 Jun 2009 19:07:18 +0200
+	id 1MJWIw-0003Ld-F2
+	for gcvg-git-2@gmane.org; Wed, 24 Jun 2009 19:30:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754437AbZFXRHE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 24 Jun 2009 13:07:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753510AbZFXRHE
-	(ORCPT <rfc822;git-outgoing>); Wed, 24 Jun 2009 13:07:04 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:39102 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753125AbZFXRHD (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 24 Jun 2009 13:07:03 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id n5OH6eGE016868
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Wed, 24 Jun 2009 19:06:40 +0200
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
-	(Exim 4.50)
-	id 1MJVvz-0001xg-Eg; Wed, 24 Jun 2009 19:06:55 +0200
-Received: from moy by bauges.imag.fr with local (Exim 4.63)
-	(envelope-from <moy@imag.fr>)
-	id 1MJVvz-0002SR-DG; Wed, 24 Jun 2009 19:06:55 +0200
-In-Reply-To: <376636be0906240958l70c81b68g83340556f2bf4eca@mail.gmail.com> (Ryan's message of "Wed\, 24 Jun 2009 22\:28\:40 +0530")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.0.91 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Wed, 24 Jun 2009 19:06:40 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: n5OH6eGE016868
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
-MailScanner-NULL-Check: 1246468004.59005@3Q2D5wk+y9DBI6rkUzeCgQ
+	id S1754060AbZFXRa1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 24 Jun 2009 13:30:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753106AbZFXRa1
+	(ORCPT <rfc822;git-outgoing>); Wed, 24 Jun 2009 13:30:27 -0400
+Received: from george.spearce.org ([209.20.77.23]:51834 "EHLO
+	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751485AbZFXRa0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 24 Jun 2009 13:30:26 -0400
+Received: by george.spearce.org (Postfix, from userid 1001)
+	id 5D60A381FD; Wed, 24 Jun 2009 17:30:29 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <1245813109-29763-2-git-send-email-spearce@spearce.org>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122146>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122147>
 
-Ryan <ryanphilips19@googlemail.com> writes:
+A typical Signed-off-by footer line can be seen below in this
+message, and it clearly contains an email address (or at least
+a user@domain sort of reference to the identity).  This identity
+may need to be parsed out of a footer line by application code,
+to match the Signed-off-by line back to the author or the committer
+of the commit, or to some external datastore.
 
-> How do i select a Name which ends in a dot something like Ryan W.
-> Philips in Git using  git config user.name
->
-> Because when i do that "Ryan W. Philips" It just comes and Ryan W
-> Philips in git log when i add a commit.
+Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
+---
+ .../org/spearce/jgit/revwalk/FooterLineTest.java   |   40 ++++++++++++++++++++
+ .../src/org/spearce/jgit/revwalk/FooterLine.java   |   24 ++++++++++++
+ 2 files changed, 64 insertions(+), 0 deletions(-)
 
-Can't reproduce here:
-
-$ mkdir git
-$ cd git/
-$ git init
-Initialized empty Git repository in /tmp/git/.git/
-$ git config user.name 'Matthieu M. Moy'
-$ cat .git/config 
-[core]
-        repositoryformatversion = 0
-        filemode = true
-        bare = false
-        logallrefupdates = true
-[user]
-        name = Matthieu M. Moy
-$ touch foo; git add foo
-$ git commit -m "foo"
-[master (root-commit) 6814174] foo
- 0 files changed, 0 insertions(+), 0 deletions(-)
- create mode 100644 foo
-$ git log
-commit 681417491423260ad13c3fb59c28fc96a68bf4f9
-Author: Matthieu M. Moy <Matthieu.Moy@imag.fr>
-Date:   Wed Jun 24 19:05:43 2009 +0200
-
-    foo
-$ git version
-git version 1.6.3.rc1.35.gabb3a
-$ 
-
+diff --git a/org.spearce.jgit.test/tst/org/spearce/jgit/revwalk/FooterLineTest.java b/org.spearce.jgit.test/tst/org/spearce/jgit/revwalk/FooterLineTest.java
+index 342346f..431c170 100644
+--- a/org.spearce.jgit.test/tst/org/spearce/jgit/revwalk/FooterLineTest.java
++++ b/org.spearce.jgit.test/tst/org/spearce/jgit/revwalk/FooterLineTest.java
+@@ -105,6 +105,7 @@ public void testSignedOffBy_OneUserNoLF() {
+ 		f = footers.get(0);
+ 		assertEquals("Signed-off-by", f.getKey());
+ 		assertEquals("A. U. Thor <a@example.com>", f.getValue());
++		assertEquals("a@example.com", f.getEmailAddress());
+ 	}
+ 
+ 	public void testSignedOffBy_OneUserWithLF() {
+@@ -119,6 +120,7 @@ public void testSignedOffBy_OneUserWithLF() {
+ 		f = footers.get(0);
+ 		assertEquals("Signed-off-by", f.getKey());
+ 		assertEquals("A. U. Thor <a@example.com>", f.getValue());
++		assertEquals("a@example.com", f.getEmailAddress());
+ 	}
+ 
+ 	public void testSignedOffBy_IgnoreWhitespace() {
+@@ -136,6 +138,7 @@ public void testSignedOffBy_IgnoreWhitespace() {
+ 		f = footers.get(0);
+ 		assertEquals("Signed-off-by", f.getKey());
+ 		assertEquals("A. U. Thor <a@example.com>  ", f.getValue());
++		assertEquals("a@example.com", f.getEmailAddress());
+ 	}
+ 
+ 	public void testEmptyValueNoLF() {
+@@ -150,6 +153,7 @@ public void testEmptyValueNoLF() {
+ 		f = footers.get(0);
+ 		assertEquals("Signed-off-by", f.getKey());
+ 		assertEquals("", f.getValue());
++		assertNull(f.getEmailAddress());
+ 	}
+ 
+ 	public void testEmptyValueWithLF() {
+@@ -164,6 +168,7 @@ public void testEmptyValueWithLF() {
+ 		f = footers.get(0);
+ 		assertEquals("Signed-off-by", f.getKey());
+ 		assertEquals("", f.getValue());
++		assertNull(f.getEmailAddress());
+ 	}
+ 
+ 	public void testShortKey() {
+@@ -178,6 +183,37 @@ public void testShortKey() {
+ 		f = footers.get(0);
+ 		assertEquals("K", f.getKey());
+ 		assertEquals("V", f.getValue());
++		assertNull(f.getEmailAddress());
++	}
++
++	public void testNonDelimtedEmail() {
++		final RevCommit commit = parse("subject\n\nbody of commit\n" + "\n"
++				+ "Acked-by: re@example.com\n");
++		final List<FooterLine> footers = commit.getFooterLines();
++		FooterLine f;
++
++		assertNotNull(footers);
++		assertEquals(1, footers.size());
++
++		f = footers.get(0);
++		assertEquals("Acked-by", f.getKey());
++		assertEquals("re@example.com", f.getValue());
++		assertEquals("re@example.com", f.getEmailAddress());
++	}
++
++	public void testNotEmail() {
++		final RevCommit commit = parse("subject\n\nbody of commit\n" + "\n"
++				+ "Acked-by: Main Tain Er\n");
++		final List<FooterLine> footers = commit.getFooterLines();
++		FooterLine f;
++
++		assertNotNull(footers);
++		assertEquals(1, footers.size());
++
++		f = footers.get(0);
++		assertEquals("Acked-by", f.getKey());
++		assertEquals("Main Tain Er", f.getValue());
++		assertNull(f.getEmailAddress());
+ 	}
+ 
+ 	public void testSignedOffBy_ManyUsers() {
+@@ -197,18 +233,22 @@ public void testSignedOffBy_ManyUsers() {
+ 		f = footers.get(0);
+ 		assertEquals("Signed-off-by", f.getKey());
+ 		assertEquals("A. U. Thor <a@example.com>", f.getValue());
++		assertEquals("a@example.com", f.getEmailAddress());
+ 
+ 		f = footers.get(1);
+ 		assertEquals("CC", f.getKey());
+ 		assertEquals("<some.mailing.list@example.com>", f.getValue());
++		assertEquals("some.mailing.list@example.com", f.getEmailAddress());
+ 
+ 		f = footers.get(2);
+ 		assertEquals("Acked-by", f.getKey());
+ 		assertEquals("Some Reviewer <sr@example.com>", f.getValue());
++		assertEquals("sr@example.com", f.getEmailAddress());
+ 
+ 		f = footers.get(3);
+ 		assertEquals("Signed-off-by", f.getKey());
+ 		assertEquals("Main Tain Er <mte@example.com>", f.getValue());
++		assertEquals("mte@example.com", f.getEmailAddress());
+ 	}
+ 
+ 	public void testSignedOffBy_SkipNonFooter() {
+diff --git a/org.spearce.jgit/src/org/spearce/jgit/revwalk/FooterLine.java b/org.spearce.jgit/src/org/spearce/jgit/revwalk/FooterLine.java
+index 1fef47d..b28f52d 100644
+--- a/org.spearce.jgit/src/org/spearce/jgit/revwalk/FooterLine.java
++++ b/org.spearce.jgit/src/org/spearce/jgit/revwalk/FooterLine.java
+@@ -114,6 +114,30 @@ public String getValue() {
+ 		return RawParseUtils.decode(enc, buffer, valStart, valEnd);
+ 	}
+ 
++	/**
++	 * Extract the email address (if present) from the footer.
++	 * <p>
++	 * If there is an email address looking string inside of angle brackets
++	 * (e.g. "<a@b>"), the return value is the part extracted from inside the
++	 * brackets. If no brackets are found, then {@link #getValue()} is returned
++	 * if the value contains an '@' sign. Otherwise, null.
++	 *
++	 * @return email address appearing in the value of this footer, or null.
++	 */
++	public String getEmailAddress() {
++		final int lt = RawParseUtils.nextLF(buffer, valStart, '<');
++		if (valEnd <= lt) {
++			final int at = RawParseUtils.nextLF(buffer, valStart, '@');
++			if (valStart < at && at < valEnd)
++				return getValue();
++			return null;
++		}
++		final int gt = RawParseUtils.nextLF(buffer, lt, '>');
++		if (valEnd < gt)
++			return null;
++		return RawParseUtils.decode(enc, buffer, lt, gt - 1);
++	}
++
+ 	@Override
+ 	public String toString() {
+ 		return getKey() + ": " + getValue();
 -- 
-Matthieu
+1.6.3.3.420.gd4b46
