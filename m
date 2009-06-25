@@ -1,108 +1,76 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: [PATCH] git svn: Support multiple branch and tag paths in the
-	svn repository.
-Date: Thu, 25 Jun 2009 02:36:02 -0700
-Message-ID: <20090625093602.GA3997@dcvr.yhbt.net>
-References: <4A3A4945.6050307@drmicha.warpmail.net> <1245335463-4488-1-git-send-email-git@drmicha.warpmail.net> <4A3F9A44.8070805@xiplink.com> <4A410A90.1090101@xiplink.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: git pull merges current branch even when <dst> is specified
+Date: Thu, 25 Jun 2009 11:44:17 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.0906251142550.5365@intel-tinevez-2-302>
+References: <1245862052581-3149948.post@n2.nabble.com> <4A433AC8.4040702@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Michael J Gruber <git@drmicha.warpmail.net>, git@vger.kernel.org
-To: Marc Branchaud <marcnarc@xiplink.com>
-X-From: git-owner@vger.kernel.org Thu Jun 25 11:37:00 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Tom Lambda <tom.lambda@gmail.com>, git@vger.kernel.org
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Thu Jun 25 11:45:00 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MJlNL-0004nO-Gn
-	for gcvg-git-2@gmane.org; Thu, 25 Jun 2009 11:36:12 +0200
+	id 1MJlVM-0002JW-4t
+	for gcvg-git-2@gmane.org; Thu, 25 Jun 2009 11:44:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755948AbZFYJgB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 25 Jun 2009 05:36:01 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755941AbZFYJgA
-	(ORCPT <rfc822;git-outgoing>); Thu, 25 Jun 2009 05:36:00 -0400
-Received: from dcvr.yhbt.net ([64.71.152.64]:46115 "EHLO dcvr.yhbt.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755894AbZFYJf7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 25 Jun 2009 05:35:59 -0400
-Received: from localhost (unknown [127.0.2.5])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BE1DF1F44D;
-	Thu, 25 Jun 2009 09:36:02 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <4A410A90.1090101@xiplink.com>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+	id S1751548AbZFYJoS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 25 Jun 2009 05:44:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751324AbZFYJoR
+	(ORCPT <rfc822;git-outgoing>); Thu, 25 Jun 2009 05:44:17 -0400
+Received: from mail.gmx.net ([213.165.64.20]:45038 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751312AbZFYJoQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 Jun 2009 05:44:16 -0400
+Received: (qmail invoked by alias); 25 Jun 2009 09:44:17 -0000
+Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
+  by mail.gmx.net (mp006) with SMTP; 25 Jun 2009 11:44:17 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19bjIJaRExbtE6keaquA2A7EBeR6o8j07Pa408sEb
+	Uxdg8nn0ornWGn
+X-X-Sender: schindel@intel-tinevez-2-302
+In-Reply-To: <4A433AC8.4040702@drmicha.warpmail.net>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.62
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122188>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122189>
 
-Marc Branchaud <marcnarc@xiplink.com> wrote:
-> This enables git-svn.perl to read multiple 'branches' and 'tags' entries in
-> svn-remote config sections.  The init and clone subcommands also support
-> multiple --branches and --tags arguments.
+Hi,
+
+On Thu, 25 Jun 2009, Michael J Gruber wrote:
+
+> Tom Lambda venit, vidit, dixit 24.06.2009 18:47:
+> > 
+> > If I am in 'master' and 'bugfix' is a remote branch in 'repo' which I do not
+> > have locally yet, running:
+> > 
+> > git pull repo bugfix:bugfix
+> > 
+> > creates a new local branch 'bugfix' equals to 'repo/bugfix' as expected.
+> > However, it also merges 'bugfix' into 'master', that surprises me since I
+> > explicitly specify that <dst> is 'bugfix'.
+> > 
+> > I know that I can get what I want by running:
+> > 
+> > git fetch repo bugfix:bugfix
+> > 
+> > But the git-pull behavior looks odd to me. I thought that <dst> was the
+> > current branch by default and it could be overridden by specifying it in the
+> > command line.
 > 
-> The branch (and tag) subcommand gets a new argument: --destination (or -d).
-> This argument is required if there are multiple branches (or tags) entries
-> configured for the remote Subversion repository.  The argument's value
-> specifies which branch (or tag) path to use to create the branch (or tag).
-> The specified value must match the left side (without wildcards) of one of
-> the branches (or tags) refspecs in the svn-remote's config.
+> Well, the first line of git-pull's man page says:
 > 
-> Signed-off-by: Marc Branchaud <marcnarc@xiplink.com>
-> ---
-> 
-> I got carried away making unit tests and went and implemented most of this...
-> 
-> I'm fairly happy with this, except for the way the branch subcommand matches
-> refspecs.  The patch does a simple string comparison, but it'd be better to do
-> an actual glob.  I just couldn't track down the right function for that, so I
-> left it as a strcmp and hope that a gitizen can tell me how to glob here.
-> 
-> (ps. I'm trying a new way to send patches -- apologies if it's mangled!)
+> Runs git-fetch with the given parameters, and calls git-merge to merge
+> the retrieved head(s) into the current branch.
 
-Thanks Marc!  Everything looks fine here; I don't think I'll have time
-to test it myself any time soon but your test case looks good and
-doesn't break any of the other tests :)  Sorry for the delay, I haven't
-had access to my computer or email much in the past few weeks.
+To explain why this is so: Merging is an operation that requires a working 
+directory, as merge conflicts can happen.  That is why merging is only 
+possible locally, and only into the current branch.
 
-Acked and and pushed out to git://git.bogomips.org/git-svn along with a
-followup patch to convert the glob to a regexp for branching:
-
->From f7050599310c18bd67b35b8d59486116b30ff1f6 Mon Sep 17 00:00:00 2001
-From: Eric Wong <normalperson@yhbt.net>
-Date: Thu, 25 Jun 2009 02:28:15 -0700
-Subject: [PATCH] git-svn: convert globs to regexps for branch destinations
-
-Marc Branchaud wrote:
-> I'm fairly happy with this, except for the way the branch
-> subcommand matches refspecs.  The patch does a simple string
-> comparison, but it'd be better to do an actual glob.  I just
-> couldn't track down the right function for that, so I left it as
-> a strcmp and hope that a gitizen can tell me how to glob here.
-
-Signed-off-by: Eric Wong <normalperson@yhbt.net>
----
-
- I haven't actually tested it, and yes, it should probably be
- moved to Git.pm even though it's not necessarily git-only...
-
- git-svn.perl |    4 +++-
- 1 files changed, 3 insertions(+), 1 deletions(-)
-
-diff --git a/git-svn.perl b/git-svn.perl
-index 48e8aad..6c42e2a 100755
---- a/git-svn.perl
-+++ b/git-svn.perl
-@@ -646,7 +646,9 @@ sub cmd_branch {
- 		            " with the --destination argument.\n";
- 		}
- 		foreach my $g (@{$allglobs}) {
--			if ($_branch_dest eq $g->{path}->{left}) {
-+			# SVN::Git::Editor could probably be moved to Git.pm..
-+			my $re = SVN::Git::Editor::glob2pat($g->{path}->{left});
-+			if ($_branch_dest =~ /$re/) {
- 				$glob = $g;
- 				last;
- 			}
--- 
-Eric Wong
+Ciao,
+Dscho
