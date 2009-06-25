@@ -1,86 +1,69 @@
-From: Jakub Narebski <jnareb@gmail.com>
+From: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
 Subject: Re: [PATCHv5 1/3] gitweb: refactor author name insertion
-Date: Thu, 25 Jun 2009 09:39:55 +0200
-Message-ID: <200906250939.56361.jnareb@gmail.com>
-References: <1245878183-2967-1-git-send-email-giuseppe.bilotta@gmail.com> <1245878183-2967-2-git-send-email-giuseppe.bilotta@gmail.com>
+Date: Thu, 25 Jun 2009 10:04:34 +0200
+Message-ID: <cb7bb73a0906250104u46da8299q198f83acd1291387@mail.gmail.com>
+References: <1245878183-2967-1-git-send-email-giuseppe.bilotta@gmail.com>
+	 <1245878183-2967-2-git-send-email-giuseppe.bilotta@gmail.com>
+	 <200906250939.56361.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-2"
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
 	Aaron Crane <git@aaroncrane.co.uk>,
 	Nanako Shiraishi <nanako3@lavabit.com>
-To: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jun 25 09:40:17 2009
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jun 25 10:04:53 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MJjZA-0002U8-KJ
-	for gcvg-git-2@gmane.org; Thu, 25 Jun 2009 09:40:17 +0200
+	id 1MJjwt-0004fR-RV
+	for gcvg-git-2@gmane.org; Thu, 25 Jun 2009 10:04:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753794AbZFYHkF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 25 Jun 2009 03:40:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753662AbZFYHkE
-	(ORCPT <rfc822;git-outgoing>); Thu, 25 Jun 2009 03:40:04 -0400
-Received: from mail-fx0-f213.google.com ([209.85.220.213]:56967 "EHLO
-	mail-fx0-f213.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753554AbZFYHkD (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 25 Jun 2009 03:40:03 -0400
-Received: by fxm9 with SMTP id 9so1254015fxm.37
-        for <git@vger.kernel.org>; Thu, 25 Jun 2009 00:40:05 -0700 (PDT)
+	id S1752963AbZFYIEh convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 25 Jun 2009 04:04:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752246AbZFYIEg
+	(ORCPT <rfc822;git-outgoing>); Thu, 25 Jun 2009 04:04:36 -0400
+Received: from mail-bw0-f213.google.com ([209.85.218.213]:59185 "EHLO
+	mail-bw0-f213.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751679AbZFYIEd convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 25 Jun 2009 04:04:33 -0400
+Received: by bwz9 with SMTP id 9so1222076bwz.37
+        for <git@vger.kernel.org>; Thu, 25 Jun 2009 01:04:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=uhWRy9XOR5G6XfSKBhorrYE2V9Dv6QHPGdGN9/FB8KU=;
-        b=s+IYJTLGwwDtMSBLcL5a1foG5PLjHl8PDzG3hlG8CcCaYf5+BbRxByY1RaZDjB6o4l
-         rTJRWH+F3D1oqv2stKAKFlH6lK58bEhoIYYsmqznfVEQCJ/OJTnYMDwZAGX3w1ndFf0+
-         gsE/zyA6mLNdEWGdhWHABLbveC4lM5PxlVAAQ=
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=A1Ozat9LomNBOKx+KwfKo1nt5Kmo1xCzqHzfof3AEIg=;
+        b=W5Vi1LwccYYUIwTg6QW0El4zxrxaFELrb1a+l/n5k0jjdxMOMVpuMaJl/5I6ym7NCM
+         GxEOlPe60Za3XnAxMnPK1k1Vg/Kt+S90ycv/yNnrrFDCpw1KfXwU7wVh725BgZ2sGL/a
+         yjdnPMzcNrJQVCx9y/pCUVazp4+gjStKanpW4=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=d7njOB7l2flcYEEX3rL7CG7Uyu3P/JbHjOB2L3PKc1ryTQ9YDDaASp3TJQA9iGwNlA
-         KzB4+t6Vza0kwxxc2ISGD+cwOy6jFLpJ9dOFQ+TMp/Mhq2ma5xh+a4BudKw9HAM1aHej
-         a8qczull6qxSmfLvS1sqyhVCmTawq8MrUIiQU=
-Received: by 10.103.213.19 with SMTP id p19mr1327716muq.32.1245915605039;
-        Thu, 25 Jun 2009 00:40:05 -0700 (PDT)
-Received: from ?192.168.1.13? (abvy107.neoplus.adsl.tpnet.pl [83.8.222.107])
-        by mx.google.com with ESMTPS id j9sm9451610mue.21.2009.06.25.00.40.03
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 25 Jun 2009 00:40:04 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <1245878183-2967-2-git-send-email-giuseppe.bilotta@gmail.com>
-Content-Disposition: inline
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=kKV3o82rGJP1GJv2Xa9cDoHK0vZdTg+i3jqZJhAYbkzJhU+Vhxgbn3lWoAhpyg4euo
+         ZoXeIFwB+gE/3Gdu5+/FgZKH2V5+Tld6pSA8fuXFEW7mbLVhMZPaw7eEEtiJlBTyJZ4u
+         B9brbbE+fYu8Mwn779VMBx+i0TmaI/rPvq1B8=
+Received: by 10.204.53.143 with SMTP id m15mr2219508bkg.119.1245917074443; 
+	Thu, 25 Jun 2009 01:04:34 -0700 (PDT)
+In-Reply-To: <200906250939.56361.jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122182>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122183>
 
-On Wed, 24 June 2009, Giuseppe Bilotta wrote:
+2009/6/25 Jakub Narebski <jnareb@gmail.com>:
+>
+> Could you please state here, in the comments area, what are the
+> differences between v4 (previous) and v5 (current) version of patch,
+> and if there are any? =A0It helps with patch review...
 
-> The refactoring allows easier customization of the output by means of
-> CSS and improves extensibility on the CGI side too.
-> 
-> Layout is preserved for all views except for 'commitdiff', which now
-> uses the same format as 'commit'.
-> 
-> Signed-off-by: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-> ---
+Sorry. This patch was untouched because I only received your comments
+on it this morning. I'm working on it right now so expect and new
+patch series soon.
 
-Could you please state here, in the comments area, what are the 
-differences between v4 (previous) and v5 (current) version of patch,
-and if there are any?  It helps with patch review...
-
->  gitweb/gitweb.css  |    5 ++-
->  gitweb/gitweb.perl |   79 +++++++++++++++++++++++++++++++---------------------
->  2 files changed, 51 insertions(+), 33 deletions(-)
-
-
--- 
-Jakub Narebski
-Poland
+--=20
+Giuseppe "Oblomov" Bilotta
