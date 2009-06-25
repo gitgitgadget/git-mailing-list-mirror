@@ -1,80 +1,73 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: Could this be done simpler?
-Date: Thu, 25 Jun 2009 15:50:19 -0700 (PDT)
-Message-ID: <alpine.LFD.2.01.0906251544030.3605@localhost.localdomain>
-References: <alpine.LFD.2.01.0906241426120.3154@localhost.localdomain> <7veit9m8cs.fsf@alter.siamese.dyndns.org> <200906260002.40531.chriscool@tuxfamily.org> <200906260023.03169.chriscool@tuxfamily.org> <7vprcsymjd.fsf@alter.siamese.dyndns.org>
+From: Kjetil Barvik <barvik@broadpark.no>
+Subject: Re: Troubles when directory is replaced by symlink
+Date: Fri, 26 Jun 2009 00:51:35 +0200
+Organization: private
+Message-ID: <86bpocsz9k.fsf@broadpark.no>
+References: <c6c947f60906042243v2e36251dn9a46343cf6b8a2f4@mail.gmail.com>
+ <c6c947f60906090118n78d3c40fq11d1390f8776c2c0@mail.gmail.com>
+ <20090611114846.GC4409@coredump.intra.peff.net> <861vpmkhob.fsf@broadpark.no>
+ <885649360906241507r6ac78495s802f8b7758bcabf9@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Christian Couder <chriscool@tuxfamily.org>,
-	Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jun 26 00:51:06 2009
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7BIT
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Jeff King <peff@peff.net>,
+	Alexander Gladysh <agladysh@gmail.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>
+To: James Pickens <jepicken@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jun 26 00:54:40 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MJxma-0004mg-Ma
-	for gcvg-git-2@gmane.org; Fri, 26 Jun 2009 00:51:05 +0200
+	id 1MJxq3-0005pN-3s
+	for gcvg-git-2@gmane.org; Fri, 26 Jun 2009 00:54:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755665AbZFYWu2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 25 Jun 2009 18:50:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753768AbZFYWu2
-	(ORCPT <rfc822;git-outgoing>); Thu, 25 Jun 2009 18:50:28 -0400
-Received: from smtp1.linux-foundation.org ([140.211.169.13]:59659 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751893AbZFYWu0 (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 25 Jun 2009 18:50:26 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
-	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id n5PMoKKD016494
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Thu, 25 Jun 2009 15:50:21 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id n5PMoJ6v017559;
-	Thu, 25 Jun 2009 15:50:20 -0700
-X-X-Sender: torvalds@localhost.localdomain
-In-Reply-To: <7vprcsymjd.fsf@alter.siamese.dyndns.org>
-User-Agent: Alpine 2.01 (LFD 1184 2008-12-16)
-X-Spam-Status: No, hits=-3.47 required=5 tests=AWL,BAYES_00
-X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
+	id S1754153AbZFYWy3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 25 Jun 2009 18:54:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753440AbZFYWy2
+	(ORCPT <rfc822;git-outgoing>); Thu, 25 Jun 2009 18:54:28 -0400
+Received: from bgo1smout1.broadpark.no ([217.13.4.94]:35130 "EHLO
+	bgo1smout1.broadpark.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752786AbZFYWy1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 Jun 2009 18:54:27 -0400
+Received: from bgo1sminn1.broadpark.no ([217.13.4.93])
+ by bgo1smout1.broadpark.no
+ (Sun Java(tm) System Messaging Server 6.3-3.01 (built Jul 12 2007; 32bit))
+ with ESMTP id <0KLT00BD5GW9R450@bgo1smout1.broadpark.no> for
+ git@vger.kernel.org; Fri, 26 Jun 2009 00:52:57 +0200 (CEST)
+Received: from localhost ([84.48.79.229]) by bgo1sminn1.broadpark.no
+ (Sun Java(tm) System Messaging Server 6.3-3.01 (built Jul 12 2007; 32bit))
+ with ESMTP id <0KLT007W7GW81AA0@bgo1sminn1.broadpark.no> for
+ git@vger.kernel.org; Fri, 26 Jun 2009 00:52:57 +0200 (CEST)
+In-reply-to: <885649360906241507r6ac78495s802f8b7758bcabf9@mail.gmail.com>
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122253>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122254>
 
+James Pickens <jepicken@gmail.com> writes:
 
+> On Sun, Jun 14, 2009, Kjetil Barvik<barvik@broadpark.no> wrote:
+>> From: Kjetil Barvik <barvik@broadpark.no>
+>> Date: Sun, 14 Jun 2009 15:08:28 +0200
+>> Subject: [PATCH] lstat_cache: guard against full match of length of 'name' parameter
+>
+> My project ran into this bug today, and I can confirm that this patch
+> fixes it.  I think it's an important bug; it hasn't been mentioned yet,
+> but this can result in lost work if the user had modified, but not added,
+> one of the files that Git wrongly deleted.
+>
+> So, what's the status of this patch?
 
-On Thu, 25 Jun 2009, Junio C Hamano wrote:
-> 
-> Such a decomposed octopus would _only_ be necessary during bisection, only
-> when the user chooses to test two tips at once (instead of testing one by
-> one), _and_ only its tree is needed for that purpose.  In other words, we
-> should be able to do this _without_ creating an extra commit, let alone
-> replace mechanism.
+  Sorry, have not have much time, and did not get any response on the
+  patch, and I almost forgot about it for a while.
 
-Keep in mind, though, that realistically, I don't think we've ever seen 
-any bisection attempts that end at an octopus.
+  But, since you say that the patch is ok, I shall try make a more
+  "final" patch by 14:00 UTC Friday 26.
 
-Sure, I suspect that being really clever about decomposing an octopus 
-merge might allow us to bisect things _faster_ to one of the branches 
-involved in the merge, but the amount of smarts to do that just for that 
-reason seems pretty outlandish.
+  Thanks for reminding me!
 
-And if we ever do end up with an actual bug being bisected to the octopus 
-merge itself, at that point I don't think it's unreasonable to take the 
-same approach we do with any normal merge: just try to figure out what the 
-conflict is all about (clearly it's not a data conflict, since the 
-octopus wouldn't have succeeded in that case, but subtle merge errors can 
-be due to two branches each introducing their own assumptions without 
-actually ever clashing on a source file level).
-
-With regular merges, if you really don't see what the conceptual conflict 
-is, you could try to do a temporary rebase to try to figure it out, and I 
-suspect that that is what you'd want to do with an octopus merge too - 
-rather than try to decompose the octopus merge into multiple simpler 
-merges, you'd like to try to linearize history and then re-do the 
-bisection attempt on that totally modified/simplified history.
-
-			Linus
+  -- kjetil
