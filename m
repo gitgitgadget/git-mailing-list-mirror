@@ -1,69 +1,104 @@
-From: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-Subject: Re: [PATCHv5 1/3] gitweb: refactor author name insertion
-Date: Thu, 25 Jun 2009 10:04:34 +0200
-Message-ID: <cb7bb73a0906250104u46da8299q198f83acd1291387@mail.gmail.com>
-References: <1245878183-2967-1-git-send-email-giuseppe.bilotta@gmail.com>
-	 <1245878183-2967-2-git-send-email-giuseppe.bilotta@gmail.com>
-	 <200906250939.56361.jnareb@gmail.com>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: Improving git-svn documentation
+Date: Thu, 25 Jun 2009 01:47:27 -0700
+Message-ID: <20090625084727.GA2901@dcvr.yhbt.net>
+References: <20090617201851.GA6123@nan92-1-81-57-214-146.fbx.proxad.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Aaron Crane <git@aaroncrane.co.uk>,
-	Nanako Shiraishi <nanako3@lavabit.com>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jun 25 10:04:53 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: GIT list <git@vger.kernel.org>
+To: Yann Dirson <ydirson@altern.org>
+X-From: git-owner@vger.kernel.org Thu Jun 25 10:47:59 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MJjwt-0004fR-RV
-	for gcvg-git-2@gmane.org; Thu, 25 Jun 2009 10:04:48 +0200
+	id 1MJkce-0007u0-0E
+	for gcvg-git-2@gmane.org; Thu, 25 Jun 2009 10:47:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752963AbZFYIEh convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 25 Jun 2009 04:04:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752246AbZFYIEg
-	(ORCPT <rfc822;git-outgoing>); Thu, 25 Jun 2009 04:04:36 -0400
-Received: from mail-bw0-f213.google.com ([209.85.218.213]:59185 "EHLO
-	mail-bw0-f213.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751679AbZFYIEd convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 25 Jun 2009 04:04:33 -0400
-Received: by bwz9 with SMTP id 9so1222076bwz.37
-        for <git@vger.kernel.org>; Thu, 25 Jun 2009 01:04:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=A1Ozat9LomNBOKx+KwfKo1nt5Kmo1xCzqHzfof3AEIg=;
-        b=W5Vi1LwccYYUIwTg6QW0El4zxrxaFELrb1a+l/n5k0jjdxMOMVpuMaJl/5I6ym7NCM
-         GxEOlPe60Za3XnAxMnPK1k1Vg/Kt+S90ycv/yNnrrFDCpw1KfXwU7wVh725BgZ2sGL/a
-         yjdnPMzcNrJQVCx9y/pCUVazp4+gjStKanpW4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=kKV3o82rGJP1GJv2Xa9cDoHK0vZdTg+i3jqZJhAYbkzJhU+Vhxgbn3lWoAhpyg4euo
-         ZoXeIFwB+gE/3Gdu5+/FgZKH2V5+Tld6pSA8fuXFEW7mbLVhMZPaw7eEEtiJlBTyJZ4u
-         B9brbbE+fYu8Mwn779VMBx+i0TmaI/rPvq1B8=
-Received: by 10.204.53.143 with SMTP id m15mr2219508bkg.119.1245917074443; 
-	Thu, 25 Jun 2009 01:04:34 -0700 (PDT)
-In-Reply-To: <200906250939.56361.jnareb@gmail.com>
+	id S1752375AbZFYIrc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 25 Jun 2009 04:47:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751558AbZFYIrb
+	(ORCPT <rfc822;git-outgoing>); Thu, 25 Jun 2009 04:47:31 -0400
+Received: from dcvr.yhbt.net ([64.71.152.64]:47546 "EHLO dcvr.yhbt.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750755AbZFYIr3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 Jun 2009 04:47:29 -0400
+Received: from localhost (user-118bg3p.cable.mindspring.com [66.133.192.121])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by dcvr.yhbt.net (Postfix) with ESMTPSA id 7319E1F44D;
+	Thu, 25 Jun 2009 08:47:32 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <20090617201851.GA6123@nan92-1-81-57-214-146.fbx.proxad.net>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122183>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122184>
 
-2009/6/25 Jakub Narebski <jnareb@gmail.com>:
->
-> Could you please state here, in the comments area, what are the
-> differences between v4 (previous) and v5 (current) version of patch,
-> and if there are any? =A0It helps with patch review...
+Yann Dirson <ydirson@altern.org> wrote:
+> While diving into the git-svn code, I realized that many things could
+> be done to make it more documented/understundable.  I need to get more
+> understanding of it, so I'd like to improve this state of things.  But
+> first, I'd like to be sure there is a consensus on what is a good idea
+> to do, since that could easily turn up into a lot of textual change.
+> 
+> - (on the user doc side of things) some options appear not to be
+>   documented (I spotted --parent for 'clone' and --revision for
+>   'dcommit').  But looking at where to document them, I found it not
+>   always easy, since some options are documented together with the
+>   command they modify, some others in the "options" section (even when
+>   they are documented as applying to a single command, like --shared
+>   or --stdin).  This IMHO leads to confusion for the user looking for
+>   information, as well as to the reviewer trying to check that nothing
+>   was forgotten.  I would rather make that only very commons are
+>   described in a common "options" section, and that all commands using
+>   them explicitely say so in their descriptions (with xref).
 
-Sorry. This patch was untouched because I only received your comments
-on it this morning. I'm working on it right now so expect and new
-patch series soon.
+Sadly I haven't ever done much maintenance on the documentation myself.
+I've found building/formatting the docs too painful of an experience for
+me (this coming from a guy willing to deal with SVN) so I haven't made
+many attempts in several years.
 
---=20
-Giuseppe "Oblomov" Bilotta
+> - (on the code side of things) git-svn.perl weights more than 5500
+>   lines, most classes functions and methods severely lack
+>   documentation, and some extensively-used variable names are so short
+>   they make the code harder to grasp
+> 
+>   Eg. $gs to refer to an instance of the Git::SVN class, which I would
+>   suggest to change to something like $gsrepo, while at the same time
+>   renaming Git::SVN to eg. Git::SVN::Repository - which would make it
+>   much easier for a newcomer to grasp what this is supposed to
+>   represent - supposing, that is, that my understunding of this part
+>   is accurate enough, which it is probably not after spending many
+>   hours in there :)
+
+I think I was at least fairly consistent with naming most Git::SVN
+objects $gs, at least (and vectors are "$gsv" (a la arg => argv).  But I
+do admit it's not the easiest code to follow since the majority of it
+was written in a short time span in early 2007 before I was to
+(knowingly) embark on other life-changing (or life-consuming :)
+projects.  I seem to recall most of my time was spent dealing
+with/working around various issues I had with SVN Perl bindings, but
+I've probably blocked out the most traumatizing experiences.
+
+>   As to the size of the file, it seems natural to me to split the
+>   classes into their own files.  That would still let git-svn.perl and
+>   the Git::SVN class to be 1500-lines tall, the largest others
+>   achieving around 500 lines.  That should be much more manageable
+>   pieces, and would require some refactoring wrt a couple of global
+>   variables used throughout the script; which, incidentally, could
+>   make it much easier to simultanously look at several git-svn
+>   repositories (for my work on mapping externals to submodules), and
+>   to allow reusing the existing code, eg. as a git-vcs backend.
+> 
+> How are you people feeling about this rough plans ?
+
+I've been planning on splitting git-svn.perl out into separate modules
+for years now.  Please take the lead on it if you wish to, since I've
+obviously been unable to dedicate much time to git-svn in over two years
+now.
+
+-- 
+Eric Wong
