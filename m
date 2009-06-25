@@ -1,140 +1,97 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Could this be done simpler?
-Date: Thu, 25 Jun 2009 11:32:30 -0700
-Message-ID: <7vfxdocgg1.fsf@alter.siamese.dyndns.org>
-References: <alpine.LFD.2.01.0906241426120.3154@localhost.localdomain>
-	<7veit9m8cs.fsf@alter.siamese.dyndns.org>
-	<863a9oz8lh.fsf@blue.stonehenge.com> <4A43A6B3.5020407@gmx.de>
+From: Tim Visher <tim.visher@gmail.com>
+Subject: Re: Displaying Current Git Aliases
+Date: Thu, 25 Jun 2009 14:45:13 -0400
+Message-ID: <c115fd3c0906251145l7641627od35b251fca899ba8@mail.gmail.com>
+References: <c115fd3c0906250859q661d2319i463d6eea7e9dbe54@mail.gmail.com>
+	 <m33a9oxogk.fsf@localhost.localdomain>
+	 <86ljngxngu.fsf@blue.stonehenge.com>
+	 <alpine.DEB.1.00.0906251857010.8908@intel-tinevez-2-302>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: "Randal L. Schwartz" <merlyn@stonehenge.com>,
-	Christian Couder <chriscool@tuxfamily.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
+	Jakub Narebski <jnareb@gmail.com>,
 	Git Mailing List <git@vger.kernel.org>
-To: Matthias Andree <matthias.andree@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Jun 25 20:32:36 2009
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Thu Jun 25 20:45:33 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MJtkQ-0005RK-VO
-	for gcvg-git-2@gmane.org; Thu, 25 Jun 2009 20:32:35 +0200
+	id 1MJtww-0002cs-AL
+	for gcvg-git-2@gmane.org; Thu, 25 Jun 2009 20:45:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753663AbZFYSca (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 25 Jun 2009 14:32:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752837AbZFYSc2
-	(ORCPT <rfc822;git-outgoing>); Thu, 25 Jun 2009 14:32:28 -0400
-Received: from fed1rmmtao102.cox.net ([68.230.241.44]:51692 "EHLO
-	fed1rmmtao102.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752126AbZFYSc2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 25 Jun 2009 14:32:28 -0400
-Received: from fed1rmimpo03.cox.net ([70.169.32.75])
-          by fed1rmmtao102.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20090625183230.RFV20976.fed1rmmtao102.cox.net@fed1rmimpo03.cox.net>;
-          Thu, 25 Jun 2009 14:32:30 -0400
-Received: from localhost ([68.225.240.211])
-	by fed1rmimpo03.cox.net with bizsmtp
-	id 8JYW1c00J4aMwMQ04JYWKB; Thu, 25 Jun 2009 14:32:30 -0400
-X-VR-Score: -100.00
-X-Authority-Analysis: v=1.0 c=1 a=YjxVEfEYJ9cA:10 a=7F2WDEu3UXN4eMTeP9wA:9
- a=ShuQO_CTz5TGZBCRjrIA:7 a=NDjQFNsl70t1FQvved2hvgZmf0YA:4 a=_RhRFcbxBZMA:10
- a=7GKGpSW4UZtGKo4B:21 a=J5f_SzffpmV9_2sl:21
-X-CM-Score: 0.00
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+	id S1753772AbZFYSpN convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 25 Jun 2009 14:45:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753368AbZFYSpM
+	(ORCPT <rfc822;git-outgoing>); Thu, 25 Jun 2009 14:45:12 -0400
+Received: from an-out-0708.google.com ([209.85.132.240]:22430 "EHLO
+	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753358AbZFYSpL convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 25 Jun 2009 14:45:11 -0400
+Received: by an-out-0708.google.com with SMTP id d11so225166and.1
+        for <git@vger.kernel.org>; Thu, 25 Jun 2009 11:45:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=BhCAOauQLKWaB5I9MECM1oI1FJkmQXDg/DXBa4uPLYI=;
+        b=nCUNrpiFPGrS/e8WQeYPRPbfx97q0tkJaTMyPnFtFieHvJtdXF39A6cv552b66G6Z7
+         rASnr/uHX8BeeWyR6rS10VdpDLLuAiNNmgvQ5iOM4TckuqnHGF9q1A/VpGIHqof/pdBN
+         lBea6KkDdCqhTIHDwYv8g5c7lPfRmnvmF9Cpw=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=K248/0l0nuuil0xq83qW657vLnwcGb9jFxFWb1fGjW6z1x1JGEZhOvavg9MTVcUGlj
+         HSj2/ErQl7B/N9Y86acrrS9FB8fMUp5IW1dfj5O4XIF7fYJV83wmX0CMUqKib8dDP89l
+         01lLlryY36RkrC3a2M9J7SWlg9qD8uWVo2bik=
+Received: by 10.100.171.13 with SMTP id t13mr3753290ane.29.1245955513961; Thu, 
+	25 Jun 2009 11:45:13 -0700 (PDT)
+In-Reply-To: <alpine.DEB.1.00.0906251857010.8908@intel-tinevez-2-302>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122230>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122231>
 
-Matthias Andree <matthias.andree@gmx.de> writes:
+Thanks everyone.
 
-> And if I may be so bold: Please rewrite before somebody starts polishing the
-> bisect facilities WRT octopus merges. These seem unrelated, as in: you don't
-> need to make bisect more convenient to be able to fix the description of
-> git-pull --append...
+On Thu, Jun 25, 2009 at 12:57 PM, Johannes
+Schindelin<Johannes.Schindelin@gmx.de> wrote:
+> Hi,
+>
+> On Thu, 25 Jun 2009, Randal L. Schwartz wrote:
+>
+>> >>>>> "Jakub" =3D=3D Jakub Narebski <jnareb@gmail.com> writes:
+>>
+>> Jakub> Tim Visher <tim.visher@gmail.com> writes:
+>> >> Can git display a list of all of your current aliases like bash's
+>> >> `alias` command?
+>>
+>> Jakub> In ~/.gitconfig:
+>>
+>> Jakub> =C2=A0 [alias]
+>> Jakub> =C2=A0 =C2=A0 =C2=A0 =C2=A0 alias =3D config --get-regexp ^al=
+ias\\.
+>>
+>> But then it shows itself. :)
+>
+> Which is correct.
+>
+> Ciao,
+> Dscho
+>
+>
 
-Let's have a refresher course of how bisection works with a history with
-merges.
 
-Assume that you have this history (time flows from left to right, recent
-commits are known to be bad, old commits are known to be good).
 
-                       o---o---o---o---A
-                      /                 \
-  ---o---o---o---o---F---o---o---o---B---M
+--=20
 
-In real life, you would start from a history with more commits on top of M
-and only know that the tip of that sequence is bad, but for brevity, let's
-assume we bisected and already know M is bad.
+In Christ,
 
-If B is good, the breakage was either introduced at M, or was on the side
-branch leading to A, but not older than F where A and B forked from.
+Timmy V.
 
-    Side note.  As in all other discussion in this message, remember
-    that bisect is for finding a _single_ breakage that was left
-    unfixed til the tip of the history being bisected.  "B is good"
-    means "the _single_ breakage is not in the commit that would
-    affect B, i.e. in B's ancestors",
-
-If B is bad, on the other hand, the branch leading to A since the fork
-point F is exonerated and we do not have to look at the side branch that
-leads to A.
-
-Which means that by seeing one the tip of a merged branch is good, you
-can see that everything before the merge base is good and you need to only
-look at _the other_ branch.
-
-What happens if M is an Octopus?
-
-                       o---o---o---o---A
-                      /                 \
-  ---o---o---o---o---F---o---o---o---B---M
-                  \       \             /|
-                   \       o---o---o---C |
-                    \                    |
-                     o---o---o---o---o---D
-
-If B is good, you still need to look at histories leading to A, C, and D
-individually.  Of course if B is bad, then you do not have to look at 
-the histrories leading to A, C and D from their respective fork points,
-but you still do have to look at the shared past.
-
-But we could optimize further.  After knowing M, an Octopus merge, is bad,
-when we are tempted to test one of the tips of the branches that was
-merged (say B), we can instead give a tree that is a result of merging
-only A and B (i.e. excluding C and D) for testing.  If it is good, then
-the histories leading to both A and B are good, and we only need to check
-side branches leading C and D since they forked from the shared common
-history.  If combination of A and B is bad, on the other hand, then we do
-not have to check branch histories leading to C nor D.
-
-Doing so essentially shifts the balance between what happens if a single
-test turns out to be good or bad.  If we test the tip of the branch, and
-if it is bad, we will eliminate other forks (but still need to test the
-shared history).  If it is good, we only eliminate that particular branch
-and shared history, but all the other forks remain suspect.  So it is a
-tradeoff between:
-
- - the size of all the other side branches since they forked == number of
-   commits we do not have to test if this round says "bad";
-
- - the size of this side branch and the shared history == number of
-   commits we do not have to test if this round says "good";
-
-The current bisect algorithm makes this tradeoff, by computing the above
-two numbers and finding the point that makes them closest to each other.
-It however does not let you test two commits at the same time (i.e.
-testing the merge of A and B in the above example) which could make the
-tradeoff even more efficient.
-
-I see there is another window for optimization we could make from the
-above observation.  Making the number of commits eliminated when the test
-is "good" and "bad" as close to equal as possible is the best strategy
-when the tested commit has a 50-50 chance of being "good" or "bad".  If we
-somehow know that the tested commit is likely to be "bad", we would want
-to maximize the number of commits eliminated when the commit is indeed
-"bad" (and vice versa).
-
-I do not see an easy way to exploit this window offhand, though...
+http://burningones.com/
+http://five.sentenc.es/ - Spend less time on e-mail
