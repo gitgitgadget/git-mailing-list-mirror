@@ -1,79 +1,114 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: Could this be done simpler?
-Date: Thu, 25 Jun 2009 19:19:03 +0200
-Message-ID: <4A43B187.7080509@drmicha.warpmail.net>
-References: <alpine.LFD.2.01.0906241426120.3154@localhost.localdomain>	<7veit9m8cs.fsf@alter.siamese.dyndns.org> <863a9oz8lh.fsf@blue.stonehenge.com>
+Date: Thu, 25 Jun 2009 10:25:52 -0700
+Message-ID: <7v3a9ogr8f.fsf@alter.siamese.dyndns.org>
+References: <alpine.LFD.2.01.0906241426120.3154@localhost.localdomain>
+	<7veit9m8cs.fsf@alter.siamese.dyndns.org>
+	<863a9oz8lh.fsf@blue.stonehenge.com> <4A43A6B3.5020407@gmx.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
+Content-Type: text/plain; charset=us-ascii
+Cc: "Randal L. Schwartz" <merlyn@stonehenge.com>,
+	Junio C Hamano <gitster@pobox.com>,
 	Linus Torvalds <torvalds@linux-foundation.org>,
 	Git Mailing List <git@vger.kernel.org>
-To: "Randal L. Schwartz" <merlyn@stonehenge.com>
-X-From: git-owner@vger.kernel.org Thu Jun 25 19:19:34 2009
+To: Matthias Andree <matthias.andree@gmx.de>
+X-From: git-owner@vger.kernel.org Thu Jun 25 19:26:01 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MJsbl-0000td-7H
-	for gcvg-git-2@gmane.org; Thu, 25 Jun 2009 19:19:33 +0200
+	id 1MJsi0-0003WV-Gl
+	for gcvg-git-2@gmane.org; Thu, 25 Jun 2009 19:26:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752887AbZFYRTL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 25 Jun 2009 13:19:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752312AbZFYRTJ
-	(ORCPT <rfc822;git-outgoing>); Thu, 25 Jun 2009 13:19:09 -0400
-Received: from out1.smtp.messagingengine.com ([66.111.4.25]:42088 "EHLO
-	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752600AbZFYRTI (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 25 Jun 2009 13:19:08 -0400
-Received: from compute2.internal (compute2.internal [10.202.2.42])
-	by out1.messagingengine.com (Postfix) with ESMTP id 16258382094;
-	Thu, 25 Jun 2009 13:19:11 -0400 (EDT)
-Received: from heartbeat2.messagingengine.com ([10.202.2.161])
-  by compute2.internal (MEProxy); Thu, 25 Jun 2009 13:19:10 -0400
-X-Sasl-enc: TKwtWrnrHNlhx/rTmlKK2wH3LoZDUnDiMxilcF1pEZK3 1245950350
-Received: from localhost.localdomain (p4FC21214.dip0.t-ipconnect.de [79.194.18.20])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 32A8431F86;
-	Thu, 25 Jun 2009 13:19:10 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1pre) Gecko/20090625 Lightning/1.0pre Shredder/3.0b3pre
-In-Reply-To: <863a9oz8lh.fsf@blue.stonehenge.com>
+	id S1752784AbZFYRZv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 25 Jun 2009 13:25:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751687AbZFYRZu
+	(ORCPT <rfc822;git-outgoing>); Thu, 25 Jun 2009 13:25:50 -0400
+Received: from fed1rmmtao106.cox.net ([68.230.241.40]:52519 "EHLO
+	fed1rmmtao106.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751397AbZFYRZu (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 Jun 2009 13:25:50 -0400
+Received: from fed1rmimpo03.cox.net ([70.169.32.75])
+          by fed1rmmtao106.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20090625172551.SKCJ25927.fed1rmmtao106.cox.net@fed1rmimpo03.cox.net>;
+          Thu, 25 Jun 2009 13:25:51 -0400
+Received: from localhost ([68.225.240.211])
+	by fed1rmimpo03.cox.net with bizsmtp
+	id 8HRs1c0084aMwMQ04HRsJS; Thu, 25 Jun 2009 13:25:52 -0400
+X-VR-Score: -100.00
+X-Authority-Analysis: v=1.0 c=1 a=YjxVEfEYJ9cA:10 a=MshGkDdrAbR6CWV3s3kA:9
+ a=g6l8zi193-e5v0MFGZEA:7 a=-Dn8YDuRPdFlLXFe-24QqZrmA90A:4 a=_RhRFcbxBZMA:10
+X-CM-Score: 0.00
+In-Reply-To: <4A43A6B3.5020407@gmx.de> (Matthias Andree's message of "Thu\, 25 Jun 2009 18\:32\:51 +0200")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122224>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122225>
 
-Randal L. Schwartz venit, vidit, dixit 25.06.2009 16:33:
->>>>>> "Junio" == Junio C Hamano <gitster@pobox.com> writes:
-> 
-> Junio> (5) Continue pretending to be Linus, complete the octopus.  The key is to
-> Junio>     let the "fetch" phase of this to append to the FETCH_HEAD, not
-> Junio>     replacing it.
-> 
-> Junio>     $ git pull --append \
-> Junio>       git://git.kernel.org/pub/scm/linux/kernel/git/viro/audit-current \
-> Junio>       for-linus
-> 
-> The relatively current doc of "--append" looks like this:
-> 
->        -a, --append
->            Append ref names and object names of fetched refs to the existing
->            contents of will be overwritten.
-> 
-> I read this three times, and still don't know what it means (and it doesn't
-> even scan well as English), so I would have never known to use this strategy.
-> Can you explain this more in detail, or point at something in the mailing list
-> that does?
+Matthias Andree <matthias.andree@gmx.de> writes:
 
-Uhm,
-my version of git-fetch.1 has
+> Could we ditch the current git-pull --append description? Can then please
+> somebody rewrite this paragraph? This somebody must have completely understood
 
-       -a, --append
-           Append ref names and object names of fetched refs to the
-existing contents of .git/FETCH_HEAD. Without this option
-           old data in .git/FETCH_HEAD will be overwritten.
+> (1) what this feature is good for (practically speaking)
+>
+> (2) how it works (technically speaking, to provide reference information)
+>
+> That would be much more useful, and the use would last longer :-)
+>
+> I don't dare ask Junio directly.
 
-That at least scans better in English. It does not make it very clear
-what the consequences are, though.
+But if you run blame and mailing list archive search, you would discover
+that "fetch --append" was my invention.  After all, the entire Octopus
+idea originates from me at 211232b (Octopus merge of the following five
+patches., 2005-05-05).  It is interesting to realize that it was actually
+a Pentapus made on the day of 5/5/5 ;-)
 
-Michael
+I thought I was going to take blame on the incomprehensive documentation
+and pass it on to me being non-native speaker/writer of English, but the
+situation is bit funny.  Documentation/fetch-options.txt says this:
+
+    -a::
+    --append::
+            Append ref names and object names of fetched refs to the
+            existing contents of `.git/FETCH_HEAD`.  Without this
+            option old data in `.git/FETCH_HEAD` will be overwritten.
+
+Perhaps there has a cut&paste error?  I haven't looked.
+
+Now answers to (1) and (2).
+
+ (1) The feature was designed exactly for the use case Linus described.
+
+ (2) "git fetch" leaves list of <commit object, repo, branch, flag> for
+     each ref fetched from repository in .git/FETCH_HEAD, where flag tells
+     if it is meant for merging.  "git pull" runs "git fetch", reads from
+     this file to learn which ones to pass to "git merge".  The
+     information also is given to "git fmt-merge-msg" to come up with the
+     message.
+
+     Usually "git fetch" first empties the existing contents of the file
+     and stores the list of refs it fetched.  With --append, it doesn't
+     empty the file; refs fetched by the previous invocation of "git
+     fetch" will be kept and the refs it fetched are appenede.
+
+     So:
+
+	$ git fetch one a
+        $ git fetch --append two b
+        $ git pull --apend three c
+
+     will end up having all the three refs from different repositories in
+     .git/FETCH_HEAD.  I.e.
+
+	branch a, from repo one, to be merged
+	branch b, from repo two, to be merged
+	branch c, from repo three, to be merged
+
+     when "git fetch" run by the the last "git pull" returns.  "git pull"
+     reads the file and learn what to give to "git fmt-merge-msg" (to come
+     up with the message for the merge commit) and "git merge" (to create
+     the merge commit).
