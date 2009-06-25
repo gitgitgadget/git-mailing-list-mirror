@@ -1,99 +1,80 @@
-From: Matthias Andree <matthias.andree@gmx.de>
-Subject: Re: Could this be done simpler?
-Date: Thu, 25 Jun 2009 18:32:51 +0200
-Message-ID: <4A43A6B3.5020407@gmx.de>
-References: <alpine.LFD.2.01.0906241426120.3154@localhost.localdomain>	<7veit9m8cs.fsf@alter.siamese.dyndns.org> <863a9oz8lh.fsf@blue.stonehenge.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: Displaying Current Git Aliases
+Date: Thu, 25 Jun 2009 09:33:49 -0700 (PDT)
+Message-ID: <m33a9oxogk.fsf@localhost.localdomain>
+References: <c115fd3c0906250859q661d2319i463d6eea7e9dbe54@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Git Mailing List <git@vger.kernel.org>
-To: "Randal L. Schwartz" <merlyn@stonehenge.com>
-X-From: git-owner@vger.kernel.org Thu Jun 25 18:33:05 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Tim Visher <tim.visher@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jun 25 18:34:03 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MJrsl-0005ol-7s
-	for gcvg-git-2@gmane.org; Thu, 25 Jun 2009 18:33:03 +0200
+	id 1MJrtf-0006Fc-L4
+	for gcvg-git-2@gmane.org; Thu, 25 Jun 2009 18:34:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752128AbZFYQcw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 25 Jun 2009 12:32:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752100AbZFYQcv
-	(ORCPT <rfc822;git-outgoing>); Thu, 25 Jun 2009 12:32:51 -0400
-Received: from mail.gmx.net ([213.165.64.20]:53888 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750964AbZFYQcv (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 25 Jun 2009 12:32:51 -0400
-Received: (qmail invoked by alias); 25 Jun 2009 16:32:53 -0000
-Received: from balu.cs.uni-paderborn.de (EHLO balu.cs.uni-paderborn.de) [131.234.21.37]
-  by mail.gmx.net (mp071) with SMTP; 25 Jun 2009 18:32:53 +0200
-X-Authenticated: #428038
-X-Provags-ID: V01U2FsdGVkX1+muXEJ2PGmvWGcucHp80kc9ST6qX2EbWHL3voY9E
-	qieVpZGoiv33Fz
-Received: from localhost ([127.0.0.1])
-	by balu.cs.uni-paderborn.de with esmtp (Exim 4.69)
-	(envelope-from <matthias.andree@gmx.de>)
-	id KLSZAR-0003CO-E8; Thu, 25 Jun 2009 18:32:51 +0200
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.8.1.22) Gecko/20090605 Thunderbird/2.0.0.22 Mnenhy/0.7.6.666
-In-Reply-To: <863a9oz8lh.fsf@blue.stonehenge.com>
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.57
+	id S1752993AbZFYQdu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 25 Jun 2009 12:33:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752804AbZFYQdt
+	(ORCPT <rfc822;git-outgoing>); Thu, 25 Jun 2009 12:33:49 -0400
+Received: from fg-out-1718.google.com ([72.14.220.159]:50413 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752119AbZFYQds (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 Jun 2009 12:33:48 -0400
+Received: by fg-out-1718.google.com with SMTP id e21so317832fga.17
+        for <git@vger.kernel.org>; Thu, 25 Jun 2009 09:33:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:received
+         :x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        bh=JV6t5iINJFs+8MA19J77uuG+v3dMleOPNsIrMhJk5fo=;
+        b=j1vzX+emedQ+MjWpv1pgp5Bo+NK1baVBy2RktK8CXYWwX9L3c2YvL3XJhIJ2XZyQTq
+         4Otj2UEvXjkjDGR0BZClhWeZcHhJOlR15X6a47DagLqKDhuY0J6FQdy//veXzstEUUD6
+         Mf8gOWTIZHlc+nC36PNrgppOPa+obaQiXapgw=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        b=S3jqRlP99QZjIc3mtwqTaC3bzgcvGzqkbrhn+3Qs9FuYC6my+Hkmc33bEnTLeWLR3y
+         NJFHh9tRIWX4mZHnOX9XcjeGw1ZCFIV4waoLnqAKJiTc8soPiZk8H0RXogbEs/s4aBQK
+         54m6d8goJ61B5Y3jWmSjwIzd6I13o13hI5s38=
+Received: by 10.86.93.17 with SMTP id q17mr2768985fgb.75.1245947630344;
+        Thu, 25 Jun 2009 09:33:50 -0700 (PDT)
+Received: from localhost.localdomain (abwu167.neoplus.adsl.tpnet.pl [83.8.244.167])
+        by mx.google.com with ESMTPS id 12sm4480151fgg.14.2009.06.25.09.33.49
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Thu, 25 Jun 2009 09:33:49 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id n5PGXnIS021219;
+	Thu, 25 Jun 2009 18:33:49 +0200
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id n5PGXlTh021216;
+	Thu, 25 Jun 2009 18:33:47 +0200
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <c115fd3c0906250859q661d2319i463d6eea7e9dbe54@mail.gmail.com>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122219>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122220>
 
-Randal L. Schwartz schrieb:
->>>>>> "Junio" == Junio C Hamano <gitster@pobox.com> writes:
-> 
-> Junio> (5) Continue pretending to be Linus, complete the octopus.  The key is to
-> Junio>     let the "fetch" phase of this to append to the FETCH_HEAD, not
-> Junio>     replacing it.
-> 
-> Junio>     $ git pull --append \
-> Junio>       git://git.kernel.org/pub/scm/linux/kernel/git/viro/audit-current \
-> Junio>       for-linus
-> 
-> The relatively current doc of "--append" looks like this:
-> 
->        -a, --append
->            Append ref names and object names of fetched refs to the existing
->            contents of will be overwritten.
-> 
-> I read this three times, and still don't know what it means (and it doesn't
-> even scan well as English), so I would have never known to use this strategy.
-> Can you explain this more in detail, or point at something in the mailing list
-> that does?
+Tim Visher <tim.visher@gmail.com> writes:
 
-Greetings,
+> Can git display a list of all of your current aliases like bash's
+> `alias` command?
 
-If I may: So the existing description is incomprehensible. I sort of believed I
-understood it, but apparently I didn't understand enough of it.
+In ~/.gitconfig:
 
-Could we ditch the current git-pull --append description? Can then please
-somebody rewrite this paragraph? This somebody must have completely understood
+  [alias]
+        alias = config --get-regexp ^alias\\.
 
-(1) what this feature is good for (practically speaking)
-
-(2) how it works (technically speaking, to provide reference information)
-
-That would be much more useful, and the use would last longer :-)
-
-I don't dare ask Junio directly.
-
-However, it appears to me that git-pull already does most of what Linus needs,
-could take some final cosmetic touch-ups WRT logs. So could somebody please
-rewrite this?
-
-And if I may be so bold: Please rewrite before somebody starts polishing the
-bisect facilities WRT octopus merges. These seem unrelated, as in: you don't
-need to make bisect more convenient to be able to fix the description of
-git-pull --append...
-
-Thanks for not slashing me to pieces. 8-)
-
-Best regards
-MA
+Then you can simply use "git alias" to get list of all of your current
+aliases.
+-- 
+Jakub Narebski
+Poland
+ShadeHawk on #git
