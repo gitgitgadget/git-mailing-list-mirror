@@ -1,80 +1,94 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: git-svn and *lots* of ssh connections
-Date: Thu, 25 Jun 2009 02:49:20 -0700
-Message-ID: <20090625094919.GC2901@dcvr.yhbt.net>
-References: <cccedfc60906100709r18364bc2h82d8e1a7ee0b8fd1@mail.gmail.com>
+From: Patrick Neuner <neuner@futureweb.at>
+Subject: Parallell Development / Switching to GIT
+Date: Thu, 25 Jun 2009 09:52:06 +0000 (UTC)
+Message-ID: <loom.20090625T095000-90@post.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Jon Nelson <jnelson@jamponi.net>
-X-From: git-owner@vger.kernel.org Thu Jun 25 11:49:34 2009
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jun 25 11:55:15 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MJlaH-0004VY-TB
-	for gcvg-git-2@gmane.org; Thu, 25 Jun 2009 11:49:34 +0200
+	id 1MJlfm-0006VK-Dq
+	for gcvg-git-2@gmane.org; Thu, 25 Jun 2009 11:55:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751917AbZFYJtV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 25 Jun 2009 05:49:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751865AbZFYJtV
-	(ORCPT <rfc822;git-outgoing>); Thu, 25 Jun 2009 05:49:21 -0400
-Received: from dcvr.yhbt.net ([64.71.152.64]:39894 "EHLO dcvr.yhbt.net"
+	id S1751935AbZFYJzD convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 25 Jun 2009 05:55:03 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751865AbZFYJzD
+	(ORCPT <rfc822;git-outgoing>); Thu, 25 Jun 2009 05:55:03 -0400
+Received: from main.gmane.org ([80.91.229.2]:60856 "EHLO ciao.gmane.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751572AbZFYJtV (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 25 Jun 2009 05:49:21 -0400
-Received: from localhost (user-118bg3p.cable.mindspring.com [66.133.192.121])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by dcvr.yhbt.net (Postfix) with ESMTPSA id 8C0CD1F44D;
-	Thu, 25 Jun 2009 09:49:22 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <cccedfc60906100709r18364bc2h82d8e1a7ee0b8fd1@mail.gmail.com>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+	id S1751818AbZFYJzB (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 Jun 2009 05:55:01 -0400
+Received: from root by ciao.gmane.org with local (Exim 4.43)
+	id 1MJlfa-0003dI-F6
+	for git@vger.kernel.org; Thu, 25 Jun 2009 09:55:02 +0000
+Received: from chello080109165250.static.tirol.surfer.at ([80.109.165.250])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 25 Jun 2009 09:55:02 +0000
+Received: from neuner by chello080109165250.static.tirol.surfer.at with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 25 Jun 2009 09:55:02 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: main.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 80.109.165.250 (Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.0.11) Gecko/2009060215 Firefox/3.0.11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122190>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122191>
 
-Jon Nelson <jnelson@jamponi.net> wrote:
-> The company I work for (but do not speak for) uses svn (via ssh). I
-> tried to use it; I really did. But I missed git and found svn quite
-> honestly painful to use so I went to git-svn, and other than some
-> caveats I'm pretty happy.  However, one of the issues I've had with
-> git-svn is fairly troublesome.
-> 
-> Basically, during the fetch stage (or clone) git-svn uses a *ton* of
-> ssh connections. Many dozens and in even with smaller projects well
-> over a hundred. By "small" I mean a .git of less than 6MB and less
-> than 60 files in the checkout. I've got 4MBit bandwidth available but
-> frequently see only a single digit fraction of that going to the
-> fetch/clone process. Is there anything that can be done to reduce the
-> number of ssh connections involved? Why can't a single connection
-> simple be re-used? I can't use "ssh connection sharing" for a variety
-> of reasons that aren't relevant here.
-> 
-> I'm using 1.6.0.2.
+Hello,
 
-Hi Jon,
+we are using SVN right now and with the way we do / need to develop, it=
+ seems we
+are constantly get in a merging horror.=20
+I did quite some reading about git now, but I am still not really sure =
+if that
+what we try to accomplish can be done with git,
+Or if we are really doing something a too odd way.=20
 
-The actual connection setup/teardown is handled by the SVN Perl bindings
-which gives git-svn little control over handling them.  We actually try
-to force a zero reference count to close a connection to an open SVN
-repository.
+Let my try to describe =E2=80=93 I also added an image.=20
 
-Which OS/Perl version/SVN bindings version are you using?
+---- repo 1
+  |
+   - repo 2 (=3Dbranch of repo 1 - for our external developers)
 
-Could the ssh processes just be zombies that didn't get reaped?
+We have the main branch and 2nd branch for external developers.=20
 
-Does this happen when you clone a single directory with
---no-follow-parent?  (no --stdlayout/-s option or --branches/--tags
-switches, either).  Can you test against an http/https/plain-svn
-server and see if it happens there?
+We work inside the repo1, which are usually features/updates that go li=
+fe after
+a short turn.=20
+Our external developer work on different features that will be merged i=
+nto repo1
+from time to time.=20
 
-I could be talked into putting in a (nasty!) hack to start zapping
-integer file descriptors when switching paths/repos and hope SVN closes
-those; but that may not work...
+Usually during development, we sometimes need to push features from rep=
+o1 to
+repo2, and later the features developed on repo2 will be pushed back to=
+ repo1,=20
+And also smaller bug fixes come from repo2 that needs to go into repo1.=
+=20
 
--- 
-Eric Wong
+But this is a constant process, meaning, that both branches will exist,
+especially repo2 will exist after this feature has finished for smaller
+updates/bugfixes.=20
+We don=E2=80=99t want to do a new branch for each bugfix, for each new =
+small feature,
+but have different branches for different developer teams.=20
+
+So I was wondering, if this could cause troubles with GIT in case of me=
+rging
+around without closing a branch.=20
+
+I am adding an link to an image that might show what I tried to explain=
+=2E=20
+http://temp.in.futureweb.at/parallell-development.png
+
+Thanks
+Patrick
