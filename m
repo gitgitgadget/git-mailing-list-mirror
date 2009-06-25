@@ -1,71 +1,101 @@
-From: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-Subject: Re: [PATCHv6 0/8] gitweb: gravatar support
-Date: Thu, 25 Jun 2009 20:46:01 +0200
-Message-ID: <cb7bb73a0906251146s785fac1by6847e1d0350f195b@mail.gmail.com>
-References: <1245926587-25074-1-git-send-email-giuseppe.bilotta@gmail.com>
-	 <200906251455.32953.jnareb@gmail.com>
-	 <cb7bb73a0906250615i2ed880eci2d3716aa1ca43e4d@mail.gmail.com>
-	 <7v8wjggs2c.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: names using git config
+Date: Thu, 25 Jun 2009 11:46:17 -0700
+Message-ID: <7vy6rgb18m.fsf@alter.siamese.dyndns.org>
+References: <376636be0906240958l70c81b68g83340556f2bf4eca@mail.gmail.com>
+	<vpqljnhv9w0.fsf@bauges.imag.fr>
+	<376636be0906242146h1d4c3b1q8c2e9af26f124af4@mail.gmail.com>
+	<7veit8kidz.fsf@alter.siamese.dyndns.org>
+	<376636be0906250309h6eb99296r4b81cf22985b690a@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jun 25 20:46:14 2009
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Matthieu Moy <Matthieu.Moy@imag.fr>, git@vger.kernel.org
+To: Ryan <ryanphilips19@googlemail.com>
+X-From: git-owner@vger.kernel.org Thu Jun 25 20:46:30 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MJtxd-0002zK-Tj
-	for gcvg-git-2@gmane.org; Thu, 25 Jun 2009 20:46:14 +0200
+	id 1MJtxs-00035x-Lj
+	for gcvg-git-2@gmane.org; Thu, 25 Jun 2009 20:46:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754489AbZFYSqB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 25 Jun 2009 14:46:01 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753748AbZFYSqA
-	(ORCPT <rfc822;git-outgoing>); Thu, 25 Jun 2009 14:46:00 -0400
-Received: from mail-bw0-f213.google.com ([209.85.218.213]:43467 "EHLO
-	mail-bw0-f213.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753055AbZFYSp7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 25 Jun 2009 14:45:59 -0400
-Received: by bwz9 with SMTP id 9so1603111bwz.37
-        for <git@vger.kernel.org>; Thu, 25 Jun 2009 11:46:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=+ZcYuT3mpdRh+odcZJ1CMXYeWcA4ysSCzct9j7hGihQ=;
-        b=KaUsDpix0SrhLkweWYljqnd/3N6YlitAborpdpn2FUPQV38Xiqm4boKNp0NHVD5p/H
-         9LLqU4uA1JdCzdTYmqkf1bqWSbL9uXv5K4liUmrgITuWAkWD4ro8AOnqq2aAGLGRuocy
-         S2DYnFR/x/XwghWtS4zNg9r1FABl9mFRhiHqY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=WfBCjOdkZHBaFuGfY8TkcrxxNnC2X0q8HL0qutjgw8mOzGpPiti6/Ea9o7fVJ3TA+g
-         D40zBIhOnjyMJ0SE8vIVZEQRJJilKhVSim8c55kPwrbbqxCYfL7uAGC0VhFRpKxsifOi
-         GncuaDXPFAGpiGNprdGqq3p77aIw9o8oACA54=
-Received: by 10.204.58.79 with SMTP id f15mr2700740bkh.202.1245955561173; Thu, 
-	25 Jun 2009 11:46:01 -0700 (PDT)
-In-Reply-To: <7v8wjggs2c.fsf@alter.siamese.dyndns.org>
+	id S1754791AbZFYSqQ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 25 Jun 2009 14:46:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754607AbZFYSqQ
+	(ORCPT <rfc822;git-outgoing>); Thu, 25 Jun 2009 14:46:16 -0400
+Received: from fed1rmmtao106.cox.net ([68.230.241.40]:59745 "EHLO
+	fed1rmmtao106.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754475AbZFYSqP (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 Jun 2009 14:46:15 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao106.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20090625184618.VTSR25927.fed1rmmtao106.cox.net@fed1rmimpo02.cox.net>;
+          Thu, 25 Jun 2009 14:46:18 -0400
+Received: from localhost ([68.225.240.211])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id 8JmH1c00C4aMwMQ04JmJVf; Thu, 25 Jun 2009 14:46:18 -0400
+X-VR-Score: -210.00
+X-Authority-Analysis: v=1.0 c=1 a=mK_AVkanAAAA:8 a=ybZZDoGAAAAA:8
+ a=A1X0JdhQAAAA:8 a=EXwH7TH5yibCbZU3t-kA:9 a=h9xPZ3p2fLWW1PYVIqFFM_7yCawA:4
+ a=9xyTavCNlvEA:10 a=qIVjreYYsbEA:10 a=Y6qChIQXU1wA:10
+X-CM-Score: 0.00
+In-Reply-To: <376636be0906250309h6eb99296r4b81cf22985b690a@mail.gmail.com> (Ryan's message of "Thu\, 25 Jun 2009 15\:39\:11 +0530")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122232>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122233>
 
-On Thu, Jun 25, 2009 at 7:07 PM, Junio C Hamano<gitster@pobox.com> wrote:
-> Giuseppe Bilotta <giuseppe.bilotta@gmail.com> writes:
+Ryan <ryanphilips19@googlemail.com> writes:
+
+> On Thu, Jun 25, 2009 at 10:41 AM, Junio C Hamano<gitster@pobox.com> w=
+rote:
+>> Ryan <ryanphilips19@googlemail.com> writes:
+>>
+>>> Hi,
+>>> =C2=A0 Thank you for your response.
+>>>
+>>> 1) git config user.name 'Matthieu M. Moy' Works
+>>> 2) git config user.name 'Matthieu M.' =C2=A0does not
+>>>
+>>> Name cannot end in a '.' <dot>. in git config user.name
+>>
+>> That is correct, but I think we are a bit too strict in sanitizing n=
+ames.
+>> The code is ident.c::copy() whose intent was to sanitize useless run=
+s of
+>> commas we slurp from GECOS field, but the sanitization is done also =
+for
+>> anything specified by the end user.
 >
->> I was thinking about some form of fallback like that too, but I
->> haven't the slightest idea how picons work, so I'm afraid I'll leave
->> that enhancement to some later time.
->
-> Yeah, let's not go overboard with the initial series.
+> What are you suggesting me to do? Apply the below patch.
+> I may want to submit patches to the linux kernel. Is this okay?
 
-Well, I'll confess that I've been on a coding frenzy all day, so
-expect a new release with preliminary picon support as soon as the
-review for the last patchset is done 8-D
+Sorry if I was unclear.  I wasn't suggesting anything in particular to
+you.  The only concrete thing addressed to you in my message was the
+answer "That is correct" and all the remainder of my message, including
+the patch, was primarily meant as illustration for other git developers=
+ to
+think about.
 
--- 
-Giuseppe "Oblomov" Bilotta
+I do not think this matters that much in practice, as long as you are
+submitting patches via e-mail, the usual method for leaf-level develope=
+rs.
+The maintainers apply your patches under the name your e-mail's From:
+header carries, not your user.name.
+
+If you apply the patch to your copy of git, your "git log" output will
+start showing otherwise forbidden names that have leading or trailing d=
+ots
+(and other letters like semicolons) because your modified copy of "git
+commit" will allow them, and I think "git commit -s" also will pass the
+trailing dots intact, but that is about the extent of the damage.  With=
+out
+applying the patch, you will perhaps see your "Signed-off-by: Foo M
+<foo.m@example.com>" line without the trailing dots after the name, but
+that is something you can easily modify in your MUA when you are sendin=
+g
+the e-mail out.
