@@ -1,61 +1,80 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
 Subject: Re: Could this be done simpler?
-Date: Thu, 25 Jun 2009 15:29:58 -0700
-Message-ID: <7vprcsymjd.fsf@alter.siamese.dyndns.org>
-References: <alpine.LFD.2.01.0906241426120.3154@localhost.localdomain>
-	<7veit9m8cs.fsf@alter.siamese.dyndns.org>
-	<200906260002.40531.chriscool@tuxfamily.org>
-	<200906260023.03169.chriscool@tuxfamily.org>
+Date: Thu, 25 Jun 2009 15:50:19 -0700 (PDT)
+Message-ID: <alpine.LFD.2.01.0906251544030.3605@localhost.localdomain>
+References: <alpine.LFD.2.01.0906241426120.3154@localhost.localdomain> <7veit9m8cs.fsf@alter.siamese.dyndns.org> <200906260002.40531.chriscool@tuxfamily.org> <200906260023.03169.chriscool@tuxfamily.org> <7vprcsymjd.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Christian Couder <chriscool@tuxfamily.org>,
 	Git Mailing List <git@vger.kernel.org>
-To: Christian Couder <chriscool@tuxfamily.org>
-X-From: git-owner@vger.kernel.org Fri Jun 26 00:30:11 2009
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jun 26 00:51:06 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MJxSL-0006LW-Nk
-	for gcvg-git-2@gmane.org; Fri, 26 Jun 2009 00:30:10 +0200
+	id 1MJxma-0004mg-Ma
+	for gcvg-git-2@gmane.org; Fri, 26 Jun 2009 00:51:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753593AbZFYW35 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 25 Jun 2009 18:29:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753574AbZFYW34
-	(ORCPT <rfc822;git-outgoing>); Thu, 25 Jun 2009 18:29:56 -0400
-Received: from fed1rmmtao106.cox.net ([68.230.241.40]:56554 "EHLO
-	fed1rmmtao106.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752788AbZFYW3z (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 25 Jun 2009 18:29:55 -0400
-Received: from fed1rmimpo03.cox.net ([70.169.32.75])
-          by fed1rmmtao106.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20090625222958.EFGM25927.fed1rmmtao106.cox.net@fed1rmimpo03.cox.net>;
-          Thu, 25 Jun 2009 18:29:58 -0400
-Received: from localhost ([68.225.240.211])
-	by fed1rmimpo03.cox.net with bizsmtp
-	id 8NVy1c0074aMwMQ04NVysx; Thu, 25 Jun 2009 18:29:58 -0400
-X-VR-Score: -100.00
-X-Authority-Analysis: v=1.0 c=1 a=YjxVEfEYJ9cA:10 a=dIu3SnmMAAAA:8
- a=UuNRHE8GK7IFE6iMFhoA:9 a=oA-hiQXhRBJ7UUu7GJpmqOYQ8GwA:4 a=Rn8qiON8_f4A:10
-X-CM-Score: 0.00
-In-Reply-To: <200906260023.03169.chriscool@tuxfamily.org> (Christian Couder's message of "Fri\, 26 Jun 2009 00\:23\:02 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+	id S1755665AbZFYWu2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 25 Jun 2009 18:50:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753768AbZFYWu2
+	(ORCPT <rfc822;git-outgoing>); Thu, 25 Jun 2009 18:50:28 -0400
+Received: from smtp1.linux-foundation.org ([140.211.169.13]:59659 "EHLO
+	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751893AbZFYWu0 (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 25 Jun 2009 18:50:26 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
+	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id n5PMoKKD016494
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Thu, 25 Jun 2009 15:50:21 -0700
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id n5PMoJ6v017559;
+	Thu, 25 Jun 2009 15:50:20 -0700
+X-X-Sender: torvalds@localhost.localdomain
+In-Reply-To: <7vprcsymjd.fsf@alter.siamese.dyndns.org>
+User-Agent: Alpine 2.01 (LFD 1184 2008-12-16)
+X-Spam-Status: No, hits=-3.47 required=5 tests=AWL,BAYES_00
+X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122252>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122253>
 
-Christian Couder <chriscool@tuxfamily.org> writes:
 
->> If someone creates a "git decompose-octopus <commit>" command then ...
 
-I am afraid that misses the entire point of my discussion.
+On Thu, 25 Jun 2009, Junio C Hamano wrote:
+> 
+> Such a decomposed octopus would _only_ be necessary during bisection, only
+> when the user chooses to test two tips at once (instead of testing one by
+> one), _and_ only its tree is needed for that purpose.  In other words, we
+> should be able to do this _without_ creating an extra commit, let alone
+> replace mechanism.
 
-Such a decomposed octopus would _only_ be necessary during bisection, only
-when the user chooses to test two tips at once (instead of testing one by
-one), _and_ only its tree is needed for that purpose.  In other words, we
-should be able to do this _without_ creating an extra commit, let alone
-replace mechanism.
+Keep in mind, though, that realistically, I don't think we've ever seen 
+any bisection attempts that end at an octopus.
+
+Sure, I suspect that being really clever about decomposing an octopus 
+merge might allow us to bisect things _faster_ to one of the branches 
+involved in the merge, but the amount of smarts to do that just for that 
+reason seems pretty outlandish.
+
+And if we ever do end up with an actual bug being bisected to the octopus 
+merge itself, at that point I don't think it's unreasonable to take the 
+same approach we do with any normal merge: just try to figure out what the 
+conflict is all about (clearly it's not a data conflict, since the 
+octopus wouldn't have succeeded in that case, but subtle merge errors can 
+be due to two branches each introducing their own assumptions without 
+actually ever clashing on a source file level).
+
+With regular merges, if you really don't see what the conceptual conflict 
+is, you could try to do a temporary rebase to try to figure it out, and I 
+suspect that that is what you'd want to do with an octopus merge too - 
+rather than try to decompose the octopus merge into multiple simpler 
+merges, you'd like to try to linearize history and then re-do the 
+bisection attempt on that totally modified/simplified history.
+
+			Linus
