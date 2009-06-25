@@ -1,69 +1,83 @@
-From: Rustom Mody <rustompmody@gmail.com>
-Subject: git in emacs
-Date: Thu, 25 Jun 2009 18:05:49 +0530
-Message-ID: <f46c52560906250535k6a0eb0a5ne05dc327760d14bd@mail.gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCHv6 0/8] gitweb: gravatar support
+Date: Thu, 25 Jun 2009 14:55:32 +0200
+Message-ID: <200906251455.32953.jnareb@gmail.com>
+References: <1245926587-25074-1-git-send-email-giuseppe.bilotta@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain;
+  charset="iso-8859-2"
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jun 25 14:35:59 2009
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jun 25 14:55:50 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MJoBJ-00015Y-QV
-	for gcvg-git-2@gmane.org; Thu, 25 Jun 2009 14:35:58 +0200
+	id 1MJoUT-0001Kk-3a
+	for gcvg-git-2@gmane.org; Thu, 25 Jun 2009 14:55:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752209AbZFYMfr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 25 Jun 2009 08:35:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752047AbZFYMfq
-	(ORCPT <rfc822;git-outgoing>); Thu, 25 Jun 2009 08:35:46 -0400
-Received: from mail-pz0-f189.google.com ([209.85.222.189]:36509 "EHLO
-	mail-pz0-f189.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752133AbZFYMfq (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 25 Jun 2009 08:35:46 -0400
-Received: by pzk27 with SMTP id 27so1311130pzk.33
-        for <git@vger.kernel.org>; Thu, 25 Jun 2009 05:35:49 -0700 (PDT)
+	id S1753377AbZFYMze (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 25 Jun 2009 08:55:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753334AbZFYMze
+	(ORCPT <rfc822;git-outgoing>); Thu, 25 Jun 2009 08:55:34 -0400
+Received: from mail-fx0-f213.google.com ([209.85.220.213]:50067 "EHLO
+	mail-fx0-f213.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753102AbZFYMzd (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 Jun 2009 08:55:33 -0400
+Received: by fxm9 with SMTP id 9so1425905fxm.37
+        for <git@vger.kernel.org>; Thu, 25 Jun 2009 05:55:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:date:message-id:subject
-         :from:to:content-type:content-transfer-encoding;
-        bh=SYqp7NpIwKsRIFza300AEhP3BkeE6HZBV53oxWdbWqw=;
-        b=lfIU4PvJ9LxmWqdsH9+jYNG1itmTedkMcF5Ia4CtWcMD/UjRPcHiULTKf/tW1QUIRt
-         QtHguDKIqOhNGkITc0q1bteZ/yX4RSvTMr8gNKHHMmoSd0/Tk4IFKYX2pJiFP9N6D+r3
-         El+vic2E3V4im4lVnPjQJBVLA/CREoghjXoWE=
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=m5kcy781CfZFA2tLg5z2LE9T6pdpNhdCdVr/wJt4xmk=;
+        b=vFPRsAjy7dVDsMA/JNyGk5hUt0L6D7NFYGJ8i1PfFj9RUIaj8/lLCsgAdHzI/4PGMP
+         nI2+AyBFQgFjRHSM7uPnEKvSMqH/ctfTFWkYahRXsVzqJvyPpPQZXCbidyWLLwD6xmC2
+         CrnrU+WHpRXzmYn6/vkNfMroABXAQPNjd1jH0=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type
-         :content-transfer-encoding;
-        b=c+I8GJKU4qXtS9dCB0pYJU0Su6pzyKhzds2+IQEIvS0WpKfYwL/T93Pw7Wakd5cZgO
-         ChvXn1JTBtG0CXJpk1MjUKUs+jGcDLt97RmksQr2EmjpSst7tHKeFoLOuT5v8geEwcgh
-         Vtf7E3tlG34paBWb11hyd/GN9vH89TQcboQ0I=
-Received: by 10.114.199.1 with SMTP id w1mr3842969waf.151.1245933349408; Thu, 
-	25 Jun 2009 05:35:49 -0700 (PDT)
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=tIJj9S85XrGPuaCyTopeVmfvU+9/V+TQ5b6KIGqujo/TFofhx0Zii22Fg8UskAo+U1
+         brVQZCZWWAG70LTPmCSx9O+ikuNxGFFFG2R/ZR3e2iNxLEr8AUUGNTgmH97mCHW2V6Jl
+         yMUknh7pzgqUZJbXpOt8zRgxsPJeGRXOjhkQI=
+Received: by 10.103.214.13 with SMTP id r13mr1547816muq.37.1245934534922;
+        Thu, 25 Jun 2009 05:55:34 -0700 (PDT)
+Received: from ?192.168.1.13? (abwu167.neoplus.adsl.tpnet.pl [83.8.244.167])
+        by mx.google.com with ESMTPS id s11sm1054829mue.41.2009.06.25.05.55.33
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Thu, 25 Jun 2009 05:55:34 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <1245926587-25074-1-git-send-email-giuseppe.bilotta@gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122203>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122204>
 
-Ive been trying to use git.el in emacs
+Giuseppe Bilotta wrote:
 
-When I checked out an internal commit (I guess that's called a
-detached head?) then git-status (in emacs) starts giving me
+> Significant changes from the previous iteration are:
+> 
+> * the feature has been renamed to 'avatar', and 'gravatar' is a possible
+>   value for it (currently the only sensible value, other than '');
 
-Branch:     fatal: ref HEAD is not a symbolic ref
+By the way, I think it might be better solution to provide picon URL
+as 'default' attribute for gravatar URL, so it is used if there is no
+gravatar for given email.
 
-This goes away when I do
-git reset --hard <original-head-sha> --
-git checkout master
+> * the last patch adds avatars to signoff lines.
 
-[I'm not sure this the best way of restoring the head]
+Perhaps it would be better to add gravatars at beginning of line?
 
-But my question is more about git in emacs. I gather that there are 3 options:
-1. git.el
-2. vc with git backend
-3. dvc with git backend
 
-Which is best/preferable?
-Or is it best to stay with the command line?
+I'll try to post my comments today (i.e. within 24 hours)... but it
+looks good.
+
+-- 
+Jakub Narebski
+Poland
