@@ -1,65 +1,68 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] fread does not return negative on error
-Date: Thu, 25 Jun 2009 11:31:09 -0700
-Message-ID: <7vtz24cgia.fsf@alter.siamese.dyndns.org>
-References: <4A3FB09D.9050903@gmail.com> <20090622153431.GA18466@elte.hu>
-	<25e057c00906220847t15425f38maf486c291d1d2468@mail.gmail.com>
-	<4A3FB479.2090902@lsrfire.ath.cx>
-	<7vhby64i8f.fsf@alter.siamese.dyndns.org>
-	<20090624081819.GA10436@elte.hu>
+Subject: Re: [PATCH] git-remote: fixed missing .uploadpack usage for show command
+Date: Thu, 25 Jun 2009 11:32:17 -0700
+Message-ID: <7vmy7wcgge.fsf@alter.siamese.dyndns.org>
+References: <20090625090036.GA32650@foursquare.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
-	=?utf-8?Q?Ren=C3=A9?= Scharfe <rene.scharfe@lsrfire.ath.cx>,
-	roel kluin <roel.kluin@gmail.com>, git@vger.kernel.org,
-	LKML <linux-kernel@vger.kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Pierre Habouzit <madcoder@debian.org>
-To: Ingo Molnar <mingo@elte.hu>
-X-From: git-owner@vger.kernel.org Thu Jun 25 20:31:21 2009
+Cc: git@vger.kernel.org
+To: Chris Frey <cdfrey@foursquare.net>
+X-From: git-owner@vger.kernel.org Thu Jun 25 20:32:28 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MJtjE-0004rf-G0
-	for gcvg-git-2@gmane.org; Thu, 25 Jun 2009 20:31:21 +0200
+	id 1MJtkI-0005OC-FG
+	for gcvg-git-2@gmane.org; Thu, 25 Jun 2009 20:32:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752900AbZFYSbK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 25 Jun 2009 14:31:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752005AbZFYSbJ
-	(ORCPT <rfc822;git-outgoing>); Thu, 25 Jun 2009 14:31:09 -0400
-Received: from fed1rmmtao105.cox.net ([68.230.241.41]:43093 "EHLO
-	fed1rmmtao105.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751304AbZFYSbI (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 25 Jun 2009 14:31:08 -0400
+	id S1753401AbZFYScP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 25 Jun 2009 14:32:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752126AbZFYScP
+	(ORCPT <rfc822;git-outgoing>); Thu, 25 Jun 2009 14:32:15 -0400
+Received: from fed1rmmtao106.cox.net ([68.230.241.40]:53112 "EHLO
+	fed1rmmtao106.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751820AbZFYScO (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 Jun 2009 14:32:14 -0400
 Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao105.cox.net
+          by fed1rmmtao106.cox.net
           (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20090625183110.VJPJ20430.fed1rmmtao105.cox.net@fed1rmimpo01.cox.net>;
-          Thu, 25 Jun 2009 14:31:10 -0400
+          id <20090625183217.VFMJ25927.fed1rmmtao106.cox.net@fed1rmimpo01.cox.net>;
+          Thu, 25 Jun 2009 14:32:17 -0400
 Received: from localhost ([68.225.240.211])
 	by fed1rmimpo01.cox.net with bizsmtp
-	id 8JXA1c0024aMwMQ03JXAfE; Thu, 25 Jun 2009 14:31:10 -0400
-X-VR-Score: -100.00
-X-Authority-Analysis: v=1.0 c=1 a=F_o4wktclTQA:10 a=8zWp4CDmNhVN3as29EUA:9
- a=MVTGGcZhlGhNtarNthw4e9ThxssA:4
+	id 8JYH1c0094aMwMQ03JYHDw; Thu, 25 Jun 2009 14:32:17 -0400
+X-VR-Score: -130.00
+X-Authority-Analysis: v=1.0 c=1 a=C0EaV7SPPR0A:10 a=xp1XZONDAAAA:8
+ a=2sPNTWWvntwGMlOfXoUA:9 a=3CdS1A_l_txkgYw6WMp1IhNnriYA:4 a=kMKJStmIQngA:10
 X-CM-Score: 0.00
-In-Reply-To: <20090624081819.GA10436@elte.hu> (Ingo Molnar's message of "Wed\, 24 Jun 2009 10\:18\:19 +0200")
 User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122228>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122229>
 
-Ingo Molnar <mingo@elte.hu> writes:
+Chris Frey <cdfrey@foursquare.net> writes:
 
-> And our general experience with the Git libraries in 
-> tools/perf/util/* is: we love them!
+> When using 'git remote show <name>', the remote HEAD check
+> did not use the uploadpack configuration setting.
+>
+> Signed-off-by: Chris Frey <cdfrey@foursquare.net>
 
-> For example parse-options.c is a striking improvement compared to 
-> getopt.h we used before, and all the other facilities are sane and 
-> straight to the point as well. So in this sense 'perf' is an ... 
-> interesting cross-discipline 'fork' of Git's generic libraries.
+Thanks.
 
-Kudos to Pierre, then.
+"X did not use Y" may be a good statement of the fact.  From the patch
+text it can be seen that a NULL used to be passed and the patch makes it
+to pass states->remote instead, so "This patch make X use Y", even though
+left unsaid in the message, can be seen.
+
+But it does not answer a more important question.  How was it a problem
+that "X did not use Y"?
+
+People who followed a recent discussion know the answer to this question,
+but ones who read this in the "git log" output 6 months down the line will
+not.  Please make a habit of justifying the change by stating "why".
+
+"X should have used Y because of such and such reasons, but it didn't.
+Instead of showing the correct result W, it gave Z, which may happen to be
+the same as W in default settings but otherwise is wrong."
