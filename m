@@ -1,153 +1,159 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: Parallell Development / Switching to GIT
-Date: Thu, 25 Jun 2009 12:11:59 +0200
-Message-ID: <4A434D6F.2090105@op5.se>
-References: <loom.20090625T095000-90@post.gmane.org>
+From: Ryan <ryanphilips19@googlemail.com>
+Subject: Re: names using git config
+Date: Thu, 25 Jun 2009 15:39:11 +0530
+Message-ID: <376636be0906250309h6eb99296r4b81cf22985b690a@mail.gmail.com>
+References: <376636be0906240958l70c81b68g83340556f2bf4eca@mail.gmail.com>
+	 <vpqljnhv9w0.fsf@bauges.imag.fr>
+	 <376636be0906242146h1d4c3b1q8c2e9af26f124af4@mail.gmail.com>
+	 <7veit8kidz.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8;
-	format=flowed
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Patrick Neuner <neuner@futureweb.at>
-X-From: git-owner@vger.kernel.org Thu Jun 25 12:12:13 2009
+Cc: Matthieu Moy <Matthieu.Moy@imag.fr>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jun 25 12:15:58 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MJlwB-0004vc-CF
-	for gcvg-git-2@gmane.org; Thu, 25 Jun 2009 12:12:11 +0200
+	id 1MJlzm-0006aX-DQ
+	for gcvg-git-2@gmane.org; Thu, 25 Jun 2009 12:15:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752044AbZFYKMB convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 25 Jun 2009 06:12:01 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751721AbZFYKMB
-	(ORCPT <rfc822;git-outgoing>); Thu, 25 Jun 2009 06:12:01 -0400
-Received: from na3sys009aog101.obsmtp.com ([74.125.149.67]:58179 "HELO
-	na3sys009aog101.obsmtp.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with SMTP id S1751321AbZFYKMA (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 25 Jun 2009 06:12:00 -0400
-Received: from source ([209.85.220.225]) by na3sys009aob101.postini.com ([74.125.148.12]) with SMTP
-	ID DSNKSkNNcvT+lRY3YZ00Cm1kUHp7Z8HYHW0d@postini.com; Thu, 25 Jun 2009 03:12:03 PDT
-Received: by mail-fx0-f225.google.com with SMTP id 25so1402744fxm.35
-        for <git@vger.kernel.org>; Thu, 25 Jun 2009 03:12:02 -0700 (PDT)
-Received: by 10.86.33.9 with SMTP id g9mr2427847fgg.41.1245924722118;
-        Thu, 25 Jun 2009 03:12:02 -0700 (PDT)
-Received: from clix.int.op5.se ([212.112.174.166])
-        by mx.google.com with ESMTPS id d4sm2975653fga.3.2009.06.25.03.12.00
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 25 Jun 2009 03:12:01 -0700 (PDT)
-User-Agent: Thunderbird 2.0.0.21 (X11/20090320)
-In-Reply-To: <loom.20090625T095000-90@post.gmane.org>
+	id S1755941AbZFYKPo convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 25 Jun 2009 06:15:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754367AbZFYKPo
+	(ORCPT <rfc822;git-outgoing>); Thu, 25 Jun 2009 06:15:44 -0400
+Received: from mail-gx0-f222.google.com ([209.85.217.222]:64916 "EHLO
+	mail-gx0-f222.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755973AbZFYKPm convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 25 Jun 2009 06:15:42 -0400
+X-Greylist: delayed 394 seconds by postgrey-1.27 at vger.kernel.org; Thu, 25 Jun 2009 06:15:42 EDT
+Received: by gxk22 with SMTP id 22so531867gxk.13
+        for <git@vger.kernel.org>; Thu, 25 Jun 2009 03:15:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=Uly6LgESllCCmnlsCK5CTL49RANhUydrb5esfxVfUWY=;
+        b=Jmoe6hRdvTNXRrEOqUnNAXDriS+1lKPQgNan3pHPEyEXM3glxLBpeLrJ0BfFV90JpK
+         6eAx34DYL3N+gqU6YHBoHX34/V04eblK64Ej0nkwrCjJmxuKupzjvv2/X5PpP7K5eVc5
+         EukOypAnQgNw1rzPwH7ix5NPpbC/Rqcsqc5r0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlemail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=MWD+k1DfMiTwU5DDUTu2Hb9KFE7KyQHuEOzEvy8YkqRvtzCWNhxuxmGBKi/gnlwKKi
+         JbXzxeeyYo6lfrCKqRj2ui+0uIBXzu7P+n4FTt0wnVLeBR3zZn6fmz8o8D5uUKBBROsh
+         tNx1MmhbyqwaetQU4mLw2u77ZYFDcLyoQYO2k=
+Received: by 10.231.16.134 with SMTP id o6mr809841iba.11.1245924551380; Thu, 
+	25 Jun 2009 03:09:11 -0700 (PDT)
+In-Reply-To: <7veit8kidz.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122192>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122193>
 
-Patrick Neuner wrote:
-> Hello,
->=20
-> we are using SVN right now and with the way we do / need to develop, =
-it seems we
-> are constantly get in a merging horror.=20
-> I did quite some reading about git now, but I am still not really sur=
-e if that
-> what we try to accomplish can be done with git,
-> Or if we are really doing something a too odd way.=20
->=20
+On Thu, Jun 25, 2009 at 10:41 AM, Junio C Hamano<gitster@pobox.com> wro=
+te:
+> Ryan <ryanphilips19@googlemail.com> writes:
+>
+>> Hi,
+>> =A0 Thank you for your response.
+>>
+>> 1) git config user.name 'Matthieu M. Moy' Works
+>> 2) git config user.name 'Matthieu M.' =A0does not
+>>
+>> Name cannot end in a '.' <dot>. in git config user.name
+>
+> That is correct, but I think we are a bit too strict in sanitizing na=
+mes.
+> The code is ident.c::copy() whose intent was to sanitize useless runs=
+ of
+> commas we slurp from GECOS field, but the sanitization is done also f=
+or
+> anything specified by the end user.
+>
 
-Conflicts will still happen with git, but "merge horror" no longer appl=
-ies,
-for a couple of reasons (I come from a similar background, but switched=
- to
-git in late 2005).
-1. In SVN (and CVS), you're merging *unknown changes* into *unsaved sta=
-te*.
-   You haven't committed your changes to the repository before you merg=
-e,
-   and you haven't (usually) looked at the upstream changes before you
-   try to merge. Git doesn't have this problem (and neither does any ot=
-her
-   distributed version control system), since you first fetch changes f=
-rom
-   someone else and then merge them into an already saved state. When a
-   merge conflict resolution goes wahoonie-shaped, you can easily resto=
-re
-   either of the previously saved states with zero hassle.
-2. Git has "rerere", which records and reuses previously resolved merge
-   conflicts, so you won't get the same merge-conflict more than once, =
-if
-   you enable rerere.
-3. SVN (and CVS) won't remember which changes are already merged in, so
-   they will fail horribly at repeated same-branch merges. Git (and oth=
-er
-   DAG-based scm's) can and do calculate the merge-base for you so you'=
-ll
-   never have to think about that yourself.
 
-> Let my try to describe =E2=80=93 I also added an image.=20
->=20
-> ---- repo 1
->   |
->    - repo 2 (=3Dbranch of repo 1 - for our external developers)
->=20
-> We have the main branch and 2nd branch for external developers.=20
->=20
-> We work inside the repo1, which are usually features/updates that go =
-life after
-> a short turn.=20
-> Our external developer work on different features that will be merged=
- into repo1
-> from time to time.=20
->=20
-> Usually during development, we sometimes need to push features from r=
-epo1 to
-> repo2, and later the features developed on repo2 will be pushed back =
-to repo1,=20
-> And also smaller bug fixes come from repo2 that needs to go into repo=
-1.=20
->=20
-> But this is a constant process, meaning, that both branches will exis=
-t,
-> especially repo2 will exist after this feature has finished for small=
-er
-> updates/bugfixes.=20
-> We don=E2=80=99t want to do a new branch for each bugfix, for each ne=
-w small feature,
-> but have different branches for different developer teams.=20
->=20
-> So I was wondering, if this could cause troubles with GIT in case of =
-merging
-> around without closing a branch.=20
->=20
+What are you suggesting me to do? Apply the below patch.
+I may want to submit patches to the linux kernel. Is this okay? Or
+will this (below patch)
+on machine will later at some point of time cause trouble to people
+applying the patches.
 
-Git doesn't take away merge conflicts, but it does make it (a LOT) easi=
-er to
-handle them when they appear, for the reasons stated above. What you wa=
-nt to
-do sounds pretty reasonable, although I'd personally use feature-branch=
-es
-for both internal and external developers, since they make it possible =
-to
-pick which features and fixes you want to release while allowing develo=
-pers
-to make as many commits as they feel is necessary for each feature.
+Does git am or git apply check if name ends in a "." and do something?
 
-> I am adding an link to an image that might show what I tried to expla=
-in.=20
-> http://temp.in.futureweb.at/parallell-development.png
->=20
 
-We're quite fond of ascii-art here on git@vger. Since I don't know what=
- the
-different colors mean in the picture, ascii would probably have made mo=
-re
-sense (since I then could have commented on it).
+Thank you,
 
---=20
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+Ryan W.
 
-Considering the successes of the wars on alcohol, poverty, drugs and
-terror, I think we should give some serious thought to declaring war
-on peace.
+
+
+
+
+> This patch loosens it, but I think it goes too far, in that it does n=
+ot
+> stop you from feeding total nonsense with GIT_AUTHOR_NAME environment=
+ and
+> user.name configuration.
+>
+> =A0ident.c =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0| =A0 =A05 ++---
+> =A0t/t1300-repo-config.sh | =A0 12 ++++++++++++
+> =A02 files changed, 14 insertions(+), 3 deletions(-)
+>
+> diff --git a/ident.c b/ident.c
+> index 99f1c85..07ec81d 100644
+> --- a/ident.c
+> +++ b/ident.c
+> @@ -212,8 +212,7 @@ const char *fmt_ident(const char *name, const cha=
+r *email,
+> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0pw =3D getpwuid(getuid());
+> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0if (!pw)
+> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0die("You don't exist. =
+Go away!");
+> - =A0 =A0 =A0 =A0 =A0 =A0 =A0 strlcpy(git_default_name, pw->pw_name,
+> - =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 sizeof(git_default_name=
+));
+> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 copy(git_default_name, sizeof(git_defau=
+lt_name), 0, pw->pw_name);
+> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0name =3D git_default_name;
+> =A0 =A0 =A0 =A0}
+>
+> @@ -221,7 +220,7 @@ const char *fmt_ident(const char *name, const cha=
+r *email,
+> =A0 =A0 =A0 =A0if (!name_addr_only && date_str)
+> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0parse_date(date_str, date, sizeof(date=
+));
+>
+> - =A0 =A0 =A0 i =3D copy(buffer, sizeof(buffer), 0, name);
+> + =A0 =A0 =A0 i =3D add_raw(buffer, sizeof(buffer), 0, name);
+> =A0 =A0 =A0 =A0i =3D add_raw(buffer, sizeof(buffer), i, " <");
+> =A0 =A0 =A0 =A0i =3D copy(buffer, sizeof(buffer), i, email);
+> =A0 =A0 =A0 =A0if (!name_addr_only) {
+> diff --git a/t/t1300-repo-config.sh b/t/t1300-repo-config.sh
+> index 43ea283..c1a913e 100755
+> --- a/t/t1300-repo-config.sh
+> +++ b/t/t1300-repo-config.sh
+> @@ -758,4 +758,16 @@ test_expect_success 'check split_cmdline return'=
+ "
+> =A0 =A0 =A0 =A0test_must_fail git merge master
+> =A0 =A0 =A0 =A0"
+>
+> +test_expect_success 'name ending in dot' '
+> + =A0 =A0 =A0 foobar=3D"Foo Bar."
+> + =A0 =A0 =A0 git config user.name "$foobar" &&
+> + =A0 =A0 =A0 git config user.email "foo.bar@example.com" &&
+> + =A0 =A0 =A0 test "$(git config user.name)" =3D "$foobar" &&
+> + =A0 =A0 =A0 (
+> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 unset GIT_AUTHOR_NAME
+> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 ident=3D$(git var GIT_AUTHOR_IDENT | se=
+d -e "s/ *<.*//") &&
+> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 test "$ident" =3D "$foobar"
+> + =A0 =A0 =A0 )
+> +'
+> +
+> =A0test_done
+>
