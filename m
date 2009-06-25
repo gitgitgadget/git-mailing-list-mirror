@@ -1,310 +1,115 @@
-From: Stephen Boyd <bebarino@gmail.com>
-Subject: [PATCHv2 2/2] read-tree: migrate to parse-options
-Date: Wed, 24 Jun 2009 22:06:01 -0700
-Message-ID: <1245906361-20644-1-git-send-email-bebarino@gmail.com>
-References: <1245817672-25483-2-git-send-email-bebarino@gmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jun 25 07:06:18 2009
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: names using git config
+Date: Wed, 24 Jun 2009 22:11:04 -0700
+Message-ID: <7veit8kidz.fsf@alter.siamese.dyndns.org>
+References: <376636be0906240958l70c81b68g83340556f2bf4eca@mail.gmail.com>
+	<vpqljnhv9w0.fsf@bauges.imag.fr>
+	<376636be0906242146h1d4c3b1q8c2e9af26f124af4@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Matthieu Moy <Matthieu.Moy@imag.fr>, git@vger.kernel.org
+To: Ryan <ryanphilips19@googlemail.com>
+X-From: git-owner@vger.kernel.org Thu Jun 25 07:11:17 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MJhA9-0000q4-KC
-	for gcvg-git-2@gmane.org; Thu, 25 Jun 2009 07:06:18 +0200
+	id 1MJhEx-0002JH-Ow
+	for gcvg-git-2@gmane.org; Thu, 25 Jun 2009 07:11:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751794AbZFYFGH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 25 Jun 2009 01:06:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751018AbZFYFGF
-	(ORCPT <rfc822;git-outgoing>); Thu, 25 Jun 2009 01:06:05 -0400
-Received: from mail-px0-f190.google.com ([209.85.216.190]:40734 "EHLO
-	mail-px0-f190.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750731AbZFYFGE (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 25 Jun 2009 01:06:04 -0400
-Received: by pxi28 with SMTP id 28so789769pxi.33
-        for <git@vger.kernel.org>; Wed, 24 Jun 2009 22:06:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:from:to:cc:subject
-         :date:message-id:x-mailer:in-reply-to:references;
-        bh=KXvTt+863iPxBTqvXP1d3hq22q9/8qv1roEfHHj19tQ=;
-        b=BrlwDUsnmvZyfUPw9gS5HEMTi+TExfDg3Kns9/xWqbln3AutRXACwfixFKha0BM7hr
-         f80RJPg4uEbnx3zwdLbFIBOXP8CL2a+MIFV9yDAfVI0gX9EMi5PQRPUEGVAPxAmX/bGD
-         DwoqmXi6SZPD3Fij7JHJ8vU4oCHmMSStDBuT0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=YTQG9ZClfnIIeSppS/3IfG8KMUK8kXlLyLvpPIzShAqnSE9eFsb1eVUqUx2JAkc/PT
-         QTZF713bj01Y1JZbnh2+6IkC1mGq1CUzkoLDusrjSeYkd/Sg+xYzPco0UwhmRYEPYRyy
-         uNdpjUeAu+/0FEVz3sS/NqL/mbWk7A9FtjM1w=
-Received: by 10.115.18.3 with SMTP id v3mr3355095wai.32.1245906365771;
-        Wed, 24 Jun 2009 22:06:05 -0700 (PDT)
-Received: from earth (cpe-66-75-25-79.san.res.rr.com [66.75.25.79])
-        by mx.google.com with ESMTPS id k14sm3153067waf.60.2009.06.24.22.06.03
-        (version=SSLv3 cipher=RC4-MD5);
-        Wed, 24 Jun 2009 22:06:04 -0700 (PDT)
-Received: by earth (sSMTP sendmail emulation); Wed, 24 Jun 2009 22:06:01 -0700
-X-Mailer: git-send-email 1.6.3.3.334.g916e1
-In-Reply-To: <1245817672-25483-2-git-send-email-bebarino@gmail.com>
+	id S1751202AbZFYFLG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 25 Jun 2009 01:11:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750879AbZFYFLE
+	(ORCPT <rfc822;git-outgoing>); Thu, 25 Jun 2009 01:11:04 -0400
+Received: from fed1rmmtao105.cox.net ([68.230.241.41]:53450 "EHLO
+	fed1rmmtao105.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750788AbZFYFLD (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 Jun 2009 01:11:03 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao105.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20090625051106.WNLL20430.fed1rmmtao105.cox.net@fed1rmimpo01.cox.net>;
+          Thu, 25 Jun 2009 01:11:06 -0400
+Received: from localhost ([68.225.240.211])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id 85B51c0024aMwMQ035B5fy; Thu, 25 Jun 2009 01:11:05 -0400
+X-VR-Score: -100.00
+X-Authority-Analysis: v=1.0 c=1 a=mK_AVkanAAAA:8 a=A1X0JdhQAAAA:8
+ a=ez72-NhEb3RnDuAYZeAA:9 a=M4EtGvymtxyFKlqHMfCn6DnyxykA:4 a=MTTpUSoqY4oA:10
+ a=9xyTavCNlvEA:10 a=Y6qChIQXU1wA:10
+X-CM-Score: 0.00
+In-Reply-To: <376636be0906242146h1d4c3b1q8c2e9af26f124af4@mail.gmail.com> (Ryan's message of "Thu\, 25 Jun 2009 10\:16\:56 +0530")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122178>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122180>
 
-Cleanup the documentation to explicitly state that --exclude-directory
-is only meaningful when used with -u. Also make the documentation more
-consistent with the usage message printed with read-tree --help-all.
+Ryan <ryanphilips19@googlemail.com> writes:
 
-The -m, --prefix, and --reset options are performing similar actions
-(setting some flags, read_cache_unmerged(), checking for illegal option
-combinations). Instead of performing these actions when the options are
-parsed, we delay doing them until after parse-opts has finished.
+> Hi,
+>   Thank you for your response.
+>
+> 1) git config user.name 'Matthieu M. Moy' Works
+> 2) git config user.name 'Matthieu M.'  does not
+>
+> Name cannot end in a '.' <dot>. in git config user.name
 
-Signed-off-by: Stephen Boyd <bebarino@gmail.com>
----
+That is correct, but I think we are a bit too strict in sanitizing names.
+The code is ident.c::copy() whose intent was to sanitize useless runs of
+commas we slurp from GECOS field, but the sanitization is done also for
+anything specified by the end user.
 
-I updated the two usage strings for --prefix and --reset too.
+This patch loosens it, but I think it goes too far, in that it does not
+stop you from feeding total nonsense with GIT_AUTHOR_NAME environment and
+user.name configuration.
 
- Documentation/git-read-tree.txt |    5 +-
- builtin-read-tree.c             |  183 ++++++++++++++++++---------------------
- 2 files changed, 89 insertions(+), 99 deletions(-)
+ ident.c                |    5 ++---
+ t/t1300-repo-config.sh |   12 ++++++++++++
+ 2 files changed, 14 insertions(+), 3 deletions(-)
 
-diff --git a/Documentation/git-read-tree.txt b/Documentation/git-read-tree.txt
-index 7160fa1..1e0cc8f 100644
---- a/Documentation/git-read-tree.txt
-+++ b/Documentation/git-read-tree.txt
-@@ -8,7 +8,10 @@ git-read-tree - Reads tree information into the index
- 
- SYNOPSIS
- --------
--'git read-tree' (<tree-ish> | [[-m [--trivial] [--aggressive] | --reset | --prefix=<prefix>] [-u | -i]] [--exclude-per-directory=<gitignore>] [--index-output=<file>] <tree-ish1> [<tree-ish2> [<tree-ish3>]])
-+'git read-tree' [--index-output=<file>] <treeish>
-+'git read-tree' [[-m [--trivial] [--aggressive] | --reset | --prefix=<prefix>]
-+		[-u [--exclude-per-directory=<gitignore>] | -i]]
-+		[--index-output=<file>] <tree-ish1> [<tree-ish2> [<tree-ish3>]]
- 
- 
- DESCRIPTION
-diff --git a/builtin-read-tree.c b/builtin-read-tree.c
-index 887e177..ba3ae6b 100644
---- a/builtin-read-tree.c
-+++ b/builtin-read-tree.c
-@@ -12,6 +12,7 @@
- #include "unpack-trees.h"
- #include "dir.h"
- #include "builtin.h"
-+#include "parse-options.h"
- 
- static int nr_trees;
- static struct tree *trees[MAX_UNPACK_TREES];
-@@ -29,7 +30,40 @@ static int list_tree(unsigned char *sha1)
- 	return 0;
- }
- 
--static const char read_tree_usage[] = "git read-tree (<sha> | [[-m [--trivial] [--aggressive] | --reset | --prefix=<prefix>] [-u | -i]] [--exclude-per-directory=<gitignore>] [--index-output=<file>] <sha1> [<sha2> [<sha3>]])";
-+static const char * const read_tree_usage[] = {
-+	"git read-tree [--index-output=<file>] <treeish>",
-+	"git read-tree [[-m [--trivial] [--aggressive] | --reset | --prefix=<prefix>] [-u [--exclude-per-directory=<gitignore>] | -i]]  [--index-output=<file>] <treeish1> [<treeish2> [<treeish3>]]",
-+	NULL
-+};
-+
-+static int index_output_cb(const struct option *opt, const char *arg,
-+				 int unset)
-+{
-+	set_alternate_index_output(arg);
-+	return 0;
-+}
-+
-+static int exclude_per_directory_cb(const struct option *opt, const char *arg,
-+				    int unset)
-+{
-+	struct dir_struct *dir;
-+	struct unpack_trees_options *opts;
-+
-+	opts = (struct unpack_trees_options *)opt->value;
-+
-+	if (opts->dir)
-+		die("more than one --exclude-per-directory given.");
-+
-+	dir = xcalloc(1, sizeof(*opts->dir));
-+	dir->flags |= DIR_SHOW_IGNORED;
-+	dir->exclude_per_dir = arg;
-+	opts->dir = dir;
-+	/* We do not need to nor want to do read-directory
-+	 * here; we are merely interested in reusing the
-+	 * per directory ignore stack mechanism.
-+	 */
-+	return 0;
-+}
- 
- static struct lock_file lock_file;
- 
-@@ -39,6 +73,35 @@ int cmd_read_tree(int argc, const char **argv, const char *unused_prefix)
- 	unsigned char sha1[20];
- 	struct tree_desc t[MAX_UNPACK_TREES];
- 	struct unpack_trees_options opts;
-+	int update = 0, index_only = 0, trivial_merges_only = 0, aggressive = 0,
-+	    verbose = 0, merge = 0, reset = 0, prefix_set = 0;
-+	const struct option read_tree_options[] = {
-+		{ OPTION_CALLBACK, 0, "index-output", NULL, "FILE",
-+		  "write resulting index to <FILE>",
-+		  PARSE_OPT_NONEG, index_output_cb },
-+		{ OPTION_STRING, 0, "prefix", &opts.prefix, "<subdirectory>/",
-+		  "read the tree into the index under <subdirectory>/",
-+		  PARSE_OPT_NONEG | PARSE_OPT_LITERAL_ARGHELP },
-+		{ OPTION_CALLBACK, 0, "exclude-per-directory", &opts,
-+		  "gitignore",
-+		  "allow explicitly ignored files to be overwritten",
-+		  PARSE_OPT_NONEG, exclude_per_directory_cb },
-+		OPT__VERBOSE(&verbose),
-+		OPT_GROUP("Merging"),
-+		OPT_BOOLEAN('m', NULL, &merge,
-+			    "perform a merge in addition to a read"),
-+		OPT_BOOLEAN(0, "reset", &reset,
-+			    "same as -m, but discard unmerged entries"),
-+		OPT_BOOLEAN('u', NULL, &update,
-+			    "update working tree with merge result"),
-+		OPT_BOOLEAN('i', NULL, &index_only,
-+			    "don't check the working tree after merging"),
-+		OPT_BOOLEAN(0, "trivial", &trivial_merges_only,
-+			    "3-way merge if no file level merging required"),
-+		OPT_BOOLEAN(0, "aggressive", &aggressive,
-+			    "3-way merge in presence of adds and removes"),
-+		OPT_END()
-+	};
- 
- 	memset(&opts, 0, sizeof(opts));
- 	opts.head_idx = -1;
-@@ -49,104 +112,24 @@ int cmd_read_tree(int argc, const char **argv, const char *unused_prefix)
- 
- 	newfd = hold_locked_index(&lock_file, 1);
- 
--	for (i = 1; i < argc; i++) {
--		const char *arg = argv[i];
-+	argc = parse_options(argc, argv, unused_prefix, read_tree_options,
-+			     read_tree_usage, 0);
- 
--		/* "-u" means "update", meaning that a merge will update
--		 * the working tree.
--		 */
--		if (!strcmp(arg, "-u")) {
--			opts.update = 1;
--			continue;
--		}
-+	prefix_set = opts.prefix ? 1 : 0;
- 
--		if (!strcmp(arg, "-v")) {
--			opts.verbose_update = 1;
--			continue;
--		}
-+	if (read_cache_unmerged() && (prefix_set || merge))
-+		die("You need to resolve your current index first");
- 
--		/* "-i" means "index only", meaning that a merge will
--		 * not even look at the working tree.
--		 */
--		if (!strcmp(arg, "-i")) {
--			opts.index_only = 1;
--			continue;
--		}
-+	opts.update = update ? 1 : 0;
-+	opts.index_only = index_only ? 1 : 0;
-+	opts.trivial_merges_only = trivial_merges_only ? 1 : 0;
-+	opts.aggressive = aggressive ? 1 : 0;
-+	opts.verbose_update = verbose ? 1 : 0;
-+	opts.reset = reset ? 1 : 0;
-+	stage = opts.merge = (reset || merge || prefix_set) ? 1 : 0;
- 
--		if (!prefixcmp(arg, "--index-output=")) {
--			set_alternate_index_output(arg + 15);
--			continue;
--		}
--
--		/* "--prefix=<subdirectory>/" means keep the current index
--		 *  entries and put the entries from the tree under the
--		 * given subdirectory.
--		 */
--		if (!prefixcmp(arg, "--prefix=")) {
--			if (stage || opts.merge || opts.prefix)
--				usage(read_tree_usage);
--			opts.prefix = arg + 9;
--			opts.merge = 1;
--			stage = 1;
--			if (read_cache_unmerged())
--				die("you need to resolve your current index first");
--			continue;
--		}
--
--		/* This differs from "-m" in that we'll silently ignore
--		 * unmerged entries and overwrite working tree files that
--		 * correspond to them.
--		 */
--		if (!strcmp(arg, "--reset")) {
--			if (stage || opts.merge || opts.prefix)
--				usage(read_tree_usage);
--			opts.reset = 1;
--			opts.merge = 1;
--			stage = 1;
--			read_cache_unmerged();
--			continue;
--		}
--
--		if (!strcmp(arg, "--trivial")) {
--			opts.trivial_merges_only = 1;
--			continue;
--		}
--
--		if (!strcmp(arg, "--aggressive")) {
--			opts.aggressive = 1;
--			continue;
--		}
--
--		/* "-m" stands for "merge", meaning we start in stage 1 */
--		if (!strcmp(arg, "-m")) {
--			if (stage || opts.merge || opts.prefix)
--				usage(read_tree_usage);
--			if (read_cache_unmerged())
--				die("you need to resolve your current index first");
--			stage = 1;
--			opts.merge = 1;
--			continue;
--		}
--
--		if (!prefixcmp(arg, "--exclude-per-directory=")) {
--			struct dir_struct *dir;
--
--			if (opts.dir)
--				die("more than one --exclude-per-directory are given.");
--
--			dir = xcalloc(1, sizeof(*opts.dir));
--			dir->flags |= DIR_SHOW_IGNORED;
--			dir->exclude_per_dir = arg + 24;
--			opts.dir = dir;
--			/* We do not need to nor want to do read-directory
--			 * here; we are merely interested in reusing the
--			 * per directory ignore stack mechanism.
--			 */
--			continue;
--		}
--
--		if (1 < opts.index_only + opts.update)
--			die("-u and -i at the same time makes no sense");
-+	for (i = 0; i < argc; i++) {
-+		const char *arg = argv[i];
- 
- 		if (get_sha1(arg, sha1))
- 			die("Not a valid object name %s", arg);
-@@ -154,6 +137,10 @@ int cmd_read_tree(int argc, const char **argv, const char *unused_prefix)
- 			die("failed to unpack tree object %s", arg);
- 		stage++;
+diff --git a/ident.c b/ident.c
+index 99f1c85..07ec81d 100644
+--- a/ident.c
++++ b/ident.c
+@@ -212,8 +212,7 @@ const char *fmt_ident(const char *name, const char *email,
+ 		pw = getpwuid(getuid());
+ 		if (!pw)
+ 			die("You don't exist. Go away!");
+-		strlcpy(git_default_name, pw->pw_name,
+-			sizeof(git_default_name));
++		copy(git_default_name, sizeof(git_default_name), 0, pw->pw_name);
+ 		name = git_default_name;
  	}
-+	if (1 < opts.merge + opts.reset + prefix_set)
-+		die("Which one? -m, --reset, or --prefix?");
-+	if (1 < opts.index_only + opts.update)
-+		die("-u and -i at the same time makes no sense");
- 	if ((opts.update||opts.index_only) && !opts.merge)
- 		die("%s is meaningless without -m",
- 		    opts.update ? "-u" : "-i");
--- 
-1.6.3.3.334.g916e1
+ 
+@@ -221,7 +220,7 @@ const char *fmt_ident(const char *name, const char *email,
+ 	if (!name_addr_only && date_str)
+ 		parse_date(date_str, date, sizeof(date));
+ 
+-	i = copy(buffer, sizeof(buffer), 0, name);
++	i = add_raw(buffer, sizeof(buffer), 0, name);
+ 	i = add_raw(buffer, sizeof(buffer), i, " <");
+ 	i = copy(buffer, sizeof(buffer), i, email);
+ 	if (!name_addr_only) {
+diff --git a/t/t1300-repo-config.sh b/t/t1300-repo-config.sh
+index 43ea283..c1a913e 100755
+--- a/t/t1300-repo-config.sh
++++ b/t/t1300-repo-config.sh
+@@ -758,4 +758,16 @@ test_expect_success 'check split_cmdline return' "
+ 	test_must_fail git merge master
+ 	"
+ 
++test_expect_success 'name ending in dot' '
++	foobar="Foo Bar."
++	git config user.name "$foobar" &&
++	git config user.email "foo.bar@example.com" &&
++	test "$(git config user.name)" = "$foobar" &&
++	(
++		unset GIT_AUTHOR_NAME
++		ident=$(git var GIT_AUTHOR_IDENT | sed -e "s/ *<.*//") &&
++		test "$ident" = "$foobar"
++	)
++'
++
+ test_done
