@@ -1,73 +1,65 @@
-From: Kjetil Barvik <barvik@broadpark.no>
-Subject: Re: Troubles when directory is replaced by symlink
-Date: Fri, 26 Jun 2009 00:51:35 +0200
-Organization: private
-Message-ID: <86bpocsz9k.fsf@broadpark.no>
-References: <c6c947f60906042243v2e36251dn9a46343cf6b8a2f4@mail.gmail.com>
- <c6c947f60906090118n78d3c40fq11d1390f8776c2c0@mail.gmail.com>
- <20090611114846.GC4409@coredump.intra.peff.net> <861vpmkhob.fsf@broadpark.no>
- <885649360906241507r6ac78495s802f8b7758bcabf9@mail.gmail.com>
+From: Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: Could this be done simpler?
+Date: Fri, 26 Jun 2009 00:55:23 +0200
+Message-ID: <200906260055.23929.chriscool@tuxfamily.org>
+References: <alpine.LFD.2.01.0906241426120.3154@localhost.localdomain> <200906260023.03169.chriscool@tuxfamily.org> <7vprcsymjd.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7BIT
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Jeff King <peff@peff.net>,
-	Alexander Gladysh <agladysh@gmail.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>
-To: James Pickens <jepicken@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jun 26 00:54:40 2009
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jun 26 00:55:21 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MJxq3-0005pN-3s
-	for gcvg-git-2@gmane.org; Fri, 26 Jun 2009 00:54:39 +0200
+	id 1MJxqh-00062S-02
+	for gcvg-git-2@gmane.org; Fri, 26 Jun 2009 00:55:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754153AbZFYWy3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 25 Jun 2009 18:54:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753440AbZFYWy2
-	(ORCPT <rfc822;git-outgoing>); Thu, 25 Jun 2009 18:54:28 -0400
-Received: from bgo1smout1.broadpark.no ([217.13.4.94]:35130 "EHLO
-	bgo1smout1.broadpark.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752786AbZFYWy1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 25 Jun 2009 18:54:27 -0400
-Received: from bgo1sminn1.broadpark.no ([217.13.4.93])
- by bgo1smout1.broadpark.no
- (Sun Java(tm) System Messaging Server 6.3-3.01 (built Jul 12 2007; 32bit))
- with ESMTP id <0KLT00BD5GW9R450@bgo1smout1.broadpark.no> for
- git@vger.kernel.org; Fri, 26 Jun 2009 00:52:57 +0200 (CEST)
-Received: from localhost ([84.48.79.229]) by bgo1sminn1.broadpark.no
- (Sun Java(tm) System Messaging Server 6.3-3.01 (built Jul 12 2007; 32bit))
- with ESMTP id <0KLT007W7GW81AA0@bgo1sminn1.broadpark.no> for
- git@vger.kernel.org; Fri, 26 Jun 2009 00:52:57 +0200 (CEST)
-In-reply-to: <885649360906241507r6ac78495s802f8b7758bcabf9@mail.gmail.com>
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.3 (gnu/linux)
+	id S1755189AbZFYWzI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 25 Jun 2009 18:55:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754951AbZFYWzI
+	(ORCPT <rfc822;git-outgoing>); Thu, 25 Jun 2009 18:55:08 -0400
+Received: from smtp3-g21.free.fr ([212.27.42.3]:51077 "EHLO smtp3-g21.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753416AbZFYWzH (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 Jun 2009 18:55:07 -0400
+Received: from smtp3-g21.free.fr (localhost [127.0.0.1])
+	by smtp3-g21.free.fr (Postfix) with ESMTP id 76B51818057;
+	Fri, 26 Jun 2009 00:55:02 +0200 (CEST)
+Received: from bureau.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
+	by smtp3-g21.free.fr (Postfix) with ESMTP id 96721818052;
+	Fri, 26 Jun 2009 00:55:00 +0200 (CEST)
+User-Agent: KMail/1.9.9
+In-Reply-To: <7vprcsymjd.fsf@alter.siamese.dyndns.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122254>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122255>
 
-James Pickens <jepicken@gmail.com> writes:
-
-> On Sun, Jun 14, 2009, Kjetil Barvik<barvik@broadpark.no> wrote:
->> From: Kjetil Barvik <barvik@broadpark.no>
->> Date: Sun, 14 Jun 2009 15:08:28 +0200
->> Subject: [PATCH] lstat_cache: guard against full match of length of 'name' parameter
+On Friday 26 June 2009, Junio C Hamano wrote:
+> Christian Couder <chriscool@tuxfamily.org> writes:
+> >> If someone creates a "git decompose-octopus <commit>" command then ...
 >
-> My project ran into this bug today, and I can confirm that this patch
-> fixes it.  I think it's an important bug; it hasn't been mentioned yet,
-> but this can result in lost work if the user had modified, but not added,
-> one of the files that Git wrongly deleted.
+> I am afraid that misses the entire point of my discussion.
 >
-> So, what's the status of this patch?
+> Such a decomposed octopus would _only_ be necessary during bisection,
+> only when the user chooses to test two tips at once (instead of testing
+> one by one), _and_ only its tree is needed for that purpose.  In other
+> words, we should be able to do this _without_ creating an extra commit,
+> let alone replace mechanism.
 
-  Sorry, have not have much time, and did not get any response on the
-  patch, and I almost forgot about it for a while.
+But suppose the result from the bisection tells that M1 is the first bad 
+commit, then the user will need to look at M1, and perhaps check it out or 
+use it in other ways after the bisection is finished. So why shouldn't it 
+be a real commit?
 
-  But, since you say that the patch is ok, I shall try make a more
-  "final" patch by 14:00 UTC Friday 26.
+It's not like a few more commits are a big problem as they will be reclaimed 
+by garbage collection anyway if the replace ref is deleted.
 
-  Thanks for reminding me!
-
-  -- kjetil
+Best regards,
+Christian.
