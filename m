@@ -1,70 +1,55 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCHv6 0/8] gitweb: gravatar support
-Date: Thu, 25 Jun 2009 11:56:26 -0700
-Message-ID: <7veit8b0rp.fsf@alter.siamese.dyndns.org>
-References: <1245926587-25074-1-git-send-email-giuseppe.bilotta@gmail.com>
-	<200906251455.32953.jnareb@gmail.com>
-	<cb7bb73a0906250615i2ed880eci2d3716aa1ca43e4d@mail.gmail.com>
-	<7v8wjggs2c.fsf@alter.siamese.dyndns.org>
-	<cb7bb73a0906251146s785fac1by6847e1d0350f195b@mail.gmail.com>
+From: "Sigurdson, Dirk" <Dirk.Sigurdson@T-Mobile.com>
+Subject: Determine Blob ID from Commit ID and File Path
+Date: Thu, 25 Jun 2009 12:02:37 -0700
+Message-ID: <C66917DD.29BF%dirk.sigurdson@t-mobile.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
-To: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jun 25 20:56:51 2009
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: "git@vger.kernel.org" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Jun 25 21:03:15 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MJu7u-0007Sh-I8
-	for gcvg-git-2@gmane.org; Thu, 25 Jun 2009 20:56:51 +0200
+	id 1MJuE4-00022A-Mm
+	for gcvg-git-2@gmane.org; Thu, 25 Jun 2009 21:03:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753647AbZFYS40 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 25 Jun 2009 14:56:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754600AbZFYS4Z
-	(ORCPT <rfc822;git-outgoing>); Thu, 25 Jun 2009 14:56:25 -0400
-Received: from fed1rmmtao106.cox.net ([68.230.241.40]:64104 "EHLO
-	fed1rmmtao106.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754475AbZFYS4Y (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 25 Jun 2009 14:56:24 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao106.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20090625185627.WDFT25927.fed1rmmtao106.cox.net@fed1rmimpo02.cox.net>;
-          Thu, 25 Jun 2009 14:56:27 -0400
-Received: from localhost ([68.225.240.211])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id 8JwT1c0074aMwMQ04JwTJS; Thu, 25 Jun 2009 14:56:27 -0400
-X-VR-Score: -200.00
-X-Authority-Analysis: v=1.0 c=1 a=hQqndbpKY2IA:10 a=pGLkceISAAAA:8
- a=ybZZDoGAAAAA:8 a=P6H1My3GfQJrqHuCoKAA:9 a=YQZJq7u5JOI3aPJQMdalGTMsEBQA:4
- a=MSl-tDqOz04A:10 a=qIVjreYYsbEA:10
-X-CM-Score: 0.00
-In-Reply-To: <cb7bb73a0906251146s785fac1by6847e1d0350f195b@mail.gmail.com> (Giuseppe Bilotta's message of "Thu\, 25 Jun 2009 20\:46\:01 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+	id S1753722AbZFYTDC convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 25 Jun 2009 15:03:02 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751941AbZFYTDB
+	(ORCPT <rfc822;git-outgoing>); Thu, 25 Jun 2009 15:03:01 -0400
+Received: from mail1.t-mobile.com ([206.29.162.141]:1301 "EHLO t-mobile.com"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1751663AbZFYTDA convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 25 Jun 2009 15:03:00 -0400
+Received: from ([10.1.1.64])
+	by nxprdapirn01.t-mobile.com with ESMTP  id 5502254.290310099;
+	Thu, 25 Jun 2009 12:02:39 -0700
+Received: from NXPRDMSHUB03.gsm1900.org ([10.133.32.112]) by waprdmsims04.t-mobile.com with Microsoft SMTPSVC(6.0.3790.3959);
+	 Thu, 25 Jun 2009 12:02:38 -0700
+Received: from NXPRDVSMBX17.gsm1900.org ([10.133.32.101]) by
+ NXPRDMSHUB03.gsm1900.org ([10.133.32.112]) with mapi; Thu, 25 Jun 2009
+ 12:02:38 -0700
+Thread-Topic: Determine Blob ID from Commit ID and File Path
+Thread-Index: Acn1x4EZtcPGfIoUBkOviC0yscUSaw==
+Accept-Language: en-US
+Content-Language: en
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+acceptlanguage: en-US
+x-tm-as-product-ver: SMEX-8.0.0.1285-5.600.1016-16724.004
+x-tm-as-result: No--28.893500-8.000000-31
+x-tm-as-user-approved-sender: No
+x-tm-as-user-blocked-sender: No
+X-OriginalArrivalTime: 25 Jun 2009 19:02:38.0942 (UTC) FILETIME=[8241D7E0:01C9F5C7]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122234>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122235>
 
-Giuseppe Bilotta <giuseppe.bilotta@gmail.com> writes:
-
-> On Thu, Jun 25, 2009 at 7:07 PM, Junio C Hamano<gitster@pobox.com> wrote:
->> Giuseppe Bilotta <giuseppe.bilotta@gmail.com> writes:
->>
->>> I was thinking about some form of fallback like that too, but I
->>> haven't the slightest idea how picons work, so I'm afraid I'll leave
->>> that enhancement to some later time.
->>
->> Yeah, let's not go overboard with the initial series.
->
-> Well, I'll confess that I've been on a coding frenzy all day, so
-> expect a new release with preliminary picon support as soon as the
-> review for the last patchset is done 8-D
-
-Ok, I saved v6 in my to-queue box planning to queue it in 'pu', but I'll
-discard them and wait until the dust settles in v$n ($n >= 7).
-
-Thanks.
+Given a commit id and the path to a file, I=B9d like to be able to dete=
+rmine
+the blob id for the file.  Is there a git command that would provide th=
+is
+info?
