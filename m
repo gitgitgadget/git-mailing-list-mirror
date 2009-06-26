@@ -1,7 +1,7 @@
 From: Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH 2/4] sequencer: add "make_patch" function to save a patch
-Date: Fri, 26 Jun 2009 23:08:44 +0200
-Message-ID: <20090626210847.3885.18347.chriscool@tuxfamily.org>
+Subject: [PATCH 1/4] sequencer: add "builtin-sequencer--helper.c"
+Date: Fri, 26 Jun 2009 23:08:43 +0200
+Message-ID: <20090626210847.3885.55343.chriscool@tuxfamily.org>
 References: <20090626205319.3885.91532.chriscool@tuxfamily.org>
 Cc: git@vger.kernel.org,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
@@ -9,153 +9,132 @@ Cc: git@vger.kernel.org,
 	Daniel Barkalow <barkalow@iabervon.org>,
 	Jakub Narebski <jnareb@gmail.com>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jun 26 23:09:08 2009
+X-From: git-owner@vger.kernel.org Fri Jun 26 23:09:09 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MKIfU-0000qR-75
-	for gcvg-git-2@gmane.org; Fri, 26 Jun 2009 23:09:08 +0200
+	id 1MKIfT-0000qR-EN
+	for gcvg-git-2@gmane.org; Fri, 26 Jun 2009 23:09:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755646AbZFZVI6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 26 Jun 2009 17:08:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754138AbZFZVIx
-	(ORCPT <rfc822;git-outgoing>); Fri, 26 Jun 2009 17:08:53 -0400
-Received: from smtp3-g21.free.fr ([212.27.42.3]:56318 "EHLO smtp3-g21.free.fr"
+	id S1754606AbZFZVI5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 26 Jun 2009 17:08:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755156AbZFZVIw
+	(ORCPT <rfc822;git-outgoing>); Fri, 26 Jun 2009 17:08:52 -0400
+Received: from smtp3-g21.free.fr ([212.27.42.3]:56311 "EHLO smtp3-g21.free.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753892AbZFZVIv (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 26 Jun 2009 17:08:51 -0400
+	id S1753702AbZFZVIu (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Jun 2009 17:08:50 -0400
 Received: from smtp3-g21.free.fr (localhost [127.0.0.1])
-	by smtp3-g21.free.fr (Postfix) with ESMTP id 067CD8180BC;
-	Fri, 26 Jun 2009 23:08:44 +0200 (CEST)
+	by smtp3-g21.free.fr (Postfix) with ESMTP id 6FFD3818143;
+	Fri, 26 Jun 2009 23:08:43 +0200 (CEST)
 Received: from bureau.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
-	by smtp3-g21.free.fr (Postfix) with ESMTP id E17EF818109;
+	by smtp3-g21.free.fr (Postfix) with ESMTP id 57A79818083;
 	Fri, 26 Jun 2009 23:08:41 +0200 (CEST)
-X-git-sha1: c0aa38bcb461b31c7811d9c69752b1d8e3fea703 
+X-git-sha1: e9007da8781ff6e301b5d4d693d92e213e072a90 
 X-Mailer: git-mail-commits v0.5.0
 In-Reply-To: <20090626205319.3885.91532.chriscool@tuxfamily.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122323>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122324>
 
-This function generates an informational patch file.
+This a helper builtin that will be used to port some parts of
+"git-rebase--interactive.sh" to C.
 
-The "make_patch" and the "get_commit" functions are copied from the
-GSoC sequencer project:
+It currently does nothing except checking arguments it is passed.
 
-git://repo.or.cz/git/sbeyer.git
-
-(commit e7b8dab0c2a73ade92017a52bb1405ea1534ef20)
-
-Mentored-by: Christian Couder <chriscool@tuxfamily.org>
-Mentored-by: Daniel Barkalow <barkalow@iabervon.org>
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- builtin-sequencer--helper.c |   75 ++++++++++++++++++++++++++++++++++++++++++-
- 1 files changed, 74 insertions(+), 1 deletions(-)
+ .gitignore                  |    1 +
+ Makefile                    |    1 +
+ builtin-sequencer--helper.c |   27 +++++++++++++++++++++++++++
+ builtin.h                   |    1 +
+ git.c                       |    1 +
+ 5 files changed, 31 insertions(+), 0 deletions(-)
+ create mode 100644 builtin-sequencer--helper.c
 
+diff --git a/.gitignore b/.gitignore
+index 04926fc..98711c3 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -117,6 +117,7 @@ git-revert
+ git-rm
+ git-send-email
+ git-send-pack
++git-sequencer--helper
+ git-sh-setup
+ git-shell
+ git-shortlog
+diff --git a/Makefile b/Makefile
+index 4e8f45d..10bb7f5 100644
+--- a/Makefile
++++ b/Makefile
+@@ -632,6 +632,7 @@ BUILTIN_OBJS += builtin-rev-parse.o
+ BUILTIN_OBJS += builtin-revert.o
+ BUILTIN_OBJS += builtin-rm.o
+ BUILTIN_OBJS += builtin-send-pack.o
++BUILTIN_OBJS += builtin-sequencer--helper.o
+ BUILTIN_OBJS += builtin-shortlog.o
+ BUILTIN_OBJS += builtin-show-branch.o
+ BUILTIN_OBJS += builtin-show-ref.o
 diff --git a/builtin-sequencer--helper.c b/builtin-sequencer--helper.c
-index 721c0d8..8d32480 100644
---- a/builtin-sequencer--helper.c
+new file mode 100644
+index 0000000..721c0d8
+--- /dev/null
 +++ b/builtin-sequencer--helper.c
-@@ -1,15 +1,83 @@
- #include "builtin.h"
- #include "cache.h"
- #include "parse-options.h"
-+#include "run-command.h"
+@@ -0,0 +1,27 @@
++#include "builtin.h"
++#include "cache.h"
++#include "parse-options.h"
 +
-+#define SEQ_DIR "rebase-merge"
++static const char * const git_sequencer_helper_usage[] = {
++	"git sequencer--helper --make-patch <commit>",
++	NULL
++};
 +
-+#define PATCH_FILE	git_path(SEQ_DIR "/patch")
- 
- static const char * const git_sequencer_helper_usage[] = {
- 	"git sequencer--helper --make-patch <commit>",
- 	NULL
- };
- 
-+/* Generate purely informational patch file */
-+static void make_patch(struct commit *commit)
++int cmd_sequencer__helper(int argc, const char **argv, const char *prefix)
 +{
-+	struct commit_list *parents = commit->parents;
-+	const char **args;
-+	struct child_process chld;
-+	int fd = open(PATCH_FILE, O_WRONLY | O_CREAT, 0666);
-+	if (fd < 0)
-+		return;
++	char *commit = NULL;
++	struct option options[] = {
++		OPT_STRING(0, "make-patch", &commit, "commit",
++			   "create a patch from commit"),
++		OPT_END()
++	};
 +
-+	memset(&chld, 0, sizeof(chld));
-+	if (!parents) {
-+		write(fd, "Root commit\n", 12);
-+		close(fd);
-+		return;
-+	} else if (!parents->next) {
-+		args = xcalloc(5, sizeof(char *));
-+		args[0] = "diff-tree";
-+		args[1] = "-p";
-+		args[2] = xstrdup(sha1_to_hex(parents->item->object.sha1));
-+		args[3] = xstrdup(sha1_to_hex(((struct object *)commit)->sha1));
-+	} else {
-+		int i = 0;
-+		int count = 1;
++	argc = parse_options(argc, argv, prefix, options,
++			     git_sequencer_helper_usage, 0);
 +
-+		for (; parents; parents = parents->next)
-+			++count;
-+		args = xcalloc(count + 3, sizeof(char *));
-+		args[i++] = "diff";
-+		args[i++] = "--cc";
-+		args[i++] = xstrdup(sha1_to_hex(commit->object.sha1));
++	if (!commit)
++		usage_with_options(git_sequencer_helper_usage, options);
 +
-+		for (parents = commit->parents; parents;
-+		     parents = parents->next)
-+			args[i++] = xstrdup(sha1_to_hex(
-+					    parents->item->object.sha1));
-+	}
-+
-+	chld.argv = args;
-+	chld.git_cmd = 1;
-+	chld.out = fd;
-+
-+	/* Run, ignore errors. */
-+	if (start_command(&chld))
-+		return;
-+	finish_command(&chld);
-+
-+	/* TODO: free dup'ed SHAs in argument list */
++	/* Nothing to do yet */
++	return 0;
 +}
-+
-+/* Return a commit object of "arg" */
-+static struct commit *get_commit(const char *arg)
-+{
-+	unsigned char sha1[20];
-+
-+	if (get_sha1(arg, sha1)) {
-+		error("Could not find '%s'", arg);
-+		return NULL;
-+	}
-+	return lookup_commit_reference(sha1);
-+}
-+
- int cmd_sequencer__helper(int argc, const char **argv, const char *prefix)
- {
- 	char *commit = NULL;
-+	struct commit *c;
- 	struct option options[] = {
- 		OPT_STRING(0, "make-patch", &commit, "commit",
- 			   "create a patch from commit"),
-@@ -22,6 +90,11 @@ int cmd_sequencer__helper(int argc, const char **argv, const char *prefix)
- 	if (!commit)
- 		usage_with_options(git_sequencer_helper_usage, options);
- 
--	/* Nothing to do yet */
-+	c = get_commit(commit);
-+	if (!c)
-+		return 1;
-+
-+	make_patch(c);
-+
- 	return 0;
- }
+diff --git a/builtin.h b/builtin.h
+index 38ceddc..d181669 100644
+--- a/builtin.h
++++ b/builtin.h
+@@ -92,6 +92,7 @@ extern int cmd_rev_parse(int argc, const char **argv, const char *prefix);
+ extern int cmd_revert(int argc, const char **argv, const char *prefix);
+ extern int cmd_rm(int argc, const char **argv, const char *prefix);
+ extern int cmd_send_pack(int argc, const char **argv, const char *prefix);
++extern int cmd_sequencer__helper(int argc, const char **argv, const char *prefix);
+ extern int cmd_shortlog(int argc, const char **argv, const char *prefix);
+ extern int cmd_show(int argc, const char **argv, const char *prefix);
+ extern int cmd_show_branch(int argc, const char **argv, const char *prefix);
+diff --git a/git.c b/git.c
+index 479279b..3e4b4ad 100644
+--- a/git.c
++++ b/git.c
+@@ -349,6 +349,7 @@ static void handle_internal_command(int argc, const char **argv)
+ 		{ "revert", cmd_revert, RUN_SETUP | NEED_WORK_TREE },
+ 		{ "rm", cmd_rm, RUN_SETUP },
+ 		{ "send-pack", cmd_send_pack, RUN_SETUP },
++		{ "sequencer--helper", cmd_sequencer__helper, RUN_SETUP | NEED_WORK_TREE },
+ 		{ "shortlog", cmd_shortlog, USE_PAGER },
+ 		{ "show-branch", cmd_show_branch, RUN_SETUP },
+ 		{ "show", cmd_show, RUN_SETUP | USE_PAGER },
 -- 
 1.6.3.GIT
