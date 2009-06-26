@@ -1,73 +1,77 @@
-From: John Bito <jwbito@gmail.com>
-Subject: Egit crashing Eclipse on sparc (Solaris 10)
-Date: Thu, 25 Jun 2009 18:54:22 -0700
-Message-ID: <3ae83b000906251854h70e5d9cs30bba9d563c3827a@mail.gmail.com>
+From: Stephen Boyd <bebarino@gmail.com>
+Subject: Re: [PATCHv2 2/2] read-tree: migrate to parse-options
+Date: Thu, 25 Jun 2009 20:15:57 -0700
+Message-ID: <4A443D6D.7060009@gmail.com>
+References: <1245817672-25483-2-git-send-email-bebarino@gmail.com> <1245906361-20644-1-git-send-email-bebarino@gmail.com> <4A431F5E.6070109@viscovery.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Jun 26 03:54:59 2009
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Fri Jun 26 05:16:11 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MK0eW-0004PS-59
-	for gcvg-git-2@gmane.org; Fri, 26 Jun 2009 03:54:56 +0200
+	id 1MK1v8-0006BG-OQ
+	for gcvg-git-2@gmane.org; Fri, 26 Jun 2009 05:16:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752567AbZFZByU convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 25 Jun 2009 21:54:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752431AbZFZByU
-	(ORCPT <rfc822;git-outgoing>); Thu, 25 Jun 2009 21:54:20 -0400
-Received: from mail-yx0-f186.google.com ([209.85.210.186]:37687 "EHLO
-	mail-yx0-f186.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752342AbZFZByT convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 25 Jun 2009 21:54:19 -0400
-Received: by yxe16 with SMTP id 16so640621yxe.33
-        for <git@vger.kernel.org>; Thu, 25 Jun 2009 18:54:22 -0700 (PDT)
+	id S1752810AbZFZDP6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 25 Jun 2009 23:15:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752590AbZFZDP5
+	(ORCPT <rfc822;git-outgoing>); Thu, 25 Jun 2009 23:15:57 -0400
+Received: from mail-px0-f190.google.com ([209.85.216.190]:56865 "EHLO
+	mail-px0-f190.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752481AbZFZDP5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 Jun 2009 23:15:57 -0400
+Received: by pxi28 with SMTP id 28so1415051pxi.33
+        for <git@vger.kernel.org>; Thu, 25 Jun 2009 20:16:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:date:message-id:subject
-         :from:to:content-type:content-transfer-encoding;
-        bh=Vo63aCVdaofyap4aOMDKM59owRof1YYy61WPAFoG/70=;
-        b=SjDxiibVMU7Vkot/CdmxdI3ThW+ee3rNw30YKKYS517352iWW/juAP3QcaiangIzl0
-         PTVwBibFBF+l9h2X6WsOYk3nK5ZcHubFQWbxbhDXip8/WMjJmBSVlDwUUVVp8MSQbyhc
-         rvU7iSTRJwA017sWCI1j96+1RFv2ethzrBaXw=
+        h=domainkey-signature:received:received:message-id:date:from
+         :user-agent:mime-version:to:cc:subject:references:in-reply-to
+         :content-type:content-transfer-encoding;
+        bh=upFAvHmHhKhWrzAL6099MErUFdsop9Vupj1pjbxEpDk=;
+        b=a/N+UgxeiFkZnORVCHA5H0bz2NYWyZtaao8Q5FazG/V7YHgtgR2UAT2Bq8nD91POs9
+         NFZSBptOcOhqV+M+6msyUIJ5IMvzdPP1jjG+SJ8/IpQOU8q5j/xx/MT+v2rij1x+pGeQ
+         qBd+LrDsiPoycrXj3EWK4+YVzZ7aVai+o5WQs=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type
-         :content-transfer-encoding;
-        b=Q/8XEddf3u5cs4gEy0VJ7BRfDVKAct+EtZy9tIzFhA46m+u/pZj6vKas4uUhnsP+Xr
-         G+5WUrVZ6CJXDIyVYawdJmjtvsnI81bkMvru2A3UQi7ukvZjqcgvb8rgCf/owgeJK1KL
-         JEb3EcNqkH6WU0LEFd0lzzEbzWx31fit4BMsk=
-Received: by 10.100.128.18 with SMTP id a18mr4304743and.12.1245981262525; Thu, 
-	25 Jun 2009 18:54:22 -0700 (PDT)
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        b=WHDXkopo6VU08KbcnCIKSl9eM0c187FvTSc7I3KAS5YDYLz13urfGPafEg8dZb+p9M
+         6xNPmJrwPiYrVJi1rOT8snlDx70S/tg+MNdJwXszXlR4DST0xPT53fnrgsiEoQK1/8oJ
+         X9ExtldCiGh7UV4odDpLcDneBciy2sAON6Weg=
+Received: by 10.114.93.1 with SMTP id q1mr4985793wab.212.1245986160358;
+        Thu, 25 Jun 2009 20:16:00 -0700 (PDT)
+Received: from ?10.10.0.5? (cpe-66-75-25-79.san.res.rr.com [66.75.25.79])
+        by mx.google.com with ESMTPS id k35sm5034818waf.53.2009.06.25.20.15.58
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Thu, 25 Jun 2009 20:15:59 -0700 (PDT)
+User-Agent: Thunderbird 2.0.0.21 (X11/20090429)
+In-Reply-To: <4A431F5E.6070109@viscovery.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122265>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122266>
 
-As I noted last month, a commit from April broke on sparc running
-Solaris 10.=A0 Since then, I opened an issue here
-<http://code.google.com/p/egit/issues/detail?id=3D95>, two with eclipse
-<https://bugs.eclipse.org/bugs/show_bug.cgi?id=3D280960 &
-https://bugs.eclipse.org/bugs/show_bug.cgi?id=3D279300> and four with
-sun (one for each of the 1.6 updates 12, 13 & 14 plus one for the JDK
-7 Early Access release - they haven't responded).
+Johannes Sixt wrote:
+>
+> If you write more than one mode of operation, the subsequent text should
+> better reference them, but the current text does not do that. I think it
+> is OK if you leave only the second, particularly because the first is only
+> a subset of the second.
 
-The problem is quite repeatable on my environment (I only have one
-sparc machine to try it on).  It does not appear at all on WinVista.
-(I do have a Solaris x86 machine, but I can't really do anything with
-it immediately.)
+I was contemplating this change, but I left it out because the single
+tree case felt special. So special that I felt the merging and the
+reading were two different modes. The description section hints at the
+two types of uses, but I think you want it to be more explicit? I'll
+have to think about this more.
 
-Robin worked with me as far as identifying the commit that introduced
-the problem (2d77d30b5f5eca2b3087f1bab47fa9df2e64cd71 - Rewrite
-WindowCache to be easier to follow and maintain). Now I need further
-guidance to get this problem resolved.
+> I don't think that the bitfields of struct unpack_trees_options are cast
+> in stone. IMHO it is fine to make them regular struct members, so that you
+> can take their address for read_tree_options and these foo ? 1 : 0 become
+> unnecessary
 
-The current 'Release Build' (0.4.9) cannot clone
-git://repo.or.cz/egit.git on sparc Solaris.  I'm very interested in
-getting this solved, if only I can get some more input from the folks
-who know the code.
-
-~John
+Thanks. I'll fix this up and resend the series.
