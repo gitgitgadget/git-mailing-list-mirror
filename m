@@ -1,111 +1,81 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCHv3 2/2] read-tree: migrate to parse-options
-Date: Fri, 26 Jun 2009 10:23:21 -0700
-Message-ID: <7vab3uucxi.fsf@alter.siamese.dyndns.org>
-References: <1245817672-25483-1-git-send-email-bebarino@gmail.com>
-	<1245993250-8213-1-git-send-email-bebarino@gmail.com>
-	<1245993250-8213-2-git-send-email-bebarino@gmail.com>
-	<4A445CB0.4010506@gmail.com>
+From: Gregory Jefferis <jefferis@gmail.com>
+Subject: Re: Choosing a mergetool according to file type
+Date: Fri, 26 Jun 2009 18:43:34 +0100
+Message-ID: <C66AC756.2064B%jefferis@gmail.com>
+References: <7viqijszjw.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Johannes Sixt <j.sixt@viscovery.net>
-To: Stephen Boyd <bebarino@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jun 26 19:23:33 2009
+Content-Type: text/plain;
+	charset="US-ASCII"
+Content-Transfer-Encoding: 7bit
+Cc: David Aguilar <davvid@gmail.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>,
+	Matthieu Moy <Matthieu.Moy@imag.fr>
+X-From: git-owner@vger.kernel.org Fri Jun 26 19:43:59 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MKF98-0005JW-4S
-	for gcvg-git-2@gmane.org; Fri, 26 Jun 2009 19:23:30 +0200
+	id 1MKFSp-0006bb-9K
+	for gcvg-git-2@gmane.org; Fri, 26 Jun 2009 19:43:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756207AbZFZRXU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 26 Jun 2009 13:23:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754037AbZFZRXT
-	(ORCPT <rfc822;git-outgoing>); Fri, 26 Jun 2009 13:23:19 -0400
-Received: from fed1rmmtao107.cox.net ([68.230.241.39]:49502 "EHLO
-	fed1rmmtao107.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750720AbZFZRXT (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 26 Jun 2009 13:23:19 -0400
-Received: from fed1rmimpo03.cox.net ([70.169.32.75])
-          by fed1rmmtao107.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20090626172320.MNMO18948.fed1rmmtao107.cox.net@fed1rmimpo03.cox.net>;
-          Fri, 26 Jun 2009 13:23:20 -0400
-Received: from localhost ([68.225.240.211])
-	by fed1rmimpo03.cox.net with bizsmtp
-	id 8hPM1c00K4aMwMQ04hPMM0; Fri, 26 Jun 2009 13:23:21 -0400
-X-VR-Score: -100.00
-X-Authority-Analysis: v=1.0 c=1 a=XzB1hdDWffMA:10 a=pGLkceISAAAA:8
- a=DO18-AkTYmQzAZKMYVUA:9 a=hxc2hsTdTB8K2sMctrqLCr6v7D4A:4 a=MSl-tDqOz04A:10
-X-CM-Score: 0.00
-In-Reply-To: <4A445CB0.4010506@gmail.com> (Stephen Boyd's message of "Thu\, 25 Jun 2009 22\:29\:20 -0700")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+	id S1751909AbZFZRnk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 26 Jun 2009 13:43:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750699AbZFZRnj
+	(ORCPT <rfc822;git-outgoing>); Fri, 26 Jun 2009 13:43:39 -0400
+Received: from mail-ew0-f210.google.com ([209.85.219.210]:62671 "EHLO
+	mail-ew0-f210.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750711AbZFZRni (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Jun 2009 13:43:38 -0400
+Received: by ewy6 with SMTP id 6so3595051ewy.37
+        for <git@vger.kernel.org>; Fri, 26 Jun 2009 10:43:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:user-agent:date:subject:from
+         :to:cc:message-id:thread-topic:thread-index:in-reply-to:mime-version
+         :content-type:content-transfer-encoding;
+        bh=aPVJccEwaGMI/qSehoFsT2gyU5rj2IUAN7ILf+KyWbI=;
+        b=k5PBbBFOIAX4oDML2znm2JBptbuBELGvh2YyppNJHDyOypxymBOqs1aeJ39eT0rgjO
+         Ej9kz4UDc+ohNPt2u97/Etxb2nVt3fgD7vAHGg0lF43JfCc8K1gmfUeYksiD+q6mVzbt
+         vvKEL0hUe26vlObh9J+X1Ol081X5qmoOTyZqI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=user-agent:date:subject:from:to:cc:message-id:thread-topic
+         :thread-index:in-reply-to:mime-version:content-type
+         :content-transfer-encoding;
+        b=MQV7P3QLnIKUht1cUGspBslFY3KyZqSNuj9/5UsSlNUytAXdEUapBPvLCvf336Ctst
+         7zxHiKjax5tjI0EdkRNeaEgaEsdX2GW6XcSsNdm/V6KZPrzVrY57bPoqIsmdOkl7y4dP
+         1+Itf3WEhcTGySb//DCtk1rnRzNfqbkSkMmzo=
+Received: by 10.210.58.17 with SMTP id g17mr4670774eba.1.1246038220480;
+        Fri, 26 Jun 2009 10:43:40 -0700 (PDT)
+Received: from ?10.6.0.183? (nat.mrc-lmb.cam.ac.uk [131.111.85.79])
+        by mx.google.com with ESMTPS id 5sm486738eyh.50.2009.06.26.10.43.38
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 26 Jun 2009 10:43:39 -0700 (PDT)
+User-Agent: Microsoft-Entourage/12.13.0.080930
+Thread-Topic: Choosing a mergetool according to file type
+Thread-Index: Acn2haB2+EW+tGDwd0+dkLRSM+FxKg==
+In-Reply-To: <7viqijszjw.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122310>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122311>
 
-Stephen Boyd <bebarino@gmail.com> writes:
+On 2009-06-26 17:57, "Junio C Hamano" <gitster@pobox.com> wrote:
 
-> Sorry I went a little overboard with s/:1// on unpack_tree_options.
-> You'll probably want to squash this on top.
->
-> diff --git a/unpack-trees.h b/unpack-trees.h
-> index d19df44..f344679 100644
-> --- a/unpack-trees.h
-> +++ b/unpack-trees.h
-> @@ -21,14 +21,14 @@ struct unpack_trees_options {
->                      merge,
->                      update,
->                      index_only,
-> -                    nontrivial_merge,
-> +                    nontrivial_merge:1,
->                      trivial_merges_only,
->                      verbose_update,
->                      aggressive,
-> -                    skip_unmerged,
-> -                    initial_checkout,
-> -                    diff_index_cached,
-> -                    gently;
-> +                    skip_unmerged:1,
-> +                    initial_checkout:1,
-> +                    diff_index_cached:1,
-> +                    gently:1;
+> You are both correct.  Your example runs "gedit" with three files before
+> merge.  If Gregory's custom mergetool expects the failed half-merge result
+> as its input, this is not the interface he is looking for.
 
-Let's look at this (not this follow-up patch) the other way around.
+I think that Matthieu is more correct this time in that I can do what I need
+with the merge driver because I don't need the failed half-merge result.
+But I prefer the 2 level arrangement of 1) automatic then 2) fixing merge
+conflicts manually since there will be other cases where this is required.
 
-Six months down the load, somebody may ask you:
+Thank you Junio for pointing out how to do add the necessary functionality -
+a project for a rainy weekend I guess.
 
-    Is there a good reason why many are not bitfields but only selected
-    few are bitfields in this structure?  Most of these can and should be
-    bitfields, as far as I can see, because the code uses them as
-    booleans, and the only breakage it may cause if we change them to
-    bitfields to shrink this structure would be the option parsing code.
+Best,
 
-What would be your answer?  Doesn't it feel wrong to do such a conversion
-only to work around the current limitation of parseopt?
-
-By the way, has it been verified that all the users of these fields are OK
-with this change when they use these fields?  I am not worried about them
-reading the value command line option parser set, but more worried about
-reading after other codepaths set/modified these fields.  The command line
-parser that uses parseopt may correctly set only 0 or 1 to these fields
-initially and we should be able to verify that from the patch text, but
-there is no guarantee that this conversion is even correct at runtime
-without an audit, no?
-
-The callers have long relied on the fact that reading from these bitfields
-yields either 0 or 1 and never 2 or larger, but they are now widened to
-full-width unsigned.  A pattern like this:
-
-	uto.field = ~uto.field;
-        if (uto.field == 1) {
-        	field now set;
-	} else {
-        	field now unset;
-	}
-
-would be broken by widening "unsigned field:1" to "unsigned field", right?
-I am not saying this is the only pattern that would break, nor I know
-there are codepaths that use this pattern, but I think you got my point.
+Greg.
