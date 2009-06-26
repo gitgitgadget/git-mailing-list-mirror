@@ -1,77 +1,85 @@
-From: Stephen Boyd <bebarino@gmail.com>
-Subject: Re: [PATCHv2 2/2] read-tree: migrate to parse-options
-Date: Thu, 25 Jun 2009 20:15:57 -0700
-Message-ID: <4A443D6D.7060009@gmail.com>
-References: <1245817672-25483-2-git-send-email-bebarino@gmail.com> <1245906361-20644-1-git-send-email-bebarino@gmail.com> <4A431F5E.6070109@viscovery.net>
+From: Elijah Newren <newren@gmail.com>
+Subject: Re: [PATCH v2] fast-export: Add a --tag-of-filtered-object option for 
+	newly dangling tags
+Date: Thu, 25 Jun 2009 22:45:13 -0600
+Message-ID: <51419b2c0906252145pe174d1diddee9ed81413af74@mail.gmail.com>
+References: <1245676001-14734-1-git-send-email-newren@gmail.com>
+	 <1245676001-14734-5-git-send-email-newren@gmail.com>
+	 <7vd48wazhu.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Fri Jun 26 05:16:11 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Johannes.Schindelin@gmx.de,
+	kusmabite@gmail.com
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jun 26 06:45:35 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MK1v8-0006BG-OQ
-	for gcvg-git-2@gmane.org; Fri, 26 Jun 2009 05:16:11 +0200
+	id 1MK3Jf-0001vm-3j
+	for gcvg-git-2@gmane.org; Fri, 26 Jun 2009 06:45:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752810AbZFZDP6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 25 Jun 2009 23:15:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752590AbZFZDP5
-	(ORCPT <rfc822;git-outgoing>); Thu, 25 Jun 2009 23:15:57 -0400
-Received: from mail-px0-f190.google.com ([209.85.216.190]:56865 "EHLO
-	mail-px0-f190.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752481AbZFZDP5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 25 Jun 2009 23:15:57 -0400
-Received: by pxi28 with SMTP id 28so1415051pxi.33
-        for <git@vger.kernel.org>; Thu, 25 Jun 2009 20:16:00 -0700 (PDT)
+	id S1751257AbZFZEpO convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 26 Jun 2009 00:45:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751074AbZFZEpN
+	(ORCPT <rfc822;git-outgoing>); Fri, 26 Jun 2009 00:45:13 -0400
+Received: from an-out-0708.google.com ([209.85.132.246]:25864 "EHLO
+	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750892AbZFZEpM convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 26 Jun 2009 00:45:12 -0400
+Received: by an-out-0708.google.com with SMTP id d40so371349and.1
+        for <git@vger.kernel.org>; Thu, 25 Jun 2009 21:45:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from
-         :user-agent:mime-version:to:cc:subject:references:in-reply-to
-         :content-type:content-transfer-encoding;
-        bh=upFAvHmHhKhWrzAL6099MErUFdsop9Vupj1pjbxEpDk=;
-        b=a/N+UgxeiFkZnORVCHA5H0bz2NYWyZtaao8Q5FazG/V7YHgtgR2UAT2Bq8nD91POs9
-         NFZSBptOcOhqV+M+6msyUIJ5IMvzdPP1jjG+SJ8/IpQOU8q5j/xx/MT+v2rij1x+pGeQ
-         qBd+LrDsiPoycrXj3EWK4+YVzZ7aVai+o5WQs=
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=AEVXeDjG/Il1/yCntSkwew5LEUKATSVKCXNMkjanilE=;
+        b=PzhI0gEfPSHaZQDwH4stAohHtI77HcSTn/sj/dIoILlaFYQmK1Yo1NsHSQmYiPZETR
+         KC63RjAy7cVCaJE0QzCQey2j2YFclRaiY65/DqIhQOioYV3AhfhH3LS+ZlH4lIaoFrta
+         ulxPT30uFEaiXBvFf+XmtgjCcea1mosjMoBIM=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        b=WHDXkopo6VU08KbcnCIKSl9eM0c187FvTSc7I3KAS5YDYLz13urfGPafEg8dZb+p9M
-         6xNPmJrwPiYrVJi1rOT8snlDx70S/tg+MNdJwXszXlR4DST0xPT53fnrgsiEoQK1/8oJ
-         X9ExtldCiGh7UV4odDpLcDneBciy2sAON6Weg=
-Received: by 10.114.93.1 with SMTP id q1mr4985793wab.212.1245986160358;
-        Thu, 25 Jun 2009 20:16:00 -0700 (PDT)
-Received: from ?10.10.0.5? (cpe-66-75-25-79.san.res.rr.com [66.75.25.79])
-        by mx.google.com with ESMTPS id k35sm5034818waf.53.2009.06.25.20.15.58
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 25 Jun 2009 20:15:59 -0700 (PDT)
-User-Agent: Thunderbird 2.0.0.21 (X11/20090429)
-In-Reply-To: <4A431F5E.6070109@viscovery.net>
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=gM5FkciOtSmcrWoypHLBvC5p0KI6w/hiv2WFkD3vnHJv+Opkk16vwCqUGbvTfTb/Ae
+         G3IFADIAhR4gvcNaJ9mVhwcqDXwTdOUzr9LAlCh9OGSh5ZPSMY3SF4CYJP8z/zdoIip7
+         1rA3rl9GH2LC7GbA/mIBJYokbskoi7QhJXwFc=
+Received: by 10.101.71.3 with SMTP id y3mr4465960ank.62.1245991513547; Thu, 25 
+	Jun 2009 21:45:13 -0700 (PDT)
+In-Reply-To: <7vd48wazhu.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122266>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122267>
 
-Johannes Sixt wrote:
->
-> If you write more than one mode of operation, the subsequent text should
-> better reference them, but the current text does not do that. I think it
-> is OK if you leave only the second, particularly because the first is only
-> a subset of the second.
+Hi,
 
-I was contemplating this change, but I left it out because the single
-tree case felt special. So special that I felt the merging and the
-reading were two different modes. The description section hints at the
-two types of uses, but I think you want it to be more explicit? I'll
-have to think about this more.
+Thanks for the detailed feedback and suggestions.  I'll send a new
+patch series shortly, which I believe addresses all your suggestions
+and requests (and opens up a new issue), but there is one item in
+particular I wanted to respond to...
 
-> I don't think that the bitfields of struct unpack_trees_options are cast
-> in stone. IMHO it is fine to make them regular struct members, so that you
-> can take their address for read_tree_options and these foo ? 1 : 0 become
-> unnecessary
+On Mon, Jun 22, 2009 at 12:34 PM, Junio C Hamano<gitster@pobox.com> wro=
+te:
+> Also, are you absolutely sure that your revs is always limited at thi=
+s
+> point? =C2=A0Otherwise, the parents of this commit are queued in rev-=
+>list,
+> expecting somebody else to later pick them up and further process, bu=
+t
+> there is nobody who does that in your codepath as far as I can see. =C2=
+=A0What
+> will happen to these parent commits?
 
-Thanks. I'll fix this up and resend the series.
+revs was not limited, but should have been.  Inside setup_revisions,
+revs->limited is set if revs->topo_order is, but unfortunately we
+weren't setting revs->topo_order until after the call to
+setup_revisions.  So, as you suggest, my code caused the parents of
+the rewritten commit to needlessly get queued up and left around, with
+no one to process them.  Oops.
+
+
+Elijah
