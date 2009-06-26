@@ -1,129 +1,177 @@
 From: Jakub Narebski <jnareb@gmail.com>
 Subject: Re: [RFC] Git User's Survey 2009 - trial run
-Date: Fri, 26 Jun 2009 17:10:27 +0200
-Message-ID: <200906261710.27881.jnareb@gmail.com>
-References: <200906252122.51737.jnareb@gmail.com> <20090626101605.GB9780@m62s10.vlinux.de>
+Date: Fri, 26 Jun 2009 17:44:04 +0200
+Message-ID: <200906261744.04610.jnareb@gmail.com>
+References: <200906252122.51737.jnareb@gmail.com> <94a0d4530906260412h78b55458gc722964011edb54d@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: Peter Baumann <waste.manager@gmx.de>
-X-From: git-owner@vger.kernel.org Fri Jun 26 17:11:02 2009
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jun 26 17:44:21 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MKD4k-0003Uv-A5
-	for gcvg-git-2@gmane.org; Fri, 26 Jun 2009 17:10:50 +0200
+	id 1MKDbB-0003Eg-0J
+	for gcvg-git-2@gmane.org; Fri, 26 Jun 2009 17:44:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754209AbZFZPK3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 26 Jun 2009 11:10:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751722AbZFZPK2
-	(ORCPT <rfc822;git-outgoing>); Fri, 26 Jun 2009 11:10:28 -0400
-Received: from mail-fx0-f213.google.com ([209.85.220.213]:57510 "EHLO
+	id S1751327AbZFZPoI convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 26 Jun 2009 11:44:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751312AbZFZPoG
+	(ORCPT <rfc822;git-outgoing>); Fri, 26 Jun 2009 11:44:06 -0400
+Received: from mail-fx0-f213.google.com ([209.85.220.213]:37898 "EHLO
 	mail-fx0-f213.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751269AbZFZPK1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 26 Jun 2009 11:10:27 -0400
-Received: by fxm9 with SMTP id 9so2162401fxm.37
-        for <git@vger.kernel.org>; Fri, 26 Jun 2009 08:10:29 -0700 (PDT)
+	with ESMTP id S1751248AbZFZPoE (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Jun 2009 11:44:04 -0400
+Received: by fxm9 with SMTP id 9so2183834fxm.37
+        for <git@vger.kernel.org>; Fri, 26 Jun 2009 08:44:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:subject:date
          :user-agent:cc:references:in-reply-to:mime-version:content-type
          :content-transfer-encoding:content-disposition:message-id;
-        bh=efbNwR/tlcHP6Kb1h9lrgKO8PjU54MXD/PDEYepfTQU=;
-        b=nj2CVYcPC30kuHAEAY9E5pmDgKaCBqt30aIJmA/zegYRXOgcmETW99BnN6/xErCz+Z
-         wB/mxChM4FjRzs1IpWbSXmOs8uUPAx1subCYpbXEfGaZ7eICazlUwU7yIiK+3+uF1QA4
-         vTZCqDu38i7aLYXuq6yADfzN+pKRfALTrDu+0=
+        bh=U8nodrcIxgzPucSyG3YpZCZZ8IKWrsGVMICAl7FsmZI=;
+        b=gvb6opkRKQ/Vxl5DkNJYejtzy5d6CjQEtZMl9UbNDpLIdFib0FMd3mbrRXOVD6XtE/
+         JOimDCkCbUobYMaWqjCugKPMPC8I24/ZHmA8RoEXyKgrA/yuAD9X2hn0esheFtoooBqq
+         EzZFwl8JFDnJN3XxoSmLXzWI9j6FjmX/65Vus=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:subject:date:user-agent:cc:references:in-reply-to
          :mime-version:content-type:content-transfer-encoding
          :content-disposition:message-id;
-        b=qHGk1Kg6Xg+PQETMgIycp7morjbi0crYatFPjF418UHTgkK5uAFNJx1sC+VDIbjzSR
-         itAfIiKM0W1qJ09DwDfu6lZUmJHWhP17fC4DqUKlJlROjvWHa8L2G9It0ueLpn/K4ueI
-         188jYYJ7gyEeL2zPKDhvEMWjz1QjtN4ByD6Zs=
-Received: by 10.103.39.3 with SMTP id r3mr2361052muj.56.1246029029489;
-        Fri, 26 Jun 2009 08:10:29 -0700 (PDT)
+        b=f7Dox55sank3zeU20MgopvbCmyrZgYf69j8052n3/+4Qo6pu8F4Y8FGj8LKHuvQHel
+         xcCv2i0178frmQGk4JfBX4iektjAf2YKJkMaRB0nJuOzrAoM99KoeSgaZXpiTzFS+gn3
+         ZqLT/MnltVzFgiMJS0Pvt/Z+WtWi6gJtWaZEA=
+Received: by 10.103.248.17 with SMTP id a17mr2346701mus.97.1246031046139;
+        Fri, 26 Jun 2009 08:44:06 -0700 (PDT)
 Received: from ?192.168.1.13? (abwa104.neoplus.adsl.tpnet.pl [83.8.224.104])
-        by mx.google.com with ESMTPS id e10sm17864796muf.14.2009.06.26.08.10.28
+        by mx.google.com with ESMTPS id 7sm18143150mup.24.2009.06.26.08.44.05
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 26 Jun 2009 08:10:28 -0700 (PDT)
+        Fri, 26 Jun 2009 08:44:05 -0700 (PDT)
 User-Agent: KMail/1.9.3
-In-Reply-To: <20090626101605.GB9780@m62s10.vlinux.de>
+In-Reply-To: <94a0d4530906260412h78b55458gc722964011edb54d@mail.gmail.com>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122304>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122305>
 
-On Fri, 26 June 2009, Peter Baumann wrote:
-> On Thu, Jun 25, 2009 at 09:22:50PM +0200, Jakub Narebski wrote:
- 
+On Fri, 26 June 2009, Felipe Contreras wrote:
+> 2009/6/25 Jakub Narebski <jnareb@gmail.com>:
+
+> > I have created _proposed_ version of questions for upcoming
+> > "Git User's Survey 2009", based on (a bit of) feedback on git
+> > mailing list:
+> > =C2=A0"[RFH] Questions for Git User's Survey 2009"
+> > =C2=A0Msg-Id: <200905291855.03328.jnareb@gmail.com>
+> > =C2=A0http://thread.gmane.org/gmane.comp.version-control.git/120287
+> > and comments on #git IRC channel on FreeNode.
+> >
+> > Current version of survey has 30 questions, as compared to
+> > 60 questions last year; the number of free-form essay questions
+> > were also greatly reduced.
+> >
+> >
 > > The *test* version of this year survey can be now found at
 > > the following URL (as in previous year, we use Survs.com)
-> > 
-> >   http://www.survs.com/survey?id=2PIMZGU0&channel=TFN2Y52K7Y
-> > 
-> > Please tell me what you think about questions and about selection
-> > of possible answers in single choice/multiple choice questions.
-> > If you have better idea for theme (mainly background and font 
-> > colors, and perhaps font size), help would be appreciated.  Is it
-> > better to use vertical form everywhere, or should we use horizontal
-> > layout of answers for questions with short number of possible
-> > answers?  How long does it take to fill survey?
-> 
-> Remarks:
-> 
-> - I find the visual layout of footnotes to 10 ("What do you use to edit contents under
->   version control with Git?  What kind of editor, IDE or RAD you use working
->   with Git?") a little distracting. Could those at least be seperated by a newline?
+> >
+> > =C2=A0http://www.survs.com/survey?id=3D2PIMZGU0&channel=3DTFN2Y52K7=
+Y
 
-This is unfortunately technical limitation of Survs.com.  It replaces
-run of empty lines with _single_ linebreak in text elements.  I have
-submitted request for more rich formatting options (like whitelist HTML)
-as feedback, but for the time being (if it didn't get accepted before
-"Git User's Survey 2009" is run) I can simply divide those "footnotes"
-in more than one text element.
+I reworked those comments a bit, to make it easier to see
+proposed changes.
 
-> 
-> - I'm not sure if question 16 ("How often do you use the following forms of git
->   commands or extra git tools?") isn't a little too much. At least I got scared by looking
->   at all questions in there and I imagine that people get easily bored answering them.
-> 
-> - The same might be true for question 17 and 18.
+> These are my comments:
+>=20
+> -3. Did you find Git easy to learn?
+> +3. Have you found Git easy to learn?
+>=20
+> That assumes the user already learned to use git [...]
 
-As you probably remember question "16/17. How often do you use the
-following forms of git commands or extra git tools?" wasn't present
-in first two drafts of Git User's Survey 2009.  It was only added
-at request from #git channel.
+Thanks.  I think your version is better.
 
-On one hand side this question allows responders to get to know git
-commands and forms of git commands they wouldn't otherwise know about.
-So it can be seen as learning tool.  Answers to this question are also
-quite interesting from the point of view of analysing git usage(s).
+>=20
+> -8. How do you obtain Git?
+> +8. How did you obtain Git? (maybe s/obtain/install/)
+>=20
+> Most people install once, or at least not very often
 
-On the other hand side this question is very long; so long that due to
-technical limits had to be split in two.  It is time-consuming and 
-quite scary.  Also one can get similar statistics from filtered history;
-we could also create version of git which would gather such statistics
-and at request of user would aggregate responses and format for sending
-(or even send via email), similarly to what Linux Counter does.
+Perhaps
 
+  +8. How did/do you obtain Git?
 
-Possible solution would be to delete this question (again).  
-Alternatively this question could be marked explicitly as optional
-(even though all questions are optional in this survey), and put
-it in separate page with more difficult / time consuming questions.
+It is IMHO more interesting how people upgrade Git, than just how
+they installed it.
 
-> 
-> 
-> Overall, I like the survey.
+>=20
+> -14. How do you fetch/get changes from upstream repository?
+> +14. How do you fetch/get changes from upstream repositories?
+>=20
+> Only one repository?
 
-Thanks!  Thank you very much for taking your time to test this survey,
-and to write your comments about it.
--- 
+Good catch.  Thanks.
+
+>=20
+> git ... --dirstat
+>=20
+> Isn't '--stat' more common?
+> git ... --stat (or --dirstat)
+
+Well, this is specifically about this rare used feature/option.
+"git ... --stat" or "git ... --summary" is a byproduct of many
+other commands, like "git pull" / "git merge", or "git format-patch".
+But perhaps we should ask about it explicitly.
+
+>=20
+> -18. Which of the following features do or did you use?
+> +18. Which of the following features have you used?
+>=20
+> More readable.
+
+True.  Thanks.
+
+>=20
+> -22. Did you participate in previous Git User's Surveys?
+> +22. In which of the previous Git User's Surveys have you participate=
+d?
+>=20
+> -24. Which form of Git documentation do you use?
+> -    Do you consider them useful?
+> +24. How useful have you found Git documentation?
+>=20
+> -28. Do you read the mailing list, or watch IRC channel?
+> +28. Which communication channels do you use?
+
+Good ideas.
+
+>=20
+> Also, I would like to see a list of areas users would like improvemen=
+ts:
+> XX. In you opinion, which areas need improvement?
+>  * user-interface
+>  * documentation
+>  * performance
+>  * more features
+>  * other
+>=20
+> Is there a way for users to assign points? eg. user-interface: 2,
+> documentation: 1, more features: 1
+
+We can always use 'matrix' form, with columns corresponding to importan=
+ce
+of a given area for improvement (1-3, or 1-5 numeric range).  Because
+asking user to order from most important to least important (one can
+enforce this on Survs.com by requiring only one answer with given colum=
+n
+selected) would be too difficult and confusing.
+
+>=20
+> I like it better than the previous one :)
+
+Thanks!
+
+--=20
 Jakub Narebski
 Poland
