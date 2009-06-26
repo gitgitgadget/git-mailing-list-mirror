@@ -1,112 +1,131 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [RFC] Git User's Survey 2009 - trial run
-Date: Fri, 26 Jun 2009 13:55:50 +0300
-Message-ID: <94a0d4530906260355r2d50fe0s244659599177c8@mail.gmail.com>
-References: <200906252122.51737.jnareb@gmail.com>
-	 <200906260932.43826.johan@herland.net>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: git svn's performance on cloning mono's branches/tags...
+Date: Fri, 26 Jun 2009 12:57:45 +0200
+Message-ID: <4A44A9A9.6030008@op5.se>
+References: <3ace41890906251739r45b3eae9oe1b7e32886defc0f@mail.gmail.com>	 <4A445959.6090403@op5.se> <3ace41890906260259o3be005fq6be9d0e2c3f9af66@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Peter Baumann <waste.manager@gmx.de>,
-	Clemens Buchacher <drizzd@aon.at>,
-	David Aguilar <davvid@gmail.com>,
-	Erik Faye-Lund <kusmabite@googlemail.com>
-To: Johan Herland <johan@herland.net>
-X-From: git-owner@vger.kernel.org Fri Jun 26 12:56:01 2009
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Hin-Tak Leung <hintak.leung@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jun 26 12:57:58 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MK968-0001yv-MJ
-	for gcvg-git-2@gmane.org; Fri, 26 Jun 2009 12:56:01 +0200
+	id 1MK981-0002gP-OV
+	for gcvg-git-2@gmane.org; Fri, 26 Jun 2009 12:57:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754434AbZFZKzu convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 26 Jun 2009 06:55:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754428AbZFZKzt
-	(ORCPT <rfc822;git-outgoing>); Fri, 26 Jun 2009 06:55:49 -0400
-Received: from mail-fx0-f213.google.com ([209.85.220.213]:51397 "EHLO
-	mail-fx0-f213.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754382AbZFZKzt convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 26 Jun 2009 06:55:49 -0400
-Received: by fxm9 with SMTP id 9so2017883fxm.37
-        for <git@vger.kernel.org>; Fri, 26 Jun 2009 03:55:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=0swZBlEAfzAeTp43h2P/jflqTDdA9PZUCrQ+vq4RMZM=;
-        b=W0ktC4UxNJAenR/3bdwDIg831OcbkyFebeZBmr9jR7GV4/9TQYg0YYu+LHU7K13NpD
-         6prkk/O5JT1Z8o/5rF+GIxKv1NnA/+awXhRK0+luNIkVxsNFfNUZIMQRlbAKQNXUbQDX
-         w/Pz350TQQcnaFtKX2GlSAuNU8E1LvHOtxEB4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=Ix200B2pTxipd+A7Whl5Ii/CQglCelpZbKKEC2T9vjSPEtfnRfe+1L0s76tw4Bo5gi
-         cMKaP0RabK6mv/AyViBxfFeC+eFDcuINO0OGdOlH5BT8nZJ2ue59oxzEACeRyiuhMwb9
-         Al40bkE6TcZS8vEdWWO1PBOXg/mfWUdcWxszU=
-Received: by 10.86.31.18 with SMTP id e18mr3602380fge.72.1246013750985; Fri, 
-	26 Jun 2009 03:55:50 -0700 (PDT)
-In-Reply-To: <200906260932.43826.johan@herland.net>
+	id S1755480AbZFZK5s (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 26 Jun 2009 06:57:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754963AbZFZK5r
+	(ORCPT <rfc822;git-outgoing>); Fri, 26 Jun 2009 06:57:47 -0400
+Received: from na3sys009aog110.obsmtp.com ([74.125.149.203]:33379 "HELO
+	na3sys009aog110.obsmtp.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with SMTP id S1754704AbZFZK5q (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 26 Jun 2009 06:57:46 -0400
+Received: from source ([209.85.220.215]) by na3sys009aob110.postini.com ([74.125.148.12]) with SMTP
+	ID DSNKSkSprL4sBD5T0jDKT6BF4wHADvxPQtTU@postini.com; Fri, 26 Jun 2009 03:57:50 PDT
+Received: by mail-fx0-f215.google.com with SMTP id 11so476549fxm.5
+        for <git@vger.kernel.org>; Fri, 26 Jun 2009 03:57:47 -0700 (PDT)
+Received: by 10.86.49.13 with SMTP id w13mr3614267fgw.38.1246013867801;
+        Fri, 26 Jun 2009 03:57:47 -0700 (PDT)
+Received: from clix.int.op5.se ([212.112.174.166])
+        by mx.google.com with ESMTPS id e20sm182004fga.10.2009.06.26.03.57.46
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 26 Jun 2009 03:57:47 -0700 (PDT)
+User-Agent: Thunderbird 2.0.0.21 (X11/20090320)
+In-Reply-To: <3ace41890906260259o3be005fq6be9d0e2c3f9af66@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122289>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122290>
 
-2009/6/26 Johan Herland <johan@herland.net>:
-> On Thursday 25 June 2009, Jakub Narebski wrote:
->> Current version of survey has 30 questions, as compared to
->> 60 questions last year; the number of free-form essay questions
->> were also greatly reduced.
->
-> Good. :)
->
->> The *test* version of this year survey can be now found at
->> the following URL (as in previous year, we use Survs.com)
+Hin-Tak Leung wrote:
+> On Fri, Jun 26, 2009 at 6:15 AM, Andreas Ericsson<ae@op5.se> wrote:
+>> Hin-Tak Leung wrote:
+>>> (I'm not on list so please CC) - I am trying to git svn clone mono's
+>>> repository, and for some strange reason it is doing a complete check
+>>> out from revision 1 all the way to each branch/tag . Is this normal or
+>>> am I doing anything wrong? I have git svn clone a few other things
+>>> recently (R, ghostscript) and I don't remember git doing this, but R
+>>> is quite a normal svn layout and I think I only have ghostcript trunk
+>>> (no branch/tag).
+>>>
+>>> What I did was this: I started out with just git-svn clone trunk
+>>> (which generated the first two [now-commented out] lines), then I
+>>> thought I also want 2.4 branch so I added the next commented-out
+>>> section, and ran 'git svn fetch --all'. Then I thought I like the
+>>> whole thing - so I commented out most of it and added the 4 lines as
+>>> blow - which is also my current git config.
+>>>
+>>> The problem is that it seems to treat every tag as a branch,
+>> This is normal. SVN makes no real distinction between tags and branches,
+>> so git-svn has no way of detecting which is which. SVN also allows
+>> committing to "tags", so it doesn't make sense for git to store what
+>> SVN calls tags as git tags.
 >>
->> =C2=A0 http://www.survs.com/survey?id=3D2PIMZGU0&channel=3DTFN2Y52K7=
-Y
+>> As for your other questions, I don't know.
 >>
->> Please tell me what you think about questions and about selection
->> of possible answers in single choice/multiple choice questions.
->
-> There seems to be some unnecessary overlap among questions 11, 16/17 =
-and 18.
-> Examples: I found myself ticking off equivalent options like:
-> - 11/gitk, 17/gitk and 18/"gitk or other history viewer"
-> - 17/"git gui" and 18/"git-gui or other commit tool"
-> - 14/"via git-bundle", 15/"git bundle", 16/"git bundle" and 18/"git b=
-undle"
-> - 11/StGIT/Guilt/TopGit and 18/"path management interface"
-> - 17/"git reflog" and 18/reflog
-> - 17/"git stash" and 18/stash
-> - 16/"git difftool" and 18/"mergetool and/or difftool"
-> - 16/"git mergetool" and 18/"mergetool and/or difftool"
-> - 17/"git rebase -i" and 18/"interactive rebase"
-> - 16/"git add -i" and 18/"interactive commit/..."
-> - 16/"git filter-branch", 18/"git-filter-branch or cg-admin-rewritehi=
-st" and
-> 18/"git-filter-branch or equivalent"
-> - 11/"editor/IDE VC integration" and 18/"integration with IDE/editor"
->
-> Some of this overlap is probably unavoidable, but I think some of it
-> (especially between 16/17 and 18) can be eliminated without compromis=
-ing the
-> survey. Maybe we can integrate the non-overlapping parts of 18 into t=
-he
-> other questions, thereby further decreasing the number of questions?
->
-> BTW, 17 is just a continuation of 16, AFAICS. Is it possible to just =
-repeat
-> the column headers (to break up the table length) and still keep it a=
-s one
-> question?
+>> --
+>> Andreas Ericsson                   andreas.ericsson@op5.se
+>> OP5 AB                             www.op5.se
+>> Tel: +46 8-230225                  Fax: +46 8-230231
+>>
+>> Considering the successes of the wars on alcohol, poverty, drugs and
+>> terror, I think we should give some serious thought to declaring war
+>> on peace.
+>>
+> 
+> I guess my question is two-fold:
+> 1) what is the correct/recommended way of adding tags/branches *after*
+> already cloning trunk?
+> 
 
-I agree, I found myself clicking on gitk multiple times (4?)
+I don't know.
 
---=20
-=46elipe Contreras
+> 2) the current way of cloning svn repository is quite inefficient -
+> for every tag/branch, it does:
+> r1 -> rX branch 1
+> r1 -> rN tag 1
+> r1 -> rY branch 2
+> r1 -> rM tag 2
+> r1 -> rZ branch 3
+> etc
+> 
+> but I think it is possible to track branches to the point where it
+> branches off (when 'svn copy' happens), rather than all the way to r1?
+
+This isn't really a question, but a statement with a question mark.
+
+> And in that sense tags are just very short branches.
+> 
+
+Often, yes, but they *can* be committed to. SVN's inability to keep
+immutable tags is one of the reasons I never looked at it to replace
+CVS at $dayjob. But I digress..
+
+> The current behavior is quite bandwith consuming for projects with a
+> long history and lots of tags, like mono...
+> 
+
+Hmm. I've cloned many subversion repositories to git, and I've never
+seen the issues you're seeing. Perhaps because I always cloned the
+entire repository the first time, or because I normally do such things
+over a high-capacity connection, or because I just fire it up and
+forget about it until it's done.
+
+What happens if you ignore the already-cloned svn tree and just do
+a new import without trying to continue the old one? Not that I'll
+actually do anything about it, as I don't have any problems with it,
+but I'm curious even so ;-)
+
+-- 
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
+
+Considering the successes of the wars on alcohol, poverty, drugs and
+terror, I think we should give some serious thought to declaring war
+on peace.
