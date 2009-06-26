@@ -1,45 +1,56 @@
-From: "Tilly Buchanan" <mutter@rbmc.org>
-Subject: Improve your organism state.
-Date: Fri, 26 Jun 2009 11:54:28 +0530
-Message-ID: <20090626115428.4030006@rbmc.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: feature suggestion: git commit -a -o ...
+Date: Fri, 26 Jun 2009 02:34:35 -0400
+Message-ID: <20090626063435.GA12283@coredump.intra.peff.net>
+References: <F9B3FF44-FC23-4ADA-A933-9BED857AB469@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jun 26 08:27:53 2009
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: David Reitter <david.reitter@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jun 26 08:34:51 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MK4ue-0003ks-Dj
-	for gcvg-git-2@gmane.org; Fri, 26 Jun 2009 08:27:52 +0200
+	id 1MK51N-0005hD-2B
+	for gcvg-git-2@gmane.org; Fri, 26 Jun 2009 08:34:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751514AbZFZG1k (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 26 Jun 2009 02:27:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751440AbZFZG1j
-	(ORCPT <rfc822;git-outgoing>); Fri, 26 Jun 2009 02:27:39 -0400
-Received: from [117.195.0.168] ([117.195.0.168]:62755 "HELO wergvan"
-	rhost-flags-FAIL-FAIL-OK-FAIL) by vger.kernel.org with SMTP
-	id S1751432AbZFZG1i (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 26 Jun 2009 02:27:38 -0400
-Received: from tnhw ([169.189.84.72]) by wergvan with Microsoft SMTPSVC(6.0.3790.0); Fri, 26 Jun 2009 11:54:28 +0530
-User-Agent: Thunderbird 2.0.0.9 (Windows/20071031)
+	id S1752588AbZFZGek (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 26 Jun 2009 02:34:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752220AbZFZGej
+	(ORCPT <rfc822;git-outgoing>); Fri, 26 Jun 2009 02:34:39 -0400
+Received: from peff.net ([208.65.91.99]:42176 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751005AbZFZGei (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Jun 2009 02:34:38 -0400
+Received: (qmail 28526 invoked by uid 107); 26 Jun 2009 06:36:30 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Fri, 26 Jun 2009 02:36:30 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Fri, 26 Jun 2009 02:34:35 -0400
+Content-Disposition: inline
+In-Reply-To: <F9B3FF44-FC23-4ADA-A933-9BED857AB469@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-X-Spam-Report: 12.5 points;
- *  3.0 RAZOR2_CF_RANGE_51_100 BODY: Razor2 gives confidence level above 50%
- *      [cf: 100]
- *  1.0 RAZOR2_CHECK Listed in Razor2 (http://razor.sf.net/)
- *  2.0 URIBL_AB_SURBL Contains an URL listed in the AB SURBL blocklist
- *      [URIs: nufqadob.cn]
- *  0.5 URIBL_WS_SURBL Contains an URL listed in the WS SURBL blocklist
- *      [URIs: nufqadob.cn]
- *  2.0 URIBL_OB_SURBL Contains an URL listed in the OB SURBL blocklist
- *      [URIs: nufqadob.cn]
- *  4.0 URIBL_SC_SURBL Contains an URL listed in the SC SURBL blocklist
- *      [URIs: nufqadob.cn]
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122281>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122282>
 
-Make your own supply of health. http://ti.nufqadob.cn/
+On Thu, Jun 25, 2009 at 04:39:32PM -0400, David Reitter wrote:
+
+> I'm wondering why "git commit -a -o *" is not supported.
+> With this command I'd like to commit the intersection of all changed,
+> tracked files and those in the current directory.
+> 
+> I found that "git commit ." does what I want and it even detects
+> deleted files (excellent, thank you).
+
+I don't understand what "-a" is supposed to be doing there. It means
+"all tracked files in the whole repo".  But from your "git commit ."
+example, it sounds like you just want "git commit -o *" (in fact, "git
+commit ." is more or less equivalent (with the except of dot-files) to
+"git commit *", which is in turn the same as "git commit -o *").
+
+Can you be more clear about the set of files you have, the set you want
+to commit, and how "git commit" differs from your expectations?
+
+-Peff
