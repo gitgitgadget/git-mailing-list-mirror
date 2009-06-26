@@ -1,165 +1,91 @@
-From: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-Subject: Re: [PATCHv6 1/8] gitweb: refactor author name insertion
-Date: Fri, 26 Jun 2009 01:41:28 +0200
-Message-ID: <cb7bb73a0906251641g71250105ob608b557cce7c454@mail.gmail.com>
-References: <1245926587-25074-1-git-send-email-giuseppe.bilotta@gmail.com>
-	 <1245926587-25074-2-git-send-email-giuseppe.bilotta@gmail.com>
-	 <200906260055.11347.jnareb@gmail.com>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: [PATCH] git svn: Support multiple branch and tag paths in the
+	svn repository.
+Date: Thu, 25 Jun 2009 17:33:39 -0700
+Message-ID: <20090626003338.GA591@dcvr.yhbt.net>
+References: <4A3A4945.6050307@drmicha.warpmail.net> <1245335463-4488-1-git-send-email-git@drmicha.warpmail.net> <4A3F9A44.8070805@xiplink.com> <4A410A90.1090101@xiplink.com> <20090625093602.GA3997@dcvr.yhbt.net> <7v3a9o0x48.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jun 26 01:41:40 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Marc Branchaud <marcnarc@xiplink.com>,
+	Michael J Gruber <git@drmicha.warpmail.net>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jun 26 02:33:51 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MJyZV-0002zW-OW
-	for gcvg-git-2@gmane.org; Fri, 26 Jun 2009 01:41:38 +0200
+	id 1MJzO2-0001Cw-P8
+	for gcvg-git-2@gmane.org; Fri, 26 Jun 2009 02:33:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752384AbZFYXl2 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 25 Jun 2009 19:41:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751999AbZFYXl1
-	(ORCPT <rfc822;git-outgoing>); Thu, 25 Jun 2009 19:41:27 -0400
-Received: from mail-fx0-f213.google.com ([209.85.220.213]:58048 "EHLO
-	mail-fx0-f213.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751503AbZFYXl1 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 25 Jun 2009 19:41:27 -0400
-Received: by fxm9 with SMTP id 9so1795402fxm.37
-        for <git@vger.kernel.org>; Thu, 25 Jun 2009 16:41:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=DGT1iAsBsreMqBYyJE1GefZmrJVaJdIIdQ+/69QH+8I=;
-        b=V2ldjOrYwE4AjFFXhM0F+NFHivuTKcn5hlKKKFZQ9BTdhubFIj3gHdlDAjvo8PdrYF
-         0GxFlcrB29AyJS7ycXxSt1bXssbfoKncXWRYLYJN8+aeZkUlts6OaIb542cjJjxrGTeb
-         A5WX5P6m2iwJT2n8isS3nAzR13G8NQlekmxUw=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=k2p5LXBRYC/SzlDgCbJIUtU+/lXYG2VYuRhrsgyBUUTMg3c8Cz6qFXgDFa5jMVh6Qm
-         EzQH0vc5xNE9ahBephQrsJ+N+PV6Auib/QaKUrOsYLQ+gsnTIRDOHLj8bVZ97bwUogaF
-         RE+gs1CEiQ3QySamdiGjhNpWF4W9iAeklQHUM=
-Received: by 10.204.66.69 with SMTP id m5mr2890408bki.174.1245973288629; Thu, 
-	25 Jun 2009 16:41:28 -0700 (PDT)
-In-Reply-To: <200906260055.11347.jnareb@gmail.com>
+	id S1751645AbZFZAdi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 25 Jun 2009 20:33:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751499AbZFZAdh
+	(ORCPT <rfc822;git-outgoing>); Thu, 25 Jun 2009 20:33:37 -0400
+Received: from dcvr.yhbt.net ([64.71.152.64]:39456 "EHLO dcvr.yhbt.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751411AbZFZAdh (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 Jun 2009 20:33:37 -0400
+Received: from localhost (unknown [127.0.2.5])
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4D17D1F7B9;
+	Fri, 26 Jun 2009 00:33:39 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <7v3a9o0x48.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122261>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122262>
 
-2009/6/26 Jakub Narebski <jnareb@gmail.com>:
-> Do I understand it correctly that this was meant as pure refactoring,
-> i.e. that none of gitweb output should have changed? =A0Because you m=
-ade
-> a mistake, and 'log' view is broken (and it doesn't look like it did
-> before). =A0See comments below for cause and (simple) solution.
+Junio C Hamano <gitster@pobox.com> wrote:
+> Eric Wong <normalperson@yhbt.net> writes:
+> 
+> > Acked and and pushed out to git://git.bogomips.org/git-svn along with a
+> > followup patch ...
+> 
+> Hmmm...
+> 
+> t9138-git-svn-multiple-branches.sh does not seem to pass for me.
+> 
+>     ...
+>     A    svn_project/tags_A/1.0
+>     A    svn_project/tags_A/1.0/a.file
+>     Checked out revision 3.
+>     ./test-lib.sh: line 329: .: filename argument required
+>     .: usage: . filename [arguments]
+>     FATAL: Unexpected exit with code 2
 
-Thanks for noticing. And yes, the problem is indeed that I forgot to
-specify tag =3D> span in git log view (I'm keeping div the default
-because that's what was there in the first place in
-git_print_authorship).
+Oops, I wasn't reading the test too closely[1], this should fix it:
 
->> +# format the author name of the given commit with the given tag
->> +# the author name is chopped and escaped according to the other
->> +# optional parameters (see chop_str).
->> +sub format_author_html {
->> + =A0 =A0 my $tag =3D shift;
->> + =A0 =A0 my $co =3D shift;
->> + =A0 =A0 my $author =3D chop_and_escape_str($co->{'author_name'}, @=
-_);
->> + =A0 =A0 return "<$tag class=3D\"author\">" . $author . "</$tag>\n"=
-;
->> +}
->
-> Good... although I wonder if we should not get rid of chop_and_escape=
-_str
-> altogether, and for example add title attribute (if needed due to hav=
-ing
-> to do shortening) directly to $tag, and not to inner <span> element.
+>From 1ad8ff7b49f508ad37081a709d4230833564eca2 Mon Sep 17 00:00:00 2001
+From: Eric Wong <normalperson@yhbt.net>
+Date: Thu, 25 Jun 2009 16:09:59 -0700
+Subject: [PATCH] t9138: remove stray "." in tests
 
-This would require some additional refactoring, and I don't have a
-clear idea on how to best implement it right now. I'm afraid it'll
-have to wait for another time.
+This breaks bash and probably some other shells, but worked
+fine with dash in my limited testing.
 
-> Should "\n" be in returned string? Just asking.
+Signed-off-by: Eric Wong <normalperson@yhbt.net>
+---
+ t/t9138-git-svn-multiple-branches.sh |    1 -
+ 1 files changed, 0 insertions(+), 1 deletions(-)
 
-You're right, we probably don't want to force the newline there. The
-real question is, do we want the callers to put a newline there? I'm
-thinking no, because it's mostly used in table cells and a newline is
-better done at the row level, but I'm not sure either way. I'll just
-remove it for the time being, it should only have effects at the
-sourcecode level, not on the layout.
+diff --git a/t/t9138-git-svn-multiple-branches.sh b/t/t9138-git-svn-multiple-branches.sh
+index 9725ccf..37ecdb0 100755
+--- a/t/t9138-git-svn-multiple-branches.sh
++++ b/t/t9138-git-svn-multiple-branches.sh
+@@ -22,7 +22,6 @@ test_expect_success 'setup svnrepo' '
+ 			  "$svnrepo/project/tags_A/1.0" &&
+ 	svn co "$svnrepo/project" svn_project &&
+ 	cd svn_project &&
+-		.
+ 		echo 2 > trunk/a.file &&
+ 		svn ci -m "Change 1" trunk/a.file &&
+ 		svn cp -m "Branch 2" "$svnrepo/project/trunk" \
+-- 
+Eric Wong
 
-> Usually though we use %opts and not %params for the name of this
-> hash, and we use CGI-like keys prefixed by '-', for example
-> '-z' in parse_ls_tree_line(), '-nbsp' in esc_html, '-nohtml' in
-> quot_cec(), =A0'-remove_title', '-remove_signoff' and '-final_empty_l=
-ine'
-> in git_print_log(). =A0git_commitdiff() uses %params, but it doesn't
-> have non-optional parameters (still, I guess we should use %opts
-> for consistency), and it uses '-format' and '-single' as names.
->
-> href() subroutine uses %params... but those are not extra named
-> optional parameters to subroutine; they are CGI query parameters.
-
-I'll adjust the code accordingly. BTW the %params in git_commitdiff is
-my fault too, IIRC.
-
->> =A0 =A0 =A0 my %ad =3D parse_date($co->{'author_epoch'}, $co->{'auth=
-or_tz'});
->> - =A0 =A0 print "<div class=3D\"author_date\">" .
->> + =A0 =A0 print "<$tag class=3D\"author_date\">" .
->> =A0 =A0 =A0 =A0 =A0 =A0 esc_html($co->{'author_name'}) .
->> =A0 =A0 =A0 =A0 =A0 =A0 " [$ad{'rfc2822'}";
->> + =A0 =A0 if ($params{'localtime'}) {
->> + =A0 =A0 =A0 =A0 =A0 =A0 if ($ad{'hour_local'} < 6) {
->> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 printf(" (<span class=3D\"=
-atnight\">%02d:%02d</span> %s)",
->> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0$ad{'hour_l=
-ocal'}, $ad{'minute_local'}, $ad{'tz_local'});
->> + =A0 =A0 =A0 =A0 =A0 =A0 } else {
->> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 printf(" (%02d:%02d %s)",
->> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0$ad{'hour_l=
-ocal'}, $ad{'minute_local'}, $ad{'tz_local'});
->> + =A0 =A0 =A0 =A0 =A0 =A0 }
->> + =A0 =A0 }
->> + =A0 =A0 print "]</$tag>\n";
->> +}
->
-> Gaah, git has chosen to show this diff a bit strangely...
-
-Oh, very funny indeed. I hadn't realized it went that way. Wonder if
-the patience diff would have helped here.
-
-> By the way, what about author / tagger info used in 'tag' view?
-
-I totally forgot about that.
-
-> Wouldn't it be better to factor out generating table rows for single
-> author / committer / tagger header (field) info?
-
-Good idea. I'm not sure the tagger field has all the relevant data. I'l=
-l check.
-
-> I'd rather use here (as mentioned in comment about git_print_full_aut=
-horship
-> subroutine) something like the following:
->
-> + =A0 =A0 =A0 git_print_authorship_header(\%co, 'author');
-> + =A0 =A0 =A0 git_print_authorship_header(\%co, 'committer');
->
-> Or something like that. =A0But this might be a matter of taste.
-
-I renamed the sub to git_print_authorship_rows, and I'm making it
-accept a list of people to print info for. I'll make it default to
-both author and committer though.
-
-
---=20
-Giuseppe "Oblomov" Bilotta
+[1] - the test should use the new svn_cmd wrapper and avoid cd + cd ..
+which is more error prone than (cd ).  I'll try to find time to fix
+it later tonight.
