@@ -1,131 +1,91 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: git svn's performance on cloning mono's branches/tags...
-Date: Fri, 26 Jun 2009 12:57:45 +0200
-Message-ID: <4A44A9A9.6030008@op5.se>
-References: <3ace41890906251739r45b3eae9oe1b7e32886defc0f@mail.gmail.com>	 <4A445959.6090403@op5.se> <3ace41890906260259o3be005fq6be9d0e2c3f9af66@mail.gmail.com>
+From: Gregory Jefferis <jefferis@gmail.com>
+Subject: Re: Choosing a mergetool according to file type
+Date: Fri, 26 Jun 2009 12:04:54 +0100
+Message-ID: <C66A69E6.205F2%jefferis@gmail.com>
+References: <4A44A66B.10906@viscovery.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Type: text/plain;
+	charset="US-ASCII"
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Hin-Tak Leung <hintak.leung@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jun 26 12:57:58 2009
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Fri Jun 26 13:05:46 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MK981-0002gP-OV
-	for gcvg-git-2@gmane.org; Fri, 26 Jun 2009 12:57:58 +0200
+	id 1MK9FZ-0005Fr-BC
+	for gcvg-git-2@gmane.org; Fri, 26 Jun 2009 13:05:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755480AbZFZK5s (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 26 Jun 2009 06:57:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754963AbZFZK5r
-	(ORCPT <rfc822;git-outgoing>); Fri, 26 Jun 2009 06:57:47 -0400
-Received: from na3sys009aog110.obsmtp.com ([74.125.149.203]:33379 "HELO
-	na3sys009aog110.obsmtp.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with SMTP id S1754704AbZFZK5q (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 26 Jun 2009 06:57:46 -0400
-Received: from source ([209.85.220.215]) by na3sys009aob110.postini.com ([74.125.148.12]) with SMTP
-	ID DSNKSkSprL4sBD5T0jDKT6BF4wHADvxPQtTU@postini.com; Fri, 26 Jun 2009 03:57:50 PDT
-Received: by mail-fx0-f215.google.com with SMTP id 11so476549fxm.5
-        for <git@vger.kernel.org>; Fri, 26 Jun 2009 03:57:47 -0700 (PDT)
-Received: by 10.86.49.13 with SMTP id w13mr3614267fgw.38.1246013867801;
-        Fri, 26 Jun 2009 03:57:47 -0700 (PDT)
-Received: from clix.int.op5.se ([212.112.174.166])
-        by mx.google.com with ESMTPS id e20sm182004fga.10.2009.06.26.03.57.46
+	id S1754704AbZFZLE6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 26 Jun 2009 07:04:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754382AbZFZLE6
+	(ORCPT <rfc822;git-outgoing>); Fri, 26 Jun 2009 07:04:58 -0400
+Received: from mail-ew0-f210.google.com ([209.85.219.210]:58363 "EHLO
+	mail-ew0-f210.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752454AbZFZLE5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Jun 2009 07:04:57 -0400
+Received: by ewy6 with SMTP id 6so3208099ewy.37
+        for <git@vger.kernel.org>; Fri, 26 Jun 2009 04:04:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:user-agent:date:subject:from
+         :to:cc:message-id:thread-topic:thread-index:in-reply-to:mime-version
+         :content-type:content-transfer-encoding;
+        bh=t7OEkg9ZmFcSTqcM/pwgXGqkInqXe92oNU0Aqn5b+xQ=;
+        b=WnNGd1gyXJoUDa2jKIFwProCgmYMZHgM28YR7kuvTMeyOeyCONhCXsWGN5srgUjN93
+         SbAlTjP728RIvkKMXx8FGeziclB9uqsYgd3PjlQ8cqbBKXnAgaw9BFQ5S9QsEX9wEv6M
+         +Gjl/A3tS1ZJ3CTdY2CKoRcd+Ai81QZ3NY4NE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=user-agent:date:subject:from:to:cc:message-id:thread-topic
+         :thread-index:in-reply-to:mime-version:content-type
+         :content-transfer-encoding;
+        b=ngv0scUNSJXnds4852eM33iFoopmLuIj1GXlRnxs0AVKDpyQAA0YJEcOOunAW/oCR4
+         cTKxm3zEfESHXq62sl+LaUYz4Ib0D5ZFsTVsotgc6E7IETgNi6vInGrCTIiH8bC2iNi9
+         R6AcU+I15gbJJEUIpuquE89uAfSW8Qhdd+c0E=
+Received: by 10.210.43.10 with SMTP id q10mr1983487ebq.2.1246014299476;
+        Fri, 26 Jun 2009 04:04:59 -0700 (PDT)
+Received: from ?10.6.0.183? (nat.mrc-lmb.cam.ac.uk [131.111.85.79])
+        by mx.google.com with ESMTPS id 7sm2849120eyg.32.2009.06.26.04.04.58
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 26 Jun 2009 03:57:47 -0700 (PDT)
-User-Agent: Thunderbird 2.0.0.21 (X11/20090320)
-In-Reply-To: <3ace41890906260259o3be005fq6be9d0e2c3f9af66@mail.gmail.com>
+        Fri, 26 Jun 2009 04:04:59 -0700 (PDT)
+User-Agent: Microsoft-Entourage/12.13.0.080930
+Thread-Topic: Choosing a mergetool according to file type
+Thread-Index: Acn2Te8IaKTQGQrO7E+wxrVjn3xP8A==
+In-Reply-To: <4A44A66B.10906@viscovery.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122290>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122291>
 
-Hin-Tak Leung wrote:
-> On Fri, Jun 26, 2009 at 6:15 AM, Andreas Ericsson<ae@op5.se> wrote:
->> Hin-Tak Leung wrote:
->>> (I'm not on list so please CC) - I am trying to git svn clone mono's
->>> repository, and for some strange reason it is doing a complete check
->>> out from revision 1 all the way to each branch/tag . Is this normal or
->>> am I doing anything wrong? I have git svn clone a few other things
->>> recently (R, ghostscript) and I don't remember git doing this, but R
->>> is quite a normal svn layout and I think I only have ghostcript trunk
->>> (no branch/tag).
->>>
->>> What I did was this: I started out with just git-svn clone trunk
->>> (which generated the first two [now-commented out] lines), then I
->>> thought I also want 2.4 branch so I added the next commented-out
->>> section, and ran 'git svn fetch --all'. Then I thought I like the
->>> whole thing - so I commented out most of it and added the 4 lines as
->>> blow - which is also my current git config.
->>>
->>> The problem is that it seems to treat every tag as a branch,
->> This is normal. SVN makes no real distinction between tags and branches,
->> so git-svn has no way of detecting which is which. SVN also allows
->> committing to "tags", so it doesn't make sense for git to store what
->> SVN calls tags as git tags.
->>
->> As for your other questions, I don't know.
->>
->> --
->> Andreas Ericsson                   andreas.ericsson@op5.se
->> OP5 AB                             www.op5.se
->> Tel: +46 8-230225                  Fax: +46 8-230231
->>
->> Considering the successes of the wars on alcohol, poverty, drugs and
->> terror, I think we should give some serious thought to declaring war
->> on peace.
->>
+Hi Johannes,
+
+On 2009-06-26 11:43, "Johannes Sixt" <j.sixt@viscovery.net> wrote:
+
+> I don't think that you can choose the merge tool by setting attributes.
+
+OK, that was my impression, but I wanted to check.
+
+ > The reason I write to you is: Can you tell me what 'wordgitmerge' and
+> 'wordgitdiff' are?
 > 
-> I guess my question is two-fold:
-> 1) what is the correct/recommended way of adding tags/branches *after*
-> already cloning trunk?
-> 
+> I, too, have a number of Word files that I need to merge every now and then.
 
-I don't know.
+Ah!  Well they are nothing fancy, I'm afraid, just scripts that call Word
+itself, but that turns out to work pretty well.  For Mac (my platform) they
+have to be in applescript.  For Windows I imagine they could be pretty much
+the same as the scripts here:
 
-> 2) the current way of cloning svn repository is quite inefficient -
-> for every tag/branch, it does:
-> r1 -> rX branch 1
-> r1 -> rN tag 1
-> r1 -> rY branch 2
-> r1 -> rM tag 2
-> r1 -> rZ branch 3
-> etc
-> 
-> but I think it is possible to track branches to the point where it
-> branches off (when 'svn copy' happens), rather than all the way to r1?
+http://tortoisesvn.tigris.org/svn/tortoisesvn/trunk/contrib/diff-scripts/
 
-This isn't really a question, but a statement with a question mark.
+diff-doc.js
+merge-doc.js
 
-> And in that sense tags are just very short branches.
-> 
+Perhaps tortoisegit already exposes this.  Those scripts include fallbacks
+for openoffice so I suppose one could use that on linux.
 
-Often, yes, but they *can* be committed to. SVN's inability to keep
-immutable tags is one of the reasons I never looked at it to replace
-CVS at $dayjob. But I digress..
+Best,
 
-> The current behavior is quite bandwith consuming for projects with a
-> long history and lots of tags, like mono...
-> 
-
-Hmm. I've cloned many subversion repositories to git, and I've never
-seen the issues you're seeing. Perhaps because I always cloned the
-entire repository the first time, or because I normally do such things
-over a high-capacity connection, or because I just fire it up and
-forget about it until it's done.
-
-What happens if you ignore the already-cloned svn tree and just do
-a new import without trying to continue the old one? Not that I'll
-actually do anything about it, as I don't have any problems with it,
-but I'm curious even so ;-)
-
--- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
-
-Considering the successes of the wars on alcohol, poverty, drugs and
-terror, I think we should give some serious thought to declaring war
-on peace.
+Greg.
