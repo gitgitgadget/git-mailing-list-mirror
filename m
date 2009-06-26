@@ -1,122 +1,120 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [RFC] Git User's Survey 2009 - trial run
-Date: Fri, 26 Jun 2009 22:05:48 +0300
-Message-ID: <94a0d4530906261205o6e4195dub4e38e8dccbd9258@mail.gmail.com>
-References: <200906252122.51737.jnareb@gmail.com>
-	 <94a0d4530906260412h78b55458gc722964011edb54d@mail.gmail.com>
-	 <200906261744.04610.jnareb@gmail.com>
+From: Marc Branchaud <marcnarc@xiplink.com>
+Subject: Re: [PATCH] git svn: Support multiple branch and tag paths in the
+ svn repository.
+Date: Fri, 26 Jun 2009 15:20:42 -0400
+Message-ID: <4A451F8A.9060501@xiplink.com>
+References: <4A3A4945.6050307@drmicha.warpmail.net> <1245335463-4488-1-git-send-email-git@drmicha.warpmail.net> <4A3F9A44.8070805@xiplink.com> <4A410A90.1090101@xiplink.com> <20090625093602.GA3997@dcvr.yhbt.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jun 26 21:06:00 2009
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Michael J Gruber <git@drmicha.warpmail.net>, git@vger.kernel.org
+To: Eric Wong <normalperson@yhbt.net>
+X-From: git-owner@vger.kernel.org Fri Jun 26 21:22:00 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MKGkI-0006Rf-5B
-	for gcvg-git-2@gmane.org; Fri, 26 Jun 2009 21:05:58 +0200
+	id 1MKGzh-00044S-Ep
+	for gcvg-git-2@gmane.org; Fri, 26 Jun 2009 21:21:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755424AbZFZTFs convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 26 Jun 2009 15:05:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754698AbZFZTFr
-	(ORCPT <rfc822;git-outgoing>); Fri, 26 Jun 2009 15:05:47 -0400
-Received: from fg-out-1718.google.com ([72.14.220.156]:61885 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753707AbZFZTFq convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 26 Jun 2009 15:05:46 -0400
-Received: by fg-out-1718.google.com with SMTP id e12so98278fga.17
-        for <git@vger.kernel.org>; Fri, 26 Jun 2009 12:05:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=q71V5pcHEd7ewcHwdMSH2eRAs1e4ovNVznRkDgU6Ano=;
-        b=jXVvta8RtGvFyiugzE1OEuGmDNlcsqyI5IcoQ0qqP+wijnsE5qPJsX+rVrxBjB4XtQ
-         o1YwzVuSE4dC5jA649RZXkbdfcn2eTKHMUIdwJ7sc+Y9Z7BPSX2+7xAcOM5wEa4kbKfT
-         2eUPfbSTux8OQCsGb+5m9b4EjsxgfKmPOCdFQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=Cd/CQ1z5qXAAGkCKpo2jfJG6ZOjsM4utaWAl0ciG773kg9n++/FSAwGbsEPC+z6Od5
-         QYCjHANCVmNZbCMc4/151hA1lZ69DzE2yFnW++9G7xHE4YIfu5NmVWC2zs5f/8MiCS2j
-         lJMj4ciX/jNFc519wxxS/MOO8INVZgUVcbEeU=
-Received: by 10.86.93.17 with SMTP id q17mr3950590fgb.75.1246043148826; Fri, 
-	26 Jun 2009 12:05:48 -0700 (PDT)
-In-Reply-To: <200906261744.04610.jnareb@gmail.com>
+	id S1761444AbZFZTUy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 26 Jun 2009 15:20:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761438AbZFZTUy
+	(ORCPT <rfc822;git-outgoing>); Fri, 26 Jun 2009 15:20:54 -0400
+Received: from smtp192.iad.emailsrvr.com ([207.97.245.192]:47319 "EHLO
+	smtp192.iad.emailsrvr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1761254AbZFZTUx (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Jun 2009 15:20:53 -0400
+Received: from relay9.relay.iad.mlsrvr.com (localhost [127.0.0.1])
+	by relay9.relay.iad.mlsrvr.com (SMTP Server) with ESMTP id 7F9811E5123
+	for <git@vger.kernel.org>; Fri, 26 Jun 2009 15:20:56 -0400 (EDT)
+Received: by relay9.relay.iad.mlsrvr.com (Authenticated sender: mbranchaud-AT-xiplink.com) with ESMTPSA id B41E81E2EDD;
+	Fri, 26 Jun 2009 15:20:49 -0400 (EDT)
+User-Agent: Thunderbird 2.0.0.21 (X11/20090409)
+In-Reply-To: <20090625093602.GA3997@dcvr.yhbt.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122315>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122316>
 
-On Fri, Jun 26, 2009 at 6:44 PM, Jakub Narebski<jnareb@gmail.com> wrote=
-:
-> On Fri, 26 June 2009, Felipe Contreras wrote:
->> 2009/6/25 Jakub Narebski <jnareb@gmail.com>:
->
->> > I have created _proposed_ version of questions for upcoming
->> > "Git User's Survey 2009", based on (a bit of) feedback on git
->> > mailing list:
->> > =C2=A0"[RFH] Questions for Git User's Survey 2009"
->> > =C2=A0Msg-Id: <200905291855.03328.jnareb@gmail.com>
->> > =C2=A0http://thread.gmane.org/gmane.comp.version-control.git/12028=
-7
->> > and comments on #git IRC channel on FreeNode.
->> >
->> > Current version of survey has 30 questions, as compared to
->> > 60 questions last year; the number of free-form essay questions
->> > were also greatly reduced.
->> >
->> >
->> > The *test* version of this year survey can be now found at
->> > the following URL (as in previous year, we use Survs.com)
->> >
->> > =C2=A0http://www.survs.com/survey?id=3D2PIMZGU0&channel=3DTFN2Y52K=
-7Y
+Thanks a bunch, Eric!
 
-<snip/>
+Can I assume that since you've taken the commit into your repo that the feature will find itself into Junio's git at some point?
 
-> =C2=A0+8. How did/do you obtain Git?
->
-> It is IMHO more interesting how people upgrade Git, than just how
-> they installed it.
+I'll send out a documentation patch shortly.
 
-Sure, but it can be assumed from how it was installed:
- * Some kind of package management (automatically updated)
- * In other binary form (manually)
- * From a source tarball (manually)
- * From git.git repository (manually)
+Is the svn_cmd wrapper simply a drop-in replacement for svn?  I can make that change, too.
 
-<snip/>
+		M.
 
->> Also, I would like to see a list of areas users would like improveme=
-nts:
->> XX. In you opinion, which areas need improvement?
->> =C2=A0* user-interface
->> =C2=A0* documentation
->> =C2=A0* performance
->> =C2=A0* more features
->> =C2=A0* other
+
+Eric Wong wrote:
+> Marc Branchaud <marcnarc@xiplink.com> wrote:
+>> This enables git-svn.perl to read multiple 'branches' and 'tags' entries in
+>> svn-remote config sections.  The init and clone subcommands also support
+>> multiple --branches and --tags arguments.
 >>
->> Is there a way for users to assign points? eg. user-interface: 2,
->> documentation: 1, more features: 1
->
-> We can always use 'matrix' form, with columns corresponding to import=
-ance
-> of a given area for improvement (1-3, or 1-5 numeric range). =C2=A0Be=
-cause
-> asking user to order from most important to least important (one can
-> enforce this on Survs.com by requiring only one answer with given col=
-umn
-> selected) would be too difficult and confusing.
-
-I see, in that case I think a matrix form would do.
-
-Cheers.
-
---=20
-=46elipe Contreras
+>> The branch (and tag) subcommand gets a new argument: --destination (or -d).
+>> This argument is required if there are multiple branches (or tags) entries
+>> configured for the remote Subversion repository.  The argument's value
+>> specifies which branch (or tag) path to use to create the branch (or tag).
+>> The specified value must match the left side (without wildcards) of one of
+>> the branches (or tags) refspecs in the svn-remote's config.
+>>
+>> Signed-off-by: Marc Branchaud <marcnarc@xiplink.com>
+>> ---
+>>
+>> I got carried away making unit tests and went and implemented most of this...
+>>
+>> I'm fairly happy with this, except for the way the branch subcommand matches
+>> refspecs.  The patch does a simple string comparison, but it'd be better to do
+>> an actual glob.  I just couldn't track down the right function for that, so I
+>> left it as a strcmp and hope that a gitizen can tell me how to glob here.
+>>
+>> (ps. I'm trying a new way to send patches -- apologies if it's mangled!)
+> 
+> Thanks Marc!  Everything looks fine here; I don't think I'll have time
+> to test it myself any time soon but your test case looks good and
+> doesn't break any of the other tests :)  Sorry for the delay, I haven't
+> had access to my computer or email much in the past few weeks.
+> 
+> Acked and and pushed out to git://git.bogomips.org/git-svn along with a
+> followup patch to convert the glob to a regexp for branching:
+> 
+> From f7050599310c18bd67b35b8d59486116b30ff1f6 Mon Sep 17 00:00:00 2001
+> From: Eric Wong <normalperson@yhbt.net>
+> Date: Thu, 25 Jun 2009 02:28:15 -0700
+> Subject: [PATCH] git-svn: convert globs to regexps for branch destinations
+> 
+> Marc Branchaud wrote:
+>> I'm fairly happy with this, except for the way the branch
+>> subcommand matches refspecs.  The patch does a simple string
+>> comparison, but it'd be better to do an actual glob.  I just
+>> couldn't track down the right function for that, so I left it as
+>> a strcmp and hope that a gitizen can tell me how to glob here.
+> 
+> Signed-off-by: Eric Wong <normalperson@yhbt.net>
+> ---
+> 
+>  I haven't actually tested it, and yes, it should probably be
+>  moved to Git.pm even though it's not necessarily git-only...
+> 
+>  git-svn.perl |    4 +++-
+>  1 files changed, 3 insertions(+), 1 deletions(-)
+> 
+> diff --git a/git-svn.perl b/git-svn.perl
+> index 48e8aad..6c42e2a 100755
+> --- a/git-svn.perl
+> +++ b/git-svn.perl
+> @@ -646,7 +646,9 @@ sub cmd_branch {
+>  		            " with the --destination argument.\n";
+>  		}
+>  		foreach my $g (@{$allglobs}) {
+> -			if ($_branch_dest eq $g->{path}->{left}) {
+> +			# SVN::Git::Editor could probably be moved to Git.pm..
+> +			my $re = SVN::Git::Editor::glob2pat($g->{path}->{left});
+> +			if ($_branch_dest =~ /$re/) {
+>  				$glob = $g;
+>  				last;
+>  			}
