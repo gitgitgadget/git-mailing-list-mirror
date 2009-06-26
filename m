@@ -1,359 +1,78 @@
-From: Johan Herland <johan@herland.net>
-Subject: Re: [RFC] Git User's Survey 2009 - trial run
-Date: Fri, 26 Jun 2009 16:44:02 +0200
-Message-ID: <200906261644.02694.johan@herland.net>
-References: <200906252122.51737.jnareb@gmail.com> <200906260932.43826.johan@herland.net> <200906261508.46176.jnareb@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-2"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jun 26 16:44:58 2009
+From: Ulrich Dangel <uli@spamt.net>
+Subject: [PATCH] Canonicalize svn urls to prevent libsvn assertion
+Date: Fri, 26 Jun 2009 16:52:09 +0200
+Message-ID: <1246027929-2792-1-git-send-email-uli@spamt.net>
+Cc: Ulrich Dangel <uli@spamt.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jun 26 16:59:48 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MKCfa-00081I-SV
-	for gcvg-git-2@gmane.org; Fri, 26 Jun 2009 16:44:51 +0200
+	id 1MKCu3-0006n7-P8
+	for gcvg-git-2@gmane.org; Fri, 26 Jun 2009 16:59:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755583AbZFZOoN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 26 Jun 2009 10:44:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760758AbZFZOoL
-	(ORCPT <rfc822;git-outgoing>); Fri, 26 Jun 2009 10:44:11 -0400
-Received: from sam.opera.com ([213.236.208.81]:42268 "EHLO smtp.opera.com"
+	id S1751670AbZFZO7f (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 26 Jun 2009 10:59:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751269AbZFZO7f
+	(ORCPT <rfc822;git-outgoing>); Fri, 26 Jun 2009 10:59:35 -0400
+Received: from mail.spamt.net ([78.46.151.67]:34864 "EHLO mail.spamt.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757705AbZFZOoE (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 26 Jun 2009 10:44:04 -0400
-Received: from pc107.coreteam.oslo.opera.com (pat-tdc.opera.com [213.236.208.22])
-	(authenticated bits=0)
-	by smtp.opera.com (8.13.4/8.13.4/Debian-3sarge3) with ESMTP id n5QEi2DA014474
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Fri, 26 Jun 2009 14:44:03 GMT
-User-Agent: KMail/1.9.9
-In-Reply-To: <200906261508.46176.jnareb@gmail.com>
-Content-Disposition: inline
+	id S1750839AbZFZO7e (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Jun 2009 10:59:34 -0400
+X-Greylist: delayed 427 seconds by postgrey-1.27 at vger.kernel.org; Fri, 26 Jun 2009 10:59:34 EDT
+Received: from localhost (d91-128-181-41.cust.tele2.at [91.128.181.41])
+	by mail.spamt.net (Postfix) with ESMTPSA id 98E346956B;
+	Fri, 26 Jun 2009 16:52:30 +0200 (CEST)
+X-Mailer: git-send-email 1.6.3.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122302>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122303>
 
-On Friday 26 June 2009, Jakub Narebski wrote:
-> On Fri, 26 June 2009, Johan Herland wrote:
-> > On Thursday 25 June 2009, Jakub Narebski wrote:
-> > > Current version of survey has 30 questions, as compared to
-> > > 60 questions last year; the number of free-form essay questions
-> > > were also greatly reduced.
-> >
-> > Good. :)
->
-> Too large number of questions in the survey, and filling survey
-> taking too long were, I think, the most common complaints about
-> survey in the year before.
+Cloning/initializing svn repositories with an uncanonicalize url does not
+work as libsvn throws an assertion. This patch canonicalize svn uris for the
+clone and init command from git-svn.
 
-Yes, that's why I focused on decreasing the number of questions even
-further.
+Signed-off-by: Ulrich Dangel <uli@spamt.net>
+---
+ git-svn.perl |    9 ++++++++-
+ 1 files changed, 8 insertions(+), 1 deletions(-)
 
-> A number of free-form essay questions from previous survey are still
-> not analyzed (even now).
-
-Which is why we should as few free-form questions as possible.
-
-> > > The *test* version of this year survey can be now found at
-> > > the following URL (as in previous year, we use Survs.com)
-> > >
-> > >   http://www.survs.com/survey?id=2PIMZGU0&channel=TFN2Y52K7Y
-> > >
-> > > Please tell me what you think about questions and about selection
-> > > of possible answers in single choice/multiple choice questions.
-> >
-> > There seems to be some unnecessary overlap among questions 11,
-> > 16/17 and 18.
->
-> Just a reminder; those questions are:
->
-> 11. What Git interfaces, implementations, frontends and tools do you
-> use?
->
-> 16. How often do you use the following forms of git commands
->     or extra git tools?
-> 17. How often do you use the following forms of git commands
->     or extra git tools? (continued)
->
-> 18. Which of the following features do or did you use?
->
-> Overlap between questions 16/17 and 18 is, to some extent, intended.
-> Those two questions ask about similar area but from the two different
-> points of view: question 16/17 is about git commands, 18 about
-> features.
-
-I see, but in the cases where the feature questions in 18 are tied to
-a specific git command already mentioned in 16/17, I believe you can
-drop it from 18 (since we already got our answer in 16/17).
-
-> In first two drafts there were no question 16/17; it was brought back
-> at the request on #git channel.  I am a bit ambivalent about this
-> question; on one hand side it allows responders to get to know some
-> git commands or form of git commands they didn't know about, on the
-> other hand side it is one of most work-intensive and time-consuming
-> questions.  It brings interesting information, but the same could
-> have been (perhaps better) gathered from a filtered list of commands
-> in history, or from list of commands generated by special 'statistic
-> gathering' compiled version of git.
->
-> It there are votes for removing questions 16/17 I can remove it from
-> survey (again).
-
-No, I don't want to remove 16/17. I'd rather remove 18, since it
-overlaps so much with several of the earlier questions.
-
-> > Examples: I found myself ticking off equivalent options like:
-> > - 11/gitk, 17/gitk and 18/"gitk or other history viewer"
-> > - 17/"git gui" and 18/"git-gui or other commit tool"
->
-> This can be easily corrected by removing extra tools which are
-> mentioned in question 11. about tools used from possible answers
-> to question 18. about features used.  I am not so sure about removing
-> 'gitk' and 'git gui' from 16/17.
-
-makes sense.
-
-> OTOH some tools can be uses both as history viewer, and as commit
-> tool. This answer allow to distinguish between those two distinct
-> usages.
->
-> > - 14/"via git-bundle", 15/"git bundle", 16/"git bundle" and 18/"git
-> > bundle"
->
-> 14. How do you fetch/get changes from upstream repository?
-> 15. How do you publish/propagate your changes?
->
-> These are about different directions, and I think different ways of
-> using git-bundle.  For fetching (or rather cloning) via bundle I
-> would think that project would publish ready for download bundles to
-> reduce traffic and load on server (HTTP download can be resumed,
-> git-clone currently cannot; you can distribute bundle using P2P,
-> GitTorrent and git mirror-sync are not implemented (yet)).  For
-> publishing via bundle I would think about sending bundle via email,
-> or posting it on review board (BTW IIRC Gerrit uses git-bundle).
-
-yes, I don't want to remove or collapse 14 or 15. But in the cases
-where they overlap with later questions (16/17 and 18), you can
-remove those alternatives from the later questions.
-
-> About 16/17 (git commands) and 18 (features): I guess I can remove
-> git-bundle from the list of features we ask about.
-
-yes.
-
-> About 14, 15 (get / publish) and 16/17 (git commands): the command
-> list is meant to be comprehensive list of porcelain and porcelanish
-> git commands, so I don't think it would be good to remove bundle from
-> 16/17.  OTOH git-bundle can be used neither for fetching nor for
-> publishing, but for example only for review, or for syncing between
-> _own_ repositories.
-
-I believe the "comprehensive list of porcelain and porcelainish git
-commands" can be distributed over several questions, including 14 and 15.
-
-> > - 11/StGIT/Guilt/TopGit and 18/"patch management interface"
->
-> I could remove "patch management interface" / "topic branch
-> management interface" from 18 (features), as they are in 11 (tools),
-> but I am less sure about this than about removing "history viewers"
-> and "commit tools".
->
-> > - 17/"git reflog" and 18/reflog
->
-> I think I'll remove 'reflog' from 18 (features), not because it is
-> present in 16/17 (git commands), but because this is feature one
-> uses, I think, quite often and less 'conscious'.
-
-agreed.
-
-> OTOH one can use reflog feature without using "git reflog" or
-> "git log -g" ("git log --walk-reflogs") -- HEAD@{1} or @{yesterday}
-> uses reflog feature without using mentioned git commands :-)
-
-But _why_ are we asking this question? If the reflog feature is used
-all the time without people having to know about it, then there's no
-point in asking about it. It's not like it's going to be removed in
-the next version because people dislike it. It's like asking "Are you
-using Git blob objects?". What are you going to do with the answer?
-
-> > - 17/"git stash" and 18/stash
->
-> True. Nevertheless I'd rather leave this duplication (well, unless
-> question 16/17 (git commands) would be voted to be removed).
-
-Again, I don't want to remove 16/17, I'd rather remove 18.
-
-> > - 16/"git difftool" and 18/"mergetool and/or difftool"
-> > - 16/"git mergetool" and 18/"mergetool and/or difftool"
->
-> Well, it is even more clear that the issue of gitk etc. in 16/17 and
-> 18; I think I can safely remove "mergetool and/or difftool" from 18
-> (features).  IIRC it was here because initially there were no 16/17
-> (git commands) question.
-
-I understand.
-
-> > - 17/"git rebase -i" and 18/"interactive rebase"
->
-> Hmmm... I would think about this.
-
-Ask yourself: Would anyone answer YES to one of these items, but NO
-to the other (modulo typos/thinkos)? If not, you do not gain any
-extra information by asking the extra question, so you can safely
-drop one of them.
-
-> > - 16/"git add -i" and 18/"interactive commit/..."
->
-> Actually here "interactive commit/..." in 18 (features) covers more
-> than just "git add -i", as it is also about per-chunk committing
-> feature of git-gui and other commit tools.
-
-Ok, but in that case do we really need to ask if they use "git add -i"?
-Isn't the main point whether or not people use the concept/feature,
-and not exactly which tool they use to do it?
-
-> > - 16/"git filter-branch", 18/"git-filter-branch or
-> > cg-admin-rewritehist" and 18/"git-filter-branch or equivalent"
->
-> Ooops.  Certainly "git-filter-branch or cg-admin-rewritehist" and
-> "git-filter-branch or equivalent" answers should be concatenated.
-> My mistake.
->
-> About having it both in 16/17 (git commands) and 18 (features): I
-> wonder if "git filter-branch" in 16/17 should be split into
-> filterless version (make grafts into history, add 'encoding' header)
-> and version with some filter specified...
-
-I don't think it is necessary to split it.
-
-> > - 11/"editor/IDE VC integration" and 18/"integration with
-> > IDE/editor"
->
-> O.K. I think I can safely remove this from 18 (features), as it is
-> present in 11 (tools).
->
-> > Some of this overlap is probably unavoidable, but I think some of
-> > it (especially between 16/17 and 18) can be eliminated without
-> > compromising the survey. Maybe we can integrate the non-overlapping
-> > parts of 18 into the other questions, thereby further decreasing
-> > the number of questions?
->
-> Questions 16/17 (git commands) and 18 (features) are about the same
-> area, but orthogonal (different) approach.  I was not sure (and still
-> I am not) whether to include 16/17 (git commands) question in the
-> survey.
-
-As I said above, I'd rather drop 18 (by which I really mean baking the
-non-overlapping parts of 18 into the other questions).
-
-> > BTW, 17 is just a continuation of 16, AFAICS. Is it possible to
-> > just repeat the column headers (to break up the table length) and
-> > still keep it as one question?
->
-> This is _technical_ limitation of Survs.com on number of answers in
-> a single question (I think it is 50 answers maximum, or something).
-
-Ok.
-
-> > > How long does it take to fill survey?
-> >
-> > ~ 5-7 minutes
->
-> Thanks for this information.
-
-BTW, Here are my suggested changes to the survey (in an ad-hoc
-quasi-diff format that hopefully better overview than the above
-discussion). As you can see, I have removed question 18, and added
-its non-overlapping items to the other questions (mostly 17). For
-each item in 18, I've noted [in square brackets] why it is removed
-or where it has moved:
-
-
-(1 - 10: No changes)
-
-11. What Git interfaces, implementations, frontends and tools do you use? 
-+ * my own scripts
-
-(12 - 15: No changes)
-
-- 16. How often do you use the following forms of git commands or extra git tools?
-+ 16. How often do you use the following forms of git commands, features or extra git tools?
-                                     never   rarely   sometimes   often
-- * git add -i / -p                    [ ]      [ ]      [ ]      [ ]
-+ * interactive commit / per-hunk comitting / partial commit (git add -i / -p)   [ ] [ ] [ ] [ ]
-
-- * git filter-branch                  [ ]      [ ]      [ ]      [ ]
-+ * git filter-branch (or equivalent)  [ ]      [ ]      [ ]      [ ]
-
-
-- 17. How often do you use the following forms of git commands or extra git tools? (continued)
-+ 17. How often do you use the following forms of git commands, features or extra git tools? (continued)
-                                     never   rarely   sometimes   often
-- * git rebase -i                      [ ]      [ ]      [ ]      [ ]
-+ * git rebase -i (interactive rebase) [ ]      [ ]      [ ]      [ ]
-- * git gui                            [ ]      [ ]      [ ]      [ ]
-- * gitk                               [ ]      [ ]      [ ]      [ ]
-+ * End-of-line conversion (CRLF)      [ ]      [ ]      [ ]      [ ]
-+ * gitattributes                      [ ]      [ ]      [ ]      [ ]
-+ * submodules (subprojects)           [ ]      [ ]      [ ]      [ ]
-+ * subtree merge                      [ ]      [ ]      [ ]      [ ]
-+ * git-subtree                        [ ]      [ ]      [ ]      [ ]
-+ * separate worktree / core.worktree  [ ]      [ ]      [ ]      [ ]
-+ * multiple worktrees (git-new-worktree)  [ ]  [ ]      [ ]      [ ]
-+ * alternates mechanism (sharing object database)  [ ] [ ] [ ]   [ ]
-+ * shallow clone                      [ ]      [ ]      [ ]      [ ]
-+ * detaching HEAD                     [ ]      [ ]      [ ]      [ ]
-+ * commit message templates           [ ]      [ ]      [ ]      [ ]
-+ * non-default hooks                  [ ]      [ ]      [ ]      [ ]
-+ * shell completion of commands       [ ]      [ ]      [ ]      [ ]
-+ * git-aware shell prompt             [ ]      [ ]      [ ]      [ ]
-
-
-- 18. Which of the following features do or did you use? 
-- * git-gui or other commit tool [covered by 11/git-gui or 11/Other]
-- * gitk or other history viewer [covered by 11/gitk or 11/Other]
-- * patch management interface (e.g. StGIT, Guilt, TopGit) [covered by 11]
-- * git bundle (off-line transport) [covered by 16]
-- * eol conversion (crlf) [added to 17]
-- * gitattributes [added to 17]
-- * submodules (subprojects) [added to 17]
-- * subtree merge (optionally git-subtree) [added to 17]
-- * separate worktree / core.worktree [added to 17]
-- * multiple worktrees (git-new-worktree) [added to 17]
-- * alternates mechanism (sharing object database) [added to 17]
-- * reflog (includes "git log -g" and branch@{n}) [covered by 17]
-- * stash (optionally "git stash --keep-index") [covered by 17]
-- * shallow clone [added to 17]
-- * detaching HEAD [added to 17]
-- * mergetool and/or difftool [covered by 16]
-- * interactive rebase [covered by 17]
-- * interactive commit / per-hunk comitting / partial commit [covered by / added to 16]
-- * commit message templates [added to 17]
-- * git-filter-branch or cg-admin-rewritehist [remove, duplicate below]
-- * bisect (optionally "git bisect run <script>") [covered by 16]
-- * working with dirty tree [rephrase or drop? why would anyone answer NO?]
-- * git-filter-branch or equivalent [covered by / added to 16]
-- * integration with IDE/editor [covered by 11]
-- * non-default hooks [added to 17]
-- * shell completion of commands [added to 17]
-- * git-aware shell prompt [added to 17]
-- * my own scripts [this is not a git "feature", added to 11, instead]
-- * Other, please specify
-
-(19 - 30: No changes)
-
-
-Have fun! :)
-
-...Johan
-
--- 
-Johan Herland, <johan@herland.net>
-www.herland.net
+diff --git a/git-svn.perl b/git-svn.perl
+index 3301797..5130a8c 100755
+--- a/git-svn.perl
++++ b/git-svn.perl
+@@ -380,6 +380,7 @@ sub cmd_init {
+ 	}
+ 	my $url = shift or die "SVN repository location required ",
+ 	                       "as a command-line argument\n";
++	$url = canonicalize_url($url);
+ 	init_subdir(@_);
+ 	do_git_init_db();
  
+@@ -741,6 +742,12 @@ sub canonicalize_path {
+ 	return $path;
+ }
+ 
++sub canonicalize_url {
++	my ($url) = @_;
++	$url =~ s#^([^:]+://[^/]*/)(.*)$#$1 . canonicalize_path($2)#e;
++	return $url;
++}
++
+ # get_svnprops(PATH)
+ # ------------------
+ # Helper for cmd_propget and cmd_proplist below.
+@@ -810,7 +817,7 @@ sub cmd_multi_init {
+ 
+ 	$_prefix = '' unless defined $_prefix;
+ 	if (defined $url) {
+-		$url =~ s#/+$##;
++		$url = canonicalize_url($url);    
+ 		init_subdir(@_);
+ 	}
+ 	do_git_init_db();
+-- 
+1.6.3.1
