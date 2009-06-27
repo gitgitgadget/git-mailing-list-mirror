@@ -1,247 +1,175 @@
-From: Larry D'Anna <larry@elder-gods.org>
-Subject: [PATCH] add --summary option to git-push
-Date: Fri, 26 Jun 2009 20:23:17 -0400
-Message-ID: <1246062197-28685-1-git-send-email-larry@elder-gods.org>
-References: <7vtz249lpf.fsf@alter.siamese.dyndns.org>
-Cc: Larry D'Anna <larry@elder-gods.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jun 27 02:23:41 2009
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Could this be done simpler?
+Date: Fri, 26 Jun 2009 17:26:33 -0700
+Message-ID: <7vtz22o72e.fsf@alter.siamese.dyndns.org>
+References: <alpine.LFD.2.01.0906241426120.3154@localhost.localdomain>
+	<7veit9m8cs.fsf@alter.siamese.dyndns.org>
+	<863a9oz8lh.fsf@blue.stonehenge.com> <4A43A6B3.5020407@gmx.de>
+	<7v3a9ogr8f.fsf@alter.siamese.dyndns.org>
+	<op.uv3ogqin1e62zd@merlin.emma.line.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "Randal L. Schwartz" <merlyn@stonehenge.com>,
+	"Linus Torvalds" <torvalds@linux-foundation.org>,
+	"Git Mailing List" <git@vger.kernel.org>
+To: "Matthias Andree" <matthias.andree@gmx.de>
+X-From: git-owner@vger.kernel.org Sat Jun 27 02:26:43 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MKLhi-0000ic-Gn
-	for gcvg-git-2@gmane.org; Sat, 27 Jun 2009 02:23:39 +0200
+	id 1MKLkg-0001VY-3N
+	for gcvg-git-2@gmane.org; Sat, 27 Jun 2009 02:26:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753644AbZF0AX3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 26 Jun 2009 20:23:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752891AbZF0AX2
-	(ORCPT <rfc822;git-outgoing>); Fri, 26 Jun 2009 20:23:28 -0400
-Received: from cthulhu.elder-gods.org ([140.239.99.253]:34852 "EHLO
-	cthulhu.elder-gods.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751935AbZF0AX1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 26 Jun 2009 20:23:27 -0400
-Received: by cthulhu.elder-gods.org (Postfix, from userid 1000)
-	id 845E7822106; Fri, 26 Jun 2009 20:23:26 -0400 (EDT)
-X-Mailer: git-send-email 1.6.3.3.336.gc126d
-In-Reply-To: <7vtz249lpf.fsf@alter.siamese.dyndns.org>
+	id S1753742AbZF0A0d convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 26 Jun 2009 20:26:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752855AbZF0A0c
+	(ORCPT <rfc822;git-outgoing>); Fri, 26 Jun 2009 20:26:32 -0400
+Received: from fed1rmmtao107.cox.net ([68.230.241.39]:62952 "EHLO
+	fed1rmmtao107.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751772AbZF0A0b (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Jun 2009 20:26:31 -0400
+Received: from fed1rmimpo03.cox.net ([70.169.32.75])
+          by fed1rmmtao107.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20090627002634.BUDM18948.fed1rmmtao107.cox.net@fed1rmimpo03.cox.net>;
+          Fri, 26 Jun 2009 20:26:34 -0400
+Received: from localhost ([68.225.240.211])
+	by fed1rmimpo03.cox.net with bizsmtp
+	id 8oSa1c0014aMwMQ04oSaRt; Fri, 26 Jun 2009 20:26:34 -0400
+X-VR-Score: -130.00
+X-Authority-Analysis: v=1.0 c=1 a=YjxVEfEYJ9cA:10 a=Gug_5fj00tGTSgTR2DoA:9
+ a=e3FHnsml7I8FUjA8GbgA:7 a=Ofv2b2wr-NBsH7nbEdyjs-HaKRQA:4 a=_RhRFcbxBZMA:10
+X-CM-Score: 0.00
+In-Reply-To: <op.uv3ogqin1e62zd@merlin.emma.line.org> (Matthias Andree's message of "Thu\, 25 Jun 2009 23\:54\:16 +0200")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122341>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122342>
 
---summary will cause git-push to output a one-line of each commit pushed.
---summary=n will display at most n commits for each ref pushed.
+"Matthias Andree" <matthias.andree@gmx.de> writes:
 
-$ git push --dry-run --summary origin :
-To /home/larry/gitsandbox/a
-   80f0e50..5593a38  master -> master
-    5593a38 foo
-    81c03f8 bar
+> Neither am I a native writer, why bother=E2=80=A6 it's more important=
+ to write
+> things clearly than to polish things,...
 
-Signed-off-by: Larry D'Anna <larry@elder-gods.org>
----
- Documentation/git-push.txt |    6 ++++++
- builtin-push.c             |   12 +++++++++---
- transport.c                |   43 +++++++++++++++++++++++++++++++------------
- transport.h                |    2 +-
- 4 files changed, 47 insertions(+), 16 deletions(-)
+Hey, calm down.
 
-diff --git a/Documentation/git-push.txt b/Documentation/git-push.txt
-index 2653388..803fe36 100644
---- a/Documentation/git-push.txt
-+++ b/Documentation/git-push.txt
-@@ -85,6 +85,12 @@ nor in any Push line of the corresponding remotes file---see below).
- --dry-run::
- 	Do everything except actually send the updates.
- 
-+--summary::
-+	Print a one-line summary of each commit pushed.
-+
-+--summary=<n>::
-+	Like --summary, but with a limit of <n> commits per ref.
-+
- --porcelain::
- 	Produce machine-readable output.  The output status line for each ref
- 	will be tab-separated and sent to stdout instead of stderr.  The full
-diff --git a/builtin-push.c b/builtin-push.c
-index 0a0297f..00cf846 100644
---- a/builtin-push.c
-+++ b/builtin-push.c
-@@ -113,7 +113,7 @@ static void setup_default_push_refspecs(void)
- 	}
- }
- 
--static int do_push(const char *repo, int flags)
-+static int do_push(const char *repo, int flags, int summary)
- {
- 	int i, errs;
- 	struct remote *remote = remote_get(repo);
-@@ -173,7 +173,7 @@ static int do_push(const char *repo, int flags)
- 
- 		if (flags & TRANSPORT_PUSH_VERBOSE)
- 			fprintf(stderr, "Pushing to %s\n", url[i]);
--		err = transport_push(transport, refspec_nr, refspec, flags);
-+		err = transport_push(transport, refspec_nr, refspec, flags, summary);
- 		err |= transport_disconnect(transport);
- 
- 		if (!err)
-@@ -192,6 +192,8 @@ int cmd_push(int argc, const char **argv, const char *prefix)
- 	int rc;
- 	const char *repo = NULL;	/* default repository */
- 
-+	int summary = 0;
-+
- 	struct option options[] = {
- 		OPT_BIT('v', "verbose", &flags, "be verbose", TRANSPORT_PUSH_VERBOSE),
- 		OPT_STRING( 0 , "repo", &repo, "repository", "repository"),
-@@ -205,6 +207,10 @@ int cmd_push(int argc, const char **argv, const char *prefix)
- 		OPT_BOOLEAN( 0 , "thin", &thin, "use thin pack"),
- 		OPT_STRING( 0 , "receive-pack", &receivepack, "receive-pack", "receive pack program"),
- 		OPT_STRING( 0 , "exec", &receivepack, "receive-pack", "receive pack program"),
-+		{ OPTION_INTEGER, 0, "summary", &summary, "n", "print a summary of [at most n] pushed commits",
-+		  PARSE_OPT_OPTARG, NULL, -1
-+		},
-+
- 		OPT_END()
- 	};
- 
-@@ -218,7 +224,7 @@ int cmd_push(int argc, const char **argv, const char *prefix)
- 		set_refspecs(argv + 1, argc - 1);
- 	}
- 
--	rc = do_push(repo, flags);
-+	rc = do_push(repo, flags, summary);
- 	if (rc == -1)
- 		usage_with_options(push_usage, options);
- 	else
-diff --git a/transport.c b/transport.c
-index b074067..562e788 100644
---- a/transport.c
-+++ b/transport.c
-@@ -750,17 +750,19 @@ static const char *status_abbrev(unsigned char sha1[20])
- 	return find_unique_abbrev(sha1, DEFAULT_ABBREV);
- }
- 
--static void print_ok_ref_status(struct ref *ref, int porcelain)
-+static void print_ok_ref_status(struct ref *ref, int porcelain, int summary)
- {
-+	char quickref[84];
-+
- 	if (ref->deletion)
- 		print_ref_status('-', "[deleted]", ref, NULL, NULL, porcelain);
--	else if (is_null_sha1(ref->old_sha1))
-+	else if (is_null_sha1(ref->old_sha1)) {
- 		print_ref_status('*',
- 			(!prefixcmp(ref->name, "refs/tags/") ? "[new tag]" :
- 			"[new branch]"),
- 			ref, ref->peer_ref, NULL, porcelain);
--	else {
--		char quickref[84];
-+		strcpy (quickref, status_abbrev(ref->new_sha1));
-+	} else {
- 		char type;
- 		const char *msg;
- 
-@@ -778,9 +780,25 @@ static void print_ok_ref_status(struct ref *ref, int porcelain)
- 
- 		print_ref_status(type, quickref, ref, ref->peer_ref, msg, porcelain);
- 	}
-+
-+	if (summary) {
-+		FILE *temp = stdout;
-+		stdout = stderr;
-+		if (summary < 0) {
-+			char *argv[] = {"log", "--pretty=format:    %h %s", quickref};
-+			cmd_log(3, argv, 0);
-+		} else {
-+			char dashn[15];
-+			sprintf(dashn, "-n%d", summary);
-+			char *argv[] = {"log", "--pretty=format:    %h %s", dashn, quickref};
-+			cmd_log(4, argv, 0);
-+		}
-+		fprintf(stderr, "\n");
-+		stdout = temp;
-+	}
- }
- 
--static int print_one_push_status(struct ref *ref, const char *dest, int count, int porcelain)
-+static int print_one_push_status(struct ref *ref, const char *dest, int count, int porcelain, int summary)
- {
- 	if (!count)
- 		fprintf(stderr, "To %s\n", dest);
-@@ -812,7 +830,7 @@ static int print_one_push_status(struct ref *ref, const char *dest, int count, i
- 						 "remote failed to report status", porcelain);
- 		break;
- 	case REF_STATUS_OK:
--		print_ok_ref_status(ref, porcelain);
-+		print_ok_ref_status(ref, porcelain, summary);
- 		break;
- 	}
- 
-@@ -820,7 +838,7 @@ static int print_one_push_status(struct ref *ref, const char *dest, int count, i
- }
- 
- static void print_push_status(const char *dest, struct ref *refs,
--							  int verbose, int porcelain)
-+							  int verbose, int porcelain, int summary)
- {
- 	struct ref *ref;
- 	int n = 0;
-@@ -828,18 +846,18 @@ static void print_push_status(const char *dest, struct ref *refs,
- 	if (verbose) {
- 		for (ref = refs; ref; ref = ref->next)
- 			if (ref->status == REF_STATUS_UPTODATE)
--				n += print_one_push_status(ref, dest, n, porcelain);
-+				n += print_one_push_status(ref, dest, n, porcelain, summary);
- 	}
- 
- 	for (ref = refs; ref; ref = ref->next)
- 		if (ref->status == REF_STATUS_OK)
--			n += print_one_push_status(ref, dest, n, porcelain);
-+			n += print_one_push_status(ref, dest, n, porcelain, summary);
- 
- 	for (ref = refs; ref; ref = ref->next) {
- 		if (ref->status != REF_STATUS_NONE &&
- 		    ref->status != REF_STATUS_UPTODATE &&
- 		    ref->status != REF_STATUS_OK)
--			n += print_one_push_status(ref, dest, n, porcelain);
-+			n += print_one_push_status(ref, dest, n, porcelain, summary);
- 	}
- }
- 
-@@ -997,7 +1015,8 @@ int transport_set_option(struct transport *transport,
- }
- 
- int transport_push(struct transport *transport,
--		   int refspec_nr, const char **refspec, int flags)
-+				   int refspec_nr, const char **refspec,
-+				   int flags, int summary)
- {
- 	verify_remote_names(refspec_nr, refspec);
- 
-@@ -1024,7 +1043,7 @@ int transport_push(struct transport *transport,
- 
- 		ret = transport->push_refs(transport, remote_refs, flags);
- 
--		print_push_status(transport->url, remote_refs, verbose | porcelain, porcelain);
-+		print_push_status(transport->url, remote_refs, verbose | porcelain, porcelain, summary);
- 
- 		if (!(flags & TRANSPORT_PUSH_DRY_RUN)) {
- 			struct ref *ref;
-diff --git a/transport.h b/transport.h
-index 51b5397..360051e 100644
---- a/transport.h
-+++ b/transport.h
-@@ -68,7 +68,7 @@ int transport_set_option(struct transport *transport, const char *name,
- 			 const char *value);
- 
- int transport_push(struct transport *connection,
--		   int refspec_nr, const char **refspec, int flags);
-+				   int refspec_nr, const char **refspec, int flags, int summary);
- 
- const struct ref *transport_get_remote_refs(struct transport *transport);
- 
--- 
-1.6.0.4
+The current documentation was written back when everybody knew what git
+fetch internally did (e.g. left state in .git/FETCH_HEAD) and describin=
+g
+things from the perspective of what is done internally was "accepted" b=
+ack
+when the alternative was not describing anything in any form ;-)
+
+I took your two questions literally as they were.  That is,=20
+
+ * You, like other people, realize that times have changed since then, =
+and
+   noticed that even with the correct rendition (it appears the problem
+   Merlyn saw was primarily caused by Asciidoc toolchain), the bottom-u=
+p
+   description based on what is done internally is not sufficient.
+
+ * You are volunteering to make things better, but you first need input=
+ to
+   make sure the result is not just readable but technically correct.
+
+ * And I was among the few people who were around when .git/FETCH_HEAD =
+and
+   "git fetch --append" were invented to give precise answers to these
+   questions.
+
+No way I meant that these two answers should replace the current
+documentation.
+
+> Let's change roles (or perspective) for a moment, for the sake of
+> clarity  and usability: I am just a Git user. I don't want to hack
+> Git. I couldn't  care less about implementation details such as
+> FETCH_HEAD, I only need to  know how I can tell Git to merge branches
+> foo, bar, baz into master in one  single merge.
+
+Yes, that is the good starting point.
+
+> "git pull" (at bird eye's view) is just a short-cut for "git fetch
+> something" and "git merge with somehow configured branch" (somehow =3D
+> implicitly through setting up tracking branches, or clone)
+
+Actually the latter is "with information somehow left by git-fetch".
+
+> FETCH_HEAD(5)
+> -------------------------------------------------
+> This file in the git directory records which heads have been
+> downloaded,  from where, and for what purpose. Each line in this file
+> is one  TAB-delimited record with three fields. From left to right,
+> these fields  contain:
+>
+> 1 - the commit of the remote head
+> 2 - "not-for-merge" if the branch is not meant to be merged,
+> otherwise,  this field remains empty
+> 3 - branch 'xxx' of UUU, where xxx and UUU are the remote repository'=
+s
+> refname and base URL, respectively.
+>
+> This file is written by git-fetch and used by git-merge.
+> -------------------------------------------------
+
+It is true that git-merge does use it, but not under its normal mode of
+operation.  Unless the reader of this paragraph is hacking git, I do no=
+t
+think s/he needs to (nor wants to) know about it.  IIRC, it only trigge=
+rs
+if you do
+
+	$ git merge FETCH_HEAD
+
+The more prominent user is git-pull.  git-fetch leaves the instructions=
+ to
+git-pull so that the latter knows what to use when it drives git-merge =
+in
+this file.
+
+> git-fetch(1)
+> -------------------------------------------------
+> ...
+>      -a::
+>      --append::
+> 	This option allows you to fetch and accumulate multiple remote
+> refs for  future merging.  Normally, git-fetch records the latest
+> fetch for a later  merge, by writing them to .git/FETCH_HEAD (there
+> can be multiple recorded  heads in FETCH_HEAD although the name
+> suggests there were just one).
+
+I personally find the parenthesized comment at the end just distracting
+and confusing.  You are explicitly saying "by writing THEM" so it is cl=
+ear
+that the file can and does record more than one when the user instructs
+the command to.
+
+> ....  The  --append option lets git-fetch
+> keep, rather than delete, prior contents of  the file.  This can be
+> ueful when consolidating multiple topic branches in  one single merge
+> (a so-called octopus merge, see git-merge(1)). Example:
+
+The description lacks one important point.  It can be useful only when
+consolidating multiple topic branches _that come from more than one rem=
+ote
+repositories_
+
+Other than that, the above paragraph is perfect.
+
+> NOTE: git-fetch accepts command lines without refspec. These mark
+> fetched  heads as "not-for-merge". IOW, a refspec is needed that head=
+s
+> are marked  as for-merge. I haven't found this documented in
+> git-fetch.
+
+Sorry, I have no idea what you are talking about in these four lines.
+
+Perhaps "DEFAULT BEHAVIOUR" section in Documentation/git-pull.txt, the
+paragraph that begins with "The rule to determine which remote branch t=
+o
+merge ..." may be what you are looking for?
