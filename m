@@ -1,99 +1,100 @@
 From: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-Subject: Re: [PATCHv7 4/9] gitweb: right-align date cell in shortlog
-Date: Sun, 28 Jun 2009 00:27:50 +0200
-Message-ID: <cb7bb73a0906271527g60a92daqd20e3c20e2d87842@mail.gmail.com>
+Subject: Re: [PATCHv7 2/9] gitweb: uniform author info for commit and 
+	commitdiff
+Date: Sun, 28 Jun 2009 00:33:53 +0200
+Message-ID: <cb7bb73a0906271533g308fd42w82d11cd2658b1e99@mail.gmail.com>
 References: <1246104305-15191-1-git-send-email-giuseppe.bilotta@gmail.com>
-	 <1246104305-15191-4-git-send-email-giuseppe.bilotta@gmail.com>
-	 <1246104305-15191-5-git-send-email-giuseppe.bilotta@gmail.com>
-	 <200906272028.05239.jnareb@gmail.com>
+	 <1246104305-15191-2-git-send-email-giuseppe.bilotta@gmail.com>
+	 <1246104305-15191-3-git-send-email-giuseppe.bilotta@gmail.com>
+	 <200906271810.23119.jnareb@gmail.com>
+	 <7vskhlikt7.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Jun 28 00:27:59 2009
+Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Jun 28 00:35:52 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MKgNK-0006Ad-Vk
-	for gcvg-git-2@gmane.org; Sun, 28 Jun 2009 00:27:59 +0200
+	id 1MKgUx-0007xO-Em
+	for gcvg-git-2@gmane.org; Sun, 28 Jun 2009 00:35:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752928AbZF0W1u convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 27 Jun 2009 18:27:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752255AbZF0W1t
-	(ORCPT <rfc822;git-outgoing>); Sat, 27 Jun 2009 18:27:49 -0400
-Received: from mail-fx0-f218.google.com ([209.85.220.218]:62035 "EHLO
-	mail-fx0-f218.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751805AbZF0W1s convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 27 Jun 2009 18:27:48 -0400
-Received: by fxm18 with SMTP id 18so325410fxm.37
-        for <git@vger.kernel.org>; Sat, 27 Jun 2009 15:27:50 -0700 (PDT)
+	id S1752382AbZF0Wdx convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 27 Jun 2009 18:33:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752210AbZF0Wdw
+	(ORCPT <rfc822;git-outgoing>); Sat, 27 Jun 2009 18:33:52 -0400
+Received: from mail-bw0-f213.google.com ([209.85.218.213]:55751 "EHLO
+	mail-bw0-f213.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751102AbZF0Wdv convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 27 Jun 2009 18:33:51 -0400
+Received: by bwz9 with SMTP id 9so2623160bwz.37
+        for <git@vger.kernel.org>; Sat, 27 Jun 2009 15:33:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:mime-version:received:in-reply-to:references
          :date:message-id:subject:from:to:cc:content-type
          :content-transfer-encoding;
-        bh=DJqQBH+g7mg9FlikOD8GXnaG3VgEq+27vMLtOEhfQgA=;
-        b=OQPFWlQCPQoZzme/saCzA0E8JTBuev2XgepsTwWA07VO0j+41OI6fUKHmfL/g4qq9K
-         C+17Zv+OxYEAhLqQ2GAbkmgjdMxtj8jMRE08sQ5SVTeWO+1JsVRSd539Vieya+CE3Hxg
-         GiWf8urAIgT8mFeKAONlRXZ/ZYhQml/rVqXCc=
+        bh=aNBM/M2KfFUZAMEJzSAJvDNrbeNwLrSessrwbgt/uXU=;
+        b=EyFhJKRk1T993V4S6uFlcHCY1Wz83cVFWuG7AwRQ2vMAjFOiDgYVBm5px7pASUqaXF
+         R/WMKb8BMDK7gobn9KPrUiOiwa5x7sfgQk7vOLhOpWuI4O7yogapDr7VZX17JxHbgqA+
+         vVf4JXvPvQoU3JnqK4I0JMDI8agQd28fhpCPQ=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type:content-transfer-encoding;
-        b=ZzrfNkKL8ilzGmdVB8tH7CwyB5k0bokrw7TFxZrBy/XaMbqrg9T1TIxaB8YEdK/log
-         Y2ax6bAd0lwAQJaVtpkDVMzUL8KZw9Yd0KANBgnB/eNMyyVt/cIvoLW2laRPXJCYrBcH
-         Qbd/DONrQgoqizGWakalLqWIRP83e+ZOqL3yU=
-Received: by 10.204.70.135 with SMTP id d7mr5284712bkj.87.1246141670193; Sat, 
-	27 Jun 2009 15:27:50 -0700 (PDT)
-In-Reply-To: <200906272028.05239.jnareb@gmail.com>
+        b=ufNW4wTtMlNnfPj1F6TjypNg9dsMiThhGMvBfn6UVSLsMJDmE6zm8/svSPXbQUX8u5
+         LNFB5MDBGuf4QjFky/hvgOTteoQ933pmMUpxGbaBvE6uEaNrtBIt4mvJUgflkUov7LMX
+         le53AT+Ny4cbcsi/cbCwKg1jJhfVgDPJNgevE=
+Received: by 10.204.64.196 with SMTP id f4mr5234783bki.151.1246142033685; Sat, 
+	27 Jun 2009 15:33:53 -0700 (PDT)
+In-Reply-To: <7vskhlikt7.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122388>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122389>
 
-2009/6/27 Jakub Narebski <jnareb@gmail.com>:
-> On Sat, 27 June 2009, Giuseppe Bilotta wrote:
+On Sat, Jun 27, 2009 at 8:38 PM, Junio C Hamano<gitster@pobox.com> wrot=
+e:
+> Jakub Narebski <jnareb@gmail.com> writes:
 >
->> Signed-off-by: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+>> I would use:
+>>
+>> =A0 Switch from form similar to the one used by 'log' view
+>>
+>> =A0 =A0 =A0 A U Thor <email@example.com> [date time]
+>>
+>> =A0 to the form used in 'commit' view
+>>
+>> =A0 =A0 =A0 author =A0 =A0 =A0 A U Thor <email@example.com>
+>> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0date time
+>> =A0 =A0 =A0 committer =A0 =A0C O Mitter <other.email@example.com>
+>> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0date time
+>>
+>> (i.e. use spaces and not tabs to align). =A0But this is minor
+>> issue, not worth worrying about IMVHO.
 >
-> I don't like it. =A0In my opinion it is less readable that way, espec=
-ially
-> if word wrapping gets involved:
->
-> =A05 hours |
-> =A0 =A0 =A0ago |
->
-> =A05 hours |
-> =A0 =A0 =A0ago |
->
-> =A0 5 days |
-> =A0 =A0 =A0ago |
->
-> It is IMVHO a bit ugly.
+> These extra blank lines make things much easier to read, and explicit
+> mention of switching from WHAT to WHAT ELSE is very much appreciated.
 
-You might have a point there.
+I updated the patch accordingly.
 
-> That aside this is *not complete*. =A0Take a look at 'summary' view.
-> You have there 'date' column in 'shortlog' section aligned to the rig=
-ht,
-> while in 'heads' and 'tags' section it is aligned to the left. =A0Add=
- to
-> that "Last Change" column in projects list view (which should probabl=
-y
-> be aligned to the left, even with this patch completed).
+>> On the other hand side IIRC 'commitdiff' uses short (one-line)
+>> authorship info because the main point is the diff, and multi-line
+>> author and commit info like the one used in 'commit' view takes
+>> a bit of vertical space.
 >
-> NAK from me. =A0(Alternate stylesheet? =A0Just kidding...)
+> In general, we might want to make the committer information less prom=
+inent
+> than it currently is.
 
-[...]
->
-> On the other hand: it is short and simple.
-
-And totally independent from the rest of the patchset. I'll move it to
-the top of the stack, so that the rest of the next iteration can be
-applied in batch as soon as it's ready.
+I've been thinking about this. A possible approach I considered could
+be to only show the commit _date_ by default (which could be
+interesting to see), and use some DHTML to show the committer on
+request. But as you mention, this is not the patchset to do this kind
+of work on 8-)
 
 --=20
 Giuseppe "Oblomov" Bilotta
