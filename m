@@ -1,113 +1,91 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCHv7 4/9] gitweb: right-align date cell in shortlog
-Date: Sat, 27 Jun 2009 20:28:04 +0200
-Message-ID: <200906272028.05239.jnareb@gmail.com>
-References: <1246104305-15191-1-git-send-email-giuseppe.bilotta@gmail.com> <1246104305-15191-4-git-send-email-giuseppe.bilotta@gmail.com> <1246104305-15191-5-git-send-email-giuseppe.bilotta@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCHv7 2/9] gitweb: uniform author info for commit and commitdiff
+Date: Sat, 27 Jun 2009 11:38:28 -0700
+Message-ID: <7vskhlikt7.fsf@alter.siamese.dyndns.org>
+References: <1246104305-15191-1-git-send-email-giuseppe.bilotta@gmail.com>
+	<1246104305-15191-2-git-send-email-giuseppe.bilotta@gmail.com>
+	<1246104305-15191-3-git-send-email-giuseppe.bilotta@gmail.com>
+	<200906271810.23119.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-2"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Jun 27 20:29:56 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Jun 27 20:38:39 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MKcdR-0007x0-0q
-	for gcvg-git-2@gmane.org; Sat, 27 Jun 2009 20:28:21 +0200
+	id 1MKcnN-0004Y9-86
+	for gcvg-git-2@gmane.org; Sat, 27 Jun 2009 20:38:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751886AbZF0S2L (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 27 Jun 2009 14:28:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751535AbZF0S2K
-	(ORCPT <rfc822;git-outgoing>); Sat, 27 Jun 2009 14:28:10 -0400
-Received: from fg-out-1718.google.com ([72.14.220.156]:23372 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751450AbZF0S2J (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 27 Jun 2009 14:28:09 -0400
-Received: by fg-out-1718.google.com with SMTP id e12so218897fga.17
-        for <git@vger.kernel.org>; Sat, 27 Jun 2009 11:28:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=KceQEjhg38i4nCrIdg7xYEHoL5SXd/oyK8bFugKowY8=;
-        b=dGCh/DcfpjCplEexkyRtU340FpQsOqtZX3pC0lxRrZIjQ9GIeFtey9aB9knMOkw1kX
-         CtOk0fOer4y/qyS3Yj/aVp9PxmXbDrWu8gcdVCDTUwY6ilANRoQjEam4XlxbyOFJDkkB
-         1DfuvnoSo2rPFHnwCfTaXiH1NU6oZj99fHDbc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=dKcwuHgvvsloUXi9+beqXdLD8sdai4jSdNGB3sfzaYeksHbbbR2CW0xKQQFTLjR4jZ
-         2MAQCGyX+zbgJWo5JVM28Q7m9N5rP9G3T1MiRkZP4fwu7LeB+YFs/2W1Naad/sBrzaS7
-         CYLo9uz1AELdKRGIowpotNiT0o2UHdyo7Twxw=
-Received: by 10.86.61.2 with SMTP id j2mr191750fga.61.1246127290672;
-        Sat, 27 Jun 2009 11:28:10 -0700 (PDT)
-Received: from ?192.168.1.13? (abwd106.neoplus.adsl.tpnet.pl [83.8.227.106])
-        by mx.google.com with ESMTPS id 4sm3137303fgg.27.2009.06.27.11.28.09
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sat, 27 Jun 2009 11:28:09 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <1246104305-15191-5-git-send-email-giuseppe.bilotta@gmail.com>
-Content-Disposition: inline
+	id S1751900AbZF0Si2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 27 Jun 2009 14:38:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751838AbZF0Si1
+	(ORCPT <rfc822;git-outgoing>); Sat, 27 Jun 2009 14:38:27 -0400
+Received: from fed1rmmtao106.cox.net ([68.230.241.40]:46835 "EHLO
+	fed1rmmtao106.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751466AbZF0Si0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 27 Jun 2009 14:38:26 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao106.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20090627183829.IPVF25927.fed1rmmtao106.cox.net@fed1rmimpo02.cox.net>;
+          Sat, 27 Jun 2009 14:38:29 -0400
+Received: from localhost ([68.225.240.211])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id 96eV1c0024aMwMQ046eVwQ; Sat, 27 Jun 2009 14:38:29 -0400
+X-VR-Score: -100.00
+X-Authority-Analysis: v=1.0 c=1 a=boqP4a8FSW4A:10 a=pGLkceISAAAA:8
+ a=A1X0JdhQAAAA:8 a=nlT8ApQr69qcW-Z8gdkA:9 a=BIDQC-Jy8VvqPzKoomMA:7
+ a=frsTvg_tKKljMOG3I0-vHoe8u8YA:4 a=MSl-tDqOz04A:10 a=Y6qChIQXU1wA:10
+X-CM-Score: 0.00
+In-Reply-To: <200906271810.23119.jnareb@gmail.com> (Jakub Narebski's message of "Sat\, 27 Jun 2009 18\:10\:22 +0200")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122378>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122379>
 
-On Sat, 27 June 2009, Giuseppe Bilotta wrote:
+Jakub Narebski <jnareb@gmail.com> writes:
 
-> Signed-off-by: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+> I would use:
+>
+>   Switch from form similar to the one used by 'log' view
+>
+>   	A U Thor <email@example.com> [date time]
+>
+>   to the form used in 'commit' view
+>
+> 	author       A U Thor <email@example.com>
+>   	 	     date time
+>   	committer    C O Mitter <other.email@example.com>
+>   	             date time
+>
+> (i.e. use spaces and not tabs to align).  But this is minor
+> issue, not worth worrying about IMVHO.
 
-I don't like it.  In my opinion it is less readable that way, especially
-if word wrapping gets involved:
+These extra blank lines make things much easier to read, and explicit
+mention of switching from WHAT to WHAT ELSE is very much appreciated.
 
-  5 hours |
-      ago |
+> On the other hand side IIRC 'commitdiff' uses short (one-line) 
+> authorship info because the main point is the diff, and multi-line
+> author and commit info like the one used in 'commit' view takes
+> a bit of vertical space.
 
-  5 hours |
-      ago |
+In general, we might want to make the committer information less prominent
+than it currently is.
 
-   5 days |
-      ago |
+When looking at a repository that is used like CVS, author and committer
+are always the same.  When looking at a repository that is owned by a
+single integrator, the committer is a single person.  The only time
+committer information for every commit would help is when viewing a
+repository of higher level integrator in a project that has subintegrators
+(e.g. Linus pulls from David who commits patches from others).
 
-It is IMVHO a bit ugly.
+So at some point, it may not be a bad idea to introduce a per-repository
+option/feature to hide committer information from certain views to
+allocate more space for other information.
 
-
-That aside this is *not complete*.  Take a look at 'summary' view.  
-You have there 'date' column in 'shortlog' section aligned to the right,
-while in 'heads' and 'tags' section it is aligned to the left.  Add to
-that "Last Change" column in projects list view (which should probably
-be aligned to the left, even with this patch completed).
-
-NAK from me.  (Alternate stylesheet?  Just kidding...)
-
-> ---
->  gitweb/gitweb.css |    4 ++++
->  1 files changed, 4 insertions(+), 0 deletions(-)
-> 
-> diff --git a/gitweb/gitweb.css b/gitweb/gitweb.css
-> index 68b22ff..ef24a1b 100644
-> --- a/gitweb/gitweb.css
-> +++ b/gitweb/gitweb.css
-> @@ -180,6 +180,10 @@ table {
->  	border-spacing: 0;
->  }
->  
-> +table.shortlog td:first-child {
-> +	text-align: right;
-> +}
-> +
->  table.diff_tree {
->  	font-family: monospace;
->  }
-
-On the other hand: it is short and simple.
-
--- 
-Jakub Narebski
-Poland
+But certainly that shouldn't be a part of this topic.
