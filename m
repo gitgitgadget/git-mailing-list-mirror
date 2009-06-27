@@ -1,96 +1,247 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCHv6 7/8] gitweb: recognize 'trivial' acks
-Date: Sat, 27 Jun 2009 02:19:45 +0200
-Message-ID: <200906270219.46266.jnareb@gmail.com>
-References: <1245926587-25074-1-git-send-email-giuseppe.bilotta@gmail.com> <1245926587-25074-7-git-send-email-giuseppe.bilotta@gmail.com> <1245926587-25074-8-git-send-email-giuseppe.bilotta@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-2"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Jun 27 02:20:07 2009
+From: Larry D'Anna <larry@elder-gods.org>
+Subject: [PATCH] add --summary option to git-push
+Date: Fri, 26 Jun 2009 20:23:17 -0400
+Message-ID: <1246062197-28685-1-git-send-email-larry@elder-gods.org>
+References: <7vtz249lpf.fsf@alter.siamese.dyndns.org>
+Cc: Larry D'Anna <larry@elder-gods.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Jun 27 02:23:41 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MKLeJ-0008AQ-1N
-	for gcvg-git-2@gmane.org; Sat, 27 Jun 2009 02:20:07 +0200
+	id 1MKLhi-0000ic-Gn
+	for gcvg-git-2@gmane.org; Sat, 27 Jun 2009 02:23:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753442AbZF0AT4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 26 Jun 2009 20:19:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753084AbZF0ATz
-	(ORCPT <rfc822;git-outgoing>); Fri, 26 Jun 2009 20:19:55 -0400
-Received: from mail-fx0-f218.google.com ([209.85.220.218]:42821 "EHLO
-	mail-fx0-f218.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752945AbZF0ATz (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 26 Jun 2009 20:19:55 -0400
-Received: by fxm18 with SMTP id 18so9322fxm.37
-        for <git@vger.kernel.org>; Fri, 26 Jun 2009 17:19:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=PkpwPDOrWs5fWp9x0LCSYHcU8ZiDlUCfcNkwd6RCI58=;
-        b=dDvNuxDul1jWZiBDfZP2o1kUZ+gZIbFsqoEpc3XyiA4aKQh5uMf3MeiFxz5etQR8Hv
-         pvySFlAUR8VMYn11L3/olpkEYmmbq3OeW0qqjlFKw8gWL76ThMHSaRYeYfN/WOK2Axte
-         kp8qX3VYBy1G+igOfd6aBk06AnbDOfA5WiAbs=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=xwXWXEz+wkIW4qmSkFSaznGE3j42yH+bZzr8+am7KQIG4ggxjWYaOWtyiFjA+Yedgo
-         cs1ssrZuGO58oW6R0723ZX7h3wvNQspTYaFoqOPFDSTkkN16juKWXG2fWZ+0mn9Ih5Pn
-         drnbNS1/x0h0somIkYWWfhPI1b1avz6PAtBKo=
-Received: by 10.86.2.8 with SMTP id 8mr4110295fgb.59.1246061997328;
-        Fri, 26 Jun 2009 17:19:57 -0700 (PDT)
-Received: from ?192.168.1.13? (abwa104.neoplus.adsl.tpnet.pl [83.8.224.104])
-        by mx.google.com with ESMTPS id e11sm1413603fga.11.2009.06.26.17.19.44
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 26 Jun 2009 17:19:57 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <1245926587-25074-8-git-send-email-giuseppe.bilotta@gmail.com>
-Content-Disposition: inline
+	id S1753644AbZF0AX3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 26 Jun 2009 20:23:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752891AbZF0AX2
+	(ORCPT <rfc822;git-outgoing>); Fri, 26 Jun 2009 20:23:28 -0400
+Received: from cthulhu.elder-gods.org ([140.239.99.253]:34852 "EHLO
+	cthulhu.elder-gods.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751935AbZF0AX1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Jun 2009 20:23:27 -0400
+Received: by cthulhu.elder-gods.org (Postfix, from userid 1000)
+	id 845E7822106; Fri, 26 Jun 2009 20:23:26 -0400 (EDT)
+X-Mailer: git-send-email 1.6.3.3.336.gc126d
+In-Reply-To: <7vtz249lpf.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122340>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122341>
 
-On Thu, 25 Jun 2009, Giuseppe Bilotta wrote:
-> Sometimes patches are trivially acked rather than just acked, so
-> extend the signoff regexp to include this case.
-> 
-> Signed-off-by: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+--summary will cause git-push to output a one-line of each commit pushed.
+--summary=n will display at most n commits for each ref pushed.
 
-This is straghtforward enough.
+$ git push --dry-run --summary origin :
+To /home/larry/gitsandbox/a
+   80f0e50..5593a38  master -> master
+    5593a38 foo
+    81c03f8 bar
 
-Acked-by: Jakub Narebski <jnareb@gmail.com>
+Signed-off-by: Larry D'Anna <larry@elder-gods.org>
+---
+ Documentation/git-push.txt |    6 ++++++
+ builtin-push.c             |   12 +++++++++---
+ transport.c                |   43 +++++++++++++++++++++++++++++++------------
+ transport.h                |    2 +-
+ 4 files changed, 47 insertions(+), 16 deletions(-)
 
-> ---
->  gitweb/gitweb.perl |    2 +-
->  1 files changed, 1 insertions(+), 1 deletions(-)
-> 
-> diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-> index 3e6786b..7ca115f 100755
-> --- a/gitweb/gitweb.perl
-> +++ b/gitweb/gitweb.perl
-> @@ -3403,7 +3403,7 @@ sub git_print_log {
->  	my $signoff = 0;
->  	my $empty = 0;
->  	foreach my $line (@$log) {
-> -		if ($line =~ m/^ *(signed[ \-]off[ \-]by[ :]|acked[ \-]by[ :]|cc[ :])/i) {
-> +		if ($line =~ m/^ *(signed[ \-]off[ \-]by[ :]|(?:trivially[ \-])?acked[ \-]by[ :]|cc[ :])/i) {
->  			$signoff = 1;
->  			$empty = 0;
->  			if (! $opts{'-remove_signoff'}) {
-> -- 
-> 1.6.3.rc1.192.gdbfcb
-> 
-> 
-
+diff --git a/Documentation/git-push.txt b/Documentation/git-push.txt
+index 2653388..803fe36 100644
+--- a/Documentation/git-push.txt
++++ b/Documentation/git-push.txt
+@@ -85,6 +85,12 @@ nor in any Push line of the corresponding remotes file---see below).
+ --dry-run::
+ 	Do everything except actually send the updates.
+ 
++--summary::
++	Print a one-line summary of each commit pushed.
++
++--summary=<n>::
++	Like --summary, but with a limit of <n> commits per ref.
++
+ --porcelain::
+ 	Produce machine-readable output.  The output status line for each ref
+ 	will be tab-separated and sent to stdout instead of stderr.  The full
+diff --git a/builtin-push.c b/builtin-push.c
+index 0a0297f..00cf846 100644
+--- a/builtin-push.c
++++ b/builtin-push.c
+@@ -113,7 +113,7 @@ static void setup_default_push_refspecs(void)
+ 	}
+ }
+ 
+-static int do_push(const char *repo, int flags)
++static int do_push(const char *repo, int flags, int summary)
+ {
+ 	int i, errs;
+ 	struct remote *remote = remote_get(repo);
+@@ -173,7 +173,7 @@ static int do_push(const char *repo, int flags)
+ 
+ 		if (flags & TRANSPORT_PUSH_VERBOSE)
+ 			fprintf(stderr, "Pushing to %s\n", url[i]);
+-		err = transport_push(transport, refspec_nr, refspec, flags);
++		err = transport_push(transport, refspec_nr, refspec, flags, summary);
+ 		err |= transport_disconnect(transport);
+ 
+ 		if (!err)
+@@ -192,6 +192,8 @@ int cmd_push(int argc, const char **argv, const char *prefix)
+ 	int rc;
+ 	const char *repo = NULL;	/* default repository */
+ 
++	int summary = 0;
++
+ 	struct option options[] = {
+ 		OPT_BIT('v', "verbose", &flags, "be verbose", TRANSPORT_PUSH_VERBOSE),
+ 		OPT_STRING( 0 , "repo", &repo, "repository", "repository"),
+@@ -205,6 +207,10 @@ int cmd_push(int argc, const char **argv, const char *prefix)
+ 		OPT_BOOLEAN( 0 , "thin", &thin, "use thin pack"),
+ 		OPT_STRING( 0 , "receive-pack", &receivepack, "receive-pack", "receive pack program"),
+ 		OPT_STRING( 0 , "exec", &receivepack, "receive-pack", "receive pack program"),
++		{ OPTION_INTEGER, 0, "summary", &summary, "n", "print a summary of [at most n] pushed commits",
++		  PARSE_OPT_OPTARG, NULL, -1
++		},
++
+ 		OPT_END()
+ 	};
+ 
+@@ -218,7 +224,7 @@ int cmd_push(int argc, const char **argv, const char *prefix)
+ 		set_refspecs(argv + 1, argc - 1);
+ 	}
+ 
+-	rc = do_push(repo, flags);
++	rc = do_push(repo, flags, summary);
+ 	if (rc == -1)
+ 		usage_with_options(push_usage, options);
+ 	else
+diff --git a/transport.c b/transport.c
+index b074067..562e788 100644
+--- a/transport.c
++++ b/transport.c
+@@ -750,17 +750,19 @@ static const char *status_abbrev(unsigned char sha1[20])
+ 	return find_unique_abbrev(sha1, DEFAULT_ABBREV);
+ }
+ 
+-static void print_ok_ref_status(struct ref *ref, int porcelain)
++static void print_ok_ref_status(struct ref *ref, int porcelain, int summary)
+ {
++	char quickref[84];
++
+ 	if (ref->deletion)
+ 		print_ref_status('-', "[deleted]", ref, NULL, NULL, porcelain);
+-	else if (is_null_sha1(ref->old_sha1))
++	else if (is_null_sha1(ref->old_sha1)) {
+ 		print_ref_status('*',
+ 			(!prefixcmp(ref->name, "refs/tags/") ? "[new tag]" :
+ 			"[new branch]"),
+ 			ref, ref->peer_ref, NULL, porcelain);
+-	else {
+-		char quickref[84];
++		strcpy (quickref, status_abbrev(ref->new_sha1));
++	} else {
+ 		char type;
+ 		const char *msg;
+ 
+@@ -778,9 +780,25 @@ static void print_ok_ref_status(struct ref *ref, int porcelain)
+ 
+ 		print_ref_status(type, quickref, ref, ref->peer_ref, msg, porcelain);
+ 	}
++
++	if (summary) {
++		FILE *temp = stdout;
++		stdout = stderr;
++		if (summary < 0) {
++			char *argv[] = {"log", "--pretty=format:    %h %s", quickref};
++			cmd_log(3, argv, 0);
++		} else {
++			char dashn[15];
++			sprintf(dashn, "-n%d", summary);
++			char *argv[] = {"log", "--pretty=format:    %h %s", dashn, quickref};
++			cmd_log(4, argv, 0);
++		}
++		fprintf(stderr, "\n");
++		stdout = temp;
++	}
+ }
+ 
+-static int print_one_push_status(struct ref *ref, const char *dest, int count, int porcelain)
++static int print_one_push_status(struct ref *ref, const char *dest, int count, int porcelain, int summary)
+ {
+ 	if (!count)
+ 		fprintf(stderr, "To %s\n", dest);
+@@ -812,7 +830,7 @@ static int print_one_push_status(struct ref *ref, const char *dest, int count, i
+ 						 "remote failed to report status", porcelain);
+ 		break;
+ 	case REF_STATUS_OK:
+-		print_ok_ref_status(ref, porcelain);
++		print_ok_ref_status(ref, porcelain, summary);
+ 		break;
+ 	}
+ 
+@@ -820,7 +838,7 @@ static int print_one_push_status(struct ref *ref, const char *dest, int count, i
+ }
+ 
+ static void print_push_status(const char *dest, struct ref *refs,
+-							  int verbose, int porcelain)
++							  int verbose, int porcelain, int summary)
+ {
+ 	struct ref *ref;
+ 	int n = 0;
+@@ -828,18 +846,18 @@ static void print_push_status(const char *dest, struct ref *refs,
+ 	if (verbose) {
+ 		for (ref = refs; ref; ref = ref->next)
+ 			if (ref->status == REF_STATUS_UPTODATE)
+-				n += print_one_push_status(ref, dest, n, porcelain);
++				n += print_one_push_status(ref, dest, n, porcelain, summary);
+ 	}
+ 
+ 	for (ref = refs; ref; ref = ref->next)
+ 		if (ref->status == REF_STATUS_OK)
+-			n += print_one_push_status(ref, dest, n, porcelain);
++			n += print_one_push_status(ref, dest, n, porcelain, summary);
+ 
+ 	for (ref = refs; ref; ref = ref->next) {
+ 		if (ref->status != REF_STATUS_NONE &&
+ 		    ref->status != REF_STATUS_UPTODATE &&
+ 		    ref->status != REF_STATUS_OK)
+-			n += print_one_push_status(ref, dest, n, porcelain);
++			n += print_one_push_status(ref, dest, n, porcelain, summary);
+ 	}
+ }
+ 
+@@ -997,7 +1015,8 @@ int transport_set_option(struct transport *transport,
+ }
+ 
+ int transport_push(struct transport *transport,
+-		   int refspec_nr, const char **refspec, int flags)
++				   int refspec_nr, const char **refspec,
++				   int flags, int summary)
+ {
+ 	verify_remote_names(refspec_nr, refspec);
+ 
+@@ -1024,7 +1043,7 @@ int transport_push(struct transport *transport,
+ 
+ 		ret = transport->push_refs(transport, remote_refs, flags);
+ 
+-		print_push_status(transport->url, remote_refs, verbose | porcelain, porcelain);
++		print_push_status(transport->url, remote_refs, verbose | porcelain, porcelain, summary);
+ 
+ 		if (!(flags & TRANSPORT_PUSH_DRY_RUN)) {
+ 			struct ref *ref;
+diff --git a/transport.h b/transport.h
+index 51b5397..360051e 100644
+--- a/transport.h
++++ b/transport.h
+@@ -68,7 +68,7 @@ int transport_set_option(struct transport *transport, const char *name,
+ 			 const char *value);
+ 
+ int transport_push(struct transport *connection,
+-		   int refspec_nr, const char **refspec, int flags);
++				   int refspec_nr, const char **refspec, int flags, int summary);
+ 
+ const struct ref *transport_get_remote_refs(struct transport *transport);
+ 
 -- 
-Jakub Narebski
-Poland
+1.6.0.4
