@@ -1,61 +1,117 @@
-From: Paolo Bonzini <bonzini@gnu.org>
-Subject: [PATCH] git mailinfo strips important context from patch subjects
-Date: Sun, 28 Jun 2009 22:07:44 +0200
-Message-ID: <1246219664-11000-1-git-send-email-bonzini@gnu.org>
-References: <20090628193858.GA29467@codelibre.net>
-Cc: Roger Leigh <rleigh@codelibre.net>
-To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun Jun 28 22:08:02 2009
+From: "Patrick Neuner - Futureweb.at" <neuner@futureweb.at>
+Subject: AW: Parallell Development / Switching to GIT
+Date: Sun, 28 Jun 2009 22:08:45 +0200
+Message-ID: <B81058949321C8439B9D742F5F8D8FCA01A75C33@hpserver.intranet.local>
+References: <loom.20090625T095000-90@post.gmane.org> <4A434D6F.2090105@op5.se> <B81058949321C8439B9D742F5F8D8FCA01A75C1D@hpserver.intranet.local> <20090628184714.GA8634@sigio.peff.net>
+Mime-Version: 1.0
+Content-Type: text/plain;
+	charset="utf-8"
+Content-Transfer-Encoding: base64
+Cc: <git@vger.kernel.org>, "Andreas Ericsson" <ae@op5.se>
+To: "Jeff King" <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sun Jun 28 22:08:56 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ML0fQ-0000zt-OV
-	for gcvg-git-2@gmane.org; Sun, 28 Jun 2009 22:08:01 +0200
+	id 1ML0gJ-0001LI-TA
+	for gcvg-git-2@gmane.org; Sun, 28 Jun 2009 22:08:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752980AbZF1UHw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 28 Jun 2009 16:07:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752813AbZF1UHv
-	(ORCPT <rfc822;git-outgoing>); Sun, 28 Jun 2009 16:07:51 -0400
-Received: from fencepost.gnu.org ([140.186.70.10]:43436 "EHLO
-	fencepost.gnu.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752444AbZF1UHu (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 28 Jun 2009 16:07:50 -0400
-Received: from bonzini by fencepost.gnu.org with local (Exim 4.67)
-	(envelope-from <bonzini@gnu.org>)
-	id 1ML0fI-0003wM-6F; Sun, 28 Jun 2009 16:07:52 -0400
-X-Mailer: git-send-email 1.6.0.3
-In-Reply-To: <20090628193858.GA29467@codelibre.net>
+	id S1753279AbZF1UIr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 28 Jun 2009 16:08:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753187AbZF1UIq
+	(ORCPT <rfc822;git-outgoing>); Sun, 28 Jun 2009 16:08:46 -0400
+Received: from eu1sys200aog108.obsmtp.com ([207.126.144.125]:49672 "EHLO
+	eu1sys200aog108.obsmtp.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752444AbZF1UIp (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 28 Jun 2009 16:08:45 -0400
+Received: from source ([80.109.165.251]) (using TLSv1) by eu1sys200aob108.postini.com ([207.126.147.11]) with SMTP
+	ID DSNKSkfNz3+kkm9TQbEpYvdoMEDLIbXt07Xh@postini.com; Sun, 28 Jun 2009 20:08:48 UTC
+Content-class: urn:content-classes:message
+X-MimeOLE: Produced By Microsoft Exchange V6.5
+In-Reply-To: <20090628184714.GA8634@sigio.peff.net>
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+Thread-Topic: Parallell Development / Switching to GIT
+Thread-Index: Acn4IJszEMg1fzusRc2wFjq9dD3ptwACIWsw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122421>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122422>
 
-> Would it be possible to change the git-mailinfo logic to use a less
-> greedy pattern match?
-
-Like this?  (I also simplified the first part of the if condition since I
-was at it).  Anyone, feel free to resubmit it as a proper patch.
-
-Almost-Signed-off-by: Paolo Bonzini <bonzini@gnu.org>
----
- builtin-mailinfo.c |    3 ++-
- 1 files changed, 2 insertions(+), 1 deletions(-)
-
-diff --git a/builtin-mailinfo.c b/builtin-mailinfo.c
-index 92637ac..d340ae6 100644
---- a/builtin-mailinfo.c
-+++ b/builtin-mailinfo.c
-@@ -237,7 +237,8 @@ static void cleanup_subject(struct strbuf *subject)
- 		case '[':
- 			if ((pos = strchr(subject->buf, ']'))) {
- 				remove = pos - subject->buf;
--				if (remove <= (subject->len - remove) * 2) {
-+				if (remove <= subject->len * 2 / 3
-+				    && memmem(subject->buf, remove, 'PATCH', 5)) {
- 					strbuf_remove(subject, 0, remove + 1);
- 					continue;
- 				}
--- 
-1.6.0.3
+SGksDQoNCnRoYW5rcyBmb3IgeW91ciBhbnN3ZXJzLCBJIGFwcHJlY2lhdGUgdGhhdC4NCkkgcmVh
+ZCBhYm91dCBjaGVycnktcGlja2luZywgYnV0IEkgYW0gbm90IHF1aXRlIHN1cmUgaWYgdGhhdCdz
+IHJlYWxseSB3aGF0IHdlIG5lZWQuIA0KTGV0cyBhc3N1bWUsIHlvdSBkbyBhIG5ldyBmZWF0dXJl
+OiANCg0KL2ZlYXR1cmVYDQoNCllvdSB3aWxsIGNvbW1pdCBpdCwgY2hlY2sgaXQgb3V0IG9uIHRo
+ZSB0ZXN0c2VydmVyIGFuZCBwcm9iYWJseSBzZWUgYSBidWcsIGZpeCBpdCwgY29tbWl0IGFuZCBw
+dXNoIGl0IGFnYWluLiAoYW5kIHByb2JhYmx5IG1vcmUgY29tbWl0cyBhZnRlciB0aGUgdGVzdGlu
+ZyBwZXJzb24gcmFuIG92ZXIgb3RoZXIgaXNzdWVzKS4gDQoNCldpdGggY2hlcnJ5LXBpY2tpbmcs
+IEkgd291bGQgbmVlZCB0byBrbm93IGFsbCBjb21taXRzIEkgaGF2ZSB0byBwaWNrLiANCkJ1dCBh
+cyB0aGVyZSBoYXZlIGJlZW4gc2VydmVyYWwgY29tbWl0cywgc28gd291bGRuJ3QgaXQgYmUgYSBw
+YWluIHRvIGNoZWNrIGFsbCBjb21taXRzIHRvIHRoYXQgZmlsZSBvciBkaXJlY3RvcnkgdG8gaGF2
+ZSB0aGUgc2FtZSB2ZXJzaW9uPw0KDQpKdXN0IHRyeWluZyB0byBmaW5kIHRoZSByaWdodCB3YXkg
+dG8gaGFuZGxlIHRoYXQuIA0KDQoNCkFib3V0IHRoZSAybmQgcG9pbnQgLSBJIGFtIG5vdCBzdXJl
+IGlmIEkgZ2V0IHRoZSBkaWZmZXJlbnQgcmVwb3NpdG9yaWVzIHRoaW5nLiANCkRvIHlvdSB0YWxr
+IGFib3V0IHRvIGRpZmZlcmVudCBjbG9uZXMgb2YgdGhlIHJlcCwgYW5kIGdpdmUgZGlmZmVyZW50
+IGRpcmVjdG9yeSBwZXJtaXNzaW9ucyBvbiBpdCwgDQpvciBpcyB0aGVyZSBhIHdheSB0byBoYXZl
+IGxpa2UgdG8gY29tcGxldGx5IGRpZmZlcmVudCBnaXQgcmVwJ3MgcnVubmluZyBhbmQgc3RpbGwg
+bWVyZ2UgdGhpbmdzIG92ZXIgKGJvdGggd2F5cyk/DQpJIGp1c3QgdGhvdWdodCB0aGlzIGFwcHJv
+YWNoIHdvdWxkIGJyZWFrIGNvcnJlY3QgbWVyZ2luLCBhcyBpdCBkb2Vzbid0IGtub3cgd2hlcmUg
+aXQncyBjb21taW5nIGZyb20uIA0KDQpUaGUgb25seSB0aGluZyBJIHJhbiBvdmVyIHNvIGZhciBp
+cyBwcm9iYWJseSBkb2luZyBhIGhvb2sgZm9yIHRoYXQgKGxpa2UgYSBwcmUtcHVsbCBob29rIGlm
+IHRoYXQgZXhpc3RzKS4gZGlkbid0IGdldCB0byByZWFkIHRvbyBtdWNoIGFib3V0IGhvb2tzIHll
+dCwNCmp1c3QgZGlkIHRoZSB1cGRhdGUgaG9vayB0aGF0IGNoZWNrcyBpZiB0aGUgdXNlciB3aXRo
+IHNwZWNpZmljIHNzaCBrZXkgaXMgYWxsb3dlZCB0byBwdXNoIHRvIGEgc3BlY2lmaWMgYnJhbmNo
+LiBUaGF0IHdvcmtzIHByZXR0eSBnb29kIGFuZCBpcyBtb3JlIGltcG9ydGFudCBpbiBmYWN0Lg0K
+DQpCdXQgaGF2aW5nIDIgY29tcGxldGx5IGRpZmZlcmVudCByZXBvcyB3b3VsZCBiZSBhbm90aGVy
+IHNvbHV0aW9uLCBidXQgSSBraW5kYSB3b25kZXIgdGhhdCBtZXJnaW4gd291bGQgd29yayBjb3Jy
+ZWN0bHkgdGhpcyB3YXkgKGlmIGJvdGggc2lkZXMgaGF2ZSBjaGFuZ2VzKS4gDQoNClRoYW5rcw0K
+UGF0cmljayANCg0KLS0tLS1VcnNwcsO8bmdsaWNoZSBOYWNocmljaHQtLS0tLQ0KVm9uOiBKZWZm
+IEtpbmcgW21haWx0bzpwZWZmQHBlZmYubmV0XSANCkdlc2VuZGV0OiBTb25udGFnLCAyOC4gSnVu
+aSAyMDA5IDIwOjQ3DQpBbjogUGF0cmljayBOZXVuZXIgLSBGdXR1cmV3ZWIuYXQNCkNjOiBBbmRy
+ZWFzIEVyaWNzc29uOyBnaXRAdmdlci5rZXJuZWwub3JnDQpCZXRyZWZmOiBSZTogUGFyYWxsZWxs
+IERldmVsb3BtZW50IC8gU3dpdGNoaW5nIHRvIEdJVA0KDQpPbiBTdW4sIEp1biAyOCwgMjAwOSBh
+dCAwNzo1MToyNlBNICswMjAwLCBQYXRyaWNrIE5ldW5lciAtIEZ1dHVyZXdlYi5hdCB3cm90ZToN
+Cg0KPiAxKSBXaGF0IGlmIEkgb25seSB3YW50IHRvIG1lcmdlIGEgc3BlY2lmaWMgZmlsZS9kaXJl
+Y3RseSwgYnV0IG5vdCB0aGUNCj4gd2hvbGUgYnJhbmNoLCBpcyB0aGVyZSBhIHdheT8NCj4gWy4u
+Ll0NCj4gVGhlIHJlYXNvbiBpcywgdGhhdCBleHRlcm5hbCBkZXZlbG9wZXJzIHdpbGwgb25seSBj
+b21taXQgdG8NCj4gZGV2ZWxvcG1lbnQgYnJhbmNoLiAgVGhleSBhcmUgd29ya2luZyBvbiBuZXcg
+ZmVhdHVyZXMsIGFuZCBzb21ldGltZXMNCj4gc29tZSBzbWFsbCBidWdmaXhlcywgb3IgZGVzaWdu
+IHRlbXBsYXRlcy4gIFRob3NlIG5lZWQgdG8gYmUgbWVyZ2VkDQo+IHNlcGFyYXRlbHksIGFuZCB3
+ZSB0cnkgdG8gbm90IGhhdmUgbW9yZSBicmFuY2hlcy4gQXMgZGV2ZWxvcGVycyBjYW4NCj4gYWNj
+ZXNzIG91ciB0ZXN0c2VydmVyIGFuZCB0aGVuIHNlZSB3aGF0IHRoZXkgaGF2ZSBkb25lIGFuZCB0
+ZXN0DQo+IGZ1bmN0aW9uYWxpdHkuDQoNCkZvciB0aGUgc2l0dWF0aW9uIHlvdSBkZXNjcmliZSwg
+aXQgaXMgbm90IGFib3V0IG1lcmdpbmcgYSBzcGVjaWZpYw0KX2ZpbGVfLCBidXQgcmF0aGVyIHlv
+dSB3YW50IHRvIHBpY2sgc3BlY2lmaWMgX2NvbW1pdHNfIGZyb20gdGhlDQpkZXZlbG9wbWVudCBi
+cmFuY2ggdGhhdCBoYXZlIHRoZSBidWdmaXhlcyAob3Igd2hhdGV2ZXIpIHRoYXQgeW91IG5lZWQs
+DQphbmQgbWVyZ2UgdGhlIGNoYW5nZXMgaW50cm9kdWNlZCBieSB0aG9zZSBjb21taXRzIChidXQg
+bm90IHRoZSByZXN0IG9mDQp0aGUgaGlzdG9yeSkuDQoNCkFuZCB0aGF0IGlzIGVhc3kgdG8gZG87
+IGl0IGlzIGNhbGxlZCBjaGVycnktcGlja2luZywgYW5kIHlvdSBjYW4gdXNlDQoiZ2l0IGNoZXJy
+eS1waWNrIiB0byBwaWNrIHNwZWNpZmljIGNvbW1pdHMgZnJvbSBkZXZlbG9wbWVudCB0byBtYXN0
+ZXIuDQoNCj4gMikgV2UgYXJlIHVzaW5nIGdpdG9zaXMgdG8gZ2l2ZSBleHRlcm5hbCBkZXZlbG9w
+ZXJzIGFjY2VzcyB0byB0aGUNCj4gYnJhbmNoZXMgYW5kIGhhdmUgc29tZSBraW5kIG9mIGFjY2Vz
+cyByZXN0cmljdGlvbi4gIEJ1dCB3ZSBhcmUgb25seQ0KPiBhYmxlIHRvIGxpbWl0IHB1c2ggcmln
+aHRzLCBub3QgcHVsbCByaWdodHMuIEluIG1vc3QgY2FzZXMsIHRoYXQncyBub3QNCj4gYSBwcm9i
+bGVtLCBpZiB0aGV5IHNlZSBtYXN0ZXIgQW5kIGRldmVsb3BtZW50LCBidXQgc29tZXRpbWVzIChs
+aWtlIGZvcg0KPiBleHRlcm5hbCBkZXNpZ25lcnMpLCB3ZSBtaWdodCB3YW50IHRoZW0gdG8gb25s
+eSBiZSBhYmxlIHRvIGNoZWNrb3V0DQo+IHNvbWUgZGlyZWN0b3JpZXMuDQoNClRoZXJlIGFyZSB0
+d28gd2F5cyB5b3UgY2FuIHNwbGl0IGFjY2VzcywgYW5kIG9uZSB3aWxsIHdvcmsgYnV0IHRoZSBv
+dGhlcg0Kd2lsbCBub3QuDQoNCkluIGdpdCwgeW91IGdlbmVyYWxseSBjYW5ub3Qgc3BsaXQgeW91
+ciBkYXRhIGJ5IF90cmVlXy4gVGhhdCBpcywgeW91DQpjYW5ub3Qgc2F5ICJoZXJlIGlzIGFsbCBv
+ZiB0aGUgaGlzdG9yeSBmb3IgdGhlIG1hc3RlciBicmFuY2gsIGJ1dCB5b3UNCmFyZSBvbmx5IGFs
+bG93ZWQgdG8gbG9vayBhdCBzb21lIHN1YnNldCBvZiB0aGUgZmlsZXMuIiBCZWNhdXNlIGF0IGEN
+CmZ1bmRhbWVudGFsIGxldmVsLCBnaXQgaXMgYWJvdXQgdHJhY2tpbmcgY2hhbmdlcyB0byB0aGUg
+X3dob2xlXyBzZXQgb2YNCmZpbGVzIG92ZXIgdGltZSwgYW5kIGl0IG1ha2VzIHRoZSBhc3N1bXB0
+aW9uIHRoYXQgaWYgeW91IGhhdmUgY29tbWl0IFgsDQp3aGljaCBwb2ludHMgdG8gdHJlZSBZLCB3
+aGljaCBwb2ludHMgdG8gZmlsZXMgQSwgQiwgYW5kIEMsIHRoYXQgeW91IHdpbGwNCmhhdmUgdGhl
+IGRhdGEgZm9yIFgsIFksIEEsIEIsIGFuZCBDIGluIHlvdXIgcmVwb3NpdG9yeS4NCg0KSG93ZXZl
+ciwgaWYgeW91IGhhdmUgeW91ciBkYXRhIHNwbGl0IGJ5IF9oaXN0b3J5XywgdGhhdCBtaWdodCB3
+b3JrLiBUaGF0DQppcywgaWYgeW91IGhhdmUgYSAibWFzdGVyIiBicmFuY2ggYW5kIGEgImRldmVs
+b3BtZW50IiBicmFuY2gsIHlvdSBjYW4gaW4NCnRoZW9yeSBzYXkgInlvdSBtYXkgbG9vayBhdCB0
+aGUgaGlzdG9yeSBvZiBtYXN0ZXIsIGJ1dCBub3Qgb2YNCmRldmVsb3BtZW50Ii4gVGhlIHVzdWFs
+IHdheSB0byBkbyB0aGF0IGlzIHRvIGFjdHVhbGx5IGtlZXAgIm1hc3RlciIgYW5kDQoiZGV2ZWxv
+cG1lbnQiIGluIHR3byBkaWZmZXJlbnQgcmVwb3NpdG9yaWVzLCBhbmQgb25seSBncmFudCByZWFk
+DQpwZXJtaXNzaW9uIGluIHRoZSBmaWxlc3lzdGVtIGZvciB0aGUgIm1hc3RlciIgb25lICh3aGlj
+aCBvYnZpb3VzbHkNCmltcGxpZXMgZG9pbmcgeW91ciByZWFkaW5nIG92ZXIgc29tZXRoaW5nIGF1
+dGhlbnRpY2F0ZWQsIGxpa2Ugc3NoKS4NCg0KSG9wZSB0aGF0IGhlbHBzLA0KLVBlZmYNCg==
