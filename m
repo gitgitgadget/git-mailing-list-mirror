@@ -1,78 +1,66 @@
-From: Christian Couder <chriscool@tuxfamily.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Subject: Re: What's cooking in git.git (Jun 2009, #03; Sat, 27)
-Date: Sun, 28 Jun 2009 15:50:38 +0200
-Message-ID: <200906281550.39051.chriscool@tuxfamily.org>
-References: <7vy6rcg7hc.fsf@alter.siamese.dyndns.org>
+Date: Sun, 28 Jun 2009 16:04:35 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.0906281603580.4773@pacific.mpi-cbg.de>
+References: <7vy6rcg7hc.fsf@alter.siamese.dyndns.org> <200906281550.39051.chriscool@tuxfamily.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Jun 28 15:50:30 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Christian Couder <chriscool@tuxfamily.org>
+X-From: git-owner@vger.kernel.org Sun Jun 28 16:03:12 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MKum5-0007Rn-Lu
-	for gcvg-git-2@gmane.org; Sun, 28 Jun 2009 15:50:30 +0200
+	id 1MKuyN-0002hI-RF
+	for gcvg-git-2@gmane.org; Sun, 28 Jun 2009 16:03:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752790AbZF1NuV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 28 Jun 2009 09:50:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752665AbZF1NuU
-	(ORCPT <rfc822;git-outgoing>); Sun, 28 Jun 2009 09:50:20 -0400
-Received: from smtp3-g21.free.fr ([212.27.42.3]:53459 "EHLO smtp3-g21.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751509AbZF1NuT (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 28 Jun 2009 09:50:19 -0400
-Received: from smtp3-g21.free.fr (localhost [127.0.0.1])
-	by smtp3-g21.free.fr (Postfix) with ESMTP id 3222E818139;
-	Sun, 28 Jun 2009 15:50:15 +0200 (CEST)
-Received: from bureau.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
-	by smtp3-g21.free.fr (Postfix) with ESMTP id 48E1B81815F;
-	Sun, 28 Jun 2009 15:50:13 +0200 (CEST)
-User-Agent: KMail/1.9.9
-In-Reply-To: <7vy6rcg7hc.fsf@alter.siamese.dyndns.org>
-Content-Disposition: inline
+	id S1752612AbZF1ODC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 28 Jun 2009 10:03:02 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752188AbZF1ODA
+	(ORCPT <rfc822;git-outgoing>); Sun, 28 Jun 2009 10:03:00 -0400
+Received: from mail.gmx.net ([213.165.64.20]:34154 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751509AbZF1ODA (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 28 Jun 2009 10:03:00 -0400
+Received: (qmail invoked by alias); 28 Jun 2009 14:03:02 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp071) with SMTP; 28 Jun 2009 16:03:02 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX196Vp1gbTd6SjyXPpkwnqb8ZTCZ6lGoEXPSwrmR7h
+	krkPprwwX4BhhS
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <200906281550.39051.chriscool@tuxfamily.org>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.62
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122404>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122405>
 
-On Sunday 28 June 2009, Junio C Hamano wrote:
-> Here are the topics that have been cooking.  Commits prefixed with '-'
-> are only in 'pu' while commits prefixed with '+' are in 'next'.  The ones
-> marked with '.' do not appear in any of the branches, but I am still
-> holding onto them.
+Hi,
 
-Is there a reason why the following patches have been removed from pu:
+On Sun, 28 Jun 2009, Christian Couder wrote:
 
-commit 6dcab5fbeb56a8fdd908d54ae7154308bfa5f74b
-Author: Christian Couder <chriscool@tuxfamily.org>
-Date:   Sun Jun 21 07:08:45 2009 +0200
+> On Sunday 28 June 2009, Junio C Hamano wrote:
+> > Here are the topics that have been cooking.  Commits prefixed with '-'
+> > are only in 'pu' while commits prefixed with '+' are in 'next'.  The ones
+> > marked with '.' do not appear in any of the branches, but I am still
+> > holding onto them.
+> 
+> Is there a reason why the following patches have been removed from pu:
+> 
+> commit 6dcab5fbeb56a8fdd908d54ae7154308bfa5f74b
+> Author: Christian Couder <chriscool@tuxfamily.org>
+> Date:   Sun Jun 21 07:08:45 2009 +0200
+> 
+>     rebase -i: use config file format to save author information
+> [...]
 
-    rebase -i: use config file format to save author information
+The reason might be that I did not see how this could help 
+builtinification.
 
-    This is better than saving in a shell script, because it will make
-    it much easier to port "rebase -i" to C. This also removes some sed
-    regexps and some "eval"s.
-
-    Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
-    Signed-off-by: Junio C Hamano <gitster@pobox.com>
-
-commit aac0a09aedae9dc3ca0e2c0bb5ad5f3918a821a5
-Author: Christian Couder <chriscool@tuxfamily.org>
-Date:   Sun Jun 21 07:08:44 2009 +0200
-
-    rebase -i: remove get_author_ident_from_commit() from "git-sh-setup.sh"
-
-    The "get_author_ident_from_commit" function is only used in
-    "git-rebase--interactive.sh" so there is no need for this function
-    to be in "git-sh-setup.sh" anymore.
-
-    Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
-    Signed-off-by: Junio C Hamano <gitster@pobox.com>
-
-Thanks,
-Christian.
+Ciao,
+Dscho
