@@ -1,83 +1,89 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH] git-submodule documentation: fix foreach example
-Date: Sun, 28 Jun 2009 05:34:23 -0700 (PDT)
-Message-ID: <m3tz20wmzv.fsf@localhost.localdomain>
-References: <20090628113931.GC10895@genesis.frugalware.org>
+From: Miklos Vajna <vmiklos@frugalware.org>
+Subject: [PATCH v2] git-submodule documentation: fix foreach example
+Date: Sun, 28 Jun 2009 14:55:45 +0200
+Message-ID: <20090628125545.GH10895@genesis.frugalware.org>
+References: <20090628113931.GC10895@genesis.frugalware.org> <m3tz20wmzv.fsf@localhost.localdomain>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
+Cc: Jakub Narebski <jnareb@gmail.com>,
 	Mark Levedahl <mlevedahl@gmail.com>, git@vger.kernel.org
-To: Miklos Vajna <vmiklos@frugalware.org>
-X-From: git-owner@vger.kernel.org Sun Jun 28 14:34:33 2009
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Jun 28 14:56:07 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MKtaa-0007Mm-SF
-	for gcvg-git-2@gmane.org; Sun, 28 Jun 2009 14:34:33 +0200
+	id 1MKtvF-00056W-PQ
+	for gcvg-git-2@gmane.org; Sun, 28 Jun 2009 14:55:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751018AbZF1MeW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 28 Jun 2009 08:34:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750840AbZF1MeV
-	(ORCPT <rfc822;git-outgoing>); Sun, 28 Jun 2009 08:34:21 -0400
-Received: from fg-out-1718.google.com ([72.14.220.155]:56678 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750803AbZF1MeV (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 28 Jun 2009 08:34:21 -0400
-Received: by fg-out-1718.google.com with SMTP id e12so294017fga.17
-        for <git@vger.kernel.org>; Sun, 28 Jun 2009 05:34:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received
-         :x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        bh=q06BWk2RDgshowcH/OddpPyR6oanqAMx1/iwINJSeko=;
-        b=q3WCGV0qiLXOvx56gX3tPJ1kGRA/voFcrYQvsIua4twf9uQDzEhGvAJHOfF8jGK+Pl
-         lKm1ZnJJ8RPifOth3ePKs5BSqmT31Gx8SE+tRHokmeysycM3G41GiWE9qH91Agy+ybyr
-         EeS52OTRC0cLWYtboQDwRKdUfzYNqz/OWgLdI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        b=OavWLdxC+WUBVxgDj7LdFrYoO3OasiV5wpVVJbZnmnOO63qKfHkSqqXSbo21JSdDDF
-         1whRVU1WjS8vwFSCrx1AlfF5PaAoWkxA+sEtInKqzc+adoSc4htWLTUwjJ+Kg4epLuw5
-         oXeK+VFqgTL1PxFSpphaGCfNk9ZERxBFDC2Dg=
-Received: by 10.86.66.20 with SMTP id o20mr192351fga.15.1246192463338;
-        Sun, 28 Jun 2009 05:34:23 -0700 (PDT)
-Received: from localhost.localdomain (abvg228.neoplus.adsl.tpnet.pl [83.8.204.228])
-        by mx.google.com with ESMTPS id 4sm4279241fgg.2.2009.06.28.05.34.22
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 28 Jun 2009 05:34:23 -0700 (PDT)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id n5SCdqQF024718;
-	Sun, 28 Jun 2009 14:39:52 +0200
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id n5SCdnp3024712;
-	Sun, 28 Jun 2009 14:39:49 +0200
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <20090628113931.GC10895@genesis.frugalware.org>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+	id S1751450AbZF1Mzo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 28 Jun 2009 08:55:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751295AbZF1Mzn
+	(ORCPT <rfc822;git-outgoing>); Sun, 28 Jun 2009 08:55:43 -0400
+Received: from virgo.iok.hu ([212.40.97.103]:35823 "EHLO virgo.iok.hu"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751102AbZF1Mzn (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 28 Jun 2009 08:55:43 -0400
+Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
+	by virgo.iok.hu (Postfix) with ESMTP id 0221A58087;
+	Sun, 28 Jun 2009 14:55:46 +0200 (CEST)
+Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
+	by kag.elte.hu (Postfix) with ESMTP id AFD4D448D3;
+	Sun, 28 Jun 2009 14:55:45 +0200 (CEST)
+Received: by genesis.frugalware.org (Postfix, from userid 1000)
+	id 8EE82634001; Sun, 28 Jun 2009 14:55:45 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <m3tz20wmzv.fsf@localhost.localdomain>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122401>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122402>
 
-Miklos Vajna <vmiklos@frugalware.org> writes:
+Backtick and apostrophe are asciidoc markup, so they should be escaped
+in order to get the expected result in the rendered manual page.
 
-> Backstick and apostrophe are asciidoc markup, so they should be escaped
-> in order to get the expected result in the rendered manual page.
+Signed-off-by: Miklos Vajna <vmiklos@frugalware.org>
+---
 
-[...]
->  startsb=&#91;
->  endsb=&#93;
->  tilde=&#126;
-> +backstick=&#96;
+On Sun, Jun 28, 2009 at 05:34:23AM -0700, Jakub Narebski <jnareb@gmail.com> wrote:
+> It is 'backtick' (or 'backquote'), not 'backstick'.  There is no 's'
+> in its name.
 
-It is 'backtick' (or 'backquote'), not 'backstick'.  There is no 's'
-in its name.
+Ah, true. Thanks, fixed.
 
+ Documentation/asciidoc.conf     |    1 +
+ Documentation/git-submodule.txt |    5 +++--
+ 2 files changed, 4 insertions(+), 2 deletions(-)
+
+diff --git a/Documentation/asciidoc.conf b/Documentation/asciidoc.conf
+index dc76e7f..b88d875 100644
+--- a/Documentation/asciidoc.conf
++++ b/Documentation/asciidoc.conf
+@@ -17,6 +17,7 @@ caret=&#94;
+ startsb=&#91;
+ endsb=&#93;
+ tilde=&#126;
++backtick=&#96;
+ 
+ ifdef::backend-docbook[]
+ [linkgit-inlinemacro]
+diff --git a/Documentation/git-submodule.txt b/Documentation/git-submodule.txt
+index 470bd75..8941ad7 100644
+--- a/Documentation/git-submodule.txt
++++ b/Documentation/git-submodule.txt
+@@ -141,8 +141,9 @@ foreach::
+ 	the processing to terminate. This can be overridden by adding '|| :'
+ 	to the end of the command.
+ +
+-As an example, "git submodule foreach 'echo $path `git rev-parse HEAD`' will
+-show the path and currently checked out commit for each submodule.
++As an example, +git submodule foreach \'echo $path {backtick}git
++rev-parse HEAD{backtick}'+ will show the path and currently checked out
++commit for each submodule.
+ 
+ sync::
+ 	Synchronizes submodules' remote URL configuration setting
 -- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+1.6.3.2
