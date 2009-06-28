@@ -1,90 +1,61 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: whitespace ignoring during diff -M
-Date: Sun, 28 Jun 2009 16:02:55 -0400
-Message-ID: <20090628200254.GA8828@sigio.peff.net>
-References: <4A22E882.8020500@impulze.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Daniel Mierswa <impulze@impulze.org>
-X-From: git-owner@vger.kernel.org Sun Jun 28 22:01:27 2009
+From: Paolo Bonzini <bonzini@gnu.org>
+Subject: [PATCH] git mailinfo strips important context from patch subjects
+Date: Sun, 28 Jun 2009 22:07:44 +0200
+Message-ID: <1246219664-11000-1-git-send-email-bonzini@gnu.org>
+References: <20090628193858.GA29467@codelibre.net>
+Cc: Roger Leigh <rleigh@codelibre.net>
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun Jun 28 22:08:02 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ML0Yz-0007JO-LP
-	for gcvg-git-2@gmane.org; Sun, 28 Jun 2009 22:01:22 +0200
+	id 1ML0fQ-0000zt-OV
+	for gcvg-git-2@gmane.org; Sun, 28 Jun 2009 22:08:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752784AbZF1UBE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 28 Jun 2009 16:01:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752496AbZF1UBD
-	(ORCPT <rfc822;git-outgoing>); Sun, 28 Jun 2009 16:01:03 -0400
-Received: from peff.net ([208.65.91.99]:39755 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751901AbZF1UBC (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 28 Jun 2009 16:01:02 -0400
-Received: (qmail 8838 invoked by uid 1000); 28 Jun 2009 20:02:55 -0000
-Content-Disposition: inline
-In-Reply-To: <4A22E882.8020500@impulze.org>
+	id S1752980AbZF1UHw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 28 Jun 2009 16:07:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752813AbZF1UHv
+	(ORCPT <rfc822;git-outgoing>); Sun, 28 Jun 2009 16:07:51 -0400
+Received: from fencepost.gnu.org ([140.186.70.10]:43436 "EHLO
+	fencepost.gnu.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752444AbZF1UHu (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 28 Jun 2009 16:07:50 -0400
+Received: from bonzini by fencepost.gnu.org with local (Exim 4.67)
+	(envelope-from <bonzini@gnu.org>)
+	id 1ML0fI-0003wM-6F; Sun, 28 Jun 2009 16:07:52 -0400
+X-Mailer: git-send-email 1.6.0.3
+In-Reply-To: <20090628193858.GA29467@codelibre.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122420>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122421>
 
-[this is a bit of an old message, but I am way behind on git mail,
- and nobody else seems to have responded, so...]
+> Would it be possible to change the git-mailinfo logic to use a less
+> greedy pattern match?
 
-On Sun, May 31, 2009 at 10:28:50PM +0200, Daniel Mierswa wrote:
+Like this?  (I also simplified the first part of the if condition since I
+was at it).  Anyone, feel free to resubmit it as a proper patch.
 
-> I was told to try it here after visiting #git/Freenode
-> I want git to think that the diff of two branches where filenames and
-> whitespace amount differ are the same.
-> The following is a snippet from my terminal with output, is there a
-> chance to make git think that those are equal?
-
-Rename detection in git does not respect the "-w" option at all. It
-hashes each line of a text file, and then compares the hashes to see how
-"similar" the files are.
-
-It already makes some effort to ignore the CR in a CRLF sequence when
-calculating the hash. So just running "unix2dos" (or vice versa) on a
-file should still allow it to find renames.
-
-This could probably be extended fairly trivially to ignore arbitrary
-whitespace when generating the hash (I'm not sure if the feature should
-be triggered by "-w" or not; it makes sense to me, but I'm not sure if
-there are cases where people would want diff generation to have
-different rules than rename detection. We maybe would even want to
-ignore whitespace in diff generation _always_, as we always do already
-with CRLF. Somebody would need to check the results of the two
-approaches against a number of cases).
-
-If you are interested, the relevant code is in hash_chars in
-diffcore-delta.c. A trivial implementation would probably look something
-like the patch below. I tested it with:
-
-  git init
-  cp /usr/share/dict/words words && git add words && git commit -m one
-  sed 's/^/  /' <words >munged
-  git add munged && git rm words
-  git diff --cached --summary
-
-which curious reports 82% similarity. So maybe there is more
-investigation to be done. Anyway, patch below.
-
+Almost-Signed-off-by: Paolo Bonzini <bonzini@gnu.org>
 ---
+ builtin-mailinfo.c |    3 ++-
+ 1 files changed, 2 insertions(+), 1 deletions(-)
 
-diff --git a/diffcore-delta.c b/diffcore-delta.c
-index e670f85..63704da 100644
---- a/diffcore-delta.c
-+++ b/diffcore-delta.c
-@@ -145,6 +145,8 @@ static struct spanhash_top *hash_chars(struct diff_filespec *one)
- 		/* Ignore CR in CRLF sequence if text */
- 		if (is_text && c == '\r' && sz && *buf == '\n')
- 			continue;
-+		if (is_text && (c == ' ' || c == '\t'))
-+			continue;
- 
- 		accum1 = (accum1 << 7) ^ (accum2 >> 25);
- 		accum2 = (accum2 << 7) ^ (old_1 >> 25);
+diff --git a/builtin-mailinfo.c b/builtin-mailinfo.c
+index 92637ac..d340ae6 100644
+--- a/builtin-mailinfo.c
++++ b/builtin-mailinfo.c
+@@ -237,7 +237,8 @@ static void cleanup_subject(struct strbuf *subject)
+ 		case '[':
+ 			if ((pos = strchr(subject->buf, ']'))) {
+ 				remove = pos - subject->buf;
+-				if (remove <= (subject->len - remove) * 2) {
++				if (remove <= subject->len * 2 / 3
++				    && memmem(subject->buf, remove, 'PATCH', 5)) {
+ 					strbuf_remove(subject, 0, remove + 1);
+ 					continue;
+ 				}
+-- 
+1.6.0.3
