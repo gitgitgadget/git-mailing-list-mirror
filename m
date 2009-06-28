@@ -1,174 +1,83 @@
-From: Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH 2/4] sequencer: add "make_patch" function to save a patch
-Date: Sun, 28 Jun 2009 14:13:21 +0200
-Message-ID: <200906281413.21454.chriscool@tuxfamily.org>
-References: <20090626205319.3885.91532.chriscool@tuxfamily.org> <20090626210847.3885.18347.chriscool@tuxfamily.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH] git-submodule documentation: fix foreach example
+Date: Sun, 28 Jun 2009 05:34:23 -0700 (PDT)
+Message-ID: <m3tz20wmzv.fsf@localhost.localdomain>
+References: <20090628113931.GC10895@genesis.frugalware.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-15"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Stephan Beyer <s-beyer@gmx.net>,
-	Daniel Barkalow <barkalow@iabervon.org>,
-	Jakub Narebski <jnareb@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Jun 28 14:13:25 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Mark Levedahl <mlevedahl@gmail.com>, git@vger.kernel.org
+To: Miklos Vajna <vmiklos@frugalware.org>
+X-From: git-owner@vger.kernel.org Sun Jun 28 14:34:33 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MKtG6-0001UI-At
-	for gcvg-git-2@gmane.org; Sun, 28 Jun 2009 14:13:22 +0200
+	id 1MKtaa-0007Mm-SF
+	for gcvg-git-2@gmane.org; Sun, 28 Jun 2009 14:34:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751327AbZF1MNJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 28 Jun 2009 08:13:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751018AbZF1MNH
-	(ORCPT <rfc822;git-outgoing>); Sun, 28 Jun 2009 08:13:07 -0400
-Received: from smtp3-g21.free.fr ([212.27.42.3]:40511 "EHLO smtp3-g21.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750757AbZF1MNG (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 28 Jun 2009 08:13:06 -0400
-Received: from smtp3-g21.free.fr (localhost [127.0.0.1])
-	by smtp3-g21.free.fr (Postfix) with ESMTP id D9D0F818157;
-	Sun, 28 Jun 2009 14:12:58 +0200 (CEST)
-Received: from bureau.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
-	by smtp3-g21.free.fr (Postfix) with ESMTP id C85188180F9;
-	Sun, 28 Jun 2009 14:12:55 +0200 (CEST)
-User-Agent: KMail/1.9.9
-In-Reply-To: <20090626210847.3885.18347.chriscool@tuxfamily.org>
-Content-Disposition: inline
+	id S1751018AbZF1MeW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 28 Jun 2009 08:34:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750840AbZF1MeV
+	(ORCPT <rfc822;git-outgoing>); Sun, 28 Jun 2009 08:34:21 -0400
+Received: from fg-out-1718.google.com ([72.14.220.155]:56678 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750803AbZF1MeV (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 28 Jun 2009 08:34:21 -0400
+Received: by fg-out-1718.google.com with SMTP id e12so294017fga.17
+        for <git@vger.kernel.org>; Sun, 28 Jun 2009 05:34:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:received
+         :x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        bh=q06BWk2RDgshowcH/OddpPyR6oanqAMx1/iwINJSeko=;
+        b=q3WCGV0qiLXOvx56gX3tPJ1kGRA/voFcrYQvsIua4twf9uQDzEhGvAJHOfF8jGK+Pl
+         lKm1ZnJJ8RPifOth3ePKs5BSqmT31Gx8SE+tRHokmeysycM3G41GiWE9qH91Agy+ybyr
+         EeS52OTRC0cLWYtboQDwRKdUfzYNqz/OWgLdI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        b=OavWLdxC+WUBVxgDj7LdFrYoO3OasiV5wpVVJbZnmnOO63qKfHkSqqXSbo21JSdDDF
+         1whRVU1WjS8vwFSCrx1AlfF5PaAoWkxA+sEtInKqzc+adoSc4htWLTUwjJ+Kg4epLuw5
+         oXeK+VFqgTL1PxFSpphaGCfNk9ZERxBFDC2Dg=
+Received: by 10.86.66.20 with SMTP id o20mr192351fga.15.1246192463338;
+        Sun, 28 Jun 2009 05:34:23 -0700 (PDT)
+Received: from localhost.localdomain (abvg228.neoplus.adsl.tpnet.pl [83.8.204.228])
+        by mx.google.com with ESMTPS id 4sm4279241fgg.2.2009.06.28.05.34.22
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sun, 28 Jun 2009 05:34:23 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id n5SCdqQF024718;
+	Sun, 28 Jun 2009 14:39:52 +0200
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id n5SCdnp3024712;
+	Sun, 28 Jun 2009 14:39:49 +0200
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <20090628113931.GC10895@genesis.frugalware.org>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122400>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122401>
 
-Ooops, there should be a:
+Miklos Vajna <vmiklos@frugalware.org> writes:
 
-From: Stephan Beyer <s-beyer@gmx.net>
+> Backstick and apostrophe are asciidoc markup, so they should be escaped
+> in order to get the expected result in the rendered manual page.
 
-header in this patch.
+[...]
+>  startsb=&#91;
+>  endsb=&#93;
+>  tilde=&#126;
+> +backstick=&#96;
 
-Regards,
-Christian.
+It is 'backtick' (or 'backquote'), not 'backstick'.  There is no 's'
+in its name.
 
-On Friday 26 June 2009, Christian Couder wrote:
-> This function generates an informational patch file.
->
-> The "make_patch" and the "get_commit" functions are copied from the
-> GSoC sequencer project:
->
-> git://repo.or.cz/git/sbeyer.git
->
-> (commit e7b8dab0c2a73ade92017a52bb1405ea1534ef20)
->
-> Mentored-by: Christian Couder <chriscool@tuxfamily.org>
-> Mentored-by: Daniel Barkalow <barkalow@iabervon.org>
-> Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
-> ---
->  builtin-sequencer--helper.c |   75
-> ++++++++++++++++++++++++++++++++++++++++++- 1 files changed, 74
-> insertions(+), 1 deletions(-)
->
-> diff --git a/builtin-sequencer--helper.c b/builtin-sequencer--helper.c
-> index 721c0d8..8d32480 100644
-> --- a/builtin-sequencer--helper.c
-> +++ b/builtin-sequencer--helper.c
-> @@ -1,15 +1,83 @@
->  #include "builtin.h"
->  #include "cache.h"
->  #include "parse-options.h"
-> +#include "run-command.h"
-> +
-> +#define SEQ_DIR "rebase-merge"
-> +
-> +#define PATCH_FILE	git_path(SEQ_DIR "/patch")
->
->  static const char * const git_sequencer_helper_usage[] = {
->  	"git sequencer--helper --make-patch <commit>",
->  	NULL
->  };
->
-> +/* Generate purely informational patch file */
-> +static void make_patch(struct commit *commit)
-> +{
-> +	struct commit_list *parents = commit->parents;
-> +	const char **args;
-> +	struct child_process chld;
-> +	int fd = open(PATCH_FILE, O_WRONLY | O_CREAT, 0666);
-> +	if (fd < 0)
-> +		return;
-> +
-> +	memset(&chld, 0, sizeof(chld));
-> +	if (!parents) {
-> +		write(fd, "Root commit\n", 12);
-> +		close(fd);
-> +		return;
-> +	} else if (!parents->next) {
-> +		args = xcalloc(5, sizeof(char *));
-> +		args[0] = "diff-tree";
-> +		args[1] = "-p";
-> +		args[2] = xstrdup(sha1_to_hex(parents->item->object.sha1));
-> +		args[3] = xstrdup(sha1_to_hex(((struct object *)commit)->sha1));
-> +	} else {
-> +		int i = 0;
-> +		int count = 1;
-> +
-> +		for (; parents; parents = parents->next)
-> +			++count;
-> +		args = xcalloc(count + 3, sizeof(char *));
-> +		args[i++] = "diff";
-> +		args[i++] = "--cc";
-> +		args[i++] = xstrdup(sha1_to_hex(commit->object.sha1));
-> +
-> +		for (parents = commit->parents; parents;
-> +		     parents = parents->next)
-> +			args[i++] = xstrdup(sha1_to_hex(
-> +					    parents->item->object.sha1));
-> +	}
-> +
-> +	chld.argv = args;
-> +	chld.git_cmd = 1;
-> +	chld.out = fd;
-> +
-> +	/* Run, ignore errors. */
-> +	if (start_command(&chld))
-> +		return;
-> +	finish_command(&chld);
-> +
-> +	/* TODO: free dup'ed SHAs in argument list */
-> +}
-> +
-> +/* Return a commit object of "arg" */
-> +static struct commit *get_commit(const char *arg)
-> +{
-> +	unsigned char sha1[20];
-> +
-> +	if (get_sha1(arg, sha1)) {
-> +		error("Could not find '%s'", arg);
-> +		return NULL;
-> +	}
-> +	return lookup_commit_reference(sha1);
-> +}
-> +
->  int cmd_sequencer__helper(int argc, const char **argv, const char
-> *prefix) {
->  	char *commit = NULL;
-> +	struct commit *c;
->  	struct option options[] = {
->  		OPT_STRING(0, "make-patch", &commit, "commit",
->  			   "create a patch from commit"),
-> @@ -22,6 +90,11 @@ int cmd_sequencer__helper(int argc, const char **argv,
-> const char *prefix) if (!commit)
->  		usage_with_options(git_sequencer_helper_usage, options);
->
-> -	/* Nothing to do yet */
-> +	c = get_commit(commit);
-> +	if (!c)
-> +		return 1;
-> +
-> +	make_patch(c);
-> +
->  	return 0;
->  }
+-- 
+Jakub Narebski
+Poland
+ShadeHawk on #git
