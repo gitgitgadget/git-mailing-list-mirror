@@ -1,60 +1,115 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] git status -q (similar to subversion)
-Date: Sun, 28 Jun 2009 14:52:18 -0400
-Message-ID: <20090628185218.GB8634@sigio.peff.net>
-References: <Pine.LNX.4.64.0906272248570.11453@cube>
+From: Roger Leigh <rleigh@codelibre.net>
+Subject: git mailinfo strips important context from patch subjects
+Date: Sun, 28 Jun 2009 20:38:58 +0100
+Message-ID: <20090628193858.GA29467@codelibre.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Unknown <borg@uu3.net>
-X-From: git-owner@vger.kernel.org Sun Jun 28 20:50:38 2009
+Content-Type: multipart/signed; micalg=pgp-ripemd160;
+	protocol="application/pgp-signature"; boundary="UugvWAfsgieZRqgk"
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Jun 28 21:47:20 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MKzSW-0008Ad-Fo
-	for gcvg-git-2@gmane.org; Sun, 28 Jun 2009 20:50:36 +0200
+	id 1ML0LP-0002e1-G3
+	for gcvg-git-2@gmane.org; Sun, 28 Jun 2009 21:47:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752312AbZF1Su0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 28 Jun 2009 14:50:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752028AbZF1Su0
-	(ORCPT <rfc822;git-outgoing>); Sun, 28 Jun 2009 14:50:26 -0400
-Received: from peff.net ([208.65.91.99]:58883 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751519AbZF1SuZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 28 Jun 2009 14:50:25 -0400
-Received: (qmail 8676 invoked by uid 1000); 28 Jun 2009 18:52:18 -0000
+	id S1752776AbZF1TrE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 28 Jun 2009 15:47:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752398AbZF1TrD
+	(ORCPT <rfc822;git-outgoing>); Sun, 28 Jun 2009 15:47:03 -0400
+Received: from nagini.codelibre.net ([80.68.93.164]:38223 "EHLO
+	nagini.codelibre.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752167AbZF1TrC (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 28 Jun 2009 15:47:02 -0400
+X-Greylist: delayed 478 seconds by postgrey-1.27 at vger.kernel.org; Sun, 28 Jun 2009 15:47:02 EDT
+Received: by nagini.codelibre.net (Postfix, from userid 107)
+	id 86DF118223; Sun, 28 Jun 2009 20:39:03 +0100 (BST)
+Received: from hardknott (unknown [78.149.59.55])
+	by nagini.codelibre.net (Postfix) with ESMTPSA id 747FA18044
+	for <git@vger.kernel.org>; Sun, 28 Jun 2009 20:38:58 +0100 (BST)
+Received: by hardknott (Postfix, from userid 1000)
+	id 91982120C1; Sun, 28 Jun 2009 20:38:58 +0100 (BST)
 Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0906272248570.11453@cube>
+X-GPG-Key: 0x25BFB848
+X-Debian: testing/unstable
+X-OS-Uptime: 20:09:49 up  2:40,  2 users,  load average: 0.77, 0.25, 0.14
+User-Agent: Mutt/1.5.20 (2009-06-14)
+X-Bogosity: Ham, tests=bogofilter, spamicity=0.000000, version=1.1.7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122417>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122418>
 
-On Sat, Jun 27, 2009 at 10:57:13PM +0200, Unknown wrote:
 
-> Here is a tiny patch adding -q option to git status.
-> It means -uno (Show no untracked files).
-> 
-> Not sure where to add that in documentation.
-> Maybe in git-commit man just below -u:
-> -q (for git-status only, equals to -uno).
-> Or something like this?
+--UugvWAfsgieZRqgk
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-I'm not sure if this is a good idea. As you mention, there is already
-"-uno" to accomplish the same thing. So we are making the interface
-redundant.
+[I'm not currently subscribed to the list; I'd appreciate a CC
+on any replies, thanks!]
 
-It seems from the subject like you are trying to emulate a similar
-option in "svn status". But my understanding (and I was never a big
-subversion user, so I am going off of things said on the git list) is
-that there are quite a few differences between "svn status" and "git
-status".  Enough that we do not want users to really equate them (a
-subject which has come up over and over on the list).
+Hi,
 
-In other words, it seems like we are at best simply adding a redundant
-option, and at worst, confusing people even more about the equivalence
-between the "status" commands of the two systems.
+In most of the projects I work on, the git commit message has
+the affected subsystem or component in square brackets, such as
 
--Peff
+  [foo] change bar to baz
+
+For example, with a single patch from a series produced by
+git format-patch:
+
+% head -n4 /tmp/patches/0005-sbuild-chroot_mountable-Don-t-derive-from-chro=
+ot.patch
+=46rom f01579584f1e7d77cf1e9c3306601a4cccff8c55 Mon Sep 17 00:00:00 2001
+=46rom: Roger Leigh <rleigh@debian.org>
+Date: Fri, 10 Apr 2009 19:43:15 +0100
+Subject: [PATCH 05/15] [sbuild] chroot_mountable: Don't derive from chroot
+
+% git mailinfo </tmp/patches/0005-sbuild-chroot_mountable-Don-t-derive-from=
+-chroot.patch /dev/null /dev/null
+Author: Roger Leigh
+Email: rleigh@debian.org
+Subject: chroot_mountable: Don't derive from chroot
+Date: Fri, 10 Apr 2009 19:43:15 +0100
+
+The [sbuild] prefix has been dropped from the Subject, so an
+important bit of context about the patch has been lost.
+
+It's a bit of a bug that you can't round trip from a git-format-patch
+to import with git-am and then not be able to produce the exact same
+patch set with git-format-patch again (assuming preparing and applying
+to the same point, of course).
+
+Would it be possible to change the git-mailinfo logic to use a less
+greedy pattern match so it leaves everything after
+([PATCH( [0-9/])+])+ in the subject?  AFAICT this is cleanup_subject in
+builtin-mailinfo.c?  Could this rather complex function not just do a
+simple regex match which can also take care of stripping ([Rr]e:) ?
+
+
+Thanks,
+Roger
+
+--=20
+  .''`.  Roger Leigh
+ : :' :  Debian GNU/Linux             http://people.debian.org/~rleigh/
+ `. `'   Printing on GNU/Linux?       http://gutenprint.sourceforge.net/
+   `-    GPG Public Key: 0x25BFB848   Please GPG sign your mail.
+
+--UugvWAfsgieZRqgk
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
+
+iEYEAREDAAYFAkpHxtIACgkQVcFcaSW/uEgkowCgpXpQNkGcrx/1jGHQm9/uDldG
+1ZMAn1glmSnH935eEYwT3vfzd+5Cekoy
+=SqRE
+-----END PGP SIGNATURE-----
+
+--UugvWAfsgieZRqgk--
