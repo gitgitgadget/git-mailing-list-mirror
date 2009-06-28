@@ -1,181 +1,145 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCHv7 5/9] gitweb: (gr)avatar support
-Date: Sun, 28 Jun 2009 01:20:02 +0200
-Message-ID: <200906280120.02475.jnareb@gmail.com>
-References: <1246104305-15191-1-git-send-email-giuseppe.bilotta@gmail.com> <200906272145.46506.jnareb@gmail.com> <cb7bb73a0906271545h8033f63jf0198a2f9e187428@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Jun 28 01:20:22 2009
+From: Colin Watson <cjwatson@debian.org>
+Subject: Re: Suggestion: "man git clone"
+Date: Sun, 28 Jun 2009 03:34:57 +0100 (BST)
+Organization: riva.ucam.org
+Message-ID: <20090628023458.297703BC143@sarantium.pelham.vpn.ucam.org>
+References: <48AE143C.8030704@acm.org>
+Cc: Jeff King <peff@peff.net>, "H. Peter Anvin" <hpa@zytor.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Federico Lucifredi <flucifredi@acm.org>
+X-From: git-owner@vger.kernel.org Sun Jun 28 05:00:19 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MKhC1-0001v6-FH
-	for gcvg-git-2@gmane.org; Sun, 28 Jun 2009 01:20:22 +0200
+	id 1MKkcr-0002Qf-CG
+	for gcvg-git-2@gmane.org; Sun, 28 Jun 2009 05:00:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752081AbZF0XUB convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 27 Jun 2009 19:20:01 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752678AbZF0XUA
-	(ORCPT <rfc822;git-outgoing>); Sat, 27 Jun 2009 19:20:00 -0400
-Received: from fg-out-1718.google.com ([72.14.220.157]:58143 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751018AbZF0XT7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 27 Jun 2009 19:19:59 -0400
-Received: by fg-out-1718.google.com with SMTP id e12so243276fga.17
-        for <git@vger.kernel.org>; Sat, 27 Jun 2009 16:20:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=iCko+BFQBhN3HfLFzZBtOp9XqV6PAjW0YA8DnXXd224=;
-        b=iJz5zP6Udgq0FNz9Ba/8BLZZuquxLjesP8K1M73YE8dZn4mj/bMJb5S3Dtu6pbn1rT
-         g1kzU3Dvyzz0Qq7ADxe/WhcPxwoVsExjwsoy6V3bRFpumMnu+y8OTBIujY0enep/XEdB
-         gPs3tIVz6By6O6Kq1w/p/hJjzsMWhN5EYtHus=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=OEzV4hyWIz64E6/vOVtvkCfFBcuMDLnsowl8Wi2hkjVd4itYeVYYWTmFAWjae1SJQE
-         DoWO6oi4cNzDhEmIW/Hgdvg4lvQTkXMFK2nkixcrD/p9mLHp5+/PCrjBzPgeV8XP2MT7
-         yZCzDYhOR16oKiPzO9JlN25ZiuZQWmJgBMCDU=
-Received: by 10.86.74.4 with SMTP id w4mr233463fga.65.1246144801665;
-        Sat, 27 Jun 2009 16:20:01 -0700 (PDT)
-Received: from ?192.168.1.13? (abwd106.neoplus.adsl.tpnet.pl [83.8.227.106])
-        by mx.google.com with ESMTPS id d4sm3931173fga.28.2009.06.27.16.20.00
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sat, 27 Jun 2009 16:20:01 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <cb7bb73a0906271545h8033f63jf0198a2f9e187428@mail.gmail.com>
-Content-Disposition: inline
+	id S1751983AbZF1C5Y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 27 Jun 2009 22:57:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751836AbZF1C5X
+	(ORCPT <rfc822;git-outgoing>); Sat, 27 Jun 2009 22:57:23 -0400
+Received: from queue01.mail.zen.net.uk ([212.23.3.234]:45581 "EHLO
+	fizeau.zen.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751811AbZF1C5W (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 27 Jun 2009 22:57:22 -0400
+X-Greylist: delayed 1331 seconds by postgrey-1.27 at vger.kernel.org; Sat, 27 Jun 2009 22:57:22 EDT
+Received: from [212.23.3.140] (helo=smarthost01.mail.zen.net.uk)
+	by fizeau.zen.co.uk with esmtp (Exim 4.63)
+	(envelope-from <cjwatson@riva.dynamic.greenend.org.uk>)
+	id 1MKkHZ-0000Z0-Gz; Sun, 28 Jun 2009 02:38:17 +0000
+Received: from [82.69.40.219] (helo=riva.pelham.vpn.ucam.org)
+	by smarthost01.mail.zen.net.uk with esmtp (Exim 4.63)
+	(envelope-from <cjwatson@riva.dynamic.greenend.org.uk>)
+	id 1MKkEV-0005bW-NP; Sun, 28 Jun 2009 02:35:07 +0000
+Received: from sarantium.pelham.vpn.ucam.org ([172.20.153.24])
+	by riva.pelham.vpn.ucam.org with esmtp (Exim 3.36 #1 (Debian))
+	id 1MKkEV-0002ZH-00; Sun, 28 Jun 2009 03:35:07 +0100
+Received: by sarantium.pelham.vpn.ucam.org (Postfix, from userid 1000)
+	id 297703BC143; Sun, 28 Jun 2009 03:34:57 +0100 (BST)
+In-Reply-To: <48AE143C.8030704@acm.org>
+X-Originating-Smarthost01-IP: [82.69.40.219]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122391>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122392>
 
-On Sun, 28 Jun 2009, Giuseppe Bilotta wrote:
-> 2009/6/27 Jakub Narebski <jnareb@gmail.com>:
+(Sorry I didn't see this until now. HPA only CCed the maintainer of one
+of the two man packages popular on Linux-based systems; I'm the other
+one. I happened to find this thread while searching for something else.)
 
->>> + =A0 =A0 # Avatar support. When this feature is enabled, views suc=
-h as
->>> + =A0 =A0 # shortlog or commit will display an avatar associated wi=
-th
->>> + =A0 =A0 # the email of the committer(s) and/or author(s).
->>> +
->>> + =A0 =A0 # Currently only the gravatar provider is available, and =
-it
->>> + =A0 =A0 # depends on Digest::MD5.
-[...]
+In article <48AE143C.8030704@acm.org>, Federico Lucifredi wrote:
+>Jeff King wrote:
+>> On Thu, Aug 21, 2008 at 08:07:56PM -0400, Federico Lucifredi wrote:
+>>> I am all for bass-ackwards compatibility, and I think the suggestion of  
+>>> going on "man foo bar" :
+>>>
+>>>  1) look for foo-bar; if success, terminate search
+>>>  2) look for foo
+>>>  3) look for bar
+>>>  ....
+>>>
+>>> may be acceptable - I don't see drawbacks at a first glance, and it would 
+>>> allow for groups of pages to be meaningful.
 
->> By the way, we might want to accept 'none' instead of empty value
->> or no value to turn off avatar support for specific project (if
->> avatars are turned on globally, and project specific override is on)=
-=2E
->> We use this technique for 'snapshot' feature.
->>
->> But this isn't terribly important.
->=20
-> Well, since 'none' is not a known provider, that trick should work
-> correctly anyway.
+I think this is a sensible enough compromise, especially given an option
+to disable it. The code would be a little ugly, but *shrug* not that
+bad. The extra stat is cheap enough.
 
-Ah, I have forgot about this.  Perhaps it should be stated more=20
-explicitly that unknown provider (type) =3D no avatar image?  Or do I
-simply not see it?
+Using a plain 'git' section for this in order to provoke the
+happenstance of 'man git clone' working is definitely wrong as far as
+the manual page hierarchy goes; it means that things like searching for
+just user commands (section 1) that contain some term will fail. Putting
+them in section '1git' (i.e. section 1 with a git "extension") would be
+more in line with how manual pages are typically laid out, and at least
+with man-db would not require any configuration file changes. However, I
+think both of these are suboptimal. Section extensions are typically
+used for things like functions or modules in other programming
+languages, or sometimes for cases where file names would otherwise
+clash. I'm not much of a git user myself, but I don't get the impression
+that most git users think of 'git clone' as analogous to a 'clone'
+command in a hypothetical 'git' programming language; it's closer to an
+ordinary user command.
 
->>> +our ($git_avatar) =3D gitweb_get_feature('avatar');
->>> +if ($git_avatar eq 'gravatar') {
->>> + =A0 =A0 $git_avatar =3D '' unless (eval { require Digest::MD5; 1;=
- });
->>> +} else {
->>> + =A0 =A0 $git_avatar =3D '';
->>> +}
->>
->> Thoughts for the future: this can lead to not very pretty if-elsif
->> chain. =A0We have replaces such chain for selecting action (for disp=
-atch)
->> by using %actions hash of subroutine refs (as a kind of 'switch'/'gi=
-ven'
->> statement). =A0We could do the same for avatar provider initializati=
-on
->> and validation subroutines.
->>
->> But for now it is clear enough. =A0Don't worry about this issue now.
->=20
-> I'm also not terribly sure about how to implement _this_ through hash
-> calls. But I did consider the issue (how I wish Perl had an actual
-> switch statement ...)
+The only case where I've seen subcommands given their own unprefixed
+manual pages with only the section extension to tell them apart is
+OpenSSL, with pages like x509(1ssl). IME, this is very confusing and not
+a good example to follow: firstly, you can't trivially find a list of
+all the subcommands with something like 'apropos openssl-'; secondly,
+it's easy to miss that you're dealing with an openssl subcommand unless
+you keep your eyes peeled.
 
-Perl 5.10, Perl 6, Switch.pm... but it isn't something that we can use
-in gitweb.  Switch statement (spelled 'given / when') in Perl6 / Perl 5=
-=2E10
-is very, very powerfull (from what I have read).
+Short of some mechanism for git to provide a plug-in to man to tell it
+where to find subpages (eek! potential overengineering alert!), a
+foo-bar lookup seems tolerable enough.
 
-But what I meant here is something like the following:
+>> Personally I have never ever wanted to see two manpages from one man
+>> invocation, so I have no real problem with that assumption.
+>
+>I expected as much, and we should have an option to disable the "new" 
+>behavior as a safety anyway.
 
-  our %avatar_providers =3D (
-  	'gravatar' =3D> sub { eval { require Digest::MD5; 1; } },
-  	'picon'    =3D> sub { 1; },
-  );
-  unless (defined $avatar_providers{$git_avatar} &&
-          $avatar_providers{$git_avatar}->()) {
-  	$git_avatar =3D '';
-  }
+Would you like to suggest an option name for this, so that we can avoid
+unnecessary divergence? Perhaps something like --separate?
 
-Or something like that (we can use 'undef' for providers without need
-for initialization).  But that can be improved later, "in tree".
+>>> Are you willing to put your patch where your mouth is? :-)
+>> 
+>> I've never looked at man code before, but there seem to be at least two
+>> man packages for Linux. My boxes have man-db 2.5.2.
+>
+>There are two man packages for linux, man and man-db, the latter being a 
+>90's fork that uses Berkeley DB as a backend to speedup man -k searches 
+>(it helped back then).
 
+(I hope git@ will excuse the digression.)
 
-On the other hand side this solution wouldn't I think be able to deal
-with specifying fallbacks using e.g. 'gravatar+picon' (gravatar using
-picon URL as fallback i.e. "default" argument), or two images side by
-side like GMane uses (if there are two), e.g. 'gravatar picon' or=20
-'gravatar, picon'.
+Don't be confused by the name. Once upon a time the main feature of
+man-db was indeed its database; these days that's almost one of the
+least interesting features as far as I'm concerned (and I recommend GDBM
+for the database layer nowadays anyway, since Berkeley DB is overkill
+and has gone through an annoying number of disk format changes).
 
-=46ood for thought.  Not something to act on now.
+These days, much more relevant are things like the fact that man-db can
+handle encodings properly (both in manual pages and its own translated
+messages; *why* does man still use catgets?), and the effort put into
+process glue libraries so that it doesn't have to be audited carefully
+for unsafe shell code and so that it can be a lot more efficient when
+processing large numbers of manual pages (e.g. man -K).
 
->> Running t9500-gitweb-standalone-no-errors.sh with --debug option sho=
-ws
->> failing of 15 among 87 tests, with error:
->>
->> =A0 gitweb.perl: Use of uninitialized value in hash element at gitwe=
-b/gitweb.perl line 1524.
->>
->> which is the above line. =A0This line should read:
->>
->> =A0+ =A0 =A0 my $size =3D exists $opts{'size'}
->> =A0+ =A0 =A0 =A0 =A0 =A0 =A0 ? $avatar_size{$opts{'size'}} || $avata=
-r_size{'default'}
->> =A0+ =A0 =A0 =A0 =A0 =A0 =A0 : $avatar_size{'default'};
->>
->> or something like that, e.g.:
->>
->> =A0+ =A0 =A0 my $size =3D $avatar_size{ defined $opts{'size'} ? $opt=
-s{'size'} : 'default' }
->> =A0+ =A0 =A0 =A0 =A0 =A0 =A0 || $avatar_size{'default'};
->=20
-> I did $opts{-size} ||=3D 'default'. Or is it bad form to modify the
-> passed option hash?
+Anyway, if you look at the history, what happened is that John W. Eaton
+wrote the original man way back in 1990/1 or so, then two different sets
+of people developed it in different directions into man and man-db. That
+was in the early 1990s when free software developers weren't
+communicating as often as they do now. Then, by the time it became
+obvious around 1995 that there'd been a fork, the two were already
+separate packages with different aims and it was now too hard for anyone
+to merge them. You could still see the common ancestry if you looked
+closely (indeed, you still can in places), but they're really much more
+like two completely separate implementations than a fork. It's a bit of
+a shame in some ways, but harmless enough.
 
-No, it is O.K.  We do similar thing in href(), deleting keys from hash.
+Cheers,
 
->>> + =A0 =A0 my $url =3D "";
->>> + =A0 =A0 if ($git_avatar eq 'gravatar') {
->>> + =A0 =A0 =A0 =A0 =A0 =A0 $url =3D "http://www.gravatar.com/avatar.=
-php?gravatar_id=3D" .
->>> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 Digest::MD5::md5_hex(lc $=
-email) . "&amp;size=3D$size";
->>
->> Why not use the new API[1][2]?:
->=20
-> Updated.
-
-This affects also the next patch in series.
-
---=20
-Jakub Narebski
-Poland
+-- 
+Colin Watson                                       [cjwatson@debian.org]
