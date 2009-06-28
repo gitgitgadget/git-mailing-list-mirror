@@ -1,89 +1,65 @@
-From: Miklos Vajna <vmiklos@frugalware.org>
-Subject: [PATCH v2] git-submodule documentation: fix foreach example
-Date: Sun, 28 Jun 2009 14:55:45 +0200
-Message-ID: <20090628125545.GH10895@genesis.frugalware.org>
-References: <20090628113931.GC10895@genesis.frugalware.org> <m3tz20wmzv.fsf@localhost.localdomain>
+From: Tay Ray Chuan <rctay89@gmail.com>
+Subject: Re: git push failed over http
+Date: Sun, 28 Jun 2009 21:47:56 +0800
+Message-ID: <be6fef0d0906280647o6ff292a7t334525f95cba41@mail.gmail.com>
+References: <82ec251f0906280020p71026a81w57018e9af4d39396@mail.gmail.com>
+	 <m3y6rcwz5f.fsf@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jakub Narebski <jnareb@gmail.com>,
-	Mark Levedahl <mlevedahl@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Jun 28 14:56:07 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Lynn Lin <lynnos@tong-ji.org>, git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Jun 28 15:48:05 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MKtvF-00056W-PQ
-	for gcvg-git-2@gmane.org; Sun, 28 Jun 2009 14:55:54 +0200
+	id 1MKujk-0006jE-DN
+	for gcvg-git-2@gmane.org; Sun, 28 Jun 2009 15:48:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751450AbZF1Mzo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 28 Jun 2009 08:55:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751295AbZF1Mzn
-	(ORCPT <rfc822;git-outgoing>); Sun, 28 Jun 2009 08:55:43 -0400
-Received: from virgo.iok.hu ([212.40.97.103]:35823 "EHLO virgo.iok.hu"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751102AbZF1Mzn (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 28 Jun 2009 08:55:43 -0400
-Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
-	by virgo.iok.hu (Postfix) with ESMTP id 0221A58087;
-	Sun, 28 Jun 2009 14:55:46 +0200 (CEST)
-Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
-	by kag.elte.hu (Postfix) with ESMTP id AFD4D448D3;
-	Sun, 28 Jun 2009 14:55:45 +0200 (CEST)
-Received: by genesis.frugalware.org (Postfix, from userid 1000)
-	id 8EE82634001; Sun, 28 Jun 2009 14:55:45 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <m3tz20wmzv.fsf@localhost.localdomain>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+	id S1751917AbZF1Nry (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 28 Jun 2009 09:47:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751509AbZF1Nrx
+	(ORCPT <rfc822;git-outgoing>); Sun, 28 Jun 2009 09:47:53 -0400
+Received: from mail-px0-f190.google.com ([209.85.216.190]:57974 "EHLO
+	mail-px0-f190.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751102AbZF1Nrw (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 28 Jun 2009 09:47:52 -0400
+Received: by pxi28 with SMTP id 28so2840458pxi.33
+        for <git@vger.kernel.org>; Sun, 28 Jun 2009 06:47:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=tYFrez3BXt5K9EEFld4SJjnJvOR09uEFI3DyaHJm2wE=;
+        b=O7sayLbqLdr7x03zd9U3Zb/d7QDPVggYxvKWEE8ZDsjJ7b9THf3zUMG9ItRlFLZE7C
+         hza9nOw1KZ0WtCghi+O/FzG4zyzrROT4AM3VJN9USXivBNWYlUOzGipmdXi1uZmrnlTu
+         ANPgzRUu+85Yzl6Mbk252SoC6lu+B6GK+AodM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=OEzsvlzuQytcAXTAxpVQKVZJUsZVtxU1x9S3TjFCN+i7IqAFd5Fg5ugUcEh1apooSS
+         Nf5nhYuJjctj+nCGNlDoSlnNICRXQnG7b0brVGkGw5CDX6CCUzFyOFj4z0MhmxMKq8QJ
+         uNDRqRYczzDjaUEaOfKgiTPKnZINYJee4ujfo=
+Received: by 10.141.27.16 with SMTP id e16mr749689rvj.79.1246196876088; Sun, 
+	28 Jun 2009 06:47:56 -0700 (PDT)
+In-Reply-To: <m3y6rcwz5f.fsf@localhost.localdomain>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122402>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122403>
 
-Backtick and apostrophe are asciidoc markup, so they should be escaped
-in order to get the expected result in the rendered manual page.
+Hi,
 
-Signed-off-by: Miklos Vajna <vmiklos@frugalware.org>
----
+On Sun, Jun 28, 2009 at 4:11 PM, Jakub Narebski<jnareb@gmail.com> wrote:
+> First, you push over https, not http.
 
-On Sun, Jun 28, 2009 at 05:34:23AM -0700, Jakub Narebski <jnareb@gmail.com> wrote:
-> It is 'backtick' (or 'backquote'), not 'backstick'.  There is no 's'
-> in its name.
+It's possible to push over HTTP. Authentication methods include Basic
+and Digest.
 
-Ah, true. Thanks, fixed.
-
- Documentation/asciidoc.conf     |    1 +
- Documentation/git-submodule.txt |    5 +++--
- 2 files changed, 4 insertions(+), 2 deletions(-)
-
-diff --git a/Documentation/asciidoc.conf b/Documentation/asciidoc.conf
-index dc76e7f..b88d875 100644
---- a/Documentation/asciidoc.conf
-+++ b/Documentation/asciidoc.conf
-@@ -17,6 +17,7 @@ caret=&#94;
- startsb=&#91;
- endsb=&#93;
- tilde=&#126;
-+backtick=&#96;
- 
- ifdef::backend-docbook[]
- [linkgit-inlinemacro]
-diff --git a/Documentation/git-submodule.txt b/Documentation/git-submodule.txt
-index 470bd75..8941ad7 100644
---- a/Documentation/git-submodule.txt
-+++ b/Documentation/git-submodule.txt
-@@ -141,8 +141,9 @@ foreach::
- 	the processing to terminate. This can be overridden by adding '|| :'
- 	to the end of the command.
- +
--As an example, "git submodule foreach 'echo $path `git rev-parse HEAD`' will
--show the path and currently checked out commit for each submodule.
-+As an example, +git submodule foreach \'echo $path {backtick}git
-+rev-parse HEAD{backtick}'+ will show the path and currently checked out
-+commit for each submodule.
- 
- sync::
- 	Synchronizes submodules' remote URL configuration setting
 -- 
-1.6.3.2
+Cheers,
+Ray Chuan
