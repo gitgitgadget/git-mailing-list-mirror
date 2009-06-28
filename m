@@ -1,149 +1,83 @@
-From: "Patrick Neuner - Futureweb.at" <neuner@futureweb.at>
-Subject: AW: Parallell Development / Switching to GIT
-Date: Sun, 28 Jun 2009 19:51:26 +0200
-Message-ID: <B81058949321C8439B9D742F5F8D8FCA01A75C1D@hpserver.intranet.local>
-References: <loom.20090625T095000-90@post.gmane.org> <4A434D6F.2090105@op5.se>
+From: Jeff King <peff@peff.net>
+Subject: Re: Parallell Development / Switching to GIT
+Date: Sun, 28 Jun 2009 14:47:14 -0400
+Message-ID: <20090628184714.GA8634@sigio.peff.net>
+References: <loom.20090625T095000-90@post.gmane.org> <4A434D6F.2090105@op5.se> <B81058949321C8439B9D742F5F8D8FCA01A75C1D@hpserver.intranet.local>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="utf-8"
-Content-Transfer-Encoding: base64
-Cc: <git@vger.kernel.org>
-To: "Andreas Ericsson" <ae@op5.se>
-X-From: git-owner@vger.kernel.org Sun Jun 28 19:51:42 2009
+Content-Type: text/plain; charset=utf-8
+Cc: Andreas Ericsson <ae@op5.se>, git@vger.kernel.org
+To: "Patrick Neuner - Futureweb.at" <neuner@futureweb.at>
+X-From: git-owner@vger.kernel.org Sun Jun 28 20:46:16 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MKyXV-0004EO-Uv
-	for gcvg-git-2@gmane.org; Sun, 28 Jun 2009 19:51:42 +0200
+	id 1MKzOH-0006n4-LT
+	for gcvg-git-2@gmane.org; Sun, 28 Jun 2009 20:46:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752337AbZF1Rv3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 28 Jun 2009 13:51:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752207AbZF1Rv3
-	(ORCPT <rfc822;git-outgoing>); Sun, 28 Jun 2009 13:51:29 -0400
-Received: from eu1sys200aog116.obsmtp.com ([207.126.144.141]:34770 "EHLO
-	eu1sys200aog116.obsmtp.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751538AbZF1Rv2 (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 28 Jun 2009 13:51:28 -0400
-Received: from source ([80.109.165.251]) (using TLSv1) by eu1sys200aob116.postini.com ([207.126.147.11]) with SMTP
-	ID DSNKSketoKoD+66F1JXm42O0fmh06LYKcIeb@postini.com; Sun, 28 Jun 2009 17:51:31 UTC
-Content-class: urn:content-classes:message
-X-MimeOLE: Produced By Microsoft Exchange V6.5
-In-Reply-To: <4A434D6F.2090105@op5.se>
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-Thread-Topic: Parallell Development / Switching to GIT
-Thread-Index: Acn1fWaQLApTs2gqSwmfKV8qwNGo3QBzLLwQ
+	id S1757015AbZF1SpZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 28 Jun 2009 14:45:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757000AbZF1SpX
+	(ORCPT <rfc822;git-outgoing>); Sun, 28 Jun 2009 14:45:23 -0400
+Received: from peff.net ([208.65.91.99]:34893 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757195AbZF1SpW (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 28 Jun 2009 14:45:22 -0400
+Received: (qmail 8644 invoked by uid 1000); 28 Jun 2009 18:47:14 -0000
+Content-Disposition: inline
+In-Reply-To: <B81058949321C8439B9D742F5F8D8FCA01A75C1D@hpserver.intranet.local>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122415>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122416>
 
-SGksDQoNCkkgaGF2ZSBiZWVuIGluc3RhbGxpbmcgYW5kIHRyeWluZyBvdXQgR0lUIGJ5IG5vdyBh
-bmQgbGlrZSBpdC4gDQoNCkkgYW0gbm90IHN1cmUgaWYgSSB1bmRlcnN0b29kIGV2ZXJ5dGhpbmcg
-Y29ycmVjdGx5IHRob3VnaC4gDQpMZXQgbWUgcG9pbnQgb3V0IDIgcGFydHMgSSBqdXN0IGNvdWxk
-bid0IGZpbmQgYSBzb2x1dGlvbiBmb3Igc28gZmFyOiANCg0KV2UgYXJlIHN0aWxsIGhhdmluZyB0
-aGUgc2NlbmFyaW8gb2YgMiBicmFuY2hlcy4gDQpNYXN0ZXINCkRldmVsb3BtZW50LiANCg0KMSkg
-V2hhdCBpZiBJIG9ubHkgd2FudCB0byBtZXJnZSBhIHNwZWNpZmljIGZpbGUvZGlyZWN0bHksIGJ1
-dCBub3QgdGhlIHdob2xlIGJyYW5jaCwgaXMgdGhlcmUgYSB3YXk/DQoNCkkgZm91bmQgdGhhdCBJ
-IGNhbiBnaXQgY2hlY2tvdXQgZGV2ZWxvcG1lbnQgZGlyZWN0b3J5LyBidXQgdGhpcyBvbmx5IHdv
-cmtzIGZvciBuZXcgYWRkZWQgZmlsZXMsIA0KaXQgd291bGQgb3ZlcndyaXRlIGNoYW5nZXMgd2l0
-aGluIHRoZSBzYW1lIGZpbGUgb2YgbWFzdGVyLCBpZiBpdCBleGlzdHMuIFNvIGl0J3MgcHJldHR5
-IHNpbWlsYXIgdG8ganVzdCBjb3BpaW5nIGZpbGVzIG92ZXIgYW5kIGNvbW1pdC4NCg0KVGhlIHJl
-YXNvbiBpcywgdGhhdCBleHRlcm5hbCBkZXZlbG9wZXJzIHdpbGwgb25seSBjb21taXQgdG8gZGV2
-ZWxvcG1lbnQgYnJhbmNoLiANClRoZXkgYXJlIHdvcmtpbmcgb24gbmV3IGZlYXR1cmVzLCBhbmQg
-c29tZXRpbWVzIHNvbWUgc21hbGwgYnVnZml4ZXMsIG9yIGRlc2lnbiB0ZW1wbGF0ZXMuIA0KVGhv
-c2UgbmVlZCB0byBiZSBtZXJnZWQgc2VwYXJhdGVseSwgYW5kIHdlIHRyeSB0byBub3QgaGF2ZSBt
-b3JlIGJyYW5jaGVzLiBBcyBkZXZlbG9wZXJzIGNhbiBhY2Nlc3Mgb3VyIHRlc3RzZXJ2ZXIgYW5k
-IHRoZW4gc2VlIHdoYXQgdGhleSBoYXZlIGRvbmUgYW5kIHRlc3QgZnVuY3Rpb25hbGl0eS4gDQoN
-CklmIHdlIGRvIGRpZmZlcmVudCBicmFuY2hlcywgdGVzdGluZyBvbiB0aGUgdGVzdHNlcnZlciB3
-b3VsZCBhbHdheXMgaW52b2x2ZSBtZXJnaW5nIHRoZSBicmFuY2ggaW50byBkZXZlbG9wbWVudCBi
-cmFuY2gsIGFuZCBlc3BlY2lhbGx5IGZvciB0ZW1wbGF0ZXMsDQp0aGlzIGlzbid0IGEgb25lIHRp
-bWUgdXBkYXRlLCBidXQgbWlnaHQgYmUgdGhlcmUgYXJlIHF1aXRlIHNvbWUgY29tbWl0cywgdW50
-aWwgZXZlcnl0aGluZyBmaXRzLg0KDQpJcyB0aGVyZSBhIHdheT8NCiAgDQoyKSBXZSBhcmUgdXNp
-bmcgZ2l0b3NpcyB0byBnaXZlIGV4dGVybmFsIGRldmVsb3BlcnMgYWNjZXNzIHRvIHRoZSBicmFu
-Y2hlcyBhbmQgaGF2ZSBzb21lIGtpbmQgb2YgYWNjZXNzIHJlc3RyaWN0aW9uLiANCkJ1dCB3ZSBh
-cmUgb25seSBhYmxlIHRvIGxpbWl0IHB1c2ggcmlnaHRzLCBub3QgcHVsbCByaWdodHMuIEluIG1v
-c3QgY2FzZXMsIHRoYXQncyBub3QgYSBwcm9ibGVtLCBpZiB0aGV5IHNlZSBtYXN0ZXINCkFuZCBk
-ZXZlbG9wbWVudCwgYnV0IHNvbWV0aW1lcyAobGlrZSBmb3IgZXh0ZXJuYWwgZGVzaWduZXJzKSwg
-d2UgbWlnaHQgd2FudCB0aGVtIHRvIG9ubHkgYmUgYWJsZSB0byBjaGVja291dCBzb21lIGRpcmVj
-dG9yaWVzLiANCg0KSW1wb3J0YW50IGhlcmUgaXMsIHRoYXQgbWVyZ2luZyB3aWxsIHN0aWxsIHdv
-cmsgKGxpa2UgbGF0ZXIgaW50byB0aGUgbWFzdGVyKSwgYW5kIHRoYXQgZmlsZXMgZ28gZGlyZWN0
-bHkgaW50byBkZXZlbG9wbWVudCBicmFuY2guIA0KU2FtZSBhcyBhYm92ZSwgdGhleSBuZWVkIHRv
-IHRlc3QgZnVuY3Rpb25hbGl0eSwgc28gc3dpdGNoaW5nIGJyYW5jaGVzIG9uIHRoZSB0ZXN0c2Vy
-dmVyIHdvdWxkbid0IHdvcmsuIA0KDQpBcyBJIGFtIGNvbWluZyBmcm9tIGFuIHN2biBiYWNrZ3Jv
-dW5kLCB3aGVyZSBib3RoIHRoaW5ncyB3ZXJlIHBvc3NpYmxlLCBJIHdvbmRlciBpZiBJIGp1c3Qg
-ZGlkbid0IGhpdCB0aGUgcmlnaHQgdHJhaWwNCnRvIGdldCB0aGlzIGFjY29tcGxpc2hlZCB3aXRo
-IGdpdD8NCg0KVGhhbmtzDQoNClBhdHJpY2sNCg0KDQotLS0tLVVyc3Byw7xuZ2xpY2hlIE5hY2hy
-aWNodC0tLS0tDQpWb246IEFuZHJlYXMgRXJpY3Nzb24gW21haWx0bzphZUBvcDUuc2VdIA0KR2Vz
-ZW5kZXQ6IERvbm5lcnN0YWcsIDI1LiBKdW5pIDIwMDkgMTI6MTINCkFuOiBQYXRyaWNrIE5ldW5l
-ciAtIEZ1dHVyZXdlYi5hdA0KQ2M6IGdpdEB2Z2VyLmtlcm5lbC5vcmcNCkJldHJlZmY6IFJlOiBQ
-YXJhbGxlbGwgRGV2ZWxvcG1lbnQgLyBTd2l0Y2hpbmcgdG8gR0lUDQoNClBhdHJpY2sgTmV1bmVy
-IHdyb3RlOg0KPiBIZWxsbywNCj4gDQo+IHdlIGFyZSB1c2luZyBTVk4gcmlnaHQgbm93IGFuZCB3
-aXRoIHRoZSB3YXkgd2UgZG8gLyBuZWVkIHRvIGRldmVsb3AsIGl0IHNlZW1zIHdlDQo+IGFyZSBj
-b25zdGFudGx5IGdldCBpbiBhIG1lcmdpbmcgaG9ycm9yLiANCj4gSSBkaWQgcXVpdGUgc29tZSBy
-ZWFkaW5nIGFib3V0IGdpdCBub3csIGJ1dCBJIGFtIHN0aWxsIG5vdCByZWFsbHkgc3VyZSBpZiB0
-aGF0DQo+IHdoYXQgd2UgdHJ5IHRvIGFjY29tcGxpc2ggY2FuIGJlIGRvbmUgd2l0aCBnaXQsDQo+
-IE9yIGlmIHdlIGFyZSByZWFsbHkgZG9pbmcgc29tZXRoaW5nIGEgdG9vIG9kZCB3YXkuIA0KPiAN
-Cg0KQ29uZmxpY3RzIHdpbGwgc3RpbGwgaGFwcGVuIHdpdGggZ2l0LCBidXQgIm1lcmdlIGhvcnJv
-ciIgbm8gbG9uZ2VyIGFwcGxpZXMsDQpmb3IgYSBjb3VwbGUgb2YgcmVhc29ucyAoSSBjb21lIGZy
-b20gYSBzaW1pbGFyIGJhY2tncm91bmQsIGJ1dCBzd2l0Y2hlZCB0bw0KZ2l0IGluIGxhdGUgMjAw
-NSkuDQoxLiBJbiBTVk4gKGFuZCBDVlMpLCB5b3UncmUgbWVyZ2luZyAqdW5rbm93biBjaGFuZ2Vz
-KiBpbnRvICp1bnNhdmVkIHN0YXRlKi4NCiAgIFlvdSBoYXZlbid0IGNvbW1pdHRlZCB5b3VyIGNo
-YW5nZXMgdG8gdGhlIHJlcG9zaXRvcnkgYmVmb3JlIHlvdSBtZXJnZSwNCiAgIGFuZCB5b3UgaGF2
-ZW4ndCAodXN1YWxseSkgbG9va2VkIGF0IHRoZSB1cHN0cmVhbSBjaGFuZ2VzIGJlZm9yZSB5b3UN
-CiAgIHRyeSB0byBtZXJnZS4gR2l0IGRvZXNuJ3QgaGF2ZSB0aGlzIHByb2JsZW0gKGFuZCBuZWl0
-aGVyIGRvZXMgYW55IG90aGVyDQogICBkaXN0cmlidXRlZCB2ZXJzaW9uIGNvbnRyb2wgc3lzdGVt
-KSwgc2luY2UgeW91IGZpcnN0IGZldGNoIGNoYW5nZXMgZnJvbQ0KICAgc29tZW9uZSBlbHNlIGFu
-ZCB0aGVuIG1lcmdlIHRoZW0gaW50byBhbiBhbHJlYWR5IHNhdmVkIHN0YXRlLiBXaGVuIGENCiAg
-IG1lcmdlIGNvbmZsaWN0IHJlc29sdXRpb24gZ29lcyB3YWhvb25pZS1zaGFwZWQsIHlvdSBjYW4g
-ZWFzaWx5IHJlc3RvcmUNCiAgIGVpdGhlciBvZiB0aGUgcHJldmlvdXNseSBzYXZlZCBzdGF0ZXMg
-d2l0aCB6ZXJvIGhhc3NsZS4NCjIuIEdpdCBoYXMgInJlcmVyZSIsIHdoaWNoIHJlY29yZHMgYW5k
-IHJldXNlcyBwcmV2aW91c2x5IHJlc29sdmVkIG1lcmdlDQogICBjb25mbGljdHMsIHNvIHlvdSB3
-b24ndCBnZXQgdGhlIHNhbWUgbWVyZ2UtY29uZmxpY3QgbW9yZSB0aGFuIG9uY2UsIGlmDQogICB5
-b3UgZW5hYmxlIHJlcmVyZS4NCjMuIFNWTiAoYW5kIENWUykgd29uJ3QgcmVtZW1iZXIgd2hpY2gg
-Y2hhbmdlcyBhcmUgYWxyZWFkeSBtZXJnZWQgaW4sIHNvDQogICB0aGV5IHdpbGwgZmFpbCBob3Jy
-aWJseSBhdCByZXBlYXRlZCBzYW1lLWJyYW5jaCBtZXJnZXMuIEdpdCAoYW5kIG90aGVyDQogICBE
-QUctYmFzZWQgc2NtJ3MpIGNhbiBhbmQgZG8gY2FsY3VsYXRlIHRoZSBtZXJnZS1iYXNlIGZvciB5
-b3Ugc28geW91J2xsDQogICBuZXZlciBoYXZlIHRvIHRoaW5rIGFib3V0IHRoYXQgeW91cnNlbGYu
-DQoNCj4gTGV0IG15IHRyeSB0byBkZXNjcmliZSDigJMgSSBhbHNvIGFkZGVkIGFuIGltYWdlLiAN
-Cj4gDQo+IC0tLS0gcmVwbyAxDQo+ICAgfA0KPiAgICAtIHJlcG8gMiAoPWJyYW5jaCBvZiByZXBv
-IDEgLSBmb3Igb3VyIGV4dGVybmFsIGRldmVsb3BlcnMpDQo+IA0KPiBXZSBoYXZlIHRoZSBtYWlu
-IGJyYW5jaCBhbmQgMm5kIGJyYW5jaCBmb3IgZXh0ZXJuYWwgZGV2ZWxvcGVycy4gDQo+IA0KPiBX
-ZSB3b3JrIGluc2lkZSB0aGUgcmVwbzEsIHdoaWNoIGFyZSB1c3VhbGx5IGZlYXR1cmVzL3VwZGF0
-ZXMgdGhhdCBnbyBsaWZlIGFmdGVyDQo+IGEgc2hvcnQgdHVybi4gDQo+IE91ciBleHRlcm5hbCBk
-ZXZlbG9wZXIgd29yayBvbiBkaWZmZXJlbnQgZmVhdHVyZXMgdGhhdCB3aWxsIGJlIG1lcmdlZCBp
-bnRvIHJlcG8xDQo+IGZyb20gdGltZSB0byB0aW1lLiANCj4gDQo+IFVzdWFsbHkgZHVyaW5nIGRl
-dmVsb3BtZW50LCB3ZSBzb21ldGltZXMgbmVlZCB0byBwdXNoIGZlYXR1cmVzIGZyb20gcmVwbzEg
-dG8NCj4gcmVwbzIsIGFuZCBsYXRlciB0aGUgZmVhdHVyZXMgZGV2ZWxvcGVkIG9uIHJlcG8yIHdp
-bGwgYmUgcHVzaGVkIGJhY2sgdG8gcmVwbzEsIA0KPiBBbmQgYWxzbyBzbWFsbGVyIGJ1ZyBmaXhl
-cyBjb21lIGZyb20gcmVwbzIgdGhhdCBuZWVkcyB0byBnbyBpbnRvIHJlcG8xLiANCj4gDQo+IEJ1
-dCB0aGlzIGlzIGEgY29uc3RhbnQgcHJvY2VzcywgbWVhbmluZywgdGhhdCBib3RoIGJyYW5jaGVz
-IHdpbGwgZXhpc3QsDQo+IGVzcGVjaWFsbHkgcmVwbzIgd2lsbCBleGlzdCBhZnRlciB0aGlzIGZl
-YXR1cmUgaGFzIGZpbmlzaGVkIGZvciBzbWFsbGVyDQo+IHVwZGF0ZXMvYnVnZml4ZXMuIA0KPiBX
-ZSBkb27igJl0IHdhbnQgdG8gZG8gYSBuZXcgYnJhbmNoIGZvciBlYWNoIGJ1Z2ZpeCwgZm9yIGVh
-Y2ggbmV3IHNtYWxsIGZlYXR1cmUsDQo+IGJ1dCBoYXZlIGRpZmZlcmVudCBicmFuY2hlcyBmb3Ig
-ZGlmZmVyZW50IGRldmVsb3BlciB0ZWFtcy4gDQo+IA0KPiBTbyBJIHdhcyB3b25kZXJpbmcsIGlm
-IHRoaXMgY291bGQgY2F1c2UgdHJvdWJsZXMgd2l0aCBHSVQgaW4gY2FzZSBvZiBtZXJnaW5nDQo+
-IGFyb3VuZCB3aXRob3V0IGNsb3NpbmcgYSBicmFuY2guIA0KPiANCg0KR2l0IGRvZXNuJ3QgdGFr
-ZSBhd2F5IG1lcmdlIGNvbmZsaWN0cywgYnV0IGl0IGRvZXMgbWFrZSBpdCAoYSBMT1QpIGVhc2ll
-ciB0bw0KaGFuZGxlIHRoZW0gd2hlbiB0aGV5IGFwcGVhciwgZm9yIHRoZSByZWFzb25zIHN0YXRl
-ZCBhYm92ZS4gV2hhdCB5b3Ugd2FudCB0bw0KZG8gc291bmRzIHByZXR0eSByZWFzb25hYmxlLCBh
-bHRob3VnaCBJJ2QgcGVyc29uYWxseSB1c2UgZmVhdHVyZS1icmFuY2hlcw0KZm9yIGJvdGggaW50
-ZXJuYWwgYW5kIGV4dGVybmFsIGRldmVsb3BlcnMsIHNpbmNlIHRoZXkgbWFrZSBpdCBwb3NzaWJs
-ZSB0bw0KcGljayB3aGljaCBmZWF0dXJlcyBhbmQgZml4ZXMgeW91IHdhbnQgdG8gcmVsZWFzZSB3
-aGlsZSBhbGxvd2luZyBkZXZlbG9wZXJzDQp0byBtYWtlIGFzIG1hbnkgY29tbWl0cyBhcyB0aGV5
-IGZlZWwgaXMgbmVjZXNzYXJ5IGZvciBlYWNoIGZlYXR1cmUuDQoNCj4gSSBhbSBhZGRpbmcgYW4g
-bGluayB0byBhbiBpbWFnZSB0aGF0IG1pZ2h0IHNob3cgd2hhdCBJIHRyaWVkIHRvIGV4cGxhaW4u
-IA0KPiBodHRwOi8vdGVtcC5pbi5mdXR1cmV3ZWIuYXQvcGFyYWxsZWxsLWRldmVsb3BtZW50LnBu
-Zw0KPiANCg0KV2UncmUgcXVpdGUgZm9uZCBvZiBhc2NpaS1hcnQgaGVyZSBvbiBnaXRAdmdlci4g
-U2luY2UgSSBkb24ndCBrbm93IHdoYXQgdGhlDQpkaWZmZXJlbnQgY29sb3JzIG1lYW4gaW4gdGhl
-IHBpY3R1cmUsIGFzY2lpIHdvdWxkIHByb2JhYmx5IGhhdmUgbWFkZSBtb3JlDQpzZW5zZSAoc2lu
-Y2UgSSB0aGVuIGNvdWxkIGhhdmUgY29tbWVudGVkIG9uIGl0KS4NCg0KLS0gDQpBbmRyZWFzIEVy
-aWNzc29uICAgICAgICAgICAgICAgICAgIGFuZHJlYXMuZXJpY3Nzb25Ab3A1LnNlDQpPUDUgQUIg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgIHd3dy5vcDUuc2UNClRlbDogKzQ2IDgtMjMwMjI1
-ICAgICAgICAgICAgICAgICAgRmF4OiArNDYgOC0yMzAyMzENCg0KQ29uc2lkZXJpbmcgdGhlIHN1
-Y2Nlc3NlcyBvZiB0aGUgd2FycyBvbiBhbGNvaG9sLCBwb3ZlcnR5LCBkcnVncyBhbmQNCnRlcnJv
-ciwgSSB0aGluayB3ZSBzaG91bGQgZ2l2ZSBzb21lIHNlcmlvdXMgdGhvdWdodCB0byBkZWNsYXJp
-bmcgd2FyDQpvbiBwZWFjZS4NCg==
+On Sun, Jun 28, 2009 at 07:51:26PM +0200, Patrick Neuner - Futureweb.at wrote:
+
+> 1) What if I only want to merge a specific file/directly, but not the
+> whole branch, is there a way?
+> [...]
+> The reason is, that external developers will only commit to
+> development branch.  They are working on new features, and sometimes
+> some small bugfixes, or design templates.  Those need to be merged
+> separately, and we try to not have more branches. As developers can
+> access our testserver and then see what they have done and test
+> functionality.
+
+For the situation you describe, it is not about merging a specific
+_file_, but rather you want to pick specific _commits_ from the
+development branch that have the bugfixes (or whatever) that you need,
+and merge the changes introduced by those commits (but not the rest of
+the history).
+
+And that is easy to do; it is called cherry-picking, and you can use
+"git cherry-pick" to pick specific commits from development to master.
+
+> 2) We are using gitosis to give external developers access to the
+> branches and have some kind of access restriction.  But we are only
+> able to limit push rights, not pull rights. In most cases, that's not
+> a problem, if they see master And development, but sometimes (like for
+> external designers), we might want them to only be able to checkout
+> some directories.
+
+There are two ways you can split access, and one will work but the other
+will not.
+
+In git, you generally cannot split your data by _tree_. That is, you
+cannot say "here is all of the history for the master branch, but you
+are only allowed to look at some subset of the files." Because at a
+fundamental level, git is about tracking changes to the _whole_ set of
+files over time, and it makes the assumption that if you have commit X,
+which points to tree Y, which points to files A, B, and C, that you will
+have the data for X, Y, A, B, and C in your repository.
+
+However, if you have your data split by _history_, that might work. That
+is, if you have a "master" branch and a "development" branch, you can in
+theory say "you may look at the history of master, but not of
+development". The usual way to do that is to actually keep "master" and
+"development" in two different repositories, and only grant read
+permission in the filesystem for the "master" one (which obviously
+implies doing your reading over something authenticated, like ssh).
+
+Hope that helps,
+-Peff
