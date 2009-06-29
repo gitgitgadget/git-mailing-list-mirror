@@ -1,53 +1,59 @@
-From: Rogan Dawes <lists@dawes.za.net>
-Subject: Re: Merge, rebase and whitespace fixes
-Date: Mon, 29 Jun 2009 23:30:47 +0200
-Message-ID: <4A493287.20106@dawes.za.net>
-References: <cb7bb73a0906291218m3ba43109s35cad87efc5161a7@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Git List <git@vger.kernel.org>
-To: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jun 29 23:32:15 2009
+From: Roger Leigh <rleigh@debian.org>
+Subject: [PATCH 2/2] builtin-mailinfo.c: Free regular expression after use
+Date: Mon, 29 Jun 2009 22:34:29 +0100
+Message-ID: <1246311269-18120-1-git-send-email-rleigh@debian.org>
+References: <7vfxdkez96.fsf@alter.siamese.dyndns.org>
+Cc: Roger Leigh <rleigh@debian.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jun 29 23:34:59 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MLOSU-0002yv-2P
-	for gcvg-git-2@gmane.org; Mon, 29 Jun 2009 23:32:14 +0200
+	id 1MLOV7-0003x1-W5
+	for gcvg-git-2@gmane.org; Mon, 29 Jun 2009 23:34:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753888AbZF2VcE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 29 Jun 2009 17:32:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753283AbZF2VcC
-	(ORCPT <rfc822;git-outgoing>); Mon, 29 Jun 2009 17:32:02 -0400
-Received: from hapkido.dreamhost.com ([66.33.216.122]:34122 "EHLO
-	hapkido.dreamhost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753059AbZF2VcA (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 29 Jun 2009 17:32:00 -0400
-Received: from homiemail-a14.g.dreamhost.com (caiajhbdcbhh.dreamhost.com [208.97.132.177])
-	by hapkido.dreamhost.com (Postfix) with ESMTP id CB5141842D5
-	for <git@vger.kernel.org>; Mon, 29 Jun 2009 14:32:04 -0700 (PDT)
-Received: from artemis.local (dsl-246-34-245.telkomadsl.co.za [41.246.34.245])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by homiemail-a14.g.dreamhost.com (Postfix) with ESMTPSA id 682CC8C062;
-	Mon, 29 Jun 2009 14:30:53 -0700 (PDT)
-User-Agent: Thunderbird 2.0.0.22 (Macintosh/20090605)
-In-Reply-To: <cb7bb73a0906291218m3ba43109s35cad87efc5161a7@mail.gmail.com>
+	id S1753283AbZF2Ves (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 29 Jun 2009 17:34:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752800AbZF2Ver
+	(ORCPT <rfc822;git-outgoing>); Mon, 29 Jun 2009 17:34:47 -0400
+Received: from nagini.codelibre.net ([80.68.93.164]:58625 "EHLO
+	nagini.codelibre.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752786AbZF2Ver (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 29 Jun 2009 17:34:47 -0400
+Received: by nagini.codelibre.net (Postfix, from userid 107)
+	id ED98818223; Mon, 29 Jun 2009 22:34:47 +0100 (BST)
+Received: from hardknott (unknown [78.148.79.113])
+	by nagini.codelibre.net (Postfix) with ESMTPSA id 994F3181C0;
+	Mon, 29 Jun 2009 22:34:47 +0100 (BST)
+Received: by hardknott (Postfix, from userid 1000)
+	id DC99D120C1; Mon, 29 Jun 2009 22:34:47 +0100 (BST)
+X-Mailer: git-send-email 1.6.3.3
+In-Reply-To: <7vfxdkez96.fsf@alter.siamese.dyndns.org>
+X-Bogosity: Ham, tests=bogofilter, spamicity=0.000000, version=1.1.7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122461>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122462>
 
-Giuseppe Bilotta wrote:
-> Hello all,
-> 
-> recently a tree I've been working on received some thorough whitespace
-> adjustments (changing indents from spaces to tabs). This results in
-> annoying conflicts when running merges or rebases with my local
-> branches. I tried googling around but I couldn't find any helpful
-> hints on how to make git cope with this. Any suggestions?
-> 
+Signed-off-by: Roger Leigh <rleigh@debian.org>
+---
+ builtin-mailinfo.c |    2 ++
+ 1 files changed, 2 insertions(+), 0 deletions(-)
 
-Do the same thing to your own tree?
+diff --git a/builtin-mailinfo.c b/builtin-mailinfo.c
+index 6d19046..6559c37 100644
+--- a/builtin-mailinfo.c
++++ b/builtin-mailinfo.c
+@@ -254,6 +254,8 @@ static void cleanup_subject(struct strbuf *subject)
+ 		strbuf_trim(subject);
+ 	}
+ 
++	regfree(&regex);
++
+ 	return;
+ }
+ 
+-- 
+1.6.3.3
