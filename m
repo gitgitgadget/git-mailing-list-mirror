@@ -1,257 +1,142 @@
 From: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-Subject: [PATCHv8 4/7] gitweb: (gr)avatar support
-Date: Tue, 30 Jun 2009 00:00:51 +0200
-Message-ID: <1246312854-3365-5-git-send-email-giuseppe.bilotta@gmail.com>
+Subject: [PATCHv8 6/7] gitweb: picon avatar provider
+Date: Tue, 30 Jun 2009 00:00:53 +0200
+Message-ID: <1246312854-3365-7-git-send-email-giuseppe.bilotta@gmail.com>
 References: <1246312854-3365-1-git-send-email-giuseppe.bilotta@gmail.com>
  <1246312854-3365-2-git-send-email-giuseppe.bilotta@gmail.com>
  <1246312854-3365-3-git-send-email-giuseppe.bilotta@gmail.com>
  <1246312854-3365-4-git-send-email-giuseppe.bilotta@gmail.com>
+ <1246312854-3365-5-git-send-email-giuseppe.bilotta@gmail.com>
+ <1246312854-3365-6-git-send-email-giuseppe.bilotta@gmail.com>
 Cc: Jakub Narebski <jnareb@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>,
 	Petr Baudis <pasky@suse.cz>,
 	Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jun 30 00:01:47 2009
+X-From: git-owner@vger.kernel.org Tue Jun 30 00:01:51 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MLOv3-0005Hd-AB
-	for gcvg-git-2@gmane.org; Tue, 30 Jun 2009 00:01:45 +0200
+	id 1MLOv4-0005Hd-2r
+	for gcvg-git-2@gmane.org; Tue, 30 Jun 2009 00:01:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758697AbZF2WBD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 29 Jun 2009 18:01:03 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758663AbZF2WBD
-	(ORCPT <rfc822;git-outgoing>); Mon, 29 Jun 2009 18:01:03 -0400
-Received: from mail-fx0-f218.google.com ([209.85.220.218]:53425 "EHLO
-	mail-fx0-f218.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758217AbZF2WAy (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 29 Jun 2009 18:00:54 -0400
-Received: by mail-fx0-f218.google.com with SMTP id 18so1264489fxm.37
-        for <git@vger.kernel.org>; Mon, 29 Jun 2009 15:00:57 -0700 (PDT)
+	id S1758105AbZF2WBJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 29 Jun 2009 18:01:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753716AbZF2WBF
+	(ORCPT <rfc822;git-outgoing>); Mon, 29 Jun 2009 18:01:05 -0400
+Received: from mail-bw0-f213.google.com ([209.85.218.213]:63590 "EHLO
+	mail-bw0-f213.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758164AbZF2WA7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 29 Jun 2009 18:00:59 -0400
+Received: by mail-bw0-f213.google.com with SMTP id 9so3551293bwz.37
+        for <git@vger.kernel.org>; Mon, 29 Jun 2009 15:01:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:cc:subject:date
          :message-id:x-mailer:in-reply-to:references;
-        bh=f7OAzhaqXC3+vnxVQ1mfigcfdBRFMYn5kjIckagkI9Y=;
-        b=C/tWuZ6P/RusXfF8jBa7QyRzT4Uc2KElECTLHtBdM+jdqR7gZm1dfzZzslR9tdiSqp
-         enVJwST7TTsls8KFVR/cIce3AzNWQOhMHf+E1gXpucJUJAml93Qk8qadIixD0pMPCxJY
-         XFT0f/277BQVdLQfPujewss1KHXxl5GuSX7BA=
+        bh=XIxEEmspO2ijPalVpxdOb25DyoKk80U5bwVUoKiVI64=;
+        b=GI0ERTxog7ALnI2FRyEJMIDsMdVPWIzxzMdtxInjzipL2vySip+Rj7nHPpBJaWSTdG
+         IzcTUCIIqhP0fLNHjb1WBrYmhpQ54eG21ONVpOn4FfSwfKyJx4omgxzPQmN2lzDb1csq
+         EYbEuGGuyC6GptQkYfHICXyatnuMar3IWhRns=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=ZZf2bMkMZQ4MItZ57F9WLDWgkmM7IAqUFPKCjTFf0YtmE5yqHZvIfJiF8MO5GybnpE
-         LovYGMtshRt+O9fCl4Ga7isLgNJ8Jgpkt/4IrKENQBadDWXMkCVaQwKXOmObgqtuTj6i
-         cv/OR9RqlsBmMLGQdphILvwGyeAD2IsD21zdM=
-Received: by 10.204.65.65 with SMTP id h1mr7631142bki.18.1246312857691;
-        Mon, 29 Jun 2009 15:00:57 -0700 (PDT)
+        b=HxfbVUetp3eaZkgGaQP02+jpveXHUms2o4b+hVujfNBDzdpW4CU89K6wrL5zX//hVQ
+         A9pZhv7O3mf4k+8pSJyqTcqUPsEmgJafz7i7k2JkuBjCUYPE+LT0WwsXHHWFWXn8PUV0
+         4TEKoiNFaFzPBws9QiHTAIJ3SKodOXwniriL8=
+Received: by 10.204.58.130 with SMTP id g2mr7654573bkh.45.1246312862658;
+        Mon, 29 Jun 2009 15:01:02 -0700 (PDT)
 Received: from localhost (host-78-13-59-48.cust-adsl.tiscali.it [78.13.59.48])
-        by mx.google.com with ESMTPS id 9sm9942241fks.58.2009.06.29.15.00.55
+        by mx.google.com with ESMTPS id 21sm2599656fks.9.2009.06.29.15.01.01
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 29 Jun 2009 15:00:57 -0700 (PDT)
+        Mon, 29 Jun 2009 15:01:02 -0700 (PDT)
 X-Mailer: git-send-email 1.6.3.rc1.192.gdbfcb
-In-Reply-To: <1246312854-3365-4-git-send-email-giuseppe.bilotta@gmail.com>
+In-Reply-To: <1246312854-3365-6-git-send-email-giuseppe.bilotta@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122472>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122473>
 
-Introduce avatar support: the feature adds the appropriate img tag next
-to author and committer in commit(diff), history, shortlog, log and tag
-views. Multiple avatar providers are possible, but only gravatar is
-implemented at the moment.
-
-Gravatar support depends on Digest::MD5, which is a core package since
-Perl 5.8. If gravatars are activated but Digest::MD5 cannot be found,
-the feature will be automatically disabled.
-
-No avatar provider is selected by default, except in the t9500 test.
+Simple implementation of picon that only relies on the indiana.edu
+database.
 
 Signed-off-by: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
 ---
- gitweb/gitweb.css                      |    4 ++
- gitweb/gitweb.perl                     |   83 ++++++++++++++++++++++++++++++-
- t/t9500-gitweb-standalone-no-errors.sh |    2 +
- 3 files changed, 86 insertions(+), 3 deletions(-)
+ gitweb/gitweb.perl |   34 +++++++++++++++++++++++++++-------
+ 1 files changed, 27 insertions(+), 7 deletions(-)
 
-diff --git a/gitweb/gitweb.css b/gitweb/gitweb.css
-index 68b22ff..d05bc37 100644
---- a/gitweb/gitweb.css
-+++ b/gitweb/gitweb.css
-@@ -28,6 +28,10 @@ img.logo {
- 	border-width: 0px;
- }
- 
-+img.avatar {
-+	vertical-align: middle;
-+}
-+
- div.page_header {
- 	height: 25px;
- 	padding: 8px;
 diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index a393ac6..92695a3 100755
+index 4d7e4ff..862ea99 100755
 --- a/gitweb/gitweb.perl
 +++ b/gitweb/gitweb.perl
-@@ -195,6 +195,14 @@ our %known_snapshot_format_aliases = (
- 	'x-zip' => undef, '' => undef,
- );
+@@ -378,15 +378,18 @@ our %feature = (
+ 	# shortlog or commit will display an avatar associated with
+ 	# the email of the committer(s) and/or author(s).
  
-+# Pixel sizes for icons and avatars. If the default font sizes or lineheights
-+# are changed, it may be appropriate to change these values too via
-+# $GITWEB_CONFIG.
-+our %avatar_size = (
-+	'default' => 16,
-+	'double'  => 32
-+);
+-	# Currently only the gravatar provider is available, and it
+-	# depends on Digest::MD5. If an unknown provider is specified,
+-	# the feature is disabled.
++	# Currently available providers are gravatar and picon.
++	# If an unknown provider is specified, the feature is disabled.
 +
- # You define site-wide feature defaults here; override them with
- # $GITWEB_CONFIG as necessary.
- our %feature = (
-@@ -365,6 +373,24 @@ our %feature = (
- 		'sub' => \&feature_patches,
++	# Gravatar depends on Digest::MD5.
++	# Picon currently relies on the indiana.edu database.
+ 
+ 	# To enable system wide have in $GITWEB_CONFIG
+-	# $feature{'avatar'}{'default'} = ['gravatar'];
++	# $feature{'avatar'}{'default'} = ['<provider>'];
++	# where <provider> is either gravatar or picon.
+ 	# To have project specific config enable override in $GITWEB_CONFIG
+ 	# $feature{'avatar'}{'override'} = 1;
+-	# and in project config gitweb.avatar = gravatar;
++	# and in project config gitweb.avatar = <provider>;
+ 	'avatar' => {
+ 		'sub' => \&feature_avatar,
  		'override' => 0,
- 		'default' => [16]},
-+
-+	# Avatar support. When this feature is enabled, views such as
-+	# shortlog or commit will display an avatar associated with
-+	# the email of the committer(s) and/or author(s).
-+
-+	# Currently only the gravatar provider is available, and it
-+	# depends on Digest::MD5. If an unknown provider is specified,
-+	# the feature is disabled.
-+
-+	# To enable system wide have in $GITWEB_CONFIG
-+	# $feature{'avatar'}{'default'} = ['gravatar'];
-+	# To have project specific config enable override in $GITWEB_CONFIG
-+	# $feature{'avatar'}{'override'} = 1;
-+	# and in project config gitweb.avatar = gravatar;
-+	'avatar' => {
-+		'sub' => \&feature_avatar,
-+		'override' => 0,
-+		'default' => ['']},
- );
- 
- sub gitweb_get_feature {
-@@ -433,6 +459,12 @@ sub feature_patches {
- 	return ($_[0]);
+@@ -853,6 +856,8 @@ our @snapshot_fmts = gitweb_get_feature('snapshot');
+ our ($git_avatar) = gitweb_get_feature('avatar');
+ if ($git_avatar eq 'gravatar') {
+ 	$git_avatar = '' unless (eval { require Digest::MD5; 1; });
++} elsif ($git_avatar eq 'picon') {
++	# no dependencies
+ } else {
+ 	$git_avatar = '';
  }
+@@ -1520,6 +1525,20 @@ sub format_subject_html {
+ # given page, there's no risk for cache conflicts.
+ our %avatar_cache = ();
  
-+sub feature_avatar {
-+	my @val = (git_get_project_config('avatar'));
-+
-+	return @val ? @val : @_;
++# Compute the picon url for a given email, by using the picon search service over at
++# http://www.cs.indiana.edu/picons/search.html
++sub picon_url {
++	my $email = lc shift;
++	if (!$avatar_cache{$email}) {
++		my ($user, $domain) = split('@', $email);
++		$avatar_cache{$email} =
++			"http://www.cs.indiana.edu/cgi-pub/kinzler/piconsearch.cgi/" .
++			"$domain/$user/" .
++			"users+domains+unknown/up/single";
++	}
++	return $avatar_cache{$email};
 +}
 +
- # checking HEAD file with -e is fragile if the repository was
- # initialized long time ago (i.e. symlink HEAD) and was pack-ref'ed
- # and then pruned.
-@@ -814,6 +846,17 @@ $git_dir = "$projectroot/$project" if $project;
- our @snapshot_fmts = gitweb_get_feature('snapshot');
- @snapshot_fmts = filter_snapshot_fmts(@snapshot_fmts);
- 
-+# check that the avatar feature is set to a known provider name,
-+# and for each provider check if the dependencies are satisfied.
-+# if the provider name is invalid or the dependencies are not met,
-+# reset $git_avatar to the empty string.
-+our ($git_avatar) = gitweb_get_feature('avatar');
-+if ($git_avatar eq 'gravatar') {
-+	$git_avatar = '' unless (eval { require Digest::MD5; 1; });
-+} else {
-+	$git_avatar = '';
-+}
-+
- # dispatch
- if (!defined $action) {
- 	if (defined $hash) {
-@@ -1469,6 +1512,34 @@ sub format_subject_html {
+ # Compute the gravatar url for a given email, if it's not in the cache already.
+ # Gravatar stores only the part of the URL before the size, since that's the
+ # one computationally more expensive. This also allows reuse of the cache for
+@@ -1544,9 +1563,10 @@ sub git_get_avatar {
+ 	my $url = "";
+ 	if ($git_avatar eq 'gravatar') {
+ 		$url = gravatar_url($email, $size);
++	} elsif ($git_avatar eq 'picon') {
++		$url = picon_url($email);
  	}
- }
- 
-+# Insert an avatar for the given $email at the given $size if the feature
-+# is enabled.
-+sub git_get_avatar {
-+	my ($email, %opts) = @_;
-+	my $pre_white  = ($opts{-pad_before} ? "&nbsp;" : "");
-+	my $post_white = ($opts{-pad_after}  ? "&nbsp;" : "");
-+	$opts{-size} ||= 'default';
-+	my $size = $avatar_size{$opts{-size}} || $avatar_size{'default'};
-+	my $url = "";
-+	if ($git_avatar eq 'gravatar') {
-+		$url = "http://www.gravatar.com/avatar/" .
-+			Digest::MD5::md5_hex(lc $email) . "?s=$size";
-+	}
-+	# Currently only gravatars are supported, but other forms such as
-+	# picons can be added by putting an else up here and defining $url
-+	# as needed. If no variant puts something in $url, we assume avatars
-+	# are completely disabled/unavailable.
-+	if ($url) {
-+		return $pre_white .
-+		       "<img width=\"$size\" " .
-+		            "class=\"avatar\" " .
-+		            "src=\"$url\" " .
-+		       "/>" . $post_white;
-+	} else {
-+		return "";
-+	}
-+}
-+
- # format the author name of the given commit with the given tag
- # the author name is chopped and escaped according to the other
- # optional parameters (see chop_str).
-@@ -1476,7 +1547,9 @@ sub format_author_html {
- 	my $tag = shift;
- 	my $co = shift;
- 	my $author = chop_and_escape_str($co->{'author_name'}, @_);
--	return "<$tag class=\"author\">" . $author . "</$tag>";
-+	return "<$tag class=\"author\">" .
-+	       git_get_avatar($co->{'author_email'}, -pad_after => 1) .
-+	       $author . "</$tag>";
- }
- 
- # format git diff header line, i.e. "diff --(git|combined|cc) ..."
-@@ -3252,7 +3325,8 @@ sub git_print_authorship {
- 	      esc_html($co->{'author_name'}) .
- 	      " [$ad{'rfc2822'}";
- 	print_local_time(%ad) if ($opts{-localtime});
--	print "]</$tag>\n";
-+	print "]" . git_get_avatar($co->{'author_email'}, -pad_before => 1)
-+		  . "</$tag>\n";
- }
- 
- # Outputs table rows containing the full author or committer information,
-@@ -3267,7 +3341,10 @@ sub git_print_authorship_rows {
- 	@people = ('author', 'committer') unless @people;
- 	foreach my $who (@people) {
- 		my %wd = parse_date($co->{"${who}_epoch"}, $co->{"${who}_tz"});
--		print "<tr><td>$who</td><td>" . esc_html($co->{$who}) . "</td></tr>\n".
-+		print "<tr><td>$who</td><td>" . esc_html($co->{$who}) . "</td>" .
-+		      "<td rowspan=\"2\">" .
-+		      git_get_avatar($co->{"${who}_email"}, -size => 'double') .
-+		      "</td></tr>\n" .
- 		      "<tr>" .
- 		      "<td></td><td> $wd{'rfc2822'}";
- 		print_local_time(%wd);
-diff --git a/t/t9500-gitweb-standalone-no-errors.sh b/t/t9500-gitweb-standalone-no-errors.sh
-index d539619..6275181 100755
---- a/t/t9500-gitweb-standalone-no-errors.sh
-+++ b/t/t9500-gitweb-standalone-no-errors.sh
-@@ -660,6 +660,7 @@ cat >>gitweb_config.perl <<EOF
- 
- \$feature{'blame'}{'override'} = 1;
- \$feature{'snapshot'}{'override'} = 1;
-+\$feature{'avatar'}{'override'} = 1;
- EOF
- 
- test_expect_success \
-@@ -671,6 +672,7 @@ test_expect_success \
- 	'config override: tree view, features disabled in repo config' \
- 	'git config gitweb.blame no &&
- 	 git config gitweb.snapshot none &&
-+	 git config gitweb.avatar gravatar &&
- 	 gitweb_run "p=.git;a=tree"'
- test_debug 'cat gitweb.log'
- 
+-	# Currently only gravatars are supported, but other forms such as
+-	# picons can be added by putting an else up here and defining $url
++	# Other providers can be added by extending the if chain, defining $url
+ 	# as needed. If no variant puts something in $url, we assume avatars
+ 	# are completely disabled/unavailable.
+ 	if ($url) {
 -- 
 1.6.3.rc1.192.gdbfcb
