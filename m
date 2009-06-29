@@ -1,645 +1,143 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: gitk: cache line for unreachable rev causing error
-Date: Mon, 29 Jun 2009 11:19:01 +0200
-Message-ID: <200906291119.10897.trast@student.ethz.ch>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: git mailinfo strips important context from patch subjects
+Date: Mon, 29 Jun 2009 11:53:11 +0200
+Message-ID: <4A488F07.10002@op5.se>
+References: <20090628193858.GA29467@codelibre.net>	<20090628200259.GB8828@sigio.peff.net> <7vfxdkez96.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed;
-  boundary="nextPart18333533.IxNfVZ353V";
-  protocol="application/pgp-signature";
-  micalg=pgp-sha1
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: Paul Mackerras <paulus@samba.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jun 29 11:19:40 2009
+Cc: Jeff King <peff@peff.net>, Roger Leigh <rleigh@codelibre.net>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Jun 29 11:53:39 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MLD1U-0008U8-SS
-	for gcvg-git-2@gmane.org; Mon, 29 Jun 2009 11:19:38 +0200
+	id 1MLDYO-0003CN-7o
+	for gcvg-git-2@gmane.org; Mon, 29 Jun 2009 11:53:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752341AbZF2JTR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 29 Jun 2009 05:19:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751263AbZF2JTQ
-	(ORCPT <rfc822;git-outgoing>); Mon, 29 Jun 2009 05:19:16 -0400
-Received: from xsmtp1.ethz.ch ([82.130.70.13]:34505 "EHLO xsmtp1.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751484AbZF2JTO (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 29 Jun 2009 05:19:14 -0400
-Received: from xfe0.d.ethz.ch ([82.130.124.40]) by xsmtp1.ethz.ch with Microsoft SMTPSVC(6.0.3790.3959);
-	 Mon, 29 Jun 2009 11:19:15 +0200
-Received: from thomas.localnet ([129.132.153.233]) by xfe0.d.ethz.ch over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
-	 Mon, 29 Jun 2009 11:19:14 +0200
-User-Agent: KMail/1.11.90 (Linux/2.6.27.23-0.1-default; KDE/4.2.90; x86_64; ; )
-X-OriginalArrivalTime: 29 Jun 2009 09:19:15.0043 (UTC) FILETIME=[ABF5BB30:01C9F89A]
+	id S1754454AbZF2JxQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 29 Jun 2009 05:53:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754063AbZF2JxO
+	(ORCPT <rfc822;git-outgoing>); Mon, 29 Jun 2009 05:53:14 -0400
+Received: from na3sys009aog108.obsmtp.com ([74.125.149.199]:34027 "HELO
+	na3sys009aog108.obsmtp.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with SMTP id S1753327AbZF2JxN (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 29 Jun 2009 05:53:13 -0400
+Received: from source ([209.85.220.215]) by na3sys009aob108.postini.com ([74.125.148.12]) with SMTP
+	ID DSNKSkiPC/TXGLz5W7ZJ3WgYqH4evYEic7sB@postini.com; Mon, 29 Jun 2009 02:53:17 PDT
+Received: by fxm11 with SMTP id 11so1788934fxm.5
+        for <git@vger.kernel.org>; Mon, 29 Jun 2009 02:53:14 -0700 (PDT)
+Received: by 10.86.90.13 with SMTP id n13mr1770615fgb.45.1246269194791;
+        Mon, 29 Jun 2009 02:53:14 -0700 (PDT)
+Received: from clix.int.op5.se ([212.112.174.166])
+        by mx.google.com with ESMTPS id 12sm5542510fgg.29.2009.06.29.02.53.13
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 29 Jun 2009 02:53:14 -0700 (PDT)
+User-Agent: Thunderbird 2.0.0.21 (X11/20090320)
+In-Reply-To: <7vfxdkez96.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122432>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122433>
 
---nextPart18333533.IxNfVZ353V
-Content-Type: multipart/mixed;
-  boundary="Boundary-01=_GcISK7rIE5oBod/"
-Content-Transfer-Encoding: 7bit
+Junio C Hamano wrote:
+> Jeff King <peff@peff.net> writes:
+> 
+>> On Sun, Jun 28, 2009 at 08:38:58PM +0100, Roger Leigh wrote:
+>>
+>>> In most of the projects I work on, the git commit message has
+>>> the affected subsystem or component in square brackets, such as
+>>>
+>>>   [foo] change bar to baz
+>>>
+>>> [...]
+>>>
+>>> The [sbuild] prefix has been dropped from the Subject, so an
+>>> important bit of context about the patch has been lost.
+>>>
+>>> It's a bit of a bug that you can't round trip from a git-format-patch
+>>> to import with git-am and then not be able to produce the exact same
+>>> patch set with git-format-patch again (assuming preparing and applying
+>>> to the same point, of course).
+>> As an immediate solution, you probably want to use "-k" when generating
+>> the patch (not to add the [PATCH] munging) and "-k" when reading the
+>> patch via "git am" (which will avoid trying to strip any munging).
+>>
+>> However:
+>>
+>>> Would it be possible to change the git-mailinfo logic to use a less
+>>> greedy pattern match so it leaves everything after
+>>> ([PATCH( [0-9/])+])+ in the subject?  AFAICT this is cleanup_subject in
+>>> builtin-mailinfo.c?  Could this rather complex function not just do a
+>>> simple regex match which can also take care of stripping ([Rr]e:) ?
+>> Yes, I think in the long run it makes sense to strip just the _first_
+>> set of brackets. I don't think we want to be more specific than that in
+>> the match, because we allow arbitrary cruft inside the brackets (like
+>> "[RFC/PATCH]", etc). But if format-patch always puts exactly one set of
+>> brackets, and am strips exactly one set, then that should retain your
+>> subject in practice, even if it starts with [foo].
+> 
+> I think it may still make sense to insist that PATCH appears somewhere in
+> the first set of brackets, but I have stop and wonder if it is even
+> necessary.
+> 
+> Because git removes [sbuild] at the beginning, Roger is unhappy.
+> 
 
+[ and a lot more ]
 
---Boundary-01=_GcISK7rIE5oBod/
-Content-Type: Text/Plain;
-  charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
-Content-Disposition: inline
+> 
+> _An_ established (note that I did not say _the_ nor _best current_)
+> practice supported well by git to note the area being affected in a
+> project of nontrivial size is to prefix the single line summary with the
+> name of the area followed by a colon.  There is no difference between
+> "[sbuild] foo" and "sbuild: foo" at the information content point-of-view,
+> but the latter has an advantage of being one letter shorter and less
+> distracting in MUA.  He does not have a very strong reason to choose
+> something different only to make his life harder, does he?
+> 
 
-Hello,
+True, but it seems wrong to have am remove more of the subject than
+format-patch prepends. Imagine a commit subject looking like this:
+  "Allow [ and ] in the blurble.foostuff table".
 
-Running gitk in one of my repositories always results in the error
+Should am strip the subject all the way up to the last ']'? I think
+not, and I'd be very vexed if it did.
 
-  can't read "arcnos()": no such element in array
-  can't read "arcnos()": no such element in array
-      while executing
-  "lsearch -exact $arcnos($l) $a"
-      (procedure "splitarc" line 21)
-      invoked from within
-  "splitarc $olds"
-      (procedure "getallclines" line 33)
-      invoked from within
-  "getallclines file7"
-      ("eval" body line 1)
-      invoked from within
-  "eval $script"
-      (procedure "dorunq" line 11)
-      invoked from within
-  "dorunq"
-      ("after" script)
+> Users can take advantage of this established practice when running
+> shortlog with "--grep=^area:" to limit the birds-eye-view to a specific
+> area.  If this turns out to be useful, we could even add an option to "git
+> log --area=name" that limits this kind of match to the first paragraph of
+> the commit log message, for example.
+> 
+> Supporting a slightly different convention may seem to be accomodating and
+> nice, but if there is no real technical difference between the two (and
+> again, "area:" is one letter shorter ;-), letting people run with
+> different convention longer, when they can switch easily to another
+> convention that is already well supported, may actually hurt them in the
+> long run.  "[sbuild]" will not match "--area=sbuild" that will internally
+> become "--grep-only-first-line=sbuild:" so either he will miss out
+> benefiting from the new feature, or the implementation of the new feature
+> unnecessarily needs more code.
+> 
+> It is not about discouraging a wrong workflow or practice, because there
+> is nothing _wrong_ per-se in [sbuild] prefix.  It is just that it makes
+> things harder in the long run.  In this particular case, it is only very
+> slightly harder, but these things tend to add up from different fronts.
 
-Unfortunately, this repository contains problem sets for an ACM-style
-exam that I'm working on, so I cannot share it, and rewriting+pruning
-it in any way lets the bug disappear.
+Agreed, but there are valid use-cases orthogonal to subsystem naming to
+place [] in the patch subject. I still feel that since format-patch only
+adds one set, am (mailinfo) should really only remove one set, too. It's
+what makes sense, really.
 
-Thanks mostly to Ilari's help and good ideas on IRC, I was able to
-nail it down to the line for a specific commit in .git/gitk.cache.  It
-looks like this:
+-- 
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
 
-  e2f039d440a707c7eda6f0b741283d8efba622a6 0c6626ffec4f03b49aa15c0f8c28224a=
-8565c3a9 0c6626ffec4f03b49aa15c0f8c28224a8565c3a9
-
-Incidentally that's the only mention of e2f039d in the cache.  (I have
-attached the cache file if that helps you in any way.)
-
-As far as I can tell there's nothing special about e2f039d or 0c6626f;
-both commits are perfectly fine and 0c6626f is indeed the (only)
-parent of e2f039d.  It is, however, no longer reachable from any
-branch tip; the reflog shows that I immediately amended it (resulting
-in ff44826).
-
-=46or some reason e2f039d is the main cause of trouble, as either
-deleting the above line from the cache or the commit object from the
-repository fixes the issue.  By the latter, I mean editing the reflog
-so that e2f039d is not mentioned in it any more (really just editing
-out that single commit, adjusting the surrounding entries to make the
-reflog contiguous again, is enough) and 'git repack -a -d; git prune'.
-
-Perhaps as a useful data point, running with GIT_TRACE (output also
-attached) shows a huge rev-list invocation that lists e2f039d as an
-excluded revision:
-
-  trace: built-in: git 'rev-list' '--parents'
-    '08ce40933354d3652affef73387c039db1ce1543'  # master
-    '7f6edf07183c3bbd47844ede1bffe2c924dee0d3'  # t/runguard-rewrite
-    # ... lots more ...
-    '^e06d247080adf3da8adc14f1fb41f3911c9c72f9' # domjudge/configoverhaul
-    '^e0cd45f984abf44021b7253d94fd0eb02f82a1da' # HEAD@{97}
-    '^e2f039d440a707c7eda6f0b741283d8efba622a6' # HEAD@{144}
-    '^f4df3a10aeec248d6ffd550c609493527173adf2' # HEAD@{139}
-
-Note the reachability on the right: the last three are not reachable
-except through the reflog, and yet only one of them causes trouble.
-All others, including the snipped ones, are branch heads.
-
-I also ran gitk with GIT_TRACE after the above reflog editing and
-pruning steps: in that case it still runs the above command (which
-fails with "fatal: bad object e2f039d..." when invoked manually), and
-then immediately follows up with 'git rev-list --parents --all'.
-
-I am keeping a copy of the broken repository, so if you need more
-information, please let me know.  I just can't share any trees or
-commit messages from the repo, as that would give away some of the
-problems used in the exam.
-
-=2D Thomas
-
-=2D-=20
-Thomas Rast
-trast@{inf,student}.ethz.ch
-
---Boundary-01=_GcISK7rIE5oBod/
-Content-Type: text/plain;
-  charset="UTF-8";
-  name="gitk.cache"
-Content-Transfer-Encoding: quoted-printable
-Content-Disposition: attachment;
-	filename="gitk.cache"
-
-1 20
-3c27c1ebe6e0290b48a09da5cc278bb6f0f089b1 ba616428c26f545a7e503c27cb98401340=
-8ab19b {52a631d2cdfdc5c1b899631c72b41a3c321bfc57 6b8b52dd9c5727b9bb1231ce35=
-e7d741cf16b1ab 16dcc3ede29b79de61cd671a098b5cb767a874e9 79c522eea817b2dde09=
-b97a6d94577401fc2d24d 366ff6cc806698fba2063efaae05f843f1689e0c a9a4346e195b=
-c26ccd15ededbec33f70cc9dd9f8 60f53ac64af269958ca8d9da1cc031ee96c5714c 32400=
-cd16457a0dfdf74fb959bb4b75c5e7e16a8 7ec2b5d05746f39db3ccc9bc4e3a6cca3e157a2=
-6 2a9a9a9dd8a97d9e085136e90a94cb6569db0792 028b374417f62631b03b61bb8fa16386=
-606b4bd1 e72c0bf932492005d329f7ed64824410dd2b6bed 0f867c72564c80894c7ca4d5a=
-aec1f7a4873fb7e 7bdfa8e50b22a543bbda87427b61b2b54400df8a bb70c9e79536daae2c=
-23d94c090bbe00924c724d 6b571306aca977f33e45d9f7862b5cb48614c04a d1e2ad8a5a3=
-1767a5f945c42e341585523a9bccb a0174549fca52888ed50ea08458a9d06a2dd538c a8ae=
-359a979129455fa471c72a2abf5d24ce64bf 3f6a1b6da16eb554dc159f7b681a7a82625b0c=
-b4 eceeb699e90d6b61eb2b4e909986950ed39a8f21 29f2a9a7121be1819fcd905ef5f50a0=
-54532d0f7 22bee0d18a061a6e47614a4c444a25009c362c9e 1395b6e52d7c999643619d73=
-14a1b93d3a690f34 3636e249d299acc0d1ff822aa6bc6c4dd4fd22dc 0162be594ad5b0d29=
-ae72324f142591e4f9d1d62 746355a545707ce34dddc6db148cfa83ace909ce b192723021=
-93ba25f59e4f60f3caec759ec3d8eb b145e878f87b4b609a8e1ba4608b7ab8f913c910 cfd=
-b0488809826ede1504452a80d322a42f46637 c12fa9c66411f1b8c39b42c2ccec8e5ceb996=
-055 c72055050eef2ded01c48743e65ab31daf19d928 02422b584b3aaf64bc499bdeb93872=
-d09165868d 09011f48a3d3654943ebfb255fb84427c5c64c6e e262e549f1a888faa923516=
-958332e244d457bb2 eb5b900cdc15dff119c690385e16a4837423ecf5 4449b634607f5152=
-7c1a3f7e9baab44f54542a3a 5ad8301a5ab26d87750783db71a311b261e2a39d 3039a7f14=
-c50c7ab6c666b845b0ab90328548409 b4ee460aa207a344d1122669ae43319d05017478 c2=
-c551cbcd1f48841ca2b4728d121f5d290146ba f7678e4cb45d2b66e4c814e8b9929d5ddbe3=
-0b57 121b779e1ebdc212f718feeb7fe37ba87a45b803 97b088a006da6b0e6873d2fe640f3=
-10dcb88327f 620cdc8f97205c6d329aa1d7a0f69332945ce23d 34d45bdf98e3e46f3d3863=
-73e9b0370da8bfe70d 5c00dac2dd5794ab96f078b263223bb6189c4170 5d31605e47819c4=
-3f61b24f5e2ae14cd8a08ec41 a3753d933b219e48fe899880a77d56ecdd46cce1 6fe2b2d2=
-e19021038f91aa8556abca750c092966 bfe87e2c8d21448ce4e2a426566080b18291f667 9=
-f144f8d7195a0c25c7ab3052a04c74e3d5c7f2c a507e94e4d2662eb9ebd1b93260a7f288f5=
-3f058 7bbe5eb53aa2a8d0ba23404c142ca6395836d16b 2a6a5ee16b8014d94a1067967c9d=
-d966b9eac379 0a1765cdcb083c4c38709163df17b5130c6fa0c2 77808f72780f925cee800=
-cd040dd7de9e869dff7 1498dcb44ca379331f35edecf8213691576c41a2 2fd9f36876275c=
-4beb94bc4f4809369654183f85 d8bd32e0c6e10e3a715824ae9da941ecef0bab3d 5ab07e3=
-c5a0b5d092c830d84005ee54fce1b11b1 f607b889a0f3d8601e536bf123df5cebb5f33a1b =
-156b84d0b87d3ca8680a5616d2130fa6d71e51a3 fd242ac140c2ae0a73a0296f75fe2816b0=
-a84253 531668145373aef2e8985f14786dfefa310ab5ea 3e1a80a90382f4d491b12b18a82=
-ed2ca16b62d21 2e775b0443affaef376e49e2cac0f48f404258a1 89c88b4f233ca46f85bd=
-b273f7a67dbccecdd670 afe836d1cc782548d1914ca5fecdf53d825541fe e174de238d5a2=
-777b4cc585ca29f3d802196c24c e11a330fba15ebf0a1d5cb16391fd539bd7960f1 1488b6=
-23c988be948819de84be304f3f252b9ffa 634483991a41f22c48de6edba161c392d111a4f7=
- 4869d6f41a51920ca279480f9e7e0ec8ff0584be 683f9f073d91cdb30f2b3bfa1ffb50245=
-8284c8d e9c745c2b070b9c6b60a78f7fa6aaa64e9b3f42e b4f888105114128a83129f38a4=
-36023d75cd37ca c09bea0e767c7707dae8cecb5cede1c8b733272b 2f0bb71c66244b09b52=
-f6f863c2448e582f690e7 aee8ea87fbe94c19146d34c5e5bea26f2d57eb8a 55df50b11a52=
-fefba2329b6586cc3b40d02997e9 3791ed43c0b7146f6776dcae0035bc573a85c93d 6bee3=
-ecd10927241175e116881c7af3b3669dc28 c932e6ef6a16b2a385a341584077cf57e5e3e93=
-8 819513d0ad7edc94f3e437f7ca84ea417ff8d2d1 376e1cacd0bfeb23d48382d76e5aee83=
-74637edb 4e341ba145d71dff9199b7a1c8d96f3179cfeffc b88a76edcf75fbfcd51d15790=
-caa5be32493202a c5ad6e4b01c8b65738246ad62f78b52bca9a0bad c708fdc9dc79bdf7c4=
-007f8cd685710b85a51f66 5ac1ee0b2992708b94177c437388d70a28d070fc c704115b9f4=
-a95dfef0ba40f275fe134e6be5bc2 75d86a5c263eff3534c406fecd307048d058921b 9760=
-6ce35704e825bb1bd2677d0f86edbf9bcc01 e3bdbb106c9f97b2c57cef755383816588a48c=
-e6 04eb697cae56441eb5fdf7a89219591d7cfd9b6b ed1d44a1ad71f99d28ebd32c5b46e4e=
-30cd141ce e8fcfdde58507c6c4ea871042bbfd1bd2464ca4a 924f7cf1b9ea14ae345aeee1=
-630c3d839332e9bd 679682c96d9e1f860db821747ca9f7b7cbfad85e cbd41ef5244c4a09a=
-7ce70f2f4ef80596e3fbfdd 5610ac37dad32b8deb5d10a2943fc59413df81a8 6d63fe17b5=
-fe57b0505d6ce80ece5f74bfa5d7b0 e7859a0a19b35ee297b7b2033f43adef59c7bf67 749=
-14a4c12ab9e6446b4207b9cc22673d3058f3b 97928451a6d9ee2f06b7955af36ee36b0018d=
-de6 41d463f25477f3c191b898bb250a506f76bdbda4 4b0953cedcdf16a64e151bad7d46ae=
-998f0f5d1b a2e75b4e795afc21d522f3ee7c7d267cf7ae0835 4f6fafa3648945e1c5551c0=
-b0e709a654ba370ba 77459ae949dfa68f18fed40d6d5558204dbab11c 0160ba2752e93ff9=
-52ee976e13ed4412944030f6 fc256f7a484d338d197961cf612ca70593abf82b a08640988=
-4949a71af95048677e6a0752ca9fd9f 0e426ad5dfb4a2ecc5b8447b0b6afcfc4d9eb45f ff=
-abd3bfb5bf5e708751f5de1c47f478965d39e0 237c7fa2cfdd5af141614421d156cf58e64e=
-87a0 1e4ab45f53683ed57ef65bbcda62e3e0373959ee 04b458f1f7022101e3f90077eb769=
-bb54dc137b3 d34c5b00e8d5d5182f3ac6b80589b3a7de91d1c6 1a8b0c3a4da5776af4f71d=
-1a47afd1a79dc4f185 ba616428c26f545a7e503c27cb984013408ab19b}
-0c6626ffec4f03b49aa15c0f8c28224a8565c3a9 3c27c1ebe6e0290b48a09da5cc278bb6f0=
-f089b1 {71d1a03f309c25209a3b1e60db9bd37d96d4d01b 3c27c1ebe6e0290b48a09da5cc=
-278bb6f0f089b1}
-cf2606eadcb8c95ce82248ba1c543e383ab4a546 0c6626ffec4f03b49aa15c0f8c28224a85=
-65c3a9 0c6626ffec4f03b49aa15c0f8c28224a8565c3a9
-12f0055a80edac093e580548cb2c70b7738abfc0 cf2606eadcb8c95ce82248ba1c543e383a=
-b4a546 cf2606eadcb8c95ce82248ba1c543e383ab4a546
-e2f039d440a707c7eda6f0b741283d8efba622a6 0c6626ffec4f03b49aa15c0f8c28224a85=
-65c3a9 0c6626ffec4f03b49aa15c0f8c28224a8565c3a9
-f4df3a10aeec248d6ffd550c609493527173adf2 8e9017048af978e9480fb3de7780fff0eb=
-56fb7e {5931c541d9e92b4b816fc7b3292968c0b8c0cdef 8fb893770bd381a4f86348d4be=
-8fb19952ad137c 8e9017048af978e9480fb3de7780fff0eb56fb7e}
-4906553a1dad5294f5815b719fbbcea21d501a8e 8e9017048af978e9480fb3de7780fff0eb=
-56fb7e {610578445b765b06121b82ddc1dc6c550ce6027c bdf81bb01b3f589b38ebd30e13=
-e4e827075aba6b 8e9017048af978e9480fb3de7780fff0eb56fb7e}
-8e9017048af978e9480fb3de7780fff0eb56fb7e 3c27c1ebe6e0290b48a09da5cc278bb6f0=
-f089b1 {b918106f8c89f5ed2365d7714f402abe724613aa 3c27c1ebe6e0290b48a09da5cc=
-278bb6f0f089b1}
-0635614700e946ddec0c626b6d7ab5b01b3513fe 4906553a1dad5294f5815b719fbbcea21d=
-501a8e {5e25da3ccb75041673b29432162375ce4cbcf7fa f3e4b6069f514ec52d67e2f3e3=
-8d44336b615dd1 06eb099d77a6dd9226ca418c84a8ec1e0c95261c 9a023c922a9865adf97=
-1a02d2ddcc1ae33424f00 977ecd513103101d006c02deb86708d795434a23 22ba52b4fac9=
-52d478285095ff053167f399cdf4 f8d70cb73cb0d69c47600608c78d0740dce147f2 aca49=
-8577ab8084a4ee32a60c2b40b0883fa288b b80229d43628dcdbf08d4ddb768c0bd809121f5=
-a f23615abe38e1ac613a972753b7f3ec62ed82ee7 dc4483a7824a65486fa103b88d2695aa=
-fa89bc2a 09c463fd6edea5e3daed9e3fd0c823c3b480beb0 47acd9c076629de86eec7f85d=
-ca15ff6f692e8bf acbbb0026f9db4801f87944279f9641f53ab2e82 c3b92080d51fa0c821=
-860da8bf2f8931ddc26e1f 18240b4ca926d1acb4b96dc8bf0360b30d7e1cc9 32ccaf9278a=
-7e713235dd7784b6334a18512dca1 a87917cab40de00ddfb761a4e3062ad49675f014 ecca=
-90fb7bbbb76c9f706f5a95c4ca2261366cbd 27d1130a4aaefc81fdde2780e4701945a7bda0=
-aa 8d111c33edf8747ed86691734f8f9a3baf84ddbe d8c64690872e82a121a8b24c54918a2=
-ec1c77f47 7bd06101e190d4bd84001d5d4e77023ae95a4468 b2644a76127f31b136cf00c1=
-d4ff3542eb4e9d88 6b12038b9cfc08bf6bdc55dab54e4df5cd1bbc92 77713071424335966=
-654c391cafca8e3e46f1402 f97514f8f0d533ac5a0de608f2be777684906d96 7ae52137a1=
-7f30c5d1f70437329a98e3e0fa971b edff2a5db66b00accea9b30b7b07a4c4d232ebc0 cd7=
-aa0093e3f8fe5a5f44e3519515421dc08f211 d2c10940c07f3c05af9e03cc122aa1565952d=
-cbe ae9ec1424d94aa7a27567c051421ff6423f172ad b7c9d4f96bb752f8c060e1ae9db7d0=
-abc8a61048 c0a62d183ccaf31cc967ea3ed352cbc01b59fb43 b18c62b59c10cbe31244deb=
-c0224fb359dc070db 4906553a1dad5294f5815b719fbbcea21d501a8e}
-f744f31b374adf6af60cf7ae825efe6af2848ea4 0635614700e946ddec0c626b6d7ab5b01b=
-3513fe {e695872c378fc5547cbf471c984eead3759b6f6d c3f617584161d4e546e44e5372=
-77ae77d64fb5ae 50845670580cd7c68be65e6fdcf8988ac41a6d25 0f127924243e22eebfd=
-021a5304c332bee439c3b 80e338afc759f01aafac9e65f40e49d16985bb2e f3d7cb8be649=
-df5b427b173e93483b472c888c46 0635614700e946ddec0c626b6d7ab5b01b3513fe}
-210cb6cedb414e90e560405c62270c9765906488 f744f31b374adf6af60cf7ae825efe6af2=
-848ea4 {d915e6f390c1bb2fed8025ea4690b337b2e129c1 ce67f22129043e4d749df8063f=
-2929f1b84b0de1 d8f9891d07afc4a4d8c06eb522752bd928a0fe3d 5a88b4de44fbb3ab78e=
-f0b6a0c0b7c8cc3fd99ba 2983a8c5a5d821d0800e5dfbda4120554bfcd750 2d595d24e9e4=
-fff77cd9d762cd61f66c6b98b22d deac39fe927bbf554197dadd9ea79d6f5811fc12 efc24=
-b41e1fd123306cdd9bca551555f25bc0188 711ca7d4484879f8ffedf1979f80f72ebb23443=
-f 07c15324ca4df9e8c55209d0e9e2c64ed9c526b2 088e50481133555c215220cc98ed954e=
-41581be0 fe335f421b423197ed36ee27216b8f1dd3d5597f dde3fef0a63672d856e136ebd=
-41eebc880bf9a53 849cfef289de7cfcc009c895444095c7c43c2c96 6d36fbcb26b062b8c0=
-0f9e99abb00b84826a403a d6d8ffeba15786ec43ee00ce15fd7b0e232f8229 6e6a6362e9d=
-62af6c703bdb4cd390eebde2f87b3 7bff1292a145c839de0695001a0dd08e8f61adce f722=
-6bee3dbc52a62ddeac2b4bf0575843ad1277 f744f31b374adf6af60cf7ae825efe6af2848e=
-a4}
-e0cd45f984abf44021b7253d94fd0eb02f82a1da {} {2220bf8b12b09da5b3fce7d20912b8=
-d041fc94bd fbb06e54544402072c87656360eae8112871e87a f0b00f8580afe23feaae0ba=
-ec4ab69d6be817dea 29fbac27c5adda78b3698d70e611f89bc2af5b11}
-e06d247080adf3da8adc14f1fb41f3911c9c72f9 {} {f0a2839b537542db8311b051cd202d=
-2c4f5e5cd9 c531723c8d57f2c570e047e69e8a21afd6f0ee31 90c8f88c4875577aa2083af=
-ec407b478abb82938 579c3679efa901ca7a11751680d85f048e557276 5a1ad147080d1d81=
-c22e18dd8238b631258a3e72 0f47c23f2e270be02161c6403860f88051988b23 ca892d53b=
-9a54e6d418b553033c1609355c7f073 13f74eee23d820baab51c663d18de58fa3c7b54f b0=
-749bff86ea9fedd4add2d7b7a76b13d8097246 ce65917bcae1a94910401314752b1f5b9227=
-1bb7 6eecd68d493946d2a9f6b70baca650bb964ab86c a6ec479032042c8590e6add877332=
-be0cc6b7fff f6f23d12a7594d7b5135078cbbef9b5c65ee2dd7 776fae71e98daaec876b40=
-92db17f613323df5c2 d1f4e4aca57f4b7b15fd31db65da7674ee0c66d8 cafa0e8e957fc43=
-6f0068e28a069d3ed61b63731 52cf80303ca01e7e45b9ceb7d2cf13131e89ff4f 4948623a=
-2a72b7602f77428e48ca10527bb5fc2a f795260ecfffeed65107f0b3e1b43351fb6d5338 4=
-f19874a8af8ae2a8386480cb8c36e493f7514e7 078aaabd1b244bb5a176add9fefceb00519=
-53be7 1e1510d4fa611ef56402adf6af45c13abb95ee12 bd86d1a63a9a81325e799b984412=
-72e7085a6c93 ab8e1f2ea9189ec278528543cf79df6a301d4dc1 3832cb27d6c5195cea04b=
-4d6760917ffffd7073c 4b2450d9f3e8aa192b32e957e4bba758984db341 874798480e97b7=
-8d4eaf6de36da63a54ff0fb75e 9e607b9c8f4b2b920552f6f34ec14d5065f526c0 effc964=
-4d91071629f5bdd6a6a23b7eb371efa2c 2a8e83e871e2b3340567afd798a2f741d8316060 =
-17014ea5e0b400e5223238242ec393734840ff70 3c9f69425a732bbf11fc10d7e743e64c53=
-e82526 ad434fb8ff08de79d0b7746c6a3fffbd7946118c f127d9bacefd366cf12c1c847f4=
-63af5e7817527 198db25d77d73c19cf08f9f5c06e8dba8edad6b0 d2d3e50641207472a184=
-3c649d80d4dbccd72abc 466e7df5660f1b9108f649225808957e0dc37c69 39c23266cda20=
-31f2efd29751b3e0c3798eca64d 575f1c0ba2284b50dfdbcbaf46ba921226471f47 fd7b8a=
-900eecdfa4ffc91dceb31866fbf75893cb f3bc832fa80959009d83e7ef5a3014acf08cd600=
- ebd25b753c635352ca725d503bf7ce5087f337f8 ce69419900c60ec6b85237f8ec41044c0=
-845df87 a569bfeadad22b2b1269b8eab1c216ae62553093 ad5b07b27ddd1a0ef391504286=
-f5bda30aff40b1 2566a50a6d66a3342385481a2c12f0a20cc7be35 be37a678211edd46f17=
-cab71187fcb2a91c1986e 82f8cc5916f5da421fbdb681e252bbe2b532d21c 93bf9a5d9307=
-301d1ad7998c3f831bfd42f80f09 c52691955c17d22b9119c4e21cba7807734c23de acddd=
-936bb1515a7edfabb2440d71f54eb20a636 a3db80b6a3fcc2418c93627019bd9abf7816509=
-2 1d90e36123b6d9ca3d0c8131f8bb73ce1f36a22a bc27c246524e0eb628308f659e9b89e1=
-640933c3 952a37221ed2c3393fe4d5acff84b5440650bdab a2e901bf8b5768cfd73154da1=
-243111bf2cc9503 cb4a7d0f0cdcac64a93a8f76fbb96787fdf3e742 64b3504f411dcf19e4=
-cadccc342c647614622d48 8cfb32c471c590ac42a749929c897a3df17b2a2e 78a4d1cabb2=
-4b9cfbc4a632cfe78ed355d8c0828 d689a82152959b69cebc150ed4163b1ebd7ef9e6 5722=
-814fe312ed35d1fc72302edcd61320487a30 17bb1c57ed18b81b97a6c84e7dde64e38bcd9f=
-3d f6dc73dab291a10d39b87de25145ad390a703d09 edad344f8f7a5ed4ea2ea6942ae0ef6=
-427341e3f fe32bbcaa2722209d06139bc806203b8a9e878c7 c1d0b511125a8807c1a410f7=
-153fb05ec26b2d19 32c5fef1a19d711ffa8f23b788b54cabaca9686e 6597f233a4fcce7cd=
-13df6e2c3b29ea53caac0ab a3557eabca3d775b52312a9055bf7a590115e54f 0e95381f0a=
-93184238cc39a74dd2ff2ae951725b e8c05176e9b943efb02dc16f5e9ee9bf55039205 537=
-aabdd5652c0ad88058b615abe7819b8c155f2 282b1dc9cae1a96d62d765fd75682aeefc9db=
-5bd 6ca8b299cd13f7d64c6d469d166fad49b0f04250 a55fafacfffa6564f4851b72144031=
-ba32fc6deb 0565d256b5eba6e50692cf4c1b45a4ea4471c8d7 ee132cc827847f0e3a4d64e=
-fcb75b93fe3a00d57 2ec8b9a7c7bdd588c1fced34f8b5217ba60379fc d259e514d93a1140=
-7f2893687ee1e3121175cc20 c02239f065ad5b57ab68aa76e72853dd773a2677 0c2b190ce=
-3f907a4953201f62f8abe5cf16edbe0 fea71a50c50e07e8fb3c715a44ee1ec964dea6f8 c6=
-bd97906a6421039a50634a42602cb212c2bdaf 5d39afbdcb12512a82d45a31accee72374df=
-0793 4fddc22fd2e9ba242b78a2e4aafa3bc90f10b3cc 8e0705a0528b4985aa60a75d343b4=
-63ef4ce5802 f8a05d0592503ecfe95c30ad2775b2f04032b92d 164ca0eb496f99852f9d83=
-709a2199469f71332f 5b8670c0a0d551e446e144cfae2c3ed05fef390f 6284a4bed868904=
-9954b5a6a7d6a3beaa72567f8 6d0fe746c7c5660920cbccf267877bddfeafde67 a923f182=
-b101ada60d04fe72f7f228df4f15319b 79c860d7e209935f0681cb4f5ecc2681857fa7e3 f=
-707b9b45bbd5edd15b9eaddff11b9c04ed862d0 67b5975f2a93dbae271877d28fd9002d162=
-8eb63 6427e22fe50d6de27ca25a2d45544f292bb8188a 463dd3da12de30df3a5bdceb5741=
-de54a8f7bd51 da7c2159731e888c9588a4c67e86edacab124515 df23fbd54004d0b10db9d=
-9f06e07bc01ce5e04f9 1f4801e540475b8d192055070d1400489c5229b5 809289e3098ac2=
-69869b6961f8dd27a9e6b87e32 ea6c44934025b27d4b458835e79e6e30b90f9011 f777d60=
-f906c67d997692172c20fd7a36a3891d2 85366326f3e85f2b8bf18c03bd9c8556c03988a0 =
-0c3d1895d45779ce07d5ee39217f77135bfa8397 6d2f24f85c44ff8bf9cc4764f198bb5c3c=
-c432ee fb94e21692a3a2d2533188cdb3bfc2399eeaff04 934d4a31c357e0e764d57eea70f=
-657500d03e235 7903f4382dbd72b690ace7051ae9102948a31691 2bf9bd0e469149daf480=
-d857a8829bdba89dcbf0 a676046078bb2e9e7c67bd2ad78c099a589c18e8 b3a8566d3283d=
-c14b6c1e5f5963296365f19f493 ba81621d9b9e8b8cd33deefc272d7ffbd242f459 d99e70=
-e4377211e52edef97a633e79051860e224 ba132338ba72fab6355be24bc8fab1ca2d98dac6=
- 4a8ac2638292ebc4af4bd6f4c71bd497f76a1584 1671686c8d807a7f6a1f9d0e8b2d268f5=
-971a89f f4245550b36e6e65c3a3e6ad5c861fccda2fd94a 76a3f518385d135cfce800d7bc=
-dccc168e6d14da 9573516256b5a1595488fd084629a230f43e7853 4597a9e93b89ab082f2=
-52f6020fc3d891d8a7d49 37da8d7a583883f2ff434ffc03cbeaea38d844a2 51869ccc342d=
-24688c5c58f3bbd1622dc19db5f6 b65dcb92cc84cca513cf82dec198b6c487796354 64539=
-45046f15408bd1693fa0edfdb69d58ffa68 9c53ecb8dd898427fbeb938beaff16673ed4362=
-1 15a32f1954eac2ca36e55033a2644e7ba2140f1c fe2ebbcd4fa04299b5b03b846e6aaeec=
-ceada537 e5ad744350e85ab31fdbede3f1747d3a8b06185e 0c61ede85d8df340e6d01a616=
-a6e3b01618af8aa 1f5f70c701dff56f857cd91485fa34a97d904139 82ea540a735251fd07=
-f4dc7ba2b19c38913977a9 0415ddc8da6054881b91183e8a717319e95eb358 2261e4ed12e=
-9885064c3d018e7dbb1682d92cc97 4f45d4acb2ecfa5bdaba19cadf8dc100e9b380db ff73=
-e4756407fad6e7db935f67fe8ef1945741e1 9c93723054a08604d8816944d03342cd41778a=
-50 913b2dcb89861c9353d19f494923760d2b8a7f68 d4c58faa218e29beb792e1500b5004f=
-ca2a010f2 5a255829acef346e185b8f37e4e02cb9e853f457 e6e027c9c72876a8b408a4ad=
-f7ba3843ac891e28 4732d5e1664f3753249b1dc8c71b56ee9b69d602 99f1a7331a5cfd952=
-b3b2f180c39459853e90ad8 de47228bc9c6a4ad316d90ba5db8fb5a39353935 48476234f9=
-08f8f26befcabd55eddf6cb883c29f 01f81b20825fb13ba51a545a1939667eb87e66b9 319=
-cba8a447c4fcc1700a1aae641f6bf3fa1482a f860ba5f5e896d4805a56232530cfa59d775e=
-098 c02025cb53717e9bf0b0d041495766150609cd2c 7b852b746588ced743ab7cea175c44=
-79531bf103 c56e0945df2bc992ab8794d7f9c57f7dc70c64ab a8da46c7e882d02995cce2e=
-77246fa88ed67a6de 924ff6c52d1f16b7bdcc9e91ea46de6f7b505a6c 11b20ca3f3f375e9=
-4c3a040a18d1b12ab80e0d42 3849b997c0c1b8369f8a0e109ba9205a6833c346 e43b5e63c=
-2b65327328d0c7032bfddfc0fc10e64 fde24973230f55cbba122f01fef7801cb1394341 3f=
-c24d2bb0675189d44e2d82851ca34045d11ad9 d658d81390db13eb23aec9b4ee4d137bce5e=
-6d59 391adb63bc5f78e8293c73a88d62d61ae1f6b322 ec96bbe8ed9ff29b1417438fa0461=
-bcec284fa95 1b16eacf4313b317c0c5ea588f354bb25ab5258e a03ec64aff197335558dbf=
-3305f028112ae105bf 73a570f0ecdc67e38b258e4550f83fb7a2c6aa4e 99014813609a11a=
-363b07e8c102e99de678fc3f4 ca130449e877c1392beba6a2c55c2f923b2de271 db97f9f7=
-039157dc79b6ae7101923d548ed351d7 8eb4e274a134655e4a85f0fadc4e4e8aa503187c 6=
-47ca4f6effa793487be4780e6b15e7957198059 c210186aa3c26cc85f505c74a2e9d080e66=
-91af0 e2e4446eb19de3ba54bb5b0d4df3211e04b1e17b 418592b0739f791631491cdd3022=
-7ec4c11d3004 796ec7218df2f1d86da1571bf634b5bf916f3bf5 8eb8c920885d088c903fa=
-637d70c19ac92a3b75f d284c7d64474ad7ab08fc14ecb02285914f6eb53 b4885386a64f18=
-ce2eb72b8dee55fd4230f04602 88a10a6de7239331ae97cdbd7c629d827aa987fe bb7fabf=
-edbb5eccc9709a59354dd52c9b3c31c6e f5f2bd14b74278c1b69c0dbbe1b15b45f4da1e5b =
-d592f9358af12f12774f644dc8421473fb29ab5d f3e7542b0317a0c03cbf9a9466deb1df12=
-b6d14b a93c9d31bbd5f214667696812f84c2cfe78f1fae 246d5d8ba46ee9494638597ced0=
-2084ee35b5ec8 08e9f81c94cd587e607072c042d37873d2052b33 39b680b5baa2b1a7b8d7=
-63f392a8f7f136a9ba6c d8cd1e28122db0f2273927f4ec9cbbb0aca7642a 0f8dd8b368a6a=
-cc949f4fbfc6e522f8a60b8d948 4fa890c88ee7a601d5b287615e976b533f61f883 d66f8a=
-3153b2a7a3b765ea7d223a58dc11405671 63790dd806bdb4dba10384831f4f1a4d3350515d=
- 29a8498ed608755941ad95e02c96b13425ac4119 3f187615ad9be40a1a02b8c9ad3f13014=
-d10e8bf beb24972caa6d1a22ce35d73cf8e975e051043bf 54ac61529eee75cca123b6702a=
-0b34283f7aa60b 4bb2bb36c2ca4df99ff11ebce611837a677c1e57 adf583954c76cbde639=
-51cb288cc1cc521195d64 e8a61faa30feeb8b43d0ace6199951cd48f3b284 db2a9e9e2556=
-65b36b4e06599ebaf54a316748f3 1e31e441d28107bd035f45d359567d9535a5c05d 65bb2=
-c4180a1f95d465aa8d728539ecc30c81af9 a452bf174f8dcd6e1c1a80ae5961fef6681774c=
-8 62b191c758233caf5ef84e4321c7b3b2741872bd 23da8f650a602ee840b89bbd95e0a01c=
-d76dae11 f3d1b7867d0cf5e65301a895444b1e249eacc308 5f071e188864330ac3d775671=
-024c88879161133 2944c2e140ebec0defc701581e19eeb507ddb8f1 f5a53ca7ef7da5db1c=
-4f0f231b6e80f696f24836 4f20d0c4605e271e9e17df4e362c08fe53d67232 77d26530042=
-482290f0bc9871976e9f191cbf7fe 96843535afdea74cb72de163408604a68db63786 4122=
-1802bbd6ff0f4c4378f695cd0a396244a5f4 151eacfab09f4b30a943670ef114a116041880=
-4f ba2e1aad1cfeb6a8ff3aca218d32934665236867 5dccb4c99ea78c06eef549629794525=
-3d4abfdb9 367a7c78860968a29d1abb0d6d74c348d6297af4 6f65961364464a441871cc26=
-9f1651c9f63b5d06 a72199632b7d8cde591e6047c27aa13d0f2e8850 5b53e53541930bb76=
-d38303ed4714c4ed01e38c6 4045c820111f09bb54211c510f13a2882d431763 d662d6f1e4=
-75a650036456a6b5349a22ea4a5dd2 d0ea57917ecc996b6ac103cb346e37f059a37c59 358=
-25df88d5565651093377e3ad73b0cec560f58 1128d2c448b35da4d61e159f15e5d12b5e921=
-92e 6f1bfb685a3735a468fc2d5e5f0ae24f734b43bc 51844fa9cc631c8792352fa67dce60=
-d31ec881f2 f8afb2c0d2801ffd84081b84e2941dbbedc86621 9fca575224129712f47c456=
-ec8dc087ae2c0ee78 8c661da79591a603c8ac82204d7982757fc36e17 9b97244de1c764cf=
-0ab12d7b1a0cb69d825a201b 2a3509087db7a9e8e00c550155ec5e0993a7ec71 ac3efa86a=
-b2d574622317293bed40d7b3c6c577a bc11239dd607041653589df0275a52321fd77e8c 0e=
-bd1f29b2fd2438624deb1be7e8656cbdd57d60 d5630fff928f712bd96a9c97753d905b50a8=
-fc73 54f548ccf9584cf1cf0137d58f0cfb6ade7789da a0aa68bcbf24eaa01916ba30ead2f=
-c2754dacd2f 47dba195c36cd907447e30d6a29122f2d575bada 578fe0a3c254d75008d972=
-f81fcfbc15d930a6f8 006c41288cfe14c9b1daf908c0d7be974c38f966 7243801839510f7=
-d5b4db39406e4f0a3f124f6ec ed13be3117e0074b8184e7357c3e00b4d632148e 27b34e55=
-7756d16d9268280a1b10edbd83f6405a 331cbc383c6a362dacd7ad59bc60d88dbe76e6aa d=
-8232162b86db46e86f05a802b881d1daeba36fe db81779e880067cb464ce9af2ccc194c132=
-d3859 8f2b5f2ea29076ead2c98b9fdda6aa7e692f16ae 06e2f0f531ef70e09747f80cfac2=
-d8006983897b 1244882b7555427ea4459a8b135445041ed78080 fdbe82c45c55de376dc60=
-b0598fa61557ab8b78d 1f15eec4c673adbda04981d356f5909ced6f585c f29375268757be=
-3ec8d59adc1454429babbc9642 a95cda221c7c27c23e5d98f3a61e9137ef0bef49 34f9177=
-b0d2ac603012a7e878ee92abcd73d7629 bf09e9f68ffd79e03cefca3be259033afa334e6e =
-baf3d98b816a65f88fef14f05fab23071cc2a182 1a0a08f8f19aaae74f6198ac7d22d33828=
-21579d bd471aa3a3f9acd1f64341534d54d5895b586b94 f703a3b48f36d5d350bf2c278c0=
-fb444dbc5f6b3 cffb3804be73bdf1a4513cfeeecb0b87e509c73b 313682565688ff124f11=
-232102ad5039bd34a7f1 64cdd5ec2578d7bfd818046b14269724a00d85d7 b063936b7a677=
-a8f79d9f9c2dbe82376f756c84c 8989b17df88c7d51277a48fd8de079f4b63c6cbc e22a77=
-cf01da56448e3f25c6eaae06818247780c 775c2541427189768c99a0e5c18add466bf09b43=
- cce114d949e13960b7a77186d2a51debefb1ab99 559adbdfe27ec7b6d672d895d3e740afd=
-2a9a3ce 437746dc2982e0f6ea7605c63b5ccdc4abd11e0f a968e1936aaf63f4515851cb29=
-c93c040b4831b9 a1e1e69176ab5e612bab1b9d110db0aebef75d2f fc7d12114b3983c5998=
-a9980f4e8d0048f820b88 8d1cca9adf312fb07dd7b631a15bd60cde74e4ba 24a616689bd6=
-07bd80ef28a51ee10c41cb0140c9 7bda6f5467c38b0b36fa8cccda67dbfbd2328fea 3b77b=
-fe2fbdd3c84c03fbd24b26f444b455c790e 2ca87cdb0af7b8e7b3d2d23d9ed2f0855da77d1=
-5 7bcc8570bb32df0ad5e469436af6bf998ac81585 a0382abad528b34eae1327b190a76cb5=
-baee438d c1f6692031a3de1b5bec9ca692dffb157e2b19bb e082934d9860dbdeafc36eca1=
-99caafb3e15de8e 20d0b673322df11927d8608ff343d48fd8fa7e8e 1e5db7c2bfda12b0af=
-81e09bb655b0271b802f8c 86730d9356f733045be1f7421933720a3e9aad73 0bb448dedf4=
-bf8b6ef9e0356cc0e302abf177d06 9c43c0391b4d05cf29589fce58ead3b176a1a8ef 2c68=
-28874ae51a3eddd1542b0cb95d435fc33b03 ef585f4a7b8c049771a2bd5549f05c63a9cb2d=
-e1 25a071de89d4e479ab8c9549e628e7a38116be38 a34febcf8551440c2197508f3a9a8d8=
-df20aa324 218d653a772372fe6c2ff0033a3c5b38a3a81a4e eef1a88430c2cda36a9db411=
-05608e34999abbe4 7c8eae789e03504ba3172f6747c6346ecb9840c4 d7ccdac3fc2fead66=
-3ee91620361e126d2bcd28c bb5e927fde215b3e8a594887a731b2442227130c 667daad2f7=
-120497bfb8e9334bf33af13d6d3cce f5f9fd79e201e2445322017a4db9f2ee9d88c240 99d=
-cc278b889dd639f066e1dbf0e83bf7fa0bc74 a1a61f0b1425030099d1636d139274592ee48=
-7ac d012cf3f1d99df7a56d4c16bb4b6eaf08f4d3359 6ed4ec56753694f2d3722f34254a1b=
-010e3febf6 531237ad11375626df81e77e47202156b14d9d30 030166add4a625350a3af01=
-af6d201d24025b8d8 b8d6b270a718b47b03db7b40a9e54d2b1e79bcc2 b24dbc292e63249f=
-ae363338dd3d4bb95a5ceac8 41f0e06a66a58987935fe9286e4110c65a3ca099 097cd6881=
-b75911c645169c31727911386f7c3f3 947117af623a1d0730053bd265e70891fc58347e 0c=
-b824d5e08cf50d4987fb186ec49fb4f4b93e07 a6ad66f4b2e1924fc368a646bf2df6a47983=
-7c50 827debd12cc9bfa34e40058a39e2703683a44048 79f0e7e06968ea64e19b8965e5e47=
-cd3fcdce950 f52d9daec43a74246901ae40bdcc7aa6496d392e 7bde8822e3b3858ad725d3=
-6ce2843309a92fe058 fff32d1ba2069d6b178412107963325f16bb55f2 88c058b1ebd1337=
-f223c8e1d91580d4f493c2c13 60d1a88fb0ef2558104f00c0fbf920f724d27438 aca0ff14=
-3867de1e0032eb23c30ec01a645e6562 735ca38e6c54b63b86b4db98d4245166828f5862 8=
-acdd3baacf56b56d383ff109cc671de8540fa47 bea7f7e9858fbf2eb27a3deb729ac99e266=
-5b0fd 91ea9621e9f6f060488edf2b620cbd88735edeac 42cf5708029f343092a1a6f81177=
-d6e89a6ee9a6 80b62cb7ff0019efe0e619ca4268654e1bef198b 0994df337463446ac8faa=
-aaf04ad2b2da4430d55 7723f313d4a9bc96713881893a8541c5c340401d f351f590c76872=
-48afd394a8fb48ae0916137c1f dc7af3209b79069a999a63e29a757d191c7fa708 e3e3be2=
-25c480e3b82eeebff5ccae5aa57593f98 1c662624528cb93a584e9795cca8a6a03cde2e96 =
-3de7b0444fc8a683897f8548a6d35b2c58728284 6ffe24c422f0b850cf9ce95201d7c8445d=
-6fe9e8 ac4fc75e24ccead6b6a97984c9d8602815275157 f62541de4b4b3d2e19f3c5e8708=
-8edfcd801e817 f9746b5a8a9e8adec1db029a6a2097043c7c2f87 99656e0f23e571f21542=
-8f58e6911ad7785f7cfc df7feddc67db1c153c72ea910679cc26356bc92b e5bfdf7119e66=
-6c32ecd007a06924ea93381bec1 cd7f5bebf9b89d11deac9afa3964fb722c3dfaf3 7c4fb1=
-daa4c57dc14fbcacea6ad62e37d0ca1db4 8a05a8a76685f468fccc1e882cb7c3a9a66e3113=
- e0db4b6794bf12ea9f72af9bb013d14f8ea2d554 7863f09cf35cd78c90f1cb2821690143b=
-f88e910 d5a4151f554b0c619cd779db93a5c4040dee0cbf 9f6269493257220962eeaa886b=
-a8383d3a7a8ea3 b9cf0f61c4bfd6a0f773ca48673ac06a202c55e3 4de53973d83b2be72de=
-c29042f9dc68caf2eb23b d531047528c1d7e13e7e65c1b9e3003cdb7d381f 733ed645c44e=
-20546263c7f187aa8323d21d84f5 88f503434bf15f47145f6928b610370b3fc79d05 c0839=
-44971ab73fe1ba0533043ab20812cf03836 c5030deac9fda3f7bb654e75110914fa36d883c=
-6 0c54be51dac51112e405dc1dacc4c23ad995f7a1 874964a4e52f401b71c379583a75c2ba=
-bb7dd3f8 f08b2dfaab7037aec043855f070c3e44a8abd802 54559748bd63d3964443f317b=
-aff5ca80e205469 afd179b805532d7f349826f62f5d762b40090e53 ee7069935b4a7b346e=
-a17b040188ab15568f5f2a bb6b830f41d96e37466bfbe182e882c026353073 75574c1c17b=
-5babb6bf09e15d8bc85f80d54e604 184ff44a48ce74fdcd0a116adccecfd2d904ac88 d674=
-5a8cedc3143bf51d50aa8970808bc880c949 a5d813acac8f05c6dc1d92d3706d2c1c6541a3=
-62 d866c49802dd5019532011cf34ee2fb73210ca87 7d18316a430ac5f55816a7f3c87d12a=
-927d82de2 6de911b35e9ff04f2bcfafe20cfa52e5605c5377 09b96dbca92fa35a347db6fb=
-cb5d1b92e97cf8a0 130a63cde9046bfbdb9e28b7b85ca5280a967a43 8915f165d07a6fa56=
-6c7a9e67979929f85f173f4 31f45c8400d9c0c5af4feacf8b49fd5e22d34439 aa7a0db91e=
-323dec22431faaaa33eb687eb23e75 3536f5b2626e53c4592bbe7df7bee7a923bc490b a0c=
-ef29ae2be5ecc39e532749f00fc6f7c8f5357 bb941cf43de17e666c1cf4f5116ed9d0057cc=
-fb4 45dbbc87b179bcb5800776bef08f0cd60a2817fd 2c0063c17bb247bc552b008c8744ee=
-08c39b2c44 fb72f2e319fdc4faf09c8be399b156cd91b46a26 09243f374a283aacbabcf38=
-8832cb2bd36b312b3 f16b5e1bb5d30ad738c76b530f0997acd31aeab4 63a2c037a8cc6a7d=
-78aa6ff9ed9f6bb6966e8bd3 057a0409043437abbc2dd54e3855e40851e269a2 51328b61a=
-acdf0ff8d2869de15834bbf70944e22 f68d562fb2961c3d3f527b916b59c485e457e0b5 15=
-264caeeae66da273eb580e7daee3205ac5e8e7 5b738c9ab248451a7a8a79fa20d6a6fb94d4=
-6e56 404eae5274fa26e4529c18124724109e6c0042b6 857835c6f4cd81a00db2faa4d791f=
-567dbfd8706 3c1c7ec0e418b587281c4d0467599f2f708dc361 5c54075c43d3bfc52a7c49=
-621a572fd18461ca55 c7cedf7598d51a7531eb598036cbb4db26713159 25b48d4b9228638=
-1c0f920b44f3ad266afa67016 0979fdf670f62728584a82b5f51ce3be1403f10f 45cbaf8c=
-6c7490c60aeb4d217400da3bd5b9633e 8145943c817e4525fbd259a99ace412e086f80dc b=
-adb2921e1290d37ac6a5a56f03aa5cf95b1fdcd 157183eb120d9436d4493ab1689e019edec=
-a957e 280e8130f4e4096bd1c4db049f5ccc68adcde860 ba20b955008accc5d02999740143=
-eb4bead467e5 a9e0771d016819054127ef811c64cbf6f79a497f 028a1881e11cdb540c1ce=
-3339b3ea5eb728d3f3c 43712f01be1954cef8a308da477fb8312c046b93 18d84f13a448d8=
-1d462de1346327acb806a15c78 c3486ad16761d9851c4cbc6d53012a3e2885c24e 81d0023=
-3c3b891cfe795409845874589b5b2b57b 7f2af84cd4a712b208d04683d8a2deb398e5bb10 =
-5976eaf9bfdb32c2c820db520acaa942cf42868e 176b107d392655f17b4e8fa42da5cf9238=
-df7fa6 cd1361246842c07947dbbcd2812ebf2051a1ebee 0edc055833e8f40b3d225657268=
-fac17b5650f70 345e1f75bef867647032e7cb948bd0ba1a951100 f67f966ba3a0c931bb50=
-bae7097e2295d961ade4 9013dd69e70522a612fb495bc68824e69303e49d 97f355aaefcc7=
-f352ee3cf72c08f5dc61d941a3e}
-bbcaecf229c41fb687070dda1e63397fc3c0eac1 {} {6f03236838812dfeb87061ccd9de79=
-e01c37277e 4d05b77e4b60b78ae66c9d624d05e2952a8a2efd 40842413f4e0bd7c3fc00e0=
-66103283f0282112c 865e6208a23d7d8eabf80e7e0331eedfb24beb6e a85a4139f14b6286=
-5a91f20d2b89ae9810bb2b9f 17faddfef381b7cb2018369640f187f10b573d78 cc1e34188=
-90110dd5d4a1977cc2081f089ac37b0 bdcf1b1b32e17ed4ddcd008b2786dc4e9dfcff44 61=
-cb0112e2c212799d673e5c23f8fc86caa31396 2bb826374ae534e7369e4536c4eeab9b2d53=
-0f1c 9341a6a82fc1ad30a521f10949a633fc20dc8376 5277d8243dcc42e93f9e137d5385c=
-d4ba848c07e 0cdc81313f2f10f60ab6dc890ec9053643d8e29c 34bb058cf8db1e9f8ff269=
-84d97504d16d8ba38c 8949d2a5e0833031704a5c7997ab522430d9955f 771c2e334abe1b5=
-aa89538166ed1eaa0f49dc035 3248a56cc0a4fce2fe865ac183a496df42b1c250 82641456=
-11681929474ca21af869567cf6ab12dc cc5993240438b1398471ed2d578f7e4b38b179be b=
-4c8256984bad7fe9ae71e15c23766f14d8db7c7 49b658b75959b59af83dca0b168b7b78489=
-ef9f4 bb5ce737f7e12edcfe4a305ae58bceecd0498ab8 a18916ad46837a37dac5bdd25fc3=
-1ddc98def850 3ea14aaadebacd6e45b768f1d45ecb2a8f882cfa faa8f1bdd241124fb0ee1=
-8de0e98595267a10c95 8480e2d6e533a32099589e79d12e386974b35405 048573703b94e4=
-caa0c82379602b65dc1462d82b 7a2c031ab257fcd0cfdc08bafc859a9645659063 070a4b5=
-5bb9ddfc136704e57ff201698a854bbb2 fe6b0560a1b1fab63f2d951314ff9f94f3c0c968 =
-48ddc873dafe939fcf8810979ee58b272facc451 bb7806f36cbb7af532d7de88c7fe33dbcd=
-7fcd86 47b098b64ff6ee0fd0a9cec67e0dbcf0772cd1e6 206ae1edbac79cafa23d1a945c3=
-37f608dcf4c38 ced8d677486c8b2f78ad77ef3c1e714610b50715 61ce123d6d74b26fd755=
-48350cb940063d76595e 5c33c369bef0ef30e1c524414e6f8f8fb572a702 306192c5726c3=
-0130153aab732599a02d6300865 930518928cc1774b4a6f1fe705a7b25898f8484a 552186=
-7feff3e4246bf353f9b9de80b47aa42a69 c75b0a3043be1d3022534078a142caeda7203c1b=
- a23214c0b96f5a250177ec8ead1933a9f1b3edf4 dcab0cd13c1494bd6252fcbd6622b922c=
-0e2940e 49c99a03e1c701b7bdf4f9526c8150a21752e3d9 bc2467157ac390f62e9b631f0c=
-74a4e8768bb615 8584fb202b8867a35906f25c2d218af4ccadd136 a8e92b11dd06f61961b=
-1cff0fdde668e5c2921c3}
-7924c83765f1aef7adeea2d4631c4d2f6fcec478 83624e058f8446d808ec4baac2bafb3669=
-d3136e {50b3532bb4099e7e033d4cdce9fcf3ff443fa2b3 f6ec9137c268a08a24544d4c98=
-55681e3949d63f 49af7195800e46a63d0f788d2634946830d162dd 4b108602706eb881c8c=
-592ec84751ed21f0e4f23 6d6c81f8fb7de01e615671d36523bb07cd06d2ce 2003eeda3fbd=
-c004eadc7252ea73985ad3a7b827 3c454c68520e0038ddca5d2b25a1a7209e892b97 9200b=
-ec98fe6e9bc60f16de7f73ecd251dbe4a78 20f33c49e30f95a128c6acd61ac24839070a638=
-4 00574c5156305896194e83474dc9ca3bdc6eeb9a 99caf3fd93c50c252fad1e5a34a2f326=
-3fa9096c 83624e058f8446d808ec4baac2bafb3669d3136e}
-4c29b1d5d41a5988e386913e44fb2c048272a1fd 83624e058f8446d808ec4baac2bafb3669=
-d3136e {7b2a4bd911e79e168fa6ec946e1fa9d78a46a7ec ef3f3a9c536c5b260049cdf34e=
-7165d50816e62a d0e904b2a32e2aa47d4f5b4567e471c580c6b8a4 7107bffb16abe39b7d8=
-80ce68f76ca6276608be2 1aa2eba23a5194fc2aa7b0c670929c35f23faf50 fa338513ad9b=
-f6e44454cc0c311ce3714962f5be be127fce65776754b7e43bf7e524abadcba68e81 0ccae=
-b628e4187fa2262cec96a53616fa84c7f46 8991abd7f9adf962a22fcf360a0c502ff8666b2=
-2 7e1b58db41c03f41a4af059e4fc05c5e36b75157 227406355dce338d3c960ef72c3e27d1=
-31f2252f b27fd197a17abb5710fb929ec09c77b349de2496 0ee8f53f3060f201b91f20c82=
-c746aaf772ca223 0e83884e63a20a3fa83347bbbaa2e311a71550e1 349acc9f1142e1291c=
-0400b494ddfe1d26444067 808bc8441fb67905c0facb0e08e2cc4a1a93c19f 2ea29f37aa4=
-70ae641fa04779bbf5a1c107d1c17 5cb1505600770eaa1eebd990b9cb7f6a8ec21985 98e4=
-e3132182bbb8770f853b525678e9cd4c399a 4b6328ae08a6f63ffadf7cc058bf673bb4de12=
-8a 447c0f644b14e4b4571193fdfa691ed7b07686f0 3c6906839acc4831255f755e8abc307=
-a84dba31d d63720bc1ffbb2db107ff9970d5b27dd57ff5120 a3ae4c8f4f5f50a99badebb0=
-3be517a809647045 db5521eec869f48a594552277982a1e68555af1d ec3a7f8f717bd7c12=
-c10e83c440e6af3dd2d0e1f 37d26a37324173be8c59609a95c140ba8e6a4969 1238f8d605=
-5fda380f62ff5e755cea1bf3210609 18a5be354fe335590156bf8ed9141e067c53dc0a 836=
-24e058f8446d808ec4baac2bafb3669d3136e}
-94efe8bde9749672bcc585bedff690d27a8fe788 {} {b6ac1d579a717072a43d8f5dcdf209=
-4b59cb2e9f 4466409414f2dc6d280321fc79924ea8092a50ef 27fdf6162dd776c3f60331a=
-c13a4b1fe5b1620c8 a60f67ef788f057bb93eb46f9c993bc4d510970f 1ea071c897fbe849=
-c5576aeba237de19aeec52e8 80a9c6a55b1cfd98ac7e306a6676c169c108aefa bbc529efe=
-4663297f418568bf2869bc41661837d 5efe911cbaffc640821c3de86208d3bf48d38967 20=
-dd4fce2fad283afbb708db80fe9cb6d00c6cb6 781fd766d0ddb69fcc545c4566fbe7faa47b=
-93b1 29b04794e4ebc117d7c49336b7d1380a1cd2ec09 c2993f36f2f0856a17f95702f73bc=
-22cdd432c3f 6d30dd72c5f4484aafd160c7ec288c5d2564fcc3 a53b2d492a5de297e26923=
-0cc3a8ebb2c316bb7d cc2b3df0a2486547d3fed3c92e109e3480b68f98 621ef90d71fec0c=
-8d76fd3b816906f4f03ae8db3 8de42fec95ea652c627155d949cb5ede8af3bfa6 95382267=
-2837bf065f03f939866d0f6da6e593c1 9c5ed542f2167e5f74f6b414613e4301b25b28b4 e=
-4a194f711fffe9ee26339733ed65e1b4f6fb55a c67190825c635ba4946705790334e692fbb=
-18a11 2aa2b8c570b1f75b131ba2dbe42f9a0743cd1302 0955b6e1575fbdca8a25940446f4=
-6c75ccb83d71 fa5df51a835c8dff5b19ea74e34884c315cde3e3 a34b425f8ac8477220699=
-430013a44e101ed3b4f 91ca8ec1d24f6a25090b33ca914594e648979ee2 66e1ea4712db89=
-b747bf67c5d4a3faffc41292fb 3b70f540448b8ddfdbbc2b69df72649c52b924a7 681cce3=
-d3d51cef87bf00065ec9d216d7f0b1699 8139b18b6e1be1061d855f04669a6c1d65af1bc6 =
-4cbae7c75385b8ab0253e3364f472c534b4ca354 eafa72cc32269ad71cad68c233a4733843=
-465b28 0560d023f48a7bc6b9815d76663ed46e7288f297 d6ce78301319cb3112113af0977=
-680d8ad6a4672 341550cf91e3efa2d89c3994b3a43be59a618dbc b198c92aa2390bf7672b=
-92f7e79396077b2d78ca c823b4bbc78ecbb7f02fb010ab42d92e0d9657ec 9c91d372a265b=
-8aa537d42850cce5f83c59a427d 890e07c2812dbd1276023691157245b15475b5a3 b8474d=
-1463eb9911924fdfdfb7b84cf7daa1b031 09d0a9025e1f21c909ba02c575428936a5b902c9=
- b11128211200d8af444ade055b4af7394e610135}
-83624e058f8446d808ec4baac2bafb3669d3136e {} {0f7675783a536127ba846ac2d2a02e=
-6843c61fdf b16b5e2519313500fcfc962461c2dc72234d9fe5 c88dfb7d12513a99ffe50b9=
-e661e0bf00a493cab 3936463a537af8cfc23638244b123adccc938b18 16a818452458c667=
-96427de7bcbf478c30530fde db12d9605ba66625e0b63b8e0e49bf1b6a34aeae 17e422c41=
-43319083532bf65eeb3734a30e82e36 33204ad7ad66b77495e3ddce3e3079b1e9d2495a 69=
-cd52db2b962b3b99c0aa5db46c0349e9205c79 caaf7ad845bea1a906148b105ee5bac84694=
-f121 61d9f17b6e19abadfd5389bf9c064e97bbf5987c}
-bd67c668e138c8deeff621eef24ab31e927bac91 {} {2bb9f68a184d69d9d12ecb9278f950=
-bf8ff38c63 0285265d860afb0a34e3bd876d054cc773ae232f 382291265e1a07703243000=
-e2ea14d04c5c6e7c2}
-bb8f3ce781587569eaa95da15f1d99682b6b7ec0 {} {96b88a10325e6700500298594f5f2b=
-f28e630f0a 4e6c0bf6302058e36430d8d1108f83c93e0802fb 4e84e1d738d86902f5e4b42=
-73ad031c665fec61e}
-1
-
---Boundary-01=_GcISK7rIE5oBod/
-Content-Type: text/plain;
-  charset="UTF-8";
-  name="trace"
-Content-Transfer-Encoding: 7bit
-Content-Disposition: attachment;
-	filename="trace"
-
-trace: built-in: git 'symbolic-ref' 'HEAD'
-trace: built-in: git 'rev-parse' '--is-inside-git-dir'
-trace: built-in: git 'rev-parse' '--is-inside-work-tree'
-trace: built-in: git 'config' '--bool' 'bash.showDirtyState'
-trace: built-in: git 'diff' '--no-ext-diff' '--ignore-submodules' '--quiet' '--exit-code'
-trace: built-in: git 'rev-parse' '--quiet' '--verify' 'HEAD'
-trace: built-in: git 'diff-index' '--cached' '--quiet' '--ignore-submodules' 'HEAD' '--'
-trace: built-in: git 'config' '--get' 'i18n.commitencoding'
-trace: built-in: git 'config' '--get' 'i18n.logoutputencoding'
-trace: built-in: git 'config' '--get' 'gui.encoding'
-trace: built-in: git 'rev-parse' '--git-dir'
-trace: built-in: git 'version'
-trace: built-in: git 'rev-parse' '--is-inside-work-tree'
-trace: built-in: git 'show-ref' '-d'
-trace: built-in: git 'rev-parse' 'HEAD'
-trace: built-in: git 'symbolic-ref' 'HEAD'
-trace: built-in: git 'rev-parse' 'HEAD'
-trace: built-in: git 'log' '--no-color' '-z' '--pretty=raw' '--parents' '--boundary' '08ce40933354d3652affef73387c039db1ce1543' '--'
-trace: built-in: git 'diff-index' '--cached' 'HEAD'
-trace: built-in: git 'rev-parse' '--git-dir'
-trace: built-in: git 'diff-tree' '-r' '--no-commit-id' '08ce40933354d3652affef73387c039db1ce1543'
-trace: built-in: git 'diff-files'
-trace: built-in: git 'diff-tree' '-r' '-p' '--textconv' '-C' '--cc' '--no-commit-id' '-U3' '08ce40933354d3652affef73387c039db1ce1543'
-trace: built-in: git 'rev-list' '--parents' '08ce40933354d3652affef73387c039db1ce1543' '7f6edf07183c3bbd47844ede1bffe2c924dee0d3' 'b8fc5a781edd929a3557738ca72effa8b069a863' 'e645a1df7240f9ec8dd5aab1a249208049c18d2b' '^12f0055a80edac093e580548cb2c70b7738abfc0' '^210cb6cedb414e90e560405c62270c9765906488' '^4c29b1d5d41a5988e386913e44fb2c048272a1fd' '^7924c83765f1aef7adeea2d4631c4d2f6fcec478' '^94efe8bde9749672bcc585bedff690d27a8fe788' '^bb8f3ce781587569eaa95da15f1d99682b6b7ec0' '^bbcaecf229c41fb687070dda1e63397fc3c0eac1' '^bd67c668e138c8deeff621eef24ab31e927bac91' '^e06d247080adf3da8adc14f1fb41f3911c9c72f9' '^e0cd45f984abf44021b7253d94fd0eb02f82a1da' '^e2f039d440a707c7eda6f0b741283d8efba622a6' '^f4df3a10aeec248d6ffd550c609493527173adf2'
-trace: built-in: git 'symbolic-ref' 'HEAD'
-trace: built-in: git 'rev-parse' '--is-inside-git-dir'
-trace: built-in: git 'rev-parse' '--is-inside-work-tree'
-trace: built-in: git 'config' '--bool' 'bash.showDirtyState'
-trace: built-in: git 'diff' '--no-ext-diff' '--ignore-submodules' '--quiet' '--exit-code'
-trace: built-in: git 'rev-parse' '--quiet' '--verify' 'HEAD'
-trace: built-in: git 'diff-index' '--cached' '--quiet' '--ignore-submodules' 'HEAD' '--'
-
---Boundary-01=_GcISK7rIE5oBod/--
-
---nextPart18333533.IxNfVZ353V
-Content-Type: application/pgp-signature; name=signature.asc 
-Content-Description: This is a digitally signed message part.
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.9 (GNU/Linux)
-
-iEYEABECAAYFAkpIhw4ACgkQqUud07tmzP2FzwCfdRJaw2K6FZ/egN5e+IyJg71N
-REwAn08SDHq0JpNlZDXcbFFUxZyJOHr1
-=TxkP
------END PGP SIGNATURE-----
-
---nextPart18333533.IxNfVZ353V--
+Considering the successes of the wars on alcohol, poverty, drugs and
+terror, I think we should give some serious thought to declaring war
+on peace.
