@@ -1,59 +1,67 @@
-From: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-Subject: Merge, rebase and whitespace fixes
-Date: Mon, 29 Jun 2009 21:18:36 +0200
-Message-ID: <cb7bb73a0906291218m3ba43109s35cad87efc5161a7@mail.gmail.com>
+From: Unknown <borg@uu3.net>
+Subject: Re: [PATCH] git status -q (similar to subversion)
+Date: Mon, 29 Jun 2009 21:39:18 +0200 (CEST)
+Message-ID: <Pine.LNX.4.64.0906292131330.27727@cube>
+References: <Pine.LNX.4.64.0906272248570.11453@cube> <20090628224447.GB1951@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: Git List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Jun 29 21:18:48 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Cc: git@vger.kernel.org
+To: David Aguilar <davvid@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jun 29 21:39:30 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MLMNL-0004Kh-71
-	for gcvg-git-2@gmane.org; Mon, 29 Jun 2009 21:18:47 +0200
+	id 1MLMhN-0004E3-TP
+	for gcvg-git-2@gmane.org; Mon, 29 Jun 2009 21:39:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751182AbZF2TSg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 29 Jun 2009 15:18:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752778AbZF2TSf
-	(ORCPT <rfc822;git-outgoing>); Mon, 29 Jun 2009 15:18:35 -0400
-Received: from mail-bw0-f213.google.com ([209.85.218.213]:56945 "EHLO
-	mail-bw0-f213.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752710AbZF2TSe (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 29 Jun 2009 15:18:34 -0400
-Received: by bwz9 with SMTP id 9so3467619bwz.37
-        for <git@vger.kernel.org>; Mon, 29 Jun 2009 12:18:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:date:message-id:subject
-         :from:to:content-type:content-transfer-encoding;
-        bh=bsO3U4v3MRSAnM9Ym0BLo0wK610woizJg50UVt54BuU=;
-        b=Q0m0HQ92MK3m23X6Su56OgHsxLB+VonjNAK/g3SJBxZVfqcVlwxnBCtCzO9d3f+fS8
-         fZqJ4od8tGRDwUsfcSX8+CSrAjXkUbw70OXJGddd6H7aUovYmPSu3e949HCb5V8mes6Y
-         csot7YxYjQrQy/hc3narfwijFwa6LLba1/TtY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type
-         :content-transfer-encoding;
-        b=Jf4xKKcZ6pUbYApw5qbQ6sJ5TBiKbjFsLaeNPd6aiEz7BeRBTH7r8jkNlT9HK6P7xr
-         omUuoKi7iva7Qbky9RPs7XugMexFDamuwJUG1vTcz8o0xxtoHTcLknjXCFDwBLw4lZbk
-         iOVeYTmEwpVGgbgcNh+oh+j/LN3aa+aBEvhkA=
-Received: by 10.204.71.210 with SMTP id i18mr7503006bkj.48.1246303116798; Mon, 
-	29 Jun 2009 12:18:36 -0700 (PDT)
+	id S1753325AbZF2TjT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 29 Jun 2009 15:39:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752775AbZF2TjS
+	(ORCPT <rfc822;git-outgoing>); Mon, 29 Jun 2009 15:39:18 -0400
+Received: from borg.uu3.net ([87.99.63.19]:49366 "EHLO borg.uu3.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752548AbZF2TjR (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 29 Jun 2009 15:39:17 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by borg.uu3.net (Postfix) with ESMTP
+	id 8DAD9633D1; Mon, 29 Jun 2009 21:39:18 +0200 (CEST)
+X-X-Sender: borg@cube
+In-Reply-To: <20090628224447.GB1951@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122454>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122455>
 
-Hello all,
+On Sun, 28 Jun 2009, David Aguilar wrote:
 
-recently a tree I've been working on received some thorough whitespace
-adjustments (changing indents from spaces to tabs). This results in
-annoying conflicts when running merges or rebases with my local
-branches. I tried googling around but I couldn't find any helpful
-hints on how to make git cope with this. Any suggestions?
+> Hello
+Hi and thanks for reply.
 
--- 
-Giuseppe "Oblomov" Bilotta
+> Please take a look at Documentation/SubmittingPatches
+> (all of the documentation lives in Documentation/).
+>
+> It doesn't seem like this patch was generated with
+> git format-patch.  You'll also want to submit your patch using
+> git send-email, as we require inline patches instead of
+> attachments.
+Right. I though such a small patch can be provided as is.
+Anyway, I will take necessary steps to peform better next time.
+
+The question is, would that patch will be applied anyway?
+I already received some criticism about not applying it.
+I can only answer that where svn status and git status differ in many 
+cases, there are also similar in some.
+
+For now, I would rather want to see a discus about it (Pro vs Cons).
+
+Other solution I see is add extra config variable like:
+status.showUntrackedDefault = (no|normal|all)
+So when you peform 'git status -u' it will be used.
+
+Looks better to me if we really want to have difference between
+git status vs svn status.
+
+Regards,
+Borg
