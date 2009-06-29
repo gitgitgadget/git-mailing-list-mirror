@@ -1,139 +1,167 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [RFC] Git User's Survey 2009 - trial run
-Date: Mon, 29 Jun 2009 01:23:08 +0200
-Message-ID: <200906290123.09701.jnareb@gmail.com>
-References: <200906252122.51737.jnareb@gmail.com> <200906261508.46176.jnareb@gmail.com> <200906261644.02694.johan@herland.net>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: AW: Parallell Development / Switching to GIT
+Date: Mon, 29 Jun 2009 10:35:25 +0200
+Message-ID: <4A487CCD.1040406@op5.se>
+References: <loom.20090625T095000-90@post.gmane.org> <4A434D6F.2090105@op5.se> <B81058949321C8439B9D742F5F8D8FCA01A75C1D@hpserver.intranet.local> <20090628184714.GA8634@sigio.peff.net> <B81058949321C8439B9D742F5F8D8FCA01A75C33@hpserver.intranet.local>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-2
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Johan Herland <johan@herland.net>
-X-From: git-owner@vger.kernel.org Mon Jun 29 01:23:32 2009
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
+To: "Patrick Neuner - Futureweb.at" <neuner@futureweb.at>
+X-From: git-owner@vger.kernel.org Mon Jun 29 10:35:45 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ML3ie-0001F8-3L
-	for gcvg-git-2@gmane.org; Mon, 29 Jun 2009 01:23:32 +0200
+	id 1MLCL1-0000eS-HE
+	for gcvg-git-2@gmane.org; Mon, 29 Jun 2009 10:35:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752628AbZF1XXR convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 28 Jun 2009 19:23:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752445AbZF1XXQ
-	(ORCPT <rfc822;git-outgoing>); Sun, 28 Jun 2009 19:23:16 -0400
-Received: from mail-fx0-f218.google.com ([209.85.220.218]:62454 "EHLO
-	mail-fx0-f218.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752262AbZF1XXP (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 28 Jun 2009 19:23:15 -0400
-Received: by fxm18 with SMTP id 18so669149fxm.37
-        for <git@vger.kernel.org>; Sun, 28 Jun 2009 16:23:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version
-         :content-disposition:content-type:content-transfer-encoding
-         :message-id;
-        bh=dn3Ro0pLiLwydbSrG3/LSCViYj83BlRt3k/cyRHvw5M=;
-        b=Fj075KLlBVDueh8MnSLJqRZEN/00dsKtBcgniYKgWSzEQ1ZvZu8EiEGlSkP5/H+L/U
-         6K91p6UihrApElPt+XHhag1LL9Lgrp6lGlenanCUvJpXDfduX+/dvbfKrzpfQFGMNRnC
-         jzZXW6xuSpCkxgK5BZcD5K5plzuN/vA2H+Yho=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-disposition:content-type
-         :content-transfer-encoding:message-id;
-        b=gLeW4WaoQJ47i8XX588nhEUbWNGafn6CvwpPJlJVb6z4fcVQO7OX4QviEsfBRx4iKm
-         ypSu5Y5ZMcdgH3/I0soQOREoC5/5y515XTdFBKLPMg8prMKfq0S8In4ajsZkRKYqUst2
-         bSiIZLJuu1fSfudMjYsw/IYYqJ04ypmm8pOpc=
-Received: by 10.103.6.14 with SMTP id j14mr3709674mui.48.1246231397484;
-        Sun, 28 Jun 2009 16:23:17 -0700 (PDT)
-Received: from ?192.168.1.13? (abvg228.neoplus.adsl.tpnet.pl [83.8.204.228])
-        by mx.google.com with ESMTPS id 25sm11863830mul.50.2009.06.28.16.23.15
+	id S1752733AbZF2Ifc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 29 Jun 2009 04:35:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752692AbZF2Ifb
+	(ORCPT <rfc822;git-outgoing>); Mon, 29 Jun 2009 04:35:31 -0400
+Received: from na3sys009aog109.obsmtp.com ([74.125.149.201]:45302 "HELO
+	na3sys009aog109.obsmtp.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with SMTP id S1752373AbZF2If3 (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 29 Jun 2009 04:35:29 -0400
+Received: from source ([209.85.220.225]) by na3sys009aob109.postini.com ([74.125.148.12]) with SMTP
+	ID DSNKSkh80j8URsuEODQGLM4+b9vBYo6x4eJ7@postini.com; Mon, 29 Jun 2009 01:35:33 PDT
+Received: by fxm25 with SMTP id 25so992304fxm.13
+        for <git@vger.kernel.org>; Mon, 29 Jun 2009 01:35:29 -0700 (PDT)
+Received: by 10.86.74.17 with SMTP id w17mr992816fga.12.1246264529512;
+        Mon, 29 Jun 2009 01:35:29 -0700 (PDT)
+Received: from clix.int.op5.se ([212.112.174.166])
+        by mx.google.com with ESMTPS id 4sm5354755fge.8.2009.06.29.01.35.27
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 28 Jun 2009 16:23:16 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <200906261644.02694.johan@herland.net>
-Content-Disposition: inline
+        Mon, 29 Jun 2009 01:35:28 -0700 (PDT)
+User-Agent: Thunderbird 2.0.0.21 (X11/20090320)
+In-Reply-To: <B81058949321C8439B9D742F5F8D8FCA01A75C33@hpserver.intranet.local>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122429>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122430>
 
-Dnia pi=B1tek 26. czerwca 2009 16:44, Johan Herland napisa=B3:
-> On Friday 26 June 2009, Jakub Narebski wrote:
+Patrick Neuner - Futureweb.at wrote:
+> Hi,
+> 
+> thanks for your answers, I appreciate that. I read about
+> cherry-picking, but I am not quite sure if that's really what we
+> need. Lets assume, you do a new feature:
+> 
+> /featureX
+> 
+> You will commit it, check it out on the testserver and probably see a
+> bug, fix it, commit and push it again. (and probably more commits
+> after the testing person ran over other issues).
+> 
+> With cherry-picking, I would need to know all commits I have to pick.
+>  But as there have been serveral commits, so wouldn't it be a pain to
+> check all commits to that file or directory to have the same version?
+> 
+> 
+> Just trying to find the right way to handle that.
+> 
 
->> Too large number of questions in the survey, and filling survey
->> taking too long were, I think, the most common complaints about
->> survey in the year before.
->=20
-> Yes, that's why I focused on decreasing the number of questions even
-> further.
+I can't help but think you're going about this the entirely wrong way.
+It sounds as if every developer has to be able to log in to the test
+server to try out their stuff, which sounds just plain insane to me
+(unless you're developing supercomputer applications, but a company
+named "futureweb" probably doesn't do that).
 
-Having less questions (currently trying to fit within 30 questions)
-is not the only criterion.  It is also important to not have too=20
-complicated questions (with large number of possible responses),
-see e.g. question 10 (editors and RAD) which got slimmed down by
-asking about kind of editors and not individual editors.
+Anyways, the way you *merge* specific features in git is to develop
+them on a topic-branch. If you absolutely do not want that (though I
+can't think why, since branching is both cheap and easy in git), you
+have to resort to cherry-picking. You cannot merge and say "I want
+only changes to these and those files" because you'd end up with 
+either a disconnected DAG (meaning git wouldn't know where to merge
+from when you want to merge next), or with a connected DAG that
+*still* doesn't have all the changes.
 
->>> There seems to be some unnecessary overlap among questions 11,
->>> 16/17 and 18.
->>
->> Overlap between questions 16/17 and 18 is, to some extent, intended.
->> Those two questions ask about similar area but from the two differen=
-t
->> points of view: question 16/17 is about git commands, 18 about
->> features.
->=20
-> I see, but in the cases where the feature questions in 18 are tied to
-> a specific git command already mentioned in 16/17, I believe you can
-> drop it from 18 (since we already got our answer in 16/17).
+In short; Your workflow seems built around the capabilities and
+shortcomings of SVN. Git has a different set of capabilities and
+shortcomings, so it's natural that some things will feel awkward.
+It's like bringing a skateboard to a formula 1 race, really.
 
-Actually if I could I'd rather drop it from 16/17... but this question
-is about comprehensive list of git commands (one can use).  I think
-that some people won't answer 16/17 because it is long and time-consumi=
-ng
-(and difficult to answer, if you want to do it truthfully).
+With SVN, noone uses feature branches, because merging is a serious
+pain. With SVN, every active contributor has commit access to the
+central repository, because without it they'd have to juggle patches,
+which is boring, and that would hinder them in their work.
 
-On the other hand trimming down the list of possible answers in=20
-18 (features of git) could be a good idea...
+With git, a lot of people use feature-branches, because merging is
+really easy. With git, there's no real need to let every developer
+have write access to the "officially blessed" repository. Instead
+it's often useful to have each developer set up his/her own public
+repository and then issue "please pull" requests, allowing the
+maintainer(s) to fetch their changes, inspect them and then decide
+which of the changes to make public. A lot of active git contributors
+have their own repositories, and nearly all of the linux subsystem
+maintainers have them too. Git also makes it really easy to send
+patches by email (and apply such emailed patches). Since git is a
+distributed version control system, each developer still gains the
+full benefit of using an SCM, while the trusted people act as gate-
+keepers for patches that get sent in. But I digress...
 
->> It there are votes for removing questions 16/17 I can remove it from
->> survey (again).
->=20
-> No, I don't want to remove 16/17. I'd rather remove 18, since it
-> overlaps so much with several of the earlier questions.
+> 
+> About the 2nd point - I am not sure if I get the different
+> repositories thing. Do you talk about to different clones of the rep,
+> and give different directory permissions on it,
 
-I'd rather not.  I prefer 18 to 16/17.
-=20
->>> - 17/"git reflog" and 18/reflog
->>
->> I think I'll remove 'reflog' from 18 (features), not because it is
->> present in 16/17 (git commands), but because this is feature one
->> uses, I think, quite often and less 'conscious'.
->=20
-> agreed.
->=20
->> OTOH one can use reflog feature without using "git reflog" or
->> "git log -g" ("git log --walk-reflogs") -- HEAD@{1} or @{yesterday}
->> uses reflog feature without using mentioned git commands :-)
->=20
-> But _why_ are we asking this question? If the reflog feature is used
-> all the time without people having to know about it, then there's no
-> point in asking about it. It's not like it's going to be removed in
-> the next version because people dislike it. It's like asking "Are you
-> using Git blob objects?". What are you going to do with the answer?
+I'm sure he is, yes.
 
-Actually I think this answer is here because it was present in previous
-survey... and then reflog was not turned on by default, and <rev>@{<n>}
-syntax didn't exist then.  Using reflog was then conscious choice.
-Not nowadays.
-=20
+> or is there a way to
+> have like to completly different git rep's running and still merge
+> things over (both ways)?
 
-Thank you for all your comments.  I'll try to come up soon with next
-version of "Git User's Survey 2009", hopefully the last one before star=
-t
-(and question about announcing it).
+Yes, there is. That's what happens as soon as you have a public repo
+and a local repo, and it's how all distributed version control systems
+work. They're both separate repositories, but you can merge til your
+heart's content between them, ofcourse.
 
---=20
-Jakub Narebski
-Poland
+> I just thought this approach would break
+> correct mergin, as it doesn't know where it's comming from.
+> 
+
+bzzt! wrong. You're thinking SVN. Git has a DAG, with each revision
+having a unique name, based on its content and all its history, so
+separate copies of the same repository can be merged without problem
+at all. This is how Linux development happens; The subsystem maintainers
+all have their own repositories, and Linus merges from them during each
+merge-window. I think there are about 30 "official" Linux repositories
+if you count all the subsystem ones. Git was *designed* for scenarios
+like that, so it does it very, very well.
+
+> The only thing I ran over so far is probably doing a hook for that
+> (like a pre-pull hook if that exists). didn't get to read too much
+> about hooks yet, just did the update hook that checks if the user
+> with specific ssh key is allowed to push to a specific branch. That
+> works pretty good and is more important in fact.
+> 
+> But having 2 completly different repos would be another solution, but
+> I kinda wonder that mergin would work correctly this way (if both
+> sides have changes).
+> 
+
+git help merge-base
+
+In SVN, you need to know exactly which revision you've merged before
+in order to once again merge the same branch. Git holds that knowledge
+already. Spend some time with gitk after following the git tutorial
+and you'll probably get a much better grasp of how the DAG works and
+how git uses it.
+
+I'd advise you to clone the linux kernel and inspecting its history
+using gitk. Every merge-commit you see which has a line saying something
+like "merge foo bar frotz of git://example.com/path/to/repo.git" is a
+merge with branches from different repositories. I wouldn't be the least
+surprised if you find more than 5000 such merges in the linux kernel
+history.
+
+-- 
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
+
+Considering the successes of the wars on alcohol, poverty, drugs and
+terror, I think we should give some serious thought to declaring war
+on peace.
