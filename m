@@ -1,77 +1,72 @@
 From: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-Subject: Re: [PATCHv7 0/9] gitweb: avatar support
-Date: Mon, 29 Jun 2009 23:55:38 +0200
-Message-ID: <cb7bb73a0906291455i6a5e8d91ha535a3a918875ac5@mail.gmail.com>
-References: <1246104305-15191-1-git-send-email-giuseppe.bilotta@gmail.com>
-	 <200906292337.18636.jnareb@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jun 29 23:55:49 2009
+Subject: [PATCHv8 0/7] gitweb: avatar support
+Date: Tue, 30 Jun 2009 00:00:47 +0200
+Message-ID: <1246312854-3365-1-git-send-email-giuseppe.bilotta@gmail.com>
+Cc: Jakub Narebski <jnareb@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Petr Baudis <pasky@suse.cz>,
+	Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jun 30 00:01:40 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MLOpI-0003Gb-8c
-	for gcvg-git-2@gmane.org; Mon, 29 Jun 2009 23:55:48 +0200
+	id 1MLOux-0005Hd-Oq
+	for gcvg-git-2@gmane.org; Tue, 30 Jun 2009 00:01:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754209AbZF2Vzh convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 29 Jun 2009 17:55:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753059AbZF2Vzh
-	(ORCPT <rfc822;git-outgoing>); Mon, 29 Jun 2009 17:55:37 -0400
-Received: from mail-fx0-f218.google.com ([209.85.220.218]:64008 "EHLO
-	mail-fx0-f218.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752771AbZF2Vzg convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 29 Jun 2009 17:55:36 -0400
-Received: by fxm18 with SMTP id 18so1262301fxm.37
-        for <git@vger.kernel.org>; Mon, 29 Jun 2009 14:55:38 -0700 (PDT)
+	id S1752716AbZF2WAn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 29 Jun 2009 18:00:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753716AbZF2WAm
+	(ORCPT <rfc822;git-outgoing>); Mon, 29 Jun 2009 18:00:42 -0400
+Received: from mail-bw0-f213.google.com ([209.85.218.213]:63590 "EHLO
+	mail-bw0-f213.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752312AbZF2WAl (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 29 Jun 2009 18:00:41 -0400
+Received: by bwz9 with SMTP id 9so3551293bwz.37
+        for <git@vger.kernel.org>; Mon, 29 Jun 2009 15:00:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=zeVDm2dseT3qq/z2wof3LG33BmrjuhA9gEP0poEstWc=;
-        b=IvqHVUFJ0GpalCJKjmjXu/cJu+RtbqWRt4Ck4umJso2/Eg5rf3vcuxFLU28QvBJFXC
-         innl7E6OJ6t/3+ZZWweAkqaN37WBiJJCQ/cgLSpfkdL85URGIdVX/iLMt3I2UNULgPdR
-         Xfias05ExlnnVZz7D+3ysLPVkf5UAhZ60shlk=
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer;
+        bh=P28ZHON1dqosWjVD+jQW7nHWakhl9cQWsZqU/j2tD/s=;
+        b=VuG2PM2aeyy5zgJY93MuF+RUUbaCm2i6QdrwgujNUpqO4B9h0I6hxJg7BmvitNROwa
+         foTfqbPp5IWwfh3qM3jeErtF5EOKLFUPjvTUEnrQT3d1Xna4rDCtyxhQqt84v43XKTLZ
+         QhGLuSPgGftjE+cbxPD2PwVTqjqvV47mkuYE4=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=KpZIsFZCfJGiO+Ntypi0Rg8C3mqtT011v9DdcPyAmEOwVdgHSQRQfDkWsNg7v2yfdG
-         fueh/GHzzntkQtE2REYtBiOC68xAqwbzCrdExK2suE7QvdbEqPrs/NH8cYaQ2tlcjh1N
-         uZKo9IeaSHhpem4Q071jJCPoFHqfrv1mR3Jh0=
-Received: by 10.204.78.131 with SMTP id l3mr7539063bkk.186.1246312538211; Mon, 
-	29 Jun 2009 14:55:38 -0700 (PDT)
-In-Reply-To: <200906292337.18636.jnareb@gmail.com>
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=nLgMLuq8g4dbuD3d7n+BH9S+JDGL0LzS2fmDTsdwE3Q+XhoMCZ8GY+63tBzTgX85vr
+         2W3vxOCRhMLFfRtichBRPFN4R3rtGa2Tv0+18lNa4HRUVLN/+qhTIM4vPFntxPRmxc1L
+         t/Y9uFy3vSyeuf1kwogAWk05BDhZwfA5TNt+Q=
+Received: by 10.204.103.197 with SMTP id l5mr3778409bko.165.1246312843614;
+        Mon, 29 Jun 2009 15:00:43 -0700 (PDT)
+Received: from localhost (host-78-13-59-48.cust-adsl.tiscali.it [78.13.59.48])
+        by mx.google.com with ESMTPS id 18sm13177294fkq.59.2009.06.29.15.00.42
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 29 Jun 2009 15:00:43 -0700 (PDT)
+X-Mailer: git-send-email 1.6.3.rc1.192.gdbfcb
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122467>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122468>
 
-2009/6/29 Jakub Narebski <jnareb@gmail.com>:
->> Giuseppe Bilotta (9):
->> =A0 gitweb: refactor author name insertion
->> =A0 gitweb: uniform author info for commit and commitdiff
->> =A0 gitweb: use git_print_authorship_rows in 'tag' view too
->> =A0 gitweb: right-align date cell in shortlog
->> =A0 gitweb: (gr)avatar support
->> =A0 gitweb: gravatar url cache
->> =A0 gitweb: picon avatar provider
->> =A0 gitweb: use picon for gravatar fallback
->> =A0 gitweb: add alt text to avatar img
->
-> I think this patch series shapes very nicely. =A0A bit of refactoring
-> upfront, so that the following patches are not very large, and don't
-> need to repeat the same code in many places. =A0Separate issues such
-> as right-align date cell, or making 'commitdiff' view use authorship
-> info layout from 'commit' view are put in separate patches in such
-> way that they can be accepted or rejected individually.
+8th iteration of my attempt to implement avatar support for gitweb. Only
+minor changes from the previous version: the removal of a couple of
+patches that need to be discussed some more, and some tune-up suggested
+by Jakub.
 
-Thanks. I'll send a cleaned up version of everything we agreed on.
+Giuseppe Bilotta (7):
+  gitweb: refactor author name insertion
+  gitweb: uniform author info for commit and commitdiff
+  gitweb: use git_print_authorship_rows in 'tag' view too
+  gitweb: (gr)avatar support
+  gitweb: gravatar url cache
+  gitweb: picon avatar provider
+  gitweb: add empty alt text to avatar img
 
---=20
-Giuseppe "Oblomov" Bilotta
+ gitweb/gitweb.css                      |    9 +-
+ gitweb/gitweb.perl                     |  231 +++++++++++++++++++++++++------
+ t/t9500-gitweb-standalone-no-errors.sh |    2 +
+ 3 files changed, 196 insertions(+), 46 deletions(-)
