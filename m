@@ -1,110 +1,77 @@
-From: Roger Leigh <rleigh@codelibre.net>
-Subject: Re: [PATCH] builtin-mailinfo.c: Trim only first pair of square
- brackets in subject
-Date: Mon, 29 Jun 2009 22:49:20 +0100
-Message-ID: <20090629214919.GB5397@codelibre.net>
-References: <7vfxdkez96.fsf@alter.siamese.dyndns.org>
- <1246310220-16909-1-git-send-email-rleigh@debian.org>
- <m3ljnawx3h.fsf@localhost.localdomain>
+From: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+Subject: Re: [PATCHv7 0/9] gitweb: avatar support
+Date: Mon, 29 Jun 2009 23:55:38 +0200
+Message-ID: <cb7bb73a0906291455i6a5e8d91ha535a3a918875ac5@mail.gmail.com>
+References: <1246104305-15191-1-git-send-email-giuseppe.bilotta@gmail.com>
+	 <200906292337.18636.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-ripemd160;
-	protocol="application/pgp-signature"; boundary="rS8CxjVDS/+yyDmU"
-Cc: Roger Leigh <rleigh@debian.org>, git@vger.kernel.org
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
 To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jun 29 23:49:31 2009
+X-From: git-owner@vger.kernel.org Mon Jun 29 23:55:49 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MLOjC-0001Ck-HF
-	for gcvg-git-2@gmane.org; Mon, 29 Jun 2009 23:49:31 +0200
+	id 1MLOpI-0003Gb-8c
+	for gcvg-git-2@gmane.org; Mon, 29 Jun 2009 23:55:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752819AbZF2VtT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 29 Jun 2009 17:49:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752771AbZF2VtT
-	(ORCPT <rfc822;git-outgoing>); Mon, 29 Jun 2009 17:49:19 -0400
-Received: from nagini.codelibre.net ([80.68.93.164]:33310 "EHLO
-	nagini.codelibre.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752709AbZF2VtT (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 29 Jun 2009 17:49:19 -0400
-Received: by nagini.codelibre.net (Postfix, from userid 107)
-	id 58B3D18223; Mon, 29 Jun 2009 22:49:20 +0100 (BST)
-Received: from hardknott (unknown [78.148.79.113])
-	by nagini.codelibre.net (Postfix) with ESMTPSA id EA3AD181C0;
-	Mon, 29 Jun 2009 22:49:19 +0100 (BST)
-Received: by hardknott (Postfix, from userid 1000)
-	id 44C99120C1; Mon, 29 Jun 2009 22:49:20 +0100 (BST)
-Content-Disposition: inline
-In-Reply-To: <m3ljnawx3h.fsf@localhost.localdomain>
-X-GPG-Key: 0x25BFB848
-X-Debian: testing/unstable
-X-OS-Uptime: 19:33:15 up 8 min,  2 users,  load average: 0.92, 0.41, 0.18
-User-Agent: Mutt/1.5.20 (2009-06-14)
-X-Bogosity: Ham, tests=bogofilter, spamicity=0.000000, version=1.1.7
+	id S1754209AbZF2Vzh convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 29 Jun 2009 17:55:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753059AbZF2Vzh
+	(ORCPT <rfc822;git-outgoing>); Mon, 29 Jun 2009 17:55:37 -0400
+Received: from mail-fx0-f218.google.com ([209.85.220.218]:64008 "EHLO
+	mail-fx0-f218.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752771AbZF2Vzg convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 29 Jun 2009 17:55:36 -0400
+Received: by fxm18 with SMTP id 18so1262301fxm.37
+        for <git@vger.kernel.org>; Mon, 29 Jun 2009 14:55:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=zeVDm2dseT3qq/z2wof3LG33BmrjuhA9gEP0poEstWc=;
+        b=IvqHVUFJ0GpalCJKjmjXu/cJu+RtbqWRt4Ck4umJso2/Eg5rf3vcuxFLU28QvBJFXC
+         innl7E6OJ6t/3+ZZWweAkqaN37WBiJJCQ/cgLSpfkdL85URGIdVX/iLMt3I2UNULgPdR
+         Xfias05ExlnnVZz7D+3ysLPVkf5UAhZ60shlk=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=KpZIsFZCfJGiO+Ntypi0Rg8C3mqtT011v9DdcPyAmEOwVdgHSQRQfDkWsNg7v2yfdG
+         fueh/GHzzntkQtE2REYtBiOC68xAqwbzCrdExK2suE7QvdbEqPrs/NH8cYaQ2tlcjh1N
+         uZKo9IeaSHhpem4Q071jJCPoFHqfrv1mR3Jh0=
+Received: by 10.204.78.131 with SMTP id l3mr7539063bkk.186.1246312538211; Mon, 
+	29 Jun 2009 14:55:38 -0700 (PDT)
+In-Reply-To: <200906292337.18636.jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122466>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122467>
 
+2009/6/29 Jakub Narebski <jnareb@gmail.com>:
+>> Giuseppe Bilotta (9):
+>> =A0 gitweb: refactor author name insertion
+>> =A0 gitweb: uniform author info for commit and commitdiff
+>> =A0 gitweb: use git_print_authorship_rows in 'tag' view too
+>> =A0 gitweb: right-align date cell in shortlog
+>> =A0 gitweb: (gr)avatar support
+>> =A0 gitweb: gravatar url cache
+>> =A0 gitweb: picon avatar provider
+>> =A0 gitweb: use picon for gravatar fallback
+>> =A0 gitweb: add alt text to avatar img
+>
+> I think this patch series shapes very nicely. =A0A bit of refactoring
+> upfront, so that the following patches are not very large, and don't
+> need to repeat the same code in many places. =A0Separate issues such
+> as right-align date cell, or making 'commitdiff' view use authorship
+> info layout from 'commit' view are put in separate patches in such
+> way that they can be accepted or rejected individually.
 
---rS8CxjVDS/+yyDmU
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-On Mon, Jun 29, 2009 at 02:26:45PM -0700, Jakub Narebski wrote:
-> Roger Leigh <rleigh@debian.org> writes:
->=20
-> > Use a regular expression to match text after "Re:" or any text in the
-> > first pair of square brackets such as "[PATCH n/m]".  This replaces
-> > the complex hairy string munging with a simple single  pattern match.
->=20
-> [...]
-> > +	/* Strip off 'Re:' and/or the first text in square brackets, such as
-> > +	   '[PATCH]' at the start of the mail Subject. */
-> > +	status =3D regcomp(&regex,
-> > +			 "^([Rr]e:)?([^]]*\\[[^]]+\\])(.*)$",
-> > +			 REG_EXTENDED);
->=20
-> Sidenote: it probably didn't worked before either, but there are some
-> broken mail readers in the wold (*cough* MS Outlook *cough*), that
-> misinterpret RFCs and use translated form of "Re:" e.g. "Odp:" (Polish),
-> or not strip "Re:" when replying resulting in string of "Re: Re: Re: ...",
-> or use capitalized form of "Re:", i.e. "RE:", or use yet another form=20
-> e.g. compact form of repeated "Re: Re: Re: ..." in form of "Re(3):".
->=20
-> But I guess it didn't worked before either.
-
-One could update the regex to cope with that easily enough such as
-
-  "^([Rr]e:[[:space:]]*)*([^]]*\\[[^]]+\\])(.*)$"
-
-for the "Re: Re: Re:" case, though I can't say I've seen anything
-except "Re:" for years.  Maybe I just don't get mail and patches
-=66rom Outlook users ;-)
-
-
-Regards,
-Roger
+Thanks. I'll send a cleaned up version of everything we agreed on.
 
 --=20
-  .''`.  Roger Leigh
- : :' :  Debian GNU/Linux             http://people.debian.org/~rleigh/
- `. `'   Printing on GNU/Linux?       http://gutenprint.sourceforge.net/
-   `-    GPG Public Key: 0x25BFB848   Please GPG sign your mail.
-
---rS8CxjVDS/+yyDmU
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
-
-iEYEAREDAAYFAkpJNt8ACgkQVcFcaSW/uEi5tgCeKN8Dg+KazdljHXbM0GEJUP7j
-hjEAoMOtu4H6ayKUezSWtGgCdq8IvoLP
-=Ov6l
------END PGP SIGNATURE-----
-
---rS8CxjVDS/+yyDmU--
+Giuseppe "Oblomov" Bilotta
