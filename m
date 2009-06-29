@@ -1,64 +1,110 @@
-From: Nanako Shiraishi <nanako3@lavabit.com>
-Subject: Re: git monthly links: 2009-05
-Date: Tue, 30 Jun 2009 06:37:55 +0900
-Message-ID: <20090630063755.6117@nanako3.lavabit.com>
-References: <94a0d4530906290506m1a5b02acgbabdce219aaf412e@mail.gmail.com>
+From: Roger Leigh <rleigh@codelibre.net>
+Subject: Re: [PATCH] builtin-mailinfo.c: Trim only first pair of square
+ brackets in subject
+Date: Mon, 29 Jun 2009 22:49:20 +0100
+Message-ID: <20090629214919.GB5397@codelibre.net>
+References: <7vfxdkez96.fsf@alter.siamese.dyndns.org>
+ <1246310220-16909-1-git-send-email-rleigh@debian.org>
+ <m3ljnawx3h.fsf@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jun 29 23:38:57 2009
+Content-Type: multipart/signed; micalg=pgp-ripemd160;
+	protocol="application/pgp-signature"; boundary="rS8CxjVDS/+yyDmU"
+Cc: Roger Leigh <rleigh@debian.org>, git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jun 29 23:49:31 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MLOYu-0005cN-2U
-	for gcvg-git-2@gmane.org; Mon, 29 Jun 2009 23:38:52 +0200
+	id 1MLOjC-0001Ck-HF
+	for gcvg-git-2@gmane.org; Mon, 29 Jun 2009 23:49:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753789AbZF2Vin convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 29 Jun 2009 17:38:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753374AbZF2Vim
-	(ORCPT <rfc822;git-outgoing>); Mon, 29 Jun 2009 17:38:42 -0400
-Received: from karen.lavabit.com ([72.249.41.33]:38416 "EHLO karen.lavabit.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753283AbZF2Vil (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 29 Jun 2009 17:38:41 -0400
-Received: from e.earth.lavabit.com (e.earth.lavabit.com [192.168.111.14])
-	by karen.lavabit.com (Postfix) with ESMTP id 5185E11B817;
-	Mon, 29 Jun 2009 16:38:42 -0500 (CDT)
-Received: from 1473.lavabit.com (212.62.97.23)
-	by lavabit.com with ESMTP id RH0F78VZH4DW; Mon, 29 Jun 2009 16:38:42 -0500
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws; s=lavabit; d=lavabit.com;
-  b=TNCAahaAe53uTB3/bc9l9tQrLlrBmjtlbnmrbhM1AvETSGy76cCEb3jCT2Mf0DJKMTS+pfnlvKpNmFd1qyhj53xUP9SKE4tV1qXDBMS4IvaEr49H4hdb/C7R4gqpaRWd+kQx9AM71O92fmaJ470sHojnNy5cwOCi+xpYEV9P2Jw=;
-  h=From:To:Cc:Subject:References:In-Reply-To:Date:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id;
-In-Reply-To: <94a0d4530906290506m1a5b02acgbabdce219aaf412e@mail.gmail.com>
+	id S1752819AbZF2VtT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 29 Jun 2009 17:49:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752771AbZF2VtT
+	(ORCPT <rfc822;git-outgoing>); Mon, 29 Jun 2009 17:49:19 -0400
+Received: from nagini.codelibre.net ([80.68.93.164]:33310 "EHLO
+	nagini.codelibre.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752709AbZF2VtT (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 29 Jun 2009 17:49:19 -0400
+Received: by nagini.codelibre.net (Postfix, from userid 107)
+	id 58B3D18223; Mon, 29 Jun 2009 22:49:20 +0100 (BST)
+Received: from hardknott (unknown [78.148.79.113])
+	by nagini.codelibre.net (Postfix) with ESMTPSA id EA3AD181C0;
+	Mon, 29 Jun 2009 22:49:19 +0100 (BST)
+Received: by hardknott (Postfix, from userid 1000)
+	id 44C99120C1; Mon, 29 Jun 2009 22:49:20 +0100 (BST)
+Content-Disposition: inline
+In-Reply-To: <m3ljnawx3h.fsf@localhost.localdomain>
+X-GPG-Key: 0x25BFB848
+X-Debian: testing/unstable
+X-OS-Uptime: 19:33:15 up 8 min,  2 users,  load average: 0.92, 0.41, 0.18
+User-Agent: Mutt/1.5.20 (2009-06-14)
+X-Bogosity: Ham, tests=bogofilter, spamicity=0.000000, version=1.1.7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122465>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122466>
 
-Quoting Felipe Contreras <felipe.contreras@gmail.com>:
 
-> =3D=3D Janapese =3D=3D
+--rS8CxjVDS/+yyDmU
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Japanese ;-)
+On Mon, Jun 29, 2009 at 02:26:45PM -0700, Jakub Narebski wrote:
+> Roger Leigh <rleigh@debian.org> writes:
+>=20
+> > Use a regular expression to match text after "Re:" or any text in the
+> > first pair of square brackets such as "[PATCH n/m]".  This replaces
+> > the complex hairy string munging with a simple single  pattern match.
+>=20
+> [...]
+> > +	/* Strip off 'Re:' and/or the first text in square brackets, such as
+> > +	   '[PATCH]' at the start of the mail Subject. */
+> > +	status =3D regcomp(&regex,
+> > +			 "^([Rr]e:)?([^]]*\\[[^]]+\\])(.*)$",
+> > +			 REG_EXTENDED);
+>=20
+> Sidenote: it probably didn't worked before either, but there are some
+> broken mail readers in the wold (*cough* MS Outlook *cough*), that
+> misinterpret RFCs and use translated form of "Re:" e.g. "Odp:" (Polish),
+> or not strip "Re:" when replying resulting in string of "Re: Re: Re: ...",
+> or use capitalized form of "Re:", i.e. "RE:", or use yet another form=20
+> e.g. compact form of repeated "Re: Re: Re: ..." in form of "Re(3):".
+>=20
+> But I guess it didn't worked before either.
 
-> =E3=81=93=E3=82=8C=E3=81=8B=E3=82=89Git=E3=82=92=E5=A7=8B=E3=82=81=E3=
-=82=8B=E4=BA=BA=E3=81=8C=E8=AA=AD=E3=82=80=E3=81=B9=E3=81=8D=E8=A8=98=E4=
-=BA=8B=E3=81=AE=E3=81=BE=E3=81=A8=E3=82=81
-> *Very* popular, but I've no idea what it is about
-> http://www.akiyan.com/blog/archives/2009/05/posts-for-git-beginne.htm=
-l
+One could update the regex to cope with that easily enough such as
 
-A list of articles the page author thinks must-read for people who begi=
-n to use git.
+  "^([Rr]e:[[:space:]]*)*([^]]*\\[[^]]+\\])(.*)$"
 
-The first entry in the list is a 45-page article Junio wrote for a bi-m=
-onthly paper magazine published in April (it still seems to be availabl=
-e at Amazon.co.jp). The others are various web pages.
+for the "Re: Re: Re:" case, though I can't say I've seen anything
+except "Re:" for years.  Maybe I just don't get mail and patches
+=66rom Outlook users ;-)
+
+
+Regards,
+Roger
 
 --=20
-Nanako Shiraishi
-http://ivory.ap.teacup.com/nanako3/
+  .''`.  Roger Leigh
+ : :' :  Debian GNU/Linux             http://people.debian.org/~rleigh/
+ `. `'   Printing on GNU/Linux?       http://gutenprint.sourceforge.net/
+   `-    GPG Public Key: 0x25BFB848   Please GPG sign your mail.
+
+--rS8CxjVDS/+yyDmU
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
+
+iEYEAREDAAYFAkpJNt8ACgkQVcFcaSW/uEi5tgCeKN8Dg+KazdljHXbM0GEJUP7j
+hjEAoMOtu4H6ayKUezSWtGgCdq8IvoLP
+=Ov6l
+-----END PGP SIGNATURE-----
+
+--rS8CxjVDS/+yyDmU--
