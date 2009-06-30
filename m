@@ -1,80 +1,70 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: Team Coherence to Git conversion
-Date: Tue, 30 Jun 2009 07:41:28 -0700
-Message-ID: <20090630144128.GR11191@spearce.org>
-References: <h2cmv6$agp$1@ger.gmane.org>
+From: Martin Renold <martinxyz@gmx.ch>
+Subject: Re: [PATCH] git status -q (similar to subversion)
+Date: Tue, 30 Jun 2009 17:14:42 +0200
+Message-ID: <20090630151442.GA20688@old.homeip.net>
+References: <Pine.LNX.4.64.0906272248570.11453@cube> <20090628185218.GB8634@sigio.peff.net> <20090628210117.GA7821@old.homeip.net> <20090630053304.GB29643@sigio.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Graeme Geldenhuys <graemeg@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jun 30 17:01:02 2009
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Jun 30 17:15:29 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
-Received: from mail-forward2.uio.no ([129.240.10.71])
-	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MLemN-0002T1-3N
-	for gcvg-git-2@gmane.org; Tue, 30 Jun 2009 16:57:51 +0200
-Received: from exim by mail-out2.uio.no with local-bsmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1MLeWh-00087l-6g
-	for gcvg-git-2@gmane.org; Tue, 30 Jun 2009 16:41:39 +0200
-Received: from mail-mx6.uio.no ([129.240.10.47])
-	by mail-out2.uio.no with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1MLeWh-00087i-5g
-	for gcvg-git-2@gmane.org; Tue, 30 Jun 2009 16:41:39 +0200
 Received: from vger.kernel.org ([209.132.176.167])
-	by mail-mx6.uio.no with esmtp  (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1MLeWf-0001So-Ez
-	for gcvg-git-2@gmane.org; Tue, 30 Jun 2009 16:41:39 +0200
+	by lo.gmane.org with esmtp (Exim 4.50)
+	id 1MLf3M-0002KA-3f
+	for gcvg-git-2@gmane.org; Tue, 30 Jun 2009 17:15:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757959AbZF3Ol1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 30 Jun 2009 10:41:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753614AbZF3Ol1
-	(ORCPT <rfc822;git-outgoing>); Tue, 30 Jun 2009 10:41:27 -0400
-Received: from george.spearce.org ([209.20.77.23]:45780 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757959AbZF3Ol0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 30 Jun 2009 10:41:26 -0400
-Received: by george.spearce.org (Postfix, from userid 1001)
-	id EDB77381FD; Tue, 30 Jun 2009 14:41:28 +0000 (UTC)
+	id S1756754AbZF3POk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 30 Jun 2009 11:14:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754645AbZF3POk
+	(ORCPT <rfc822;git-outgoing>); Tue, 30 Jun 2009 11:14:40 -0400
+Received: from mail.gmx.net ([213.165.64.20]:36276 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752800AbZF3POj (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 30 Jun 2009 11:14:39 -0400
+Received: (qmail invoked by alias); 30 Jun 2009 15:14:41 -0000
+Received: from 84-74-83-103.dclient.hispeed.ch (EHLO bazaar) [84.74.83.103]
+  by mail.gmx.net (mp013) with SMTP; 30 Jun 2009 17:14:41 +0200
+X-Authenticated: #1936982
+X-Provags-ID: V01U2FsdGVkX1+LPpQ/9GmLkpmdlgNFkRio3CApfA8fwmjqCM1JM+
+	RaDuAGfISu2XOF
+Received: from martin by bazaar with local (Exim 4.69)
+	(envelope-from <martinxyz@gmx.ch>)
+	id 1MLf2g-0006BG-9x; Tue, 30 Jun 2009 17:14:42 +0200
 Content-Disposition: inline
-In-Reply-To: <h2cmv6$agp$1@ger.gmane.org>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+In-Reply-To: <20090630053304.GB29643@sigio.peff.net>
+X-Virus: Hi! I'm a header virus! Copy me into yours and join the fun!
+User-Agent: Mutt/1.5.18 (2008-05-17)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.65
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-X-UiO-Spam-info: not spam, SpamAssassin (score=-7.0, required=5.0, autolearn=disabled, RCVD_IN_DNSWL_MED=-4,UIO_VGER=-3, uiobl=NO, uiouri=_URIID_)
-X-UiO-Scanned: FEFEDF4FE007B402AFDE74414D2FA504DAD9C2BB
-X-UiO-SPAM-Test: remote_host: 209.132.176.167 spam_score: -69 maxlevel 80 minaction 2 bait 0 mail/h: 154 total 2547832 max/h 849 blacklist 0 greylist 0 ratelimit 0
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122518>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122519>
 
-Graeme Geldenhuys <graemeg@gmail.com> wrote:
-> We have a couple (actually around 20) projects sitting in Team
-> Coherence repositories. Luckily they have very little history. Before
-> I joined the company nobody used revision control software - just
-> simple zip archives once a week (if that many).
->
-> Does anybody know of a tool that can convert a TC repository to
-> Git? TC seems to be dying a slow dead, and I don't want our code
-> to get trapped in proprietary software we can't access, a few years
-> down the line.
+On Tue, Jun 30, 2009 at 01:33:05AM -0400, Jeff King wrote:
+> If it is convenience you want, perhaps you would be even happier with:
+>   git config status.showUntrackedFiles no
 
-Huh.  TC reminds me of PVCS Version Manager.  Lots of hype on
-the web page, but a tool from the early 1980s that still can't
-do anything useful.  Hell, it might be a rebranded PVCS VM.
+No, that doesn't help in my usecase. I want to be reminded about the
+untracked files by default because I intend to clean them up later.
 
-No, there aren't any existing import tools from TC, in fact probably
-nobody here has even heard of TC before.  You are on your own to
-write an import tool.
+> [...] but we have to deal with the fact that "git status" is really a
+> dry-run version of "git commit", which already has a "-q" option
 
-You might want to look at using git-fast-import to handle the git
-side of the conversion, but you'll need to write your own script
-to mine the data out of TC and format it for git-fast-import.
-Look at contrib/fast-import for some examples, and the fast-import
-man page is rather extensive.
+Good point. However I think those commands are similar only from an
+implementation point of view.  As an user I think of them as being quite
+different.  I would not be surprised about different meaning of options -
+certainly less than about "git commit -a" vs "git add -u".
 
--- 
-Shawn.
+> So I am a little hesitant to endorse its use in "git status" for something
+> unrelated (and I am hesitant to have redundant command line options, as
+> well).
+
+Yes I understand that. I'm using a wrapper script for now, but if it was any
+other one-letter shortcut, I would prefer to learn that instead.
+
+bye,
+Martin
