@@ -1,47 +1,69 @@
-From: Unknown <borg@uu3.net>
-Subject: Re: [PATCH] git status -q (similar to subversion)
-Date: Tue, 30 Jun 2009 18:56:54 +0200 (CEST)
-Message-ID: <Pine.LNX.4.64.0906301854320.17614@cube>
-References: <Pine.LNX.4.64.0906272248570.11453@cube> <20090628224447.GB1951@gmail.com>
- <Pine.LNX.4.64.0906292131330.27727@cube> <20090630053325.GC29643@sigio.peff.net>
+From: Michal Marek <mmarek@suse.cz>
+Subject: Re: [PATCH] request-pull: do not paginate output of git commands
+Date: Tue, 30 Jun 2009 19:26:11 +0200
+Message-ID: <4A4A4AB3.8030107@suse.cz>
+References: <1246361606-20457-1-git-send-email-mmarek@suse.cz>	<7vws6t8zhv.fsf@alter.siamese.dyndns.org> <7vskhh8yxf.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-Cc: David Aguilar <davvid@gmail.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Jun 30 18:57:05 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jun 30 19:26:29 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MLgdj-0003eM-Nk
-	for gcvg-git-2@gmane.org; Tue, 30 Jun 2009 18:57:04 +0200
+	id 1MLh6A-0007bS-QL
+	for gcvg-git-2@gmane.org; Tue, 30 Jun 2009 19:26:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752063AbZF3Q4x (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 30 Jun 2009 12:56:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751906AbZF3Q4w
-	(ORCPT <rfc822;git-outgoing>); Tue, 30 Jun 2009 12:56:52 -0400
-Received: from borg.uu3.net ([87.99.63.19]:49911 "EHLO borg.uu3.net"
+	id S1752904AbZF3R0R (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 30 Jun 2009 13:26:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752843AbZF3R0Q
+	(ORCPT <rfc822;git-outgoing>); Tue, 30 Jun 2009 13:26:16 -0400
+Received: from cantor.suse.de ([195.135.220.2]:41319 "EHLO mx1.suse.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751799AbZF3Q4w (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 30 Jun 2009 12:56:52 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by borg.uu3.net (Postfix) with ESMTP
-	id 0C662633D1; Tue, 30 Jun 2009 18:56:54 +0200 (CEST)
-X-X-Sender: borg@cube
-In-Reply-To: <20090630053325.GC29643@sigio.peff.net>
+	id S1752741AbZF3R0P (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 30 Jun 2009 13:26:15 -0400
+Received: from relay2.suse.de (mail2.suse.de [195.135.221.8])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by mx1.suse.de (Postfix) with ESMTP id DBA9C93B4B;
+	Tue, 30 Jun 2009 19:26:18 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.19 (X11/20081227)
+In-Reply-To: <7vskhh8yxf.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122523>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122524>
 
-On Tue, 30 Jun 2009, Jeff King wrote:
-> It exists, but is called showUntrackedFiles. See "git help config" for
-> details.
-Its not what I meant. showUntrackedFiles is used when you do not specify 
-'-u' option. showUnrackedDefault (not so good name, someone have better 
-idea?) would be used if you specify '-u' option without argument.
-Currently argument 'all' is used.
+Junio C Hamano napsal(a):
+> Junio C Hamano <gitster@pobox.com> writes:
+> 
+>> Michal Marek <mmarek@suse.cz> writes:
+>>
+>>> git request-pull called inside a terminal prints part of the output to
+>>> the terminal and other parts are piped through the pager. Fix this.
+>> Hmph, I have always thought this was meant to be a feature.
+>>
+>> That is, you run it to yourself, instead of piping it to a file or "| mail
+>> torvalds", in order to sanity check before you actually do the latter.
+>> When the request is larger than a screenful, you would want a pager while
+>> reviewing.
+> 
+> Sorry, I take it back.
+> 
+> If it _were_ a single call to a paging command what I said may make sense,
+> but with many separate calls to shortlog, we wouldn't know which output is
+> too large (and uses pager).  I agree your patch makes things better.
 
--- 
-Borg
+Yes, this is what I dislike, it prints parts to the terminal and parts
+are paged (separately). Paging the whole output would be a nice
+improvement, but probably not worth the effort.
+
+
+> I should have read your commit log message after finishing my coffee ;-)
+
+:-)
+
+Michal
