@@ -1,66 +1,75 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Always output a trailing space conflicted merge markers.
-Date: Tue, 30 Jun 2009 15:20:09 -0700
-Message-ID: <7v1vp15ppi.fsf@alter.siamese.dyndns.org>
-References: <1246322461-24742-1-git-send-email-nelhage@mit.edu>
+From: =?ISO-8859-15?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
+Subject: [PATCH] attr: plug minor memory leak
+Date: Wed, 01 Jul 2009 00:30:00 +0200
+Message-ID: <4A4A91E8.6060604@lsrfire.ath.cx>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Nelson Elhage <nelhage@MIT.EDU>
-X-From: git-owner@vger.kernel.org Wed Jul 01 00:20:42 2009
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: Dmitry Potapov <dpotapov@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Jul 01 00:41:11 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
-Received: from vger.kernel.org ([209.132.176.167])
+Received: from mail-forward1.uio.no ([129.240.10.70])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MLlgw-0001Ws-2T
-	for gcvg-git-2@gmane.org; Wed, 01 Jul 2009 00:20:42 +0200
+	id 1MLm0a-0007Th-8Y
+	for gcvg-git-2@gmane.org; Wed, 01 Jul 2009 00:41:00 +0200
+Received: from exim by mail-out1.uio.no with local-bsmtp (Exim 4.69)
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1MLlqD-0000Ew-Uy
+	for gcvg-git-2@gmane.org; Wed, 01 Jul 2009 00:30:17 +0200
+Received: from mail-mx3.uio.no ([129.240.10.44])
+	by mail-out1.uio.no with esmtp (Exim 4.69)
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1MLlqD-0000Et-Tv
+	for gcvg-git-2@gmane.org; Wed, 01 Jul 2009 00:30:17 +0200
+Received: from vger.kernel.org ([209.132.176.167])
+	by mail-mx3.uio.no with esmtp  (Exim 4.69)
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1MLlqD-00034m-1u
+	for gcvg-git-2@gmane.org; Wed, 01 Jul 2009 00:30:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754989AbZF3WUI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 30 Jun 2009 18:20:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753351AbZF3WUH
-	(ORCPT <rfc822;git-outgoing>); Tue, 30 Jun 2009 18:20:07 -0400
-Received: from fed1rmmtao102.cox.net ([68.230.241.44]:59239 "EHLO
-	fed1rmmtao102.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754025AbZF3WUG (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 30 Jun 2009 18:20:06 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao102.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20090630222009.ABQ20976.fed1rmmtao102.cox.net@fed1rmimpo02.cox.net>;
-          Tue, 30 Jun 2009 18:20:09 -0400
-Received: from localhost ([68.225.240.211])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id ANL91c0054aMwMQ04NL9iG; Tue, 30 Jun 2009 18:20:09 -0400
-X-VR-Score: -100.00
-X-Authority-Analysis: v=1.0 c=1 a=JfQwyIwb32wA:10 a=Op-QDATyAAAA:8
- a=6VNn5m6oBOv1yGUJeeoA:9 a=RJjzyz1pR24c_mw7FU0A:7
- a=3nyKVQqmC_SHZ-VQ8At9HghtyvEA:4
-X-CM-Score: 0.00
-In-Reply-To: <1246322461-24742-1-git-send-email-nelhage@mit.edu> (Nelson Elhage's message of "Mon\, 29 Jun 2009 20\:41\:01 -0400")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+	id S1753932AbZF3WaG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 30 Jun 2009 18:30:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753346AbZF3WaF
+	(ORCPT <rfc822;git-outgoing>); Tue, 30 Jun 2009 18:30:05 -0400
+Received: from india601.server4you.de ([85.25.151.105]:43954 "EHLO
+	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752569AbZF3WaE (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 30 Jun 2009 18:30:04 -0400
+Received: from [10.0.1.101] (p57B7D23C.dip.t-dialin.net [87.183.210.60])
+	by india601.server4you.de (Postfix) with ESMTPSA id 98C302F8068;
+	Wed,  1 Jul 2009 00:30:05 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.22 (Windows/20090605)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122548>
+X-UiO-Spam-info: not spam, SpamAssassin (score=-7.0, required=5.0, autolearn=disabled, RCVD_IN_DNSWL_MED=-4,UIO_VGER=-3, uiobl=NO, uiouri=_URIID_)
+X-UiO-Scanned: 647597FF86CC386D8F11353CC7CB7E108F6FAFD1
+X-UiO-SPAM-Test: remote_host: 209.132.176.167 spam_score: -69 maxlevel 80 minaction 2 bait 0 mail/h: 112 total 2549203 max/h 849 blacklist 0 greylist 0 ratelimit 0
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122549>
 
-Nelson Elhage <nelhage@MIT.EDU> writes:
+Free the memory allocated for struct strbuf pathbuf when we're done.
 
-> Some tools, such as emacs' smerge-mode, except that diff3-style merge
-> conflict markers always include a trailing space (and optional
-> description) after the marker, and so fail to correctly detect
-> git's (notably the '|||||||' base marker, for which git never outputs a
-> trailing space).
->
-> (See http://emacsbugs.donarmstrong.com/cgi-bin/bugreport.cgi?bug=3553
-> for the emacs issue)
->
-> Signed-off-by: Nelson Elhage <nelhage@mit.edu>
-> ---
->  xdiff/xmerge.c |   11 ++++++++---
->  1 files changed, 8 insertions(+), 3 deletions(-)
+Signed-off-by: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
+---
+ attr.c |    2 ++
+ 1 files changed, 2 insertions(+), 0 deletions(-)
 
-Thanks, but I think you also need to update the test scripts.
-
-Don't you want some new tests to protect this from getting broken
-in the future by other people yourself, too?
+diff --git a/attr.c b/attr.c
+index f8f6faa..55bdb7c 100644
+--- a/attr.c
++++ b/attr.c
+@@ -555,6 +555,8 @@ static void prepare_attr_stack(const char *path, int dirlen)
+ 		}
+ 	}
+ 
++	strbuf_release(&pathbuf);
++
+ 	/*
+ 	 * Finally push the "info" one at the top of the stack.
+ 	 */
+-- 
+1.6.3.3
