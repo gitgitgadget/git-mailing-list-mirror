@@ -1,107 +1,77 @@
-From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
-Subject: Re: correct workflow with bare repo and pull?
-Date: Tue, 30 Jun 2009 10:14:46 +0200
-Message-ID: <200906301014.46540.robin.rosenberg.lists@dewire.com>
-References: <583913.73865.qm@web52205.mail.re2.yahoo.com> <4A49B086.30000@op5.se>
+From: Rogan Dawes <lists@dawes.za.net>
+Subject: Re: Merge, rebase and whitespace fixes
+Date: Tue, 30 Jun 2009 11:03:01 +0200
+Message-ID: <4A49D4C5.8090700@dawes.za.net>
+References: <cb7bb73a0906291218m3ba43109s35cad87efc5161a7@mail.gmail.com>	 <4A493287.20106@dawes.za.net> <cb7bb73a0906300037w6b61cae0jeecd2f97b1095b17@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: Text/Plain;
-  charset="iso-8859-1"
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: Tim <opensourcetim@yahoo.com>, git@vger.kernel.org
-To: Andreas Ericsson <ae@op5.se>
-X-From: git-owner@vger.kernel.org Tue Jun 30 10:15:04 2009
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+	Robert Fitzsimons <robfitz@273k.net>
+To: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jun 30 11:03:42 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MLYUZ-0003fW-JZ
-	for gcvg-git-2@gmane.org; Tue, 30 Jun 2009 10:15:04 +0200
+	id 1MLZFd-0003Yz-Rz
+	for gcvg-git-2@gmane.org; Tue, 30 Jun 2009 11:03:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752302AbZF3IOw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 30 Jun 2009 04:14:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752133AbZF3IOv
-	(ORCPT <rfc822;git-outgoing>); Tue, 30 Jun 2009 04:14:51 -0400
-Received: from mail.dewire.com ([83.140.172.130]:13913 "EHLO dewire.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751846AbZF3IOu (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 30 Jun 2009 04:14:50 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by dewire.com (Postfix) with ESMTP id 64846139CC88;
-	Tue, 30 Jun 2009 10:14:48 +0200 (CEST)
-X-Virus-Scanned: by amavisd-new at dewire.com
-Received: from dewire.com ([127.0.0.1])
-	by localhost (torino.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id EOnWM1KDSxTI; Tue, 30 Jun 2009 10:14:47 +0200 (CEST)
-Received: from sleipner.localnet (unknown [10.9.0.7])
-	by dewire.com (Postfix) with ESMTP id AA41F139CC83;
-	Tue, 30 Jun 2009 10:14:47 +0200 (CEST)
-User-Agent: KMail/1.11.2 (Linux/2.6.28-11-generic; KDE/4.2.2; i686; ; )
-In-Reply-To: <4A49B086.30000@op5.se>
-Content-Disposition: inline
+	id S1751203AbZF3JDK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 30 Jun 2009 05:03:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751918AbZF3JDJ
+	(ORCPT <rfc822;git-outgoing>); Tue, 30 Jun 2009 05:03:09 -0400
+Received: from caiajhbdccac.dreamhost.com ([208.97.132.202]:55994 "EHLO
+	homiemail-a6.g.dreamhost.com" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1750937AbZF3JDI (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 30 Jun 2009 05:03:08 -0400
+X-Greylist: delayed 41536 seconds by postgrey-1.27 at vger.kernel.org; Tue, 30 Jun 2009 05:03:08 EDT
+Received: from artemis.local (dsl-246-34-245.telkomadsl.co.za [41.246.34.245])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by homiemail-a6.g.dreamhost.com (Postfix) with ESMTP id 2F8ED1427D;
+	Tue, 30 Jun 2009 02:03:07 -0700 (PDT)
+User-Agent: Thunderbird 2.0.0.22 (Macintosh/20090605)
+In-Reply-To: <cb7bb73a0906300037w6b61cae0jeecd2f97b1095b17@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122500>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122501>
 
-tisdag 30 juni 2009 08:28:22 skrev Andreas Ericsson <ae@op5.se>:
-> Tim wrote:
-> > Myself and the other developer on the team have private repos, and we
-> > push to a bare repo (which we use for Hudson builds).  For now we only
-> > use the master branch.  No other remote repos.  When another developer
-> > pushes changes to the bare repo, and I pull them, all of the files they
-> > pushed show up as modified on my box when I do "git status" (even
-> > though I had not modified them).  How to avoid this?
+Giuseppe Bilotta wrote:
+> On Mon, Jun 29, 2009 at 11:30 PM, Rogan Dawes<lists@dawes.za.net> wrote:
+>> Giuseppe Bilotta wrote:
+>>> Hello all,
+>>>
+>>> recently a tree I've been working on received some thorough whitespace
+>>> adjustments (changing indents from spaces to tabs). This results in
+>>> annoying conflicts when running merges or rebases with my local
+>>> branches. I tried googling around but I couldn't find any helpful
+>>> hints on how to make git cope with this. Any suggestions?
+>>>
+>> Do the same thing to your own tree?
 > 
-> Make sure neither of you modify the executable bit on the files, and make
-> sure your editors work the same in both ends wrt the last line and white-
-> space at the ends of lines.
+> I tried doing the whitespace cleanup on top of the last patch, but the
+> merge still conflicted.
 > 
-> Also make sure you have compatible crlf settings in your git configs.
+> The interesting thing is that there's patchset from Robert Fitzsimons
+> that goes back to August 2005 (!) that does a couple of git apply
+> cleanups and in particular adds the --ignore-whitespace option that I
+> would need ...
 > 
-> If your editors are what's causing the problem, you should only see the
-> files you've actually opened in your editor as being different. If it's
-> your git configuration, "git pull && git status" should show differences
-> immediately. "git help config" and searching for core.autocrlf should
-> point you in the right direction to what might be causing the error.
-> If it's modechanges that's the problem. core.filemode may also be a
-> possible source of errors (it has to be "false" on windows but can be
-> "true" on systems with posix permissions).
+> http://permalink.gmane.org/gmane.comp.version-control.git/7876
 > 
-> >   Also, one
-> > developer saw really strange results when they did a "git pull origin
-> > master" and "git status" -- the paths shown below do not exist in the
-> > local work area.  These files have always lived under a-core/.... so it
-> > is really odd that they show up under a-web
-> > # On branch master
-> > # Changes to be committed:
-> > #   (use "git reset HEAD <file>..." to unstage)
-> > #
-> > #    new file:   a-web/src/main/java/com/blah/account/Account.java
-> > #    new file:   a-web/src/main/java/com/blah/account/AccountType.java
-> > #
-> > # Changed but not updated:
-> > #   (use "git add/rm <file>..." to update what will be committed)
-> > #   (use "git checkout -- <file>..." to discard changes in working directory)
-> > #
-> > #    deleted:    a-web/src/main/java/com/blah/account/Account.java
-> > #    deleted:    a-web/src/main/java/com/blah/account/AccountType.java
-> > 
-> > What are we doing wrong?  
-> > 
+> but the patch apparently never made it into mainline ...
 > 
-> Hard to tell without knowing what the repository looks like. Is this
-> a repo you can share with us?
 
-"Changes to be committed" is the index
-"Changed but not updated" is the workdir.
+One thing I have done in the past when trying to merge two diverged
+trees was to format each commit in each tree to a common standard.
 
-So modify the files, update the index (git add -u) and then rm (not git rm) the files
-and you get this. But from a pull/merge only you should not get this state.
+One of the ways in which the trees had diverged was whitespace
+(non-meaningful) changes, so I used the Eclipse formatter as part of a
+"git filter-branch" script to make sure that I was ony looking at
+meaningful changes between the trees at each point. This significantly
+simplified the process.
 
-A possible way,is if you had non-ascii filenames and one of the trees was produced using the Eclipse plugin. 
-For non-ascii names you could get corrupt (wrong order) trees and that would fool git when merging into
-producing "interesting" results.  See http://egit.googlecode.com for instructions for upgrading to the latest
-pre-built plugin.
-
--- robin
+Rogan
