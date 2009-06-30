@@ -1,68 +1,65 @@
-From: Tim <opensourcetim@yahoo.com>
-Subject: correct workflow with bare repo and pull?
-Date: Mon, 29 Jun 2009 17:01:15 -0700 (PDT)
-Message-ID: <583913.73865.qm@web52205.mail.re2.yahoo.com>
+From: Eric Raible <raible@gmail.com>
+Subject: RFH - git-log variant that _does_ search through diffs
+Date: Mon, 29 Jun 2009 17:08:47 -0700
+Message-ID: <279b37b20906291708g67da3a75p316ea4893f02666a@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jun 30 02:08:02 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Jun 30 02:08:58 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MLQtF-0000YW-ON
-	for gcvg-git-2@gmane.org; Tue, 30 Jun 2009 02:08:02 +0200
+	id 1MLQu9-0000oR-IR
+	for gcvg-git-2@gmane.org; Tue, 30 Jun 2009 02:08:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758909AbZF3AHx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 29 Jun 2009 20:07:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754252AbZF3AHx
-	(ORCPT <rfc822;git-outgoing>); Mon, 29 Jun 2009 20:07:53 -0400
-Received: from web52205.mail.re2.yahoo.com ([206.190.48.128]:20146 "HELO
-	web52205.mail.re2.yahoo.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with SMTP id S1753839AbZF3AHw (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 29 Jun 2009 20:07:52 -0400
-X-Greylist: delayed 400 seconds by postgrey-1.27 at vger.kernel.org; Mon, 29 Jun 2009 20:07:52 EDT
-Received: (qmail 81790 invoked by uid 60001); 30 Jun 2009 00:01:15 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s1024; t=1246320075; bh=SElJ3K55bLG5NqUKJYnBrk9iMYt+JEBVH7266O/TdUQ=; h=Message-ID:X-YMail-OSG:Received:X-Mailer:Date:From:Subject:To:MIME-Version:Content-Type; b=X0X0wl4s/bdWGYnCuae5lIm6qmnbpp/hCrK4uRdAJVoirPpQLy1jQLGRh/DebmWZHTxCg9PsUpVU9/FpNCoxcqtK1CI7DD4hENrn0YY003IETajPfYsZnj7w20bOzhpBfGpn+O4RjnP76wiJ7i/9HCZRwI4fWIJMEpMCYpPxiT8=
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=s1024; d=yahoo.com;
-  h=Message-ID:X-YMail-OSG:Received:X-Mailer:Date:From:Subject:To:MIME-Version:Content-Type;
-  b=gHnVGAKP7hIYnqLzsEHnFDdbL5NMWuqRcrXi+mxhbk9h8SorEz4rNM+UD53+u6pV86xWu/vjxnR2UByNBsOyCt+wBNzxPe2nEAZEAc1xDHGNgBPYiZhE2im7LSIQV+Z22mP/DgqvHNT1fQzGb1aAI6grERyOXrALRhd+riMlBos=;
-X-YMail-OSG: lzInEA4VM1kycDNLUHDH1iQoKAIKkikv.N9G_HvSmWy4B33lWIeTT6CPF8sJKkHvY5xmcE__VRUbf6sofs0DDnYTZHGVTmaa.IS35ngffUHDtKNPUuqsKCH8kXJuVaWw2gQMtGxEu7v725MScsTk558IG2ZKqR3JbcmRGYzd5F4Ilnywq1TMjWcrXYtqJDEJjWKN4fyoxV5M17.bus1qo6Pd.wlKjRy1rt26Mwi66G4qXN9bCMd85MGbf4SUgjSl8jrZCEUkBIhkOSZbQ7TpzpuiW0xobAh01hqVOzWForbOYNraiar6Mk0NjCofKpGfMhZ15Ti2.A--
-Received: from [70.99.96.178] by web52205.mail.re2.yahoo.com via HTTP; Mon, 29 Jun 2009 17:01:15 PDT
-X-Mailer: YahooMailClassic/5.4.17 YahooMailWebService/0.7.289.15
+	id S1756997AbZF3AIq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 29 Jun 2009 20:08:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752856AbZF3AIp
+	(ORCPT <rfc822;git-outgoing>); Mon, 29 Jun 2009 20:08:45 -0400
+Received: from qw-out-2122.google.com ([74.125.92.26]:63620 "EHLO
+	qw-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752819AbZF3AIo (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 29 Jun 2009 20:08:44 -0400
+Received: by qw-out-2122.google.com with SMTP id 9so1909738qwb.37
+        for <git@vger.kernel.org>; Mon, 29 Jun 2009 17:08:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:date:message-id:subject
+         :from:to:content-type:content-transfer-encoding;
+        bh=1zzPsJVfPGwpuO7QC/fQVTinZcLZw9idJRh8f39sSEo=;
+        b=H09qc10qE6kWqzGj8vqjJrfbh7dDrg/XTfoT0gZv11R0cJY9QBR9cqUGfpFglMAu8I
+         NTHDGEstW9sRUQogLGdO56Z/7q7XpI1hUAgX9vg0urTNNBuI2NJx0IRi9GW+9YEXxXWF
+         AAKpxiMSK5e11lUydKGsrvD+PteAGr8duq8+U=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:date:message-id:subject:from:to:content-type
+         :content-transfer-encoding;
+        b=tNCeJV32hOiQyI+z7eXfqJ0OjTddMsCaN6bJIgutDeoFB7V3GVYHMkN79ZcRjnn9pa
+         41Vd8sbuk1+GpMFyGNURWus9rP3phd+zCQasVrSj0lgPaV60IqSrjqrmHBYuH1k4LFul
+         6IMyma3nBL6UxdLOJEHnTLdFl2n4S6ZaDAFEI=
+Received: by 10.220.92.204 with SMTP id s12mr4919012vcm.30.1246320527333; Mon, 
+	29 Jun 2009 17:08:47 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122477>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122478>
 
+[Surely this has been address before,  but I wasn't able to find it...]
 
-Myself and the other developer on the team have private repos, and we
-push to a bare repo (which we use for Hudson builds).  For now we only
-use the master branch.  No other remote repos.  When another developer
-pushes changes to the bare repo, and I pull them, all of the files they
-pushed show up as modified on my box when I do "git status" (even
-though I had not modified them).  How to avoid this?   Also, one
-developer saw really strange results when they did a "git pull origin
-master" and "git status" -- the paths shown below do not exist in the
-local work area.  These files have always lived under a-core/.... so it
-is really odd that they show up under a-web
-# On branch master
-# Changes to be committed:
-#   (use "git reset HEAD <file>..." to unstage)
-#
-#    new file:   a-web/src/main/java/com/blah/account/Account.java
-#    new file:   a-web/src/main/java/com/blah/account/AccountType.java
-#
-# Changed but not updated:
-#   (use "git add/rm <file>..." to update what will be committed)
-#   (use "git checkout -- <file>..." to discard changes in working directory)
-#
-#    deleted:    a-web/src/main/java/com/blah/account/Account.java
-#    deleted:    a-web/src/main/java/com/blah/account/AccountType.java
+The documentation for git-log -S includes:
 
-What are we doing wrong?  
+"Look for differences that introduce or remove an instance of <string>.
+ Note that this is different than the string simply appearing in diff output"
 
+But I want to do that "different" thing (IOW I want search the diff output).
 
-      
+So must I loop through git-rev-list, grepping git-diff output on each commit?
+
+Or if it _is_ possible to search the diff output directly then it
+might be useful
+to link to the relevant description instead of saying what -S doesn't do.
+
+Thanks - Eric
