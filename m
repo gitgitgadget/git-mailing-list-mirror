@@ -1,66 +1,82 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: RFH - git-log variant that _does_ search through diffs
-Date: Tue, 30 Jun 2009 15:31:35 -0400
-Message-ID: <20090630193135.GA4460@sigio.peff.net>
-References: <279b37b20906291708g67da3a75p316ea4893f02666a@mail.gmail.com> <20090630040337.GA23741@sigio.peff.net> <279b37b20906301105tf92f471g6146a083ba2e2882@mail.gmail.com>
+From: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+Subject: Re: [PATCHv8 1/7] gitweb: refactor author name insertion
+Date: Tue, 30 Jun 2009 22:23:34 +0200
+Message-ID: <cb7bb73a0906301323j32e1f8dam9ba185401b2d1e2f@mail.gmail.com>
+References: <1246312854-3365-1-git-send-email-giuseppe.bilotta@gmail.com>
+	 <1246312854-3365-2-git-send-email-giuseppe.bilotta@gmail.com>
+	 <200906302204.40876.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Eric Raible <raible@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jun 30 21:29:59 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Petr Baudis <pasky@suse.cz>
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jun 30 22:23:47 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MLj1c-0007Lp-79
-	for gcvg-git-2@gmane.org; Tue, 30 Jun 2009 21:29:52 +0200
+	id 1MLjrn-0004Ko-9k
+	for gcvg-git-2@gmane.org; Tue, 30 Jun 2009 22:23:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752939AbZF3T3m (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 30 Jun 2009 15:29:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752755AbZF3T3l
-	(ORCPT <rfc822;git-outgoing>); Tue, 30 Jun 2009 15:29:41 -0400
-Received: from peff.net ([208.65.91.99]:50476 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752723AbZF3T3l (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 30 Jun 2009 15:29:41 -0400
-Received: (qmail 4471 invoked by uid 1000); 30 Jun 2009 19:31:35 -0000
-Content-Disposition: inline
-In-Reply-To: <279b37b20906301105tf92f471g6146a083ba2e2882@mail.gmail.com>
+	id S1753140AbZF3UXe convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 30 Jun 2009 16:23:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754016AbZF3UXd
+	(ORCPT <rfc822;git-outgoing>); Tue, 30 Jun 2009 16:23:33 -0400
+Received: from mail-fx0-f218.google.com ([209.85.220.218]:62364 "EHLO
+	mail-fx0-f218.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752755AbZF3UXc convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 30 Jun 2009 16:23:32 -0400
+Received: by fxm18 with SMTP id 18so395662fxm.37
+        for <git@vger.kernel.org>; Tue, 30 Jun 2009 13:23:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=lwmaLrsBBOdsLrrwymmGGY8g834zqphBsjOw82/hde8=;
+        b=ph9DXAm4JuRBDsTXESwJN4OnL+E9QRwTN4EyTm/bp3+mOBbx0DmQ3H32wajHtvOFZu
+         tztZeHx6o9xNAUKemfpkzr8N8XV6HSq8XLAwcDoRTZbf3ZpY4NkcwOmKof4AKDoU5a+o
+         vkANRghHpQ9cld5c6TBqR7oKziTbMhvRFdARs=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=Q8c5vPI/GMtexIwviejK8xPqzlqZJvOx5k6xLcmsv3UJ1DjTggnJAV3VkpCm1wNQZt
+         vhW6sQ6Y7GnRf5GZ6EDBKqeXOqh4A5cxTmMxGI9qXAMyrqfS1BygZwWM81XR0AT/IKjX
+         7fdkcd7zvrz0Zk2P+Axma7OaDq8nItUtPjfjE=
+Received: by 10.204.60.72 with SMTP id o8mr8689798bkh.184.1246393414021; Tue, 
+	30 Jun 2009 13:23:34 -0700 (PDT)
+In-Reply-To: <200906302204.40876.jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122529>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122530>
 
-On Tue, Jun 30, 2009 at 11:05:08AM -0700, Eric Raible wrote:
+2009/6/30 Jakub Narebski <jnareb@gmail.com>:
+> On Tue, 30 Jun 2009, Giuseppe Bilotta wrote:
+>> +sub print_local_time {
+>> + =A0 =A0 my %date =3D @_;
+>> + =A0 =A0 if ($date{'hour_local'} < 6) {
+>> + =A0 =A0 =A0 =A0 =A0 =A0 printf(" (<span class=3D\"atnight\">%02d:%=
+02d</span> %s)",
+>> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 $date{'hour_local'}, $date=
+{'minute_local'}, $date{'tz_local'});
+>> + =A0 =A0 } else {
+>> + =A0 =A0 =A0 =A0 =A0 =A0 printf(" (%02d:%02d %s)",
+>> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 $date{'hour_local'}, $date=
+{'minute_local'}, $date{'tz_local'});
+>> + =A0 =A0 }
+>> +}
+>
+> Very nice refactoring.
+>
+> It could do with a comment describing its output, but it is not
+> necessary, and IMHO not worth resend. =A0We can always add it "in tre=
+e".
 
-> What I _really_ want is the subset of all commits containing foo
-> who's oneline commit message doesn't match a given regexp.
-> 
-> So I'm used something like this to extract the commits of interest:
-> 
-> git log -z -p | perl -0ne 'print if /^[-+].*foo/m' | tr '\0' '\n' |
-> grep "^commit [0-9a-f]" | awk '{print $2}' |
-> xargs -n1 git log --pretty=oneline -1 |
-> grep -v dont_want
+Damn! I was sure I'd forget something ...
 
-I think you can do this a little more simply and efficiently as:
-
-  git log -z -p --format='GREP: %s' |
-    perl -0ne 'print if /^[-+].*foo/m && !/^GREP:.*dont_want/' |
-    tr '\0' '\n'
-
-(though note that --format is new as of 1.6.3, I think; before that you
-have to use "--pretty=format:"). Many fewer process invocations, and
-less typing, though still easy to mess up. At one point I had considered
-writing small wrapper scripts that understood the log output so you
-could say:
-
-  git log -z -p | filter-author $A | filter-diff $D | filter-subject $S
-
-which is nicely readable and Unix-y, but is really _slow_ compared to
-git doing it all in a single process. I think a "--grep-subject" and a
-"--grep-diff" (aka "--search") are the only things that are missing now,
-and those would both be pretty easy to implement.
-
--Peff
+--=20
+Giuseppe "Oblomov" Bilotta
