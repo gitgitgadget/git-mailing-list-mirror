@@ -1,117 +1,72 @@
-From: Peter Harris <git@peter.is-a-geek.org>
-Subject: Re: git svn and multiple cloned repositories
-Date: Tue, 30 Jun 2009 09:44:28 -0400
-Message-ID: <eaa105840906300644s6bc9b619i24bd54537f4a67d4@mail.gmail.com>
-References: <h2d043$4tm$1@ger.gmane.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] git-mv: fix directory separator treatment on Windows
+Date: Tue, 30 Jun 2009 16:20:51 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.0906301620370.4773@pacific.mpi-cbg.de>
+References: <4A4A1445.6090704@viscovery.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Bruno Harbulot <Bruno.Harbulot@manchester.ac.uk>
-X-From: git-owner@vger.kernel.org Tue Jun 30 16:19:09 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Tue Jun 30 16:21:29 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
-Received: from mail-forward2.uio.no ([129.240.10.71])
-	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MLe9C-0000ux-Th
-	for gcvg-git-2@gmane.org; Tue, 30 Jun 2009 16:17:22 +0200
-Received: from exim by mail-out2.uio.no with local-bsmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1MLddX-00081H-Jx
-	for gcvg-git-2@gmane.org; Tue, 30 Jun 2009 15:44:39 +0200
-Received: from mail-mx3.uio.no ([129.240.10.44])
-	by mail-out2.uio.no with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1MLddX-00081E-Ip
-	for gcvg-git-2@gmane.org; Tue, 30 Jun 2009 15:44:39 +0200
 Received: from vger.kernel.org ([209.132.176.167])
-	by mail-mx3.uio.no with esmtp  (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1MLddV-0004Nn-UF
-	for gcvg-git-2@gmane.org; Tue, 30 Jun 2009 15:44:39 +0200
+	by lo.gmane.org with esmtp (Exim 4.50)
+	id 1MLeB9-0002IM-Pz
+	for gcvg-git-2@gmane.org; Tue, 30 Jun 2009 16:19:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751781AbZF3No1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 30 Jun 2009 09:44:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751754AbZF3No1
-	(ORCPT <rfc822;git-outgoing>); Tue, 30 Jun 2009 09:44:27 -0400
-Received: from mail-ew0-f210.google.com ([209.85.219.210]:44422 "EHLO
-	mail-ew0-f210.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751606AbZF3No1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 30 Jun 2009 09:44:27 -0400
-Received: by ewy6 with SMTP id 6so179194ewy.37
-        for <git@vger.kernel.org>; Tue, 30 Jun 2009 06:44:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:sender:received:in-reply-to
-         :references:date:x-google-sender-auth:message-id:subject:from:to:cc
-         :content-type:content-transfer-encoding;
-        bh=96r/TgBp/Jx829JvT0uHI8PzbqrdKalE0pJKw6kvoAg=;
-        b=SbtBSeS+od36fvZZe1UwFo+xMEiySTQbAHzp9u0zCSvkJc0hCuEKS3aDwK2ZuX6DHO
-         MucaDEUD6nGJFya6i1EP0AWZ1UXRf2ELEjmj+tDB/2q0LbscFG+Sy2DuCXQWtZrLL7WC
-         aH1Qm7O6w6d6roVITc2g/LYZ+wcfP2FFKc0rA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:sender:in-reply-to:references:date
-         :x-google-sender-auth:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        b=LMNUtHufUBHw0mdm40X5Tvh7ggcuuJF7hhKM6ni4bmF7n2W5T8y9XyiIM7rQHqNfqu
-         lhJ6jaHTcCeUBWNVx3nCYOnFqbfFlr5yB27DGxMYSjQW2hYF0EZqHlY4n/O6xdNSMa0m
-         jkUt4SiXQ10I5lOx9tstqyiKBSgYzz2z73JVg=
-Received: by 10.210.53.1 with SMTP id b1mr125823eba.81.1246369468117; Tue, 30 
-	Jun 2009 06:44:28 -0700 (PDT)
-In-Reply-To: <h2d043$4tm$1@ger.gmane.org>
-X-Google-Sender-Auth: c583cdb472e9afaa
+	id S1752847AbZF3OTO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 30 Jun 2009 10:19:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752569AbZF3OTN
+	(ORCPT <rfc822;git-outgoing>); Tue, 30 Jun 2009 10:19:13 -0400
+Received: from mail.gmx.net ([213.165.64.20]:36279 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752500AbZF3OTN (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 30 Jun 2009 10:19:13 -0400
+Received: (qmail invoked by alias); 30 Jun 2009 14:19:15 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp063) with SMTP; 30 Jun 2009 16:19:15 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/x9KFYXrLxMKSTMGvfv9l0j7zT8U8c6ofl63xl4D
+	oepuf38/XvoBim
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <4A4A1445.6090704@viscovery.net>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.65
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-X-UiO-Spam-info: not spam, SpamAssassin (score=-7.0, required=5.0, autolearn=disabled, RCVD_IN_DNSWL_MED=-4,UIO_VGER=-3, uiobl=NO, uiouri=_URIID_)
-X-UiO-Scanned: EDC090FF815059DB4311698EDCFE3CC1C510FB4E
-X-UiO-SPAM-Test: remote_host: 209.132.176.167 spam_score: -69 maxlevel 80 minaction 2 bait 0 mail/h: 103 total 2547669 max/h 849 blacklist 0 greylist 0 ratelimit 0
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122514>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122515>
 
-On Tue, Jun 30, 2009 at 8:23 AM, Bruno Harbulot wrote:
-> I participate in a few open-source projects for which I provide patches
-> sometimes, but most of these projects use Subversion. git-svn is very
-> convenient for trying out patches without interfering with the main branch
-> (so as to submit them when they're ready). I presume many 'git svn' users do
-> something like this too.
->
-> However, I'd like to keep multiple copies of this repository (on a few
-> machines, including one on a backup server) with the appropriate SVN
-> metadata. I'd also like to be able to do 'git svn fetch' on only one of
-> these cloned repositories (perhaps via crontab on the server) and to be able
-> to push/pull this SVN metadata along with the commits between the cloned git
-> repositories.
->
->
-> Is there a recommended way to do this?
->
->
-> I have found 3 ways of achieving this, but none of them seem ideal:
->
-> 1. Copying the entire cloned repository as regular files and doing 'git svn
-> fetch' regularly on each copy.
+Hi,
 
-> 2. Transferring the SVN references by hand.
+On Tue, 30 Jun 2009, Johannes Sixt wrote:
 
-> 3. Using 'git clone --mirror' (only works with --bare option).
+> From: Johannes Sixt <j6t@kdbg.org>
+> 
+> The following invocations did not work as expected on Windows:
+> 
+>     git mv foo\bar dest
+>     git mv foo\ dest
+> 
+> The first command was interpreted as
+> 
+>     git mv foo/bar dest/foo/bar
+> 
+> because the Windows style directory separator was not obeyed when the
+> basename of 'foo\bar' was computed.
+> 
+> The second command failed because the Windows style directory separator was
+> not removed from the source directory, whereupon the lookup of the
+> directory in the index failed.
+> 
+> This fixes both issues by using is_dir_sep() and basename().
+> 
+> Signed-off-by: Johannes Sixt <j6t@kdbg.org>
 
-I use 4. Set up git remotes by hand to populate svn remotes directly.
+ACK
 
-  - On 'backup-server':
-git svn clone -s svn://upstream/project
-crontab -e  # run git svn fetch periodically
-
-  - On 'machineX':
-mkdir project
-cd project
-git init
-git remote add origin git://mirror/project
-git config --add remote.origin.fetch refs/remotes/*:refs/remotes/*
-git fetch
-git svn init -s svn://upstream/project
-git reset --hard trunk
-git svn rebase
-
-Peter Harris
+Dscho
