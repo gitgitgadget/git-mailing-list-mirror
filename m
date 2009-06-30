@@ -1,100 +1,152 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: correct workflow with bare repo and pull?
-Date: Tue, 30 Jun 2009 08:28:22 +0200
-Message-ID: <4A49B086.30000@op5.se>
-References: <583913.73865.qm@web52205.mail.re2.yahoo.com>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: [PATCH 2/2] Don't clean any untracked submodule's .git dir by
+ default in git-clean
+Date: Tue, 30 Jun 2009 08:40:45 +0200
+Message-ID: <4A49B36D.2080103@viscovery.net>
+References: <1246327845-22718-1-git-send-email-jason.k.holden@gmail.com> <1246327845-22718-2-git-send-email-jason.k.holden@gmail.com> <1246327845-22718-3-git-send-email-jason.k.holden@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Type: text/plain; charset=ISO-8859-15
 Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Tim <opensourcetim@yahoo.com>
-X-From: git-owner@vger.kernel.org Tue Jun 30 08:29:46 2009
+To: Jason Holden <jason.k.holden@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jun 30 08:41:05 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MLWpY-0001c9-8d
-	for gcvg-git-2@gmane.org; Tue, 30 Jun 2009 08:28:36 +0200
+	id 1MLX1c-0007Nk-0b
+	for gcvg-git-2@gmane.org; Tue, 30 Jun 2009 08:41:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752824AbZF3G20 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 30 Jun 2009 02:28:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752134AbZF3G2Z
-	(ORCPT <rfc822;git-outgoing>); Tue, 30 Jun 2009 02:28:25 -0400
-Received: from na3sys009aog113.obsmtp.com ([74.125.149.209]:41517 "HELO
-	na3sys009aog113.obsmtp.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with SMTP id S1751926AbZF3G2Y (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 30 Jun 2009 02:28:24 -0400
-Received: from source ([209.85.219.218]) by na3sys009aob113.postini.com ([74.125.148.12]) with SMTP
-	ID DSNKSkmwiu/zLAjDteF/OGuivkBlmwBjnIyX@postini.com; Mon, 29 Jun 2009 23:28:28 PDT
-Received: by ewy18 with SMTP id 18so5599428ewy.45
-        for <git@vger.kernel.org>; Mon, 29 Jun 2009 23:28:25 -0700 (PDT)
-Received: by 10.211.180.19 with SMTP id h19mr675877ebp.26.1246343305762;
-        Mon, 29 Jun 2009 23:28:25 -0700 (PDT)
-Received: from clix.int.op5.se ([212.112.174.166])
-        by mx.google.com with ESMTPS id 23sm1704948eya.49.2009.06.29.23.28.24
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 29 Jun 2009 23:28:24 -0700 (PDT)
-User-Agent: Thunderbird 2.0.0.21 (X11/20090320)
-In-Reply-To: <583913.73865.qm@web52205.mail.re2.yahoo.com>
+	id S1752517AbZF3Gky (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 30 Jun 2009 02:40:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752483AbZF3Gkx
+	(ORCPT <rfc822;git-outgoing>); Tue, 30 Jun 2009 02:40:53 -0400
+Received: from lilzmailso02.liwest.at ([212.33.55.13]:58550 "EHLO
+	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751680AbZF3Gkw (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 30 Jun 2009 02:40:52 -0400
+Received: from cpe228-254.liwest.at ([81.10.228.254] helo=linz.eudaptics.com)
+	by lilzmailso02.liwest.at with esmtpa (Exim 4.69)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1MLX1K-0006Vj-0c; Tue, 30 Jun 2009 08:40:50 +0200
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.96])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id B2731795; Tue, 30 Jun 2009 08:40:45 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.21 (Windows/20090302)
+In-Reply-To: <1246327845-22718-3-git-send-email-jason.k.holden@gmail.com>
+X-Spam-Score: -1.4 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122491>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122492>
 
-Tim wrote:
-> Myself and the other developer on the team have private repos, and we
-> push to a bare repo (which we use for Hudson builds).  For now we only
-> use the master branch.  No other remote repos.  When another developer
-> pushes changes to the bare repo, and I pull them, all of the files they
-> pushed show up as modified on my box when I do "git status" (even
-> though I had not modified them).  How to avoid this?
+Jason Holden schrieb:
+> Git-clean is not safe when the submodules are not tracked in mainline.
 
-Make sure neither of you modify the executable bit on the files, and make
-sure your editors work the same in both ends wrt the last line and white-
-space at the ends of lines.
+Generally, I think you are addressing a real issue. On the other hand, it
+also changes the behavior substantially. Nevertheless IMO it is better to
+be safe than sorry, even if existing 'git clean' users may now observe
+that directories are left over that previously weren't.
 
-Also make sure you have compatible crlf settings in your git configs.
+>  If
+> we run git-clean on the mainline branch, when we have a submodule that only
+> exists on a local branch, the entire .git directory of the untracked
+> submodule will get deleted, possibly losing any un-pushed local changes to
+> the submodule.
 
-If your editors are what's causing the problem, you should only see the
-files you've actually opened in your editor as being different. If it's
-your git configuration, "git pull && git status" should show differences
-immediately. "git help config" and searching for core.autocrlf should
-point you in the right direction to what might be causing the error.
-If it's modechanges that's the problem. core.filemode may also be a
-possible source of errors (it has to be "false" on windows but can be
-"true" on systems with posix permissions).
+This is not about "mainline" and "local branch"; it is about switching
+from one branch that tracks the submodule to another one that doesn't
+track it.
 
->   Also, one
-> developer saw really strange results when they did a "git pull origin
-> master" and "git status" -- the paths shown below do not exist in the
-> local work area.  These files have always lived under a-core/.... so it
-> is really odd that they show up under a-web
-> # On branch master
-> # Changes to be committed:
-> #   (use "git reset HEAD <file>..." to unstage)
-> #
-> #    new file:   a-web/src/main/java/com/blah/account/Account.java
-> #    new file:   a-web/src/main/java/com/blah/account/AccountType.java
-> #
-> # Changed but not updated:
-> #   (use "git add/rm <file>..." to update what will be committed)
-> #   (use "git checkout -- <file>..." to discard changes in working directory)
-> #
-> #    deleted:    a-web/src/main/java/com/blah/account/Account.java
-> #    deleted:    a-web/src/main/java/com/blah/account/AccountType.java
+> This change doesn't delete any untracked submodule's .git directories during
+> the recursive-delete (unless forced with the -m option to git-clean), so that
+> the submodule history can be restored w/ the proper git commands.
 > 
-> What are we doing wrong?  
+> # Example illustrating problem:
+> # Clone mainline project
+> git clone git://github.com/thoughtbot/paperclip.git
+> cd paperclip/
 > 
+> # Add a submodule not tracked by mainline
+> git checkout -b test_submodule_clean
 
-Hard to tell without knowing what the repository looks like. Is this
-a repo you can share with us?
+# Add a submodule to a different branch
+# git checkout -b has-submodule
 
--- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+> git submodule add git://github.com/technoweenie/attachment_fu.git attachement_fu
+> git commit -m "add submodule"
+> 
+> # Make a modification to the submodule.  Note that we haven't pushed the change
+> cd attachement_fu/
+> git checkout -b mod_readme_in_submodule
+> vi README
+> git add README
+> git commit -m "Small change in submodule"
+> 
+> # Go back to mainline's master branch and do a clean
+> cd ..
+> git checkout master
+> git clean -f -d
+> 
+> # Our change to the submodule, that was never pushed, is now gone forever
+> # because all the history stored in the submodule's .git direct is deleted.
+> # There is no recovering from this.
+> # This breaks the "git must be safe" rule, as we've lost potentially a lot of
+> # changes to any submodule projects that didn't get pushed yet. Solve
+> # this issue by not deleting any .git directories we come across during a
+> # git-clean, unless the "-m" option is passed to git-clean.
 
-Considering the successes of the wars on alcohol, poverty, drugs and
-terror, I think we should give some serious thought to declaring war
-on peace.
+If you indent the example script by some spaces, you won't have to mark
+the surrounding text like shell script comments (surrounding text is the
+line '# Example...' and the paragraph '# Our change...'. But the
+interspersed comments are very helpful.
+
+> +-m::
+> +	Clean any .git directories that may be left-over, untracked
+> +	submodules.
+
+	Remove .git directories from subdirectories (i.e.
+	untracked submodules).
+
+Please address (here and in the code later) that -m makes sense only in
+combination with -d.
+
+There is one in-tree user of git-clean (git-filter-branch). Did you check
+whether it needs this new flag?
+
+> @@ -44,6 +45,8 @@ int cmd_clean(int argc, const char **argv, const char *prefix)
+>  		OPT_BOOLEAN('f', NULL, &force, "force"),
+>  		OPT_BOOLEAN('d', NULL, &remove_directories,
+>  				"remove whole directories"),
+> +		OPT_BOOLEAN('m', NULL, &rm_untracked_submodules,
+> +				"remove untracked submodules"),
+>  		OPT_BOOLEAN('x', NULL, &ignored, "remove ignored files, too"),
+>  		OPT_BOOLEAN('X', NULL, &ignored_only,
+>  				"remove only ignored files"),
+> @@ -59,6 +62,14 @@ int cmd_clean(int argc, const char **argv, const char *prefix)
+>  	argc = parse_options(argc, argv, prefix, options, builtin_clean_usage,
+>  			     0);
+>  
+> +
+> +	int keep_dot_git = 0;
+> +	if (rm_untracked_submodules == 0)
+> +		keep_dot_git = 1;
+> +	else
+> +		printf("Any untracked .git directories will be deleted (abandoned submodules)\n");
+> +
+> +
+
+I can share your feelings about lost work, and that you want to be extra
+verbose about .git directories.
+
+But step back a bit. This warning is absolutely useless: It just repeats
+the user's instruction: After passing -m, we *expect* 'git clean' to
+remove .git directories.
+
+BTW, for what reason are you using a new variable keep_dot_git if there is
+already rm_untracked_submodules?
+
+Please add a test to the test suite.
+
+-- Hannes
