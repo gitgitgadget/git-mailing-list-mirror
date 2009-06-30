@@ -1,55 +1,52 @@
-From: Graeme Geldenhuys <graemeg@gmail.com>
-Subject: Team Coherence to Git conversion
-Date: Tue, 30 Jun 2009 11:45:26 +0200
-Message-ID: <h2cmv6$agp$1@ger.gmane.org>
+From: dtletmn <dtletmedn@gmail.com>
+Subject: Does CVS has a easy way to compare file with its previous version?
+Date: Tue, 30 Jun 2009 00:41:08 -0700 (PDT)
+Message-ID: <1e56aa11-735a-47f7-a273-5b6bf611f528@n11g2000yqb.googlegroups.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jun 30 11:47:46 2009
+X-From: git-owner@vger.kernel.org Tue Jun 30 12:59:50 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MLZwH-00032x-E4
-	for gcvg-git-2@gmane.org; Tue, 30 Jun 2009 11:47:45 +0200
+	id 1MLb40-0000rb-0c
+	for gcvg-git-2@gmane.org; Tue, 30 Jun 2009 12:59:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751508AbZF3Jrf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 30 Jun 2009 05:47:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751065AbZF3Jrf
-	(ORCPT <rfc822;git-outgoing>); Tue, 30 Jun 2009 05:47:35 -0400
-Received: from main.gmane.org ([80.91.229.2]:34352 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750937AbZF3Jre (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 30 Jun 2009 05:47:34 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1MLZw2-0002xA-Uk
-	for git@vger.kernel.org; Tue, 30 Jun 2009 09:47:30 +0000
-Received: from dsl-245-91-189.telkomadsl.co.za ([41.245.91.189])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 30 Jun 2009 09:47:30 +0000
-Received: from graemeg by dsl-245-91-189.telkomadsl.co.za with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 30 Jun 2009 09:47:30 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: dsl-245-91-189.telkomadsl.co.za
-User-Agent: Thunderbird 2.0.0.22 (X11/20090608)
+	id S1752134AbZF3K7h (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 30 Jun 2009 06:59:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752059AbZF3K7g
+	(ORCPT <rfc822;git-outgoing>); Tue, 30 Jun 2009 06:59:36 -0400
+Received: from mail-gx0-f200.google.com ([209.85.217.200]:51901 "EHLO
+	mail-gx0-f200.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751861AbZF3K7g (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 30 Jun 2009 06:59:36 -0400
+X-Greylist: delayed 11439 seconds by postgrey-1.27 at vger.kernel.org; Tue, 30 Jun 2009 06:59:35 EDT
+Received: by gxk24 with SMTP id 24so48793gxk.13
+        for <git@vger.kernel.org>; Tue, 30 Jun 2009 03:59:39 -0700 (PDT)
+Received: by 10.100.132.4 with SMTP id f4mr873242and.13.1246347668874; Tue, 30 
+	Jun 2009 00:41:08 -0700 (PDT)
+X-IP: 192.203.57.28
+User-Agent: G2/1.0
+X-HTTP-UserAgent: Mozilla/5.0 (Windows; U; Windows NT 5.1; zh-CN; rv:1.9.0.11) 
+	Gecko/2009060215 Firefox/3.0.11 GTB5,gzip(gfe),gzip(gfe)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122505>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122506>
 
-We have a couple (actually around 20) projects sitting in Team Coherence repositories. Luckily they have very little history. Before I joined the company nobody used revision control software - just simple zip archives once a week (if that many).
+Hi,All,
 
-Does anybody know of a tool that can convert a TC repository to Git? TC seems to be dying a slow dead, and I don't want our code to get trapped in proprietary software we can't access, a few years down the line.
+     I am wondering if cvs has an easy way to compare a file with its
+previous version.
 
+     In clearcase,I can use  :
+       cleartool diff -pred file.cc
 
-Regards,
-  - Graeme -
+     how can I acheive it in CVS?
+     any help would be highly appreciated!
 
--- 
-fpGUI Toolkit - a cross-platform GUI toolkit using Free Pascal
-http://opensoft.homeip.net/fpgui/
+     Thanks,
+     dt
