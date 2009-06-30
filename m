@@ -1,75 +1,85 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] mailinfo: Remove only one set of square brackets
-Date: Tue, 30 Jun 2009 01:33:34 -0400
-Message-ID: <20090630053333.GD29643@sigio.peff.net>
-References: <4A488F07.10002@op5.se> <1246269351-26929-1-git-send-email-ae@op5.se>
+From: Paolo Bonzini <bonzini@gnu.org>
+Subject: Re: [PATCH 2/2] Don't clean any untracked submodule's .git dir by
+ default in git-clean
+Date: Tue, 30 Jun 2009 08:07:01 +0200
+Message-ID: <4A49AB85.40303@gnu.org>
+References: <1246327845-22718-1-git-send-email-jason.k.holden@gmail.com> <1246327845-22718-2-git-send-email-jason.k.holden@gmail.com> <1246327845-22718-3-git-send-email-jason.k.holden@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: gitster@pobox.com, git@vger.kernel.org
-To: Andreas Ericsson <ae@op5.se>
-X-From: git-owner@vger.kernel.org Tue Jun 30 07:32:11 2009
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Jason Holden <jason.k.holden@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jun 30 08:07:18 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MLVww-0006LB-M0
-	for gcvg-git-2@gmane.org; Tue, 30 Jun 2009 07:32:11 +0200
+	id 1MLWUt-000237-Uu
+	for gcvg-git-2@gmane.org; Tue, 30 Jun 2009 08:07:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754282AbZF3Fbm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 30 Jun 2009 01:31:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754161AbZF3Fbl
-	(ORCPT <rfc822;git-outgoing>); Tue, 30 Jun 2009 01:31:41 -0400
-Received: from peff.net ([208.65.91.99]:57130 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753055AbZF3Fbl (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 30 Jun 2009 01:31:41 -0400
-Received: (qmail 29703 invoked by uid 1000); 30 Jun 2009 05:33:34 -0000
-Content-Disposition: inline
-In-Reply-To: <1246269351-26929-1-git-send-email-ae@op5.se>
+	id S1751603AbZF3GHF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 30 Jun 2009 02:07:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751488AbZF3GHF
+	(ORCPT <rfc822;git-outgoing>); Tue, 30 Jun 2009 02:07:05 -0400
+Received: from mail-bw0-f213.google.com ([209.85.218.213]:37257 "EHLO
+	mail-bw0-f213.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751203AbZF3GHD (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 30 Jun 2009 02:07:03 -0400
+Received: by bwz9 with SMTP id 9so3673337bwz.37
+        for <git@vger.kernel.org>; Mon, 29 Jun 2009 23:07:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:sender:message-id:date:from
+         :user-agent:mime-version:to:cc:subject:references:in-reply-to
+         :content-type:content-transfer-encoding;
+        bh=pZE6y97aCMEwdznmdt9FQJds2gC6lJGtONd2JgAP49k=;
+        b=PcRRZA4BwYgJmt1U/UqS6w0c7PxfMqPv6+IgGqMzRepic5FA5YUs0FkmrhjiXwdk33
+         7ebihjGnJlfFDsv3LMgL0KBUKlcjJO23vuti8giF2LqfFhgNf6n0764FR66pTXsVxJQW
+         8L6I1YRbWP1AlNA21xIADwXB/AgykguEZscfg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=sender:message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        b=kC9zSIehpyjmWgHj3GWIZPiGiF8e33uVxV5TmJjMrG6Yz0eF0r51D8Kbjmugt3RBY0
+         u2P7KWatfAeEww3YIseEJAVUkX4PuxNbzSbam+qU/pgjd0jFwgZtB/3JV3yHscjOxYze
+         hP1yTIfaMC62wWpSH25T2xj3OojGy+gsyLmzk=
+Received: by 10.204.122.141 with SMTP id l13mr7978748bkr.106.1246342024198;
+        Mon, 29 Jun 2009 23:07:04 -0700 (PDT)
+Received: from yakj.usersys.redhat.com ([85.93.118.17])
+        by mx.google.com with ESMTPS id z15sm8174661fkz.4.2009.06.29.23.07.03
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 29 Jun 2009 23:07:03 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1b3pre) Gecko/20090513 Fedora/3.0-2.3.beta2.fc11 Thunderbird/3.0b2
+In-Reply-To: <1246327845-22718-3-git-send-email-jason.k.holden@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122489>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122490>
 
-On Mon, Jun 29, 2009 at 11:55:51AM +0200, Andreas Ericsson wrote:
+Useful indeed.
 
-> git-format-patch prepends patches with a [PATCH x/n] prefix, but
-> mailinfo used to remove any number of square-bracket pairs and
-> the content between them. This prevents one from using a commit
-> subject like this:
-> 
->   [ and ] must be allowed as input
-> 
-> Removing the square bracket pair from this rather clumsily
-> constructed subject line loses important information, so we must
-> take care not to.
-> 
-> This patch causes the subject stripping to stop after it has
-> encountered one pair of square brackets.
+Note that 'git clean -n -d ' however will still report the directory as 
+being removed.  Also, I'm not sure what happens (and what should happen) 
+if an untracked directory foo.git is found.
 
-I think this is a definite improvement, though I would be much more
-convinced that the does the right thing if there were some tests. :)
+Probably the best way to fix this is to add an is_dot_git_path function 
+to dir.c like this
 
-> One possible downside of this patch is that the patch-handling
-> programs will now fail at removing author-added square-brackets
-> to be removed, such as
-> 
->   [RFC][PATCH x/n]
-> 
-> However, since format-patch only adds one set of square brackets,
-> this behaviour is quite easily undesrstood and defended while the
-> previous behaviour is not.
+int
+is_dot_git_path (const char *s, int len);
+{
+   while (len && s[len - 1] == '/')
+     len--;
+   return len >= 4 && !memcmp (s + len - 4, ".git", 5) &&
+          (len == 4 || s[len - 5] == '/');
+}
 
-Agreed. And I think Junio raised a good point elsewhere: there are
-certain formatting conventions that are part of format-patch output. So
-I think we do need to address "this subject munging is totally idiot
-proof and will always reproduce the input patch text exactly". But
-rather "is this a sane and useful way to do the munging?". And I think
-it is a useful convention.
+This function is safer if the directory does not have a trailing slash, 
+as it might be for the paths in builtin-clean.c for the -n case.  You 
+can have some adjustments if you decide do keep foo.git (just removing 
+the last && of course).
 
-This is a user-visible change that might impact people's workflows (if
-only slightly), though, so it should probably get a good mention in the
-release notes.
+Thanks!
 
--Peff
+Paolo
