@@ -1,295 +1,213 @@
 From: =?ISO-8859-15?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
-Subject: [PATCH 5/6] grep: add option -p/--show-function
-Date: Thu, 02 Jul 2009 00:06:34 +0200
-Message-ID: <4A4BDDEA.3030005@lsrfire.ath.cx>
+Subject: [PATCH 6/6] grep -p: support user defined regular expressions
+Date: Thu, 02 Jul 2009 00:07:24 +0200
+Message-ID: <4A4BDE1C.8070903@lsrfire.ath.cx>
 References: <4A4BDC65.80504@lsrfire.ath.cx>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-15
 Content-Transfer-Encoding: 7bit
 Cc: Junio C Hamano <gitster@pobox.com>
 To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Jul 02 00:06:43 2009
+X-From: git-owner@vger.kernel.org Thu Jul 02 00:07:32 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MM7ww-000486-CT
-	for gcvg-git-2@gmane.org; Thu, 02 Jul 2009 00:06:43 +0200
+	id 1MM7xj-0004L1-QO
+	for gcvg-git-2@gmane.org; Thu, 02 Jul 2009 00:07:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754331AbZGAWGc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 1 Jul 2009 18:06:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754181AbZGAWGc
-	(ORCPT <rfc822;git-outgoing>); Wed, 1 Jul 2009 18:06:32 -0400
-Received: from india601.server4you.de ([85.25.151.105]:55628 "EHLO
+	id S1754558AbZGAWHX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 1 Jul 2009 18:07:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754520AbZGAWHW
+	(ORCPT <rfc822;git-outgoing>); Wed, 1 Jul 2009 18:07:22 -0400
+Received: from india601.server4you.de ([85.25.151.105]:55631 "EHLO
 	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753387AbZGAWGb (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 1 Jul 2009 18:06:31 -0400
+	with ESMTP id S1754448AbZGAWHV (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 1 Jul 2009 18:07:21 -0400
 Received: from [10.0.1.101] (p57B7FA76.dip.t-dialin.net [87.183.250.118])
-	by india601.server4you.de (Postfix) with ESMTPSA id BF9262F8068;
-	Thu,  2 Jul 2009 00:06:33 +0200 (CEST)
+	by india601.server4you.de (Postfix) with ESMTPSA id B9E852F8068;
+	Thu,  2 Jul 2009 00:07:23 +0200 (CEST)
 User-Agent: Thunderbird 2.0.0.22 (Windows/20090605)
 In-Reply-To: <4A4BDC65.80504@lsrfire.ath.cx>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122607>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122608>
 
-The new option -p instructs git grep to print the previous function
-definition as a context line, similar to diff -p.  Such context lines
-are marked with an equal sign instead of a dash.  This option
-complements the existing context options -A, -B, -C.
-
-Function definitions are detected using the same heuristic that diff
-uses.  User defined regular expressions are not supported, yet.
+Respect the userdiff attributes and config settings when looking for
+lines with function definitions in git grep -p.
 
 Signed-off-by: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
 ---
- Documentation/git-grep.txt |    5 +++
- builtin-grep.c             |    8 +++--
- grep.c                     |   61 ++++++++++++++++++++++++++++++++++++++------
+ Documentation/git-grep.txt |    3 +++
+ builtin-grep.c             |    7 +++++++
+ grep.c                     |   29 ++++++++++++++++++++++++++---
  grep.h                     |    1 +
- t/t7002-grep.sh            |   36 ++++++++++++++++++++++++-
- 5 files changed, 98 insertions(+), 13 deletions(-)
+ t/t7002-grep.sh            |   13 +++++++++++++
+ 5 files changed, 50 insertions(+), 3 deletions(-)
 
 diff --git a/Documentation/git-grep.txt b/Documentation/git-grep.txt
-index fccb82d..b3bb283 100644
+index b3bb283..b753c9d 100644
 --- a/Documentation/git-grep.txt
 +++ b/Documentation/git-grep.txt
-@@ -122,6 +122,11 @@ OPTIONS
- -<num>::
- 	A shortcut for specifying -C<num>.
+@@ -126,6 +126,9 @@ OPTIONS
+ --show-function::
+ 	Show the preceding line that contains the function name of
+ 	the match, unless the matching line is a function name itself.
++	The name is determined in the same way as 'git diff' works out
++	patch hunk headers (see 'Defining a custom hunk-header' in
++	linkgit:gitattributes[5]).
  
-+-p::
-+--show-function::
-+	Show the preceding line that contains the function name of
-+	the match, unless the matching line is a function name itself.
-+
  -f <file>::
  	Read patterns from <file>, one per line.
- 
 diff --git a/builtin-grep.c b/builtin-grep.c
-index 48998af..037452e 100644
+index 037452e..9343cc5 100644
 --- a/builtin-grep.c
 +++ b/builtin-grep.c
-@@ -278,13 +278,13 @@ static int flush_grep(struct grep_opt *opt,
- 		argc -= 2;
- 	}
+@@ -11,6 +11,7 @@
+ #include "tree-walk.h"
+ #include "builtin.h"
+ #include "parse-options.h"
++#include "userdiff.h"
+ #include "grep.h"
  
--	if (opt->pre_context || opt->post_context) {
-+	if (opt->pre_context || opt->post_context || opt->funcname) {
- 		/*
- 		 * grep handles hunk marks between files, but we need to
- 		 * do that ourselves between multiple calls.
- 		 */
- 		if (opt->show_hunk_mark)
--			write_or_die(1, "--\n", 3);
-+			write_or_die(1, opt->funcname ? "==\n" : "--\n", 3);
- 		else
- 			opt->show_hunk_mark = 1;
- 	}
-@@ -721,6 +721,8 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
- 			"show <n> context lines after matches"),
- 		OPT_NUMBER_CALLBACK(&opt, "shortcut for -C NUM",
- 			context_callback),
-+		OPT_BOOLEAN('p', "show-function", &opt.funcname,
-+			"show a line with the function name before matches"),
- 		OPT_GROUP(""),
- 		OPT_CALLBACK('f', NULL, &opt, "file",
- 			"read patterns from file", file_callback),
-@@ -789,7 +791,7 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
- 		argc--;
- 	}
+ #ifndef NO_EXTERNAL_GREP
+@@ -30,6 +31,12 @@ static int grep_config(const char *var, const char *value, void *cb)
+ {
+ 	struct grep_opt *opt = cb;
  
--	if (opt.color && !opt.color_external)
-+	if ((opt.color && !opt.color_external) || opt.funcname)
- 		external_grep_allowed = 0;
- 	if (!opt.pattern_list)
- 		die("no pattern given.");
++	switch (userdiff_config(var, value)) {
++	case 0: break;
++	case -1: return -1;
++	default: return 0;
++	}
++
+ 	if (!strcmp(var, "color.grep")) {
+ 		opt->color = git_config_colorbool(var, value, -1);
+ 		return 0;
 diff --git a/grep.c b/grep.c
-index 9b9d2e3..3a5c138 100644
+index 3a5c138..c47785a 100644
 --- a/grep.c
 +++ b/grep.c
-@@ -490,14 +490,18 @@ static void show_line(struct grep_opt *opt, char *bol, char *eol,
- {
- 	int rest = eol - bol;
+@@ -1,5 +1,6 @@
+ #include "cache.h"
+ #include "grep.h"
++#include "userdiff.h"
+ #include "xdiff-interface.h"
  
--	if (opt->pre_context || opt->post_context) {
-+	if (opt->pre_context || opt->post_context || opt->funcname) {
- 		if (opt->last_shown == 0) {
- 			if (opt->show_hunk_mark)
--				fputs("--\n", stdout);
-+				fputs(opt->funcname ? "==\n" : "--\n", stdout);
- 			else
- 				opt->show_hunk_mark = 1;
--		} else if (lno > opt->last_shown + 1)
--			fputs("--\n", stdout);
-+		} else if (lno > opt->last_shown + 1) {
-+			if (opt->pre_context || opt->post_context)
-+				fputs((sign == '=') ? "==\n" : "--\n", stdout);
-+			else if (sign == '=')
-+				fputs("==\n", stdout);
-+		}
- 	}
- 	opt->last_shown = lno;
- 
-@@ -531,10 +535,40 @@ static void show_line(struct grep_opt *opt, char *bol, char *eol,
+ void append_header_grep_pattern(struct grep_opt *opt, enum grep_header_field field, const char *pat)
+@@ -535,8 +536,15 @@ static void show_line(struct grep_opt *opt, char *bol, char *eol,
  	printf("%.*s\n", rest, bol);
  }
  
-+static int match_funcname(char *bol, char *eol)
-+{
-+	if (bol == eol)
-+		return 0;
-+	if (isalpha(*bol) || *bol == '_' || *bol == '$')
-+		return 1;
-+	return 0;
-+}
-+
-+static void show_funcname_line(struct grep_opt *opt, const char *name,
-+			       char *buf, char *bol, unsigned lno)
-+{
-+	while (bol > buf) {
-+		char *eol = --bol;
-+
-+		while (bol > buf && bol[-1] != '\n')
-+			bol--;
-+		lno--;
-+
-+		if (lno <= opt->last_shown)
-+			break;
-+
-+		if (match_funcname(bol, eol)) {
-+			show_line(opt, bol, eol, name, lno, '=');
-+			break;
-+		}
-+	}
-+}
-+
- static void show_pre_context(struct grep_opt *opt, const char *name, char *buf,
- 			     char *bol, unsigned lno)
+-static int match_funcname(char *bol, char *eol)
++static int match_funcname(struct grep_opt *opt, char *bol, char *eol)
  {
--	unsigned cur = lno, from = 1;
-+	unsigned cur = lno, from = 1, funcname_lno = 0;
-+	int funcname_needed = opt->funcname;
- 
- 	if (opt->pre_context < lno)
- 		from = lno - opt->pre_context;
-@@ -543,19 +577,28 @@ static void show_pre_context(struct grep_opt *opt, const char *name, char *buf,
- 
- 	/* Rewind. */
- 	while (bol > buf && cur > from) {
--		bol--;
-+		char *eol = --bol;
++	xdemitconf_t *xecfg = opt->priv;
++	if (xecfg && xecfg->find_func) {
++		char buf[1];
++		return xecfg->find_func(bol, eol - bol, buf, 1,
++					xecfg->find_func_priv) >= 0;
++	}
 +
+ 	if (bol == eol)
+ 		return 0;
+ 	if (isalpha(*bol) || *bol == '_' || *bol == '$')
+@@ -557,7 +565,7 @@ static void show_funcname_line(struct grep_opt *opt, const char *name,
+ 		if (lno <= opt->last_shown)
+ 			break;
+ 
+-		if (match_funcname(bol, eol)) {
++		if (match_funcname(opt, bol, eol)) {
+ 			show_line(opt, bol, eol, name, lno, '=');
+ 			break;
+ 		}
+@@ -582,7 +590,7 @@ static void show_pre_context(struct grep_opt *opt, const char *name, char *buf,
  		while (bol > buf && bol[-1] != '\n')
  			bol--;
  		cur--;
-+		if (funcname_needed && match_funcname(bol, eol)) {
-+			funcname_lno = cur;
-+			funcname_needed = 0;
+-		if (funcname_needed && match_funcname(bol, eol)) {
++		if (funcname_needed && match_funcname(opt, bol, eol)) {
+ 			funcname_lno = cur;
+ 			funcname_needed = 0;
+ 		}
+@@ -614,6 +622,7 @@ static int grep_buffer_1(struct grep_opt *opt, const char *name,
+ 	int binary_match_only = 0;
+ 	unsigned count = 0;
+ 	enum grep_context ctx = GREP_CONTEXT_HEAD;
++	xdemitconf_t xecfg;
+ 
+ 	opt->last_shown = 0;
+ 
+@@ -630,6 +639,17 @@ static int grep_buffer_1(struct grep_opt *opt, const char *name,
+ 		}
+ 	}
+ 
++	memset(&xecfg, 0, sizeof(xecfg));
++	if (opt->funcname && !opt->unmatch_name_only && !opt->status_only &&
++	    !opt->name_only && !binary_match_only && !collect_hits) {
++		struct userdiff_driver *drv = userdiff_find_by_path(name);
++		if (drv && drv->funcname.pattern) {
++			const struct userdiff_funcname *pe = &drv->funcname;
++			xdiff_set_find_func(&xecfg, pe->pattern, pe->cflags);
++			opt->priv = &xecfg;
 +		}
- 	}
- 
-+	/* We need to look even further back to find a function signature. */
-+	if (opt->funcname && funcname_needed)
-+		show_funcname_line(opt, name, buf, bol, cur);
++	}
 +
- 	/* Back forward. */
- 	while (cur < lno) {
--		char *eol = bol;
-+		char *eol = bol, sign = (cur == funcname_lno) ? '=' : '-';
- 
- 		while (*eol != '\n')
- 			eol++;
--		show_line(opt, bol, eol, name, cur, '-');
-+		show_line(opt, bol, eol, name, cur, sign);
- 		bol = eol + 1;
- 		cur++;
+ 	while (left) {
+ 		char *eol, ch;
+ 		int hit;
+@@ -711,6 +731,9 @@ static int grep_buffer_1(struct grep_opt *opt, const char *name,
+ 		return 1;
  	}
-@@ -635,6 +678,8 @@ static int grep_buffer_1(struct grep_opt *opt, const char *name,
- 			 */
- 			if (opt->pre_context)
- 				show_pre_context(opt, name, buf, bol, lno);
-+			else if (opt->funcname)
-+				show_funcname_line(opt, name, buf, bol, lno);
- 			if (!opt->count)
- 				show_line(opt, bol, eol, name, lno, ':');
- 			last_hit = lno;
+ 
++	xdiff_clear_find_func(&xecfg);
++	opt->priv = NULL;
++
+ 	/* NEEDSWORK:
+ 	 * The real "grep -c foo *.c" gives many "bar.c:0" lines,
+ 	 * which feels mostly useless but sometimes useful.  Maybe
 diff --git a/grep.h b/grep.h
-index 730ffd6..3f75e3a 100644
+index 3f75e3a..f00db0e 100644
 --- a/grep.h
 +++ b/grep.h
-@@ -79,6 +79,7 @@ struct grep_opt {
- 	int pathname;
- 	int null_following_name;
- 	int color;
-+	int funcname;
- 	char color_match[COLOR_MAXLEN];
- 	const char *color_external;
- 	int regflags;
+@@ -87,6 +87,7 @@ struct grep_opt {
+ 	unsigned post_context;
+ 	unsigned last_shown;
+ 	int show_hunk_mark;
++	void *priv;
+ };
+ 
+ extern void append_grep_pattern(struct grep_opt *opt, const char *pat, const char *origin, int no, enum grep_pat_token t);
 diff --git a/t/t7002-grep.sh b/t/t7002-grep.sh
-index 155bfdb..ef59ab9 100755
+index ef59ab9..b13aa7e 100755
 --- a/t/t7002-grep.sh
 +++ b/t/t7002-grep.sh
-@@ -8,6 +8,15 @@ test_description='git grep various.
- 
- . ./test-lib.sh
- 
-+cat >hello.c <<EOF
-+#include <stdio.h>
-+int main(int argc, const char **argv)
-+{
-+	printf("Hello world.\n");
-+	return 0;
-+}
-+EOF
-+
- test_expect_success setup '
- 	{
- 		echo foo mmap bar
-@@ -22,7 +31,7 @@ test_expect_success setup '
- 	echo zzz > z &&
- 	mkdir t &&
- 	echo test >t/t &&
--	git add file w x y z t/t &&
-+	git add file w x y z t/t hello.c &&
- 	test_tick &&
- 	git commit -m initial
- '
-@@ -229,9 +238,32 @@ test_expect_success 'log grep (6)' '
- test_expect_success 'grep with CE_VALID file' '
- 	git update-index --assume-unchanged t/t &&
- 	rm t/t &&
--	test "$(git grep --no-ext-grep t)" = "t/t:test" &&
-+	test "$(git grep --no-ext-grep test)" = "t/t:test" &&
- 	git update-index --no-assume-unchanged t/t &&
- 	git checkout t/t
+@@ -244,11 +244,24 @@ test_expect_success 'grep with CE_VALID file' '
  '
  
-+cat >expected <<EOF
-+hello.c=int main(int argc, const char **argv)
+ cat >expected <<EOF
++hello.c=#include <stdio.h>
 +hello.c:	return 0;
 +EOF
 +
-+test_expect_success 'grep -p' '
++test_expect_success 'grep -p with userdiff' '
++	git config diff.custom.funcname "^#" &&
++	echo "hello.c diff=custom" >.gitattributes &&
 +	git grep -p return >actual &&
 +	test_cmp expected actual
 +'
 +
 +cat >expected <<EOF
-+hello.c-#include <stdio.h>
-+hello.c=int main(int argc, const char **argv)
-+hello.c-{
-+hello.c-	printf("Hello world.\n");
-+hello.c:	return 0;
-+EOF
-+
-+test_expect_success 'grep -p -B5' '
-+	git grep -p -B5 return >actual &&
-+	test_cmp expected actual
-+'
-+
- test_done
+ hello.c=int main(int argc, const char **argv)
+ hello.c:	return 0;
+ EOF
+ 
+ test_expect_success 'grep -p' '
++	rm -f .gitattributes &&
+ 	git grep -p return >actual &&
+ 	test_cmp expected actual
+ '
 -- 
 1.6.3.3
