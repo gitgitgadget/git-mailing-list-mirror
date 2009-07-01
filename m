@@ -1,106 +1,63 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: git bisect; is there a way to pick only from the children of a given commit
-Date: Wed, 01 Jul 2009 13:02:23 -0700 (PDT)
-Message-ID: <m38wj8w4s1.fsf@localhost.localdomain>
-References: <loom.20090701T170535-707@post.gmane.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] request-pull: do not paginate output of git commands
+Date: Wed, 01 Jul 2009 13:16:45 -0700
+Message-ID: <7vy6r8f9aq.fsf@alter.siamese.dyndns.org>
+References: <1246361606-20457-1-git-send-email-mmarek@suse.cz>
+	<7vtz1x7f05.fsf@alter.siamese.dyndns.org>
+	<20090701094029.GA22508@sepie.suse.cz>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Robert Stonehouse <rstonehouse@solarflare.com>
-X-From: git-owner@vger.kernel.org Wed Jul 01 22:02:33 2009
+Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>
+To: Michal Marek <mmarek@suse.cz>
+X-From: git-owner@vger.kernel.org Wed Jul 01 22:17:15 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MM60m-0006K3-Mf
-	for gcvg-git-2@gmane.org; Wed, 01 Jul 2009 22:02:33 +0200
+	id 1MM6F0-0004KP-BR
+	for gcvg-git-2@gmane.org; Wed, 01 Jul 2009 22:17:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753362AbZGAUCX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 1 Jul 2009 16:02:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752988AbZGAUCW
-	(ORCPT <rfc822;git-outgoing>); Wed, 1 Jul 2009 16:02:22 -0400
-Received: from fg-out-1718.google.com ([72.14.220.158]:33720 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752342AbZGAUCW (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 1 Jul 2009 16:02:22 -0400
-Received: by fg-out-1718.google.com with SMTP id e12so973968fga.17
-        for <git@vger.kernel.org>; Wed, 01 Jul 2009 13:02:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received
-         :x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        bh=vOBaDm7DpLTs5nn/mfPAK7A9I2ecbjscDKitSoSSGw8=;
-        b=g2Ar5ic86l9OU/pD1rFLkU0wuCsbWbY0jVWxsVwj4XSwawBPPTaZproBU3/9jfxmNr
-         EElUvbykRev/2QHqa0aLZDSpbzytIHfe0VVzf45gyzKb7P12dB6EnbqsW1AZ2nmuwfVn
-         HZ9MSLLJRmOfS+0N1EYz6xvI9d9eYLXiwu2zQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        b=B/8ZVajDpqAz8iCIQu540HHdgP7EFFqUioeXJF52/FJ2/qXzLVmwApbQoF0TM1aOBF
-         VzyjekoOITH/qPGj1mp4EXO9gnjUhVb5qEybinZAOou4RZ/spbe4OD8Ww2LZ446mv+M4
-         yLFuoekYAj+qDH1NshqfexoW687RhzmRpbfAw=
-Received: by 10.86.58.9 with SMTP id g9mr4959916fga.18.1246478543546;
-        Wed, 01 Jul 2009 13:02:23 -0700 (PDT)
-Received: from localhost.localdomain (abwo245.neoplus.adsl.tpnet.pl [83.8.238.245])
-        by mx.google.com with ESMTPS id 3sm4545911fge.17.2009.07.01.13.02.22
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 01 Jul 2009 13:02:23 -0700 (PDT)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id n61K2NHX018858;
-	Wed, 1 Jul 2009 22:02:23 +0200
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id n61K2M7N018855;
-	Wed, 1 Jul 2009 22:02:22 +0200
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <loom.20090701T170535-707@post.gmane.org>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+	id S1751554AbZGAUQo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 1 Jul 2009 16:16:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751225AbZGAUQo
+	(ORCPT <rfc822;git-outgoing>); Wed, 1 Jul 2009 16:16:44 -0400
+Received: from fed1rmmtao106.cox.net ([68.230.241.40]:48201 "EHLO
+	fed1rmmtao106.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751326AbZGAUQn (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 1 Jul 2009 16:16:43 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao106.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20090701201645.RZGQ25927.fed1rmmtao106.cox.net@fed1rmimpo01.cox.net>;
+          Wed, 1 Jul 2009 16:16:45 -0400
+Received: from localhost ([68.225.240.211])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id AkGl1c00C4aMwMQ03kGlxq; Wed, 01 Jul 2009 16:16:46 -0400
+X-VR-Score: -100.00
+X-Authority-Analysis: v=1.0 c=1 a=hoH3GwZHzGIA:10 a=yvBS0kstd_Qq12r5lscA:9
+ a=u-W5c-3tW6iwiO-xsRWBm4ewM5sA:4
+X-CM-Score: 0.00
+In-Reply-To: <20090701094029.GA22508@sepie.suse.cz> (Michal Marek's message of "Wed\, 1 Jul 2009 11\:40\:30 +0200")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122597>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122598>
 
-Robert Stonehouse <rstonehouse@solarflare.com> writes:
+Michal Marek <mmarek@suse.cz> writes:
 
-> I had a problem where I thought git bisect would be a good way forwards.
-> It didn't work as expected so I made myself a simpler test-case.
-> 
-> featureA (which was a new build target) was broken at HEAD. It had been
-> developed on the featureA branch. After featureA was merged into master,
-> featureB (which had branched from master at the same point as featureA) was
-> merged with master.
-> 
->   $ git log --graph --abbrev-commit --pretty=oneline
->   * b394c57... master4
->   *   7e8d675... Merge branch 'featureB'
->   |\  
->   | * 8d87aee... featureB2
->   | * c1a8450... featureB1
->   * | 44c5601... master3
->   * |   269602a... Merge branch 'featureA'
->   |\ \  
->   | * | 91b1bbb... featureA2
->   | * | 0c15834... featureA1
->   | |/  
->   * | 1ea4a0c... master2
->   |/  
->   * 204f839... master1
-> 
-> Tag featureA1 was my good commit, and HEAD was the bad.
-> I was surprised that git bisect was asking me to test commits on the featureB
-> branch. I couldn't test the build target that was broken on branch featureB
-> because it wasn't present in the code at that point.
+> Good idea, but for completeness, it should be set before this command:
+>     git log --max-count=1 --pretty='format:warn:   %h: %s' $headrev >&2
+> (which should use tformat to get the newline right). So what about this
+> one?
 
-That is what "git bisect skip [<rev>|<range>...]" is for."
+Good eyes.
 
-> Is there a way to do what I want (bisect all children of a commit)?
+The blamed commit for that new use of "log" is ff06c74 (Improve
+request-pull to handle non-rebased branches, 2007-05-01) itself, which did
+introduce the "define an empty PAGER to disable paging" trick, so this
+makes it doubly buggy (i.e. for forgetting GIT_PAGER trumps PAGER, and for
+introducing a use of log that is not covered by its own trick).
 
-Also in 'pu' there is refs/replace mechanism, which was intendend
-mainly to "repair" un-bisectable history...
-
--- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+Thanks.
