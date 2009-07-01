@@ -1,96 +1,126 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH/v2] Remove filename from conflict markers
-Date: Wed, 01 Jul 2009 13:57:54 -0700
-Message-ID: <7vljn8f7e5.fsf@alter.siamese.dyndns.org>
-References: <20090628154559.GA29049@old.homeip.net>
-	<7v63ed5pvi.fsf@alter.siamese.dyndns.org>
-	<20090701123310.6117@nanako3.lavabit.com>
-	<20090701075634.GA18326@old.homeip.net>
-	<7vljn8ls0c.fsf@alter.siamese.dyndns.org>
-	<20090701161651.GA29393@old.homeip.net>
-	<20090701201804.GA16876@old.homeip.net>
+From: David Chanters <david.chanters@googlemail.com>
+Subject: Re: CVS <--> GIT workflow...
+Date: Wed, 1 Jul 2009 22:25:15 +0100
+Message-ID: <ac3d41850907011425x966483awe1757e24417d9da4@mail.gmail.com>
+References: <ac3d41850907011132q8e19b37ofa10813258a97555@mail.gmail.com>
+	 <m3d48kw4uz.fsf@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Nanako Shiraishi <nanako3@lavabit.com>, git@vger.kernel.org
-To: Martin Renold <martinxyz@gmx.ch>
-X-From: git-owner@vger.kernel.org Wed Jul 01 22:58:26 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jul 01 23:26:16 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MM6si-0006mP-5L
-	for gcvg-git-2@gmane.org; Wed, 01 Jul 2009 22:58:16 +0200
+	id 1MM7Iz-0005Lz-NN
+	for gcvg-git-2@gmane.org; Wed, 01 Jul 2009 23:25:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753393AbZGAU5x (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 1 Jul 2009 16:57:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752817AbZGAU5x
-	(ORCPT <rfc822;git-outgoing>); Wed, 1 Jul 2009 16:57:53 -0400
-Received: from fed1rmmtao105.cox.net ([68.230.241.41]:59111 "EHLO
-	fed1rmmtao105.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751345AbZGAU5w (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 1 Jul 2009 16:57:52 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao105.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20090701205755.JZBY20430.fed1rmmtao105.cox.net@fed1rmimpo02.cox.net>;
-          Wed, 1 Jul 2009 16:57:55 -0400
-Received: from localhost ([68.225.240.211])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id Akxu1c00A4aMwMQ04kxuTG; Wed, 01 Jul 2009 16:57:55 -0400
-X-VR-Score: -100.00
-X-Authority-Analysis: v=1.0 c=1 a=FKjP3o1w7WsA:10 a=vWC9mcd_r7eoDwPO0WMA:9
- a=9CVBqi76Nm2R49A0lqMA:7 a=YWmqVLWnAFlGW-tzzB_rGRFPslgA:4
- a=IumQJTCgq9KiQUQy:21 a=kGIXidAuaAvqlzEL:21
-X-CM-Score: 0.00
-In-Reply-To: <20090701201804.GA16876@old.homeip.net> (Martin Renold's message of "Wed\, 1 Jul 2009 22\:18\:04 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+	id S1753839AbZGAVZO convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 1 Jul 2009 17:25:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753707AbZGAVZO
+	(ORCPT <rfc822;git-outgoing>); Wed, 1 Jul 2009 17:25:14 -0400
+Received: from fg-out-1718.google.com ([72.14.220.159]:48379 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752741AbZGAVZN convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 1 Jul 2009 17:25:13 -0400
+Received: by fg-out-1718.google.com with SMTP id e21so360134fga.17
+        for <git@vger.kernel.org>; Wed, 01 Jul 2009 14:25:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=uGjGOs6nMCHUOXSUME6opnGu1lUHzKdn+651eS7Meo8=;
+        b=kF9jJhszISunrTjVKdnZA1cO2rcHCbbaEK2WrYjH16I861N+rWVXOXQmJ9RoKfOhou
+         7SWny9R+CV6nmwKBIEuf5qW1rflEIgGHOzGs6TzTr5U6F0auEasO9u6sV4WTyJn0HSQ/
+         Kw/vUcYQ9X9zrOUqNcBY914FgDTusPOfYY7PY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlemail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=ubWhV2t9R5eGfEUg1zZ8fqlZtBYKRm/qcDAxgQgMio5wPFW+Dor3QTswFxWWIkxg4P
+         xpw2H1rwv1I3lU+zml6efoRHYq1GluJFgdeNVZkbZhCl9QcXrXSIkQ1Y4MD4ZGj0/Hzu
+         yjVsdm7H8n4aK4tv7jGvcDdbWNV8ZRb0GDc4w=
+Received: by 10.86.90.13 with SMTP id n13mr4752422fgb.45.1246483515161; Wed, 
+	01 Jul 2009 14:25:15 -0700 (PDT)
+In-Reply-To: <m3d48kw4uz.fsf@localhost.localdomain>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122600>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122601>
 
-Martin Renold <martinxyz@gmx.ch> writes:
-
-> Put filenames into the conflict markers only when they are different.
-> Otherwise they are redundant information clutter.
+2009/7/1 Jakub Narebski <jnareb@gmail.com>:
+> David Chanters <david.chanters@googlemail.com> writes:
 >
-> Print the filename explicitely when warning about a binary conflict.
+>> I am wondering if there's any best practises/howtos on using CVS and
+>> Git together. =A0I have a project which is currently residing in CVS=
+;
+>> people actively use it to add changes, etc. =A0Which is fine -- and =
+for
+>> a variety of reasons we're unable to simply switch away from using C=
+VS
+>> to Git.
+>>
+>> So... the question is, can I use Git locally to manage all my work i=
+n
+>> -- create topic branches, merge them, etc., and then commit that bac=
+k
+>> out to the CVS repository? =A0 Likewise, I would need to keep my Git
+>> repository in synch with any changes to the CVS repository -- is tha=
+t
+>> possible? =A0Has anyone else done something like this? =A0What I am
+>> effectively wanting to do is Git for my entire development on this
+>> project and just forget it even uses CVS.
+>>
+>> I've read up on git-cvsimport which seems to explain how to convert =
+a
+>> current CVS repo over to Git -- is that right? =A0Any information yo=
+u
+>> can point me to would be very welcome. =A0I am not adverse to readin=
+g,
+>> providing it's useful to me. =A0:)
+>
+> I think from all CVS importers (git-cvsimport, parsecvs, git mode of
+> cvs2svn aka. cvs2git) only git-cvsimport has incremental mode.
 
-I think we are getting closer.
+Excellent.   So git-cvsimport it is then.  That's stage 1.
 
-> -	grep "Cannot merge binary files: HEAD:binary-file vs. F:binary-file" \
-> -		merge.err
-> +	grep "Cannot merge binary files: binary-file (HEAD vs. F)" merge.err
+> As for exporting to CVS there is git-cvsexportcommit and git-cvsserve=
+r
+> (which functions like cvsserver, but conects to git repository;
+> although it has its own limitations).
 
-In the original code, if you are not in "merge renamed" situation, you
-would see something like this.
+I wouldn't need connectivity like what git-cvsserver seems to imply.
+git-cvsexportcommit sounds about right.
 
-    "Cannot merge binary files: HEAD:porn.jpg vs F:porn.jpg"
+> But you should really hope that your fellow CVS committers use good
+> practice; because it is quite easy to create very messy CVS repositor=
+y
+> (so that for example it would be hard to extract changesets).
 
-And the patch changes it to
+They do -- which is about the only guaranteed thing.
 
-    "Cannot merge binary files: porn.jpg (HEAD vs F)"
+So what would I do?  Something like this:
 
-which is an improvement.  I have to wonder, if it even necessary to say
-HEAD vs F when no rename is involved, though.  Probably it is, as this is
-about binary files, and the user may need to extract the contents with
-something like "git cat-file blob HEAD:porn.jpg >tmp1.jpg".
+1.  Use git-cvsimport to "convert" a snapshot of the current CVS
+project to something Git can understand.
+2.  Checkout this git project via git clone in the usual way.
+3,  Hack away in this Git clone.
+4.  Use git-cvsexportcommit to extract commits?
 
-When you are indeed in "merge renamed" situation, it gets a bit more
-interesting.  The original said
+What about my workflow within the Git repository?  I assume that
+"Master" would be the branch I would want to merge *to* if I have
+local topic brances I wish to have in to CVS, and then the commits on
+Master would be something git-cvsexportcommit would look at?
 
-    "Cannot merge binary files: HEAD:porn.jpg vs F:porn112.jpg"
+Indeed, it seems git-cvsexportcommit is somewhat "manual" -- is there
+no way of automating that to say something like:  "Take all commits on
+branch $FOO in Git, which aren't in CVS, and apply them?"   I might be
+missing some understanding here.
 
-which makes it clear that what is merged with what, but did not say where
-the resulting merge will go.  The updated output would say something like
-this
+Any advice greatly received.  :)
 
-    "Cannot merge binary files: porn.jpg (HEAD:porn.jpg vs F:porn112.jpg)"
-
-which adds information and is probably better.
-
-So overall, I like what the change does, but I'd probably wait for a few
-more days just in case there are objections from different corners,
-primarily because I am somewhat concerned that this change might affect
-users of mergetool (which I do not use myself) in some negative way.
+David
