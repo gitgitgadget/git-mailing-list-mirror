@@ -1,68 +1,69 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: [JGIT PATCH] Avoid growing WorkingTreeIterator's path multiple times
-Date: Wed,  1 Jul 2009 15:45:53 -0700
-Message-ID: <1246488353-16867-1-git-send-email-spearce@spearce.org>
-Cc: git@vger.kernel.org,
-	Constantine Plotnikov <constantine.plotnikov@gmail.com>
-To: Robin Rosenberg <robin.rosenberg@dewire.com>
-X-From: git-owner@vger.kernel.org Thu Jul 02 00:46:04 2009
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/6] grep: move context hunk mark handling into show_line()
+Date: Wed, 01 Jul 2009 15:55:19 -0700
+Message-ID: <7vzlbodne0.fsf@alter.siamese.dyndns.org>
+References: <4A4BDC65.80504@lsrfire.ath.cx> <4A4BDCFE.3050808@lsrfire.ath.cx>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>
+To: =?utf-8?Q?Ren=C3=A9?= Scharfe <rene.scharfe@lsrfire.ath.cx>
+X-From: git-owner@vger.kernel.org Thu Jul 02 00:55:29 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MM8Z1-0008JD-JG
-	for gcvg-git-2@gmane.org; Thu, 02 Jul 2009 00:46:04 +0200
+	id 1MM8i9-0003Th-1I
+	for gcvg-git-2@gmane.org; Thu, 02 Jul 2009 00:55:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751988AbZGAWpy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 1 Jul 2009 18:45:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751571AbZGAWpx
-	(ORCPT <rfc822;git-outgoing>); Wed, 1 Jul 2009 18:45:53 -0400
-Received: from george.spearce.org ([209.20.77.23]:43776 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751484AbZGAWpw (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 1 Jul 2009 18:45:52 -0400
-Received: by george.spearce.org (Postfix, from userid 1000)
-	id 31ACE381FE; Wed,  1 Jul 2009 22:45:56 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.2.4 (2008-01-01) on george.spearce.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-4.4 required=4.0 tests=ALL_TRUSTED,BAYES_00
-	autolearn=ham version=3.2.4
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by george.spearce.org (Postfix) with ESMTP id D5692381D5;
-	Wed,  1 Jul 2009 22:45:53 +0000 (UTC)
-X-Mailer: git-send-email 1.6.3.3.420.gd4b46
+	id S1752840AbZGAWzS convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 1 Jul 2009 18:55:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752751AbZGAWzS
+	(ORCPT <rfc822;git-outgoing>); Wed, 1 Jul 2009 18:55:18 -0400
+Received: from fed1rmmtao104.cox.net ([68.230.241.42]:63730 "EHLO
+	fed1rmmtao104.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751545AbZGAWzR (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 1 Jul 2009 18:55:17 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao104.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20090701225520.OAWH17135.fed1rmmtao104.cox.net@fed1rmimpo02.cox.net>;
+          Wed, 1 Jul 2009 18:55:20 -0400
+Received: from localhost ([68.225.240.211])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id AmvK1c00L4aMwMQ04mvKi6; Wed, 01 Jul 2009 18:55:20 -0400
+X-VR-Score: -100.00
+X-Authority-Analysis: v=1.0 c=1 a=OgmuE65XyGQA:10 a=v6yO08Rf7k42Y96wfBoA:9
+ a=yX1g3PSwjzfczPxLzrQdRYF1AikA:4
+X-CM-Score: 0.00
+In-Reply-To: <4A4BDCFE.3050808@lsrfire.ath.cx> (=?utf-8?Q?=22Ren=C3=A9?=
+ Scharfe"'s message of "Thu\, 02 Jul 2009 00\:02\:38 +0200")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122611>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122612>
 
-If the current path buffer isn't big enough for the current file
-name to be appended onto it, we can immediately grow it to the
-correct target size by using the new ensurePathCapacity method.
-This may save us from growing the buffer twice in rapid succession
-if the path name component is really long, and the current buffer
-is still the fairly small default size.
+Ren=C3=A9 Scharfe <rene.scharfe@lsrfire.ath.cx> writes:
 
-Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
-CC: Constantine Plotnikov <constantine.plotnikov@gmail.com>
----
- .../spearce/jgit/treewalk/WorkingTreeIterator.java |    3 +--
- 1 files changed, 1 insertions(+), 2 deletions(-)
+> Move last_shown into struct grep_opt, to make it available in
+> show_line(), and then make the function handle the printing of hunk
+> marks for context lines in a central place.
 
-diff --git a/org.spearce.jgit/src/org/spearce/jgit/treewalk/WorkingTreeIterator.java b/org.spearce.jgit/src/org/spearce/jgit/treewalk/WorkingTreeIterator.java
-index 836b01a..d4291ea 100644
---- a/org.spearce.jgit/src/org/spearce/jgit/treewalk/WorkingTreeIterator.java
-+++ b/org.spearce.jgit/src/org/spearce/jgit/treewalk/WorkingTreeIterator.java
-@@ -258,8 +258,7 @@ private void parseEntry() {
- 		mode = e.getMode().getBits();
- 
- 		final int nameLen = e.encodedNameLen;
--		while (pathOffset + nameLen > path.length)
--			growPath(pathOffset);
-+		ensurePathCapacity(pathOffset + nameLen, pathOffset);
- 		System.arraycopy(e.encodedName, 0, path, pathOffset, nameLen);
- 		pathLen = pathOffset + nameLen;
- 	}
--- 
-1.6.3.3.420.gd4b46
+Makes sense.  But now "are we showing from a separate block of text" ch=
+eck
+is in show_line() and relieves the caller of show_line() from doing so,=
+=2E..
+
+>  		else if (last_hit &&
+>  			 lno <=3D last_hit + opt->post_context) {
+>  			/* If the last hit is within the post context,
+>  			 * we need to show this line.
+>  			 */
+> -			if (last_shown && lno !=3D last_shown + 1)
+> -				fputs(hunk_mark, stdout);
+>  			show_line(opt, bol, eol, name, lno, '-');
+> -			last_shown =3D lno;
+
+=2E.. the comment in this context should go, no?
