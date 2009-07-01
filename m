@@ -1,70 +1,68 @@
 From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [JGIT PATCH] Support for delegating tree iterators
-Date: Wed, 1 Jul 2009 15:41:37 -0700
-Message-ID: <20090701224137.GU11191@spearce.org>
-References: <1246470772-4496-1-git-send-email-constantine.plotnikov@gmail.com> <20090701223448.GT11191@spearce.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Constantine Plotnikov <constantine.plotnikov@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jul 02 00:41:45 2009
+Subject: [JGIT PATCH] Avoid growing WorkingTreeIterator's path multiple times
+Date: Wed,  1 Jul 2009 15:45:53 -0700
+Message-ID: <1246488353-16867-1-git-send-email-spearce@spearce.org>
+Cc: git@vger.kernel.org,
+	Constantine Plotnikov <constantine.plotnikov@gmail.com>
+To: Robin Rosenberg <robin.rosenberg@dewire.com>
+X-From: git-owner@vger.kernel.org Thu Jul 02 00:46:04 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MM8Ur-0006u1-0Y
-	for gcvg-git-2@gmane.org; Thu, 02 Jul 2009 00:41:45 +0200
+	id 1MM8Z1-0008JD-JG
+	for gcvg-git-2@gmane.org; Thu, 02 Jul 2009 00:46:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751748AbZGAWlf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 1 Jul 2009 18:41:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751707AbZGAWle
-	(ORCPT <rfc822;git-outgoing>); Wed, 1 Jul 2009 18:41:34 -0400
-Received: from george.spearce.org ([209.20.77.23]:42111 "EHLO
+	id S1751988AbZGAWpy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 1 Jul 2009 18:45:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751571AbZGAWpx
+	(ORCPT <rfc822;git-outgoing>); Wed, 1 Jul 2009 18:45:53 -0400
+Received: from george.spearce.org ([209.20.77.23]:43776 "EHLO
 	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750726AbZGAWle (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 1 Jul 2009 18:41:34 -0400
-Received: by george.spearce.org (Postfix, from userid 1001)
-	id 97031381FD; Wed,  1 Jul 2009 22:41:37 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <20090701223448.GT11191@spearce.org>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	with ESMTP id S1751484AbZGAWpw (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 1 Jul 2009 18:45:52 -0400
+Received: by george.spearce.org (Postfix, from userid 1000)
+	id 31ACE381FE; Wed,  1 Jul 2009 22:45:56 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.2.4 (2008-01-01) on george.spearce.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-4.4 required=4.0 tests=ALL_TRUSTED,BAYES_00
+	autolearn=ham version=3.2.4
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by george.spearce.org (Postfix) with ESMTP id D5692381D5;
+	Wed,  1 Jul 2009 22:45:53 +0000 (UTC)
+X-Mailer: git-send-email 1.6.3.3.420.gd4b46
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122610>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122611>
 
-"Shawn O. Pearce" <spearce@spearce.org> wrote:
-> Constantine Plotnikov <constantine.plotnikov@gmail.com> wrote:
-> > This patch introduce some methods that simplify creation of tree
-> > iterators that wraps other iterators and which are located in
-> > other package. Such iterators need to efficiently access the
-> > name component of the path of wrapped iterator and wrapped bits.
-> > The patch also adds a method that ensuring that path buffer has
-> > a requried capacity when the required capacity is known in advance.
-> > 
-> > Signed-off-by: Constantine Plotnikov <constantine.plotnikov@gmail.com>
-> 
-> Thanks, two style nits, I fixed during apply:
+If the current path buffer isn't big enough for the current file
+name to be appended onto it, we can immediately grow it to the
+correct target size by using the new ensurePathCapacity method.
+This may save us from growing the buffer twice in rapid succession
+if the path name component is really long, and the current buffer
+is still the fairly small default size.
 
-I also decided to squash this in, the name better matches with
-TreeWalk's other like methods.  That is, the method name in TreeWalk
-lacks the "Entry" prefix, but is otherwise the same name as the
-name in the iterator.
+Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
+CC: Constantine Plotnikov <constantine.plotnikov@gmail.com>
+---
+ .../spearce/jgit/treewalk/WorkingTreeIterator.java |    3 +--
+ 1 files changed, 1 insertions(+), 2 deletions(-)
 
-diff --git a/org.spearce.jgit/src/org/spearce/jgit/treewalk/AbstractTreeIterator.java b/org.spearce.jgit/src/org/spearce/jgit/treewalk/AbstractTreeIterator.java
-index 50befbe..2116387 100644
---- a/org.spearce.jgit/src/org/spearce/jgit/treewalk/AbstractTreeIterator.java
-+++ b/org.spearce.jgit/src/org/spearce/jgit/treewalk/AbstractTreeIterator.java
-@@ -387,7 +387,7 @@ public FileMode getEntryFileMode() {
+diff --git a/org.spearce.jgit/src/org/spearce/jgit/treewalk/WorkingTreeIterator.java b/org.spearce.jgit/src/org/spearce/jgit/treewalk/WorkingTreeIterator.java
+index 836b01a..d4291ea 100644
+--- a/org.spearce.jgit/src/org/spearce/jgit/treewalk/WorkingTreeIterator.java
++++ b/org.spearce.jgit/src/org/spearce/jgit/treewalk/WorkingTreeIterator.java
+@@ -258,8 +258,7 @@ private void parseEntry() {
+ 		mode = e.getMode().getBits();
+ 
+ 		final int nameLen = e.encodedNameLen;
+-		while (pathOffset + nameLen > path.length)
+-			growPath(pathOffset);
++		ensurePathCapacity(pathOffset + nameLen, pathOffset);
+ 		System.arraycopy(e.encodedName, 0, path, pathOffset, nameLen);
+ 		pathLen = pathOffset + nameLen;
  	}
- 
- 	/** @return the file mode of the current entry as bits */
--	public int getEntryFileModeBits() {
-+	public int getEntryRawMode() {
- 		return mode;
- 	}
- 
- 
 -- 
-Shawn.
+1.6.3.3.420.gd4b46
