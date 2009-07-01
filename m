@@ -1,77 +1,105 @@
-From: Paolo Bonzini <bonzini@gnu.org>
-Subject: Re: [PATCH] git status -q (similar to subversion)
-Date: Wed, 01 Jul 2009 10:37:37 +0200
-Message-ID: <4A4B2051.7020606@gnu.org>
-References: <Pine.LNX.4.64.0906272248570.11453@cube> <20090628185218.GB8634@sigio.peff.net> <20090628210117.GA7821@old.homeip.net> <20090630053304.GB29643@sigio.peff.net> <20090630151442.GA20688@old.homeip.net> <20090630153347.GA3547@sigio.peff.net>
+From: Michal Marek <mmarek@suse.cz>
+Subject: Re: [PATCH] request-pull: do not paginate output of git commands
+Date: Wed, 1 Jul 2009 11:40:30 +0200
+Message-ID: <20090701094029.GA22508@sepie.suse.cz>
+References: <1246361606-20457-1-git-send-email-mmarek@suse.cz> <7vtz1x7f05.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Martin Renold <martinxyz@gmx.ch>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Jul 01 10:37:54 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jul 01 11:40:41 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MLvKA-0000vM-L3
-	for gcvg-git-2@gmane.org; Wed, 01 Jul 2009 10:37:51 +0200
+	id 1MLwIy-0007n3-1Q
+	for gcvg-git-2@gmane.org; Wed, 01 Jul 2009 11:40:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753138AbZGAIhl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 1 Jul 2009 04:37:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753132AbZGAIhk
-	(ORCPT <rfc822;git-outgoing>); Wed, 1 Jul 2009 04:37:40 -0400
-Received: from mail-ew0-f210.google.com ([209.85.219.210]:53879 "EHLO
-	mail-ew0-f210.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753055AbZGAIhj (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 1 Jul 2009 04:37:39 -0400
-Received: by ewy6 with SMTP id 6so904404ewy.37
-        for <git@vger.kernel.org>; Wed, 01 Jul 2009 01:37:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:sender:message-id:date:from
-         :user-agent:mime-version:newsgroups:to:cc:subject:references
-         :in-reply-to:content-type:content-transfer-encoding;
-        bh=ury1UIWAwZtr/XF9ep6uNOsCS28M7RbhkTl65hqOKr0=;
-        b=qWGxJaAQU3M1nz530cT8XvweOl05LfTrtvJ6y2tPi/bv/7Qc5zt3MbxQdtaYLJ3tcL
-         Oge6114Dz0daNAtR+ExMLEOqOoPD8nrh3cvcUCEFtaR64oq9PWbqGs349lHpiH0RC3ic
-         0Yk8XTWl7sq1uffJx8iCLWKZ52NxrsyooOI0s=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=sender:message-id:date:from:user-agent:mime-version:newsgroups:to
-         :cc:subject:references:in-reply-to:content-type
-         :content-transfer-encoding;
-        b=sMqF0wDXzRDHpap04Etia8sDIn/Z9KtKeCMDpqDGNrk7likJbH8caxnMpFdYI13edd
-         5zt7YPUQ3/NhfH2ifiNdidIaUo/hri9Qh3JwCgUg3W7USykBqWjwbjGTfMS0+EOLXlyb
-         L6CCDkHsH2yeXT/LCHWMN6vBLBcijcmcCnYc0=
-Received: by 10.210.63.18 with SMTP id l18mr1375572eba.71.1246437461632;
-        Wed, 01 Jul 2009 01:37:41 -0700 (PDT)
-Received: from yakj.usersys.redhat.com (nat-pool-brq.redhat.com [62.40.79.66])
-        by mx.google.com with ESMTPS id 7sm2421892eyg.47.2009.07.01.01.37.39
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 01 Jul 2009 01:37:39 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1b3pre) Gecko/20090513 Fedora/3.0-2.3.beta2.fc11 Lightning/1.0pre Thunderbird/3.0b2
-Newsgroups: gmane.comp.version-control.git
-In-Reply-To: <20090630153347.GA3547@sigio.peff.net>
+	id S1753844AbZGAJk3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 1 Jul 2009 05:40:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753193AbZGAJk2
+	(ORCPT <rfc822;git-outgoing>); Wed, 1 Jul 2009 05:40:28 -0400
+Received: from cantor2.suse.de ([195.135.220.15]:41442 "EHLO mx2.suse.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752815AbZGAJk1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 1 Jul 2009 05:40:27 -0400
+Received: from relay2.suse.de (mail2.suse.de [195.135.221.8])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by mx2.suse.de (Postfix) with ESMTP id 928B68726A;
+	Wed,  1 Jul 2009 11:40:30 +0200 (CEST)
+Received: by sepie.suse.cz (Postfix, from userid 10020)
+	id 241547664A; Wed,  1 Jul 2009 11:40:30 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <7vtz1x7f05.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.17 (2007-11-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122576>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122577>
 
+On Tue, Jun 30, 2009 at 11:28:26AM -0700, Junio C Hamano wrote:
+> Looking at ff06c74 (Improve request-pull to handle non-rebased branches,
+> 2007-05-01), it introduced these specifically to address the issue you are
+> bringing up, but it is ineffective.
+> 
+> I'd suggest to replace your patch with the attached instead.
+> 
+> ---
+> 
+>  git-request-pull.sh |    4 ++--
+>  1 files changed, 2 insertions(+), 2 deletions(-)
+> 
+> diff --git a/git-request-pull.sh b/git-request-pull.sh
+> index a2cf5b8..f86d8fd 100755
+> --- a/git-request-pull.sh
+> +++ b/git-request-pull.sh
+> @@ -42,8 +42,8 @@ if [ -z "$branch" ]; then
+>  	status=1
+>  fi
+>  
+> -PAGER=
+> -export PAGER
+> +GIT_PAGER=cat
+> +export GIT_PAGER
 
-> There has been much discussion about an alternate command that would be
-> more like "svn status", and even some partial implementations. But it
-> needs somebody who really cares about the feature to step up and
-> complete it.
+Good idea, but for completeness, it should be set before this command:
+    git log --max-count=1 --pretty='format:warn:   %h: %s' $headrev >&2
+(which should use tformat to get the newline right). So what about this
+one?
 
-An alias
+---
 
-         changes=diff --name-status -r
-
-already does almost the same function as "svn status -q".  If you wanted 
-full svn status with untracked files you could use this:
-
-	changes = "!sh -c 'git status | sed -n 
-\"/Untracked/N;//N;1,//d;s/^#/?/p\"; git diff --name-status -r \"$@\"' -"
-
-Paolo
+diff --git a/git-request-pull.sh b/git-request-pull.sh
+index ab2dd10..5917773 100755
+--- a/git-request-pull.sh
++++ b/git-request-pull.sh
+@@ -12,6 +12,9 @@ OPTIONS_SPEC=
+ . git-sh-setup
+ . git-parse-remote
+ 
++GIT_PAGER=
++export GIT_PAGER
++
+ base=$1
+ url=$2
+ head=${3-HEAD}
+@@ -34,7 +37,7 @@ branch=$(git ls-remote "$url" \
+ 	}")
+ if [ -z "$branch" ]; then
+ 	echo "warn: No branch of $url is at:" >&2
+-	git log --max-count=1 --pretty='format:warn:   %h: %s' $headrev >&2
++	git log --max-count=1 --pretty='tformat:warn:   %h: %s' $headrev >&2
+ 	echo "warn: Are you sure you pushed $head there?" >&2
+ 	echo >&2
+ 	echo >&2
+@@ -42,8 +45,6 @@ if [ -z "$branch" ]; then
+ 	status=1
+ fi
+ 
+-GIT_PAGER=
+-export GIT_PAGER
+ echo "The following changes since commit $baserev:"
+ git shortlog --max-count=1 $baserev | sed -e 's/^\(.\)/  \1/'
+ 
