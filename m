@@ -1,78 +1,74 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Bug report: .gitattributes: -diff Unset causes files to be
-	reported as binaries
-Date: Thu, 2 Jul 2009 01:35:34 -0400
-Message-ID: <20090702053534.GA13255@sigio.peff.net>
-References: <200907011208.35397.fenglich@fastmail.fm>
+From: Stephen Boyd <bebarino@gmail.com>
+Subject: Re: [PATCH] completion: __git_config_get_set_variables() handle values
+ with spaces
+Date: Wed, 01 Jul 2009 23:04:07 -0700
+Message-ID: <4A4C4DD7.7030801@gmail.com>
+References: <1246338518-9030-1-git-send-email-bebarino@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Frans Englich <fenglich@fastmail.fm>
-X-From: git-owner@vger.kernel.org Thu Jul 02 07:35:45 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jul 02 08:05:12 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MMExU-0002t4-LH
-	for gcvg-git-2@gmane.org; Thu, 02 Jul 2009 07:35:45 +0200
+	id 1MMFPz-0003P1-3N
+	for gcvg-git-2@gmane.org; Thu, 02 Jul 2009 08:05:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755981AbZGBFdk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 2 Jul 2009 01:33:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755958AbZGBFdk
-	(ORCPT <rfc822;git-outgoing>); Thu, 2 Jul 2009 01:33:40 -0400
-Received: from peff.net ([208.65.91.99]:56704 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755981AbZGBFdj (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 2 Jul 2009 01:33:39 -0400
-Received: (qmail 13265 invoked by uid 1000); 2 Jul 2009 05:35:34 -0000
-Content-Disposition: inline
-In-Reply-To: <200907011208.35397.fenglich@fastmail.fm>
+	id S1753118AbZGBGEa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 2 Jul 2009 02:04:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751838AbZGBGEa
+	(ORCPT <rfc822;git-outgoing>); Thu, 2 Jul 2009 02:04:30 -0400
+Received: from mail-px0-f190.google.com ([209.85.216.190]:37341 "EHLO
+	mail-px0-f190.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752893AbZGBGE3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 Jul 2009 02:04:29 -0400
+Received: by pxi28 with SMTP id 28so1313575pxi.33
+        for <git@vger.kernel.org>; Wed, 01 Jul 2009 23:04:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from
+         :user-agent:mime-version:to:cc:subject:references:in-reply-to
+         :x-enigmail-version:content-type:content-transfer-encoding;
+        bh=zyPGaCchr1Oa37sRkaPjMnsGZmHkgFH+hVWXFXd4xx4=;
+        b=fy3OFBf8CJ9G0wVtJoCx4nm/bugrVcORmOBBeEKYBn5eqR59Inpj+iFppf5Qa4gDpv
+         i0UBSD7jbf29fDQ0+lBN+56Qv0TVNYeLaeWALAkvY6G0slKDmCKaGaTwF6jaUA93agy+
+         iKcjxyBwRFfUE7XNJQBUfc9fF+b6KbrqnRBaQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:x-enigmail-version:content-type
+         :content-transfer-encoding;
+        b=D739zec11vn0gpkMWFxl32KCoyFRkOV5jIC2ai1tTJ5lHC3Zl7oJ2QHr1TWgHdAwpx
+         3Ud3Hv2HDViDR0WmUH4hFroW0/dtqLR1hJqK5NRAVBgZA2woLvdEyHO7z4AEnpdbvV/R
+         s9B/tfrNsU+kXv2qzU9DcjTe1nj1zRH7rI8do=
+Received: by 10.114.24.6 with SMTP id 6mr16562471wax.79.1246514650107;
+        Wed, 01 Jul 2009 23:04:10 -0700 (PDT)
+Received: from ?10.10.0.2? (cpe-66-75-25-79.san.res.rr.com [66.75.25.79])
+        by mx.google.com with ESMTPS id l28sm3509521waf.54.2009.07.01.23.04.08
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 01 Jul 2009 23:04:08 -0700 (PDT)
+User-Agent: Thunderbird 2.0.0.22 (X11/20090629)
+In-Reply-To: <1246338518-9030-1-git-send-email-bebarino@gmail.com>
+X-Enigmail-Version: 0.95.7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122621>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122622>
 
-On Wed, Jul 01, 2009 at 12:08:35PM +0200, Frans Englich wrote:
+Stephen Boyd wrote:
+> For example
+>
+>  $ cat .git/config
+>    format.cc = Junio C Hamano <gitster@pobox.com>
+>   
 
-> Applying -diff Unset to a file using .gittattributes causes "git diff"
-> to state that the file is a binary even though it isn't, or have been
-> instructed to be treated as one. See attached script for reproducing.
+Sorry this is inaccurate. Something more like
+$ cat .git/config
+[format]
+        cc = Junio C Hamano <gitster@pobox.com>
 
-I think you are a little confused by the syntax. Each line of the
-gitattributes file has a filename pattern and a set of attributes. Each
-attribute is either set, unset, set to a value, or unspecified. For your
-example (file.txt and the "diff" attribute), they look like:
-
-  Set:
-    file.txt diff
-  Unset:
-    file.txt -diff
-  Set to a value:
-    file.txt diff=foo
-  Unspecified:
-    file.txt
-
-So the word "Unset" is unnecessary in "-diff Unset" (and syntactically
-means "set the attribute named "Unset", not any sort of modifier on the
-diff attribute). This is described in the first section of "git help
-attributes".
-
-All of that being said, your example does end up, in fact, making the
-diff attribute "unset" for you (because it uses "-diff"). And the effect
-of doing so is to mark the file as binary (i.e., not to be diffed). From
-"git help attributes", section "Generating diff text":
-
-  The attribute `diff` affects how 'git' generates diffs for particular
-  files. It can tell git whether to generate a textual patch for the
-  path or to treat the path as a binary file.
-  [...]
-  Unset
-      A path to which the diff attribute is unset will generate Binary
-      files differ.
-
-So as far as I can see, git is behaving exactly as it is supposed to.
-Maybe you can be more specific about what effect you were trying to
-achieve by setting gitattributes in the first place?
-
--Peff
+would be correct, but I think you got the point.
