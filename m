@@ -1,78 +1,94 @@
-From: Frans Englich <fenglich@fastmail.fm>
-Subject: Re: Bug report: .gitattributes: -diff Unset causes files to be reported as binaries
-Date: Thu, 2 Jul 2009 10:14:06 +0200
-Message-ID: <200907021014.06540.fenglich@fastmail.fm>
-References: <200907011208.35397.fenglich@fastmail.fm> <20090702053534.GA13255@sigio.peff.net>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: git+http:// proof-of-concept (not using CONNECT)
+Date: Thu, 2 Jul 2009 01:54:40 -0700
+Message-ID: <20090702085440.GC11119@dcvr.yhbt.net>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Jul 02 10:21:53 2009
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jul 02 10:54:52 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MMHYG-00087W-8v
-	for gcvg-git-2@gmane.org; Thu, 02 Jul 2009 10:21:52 +0200
+	id 1MMI4B-0003qR-Sg
+	for gcvg-git-2@gmane.org; Thu, 02 Jul 2009 10:54:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752837AbZGBIVj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 2 Jul 2009 04:21:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752542AbZGBIVj
-	(ORCPT <rfc822;git-outgoing>); Thu, 2 Jul 2009 04:21:39 -0400
-Received: from out2.smtp.messagingengine.com ([66.111.4.26]:37619 "EHLO
-	out2.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752482AbZGBIVh (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 2 Jul 2009 04:21:37 -0400
-Received: from compute1.internal (compute1.internal [10.202.2.41])
-	by out1.messagingengine.com (Postfix) with ESMTP id 71F0D389374;
-	Thu,  2 Jul 2009 04:10:50 -0400 (EDT)
-Received: from heartbeat2.messagingengine.com ([10.202.2.161])
-  by compute1.internal (MEProxy); Thu, 02 Jul 2009 04:10:50 -0400
-X-Sasl-enc: zo/vuhlOzMqnsQM8T/O+fFtyEeOxWXWlIFCnSfDd2mIR 1246522245
-Received: from localhost (unknown [62.70.27.104])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id CD5121D69;
-	Thu,  2 Jul 2009 04:10:45 -0400 (EDT)
-User-Agent: KMail/1.9.10
-In-Reply-To: <20090702053534.GA13255@sigio.peff.net>
+	id S1751090AbZGBIyl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 2 Jul 2009 04:54:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750770AbZGBIyk
+	(ORCPT <rfc822;git-outgoing>); Thu, 2 Jul 2009 04:54:40 -0400
+Received: from dcvr.yhbt.net ([64.71.152.64]:34573 "EHLO dcvr.yhbt.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750702AbZGBIyj (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 Jul 2009 04:54:39 -0400
+Received: from localhost (user-118bg3p.cable.mindspring.com [66.133.192.121])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by dcvr.yhbt.net (Postfix) with ESMTPSA id 19EF41F78F;
+	Thu,  2 Jul 2009 08:54:42 +0000 (UTC)
 Content-Disposition: inline
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122629>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122630>
 
-On Thursday 02 July 2009 07:35:34 Jeff King wrote:
-> On Wed, Jul 01, 2009 at 12:08:35PM +0200, Frans Englich wrote:
-> > Applying -diff Unset to a file using .gittattributes causes "git diff"
-> > to state that the file is a binary even though it isn't, or have been
-> > instructed to be treated as one. See attached script for reproducing.
->
-> I think you are a little confused by the syntax. Each line of the
-> gitattributes file has a filename pattern and a set of attributes. Each
-> attribute is either set, unset, set to a value, or unspecified. For your
-> example (file.txt and the "diff" attribute), they look like:
+I've been toying around with an HTTP server for various things over the
+past few months and a few weeks ago I came up with the idea of tunneling
+arbitrary stream protocols over HTTP with "Transfer-Encoding: chunked"
+bodies on both ends.  This allowed me to tunnel the git:// protocol
+among other things over something that may conform to RFC 2616.
 
-Perhaps that should be considered another bug; that invalid syntax is 
-accepted, instead of being communicated to the user.
+To facilitate this, curl needed only one minor modification (now in
+their CVS repository) to make stdin with "-T-" non-blocking:
 
-[...]
-> So as far as I can see, git is behaving exactly as it is supposed to.
-> Maybe you can be more specific about what effect you were trying to
-> achieve by setting gitattributes in the first place?
+  http://cool.haxx.se/cvs.cgi/curl/src/main.c.diff?r1=1.520&r2=1.521
 
-To exclude it in diffs, such as from `git show`. Take the case where you have 
-a grammar file for a parser and generate a source file from it(or any similar 
-scenario); the diff for the generated source file is not of interest and is 
-just noisy when read as part of a patch. This applies to all kinds of 
-generated files. However, this doesn't mean that the file should be treated 
-as a binary, and what practicalities that implies.
+Since git clone already supports proxy commands via GIT_PROXY_COMMAND, I
+just created a one line shell script to use as GIT_PROXY_COMMAND.  No
+modifications were needed to git itself on either end:
 
-If -diff affects whether a file is treated as a binary, as opposed whether 
-it's diff'ed, it would imo make sense to call it -binary.
+cat > /path/to/script <<\EOF
+#!/bin/sh
+exec curl --no-buffer -sSfT- http://$1:$2/
+EOF
+
+chmod +x /path/to/script
+GIT_PROXY_COMMAND=/path/to/script
+export GIT_PROXY_COMMAND
+
+# Then, to test it on a small project on my server:
+git clone git://git.bogomips.org:8080/pcu
+
+# Of course, a larger project like git should work, too:
+git clone git://git.bogomips.org:8080/mirrors/git
+
+Hopefully it doesn't blow up or die on you, this is only lightly
+tested.  Let me know if you manage to break it permanently.
 
 
-Cheers,
+The origin server I'm running for this is the latest release of
+Unicorn[2], which supports sending a chunked HTTP response as it is
+receiving a chunked request.  Unicorn just dechunks the request and
+pipes it to git-daemon.  When git-daemon writes to stdout, Unicorn just
+grabs the output and chunks it (via Rack[3] middleware) for the client.
 
-		Frans
+
+This doesn't work in the face of most HTTP-aware proxies[1], so it
+probably doesn't help those who have trouble accessing git:// servers in
+the first place...  However, this could potentially be useful in places
+where a proxy providing CONNECT is not available.
+
+
+[1] - I run nginx on port 80 on bogomips.org and nginx (attempts to)
+fully buffer all requests before proxying it to the backend, so it
+definitely won't fly here.  HTTP proxies are perfectly alright with
+taking chunked requests/responses and remove chunking on them (or
+vice versa).
+
+[2] - http://unicorn.bogomips.org/
+[3] - http://rack.rubyforge.org/
+
+-- 
+Eric Wong
