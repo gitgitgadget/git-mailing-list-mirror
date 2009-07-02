@@ -1,113 +1,85 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/2] git apply: option to ignore whitespace differences
-Date: Thu, 02 Jul 2009 09:46:45 -0700
-Message-ID: <7vws6r822y.fsf@alter.siamese.dyndns.org>
-References: <1246539137-24754-1-git-send-email-giuseppe.bilotta@gmail.com>
-	<1246539137-24754-2-git-send-email-giuseppe.bilotta@gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: Bug report: .gitattributes: -diff Unset causes files to be
+	reported as binaries
+Date: Thu, 2 Jul 2009 13:04:59 -0400
+Message-ID: <20090702170459.GA15802@sigio.peff.net>
+References: <200907011208.35397.fenglich@fastmail.fm> <20090702053534.GA13255@sigio.peff.net> <200907021014.06540.fenglich@fastmail.fm>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Robert Fitzsimons <robfitz@273k.net>
-To: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jul 02 18:46:55 2009
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Frans Englich <fenglich@fastmail.fm>
+X-From: git-owner@vger.kernel.org Thu Jul 02 19:03:18 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MMPR1-0003Zy-61
-	for gcvg-git-2@gmane.org; Thu, 02 Jul 2009 18:46:55 +0200
+	id 1MMPgs-0002DR-BO
+	for gcvg-git-2@gmane.org; Thu, 02 Jul 2009 19:03:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752217AbZGBQqp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 2 Jul 2009 12:46:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751735AbZGBQqo
-	(ORCPT <rfc822;git-outgoing>); Thu, 2 Jul 2009 12:46:44 -0400
-Received: from fed1rmmtao101.cox.net ([68.230.241.45]:36861 "EHLO
-	fed1rmmtao101.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750848AbZGBQqn (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 2 Jul 2009 12:46:43 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao101.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20090702164647.NPKS17670.fed1rmmtao101.cox.net@fed1rmimpo01.cox.net>;
-          Thu, 2 Jul 2009 12:46:47 -0400
-Received: from localhost ([68.225.240.211])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id B4mm1c0074aMwMQ034mmJr; Thu, 02 Jul 2009 12:46:46 -0400
-X-VR-Score: -100.00
-X-Authority-Analysis: v=1.0 c=1 a=RzdjjvD8XIkA:10 a=fh7huV5zw2NYd11lWa0A:9
- a=KkkIflc6Kk7UmLLI6NYA:7 a=2EBdGLB2__-xDeM_XlLrdsflce4A:4
- a=qpU7hWoNisHR5kKx:21 a=s3RJLVacHdnkOZyR:21
-X-CM-Score: 0.00
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+	id S1751716AbZGBRDI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 2 Jul 2009 13:03:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751117AbZGBRDG
+	(ORCPT <rfc822;git-outgoing>); Thu, 2 Jul 2009 13:03:06 -0400
+Received: from peff.net ([208.65.91.99]:45156 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751094AbZGBRDF (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 Jul 2009 13:03:05 -0400
+Received: (qmail 15812 invoked by uid 1000); 2 Jul 2009 17:04:59 -0000
+Content-Disposition: inline
+In-Reply-To: <200907021014.06540.fenglich@fastmail.fm>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122653>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122654>
 
-> diff --git a/builtin-apply.c b/builtin-apply.c
-> index dc0ff5e..86860d6 100644
-> --- a/builtin-apply.c
-> +++ b/builtin-apply.c
-> @@ -39,6 +39,7 @@ static int diffstat;
->  static int numstat;
->  static int summary;
->  static int check;
-> +static int ignore_whitespace = 0;
+On Thu, Jul 02, 2009 at 10:14:06AM +0200, Frans Englich wrote:
 
-s/ = 0//;
+> > I think you are a little confused by the syntax. Each line of the
+> > gitattributes file has a filename pattern and a set of attributes. Each
+> > attribute is either set, unset, set to a value, or unspecified. For your
+> > example (file.txt and the "diff" attribute), they look like:
+> 
+> Perhaps that should be considered another bug; that invalid syntax is 
+> accepted, instead of being communicated to the user.
 
-> +/*
-> + * Compare two memory areas ignoring whitespace differences
-> + */
-> +static int memcmp_ignore_whitespace(const char *s1, const char *s2, size_t n)
-> +{
+It's not invalid syntax; it just doesn't do what you thought it did. And
+even though it is _semantically_ useless to git, it is a feature of
+gitattributes (and the git config) to allow unknown keys, so that they
+can be used by other programs and scripts built on top of git.
 
-Don't you think this function signature is bogus?
+> > So as far as I can see, git is behaving exactly as it is supposed to.
+> > Maybe you can be more specific about what effect you were trying to
+> > achieve by setting gitattributes in the first place?
+> 
+> To exclude it in diffs, such as from `git show`. Take the case where
+> you have a grammar file for a parser and generate a source file from
+> it(or any similar scenario); the diff for the generated source file is
+> not of interest and is just noisy when read as part of a patch. This
+> applies to all kinds of generated files. However, this doesn't mean
+> that the file should be treated as a binary, and what practicalities
+> that implies.
 
-You are going to use this function to compare a line that is in the target
-buffer (i.e. the contents of the current blob) with a line read from the
-patch context when the user says they might match if you ignore whitespace
-differences.
+The usual workflow is not to check in generated files at all. You can
+mark them with '.gitignore' to make sure they are not actually added.
 
-How on earth can you do that with only a single length parameter "n"?
-Length of which side are you talking about?
+However, I can imagine a case where your workflow required checking in
+generated files (because, e.g., the tools to generate them were
+difficult to use or not available to all developers), but most of the
+time seeing their diffs is just clutter. So the instruction you want to
+give to git is "when diffing these, generate nothing". And that is:
 
-Remember that git-apply is designed to be able to handle a patch that has
-NUL in it (generated with "diff --text"), so strlen() is not an acceptable
-answer.
+  $ echo file.txt diff=invisible >>.gitattributes
+  $ git config diff.invisible.command /bin/true
 
-> +static int memcmp_switch(const char *s1, const char *s2, size_t n)
-> +{
-> +	if (ignore_whitespace)
-> +		return memcmp_ignore_whitespace(s1, s2, n);
-> +	else
-> +		return memcmp(s1, s2, n);
-> +}
-> +
+Or even some other custom script of your choosing that might show a more
+condensed diff.
 
-This function signature shares the same bogosity with the previous one.
+> If -diff affects whether a file is treated as a binary, as opposed
+> whether it's diff'ed, it would imo make sense to call it -binary.
 
-In addition, it's name and semantics is bogus.
+I'm not sure I agree, but even if I did, it is far too late to change
+the semantics of the "diff" and "binary" attributes; you would be
+breaking the existing setup of many other users.
 
-The original implementation had encapsulated the notion that it is
-comparing two lines entirely in match_fragment().  Its use of memcmp() was
-an implementation detail of a half of the open-coded logic to compare two
-lines (the other half being the comparison of lengths), and direct use of
-memcmp() made perfect sense.  It checked the length matched.  Now it
-wanted to make sure they matched byte-for-byte.
-
-If you are separating that "compare two lines" logic into a helper
-function, I would expect its name actually reflect its purpose, whose
-behaviour may change depending on --ignore-whitespace.  The traditional
-codepath would say "do they have the same length and match byte-for-byte?"
-while the new loosened codepath would say "we do not care about the
-whitespaces; do they match if we disregard ws differences?"
-
-I also suspect that you might be able to optimize the existing "allow
-whitespace-fixed match" a bit by "fix"ing the target buffer only once,
-instead of doing so line-by-line for every offset that find_pos() checks
-by calling match_fragment().  It is an independent issue, but it appears
-to me that the change this patch wants to do to match_fragment() might
-become cleaner if we did that conversion first, as match_fragment() itself
-won't have to have two cases (early return for exact match, and match with
-whitespace-fixed target).
+-Peff
