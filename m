@@ -1,70 +1,116 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: Parallell Development / Switching to GIT
-Date: Thu, 02 Jul 2009 13:55:12 +0200
-Message-ID: <4A4CA020.5020108@viscovery.net>
-References: <loom.20090625T095000-90@post.gmane.org> <4A434D6F.2090105@op5.se> <B81058949321C8439B9D742F5F8D8FCA01A75C1D@hpserver.intranet.local> <20090628184714.GA8634@sigio.peff.net> <B81058949321C8439B9D742F5F8D8FCA01A75C33@hpserver.intranet.local> <4A487CCD.1040406@op5.se> <B81058949321C8439B9D742F5F8D8FCA01A75CFA@hpserver.intranet.local> <4A4C51B7.7010000@viscovery.net> <B81058949321C8439B9D742F5F8D8FCA01A75D15@hpserver.intranet.local>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: Bug report: .gitattributes: -diff Unset causes files to be reported as binaries
+Date: Thu, 02 Jul 2009 04:59:04 -0700 (PDT)
+Message-ID: <m34otvwb24.fsf@localhost.localdomain>
+References: <200907011208.35397.fenglich@fastmail.fm>
+	<20090702053534.GA13255@sigio.peff.net>
+	<200907021014.06540.fenglich@fastmail.fm>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Andreas Ericsson <ae@op5.se>, Jeff King <peff@peff.net>,
-	git@vger.kernel.org, David Aguilar <davvid@gmail.com>
-To: "Patrick Neuner - Futureweb.at" <neuner@futureweb.at>
-X-From: git-owner@vger.kernel.org Thu Jul 02 13:55:56 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
+To: Frans Englich <fenglich@fastmail.fm>
+X-From: git-owner@vger.kernel.org Thu Jul 02 13:59:16 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MMKtQ-0007Dr-1t
-	for gcvg-git-2@gmane.org; Thu, 02 Jul 2009 13:55:56 +0200
+	id 1MMKwd-00006s-CU
+	for gcvg-git-2@gmane.org; Thu, 02 Jul 2009 13:59:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751053AbZGBLzW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 2 Jul 2009 07:55:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752768AbZGBLzW
-	(ORCPT <rfc822;git-outgoing>); Thu, 2 Jul 2009 07:55:22 -0400
-Received: from lilzmailso01.liwest.at ([212.33.55.23]:64008 "EHLO
-	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751053AbZGBLzU (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 2 Jul 2009 07:55:20 -0400
-Received: from cpe228-254.liwest.at ([81.10.228.254] helo=linz.eudaptics.com)
-	by lilzmailso01.liwest.at with esmtpa (Exim 4.69)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1MMKsi-0005Ru-FG; Thu, 02 Jul 2009 13:55:19 +0200
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.96])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id 2885D4E4; Thu,  2 Jul 2009 13:55:12 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.21 (Windows/20090302)
-In-Reply-To: <B81058949321C8439B9D742F5F8D8FCA01A75D15@hpserver.intranet.local>
-X-Enigmail-Version: 0.95.5
-X-Spam-Score: -1.4 (-)
+	id S1751806AbZGBL7F (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 2 Jul 2009 07:59:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751802AbZGBL7F
+	(ORCPT <rfc822;git-outgoing>); Thu, 2 Jul 2009 07:59:05 -0400
+Received: from mail-fx0-f218.google.com ([209.85.220.218]:43238 "EHLO
+	mail-fx0-f218.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751359AbZGBL7D (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 Jul 2009 07:59:03 -0400
+Received: by fxm18 with SMTP id 18so1431716fxm.37
+        for <git@vger.kernel.org>; Thu, 02 Jul 2009 04:59:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:received
+         :x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        bh=OJbhwRfF2s484c8n5aoBjjdC8SGK0vkeDZATRtUJ4OQ=;
+        b=m1cd7RqUlSl6iCmfGGs0IVsc1IjJHKm/cQJwc4NU6LQ0Sze+ZQXBoWLmHlshjLS37J
+         96L06bhlf3AJkF9sAVVJqsYi73amxTjXHZyRfBOnVmsEdyfCrv4BjqNl9hjp0kiTKicK
+         qugpSpJvvvuzSzJnHu7MoLlZ8JE4C45bsiWaA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        b=cSgjhj22doNs+Tu73f8YWFlOYEaSxEmgtlsUKotIYkvR1cQihd1/sKOSmb7NQt8bfh
+         3aSyWIN0XLvLf0nATvOsm9o3OPHTaMdvTgLsOcuIcAmmTTp7oQoIXNlYdnBtj8Wnabsz
+         XgFcv5FmdJLeUDwe6bW9QuTeb7q+zUQ2B4Z14=
+Received: by 10.103.213.19 with SMTP id p19mr3614697muq.135.1246535945526;
+        Thu, 02 Jul 2009 04:59:05 -0700 (PDT)
+Received: from localhost.localdomain (abwc128.neoplus.adsl.tpnet.pl [83.8.226.128])
+        by mx.google.com with ESMTPS id u26sm9086333mug.22.2009.07.02.04.59.04
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Thu, 02 Jul 2009 04:59:04 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id n62Bx2Sx029939;
+	Thu, 2 Jul 2009 13:59:02 +0200
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id n62BwxgT029935;
+	Thu, 2 Jul 2009 13:58:59 +0200
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <200907021014.06540.fenglich@fastmail.fm>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122637>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122638>
 
-Please don't top-post on this list.
+Frans Englich <fenglich@fastmail.fm> writes:
+> On Thursday 02 July 2009 07:35:34 Jeff King wrote:
+> > On Wed, Jul 01, 2009 at 12:08:35PM +0200, Frans Englich wrote:
 
-Patrick Neuner - Futureweb.at schrieb:
->> You cannot have refs/heads/dev and refs/heads/dev/featureA at the same
->> time, just like you cannot have a file and a directory with the same
->> name
->> at the same time. In fact, the refs "database" is implemented as
->> physical
->> files on the file system.
+> > > Applying -diff Unset to a file using .gittattributes causes "git diff"
+> > > to state that the file is a binary even though it isn't, or have been
+> > > instructed to be treated as one. See attached script for reproducing.
+> >
+> > I think you are a little confused by the syntax. Each line of the
+> > gitattributes file has a filename pattern and a set of attributes. Each
+> > attribute is either set, unset, set to a value, or unspecified. For your
+> > example (file.txt and the "diff" attribute), they look like:
 > 
-> ok, I see, well then this howto (at the end of page) seems to be misleading. 
-> http://www.kernel.org/pub/software/scm/git/docs/howto/update-hook-example.txt
-> as it actually works with the update hook, but not with git itself. 
+> Perhaps that should be considered another bug; that invalid syntax is 
+> accepted, instead of being communicated to the user.
 
-Are you refering to the example line such as
+This is not a bug, this is a feature.  
 
-        refs/heads/bw/.*	linus
+You can add extra attributes which are unknown to Git (like "Unset"),
+just like you can add config variables in $GIT_DIR/config file which
+are unknown to Git, to be used by some wrapper, tool or porcelain.  An
+example for unknown config variables is e.g. stgit.sender or
+stgit.editor (for StGIT patch management interface).
+ 
+> [...]
+> > So as far as I can see, git is behaving exactly as it is supposed to.
+> > Maybe you can be more specific about what effect you were trying to
+> > achieve by setting gitattributes in the first place?
+> 
+> To exclude it in diffs, such as from `git show`. Take the case where
+> you have a grammar file for a parser and generate a source file from
+> it(or any similar scenario); the diff for the generated source file
+> is not of interest and is just noisy when read as part of a
+> patch. This applies to all kinds of generated files. However, this
+> doesn't mean that the file should be treated as a binary, and what
+> practicalities that implies.
+> 
+> If -diff affects whether a file is treated as a binary, as opposed
+> whether it's diff'ed, it would imo make sense to call it -binary.
 
+Actually there exists already "binary" gitattribute, or to be more
+exact "binary" built-in attribute macro.  "binary" means "-diff -crlf",
+as you can see at the bottom of gitattributes(5) manpage.
 
-? Of course, you can have refs/heads/dev/featureA in your repository (and
-the shortened branch name would obviously be "dev/featureA"), but then you
-cannot have a branch named "dev", i.e. refs/heads/dev.
+The message "Binary files differ" is taken from GNU diff, I think.
 
-I don't see how the cited document would be misleading in this regard.
-
--- Hannes
+-- 
+Jakub Narebski
+Poland
+ShadeHawk on #git
