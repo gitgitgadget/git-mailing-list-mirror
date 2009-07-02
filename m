@@ -1,125 +1,80 @@
 From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: git-svn seems confused about current HEAD
-Date: Thu, 2 Jul 2009 00:54:38 -0700
-Message-ID: <20090702075438.GA11119@dcvr.yhbt.net>
-References: <auto-000019790488@sci.utah.edu>
+Subject: Re: git svn's performance on cloning mono's branches/tags...
+Date: Thu, 2 Jul 2009 01:16:15 -0700
+Message-ID: <20090702081615.GB11119@dcvr.yhbt.net>
+References: <3ace41890906251739r45b3eae9oe1b7e32886defc0f@mail.gmail.com> <4A445959.6090403@op5.se> <3ace41890906260259o3be005fq6be9d0e2c3f9af66@mail.gmail.com> <4A44A9A9.6030008@op5.se> <3ace41890906260644t3eddb2d2sb4ddbcb6499801@mail.gmail.com> <3ace41890906261817y523c9321xd621fb3130941d91@mail.gmail.com> <3ace41890906272008t96bfb04q7218e95055897900@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: tfogal@sci.utah.edu
-X-From: git-owner@vger.kernel.org Thu Jul 02 09:56:31 2009
+Cc: Andreas Ericsson <ae@op5.se>, git@vger.kernel.org
+To: Hin-Tak Leung <hintak.leung@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jul 02 10:16:29 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MMH87-00037f-GB
-	for gcvg-git-2@gmane.org; Thu, 02 Jul 2009 09:54:52 +0200
+	id 1MMHT2-0005zw-IM
+	for gcvg-git-2@gmane.org; Thu, 02 Jul 2009 10:16:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752056AbZGBHyj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 2 Jul 2009 03:54:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751988AbZGBHyi
-	(ORCPT <rfc822;git-outgoing>); Thu, 2 Jul 2009 03:54:38 -0400
-Received: from dcvr.yhbt.net ([64.71.152.64]:45128 "EHLO dcvr.yhbt.net"
+	id S1751059AbZGBIQP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 2 Jul 2009 04:16:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751046AbZGBIQP
+	(ORCPT <rfc822;git-outgoing>); Thu, 2 Jul 2009 04:16:15 -0400
+Received: from dcvr.yhbt.net ([64.71.152.64]:54862 "EHLO dcvr.yhbt.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751622AbZGBHyi (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 2 Jul 2009 03:54:38 -0400
+	id S1750849AbZGBIQN (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 Jul 2009 04:16:13 -0400
 Received: from localhost (user-118bg3p.cable.mindspring.com [66.133.192.121])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by dcvr.yhbt.net (Postfix) with ESMTPSA id 046D01F78F;
-	Thu,  2 Jul 2009 07:54:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTPSA id B5F471F78F;
+	Thu,  2 Jul 2009 08:16:16 +0000 (UTC)
 Content-Disposition: inline
-In-Reply-To: <auto-000019790488@sci.utah.edu>
+In-Reply-To: <3ace41890906272008t96bfb04q7218e95055897900@mail.gmail.com>
 User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122627>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122628>
 
-tom fogal <tfogal@alumni.unh.edu> wrote:
-> I've got a repository that git-svn won't grab the most recent commits
-> for:
+Hin-Tak Leung <hintak.leung@gmail.com> wrote:
+> On Sat, Jun 27, 2009 at 2:17 AM, Hin-Tak Leung<hintak.leung@gmail.com> wrote:
 > 
->   tf@shigeru tuvok ~/sw/bin/git svn find-rev HEAD
->   1164
->   tf@shigeru tuvok ~/sw/bin/git svn fetch
->   tf@shigeru tuvok ~/sw/bin/git --version
->   git version 1.6.3.3
+> > the tags, branches, url entries are effectively the same, I think - so
+> > the main difference is using trunk instead of fetch.
+> > Why does it make any difference? The example at the bottom of
+> > git-svn's man page uses the trunk notation. Maybe it should be
+> > changed?
 > 
-> The repository is actually at revision 1184.  It's browsable online:
-> 
->   https://gforge.sci.utah.edu/gf/project/Tuvok/scmsvn/
-> 
-> and publicly clonable:
-> 
->   https://gforge.sci.utah.edu/svn/Tuvok
-> 
-> Interestingly, 1165 is also a commit which contains a string which
-> is not representable in 8bit ASCII in the commit log.  This is very
-> likely to be the only such commit in the repository's history.  After
-> cloning, setting i18n.commitencoding and i18n.logoutputencoding to
-> ISO-8859-1 and then trying another `git svn fetch' does not seem to
-> have any effect.
+> To answer my question - I think the man page should be updated.
 
-Wow, "svn log" seems to croak on 1165, too.  How did you manage that?  I
-guess SVN servers don't check for UTF-8 validity at all in the
-commits...
+Somebody actually fixed it a while back:
 
-I would get your SVN administrator to propedit the r1165 log entry
-so people can see it in the future.  Basically git svn relies
-on the library version of "svn log", so if "svn log" fails, then
-git svn usually has no chance of getting those revisions.
+commit 0e5e69a355b7bdd1af6ca33ac7ee35299bda368e
+Author: Wesley J. Landaker <wjl@icecavern.net>
+Date:   Wed Apr 1 16:05:01 2009 -0600
 
-> Revisions 1166-1169 actually correspond to some commits I did to split
-> a particular directory of that repository into another repository, and
-> then add an svn:external for it.  I did that via an svn checkout.
-> 
-> This is actually a `secondary' clone.  In the clone I use to do daily
-> work, I have somehow magically convinced my git repository that commits
-> 116[56] do not exist.  A contiguous snippet from `git log':
-> 
->   commit 351dedb982af09e170b17001340208af46b197b5
->   Author: tfogal <tfogal@c36c8488-0289-0348-9b64-b301f74bd9a7>
->   Date:   Sat Jun 6 20:42:11 2009 +0000
-> 
->       Use external `scio' repository.
-> 
->       git-svn-id: https://gforge.sci.utah.edu/svn/Tuvok@1167
->   c36c8488-0289-0348-9b64-b301f74bd9a7
-> 
->   commit 401493d9175ebdb3c62d6524c701944f208aba94
->   Author: tfogal <tfogal@c36c8488-0289-0348-9b64-b301f74bd9a7>
->   Date:   Fri Jun 5 22:54:48 2009 +0000
-> 
->       no newline at EOF issue.
-> 
->       git-svn-id: https://gforge.sci.utah.edu/svn/Tuvok@1164
->   c36c8488-0289-0348-9b64-b301f74bd9a7
-> 
-> I have no idea how I managed to do that, but it seems to have done
-> the trick; I haven't noticed any issues with that clone, and I've
-> apparently been working with it for a couple weeks now.
+    Documentation: git-svn: fix trunk/fetch svn-remote key typo
 
-I think one of your clones worked for you because 1166 was the latest
-revision for you when you ran "git svn fetch", so the next time you ran
-"git svn fetch" it would've started exactly at 1166.
 
-> Is there a known workaround for this issue (or, how did I manage to
-> `ignore' those commits in my initial repo)?
+As far as performance goes, SVN's flexibility of tagging and having
+multiple subprojects interacts quite badly with git svn's --stdlayout
+behavior.
 
-Here's what I did when the initial clone got stuck at 1164:
+With --stdoulayout, git svn supports tags/branches that are directly
+descended from the top-level of trunk:
 
-# kill the revmap, it caches the max revision to start scanning
-# (if you're using using noMetadata you'll need to use dd or a
-# a hex editor and delete the last 24 bytes instead.
-$ rm .git/svn/git-svn/.rev_map.c36c8488-0289-0348-9b64-b301f74bd9a7
+	svn cp $root/trunk $root/tags/0.1.0
 
-# Instead of attempting to scan starting at 1164, start at 1166 instead
-$ git svn fetch -r1166:HEAD
+However, it looks like mono does things like this:
 
-I was stuck on this problem for a while, too... 1165 seems
-unrepresentable at the moment because of the log message.
+	svn cp $root/trunk/mono $root/tags/mono-0.1.0
+
+And when git svn sees that $root/tags/mono-0.1.0's parent is
+$root/trunk/mono and not $root/trunk (which it's actually following),
+it will try to fetch the complete history of $root/trunk/mono
+($root/trunk may not contain all the history $root/trunk/mono contained,
+either).
 
 -- 
 Eric Wong
