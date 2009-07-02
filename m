@@ -1,80 +1,78 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: git svn's performance on cloning mono's branches/tags...
-Date: Thu, 2 Jul 2009 01:16:15 -0700
-Message-ID: <20090702081615.GB11119@dcvr.yhbt.net>
-References: <3ace41890906251739r45b3eae9oe1b7e32886defc0f@mail.gmail.com> <4A445959.6090403@op5.se> <3ace41890906260259o3be005fq6be9d0e2c3f9af66@mail.gmail.com> <4A44A9A9.6030008@op5.se> <3ace41890906260644t3eddb2d2sb4ddbcb6499801@mail.gmail.com> <3ace41890906261817y523c9321xd621fb3130941d91@mail.gmail.com> <3ace41890906272008t96bfb04q7218e95055897900@mail.gmail.com>
+From: Frans Englich <fenglich@fastmail.fm>
+Subject: Re: Bug report: .gitattributes: -diff Unset causes files to be reported as binaries
+Date: Thu, 2 Jul 2009 10:14:06 +0200
+Message-ID: <200907021014.06540.fenglich@fastmail.fm>
+References: <200907011208.35397.fenglich@fastmail.fm> <20090702053534.GA13255@sigio.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Andreas Ericsson <ae@op5.se>, git@vger.kernel.org
-To: Hin-Tak Leung <hintak.leung@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jul 02 10:16:29 2009
+Content-Type: text/plain;
+  charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Jul 02 10:21:53 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MMHT2-0005zw-IM
-	for gcvg-git-2@gmane.org; Thu, 02 Jul 2009 10:16:29 +0200
+	id 1MMHYG-00087W-8v
+	for gcvg-git-2@gmane.org; Thu, 02 Jul 2009 10:21:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751059AbZGBIQP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 2 Jul 2009 04:16:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751046AbZGBIQP
-	(ORCPT <rfc822;git-outgoing>); Thu, 2 Jul 2009 04:16:15 -0400
-Received: from dcvr.yhbt.net ([64.71.152.64]:54862 "EHLO dcvr.yhbt.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750849AbZGBIQN (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 2 Jul 2009 04:16:13 -0400
-Received: from localhost (user-118bg3p.cable.mindspring.com [66.133.192.121])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by dcvr.yhbt.net (Postfix) with ESMTPSA id B5F471F78F;
-	Thu,  2 Jul 2009 08:16:16 +0000 (UTC)
+	id S1752837AbZGBIVj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 2 Jul 2009 04:21:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752542AbZGBIVj
+	(ORCPT <rfc822;git-outgoing>); Thu, 2 Jul 2009 04:21:39 -0400
+Received: from out2.smtp.messagingengine.com ([66.111.4.26]:37619 "EHLO
+	out2.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752482AbZGBIVh (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 2 Jul 2009 04:21:37 -0400
+Received: from compute1.internal (compute1.internal [10.202.2.41])
+	by out1.messagingengine.com (Postfix) with ESMTP id 71F0D389374;
+	Thu,  2 Jul 2009 04:10:50 -0400 (EDT)
+Received: from heartbeat2.messagingengine.com ([10.202.2.161])
+  by compute1.internal (MEProxy); Thu, 02 Jul 2009 04:10:50 -0400
+X-Sasl-enc: zo/vuhlOzMqnsQM8T/O+fFtyEeOxWXWlIFCnSfDd2mIR 1246522245
+Received: from localhost (unknown [62.70.27.104])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id CD5121D69;
+	Thu,  2 Jul 2009 04:10:45 -0400 (EDT)
+User-Agent: KMail/1.9.10
+In-Reply-To: <20090702053534.GA13255@sigio.peff.net>
 Content-Disposition: inline
-In-Reply-To: <3ace41890906272008t96bfb04q7218e95055897900@mail.gmail.com>
-User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122628>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122629>
 
-Hin-Tak Leung <hintak.leung@gmail.com> wrote:
-> On Sat, Jun 27, 2009 at 2:17 AM, Hin-Tak Leung<hintak.leung@gmail.com> wrote:
-> 
-> > the tags, branches, url entries are effectively the same, I think - so
-> > the main difference is using trunk instead of fetch.
-> > Why does it make any difference? The example at the bottom of
-> > git-svn's man page uses the trunk notation. Maybe it should be
-> > changed?
-> 
-> To answer my question - I think the man page should be updated.
+On Thursday 02 July 2009 07:35:34 Jeff King wrote:
+> On Wed, Jul 01, 2009 at 12:08:35PM +0200, Frans Englich wrote:
+> > Applying -diff Unset to a file using .gittattributes causes "git diff"
+> > to state that the file is a binary even though it isn't, or have been
+> > instructed to be treated as one. See attached script for reproducing.
+>
+> I think you are a little confused by the syntax. Each line of the
+> gitattributes file has a filename pattern and a set of attributes. Each
+> attribute is either set, unset, set to a value, or unspecified. For your
+> example (file.txt and the "diff" attribute), they look like:
 
-Somebody actually fixed it a while back:
+Perhaps that should be considered another bug; that invalid syntax is 
+accepted, instead of being communicated to the user.
 
-commit 0e5e69a355b7bdd1af6ca33ac7ee35299bda368e
-Author: Wesley J. Landaker <wjl@icecavern.net>
-Date:   Wed Apr 1 16:05:01 2009 -0600
+[...]
+> So as far as I can see, git is behaving exactly as it is supposed to.
+> Maybe you can be more specific about what effect you were trying to
+> achieve by setting gitattributes in the first place?
 
-    Documentation: git-svn: fix trunk/fetch svn-remote key typo
+To exclude it in diffs, such as from `git show`. Take the case where you have 
+a grammar file for a parser and generate a source file from it(or any similar 
+scenario); the diff for the generated source file is not of interest and is 
+just noisy when read as part of a patch. This applies to all kinds of 
+generated files. However, this doesn't mean that the file should be treated 
+as a binary, and what practicalities that implies.
+
+If -diff affects whether a file is treated as a binary, as opposed whether 
+it's diff'ed, it would imo make sense to call it -binary.
 
 
-As far as performance goes, SVN's flexibility of tagging and having
-multiple subprojects interacts quite badly with git svn's --stdlayout
-behavior.
+Cheers,
 
-With --stdoulayout, git svn supports tags/branches that are directly
-descended from the top-level of trunk:
-
-	svn cp $root/trunk $root/tags/0.1.0
-
-However, it looks like mono does things like this:
-
-	svn cp $root/trunk/mono $root/tags/mono-0.1.0
-
-And when git svn sees that $root/tags/mono-0.1.0's parent is
-$root/trunk/mono and not $root/trunk (which it's actually following),
-it will try to fetch the complete history of $root/trunk/mono
-($root/trunk may not contain all the history $root/trunk/mono contained,
-either).
-
--- 
-Eric Wong
+		Frans
