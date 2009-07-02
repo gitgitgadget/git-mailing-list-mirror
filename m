@@ -1,116 +1,146 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Bug report: .gitattributes: -diff Unset causes files to be reported as binaries
-Date: Thu, 02 Jul 2009 04:59:04 -0700 (PDT)
-Message-ID: <m34otvwb24.fsf@localhost.localdomain>
-References: <200907011208.35397.fenglich@fastmail.fm>
-	<20090702053534.GA13255@sigio.peff.net>
-	<200907021014.06540.fenglich@fastmail.fm>
+From: Nick Woolley <nickwoolley@yahoo.co.uk>
+Subject: Re: CVS <--> GIT workflow...
+Date: Thu, 02 Jul 2009 13:01:27 +0100
+Message-ID: <4A4CA197.5050202@yahoo.co.uk>
+References: <ac3d41850907011132q8e19b37ofa10813258a97555@mail.gmail.com>	 <m3d48kw4uz.fsf@localhost.localdomain> <ac3d41850907011425x966483awe1757e24417d9da4@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
-To: Frans Englich <fenglich@fastmail.fm>
-X-From: git-owner@vger.kernel.org Thu Jul 02 13:59:16 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
+To: David Chanters <david.chanters@googlemail.com>
+X-From: git-owner@vger.kernel.org Thu Jul 02 14:01:47 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MMKwd-00006s-CU
-	for gcvg-git-2@gmane.org; Thu, 02 Jul 2009 13:59:15 +0200
+	id 1MMKz4-00013e-RW
+	for gcvg-git-2@gmane.org; Thu, 02 Jul 2009 14:01:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751806AbZGBL7F (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 2 Jul 2009 07:59:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751802AbZGBL7F
-	(ORCPT <rfc822;git-outgoing>); Thu, 2 Jul 2009 07:59:05 -0400
-Received: from mail-fx0-f218.google.com ([209.85.220.218]:43238 "EHLO
-	mail-fx0-f218.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751359AbZGBL7D (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 2 Jul 2009 07:59:03 -0400
-Received: by fxm18 with SMTP id 18so1431716fxm.37
-        for <git@vger.kernel.org>; Thu, 02 Jul 2009 04:59:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received
-         :x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        bh=OJbhwRfF2s484c8n5aoBjjdC8SGK0vkeDZATRtUJ4OQ=;
-        b=m1cd7RqUlSl6iCmfGGs0IVsc1IjJHKm/cQJwc4NU6LQ0Sze+ZQXBoWLmHlshjLS37J
-         96L06bhlf3AJkF9sAVVJqsYi73amxTjXHZyRfBOnVmsEdyfCrv4BjqNl9hjp0kiTKicK
-         qugpSpJvvvuzSzJnHu7MoLlZ8JE4C45bsiWaA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        b=cSgjhj22doNs+Tu73f8YWFlOYEaSxEmgtlsUKotIYkvR1cQihd1/sKOSmb7NQt8bfh
-         3aSyWIN0XLvLf0nATvOsm9o3OPHTaMdvTgLsOcuIcAmmTTp7oQoIXNlYdnBtj8Wnabsz
-         XgFcv5FmdJLeUDwe6bW9QuTeb7q+zUQ2B4Z14=
-Received: by 10.103.213.19 with SMTP id p19mr3614697muq.135.1246535945526;
-        Thu, 02 Jul 2009 04:59:05 -0700 (PDT)
-Received: from localhost.localdomain (abwc128.neoplus.adsl.tpnet.pl [83.8.226.128])
-        by mx.google.com with ESMTPS id u26sm9086333mug.22.2009.07.02.04.59.04
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 02 Jul 2009 04:59:04 -0700 (PDT)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id n62Bx2Sx029939;
-	Thu, 2 Jul 2009 13:59:02 +0200
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id n62BwxgT029935;
-	Thu, 2 Jul 2009 13:58:59 +0200
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <200907021014.06540.fenglich@fastmail.fm>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+	id S1754308AbZGBMBL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 2 Jul 2009 08:01:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754417AbZGBMBK
+	(ORCPT <rfc822;git-outgoing>); Thu, 2 Jul 2009 08:01:10 -0400
+Received: from udon.noodlefactory.co.uk ([80.68.88.167]:51936 "EHLO
+	udon.noodlefactory.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754403AbZGBMBJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 Jul 2009 08:01:09 -0400
+Received: from 87-194-154-6.bethere.co.uk ([87.194.154.6] helo=[192.168.0.100])
+	by udon.noodlefactory.co.uk with esmtpsa (TLS-1.0:DHE_RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.63)
+	(envelope-from <nickwoolley@yahoo.co.uk>)
+	id 1MMKyU-0004Et-FO; Thu, 02 Jul 2009 13:01:10 +0100
+User-Agent: Thunderbird 2.0.0.22 (X11/20090608)
+In-Reply-To: <ac3d41850907011425x966483awe1757e24417d9da4@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122638>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122639>
 
-Frans Englich <fenglich@fastmail.fm> writes:
-> On Thursday 02 July 2009 07:35:34 Jeff King wrote:
-> > On Wed, Jul 01, 2009 at 12:08:35PM +0200, Frans Englich wrote:
+Hi,
 
-> > > Applying -diff Unset to a file using .gittattributes causes "git diff"
-> > > to state that the file is a binary even though it isn't, or have been
-> > > instructed to be treated as one. See attached script for reproducing.
-> >
-> > I think you are a little confused by the syntax. Each line of the
-> > gitattributes file has a filename pattern and a set of attributes. Each
-> > attribute is either set, unset, set to a value, or unspecified. For your
-> > example (file.txt and the "diff" attribute), they look like:
+David Chanters wrote:
+> So what would I do?  Something like this:
 > 
-> Perhaps that should be considered another bug; that invalid syntax is 
-> accepted, instead of being communicated to the user.
-
-This is not a bug, this is a feature.  
-
-You can add extra attributes which are unknown to Git (like "Unset"),
-just like you can add config variables in $GIT_DIR/config file which
-are unknown to Git, to be used by some wrapper, tool or porcelain.  An
-example for unknown config variables is e.g. stgit.sender or
-stgit.editor (for StGIT patch management interface).
- 
-> [...]
-> > So as far as I can see, git is behaving exactly as it is supposed to.
-> > Maybe you can be more specific about what effect you were trying to
-> > achieve by setting gitattributes in the first place?
+> 1.  Use git-cvsimport to "convert" a snapshot of the current CVS
+> project to something Git can understand.
+> 2.  Checkout this git project via git clone in the usual way.
+> 3,  Hack away in this Git clone.
+> 4.  Use git-cvsexportcommit to extract commits?
 > 
-> To exclude it in diffs, such as from `git show`. Take the case where
-> you have a grammar file for a parser and generate a source file from
-> it(or any similar scenario); the diff for the generated source file
-> is not of interest and is just noisy when read as part of a
-> patch. This applies to all kinds of generated files. However, this
-> doesn't mean that the file should be treated as a binary, and what
-> practicalities that implies.
-> 
-> If -diff affects whether a file is treated as a binary, as opposed
-> whether it's diff'ed, it would imo make sense to call it -binary.
 
-Actually there exists already "binary" gitattribute, or to be more
-exact "binary" built-in attribute macro.  "binary" means "-diff -crlf",
-as you can see at the bottom of gitattributes(5) manpage.
+I don't think step 2 is needed, since git-cvsimport imports into a local .git
+repository that you can work with directly.  A read-only copy of all the
+imported CVS commits go into the git repository, within a "remote" whose name
+you need to specify with git-cvsimport's -r parameter.  I normally use "-r cvs
+-o cvshead", which will import CVS's HEAD onto remotes/cvs/cvshead and BRANCHX
+onto remotes/cvs/BRANCHX.
 
-The message "Binary files differ" is taken from GNU diff, I think.
+> What about my workflow within the Git repository?  I assume that
+> "Master" would be the branch I would want to merge *to* if I have
+> local topic brances I wish to have in to CVS, and then the commits on
+> Master would be something git-cvsexportcommit would look at?
+>
+> Indeed, it seems git-cvsexportcommit is somewhat "manual" -- is there
+> no way of automating that to say something like:  "Take all commits on
+> branch $FOO in Git, which aren't in CVS, and apply them?"   I might be
+> missing some understanding here.
 
--- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+Yes, git-cvsexportcommit has to be told explicitly which commits to export.  It
+will only check that they seem to be sane, in that they will apply cleanly.
+
+Currently I presume everyone has to roll their own solution to this.  In my
+case, with the absence of any available prior art, I wrote a wrapper script, in
+an attempt to simplify the process to 'git-cvs push' and 'git-cvs pull'.  See my
+earlier post to this list:
+
+ http://article.gmane.org/gmane.comp.version-control.git/120351
+
+This works for me for basic day-to-day interaction with my CVS repository, which
+has over a year's work in it, although there are times when I still need to
+manually intervene.
+
+If you do try it I'd be interested hear how  well it works, especially if it
+means I can improve it. Currently it doesn't have a lot of documentation besides
+what's in the script itself,  but if I could be encouraged to write more if
+asked nicely.
+
+
+
+Note, you probably also want a step 5 before cycling back to step 3: use
+git-cvsimport to incrementally import your exported commits back into git.  If
+this succeeds, git-cvsimport will also merge the remote CVS branch with your
+local one - like this, where c' and d' are the re-imported copies of commits c
+and d which come via CVS:
+
+ a-b----c'-d'    <- e.g. remotes/cvs/cvshead
+    \       \
+     c-d-----e-  <- e.g. master
+
+I find that merge loops in the history like this make it hard to get the list of
+exports to commit next time.
+
+i.e. After adding some more commits to master:
+
+ a-b----c'-d'      <- remotes/cvs/cvshead
+    \       \
+     c-d-----e-f-g <- master
+
+Then you want to commit f and g.  But:
+
+  git rev-list master..remotes/cvs/cvshead
+
+Will return c, d, e, f, g.  So instead I typically add this to step 5:
+
+  git reset --hard remotes/cvs/cvshead
+
+Which discards c, d and e, leaving:
+
+ a-b-c'-d'      <- remotes/cvs/cvshead and master
+
+Then you have a clean linear history and future commits to export.  My script
+doesn't do this for you, currently, since in the case where there have been
+multiple branches merged in before commit e, you might prune away those branches
+as well as the duplicate commits on the working branch (i.e. c and d).
+
+(I've just been avoiding this situation rather than fixing it, partly because
+I'd not found a better way yet, despite fiddling with various invocations of
+git-rebase. So I'd be particularly interested if anyone can suggest one.)
+
+In theory c' and d' should be identical to c and d - although if you haven't set
+up an author map for git-cvsimport, you may find that your commits come back
+with the username you use in CVS, which may differ from that in git.
+
+In this case, you need to have supplied the -A parameter to git-cvsimport in step 1.
+
+
+
+Finally, whatever you use, you'll probably want the latest release of git, since
+it has a bug fix for git-cvsexportcommit.  See:
+
+  http://article.gmane.org/gmane.comp.version-control.git/120241
+
+
+Cheers,
+
+N
