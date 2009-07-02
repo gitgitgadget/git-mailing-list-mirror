@@ -1,92 +1,68 @@
-From: Bill Purcell <flyeng4@gmail.com>
-Subject: git-daemon not responding
-Date: Thu, 2 Jul 2009 09:29:43 -0500
-Message-ID: <20090702142942.GA6694@william-laptop>
-References: <20090702133417.GD7158@william-laptop> <20090702135542.GE7158@william-laptop>
+From: Tim Harper <timcharper@gmail.com>
+Subject: Git Submodule hooks someone else may find of use
+Date: Thu, 2 Jul 2009 09:20:18 -0600
+Message-ID: <e1a5e9a00907020820i34fb3127r90f29d06619fe64e@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jul 02 16:35:30 2009
+X-From: git-owner@vger.kernel.org Thu Jul 02 17:21:00 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MMNNo-0008BI-JR
-	for gcvg-git-2@gmane.org; Thu, 02 Jul 2009 16:35:29 +0200
+	id 1MMO5j-0003M0-J2
+	for gcvg-git-2@gmane.org; Thu, 02 Jul 2009 17:20:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753334AbZGBOfS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 2 Jul 2009 10:35:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753217AbZGBOfS
-	(ORCPT <rfc822;git-outgoing>); Thu, 2 Jul 2009 10:35:18 -0400
-Received: from mail-ew0-f215.google.com ([209.85.219.215]:52037 "EHLO
-	mail-ew0-f215.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751418AbZGBOfG (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 2 Jul 2009 10:35:06 -0400
-X-Greylist: delayed 312 seconds by postgrey-1.27 at vger.kernel.org; Thu, 02 Jul 2009 10:35:05 EDT
-Received: by ewy11 with SMTP id 11so194077ewy.37
-        for <git@vger.kernel.org>; Thu, 02 Jul 2009 07:35:08 -0700 (PDT)
+	id S1751171AbZGBPUi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 2 Jul 2009 11:20:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751957AbZGBPUh
+	(ORCPT <rfc822;git-outgoing>); Thu, 2 Jul 2009 11:20:37 -0400
+Received: from mail-fx0-f218.google.com ([209.85.220.218]:52585 "EHLO
+	mail-fx0-f218.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751145AbZGBPUg (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 Jul 2009 11:20:36 -0400
+Received: by fxm18 with SMTP id 18so1567677fxm.37
+        for <git@vger.kernel.org>; Thu, 02 Jul 2009 08:20:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=RCqrLH2GRwQuinULuEeRIujQoTe4x+hX9ftdkKb2T94=;
-        b=orp4wYJVPkEndjFOymFDqkTOfv1A9NhYM82ZrkVB3KG3p3BZK3pb3tfOT8q4+UtZvg
-         qu6M86D+ij5xPgj3uownBikkTQzB+D4/miVDeyMjaNz/qKVs+lyMGV4QyNN1Gt1ejen6
-         57r6sY+On84eoVy1tFCXmdj1ScZP1lPvwHqKE=
+        h=domainkey-signature:mime-version:received:from:date:message-id
+         :subject:to:content-type:content-transfer-encoding;
+        bh=JepjEfem/YRE4o6b2KRVXw3fAmuDraWE0q17QG7sYrM=;
+        b=dLnUiH0YdBU9CQ2Lf1RgDHu+goJ+K8vFcVNYAZmX6QJ7jo7pKo7Q9YYsC9tBd1Q/4b
+         V0p1Zo7LL/ICB0I/Sbm+VEI13CjEcdnFYI5kBldzRkrgw6vSykk0G6N/8RzwYPltnNd1
+         9bm/A+hlLXp3gXpx6yhWSWbS272WVWA2DVgNM=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=nr6lC7S7lau2h7bloc96cL9SjVE98OjL2RT0zPvEDl0RUiG/VbvTR8INZLf3+azT2g
-         ZZQtdrLPDAU/1MYupuu4Idq3nJOlHGmtdqCzr1gBlrCd9QT41PAmBjAaFx1CWuDR+/p4
-         WUPlcTeYmrqVUqiDJhOqpdnwp7UWtZldUp1lM=
-Received: by 10.216.52.76 with SMTP id d54mr31496wec.119.1246544995661;
-        Thu, 02 Jul 2009 07:29:55 -0700 (PDT)
-Received: from localhost (static-209-107-234-220.consolidated.net [209.107.234.220])
-        by mx.google.com with ESMTPS id i34sm5850714gve.13.2009.07.02.07.29.54
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 02 Jul 2009 07:29:55 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <20090702135542.GE7158@william-laptop>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+        h=mime-version:from:date:message-id:subject:to:content-type
+         :content-transfer-encoding;
+        b=wbT3cTO3TQHaMqXqJG8VySv/lb9dYkKgyoRYoKYFWx5j6Qt45GvVnCF5U7FhaMBlKz
+         99rrsQbx2k5TYLeNnOcTKiipMXgdpMGEK5mpx9MnmChN7Tac1CKtXJv7OlO1AMQpGmsx
+         jh9FIPoQM6nykp++aHspzAIllXDciv57H4Rd0=
+Received: by 10.239.175.131 with SMTP id n3mr14397hbf.82.1246548038136; Thu, 
+	02 Jul 2009 08:20:38 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122650>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122651>
 
-On Thu, Jul 02, 2009 at 08:55:42AM -0500, Bill Purcell wrote:
-I started git-daemon with
- 
-sudo -u git git-daemon --reuseaddr --verbose --base-path=/home/git/repositories/ --detach
+A while ago I started a thread discussing my desires to have
+submodules automatically update when I switch branches or pull.  This
+I desired to occur only if my submodule revision conformed with the
+pointer recorded in the superproject's previous HEAD.  In other words,
+if my submodule showed as "modified", and I switch branches, I would
+desire that this "modified" state persist exactly the same way an
+uncommitted change would.
 
-[08:26:38]william ~$ grep 9418 /etc/services 
-git             9418/tcp                        # Git Version Control System
- 
-[08:30:38]william /home/git$ ls
-total 8.0K
-drwxrwxrwx 2 git git 4.0K 2009-07-01 01:05 gitosis
-drwxrwxrwx 5 git git 4.0K 2009-07-01 22:00 repositories
- 
-[08:30:39]william /home/git$ ls repositories/
-total 12K
-drwxr-xr-x 8 git git 4.0K 2009-07-01 21:57 fedha.git
-drwxrwxrwx 8 git git 4.0K 2009-07-01 01:05 gitosis-admin.git
-drwxr-xr-x 8 git git 4.0K 2009-07-01 22:00 montco.git
+I've created a local git hook to support this behavior.  If it
+interests you, you may find it here, under
+'git-post-checkout-submodules'.
 
-When I go to my local machine and try to clone I get this result ...
+http://github.com/timcharper/git-helpers/tree/master
 
-[08:31:16]william /tmp$ git clone git://whpiv.net/montco.git
-Initialized empty Git repository in /tmp/montco/.git/
+Installation instructions are found at the top of the script.
 
-With no response.  I have waited about five minutes and gave up.  Any
-recommendations on how to approach this.  How do I tell if git-daemon
-is working correctly? 
+Feedback welcome.
 
-I have opened port 9418 on my router and firewall.  So think I am reaching
-my server, I just don't know how to tell what git-daemon is telling
-git-clone or if they are even communicating at all.
-
--- 
-whp
+Tim
