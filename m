@@ -1,66 +1,72 @@
-From: Robert Stonehouse <rstonehouse@solarflare.com>
-Subject: Re: git bisect; is there a way to pick only from the children of
- a given commit
-Date: Thu, 02 Jul 2009 12:56:27 +0100
-Message-ID: <4A4CA06B.8090403@solarflare.com>
-References: <loom.20090701T170535-707@post.gmane.org> <BLU0-SMTP20683A1D7E5DEC1370D496AE2E0@phx.gbl>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
+From: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+Subject: [PATCH 0/2] git apply: cope with whitespace differences
+Date: Thu,  2 Jul 2009 14:52:15 +0200
+Message-ID: <1246539137-24754-1-git-send-email-giuseppe.bilotta@gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Robert Fitzsimons <robfitz@273k.net>,
+	Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jul 02 14:12:00 2009
+X-From: git-owner@vger.kernel.org Thu Jul 02 14:52:33 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MML8w-0005B9-I8
-	for gcvg-git-2@gmane.org; Thu, 02 Jul 2009 14:11:59 +0200
+	id 1MMLmC-00056H-Ld
+	for gcvg-git-2@gmane.org; Thu, 02 Jul 2009 14:52:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751736AbZGBMLm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 2 Jul 2009 08:11:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751370AbZGBMLl
-	(ORCPT <rfc822;git-outgoing>); Thu, 2 Jul 2009 08:11:41 -0400
-Received: from 216-237-3-220.orange.nextweb.net ([216.237.3.220]:36585 "EHLO
-	exchange.solarflare.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751225AbZGBMLl (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 2 Jul 2009 08:11:41 -0400
-X-Greylist: delayed 909 seconds by postgrey-1.27 at vger.kernel.org; Thu, 02 Jul 2009 08:11:41 EDT
-Received: from [10.17.20.41] ([10.17.20.41]) by exchange.solarflare.com over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
-	 Thu, 2 Jul 2009 04:56:34 -0700
-User-Agent: Thunderbird 2.0.0.21 (X11/20090320)
-In-Reply-To: <BLU0-SMTP20683A1D7E5DEC1370D496AE2E0@phx.gbl>
-X-OriginalArrivalTime: 02 Jul 2009 11:56:34.0722 (UTC) FILETIME=[25AFB020:01C9FB0C]
+	id S1752475AbZGBMwW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 2 Jul 2009 08:52:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752246AbZGBMwV
+	(ORCPT <rfc822;git-outgoing>); Thu, 2 Jul 2009 08:52:21 -0400
+Received: from fg-out-1718.google.com ([72.14.220.159]:14447 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751428AbZGBMwU (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 Jul 2009 08:52:20 -0400
+Received: by fg-out-1718.google.com with SMTP id e12so1106378fga.17
+        for <git@vger.kernel.org>; Thu, 02 Jul 2009 05:52:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer;
+        bh=RA/IzacxX/5u9KqQtIoaSPxh/OEAsPSgiSVOMAeqhiI=;
+        b=fWSsJ+gOOnxU2/1j2VLNRTYRhg95j4roHxb+4utsHWnlewQbinjnHrgGSZX0wEVBAZ
+         0d+5MVNXysep39eumsXeDiKUIyl62Lp5HMyFKtHlY8JhDtldDBml6ovfca/6fWq6qYou
+         RC9+x63mm2GoNusvICLksh29RQGnlVlFpdyx8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=SHQKfsOeZDyqiKaFiA2qjUJUhfhyV4KU6SiH2+5cq8Vkye4Ivk0wWG/kU4mbOLRtbD
+         hTpuYRK036gHYoPSVnmP9xg3Grf2MsgLcdM4COKL5cF/qKf4XVGKj0AbipLn6LXSh0Pu
+         0AVOo1XUZHSUMxAnFCa9aDn+ujyVeup4qj/xw=
+Received: by 10.86.65.18 with SMTP id n18mr171960fga.7.1246539142766;
+        Thu, 02 Jul 2009 05:52:22 -0700 (PDT)
+Received: from localhost (host-78-15-5-16.cust-adsl.tiscali.it [78.15.5.16])
+        by mx.google.com with ESMTPS id 4sm13806422fge.8.2009.07.02.05.52.21
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Thu, 02 Jul 2009 05:52:21 -0700 (PDT)
+X-Mailer: git-send-email 1.6.3.3.512.g1f6a.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122640>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122641>
 
-Sean Estabrooks wrote:
- > On Wed, 1 Jul 2009 17:12:16 +0000 (UTC)
- > Robert Stonehouse <rstonehouse@solarflare.com> wrote:
- >> I was surprised that git bisect was asking me to test commits on the 
-featureB
- >> branch. I couldn't test the build target that was broken on branch 
-featureB
- >> because it wasn't present in the code at that point.
- >
- > You can exclude the featureB branch by listing at good.  Git will 
-know there
- > is no need to test anything on that branch:
+A small patchset that allows git-apply (and thus git-am and git-rebase)
+to cope with whitespace differences that would otherwise generate a conflict.
 
-In my toy example it is easy to identify featureB branch as being 
-independent and marking it as good - but in a real repository it would 
-be much harder as they might be many more merges.
+The first patch is basically an update of Rober Fitzsimons' previous work
+http://permalink.gmane.org/gmane.comp.version-control.git/7876
+whereas the second one is entirely mine and makes the context lines
+match the original instead of the patched whitespace.
 
-I think if I changed my usage of git bisect good and bad to:
-   good => build completes
-           OR a revision that does not have the new build target
-   bad  => new build target fails
-then I think it will converge to the problem commit. So perhaps this was 
-just an issue of semantics
+Giuseppe Bilotta (2):
+  git apply: option to ignore whitespace differences
+  git apply: preserve original whitespace with --ignore-whitespace
 
-Thanks for your help
-
--- 
-Rob Stonehouse
+ builtin-apply.c                        |   83 ++++++++++++++++++++++++++++++--
+ contrib/completion/git-completion.bash |    2 +
+ git-am.sh                              |    3 +-
+ git-rebase.sh                          |    3 +
+ t/t4107-apply-ignore-whitespace.sh     |   74 ++++++++++++++++++++++++++++
+ 5 files changed, 159 insertions(+), 6 deletions(-)
+ create mode 100755 t/t4107-apply-ignore-whitespace.sh
