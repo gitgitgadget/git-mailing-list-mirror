@@ -1,151 +1,92 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCHv1bis 1/2] git apply: option to ignore whitespace  differences
-Date: Thu, 02 Jul 2009 16:55:55 -0700
-Message-ID: <7vhbxuzlkk.fsf@alter.siamese.dyndns.org>
-References: <1246556921-5819-1-git-send-email-giuseppe.bilotta@gmail.com>
-	<1246556921-5819-2-git-send-email-giuseppe.bilotta@gmail.com>
-	<7vvdmb6ium.fsf@alter.siamese.dyndns.org>
-	<cb7bb73a0907021202ra322425pc64b54953f4f544d@mail.gmail.com>
-	<cb7bb73a0907021228q7e9d2791vafead8e0c5b06b79@mail.gmail.com>
-	<7vhbxu6f87.fsf@alter.siamese.dyndns.org>
-	<cb7bb73a0907021333t6f377d61v1c1479c15b72c436@mail.gmail.com>
+Subject: Re: [RFC] Git User's Survey 2009 - second trial run, and question about announcing it
+Date: Thu, 02 Jul 2009 17:22:23 -0700
+Message-ID: <7v1voyzkcg.fsf@alter.siamese.dyndns.org>
+References: <200907030130.24417.jnareb@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Robert Fitzsimons <robfitz@273k.net>
-To: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jul 03 01:56:13 2009
+Cc: git@vger.kernel.org, Johan Herland <johan@herland.net>,
+	Peter Baumann <waste.manager@gmx.de>,
+	Felipe Contreras <felipe.contreras@gmail.com>,
+	Graham Perks <graham@kace.com>
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jul 03 02:22:52 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MMW8Q-0000bf-3B
-	for gcvg-git-2@gmane.org; Fri, 03 Jul 2009 01:56:10 +0200
+	id 1MMWYE-00086h-11
+	for gcvg-git-2@gmane.org; Fri, 03 Jul 2009 02:22:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756809AbZGBXzy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 2 Jul 2009 19:55:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755370AbZGBXzx
-	(ORCPT <rfc822;git-outgoing>); Thu, 2 Jul 2009 19:55:53 -0400
-Received: from fed1rmmtao107.cox.net ([68.230.241.39]:43838 "EHLO
-	fed1rmmtao107.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752521AbZGBXzx (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 2 Jul 2009 19:55:53 -0400
-Received: from fed1rmimpo03.cox.net ([70.169.32.75])
-          by fed1rmmtao107.cox.net
+	id S1755125AbZGCAWX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 2 Jul 2009 20:22:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753069AbZGCAWX
+	(ORCPT <rfc822;git-outgoing>); Thu, 2 Jul 2009 20:22:23 -0400
+Received: from fed1rmmtao102.cox.net ([68.230.241.44]:58412 "EHLO
+	fed1rmmtao102.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756214AbZGCAWU (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 Jul 2009 20:22:20 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao102.cox.net
           (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20090702235555.BFZM18948.fed1rmmtao107.cox.net@fed1rmimpo03.cox.net>;
-          Thu, 2 Jul 2009 19:55:55 -0400
+          id <20090703002223.SYZD20976.fed1rmmtao102.cox.net@fed1rmimpo02.cox.net>;
+          Thu, 2 Jul 2009 20:22:23 -0400
 Received: from localhost ([68.225.240.211])
-	by fed1rmimpo03.cox.net with bizsmtp
-	id BBvv1c00L4aMwMQ04BvvxF; Thu, 02 Jul 2009 19:55:55 -0400
-X-VR-Score: -100.00
-X-Authority-Analysis: v=1.0 c=1 a=SK8bdSSw-t4A:10 a=s9DunzN3-kS4Bjelyl0A:9
- a=v_V-SbdGULBg6NfK5ogA:7 a=KM1pRBaHkBxdIlGTvUhlBeCYxWEA:4 a=Xd8QDxADr6IA:10
- a=6J_nGldjey_7iN8l:21 a=aRyNp2xh8EJ_w2xl:21
+	by fed1rmimpo02.cox.net with bizsmtp
+	id BCNP1c0064aMwMQ04CNPf7; Thu, 02 Jul 2009 20:22:23 -0400
+X-VR-Score: -110.00
+X-Authority-Analysis: v=1.0 c=1 a=xSnGGwmRascA:10 a=pGLkceISAAAA:8
+ a=KrWt_d_5N1XpHNL9ahgA:9 a=g8p1FjySu8YjS2Q_VroA:7
+ a=lcpd8c25ypoyUofNF3hpfVeAcnQA:4 a=MSl-tDqOz04A:10
 X-CM-Score: 0.00
-In-Reply-To: <cb7bb73a0907021333t6f377d61v1c1479c15b72c436@mail.gmail.com> (Giuseppe Bilotta's message of "Thu\, 2 Jul 2009 22\:33\:10 +0200")
+In-Reply-To: <200907030130.24417.jnareb@gmail.com> (Jakub Narebski's message of "Fri\, 3 Jul 2009 01\:30\:22 +0200")
 User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122676>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122677>
 
-By the way, I think we need to make sure your understanding of how the
-current code works matches mine before you go any further.
+Jakub Narebski <jnareb@gmail.com> writes:
 
-Are the words "preimage", "postimage" and "target" used consistently
-between us?  By these words, I mean:
+> 8. How do/did you obtain Git (install and/or upgrade)?
+>     * binary package (includes automatic updates in usual situation)
+>     * source package or script
+>     * source tarball
+>     * pull from (main) repository
+>
+> Explanation: binary package covers pre-compiled binary (e.g. from rpm
+> or deb binary packages); source package covers things like deb-src and
+> SRPMS/src.rpm; source script is meant to cover installation in
+> source-based distributions, like 'emerge' in Gentoo, and it includes
+> automatic update in source-based Linux distributions.
+>
+> Note that this question is multiple choices question because one can
+> install Git in different ways on different machines or on different
+> operating systems.
 
-  preimage = the lines prefixed with '-' and ' ' in the patch
+Could we please have "None of the above" here ;-)?  Just kidding.
 
-  postimage = the lines prefixed with ' ' and '+' in the patch
+> 17. How often do you use the following forms of git commands
+>     or extra git tools? (continued)
+> ...
+> Note: git-subtree is managed out of tree, as a separate project (not
+> in git.git repository, not even in contrib/ area).
 
-  target = lines in the file being patched that corresponds to the preimage
+Is there a reason why this particular out-of-tree script was singled out,
+and no other goodies are listed?
 
-The point of patch application is to find a block of lines in the target
-that matches preimage, and replace that block with postimage.  When the
-patch applies cleanly (which is the case we should optimize for), the
-preimage match the target byte-for-byte.  The hunk starting at line 1690
-does a memcmp of the whole thing, without ws fuzz, for this reason.  You
-do not want to touch that part with your patch (and that is why I am
-writing this message to make sure you understand what you are doing).
+> 23. How do you compare current version with version from year ago?
+>     * better
+>     * no changes
+>     * worse
+>     * cannot say
 
-After that, as a fallback, we compare line-by-line, while fixing the
-whitespace breakage in the preimage (what the patch author based on) and
-the target (what we currently have).  The reason for the loop is because
-we are interested in two cases:
+Which version was that?  v1.5.6?  v1.6.0?  I think you would want to
+explicitly say v1.6.0 (mid Aug 2008), and it might even make sense to link
+to a list of changes since then (relnotes to 1.6.[123], at least, but
+perhaps more condensed).
 
- (1) The patch was made against an old code without recent whitespace fix
-     we already have.
-
- (2) The patch was made against a code with whitespace fix we do not have
-     yet.
-
-In either case, preimage and target won't match byte-for-byte, but by
-applying the whitespace breakage on each of the preimage line and the
-corresponding target line, they will match in either of the above cases.
-While doing this "convert-and-match", we prepare a version of preimage
-with whitespace breakage fixed to give to update_pre_post_images() at the
-end of the function in fixed_buf.
-
-The contents of fixed_buf is used to update the preimage and the postimage
-by calling update_pre_post_images().  This is to avoid reverting the
-whitespace fix we already had in the target when we are in situation (1).
-The postimage is what replaces the block of lines in the image that
-matched the preimage, so this step is essential.
-
-This is another point I am worried about your patch.  Suppose you have this
-target:
-
-    a a a
-    b b b
-    c c
-    d
-    e e
-
-And we have a broken patch that needs --ignore-whitespace to apply:
-
-    diff --git a/file b/file
-    index xxxxxx..yyyyyy 100644
-    @@ -1,4, +1,5 @@
-     a  a  a
-     b b  b
-    +q
-     c  c
-       d
-
-Your preimage is "a  a  a\nb b  b\nc  c\n  d\n",
-target is        "a a a\nb b b\nc c\nd\ne e\n",
-and postimage is "a  a  a\nb b  b\nq\nc  c\n  d\n".
-
-Wouldn't you want to have this as the result of patch application?
-
-    a a a
-    b b b
-    q
-    c c
-    d
-    e e
-
-With whitespace squashed, the preimage would match the target (perhaps
-after fixing line_matches()), but wsfix_copy() called while we fix each
-preimage line won't have changed anything in the fixed_buf that is to
-become the new preimage, and update_pre_post_images() while copying the
-fixed preimage to the postimage won't have corrected "a a a" back to "a a
-a" that was in the target as the result.
-
-So I suspect that you would instead end up with:
-
-    a  a  a
-    b b  b
-    c  c
-      d
-    e e
-
-I think the intent of --ignore-whitespace is "don't worry about ws
-differences in the context when locating where to make the change", and it
-is not "I do not care about getting whitespace mangled anywhere in the
-file the patch touches."  correct_ws_error is special in that we can
-afford to take the fixed pre/postimage, "because we are fixing the ws
-breakage anyway", but arguably it _might_ be nicer to limit the change to
-the lines marked with '-' and '+' in the patch even in that case.
+I see you dropped "How did you hear about git" from the questionaire.  It
+was a good way to spot which response was from Linus who answered "I wrote
+it" to the question ;-).
