@@ -1,92 +1,140 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC] Git User's Survey 2009 - second trial run, and question about announcing it
-Date: Thu, 02 Jul 2009 17:22:23 -0700
-Message-ID: <7v1voyzkcg.fsf@alter.siamese.dyndns.org>
-References: <200907030130.24417.jnareb@gmail.com>
+From: Sitaram Chamarty <sitaramc@gmail.com>
+Subject: Re: what's the current wisdom on git over NFS/CIFS?
+Date: Fri, 3 Jul 2009 06:22:01 +0530
+Message-ID: <2e24e5b90907021752t10243468sc07be88cd88ac5c1@mail.gmail.com>
+References: <slrnh4pcf8.484.sitaramc@sitaramc.homelinux.net>
+	 <alpine.LFD.2.01.0907021345440.3210@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Johan Herland <johan@herland.net>,
-	Peter Baumann <waste.manager@gmx.de>,
-	Felipe Contreras <felipe.contreras@gmail.com>,
-	Graham Perks <graham@kace.com>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jul 03 02:22:52 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Fri Jul 03 02:52:11 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MMWYE-00086h-11
-	for gcvg-git-2@gmane.org; Fri, 03 Jul 2009 02:22:50 +0200
+	id 1MMX0c-0002fj-OO
+	for gcvg-git-2@gmane.org; Fri, 03 Jul 2009 02:52:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755125AbZGCAWX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 2 Jul 2009 20:22:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753069AbZGCAWX
-	(ORCPT <rfc822;git-outgoing>); Thu, 2 Jul 2009 20:22:23 -0400
-Received: from fed1rmmtao102.cox.net ([68.230.241.44]:58412 "EHLO
-	fed1rmmtao102.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756214AbZGCAWU (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 2 Jul 2009 20:22:20 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao102.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20090703002223.SYZD20976.fed1rmmtao102.cox.net@fed1rmimpo02.cox.net>;
-          Thu, 2 Jul 2009 20:22:23 -0400
-Received: from localhost ([68.225.240.211])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id BCNP1c0064aMwMQ04CNPf7; Thu, 02 Jul 2009 20:22:23 -0400
-X-VR-Score: -110.00
-X-Authority-Analysis: v=1.0 c=1 a=xSnGGwmRascA:10 a=pGLkceISAAAA:8
- a=KrWt_d_5N1XpHNL9ahgA:9 a=g8p1FjySu8YjS2Q_VroA:7
- a=lcpd8c25ypoyUofNF3hpfVeAcnQA:4 a=MSl-tDqOz04A:10
-X-CM-Score: 0.00
-In-Reply-To: <200907030130.24417.jnareb@gmail.com> (Jakub Narebski's message of "Fri\, 3 Jul 2009 01\:30\:22 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+	id S1752814AbZGCAv7 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 2 Jul 2009 20:51:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751892AbZGCAv7
+	(ORCPT <rfc822;git-outgoing>); Thu, 2 Jul 2009 20:51:59 -0400
+Received: from mail-yx0-f188.google.com ([209.85.210.188]:53615 "EHLO
+	mail-yx0-f188.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751027AbZGCAv6 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 2 Jul 2009 20:51:58 -0400
+Received: by yxe26 with SMTP id 26so2927748yxe.33
+        for <git@vger.kernel.org>; Thu, 02 Jul 2009 17:52:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=CbaohCzKpUF6TsaWpmfPhjnY7gv+Ej40a9nevRKU6f4=;
+        b=bOqxDTgtksyDxe3TF4JvWnaWONfe6GH4bgwj9p4Reqg9SdSfwIb8k2RqAR/CerjWqq
+         O+eiqrLFOJm+h/VA7c6fWv4hVppE4IFNQ6kQWr8x03nRphOV1IZAJkilRTMnHFMv0W3G
+         ybyadsGgYlq4uBMLblzmGOmWarA1H8yC0IBF4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=e/PbGOdlyjuCMACcI3w47sHzJzlMdwyPIUd27rQVLJA2cstj/2CrY1KRNsjARuCPGg
+         sXkQ1r4D/a0bbK2RghzfcbBEzWCkS8VjH4Zkt/xx43PX1so42w8zA2LgQpbTTjgZ6p4P
+         xQXeUqXRz9wR3sZQXq5v65mZbZWoOwwuWbg2A=
+Received: by 10.231.10.137 with SMTP id p9mr873572ibp.52.1246582321082; Thu, 
+	02 Jul 2009 17:52:01 -0700 (PDT)
+In-Reply-To: <alpine.LFD.2.01.0907021345440.3210@localhost.localdomain>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122677>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122678>
 
-Jakub Narebski <jnareb@gmail.com> writes:
+On Fri, Jul 3, 2009 at 2:28 AM, Linus
+Torvalds<torvalds@linux-foundation.org> wrote:
 
-> 8. How do/did you obtain Git (install and/or upgrade)?
->     * binary package (includes automatic updates in usual situation)
->     * source package or script
->     * source tarball
->     * pull from (main) repository
+> On Thu, 2 Jul 2009, Sitaram Chamarty wrote:
+
+>> A couple of us were beating each other senseless on this
+>> issue over on #git, so I thought I'd ask: is it OK to do
+>> this? =A0Or would there potential be race conditions due to
+>> the lack of proper locking?
 >
-> Explanation: binary package covers pre-compiled binary (e.g. from rpm
-> or deb binary packages); source package covers things like deb-src and
-> SRPMS/src.rpm; source script is meant to cover installation in
-> source-based distributions, like 'emerge' in Gentoo, and it includes
-> automatic update in source-based Linux distributions.
+> It should all work fine.
 >
-> Note that this question is multiple choices question because one can
-> install Git in different ways on different machines or on different
-> operating systems.
+> We've had a few NFS issues due to oddities with renaming across
+> directories, but modern git avoids the cross-directory renames, and t=
+hat
+> whole issue only hit some very specific cases anyway.
+>
+> And git doesn't have "proper locking", because it doesn't need it for
+> database ops: git objects are stable. For refs, git should be using t=
+he
+> proper NFS-safe "create and atomic rename" ops.
+>
+> You do need to be a bit careful if you do maintenance operations
+> concurrently (I would suggest avoiding doing concurrent "git gc --pru=
+ne",
+> for example), but any normal git workflow should be fine.
+>
+> There is one big thing to look out for: performance. You may want to =
+add
+>
+> =A0 =A0 =A0 =A0[core]
+> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0PreloadIndex =3D true
 
-Could we please have "None of the above" here ;-)?  Just kidding.
+Great!  Thanks for the really detailed reply; appreciate it very much.
 
-> 17. How often do you use the following forms of git commands
->     or extra git tools? (continued)
-> ...
-> Note: git-subtree is managed out of tree, as a separate project (not
-> in git.git repository, not even in contrib/ area).
+I knew about core.PreloadIndex simply due to searching "man
+git-config" for NFS etc., but not the rest of it.
 
-Is there a reason why this particular out-of-tree script was singled out,
-and no other goodies are listed?
+> in your .git/config file, especially if you have a high-latency NFS s=
+erver
+> (but if you have a fast network and a high-end NFS server, you might =
+be
+> better off without it, so do your own testing).
+>
+> Btw, I think we fixed the problem we had with CIFS. That one was a ci=
+fs
+> filesystem problem on Linux, but it should be fixed in 2.6.30+ (commi=
+t
+> 0f4d634c: "cifs: flush data on any setattr"). If you have an older ke=
+rnel
+> (or are just uncertain), you can also work around it with
+>
+>        [core]
+>                fsyncobjectfiles =3D true
+>
+> which may be a good thing in general (regardless of any cifs issues),=
+ but
+> in most cases the performance loss isn't worth it if your filesystem =
+is
+> stable and sane.
 
-> 23. How do you compare current version with version from year ago?
->     * better
->     * no changes
->     * worse
->     * cannot say
+Though I asked this following from a debate on IRC, it now looks as if
+this will solve another of my problems too.
 
-Which version was that?  v1.5.6?  v1.6.0?  I think you would want to
-explicitly say v1.6.0 (mid Aug 2008), and it might even make sense to link
-to a list of changes since then (relnotes to 1.6.[123], at least, but
-perhaps more condensed).
+Let me explain.
 
-I see you dropped "How did you hear about git" from the questionaire.  It
-was a good way to spot which response was from Linus who answered "I wrote
-it" to the question ;-).
+I'm evangelising git at work, and although most projects are happy,
+even eager to setup a proper server for git, and those that can't are
+happy to just use mine, there are a couple of projects that are almost
+exclusively Windows _and_ cannot add another machine _and_ have client
+confidentiality issues so they can't just use my server.
+
+My alternatives for them so far were (1) VirtualBox running Fedora or
+something within one of their beefier Windows servers or (2) the whole
+cygwin install, which is painful compared to msysgit.
+
+Sounds like we can just do it with traditional Windows fileshares, as
+long as we make sure no one does a "git gc" on the bare repo that is
+being shared.  That's a very small price to pay!
+
+Thanks once again, and I'm copying Gitte in case he has anything to
+add, seeing I have sneakily changed the focus of the question now :-)
+[It wasn't pre-meditated, honest!]
+
+Sitaram
