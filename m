@@ -1,83 +1,63 @@
-From: tom fogal <tfogal@alumni.unh.edu>
-Subject: Re: git-svn seems confused about current HEAD
-Date: Fri, 03 Jul 2009 11:43:05 -0600
-Message-ID: <auto-000019869879@sci.utah.edu>
-References: <auto-000019790488@sci.utah.edu>  <20090702075438.GA11119@dcvr.yhbt.net>
-Reply-To: tfogal@sci.utah.edu
+From: Alex K <spaceoutlet@gmail.com>
+Subject: newbie question
+Date: Fri, 3 Jul 2009 11:39:45 -0700
+Message-ID: <e4a904790907031139rc61c2e0t6b9dbbc0c3dc379e@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jul 03 19:43:11 2009
+X-From: git-owner@vger.kernel.org Fri Jul 03 20:39:58 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MMmn0-00049w-6F
-	for gcvg-git-2@gmane.org; Fri, 03 Jul 2009 19:43:10 +0200
+	id 1MMnfx-0007ui-21
+	for gcvg-git-2@gmane.org; Fri, 03 Jul 2009 20:39:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755799AbZGCRm7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 3 Jul 2009 13:42:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755596AbZGCRm6
-	(ORCPT <rfc822;git-outgoing>); Fri, 3 Jul 2009 13:42:58 -0400
-Received: from mail.sci.utah.edu ([155.98.58.79]:39941 "EHLO sci.utah.edu"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1755549AbZGCRm5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 3 Jul 2009 13:42:57 -0400
-Received: from dummy.name; Fri, 03 Jul 2009 11:42:59 -0600
-In-Reply-To: Your message of "Thu, 02 Jul 2009 00:54:38 PDT."
-             <20090702075438.GA11119@dcvr.yhbt.net> 
+	id S1757305AbZGCSjp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 3 Jul 2009 14:39:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756792AbZGCSjo
+	(ORCPT <rfc822;git-outgoing>); Fri, 3 Jul 2009 14:39:44 -0400
+Received: from mail-bw0-f207.google.com ([209.85.218.207]:41942 "EHLO
+	mail-bw0-f207.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756684AbZGCSjn (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 3 Jul 2009 14:39:43 -0400
+Received: by bwz3 with SMTP id 3so515973bwz.37
+        for <git@vger.kernel.org>; Fri, 03 Jul 2009 11:39:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:sender:received:date
+         :x-google-sender-auth:message-id:subject:from:to:content-type
+         :content-transfer-encoding;
+        bh=tYtO61RokpXcc1CVD/9puLRY2RTZPuCoQ2fgFuLl/zk=;
+        b=WEcxxtLj2d8PAl13NQp7Ni2J0HSf3wAcPrCWoQqmByib+S0PoHX078Gmyj+1QVEyRZ
+         LxY5i7owbJLhUCt+q0dbwigU2w30rCQmMzsu0W/O/jirT0LR1D+96GHDgYiYrrSwT8F+
+         BJDVoLQmCOUZIaeXHDbQHmQRSgH3IQTCggpcY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:sender:date:x-google-sender-auth:message-id:subject
+         :from:to:content-type:content-transfer-encoding;
+        b=SmEHOfnLHQeCgyPjTe3OsTrzQuybddL6eJe7ChJ3ExX+2QGhzMpOd39s2HsfummBGO
+         /4ne5htgGM+di0+w0TP9e8dI7hBXCsQB/w3GyvwAL0C9Kzz2S6LYRpxARlK1K8XS1083
+         DLP7Nk/2HajeganmmZGinOXZMc261XDeYPSzM=
+Received: by 10.204.58.79 with SMTP id f15mr1507625bkh.202.1246646385792; Fri, 
+	03 Jul 2009 11:39:45 -0700 (PDT)
+X-Google-Sender-Auth: f0ad59f02487629d
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122704>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122705>
 
-Hi all, just wanted to ACK and confirm that the recommended actions
-were sound.
+Hello,
 
-Eric Wong <normalperson@yhbt.net> writes:
-> tom fogal <tfogal@alumni.unh.edu> wrote:
-> > I've got a repository that git-svn won't grab the most recent commits
-> > for:
-> > 
-> >   tf@shigeru tuvok ~/sw/bin/git svn find-rev HEAD
-> >   1164
-> >   tf@shigeru tuvok ~/sw/bin/git svn fetch
-> >   tf@shigeru tuvok ~/sw/bin/git --version
-> >   git version 1.6.3.3
-> > 
-> > The repository is actually at revision 1184.
-> >
-> > Interestingly, 1165 is also a commit which contains a string which
-> > is not representable in 8bit ASCII in the commit log.
-> 
-> Wow, "svn log" seems to croak on 1165, too.  How did you manage that?  I
-> guess SVN servers don't check for UTF-8 validity at all in the
-> commits...
+I would think the following simple pattern would be possible:
 
-*shrug*, I just copy-and-pasted a contributor's name into the log.  I
-think in the future, I'll leave their names in the code instead of the
-log :)
+Create two branches A and B. Switch to A, modify some files, do not
+commit to A, switch to B. Now B should not show any of the changes
+performed to A? However a git status while on B does show that the
+files on A have been modified. Is there something I am missing?
 
-> I would get your SVN administrator to propedit the r1165 log entry
-> so people can see it in the future.  Basically git svn relies on the
-> library version of "svn log", so if "svn log" fails, then git svn
-> usually has no chance of getting those revisions.
+Thank you,
 
-I think Eric was referring to `svnadmin setlog' here.  We've done that
-and everything seems to be working well.
-
-I'm slightly worried that I've rewritten history behind git's back
--- I'm likening it to rebasing an upstream after pulling from it --
-but everything seems okay so far without any gymnastics downstream.
-Perhaps it's not an issue because only a log message, and not actual
-code, has changed. *shrug*, for my case, re-cloning wouldn't be a
-disaster anyway.
-
-> > Is there a known workaround for this issue (or, how did I manage to
-> > `ignore' those commits in my initial repo)?
-> 
-> Here's what I did when the initial clone got stuck at 1164:
-[snip]
-
-Thanks much for the help!
-
--tom
+Alex
