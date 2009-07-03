@@ -1,93 +1,70 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: [PATCH] Allow the Unix epoch to be a valid commit date
-Date: Thu, 2 Jul 2009 21:34:54 -0700
-Message-ID: <20090703043454.GA20080@dcvr.yhbt.net>
-References: <sbqo45dgejpcnt58cam2tfkeon4is2v4ur@4ax.com> <20090703042846.GA14767@dcvr.yhbt.net>
+From: Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: git bisect; is there a way to pick only from the children of a given commit
+Date: Fri, 3 Jul 2009 06:42:35 +0200
+Message-ID: <200907030642.36314.chriscool@tuxfamily.org>
+References: <loom.20090701T170535-707@post.gmane.org> <BLU0-SMTP20683A1D7E5DEC1370D496AE2E0@phx.gbl> <4A4CA06B.8090403@solarflare.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, esskov@oncable.dk
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jul 03 06:35:06 2009
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Robert Stonehouse <rstonehouse@solarflare.com>
+X-From: git-owner@vger.kernel.org Fri Jul 03 06:42:27 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MMaUM-00076F-8o
-	for gcvg-git-2@gmane.org; Fri, 03 Jul 2009 06:35:06 +0200
+	id 1MMabT-0000lt-5R
+	for gcvg-git-2@gmane.org; Fri, 03 Jul 2009 06:42:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751943AbZGCEex (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 3 Jul 2009 00:34:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751741AbZGCEew
-	(ORCPT <rfc822;git-outgoing>); Fri, 3 Jul 2009 00:34:52 -0400
-Received: from dcvr.yhbt.net ([64.71.152.64]:53955 "EHLO dcvr.yhbt.net"
+	id S1751520AbZGCEmR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 3 Jul 2009 00:42:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751128AbZGCEmQ
+	(ORCPT <rfc822;git-outgoing>); Fri, 3 Jul 2009 00:42:16 -0400
+Received: from smtp3-g21.free.fr ([212.27.42.3]:60397 "EHLO smtp3-g21.free.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751358AbZGCEev (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 3 Jul 2009 00:34:51 -0400
-Received: from localhost (user-118bg3p.cable.mindspring.com [66.133.192.121])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by dcvr.yhbt.net (Postfix) with ESMTPSA id 665D41F84D;
-	Fri,  3 Jul 2009 04:34:55 +0000 (UTC)
+	id S1750901AbZGCEmP (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 3 Jul 2009 00:42:15 -0400
+Received: from smtp3-g21.free.fr (localhost [127.0.0.1])
+	by smtp3-g21.free.fr (Postfix) with ESMTP id 7759081808C;
+	Fri,  3 Jul 2009 06:42:10 +0200 (CEST)
+Received: from bureau.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
+	by smtp3-g21.free.fr (Postfix) with ESMTP id 52C8D81808F;
+	Fri,  3 Jul 2009 06:42:08 +0200 (CEST)
+User-Agent: KMail/1.9.9
+In-Reply-To: <4A4CA06B.8090403@solarflare.com>
 Content-Disposition: inline
-In-Reply-To: <20090703042846.GA14767@dcvr.yhbt.net>
-User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122680>
 
-It is common practice to use the Unix epoch as a fallback date
-when a suitable date is not available.  This is true of git svn
-and possibly other importing tools that import non-git history
-into git.
+On Thursday 02 July 2009, Robert Stonehouse wrote:
+>
+> In my toy example it is easy to identify featureB branch as being
+> independent and marking it as good - but in a real repository it would
+> be much harder as they might be many more merges.
 
-Instead of clobbering established strtoul() error reporting
-semantics with our own, preserve the strtoul() error value
-of ULONG_MAX for fsck.c to handle.
+As Jakub said, when the current commit is untestable, "git bisect skip" is 
+the most logical command to use.
 
-Signed-off-by: Eric Wong <normalperson@yhbt.net>
----
- commit.c |    6 +-----
- fsck.c   |    2 +-
- 2 files changed, 2 insertions(+), 6 deletions(-)
+Now if you have more information than just "the current commit is 
+untestable", for example if you know that the current commit is on a side 
+branch that has work unrelated to the breakage you are looking for, and if 
+you know that the branch started from a "good" commit, then you can 
+use "git bisect good" instead, because you know the commit is good even if 
+you have not tested it.
 
-diff --git a/commit.c b/commit.c
-index aa3b35b..a47fb4d 100644
---- a/commit.c
-+++ b/commit.c
-@@ -50,7 +50,6 @@ struct commit *lookup_commit(const unsigned char *sha1)
- 
- static unsigned long parse_commit_date(const char *buf, const char *tail)
- {
--	unsigned long date;
- 	const char *dateptr;
- 
- 	if (buf + 6 >= tail)
-@@ -73,10 +72,7 @@ static unsigned long parse_commit_date(const char *buf, const char *tail)
- 	if (buf >= tail)
- 		return 0;
- 	/* dateptr < buf && buf[-1] == '\n', so strtoul will stop at buf-1 */
--	date = strtoul(dateptr, NULL, 10);
--	if (date == ULONG_MAX)
--		date = 0;
--	return date;
-+	return strtoul(dateptr, NULL, 10);
- }
- 
- static struct commit_graft **commit_graft;
-diff --git a/fsck.c b/fsck.c
-index 511b82c..89278c1 100644
---- a/fsck.c
-+++ b/fsck.c
-@@ -229,7 +229,7 @@ static int fsck_commit(struct commit *commit, fsck_error error_func)
- 	struct commit_graft *graft;
- 	int parents = 0;
- 
--	if (!commit->date)
-+	if (commit->date == ULONG_MAX)
- 		return error_func(&commit->object, FSCK_ERROR, "invalid author/committer line");
- 
- 	if (memcmp(buffer, "tree ", 5))
--- 
-Eric Wong
+> I think if I changed my usage of git bisect good and bad to:
+>    good => build completes
+>            OR a revision that does not have the new build target
+>    bad  => new build target fails
+> then I think it will converge to the problem commit. So perhaps this was
+> just an issue of semantics
+
+I'd say that it's an issue of information. If you already have the 
+information that some commits are good before testing them, then you should 
+use "git bisect good" even if you can't test them.
+
+Best regards,
+Christian.
