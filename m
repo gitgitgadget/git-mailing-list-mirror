@@ -1,108 +1,82 @@
-From: Chris Johnsen <chris_johnsen@pobox.com>
-Subject: unexpected empty commit after checkout with uncommitted index
-Date: Fri, 3 Jul 2009 06:28:27 -0500
-Message-ID: <B98E6930-01E8-4A14-9C09-CC2BACC3389C@pobox.com>
-Mime-Version: 1.0 (Apple Message framework v753.1)
-Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jul 03 13:29:49 2009
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: Rails code to serve git repositories?
+Date: Fri, 03 Jul 2009 04:48:10 -0700 (PDT)
+Message-ID: <m3zlbmugx8.fsf@localhost.localdomain>
+References: <a6591d550907030428w175ba2ajb4bef8e906a2de5a@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Bjorn Boulder <bornboulder77@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jul 03 13:48:22 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MMgxe-0007Sd-Nb
-	for gcvg-git-2@gmane.org; Fri, 03 Jul 2009 13:29:47 +0200
+	id 1MMhFd-0005z4-UY
+	for gcvg-git-2@gmane.org; Fri, 03 Jul 2009 13:48:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752553AbZGCL3h (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 3 Jul 2009 07:29:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752810AbZGCL3g
-	(ORCPT <rfc822;git-outgoing>); Fri, 3 Jul 2009 07:29:36 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:49719 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752434AbZGCL3g (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 3 Jul 2009 07:29:36 -0400
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 5165424E0D;
-	Fri,  3 Jul 2009 07:29:39 -0400 (EDT)
-Received: from [192.168.1.241] (unknown [76.222.27.125]) (using TLSv1 with
- cipher AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id EAA5524E0B; Fri, 
- 3 Jul 2009 07:29:37 -0400 (EDT)
-X-Mailer: Apple Mail (2.753.1)
-X-Pobox-Relay-ID: CB816406-67C4-11DE-9B5E-DC021A496417-07245699!a-sasl-quonix.pobox.com
+	id S1752916AbZGCLsM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 3 Jul 2009 07:48:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752828AbZGCLsL
+	(ORCPT <rfc822;git-outgoing>); Fri, 3 Jul 2009 07:48:11 -0400
+Received: from mail-fx0-f218.google.com ([209.85.220.218]:50272 "EHLO
+	mail-fx0-f218.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752102AbZGCLsK (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 3 Jul 2009 07:48:10 -0400
+Received: by fxm18 with SMTP id 18so2108199fxm.37
+        for <git@vger.kernel.org>; Fri, 03 Jul 2009 04:48:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:received
+         :x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        bh=WyRz8Hm/1Dnv/TJXKr3norS9moiSFbEB4L1goqPl92A=;
+        b=sca8aiTrsxrwuZ2JyXugcI8AbBlUS5Y4mm9nLB2dFlapGl/6I4CcQq7JQqZ/XUhuFY
+         YPqlse1BtDpu40uMt8dd1FfSbjAradYLLteOG82PnA9uHF8eeN9+ECcuL8m8ApyDM7DA
+         n72SL5ZVtFxZazhyKSMZojicKfKs9Gd43e3i4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        b=kuiGagxdsexOlqz25zvHzw8Ac3CRexJK8JHRz+Nbl6uBfaoILkUyt3AkwVURxZS7kr
+         EQmOUxJgiMIhaXxG38+GPkhebHLQG5W/LHc1KKWH2E56oCI9nmlUc7UlV9xS/3JXALLn
+         ay1hjH7e4E0gXEQX1K+Hxhk0zuQOccm4lOb4M=
+Received: by 10.103.218.9 with SMTP id v9mr733147muq.109.1246621691363;
+        Fri, 03 Jul 2009 04:48:11 -0700 (PDT)
+Received: from localhost.localdomain (abvs71.neoplus.adsl.tpnet.pl [83.8.216.71])
+        by mx.google.com with ESMTPS id i5sm17280496mue.55.2009.07.03.04.48.10
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 03 Jul 2009 04:48:10 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id n63Blgft014144;
+	Fri, 3 Jul 2009 13:47:53 +0200
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id n63BlWCH014140;
+	Fri, 3 Jul 2009 13:47:32 +0200
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <a6591d550907030428w175ba2ajb4bef8e906a2de5a@mail.gmail.com>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122696>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122697>
 
-The following test script fails after 83ae209 (checkout branch: prime  
-cache-tree fully, 2009-04-20).
+Bjorn Boulder <bornboulder77@gmail.com> writes:
+
+> rails and git people,
+> 
+> I am searching for some Rails code I can use to serve git repositories.
+> 
+> Please alert me if you know of any projects which have this use-case.
+> 
+> In other words I want to create my own github.
+
+Gitorious (git hosting).
+
+Gitarella, Ginatra (gitweb-like).
 
 -- 
-Chris
-
-#!/usr/bin/env dash
-abort() {
-     printf "$@"
-     exit 128
-}
-failed=0
-fail() {
-     failed=1
-     printf "$@"
-}
-
-set -e
-
-GIT="${1:-git}"
-case "$GIT" in
-./*|../*) GIT="$PWD/$GIT"
-esac
-type "$GIT" > /dev/null ||
-     abort 'bad git command?: %s\n' "$GIT"
-
-tn=checkout-with-changed-index
-td="$(mktemp -d -t "$tn")"
-if test -z "$td"; then
-     td="/tmp/$tn"
-     mkdir "$td" ||
-         abort 'unable to create test dir: %s\n' "$td"
-     test -d "$td"/.git &&
-         abort '.git already exists in test dir: %s\n' "$td"
-fi
-trap 'rm -rf "$td"' 0
-
-cd "$td"
-"$GIT" --version
-"$GIT" init
-echo foo > foo
-echo bar > bar
-"$GIT" add foo bar
-"$GIT" commit -m 'add foo, bar'
-echo BAR > bar
-echo baz > baz
-"$GIT" rm foo
-"$GIT" add bar baz
-"$GIT" checkout -b new
-"$GIT" commit -m 'rm foo, change bar, add baz'
-
-# After 83ae209 the commit on "new" (or even a detached HEAD if
-# we use "HEAD@{0}" instead of "-b new") appears to be an empty
-# commit. The same thing happens whether the changes (add new, rm
-# existing, add edited) are done in a group, as above, or
-# individually.  Both before and after the commit, [git status]
-# seems to show that the changes are properly staged, but they
-# never make it into the committed tree. [git reset] and then
-# [git add --all] resolves the strange state and allows the
-# expected commit to take place.
-
-test -z "$("$GIT" ls-tree HEAD foo)" ||
-     fail '*** foo was not removed\n'
-test "$("$GIT" cat-file blob HEAD:bar)" = "BAR" ||
-     fail '*** bar was not changed\n'
-test "$("$GIT" cat-file blob HEAD:baz)" = "baz" ||
-     fail '*** baz was not added\n'
-exit $failed
+Jakub Narebski
+Poland
+ShadeHawk on #git
