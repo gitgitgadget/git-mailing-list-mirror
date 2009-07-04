@@ -1,180 +1,137 @@
 From: Johannes Sixt <j6t@kdbg.org>
-Subject: [PATCH 3/7] run_command: return exit code as positive value
-Date: Sat,  4 Jul 2009 21:26:39 +0200
-Message-ID: <4fe5ad61e7500735d1bbc12c98a863dd3499ea31.1246734159.git.j6t@kdbg.org>
+Subject: [PATCH/RFC 7/7] receive-pack: remove unnecessary run_status report
+Date: Sat,  4 Jul 2009 21:26:43 +0200
+Message-ID: <bc993d449ea426dfdbf6feb76779d98944a8b29a.1246734159.git.j6t@kdbg.org>
 References: <cover.1246734159.git.j6t@kdbg.org>
  <b73cf4b4cd09f4225098e71182044f64e12380aa.1246734159.git.j6t@kdbg.org>
  <d63e9230d57698a058c8a550709155e5e3222348.1246734159.git.j6t@kdbg.org>
+ <4fe5ad61e7500735d1bbc12c98a863dd3499ea31.1246734159.git.j6t@kdbg.org>
+ <ea2d8110ea70b8698bb3674ca4482db64053d841.1246734159.git.j6t@kdbg.org>
+ <195a33e7de20a4b52df8cb8861998fbbbed0b311.1246734159.git.j6t@kdbg.org>
+ <87ce2ffef09004ca19acd491b9374283f06c98c2.1246734159.git.j6t@kdbg.org>
 Cc: git@vger.kernel.org, Johannes Sixt <j6t@kdbg.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Jul 04 21:28:45 2009
+X-From: git-owner@vger.kernel.org Sat Jul 04 21:28:46 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MNAui-0005PF-2k
-	for gcvg-git-2@gmane.org; Sat, 04 Jul 2009 21:28:44 +0200
+	id 1MNAui-0005PF-Ri
+	for gcvg-git-2@gmane.org; Sat, 04 Jul 2009 21:28:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752783AbZGDT1l (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 4 Jul 2009 15:27:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752741AbZGDT1k
-	(ORCPT <rfc822;git-outgoing>); Sat, 4 Jul 2009 15:27:40 -0400
-Received: from bsmtp.bon.at ([213.33.87.14]:17679 "EHLO bsmtp.bon.at"
+	id S1752791AbZGDT1n (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 4 Jul 2009 15:27:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752741AbZGDT1m
+	(ORCPT <rfc822;git-outgoing>); Sat, 4 Jul 2009 15:27:42 -0400
+Received: from bsmtp.bon.at ([213.33.87.14]:17700 "EHLO bsmtp.bon.at"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752517AbZGDT1b (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 4 Jul 2009 15:27:31 -0400
+	id S1752556AbZGDT1c (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 4 Jul 2009 15:27:32 -0400
 Received: from dx.sixt.local (unknown [93.83.142.38])
-	by bsmtp.bon.at (Postfix) with ESMTP id 04CFC1000B;
+	by bsmtp.bon.at (Postfix) with ESMTP id 79B61A7EBB;
 	Sat,  4 Jul 2009 21:27:34 +0200 (CEST)
 Received: from localhost.localdomain (localhost [127.0.0.1])
-	by dx.sixt.local (Postfix) with ESMTP id BF9C45B86D;
-	Sat,  4 Jul 2009 21:27:33 +0200 (CEST)
+	by dx.sixt.local (Postfix) with ESMTP id 2E5228994C;
+	Sat,  4 Jul 2009 21:27:34 +0200 (CEST)
 X-Mailer: git-send-email 1.6.3.17.g1665f
-In-Reply-To: <d63e9230d57698a058c8a550709155e5e3222348.1246734159.git.j6t@kdbg.org>
+In-Reply-To: <87ce2ffef09004ca19acd491b9374283f06c98c2.1246734159.git.j6t@kdbg.org>
 In-Reply-To: <cover.1246734159.git.j6t@kdbg.org>
 References: <cover.1246734159.git.j6t@kdbg.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122727>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122728>
 
-As a general guideline, functions in git's code return zero to indicate
-success and negative values to indicate failure. The run_command family of
-functions followed this guideline. But there are actually two different
-kinds of failure:
-
-- failures of system calls;
-
-- non-zero exit code of the program that was run.
-
-Usually, a non-zero exit code of the program is a failure and means a
-failure to the caller. Except that sometimes it does not. For example, the
-exit code of merge programs (e.g. external merge drivers) conveys
-information about how the merge failed, and not all exit calls are
-actually failures.
-
-Furthermore, the return value of run_command is sometimes used as exit
-code by the caller.
-
-This change arranges that the exit code of the program is returned as a
-positive value, which can now be regarded as the "result" of the function.
-System call failures continue to be reported as negative values.
+The function run_status was used to report failures after a hook was run.
+By now, the only thing that the function itself reported was the exit code
+of the hook (if it was non-zero). But this is redundant because it can be
+expected that the hook itself will have reported a suitable error.
 
 Signed-off-by: Johannes Sixt <j6t@kdbg.org>
 ---
- builtin-merge.c        |    2 +-
- builtin-receive-pack.c |    4 ++--
- convert.c              |    2 +-
- git.c                  |    4 ++--
- ll-merge.c             |    4 ----
- run-command.c          |    9 +--------
- run-command.h          |    1 -
- 7 files changed, 7 insertions(+), 19 deletions(-)
+ builtin-receive-pack.c |   20 ++++----------------
+ 1 files changed, 4 insertions(+), 16 deletions(-)
 
-diff --git a/builtin-merge.c b/builtin-merge.c
-index af9adab..96ecaf4 100644
---- a/builtin-merge.c
-+++ b/builtin-merge.c
-@@ -594,7 +594,7 @@ static int try_merge_strategy(const char *strategy, struct commit_list *common,
- 		discard_cache();
- 		if (read_cache() < 0)
- 			die("failed to read the cache");
--		return -ret;
-+		return ret;
- 	}
- }
- 
 diff --git a/builtin-receive-pack.c b/builtin-receive-pack.c
-index 6ec1d05..6235903 100644
+index c85507b..b771fe9 100644
 --- a/builtin-receive-pack.c
 +++ b/builtin-receive-pack.c
-@@ -143,8 +143,8 @@ static int run_status(int code, const char *cmd_name)
- 	case -ERR_RUN_COMMAND_WAITPID_NOEXIT:
- 		return error("%s died strangely", cmd_name);
- 	default:
--		error("%s exited with error code %d", cmd_name, -code);
--		return -code;
-+		error("%s exited with error code %d", cmd_name, code);
+@@ -123,13 +123,6 @@ static struct command *commands;
+ static const char pre_receive_hook[] = "hooks/pre-receive";
+ static const char post_receive_hook[] = "hooks/post-receive";
+ 
+-static int run_status(int code, const char *cmd_name)
+-{
+-	if (code > 0)
+-		error("%s exited with error code %d", cmd_name, code);
+-	return code;
+-}
+-
+ static int run_receive_hook(const char *hook_name)
+ {
+ 	static char buf[sizeof(commands->old_sha1) * 2 + PATH_MAX + 4];
+@@ -156,7 +149,7 @@ static int run_receive_hook(const char *hook_name)
+ 
+ 	code = start_command(&proc);
+ 	if (code)
+-		return run_status(code, hook_name);
 +		return code;
+ 	for (cmd = commands; cmd; cmd = cmd->next) {
+ 		if (!cmd->error_string) {
+ 			size_t n = snprintf(buf, sizeof(buf), "%s %s %s\n",
+@@ -168,7 +161,7 @@ static int run_receive_hook(const char *hook_name)
+ 		}
  	}
+ 	close(proc.in);
+-	return run_status(finish_command(&proc), hook_name);
++	return finish_command(&proc);
  }
  
-diff --git a/convert.c b/convert.c
-index 1816e97..491e714 100644
---- a/convert.c
-+++ b/convert.c
-@@ -267,7 +267,7 @@ static int filter_buffer(int fd, void *data)
+ static int run_update_hook(struct command *cmd)
+@@ -185,9 +178,8 @@ static int run_update_hook(struct command *cmd)
+ 	argv[3] = sha1_to_hex(cmd->new_sha1);
+ 	argv[4] = NULL;
  
- 	status = finish_command(&child_process);
- 	if (status)
--		error("external filter %s failed %d", params->cmd, -status);
-+		error("external filter %s failed %d", params->cmd, status);
- 	return (write_err || status);
+-	return run_status(run_command_v_opt(argv, RUN_COMMAND_NO_STDIN |
+-					RUN_COMMAND_STDOUT_TO_STDERR),
+-			update_hook);
++	return run_command_v_opt(argv, RUN_COMMAND_NO_STDIN |
++					RUN_COMMAND_STDOUT_TO_STDERR);
  }
  
-diff --git a/git.c b/git.c
-index f4d53f4..662f21e 100644
---- a/git.c
-+++ b/git.c
-@@ -418,9 +418,9 @@ static void execv_dashed_external(const char **argv)
- 	 */
- 	status = run_command_v_opt(argv, 0);
- 	if (status != -ERR_RUN_COMMAND_EXEC) {
--		if (IS_RUN_COMMAND_ERR(status))
-+		if (status < 0)
- 			die("unable to run '%s'", argv[0]);
--		exit(-status);
-+		exit(status);
- 	}
- 	errno = ENOENT; /* as if we called execvp */
- 
-diff --git a/ll-merge.c b/ll-merge.c
-index a2c13c4..31c7457 100644
---- a/ll-merge.c
-+++ b/ll-merge.c
-@@ -192,10 +192,6 @@ static int ll_ext_merge(const struct ll_merge_driver *fn,
- 
- 	args[2] = cmd.buf;
- 	status = run_command_v_opt(args, 0);
--	if (status < -ERR_RUN_COMMAND_FORK)
--		; /* failure in run-command */
--	else
--		status = -status;
- 	fd = open(temp[1], O_RDONLY);
- 	if (fd < 0)
- 		goto bad;
-diff --git a/run-command.c b/run-command.c
-index eb2efc3..a4e309e 100644
---- a/run-command.c
-+++ b/run-command.c
-@@ -241,14 +241,7 @@ static int wait_or_whine(pid_t pid)
- 		if (!WIFEXITED(status))
- 			return -ERR_RUN_COMMAND_WAITPID_NOEXIT;
- 		code = WEXITSTATUS(status);
--		switch (code) {
--		case 127:
--			return -ERR_RUN_COMMAND_EXEC;
--		case 0:
--			return 0;
--		default:
--			return -code;
--		}
-+		return code == 127 ? -ERR_RUN_COMMAND_EXEC : code;
- 	}
+ static int is_ref_checked_out(const char *ref)
+@@ -401,7 +393,6 @@ static void run_update_post_hook(struct command *cmd)
+ 	argv[argc] = NULL;
+ 	status = run_command_v_opt(argv, RUN_COMMAND_NO_STDIN
+ 			| RUN_COMMAND_STDOUT_TO_STDERR);
+-	run_status(status, update_post_hook);
  }
  
-diff --git a/run-command.h b/run-command.h
-index e345502..0211e1d 100644
---- a/run-command.h
-+++ b/run-command.h
-@@ -10,7 +10,6 @@ enum {
- 	ERR_RUN_COMMAND_WAITPID_SIGNAL,
- 	ERR_RUN_COMMAND_WAITPID_NOEXIT,
- };
--#define IS_RUN_COMMAND_ERR(x) (-(x) >= ERR_RUN_COMMAND_FORK)
- 
- struct child_process {
- 	const char **argv;
+ static void execute_commands(const char *unpacker_error)
+@@ -519,7 +510,6 @@ static const char *unpack(void)
+ 		code = run_command_v_opt(unpacker, RUN_GIT_CMD);
+ 		if (!code)
+ 			return NULL;
+-		run_status(code, unpacker[0]);
+ 		return "unpack-objects abnormal exit";
+ 	} else {
+ 		const char *keeper[7];
+@@ -545,7 +535,6 @@ static const char *unpack(void)
+ 		ip.git_cmd = 1;
+ 		status = start_command(&ip);
+ 		if (status) {
+-			run_status(status, keeper[0]);
+ 			return "index-pack fork failed";
+ 		}
+ 		pack_lockfile = index_pack_lockfile(ip.out);
+@@ -555,7 +544,6 @@ static const char *unpack(void)
+ 			reprepare_packed_git();
+ 			return NULL;
+ 		}
+-		run_status(status, keeper[0]);
+ 		return "index-pack abnormal exit";
+ 	}
+ }
 -- 
 1.6.3.17.g1665f
