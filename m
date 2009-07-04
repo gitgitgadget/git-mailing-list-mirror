@@ -1,52 +1,108 @@
-From: Sitaram Chamarty <sitaramc@gmail.com>
-Subject: Re: newbie question
-Date: Sat, 4 Jul 2009 00:29:44 +0000 (UTC)
-Organization: disorganised!
-Message-ID: <slrnh4t8jo.b72.sitaramc@sitaramc.homelinux.net>
-References: <e4a904790907031139rc61c2e0t6b9dbbc0c3dc379e@mail.gmail.com>
- <7vvdm9r2pi.fsf@alter.siamese.dyndns.org>
+From: David Aguilar <davvid@gmail.com>
+Subject: Re: [RFC] Git User's Survey 2009 - second trial run, and question
+	about announcing it
+Date: Fri, 3 Jul 2009 18:26:36 -0700
+Message-ID: <20090704012635.GB39268@gmail.com>
+References: <200907030130.24417.jnareb@gmail.com> <94a0d4530907031619x3d1296eenf9198b4ab5e43f67@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jul 04 02:30:10 2009
+Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org,
+	Johan Herland <johan@herland.net>,
+	Peter Baumann <waste.manager@gmx.de>,
+	Graham Perks <graham@kace.com>
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Jul 04 03:26:52 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MMt8r-0004Oq-H2
-	for gcvg-git-2@gmane.org; Sat, 04 Jul 2009 02:30:10 +0200
+	id 1MMu1j-00086F-F5
+	for gcvg-git-2@gmane.org; Sat, 04 Jul 2009 03:26:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753389AbZGDA36 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 3 Jul 2009 20:29:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752809AbZGDA35
-	(ORCPT <rfc822;git-outgoing>); Fri, 3 Jul 2009 20:29:57 -0400
-Received: from main.gmane.org ([80.91.229.2]:53124 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751535AbZGDA35 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 3 Jul 2009 20:29:57 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1MMt8e-0007iC-HV
-	for git@vger.kernel.org; Sat, 04 Jul 2009 00:29:56 +0000
-Received: from atcmail.atc.tcs.co.in ([203.200.212.145])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 04 Jul 2009 00:29:56 +0000
-Received: from sitaramc by atcmail.atc.tcs.co.in with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 04 Jul 2009 00:29:56 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: atcmail.atc.tcs.co.in
-User-Agent: slrn/0.9.9 (Linux)
+	id S1754154AbZGDB0i (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 3 Jul 2009 21:26:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753823AbZGDB0h
+	(ORCPT <rfc822;git-outgoing>); Fri, 3 Jul 2009 21:26:37 -0400
+Received: from wa-out-1112.google.com ([209.85.146.181]:1466 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753821AbZGDB0h (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 3 Jul 2009 21:26:37 -0400
+Received: by wa-out-1112.google.com with SMTP id j5so539517wah.21
+        for <git@vger.kernel.org>; Fri, 03 Jul 2009 18:26:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=FsA53uIuzjbBrEbiBJmDWOn1NEXP8OY+SY2kIqPxT7E=;
+        b=u4rr99J7UTiE/95yXL1+WpeqdsNXgdtMYaI95qXHOqc5R/Fxi4M5cuOkmy61QPBqGw
+         3hBe5uiArKGe6QW1OE8zVmJK9Y6GwCW64OjpmZCw640B3Nj9MnYkFY8LyRJPkhuejOMD
+         JYgWH7p8BKmBP9sCju/vZWPZuPu9p9pjPQdh8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=HUE/rizb9i6WBEkqDlm0lvANx8hjLc1wHcLXO9YqboKxy/70Wyd5l0a4DLJfnlFrmr
+         YvsEojYW5/upmTRmLET3SidnaYkIWwugKrdI8MlCzpdXyeNOh9+DPtiQdU90qwb7tQn8
+         JrdxHZ4qAWpYtzzoIyiuuEjkBKqXLKj0Q48Tk=
+Received: by 10.114.185.12 with SMTP id i12mr2977117waf.16.1246670799472;
+        Fri, 03 Jul 2009 18:26:39 -0700 (PDT)
+Received: from gmail.com (208-106-56-2.static.dsltransport.net [208.106.56.2])
+        by mx.google.com with ESMTPS id j28sm7128111waf.67.2009.07.03.18.26.37
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 03 Jul 2009 18:26:38 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <94a0d4530907031619x3d1296eenf9198b4ab5e43f67@mail.gmail.com>
+User-Agent: Mutt/1.5.19 (2009-01-05)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122712>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122713>
 
-On 2009-07-03 19:22:49, Junio C Hamano <gitster@pobox.com> wrote:
+On Sat, Jul 04, 2009 at 02:19:25AM +0300, Felipe Contreras wrote:
+> 2009/7/3 Jakub Narebski <jnareb@gmail.com>:
+> 
+> > 20. Overall, how happy are you with Git?
+> >    * unhappy
+> >    * not so happy
+> >    * happy
+> >    * very happy
+> >    * completely ecstatic
+> 
+> Let's leave room for git haters too:
+>  * I hate it
 
->     $ git branch --with $commit ;# on which branches is the bad commit in?
+Umm, let's not.
 
---with?  Did --contains get an alternative form?
+If they hate it, they'll be in the "unhappy" category.
+And if they hate it, I doubt they'll be filling out this survey.
+
+I've heard nothing but unhelpful, uneducated, and stubborn words
+from people who "hate git".  They usually have nothing productive
+to say and spend their time complaining about really petty things
+like the fact that they have to paste in a SHA-1 every now and
+then.  Worse still, they almost never have constructive
+criticism and thus will always be upset.
+
+Personally, I couldn't care less to hear what they have to
+say.  The only thing worse then the haters are the ones who
+actually believe that they would hate hg less
+(even when they've never tried hg!).
+
+Let's not encourage them by including including "I hate git"
+in our survey.
+
+No thanks.
+
+> - 21. In you opinion, which areas in Git needs improvement?
+> + 21. In you opinion, which areas of Git need improvement?
+
+- 21. In you opinion, which areas of Git need improvement?
++ 21. In your opinion, which areas of Git need improvement?
+         ^^^^
+
+Have fun,
+
+-- 
+		David
