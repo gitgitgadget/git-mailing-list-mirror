@@ -1,72 +1,105 @@
-From: Stefan Bucur <stefan.bucur@gmail.com>
-Subject: Wrong file diff for merge conflict
-Date: Sat, 4 Jul 2009 07:53:34 +0000 (UTC)
-Message-ID: <loom.20090704T072854-229@post.gmane.org>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [RFC] Git User's Survey 2009 - second trial run, and question 
+	about announcing it
+Date: Sat, 4 Jul 2009 11:24:40 +0300
+Message-ID: <94a0d4530907040124i32abe421x86e5c8f0839bf2fa@mail.gmail.com>
+References: <200907030130.24417.jnareb@gmail.com>
+	 <94a0d4530907031619x3d1296eenf9198b4ab5e43f67@mail.gmail.com>
+	 <20090704012635.GB39268@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jul 04 10:00:18 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org,
+	Johan Herland <johan@herland.net>,
+	Peter Baumann <waste.manager@gmx.de>,
+	Graham Perks <graham@kace.com>
+To: David Aguilar <davvid@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Jul 04 10:24:53 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MN0AS-0006kW-Al
-	for gcvg-git-2@gmane.org; Sat, 04 Jul 2009 10:00:16 +0200
+	id 1MN0YG-0006PL-NC
+	for gcvg-git-2@gmane.org; Sat, 04 Jul 2009 10:24:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753097AbZGDIAE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 4 Jul 2009 04:00:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753000AbZGDIAE
-	(ORCPT <rfc822;git-outgoing>); Sat, 4 Jul 2009 04:00:04 -0400
-Received: from main.gmane.org ([80.91.229.2]:59337 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752257AbZGDIAD (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 4 Jul 2009 04:00:03 -0400
-Received: from root by ciao.gmane.org with local (Exim 4.43)
-	id 1MN0AE-0005rI-AR
-	for git@vger.kernel.org; Sat, 04 Jul 2009 08:00:02 +0000
-Received: from 86-121-81-145.rdsnet.ro ([86-121-81-145.rdsnet.ro])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 04 Jul 2009 08:00:02 +0000
-Received: from stefan.bucur by 86-121-81-145.rdsnet.ro with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 04 Jul 2009 08:00:02 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: main.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 86.121.81.145 (Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.1b4pre) Gecko/20090401 Ubuntu/9.04 (jaunty) Shiretoko/3.5b4pre)
+	id S1753350AbZGDIYl convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 4 Jul 2009 04:24:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753280AbZGDIYj
+	(ORCPT <rfc822;git-outgoing>); Sat, 4 Jul 2009 04:24:39 -0400
+Received: from fg-out-1718.google.com ([72.14.220.159]:13645 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753121AbZGDIYi convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 4 Jul 2009 04:24:38 -0400
+Received: by fg-out-1718.google.com with SMTP id e21so829459fga.17
+        for <git@vger.kernel.org>; Sat, 04 Jul 2009 01:24:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=OeOX+iFv14yWtaTyQC02ZGGBiBcXLD4C21Vv1EU/WyI=;
+        b=c9tIX9N/yoA/wG0r5cH2bYmAY43UOlroijrSbblrA6diflqd3wOy54JzufMuVtAyux
+         kNxIMcev7z8VupfZt281nq0iBVkp53mjmT8u9d0Dz336OO9H7xqJmTsq+/Mg/xn/3DLg
+         JIidmywSMZFvZJwoRb9PzzCNcDaDvXopAtSns=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=tlut2A6qQTTeuDLOCSwJoApX4qZhhoj3sTIcazjYRZi5p7IQsPtKOwsqn3fVtuW8o6
+         r5DF28rNNuXJulLT0S60tZ1Kk48DGH6pQqIslKPl3+7tH8QCUl4WU1KUkDGA4jj+dlDq
+         wJlF3HC+ChLp8CQZfqO3vnYcmQqIn2+/p73oc=
+Received: by 10.86.35.18 with SMTP id i18mr1313281fgi.8.1246695880577; Sat, 04 
+	Jul 2009 01:24:40 -0700 (PDT)
+In-Reply-To: <20090704012635.GB39268@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122714>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122715>
 
-Hi!
+On Sat, Jul 4, 2009 at 4:26 AM, David Aguilar<davvid@gmail.com> wrote:
+> On Sat, Jul 04, 2009 at 02:19:25AM +0300, Felipe Contreras wrote:
+>> 2009/7/3 Jakub Narebski <jnareb@gmail.com>:
+>>
+>> > 20. Overall, how happy are you with Git?
+>> > =C2=A0 =C2=A0* unhappy
+>> > =C2=A0 =C2=A0* not so happy
+>> > =C2=A0 =C2=A0* happy
+>> > =C2=A0 =C2=A0* very happy
+>> > =C2=A0 =C2=A0* completely ecstatic
+>>
+>> Let's leave room for git haters too:
+>> =C2=A0* I hate it
+>
+> Umm, let's not.
+>
+> If they hate it, they'll be in the "unhappy" category.
+> And if they hate it, I doubt they'll be filling out this survey.
+>
+> I've heard nothing but unhelpful, uneducated, and stubborn words
+> from people who "hate git". =C2=A0They usually have nothing productiv=
+e
+> to say and spend their time complaining about really petty things
+> like the fact that they have to paste in a SHA-1 every now and
+> then. =C2=A0Worse still, they almost never have constructive
+> criticism and thus will always be upset.
+>
+> Personally, I couldn't care less to hear what they have to
+> say. =C2=A0The only thing worse then the haters are the ones who
+> actually believe that they would hate hg less
+> (even when they've never tried hg!).
+>
+> Let's not encourage them by including including "I hate git"
+> in our survey.
 
-I would like to point out a very strange behavior of git merge, which led to
-data loss or data duplication in the conflict file generated during a diff merge.
+That's a good point, I just thought it would be nice to spot them;
+which would be easy if they answer "I hate it". But also, if there's
+an extreme positive (completely ecstatic) I thought there should be an
+extreme negative, just in case.
 
-I had to merge two branches (A and B) which contained more files (e.g.
-http://pastebin.ca/1483691 - before splitting branches) which were affected in
-the following way:
-* The files were formatted (indented) in branch A: http://pastebin.ca/1483684
-* In branch B, their contents were altered in various points, but not
-significantly (refactored some statements into macros): http://pastebin.ca/1483683
+Probably not important at all.
 
-I checked out branch A, and I ran "git merge B", and (obviously) there was a
-conflict with this file. The big surprise was to see that the generated diff
-file looks like this:
+Cheers.
 
-http://pastebin.ca/1483228
-
-The problem is with the last diff in the file, where the left portion is empty,
-and the right portion contains code which already was marked as merged (common),
-right before the start of the diff. Therefore, the mark at line 127 should
-really have been before line 114.
-
-Is this a bug or I am missing something?
-
-Thanks,
-Stefan Bucur
+--=20
+=46elipe Contreras
