@@ -1,194 +1,232 @@
-From: Johannes Sixt <j6t@kdbg.org>
-Subject: [PATCH 6/7] run_command: report failure to execute the program, but optionally don't
-Date: Sat,  4 Jul 2009 21:26:42 +0200
-Message-ID: <87ce2ffef09004ca19acd491b9374283f06c98c2.1246734159.git.j6t@kdbg.org>
-References: <cover.1246734159.git.j6t@kdbg.org>
- <b73cf4b4cd09f4225098e71182044f64e12380aa.1246734159.git.j6t@kdbg.org>
- <d63e9230d57698a058c8a550709155e5e3222348.1246734159.git.j6t@kdbg.org>
- <4fe5ad61e7500735d1bbc12c98a863dd3499ea31.1246734159.git.j6t@kdbg.org>
- <ea2d8110ea70b8698bb3674ca4482db64053d841.1246734159.git.j6t@kdbg.org>
- <195a33e7de20a4b52df8cb8861998fbbbed0b311.1246734159.git.j6t@kdbg.org>
-Cc: git@vger.kernel.org, Johannes Sixt <j6t@kdbg.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Jul 04 21:28:46 2009
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [RFC] Git User's Survey 2009 - second trial run, and question  about announcing it
+Date: Sun, 5 Jul 2009 00:40:20 +0200
+Message-ID: <200907050040.21991.jnareb@gmail.com>
+References: <200907030130.24417.jnareb@gmail.com> <94a0d4530907031619x3d1296eenf9198b4ab5e43f67@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain;
+  charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Jul 05 00:40:41 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MNAuj-0005PF-KU
-	for gcvg-git-2@gmane.org; Sat, 04 Jul 2009 21:28:46 +0200
+	id 1MNDuS-0006bX-DW
+	for gcvg-git-2@gmane.org; Sun, 05 Jul 2009 00:40:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752749AbZGDT1q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 4 Jul 2009 15:27:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752768AbZGDT1o
-	(ORCPT <rfc822;git-outgoing>); Sat, 4 Jul 2009 15:27:44 -0400
-Received: from bsmtp.bon.at ([213.33.87.14]:17694 "EHLO bsmtp.bon.at"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752535AbZGDT1b (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 4 Jul 2009 15:27:31 -0400
-Received: from dx.sixt.local (unknown [93.83.142.38])
-	by bsmtp.bon.at (Postfix) with ESMTP id 81FB3CDF87;
-	Sat,  4 Jul 2009 21:27:34 +0200 (CEST)
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by dx.sixt.local (Postfix) with ESMTP id 15B387DFEA;
-	Sat,  4 Jul 2009 21:27:34 +0200 (CEST)
-X-Mailer: git-send-email 1.6.3.17.g1665f
-In-Reply-To: <195a33e7de20a4b52df8cb8861998fbbbed0b311.1246734159.git.j6t@kdbg.org>
-In-Reply-To: <cover.1246734159.git.j6t@kdbg.org>
-References: <cover.1246734159.git.j6t@kdbg.org>
+	id S1752817AbZGDWk0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 4 Jul 2009 18:40:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752704AbZGDWk0
+	(ORCPT <rfc822;git-outgoing>); Sat, 4 Jul 2009 18:40:26 -0400
+Received: from mail-fx0-f218.google.com ([209.85.220.218]:52115 "EHLO
+	mail-fx0-f218.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752508AbZGDWkZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 4 Jul 2009 18:40:25 -0400
+Received: by fxm18 with SMTP id 18so2903963fxm.37
+        for <git@vger.kernel.org>; Sat, 04 Jul 2009 15:40:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=YGnWHTPmGOE/dWn3ZfvvqKLbFUoiGzjk/MJPxt0iF+w=;
+        b=EOZqieo4HHaoJCc/desGd4XZI7DqkmQc2cZHzJAC3T3Cfiq/TeQOT7mjqOv0I9IvlI
+         3avVQT8Os8QcxwzpykxPdWzW7I6dyyWeiFQD0QSESBr8FCvQgIcpA4kquU+OEfSNM1CQ
+         9gcDa9841QRLNFTawOqMSDQ+5uBG6gjApJn4A=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=CNB5qYlCGI8LRyy8d4Q5Vlzd1thP0KW8ZuxxhcJsJOIFCZS5e/ewUeoXLgXe3n9z7x
+         CnDouKsaSom5emSj9fhcC/1lACZu+rKjCFBtm2YmMIGjeyglsXc+jJ/wqDM1cn+/AK+N
+         8axijha+7bJQbZUjECaoo51c91HYtp33raOvg=
+Received: by 10.204.113.12 with SMTP id y12mr2819775bkp.214.1246747225938;
+        Sat, 04 Jul 2009 15:40:25 -0700 (PDT)
+Received: from ?192.168.1.13? (absh167.neoplus.adsl.tpnet.pl [83.8.127.167])
+        by mx.google.com with ESMTPS id 21sm8838751fkx.44.2009.07.04.15.40.24
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sat, 04 Jul 2009 15:40:24 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <94a0d4530907031619x3d1296eenf9198b4ab5e43f67@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122729>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122730>
 
-In the case where a program was not found, it was still the task of the
-caller to report an error to the user. Usually, this is an interesting case
-but only few callers actually reported a specific error (though many call
-sites report a generic error message regardless of the cause).
+On Sat, 4 July 2009, Felipe Contreras wrote:
+> 2009/7/3 Jakub Narebski <jnareb@gmail.com>:
 
-With this change the error is reported by run_command, but since there is
-one call site in git.c that does not want that, an option is added to
-struct child_process, which is used to turn the error off.
+> > The last replacements reminds me of the problem of announcing this
+> > survey.  Where to submit note announcing "Git User's Survey 2009"
+> > (tentative date of survey is 15 July 2009 -- 15 September 2009)?
+> > How such note should look like?
+> 
+> I'm not sure what you mean. I think the best place to announce these
+> kinds of things is through a post in an official blog.
 
-Signed-off-by: Johannes Sixt <j6t@kdbg.org>
----
- builtin-receive-pack.c |    4 +---
- git.c                  |    2 +-
- run-command.c          |   12 ++++++++----
- run-command.h          |    2 ++
- transport.c            |    6 +-----
- 5 files changed, 13 insertions(+), 13 deletions(-)
+The problem is that there isn't "official blog" for Git.  There is
+gitster's (Junio C Hamano, git maintainer) blog at
+  http://gitster.livejournal.com/
+there is yours 'A git blog looking to be official' at
+  http://gitlog.wordpress.com/
 
-diff --git a/builtin-receive-pack.c b/builtin-receive-pack.c
-index 1dcdb1a..c85507b 100644
---- a/builtin-receive-pack.c
-+++ b/builtin-receive-pack.c
-@@ -125,9 +125,7 @@ static const char post_receive_hook[] = "hooks/post-receive";
+Let me quote appropriate question from "Git User's Survey 2009" which
+lists possible announcement mechanisms I did think of:
+
+  29. How did you hear about this Git User's Survey?
+    * git mailing list
+    * git-related mailing list (msysGit, Git for Human Beings, ...)
+    * mailing list or forum of some project
+    * #git IRC channel topic
+    * announcement on IRC channel
+    * git homepage
+    * git wiki
+    * git hosting site
+    * software-related web site
+    * news web site or social news site
+    * blog
+    * other kind of web site
+    * Twitter or other microblogging platform
+    * other - please specify
+
+I will send announcement to Git mailing list (i.e. here) using
+"[ANNOUNCE]" in email subject, which means that 'GIT Mailing List
+RSS Feeds' script would pick it up for 'announce' feed
+  http://gitrss.q42.co.uk/announce.rss
+which means that Ohloh would have it in "News" section for Git project:
+  http://www.ohloh.net/p/git
+(and it is easy to add announcement in "Journal Entries" at Ohloh).
+
+I can add announcement about Git User's Survey 2009 at Git Wiki and
+create page about it at
+  http://git.or.cz/gitwiki/GitSurvey2009
+I can ask Scott Chacon to put announcement on Git Homepage at
+  http://git-scm.com
+
+What other places to ask to put note about this survey?  For past
+surveys I was sending announcement to mailing list of projects using
+git (http://git.or.cz/gitwiki/GitProjects)... well, at least those
+which didn't require subscribing to mailing list before postiting on
+it (and even that for some cases can be worked around by sending
+announcement via GMane).  But with number of projects using git so
+large nowadays I don't think it is good approach...
+
+> > 8. How do/did you obtain Git (install and/or upgrade)?
+> >    * binary package (includes automatic updates in usual situation)
+> >    * source package or script
+> >    * source tarball
+> >    * pull from (main) repository
+> >
+> > Explanation: binary package covers pre-compiled binary (e.g. from rpm
+> > or deb binary packages); source package covers things like deb-src and
+> > SRPMS/src.rpm; source script is meant to cover installation in
+> > source-based distributions, like 'emerge' in Gentoo, and it includes
+> > automatic update in source-based Linux distributions.
+> >
+> > Note that this question is multiple choices question because one can
+> > install Git in different ways on different machines or on different
+> > operating systems.
+> 
+> It's a bit complicated and missing some, how about:
+> 8. How do/did you obtain Git?
+>  * package management (apt, yum, etc.)
+>  * binary package or installer (.deb, .exe) <-
+>  * source package or script (deb-src, src.rpm)
+>  * source tarball
+>  * pull from (main) repository
+
+It might be better formulation.  Currently updates using automatic 
+updates (apt, yum, YaST, Package Manager) is split into two: binary
+package for distributions using binary packages for update (most 
+distributions: Ubuntu, Debian, Fedora, SuSE) and source package for
+source based distributions (like Gentoo or Sourcemage).
+
+I will think about it (and about adding "sysadmin job" answer too).
+
+> - 9. What operating system do you use Git on?
+> + 9. On which operating system(s) do you use Git?
+
+Thanks, this is better.
+
+> 
+> - 13. Which git hosting site do you use for your projects?
+> + 13. Which hosting site(s) do you use for your projects?
+
+Well, on one hand side among possible answers there is "generic site
+without git support".  On the other hand this question is about where
+you host your projects that you use git for.
+
+I think I'll leave "git" in question, but use "site(s)".
+
+> > 20. Overall, how happy are you with Git?
+> >    * unhappy
+> >    * not so happy
+> >    * happy
+> >    * very happy
+> >    * completely ecstatic
+> 
+> Let's leave room for git haters too:
+>  * I hate it
+
+Well, "I hate it" is "unhappy".  But on the other hand I'd like to have
+here set of answers with 'neutral' in the middle, and symmetric around
+this middle answer.  Perhaps:
+
+    * unhappy
+    * not so happy
+    * average
+    * somewhat happy
+    * very happy
+
+Also I agree with Junio that I'd rather git haters didn't answer this
+survey...
  
- static int run_status(int code, const char *cmd_name)
- {
--	if (code < 0 && errno == ENOENT)
--		return error("execute of %s failed", cmd_name);
--	else if (code > 0)
-+	if (code > 0)
- 		error("%s exited with error code %d", cmd_name, code);
- 	return code;
- }
-diff --git a/git.c b/git.c
-index 2fb7093..4a977f5 100644
---- a/git.c
-+++ b/git.c
-@@ -416,7 +416,7 @@ static void execv_dashed_external(const char **argv)
- 	 * if we fail because the command is not found, it is
- 	 * OK to return. Otherwise, we just pass along the status code.
- 	 */
--	status = run_command_v_opt(argv, 0);
-+	status = run_command_v_opt(argv, RUN_SILENT_EXEC_FAILURE);
- 	if (status >= 0 || errno != ENOENT)
- 		exit(status & 0xff);
+> - 21. In you opinion, which areas in Git needs improvement?
+> + 21. In you opinion, which areas of Git need improvement?
+> 
+> - 23. How do you compare current version with version from year ago?
+> + 23. How do you compare the current version with the one from one year ago?
+
+Thanks.
  
-diff --git a/run-command.c b/run-command.c
-index 146a8ea..ddf3dd3 100644
---- a/run-command.c
-+++ b/run-command.c
-@@ -184,7 +184,7 @@ fail_pipe:
- 	}
+> > 25. Have you tried to get Git help from other people?
+> > 26. What channel did you use to request help?
+> > 27. If yes, did you get these problems resolved quickly and to your liking?
+> 
+> "If yes" on 27 is out of context:
+> 
+> - 25. Have you tried to get Git help from other people?
+> + 25. Have you tried to get help regarding Git from other people?
+> 26. If yes, did you get these problems resolved quickly and to your liking?
+> 27. What channel did you use to request help?
+
+Ooops.  I'll fix it.
+
+> - 28. Which communication channels do you use?
+> + 28. Which communication channel(s) do you use?
+
+Thanks
  
- 	cmd->pid = mingw_spawnvpe(cmd->argv[0], cmd->argv, env);
--	if (cmd->pid < 0 && errno != ENOENT)
-+	if (cmd->pid < 0 && (!cmd->silent_exec_failure || errno != ENOENT))
- 		error("cannot spawn %s: %s", cmd->argv[0],
- 			strerror(failed_errno = errno));
- 
-@@ -233,7 +233,7 @@ fail_pipe:
- 	return 0;
- }
- 
--static int wait_or_whine(pid_t pid, const char *argv0)
-+static int wait_or_whine(pid_t pid, const char *argv0, int silent_exec_failure)
- {
- 	int status, code = -1;
- 	pid_t waiting;
-@@ -264,6 +264,9 @@ static int wait_or_whine(pid_t pid, const char *argv0)
- 		if (code == 127) {
- 			code = -1;
- 			failed_errno = ENOENT;
-+			if (!silent_exec_failure)
-+				error("cannot run %s: %s", argv0,
-+					strerror(ENOENT));
- 		}
- 	} else {
- 		error("waitpid is confused (%s)", argv0);
-@@ -274,7 +277,7 @@ static int wait_or_whine(pid_t pid, const char *argv0)
- 
- int finish_command(struct child_process *cmd)
- {
--	return wait_or_whine(cmd->pid, cmd->argv[0]);
-+	return wait_or_whine(cmd->pid, cmd->argv[0], cmd->silent_exec_failure);
- }
- 
- int run_command(struct child_process *cmd)
-@@ -294,6 +297,7 @@ static void prepare_run_command_v_opt(struct child_process *cmd,
- 	cmd->no_stdin = opt & RUN_COMMAND_NO_STDIN ? 1 : 0;
- 	cmd->git_cmd = opt & RUN_GIT_CMD ? 1 : 0;
- 	cmd->stdout_to_stderr = opt & RUN_COMMAND_STDOUT_TO_STDERR ? 1 : 0;
-+	cmd->silent_exec_failure = opt & RUN_SILENT_EXEC_FAILURE ? 1 : 0;
- }
- 
- int run_command_v_opt(const char **argv, int opt)
-@@ -358,7 +362,7 @@ int start_async(struct async *async)
- int finish_async(struct async *async)
- {
- #ifndef __MINGW32__
--	int ret = wait_or_whine(async->pid, "child process");
-+	int ret = wait_or_whine(async->pid, "child process", 0);
- #else
- 	DWORD ret = 0;
- 	if (WaitForSingleObject(async->tid, INFINITE) != WAIT_OBJECT_0)
-diff --git a/run-command.h b/run-command.h
-index ac6c09c..0c00b25 100644
---- a/run-command.h
-+++ b/run-command.h
-@@ -31,6 +31,7 @@ struct child_process {
- 	unsigned no_stdout:1;
- 	unsigned no_stderr:1;
- 	unsigned git_cmd:1; /* if this is to be git sub-command */
-+	unsigned silent_exec_failure:1;
- 	unsigned stdout_to_stderr:1;
- 	void (*preexec_cb)(void);
- };
-@@ -44,6 +45,7 @@ extern int run_hook(const char *index_file, const char *name, ...);
- #define RUN_COMMAND_NO_STDIN 1
- #define RUN_GIT_CMD	     2	/*If this is to be git sub-command */
- #define RUN_COMMAND_STDOUT_TO_STDERR 4
-+#define RUN_SILENT_EXEC_FAILURE 8
- int run_command_v_opt(const char **argv, int opt);
- 
- /*
-diff --git a/transport.c b/transport.c
-index 0885801..802ce7f 100644
---- a/transport.c
-+++ b/transport.c
-@@ -396,7 +396,6 @@ static int curl_transport_push(struct transport *transport, int refspec_nr, cons
- {
- 	const char **argv;
- 	int argc;
--	int err;
- 
- 	if (flags & TRANSPORT_PUSH_MIRROR)
- 		return error("http transport does not support mirror mode");
-@@ -416,10 +415,7 @@ static int curl_transport_push(struct transport *transport, int refspec_nr, cons
- 	while (refspec_nr--)
- 		argv[argc++] = *refspec++;
- 	argv[argc] = NULL;
--	err = run_command_v_opt(argv, RUN_GIT_CMD);
--	if (err < 0 && errno == ENOENT)
--		error("unable to exec %s", argv[0]);
--	return !!err;
-+	return !!run_command_v_opt(argv, RUN_GIT_CMD);
- }
- 
- static struct ref *get_refs_via_curl(struct transport *transport, int for_push)
+> - 29. How did you heard about this Git User's Survey?
+> + 29. How did you hear about this survey?
+
+I'll fix grammar, but I'd leave "Git User's Survey" here.
+
+> - 30. What other comments or suggestions do you have that are not
+> covered by the questions above?
+> + 30. Any other comments or suggestions?
+
+Perhaps.
+
+
+Thanks a lot for your review and comments!
+
 -- 
-1.6.3.17.g1665f
+Jakub Narebski
+Poland
