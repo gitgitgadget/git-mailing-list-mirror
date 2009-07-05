@@ -1,120 +1,55 @@
-From: Yann Dirson <ydirson@altern.org>
-Subject: [PATCH 2/2] Improve doc for format-patch threading options.
-Date: Mon,  6 Jul 2009 01:05:29 +0200
-Message-ID: <9820c7a185de928cf693a21a68d8550afe36d354.1246834884.git.ydirson@altern.org>
-References: <cover.1246834883.git.ydirson@altern.org>
- <112440b74f47290e55209b23d1bfc66ed2423297.1246834884.git.ydirson@altern.org>
-Cc: Yann Dirson <ydirson@altern.org>
+From: Wink Saville <wink@saville.com>
+Subject: Git gui error RenderBadPicture
+Date: Sun, 5 Jul 2009 16:40:46 -0700
+Message-ID: <d4cf37a60907051640k215595a1n95b720201243fc89@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jul 06 01:04:16 2009
+X-From: git-owner@vger.kernel.org Mon Jul 06 01:42:03 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MNakk-0007iA-AV
-	for gcvg-git-2@gmane.org; Mon, 06 Jul 2009 01:04:10 +0200
+	id 1MNbLO-0007Y6-Op
+	for gcvg-git-2@gmane.org; Mon, 06 Jul 2009 01:42:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755103AbZGEXD6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 5 Jul 2009 19:03:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752964AbZGEXDy
-	(ORCPT <rfc822;git-outgoing>); Sun, 5 Jul 2009 19:03:54 -0400
-Received: from smtp1-g21.free.fr ([212.27.42.1]:37135 "EHLO smtp1-g21.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754629AbZGEXDw (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 5 Jul 2009 19:03:52 -0400
-Received: from smtp1-g21.free.fr (localhost [127.0.0.1])
-	by smtp1-g21.free.fr (Postfix) with ESMTP id DE89294007C;
-	Mon,  6 Jul 2009 01:03:49 +0200 (CEST)
-Received: from gandelf.nowhere.earth (nan92-1-81-57-214-146.fbx.proxad.net [81.57.214.146])
-	by smtp1-g21.free.fr (Postfix) with ESMTP id A7D8F9400B5;
-	Mon,  6 Jul 2009 01:03:46 +0200 (CEST)
-Received: by gandelf.nowhere.earth (Postfix, from userid 1000)
-	id 1E9BCA005; Mon,  6 Jul 2009 01:05:33 +0200 (CEST)
-X-Mailer: git-send-email 1.6.3.3
-In-Reply-To: <112440b74f47290e55209b23d1bfc66ed2423297.1246834884.git.ydirson@altern.org>
-In-Reply-To: <cover.1246834883.git.ydirson@altern.org>
-References: <cover.1246834883.git.ydirson@altern.org>
+	id S1755883AbZGEXko convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 5 Jul 2009 19:40:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755755AbZGEXkn
+	(ORCPT <rfc822;git-outgoing>); Sun, 5 Jul 2009 19:40:43 -0400
+Received: from mail-yx0-f188.google.com ([209.85.210.188]:44961 "EHLO
+	mail-yx0-f188.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754611AbZGEXkn convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 5 Jul 2009 19:40:43 -0400
+Received: by yxe26 with SMTP id 26so5064255yxe.33
+        for <git@vger.kernel.org>; Sun, 05 Jul 2009 16:40:46 -0700 (PDT)
+Received: by 10.100.251.7 with SMTP id y7mr7220275anh.178.1246837246529; Sun, 
+	05 Jul 2009 16:40:46 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122765>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122766>
 
-It was not immediately clear to me that not specifying any threading
-at all would result in a deep-threading because of send-email.
+I recently upgraded to ubuntu 9.04 and now I'm getting the
+following error when when closing git gui using the "close button",
+when exiting via Ctrl-Q this error does not occur:
 
-Signed-off-by: Yann Dirson <ydirson@altern.org>
----
- Documentation/git-format-patch.txt |   15 +++++++++++----
- Documentation/git-send-email.txt   |   16 +++++++++++-----
- 2 files changed, 22 insertions(+), 9 deletions(-)
+wink@pacific:~/foss/protobuf-2.1.0$ git gui
+X Error of failed request: =A0RenderBadPicture (invalid Picture paramet=
+er)
+=A0=A0Major opcode of failed request: =A0152 (RENDER)
+=A0=A0Minor opcode of failed request: =A07 (RenderFreePicture)
+=A0=A0Picture id in failed request: 0x3a000e2
+=A0=A0Serial number of failed request: =A01845
+=A0=A0Current serial number in output stream: =A01860
 
-diff --git a/Documentation/git-format-patch.txt b/Documentation/git-format-patch.txt
-index 6f1fc80..ebc8b16 100644
---- a/Documentation/git-format-patch.txt
-+++ b/Documentation/git-format-patch.txt
-@@ -10,7 +10,7 @@ SYNOPSIS
- --------
- [verse]
- 'git format-patch' [-k] [(-o|--output-directory) <dir> | --stdout]
--		   [--thread[=<style>]]
-+		   [--no-thread | --thread[=<style>]]
- 		   [(--attach|--inline)[=<boundary>] | --no-attach]
- 		   [-s | --signoff]
- 		   [-n | --numbered | -N | --no-numbered]
-@@ -124,6 +124,7 @@ include::diff-options.txt[]
- 	second part, with "Content-Disposition: inline".
- 
- --thread[=<style>]::
-+--no-thread::
- 	Add In-Reply-To and References headers to make the second and
- 	subsequent mails appear as replies to the first.  Also generates
- 	the Message-Id header to reference.
-@@ -132,9 +133,15 @@ The optional <style> argument can be either `shallow` or `deep`.
- 'shallow' threading makes every mail a reply to the head of the
- series, where the head is chosen from the cover letter, the
- `\--in-reply-to`, and the first patch mail, in this order.  'deep'
--threading makes every mail a reply to the previous one.  If not
--specified, defaults to the 'format.thread' configuration, or `shallow`
--if that is not set.
-+threading makes every mail a reply to the previous one.
-++
-+The default is --no-thread, unless the 'format.thread' configuration
-+is set.  If --thread is specified without a style, it defaults to the
-+style specified by 'format.thread' if any, or else `shallow`.
-++
-+Beware that the default for 'git send-email' is to do deep threading
-+if the emails to be sent have no Message-Id header, which is what
-+happens when then are generated by 'git format-patch --no-thread'.
- 
- --in-reply-to=Message-Id::
- 	Make the first mail (or all the mails with --no-thread) appear as a
-diff --git a/Documentation/git-send-email.txt b/Documentation/git-send-email.txt
-index fbde2d3..177fc93 100644
---- a/Documentation/git-send-email.txt
-+++ b/Documentation/git-send-email.txt
-@@ -212,11 +212,17 @@ specified, as well as 'body' if --no-signed-off-cc is specified.
- 	value; if that is unspecified, default to --no-suppress-from.
- 
- --[no-]thread::
--	If this is set, the In-Reply-To header will be set on each email sent.
--	If disabled with "--no-thread", no emails will have the In-Reply-To
--	header set, unless specified with --in-reply-to.
--	Default is the value of the 'sendemail.thread' configuration
--	value; if that is unspecified, default to --thread.
-+	If this is set, the In-Reply-To header will be set on each
-+	email sent, refering to the previous email (`deep` threading
-+	per 'git format-patch' wording).
-++
-+If disabled with "--no-thread", no emails will have the In-Reply-To
-+header set, unless specified with --in-reply-to.  Default is the value
-+of the 'sendemail.thread' configuration value; if that is unspecified,
-+default to --thread.
-++
-+Please note that this setting is independant from the similarly-named
-+flag of 'git format-patch'.
- 
- 
- Administering
--- 
-1.6.3.3
+There appears to be no ill effects but it is disconcerting and I'll try
+to get in the habit of quiting via Ctrl-Q but thought someone might
+like to know. I've built git from sources and the version is:
+
+wink@pacific:~/foss/protobuf-2.1.0$ git --version
+git version 1.6.3.GIT
+
+-- Wink
