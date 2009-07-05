@@ -1,67 +1,78 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: [PATCH v2] completion: Add --full-diff to log options
-Date: Sun, 5 Jul 2009 01:35:01 -0700
-Message-ID: <20090705083501.GA13068@dcvr.yhbt.net>
-References: <pan.2009.06.02.00.34.36@fedoraproject.org> <7vzlcrihew.fsf@alter.siamese.dyndns.org> <20090603122230.GZ28808@inocybe.localdomain> <200906031630.09962.trast@student.ethz.ch> <20090603202058.GA28808@inocybe.localdomain>
+From: Daniel Trstenjak <Daniel.Trstenjak@online.de>
+Subject: Verbose output of git commands
+Date: Sun, 5 Jul 2009 12:58:56 +0200
+Message-ID: <20090705105856.GC5689@laptop>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Thomas Rast <trast@student.ethz.ch>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Todd Zullinger <tmz@pobox.com>,
-	Thomas Spura <tomspur@fedoraproject.org>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Jul 05 10:35:40 2009
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Jul 05 12:59:15 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MNNCF-00052U-KT
-	for gcvg-git-2@gmane.org; Sun, 05 Jul 2009 10:35:40 +0200
+	id 1MNPRD-0008ST-7D
+	for gcvg-git-2@gmane.org; Sun, 05 Jul 2009 12:59:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753653AbZGEIe7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 5 Jul 2009 04:34:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753619AbZGEIe7
-	(ORCPT <rfc822;git-outgoing>); Sun, 5 Jul 2009 04:34:59 -0400
-Received: from dcvr.yhbt.net ([64.71.152.64]:42103 "EHLO dcvr.yhbt.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753589AbZGEIe6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 5 Jul 2009 04:34:58 -0400
-Received: from localhost (user-118bg3a.cable.mindspring.com [66.133.192.106])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by dcvr.yhbt.net (Postfix) with ESMTPSA id B65421F794;
-	Sun,  5 Jul 2009 08:35:01 +0000 (UTC)
+	id S1752518AbZGEK6z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 5 Jul 2009 06:58:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751641AbZGEK6y
+	(ORCPT <rfc822;git-outgoing>); Sun, 5 Jul 2009 06:58:54 -0400
+Received: from moutng.kundenserver.de ([212.227.126.177]:59996 "EHLO
+	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751487AbZGEK6x (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 5 Jul 2009 06:58:53 -0400
+Received: from localhost (p54A084B5.dip0.t-ipconnect.de [84.160.132.181])
+	by mrelayeu.kundenserver.de (node=mreu1) with ESMTP (Nemesis)
+	id 0MKv1o-1MNPQu2PwX-000cP6; Sun, 05 Jul 2009 12:58:56 +0200
 Content-Disposition: inline
-In-Reply-To: <20090603202058.GA28808@inocybe.localdomain>
 User-Agent: Mutt/1.5.18 (2008-05-17)
+X-Provags-ID: V01U2FsdGVkX18Fsw4Eu9QBx8zLLGEo+PdXxq6/+acRnu83frt
+ Lq5dyVtygNDmo3cXBdM35D64udgeYl/58Pdih60VgV21CXHE7R
+ tZuaL3s3hPMnxQJqt+a3A==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122737>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122738>
 
-Todd Zullinger <tmz@pobox.com> wrote:
-> Signed-off-by: Todd Zullinger <tmz@pobox.com>
 
-I was just missing this completion for "git log" myself.
+Hi all,
 
-Acked-by: Eric Wong <normalperson@yhbt.net>
+when starting with git it's very nice to have all this helpful hints in
+the output of the git commands. But know, after I can handle git quite well,
+all this helpful hints hinder me to get the core information of the
+commands. 
 
-> ---
->  contrib/completion/git-completion.bash |    2 +-
->  1 files changed, 1 insertions(+), 1 deletions(-)
-> 
-> diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-> index 98b9cbe..79a99af 100755
-> --- a/contrib/completion/git-completion.bash
-> +++ b/contrib/completion/git-completion.bash
-> @@ -1157,7 +1157,7 @@ _git_log ()
->  			$__git_log_shortlog_options
->  			$__git_log_gitk_options
->  			--root --topo-order --date-order --reverse
-> -			--follow
-> +			--follow --full-diff
->  			--abbrev-commit --abbrev=
->  			--relative-date --date=
->  			--pretty= --format= --oneline
-> -- 
+E.g:
+git status
+
+file: needs merge
+# Not currently on any branch.
+# Changed but not updated:
+#   (use "git add <file>..." to update what will be committed)
+#   (use "git checkout -- <file>..." to discard changes in working directory)
+#
+#       unmerged:   file
+#
+# Untracked files:
+#   (use "git add <file>..." to include in what will be committed)
+#
+#       init
+
+
+The core information is just:
+
+unmerged : file
+untracked: init
+
+
+
+It would be nice to be able to configure an expert mode, in which only
+the core information of the git commands is printed out.
+
+Just some thoughts.
+
+
+
+Greetings,
+Daniel
