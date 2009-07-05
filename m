@@ -1,93 +1,64 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: Re: Verbose output of git commands
-Date: Sun, 05 Jul 2009 16:06:33 +0200
-Message-ID: <vpqocrz5imu.fsf@bauges.imag.fr>
-References: <20090705105856.GC5689@laptop>
+From: Alexander Toresson <alexander.toresson@gmail.com>
+Subject: git diff infinite loop at attempt to diff two specific commits
+Date: Sun, 5 Jul 2009 19:37:44 +0200
+Message-ID: <b33ba6660907051037ve9e4176s2a1edbda8af4068f@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Daniel Trstenjak <Daniel.Trstenjak@online.de>
-X-From: git-owner@vger.kernel.org Sun Jul 05 16:09:59 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Jul 05 19:37:55 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MNSPm-0003Og-W7
-	for gcvg-git-2@gmane.org; Sun, 05 Jul 2009 16:09:59 +0200
+	id 1MNVf0-0000En-G9
+	for gcvg-git-2@gmane.org; Sun, 05 Jul 2009 19:37:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753236AbZGEOJr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 5 Jul 2009 10:09:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751641AbZGEOJq
-	(ORCPT <rfc822;git-outgoing>); Sun, 5 Jul 2009 10:09:46 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:49016 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750773AbZGEOJp (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 5 Jul 2009 10:09:45 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id n65E8wdg021991
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Sun, 5 Jul 2009 16:08:58 +0200
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
-	(Exim 4.50)
-	id 1MNSMT-0000ld-N6; Sun, 05 Jul 2009 16:06:33 +0200
-Received: from moy by bauges.imag.fr with local (Exim 4.63)
-	(envelope-from <moy@imag.fr>)
-	id 1MNSMT-0007yV-Lj; Sun, 05 Jul 2009 16:06:33 +0200
-In-Reply-To: <20090705105856.GC5689@laptop> (Daniel Trstenjak's message of "Sun\, 5 Jul 2009 12\:58\:56 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.0.91 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Sun, 05 Jul 2009 16:08:58 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: n65E8wdg021991
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
-MailScanner-NULL-Check: 1247407738.98285@HZ1lnSYgja07J8/3dH18tw
+	id S1753238AbZGERho (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 5 Jul 2009 13:37:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753217AbZGERhn
+	(ORCPT <rfc822;git-outgoing>); Sun, 5 Jul 2009 13:37:43 -0400
+Received: from mail-bw0-f225.google.com ([209.85.218.225]:54979 "EHLO
+	mail-bw0-f225.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753050AbZGERhm (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 5 Jul 2009 13:37:42 -0400
+Received: by bwz25 with SMTP id 25so533982bwz.37
+        for <git@vger.kernel.org>; Sun, 05 Jul 2009 10:37:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:date:message-id:subject
+         :from:to:content-type:content-transfer-encoding;
+        bh=97ZS3wyDcfoI4Q1vlFuWNhrlBClKyANLcc0bIc0CCjQ=;
+        b=ZJnUVywleSjw8VxS6XjpYUpj+d0J7HGeZ+2ArH6mDnfFkzlmU8Z4TgWOLRa7BJi2Dv
+         h6BeXoOrU5QqApoat+S1sJ7up22cj6yQvTQAtNtgQ+S1iYsEl0GWyvHsB/y6WI3nZNtH
+         70U1Xz3jbQF1yGjJTODHetaXH3NryIx1C7fIA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:date:message-id:subject:from:to:content-type
+         :content-transfer-encoding;
+        b=h+5IAuJPB7gFKllsFGL9Xmh0x4q231efSp8sVC8uA6v7gtHX/byp466PcRxLv85RMH
+         7DNK45Synwx+yQNmiO4kgvQxr+VmQAiK+OM9dGBl3WfCzdhmNBTX/6LCfMHxZyfJEYkE
+         qKG+gwoQAfSuWUYARi46grTaNvqP2R6zTq0L8=
+Received: by 10.204.71.68 with SMTP id g4mr3644846bkj.135.1246815464485; Sun, 
+	05 Jul 2009 10:37:44 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122740>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122741>
 
-Daniel Trstenjak <Daniel.Trstenjak@online.de> writes:
+Hello,
 
-> E.g:
-> git status
->
-> file: needs merge
-> # Not currently on any branch.
-> # Changed but not updated:
-> #   (use "git add <file>..." to update what will be committed)
-> #   (use "git checkout -- <file>..." to discard changes in working directory)
-> #
-> #       unmerged:   file
-> #
-> # Untracked files:
-> #   (use "git add <file>..." to include in what will be committed)
-> #
-> #       init
->
->
-> The core information is just:
->
-> unmerged : file
-> untracked: init
+I've got problems with git diff, it hangs in an infinite loop when
+attempting to generate a diff between two specific commits. Commands
+to reproduce:
 
-The
+git clone git://eulex.zapto.org/nightfall.git
+cd nightfall
+git diff --stat 597711..61a139
 
-# Not currently on any branch.
+(Note that the clone needs to fetch 16mb)
 
-also contains some relevant information.
+I'm running git 1.6.3.3.
 
-> It would be nice to be able to configure an expert mode, in which only
-> the core information of the git commands is printed out.
-
-Agreed, but even without that, I find 'ui.color = true' to solve most
-of the issue: the relevant text is shown colored, and the color tells
-me whether the change is staged or not. So, I can still concentrate on
-the important.
-
-Other than that, "git diff --name-status" can help, too.
-
--- 
-Matthieu
+Regards, Alexander Toresson
