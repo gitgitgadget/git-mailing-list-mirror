@@ -1,108 +1,136 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [RFC] Git User's Survey 2009 - second trial run, and question 
-	about announcing it
-Date: Sun, 5 Jul 2009 22:15:54 +0300
-Message-ID: <94a0d4530907051215h755f634bkfd043d88289df29e@mail.gmail.com>
-References: <200907030130.24417.jnareb@gmail.com>
-	 <94a0d4530907031619x3d1296eenf9198b4ab5e43f67@mail.gmail.com>
-	 <200907050040.21991.jnareb@gmail.com>
-	 <94a0d4530907041653n46c082e2ta5141e917f5bd84f@mail.gmail.com>
-	 <7vprcfj83z.fsf@alter.siamese.dyndns.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: Wrong file diff for merge conflict
+Date: Sun, 05 Jul 2009 12:22:22 -0700 (PDT)
+Message-ID: <m3vdm7ue8k.fsf@localhost.localdomain>
+References: <loom.20090704T072854-229@post.gmane.org>
+	<alpine.LFD.2.01.0907051113240.3210@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Jul 05 21:16:04 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Stefan Bucur <stefan.bucur@gmail.com>, git@vger.kernel.org
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Sun Jul 05 21:22:33 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MNXBz-000644-G7
-	for gcvg-git-2@gmane.org; Sun, 05 Jul 2009 21:16:04 +0200
+	id 1MNXIG-0008IY-I0
+	for gcvg-git-2@gmane.org; Sun, 05 Jul 2009 21:22:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753472AbZGETPx convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 5 Jul 2009 15:15:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752554AbZGETPw
-	(ORCPT <rfc822;git-outgoing>); Sun, 5 Jul 2009 15:15:52 -0400
-Received: from fg-out-1718.google.com ([72.14.220.153]:12415 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752067AbZGETPw convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 5 Jul 2009 15:15:52 -0400
-Received: by fg-out-1718.google.com with SMTP id e21so1073073fga.17
-        for <git@vger.kernel.org>; Sun, 05 Jul 2009 12:15:55 -0700 (PDT)
+	id S1753190AbZGETWW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 5 Jul 2009 15:22:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752554AbZGETWV
+	(ORCPT <rfc822;git-outgoing>); Sun, 5 Jul 2009 15:22:21 -0400
+Received: from mail-fx0-f218.google.com ([209.85.220.218]:56757 "EHLO
+	mail-fx0-f218.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752067AbZGETWV (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 5 Jul 2009 15:22:21 -0400
+Received: by fxm18 with SMTP id 18so3430691fxm.37
+        for <git@vger.kernel.org>; Sun, 05 Jul 2009 12:22:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=zcP48+rkjiVJuTiXrJxcVkV3RhyeKO1PVcrT7TBmk9k=;
-        b=gWShftOihaGUQsBa7JyacyTFspr47HgmO2djAQJLAGdd+nFhnqMM4kkVjbJDkxLGi7
-         9wdotPIHw2mk8WWFKV3xIZMCVM/JPgsAqdEWrCOQN6rEY682/QbiUNlcDSWmyRP9tchD
-         bBdts91iag02sWe+/thmT55BJiH1ppDsODQVo=
+        h=domainkey-signature:received:received:received:received
+         :x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        bh=rYwDfmNasneMdwpvmmcdHNSh6lj6MHI45kw11QTXvmI=;
+        b=GVcrOBJJeD019ZwuRf/mVQIn/6WJZsY6YPcZGK1p+6LZK91PlzFE3iPB66lhkp0hLI
+         1v7OblFIyevZ2cyfHB7XxVU+hMjPXW9plM+tyHH7EuEIHtXHRatKj8ZtjRxL7XmIwW12
+         MqNVGsL4/MUa5weTagXTrqW9seE3gunpoA9Mg=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=pUIblSnGnDIHSOBzL0Ht1C43fNkbKUxDB/aCDIbInR2R14Xx1EWCVI13s3UbUjJuU9
-         xKBzIh4AjltZEDQhd1ebfhuYiafCcbIvhfZgbyVTDIXW6wPgZJrSBNVQ7OkjbnuqnefK
-         4CV0N8/uFaOl6PbYpPV/zt5P/jXOJYR/ip4jA=
-Received: by 10.86.92.13 with SMTP id p13mr1767883fgb.43.1246821354968; Sun, 
-	05 Jul 2009 12:15:54 -0700 (PDT)
-In-Reply-To: <7vprcfj83z.fsf@alter.siamese.dyndns.org>
+        h=x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        b=OZn+OGc1w+ywC2MT8gAvdaBcchyBWHpv8Rhb7YRPXQoeOfEIjeAp2cxIJh+LtLL3it
+         egCwmCYhihIfnbfc3mQNpr3Ddd9MnNImJJ8LfJbanjjAq745yswQj/g1J12g2X1iFM3w
+         TEbX9io6cKFUEceUr2kT8FJhX3DtAcJOYiTYU=
+Received: by 10.103.167.14 with SMTP id u14mr2113857muo.81.1246821742926;
+        Sun, 05 Jul 2009 12:22:22 -0700 (PDT)
+Received: from localhost.localdomain (abvj223.neoplus.adsl.tpnet.pl [83.8.207.223])
+        by mx.google.com with ESMTPS id 7sm29433622mup.24.2009.07.05.12.22.21
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sun, 05 Jul 2009 12:22:22 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id n65JMMGU019284;
+	Sun, 5 Jul 2009 21:22:22 +0200
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id n65JMKIo019281;
+	Sun, 5 Jul 2009 21:22:20 +0200
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <alpine.LFD.2.01.0907051113240.3210@localhost.localdomain>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122750>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122751>
 
-On Sun, Jul 5, 2009 at 9:30 PM, Junio C Hamano<gitster@pobox.com> wrote=
-:
-> Felipe Contreras <felipe.contreras@gmail.com> writes:
->
->> I guess Junio's blog is the most official one ATM,...
->
-> Sorry, don't.
->
-> =C2=A0- Even if you are pretending to be a git community member, you =
-are merely
-> =C2=A0 a phoney if you are not reading it.
->
-> =C2=A0- If you want to be up-to-date with what is happening in the co=
-mmunity,
-> =C2=A0 you should be reading it. =C2=A0Any important announcement alw=
-ays will
-> =C2=A0 appear there.
->
-> That would be an official blog. =C2=A0I do not use mine that way, and=
- nobody
-> has to follow it in order to function better in the git land.
->
-> It's like expecting Linus to announce the kernel release in his blog.
->
-> Not going to happen. =C2=A0The official channel of this community has=
- always
-> been this list.
->
-> I'm OK if somebody declares that he will use his blog to relay import=
-ant
-> announcements from this list, to help blog minded people to follow it
-> instead of reading the list.
->
-> But that won't be me.
+Linus Torvalds <torvalds@linux-foundation.org> writes:
+> On Sat, 4 Jul 2009, Stefan Bucur wrote:
+> > 
+> > http://pastebin.ca/1483228
+> > 
+> > The problem is with the last diff in the file, where the left portion is empty,
+> > and the right portion contains code which already was marked as merged (common),
+> > right before the start of the diff. Therefore, the mark at line 127 should
+> > really have been before line 114.
+> > 
+> > Is this a bug or I am missing something?
+> 
+> I suspect (but without the origin files/history I can't verify) that what 
+> happens is that the "successfully merged" code was seen as a fully new 
+> snippet of code (probably due to getting re-indented?), and the other part 
+> of that action on that branch was the removal of the old code.
+> 
+> That _removal_ is then shown as a conflict against the other branch, which 
+> presumably didn't re-indent things (of course, it could be exactly the 
+> other way around too), and so now you end up having the "conflict" being 
+> seen as "one branch removes this code (empty conflict part), the other one 
+> presumably changed it some way".
+> 
+> Is that what you wanted? Obviously not. To you, the conflict makes no 
+> sense. You're a human, who tries to understand what wen't wrong, and to 
+> you, the end result of the conflict resolution makes no sense.
 
-I know there's no official git blog, I've tried to change that, but so
-far that hasn't happened. IMHO for now the most popular git blog(s)
-should announce the survey, I'll announce it at gitlog.wordpress.com
-but it is far from being popular.
+[...]
+>  - Don't rely so heavily on just the traditional three-way merge result.
+> 
+>    This is what I personally do. The trivial 3-way merge result is 
+>    wondeful for the truly trivial merges, when it gives trivial results 
+>    that are easy to fix up. But let's face it, the traditional 3-way merge 
+>    result just sucks for anything more complicated. When you have an empty 
+>    side on one of the conflicts, is that because the other side added 
+>    everything, or is it because oen side removed it? Or is it, like in 
+>    this case, simply because trivially similar lines got the whole diff 
+>    confused about which parts didn't change at all?
+> 
+>    The good news is that git does have a few nice merge tools. One is 
+>    "git diff", which actually shows way more than the trivial three-way 
+>    end result, in that you can diff against either side, and by default it 
+>    does that fairly complex "diff against both sides" thing that is also 
+>    quite useful once you get used to it.
+> 
+>    Another is "gitk --merge [filename]" which is wonderful as a tool to 
+>    see what both sides actually did, to figure out what the intent of both 
+>    branches were when the three-way merge result is just noise.
 
-I understand your position for not making your personal blog the
-official one; I wouldn't do that on my personal blog either
-(felipec.wordpress.com) that's why I created a separate blog for that,
-where you, or anyone else, can do official git posts instead of on
-their personal blog.
+There is also "git mergetool" which runs graphical merge tool of your
+choice.  It can be easier to work with GUI here.
 
-Cheers.
 
---=20
-=46elipe Contreras
+And git also supports diff3 conflict merge markers, which shows our
+and their side, and also the ancestor side; in your case it would make
+easy to distinguish between 'one side added' and 'other side removed'.
+You can get it using 
+
+  $ git checkout --conflict=diff3 <file>
+ 
+(where <file> can be '.').  You would need modern git (post 1.6.2
+I think) for that.
+
+> The right answer is probably some combination of "all of the above". In 
+> the meantime, right now, only the last one is something git itself will 
+> help you with.
+
+-- 
+Jakub Narebski
+Poland
+ShadeHawk on #git
