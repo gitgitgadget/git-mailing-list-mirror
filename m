@@ -1,113 +1,61 @@
-From: Nick Woolley <nickwoolley@yahoo.co.uk>
-Subject: Re: [PATCH] git-cvsexportcommit can't commit files which have been
- 	removed from CVS
-Date: Mon, 06 Jul 2009 14:23:31 +0100
-Message-ID: <4A51FAD3.7010306@yahoo.co.uk>
-References: <4A1F1CF5.8030002@yahoo.co.uk>	 <e2b179460906100106x2b9c0bb4r931b0a12959d4314@mail.gmail.com>	 <4A311053.5060802@yahoo.co.uk> <e2b179460907020650u672d8724p45f67173668332aa@mail.gmail.com>
+From: Nick Woolley <nick@noodlefactory.co.uk>
+Subject: [PATCH 1/2] Remove archaic use of regex capture \1 in favour of $1
+Date: Mon, 06 Jul 2009 14:33:07 +0100
+Organization: Noodle Factory Ltd
+Message-ID: <4A51FD13.3030708@noodlefactory.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Robin Rosenberg <robin.rosenberg.lists@dewire.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Jeff King <peff@peff.net>, git@vger.kernel.org
-To: Mike Ralphson <mike.ralphson@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jul 06 15:23:42 2009
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jul 06 16:12:22 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MNoAY-0006Lx-4W
-	for gcvg-git-2@gmane.org; Mon, 06 Jul 2009 15:23:42 +0200
+	id 1MNovZ-0001UO-OE
+	for gcvg-git-2@gmane.org; Mon, 06 Jul 2009 16:12:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753759AbZGFNXc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 6 Jul 2009 09:23:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753532AbZGFNXc
-	(ORCPT <rfc822;git-outgoing>); Mon, 6 Jul 2009 09:23:32 -0400
-Received: from udon.noodlefactory.co.uk ([80.68.88.167]:35902 "EHLO
+	id S1754222AbZGFOMF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 6 Jul 2009 10:12:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753906AbZGFOMD
+	(ORCPT <rfc822;git-outgoing>); Mon, 6 Jul 2009 10:12:03 -0400
+Received: from udon.noodlefactory.co.uk ([80.68.88.167]:57359 "EHLO
 	udon.noodlefactory.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753509AbZGFNXb (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 6 Jul 2009 09:23:31 -0400
+	with ESMTP id S1753581AbZGFOMD (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 6 Jul 2009 10:12:03 -0400
+X-Greylist: delayed 2342 seconds by postgrey-1.27 at vger.kernel.org; Mon, 06 Jul 2009 10:12:02 EDT
 Received: from 87-194-154-6.bethere.co.uk ([87.194.154.6] helo=[192.168.0.102])
 	by udon.noodlefactory.co.uk with esmtpsa (TLS-1.0:DHE_RSA_AES_256_CBC_SHA1:32)
 	(Exim 4.63)
-	(envelope-from <nickwoolley@yahoo.co.uk>)
-	id 1MNoAJ-0006cZ-A6; Mon, 06 Jul 2009 14:23:27 +0100
+	(envelope-from <nick@noodlefactory.co.uk>)
+	id 1MNoJb-0006cz-Hs
+	for git@vger.kernel.org; Mon, 06 Jul 2009 14:33:03 +0100
 User-Agent: Thunderbird 2.0.0.22 (X11/20090608)
-In-Reply-To: <e2b179460907020650u672d8724p45f67173668332aa@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122787>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122788>
 
-Mike Ralphson wrote:
-> debug.out contains the following:
-> 
-> # before adding file
-> cvs status: nothing known about attic_gremlin
-> ===================================================================
-> File: no file attic_gremlin             Status: Unknown
-> 
->    Working revision:    No entry for attic_gremlin
->    Repository revision: No revision control file
-> 
-> ===================================================================
-> File:  space            Status: Needs Patch
+Using it will generate a perl warning "\1 better written as $1".
 
-This is what I get on this line:
+Signed-off-by: Nick Woolley <git.wu-lee@noodlefactory.co.uk>
+---
+ git-cvsexportcommit.perl |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-  File:  space           	Status: Up-to-date
-
-Which might explain why it fails the 'up to date check' in your case - it seems
-that CVS hasn't synchronised the " space" file with the respository?  Or is this
-an artifact created by the race condition Robin mentioned?  I gather the problem
-appears intermittently.
-
-
-> 
-> CVS/Entries for the file has
-> / space/1.1/Thu Jul  2 12:50:17 2009//
-> 
->> You might also try commenting out the following part of my test, so that it
->> should trivially work, and see if there's still an error:
->>
->> #      rm attic_gremlin &&
->> #      cvs -Q rm attic_gremlin &&
->> #      cvs -Q ci -m "removed attic_gremlin"
-> 
-> It all goes a bit fun if I do that...
-> 
-
-Actually, I get the error you do here - my mistake, I should have told you to
-comment out the whole clause, i.e.:
-
-#     (cd "$CVSWORK" &&
-#      echo >attic_gremlin &&
-#      cvs -Q add attic_gremlin &&
-#      cvs -Q ci -m "added attic_gremlin" &&
-#      rm attic_gremlin &&
-#      cvs -Q rm attic_gremlin &&
-#      cvs -Q ci -m "removed attic_gremlin") &&
-
-I've checked this passes for me.
-
-
-> Would it be acceptable to simply reorder the tests so this previously
-> unreported error goes away again?
-
-Speaking personally, I can't see why not, although I don't understand the
-mechanism of the race condition in question. Wouldn't a race condition like this
-potentially cause similar errors to crop up all through the test script,
-whenever git-cvsexportingcommit gets a bogus "Needs Patch" status?
-
-An alternative might be to start my particular test by creating a new CVS
-repository.
-
-
-Cheers,
-
-N
-
-ps I've patched git-cvsexportcommit.perl to get rid of the warnings I can also
-see in your output, and will submit those to this list separately.
+diff --git a/git-cvsexportcommit.perl b/git-cvsexportcommit.perl
+index a36df33..d509468 100755
+--- a/git-cvsexportcommit.perl
++++ b/git-cvsexportcommit.perl
+@@ -299,7 +299,7 @@ foreach my $f (@files) {
+ 	while (<FILTER_IN>)
+ 	{
+ 	    my $line = $_;
+-	    $line =~ s/\$([A-Z][a-z]+):[^\$]+\$/\$\1\$/g;
++	    $line =~ s/\$([A-Z][a-z]+):[^\$]+\$/\$$1\$/g;
+ 	    print FILTER_OUT $line;
+ 	}
+ 	close FILTER_IN;
+-- 
+1.6.3.3
