@@ -1,47 +1,82 @@
-From: "Yann Dirson" <ydirson@linagora.com>
-Subject: "git svn reset" only resets current branch ?
-Date: Mon, 6 Jul 2009 12:07:37 +0200 (CEST)
-Message-ID: <43948.10.0.0.1.1246874857.squirrel@intranet.linagora.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [RFC] Git User's Survey 2009 - second trial run, and question about announcing it
+Date: Mon, 6 Jul 2009 13:16:23 +0200
+Message-ID: <200907061316.24824.jnareb@gmail.com>
+References: <200907030130.24417.jnareb@gmail.com> <94a0d4530907051312u1c4bc811i4015b1eb753a8b1e@mail.gmail.com> <4A51B25C.9040904@op5.se>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org
-To: "Eric Wong" <normalperson@yhbt.net>
-X-From: git-owner@vger.kernel.org Mon Jul 06 12:08:31 2009
+Content-Type: text/plain;
+  charset="iso-8859-15"
+Content-Transfer-Encoding: 7bit
+Cc: Felipe Contreras <felipe.contreras@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Andreas Ericsson <ae@op5.se>
+X-From: git-owner@vger.kernel.org Mon Jul 06 13:16:54 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MNl7a-0001C6-Hm
-	for gcvg-git-2@gmane.org; Mon, 06 Jul 2009 12:08:27 +0200
+	id 1MNmBf-0008MV-Ar
+	for gcvg-git-2@gmane.org; Mon, 06 Jul 2009 13:16:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753789AbZGFKH2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 6 Jul 2009 06:07:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753195AbZGFKH1
-	(ORCPT <rfc822;git-outgoing>); Mon, 6 Jul 2009 06:07:27 -0400
-Received: from alderaan.linagora.com ([84.14.148.74]:44329 "EHLO
-	alderaan.linagora.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753172AbZGFKH1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 6 Jul 2009 06:07:27 -0400
-Received: from 10.0.0.2 (unknown [10.75.192.3])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by alderaan.linagora.com (Postfix) with ESMTPSA id A1F9F429F08;
-	Mon,  6 Jul 2009 12:07:28 +0200 (CEST)
-Received: from 10.0.0.1 (proxying for 194.206.158.221)
-        (SquirrelMail authenticated user ydirson)
-        by intranet.linagora.com with HTTP;
-        Mon, 6 Jul 2009 12:07:37 +0200 (CEST)
-User-Agent: SquirrelMail/1.4.11
-X-Priority: 3 (Normal)
-Importance: Normal
+	id S1754168AbZGFLQd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 6 Jul 2009 07:16:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754023AbZGFLQc
+	(ORCPT <rfc822;git-outgoing>); Mon, 6 Jul 2009 07:16:32 -0400
+Received: from mail-fx0-f218.google.com ([209.85.220.218]:38040 "EHLO
+	mail-fx0-f218.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753817AbZGFLQb (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 6 Jul 2009 07:16:31 -0400
+Received: by fxm18 with SMTP id 18so3985852fxm.37
+        for <git@vger.kernel.org>; Mon, 06 Jul 2009 04:16:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=uyHMy6VeWTQYS0PUlSBglNb/OAHCizyzbIi0t071QNA=;
+        b=eG1mYMSsrN2qjSgH1z4GA/+O1ANvx+tLFmJ11FNpbJ4hQOcPY3h82X0EQSKKCVO6hU
+         k1LLcASxzjR62vmWX2roTXY+Y/1/yFqMrKAp7hUkJtD29BHpWa40VtUnAgDSLvQpgej2
+         FW4PaXP/4Uas5rWmbmEu3RR2FN96eXQXrCwfo=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=qyOMrMe3OowQgbTqb1OSYN5vi/ticJ08pJ2ZtXhoFVP1U1HGSyW3SM6Fj9soZYuXTj
+         7Y6A46nnKo0wBTcBQ/RlZNsHTpi065gay5t5X00N9CrGeEIy1m4P8Vd5cWQCivEzuVnV
+         8ZyUOK+7DA+meVZF3333qrN3ADuPRH0zFFE1I=
+Received: by 10.204.62.135 with SMTP id x7mr4468179bkh.95.1246878993638;
+        Mon, 06 Jul 2009 04:16:33 -0700 (PDT)
+Received: from ?192.168.1.13? (abvj223.neoplus.adsl.tpnet.pl [83.8.207.223])
+        by mx.google.com with ESMTPS id 22sm11200333fkr.30.2009.07.06.04.16.32
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 06 Jul 2009 04:16:32 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <4A51B25C.9040904@op5.se>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122781>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122782>
 
-I just tried the new "git svn reset" from master, and got puzzled that
-only the svn branch which is an ancestor of current git HEAD got rolled
-back.  Is that the expected behaviour ?  It would not make it very easy to
-fixup imports from svn trees with lots of branches/tags.
+On Mon, 6 July 2009, Andreas Ericsson wrote:
+> Felipe Contreras wrote:
+
+> > And I have many friends who don't follow git's mailing list, so no, I
+> > don't think a mailing list is enough for official announcements.
+> 
+> There are no forums suitable for everyone who are interested in git
+> development. We can (sort of) rely on package maintainers for the
+> various distros to keep track of groundbreaking changes. People who
+> compile from source are sort of on their own if they don't want to
+> follow the mailing list or in some other way find out what's going
+> on. I don't have a problem with that, and it matches what I'd have
+> expected myself if I was building something from source.
+
+People who compile from source have RelNotes since 1.5.0.  They are
+here for a reason...
+
+-- 
+Jakub Narebski
+Poland
