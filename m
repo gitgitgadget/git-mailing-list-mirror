@@ -1,147 +1,210 @@
-From: Eric Raible <raible@gmail.com>
-Subject: Re: Does CVS has a easy way to compare file with its previous 
-	version?
-Date: Mon, 6 Jul 2009 16:39:43 -0700
-Message-ID: <279b37b20907061639o6d6c72e7qf7bbc2459c7fc77e@mail.gmail.com>
-References: <1e56aa11-735a-47f7-a273-5b6bf611f528@n11g2000yqb.googlegroups.com>
-	 <m3hbxxx5jk.fsf@localhost.localdomain> <4A4A9FA5.7000009@gnu.org>
-	 <alpine.LFD.2.01.0906301813480.3605@localhost.localdomain>
-	 <loom.20090702T174843-784@post.gmane.org> <4A4DA7A5.7020303@gnu.org>
+From: Mattias Nissler <mattias.nissler@gmx.de>
+Subject: [PATCH 2/2] git-svn: Fix branch detection when repository root is
+ inaccessible
+Date: Tue, 07 Jul 2009 01:40:02 +0200
+Message-ID: <1246923602.4618.18.camel@kea>
+References: <20090706212742.GA8219@dcvr.yhbt.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Paolo Bonzini <bonzini@gnu.org>
-X-From: git-owner@vger.kernel.org Tue Jul 07 01:39:54 2009
+To: Eric Wong <normalperson@yhbt.net>
+X-From: git-owner@vger.kernel.org Tue Jul 07 01:40:11 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MNxmr-0005X0-Rb
-	for gcvg-git-2@gmane.org; Tue, 07 Jul 2009 01:39:54 +0200
+	id 1MNxn7-0005bV-Le
+	for gcvg-git-2@gmane.org; Tue, 07 Jul 2009 01:40:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753017AbZGFXjm convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 6 Jul 2009 19:39:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752781AbZGFXjl
-	(ORCPT <rfc822;git-outgoing>); Mon, 6 Jul 2009 19:39:41 -0400
-Received: from mail-vw0-f202.google.com ([209.85.212.202]:53589 "EHLO
-	mail-vw0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752769AbZGFXjk convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 6 Jul 2009 19:39:40 -0400
-Received: by vwj40 with SMTP id 40so3411051vwj.33
-        for <git@vger.kernel.org>; Mon, 06 Jul 2009 16:39:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=ENLDcOqqc40qaj0JUs33LIYHbGVZbxXZNksp0XCFEgY=;
-        b=QmFRUL18GSvVUW/1cDogHkN+JhYgznUY81IXkAn140aUiO3WomJD532rBKMjfb40dE
-         IYuaLQuH1o8NDWANWIzwe0k4WANK5t0suP3JtVSTh8xxWkml69l25WBM1c8/zEsE+QLk
-         IfgaStrQvCvehiLBYfDh4zSr9bFW3Vr1yNt4o=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=Ljq1D0f66Dljl3UMjt51XSj344msskEBEwmZOA+3+RRctjJbSyo3qjrFlsCa9HJfTL
-         76e4BrUKBu4PultzZwyYQQKF9W9iS9GR8YBl1Ly1n9gGT0Gf1aA7Ry7JKP+8vuU/nrkr
-         0JCwXuP60GDIRPKhzEPflvPn+qG9s+8Myl0Yc=
-Received: by 10.220.72.194 with SMTP id n2mr10755377vcj.36.1246923583830; Mon, 
-	06 Jul 2009 16:39:43 -0700 (PDT)
-In-Reply-To: <4A4DA7A5.7020303@gnu.org>
+	id S1753532AbZGFXkC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 6 Jul 2009 19:40:02 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753272AbZGFXkC
+	(ORCPT <rfc822;git-outgoing>); Mon, 6 Jul 2009 19:40:02 -0400
+Received: from mail.gmx.net ([213.165.64.20]:53965 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753187AbZGFXkB (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 6 Jul 2009 19:40:01 -0400
+Received: (qmail invoked by alias); 06 Jul 2009 23:40:03 -0000
+Received: from e182067244.adsl.alicedsl.de (EHLO [192.168.1.50]) [85.182.67.244]
+  by mail.gmx.net (mp012) with SMTP; 07 Jul 2009 01:40:03 +0200
+X-Authenticated: #429267
+X-Provags-ID: V01U2FsdGVkX184NaAMjp04WSz3O3NqY+lZUbS21L9seBy+ZF6R8G
+	FdneBX2oRhB+z3
+In-Reply-To: <20090706212742.GA8219@dcvr.yhbt.net>
+X-Mailer: Evolution 2.26.2 
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122809>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122810>
 
-On Thu, Jul 2, 2009 at 11:39 PM, Paolo Bonzini<bonzini@gnu.org> wrote:
-> On 07/02/2009 08:04 PM, Eric Raible wrote:
->>
->> Isn't the first one incorrect because<file> =A0needs to be inside th=
-e
->> backticks?
->> git diff `git log -2 --pretty=3Dformat:%h<file>` --<file>
->>
->> And isn't the replacement incorrect also (the diffs are backwards)?
->> git log --no-merges -p -R -1<file>
->
-> Yes and no.
->
-> Paolo
->
+For the case of multiple projects sharing a single SVN repository, it is
+common practice to create the standard SVN directory layout within a
+subdirectory for each project. In such setups, access control is often
+used to limit what projects a given user may access. git-svn failed to
+detect branches (e.g. when passing --stdlayout to clone) because it
+relied on having access to the root directory in the repository. This
+patch solves this problem by making git-svn use paths relative to the
+given repository URL instead of the repository root.
 
-Are you sure that you didn't mean yes and yes?
+Signed-off-by: Mattias Nissler <mattias.nissler@gmx.de>
+---
+ git-svn.perl                         |   42 +++++++++++++---------------------
+ t/t9138-git-svn-multiple-branches.sh |    8 +++---
+ 2 files changed, 20 insertions(+), 30 deletions(-)
 
-As the transcript shows the git-diff form produces a
-backwards diff.  Thus to get the same output git-log
-needs the -R:
-
-$ git init
-$ perl -e 'for (0..10) { print "$_\n" }' > file
-$ git add file
-$ git commit -minitial
-[master (root-commit) 2d451ec] initial
- 1 files changed, 11 insertions(+), 0 deletions(-)
- create mode 100644 file
-$ sed -e 's/4/four/' < file > file1
-$ mv file1 file
-$ git commit -a -m'updated'
-[master d49613a] updated
- 1 files changed, 1 insertions(+), 1 deletions(-)
-$ git diff `git log -2 --pretty=3Dformat:%h file` -- file
-diff --git a/file b/file
-index b29b605..b033488 100644
---- a/file
-+++ b/file
-@@ -2,7 +2,7 @@
- 1
- 2
- 3
--four
-+4
- 5
- 6
- 7
-
-$ git log --no-merges -p -1 file
-commit d49613a1d16c9ece551f9a52f56f16a3dae8bebc
-Author: Eric Raible <raible@nextest.com>
-Date:   Mon Jul 6 16:25:29 2009 -0700
-
-    updated
-
-diff --git a/file b/file
-index b033488..b29b605 100644
---- a/file
-+++ b/file
-@@ -2,7 +2,7 @@
- 1
- 2
- 3
--4
-+four
- 5
- 6
- 7
-
-$ git log --no-merges -p -R -1 file
-commit d49613a1d16c9ece551f9a52f56f16a3dae8bebc
-Author: Eric Raible <raible@nextest.com>
-Date:   Mon Jul 6 16:25:29 2009 -0700
-
-    updated
-
-diff --git b/file a/file
-index b29b605..b033488 100644
---- b/file
-+++ a/file
-@@ -2,7 +2,7 @@
- 1
- 2
- 3
--four
-+4
- 5
- 6
- 7
+diff --git a/git-svn.perl b/git-svn.perl
+index 57d13af..cf3948c 100755
+--- a/git-svn.perl
++++ b/git-svn.perl
+@@ -876,10 +876,6 @@ sub cmd_multi_init {
+ 		usage(1);
+ 	}
+ 
+-	# there are currently some bugs that prevent multi-init/multi-fetch
+-	# setups from working well without this.
+-	$Git::SVN::_minimize_url = 1;
+-
+ 	$_prefix = '' unless defined $_prefix;
+ 	if (defined $url) {
+ 		$url = canonicalize_url($url);
+@@ -1180,7 +1176,7 @@ sub complete_url_ls_init {
+ 		    "wanted to set to: $gs->{url}\n";
+ 	}
+ 	command_oneline('config', $k, $gs->{url}) unless $orig_url;
+-	my $remote_path = "$ra->{svn_path}/$repo_path";
++	my $remote_path = "$gs->{path}/$repo_path";
+ 	$remote_path =~ s#/+#/#g;
+ 	$remote_path =~ s#^/##g;
+ 	$remote_path .= "/*" if $remote_path !~ /\*/;
+@@ -2177,16 +2173,6 @@ sub ra {
+ 	$ra;
+ }
+ 
+-sub rel_path {
+-	my ($self) = @_;
+-	my $repos_root = $self->ra->{repos_root};
+-	return $self->{path} if ($self->{url} eq $repos_root);
+-	my $url = $self->{url} .
+-	          (length $self->{path} ? "/$self->{path}" : $self->{path});
+-	$url =~ s!^\Q$repos_root\E(?:/+|$)!!g;
+-	$url;
+-}
+-
+ # prop_walk(PATH, REV, SUB)
+ # -------------------------
+ # Recursively traverse PATH at revision REV and invoke SUB for each
+@@ -2512,10 +2498,7 @@ sub match_paths {
+ 	if (my $path = $paths->{"/$self->{path}"}) {
+ 		return ($path->{action} eq 'D') ? 0 : 1;
+ 	}
+-	my $repos_root = $self->ra->{repos_root};
+-	my $extended_path = $self->{url} . '/' . $self->{path};
+-	$extended_path =~ s#^\Q$repos_root\E(/|$)##;
+-	$self->{path_regex} ||= qr/^\/\Q$extended_path\E\//;
++	$self->{path_regex} ||= qr/^\/\Q$self->{path}\E\//;
+ 	if (grep /$self->{path_regex}/, keys %$paths) {
+ 		return 1;
+ 	}
+@@ -2545,7 +2528,7 @@ sub find_parent_branch {
+ 	return undef unless defined $paths;
+ 
+ 	# look for a parent from another branch:
+-	my @b_path_components = split m#/#, $self->rel_path;
++	my @b_path_components = split m#/#, $self->{path};
+ 	my @a_path_components;
+ 	my $i;
+ 	while (@b_path_components) {
+@@ -2563,11 +2546,11 @@ sub find_parent_branch {
+ 	my $r = $i->{copyfrom_rev};
+ 	my $repos_root = $self->ra->{repos_root};
+ 	my $url = $self->ra->{url};
+-	my $new_url = $repos_root . $branch_from;
++	my $new_url = $url . $branch_from;
+ 	print STDERR  "Found possible branch point: ",
+ 	              "$new_url => ", $self->full_url, ", $r\n";
+ 	$branch_from =~ s#^/##;
+-	my $gs = $self->other_gs($new_url, $url, $repos_root,
++	my $gs = $self->other_gs($new_url, $url,
+ 		                 $branch_from, $r, $self->{ref_id});
+ 	my ($r0, $parent) = $gs->find_rev_before($r, 1);
+ 	{
+@@ -2752,9 +2735,9 @@ sub parse_svn_date {
+ }
+ 
+ sub other_gs {
+-	my ($self, $new_url, $url, $repos_root,
++	my ($self, $new_url, $url,
+ 	    $branch_from, $r, $old_ref_id) = @_;
+-	my $gs = Git::SVN->find_by_url($new_url, $repos_root, $branch_from);
++	my $gs = Git::SVN->find_by_url($new_url, $url, $branch_from);
+ 	unless ($gs) {
+ 		my $ref_id = $old_ref_id;
+ 		$ref_id =~ s/\@\d+$//;
+@@ -4436,14 +4419,20 @@ sub get_log {
+ 	# passed pool (instead of our temporary and quickly cleared pool in
+ 	# Git::SVN::Ra) does not help matters at all...
+ 	my $receiver = pop @args;
++	my $prefix = "/".$self->{svn_path};
++	$prefix =~ s#/+($)##;
++	my $prefix_regex = qr#^\Q$prefix\E#;
+ 	push(@args, sub {
+ 		my ($paths) = $_[0];
+ 		return &$receiver(@_) unless $paths;
+ 		$_[0] = ();
+ 		foreach my $p (keys %$paths) {
+ 			my $i = $paths->{$p};
+-			my %s = map { $_ => $i->$_ }
+-				      qw/copyfrom_path copyfrom_rev action/;
++			# Make path relative to our url, not repos_root
++			$p =~ s/$prefix_regex//;
++			my %s = map { $_ => $i->$_; }
++				qw/copyfrom_path copyfrom_rev action/;
++			$s{'copyfrom_path'} =~ s/$prefix_regex// if $s{'copyfrom_path'};
+ 			$_[0]{$p} = \%s;
+ 		}
+ 		&$receiver(@_);
+@@ -4461,6 +4450,7 @@ sub get_log {
+ 			push(@args, sub { &$receiver(@_) if (--$limit >= 0) });
+ 		}
+ 	}
++
+ 	my $ret = $self->SUPER::get_log(@args, $pool);
+ 	$pool->clear;
+ 	$ret;
+diff --git a/t/t9138-git-svn-multiple-branches.sh b/t/t9138-git-svn-multiple-branches.sh
+index cb9a6d2..3cd0671 100755
+--- a/t/t9138-git-svn-multiple-branches.sh
++++ b/t/t9138-git-svn-multiple-branches.sh
+@@ -99,22 +99,22 @@ test_expect_success 'Multiple branch or tag paths require -d' '
+ 
+ test_expect_success 'create new branches and tags' '
+ 	( cd git_project &&
+-		git svn branch -m "New branch 1" -d project/b_one New1 ) &&
++		git svn branch -m "New branch 1" -d b_one New1 ) &&
+ 	( cd svn_project &&
+ 		svn_cmd up && test -e b_one/New1/a.file ) &&
+ 
+ 	( cd git_project &&
+-		git svn branch -m "New branch 2" -d project/b_two New2 ) &&
++		git svn branch -m "New branch 2" -d b_two New2 ) &&
+ 	( cd svn_project &&
+ 		svn_cmd up && test -e b_two/New2/a.file ) &&
+ 
+ 	( cd git_project &&
+-		git svn branch -t -m "New tag 1" -d project/tags_A Tag1 ) &&
++		git svn branch -t -m "New tag 1" -d tags_A Tag1 ) &&
+ 	( cd svn_project &&
+ 		svn_cmd up && test -e tags_A/Tag1/a.file ) &&
+ 
+ 	( cd git_project &&
+-		git svn tag -m "New tag 2" -d project/tags_B Tag2 ) &&
++		git svn tag -m "New tag 2" -d tags_B Tag2 ) &&
+ 	( cd svn_project &&
+ 		svn_cmd up && test -e tags_B/Tag2/a.file )
+ '
+-- 
+1.6.3.3
