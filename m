@@ -1,56 +1,78 @@
-From: Pat Thoyts <patthoyts@users.sourceforge.net>
-Subject: Re: Git gui error RenderBadPicture
-Date: 06 Jul 2009 10:22:58 +0100
-Message-ID: <87tz1qjhcd.fsf@users.sourceforge.net>
-References: <d4cf37a60907051640k215595a1n95b720201243fc89@mail.gmail.com>
-	<20090706001658.GA3745@unpythonic.net>
-	<d4cf37a60907051747n4ca55c28oed36a0349ace7948@mail.gmail.com>
+From: Rustom Mody <rustompmody@gmail.com>
+Subject: detached head in git.el (was git in emacs)
+Date: Mon, 6 Jul 2009 15:19:37 +0530
+Message-ID: <f46c52560907060249v19b9c55g4495d9764df70bc8@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jeff Epler <jepler@unpythonic.net>, git@vger.kernel.org
-To: Wink Saville <wink@saville.com>
-X-From: git-owner@vger.kernel.org Mon Jul 06 11:23:17 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Alexandre Julliard <julliard@winehq.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jul 06 11:49:48 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MNkPs-0002Yt-0A
-	for gcvg-git-2@gmane.org; Mon, 06 Jul 2009 11:23:16 +0200
+	id 1MNkpW-0003Pi-1y
+	for gcvg-git-2@gmane.org; Mon, 06 Jul 2009 11:49:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752349AbZGFJXE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 6 Jul 2009 05:23:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751028AbZGFJXD
-	(ORCPT <rfc822;git-outgoing>); Mon, 6 Jul 2009 05:23:03 -0400
-Received: from smtp-out4.blueyonder.co.uk ([195.188.213.7]:37627 "EHLO
-	smtp-out4.blueyonder.co.uk" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750861AbZGFJXC (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 6 Jul 2009 05:23:02 -0400
-Received: from [172.23.170.142] (helo=anti-virus02-09)
-	by smtp-out4.blueyonder.co.uk with smtp (Exim 4.52)
-	id 1MNkPe-0007T6-Ov; Mon, 06 Jul 2009 10:23:02 +0100
-Received: from [92.238.221.8] (helo=badger.patthoyts.tk)
-	by asmtp-out5.blueyonder.co.uk with esmtp (Exim 4.52)
-	id 1MNkPd-0004E9-ET; Mon, 06 Jul 2009 10:23:01 +0100
-Received: by badger.patthoyts.tk (Postfix, from userid 1000)
-	id 5DBD651842; Mon,  6 Jul 2009 10:22:59 +0100 (BST)
-X-Face: .`d#euqz@6H{";Ysmx2IVe_7M3vA+2w1X[QLk?ZO&QRauXQL{*L'$3getx}9+zK.-KWDx3.
- qrlR)76MFb`6bgoGvLpLtcQKB=X~;*<JKLtwLBM(IA'?rVjs1*tq\VHn?WMNsB,3XXWF@5.)4SRFa+
- '?a?.s#@hl7CiTo'F"O!fvbL0
-X-Url: http://www.patthoyts.tk/
-In-Reply-To: <d4cf37a60907051747n4ca55c28oed36a0349ace7948@mail.gmail.com>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.3
+	id S1753077AbZGFJte (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 6 Jul 2009 05:49:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752845AbZGFJtd
+	(ORCPT <rfc822;git-outgoing>); Mon, 6 Jul 2009 05:49:33 -0400
+Received: from mail-px0-f190.google.com ([209.85.216.190]:35130 "EHLO
+	mail-px0-f190.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752415AbZGFJtd (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 6 Jul 2009 05:49:33 -0400
+Received: by pxi28 with SMTP id 28so3443841pxi.33
+        for <git@vger.kernel.org>; Mon, 06 Jul 2009 02:49:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:date:message-id:subject
+         :from:to:cc:content-type:content-transfer-encoding;
+        bh=u/HLgkMjKpny3kM4klDwcGK0+EzrAeI7xArwic5RFEs=;
+        b=U13xhy5s65Pf+uXiy63jLYyO9vInZtCfGcKYdWpjQwp7jRUTy4N+PkuVATTAZ+v72r
+         qf8hOBFsCwkjsC7w76Glzp3mM8q5t7g5VX1FHZtQ6cSgqtXggmTZVo0y9sTz8+vlSNk4
+         vDw6vnX7NBa6krLFgR+xA7Ykrps70Qg12r7rE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        b=MAGFUxMnOZqcNxCBVrD5tgNR/xZAM/ieUoUMawHWH40ckF+TT7T5cZHYA6IzO3ehbj
+         wL8kFStMJTSnQ2V+mIrdZXyuMyP7LDmBs/R/jtPdO0C1k5FlrLSyrdlgenQ1TD/pfms8
+         k+7awRUeSBEawv0TAqnoYV1EWKjnQfL5iKr4k=
+Received: by 10.115.106.14 with SMTP id i14mr7270987wam.77.1246873777034; Mon, 
+	06 Jul 2009 02:49:37 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122779>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122780>
 
-You might like to raise this on the Tk bug tracker at sourceforge. On
-my Ubuntu system I can reproduce this with Tk 8.5.7 but not with
-8.4.19 nor the current HEAD (8.6b1.1). As this is something in the use
-of Xft I'd not expect to see a problem with 8.4.x as this was added to
-8.5+. I can't see anything explicit that should have fixed this in the
-8.6 tree though.
--- 
-Pat Thoyts                            http://www.patthoyts.tk/
-PGP fingerprint 2C 6E 98 07 2C 59 C8 97  10 CE 11 E6 04 E0 B9 DD
+I figured out that the message
+Branch:     fatal: ref HEAD is not a symbolic ref
+
+comes with a detached head on Windows
+
+On linux I get the (detached head) message
+
+On Tue, Jun 30, 2009 at 1:20 AM, Alexandre Julliard<julliard@winehq.org> wrote:
+> Rustom Mody <rustompmody@gmail.com> writes:
+>
+>> On Thu, Jun 25, 2009 at 6:29 PM, Jakub Narebski<jnareb@gmail.com> wrote:
+>>> This probably means that git.el (which version do you use) should
+>>> be corrected.
+>>
+>> Ok So I had an old version
+>> Now its version 1.0
+>> But I still get the same error :-(
+>
+> The version number isn't helpful I'm afraid, they are all called 1.0...
+>
+> You probably still have an old version, detached head support was added
+> quite some time ago. You can get the latest version from the git source
+> tree.
+>
+> --
+> Alexandre Julliard
+> julliard@winehq.org
+>
