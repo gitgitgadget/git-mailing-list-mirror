@@ -1,81 +1,71 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [RFC] Git User's Survey 2009 - second trial run, and question about announcing it
-Date: Mon, 6 Jul 2009 23:44:24 +0200
-Message-ID: <200907062344.26126.jnareb@gmail.com>
-References: <200907030130.24417.jnareb@gmail.com> <20090704090535.GA6518@old.homeip.net>
+From: Elijah Newren <newren@gmail.com>
+Subject: Re: [RFC] Git User's Survey 2009 - second trial run, and question 
+	about announcing it
+Date: Mon, 6 Jul 2009 15:49:11 -0600
+Message-ID: <51419b2c0907061449m6b379b65rb9a1279cb4de97d@mail.gmail.com>
+References: <200907030130.24417.jnareb@gmail.com>
+	 <7vprcfj83z.fsf@alter.siamese.dyndns.org>
+	 <94a0d4530907051215h755f634bkfd043d88289df29e@mail.gmail.com>
+	 <200907052145.27995.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Martin Renold <martinxyz@gmx.ch>
-X-From: git-owner@vger.kernel.org Mon Jul 06 23:44:38 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Felipe Contreras <felipe.contreras@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jul 06 23:49:23 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MNvzJ-0005dV-F1
-	for gcvg-git-2@gmane.org; Mon, 06 Jul 2009 23:44:38 +0200
+	id 1MNw3u-0007kW-Mw
+	for gcvg-git-2@gmane.org; Mon, 06 Jul 2009 23:49:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753027AbZGFVo1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 6 Jul 2009 17:44:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752957AbZGFVo0
-	(ORCPT <rfc822;git-outgoing>); Mon, 6 Jul 2009 17:44:26 -0400
-Received: from mail-bw0-f225.google.com ([209.85.218.225]:53604 "EHLO
-	mail-bw0-f225.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752693AbZGFVoZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 6 Jul 2009 17:44:25 -0400
-Received: by bwz25 with SMTP id 25so1614292bwz.37
-        for <git@vger.kernel.org>; Mon, 06 Jul 2009 14:44:28 -0700 (PDT)
+	id S1753000AbZGFVtL convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 6 Jul 2009 17:49:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752868AbZGFVtJ
+	(ORCPT <rfc822;git-outgoing>); Mon, 6 Jul 2009 17:49:09 -0400
+Received: from mail-yx0-f188.google.com ([209.85.210.188]:42797 "EHLO
+	mail-yx0-f188.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752761AbZGFVtI convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 6 Jul 2009 17:49:08 -0400
+Received: by yxe26 with SMTP id 26so6052625yxe.33
+        for <git@vger.kernel.org>; Mon, 06 Jul 2009 14:49:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=yWklCUN8Iw1eIs2IvdYlDk88jhl8WH2X/WV7Ld3NS4w=;
-        b=nVhvUSmlHMLT1BMq3tBEGCfilIseEAFEMWzk5p2cmq+YravkQ1U2bgqyWRbRjK0rIl
-         zzZdT27nPjZLkE4qJaSVX9hojoyV0lNsODLFERw6AvFcBLVFQ50zJrdKFiR9W2/Rg9VD
-         XT8Tlouno/qdF4BQGgMaQiXR4zkjYLq16kF3Y=
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=WeLbjTEbeCQs9aOBJrtG1gQWeuXZbidT9s6RJNFNC0Y=;
+        b=FbV2ImmG0kJWTE06/Ev60+CE5sqchQs0RXku9OtsVLH1E6+hL2CC1ND5XzLq8VXwSQ
+         KitsbnTWIRgDAizpAvHIy/5rjFlEl4fd5kdK2gj5wMkEi3fQ8Qtfd4nB1rxtygzPR8Og
+         GWqXO5bBMIyzj4GbGYFm6Z5X8rc3w1wcdBHtI=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=dnXFmragVYqyPY1WlZ7X2SbrX2B02oOJrqAKsK3dcrZv/4GzbnHsRBRzQMUTgK8w7c
-         7uBhAWPwK5uZfJCr/yTR6QKk8moiJC+hA2cY6lL79CRbZgW5ptW4ry4fb02bF11m3yek
-         vO4lTX1UMIQ1feRhyKcgsCFW+nVYF22OPjG+I=
-Received: by 10.204.118.12 with SMTP id t12mr5002279bkq.158.1246916667826;
-        Mon, 06 Jul 2009 14:44:27 -0700 (PDT)
-Received: from ?192.168.1.13? (abwt137.neoplus.adsl.tpnet.pl [83.8.243.137])
-        by mx.google.com with ESMTPS id 18sm12208858fks.10.2009.07.06.14.44.25
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 06 Jul 2009 14:44:26 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <20090704090535.GA6518@old.homeip.net>
-Content-Disposition: inline
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=lq9bemWrL0/zpNLTzim7xYA39H8GObmIzR6RY/B2lEQ7ro1y/3RNXo63LYqPp3EIUZ
+         MTdOHnunQL+7BOUhh7jbrainV0aMa1dmTaRV54BdlHa4D60hZqSVXGC2fAFkSrOpmdpc
+         o7UdXYXtgPxFMBSF+oQZRNFOVVa3pT+NTJSs0=
+Received: by 10.100.178.9 with SMTP id a9mr9409815anf.11.1246916952083; Mon, 
+	06 Jul 2009 14:49:12 -0700 (PDT)
+In-Reply-To: <200907052145.27995.jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122799>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122800>
 
-On Sat, 4 Jul 2009, Martin Renold wrote:
-> On Fri, Jul 03, 2009 at 01:30:22AM +0200, Jakub Narebski wrote:
+Hi,
 
-> > 11. What Git interfaces, implementations, frontends and tools do you use?
-> >     * my own scripts
-> 
-> There was a surprising amout of 12% of the users picking that in 2008, and
-> confusion about why they do so.  Could this be split up, eg. like this?
-> 
->     * my own scripts (for daily commandline use)
->     * my own scripts (for special tasks)
+On Sun, Jul 5, 2009 at 1:45 PM, Jakub Narebski<jnareb@gmail.com> wrote:
+> A propos blogs: Elijah Newren writes from time to time about git
+> on http://blogs.gnome.org/newren/ ; I think this blog is in a few
+> GNOME planets, so if he were so kind as put announcement there
+> when the time comes... =C2=A0It would be good to have such announceme=
+nt
+> on some blog which is in Perl blog planet (Perlsphere and/or Planet
+> Perl Iron Man), and similarly for other communities which rely on
+> blogs (KDE, Ruby: anyone?).
 
-By "for daily commandline use" you mean writing [partial] porcelain, 
-don't you?  It might be good idea to split it... on the other hand
-number of possible answers for this question is quite large (but IMHO
-not unmanageable large) already.
-
--- 
-Jakub Narebski
-Poland
+Sure, I'd be happy to put an announcement in my blog.
