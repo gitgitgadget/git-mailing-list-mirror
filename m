@@ -1,132 +1,90 @@
-From: Mattias Nissler <mattias.nissler@gmx.de>
-Subject: [PATCH 1/2] git-svn: Always duplicate paths returned from get_log
-Date: Tue, 07 Jul 2009 01:39:52 +0200
-Message-ID: <1246923592.4618.17.camel@kea>
-References: <20090706212742.GA8219@dcvr.yhbt.net>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: What's cooking in git.git (Jul 2009, #01; Mon, 06)
+Date: Mon, 06 Jul 2009 16:42:34 -0700 (PDT)
+Message-ID: <m3r5wtv0nr.fsf@localhost.localdomain>
+References: <7vk52l4q7k.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Eric Wong <normalperson@yhbt.net>
-X-From: git-owner@vger.kernel.org Tue Jul 07 01:40:12 2009
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jul 07 01:48:24 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MNxn6-0005bV-Rh
-	for gcvg-git-2@gmane.org; Tue, 07 Jul 2009 01:40:09 +0200
+	id 1MNxv5-0008DS-Rs
+	for gcvg-git-2@gmane.org; Tue, 07 Jul 2009 01:48:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753222AbZGFXjw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 6 Jul 2009 19:39:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753187AbZGFXjv
-	(ORCPT <rfc822;git-outgoing>); Mon, 6 Jul 2009 19:39:51 -0400
-Received: from mail.gmx.net ([213.165.64.20]:38388 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753165AbZGFXjv (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 6 Jul 2009 19:39:51 -0400
-Received: (qmail invoked by alias); 06 Jul 2009 23:39:53 -0000
-Received: from e182067244.adsl.alicedsl.de (EHLO [192.168.1.50]) [85.182.67.244]
-  by mail.gmx.net (mp015) with SMTP; 07 Jul 2009 01:39:53 +0200
-X-Authenticated: #429267
-X-Provags-ID: V01U2FsdGVkX19PzLZwfD5PVDGSGvgZ1VqqiA+FPsUjbIu62aZv5o
-	cRV4VH/K/r8hj4
-In-Reply-To: <20090706212742.GA8219@dcvr.yhbt.net>
-X-Mailer: Evolution 2.26.2 
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.51
+	id S1753834AbZGFXsO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 6 Jul 2009 19:48:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753711AbZGFXsN
+	(ORCPT <rfc822;git-outgoing>); Mon, 6 Jul 2009 19:48:13 -0400
+Received: from mail-ew0-f226.google.com ([209.85.219.226]:55547 "EHLO
+	mail-ew0-f226.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753593AbZGFXsM (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 6 Jul 2009 19:48:12 -0400
+X-Greylist: delayed 339 seconds by postgrey-1.27 at vger.kernel.org; Mon, 06 Jul 2009 19:48:12 EDT
+Received: by ewy26 with SMTP id 26so126012ewy.37
+        for <git@vger.kernel.org>; Mon, 06 Jul 2009 16:48:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:received
+         :x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        bh=wh78YkKi9wZ3YWTK+88rtq8JhdWozxnxfzx6ZdhxBew=;
+        b=AcCHJuJlMMjrM9wXQHN6EtgUOI2rYJAJ6w4nA4+pRwyF0YajoNSZdCX9/pKnyJK4tI
+         QS9Z9dmujF6cm7icbOoNNPutSqag3m0rGKvm371aavWiPD1psTZiyAtA80o2n1oWnfwS
+         j8MEJYJUhvU8/r1/1mxr+eyPWZvXwtnI/Q7Tk=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        b=xSiXqctc2YWEAky968V6mF1joL4s5Y9NHlSUPaHdCj41TWMolHxMWrjoXJcqs40KR2
+         lvqTYJ1DO6WdjsqiR8Zf3XBeFyGuhB71fENta0tqu+bd2CB4F6Bpl8+NcAV9g/1y1D1c
+         CSBNgMZkD0ow/grcUUF4Ha/N8/I8Gn23dbJ28=
+Received: by 10.210.110.5 with SMTP id i5mr6326755ebc.3.1246923755109;
+        Mon, 06 Jul 2009 16:42:35 -0700 (PDT)
+Received: from localhost.localdomain (abwt137.neoplus.adsl.tpnet.pl [83.8.243.137])
+        by mx.google.com with ESMTPS id 28sm1058561eye.46.2009.07.06.16.42.34
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 06 Jul 2009 16:42:34 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id n66NgYob007074;
+	Tue, 7 Jul 2009 01:42:35 +0200
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id n66NgXQD007071;
+	Tue, 7 Jul 2009 01:42:33 +0200
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <7vk52l4q7k.fsf@alter.siamese.dyndns.org>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122811>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122812>
 
-This makes get_log more safe to use because callers cannot run into path
-clobbering any more. The additional overhead will not affect performance
-since the critical calls from the fetch loop need the path duplication
-anyway and the rest of the call sites is not performance critical.
+Junio C Hamano <gitster@pobox.com> writes:
 
-Signed-off-by: Mattias Nissler <mattias.nissler@gmx.de>
----
- git-svn.perl |   46 +++++++++++++++++++++++-----------------------
- 1 files changed, 23 insertions(+), 23 deletions(-)
+> [Actively cooking]
+> 
+> * gb/gitweb-avatar (Tue Jun 30 00:00:54 2009 +0200) 7 commits
+>  - gitweb: add empty alt text to avatar img
+>  - gitweb: picon avatar provider
+>  - gitweb: gravatar url cache
+>  - gitweb: (gr)avatar support
+>  - gitweb: use git_print_authorship_rows in 'tag' view too
+>  - gitweb: uniform author info for commit and commitdiff
+>  - gitweb: refactor author name insertion
+> 
+> This should be the latest one posted to the list, and I think it is
+> reasonable, and Jakub seemed to concur.  Will be in 'next'
 
-diff --git a/git-svn.perl b/git-svn.perl
-index d1af1a3..57d13af 100755
---- a/git-svn.perl
-+++ b/git-svn.perl
-@@ -2538,9 +2538,8 @@ sub find_parent_branch {
- 	unless (defined $paths) {
- 		my $err_handler = $SVN::Error::handler;
- 		$SVN::Error::handler = \&Git::SVN::Ra::skip_unknown_revs;
--		$self->ra->get_log([$self->{path}], $rev, $rev, 0, 1, 1, sub {
--		                   $paths =
--				      Git::SVN::Ra::dup_changed_paths($_[0]) });
-+		$self->ra->get_log([$self->{path}], $rev, $rev, 0, 1, 1,
-+				   sub { $paths = $_[0] });
- 		$SVN::Error::handler = $err_handler;
- 	}
- 	return undef unless defined $paths;
-@@ -4431,6 +4430,26 @@ sub get_log {
- 	my ($self, @args) = @_;
- 	my $pool = SVN::Pool->new;
- 
-+	# svn_log_changed_path_t objects passed to get_log are likely to be
-+	# overwritten even if only the refs are copied to an external variable,
-+	# so we should dup the structures in their entirety.  Using an externally
-+	# passed pool (instead of our temporary and quickly cleared pool in
-+	# Git::SVN::Ra) does not help matters at all...
-+	my $receiver = pop @args;
-+	push(@args, sub {
-+		my ($paths) = $_[0];
-+		return &$receiver(@_) unless $paths;
-+		$_[0] = ();
-+		foreach my $p (keys %$paths) {
-+			my $i = $paths->{$p};
-+			my %s = map { $_ => $i->$_ }
-+				      qw/copyfrom_path copyfrom_rev action/;
-+			$_[0]{$p} = \%s;
-+		}
-+		&$receiver(@_);
-+	});
-+
-+
- 	# the limit parameter was not supported in SVN 1.1.x, so we
- 	# drop it.  Therefore, the receiver callback passed to it
- 	# is made aware of this limitation by being wrapped if
-@@ -4600,8 +4619,7 @@ sub gs_fetch_loop_common {
- 		};
- 		sub _cb {
- 			my ($paths, $r, $author, $date, $log) = @_;
--			[ dup_changed_paths($paths),
--			  { author => $author, date => $date, log => $log } ];
-+			[ $paths, { author => $author, date => $date, log => $log } ];
- 		}
- 		$self->get_log([$longest_path], $min, $max, 0, 1, 1,
- 		               sub { $revs{$_[1]} = _cb(@_) });
-@@ -4823,24 +4841,6 @@ sub skip_unknown_revs {
- 	die "Error from SVN, ($errno): ", $err->expanded_message,"\n";
- }
- 
--# svn_log_changed_path_t objects passed to get_log are likely to be
--# overwritten even if only the refs are copied to an external variable,
--# so we should dup the structures in their entirety.  Using an externally
--# passed pool (instead of our temporary and quickly cleared pool in
--# Git::SVN::Ra) does not help matters at all...
--sub dup_changed_paths {
--	my ($paths) = @_;
--	return undef unless $paths;
--	my %ret;
--	foreach my $p (keys %$paths) {
--		my $i = $paths->{$p};
--		my %s = map { $_ => $i->$_ }
--		              qw/copyfrom_path copyfrom_rev action/;
--		$ret{$p} = \%s;
--	}
--	\%ret;
--}
--
- package Git::SVN::Log;
- use strict;
- use warnings;
+I concur.
+
+It is now, after many iterations, well written and nicely crafted
+series, IMVHO.
+
 -- 
-1.6.3.3
+Jakub Narebski
+Poland
+ShadeHawk on #git
