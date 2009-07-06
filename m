@@ -1,71 +1,65 @@
-From: Elijah Newren <newren@gmail.com>
-Subject: Re: [RFC] Git User's Survey 2009 - second trial run, and question 
-	about announcing it
-Date: Mon, 6 Jul 2009 15:49:11 -0600
-Message-ID: <51419b2c0907061449m6b379b65rb9a1279cb4de97d@mail.gmail.com>
-References: <200907030130.24417.jnareb@gmail.com>
-	 <7vprcfj83z.fsf@alter.siamese.dyndns.org>
-	 <94a0d4530907051215h755f634bkfd043d88289df29e@mail.gmail.com>
-	 <200907052145.27995.jnareb@gmail.com>
+From: Florian Mickler <florian@mickler.org>
+Subject: Re: Checking for fast-forward
+Date: Mon, 6 Jul 2009 23:26:14 +0200
+Message-ID: <20090706232614.32602ccc@schatten>
+References: <ca4f67be0907060936v7bf7c44y4395717fff854fd4@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Felipe Contreras <felipe.contreras@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jul 06 23:49:23 2009
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Lee Griffiths <poddster@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jul 06 23:50:48 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MNw3u-0007kW-Mw
-	for gcvg-git-2@gmane.org; Mon, 06 Jul 2009 23:49:23 +0200
+	id 1MNw5I-0008M0-A0
+	for gcvg-git-2@gmane.org; Mon, 06 Jul 2009 23:50:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753000AbZGFVtL convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 6 Jul 2009 17:49:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752868AbZGFVtJ
-	(ORCPT <rfc822;git-outgoing>); Mon, 6 Jul 2009 17:49:09 -0400
-Received: from mail-yx0-f188.google.com ([209.85.210.188]:42797 "EHLO
-	mail-yx0-f188.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752761AbZGFVtI convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 6 Jul 2009 17:49:08 -0400
-Received: by yxe26 with SMTP id 26so6052625yxe.33
-        for <git@vger.kernel.org>; Mon, 06 Jul 2009 14:49:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=WeLbjTEbeCQs9aOBJrtG1gQWeuXZbidT9s6RJNFNC0Y=;
-        b=FbV2ImmG0kJWTE06/Ev60+CE5sqchQs0RXku9OtsVLH1E6+hL2CC1ND5XzLq8VXwSQ
-         KitsbnTWIRgDAizpAvHIy/5rjFlEl4fd5kdK2gj5wMkEi3fQ8Qtfd4nB1rxtygzPR8Og
-         GWqXO5bBMIyzj4GbGYFm6Z5X8rc3w1wcdBHtI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=lq9bemWrL0/zpNLTzim7xYA39H8GObmIzR6RY/B2lEQ7ro1y/3RNXo63LYqPp3EIUZ
-         MTdOHnunQL+7BOUhh7jbrainV0aMa1dmTaRV54BdlHa4D60hZqSVXGC2fAFkSrOpmdpc
-         o7UdXYXtgPxFMBSF+oQZRNFOVVa3pT+NTJSs0=
-Received: by 10.100.178.9 with SMTP id a9mr9409815anf.11.1246916952083; Mon, 
-	06 Jul 2009 14:49:12 -0700 (PDT)
-In-Reply-To: <200907052145.27995.jnareb@gmail.com>
+	id S1753146AbZGFVui (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 6 Jul 2009 17:50:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752927AbZGFVui
+	(ORCPT <rfc822;git-outgoing>); Mon, 6 Jul 2009 17:50:38 -0400
+Received: from ist.d-labs.de ([213.239.218.44]:43094 "EHLO mx01.d-labs.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752757AbZGFVuh (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 6 Jul 2009 17:50:37 -0400
+X-Greylist: delayed 1448 seconds by postgrey-1.27 at vger.kernel.org; Mon, 06 Jul 2009 17:50:37 EDT
+Received: from schatten (f053209007.adsl.alicedsl.de [78.53.209.7])
+	by mx01.d-labs.de (Postfix) with ESMTP id 58BD8C7BED;
+	Mon,  6 Jul 2009 23:26:29 +0200 (CEST)
+Newsgroups: gmane.comp.version-control.msysgit
+In-Reply-To: <ca4f67be0907060936v7bf7c44y4395717fff854fd4@mail.gmail.com>
+X-Newsreader: Claws Mail 3.7.1 (GTK+ 2.14.7; x86_64-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122800>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122801>
 
-Hi,
+this is more of a git question, than smth special to msysgit. 
 
-On Sun, Jul 5, 2009 at 1:45 PM, Jakub Narebski<jnareb@gmail.com> wrote:
-> A propos blogs: Elijah Newren writes from time to time about git
-> on http://blogs.gnome.org/newren/ ; I think this blog is in a few
-> GNOME planets, so if he were so kind as put announcement there
-> when the time comes... =C2=A0It would be good to have such announceme=
-nt
-> on some blog which is in Perl blog planet (Perlsphere and/or Planet
-> Perl Iron Man), and similarly for other communities which rely on
-> blogs (KDE, Ruby: anyone?).
+(git ml cc'd)
 
-Sure, I'd be happy to put an announcement in my blog.
+On Mon, 6 Jul 2009 17:36:54 +0100
+Lee Griffiths <poddster@gmail.com> wrote:
+
+> 
+> I have a script that checks for fast-forwarding by doing a git push
+> --dry-run. This strikes me as the wrong way to do it as it does _all_
+> of the stuff a git push would normally do i.e., packing and so on, and
+> I'm only really after the fast-forward check. Seeing as I already do a
+> git push at the end of the script (actualy two, as I do a --tags one
+> as well[1]), it seems like a big waste of time. Is there anyother way
+> to check and see if the git push would work? (I want the script to
+> avoid doing a git pull if possible).
+> 
+> 
+> Thanks,
+> Lee
+> 
+> 
+> 
+> [1] I originally assumed --tags would push the data AND the tags, but
+> that doesn't seem to be the case.... Am I wrong in this?
+> 
