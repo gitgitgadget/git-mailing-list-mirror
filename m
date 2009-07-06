@@ -1,57 +1,139 @@
-From: Wink Saville <wink@saville.com>
-Subject: Re: Git gui error RenderBadPicture
-Date: Sun, 5 Jul 2009 17:47:36 -0700
-Message-ID: <d4cf37a60907051747n4ca55c28oed36a0349ace7948@mail.gmail.com>
-References: <d4cf37a60907051640k215595a1n95b720201243fc89@mail.gmail.com>
-	 <20090706001658.GA3745@unpythonic.net>
+From: Federico Lucifredi <flucifredi@acm.org>
+Subject: Re: Suggestion: "man git clone"
+Date: Sun, 05 Jul 2009 22:48:16 -0400
+Message-ID: <4A5165F0.8020107@acm.org>
+References: <20090628023458.297703BC143@sarantium.pelham.vpn.ucam.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Jeff Epler <jepler@unpythonic.net>
-X-From: git-owner@vger.kernel.org Mon Jul 06 02:47:51 2009
+Content-Transfer-Encoding: 7bit
+Cc: Jeff King <peff@peff.net>, "H. Peter Anvin" <hpa@zytor.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Colin Watson <cjwatson@debian.org>
+X-From: git-owner@vger.kernel.org Mon Jul 06 04:55:10 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MNcN2-0004uB-24
-	for gcvg-git-2@gmane.org; Mon, 06 Jul 2009 02:47:48 +0200
+	id 1MNeMG-0007n5-Gu
+	for gcvg-git-2@gmane.org; Mon, 06 Jul 2009 04:55:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756444AbZGFArf convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 5 Jul 2009 20:47:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756255AbZGFAre
-	(ORCPT <rfc822;git-outgoing>); Sun, 5 Jul 2009 20:47:34 -0400
-Received: from mail-yx0-f188.google.com ([209.85.210.188]:49495 "EHLO
-	mail-yx0-f188.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755794AbZGFAre convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 5 Jul 2009 20:47:34 -0400
-Received: by yxe26 with SMTP id 26so5106112yxe.33
-        for <git@vger.kernel.org>; Sun, 05 Jul 2009 17:47:36 -0700 (PDT)
-Received: by 10.100.211.3 with SMTP id j3mr7519380ang.19.1246841256330; Sun, 
-	05 Jul 2009 17:47:36 -0700 (PDT)
-In-Reply-To: <20090706001658.GA3745@unpythonic.net>
+	id S1753172AbZGFCy6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 5 Jul 2009 22:54:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753204AbZGFCy5
+	(ORCPT <rfc822;git-outgoing>); Sun, 5 Jul 2009 22:54:57 -0400
+Received: from mail5.sea5.speakeasy.net ([69.17.117.7]:53113 "EHLO
+	mail5.sea5.speakeasy.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752315AbZGFCy4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 5 Jul 2009 22:54:56 -0400
+X-Greylist: delayed 401 seconds by postgrey-1.27 at vger.kernel.org; Sun, 05 Jul 2009 22:54:56 EDT
+Received: (qmail 27038 invoked from network); 6 Jul 2009 02:48:18 -0000
+Received: from dsl092-066-189.bos1.dsl.speakeasy.net (HELO spaceman.local) (federico@[66.92.66.189])
+          (envelope-sender <flucifredi@acm.org>)
+          by mail5.sea5.speakeasy.net (qmail-ldap-1.03) with AES256-SHA encrypted SMTP
+          for <cjwatson@debian.org>; 6 Jul 2009 02:48:18 -0000
+User-Agent: Thunderbird 2.0.0.22 (Macintosh/20090605)
+In-Reply-To: <20090628023458.297703BC143@sarantium.pelham.vpn.ucam.org>
+X-Enigmail-Version: 0.95.7
+OpenPGP: url=http://keyserver.linux.it/pks/lookup?op=get&search=0xAEEBEC184A73884C
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122770>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122771>
 
-A little more information, using Ctrl-Q for exiting doesn't
-get around the problem. That only works if you happen to
-exit immediately, if you do something such as click on a
-file and show the differences it also reports the same error.
+Colin Watson wrote:
+> (Sorry I didn't see this until now. HPA only CCed the maintainer of one
+> of the two man packages popular on Linux-based systems; I'm the other
+> one. I happened to find this thread while searching for something else.)
+> 
 
--- Wink
+Really? Sorry, I thought I had added you. My bad.
 
-On Sun, Jul 5, 2009 at 5:16 PM, Jeff Epler<jepler@unpythonic.net> wrote=
-:
-> This is likely due to a bug in Tk, the widget toolkit of 'git gui'. =A0=
-The
-> bug was set to "obsolete" back in 2007, but there's no indication the
-> problem was fixed.
->
-> https://sourceforge.net/tracker/?func=3Ddetail&atid=3D112997&aid=3D18=
-21174&group_id=3D12997
->
-> Jeff
->
+> In article <48AE143C.8030704@acm.org>, Federico Lucifredi wrote:
+>> Jeff King wrote:
+>>> On Thu, Aug 21, 2008 at 08:07:56PM -0400, Federico Lucifredi wrote:
+>>>> I am all for bass-ackwards compatibility, and I think the suggestion of  
+>>>> going on "man foo bar" :
+>>>>
+>>>>  1) look for foo-bar; if success, terminate search
+>>>>  2) look for foo
+>>>>  3) look for bar
+>>>>  ....
+>>>>
+>>>> may be acceptable - I don't see drawbacks at a first glance, and it would 
+>>>> allow for groups of pages to be meaningful.
+> 
+> I think this is a sensible enough compromise, especially given an option
+> to disable it. The code would be a little ugly, but *shrug* not that
+> bad. The extra stat is cheap enough.
+> 
+
+Sounds good to me :)
+
+> Using a plain 'git' section for this in order to provoke the
+> happenstance of 'man git clone' working is definitely wrong as far as
+> the manual page hierarchy goes; it means that things like searching for
+> just user commands (section 1) that contain some term will fail. Putting
+> them in section '1git' (i.e. section 1 with a git "extension") would be
+> more in line with how manual pages are typically laid out, and at least
+> with man-db would not require any configuration file changes. However, I
+> think both of these are suboptimal. Section extensions are typically
+> used for things like functions or modules in other programming
+> languages, or sometimes for cases where file names would otherwise
+> clash. I'm not much of a git user myself, but I don't get the impression
+> that most git users think of 'git clone' as analogous to a 'clone'
+> command in a hypothetical 'git' programming language; it's closer to an
+> ordinary user command.
+> 
+> The only case where I've seen subcommands given their own unprefixed
+> manual pages with only the section extension to tell them apart is
+> OpenSSL, with pages like x509(1ssl). IME, this is very confusing and not
+> a good example to follow: firstly, you can't trivially find a list of
+> all the subcommands with something like 'apropos openssl-'; secondly,
+> it's easy to miss that you're dealing with an openssl subcommand unless
+> you keep your eyes peeled.
+> 
+> Short of some mechanism for git to provide a plug-in to man to tell it
+> where to find subpages (eek! potential overengineering alert!), a
+> foo-bar lookup seems tolerable enough.
+> 
+>>> Personally I have never ever wanted to see two manpages from one man
+>>> invocation, so I have no real problem with that assumption.
+>> I expected as much, and we should have an option to disable the "new" 
+>> behavior as a safety anyway.
+> 
+> Would you like to suggest an option name for this, so that we can avoid
+> unnecessary divergence? Perhaps something like --separate?
+
+the option to trigger "classic" behavior? How about --no-subpages?
+
+> 
+>>>> Are you willing to put your patch where your mouth is? :-)
+>>> I've never looked at man code before, but there seem to be at least two
+>>> man packages for Linux. My boxes have man-db 2.5.2.
+>> There are two man packages for linux, man and man-db, the latter being a 
+>> 90's fork that uses Berkeley DB as a backend to speedup man -k searches 
+>> (it helped back then).
+> 
+> (I hope git@ will excuse the digression.)
+> 
+> Don't be confused by the name. Once upon a time the main feature of
+> man-db was indeed its database; these days that's almost one of the
+
+[snip]
+
+I am sorry Colin, I did not mean to say anything bad, just that there
+are two packages, and as you said... there are differences but nothing
+major.  I don't think we want to discuss "my package > yours" here
+(although I can of course provide arguments for mine!).
+
+Are you Git guys still interested in this? I actually have recently
+worked on a project where we labeled man pages for subcommands with this
+convention, so I would welcome the extension for neatness.
+
+ Best -F
+
+-- 
+_________________________________________
+-- "'Problem' is a bleak word for challenge" - Richard Fish
+(Federico L. Lucifredi) - flucifredi@acm.org - GnuPG 0x4A73884C
