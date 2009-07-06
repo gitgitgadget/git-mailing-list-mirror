@@ -1,142 +1,84 @@
-From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: [RFC/PATCH] git-gui: display summary when showing diff of a submodule
-Date: Mon, 06 Jul 2009 23:31:01 +0200
-Message-ID: <4A526D15.3090202@web.de>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: What's cooking in git.git (Jul 2009, #01; Mon, 06)
+Date: Mon, 06 Jul 2009 14:38:06 -0700
+Message-ID: <7vk52l1oht.fsf@alter.siamese.dyndns.org>
+References: <7vk52l4q7k.fsf@alter.siamese.dyndns.org>
+	<200907062229.11763.mcamen@mcamen.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: gitster@pobox.com, "Shawn O. Pearce" <spearce@spearce.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jul 06 23:31:33 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Marcus Camen <mcamen@mcamen.de>
+X-From: git-owner@vger.kernel.org Mon Jul 06 23:38:25 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MNvmf-0000xv-0N
-	for gcvg-git-2@gmane.org; Mon, 06 Jul 2009 23:31:33 +0200
+	id 1MNvtH-0003PU-6H
+	for gcvg-git-2@gmane.org; Mon, 06 Jul 2009 23:38:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752781AbZGFVbB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 6 Jul 2009 17:31:01 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751873AbZGFVbA
-	(ORCPT <rfc822;git-outgoing>); Mon, 6 Jul 2009 17:31:00 -0400
-Received: from fmmailgate01.web.de ([217.72.192.221]:38159 "EHLO
-	fmmailgate01.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752558AbZGFVbA (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 6 Jul 2009 17:31:00 -0400
-Received: from smtp08.web.de (fmsmtp08.dlan.cinetic.de [172.20.5.216])
-	by fmmailgate01.web.de (Postfix) with ESMTP id C19E0108BAA07;
-	Mon,  6 Jul 2009 23:31:02 +0200 (CEST)
-Received: from [80.128.125.148] (helo=[192.168.178.26])
-	by smtp08.web.de with asmtp (WEB.DE 4.110 #277)
-	id 1MNvmA-0006w9-00; Mon, 06 Jul 2009 23:31:02 +0200
-User-Agent: Thunderbird 2.0.0.22 (X11/20090605)
-X-Sender: Jens.Lehmann@web.de
-X-Provags-ID: V01U2FsdGVkX19oWeEiH+rZ/bFf9zgIbxQj9kK/uWzwoyZpbJsW
-	w0lQnsdq8XlBURMYkamceSUF+pidMBwp+krqEyQdr9cM8Uh6to
-	OaZ25u85zFasNnsbl+Tw==
+	id S1753689AbZGFViH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 6 Jul 2009 17:38:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753732AbZGFViF
+	(ORCPT <rfc822;git-outgoing>); Mon, 6 Jul 2009 17:38:05 -0400
+Received: from fed1rmmtao104.cox.net ([68.230.241.42]:37133 "EHLO
+	fed1rmmtao104.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753689AbZGFViE (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 6 Jul 2009 17:38:04 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao104.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20090706213807.FSJL17135.fed1rmmtao104.cox.net@fed1rmimpo01.cox.net>;
+          Mon, 6 Jul 2009 17:38:07 -0400
+Received: from localhost ([68.225.240.211])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id Cle61c00A4aMwMQ03le6bJ; Mon, 06 Jul 2009 17:38:06 -0400
+X-VR-Score: -200.00
+X-Authority-Analysis: v=1.0 c=1 a=avqLpYhvPjQA:10 a=vRn9FcIqemG-jW9jx-0A:9
+ a=A615lvF3sdN6LruXxYJa01DkHYUA:4 a=eX9e5yNMjhIA:10
+X-CM-Score: 0.00
+In-Reply-To: <200907062229.11763.mcamen@mcamen.de> (Marcus Camen's message of "Mon\, 6 Jul 2009 22\:29\:11 +0200")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122797>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122798>
 
-As it is hard to say what changed in a submodule by looking at the hashes,
-let's show the colored submodule summary instead.
+Marcus Camen <mcamen@mcamen.de> writes:
 
-Signed-off-by: Jens Lehmann <Jens.Lehmann@web.de>
----
+> On Montag 06 Juli 2009, Junio C Hamano wrote:
+>> * ml/http (Wed May 27 23:16:03 2009 -0400) 2 commits
+>>  - http.c: add http.sslCertPasswordProtected option
+>>  - http.c: prompt for SSL client certificate password
+>>
+>> I've rewritten these two to (1) move the #ifdef out of the main
+>> codepath, and (2) use configuration/environment to make the misfeature
+>> of always asking for a passphrase even a key/cert is unencrypted
+>> optional.  I tried to be careful but extra sets of eyeballs would be
+>> nice to check the result.
+>>
+>> Nobody seems to be jumping up-and-down asking for this or helping to
+>> push this forward.  Perhaps it's time to drop it?
+>
+> /me jumping up-and-down
+>
+> This fix is crucial for corporate environments where HTTPS is the only way 
+> to access GIT repositories outside the firewall.
+>
+> I verified the patch and everything works as expected.
 
-While starting to work productively with submodules a few weeks ago i
-noticed that it is very inconvenient not to know what really changed
-in a submodule when looking at it through git gui in the supermodule.
-So i wrote this patch as a starting point for a discussion of how a
-solution might look like.
+Thanks.
 
-Basically i would like to see what happened in the submodule between the
-two hashes, so it seemed like git submodule summary will provide exactly
-that information and should be preferred over git diff in that case.
-(I also thought about teaching git diff to provide the information, but
-came to the conclusion that it would be better to do that in git gui)
+What did you exactly mean by "everything"?
 
-As i don't have that much experience with submodules yet i'm not sure to
-have taken all corner cases into account ... so a few more eyeballs really
-are appreciated!
+ - On a protected key/cert, with configuration, it asks the question once.
 
- git-gui/lib/diff.tcl |   27 +++++++++++++++++++++++++--
- 1 files changed, 25 insertions(+), 2 deletions(-)
+ - On an unprotected key/cert, without configuration, it never asks the
+   question.
 
-diff --git a/git-gui/lib/diff.tcl b/git-gui/lib/diff.tcl
-index 925b3f5..67bc49f 100644
---- a/git-gui/lib/diff.tcl
-+++ b/git-gui/lib/diff.tcl
-@@ -255,7 +255,7 @@ proc show_other_diff {path w m cont_info} {
+ - On an unprotected key/cert, with configuration, it asks an useless
+   question but it does so only once.
 
- proc start_show_diff {cont_info {add_opts {}}} {
- 	global file_states file_lists
--	global is_3way_diff diff_active repo_config
-+	global is_3way_diff is_submodule_diff diff_active repo_config
- 	global ui_diff ui_index ui_workdir
- 	global current_diff_path current_diff_side current_diff_header
-
-@@ -265,6 +265,7 @@ proc start_show_diff {cont_info {add_opts {}}} {
- 	set s $file_states($path)
- 	set m [lindex $s 0]
- 	set is_3way_diff 0
-+	set is_submodule_diff 0
- 	set diff_active 1
- 	set current_diff_header {}
-
-@@ -295,6 +296,10 @@ proc start_show_diff {cont_info {add_opts {}}} {
- 		lappend cmd $path
- 	}
-
-+	if {[string match {160000 *} [lindex $s 3]]} {
-+		set cmd {submodule summary -- $current_diff_path}
-+	}
-+
- 	if {[catch {set fd [eval git_read --nice $cmd]} err]} {
- 		set diff_active 0
- 		unlock_index
-@@ -312,7 +317,7 @@ proc start_show_diff {cont_info {add_opts {}}} {
- }
-
- proc read_diff {fd cont_info} {
--	global ui_diff diff_active
-+	global ui_diff diff_active is_submodule_diff
- 	global is_3way_diff is_conflict_diff current_diff_header
- 	global current_diff_queue
- 	global diff_empty_count
-@@ -337,6 +342,9 @@ proc read_diff {fd cont_info} {
- 		}
- 		set ::current_diff_inheader 0
-
-+		if {[regexp {^\* } $line]} {
-+			set is_submodule_diff 1
-+		}
- 		# -- Automatically detect if this is a 3 way diff.
- 		#
- 		if {[string match {@@@ *} $line]} {set is_3way_diff 1}
-@@ -374,6 +382,21 @@ proc read_diff {fd cont_info} {
- 				set tags {}
- 			}
- 			}
-+		} elseif {$is_submodule_diff} {
-+			if {$line == ""} continue
-+			if {[regexp {^\* } $line]} {
-+				set tags {}
-+			} else {
-+				set op [string range $line 0 2]
-+				switch -- $op {
-+				{  <} {set tags d_+}
-+				{  >} {set tags d_-}
-+				default {
-+					puts "error: Unhandled submodule diff marker: {$op}"
-+					set tags {}
-+				}
-+				}
-+			}
- 		} else {
- 			set op [string index $line 0]
- 			switch -- $op {
--- 
-1.6.3.3.386.g1d0c9.dirty
+You tested all of the above?  I am not demanding you to test all of these,
+but we need to make sure at least somebody did.  Especially because it
+would be a regression if the second one does not.
