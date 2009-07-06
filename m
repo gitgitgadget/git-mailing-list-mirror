@@ -1,7 +1,7 @@
 From: Federico Lucifredi <flucifredi@acm.org>
 Subject: Re: Suggestion: "man git clone"
-Date: Sun, 05 Jul 2009 22:48:16 -0400
-Message-ID: <4A5165F0.8020107@acm.org>
+Date: Mon, 06 Jul 2009 00:11:18 -0400
+Message-ID: <4A517966.1060401@acm.org>
 References: <20090628023458.297703BC143@sarantium.pelham.vpn.ucam.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
@@ -9,28 +9,27 @@ Content-Transfer-Encoding: 7bit
 Cc: Jeff King <peff@peff.net>, "H. Peter Anvin" <hpa@zytor.com>,
 	Git Mailing List <git@vger.kernel.org>
 To: Colin Watson <cjwatson@debian.org>
-X-From: git-owner@vger.kernel.org Mon Jul 06 04:55:10 2009
+X-From: git-owner@vger.kernel.org Mon Jul 06 06:11:29 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MNeMG-0007n5-Gu
-	for gcvg-git-2@gmane.org; Mon, 06 Jul 2009 04:55:09 +0200
+	id 1MNfY8-0007vX-P3
+	for gcvg-git-2@gmane.org; Mon, 06 Jul 2009 06:11:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753172AbZGFCy6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 5 Jul 2009 22:54:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753204AbZGFCy5
-	(ORCPT <rfc822;git-outgoing>); Sun, 5 Jul 2009 22:54:57 -0400
-Received: from mail5.sea5.speakeasy.net ([69.17.117.7]:53113 "EHLO
-	mail5.sea5.speakeasy.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752315AbZGFCy4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 5 Jul 2009 22:54:56 -0400
-X-Greylist: delayed 401 seconds by postgrey-1.27 at vger.kernel.org; Sun, 05 Jul 2009 22:54:56 EDT
-Received: (qmail 27038 invoked from network); 6 Jul 2009 02:48:18 -0000
+	id S1751224AbZGFELS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 6 Jul 2009 00:11:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751069AbZGFELR
+	(ORCPT <rfc822;git-outgoing>); Mon, 6 Jul 2009 00:11:17 -0400
+Received: from mail2.sea5.speakeasy.net ([69.17.117.4]:51104 "EHLO
+	mail2.sea5.speakeasy.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750930AbZGFELR (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 6 Jul 2009 00:11:17 -0400
+Received: (qmail 26015 invoked from network); 6 Jul 2009 04:11:19 -0000
 Received: from dsl092-066-189.bos1.dsl.speakeasy.net (HELO spaceman.local) (federico@[66.92.66.189])
           (envelope-sender <flucifredi@acm.org>)
-          by mail5.sea5.speakeasy.net (qmail-ldap-1.03) with AES256-SHA encrypted SMTP
-          for <cjwatson@debian.org>; 6 Jul 2009 02:48:18 -0000
+          by mail2.sea5.speakeasy.net (qmail-ldap-1.03) with AES256-SHA encrypted SMTP
+          for <cjwatson@debian.org>; 6 Jul 2009 04:11:19 -0000
 User-Agent: Thunderbird 2.0.0.22 (Macintosh/20090605)
 In-Reply-To: <20090628023458.297703BC143@sarantium.pelham.vpn.ucam.org>
 X-Enigmail-Version: 0.95.7
@@ -39,7 +38,7 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122771>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122772>
 
 Colin Watson wrote:
 > (Sorry I didn't see this until now. HPA only CCed the maintainer of one
