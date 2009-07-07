@@ -1,89 +1,78 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: [PATCH/RFC] git-svn: Fix branch detection when repository root
-	is inaccessible
-Date: Tue, 7 Jul 2009 00:05:59 -0700
-Message-ID: <20090707070559.GA13684@dcvr.yhbt.net>
-References: <1246794706.4818.33.camel@kea> <20090706212742.GA8219@dcvr.yhbt.net> <1246919293.4618.12.camel@kea>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: =?ISO-8859-1?Q?Schr=F6dinger=27s_diff?=
+Date: Tue, 07 Jul 2009 09:28:13 +0200
+Message-ID: <4A52F90D.7080305@viscovery.net>
+References: <279b37b20907062353k34bca06erf035458e80933c8d@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Mattias Nissler <mattias.nissler@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Jul 07 09:09:11 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Eric Raible <raible@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jul 07 09:28:30 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MO4lB-0005ca-9j
-	for gcvg-git-2@gmane.org; Tue, 07 Jul 2009 09:06:37 +0200
+	id 1MO56K-0006oc-MO
+	for gcvg-git-2@gmane.org; Tue, 07 Jul 2009 09:28:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753339AbZGGHF6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 7 Jul 2009 03:05:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753313AbZGGHF6
-	(ORCPT <rfc822;git-outgoing>); Tue, 7 Jul 2009 03:05:58 -0400
-Received: from dcvr.yhbt.net ([64.71.152.64]:55744 "EHLO dcvr.yhbt.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752904AbZGGHF6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 Jul 2009 03:05:58 -0400
-Received: from localhost (user-118bg0q.cable.mindspring.com [66.133.192.26])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by dcvr.yhbt.net (Postfix) with ESMTPSA id 27E371F4E8;
-	Tue,  7 Jul 2009 07:06:01 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <1246919293.4618.12.camel@kea>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+	id S1753936AbZGGH2Q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 7 Jul 2009 03:28:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753193AbZGGH2Q
+	(ORCPT <rfc822;git-outgoing>); Tue, 7 Jul 2009 03:28:16 -0400
+Received: from lilzmailso01.liwest.at ([212.33.55.23]:33919 "EHLO
+	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751940AbZGGH2P (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 Jul 2009 03:28:15 -0400
+Received: from cpe228-254.liwest.at ([81.10.228.254] helo=linz.eudaptics.com)
+	by lilzmailso01.liwest.at with esmtpa (Exim 4.69)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1MO565-00021C-AD; Tue, 07 Jul 2009 09:28:13 +0200
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.96])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id E390155DD; Tue,  7 Jul 2009 09:28:12 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.21 (Windows/20090302)
+In-Reply-To: <279b37b20907062353k34bca06erf035458e80933c8d@mail.gmail.com>
+X-Spam-Score: -1.4 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122825>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122826>
 
-Mattias Nissler <mattias.nissler@gmx.de> wrote:
-> Hi Eric,
+Eric Raible schrieb:
+> Sometimes it does, and sometimes it doesn't (seems to be about
+> 50/50).  But either way in any given repo rerunning the git-diff will
+> always give the same result.
 > 
-> On Mon, 2009-07-06 at 14:27 -0700, Eric Wong wrote:
-> > Fixing the minimize logic is definitely a wanted improvement I haven't
-> > been able to fix myself.  Unfortunately, your patch breaks the
-> > t9138-git-svn-multiple-branches.sh test for me.  
+> Doing an "git ls-tree HEAD" gives an identical tree in both cases.
 > 
-> I see the same here, not sure why I've missed it before. I've had a look
-> at the problem and found that the test is actually depending on the
-> minimizing logic, i.e. needs to specify -d project1/<tag-or-branch-dir>
-> for the tag or branch destination where the project1 prefix is due to
-> the minimization at clone time. Dropping the project1 part makes the
-> test succeed. I'll simply update the test to do so.
+> Can anyone explain why the output to this is not deterministic?
+> I'm at a complete loss.
 > 
-> I also think this is much better from a usability point of view since
-> you can now use the original branch or tag dir you've given to clone in
-> order to specify the branch or tag destination.
-
-OK.  I was slightly concerned about potential breakage but I guess
-existing imports will continue to work fine, so I suppose it's
-alright...
-
-> > I haven't looked at it
-> > at all, but I'll try to take a look at it later today after I process other
-> > things in my overflowing work queue; but I definitely want access issues
-> > fixed for people with restrictive repo setups.
-> > 
-> > One thing I would do is to split out the making of dup_changed_paths()
-> > the default behavior into a separate patch.  I think this is a good
-> > change since it makes things less surprising for future hackers of
-> > git svn.
+> 	# Clean up from last run and start over
+> 	rm -rf .git has-crlf
+> 	git init
+> 	git config core.autocrlf false
 > 
-> Ok, will do so. I'll send updated patches in reply to this mail.
+> 	# Add a "bad" file
+> 	perl -e 'printf( "12%c%c", 0xd, 0xa )' > has-crlf
+> 	git add has-crlf
+> 	git commit -m"add crlf"
+> 
+> 	# I realize that switching is ill-advised, but I'm
+> 	# trying to track down a possibly related problem...
+> 	git config core.autocrlf true
+> 
+> 	# This sometimes produces output and sometimes it doesn't.
+> 	# Either way rerunning just git-diff always gives the same result
+> 	# as the first run in this repo.
+> 	git diff
 
-Thanks again Mattias.  Acked and pushed out with minor formatting fixes
-to git://git.bogomips.org/git-svn along with Yann's documentation
-patches.
+If I put this in a script, I get a diff in 9 out of 10 runs. If I insert
+'sleep 1' right before the 'git add', I never get a diff.
 
-> Finally, a big thanks for the nice job on git-svn. I've just experienced
-> lots of trouble with the mercurial SVN integration and it's really a
-> pain in the ass even to just get a simple clean rebase done properly.
-> git-svn is really way more mature and it's a pleasure to use it for
-> everyday work.
+I'm handing this off to people who care about core.autocrlf and who know
+how racily-clean index entries (not) work ;)
 
-No problem :)
-
--- 
-Eric Wong
+-- Hannes
