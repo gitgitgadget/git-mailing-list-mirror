@@ -1,260 +1,446 @@
-From: Dmitry Potapov <dpotapov@gmail.com>
-Subject: Too many 'stat' calls by git-status on Windows
-Date: Tue, 7 Jul 2009 04:05:01 +0400
-Message-ID: <20090707000500.GA5594@dpotapov.dyndns.org>
+From: Larry D'Anna <larry@elder-gods.org>
+Subject: [PATCH v3] add --summary option to git-push and git-fetch
+Date: Mon, 6 Jul 2009 21:59:48 -0400
+Message-ID: <20090707015948.GA525@cthulhu>
+References: <20090703044801.GA2072@cthulhu> <7viqiat965.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jul 07 02:06:56 2009
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jul 07 03:59:57 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MNyD1-0005sX-Sf
-	for gcvg-git-2@gmane.org; Tue, 07 Jul 2009 02:06:56 +0200
+	id 1MNzyO-00062w-Kc
+	for gcvg-git-2@gmane.org; Tue, 07 Jul 2009 03:59:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755950AbZGGAFc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 6 Jul 2009 20:05:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756011AbZGGAFb
-	(ORCPT <rfc822;git-outgoing>); Mon, 6 Jul 2009 20:05:31 -0400
-Received: from ey-out-1920.google.com ([74.125.78.145]:33417 "EHLO
-	ey-out-1920.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756459AbZGGAF3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 6 Jul 2009 20:05:29 -0400
-Received: by ey-out-1920.google.com with SMTP id 3so942153eyh.36
-        for <git@vger.kernel.org>; Mon, 06 Jul 2009 17:05:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:subject
-         :message-id:mime-version:content-type:content-disposition:user-agent;
-        bh=MtU7nh3pvRQ1IBpaO8/F2UnVru8NY5+CP2S8beQSEkQ=;
-        b=gs5Ws36IJn9zbystpVyV0/d+xiRDclM6o5N6h3PwJ0+jbXb59p+Qk+ZST5darI6jOE
-         pPlz3iy6xphiI/1SpKlTx0C6l7Dy55d+dEARwVx3SrMa2ts3tT1x4M7z5tAzCdOEtlqQ
-         ldMZ6R1I+KFCLAKPhpQKyfX2oKlvVKxwtWXN4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:subject:message-id:mime-version:content-type
-         :content-disposition:user-agent;
-        b=MxqVY5Sz7DAsBxilZJ1K/k/Zmui3FODIAj09uE1FZCP399EgeWJ5wuiRG7M5F43CDy
-         ild8/2m3hoRDDWXx7ePh9uNPrbYKUJZwosR0Vkm1NjMZSMQSVb1Qp6XwHJ7KC8z16lgt
-         PnA+sOIUWt5x0mmMwE//yeF8ztbtyGJIahnKI=
-Received: by 10.210.52.15 with SMTP id z15mr4524649ebz.99.1246925131988;
-        Mon, 06 Jul 2009 17:05:31 -0700 (PDT)
-Received: from localhost (ppp91-77-224-188.pppoe.mtu-net.ru [91.77.224.188])
-        by mx.google.com with ESMTPS id 10sm1363078eyz.41.2009.07.06.17.05.30
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 06 Jul 2009 17:05:31 -0700 (PDT)
+	id S1755773AbZGGB7u (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 6 Jul 2009 21:59:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755571AbZGGB7s
+	(ORCPT <rfc822;git-outgoing>); Mon, 6 Jul 2009 21:59:48 -0400
+Received: from cthulhu.elder-gods.org ([140.239.99.253]:49059 "EHLO
+	cthulhu.elder-gods.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755521AbZGGB7r (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 6 Jul 2009 21:59:47 -0400
+Received: by cthulhu.elder-gods.org (Postfix, from userid 1000)
+	id B2BFB822055; Mon,  6 Jul 2009 21:59:48 -0400 (EDT)
 Content-Disposition: inline
+In-Reply-To: <7viqiat965.fsf@alter.siamese.dyndns.org>
 User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122813>
-
-I have used the Cygwin version of Git on one Windows computer and
-noticed that git-status is sluggish. So, I have run the Process Monitor
-to see what is going on.
-
-The below, you can see the result of testing on Windows and Linux on the
-same repository using the same version of Git. It is rather easy to
-compare if you notice that the following match between syscalls:
-
-Windows         Linux
-
-QueryOpen       lstat or fstat
-CreateFile      open
-CloseFile       close
-QueryDirectory  getdents
-
-I have also tested git-diff to verify that the number of system calls
-matches pretty well. (In fact, I got practical identical list for stat
-syscalls for files inside of the working directory on Windows and Linux
-when ran git-diff.) But something strange is going on with git-status.
-The beginning of the log is identical on Windows and Linux, but then I
-see more 'stat's in the Windows log that did not happen on Linux.  In
-total, I see about 3 times increase of 'stat' calls, with all files
-being stat twice and directories (which are numerous) being stat 3 and
-more times (some of them as many 39 times...) It seems that every
-directory is stat as many times as the number of subdirectories it has
-plus 3.
-
-It appears that the second 'stat' for files on Windows caused by lack
-of d_type in dirent. When I recompiled the Linux version with
-NO_D_TYPE_IN_DIRENT = YesPlease, I got the same result for files.
-(Still I am not sure what caused those extra stat calls for
-directory, maybe, it is Cygwin specific...)
-
-The question is whether it is possible to avoid this redundant 'stat'
-for files on system that do not have d_type in dirent or that would
-require too much modification? Is it possible to use the cache where
-d_stat is not available provided that the entry is marked as uptodate?
 
 
-==== Git on Windows (CYGWIN) =====
 
-$ wc -l git-diff.csv  git-status.csv
-   5186 git-diff.csv
-  21694 git-status.csv
+--summary will cause git-push to output a one-line of each commit pushed.
+--summary=n will display at most n commits for each ref pushed.
 
-$ csvtool col 5 git-diff.csv | sort | uniq -c | sort -nr | head -10
-   4656 QueryOpen
-    100 CreateFile
-     94 CloseFile
-     80 QuerySecurityFile
-     61 ReadFile
-     30 QueryInformationVolume
-     28 QueryAllInformationFile
-     26 RegOpenKey
-     24 RegCloseKey
-     20 QueryStandardInformationFile
+$ git push --dry-run --summary origin :
+To /home/larry/gitsandbox/a
+   80f0e50..5593a38  master -> master
+    > 5593a38 foo
+    > 81c03f8 bar
 
-$ csvtool col 5 git-status.csv | sort | uniq -c | sort -nr | head -10
-  12984 QueryOpen
-   3086 CreateFile
-   2103 CloseFile
-   1984 QueryDirectory
-    988 QueryFileInternalInformationFile
-    132 QuerySecurityFile
-    100 ReadFile
-     77 WriteFile
-     55 QueryInformationVolume
-     53 QueryAllInformationFile
+Fetch works the same way.
 
-Successful open:
-$ csvtool col 5,7,8 git-diff.csv | grep CreateFile,SUCCESS, | wc -l
-94
-$ csvtool col 5,7,8 git-status.csv | grep CreateFile,SUCCESS, | wc -l
-2103
+Signed-off-by: Larry D'Anna <larry@elder-gods.org>
+---
 
-Successful open for directories:
-$ csvtool col 5,7,8 git-diff.csv | grep CreateFile,SUCCESS,.*Options:.*Directory | wc -l
-37
-$ csvtool col 5,7,8 git-status.csv | grep CreateFile,SUCCESS,.*Options:.*Directory | wc -l
-1024
+This patch is meant to be applied on top of 1965ff7 add --porcelain option to git-push
 
-Not successful attempts to open
-$ csvtool col 5,7,8 git-diff.csv | grep CreateFile | grep -v ,SUCCESS, | wc -l
-6
-$ csvtool col 5,7,8 git-status.csv | grep CreateFile | grep -v ,SUCCESS, | wc -l
-983
+Differences since the last version:
 
-Attempts to open .gitignore
-$ csvtool col 5,6 git-diff.csv | grep 'CreateFile,.*\\\.gitignore' | wc -l
-0
-$ csvtool col 5,6 git-status.csv | grep 'CreateFile,.*\\\.gitignore' | wc -l
-986
+* it will print ... at the end of the summary if it stops because there's too many lines
 
-=== GIT on Linux ===
+* it prints an extra newline after each summary to make the output more readable
 
-$ wc -l linux-git-*
-   4674 linux-git-diff.log
-   9807 linux-git-status.log
+* --summary now defaults to --summary=20 
 
-$ sed -e 's/(.*//' < linux-git-diff.log  | sort | uniq -c | sort -rn | head -10
-   4237 lstat
-     88 mmap
-     56 open
-     50 close
-     50 access
-     48 fstat
-     45 mprotect
-     43 read
-     15 stat
-     13 munmap
+* whitespace is fixed 
 
-The number of lstat+fstat is equal 4285 for git-diff
+* no more stdout = stderr shenanigans
 
-$ sed -e 's/(.*//' < linux-git-status.log  | sort | uniq -c | sort -rn | head -10
-   3279 lstat
-   2048 open
-   1976 getdents
-   1062 close
-   1058 fstat
-     97 mmap
-     67 read
-     48 access
-     45 mprotect
-     40 write
+* s/static int summary = 0;/static int summary;/
 
-The number of lstat+fstat is equal 4337 for git-status.
+ Documentation/fetch-options.txt |    7 +++++++
+ Documentation/git-push.txt      |    6 ++++++
+ builtin-fetch.c                 |   24 ++++++++++++++++++------
+ builtin-log.c                   |   34 ++++++++++++++++++++++++++++++++++
+ builtin-push.c                  |   12 +++++++++---
+ builtin.h                       |    2 ++
+ transport.c                     |   39 +++++++++++++++++++++++++++------------
+ transport.h                     |    2 +-
+ 8 files changed, 104 insertions(+), 22 deletions(-)
 
-Successful open:
-$ grep -c '^open(.*= [^-]' linux-*
-linux-git-diff.log:50
-linux-git-status.log:1064
-
-Successful open for directories:
-$ grep -c '^open(.*O_DIRECTORY.*= [^-]' linux-*
-linux-git-diff.log:1
-linux-git-status.log:989
-
-Not successful attempts to open:
-$ grep -c '^open(.*= -1' linux-*
-linux-git-diff.log:6
-linux-git-status.log:984
-
-Attempts to open .gitignore:
-$ grep -c '^open(.*.\.gitignore"' linux-*
-linux-git-diff.log:0
-linux-git-status.log:987
-
-=== Linux with NO_D_TYPE_IN_DIRENT = YesPlease ===
-
-$ wc -l linux-git-*no-dtype.log
-   4674 linux-git-diff-no-dtype.log
-  14040 linux-git-status-no-dtype.log
-
-$ sed -e 's/(.*//' < linux-git-diff-no-dtype.log  | sort | uniq -c | sort -rn | head -10
-
-   4237 lstat
-     88 mmap
-     56 open
-     50 close
-     50 access
-     48 fstat
-     45 mprotect
-     43 read
-     15 stat
-     13 munmap
-
-The number of lstat+fstat is equal 4285 for git-diff
-
-$ sed -e 's/(.*//' < linux-git-status-no-dtype.log  | sort | uniq -c | sort -rn | head -10
-
-   7512 lstat
-   2048 open
-   1976 getdents
-   1062 close
-   1058 fstat
-     97 mmap
-     67 read
-     48 access
-     45 mprotect
-     40 write
-
-The number of lstat+fstat is equal 8570 for git-status.
-
-Successful open:
-$ grep -c '^open(.*= [^-]' linux-*-no-dtype.log
-linux-git-diff-no-dtype.log:50
-linux-git-status-no-dtype.log:1064
-
-Successful open for directories:
-$ grep -c '^open(.*O_DIRECTORY.*= [^-]' linux-*-no-dtype.log
-linux-git-diff-no-dtype.log:1
-linux-git-status-no-dtype.log:989
-
-Not successful attempts to open:
-$ grep -c '^open(.*= -1' linux-*-no-dtype.log
-linux-git-diff-no-dtype.log:6
-linux-git-status-no-dtype.log:984
-
-Attempts to open .gitignore:
-$ grep -c '^open(.*.\.gitignore"' linux-*-no-dtype.log
-linux-git-diff-no-dtype.log:0
-linux-git-status-no-dtype.log:987
-
-=======
-
-Dmitry
+diff --git a/Documentation/fetch-options.txt b/Documentation/fetch-options.txt
+index d313795..2e66d5e 100644
+--- a/Documentation/fetch-options.txt
++++ b/Documentation/fetch-options.txt
+@@ -27,6 +27,13 @@
+ 	fetches is a descendant of `<lbranch>`.  This option
+ 	overrides that check.
+ 
++--summary::
++	Print a one-line summary of each commit fetched.
++
++--summary=<n>::
++	Like --summary, but with a limit of <n> commits per ref.
++
++
+ ifdef::git-pull[]
+ --no-tags::
+ endif::git-pull[]
+diff --git a/Documentation/git-push.txt b/Documentation/git-push.txt
+index 2653388..803fe36 100644
+--- a/Documentation/git-push.txt
++++ b/Documentation/git-push.txt
+@@ -85,6 +85,12 @@ nor in any Push line of the corresponding remotes file---see below).
+ --dry-run::
+ 	Do everything except actually send the updates.
+ 
++--summary::
++	Print a one-line summary of each commit pushed.
++
++--summary=<n>::
++	Like --summary, but with a limit of <n> commits per ref.
++
+ --porcelain::
+ 	Produce machine-readable output.  The output status line for each ref
+ 	will be tab-separated and sent to stdout instead of stderr.  The full
+diff --git a/builtin-fetch.c b/builtin-fetch.c
+index cd5eb9a..c98d06b 100644
+--- a/builtin-fetch.c
++++ b/builtin-fetch.c
+@@ -29,6 +29,7 @@ static const char *depth;
+ static const char *upload_pack;
+ static struct strbuf default_rla = STRBUF_INIT;
+ static struct transport *transport;
++static int summary;
+ 
+ static struct option builtin_fetch_options[] = {
+ 	OPT__VERBOSITY(&verbosity),
+@@ -47,6 +48,9 @@ static struct option builtin_fetch_options[] = {
+ 		    "allow updating of HEAD ref"),
+ 	OPT_STRING(0, "depth", &depth, "DEPTH",
+ 		   "deepen history of shallow clone"),
++	{ OPTION_INTEGER, 0, "summary", &summary, "n", "print a summary of [at most n] fetched commits",
++	  PARSE_OPT_OPTARG, NULL, 20
++	},
+ 	OPT_END()
+ };
+ 
+@@ -197,7 +201,8 @@ static int s_update_ref(const char *action,
+ 
+ static int update_local_ref(struct ref *ref,
+ 			    const char *remote,
+-			    char *display)
++			    char *display,
++			    char *quickref)
+ {
+ 	struct commit *current = NULL, *updated;
+ 	enum object_type type;
+@@ -260,11 +265,12 @@ static int update_local_ref(struct ref *ref,
+ 		sprintf(display, "%c %-*s %-*s -> %s%s", r ? '!' : '*',
+ 			SUMMARY_WIDTH, what, REFCOL_WIDTH, remote, pretty_ref,
+ 			r ? "  (unable to update local ref)" : "");
++		if (!r)
++			strcpy(quickref, find_unique_abbrev(ref->new_sha1, DEFAULT_ABBREV));
+ 		return r;
+ 	}
+ 
+ 	if (in_merge_bases(current, &updated, 1)) {
+-		char quickref[83];
+ 		int r;
+ 		strcpy(quickref, find_unique_abbrev(current->object.sha1, DEFAULT_ABBREV));
+ 		strcat(quickref, "..");
+@@ -275,7 +281,6 @@ static int update_local_ref(struct ref *ref,
+ 			pretty_ref, r ? "  (unable to update local ref)" : "");
+ 		return r;
+ 	} else if (force || ref->force) {
+-		char quickref[84];
+ 		int r;
+ 		strcpy(quickref, find_unique_abbrev(current->object.sha1, DEFAULT_ABBREV));
+ 		strcat(quickref, "...");
+@@ -301,6 +306,7 @@ static int store_updated_refs(const char *raw_url, const char *remote_name,
+ 	struct commit *commit;
+ 	int url_len, i, note_len, shown_url = 0, rc = 0;
+ 	char note[1024];
++	char quickref[84];
+ 	const char *what, *kind;
+ 	struct ref *rm;
+ 	char *url, *filename = git_path("FETCH_HEAD");
+@@ -373,12 +379,15 @@ static int store_updated_refs(const char *raw_url, const char *remote_name,
+ 				fputc(url[i], fp);
+ 		fputc('\n', fp);
+ 
+-		if (ref)
+-			rc |= update_local_ref(ref, what, note);
+-		else
++		if (ref) {
++			*quickref = 0;
++			rc |= update_local_ref(ref, what, note, quickref);
++		} else {
++			strcpy(quickref, find_unique_abbrev(rm->old_sha1, DEFAULT_ABBREV));
+ 			sprintf(note, "* %-*s %-*s -> FETCH_HEAD",
+ 				SUMMARY_WIDTH, *kind ? kind : "branch",
+ 				 REFCOL_WIDTH, *what ? what : "HEAD");
++		}
+ 		if (*note) {
+ 			if (verbosity >= 0 && !shown_url) {
+ 				fprintf(stderr, "From %.*s\n",
+@@ -388,6 +397,9 @@ static int store_updated_refs(const char *raw_url, const char *remote_name,
+ 			if (verbosity >= 0)
+ 				fprintf(stderr, " %s\n", note);
+ 		}
++		if (summary && quickref[0])
++			print_summary_for_push_or_fetch(quickref, summary);
++
+ 	}
+ 	free(url);
+ 	fclose(fp);
+diff --git a/builtin-log.c b/builtin-log.c
+index 0c2fa0a..e25285b 100644
+--- a/builtin-log.c
++++ b/builtin-log.c
+@@ -1293,3 +1293,37 @@ int cmd_cherry(int argc, const char **argv, const char *prefix)
+ 	free_patch_ids(&ids);
+ 	return 0;
+ }
++
++
++void print_summary_for_push_or_fetch(const char *quickref, int limit)
++{
++	struct rev_info rev;
++	int i, max;
++	struct object *obj;
++	struct commit *commit;
++
++	max = get_max_object_index();
++	for (i = 0; i < max; i++)  {
++		obj = get_indexed_object(i);
++		if (obj)
++			obj->flags &= ~ALL_REV_FLAGS;
++	}
++
++	init_revisions(&rev, NULL);
++	rev.prune = 0;
++	assert(!handle_revision_arg(quickref, &rev, 0, 1));
++	assert(!prepare_revision_walk(&rev));
++
++	while ((commit = get_revision(&rev)) != NULL) {
++		struct strbuf buf = STRBUF_INIT;
++		if (limit == 0) {
++			fprintf(stderr, "    ...\n");
++			break;
++		}
++		format_commit_message(commit, "    %m %h %s\n", &buf, 0);
++		fputs(buf.buf, stderr);
++		strbuf_release(&buf);
++		limit--;
++	}
++	fputs("\n", stderr);
++}
+diff --git a/builtin-push.c b/builtin-push.c
+index 0a0297f..d38f9a8 100644
+--- a/builtin-push.c
++++ b/builtin-push.c
+@@ -113,7 +113,7 @@ static void setup_default_push_refspecs(void)
+ 	}
+ }
+ 
+-static int do_push(const char *repo, int flags)
++static int do_push(const char *repo, int flags, int summary)
+ {
+ 	int i, errs;
+ 	struct remote *remote = remote_get(repo);
+@@ -173,7 +173,7 @@ static int do_push(const char *repo, int flags)
+ 
+ 		if (flags & TRANSPORT_PUSH_VERBOSE)
+ 			fprintf(stderr, "Pushing to %s\n", url[i]);
+-		err = transport_push(transport, refspec_nr, refspec, flags);
++		err = transport_push(transport, refspec_nr, refspec, flags, summary);
+ 		err |= transport_disconnect(transport);
+ 
+ 		if (!err)
+@@ -192,6 +192,8 @@ int cmd_push(int argc, const char **argv, const char *prefix)
+ 	int rc;
+ 	const char *repo = NULL;	/* default repository */
+ 
++	int summary = 0;
++
+ 	struct option options[] = {
+ 		OPT_BIT('v', "verbose", &flags, "be verbose", TRANSPORT_PUSH_VERBOSE),
+ 		OPT_STRING( 0 , "repo", &repo, "repository", "repository"),
+@@ -205,6 +207,10 @@ int cmd_push(int argc, const char **argv, const char *prefix)
+ 		OPT_BOOLEAN( 0 , "thin", &thin, "use thin pack"),
+ 		OPT_STRING( 0 , "receive-pack", &receivepack, "receive-pack", "receive pack program"),
+ 		OPT_STRING( 0 , "exec", &receivepack, "receive-pack", "receive pack program"),
++		{ OPTION_INTEGER, 0, "summary", &summary, "n", "print a summary of [at most n] pushed commits",
++		  PARSE_OPT_OPTARG, NULL, 20
++		},
++
+ 		OPT_END()
+ 	};
+ 
+@@ -218,7 +224,7 @@ int cmd_push(int argc, const char **argv, const char *prefix)
+ 		set_refspecs(argv + 1, argc - 1);
+ 	}
+ 
+-	rc = do_push(repo, flags);
++	rc = do_push(repo, flags, summary);
+ 	if (rc == -1)
+ 		usage_with_options(push_usage, options);
+ 	else
+diff --git a/builtin.h b/builtin.h
+index 20427d2..5aea3a3 100644
+--- a/builtin.h
++++ b/builtin.h
+@@ -113,4 +113,6 @@ extern int cmd_verify_pack(int argc, const char **argv, const char *prefix);
+ extern int cmd_show_ref(int argc, const char **argv, const char *prefix);
+ extern int cmd_pack_refs(int argc, const char **argv, const char *prefix);
+ 
++extern void print_summary_for_push_or_fetch(const char *quickref, int limit);
++
+ #endif
+diff --git a/transport.c b/transport.c
+index de0d587..80105ae 100644
+--- a/transport.c
++++ b/transport.c
+@@ -11,6 +11,7 @@
+ #include "bundle.h"
+ #include "dir.h"
+ #include "refs.h"
++#include "builtin.h"
+ 
+ /* rsync support */
+ 
+@@ -750,17 +751,20 @@ static const char *status_abbrev(unsigned char sha1[20])
+ 	return find_unique_abbrev(sha1, DEFAULT_ABBREV);
+ }
+ 
+-static void print_ok_ref_status(struct ref *ref, int porcelain)
++static void print_ok_ref_status(struct ref *ref, int porcelain, int summary)
+ {
++	char quickref[84];
++	int summary_impossible = 0;
++
+ 	if (ref->deletion)
+ 		print_ref_status('-', "[deleted]", ref, NULL, NULL, porcelain);
+-	else if (is_null_sha1(ref->old_sha1))
++	else if (is_null_sha1(ref->old_sha1)) {
+ 		print_ref_status('*',
+ 			(!prefixcmp(ref->name, "refs/tags/") ? "[new tag]" :
+ 			"[new branch]"),
+ 			ref, ref->peer_ref, NULL, porcelain);
+-	else {
+-		char quickref[84];
++		strcpy(quickref, status_abbrev(ref->new_sha1));
++	} else {
+ 		char type;
+ 		const char *msg;
+ 
+@@ -769,6 +773,8 @@ static void print_ok_ref_status(struct ref *ref, int porcelain)
+ 			strcat(quickref, "...");
+ 			type = '+';
+ 			msg = "forced update";
++			if (!lookup_commit_reference_gently(ref->old_sha1, 1))
++				summary_impossible = 1;
+ 		} else {
+ 			strcat(quickref, "..");
+ 			type = ' ';
+@@ -778,9 +784,17 @@ static void print_ok_ref_status(struct ref *ref, int porcelain)
+ 
+ 		print_ref_status(type, quickref, ref, ref->peer_ref, msg, porcelain);
+ 	}
++
++	if (summary) {
++		if (summary_impossible) {
++			fprintf(stderr, "    %s is unavailable\n", status_abbrev(ref->old_sha1));
++		} else {
++			print_summary_for_push_or_fetch(quickref, summary);
++		}
++	}
+ }
+ 
+-static int print_one_push_status(struct ref *ref, const char *dest, int count, int porcelain)
++static int print_one_push_status(struct ref *ref, const char *dest, int count, int porcelain, int summary)
+ {
+ 	if (!count)
+ 		fprintf(stderr, "To %s\n", dest);
+@@ -812,7 +826,7 @@ static int print_one_push_status(struct ref *ref, const char *dest, int count, i
+ 						 "remote failed to report status", porcelain);
+ 		break;
+ 	case REF_STATUS_OK:
+-		print_ok_ref_status(ref, porcelain);
++		print_ok_ref_status(ref, porcelain, summary);
+ 		break;
+ 	}
+ 
+@@ -820,7 +834,7 @@ static int print_one_push_status(struct ref *ref, const char *dest, int count, i
+ }
+ 
+ static void print_push_status(const char *dest, struct ref *refs,
+-							  int verbose, int porcelain)
++							  int verbose, int porcelain, int summary)
+ {
+ 	struct ref *ref;
+ 	int n = 0;
+@@ -828,18 +842,18 @@ static void print_push_status(const char *dest, struct ref *refs,
+ 	if (verbose) {
+ 		for (ref = refs; ref; ref = ref->next)
+ 			if (ref->status == REF_STATUS_UPTODATE)
+-				n += print_one_push_status(ref, dest, n, porcelain);
++				n += print_one_push_status(ref, dest, n, porcelain, summary);
+ 	}
+ 
+ 	for (ref = refs; ref; ref = ref->next)
+ 		if (ref->status == REF_STATUS_OK)
+-			n += print_one_push_status(ref, dest, n, porcelain);
++			n += print_one_push_status(ref, dest, n, porcelain, summary);
+ 
+ 	for (ref = refs; ref; ref = ref->next) {
+ 		if (ref->status != REF_STATUS_NONE &&
+ 		    ref->status != REF_STATUS_UPTODATE &&
+ 		    ref->status != REF_STATUS_OK)
+-			n += print_one_push_status(ref, dest, n, porcelain);
++			n += print_one_push_status(ref, dest, n, porcelain, summary);
+ 	}
+ }
+ 
+@@ -997,7 +1011,8 @@ int transport_set_option(struct transport *transport,
+ }
+ 
+ int transport_push(struct transport *transport,
+-		   int refspec_nr, const char **refspec, int flags)
++				   int refspec_nr, const char **refspec,
++				   int flags, int summary)
+ {
+ 	verify_remote_names(refspec_nr, refspec);
+ 
+@@ -1024,7 +1039,7 @@ int transport_push(struct transport *transport,
+ 
+ 		ret = transport->push_refs(transport, remote_refs, flags);
+ 
+-		print_push_status(transport->url, remote_refs, verbose | porcelain, porcelain);
++		print_push_status(transport->url, remote_refs, verbose | porcelain, porcelain, summary);
+ 
+ 		if (!(flags & TRANSPORT_PUSH_DRY_RUN)) {
+ 			struct ref *ref;
+diff --git a/transport.h b/transport.h
+index 51b5397..360051e 100644
+--- a/transport.h
++++ b/transport.h
+@@ -68,7 +68,7 @@ int transport_set_option(struct transport *transport, const char *name,
+ 			 const char *value);
+ 
+ int transport_push(struct transport *connection,
+-		   int refspec_nr, const char **refspec, int flags);
++				   int refspec_nr, const char **refspec, int flags, int summary);
+ 
+ const struct ref *transport_get_remote_refs(struct transport *transport);
+ 
+-- 
+1.6.3.3.409.g4a08
