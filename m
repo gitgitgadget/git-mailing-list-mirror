@@ -1,84 +1,72 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: What's cooking in git.git (Jul 2009, #01; Mon, 06)
-Date: Tue, 07 Jul 2009 15:19:31 -0700
-Message-ID: <7vk52k9lvw.fsf@alter.siamese.dyndns.org>
-References: <7vk52l4q7k.fsf@alter.siamese.dyndns.org>
- <alpine.DEB.1.00.0907072206170.3155@pacific.mpi-cbg.de>
- <20090707201326.GB11191@spearce.org>
+Subject: Re: =?utf-8?Q?Schr=C3=B6dinger's?= diff
+Date: Tue, 07 Jul 2009 15:22:48 -0700
+Message-ID: <7vfxd89lqf.fsf@alter.siamese.dyndns.org>
+References: <279b37b20907062353k34bca06erf035458e80933c8d@mail.gmail.com>
+ <alpine.LNX.2.00.0907071316490.2147@iabervon.org>
+ <20090707193605.GA30945@coredump.intra.peff.net>
+ <7vtz1o9sv6.fsf@alter.siamese.dyndns.org>
+ <20090707195406.GA32131@coredump.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Wed Jul 08 00:19:46 2009
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Daniel Barkalow <barkalow@iabervon.org>,
+	Eric Raible <raible@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Jul 08 00:23:06 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MOJ0s-0003e0-AZ
-	for gcvg-git-2@gmane.org; Wed, 08 Jul 2009 00:19:46 +0200
+	id 1MOJ45-0004vI-S4
+	for gcvg-git-2@gmane.org; Wed, 08 Jul 2009 00:23:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756376AbZGGWTk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 7 Jul 2009 18:19:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756093AbZGGWTj
-	(ORCPT <rfc822;git-outgoing>); Tue, 7 Jul 2009 18:19:39 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:53135 "EHLO
+	id S1756093AbZGGWW7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 7 Jul 2009 18:22:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755852AbZGGWW6
+	(ORCPT <rfc822;git-outgoing>); Tue, 7 Jul 2009 18:22:58 -0400
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:53598 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754983AbZGGWTj (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 Jul 2009 18:19:39 -0400
+	with ESMTP id S1754983AbZGGWW6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 Jul 2009 18:22:58 -0400
 Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id DBF5B25A51;
-	Tue,  7 Jul 2009 18:19:37 -0400 (EDT)
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 7C45625AE0;
+	Tue,  7 Jul 2009 18:22:56 -0400 (EDT)
 Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 1C3F625A50; Tue, 
- 7 Jul 2009 18:19:33 -0400 (EDT)
-In-Reply-To: <20090707201326.GB11191@spearce.org> (Shawn O. Pearce's message
- of "Tue\, 7 Jul 2009 13\:13\:26 -0700")
+ a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 863B325ADC; Tue, 
+ 7 Jul 2009 18:22:50 -0400 (EDT)
+In-Reply-To: <20090707195406.GA32131@coredump.intra.peff.net> (Jeff King's
+ message of "Tue\, 7 Jul 2009 15\:54\:06 -0400")
 User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 421DC9E2-6B44-11DE-9CAC-DC021A496417-77302942!a-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: B87EB0D8-6B44-11DE-BD8D-DC021A496417-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122880>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122881>
 
-"Shawn O. Pearce" <spearce@spearce.org> writes:
+Jeff King <peff@peff.net> writes:
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
->> On Mon, 6 Jul 2009, Junio C Hamano wrote:
->> 
->> > * jh/notes (Sat May 16 13:44:17 2009 +0200) 5 commits
->> >  - Teach "-m <msg>" and "-F <file>" to "git notes edit"
->> >  - Add an expensive test for git-notes
->> >  - Speed up git notes lookup
->> >  - Add a script to edit/inspect notes
->> >  - Introduce commit notes
->> > 
->> > Dscho asked about the performance implications of this; I do not think I 
->> > saw any progress on that yet...
->> 
->> Neither did I.
+> Yes, that works fine, but:
 >
-> I was thinking about this the other day.  We could use a hash of
-> the commit timestamp as the top level directory.  E.g. if we take
-> the commit time of the commit and convert it to a date string,
-> we could make the note path e.g.:
+>   1. It blows away anything unrelated you might have staged.
 >
->   YYYY/MM/COMMITSHA1
+>   2. You have to know to do it (and you get very confusing results if
+>      you don't), which makes it very unfriendly for newbies.
 >
-> The advantage is we only need to scan and hash the subtrees for
-> the range of commits we are currently producing output for.  As we
-> go further back in time, we can evict entries for newer dates and
-> hash the older dates.
+>   3. You have to know to do it, and it isn't documented. :)
+>
+> (3) at least is not too hard to address. And perhaps (2) is not a big
+> enough issue to care about. This is not a problem we have seen on the
+> list a lot. I suspect it is because most CRLF users are on Windows, and
+> therefore have it setup before the tree is checked out, and there are
+> simply not all that many clean/smudge users.
 
-Is the idea to make the tree object we need to scan for that particular
-SHA-1 hash smaller?
-
-If so, I am not sure how it would help over another approach of say taking
-the first four hexdigits from the SHA-1 to use as the initial fan-out
-YYYY, then two hexdigits for the secondary fan-out MM.
-
-But probably I am missing something.
-
-Besides, trees and blobs cannot be annotated with that approach.
+A much more important reason is that it is a one-time event.  You notice
+that you screwed up the configuration to use your peculiar work tree
+representation, and you fix it once and for all.  Because not only it is a
+one-time event but because it is a big-deal event, I do not think it is
+something people even would want to think about doing it while having
+local changes, so I suspect #1 is also a non-issue.
