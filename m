@@ -1,95 +1,156 @@
-From: Andreas Ericsson <ae@op5.se>
+From: Bruno Haible <bruno@clisp.org>
 Subject: Re: request for documentation about branch surgery
-Date: Tue, 07 Jul 2009 12:06:40 +0200
-Message-ID: <4A531E30.5040907@op5.se>
-References: <200907070105.12821.bruno@clisp.org> <51419b2c0907061930k71e20b42rb347b9ab8923e437@mail.gmail.com> <200907071151.03567.bruno@clisp.org>
+Date: Tue, 7 Jul 2009 12:13:24 +0200
+Message-ID: <200907071213.25418.bruno@clisp.org>
+References: <200907070105.12821.bruno@clisp.org> <7vab3hb40x.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Type: text/plain;
+  charset="iso-8859-1"
 Content-Transfer-Encoding: 7bit
-Cc: Elijah Newren <newren@gmail.com>, git@vger.kernel.org
-To: Bruno Haible <bruno@clisp.org>
-X-From: git-owner@vger.kernel.org Tue Jul 07 12:06:57 2009
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jul 07 12:13:57 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MO7Ze-0000HF-P2
-	for gcvg-git-2@gmane.org; Tue, 07 Jul 2009 12:06:55 +0200
+	id 1MO7gS-0002a6-5s
+	for gcvg-git-2@gmane.org; Tue, 07 Jul 2009 12:13:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753493AbZGGKGm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 7 Jul 2009 06:06:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752505AbZGGKGm
-	(ORCPT <rfc822;git-outgoing>); Tue, 7 Jul 2009 06:06:42 -0400
-Received: from na3sys009aog113.obsmtp.com ([74.125.149.209]:48463 "HELO
-	na3sys009aog113.obsmtp.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with SMTP id S1751659AbZGGKGl (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 7 Jul 2009 06:06:41 -0400
-Received: from source ([74.125.78.24]) by na3sys009aob113.postini.com ([74.125.148.12]) with SMTP
-	ID DSNKSlMeMxGvLQhD+y9iNzXXtDodRmcRJMKt@postini.com; Tue, 07 Jul 2009 03:06:45 PDT
-Received: by ey-out-2122.google.com with SMTP id 22so1088889eye.35
-        for <git@vger.kernel.org>; Tue, 07 Jul 2009 03:06:43 -0700 (PDT)
-Received: by 10.210.61.8 with SMTP id j8mr1890911eba.37.1246961203034;
-        Tue, 07 Jul 2009 03:06:43 -0700 (PDT)
-Received: from clix.int.op5.se ([212.112.174.166])
-        by mx.google.com with ESMTPS id 7sm2966367eyg.47.2009.07.07.03.06.41
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 07 Jul 2009 03:06:42 -0700 (PDT)
-User-Agent: Thunderbird 2.0.0.21 (X11/20090320)
-In-Reply-To: <200907071151.03567.bruno@clisp.org>
+	id S1754797AbZGGKNq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 7 Jul 2009 06:13:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753669AbZGGKNp
+	(ORCPT <rfc822;git-outgoing>); Tue, 7 Jul 2009 06:13:45 -0400
+Received: from mo-p00-ob.rzone.de ([81.169.146.160]:25633 "EHLO
+	mo-p00-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751659AbZGGKNo (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 Jul 2009 06:13:44 -0400
+X-RZG-AUTH: :Ln4Re0+Ic/6oZXR1YgKryK8brksyK8dozXDwHXjf9hj/zDNRbfU4489asA==
+X-RZG-CLASS-ID: mo00
+Received: from linuix.haible.de
+	(dslb-088-068-043-109.pools.arcor-ip.net [88.68.43.109])
+	by post.strato.de (klopstock mo46) (RZmta 18.49)
+	with ESMTP id D01297l679eK8M ; Tue, 7 Jul 2009 12:13:45 +0200 (MEST)
+User-Agent: KMail/1.9.9
+In-Reply-To: <7vab3hb40x.fsf@alter.siamese.dyndns.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122832>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122833>
 
-Bruno Haible wrote:
-> I said.
+Hi Junio,
+
+> You learn new things every day, and today is such a day ;-)
 > 
-> Still, can someone please extend the cited chapter of the user's manual,
+> >   If you want to add a commit in the middle of a branch:
+> >
+> >             A---C---...---Z    master
+> >
+> >   =>
+> >
+> >             A---B---C---...---Z    master
+> >
+> >   it is achieved by
+> 
+>         $ git checkout master~25 ;# detach HEAD at A
+>         $ edit edit edit
+>         $ git commit ;# creates B
+> 
+> which makes
+> 
+>                B              HEAD (detached)
+>               /
+>              A---C---...---Z    master
+> 
+> and then
+> 
+>         $ git rebase HEAD master
+> 
+> which reshapes the history into
+> 
+> 
+>                B---C'--...---Z' master
+>               /
+>              A---C---...---Z    master@{1}
+> 
+> and you are done.
 
-Presumably you can. I'll jot down some notes for you though ;-)
+Cool! I wouldn't have guessed that. Now you wrote it into the mailing list
+archives. It would be even better if it were mentioned in the user's manual,
+chapter "Rewriting history and maintaining patch series"
 
-> so that it answers these questions?
->   - How do I insert some commits between other commits in a branch?
->                                                        [TODO]
+> > 3) When do I need "git merge", and when do I need "git rebase", in the
+> >    context of branch surgery?
+> >
+> >    The simple answer, that I would find worth mentioning, is:
+> >      - "git merge" copies commits from one branch to another.
+> >      - "git rebase" only moves commits around to make history more linear.
+> 
+> If you think "git merge" _copies_, you will never understand what "merge"
+> does. ... There is no copying involved anywhere .  It only creates a new
+> commit 
 
-git rebase --interactive (don't do this on published branches).
+There are two cases of "git merge" operation: the one that creates a diamond
+commit, and the one that doesn't (the "simple" case of "git merge"). The latter
+operation I found useful in achieving this surgery:
 
->   - How do I reorder commits in a branch?              [TODO - mention "git rebase -i"]
+            C---D---E              topic
+           /
+      A---B                        master
 
-git rebase --interactive
+  =>
 
->   - How do I cut a branch?                             [TODO]
+            C---D---E              topic
+           /
+      A---B---C---D---E            master
 
-Define "cut". Possibly "git branch -d" or it's less forgiving
-sibling "git branch -D", in case the branch to be removed isn't
-fully merged.
+How do I do this, if not by using "git merge"? Is there a way to do it with
+"git rebase" only?
 
->   - How do I replace a branch tip with the contents of another branch?
->                                                        [TODO]
+If I have a certain task at hand, what rule of thumb would you give me,
+when can I do it with "git rebase", and when can I do it with the simple case
+of "git merge"?
 
-Easily understandable:
-git checkout branch
-git reset --hard otherbranch
+> > 4) It would be good to have a section "Cutting branches"
+> >
+> >    How do I remove the N most recent commits from a branch?
+> >
+> >                D---E---F---G---H---.........---Y---Z master
+> >
+> >   =>
+> >                D---E master
+> 
+> And it is not even cutting.  It merely makes this:
+> 
+>                       F---G---H---.........---Y---Z master@{1}
+>                      /
+>                 D---E
+>                     ^master
 
-The low-level way:
-git update-ref [-m <reason>] [--no-deref] <full-ref-name> <newvalue>
+I regularly use "git repack -a -d", so that branches like that
+master@{1} get garbage collected. So from the point of view of someone
+who considers only the contents of the commits that sit on branches,
+it *does* cut the branch.
 
-There are more options to git-update-ref. The man-page lists them all.
+I know that all commits are still present and reachable by their ID,
+as long as they have not been garbage collected. But when doing
+branch surgery, only the contents of the labelled branches matters to me.
 
->   - How do I reconnect a branch to another branch point?
->                                                        [TODO]
+> I think your confusion is primarily coming from not understanding what a
+> branch in git is.  A branch in git does not have its own identity per-se,
+> and a commit does _not_ belong to a branch, in the sense that a commit
+> object does not record anywhere on which branch it was created on.  A
+> branch is just a pointer into a dag and the pointer can be moved.
 
-I don't quite understand what you mean by "reconnect", but this might
-do something along the lines of what you want:
-git checkout branch-to-connect-to
-git merge branch-to-be-connected
+Oh, I do and did know all this. There is no confusion about that. My problem
+was that
+  - I had a couple of "how do I ..." questions regarding branch surgery,
+  - the mapping between such a task and the git command to use is not clear
+    (combinations of "git checkout", "git branch", "git rebase", "git merge",
+    "git reset", "git cherry-pick" - enough complicated commands to get
+    confused),
+  - the user's manual answered only half of my questions.
 
--- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
-
-Considering the successes of the wars on alcohol, poverty, drugs and
-terror, I think we should give some serious thought to declaring war
-on peace.
+Bruno
