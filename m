@@ -1,110 +1,71 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: request for documentation about branch surgery
-Date: Tue, 07 Jul 2009 13:03:58 +0200
-Message-ID: <4A532B9E.7020606@op5.se>
-References: <200907070105.12821.bruno@clisp.org> <7vab3hb40x.fsf@alter.siamese.dyndns.org> <200907071213.25418.bruno@clisp.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: git-blame: Documenting "previous" header
+Date: Tue, 7 Jul 2009 14:23:39 +0200
+Message-ID: <200907071423.40938.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Type: text/plain;
+  charset="iso-8859-2"
 Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Bruno Haible <bruno@clisp.org>
-X-From: git-owner@vger.kernel.org Tue Jul 07 13:04:13 2009
+Cc: Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jul 07 14:24:44 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MO8T5-0004uq-Ed
-	for gcvg-git-2@gmane.org; Tue, 07 Jul 2009 13:04:11 +0200
+	id 1MO9j0-00032y-8k
+	for gcvg-git-2@gmane.org; Tue, 07 Jul 2009 14:24:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755056AbZGGLEB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 7 Jul 2009 07:04:01 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754861AbZGGLEA
-	(ORCPT <rfc822;git-outgoing>); Tue, 7 Jul 2009 07:04:00 -0400
-Received: from na3sys009aog106.obsmtp.com ([74.125.149.77]:46695 "HELO
-	na3sys009aog106.obsmtp.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with SMTP id S1754641AbZGGLD7 (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 7 Jul 2009 07:03:59 -0400
-Received: from source ([209.85.219.209]) by na3sys009aob106.postini.com ([74.125.148.12]) with SMTP
-	ID DSNKSlMronX22Lwg2ZP61p4lqmt6kYNUHVTY@postini.com; Tue, 07 Jul 2009 04:04:03 PDT
-Received: by ewy5 with SMTP id 5so5876255ewy.30
-        for <git@vger.kernel.org>; Tue, 07 Jul 2009 04:04:01 -0700 (PDT)
-Received: by 10.210.43.11 with SMTP id q11mr6985599ebq.81.1246964641561;
-        Tue, 07 Jul 2009 04:04:01 -0700 (PDT)
-Received: from clix.int.op5.se ([212.112.174.166])
-        by mx.google.com with ESMTPS id 5sm3537552eyh.10.2009.07.07.04.04.00
+	id S1755465AbZGGMXm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 7 Jul 2009 08:23:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754814AbZGGMXm
+	(ORCPT <rfc822;git-outgoing>); Tue, 7 Jul 2009 08:23:42 -0400
+Received: from mail-fx0-f218.google.com ([209.85.220.218]:45691 "EHLO
+	mail-fx0-f218.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752906AbZGGMXl (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 Jul 2009 08:23:41 -0400
+Received: by fxm18 with SMTP id 18so4856189fxm.37
+        for <git@vger.kernel.org>; Tue, 07 Jul 2009 05:23:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        bh=J0kJ6E+KE6y1/k2GU0ZwxdoOYsfAISsc8Vc9B6aWZ1E=;
+        b=eDD33uskfQoYyBZ+zv5r7A0b+g+oJdIBc1rwSgmlMEUv7fDkmHdTaH/3bcaoKQlvHu
+         9Nl7UhLu2Yx3Vt7GQl9akfsYVxyeulGhJHHsqRmJsYQWmaPoOEFTxglweQywdmOjaz6S
+         ymGyi97mlJCD/zVT3tkBIgq1ii/777+iBJvBo=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        b=SVIkhvxtXQfRwCv/nLO+ECIsF0H/qildP1sSExH1vKC2qXbsJ5DTcWZ8AE8DAXRhcH
+         CmlRQ1623fWcoRMFl2POf5xcbRFCou/E5nqOfW3kqGZGFuapipYJghpz6QrGtWU28KHI
+         qT56nAf3kd4G3VmRqQ3p0yoaJF/xetRScw2ws=
+Received: by 10.204.65.17 with SMTP id g17mr5736185bki.193.1246969423867;
+        Tue, 07 Jul 2009 05:23:43 -0700 (PDT)
+Received: from ?192.168.1.13? (abva123.neoplus.adsl.tpnet.pl [83.8.198.123])
+        by mx.google.com with ESMTPS id 19sm13499024fkr.55.2009.07.07.05.23.43
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 07 Jul 2009 04:04:01 -0700 (PDT)
-User-Agent: Thunderbird 2.0.0.21 (X11/20090320)
-In-Reply-To: <200907071213.25418.bruno@clisp.org>
+        Tue, 07 Jul 2009 05:23:43 -0700 (PDT)
+User-Agent: KMail/1.9.3
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122836>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122837>
 
-Bruno Haible wrote:
-> Hi Junio,
-> 
->> You learn new things every day, and today is such a day ;-)
->>
->>>   If you want to add a commit in the middle of a branch:
->>>
->>>             A---C---...---Z    master
->>>
->>>   =>
->>>
->>>             A---B---C---...---Z    master
->>>
->>>   it is achieved by
->>         $ git checkout master~25 ;# detach HEAD at A
->>         $ edit edit edit
->>         $ git commit ;# creates B
->>
->> which makes
->>
->>                B              HEAD (detached)
->>               /
->>              A---C---...---Z    master
->>
->> and then
->>
->>         $ git rebase HEAD master
->>
->> which reshapes the history into
->>
->>
->>                B---C'--...---Z' master
->>               /
->>              A---C---...---Z    master@{1}
->>
->> and you are done.
-> 
-> Cool! I wouldn't have guessed that. Now you wrote it into the mailing list
-> archives. It would be even better if it were mentioned in the user's manual,
-> chapter "Rewriting history and maintaining patch series"
-> 
+I have just noticed that talked about "previous" ("parent") header was 
+added to --porcelain/--incremental output of git-blame in 96e1170 
+(blame: show "previous" information in --porcelain/--incremental 
+format).
 
-Anyone can submit patches. I find your persistent urging that someone else
-do this for you slightly annoying. Now that you've been helped along the
-way to understanding, it's your turn to do your bit and write up the info
-you've received as a proper patch. This will help ensure that:
-a) Other people can find the relevant information quickly
-b) We won't have to answer the same questions again
-c) You gain an even deeper understanding about how the various features
-   actually work as your patches are submitted for review and improvements
-   are suggested for them by the list members
-d) We answer your questions again next time you have any
-
-You can ofcourse refrain from submitting patches and just hope that d)
-happens anyway. It probably will, but not indefinitely.
-
-Thanks.
+It didn't get documented however.  My question is if <sha1> in
+"previous <sha1> <filename>" is <sha1> of parent (taking grafts
+and refs/replace into account), or is it <sha1> of _effective_
+parent for given line?
 
 -- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
-
-Considering the successes of the wars on alcohol, poverty, drugs and
-terror, I think we should give some serious thought to declaring war
-on peace.
+Jakub Narebski
+Poland
