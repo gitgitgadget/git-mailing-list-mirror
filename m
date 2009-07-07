@@ -1,158 +1,104 @@
-From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: [RFC/PATCH v2] git-gui: display summary when showing diff of a submodule
-Date: Tue, 07 Jul 2009 17:50:20 +0200
-Message-ID: <4A536EBC.8080107@web.de>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: request for documentation about branch surgery
+Date: Tue, 07 Jul 2009 08:52:16 -0700
+Message-ID: <7v3a98bidr.fsf@alter.siamese.dyndns.org>
+References: <200907070105.12821.bruno@clisp.org>
+ <7vab3hb40x.fsf@alter.siamese.dyndns.org>
+ <200907071213.25418.bruno@clisp.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: gitster@pobox.com, "Shawn O. Pearce" <spearce@spearce.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jul 07 17:50:37 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Bruno Haible <bruno@clisp.org>
+X-From: git-owner@vger.kernel.org Tue Jul 07 17:52:37 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MOCwG-0004U3-3Z
-	for gcvg-git-2@gmane.org; Tue, 07 Jul 2009 17:50:36 +0200
+	id 1MOCyC-0005QT-Rw
+	for gcvg-git-2@gmane.org; Tue, 07 Jul 2009 17:52:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756268AbZGGPu2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 7 Jul 2009 11:50:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755572AbZGGPu1
-	(ORCPT <rfc822;git-outgoing>); Tue, 7 Jul 2009 11:50:27 -0400
-Received: from fmmailgate02.web.de ([217.72.192.227]:57323 "EHLO
-	fmmailgate02.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755259AbZGGPu0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 Jul 2009 11:50:26 -0400
-Received: from smtp06.web.de (fmsmtp06.dlan.cinetic.de [172.20.5.172])
-	by fmmailgate02.web.de (Postfix) with ESMTP id 26FCE107BC62C;
-	Tue,  7 Jul 2009 17:50:23 +0200 (CEST)
-Received: from [80.128.54.107] (helo=[192.168.178.26])
-	by smtp06.web.de with asmtp (WEB.DE 4.110 #277)
-	id 1MOCw2-0002AR-00; Tue, 07 Jul 2009 17:50:22 +0200
-User-Agent: Thunderbird 2.0.0.22 (X11/20090605)
-X-Sender: Jens.Lehmann@web.de
-X-Provags-ID: V01U2FsdGVkX18dZ9hbi44MO31bUiDkLIKFj5s7JYaltauOzJIj
-	RywfPHp71cnEhn5JHtekRD2dSVXYlJYMjWCQX5nfJAoxAmXa0F
-	6d/JAV1kk4ubWxEVI74w==
+	id S1757273AbZGGPw0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 7 Jul 2009 11:52:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757243AbZGGPw0
+	(ORCPT <rfc822;git-outgoing>); Tue, 7 Jul 2009 11:52:26 -0400
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:58001 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756473AbZGGPwZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 Jul 2009 11:52:25 -0400
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 8E59625F6C;
+	Tue,  7 Jul 2009 11:52:23 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id B8E3E25F6B; Tue, 
+ 7 Jul 2009 11:52:20 -0400 (EDT)
+In-Reply-To: <200907071213.25418.bruno@clisp.org> (Bruno Haible's message of
+ "Tue\, 7 Jul 2009 12\:13\:24 +0200")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 29620868-6B0E-11DE-9454-DC021A496417-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122850>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122851>
 
-As it is hard to say what changed in a submodule by looking at the hashes,
-let's show the colored submodule summary instead.
+Bruno Haible <bruno@clisp.org> writes:
 
-Signed-off-by: Jens Lehmann <Jens.Lehmann@web.de>
----
+>> If you think "git merge" _copies_, you will never understand what "merge"
+>> does. ... There is no copying involved anywhere .  It only creates a new
+>> commit 
+>
+> There are two cases of "git merge" operation: the one that creates a diamond
+> commit, and the one that doesn't (the "simple" case of "git merge"). The latter
+> operation I found useful in achieving this surgery:
+>
+>             C---D---E              topic
+>            /
+>       A---B                        master
+>
+>   =>
+>
+>             C---D---E              topic
+>            /
+>       A---B---C---D---E            master
 
-While working with this feature during the daytime i noticed a few
-shortcomings that are fixed in this version:
+If C, D, E on the above two lines are the _same_ commit, i.e. with the
+same history and same object IDs, then the picture should instead look
+like this:
 
-- The newer commits in the submodule should be colored green, not red.
+             C---D---E topic
+            /
+       A---B master
 
-- Replaced the '*' in the first line of the output of git submodule
-  with "Submodule" and changed the color of this line to blue.
+   =>
+                       master
+             C---D---E topic
+            /
+       A---B master@{1}
 
-- Warnings from git submodule are parsed and shown correctly now.
+If that is the case, you drew the picture incorrectly, and it shows the
+misunderstanding of your git object model and what a git branch is.
 
-- When the submodule was staged, the git diff output was shown again.
+The latter I have already explained to you, but here is a hint.
 
-- Disabled [un]stage commit & line popup menu items for submodules.
+    Do not think of a branch as "the upper line is topic, the lower line
+    is master".  A branch is just a pointer to _a commit_.  IOW, in the
+    picture I drew to correct yours, master and topic point at "E".  It
+    does _not_ point at the line that C, D, and E are on.  Similarly,
+    master@{1} points at the commit "B", not at the line A and B are on.
 
+You claimed that you understand in your response, but judging from the way
+you wrote the above picture, I can tell that you don't understand what a
+branch in git is.  Otherwise you would have drew it like how I did, and
+you wouldn't have used the word "copy".
 
- git-gui/git-gui.sh   |    2 +-
- git-gui/lib/diff.tcl |   30 ++++++++++++++++++++++++++++--
- 2 files changed, 29 insertions(+), 3 deletions(-)
+If you instead for some reason _want_ a forked history where C, D and E
+are _duplicated_, then you would start from the first picture, fast
+forward master to "E", and would force rebase onto B, to end up with
+a picture like this.
 
-diff --git a/git-gui/git-gui.sh b/git-gui/git-gui.sh
-index 14b92ba..3c0ce26 100755
---- a/git-gui/git-gui.sh
-+++ b/git-gui/git-gui.sh
-@@ -3212,7 +3212,7 @@ proc popup_diff_menu {ctxm ctxmmg x y X Y} {
- 			set l [mc "Stage Hunk For Commit"]
- 			set t [mc "Stage Line For Commit"]
- 		}
--		if {$::is_3way_diff
-+		if {$::is_3way_diff || $::is_submodule_diff
- 			|| $current_diff_path eq {}
- 			|| {__} eq $state
- 			|| {_O} eq $state
-diff --git a/git-gui/lib/diff.tcl b/git-gui/lib/diff.tcl
-index 925b3f5..ae1ea3a 100644
---- a/git-gui/lib/diff.tcl
-+++ b/git-gui/lib/diff.tcl
-@@ -255,7 +255,7 @@ proc show_other_diff {path w m cont_info} {
+             C---D---E topic
+            /
+       A---B---C'--D'--E' master
 
- proc start_show_diff {cont_info {add_opts {}}} {
- 	global file_states file_lists
--	global is_3way_diff diff_active repo_config
-+	global is_3way_diff is_submodule_diff diff_active repo_config
- 	global ui_diff ui_index ui_workdir
- 	global current_diff_path current_diff_side current_diff_header
-
-@@ -265,6 +265,7 @@ proc start_show_diff {cont_info {add_opts {}}} {
- 	set s $file_states($path)
- 	set m [lindex $s 0]
- 	set is_3way_diff 0
-+	set is_submodule_diff 0
- 	set diff_active 1
- 	set current_diff_header {}
-
-@@ -295,6 +296,11 @@ proc start_show_diff {cont_info {add_opts {}}} {
- 		lappend cmd $path
- 	}
-
-+	if {[string match {160000 *} [lindex $s 2]]
-+        || [string match {160000 *} [lindex $s 3]]} {
-+		set cmd {submodule summary -- $current_diff_path}
-+	}
-+
- 	if {[catch {set fd [eval git_read --nice $cmd]} err]} {
- 		set diff_active 0
- 		unlock_index
-@@ -312,7 +318,7 @@ proc start_show_diff {cont_info {add_opts {}}} {
- }
-
- proc read_diff {fd cont_info} {
--	global ui_diff diff_active
-+	global ui_diff diff_active is_submodule_diff
- 	global is_3way_diff is_conflict_diff current_diff_header
- 	global current_diff_queue
- 	global diff_empty_count
-@@ -337,6 +343,9 @@ proc read_diff {fd cont_info} {
- 		}
- 		set ::current_diff_inheader 0
-
-+		if {[regexp {^\* } $line]} {
-+			set is_submodule_diff 1
-+		}
- 		# -- Automatically detect if this is a 3 way diff.
- 		#
- 		if {[string match {@@@ *} $line]} {set is_3way_diff 1}
-@@ -374,6 +383,23 @@ proc read_diff {fd cont_info} {
- 				set tags {}
- 			}
- 			}
-+		} elseif {$is_submodule_diff} {
-+			if {$line == ""} continue
-+			if {[regexp {^\* } $line]} {
-+				set line [string replace $line 0 1 {Submodule }]
-+				set tags d_@
-+			} else {
-+				set op [string range $line 0 2]
-+				switch -- $op {
-+				{  <} {set tags d_-}
-+				{  >} {set tags d_+}
-+				{  W} {set tags {}}
-+				default {
-+					puts "error: Unhandled submodule diff marker: {$op}"
-+					set tags {}
-+				}
-+				}
-+			}
- 		} else {
- 			set op [string index $line 0]
- 			switch -- $op {
--- 
-1.6.3.3.386.g0f75a.dirty
+But there is no reason to do this.
