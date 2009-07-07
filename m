@@ -1,92 +1,78 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: What's cooking in git.git (Jul 2009, #01; Mon, 06)
-Date: Tue, 7 Jul 2009 21:57:14 +0200
-Message-ID: <81b0412b0907071257q14bb544dp99846f2a35fbada2@mail.gmail.com>
-References: <7vk52l4q7k.fsf@alter.siamese.dyndns.org>
-	 <alpine.LFD.2.01.0907071142330.3210@localhost.localdomain>
+From: Paolo Bonzini <paolo.bonzini@gmail.com>
+Subject: Re: Does CVS has a easy way to compare file with its previous version?
+Date: Tue, 07 Jul 2009 21:57:46 +0200
+Message-ID: <4A53A8BA.6060505@gmail.com>
+References: <1e56aa11-735a-47f7-a273-5b6bf611f528@n11g2000yqb.googlegroups.com>	 <m3hbxxx5jk.fsf@localhost.localdomain> <4A4A9FA5.7000009@gnu.org>	 <alpine.LFD.2.01.0906301813480.3605@localhost.localdomain>	 <loom.20090702T174843-784@post.gmane.org> <4A4DA7A5.7020303@gnu.org> <279b37b20907061639o6d6c72e7qf7bbc2459c7fc77e@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Tue Jul 07 21:57:32 2009
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Paolo Bonzini <bonzini@gnu.org>, git@vger.kernel.org
+To: Eric Raible <raible@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jul 07 21:58:16 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MOGnB-0006Xg-EV
-	for gcvg-git-2@gmane.org; Tue, 07 Jul 2009 21:57:30 +0200
+	id 1MOGnw-0006qC-4t
+	for gcvg-git-2@gmane.org; Tue, 07 Jul 2009 21:58:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757016AbZGGT5V convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 7 Jul 2009 15:57:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758150AbZGGT5U
-	(ORCPT <rfc822;git-outgoing>); Tue, 7 Jul 2009 15:57:20 -0400
+	id S1757079AbZGGT5v (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 7 Jul 2009 15:57:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757221AbZGGT5u
+	(ORCPT <rfc822;git-outgoing>); Tue, 7 Jul 2009 15:57:50 -0400
 Received: from mail-bw0-f225.google.com ([209.85.218.225]:45267 "EHLO
 	mail-bw0-f225.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758237AbZGGT5S convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 7 Jul 2009 15:57:18 -0400
-Received: by bwz25 with SMTP id 25so2315452bwz.37
-        for <git@vger.kernel.org>; Tue, 07 Jul 2009 12:57:16 -0700 (PDT)
+	with ESMTP id S1757073AbZGGT5t (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 Jul 2009 15:57:49 -0400
+Received: by mail-bw0-f225.google.com with SMTP id 25so2315452bwz.37
+        for <git@vger.kernel.org>; Tue, 07 Jul 2009 12:57:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=gWAAgnKlesFwgB3V4Ic/uWhaN4UC70wNDt3wOqTPWPw=;
-        b=Egxbiqgp9ZB6rgHMvDoxbozcUz+S5DWYPg8mxLRHadrYLXISzJysW11G3ZoXlMTKsU
-         H1Cy3oi/pdASD9GWiwaIjC6BIgRBNXK5banygdgQqU/4enOxSh/t7OoGHc6egjq4dhKN
-         2A1NcDipNBMjbj2acl08JLTPH6dkjrKkF7l0E=
+        h=domainkey-signature:received:received:message-id:date:from
+         :user-agent:mime-version:to:cc:subject:references:in-reply-to
+         :content-type:content-transfer-encoding;
+        bh=+Zp1I4dkXylssVCVPmDSfAWYje2aKsBLMst6/NZZQIU=;
+        b=SOV9UyEHk//LBq0bzk0k8rzhXNyAtGe3yw2zXeBZPt54LDwZaEw8FMuiLN3jvVjFmP
+         W5jX0+3CTwDqjwYa/HBd/9eAPhcseZMbSGmpy6h4+PWGL9YV0PCPSVg8j6O39yRbkzMx
+         HDhNAXqSEAPwOHgX9N3I1kTRhCi54xr5hWM2k=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=ZLq8CuPUMHmeHlvGSvvF4onIjYRZ062XDH2II2xaX1nZk0+alJ1NUIKQdDK5M6qXLm
-         81G954o1nUfhSivC3UgLBiezMLl+FpyEavnOXdOGZbJfwOd5fSbN6Bb0biNuuZmkKfRK
-         bUBSO7MpTw2JxBeqEsuShxWSbiLwqgDR4QUog=
-Received: by 10.204.112.205 with SMTP id x13mr6063839bkp.170.1246996634088; 
-	Tue, 07 Jul 2009 12:57:14 -0700 (PDT)
-In-Reply-To: <alpine.LFD.2.01.0907071142330.3210@localhost.localdomain>
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        b=uZiLtQzXs/2VATFgCBNL9ph0nX/SCGm/rs9+aREv7SxknQg7KKRxgUU/22nwrC2ma/
+         zbsQhvsI7zHb2blH54q5noAsxWCtjnWTb7tPoq/g4wSM4HcDM1kTFNkZzS5nFL9+zq4x
+         zTWAtrAGQO5oUCXCGuzcI1lmqFN54kbIjG31w=
+Received: by 10.102.219.8 with SMTP id r8mr3598420mug.0.1246996668398;
+        Tue, 07 Jul 2009 12:57:48 -0700 (PDT)
+Received: from yakj.usersys.redhat.com ([85.93.118.17])
+        by mx.google.com with ESMTPS id i7sm7722341mue.48.2009.07.07.12.57.47
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Tue, 07 Jul 2009 12:57:47 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1b3pre) Gecko/20090513 Fedora/3.0-2.3.beta2.fc11 Lightning/1.0pre Thunderbird/3.0b2
+In-Reply-To: <279b37b20907061639o6d6c72e7qf7bbc2459c7fc77e@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122864>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122865>
 
-On Tue, Jul 7, 2009 at 21:17, Linus
-Torvalds<torvalds@linux-foundation.org> wrote:
-> So right now, my personal opinion is:
+On 07/07/2009 01:39 AM, Eric Raible wrote:
+> On Thu, Jul 2, 2009 at 11:39 PM, Paolo Bonzini<bonzini@gnu.org>  wrote:
+>> On 07/02/2009 08:04 PM, Eric Raible wrote:
+>>> Isn't the first one incorrect because<file>    needs to be inside the
+>>> backticks?
+>>> git diff `git log -2 --pretty=format:%h<file>` --<file>
+>>>
+>>> And isn't the replacement incorrect also (the diffs are backwards)?
+>>> git log --no-merges -p -R -1<file>
+>> Yes and no.
+>>
+>> Paolo
+>>
 >
-> =C2=A0- let's just face the fact that the only sane filename represen=
-tation is
-> =C2=A0 NFC UTF-8. Show filenames as UTF-8 when possible, rather than =
-quoting
-> =C2=A0 them.
->
-> =C2=A0- Do case (b) above: add support for converting NFD -> NFC at r=
-eaddir()
-> =C2=A0 time, so that OS X people can use UTF-8 sanely.
->
-> =C2=A0- add a "binary encoding" mode to filesystems that actually use=
- Latin1,
-> =C2=A0 just so that if people use Latin1 or Shift-JIS filesystem enco=
-dings, we
-> =C2=A0 promise that we'll never munge those kinds of names.
->
-> =C2=A0- Maybe we'd make the "binary encoding" (which is effectively e=
-xisting
-> =C2=A0 git behavior) be the default on non-OSX platforms.
->
-> but that's just my gut feel from trying to weigh the costs of trying =
-to do
-> something more involved against the costs of OS X support and just le=
-tting
-> crazy encodings exist in their own little worlds. So a development gr=
-oup
-> that uses Shift-JIS (or Latin1) would be able to work internally with=
- git
-> that way, but would not be able to sanely work with the world at larg=
-e
-> that uses UTF-8.
+> Are you sure that you didn't mean yes and yes?
 
-Maybe we could at least let the user save the encoding of file names
-in the tree objects somehow?
+I'm sure; I'm not sure I was right (though I did retest at the time, and 
+I was convinced that Linus's alternative worked).
+
+Paolo
