@@ -1,76 +1,79 @@
-From: Ben Jackson <ben@ben.com>
-Subject: Re: "git svn reset" only resets current branch ?
-Date: Tue, 7 Jul 2009 11:21:11 -0700
-Message-ID: <20090707182109.GA3158@kronos.home.ben.com>
-References: <46974.10.0.0.1.1246953668.squirrel@intranet.linagora.com>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: request for documentation about branch surgery
+Date: Tue, 7 Jul 2009 14:28:57 -0400 (EDT)
+Message-ID: <alpine.LNX.2.00.0907071400170.2147@iabervon.org>
+References: <200907070105.12821.bruno@clisp.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Eric Wong <normalperson@yhbt.net>, Ben Jackson <ben@ben.com>,
-	git@vger.kernel.org
-To: Yann Dirson <ydirson@linagora.com>
-X-From: git-owner@vger.kernel.org Tue Jul 07 20:21:26 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Bruno Haible <bruno@clisp.org>
+X-From: git-owner@vger.kernel.org Tue Jul 07 20:29:10 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MOFIC-0008Rm-13
-	for gcvg-git-2@gmane.org; Tue, 07 Jul 2009 20:21:24 +0200
+	id 1MOFPe-0003IP-VE
+	for gcvg-git-2@gmane.org; Tue, 07 Jul 2009 20:29:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755751AbZGGSVR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 7 Jul 2009 14:21:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755638AbZGGSVQ
-	(ORCPT <rfc822;git-outgoing>); Tue, 7 Jul 2009 14:21:16 -0400
-Received: from kronos.home.ben.com ([71.117.242.19]:50777 "EHLO
-	kronos.home.ben.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755501AbZGGSVQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 Jul 2009 14:21:16 -0400
-Received: from kronos.home.ben.com (localhost [127.0.0.1])
-	by kronos.home.ben.com (8.14.3/8.14.3) with ESMTP id n67ILBhN003638;
-	Tue, 7 Jul 2009 11:21:11 -0700 (PDT)
-Received: (from bjj@localhost)
-	by kronos.home.ben.com (8.14.3/8.14.3/Submit) id n67ILBRD003637;
-	Tue, 7 Jul 2009 11:21:11 -0700 (PDT)
-	(envelope-from bjj)
-Content-Disposition: inline
-In-Reply-To: <46974.10.0.0.1.1246953668.squirrel@intranet.linagora.com>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+	id S1752212AbZGGS27 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 7 Jul 2009 14:28:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751824AbZGGS27
+	(ORCPT <rfc822;git-outgoing>); Tue, 7 Jul 2009 14:28:59 -0400
+Received: from iabervon.org ([66.92.72.58]:50971 "EHLO iabervon.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751356AbZGGS26 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 Jul 2009 14:28:58 -0400
+Received: (qmail 4804 invoked by uid 1000); 7 Jul 2009 18:28:57 -0000
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 7 Jul 2009 18:28:57 -0000
+In-Reply-To: <200907070105.12821.bruno@clisp.org>
+User-Agent: Alpine 2.00 (LNX 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122856>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122857>
 
-On Tue, Jul 07, 2009 at 10:01:08AM +0200, Yann Dirson wrote:
+On Tue, 7 Jul 2009, Bruno Haible wrote:
+
+> 6) Also, it would be good to have a section "Reconnecting branches after rebase".
+>    If you want to reconnect a branch to a rebased master, here's how to do it:
 > 
-> As an alternative, we could also allow "git svn reset" to take us back
-> into the future to undo any such mistake without refetching.
+>                    /--C'--...---P'--Q'--...---Z'  new rebased master
+>               A---B---C---...---P---Q---...---Z   old master
+>                                  \
+>                                   --BA---...---BZ  release-branch
+> 
+>   =>
+>               A---B---C'--...---P'--Q'--...---Z'  new rebased master
+>                                  \
+>                                   --BA---...---BZ  release-branch
 
-You can't do that directly, since data is destroyed (specifically, the
-rev_map is truncated back to the selected revision).  However, you can
-"git reset" the branch back to where it was using the reflog, and then
-the next git-svn command you run will rebuild the rev_map from the
-comment metadata (obviously you're out of luck if you set "no_metadata").
+This is impossible; the parent of BA is P, not P'.
 
-It's possible that "git-svn reset" should be saving something like
-ORIG_HEAD (comments welcome) but that does conflict with the idea of
-adding "--all" or defaulting to "--all" behavior.
+                   /--C'--...---P'--Q'--...---Z'  new rebased master
+              A---B---C---...---P---Q---...---Z   old master
+                                 \
+                                  --BA---...---BZ  release-branch
 
-> I'm not sure it would be the best to keep reset act on a single branch,
-> where eg. fetch acts on all branches, and already has a --all flag, which
-> is not yet documented, and seems to have a different meaning (if that
-> wasn't obvious, I have still not had a look at what it really does ;)
+  =>
+                                  --BA'--...---BZ' release branch
+                                 /
+                   /--C'--...---P'--Q'--...---Z'  new rebased master
+              A---B---C---...---P---Q---...---Z
+                                 \
+                                  --BA---...---BZ
 
-Right, I don't really grok the branch thing on the fetch side either.
-I was hoping for guidance from people who use it on what the expected
-behavior is.  I see even branch users are fuzzy.  ;-)
+In order to draw well-formed tree sequences, you can only add items to the 
+trees, and only use each letter once in the whole thing. When you've got a 
+complete history following those rules, you can elide parts of the history 
+that aren't referenced any more, but you still can't reuse their letters.
 
-The one area where I can definitely see a potential problem is if you
-reset/refetched one branch (and the revs actually changed, eg due to
-permissions changes or --ignore-paths changes) and then did a merge.
-On the other hand, the documentation already suggests you not try to
-do SVN branch merges with git-svn.
+You're drawing some of your trees as if it were possible to have commits 
+that are not eq but are equal; in fact, all information about a commit, 
+including its parentage, is immutable and contributes to the way it is 
+referenced, so any equal commits are eq (and therefore only appear in one 
+spot on the graph).
 
--- 
-Ben Jackson AD7GD
-<ben@ben.com>
-http://www.ben.com/
+	-Daniel
+*This .sig left intentionally blank*
