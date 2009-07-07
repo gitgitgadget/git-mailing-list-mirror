@@ -1,61 +1,51 @@
-From: Tony Finch <dot@dotat.at>
-Subject: Re: git+http:// proof-of-concept (not using CONNECT)
-Date: Tue, 7 Jul 2009 17:14:31 +0100
-Message-ID: <alpine.LSU.2.00.0907071712580.30197@hermes-2.csi.cam.ac.uk>
-References: <20090702085440.GC11119@dcvr.yhbt.net> <85647ef50907020252u41e36187jaacacad3d8a10f75@mail.gmail.com> <20090703202839.GB12072@dcvr.yhbt.net>
+From: "Andre Mostert" <Andre.Mostert@intecbilling.com>
+Subject: git svn fetch fails with Temp file with moniker 'svn_delta' already in use
+Date: Tue, 7 Jul 2009 18:14:07 +0200
+Message-ID: <B4BD8C6031F4EC4DAD8EABAB3ABA6CFE024DD4C5@IBCPTEX01.intecbilling.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Constantine Plotnikov <constantine.plotnikov@gmail.com>,
-	git@vger.kernel.org
-To: Eric Wong <normalperson@yhbt.net>
-X-From: git-owner@vger.kernel.org Tue Jul 07 18:14:55 2009
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Jul 07 18:30:13 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MODJj-0007Qc-Lt
-	for gcvg-git-2@gmane.org; Tue, 07 Jul 2009 18:14:52 +0200
+	id 1MODYa-0006ol-HQ
+	for gcvg-git-2@gmane.org; Tue, 07 Jul 2009 18:30:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757970AbZGGQOf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 7 Jul 2009 12:14:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758472AbZGGQOe
-	(ORCPT <rfc822;git-outgoing>); Tue, 7 Jul 2009 12:14:34 -0400
-Received: from ppsw-7.csi.cam.ac.uk ([131.111.8.137]:57432 "EHLO
-	ppsw-7.csi.cam.ac.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758707AbZGGQOd (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 Jul 2009 12:14:33 -0400
-X-Cam-AntiVirus: no malware found
-X-Cam-SpamDetails: not scanned
-X-Cam-ScannerInfo: http://www.cam.ac.uk/cs/email/scanner/
-Received: from hermes-2.csi.cam.ac.uk ([131.111.8.54]:49855)
-	by ppsw-7.csi.cam.ac.uk (smtp.hermes.cam.ac.uk [131.111.8.157]:25)
-	with esmtpa (EXTERNAL:fanf2) id 1MODJP-0003Em-PE (Exim 4.70)
-	(return-path <fanf2@hermes.cam.ac.uk>); Tue, 07 Jul 2009 17:14:31 +0100
-Received: from fanf2 (helo=localhost) by hermes-2.csi.cam.ac.uk (hermes.cam.ac.uk)
-	with local-esmtp id 1MODJP-0006sm-Q6 (Exim 4.67)
-	(return-path <fanf2@hermes.cam.ac.uk>); Tue, 07 Jul 2009 17:14:31 +0100
-X-X-Sender: fanf2@hermes-2.csi.cam.ac.uk
-In-Reply-To: <20090703202839.GB12072@dcvr.yhbt.net>
-User-Agent: Alpine 2.00 (LSU 1167 2008-08-23)
+	id S1757497AbZGGQ3s convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 7 Jul 2009 12:29:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757080AbZGGQ3s
+	(ORCPT <rfc822;git-outgoing>); Tue, 7 Jul 2009 12:29:48 -0400
+Received: from gateway.cpt.intecbilling.com ([196.30.79.194]:26471 "HELO
+	gateway.cpt.intecbilling.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with SMTP id S1756960AbZGGQ3s convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>); Tue, 7 Jul 2009 12:29:48 -0400
+X-Greylist: delayed 916 seconds by postgrey-1.27 at vger.kernel.org; Tue, 07 Jul 2009 12:29:47 EDT
+X-MimeOLE: Produced By Microsoft Exchange V6.5
+Content-class: urn:content-classes:message
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+Thread-Topic: git svn fetch fails with Temp file with moniker 'svn_delta' already in use
+Thread-Index: Acn/HfQ1htnv02iyQvKKElkeWMF+mg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122852>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122853>
 
-On Fri, 3 Jul 2009, Eric Wong wrote:
->
-> That and my approach requires both the client and server to be
-> simutaneously sending and receiving responses in full-duplex channel
-> which makes it impossible to work without chunking.  IOW, there's no
-> chance any HTTP proxy that dechunks or queues/coalesces chunked
-> requests/responses can work with my approach.
+Hi=20
 
-Many HTTP servers will not be able to support it either because HTTP is a
-half-duplex protocol (modulo request pipelining).
+I'm getting this error when trying to "git svn fetch":
 
-Tony.
--- 
-f.anthony.n.finch  <dot@dotat.at>  http://dotat.at/
-GERMAN BIGHT HUMBER: SOUTHWEST 5 TO 7. MODERATE OR ROUGH. SQUALLY SHOWERS.
-MODERATE OR GOOD.
+Temp file with moniker 'svn_delta' already in use at /usr/lib/perl5/sit=
+e_perl/5.10.0/Git.pm
+
+I've found some mention of this in the archives, but no conclusive fixe=
+s or workarounds.
+
+This is with git 1.6.3.3, perl 5.10.0 and svn 1.5.1
+
+Thanks
+Andr=E9 Mostert
