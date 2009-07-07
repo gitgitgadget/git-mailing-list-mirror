@@ -1,164 +1,92 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: [RFC] Tree blame (git blame <directory>)
-Date: Tue, 7 Jul 2009 10:58:38 +0200
-Message-ID: <200907071058.39390.jnareb@gmail.com>
+From: Bruno Haible <bruno@clisp.org>
+Subject: Re: request for documentation about branch surgery
+Date: Tue, 7 Jul 2009 11:51:02 +0200
+Message-ID: <200907071151.03567.bruno@clisp.org>
+References: <200907070105.12821.bruno@clisp.org> <51419b2c0907061930k71e20b42rb347b9ab8923e437@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain;
-  charset="iso-8859-2"
+  charset="utf-8"
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jul 07 10:59:08 2009
+Cc: git@vger.kernel.org
+To: Elijah Newren <newren@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jul 07 11:51:36 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MO6W2-0007ro-R4
-	for gcvg-git-2@gmane.org; Tue, 07 Jul 2009 10:59:07 +0200
+	id 1MO7Kp-0002f3-26
+	for gcvg-git-2@gmane.org; Tue, 07 Jul 2009 11:51:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754487AbZGGI64 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 7 Jul 2009 04:58:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752301AbZGGI6z
-	(ORCPT <rfc822;git-outgoing>); Tue, 7 Jul 2009 04:58:55 -0400
-Received: from mail-fx0-f218.google.com ([209.85.220.218]:57338 "EHLO
-	mail-fx0-f218.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752142AbZGGI6x (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 Jul 2009 04:58:53 -0400
-Received: by fxm18 with SMTP id 18so4731530fxm.37
-        for <git@vger.kernel.org>; Tue, 07 Jul 2009 01:58:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:mime-version:content-disposition:content-type
-         :content-transfer-encoding:message-id;
-        bh=+uT6K3DijStzwu+KeJqbcuo+KIy30QMSd/Mx0BalFPQ=;
-        b=X2m3VFUspTooHelZGGeoMeXUmoLReOFRG1v2ov2l5IhszHzZOjl8mNsH+qEyjKBLtH
-         RZByw6bUFyv7JSXIEwapKA2rwUH6i8tAL7tTsNQVSxkFWIWuEf+hk3XFEM+yjvMaWN7O
-         /1rQ54RM5wtCsyctZKbQwT4SoQAQmd3YnGMfs=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:mime-version:content-disposition
-         :content-type:content-transfer-encoding:message-id;
-        b=g9T4oj4fEZnTITplJr/HyAsOLAFseIYrRlwWieYmJl8j36kYkhr4uHUVaY6uV49Bjs
-         LfUVN0rniqYW0cx3fgYQ+Tuss53529vHfi2a1xeHXkDUVFDxJgDlrZi5+L28VU06EzFE
-         ucl1hqweKnNs4kdF8MLhQh/xjVhPwKak1ul34=
-Received: by 10.103.240.15 with SMTP id s15mr3182254mur.102.1246957136042;
-        Tue, 07 Jul 2009 01:58:56 -0700 (PDT)
-Received: from ?192.168.1.13? (abwt137.neoplus.adsl.tpnet.pl [83.8.243.137])
-        by mx.google.com with ESMTPS id e9sm9916223muf.2.2009.07.07.01.58.54
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 07 Jul 2009 01:58:55 -0700 (PDT)
-User-Agent: KMail/1.9.3
+	id S1753945AbZGGJvX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 7 Jul 2009 05:51:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753865AbZGGJvX
+	(ORCPT <rfc822;git-outgoing>); Tue, 7 Jul 2009 05:51:23 -0400
+Received: from mo-p00-ob.rzone.de ([81.169.146.161]:10295 "EHLO
+	mo-p00-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753690AbZGGJvW (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 Jul 2009 05:51:22 -0400
+X-RZG-AUTH: :Ln4Re0+Ic/6oZXR1YgKryK8brksyK8dozXDwHXjf9hj/zDNRbfU4489asA==
+X-RZG-CLASS-ID: mo00
+Received: from linuix.haible.de
+	(dslb-088-068-043-109.pools.arcor-ip.net [88.68.43.109])
+	by post.strato.de (mrclete mo15) (RZmta 18.49)
+	with ESMTP id U00494l679YqtU ; Tue, 7 Jul 2009 11:51:24 +0200 (MEST)
+User-Agent: KMail/1.9.9
+In-Reply-To: <51419b2c0907061930k71e20b42rb347b9ab8923e437@mail.gmail.com>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122830>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122831>
 
-Currently git-blame supports only ordinary files (blobs).  If you try to 
-use git-blame on directory, it errors-out with a bit cryptic error 
-message:
+Hi Elijah,
 
-  $ git blame Documentation
-  fatal: unsupported file type Documentation
+> When the cost of certain activities changes dramatically (which git
+> does by making lots new things possible and fast), formerly "exotic"
+> usecases can become natural and common -- and really helpful.
 
-Meanwhile some git web interface (e.g. GitHub and Gitorious), most 
-probably following web interfaces for file-based VCS like ViewVC for 
-CVS and Subversion, provide kind of "tree blame" view as default view 
-for directory contents.  It means that for each element (entry) in 
-given directory it shows 'last changed' info, namely author, date and 
-summary of commit that changed given entry to current version.
+Yes. With cvs, I would not never have dared to do branch surgery. With
+git, I can - assuming some documentation. "git clone", "git checkout",
+"git commit" each serves a particular purpose, so one can understand
+when to use which command. But for branch surgery, several commands
+are available:
+  - "git reset --hard"
+  - "git rebase"
+  - "git rebase --onto"
+  - "git merge" (simple case, no merge commit)
+The mapping from "How do I ..." questions to command is not easy,
+therefore a user's manual like
+  <http://www.kernel.org/pub/software/scm/git/docs/user-manual.html#rewriting-one-commit>
+is needed.
 
-I don't know what algorithm they use to generate this info (well,
-I could find out in the case of Gitorious... if I read Ruby ;-)), 
-but I suspect that they might a bit inefficient algorithm to find such 
-info.  Some time ago I tried to add such 'tree_blame' view to gitweb:
-you can check the result in the 'gitweb/tree_blame' branch in my 
-git/jnareb-git.git repository at repo.or.cz:
-  http://repo.or.cz/w/git/jnareb-git.git?a=commitdiff;h=gitweb/tree_blame
+Thanks for correcting me and showing simpler alternatives to what
+I said.
 
+Still, can someone please extend the cited chapter of the user's manual,
+so that it answers these questions?
+  - How do I change the last commit in a branch?       [DONE]
+  - How do I change an older commit in a branch?       [DONE]
+  - How do I insert some commits between other commits in a branch?
+                                                       [TODO]
+  - How do I reorder commits in a branch?              [TODO - mention "git rebase -i"]
+  - How do I copy selected commits from a branch to another?
+                                                       [DONE]
+  - How do I cut a branch?                             [TODO]
+  - How do I replace a branch tip with the contents of another branch?
+                                                       [TODO]
+  - How do I reconnect a branch to another branch point?
+                                                       [TODO]
 
-It would be nice if "git blame <directory>" would give us required 
-information; for tools such like GitHub, Gitorious or gitweb one could 
-use '--porcelain' or '--incremental' output.
+> I think
+> the rebase command would be much easier to understand for new users if
+> it used an "--against" before the first reference(*).
 
-Unfortunately I don't know this part of code good enough to write it
-easily myself. I would think that it wouldn't be too hard to code it;
-certainly easier than git-blame for ordinary files.
+Don't know, this is just a cosmetic change. The thing that confused me
+about "git rebase" is that its thinking is focused on the current branch.
+Whereas when I'm doing branch surgery, I'm creating a new branch
+bottom-up, so my thinking is "here I have some commits, what can I do
+with them". It requires a good user's manual to map this to the right
+"git rebase" command.
 
-I think that ordinary git-blame output for trees (directories) could
-mimic "ls -l" output format as far as possible, i.e. when currently
-  $ git ls-tree --abbrev v1.6.3.3
-generates the following output:
-  ...
-  100644 blob e57630e     walker.c
-  100644 blob 8a149e1     walker.h
-  100644 blob 7eb3218     wrapper.c
-  100644 blob 4c29255     write_or_die.c
-  100644 blob 819c797     ws.c
-  100644 blob 1b6df45     wt-status.c
-  100644 blob 78add09     wt-status.h
-  100644 blob b9b0db8     xdiff-interface.c
-  100644 blob 7352b9a     xdiff-interface.h
-  040000 tree ef5d413     xdiff
-
-then
-  $ git blame --abbrev v1.6.3.3 -- .
-would generate
-
-  100644 blob e57630e ba19a80 Junio C Hamano      Feb 10 17:42   walker.c
-  100644 blob 8a149e1 c13b263 Daniel Barkalow     Apr 26  2008   walker.h
-  100644 blob 7eb3218 fc71db3 Alex Riesen         Apr 29 23:21   wrapper.c
-  100644 blob 4c29255 559e840 Junio C Hamano      Jul 20  2008   write_or_die.c
-  100644 blob 819c797 a437900 Junio C Hamano      Jun 21 02:35   ws.c
-  100644 blob 1b6df45 2af202b Linus Torvalds      Jun 18 10:28   wt-status.c
-  100644 blob 78add09 6c2ce04 Marius Storm-Olsen  Jun  5  2008   wt-status.h
-  100644 blob b9b0db8 eb3a9dd Benjamin Kramer     Mar  7 21:02   xdiff-interface.c
-  100644 blob 7352b9a 86295bb Rene Scharfe        Oct 25  2008   xdiff-interface.h
-  040000 tree ef5d413 5719db9 Charles Bailey      May 25 01:21   xdiff/
-
-or something like that.  Date doesn't have to be in this strange format
-used by 'ls'.  Also instead of name we can use username part of email,
-or just email; OTOH git-blame uses above format for author.
-
-The porcelain / incremental output format for "git blame <directory>"
-wouldn't need to be changed much from "git blame <file>"; line numbers
-do not matter though, as what is important is SHA-1 of entry (blob, tree
-or commit).
-  $ git blame --porcelain v1.6.3.3 -- .
-The blame output for last two lines could look like the following:
-  86295bb6bac1482d29650d1f77f19d8e7a7cc2fe 7352b9a9c204c2b1d4ca9df5ce040fe22d6f521c
-  author Rene Scharfe
-  author-mail <rene.scharfe@lsrfire.ath.cx>
-  author-time 1224941475
-  author-tz +0200
-  committer Junio C Hamano
-  committer-mail <gitster@pobox.com>
-  committer-time 1224961771
-  committer-tz -0700
-  summary add xdi_diff_hunks() for callers that only need hunk lengths
-  filename xdiff-interface.h
-  100644 blob 7352b9a9c204c2b1d4ca9df5ce040fe22d6f521c    xdiff-interface.h
-  5719db91ce5915ee07c50f1afdc94fe34e91529f ef5d413237b3a390007fba56671b00d7c371ae1e
-  author Charles Bailey
-  author-mail <charles@hashpling.org>
-  author-time 1243210874
-  author-tz +0100
-  committer Junio C Hamano
-  committer-mail <gitster@pobox.com>
-  committer-time 1243234594
-  committer-tz -0700
-  summary add xdi_diff_hunks() for callers that only need hunk lengths
-  filename xdiff
-  040000 tree ef5d413237b3a390007fba56671b00d7c371ae1e    xdiff
-
-
-What do you think about adding such feature?  
-
-It either could use infrastructure for better '--follow' implementation,
-or lead to better implementation of '--follow' option (which currently
-as it is now works only for simplest cases).  Probably.
-
--- 
-Jakub Narebski
-Poland
+Bruno
