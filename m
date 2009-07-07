@@ -1,65 +1,90 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: What's cooking in git.git (Jul 2009, #01; Mon, 06)
-Date: Tue, 7 Jul 2009 13:13:26 -0700
-Message-ID: <20090707201326.GB11191@spearce.org>
-References: <7vk52l4q7k.fsf@alter.siamese.dyndns.org> <alpine.DEB.1.00.0907072206170.3155@pacific.mpi-cbg.de>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Jul 07 22:14:07 2009
+From: Yann Dirson <ydirson@altern.org>
+Subject: [PATCH 3/4] git-svn.txt: fix fetch flags incorrectly documented as init flags.
+Date: Tue,  7 Jul 2009 22:22:21 +0200
+Message-ID: <a427e73e459e18d9e28701a97eca338934d74300.1246997775.git.ydirson@altern.org>
+References: <cover.1246997775.git.ydirson@altern.org>
+ <ffe5b8e8cf2cb889cdcc04850cf867b46df9ced9.1246997775.git.ydirson@altern.org>
+ <4d918af1f5122cc5b71142cd50b7d5699a2a912d.1246997775.git.ydirson@altern.org>
+Cc: Yann Dirson <ydirson@altern.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jul 07 22:22:35 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MOH2k-0004y8-FH
-	for gcvg-git-2@gmane.org; Tue, 07 Jul 2009 22:13:35 +0200
+	id 1MOHBR-0002yV-Od
+	for gcvg-git-2@gmane.org; Tue, 07 Jul 2009 22:22:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756098AbZGGUN2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 7 Jul 2009 16:13:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755388AbZGGUN1
-	(ORCPT <rfc822;git-outgoing>); Tue, 7 Jul 2009 16:13:27 -0400
-Received: from george.spearce.org ([209.20.77.23]:59229 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752547AbZGGUN1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 Jul 2009 16:13:27 -0400
-Received: by george.spearce.org (Postfix, from userid 1001)
-	id 6B06238195; Tue,  7 Jul 2009 20:13:26 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <alpine.DEB.1.00.0907072206170.3155@pacific.mpi-cbg.de>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1757416AbZGGUWQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 7 Jul 2009 16:22:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756781AbZGGUWM
+	(ORCPT <rfc822;git-outgoing>); Tue, 7 Jul 2009 16:22:12 -0400
+Received: from smtp1-g21.free.fr ([212.27.42.1]:42595 "EHLO smtp1-g21.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756242AbZGGUWJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 Jul 2009 16:22:09 -0400
+Received: from smtp1-g21.free.fr (localhost [127.0.0.1])
+	by smtp1-g21.free.fr (Postfix) with ESMTP id 5DF749401CE;
+	Tue,  7 Jul 2009 22:22:01 +0200 (CEST)
+Received: from gandelf.nowhere.earth (nan92-1-81-57-214-146.fbx.proxad.net [81.57.214.146])
+	by smtp1-g21.free.fr (Postfix) with ESMTP id 7480694019D;
+	Tue,  7 Jul 2009 22:21:59 +0200 (CEST)
+Received: by gandelf.nowhere.earth (Postfix, from userid 1000)
+	id 7129E1F0D6; Tue,  7 Jul 2009 22:22:24 +0200 (CEST)
+X-Mailer: git-send-email 1.6.3.3
+In-Reply-To: <4d918af1f5122cc5b71142cd50b7d5699a2a912d.1246997775.git.ydirson@altern.org>
+In-Reply-To: <cover.1246997775.git.ydirson@altern.org>
+References: <cover.1246997775.git.ydirson@altern.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122867>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122868>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> On Mon, 6 Jul 2009, Junio C Hamano wrote:
-> 
-> > * jh/notes (Sat May 16 13:44:17 2009 +0200) 5 commits
-> >  - Teach "-m <msg>" and "-F <file>" to "git notes edit"
-> >  - Add an expensive test for git-notes
-> >  - Speed up git notes lookup
-> >  - Add a script to edit/inspect notes
-> >  - Introduce commit notes
-> > 
-> > Dscho asked about the performance implications of this; I do not think I 
-> > saw any progress on that yet...
-> 
-> Neither did I.
+Signed-off-by: Yann Dirson <ydirson@altern.org>
+Acked-by: Eric Wong <normalperson@yhbt.net>
+---
+ Documentation/git-svn.txt |   21 +++++++++++----------
+ 1 files changed, 11 insertions(+), 10 deletions(-)
 
-I was thinking about this the other day.  We could use a hash of
-the commit timestamp as the top level directory.  E.g. if we take
-the commit time of the commit and convert it to a date string,
-we could make the note path e.g.:
-
-  YYYY/MM/COMMITSHA1
-
-The advantage is we only need to scan and hash the subtrees for
-the range of commits we are currently producing output for.  As we
-go further back in time, we can evict entries for newer dates and
-hash the older dates.
-
+diff --git a/Documentation/git-svn.txt b/Documentation/git-svn.txt
+index f40fd42..1e8242b 100644
+--- a/Documentation/git-svn.txt
++++ b/Documentation/git-svn.txt
+@@ -62,16 +62,6 @@ COMMANDS
+ 	Set the 'useSvnsyncProps' option in the [svn-remote] config.
+ --rewrite-root=<URL>;;
+ 	Set the 'rewriteRoot' option in the [svn-remote] config.
+---use-log-author;;
+-	When retrieving svn commits into git (as part of fetch, rebase, or
+-	dcommit operations), look for the first From: or Signed-off-by: line
+-	in the log message and use that as the author string.
+---add-author-from;;
+-	When committing to svn from git (as part of commit or dcommit
+-	operations), if the existing log message doesn't already have a
+-	From: or Signed-off-by: line, append a From: line based on the
+-	git commit's author string.  If you use this, then --use-log-author
+-	will retrieve a valid author string for all commits.
+ --username=<USER>;;
+ 	For transports that SVN handles authentication for (http,
+ 	https, and plain svn), specify the username.  For other
+@@ -140,6 +130,17 @@ Skip "branches" and "tags" of first level directories;;
+ ------------------------------------------------------------------------
+ --
+ 
++--use-log-author;;
++	When retrieving svn commits into git (as part of fetch, rebase, or
++	dcommit operations), look for the first From: or Signed-off-by: line
++	in the log message and use that as the author string.
++--add-author-from;;
++	When committing to svn from git (as part of commit or dcommit
++	operations), if the existing log message doesn't already have a
++	From: or Signed-off-by: line, append a From: line based on the
++	git commit's author string.  If you use this, then --use-log-author
++	will retrieve a valid author string for all commits.
++
+ 'clone'::
+ 	Runs 'init' and 'fetch'.  It will automatically create a
+ 	directory based on the basename of the URL passed to it;
 -- 
-Shawn.
+1.6.3.3
