@@ -1,82 +1,73 @@
-From: Ondrej Certik <ondrej@certik.cz>
-Subject: default aliases (ci, di, st, co)
-Date: Wed, 8 Jul 2009 17:49:26 -0600
-Message-ID: <85b5c3130907081649s37f726f7id1a64f2fdbe609f@mail.gmail.com>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: 'git svn fetch' keeps giving a error after freezing
+Date: Wed, 8 Jul 2009 16:59:00 -0700
+Message-ID: <20090708235900.GB20768@dcvr.yhbt.net>
+References: <h31vg6$b38$1@ger.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Jul 09 01:49:36 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Graeme Geldenhuys <graemeg@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jul 09 01:59:09 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MOgtL-0008TQ-Gx
-	for gcvg-git-2@gmane.org; Thu, 09 Jul 2009 01:49:36 +0200
+	id 1MOh2a-0002mU-D6
+	for gcvg-git-2@gmane.org; Thu, 09 Jul 2009 01:59:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755770AbZGHXta (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 8 Jul 2009 19:49:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754732AbZGHXt3
-	(ORCPT <rfc822;git-outgoing>); Wed, 8 Jul 2009 19:49:29 -0400
-Received: from mail-yx0-f188.google.com ([209.85.210.188]:56245 "EHLO
-	mail-yx0-f188.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754661AbZGHXt2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 8 Jul 2009 19:49:28 -0400
-Received: by yxe26 with SMTP id 26so8557277yxe.33
-        for <git@vger.kernel.org>; Wed, 08 Jul 2009 16:49:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:sender:received:date
-         :x-google-sender-auth:message-id:subject:from:to:content-type
-         :content-transfer-encoding;
-        bh=ActJnEylBreE63qZ0KaeSBt25KfaM1qpC5LV8ZjJIME=;
-        b=sVH1HgG+9ZDcbuQdKnv2QS5nyJepdxlOqLMkjUHL33LGRe6o/oAOH+lFdlqFW38xel
-         3A2bDvKY8cI93Q7lDhl+mEkjY0CyHn4jvOsVz8zxXhFOThliQ3KuJUijn5zzwFD4h6J+
-         xo4faovcthQ0aRqp0kmI76uEE8Bm5zhRJMsEE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:sender:date:x-google-sender-auth:message-id:subject
-         :from:to:content-type:content-transfer-encoding;
-        b=kCyEgWCTlYysh8KEoORtG9Lr8bc8JytP6m0G6E6D2zO+5NnDZTOijfeAJ1hRgMJBW4
-         jfWsVmERjDYWYTIpnF6W+7g4j8tnQZWDRCpRa2pIJxM/Fn8NHPPwqbDfbv/mQof+s2Ct
-         e2EpZU7SlQPZ8aRbFPZYUFfcThg8odc1x8Lis=
-Received: by 10.90.84.2 with SMTP id h2mr95008agb.38.1247096966990; Wed, 08 
-	Jul 2009 16:49:26 -0700 (PDT)
-X-Google-Sender-Auth: 2b2a2579e323c1d5
+	id S1756080AbZGHX7D (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 8 Jul 2009 19:59:03 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755799AbZGHX7B
+	(ORCPT <rfc822;git-outgoing>); Wed, 8 Jul 2009 19:59:01 -0400
+Received: from dcvr.yhbt.net ([64.71.152.64]:43376 "EHLO dcvr.yhbt.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754972AbZGHX7A (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 8 Jul 2009 19:59:00 -0400
+Received: from localhost (unknown [12.186.229.34])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by dcvr.yhbt.net (Postfix) with ESMTPSA id 622171F605;
+	Wed,  8 Jul 2009 23:59:00 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <h31vg6$b38$1@ger.gmane.org>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122926>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122927>
 
-Hi,
+Graeme Geldenhuys <graemeg@gmail.com> wrote:
+> Hi,
+>
+> I'm using git-1.6.3.3 under Ubuntu Linux 8.04.2
+>
+> I'm trying to convert (clone) a SubVersion repository to Git, so I can  
+> host the mirror on GitHub, but for the last 4 days I don't get very far.  
+> It seems to be getting a few files, then freezes and then gives the  
+> error shown below. I'm now stuck around r2665 out of about 14,000  
+> revisions. :-(
+>
+> I have done such a clone before using a different SVN repository and  
+> pulling in around 13,000 revisions, so my 'git svn' commands should work.
+>
+> ==============================
+> $ git svn fetch
+> .....
+>         A       fixes_2_0/fv/gadgets.pas
+>         A       fixes_2_0/fv/colortxt.pas
+>         A       fixes_2_0/fv/outline.pas
+> RA layer request failed: REPORT of '/svn/fpc/!svn/vcc/default': Could  
+> not read response body: connection was closed by server  
+> (http://svn2.freepascal.org) at /usr/local/libexec/git-core/git-svn line  
+> 4505
 
-coming to git from mercurial and svn, here is the alias part of my .gitconfig:
+Does restarting "git svn fetch" work?  Can you checkout exactly that
+revision from SVN itself?  It could be an extremely large file that
+SVN has trouble serving, but as far as I can tell it's a problem
+with the server or your connection and not with git svn.
 
-[alias]
-    ci = commit
-    di = diff --color-words
-    st = status
-    co = checkout
+I'll give it a shot when I'm on a better connection/machine later.
 
-
-And all is fine until I share commands to checkout my branch (for
-example) with other people, then basically I have to write those
-commands in full (e.g. commit, checkout, ...), since I cannot assume
-they have their .gitconfig setup the same way I do. Especially for
-people who are new to git.
-
-What is the view on this in the git community? Do most of you write
-
-git checkout -b branch ...
-
-(possibly with TAB completion) or do most of you write
-
-git co -b branch ...
-
-(like I do all the time, except when sharing my commands with other people)?
-
-Could in principle those aliases be even made default by git? Or is
-this not a good idea.
-
-Ondrej
+-- 
+Eric Wong
