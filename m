@@ -1,144 +1,57 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: "fatal: index-pack failed" on git-clone
-Date: Wed, 08 Jul 2009 11:49:39 -0700
-Message-ID: <7vd48b6md8.fsf@alter.siamese.dyndns.org>
-References: <C92DE6F3-4F35-469F-AC28-4DDD1D8105C2@uchicago.edu>
- <7viqi386th.fsf@alter.siamese.dyndns.org>
- <102A43B8-AD35-4B1D-850C-3642CEDB2864@uchicago.edu>
- <7vskh76pui.fsf@alter.siamese.dyndns.org>
- <4103BA41-39E4-496F-A76F-17D84F30EA21@uchicago.edu>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: git svn fetch fails with Temp file with moniker
+	'svn_delta'already in use
+Date: Wed, 8 Jul 2009 11:51:15 -0700
+Message-ID: <20090708185115.GA14522@dcvr.yhbt.net>
+References: <B4BD8C6031F4EC4DAD8EABAB3ABA6CFE024DD5C1@IBCPTEX01.intecbilling.com> <B4BD8C6031F4EC4DAD8EABAB3ABA6CFE025132AF@IBCPTEX01.intecbilling.com> <4A549DAC.6010206@viscovery.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Daniel Barkalow <barkalow@iabervon.org>,
-	Johannes Sixt <j6t@kdbg.org>
-To: Fritz Anderson <fritza@uchicago.edu>
-X-From: git-owner@vger.kernel.org Wed Jul 08 20:50:49 2009
+Cc: Johannes Sixt <j.sixt@viscovery.net>, git@vger.kernel.org,
+	Marcus Griep <marcus@griep.us>
+To: Andre Mostert <Andre.Mostert@intecbilling.com>
+X-From: git-owner@vger.kernel.org Wed Jul 08 20:51:43 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MOcDb-0004no-TE
-	for gcvg-git-2@gmane.org; Wed, 08 Jul 2009 20:50:12 +0200
+	id 1MOcEm-0005dR-De
+	for gcvg-git-2@gmane.org; Wed, 08 Jul 2009 20:51:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756021AbZGHSts (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 8 Jul 2009 14:49:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754836AbZGHSts
-	(ORCPT <rfc822;git-outgoing>); Wed, 8 Jul 2009 14:49:48 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:63565 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755960AbZGHStr (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 8 Jul 2009 14:49:47 -0400
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 90DF7265E0;
-	Wed,  8 Jul 2009 14:49:46 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 7A0CD265DD; Wed, 
- 8 Jul 2009 14:49:41 -0400 (EDT)
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 1B862B74-6BF0-11DE-B2DF-DC021A496417-77302942!a-sasl-quonix.pobox.com
+	id S1756137AbZGHSvR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 8 Jul 2009 14:51:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756010AbZGHSvQ
+	(ORCPT <rfc822;git-outgoing>); Wed, 8 Jul 2009 14:51:16 -0400
+Received: from dcvr.yhbt.net ([64.71.152.64]:54458 "EHLO dcvr.yhbt.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754763AbZGHSvQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 8 Jul 2009 14:51:16 -0400
+Received: from localhost (unknown [12.186.229.34])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by dcvr.yhbt.net (Postfix) with ESMTPSA id DDCD01F604;
+	Wed,  8 Jul 2009 18:51:15 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <4A549DAC.6010206@viscovery.net>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122910>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122911>
 
-Fritz Anderson <fritza@uchicago.edu> writes:
+Johannes Sixt <j.sixt@viscovery.net> wrote:
+> Andre Mostert schrieb:
+> > /usr/local/apr/lib/libapr-1.so.0(apr_allocator_destroy+0x1d)[0x7fd7f450794d]
+> > /usr/local/apr/lib/libapr-1.so.0(apr_pool_terminate+0x34)[0x7fd7f4508494]
+> > /usr/lib/perl5/site_perl/5.10.0/x86_64-linux/auto/SVN/_Core/_Core.so(_wrap_apr_terminate+0x53)[0x7fd7f5eb19a3]
+> > /usr/bin/perl(Perl_pp_entersub+0x56a)[0x46663a]
+> 
+> Are you sure that your /usr/local/apr is compatible with your /usr/bin/perl?
 
-> On Jul 8, 2009, at 12:34 PM, Junio C Hamano wrote:
->
->> Which makes the initial "sudo git clone..." find git in _your_ path
->> before sanitization (and that is why it even starts), but then the path
->> is nuked for the git process it launches, and we cannot find
->> git-index-pack on the PATH.
->>
->> But this should be fine, as git is expected to find git-index-pack in
->> its GIT_EXEC_PATH that is compiled in the binary of "git" itself.
->>
->> Which makes me suspect that your "git" in /usr/local/bin may be
->> misconfigured.  You might want to check what these tell you.
->>
->> 	$ git --exec-path
->> 	$ /usr/local/bin/git --exec-path
->
-> Glad to oblige. These are the four possibilities:
->
-> $ git --exec-path
-> /usr/local/libexec/git-core
-> $ /usr/local/bin/git --exec-path
-> /usr/local/libexec/git-core
-> $ sudo git --exec-path
-> /usr/local/libexec/git-core
-> $ sudo /usr/local/bin/git --exec-path
-> /usr/local/libexec/git-core
-> $
->
-> Same path every time, sudo or not, full path to git or not.
+Not only that is suspicious, it seems Andre is mixing the SVN Perl
+modules (presumably from the distro, Ubuntu, in /usr/lib/) with SVN
+libraries in /usr/local, which I doubt was provided by the distro.
+AFAIK Ubuntu (like Debian) doesn't touch /usr/local at all.
 
-Hmm, there is something fishy going on, and I am a bit frustrated not
-being able to see what it is.
-
-The callpath should look like this:
-
-  git.c::main()
-  -> setup_path()
-  -> cmd_clone()
-     -> transport_fetch_refs()
-        -> fetch_refs_via_pack()
-           -> fetch_pack()
-              -> do_fetch_pack()
-                 -> get_pack()
-                    -> start_command(), running either
-                       "index-pack" or "unpack-objects"
-                       on the incoming stream
-
-and start_command() forks and eventually does execv_git_cmd() which is a
-thin wrapper around execvp().
-
-The PATH exported when this execvp() runs should have been adjusted to
-have the exec-path at the beginning by calling setup_path() and this is
-done way before cmd_clone() was called by git.c::main() function.
-
-What am I not seeing?  There should be something obvious that I am
-missing.  I do not see how your original command can fail with "exec
-failed: No such file or directory".
-
-Could you try your original (non-working) command with this debug patch?
-
- exec_cmd.c |    9 +++++++--
- 1 files changed, 7 insertions(+), 2 deletions(-)
-
-diff --git a/exec_cmd.c b/exec_cmd.c
-index 408e4e5..000910b 100644
---- a/exec_cmd.c
-+++ b/exec_cmd.c
-@@ -101,6 +101,9 @@ void setup_path(void)
- 	const char *old_path = getenv("PATH");
- 	struct strbuf new_path = STRBUF_INIT;
- 
-+	trace_printf("trace: setup_path: the $PATH was: %s\n",
-+		     old_path ? old_path : "NULL");
-+
- 	add_path(&new_path, git_exec_path());
- 	add_path(&new_path, argv0_path);
- 
-@@ -110,7 +113,8 @@ void setup_path(void)
- 		strbuf_addstr(&new_path, "/usr/local/bin:/usr/bin:/bin");
- 
- 	setenv("PATH", new_path.buf, 1);
--
-+	trace_printf("trace: setup_path: the $PATH is now: %s\n",
-+		     getenv("PATH") ? getenv("PATH") : "NULL");
- 	strbuf_release(&new_path);
- }
- 
-@@ -138,7 +142,8 @@ int execv_git_cmd(const char **argv) {
- 	execvp("git", (char **)nargv);
- 
- 	trace_printf("trace: exec failed: %s\n", strerror(errno));
--
-+	trace_printf("trace: the $PATH was: %s\n",
-+		     getenv("PATH") ? getenv("PATH") : "NULL");
- 	free(nargv);
- 	return -1;
- }
+-- 
+Eric Wong
