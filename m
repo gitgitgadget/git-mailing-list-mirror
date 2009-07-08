@@ -1,57 +1,108 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: git svn fetch fails with Temp file with moniker
-	'svn_delta'already in use
-Date: Wed, 8 Jul 2009 11:51:15 -0700
-Message-ID: <20090708185115.GA14522@dcvr.yhbt.net>
-References: <B4BD8C6031F4EC4DAD8EABAB3ABA6CFE024DD5C1@IBCPTEX01.intecbilling.com> <B4BD8C6031F4EC4DAD8EABAB3ABA6CFE025132AF@IBCPTEX01.intecbilling.com> <4A549DAC.6010206@viscovery.net>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: "fatal: index-pack failed" on git-clone
+Date: Wed, 8 Jul 2009 15:05:37 -0400 (EDT)
+Message-ID: <alpine.LNX.2.00.0907081456570.2147@iabervon.org>
+References: <C92DE6F3-4F35-469F-AC28-4DDD1D8105C2@uchicago.edu> <7viqi386th.fsf@alter.siamese.dyndns.org> <102A43B8-AD35-4B1D-850C-3642CEDB2864@uchicago.edu> <7vskh76pui.fsf@alter.siamese.dyndns.org> <4103BA41-39E4-496F-A76F-17D84F30EA21@uchicago.edu>
+ <7vd48b6md8.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Sixt <j.sixt@viscovery.net>, git@vger.kernel.org,
-	Marcus Griep <marcus@griep.us>
-To: Andre Mostert <Andre.Mostert@intecbilling.com>
-X-From: git-owner@vger.kernel.org Wed Jul 08 20:51:43 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Fritz Anderson <fritza@uchicago.edu>, git@vger.kernel.org,
+	Johannes Sixt <j6t@kdbg.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jul 08 21:05:47 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MOcEm-0005dR-De
-	for gcvg-git-2@gmane.org; Wed, 08 Jul 2009 20:51:24 +0200
+	id 1MOcSg-0004G7-QG
+	for gcvg-git-2@gmane.org; Wed, 08 Jul 2009 21:05:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756137AbZGHSvR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 8 Jul 2009 14:51:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756010AbZGHSvQ
-	(ORCPT <rfc822;git-outgoing>); Wed, 8 Jul 2009 14:51:16 -0400
-Received: from dcvr.yhbt.net ([64.71.152.64]:54458 "EHLO dcvr.yhbt.net"
+	id S1754851AbZGHTFk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 8 Jul 2009 15:05:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754763AbZGHTFk
+	(ORCPT <rfc822;git-outgoing>); Wed, 8 Jul 2009 15:05:40 -0400
+Received: from iabervon.org ([66.92.72.58]:34302 "EHLO iabervon.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754763AbZGHSvQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 8 Jul 2009 14:51:16 -0400
-Received: from localhost (unknown [12.186.229.34])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by dcvr.yhbt.net (Postfix) with ESMTPSA id DDCD01F604;
-	Wed,  8 Jul 2009 18:51:15 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <4A549DAC.6010206@viscovery.net>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+	id S1754282AbZGHTFj (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 8 Jul 2009 15:05:39 -0400
+Received: (qmail 26863 invoked by uid 1000); 8 Jul 2009 19:05:37 -0000
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 8 Jul 2009 19:05:37 -0000
+In-Reply-To: <7vd48b6md8.fsf@alter.siamese.dyndns.org>
+User-Agent: Alpine 2.00 (LNX 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122911>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122912>
 
-Johannes Sixt <j.sixt@viscovery.net> wrote:
-> Andre Mostert schrieb:
-> > /usr/local/apr/lib/libapr-1.so.0(apr_allocator_destroy+0x1d)[0x7fd7f450794d]
-> > /usr/local/apr/lib/libapr-1.so.0(apr_pool_terminate+0x34)[0x7fd7f4508494]
-> > /usr/lib/perl5/site_perl/5.10.0/x86_64-linux/auto/SVN/_Core/_Core.so(_wrap_apr_terminate+0x53)[0x7fd7f5eb19a3]
-> > /usr/bin/perl(Perl_pp_entersub+0x56a)[0x46663a]
+On Wed, 8 Jul 2009, Junio C Hamano wrote:
+
+> Fritz Anderson <fritza@uchicago.edu> writes:
 > 
-> Are you sure that your /usr/local/apr is compatible with your /usr/bin/perl?
+> > On Jul 8, 2009, at 12:34 PM, Junio C Hamano wrote:
+> >
+> >> Which makes the initial "sudo git clone..." find git in _your_ path
+> >> before sanitization (and that is why it even starts), but then the path
+> >> is nuked for the git process it launches, and we cannot find
+> >> git-index-pack on the PATH.
+> >>
+> >> But this should be fine, as git is expected to find git-index-pack in
+> >> its GIT_EXEC_PATH that is compiled in the binary of "git" itself.
+> >>
+> >> Which makes me suspect that your "git" in /usr/local/bin may be
+> >> misconfigured.  You might want to check what these tell you.
+> >>
+> >> 	$ git --exec-path
+> >> 	$ /usr/local/bin/git --exec-path
+> >
+> > Glad to oblige. These are the four possibilities:
+> >
+> > $ git --exec-path
+> > /usr/local/libexec/git-core
+> > $ /usr/local/bin/git --exec-path
+> > /usr/local/libexec/git-core
+> > $ sudo git --exec-path
+> > /usr/local/libexec/git-core
+> > $ sudo /usr/local/bin/git --exec-path
+> > /usr/local/libexec/git-core
+> > $
+> >
+> > Same path every time, sudo or not, full path to git or not.
 
-Not only that is suspicious, it seems Andre is mixing the SVN Perl
-modules (presumably from the distro, Ubuntu, in /usr/lib/) with SVN
-libraries in /usr/local, which I doubt was provided by the distro.
-AFAIK Ubuntu (like Debian) doesn't touch /usr/local at all.
+Just to verify, /usr/local/libexec/git-core/git-index-pack exists, and is 
+executable?
 
--- 
-Eric Wong
+> Hmm, there is something fishy going on, and I am a bit frustrated not
+> being able to see what it is.
+> 
+> The callpath should look like this:
+> 
+>   git.c::main()
+>   -> setup_path()
+>   -> cmd_clone()
+>      -> transport_fetch_refs()
+>         -> fetch_refs_via_pack()
+>            -> fetch_pack()
+>               -> do_fetch_pack()
+>                  -> get_pack()
+>                     -> start_command(), running either
+>                        "index-pack" or "unpack-objects"
+>                        on the incoming stream
+> 
+> and start_command() forks and eventually does execv_git_cmd() which is a
+> thin wrapper around execvp().
+> 
+> The PATH exported when this execvp() runs should have been adjusted to
+> have the exec-path at the beginning by calling setup_path() and this is
+> done way before cmd_clone() was called by git.c::main() function.
+> 
+> What am I not seeing?  There should be something obvious that I am
+> missing.  I do not see how your original command can fail with "exec
+> failed: No such file or directory".
+
+All I can think of is that this could happen if PATH already had 
+git-index-pack, and the exec-path didn't have it.
+
+	-Daniel
+*This .sig left intentionally blank*
