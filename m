@@ -1,76 +1,59 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH] quickfetch(): Prevent overflow of the rev-list command
- line
-Date: Wed, 08 Jul 2009 17:12:21 +0200
-Message-ID: <4A54B755.4090100@viscovery.net>
-References: <alpine.DEB.2.00.0906181310400.23400@ds9.cixit.se> <alpine.DEB.2.00.0906221342310.26061@ds9.cixit.se> <200907081558.51767.johan@herland.net>
+From: "Yann Dirson" <ydirson@linagora.com>
+Subject: Re: "git svn reset" only resets current branch ?
+Date: Wed, 8 Jul 2009 17:41:01 +0200 (CEST)
+Message-ID: <50232.10.0.0.1.1247067661.squirrel@intranet.linagora.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Peter Krefting <peter@softwolves.pp.se>,
-	"Shawn O. Pearce" <spearce@spearce.org>
-To: Johan Herland <johan@herland.net>
-X-From: git-owner@vger.kernel.org Wed Jul 08 17:12:36 2009
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: "Eric Wong" <normalperson@yhbt.net>, git@vger.kernel.org
+To: "Ben Jackson" <ben@ben.com>
+X-From: git-owner@vger.kernel.org Wed Jul 08 17:41:01 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MOYp1-000610-B3
-	for gcvg-git-2@gmane.org; Wed, 08 Jul 2009 17:12:35 +0200
+	id 1MOZGP-0003ML-MB
+	for gcvg-git-2@gmane.org; Wed, 08 Jul 2009 17:40:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754743AbZGHPM2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 8 Jul 2009 11:12:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754596AbZGHPM1
-	(ORCPT <rfc822;git-outgoing>); Wed, 8 Jul 2009 11:12:27 -0400
-Received: from lilzmailso02.liwest.at ([212.33.55.13]:29156 "EHLO
-	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754343AbZGHPM1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 8 Jul 2009 11:12:27 -0400
-Received: from cpe228-254.liwest.at ([81.10.228.254] helo=linz.eudaptics.com)
-	by lilzmailso02.liwest.at with esmtpa (Exim 4.69)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1MOYoo-0000d9-CT; Wed, 08 Jul 2009 17:12:23 +0200
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.96])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id 167344E4; Wed,  8 Jul 2009 17:12:22 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.21 (Windows/20090302)
-In-Reply-To: <200907081558.51767.johan@herland.net>
-X-Spam-Score: -1.4 (-)
+	id S1755478AbZGHPkr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 8 Jul 2009 11:40:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754606AbZGHPkq
+	(ORCPT <rfc822;git-outgoing>); Wed, 8 Jul 2009 11:40:46 -0400
+Received: from alderaan.linagora.com ([84.14.148.74]:46139 "EHLO
+	alderaan.linagora.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754149AbZGHPkp (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 8 Jul 2009 11:40:45 -0400
+Received: from 10.0.0.2 (unknown [10.75.192.3])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by alderaan.linagora.com (Postfix) with ESMTPSA id B03EE429F01;
+	Wed,  8 Jul 2009 17:40:43 +0200 (CEST)
+Received: from 10.0.0.1 (proxying for 82.127.2.119)
+        (SquirrelMail authenticated user ydirson)
+        by intranet.linagora.com with HTTP;
+        Wed, 8 Jul 2009 17:41:01 +0200 (CEST)
+User-Agent: SquirrelMail/1.4.11
+X-Priority: 3 (Normal)
+Importance: Normal
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122900>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122901>
 
-Johan Herland schrieb:
-> +	/* If rev-list --stdin encounters an unknown commit, it terminates,
-> +	 * which will cause SIGPIPE in the write loop below. */
+> On Tue, Jul 07, 2009 at 10:01:08AM +0200, Yann Dirson wrote:
+>>
+>> As an alternative, we could also allow "git svn reset" to take us back
+>> into the future to undo any such mistake without refetching.
+>
+> You can't do that directly, since data is destroyed (specifically, the
+> rev_map is truncated back to the selected revision).  However, you can
+> "git reset" the branch back to where it was using the reflog, and then
+> the next git-svn command you run will rebuild the rev_map from the
+> comment metadata (obviously you're out of luck if you set "no_metadata").
+>
+> It's possible that "git-svn reset" should be saving something like
+> ORIG_HEAD (comments welcome) but that does conflict with the idea of
+> adding "--all" or defaulting to "--all" behavior.
 
-Under the conditions you describe here...
-
-> +	signal(SIGPIPE, SIG_IGN);
-
-... and SIGPIPE being ignored...
-
-> +
-> +	err = start_command(&revlist);
-> +	if (err) {
-> +		error("could not run rev-list");
-> +		return err;
-> +	}
->  
-> -	for (i = 0; argv[i]; i++)
-> -		free(argv[i]);
-> -	free(argv);
-> -	return err;
-> +	for (ref = ref_map; ref; ref = ref->next) {
-> +		if (write_in_full(revlist.in, sha1_to_hex(ref->old_sha1), 40) < 0 ||
-> +		    write_in_full(revlist.in, "\n", 1) < 0) {
-> +			error("failed write to rev-list");
-> +			err = errno;
-
-... don't you get this error message with errno set to EPIPE? Previously,
-there was no error message.
-
--- Hannes
+Well, adding --all would probably be better after all.
