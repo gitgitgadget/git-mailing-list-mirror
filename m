@@ -1,68 +1,111 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: =?utf-8?Q?Schr=C3=B6dinger's?= diff
-Date: Tue, 07 Jul 2009 19:54:04 -0700
-Message-ID: <7v8wizanqr.fsf@alter.siamese.dyndns.org>
-References: <279b37b20907062353k34bca06erf035458e80933c8d@mail.gmail.com>
- <alpine.LNX.2.00.0907071316490.2147@iabervon.org>
- <20090707193605.GA30945@coredump.intra.peff.net>
- <7vtz1o9sv6.fsf@alter.siamese.dyndns.org>
- <20090707195406.GA32131@coredump.intra.peff.net>
- <7vfxd89lqf.fsf@alter.siamese.dyndns.org>
- <279b37b20907071717r71f982b6u7333ff10fadfc39@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, Daniel Barkalow <barkalow@iabervon.org>,
-	Git Mailing List <git@vger.kernel.org>
-To: Eric Raible <raible@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jul 08 04:54:21 2009
+From: Stephen Boyd <bebarino@gmail.com>
+Subject: [PATCH 2/4] tag-verify: migrate to parse-options
+Date: Tue,  7 Jul 2009 22:15:39 -0700
+Message-ID: <1247030141-11695-3-git-send-email-bebarino@gmail.com>
+References: <1247030141-11695-1-git-send-email-bebarino@gmail.com>
+ <1247030141-11695-2-git-send-email-bebarino@gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jul 08 07:16:15 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MONIa-0006QG-K2
-	for gcvg-git-2@gmane.org; Wed, 08 Jul 2009 04:54:21 +0200
+	id 1MOPVu-00082W-0x
+	for gcvg-git-2@gmane.org; Wed, 08 Jul 2009 07:16:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756276AbZGHCyO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 7 Jul 2009 22:54:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755799AbZGHCyN
-	(ORCPT <rfc822;git-outgoing>); Tue, 7 Jul 2009 22:54:13 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:54108 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755110AbZGHCyN (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 Jul 2009 22:54:13 -0400
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 150192595C;
-	Tue,  7 Jul 2009 22:54:11 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 042AD2595A; Tue, 
- 7 Jul 2009 22:54:05 -0400 (EDT)
-In-Reply-To: <279b37b20907071717r71f982b6u7333ff10fadfc39@mail.gmail.com>
- (Eric Raible's message of "Tue\, 7 Jul 2009 17\:17\:21 -0700")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 9CE03EB6-6B6A-11DE-B5BA-DC021A496417-77302942!a-sasl-quonix.pobox.com
+	id S1756275AbZGHFP7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 8 Jul 2009 01:15:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754909AbZGHFP7
+	(ORCPT <rfc822;git-outgoing>); Wed, 8 Jul 2009 01:15:59 -0400
+Received: from mail-px0-f181.google.com ([209.85.216.181]:37259 "EHLO
+	mail-px0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752488AbZGHFP6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 8 Jul 2009 01:15:58 -0400
+Received: by mail-px0-f181.google.com with SMTP id 11so141523pxi.33
+        for <git@vger.kernel.org>; Tue, 07 Jul 2009 22:15:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:from:to:cc:subject
+         :date:message-id:x-mailer:in-reply-to:references;
+        bh=jI+kIa3x2WpoHONuxrFvPGrazQhOIsAEuhLK50QLaX0=;
+        b=tReshAk9FLP4g8U72pC7ZJpv8+L/eJEYg30yhZleC+cFYFELH6oj/rW4KxaKQD96ra
+         H/LRzkxeXkV9s6UmiaiUoNjH/bb6t377Qow9NLkEeADULtppzDrZ2Y/BKz98jLBzrs5L
+         KeGloP7xAsRFztcL55Cy44Q9AXXT69QuSLhFU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        b=cZYjiPIZ4KDqM2foHnTrXIZMdBqQMuk5gVkrdh5wcvs/pyucY0N/J2wWQ0SVsQJgdU
+         q+qkX4ZFuGrj3aH8gNP4EolZbVVuKpyIpZjZNt2TLbR2gECJORfrQbkNAWorWtTdPwHF
+         KcwBaS5aEsQKoFm09DkU3Sr9u9G7NYtKJf3bU=
+Received: by 10.114.167.3 with SMTP id p3mr10647097wae.92.1247030158241;
+        Tue, 07 Jul 2009 22:15:58 -0700 (PDT)
+Received: from earth (cpe-66-75-25-79.san.res.rr.com [66.75.25.79])
+        by mx.google.com with ESMTPS id l30sm933942waf.35.2009.07.07.22.15.54
+        (version=SSLv3 cipher=RC4-MD5);
+        Tue, 07 Jul 2009 22:15:57 -0700 (PDT)
+Received: by earth (sSMTP sendmail emulation); Tue, 07 Jul 2009 22:15:49 -0700
+X-Mailer: git-send-email 1.6.3.3.385.g60647
+In-Reply-To: <1247030141-11695-2-git-send-email-bebarino@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122885>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122886>
 
-Eric Raible <raible@gmail.com> writes:
+Signed-off-by: Stephen Boyd <bebarino@gmail.com>
+---
 
-> So what's the best way of "fixing once and for all" a repo infected with
-> carriage returns when you want to use autocrlf=true moving forward?
+It may be nicer to die with a message like "Must give a tag to verify"
+or something when a tag isn't given, but that could probably be a
+later patch.
 
-Didn't "rm -f .git/index && git reset --hard HEAD" work?
+ builtin-verify-tag.c |   21 ++++++++++++---------
+ 1 files changed, 12 insertions(+), 9 deletions(-)
 
-> And a hopefully less annoying one:
->
-> Would you accept a patch explaining how "git reset --hard" doesn't
-> actually rebuild the index from scratch,...
-
-Absolutely.
-
-> ... and how "git read-head" might
-> be recommended in some weird situations?
-
-I am less certain about that; people may have easier-to-read solution than
-the one with read-tree, I would suspect.
+diff --git a/builtin-verify-tag.c b/builtin-verify-tag.c
+index 7f7fda4..9f482c2 100644
+--- a/builtin-verify-tag.c
++++ b/builtin-verify-tag.c
+@@ -10,9 +10,12 @@
+ #include "tag.h"
+ #include "run-command.h"
+ #include <signal.h>
++#include "parse-options.h"
+ 
+-static const char builtin_verify_tag_usage[] =
+-		"git verify-tag [-v|--verbose] <tag>...";
++static const char * const verify_tag_usage[] = {
++		"git verify-tag [-v|--verbose] <tag>...",
++		NULL
++};
+ 
+ #define PGP_SIGNATURE "-----BEGIN PGP SIGNATURE-----"
+ 
+@@ -89,17 +92,17 @@ static int verify_tag(const char *name, int verbose)
+ int cmd_verify_tag(int argc, const char **argv, const char *prefix)
+ {
+ 	int i = 1, verbose = 0, had_error = 0;
++	const struct option verify_tag_options[] = {
++		OPT__VERBOSE(&verbose),
++		OPT_END()
++	};
+ 
+ 	git_config(git_default_config, NULL);
+ 
+-	if (argc > 1 &&
+-	    (!strcmp(argv[i], "-v") || !strcmp(argv[i], "--verbose"))) {
+-		verbose = 1;
+-		i++;
+-	}
+-
++	argc = parse_options(argc, argv, prefix, verify_tag_options,
++			     verify_tag_usage, PARSE_OPT_KEEP_ARGV0);
+ 	if (argc <= i)
+-		usage(builtin_verify_tag_usage);
++		usage_with_options(verify_tag_usage, verify_tag_options);
+ 
+ 	/* sometimes the program was terminated because this signal
+ 	 * was received in the process of writing the gpg input: */
+-- 
+1.6.3.3.385.g60647
