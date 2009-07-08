@@ -1,73 +1,78 @@
-From: Lee Griffiths <poddster@gmail.com>
-Subject: Re: Checking for fast-forward
-Date: Wed, 8 Jul 2009 18:36:30 +0100
-Message-ID: <ca4f67be0907081036j38724491n6c4c0e9aa995ee51@mail.gmail.com>
-References: <ca4f67be0907060936v7bf7c44y4395717fff854fd4@mail.gmail.com> 
-	<20090706232614.32602ccc@schatten> <4A530594.20100@drmicha.warpmail.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Florian Mickler <florian@mickler.org>, git@vger.kernel.org
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Wed Jul 08 19:37:11 2009
+From: Fritz Anderson <fritza@uchicago.edu>
+Subject: Re: "fatal: index-pack failed" on git-clone
+Date: Wed, 8 Jul 2009 13:22:15 -0500
+Message-ID: <4103BA41-39E4-496F-A76F-17D84F30EA21@uchicago.edu>
+References: <C92DE6F3-4F35-469F-AC28-4DDD1D8105C2@uchicago.edu> <7viqi386th.fsf@alter.siamese.dyndns.org> <102A43B8-AD35-4B1D-850C-3642CEDB2864@uchicago.edu> <7vskh76pui.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0 (Apple Message framework v1068)
+Content-Type: text/plain; charset=windows-1252;
+	format=flowed	delsp=yes
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jul 08 20:22:45 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MOb4x-0001bx-0f
-	for gcvg-git-2@gmane.org; Wed, 08 Jul 2009 19:37:11 +0200
+	id 1MObn2-00083B-Ai
+	for gcvg-git-2@gmane.org; Wed, 08 Jul 2009 20:22:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754896AbZGHRgw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 8 Jul 2009 13:36:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754477AbZGHRgw
-	(ORCPT <rfc822;git-outgoing>); Wed, 8 Jul 2009 13:36:52 -0400
-Received: from fg-out-1718.google.com ([72.14.220.156]:33002 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754817AbZGHRgv (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 8 Jul 2009 13:36:51 -0400
-Received: by fg-out-1718.google.com with SMTP id e21so1748715fga.17
-        for <git@vger.kernel.org>; Wed, 08 Jul 2009 10:36:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=sp6NyL8n+a7C2nV0H+nfdNoPixbtMOD1hKjiM7hQUUk=;
-        b=YFvs+ETpJRmcMsRBsRgJhK6vgR/B5gtFIpTIvXeABp7VIF1R5AWzFHM8AYu5ysZGZi
-         VK34Vmiq7lasEA1vgmb2k2kH6x9bD4b5KTKvh/8jw7DWPyHeXIy1s/Shxd3oJJxcHFeo
-         yl8R1BddY+dhoDnqhAMrHjL93v4syApgqMxRM=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=rK/OWrpJ2eLBBHXc5NTzRXvrEKdbRohKAUD0JeVIdr4fzpqokN3VXQe2/69e2u1Ubs
-         AbBKhBIPa8gfL1tGPjsYXgV5Hk2GnAhv8famxqs1N8t144s+ht/goUmc0gtHn5fOJH1R
-         xLgbSmnhXxNhz/69T+g0kGvuBKAqsnGz9AU/4=
-Received: by 10.86.1.1 with SMTP id 1mr2857688fga.42.1247074610186; Wed, 08 
-	Jul 2009 10:36:50 -0700 (PDT)
-In-Reply-To: <4A530594.20100@drmicha.warpmail.net>
+	id S1754201AbZGHSWf convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 8 Jul 2009 14:22:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754080AbZGHSWf
+	(ORCPT <rfc822;git-outgoing>); Wed, 8 Jul 2009 14:22:35 -0400
+Received: from authsmtp00.uchicago.edu ([128.135.249.245]:36467 "EHLO
+	authsmtp00.uchicago.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754050AbZGHSWf convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 8 Jul 2009 14:22:35 -0400
+Received: from fritzanderson.uchicago.edu (fritzanderson.uchicago.edu [128.135.0.17])
+	(authenticated bits=0)
+	by authsmtp00.uchicago.edu (8.13.1/8.13.1) with ESMTP id n68IMEh0010855
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
+	Wed, 8 Jul 2009 13:22:14 -0500
+In-Reply-To: <7vskh76pui.fsf@alter.siamese.dyndns.org>
+X-Mailer: Apple Mail (2.1068)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122908>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122909>
 
-Thanks for the answers :)
+On Jul 8, 2009, at 12:34 PM, Junio C Hamano wrote:
 
-After seeing that git push skips the packing (and potentially other
-things) when doing a dry run, and given that:
-	git push --dry-run
-takes 1.5s on average and that:
-	git fetch
-	git rev-list master..remotes/origin/master
-OR
-	git ls-remote origin refs/remotes/origin/master
+> Which makes the initial "sudo git clone..." find git in _your_ path =20
+> before
+> sanitization (and that is why it even starts), but then the path is =20
+> nuked
+> for the git process it launches, and we cannot find git-index-pack =20
+> on the
+> PATH.
+>
+> But this should be fine, as git is expected to find git-index-pack =20
+> in its
+> GIT_EXEC_PATH that is compiled in the binary of "git" itself.
+>
+> Which makes me suspect that your "git" in /usr/local/bin may be
+> misconfigured.  You might want to check what these tell you.
+>
+> 	$ git --exec-path
+> 	$ /usr/local/bin/git --exec-path
 
-take 4s on average, I think I'll stick with the dry-run & checking for
-exception method.
+Glad to oblige. These are the four possibilities:
 
-Thanks though :)
+$ git --exec-path
+/usr/local/libexec/git-core
+$ /usr/local/bin/git --exec-path
+/usr/local/libexec/git-core
+$ sudo git --exec-path
+/usr/local/libexec/git-core
+$ sudo /usr/local/bin/git --exec-path
+/usr/local/libexec/git-core
+$
 
-2009/7/7 Michael J Gruber <git@drmicha.warpmail.net>:
-> If $(git rev-list bar..remotes/origin/foo) is empty then the branch foo
-> in the remote repo can be fast-forwarded to bar.
+Same path every time, sudo or not, full path to git or not.
+
+I built git (after installing zlib) simply with "./configure" and =20
+"sudo make install".
+
+	=97 F
