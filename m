@@ -1,103 +1,83 @@
-From: Alex Vandiver <alex@chmrr.net>
-Subject: [PATCH] Failing test; renaming sections can lose assignments on the same line
-Date: Wed,  8 Jul 2009 16:40:41 -0400
-Message-ID: <1247085641-14772-1-git-send-email-alex@chmrr.net>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jul 08 23:14:14 2009
+From: Fritz Anderson <fritza@uchicago.edu>
+Subject: Re: "fatal: index-pack failed" on git-clone
+Date: Wed, 8 Jul 2009 16:27:42 -0500
+Message-ID: <47A38129-92A6-4CA5-8B79-E93CE9BF867B@uchicago.edu>
+References: <C92DE6F3-4F35-469F-AC28-4DDD1D8105C2@uchicago.edu> <4103BA41-39E4-496F-A76F-17D84F30EA21@uchicago.edu> <7vd48b6md8.fsf@alter.siamese.dyndns.org> <200907082242.51495.j6t@kdbg.org> <20090708211201.GA21600@coredump.intra.peff.net>
+Mime-Version: 1.0 (Apple Message framework v1068)
+Content-Type: text/plain; charset=windows-1252;
+	format=flowed	delsp=yes
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Johannes Sixt <j6t@kdbg.org>, Junio C Hamano <gitster@pobox.com>,
+	git@vger.kernel.org, Daniel Barkalow <barkalow@iabervon.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Jul 08 23:27:59 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MOeSz-00037f-Qz
-	for gcvg-git-2@gmane.org; Wed, 08 Jul 2009 23:14:14 +0200
+	id 1MOegI-0000AP-0N
+	for gcvg-git-2@gmane.org; Wed, 08 Jul 2009 23:27:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755523AbZGHVOG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 8 Jul 2009 17:14:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755479AbZGHVOG
-	(ORCPT <rfc822;git-outgoing>); Wed, 8 Jul 2009 17:14:06 -0400
-Received: from chmrr.net ([209.67.253.66]:44348 "EHLO utwig.chmrr.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755097AbZGHVOF (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 8 Jul 2009 17:14:05 -0400
-X-Greylist: delayed 1990 seconds by postgrey-1.27 at vger.kernel.org; Wed, 08 Jul 2009 17:14:05 EDT
-Received: from 75-147-59-54-newengland.hfc.comcastbusiness.net ([75.147.59.54] helo=localhost.localdomain)
-	by utwig.chmrr.net with esmtpsa (TLSv1:AES256-SHA:256)
-	(Exim 4.69)
-	(envelope-from <alex@chmrr.net>)
-	id 1MOdwf-0000cQ-2f
-	for git@vger.kernel.org; Wed, 08 Jul 2009 16:40:54 -0400
-X-Mailer: git-send-email 1.6.3.3.473.gb74fc4.dirty
-X-Authenticated-User: chmrr
-X-Authenticator: plain
-X-Sender-Verify: SUCCEEDED (sender exists & accepts mail)
-X-Spam-Score: -4.4
-X-Spam-Score-Int: -43
-X-Exim-Version: 4.69 (build at 07-Feb-2009 20:08:51)
-X-Date: 2009-07-08 16:40:54
-X-Connected-IP: 75.147.59.54:49722
-X-Message-Linecount: 59
-X-Body-Linecount: 52
-X-Message-Size: 1473
-X-Body-Size: 1172
-X-Received-Count: 1
-X-Recipient-Count: 1
-X-Local-Recipient-Count: 1
-X-Local-Recipient-Defer-Count: 0
-X-Local-Recipient-Fail-Count: 0
+	id S1754841AbZGHV1w convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 8 Jul 2009 17:27:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754628AbZGHV1v
+	(ORCPT <rfc822;git-outgoing>); Wed, 8 Jul 2009 17:27:51 -0400
+Received: from authsmtp00.uchicago.edu ([128.135.249.245]:38682 "EHLO
+	authsmtp00.uchicago.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754584AbZGHV1v convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 8 Jul 2009 17:27:51 -0400
+Received: from fritzanderson.uchicago.edu (fritzanderson.uchicago.edu [128.135.0.17])
+	(authenticated bits=0)
+	by authsmtp00.uchicago.edu (8.13.1/8.13.1) with ESMTP id n68LRgJx031180
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
+	Wed, 8 Jul 2009 16:27:43 -0500
+In-Reply-To: <20090708211201.GA21600@coredump.intra.peff.net>
+X-Mailer: Apple Mail (2.1068)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122921>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122922>
 
+On Jul 8, 2009, at 4:12 PM, Jeff King wrote:
 
-Signed-off-by: Alex Vandiver <alex@chmrr.net>
----
+>  1. Hardlinking "git" into exec-path. That means we will always be =20
+> able
+>     to find the wrapper, even if the PATH has been munged. Admittedly=
+,
+>     it sounds far fetched to me that something would exec from the =20
+> PATH
+>     and then munge the PATH afterwards, but that seems to be what sud=
+o
+>     is doing (and it is pretty commonly used).
 
-I noticed the following bug recently:
+Here's an interesting experiment (RHEL 5):
 
-    echo "[foo] x = 1" > testfile
-    git config --file=testfile --rename-section foo bar
-    cat testfile
-    # [bar]
+=3D=3D=3D=3D=3D
+$ echo $PATH
+/usr/kerberos/bin:/usr/local/bin:/bin:/usr/bin:/home/fritza/bin
+$ cat >tryme.sh
+echo $PATH
+$ chmod a+x tryme.sh
+$ sudo ./tryme.sh
+/usr/bin:/bin
 
-This is at least a failing test, and I'll look at how complex the
-fix is when I get a few spare tuits.
+$ sudo git --exec-path
+/usr/local/libexec/git-core
+$ cat >tryme.sh
+git --exec-path
+$ ./tryme.sh
+/usr/local/libexec/git-core
+$ sudo ./tryme.sh
+=2E/tryme.sh: line 1: git: command not found
+=3D=3D=3D=3D=3D
 
- t/t1300-repo-config.sh |   21 +++++++++++++++++++++
- 1 files changed, 21 insertions(+), 0 deletions(-)
+That is to say, possibly there is some sudo magic that uses the =20
+invoker's PATH to find the command in the first argument. After that, =20
+however, PATH is a "safe" value. So if you invoke git via sudo, it =20
+will internally see a PATH different from the one at the time of =20
+invocation.
 
-diff --git a/t/t1300-repo-config.sh b/t/t1300-repo-config.sh
-index 43ea283..4d576c6 100755
---- a/t/t1300-repo-config.sh
-+++ b/t/t1300-repo-config.sh
-@@ -460,6 +460,27 @@ EOF
- test_expect_success "rename succeeded" "test_cmp expect .git/config"
- 
- cat >> .git/config << EOF
-+[branch "vier"] z = 1
-+EOF
-+
-+test_expect_success "rename a section with a var on the same line" \
-+	'git config --rename-section branch.vier branch.zwei'
-+
-+cat > expect << EOF
-+# Hallo
-+	#Bello
-+[branch "zwei"]
-+	x = 1
-+[branch "zwei"]
-+	y = 1
-+[branch "drei"]
-+weird
-+[branch "zwei"] z = 1
-+EOF
-+
-+test_expect_success "rename succeeded" "test_cmp expect .git/config"
-+
-+cat >> .git/config << EOF
-   [branch "zwei"] a = 1 [branch "vier"]
- EOF
- 
--- 
-1.6.3.3.473.gb74fc4.dirty
+=46or what it's worth.
+
+	=97 F
