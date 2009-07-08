@@ -1,10 +1,8 @@
 From: Stephen Boyd <bebarino@gmail.com>
-Subject: [PATCH 3/4] verify-pack: migrate to parse-options
-Date: Tue,  7 Jul 2009 22:15:40 -0700
-Message-ID: <1247030141-11695-4-git-send-email-bebarino@gmail.com>
+Subject: [PATCH 1/4] write-tree: migrate to parse-options
+Date: Tue,  7 Jul 2009 22:15:38 -0700
+Message-ID: <1247030141-11695-2-git-send-email-bebarino@gmail.com>
 References: <1247030141-11695-1-git-send-email-bebarino@gmail.com>
- <1247030141-11695-2-git-send-email-bebarino@gmail.com>
- <1247030141-11695-3-git-send-email-bebarino@gmail.com>
 Cc: Junio C Hamano <gitster@pobox.com>
 To: git@vger.kernel.org
 X-From: git-owner@vger.kernel.org Wed Jul 08 07:16:16 2009
@@ -12,142 +10,121 @@ Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MOPVu-00082W-Q2
-	for gcvg-git-2@gmane.org; Wed, 08 Jul 2009 07:16:15 +0200
+	id 1MOPVt-00082W-8G
+	for gcvg-git-2@gmane.org; Wed, 08 Jul 2009 07:16:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756848AbZGHFQI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 8 Jul 2009 01:16:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756748AbZGHFQI
-	(ORCPT <rfc822;git-outgoing>); Wed, 8 Jul 2009 01:16:08 -0400
-Received: from mail-pz0-f193.google.com ([209.85.222.193]:35535 "EHLO
-	mail-pz0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756399AbZGHFQG (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 8 Jul 2009 01:16:06 -0400
-Received: by pzk31 with SMTP id 31so3404566pzk.33
-        for <git@vger.kernel.org>; Tue, 07 Jul 2009 22:16:06 -0700 (PDT)
+	id S1755852AbZGHFPu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 8 Jul 2009 01:15:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755345AbZGHFPu
+	(ORCPT <rfc822;git-outgoing>); Wed, 8 Jul 2009 01:15:50 -0400
+Received: from mail-px0-f181.google.com ([209.85.216.181]:37259 "EHLO
+	mail-px0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754815AbZGHFPt (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 8 Jul 2009 01:15:49 -0400
+Received: by mail-px0-f181.google.com with SMTP id 11so141523pxi.33
+        for <git@vger.kernel.org>; Tue, 07 Jul 2009 22:15:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:received:from:to:cc:subject
          :date:message-id:x-mailer:in-reply-to:references;
-        bh=/1AA4zNE9JFSnAQl5q2nYOzbCXtw/YH2QmxEZygI/7o=;
-        b=Ye+9EycLY2V0aH9RLiXYeUSB3XaQ9oB8ioUFSg9mgxKMCiunghDTNOPbGlzMMzGz6H
-         q9+YOucItuQ7bbeY4JbJPKh8AKuF0aZffbDp4dsWN7TtDtvqKjI3JAwDzJLyogaJf7Dx
-         DQ90T2aG7Yombh4C8ORPzENfWuqoUXGcNdJNY=
+        bh=mgyHdgQNg6yjDjDDAW8l6N6PIak30YvNCob7iVUOQMo=;
+        b=Y+vDcNcY/zoQ2L1Lx8D0v7Ir/x+qitgzjLJbIX+g0qFpfU9NOz3kbTOpEZaxIrGQQv
+         mH4M3IyTs3ih/zgpE0TEbkAGkauMFSir7iw8ZDY0i/smSnFhsDQ9DfTY/VcBJjSLHVQz
+         amfAEeM4bcAhpGfvZN17HcSZGgtLIIv/5mGcA=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=x9Y5aB+jN2E6Nad6Ly/7OT7X60cZWqQIXSLmkHK8Fu/x2uFRXWmzZ6zvmh9ZqiSm7P
-         qnMUyVeS0I3pMG2O2CRC8B7ZWIm9FtuQe8MMHR1m4w0M24PiK5IwMZmJMXvGPBI59Sk5
-         MeRYtFmmLZa/MWEPjsesFXwOaY1Zb+DK5MAH4=
-Received: by 10.114.135.16 with SMTP id i16mr10797302wad.3.1247030162462;
-        Tue, 07 Jul 2009 22:16:02 -0700 (PDT)
+        b=PAtbslgr7Nuw3ab0snE9mlfq5y5yMLjZmvHcgr9FPWPevt6epRLotk34Tw4xlZe5ft
+         Awj1AZs3lFSHzzAI7goE3T8UhfeG8ULmSXd8EzHTjm0w+kjlVs4+e98HDoTHx2Bx7ag9
+         i20BNoKaeBGPnrwOTj7p3CAQyP+FHPcxng1T0=
+Received: by 10.114.147.1 with SMTP id u1mr10943054wad.108.1247030149104;
+        Tue, 07 Jul 2009 22:15:49 -0700 (PDT)
 Received: from earth (cpe-66-75-25-79.san.res.rr.com [66.75.25.79])
-        by mx.google.com with ESMTPS id m30sm573161wag.69.2009.07.07.22.16.00
+        by mx.google.com with ESMTPS id l37sm1263271waf.40.2009.07.07.22.15.46
         (version=SSLv3 cipher=RC4-MD5);
-        Tue, 07 Jul 2009 22:16:01 -0700 (PDT)
-Received: by earth (sSMTP sendmail emulation); Tue, 07 Jul 2009 22:15:58 -0700
+        Tue, 07 Jul 2009 22:15:48 -0700 (PDT)
+Received: by earth (sSMTP sendmail emulation); Tue, 07 Jul 2009 22:15:45 -0700
 X-Mailer: git-send-email 1.6.3.3.385.g60647
-In-Reply-To: <1247030141-11695-3-git-send-email-bebarino@gmail.com>
+In-Reply-To: <1247030141-11695-1-git-send-email-bebarino@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122887>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122888>
 
-OPT__VERBOSE adds a --verbose option, so document the new addition.
+A check for extra options has been dropped, it could never be triggered
+in the original code as the usage message would be printed instead.
 
 Signed-off-by: Stephen Boyd <bebarino@gmail.com>
 ---
- Documentation/git-verify-pack.txt |    3 +-
- builtin-verify-pack.c             |   40 ++++++++++++++++--------------------
- 2 files changed, 20 insertions(+), 23 deletions(-)
 
-diff --git a/Documentation/git-verify-pack.txt b/Documentation/git-verify-pack.txt
-index c861163..d791a80 100644
---- a/Documentation/git-verify-pack.txt
-+++ b/Documentation/git-verify-pack.txt
-@@ -8,7 +8,7 @@ git-verify-pack - Validate packed git archive files
- 
- SYNOPSIS
- --------
--'git verify-pack' [-v] [--] <pack>.idx ...
-+'git verify-pack' [-v|--verbose] [--] <pack>.idx ...
- 
- 
- DESCRIPTION
-@@ -23,6 +23,7 @@ OPTIONS
- 	The idx files to verify.
- 
- -v::
-+--verbose::
- 	After verifying the pack, show list of objects contained
- 	in the pack.
- \--::
-diff --git a/builtin-verify-pack.c b/builtin-verify-pack.c
-index 0ee0a9a..ebd6dff 100644
---- a/builtin-verify-pack.c
-+++ b/builtin-verify-pack.c
-@@ -2,6 +2,7 @@
+For historical purposes (and those interested), the die() became dead
+code in commit 6bd2035 (write-tree: --prefix=<path> 2006-04-26) when
+the line if (argc == 2) was changed to a while loop.
+
+ builtin-write-tree.c |   40 +++++++++++++++++++---------------------
+ 1 files changed, 19 insertions(+), 21 deletions(-)
+
+diff --git a/builtin-write-tree.c b/builtin-write-tree.c
+index 3a24ce8..b223af4 100644
+--- a/builtin-write-tree.c
++++ b/builtin-write-tree.c
+@@ -7,9 +7,12 @@
  #include "cache.h"
- #include "pack.h"
- #include "pack-revindex.h"
+ #include "tree.h"
+ #include "cache-tree.h"
 +#include "parse-options.h"
  
- #define MAX_CHAIN 50
- 
-@@ -107,36 +108,31 @@ static int verify_one_pack(const char *path, int verbose)
- 	return err;
- }
- 
--static const char verify_pack_usage[] = "git verify-pack [-v] <pack>...";
-+static const char * const verify_pack_usage[] = {
-+	"git verify-pack [-v|--verbose] <pack>...",
+-static const char write_tree_usage[] =
+-"git write-tree [--missing-ok] [--prefix=<prefix>/]";
++static const char * const write_tree_usage[] = {
++	"git write-tree [--missing-ok] [--prefix=<prefix>/]",
 +	NULL
 +};
  
- int cmd_verify_pack(int argc, const char **argv, const char *prefix)
+ int cmd_write_tree(int argc, const char **argv, const char *unused_prefix)
  {
- 	int err = 0;
- 	int verbose = 0;
--	int no_more_options = 0;
--	int nothing_done = 1;
-+	int i;
-+	const struct option verify_pack_options[] = {
-+		OPT__VERBOSE(&verbose),
+@@ -17,27 +20,22 @@ int cmd_write_tree(int argc, const char **argv, const char *unused_prefix)
+ 	const char *prefix = NULL;
+ 	unsigned char sha1[20];
+ 	const char *me = "git-write-tree";
++	struct option write_tree_options[] = {
++		OPT_BIT(0, "missing-ok", &flags, "allow missing objects",
++			WRITE_TREE_MISSING_OK),
++		{ OPTION_STRING, 0, "prefix", &prefix, "<prefix>/",
++		  "write tree object for a subdirectory <prefix>" ,
++		  PARSE_OPT_LITERAL_ARGHELP },
++		{ OPTION_BIT, 0, "ignore-cache-tree", &flags, NULL,
++		  "only useful for debugging",
++		  PARSE_OPT_HIDDEN | PARSE_OPT_NOARG, NULL,
++		  WRITE_TREE_IGNORE_CACHE_TREE },
 +		OPT_END()
 +	};
  
  	git_config(git_default_config, NULL);
 -	while (1 < argc) {
--		if (!no_more_options && argv[1][0] == '-') {
--			if (!strcmp("-v", argv[1]))
--				verbose = 1;
--			else if (!strcmp("--", argv[1]))
--				no_more_options = 1;
--			else
--				usage(verify_pack_usage);
--		}
--		else {
--			if (verify_one_pack(argv[1], verbose))
--				err = 1;
--			discard_revindex();
--			nothing_done = 0;
--		}
+-		const char *arg = argv[1];
+-		if (!strcmp(arg, "--missing-ok"))
+-			flags |= WRITE_TREE_MISSING_OK;
+-		else if (!prefixcmp(arg, "--prefix="))
+-			prefix = arg + 9;
+-		else if (!prefixcmp(arg, "--ignore-cache-tree"))
+-			/*
+-			 * This is only useful for debugging, so I
+-			 * do not bother documenting it.
+-			 */
+-			flags |= WRITE_TREE_IGNORE_CACHE_TREE;
+-		else
+-			usage(write_tree_usage);
 -		argc--; argv++;
-+	argc = parse_options(argc, argv, prefix, verify_pack_options,
-+			     verify_pack_usage, 0);
-+	if (argc < 1)
-+		usage_with_options(verify_pack_usage, verify_pack_options);
-+	for (i = 0; i < argc; i++) {
-+		if (verify_one_pack(argv[i], verbose))
-+			err = 1;
-+		discard_revindex();
- 	}
- 
--	if (nothing_done)
--		usage(verify_pack_usage);
+-	}
 -
- 	return err;
- }
+-	if (argc > 2)
+-		die("too many options");
++	argc = parse_options(argc, argv, unused_prefix, write_tree_options,
++			     write_tree_usage, 0);
+ 
+ 	ret = write_cache_as_tree(sha1, flags, prefix);
+ 	switch (ret) {
 -- 
 1.6.3.3.385.g60647
