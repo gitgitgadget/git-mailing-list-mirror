@@ -1,106 +1,184 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: notes, was Re: What's cooking in git.git (Jul 2009, #01; Mon, 06)
-Date: Wed, 8 Jul 2009 15:42:11 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.0907081519210.4302@intel-tinevez-2-302>
-References: <7vk52l4q7k.fsf@alter.siamese.dyndns.org> <alpine.DEB.1.00.0907072206170.3155@pacific.mpi-cbg.de> <20090707201326.GB11191@spearce.org> <7vk52k9lvw.fsf@alter.siamese.dyndns.org> <20090707222820.GC11191@spearce.org>
+From: Johan Herland <johan@herland.net>
+Subject: [PATCH] quickfetch(): Prevent overflow of the rev-list command line
+Date: Wed, 8 Jul 2009 15:58:51 +0200
+Message-ID: <200907081558.51767.johan@herland.net>
+References: <alpine.DEB.2.00.0906181310400.23400@ds9.cixit.se> <alpine.DEB.2.00.0906221342310.26061@ds9.cixit.se>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Wed Jul 08 15:42:22 2009
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Peter Krefting <peter@softwolves.pp.se>,
+	"Shawn O. Pearce" <spearce@spearce.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jul 08 15:59:27 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MOXPh-0004Rn-NO
-	for gcvg-git-2@gmane.org; Wed, 08 Jul 2009 15:42:22 +0200
+	id 1MOXgE-0003Wk-Jq
+	for gcvg-git-2@gmane.org; Wed, 08 Jul 2009 15:59:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755357AbZGHNmQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 8 Jul 2009 09:42:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755322AbZGHNmP
-	(ORCPT <rfc822;git-outgoing>); Wed, 8 Jul 2009 09:42:15 -0400
-Received: from mail.gmx.net ([213.165.64.20]:40781 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1755094AbZGHNmO (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 8 Jul 2009 09:42:14 -0400
-Received: (qmail invoked by alias); 08 Jul 2009 13:42:12 -0000
-Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
-  by mail.gmx.net (mp020) with SMTP; 08 Jul 2009 15:42:12 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19dN9x6owZdj74SlDOHyDOcxC3NL64+RLrSyg6xVN
-	9+83gMZrOldIfq
-X-X-Sender: schindel@intel-tinevez-2-302
-In-Reply-To: <20090707222820.GC11191@spearce.org>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.5600000000000001
+	id S1755202AbZGHN7V (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 8 Jul 2009 09:59:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754810AbZGHN7U
+	(ORCPT <rfc822;git-outgoing>); Wed, 8 Jul 2009 09:59:20 -0400
+Received: from sam.opera.com ([213.236.208.81]:56761 "EHLO smtp.opera.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753791AbZGHN7T (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 8 Jul 2009 09:59:19 -0400
+Received: from pc107.coreteam.oslo.opera.com (pat-tdc.opera.com [213.236.208.22])
+	(authenticated bits=0)
+	by smtp.opera.com (8.13.4/8.13.4/Debian-3sarge3) with ESMTP id n68DwpSj030809
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Wed, 8 Jul 2009 13:58:57 GMT
+User-Agent: KMail/1.9.9
+In-Reply-To: <alpine.DEB.2.00.0906221342310.26061@ds9.cixit.se>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122898>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122899>
+
+quickfetch() calls rev-list to check whether the objects we are about to
+fetch are already present in the repo (if so, we can skip the object fetch).
+However, when there are many (~1000) refs to be fetched, the rev-list
+command line grows larger than the maximum command line size on some systems
+(32K in Windows). This causes rev-list to fail, making quickfetch() return
+non-zero, which unnecessarily triggers the transport machinery. This somehow
+causes fetch to fail with an exit code.
+
+By using the --stdin option to rev-list (and feeding the object list to its
+standard input), we prevent the overflow of the rev-list command line,
+which causes quickfetch(), and subsequently the overall fetch, to succeed.
+
+However, using rev-list --stdin is not entirely straightforward: rev-list
+terminates immediately when encountering an unknown object, which can
+trigger SIGPIPE if we are still writing object's to its standard input.
+We therefore ignore SIGPIPE so that the fetch process is not terminated.
+
+Signed-off-by: Johan Herland <johan@herland.net>
+Tested-by: Peter Krefting <peter@softwolves.pp.se>
+---
 
 Hi,
 
-On Tue, 7 Jul 2009, Shawn O. Pearce wrote:
+It seems the git fetch failure described by Peter earlier in this thread
+is caused by a long ref list overflowing the command line buffer on
+Windows (32K I am told), when calling rev-list from quickfetch(). AFAICS
+this overflow will trigger on any fetch from msysgit with more than ~800
+(32K / 40) refs.
 
-> Junio C Hamano <gitster@pobox.com> wrote:
-> > "Shawn O. Pearce" <spearce@spearce.org> writes:
-> > >> 
-> > >> > * jh/notes (Sat May 16 13:44:17 2009 +0200) 5 commits
-> > >
-> > > I was thinking about this the other day.  We could use a hash of the 
-> > > commit timestamp as the top level directory.  E.g. if we take the 
-> > > commit time of the commit and convert it to a date string, we could 
-> > > make the note path e.g.:
-> > >
-> > >   YYYY/MM/COMMITSHA1
-> > 
-> > Is the idea to make the tree object we need to scan for that 
-> > particular SHA-1 hash smaller?
-> 
-> No, the idea was to avoid needing to create a massive hash of all
-> commit notes just to answer `git log -10` on the current branch.
-> I remember that was a concern last time we were talking about this.
-> By putting the notes under a timestamped path we can scan only a
-> small percentage of the notes before we have sufficient data to
-> output the first few commits.
+According to Peter, this patch fixes the submodule update failure.
 
-The problem is that you end up with possibly _very_ large root trees in 
-the notes, and the whole idea was to reduce the root tree, and load the 
-subtrees only on demand.  That way, outputting a couple of commits (or a 
-single one) is still cheap.
+CC-ing Shawn since he is the original author of quickfetch().
 
-To recapitulate mugwump's idea: allow not only blobs in the root tree of 
-the notes, but also tree objects.  That allows for fan-out -- if you want 
-it.
 
-Example:
+Have fun! :)
 
-Commit 0123456789abcdef0123456789abcdef01234567 can be in 
-refs/notes:0123456789abcdef0123456789abcdef01234567 or in
-refs/notes:01/23456789abcdef0123456789abcdef01234567 or in
-refs/notes:01/23/456789abcdef0123456789abcdef01234567 or in
+...Johan
 
-My idea was to let shorter paths (in terms of characters used) precedence 
-(and longer prefixes).  There was also the idea to always show all of 
-them, but that would not appeal to me from a performance angle.
+ builtin-fetch.c |   63 ++++++++++++++++++++++++++++++------------------------
+ 1 files changed, 35 insertions(+), 28 deletions(-)
 
-> > If so, I am not sure how it would help over another approach of say 
-> > taking the first four hexdigits from the SHA-1 to use as the initial 
-> > fan-out YYYY, then two hexdigits for the secondary fan-out MM.
-> 
-> See above, the idea is to avoid scanning all notes at once on startup.  
-> SHA-1 is bad at this as a fanout because it is too good at uniform 
-> distribution of the names.
-
-The problem is the unpacking of the tree object.
-
-> > Besides, trees and blobs cannot be annotated with that approach.
-> 
-> True.  But I didn't realize that was a goal.  :-|
-
-It would be a nice-to-have, I guess.
-
-Ciao,
-Dscho
+diff --git a/builtin-fetch.c b/builtin-fetch.c
+index cd5eb9a..52febc6 100644
+--- a/builtin-fetch.c
++++ b/builtin-fetch.c
+@@ -400,14 +400,14 @@ static int store_updated_refs(const char *raw_url, const char *remote_name,
+ 
+ /*
+  * We would want to bypass the object transfer altogether if
+- * everything we are going to fetch already exists and connected
++ * everything we are going to fetch already exists and is connected
+  * locally.
+  *
+- * The refs we are going to fetch are in to_fetch (nr_heads in
+- * total).  If running
++ * The refs we are going to fetch are in ref_map.  If running
+  *
+- *  $ git rev-list --objects to_fetch[0] to_fetch[1] ... --not --all
++ *  $ git rev-list --objects --stdin --not --all
+  *
++ * (feeding all the refs in ref_map on its standard input)
+  * does not error out, that means everything reachable from the
+  * refs we are going to fetch exists and is connected to some of
+  * our existing refs.
+@@ -416,9 +416,10 @@ static int quickfetch(struct ref *ref_map)
+ {
+ 	struct child_process revlist;
+ 	struct ref *ref;
+-	char **argv;
+-	int i, err;
+-
++	int err;
++	const char *argv[] = {
++		"rev-list", "--quiet", "--objects", "--stdin", "--not", "--all", NULL
++	};
+ 	/*
+ 	 * If we are deepening a shallow clone we already have these
+ 	 * objects reachable.  Running rev-list here will return with
+@@ -429,34 +430,40 @@ static int quickfetch(struct ref *ref_map)
+ 	if (depth)
+ 		return -1;
+ 
+-	for (i = 0, ref = ref_map; ref; ref = ref->next)
+-		i++;
+-	if (!i)
++	if (!ref_map)
+ 		return 0;
+ 
+-	argv = xmalloc(sizeof(*argv) * (i + 6));
+-	i = 0;
+-	argv[i++] = xstrdup("rev-list");
+-	argv[i++] = xstrdup("--quiet");
+-	argv[i++] = xstrdup("--objects");
+-	for (ref = ref_map; ref; ref = ref->next)
+-		argv[i++] = xstrdup(sha1_to_hex(ref->old_sha1));
+-	argv[i++] = xstrdup("--not");
+-	argv[i++] = xstrdup("--all");
+-	argv[i++] = NULL;
+-
+ 	memset(&revlist, 0, sizeof(revlist));
+-	revlist.argv = (const char**)argv;
++	revlist.argv = argv;
+ 	revlist.git_cmd = 1;
+-	revlist.no_stdin = 1;
+ 	revlist.no_stdout = 1;
+ 	revlist.no_stderr = 1;
+-	err = run_command(&revlist);
++	revlist.in = -1;
++
++	/* If rev-list --stdin encounters an unknown commit, it terminates,
++	 * which will cause SIGPIPE in the write loop below. */
++	signal(SIGPIPE, SIG_IGN);
++
++	err = start_command(&revlist);
++	if (err) {
++		error("could not run rev-list");
++		return err;
++	}
+ 
+-	for (i = 0; argv[i]; i++)
+-		free(argv[i]);
+-	free(argv);
+-	return err;
++	for (ref = ref_map; ref; ref = ref->next) {
++		if (write_in_full(revlist.in, sha1_to_hex(ref->old_sha1), 40) < 0 ||
++		    write_in_full(revlist.in, "\n", 1) < 0) {
++			error("failed write to rev-list");
++			err = errno;
++			break;
++		}
++	}
++
++	if (close(revlist.in)) {
++		error("failed to close rev-list's stdin");
++		err = errno;
++	}
++	return finish_command(&revlist) || err;
+ }
+ 
+ static int fetch_refs(struct transport *transport, struct ref *ref_map)
+-- 
+1.6.3.2.316.gda4e
