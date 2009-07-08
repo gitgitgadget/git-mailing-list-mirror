@@ -1,110 +1,119 @@
-From: Fritz Anderson <fritza@uchicago.edu>
-Subject: Re: "fatal: index-pack failed" on git-clone
-Date: Wed, 8 Jul 2009 12:10:11 -0500
-Message-ID: <102A43B8-AD35-4B1D-850C-3642CEDB2864@uchicago.edu>
-References: <C92DE6F3-4F35-469F-AC28-4DDD1D8105C2@uchicago.edu> <7viqi386th.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0 (Apple Message framework v1068)
-Content-Type: text/plain; charset=windows-1252;
-	format=flowed	delsp=yes
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jul 08 19:10:37 2009
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] quickfetch(): Prevent overflow of the rev-list command
+ line
+Date: Wed, 08 Jul 2009 10:22:34 -0700
+Message-ID: <7vws6j6qed.fsf@alter.siamese.dyndns.org>
+References: <alpine.DEB.2.00.0906181310400.23400@ds9.cixit.se>
+ <200907081558.51767.johan@herland.net> <4A54B755.4090100@viscovery.net>
+ <200907081801.36901.johan@herland.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Johannes Sixt <j.sixt@viscovery.net>, git@vger.kernel.org,
+	Peter Krefting <peter@softwolves.pp.se>,
+	"Shawn O. Pearce" <spearce@spearce.org>
+To: Johan Herland <johan@herland.net>
+X-From: git-owner@vger.kernel.org Wed Jul 08 19:22:56 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MOafD-0005u6-37
-	for gcvg-git-2@gmane.org; Wed, 08 Jul 2009 19:10:35 +0200
+	id 1MOar6-0003JN-W7
+	for gcvg-git-2@gmane.org; Wed, 08 Jul 2009 19:22:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754381AbZGHRK2 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 8 Jul 2009 13:10:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754282AbZGHRK2
-	(ORCPT <rfc822;git-outgoing>); Wed, 8 Jul 2009 13:10:28 -0400
-Received: from authsmtp00.uchicago.edu ([128.135.249.245]:35713 "EHLO
-	authsmtp00.uchicago.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753728AbZGHRK1 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 8 Jul 2009 13:10:27 -0400
-Received: from fritzanderson.uchicago.edu (fritzanderson.uchicago.edu [128.135.0.17])
-	(authenticated bits=0)
-	by authsmtp00.uchicago.edu (8.13.1/8.13.1) with ESMTP id n68HACG0003088
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
-	Wed, 8 Jul 2009 12:10:12 -0500
-In-Reply-To: <7viqi386th.fsf@alter.siamese.dyndns.org>
-X-Mailer: Apple Mail (2.1068)
+	id S1753926AbZGHRWq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 8 Jul 2009 13:22:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753923AbZGHRWp
+	(ORCPT <rfc822;git-outgoing>); Wed, 8 Jul 2009 13:22:45 -0400
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:52011 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753746AbZGHRWp (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 8 Jul 2009 13:22:45 -0400
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 2FE1526B6C;
+	Wed,  8 Jul 2009 13:22:43 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 866E426B63; Wed, 
+ 8 Jul 2009 13:22:36 -0400 (EDT)
+In-Reply-To: <200907081801.36901.johan@herland.net> (Johan Herland's message
+ of "Wed\, 8 Jul 2009 18\:01\:36 +0200")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: F222E31E-6BE3-11DE-B823-DC021A496417-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122905>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122906>
 
-On Jul 8, 2009, at 11:42 AM, Junio C Hamano wrote:
+Johan Herland <johan@herland.net> writes:
 
-> Fritz Anderson <fritza@uchicago.edu> writes:
-=2E..
->> $ sudo GIT_TRACE=3D1 git clone myusername@remote.example.com:/Users/
->> myusername/scientia/scientia.git
->
-> I have heard that pseudo resets the PATH so you are invoking "git" =20
-> from
-> one of those standard system PATH, perhaps /usr/bin.
->
->> trace: built-in: git 'clone' 'myusername@remote.example.com:/Users/
->> myusername/scientia/scientia.git'
->> Initialized empty Git repository in /srv/scientia/.git/
->> trace: run_command: 'ssh' 'myusername@remote.example.com' 'git-=20
->> upload-
->> pack '\''/Users/myusername/scientia/scientia.git'\'''
->> Password:
->> trace: run_command: 'index-pack' '--stdin' '-v' '--fix-thin' '--
->> keep=3Dfetch-pack 17580 on local.example.com'
->> trace: exec: 'git' 'index-pack' '--stdin' '-v' '--fix-thin' '--
->> keep=3Dfetch-pack 17580 on local.example.com'
->> trace: exec failed: No such file or directory
->> trace: exec 'index-pack' failed: No such file or directory
->
-> This is saying that "git" on the local side (the one you are running
-> "clone" on) couldn't find its "index-pack" subcommand.  Why?
->
-> I think this is an issue with your RHEL5 box, not the MacOS box.  A =20
-> quick
-> check that might be useful is to type:
->
-> 	$ git index-pack
-> 	$ sudo git index-pack
+> Maybe I need to do something to the close() call as well? What happens
+> on close() after EPIPE?
 
-Here is the result:
+You should be OK (you could try this).
 
-=3D=3D=3D
-$ git index-pack
-usage: git index-pack [-v] [-o <index-file>] [{ ---keep | --=20
-keep=3D<msg> }] [--strict] { <pack-file> | --stdin [--fix-thin] [<pack-=
-=20
-file>] }
-$ sudo git index-pack
-usage: git index-pack [-v] [-o <index-file>] [{ ---keep | --=20
-keep=3D<msg> }] [--strict] { <pack-file> | --stdin [--fix-thin] [<pack-=
-=20
-file>] }
-=3D=3D=3D
+-- >8 --
+#include <stdio.h>
+#include <errno.h>
+#include <stdlib.h>
+#include <signal.h>
+#include <string.h>
 
-So git is apparently found. HOWEVER, if I do this, it's a different =20
-story:
+int main(int ac, char **av)
+{
+	int pipefd[2];
+	int child;
 
-=3D=3D=3D
-$ which git
-/usr/local/bin/git
-$ sudo which git
-which: no git in (/usr/bin:/bin)
-=3D=3D=3D
+	if (pipe(pipefd) < 0) {
+		fprintf(stderr, "pipe failed: %s\n", strerror(errno));
+		exit(1);
+	}
+	child = fork();
+	if (child < 0) {
+		fprintf(stderr, "fork failed: %s\n", strerror(errno));
+		exit(1);
+	} else if (child == 0) {
+		char buf[1024];
+		ssize_t sz;
 
-On that evidence, I reissued my problem command under sudo, =20
-specifying /usr/local/bin/git as the command. That worked. Thank you; =20
-I would not have found it without you.
+		/* the child reads from the parent but does not talk back */
+		close(pipefd[1]);
 
-I'm obviously ignorant on the path issue, but that's off-topic for =20
-this list.
+		/* emulate reading a bit, then dying without cleaning up */
+		sz = read(pipefd[0], buf, sizeof(buf));
+		fprintf(stderr, "read %lu bytes, and will die\n",
+			(unsigned long) sz);
+		exit(1);
+	} else {
+		const char data[] = "abcdefg";
+		size_t len = sizeof(data);
+		size_t written = 0;
 
-Thanks again.
+		/* the parent writes to the child but does not listen */
+		close(pipefd[0]);
 
-	=97 F
+		/* we will rite to the pipe even after the child is gone */
+		signal(SIGPIPE, SIG_IGN);
+
+		/* write, write, write, ... */
+		while (1) {
+			ssize_t sz = write(pipefd[1], data, len);
+			if (sz < 0) {
+				/* error */
+				fprintf(stderr,
+					"write failed (%s) after writing"
+					" %lu bytes\n",
+					strerror(errno),
+					(unsigned long) written);
+				break;
+			}
+			written += sz;
+		}
+		errno = 0;
+		if (close(pipefd[1]))
+			fprintf(stderr, "close failed: %s\n", strerror(errno));
+		else
+			fprintf(stderr, "close ok\n");
+	}
+	exit(0);
+}
