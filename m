@@ -1,88 +1,110 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: Fritz Anderson <fritza@uchicago.edu>
 Subject: Re: "fatal: index-pack failed" on git-clone
-Date: Wed, 08 Jul 2009 09:42:34 -0700
-Message-ID: <7viqi386th.fsf@alter.siamese.dyndns.org>
-References: <C92DE6F3-4F35-469F-AC28-4DDD1D8105C2@uchicago.edu>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Date: Wed, 8 Jul 2009 12:10:11 -0500
+Message-ID: <102A43B8-AD35-4B1D-850C-3642CEDB2864@uchicago.edu>
+References: <C92DE6F3-4F35-469F-AC28-4DDD1D8105C2@uchicago.edu> <7viqi386th.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0 (Apple Message framework v1068)
+Content-Type: text/plain; charset=windows-1252;
+	format=flowed	delsp=yes
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: Fritz Anderson <fritza@uchicago.edu>
-X-From: git-owner@vger.kernel.org Wed Jul 08 18:42:51 2009
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jul 08 19:10:37 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MOaEM-00010n-OW
-	for gcvg-git-2@gmane.org; Wed, 08 Jul 2009 18:42:51 +0200
+	id 1MOafD-0005u6-37
+	for gcvg-git-2@gmane.org; Wed, 08 Jul 2009 19:10:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754035AbZGHQmo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 8 Jul 2009 12:42:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754027AbZGHQmn
-	(ORCPT <rfc822;git-outgoing>); Wed, 8 Jul 2009 12:42:43 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:45968 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753726AbZGHQmm (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 8 Jul 2009 12:42:42 -0400
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 17CA0265D9;
-	Wed,  8 Jul 2009 12:42:40 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id B3FE8265D7; Wed, 
- 8 Jul 2009 12:42:36 -0400 (EDT)
-In-Reply-To: <C92DE6F3-4F35-469F-AC28-4DDD1D8105C2@uchicago.edu> (Fritz
- Anderson's message of "Wed\, 8 Jul 2009 10\:58\:48 -0500")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 59B9A4E6-6BDE-11DE-ABC3-DC021A496417-77302942!a-sasl-quonix.pobox.com
+	id S1754381AbZGHRK2 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 8 Jul 2009 13:10:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754282AbZGHRK2
+	(ORCPT <rfc822;git-outgoing>); Wed, 8 Jul 2009 13:10:28 -0400
+Received: from authsmtp00.uchicago.edu ([128.135.249.245]:35713 "EHLO
+	authsmtp00.uchicago.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753728AbZGHRK1 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 8 Jul 2009 13:10:27 -0400
+Received: from fritzanderson.uchicago.edu (fritzanderson.uchicago.edu [128.135.0.17])
+	(authenticated bits=0)
+	by authsmtp00.uchicago.edu (8.13.1/8.13.1) with ESMTP id n68HACG0003088
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
+	Wed, 8 Jul 2009 12:10:12 -0500
+In-Reply-To: <7viqi386th.fsf@alter.siamese.dyndns.org>
+X-Mailer: Apple Mail (2.1068)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122904>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122905>
 
-Fritz Anderson <fritza@uchicago.edu> writes:
+On Jul 8, 2009, at 11:42 AM, Junio C Hamano wrote:
 
-> I get the error "fatal: index-pack failed" when I attempt to clone a  
-> remote bare repository. The repository works well on other machines,  
-> including the repository's own.
+> Fritz Anderson <fritza@uchicago.edu> writes:
+=2E..
+>> $ sudo GIT_TRACE=3D1 git clone myusername@remote.example.com:/Users/
+>> myusername/scientia/scientia.git
 >
-> The repository lives on a version of Mac OS X I'm not allowed to talk  
-> about (I repeat: It works well for working copies on other machines,  
-> and on its own). The client is RHEL5. Git is version 1.6.3 on both  
-> machines, and was built from the tarball.
+> I have heard that pseudo resets the PATH so you are invoking "git" =20
+> from
+> one of those standard system PATH, perhaps /usr/bin.
+>
+>> trace: built-in: git 'clone' 'myusername@remote.example.com:/Users/
+>> myusername/scientia/scientia.git'
+>> Initialized empty Git repository in /srv/scientia/.git/
+>> trace: run_command: 'ssh' 'myusername@remote.example.com' 'git-=20
+>> upload-
+>> pack '\''/Users/myusername/scientia/scientia.git'\'''
+>> Password:
+>> trace: run_command: 'index-pack' '--stdin' '-v' '--fix-thin' '--
+>> keep=3Dfetch-pack 17580 on local.example.com'
+>> trace: exec: 'git' 'index-pack' '--stdin' '-v' '--fix-thin' '--
+>> keep=3Dfetch-pack 17580 on local.example.com'
+>> trace: exec failed: No such file or directory
+>> trace: exec 'index-pack' failed: No such file or directory
+>
+> This is saying that "git" on the local side (the one you are running
+> "clone" on) couldn't find its "index-pack" subcommand.  Why?
+>
+> I think this is an issue with your RHEL5 box, not the MacOS box.  A =20
+> quick
+> check that might be useful is to type:
+>
+> 	$ git index-pack
+> 	$ sudo git index-pack
 
-Looking at the output of the trace, I do not think that you have to worry
-about people asking for a copy of your repository in order to diagnose
-this issue, as I suspect that even a much smaller toy repository will fail
-for you in the same way.
+Here is the result:
 
-> Here's the debug transcript:
+=3D=3D=3D
+$ git index-pack
+usage: git index-pack [-v] [-o <index-file>] [{ ---keep | --=20
+keep=3D<msg> }] [--strict] { <pack-file> | --stdin [--fix-thin] [<pack-=
+=20
+file>] }
+$ sudo git index-pack
+usage: git index-pack [-v] [-o <index-file>] [{ ---keep | --=20
+keep=3D<msg> }] [--strict] { <pack-file> | --stdin [--fix-thin] [<pack-=
+=20
+file>] }
+=3D=3D=3D
 
-> ===========
-> $ sudo GIT_TRACE=1 git clone myusername@remote.example.com:/Users/ 
-> myusername/scientia/scientia.git
+So git is apparently found. HOWEVER, if I do this, it's a different =20
+story:
 
-I have heard that pseudo resets the PATH so you are invoking "git" from
-one of those standard system PATH, perhaps /usr/bin.
+=3D=3D=3D
+$ which git
+/usr/local/bin/git
+$ sudo which git
+which: no git in (/usr/bin:/bin)
+=3D=3D=3D
 
-> trace: built-in: git 'clone' 'myusername@remote.example.com:/Users/ 
-> myusername/scientia/scientia.git'
-> Initialized empty Git repository in /srv/scientia/.git/
-> trace: run_command: 'ssh' 'myusername@remote.example.com' 'git-upload- 
-> pack '\''/Users/myusername/scientia/scientia.git'\'''
-> Password:
-> trace: run_command: 'index-pack' '--stdin' '-v' '--fix-thin' '-- 
-> keep=fetch-pack 17580 on local.example.com'
-> trace: exec: 'git' 'index-pack' '--stdin' '-v' '--fix-thin' '-- 
-> keep=fetch-pack 17580 on local.example.com'
-> trace: exec failed: No such file or directory
-> trace: exec 'index-pack' failed: No such file or directory
+On that evidence, I reissued my problem command under sudo, =20
+specifying /usr/local/bin/git as the command. That worked. Thank you; =20
+I would not have found it without you.
 
-This is saying that "git" on the local side (the one you are running
-"clone" on) couldn't find its "index-pack" subcommand.  Why?
+I'm obviously ignorant on the path issue, but that's off-topic for =20
+this list.
 
-I think this is an issue with your RHEL5 box, not the MacOS box.  A quick
-check that might be useful is to type:
+Thanks again.
 
-	$ git index-pack
-	$ sudo git index-pack
+	=97 F
