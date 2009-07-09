@@ -1,123 +1,78 @@
-From: Yann Simon <yann.simon.fr@gmail.com>
-Subject: Re: [PATCH JGIT] Method invokes inefficient new String(String) 
-	constructor
-Date: Thu, 9 Jul 2009 10:47:27 +0200
-Message-ID: <551f769b0907090147x9b78604i77a095441f232703@mail.gmail.com>
-References: <49C20D4E.5020203@gmail.com> <20090319160102.GQ23521@spearce.org>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: [PATCH] quickfetch(): Prevent overflow of the rev-list command 
+	line
+Date: Thu, 9 Jul 2009 10:49:07 +0200
+Message-ID: <81b0412b0907090149l34450255ka77a2341e7ee966b@mail.gmail.com>
+References: <alpine.DEB.2.00.0906181310400.23400@ds9.cixit.se>
+	 <200907081801.36901.johan@herland.net>
+	 <7vws6j6qed.fsf@alter.siamese.dyndns.org>
+	 <200907091043.03263.johan@herland.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Robin Rosenberg <robin.rosenberg.lists@dewire.com>,
-	git <git@vger.kernel.org>
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Thu Jul 09 10:47:39 2009
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Johannes Sixt <j.sixt@viscovery.net>, git@vger.kernel.org,
+	Peter Krefting <peter@softwolves.pp.se>,
+	"Shawn O. Pearce" <spearce@spearce.org>
+To: Johan Herland <johan@herland.net>
+X-From: git-owner@vger.kernel.org Thu Jul 09 10:49:34 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MOpI0-0003h6-Ob
-	for gcvg-git-2@gmane.org; Thu, 09 Jul 2009 10:47:37 +0200
+	id 1MOpJt-0004Te-46
+	for gcvg-git-2@gmane.org; Thu, 09 Jul 2009 10:49:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753407AbZGIIrb convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 9 Jul 2009 04:47:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751896AbZGIIra
-	(ORCPT <rfc822;git-outgoing>); Thu, 9 Jul 2009 04:47:30 -0400
-Received: from mail-fx0-f218.google.com ([209.85.220.218]:64312 "EHLO
-	mail-fx0-f218.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751774AbZGIIr3 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 9 Jul 2009 04:47:29 -0400
-Received: by fxm18 with SMTP id 18so709fxm.37
-        for <git@vger.kernel.org>; Thu, 09 Jul 2009 01:47:27 -0700 (PDT)
+	id S1756942AbZGIItM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 9 Jul 2009 04:49:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756703AbZGIItK
+	(ORCPT <rfc822;git-outgoing>); Thu, 9 Jul 2009 04:49:10 -0400
+Received: from mail-bw0-f225.google.com ([209.85.218.225]:51362 "EHLO
+	mail-bw0-f225.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751774AbZGIItJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 9 Jul 2009 04:49:09 -0400
+Received: by bwz25 with SMTP id 25so1782bwz.37
+        for <git@vger.kernel.org>; Thu, 09 Jul 2009 01:49:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:mime-version:received:in-reply-to:references
          :date:message-id:subject:from:to:cc:content-type
          :content-transfer-encoding;
-        bh=MKZMucF0cPOCXFSR97ncRCMglsluHDT+PgGCrcYS14k=;
-        b=tRFHur1BTdDEEVbQxxOg0VVmRa6f/EWdM+tGLZhkKtdFOr92kSUKwpI8HVRYFyD+/u
-         dN8mDWF+FbVK5/RmCq4nndVZSEiIA2z97reyG/WFwtMVYNpQiAFQ/ruQlkRpQbWNp37g
-         C9QcQp7j/s5O4bS9unyGufOnhmt6vFdN6LaTs=
+        bh=G4RbAr5jFyypHt+DN6vfNkC6F9QSW2JL7LFsvUAfTZ8=;
+        b=qiqdrDohz8y97XXy9Qtx41dnvQymtJEzYxC/LHRNNTlxM9cxjDY+OdizDDA/UYXpLT
+         TxiY8BQ3UapH2aaL+SnJQJoiqPkck5I5HgsxVJ3+eT9Px/MUOiQ0OS3LxS/ACTosuIY2
+         +h6m13VFaOZ/3v63XKeq+Zwo1XaU54vbrwfg4=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type:content-transfer-encoding;
-        b=m2kHkEXZE5S6cP9atPMXlAXD9orq1hSxDLqq7tTfDM4Gtv8f7kcdf+G8jtIM4+1ygA
-         Gyq1Z1Qwyc/gDMm9TuNgPHsWQB7/ocuT9h7DN30Xw4avNd6HlbcYjyMOdhjz1D+xgYhC
-         uTTMaXDXAd8WCoPTxUabzMcHXiWB+MtEFVzdU=
-Received: by 10.223.111.211 with SMTP id t19mr137211fap.64.1247129247663; Thu, 
-	09 Jul 2009 01:47:27 -0700 (PDT)
-In-Reply-To: <20090319160102.GQ23521@spearce.org>
+        b=GXKk2yA3WRGRqbmf9FTY/H7rx/0vhVdN8IIiMVefJe6rC81UBHCLdpTF7RjvREVbg3
+         Bg40LEtmNjBtSklkBk/vB0ISZxcyeb6SiUAko7/3fiaXxSx5oVq7ZjOa1hKlJbukH+zU
+         gXjKobiv0w6jggXPdU90J7EDOKgqGdUZ7GuBc=
+Received: by 10.204.72.15 with SMTP id k15mr513173bkj.14.1247129347806; Thu, 
+	09 Jul 2009 01:49:07 -0700 (PDT)
+In-Reply-To: <200907091043.03263.johan@herland.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122948>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122949>
 
-2009/3/19 Shawn O. Pearce <spearce@spearce.org>:
-> Yann Simon <yann.simon.fr@gmail.com> wrote:
->> From FindBugs:
->> Using the java.lang.String(String) constructor wastes memory because
->> the object so constructed will be functionally indistinguishable fro=
-m
->> the String passed as a parameter. Just use the argument String direc=
-tly.
->>
->> Signed-off-by: Yann Simon <yann.simon.fr@gmail.com>
->> ---
->> =C2=A0.../src/org/spearce/jgit/lib/RefDatabase.java =C2=A0 =C2=A0 =C2=
-=A0| =C2=A0 =C2=A02 +-
->> =C2=A01 files changed, 1 insertions(+), 1 deletions(-)
->>
->> diff --git a/org.spearce.jgit/src/org/spearce/jgit/lib/RefDatabase.j=
-ava b/org.spearce.jgit/src/org/spearce/jgit/lib/RefDatabase.java
->> index 87f26bf..49da538 100644
->> --- a/org.spearce.jgit/src/org/spearce/jgit/lib/RefDatabase.java
->> +++ b/org.spearce.jgit/src/org/spearce/jgit/lib/RefDatabase.java
->> @@ -447,7 +447,7 @@ private synchronized void refreshPackedRefs() {
->>
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 final i=
-nt sp =3D p.indexOf(' ');
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 final O=
-bjectId id =3D ObjectId.fromString(p.substring(0, sp));
->> - =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 final Strin=
-g name =3D new String(p.substring(sp + 1));
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 final Strin=
-g name =3D p.substring(sp + 1);
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 last =3D=
- new Ref(Ref.Storage.PACKED, name, name, id);
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 newPack=
-edRefs.put(last.getName(), last);
+On Thu, Jul 9, 2009 at 10:43, Johan Herland<johan@herland.net> wrote:
+> On Wednesday 08 July 2009, Junio C Hamano wrote:
+>> Johan Herland <johan@herland.net> writes:
+>> > Maybe I need to do something to the close() call as well? What happens
+>> > on close() after EPIPE?
 >
-> I had a specific reason for forcing a new String object here.
+> Does anybody with Windows/MSYS experience know how this scenario (write() to
+> a terminated process, followed by close()) would play out in msysGit?
 >
-> The line in question, p, is from the packed-refs file and
-> contains the entire SHA-1 in hex form at the beginning of it.
-> We've converted that into binary as an ObjectId, it uses 1/4 the
-> space of the string portion.
->
-> The Ref object, its ObjectId, and its name string, are going to be
-> cached in a Map, probably long-term. =C2=A0We're better off shedding =
-the
-> 80 bytes of memory used to hold the hex SHA-1 then risk substring()
-> deciding its "faster" to reuse the char[] then to make a copy of it.
 
-However, using the trick newString =3D new String(aString.substring(),
-i) does not work on all JVM.
-With an IBM JVM, the newString will still contain the original array of=
- chars.
+It fails with ERROR_BROKEN_PIPE. See MSDN for WriteFile:
 
-Another solution that work on all JVM could be:
-newString =3D new String(aString.substring(i).toCharArray())
-Or
-newString =3D new String(aString.toCharArray(), i, aString.length() - i=
-)
+ http://msdn.microsoft.com/en-us/library/aa365747%28VS.85%29.aspx
 
-I like the latter one.
+(look for the error above).
 
-Yann
+Well, sometimes it just fails, so you can hardly use the error code to detect
+if the other process is truly gone or something broke in Windows.
