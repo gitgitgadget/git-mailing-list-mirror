@@ -1,74 +1,62 @@
-From: Johan Herland <johan@herland.net>
-Subject: Re: [PATCH] quickfetch(): Prevent overflow of the rev-list command line
-Date: Thu, 09 Jul 2009 11:07:46 +0200
-Message-ID: <200907091107.46838.johan@herland.net>
-References: <alpine.DEB.2.00.0906181310400.23400@ds9.cixit.se>
- <200907091043.03263.johan@herland.net> <4A55AF88.3090205@viscovery.net>
+From: Graeme Geldenhuys <graemeg@gmail.com>
+Subject: Re: default aliases (ci, di, st, co)
+Date: Thu, 09 Jul 2009 11:04:17 +0200
+Message-ID: <h34br8$8to$2@ger.gmane.org>
+References: <85b5c3130907081649s37f726f7id1a64f2fdbe609f@mail.gmail.com> <4A55958E.1050401@op5.se> <4A55AF45.4040700@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: Text/Plain; charset=iso-8859-1
-Content-Transfer-Encoding: 7BIT
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Peter Krefting <peter@softwolves.pp.se>,
-	"Shawn O. Pearce" <spearce@spearce.org>
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Thu Jul 09 11:08:32 2009
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jul 09 11:10:17 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MOpcE-0004JP-3p
-	for gcvg-git-2@gmane.org; Thu, 09 Jul 2009 11:08:30 +0200
+	id 1MOpdu-00056d-Cv
+	for gcvg-git-2@gmane.org; Thu, 09 Jul 2009 11:10:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758433AbZGIJHu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 9 Jul 2009 05:07:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754563AbZGIJHt
-	(ORCPT <rfc822;git-outgoing>); Thu, 9 Jul 2009 05:07:49 -0400
-Received: from mx.getmail.no ([84.208.15.66]:39356 "EHLO
-	get-mta-out02.get.basefarm.net" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1757207AbZGIJHt (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 9 Jul 2009 05:07:49 -0400
-Content-disposition: inline
-Received: from mx.getmail.no ([10.5.16.4]) by get-mta-out02.get.basefarm.net
- (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
- with ESMTP id <0KMI006KZC0Z3G40@get-mta-out02.get.basefarm.net> for
- git@vger.kernel.org; Thu, 09 Jul 2009 11:07:47 +0200 (MEST)
-Received: from alpha.localnet ([84.215.102.95])
- by get-mta-in02.get.basefarm.net
- (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
- with ESMTP id <0KMI0065XC0ZIS30@get-mta-in02.get.basefarm.net> for
- git@vger.kernel.org; Thu, 09 Jul 2009 11:07:47 +0200 (MEST)
-X-PMX-Version: 5.5.3.366731, Antispam-Engine: 2.7.0.366912,
- Antispam-Data: 2009.7.9.85422
-User-Agent: KMail/1.11.4 (Linux/2.6.30-ARCH; KDE/4.2.4; x86_64; ; )
-In-reply-to: <4A55AF88.3090205@viscovery.net>
+	id S1756823AbZGIJKI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 9 Jul 2009 05:10:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756685AbZGIJKH
+	(ORCPT <rfc822;git-outgoing>); Thu, 9 Jul 2009 05:10:07 -0400
+Received: from main.gmane.org ([80.91.229.2]:46111 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751747AbZGIJKG (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 9 Jul 2009 05:10:06 -0400
+Received: from root by ciao.gmane.org with local (Exim 4.43)
+	id 1MOpdi-0003qH-IL
+	for git@vger.kernel.org; Thu, 09 Jul 2009 09:10:02 +0000
+Received: from dsl-245-91-189.telkomadsl.co.za ([41.245.91.189])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 09 Jul 2009 09:10:02 +0000
+Received: from graemeg by dsl-245-91-189.telkomadsl.co.za with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 09 Jul 2009 09:10:02 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: dsl-245-91-189.telkomadsl.co.za
+User-Agent: Thunderbird 2.0.0.22 (X11/20090608)
+In-Reply-To: <4A55AF45.4040700@drmicha.warpmail.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122957>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122958>
 
-On Thursday 09 July 2009, Johannes Sixt wrote:
-> Johan Herland schrieb:
-> > Does anybody with Windows/MSYS experience know how this scenario
-> > (write() to a terminated process, followed by close()) would play out
-> > in msysGit?
->
-> The first write() sometimes fails with EPIPE, otherwise it fails with
-> EINVAL. All subsequent write()s fail with EINVAL. The setting of SIGPIPE
-> is irrelevant because it is unknown to Windows.
->
-> There's precedent already in write_or_die.c. You should not write the
-> error message for both EPIPE and EINVAL.
+Michael J Gruber wrote:
+> 
+> Having said that, collecting useful aliases (e.g. one, who, ...) in
+> contrib/ or in the wiki would be helpful.
 
-Thanks, but what about the subsequent close()? Will it fail with EINVAL? 
-EBADF? or will is succeed (like on Linux)?
-
-I will send an updated patch with all fixes, as soon as I know what to do 
-about close().
++1 to that. I only spotted the 'one' alias now. So simple yet very 
+handy. :-)
 
 
-...Johan
+
+Regards,
+   - Graeme -
 
 -- 
-Johan Herland, <johan@herland.net>
-www.herland.net
+fpGUI Toolkit - a cross-platform GUI toolkit using Free Pascal
+http://opensoft.homeip.net/fpgui/
