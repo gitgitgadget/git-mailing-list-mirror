@@ -1,175 +1,77 @@
-From: Johan Herland <johan@herland.net>
-Subject: [PATCH] quickfetch(): Prevent overflow of the rev-list command line
-Date: Thu, 09 Jul 2009 11:34:45 +0200
-Message-ID: <200907091134.45492.johan@herland.net>
-References: <alpine.DEB.2.00.0906181310400.23400@ds9.cixit.se>
- <200907091107.46838.johan@herland.net> <4A55B54D.4080601@viscovery.net>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: default aliases (ci, di, st, co)
+Date: Thu, 9 Jul 2009 11:40:15 +0200
+Message-ID: <200907091140.16651.jnareb@gmail.com>
+References: <85b5c3130907081649s37f726f7id1a64f2fdbe609f@mail.gmail.com> <4A55958E.1050401@op5.se> <4A55AF45.4040700@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: Text/Plain; charset=iso-8859-1
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org, Peter Krefting <peter@softwolves.pp.se>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Alex Riesen <raa.lkml@gmail.com>
-To: Johannes Sixt <j.sixt@viscovery.net>,
-	Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jul 09 11:34:58 2009
+Content-Type: text/plain;
+  charset="iso-8859-15"
+Content-Transfer-Encoding: 7bit
+Cc: Andreas Ericsson <ae@op5.se>, Ondrej Certik <ondrej@certik.cz>,
+	Git Mailing List <git@vger.kernel.org>
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Thu Jul 09 11:40:30 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MOq1n-0000V3-Tq
-	for gcvg-git-2@gmane.org; Thu, 09 Jul 2009 11:34:56 +0200
+	id 1MOq7B-0002by-HB
+	for gcvg-git-2@gmane.org; Thu, 09 Jul 2009 11:40:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753938AbZGIJev (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 9 Jul 2009 05:34:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753532AbZGIJeu
-	(ORCPT <rfc822;git-outgoing>); Thu, 9 Jul 2009 05:34:50 -0400
-Received: from mx.getmail.no ([84.208.15.66]:53442 "EHLO
-	get-mta-out02.get.basefarm.net" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1752181AbZGIJet (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 9 Jul 2009 05:34:49 -0400
-Content-disposition: inline
-Received: from mx.getmail.no ([10.5.16.4]) by get-mta-out02.get.basefarm.net
- (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
- with ESMTP id <0KMI00612D9Z3G50@get-mta-out02.get.basefarm.net> for
- git@vger.kernel.org; Thu, 09 Jul 2009 11:34:47 +0200 (MEST)
-Received: from alpha.localnet ([84.215.102.95])
- by get-mta-in02.get.basefarm.net
- (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
- with ESMTP id <0KMI003FKD9XD390@get-mta-in02.get.basefarm.net> for
- git@vger.kernel.org; Thu, 09 Jul 2009 11:34:46 +0200 (MEST)
-X-PMX-Version: 5.5.3.366731, Antispam-Engine: 2.7.0.366912,
- Antispam-Data: 2009.7.9.92417
-User-Agent: KMail/1.11.4 (Linux/2.6.30-ARCH; KDE/4.2.4; x86_64; ; )
-In-reply-to: <4A55B54D.4080601@viscovery.net>
+	id S1754795AbZGIJkY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 9 Jul 2009 05:40:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751953AbZGIJkX
+	(ORCPT <rfc822;git-outgoing>); Thu, 9 Jul 2009 05:40:23 -0400
+Received: from mail-ew0-f226.google.com ([209.85.219.226]:55039 "EHLO
+	mail-ew0-f226.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751459AbZGIJkW (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 9 Jul 2009 05:40:22 -0400
+Received: by ewy26 with SMTP id 26so34786ewy.37
+        for <git@vger.kernel.org>; Thu, 09 Jul 2009 02:40:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=yFf3dqHg8EwcdViDw+wYQEiQdXpznARuQnUGVjbqKL4=;
+        b=ooSJwSOFRQ4m00/k+ea6hJu5v6dHk7tMtF9ZdktEfNGFUKh6w/3QyjBaS5OBXprYx4
+         0ko28MCCGfXrCUI/2lb64cxyZpRYAqgcY11oREM3pAf/rBxU3aKo/Xg8fYju5iCNJzbS
+         Pt50XzCTge7XEdrWw9ub61PaHhelKkub0ndIQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=hK8eDc1z7BUbvEp6iMLD5dezWDKMbXas2xGJazBrUPc9a9Gwf9o0iA7Ga7hByWzrzQ
+         raCsRMkSohU0bvO4rRRVC/3wPkBh/KT8jDiP3pOL9UmeXIr+vZyCqxIVcF2PfOimYCz7
+         Rce7w1tXzxYsyOOavs2HmZGuMCnkP5XQ8C6zs=
+Received: by 10.210.132.3 with SMTP id f3mr698455ebd.41.1247132420341;
+        Thu, 09 Jul 2009 02:40:20 -0700 (PDT)
+Received: from ?192.168.1.13? (abvk53.neoplus.adsl.tpnet.pl [83.8.208.53])
+        by mx.google.com with ESMTPS id 5sm2197321eyf.44.2009.07.09.02.40.19
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Thu, 09 Jul 2009 02:40:19 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <4A55AF45.4040700@drmicha.warpmail.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122962>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122963>
 
-quickfetch() calls rev-list to check whether the objects we are about to
-fetch are already present in the repo (if so, we can skip the object fetch).
-However, when there are many (~1000) refs to be fetched, the rev-list
-command line grows larger than the maximum command line size on some systems
-(32K in Windows). This causes rev-list to fail, making quickfetch() return
-non-zero, which unnecessarily triggers the transport machinery. This somehow
-causes fetch to fail with an exit code.
+On Thu, 9 July 2009, Michael J Gruber wrote:
 
-By using the --stdin option to rev-list (and feeding the object list to its
-standard input), we prevent the overflow of the rev-list command line,
-which causes quickfetch(), and subsequently the overall fetch, to succeed.
+[...]
+> Aliases are great, but default aliases are a problem. We saw this when
+> we introduced "git stage", and I don't think we're happy in
+> retrorespect. 
+> 
+> Having said that, collecting useful aliases (e.g. one, who, ...) in
+> contrib/ or in the wiki would be helpful.
 
-However, using rev-list --stdin is not entirely straightforward: rev-list
-terminates immediately when encountering an unknown object, which can
-trigger SIGPIPE if we are still writing object's to its standard input.
-We therefore ignore SIGPIPE so that the fetch process is not terminated.
+http://git.or.cz/gitwiki/Aliases
 
-Signed-off-by: Johan Herland <johan@herland.net>
-Improved-by: Johannes Sixt <j.sixt@viscovery.net>
-Improved-by: Alex Riesen <raa.lkml@gmail.com>
-Tested-by: Peter Krefting <peter@softwolves.pp.se>
----
- builtin-fetch.c |   62 +++++++++++++++++++++++++++++++------------------------
- 1 files changed, 35 insertions(+), 27 deletions(-)
-
-diff --git a/builtin-fetch.c b/builtin-fetch.c
-index cd5eb9a..20bcbdd 100644
---- a/builtin-fetch.c
-+++ b/builtin-fetch.c
-@@ -400,14 +400,14 @@ static int store_updated_refs(const char *raw_url, const char *remote_name,
- 
- /*
-  * We would want to bypass the object transfer altogether if
-- * everything we are going to fetch already exists and connected
-+ * everything we are going to fetch already exists and is connected
-  * locally.
-  *
-- * The refs we are going to fetch are in to_fetch (nr_heads in
-- * total).  If running
-+ * The refs we are going to fetch are in ref_map.  If running
-  *
-- *  $ git rev-list --objects to_fetch[0] to_fetch[1] ... --not --all
-+ *  $ git rev-list --objects --stdin --not --all
-  *
-+ * (feeding all the refs in ref_map on its standard input)
-  * does not error out, that means everything reachable from the
-  * refs we are going to fetch exists and is connected to some of
-  * our existing refs.
-@@ -416,8 +416,9 @@ static int quickfetch(struct ref *ref_map)
- {
- 	struct child_process revlist;
- 	struct ref *ref;
--	char **argv;
--	int i, err;
-+	int err;
-+	const char *argv[] = {"rev-list",
-+		"--quiet", "--objects", "--stdin", "--not", "--all", NULL};
- 
- 	/*
- 	 * If we are deepening a shallow clone we already have these
-@@ -429,34 +430,41 @@ static int quickfetch(struct ref *ref_map)
- 	if (depth)
- 		return -1;
- 
--	for (i = 0, ref = ref_map; ref; ref = ref->next)
--		i++;
--	if (!i)
-+	if (!ref_map)
- 		return 0;
- 
--	argv = xmalloc(sizeof(*argv) * (i + 6));
--	i = 0;
--	argv[i++] = xstrdup("rev-list");
--	argv[i++] = xstrdup("--quiet");
--	argv[i++] = xstrdup("--objects");
--	for (ref = ref_map; ref; ref = ref->next)
--		argv[i++] = xstrdup(sha1_to_hex(ref->old_sha1));
--	argv[i++] = xstrdup("--not");
--	argv[i++] = xstrdup("--all");
--	argv[i++] = NULL;
--
- 	memset(&revlist, 0, sizeof(revlist));
--	revlist.argv = (const char**)argv;
-+	revlist.argv = argv;
- 	revlist.git_cmd = 1;
--	revlist.no_stdin = 1;
- 	revlist.no_stdout = 1;
- 	revlist.no_stderr = 1;
--	err = run_command(&revlist);
-+	revlist.in = -1;
-+
-+	/* If rev-list --stdin encounters an unknown commit, it terminates,
-+	 * which will cause SIGPIPE in the write loop below. */
-+	signal(SIGPIPE, SIG_IGN);
-+
-+	err = start_command(&revlist);
-+	if (err) {
-+		error("could not run rev-list");
-+		return err;
-+	}
- 
--	for (i = 0; argv[i]; i++)
--		free(argv[i]);
--	free(argv);
--	return err;
-+	for (ref = ref_map; ref; ref = ref->next) {
-+		if (write_in_full(revlist.in, sha1_to_hex(ref->old_sha1), 40) < 0 ||
-+		    write_in_full(revlist.in, "\n", 1) < 0) {
-+			err = errno;
-+			if (err != EPIPE && err != EINVAL)
-+				error("failed write to rev-list");
-+			break;
-+		}
-+	}
-+
-+	if (close(revlist.in)) {
-+		err = errno;
-+		error("failed to close rev-list's stdin");
-+	}
-+	return finish_command(&revlist) || err;
- }
- 
- static int fetch_refs(struct transport *transport, struct ref *ref_map)
 -- 
-1.6.3.rc0.1.gf800
+Jakub Narebski
+Poland
