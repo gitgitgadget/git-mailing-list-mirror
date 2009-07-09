@@ -1,104 +1,123 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: [PATCH] quickfetch(): Prevent overflow of the rev-list command 
-	line
-Date: Thu, 9 Jul 2009 10:43:38 +0200
-Message-ID: <81b0412b0907090143r7c894c6fh15db309b53b9c446@mail.gmail.com>
-References: <alpine.DEB.2.00.0906181310400.23400@ds9.cixit.se>
-	 <200907081801.36901.johan@herland.net>
-	 <81b0412b0907090101x7c8aa182o36687d67be3c5fb0@mail.gmail.com>
-	 <200907091037.41329.johan@herland.net>
+From: Yann Simon <yann.simon.fr@gmail.com>
+Subject: Re: [PATCH JGIT] Method invokes inefficient new String(String) 
+	constructor
+Date: Thu, 9 Jul 2009 10:47:27 +0200
+Message-ID: <551f769b0907090147x9b78604i77a095441f232703@mail.gmail.com>
+References: <49C20D4E.5020203@gmail.com> <20090319160102.GQ23521@spearce.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Johannes Sixt <j.sixt@viscovery.net>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Peter Krefting <peter@softwolves.pp.se>,
-	"Shawn O. Pearce" <spearce@spearce.org>
-To: Johan Herland <johan@herland.net>
-X-From: git-owner@vger.kernel.org Thu Jul 09 10:44:10 2009
+Cc: Robin Rosenberg <robin.rosenberg.lists@dewire.com>,
+	git <git@vger.kernel.org>
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Thu Jul 09 10:47:39 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MOpEg-0002Ya-5p
-	for gcvg-git-2@gmane.org; Thu, 09 Jul 2009 10:44:10 +0200
+	id 1MOpI0-0003h6-Ob
+	for gcvg-git-2@gmane.org; Thu, 09 Jul 2009 10:47:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756026AbZGIInm convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 9 Jul 2009 04:43:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755725AbZGIInk
-	(ORCPT <rfc822;git-outgoing>); Thu, 9 Jul 2009 04:43:40 -0400
-Received: from mail-bw0-f225.google.com ([209.85.218.225]:62660 "EHLO
-	mail-bw0-f225.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755586AbZGIInk convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 9 Jul 2009 04:43:40 -0400
-Received: by bwz25 with SMTP id 25so3377138bwz.37
-        for <git@vger.kernel.org>; Thu, 09 Jul 2009 01:43:38 -0700 (PDT)
+	id S1753407AbZGIIrb convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 9 Jul 2009 04:47:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751896AbZGIIra
+	(ORCPT <rfc822;git-outgoing>); Thu, 9 Jul 2009 04:47:30 -0400
+Received: from mail-fx0-f218.google.com ([209.85.220.218]:64312 "EHLO
+	mail-fx0-f218.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751774AbZGIIr3 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 9 Jul 2009 04:47:29 -0400
+Received: by fxm18 with SMTP id 18so709fxm.37
+        for <git@vger.kernel.org>; Thu, 09 Jul 2009 01:47:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:mime-version:received:in-reply-to:references
          :date:message-id:subject:from:to:cc:content-type
          :content-transfer-encoding;
-        bh=QtTTo8g0FHPu8Mx61+Sv9BCUyQxjMd0KG4pT12Y9Hno=;
-        b=iyKfIxCDK5o4XDGA0V56+X53fqKF5hJCOmFqA3pTXGGzuk4xXcntt3UJ5VOO8cIHq1
-         r8z5ahmSvMY0TUsPp0EVrvNzPiJC/4ERcuCiplZATeYSPmQM0QXO2gPRhQV5CiHqr/8W
-         3KA8UYBSqaPmdi70dOCKCN/YTxFmWmldpUCYQ=
+        bh=MKZMucF0cPOCXFSR97ncRCMglsluHDT+PgGCrcYS14k=;
+        b=tRFHur1BTdDEEVbQxxOg0VVmRa6f/EWdM+tGLZhkKtdFOr92kSUKwpI8HVRYFyD+/u
+         dN8mDWF+FbVK5/RmCq4nndVZSEiIA2z97reyG/WFwtMVYNpQiAFQ/ruQlkRpQbWNp37g
+         C9QcQp7j/s5O4bS9unyGufOnhmt6vFdN6LaTs=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type:content-transfer-encoding;
-        b=tyWJFpyjSatlsZqQNrMB+wpH1n2Q3vLkF2E5TczOIDxCTeg2DMfrtW1JEKNnAFdU5/
-         O3ZJN98coc0sRepRV552VksRAce9Dv58rxKBtAzlY2E0KgVm3PFFm57W9asTicWeA6G7
-         QEZSOoP2uxpI1IagLXczvNQOmb7vDegyHm8V8=
-Received: by 10.204.113.12 with SMTP id y12mr455179bkp.214.1247129018348; Thu, 
-	09 Jul 2009 01:43:38 -0700 (PDT)
-In-Reply-To: <200907091037.41329.johan@herland.net>
+        b=m2kHkEXZE5S6cP9atPMXlAXD9orq1hSxDLqq7tTfDM4Gtv8f7kcdf+G8jtIM4+1ygA
+         Gyq1Z1Qwyc/gDMm9TuNgPHsWQB7/ocuT9h7DN30Xw4avNd6HlbcYjyMOdhjz1D+xgYhC
+         uTTMaXDXAd8WCoPTxUabzMcHXiWB+MtEFVzdU=
+Received: by 10.223.111.211 with SMTP id t19mr137211fap.64.1247129247663; Thu, 
+	09 Jul 2009 01:47:27 -0700 (PDT)
+In-Reply-To: <20090319160102.GQ23521@spearce.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122947>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122948>
 
-On Thu, Jul 9, 2009 at 10:37, Johan Herland<johan@herland.net> wrote:
-> On Thursday 09 July 2009, Alex Riesen wrote:
->> On Wed, Jul 8, 2009 at 18:01, Johan Herland<johan@herland.net> wrote=
-:
->> > On Wednesday 08 July 2009, Johannes Sixt wrote:
->> >> ... don't you get this error message with errno set to EPIPE?
->> >> Previously, there was no error message.
->> >
->> > Indeed, you are correct. I guess the following should be added to =
-the
->> > patch:
->> >
->> > =C2=A0 =C2=A0 =C2=A0 =C2=A0if (write_in_full(revlist.in, sha1_to_h=
-ex(ref->old_sha1), 40) <
->> > 0 || write_in_full(revlist.in, "\n", 1) < 0) {
->> > - =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 error("failed w=
-rite to rev-list");
->> > - =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 err =3D errno;
->> > + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (errno !=3D =
-EPIPE) {
->> > + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 error("failed write to rev-list");
->> > + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 err =3D errno;
+2009/3/19 Shawn O. Pearce <spearce@spearce.org>:
+> Yann Simon <yann.simon.fr@gmail.com> wrote:
+>> From FindBugs:
+>> Using the java.lang.String(String) constructor wastes memory because
+>> the object so constructed will be functionally indistinguishable fro=
+m
+>> the String passed as a parameter. Just use the argument String direc=
+tly.
 >>
->> You'll loose errno this way: error() does not save it.
+>> Signed-off-by: Yann Simon <yann.simon.fr@gmail.com>
+>> ---
+>> =C2=A0.../src/org/spearce/jgit/lib/RefDatabase.java =C2=A0 =C2=A0 =C2=
+=A0| =C2=A0 =C2=A02 +-
+>> =C2=A01 files changed, 1 insertions(+), 1 deletions(-)
+>>
+>> diff --git a/org.spearce.jgit/src/org/spearce/jgit/lib/RefDatabase.j=
+ava b/org.spearce.jgit/src/org/spearce/jgit/lib/RefDatabase.java
+>> index 87f26bf..49da538 100644
+>> --- a/org.spearce.jgit/src/org/spearce/jgit/lib/RefDatabase.java
+>> +++ b/org.spearce.jgit/src/org/spearce/jgit/lib/RefDatabase.java
+>> @@ -447,7 +447,7 @@ private synchronized void refreshPackedRefs() {
+>>
+>> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 final i=
+nt sp =3D p.indexOf(' ');
+>> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 final O=
+bjectId id =3D ObjectId.fromString(p.substring(0, sp));
+>> - =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 final Strin=
+g name =3D new String(p.substring(sp + 1));
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 final Strin=
+g name =3D p.substring(sp + 1);
+>> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 last =3D=
+ new Ref(Ref.Storage.PACKED, name, name, id);
+>> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 newPack=
+edRefs.put(last.getName(), last);
 >
-> Not sure what you mean here. Should I move "err =3D errno;" outside t=
-he
-> innermost "if"?
+> I had a specific reason for forcing a new String object here.
+>
+> The line in question, p, is from the packed-refs file and
+> contains the entire SHA-1 in hex form at the beginning of it.
+> We've converted that into binary as an ObjectId, it uses 1/4 the
+> space of the string portion.
+>
+> The Ref object, its ObjectId, and its name string, are going to be
+> cached in a Map, probably long-term. =C2=A0We're better off shedding =
+the
+> 80 bytes of memory used to hold the hex SHA-1 then risk substring()
+> deciding its "faster" to reuse the char[] then to make a copy of it.
 
-put it before error("failed write to rev-list"); or even before the
-"if (err !=3D EPIPE)".
-Otherwise it is 0 after fprintf to stderr (which is the error() call).
+However, using the trick newString =3D new String(aString.substring(),
+i) does not work on all JVM.
+With an IBM JVM, the newString will still contain the original array of=
+ chars.
 
-> From my POV, if errno !=3D EPIPE, we save it into err, and return tha=
-t
-> (overridden by finish_command()'s return value, if non-zero). If errn=
-o =3D=3D
-> EPIPE, we're not interested in saving it, because we expect finish_co=
-mmand()
-> to return non-zero in any case.
+Another solution that work on all JVM could be:
+newString =3D new String(aString.substring(i).toCharArray())
+Or
+newString =3D new String(aString.toCharArray(), i, aString.length() - i=
+)
 
-And you think this expectation makes the code simpler to understand?
+I like the latter one.
+
+Yann
