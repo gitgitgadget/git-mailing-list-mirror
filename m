@@ -1,79 +1,69 @@
 From: Stephen Boyd <bebarino@gmail.com>
-Subject: Re: [PATCH 4/4] prune-packed: migrate to parse-options
-Date: Thu, 09 Jul 2009 08:55:50 -0700
-Message-ID: <4A561306.9010908@gmail.com>
-References: <1247030141-11695-1-git-send-email-bebarino@gmail.com> <1247030141-11695-2-git-send-email-bebarino@gmail.com> <1247030141-11695-3-git-send-email-bebarino@gmail.com> <1247030141-11695-4-git-send-email-bebarino@gmail.com> <1247030141-11695-5-git-send-email-bebarino@gmail.com> <alpine.DEB.1.00.0907091250120.4339@intel-tinevez-2-302>
+Subject: Re: [PATCH 3/4] verify-pack: migrate to parse-options
+Date: Thu, 09 Jul 2009 09:01:20 -0700
+Message-ID: <4A561450.4000404@gmail.com>
+References: <1247030141-11695-1-git-send-email-bebarino@gmail.com> <1247030141-11695-2-git-send-email-bebarino@gmail.com> <1247030141-11695-3-git-send-email-bebarino@gmail.com> <1247030141-11695-4-git-send-email-bebarino@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Jul 09 17:56:09 2009
+Cc: Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jul 09 18:02:44 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MOvye-0005nu-Kr
-	for gcvg-git-2@gmane.org; Thu, 09 Jul 2009 17:56:05 +0200
+	id 1MOw53-0000gB-EJ
+	for gcvg-git-2@gmane.org; Thu, 09 Jul 2009 18:02:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759868AbZGIPz6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 9 Jul 2009 11:55:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759611AbZGIPz5
-	(ORCPT <rfc822;git-outgoing>); Thu, 9 Jul 2009 11:55:57 -0400
-Received: from mail-bw0-f225.google.com ([209.85.218.225]:65324 "EHLO
-	mail-bw0-f225.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756304AbZGIPz5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 9 Jul 2009 11:55:57 -0400
-Received: by bwz25 with SMTP id 25so271466bwz.37
-        for <git@vger.kernel.org>; Thu, 09 Jul 2009 08:55:55 -0700 (PDT)
+	id S1758363AbZGIQB3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 9 Jul 2009 12:01:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757057AbZGIQB2
+	(ORCPT <rfc822;git-outgoing>); Thu, 9 Jul 2009 12:01:28 -0400
+Received: from mail-fx0-f218.google.com ([209.85.220.218]:33591 "EHLO
+	mail-fx0-f218.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756304AbZGIQB1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 9 Jul 2009 12:01:27 -0400
+Received: by fxm18 with SMTP id 18so278842fxm.37
+        for <git@vger.kernel.org>; Thu, 09 Jul 2009 09:01:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:message-id:date:from
          :user-agent:mime-version:to:cc:subject:references:in-reply-to
          :x-enigmail-version:content-type:content-transfer-encoding;
-        bh=rDvSx0w2CwuU9jrZkO+MwAu8isltQCbUG3xkUxy+Gb0=;
-        b=bmDL9jZWAl3LRz7mKJLRJRX09/MOxeCkMtpaTduGqx6MHYG0VKtWI95wx7FjNX7Ayh
-         xxz1npsaVNgsArU2eWCQ2Lguvin+QCpX4k9hHmzDfKRdgRt5GcXC3oSaVQkgO0+M9zbu
-         egzDHW1BfbMX33KP5D4d96iD/R12EF1J3tTuE=
+        bh=1RbQN+3ZDTiMT7a1HwNQGcPOHh3kjKLxucTzfTORPzE=;
+        b=YesvVV0K9/vfWpbgm2clOCtbj+WozXeXypGWsBawnekNb1x//Nq4aEQ65lC+zwK2lL
+         LW9NAbdeQoF11CEGvcg6h0M1Tw7IR+sPuycwpYARG0B4DuM9KCaehA0zjbK6B4YgklY0
+         8H6aYImxWcodPJVqIyywRHiXn9RgpnIZYEHhs=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=message-id:date:from:user-agent:mime-version:to:cc:subject
          :references:in-reply-to:x-enigmail-version:content-type
          :content-transfer-encoding;
-        b=GDBoJADP3SSR2KAQ4HN05ocUudmIWWSX6etZGTEG6HBGfOM1aV67eSLPPtd5Nn7lYL
-         56wJl4wKyryNNtZkj7B8NerxBcbAF+e1AZSYg/452B72AdaSeRvuLOkfCATc3xBokjMs
-         CqVGHKmkcIODq2iXJhOWLYT9NHa83vFUEHeFc=
-Received: by 10.204.116.15 with SMTP id k15mr858104bkq.118.1247154955339;
-        Thu, 09 Jul 2009 08:55:55 -0700 (PDT)
+        b=BBq7j73UnsLiqGIEC+2qm5JQIrPEHcHMAssVH3rE0754xGFF48skxup+gZ6AWr5kR+
+         PtayVlUY759r5VLdhdCmn/Em9DWoGsAl3ZUeLxU5TlLyq7vtZhlobirnJcgMoPm5Lgfr
+         aMaY2bMWfTxDegDxn//FFIfYoE3yNSmdXo908=
+Received: by 10.204.51.65 with SMTP id c1mr863168bkg.59.1247155286024;
+        Thu, 09 Jul 2009 09:01:26 -0700 (PDT)
 Received: from ?10.10.0.4? (cpe-66-75-25-79.san.res.rr.com [66.75.25.79])
-        by mx.google.com with ESMTPS id 12sm18320821fks.51.2009.07.09.08.55.52
+        by mx.google.com with ESMTPS id 35sm18371832fkt.20.2009.07.09.09.01.23
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 09 Jul 2009 08:55:54 -0700 (PDT)
+        Thu, 09 Jul 2009 09:01:25 -0700 (PDT)
 User-Agent: Thunderbird 2.0.0.22 (X11/20090629)
-In-Reply-To: <alpine.DEB.1.00.0907091250120.4339@intel-tinevez-2-302>
+In-Reply-To: <1247030141-11695-4-git-send-email-bebarino@gmail.com>
 X-Enigmail-Version: 0.95.7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122984>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122985>
 
-Johannes Schindelin wrote:
-> Hi,
->
-> I reviewed all four patches, and like them.  Just a minor nit:
->
-> On Tue, 7 Jul 2009, Stephen Boyd wrote:
->   
->> Add --dry-run and --quiet to be more consistent with the rest of git.
->>     
->
-> You should say here that you add the _long_ options (the short options 
-> were supported already); I almost expected you to sneak in additional 
-> features with the parseoptification.
->
-> Same goes for 3/4, I guess.
+Stephen Boyd wrote:
+> OPT__VERBOSE adds a --verbose option, so document the new addition.
 >   
 
+OPT__VERBOSE introduces the long option (--verbose) in addition to the
+already present short option (-v),  so document this new addition.
 
-Sure, this sounds reasonable. I'll send follow up commit message fixups.
+> Signed-off-by: Stephen Boyd <bebarino@gmail.com>
+>   
