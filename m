@@ -1,69 +1,113 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: Problem with git bisect in git-1.6.3.3
-Date: Thu, 09 Jul 2009 08:39:31 +0200
-Message-ID: <4A5590A3.8070404@viscovery.net>
-References: <c6b1100b0907082242y7b348b13m8a4607c96b1d164b@mail.gmail.com>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: default aliases (ci, di, st, co)
+Date: Thu, 09 Jul 2009 09:00:30 +0200
+Message-ID: <4A55958E.1050401@op5.se>
+References: <85b5c3130907081649s37f726f7id1a64f2fdbe609f@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Chris Clayton <chris2553@googlemail.com>
-X-From: git-owner@vger.kernel.org Thu Jul 09 08:40:02 2009
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Ondrej Certik <ondrej@certik.cz>
+X-From: git-owner@vger.kernel.org Thu Jul 09 09:02:53 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MOnIX-0001Pa-Jh
-	for gcvg-git-2@gmane.org; Thu, 09 Jul 2009 08:40:02 +0200
+	id 1MOnec-0000Pt-71
+	for gcvg-git-2@gmane.org; Thu, 09 Jul 2009 09:02:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752823AbZGIGjn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 9 Jul 2009 02:39:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752707AbZGIGjn
-	(ORCPT <rfc822;git-outgoing>); Thu, 9 Jul 2009 02:39:43 -0400
-Received: from lilzmailso02.liwest.at ([212.33.55.13]:19078 "EHLO
-	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751556AbZGIGjm (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 9 Jul 2009 02:39:42 -0400
-Received: from cpe228-254.liwest.at ([81.10.228.254] helo=linz.eudaptics.com)
-	by lilzmailso02.liwest.at with esmtpa (Exim 4.69)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1MOnI4-0004gO-02; Thu, 09 Jul 2009 08:39:39 +0200
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.96])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id ACAB06B7; Thu,  9 Jul 2009 08:39:31 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.21 (Windows/20090302)
-In-Reply-To: <c6b1100b0907082242y7b348b13m8a4607c96b1d164b@mail.gmail.com>
-X-Spam-Score: -1.4 (-)
+	id S1760053AbZGIHAj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 9 Jul 2009 03:00:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760034AbZGIHAj
+	(ORCPT <rfc822;git-outgoing>); Thu, 9 Jul 2009 03:00:39 -0400
+Received: from na3sys009aog106.obsmtp.com ([74.125.149.77]:40268 "HELO
+	na3sys009aog106.obsmtp.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with SMTP id S1760039AbZGIHAg (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 9 Jul 2009 03:00:36 -0400
+Received: from source ([209.85.219.225]) by na3sys009aob106.postini.com ([74.125.148.12]) with SMTP
+	ID DSNKSlWVkcSNNx8jvV83QFAxV/bovDOr0Xfy@postini.com; Thu, 09 Jul 2009 00:00:36 PDT
+Received: by ewy25 with SMTP id 25so7352756ewy.8
+        for <git@vger.kernel.org>; Thu, 09 Jul 2009 00:00:33 -0700 (PDT)
+Received: by 10.210.65.16 with SMTP id n16mr480446eba.87.1247122833044;
+        Thu, 09 Jul 2009 00:00:33 -0700 (PDT)
+Received: from clix.int.op5.se ([212.112.174.166])
+        by mx.google.com with ESMTPS id 10sm4479342eyd.18.2009.07.09.00.00.31
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Thu, 09 Jul 2009 00:00:32 -0700 (PDT)
+User-Agent: Thunderbird 2.0.0.21 (X11/20090320)
+In-Reply-To: <85b5c3130907081649s37f726f7id1a64f2fdbe609f@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122936>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122937>
 
-Chris Clayton schrieb:
-> git bisect start
-> # good: [07a2039b8eb0af4ff464efd3dfd95de5c02648c6] Linux 2.6.30
-> git bisect good 07a2039b8eb0af4ff464efd3dfd95de5c02648c6
-> # bad: [8e4a718ff38d8539938ec3421935904c27e00c39] Linux 2.6.31-rc2
-...
-> but, from Makefile, it appears the last "bad" has placed me at a
-> change earlier than 2.6.30:
+Ondrej Certik wrote:
+> Hi,
 > 
-> [chris:~/kernel/linux-2.6]$ head Makefile
-> VERSION = 2
-> PATCHLEVEL = 6
-> SUBLEVEL = 30
-> EXTRAVERSION = -rc6
-...
-> I'm not an experienced git user, so it may be that I have made an
-> error or false assumption.
+> coming to git from mercurial and svn, here is the alias part of my .gitconfig:
+> 
+> [alias]
+>     ci = commit
+>     di = diff --color-words
+>     st = status
+>     co = checkout
+> 
+> 
+> And all is fine until I share commands to checkout my branch (for
+> example) with other people, then basically I have to write those
+> commands in full (e.g. commit, checkout, ...), since I cannot assume
+> they have their .gitconfig setup the same way I do. Especially for
+> people who are new to git.
+> 
+> What is the view on this in the git community?
 
-Not an error, but false assumptions:
 
-http://thread.gmane.org/gmane.comp.version-control.git/99967/focus=99977
+Personally I think "plain" aliases like you use above are evil.
+git is not svn or mercurial. If you use it like svn you'll be
+surprised sooner or later and your workflow will feel awkward or
+just plain wrong. hg and git are very similar, but the fact that
+hg assumed the svn shorthands implies to me that they've tried
+to retain a compatibility that does not, in fact, exist. DVCS
+systems are enormously different from centralized ones. Borrowing
+from centralized ones to a DVCS one feels utterly backwards.
 
-Just continue bisecting. If you can't test the version that bisect warps
-you to because the feature where the bug happens is not present, mark that
-revision as "good".
 
--- Hannes
+> Do most of you write
+> 
+> git checkout -b branch ...
+> 
+> (possibly with TAB completion) or do most of you write
+> 
+> git co -b branch ...
+> 
+> (like I do all the time, except when sharing my commands with other people)?
+> 
+
+I have no simple aliases for any of the commands. There's just no reason
+for them since tab completion works so well.
+
+I do have one alias, which is "wsfix". It fixes whitespace fsckups I've
+added to the index but not yet committed to the worktree. It's not a
+particularly complex one, but not exactly simple either.
+
+
+> Could in principle those aliases be even made default by git? Or is
+> this not a good idea.
+> 
+
+I see no reason to add default aliases. It will make a mess of things
+when trying to explain workflows to people who have older versions of
+git where those default aliases aren't available. It'll add complexity
+to explanations, which is never a good thing.
+
+If I have a vote, I vote no.
+
+-- 
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
+
+Considering the successes of the wars on alcohol, poverty, drugs and
+terror, I think we should give some serious thought to declaring war
+on peace.
