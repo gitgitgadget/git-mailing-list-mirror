@@ -1,84 +1,75 @@
-From: Johan Herland <johan@herland.net>
-Subject: Re: [PATCH] quickfetch(): Prevent overflow of the rev-list command line
-Date: Thu, 09 Jul 2009 10:37:41 +0200
-Message-ID: <200907091037.41329.johan@herland.net>
-References: <alpine.DEB.2.00.0906181310400.23400@ds9.cixit.se>
- <200907081801.36901.johan@herland.net>
- <81b0412b0907090101x7c8aa182o36687d67be3c5fb0@mail.gmail.com>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: "fatal: index-pack failed" on git-clone
+Date: Thu, 09 Jul 2009 10:42:22 +0200
+Message-ID: <4A55AD6E.8080200@drmicha.warpmail.net>
+References: <C92DE6F3-4F35-469F-AC28-4DDD1D8105C2@uchicago.edu> <4103BA41-39E4-496F-A76F-17D84F30EA21@uchicago.edu> <7vd48b6md8.fsf@alter.siamese.dyndns.org> <200907082242.51495.j6t@kdbg.org> <7vvdm26bbk.fsf@alter.siamese.dyndns.org> <20090709063735.GA22544@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: Text/Plain; charset=utf-8
-Content-Transfer-Encoding: 7BIT
-Cc: Johannes Sixt <j.sixt@viscovery.net>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Peter Krefting <peter@softwolves.pp.se>,
-	"Shawn O. Pearce" <spearce@spearce.org>
-To: Alex Riesen <raa.lkml@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jul 09 10:37:59 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, Johannes Sixt <j6t@kdbg.org>,
+	Fritz Anderson <fritza@uchicago.edu>, git@vger.kernel.org,
+	Daniel Barkalow <barkalow@iabervon.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Jul 09 10:42:59 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MOp8Z-00009V-Ox
-	for gcvg-git-2@gmane.org; Thu, 09 Jul 2009 10:37:52 +0200
+	id 1MOpDO-00026M-JP
+	for gcvg-git-2@gmane.org; Thu, 09 Jul 2009 10:42:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752466AbZGIIhq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 9 Jul 2009 04:37:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751609AbZGIIhp
-	(ORCPT <rfc822;git-outgoing>); Thu, 9 Jul 2009 04:37:45 -0400
-Received: from mx.getmail.no ([84.208.15.66]:55652 "EHLO
-	get-mta-out02.get.basefarm.net" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1751459AbZGIIho (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 9 Jul 2009 04:37:44 -0400
-Content-disposition: inline
-Received: from mx.getmail.no ([10.5.16.4]) by get-mta-out02.get.basefarm.net
- (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
- with ESMTP id <0KMI0063OAMU3G40@get-mta-out02.get.basefarm.net> for
- git@vger.kernel.org; Thu, 09 Jul 2009 10:37:42 +0200 (MEST)
-Received: from alpha.localnet ([84.215.102.95])
- by get-mta-in03.get.basefarm.net
- (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
- with ESMTP id <0KMI00LBUAMTMA50@get-mta-in03.get.basefarm.net> for
- git@vger.kernel.org; Thu, 09 Jul 2009 10:37:42 +0200 (MEST)
-X-PMX-Version: 5.5.5.374460, Antispam-Engine: 2.7.1.369594,
- Antispam-Data: 2009.7.9.82422
-User-Agent: KMail/1.11.4 (Linux/2.6.30-ARCH; KDE/4.2.4; x86_64; ; )
-In-reply-to: <81b0412b0907090101x7c8aa182o36687d67be3c5fb0@mail.gmail.com>
+	id S1757129AbZGIImn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 9 Jul 2009 04:42:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756893AbZGIImn
+	(ORCPT <rfc822;git-outgoing>); Thu, 9 Jul 2009 04:42:43 -0400
+Received: from out1.smtp.messagingengine.com ([66.111.4.25]:59633 "EHLO
+	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1756683AbZGIIml (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 9 Jul 2009 04:42:41 -0400
+Received: from compute1.internal (compute1.internal [10.202.2.41])
+	by out1.messagingengine.com (Postfix) with ESMTP id 7A1BF3B04D9;
+	Thu,  9 Jul 2009 04:42:40 -0400 (EDT)
+Received: from heartbeat2.messagingengine.com ([10.202.2.161])
+  by compute1.internal (MEProxy); Thu, 09 Jul 2009 04:42:40 -0400
+X-Sasl-enc: bF+lQfQmcbuel61cu5yhru8fhqy3BjP5BucJnw6RDYtR 1247128960
+Received: from localhost.localdomain (heawood.math.tu-clausthal.de [139.174.44.4])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 7877D4B45;
+	Thu,  9 Jul 2009 04:42:39 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.1pre) Gecko/20090707 Lightning/1.0pre Shredder/3.0b3pre
+In-Reply-To: <20090709063735.GA22544@coredump.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122944>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122945>
 
-On Thursday 09 July 2009, Alex Riesen wrote:
-> On Wed, Jul 8, 2009 at 18:01, Johan Herland<johan@herland.net> wrote:
-> > On Wednesday 08 July 2009, Johannes Sixt wrote:
-> >> ... don't you get this error message with errno set to EPIPE?
-> >> Previously, there was no error message.
-> >
-> > Indeed, you are correct. I guess the following should be added to the
-> > patch:
-> >
-> >        if (write_in_full(revlist.in, sha1_to_hex(ref->old_sha1), 40) <
-> > 0 || write_in_full(revlist.in, "\n", 1) < 0) {
-> > -               error("failed write to rev-list");
-> > -               err = errno;
-> > +               if (errno != EPIPE) {
-> > +                       error("failed write to rev-list");
-> > +                       err = errno;
->
-> You'll loose errno this way: error() does not save it.
+Jeff King venit, vidit, dixit 09.07.2009 08:37:
+> On Wed, Jul 08, 2009 at 03:48:15PM -0700, Junio C Hamano wrote:
+> 
+>>> However, if Fritz runs 'sudo /usr/local/bin/git clone ...', then the interim 
+>>> PATH is "/usr/local/bin:/usr/local/libexec/git-core:/bin:/usr/bin" because 
+>>> this time setup_path() finds a non-empty argv0_path, and the command works.
+>>
+>> Ahh, that is what I was missing.
+>>
+>> As I said elsewhere already, I personally do not think sudo is worth
+>> supporting compared to the cost of this kind of pain resulting from its
+>> misguided "safety" brokenness, but apparently it is widely used.  I think
+>> what Peff suggests in this thread might be a reasonable workaround.
+> 
+> Yes, I find sudo's restrictions silly, considering that most people use
+> it to allow arbitrary code execution, which is why I wrote this some
+> time ago:
+> 
+>   http://peff.net/tinysu/
+> 
 
-Not sure what you mean here. Should I move "err = errno;" outside the 
-innermost "if"?
+:)
 
->From my POV, if errno != EPIPE, we save it into err, and return that 
-(overridden by finish_command()'s return value, if non-zero). If errno == 
-EPIPE, we're not interested in saving it, because we expect finish_command() 
-to return non-zero in any case.
+I think writing "tinysu" is really the best statement one can make about
+"sudo"... although "sudoh" would have been the most appropriate name...
 
+Your patch is welcome, of course, and also removes the somewhat
+surprising special role played by "git-add".
 
-...Johan
-
--- 
-Johan Herland, <johan@herland.net>
-www.herland.net
+Michael
