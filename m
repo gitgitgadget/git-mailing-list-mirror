@@ -1,89 +1,128 @@
-From: Johan Herland <johan@herland.net>
-Subject: Re: [PATCH v3] quickfetch(): Prevent overflow of the rev-list command
- line
-Date: Thu, 09 Jul 2009 17:32:49 +0200
-Message-ID: <200907091732.49708.johan@herland.net>
-References: <alpine.DEB.2.00.0906181310400.23400@ds9.cixit.se>
- <200907091642.05746.johan@herland.net> <4A560509.8060909@viscovery.net>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: [PATCH 3/3] Avoid doing extra 'lstat()'s for d_type if we have
+ an up-to-date cache entry
+Date: Thu, 9 Jul 2009 08:52:37 -0700 (PDT)
+Message-ID: <alpine.LFD.2.01.0907090832200.3352@localhost.localdomain>
+References: <20090707000500.GA5594@dpotapov.dyndns.org> <alpine.LFD.2.01.0907081902371.3352@localhost.localdomain> <alpine.LFD.2.01.0907081933530.3352@localhost.localdomain> <alpine.LFD.2.01.0907081936470.3352@localhost.localdomain>
+ <alpine.LFD.2.01.0907081940220.3352@localhost.localdomain> <alpine.LFD.2.01.0907081942380.3352@localhost.localdomain> <7vskh646bw.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: Text/Plain; charset=iso-8859-1
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Peter Krefting <peter@softwolves.pp.se>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Alex Riesen <raa.lkml@gmail.com>, Jeff King <peff@peff.net>
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Thu Jul 09 17:33:01 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Dmitry Potapov <dpotapov@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jul 09 17:53:00 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MOvcK-0003JG-RU
-	for gcvg-git-2@gmane.org; Thu, 09 Jul 2009 17:33:01 +0200
+	id 1MOvvf-0004Ht-99
+	for gcvg-git-2@gmane.org; Thu, 09 Jul 2009 17:52:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760537AbZGIPcx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 9 Jul 2009 11:32:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760061AbZGIPcw
-	(ORCPT <rfc822;git-outgoing>); Thu, 9 Jul 2009 11:32:52 -0400
-Received: from mx.getmail.no ([84.208.15.66]:51954 "EHLO
-	get-mta-out02.get.basefarm.net" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1752975AbZGIPcw (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 9 Jul 2009 11:32:52 -0400
-Content-disposition: inline
-Received: from mx.getmail.no ([10.5.16.4]) by get-mta-out02.get.basefarm.net
- (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
- with ESMTP id <0KMI006DSTUQ3GB0@get-mta-out02.get.basefarm.net> for
- git@vger.kernel.org; Thu, 09 Jul 2009 17:32:50 +0200 (MEST)
-Received: from alpha.localnet ([84.215.102.95])
- by get-mta-in01.get.basefarm.net
- (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
- with ESMTP id <0KMI00KRVTUP3Z00@get-mta-in01.get.basefarm.net> for
- git@vger.kernel.org; Thu, 09 Jul 2009 17:32:50 +0200 (MEST)
-X-PMX-Version: 5.5.3.366731, Antispam-Engine: 2.7.0.366912,
- Antispam-Data: 2009.7.9.151820
-User-Agent: KMail/1.11.4 (Linux/2.6.30-ARCH; KDE/4.2.4; x86_64; ; )
-In-reply-to: <4A560509.8060909@viscovery.net>
+	id S1758417AbZGIPww (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 9 Jul 2009 11:52:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757951AbZGIPwv
+	(ORCPT <rfc822;git-outgoing>); Thu, 9 Jul 2009 11:52:51 -0400
+Received: from smtp1.linux-foundation.org ([140.211.169.13]:48490 "EHLO
+	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1757057AbZGIPwu (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 9 Jul 2009 11:52:50 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
+	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id n69FqcJY024570
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Thu, 9 Jul 2009 08:52:39 -0700
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id n69Fqb0D015048;
+	Thu, 9 Jul 2009 08:52:38 -0700
+X-X-Sender: torvalds@localhost.localdomain
+In-Reply-To: <7vskh646bw.fsf@alter.siamese.dyndns.org>
+User-Agent: Alpine 2.01 (LFD 1184 2008-12-16)
+X-Spam-Status: No, hits=-3.966 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED
+X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122982>
-
-On Thursday 09 July 2009, Johannes Sixt wrote:
-> Johan Herland schrieb:
-> > On Thursday 09 July 2009, Johannes Sixt wrote:
-> >> But actually I meant you to make a test that triggers the SIGPIPE that
-> >> would kill git-fetch if it were not ignored. This one doesn't trigger
-> >> it, either.
-> >
-> > AFAIU from earlier in this thread (and a mail from Peter linking to
-> > http://markmail.org/message/dbgdj4csafen65ye), SIGPIPE _never_ triggers
-> > on Windows, thus ignoring SIGPIPE is not needed for the fix per se.
-> > However, as a side-effect of the fix, we may now get SIGPIPE on Linux
-> > (and other POSIX platforms), so although it never triggers on Windows,
-> > it's still needed.
->
-> I know that, of course. But try this: Remove the signal(SIGPIPE, SIG_IGN)
-> and run the test suite. There is not a single failure.
-
-That's not what I'm seeing. When I don't ignore the signal, the testsuite 
-fails intermittently for me (on Linux). I see the following tests fail:
-
-- t3409-rebase-preserve-merges.sh (subtest #2)
-- t5503-tagfollow.sh (subtests #4, #6, #7)
-- t5505-remote.sh (subtests #10, #12, #14 - #20, #27)
-- t5510-fetch.sh (subtest #6 or #25)
-- probably more (I seldom get this far...)
-
-I assume the intermittent failures are caused by git rev-list sometimes 
-terminate before git fetch is finished writing objects to its standard input 
-(because of scheduling differences).
-
-When i enable the signal handling, all selftests pass every time.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122983>
 
 
-...Johan
 
--- 
-Johan Herland, <johan@herland.net>
-www.herland.net
+On Thu, 9 Jul 2009, Junio C Hamano wrote:
+> 
+> I was wondering if we could also say that D exists as a directory when we
+> know there is D/F in the index and is up to date.
+
+Yeah, that would probably be a good thing, but is slightly slower to look 
+up (we have the name hashing for the case-ignoring code anyway, but that 
+only works for exact names, so you can't look up directories that way).
+
+You'd have to use the regular binary search for that (or we'd have to 
+change it to hash directories too - which we might want to do for other 
+reasons, but don't do now).
+
+Something like this?
+
+		Linus
+
+---
+ dir.c |   39 ++++++++++++++++++++++++++++++++++-----
+ 1 files changed, 34 insertions(+), 5 deletions(-)
+
+diff --git a/dir.c b/dir.c
+index 8a9e7d8..fb7432e 100644
+--- a/dir.c
++++ b/dir.c
+@@ -566,18 +566,47 @@ static int in_pathspec(const char *path, int len, const struct path_simplify *si
+ 	return 0;
+ }
+ 
++static int get_index_mode(const char *path, int len)
++{
++	int pos;
++	struct cache_entry *ce;
++
++	ce = cache_name_exists(path, len, 0);
++	if (ce) {
++		if (ce_uptodate(ce))
++			return ce->ce_mode;
++		return 0;
++	}
++
++	/* Try to look it up as a directory */
++	pos = cache_name_pos(path, len);
++	if (pos >= 0)
++		return 0;
++	pos = -pos-1;
++	while (pos < active_nr) {
++		ce = active_cache[pos++];
++		if (strncmp(ce->name, path, len))
++			break;
++		if (ce->name[len] > '/')
++			break;
++		if (ce->name[len] < '/')
++			continue;
++		if (!ce_uptodate(ce))
++			break;	/* continue? */
++		return S_IFDIR;
++	}
++	return 0;
++}
++
+ static int get_dtype(struct dirent *de, const char *path, int len)
+ {
+ 	int dtype = de ? DTYPE(de) : DT_UNKNOWN;
+-	struct cache_entry *ce;
+ 	struct stat st;
+ 
+ 	if (dtype != DT_UNKNOWN)
+ 		return dtype;
+-	ce = cache_name_exists(path, len, 0);
+-	if (ce && ce_uptodate(ce))
+-		st.st_mode = ce->ce_mode;
+-	else if (lstat(path, &st))
++	st.st_mode = get_index_mode(path, len);
++	if (!st.st_mode && lstat(path, &st))
+ 		return dtype;
+ 	if (S_ISREG(st.st_mode))
+ 		return DT_REG;
