@@ -1,74 +1,81 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: [PATCH 7/3] Make index preloading check the whole path to the
- file
-Date: Thu, 9 Jul 2009 13:56:17 -0700 (PDT)
-Message-ID: <alpine.LFD.2.01.0907091351000.3352@localhost.localdomain>
-References: <20090707000500.GA5594@dpotapov.dyndns.org> <alpine.LFD.2.01.0907081902371.3352@localhost.localdomain> <alpine.LFD.2.01.0907081933530.3352@localhost.localdomain> <alpine.LFD.2.01.0907081936470.3352@localhost.localdomain>
- <alpine.LFD.2.01.0907081940220.3352@localhost.localdomain> <alpine.LFD.2.01.0907081942380.3352@localhost.localdomain> <7vskh646bw.fsf@alter.siamese.dyndns.org> <alpine.LFD.2.01.0907090832200.3352@localhost.localdomain> <7vws6h3ji4.fsf@alter.siamese.dyndns.org>
- <alpine.LFD.2.01.0907091011280.3352@localhost.localdomain> <alpine.LFD.2.01.0907091013540.3352@localhost.localdomain> <7vab3d3dpc.fsf@alter.siamese.dyndns.org> <alpine.LFD.2.01.0907091153130.3352@localhost.localdomain> <alpine.LFD.2.01.0907091344340.3352@localhost.localdomain>
- <alpine.LFD.2.01.0907091344530.3352@localhost.localdomain> <alpine.LFD.2.01.0907091347080.3352@localhost.localdomain> <alpine.LFD.2.01.0907091348490.3352@localhost.localdomain>
+From: Dmitry Potapov <dpotapov@gmail.com>
+Subject: Re: [PATCH 3/3] Avoid doing extra 'lstat()'s for d_type if we have
+	an up-to-date cache entry
+Date: Fri, 10 Jul 2009 01:05:13 +0400
+Message-ID: <20090709210513.GB19425@dpotapov.dyndns.org>
+References: <20090707000500.GA5594@dpotapov.dyndns.org> <alpine.LFD.2.01.0907081902371.3352@localhost.localdomain> <alpine.LFD.2.01.0907081933530.3352@localhost.localdomain> <alpine.LFD.2.01.0907081936470.3352@localhost.localdomain> <alpine.LFD.2.01.0907081940220.3352@localhost.localdomain> <alpine.LFD.2.01.0907081942380.3352@localhost.localdomain> <7vskh646bw.fsf@alter.siamese.dyndns.org> <alpine.LFD.2.01.0907090832200.3352@localhost.localdomain> <7vws6h3ji4.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Dmitry Potapov <dpotapov@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Kjetil Barvik <barvik@broadpark.no>
+Content-Type: text/plain; charset=us-ascii
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	Git Mailing List <git@vger.kernel.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jul 09 22:56:32 2009
+X-From: git-owner@vger.kernel.org Thu Jul 09 23:05:58 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MP0fO-0002DY-GT
-	for gcvg-git-2@gmane.org; Thu, 09 Jul 2009 22:56:31 +0200
+	id 1MP0oX-00064w-MV
+	for gcvg-git-2@gmane.org; Thu, 09 Jul 2009 23:05:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755250AbZGIU4Y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 9 Jul 2009 16:56:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754360AbZGIU4X
-	(ORCPT <rfc822;git-outgoing>); Thu, 9 Jul 2009 16:56:23 -0400
-Received: from smtp1.linux-foundation.org ([140.211.169.13]:34123 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753653AbZGIU4X (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 9 Jul 2009 16:56:23 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
-	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id n69KuIVZ018613
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Thu, 9 Jul 2009 13:56:19 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id n69KuHVN021732;
-	Thu, 9 Jul 2009 13:56:17 -0700
-X-X-Sender: torvalds@localhost.localdomain
-In-Reply-To: <alpine.LFD.2.01.0907091348490.3352@localhost.localdomain>
-User-Agent: Alpine 2.01 (LFD 1184 2008-12-16)
-X-Spam-Status: No, hits=-3.966 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED
-X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
+	id S1755788AbZGIVFl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 9 Jul 2009 17:05:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755634AbZGIVFk
+	(ORCPT <rfc822;git-outgoing>); Thu, 9 Jul 2009 17:05:40 -0400
+Received: from mail-bw0-f225.google.com ([209.85.218.225]:33120 "EHLO
+	mail-bw0-f225.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755099AbZGIVFk (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 9 Jul 2009 17:05:40 -0400
+Received: by bwz25 with SMTP id 25so460066bwz.37
+        for <git@vger.kernel.org>; Thu, 09 Jul 2009 14:05:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=LdODRmh09P6nyiRFH81+Rng1NpbMqhLA7h14GdEP1dI=;
+        b=fZEoxz/yckvltI58xSidR0T2VldeWye8IBj9NYAS+AJ8Z3bMUASP2X6NiQTMFtMs8E
+         r7okTtbtzWwtbUMaHS+rru+jkS36rSbrqKwriESLzvcfScqsB4G0TshnyDmPU5iA3wL7
+         2K4ulLDSzmjmbHX0vatQAhZZJVCetwbfEeFio=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=LBbwgWt5lJfIYxPbrPq+J1GoJv+kyKa/m+x5FIi2xDWaMw7eId4A1CCW7sNtb+gSiQ
+         Rn7wdfohMANZkq+1hyRZEm88TUtCopkG1OQ7AnjWHMYXZBfCxL5rQQtnMF9Q5yroCD69
+         RNQ8yAYCfQdf7n6hOtoO7WUBOIf4p64I3cuPM=
+Received: by 10.102.228.10 with SMTP id a10mr680626muh.16.1247173537940;
+        Thu, 09 Jul 2009 14:05:37 -0700 (PDT)
+Received: from localhost (ppp85-141-235-157.pppoe.mtu-net.ru [85.141.235.157])
+        by mx.google.com with ESMTPS id y2sm1587262mug.13.2009.07.09.14.05.36
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Thu, 09 Jul 2009 14:05:37 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <7vws6h3ji4.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123010>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123011>
+
+On Thu, Jul 09, 2009 at 09:32:03AM -0700, Junio C Hamano wrote:
+> 
+> Yeah, in Dmitry's response that crossed with this update patch from you,
+> he says lstat() on directories are still problem---it would be interesting to
+> hear what he sees after applying this patch and retesting.
+
+With this patch, I see one 'stat' less for each directory, which on my
+repo resulted in about 10.7% less 'stat' or 4.8% less of the total
+number of syscalls. The total run time decreased by 4.6%.
+
+Still, there are many stats for directories -- for each directory I see
+2 + number of subdirectories it has, but I am not sure about its cause.
+
+There is one strange thing though. Before that patch the number of
+'open' for each directory was always the same in each run. But after
+that patch, it slightly differs in each run... Comparing with results
+without this patch, the number of open for some directories in some
+be less by one... which is puzzling...
 
 
-
-Ok, with these patches, the strace of the index preload looks very clean, 
-and has the required tests for the directory components too:
-
-	...
-	26504 lstat("connect.c", {st_mode=S_IFREG|0664, st_size=14312, ...}) = 0
-	26504 lstat("contrib", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
-	26504 lstat("contrib/README", {st_mode=S_IFREG|0664, st_size=2113, ...}) = 0
-	26504 lstat("contrib/blameview", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
-	26504 lstat("contrib/blameview/blameview.perl", {st_mode=S_IFREG|0775, st_size=3776, ...}) = 0
-	...
-
-ie now it actualyl verifies that the directories leading up to filenames 
-are really directories by doing lstat() on them. And the symlink cache 
-means that it doesn't do it for every single pathname, only for the first 
-lookup per thread and directory.
-
-Maybe Kjetil wants to check the changes, but quite frankly, it looked 
-pretty trivial to make that whole has_symlink_leading_path() be 
-thread-safe.
-
-			Linus
+Dmitry
