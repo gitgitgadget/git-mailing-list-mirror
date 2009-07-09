@@ -1,112 +1,121 @@
-From: Chris Clayton <chris2553@googlemail.com>
-Subject: Problem with git bisect in git-1.6.3.3
-Date: Thu, 9 Jul 2009 06:42:16 +0100
-Message-ID: <c6b1100b0907082242y7b348b13m8a4607c96b1d164b@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: "fatal: index-pack failed" on git-clone
+Date: Thu, 9 Jul 2009 02:37:35 -0400
+Message-ID: <20090709063735.GA22544@coredump.intra.peff.net>
+References: <C92DE6F3-4F35-469F-AC28-4DDD1D8105C2@uchicago.edu>
+ <4103BA41-39E4-496F-A76F-17D84F30EA21@uchicago.edu>
+ <7vd48b6md8.fsf@alter.siamese.dyndns.org>
+ <200907082242.51495.j6t@kdbg.org>
+ <7vvdm26bbk.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jul 09 07:42:29 2009
+Content-Type: text/plain; charset=utf-8
+Cc: Johannes Sixt <j6t@kdbg.org>, Fritz Anderson <fritza@uchicago.edu>,
+	git@vger.kernel.org, Daniel Barkalow <barkalow@iabervon.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jul 09 08:37:58 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MOmOp-00018W-8H
-	for gcvg-git-2@gmane.org; Thu, 09 Jul 2009 07:42:27 +0200
+	id 1MOnGY-0000rW-7z
+	for gcvg-git-2@gmane.org; Thu, 09 Jul 2009 08:37:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752083AbZGIFmT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 9 Jul 2009 01:42:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751472AbZGIFmS
-	(ORCPT <rfc822;git-outgoing>); Thu, 9 Jul 2009 01:42:18 -0400
-Received: from mail-fx0-f218.google.com ([209.85.220.218]:59160 "EHLO
-	mail-fx0-f218.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750924AbZGIFmR (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 9 Jul 2009 01:42:17 -0400
-Received: by fxm18 with SMTP id 18so6155730fxm.37
-        for <git@vger.kernel.org>; Wed, 08 Jul 2009 22:42:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:date:message-id:subject
-         :from:to:content-type:content-transfer-encoding;
-        bh=I/711y8BMFiKbuCO3v+3iF7D/cH0v2VWRvAMPox5MkQ=;
-        b=M94z5F1RcvbkYRFvORtP4y5OsXdbR7hISx+w+ZLklsfQMmMHSWnFafQ2NcvF7/fhnK
-         SeIcwu7dbeD1ErYGwDvc5Iq7QIBYVyjftRvN7TFXrNMOz1HoXSS6D6cA9RR26UPnoDKn
-         W3JJj8bPbFhMYk/K6k6qbISj75DyIhyzviqKk=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type
-         :content-transfer-encoding;
-        b=cTupwaZLeUpdShrwEBb4+yVr5j70f12ub/udgi6h74vxfXjeVPScVOJoP5q/ZWKIxS
-         Dtk0GFamBMSrfWJahRnHoUFDn0dA4lVkLNvXmXZIZj9bP5PsYVvFI4PLg0JJywC0G1gV
-         wv/wRjLpulmBhWiXom+jN3miuPYc1C/EJcegE=
-Received: by 10.204.116.69 with SMTP id l5mr337148bkq.102.1247118136317; Wed, 
-	08 Jul 2009 22:42:16 -0700 (PDT)
+	id S1751925AbZGIGhl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 9 Jul 2009 02:37:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751876AbZGIGhk
+	(ORCPT <rfc822;git-outgoing>); Thu, 9 Jul 2009 02:37:40 -0400
+Received: from peff.net ([208.65.91.99]:35746 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751556AbZGIGhj (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 9 Jul 2009 02:37:39 -0400
+Received: (qmail 12968 invoked by uid 107); 9 Jul 2009 06:39:34 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Thu, 09 Jul 2009 02:39:34 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Thu, 09 Jul 2009 02:37:35 -0400
+Content-Disposition: inline
+In-Reply-To: <7vvdm26bbk.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122934>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122935>
 
-Hi,
+On Wed, Jul 08, 2009 at 03:48:15PM -0700, Junio C Hamano wrote:
 
-I'm using git bisect to track down a problem in 2.6.31-rc2 that is
-locking up my laptop. I get so far in the bisection process and then
-end up building a kernel that seems to me to be outside the good..bad
-range. First time up I thought it might be a case of PBKAC, but I've
-run the process again (very carefully) and got to the same place.
+> > However, if Fritz runs 'sudo /usr/local/bin/git clone ...', then the interim 
+> > PATH is "/usr/local/bin:/usr/local/libexec/git-core:/bin:/usr/bin" because 
+> > this time setup_path() finds a non-empty argv0_path, and the command works.
+> 
+> Ahh, that is what I was missing.
+> 
+> As I said elsewhere already, I personally do not think sudo is worth
+> supporting compared to the cost of this kind of pain resulting from its
+> misguided "safety" brokenness, but apparently it is widely used.  I think
+> what Peff suggests in this thread might be a reasonable workaround.
 
-The bisect log so far:
+Yes, I find sudo's restrictions silly, considering that most people use
+it to allow arbitrary code execution, which is why I wrote this some
+time ago:
 
-[chris:~/kernel/linux-2.6]$ git bisect log
-git bisect start
-# good: [07a2039b8eb0af4ff464efd3dfd95de5c02648c6] Linux 2.6.30
-git bisect good 07a2039b8eb0af4ff464efd3dfd95de5c02648c6
-# bad: [8e4a718ff38d8539938ec3421935904c27e00c39] Linux 2.6.31-rc2
-git bisect bad 8e4a718ff38d8539938ec3421935904c27e00c39
-# good: [e7c5a4f292e0d1f4ba9a3a94b2c8e8b71e35b25a] powerpc/5121: make
-clock debug output more readable
-git bisect good e7c5a4f292e0d1f4ba9a3a94b2c8e8b71e35b25a
-# bad: [d23c45fd84f79a3b84899dac053dcafe9d43ebc9] NFS: Invalid mount
-option values should always fail, even with "sloppy"
-git bisect bad d23c45fd84f79a3b84899dac053dcafe9d43ebc9
-# bad: [2ed0e21b30b53d3a94e204196e523e6c8f732b56] Merge
-git://git.kernel.org/pub/scm/linux/kernel/git/davem/net-next-2.6
-git bisect bad 2ed0e21b30b53d3a94e204196e523e6c8f732b56
+  http://peff.net/tinysu/
 
-but, from Makefile, it appears the last "bad" has placed me at a
-change earlier than 2.6.30:
+However, sudo is pretty popular, and it should be easy enough for us to
+work around it in this case. Patch is below. It's longer than the
+one-liner necessary, because it now uses "git" as the magic "everything
+should link to this" file instead of "git-add", which I think is a bit
+more obvious.
 
-[chris:~/kernel/linux-2.6]$ head Makefile
-VERSION = 2
-PATCHLEVEL = 6
-SUBLEVEL = 30
-EXTRAVERSION = -rc6
-NAME = Vindictive Armadillo
+-- >8 --
+Subject: [PATCH] Makefile: install 'git' in execdir
 
-# *DOCUMENTATION*
-# To see a list of typical targets execute "make help"
-# More info can be located in ./README
-# Comments in this file are targeted only to the developer, do not
+When a git command executes a subcommand, it uses the "git
+foo" form, which relies on finding "git" in the PATH.
+Normally this should not be a problem, since the same "git"
+that was used to invoke git in the first place will be
+found.  And if somebody invokes a "git" outside of the PATH
+(e.g., by giving its absolute path), this case is already
+covered: we put that absolute path onto the front of PATH.
 
-I'm not an experienced git user, so it may be that I have made an
-error or false assumption. I guess it's also possible that I've
-screwed my repository, although basically I only use two types of
-command - pull a few times a week and the bisect family when I'm
-trying to track down a problem.
+However, if one is using "sudo", then sudo will execute the
+"git" from the PATH, but pass along a restricted PATH that
+may not contain the original "git" directory. In this case,
+executing a subcommand will fail.
 
-Come to think of it, I did archive the repository (with tar | bzip2)
-about a week ago whilst I changed the hard drive in my laptop. Once
-the new drive was installed, I restored the repository and freshened
-it up with a git pull. Could this be the root of my problem, please?
+To solve this, we put the "git" wrapper itself into the
+execdir; this directory is prepended to the PATH when git
+starts, so the wrapper will always be found.
 
-Happy to provide more information if needed. Please cc me to any reply
-- I'm not subscribed.
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ Makefile |   14 +++++++-------
+ 1 files changed, 7 insertions(+), 7 deletions(-)
 
-Thanks
-
-Chris
-
+diff --git a/Makefile b/Makefile
+index 78cc113..311ce7d 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1641,15 +1641,15 @@ ifneq (,$X)
+ endif
+ 	bindir=$$(cd '$(DESTDIR_SQ)$(bindir_SQ)' && pwd) && \
+ 	execdir=$$(cd '$(DESTDIR_SQ)$(gitexec_instdir_SQ)' && pwd) && \
+-	{ $(RM) "$$execdir/git-add$X" && \
++	{ $(RM) "$$execdir/git$X" && \
+ 		test -z "$(NO_CROSS_DIRECTORY_HARDLINKS)" && \
+-		ln "$$bindir/git$X" "$$execdir/git-add$X" 2>/dev/null || \
+-		cp "$$bindir/git$X" "$$execdir/git-add$X"; } && \
+-	{ for p in $(filter-out git-add$X,$(BUILT_INS)); do \
++		ln "$$bindir/git$X" "$$execdir/git$X" 2>/dev/null || \
++		cp "$$bindir/git$X" "$$execdir/git$X"; } && \
++	{ for p in $(BUILT_INS); do \
+ 		$(RM) "$$execdir/$$p" && \
+-		ln "$$execdir/git-add$X" "$$execdir/$$p" 2>/dev/null || \
+-		ln -s "git-add$X" "$$execdir/$$p" 2>/dev/null || \
+-		cp "$$execdir/git-add$X" "$$execdir/$$p" || exit; \
++		ln "$$execdir/git$X" "$$execdir/$$p" 2>/dev/null || \
++		ln -s "git$X" "$$execdir/$$p" 2>/dev/null || \
++		cp "$$execdir/git$X" "$$execdir/$$p" || exit; \
+ 	  done; } && \
+ 	./check_bindir "z$$bindir" "z$$execdir" "$$bindir/git-add$X"
+ 
 -- 
-No, Sir; there is nothing which has yet been contrived by man, by
-which so much happiness is produced as by a good tavern or inn -
-Doctor Samuel Johnson
+1.6.3.3.529.g74caa.dirty
