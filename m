@@ -1,96 +1,94 @@
-From: "Matthias Andree" <matthias.andree@gmx.de>
-Subject: Re: found a resource leak in file builtin-fast-export.c
-Date: Thu, 09 Jul 2009 15:36:13 +0200
-Message-ID: <op.uwsyqnwt1e62zd@balu.cs.uni-paderborn.de>
-References: <20090709075728.137880@gmx.net>
- <200907091031.43494.trast@student.ethz.ch>
- <alpine.DEB.1.00.0907091302520.4339@intel-tinevez-2-302>
- <200907091324.17643.trast@student.ethz.ch>
- <alpine.DEB.1.00.0907091500420.4339@intel-tinevez-2-302>
-Mime-Version: 1.0
-Content-Type: text/plain; format=flowed; delsp=yes; charset=iso-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: "Martin Ettl" <ettl.martin@gmx.de>, git@vger.kernel.org
-To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
-	"Thomas Rast" <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Thu Jul 09 15:36:29 2009
+From: Matthias Andree <matthias.andree@gmx.de>
+Subject: [PATCH] Fix export_marks() error handling.
+Date: Thu,  9 Jul 2009 15:28:01 +0200
+Message-ID: <1247146081-4692-1-git-send-email-matthias.andree@gmx.de>
+References: <alpine.DEB.1.00.0907091500420.4339@intel-tinevez-2-302>
+Cc: Matthias Andree <matthias.andree@gmx.de>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jul 09 15:45:55 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MOtnU-0006cf-JF
-	for gcvg-git-2@gmane.org; Thu, 09 Jul 2009 15:36:25 +0200
+	id 1MOtwg-0002Wd-Ka
+	for gcvg-git-2@gmane.org; Thu, 09 Jul 2009 15:45:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760551AbZGINgR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 9 Jul 2009 09:36:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759143AbZGINgR
-	(ORCPT <rfc822;git-outgoing>); Thu, 9 Jul 2009 09:36:17 -0400
-Received: from mail.gmx.net ([213.165.64.20]:35107 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1757499AbZGINgQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 9 Jul 2009 09:36:16 -0400
-Received: (qmail invoked by alias); 09 Jul 2009 13:36:14 -0000
-Received: from balu.cs.uni-paderborn.de (EHLO balu.cs.uni-paderborn.de) [131.234.21.37]
-  by mail.gmx.net (mp018) with SMTP; 09 Jul 2009 15:36:14 +0200
-X-Authenticated: #428038
-X-Provags-ID: V01U2FsdGVkX1/P7whMBcHPo5P92Qts2TGuF8WBQ/diZLe/gPR6Oe
-	EKmvu4eqntcpLW
-Received: from localhost ([127.0.0.1] helo=balu.cs.uni-paderborn.de)
-	by balu.cs.uni-paderborn.de with esmtp (Exim 4.69)
-	(envelope-from <matthias.andree@gmx.de>)
-	id KMIOGE-0004LC-0U; Thu, 09 Jul 2009 15:36:14 +0200
+	id S1760036AbZGINps (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 9 Jul 2009 09:45:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759070AbZGINpr
+	(ORCPT <rfc822;git-outgoing>); Thu, 9 Jul 2009 09:45:47 -0400
+Received: from mail.uni-paderborn.de ([131.234.142.9]:64960 "EHLO
+	mail.uni-paderborn.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758578AbZGINpq (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 9 Jul 2009 09:45:46 -0400
+X-Greylist: delayed 1047 seconds by postgrey-1.27 at vger.kernel.org; Thu, 09 Jul 2009 09:45:46 EDT
+Received: from balu.cs.uni-paderborn.de ([131.234.21.37])
+	by mail.uni-paderborn.de with esmtpsa (TLS-1.0:DHE_RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.63 spheron)
+	id 1MOtfc-0000aU-Hk; Thu, 09 Jul 2009 15:28:17 +0200
+Received: from mandree by balu.cs.uni-paderborn.de with local (Exim 4.69)
+	(envelope-from <mandree@balu.cs.uni-paderborn.de>)
+	id KMIO32-0004BS-QH; Thu, 09 Jul 2009 15:28:15 +0200
+X-Mailer: git-send-email 1.6.3.3.385.g60647
 In-Reply-To: <alpine.DEB.1.00.0907091500420.4339@intel-tinevez-2-302>
-User-Agent: Opera Mail/9.64 (Win32)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.57
+X-IMT-Spam-Score: 0.0 ()
+X-PMX-Version: 5.5.5.374460, Antispam-Engine: 2.7.1.369594, Antispam-Data: 2009.7.9.132121
+X-IMT-Authenticated-Sender: uid=mandree,ou=People,o=upb,c=de
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122973>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122974>
 
-Am 09.07.2009, 15:01 Uhr, schrieb Johannes Schindelin  
-<Johannes.Schindelin@gmx.de>:
+- Don't leak one FILE * on error per export_marks() call. Found with
+  cppcheck and reported by Martin Ettl.
 
-> Hi,
->
-> On Thu, 9 Jul 2009, Thomas Rast wrote:
->
->> Johannes Schindelin wrote:
->> > On Thu, 9 Jul 2009, Thomas Rast wrote:
->> >
->> > > Martin Ettl wrote:
->> > > > -	if (ferror(f) || fclose(f))
->> > > > +	if (ferror(f))
->> > > >  		error("Unable to write marks file %s.", file);
->> > > > +  	fclose(f);
->> > >
->> > > You no longer check the error returned by fclose().  This is
->> > > important, because the FILE* API may buffer writes, and a write  
->> error
->> > > may only become apparent when fclose() flushes the file.
->> >
->> > Indeed.  A better fix would be to replace the || by a |, but this  
->> must be
->> > accompanied by a comment so it does not get removed due to overzealous
->> > compiler warnings.
->>
->> Are you allowed to do that?  IIRC using | no longer guarantees that
->> ferror() is called before fclose(), and my local 'man 3p fclose' says
->> that
->>
->>        After the call to fclose(), any use of stream results in
->>        undefined behavior.
->
-> Good point.  So we really need something like
->
-> 	err = ferror(f);
-> 	err |= fclose(f); /* call fclose() even if there was an error */
-> 	if (err)
-> 		error...
+- Abort the potentially long for(;idnums.size;) loop on write errors.
 
-I've made such a patch, to appear soon on the list (sorry for not Cc:'ing  
-it).
+- Add a trailing full-stop to error message when fopen() fails.
 
+Signed-off-by: Matthias Andree <matthias.andree@gmx.de>
+---
+ builtin-fast-export.c |   15 ++++++++++++---
+ 1 files changed, 12 insertions(+), 3 deletions(-)
+
+diff --git a/builtin-fast-export.c b/builtin-fast-export.c
+index 9a8a6fc..6c0956d 100644
+--- a/builtin-fast-export.c
++++ b/builtin-fast-export.c
+@@ -428,21 +428,30 @@ static void export_marks(char *file)
+ 	uint32_t mark;
+ 	struct object_decoration *deco = idnums.hash;
+ 	FILE *f;
++	int e;
+ 
+ 	f = fopen(file, "w");
+ 	if (!f)
+-		error("Unable to open marks file %s for writing", file);
++		error("Unable to open marks file %s for writing.", file);
+ 
+ 	for (i = 0; i < idnums.size; i++) {
+ 		if (deco->base && deco->base->type == 1) {
+ 			mark = ptr_to_mark(deco->decoration);
+-			fprintf(f, ":%"PRIu32" %s\n", mark,
++			e = fprintf(f, ":%"PRIu32" %s\n", mark,
+ 				sha1_to_hex(deco->base->sha1));
++			if (e < 0) break;
+ 		}
+ 		deco++;
+ 	}
+ 
+-	if (ferror(f) || fclose(f))
++	/* do not optimize the next two lines - they must both be executed in
++	 * this order. || might short-circuit the fclose(), and combining them
++	 * into one statement might reverse the order of execution.
++	 * Also, fflush() may not be sufficient - on some file systems, the
++	 * error is still delayed until the final [f]close().  */
++	e  = ferror(f);
++	e |= fclose(f);
++	if (e)
+ 		error("Unable to write marks file %s.", file);
+ }
+ 
 -- 
-Matthias Andree
+1.6.3.3.385.g60647
