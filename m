@@ -1,84 +1,137 @@
-From: Henrik Nilsson <henrik30000@gmail.com>
-Subject: Re: New Bzr to Git migration tool
-Date: Thu, 9 Jul 2009 20:06:33 +0000
-Message-ID: <d51232210907091306n46c0cda6g49bf9880d701f2e0@mail.gmail.com>
-References: <37B936CB-2B2F-49DB-B282-EAD6C87E9A63@gmail.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: [PATCH 4/3] Avoid using 'lstat()' to figure out directories
+Date: Thu, 9 Jul 2009 13:44:46 -0700 (PDT)
+Message-ID: <alpine.LFD.2.01.0907091344340.3352@localhost.localdomain>
+References: <20090707000500.GA5594@dpotapov.dyndns.org> <alpine.LFD.2.01.0907081902371.3352@localhost.localdomain> <alpine.LFD.2.01.0907081933530.3352@localhost.localdomain> <alpine.LFD.2.01.0907081936470.3352@localhost.localdomain>
+ <alpine.LFD.2.01.0907081940220.3352@localhost.localdomain> <alpine.LFD.2.01.0907081942380.3352@localhost.localdomain> <7vskh646bw.fsf@alter.siamese.dyndns.org> <alpine.LFD.2.01.0907090832200.3352@localhost.localdomain> <7vws6h3ji4.fsf@alter.siamese.dyndns.org>
+ <alpine.LFD.2.01.0907091011280.3352@localhost.localdomain> <alpine.LFD.2.01.0907091013540.3352@localhost.localdomain> <7vab3d3dpc.fsf@alter.siamese.dyndns.org> <alpine.LFD.2.01.0907091153130.3352@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jul 09 22:06:44 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Dmitry Potapov <dpotapov@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Kjetil Barvik <barvik@broadpark.no>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jul 09 22:45:40 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MOztC-0006A2-Dq
-	for gcvg-git-2@gmane.org; Thu, 09 Jul 2009 22:06:42 +0200
+	id 1MP0Ut-0006Ja-Ev
+	for gcvg-git-2@gmane.org; Thu, 09 Jul 2009 22:45:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754179AbZGIUGg convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 9 Jul 2009 16:06:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754073AbZGIUGf
-	(ORCPT <rfc822;git-outgoing>); Thu, 9 Jul 2009 16:06:35 -0400
-Received: from mail-ew0-f226.google.com ([209.85.219.226]:59347 "EHLO
-	mail-ew0-f226.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754030AbZGIUGf convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 9 Jul 2009 16:06:35 -0400
-Received: by ewy26 with SMTP id 26so538592ewy.37
-        for <git@vger.kernel.org>; Thu, 09 Jul 2009 13:06:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:content-type
-         :content-transfer-encoding;
-        bh=AmAobNdPjnqpnktqLHa6M/5GETi2qobj59cg0w2dzig=;
-        b=uV955gAyHhSPWfQKFkY/pYpkJJPvRJ2rQIfCDQayBLrN1x52QO4svDF+aPyfKkOuyO
-         LqEPeofCDHK5TADizmnZwPCzU2muISwNfvJbw6ImVUJvgG4pJ7Fz/Xz47hElQc+pE0BD
-         MQrPJijamXImHbV81VbxkOFXd7D48amIgDCEw=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :content-type:content-transfer-encoding;
-        b=EkY0mh19/c3pjsI9NlQxUir5yIMcJ08Q9PHViVddTMx9IJjegz/ky6hL/utQWqppNk
-         Rr0DYhgAQQzpJvevySLs5ByWbhEWBRG5EVa4sgTNZu9tdG5jex12UlAQj71V4aeytz5U
-         wJuluiuFEhrDOY0LvbJPN6l88eF8HEelCSDTo=
-Received: by 10.216.36.84 with SMTP id v62mr325525wea.128.1247169993193; Thu, 
-	09 Jul 2009 13:06:33 -0700 (PDT)
-In-Reply-To: <37B936CB-2B2F-49DB-B282-EAD6C87E9A63@gmail.com>
+	id S1754637AbZGIUpd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 9 Jul 2009 16:45:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754476AbZGIUpc
+	(ORCPT <rfc822;git-outgoing>); Thu, 9 Jul 2009 16:45:32 -0400
+Received: from smtp1.linux-foundation.org ([140.211.169.13]:40364 "EHLO
+	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753644AbZGIUpb (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 9 Jul 2009 16:45:31 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
+	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id n69KikAX017740
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Thu, 9 Jul 2009 13:44:48 -0700
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id n69Kiket006394;
+	Thu, 9 Jul 2009 13:44:46 -0700
+X-X-Sender: torvalds@localhost.localdomain
+In-Reply-To: <alpine.LFD.2.01.0907091153130.3352@localhost.localdomain>
+User-Agent: Alpine 2.01 (LFD 1184 2008-12-16)
+X-Spam-Status: No, hits=-3.966 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED
+X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123004>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123005>
 
-2009/7/9 David Reitter <david.reitter@gmail.com>:
-> Henrik Nilsson wrote on git@vger.kernel.org:
->
->> I recently wrote a Bzr to Git migration tool and thought I'd share i=
-t
->> with anyone who might be interested.
->> It's written in shell-script and iterates through the Bzr commits
->> while adding those changes to a new Git repository.
->
-> This is interesting to me, as my use case will involve extending an e=
-xisting
-> git repository iteratively from the bzr commits.
-> Looking at the technique, this should be possible that way.
->
-> I am missing support for converting all branches of the repository. =A0=
-More
-> importantly, don't merges get lost? =A0All your git side commits seem=
- to have
-> a single parent.
->
->
->
 
-Yes I suppose they do.
-The Bzr repository I was working on when I wrote this script has not
-been dealing with any branches.
 
-I should have mentioned that I am not looking for feedback to work
-further on this, unless I have any need for it myself, but you are
-very welcome to build upon it. :)
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Date: Thu, 9 Jul 2009 13:14:28 -0700
+Subject: [PATCH 4/3] Avoid using 'lstat()' to figure out directories
 
-Henrik Nilsson
+If we have an up-to-date index entry for a file in that directory, we
+can know that the directories leading up to that file must be
+directories.  No need to do an lstat() on the directory.
+
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+---
+
+This is the patch I already sent out earlier. Now it's just numbered. 
+There's going to be an additional three patches to actually give the right 
+behavior for index preloading, so that we can really say "if CE_UPTODATE 
+is set, then the whole directory structure is valid".
+
+ dir.c |   47 ++++++++++++++++++++++++++++++++++++++++++-----
+ 1 files changed, 42 insertions(+), 5 deletions(-)
+
+diff --git a/dir.c b/dir.c
+index 8a9e7d8..e05b850 100644
+--- a/dir.c
++++ b/dir.c
+@@ -566,18 +566,55 @@ static int in_pathspec(const char *path, int len, const struct path_simplify *si
+ 	return 0;
+ }
+ 
++static int get_index_dtype(const char *path, int len)
++{
++	int pos;
++	struct cache_entry *ce;
++
++	ce = cache_name_exists(path, len, 0);
++	if (ce) {
++		if (!ce_uptodate(ce))
++			return DT_UNKNOWN;
++		if (S_ISGITLINK(ce->ce_mode))
++			return DT_DIR;
++		/*
++		 * Nobody actually cares about the
++		 * difference between DT_LNK and DT_REG
++		 */
++		return DT_REG;
++	}
++
++	/* Try to look it up as a directory */
++	pos = cache_name_pos(path, len);
++	if (pos >= 0)
++		return DT_UNKNOWN;
++	pos = -pos-1;
++	while (pos < active_nr) {
++		ce = active_cache[pos++];
++		if (strncmp(ce->name, path, len))
++			break;
++		if (ce->name[len] > '/')
++			break;
++		if (ce->name[len] < '/')
++			continue;
++		if (!ce_uptodate(ce))
++			break;	/* continue? */
++		return DT_DIR;
++	}
++	return DT_UNKNOWN;
++}
++
+ static int get_dtype(struct dirent *de, const char *path, int len)
+ {
+ 	int dtype = de ? DTYPE(de) : DT_UNKNOWN;
+-	struct cache_entry *ce;
+ 	struct stat st;
+ 
+ 	if (dtype != DT_UNKNOWN)
+ 		return dtype;
+-	ce = cache_name_exists(path, len, 0);
+-	if (ce && ce_uptodate(ce))
+-		st.st_mode = ce->ce_mode;
+-	else if (lstat(path, &st))
++	dtype = get_index_dtype(path, len);
++	if (dtype != DT_UNKNOWN)
++		return dtype;
++	if (lstat(path, &st))
+ 		return dtype;
+ 	if (S_ISREG(st.st_mode))
+ 		return DT_REG;
+-- 
+1.6.3.3.415.ga8877
