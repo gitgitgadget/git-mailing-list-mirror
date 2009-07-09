@@ -1,85 +1,77 @@
-From: Paolo Bonzini <bonzini@gnu.org>
-Subject: Re: default aliases (ci, di, st, co)
-Date: Fri, 10 Jul 2009 01:08:27 +0200
-Message-ID: <4A56786B.7040904@gnu.org>
-References: <85b5c3130907081649s37f726f7id1a64f2fdbe609f@mail.gmail.com> <m3my7evhky.fsf@localhost.localdomain> <7vskh53iyt.fsf@alter.siamese.dyndns.org>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: [PATCH 4/3] Avoid using 'lstat()' to figure out directories
+Date: Thu, 9 Jul 2009 16:26:19 -0700 (PDT)
+Message-ID: <alpine.LFD.2.01.0907091626080.3352@localhost.localdomain>
+References: <20090707000500.GA5594@dpotapov.dyndns.org> <alpine.LFD.2.01.0907081902371.3352@localhost.localdomain> <alpine.LFD.2.01.0907081933530.3352@localhost.localdomain> <alpine.LFD.2.01.0907081936470.3352@localhost.localdomain>
+ <alpine.LFD.2.01.0907081940220.3352@localhost.localdomain> <alpine.LFD.2.01.0907081942380.3352@localhost.localdomain> <7vskh646bw.fsf@alter.siamese.dyndns.org> <alpine.LFD.2.01.0907090832200.3352@localhost.localdomain> <7vws6h3ji4.fsf@alter.siamese.dyndns.org>
+ <alpine.LFD.2.01.0907091011280.3352@localhost.localdomain> <alpine.LFD.2.01.0907091013540.3352@localhost.localdomain> <7vab3d3dpc.fsf@alter.siamese.dyndns.org> <alpine.LFD.2.01.0907091153130.3352@localhost.localdomain> <alpine.LFD.2.01.0907091344340.3352@localhost.localdomain>
+ <4A5670F3.9020309@gnu.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Jakub Narebski <jnareb@gmail.com>,
-	Ondrej Certik <ondrej@certik.cz>,
-	Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jul 10 01:08:40 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Dmitry Potapov <dpotapov@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Kjetil Barvik <barvik@broadpark.no>
+To: Paolo Bonzini <bonzini@gnu.org>
+X-From: git-owner@vger.kernel.org Fri Jul 10 01:28:06 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MP2jH-00085g-4V
-	for gcvg-git-2@gmane.org; Fri, 10 Jul 2009 01:08:39 +0200
+	id 1MP325-0005XO-JY
+	for gcvg-git-2@gmane.org; Fri, 10 Jul 2009 01:28:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750838AbZGIXIb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 9 Jul 2009 19:08:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750756AbZGIXIb
-	(ORCPT <rfc822;git-outgoing>); Thu, 9 Jul 2009 19:08:31 -0400
-Received: from mail-bw0-f225.google.com ([209.85.218.225]:45840 "EHLO
-	mail-bw0-f225.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750744AbZGIXIa (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 9 Jul 2009 19:08:30 -0400
-Received: by bwz25 with SMTP id 25so516123bwz.37
-        for <git@vger.kernel.org>; Thu, 09 Jul 2009 16:08:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:sender:message-id:date:from
-         :user-agent:mime-version:newsgroups:to:cc:subject:references
-         :in-reply-to:content-type:content-transfer-encoding;
-        bh=omOtx3E70NjqRjlTNdo0FoOBKVCWpVVtsG844UqyL+g=;
-        b=R0CmKslZ3/Qa2KNY4iSM+L7fjLuJ9qOnDUb5nfaEnIghN8Co1tKla6pJls6KqigAsA
-         5a4Ab7eB0Ozk36brPLj0a+YfThY5l2RWCxmMEbe4Ibp8nK6UCtHAxbsokuiiZIbVe0WM
-         Ca2+Cs4OePxAWOg5lnXYJokjWZhzgP+Q3Txhw=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=sender:message-id:date:from:user-agent:mime-version:newsgroups:to
-         :cc:subject:references:in-reply-to:content-type
-         :content-transfer-encoding;
-        b=xxxNAVov7DQTB8K7p/K/zsGLkuelf+IgPT448jDsqd92MTKt9PeYb4UN+DEOsxKJT5
-         cB8cGqrj5FIwI8PC2zazmrnXAAAViMwGgc7KfRBAUQ2YvVu9i53dOWV/hjQAQcFX97Q4
-         xf744GpvnsfNzuiztC7R4pJwauliF7gNuWv9o=
-Received: by 10.204.100.71 with SMTP id x7mr1230213bkn.130.1247180908499;
-        Thu, 09 Jul 2009 16:08:28 -0700 (PDT)
-Received: from yakj.usersys.redhat.com ([85.93.118.17])
-        by mx.google.com with ESMTPS id 1sm855361fks.41.2009.07.09.16.08.27
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 09 Jul 2009 16:08:27 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1b3pre) Gecko/20090513 Fedora/3.0-2.3.beta2.fc11 Lightning/1.0pre Thunderbird/3.0b2
-Newsgroups: gmane.comp.version-control.git
-In-Reply-To: <7vskh53iyt.fsf@alter.siamese.dyndns.org>
+	id S1751648AbZGIX1J (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 9 Jul 2009 19:27:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751677AbZGIX1I
+	(ORCPT <rfc822;git-outgoing>); Thu, 9 Jul 2009 19:27:08 -0400
+Received: from smtp1.linux-foundation.org ([140.211.169.13]:39582 "EHLO
+	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751616AbZGIX1H (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 9 Jul 2009 19:27:07 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
+	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id n69NQKdB029739
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Thu, 9 Jul 2009 16:26:21 -0700
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id n69NQJCP028251;
+	Thu, 9 Jul 2009 16:26:19 -0700
+X-X-Sender: torvalds@localhost.localdomain
+In-Reply-To: <4A5670F3.9020309@gnu.org>
+User-Agent: Alpine 2.01 (LFD 1184 2008-12-16)
+X-Spam-Status: No, hits=-3.966 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED
+X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123018>
-
-On 07/09/2009 06:43 PM, Junio C Hamano wrote:
-> Jakub Narebski<jnareb@gmail.com>  writes:
->
->>          one = show -s --pretty='format:%h (%s)'
->
-> If you use "git one" for quoting a commit in the log message, please use a
-> format that shows the date as well (I think I posted mine to the list in
-> the past).
-
-Yes, it's in the wiki and in my .gitconfig:
-
-         whatis = "!sh -c 'git show -s --pretty=\"format:%h (%s, %ai\" 
-\"$@\" | sed -e \"s/ [012][0-9]:[0-5][0-9]:[0-5][0-9] 
-[-+][0-9][0-9][0-9][0-9]$/)\\n/\"' -"
-
-BTW, the wiki shows a nice trick to avoid the extra ' quotation:
-
-         whatis = "!f() { git show -s --pretty='format:%h (%s, %ai' 
-\"$@\" | sed -e 's/ [012][0-9]:[0-5][0-9]:[0-5][0-9] 
-[-+][0-9][0-9][0-9][0-9]$/)\\n/'; }; f"
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123019>
 
 
-Paolo
+On Fri, 10 Jul 2009, Paolo Bonzini wrote:
+> 
+> I'm not much worried about accessing foo-0001, foo-0002, foo-0003 while 
+> looking for foo/a (that would be O(number of files in a directory), 
+> which is bearable), but risking to go down a huge subtree is not very 
+> nice.
+
+That sounds rather unlikely, and the thing is, even if it were to happen, 
+it really wouldn't be that slow. Our data structures are pretty efficient, 
+and it wouldn't be _that_ slow to traverse them.
+
+That said, I don't love that loop. It would be better to do that whole 
+cache_name_pos() call with the '/' simply appended to the path, and then 
+we'd do the binary search directly to the first entry.
+
+Of course, since 'path' is a 'const char *', we'd need to either do a 
+silly copy, or we'd need to change a whole lot of the code to make it 
+clear that we can actually add a slash to the end (which we can: I think 
+it's already always going to be an array that we _will_ add a slash to in 
+case it turns out to be a directory).
+
+So there's definitely room for improvement there. I just think that the 
+improvement isn't the patch you suggest.
+
+			Linus
