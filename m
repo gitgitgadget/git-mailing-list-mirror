@@ -1,121 +1,112 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: [PATCH 3/3] Avoid doing extra 'lstat()'s for d_type if we have an
- up-to-date cache entry
-Date: Wed, 8 Jul 2009 19:43:50 -0700 (PDT)
-Message-ID: <alpine.LFD.2.01.0907081942380.3352@localhost.localdomain>
-References: <20090707000500.GA5594@dpotapov.dyndns.org> <alpine.LFD.2.01.0907081902371.3352@localhost.localdomain> <alpine.LFD.2.01.0907081933530.3352@localhost.localdomain> <alpine.LFD.2.01.0907081936470.3352@localhost.localdomain>
- <alpine.LFD.2.01.0907081940220.3352@localhost.localdomain>
+From: Chris Clayton <chris2553@googlemail.com>
+Subject: Problem with git bisect in git-1.6.3.3
+Date: Thu, 9 Jul 2009 06:42:16 +0100
+Message-ID: <c6b1100b0907082242y7b348b13m8a4607c96b1d164b@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: Dmitry Potapov <dpotapov@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jul 09 04:44:34 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jul 09 07:42:29 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MOjcg-0005kU-7c
-	for gcvg-git-2@gmane.org; Thu, 09 Jul 2009 04:44:34 +0200
+	id 1MOmOp-00018W-8H
+	for gcvg-git-2@gmane.org; Thu, 09 Jul 2009 07:42:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757792AbZGICo3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 8 Jul 2009 22:44:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757531AbZGICo2
-	(ORCPT <rfc822;git-outgoing>); Wed, 8 Jul 2009 22:44:28 -0400
-Received: from smtp1.linux-foundation.org ([140.211.169.13]:52916 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1757305AbZGICo1 (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 8 Jul 2009 22:44:27 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
-	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id n692hoht024621
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Wed, 8 Jul 2009 19:43:51 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id n692ho0q009842;
-	Wed, 8 Jul 2009 19:43:50 -0700
-X-X-Sender: torvalds@localhost.localdomain
-In-Reply-To: <alpine.LFD.2.01.0907081940220.3352@localhost.localdomain>
-User-Agent: Alpine 2.01 (LFD 1184 2008-12-16)
-X-Spam-Status: No, hits=-3.966 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED
-X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
+	id S1752083AbZGIFmT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 9 Jul 2009 01:42:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751472AbZGIFmS
+	(ORCPT <rfc822;git-outgoing>); Thu, 9 Jul 2009 01:42:18 -0400
+Received: from mail-fx0-f218.google.com ([209.85.220.218]:59160 "EHLO
+	mail-fx0-f218.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750924AbZGIFmR (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 9 Jul 2009 01:42:17 -0400
+Received: by fxm18 with SMTP id 18so6155730fxm.37
+        for <git@vger.kernel.org>; Wed, 08 Jul 2009 22:42:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:date:message-id:subject
+         :from:to:content-type:content-transfer-encoding;
+        bh=I/711y8BMFiKbuCO3v+3iF7D/cH0v2VWRvAMPox5MkQ=;
+        b=M94z5F1RcvbkYRFvORtP4y5OsXdbR7hISx+w+ZLklsfQMmMHSWnFafQ2NcvF7/fhnK
+         SeIcwu7dbeD1ErYGwDvc5Iq7QIBYVyjftRvN7TFXrNMOz1HoXSS6D6cA9RR26UPnoDKn
+         W3JJj8bPbFhMYk/K6k6qbISj75DyIhyzviqKk=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlemail.com; s=gamma;
+        h=mime-version:date:message-id:subject:from:to:content-type
+         :content-transfer-encoding;
+        b=cTupwaZLeUpdShrwEBb4+yVr5j70f12ub/udgi6h74vxfXjeVPScVOJoP5q/ZWKIxS
+         Dtk0GFamBMSrfWJahRnHoUFDn0dA4lVkLNvXmXZIZj9bP5PsYVvFI4PLg0JJywC0G1gV
+         wv/wRjLpulmBhWiXom+jN3miuPYc1C/EJcegE=
+Received: by 10.204.116.69 with SMTP id l5mr337148bkq.102.1247118136317; Wed, 
+	08 Jul 2009 22:42:16 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122933>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122934>
 
+Hi,
 
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Date: Wed, 8 Jul 2009 19:31:49 -0700
-Subject: [PATCH 3/3] Avoid doing extra 'lstat()'s for d_type if we have an up-to-date cache entry
+I'm using git bisect to track down a problem in 2.6.31-rc2 that is
+locking up my laptop. I get so far in the bisection process and then
+end up building a kernel that seems to me to be outside the good..bad
+range. First time up I thought it might be a case of PBKAC, but I've
+run the process again (very carefully) and got to the same place.
 
-On filesystems without d_type, we can look at the cache entry first.
-Doing an lstat() can be expensive.
+The bisect log so far:
 
-Reported by Dmitry Potapov for Cygwin.
+[chris:~/kernel/linux-2.6]$ git bisect log
+git bisect start
+# good: [07a2039b8eb0af4ff464efd3dfd95de5c02648c6] Linux 2.6.30
+git bisect good 07a2039b8eb0af4ff464efd3dfd95de5c02648c6
+# bad: [8e4a718ff38d8539938ec3421935904c27e00c39] Linux 2.6.31-rc2
+git bisect bad 8e4a718ff38d8539938ec3421935904c27e00c39
+# good: [e7c5a4f292e0d1f4ba9a3a94b2c8e8b71e35b25a] powerpc/5121: make
+clock debug output more readable
+git bisect good e7c5a4f292e0d1f4ba9a3a94b2c8e8b71e35b25a
+# bad: [d23c45fd84f79a3b84899dac053dcafe9d43ebc9] NFS: Invalid mount
+option values should always fail, even with "sloppy"
+git bisect bad d23c45fd84f79a3b84899dac053dcafe9d43ebc9
+# bad: [2ed0e21b30b53d3a94e204196e523e6c8f732b56] Merge
+git://git.kernel.org/pub/scm/linux/kernel/git/davem/net-next-2.6
+git bisect bad 2ed0e21b30b53d3a94e204196e523e6c8f732b56
 
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
----
+but, from Makefile, it appears the last "bad" has placed me at a
+change earlier than 2.6.30:
 
-This is the same patch I already sent Dmitry, but now it applies on top of 
-the cleaned-up read_directory_recursive() code.
+[chris:~/kernel/linux-2.6]$ head Makefile
+VERSION = 2
+PATCHLEVEL = 6
+SUBLEVEL = 30
+EXTRAVERSION = -rc6
+NAME = Vindictive Armadillo
 
- dir.c |   14 +++++++++-----
- 1 files changed, 9 insertions(+), 5 deletions(-)
+# *DOCUMENTATION*
+# To see a list of typical targets execute "make help"
+# More info can be located in ./README
+# Comments in this file are targeted only to the developer, do not
 
-diff --git a/dir.c b/dir.c
-index b0671f5..8a9e7d8 100644
---- a/dir.c
-+++ b/dir.c
-@@ -16,7 +16,7 @@ struct path_simplify {
- 
- static int read_directory_recursive(struct dir_struct *dir, const char *path, int len,
- 	int check_only, const struct path_simplify *simplify);
--static int get_dtype(struct dirent *de, const char *path);
-+static int get_dtype(struct dirent *de, const char *path, int len);
- 
- static int common_prefix(const char **pathspec)
- {
-@@ -326,7 +326,7 @@ static int excluded_1(const char *pathname,
- 
- 			if (x->flags & EXC_FLAG_MUSTBEDIR) {
- 				if (*dtype == DT_UNKNOWN)
--					*dtype = get_dtype(NULL, pathname);
-+					*dtype = get_dtype(NULL, pathname, pathlen);
- 				if (*dtype != DT_DIR)
- 					continue;
- 			}
-@@ -566,14 +566,18 @@ static int in_pathspec(const char *path, int len, const struct path_simplify *si
- 	return 0;
- }
- 
--static int get_dtype(struct dirent *de, const char *path)
-+static int get_dtype(struct dirent *de, const char *path, int len)
- {
- 	int dtype = de ? DTYPE(de) : DT_UNKNOWN;
-+	struct cache_entry *ce;
- 	struct stat st;
- 
- 	if (dtype != DT_UNKNOWN)
- 		return dtype;
--	if (lstat(path, &st))
-+	ce = cache_name_exists(path, len, 0);
-+	if (ce && ce_uptodate(ce))
-+		st.st_mode = ce->ce_mode;
-+	else if (lstat(path, &st))
- 		return dtype;
- 	if (S_ISREG(st.st_mode))
- 		return DT_REG;
-@@ -633,7 +637,7 @@ static int read_directory_recursive(struct dir_struct *dir, const char *base, in
- 				continue;
- 
- 			if (dtype == DT_UNKNOWN)
--				dtype = get_dtype(de, path);
-+				dtype = get_dtype(de, path, len);
- 
- 			/*
- 			 * Do we want to see just the ignored files?
+I'm not an experienced git user, so it may be that I have made an
+error or false assumption. I guess it's also possible that I've
+screwed my repository, although basically I only use two types of
+command - pull a few times a week and the bisect family when I'm
+trying to track down a problem.
+
+Come to think of it, I did archive the repository (with tar | bzip2)
+about a week ago whilst I changed the hard drive in my laptop. Once
+the new drive was installed, I restored the repository and freshened
+it up with a git pull. Could this be the root of my problem, please?
+
+Happy to provide more information if needed. Please cc me to any reply
+- I'm not subscribed.
+
+Thanks
+
+Chris
+
 -- 
-1.6.3.3.412.gf581d
+No, Sir; there is nothing which has yet been contrived by man, by
+which so much happiness is produced as by a good tavern or inn -
+Doctor Samuel Johnson
