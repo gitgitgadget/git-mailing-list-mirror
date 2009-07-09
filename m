@@ -1,87 +1,250 @@
-From: Dmitry Potapov <dpotapov@gmail.com>
-Subject: Re: [PATCH 3/3] Avoid doing extra 'lstat()'s for d_type if we have
-	an up-to-date cache entry
-Date: Thu, 9 Jul 2009 17:50:10 +0400
-Message-ID: <20090709135010.GA19425@dpotapov.dyndns.org>
-References: <20090707000500.GA5594@dpotapov.dyndns.org> <alpine.LFD.2.01.0907081902371.3352@localhost.localdomain> <alpine.LFD.2.01.0907081933530.3352@localhost.localdomain> <alpine.LFD.2.01.0907081936470.3352@localhost.localdomain> <alpine.LFD.2.01.0907081940220.3352@localhost.localdomain> <alpine.LFD.2.01.0907081942380.3352@localhost.localdomain>
+From: Johan Herland <johan@herland.net>
+Subject: [PATCH v3] quickfetch(): Prevent overflow of the rev-list command line
+Date: Thu, 09 Jul 2009 15:52:44 +0200
+Message-ID: <200907091552.44545.johan@herland.net>
+References: <alpine.DEB.2.00.0906181310400.23400@ds9.cixit.se>
+ <200907091134.45492.johan@herland.net> <4A55E100.9010700@viscovery.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>,
+Content-Type: Text/Plain; charset=iso-8859-1
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org, Peter Krefting <peter@softwolves.pp.se>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Alex Riesen <raa.lkml@gmail.com>
+To: Johannes Sixt <j.sixt@viscovery.net>,
 	Junio C Hamano <gitster@pobox.com>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Thu Jul 09 15:51:10 2009
+X-From: git-owner@vger.kernel.org Thu Jul 09 15:52:55 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MOu1l-000576-T2
-	for gcvg-git-2@gmane.org; Thu, 09 Jul 2009 15:51:10 +0200
+	id 1MOu3T-0005uq-2G
+	for gcvg-git-2@gmane.org; Thu, 09 Jul 2009 15:52:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760147AbZGINui (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 9 Jul 2009 09:50:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760070AbZGINui
-	(ORCPT <rfc822;git-outgoing>); Thu, 9 Jul 2009 09:50:38 -0400
-Received: from mail-fx0-f218.google.com ([209.85.220.218]:61076 "EHLO
-	mail-fx0-f218.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759129AbZGINuh (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 9 Jul 2009 09:50:37 -0400
-Received: by fxm18 with SMTP id 18so185171fxm.37
-        for <git@vger.kernel.org>; Thu, 09 Jul 2009 06:50:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=wns8WAOJ0qX1K95pHCxyjPw6XrI8QGcC2NFIgeYqvbI=;
-        b=rMlBmIjho3ZfY0VhcH8bPvZAMoP2cuqmFUIN78JzZKhSe1MQaoC3Xz2TBhQD8YHoPG
-         A333U8j/rpT1WuGWnnSu9ToikC1qW0puknpkaKShznoa6gHBLmShoFeU3PPlfyKjQiM9
-         cI0PRJaX0NNAYpZN86S9/jHy8m/LZnRtxnlno=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=RnE+x465KOLihxlMQA6MjqtTFRjWYesGM3WuKopMgwb/e1yrtS5202ZvDB5CFPGhPK
-         BLhyhkoVWMW/DLYjvf2sKkkgs9e+cDJUkWjRdwbxPgV6XWkdN6crSWRBMdjlIF4OmzD1
-         0LTW5a6ppaNCWNEtibfg0PTeHELNAIdo2JMGs=
-Received: by 10.103.189.18 with SMTP id r18mr445833mup.80.1247147436299;
-        Thu, 09 Jul 2009 06:50:36 -0700 (PDT)
-Received: from localhost (ppp91-76-16-212.pppoe.mtu-net.ru [91.76.16.212])
-        by mx.google.com with ESMTPS id w5sm45411828mue.4.2009.07.09.06.50.35
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 09 Jul 2009 06:50:35 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <alpine.LFD.2.01.0907081942380.3352@localhost.localdomain>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+	id S1760530AbZGINwt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 9 Jul 2009 09:52:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760189AbZGINws
+	(ORCPT <rfc822;git-outgoing>); Thu, 9 Jul 2009 09:52:48 -0400
+Received: from mx.getmail.no ([84.208.15.66]:44116 "EHLO
+	get-mta-out01.get.basefarm.net" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1759143AbZGINws (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 9 Jul 2009 09:52:48 -0400
+Content-disposition: inline
+Received: from mx.getmail.no ([10.5.16.4]) by get-mta-out01.get.basefarm.net
+ (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
+ with ESMTP id <0KMI008NVP7YUL30@get-mta-out01.get.basefarm.net> for
+ git@vger.kernel.org; Thu, 09 Jul 2009 15:52:46 +0200 (MEST)
+Received: from alpha.localnet ([84.215.102.95])
+ by get-mta-in03.get.basefarm.net
+ (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
+ with ESMTP id <0KMI0053AP7W7630@get-mta-in03.get.basefarm.net> for
+ git@vger.kernel.org; Thu, 09 Jul 2009 15:52:46 +0200 (MEST)
+X-PMX-Version: 5.5.5.374460, Antispam-Engine: 2.7.1.369594,
+ Antispam-Data: 2009.7.9.134227
+User-Agent: KMail/1.11.4 (Linux/2.6.30-ARCH; KDE/4.2.4; x86_64; ; )
+In-reply-to: <4A55E100.9010700@viscovery.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122975>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/122976>
 
-On Wed, Jul 08, 2009 at 07:43:50PM -0700, Linus Torvalds wrote:
-> 
-> On filesystems without d_type, we can look at the cache entry first.
-> Doing an lstat() can be expensive.
-> 
-> Reported by Dmitry Potapov for Cygwin.
+quickfetch() calls rev-list to check whether the objects we are about to
+fetch are already present in the repo (if so, we can skip the object fetch).
+However, when there are many (~1000) refs to be fetched, the rev-list
+command line grows larger than the maximum command line size on some systems
+(32K in Windows). This causes rev-list to fail, making quickfetch() return
+non-zero, which unnecessarily triggers the transport machinery. This somehow
+causes fetch to fail with an exit code.
 
-I have tested it on Cygwin. The number of 'stat' for files is now 1, so
-it works fine :)
+By using the --stdin option to rev-list (and feeding the object list to its
+standard input), we prevent the overflow of the rev-list command line,
+which causes quickfetch(), and subsequently the overall fetch, to succeed.
 
-I still have the same large number of 'stat' calls for directories, but I
-suspect that due to that due to some Cygwin specific. I will investigate
-that issue later when I have more time.
+However, using rev-list --stdin is not entirely straightforward: rev-list
+terminates immediately when encountering an unknown object, which can
+trigger SIGPIPE if we are still writing object's to its standard input.
+We therefore temporarily ignore SIGPIPE so that the fetch process is not
+terminated.
 
-Because the repositoty on which I did testing has too many directories
-(one directory per each 3.5 files) the effect was not as prominent as
-it would be otherwise. Yet, it is 24.9% decrease of the number of 'stat'
-or 14.8% descreased of the total number of syscalls. And my measurement
-shows 14% descrease of run-time. So, it appears that on Windows the run
-time almost directly proportional of the total number of syscalls...
+The patch also contains a testcase to verify the fix (note that before
+the patch, the testcase would only fail on msysGit).
 
-BTW, I believe that this patch should help MinGW too, because AFAIK
-MinGW does not have d_type either.
+Signed-off-by: Johan Herland <johan@herland.net>
+Improved-by: Johannes Sixt <j6t@kdbg.org>
+Improved-by: Alex Riesen <raa.lkml@gmail.com>
+Tested-by: Peter Krefting <peter@softwolves.pp.se>
+---
+
+On Thursday 09 July 2009, Johannes Sixt wrote:
+> Would you please add such a test (perhaps in t5502)? It
+> would also help me verify the patch works as intended on Windows.
+
+Done (although somewhat naively). I don't have an msysgit setup to test
+this, but faking the failure condition in quickfetch() (return -1 if
+#refs > 800) does trigger the selftest (the second git fetch fails).
+
+I could add a separate pre-patch introducing the selftest with
+test_expect_failure, but that would only confuse non-msysgit users
+where the test succeeds both before and after the fix.
+
+> Please make this <j6t@kdbg.org> despite the email address I'm using right
+> now.
+
+Ok.
+
+> The call site of quickfetch() is not interested in the errno, only on
+> whether the return value is non-zero: You can just assign -1 to err
+> (that's our convention for failure). OTOH, it would be helpful to include
+> strerror(errno) in the error message.
+
+Fixed.
+
+> Shouldn't you reset signal(SIGPIPE) to its previous value?
+
+Done (provided that the sigchain_push/pop infrastructure works the way
+I expect).
+
+Thanks a lot for your review and suggestions.
 
 
-Thanks,
-Dmitry
+Have fun! :)
+
+...Johan
+
+
+ builtin-fetch.c       |   65 ++++++++++++++++++++++++++++--------------------
+ t/t5502-quickfetch.sh |   20 +++++++++++++++
+ 2 files changed, 58 insertions(+), 27 deletions(-)
+
+diff --git a/builtin-fetch.c b/builtin-fetch.c
+index cd5eb9a..2e3c609 100644
+--- a/builtin-fetch.c
++++ b/builtin-fetch.c
+@@ -400,14 +400,14 @@ static int store_updated_refs(const char *raw_url, const char *remote_name,
+ 
+ /*
+  * We would want to bypass the object transfer altogether if
+- * everything we are going to fetch already exists and connected
++ * everything we are going to fetch already exists and is connected
+  * locally.
+  *
+- * The refs we are going to fetch are in to_fetch (nr_heads in
+- * total).  If running
++ * The refs we are going to fetch are in ref_map.  If running
+  *
+- *  $ git rev-list --objects to_fetch[0] to_fetch[1] ... --not --all
++ *  $ git rev-list --objects --stdin --not --all
+  *
++ * (feeding all the refs in ref_map on its standard input)
+  * does not error out, that means everything reachable from the
+  * refs we are going to fetch exists and is connected to some of
+  * our existing refs.
+@@ -416,8 +416,9 @@ static int quickfetch(struct ref *ref_map)
+ {
+ 	struct child_process revlist;
+ 	struct ref *ref;
+-	char **argv;
+-	int i, err;
++	int err;
++	const char *argv[] = {"rev-list",
++		"--quiet", "--objects", "--stdin", "--not", "--all", NULL};
+ 
+ 	/*
+ 	 * If we are deepening a shallow clone we already have these
+@@ -429,34 +430,44 @@ static int quickfetch(struct ref *ref_map)
+ 	if (depth)
+ 		return -1;
+ 
+-	for (i = 0, ref = ref_map; ref; ref = ref->next)
+-		i++;
+-	if (!i)
++	if (!ref_map)
+ 		return 0;
+ 
+-	argv = xmalloc(sizeof(*argv) * (i + 6));
+-	i = 0;
+-	argv[i++] = xstrdup("rev-list");
+-	argv[i++] = xstrdup("--quiet");
+-	argv[i++] = xstrdup("--objects");
+-	for (ref = ref_map; ref; ref = ref->next)
+-		argv[i++] = xstrdup(sha1_to_hex(ref->old_sha1));
+-	argv[i++] = xstrdup("--not");
+-	argv[i++] = xstrdup("--all");
+-	argv[i++] = NULL;
+-
+ 	memset(&revlist, 0, sizeof(revlist));
+-	revlist.argv = (const char**)argv;
++	revlist.argv = argv;
+ 	revlist.git_cmd = 1;
+-	revlist.no_stdin = 1;
+ 	revlist.no_stdout = 1;
+ 	revlist.no_stderr = 1;
+-	err = run_command(&revlist);
++	revlist.in = -1;
++
++	/* If rev-list --stdin encounters an unknown commit, it terminates,
++	 * which will cause SIGPIPE in the write loop below. */
++	sigchain_push(SIGPIPE, SIG_IGN);
++
++	err = start_command(&revlist);
++	if (err) {
++		error("could not run rev-list");
++		return err;
++	}
++
++	for (ref = ref_map; ref; ref = ref->next) {
++		if (write_in_full(revlist.in, sha1_to_hex(ref->old_sha1), 40) < 0 ||
++		    write_in_full(revlist.in, "\n", 1) < 0) {
++			if (err != EPIPE && err != EINVAL)
++				error("failed write to rev-list: %s", strerror(errno));
++			err = -1;
++			break;
++		}
++	}
++
++	if (close(revlist.in)) {
++		error("failed to close rev-list's stdin: %s", strerror(errno));
++		err = -1;
++	}
++
++	sigchain_pop(SIGPIPE);
+ 
+-	for (i = 0; argv[i]; i++)
+-		free(argv[i]);
+-	free(argv);
+-	return err;
++	return finish_command(&revlist) || err;
+ }
+ 
+ static int fetch_refs(struct transport *transport, struct ref *ref_map)
+diff --git a/t/t5502-quickfetch.sh b/t/t5502-quickfetch.sh
+index 16eadd6..1037a72 100755
+--- a/t/t5502-quickfetch.sh
++++ b/t/t5502-quickfetch.sh
+@@ -119,4 +119,24 @@ test_expect_success 'quickfetch should not copy from alternate' '
+ 
+ '
+ 
++test_expect_success 'quickfetch should handle ~1000 refs (on Windows)' '
++
++	git gc &&
++	head=$(git rev-parse HEAD) &&
++	branchprefix="$head refs/heads/branch" &&
++	for i in 0 1 2 3 4 5 6 7 8 9; do
++		for j in 0 1 2 3 4 5 6 7 8 9; do
++			for k in 0 1 2 3 4 5 6 7 8 9; do
++				echo "$branchprefix$i$j$k" >> .git/packed-refs
++			done
++		done
++	done &&
++	(
++		cd cloned &&
++		git fetch &&
++		git fetch
++	)
++
++'
++
+ test_done
+-- 
+1.6.3.rc0.1.gf800
