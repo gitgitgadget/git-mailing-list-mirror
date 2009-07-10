@@ -1,117 +1,442 @@
-From: Antony Stubbs <antony.stubbs@gmail.com>
-Subject: [script] find largest pack objects
-Date: Fri, 10 Jul 2009 13:16:50 +1200
-Message-ID: <A67AA762-487D-4CFB-B555-718C88C5787D@gmail.com>
-Mime-Version: 1.0 (Apple Message framework v935.3)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
-Content-Transfer-Encoding: 7bit
+From: Larry D'Anna <larry@elder-gods.org>
+Subject: [PATCH v4] add --summary option to git-push and git-fetch
+Date: Thu, 9 Jul 2009 22:24:15 -0400
+Message-ID: <20090710022415.GA27274@cthulhu>
+References: <20090703044801.GA2072@cthulhu> <7viqiat965.fsf@alter.siamese.dyndns.org> <20090707015948.GA525@cthulhu> <h35bda$kgv$1@ger.gmane.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jul 10 03:17:08 2009
+X-From: git-owner@vger.kernel.org Fri Jul 10 04:24:26 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MP4ja-0004VL-Nj
-	for gcvg-git-2@gmane.org; Fri, 10 Jul 2009 03:17:07 +0200
+	id 1MP5mj-0003Kz-Nc
+	for gcvg-git-2@gmane.org; Fri, 10 Jul 2009 04:24:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751649AbZGJBQ7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 9 Jul 2009 21:16:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751458AbZGJBQ6
-	(ORCPT <rfc822;git-outgoing>); Thu, 9 Jul 2009 21:16:58 -0400
-Received: from mail-pz0-f175.google.com ([209.85.222.175]:40710 "EHLO
-	mail-pz0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751455AbZGJBQ5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 9 Jul 2009 21:16:57 -0400
-Received: by pzk5 with SMTP id 5so370951pzk.33
-        for <git@vger.kernel.org>; Thu, 09 Jul 2009 18:16:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:from:to
-         :content-type:content-transfer-encoding:mime-version:subject:date
-         :x-mailer;
-        bh=MrQRMYKQu4fx/TlOJLP6W7crfqoIFRdnWKTJ9Eo24XE=;
-        b=Mo3BfW4hEsh3q9bsKN3aTYnZN9CXyZFArbqhdbSVdfag6Ji7c8TRe2fL1FTmNHbnWl
-         H3OLeqWc8YHe8TL2L1wIMjg7JAMQDRs6Uvin6OApPD36AJ6XLDeqDgdiGGDBmO+FG8rQ
-         wwuWuoIyFDSBNoP7wwa/lOGzbvV8fGhzaHrRQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:from:to:content-type:content-transfer-encoding
-         :mime-version:subject:date:x-mailer;
-        b=b8TP4Qmx9BhhMfxFPo6ZD+K0FkEw1vohcc4lj05kxPVPwXR0zqr23Rrt5VmritIWwU
-         YvfvaoEabQb3tW24tbKHHn50DPrzKIYVTauGFcKWutc78od5A9wLDWxkBbeDBxtmRkdg
-         jZxfdZCXEQWNfTAWgW3qKqxllSRVQ0Ait97HI=
-Received: by 10.115.108.20 with SMTP id k20mr1242620wam.4.1247188615946;
-        Thu, 09 Jul 2009 18:16:55 -0700 (PDT)
-Received: from ?10.10.10.123? (mail.vgaca.co.nz [60.234.161.39])
-        by mx.google.com with ESMTPS id l38sm671811waf.26.2009.07.09.18.16.53
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 09 Jul 2009 18:16:55 -0700 (PDT)
-X-Mailer: Apple Mail (2.935.3)
+	id S1751518AbZGJCYS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 9 Jul 2009 22:24:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751428AbZGJCYR
+	(ORCPT <rfc822;git-outgoing>); Thu, 9 Jul 2009 22:24:17 -0400
+Received: from cthulhu.elder-gods.org ([140.239.99.253]:52409 "EHLO
+	cthulhu.elder-gods.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751376AbZGJCYQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 9 Jul 2009 22:24:16 -0400
+Received: by cthulhu.elder-gods.org (Postfix, from userid 1000)
+	id A7F42822106; Thu,  9 Jul 2009 22:24:15 -0400 (EDT)
+Mail-Followup-To: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Content-Disposition: inline
+In-Reply-To: <h35bda$kgv$1@ger.gmane.org>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123027>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123028>
 
-Blog post about git pruning history and finding large objects in your  
-repo: http://stubbisms.wordpress.com/2009/07/10/git-script-to-show-largest-pack-objects-and-trim-your-waist-line/
+--summary will cause git-push to output a one-line of each commit pushed.
+--summary=n will display at most n commits for each ref pushed.
 
-This is a script I put together after migrating the Spring Modules  
-project from CVS, using git-cvsimport (which I also had to patch, to  
-get to work on OS X / MacPorts). I wrote it because I wanted to get  
-rid of all the large jar files, and documentation etc, that had been  
-put into source control. However, if _large files_ are deleted in the  
-latest revision, then they can be hard to track down.
+$ git push --dry-run --summary origin :
+To /home/larry/gitsandbox/a
+   80f0e50..5593a38  master -> master
+    > 5593a38 foo
+    > 81c03f8 bar
 
-#!/bin/bash
-#set -x
+Fetch works the same way.
 
-# Shows you the largest objects in your repo's pack file.
-# Written for osx.
-#
-# @see http://stubbisms.wordpress.com/2009/07/10/git-script-to-show-largest-pack-objects-and-trim-your-waist-line/
-# @author Antony Stubbs
+Signed-off-by: Larry D'Anna <larry@elder-gods.org>
+---
 
-# set the internal field spereator to line break, so that we can  
-iterate easily over the verify-pack output
-IFS=$'\n';
+ Changes since last version: 
 
-# list all objects including their size, sort by size, take top 10
-objects=`git verify-pack -v .git/objects/pack/pack-*.idx | grep -v  
-chain | sort -k3nr | head`
+ * fixed the segfalt bug.  commit->buffer was NULL.
 
-echo "All sizes are in kB's. The pack column is the size of the  
-object, compressed, inside the pack file."
+ Documentation/fetch-options.txt |    7 ++++++
+ Documentation/git-push.txt      |    6 +++++
+ builtin-fetch.c                 |   24 ++++++++++++++++-----
+ builtin-log.c                   |   42 +++++++++++++++++++++++++++++++++++++++
+ builtin-push.c                  |   12 ++++++++--
+ builtin.h                       |    2 +
+ transport.c                     |   39 +++++++++++++++++++++++++-----------
+ transport.h                     |    2 +-
+ 8 files changed, 112 insertions(+), 22 deletions(-)
 
-output="size,pack,SHA,location"
-for y in $objects
-do
-	# extract the size in bytes
-	size=$((`echo $y | cut -f 5 -d ' '`/1024))
-	# extract the compressed size in bytes
-	compressedSize=$((`echo $y | cut -f 6 -d ' '`/1024))
-	# extract the SHA
-	sha=`echo $y | cut -f 1 -d ' '`
-	# find the objects location in the repository tree
-	other=`git rev-list --all --objects | grep $sha`
-	#lineBreak=`echo -e "\n"`
-	output="${output}\n${size},${compressedSize},${other}"
-done
-
-echo -e $output | column -t -s ', '
-
-More info on the blog post: http://stubbisms.wordpress.com/2009/07/10/git-script-to-show-largest-pack-objects-and-trim-your-waist-line/
-
-Regards,
-Antony Stubbs
-
-Talk to me about Wicket, Spring, Maven consulting, small scale  
-outsourcing to Australasia and India and Open Source development!
-
-Check out the Spring Modules fork at http://wiki.github.com/astubbs/spring-modules 
-  ! We've just done the first release of the project in over a year!
-
-Website: http://sharca.com
-Blog: http://stubbisms.wordpress.com
-Linked In: http://www.linkedin.com/in/antonystubbs
-Podcast: http://www.illegalargument.com
+diff --git a/Documentation/fetch-options.txt b/Documentation/fetch-options.txt
+index d313795..2e66d5e 100644
+--- a/Documentation/fetch-options.txt
++++ b/Documentation/fetch-options.txt
+@@ -27,6 +27,13 @@
+ 	fetches is a descendant of `<lbranch>`.  This option
+ 	overrides that check.
+ 
++--summary::
++	Print a one-line summary of each commit fetched.
++
++--summary=<n>::
++	Like --summary, but with a limit of <n> commits per ref.
++
++
+ ifdef::git-pull[]
+ --no-tags::
+ endif::git-pull[]
+diff --git a/Documentation/git-push.txt b/Documentation/git-push.txt
+index 2653388..803fe36 100644
+--- a/Documentation/git-push.txt
++++ b/Documentation/git-push.txt
+@@ -85,6 +85,12 @@ nor in any Push line of the corresponding remotes file---see below).
+ --dry-run::
+ 	Do everything except actually send the updates.
+ 
++--summary::
++	Print a one-line summary of each commit pushed.
++
++--summary=<n>::
++	Like --summary, but with a limit of <n> commits per ref.
++
+ --porcelain::
+ 	Produce machine-readable output.  The output status line for each ref
+ 	will be tab-separated and sent to stdout instead of stderr.  The full
+diff --git a/builtin-fetch.c b/builtin-fetch.c
+index cd5eb9a..c98d06b 100644
+--- a/builtin-fetch.c
++++ b/builtin-fetch.c
+@@ -29,6 +29,7 @@ static const char *depth;
+ static const char *upload_pack;
+ static struct strbuf default_rla = STRBUF_INIT;
+ static struct transport *transport;
++static int summary;
+ 
+ static struct option builtin_fetch_options[] = {
+ 	OPT__VERBOSITY(&verbosity),
+@@ -47,6 +48,9 @@ static struct option builtin_fetch_options[] = {
+ 		    "allow updating of HEAD ref"),
+ 	OPT_STRING(0, "depth", &depth, "DEPTH",
+ 		   "deepen history of shallow clone"),
++	{ OPTION_INTEGER, 0, "summary", &summary, "n", "print a summary of [at most n] fetched commits",
++	  PARSE_OPT_OPTARG, NULL, 20
++	},
+ 	OPT_END()
+ };
+ 
+@@ -197,7 +201,8 @@ static int s_update_ref(const char *action,
+ 
+ static int update_local_ref(struct ref *ref,
+ 			    const char *remote,
+-			    char *display)
++			    char *display,
++			    char *quickref)
+ {
+ 	struct commit *current = NULL, *updated;
+ 	enum object_type type;
+@@ -260,11 +265,12 @@ static int update_local_ref(struct ref *ref,
+ 		sprintf(display, "%c %-*s %-*s -> %s%s", r ? '!' : '*',
+ 			SUMMARY_WIDTH, what, REFCOL_WIDTH, remote, pretty_ref,
+ 			r ? "  (unable to update local ref)" : "");
++		if (!r)
++			strcpy(quickref, find_unique_abbrev(ref->new_sha1, DEFAULT_ABBREV));
+ 		return r;
+ 	}
+ 
+ 	if (in_merge_bases(current, &updated, 1)) {
+-		char quickref[83];
+ 		int r;
+ 		strcpy(quickref, find_unique_abbrev(current->object.sha1, DEFAULT_ABBREV));
+ 		strcat(quickref, "..");
+@@ -275,7 +281,6 @@ static int update_local_ref(struct ref *ref,
+ 			pretty_ref, r ? "  (unable to update local ref)" : "");
+ 		return r;
+ 	} else if (force || ref->force) {
+-		char quickref[84];
+ 		int r;
+ 		strcpy(quickref, find_unique_abbrev(current->object.sha1, DEFAULT_ABBREV));
+ 		strcat(quickref, "...");
+@@ -301,6 +306,7 @@ static int store_updated_refs(const char *raw_url, const char *remote_name,
+ 	struct commit *commit;
+ 	int url_len, i, note_len, shown_url = 0, rc = 0;
+ 	char note[1024];
++	char quickref[84];
+ 	const char *what, *kind;
+ 	struct ref *rm;
+ 	char *url, *filename = git_path("FETCH_HEAD");
+@@ -373,12 +379,15 @@ static int store_updated_refs(const char *raw_url, const char *remote_name,
+ 				fputc(url[i], fp);
+ 		fputc('\n', fp);
+ 
+-		if (ref)
+-			rc |= update_local_ref(ref, what, note);
+-		else
++		if (ref) {
++			*quickref = 0;
++			rc |= update_local_ref(ref, what, note, quickref);
++		} else {
++			strcpy(quickref, find_unique_abbrev(rm->old_sha1, DEFAULT_ABBREV));
+ 			sprintf(note, "* %-*s %-*s -> FETCH_HEAD",
+ 				SUMMARY_WIDTH, *kind ? kind : "branch",
+ 				 REFCOL_WIDTH, *what ? what : "HEAD");
++		}
+ 		if (*note) {
+ 			if (verbosity >= 0 && !shown_url) {
+ 				fprintf(stderr, "From %.*s\n",
+@@ -388,6 +397,9 @@ static int store_updated_refs(const char *raw_url, const char *remote_name,
+ 			if (verbosity >= 0)
+ 				fprintf(stderr, " %s\n", note);
+ 		}
++		if (summary && quickref[0])
++			print_summary_for_push_or_fetch(quickref, summary);
++
+ 	}
+ 	free(url);
+ 	fclose(fp);
+diff --git a/builtin-log.c b/builtin-log.c
+index 0c2fa0a..a09670c 100644
+--- a/builtin-log.c
++++ b/builtin-log.c
+@@ -1293,3 +1293,45 @@ int cmd_cherry(int argc, const char **argv, const char *prefix)
+ 	free_patch_ids(&ids);
+ 	return 0;
+ }
++
++
++void print_summary_for_push_or_fetch(const char *quickref, int limit)
++{
++	struct rev_info rev;
++	int i, max;
++	struct object *obj;
++	struct commit *commit;
++
++	max = get_max_object_index();
++	for (i = 0; i < max; i++)  {
++		obj = get_indexed_object(i);
++		if (obj)
++			obj->flags &= ~ALL_REV_FLAGS;
++	}
++
++	init_revisions(&rev, NULL);
++	rev.prune = 0;
++	assert(!handle_revision_arg(quickref, &rev, 0, 1));
++	assert(!prepare_revision_walk(&rev));
++
++	while ((commit = get_revision(&rev)) != NULL) {
++		struct strbuf buf = STRBUF_INIT;
++		if (limit == 0) {
++			fprintf(stderr, "    ...\n");
++			break;
++		}
++		if (!commit->buffer) {
++			enum object_type type;
++			unsigned long size;
++			commit->buffer =
++				read_sha1_file(commit->object.sha1, &type, &size);
++			if (!commit->buffer)
++				die("Cannot read commit %s", sha1_to_hex(commit->object.sha1));
++		}
++		format_commit_message(commit, "    %m %h %s\n", &buf, 0);
++		fputs(buf.buf, stderr);
++		strbuf_release(&buf);
++		limit--;
++	}
++	fputs("\n", stderr);
++}
+diff --git a/builtin-push.c b/builtin-push.c
+index 0a0297f..d38f9a8 100644
+--- a/builtin-push.c
++++ b/builtin-push.c
+@@ -113,7 +113,7 @@ static void setup_default_push_refspecs(void)
+ 	}
+ }
+ 
+-static int do_push(const char *repo, int flags)
++static int do_push(const char *repo, int flags, int summary)
+ {
+ 	int i, errs;
+ 	struct remote *remote = remote_get(repo);
+@@ -173,7 +173,7 @@ static int do_push(const char *repo, int flags)
+ 
+ 		if (flags & TRANSPORT_PUSH_VERBOSE)
+ 			fprintf(stderr, "Pushing to %s\n", url[i]);
+-		err = transport_push(transport, refspec_nr, refspec, flags);
++		err = transport_push(transport, refspec_nr, refspec, flags, summary);
+ 		err |= transport_disconnect(transport);
+ 
+ 		if (!err)
+@@ -192,6 +192,8 @@ int cmd_push(int argc, const char **argv, const char *prefix)
+ 	int rc;
+ 	const char *repo = NULL;	/* default repository */
+ 
++	int summary = 0;
++
+ 	struct option options[] = {
+ 		OPT_BIT('v', "verbose", &flags, "be verbose", TRANSPORT_PUSH_VERBOSE),
+ 		OPT_STRING( 0 , "repo", &repo, "repository", "repository"),
+@@ -205,6 +207,10 @@ int cmd_push(int argc, const char **argv, const char *prefix)
+ 		OPT_BOOLEAN( 0 , "thin", &thin, "use thin pack"),
+ 		OPT_STRING( 0 , "receive-pack", &receivepack, "receive-pack", "receive pack program"),
+ 		OPT_STRING( 0 , "exec", &receivepack, "receive-pack", "receive pack program"),
++		{ OPTION_INTEGER, 0, "summary", &summary, "n", "print a summary of [at most n] pushed commits",
++		  PARSE_OPT_OPTARG, NULL, 20
++		},
++
+ 		OPT_END()
+ 	};
+ 
+@@ -218,7 +224,7 @@ int cmd_push(int argc, const char **argv, const char *prefix)
+ 		set_refspecs(argv + 1, argc - 1);
+ 	}
+ 
+-	rc = do_push(repo, flags);
++	rc = do_push(repo, flags, summary);
+ 	if (rc == -1)
+ 		usage_with_options(push_usage, options);
+ 	else
+diff --git a/builtin.h b/builtin.h
+index 20427d2..5aea3a3 100644
+--- a/builtin.h
++++ b/builtin.h
+@@ -113,4 +113,6 @@ extern int cmd_verify_pack(int argc, const char **argv, const char *prefix);
+ extern int cmd_show_ref(int argc, const char **argv, const char *prefix);
+ extern int cmd_pack_refs(int argc, const char **argv, const char *prefix);
+ 
++extern void print_summary_for_push_or_fetch(const char *quickref, int limit);
++
+ #endif
+diff --git a/transport.c b/transport.c
+index de0d587..80105ae 100644
+--- a/transport.c
++++ b/transport.c
+@@ -11,6 +11,7 @@
+ #include "bundle.h"
+ #include "dir.h"
+ #include "refs.h"
++#include "builtin.h"
+ 
+ /* rsync support */
+ 
+@@ -750,17 +751,20 @@ static const char *status_abbrev(unsigned char sha1[20])
+ 	return find_unique_abbrev(sha1, DEFAULT_ABBREV);
+ }
+ 
+-static void print_ok_ref_status(struct ref *ref, int porcelain)
++static void print_ok_ref_status(struct ref *ref, int porcelain, int summary)
+ {
++	char quickref[84];
++	int summary_impossible = 0;
++
+ 	if (ref->deletion)
+ 		print_ref_status('-', "[deleted]", ref, NULL, NULL, porcelain);
+-	else if (is_null_sha1(ref->old_sha1))
++	else if (is_null_sha1(ref->old_sha1)) {
+ 		print_ref_status('*',
+ 			(!prefixcmp(ref->name, "refs/tags/") ? "[new tag]" :
+ 			"[new branch]"),
+ 			ref, ref->peer_ref, NULL, porcelain);
+-	else {
+-		char quickref[84];
++		strcpy(quickref, status_abbrev(ref->new_sha1));
++	} else {
+ 		char type;
+ 		const char *msg;
+ 
+@@ -769,6 +773,8 @@ static void print_ok_ref_status(struct ref *ref, int porcelain)
+ 			strcat(quickref, "...");
+ 			type = '+';
+ 			msg = "forced update";
++			if (!lookup_commit_reference_gently(ref->old_sha1, 1))
++				summary_impossible = 1;
+ 		} else {
+ 			strcat(quickref, "..");
+ 			type = ' ';
+@@ -778,9 +784,17 @@ static void print_ok_ref_status(struct ref *ref, int porcelain)
+ 
+ 		print_ref_status(type, quickref, ref, ref->peer_ref, msg, porcelain);
+ 	}
++
++	if (summary) {
++		if (summary_impossible) {
++			fprintf(stderr, "    %s is unavailable\n", status_abbrev(ref->old_sha1));
++		} else {
++			print_summary_for_push_or_fetch(quickref, summary);
++		}
++	}
+ }
+ 
+-static int print_one_push_status(struct ref *ref, const char *dest, int count, int porcelain)
++static int print_one_push_status(struct ref *ref, const char *dest, int count, int porcelain, int summary)
+ {
+ 	if (!count)
+ 		fprintf(stderr, "To %s\n", dest);
+@@ -812,7 +826,7 @@ static int print_one_push_status(struct ref *ref, const char *dest, int count, i
+ 						 "remote failed to report status", porcelain);
+ 		break;
+ 	case REF_STATUS_OK:
+-		print_ok_ref_status(ref, porcelain);
++		print_ok_ref_status(ref, porcelain, summary);
+ 		break;
+ 	}
+ 
+@@ -820,7 +834,7 @@ static int print_one_push_status(struct ref *ref, const char *dest, int count, i
+ }
+ 
+ static void print_push_status(const char *dest, struct ref *refs,
+-							  int verbose, int porcelain)
++							  int verbose, int porcelain, int summary)
+ {
+ 	struct ref *ref;
+ 	int n = 0;
+@@ -828,18 +842,18 @@ static void print_push_status(const char *dest, struct ref *refs,
+ 	if (verbose) {
+ 		for (ref = refs; ref; ref = ref->next)
+ 			if (ref->status == REF_STATUS_UPTODATE)
+-				n += print_one_push_status(ref, dest, n, porcelain);
++				n += print_one_push_status(ref, dest, n, porcelain, summary);
+ 	}
+ 
+ 	for (ref = refs; ref; ref = ref->next)
+ 		if (ref->status == REF_STATUS_OK)
+-			n += print_one_push_status(ref, dest, n, porcelain);
++			n += print_one_push_status(ref, dest, n, porcelain, summary);
+ 
+ 	for (ref = refs; ref; ref = ref->next) {
+ 		if (ref->status != REF_STATUS_NONE &&
+ 		    ref->status != REF_STATUS_UPTODATE &&
+ 		    ref->status != REF_STATUS_OK)
+-			n += print_one_push_status(ref, dest, n, porcelain);
++			n += print_one_push_status(ref, dest, n, porcelain, summary);
+ 	}
+ }
+ 
+@@ -997,7 +1011,8 @@ int transport_set_option(struct transport *transport,
+ }
+ 
+ int transport_push(struct transport *transport,
+-		   int refspec_nr, const char **refspec, int flags)
++				   int refspec_nr, const char **refspec,
++				   int flags, int summary)
+ {
+ 	verify_remote_names(refspec_nr, refspec);
+ 
+@@ -1024,7 +1039,7 @@ int transport_push(struct transport *transport,
+ 
+ 		ret = transport->push_refs(transport, remote_refs, flags);
+ 
+-		print_push_status(transport->url, remote_refs, verbose | porcelain, porcelain);
++		print_push_status(transport->url, remote_refs, verbose | porcelain, porcelain, summary);
+ 
+ 		if (!(flags & TRANSPORT_PUSH_DRY_RUN)) {
+ 			struct ref *ref;
+diff --git a/transport.h b/transport.h
+index 51b5397..360051e 100644
+--- a/transport.h
++++ b/transport.h
+@@ -68,7 +68,7 @@ int transport_set_option(struct transport *transport, const char *name,
+ 			 const char *value);
+ 
+ int transport_push(struct transport *connection,
+-		   int refspec_nr, const char **refspec, int flags);
++				   int refspec_nr, const char **refspec, int flags, int summary);
+ 
+ const struct ref *transport_get_remote_refs(struct transport *transport);
+ 
+-- 
+1.6.3.3.415.gbe1e
