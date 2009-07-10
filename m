@@ -1,62 +1,84 @@
-From: Catalin Marinas <catalin.marinas@gmail.com>
-Subject: Re: [StGit PATCH] teach --summary to stg show
-Date: Fri, 10 Jul 2009 23:14:31 +0100
-Message-ID: <b0943d9e0907101514u6140b577t2cd8e4e9f646817c@mail.gmail.com>
-References: <20090619050653.GD21764@ldl.fc.hp.com>
-	 <b0943d9e0907100311n26af2e86j95cae2200298ff68@mail.gmail.com>
-	 <20090710185629.GA19324@ldl.fc.hp.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/3] gitweb: Use "previous" header of git-blame -p in
+ 'blame' view
+Date: Fri, 10 Jul 2009 15:21:05 -0700
+Message-ID: <7v4otkuqlq.fsf@alter.siamese.dyndns.org>
+References: <200907102354.43232.jnareb@gmail.com>
+ <200907102357.43475.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: kha@treskal.com, git@vger.kernel.org
-To: Alex Chiang <achiang@hp.com>
-X-From: git-owner@vger.kernel.org Sat Jul 11 00:14:42 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Luben Tuikov <ltuikov@yahoo.com>,
+	Junio C Hamano <gitster@pobox.com>
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Jul 11 00:21:21 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MPOMa-0007JP-VG
-	for gcvg-git-2@gmane.org; Sat, 11 Jul 2009 00:14:41 +0200
+	id 1MPOT2-0000y7-SA
+	for gcvg-git-2@gmane.org; Sat, 11 Jul 2009 00:21:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756409AbZGJWOf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 10 Jul 2009 18:14:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755668AbZGJWOe
-	(ORCPT <rfc822;git-outgoing>); Fri, 10 Jul 2009 18:14:34 -0400
-Received: from mail-bw0-f225.google.com ([209.85.218.225]:55203 "EHLO
-	mail-bw0-f225.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752750AbZGJWOd (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 10 Jul 2009 18:14:33 -0400
-Received: by bwz25 with SMTP id 25so1163624bwz.37
-        for <git@vger.kernel.org>; Fri, 10 Jul 2009 15:14:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=98ZwyYMKmXbMdkzkvzMI0Gv4/ZzhhNV2jwJswdyMSCE=;
-        b=rFOJNiVa4q/G6UnZr+3CWeigkvNnGAAjzKAD+VUXIV078wP5V36EH7wxmWgL51tC6+
-         K6vFbH535cdmxK0o7Jj0K8htXCfBtR/VXa4olUDvaRQT0DLJyRTS0RKb+PyjJ1000ic4
-         UR9H6VyKL+SEYd9ZV2KCLTuxKMgi47e0Elx7s=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=FuZM2xJu12I1rIk63L96pPqZMpQAUfBPTdtqt+fYOnbnINUhc5NKZqGilA7/UyuyFk
-         z6or/lTE3A1Nn0mLZaay2XJzZCDdTGgi5IYlB7tr85beJ2niFfq9On8GWJ3Cq/mbX4yR
-         vmmhEwRL9wNcM7Qj/eSGDoaQGkwe8JRSYe/p0=
-Received: by 10.223.122.141 with SMTP id l13mr1390608far.99.1247264071712; 
-	Fri, 10 Jul 2009 15:14:31 -0700 (PDT)
-In-Reply-To: <20090710185629.GA19324@ldl.fc.hp.com>
+	id S1756744AbZGJWVO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 10 Jul 2009 18:21:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756719AbZGJWVN
+	(ORCPT <rfc822;git-outgoing>); Fri, 10 Jul 2009 18:21:13 -0400
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:63424 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756626AbZGJWVN (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 10 Jul 2009 18:21:13 -0400
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 2C3E02600D;
+	Fri, 10 Jul 2009 18:21:12 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 4E07726008; Fri,
+ 10 Jul 2009 18:21:07 -0400 (EDT)
+In-Reply-To: <200907102357.43475.jnareb@gmail.com> (Jakub Narebski's message
+ of "Fri\, 10 Jul 2009 23\:57\:42 +0200")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: F98D031A-6D9F-11DE-A9AE-424D1A496417-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123089>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123090>
 
-2009/7/10 Alex Chiang <achiang@hp.com>:
-> [how about that other patch "fix stg mail %(shortlog)s order"? :) ]
+Jakub Narebski <jnareb@gmail.com> writes:
 
-I already merged it. Thanks.
+> Luben Tuikov changed 'lineno' link (line number link) from pointing to
+> 'blame' view at given line at blamed commit, to the one at parent of
+> blamed commit in
+>   244a70e (Blame "linenr" link jumps to previous state at
+>            "orig_lineno", 2007-01-04).
+> This made it possible to do data mining using 'blame' view, by going
+> through history of a line using mentioned line number link.
 
--- 
-Catalin
+I was playing with this feature the other day (and I think you can guess
+what I was writing when I was doing so as preparation).  I was mildly
+annoyed that these links on the commit object names go to the commit view.
+
+I think going to commitdiff view would make it far more useful while
+digging.
+
+Suppose if you were somehow interested in the recent commit by Peff,
+"Makefile: install 'git' in execdir".  You go to:
+
+    http://repo.or.cz/w/alt-git.git
+
+and look at commitdiff of the commit from the shortlog part.
+
+You read the diff, understand what the changed Makefile does, but you get
+curious to see the blame.  Nicely, the commitdiff view has a list of the
+files changed, and each entry in the list has "blame" link.
+
+Clicking it would give you the blame on each line from the Makefile.
+
+So far, very smooth experience.  Then you scroll to an area of the file
+you are interested in, and click on one of the commits.
+
+Oops.
+
+It does not show the change of the commit made by this one, even though it
+does list Makefile in the list of files changed, and it has a blame link,
+the commit view without diff disrupts the thought process I had in the
+previous blame page, and I have to go to commitdiff to reorient myself.
