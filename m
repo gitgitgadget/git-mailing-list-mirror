@@ -1,129 +1,184 @@
-From: Dmitry Potapov <dpotapov@gmail.com>
-Subject: Re: [PATCH 3/3] Avoid doing extra 'lstat()'s for d_type if we
-	have?an up-to-date cache entry
-Date: Fri, 10 Jul 2009 17:04:07 +0400
-Message-ID: <20090710130407.GE19425@dpotapov.dyndns.org>
-References: <alpine.LFD.2.01.0907081933530.3352@localhost.localdomain> <alpine.LFD.2.01.0907081936470.3352@localhost.localdomain> <alpine.LFD.2.01.0907081940220.3352@localhost.localdomain> <alpine.LFD.2.01.0907081942380.3352@localhost.localdomain> <7vskh646bw.fsf@alter.siamese.dyndns.org> <alpine.LFD.2.01.0907090832200.3352@localhost.localdomain> <7vws6h3ji4.fsf@alter.siamese.dyndns.org> <20090709210513.GB19425@dpotapov.dyndns.org> <loom.20090709T214734-78@post.gmane.org> <20090709233024.GD19425@dpotapov.dyndns.org>
+From: Graeme Geldenhuys <graemeg@gmail.com>
+Subject: Pushing to GitHub doesn't push all branches
+Date: Fri, 10 Jul 2009 15:24:55 +0200
+Message-ID: <h37fga$5ie$1@ger.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Eric Blake <ebb9@byu.net>
-X-From: git-owner@vger.kernel.org Fri Jul 10 15:04:40 2009
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jul 10 15:26:24 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MPFmJ-0001ER-BZ
-	for gcvg-git-2@gmane.org; Fri, 10 Jul 2009 15:04:39 +0200
+	id 1MPG7L-0002gv-Ag
+	for gcvg-git-2@gmane.org; Fri, 10 Jul 2009 15:26:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755524AbZGJNEf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 10 Jul 2009 09:04:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754899AbZGJNEe
-	(ORCPT <rfc822;git-outgoing>); Fri, 10 Jul 2009 09:04:34 -0400
-Received: from mail-bw0-f225.google.com ([209.85.218.225]:64859 "EHLO
-	mail-bw0-f225.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755422AbZGJNEd (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 10 Jul 2009 09:04:33 -0400
-Received: by bwz25 with SMTP id 25so854654bwz.37
-        for <git@vger.kernel.org>; Fri, 10 Jul 2009 06:04:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=1163Uz2Iar5mx6a/Ttifpo0ihUDzDgaMV14SUmsAKLc=;
-        b=oCkWOsjgpalUPzH81j5J7IYbz1Ue983+5Lvso5+EWRMEYltSVoLalbSKxNT1tEnX0/
-         kSvS5PS/lWClilkQy8SGicqqvDj1Um2yOykp0zbvLumQz/IeQVKztMLL3rMft4qffjJB
-         26GTYjHKT9SNmTuSPlwzRXig0raaFGB91xCoU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=Cuqh7Bux3DIoODeQ3827oNZnv2x01r6Qa4HiMFjkpPZ1QVPu7WLfbSLXMNxucWNMJb
-         3/7rWtUvNjrpvITA2tEqiFEBD9Eq/uk7epviiMm0sysQfLGa5vOREMIUw3MCXijGMWVi
-         9lHLj97ZDuBKR8GvBZJzZ5l9iCPhhnuSnq7Qg=
-Received: by 10.102.247.4 with SMTP id u4mr1099212muh.26.1247231072014;
-        Fri, 10 Jul 2009 06:04:32 -0700 (PDT)
-Received: from localhost (ppp85-141-235-157.pppoe.mtu-net.ru [85.141.235.157])
-        by mx.google.com with ESMTPS id y6sm5475636mug.40.2009.07.10.06.04.30
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 10 Jul 2009 06:04:30 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <20090709233024.GD19425@dpotapov.dyndns.org>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+	id S1753940AbZGJNZr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 10 Jul 2009 09:25:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755265AbZGJNZq
+	(ORCPT <rfc822;git-outgoing>); Fri, 10 Jul 2009 09:25:46 -0400
+Received: from main.gmane.org ([80.91.229.2]:49604 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753268AbZGJNZp (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 10 Jul 2009 09:25:45 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1MPG6g-00088J-8b
+	for git@vger.kernel.org; Fri, 10 Jul 2009 13:25:42 +0000
+Received: from 41.177.20.228 ([41.177.20.228])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 10 Jul 2009 13:25:42 +0000
+Received: from graemeg by 41.177.20.228 with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 10 Jul 2009 13:25:42 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: 41.177.20.228
+User-Agent: Thunderbird 2.0.0.22 (X11/20090608)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123052>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123053>
 
-On Fri, Jul 10, 2009 at 03:30:24AM +0400, Dmitry Potapov wrote:
-> 
-> But we still use readdir() from Cygwin and that may be source of extra
-> syscalls that I observe...
+Hi,
 
-opendir gives an extra 'stat' before opening directory
-readdir produces one more extra 'stat' on the parent directory before
-        returning '..'
-open(.gitignore) does one extra 'stat' on the directory where it tries
-        to open .gitignore (it did not exist in my tests)
+What am I doing wrong here.  I 'git svn clone' a SubVersion repository 
+and when it was done, I was placed in the "master" branch, which seems 
+to track the "trunk" branch of the remote.
 
-So, the number of 'stat' on each directory is 2 plus the number of
-subidectories that it has. Thus, the total number of 'stat' for all
-directories is 3 multiple the number of directories in your repo. All
-those 'stat' are artifacts of Cygwin. Also, you have 2 open per each
-directory and one of them are redundant (at least, for Git purposes).
-Overall (including syscalls for .gitignore), you have the following
-number of syscalls for each directory in your repo:
-  5 - QueryOpen (stat)
-  3 - CreateFile (open)
-  2 - CloseFile (close)
-  1 - QueryFileInternalInformationFile
+I then added GitHub as a remote repository:
 
-Here is the detail listing of testing of read_directory_recursive:
-=====
-opendir(.)
-	QueryOpen,E:\dpotapov\repo
-	CreateFile,E:\dpotapov\repo
-first readdir call
-	QueryDirectory,E:\dpotapov\repo
-second readdir call that returns '..'
-	QueryOpen,E:\dpotapov
-	CreateFile,E:\dpotapov
-	QueryFileInternalInformationFile,E:\dpotapov
-	CloseFile,E:\dpotapov
-open(.gitignore) -- .gitignore does not exist
-	QueryOpen,E:\dpotapov\repo\.gitignore
-	QueryOpen,E:\dpotapov\repo\.gitignore.lnk
-	QueryOpen,E:\dpotapov\repo
-	CreateFile,E:\dpotapov\repo\.gitignore
-stat for untracked file
-	QueryOpen,E:\dpotapov\repo\bar
-opendir(dir1)
-	QueryOpen,E:\dpotapov\repo\dir1
-	CreateFile,E:\dpotapov\repo\dir1
-first readdir call
-	QueryDirectory,E:\dpotapov\repo\dir1
-second readdir call that returns '..'
-	QueryOpen,E:\dpotapov\repo
-	CreateFile,E:\dpotapov\repo
-	QueryFileInternalInformationFile,E:\dpotapov\repo
-	CloseFile,E:\dpotapov\repo
-open(.gitignore) -- .gitignore does not exist
-	QueryOpen,E:\dpotapov\repo\dir1\.gitignore
-	QueryOpen,E:\dpotapov\repo\dir1\.gitignore.lnk
-	QueryOpen,E:\dpotapov\repo\dir1
-	CreateFile,E:\dpotapov\repo\dir1\.gitignore
-last readdir call that returns NULL
-	QueryDirectory,E:\dpotapov\repo\dir1
-closedir
-	CloseFile,E:\dpotapov\repo\dir1
-stat for some modified file
-	QueryOpen,E:\dpotapov\repo\foo
-last readdir call that returns NULL
-	QueryDirectory,E:\dpotapov\repo
-closedir
-	CloseFile,E:\dpotapov\repo
-=====
+$ git remote add origin git@github.com:graemeg/freepascal.git
 
-Dmitry
+I then tried to push all the SubVersion branches to GitHub, but only the 
+"master" branch went through.  I thought the --mirror will push everything.
+
+Any ideas?
+
+You can view the repository on GitHub with your Web Browser at this URL:
+   http://github.com/graemeg/freepascal/tree
+As you will notice, under the "all branches" option, only "master" is 
+available.
+
+
+=======================
+$ git branch -a
+* master
+   remotes/aspect
+   remotes/avr
+   remotes/cleanroom
+   remotes/cpstr
+   remotes/ctypes
+   remotes/fixes_2_0
+   remotes/fixes_2_2
+   remotes/fixes_2_2_0_dos
+   remotes/florian
+   remotes/fpc_2_3
+   remotes/generics
+   remotes/genfunc
+   remotes/inline
+   remotes/janbruns
+   remotes/linker
+   remotes/linker@2665
+   remotes/llvm
+   remotes/merged
+   remotes/newthreading
+   remotes/objc
+   remotes/origin/master
+   remotes/rc_2_2_2
+   remotes/release_2_1_2x
+   remotes/release_2_2_4_rc1
+   remotes/resources
+   remotes/ssa
+   remotes/tags/release_2_0_0
+   remotes/tags/release_2_0_2
+   remotes/tags/release_2_0_4
+   remotes/tags/release_2_0_4_macos
+   remotes/tags/release_2_0_4_rc1
+   remotes/tags/release_2_0_4_rc2
+   remotes/tags/release_2_0_4_rc3
+   remotes/tags/release_2_1_2
+   remotes/tags/release_2_1_4
+   remotes/tags/release_2_2_0
+   remotes/tags/release_2_2_2
+   remotes/tags/release_2_2_2_rc1
+   remotes/tags/release_2_2_2_rc2
+   remotes/tags/release_2_2_4
+   remotes/tags/test_2_0_4
+   remotes/tags/test_2_0_4_1
+   remotes/trunk
+   remotes/tue
+   remotes/unicodertl
+   remotes/unicodestring
+   remotes/unitrw
+   remotes/wpo
+=======================
+
+
+$ git push -v --mirror origin
+Pushing to git@github.com:graemeg/freepascal.git
+Counting objects: 130317, done.
+Delta compression using up to 2 threads.
+Compressing objects: 100% (38881/38881), done.
+Writing objects: 100% (130317/130317), 54.53 MiB | 51 KiB/s, done.
+Total 130317 (delta 100296), reused 120757 (delta 90739)
+To git@github.com:graemeg/freepascal.git
+  * [new branch]      master -> master
+  * [new branch]      aspect -> aspect
+  * [new branch]      avr -> avr
+  * [new branch]      cleanroom -> cleanroom
+  * [new branch]      cpstr -> cpstr
+  * [new branch]      ctypes -> ctypes
+  * [new branch]      fixes_2_0 -> fixes_2_0
+  * [new branch]      fixes_2_2 -> fixes_2_2
+  * [new branch]      fixes_2_2_0_dos -> fixes_2_2_0_dos
+  * [new branch]      florian -> florian
+  * [new branch]      fpc_2_3 -> fpc_2_3
+  * [new branch]      generics -> generics
+  * [new branch]      genfunc -> genfunc
+  * [new branch]      inline -> inline
+  * [new branch]      janbruns -> janbruns
+  * [new branch]      linker -> linker
+  * [new branch]      linker@2665 -> linker@2665
+  * [new branch]      llvm -> llvm
+  * [new branch]      merged -> merged
+  * [new branch]      newthreading -> newthreading
+  * [new branch]      objc -> objc
+  * [new branch]      rc_2_2_2 -> rc_2_2_2
+  * [new branch]      release_2_1_2x -> release_2_1_2x
+  * [new branch]      release_2_2_4_rc1 -> release_2_2_4_rc1
+  * [new branch]      resources -> resources
+  * [new branch]      ssa -> ssa
+  * [new branch]      tags/release_2_0_0 -> tags/release_2_0_0
+  * [new branch]      tags/release_2_0_2 -> tags/release_2_0_2
+  * [new branch]      tags/release_2_0_4 -> tags/release_2_0_4
+  * [new branch]      tags/release_2_0_4_macos -> tags/release_2_0_4_macos
+  * [new branch]      tags/release_2_0_4_rc1 -> tags/release_2_0_4_rc1
+  * [new branch]      tags/release_2_0_4_rc2 -> tags/release_2_0_4_rc2
+  * [new branch]      tags/release_2_0_4_rc3 -> tags/release_2_0_4_rc3
+  * [new branch]      tags/release_2_1_2 -> tags/release_2_1_2
+  * [new branch]      tags/release_2_1_4 -> tags/release_2_1_4
+  * [new branch]      tags/release_2_2_0 -> tags/release_2_2_0
+  * [new branch]      tags/release_2_2_2 -> tags/release_2_2_2
+  * [new branch]      tags/release_2_2_2_rc1 -> tags/release_2_2_2_rc1
+  * [new branch]      tags/release_2_2_2_rc2 -> tags/release_2_2_2_rc2
+  * [new branch]      tags/release_2_2_4 -> tags/release_2_2_4
+  * [new branch]      tags/test_2_0_4 -> tags/test_2_0_4
+  * [new branch]      tags/test_2_0_4_1 -> tags/test_2_0_4_1
+  * [new branch]      trunk -> trunk
+  * [new branch]      tue -> tue
+  * [new branch]      unicodertl -> unicodertl
+  * [new branch]      unicodestring -> unicodestring
+  * [new branch]      unitrw -> unitrw
+  * [new branch]      wpo -> wpo
+updating local tracking ref 'refs/remotes/origin/master'
+
+
+Regards,
+   - Graeme -
+
+-- 
+fpGUI Toolkit - a cross-platform GUI toolkit using Free Pascal
+http://opensoft.homeip.net/fpgui/
