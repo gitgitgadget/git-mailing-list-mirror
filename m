@@ -1,45 +1,79 @@
-From: layer <layer@known.net>
-Subject: How can I tell if a tag has been pushed, or not?
-Date: Fri, 10 Jul 2009 10:43:27 -0700
-Message-ID: <14563.1247247807@relay.known.net>
+From: Brandon Casey <casey@nrlssc.navy.mil>
+Subject: [PATCH FYI 6/5] Makefile: update IRIX64 section
+Date: Fri, 10 Jul 2009 13:31:19 -0500
+Message-ID: <stPsg0ZZV3g6iZzJJntBzwwYW5t-03cXjs4wphlspoOTzCVzFQjvHF1wtQgAA7hq1rWxe4CvZHs@cipher.nrlssc.navy.mil>
+References: <39niBtmtFs5Sy_fjtaztVpzvYMB2VqzJqRa_5SCfycpkVR-qsHwAomyoqf7KXKH-vbxIhbJxKJM@cipher.nrlssc.navy.mil>
+Cc: Brandon Casey <drafnel@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jul 10 19:49:40 2009
+X-From: git-owner@vger.kernel.org Fri Jul 10 20:32:04 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MPKE8-0003Oq-BF
-	for gcvg-git-2@gmane.org; Fri, 10 Jul 2009 19:49:40 +0200
+	id 1MPKt9-0002cT-OA
+	for gcvg-git-2@gmane.org; Fri, 10 Jul 2009 20:32:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752337AbZGJRtd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 10 Jul 2009 13:49:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751696AbZGJRtc
-	(ORCPT <rfc822;git-outgoing>); Fri, 10 Jul 2009 13:49:32 -0400
-Received: from relay.known.net ([67.121.255.169]:52918 "EHLO relay.known.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751458AbZGJRtc (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 10 Jul 2009 13:49:32 -0400
-X-Greylist: delayed 364 seconds by postgrey-1.27 at vger.kernel.org; Fri, 10 Jul 2009 13:49:31 EDT
-Received: from localhost (127.0.0.1) by relay.known.net
-    (Allegro Maild v1.2.19) id 000000046934; Fri, 10 Jul 2009 10:43:27 -0700
-X-Mailer: MH-E 8.1; nmh 1.3; GNU Emacs 22.3.1
+	id S1754914AbZGJSbe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 10 Jul 2009 14:31:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754357AbZGJSbe
+	(ORCPT <rfc822;git-outgoing>); Fri, 10 Jul 2009 14:31:34 -0400
+Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:36383 "EHLO
+	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754914AbZGJSbe (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 10 Jul 2009 14:31:34 -0400
+Received: by mail.nrlssc.navy.mil id n6AIVVU2024938; Fri, 10 Jul 2009 13:31:31 -0500
+In-Reply-To: <39niBtmtFs5Sy_fjtaztVpzvYMB2VqzJqRa_5SCfycpkVR-qsHwAomyoqf7KXKH-vbxIhbJxKJM@cipher.nrlssc.navy.mil>
+X-OriginalArrivalTime: 10 Jul 2009 18:31:31.0017 (UTC) FILETIME=[A5155B90:01CA018C]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123074>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123075>
 
-Here's the problem:
+From: Brandon Casey <drafnel@gmail.com>
 
-I expect that users, in their own private repos, will from time to
-time create tags that should not be pushed.  Sometimes, tags that
-should be pushed will be created.
+---
 
-I could require that the "public" tags follow a specific convention
-(start with "release", or something).  Then, the scripts all my
-developers use could use that and push only certain tags.  However,
-over time there could be a large number of them.  It seems undesirable
-to push each tag each time a push is done.  So, how can I tell if a
-tag has already been pushed?  Is there a way?
 
-Thanks.
+Here's the update for the 64-bit version of IRIX.  This has been tested to
+the same extent that the 32-bit version has been tested.  The 64-bit test
+system is a little bit older than the 32-bit system, so a few more tests are
+skipped (related to a too old gtar), and NO_STRLCPY and NO_DEFLATE_BOUND
+macros are set.
+
+-brandon
+
+
+ Makefile |   12 ++++++------
+ 1 files changed, 6 insertions(+), 6 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index d404524..baa0296 100644
+--- a/Makefile
++++ b/Makefile
+@@ -844,17 +844,17 @@ ifeq ($(uname_S),IRIX)
+ 	NEEDS_LIBGEN = YesPlease
+ endif
+ ifeq ($(uname_S),IRIX64)
+-	NO_IPV6=YesPlease
+ 	NO_SETENV=YesPlease
++	NO_UNSETENV = YesPlease
+ 	NO_STRCASESTR=YesPlease
+ 	NO_MEMMEM = YesPlease
+ 	NO_MKSTEMPS = YesPlease
+-	NO_STRLCPY = YesPlease
+-	NO_SOCKADDR_STORAGE=YesPlease
++	NO_MKDTEMP = YesPlease
++	NO_MMAP = YesPlease
++	NO_EXTERNAL_GREP = UnfortunatelyYes
++	SNPRINTF_RETURNS_BOGUS = YesPlease
+ 	SHELL_PATH=/usr/gnu/bin/bash
+-	BASIC_CFLAGS += -DPATH_MAX=1024
+-	# for now, build 32-bit version
+-	BASIC_LDFLAGS += -L/usr/lib32
++	NEEDS_LIBGEN = YesPlease
+ endif
+ ifeq ($(uname_S),HP-UX)
+ 	NO_IPV6=YesPlease
+-- 
+1.6.4.rc0.5.g76f7cf
