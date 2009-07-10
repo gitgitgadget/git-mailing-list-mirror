@@ -1,98 +1,117 @@
-From: Tom Lanyon <tom@netspot.com.au>
-Subject: Re: [RFC] Git Perl bindings, and OO interface
-Date: Fri, 10 Jul 2009 11:38:04 +0930
-Message-ID: <E6AB02D1-CF72-4611-91B0-DA524081A2EE@netspot.com.au>
-References: <200811270258.50898.jnareb@gmail.com>
-Mime-Version: 1.0 (Apple Message framework v935.3)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Petr Baudis <pasky@suse.cz>,
-	Lea Wiemann <lewiemann@gmail.com>,
-	Nadim Khemir <nadim@khemir.net>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jul 10 04:28:26 2009
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 7/3] Make index preloading check the whole path to the
+ file
+Date: Thu, 09 Jul 2009 20:12:31 -0700
+Message-ID: <7v8wixw7s0.fsf@alter.siamese.dyndns.org>
+References: <20090707000500.GA5594@dpotapov.dyndns.org>
+ <alpine.LFD.2.01.0907081902371.3352@localhost.localdomain>
+ <alpine.LFD.2.01.0907081933530.3352@localhost.localdomain>
+ <alpine.LFD.2.01.0907081936470.3352@localhost.localdomain>
+ <alpine.LFD.2.01.0907081940220.3352@localhost.localdomain>
+ <alpine.LFD.2.01.0907081942380.3352@localhost.localdomain>
+ <7vskh646bw.fsf@alter.siamese.dyndns.org>
+ <alpine.LFD.2.01.0907090832200.3352@localhost.localdomain>
+ <7vws6h3ji4.fsf@alter.siamese.dyndns.org>
+ <alpine.LFD.2.01.0907091011280.3352@localhost.localdomain>
+ <alpine.LFD.2.01.0907091013540.3352@localhost.localdomain>
+ <7vab3d3dpc.fsf@alter.siamese.dyndns.org>
+ <alpine.LFD.2.01.0907091153130.3352@localhost.localdomain>
+ <alpine.LFD.2.01.0907091344340.3352@localhost.localdomain>
+ <alpine.LFD.2.01.0907091344530.3352@localhost.localdomain>
+ <alpine.LFD.2.01.0907091347080.3352@localhost.localdomain>
+ <alpine.LFD.2.01.0907091348490.3352@localhost.localdomain>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Dmitry Potapov <dpotapov@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Kjetil Barvik <barvik@broadpark.no>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Fri Jul 10 05:12:52 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MP5qc-0004As-7x
-	for gcvg-git-2@gmane.org; Fri, 10 Jul 2009 04:28:26 +0200
+	id 1MP6Xb-0006OA-Ea
+	for gcvg-git-2@gmane.org; Fri, 10 Jul 2009 05:12:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751448AbZGJC2V (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 9 Jul 2009 22:28:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751376AbZGJC2U
-	(ORCPT <rfc822;git-outgoing>); Thu, 9 Jul 2009 22:28:20 -0400
-Received: from mail.adl-na.netspot.com.au ([203.30.161.27]:57693 "EHLO
-	mail.adl-na.netspot.com.au" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751183AbZGJC2T (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 9 Jul 2009 22:28:19 -0400
-X-Greylist: delayed 1211 seconds by postgrey-1.27 at vger.kernel.org; Thu, 09 Jul 2009 22:28:19 EDT
-Received: from dhcp-248-44.net.adl-na.netspot.com.au (dhcp-248-44.net.adl-na.netspot.com.au [10.229.248.44])
-	(Authenticated sender: tom)
-	by mail.adl-na.netspot.com.au (Postfix) with ESMTP id CD0E0960615;
-	Fri, 10 Jul 2009 11:38:06 +0930 (CST)
-In-Reply-To: <200811270258.50898.jnareb@gmail.com>
-X-Mailer: Apple Mail (2.935.3)
+	id S1751890AbZGJDMo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 9 Jul 2009 23:12:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751718AbZGJDMn
+	(ORCPT <rfc822;git-outgoing>); Thu, 9 Jul 2009 23:12:43 -0400
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:35763 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752760AbZGJDMm (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 9 Jul 2009 23:12:42 -0400
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id ED3A226B37;
+	Thu,  9 Jul 2009 23:12:40 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id B153C26B36; Thu, 
+ 9 Jul 2009 23:12:32 -0400 (EDT)
+In-Reply-To: <alpine.LFD.2.01.0907091348490.3352@localhost.localdomain>
+ (Linus Torvalds's message of "Thu\, 9 Jul 2009 13\:50\:26 -0700 \(PDT\)")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 8744F83A-6CFF-11DE-927C-DC021A496417-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123029>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123030>
 
-On 27/11/2008, at 12:28 PM, Jakub Narebski wrote:
-> 0. One of points of disagreement between Git.pm and new Git::Repo was
->   using Error module for frontend error handling.  While the
->   explanation in http://www.perl.com/pub/a/2002/11/14/exception.html
->   is compelling, it is not standard Perl technique.  Additionally
->   adding "cmd_git_try { CODE } ERRORMSG" syntactic sugar was not very
->   good idea.
+Linus Torvalds <torvalds@linux-foundation.org> writes:
+
+> From: Linus Torvalds <torvalds@linux-foundation.org>
+> Date: Thu, 9 Jul 2009 13:37:02 -0700
+> Subject: [PATCH 7/3] Make index preloading check the whole path to the file
 >
->   So the first thing I'd like to discuss: to use Error and try/catch,
->   or not in Perl interface (bindings) to Git?  I would really like to
->   hear from Perl experts / Perl hackers here...
+> This uses the new thread-safe 'threaded_has_symlink_leading_path()'
+> function to efficiently verify that the whole path leading up to the
+> filename is a proper path, and does not contain symlinks.
+>
+> This makes 'ce_uptodate()' a much stronger guarantee: it no longer just
+> guarantees that the 'lstat()' of the path would match, it also means
+> that we know that people haven't played games with moving directories
+> around and covered it up with symlinks.
+>
+> Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+> ---
+>
+> Totally trivial, now that we have a thread-safe symlink checker.
+>
+> If we have leading symlinks in the cache-entry path, we will refuse to 
+> mark it up-to-date. There's no need to even try to stat anything under 
+> that directory.
+>
+>  preload-index.c |    3 +++
+>  1 files changed, 3 insertions(+), 0 deletions(-)
+>
+> diff --git a/preload-index.c b/preload-index.c
+> index 88edc5f..c3462dc 100644
+> --- a/preload-index.c
+> +++ b/preload-index.c
+> @@ -34,6 +34,7 @@ static void *preload_thread(void *_data)
+>  	struct thread_data *p = _data;
+>  	struct index_state *index = p->index;
+>  	struct cache_entry **cep = index->cache + p->offset;
+> +	struct cache_def cache;
+>  
+>  	nr = p->nr;
+>  	if (nr + p->offset > index->cache_nr)
+> @@ -49,6 +50,8 @@ static void *preload_thread(void *_data)
+>  			continue;
+>  		if (!ce_path_match(ce, p->pathspec))
+>  			continue;
+> +		if (threaded_has_symlink_leading_path(&cache, ce->name, ce_namelen(ce)))
+> +			continue;
 
+I must be missing something very obvious, but how would this call behave
+on an uninitialized cache defined above, or do we need reset_lstat_cache()
+on it before the first use?
 
-Sorry to bring up an old thread - but there was no further discussion  
-on this and I've recently run into some grief with Git.pm.
-
-I'm new to Git, but not new to Perl and recently attempted to perform  
-some simple operations over Git repositories from a Perl application  
-(it needs to clone, push, checkout, merge and that's about it) and  
-found the Error.pm style handling of errors unintuitive and annoying.  
-It is currently fairly simple to capture errors into the application  
-by wrapping git_cmd_try { CODE } ERROR into an eval {} block but this  
-really only provides you with the command's exit status and no  
-meaningful error messages to display to your users; not to mention  
-it's fairly ugly.
-
-A long standing Perl motto is 'There Is More Than One Way To Do It'  
-and the use of Error.pm here forces developers down a specific path  
-for error handling - some may like this, some may not, but there's not  
-a lot they can do about it. I would suggest that the Perl way for  
-Git.pm to handle errors is for its methods to return the standard 1 or  
-0 for success or failure and perhaps store some meaningful error  
-messages in an accessor or variable. The module should also not die()  
-if there's an error - leave this up to the users of the module to  
-handle errors how they prefer - if it dies, we must wrap the methods  
-in eval{} blocks or handle with $SIG{__DIE__}, making for some messy  
-and ugly code.
-
-I would love to be able to:
-
-	my $repo = Git->repository( directory => '/some/repo' )
-		or die "Unable to load git repo /some/repo: $Git::errstr";
-
-	$repo->command( 'push', [ 'some-remote' ] )
-		or die "Unable to push to origin: $Git::errstr";
-
-... or similar, and have $Git::errstr set to something meaningful like  
-the "fatal: 'some-remote': unable to chdir or not a git archive"  
-returned by git-push. This also leads into some discussion around git  
-commands printing to STDERR when there is no error -- example: if  
-everything is fine and up to date, I don't need git-push to tell me  
-"Everything up-to-date" in STDERR...
-
-Hope this helps.
-
-Regards,
-Tom
+>  		if (lstat(ce->name, &st))
+>  			continue;
+>  		if (ie_match_stat(index, ce, &st, CE_MATCH_RACY_IS_DIRTY))
+> -- 
+> 1.6.3.3.415.ga8877
