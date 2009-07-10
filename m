@@ -1,96 +1,118 @@
-From: Ralf Baechle <ralf@linux-mips.org>
-Subject: Re: What's happening with vr41xx_giu.c?
-Date: Fri, 10 Jul 2009 11:47:43 +0100
-Message-ID: <20090710104743.GB1288@linux-mips.org>
-References: <4A5680B5.2090405@necel.com> <4A56B060.7090106@mips.com>
+From: Esben Skovenborg <esskov@oncable.dk>
+Subject: Re: git-svn is "Unable to determine upstream SVN information..."
+Date: Fri, 10 Jul 2009 13:15:14 +0200
+Message-ID: <5m5e55538tlnq40rup7rci61i2mg16q0dv@4ax.com>
+References: <ohrc5510bko329be5ugj3n6bgvhcevd2kg@4ax.com> <20090710033133.GA23082@dcvr.yhbt.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Shinya Kuribayashi <shinya.kuribayashi@necel.com>,
-	yuasa@linux-mips.org, linux-mips@linux-mips.org,
-	git@vger.kernel.org
-To: Chris Dearman <chris@mips.com>
-X-From: git-owner@vger.kernel.org Fri Jul 10 12:48:08 2009
+Content-Transfer-Encoding: 8BIT
+Cc: git@vger.kernel.org
+To: Eric Wong <normalperson@yhbt.net>
+X-From: git-owner@vger.kernel.org Fri Jul 10 13:15:39 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MPDeC-0003Y9-2W
-	for gcvg-git-2@gmane.org; Fri, 10 Jul 2009 12:48:08 +0200
+	id 1MPE4o-00062S-1b
+	for gcvg-git-2@gmane.org; Fri, 10 Jul 2009 13:15:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751580AbZGJKr4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 10 Jul 2009 06:47:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751348AbZGJKr4
-	(ORCPT <rfc822;git-outgoing>); Fri, 10 Jul 2009 06:47:56 -0400
-Received: from h5.dl5rb.org.uk ([81.2.74.5]:52173 "EHLO h5.dl5rb.org.uk"
+	id S1754243AbZGJLPd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 10 Jul 2009 07:15:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751557AbZGJLPP
+	(ORCPT <rfc822;git-outgoing>); Fri, 10 Jul 2009 07:15:15 -0400
+Received: from mx04.stofanet.dk ([212.10.10.14]:39091 "EHLO mx04.stofanet.dk"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751382AbZGJKrz (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 10 Jul 2009 06:47:55 -0400
-Received: from h5.dl5rb.org.uk (localhost.localdomain [127.0.0.1])
-	by h5.dl5rb.org.uk (8.14.3/8.14.3) with ESMTP id n6AAliGS003400;
-	Fri, 10 Jul 2009 11:47:44 +0100
-Received: (from ralf@localhost)
-	by h5.dl5rb.org.uk (8.14.3/8.14.3/Submit) id n6AAlhqw003398;
-	Fri, 10 Jul 2009 11:47:43 +0100
-Content-Disposition: inline
-In-Reply-To: <4A56B060.7090106@mips.com>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+	id S1751078AbZGJLPN convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 10 Jul 2009 07:15:13 -0400
+Received: from 56344c10.rev.stofanet.dk ([86.52.76.16] helo=eclipse2)
+	by mx04.stofanet.dk (envelope-from
+	<esskov@oncable.dk>)
+	with esmtpa id 1MPE4M-0000NZ-0h; Fri, 10 Jul 2009 13:15:10 +0200
+In-Reply-To: <20090710033133.GA23082@dcvr.yhbt.net>
+X-Mailer: Forte Agent 4.2/32.1118
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123048>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123049>
 
-On Thu, Jul 09, 2009 at 08:07:12PM -0700, Chris Dearman wrote:
 
-This is smelling like a git issue so I'm adding git@vger.kernel.org to cc
-list.
+Thanks for your quick reply! Let me go through your check-list...
 
-> Shinya Kuribayashi wrote:
+On Thu, 9 Jul 2009 20:31:33 -0700, Eric Wong wrote:
+>esskov@oncable.dk wrote:
+>> I'm trying to clone the trunk of an svn repo, so that I can work on a set
+>> of patches locally, and then occasionally push some of them back to svn.
+>> 
+>> The git-svn clone seems to go well, and the resulting git log looks
+>> alright. However, git-svn info and git-svn rebase both say "Unable to
+>> determine upstream SVN information from working tree history".
+>> Also, git-svn log shows nothing.  I'm using the svn:// protocol btw, but I
+>> guess the protocol shouldn't matter?
 >
->> skuribay@ubuntu:linux.git$ make distclean
->> skuribay@ubuntu:linux.git$
->> skuribay@ubuntu:linux.git$
->> skuribay@ubuntu:linux.git$ git status
->> # On branch master
->> # Changed but not updated:
->> #   (use "git add/rm <file>..." to update what will be committed)
->> #   (use "git checkout -- <file>..." to discard changes in working  
->> directory)
->> #
->> #       deleted:    drivers/char/vr41xx_giu.c
->> #
->> no changes added to commit (use "git add" and/or "git commit -a")
->> skuribay@ubuntu:linux.git$
->>
+>Protocol shouldn't matter.  Do you have any non-linear history from
+>merges in git?  git-svn (and SVN) doesn't play very nicely with
+>non-linear history that git merges can generate.
 >
-> Commit 27fdd325dace4a1ebfa10e93ba6f3d25f25df674 turned  
-> drivers/char/vr41xx_giu.c into an empty file instead of deleting it when  
-> the file was moved to drivers/gpio
+>Does having a clean clone of that repo fix things?  You didn't use
+>--no-metadata or blow away your .git/svn/* directories, did you?
+
+I do get the problem with a clean clone, and I don't see any difference
+between the structure of the .git/svn/* of the problematic repo and of the
+working test-repo.
+
+The problem can be reproduced as simple as this:
+$ git svn init svn://svn.xxx.xxx/xxx/trunk
+$ git svn fetch -r BASE:10
+$ git branch -a
+	* master
+	  remotes/git-svn
+$ git svn info 
+	Unable to determine upstream SVN information from working tree
+history
+$ git log
+	each commit shows line like: "a git-svn-id:
+svn://svn.xxx.xxx/xxx/trunk@1-10 xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+
+These 10 revisions only consist of file insertions and deletions in the
+trunk.
+
+>> To test if this was a general problem, I just tried to git-svn clone a
+>> repo on some public svn server which was also using the svn protocol. I
+>> used exactly the same syntax for the svn init and fetch commands. However,
+>> the resulting git repo did NOT suffer from the problem, i.e., git-svn info
+>> reported nicely etc.
+>> 
+>> At some point I suspected that there might be a problem with the
+>> "git-svn-id ..." lines in the commits for the problematic repo, but they
+>> look just like the ones for the working repo. The .git/config files of the
+>> working and the non-working git-repos are similar as well. 
+>> 
+>> What could be causing this problem?
 >
-> "make distclean" deletes any 0 length .c files that it finds.
->
-> Leaving drivers/char/vr41xx_giu.c as a zero length file may have been a  
-> git bug but was probably just an oversight. I'll send a patch to clean  
-> it up as a followup.
+>Which version of git svn is this?  
 
-And issue is reproducable.  When I go back to commit
-27fdd325dace4a1ebfa10e93ba6f3d25f25df674^ and apply Yoichi's patch using
-git am or git apply this will leave a zero byte drivers/char/vr41xx_giu.c.
-Patch(1) otoh will remove that file as expected.  The patch file Yoichi
-sent looks perfectly ok; here the headers of the vr41xx_giu.c bit:
+I see the problem with both git version 1.6.3.2.1299.gee46c (msysgit) and
+git version 1.6.3.3.412.gf581d (Ubuntu). The latter contains your fix for
+that other problem I encountered :)
 
-[...]
-diff -pruN -X /home/yuasa/Memo/dontdiff linux-orig/drivers/char/vr41xx_giu.c linux/drivers/char/vr41xx_giu.c
---- linux-orig/drivers/char/vr41xx_giu.c        2009-06-29 10:06:58.329177629 +0900
-+++ linux/drivers/char/vr41xx_giu.c     1970-01-01 09:00:00.000000000 +0900
-@@ -1,680 +0,0 @@
--/*
-[...]
+>Are there any weird characters in the URL?  
 
-This is with git 1.6.0.6 (git-1.6.0.6-4.fc10.x86_64 from Fedora 10).
+No. The only thing 'different' about this svn server is that it uses
+authentication (i.e. asks for name+password). But I suppose that when the
+git-svn fetch goes well, then this is not the problem?  Do the git-svn
+info and git-svn rebase even need to access the svn server?
 
-The patch is available at http://www.linux-mips.org/cgi-bin/extract-mesg.cgi?a=linux-mips&m=2009-06&i=20090629111105.9ff024bf.yyuasa%40linux.com
-and the git tree in question is Linus' kernel tree available from
-git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6.
+>Off the top of my head I can't think of anything else; I assume
+>you're not allowed to share access to the repo (or to the clone) you're
+>having problems with?
 
-  Ralf
+Right, at least it's something we should talk about off-list.
+
+Is there any way of asking git-svn *why* it is "unable to determine
+upstream SVN information from working tree history" ?
+
+
+Cheers,
+
+	Esben
