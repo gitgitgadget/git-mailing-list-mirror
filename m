@@ -1,112 +1,65 @@
-From: Stephen Boyd <bebarino@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: [PATCH/RFC] grep: Add --directories option.
-Date: Fri, 10 Jul 2009 01:02:22 -0700
-Message-ID: <4A56F58E.1080907@gmail.com>
+Date: Fri, 10 Jul 2009 01:11:14 -0700
+Message-ID: <7vmy7dufdp.fsf@alter.siamese.dyndns.org>
 References: <1247167228-2466-1-git-send-email-michal.kiedrowicz@gmail.com>
+ <4A56EED7.9040008@lsrfire.ath.cx>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>
-To: =?UTF-8?B?TWljaGHFgiBLaWVkcm93aWN6?= <michal.kiedrowicz@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jul 10 10:02:36 2009
+Cc: =?utf-8?Q?Micha=C5=82?= Kiedrowicz <michal.kiedrowicz@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: =?utf-8?Q?Ren=C3=A9?= Scharfe <rene.scharfe@lsrfire.ath.cx>
+X-From: git-owner@vger.kernel.org Fri Jul 10 10:12:17 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MPB3z-0000Aa-CW
-	for gcvg-git-2@gmane.org; Fri, 10 Jul 2009 10:02:35 +0200
+	id 1MPBDM-0003KC-JA
+	for gcvg-git-2@gmane.org; Fri, 10 Jul 2009 10:12:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750996AbZGJIC1 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 10 Jul 2009 04:02:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750968AbZGJIC1
-	(ORCPT <rfc822;git-outgoing>); Fri, 10 Jul 2009 04:02:27 -0400
-Received: from mail-px0-f193.google.com ([209.85.216.193]:43246 "EHLO
-	mail-px0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750722AbZGJIC0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 10 Jul 2009 04:02:26 -0400
-Received: by pxi31 with SMTP id 31so511664pxi.33
-        for <git@vger.kernel.org>; Fri, 10 Jul 2009 01:02:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from
-         :user-agent:mime-version:to:cc:subject:references:in-reply-to
-         :x-enigmail-version:content-type:content-transfer-encoding;
-        bh=0fVXCupqYvzk6o372IXtkuptojNtrS0SQEhnE6aE9G4=;
-        b=GjjAgW3Szt6a88KBoBURG90bB3xfEB+PdtvZ8axzv08tShqMtsqM/Sn0Izs0wP6ser
-         /bYCED2NDMQ6aLvs2vDEv2Q9o3xSaZO6bxZzb8zzxx/WyQ9CrKY+MoN9OmYEq3p4EBzO
-         7p/Cn5e+XbmnXQV0zCMRI2DtBjo7N1pYLsSco=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:x-enigmail-version:content-type
-         :content-transfer-encoding;
-        b=rO69FQuGPTLBQGfM45/6/Xg3U8xr9ttDPSuM5Xd/IMKsjJCgAutijOa0qOPbO6550o
-         AwJUOPSm2m3Qi8KR2dpnbw72C2B08CAWs5gdSQjxD6pNrYqProUQeOvX5a97E+Q+8nFJ
-         K//o22b7lFXaW+p3+Vfk4cC7ZPQYQ32tPyRYE=
-Received: by 10.142.135.16 with SMTP id i16mr643770wfd.189.1247212945051;
-        Fri, 10 Jul 2009 01:02:25 -0700 (PDT)
-Received: from ?10.10.0.4? (cpe-66-75-25-79.san.res.rr.com [66.75.25.79])
-        by mx.google.com with ESMTPS id 32sm1606378wfa.13.2009.07.10.01.02.23
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 10 Jul 2009 01:02:24 -0700 (PDT)
-User-Agent: Thunderbird 2.0.0.22 (X11/20090629)
-In-Reply-To: <1247167228-2466-1-git-send-email-michal.kiedrowicz@gmail.com>
-X-Enigmail-Version: 0.95.7
+	id S1751227AbZGJILX convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 10 Jul 2009 04:11:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750970AbZGJILW
+	(ORCPT <rfc822;git-outgoing>); Fri, 10 Jul 2009 04:11:22 -0400
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:58192 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753553AbZGJILV (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 10 Jul 2009 04:11:21 -0400
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id B18B7264AB;
+	Fri, 10 Jul 2009 04:11:19 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id F1DA6264A7; Fri,
+ 10 Jul 2009 04:11:15 -0400 (EDT)
+In-Reply-To: <4A56EED7.9040008@lsrfire.ath.cx> (=?utf-8?Q?=22Ren=C3=A9?=
+ Scharfe"'s message of "Fri\, 10 Jul 2009 09\:33\:43 +0200")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 3FAD9E44-6D29-11DE-9627-DC021A496417-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123043>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123044>
 
-Micha=C5=82 Kiedrowicz wrote:
-> @@ -648,10 +658,32 @@ static int help_callback(const struct option *o=
-pt, const char *arg, int unset)
->  	return -1;
->  }
-> =20
-> +static int directories_callback(const struct option *opt,
-> +				const char *arg, int unset)
-> +{
-> +	int *recurse =3D opt->value;
-> +
-> +	if (!arg)
-> +		return error("switch `d' requires a value");
+Ren=C3=A9 Scharfe <rene.scharfe@lsrfire.ath.cx> writes:
 
-This isn't needed because OPT_CALLBACK requires an argument always be g=
-iven.
+> It seems your patch still allows recursion, one level deep.
 
-> +
-> +	if (!strcmp(arg, "recurse")) {
-> +		*recurse =3D 1;
-> +		return 0;
-> +	} else if (!strcmp(arg, "skip")) {
-> +		*recurse =3D 0;
-> +		return 0;
-> +	}
-> +
-> +	fprintf(stderr, "Invalid action `%s'.\n", arg);
-> +	fprintf(stderr, "Available actions are: recurse skip.\n");
-> +	return -1;
-> +}
-> +
+I suspect what the patch wants to do may be fundamentally unworkable.
 
-I think I would drop the two fprintf's here and just return an error()
-saying invalid action. This will in turn cause the usage message to sho=
-w
-up, where you can show the two possible actions.
+Unlike GNU grep that takes its command line arguments literally as file=
+s
+and directories, we use them merely as pathspec filters, so...
 
-> @@ -674,6 +706,9 @@ int cmd_grep(int argc, const char **argv, const c=
-har *prefix)
->  		OPT_SET_INT('I', NULL, &opt.binary,
->  			"don't match patterns in binary files",
->  			GREP_BINARY_NOMATCH),
-> +		OPT_CALLBACK('d', "directories", &recurse, "action",
-> +			"action to perform when input file is a directory",
-> +			directories_callback),
->  		OPT_GROUP(""),
->  		OPT_BIT('E', "extended-regexp", &opt.regflags,
->  			"use extended POSIX regular expressions", REG_EXTENDED),
+> 	$ git grep -l --directories=3Dskip GNU compat/*
 
-Do you want to allow "--no-directories", I would suggest setting the
-PARSE_OPT_NONEG flag to avoid this. Maybe you want to replace "action"
-with "recurse|skip" too.
+=2E.. while I think you should be able to compensate for this kind  of
+"off-by-one" and make it appear to work, I do not think there is a good
+definition of which level it should stop if you run it with something
+like this (notice the single-quote around the pathspec to prevent it fr=
+om
+getting expanded by the shell):
+
+	git grep GNU 'compat/*/*'
