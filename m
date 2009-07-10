@@ -1,65 +1,62 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH/RFC] grep: Add --directories option.
-Date: Fri, 10 Jul 2009 01:11:14 -0700
-Message-ID: <7vmy7dufdp.fsf@alter.siamese.dyndns.org>
-References: <1247167228-2466-1-git-send-email-michal.kiedrowicz@gmail.com>
- <4A56EED7.9040008@lsrfire.ath.cx>
+From: =?ISO-8859-1?Q?Santi_B=E9jar?= <santi@agolina.net>
+Subject: make install fails with $bindir = $execdir
+Date: Fri, 10 Jul 2009 12:11:59 +0200
+Message-ID: <adf1fd3d0907100311k3b70c9f4va077e96a499ce093@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?utf-8?Q?Micha=C5=82?= Kiedrowicz <michal.kiedrowicz@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: =?utf-8?Q?Ren=C3=A9?= Scharfe <rene.scharfe@lsrfire.ath.cx>
-X-From: git-owner@vger.kernel.org Fri Jul 10 10:12:17 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: Git Mailing List <git@vger.kernel.org>, Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Jul 10 12:13:26 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MPBDM-0003KC-JA
-	for gcvg-git-2@gmane.org; Fri, 10 Jul 2009 10:12:17 +0200
+	id 1MPD5O-00059m-3x
+	for gcvg-git-2@gmane.org; Fri, 10 Jul 2009 12:12:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751227AbZGJILX convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 10 Jul 2009 04:11:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750970AbZGJILW
-	(ORCPT <rfc822;git-outgoing>); Fri, 10 Jul 2009 04:11:22 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:58192 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753553AbZGJILV (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 10 Jul 2009 04:11:21 -0400
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id B18B7264AB;
-	Fri, 10 Jul 2009 04:11:19 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id F1DA6264A7; Fri,
- 10 Jul 2009 04:11:15 -0400 (EDT)
-In-Reply-To: <4A56EED7.9040008@lsrfire.ath.cx> (=?utf-8?Q?=22Ren=C3=A9?=
- Scharfe"'s message of "Fri\, 10 Jul 2009 09\:33\:43 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 3FAD9E44-6D29-11DE-9627-DC021A496417-77302942!a-sasl-quonix.pobox.com
+	id S1751109AbZGJKMD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 10 Jul 2009 06:12:03 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751049AbZGJKMC
+	(ORCPT <rfc822;git-outgoing>); Fri, 10 Jul 2009 06:12:02 -0400
+Received: from mail-bw0-f225.google.com ([209.85.218.225]:47244 "EHLO
+	mail-bw0-f225.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750971AbZGJKMB (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 10 Jul 2009 06:12:01 -0400
+Received: by bwz25 with SMTP id 25so755657bwz.37
+        for <git@vger.kernel.org>; Fri, 10 Jul 2009 03:11:59 -0700 (PDT)
+Received: by 10.204.120.19 with SMTP id b19mr1791337bkr.36.1247220719666; Fri, 
+	10 Jul 2009 03:11:59 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123044>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123045>
 
-Ren=C3=A9 Scharfe <rene.scharfe@lsrfire.ath.cx> writes:
+Hi *,
 
-> It seems your patch still allows recursion, one level deep.
+  since commit 4ecbc17 (Makefile: install 'git' in execdir,
+2009-07-09), included in v1.6.4-rc0, the install fails when $bindir is
+equal to $execdir with:
 
-I suspect what the patch wants to do may be fundamentally unworkable.
+bindir=$(cd '/home/pcl305/sbejar/usr/stow/git/bin' && pwd) && \
+        execdir=$(cd '/home/pcl305/sbejar/usr/stow/git/bin' && pwd) && \
+        { rm -f "$execdir/git" && \
+                test -z "" && \
+                ln "$bindir/git" "$execdir/git" 2>/dev/null || \
+                cp "$bindir/git" "$execdir/git"; } && \
+        { for p in  ..list..of..builtins; do \
+                rm -f "$execdir/$p" && \
+                ln "$execdir/git" "$execdir/$p" 2>/dev/null || \
+                ln -s "git" "$execdir/$p" 2>/dev/null || \
+                cp "$execdir/git" "$execdir/$p" || exit; \
+          done; } && \
+        ./check_bindir "z$bindir" "z$execdir" "$bindir/git-add"
+cp: cannot stat `/home/pcl305/sbejar/usr/stow/git/bin/git': No such
+file or directory
+make: *** [install] Error 1
 
-Unlike GNU grep that takes its command line arguments literally as file=
-s
-and directories, we use them merely as pathspec filters, so...
+I understant what happens, but all this is very delicate, so I'll try
+to fix it but I don't know when.
+Maybe we need also tests for this.
 
-> 	$ git grep -l --directories=3Dskip GNU compat/*
-
-=2E.. while I think you should be able to compensate for this kind  of
-"off-by-one" and make it appear to work, I do not think there is a good
-definition of which level it should stop if you run it with something
-like this (notice the single-quote around the pathspec to prevent it fr=
-om
-getting expanded by the shell):
-
-	git grep GNU 'compat/*/*'
+Santi
