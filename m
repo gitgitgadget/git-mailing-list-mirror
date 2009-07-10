@@ -1,108 +1,123 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: What's happening with vr41xx_giu.c?
-Date: Fri, 10 Jul 2009 09:20:22 -0700
-Message-ID: <7vhbxkv7ax.fsf@alter.siamese.dyndns.org>
-References: <4A5680B5.2090405@necel.com> <4A56B060.7090106@mips.com>
- <20090710104743.GB1288@linux-mips.org>
+From: =?UTF-8?B?TWljaGHFgg==?= Kiedrowicz <michal.kiedrowicz@gmail.com>
+Subject: Re: [PATCH/RFC] grep: Add --directories option.
+Date: Fri, 10 Jul 2009 18:41:19 +0200
+Message-ID: <20090710184119.072e5a0f@gmail.com>
+References: <1247167228-2466-1-git-send-email-michal.kiedrowicz@gmail.com>
+	<4A56EED7.9040008@lsrfire.ath.cx>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Chris Dearman <chris@mips.com>,
-	Shinya Kuribayashi <shinya.kuribayashi@necel.com>,
-	yuasa@linux-mips.org, linux-mips@linux-mips.org,
-	git@vger.kernel.org
-To: Ralf Baechle <ralf@linux-mips.org>
-X-From: git-owner@vger.kernel.org Fri Jul 10 18:20:52 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>
+To: =?UTF-8?B?UmVuw6k=?= Scharfe <rene.scharfe@lsrfire.ath.cx>
+X-From: git-owner@vger.kernel.org Fri Jul 10 18:41:33 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MPIqB-0007Ir-9k
-	for gcvg-git-2@gmane.org; Fri, 10 Jul 2009 18:20:51 +0200
+	id 1MPJAD-00010h-7q
+	for gcvg-git-2@gmane.org; Fri, 10 Jul 2009 18:41:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751449AbZGJQUh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 10 Jul 2009 12:20:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751376AbZGJQUg
-	(ORCPT <rfc822;git-outgoing>); Fri, 10 Jul 2009 12:20:36 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:55145 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751104AbZGJQUf (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 10 Jul 2009 12:20:35 -0400
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 2E70426D30;
-	Fri, 10 Jul 2009 12:20:34 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id E0B1C26D2F; Fri,
- 10 Jul 2009 12:20:25 -0400 (EDT)
-In-Reply-To: <20090710104743.GB1288@linux-mips.org> (Ralf Baechle's message
- of "Fri\, 10 Jul 2009 11\:47\:43 +0100")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 98188F50-6D6D-11DE-8195-424D1A496417-77302942!a-sasl-quonix.pobox.com
+	id S1754884AbZGJQl1 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 10 Jul 2009 12:41:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754681AbZGJQl0
+	(ORCPT <rfc822;git-outgoing>); Fri, 10 Jul 2009 12:41:26 -0400
+Received: from ey-out-1920.google.com ([74.125.78.148]:21694 "EHLO
+	ey-out-1920.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753875AbZGJQlZ convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 10 Jul 2009 12:41:25 -0400
+Received: by ey-out-1920.google.com with SMTP id 3so204352eyh.36
+        for <git@vger.kernel.org>; Fri, 10 Jul 2009 09:41:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:in-reply-to:references:x-mailer:mime-version
+         :content-type:content-transfer-encoding;
+        bh=btgmR+n6LkGJjGntEEp6fMkJ5OoBwyEgI5YhEu9AEgM=;
+        b=HqU52zdfRei6Oo3tY+vCBRrQxR4V0lOxWhvQUbn/qEatehbk3DY8+z2jNj0rZvh5kG
+         LxTYav165Jzl0p7RoJdwnObYrAIBMspn1axRDG+DehcS3PMQQo6/Sx9Hsaamsp2AiLmt
+         R7s3ibVI5jnxariSsJk8uhvkaNAjxGJNWLopI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:in-reply-to:references:x-mailer
+         :mime-version:content-type:content-transfer-encoding;
+        b=i0ZOqbjK4RsG6IzYcoIsVUKuysmr9eAL+xlv+gaQY8rBfXGf9NKlDzzPid8kUQckBS
+         WHdzkKaT0s68J/imFZhFdwNLMvC+ePvpHRgSdB7jfprhLehirRf6rlHSpbR0ue2hEi4t
+         WIB2R3O5AL4KZjuxQXCVwslJxegjtgEi8PjRg=
+Received: by 10.210.118.13 with SMTP id q13mr2649510ebc.45.1247244083724;
+        Fri, 10 Jul 2009 09:41:23 -0700 (PDT)
+Received: from localhost (87-205-51-27.adsl.inetia.pl [87.205.51.27])
+        by mx.google.com with ESMTPS id 23sm3018381eya.26.2009.07.10.09.41.22
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 10 Jul 2009 09:41:23 -0700 (PDT)
+In-Reply-To: <4A56EED7.9040008@lsrfire.ath.cx>
+X-Mailer: Claws Mail 3.7.1 (GTK+ 2.14.7; x86_64-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123061>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123062>
 
-Ralf Baechle <ralf@linux-mips.org> writes:
+Hi,
 
-> 27fdd325dace4a1ebfa10e93ba6f3d25f25df674^ and apply Yoichi's patch using
-> git am or git apply this will leave a zero byte drivers/char/vr41xx_giu.c.
-> Patch(1) otoh will remove that file as expected.  The patch file Yoichi
-> sent looks perfectly ok; here the headers of the vr41xx_giu.c bit:
->
-> [...]
-> diff -pruN -X /home/yuasa/Memo/dontdiff linux-orig/drivers/char/vr41xx_giu.c linux/drivers/char/vr41xx_giu.c
-> --- linux-orig/drivers/char/vr41xx_giu.c        2009-06-29 10:06:58.329177629 +0900
-> +++ linux/drivers/char/vr41xx_giu.c     1970-01-01 09:00:00.000000000 +0900
-> @@ -1,680 +0,0 @@
-> -/*
+Ren=C3=A9 Scharfe <rene.scharfe@lsrfire.ath.cx> wrote:
 
-If you look for -E option in "man patch" and find that it says "causes
-patch to remove output files that are empty after the patches have been
-applied.", you will realize that your claim that "patch(1) otoh ... as
-expected" does not match the reality for everybody.  It is true only if
-you _are_ explicitly asking to remove such an empty file.
+>=20
+> I suspect the patch would shrink significantly if you moved "int
+> recurse" into struct grep_opt, because then you wouln't need to add i=
+t
+> as a parameter to the grep_* functions.
 
-The recent diff specification (at least the one in POSIX.1) says that file
-removal is marked by the UNIX epoch timestamp you see there, instead of a
-more recent timestamp. IOW, you should _in theory_ be able to tell by
-looking at the 1970-01-01 timestamp that the intention of this patch is
-not to make the file empty, but is to remove.
+Yes. At the beginning, I placed 'int recurse' in that struct. However, =
+I
+thought that this struct does not say anything about selecting files,
+but it says how to grep files (invert, count, fixed [string], binary
+etc.). Most of opts (if not all) are used in grep.c, not builtin-grep.c=
+=2E
 
-But in practice, because traditionally GNU diff and other people's diff
-placed pretty arbitrary garbage after the TAB that follows the filename,
-patch does not rely on that convention to detect a removal patch.  Notice
-that even -E option does not pay attention to that timestamp line, but
-removes files that become _empty_.
+>=20
+> > diff --git a/t/t7002-grep.sh b/t/t7002-grep.sh
+> > index 7868af8..6d1faf4 100755
+> > --- a/t/t7002-grep.sh
+> > +++ b/t/t7002-grep.sh
+> > @@ -22,7 +22,9 @@ test_expect_success setup '
+> >  	echo zzz > z &&
+> >  	mkdir t &&
+> >  	echo test >t/t &&
+> > -	git add file w x y z t/t &&
+> > +	mkdir t/a &&
+> > +	echo aa aa aa aa >t/a/a &&
+> > +	git add file w x y z t/t t/a/a &&
+>=20
+> This conflicts with a recent change.
 
-Neither do we.  The patch application toolchain in "git" does not have -E
-option and the above patch is interpreted just like traditional patch does
-by default: the file goes empty.
+Yeah, I found out that...
+>=20
+> It seems your patch still allows recursion, one level deep.  In git's
+> repo:
+>=20
+> 	$ grep -l --directories=3Dskip GNU compat
+>=20
+> 	$ grep -l --directories=3Dskip GNU compat/*
+> 	compat/qsort.c
+> 	compat/snprintf.c
+>=20
+> 	$ git grep -l --directories=3Dskip GNU compat
+> 	compat/qsort.c
+> 	compat/snprintf.c
+>=20
+> 	$ git grep -l --directories=3Dskip GNU compat/*
+> 	compat/fnmatch/fnmatch.c
+> 	compat/fnmatch/fnmatch.h
+> 	compat/nedmalloc/malloc.c.h
+> 	compat/nedmalloc/nedmalloc.c
+> 	compat/nedmalloc/nedmalloc.h
+> 	compat/qsort.c
+> 	compat/regex/regex.c
+> 	compat/regex/regex.h
+> 	compat/snprintf.c
+>=20
+> Ren=C3=A9
 
-The output from "git diff" is designed so that (1) it can distinguish the
-removal case and the goes-empty case more clearly, and also that (2) it
-can be safely used by patch(1).  A removal patch from git looks like:
-
-    diff --git a/file b/file
-    deleted file mode 100644
-    index 363ef61..0000000
-    --- a/file
-    +++ /dev/null
-    @@ -1 +0,0 @@
-    -original contents
-
-while "goes empty" patch looks like:
-
-    diff --git a/file b/file
-    index 363ef61..e69de29 100644
-    --- a/file
-    +++ b/file
-    @@ -1 +0,0 @@
-    -original contents
-
-and when applied with git, they both produce "expected" results.
-
-We _could_ add -E option to "git apply" and pass that through "git am" to
-support projects like the kernel where 0-byte files are forbidden.  A
-patch to do that shouldn't be too involved.
+Actually, this is what I wanted: Do not descend to subdirectories of
+selected directories. After a while, I think this action should be
+called "read [files in that directory]", not "skip".
