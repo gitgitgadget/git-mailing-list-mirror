@@ -1,64 +1,78 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: [PATCH 7/3] Make index preloading check the whole path to the
- file
-Date: Thu, 9 Jul 2009 20:29:05 -0700 (PDT)
-Message-ID: <alpine.LFD.2.01.0907092028480.3352@localhost.localdomain>
-References: <20090707000500.GA5594@dpotapov.dyndns.org> <alpine.LFD.2.01.0907081933530.3352@localhost.localdomain> <alpine.LFD.2.01.0907081936470.3352@localhost.localdomain> <alpine.LFD.2.01.0907081940220.3352@localhost.localdomain>
- <alpine.LFD.2.01.0907081942380.3352@localhost.localdomain> <7vskh646bw.fsf@alter.siamese.dyndns.org> <alpine.LFD.2.01.0907090832200.3352@localhost.localdomain> <7vws6h3ji4.fsf@alter.siamese.dyndns.org> <alpine.LFD.2.01.0907091011280.3352@localhost.localdomain>
- <alpine.LFD.2.01.0907091013540.3352@localhost.localdomain> <7vab3d3dpc.fsf@alter.siamese.dyndns.org> <alpine.LFD.2.01.0907091153130.3352@localhost.localdomain> <alpine.LFD.2.01.0907091344340.3352@localhost.localdomain> <alpine.LFD.2.01.0907091344530.3352@localhost.localdomain>
- <alpine.LFD.2.01.0907091347080.3352@localhost.localdomain> <alpine.LFD.2.01.0907091348490.3352@localhost.localdomain> <7v8wixw7s0.fsf@alter.siamese.dyndns.org>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: git-svn is "Unable to determine upstream SVN information..."
+Date: Thu, 9 Jul 2009 20:31:33 -0700
+Message-ID: <20090710033133.GA23082@dcvr.yhbt.net>
+References: <ohrc5510bko329be5ugj3n6bgvhcevd2kg@4ax.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Dmitry Potapov <dpotapov@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Kjetil Barvik <barvik@broadpark.no>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jul 10 05:29:21 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: esskov@oncable.dk
+X-From: git-owner@vger.kernel.org Fri Jul 10 05:32:02 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MP6nY-0001qn-OX
-	for gcvg-git-2@gmane.org; Fri, 10 Jul 2009 05:29:21 +0200
+	id 1MP6q9-0002WY-9u
+	for gcvg-git-2@gmane.org; Fri, 10 Jul 2009 05:32:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751538AbZGJD3O (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 9 Jul 2009 23:29:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751223AbZGJD3N
-	(ORCPT <rfc822;git-outgoing>); Thu, 9 Jul 2009 23:29:13 -0400
-Received: from smtp1.linux-foundation.org ([140.211.169.13]:39347 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751139AbZGJD3N (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 9 Jul 2009 23:29:13 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
-	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id n6A3T6l9012202
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Thu, 9 Jul 2009 20:29:07 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id n6A3T5tk001335;
-	Thu, 9 Jul 2009 20:29:05 -0700
-X-X-Sender: torvalds@localhost.localdomain
-In-Reply-To: <7v8wixw7s0.fsf@alter.siamese.dyndns.org>
-User-Agent: Alpine 2.01 (LFD 1184 2008-12-16)
-X-Spam-Status: No, hits=-3.966 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED
-X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
+	id S1752337AbZGJDbg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 9 Jul 2009 23:31:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751924AbZGJDbf
+	(ORCPT <rfc822;git-outgoing>); Thu, 9 Jul 2009 23:31:35 -0400
+Received: from dcvr.yhbt.net ([64.71.152.64]:56969 "EHLO dcvr.yhbt.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751571AbZGJDbe (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 9 Jul 2009 23:31:34 -0400
+Received: from localhost (user-118bg0q.cable.mindspring.com [66.133.192.26])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by dcvr.yhbt.net (Postfix) with ESMTPSA id 3D5221F78E;
+	Fri, 10 Jul 2009 03:31:34 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <ohrc5510bko329be5ugj3n6bgvhcevd2kg@4ax.com>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123031>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123032>
 
-
-
-On Thu, 9 Jul 2009, Junio C Hamano wrote:
+esskov@oncable.dk wrote:
+> 	Hi,
 > 
-> I must be missing something very obvious, but how would this call behave
-> on an uninitialized cache defined above, or do we need reset_lstat_cache()
-> on it before the first use?
+> I'm trying to clone the trunk of an svn repo, so that I can work on a set
+> of patches locally, and then occasionally push some of them back to svn.
+> 
+> The git-svn clone seems to go well, and the resulting git log looks
+> alright. However, git-svn info and git-svn rebase both say "Unable to
+> determine upstream SVN information from working tree history".
+> Also, git-svn log shows nothing.  I'm using the svn:// protocol btw, but I
+> guess the protocol shouldn't matter?
 
-Neither.
+Protocol shouldn't matter.  Do you have any non-linear history from
+merges in git?  git-svn (and SVN) doesn't play very nicely with
+non-linear history that git merges can generate.
 
-It should be memset() to zero. Good catch.
+Does having a clean clone of that repo fix things?  You didn't use
+--no-metadata or blow away your .git/svn/* directories, did you?
 
-			Linus
+> To test if this was a general problem, I just tried to git-svn clone a
+> repo on some public svn server which was also using the svn protocol. I
+> used exactly the same syntax for the svn init and fetch commands. However,
+> the resulting git repo did NOT suffer from the problem, i.e., git-svn info
+> reported nicely etc.
+> 
+> At some point I suspected that there might be a problem with the
+> "git-svn-id ..." lines in the commits for the problematic repo, but they
+> look just like the ones for the working repo. The .git/config files of the
+> working and the non-working git-repos are similar as well. 
+> 
+> What could be causing this problem?
+
+Which version of git svn is this?  Are there any weird characters in the
+URL?  Off the top of my head I can't think of anything else; I assume
+you're not allowed to share access to the repo (or to the clone) you're
+having problems with?
+
+-- 
+Eric Wong
