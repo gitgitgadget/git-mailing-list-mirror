@@ -1,97 +1,92 @@
-From: Graeme Geldenhuys <graemeg@gmail.com>
-Subject: Re: Pushing to GitHub doesn't push all branches
-Date: Fri, 10 Jul 2009 17:07:43 +0200
-Message-ID: <h37lh2$q3s$1@ger.gmane.org>
-References: <h37fga$5ie$1@ger.gmane.org> <4A575416.2090304@drmicha.warpmail.net>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: [JGIT PATCH] Allow http_proxy values without protocol-part
+Date: Fri, 10 Jul 2009 08:22:09 -0700
+Message-ID: <20090710152209.GE11191@spearce.org>
+References: <20090709232822.00000164@unknown>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jul 10 17:08:41 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Robin Rosenberg <robin.rosenberg@dewire.com>, git@vger.kernel.org
+To: Christian Halstrick <christian.halstrick@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jul 10 17:22:24 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MPHiK-0006Bp-0B
-	for gcvg-git-2@gmane.org; Fri, 10 Jul 2009 17:08:40 +0200
+	id 1MPHvZ-0003gj-B6
+	for gcvg-git-2@gmane.org; Fri, 10 Jul 2009 17:22:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753017AbZGJPIe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 10 Jul 2009 11:08:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752214AbZGJPId
-	(ORCPT <rfc822;git-outgoing>); Fri, 10 Jul 2009 11:08:33 -0400
-Received: from main.gmane.org ([80.91.229.2]:55685 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751449AbZGJPIc (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 10 Jul 2009 11:08:32 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1MPHiA-0003xz-36
-	for git@vger.kernel.org; Fri, 10 Jul 2009 15:08:30 +0000
-Received: from 41.177.20.228 ([41.177.20.228])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 10 Jul 2009 15:08:30 +0000
-Received: from graemeg by 41.177.20.228 with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 10 Jul 2009 15:08:30 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: 41.177.20.228
-User-Agent: Thunderbird 2.0.0.22 (X11/20090608)
-In-Reply-To: <4A575416.2090304@drmicha.warpmail.net>
+	id S1751724AbZGJPWL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 10 Jul 2009 11:22:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751580AbZGJPWL
+	(ORCPT <rfc822;git-outgoing>); Fri, 10 Jul 2009 11:22:11 -0400
+Received: from george.spearce.org ([209.20.77.23]:35218 "EHLO
+	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750974AbZGJPWK (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 10 Jul 2009 11:22:10 -0400
+Received: by george.spearce.org (Postfix, from userid 1001)
+	id B52043819F; Fri, 10 Jul 2009 15:22:09 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <20090709232822.00000164@unknown>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123056>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123057>
 
-Michael J Gruber wrote:
-> 
-> You really mirrored your repo: All your "lost" branches are remotes on
-> the github side as well. That has two consequences:
+Sorry I didn't respond earlier this week, I was more or less offline
+for basically 2.5 days.
 
-The two branches that are of most importance to me, is "trunk" and 
-"fixes_2_2" as found in the SubVersion repository.
+Christian Halstrick <christian.halstrick@gmail.com> wrote:
+> jgit reads the environment variable http_proxy to configure the proxy
+> for http traffic in the same way as applications using the libcurl
+> library. It would be nice if jgit would understand the same values as
+> libcurl, but for libcurl the protocol part is optional (e.g.
+> http_proxy=proxy:8080 is valid). I changed jgit to also support
+> http_proxy values without a protocol spec. When no protocol is
+> specified "http://" is assumed.
 
-refs/remotes/trunk
-refs/remotes/fixes_2_2
+This didn't really fit with our style of commit messages.  Instead of
+saying what you did, we prefer to say *why* you did it.  The what
+is clear from the diff.  The why is usually less clear.
 
+I replaced the message with the following:
 
-So should I have only pushed the above mentioned branches, but as "true" 
-heads in GitHub. Geesh, I hope I am understanding what I am typing, 
-because I feel a bit lost now. :-)
+--8<--
+Allow http_proxy values without protocol-part
 
-Is there any way to clean up the mess available on GitGub? So that 'git 
-ls-remote ...' will only show the real remotes.... Or should there be no 
-remotes on GitHub?
+jgit reads the environment variable http_proxy to configure the
+JRE's URL library for HTTP traffic through the proxy in the same
+way as other applications that are using the libcurl library.
+libcurl assumes "http://" when the protocol is not specified in
+http_proxy, so jgit should do the same.
 
-Sorry, I'm fairly new to Git and it feels like I jumped into the deap 
-end here. ;-)
+Thus http_proxy=proxy:8080 is now valid.
 
-> (assuming there are only svn branches) into proper heads on github, i.e.
-> a refspec like '+refs/remotes/*:refs/*' for your pushes.
+Signed-off-by: Christian Halstrick <christian.halstrick@sap.com>
+Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
+-->8--
 
-I'll read the man pages on what that refspec means...  If I manage to 
-only push 'trunk' which is master under git and 'fixes_2_2' which will 
-be some other name under git, how to I keep both those in sync with the 
-SubVersion repository.
+> diff --git a/org.spearce.jgit/src/org/spearce/jgit/util/HttpSupport.java b/org.spearce.jgit/src/org/spearce/jgit/util/HttpSupport.java
+> index 33dfcee..5f21677 100644
+> --- a/org.spearce.jgit/src/org/spearce/jgit/util/HttpSupport.java
+> +++ b/org.spearce.jgit/src/org/spearce/jgit/util/HttpSupport.java
+> @@ -69,7 +69,7 @@ public static void configureHttpProxy() throws MalformedURLException {
+>  		if (s == null || s.equals(""))
+>  			return;
+>  
+> -		final URL u = new URL(s);
+> +		final URL u = new URL((s.indexOf("://")==-1) ? "http://"+s : s);
 
-At the moment I have a cronjob that executes the following every 30 minutes.
-====================
-cd /mnt/samba/git/fpc.git/
-$GIT checkout master
-$GIT svn rebase
-$GIT gc --auto
-$GIT push origin master
-====================
+Also, our formatting rules tend to place spaces around operators,
+so this line was reformatted slightly to honor that convention.
+If you are using Eclipse, the projects should be configured
+automatically with our preferred code formatting rules, though
+Eclipse often gets Javadoc blocks wrong and adds a trailing space
+on the end of a blank line.
 
-Does 'git svn rebase' get all branch or does it just update "master" 
-(Trunk from SubVersion)?
-
-I apologise for all the questions...
-
-Regards,
-   - Graeme -
+But, patches applied clean, so your techique of sending works.
+Thanks.
 
 -- 
-fpGUI Toolkit - a cross-platform GUI toolkit using Free Pascal
-http://opensoft.homeip.net/fpgui/
+Shawn.
