@@ -1,76 +1,96 @@
-From: Charles Bailey <charles@hashpling.org>
-Subject: Re: Show current SHA1
-Date: Sat, 11 Jul 2009 11:16:52 +0100
-Message-ID: <20090711101652.GA30698@hashpling.org>
-References: <9586f3420907110239nbc35aealb473e1f1b3667410@mail.gmail.com> <874otjlf22.fsf@iki.fi>
+From: Johan Herland <johan@herland.net>
+Subject: Re: [PATCH v5] quickfetch(): Prevent overflow of the rev-list command
+ line
+Date: Sat, 11 Jul 2009 12:58:24 +0200
+Message-ID: <200907111258.25118.johan@herland.net>
+References: <alpine.DEB.2.00.0906181310400.23400@ds9.cixit.se>
+ <200907100152.30683.johan@herland.net>
+ <7vy6qvn1ya.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Allan Kelly <allankelly@gmail.com>, git@vger.kernel.org
-To: Teemu Likonen <tlikonen@iki.fi>
-X-From: git-owner@vger.kernel.org Sat Jul 11 12:27:10 2009
+Content-Type: Text/Plain; charset=iso-8859-1
+Content-Transfer-Encoding: 7BIT
+Cc: Johannes Sixt <j.sixt@viscovery.net>, Jeff King <peff@peff.net>,
+	Git Mailing List <git@vger.kernel.org>,
+	Peter Krefting <peter@softwolves.pp.se>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Alex Riesen <raa.lkml@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Jul 11 12:59:23 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MPZnS-0003ni-BB
-	for gcvg-git-2@gmane.org; Sat, 11 Jul 2009 12:27:10 +0200
+	id 1MPaId-0005n9-0L
+	for gcvg-git-2@gmane.org; Sat, 11 Jul 2009 12:59:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753175AbZGKK07 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 11 Jul 2009 06:26:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753011AbZGKK06
-	(ORCPT <rfc822;git-outgoing>); Sat, 11 Jul 2009 06:26:58 -0400
-Received: from relay.pcl-ipout01.plus.net ([212.159.7.99]:7375 "EHLO
-	relay.pcl-ipout01.plus.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752587AbZGKK05 (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 11 Jul 2009 06:26:57 -0400
-X-Greylist: delayed 600 seconds by postgrey-1.27 at vger.kernel.org; Sat, 11 Jul 2009 06:26:57 EDT
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: ApoEAPMDWErUnw4S/2dsb2JhbADNF4QJBYE7
-Received: from pih-relay05.plus.net ([212.159.14.18])
-  by relay.pcl-ipout01.plus.net with ESMTP; 11 Jul 2009 11:16:53 +0100
-Received: from [212.159.69.125] (helo=hashpling.plus.com)
-	 by pih-relay05.plus.net with esmtp (Exim) id 1MPZdV-0003MQ-71; Sat, 11 Jul 2009 11:16:53 +0100
-Received: from cayley.hashpling.org (cayley.hashpling.org [192.168.76.254])
-	by hashpling.plus.com (8.14.2/8.14.2) with ESMTP id n6BAGqrB031357
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Sat, 11 Jul 2009 11:16:52 +0100
-Received: (from charles@localhost)
-	by cayley.hashpling.org (8.14.2/8.14.2/Submit) id n6BAGqRT031356;
-	Sat, 11 Jul 2009 11:16:52 +0100
-Content-Disposition: inline
-In-Reply-To: <874otjlf22.fsf@iki.fi>
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-Plusnet-Relay: f7c8c48257d1533687e3db39a902d2e6
+	id S1751500AbZGKK6b (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 11 Jul 2009 06:58:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751218AbZGKK6a
+	(ORCPT <rfc822;git-outgoing>); Sat, 11 Jul 2009 06:58:30 -0400
+Received: from mx.getmail.no ([84.208.15.66]:60983 "EHLO
+	get-mta-out02.get.basefarm.net" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1751152AbZGKK63 (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 11 Jul 2009 06:58:29 -0400
+Content-disposition: inline
+Received: from mx.getmail.no ([10.5.16.4]) by get-mta-out02.get.basefarm.net
+ (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
+ with ESMTP id <0KMM00IT16HEJG40@get-mta-out02.get.basefarm.net> for
+ git@vger.kernel.org; Sat, 11 Jul 2009 12:58:26 +0200 (MEST)
+Received: from alpha.localnet ([84.215.102.95])
+ by get-mta-in02.get.basefarm.net
+ (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
+ with ESMTP id <0KMM001PQ6HD4CA0@get-mta-in02.get.basefarm.net> for
+ git@vger.kernel.org; Sat, 11 Jul 2009 12:58:26 +0200 (MEST)
+X-PMX-Version: 5.5.3.366731, Antispam-Engine: 2.7.0.366912,
+ Antispam-Data: 2009.7.11.104609
+User-Agent: KMail/1.11.4 (Linux/2.6.30-ARCH; KDE/4.2.4; x86_64; ; )
+In-reply-to: <7vy6qvn1ya.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123108>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123109>
 
-On Sat, Jul 11, 2009 at 12:55:17PM +0300, Teemu Likonen wrote:
-> On 2009-07-11 10:39 (+0100), Allan Kelly wrote:
-> 
-> > The question then is: what is the command to report the current SHA1?
-> > Note I never branch in the HTML repo, it's entirely linear.
-> 
-> If the "current SHA1" means "the SHA1 of the most recent commit in the
-> current branch" then usually
-> 
->     git show
-> 
-> is the simplest way. There are many ways to print _only_ the SHA1.
-> Examples:
-> 
->     git log -1 --pretty=format:%H
->     git rev-list -1 HEAD
+On Saturday 11 July 2009, Junio C Hamano wrote:
+> Johan Herland <johan@herland.net> writes:
+> > quickfetch() calls rev-list to check whether the objects we are about
+> > to fetch are already present in the repo (if so, we can skip the object
+> > fetch). However, when there are many (~1000) refs to be fetched, the
+> > rev-list command line grows larger than the maximum command line size
+> > on some systems (32K in Windows). This causes rev-list to fail, making
+> > quickfetch() return non-zero, which unnecessarily triggers the
+> > transport machinery. This somehow causes fetch to fail with an exit
+> > code.
+> >
+> > By using the --stdin option to rev-list (and feeding the object list to
+> > its standard input), we prevent the overflow of the rev-list command
+> > line, which causes quickfetch(), and subsequently the overall fetch, to
+> > succeed.
+>
+> I feel uneasy with that "somehow" at the end of the first paragraph, but
+> nevertheless this is the right thing to do.
 
-For listing a single commit, I usually think of show and rev-parse
-before using commands that list multiple commits. (Of course, having
-to use --quiet doesn't make show any shorter than log -1.)
+Yes, it feels wrong that transport_fetch_refs() returns error when there are 
+no objects to be fetched. After all, the quickfetch() routine is only meant 
+to be an optimization (to skip the object fetching when not needed). Only if 
+quickfetch() returned a false positive (indicating that all objects are 
+present when they're really not) would I expect it to have adverse effects 
+on the result of the fetch. But even then, as you indicate, fixing 
+quickfetch() itself is the right thing to do, and looking into 
+transport_fetch_refs() is a separate issue.
 
-    git rev-parse HEAD
-    git show --quiet --pretty=format:%H
+> Since it is a very isolated
+> change, I'd queue this directly on 'master' and see if anybody notices a
+> breakage, as it would be relatively pain-free to revert if it turns out
+> to be necessary.
+
+Thanks.
+
+
+Have fun! :)
+
+...Johan
 
 -- 
-Charles Bailey
-http://ccgi.hashpling.plus.com/blog/
+Johan Herland, <johan@herland.net>
+www.herland.net
