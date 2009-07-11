@@ -1,96 +1,61 @@
-From: Johan Herland <johan@herland.net>
-Subject: Re: [PATCH v5] quickfetch(): Prevent overflow of the rev-list command
- line
-Date: Sat, 11 Jul 2009 12:58:24 +0200
-Message-ID: <200907111258.25118.johan@herland.net>
-References: <alpine.DEB.2.00.0906181310400.23400@ds9.cixit.se>
- <200907100152.30683.johan@herland.net>
- <7vy6qvn1ya.fsf@alter.siamese.dyndns.org>
+From: Heinrich Nirschl <heinrich.nirschl@gmail.com>
+Subject: Re: Show current SHA1
+Date: Sat, 11 Jul 2009 13:36:52 +0200
+Message-ID: <394ab6ec0907110436o42062d7dn362194978bc098f9@mail.gmail.com>
+References: <9586f3420907110239nbc35aealb473e1f1b3667410@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: Text/Plain; charset=iso-8859-1
-Content-Transfer-Encoding: 7BIT
-Cc: Johannes Sixt <j.sixt@viscovery.net>, Jeff King <peff@peff.net>,
-	Git Mailing List <git@vger.kernel.org>,
-	Peter Krefting <peter@softwolves.pp.se>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Alex Riesen <raa.lkml@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Jul 11 12:59:23 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Allan Kelly <allankelly@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Jul 11 13:37:03 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MPaId-0005n9-0L
-	for gcvg-git-2@gmane.org; Sat, 11 Jul 2009 12:59:23 +0200
+	id 1MPat4-0008P8-Ll
+	for gcvg-git-2@gmane.org; Sat, 11 Jul 2009 13:37:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751500AbZGKK6b (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 11 Jul 2009 06:58:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751218AbZGKK6a
-	(ORCPT <rfc822;git-outgoing>); Sat, 11 Jul 2009 06:58:30 -0400
-Received: from mx.getmail.no ([84.208.15.66]:60983 "EHLO
-	get-mta-out02.get.basefarm.net" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1751152AbZGKK63 (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 11 Jul 2009 06:58:29 -0400
-Content-disposition: inline
-Received: from mx.getmail.no ([10.5.16.4]) by get-mta-out02.get.basefarm.net
- (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
- with ESMTP id <0KMM00IT16HEJG40@get-mta-out02.get.basefarm.net> for
- git@vger.kernel.org; Sat, 11 Jul 2009 12:58:26 +0200 (MEST)
-Received: from alpha.localnet ([84.215.102.95])
- by get-mta-in02.get.basefarm.net
- (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
- with ESMTP id <0KMM001PQ6HD4CA0@get-mta-in02.get.basefarm.net> for
- git@vger.kernel.org; Sat, 11 Jul 2009 12:58:26 +0200 (MEST)
-X-PMX-Version: 5.5.3.366731, Antispam-Engine: 2.7.0.366912,
- Antispam-Data: 2009.7.11.104609
-User-Agent: KMail/1.11.4 (Linux/2.6.30-ARCH; KDE/4.2.4; x86_64; ; )
-In-reply-to: <7vy6qvn1ya.fsf@alter.siamese.dyndns.org>
+	id S1753232AbZGKLgz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 11 Jul 2009 07:36:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753001AbZGKLgz
+	(ORCPT <rfc822;git-outgoing>); Sat, 11 Jul 2009 07:36:55 -0400
+Received: from mail-fx0-f218.google.com ([209.85.220.218]:35807 "EHLO
+	mail-fx0-f218.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752871AbZGKLgy (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 11 Jul 2009 07:36:54 -0400
+Received: by fxm18 with SMTP id 18so1364381fxm.37
+        for <git@vger.kernel.org>; Sat, 11 Jul 2009 04:36:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=VOMMxJPbGKwtL+esu8DcSuGDbjvd9hkKmnacKj+fqm8=;
+        b=kZrtIyWrQWBZ6NQeQ0fYMt/YO9c01YPGlJtqsmXwX4OOaE/tLlUgUUfRTiFGJiXRWM
+         UyHHR5ScJ3v4aFUjT/BkQ1HtMqSAAi6Ae5FODXTQBI+EGoQMCQ+ue+w2xI8nQFUidOg/
+         rCwt+me9q0F37/zX63zb1htB+/TgIlvm9We6A=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=Jzlm62JcxXSAReV1wOXe9kZvmTEjwiPM89Ue9QeqDae9tfCS8inihBXAjcuxdr7fhD
+         hAQxvCGjXszygR/SuwkBiICcsTEsp7eMuiyiNmAGqu2esilQmzT3wrygqCEiCS0SFFzK
+         OYIvOgjc8OgtVSk6XHz8iWLwdkUnwkQPtlBnE=
+Received: by 10.204.59.76 with SMTP id k12mr2880162bkh.136.1247312212848; Sat, 
+	11 Jul 2009 04:36:52 -0700 (PDT)
+In-Reply-To: <9586f3420907110239nbc35aealb473e1f1b3667410@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123109>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123110>
 
-On Saturday 11 July 2009, Junio C Hamano wrote:
-> Johan Herland <johan@herland.net> writes:
-> > quickfetch() calls rev-list to check whether the objects we are about
-> > to fetch are already present in the repo (if so, we can skip the object
-> > fetch). However, when there are many (~1000) refs to be fetched, the
-> > rev-list command line grows larger than the maximum command line size
-> > on some systems (32K in Windows). This causes rev-list to fail, making
-> > quickfetch() return non-zero, which unnecessarily triggers the
-> > transport machinery. This somehow causes fetch to fail with an exit
-> > code.
-> >
-> > By using the --stdin option to rev-list (and feeding the object list to
-> > its standard input), we prevent the overflow of the rev-list command
-> > line, which causes quickfetch(), and subsequently the overall fetch, to
-> > succeed.
->
-> I feel uneasy with that "somehow" at the end of the first paragraph, but
-> nevertheless this is the right thing to do.
+On Sat, Jul 11, 2009 at 11:39 AM, Allan Kelly<allankelly@gmail.com> wrote:
+> I'd like to put the current SHA1 as text in the RTF so that I can
+> generate a diff from my current version before responding to his
+> comments.
 
-Yes, it feels wrong that transport_fetch_refs() returns error when there are 
-no objects to be fetched. After all, the quickfetch() routine is only meant 
-to be an optimization (to skip the object fetching when not needed). Only if 
-quickfetch() returned a false positive (indicating that all objects are 
-present when they're really not) would I expect it to have adverse effects 
-on the result of the fetch. But even then, as you indicate, fixing 
-quickfetch() itself is the right thing to do, and looking into 
-transport_fetch_refs() is a separate issue.
+Instead of doing that, you can put a tag on the version you deliver.
 
-> Since it is a very isolated
-> change, I'd queue this directly on 'master' and see if anybody notices a
-> breakage, as it would be relatively pain-free to revert if it turns out
-> to be necessary.
-
-Thanks.
-
-
-Have fun! :)
-
-...Johan
-
--- 
-Johan Herland, <johan@herland.net>
-www.herland.net
+- Henry
