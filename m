@@ -1,92 +1,89 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/2] apply: notice creation/removal patches produced by
- GNU diff
-Date: Fri, 10 Jul 2009 20:57:32 -0700
-Message-ID: <7vws6foor7.fsf@alter.siamese.dyndns.org>
-References: <4A5680B5.2090405@necel.com> <4A56B060.7090106@mips.com>
- <20090710104743.GB1288@linux-mips.org>
- <7vhbxkv7ax.fsf@alter.siamese.dyndns.org>
- <7vk52frjv9.fsf@alter.siamese.dyndns.org>
- <7vbpnrrjld.fsf_-_@alter.siamese.dyndns.org>
- <alpine.LFD.2.01.0907102029570.3552@localhost.localdomain>
+From: Tim Harper <timcharper@gmail.com>
+Subject: Re: commit hooks on merge
+Date: Fri, 10 Jul 2009 23:11:40 -0600
+Message-ID: <e1a5e9a00907102211m43522a09l49093ae50ea16e2a@mail.gmail.com>
+References: <4A43D37B.20203@surfmerchants.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Sat Jul 11 05:59:09 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Kurt Milligan <kurt@surfmerchants.com>
+X-From: git-owner@vger.kernel.org Sat Jul 11 07:12:15 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MPTjw-00046m-7i
-	for gcvg-git-2@gmane.org; Sat, 11 Jul 2009 05:59:08 +0200
+	id 1MPUsg-0001qs-Un
+	for gcvg-git-2@gmane.org; Sat, 11 Jul 2009 07:12:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753287AbZGKD5o (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 10 Jul 2009 23:57:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753132AbZGKD5n
-	(ORCPT <rfc822;git-outgoing>); Fri, 10 Jul 2009 23:57:43 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:58040 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752428AbZGKD5m (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 10 Jul 2009 23:57:42 -0400
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id B671B27C9E;
-	Fri, 10 Jul 2009 23:57:41 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id DBACA27C9D; Fri,
- 10 Jul 2009 23:57:35 -0400 (EDT)
-In-Reply-To: <alpine.LFD.2.01.0907102029570.3552@localhost.localdomain>
- (Linus Torvalds's message of "Fri\, 10 Jul 2009 20\:32\:01 -0700 \(PDT\)")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: FB785164-6DCE-11DE-A1C5-424D1A496417-77302942!a-sasl-quonix.pobox.com
+	id S1751451AbZGKFMB convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 11 Jul 2009 01:12:01 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751277AbZGKFMB
+	(ORCPT <rfc822;git-outgoing>); Sat, 11 Jul 2009 01:12:01 -0400
+Received: from mail-px0-f193.google.com ([209.85.216.193]:40213 "EHLO
+	mail-px0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751381AbZGKFMA convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 11 Jul 2009 01:12:00 -0400
+Received: by pxi31 with SMTP id 31so924420pxi.33
+        for <git@vger.kernel.org>; Fri, 10 Jul 2009 22:12:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=EKPxlHfPl+1z0snsE4g4uFK+XXRCPbqtc1Lt7Vbf1xo=;
+        b=xOhCskyCUkSVhrHgbYlpTq6yRkruVLV/idw58tTeYwvSrZWxm3WdDgX+RnAodTIFVW
+         sJrNNfirtLAiWSaMIQDhbT6hDpWOIMLWdPhNLGSygJj2wNe1sF4Tfq7OgGB2oLHwNZe1
+         Q9+LXa6VaprSdMvotxjaZSZRYuQJrd3+IyUNs=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=iqrmkgRLiAHlj2dQOatzZGrtsJPFXRWgffPhActs4H2vIKgEhieXdgayI8SVwJxb/u
+         J1riUhny5erFaDYfrkl081BjucJ9uT/6dXBWdCLYzQsEm2qUfSAPrdjM78/TVbUmo2YI
+         YBRoLSfX50Fj2ZRi8VzTcE4PzfWd5mGtJjrf4=
+Received: by 10.140.162.3 with SMTP id k3mr1882737rve.3.1247289120059; Fri, 10 
+	Jul 2009 22:12:00 -0700 (PDT)
+In-Reply-To: <4A43D37B.20203@surfmerchants.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123098>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123099>
 
-Linus Torvalds <torvalds@linux-foundation.org> writes:
+Kurt
 
-> On Fri, 10 Jul 2009, Junio C Hamano wrote:
->>
->> Unified context patch generated by GNU diff has UNIX epoch timestamp
->> on the side that does not exist when the patch is about a creation or
->> a deletion event.  Notice this convention when reading a non-git diff.
+I don't think there is a hook to prevent a merge from occurring.  I
+mean, you could probably rename git-merge, and then put a wrapper
+script in its place.  That script could call the hook for the current
+repository, if it exists and you could implement pre-merge.
+
+This is if you REALLY REALLY want to do it :)
+
+Tim
+
+On Thu, Jun 25, 2009 at 1:43 PM, Kurt Milligan<kurt@surfmerchants.com> =
+wrote:
+> Hi
 >
-> Hmm. Do you really want to do a regex here? That seems overkill. Why not 
-> just try to parse the date?
-
-If parse_date() says "It is a date and it is UNIX epoch", we mark the
-patch as either creation or deletion, and that is used by various
-consistency checks.  Deletion patch must remove the entire line, the file
-must not exist if it is the target of a creation patch, etc.
-
-I found parse_date() to be a bit too forgiving for my taste for this
-particular application; I wanted to be anal and only accept the format
-specified by
- 
-  http://www.opengroup.org/onlinepubs/9699919799/utilities/diff.html#tag_20_34_10_07
-
-By the way, the above does not mention anything about marking
-creation/deletion event with UNIX epoch; I am guessing it is a GNU
-extension.
-
->> +	const char stamp_regexp[] =
->> +		"^[0-9][0-9][0-9][0-9]-[01][0-9]-[0-3][0-9]"
->> +		" "
->> +		"[0-2][0-9]:[0-5][0-9]:[0-6][0-9](\\.0+)?"
->> +		" "
->> +		"[-+][0-2][0-9][0-5][0-9]\n";
+> I asked this in #git, and did a quick Google search to no avail...
 >
-> Also, why are you apparently expecting micro-seconds to always be all 
-> zeroes? Maybe that's the common case, but I'd expect that somebody has 
-> non-zero microseconds on filesystems that support them..
-
-As the comment before the quoted part of the patch says, the point of this
-function is not about detecting the presense of a timestamp (and parsing
-the time), but telling if the timestamp that represents UNIX epoch is
-there.  The first iteration of my patch did not even use parse_date() but
-accepted only 1969-12-31 (west of GMT) or 1970-01-01 (east of GMT) and
-then checked timestamp with timezone manually.  Perhaps that might be a
-better way to do this function?  I dunno.
+> According to the docs, merge does an auto-commit, but it seems that t=
+he
+> pre/post commit hooks are not run for this commit. Is that intentiona=
+l? Is
+> there a way I can make them run for the merge commit? I see there is =
+a
+> post-merge hook, but that doesn't really help me if I want to stop th=
+e
+> merge...
+>
+> Thanks in advance
+>
+> -Kurt
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at =C2=A0http://vger.kernel.org/majordomo-info.ht=
+ml
+>
