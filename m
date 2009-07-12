@@ -1,181 +1,136 @@
-From: Stephen Boyd <bebarino@gmail.com>
-Subject: Re: [PATCH] init-db: migrate to parse-options
-Date: Sun, 12 Jul 2009 00:17:23 -0700
-Message-ID: <4A598E03.10204@gmail.com>
-References: <1247352793-25675-1-git-send-email-michal.kiedrowicz@gmail.com>
+From: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <rene.scharfe@lsrfire.ath.cx>
+Subject: Re: [PATCH/RFC v2] grep: Add --[no-]recurse options.
+Date: Sun, 12 Jul 2009 11:39:50 +0200
+Message-ID: <4A59AF66.8030105@lsrfire.ath.cx>
+References: <1247347208-2624-1-git-send-email-michal.kiedrowicz@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
+Cc: Git Mailing List <git@vger.kernel.org>
 To: =?UTF-8?B?TWljaGHFgiBLaWVkcm93aWN6?= <michal.kiedrowicz@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Jul 12 09:18:47 2009
+X-From: git-owner@vger.kernel.org Sun Jul 12 11:40:15 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MPtKg-0001C9-S8
-	for gcvg-git-2@gmane.org; Sun, 12 Jul 2009 09:18:47 +0200
+	id 1MPvXa-0006kv-SU
+	for gcvg-git-2@gmane.org; Sun, 12 Jul 2009 11:40:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751671AbZGLHRa convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 12 Jul 2009 03:17:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751625AbZGLHR3
-	(ORCPT <rfc822;git-outgoing>); Sun, 12 Jul 2009 03:17:29 -0400
-Received: from mail-px0-f185.google.com ([209.85.216.185]:39332 "EHLO
-	mail-px0-f185.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751577AbZGLHR2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 12 Jul 2009 03:17:28 -0400
-Received: by pxi15 with SMTP id 15so55103pxi.33
-        for <git@vger.kernel.org>; Sun, 12 Jul 2009 00:17:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from
-         :user-agent:mime-version:to:cc:subject:references:in-reply-to
-         :x-enigmail-version:content-type:content-transfer-encoding;
-        bh=u9GgXZLVygogat3tOwKAeEub6XZqgJxera2fQa4OMXA=;
-        b=rYsT7qTZGR4MD+6q5XjK25QJIjQfjAYaFkL/yDHcVJaWwM9V3zDWY9ZHuk9Dm/NJ4O
-         r0c/ds1ADRcZwrnIsrg4ADzIEapUBai+MdHEXSUCm64eT1ElpgV35rH9trj+4sp2scn1
-         koGGTch/rPkoBAQbGC3nrqz4nnJ37YIEOx74I=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:x-enigmail-version:content-type
-         :content-transfer-encoding;
-        b=MxKTvCWB44mt1XjfgZWyJEbt3DZdKnNhYpLfwzK1cAY40LKQGjre6Fs3Ndf0XJdOU6
-         GxBF2Ai9F+jhIvATsyAZxqDigv1LidXcs6Q1bl8D/LAUmZQYmQbB3m0LmYYlXokkYmhY
-         op8iwdXjQUsFty8xleU3R4PrWnj1qpvTh9oKs=
-Received: by 10.114.130.15 with SMTP id c15mr6433128wad.59.1247383047856;
-        Sun, 12 Jul 2009 00:17:27 -0700 (PDT)
-Received: from ?10.10.0.4? (cpe-66-75-25-79.san.res.rr.com [66.75.25.79])
-        by mx.google.com with ESMTPS id n33sm5680897wag.56.2009.07.12.00.17.25
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 12 Jul 2009 00:17:26 -0700 (PDT)
-User-Agent: Thunderbird 2.0.0.22 (X11/20090629)
-In-Reply-To: <1247352793-25675-1-git-send-email-michal.kiedrowicz@gmail.com>
-X-Enigmail-Version: 0.95.7
+	id S1752088AbZGLJkG convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 12 Jul 2009 05:40:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751953AbZGLJkG
+	(ORCPT <rfc822;git-outgoing>); Sun, 12 Jul 2009 05:40:06 -0400
+Received: from india601.server4you.de ([85.25.151.105]:57989 "EHLO
+	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751908AbZGLJkE (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 12 Jul 2009 05:40:04 -0400
+Received: from [10.0.1.101] (p57B7E8EB.dip.t-dialin.net [87.183.232.235])
+	by india601.server4you.de (Postfix) with ESMTPSA id 9D48D2F803F;
+	Sun, 12 Jul 2009 11:40:00 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.22 (Windows/20090605)
+In-Reply-To: <1247347208-2624-1-git-send-email-michal.kiedrowicz@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123137>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123138>
 
-Micha=C5=82 Kiedrowicz wrote:
-> Also add missing --bare to init-db synopsis.
+Micha=C5=82 Kiedrowicz schrieb:
+> Sometimes it is useful to grep directories non-recursive. E.g. if I w=
+ant
+> to look for all files in main directory, but not in any subdirectory.
+> Or in Documentation/, but not in Documentation/technical/ and so on.
+>=20
+> This patch adds support for --no-recurse and (for symmetry) --recurse
+> options to git-grep. If --no-recurse is set, git-grep does not descen=
+d
+> to subdirectories. When --recurse option is set, directories are
+> searched recursively (this is the default behavior).
+>=20
+> If path specified on command line contains wildcards, option --no-rec=
+urse
+> makes no sense, i.e.
+>=20
+> $ git grep -l --no-recurse GNU -- 'contrib/*'
+>=20
+> (note the quotes) will search all files in contrib/, even in
+> subdirectories, because '*' matches all files.
 >
+> Documentation updates, bash-completion and simple test cases are also
+> provided.
+>=20
 > Signed-off-by: Micha=C5=82 Kiedrowicz <michal.kiedrowicz@gmail.com>
 > ---
+>=20
+> Changes from previous version:
+>  * Renamed '--directories=3Daction' to '--[no-]recurse', because my
+>    implementation is not compatible with GNU. Also parsing this optio=
+n was
+>    simplified.
 
-Heh, I had a very similar patch queued up.
+OK.  Yet another idea: if we can't copy an option from grep, perhaps we
+can steal it from another program?  Would find's -maxdepth option fit
+the bill?  I imagine it git grep --max-depth=3D<n> counting the slashes=
+ in
+path specs and files and rejecting those files whose count is higher
+than the one of its (otherwise matching) pattern plus n.
 
->  Documentation/git-init-db.txt |    2 +-
->  builtin-init-db.c             |   51 ++++++++++++++++++++++++-------=
-----------
->  2 files changed, 31 insertions(+), 22 deletions(-)
->
-> diff --git a/Documentation/git-init-db.txt b/Documentation/git-init-d=
-b.txt
-> index 1fd0ff2..eba3cb4 100644
-> --- a/Documentation/git-init-db.txt
-> +++ b/Documentation/git-init-db.txt
-> @@ -8,7 +8,7 @@ git-init-db - Creates an empty git repository
+> diff --git a/t/t7002-grep.sh b/t/t7002-grep.sh
+> index b13aa7e..0633673 100755
+> --- a/t/t7002-grep.sh
+> +++ b/t/t7002-grep.sh
+> @@ -31,7 +31,9 @@ test_expect_success setup '
+>  	echo zzz > z &&
+>  	mkdir t &&
+>  	echo test >t/t &&
+> -	git add file w x y z t/t hello.c &&
+> +	mkdir t/a &&
+> +	echo aa aa aa aa >t/a/a &&
+> +	git add file w x y z t/t t/a/a hello.c &&
+>  	test_tick &&
+>  	git commit -m initial
+>  '
+> @@ -132,6 +134,36 @@ do
+>  		! git grep -c test $H | grep /dev/null
+>          '
 > =20
->  SYNOPSIS
->  --------
-> -'git init-db' [-q | --quiet] [--template=3D<template_directory>] [--=
-shared[=3D<permissions>]]
-> +'git init-db' [-q | --quiet] [--bare] [--template=3D<template_direct=
-ory>] [--shared[=3D<permissions>]]
-> =20
-> =20
->  DESCRIPTION
-> diff --git a/builtin-init-db.c b/builtin-init-db.c
-> index 4a56006..9b1ce45 100644
-> --- a/builtin-init-db.c
-> +++ b/builtin-init-db.c
-> @@ -6,6 +6,7 @@
->  #include "cache.h"
->  #include "builtin.h"
->  #include "exec_cmd.h"
-> +#include "parse-options.h"
-> =20
->  #ifndef DEFAULT_GIT_TEMPLATE_DIR
->  #define DEFAULT_GIT_TEMPLATE_DIR "/usr/share/git-core/templates"
-> @@ -370,8 +371,16 @@ static int guess_repository_type(const char *git=
-_dir)
->  	return 1;
->  }
-> =20
-> -static const char init_db_usage[] =3D
-> -"git init [-q | --quiet] [--bare] [--template=3D<template-directory>=
-] [--shared[=3D<permissions>]]";
-> +static int shared_callback(const struct option *opt, const char *arg=
-, int unset)
-> +{
-> +	*((int *) opt->value) =3D (arg) ? git_config_perm("arg", arg) : PER=
-M_GROUP;
-> +	return 0;
-> +}
+> +	test_expect_success "grep --recurse $L" '
+> +		echo "${HC}t/t:1:test" >expected &&
+> +		git grep --recurse -n -e test $H >actual &&
+> +		diff expected actual
+> +	'
 
-What occurs when "--no-shared" is used? I have this callback use an if,
-else if, else to handle all possibilities.
+Use test_cmp instead of diff.
 
 > +
-> +static const char *const init_db_usage[] =3D {
-> +	"git init [-q | --quiet] [--bare] [--template=3D<template-directory=
->] [--shared[=3D<permissions>]]",
-> +	NULL
-> +};
-> =20
->  /*
->   * If you want to, you can share the DB area with any number of bran=
-ches.
-> @@ -384,25 +393,25 @@ int cmd_init_db(int argc, const char **argv, co=
-nst char *prefix)
->  	const char *git_dir;
->  	const char *template_dir =3D NULL;
->  	unsigned int flags =3D 0;
-> -	int i;
-> -
-> -	for (i =3D 1; i < argc; i++, argv++) {
-> -		const char *arg =3D argv[1];
-> -		if (!prefixcmp(arg, "--template=3D"))
-> -			template_dir =3D arg+11;
-> -		else if (!strcmp(arg, "--bare")) {
-> -			static char git_dir[PATH_MAX+1];
-> -			is_bare_repository_cfg =3D 1;
-> -			setenv(GIT_DIR_ENVIRONMENT, getcwd(git_dir,
-> -						sizeof(git_dir)), 0);
-> -		} else if (!strcmp(arg, "--shared"))
-> -			init_shared_repository =3D PERM_GROUP;
-> -		else if (!prefixcmp(arg, "--shared=3D"))
-> -			init_shared_repository =3D git_config_perm("arg", arg+9);
-> -		else if (!strcmp(arg, "-q") || !strcmp(arg, "--quiet"))
-> -			flags |=3D INIT_DB_QUIET;
-> -		else
-> -			usage(init_db_usage);
-> +	const struct option init_db_options[] =3D {
-> +		OPT_STRING(0, "template", &template_dir, "template-directory",
-> +				"provide the directory from which templates will be used"),
-> +		OPT_SET_INT(0, "bare", &is_bare_repository_cfg,
-> +				"create a bare repository", 1),
-> +		{ OPTION_CALLBACK, 0, "shared", &init_shared_repository,
-> +			"permissions",
-> +			"specify that the git repository is to be shared amongst several =
-users",
-> +			PARSE_OPT_OPTARG, shared_callback, 0},
+> +	test_expect_success "grep --no-recurse $L" '
+> +		: >expected &&
+> +		if git grep --no-recurse -e test $H >actual
+> +		then
+> +			echo should not have matched
+> +			cat actual
+> +			false
+> +		else
+> +			diff expected actual
+> +		fi
+> +	'
 
-Or you can add PARSE_OPT_NONEG here and avoid the above comment.
+Hmm, if git crashed and only wrote to stderr, this test would pass
+(hint: try this with git's master, that doesn't know this option).
+Better to devise a test in which the tested command still has to print
+something (a restricted set of results in this case).
 
-> +		OPT_BIT('q', "quiet", &flags, "be quiet", INIT_DB_QUIET),
-> +		OPT_END()
-> +	};
 > +
-> +	parse_options(argc, argv, prefix, init_db_options, init_db_usage, 0=
-);
-> +
-> +	if(is_bare_repository_cfg =3D=3D 1) {
-> +		static char git_dir[PATH_MAX+1];
-> +		setenv(GIT_DIR_ENVIRONMENT, getcwd(git_dir,
-> +					sizeof(git_dir)), 0);
->  	}
-> =20
->  	if (init_shared_repository !=3D -1)
+> +	test_expect_success "grep --no-recurse $L -- t" '
+> +		: >expected &&
+> +		if git grep --no-recurse -e aa $H -- t >actual
+> +		then
+> +			echo should not have matched
+> +			cat actual
+> +			false
+> +		else
+> +			diff expected actual
+> +		fi
+> +	'
+
+Same here.
