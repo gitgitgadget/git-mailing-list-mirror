@@ -1,64 +1,83 @@
-From: "Wong Peter" <peters.wong17@gmail.com>
-Subject: GREETINGS MY DEAR FRIEND IT IS CONFIDENTIAL
-Date: Sun, 12 Jul 2009 14:11:17 +0200
-Message-ID: <200907121208.AXP64246@mirapoint3.brutele.be>
-Reply-To: <wong.peters@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="_iso-2022-jp$ESC"
-Content-Transfer-Encoding: 7bit
-To: unlisted-recipients:; (no To-header on input)
-X-From: git-owner@vger.kernel.org Sun Jul 12 14:12:46 2009
+From: Paolo Bonzini <bonzini@gnu.org>
+Subject: [PATCH 0/6] Tracking setup improvements: per-remote config, autosetuppush
+Date: Sun, 12 Jul 2009 14:17:27 +0200
+Message-ID: <1247401053-20429-1-git-send-email-bonzini@gnu.org>
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun Jul 12 14:17:52 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MPxvA-0008Ka-BZ
-	for gcvg-git-2@gmane.org; Sun, 12 Jul 2009 14:12:44 +0200
+	id 1MPy07-0001H1-Dl
+	for gcvg-git-2@gmane.org; Sun, 12 Jul 2009 14:17:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752451AbZGLMMi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 12 Jul 2009 08:12:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752348AbZGLMMh
-	(ORCPT <rfc822;git-outgoing>); Sun, 12 Jul 2009 08:12:37 -0400
-Received: from mirapoint3.brutele.be ([212.68.199.148]:28811 "EHLO
-	mirapoint3.brutele.be" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752237AbZGLMMh (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 12 Jul 2009 08:12:37 -0400
-Received: from User (212-166-200-212.red-acceso.airtel.net [212.166.200.212])
-	by mirapoint3.brutele.be (MOS 3.8.7a)
-	with ESMTP id AXP64246 (AUTH ach38947@teledisnet.be);
-	Sun, 12 Jul 2009 14:08:45 +0200 (CEST)
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2800.1081
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2800.1081
-X-Junkmail-Whitelist: YES (by domain whitelist at mirapoint3.brutele.be)
+	id S1752510AbZGLMRi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 12 Jul 2009 08:17:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752264AbZGLMRi
+	(ORCPT <rfc822;git-outgoing>); Sun, 12 Jul 2009 08:17:38 -0400
+Received: from fencepost.gnu.org ([140.186.70.10]:60345 "EHLO
+	fencepost.gnu.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752182AbZGLMRh (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 12 Jul 2009 08:17:37 -0400
+Received: from bonzini by fencepost.gnu.org with local (Exim 4.67)
+	(envelope-from <bonzini@gnu.org>)
+	id 1MPxzs-0003Qu-0u
+	for git@vger.kernel.org; Sun, 12 Jul 2009 08:17:36 -0400
+X-Mailer: git-send-email 1.6.2.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-X-Spam-Report: 5.2 points;
- *  0.5 FROM_ENDS_IN_NUMS From: ends in numbers
- *  0.4 SUBJ_ALL_CAPS Subject is all capitals
- *  1.3 MILLION_USD BODY: Talks about millions of dollars
- *  3.0 FORGED_MUA_OUTLOOK Forged mail pretending to be from MS Outlook
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123140>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123141>
+
+This patch series adds two features that are a step toward providing
+consistent per-remote configuration of push behavior in addition
+to merge (tracking) behavior.
+
+In particular, the two features are:
+
+1) per-remote configuration of automatic tracking setup.  This leads
+to some nice refactoring of the code handling autosetup, where the
+combination of autosetupmerge and autosetuprebase is consolidated in
+a struct.
+
+2) The ability to automatically setup push refspecs corresponding
+to local branches tracking a remote.  This is false by default, since
+we also have push.default---and actually, a generalized default of
+true is probably not a good idea, unlike a per-remote setting.  In
+the future, 'git remote add' might set the per-remote autosetuppush
+to true if it gets some appropriate command-line argument.
 
 
+Patch 1 is a somewhat tangential DWIM that I've meant to send for
+a while.  It conflicts with this patch series, so I've included it.
 
+Patches 2 and 3 include the refactorings in preparation for the new
+remote.*.autosetup configuration, which is then implemented by
+patch 4.
 
-I am sorry to encroach into your privacy in this manner, Ifind it pleasurable to offer you my partnership in business,I only pray at
+Patch 5 extracts some code to a function that will become more
+complicated in patch 6.  Patch 6 implements autosetuppush by
+automatically creating and deleting push refspecs upon branch
+creation and deletion.
 
-this time that your address is still valid.
+ config: allow false and true values for branch.autosetuprebase
+ branch: install_branch_config and struct tracking refactoring
+ introduce a struct tracking_config
+ remote: add per-remote autosetupmerge and autosetuprebase configuration
+ move deletion of merge configuration to branch.c
+ branch, checkout: introduce autosetuppush
 
-I want to solicit your attention to receive (44.5million usd) on my behalf, The purpose of my contacting you is because mystatus
- 
-would not permit me to do this alone.
-
-If interested please reach me back via my personal address wong.peters@gmail.com and I will send you the full
-
-details and more information about myself and the funds. If interested.
-
-Kind regards,
-
-Wong Peter.
+ Documentation/config.txt |   36 +++++++++++++++++-
+ branch.c                 |   92 +++++++++++++++++++++++++++++++++++++--------
+ branch.h                 |    5 ++-
+ builtin-branch.c         |   10 +----
+ builtin-checkout.c       |    2 +-
+ builtin-clone.c          |    4 +-
+ cache.h                  |   11 ++++-
+ config.c                 |   48 +++++++++++++++++-------
+ environment.c            |    7 ++-
+ remote.c                 |    3 +
+ remote.h                 |    1 +
+ t/t3200-branch.sh        |   92 ++++++++++++++++++++++++++++++++++++++++++++-
+ 12 files changed, 259 insertions(+), 52 deletions(-)
