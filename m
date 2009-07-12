@@ -1,118 +1,181 @@
-From: Ondrej Certik <ondrej@certik.cz>
-Subject: Re: default aliases (ci, di, st, co)
-Date: Sat, 11 Jul 2009 23:07:03 -0600
-Message-ID: <85b5c3130907112207x74449b12qcff25b96711c42e1@mail.gmail.com>
-References: <85b5c3130907081649s37f726f7id1a64f2fdbe609f@mail.gmail.com>
-	 <4A55958E.1050401@op5.se>
-	 <20090709085837.GA12348@bit.office.eurotux.com>
+From: Stephen Boyd <bebarino@gmail.com>
+Subject: Re: [PATCH] init-db: migrate to parse-options
+Date: Sun, 12 Jul 2009 00:17:23 -0700
+Message-ID: <4A598E03.10204@gmail.com>
+References: <1247352793-25675-1-git-send-email-michal.kiedrowicz@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Andreas Ericsson <ae@op5.se>,
-	Git Mailing List <git@vger.kernel.org>
-To: Luciano Miguel Ferreira Rocha <luciano@eurotux.com>
-X-From: git-owner@vger.kernel.org Sun Jul 12 07:07:27 2009
+Cc: git@vger.kernel.org
+To: =?UTF-8?B?TWljaGHFgiBLaWVkcm93aWN6?= <michal.kiedrowicz@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Jul 12 09:18:47 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MPrHZ-0001we-9Y
-	for gcvg-git-2@gmane.org; Sun, 12 Jul 2009 07:07:25 +0200
+	id 1MPtKg-0001C9-S8
+	for gcvg-git-2@gmane.org; Sun, 12 Jul 2009 09:18:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750975AbZGLFHH convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 12 Jul 2009 01:07:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750905AbZGLFHG
-	(ORCPT <rfc822;git-outgoing>); Sun, 12 Jul 2009 01:07:06 -0400
-Received: from mail-yx0-f184.google.com ([209.85.210.184]:41890 "EHLO
-	mail-yx0-f184.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750831AbZGLFHF convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 12 Jul 2009 01:07:05 -0400
-Received: by yxe14 with SMTP id 14so2131945yxe.33
-        for <git@vger.kernel.org>; Sat, 11 Jul 2009 22:07:03 -0700 (PDT)
+	id S1751671AbZGLHRa convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 12 Jul 2009 03:17:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751625AbZGLHR3
+	(ORCPT <rfc822;git-outgoing>); Sun, 12 Jul 2009 03:17:29 -0400
+Received: from mail-px0-f185.google.com ([209.85.216.185]:39332 "EHLO
+	mail-px0-f185.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751577AbZGLHR2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 12 Jul 2009 03:17:28 -0400
+Received: by pxi15 with SMTP id 15so55103pxi.33
+        for <git@vger.kernel.org>; Sun, 12 Jul 2009 00:17:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:sender:received:in-reply-to
-         :references:date:x-google-sender-auth:message-id:subject:from:to:cc
-         :content-type:content-transfer-encoding;
-        bh=sSJ0DHLx/rb7o9ULERiw7tz4pdVX7UKUFg4uxI7FdoQ=;
-        b=teeKY6rRe9z/fly/bneR/9qTCEx8mB3HJgMYeYNN00KHlLzdFjRwgL64b2NmaZoGpW
-         VlSf9/fc79Qw8IJaQ4+7QO3fA3KbPeov6MiVmgmUQl6kxXhDOKGSXOYhEsJFBmg2ClQQ
-         vH8vBh4AwQptueWdFUHXRFQ7KjL7P42ISbb+E=
+        h=domainkey-signature:received:received:message-id:date:from
+         :user-agent:mime-version:to:cc:subject:references:in-reply-to
+         :x-enigmail-version:content-type:content-transfer-encoding;
+        bh=u9GgXZLVygogat3tOwKAeEub6XZqgJxera2fQa4OMXA=;
+        b=rYsT7qTZGR4MD+6q5XjK25QJIjQfjAYaFkL/yDHcVJaWwM9V3zDWY9ZHuk9Dm/NJ4O
+         r0c/ds1ADRcZwrnIsrg4ADzIEapUBai+MdHEXSUCm64eT1ElpgV35rH9trj+4sp2scn1
+         koGGTch/rPkoBAQbGC3nrqz4nnJ37YIEOx74I=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:sender:in-reply-to:references:date
-         :x-google-sender-auth:message-id:subject:from:to:cc:content-type
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:x-enigmail-version:content-type
          :content-transfer-encoding;
-        b=m74H+k8Kw6v22FytAGH8C5pt/L/rUqII/wLMH7LSkh15T7HbCfDG3ThzdBVht07bOH
-         8yc3ShN/QAKVQcWCrnKRa592UK0xFWz2Bs4pWF4k1ILr4KXBOSkwnbJUdlTW3FvfCyjm
-         HpAOSeOwEQFNmAElCbFRPtQRHM0RuMY5nRdug=
-Received: by 10.100.197.2 with SMTP id u2mr5137640anf.138.1247375223452; Sat, 
-	11 Jul 2009 22:07:03 -0700 (PDT)
-In-Reply-To: <20090709085837.GA12348@bit.office.eurotux.com>
-X-Google-Sender-Auth: c4c45d8e3d60d43e
+        b=MxKTvCWB44mt1XjfgZWyJEbt3DZdKnNhYpLfwzK1cAY40LKQGjre6Fs3Ndf0XJdOU6
+         GxBF2Ai9F+jhIvATsyAZxqDigv1LidXcs6Q1bl8D/LAUmZQYmQbB3m0LmYYlXokkYmhY
+         op8iwdXjQUsFty8xleU3R4PrWnj1qpvTh9oKs=
+Received: by 10.114.130.15 with SMTP id c15mr6433128wad.59.1247383047856;
+        Sun, 12 Jul 2009 00:17:27 -0700 (PDT)
+Received: from ?10.10.0.4? (cpe-66-75-25-79.san.res.rr.com [66.75.25.79])
+        by mx.google.com with ESMTPS id n33sm5680897wag.56.2009.07.12.00.17.25
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sun, 12 Jul 2009 00:17:26 -0700 (PDT)
+User-Agent: Thunderbird 2.0.0.22 (X11/20090629)
+In-Reply-To: <1247352793-25675-1-git-send-email-michal.kiedrowicz@gmail.com>
+X-Enigmail-Version: 0.95.7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123136>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123137>
 
-On Thu, Jul 9, 2009 at 2:58 AM, Luciano Miguel Ferreira
-Rocha<luciano@eurotux.com> wrote:
-> On Thu, Jul 09, 2009 at 09:00:30AM +0200, Andreas Ericsson wrote:
->> =C2=A0Ondrej Certik wrote:
->> > Hi,
->> > coming to git from mercurial and svn, here is the alias part of my
->> > .gitconfig:
->> > [alias]
->> > =C2=A0 =C2=A0 ci =3D commit
->> > =C2=A0 =C2=A0 di =3D diff --color-words
->> > =C2=A0 =C2=A0 st =3D status
->> > =C2=A0 =C2=A0 co =3D checkout
->> > And all is fine until I share commands to checkout my branch (for
->> > example) with other people, then basically I have to write those
->> > commands in full (e.g. commit, checkout, ...), since I cannot assu=
-me
->> > they have their .gitconfig setup the same way I do. Especially for
->> > people who are new to git.
->> > What is the view on this in the git community?
->>
->>
->> =C2=A0Personally I think "plain" aliases like you use above are evil=
-=2E
->> =C2=A0git is not svn or mercurial. If you use it like svn you'll be
->> =C2=A0surprised sooner or later and your workflow will feel awkward =
-or
->> =C2=A0just plain wrong. hg and git are very similar, but the fact th=
-at
->> =C2=A0hg assumed the svn shorthands implies to me that they've tried
->> =C2=A0to retain a compatibility that does not, in fact, exist.
+Micha=C5=82 Kiedrowicz wrote:
+> Also add missing --bare to init-db synopsis.
 >
-> No, it just means that shorting common commands is useful and common.
+> Signed-off-by: Micha=C5=82 Kiedrowicz <michal.kiedrowicz@gmail.com>
+> ---
+
+Heh, I had a very similar patch queued up.
+
+>  Documentation/git-init-db.txt |    2 +-
+>  builtin-init-db.c             |   51 ++++++++++++++++++++++++-------=
+----------
+>  2 files changed, 31 insertions(+), 22 deletions(-)
 >
->> =C2=A0I have no simple aliases for any of the commands. There's just=
- no reason
->> =C2=A0for them since tab completion works so well.
->
-> "Intelligent" bash completion always gets in my way, so I can't use i=
-t.
->
-> I vote yes.
+> diff --git a/Documentation/git-init-db.txt b/Documentation/git-init-d=
+b.txt
+> index 1fd0ff2..eba3cb4 100644
+> --- a/Documentation/git-init-db.txt
+> +++ b/Documentation/git-init-db.txt
+> @@ -8,7 +8,7 @@ git-init-db - Creates an empty git repository
+> =20
+>  SYNOPSIS
+>  --------
+> -'git init-db' [-q | --quiet] [--template=3D<template_directory>] [--=
+shared[=3D<permissions>]]
+> +'git init-db' [-q | --quiet] [--bare] [--template=3D<template_direct=
+ory>] [--shared[=3D<permissions>]]
+> =20
+> =20
+>  DESCRIPTION
+> diff --git a/builtin-init-db.c b/builtin-init-db.c
+> index 4a56006..9b1ce45 100644
+> --- a/builtin-init-db.c
+> +++ b/builtin-init-db.c
+> @@ -6,6 +6,7 @@
+>  #include "cache.h"
+>  #include "builtin.h"
+>  #include "exec_cmd.h"
+> +#include "parse-options.h"
+> =20
+>  #ifndef DEFAULT_GIT_TEMPLATE_DIR
+>  #define DEFAULT_GIT_TEMPLATE_DIR "/usr/share/git-core/templates"
+> @@ -370,8 +371,16 @@ static int guess_repository_type(const char *git=
+_dir)
+>  	return 1;
+>  }
+> =20
+> -static const char init_db_usage[] =3D
+> -"git init [-q | --quiet] [--bare] [--template=3D<template-directory>=
+] [--shared[=3D<permissions>]]";
+> +static int shared_callback(const struct option *opt, const char *arg=
+, int unset)
+> +{
+> +	*((int *) opt->value) =3D (arg) ? git_config_perm("arg", arg) : PER=
+M_GROUP;
+> +	return 0;
+> +}
 
+What occurs when "--no-shared" is used? I have this callback use an if,
+else if, else to handle all possibilities.
 
+> +
+> +static const char *const init_db_usage[] =3D {
+> +	"git init [-q | --quiet] [--bare] [--template=3D<template-directory=
+>] [--shared[=3D<permissions>]]",
+> +	NULL
+> +};
+> =20
+>  /*
+>   * If you want to, you can share the DB area with any number of bran=
+ches.
+> @@ -384,25 +393,25 @@ int cmd_init_db(int argc, const char **argv, co=
+nst char *prefix)
+>  	const char *git_dir;
+>  	const char *template_dir =3D NULL;
+>  	unsigned int flags =3D 0;
+> -	int i;
+> -
+> -	for (i =3D 1; i < argc; i++, argv++) {
+> -		const char *arg =3D argv[1];
+> -		if (!prefixcmp(arg, "--template=3D"))
+> -			template_dir =3D arg+11;
+> -		else if (!strcmp(arg, "--bare")) {
+> -			static char git_dir[PATH_MAX+1];
+> -			is_bare_repository_cfg =3D 1;
+> -			setenv(GIT_DIR_ENVIRONMENT, getcwd(git_dir,
+> -						sizeof(git_dir)), 0);
+> -		} else if (!strcmp(arg, "--shared"))
+> -			init_shared_repository =3D PERM_GROUP;
+> -		else if (!prefixcmp(arg, "--shared=3D"))
+> -			init_shared_repository =3D git_config_perm("arg", arg+9);
+> -		else if (!strcmp(arg, "-q") || !strcmp(arg, "--quiet"))
+> -			flags |=3D INIT_DB_QUIET;
+> -		else
+> -			usage(init_db_usage);
+> +	const struct option init_db_options[] =3D {
+> +		OPT_STRING(0, "template", &template_dir, "template-directory",
+> +				"provide the directory from which templates will be used"),
+> +		OPT_SET_INT(0, "bare", &is_bare_repository_cfg,
+> +				"create a bare repository", 1),
+> +		{ OPTION_CALLBACK, 0, "shared", &init_shared_repository,
+> +			"permissions",
+> +			"specify that the git repository is to be shared amongst several =
+users",
+> +			PARSE_OPT_OPTARG, shared_callback, 0},
 
-Thanks everyone for contributing to the discussion. So it seems that
-most people are against such aliases.
+Or you can add PARSE_OPT_NONEG here and avoid the above comment.
 
-I only want to correct one thing --- I use git exactly because it's
-not svn and exactly because it's not mercurial, things like git
-branches, git remote branches, rebase -i, are still truly unique, and
-in my experience once one tries it, he never wants to come back.
-
-That said, I do use "git ci" and "git st" very often and I don't think
-it infers any kind of workflow. TAB completion doesn't help, because I
-need to write "git stat<TAB>", e.g. I save exactly one letter., commit
-is better, there I just need "git com<TAB>", but I am still faster
-with my aliases. Maybe "git co" is nasty, but I never had any problems
-with that either.
-
-Ondrej
+> +		OPT_BIT('q', "quiet", &flags, "be quiet", INIT_DB_QUIET),
+> +		OPT_END()
+> +	};
+> +
+> +	parse_options(argc, argv, prefix, init_db_options, init_db_usage, 0=
+);
+> +
+> +	if(is_bare_repository_cfg =3D=3D 1) {
+> +		static char git_dir[PATH_MAX+1];
+> +		setenv(GIT_DIR_ENVIRONMENT, getcwd(git_dir,
+> +					sizeof(git_dir)), 0);
+>  	}
+> =20
+>  	if (init_shared_repository !=3D -1)
