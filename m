@@ -1,172 +1,107 @@
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: [JGIT PATCH 3/3] Introduce the command 'jgit gui'
-Date: Sun, 12 Jul 2009 16:47:06 +0200 (CEST)
-Message-ID: <3966c8049c37155b2d09d3b4d2997d9e289d1e7a.1247408350u.git.johannes.schindelin@gmx.de>
-References: <cover.1247408350u.git.johannes.schindelin@gmx.de>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH] gitweb: update Git homepage URL
+Date: Sun, 12 Jul 2009 17:28:09 +0200
+Message-ID: <200907121728.10559.jnareb@gmail.com>
+References: <1247401888-27185-1-git-send-email-win@wincent.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: spearce@spearce.org, robin.rosenberg@dewire.com
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jul 12 16:45:22 2009
+Content-Type: text/plain;
+  charset="iso-8859-2"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Wincent Colaiuta <win@wincent.com>
+X-From: git-owner@vger.kernel.org Sun Jul 12 17:28:31 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MQ0Iq-0002r3-FN
-	for gcvg-git-2@gmane.org; Sun, 12 Jul 2009 16:45:20 +0200
+	id 1MQ0yb-0007py-Aj
+	for gcvg-git-2@gmane.org; Sun, 12 Jul 2009 17:28:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753567AbZGLOpR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 12 Jul 2009 10:45:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753370AbZGLOpQ
-	(ORCPT <rfc822;git-outgoing>); Sun, 12 Jul 2009 10:45:16 -0400
-Received: from mail.gmx.net ([213.165.64.20]:43958 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753346AbZGLOpJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 12 Jul 2009 10:45:09 -0400
-Received: (qmail invoked by alias); 12 Jul 2009 14:45:07 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp023) with SMTP; 12 Jul 2009 16:45:07 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+hWuRHrjWhXltuQgJeo2+h74+qfVDHowNxqiKY+Q
-	OFd52N8MGmB/Zi
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <cover.1247408350u.git.johannes.schindelin@gmx.de>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.45
+	id S1754302AbZGLP2V (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 12 Jul 2009 11:28:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754243AbZGLP2U
+	(ORCPT <rfc822;git-outgoing>); Sun, 12 Jul 2009 11:28:20 -0400
+Received: from ey-out-1920.google.com ([74.125.78.145]:7054 "EHLO
+	ey-out-1920.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754055AbZGLP2U (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 12 Jul 2009 11:28:20 -0400
+Received: by ey-out-1920.google.com with SMTP id 3so345736eyh.36
+        for <git@vger.kernel.org>; Sun, 12 Jul 2009 08:28:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=KyoNqhgvA869qNPsswW1F8xjqN6eWcfdwT5oy/64eH0=;
+        b=LRcH78Hb1F10ljJ8WMAWZsFyX7Gq/xDPunE8GB72jGBbrA5mVwJew/tvTUuiGrXdQh
+         BwqMsoNCX7PRbplJj7ml5iKN6pVPOjgji+ndqrYv6us0G1cRqKM8x3jijwQoW4ZF1YDU
+         AbXPOjQ9g9/JnCAB4gf2EmaMbSc8OfitdcVDU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=flgOLKVtDlWLN6AOhGNj7SGrqiNPxMQWNV/PlXqkgsJmFZYjvjHHigaj6N6egGkHwc
+         bm4nmW7JtTGFJ4lKkrDC89w7ts8mN2Q9BTRRzhAoJzKDja0TdVf5AEZAQrhrqk50Mxwz
+         VmmjPAKCCQLSF4NJtR1O2AwTnsiCdW/dgyQmM=
+Received: by 10.210.63.18 with SMTP id l18mr5090753eba.11.1247412498568;
+        Sun, 12 Jul 2009 08:28:18 -0700 (PDT)
+Received: from ?192.168.1.13? (abwk125.neoplus.adsl.tpnet.pl [83.8.234.125])
+        by mx.google.com with ESMTPS id 5sm7585430eyf.34.2009.07.12.08.28.16
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sun, 12 Jul 2009 08:28:17 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <1247401888-27185-1-git-send-email-win@wincent.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123152>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123153>
 
-Expose the graph-based user interface to the user.  This command takes
-the same arguments as 'jgit log'.
+On Sun, 12 July 2009, Wincent Colaiuta wrote:
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- .../services/org.spearce.jgit.pgm.TextBuiltin      |    1 +
- .../src/org/spearce/jgit/pgm/Gui.java              |  100 ++++++++++++++++++++
- 2 files changed, 101 insertions(+), 0 deletions(-)
- create mode 100644 org.spearce.jgit.pgm/src/org/spearce/jgit/pgm/Gui.java
+> git-scm.com is now the "official" Git project page, having taken over
+> from git.or.cz, so update the default link accordingly. This saves a
+> redirect when people hit git.or.cz.
+> 
+> Signed-off-by: Wincent Colaiuta <win@wincent.com>
 
-diff --git a/org.spearce.jgit.pgm/src/META-INF/services/org.spearce.jgit.pgm.TextBuiltin b/org.spearce.jgit.pgm/src/META-INF/services/org.spearce.jgit.pgm.TextBuiltin
-index 3a8cc09..335a643 100644
---- a/org.spearce.jgit.pgm/src/META-INF/services/org.spearce.jgit.pgm.TextBuiltin
-+++ b/org.spearce.jgit.pgm/src/META-INF/services/org.spearce.jgit.pgm.TextBuiltin
-@@ -4,6 +4,7 @@ org.spearce.jgit.pgm.Daemon
- org.spearce.jgit.pgm.DiffTree
- org.spearce.jgit.pgm.Fetch
- org.spearce.jgit.pgm.Glog
-+org.spearce.jgit.pgm.Gui
- org.spearce.jgit.pgm.IndexPack
- org.spearce.jgit.pgm.Init
- org.spearce.jgit.pgm.Log
-diff --git a/org.spearce.jgit.pgm/src/org/spearce/jgit/pgm/Gui.java b/org.spearce.jgit.pgm/src/org/spearce/jgit/pgm/Gui.java
-new file mode 100644
-index 0000000..59904a7
---- /dev/null
-+++ b/org.spearce.jgit.pgm/src/org/spearce/jgit/pgm/Gui.java
-@@ -0,0 +1,100 @@
-+/*
-+ * Copyright (C) 2009, Shawn O. Pearce <spearce@spearce.org>,
-+ *                     Johannes E. Schindelin <johannes.schindelin@gmx.de>
-+ *
-+ * All rights reserved.
-+ *
-+ * Redistribution and use in source and binary forms, with or
-+ * without modification, are permitted provided that the following
-+ * conditions are met:
-+ *
-+ * - Redistributions of source code must retain the above copyright
-+ *   notice, this list of conditions and the following disclaimer.
-+ *
-+ * - Redistributions in binary form must reproduce the above
-+ *   copyright notice, this list of conditions and the following
-+ *   disclaimer in the documentation and/or other materials provided
-+ *   with the distribution.
-+ *
-+ * - Neither the name of the Git Development Community nor the
-+ *   names of its contributors may be used to endorse or promote
-+ *   products derived from this software without specific prior
-+ *   written permission.
-+ *
-+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND
-+ * CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES,
-+ * INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
-+ * OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
-+ * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
-+ * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-+ * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
-+ * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
-+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
-+ * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
-+ * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
-+ * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
-+ * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-+ */
-+
-+package org.spearce.jgit.pgm;
-+
-+import java.awt.event.WindowAdapter;
-+import java.awt.event.WindowEvent;
-+
-+import java.io.File;
-+
-+import javax.swing.JFrame;
-+
-+import org.spearce.jgit.gui.CommitGraph;
-+import org.spearce.jgit.gui.GraphWalk;
-+
-+import org.spearce.jgit.revwalk.RevCommit;
-+import org.spearce.jgit.revwalk.RevWalk;
-+
-+class Gui extends RevWalkTextBuiltin {
-+	final JFrame frame;
-+
-+	CommitGraph graph;
-+
-+	Gui() {
-+		frame = new JFrame();
-+		frame.addWindowListener(new WindowAdapter() {
-+			@Override
-+			public void windowClosing(final WindowEvent e) {
-+				frame.dispose();
-+			}
-+		});
-+	}
-+
-+	@Override
-+	protected int walkLoop() throws Exception {
-+		graph = new CommitGraph((GraphWalk)walk);
-+		frame.getContentPane().add(graph);
-+
-+		frame.setTitle("[" + repoName() + "]");
-+		frame.pack();
-+		frame.setVisible(true);
-+		return 0;
-+	}
-+
-+	@Override
-+	protected void show(final RevCommit c) throws Exception {
-+		throw new UnsupportedOperationException();
-+	}
-+
-+	@Override
-+	protected RevWalk createWalk() {
-+		if (objects)
-+			throw die("Cannot use --objects with gui");
-+		final GraphWalk w = new GraphWalk(db);
-+		return w;
-+	}
-+
-+	private String repoName() {
-+		final File f = db.getDirectory();
-+		String n = f.getName();
-+		if (".git".equals(n))
-+			n = f.getParentFile().getName();
-+		return n;
-+	}
-+}
--- 
-1.6.3.3.644.g82c56
+Good catch!  For what is worth (not that I think such trivial patch
+needs it) ACK from me.
+
+> ---
+>  gitweb/gitweb.perl |    2 +-
+>  1 files changed, 1 insertions(+), 1 deletions(-)
+> 
+> diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+> index 6a1b5b5..7fbd5ff 100755
+> --- a/gitweb/gitweb.perl
+> +++ b/gitweb/gitweb.perl
+> @@ -94,7 +94,7 @@ our $favicon = "++GITWEB_FAVICON++";
+>  # URI and label (title) of GIT logo link
+>  #our $logo_url = "http://www.kernel.org/pub/software/scm/git/docs/";
+>  #our $logo_label = "git documentation";
+> -our $logo_url = "http://git.or.cz/";
+> +our $logo_url = "http://git-scm.com/";
+>  our $logo_label = "git homepage";
+>  
+>  # source of projects list
+> -- 
+
+Perhaps we can squash also this fix to README?  Or should
+it be a separate patch/commit?
+
+diff --git i/README w/README
+index c932ab3..67cfeb2 100644
+--- i/README
++++ w/README
+@@ -37,7 +37,7 @@ CVS users may also want to read Documentation/gitcvs-migration.txt
+ ("man gitcvs-migration" or "git help cvs-migration" if git is
+ installed).
+ 
+-Many Git online resources are accessible from http://git.or.cz/
++Many Git online resources are accessible from http://git-scm.com/
+ including full documentation and Git related tools.
+ 
+ The user discussion and development of Git take place on the Git
