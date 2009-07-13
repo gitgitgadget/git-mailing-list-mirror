@@ -1,71 +1,69 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: default aliases (ci, di, st, co)
-Date: Mon, 13 Jul 2009 02:43:09 -0400
-Message-ID: <20090713064309.GB10300@coredump.intra.peff.net>
-References: <85b5c3130907081649s37f726f7id1a64f2fdbe609f@mail.gmail.com>
- <m3my7evhky.fsf@localhost.localdomain>
- <7vskh53iyt.fsf@alter.siamese.dyndns.org>
- <4A56786B.7040904@gnu.org>
- <20090713064027.GA10300@coredump.intra.peff.net>
+From: "Matthias Andree" <matthias.andree@gmx.de>
+Subject: Re: [PATCH] Fix export_marks() error handling.
+Date: Mon, 13 Jul 2009 10:01:57 +0200
+Message-ID: <op.uwzxxj2m1e62zd@merlin.emma.line.org>
+References: <alpine.DEB.1.00.0907091500420.4339@intel-tinevez-2-302>
+ <1247146081-4692-1-git-send-email-matthias.andree@gmx.de>
+ <20090711094546.GA12399@cuci.nl>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Jakub Narebski <jnareb@gmail.com>,
-	Ondrej Certik <ondrej@certik.cz>,
-	Git Mailing List <git@vger.kernel.org>
-To: Paolo Bonzini <bonzini@gnu.org>
-X-From: git-owner@vger.kernel.org Mon Jul 13 08:43:20 2009
+Content-Type: text/plain; format=flowed; delsp=yes; charset=utf-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "Stephen R. van den Berg" <srb@cuci.nl>
+X-From: git-owner@vger.kernel.org Mon Jul 13 10:02:29 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MQFFv-0000wV-Nr
-	for gcvg-git-2@gmane.org; Mon, 13 Jul 2009 08:43:20 +0200
+	id 1MQGUX-0004cb-0V
+	for gcvg-git-2@gmane.org; Mon, 13 Jul 2009 10:02:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751726AbZGMGnO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 13 Jul 2009 02:43:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752242AbZGMGnM
-	(ORCPT <rfc822;git-outgoing>); Mon, 13 Jul 2009 02:43:12 -0400
-Received: from peff.net ([208.65.91.99]:49767 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751000AbZGMGnL (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 13 Jul 2009 02:43:11 -0400
-Received: (qmail 31505 invoked by uid 107); 13 Jul 2009 06:45:08 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Mon, 13 Jul 2009 02:45:08 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Mon, 13 Jul 2009 02:43:09 -0400
-Content-Disposition: inline
-In-Reply-To: <20090713064027.GA10300@coredump.intra.peff.net>
+	id S1752425AbZGMICE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 13 Jul 2009 04:02:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751726AbZGMICE
+	(ORCPT <rfc822;git-outgoing>); Mon, 13 Jul 2009 04:02:04 -0400
+Received: from mail.gmx.net ([213.165.64.20]:44481 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750830AbZGMICD (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 13 Jul 2009 04:02:03 -0400
+Received: (qmail invoked by alias); 13 Jul 2009 08:02:00 -0000
+Received: from g230242235.adsl.alicedsl.de (EHLO mandree.no-ip.org) [92.230.242.235]
+  by mail.gmx.net (mp035) with SMTP; 13 Jul 2009 10:02:00 +0200
+X-Authenticated: #428038
+X-Provags-ID: V01U2FsdGVkX181V/scN7Q1O88ddPO+pd2NZ11vwDv7edad4IqVLi
+	tr5FW2jNjJAlDR
+Received: from merlin.emma.line.org (localhost [127.0.0.1])
+	by merlin.emma.line.org (Postfix) with ESMTP id 67B28194006;
+	Mon, 13 Jul 2009 10:01:58 +0200 (CEST)
+In-Reply-To: <20090711094546.GA12399@cuci.nl>
+User-Agent: Opera Mail/9.64 (Linux)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.64
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123172>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123173>
 
-On Mon, Jul 13, 2009 at 02:40:27AM -0400, Jeff King wrote:
+Am 11.07.2009, 11:45 Uhr, schrieb Stephen R. van den Berg <srb@cuci.nl>:
 
-> On Fri, Jul 10, 2009 at 01:08:27AM +0200, Paolo Bonzini wrote:
-> 
-> > Yes, it's in the wiki and in my .gitconfig:
-> > 
-> >         whatis = "!sh -c 'git show -s --pretty=\"format:%h (%s, %ai\"
-> > \"$@\" | sed -e \"s/ [012][0-9]:[0-5][0-9]:[0-5][0-9]
-> > [-+][0-9][0-9][0-9][0-9]$/)\\n/\"' -"
-> 
-> Is there a reason not to simply use:
-> 
->   whatis = "show -s --pretty='format:%h (%s, %ad)' --date=short"
-> 
-> these days?
-> 
-> -Peff
-> 
-> P.S. Actually, I use --no-pager in my version, so I use 'tformat' to
-> explicitly end it with a newline, which is nicer for actually showing
-> the output on the terminal.
+> Matthias Andree wrote:
+>> +	/* do not optimize the next two lines - they must both be executed in
+>> +	 * this order. || might short-circuit the fclose(), and combining them
+>> +	 * into one statement might reverse the order of execution.
+>> +	 * Also, fflush() may not be sufficient - on some file systems, the
+>> +	 * error is still delayed until the final [f]close().  */
+>> +	e  = ferror(f);
+>> +	e |= fclose(f);
+>> +	if (e)
+>
+> The commentary above should be common knowledge for anyone familiar with
+> ANSI C.  So I'd suggest moving the comments into the description section  
+> of
+> the commit and removing them from the actual code.
 
-Er, actually, I see yours adds the newline explicitly in the sed
-invocation, so it would definitely be 'tformat' to match what yours
-does.
+Feel free to do it and submit a patch, I'm not going to invest more time  
+into a piece of code that runs seldomly.
 
--Peff
+-- 
+Matthias Andree
