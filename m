@@ -1,70 +1,73 @@
-From: Peter Voss <info@petervoss.org>
-Subject: Submodule using different repository URLs
-Date: Mon, 13 Jul 2009 11:57:24 +0200
-Message-ID: <5BE6F3DC-4B00-4D84-8D0E-41057735483F@petervoss.org>
-Mime-Version: 1.0 (Apple Message framework v935.3)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
+From: Rustom Mody <rustompmody@gmail.com>
+Subject: advisability of CIFS/SMBFS
+Date: Mon, 13 Jul 2009 15:57:10 +0530
+Message-ID: <f46c52560907130327n1fedcd9ch34a2a73a03b9af5c@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jul 13 11:57:41 2009
+X-From: git-owner@vger.kernel.org Mon Jul 13 12:27:20 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MQIHy-0006AD-EY
-	for gcvg-git-2@gmane.org; Mon, 13 Jul 2009 11:57:38 +0200
+	id 1MQIkh-0000un-BI
+	for gcvg-git-2@gmane.org; Mon, 13 Jul 2009 12:27:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755259AbZGMJ52 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 13 Jul 2009 05:57:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755153AbZGMJ51
-	(ORCPT <rfc822;git-outgoing>); Mon, 13 Jul 2009 05:57:27 -0400
-Received: from mo-p00-ob.rzone.de ([81.169.146.161]:19773 "EHLO
-	mo-p00-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755138AbZGMJ51 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 13 Jul 2009 05:57:27 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; t=1247479044; l=867;
-	s=domk; d=petervoss.org;
-	h=Date:Subject:Mime-Version:Content-Transfer-Encoding:Content-Type:To:
-	From:X-RZG-CLASS-ID:X-RZG-AUTH;
-	bh=rGl+gegXtoPHcOxbp7TA40u2K5g=;
-	b=tMbE1RLu9f/HRWm5bpUH5cDoqCtwsrubfkL9nRYTothx6KjDZofPsBs4zpX52reN2/5
-	oqxMdy3TQ/mk8+1PQNOj8IzdaiOIXslAZ+S44swHpEX0K6I3RXf/q678uuUt1TNT55Nx/
-	LuhVN5DCq5qTXBzQSgKSW0pL0wBLklE7iwo=
-X-RZG-AUTH: :JWICemC4fusRF4tAhweiuU4SRqyWF3gXMlHyMhzObhKwDIReNIDrirxOEFeT
-X-RZG-CLASS-ID: mo00
-Received: from [192.168.1.108]
-	(ip-62-143-242-232.unitymediagroup.de [62.143.242.232])
-	by post.strato.de (klopstock mo22) (RZmta 18.49)
-	with ESMTP id R0032al6D9kVZS for <git@vger.kernel.org>;
-	Mon, 13 Jul 2009 11:57:24 +0200 (MEST)
-X-Mailer: Apple Mail (2.935.3)
+	id S1755318AbZGMK1L (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 13 Jul 2009 06:27:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755301AbZGMK1L
+	(ORCPT <rfc822;git-outgoing>); Mon, 13 Jul 2009 06:27:11 -0400
+Received: from mail-pz0-f197.google.com ([209.85.222.197]:65197 "EHLO
+	mail-pz0-f197.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752944AbZGMK1K (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 13 Jul 2009 06:27:10 -0400
+Received: by pzk35 with SMTP id 35so775879pzk.33
+        for <git@vger.kernel.org>; Mon, 13 Jul 2009 03:27:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:date:message-id:subject
+         :from:to:content-type:content-transfer-encoding;
+        bh=0019qTycw+X/QMI2P3d4Rbk7go1yEduO0014b2aNCTg=;
+        b=EleOe9HwCPfLjj0dRmGv+zyfQ7RaJwCtIRG474ExJjXkYq6pWdbpt4phK3Y7sTNa1F
+         XrAsYrgz1Mt0DsyBd/5D0uKn1DQFzuPB2LjG3sqf/AuvmWiPRSnuk+kb6Ws1DjPZcex0
+         dfE6udnuytqgpwYIg67zAkjHDZ612Wk2b5sRA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:date:message-id:subject:from:to:content-type
+         :content-transfer-encoding;
+        b=rg+DrYoRA3Xuq4EOOz3821Qmns7pbV4W32H4D12KKKdMsv5e6+rfkU/FKwJHyqhhcU
+         wAP0oM79kq7pVmFvIEN05rqVazZRaia5NZuO4NrK/iY4Hi4uqG7Su8gwbpengsnIcdf5
+         fXaQBGx+bBDyxfHj3f7FVU8O9/9m9VBhxY9NQ=
+Received: by 10.115.90.1 with SMTP id s1mr5641334wal.39.1247480830065; Mon, 13 
+	Jul 2009 03:27:10 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123181>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123182>
 
-Hi,
+I see a mention of CIFS/SMBFS on the faq and some mails but no clear
+position on whether its ok or not.
 
-I want to use the git submodule feature to move part of my code to a  
-different repository at github.
+My question is in the following context:
 
-The issue is that developers should use different repository URLs for  
-the submodule depending on whether they have commit rights or not.
+- Our team (5-6 programmers) use windows and linux for development
+- We are on a windows 'network neighborhood' type system (I guess this is CIFS?)
+- there is a linux box for an (internal) server and some dual boots
 
-At the beginning I was using the public URL to set-up the submodule:
-git submodule add git://github.com/x/mymodule.git mymodule
+If I can make a repo smbmounted on one of the linux partitions then we
+can push/pull from each others' repos almost like between local repos
+ie without ssh etc.  Of course this assumes the directories are made
+suitably shareable by the team members.
 
-The issue is that some developers are working behind a firewall that  
-blocks the git protocol. These could only use the git@github.com:x/ 
-mymodule.git URL to get access.
-But other developers can only go through the public URL git:// 
-github.com/x/mymodule.git. So whatever I use it won't work for  
-everybody.
+Of course one could say: Whats the point of using the best distributed
+vcs without using the distributed features.
 
-What's the best way to deal with that? Could I set-up different  
-repository URLs for one and the same submodule and use which one is  
-appropriate?
+Well our reasons for git are:
+- efficient branching and sophisticated merge, branch surgery with
+rebase, cherry-pick
+- mailing patches (sometimes people work from home)
+- other goodies like interactive add, stash etc
 
-Thanks,
---Peter
+So is smbmounting git repos ok or is plain ol' ssh safer/preferable?
