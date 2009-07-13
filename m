@@ -1,69 +1,100 @@
-From: "Matthias Andree" <matthias.andree@gmx.de>
-Subject: Re: [PATCH] Fix export_marks() error handling.
-Date: Mon, 13 Jul 2009 10:01:57 +0200
-Message-ID: <op.uwzxxj2m1e62zd@merlin.emma.line.org>
-References: <alpine.DEB.1.00.0907091500420.4339@intel-tinevez-2-302>
- <1247146081-4692-1-git-send-email-matthias.andree@gmx.de>
- <20090711094546.GA12399@cuci.nl>
+From: Yann Simon <yann.simon.fr@gmail.com>
+Subject: Re: [PATCH] FindBugs: don't use new String(String) in RefDatabase
+Date: Mon, 13 Jul 2009 10:07:02 +0200
+Message-ID: <551f769b0907130107j51d32e4er54e125f9dc61dd80@mail.gmail.com>
+References: <49C20D4E.5020203@gmail.com> <20090319160102.GQ23521@spearce.org>
+	 <551f769b0907090147x9b78604i77a095441f232703@mail.gmail.com>
+	 <20090710153441.GF11191@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; format=flowed; delsp=yes; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Stephen R. van den Berg" <srb@cuci.nl>
-X-From: git-owner@vger.kernel.org Mon Jul 13 10:02:29 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Robin Rosenberg <robin.rosenberg.lists@dewire.com>,
+	git <git@vger.kernel.org>
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Mon Jul 13 10:14:00 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MQGUX-0004cb-0V
-	for gcvg-git-2@gmane.org; Mon, 13 Jul 2009 10:02:29 +0200
+	id 1MQGf1-0002Nt-E0
+	for gcvg-git-2@gmane.org; Mon, 13 Jul 2009 10:13:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752425AbZGMICE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 13 Jul 2009 04:02:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751726AbZGMICE
-	(ORCPT <rfc822;git-outgoing>); Mon, 13 Jul 2009 04:02:04 -0400
-Received: from mail.gmx.net ([213.165.64.20]:44481 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750830AbZGMICD (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 13 Jul 2009 04:02:03 -0400
-Received: (qmail invoked by alias); 13 Jul 2009 08:02:00 -0000
-Received: from g230242235.adsl.alicedsl.de (EHLO mandree.no-ip.org) [92.230.242.235]
-  by mail.gmx.net (mp035) with SMTP; 13 Jul 2009 10:02:00 +0200
-X-Authenticated: #428038
-X-Provags-ID: V01U2FsdGVkX181V/scN7Q1O88ddPO+pd2NZ11vwDv7edad4IqVLi
-	tr5FW2jNjJAlDR
-Received: from merlin.emma.line.org (localhost [127.0.0.1])
-	by merlin.emma.line.org (Postfix) with ESMTP id 67B28194006;
-	Mon, 13 Jul 2009 10:01:58 +0200 (CEST)
-In-Reply-To: <20090711094546.GA12399@cuci.nl>
-User-Agent: Opera Mail/9.64 (Linux)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.64
+	id S1752770AbZGMINL convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 13 Jul 2009 04:13:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752202AbZGMINK
+	(ORCPT <rfc822;git-outgoing>); Mon, 13 Jul 2009 04:13:10 -0400
+Received: from mail-bw0-f223.google.com ([209.85.218.223]:48548 "EHLO
+	mail-bw0-f223.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751376AbZGMINK convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 13 Jul 2009 04:13:10 -0400
+X-Greylist: delayed 366 seconds by postgrey-1.27 at vger.kernel.org; Mon, 13 Jul 2009 04:13:09 EDT
+Received: by bwz23 with SMTP id 23so683484bwz.37
+        for <git@vger.kernel.org>; Mon, 13 Jul 2009 01:13:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=UUe5H1u0M8q0FCCyZ0r5ECvspeZOluzX0H6CjHvdoK0=;
+        b=eAKKqkTR6ceJ5pxV2ICp1v5ikl+GXHRJ7pOfrgAYwgi6R/uZRlrJTHqmHyEqktKgGq
+         fFR3Fwnk4zSR2JAxAH4DNRaaca3qIzC506kPc4UVB+PxHQDkIaD+KqTE+xsaW5gCmz/5
+         tufbWGCtpqmvOaLePHcs/KMRDZGp1sn/oNOp4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=R+AkIy4UdXyIpRwvAWihpQelAb+kmXFjOUqWscRXLlMJ6ht76F6MFLlLQaCLnvUFsC
+         +E4CrcSfg5m5id0ml0jbiqSyzOwNbq46rOrMQlgOOa+3sqq0Juohvz79bcxXXfmhAXRz
+         QPRdiJjsFQhTzEH5TyRxMJJK6eIrTlntFNrIc=
+Received: by 10.223.126.66 with SMTP id b2mr1816778fas.3.1247472422045; Mon, 
+	13 Jul 2009 01:07:02 -0700 (PDT)
+In-Reply-To: <20090710153441.GF11191@spearce.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123173>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123174>
 
-Am 11.07.2009, 11:45 Uhr, schrieb Stephen R. van den Berg <srb@cuci.nl>:
-
-> Matthias Andree wrote:
->> +	/* do not optimize the next two lines - they must both be executed in
->> +	 * this order. || might short-circuit the fclose(), and combining them
->> +	 * into one statement might reverse the order of execution.
->> +	 * Also, fflush() may not be sufficient - on some file systems, the
->> +	 * error is still delayed until the final [f]close().  */
->> +	e  = ferror(f);
->> +	e |= fclose(f);
->> +	if (e)
+2009/7/10 Shawn O. Pearce <spearce@spearce.org>:
+> =C2=A0Yann Simon <yann.simon.fr@gmail.com> wrote:
+> =C2=A0>
+> =C2=A0> However, using the trick newString =3D new String(aString.sub=
+string(),
+> =C2=A0> i) does not work on all JVM.
+> =C2=A0> With an IBM JVM, the newString will still contain the origina=
+l array of chars.
+> =C2=A0>
+> =C2=A0> Another solution that work on all JVM could be:
+> =C2=A0> newString =3D new String(aString.substring(i).toCharArray())
+> =C2=A0> Or
+> =C2=A0> newString =3D new String(aString.toCharArray(), i, aString.le=
+ngth() - i)
+> =C2=A0>
+> =C2=A0> I like the latter one.
 >
-> The commentary above should be common knowledge for anyone familiar with
-> ANSI C.  So I'd suggest moving the comments into the description section  
-> of
-> the commit and removing them from the actual code.
+> =C2=A0I prefer this. =C2=A0It should always do what we want, and at a=
+ lower
+> =C2=A0temporary memory footprint (one less copy of the name). =C2=A0I=
+IRC Robin
+> =C2=A0rejected it earlier because it wasn't obvious what we were doin=
+g. I
+> =C2=A0say hogwash, its clear as mud.
+>
+> + =C2=A0 =C2=A0 =C2=A0 private static String copy(final String src, f=
+inal int off, final int end) {
+> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return new StringB=
+uilder(end - off).append(src, off, end).toString();
+> + =C2=A0 =C2=A0 =C2=A0 }
+> +
 
-Feel free to do it and submit a patch, I'm not going to invest more time  
-into a piece of code that runs seldomly.
+This method is quite clear.
+One line javadoc would make it even clearer... :p (and maybe make Robin=
+ happy)
 
--- 
-Matthias Andree
+And you're right: by using a StringBuilder, we need one less arraycopy.
+
+After committing your change, we can remove the entry to silent FindBug=
+s.
+(commit 21c3d82824075cd1f140b3bcf252dfaffe0fc96c)
+
+Yann
