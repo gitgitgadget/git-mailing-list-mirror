@@ -1,73 +1,80 @@
-From: Rustom Mody <rustompmody@gmail.com>
-Subject: advisability of CIFS/SMBFS
-Date: Mon, 13 Jul 2009 15:57:10 +0530
-Message-ID: <f46c52560907130327n1fedcd9ch34a2a73a03b9af5c@mail.gmail.com>
+From: =?ISO-8859-1?Q?Santi_B=E9jar?= <santi@agolina.net>
+Subject: Re: Submodule using different repository URLs
+Date: Mon, 13 Jul 2009 12:20:59 +0200
+Message-ID: <adf1fd3d0907130320s726bb80at58d454c830c7d5be@mail.gmail.com>
+References: <5BE6F3DC-4B00-4D84-8D0E-41057735483F@petervoss.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jul 13 12:27:20 2009
+Cc: git@vger.kernel.org
+To: Peter Voss <info@petervoss.org>
+X-From: git-owner@vger.kernel.org Mon Jul 13 12:29:21 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MQIkh-0000un-BI
-	for gcvg-git-2@gmane.org; Mon, 13 Jul 2009 12:27:19 +0200
+	id 1MQImd-0001cA-6e
+	for gcvg-git-2@gmane.org; Mon, 13 Jul 2009 12:29:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755318AbZGMK1L (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 13 Jul 2009 06:27:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755301AbZGMK1L
-	(ORCPT <rfc822;git-outgoing>); Mon, 13 Jul 2009 06:27:11 -0400
-Received: from mail-pz0-f197.google.com ([209.85.222.197]:65197 "EHLO
-	mail-pz0-f197.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752944AbZGMK1K (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 13 Jul 2009 06:27:10 -0400
-Received: by pzk35 with SMTP id 35so775879pzk.33
-        for <git@vger.kernel.org>; Mon, 13 Jul 2009 03:27:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:date:message-id:subject
-         :from:to:content-type:content-transfer-encoding;
-        bh=0019qTycw+X/QMI2P3d4Rbk7go1yEduO0014b2aNCTg=;
-        b=EleOe9HwCPfLjj0dRmGv+zyfQ7RaJwCtIRG474ExJjXkYq6pWdbpt4phK3Y7sTNa1F
-         XrAsYrgz1Mt0DsyBd/5D0uKn1DQFzuPB2LjG3sqf/AuvmWiPRSnuk+kb6Ws1DjPZcex0
-         dfE6udnuytqgpwYIg67zAkjHDZ612Wk2b5sRA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type
-         :content-transfer-encoding;
-        b=rg+DrYoRA3Xuq4EOOz3821Qmns7pbV4W32H4D12KKKdMsv5e6+rfkU/FKwJHyqhhcU
-         wAP0oM79kq7pVmFvIEN05rqVazZRaia5NZuO4NrK/iY4Hi4uqG7Su8gwbpengsnIcdf5
-         fXaQBGx+bBDyxfHj3f7FVU8O9/9m9VBhxY9NQ=
-Received: by 10.115.90.1 with SMTP id s1mr5641334wal.39.1247480830065; Mon, 13 
-	Jul 2009 03:27:10 -0700 (PDT)
+	id S1755385AbZGMK3N (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 13 Jul 2009 06:29:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755383AbZGMK3M
+	(ORCPT <rfc822;git-outgoing>); Mon, 13 Jul 2009 06:29:12 -0400
+Received: from mail-bw0-f228.google.com ([209.85.218.228]:44294 "EHLO
+	mail-bw0-f228.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755379AbZGMK3M (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 13 Jul 2009 06:29:12 -0400
+X-Greylist: delayed 491 seconds by postgrey-1.27 at vger.kernel.org; Mon, 13 Jul 2009 06:29:11 EDT
+Received: by bwz28 with SMTP id 28so59194bwz.37
+        for <git@vger.kernel.org>; Mon, 13 Jul 2009 03:29:09 -0700 (PDT)
+Received: by 10.204.76.129 with SMTP id c1mr5026368bkk.9.1247480459214; Mon, 
+	13 Jul 2009 03:20:59 -0700 (PDT)
+In-Reply-To: <5BE6F3DC-4B00-4D84-8D0E-41057735483F@petervoss.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123182>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123183>
 
-I see a mention of CIFS/SMBFS on the faq and some mails but no clear
-position on whether its ok or not.
+2009/7/13 Peter Voss <info@petervoss.org>:
+> Hi,
+>
+> I want to use the git submodule feature to move part of my code to a
+> different repository at github.
+>
+> The issue is that developers should use different repository URLs for the
+> submodule depending on whether they have commit rights or not.
+>
+> At the beginning I was using the public URL to set-up the submodule:
+> git submodule add git://github.com/x/mymodule.git mymodule
+>
+> The issue is that some developers are working behind a firewall that blocks
+> the git protocol. These could only use the git@github.com:x/mymodule.git URL
+> to get access.
+> But other developers can only go through the public URL
+> git://github.com/x/mymodule.git. So whatever I use it won't work for
+> everybody.
+>
+> What's the best way to deal with that? Could I set-up different repository
+> URLs for one and the same submodule and use which one is appropriate?
 
-My question is in the following context:
+After the "git submodule init" you can customize the url. From "man
+git-submodule":
 
-- Our team (5-6 programmers) use windows and linux for development
-- We are on a windows 'network neighborhood' type system (I guess this is CIFS?)
-- there is a linux box for an (internal) server and some dual boots
+init::
+        Initialize the submodules, i.e. register each submodule name
+        and url found in .gitmodules into .git/config.
+        The key used in .git/config is `submodule.$name.url`.
+        This command does not alter existing information in .git/config.
+        You can then customize the submodule clone URLs in .git/config
+        for your local setup and proceed to 'git submodule update';
+        you can also just use 'git submodule update --init' without
+        the explicit 'init' step if you do not intend to customize
+        any submodule locations.
 
-If I can make a repo smbmounted on one of the linux partitions then we
-can push/pull from each others' repos almost like between local repos
-ie without ssh etc.  Of course this assumes the directories are made
-suitably shareable by the team members.
+You can also use the config url."<actual url base>".insteadOf = <other
+url base>.
+See the git-pull manpage for examples.
 
-Of course one could say: Whats the point of using the best distributed
-vcs without using the distributed features.
-
-Well our reasons for git are:
-- efficient branching and sophisticated merge, branch surgery with
-rebase, cherry-pick
-- mailing patches (sometimes people work from home)
-- other goodies like interactive add, stash etc
-
-So is smbmounting git repos ok or is plain ol' ssh safer/preferable?
+HTH,
+Santi
