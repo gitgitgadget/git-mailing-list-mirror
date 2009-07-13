@@ -1,60 +1,137 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Make 'git show' more useful
-Date: Tue, 14 Jul 2009 01:42:22 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.0907140140470.3155@pacific.mpi-cbg.de>
-References: <alpine.LFD.2.01.0907131425490.13838@localhost.localdomain>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Tue Jul 14 01:40:32 2009
+From: Paolo Bonzini <bonzini@gnu.org>
+Subject: [PATCH] Re: Make 'git show' more useful
+Date: Tue, 14 Jul 2009 01:43:34 +0200
+Message-ID: <1247528614-24590-1-git-send-email-bonzini@gnu.org>
+References: <7vtz1gi67v.fsf@alter.siamese.dyndns.org>
+Cc: Linus Torvalds <torvalds@linux-foundation.org>
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Jul 14 01:43:46 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MQV8G-0002GF-Sp
-	for gcvg-git-2@gmane.org; Tue, 14 Jul 2009 01:40:29 +0200
+	id 1MQVBQ-0003DV-Gt
+	for gcvg-git-2@gmane.org; Tue, 14 Jul 2009 01:43:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757636AbZGMXk0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 13 Jul 2009 19:40:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754288AbZGMXk0
-	(ORCPT <rfc822;git-outgoing>); Mon, 13 Jul 2009 19:40:26 -0400
-Received: from mail.gmx.net ([213.165.64.20]:57557 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754283AbZGMXkZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 13 Jul 2009 19:40:25 -0400
-Received: (qmail invoked by alias); 13 Jul 2009 23:40:22 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp058) with SMTP; 14 Jul 2009 01:40:22 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+JYDBUffuJQDBR2t2SuszhX3iOy75yUZFV/e02x0
-	5IFFYAIDm/XNxO
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <alpine.LFD.2.01.0907131425490.13838@localhost.localdomain>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.67
+	id S1757633AbZGMXni (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 13 Jul 2009 19:43:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754533AbZGMXni
+	(ORCPT <rfc822;git-outgoing>); Mon, 13 Jul 2009 19:43:38 -0400
+Received: from fencepost.gnu.org ([140.186.70.10]:54582 "EHLO
+	fencepost.gnu.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754517AbZGMXnh (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 13 Jul 2009 19:43:37 -0400
+Received: from bonzini by fencepost.gnu.org with local (Exim 4.67)
+	(envelope-from <bonzini@gnu.org>)
+	id 1MQVBI-0000Hx-Hr; Mon, 13 Jul 2009 19:43:36 -0400
+X-Mailer: git-send-email 1.6.2.5
+In-Reply-To: <7vtz1gi67v.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123213>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123214>
 
-Hi,
+> And, admittedly, you can _already_ do this by just adding "--do-walk"
+> whenever you specify a range. And equally admittedly, you can already
+> confuse git by adding the "--no-walk" _after_ specifying the range,
+> ie you can do this:
+>
+> 	git log HEAD~5.. --no-walk
 
-On Mon, 13 Jul 2009, Linus Torvalds wrote:
+Even without the change you could do
 
-> For some reason, I ended up doing
-> 
-> 	git show HEAD~5..
-> 
-> as an odd way of asking for a log. I realize I should just have used "git 
-> log", but at the same time it does make perfect conceptual sense.
+	git show --do-walk HEAD~5.. --no-walk
 
-For some reason, I wrote exactly this patch some time ago, but I forgot 
-why I did not send it.  Probably because I did not want to appear as a 
-total moron in public.  Which apparently I end up doing anyway.
+But then why do we want --do-walk and --no-walk?  You can always use "git
+rev-parse" instead of "git rev-list --no-walk" (just check that the output 
+is a single SHA1 id), and I don't think it is so important to be able
+to say "git log --no-walk" instead of "git log -1".
 
-So count me in on the supporters' side of this patch,
-Dscho
+They are not tested either.  Just gitk cares about --no-walk... to prevent
+the user from giving it.
+
+So, what about squashing this with Linus's patch?  (This is meant to be
+squashed, which is why this text is not in a cover letter).  Still:
+
+Signed-off-by: Paolo Bonzini <bonzini@gnu.org>
+Cc: Linus Torvalds <torvalds@linux-foundation.org>
+---
+ Documentation/git-rev-list.txt     |    1 -
+ Documentation/rev-list-options.txt |    8 --------
+ revision.c                         |   13 ++-----------
+ gitk-git/gitk                      |    1 -+
+ 3 files changed, 3 insertions(+), 21 deletions(-)
+
+diff --git a/Documentation/git-rev-list.txt b/Documentation/git-rev-list.txt
+index 1c9cc28..b02cf54 100644
+--- a/Documentation/git-rev-list.txt
++++ b/Documentation/git-rev-list.txt
+@@ -44,7 +44,6 @@ SYNOPSIS
+ 	     [ \--merge ]
+ 	     [ \--reverse ]
+ 	     [ \--walk-reflogs ]
+-	     [ \--no-walk ] [ \--do-walk ]
+ 	     <commit>... [ \-- <paths>... ]
+ 
+ DESCRIPTION
+diff --git a/Documentation/rev-list-options.txt b/Documentation/rev-list-options.txt
+index 11eec94..d137e32 100644
+--- a/Documentation/rev-list-options.txt
++++ b/Documentation/rev-list-options.txt
+@@ -624,11 +624,3 @@ These options are mostly targeted for packing of git repositories.
+ 
+ 	Only useful with '--objects'; print the object IDs that are not
+ 	in packs.
+-
+---no-walk::
+-
+-	Only show the given revs, but do not traverse their ancestors.
+-
+---do-walk::
+-
+-	Overrides a previous --no-walk.
+diff --git a/revision.c b/revision.c
+index a31434b..8b1a385 100644
+--- a/revision.c
++++ b/revision.c
+@@ -993,8 +993,7 @@ static int handle_revision_opt(struct rev_info *revs, int argc, const char **arg
+ 	/* pseudo revision arguments */
+ 	if (!strcmp(arg, "--all") || !strcmp(arg, "--branches") ||
+ 	    !strcmp(arg, "--tags") || !strcmp(arg, "--remotes") ||
+-	    !strcmp(arg, "--reflog") || !strcmp(arg, "--not") ||
+-	    !strcmp(arg, "--no-walk") || !strcmp(arg, "--do-walk"))
++	    !strcmp(arg, "--reflog") || !strcmp(arg, "--not"))
+ 	{
+ 		unkv[(*unkc)++] = arg;
+ 		return 1;
+@@ -1273,14 +1272,6 @@ int setup_revisions(int argc, const char **argv, struct rev_info *revs, const ch
+ 				flags ^= UNINTERESTING;
+ 				continue;
+ 			}
+-			if (!strcmp(arg, "--no-walk")) {
+-				revs->no_walk = 1;
+-				continue;
+-			}
+-			if (!strcmp(arg, "--do-walk")) {
+-				revs->no_walk = 0;
+-				continue;
+-			}
+ 
+ 			opts = handle_revision_opt(revs, argc - i, argv + i, &left, argv);
+ 			if (opts > 0) {
+diff --git a/gitk-git/gitk b/gitk-git/gitk
+index 4604c83..984d30a 100644
+--- a/gitk-git/gitk
++++ b/gitk-git/gitk
+@@ -169,7 +169,7 @@ proc parseviewargs {n arglist} {
+ 	    "--name-only" - "--name-status" - "--color" - "--color-words" -
+ 	    "--log-size" - "--pretty=*" - "--decorate" - "--abbrev-commit" -
+ 	    "--cc" - "-z" - "--header" - "--parents" - "--boundary" -
+-	    "--no-color" - "-g" - "--walk-reflogs" - "--no-walk" -
++	    "--no-color" - "-g" - "--walk-reflogs" -
+ 	    "--timestamp" - "relative-date" - "--date=*" - "--stdin" -
+ 	    "--objects" - "--objects-edge" - "--reverse" {
+ 		# These cause our parsing of git log's output to fail, or else
+-- 
+1.6.2.5
