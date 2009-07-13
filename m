@@ -1,132 +1,60 @@
-From: Paolo Bonzini <bonzini@gnu.org>
-Subject: [PATCH 3/3] push: add remote.*.pushHeadOnly configuration
-Date: Tue, 14 Jul 2009 01:07:42 +0200
-Message-ID: <1247526462-17584-4-git-send-email-bonzini@gnu.org>
-References: <1247526462-17584-1-git-send-email-bonzini@gnu.org>
-To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Jul 14 01:08:12 2009
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Make 'git show' more useful
+Date: Tue, 14 Jul 2009 01:42:22 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.0907140140470.3155@pacific.mpi-cbg.de>
+References: <alpine.LFD.2.01.0907131425490.13838@localhost.localdomain>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Tue Jul 14 01:40:32 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MQUd1-0000nt-Lk
-	for gcvg-git-2@gmane.org; Tue, 14 Jul 2009 01:08:12 +0200
+	id 1MQV8G-0002GF-Sp
+	for gcvg-git-2@gmane.org; Tue, 14 Jul 2009 01:40:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757600AbZGMXH5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 13 Jul 2009 19:07:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753773AbZGMXH4
-	(ORCPT <rfc822;git-outgoing>); Mon, 13 Jul 2009 19:07:56 -0400
-Received: from fencepost.gnu.org ([140.186.70.10]:39444 "EHLO
-	fencepost.gnu.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756643AbZGMXHx (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 13 Jul 2009 19:07:53 -0400
-Received: from bonzini by fencepost.gnu.org with local (Exim 4.67)
-	(envelope-from <bonzini@gnu.org>)
-	id 1MQUci-0007Un-RD
-	for git@vger.kernel.org; Mon, 13 Jul 2009 19:07:53 -0400
-X-Mailer: git-send-email 1.6.2.5
-In-Reply-To: <1247526462-17584-1-git-send-email-bonzini@gnu.org>
+	id S1757636AbZGMXk0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 13 Jul 2009 19:40:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754288AbZGMXk0
+	(ORCPT <rfc822;git-outgoing>); Mon, 13 Jul 2009 19:40:26 -0400
+Received: from mail.gmx.net ([213.165.64.20]:57557 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1754283AbZGMXkZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 13 Jul 2009 19:40:25 -0400
+Received: (qmail invoked by alias); 13 Jul 2009 23:40:22 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp058) with SMTP; 14 Jul 2009 01:40:22 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+JYDBUffuJQDBR2t2SuszhX3iOy75yUZFV/e02x0
+	5IFFYAIDm/XNxO
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <alpine.LFD.2.01.0907131425490.13838@localhost.localdomain>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.67
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123212>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123213>
 
-This patch adds a remote.*.pushHeadOnly configuration that automatically
-enables (when possible) the --current option to git push.
+Hi,
 
-Signed-off-by: Paolo Bonzini <bonzini@gnu.org>
----
- Documentation/config.txt |    6 ++++++
- builtin-push.c           |    2 ++
- remote.c                 |    2 ++
- remote.h                 |    1 +
- t/t5516-fetch-push.sh    |   16 +++++++++++++++-
- 5 files changed, 26 insertions(+), 1 deletions(-)
+On Mon, 13 Jul 2009, Linus Torvalds wrote:
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index cb6832b..4ab5593 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -1359,6 +1359,12 @@ remote.<name>.uploadpack::
- 	The default program to execute on the remote side when fetching.  See
- 	option \--upload-pack of linkgit:git-fetch-pack[1].
- 
-+remote.<name>.pushHeadOnly::
-+	If true, whenever `git push` is invoked without a refspec and
-+	it will try pushing to this remote, `git push` will automatically
-+	behave as if the `\--current` option was given on the command line.
-+	In other words, only the current branch is pushed to the remote.
-+
- remote.<name>.tagopt::
- 	Setting this value to \--no-tags disables automatic tag following when
- 	fetching from remote <name>
-diff --git a/builtin-push.c b/builtin-push.c
-index 2911513..fcecd14 100644
---- a/builtin-push.c
-+++ b/builtin-push.c
-@@ -127,6 +127,8 @@ static int do_push(const char *repo, int flags)
- 
- 	if (remote->mirror)
- 		flags |= (TRANSPORT_PUSH_MIRROR|TRANSPORT_PUSH_FORCE);
-+	if (remote->push_head_only && !refspec_nr)
-+		flags |= TRANSPORT_PUSH_CURRENT;
- 
- 	if ((flags & TRANSPORT_PUSH_ALL) && refspec) {
- 		if (!strcmp(*refspec, "refs/tags/*"))
-diff --git a/remote.c b/remote.c
-index b5bf9a6..d46dc0d 100644
---- a/remote.c
-+++ b/remote.c
-@@ -379,6 +379,8 @@ static int handle_config(const char *key, const char *value, void *cb)
- 		remote->mirror = git_config_bool(key, value);
- 	else if (!strcmp(subkey, ".skipdefaultupdate"))
- 		remote->skip_default_update = git_config_bool(key, value);
-+	else if (!strcmp(subkey, ".pushheadonly"))
-+		remote->push_head_only = git_config_bool(key, value);
- 
- 	else if (!strcmp(subkey, ".url")) {
- 		const char *v;
-diff --git a/remote.h b/remote.h
-index 8e5d5b4..b1e3e99 100644
---- a/remote.h
-+++ b/remote.h
-@@ -36,6 +36,7 @@ struct remote {
- 	 * 2 to always fetch tags
- 	 */
- 	int fetch_tags;
-+	int push_head_only;
- 	int skip_default_update;
- 	int mirror;
- 
-diff --git a/t/t5516-fetch-push.sh b/t/t5516-fetch-push.sh
-index bdc98ec..eee9e00 100755
---- a/t/t5516-fetch-push.sh
-+++ b/t/t5516-fetch-push.sh
-@@ -631,9 +631,23 @@ test_expect_success 'push --current respects configuration' '
- 	git config remote.bremote.push refs/heads/master:refs/heads/master2 &&
- 	git push --current bremote &&
- 	test `git rev-parse master` = `cd b.git && git rev-parse master2`
-+'
-+
-+test_expect_success 'remote.*.pushHeadOnly respects configuration' '
-+	echo xx > b &&
-+	git commit -mmaster3 b &&
-+	git config remote.bremote.pushHeadOnly true &&
- 	git checkout branch &&
--	git push --current bremote 2>&1 | grep "Everything up-to-date" &&
-+	git push bremote &&
-+	test `git rev-parse master^` = `cd b.git && git rev-parse master` &&
- 	test `git rev-parse branch^` = `cd b.git && git rev-parse branch`
- '
- 
-+test_expect_success 'remote.*.pushHeadOnly works' '
-+	git config --unset remote.bremote.push &&
-+	git push bremote &&
-+	test `git rev-parse master^` = `cd b.git && git rev-parse master` &&
-+	test `git rev-parse branch` = `cd b.git && git rev-parse branch`
-+'
-+
- test_done
--- 
-1.6.2.5
+> For some reason, I ended up doing
+> 
+> 	git show HEAD~5..
+> 
+> as an odd way of asking for a log. I realize I should just have used "git 
+> log", but at the same time it does make perfect conceptual sense.
+
+For some reason, I wrote exactly this patch some time ago, but I forgot 
+why I did not send it.  Probably because I did not want to appear as a 
+total moron in public.  Which apparently I end up doing anyway.
+
+So count me in on the supporters' side of this patch,
+Dscho
