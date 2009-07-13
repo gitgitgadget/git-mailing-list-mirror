@@ -1,136 +1,82 @@
-From: Peter Voss <info@petervoss.org>
-Subject: Re: Submodule using different repository URLs
-Date: Mon, 13 Jul 2009 15:33:10 +0200
-Message-ID: <9B026405-27EB-4D48-8D08-461D213453C3@petervoss.org>
-References: <5BE6F3DC-4B00-4D84-8D0E-41057735483F@petervoss.org> <64652870-CF95-49A7-920A-0F9A6C202B40@petervoss.org> <200907131428.43652.johan@herland.net> <200907131443.25719.johan@herland.net>
-Mime-Version: 1.0 (Apple Message framework v935.3)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Johan Herland <johan@herland.net>
-X-From: git-owner@vger.kernel.org Mon Jul 13 15:33:28 2009
+From: "Aneesh Kumar K.V" <aneesh.kumar@linux.vnet.ibm.com>
+Subject: Re: [ANNOUNCE] Stacked Git 0.15-rc1
+Date: Mon, 13 Jul 2009 19:03:43 +0530
+Message-ID: <20090713133343.GA23946@skywalker>
+References: <b0943d9e0907121540n4b9199e2re3152e71d84a0f5@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
+To: Catalin Marinas <catalin.marinas@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jul 13 15:34:04 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MQLem-0005ha-Au
-	for gcvg-git-2@gmane.org; Mon, 13 Jul 2009 15:33:24 +0200
+	id 1MQLfM-0005wZ-JT
+	for gcvg-git-2@gmane.org; Mon, 13 Jul 2009 15:34:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755911AbZGMNdP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 13 Jul 2009 09:33:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755915AbZGMNdP
-	(ORCPT <rfc822;git-outgoing>); Mon, 13 Jul 2009 09:33:15 -0400
-Received: from mo-p00-ob.rzone.de ([81.169.146.160]:38351 "EHLO
-	mo-p00-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755911AbZGMNdP (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 13 Jul 2009 09:33:15 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; t=1247491991; l=2384;
-	s=domk; d=petervoss.org;
-	h=References:Date:Subject:Mime-Version:Content-Transfer-Encoding:
-	Content-Type:In-Reply-To:To:From:Cc:X-RZG-CLASS-ID:X-RZG-AUTH;
-	bh=WI87tWIy0SdMBHKV4QgNOLFTeFA=;
-	b=hQwMTsRHrBgTCOHjoQcj1MHpv36SQMqraJAnxnvQM4cw1ZO3LP7xgw0HzGIcAbilfnM
-	mmMl/avhmZN8z/23vsIfER2HIx1BXowqiNZPNcMOCE6F85MGv1CC4CyECvvTO3eMWsO1L
-	7jatab7gxEsDrFCc0+VNK9pJGwoqKFTcUAc=
-X-RZG-AUTH: :JWICemC4fusRF4tAhweiuU4SRqyWF3gXMlHyMhzObhKwDIReNIDrirxOEFeT
-X-RZG-CLASS-ID: mo00
-Received: from [192.168.1.108]
-	(ip-62-143-242-232.unitymediagroup.de [62.143.242.232])
-	by post.strato.de (mrclete mo52) (RZmta 18.49)
-	with ESMTP id B01cc9l6DCxwcZ ; Mon, 13 Jul 2009 15:33:11 +0200 (MEST)
-In-Reply-To: <200907131443.25719.johan@herland.net>
-X-Mailer: Apple Mail (2.935.3)
+	id S1755815AbZGMNdx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 13 Jul 2009 09:33:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755560AbZGMNdw
+	(ORCPT <rfc822;git-outgoing>); Mon, 13 Jul 2009 09:33:52 -0400
+Received: from e23smtp08.au.ibm.com ([202.81.31.141]:46217 "EHLO
+	e23smtp08.au.ibm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751932AbZGMNdw (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 13 Jul 2009 09:33:52 -0400
+Received: from d23relay02.au.ibm.com (d23relay02.au.ibm.com [202.81.31.244])
+	by e23smtp08.au.ibm.com (8.13.1/8.13.1) with ESMTP id n6DNQ1EF026792
+	for <git@vger.kernel.org>; Tue, 14 Jul 2009 09:26:01 +1000
+Received: from d23av01.au.ibm.com (d23av01.au.ibm.com [9.190.234.96])
+	by d23relay02.au.ibm.com (8.13.8/8.13.8/NCO v9.2) with ESMTP id n6DDXouU1273870
+	for <git@vger.kernel.org>; Mon, 13 Jul 2009 23:33:50 +1000
+Received: from d23av01.au.ibm.com (loopback [127.0.0.1])
+	by d23av01.au.ibm.com (8.12.11.20060308/8.13.3) with ESMTP id n6DDXn77018938
+	for <git@vger.kernel.org>; Mon, 13 Jul 2009 23:33:50 +1000
+Received: from skywalker ([9.124.220.59])
+	by d23av01.au.ibm.com (8.12.11.20060308/8.12.11) with ESMTP id n6DDXiX7018891
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
+	Mon, 13 Jul 2009 23:33:48 +1000
+Content-Disposition: inline
+In-Reply-To: <b0943d9e0907121540n4b9199e2re3152e71d84a0f5@mail.gmail.com>
+User-Agent: Mutt/1.5.19 (2009-01-05)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123191>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123192>
 
-Hi Johan,
+On Sun, Jul 12, 2009 at 11:40:05PM +0100, Catalin Marinas wrote:
+> The first release candidate for StGit 0.15 is available from the
+> git://repo.or.cz/stgit.git or http://download.gna.org/stgit/. Bugs can
+> be reported on the Git mailing list or via the project bugs page
+> (https://gna.org/bugs/?group=stgit).
+> 
+> StGit is a Python application providing similar functionality to Quilt
+> (i.e. pushing/popping patches to/from a stack) on top of Git. These
+> operations are performed using Git commands and the patches are stored
+> as Git commit objects, allowing easy merging of the StGit patches into
+> other repositories using standard Git functionality.
+> 
+> The main changes since release 0.14.3 (I may miss some important
+> features but they can be found in the log):
 
-On 13.07.2009, at 14:43, Johan Herland wrote:
 
-> On Monday 13 July 2009, Johan Herland wrote:
->> On Monday 13 July 2009, Peter Voss wrote:
->>> On 13.07.2009, at 12:59, Johan Herland wrote:
->>>> You might be able to pull this off using relative submodule URLs.
->>>
->>> That's a good hint. Unfortunately I can't use this to go up 2
->>> directories. I.e. I can't get from
->>> git@github.com:xxx/mymodule.git
->>> to
->>> git@github.com:yyy/foo.git
->>>
->>> Using the relative URL ../../yyy/foo.git leads to the result:
->>> Clone of 'git@github.com:xxx/yyy/foo.git' into submodule path 'foo'
->>> failed
->>>
->>> So I basically cannot replace the xxx part.
->>
->> This is due to a small bug in git-submodule.sh. In the
->> resolve_relative_url() function, when repeatedly unwrapping '../'s
->> from $url in the while loop, the line remoteurl="${remoteurl%/*}"
->> removes everything _after_ the last slash, which does not work for
->> the git@github.com:xxx part of your URL.
->>
->> This should be relatively easy to fix, although maybe not as
->> straightforwardly trivial as it might seem at first sight.
->>
->> I don't have the time to look into this now, so feel free to take a
->> stab at it.
->
-> Here's a first stab at it (TOTALLY UNTESTED). Obviously it needs a
-> testcase (typically in t7400-submodule-basic.sh) as well.
+stg show now gives me output like below
 
-And I thought you didn't have time. ;-) Thanks for this patch. I will  
-test this out tomorrow.
+ESC[1mdiff --git a/fs/nfs/nfs4acl.c b/fs/nfs/nfs4acl.cESC[m
+ESC[1mindex 09946da..c9a6dee 100644ESC[m
+ESC[1m--- a/fs/nfs/nfs4acl.cESC[m
+ESC[1m+++ b/fs/nfs/nfs4acl.cESC[m
+ESC[36m@@ -37,6 +37,7 @@ESC[m
 
-Thanks,
---Peter
 
->
->
-> Have fun! :)
->
-> ...Johan
->
->
-> diff --git a/git-submodule.sh b/git-submodule.sh
-> index ebed711..7d8f7a7 100755
-> --- a/git-submodule.sh
-> +++ b/git-submodule.sh
-> @@ -27,12 +27,19 @@ resolve_relative_url ()
-> 		die "remote ($remote) does not have a url defined in .git/config"
-> 	url="$1"
-> 	remoteurl=${remoteurl%/}
-> +	sep="/"
-> 	while test -n "$url"
-> 	do
-> 		case "$url" in
-> 		../*)
-> 			url="${url#../}"
-> -			remoteurl="${remoteurl%/*}"
-> +			newremoteurl="${remoteurl%/*}"
-> +			if test "$newremoteurl" = "$remoteurl" -a "$sep" = "/"
-> +			then
-> +				newremoteurl="${remoteurl%:*}"
-> +				sep=":"
-> +			fi
-> +			remoteurl="$newremoteurl"
-> 			;;
-> 		./*)
-> 			url="${url#./}"
-> @@ -41,7 +48,7 @@ resolve_relative_url ()
-> 			break;;
-> 		esac
-> 	done
-> -	echo "$remoteurl/${url%/}"
-> +	echo "$remoteurl$sep${url%/}"
-> }
->
-> #
->
->
-> -- 
-> Johan Herland, <johan@herland.net>
-> www.herland.net
+I guess it is due to coloring enabled in git. I have in git 
+
+$ git config --get  "color.ui"
+auto
+$ 
+
+git show does the right thing. ie show the diff in color
+
+-aneesh
