@@ -1,146 +1,129 @@
-From: Graeme Geldenhuys <graemeg@gmail.com>
-Subject: Re: Pushing to GitHub doesn't push all branches
-Date: Mon, 13 Jul 2009 15:41:11 +0200
-Message-ID: <h3fdjg$770$1@ger.gmane.org>
-References: <h37fga$5ie$1@ger.gmane.org> <4A575416.2090304@drmicha.warpmail.net> <h37lh2$q3s$1@ger.gmane.org> <4A57639D.4020305@drmicha.warpmail.net> <h3eqap$cov$1@ger.gmane.org> <4A5B13FB.4040203@drmicha.warpmail.net>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: [JGIT PATCH v2] FindBugs: don't use new String(String) in
+	RefDatabase
+Date: Mon, 13 Jul 2009 07:53:08 -0700
+Message-ID: <20090713145308.GI11191@spearce.org>
+References: <49C20D4E.5020203@gmail.com> <20090319160102.GQ23521@spearce.org> <551f769b0907090147x9b78604i77a095441f232703@mail.gmail.com> <20090710153441.GF11191@spearce.org> <551f769b0907130107j51d32e4er54e125f9dc61dd80@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jul 13 15:43:03 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Robin Rosenberg <robin.rosenberg.lists@dewire.com>,
+	git <git@vger.kernel.org>
+To: Yann Simon <yann.simon.fr@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jul 13 16:53:59 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MQLo5-00016Y-4f
-	for gcvg-git-2@gmane.org; Mon, 13 Jul 2009 15:43:01 +0200
+	id 1MQMuk-0006d3-6N
+	for gcvg-git-2@gmane.org; Mon, 13 Jul 2009 16:53:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755924AbZGMNmX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 13 Jul 2009 09:42:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755833AbZGMNmX
-	(ORCPT <rfc822;git-outgoing>); Mon, 13 Jul 2009 09:42:23 -0400
-Received: from main.gmane.org ([80.91.229.2]:51467 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755829AbZGMNmW (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 13 Jul 2009 09:42:22 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1MQLnQ-0004CZ-PW
-	for git@vger.kernel.org; Mon, 13 Jul 2009 13:42:21 +0000
-Received: from 41.177.20.228 ([41.177.20.228])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 13 Jul 2009 13:42:20 +0000
-Received: from graemeg by 41.177.20.228 with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 13 Jul 2009 13:42:20 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: 41.177.20.228
-User-Agent: Thunderbird 2.0.0.22 (X11/20090608)
-In-Reply-To: <4A5B13FB.4040203@drmicha.warpmail.net>
+	id S1756092AbZGMOxM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 13 Jul 2009 10:53:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755846AbZGMOxL
+	(ORCPT <rfc822;git-outgoing>); Mon, 13 Jul 2009 10:53:11 -0400
+Received: from george.spearce.org ([209.20.77.23]:33078 "EHLO
+	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756078AbZGMOxJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 13 Jul 2009 10:53:09 -0400
+Received: by george.spearce.org (Postfix, from userid 1001)
+	id 89DD73819F; Mon, 13 Jul 2009 14:53:08 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <551f769b0907130107j51d32e4er54e125f9dc61dd80@mail.gmail.com>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123194>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123195>
 
-Michael J Gruber wrote:
->> is only used for syncing svn -> our server -> github, I had to add a new 
->> commit which represents the svn-ignore meta data to a .gitignore file. I 
->> noticed I had to manually to a 'git checkout master' & 'git merge 
->> remotes/trunk' to pull in new updates. I thin pushed that to github.
-> 
-> You didn't tell us *that* before... Exactly this is why I asked whether
-> you want to do own work on those branches or just push a git-svn mirror.
+>From FindBugs:
+  Using the java.lang.String(String) constructor wastes memory
+  because the object so constructed will be functionally
+  indistinguishable from the String passed as a parameter. Just
+  use the argument String directly.
 
-When we last spoke, I did not have a .gitignore file. :)
-That is the only change I plan to make in that repository (on our server).
+Actually, here we want to get a new String object that covers only
+the portion of the source string that we are selected out.
 
-I have cloned that repository (on our server) to my local PC. The one on 
-my PC is a true Git repository and that is the one I'll be making 
-changes to and emailing patches back to the FPC mailing list.
+The line in question, p, is from the packed-refs file and contains
+the entire SHA-1 in hex form at the beginning of it.  We have already
+converted that into binary as an ObjectId, which uses 1/4 the space
+of the string portion.
 
+The Ref object, its ObjectId, and its name string, are going to be
+cached in a Map, probably long-term, as the packed-refs file does
+not change frequently.  We are better off shedding the 80 bytes of
+memory used to hold the hex SHA-1 then risk substring() deciding its
+"better" to reuse the same char[] internally.
 
-> the only change you will make to the original branches. It keeps you
-> from doing a simple fetch and forces you to set up merging.
+By creating a new StringBuilder of the exact required capacity for
+the name, and then copying in the region of characters we really
+want, we defeat the reuse substring() would normally perform, at
+the tiny cost of an extra StringBuilder temporary.  Some JITs are
+able to stack allocate that here, making it a trivial cost.
 
-OK, so seeing that I already done that and pushed it to GitHub, I now 
-need to always do the following on our server git repository.
+Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
+CC: Yann Simon <yann.simon.fr@gmail.com>
+---
+ Yann Simon <yann.simon.fr@gmail.com> wrote:
+ > This method is quite clear.
+ > One line javadoc would make it even clearer... :p (and maybe make Robin happy)
+ 
+ Javadoc is overrated.  Private utility methods like this that are one
+ line long don't need documentation.  The rationale for why this line
+ does what it does is something that `git blame` can answer better.
+  
+ > And you're right: by using a StringBuilder, we need one less arraycopy.
+ > 
+ > After committing your change, we can remove the entry to silent FindBugs.
+ > (commit 21c3d82824075cd1f140b3bcf252dfaffe0fc96c)
+ 
+ My patch is updated (below).  Thanks, I forgot about that filter.
 
-  $ git svn fetch
-  $ git checkout master
-  $ git merge origin/trunk
-  $ git push github            <-- updates remotes/* to heads/*
-  $ git push github master     <-- updates remote master branch
+ .../findBugs/FindBugsExcludeFilter.xml             |    7 -------
+ .../src/org/spearce/jgit/lib/RefDatabase.java      |    6 +++++-
+ 2 files changed, 5 insertions(+), 8 deletions(-)
 
-
-So 'git push github' as I have show above should do the trick for all 
-refts/remotes/* branches. I gather that excludes the "master" branch, so 
-I still need to push that one manually as well. Correct?
-
-In the newer Git v1.6.x versions there is a new default setting that can 
-be set for push.
-
-   $ git config push.default <type>
-
-If I set that to "matching", then I should be able to only need one 'git 
-push github' command, and that should push remotes/* and the "master" 
-branch. Correct?
-
-In my local repository on my work PC (not the server), I normally set 
-the push.default to "current" so I don't accidentally push something 
-that has an incomplete feature.
-
-
-> Also, svn-metadata may change over time. Do you intend to keep
-> .gitignore up to date with those changes?
-
-No, just the initial setup.
-
-
-
-> - Push the git-svn converted branches as is, using the suggested refspec
-> (or having it in config and doing "git push github"). "git svn fetch"
-> will have fetched all svn refs you need.
-
-OK, I haven't added a .gitignore to the fixes_2_2 local branch, so that 
-one is still exactly as it was in SubVersion. And my local "fixes_2_2" 
-has not been pushed to Github yet. So I should be able to just delete 
-the local "fixes_2_2" branch. The normal refspec will push changes to 
-Github as it should. So if anybody clones the Github repository, they 
-can manually create their local "fixes_2_2" from the 
-refs/remotes/fixes_2_2 branch. Correct?
-
-
-I think I'm starting to see a little white light in the end of the 
-tunnel. :-)
-
-
-> - Set up local branches and do your merge thing. In this case you
-> probably also want to keep up with svn metadata changes (mind that
-
-I think I will leave the local "master" branch (mapped to SubVersion 
-Trunk) as-is. I'll then modify my cron script to do a manual merge after 
-the 'git svn fetch'.
-
-I'm not going to bother updating the .gitignore again. So from now 
-onwards the merge should be a simple fast-forward merge I take it and 
-should never get conflicts again.
-
-
-> consists of .gitignore (and possibly other things) only. "git show
-> svnhelper:.gitignore > .git/info/excludes" will set up each user. You
-> can also use a tag for that (i.e. instead of a branch).
-
-Very clever indeed - pity I did not think of it before. I'll make a note 
-of this and if I ever clone another SubVersion repository, I'll do it 
-with a tag or separate branch.
-
-
-
-Regards,
-   - Graeme -
-
+diff --git a/org.spearce.jgit/findBugs/FindBugsExcludeFilter.xml b/org.spearce.jgit/findBugs/FindBugsExcludeFilter.xml
+index 2af9348..a553170 100644
+--- a/org.spearce.jgit/findBugs/FindBugsExcludeFilter.xml
++++ b/org.spearce.jgit/findBugs/FindBugsExcludeFilter.xml
+@@ -1,12 +1,5 @@
+ <?xml version="1.0" encoding="UTF-8" ?>
+ <FindBugsFilter>
+-     <!-- Silence inefficient new String(String) constructor warning, see http://thread.gmane.org/gmane.comp.version-control.git/117831/focus=117937 -->
+-     <Match>
+-       <Class name="org.spearce.jgit.lib.RefDatabase" />
+-       <Method name="refreshPackedRefs" />
+-       <Bug pattern="DM_STRING_CTOR" />
+-     </Match>
+-
+      <!-- Silence PackFile.mmap calls GC, we need to force it to remove stale
+           memory mapped segments if the JVM heap is out of address space.
+        -->
+diff --git a/org.spearce.jgit/src/org/spearce/jgit/lib/RefDatabase.java b/org.spearce.jgit/src/org/spearce/jgit/lib/RefDatabase.java
+index 6d4f374..383877f 100644
+--- a/org.spearce.jgit/src/org/spearce/jgit/lib/RefDatabase.java
++++ b/org.spearce.jgit/src/org/spearce/jgit/lib/RefDatabase.java
+@@ -438,7 +438,7 @@ private synchronized void refreshPackedRefs() {
+ 
+ 					final int sp = p.indexOf(' ');
+ 					final ObjectId id = ObjectId.fromString(p.substring(0, sp));
+-					final String name = new String(p.substring(sp + 1));
++					final String name = copy(p, sp + 1, p.length());
+ 					last = new Ref(Ref.Storage.PACKED, name, name, id);
+ 					newPackedRefs.put(last.getName(), last);
+ 				}
+@@ -460,6 +460,10 @@ private synchronized void refreshPackedRefs() {
+ 		}
+ 	}
+ 
++	private static String copy(final String src, final int off, final int end) {
++		return new StringBuilder(end - off).append(src, off, end).toString();
++	}
++
+ 	private void lockAndWriteFile(File file, byte[] content) throws IOException {
+ 		String name = file.getName();
+ 		final LockFile lck = new LockFile(file);
 -- 
-fpGUI Toolkit - a cross-platform GUI toolkit using Free Pascal
-http://opensoft.homeip.net/fpgui/
+1.6.4.rc0.117.g28cb
