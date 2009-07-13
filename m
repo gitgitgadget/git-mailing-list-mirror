@@ -1,123 +1,137 @@
-From: Graeme Geldenhuys <graemeg@gmail.com>
-Subject: Re: Pushing to GitHub doesn't push all branches
-Date: Mon, 13 Jul 2009 10:12:17 +0200
-Message-ID: <h3eqap$cov$1@ger.gmane.org>
-References: <h37fga$5ie$1@ger.gmane.org> <4A575416.2090304@drmicha.warpmail.net> <h37lh2$q3s$1@ger.gmane.org> <4A57639D.4020305@drmicha.warpmail.net>
+From: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
+	<u.kleine-koenig@pengutronix.de>
+Subject: Re: [ANNOUNCE] Stacked Git 0.15-rc1
+Date: Mon, 13 Jul 2009 10:28:59 +0200
+Message-ID: <20090713082859.GA10549@pengutronix.de>
+References: <b0943d9e0907121540n4b9199e2re3152e71d84a0f5@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jul 13 10:14:06 2009
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>,
+	John Kacur <jkacur@gmail.com>
+To: Catalin Marinas <catalin.marinas@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jul 13 10:29:09 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MQGfM-0002gj-Ou
-	for gcvg-git-2@gmane.org; Mon, 13 Jul 2009 10:13:41 +0200
+	id 1MQGuL-0008In-3x
+	for gcvg-git-2@gmane.org; Mon, 13 Jul 2009 10:29:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753467AbZGMINd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 13 Jul 2009 04:13:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753375AbZGMINc
-	(ORCPT <rfc822;git-outgoing>); Mon, 13 Jul 2009 04:13:32 -0400
-Received: from main.gmane.org ([80.91.229.2]:54098 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752227AbZGMINb (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 13 Jul 2009 04:13:31 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1MQGfC-0007Es-QO
-	for git@vger.kernel.org; Mon, 13 Jul 2009 08:13:30 +0000
-Received: from 41.177.20.228 ([41.177.20.228])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 13 Jul 2009 08:13:30 +0000
-Received: from graemeg by 41.177.20.228 with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 13 Jul 2009 08:13:30 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: 41.177.20.228
-User-Agent: Thunderbird 2.0.0.22 (X11/20090608)
-In-Reply-To: <4A57639D.4020305@drmicha.warpmail.net>
+	id S1754664AbZGMI3C convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 13 Jul 2009 04:29:02 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754340AbZGMI3C
+	(ORCPT <rfc822;git-outgoing>); Mon, 13 Jul 2009 04:29:02 -0400
+Received: from metis.ext.pengutronix.de ([92.198.50.35]:45073 "EHLO
+	metis.ext.pengutronix.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752573AbZGMI3A (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 13 Jul 2009 04:29:00 -0400
+Received: from octopus.hi.pengutronix.de ([2001:6f8:1178:2:215:17ff:fe12:23b0])
+	by metis.ext.pengutronix.de with esmtp (Exim 4.63)
+	(envelope-from <ukl@pengutronix.de>)
+	id 1MQGuB-0001Bh-RX; Mon, 13 Jul 2009 10:28:59 +0200
+Received: from ukl by octopus.hi.pengutronix.de with local (Exim 4.69)
+	(envelope-from <ukl@pengutronix.de>)
+	id 1MQGuB-0004BP-JH; Mon, 13 Jul 2009 10:28:59 +0200
+Content-Disposition: inline
+In-Reply-To: <b0943d9e0907121540n4b9199e2re3152e71d84a0f5@mail.gmail.com>
+User-Agent: Mutt/1.5.18 (2008-05-17)
+X-SA-Exim-Connect-IP: 2001:6f8:1178:2:215:17ff:fe12:23b0
+X-SA-Exim-Mail-From: ukl@pengutronix.de
+X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
+X-PTX-Original-Recipient: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123175>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123176>
 
-Michael J Gruber wrote:
-> 
-> Please don't! That's what we're here for ;)
-
-:) Thanks.
+Hi Catalin,
 
 
-> git for-each-ref --shell --format="git push -f origin :%(refname)"
-> refs/remotes/|while read line; do eval $line;done
+On Sun, Jul 12, 2009 at 11:40:05PM +0100, Catalin Marinas wrote:
+> The first release candidate for StGit 0.15 is available from the
+> git://repo.or.cz/stgit.git or http://download.gna.org/stgit/. Bugs ca=
+n
+> be reported on the Git mailing list or via the project bugs page
+> (https://gna.org/bugs/?group=3Dstgit).
+Try this:
 
-OK, done this. 'git ls-remote github' doesn't show any remotes/* 
-references anymore.
+	git clone --depth=3D10 git://git.kernel.org/pub/scm/linux/kernel/git/s=
+table/linux-2.6.29.y.git
+	wget http://www.kernel.org/pub/linux/kernel/projects/rt/patch-2.6.29.6=
+-rt23-broken-out.tar.bz2
+	tar xjf patch-2.6.29.6-rt23-broken-out.tar.bz2
+	cd linux-2.6.29.y
+	git checkout -b 2.6.29-rt v2.6.29.6
+	stg init
+	stg import -s ../patches/series
 
-Oh by the way, I followed your advice and renamed 'origin' to 'github' 
-so it makes a bit more sense. I used the following command:
+(Nice, 0.14.2-1 from Debian failed here, because of a line break in a
+=46rom: header.)
 
-   $ git remote rename origin github
+But still:
 
+	stg goto include-linux-delay-h-in-hwlat_detector.patch
+	git show --stat
 
-> 
-> git config remote.origin.push '+refs/remotes/*:refs/heads/*'
+yields:
 
-OK, I've done this, but I'm not 100% sure what this means. This is what 
-I think (from reading various git help and users guide). Any branches I 
-have which track remote references (from svn repository) will be pushed 
-to github as various head references (normal branches).  Is this correct?
+	commit 12c06d44017a9c51746290779fc24fb8d69c68ef
+	Author: Uwe Kleine-K=F6nig <=3D?utf-8?q?Uwe=3D20Kleine-K=3DC3=3DB6nig?=
+=3D>
+	Date:   Mon Jul 13 10:01:19 2009 +0200
 
-On our server, which contain the svn cloned repository and the one that 
-is only used for syncing svn -> our server -> github, I had to add a new 
-commit which represents the svn-ignore meta data to a .gitignore file. I 
-noticed I had to manually to a 'git checkout master' & 'git merge 
-remotes/trunk' to pull in new updates. I thin pushed that to github.
+	    Subject: include linux/delay.h in hwlat_detector
+		<u.kleine-koenig@pengutronix.de>
+	    Date: Sun, 14 Jun 2009 23:31:42 +0200
+	   =20
+	    This broke when compiling on i386 without X86_LOCAL_APIC because t=
+hen
+	    arch/x86/include/asm/smp.h doesn't include asm/apic.h which in tur=
+n includes
+	    linux/delay.h.
+	   =20
+	    Signed-off-by: Uwe Kleine-K=F6nig <u.kleine-koenig@pengutronix.de>
+	    Cc: Jon Masters <jcm@redhat.com>
+	    LKML-Reference: <1245015102-22057-1-git-send-email-u.kleine-koenig=
+@pengutron
+	    Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+	    Cc: Thomas Gleixner <tglx@linutronix.de>
+	    Cc: Jon Masters <jcm@redhat.com>
 
-So what is my twice hourly cron script supposed to look like? Is the 
-following still ok?
+	 drivers/misc/hwlat_detector.c |    1 +
+	 1 files changed, 1 insertions(+), 0 deletions(-)
 
-========[ script executed by cron every 30 minutes ]============
-#!/bin/sh
-GIT="/usr/local/bin/git"
+There are some things to enhance:
 
-# FPC repository
-cd /mnt/samba/git/fpc.git/
-$GIT checkout master
-$GIT svn fetch
-$GIT gc --auto
-$GIT push github master
-==============================
+  - s/Subject: //
+  - use Date line as author date
+  - stray email address
+  - author ident is wrong/broken
 
-Or do I need to add a new line after '$GIT svn fetch' that does a merge.
+If you look on arm-__builtin_return_address-works-with-argument-0.patch
+there the author is broken in an other way:
 
-==============================
-$GIT svn fetch
-$GIT merge remotes/trunk
-...
-push to github
-==============================
+	stg goto arm-__builtin_return_address-works-with-argument-0.patch
+	git show | grep Author:
 
+yields:
 
-Also what do I do with the other branch I want to track. It's called 
-remotes/fixes_2_2.
+	Author: =3D?utf-8?q?Uwe=3D20Kleine-K=3DC3=3DB6nig?=3D <u.kleine-koenig=
+@pengutronix.de>
 
-I believe I need to first create a local branch.
+Note that git quiltimport using git mailinfo gets all that right.
+(e.g.
 
-   git branch --track fixes_2_2 remotes/fixes_2_2
+	git checkout -b 2.6.29-rt-quiltimport v2.6.29.6
+	git quiltimport --author=3D"do <nt@kn.ow>" --patches=3D../patches/)
+	git log --author=3DUwe
+	git mailinfo msg patch < ../patches/include-linux-delay-h-in-hwlat_det=
+ector.patch
+	cat msg
+)
 
-What do I need to modify in my cron script to keep both the master & 
-fixes_2_2 branches in sync with SubVersion and push both to GitHub. I 
-want Github to show two branches: master & fixes_2_2
-
-
-
-Regards,
-   - Graeme -
-
--- 
-fpGUI Toolkit - a cross-platform GUI toolkit using Free Pascal
-http://opensoft.homeip.net/fpgui/
+Best regards
+Uwe
