@@ -1,100 +1,109 @@
-From: Nicolas Sebrecht <nicolas.s.dev@gmx.fr>
-Subject: [PATCH] Re: git-am: less strong format "mbox" detection
-Date: Tue, 14 Jul 2009 10:20:59 +0200
-Message-ID: <20090714082059.GA13808@vidovic>
-References: <bb3a84e2b817268a88832dc7043383e4b91a3df3.1247553623.git.ni.s@laposte.net> <cb7bb73a0907140016r4807c008h9c98f76200e9c3a5@mail.gmail.com>
+From: Catalin Marinas <catalin.marinas@gmail.com>
+Subject: Re: [ANNOUNCE] Stacked Git 0.15-rc1
+Date: Tue, 14 Jul 2009 09:24:45 +0100
+Message-ID: <b0943d9e0907140124u6e804ef2i5a17c23a44eda50f@mail.gmail.com>
+References: <b0943d9e0907121540n4b9199e2re3152e71d84a0f5@mail.gmail.com>
+	 <20090713133343.GA23946@skywalker>
+	 <b0943d9e0907131007q18dbed72tc017be92ed23a61d@mail.gmail.com>
+	 <20090713172017.GA29333@skywalker> <20090713174743.GB29333@skywalker>
+	 <b0943d9e0907131506s329bc2c2qe35180ac783a52f3@mail.gmail.com>
+	 <alpine.LFD.2.01.0907131555200.13838@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Nicolas Sebrecht <nicolas.s.dev@gmx.fr>, git@vger.kernel.org
-To: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jul 14 10:21:40 2009
+Cc: "Aneesh Kumar K.V" <aneesh.kumar@linux.vnet.ibm.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Karl Wiberg <kha@treskal.com>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Tue Jul 14 10:24:56 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MQdGe-0006jw-9K
-	for gcvg-git-2@gmane.org; Tue, 14 Jul 2009 10:21:40 +0200
+	id 1MQdJn-0007xr-M3
+	for gcvg-git-2@gmane.org; Tue, 14 Jul 2009 10:24:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752269AbZGNIVJ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 14 Jul 2009 04:21:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752161AbZGNIVJ
-	(ORCPT <rfc822;git-outgoing>); Tue, 14 Jul 2009 04:21:09 -0400
-Received: from ey-out-1920.google.com ([74.125.78.149]:24741 "EHLO
-	ey-out-1920.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750820AbZGNIVH (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 14 Jul 2009 04:21:07 -0400
-Received: by ey-out-1920.google.com with SMTP id 3so541078eyh.36
-        for <git@vger.kernel.org>; Tue, 14 Jul 2009 01:21:05 -0700 (PDT)
+	id S1751323AbZGNIYs convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 14 Jul 2009 04:24:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750911AbZGNIYs
+	(ORCPT <rfc822;git-outgoing>); Tue, 14 Jul 2009 04:24:48 -0400
+Received: from mail-bw0-f228.google.com ([209.85.218.228]:43308 "EHLO
+	mail-bw0-f228.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750815AbZGNIYr convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 14 Jul 2009 04:24:47 -0400
+Received: by bwz28 with SMTP id 28so622211bwz.37
+        for <git@vger.kernel.org>; Tue, 14 Jul 2009 01:24:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:sender:date:from:to:cc
-         :subject:message-id:references:mime-version:content-type
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=3XJaNr/KoIRiGcxXSvqGBclDS3cuM6bTYBUvjSEGLDM=;
-        b=jyhEGbXtp8rsplRe8eW9DGiF2WtetuuQBqK0tzCmfFyvx4tgrIQisc0ZMtVodKANQa
-         XUgAKkGQJ+qju6Gspv80gFkFYlO0zI6yGl0EHL/u26b9QEp/2fbDEJaIUiSDC+Lw0tuz
-         Lyv51xcfwFOXisxsGTAfKuVIRQ+0rONZy0eRE=
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=sh2uKXKi2QmuO2Ywu1keLsaSFcJyopLz/CYuXeJZCfQ=;
+        b=t8Ux6L/uwe/IiF0GmQRH3XQcH8Qfn4qKo9w7jz0HSoHGN3EEVSFnqihKFSluugVejc
+         oru++Eumv0V/axuren3w8fEQawD+6leDqJeBWkYEB0RbbREHPjS91L6zNsMv9aPJLQ25
+         ttSIUDtivERNrjgGCokBV39KtkO0LCpTExuk0=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=sender:date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=wpa1Ek+vO2gEq+tQTZO6GsvOuanTH8/xuchQCNM51SgH4Y1NyHXcqHtsI/x5XeEfbB
-         WprdeP/5IelZ32vzH0n/fxec7vn6+xhmj5yX0fqn9b1opx0wS0S7c6/pfkv5lOUx4pMj
-         4j97K96MKEck4Sa+M3kd8xfRgFYk2/jM75g+k=
-Received: by 10.210.13.12 with SMTP id 12mr7364150ebm.98.1247559665094;
-        Tue, 14 Jul 2009 01:21:05 -0700 (PDT)
-Received: from @ (91-165-132-96.rev.libertysurf.net [91.165.132.96])
-        by mx.google.com with ESMTPS id 5sm2179734eyh.50.2009.07.14.01.21.02
-        (version=SSLv3 cipher=RC4-MD5);
-        Tue, 14 Jul 2009 01:21:03 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <cb7bb73a0907140016r4807c008h9c98f76200e9c3a5@mail.gmail.com>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=jW+FNAH/5QUq4qr2R+R+fUpEJ5pS52KhDey9G7II1tc/TjzXBBskeAS8R9AoO1dJQ0
+         1hJbFyAXwGw4+QpJLk2CCbjnWAago2a8EwUiu1qIWeZPAZlDHRDf/00g7u1/VNxXG+ou
+         BD8DK9sH0tE1uFqlu+uuRYJS8Z1qPxcx3TGHI=
+Received: by 10.223.108.211 with SMTP id g19mr2703990fap.39.1247559885190; 
+	Tue, 14 Jul 2009 01:24:45 -0700 (PDT)
+In-Reply-To: <alpine.LFD.2.01.0907131555200.13838@localhost.localdomain>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123226>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123227>
 
-Le 14/07/09, Giuseppe Bilotta a =E9crit :
+2009/7/13 Linus Torvalds <torvalds@linux-foundation.org>:
+> On Mon, 13 Jul 2009, Catalin Marinas wrote:
+>>
+>> =A0 =A0 =A0os.environ.setdefault('PAGER', config.get('stgit.pager'))
+>> + =A0 =A0if os.environ.get('PAGER').startswith('less'):
+>> + =A0 =A0 =A0 =A0os.environ.setdefault('LESS', '-FRSX')
+>> =A0 =A0 =A0# FIXME: handle EDITOR the same way ?
+>
+> That's not very smart.
+>
+> First off, PAGER could easily be something like "/usr/local/bin/less"=
+=2E
+>
+> Secondly, if it isn't less, so what? If it's not less, it won't care =
+about
+> the LESS environment variable.
+>
+> So just do an unconditional
+>
+> =A0 =A0 =A0 =A0os.environ.setdefault('LESS', '-FRSX')
+>
+> and it will (a) work better, (b) be simpler and more efficient.
 
-> > diff --git a/git-am.sh b/git-am.sh
-> > index d64d997..d10a8e0 100755
-> > --- a/git-am.sh
-> > +++ b/git-am.sh
-> > @@ -169,7 +169,7 @@ check_patch_format () {
-> > =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0read l2
-> > =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0read l3
-> > =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0case "$l1" in
-> > - =A0 =A0 =A0 =A0 =A0 =A0 =A0 "From "* | "From: "*)
-> > + =A0 =A0 =A0 =A0 =A0 =A0 =A0 "From "* | "From: "* | "X-Account-Key=
-:"* | "Return-Path:"* | "Delivered-To:"*)
->=20
-> Nitpick: for consistency, should we either expect a space after the
-> colon also in the new keys, or not expect i in the From: key either. =
-I
-> don't think the RFC requires a space, but most clients probably add
-> it.
+Good point. Thanks. This is the new version:
 
-RFC 822 says:
-    =20
-" 3.4.2. WHITE SPACE
-    =20
-  Note:  In structured field bodies, multiple linear space ASCII
-         characters  (namely  HTABs  and  SPACEs) are treated as
-         single spaces and may freely surround any  symbol.   In
-         all header fields, the only place in which at least one
-         LWSP-char is REQUIRED is at the beginning of  continua-
-         tion lines in a folded field.
-"
+diff --git a/stgit/config.py b/stgit/config.py
+index f205e5b..4a6cb3b 100644
+--- a/stgit/config.py
++++ b/stgit/config.py
+@@ -37,7 +37,7 @@ class GitConfig:
+         'stgit.keepoptimized':	'no',
+         'stgit.extensions':	'.ancestor .current .patched',
+         'stgit.shortnr': '5',
+-        'stgit.pager':  'less -FRSX'
++        'stgit.pager':  'less'
+         }
 
-A trailing space after the colon is not required. I'll remove it and
-resend a patch.
+     __cache =3D None
+@@ -121,6 +121,7 @@ def config_setup():
+     global config
 
-And why should we accept "From "?
+     os.environ.setdefault('PAGER', config.get('stgit.pager'))
++    os.environ.setdefault('LESS', '-FRSX')
+     # FIXME: handle EDITOR the same way ?
+
+ class ConfigOption:
 
 --=20
-Nicolas Sebrecht
+Catalin
