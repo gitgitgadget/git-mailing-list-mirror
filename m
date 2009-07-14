@@ -1,67 +1,82 @@
-From: E R <pc88mxer@gmail.com>
-Subject: odd behavior with export LESS=i
-Date: Tue, 14 Jul 2009 12:18:52 -0500
-Message-ID: <3a69fa7c0907141018l4f6fb773o219b6a18effc393d@mail.gmail.com>
+From: Sverre Rabbelier <srabbelier@gmail.com>
+Subject: Re: odd behavior with export LESS=i
+Date: Tue, 14 Jul 2009 10:32:04 -0700
+Message-ID: <fabb9a1e0907141032o6b1aac51yb42a640249f04050@mail.gmail.com>
+References: <3a69fa7c0907141018l4f6fb773o219b6a18effc393d@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jul 14 19:26:18 2009
+Cc: git@vger.kernel.org
+To: E R <pc88mxer@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jul 14 19:32:36 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MQlli-0000so-6g
-	for gcvg-git-2@gmane.org; Tue, 14 Jul 2009 19:26:18 +0200
+	id 1MQlro-0003bD-0A
+	for gcvg-git-2@gmane.org; Tue, 14 Jul 2009 19:32:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755847AbZGNR0A (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 14 Jul 2009 13:26:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755828AbZGNR0A
-	(ORCPT <rfc822;git-outgoing>); Tue, 14 Jul 2009 13:26:00 -0400
-Received: from mail-yx0-f184.google.com ([209.85.210.184]:58469 "EHLO
-	mail-yx0-f184.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755248AbZGNRZ7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 14 Jul 2009 13:25:59 -0400
-Received: by yxe14 with SMTP id 14so4419089yxe.33
-        for <git@vger.kernel.org>; Tue, 14 Jul 2009 10:25:59 -0700 (PDT)
+	id S1752096AbZGNRc1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 14 Jul 2009 13:32:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751522AbZGNRc1
+	(ORCPT <rfc822;git-outgoing>); Tue, 14 Jul 2009 13:32:27 -0400
+Received: from mail-ew0-f226.google.com ([209.85.219.226]:58993 "EHLO
+	mail-ew0-f226.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750885AbZGNRc0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 14 Jul 2009 13:32:26 -0400
+Received: by ewy26 with SMTP id 26so3454380ewy.37
+        for <git@vger.kernel.org>; Tue, 14 Jul 2009 10:32:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:date:message-id:subject
-         :from:to:content-type:content-transfer-encoding;
-        bh=GQZNLUQ6DZwfGFKcHN6Bbuii2IvGKmsYX/1E+VgXITc=;
-        b=L2P9a12iWCIBsTgLvG17u1y225ER0IbMEwNuQUUdgoOBr91pmNPCZkdsIj7L7elx72
-         K32y3RqZQWedGPnI8ID6YjY7Ab2l6S2HlJoy6jCZlOl8bual8+TYnx8/2gp/6IDfxTkb
-         Y1YmKsbaii/w3uJUFjQaf7zDnCA3qyh8sruBU=
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=yK11xihKeqs0K5kjx5tGFGL5vQSVz+Em89f5gaXbgg0=;
+        b=HeQ8rpMQdbO4JyyTa8suXafkDs+8SYwoza0sJSOdIkqWDBhxofC8J/tXuZJxUd5rWc
+         Su519h07jebIEkSfRBZtSe/0yE08LpLY9+ADem0Vw5+YxgcBkK/eWa6MbHqB3loekPAX
+         8aJpuQMQ2nrE+o8LzeOC5mPhd1A6yksVyrSIw=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type
-         :content-transfer-encoding;
-        b=USvK19gcUkf1qudXCLt6HlqkoV8wb4OR6FV8Mr+fd85E3o126VQZa7SSdGzM7vGeUH
-         GM4zBCARHrqLoU7bdmQieW19znTKfwnotVqi2cGw1QEkavidlS+js82eAOvQaNrREQHQ
-         vWo5Xpa3q2MjU73zW5k+p+MhHf4zifhm63mtc=
-Received: by 10.151.110.8 with SMTP id n8mr10604304ybm.334.1247591932576; Tue, 
-	14 Jul 2009 10:18:52 -0700 (PDT)
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=L+3TOdlYjvWiC1IN8m83WH4rQPM7KwdqR6Ody9dfvLTWtxZZZIbM6956fCJsUTT+8o
+         dodpbAR3hBffijjiE5T1MvwL+5D3GkibqiuplVVb4j82ZVrf2yfOgxJzV044vTCn/8i1
+         qZLXnagt3pgt/C27X+O7UcEk90fIAsXDpqIHE=
+Received: by 10.216.17.213 with SMTP id j63mr1768447wej.140.1247592745108; 
+	Tue, 14 Jul 2009 10:32:25 -0700 (PDT)
+In-Reply-To: <3a69fa7c0907141018l4f6fb773o219b6a18effc393d@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123257>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123258>
 
-Is this a problem with less or with git?
+Heya,
 
->From the shell if I run:
+On Tue, Jul 14, 2009 at 10:18, E R<pc88mxer@gmail.com> wrote:
+> export LESS
+> LESS=i git log
+>
+> then I see things like ESC[33m instead of colored text.
 
-export LESS
-LESS=i git log
+That's because (as you could read in less'
+way-too-long-for-a-damn-pager man page), you did not specify the magic
+"-R" make-everything-work-like-it-should option, which turns on the
+display of escape sequences (which are used to color your terminal).
 
-then I see things like ESC[33m instead of colored text.
 
-If I run:
+> If I run:
+>
+> unset LESS
+> git log
+>
+> then I get colored text.
 
-unset LESS
-git log
+That's because if not set, git default to setting LESS to -FXRS (which
+includes the -R option). Solution is to either not set LESS, or to
+include -R if that's indeed what you want.
 
-then I get colored text.
+-- 
+Cheers,
 
-Note that the environment variable LESS is used to pass default
-command line switches to less.
+Sverre Rabbelier
