@@ -1,63 +1,82 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: Truly decentralised use of git?
-Date: Tue, 14 Jul 2009 20:09:32 +0200
-Message-ID: <81b0412b0907141109j697f4705s4cebd27b9694dac7@mail.gmail.com>
-References: <200907140811.24174.Karlis.Repsons@gmail.com>
-	 <200907141323.02151.Karlis.Repsons@gmail.com>
-	 <81b0412b0907140634g6aeec60fib23d56d83ba09fb9@mail.gmail.com>
-	 <200907141558.54044.Karlis.Repsons@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: git-am with an initial checkin doesn't work
+Date: Tue, 14 Jul 2009 11:24:10 -0700
+Message-ID: <7vocrngm2d.fsf@alter.siamese.dyndns.org>
+References: <4A5C9C66.1050100@dirk.my1.cc>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: =?UTF-8?Q?K=C4=81rlis_Repsons?= <karlis.repsons@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jul 14 20:09:46 2009
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Dirk =?utf-8?Q?S=C3=BCsserott?= <newsletter@dirk.my1.cc>
+X-From: git-owner@vger.kernel.org Tue Jul 14 20:24:45 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MQmRh-0002um-Vn
-	for gcvg-git-2@gmane.org; Tue, 14 Jul 2009 20:09:42 +0200
+	id 1MQmfv-0001mT-46
+	for gcvg-git-2@gmane.org; Tue, 14 Jul 2009 20:24:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754752AbZGNSJe convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 14 Jul 2009 14:09:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754401AbZGNSJe
-	(ORCPT <rfc822;git-outgoing>); Tue, 14 Jul 2009 14:09:34 -0400
-Received: from mail-bw0-f228.google.com ([209.85.218.228]:47256 "EHLO
-	mail-bw0-f228.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753609AbZGNSJe convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 14 Jul 2009 14:09:34 -0400
-Received: by bwz28 with SMTP id 28so944325bwz.37
-        for <git@vger.kernel.org>; Tue, 14 Jul 2009 11:09:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=l3Km52htC9VUKz9wW0NFO0V4QlAiC8UYqae8AcuC+A4=;
-        b=FhCJTXKLn7nI2SMtJjTuToyPlgiWvq9VBuxArV5PVAHf2FzW6PvwtBJC8xnq1l24Sm
-         4vTDjbe8IUCHa7P1Rd28pvpeTjJ0ovRbJ86d58h2Ktuz+Q23TkgB+t//ZTpXD6uUVWgD
-         zJeoRiMLNyB7NCUWREo71wlDJHNBzMGs4K+iM=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=UaA5iiUPxHKQglVpG/eBfjjkvBcZYPUj7u9Cyil/Fyr8+M4ztPC3iBAYkTBJEhBx9z
-         KM6yBFA0+UJhx9bZxXbFkq/CeW8gV7mFDb8fLDqxe5hMnnyBm704SmfihmXfN9yrOhRu
-         SHBEpQ7rkIdf5QJIPGp0VFaky91ob6P+AGJDA=
-Received: by 10.204.62.135 with SMTP id x7mr6613369bkh.95.1247594972108; Tue, 
-	14 Jul 2009 11:09:32 -0700 (PDT)
-In-Reply-To: <200907141558.54044.Karlis.Repsons@gmail.com>
+	id S1753331AbZGNSYQ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 14 Jul 2009 14:24:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752759AbZGNSYQ
+	(ORCPT <rfc822;git-outgoing>); Tue, 14 Jul 2009 14:24:16 -0400
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:38843 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751522AbZGNSYP (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 14 Jul 2009 14:24:15 -0400
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 05A082C3F;
+	Tue, 14 Jul 2009 14:24:15 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 5B1352C3E; Tue,
+ 14 Jul 2009 14:24:12 -0400 (EDT)
+In-Reply-To: <4A5C9C66.1050100@dirk.my1.cc> ("Dirk =?utf-8?Q?S=C3=BCsserot?=
+ =?utf-8?Q?t=22's?= message of "Tue\, 14 Jul 2009 16\:55\:34 +0200")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 891BB674-70A3-11DE-9EDA-B6A11443B67B-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123264>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123265>
 
-On Tue, Jul 14, 2009 at 17:58, K=C4=81rlis Repsons<karlis.repsons@gmail=
-=2Ecom> wrote:
-> But can IPv6 usage provide a way for git users to pull from one anoth=
-er
-> directly?
+Dirk S=C3=BCsserott <newsletter@dirk.my1.cc> writes:
 
-Yes. Wanna use that argument for IPv6 promotion?
+> # Try to "import" the patch:
+> git am 0001-initial-checkin.patch
+>
+> The latter yields to
+> fatal: HEAD: not a valid SHA1
+> fatal: bad revision 'HEAD'
+>
+> It works, when I
+> git apply 0001-initial-checkin.patch
+> instead of am'ing it, but then the thing isn't committed and I've to
+> manually git-commit it.
+>
+> Is this a bug, intentional behavior, or am I missing some magic optio=
+n
+> to git-am?
+
+The original mode of operation of the e-mail patchflow commands was to
+support project members who contribute changes to _existing_ projects, =
+and
+maintainers to accept such changes.  The reason behind the behaviour yo=
+u
+are observing is merely a historical accident that nobody bothered abou=
+t
+use cases outside of that original purpose.  For exactly the same reaso=
+n,
+the original implementation of format-patch did not bother with the roo=
+t
+commit.
+
+IOW, this was not an intentional behaviour, neither it was a bug.  It w=
+as
+simply use outside of spec, and nobody bothered until f79d4c8 (git-am:
+teach git-am to apply a patch to an unborn branch, 2009-04-10), which i=
+s
+v1.6.3-rc1~11^2, added a support for it.
+
+What version of git are you running?
