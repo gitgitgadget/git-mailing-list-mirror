@@ -1,109 +1,64 @@
-From: Yakup Akbay <yakbay@ubicom.com>
-Subject: Re: Weird behavior of git rev-parse
-Date: Tue, 14 Jul 2009 13:01:54 +0300
-Message-ID: <4A5C5792.3050704@ubicom.com>
-References: <4A5C31CF.2090204@ubicom.com> <7vvdlvhbtg.fsf@alter.siamese.dyndns.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Re: Make 'git show' more useful
+Date: Tue, 14 Jul 2009 12:44:05 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.0907141243410.3155@pacific.mpi-cbg.de>
+References: <7vtz1gi67v.fsf@alter.siamese.dyndns.org> <1247528614-24590-1-git-send-email-bonzini@gnu.org> <alpine.LFD.2.01.0907131652120.13838@localhost.localdomain> <alpine.DEB.1.00.0907140324140.3155@pacific.mpi-cbg.de> <4A5C24BE.4090804@gnu.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jul 14 12:08:11 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Linus Torvalds <torvalds@linux-foundation.org>, git@vger.kernel.org
+To: Paolo Bonzini <bonzini@gnu.org>
+X-From: git-owner@vger.kernel.org Tue Jul 14 12:42:16 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MQevM-0004Wn-8Z
-	for gcvg-git-2@gmane.org; Tue, 14 Jul 2009 12:07:48 +0200
+	id 1MQfSi-00026k-8e
+	for gcvg-git-2@gmane.org; Tue, 14 Jul 2009 12:42:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754546AbZGNKHn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 14 Jul 2009 06:07:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754544AbZGNKHn
-	(ORCPT <rfc822;git-outgoing>); Tue, 14 Jul 2009 06:07:43 -0400
-Received: from server70.appriver.com ([69.20.119.203]:3146 "EHLO
-	server70.appriver.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754483AbZGNKHm (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 14 Jul 2009 06:07:42 -0400
-X-Greylist: delayed 9496 seconds by postgrey-1.27 at vger.kernel.org; Tue, 14 Jul 2009 06:07:42 EDT
-Received: by server70.appriver.com (CommuniGate Pro PIPE 5.2.14)
-  with PIPE id 98422803; Tue, 14 Jul 2009 06:07:13 -0400
-Received: from [216.112.109.98] (HELO stork.scenix.com)
-  by server70.appriver.com (CommuniGate Pro SMTP 5.2.14)
-  with ESMTP id 98422789; Tue, 14 Jul 2009 06:07:08 -0400
-Received: from [172.18.200.186] ([172.18.200.186]) by stork.scenix.com with Microsoft SMTPSVC(6.0.3790.3959);
-	 Tue, 14 Jul 2009 02:59:48 -0700
-User-Agent: Thunderbird 2.0.0.22 (X11/20090608)
-In-Reply-To: <7vvdlvhbtg.fsf@alter.siamese.dyndns.org>
-X-OriginalArrivalTime: 14 Jul 2009 09:59:49.0265 (UTC) FILETIME=[D310C810:01CA0469]
-X-Policy: GLOBAL - ubicom.com
-X-Policy: GLOBAL - ubicom.com
-X-Primary: yakbay@ubicom.com
-X-Note: This Email was scanned by AppRiver SecureTide
-X-Virus-Scan: V-
-X-Note: TCH-CT/SI:0-34/SG:2 7/14/2009 6:06:57 AM
-X-GBUdb-Analysis: 0, 216.112.109.98, Ugly c=0.627009 p=-0.886105 Source Normal
-X-Signature-Violations: 0-0-0-3770-c
-X-Note: Spam Tests Failed: 
-X-Country-Path: PRIVATE->UNITED STATES->UNITED STATES
-X-Note-Sending-IP: 216.112.109.98
-X-Note-Reverse-DNS: 216.112.109.98.ptr.us.xo.net
-X-Note-WHTLIST: yakbay@ubicom.com
-X-Note: User Rule Hits: 
-X-Note: Global Rule Hits: 114 115 116 117 121 122 214 
-X-Note: Mail Class: VALID
+	id S1754565AbZGNKmI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 14 Jul 2009 06:42:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754424AbZGNKmH
+	(ORCPT <rfc822;git-outgoing>); Tue, 14 Jul 2009 06:42:07 -0400
+Received: from mail.gmx.net ([213.165.64.20]:42084 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753564AbZGNKmH (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 14 Jul 2009 06:42:07 -0400
+Received: (qmail invoked by alias); 14 Jul 2009 10:42:04 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp028) with SMTP; 14 Jul 2009 12:42:04 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+ZPKZcC8qZbAdHsLKCfZdzr9pNeNnI9GoOyTIYCQ
+	ZSOWh8rxi3RdFT
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <4A5C24BE.4090804@gnu.org>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.65
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123235>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123236>
 
-Junio C Hamano wrote:
-> Yakup Akbay <yakbay@ubicom.com> writes:
->
->   
->> Then I've tried
->>
->>    $ git rev-parse -'hi, this is a test!'
->>
->> the output is:
->>
->>    -hi, this is a test!
->>
->> Is this an expected behavior?
->>     
->
-> Absolutely.  rev-parse was originally written as a way for Porcelain
-> scripts to sift parameters into four different categories.
->
->  * options and non-options (that's two)
->
->  * args meant for rev-list and others (that's another two)
->
-> Multiplying two x two gives you four combinations.
->
-> Because you are not giving options like --revs-only, --no-revs, --flags,
-> nor --no-flags, rev-parse outputs everything.  You can try these:
->
-> $ git rev-parse --no-flags -'Hi'
-> $ git rev-parse --no-revs HEAD
-> $ git rev-parse --flags --no-revs -Hi HEAD
->   
-Got it!
+Hi,
 
->> Another questions is, usage is printed if you omit the commit id in
->> git rev-list (E.g. `git rev-list -2`). Is there a reason why HEAD is
->> not taken as the default?
->>     
->
-> The reason is because that is the way it has been, that is the way it is,
-> and changing it will break existing behaviour and scripts.  In other
-> words, it is a historical accident without any deep logic.
->
-> Besides, "git rev-list" is a plumbing and didn't necessarily want a
-> user-friendliness niceties such as "defaulting to X when nothing is
-> given".
->
->   
-Makes sense, thanks!
+On Tue, 14 Jul 2009, Paolo Bonzini wrote:
 
-Yakup
+> > > The actual "--no-walk" flag was then added over a year later by 
+> > > Dsco, in commit 8e64006eee ("Teach revision machinery about 
+> > > --no-walk").
+> > >
+> > > Doing a "git log -p -S--no-walk", I have to admit that I don't find 
+> > > a single actual _use_ of --no-walk.
+> >
+> > Actually, I remember very precisely why I introduced it.  The 
+> > difference between "git log --no-walk a b c" and "git show a b c" is 
+> > that "git log" sorts the commits by commit time, which is pretty 
+> > important in my case.
+> 
+> Very nice.  Can you add a test for that?
+
+Unfortunately, no; I am very short on time.
+
+Ciao,
+Dscho
