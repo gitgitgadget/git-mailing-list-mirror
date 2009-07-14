@@ -1,90 +1,94 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: [PATCH] Improve on the 'invalid object' error message at commit
- time
-Date: Tue, 14 Jul 2009 11:25:17 -0700 (PDT)
-Message-ID: <alpine.LFD.2.01.0907141119190.13838@localhost.localdomain>
-References: <1247577632053-3255106.post@n2.nabble.com> <alpine.LFD.2.01.0907141019380.13838@localhost.localdomain>
+From: "=?utf-8?q?K=C4=81rlis_Repsons?=" <karlis.repsons@gmail.com>
+Subject: Re: Truly decentralised use of git?
+Date: Tue, 14 Jul 2009 19:15:47 +0000
+Message-ID: <200907141915.50929.Karlis.Repsons@gmail.com>
+References: <200907140811.24174.Karlis.Repsons@gmail.com> <200907141558.54044.Karlis.Repsons@gmail.com> <81b0412b0907141109j697f4705s4cebd27b9694dac7@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Florian Breitwieser <florian.bw@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Jul 14 20:25:55 2009
+Content-Type: multipart/signed;
+  boundary="nextPart10676599.9WKO4cHTNO";
+  protocol="application/pgp-signature";
+  micalg=pgp-sha1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Alex Riesen <raa.lkml@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jul 14 21:17:08 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MQmhA-0002bm-8g
-	for gcvg-git-2@gmane.org; Tue, 14 Jul 2009 20:25:40 +0200
+	id 1MQnUc-0002IC-Me
+	for gcvg-git-2@gmane.org; Tue, 14 Jul 2009 21:16:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754475AbZGNSZ3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 14 Jul 2009 14:25:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754149AbZGNSZ3
-	(ORCPT <rfc822;git-outgoing>); Tue, 14 Jul 2009 14:25:29 -0400
-Received: from smtp1.linux-foundation.org ([140.211.169.13]:39609 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753978AbZGNSZ3 (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 14 Jul 2009 14:25:29 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
-	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id n6EIPHin006618
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Tue, 14 Jul 2009 11:25:18 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id n6EIPH7h010866;
-	Tue, 14 Jul 2009 11:25:17 -0700
-X-X-Sender: torvalds@localhost.localdomain
-In-Reply-To: <alpine.LFD.2.01.0907141019380.13838@localhost.localdomain>
-User-Agent: Alpine 2.01 (LFD 1184 2008-12-16)
-X-Spam-Status: No, hits=-5.467 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED,PATCH_SUBJECT_OSDL
-X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
+	id S1756057AbZGNTP4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 14 Jul 2009 15:15:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756046AbZGNTP4
+	(ORCPT <rfc822;git-outgoing>); Tue, 14 Jul 2009 15:15:56 -0400
+Received: from fg-out-1718.google.com ([72.14.220.153]:14577 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754355AbZGNTPz (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 14 Jul 2009 15:15:55 -0400
+Received: by fg-out-1718.google.com with SMTP id e12so718866fga.17
+        for <git@vger.kernel.org>; Tue, 14 Jul 2009 12:15:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:references:in-reply-to:cc:mime-version:content-type
+         :content-transfer-encoding:message-id;
+        bh=d4yr/zDIF/I53D+h/MVB9YIfIHGwojMD5MUilX3XEkE=;
+        b=Ne7m7XFWKTwx70Zn718VcIhEvhhiSeW8fJXOVU4jbCKLwGg7gQHpb0c3xaQ2lovfdx
+         JQ5sqQ1+ajJmCro2oWFX3jO6XSxlDB6SsKqc+lynFE5qdsMI6OWg60y55FwWn0OMXbjx
+         RMFiA0QxBjekSp3shIP0cWpOOHDwP3q4vWxrI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:references:in-reply-to:cc
+         :mime-version:content-type:content-transfer-encoding:message-id;
+        b=K93swk1FPfeeViTKcn6ZQuWLjTuQacrNazGbA1P+dPSA7CMFoK7EBhIrQp1/trby1A
+         LIJrfLfwyQP0+geXYOYhiS6aSGdOaR7UM+fYBWUFwxYeRYgLMVO+iLm74DvLQn+2Zh/I
+         MjXwICW7+zFyKqnS/RdbQCtA/NZ6orgYURRaY=
+Received: by 10.86.94.13 with SMTP id r13mr4509915fgb.19.1247598954067;
+        Tue, 14 Jul 2009 12:15:54 -0700 (PDT)
+Received: from ?192.168.7.93? ([85.15.210.9])
+        by mx.google.com with ESMTPS id d6sm8916510fga.10.2009.07.14.12.15.53
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Tue, 14 Jul 2009 12:15:53 -0700 (PDT)
+User-Agent: KMail/1.9.9
+In-Reply-To: <81b0412b0907141109j697f4705s4cebd27b9694dac7@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123266>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123267>
 
+--nextPart10676599.9WKO4cHTNO
+Content-Type: text/plain;
+  charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
 
-Not that anybody should ever get it, but somebody did (probably because
-of a flaky filesystem, but whatever).  And each time I see an error
-message that I haven't seen before, I decide that next time it will look
-better.
+On Tuesday 14 July 2009 18:09:32 you wrote:
+> On Tue, Jul 14, 2009 at 17:58, K=C4=81rlis Repsons<karlis.repsons@gmail.c=
+om>=20
+wrote:
+> > But can IPv6 usage provide a way for git users to pull from one another
+> > directly?
+>
+> Yes. Wanna use that argument for IPv6 promotion?
 
-So this makes us write more relevant information about exactly which
-file ended up having issues with a missing object.  Which will tell
-whether it was a tree object, for example, or just a regular file in the
-index (and which one).
+Oh, you made me curious about if there is anything more, that you could say=
+=20
+about the topic! :)
+Actually, why not? I now recompile things and soon will start testing...
 
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
----
+--nextPart10676599.9WKO4cHTNO
+Content-Type: application/pgp-signature; name=signature.asc 
+Content-Description: This is a digitally signed message part.
 
-Not a big deal. But since somebody actually saw this message, let's just 
-make it more informative. 
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.11 (GNU/Linux)
 
-A lot of the "these can't happen unless you're seriously screwed" messages 
-aren't very good, because there is little upside when doing development. 
-But let's try to improve on them in case they happen in the future.
+iEYEABECAAYFAkpc2WYACgkQHuSu329e3GEb8QCgxYlHdiYHDpRnJ1fWcjLvAI5j
+HqsAoJrLxxBiJATNKubg8hqTRn8bjkPG
+=wuUQ
+-----END PGP SIGNATURE-----
 
-Not that this would make debugging much easier, but one thing that I 
-started wondering about was whether the problem Florian saw was about one 
-of the files he had done "git add" on, or whether it was a tree entry that 
-was the result of "find_subtree()".
-
- cache-tree.c |    3 ++-
- 1 files changed, 2 insertions(+), 1 deletions(-)
-
-diff --git a/cache-tree.c b/cache-tree.c
-index 16a65df..d917437 100644
---- a/cache-tree.c
-+++ b/cache-tree.c
-@@ -329,7 +329,8 @@ static int update_one(struct cache_tree *it,
- 			entlen = pathlen - baselen;
- 		}
- 		if (mode != S_IFGITLINK && !missing_ok && !has_sha1_file(sha1))
--			return error("invalid object %s", sha1_to_hex(sha1));
-+			return error("invalid object %06o %s for '%.*s'",
-+				mode, sha1_to_hex(sha1), entlen+baselen, path);
- 
- 		if (ce->ce_flags & CE_REMOVE)
- 			continue; /* entry being removed */
+--nextPart10676599.9WKO4cHTNO--
