@@ -1,71 +1,109 @@
-From: =?ISO-8859-1?Q?Santi_B=E9jar?= <santi@agolina.net>
-Subject: Re: Truly decentralised use of git?
-Date: Tue, 14 Jul 2009 11:22:10 +0200
-Message-ID: <adf1fd3d0907140222t6762d4f7s417f56905492cbba@mail.gmail.com>
-References: <200907140811.24174.Karlis.Repsons@gmail.com>
+From: Yakup Akbay <yakbay@ubicom.com>
+Subject: Re: Weird behavior of git rev-parse
+Date: Tue, 14 Jul 2009 13:01:54 +0300
+Message-ID: <4A5C5792.3050704@ubicom.com>
+References: <4A5C31CF.2090204@ubicom.com> <7vvdlvhbtg.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: =?UTF-8?Q?K=C4=81rlis_Repsons?= <karlis.repsons@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jul 14 11:23:04 2009
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jul 14 12:08:11 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MQeDv-00015P-ST
-	for gcvg-git-2@gmane.org; Tue, 14 Jul 2009 11:22:56 +0200
+	id 1MQevM-0004Wn-8Z
+	for gcvg-git-2@gmane.org; Tue, 14 Jul 2009 12:07:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754187AbZGNJWR convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 14 Jul 2009 05:22:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754190AbZGNJWP
-	(ORCPT <rfc822;git-outgoing>); Tue, 14 Jul 2009 05:22:15 -0400
-Received: from mail-fx0-f218.google.com ([209.85.220.218]:58320 "EHLO
-	mail-fx0-f218.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754183AbZGNJWM convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 14 Jul 2009 05:22:12 -0400
-Received: by fxm18 with SMTP id 18so2683460fxm.37
-        for <git@vger.kernel.org>; Tue, 14 Jul 2009 02:22:10 -0700 (PDT)
-Received: by 10.204.103.145 with SMTP id k17mr6195617bko.10.1247563330057; 
-	Tue, 14 Jul 2009 02:22:10 -0700 (PDT)
-In-Reply-To: <200907140811.24174.Karlis.Repsons@gmail.com>
+	id S1754546AbZGNKHn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 14 Jul 2009 06:07:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754544AbZGNKHn
+	(ORCPT <rfc822;git-outgoing>); Tue, 14 Jul 2009 06:07:43 -0400
+Received: from server70.appriver.com ([69.20.119.203]:3146 "EHLO
+	server70.appriver.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754483AbZGNKHm (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 14 Jul 2009 06:07:42 -0400
+X-Greylist: delayed 9496 seconds by postgrey-1.27 at vger.kernel.org; Tue, 14 Jul 2009 06:07:42 EDT
+Received: by server70.appriver.com (CommuniGate Pro PIPE 5.2.14)
+  with PIPE id 98422803; Tue, 14 Jul 2009 06:07:13 -0400
+Received: from [216.112.109.98] (HELO stork.scenix.com)
+  by server70.appriver.com (CommuniGate Pro SMTP 5.2.14)
+  with ESMTP id 98422789; Tue, 14 Jul 2009 06:07:08 -0400
+Received: from [172.18.200.186] ([172.18.200.186]) by stork.scenix.com with Microsoft SMTPSVC(6.0.3790.3959);
+	 Tue, 14 Jul 2009 02:59:48 -0700
+User-Agent: Thunderbird 2.0.0.22 (X11/20090608)
+In-Reply-To: <7vvdlvhbtg.fsf@alter.siamese.dyndns.org>
+X-OriginalArrivalTime: 14 Jul 2009 09:59:49.0265 (UTC) FILETIME=[D310C810:01CA0469]
+X-Policy: GLOBAL - ubicom.com
+X-Policy: GLOBAL - ubicom.com
+X-Primary: yakbay@ubicom.com
+X-Note: This Email was scanned by AppRiver SecureTide
+X-Virus-Scan: V-
+X-Note: TCH-CT/SI:0-34/SG:2 7/14/2009 6:06:57 AM
+X-GBUdb-Analysis: 0, 216.112.109.98, Ugly c=0.627009 p=-0.886105 Source Normal
+X-Signature-Violations: 0-0-0-3770-c
+X-Note: Spam Tests Failed: 
+X-Country-Path: PRIVATE->UNITED STATES->UNITED STATES
+X-Note-Sending-IP: 216.112.109.98
+X-Note-Reverse-DNS: 216.112.109.98.ptr.us.xo.net
+X-Note-WHTLIST: yakbay@ubicom.com
+X-Note: User Rule Hits: 
+X-Note: Global Rule Hits: 114 115 116 117 121 122 214 
+X-Note: Mail Class: VALID
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123234>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123235>
 
-2009/7/14 K=C4=81rlis Repsons <karlis.repsons@gmail.com>:
-> Hello,
-> git is just great with its possibility of decentralised using, but ho=
-w can it
-> be done, given, that participants are all across the internet? IPv6? =
-How is
-> it done with kernel?
+Junio C Hamano wrote:
+> Yakup Akbay <yakbay@ubicom.com> writes:
+>
+>   
+>> Then I've tried
+>>
+>>    $ git rev-parse -'hi, this is a test!'
+>>
+>> the output is:
+>>
+>>    -hi, this is a test!
+>>
+>> Is this an expected behavior?
+>>     
+>
+> Absolutely.  rev-parse was originally written as a way for Porcelain
+> scripts to sift parameters into four different categories.
+>
+>  * options and non-options (that's two)
+>
+>  * args meant for rev-list and others (that's another two)
+>
+> Multiplying two x two gives you four combinations.
+>
+> Because you are not giving options like --revs-only, --no-revs, --flags,
+> nor --no-flags, rev-parse outputs everything.  You can try these:
+>
+> $ git rev-parse --no-flags -'Hi'
+> $ git rev-parse --no-revs HEAD
+> $ git rev-parse --flags --no-revs -Hi HEAD
+>   
+Got it!
 
-I don't think "truly decentralised" is what you want[1]. For me, truly
-decentralised is when all the repositories are equal, and in
-particular there is no central repository to sync with.
+>> Another questions is, usage is printed if you omit the commit id in
+>> git rev-list (E.g. `git rev-list -2`). Is there a reason why HEAD is
+>> not taken as the default?
+>>     
+>
+> The reason is because that is the way it has been, that is the way it is,
+> and changing it will break existing behaviour and scripts.  In other
+> words, it is a historical accident without any deep logic.
+>
+> Besides, "git rev-list" is a plumbing and didn't necessarily want a
+> user-friendliness niceties such as "defaulting to X when nothing is
+> given".
+>
+>   
+Makes sense, thanks!
 
-Normally there is a "social" central repository, be it controlled by
-one person (like the linux kernel) or by multiple people (like the
-gnome git repositories). It does not mean it is not decentralised,
-many people can (and do) have repositories spread across the internet
-and the central repository can be moved from one place to another.
-
-In a "truly decentralised" setup, every repository can sync any other
-repository. So you just provide a public repository and sync with the
-rest of repositories. It does not scale with a large number of
-repositories, so it is easier just to declare some of the repositories
-as central (like the Linus' repository and the subsystem
-repositories).
-
-In the linux kernel setup, there is a central repository, Linus'
-repository, with its public repository at kernel.org, and the
-subsystem repositories (x86, mm, usb,...) normally at kernel.org but
-they can be anywhere else. Everybody syncs with Linus' repository, and
-when you work in a specific subsystem you sync with the central one
-and/or the subsystem repository.
-
-HTH,
-Santi
+Yakup
