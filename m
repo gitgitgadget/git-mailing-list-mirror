@@ -1,60 +1,58 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+From: Linus Torvalds <torvalds@linux-foundation.org>
 Subject: Re: [PATCH] Re: Make 'git show' more useful
-Date: Tue, 14 Jul 2009 03:25:55 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.0907140324140.3155@pacific.mpi-cbg.de>
-References: <7vtz1gi67v.fsf@alter.siamese.dyndns.org> <1247528614-24590-1-git-send-email-bonzini@gnu.org> <alpine.LFD.2.01.0907131652120.13838@localhost.localdomain>
+Date: Mon, 13 Jul 2009 18:47:53 -0700 (PDT)
+Message-ID: <alpine.LFD.2.01.0907131846460.13838@localhost.localdomain>
+References: <7vtz1gi67v.fsf@alter.siamese.dyndns.org> <1247528614-24590-1-git-send-email-bonzini@gnu.org> <alpine.LFD.2.01.0907131652120.13838@localhost.localdomain> <alpine.DEB.1.00.0907140324140.3155@pacific.mpi-cbg.de>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: Paolo Bonzini <bonzini@gnu.org>, git@vger.kernel.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Tue Jul 14 03:24:16 2009
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Jul 14 03:48:15 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MQWkg-0007NV-Mh
-	for gcvg-git-2@gmane.org; Tue, 14 Jul 2009 03:24:15 +0200
+	id 1MQX7u-0004lI-3i
+	for gcvg-git-2@gmane.org; Tue, 14 Jul 2009 03:48:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752499AbZGNBX6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 13 Jul 2009 21:23:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752427AbZGNBX6
-	(ORCPT <rfc822;git-outgoing>); Mon, 13 Jul 2009 21:23:58 -0400
-Received: from mail.gmx.net ([213.165.64.20]:59942 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752333AbZGNBX6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 13 Jul 2009 21:23:58 -0400
-Received: (qmail invoked by alias); 14 Jul 2009 01:23:55 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp050) with SMTP; 14 Jul 2009 03:23:55 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18emAFxRtAerKL+X/1gFJ0jrU9HhcSXws4QIjxjxg
-	uwMLS/XCgUL4aW
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <alpine.LFD.2.01.0907131652120.13838@localhost.localdomain>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.67
+	id S1752744AbZGNBsF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 13 Jul 2009 21:48:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752717AbZGNBsE
+	(ORCPT <rfc822;git-outgoing>); Mon, 13 Jul 2009 21:48:04 -0400
+Received: from smtp1.linux-foundation.org ([140.211.169.13]:41930 "EHLO
+	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752562AbZGNBsD (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 13 Jul 2009 21:48:03 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
+	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id n6E1lsnr009677
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Mon, 13 Jul 2009 18:47:55 -0700
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id n6E1lrFJ013555;
+	Mon, 13 Jul 2009 18:47:54 -0700
+X-X-Sender: torvalds@localhost.localdomain
+In-Reply-To: <alpine.DEB.1.00.0907140324140.3155@pacific.mpi-cbg.de>
+User-Agent: Alpine 2.01 (LFD 1184 2008-12-16)
+X-Spam-Status: No, hits=-5.466 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED,PATCH_SUBJECT_OSDL
+X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123216>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123217>
 
-Hi,
 
-On Mon, 13 Jul 2009, Linus Torvalds wrote:
 
-> The actual "--no-walk" flag was then added over a year later by Dsco, in 
-> commit 8e64006eee ("Teach revision machinery about --no-walk").
-> 
-> Doing a "git log -p -S--no-walk", I have to admit that I don't find a 
-> single actual _use_ of --no-walk.
+On Tue, 14 Jul 2009, Johannes Schindelin wrote:
+>
+> Dscho "whose name has an h in it"
 
-Actually, I remember very precisely why I introduced it.  The difference 
-between "git log --no-walk a b c" and "git show a b c" is that "git log" 
-sorts the commits by commit time, which is pretty important in my case.
+Picky, picky.
 
-So I'd appreciate not doing away with that option.
+At least your name isn't Russell, in which case you'd be losing that final 
+'l' _all_ the time due to the world-wide shortage of said letters. The 'h' 
+goes missing only during temporary outages.
 
-Thanks,
-Dscho "whose name has an h in it"
+		Linus
