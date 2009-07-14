@@ -1,51 +1,57 @@
-From: =?ISO-8859-1?Q?Lasse_K=E4rkk=E4inen?= <tronic+dfhy@trn.iki.fi>
-Subject: Re: Proper tracking of copies in git log and others
-Date: Tue, 14 Jul 2009 15:19:45 +0300
-Message-ID: <4A5C77E1.7020500@trn.iki.fi>
-References: <4A4F8258.5070701@trn.iki.fi> <BLU0-SMTP94B7E43F5EE983A2F9BFA8AE2D0@phx.gbl>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: [PATCH] t4202-log.sh: Test git log --no-walk sort order
+Date: Tue, 14 Jul 2009 14:21:48 +0200
+Message-ID: <4A5C785C.6060706@viscovery.net>
+References: <alpine.DEB.1.00.0907141243410.3155@pacific.mpi-cbg.de> <1247573287-9526-1-git-send-email-git@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain; charset=ISO-8859-15
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Sean Estabrooks <seanlkml@sympatico.ca>
-X-From: git-owner@vger.kernel.org Tue Jul 14 14:20:03 2009
+Cc: git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Paolo Bonzini <bonzini@gnu.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Tue Jul 14 14:22:11 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MQgzK-0004tT-SN
-	for gcvg-git-2@gmane.org; Tue, 14 Jul 2009 14:20:03 +0200
+	id 1MQh1O-0005px-As
+	for gcvg-git-2@gmane.org; Tue, 14 Jul 2009 14:22:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751932AbZGNMTy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 14 Jul 2009 08:19:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751929AbZGNMTy
-	(ORCPT <rfc822;git-outgoing>); Tue, 14 Jul 2009 08:19:54 -0400
-Received: from mta-out.inet.fi ([195.156.147.13]:48641 "EHLO kirsi1.inet.fi"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751626AbZGNMTx (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 14 Jul 2009 08:19:53 -0400
-Received: from trn.iki.fi (84.250.38.215) by kirsi1.inet.fi (8.5.014)
-        id 49F6055A02BA82F0; Tue, 14 Jul 2009 15:19:50 +0300
-Received: from trn.iki.fi (localhost [127.0.0.1])
-	by trn.iki.fi (Postfix) with ESMTP id EF9F345B71005;
-	Tue, 14 Jul 2009 15:19:41 +0300 (EEST)
-Received: from [127.0.0.1] (localhost [127.0.0.1])
-	by trn.iki.fi (Postfix) with ESMTP;
-	Tue, 14 Jul 2009 15:19:41 +0300 (EEST)
-User-Agent: Thunderbird 2.0.0.22 (X11/20090616)
-In-Reply-To: <BLU0-SMTP94B7E43F5EE983A2F9BFA8AE2D0@phx.gbl>
+	id S1752338AbZGNMWD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 14 Jul 2009 08:22:03 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752107AbZGNMWD
+	(ORCPT <rfc822;git-outgoing>); Tue, 14 Jul 2009 08:22:03 -0400
+Received: from lilzmailso01.liwest.at ([212.33.55.23]:38806 "EHLO
+	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752103AbZGNMWC (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 14 Jul 2009 08:22:02 -0400
+Received: from cpe228-254.liwest.at ([81.10.228.254] helo=linz.eudaptics.com)
+	by lilzmailso01.liwest.at with esmtpa (Exim 4.69)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1MQh12-000842-OY; Tue, 14 Jul 2009 14:21:56 +0200
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.96])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id 3C5F74E4; Tue, 14 Jul 2009 14:21:48 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.21 (Windows/20090302)
+In-Reply-To: <1247573287-9526-1-git-send-email-git@drmicha.warpmail.net>
+X-Spam-Score: -1.4 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123239>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123240>
 
-> You could apply that patch and test it out.  Perhaps you could address
-> Junio's concern or reignite some interest from the original author.
+Michael J Gruber schrieb:
+> +test_expect_success 'git log --no-walk <commits> sorts by commit time' '
+...
+> +test_expect_success 'git show <commits> does not sort by commit time' '
 
-The patch works fine here and solves my issue. Hopefully it can be made 
-part of the distribution.
+Thanks, but sorry that I'm nit-picking here: You say what git show does
+not do, but shouldn't you say what git show should do?
 
-Tracking other (intermediate) copies would be a plus but I have 
-absolutely no time to work on git as I am trying to use VCS to reduce my 
-workload, not to increase it :)
+	'git show shows commits in command line order'
+
+-- Hannes
