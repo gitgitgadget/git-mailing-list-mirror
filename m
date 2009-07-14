@@ -1,82 +1,81 @@
-From: =?ISO-8859-1?Q?Santi_B=E9jar?= <santi@agolina.net>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: Weird behavior of git rev-parse
-Date: Tue, 14 Jul 2009 11:06:57 +0200
-Message-ID: <adf1fd3d0907140206v691cc27awf4f62397c5a491f8@mail.gmail.com>
+Date: Tue, 14 Jul 2009 02:07:55 -0700
+Message-ID: <7vvdlvhbtg.fsf@alter.siamese.dyndns.org>
 References: <4A5C31CF.2090204@ubicom.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
 To: Yakup Akbay <yakbay@ubicom.com>
-X-From: git-owner@vger.kernel.org Tue Jul 14 11:07:08 2009
+X-From: git-owner@vger.kernel.org Tue Jul 14 11:08:09 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MQdyd-0002tP-Q8
-	for gcvg-git-2@gmane.org; Tue, 14 Jul 2009 11:07:08 +0200
+	id 1MQdzc-0003FP-9n
+	for gcvg-git-2@gmane.org; Tue, 14 Jul 2009 11:08:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753462AbZGNJG7 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 14 Jul 2009 05:06:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753391AbZGNJG7
-	(ORCPT <rfc822;git-outgoing>); Tue, 14 Jul 2009 05:06:59 -0400
-Received: from mail-fx0-f218.google.com ([209.85.220.218]:46509 "EHLO
-	mail-fx0-f218.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753005AbZGNJG6 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 14 Jul 2009 05:06:58 -0400
-Received: by fxm18 with SMTP id 18so2676560fxm.37
-        for <git@vger.kernel.org>; Tue, 14 Jul 2009 02:06:57 -0700 (PDT)
-Received: by 10.204.65.16 with SMTP id g16mr2448202bki.37.1247562417015; Tue, 
-	14 Jul 2009 02:06:57 -0700 (PDT)
-In-Reply-To: <4A5C31CF.2090204@ubicom.com>
+	id S1753577AbZGNJIA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 14 Jul 2009 05:08:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753498AbZGNJIA
+	(ORCPT <rfc822;git-outgoing>); Tue, 14 Jul 2009 05:08:00 -0400
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:51191 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753005AbZGNJH7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 14 Jul 2009 05:07:59 -0400
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 1145C138F;
+	Tue, 14 Jul 2009 05:07:59 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 68F14138E; Tue,
+ 14 Jul 2009 05:07:56 -0400 (EDT)
+In-Reply-To: <4A5C31CF.2090204@ubicom.com> (Yakup Akbay's message of "Tue\,
+ 14 Jul 2009 10\:20\:47 +0300")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: D37FBDC6-7055-11DE-BDBC-BF7EB3670A22-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123232>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123233>
 
-2009/7/14 Yakup Akbay <yakbay@ubicom.com>:
-> Hi,
->
-> instead of `git rev-list -2 HEAD` I've tried `git rev-parse -2 HEAD` =
-just to
-> see the effect of -N in rev-parse, but I've got this output:
->
-> =A0 -2
-> =A0 0294cdd1e2c5535f5b87eff4a1aff3390e03af39
->
+Yakup Akbay <yakbay@ubicom.com> writes:
+
 > Then I've tried
 >
-> =A0 $ git rev-parse -'hi, this is a test!'
+>    $ git rev-parse -'hi, this is a test!'
 >
 > the output is:
 >
-> =A0 -hi, this is a test!
+>    -hi, this is a test!
 >
 > Is this an expected behavior?
 
-There is no "-N" flag to "git rev-parse", neither "-'hi, this is a
-test!'". The purpuse of git rev-parse is for porcelainish commands to
-parse their argument, as the man page says:
+Absolutely.  rev-parse was originally written as a way for Porcelain
+scripts to sift parameters into four different categories.
 
-git-rev-parse - Pick out and massage parameters
+ * options and non-options (that's two)
 
-Many git porcelainish commands take mixture of flags
-(i.e. parameters that begin with a dash '-') and parameters
-meant for the underlying 'git-rev-list' command they use internally
-and flags and parameters for the other commands they use
-downstream of 'git-rev-list'.  This command is used to
-distinguish between them.
+ * args meant for rev-list and others (that's another two)
 
->
->
-> Another questions is, usage is printed if you omit the commit id in g=
-it
-> rev-list (E.g. `git rev-list -2`). Is there a reason why HEAD is not =
-taken
-> as the default?
+Multiplying two x two gives you four combinations.
 
-You can say what is the default with --default <arg>.
+Because you are not giving options like --revs-only, --no-revs, --flags,
+nor --no-flags, rev-parse outputs everything.  You can try these:
 
-HTH,
-Santi
+$ git rev-parse --no-flags -'Hi'
+$ git rev-parse --no-revs HEAD
+$ git rev-parse --flags --no-revs -Hi HEAD
+
+> Another questions is, usage is printed if you omit the commit id in
+> git rev-list (E.g. `git rev-list -2`). Is there a reason why HEAD is
+> not taken as the default?
+
+The reason is because that is the way it has been, that is the way it is,
+and changing it will break existing behaviour and scripts.  In other
+words, it is a historical accident without any deep logic.
+
+Besides, "git rev-list" is a plumbing and didn't necessarily want a
+user-friendliness niceties such as "defaulting to X when nothing is
+given".
