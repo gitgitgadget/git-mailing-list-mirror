@@ -1,81 +1,98 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Recover broken git repository?
-Date: Tue, 14 Jul 2009 08:20:57 -0700 (PDT)
-Message-ID: <m3eisjuw8d.fsf@localhost.localdomain>
-References: <1247577632053-3255106.post@n2.nabble.com>
-	<20090714145432.GA12928@vidovic>
+From: "=?utf-8?q?K=C4=81rlis_Repsons?=" <karlis.repsons@gmail.com>
+Subject: Re: Truly decentralised use of git?
+Date: Tue, 14 Jul 2009 15:58:49 +0000
+Message-ID: <200907141558.54044.Karlis.Repsons@gmail.com>
+References: <200907140811.24174.Karlis.Repsons@gmail.com> <200907141323.02151.Karlis.Repsons@gmail.com> <81b0412b0907140634g6aeec60fib23d56d83ba09fb9@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Florian Breitwieser <florian.bw@gmail.com>, git@vger.kernel.org
-To: Nicolas Sebrecht <nicolas.s.dev@gmx.fr>
-X-From: git-owner@vger.kernel.org Tue Jul 14 17:21:31 2009
+Content-Type: multipart/signed;
+  boundary="nextPart3588109.xInqdQac06";
+  protocol="application/pgp-signature";
+  micalg=pgp-sha1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Alex Riesen <raa.lkml@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jul 14 17:59:10 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MQjop-0003B1-IN
-	for gcvg-git-2@gmane.org; Tue, 14 Jul 2009 17:21:24 +0200
+	id 1MQkPM-0003Jz-M8
+	for gcvg-git-2@gmane.org; Tue, 14 Jul 2009 17:59:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754900AbZGNPVJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 14 Jul 2009 11:21:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754828AbZGNPVI
-	(ORCPT <rfc822;git-outgoing>); Tue, 14 Jul 2009 11:21:08 -0400
-Received: from mail-bw0-f228.google.com ([209.85.218.228]:43511 "EHLO
-	mail-bw0-f228.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754792AbZGNPVH (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 14 Jul 2009 11:21:07 -0400
-Received: by bwz28 with SMTP id 28so846263bwz.37
-        for <git@vger.kernel.org>; Tue, 14 Jul 2009 08:21:04 -0700 (PDT)
+	id S1755090AbZGNP66 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 14 Jul 2009 11:58:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754868AbZGNP66
+	(ORCPT <rfc822;git-outgoing>); Tue, 14 Jul 2009 11:58:58 -0400
+Received: from fg-out-1718.google.com ([72.14.220.155]:25541 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754866AbZGNP65 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 14 Jul 2009 11:58:57 -0400
+Received: by fg-out-1718.google.com with SMTP id e12so681431fga.17
+        for <git@vger.kernel.org>; Tue, 14 Jul 2009 08:58:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received
-         :x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        bh=O+Hh5FEZpgg9nKUKdEdO1xJWw60ovw97bE8hJc76nP8=;
-        b=UG+hFhuGynUO9ti8yee1x83YzYQI4648I4OduX03rHY2+k7q2SxNKgcbvrgWWQYl8Y
-         1/zxOKYMOQtmNP4VgVZLWerIT7Ft7YxL1jTfMtfUoNiPm2fwA4VrwLKmwnf5vkdfn5i9
-         fO2CkS8AHxWjIQZhGPpWqZB+O67T99u/AfnMk=
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:references:in-reply-to:cc:mime-version:content-type
+         :content-transfer-encoding:message-id;
+        bh=zXgigF7CbVk8bvRjFYYc0g+f0CLQPdKjhvdswNZnHYM=;
+        b=dmsfE02JvyIvr0ETOUTxhCTXoPtJ5it+3IE8DMIct8rsMuE+bH7XWMIMDtmex8zFhc
+         LvUHREsewlKotBqK0ddYJynOpdOe4KugWx/lFF8JZcEsO0cKdxgawGaGf+sT7Jg1oybm
+         qWcRN+3B9wjxicyAUDWiVfRPUBGujvdAjlqe8=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        b=uK8CE+TSQhEzQYMW6WBYn5QeL2iD8TZjtTkdBRLU3CVS/3+Q741sd2lr/DH8+w4MkE
-         BN/d/kX3wsT+I5UrIglPg1mZi+kmiYBj+SYAnVhW0BvtRMz5xBFjEjworYfUaUIFvii1
-         pzgBNKYYUqzqEgfidj7EJODouCVJDtbd0o8Zc=
-Received: by 10.103.238.4 with SMTP id p4mr3403772mur.68.1247584858061;
-        Tue, 14 Jul 2009 08:20:58 -0700 (PDT)
-Received: from localhost.localdomain (abvk144.neoplus.adsl.tpnet.pl [83.8.208.144])
-        by mx.google.com with ESMTPS id i5sm28208641mue.55.2009.07.14.08.20.56
+        h=from:to:subject:date:user-agent:references:in-reply-to:cc
+         :mime-version:content-type:content-transfer-encoding:message-id;
+        b=LzDHydeZHW8IVgjJn/fq2kzvTrO4l9qe1OwI2yJ7Xc2fjoYngynH2v7J1AKFJ+ohF8
+         lXM8juGOlp6IIE4nVcIzmiM9MuBpdCVgkMcVWRE0EMn9x/nYmzy/D0ClNmBy0e9KZaIz
+         6CJZgsuFmPx3PwTX4QGr+U8rnjKMz7+GjcLcU=
+Received: by 10.86.96.18 with SMTP id t18mr4162939fgb.58.1247587136162;
+        Tue, 14 Jul 2009 08:58:56 -0700 (PDT)
+Received: from ?192.168.7.93? ([85.15.210.9])
+        by mx.google.com with ESMTPS id 4sm6387811fgg.7.2009.07.14.08.58.55
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 14 Jul 2009 08:20:57 -0700 (PDT)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id n6EFKsQ0020864;
-	Tue, 14 Jul 2009 17:20:55 +0200
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id n6EFKqVt020860;
-	Tue, 14 Jul 2009 17:20:52 +0200
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <20090714145432.GA12928@vidovic>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+        Tue, 14 Jul 2009 08:58:55 -0700 (PDT)
+User-Agent: KMail/1.9.9
+In-Reply-To: <81b0412b0907140634g6aeec60fib23d56d83ba09fb9@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123255>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123256>
 
-Nicolas Sebrecht <nicolas.s.dev@gmx.fr> writes:
-> The 14/07/09, Florian Breitwieser wrote:
-> 
-> > I have problems with my git repository, attached below are the steps I tried
-> > to resolve it. But now I am stuck. Is there any good way to recover?
-> 
-> You could git-format-patch your topics, clone a new repo and git-am the
-> patches.
+--nextPart3588109.xInqdQac06
+Content-Type: text/plain;
+  charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
 
-Better solution, if possible, would be to use git-fast-export /
-git-fast-import pair.
+On Tuesday 14 July 2009 13:34:37 you wrote:
+> On Tue, Jul 14, 2009 at 15:22, K=C4=81rlis Repsons<karlis.repsons@gmail.c=
+om>=20
+wrote:
+> > I am sorry, another thing was of my interest.
+> > My unknown is the technical realisation - how can particular repository
+> > be made available for easy pulling from it? Right now with IPv4 most
+> > normal workstations are not accessible directly, because they are behind
+> > routers.
+>
+> Same as with the rest of all internet services: you either put the thing =
+on
+> an internet-facing address or poke a hole in your firewall.
 
--- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+With IPv4 yes. I am using gitorious.org already.
+But can IPv6 usage provide a way for git users to pull from one another=20
+directly?
+
+--nextPart3588109.xInqdQac06
+Content-Type: application/pgp-signature; name=signature.asc 
+Content-Description: This is a digitally signed message part.
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.11 (GNU/Linux)
+
+iEYEABECAAYFAkpcqz4ACgkQHuSu329e3GHWhgCfRxyg4GWLrnaikO/QPW4/qTqr
+ZqkAoNJSRLEM8EULOO2pFo2dd/OWivsX
+=bxMu
+-----END PGP SIGNATURE-----
+
+--nextPart3588109.xInqdQac06--
