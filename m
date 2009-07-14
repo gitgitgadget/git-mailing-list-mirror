@@ -1,137 +1,92 @@
-From: Paolo Bonzini <bonzini@gnu.org>
-Subject: [PATCH] Re: Make 'git show' more useful
-Date: Tue, 14 Jul 2009 01:43:34 +0200
-Message-ID: <1247528614-24590-1-git-send-email-bonzini@gnu.org>
-References: <7vtz1gi67v.fsf@alter.siamese.dyndns.org>
-Cc: Linus Torvalds <torvalds@linux-foundation.org>
-To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Jul 14 01:43:46 2009
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: [PATCH] Re: Make 'git show' more useful
+Date: Mon, 13 Jul 2009 17:00:42 -0700 (PDT)
+Message-ID: <alpine.LFD.2.01.0907131652120.13838@localhost.localdomain>
+References: <7vtz1gi67v.fsf@alter.siamese.dyndns.org> <1247528614-24590-1-git-send-email-bonzini@gnu.org>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Paolo Bonzini <bonzini@gnu.org>
+X-From: git-owner@vger.kernel.org Tue Jul 14 02:01:00 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MQVBQ-0003DV-Gt
-	for gcvg-git-2@gmane.org; Tue, 14 Jul 2009 01:43:44 +0200
+	id 1MQVS6-00083s-Sn
+	for gcvg-git-2@gmane.org; Tue, 14 Jul 2009 02:00:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757633AbZGMXni (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 13 Jul 2009 19:43:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754533AbZGMXni
-	(ORCPT <rfc822;git-outgoing>); Mon, 13 Jul 2009 19:43:38 -0400
-Received: from fencepost.gnu.org ([140.186.70.10]:54582 "EHLO
-	fencepost.gnu.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754517AbZGMXnh (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 13 Jul 2009 19:43:37 -0400
-Received: from bonzini by fencepost.gnu.org with local (Exim 4.67)
-	(envelope-from <bonzini@gnu.org>)
-	id 1MQVBI-0000Hx-Hr; Mon, 13 Jul 2009 19:43:36 -0400
-X-Mailer: git-send-email 1.6.2.5
-In-Reply-To: <7vtz1gi67v.fsf@alter.siamese.dyndns.org>
+	id S1757706AbZGNAAw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 13 Jul 2009 20:00:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757689AbZGNAAv
+	(ORCPT <rfc822;git-outgoing>); Mon, 13 Jul 2009 20:00:51 -0400
+Received: from smtp1.linux-foundation.org ([140.211.169.13]:53610 "EHLO
+	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1757659AbZGNAAv (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 13 Jul 2009 20:00:51 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
+	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id n6E00h4r000885
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Mon, 13 Jul 2009 17:00:44 -0700
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id n6E00gao012530;
+	Mon, 13 Jul 2009 17:00:42 -0700
+X-X-Sender: torvalds@localhost.localdomain
+In-Reply-To: <1247528614-24590-1-git-send-email-bonzini@gnu.org>
+User-Agent: Alpine 2.01 (LFD 1184 2008-12-16)
+X-Spam-Status: No, hits=-5.466 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED,PATCH_SUBJECT_OSDL
+X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123214>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123215>
 
-> And, admittedly, you can _already_ do this by just adding "--do-walk"
-> whenever you specify a range. And equally admittedly, you can already
-> confuse git by adding the "--no-walk" _after_ specifying the range,
-> ie you can do this:
->
-> 	git log HEAD~5.. --no-walk
 
-Even without the change you could do
 
-	git show --do-walk HEAD~5.. --no-walk
+On Tue, 14 Jul 2009, Paolo Bonzini wrote:
+> 
+> So, what about squashing this with Linus's patch?  (This is meant to be
+> squashed, which is why this text is not in a cover letter).
 
-But then why do we want --do-walk and --no-walk?  You can always use "git
-rev-parse" instead of "git rev-list --no-walk" (just check that the output 
-is a single SHA1 id), and I don't think it is so important to be able
-to say "git log --no-walk" instead of "git log -1".
+I wouldn't squash it.
 
-They are not tested either.  Just gitk cares about --no-walk... to prevent
-the user from giving it.
+That said, in the original commit that introduced "no_walk" (ba1d4505), I 
+said
 
-So, what about squashing this with Linus's patch?  (This is meant to be
-squashed, which is why this text is not in a cover letter).  Still:
+    I was going to add "--no-walk" as a real argument flag to git-rev-list
+    too, but I'm not sure anybody actually needs it. Although it might be
+    useful for porcelain, so I left the door open.
 
-Signed-off-by: Paolo Bonzini <bonzini@gnu.org>
-Cc: Linus Torvalds <torvalds@linux-foundation.org>
----
- Documentation/git-rev-list.txt     |    1 -
- Documentation/rev-list-options.txt |    8 --------
- revision.c                         |   13 ++-----------
- gitk-git/gitk                      |    1 -+
- 3 files changed, 3 insertions(+), 21 deletions(-)
+and I never actually did it. That was Apr 15, 2006.
 
-diff --git a/Documentation/git-rev-list.txt b/Documentation/git-rev-list.txt
-index 1c9cc28..b02cf54 100644
---- a/Documentation/git-rev-list.txt
-+++ b/Documentation/git-rev-list.txt
-@@ -44,7 +44,6 @@ SYNOPSIS
- 	     [ \--merge ]
- 	     [ \--reverse ]
- 	     [ \--walk-reflogs ]
--	     [ \--no-walk ] [ \--do-walk ]
- 	     <commit>... [ \-- <paths>... ]
- 
- DESCRIPTION
-diff --git a/Documentation/rev-list-options.txt b/Documentation/rev-list-options.txt
-index 11eec94..d137e32 100644
---- a/Documentation/rev-list-options.txt
-+++ b/Documentation/rev-list-options.txt
-@@ -624,11 +624,3 @@ These options are mostly targeted for packing of git repositories.
- 
- 	Only useful with '--objects'; print the object IDs that are not
- 	in packs.
--
----no-walk::
--
--	Only show the given revs, but do not traverse their ancestors.
--
----do-walk::
--
--	Overrides a previous --no-walk.
-diff --git a/revision.c b/revision.c
-index a31434b..8b1a385 100644
---- a/revision.c
-+++ b/revision.c
-@@ -993,8 +993,7 @@ static int handle_revision_opt(struct rev_info *revs, int argc, const char **arg
- 	/* pseudo revision arguments */
- 	if (!strcmp(arg, "--all") || !strcmp(arg, "--branches") ||
- 	    !strcmp(arg, "--tags") || !strcmp(arg, "--remotes") ||
--	    !strcmp(arg, "--reflog") || !strcmp(arg, "--not") ||
--	    !strcmp(arg, "--no-walk") || !strcmp(arg, "--do-walk"))
-+	    !strcmp(arg, "--reflog") || !strcmp(arg, "--not"))
- 	{
- 		unkv[(*unkc)++] = arg;
- 		return 1;
-@@ -1273,14 +1272,6 @@ int setup_revisions(int argc, const char **argv, struct rev_info *revs, const ch
- 				flags ^= UNINTERESTING;
- 				continue;
- 			}
--			if (!strcmp(arg, "--no-walk")) {
--				revs->no_walk = 1;
--				continue;
--			}
--			if (!strcmp(arg, "--do-walk")) {
--				revs->no_walk = 0;
--				continue;
--			}
- 
- 			opts = handle_revision_opt(revs, argc - i, argv + i, &left, argv);
- 			if (opts > 0) {
-diff --git a/gitk-git/gitk b/gitk-git/gitk
-index 4604c83..984d30a 100644
---- a/gitk-git/gitk
-+++ b/gitk-git/gitk
-@@ -169,7 +169,7 @@ proc parseviewargs {n arglist} {
- 	    "--name-only" - "--name-status" - "--color" - "--color-words" -
- 	    "--log-size" - "--pretty=*" - "--decorate" - "--abbrev-commit" -
- 	    "--cc" - "-z" - "--header" - "--parents" - "--boundary" -
--	    "--no-color" - "-g" - "--walk-reflogs" - "--no-walk" -
-+	    "--no-color" - "-g" - "--walk-reflogs" -
- 	    "--timestamp" - "relative-date" - "--date=*" - "--stdin" -
- 	    "--objects" - "--objects-edge" - "--reverse" {
- 		# These cause our parsing of git log's output to fail, or else
--- 
-1.6.2.5
+The actual "--no-walk" flag was then added over a year later by Dsco, in 
+commit 8e64006eee ("Teach revision machinery about --no-walk").
+
+Doing a "git log -p -S--no-walk", I have to admit that I don't find a 
+single actual _use_ of --no-walk. And it obviously wasn't even exported 
+until a year after it was internally implemented.
+
+So I have to agree with the fact that "--no-walk" and "--do-walk" seem to 
+be pretty worthless as command line switches.  Removing them might be a 
+good thing.
+
+However, doing some googling, I do actually find examples of it on the 
+web. And some of them even appear valid:
+
+	second_parent=$(git rev-list --no-walk --parents $newrev | sed 's/ /\n/g' | grep -v $newrev | tail --lines=1)
+
+because you can't use "git rev-parse" with --parents (of course, I'm not 
+at all clear on why it doesn't do
+
+	second_parent=$(git rev-parse "$newrev"^2)
+
+but that's really immaterial - the point is that "git rev-parse" is _not_ 
+a replacement for "git rev-list --no-walk").
+
+So I dunno. I think we might as well leave --no-walk and --do-walk around, 
+even though they are of dubious value. They do mirror the internal 
+revision walking logic very directly. 
+
+			Linus
