@@ -1,71 +1,82 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Fix extraneous lstat's in 'git checkout -f'
-Date: Tue, 14 Jul 2009 01:59:13 -0700
-Message-ID: <7vzlb7hc7y.fsf@alter.siamese.dyndns.org>
-References: <alpine.LFD.2.01.0907132040530.13838@localhost.localdomain>
+From: =?ISO-8859-1?Q?Santi_B=E9jar?= <santi@agolina.net>
+Subject: Re: Weird behavior of git rev-parse
+Date: Tue, 14 Jul 2009 11:06:57 +0200
+Message-ID: <adf1fd3d0907140206v691cc27awf4f62397c5a491f8@mail.gmail.com>
+References: <4A5C31CF.2090204@ubicom.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Tue Jul 14 10:59:32 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Yakup Akbay <yakbay@ubicom.com>
+X-From: git-owner@vger.kernel.org Tue Jul 14 11:07:08 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MQdrG-0008PI-UQ
-	for gcvg-git-2@gmane.org; Tue, 14 Jul 2009 10:59:31 +0200
+	id 1MQdyd-0002tP-Q8
+	for gcvg-git-2@gmane.org; Tue, 14 Jul 2009 11:07:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753208AbZGNI7X (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 14 Jul 2009 04:59:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753005AbZGNI7W
-	(ORCPT <rfc822;git-outgoing>); Tue, 14 Jul 2009 04:59:22 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:36393 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751625AbZGNI7W (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 14 Jul 2009 04:59:22 -0400
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id B6F5343F4;
-	Tue, 14 Jul 2009 04:59:21 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 74DD843F2; Tue, 14 Jul 2009
- 04:59:18 -0400 (EDT)
-In-Reply-To: <alpine.LFD.2.01.0907132040530.13838@localhost.localdomain>
- (Linus Torvalds's message of "Mon\, 13 Jul 2009 21\:01\:59 -0700 \(PDT\)")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 9F236D1C-7054-11DE-8018-9AE02FB70C38-77302942!a-pb-sasl-sd.pobox.com
+	id S1753462AbZGNJG7 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 14 Jul 2009 05:06:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753391AbZGNJG7
+	(ORCPT <rfc822;git-outgoing>); Tue, 14 Jul 2009 05:06:59 -0400
+Received: from mail-fx0-f218.google.com ([209.85.220.218]:46509 "EHLO
+	mail-fx0-f218.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753005AbZGNJG6 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 14 Jul 2009 05:06:58 -0400
+Received: by fxm18 with SMTP id 18so2676560fxm.37
+        for <git@vger.kernel.org>; Tue, 14 Jul 2009 02:06:57 -0700 (PDT)
+Received: by 10.204.65.16 with SMTP id g16mr2448202bki.37.1247562417015; Tue, 
+	14 Jul 2009 02:06:57 -0700 (PDT)
+In-Reply-To: <4A5C31CF.2090204@ubicom.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123231>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123232>
 
-Linus Torvalds <torvalds@linux-foundation.org> writes:
+2009/7/14 Yakup Akbay <yakbay@ubicom.com>:
+> Hi,
+>
+> instead of `git rev-list -2 HEAD` I've tried `git rev-parse -2 HEAD` =
+just to
+> see the effect of -N in rev-parse, but I've got this output:
+>
+> =A0 -2
+> =A0 0294cdd1e2c5535f5b87eff4a1aff3390e03af39
+>
+> Then I've tried
+>
+> =A0 $ git rev-parse -'hi, this is a test!'
+>
+> the output is:
+>
+> =A0 -hi, this is a test!
+>
+> Is this an expected behavior?
 
-> Quite frankly, I'd like for us to at least think about removing CE_VALID. 
+There is no "-N" flag to "git rev-parse", neither "-'hi, this is a
+test!'". The purpuse of git rev-parse is for porcelainish commands to
+parse their argument, as the man page says:
 
-This is heavy.  I personally do not use this flag, nor know anybody who
-does, but deviating from the original purpose of CE_VALID, which was to
-avoid lstat() on slow filesystems, people have advised/advocated its use
-for "narrow checkout".  These people may not even have a file checked out
-to the CE_VALID path in the work tree, and they depend on us not running
-lstat() on them and instead always answering that the work tree has the
-necessary blob.
+git-rev-parse - Pick out and massage parameters
 
-> I wonder if we have other places where we have optimized away the lstat() 
-> just because we decided that it was already up-to-date - without 
-> realizing that something could have been marked up-to-date just because 
-> it was marked CE_VALID.
+Many git porcelainish commands take mixture of flags
+(i.e. parameters that begin with a dash '-') and parameters
+meant for the underlying 'git-rev-list' command they use internally
+and flags and parameters for the other commands they use
+downstream of 'git-rev-list'.  This command is used to
+distinguish between them.
 
-That is a very valid concern, but I think fixing them may break the
-"narrow checkout" people.
+>
+>
+> Another questions is, usage is printed if you omit the commit id in g=
+it
+> rev-list (E.g. `git rev-list -2`). Is there a reason why HEAD is not =
+taken
+> as the default?
 
-We may need to add ce_uptodate(ce) check instead of doing lstat() in
-some places (like the one you modified in this patch), not because we want
-to avoid lstat(), but because we do not want to lstat() paths that are
-marked as CE_VALID.
+You can say what is the default with --default <arg>.
 
-There are some mechanisms, such as REFRESH_REALLY flag, to give an escape
-hatch to break out of the CE_VALID illusion, but I have to admit that when
-we did CE_VALID we did not quite clarified its ramifications with respect
-to merging and branch switching.
+HTH,
+Santi
