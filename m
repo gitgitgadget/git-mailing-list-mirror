@@ -1,61 +1,67 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+From: Thomas Adam <thomas.adam22@gmail.com>
 Subject: Re: [commit 4ecbc178704] Incosistency?
-Date: Wed, 15 Jul 2009 00:30:43 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.0907150030180.3155@pacific.mpi-cbg.de>
-References: <Pine.LNX.4.64.0907142335210.31779@cube> <20090714214852.GA2786@coredump.intra.peff.net>
+Date: Tue, 14 Jul 2009 23:42:12 +0100
+Message-ID: <18071eea0907141542g46d9deb2k1647cabc998e61ea@mail.gmail.com>
+References: <Pine.LNX.4.64.0907142335210.31779@cube>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Unknown <borg@uu3.net>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Jul 15 00:28:53 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Unknown <borg@uu3.net>
+X-From: git-owner@vger.kernel.org Wed Jul 15 00:42:45 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MQqUX-000404-3T
-	for gcvg-git-2@gmane.org; Wed, 15 Jul 2009 00:28:53 +0200
+	id 1MQqhv-0000pT-OP
+	for gcvg-git-2@gmane.org; Wed, 15 Jul 2009 00:42:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756393AbZGNW2n (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 14 Jul 2009 18:28:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756205AbZGNW2n
-	(ORCPT <rfc822;git-outgoing>); Tue, 14 Jul 2009 18:28:43 -0400
-Received: from mail.gmx.net ([213.165.64.20]:57067 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1755973AbZGNW2n (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 14 Jul 2009 18:28:43 -0400
-Received: (qmail invoked by alias); 14 Jul 2009 22:28:41 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp041) with SMTP; 15 Jul 2009 00:28:41 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19XNENPDC5XRJr2QPStrTpHFcrbao3r1MHGUlToWs
-	LQxEl8uvyMGNWo
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <20090714214852.GA2786@coredump.intra.peff.net>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.61
+	id S1756635AbZGNWmf convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 14 Jul 2009 18:42:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756250AbZGNWmf
+	(ORCPT <rfc822;git-outgoing>); Tue, 14 Jul 2009 18:42:35 -0400
+Received: from mail-fx0-f218.google.com ([209.85.220.218]:65121 "EHLO
+	mail-fx0-f218.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756179AbZGNWme convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 14 Jul 2009 18:42:34 -0400
+Received: by fxm18 with SMTP id 18so3116404fxm.37
+        for <git@vger.kernel.org>; Tue, 14 Jul 2009 15:42:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=JHfDRzrg2rFe8dOj+5de8UgvuKa4jL4KkOl8l+gK8qI=;
+        b=ZTIsNeXxbOpKOwT4RjabR6zyaog/T8T3j5qfVgXg225oNrCvZfhDCkeKy/AKZMB0EL
+         JJxSLOqyjZK+UdcMJODeMgPvKnQuaV0ZldDkYNJV2Og0esRS/Jq1UBoTKextFRNqvFRI
+         Y2i2EORb3dGZ3aDNSNsulgq4z2mlanfU7n5/Y=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=AYBxD9BHQglh923xQjje/HllUK5YLvIvx+13VA4RsmfgZJ1Mcfq2+jLDJinsfvU6ZJ
+         qKemW+ZR+195wAYADqb5LUCAbdf/sLSJPANuIws24AwPvfA3Cy3JOLj1tx+7Cq76otCX
+         KodyCGsl9t3PLZ4SoePGe/x/NGEE8wuPJGNxI=
+Received: by 10.204.64.145 with SMTP id e17mr6876852bki.129.1247611352293; 
+	Tue, 14 Jul 2009 15:42:32 -0700 (PDT)
+In-Reply-To: <Pine.LNX.4.64.0907142335210.31779@cube>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123274>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123275>
 
-Hi,
+Dear me --
 
-On Tue, 14 Jul 2009, Jeff King wrote:
+2009/7/14 Unknown <borg@uu3.net>:
+> commit 4ecbc178704ca6c1027a38483e98f5fe493b1322
+> Author: Jeff King <peff@peff.net>
+> Date: =A0 Thu Jul 9 02:37:35 2009 -0400
+>
+> bla bla.. some strange SUDO fix (who the hell uses git that way?)
+> I dont like it.. git-add in libexecdir was good!
 
-> On Tue, Jul 14, 2009 at 11:41:40PM +0200, Unknown wrote:
-> 
-> > commit 4ecbc178704ca6c1027a38483e98f5fe493b1322
-> > Author: Jeff King <peff@peff.net>
-> > Date:   Thu Jul 9 02:37:35 2009 -0400
-> > 
-> > bla bla.. some strange SUDO fix (who the hell uses git that way?)
-> > I dont like it.. git-add in libexecdir was good!
-> 
-> Hmm. I think I wrote a better commit message than that...
+No, your understanding of that stinks.  The test, *without* your
+so-called patch wotk just fine.
 
-See?  No good deed goes unpunished.
-
-Ciao,
-Dscho
+-- Thomas Adam
