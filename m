@@ -1,92 +1,60 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Subject: Re: [PATCH] Re: Make 'git show' more useful
-Date: Mon, 13 Jul 2009 17:00:42 -0700 (PDT)
-Message-ID: <alpine.LFD.2.01.0907131652120.13838@localhost.localdomain>
-References: <7vtz1gi67v.fsf@alter.siamese.dyndns.org> <1247528614-24590-1-git-send-email-bonzini@gnu.org>
+Date: Tue, 14 Jul 2009 03:25:55 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.0907140324140.3155@pacific.mpi-cbg.de>
+References: <7vtz1gi67v.fsf@alter.siamese.dyndns.org> <1247528614-24590-1-git-send-email-bonzini@gnu.org> <alpine.LFD.2.01.0907131652120.13838@localhost.localdomain>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Paolo Bonzini <bonzini@gnu.org>
-X-From: git-owner@vger.kernel.org Tue Jul 14 02:01:00 2009
+Cc: Paolo Bonzini <bonzini@gnu.org>, git@vger.kernel.org
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Tue Jul 14 03:24:16 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MQVS6-00083s-Sn
-	for gcvg-git-2@gmane.org; Tue, 14 Jul 2009 02:00:59 +0200
+	id 1MQWkg-0007NV-Mh
+	for gcvg-git-2@gmane.org; Tue, 14 Jul 2009 03:24:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757706AbZGNAAw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 13 Jul 2009 20:00:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757689AbZGNAAv
-	(ORCPT <rfc822;git-outgoing>); Mon, 13 Jul 2009 20:00:51 -0400
-Received: from smtp1.linux-foundation.org ([140.211.169.13]:53610 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1757659AbZGNAAv (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 13 Jul 2009 20:00:51 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
-	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id n6E00h4r000885
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Mon, 13 Jul 2009 17:00:44 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id n6E00gao012530;
-	Mon, 13 Jul 2009 17:00:42 -0700
-X-X-Sender: torvalds@localhost.localdomain
-In-Reply-To: <1247528614-24590-1-git-send-email-bonzini@gnu.org>
-User-Agent: Alpine 2.01 (LFD 1184 2008-12-16)
-X-Spam-Status: No, hits=-5.466 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED,PATCH_SUBJECT_OSDL
-X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
+	id S1752499AbZGNBX6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 13 Jul 2009 21:23:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752427AbZGNBX6
+	(ORCPT <rfc822;git-outgoing>); Mon, 13 Jul 2009 21:23:58 -0400
+Received: from mail.gmx.net ([213.165.64.20]:59942 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752333AbZGNBX6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 13 Jul 2009 21:23:58 -0400
+Received: (qmail invoked by alias); 14 Jul 2009 01:23:55 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp050) with SMTP; 14 Jul 2009 03:23:55 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18emAFxRtAerKL+X/1gFJ0jrU9HhcSXws4QIjxjxg
+	uwMLS/XCgUL4aW
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <alpine.LFD.2.01.0907131652120.13838@localhost.localdomain>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.67
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123215>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123216>
 
+Hi,
 
+On Mon, 13 Jul 2009, Linus Torvalds wrote:
 
-On Tue, 14 Jul 2009, Paolo Bonzini wrote:
+> The actual "--no-walk" flag was then added over a year later by Dsco, in 
+> commit 8e64006eee ("Teach revision machinery about --no-walk").
 > 
-> So, what about squashing this with Linus's patch?  (This is meant to be
-> squashed, which is why this text is not in a cover letter).
+> Doing a "git log -p -S--no-walk", I have to admit that I don't find a 
+> single actual _use_ of --no-walk.
 
-I wouldn't squash it.
+Actually, I remember very precisely why I introduced it.  The difference 
+between "git log --no-walk a b c" and "git show a b c" is that "git log" 
+sorts the commits by commit time, which is pretty important in my case.
 
-That said, in the original commit that introduced "no_walk" (ba1d4505), I 
-said
+So I'd appreciate not doing away with that option.
 
-    I was going to add "--no-walk" as a real argument flag to git-rev-list
-    too, but I'm not sure anybody actually needs it. Although it might be
-    useful for porcelain, so I left the door open.
-
-and I never actually did it. That was Apr 15, 2006.
-
-The actual "--no-walk" flag was then added over a year later by Dsco, in 
-commit 8e64006eee ("Teach revision machinery about --no-walk").
-
-Doing a "git log -p -S--no-walk", I have to admit that I don't find a 
-single actual _use_ of --no-walk. And it obviously wasn't even exported 
-until a year after it was internally implemented.
-
-So I have to agree with the fact that "--no-walk" and "--do-walk" seem to 
-be pretty worthless as command line switches.  Removing them might be a 
-good thing.
-
-However, doing some googling, I do actually find examples of it on the 
-web. And some of them even appear valid:
-
-	second_parent=$(git rev-list --no-walk --parents $newrev | sed 's/ /\n/g' | grep -v $newrev | tail --lines=1)
-
-because you can't use "git rev-parse" with --parents (of course, I'm not 
-at all clear on why it doesn't do
-
-	second_parent=$(git rev-parse "$newrev"^2)
-
-but that's really immaterial - the point is that "git rev-parse" is _not_ 
-a replacement for "git rev-list --no-walk").
-
-So I dunno. I think we might as well leave --no-walk and --do-walk around, 
-even though they are of dubious value. They do mirror the internal 
-revision walking logic very directly. 
-
-			Linus
+Thanks,
+Dscho "whose name has an h in it"
