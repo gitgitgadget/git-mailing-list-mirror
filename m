@@ -1,97 +1,95 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Weird behavior of git rev-parse
-Date: Tue, 14 Jul 2009 04:34:42 -0700 (PDT)
-Message-ID: <m3iqhvv6ph.fsf@localhost.localdomain>
-References: <4A5C31CF.2090204@ubicom.com>
-	<7vvdlvhbtg.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Yakup Akbay <yakbay@ubicom.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jul 14 13:34:57 2009
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: [PATCH] t4202-log.sh: Test git log --no-walk sort order
+Date: Tue, 14 Jul 2009 14:08:07 +0200
+Message-ID: <1247573287-9526-1-git-send-email-git@drmicha.warpmail.net>
+References: <alpine.DEB.1.00.0907141243410.3155@pacific.mpi-cbg.de>
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Paolo Bonzini <bonzini@gnu.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jul 14 14:08:36 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MQgHf-0004Q2-SQ
-	for gcvg-git-2@gmane.org; Tue, 14 Jul 2009 13:34:56 +0200
+	id 1MQgoF-0000U1-3m
+	for gcvg-git-2@gmane.org; Tue, 14 Jul 2009 14:08:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751267AbZGNLeq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 14 Jul 2009 07:34:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751248AbZGNLeq
-	(ORCPT <rfc822;git-outgoing>); Tue, 14 Jul 2009 07:34:46 -0400
-Received: from ey-out-2122.google.com ([74.125.78.26]:25582 "EHLO
-	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750913AbZGNLep (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 14 Jul 2009 07:34:45 -0400
-Received: by ey-out-2122.google.com with SMTP id 9so601177eyd.37
-        for <git@vger.kernel.org>; Tue, 14 Jul 2009 04:34:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received
-         :x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        bh=0WtryHhOayUj8T5Ujq3IHgaN7saDaB6RRW1JcVgUh30=;
-        b=pH3iDrQbSViPKMJqqd04xqHo6uunnoN8/VJ3+D+L0LpiP0a6x7yKP4MrwGSoMQBjca
-         0Xu9vJxvVONwhmMEi8IsOp9qPmr2F6n577CeyhGaQUrpCYohj6jXSHFTxpkAJeMDQ0BQ
-         VFM2MNvwVCXVs69aNcbXMMwC7d5R57u0PuQs8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        b=N9EtUbqf750NFjHS0zYOF0ArpDjPUVhxoeBHF1fWOigv6UydRwUrFqyUjqqmvtf9hn
-         CyPcHKI0jZCHlc3rR5KjWbFDBcsVRb0NywACrhVpQW7opjAVRiK2NuP7TC6NFJa1q9Zb
-         bgOan8bimHIT6hvLOteYP3/3JhvJFCxcnyZo8=
-Received: by 10.210.35.10 with SMTP id i10mr6494567ebi.22.1247571283805;
-        Tue, 14 Jul 2009 04:34:43 -0700 (PDT)
-Received: from localhost.localdomain (abvk144.neoplus.adsl.tpnet.pl [83.8.208.144])
-        by mx.google.com with ESMTPS id 5sm1384021eyf.8.2009.07.14.04.34.42
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 14 Jul 2009 04:34:42 -0700 (PDT)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id n6EBYdO1017829;
-	Tue, 14 Jul 2009 13:34:40 +0200
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id n6EBYbTf017826;
-	Tue, 14 Jul 2009 13:34:37 +0200
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <7vvdlvhbtg.fsf@alter.siamese.dyndns.org>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+	id S1752037AbZGNMI1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 14 Jul 2009 08:08:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752011AbZGNMI0
+	(ORCPT <rfc822;git-outgoing>); Tue, 14 Jul 2009 08:08:26 -0400
+Received: from out1.smtp.messagingengine.com ([66.111.4.25]:36376 "EHLO
+	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751215AbZGNMI0 (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 14 Jul 2009 08:08:26 -0400
+Received: from compute2.internal (compute2.internal [10.202.2.42])
+	by out1.messagingengine.com (Postfix) with ESMTP id 123683B018C;
+	Tue, 14 Jul 2009 08:08:25 -0400 (EDT)
+Received: from heartbeat2.messagingengine.com ([10.202.2.161])
+  by compute2.internal (MEProxy); Tue, 14 Jul 2009 08:08:24 -0400
+X-Sasl-enc: 9Huy2Bxdt7gizZXIo3h5GoGusgjcQCMo7MWlCBvCQZ+M 1247573304
+Received: from localhost (heawood.math.tu-clausthal.de [139.174.44.4])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 7C67770B5;
+	Tue, 14 Jul 2009 08:08:24 -0400 (EDT)
+X-Mailer: git-send-email 1.6.3.3.483.g4f5e
+In-Reply-To: <alpine.DEB.1.00.0907141243410.3155@pacific.mpi-cbg.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123237>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123238>
 
-Junio C Hamano <gitster@pobox.com> writes:
+'git log --no-walk' sorts commits by commit time whereas 'git show' does
+not. Document this by two tests so that we never forget why ba1d450
+(Tentative built-in "git show", 2006-04-15) introduced it and
+8e64006 (Teach revision machinery about --no-walk, 2007-07-24) exposed
+it as an option argument.
 
-> Yakup Akbay <yakbay@ubicom.com> writes:
-> 
-> > Then I've tried
-> >
-> >    $ git rev-parse -'hi, this is a test!'
-> >
-> > the output is:
-> >
-> >    -hi, this is a test!
-> >
-> > Is this an expected behavior?
-> 
-> Absolutely.  rev-parse was originally written as a way for Porcelain
-> scripts to sift parameters into four different categories.
-> 
->  * options and non-options (that's two)
-> 
->  * args meant for rev-list and others (that's another two)
-> 
-> Multiplying two x two gives you four combinations.
-> 
-> Because you are not giving options like --revs-only, --no-revs, --flags,
-> nor --no-flags, rev-parse outputs everything.
+Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
+---
+Not much to add here, besides the fact that the actual test target
+should justify testing log as well as show here.
 
-git-rev-parse can also be used to bring parseopt to shell scripts.
+Based off master.
 
+ t/t4202-log.sh |   23 +++++++++++++++++++++++
+ 1 files changed, 23 insertions(+), 0 deletions(-)
+
+diff --git a/t/t4202-log.sh b/t/t4202-log.sh
+index aad3894..10ad5d2 100755
+--- a/t/t4202-log.sh
++++ b/t/t4202-log.sh
+@@ -149,6 +149,29 @@ test_expect_success 'git log --follow' '
+ 
+ '
+ 
++cat > expect << EOF
++804a787 sixth
++394ef78 fifth
++5d31159 fourth
++EOF
++test_expect_success 'git log --no-walk <commits> sorts by commit time' '
++	git log --no-walk --oneline 5d31159 804a787 394ef78 > actual &&
++	test_cmp expect actual
++'
++
++cat > expect << EOF
++5d31159 fourth
++ein
++804a787 sixth
++a/two
++394ef78 fifth
++a/two
++EOF
++test_expect_success 'git show <commits> does not sort by commit time' '
++	git show --oneline --name-only 5d31159 804a787 394ef78 > actual &&
++	test_cmp expect actual
++'
++
+ test_expect_success 'setup case sensitivity tests' '
+ 	echo case >one &&
+ 	test_tick &&
 -- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+1.6.3.3.483.g4f5e
