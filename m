@@ -1,75 +1,94 @@
-From: Nicolas Sebrecht <ni.s@laposte.net>
-Subject: [PATCH] git-am: less strong format "mbox" detection
-Date: Tue, 14 Jul 2009 08:40:47 +0200
-Message-ID: <bb3a84e2b817268a88832dc7043383e4b91a3df3.1247553623.git.ni.s@laposte.net>
-Cc: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>,
-	Nicolas Sebrecht <ni.s@laposte.net>
-To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Jul 14 08:41:06 2009
+From: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+Subject: Re: [PATCH] git-am: print fair error message when format detection 
+	fails
+Date: Tue, 14 Jul 2009 09:10:41 +0200
+Message-ID: <cb7bb73a0907140010o42e9d67di8e871dccb8b41ed4@mail.gmail.com>
+References: <beef9dfceed12f279bc27fbecf82118761cada49.1247553436.git.ni.s@laposte.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Nicolas Sebrecht <ni.s@laposte.net>
+X-From: git-owner@vger.kernel.org Tue Jul 14 09:11:12 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MQbhJ-0003fp-Gp
-	for gcvg-git-2@gmane.org; Tue, 14 Jul 2009 08:41:05 +0200
+	id 1MQcAS-0004L2-1r
+	for gcvg-git-2@gmane.org; Tue, 14 Jul 2009 09:11:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753826AbZGNGk6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 14 Jul 2009 02:40:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753825AbZGNGk6
-	(ORCPT <rfc822;git-outgoing>); Tue, 14 Jul 2009 02:40:58 -0400
-Received: from mail-ew0-f226.google.com ([209.85.219.226]:34311 "EHLO
-	mail-ew0-f226.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753733AbZGNGk6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 14 Jul 2009 02:40:58 -0400
-Received: by ewy26 with SMTP id 26so3051638ewy.37
-        for <git@vger.kernel.org>; Mon, 13 Jul 2009 23:40:56 -0700 (PDT)
+	id S1753668AbZGNHLE convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 14 Jul 2009 03:11:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753540AbZGNHLE
+	(ORCPT <rfc822;git-outgoing>); Tue, 14 Jul 2009 03:11:04 -0400
+Received: from mail-fx0-f218.google.com ([209.85.220.218]:53444 "EHLO
+	mail-fx0-f218.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753423AbZGNHLC convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 14 Jul 2009 03:11:02 -0400
+Received: by fxm18 with SMTP id 18so2627029fxm.37
+        for <git@vger.kernel.org>; Tue, 14 Jul 2009 00:11:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:sender:from:to:cc:subject
-         :date:message-id:x-mailer;
-        bh=6EH4ytAY/ZcNu9a1h5+01S2fzVzgIvu0VFHHAbMeCfs=;
-        b=W00ncU8mE5evuIkKHgXX5oR6/PMOp/inPJ7SoHs+Qc5E/tWGG0xudVRG3ixbPtRLkv
-         UuRtVhCjBxzUDCa5l0qM4ob9hxupfoDTTE2mTh+A7pJNKSF7QTNDE86VMJSsNJvu6hAT
-         dfGQSuFpIzQJxVEOLLc0RKIvsAp7Kx5eL0Z5Y=
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=nXuhELtA+rfHK1o3lK7o+2Vv43K8hchm9L4bw3G3qQU=;
+        b=HIV0W5fFaME7qGMtFkLtsaEg1VmQUtNhfY6lAsfWxC+jc1qQqOgDWrC7S8jQVp3sRd
+         9QWSr3RmrfPE3QxAJbNZ74cbYqMjq9n5Xm1lKvc108m8M8ByPo5wT55reFObS2XM/UWE
+         96j8ZrgFqkzTGXak/cPzjz1LzUj6tVycO2jLM=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=sender:from:to:cc:subject:date:message-id:x-mailer;
-        b=lMKTy2QM7wwIR/qXGX1WjYg7fJPrkq0x4L/R2PXEyw2xMXM33rHbpK8lLBKNoyD0xt
-         MqdahOVlVhPa7l+AuvmYJLWc56IXLuJujaXFlT4GQrdRxMpQY4foLTjHxBgPghUyzOas
-         n6o6t46E5eX7AvA72sgbhWDNjd0Fz2De9gWUg=
-Received: by 10.210.125.7 with SMTP id x7mr6101266ebc.96.1247553656711;
-        Mon, 13 Jul 2009 23:40:56 -0700 (PDT)
-Received: from localhost (91-165-132-96.rev.libertysurf.net [91.165.132.96])
-        by mx.google.com with ESMTPS id 28sm981635eyg.12.2009.07.13.23.40.55
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 13 Jul 2009 23:40:56 -0700 (PDT)
-X-Mailer: git-send-email 1.6.4.rc0.121.g2937a.dirty
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=ZCpW3axU+2LiO2KtebV/LVkrXeRZRljt75mm/kCayy2005abPBeeKFRql5YEKznrFr
+         j1D2xNK0O6uKmfwN/ZeXt3xLp41/6hOKOWAs8KZl63UjuplDuIgE2KFNwe3NF5UNNrIF
+         TQj1GzF3LHTGyEVq0p+Uvm/9QxT8lwlACkC6o=
+Received: by 10.204.52.146 with SMTP id i18mr6026196bkg.82.1247555461386; Tue, 
+	14 Jul 2009 00:11:01 -0700 (PDT)
+In-Reply-To: <beef9dfceed12f279bc27fbecf82118761cada49.1247553436.git.ni.s@laposte.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123222>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123223>
 
-Thunderbird (v1.* at least) likes to start e-mails with "X-Account-Key:".
-Also, I have some emails starting with "Return-Path:" or ""Delivered-To:".
+On Tue, Jul 14, 2009 at 8:39 AM, Nicolas Sebrecht<ni.s@laposte.net> wro=
+te:
+> Avoid git ending with this message:
+> =A0 =A0 =A0 =A0"Patch format =A0is not supported."
+>
+> Signed-off-by: Nicolas Sebrecht <ni.s@laposte.net>
+> ---
+> =A0git-am.sh | =A0 =A06 +++++-
+> =A01 files changed, 5 insertions(+), 1 deletions(-)
+>
+> diff --git a/git-am.sh b/git-am.sh
+> index d64d997..ca73c88 100755
+> --- a/git-am.sh
+> +++ b/git-am.sh
+> @@ -254,7 +254,11 @@ split_patches () {
+> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0msgnum=3D
+> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0;;
+> =A0 =A0 =A0 =A0*)
+> - =A0 =A0 =A0 =A0 =A0 =A0 =A0 clean_abort "Patch format $patch_format=
+ is not supported."
+> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 if test -n "$parse_patch" ; then
+> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 clean_abort "Patch form=
+at $patch_format is not supported."
+> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 else
+> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 clean_abort "Format pat=
+ch detection failed."
 
-Signed-off-by: Nicolas Sebrecht <ni.s@laposte.net>
----
- git-am.sh |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+"Patch format detection failed" maybe?
 
-diff --git a/git-am.sh b/git-am.sh
-index d64d997..d10a8e0 100755
---- a/git-am.sh
-+++ b/git-am.sh
-@@ -169,7 +169,7 @@ check_patch_format () {
- 		read l2
- 		read l3
- 		case "$l1" in
--		"From "* | "From: "*)
-+		"From "* | "From: "* | "X-Account-Key:"* | "Return-Path:"* | "Delivered-To:"*)
- 			patch_format=mbox
- 			;;
- 		'# This series applies on GIT commit'*)
--- 
-1.6.4.rc0.121.g2937a.dirty
+> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 fi
+> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0;;
+> =A0 =A0 =A0 =A0esac
+> =A0}
+> --
+> 1.6.4.rc0.121.g2937a.dirty
+
+
+
+--=20
+Giuseppe "Oblomov" Bilotta
