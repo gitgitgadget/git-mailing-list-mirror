@@ -1,98 +1,67 @@
-From: "=?utf-8?q?K=C4=81rlis_Repsons?=" <karlis.repsons@gmail.com>
-Subject: Re: Truly decentralised use of git?
-Date: Tue, 14 Jul 2009 15:58:49 +0000
-Message-ID: <200907141558.54044.Karlis.Repsons@gmail.com>
-References: <200907140811.24174.Karlis.Repsons@gmail.com> <200907141323.02151.Karlis.Repsons@gmail.com> <81b0412b0907140634g6aeec60fib23d56d83ba09fb9@mail.gmail.com>
+From: E R <pc88mxer@gmail.com>
+Subject: odd behavior with export LESS=i
+Date: Tue, 14 Jul 2009 12:18:52 -0500
+Message-ID: <3a69fa7c0907141018l4f6fb773o219b6a18effc393d@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed;
-  boundary="nextPart3588109.xInqdQac06";
-  protocol="application/pgp-signature";
-  micalg=pgp-sha1
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Alex Riesen <raa.lkml@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jul 14 17:59:10 2009
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jul 14 19:26:18 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MQkPM-0003Jz-M8
-	for gcvg-git-2@gmane.org; Tue, 14 Jul 2009 17:59:09 +0200
+	id 1MQlli-0000so-6g
+	for gcvg-git-2@gmane.org; Tue, 14 Jul 2009 19:26:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755090AbZGNP66 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 14 Jul 2009 11:58:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754868AbZGNP66
-	(ORCPT <rfc822;git-outgoing>); Tue, 14 Jul 2009 11:58:58 -0400
-Received: from fg-out-1718.google.com ([72.14.220.155]:25541 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754866AbZGNP65 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 14 Jul 2009 11:58:57 -0400
-Received: by fg-out-1718.google.com with SMTP id e12so681431fga.17
-        for <git@vger.kernel.org>; Tue, 14 Jul 2009 08:58:56 -0700 (PDT)
+	id S1755847AbZGNR0A (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 14 Jul 2009 13:26:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755828AbZGNR0A
+	(ORCPT <rfc822;git-outgoing>); Tue, 14 Jul 2009 13:26:00 -0400
+Received: from mail-yx0-f184.google.com ([209.85.210.184]:58469 "EHLO
+	mail-yx0-f184.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755248AbZGNRZ7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 14 Jul 2009 13:25:59 -0400
+Received: by yxe14 with SMTP id 14so4419089yxe.33
+        for <git@vger.kernel.org>; Tue, 14 Jul 2009 10:25:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:references:in-reply-to:cc:mime-version:content-type
-         :content-transfer-encoding:message-id;
-        bh=zXgigF7CbVk8bvRjFYYc0g+f0CLQPdKjhvdswNZnHYM=;
-        b=dmsfE02JvyIvr0ETOUTxhCTXoPtJ5it+3IE8DMIct8rsMuE+bH7XWMIMDtmex8zFhc
-         LvUHREsewlKotBqK0ddYJynOpdOe4KugWx/lFF8JZcEsO0cKdxgawGaGf+sT7Jg1oybm
-         qWcRN+3B9wjxicyAUDWiVfRPUBGujvdAjlqe8=
+        h=domainkey-signature:mime-version:received:date:message-id:subject
+         :from:to:content-type:content-transfer-encoding;
+        bh=GQZNLUQ6DZwfGFKcHN6Bbuii2IvGKmsYX/1E+VgXITc=;
+        b=L2P9a12iWCIBsTgLvG17u1y225ER0IbMEwNuQUUdgoOBr91pmNPCZkdsIj7L7elx72
+         K32y3RqZQWedGPnI8ID6YjY7Ab2l6S2HlJoy6jCZlOl8bual8+TYnx8/2gp/6IDfxTkb
+         Y1YmKsbaii/w3uJUFjQaf7zDnCA3qyh8sruBU=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:references:in-reply-to:cc
-         :mime-version:content-type:content-transfer-encoding:message-id;
-        b=LzDHydeZHW8IVgjJn/fq2kzvTrO4l9qe1OwI2yJ7Xc2fjoYngynH2v7J1AKFJ+ohF8
-         lXM8juGOlp6IIE4nVcIzmiM9MuBpdCVgkMcVWRE0EMn9x/nYmzy/D0ClNmBy0e9KZaIz
-         6CJZgsuFmPx3PwTX4QGr+U8rnjKMz7+GjcLcU=
-Received: by 10.86.96.18 with SMTP id t18mr4162939fgb.58.1247587136162;
-        Tue, 14 Jul 2009 08:58:56 -0700 (PDT)
-Received: from ?192.168.7.93? ([85.15.210.9])
-        by mx.google.com with ESMTPS id 4sm6387811fgg.7.2009.07.14.08.58.55
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 14 Jul 2009 08:58:55 -0700 (PDT)
-User-Agent: KMail/1.9.9
-In-Reply-To: <81b0412b0907140634g6aeec60fib23d56d83ba09fb9@mail.gmail.com>
+        h=mime-version:date:message-id:subject:from:to:content-type
+         :content-transfer-encoding;
+        b=USvK19gcUkf1qudXCLt6HlqkoV8wb4OR6FV8Mr+fd85E3o126VQZa7SSdGzM7vGeUH
+         GM4zBCARHrqLoU7bdmQieW19znTKfwnotVqi2cGw1QEkavidlS+js82eAOvQaNrREQHQ
+         vWo5Xpa3q2MjU73zW5k+p+MhHf4zifhm63mtc=
+Received: by 10.151.110.8 with SMTP id n8mr10604304ybm.334.1247591932576; Tue, 
+	14 Jul 2009 10:18:52 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123256>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123257>
 
---nextPart3588109.xInqdQac06
-Content-Type: text/plain;
-  charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
-Content-Disposition: inline
+Is this a problem with less or with git?
 
-On Tuesday 14 July 2009 13:34:37 you wrote:
-> On Tue, Jul 14, 2009 at 15:22, K=C4=81rlis Repsons<karlis.repsons@gmail.c=
-om>=20
-wrote:
-> > I am sorry, another thing was of my interest.
-> > My unknown is the technical realisation - how can particular repository
-> > be made available for easy pulling from it? Right now with IPv4 most
-> > normal workstations are not accessible directly, because they are behind
-> > routers.
->
-> Same as with the rest of all internet services: you either put the thing =
-on
-> an internet-facing address or poke a hole in your firewall.
+>From the shell if I run:
 
-With IPv4 yes. I am using gitorious.org already.
-But can IPv6 usage provide a way for git users to pull from one another=20
-directly?
+export LESS
+LESS=i git log
 
---nextPart3588109.xInqdQac06
-Content-Type: application/pgp-signature; name=signature.asc 
-Content-Description: This is a digitally signed message part.
+then I see things like ESC[33m instead of colored text.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.11 (GNU/Linux)
+If I run:
 
-iEYEABECAAYFAkpcqz4ACgkQHuSu329e3GHWhgCfRxyg4GWLrnaikO/QPW4/qTqr
-ZqkAoNJSRLEM8EULOO2pFo2dd/OWivsX
-=bxMu
------END PGP SIGNATURE-----
+unset LESS
+git log
 
---nextPart3588109.xInqdQac06--
+then I get colored text.
+
+Note that the environment variable LESS is used to pass default
+command line switches to less.
