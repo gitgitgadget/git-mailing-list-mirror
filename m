@@ -1,87 +1,100 @@
-From: "=?utf-8?q?K=C4=81rlis_Repsons?=" <karlis.repsons@gmail.com>
-Subject: Truly decentralised use of git?
-Date: Tue, 14 Jul 2009 08:11:18 +0000
-Message-ID: <200907140811.24174.Karlis.Repsons@gmail.com>
+From: Nicolas Sebrecht <nicolas.s.dev@gmx.fr>
+Subject: [PATCH] Re: git-am: less strong format "mbox" detection
+Date: Tue, 14 Jul 2009 10:20:59 +0200
+Message-ID: <20090714082059.GA13808@vidovic>
+References: <bb3a84e2b817268a88832dc7043383e4b91a3df3.1247553623.git.ni.s@laposte.net> <cb7bb73a0907140016r4807c008h9c98f76200e9c3a5@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed;
-  boundary="nextPart16215427.3KlqdNVCh0";
-  protocol="application/pgp-signature";
-  micalg=pgp-sha1
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jul 14 10:11:38 2009
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Nicolas Sebrecht <nicolas.s.dev@gmx.fr>, git@vger.kernel.org
+To: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jul 14 10:21:40 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MQd6w-0003JE-8y
-	for gcvg-git-2@gmane.org; Tue, 14 Jul 2009 10:11:38 +0200
+	id 1MQdGe-0006jw-9K
+	for gcvg-git-2@gmane.org; Tue, 14 Jul 2009 10:21:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752269AbZGNIL3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 14 Jul 2009 04:11:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751867AbZGNIL3
-	(ORCPT <rfc822;git-outgoing>); Tue, 14 Jul 2009 04:11:29 -0400
-Received: from fg-out-1718.google.com ([72.14.220.153]:37715 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751826AbZGNIL2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 14 Jul 2009 04:11:28 -0400
-Received: by fg-out-1718.google.com with SMTP id e12so593056fga.17
-        for <git@vger.kernel.org>; Tue, 14 Jul 2009 01:11:26 -0700 (PDT)
+	id S1752269AbZGNIVJ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 14 Jul 2009 04:21:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752161AbZGNIVJ
+	(ORCPT <rfc822;git-outgoing>); Tue, 14 Jul 2009 04:21:09 -0400
+Received: from ey-out-1920.google.com ([74.125.78.149]:24741 "EHLO
+	ey-out-1920.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750820AbZGNIVH (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 14 Jul 2009 04:21:07 -0400
+Received: by ey-out-1920.google.com with SMTP id 3so541078eyh.36
+        for <git@vger.kernel.org>; Tue, 14 Jul 2009 01:21:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:mime-version:content-type:content-transfer-encoding
-         :message-id;
-        bh=0o/NjMwExvej+eqC0l+QGU3M6cwAfdR8Ctuf95aehJE=;
-        b=x++478g2umKfP+MCHjPjzcDhQqITfPg7O/UDnpCkeu6AscWZVP6BZXHWKS8vcnevt4
-         CYRL2lvJXhGeM6WeZNbh4sOvxSh5EtcLHcrRSRxvLYHU5XtwDjzpsmaYmD8M0QyNX5qY
-         YWiluiev8ZRJo+J819YQs7mHG+HH6yuahXjgU=
+        h=domainkey-signature:received:received:sender:date:from:to:cc
+         :subject:message-id:references:mime-version:content-type
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=3XJaNr/KoIRiGcxXSvqGBclDS3cuM6bTYBUvjSEGLDM=;
+        b=jyhEGbXtp8rsplRe8eW9DGiF2WtetuuQBqK0tzCmfFyvx4tgrIQisc0ZMtVodKANQa
+         XUgAKkGQJ+qju6Gspv80gFkFYlO0zI6yGl0EHL/u26b9QEp/2fbDEJaIUiSDC+Lw0tuz
+         Lyv51xcfwFOXisxsGTAfKuVIRQ+0rONZy0eRE=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:mime-version:content-type
-         :content-transfer-encoding:message-id;
-        b=XjLVKqedgl6wfRs8T8FIrYKZCTipN/3tH1HzgMYPEYSQ2jD5qW1V8FAbnZ3ykXZsJY
-         jMgSTTiXfvzixzpSbsTuQ9uMw6NgRnwPYdzO4/uhttZU720O78o4BGr+7pVuqxH95jDA
-         9rT4N6hoKwvz+91ja6XHGcNn3T6qyjwA5oO98=
-Received: by 10.86.84.12 with SMTP id h12mr3817640fgb.21.1247559085946;
-        Tue, 14 Jul 2009 01:11:25 -0700 (PDT)
-Received: from ?192.168.7.93? ([85.15.210.9])
-        by mx.google.com with ESMTPS id l19sm7869884fgb.1.2009.07.14.01.11.25
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 14 Jul 2009 01:11:25 -0700 (PDT)
-User-Agent: KMail/1.9.9
+        h=sender:date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        b=wpa1Ek+vO2gEq+tQTZO6GsvOuanTH8/xuchQCNM51SgH4Y1NyHXcqHtsI/x5XeEfbB
+         WprdeP/5IelZ32vzH0n/fxec7vn6+xhmj5yX0fqn9b1opx0wS0S7c6/pfkv5lOUx4pMj
+         4j97K96MKEck4Sa+M3kd8xfRgFYk2/jM75g+k=
+Received: by 10.210.13.12 with SMTP id 12mr7364150ebm.98.1247559665094;
+        Tue, 14 Jul 2009 01:21:05 -0700 (PDT)
+Received: from @ (91-165-132-96.rev.libertysurf.net [91.165.132.96])
+        by mx.google.com with ESMTPS id 5sm2179734eyh.50.2009.07.14.01.21.02
+        (version=SSLv3 cipher=RC4-MD5);
+        Tue, 14 Jul 2009 01:21:03 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <cb7bb73a0907140016r4807c008h9c98f76200e9c3a5@mail.gmail.com>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123225>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123226>
 
---nextPart16215427.3KlqdNVCh0
-Content-Type: text/plain;
-  charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
-Content-Disposition: inline
+Le 14/07/09, Giuseppe Bilotta a =E9crit :
 
-Hello,
-git is just great with its possibility of decentralised using, but how can =
-it=20
-be done, given, that participants are all across the internet? IPv6? How is=
-=20
-it done with kernel?
+> > diff --git a/git-am.sh b/git-am.sh
+> > index d64d997..d10a8e0 100755
+> > --- a/git-am.sh
+> > +++ b/git-am.sh
+> > @@ -169,7 +169,7 @@ check_patch_format () {
+> > =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0read l2
+> > =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0read l3
+> > =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0case "$l1" in
+> > - =A0 =A0 =A0 =A0 =A0 =A0 =A0 "From "* | "From: "*)
+> > + =A0 =A0 =A0 =A0 =A0 =A0 =A0 "From "* | "From: "* | "X-Account-Key=
+:"* | "Return-Path:"* | "Delivered-To:"*)
+>=20
+> Nitpick: for consistency, should we either expect a space after the
+> colon also in the new keys, or not expect i in the From: key either. =
+I
+> don't think the RFC requires a space, but most clients probably add
+> it.
 
-Best,
-K=C4=81rlis
+RFC 822 says:
+    =20
+" 3.4.2. WHITE SPACE
+    =20
+  Note:  In structured field bodies, multiple linear space ASCII
+         characters  (namely  HTABs  and  SPACEs) are treated as
+         single spaces and may freely surround any  symbol.   In
+         all header fields, the only place in which at least one
+         LWSP-char is REQUIRED is at the beginning of  continua-
+         tion lines in a folded field.
+"
 
---nextPart16215427.3KlqdNVCh0
-Content-Type: application/pgp-signature; name=signature.asc 
-Content-Description: This is a digitally signed message part.
+A trailing space after the colon is not required. I'll remove it and
+resend a patch.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.11 (GNU/Linux)
+And why should we accept "From "?
 
-iEYEABECAAYFAkpcPawACgkQHuSu329e3GGdagCgj9nNNh1CS9+Si7yexcChGGhR
-mPQAnjpqNr52LlYcgePAc4zV4pcgd7vX
-=45Lt
------END PGP SIGNATURE-----
-
---nextPart16215427.3KlqdNVCh0--
+--=20
+Nicolas Sebrecht
