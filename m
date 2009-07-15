@@ -1,47 +1,46 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
+From: Steven Noonan <steven@uplinklabs.net>
 Subject: Re: Git/Terminal issue
-Date: Wed, 15 Jul 2009 13:51:01 +0200
-Message-ID: <4A5DC2A5.2010504@drmicha.warpmail.net>
+Date: Wed, 15 Jul 2009 04:51:58 -0700 (PDT)
+Message-ID: <alpine.LNX.2.00.0907150450290.14159@xerxes.uplinklabs.net>
 References: <24495974.post@talk.nabble.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org
 To: GleMarS <glen@erskinedesign.com>
-X-From: git-owner@vger.kernel.org Wed Jul 15 13:51:29 2009
+X-From: git-owner@vger.kernel.org Wed Jul 15 13:52:32 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MR31D-0005jk-9M
-	for gcvg-git-2@gmane.org; Wed, 15 Jul 2009 13:51:27 +0200
+	id 1MR327-00066m-GV
+	for gcvg-git-2@gmane.org; Wed, 15 Jul 2009 13:52:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754369AbZGOLvT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 15 Jul 2009 07:51:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754362AbZGOLvT
-	(ORCPT <rfc822;git-outgoing>); Wed, 15 Jul 2009 07:51:19 -0400
-Received: from out1.smtp.messagingengine.com ([66.111.4.25]:41987 "EHLO
-	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754354AbZGOLvS (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 15 Jul 2009 07:51:18 -0400
-Received: from compute1.internal (compute1.internal [10.202.2.41])
-	by out1.messagingengine.com (Postfix) with ESMTP id 0A8563B1C5D;
-	Wed, 15 Jul 2009 07:51:18 -0400 (EDT)
-Received: from heartbeat2.messagingengine.com ([10.202.2.161])
-  by compute1.internal (MEProxy); Wed, 15 Jul 2009 07:51:18 -0400
-X-Sasl-enc: QIxYsxeoAQOY/8caq9zbx56qJd9xxW47+5qTk9+59Zq7 1247658677
-Received: from localhost.localdomain (heawood.math.tu-clausthal.de [139.174.44.4])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 8288376B6;
-	Wed, 15 Jul 2009 07:51:17 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.1pre) Gecko/20090712 Lightning/1.0pre Shredder/3.0b3pre
+	id S1754459AbZGOLvl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 15 Jul 2009 07:51:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754453AbZGOLvk
+	(ORCPT <rfc822;git-outgoing>); Wed, 15 Jul 2009 07:51:40 -0400
+Received: from mail-pz0-f197.google.com ([209.85.222.197]:34668 "EHLO
+	mail-pz0-f197.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754445AbZGOLvj (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 15 Jul 2009 07:51:39 -0400
+Received: by pzk35 with SMTP id 35so1974424pzk.33
+        for <git@vger.kernel.org>; Wed, 15 Jul 2009 04:51:39 -0700 (PDT)
+Received: by 10.142.155.8 with SMTP id c8mr1809301wfe.130.1247658697258;
+        Wed, 15 Jul 2009 04:51:37 -0700 (PDT)
+Received: from Xerxes (donobi-22-18.ra.donobi.net [64.113.22.18])
+        by mx.google.com with ESMTPS id 22sm13852011wfg.27.2009.07.15.04.51.35
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 15 Jul 2009 04:51:36 -0700 (PDT)
 In-Reply-To: <24495974.post@talk.nabble.com>
+User-Agent: Alpine 2.00 (LNX 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123300>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123301>
 
-GleMarS venit, vidit, dixit 15.07.2009 13:27:
+On Wed, 15 Jul 2009, GleMarS wrote:
+
 > 
 > Hi,
 > 
@@ -55,12 +54,10 @@ GleMarS venit, vidit, dixit 15.07.2009 13:27:
 > Help appreciated.
 > 
 > http://www.nabble.com/file/p24495974/terminal_low.jpg 
-> 
-> 
-> Cheers.
 
-Are you using bash completion for git by any chance? Something calls
-"git branch" with incorrect parameters, and it may be the call which
-recalculates the bits for PS1.
+Hi there,
 
-Michael
+Do you use some kind of special .bashrc, .profile, or other dotfiles that 
+would affect what commands such as 'cd' do (i.e. aliases, etc)?
+
+- Steven
