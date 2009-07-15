@@ -1,72 +1,129 @@
-From: Nicolas Sebrecht <nicolas.s.dev@gmx.fr>
-Subject: [PATCH v3] Re: git-am: fix maildir support regression: accept
-	email file as patch
-Date: Thu, 16 Jul 2009 00:43:08 +0200
-Message-ID: <20090715224308.GA12971@vidovic>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v3] git-am: fix maildir support regression: accept email
+ file as patch
+Date: Wed, 15 Jul 2009 15:54:25 -0700
+Message-ID: <7v1voheevy.fsf@alter.siamese.dyndns.org>
 References: <1654b578a7e045b564c46df4abb6e2196422c2b2.1247696294.git.nicolas.s.dev@gmx.fr>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+Cc: <git@vger.kernel.org>,
+	Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
 To: Nicolas Sebrecht <nicolas.s.dev@gmx.fr>
-X-From: git-owner@vger.kernel.org Thu Jul 16 00:43:22 2009
+X-From: git-owner@vger.kernel.org Thu Jul 16 00:54:47 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MRDC6-0006yj-3N
-	for gcvg-git-2@gmane.org; Thu, 16 Jul 2009 00:43:22 +0200
+	id 1MRDN5-0002p4-IG
+	for gcvg-git-2@gmane.org; Thu, 16 Jul 2009 00:54:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756272AbZGOWnP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 15 Jul 2009 18:43:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756239AbZGOWnO
-	(ORCPT <rfc822;git-outgoing>); Wed, 15 Jul 2009 18:43:14 -0400
-Received: from mail-ew0-f226.google.com ([209.85.219.226]:35183 "EHLO
-	mail-ew0-f226.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756167AbZGOWnO (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 15 Jul 2009 18:43:14 -0400
-Received: by ewy26 with SMTP id 26so4437098ewy.37
-        for <git@vger.kernel.org>; Wed, 15 Jul 2009 15:43:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:sender:date:from:to:cc
-         :subject:message-id:references:mime-version:content-type
-         :content-disposition:in-reply-to:user-agent;
-        bh=ns2br1zOW2fl3wobQb5k2l1OLDQBNBNMMfAVzZ60Kz4=;
-        b=MAfXFSM30jlsURnpwCKDuLS8V/JwJV46hcoKBRNvv2m1iASh6FE2Pc3WtfWdZo70kz
-         atL5eLvcQxjIj46K+tChdPuyhdzHxYAl1wyfa2yeB43E09t/9WKN7GAU2RQAks4aHf/g
-         mCMl9Q6Y1RJbDfyQpLWeVDyFJFQrU4azo3znw=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=sender:date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=eyja7lTNKt/XgeJ/fPOX343twEXR/NEdolHNVJipm0Stykn9J51FdVUAu3v6eKQE3g
-         VstTbf/6Pt/SsqTFPimPTw5POGX9Vmsi9UsDm5Pllo+Y3jsk/VmiYjsGzTElt07f+K7q
-         hBY8S67maubPP1itSQYZpkZCbzsocj16GJ6Hs=
-Received: by 10.210.88.3 with SMTP id l3mr8813380ebb.17.1247697792606;
-        Wed, 15 Jul 2009 15:43:12 -0700 (PDT)
-Received: from @ (91-164-136-30.rev.libertysurf.net [91.164.136.30])
-        by mx.google.com with ESMTPS id 5sm3097602eyf.48.2009.07.15.15.43.11
-        (version=SSLv3 cipher=RC4-MD5);
-        Wed, 15 Jul 2009 15:43:12 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <1654b578a7e045b564c46df4abb6e2196422c2b2.1247696294.git.nicolas.s.dev@gmx.fr>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+	id S1755630AbZGOWyf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 15 Jul 2009 18:54:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755234AbZGOWyf
+	(ORCPT <rfc822;git-outgoing>); Wed, 15 Jul 2009 18:54:35 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:41668 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754399AbZGOWye (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 15 Jul 2009 18:54:34 -0400
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id E9BF67500;
+	Wed, 15 Jul 2009 18:54:31 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 5E8D574FE; Wed, 15 Jul 2009
+ 18:54:27 -0400 (EDT)
+In-Reply-To: <1654b578a7e045b564c46df4abb6e2196422c2b2.1247696294.git.nicolas.s.dev@gmx.fr> (Nicolas Sebrecht's message of "Thu\, 16 Jul 2009 00\:19\:36 +0200")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 75905F20-7192-11DE-99C5-9AE02FB70C38-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123342>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123343>
 
-The 16/07/09, Nicolas Sebrecht wrote:
+Nicolas Sebrecht <nicolas.s.dev@gmx.fr> writes:
 
 > Patch format detection introduced by a5a6755a1d4707bf2fab7752e5c974ebf63d086a
 > may refuse valid patches.
-> 
+
+This message is even worse than the previous round.
+
+By definition what git-am does not accept is invalid, and you are
+loosening that definition to include something else newly as valid.
+
+Please describe what that new something is.
+
+If you are claiming a5a6755 (git-am foreign patch support: introduce
+patch_format, 2009-05-27) is an regression, and before it X, Y and Z
+format were supported but after that only X and Y format are, then for the
+same reason please specify what that Z you are resurrecting the support
+for is.
+
+That way, people who have been frustrated that their randomly formatted
+files were not processible without first converting them to mbox format
+will know that now their favorite format is now/again also supported.
+
 > We keep detection on the first three lines. Emails may have:
 >  - header fields in a random order;
 >  - folded lines.
+>
+> Signed-off-by: Nicolas Sebrecht <nicolas.s.dev@gmx.fr>
+> ---
+>  git-am.sh |   17 +++++++++++++++++
+>  1 files changed, 17 insertions(+), 0 deletions(-)
+>
 
-I realized this patch is wrong. Please ignore it.
+Please do not break the thread.  Make this message a response to my
+message you lifted the idea from, which in turn was sent as a response in
+the thread of v2 patch.
 
--- 
-Nicolas Sebrecht
+
+> +		for line in "$l1" "$l2" "$l3"
+> +		do
+> +			printf "$line" |
+> +				# The line may be a folded line
+> +				sed -e '/^$/q' -e '/^[ ]/d' |
+> +				grep -E -e '^[A-Za-z]+(-[A-Za-z]+)*:' >/dev/null ||
+> +				is_email='false'
+
+Running three independent printf piped to two processes in a loop is
+quite silly.
+
+I think you did not understand the point of the three liner I sent you.
+
+	sed -e '/^$/q' -e '/^[ 	]/d' "$1" |
+
+    The point of this is not to use the silly "we only look at the first
+    three lines" rule.  Instead, it ignores these l1/l2/l3, but grabs all
+    the header lines, but discards second and subsequent physical lines if
+    a logical line was folded.  Which means that the effect of this is to
+    pipe the whole header (again, without worrying about the indented
+    remainder of folded lines) to downsream, which is the grep -v below
+
+        grep -v -E -e '^[A-Za-z]+(-[A-Za-z]+)*:' >/dev/null ||
+
+    This checks if there is a line that does _NOT_ match the usual
+    e-mail header pattern.  If there is such a line, it means that the
+    file is not an e-mail message.  If there is no such line, we say...
+
+        patch_format=mbox
+
+One caveat is that the above logic alone won't catch a random file that
+does not have _any_ e-mail headers in it.  So you might need to do
+something like:
+
+	LF='
+        '
+	case "$l1$LF$l2$LF$l3" in
+        *"$LF$LF"*)
+        	# has a completely empty line in there?
+                # that means the message has only two headers at most;
+                # that cannot be an email.
+		;;
+	*)
+                sed -e '/^$/q' -e '/^[ 	]/d' "$1" |
+                grep -v -E -e '^[A-Za-z]+(-[A-Za-z]+)*:' >/dev/null ||
+                patch_format=mbox
+	esac
+
+to completely replace that "for line in..." loop.
