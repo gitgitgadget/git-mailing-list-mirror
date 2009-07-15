@@ -1,83 +1,74 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: More 'shortlog' statistics models?
-Date: Tue, 14 Jul 2009 19:07:16 -0700 (PDT)
-Message-ID: <alpine.LFD.2.01.0907141852400.13838@localhost.localdomain>
+From: Elijah Newren <newren@gmail.com>
+Subject: Re: [ANNOUNCE] Git User's Survey 2009
+Date: Tue, 14 Jul 2009 22:40:00 -0600
+Message-ID: <51419b2c0907142140n7d7f64e8y3d74c29f32e689ed@mail.gmail.com>
+References: <200907150245.06067.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Jul 15 04:07:31 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jul 15 06:40:13 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MQtu7-0000Cg-A8
-	for gcvg-git-2@gmane.org; Wed, 15 Jul 2009 04:07:31 +0200
+	id 1MQwHt-0003bO-5z
+	for gcvg-git-2@gmane.org; Wed, 15 Jul 2009 06:40:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751451AbZGOCHT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 14 Jul 2009 22:07:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751405AbZGOCHT
-	(ORCPT <rfc822;git-outgoing>); Tue, 14 Jul 2009 22:07:19 -0400
-Received: from smtp1.linux-foundation.org ([140.211.169.13]:50958 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751376AbZGOCHS (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 14 Jul 2009 22:07:18 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
-	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id n6F27GiI010459
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO)
-	for <git@vger.kernel.org>; Tue, 14 Jul 2009 19:07:17 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id n6F27GcU006782
-	for <git@vger.kernel.org>; Tue, 14 Jul 2009 19:07:16 -0700
-X-X-Sender: torvalds@localhost.localdomain
-User-Agent: Alpine 2.01 (LFD 1184 2008-12-16)
-X-Spam-Status: No, hits=-3.467 required=5 tests=AWL,BAYES_00
-X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
+	id S1751419AbZGOEkD convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 15 Jul 2009 00:40:03 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751308AbZGOEkD
+	(ORCPT <rfc822;git-outgoing>); Wed, 15 Jul 2009 00:40:03 -0400
+Received: from an-out-0708.google.com ([209.85.132.241]:34014 "EHLO
+	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751280AbZGOEkB convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 15 Jul 2009 00:40:01 -0400
+Received: by an-out-0708.google.com with SMTP id d40so6952446and.1
+        for <git@vger.kernel.org>; Tue, 14 Jul 2009 21:40:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=6J8ufGU3/CFJCwRp9ylG9s1cINuY1ZzQ31r6e7i1p8M=;
+        b=sOy29bt60in3mSwxdFJqFDXbN4yje6lSbXKrgve1bz/mOGhPDx965jdg6nEK7aEPyY
+         M2+3J73Ol6bB3uUHD6C+krv8+vCSO2UbmKLUrdhgN0TbefXaTmBlo1eb3ZHxPGK+UhOA
+         ilQ5WHMDPkktel9Ndh+FxXaHVRNeEVMo5iAIY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=t03QU09FS2AdyOsZ7u6cVl1X7K05LDaVhJuwM+ve/Mk+mvOQcElpDmC7bL61xKEaFk
+         kzr2frQz81yVn8KfOj03P5DTuc/hKogEmfXu1Em5rswH5+9mYSGD/UuB4Bk4RRoTlMC4
+         nZjxpx0x3BfmGuYbiq8fdySQhsFLDFRqovtOg=
+Received: by 10.100.95.15 with SMTP id s15mr535726anb.88.1247632800896; Tue, 
+	14 Jul 2009 21:40:00 -0700 (PDT)
+In-Reply-To: <200907150245.06067.jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123284>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123285>
+
+Hi,
+
+Thanks for putting the survey together.  Just one quick comment:
+
+2009/7/14 Jakub Narebski <jnareb@gmail.com>:
+> The survey can be found here:
+> =C2=A0http://tinyurl.com/GitSurvey2009
+
+This link works for me.
+
+> =C2=A0http://www.survs.com/survey?id=3DM3PIVU72&channel=3D2WXE4BVTW8
+
+This link takes me to a page that says, "This survey is currently
+closed. Please contact the author of this survey for further
+assistance."  From following the first link, I am assuming the correct
+link you intended here is
+http://www.survs.com/survey?id=3D2PIMZGU0&channel=3DQ0EKJ3NF54.  Or is
+something strange going on at my end?
 
 
-So I was just thinking about one of the things I've wondered about for a 
-while: when do I (and others) make most of my commits?
-
-I mean literally queries about time-of-day or day-of-week issues. I know 
-we have the information, and I can write silly scripts to get it, but I'm 
-wondering if somebody would actually be willing to make our current 
-'shortlog' statistics gatherer do it automatically.
-
-Right now shortlog groups by name, and I'd like to group by other things.
-
-Here's an example of what I just played around with:
-
-	git log --since=6.months --pretty=format:%cD --author=torvalds |
-		cut -d, -f1 |
-		sort |
-		uniq -c |
-		sort -n
-
-gives you the weekdays on which I've done most of my commits in the last 
-six months. And I think it's kind of interesting. I really do calm down a 
-bit on weekends, and do only about half as many commits on Saturday and 
-Sunday as I do during the week.
-
-The same is true across the board, btw. Except while _I_ tend to do most 
-of my commits on Mondays, while on average, Linux kernel people seem to do 
-most of them on Fridays.
-
-But what about time zones? Change the 'cut' to use "-d' ' -f6" instead, 
-and it's clear that -0700 is the top time zone (US West coast), but +0100 
-and +0200 (much of Europe) are pretty active.
-
-How about time? "cut -d' ' -f5 | cut -d: -f1": The least productive time 
-hour is 05:xxAM (not a big surprise, perhaps), while the most productive 
-time is apparently early afternoon. But there I'm odd: most of my commits 
-by far are in the morning (ie 8AM to noon).
-
-Anyway, I can do all this with sorting, but it's fun enough that I wonder 
-if we should make it easier?
-
-		Linus
+Elijah
