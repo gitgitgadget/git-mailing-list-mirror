@@ -1,91 +1,90 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: More 'shortlog' statistics models?
-Date: Wed, 15 Jul 2009 10:56:13 -0700
-Message-ID: <fabb9a1e0907151056q61f73957yd7dda7a199914af7@mail.gmail.com>
-References: <alpine.LFD.2.01.0907141852400.13838@localhost.localdomain> 
-	<7v8wiqfj60.fsf@alter.siamese.dyndns.org> <m363duukvb.fsf@localhost.localdomain>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: Dividing up a large merge.
+Date: Wed, 15 Jul 2009 14:57:59 -0400 (EDT)
+Message-ID: <alpine.LNX.2.00.0907151429490.2147@iabervon.org>
+References: <20090714233246.GA25390@huya.quicinc.com> <3e8340490907141716j77df346es1f894d6a7f6cb0aa@mail.gmail.com> <20090715002926.GA26630@huya.quicinc.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Bryan Donlan <bdonlan@gmail.com>,
 	Git Mailing List <git@vger.kernel.org>
-To: Jakub Narebski <jnareb@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jul 15 19:56:50 2009
+To: davidb@quicinc.com
+X-From: git-owner@vger.kernel.org Wed Jul 15 20:58:15 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MR8ij-0002Sp-Rh
-	for gcvg-git-2@gmane.org; Wed, 15 Jul 2009 19:56:46 +0200
+	id 1MR9gB-0004xp-1s
+	for gcvg-git-2@gmane.org; Wed, 15 Jul 2009 20:58:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755916AbZGOR4h convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 15 Jul 2009 13:56:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755896AbZGOR4h
-	(ORCPT <rfc822;git-outgoing>); Wed, 15 Jul 2009 13:56:37 -0400
-Received: from mail-ew0-f226.google.com ([209.85.219.226]:59718 "EHLO
-	mail-ew0-f226.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755888AbZGOR4g convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 15 Jul 2009 13:56:36 -0400
-Received: by ewy26 with SMTP id 26so4238656ewy.37
-        for <git@vger.kernel.org>; Wed, 15 Jul 2009 10:56:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=zZWDcObxn1l5kyyhmamFsxJZRPzckzzcq+P29PKwzr8=;
-        b=epXcCOEBgFe5brBgkEavp61tgAJZHAZST0IHQzu4zm5+uxFt/gNQYjAj7EE9DBqyHO
-         g130fanpZzuh7nM8uWVaH0dFC+L1Yqt/u2wmfCzIb+F7rWLwykEYe1WYcKfrKCk36tka
-         7DPwtX/ARUsUb+IZc8uiT0UAOsa52r6fBTdnY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=sQScBQgWuDVqrnMtsSpkVSPTl5cCTdi97ZgtVe4VlCq899kd57I4O23M4Ml8wLhYr/
-         jRtbKXhdRjfTQ9XAOwjBsIb+rVTMYk3bhvLsstt/BrprQOJIEQKTnHkTc6o1Q6y5NY8s
-         +FJkqNbQHaq1KJJJMWvPT5H5KVk4bVxiHCZ8I=
-Received: by 10.216.72.206 with SMTP id t56mr2115108wed.31.1247680593128; Wed, 
-	15 Jul 2009 10:56:33 -0700 (PDT)
-In-Reply-To: <m363duukvb.fsf@localhost.localdomain>
+	id S932199AbZGOS6D (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 15 Jul 2009 14:58:03 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932172AbZGOS6D
+	(ORCPT <rfc822;git-outgoing>); Wed, 15 Jul 2009 14:58:03 -0400
+Received: from iabervon.org ([66.92.72.58]:45030 "EHLO iabervon.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932171AbZGOS6C (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 15 Jul 2009 14:58:02 -0400
+Received: (qmail 21214 invoked by uid 1000); 15 Jul 2009 18:57:59 -0000
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 15 Jul 2009 18:57:59 -0000
+In-Reply-To: <20090715002926.GA26630@huya.quicinc.com>
+User-Agent: Alpine 2.00 (LNX 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123329>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123330>
 
-Heya,
+On Tue, 14 Jul 2009, davidb@quicinc.com wrote:
 
-[message not culled as I suspect Jakub's reply didn't make the git list=
-]
+> On Tue, Jul 14, 2009 at 05:16:54PM -0700, Bryan Donlan wrote:
+> 
+> > What do you mean by describing a merge? git is designed to have all
+> > the information needed for a merge inherent in the repository history.
+> 
+> Yes, provided you can actually do the merge all at once.
+> 
+> > Why are there so many conflicts to make this an issue?
+> 
+> Because I have to work in the "real world".
+> 
+> > If the commits are isolated to small changes, rebasing the developer
+> > topic branches instead of merging may help, by allowing you to take
+> > conflicts one commit at a time. For example, if your problems are
+> > primarily conflicts between developer branches and upstream:
+> 
+> No real developer branches with conflicts (I make those be
+> fixed), but several upstreams.  We have many developers busily
+> doing work, and one or more other companies is also working on
+> the same code.  Meanwhile, the mainline kernel advances at it's
+> own astounding rate.
+> 
+> Unfortunately, paying customers will always get priority of work,
+> even when that position is actually somewhat shortsighted and it
+> makes for a lot of merge effort later.
+> 
+> The real issue is that there isn't any single individual who
+> understands all of the code that conflicts.  It has to be divided
+> up somehow, I'm just trying to figure out a better way of doing
+> it.
 
-On Wed, Jul 15, 2009 at 06:38, Jakub Narebski<jnareb@gmail.com> wrote:
->> Wasn't one of the GSoC project about git statistics? =A0Or was it a =
-topic of
->> last year?
+It sounds to me like you're maintaining an internal version that everybody 
+merges their stuff into, and you periodically merge that with the mainline 
+kernel (generating a lot of conflicts which have to be resolved at the 
+same time). Instead of merging the branch that contains a lot of merges, 
+it would probably be easier to merge into a clone of mainline each of the 
+things that was merged before. That is, instead of merging less than all 
+of two trees, you'd merge commits which are not the newest commit on the 
+branch, choosing ones that individuals can resolve.
 
-That would be me indeed, as Jakub said :).
+This also has the advantage where, if two of the changes affect an API 
+that's used in various different places, one person will get the 
+responsibility of resolving each of those conflicts, despite them being in 
+the middle of code they don't really understand, because they understand 
+what happened with the API and therefore what has to be done in that 
+little spot. Dividing the merge up by parts of the content would split 
+this work among people who aren't looking at the conflict in the 
+definition of the API.
 
-> It was topic of last year GSoC, see http://git.or.cz/gitwiki/SoC2008P=
-rojects
-> It was decided[1] that it would be better for it to remain separate
-> from git (for support for other SCMs).
->
-> =A0http://repo.or.cz/w/git-stats.git
->
-> CC-ed Sverre Rabellier (student for this git-statistic project)
->
-> [1]: http://permalink.gmane.org/gmane.comp.version-control.git/90691
-> --
-> Jakub Narebski
-> Poland
-> ShadeHawk on #git
-
-Not sure what happened but you addressed me (and my old address at
-that) and the git list in one line, not seperated by a comma. Thanks
-for the plug regardless :).
-
---=20
-Cheers,
-
-Sverre Rabbelier
+	-Daniel
+*This .sig left intentionally blank*
