@@ -1,101 +1,94 @@
-From: Nicolas Sebrecht <nicolas.s.dev@gmx.fr>
-Subject: [PATCH v3] git-am: fix maildir support regression: accept email file as patch
-Date: Thu, 16 Jul 2009 00:19:36 +0200
-Message-ID: <1654b578a7e045b564c46df4abb6e2196422c2b2.1247696294.git.nicolas.s.dev@gmx.fr>
-Cc: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>,
-	Nicolas Sebrecht <nicolas.s.dev@gmx.fr>
-To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Jul 16 00:20:17 2009
+From: Ondrej Certik <ondrej@certik.cz>
+Subject: mailmap distinguishing names
+Date: Wed, 15 Jul 2009 16:22:08 -0600
+Message-ID: <85b5c3130907151522x1009a796tced7726d9be4ca7d@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Jul 16 00:22:20 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MRCpk-0007mX-5j
-	for gcvg-git-2@gmane.org; Thu, 16 Jul 2009 00:20:16 +0200
+	id 1MRCri-0008Vy-Ep
+	for gcvg-git-2@gmane.org; Thu, 16 Jul 2009 00:22:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754681AbZGOWUF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 15 Jul 2009 18:20:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754551AbZGOWUF
-	(ORCPT <rfc822;git-outgoing>); Wed, 15 Jul 2009 18:20:05 -0400
-Received: from mail-ew0-f226.google.com ([209.85.219.226]:52596 "EHLO
-	mail-ew0-f226.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754399AbZGOWUE (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 15 Jul 2009 18:20:04 -0400
-Received: by ewy26 with SMTP id 26so4425749ewy.37
-        for <git@vger.kernel.org>; Wed, 15 Jul 2009 15:20:01 -0700 (PDT)
+	id S1755457AbZGOWWK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 15 Jul 2009 18:22:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755324AbZGOWWK
+	(ORCPT <rfc822;git-outgoing>); Wed, 15 Jul 2009 18:22:10 -0400
+Received: from mail-gx0-f213.google.com ([209.85.217.213]:61194 "EHLO
+	mail-gx0-f213.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752269AbZGOWWJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 15 Jul 2009 18:22:09 -0400
+Received: by gxk9 with SMTP id 9so2769067gxk.13
+        for <git@vger.kernel.org>; Wed, 15 Jul 2009 15:22:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:sender:from:to:cc:subject
-         :date:message-id:x-mailer;
-        bh=9fuj8uZNEal3OCPRW4KqgfRu/D1R2tL0nYepsH8H/PE=;
-        b=r2OFeU/BaZxYpHclcyzRr8GbdF0HZSo5JVL1GB4wLkPXqzwA2u5nD+zbu66tLMXK1v
-         JEJ9jckdGXJYDZldBEIU1Q2DE8WSdtJ54sIJFUyl8zcQwESiNvAqDB9VOvq3o1whzn2i
-         7wRl2pqok4Mo4aH2S7A/fGpg17SRr39Rk3YTk=
+        h=domainkey-signature:mime-version:sender:received:date
+         :x-google-sender-auth:message-id:subject:from:to:content-type
+         :content-transfer-encoding;
+        bh=GoyMF83JmuY+yOzaqL3QOgymY/XVl4wRLuXqaem7cIU=;
+        b=sgAq9FF1V19e2+jlwNB/N1WEVjM5cipZ5+Y2UDt/fU9L6ErS/0EwPSSh0ailJgBm6l
+         wyQQrqNA4FWug7hyakFqNIjwtW2GqtqxgX1w5L1V4V4lNC7QkLgc01Rw5kJyhVuWUNAI
+         w7tMTncX0nQzIQd8lJwPIS/ZndAVXVmepGlnA=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=sender:from:to:cc:subject:date:message-id:x-mailer;
-        b=lamknJandyX+BT30AN4wqMslrNr+wanGK5CVK0WSh5vQwYQyWJSOLKw7EmBdcyaJoP
-         DvGILbuBR9VnJNP3iJ3u63IZbtnnQFr2Q7g4lV44rFgGZmBunZFgHXcuNAZvybk8o3bg
-         pzcciyVU+OO/vulNguYoP7UTmpDNXbdKm7Hdw=
-Received: by 10.210.86.1 with SMTP id j1mr8773607ebb.61.1247696401452;
-        Wed, 15 Jul 2009 15:20:01 -0700 (PDT)
-Received: from localhost (91-164-136-30.rev.libertysurf.net [91.164.136.30])
-        by mx.google.com with ESMTPS id 7sm5127941eyg.54.2009.07.15.15.19.56
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 15 Jul 2009 15:20:00 -0700 (PDT)
-X-Mailer: git-send-email 1.6.4.rc0.128.g69018
+        h=mime-version:sender:date:x-google-sender-auth:message-id:subject
+         :from:to:content-type:content-transfer-encoding;
+        b=D8yIc+yeD2bNWfQAK5K5TPfcLCDgOhWqcqk4ZTTPBgJVbwn4OfhRsvAb4SGeBk2qig
+         6LbsIzTsiTlfPT0Yu3tRXZwzcE13UAPV1hpvYdIm5b4eOrKFBZW1DMN10EYcUR4s/tUH
+         nia9ME9Q1oDhIVQTCEhubLy9vSk8CiKadutFI=
+Received: by 10.90.29.13 with SMTP id c13mr4645369agc.82.1247696528181; Wed, 
+	15 Jul 2009 15:22:08 -0700 (PDT)
+X-Google-Sender-Auth: fe2092faa27980c9
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123338>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123339>
 
-Patch format detection introduced by a5a6755a1d4707bf2fab7752e5c974ebf63d086a
-may refuse valid patches.
+Hi,
 
-We keep detection on the first three lines. Emails may have:
- - header fields in a random order;
- - folded lines.
+I know how to use mailmap to map names to email addresses, however,
+what if we have some old commits that look like:
 
-Signed-off-by: Nicolas Sebrecht <nicolas.s.dev@gmx.fr>
----
- git-am.sh |   17 +++++++++++++++++
- 1 files changed, 17 insertions(+), 0 deletions(-)
+commit 1815ccf8ea8a7d99736d9b15c10d2ddf41162faf
+Author: ondrej.certik <devnull@localhost>
+Date:   Sat Oct 6 01:57:03 2007 +0000
 
-diff --git a/git-am.sh b/git-am.sh
-index d64d997..6190297 100755
---- a/git-am.sh
-+++ b/git-am.sh
-@@ -146,6 +146,7 @@ clean_abort () {
- }
- 
- patch_format=
-+is_email=
- 
- check_patch_format () {
- 	# early return if patch_format was set from the command line
-@@ -191,6 +192,22 @@ check_patch_format () {
- 			esac
- 			;;
- 		esac
-+		# Keep maildir workflows support.
-+		# Emails may have header fields in random order.
-+		is_email='true'
-+		for line in "$l1" "$l2" "$l3"
-+		do
-+			printf "$line" |
-+				# The line may be a folded line
-+				sed -e '/^$/q' -e '/^[ ]/d' |
-+				grep -E -e '^[A-Za-z]+(-[A-Za-z]+)*:' >/dev/null ||
-+				is_email='false'
-+		done
-+		# next treatments don't differ from mailbox format
-+		if [ $is_email == 'true' ]
-+		then
-+			patch_format=mbox
-+		fi
- 	} < "$1" || clean_abort
- }
- 
--- 
-1.6.4.rc0.128.g69018
+    test for a series bug 364 added, but XFAILed, because sometimes it works, so
+
+commit ef95d618e1fda2dc6b50a0edf343a7b321467527
+Author: kirill.smelkov <devnull@localhost>
+Date:   Fri Oct 5 20:10:04 2007 +0000
+
+    pprint: add support for multile indexes in unicode mode
+
+commit 7e74ebdf2701f0ab213a6e5ba47b7860fcf90cff
+Author: fredrik.johansson <devnull@localhost>
+Date:   Fri Oct 5 16:41:04 2007 +0000
+
+    add abc module
+
+
+
+E.g. for some reason the addresses are <devnull@localhost>, but the
+names are correct (svn names). Then "git shortlog -ns" shows things
+like:
+
+   654  Ondrej Certik
+   322  Kirill Smelkov
+   268  ondrej.certik
+   208  Mateusz Paprocki
+    74  fredrik.johansson
+
+is there some way to join "ondrej.certik" with "Ondrej Certik"? If the
+email address for ondrej.certik was some better one, it'd be easy, but
+since it's the same for all the old committers, maybe the only way is
+to rewrite our history and fix this. But I just wanted to check if
+there is some other way too.
+
+Thanks,
+Ondrej
