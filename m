@@ -1,70 +1,77 @@
-From: Paolo Bonzini <bonzini@gnu.org>
-Subject: Re: Make a non-bare repo bare.
-Date: Wed, 15 Jul 2009 23:48:42 +0200
-Message-ID: <4A5E4EBA.4050708@gnu.org>
-References: <c115fd3c0907151443h49aaac60r3462c69f55ed2d9f@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: "mailinfo: Remove only one set of square brackets" considered
+ harmful
+Date: Wed, 15 Jul 2009 15:09:55 -0700
+Message-ID: <7vljmpegy4.fsf@alter.siamese.dyndns.org>
+References: <alpine.LFD.2.01.0907150821280.13838@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Tim Visher <tim.visher@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jul 15 23:48:58 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Andreas Ericsson <ae@op5.se>,
+	Git Mailing List <git@vger.kernel.org>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Thu Jul 16 00:10:16 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MRCLQ-0003m2-PU
-	for gcvg-git-2@gmane.org; Wed, 15 Jul 2009 23:48:57 +0200
+	id 1MRCg1-0003wM-HS
+	for gcvg-git-2@gmane.org; Thu, 16 Jul 2009 00:10:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754848AbZGOVss (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 15 Jul 2009 17:48:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754433AbZGOVss
-	(ORCPT <rfc822;git-outgoing>); Wed, 15 Jul 2009 17:48:48 -0400
-Received: from fg-out-1718.google.com ([72.14.220.152]:8062 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754215AbZGOVss (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 15 Jul 2009 17:48:48 -0400
-Received: by fg-out-1718.google.com with SMTP id e21so1199330fga.17
-        for <git@vger.kernel.org>; Wed, 15 Jul 2009 14:48:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:sender:message-id:date:from
-         :user-agent:mime-version:newsgroups:to:cc:subject:references
-         :in-reply-to:content-type:content-transfer-encoding;
-        bh=ncg6jJoK1i1Lhy3xBAf9PZsxDcQ/ErapYDF1d45P/fY=;
-        b=KBnOEsuNOHVGEpBdDj06aFg3R2Ty/OuMOMrXf+ussc6k+9qIB7BqifklgK7nQxGfIu
-         BuJvZae4WdLSZs1yrJaDMa6bvulUYOBmhCcEl6sGsCFTw/ApVpR7pd2PlDeJkX4bIiYI
-         9OkU2r4nowQ3MX05Kq2NGUlGX+APOlXnvYjV0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=sender:message-id:date:from:user-agent:mime-version:newsgroups:to
-         :cc:subject:references:in-reply-to:content-type
-         :content-transfer-encoding;
-        b=eMTjUhyW1BjHk64qmcpShtINfbOY1b1hxo5CdwBEb/s/tHz5oDRLZTeLhzvRBIvAOg
-         RvXBI2dxQgba2P9CSJkwLWEE5j1lGWNTN12KK8ZJBsmf0zZ4cCDAbMQYMtW/HkjC5qNQ
-         DkXKMFr3JWOf7w2Of5v12w4FGkhqXueYT0VY0=
-Received: by 10.86.1.1 with SMTP id 1mr5415362fga.42.1247694525810;
-        Wed, 15 Jul 2009 14:48:45 -0700 (PDT)
-Received: from yakj.usersys.redhat.com (nat-pool-str.redhat.com [66.187.229.200])
-        by mx.google.com with ESMTPS id l19sm11000381fgb.6.2009.07.15.14.48.44
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 15 Jul 2009 14:48:44 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1b3pre) Gecko/20090513 Fedora/3.0-2.3.beta2.fc11 Lightning/1.0pre Thunderbird/3.0b2
-Newsgroups: gmane.comp.version-control.git
-In-Reply-To: <c115fd3c0907151443h49aaac60r3462c69f55ed2d9f@mail.gmail.com>
+	id S1755037AbZGOWKD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 15 Jul 2009 18:10:03 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752115AbZGOWKD
+	(ORCPT <rfc822;git-outgoing>); Wed, 15 Jul 2009 18:10:03 -0400
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:50251 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751286AbZGOWKC (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 15 Jul 2009 18:10:02 -0400
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id AAAA65EE7;
+	Wed, 15 Jul 2009 18:10:00 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id DA7315EE6; Wed,
+ 15 Jul 2009 18:09:56 -0400 (EDT)
+In-Reply-To: <alpine.LFD.2.01.0907150821280.13838@localhost.localdomain>
+ (Linus Torvalds's message of "Wed\, 15 Jul 2009 08\:30\:58 -0700 \(PDT\)")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 3D5C7E5A-718C-11DE-BEA1-F699A5B33865-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123336>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123337>
 
-On 07/15/2009 11:43 PM, Tim Visher wrote:
-> Hello Everyone,
+Linus Torvalds <torvalds@linux-foundation.org> writes:
+
+> So I see why Andreas did it, and I don't disagree violently, BUT...
 >
-> I recently had occasion to make a previously non-bare repo bare.  Is
-> there any way to do this?  It will not allow me to delete a branch
-> that I'm on so I wasn't sure how to proceed.
+> The fact is, we have mailing lists etc that add their own headers to the 
+> subject, and they know they can add things in brackets. The most obvious 
+> example is the Linux kernel security list, which adds a prefix of
+>
+> 	"[Security] "
+>
+> to the subject line in order to stand out (I'm on other lists that do 
+> this too, but those generally don'thave patches).
+>>
+> So I have emails witgh subjects like
+>
+> 	Subject: [Security] [patch] random: make get_random_int() more random
+>
+> but I also have people who do the same thing themselves, eg:
+>
+> 	Subject: [PATCH -rc] [BUGFIX] x86: fix kernel_trap_sp()
+> 	Subject: [BUGFIX][PATCH] fix bad page removal from LRU (Was Re: [RFC][PATCH] ..
+>
+> so people did kind of depend on the "remove square brackets" behavior.
 
-Just do "mv repo/.git repo.git; rm -rf repo" (with care!).
+Thanks.  The reason why I have merged some questionable stuff (including
+this one) early in this cycle was exactly because we would want to catch
+real world breakages caused by such changes.
 
-Paolo
+Even though it is silly not to rely on already well established
+conventions such as X-Mailing-List and List-ID but instead to waste
+precious real estate at the initial part of the Subject in this century
+merely for list identification purposes, this change regresses the end
+result.
