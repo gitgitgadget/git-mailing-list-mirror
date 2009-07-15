@@ -1,100 +1,83 @@
-From: Avery Pennarun <apenwarr@gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
 Subject: Re: How to manage multiple personal projects
-Date: Wed, 15 Jul 2009 12:39:11 -0400
-Message-ID: <32541b130907150939w563eeb63ib850513c93d35c2c@mail.gmail.com>
+Date: Wed, 15 Jul 2009 10:45:32 -0700 (PDT)
+Message-ID: <m3ws69u9g0.fsf@localhost.localdomain>
 References: <a1138db30907150900j7d6152ebs755d83adf7717287@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
 To: Paul Richards <paul.richards@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jul 15 18:40:19 2009
+X-From: git-owner@vger.kernel.org Wed Jul 15 19:45:45 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MR7Wk-0003v2-Hd
-	for gcvg-git-2@gmane.org; Wed, 15 Jul 2009 18:40:19 +0200
+	id 1MR8Y4-0005tN-Cf
+	for gcvg-git-2@gmane.org; Wed, 15 Jul 2009 19:45:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932192AbZGOQjd convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 15 Jul 2009 12:39:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932172AbZGOQjc
-	(ORCPT <rfc822;git-outgoing>); Wed, 15 Jul 2009 12:39:32 -0400
-Received: from mail-gx0-f213.google.com ([209.85.217.213]:35517 "EHLO
-	mail-gx0-f213.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932156AbZGOQjb convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 15 Jul 2009 12:39:31 -0400
-Received: by gxk9 with SMTP id 9so2385164gxk.13
-        for <git@vger.kernel.org>; Wed, 15 Jul 2009 09:39:31 -0700 (PDT)
+	id S1755811AbZGORpf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 15 Jul 2009 13:45:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755810AbZGORpf
+	(ORCPT <rfc822;git-outgoing>); Wed, 15 Jul 2009 13:45:35 -0400
+Received: from mail-fx0-f218.google.com ([209.85.220.218]:42188 "EHLO
+	mail-fx0-f218.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755807AbZGORpe (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 15 Jul 2009 13:45:34 -0400
+Received: by fxm18 with SMTP id 18so3609052fxm.37
+        for <git@vger.kernel.org>; Wed, 15 Jul 2009 10:45:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=vKVvK3n7zody75FAZfOLHf+CbK5TKQnzeYXaZ+TNrXQ=;
-        b=L/rU98hq88TPMV7s3nYCWYBY9X1kqnTyZbKBOiO92CY+xRxIvB8FbVoTtW5/cHMy5/
-         ddgb0AgxHHZZOcGa3ZX6bRgptdmSAby75sCApjOydMuU8Eiw1kT1iwRL0Tq4SQXcXLJ7
-         K/6Y1iTAyeMbuNAyJsJAYZbT836V6vXPWprck=
+        h=domainkey-signature:received:received:received:received
+         :x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        bh=RZXAhQxb8nCAXFI+2K4dZPfsQfvM88MhhILbQLL/Aqg=;
+        b=epliyIVDNbHYmUkAh/l72j+zhVREFlsXlWgGU0DTkkWc21mYZo+hPNAyTohFVGCEL6
+         w7zBq2X/ASQgsJlDtp2DVMCymRGqM/GcrZxkbmQwWT0mjd1p1HCPS/OOfELi5ddJku3Y
+         oMWegsDL18+2Uk74wE1GKnQ3a6AA5CRjdmDPw=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=gT/ziFHyhCMyS2jAkaJDGW5PDnuDvJsM9Ogj+cI7nDV4WTUJ7/V/cQ9K0ZaotnO12x
-         y3py411QsFL2k65vM83wURKmzJmnddm5pllQ3f6XWt9YVToNeKoRPXZfHu9Ox5E49KQu
-         Q9dVrR6Z0IpDqi94M2NFHHoFA3hRUSopI3hNE=
-Received: by 10.150.230.1 with SMTP id c1mr12751230ybh.216.1247675971136; Wed, 
-	15 Jul 2009 09:39:31 -0700 (PDT)
+        h=x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        b=rom9uaofpLAcb6Ra1ssAH5l8iCaKKch+A4Kmp9CNvZRPvcYOjLQtYx5G8JfJBKAa0t
+         XzxCEcq1kietwTyCIUOpq12gOwA4NDORrzJfyi8JCD4E8z5QucrkUpjtjnSVIimpjDYt
+         whZha4NW5tIc3+56o2PzQq/RdWjVrqdLu2Fqg=
+Received: by 10.86.59.2 with SMTP id h2mr5266180fga.60.1247679933152;
+        Wed, 15 Jul 2009 10:45:33 -0700 (PDT)
+Received: from localhost.localdomain (abuz24.neoplus.adsl.tpnet.pl [83.8.197.24])
+        by mx.google.com with ESMTPS id 12sm8759846fgg.14.2009.07.15.10.45.30
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 15 Jul 2009 10:45:32 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id n6FHjRSu008545;
+	Wed, 15 Jul 2009 19:45:28 +0200
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id n6FHjKq5008541;
+	Wed, 15 Jul 2009 19:45:20 +0200
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
 In-Reply-To: <a1138db30907150900j7d6152ebs755d83adf7717287@mail.gmail.com>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123327>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123328>
 
-On Wed, Jul 15, 2009 at 12:00 PM, Paul Richards<paul.richards@gmail.com=
-> wrote:
+Paul Richards <paul.richards@gmail.com> writes:
+
+[...]
 > I believe the correct choice with Git is to create a repository per
-> project. =A0This would work OK for me, but I worry about the shear
-> number of repositories I'd end up creating. =A0Part of the nice thing
+> project.  This would work OK for me, but I worry about the shear
+> number of repositories I'd end up creating.  Part of the nice thing
 > with my current Subversion setup is that starting a new project is
 > very easy and cheap, I don't create a new repository each time.
+[...]
 
-Creating the repository for a git project is astonishingly cheap,
-because the initial repository exists inside the source tree of the
-project itself.  So you don't even have to decide in advance what to
-name your project.  I'd say this is even easier than creating a new
-svn directory.
+Perhaps 'repo' tool developed by Google will be what you want?
 
-You could then decide to publish your project (and go through a couple
-of steps to do so) only if it's important enough.  Also, if you use
-something like github.com, this part is really easy - and someone else
-will pay the bandwidth costs.
+  http://android.git.kernel.org/?p=tools/repo.git
+  http://newblogtopic.blogspot.com/2008/11/gerrit-and-repo-android-source_04.html 
 
-> I think what might work with Git (and for which I'd like some advice)
-> is something inbetween. =A0I could have a single Git repository to ho=
-ld
-> my small experiment projects where initially is where I always start
-> my work by creating a new directory. =A0Then if any of them start to
-> mature, I could move the project out into it's own repository for
-> real. =A0Would Git support this in some way tracking changes from one
-> repo to the other? =A0Or would I end up having to "replay" all the
-> commits from one repo to the other?
-
-Although I definitely recommend just making one git repo per project
-in your case, you *could* do exactly what you describe above using
-git-subtree:  http://github.com/apenwarr/git-subtree.  Disclosure: I
-wrote git-subtree, so I like it by default.
-
-However, doing this would only really be useful if your projects
-cross-reference each other in some way.  My main motivation for
-writing git-subtree, for example, is that I often end up building
-useful tools that grow inside one of my other projects, then turn out
-to be good on their own (or as part of another project).  So it's not
-that I kept unrelated projects together for convenience (because it
-really isn't any more or less convenient in git), but rather that I
-wasn't able to predict the future, and git-subtree lets me change my
-mind.
-
-Have fun,
-
-Avery
+-- 
+Jakub Narebski
+Poland
+ShadeHawk on #git
