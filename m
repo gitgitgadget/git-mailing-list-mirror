@@ -1,115 +1,95 @@
-From: Mike Ralphson <mike@abacus.co.uk>
-Subject: [RFC PATCH] cvsexportcommit: reorder tests to quiet intermittent failure
-Date: Wed, 15 Jul 2009 15:34:24 +0100
-Message-ID: <1247668464-20813-1-git-send-email-mike@abacus.co.uk>
-Cc: git@vger.kernel.org, Mike Ralphson <mike.ralphson@gmail.com>,
-	Nick Woolley <nickwoolley@yahoo.co.uk>,
-	Robin Rosenberg <robin.rosenberg.lists@dewire.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+From: =?UTF-8?B?RGlyayBTw7xzc2Vyb3R0?= <poststelle@suesserott.de>
+Subject: Re: git-am with an initial checkin doesn't work
+Date: Wed, 15 Jul 2009 16:46:36 +0200
+Message-ID: <4A5DEBCC.9060600@suesserott.de>
+References: <4A5C9C66.1050100@dirk.my1.cc> <7vocrngm2d.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?UTF-8?B?RGlyayBTw7xzc2Vyb3R0?= <newsletter@dirk.my1.cc>,
+	Git Mailing List <git@vger.kernel.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jul 15 16:49:50 2009
+X-From: git-owner@vger.kernel.org Wed Jul 15 16:53:43 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MR5np-00079V-GJ
-	for gcvg-git-2@gmane.org; Wed, 15 Jul 2009 16:49:49 +0200
+	id 1MR5rW-0000nH-59
+	for gcvg-git-2@gmane.org; Wed, 15 Jul 2009 16:53:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753351AbZGOOtn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 15 Jul 2009 10:49:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752664AbZGOOtm
-	(ORCPT <rfc822;git-outgoing>); Wed, 15 Jul 2009 10:49:42 -0400
-Received: from [82.109.193.99] ([82.109.193.99]:57362 "EHLO orson.abacus.co.uk"
-	rhost-flags-FAIL-FAIL-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1752525AbZGOOtm (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 15 Jul 2009 10:49:42 -0400
-X-Greylist: delayed 1109 seconds by postgrey-1.27 at vger.kernel.org; Wed, 15 Jul 2009 10:49:42 EDT
-Received: by orson.abacus.co.uk (Postfix, from userid 1006)
-	id 3DA09195EBB; Wed, 15 Jul 2009 15:34:24 +0100 (BST)
-X-Mailer: git-send-email 1.6.3.1.54.g99dd
+	id S1754699AbZGOOxb convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 15 Jul 2009 10:53:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753957AbZGOOxb
+	(ORCPT <rfc822;git-outgoing>); Wed, 15 Jul 2009 10:53:31 -0400
+Received: from smtprelay02.ispgateway.de ([80.67.31.25]:50461 "EHLO
+	smtprelay02.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752525AbZGOOxa (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 15 Jul 2009 10:53:30 -0400
+X-Greylist: delayed 402 seconds by postgrey-1.27 at vger.kernel.org; Wed, 15 Jul 2009 10:53:30 EDT
+Received: from [84.176.68.208] (helo=[192.168.2.100])
+	by smtprelay02.ispgateway.de with esmtpa (Exim 4.68)
+	(envelope-from <poststelle@suesserott.de>)
+	id 1MR5kj-0005zI-Jz; Wed, 15 Jul 2009 16:46:38 +0200
+User-Agent: Thunderbird 2.0.0.22 (Windows/20090605)
+In-Reply-To: <7vocrngm2d.fsf@alter.siamese.dyndns.org>
+X-Df-Sender: 757646
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123317>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123318>
 
-Reorder tests introduced in fef3a7cc and 54d5cc0e so an intermittent but
-unimportant failure on the CVS side related to the former does not interfere
-with what is actually being tested.
+Am 14.07.2009 20:24 schrieb Junio C Hamano:
+> Dirk S=C3=BCsserott <newsletter@dirk.my1.cc> writes:
+>=20
+>> # Try to "import" the patch:
+>> git am 0001-initial-checkin.patch
+>>
+>> The latter yields to
+>> fatal: HEAD: not a valid SHA1
+>> fatal: bad revision 'HEAD'
+>>
+>> It works, when I
+>> git apply 0001-initial-checkin.patch
+>> instead of am'ing it, but then the thing isn't committed and I've to
+>> manually git-commit it.
+>>
+>> Is this a bug, intentional behavior, or am I missing some magic opti=
+on
+>> to git-am?
+>=20
+> The original mode of operation of the e-mail patchflow commands was t=
+o
+> support project members who contribute changes to _existing_ projects=
+, and
+> maintainers to accept such changes.  The reason behind the behaviour =
+you
+> are observing is merely a historical accident that nobody bothered ab=
+out
+> use cases outside of that original purpose.  For exactly the same rea=
+son,
+> the original implementation of format-patch did not bother with the r=
+oot
+> commit.
+>=20
+> IOW, this was not an intentional behaviour, neither it was a bug.  It=
+ was
+> simply use outside of spec, and nobody bothered until f79d4c8 (git-am=
+:
+> teach git-am to apply a patch to an unborn branch, 2009-04-10), which=
+ is
+> v1.6.3-rc1~11^2, added a support for it.
+>=20
+> What version of git are you running?
+>=20
+>=20
 
-Signed-off-by: Mike Ralphson <mike@abacus.co.uk>
----
+Hi Junio,
 
-Background is at http://thread.gmane.org/gmane.comp.version-control.git/120241/focus=121339
-Just chucking this out as a possibility so 1.6.4 doesn't ship with a test
-which fails unpredictably.
+I used "1.6.1.9.g97c34" which is an msysGit release and not exactly the=
+=20
+latest. I now updated to "1.6.3.2.1299.gee46c" and the problem=20
+dissapeared. Thanks for the hint and sorry for the noise.
 
- t/t9200-git-cvsexportcommit.sh |   41 +++++++++++++++++++++------------------
- 1 files changed, 22 insertions(+), 19 deletions(-)
-
-diff --git a/t/t9200-git-cvsexportcommit.sh b/t/t9200-git-cvsexportcommit.sh
-index ef1f8d2..fc3795d 100755
---- a/t/t9200-git-cvsexportcommit.sh
-+++ b/t/t9200-git-cvsexportcommit.sh
-@@ -288,6 +288,27 @@ test_expect_success 'check files before directories' '
- 
- '
- 
-+test_expect_success 're-commit a removed filename which remains in CVS attic' '
-+
-+    (cd "$CVSWORK" &&
-+     echo >attic_gremlin &&
-+     cvs -Q add attic_gremlin &&
-+     cvs -Q ci -m "added attic_gremlin" &&
-+     rm attic_gremlin &&
-+     cvs -Q rm attic_gremlin &&
-+     cvs -Q ci -m "removed attic_gremlin") &&
-+
-+    echo > attic_gremlin &&
-+    git add attic_gremlin &&
-+    git commit -m "Added attic_gremlin" &&
-+	git cvsexportcommit -w "$CVSWORK" -c HEAD &&
-+    (cd "$CVSWORK"; cvs -Q update -d) &&
-+    test -f "$CVSWORK/attic_gremlin"
-+'
-+
-+# the state of the CVS sandbox may be indeterminate for ' space'
-+# after this test on some platforms / with some versions of CVS
-+# consider adding new tests above this point
- test_expect_success 'commit a file with leading spaces in the name' '
- 
- 	echo space > " space" &&
-@@ -295,7 +316,7 @@ test_expect_success 'commit a file with leading spaces in the name' '
- 	git commit -m "Add a file with a leading space" &&
- 	id=$(git rev-parse HEAD) &&
- 	git cvsexportcommit -w "$CVSWORK" -c $id &&
--	check_entries "$CVSWORK" " space/1.1/|DS/1.1/|release-notes/1.2/" &&
-+	check_entries "$CVSWORK" " space/1.1/|DS/1.1/|attic_gremlin/1.3/|release-notes/1.2/" &&
- 	test_cmp "$CVSWORK/ space" " space"
- 
- '
-@@ -317,22 +338,4 @@ test_expect_success 'use the same checkout for Git and CVS' '
- 
- '
- 
--test_expect_success 're-commit a removed filename which remains in CVS attic' '
--
--    (cd "$CVSWORK" &&
--     echo >attic_gremlin &&
--     cvs -Q add attic_gremlin &&
--     cvs -Q ci -m "added attic_gremlin" &&
--     rm attic_gremlin &&
--     cvs -Q rm attic_gremlin &&
--     cvs -Q ci -m "removed attic_gremlin") &&
--
--    echo > attic_gremlin &&
--    git add attic_gremlin &&
--    git commit -m "Added attic_gremlin" &&
--	git cvsexportcommit -w "$CVSWORK" -c HEAD &&
--    (cd "$CVSWORK"; cvs -Q update -d) &&
--    test -f "$CVSWORK/attic_gremlin"
--'
--
- test_done
--- 
-1.6.3.1.54.g99dd
+     -- Dirk
