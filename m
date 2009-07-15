@@ -1,67 +1,92 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: Git/Terminal issue
-Date: Wed, 15 Jul 2009 14:51:47 +0200
-Message-ID: <81b0412b0907150551x718bd46eq6d5bc8f332a9db1f@mail.gmail.com>
-References: <24495974.post@talk.nabble.com>
-	 <alpine.LNX.2.00.0907150450290.14159@xerxes.uplinklabs.net>
-	 <4A5DC56E.8050607@erskinedesign.com>
+From: Derek Fawcus <dfawcus@cisco.com>
+Subject: Re: [PATCH v2] git-am: fix maildir support regression for unordered headers in emails
+Date: Wed, 15 Jul 2009 13:54:19 +0100
+Message-ID: <20090715125419.GA21811@gpk-lds-007.cisco.com>
+References: <20090714122354.GA13806@vidovic> <2433101adeafddeab78815083446552ff3ea9f49.1247636959.git.nicolas.s.dev@gmx.fr> <7vljmqflti.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Steven Noonan <steven@uplinklabs.net>, git@vger.kernel.org
-To: glen@erskinedesign.com
-X-From: git-owner@vger.kernel.org Wed Jul 15 14:52:05 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Nicolas Sebrecht <nicolas.s.dev@gmx.fr>, git@vger.kernel.org,
+	Giuseppe Bilotta <giuseppe.bilotta@gmail.com>,
+	Johannes Sixt <j.sixt@viscovery.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jul 15 15:04:24 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MR3xo-0008Dv-DA
-	for gcvg-git-2@gmane.org; Wed, 15 Jul 2009 14:52:00 +0200
+	id 1MR49m-0005ow-Nf
+	for gcvg-git-2@gmane.org; Wed, 15 Jul 2009 15:04:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754145AbZGOMvw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 15 Jul 2009 08:51:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753318AbZGOMvw
-	(ORCPT <rfc822;git-outgoing>); Wed, 15 Jul 2009 08:51:52 -0400
-Received: from mail-fx0-f218.google.com ([209.85.220.218]:35187 "EHLO
-	mail-fx0-f218.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752089AbZGOMvv (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 15 Jul 2009 08:51:51 -0400
-Received: by fxm18 with SMTP id 18so3429520fxm.37
-        for <git@vger.kernel.org>; Wed, 15 Jul 2009 05:51:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=5q0CJcmWwCFPoz0QQMsZIb4JncnkL5FVxY0oGzjhMTM=;
-        b=G44YGViuMW3iunw0lUw1m9n+LNxskVcnP4c3wWcIZPTF6E0FBmgTS8YoSGlcQ2unAr
-         DZ8Lv4HYsNopWdw+titCyzkk+eF1BeGibJfFn+GSZYBilG0/zf7HEepoVa52vRKpSyyr
-         FiMFRdGhrXoskrj37B2Zn0EiyMZOofEzatbFY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=eXGxXqyYkMsPU6NA4Pt1j4Bu2SxcIGJQkID2ETXw1VNwVKRKOpSbRWv8V1uT7CB8Wr
-         mY5vsvPB/pe6y+U1X6eryxQqr3/KQLq2Bfpw1XBK38rbo49dbhIhn9HMTPWOThwanLdo
-         eg1rrpFkqZgqbtO5MrpqfhWOETe3jtYEIYSXs=
-Received: by 10.204.114.140 with SMTP id e12mr7625698bkq.68.1247662307982; 
-	Wed, 15 Jul 2009 05:51:47 -0700 (PDT)
-In-Reply-To: <4A5DC56E.8050607@erskinedesign.com>
+	id S1752004AbZGONEO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 15 Jul 2009 09:04:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751888AbZGONEO
+	(ORCPT <rfc822;git-outgoing>); Wed, 15 Jul 2009 09:04:14 -0400
+Received: from ams-iport-1.cisco.com ([144.254.224.140]:17740 "EHLO
+	ams-iport-1.cisco.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750885AbZGONEN (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 15 Jul 2009 09:04:13 -0400
+X-Greylist: delayed 587 seconds by postgrey-1.27 at vger.kernel.org; Wed, 15 Jul 2009 09:04:13 EDT
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: AmAAAEduXUqQ/uCKe2dsb2JhbACZOAEBFiQGnQ6II5EJBYQJgUI
+X-IronPort-AV: E=Sophos;i="4.42,404,1243814400"; 
+   d="scan'208";a="45147124"
+Received: from ams-dkim-1.cisco.com ([144.254.224.138])
+  by ams-iport-1.cisco.com with ESMTP; 15 Jul 2009 12:54:25 +0000
+Received: from ams-core-1.cisco.com (ams-core-1.cisco.com [144.254.224.150])
+	by ams-dkim-1.cisco.com (8.12.11/8.12.11) with ESMTP id n6FCsO4S028567;
+	Wed, 15 Jul 2009 14:54:24 +0200
+Received: from gpk-lds-007.cisco.com (gpk-lds-007.cisco.com [64.103.78.12])
+	by ams-core-1.cisco.com (8.13.8/8.14.3) with ESMTP id n6FCsOR2001251;
+	Wed, 15 Jul 2009 12:54:24 GMT
+Received: from gpk-lds-007.cisco.com (localhost [127.0.0.1])
+	by gpk-lds-007.cisco.com (8.13.1/8.13.1) with ESMTP id n6FCsMOs020490;
+	Wed, 15 Jul 2009 13:54:22 +0100
+Received: (from dfawcus@localhost)
+	by gpk-lds-007.cisco.com (8.13.1/8.13.1/Submit) id n6FCsKqi020373;
+	Wed, 15 Jul 2009 13:54:20 +0100
+Content-Disposition: inline
+In-Reply-To: <7vljmqflti.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.4.1i
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; l=1045; t=1247662464; x=1248526464;
+	c=relaxed/simple; s=amsdkim1002;
+	h=Content-Type:From:Subject:Content-Transfer-Encoding:MIME-Version;
+	d=cisco.com; i=dfawcus@cisco.com;
+	z=From:=20Derek=20Fawcus=20<dfawcus@cisco.com>
+	|Subject:=20Re=3A=20[PATCH=20v2]=20git-am=3A=20fix=20maildi
+	r=20support=20regression=20for=20unordered=20headers=20in=20
+	emails
+	|Sender:=20;
+	bh=bDi8AaZFlQSbFwD+Q6UMLmdcibYnNv8gV9s3eGvwsjI=;
+	b=Ob6kXTYjHnFQpV69aTf72o038Rd0uJvXceqEzIV1HBV/pVcLhJw+Vbc+9l
+	Xjcjgxd4sVFdxSiFAChZIFaWGT+PbnymMn/iXCiucEfWzLyZvQEUg629KyXW
+	nRDoeTLx3g;
+Authentication-Results: ams-dkim-1; header.From=dfawcus@cisco.com; dkim=pass (
+	sig from cisco.com/amsdkim1002 verified; ); 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123305>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123306>
 
-On Wed, Jul 15, 2009 at 14:02, Glen Swinfield<glen@erskinedesign.com> wrote:
-> I cleared my .profile file but it didn't seem to have an effect. I also
-> removed any aliases.
->
-> If that's what it sounds like I'll have another dig around.
+On Wed, Jul 15, 2009 at 12:27:05AM -0700, Junio C Hamano wrote:
+> Nicolas Sebrecht <nicolas.s.dev@gmx.fr> writes:
+> 
+> > Patch format detection introduced by a5a6755a1d4707bf2fab7752e5c974ebf63d086a
+> > may refuse valid patches from verbatim emails.
+> 
+> It is unclear what you meant by "verbatim email".  A verbatim e-mail
+> in mbox begins with "From " header that is already covered in the existing
+> code long before support for stgit/hg was added.
 
-Just do
+I believe he is referring to the claimed support for maildir format boxes.
 
-  echo $PS1
+> But I am not convinced that I understand what _problem_ you are trying to
+> solve in the first place.
 
-and look at the commands it uses. If you just want to get rid
-of the prompt set it to something trivial (i.e. "PS1=\w$ ")
+Assuming it is maildir support,  then there is no 'header' as such in the
+file which can be detected.  One could try and detect that the contents
+are structured as an RFC822 message (but with local line ends),  or one
+could try and detect that the file is within a maildir folder.
+
+It seems this patch is taking the former approach and trying to ensure
+the file consists of header fields.
