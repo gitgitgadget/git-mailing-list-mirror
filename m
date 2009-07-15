@@ -1,76 +1,72 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: "mailinfo: Remove only one set of square brackets" considered
- harmful
-Date: Wed, 15 Jul 2009 15:31:44 -0700 (PDT)
-Message-ID: <alpine.LFD.2.01.0907151520380.13838@localhost.localdomain>
-References: <alpine.LFD.2.01.0907150821280.13838@localhost.localdomain> <7vljmpegy4.fsf@alter.siamese.dyndns.org>
+From: Nicolas Sebrecht <nicolas.s.dev@gmx.fr>
+Subject: [PATCH v3] Re: git-am: fix maildir support regression: accept
+	email file as patch
+Date: Thu, 16 Jul 2009 00:43:08 +0200
+Message-ID: <20090715224308.GA12971@vidovic>
+References: <1654b578a7e045b564c46df4abb6e2196422c2b2.1247696294.git.nicolas.s.dev@gmx.fr>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Andreas Ericsson <ae@op5.se>,
-	Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jul 16 00:32:39 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+To: Nicolas Sebrecht <nicolas.s.dev@gmx.fr>
+X-From: git-owner@vger.kernel.org Thu Jul 16 00:43:22 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MRD1h-0003JD-46
-	for gcvg-git-2@gmane.org; Thu, 16 Jul 2009 00:32:37 +0200
+	id 1MRDC6-0006yj-3N
+	for gcvg-git-2@gmane.org; Thu, 16 Jul 2009 00:43:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755855AbZGOWca (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 15 Jul 2009 18:32:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755848AbZGOWca
-	(ORCPT <rfc822;git-outgoing>); Wed, 15 Jul 2009 18:32:30 -0400
-Received: from smtp1.linux-foundation.org ([140.211.169.13]:60533 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755716AbZGOWc3 (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 15 Jul 2009 18:32:29 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
-	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id n6FMVjB2025580
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Wed, 15 Jul 2009 15:31:46 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id n6FMViZU005411;
-	Wed, 15 Jul 2009 15:31:44 -0700
-X-X-Sender: torvalds@localhost.localdomain
-In-Reply-To: <7vljmpegy4.fsf@alter.siamese.dyndns.org>
-User-Agent: Alpine 2.01 (LFD 1184 2008-12-16)
-X-Spam-Status: No, hits=-3.417 required=5 tests=AWL,BAYES_00,OSDL_NIGERIAN_ESTATE
-X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
+	id S1756272AbZGOWnP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 15 Jul 2009 18:43:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756239AbZGOWnO
+	(ORCPT <rfc822;git-outgoing>); Wed, 15 Jul 2009 18:43:14 -0400
+Received: from mail-ew0-f226.google.com ([209.85.219.226]:35183 "EHLO
+	mail-ew0-f226.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756167AbZGOWnO (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 15 Jul 2009 18:43:14 -0400
+Received: by ewy26 with SMTP id 26so4437098ewy.37
+        for <git@vger.kernel.org>; Wed, 15 Jul 2009 15:43:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:sender:date:from:to:cc
+         :subject:message-id:references:mime-version:content-type
+         :content-disposition:in-reply-to:user-agent;
+        bh=ns2br1zOW2fl3wobQb5k2l1OLDQBNBNMMfAVzZ60Kz4=;
+        b=MAfXFSM30jlsURnpwCKDuLS8V/JwJV46hcoKBRNvv2m1iASh6FE2Pc3WtfWdZo70kz
+         atL5eLvcQxjIj46K+tChdPuyhdzHxYAl1wyfa2yeB43E09t/9WKN7GAU2RQAks4aHf/g
+         mCMl9Q6Y1RJbDfyQpLWeVDyFJFQrU4azo3znw=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=sender:date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=eyja7lTNKt/XgeJ/fPOX343twEXR/NEdolHNVJipm0Stykn9J51FdVUAu3v6eKQE3g
+         VstTbf/6Pt/SsqTFPimPTw5POGX9Vmsi9UsDm5Pllo+Y3jsk/VmiYjsGzTElt07f+K7q
+         hBY8S67maubPP1itSQYZpkZCbzsocj16GJ6Hs=
+Received: by 10.210.88.3 with SMTP id l3mr8813380ebb.17.1247697792606;
+        Wed, 15 Jul 2009 15:43:12 -0700 (PDT)
+Received: from @ (91-164-136-30.rev.libertysurf.net [91.164.136.30])
+        by mx.google.com with ESMTPS id 5sm3097602eyf.48.2009.07.15.15.43.11
+        (version=SSLv3 cipher=RC4-MD5);
+        Wed, 15 Jul 2009 15:43:12 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <1654b578a7e045b564c46df4abb6e2196422c2b2.1247696294.git.nicolas.s.dev@gmx.fr>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123341>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123342>
 
+The 16/07/09, Nicolas Sebrecht wrote:
 
-
-On Wed, 15 Jul 2009, Junio C Hamano wrote:
+> Patch format detection introduced by a5a6755a1d4707bf2fab7752e5c974ebf63d086a
+> may refuse valid patches.
 > 
-> Even though it is silly not to rely on already well established
-> conventions such as X-Mailing-List and List-ID but instead to waste
-> precious real estate at the initial part of the Subject in this century
-> merely for list identification purposes, this change regresses the end
-> result.
+> We keep detection on the first three lines. Emails may have:
+>  - header fields in a random order;
+>  - folded lines.
 
-Note that at least for the security list, it's not about "list 
-identification", but simply to make the thing stand out in peoples 
-mailboxes.
+I realized this patch is wrong. Please ignore it.
 
-But I do agree that it's not perfect, and I would like to make the bracket 
-removal stricter. Andreas' patch was a step in that direction. But 
-different users would probably have different requirements.
-
-For example, from a strictly git tools perspective, it's not even "any 
-square bracket", and some people might want to remove only a single 
-bracketed level, and only if it starts with "[PATCH".
-
-For other uses, we want to remove the "Re: " at the beginning (and some 
-crazy email readers use language/locale-specific versions like "Vs:" for 
-that), and examples like the above "[Security]" from the security list.
-
-So maybe the right solution is to allow people to configure this somehow.
-
-		Linus
+-- 
+Nicolas Sebrecht
