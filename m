@@ -1,74 +1,97 @@
-From: Elijah Newren <newren@gmail.com>
-Subject: Re: [ANNOUNCE] Git User's Survey 2009
-Date: Tue, 14 Jul 2009 22:40:00 -0600
-Message-ID: <51419b2c0907142140n7d7f64e8y3d74c29f32e689ed@mail.gmail.com>
-References: <200907150245.06067.jnareb@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jul 15 06:40:13 2009
+From: Nicolas Sebrecht <nicolas.s.dev@gmx.fr>
+Subject: [PATCH v2] git-am: fix maildir support regression for unordered headers in emails
+Date: Wed, 15 Jul 2009 07:52:36 +0200
+Message-ID: <2433101adeafddeab78815083446552ff3ea9f49.1247636959.git.nicolas.s.dev@gmx.fr>
+References: <20090714122354.GA13806@vidovic>
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Giuseppe Bilotta <giuseppe.bilotta@gmail.com>,
+	Johannes Sixt <j.sixt@viscovery.net>,
+	Nicolas Sebrecht <nicolas.s.dev@gmx.fr>
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Jul 15 07:53:20 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MQwHt-0003bO-5z
-	for gcvg-git-2@gmane.org; Wed, 15 Jul 2009 06:40:13 +0200
+	id 1MQxQc-0007EI-CP
+	for gcvg-git-2@gmane.org; Wed, 15 Jul 2009 07:53:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751419AbZGOEkD convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 15 Jul 2009 00:40:03 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751308AbZGOEkD
-	(ORCPT <rfc822;git-outgoing>); Wed, 15 Jul 2009 00:40:03 -0400
-Received: from an-out-0708.google.com ([209.85.132.241]:34014 "EHLO
-	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751280AbZGOEkB convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 15 Jul 2009 00:40:01 -0400
-Received: by an-out-0708.google.com with SMTP id d40so6952446and.1
-        for <git@vger.kernel.org>; Tue, 14 Jul 2009 21:40:01 -0700 (PDT)
+	id S1752102AbZGOFxJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 15 Jul 2009 01:53:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752021AbZGOFxI
+	(ORCPT <rfc822;git-outgoing>); Wed, 15 Jul 2009 01:53:08 -0400
+Received: from mail-ew0-f226.google.com ([209.85.219.226]:55255 "EHLO
+	mail-ew0-f226.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752013AbZGOFxH (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 15 Jul 2009 01:53:07 -0400
+Received: by ewy26 with SMTP id 26so3788444ewy.37
+        for <git@vger.kernel.org>; Tue, 14 Jul 2009 22:53:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=6J8ufGU3/CFJCwRp9ylG9s1cINuY1ZzQ31r6e7i1p8M=;
-        b=sOy29bt60in3mSwxdFJqFDXbN4yje6lSbXKrgve1bz/mOGhPDx965jdg6nEK7aEPyY
-         M2+3J73Ol6bB3uUHD6C+krv8+vCSO2UbmKLUrdhgN0TbefXaTmBlo1eb3ZHxPGK+UhOA
-         ilQ5WHMDPkktel9Ndh+FxXaHVRNeEVMo5iAIY=
+        h=domainkey-signature:received:received:sender:from:to:cc:subject
+         :date:message-id:x-mailer:in-reply-to:references;
+        bh=nwuh00pUMPQZqnrjIhTgDDTalJIw/ggVJsnXNjiNBeI=;
+        b=uPvXU+SR/2LM9mZJ5239ZCpAn6KCENU8u/F+ejEILb77+t1w1wyagRVGH6HDA4lwRz
+         wCeocRC+Vw/KfmY+KUIh5O9XGmtfQ0MEkjDTouxkv9JLZ8N96go1i2JI2D4nkWc7fy7d
+         QE/H75zPw8QeeyOt9ZuH82vSowqxm6bcEBng4=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=t03QU09FS2AdyOsZ7u6cVl1X7K05LDaVhJuwM+ve/Mk+mvOQcElpDmC7bL61xKEaFk
-         kzr2frQz81yVn8KfOj03P5DTuc/hKogEmfXu1Em5rswH5+9mYSGD/UuB4Bk4RRoTlMC4
-         nZjxpx0x3BfmGuYbiq8fdySQhsFLDFRqovtOg=
-Received: by 10.100.95.15 with SMTP id s15mr535726anb.88.1247632800896; Tue, 
-	14 Jul 2009 21:40:00 -0700 (PDT)
-In-Reply-To: <200907150245.06067.jnareb@gmail.com>
+        h=sender:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
+         :references;
+        b=T/+Y15MaMWWQm3BUF9RTlpV2qggEMTPzBkpxloUa0iTjp95ICVS+/nKnWRNFoBa7MF
+         XgBo3iSQIKF9Eyh5wcTMkMd/fk7I/xFJdgm5xVQ1ZnOyvjKVXTsip/jrB+RZ4VTJwhYo
+         c1UQx60bdOToinkEv85K10pPy554LKpunqsG4=
+Received: by 10.210.110.2 with SMTP id i2mr8783662ebc.8.1247637186110;
+        Tue, 14 Jul 2009 22:53:06 -0700 (PDT)
+Received: from localhost (91-164-136-30.rev.libertysurf.net [91.164.136.30])
+        by mx.google.com with ESMTPS id 7sm2199070eyb.25.2009.07.14.22.53.03
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Tue, 14 Jul 2009 22:53:04 -0700 (PDT)
+X-Mailer: git-send-email 1.6.4.rc0.129.gf738
+In-Reply-To: <20090714122354.GA13806@vidovic>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123285>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123286>
 
-Hi,
+Patch format detection introduced by a5a6755a1d4707bf2fab7752e5c974ebf63d086a
+may refuse valid patches from verbatim emails.
 
-Thanks for putting the survey together.  Just one quick comment:
+Emails may have header fields in a random order.
 
-2009/7/14 Jakub Narebski <jnareb@gmail.com>:
-> The survey can be found here:
-> =C2=A0http://tinyurl.com/GitSurvey2009
+Signed-off-by: Nicolas Sebrecht <nicolas.s.dev@gmx.fr>
+---
+ git-am.sh |   10 ++++++++++
+ 1 files changed, 10 insertions(+), 0 deletions(-)
 
-This link works for me.
-
-> =C2=A0http://www.survs.com/survey?id=3DM3PIVU72&channel=3D2WXE4BVTW8
-
-This link takes me to a page that says, "This survey is currently
-closed. Please contact the author of this survey for further
-assistance."  From following the first link, I am assuming the correct
-link you intended here is
-http://www.survs.com/survey?id=3D2PIMZGU0&channel=3DQ0EKJ3NF54.  Or is
-something strange going on at my end?
-
-
-Elijah
+diff --git a/git-am.sh b/git-am.sh
+index d64d997..18e53d0 100755
+--- a/git-am.sh
++++ b/git-am.sh
+@@ -146,6 +146,7 @@ clean_abort () {
+ }
+ 
+ patch_format=
++is_verbatim_email=
+ 
+ check_patch_format () {
+ 	# early return if patch_format was set from the command line
+@@ -191,6 +192,15 @@ check_patch_format () {
+ 			esac
+ 			;;
+ 		esac
++		# Keep maildir workflows support.
++		# Verbatim emails may have header fields in random order.
++		is_verbatim_email='true'
++		for line in "$l1" "$l2" "$l3"; do
++			printf "$line" | grep --quiet --extended-regexp '^([^\ ])+: +.*' ||
++				is_verbatim_email='false'
++		done
++		# next treatments don't differ from mailbox format
++		[[ $is_verbatim_email == 'true' ]] && patch_format=mbox
+ 	} < "$1" || clean_abort
+ }
+ 
+-- 
+1.6.4.rc0.129.gf738
