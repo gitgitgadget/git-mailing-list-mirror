@@ -1,74 +1,144 @@
-From: Tim Visher <tim.visher@gmail.com>
-Subject: Re: Make a non-bare repo bare.
-Date: Wed, 15 Jul 2009 20:54:01 -0400
-Message-ID: <c115fd3c0907151754o55acec54ocdcdebe177b3c9c4@mail.gmail.com>
-References: <c115fd3c0907151443h49aaac60r3462c69f55ed2d9f@mail.gmail.com>
-	 <4A5E4EBA.4050708@gnu.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [ANNOUNCE] GIT 1.6.4.rc1
+Date: Wed, 15 Jul 2009 17:57:12 -0700
+Message-ID: <7vmy75bg2f.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Paolo Bonzini <bonzini@gnu.org>
-X-From: git-owner@vger.kernel.org Thu Jul 16 02:54:25 2009
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@gmane.org
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: linux-kernel-owner+glk-linux-kernel-3=40m.gmane.org-S1756812AbZGPA5W@vger.kernel.org Thu Jul 16 02:57:59 2009
+Return-path: <linux-kernel-owner+glk-linux-kernel-3=40m.gmane.org-S1756812AbZGPA5W@vger.kernel.org>
+Envelope-to: glk-linux-kernel-3@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MRFEt-0003dg-Dh
-	for gcvg-git-2@gmane.org; Thu, 16 Jul 2009 02:54:23 +0200
+	id 1MRFIL-0004Zo-O8
+	for glk-linux-kernel-3@gmane.org; Thu, 16 Jul 2009 02:57:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756771AbZGPAyE convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 15 Jul 2009 20:54:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756746AbZGPAyE
-	(ORCPT <rfc822;git-outgoing>); Wed, 15 Jul 2009 20:54:04 -0400
-Received: from mail-yx0-f184.google.com ([209.85.210.184]:58676 "EHLO
-	mail-yx0-f184.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756761AbZGPAyC convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 15 Jul 2009 20:54:02 -0400
-Received: by yxe14 with SMTP id 14so6102617yxe.33
-        for <git@vger.kernel.org>; Wed, 15 Jul 2009 17:54:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=Fz02tIinG2YJnPNDRTnUirHb5VwP8AMTSq1Rt9VW/AI=;
-        b=ezLke0K5oepcZwxkguUKXIXEM/RflugRYHQKFn2evO3mQiszXJ33wWv2dmmpwbszf/
-         uCN8YjCOMemLArvoKJS7Gwjzgsj7tICq4iWzVqpVgExttKOcpAP/QYKlqy+2LcmsFx7N
-         xpfqCiLqtx48j7igEHH0LPLAKEfh+fz3yeDd8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=DQ12z9Fn8dg3UobqJ4LL+amCkxBF6/PRzq8+nK7bxVbM142ZDuR+fP6e1jXfefDxmr
-         LEw42J/rCDNQzSFFL88YZbMToZ/r3OqO1gXaV07yvjilIjU91z3zMj9AHHYuxXQ3pn/u
-         GZT8PBvec+uMazRXtvOVLmJbxGAxcmyHQY0zw=
-Received: by 10.100.6.16 with SMTP id 16mr11075639anf.52.1247705641953; Wed, 
-	15 Jul 2009 17:54:01 -0700 (PDT)
-In-Reply-To: <4A5E4EBA.4050708@gnu.org>
-Sender: git-owner@vger.kernel.org
+	id S1756812AbZGPA5W (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
+	Wed, 15 Jul 2009 20:57:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756672AbZGPA5V
+	(ORCPT <rfc822;linux-kernel-outgoing>);
+	Wed, 15 Jul 2009 20:57:21 -0400
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:62674 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756646AbZGPA5U (ORCPT
+	<rfc822;linux-kernel@vger.kernel.org>);
+	Wed, 15 Jul 2009 20:57:20 -0400
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id CB7FE4F17;
+	Wed, 15 Jul 2009 20:57:18 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id AB62E4F16; Wed,
+ 15 Jul 2009 20:57:13 -0400 (EDT)
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 9C93A1A2-71A3-11DE-813F-F699A5B33865-77302942!a-sasl-quonix.pobox.com
+Sender: linux-kernel-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123349>
+List-ID: <linux-kernel.vger.kernel.org>
+X-Mailing-List: linux-kernel@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123350>
 
-On Wed, Jul 15, 2009 at 5:48 PM, Paolo Bonzini<bonzini@gnu.org> wrote:
-> On 07/15/2009 11:43 PM, Tim Visher wrote:
->> I recently had occasion to make a previously non-bare repo bare. =C2=
-=A0Is
->> there any way to do this? =C2=A0It will not allow me to delete a bra=
-nch
->> that I'm on so I wasn't sure how to proceed.
->
-> Just do "mv repo/.git repo.git; rm -rf repo" (with care!).
+A release candidate GIT 1.6.4.rc1 is available at the usual places
+for testing:
 
-Thanks, Paolo.
+  http://www.kernel.org/pub/software/scm/git/
 
---=20
+  git-1.6.4.rc1.tar.{gz,bz2}			(source tarball)
+  git-htmldocs-1.6.4.rc1.tar.{gz,bz2}		(preformatted docs)
+  git-manpages-1.6.4.rc1.tar.{gz,bz2}		(preformatted docs)
 
-In Christ,
+The RPM binary packages for a few architectures are found in:
 
-Timmy V.
+  testing/git-*-1.6.4.rc1-1.fc9.$arch.rpm	(RPM)
 
-http://burningones.com/
-http://five.sentenc.es/ - Spend less time on e-mail
+GIT v1.6.4 Release Notes (draft)
+================================
+
+With the next major release, "git push" into a branch that is
+currently checked out will be refused by default.  You can choose
+what should happen upon such a push by setting the configuration
+variable receive.denyCurrentBranch in the receiving repository.
+
+To ease the transition plan, the receiving repository of such a
+push running this release will issue a big warning when the
+configuration variable is missing.  Please refer to:
+
+  http://git.or.cz/gitwiki/GitFaq#non-bare
+  http://thread.gmane.org/gmane.comp.version-control.git/107758/focus=108007
+
+for more details on the reason why this change is needed and the
+transition plan.
+
+For a similar reason, "git push $there :$killed" to delete the branch
+$killed in a remote repository $there, if $killed branch is the current
+branch pointed at by its HEAD, gets a large warning.  You can choose what
+should happen upon such a push by setting the configuration variable
+receive.denyDeleteCurrent in the receiving repository.
+
+When the user does not tell "git push" what to push, it has always
+pushed matching refs.  For some people it is unexpected, and a new
+configuration variable push.default has been introduced to allow
+changing a different default behaviour.  To advertise the new feature,
+a big warning is issued if this is not configured and a git push without
+arguments is attempted.
+
+	Side note: we might want to tone this down, as it does not seem
+	likely for us to change the default behaviour when this option is
+	not set.
+
+
+Updates since v1.6.3
+--------------------
+
+(subsystems)
+
+ * gitweb Perl style clean-up.
+
+ * git-svn updates, including a new --authors-prog option to map author
+   names by invoking an external program.
+
+(portability)
+
+ * We feed iconv with "UTF-8" instead of "utf8"; the former is
+   understood more widely.
+
+(performance)
+
+(usability, bells and whistles)
+
+ * "git add --edit" lets users edit the whole patch text to fine-tune what
+   is added to the index.
+
+ * "git log --graph" draws graphs more compactly by using horizonal lines
+   when able.
+
+ * "git log --decorate" shows shorter refnames by stripping well-known
+   refs/* prefix.
+
+ * "git send-email" understands quoted aliases in .mailrc files (might
+   have to be backported to 1.6.3.X).
+
+ * "git send-email" can fetch the sender address from the configuration
+   variable "sendmail.from" (and "sendmail.<identity>.from").
+
+ * "git show-branch" can color its output.
+
+ * "add" and "update" subcommands to "git submodule" learned --reference
+   option to use local clone with references.
+
+(developers)
+
+ * A major part of the "git bisect" wrapper has moved to C.
+
+Fixes since v1.6.3
+------------------
+
+All of the fixes in v1.6.3.X maintenance series are included in this
+release, unless otherwise noted.
+
+Here are fixes that this release has, but have not been backported to
+v1.6.3.X series.
+
+ * The way Git.pm sets up a Repository object was not friendly to callers
+   that chdir around.  It now internally records the repository location
+   as an absolute path when autodetected.
