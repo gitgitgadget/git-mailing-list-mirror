@@ -1,94 +1,55 @@
-From: =?ISO-8859-1?Q?Santi_B=E9jar?= <santi@agolina.net>
-Subject: Re: [PATCH 2/2] pull: support rebased upstream + fetch + pull 
-	--rebase
-Date: Thu, 16 Jul 2009 08:29:22 +0200
-Message-ID: <adf1fd3d0907152329v7f49999u42b0d0fc4d39f5e9@mail.gmail.com>
-References: <1247702955-1559-1-git-send-email-santi@agolina.net>
-	 <1247702955-1559-2-git-send-email-santi@agolina.net>
-	 <7vab35cw2e.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [ANNOUNCE] GIT 1.6.4.rc1
+Date: Wed, 15 Jul 2009 23:31:04 -0700
+Message-ID: <7v3a8xb0lz.fsf@alter.siamese.dyndns.org>
+References: <7vmy75bg2f.fsf@alter.siamese.dyndns.org>
+ <4A5EA598.5050801@garzik.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jul 16 08:30:14 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, LKML <linux-kernel@vger.kernel.org>
+To: Jeff Garzik <jeff@garzik.org>
+X-From: git-owner@vger.kernel.org Thu Jul 16 08:31:34 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MRKTt-0002RD-Ej
-	for gcvg-git-2@gmane.org; Thu, 16 Jul 2009 08:30:13 +0200
+	id 1MRKVB-0002tS-Et
+	for gcvg-git-2@gmane.org; Thu, 16 Jul 2009 08:31:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757253AbZGPG32 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 16 Jul 2009 02:29:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757067AbZGPG31
-	(ORCPT <rfc822;git-outgoing>); Thu, 16 Jul 2009 02:29:27 -0400
-Received: from mail-fx0-f218.google.com ([209.85.220.218]:60246 "EHLO
-	mail-fx0-f218.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752418AbZGPG3Y convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 16 Jul 2009 02:29:24 -0400
-Received: by fxm18 with SMTP id 18so3884275fxm.37
-        for <git@vger.kernel.org>; Wed, 15 Jul 2009 23:29:22 -0700 (PDT)
-Received: by 10.204.118.132 with SMTP id v4mr8458636bkq.3.1247725762838; Wed, 
-	15 Jul 2009 23:29:22 -0700 (PDT)
-In-Reply-To: <7vab35cw2e.fsf@alter.siamese.dyndns.org>
+	id S1756613AbZGPGbM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 16 Jul 2009 02:31:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756493AbZGPGbM
+	(ORCPT <rfc822;git-outgoing>); Thu, 16 Jul 2009 02:31:12 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:46438 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756286AbZGPGbM (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 16 Jul 2009 02:31:12 -0400
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 4E8F48329;
+	Thu, 16 Jul 2009 02:31:10 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id D82488327; Thu, 16 Jul 2009
+ 02:31:05 -0400 (EDT)
+In-Reply-To: <4A5EA598.5050801@garzik.org> (Jeff Garzik's message of "Wed\,
+ 15 Jul 2009 23\:59\:20 -0400")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 4042DA2E-71D2-11DE-9740-9AE02FB70C38-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123365>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123366>
 
-2009/7/16 Junio C Hamano <gitster@pobox.com>:
-> Santi B=E9jar <santi@agolina.net> writes:
->
->> =A0 =A0 =A0 reflist=3D"$(get_remote_merge_branch "$@" 2>/dev/null)" =
-&&
->> - =A0 =A0 oldremoteref=3D"$(git rev-parse -q --verify \
->> - =A0 =A0 =A0 =A0 =A0 =A0 "$reflist")"
->> + =A0 =A0 num=3D0 &&
->> + =A0 =A0 while oldremoteref=3D"$(git rev-parse -q --verify "$reflis=
-t@{$num}")"
->
-> Applying @{nth} reflog notation to something that identifies itself a=
-s a
-> "list" made me go "Huh?". =A0Why is this variable called refLIST? =A0=
-Shouldn't
-> it be simply called something like "remoteref" or even "ref"?
+Jeff Garzik <jeff@garzik.org> writes:
 
-It used to be a list, before my patch 97af7ff (parse-remote: function
-to get the tracking branch to be merge, 2009-06-12). I'll change it.
+> Is there some sort of guide to the new best practices for handling
+> trees such as git.kernel.org, where one pushes into "foo.git"
+> directly, and there is no checked-out source code at all?
 
->
->> + =A0 =A0 do
->> + =A0 =A0 =A0 =A0 =A0 =A0 test $oldremoteref =3D $(git merge-base $o=
-ldremoteref $curr_branch) &&
->> + =A0 =A0 =A0 =A0 =A0 =A0 break
->> + =A0 =A0 =A0 =A0 =A0 =A0 num=3D$((num+1))
->
-> I think we always write "num=3D$(( $num + 1 ))" for portability; noti=
-ce the
-> lack of $ in your version.
+I think old repositories will be helped if you add
 
-Oops, you are right. I somehow missed, I even did "git grep "((" *.sh"
-to check it.
+	[core]
+        	bare
 
->
->> + =A0 =A0 done
->
-> Does this loop ever give up? =A0Should it?
-
-When remote/$origin/$branch@{nth} does not exist. I don't think we
-need another way to give up (nth<10?) because normally nth is small,
-it does not harm the normal case and it can help when nth is large.
-
->
-> What happens in the subsequent code outside of the patch context, whe=
-n
-> this loop does not find any suitable "old" value?
-
-Then the $oldremoteref is empty and in the git-rebase command it is
-used as ${oldremoteref:-$merge_head} so it get replaced by
-$merge_head.
-
-Thanks,
-Santi
+to their foo.git/config files.
