@@ -1,83 +1,89 @@
 From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: Make a non-bare repo bare.
-Date: Thu, 16 Jul 2009 13:47:01 -0700
-Message-ID: <7vd4808iey.fsf@alter.siamese.dyndns.org>
+Date: Thu, 16 Jul 2009 13:51:44 -0700
+Message-ID: <7v8wio8i73.fsf@alter.siamese.dyndns.org>
 References: <c115fd3c0907151443h49aaac60r3462c69f55ed2d9f@mail.gmail.com>
- <7vbpnlbbln.fsf@alter.siamese.dyndns.org> <h3mpls$9dt$1@ger.gmane.org>
- <e2b179460907160155g7c84b083u8a1dd6ba193f4531@mail.gmail.com>
+ <7vbpnlbbln.fsf@alter.siamese.dyndns.org>
+ <2e24e5b90907160439i29171e9fka3baf6bf871a6011@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Graeme Geldenhuys <graemeg@gmail.com>, git@vger.kernel.org
-To: Mike Ralphson <mike.ralphson@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jul 16 22:47:17 2009
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Tim Visher <tim.visher@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Sitaram Chamarty <sitaramc@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jul 16 22:52:02 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MRXrI-00027b-Nh
-	for gcvg-git-2@gmane.org; Thu, 16 Jul 2009 22:47:17 +0200
+	id 1MRXvt-000409-Cj
+	for gcvg-git-2@gmane.org; Thu, 16 Jul 2009 22:52:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933337AbZGPUrH convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 16 Jul 2009 16:47:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933328AbZGPUrH
-	(ORCPT <rfc822;git-outgoing>); Thu, 16 Jul 2009 16:47:07 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:47746 "EHLO
+	id S933352AbZGPUvy convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 16 Jul 2009 16:51:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933346AbZGPUvy
+	(ORCPT <rfc822;git-outgoing>); Thu, 16 Jul 2009 16:51:54 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:59272 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933325AbZGPUrG (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 16 Jul 2009 16:47:06 -0400
+	with ESMTP id S933345AbZGPUvx (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 16 Jul 2009 16:51:53 -0400
 Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 64321676C;
-	Thu, 16 Jul 2009 16:47:06 -0400 (EDT)
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id C44F48964;
+	Thu, 16 Jul 2009 16:51:51 -0400 (EDT)
 Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id B7ADA676B; Thu,
- 16 Jul 2009 16:47:02 -0400 (EDT)
-In-Reply-To: <e2b179460907160155g7c84b083u8a1dd6ba193f4531@mail.gmail.com>
- (Mike Ralphson's message of "Thu\, 16 Jul 2009 09\:55\:27 +0100")
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 23E758963; Thu, 16 Jul 2009
+ 16:51:45 -0400 (EDT)
+In-Reply-To: <2e24e5b90907160439i29171e9fka3baf6bf871a6011@mail.gmail.com>
+ (Sitaram Chamarty's message of "Thu\, 16 Jul 2009 17\:09\:37 +0530")
 User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: D2E37786-7249-11DE-9EF3-F699A5B33865-77302942!a-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 7CF8E3FA-724A-11DE-BD49-AEF1826986A2-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123421>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123422>
 
-Mike Ralphson <mike.ralphson@gmail.com> writes:
+Sitaram Chamarty <sitaramc@gmail.com> writes:
 
-> 2009/7/16 Graeme Geldenhuys <graemeg@gmail.com>:
->> Junio C Hamano wrote:
->>>
->>> Funny.
->>>
->>> =C2=A0 =C2=A0http://article.gmane.org/gmane.comp.version-control.gi=
-t/123303
->>>
->>> It is posed as a question but describes the correct (and officially
->>> supported) procedure.
+> On Thu, Jul 16, 2009 at 8:03 AM, Junio C Hamano<gitster@pobox.com> wr=
+ote:
+>> Tim Visher <tim.visher@gmail.com> writes:
 >>
+>>> Hello Everyone,
+>>>
+>>> I recently had occasion to make a previously non-bare repo bare. =C2=
+=A0Is
+>>> there any way to do this? =C2=A0It will not allow me to delete a br=
+anch
+>>> that I'm on so I wasn't sure how to proceed.
 >>
->> Now it deserves to be in some Git FAQ. It seems the issue is more co=
-mmon
->> than I thought. :-)
+>> Funny.
+>>
+>> =C2=A0 =C2=A0http://article.gmane.org/gmane.comp.version-control.git=
+/123303
+>>
+>> It is posed as a question but describes the correct (and officially
+>> supported) procedure.
 >
-> It already is
->
-> http://git.or.cz/gitwiki/GitFaq#HowdoImakeexistingnon-barerepositoryb=
-are.3F
->
-> unless that's new?
+> The linked procedure uses git clone --bare.  It is my belief (and
+> please correct me if I'm wrong) that only a git clone --mirror
+> actually does what you want here -- a mere "bare" clone would lose
+> your remotes and their tracking branches would it not?
 
-Somebody needs to promise to keep that entry up-to-date, or we should
-rewrite it so that we do not expose such an implementation detail.
+Depends on "what you want here".
 
-Even today core.bare is not the only difference between a repository wi=
-th
-a work tree and a bare one.  We also set core.logallrefupdates these da=
-ys
-for a repository with a work tree, so the procedure described there is
-already stale.  And this kind of implementation details are bound to
-change.
+I assumed that the request was to set up the most typical use of a bare
+repository, that is to prepare a distribution point, separate from your
+primary working repository with a work tree, from which you push your
+updates into this new bare repository.
 
-Asking git what to do is the only reliable "cut-and-paste-ready" recipe=
-=2E
+And in such a distribution point, you do not need nor want remotes.  Th=
+e
+point of remote tracking branches is to let you peek what others are do=
+ing
+and merge with them, and that is done while you advance your history in
+your primary working area with the work tree.  It does not happen in yo=
+ur
+distribution point.
