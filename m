@@ -1,91 +1,191 @@
-From: Nicolas Sebrecht <nicolas.s.dev@gmx.fr>
-Subject: [PATCH v3] Re: git-am: fix maildir support regression: accept
-	email file as patch
-Date: Thu, 16 Jul 2009 04:59:21 +0200
-Message-ID: <20090716025921.GE12971@vidovic>
-References: <1654b578a7e045b564c46df4abb6e2196422c2b2.1247696294.git.nicolas.s.dev@gmx.fr> <7v1voheevy.fsf@alter.siamese.dyndns.org> <7vfxcxcxg1.fsf@alter.siamese.dyndns.org> <20090716010001.GC12971@vidovic> <7vfxcxbbqw.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Nicolas Sebrecht <nicolas.s.dev@gmx.fr>, git@vger.kernel.org,
-	Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+From: Tommy Nordgren <tommy.nordgren@comhem.se>
+Subject: Re: [ANNOUNCE] GIT 1.6.4.rc1
+Date: Thu, 16 Jul 2009 05:51:48 +0200
+Message-ID: <057D2A1F-0383-4AE4-A431-54D6C1F90D85@comhem.se>
+References: <7vmy75bg2f.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0 (Apple Message framework v935.3)
+Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jul 16 04:59:34 2009
+X-From: git-owner@vger.kernel.org Thu Jul 16 05:52:07 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MRHC1-0003mT-BE
-	for gcvg-git-2@gmane.org; Thu, 16 Jul 2009 04:59:33 +0200
+	id 1MRI0s-0008Uk-5i
+	for gcvg-git-2@gmane.org; Thu, 16 Jul 2009 05:52:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757232AbZGPC71 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 15 Jul 2009 22:59:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757230AbZGPC71
-	(ORCPT <rfc822;git-outgoing>); Wed, 15 Jul 2009 22:59:27 -0400
-Received: from mail-ew0-f226.google.com ([209.85.219.226]:44481 "EHLO
-	mail-ew0-f226.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757222AbZGPC70 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 15 Jul 2009 22:59:26 -0400
-Received: by ewy26 with SMTP id 26so4525078ewy.37
-        for <git@vger.kernel.org>; Wed, 15 Jul 2009 19:59:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:sender:date:from:to:cc
-         :subject:message-id:references:mime-version:content-type
-         :content-disposition:in-reply-to:user-agent;
-        bh=xRfnHa7iHnor88iNwhUUUUbOpgTWg43CUb8bw9jgp64=;
-        b=P9Cp7QSizuQTMOQsLNDM+26Rg3aaqEzcbEzAxVCIFte6gyXMfmMqxUjTdPOknic3gO
-         Q6g8r/QqKfASnlvnttSG4TZN1An60CzqX80VOMLo/2M5bf+cZ+tAMeHXBVzT5q8taZxZ
-         cSDv/IOCtxOFIgDW4unm98rN5W1Yc3nKGwo6A=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=sender:date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=VmZNq0n6BU2syFJvoXp8CoUotCGT2KNoyhTO24hnw/eeGBN5ggmTObXRWuQv7tqRNT
-         Q6JjKwDvgPgUFQU4tAncKcdoDy6hXxoqbEURd5r70PXswUKxEKvNhifH27CdeB0dIDwn
-         6Rjx2iLXno1k0rQA/LAwzRV93Twlvse1Ooa/U=
-Received: by 10.210.81.9 with SMTP id e9mr10229280ebb.42.1247713165085;
-        Wed, 15 Jul 2009 19:59:25 -0700 (PDT)
-Received: from @ (91-164-136-30.rev.libertysurf.net [91.164.136.30])
-        by mx.google.com with ESMTPS id 23sm3074692eya.49.2009.07.15.19.59.23
-        (version=SSLv3 cipher=RC4-MD5);
-        Wed, 15 Jul 2009 19:59:24 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <7vfxcxbbqw.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+	id S1757380AbZGPDv6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 15 Jul 2009 23:51:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757368AbZGPDv6
+	(ORCPT <rfc822;git-outgoing>); Wed, 15 Jul 2009 23:51:58 -0400
+Received: from ch-smtp02.sth.basefarm.net ([80.76.149.213]:58564 "EHLO
+	ch-smtp02.sth.basefarm.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1757345AbZGPDv5 (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 15 Jul 2009 23:51:57 -0400
+Received: from c213-89-136-212.bredband.comhem.se ([213.89.136.212]:34004 helo=[192.168.0.4])
+	by ch-smtp02.sth.basefarm.net with esmtp (Exim 4.69)
+	(envelope-from <tommy.nordgren@comhem.se>)
+	id 1MRI0f-0006hf-8z; Thu, 16 Jul 2009 05:51:55 +0200
+In-Reply-To: <7vmy75bg2f.fsf@alter.siamese.dyndns.org>
+X-Mailer: Apple Mail (2.935.3)
+X-Originating-IP: 213.89.136.212
+X-Scan-Result: No virus found in message 1MRI0f-0006hf-8z.
+X-Scan-Signature: ch-smtp02.sth.basefarm.net 1MRI0f-0006hf-8z e244be2601cb3d529ef8f6f4b2e558ad
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123358>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123359>
 
-The 15/07/09, Junio C Hamano wrote:
-> Nicolas Sebrecht <nicolas.s.dev@gmx.fr> writes:
+Testing a build of this version fails at a late stage, with an error  
+that aborts testing.
+My system is Mac OS X 10.5.8
+Fragment of output at failure:
+*** t9200-git-cvsexportcommit.sh ***
+*   ok 1: New file
+..snip
+* FAIL 14: re-commit a removed filename which remains in CVS attic
+	
+	
+	    (cd "$CVSWORK" &&
+	     echo >attic_gremlin &&
+	     cvs -Q add attic_gremlin &&
+	     cvs -Q ci -m "added attic_gremlin" &&
+	     rm attic_gremlin &&
+	     cvs -Q rm attic_gremlin &&
+	     cvs -Q ci -m "removed attic_gremlin") &&
+	
+	    echo > attic_gremlin &&
+	    git add attic_gremlin &&
+	    git commit -m "Added attic_gremlin" &&
+		git cvsexportcommit -w "$CVSWORK" -c HEAD &&
+	    (cd "$CVSWORK"; cvs -Q update -d) &&
+	    test -f "$CVSWORK/attic_gremlin"
+	
+* failed 1 among 14 test(s)
+
+On Jul 16, 2009, at 2:57 AM, Junio C Hamano wrote:
+
+> A release candidate GIT 1.6.4.rc1 is available at the usual places
+> for testing:
 >
-> So I do not think there is any breakage that rejects good input with his
-> patch.
+>  http://www.kernel.org/pub/software/scm/git/
+>
+>  git-1.6.4.rc1.tar.{gz,bz2}			(source tarball)
+>  git-htmldocs-1.6.4.rc1.tar.{gz,bz2}		(preformatted docs)
+>  git-manpages-1.6.4.rc1.tar.{gz,bz2}		(preformatted docs)
+>
+> The RPM binary packages for a few architectures are found in:
+>
+>  testing/git-*-1.6.4.rc1-1.fc9.$arch.rpm	(RPM)
+>
+> GIT v1.6.4 Release Notes (draft)
+> ================================
+>
+> With the next major release, "git push" into a branch that is
+> currently checked out will be refused by default.  You can choose
+> what should happen upon such a push by setting the configuration
+> variable receive.denyCurrentBranch in the receiving repository.
+>
+> To ease the transition plan, the receiving repository of such a
+> push running this release will issue a big warning when the
+> configuration variable is missing.  Please refer to:
+>
+>  http://git.or.cz/gitwiki/GitFaq#non-bare
+>  http://thread.gmane.org/gmane.comp.version-control.git/107758/focus=108007
+>
+> for more details on the reason why this change is needed and the
+> transition plan.
+>
+> For a similar reason, "git push $there :$killed" to delete the branch
+> $killed in a remote repository $there, if $killed branch is the  
+> current
+> branch pointed at by its HEAD, gets a large warning.  You can choose  
+> what
+> should happen upon such a push by setting the configuration variable
+> receive.denyDeleteCurrent in the receiving repository.
+>
+> When the user does not tell "git push" what to push, it has always
+> pushed matching refs.  For some people it is unexpected, and a new
+> configuration variable push.default has been introduced to allow
+> changing a different default behaviour.  To advertise the new feature,
+> a big warning is issued if this is not configured and a git push  
+> without
+> arguments is attempted.
+>
+> 	Side note: we might want to tone this down, as it does not seem
+> 	likely for us to change the default behaviour when this option is
+> 	not set.
+>
+>
+> Updates since v1.6.3
+> --------------------
+>
+> (subsystems)
+>
+> * gitweb Perl style clean-up.
+>
+> * git-svn updates, including a new --authors-prog option to map author
+>   names by invoking an external program.
+>
+> (portability)
+>
+> * We feed iconv with "UTF-8" instead of "utf8"; the former is
+>   understood more widely.
+>
+> (performance)
+>
+> (usability, bells and whistles)
+>
+> * "git add --edit" lets users edit the whole patch text to fine-tune  
+> what
+>   is added to the index.
+>
+> * "git log --graph" draws graphs more compactly by using horizonal  
+> lines
+>   when able.
+>
+> * "git log --decorate" shows shorter refnames by stripping well-known
+>   refs/* prefix.
+>
+> * "git send-email" understands quoted aliases in .mailrc files (might
+>   have to be backported to 1.6.3.X).
+>
+> * "git send-email" can fetch the sender address from the configuration
+>   variable "sendmail.from" (and "sendmail.<identity>.from").
+>
+> * "git show-branch" can color its output.
+>
+> * "add" and "update" subcommands to "git submodule" learned -- 
+> reference
+>   option to use local clone with references.
+>
+> (developers)
+>
+> * A major part of the "git bisect" wrapper has moved to C.
+>
+> Fixes since v1.6.3
+> ------------------
+>
+> All of the fixes in v1.6.3.X maintenance series are included in this
+> release, unless otherwise noted.
+>
+> Here are fixes that this release has, but have not been backported to
+> v1.6.3.X series.
+>
+> * The way Git.pm sets up a Repository object was not friendly to  
+> callers
+>   that chdir around.  It now internally records the repository  
+> location
+>   as an absolute path when autodetected.
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
 
-Exact. It broke my workflow (at least) and was able to do it because the
-previous git-am was permiting it. Looking closer to the code made me
-understand where I was wrong.
-
-> I am not opposed to add support for individual pieces of e-mail without
-> forcing them to be in Berkeley mbox format.  Not everybody uses mbox
-> format, and it is a logical thing to do.  Also I do not think the amount
-> of new code necessary to do so is excessive, nor such a change is risky
-> even late in a cycle after -rc0.
-
-Will do, then.
-
-> I however _do_ have issues with labeling other's patch that did not break
-> any documented behaviour as a regression, even if it is to get extra
-> attention to the issue.  That's not how we do things.
-
-Of course. As we was able to do more than documented, I did not see it
-in first place. It's a wrong assumption coming from my initial
-git-bisect, some "hidden" globbing shell, and my learning curve of the
-current code.
-
-It is _NOT_ in my intention to blame anyone.
-
--- 
-Nicolas Sebrecht
+------------------------------------------------------
+"Home is not where you are born, but where your heart finds peace" -
+Tommy Nordgren, "The dying old crone"
+tommy.nordgren@comhem.se
