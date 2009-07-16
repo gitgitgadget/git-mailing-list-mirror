@@ -1,76 +1,84 @@
-From: Mike Ralphson <mike.ralphson@gmail.com>
-Subject: Re: Make a non-bare repo bare.
-Date: Thu, 16 Jul 2009 09:55:27 +0100
-Message-ID: <e2b179460907160155g7c84b083u8a1dd6ba193f4531@mail.gmail.com>
-References: <c115fd3c0907151443h49aaac60r3462c69f55ed2d9f@mail.gmail.com>
-	 <7vbpnlbbln.fsf@alter.siamese.dyndns.org> <h3mpls$9dt$1@ger.gmane.org>
+From: Kirill Smelkov <kirr@landau.phys.spbu.ru>
+Subject: Re: mailmap distinguishing names
+Date: Thu, 16 Jul 2009 12:55:32 +0400
+Organization: St.Petersburg State University
+Message-ID: <20090716085532.GA8843@landau.phys.spbu.ru>
+References: <85b5c3130907151522x1009a796tced7726d9be4ca7d@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Graeme Geldenhuys <graemeg@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jul 16 11:00:00 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Ondrej Certik <ondrej@certik.cz>
+X-From: git-owner@vger.kernel.org Thu Jul 16 11:21:48 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MRMlG-0005n0-9O
-	for gcvg-git-2@gmane.org; Thu, 16 Jul 2009 10:56:18 +0200
+	id 1MRN9v-0001LQ-EO
+	for gcvg-git-2@gmane.org; Thu, 16 Jul 2009 11:21:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754248AbZGPIzb convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 16 Jul 2009 04:55:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754223AbZGPIza
-	(ORCPT <rfc822;git-outgoing>); Thu, 16 Jul 2009 04:55:30 -0400
-Received: from mail-fx0-f218.google.com ([209.85.220.218]:37694 "EHLO
-	mail-fx0-f218.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754145AbZGPIz2 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 16 Jul 2009 04:55:28 -0400
-Received: by fxm18 with SMTP id 18so3949284fxm.37
-        for <git@vger.kernel.org>; Thu, 16 Jul 2009 01:55:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=efXVVUzfYCxHXTEKjPdMrlPgknqg+QOqV86TFg7849k=;
-        b=tlkPGHg8wH1zHUzzqTXu4pJh77XKk8U3hun/xPcWXxKXFuPf1VA757fh+n/iDRXnJM
-         aKNwevGPvac+2ysJ99SxtJiPGLGudbxvViXobF+85Dn+Ld+s70lN4QQfXqulDVpJch/f
-         psZCNWuAhPHm51E5RDmFFFmkzG6rqdrcTg3dA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=Ijn/YkL0r7Ecng1K0cdD+eU+ZM6fnja0356O0Ns2QKKduuw60vq0dkrwjZpnO3WYTV
-         7Z+VRVxQK/DiYkJkYvZn7T3G9xnnpjsTYGsVwMCKhgk/0RJT/mXRS0Q9xTsoJ+6L6Z13
-         guk3AIE9ZqY9NFlVYxgs1KBjA/p6jBl/c7++Q=
-Received: by 10.223.109.148 with SMTP id j20mr4477179fap.43.1247734527616; 
-	Thu, 16 Jul 2009 01:55:27 -0700 (PDT)
-In-Reply-To: <h3mpls$9dt$1@ger.gmane.org>
+	id S1753892AbZGPJVk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 16 Jul 2009 05:21:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752948AbZGPJVj
+	(ORCPT <rfc822;git-outgoing>); Thu, 16 Jul 2009 05:21:39 -0400
+Received: from landau.phys.spbu.ru ([195.19.235.38]:1145 "EHLO
+	landau.phys.spbu.ru" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752644AbZGPJVj (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 16 Jul 2009 05:21:39 -0400
+X-Greylist: delayed 1565 seconds by postgrey-1.27 at vger.kernel.org; Thu, 16 Jul 2009 05:21:39 EDT
+Received: by landau.phys.spbu.ru (Postfix, from userid 509)
+	id DF24C17B668; Thu, 16 Jul 2009 12:55:32 +0400 (MSD)
+Content-Disposition: inline
+In-Reply-To: <85b5c3130907151522x1009a796tced7726d9be4ca7d@mail.gmail.com>
+User-Agent: Mutt/1.5.6i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123391>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123392>
 
-2009/7/16 Graeme Geldenhuys <graemeg@gmail.com>:
-> Junio C Hamano wrote:
->>
->> Funny.
->>
->> =C2=A0 =C2=A0http://article.gmane.org/gmane.comp.version-control.git=
-/123303
->>
->> It is posed as a question but describes the correct (and officially
->> supported) procedure.
->
->
-> Now it deserves to be in some Git FAQ. It seems the issue is more com=
-mon
-> than I thought. :-)
+On Wed, Jul 15, 2009 at 04:22:08PM -0600, Ondrej Certik wrote:
+> Hi,
+> 
+> I know how to use mailmap to map names to email addresses, however,
+> what if we have some old commits that look like:
+> 
+> commit 1815ccf8ea8a7d99736d9b15c10d2ddf41162faf
+> Author: ondrej.certik <devnull@localhost>
+> Date:   Sat Oct 6 01:57:03 2007 +0000
+> 
+>     test for a series bug 364 added, but XFAILed, because sometimes it works, so
+> 
+> commit ef95d618e1fda2dc6b50a0edf343a7b321467527
+> Author: kirill.smelkov <devnull@localhost>
+> Date:   Fri Oct 5 20:10:04 2007 +0000
+> 
+>     pprint: add support for multile indexes in unicode mode
+> 
+> commit 7e74ebdf2701f0ab213a6e5ba47b7860fcf90cff
+> Author: fredrik.johansson <devnull@localhost>
+> Date:   Fri Oct 5 16:41:04 2007 +0000
+> 
+>     add abc module
+> 
+> 
+> 
+> E.g. for some reason the addresses are <devnull@localhost>, but the
+> names are correct (svn names). Then "git shortlog -ns" shows things
+> like:
+> 
+>    654  Ondrej Certik
+>    322  Kirill Smelkov
+>    268  ondrej.certik
+>    208  Mateusz Paprocki
+>     74  fredrik.johansson
+> 
+> is there some way to join "ondrej.certik" with "Ondrej Certik"? If the
 
-It already is
+You just do
 
-http://git.or.cz/gitwiki/GitFaq#HowdoImakeexistingnon-barerepositorybar=
-e.3F
+    Ondrej Certik <...@...>   ondrej.certik  <devnull@localhost>
 
-unless that's new?
+
+in .mailmap
+
+See Documentation/mailmap.txt for details
