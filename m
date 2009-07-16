@@ -1,54 +1,54 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH v5] Re: git-am: allow e-mail file(s) as input
-Date: Thu, 16 Jul 2009 10:12:26 +0200
-Message-ID: <4A5EE0EA.5000008@viscovery.net>
-References: <7v7hy9bb8k.fsf@alter.siamese.dyndns.org> <eb6317e39369adc8d2594c35ee351b49aaadcc24.1247721562.git.nicolas.s.dev@gmx.fr> <4A5ED22B.6050101@gmail.com> <7v8wip9jjw.fsf@alter.siamese.dyndns.org> <20090716075055.GI12971@vidovic>
+From: =?ISO-8859-1?Q?Santi_B=E9jar?= <santi@agolina.net>
+Subject: Re: [PATCHv2 2/2] pull: support rebased upstream + fetch + pull 
+	--rebase
+Date: Thu, 16 Jul 2009 10:15:51 +0200
+Message-ID: <adf1fd3d0907160115j24acf584ic4a8be6aa85b4606@mail.gmail.com>
+References: <adf1fd3d0907152329v7f49999u42b0d0fc4d39f5e9@mail.gmail.com>
+	 <1247731921-2290-1-git-send-email-santi@agolina.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Stephen Boyd <bebarino@gmail.com>, git@vger.kernel.org
-To: Nicolas Sebrecht <nicolas.s.dev@gmx.fr>
-X-From: git-owner@vger.kernel.org Thu Jul 16 10:12:48 2009
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jul 16 10:16:03 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MRM58-00045a-IB
-	for gcvg-git-2@gmane.org; Thu, 16 Jul 2009 10:12:47 +0200
+	id 1MRM8I-0005AQ-LU
+	for gcvg-git-2@gmane.org; Thu, 16 Jul 2009 10:16:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753587AbZGPIMc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 16 Jul 2009 04:12:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753473AbZGPIMc
-	(ORCPT <rfc822;git-outgoing>); Thu, 16 Jul 2009 04:12:32 -0400
-Received: from lilzmailso01.liwest.at ([212.33.55.23]:23340 "EHLO
-	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753319AbZGPIMb (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 16 Jul 2009 04:12:31 -0400
-Received: from cpe228-254.liwest.at ([81.10.228.254] helo=linz.eudaptics.com)
-	by lilzmailso01.liwest.at with esmtpa (Exim 4.69)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1MRM4p-0004gt-BP; Thu, 16 Jul 2009 10:12:27 +0200
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.96])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id 0081F9F88; Thu, 16 Jul 2009 10:12:26 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.21 (Windows/20090302)
-In-Reply-To: <20090716075055.GI12971@vidovic>
-X-Spam-Score: -1.4 (-)
+	id S1753630AbZGPIPz convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 16 Jul 2009 04:15:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753439AbZGPIPy
+	(ORCPT <rfc822;git-outgoing>); Thu, 16 Jul 2009 04:15:54 -0400
+Received: from mail-bw0-f228.google.com ([209.85.218.228]:45351 "EHLO
+	mail-bw0-f228.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753253AbZGPIPx convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 16 Jul 2009 04:15:53 -0400
+Received: by bwz28 with SMTP id 28so1891775bwz.37
+        for <git@vger.kernel.org>; Thu, 16 Jul 2009 01:15:51 -0700 (PDT)
+Received: by 10.204.119.76 with SMTP id y12mr8632920bkq.114.1247732151493; 
+	Thu, 16 Jul 2009 01:15:51 -0700 (PDT)
+In-Reply-To: <1247731921-2290-1-git-send-email-santi@agolina.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123386>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123387>
 
-Nicolas Sebrecht schrieb:
-> The 16/07/09, Junio C Hamano wrote:
->>                                         introduces [[:blank::]] where
->> space and tab inside [] is perfectly adequate, and we know the latter is
->> understood by everybody's sed.
-> 
-> But is harder to read in editors.
+2009/7/16 Santi B=E9jar <santi@agolina.net>:
+> Use the fork commit of the current branch (where
+> the tip of upstream branch used to be) as the upstream parameter of
+> "git rebase". Compute it walking the reflog to find the first commit
+> which is an ancestor of the current branch.
+>
+> Signed-off-by: Santi B=E9jar <santi@agolina.net>
+>
+> Changed since v1:
+> =A0- rename reflist to remoteref to better reflect its use
+> =A0- (( $num + 1 ))
 
-Tough luck. [[:blank:]] is a *portability* obstacle.
+Arg! It should not be in the commit message! Sorry. Junio, can you
+amend it if applied? Thanks
 
--- Hannes
+Santi
