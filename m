@@ -1,71 +1,123 @@
-From: Avery Pennarun <apenwarr@gmail.com>
-Subject: Re: git-describe: what is the '-g' prefix good for?
-Date: Thu, 16 Jul 2009 13:47:19 -0400
-Message-ID: <32541b130907161047h7df7fa4dsfa61ed65789f4c01@mail.gmail.com>
-References: <4A5F5340.9030908@dirk.my1.cc>
+From: Andrey Smirnov <allter@gmail.com>
+Subject: Re: [PATCH/RFC 1/2] Add 'git subtree' command for tracking history of =?utf-8?b?CXN1YnRyZWVz?= separately.
+Date: Thu, 16 Jul 2009 18:04:26 +0000 (UTC)
+Message-ID: <loom.20090716T160021-218@post.gmane.org>
+References: <1240784983-1477-1-git-send-email-apenwarr@gmail.com>  <32541b130904291927m33908bacg2dbafcf64877b88f@mail.gmail.com>  <20090430085853.GA21880@pvv.org> <32541b130904300732i691800f5kecc2f845584071c1@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>
-To: =?ISO-8859-1?Q?Dirk_S=FCsserott?= <newsletter@dirk.my1.cc>
-X-From: git-owner@vger.kernel.org Thu Jul 16 19:47:48 2009
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jul 16 20:10:16 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MRV3b-0000J5-Lk
-	for gcvg-git-2@gmane.org; Thu, 16 Jul 2009 19:47:48 +0200
+	id 1MRVPL-0002Z9-EM
+	for gcvg-git-2@gmane.org; Thu, 16 Jul 2009 20:10:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932901AbZGPRrk convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 16 Jul 2009 13:47:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932899AbZGPRrk
-	(ORCPT <rfc822;git-outgoing>); Thu, 16 Jul 2009 13:47:40 -0400
-Received: from mail-yx0-f184.google.com ([209.85.210.184]:60881 "EHLO
-	mail-yx0-f184.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932891AbZGPRrj convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 16 Jul 2009 13:47:39 -0400
-Received: by yxe14 with SMTP id 14so466799yxe.33
-        for <git@vger.kernel.org>; Thu, 16 Jul 2009 10:47:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=aRr38MXkABkp9N+QNsdxeBen9hnuoOSlXOPsRZj6Sus=;
-        b=DDwrG/ydPPRdtn/LNwzbHqFexIfgykQ5dq/HyatNhE+nSCpUCtrj97kgWJ2Bvi2PBY
-         K17ZFyeBmwQqf7O5nqVAQLtYFitxpbr3QoV1jXQsABKsP8SE5fxBXDBdPEx2JIiObQqx
-         dP0rBc13l4dUl3Qnhy86SPIbqs9i3XPbVdwXM=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=qVta2ot4rt8C2WDun9yyMHi9ba86e2ki2xOzyK3RgCPm49aatZtAA2YmPXR5l30CxN
-         iU66PUAsxKVRYIoRvTu92YK87OIoHYnFngHLR3UjntKQslW0fhq+SdoyfIbGsa+l80sD
-         dco1TAjaRIkVqkF94FjJQIYwH0JBpTQuWvijY=
-Received: by 10.150.136.10 with SMTP id j10mr177176ybd.299.1247766459058; Thu, 
-	16 Jul 2009 10:47:39 -0700 (PDT)
-In-Reply-To: <4A5F5340.9030908@dirk.my1.cc>
+	id S932951AbZGPSKG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 16 Jul 2009 14:10:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932949AbZGPSKG
+	(ORCPT <rfc822;git-outgoing>); Thu, 16 Jul 2009 14:10:06 -0400
+Received: from main.gmane.org ([80.91.229.2]:33158 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932941AbZGPSKF (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 16 Jul 2009 14:10:05 -0400
+Received: from root by ciao.gmane.org with local (Exim 4.43)
+	id 1MRVP8-0005Ap-Lf
+	for git@vger.kernel.org; Thu, 16 Jul 2009 18:10:02 +0000
+Received: from ns.cyberplat.com ([62.231.13.130])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 16 Jul 2009 18:10:02 +0000
+Received: from allter by ns.cyberplat.com with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 16 Jul 2009 18:10:02 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: main.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 62.231.13.130 (Mozilla/5.0 (Windows; U; Windows NT 5.1; ru; rv:1.8.1.20) Gecko/20081217 Firefox/2.0.0.20 (.NET CLR 3.5.30729))
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123412>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123413>
 
-2009/7/16 Dirk S=FCsserott <newsletter@dirk.my1.cc>:
-> I'm a bit surprised about the output of git-describe: if I'm on a tag=
-,
-> git-describe tells the tag's name. Fine. If I commit sth. on top of
-> that, it tells how far I'm away from that tag and the current commit'=
-s
-> SHA1. Very fine. But then the SHA1 is preceeded with a '-g'. What's t=
-hat
-> for?
+Hello!
 
-I'm sure it stands for something like "git".  You don't want a random
-number appended to your tagname (which is often a version number)
-because it might be mistaken for part of the version number.  The g
-makes this less likely.  It also differentiates between git and any
-other version control system (except ones starting with 'g', I guess
-:)) that might implement a similar feature.
+Avery Pennarun <apenwarr> writes:
 
-Avery
+> d) Merge upstream changes of shared module:
+>       git subtree pull --prefix=shared-dir shared-remote master
+>     or
+>       git fetch shared-remote master
+>       git subtree merge --prefix=shared-dir FETCH_HEAD
+
+I found the git-subtree aproach of handling sub-repositories very interesting 
+and useful to me. This is the previous-to-last feature I've awaited from DVCS
+world since I went into it. <remark> The remaining feature I wish that's not 
+already there is the ability to automatically track the tree of repos I work
+with and manage this tree as simple as filemanager-style clients 
+like Tortoise SVN allow. This is a feature like submodules, but with tracking
+refs, remotes and remote URIs in a repo itself rather than in .git dirs
+and with different commands for propagation and display of changesets). 
+Hope someone has time to try this approach (or at least patience to discuss).
+</remark>
+
+I've just used git-subtree (latest github version) and it worked for me. 
+However I've encountered some difficulty using it for my purpose and wish
+to shere the solution I've come to and ask if it is ok:
+
+My goal was to rebase changes to shared library of two similar projects from one
+project to another. The commits in the more recent project were touching both
+lib/ directory with shared library and the rest of the project.
+
+When I did 
+   git subtree split --prefix=lib NewProj -b test-split
+ and
+   git subtree split --prefix=lib OldProj -b test-split-old
+I got the following two trees without a common root:
+
+...X ----- Y ----- OldProj ----...---- Z ---- NewProj
+
+X' ----- Y'==test-split-old ----- Z'==test-split
+
+Problem:
+
+When I did
+   git subtree merge test-split --prefix=lib
+it printed:
+ Auto-merged lib/x.cgi
+ CONFLICT (add/add): Merge conflict in lib/x.cgi
+ Auto-merged lib/y.cgi
+ CONFLICT (add/add): Merge conflict in lib/y.cgi
+ Automatic merge failed; fix conflicts and then commit the result.
+
+It's obvious that it should be that way because logically both trees don't have
+the same root at the time of merge. But I've expected subtree merge --prefix
+will understand that X' is identical to changes to 'lib/*' in X, Y' to Y and Z'
+to Z.
+
+Solution: 
+
+    git rebase --onto OldProj test-split-old test-split
+it printed:
+ First, rewinding head to replay your work on top of it...
+ Applying ZZZZZ
+ error: x.cgi: does not exist in index
+ error: y.cgi: does not exist in index
+ Using index info to reconstruct a base tree...
+ Falling back to patching base and 3-way merge...
+
+I don't know what magic it used but it did rebase right. Furthermore "-s
+subtree" didn't work at all:
+    git rebase --onto OldProj test-split-old test-split -s subtree
+ First, rewinding head to replay your work on top of it...
+ Fast-forwarded OldProj to OldProj.
+
+And so I ask if this behavior is the way git-subtree was meant to work.
+It probably has sense to add 'rebase' command to git-subtree script to let
+perform such tasks simplier.
+
+My best regards, Andrey Smirnov.
