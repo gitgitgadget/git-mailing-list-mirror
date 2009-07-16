@@ -1,63 +1,78 @@
 From: Brandon Casey <casey@nrlssc.navy.mil>
-Subject: [PATCH 2/2] sha1_name.c: avoid unnecessary strbuf_release
-Date: Thu, 16 Jul 2009 16:25:19 -0500
-Message-ID: <W0GiRm9n1NEfjVB8xBotan7WQ5BVS-0Yy_3hikrJN4b57ORvs0sreBFZFVMQljOVkzTQg_oO16A@cipher.nrlssc.navy.mil>
-References: <W0GiRm9n1NEfjVB8xBotanSRY89hxjLPu3Wksn_EsZusMJjkHNIRf8JuQmUh43ny21xTKBn1Li8@cipher.nrlssc.navy.mil> <W0GiRm9n1NEfjVB8xBotapRpIoR0jr6qkttRpkkGMPpe-bfqtvLM7YBvkMsGo7-vheQxRPBUAEU@cipher.nrlssc.navy.mil>
-Cc: git@vger.kernel.org, Brandon Casey <drafnel@gmail.com>
+Subject: [PATCH next] branch.c: if remote is not config'd for branch, don't try delete push config
+Date: Thu, 16 Jul 2009 16:26:15 -0500
+Message-ID: <W0GiRm9n1NEO0ox1puhqZPKGDpWW0rbH6Cp2gxr7ofSuhyo4HCl88lyU5dRIkYdZUK1rEnxQExw@cipher.nrlssc.navy.mil>
+Cc: git@vger.kernel.org, Brandon Casey <drafnel@gmail.com>,
+	bonzini@gnu.org
 To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Thu Jul 16 23:26:44 2009
+X-From: git-owner@vger.kernel.org Thu Jul 16 23:26:48 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MRYTR-0001ME-Qb
-	for gcvg-git-2@gmane.org; Thu, 16 Jul 2009 23:26:42 +0200
+	id 1MRYTU-0001ME-0a
+	for gcvg-git-2@gmane.org; Thu, 16 Jul 2009 23:26:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933426AbZGPVZt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 16 Jul 2009 17:25:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933425AbZGPVZr
-	(ORCPT <rfc822;git-outgoing>); Thu, 16 Jul 2009 17:25:47 -0400
-Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:53030 "EHLO
+	id S933425AbZGPV0l (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 16 Jul 2009 17:26:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933410AbZGPV0k
+	(ORCPT <rfc822;git-outgoing>); Thu, 16 Jul 2009 17:26:40 -0400
+Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:53112 "EHLO
 	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933421AbZGPVZq (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 16 Jul 2009 17:25:46 -0400
-Received: by mail.nrlssc.navy.mil id n6GLPgvg017334; Thu, 16 Jul 2009 16:25:42 -0500
-In-Reply-To: <W0GiRm9n1NEfjVB8xBotapRpIoR0jr6qkttRpkkGMPpe-bfqtvLM7YBvkMsGo7-vheQxRPBUAEU@cipher.nrlssc.navy.mil>
-X-OriginalArrivalTime: 16 Jul 2009 21:25:42.0113 (UTC) FILETIME=[F8E68D10:01CA065B]
+	with ESMTP id S933406AbZGPV0k (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 16 Jul 2009 17:26:40 -0400
+Received: by mail.nrlssc.navy.mil id n6GLQWag018101; Thu, 16 Jul 2009 16:26:32 -0500
+X-OriginalArrivalTime: 16 Jul 2009 21:26:31.0850 (UTC) FILETIME=[168BD0A0:01CA065C]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123428>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123429>
 
 From: Brandon Casey <drafnel@gmail.com>
 
-When we fall back to a standard for_each_reflog_ent() after failing to find
-the nth branch switch (or if we had a short reflog) with the call to
-for_each_recent_reflog_ent(), we do not need to free the memory allocated
-for our strbuf's since a strbuf_reset() will be performed in
-grab_nth_branch_switch() before assigning to the entry.
+If a remote is not configured for the branch configuration being deleted,
+then don't try to delete the remote.<remote>.push configuration for the
+branch.  When the remote is not configured, branch->remote_name is not
+filled in.  When this NULL branch->remote_name is passed to strbuf_addf()
+it will result in an attempt to remove a bogus configuration statement in
+the best case (i.e. "remote.(null).push" for platforms which guard against
+supplying NULL to a %s conversion spec) and a segfault in the worst case.
 
-Plus, the strbuf_release() negates the non-zero hint we initially gave to
-strbuf_init() just above these lines.
+So check whether branch->remote_name is non-NULL before trying to use it.
 
 Signed-off-by: Brandon Casey <drafnel@gmail.com>
 ---
- sha1_name.c |    2 --
- 1 files changed, 0 insertions(+), 2 deletions(-)
+ branch.c |   17 ++++++++++-------
+ 1 files changed, 10 insertions(+), 7 deletions(-)
 
-diff --git a/sha1_name.c b/sha1_name.c
-index 904bcd9..44bb62d 100644
---- a/sha1_name.c
-+++ b/sha1_name.c
-@@ -777,8 +777,6 @@ int interpret_branch_name(const char *name, struct strbuf *buf)
- 	for_each_recent_reflog_ent("HEAD", grab_nth_branch_switch, 40960, &cb);
- 	if (cb.cnt < nth) {
- 		cb.cnt = 0;
--		for (i = 0; i < nth; i++)
--			strbuf_release(&cb.buf[i]);
- 		for_each_reflog_ent("HEAD", grab_nth_branch_switch, &cb);
+diff --git a/branch.c b/branch.c
+index dfde568..6dc9175 100644
+--- a/branch.c
++++ b/branch.c
+@@ -116,13 +116,16 @@ void delete_branch_config (const char *name)
+ 
+ 	/* git config --unset-all remote.foo.push ^\+?refs/heads/bar:  */
+ 	branch = branch_get(name + 11);
+-	strbuf_addf(&buf, "remote.%s.push", branch->remote_name);
+-	strbuf_addstr(&push_re, "^\\+?");
+-	strbuf_addstr_escape_re(&push_re, name);
+-	strbuf_addch(&push_re, ':');
+-	if (git_config_set_multivar(buf.buf, NULL, push_re.buf, 1) < 0) {
+-		warning("Update of config-file failed");
+-		goto fail;
++	if (branch->remote_name) {
++		strbuf_addf(&buf, "remote.%s.push", branch->remote_name);
++		strbuf_addstr(&push_re, "^\\+?");
++		strbuf_addstr_escape_re(&push_re, name);
++		strbuf_addch(&push_re, ':');
++		if (git_config_set_multivar(buf.buf, NULL, push_re.buf, 1) < 0)
++		{
++			warning("Update of config-file failed");
++			goto fail;
++		}
  	}
- 	if (cb.cnt < nth)
+ 	strbuf_reset(&buf);
+ 	strbuf_addf(&buf, "branch.%s", name + 11);
 -- 
 1.6.3.1.24.g152f4
