@@ -1,142 +1,93 @@
-From: Andrey Smirnov <allter@gmail.com>
-Subject: Re: [PATCH/RFC 1/2] Add 'git subtree' command for tracking history of 
-	subtrees separately.
-Date: Fri, 17 Jul 2009 02:09:01 +0400
-Message-ID: <cdea6cd10907161509g7771c72bl608b1924785b49fc@mail.gmail.com>
-References: <1240784983-1477-1-git-send-email-apenwarr@gmail.com>
-	 <32541b130904291927m33908bacg2dbafcf64877b88f@mail.gmail.com>
-	 <20090430085853.GA21880@pvv.org>
-	 <32541b130904300732i691800f5kecc2f845584071c1@mail.gmail.com>
-	 <loom.20090716T160021-218@post.gmane.org>
-	 <32541b130907161134n51e070a1l93690d1b8a63bee8@mail.gmail.com>
+From: Yann Dirson <ydirson@altern.org>
+Subject: Re: [PATCH 2/2] Improve doc for format-patch threading options.
+Date: Fri, 17 Jul 2009 00:23:56 +0200
+Message-ID: <20090716222356.GD5762@nan92-1-81-57-214-146.fbx.proxad.net>
+References: <cover.1246834883.git.ydirson@altern.org> <112440b74f47290e55209b23d1bfc66ed2423297.1246834884.git.ydirson@altern.org> <9820c7a185de928cf693a21a68d8550afe36d354.1246834884.git.ydirson@altern.org> <200907061049.30084.markus.heidelberg@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Avery Pennarun <apenwarr@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jul 17 00:09:15 2009
+To: Markus Heidelberg <markus.heidelberg@web.de>
+X-From: git-owner@vger.kernel.org Fri Jul 17 00:23:49 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MRZ8d-0007pY-4G
-	for gcvg-git-2@gmane.org; Fri, 17 Jul 2009 00:09:15 +0200
+	id 1MRZMj-0004TC-6Y
+	for gcvg-git-2@gmane.org; Fri, 17 Jul 2009 00:23:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933429AbZGPWJG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 16 Jul 2009 18:09:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933391AbZGPWJG
-	(ORCPT <rfc822;git-outgoing>); Thu, 16 Jul 2009 18:09:06 -0400
-Received: from mail-ew0-f226.google.com ([209.85.219.226]:51084 "EHLO
-	mail-ew0-f226.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933364AbZGPWJE (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 16 Jul 2009 18:09:04 -0400
-Received: by ewy26 with SMTP id 26so482242ewy.37
-        for <git@vger.kernel.org>; Thu, 16 Jul 2009 15:09:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=PIPeLKabrJ2fP0JMgbsHLw1kZNZw3VZV02NiNj3jgIo=;
-        b=Ti1fbrQlcbJ+yUoVyDQBmhzZjF8FtIUDu/ygXiaVHZRxHHq+8kYwzGXnyktAaWKH+Q
-         mWwQCRKrv66YQBVvM6/9sOORMLqI45PjE+1sJH22hvNTXjWobaUH5NFKh/DoCitmSisn
-         OHZTSYy5mdTu+IPmfksuCFdO++0XIqltm9a2o=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=lkd3ylQMXuwRiauPJYNABpJlDq0qhNduKcPKwtAtuVnGb74IS+g0+6i9ViUzwwZ2D0
-         QK3IVXFlpbTBElzKgFol98iEaVUuiRi4t2oAGj0K4fM/tXoD/jMYFtdnrGavZ+Ho7Nvz
-         qbo8UEkL0zgnR+Nb6oDqrtNcYnW9kabccB+IE=
-Received: by 10.216.19.212 with SMTP id n62mr96568wen.66.1247782141246; Thu, 
-	16 Jul 2009 15:09:01 -0700 (PDT)
-In-Reply-To: <32541b130907161134n51e070a1l93690d1b8a63bee8@mail.gmail.com>
+	id S933462AbZGPWXm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 16 Jul 2009 18:23:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751584AbZGPWXl
+	(ORCPT <rfc822;git-outgoing>); Thu, 16 Jul 2009 18:23:41 -0400
+Received: from smtp1-g21.free.fr ([212.27.42.1]:53343 "EHLO smtp1-g21.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S933461AbZGPWXl (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 16 Jul 2009 18:23:41 -0400
+Received: from smtp1-g21.free.fr (localhost [127.0.0.1])
+	by smtp1-g21.free.fr (Postfix) with ESMTP id 96CD59400E6;
+	Fri, 17 Jul 2009 00:23:34 +0200 (CEST)
+Received: from gandelf.nowhere.earth (nan92-1-81-57-214-146.fbx.proxad.net [81.57.214.146])
+	by smtp1-g21.free.fr (Postfix) with ESMTP id 744D79400F4;
+	Fri, 17 Jul 2009 00:23:31 +0200 (CEST)
+Received: by gandelf.nowhere.earth (Postfix, from userid 1000)
+	id D044D1F162; Fri, 17 Jul 2009 00:23:56 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <200907061049.30084.markus.heidelberg@web.de>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123430>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123431>
 
-Hello!
+On Mon, Jul 06, 2009 at 10:49:29AM +0200, Markus Heidelberg wrote:
+> Yann Dirson, 06.07.2009:
+> > +++ b/Documentation/git-format-patch.txt
+> > @@ -132,9 +133,15 @@ The optional <style> argument can be either `shallow` or `deep`.
+> >  'shallow' threading makes every mail a reply to the head of the
+> >  series, where the head is chosen from the cover letter, the
+> >  `\--in-reply-to`, and the first patch mail, in this order.  'deep'
+> > -threading makes every mail a reply to the previous one.  If not
+> > -specified, defaults to the 'format.thread' configuration, or `shallow`
+> > -if that is not set.
+> > +threading makes every mail a reply to the previous one.
+> > ++
+> > +The default is --no-thread, unless the 'format.thread' configuration
+> > +is set.  If --thread is specified without a style, it defaults to the
+> > +style specified by 'format.thread' if any, or else `shallow`.
+> > ++
+> > +Beware that the default for 'git send-email' is to do deep threading
+> > +if the emails to be sent have no Message-Id header, which is what
+> > +happens when then are generated by 'git format-patch --no-thread'.
+> 
+> Oh, due to the typo I mentioned in my previous mail, I forgot to really
+> comment.
+> 
+> The last paragraph is misleading. git-send-email always adds headers for
+> deep threading by default, regardless of any existing Message-Id
+> headers.
+> The current wording makes one believe, git-send-email respects existing
+> headers if the patches are created with 'git format-patch --thread'.
+> But that it isn't aware of them is exactly what you want to explain
+> here.
 
-On Thu, Jul 16, 2009 at 10:34 PM, Avery Pennarun<apenwarr> wrote:
->> When I did
->>   git subtree split --prefix=lib NewProj -b test-split
->>  and
->>   git subtree split --prefix=lib OldProj -b test-split-old
->> I got the following two trees without a common root:
->>
->> ...X ----- Y ----- OldProj ----...---- Z ---- NewProj
->>
->> X' ----- Y'==test-split-old ----- Z'==test-split
-> So, why don't they have a common root?  This is, of course, the
-> primary cause of your problems.
+Indeed I realize that I did not grasp correctly how things are
+supposed to fit together.  Reading the code and experimenting, I see
+that:
 
-The line with OldProj and NewProj is story of commits for the project
-that contains both library and other code. The line with test-split
-and test-split-old is the story of commits of the shared library alone
-with test-split-old corresponding to OldProj and test-split
-corresponding to NewProj.
-And I needed to get changes test-split-old..test-split in superproject
-(but without other
-garbage commits that lead to NewProj).
+- as you say, send-email completely ignores any pre-existing
+In-Reply-To and References header (it does keep the Message-Id's,
+though)
 
-> How did this shared library get merged into OldProj and NewProj in the
-> first place?  Did you just copy the files, or did you use something
-> like 'git merge -s subtree'?  If the latter, you should be able to
-> convince git-subtree to produce two split repositories with identical
-> roots, and then merge smoothly between them.
+- send-email simply adds its own In-Reply-To and References headers.
+That IMHO does not make any sense, and the behaviour of such a thing
+is likely to vary among MUAs (if it even does not violate the
+standards, which I did not check)
 
-They don't share commits because the library was never developed on its own.
-The library evolved from the common code that was cut and pasted
-trough about a hundred
-web projects stored in SVN. Before I started to use git (mostly I use
-it as merge/rebase tool
-because our primary VCS is still Subversion) I transplanted changes in
-library by manual
-svn merge, even on individual files in some cases. While I was typing
-my previous message, I
-found that if I added "--rejoin", I would have situation that imitate
-effect of "add test-split-old"
-command followed by "merge -s subtree test-merged":
+- even when --no-thread is specified, and format-patch was run with
+--no-thread as well, it still adds In-Reply-To and References headers,
+and I must say I do not see what in the code causes this behaviour.
 
-...X ----- Y ----- OldProj ----- rejoined-merge ----...---- Z ---- NewProj
-                                     /                \
-X' ----- Y'==test-split-old                      Z''==test-merged
-                                   \
-                                     Z'==test-split
-
-But Subversion and git-svn don't like git-ish merges, they need rebase. :(
-
->  git checkout -b test-merged test-split
->  git checkout OldProj
->  git subtree split --prefix=lib OldProj --rejoin
->  git subtree merge --prefix=lib test-merged
-
-Yes, that's one of ways I thought of and that I pictured above. But I
-would like
-approach that deals only with patches and not commit trees due to
-git-svn restriction.
-
->> And so I ask if this behavior is the way git-subtree was meant to work.
->> It probably has sense to add 'rebase' command to git-subtree script to let
->> perform such tasks simplier.
-> I don't think that's a good idea.  git-subtree is completely separate
-> from rebasing, and doesn't deal with patches at all.  Maybe there
-> should be some kind of "force-update" option that does what "git
-> subtree add" does, but wiping out everything in the subtree before it
-> starts.  That would have simplified the above commands a bit.
-
-The only thing that links git-subtree with git-rebase is the fact, that
-git-subtree "knows" the target commit for rebases dealing with subtrees.
-So if one knows commit of a subtree that he wishes to see in superproject
-(in my case "test-split") he could issue:
-    git subtree rebase --prefix=lib OldProject test-split
-
-Though simple:
-    git rebase --onto OldProject test-split-old test-split
-worked for me, I think this was a lucky coincidence because of simplicity
-of my library commits.
-
---
-Sincerly yours, Andrey.
+Looks like we should clarify things first, and possibly fix things,
+before we can start to document them - or did I miss some point that
+would seem obvious to others ?
