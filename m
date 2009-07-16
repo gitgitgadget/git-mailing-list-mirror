@@ -1,197 +1,79 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: Git range merge (cherry-pick a range)
-Date: Thu, 16 Jul 2009 13:36:06 +0200
-Message-ID: <4A5F10A6.80003@drmicha.warpmail.net>
-References: <Pine.LNX.4.64.0704201100050.4667@torch.nrlssc.navy.mil> <24512201.post@talk.nabble.com>
+From: Sitaram Chamarty <sitaramc@gmail.com>
+Subject: Re: Make a non-bare repo bare.
+Date: Thu, 16 Jul 2009 17:09:37 +0530
+Message-ID: <2e24e5b90907160439i29171e9fka3baf6bf871a6011@mail.gmail.com>
+References: <c115fd3c0907151443h49aaac60r3462c69f55ed2d9f@mail.gmail.com>
+	 <7vbpnlbbln.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: bshOriginal <mindplayintricks@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Jul 16 13:36:34 2009
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Tim Visher <tim.visher@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jul 16 13:39:47 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MRPGL-0006Rd-Er
-	for gcvg-git-2@gmane.org; Thu, 16 Jul 2009 13:36:33 +0200
+	id 1MRPJR-0007Yt-SI
+	for gcvg-git-2@gmane.org; Thu, 16 Jul 2009 13:39:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755100AbZGPLgZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 16 Jul 2009 07:36:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754997AbZGPLgZ
-	(ORCPT <rfc822;git-outgoing>); Thu, 16 Jul 2009 07:36:25 -0400
-Received: from out1.smtp.messagingengine.com ([66.111.4.25]:35446 "EHLO
-	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752242AbZGPLgY (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 16 Jul 2009 07:36:24 -0400
-Received: from compute1.internal (compute1.internal [10.202.2.41])
-	by out1.messagingengine.com (Postfix) with ESMTP id E09BA3BB0D2;
-	Thu, 16 Jul 2009 07:36:23 -0400 (EDT)
-Received: from heartbeat2.messagingengine.com ([10.202.2.161])
-  by compute1.internal (MEProxy); Thu, 16 Jul 2009 07:36:23 -0400
-X-Sasl-enc: M2pCNF59IR9DuinVYE93WRiYUOeMAx9gCdSIHRx//lVf 1247744183
-Received: from localhost.localdomain (heawood.math.tu-clausthal.de [139.174.44.4])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 2AA0F822A;
-	Thu, 16 Jul 2009 07:36:23 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.1pre) Gecko/20090712 Lightning/1.0pre Shredder/3.0b3pre
-In-Reply-To: <24512201.post@talk.nabble.com>
+	id S1754926AbZGPLjj convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 16 Jul 2009 07:39:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753323AbZGPLjj
+	(ORCPT <rfc822;git-outgoing>); Thu, 16 Jul 2009 07:39:39 -0400
+Received: from mail-gx0-f213.google.com ([209.85.217.213]:46258 "EHLO
+	mail-gx0-f213.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751587AbZGPLji convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 16 Jul 2009 07:39:38 -0400
+Received: by gxk9 with SMTP id 9so79277gxk.13
+        for <git@vger.kernel.org>; Thu, 16 Jul 2009 04:39:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=pTVdIixOd/4Ssq9kgpfthdVVul5LGCZSl7t/v0U7O4w=;
+        b=eikfwNgD52Qy1vAkv55j6OB3iQl/v1IMKVR57jdaE5xrou65Ff+zrHc8OEUmwqKHD+
+         1fQvd+g0di/L1twHUQX6BL4b5VA27d45c/axcZ+XPyL+rsXN/EVL6/UszxlC6ELgsI3i
+         qR84pZ1iKfZn8x3ewdK+1CbyhbKKWlihZZIY0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=Zh5+5O6/DlOfxQm7EsDMEML8K7/2lVepSrbTJObB/ysl1KJ7cc3rv5ckpe0VRyGZB7
+         2T7ImEdFfBnkUzw9AWu0rbRp9e78dTb18hZO5Y4ZVSQCgeEBWIh/RvFhzTNYEOGCpZwR
+         3jEgMYxp6F35EjKHPlaZ9LzwCrk/OcLA3JoqU=
+Received: by 10.231.16.136 with SMTP id o8mr2335753iba.24.1247744377390; Thu, 
+	16 Jul 2009 04:39:37 -0700 (PDT)
+In-Reply-To: <7vbpnlbbln.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123397>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123398>
 
-bshOriginal venit, vidit, dixit 16.07.2009 10:11:
-> 
-> Playing around with GIT, we encountered the following strange situation for
-> which we would
-> like to have an answer:
-> 
-> Scenario
-> ========
-> 
-> We want to merge the range B to D from branch B1 to master
-> 
-> Master:       o-
->                   \
-> Branch B1:      A-B-C-D-E
-> 
+On Thu, Jul 16, 2009 at 8:03 AM, Junio C Hamano<gitster@pobox.com> wrot=
+e:
+> Tim Visher <tim.visher@gmail.com> writes:
+>
+>> Hello Everyone,
+>>
+>> I recently had occasion to make a previously non-bare repo bare. =A0=
+Is
+>> there any way to do this? =A0It will not allow me to delete a branch
+>> that I'm on so I wasn't sure how to proceed.
+>
+> Funny.
+>
+> =A0 =A0http://article.gmane.org/gmane.comp.version-control.git/123303
+>
+> It is posed as a question but describes the correct (and officially
+> supported) procedure.
 
-Did you use a monospaced font when composing this e-mail? All graphs
-come out disconnect/distorted when reading your e-mail with a monospaced
-font.
+The linked procedure uses git clone --bare.  It is my belief (and
+please correct me if I'm wrong) that only a git clone --mirror
+actually does what you want here -- a mere "bare" clone would lose
+your remotes and their tracking branches would it not?
 
-I assume that above, a is the first additional commit of B1 which
-branches off o.
-
-> 
-> Commit B:
-> ---------
-> FluidSolver::FluidSolver(int argc, char* argv[]) {
->     init(argc, argv);
->     // test edit 1: a + b
-> }
-> 
-> Commit C:
-> --------
-> FluidSolver::FluidSolver(int argc, char* argv[]) {
->     init(argc, argv);
->     // test edit 1: a + b
->     // test edit 2: a - b
-> }
-> 
-> Commit D:
-> --------
-> FluidSolver::FluidSolver(int argc, char* argv[]) {
->     init(argc, argv);
->     // test edit 1: a + b
->     // test edit 2: a - b
->     // test edit 3: a * b
-> }
-> 
-> Commit E:
-> --------
-> FluidSolver::FluidSolver(int argc, char* argv[]) {
->     init(argc, argv);
->     // test edit 1: a + b
->     // test edit 2: a - b
->     // test edit 3: a * b
->     // test edit 4: a / b
-> }
-> 
-> 
-> Range merge (the GIT way):
-> =========================
-> 
-> 1) Switch to Branch B1
-> 
-> 2) Create a temporary branch which does not contain anything beyond commit D
-> 
->    $ git checkout -b volatileBranch D
-> 
->     Master:                 o-
->                                 \
->     Branch B1:                A-B-C-D-E
->                                                 \
->     Branch volatileBranch:              (A)-(B)-(C)-(D)
-> 
-> 3) Rebase volatile branch to master from commit (B) to master's HEAD
->    git rebase --onto master (A) 
-> 
-> 
->     Branch volatileBranch:   (B)-(C)-(D)
->                                      /
->     Master:                      o-
->                                      \
->     Branch B1:                   A-B-C-D-E
->                                        
-> 
-> Rebasing output:
-> ----------------
-> 
-> First, rewinding head to replay your work on top of it...
-> Applying: test edit 2: a - b
-> error: patch failed: fluidsolver.cpp:28
-> error: fluidsolver.cpp: patch does not apply
-> Using index info to reconstruct a base tree...
-> Falling back to patching base and 3-way merge...
-> Auto-merging fluidsolver.cpp
-> CONFLICT (content): Merge conflict in fluidsolver.cpp
-> Failed to merge in the changes.
-> Patch failed at 0001 test edit 2: a - b
-> 
-> 
-> When you have resolved this problem run "git rebase --continue".
-> If you would prefer to skip this patch, instead run "git rebase --skip".
-> To restore the original branch and stop rebasing run "git rebase --abort".
-> 
-> 
-> Conflicts:
-> ----------
-> FluidSolver::FluidSolver(int argc, char* argv[]) {
->     init(argc, argv);
-> <<<<<<< HEAD:fluidsolver.cpp
-> =======
->     // test edit 1: a + b
->     // test edit 2: a - b
->>>>>>>> test edit 2: a - b:fluidsolver.cpp
-> }
-> 
-> 
-> After manually resolving the conflict and continuing the rebasing 
-> with git rebase --continue, we are finally finished.
-> 
-> Since we only had updates in branch 1, it is astonishing that we get a
-> conflict at all.
-> Same situation works like a charme in subversion.
-
-Ahem, how could /anything/ work like a charm in subversion? (I've been
-using it myself.)
-
-Seriously, if, in subversion, you merge -rA:D onto master then
-subversion only computes the diff between A and D and applies it to
-master. You an do this in git as well, of course, but that's not a merge
-and does not preserve individual commit messages.
-
-> We would be happy to get an explanation for this merge bahaviour, since 
-> many edits in large projects could as a matter of principle result a lot of
-> merge conflicts
-> which all have to be treated manually.
-> 
-> We believe that GIT's interface for range merges needs to get more user
-> friendly.
-> Since steps 1) - 3) use already developed components of GIT, there should be
-> a layer above 'em
-> which performs a range merge by internally calling 1) - 3).
-> 
-> Example: git cherry-pick $from_branch@startCommitHash
-> $to_branch@endCommitHash 
-> 
-
-If I read you graphs correctly you could just as well fast-forward
-master to D (using reset or merge) and then "rebase -i" in order to
-remove A.
-
-Alternatively, you can use "git format-patch --stdout revrange | git am".
-
-Michael
+If I'm wrong please correct me...
