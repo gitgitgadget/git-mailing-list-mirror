@@ -1,192 +1,125 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: Git range merge (cherry-pick a range)
-Date: Thu, 16 Jul 2009 12:27:33 -0400 (EDT)
-Message-ID: <alpine.LNX.2.00.0907161200480.2147@iabervon.org>
-References: <Pine.LNX.4.64.0704201100050.4667@torch.nrlssc.navy.mil> <24512201.post@talk.nabble.com>
+From: =?ISO-8859-1?Q?Santi_B=E9jar?= <santi@agolina.net>
+Subject: Re: [PATCHv2 2/2] pull: support rebased upstream + fetch + pull 
+	--rebase
+Date: Thu, 16 Jul 2009 18:32:39 +0200
+Message-ID: <adf1fd3d0907160932r313de6e8lec23e4f3409b8c05@mail.gmail.com>
+References: <adf1fd3d0907152329v7f49999u42b0d0fc4d39f5e9@mail.gmail.com>
+	 <1247731921-2290-1-git-send-email-santi@agolina.net>
+	 <alpine.DEB.1.00.0907161035060.3155@pacific.mpi-cbg.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: bshOriginal <mindplayintricks@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Jul 16 18:27:50 2009
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jul 16 18:32:52 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MRToC-0004Mi-GA
-	for gcvg-git-2@gmane.org; Thu, 16 Jul 2009 18:27:48 +0200
+	id 1MRTt4-0006WC-Ft
+	for gcvg-git-2@gmane.org; Thu, 16 Jul 2009 18:32:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932719AbZGPQ1l (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 16 Jul 2009 12:27:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932672AbZGPQ1k
-	(ORCPT <rfc822;git-outgoing>); Thu, 16 Jul 2009 12:27:40 -0400
-Received: from iabervon.org ([66.92.72.58]:34509 "EHLO iabervon.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932671AbZGPQ1k (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 16 Jul 2009 12:27:40 -0400
-Received: (qmail 26657 invoked by uid 1000); 16 Jul 2009 16:27:33 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 16 Jul 2009 16:27:33 -0000
-In-Reply-To: <24512201.post@talk.nabble.com>
-User-Agent: Alpine 2.00 (LNX 1167 2008-08-23)
+	id S932695AbZGPQcm convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 16 Jul 2009 12:32:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932664AbZGPQcm
+	(ORCPT <rfc822;git-outgoing>); Thu, 16 Jul 2009 12:32:42 -0400
+Received: from mail-bw0-f228.google.com ([209.85.218.228]:49369 "EHLO
+	mail-bw0-f228.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932651AbZGPQcl convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 16 Jul 2009 12:32:41 -0400
+Received: by bwz28 with SMTP id 28so232356bwz.37
+        for <git@vger.kernel.org>; Thu, 16 Jul 2009 09:32:39 -0700 (PDT)
+Received: by 10.204.124.7 with SMTP id s7mr8854448bkr.105.1247761959621; Thu, 
+	16 Jul 2009 09:32:39 -0700 (PDT)
+In-Reply-To: <alpine.DEB.1.00.0907161035060.3155@pacific.mpi-cbg.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123407>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123408>
 
-On Thu, 16 Jul 2009, bshOriginal wrote:
+2009/7/16 Johannes Schindelin <Johannes.Schindelin@gmx.de>:
+> Hi,
+>
+> On Thu, 16 Jul 2009, Santi B=E9jar wrote:
+>
+>> Use the fork commit of the current branch (where
+>> the tip of upstream branch used to be) as the upstream parameter of
+>> "git rebase". Compute it walking the reflog to find the first commit
+>> which is an ancestor of the current branch.
+>
+> I finally understand what this patch is about. =A0Thanks.
 
-> 
-> Playing around with GIT, we encountered the following strange situation for
-> which we would
-> like to have an answer:
-> 
-> Scenario
-> ========
-> 
-> We want to merge the range B to D from branch B1 to master
-> 
-> Master:       o-
->                   \
-> Branch B1:      A-B-C-D-E
-> 
-> 
-> Commit B:
-> ---------
-> FluidSolver::FluidSolver(int argc, char* argv[]) {
->     init(argc, argv);
->     // test edit 1: a + b
-> }
-> 
-> Commit C:
-> --------
-> FluidSolver::FluidSolver(int argc, char* argv[]) {
->     init(argc, argv);
->     // test edit 1: a + b
->     // test edit 2: a - b
-> }
-> 
-> Commit D:
-> --------
-> FluidSolver::FluidSolver(int argc, char* argv[]) {
->     init(argc, argv);
->     // test edit 1: a + b
->     // test edit 2: a - b
->     // test edit 3: a * b
-> }
-> 
-> Commit E:
-> --------
-> FluidSolver::FluidSolver(int argc, char* argv[]) {
->     init(argc, argv);
->     // test edit 1: a + b
->     // test edit 2: a - b
->     // test edit 3: a * b
->     // test edit 4: a / b
-> }
-> 
-> 
-> Range merge (the GIT way):
-> =========================
-> 
-> 1) Switch to Branch B1
-> 
-> 2) Create a temporary branch which does not contain anything beyond commit D
-> 
->    $ git checkout -b volatileBranch D
-> 
->     Master:                 o-
->                                 \
->     Branch B1:                A-B-C-D-E
->                                                 \
->     Branch volatileBranch:              (A)-(B)-(C)-(D)
-> 
-> 3) Rebase volatile branch to master from commit (B) to master's HEAD
->    git rebase --onto master (A) 
-> 
-> 
->     Branch volatileBranch:   (B)-(C)-(D)
->                                      /
->     Master:                      o-
->                                      \
->     Branch B1:                   A-B-C-D-E
->                                        
-> 
-> Rebasing output:
-> ----------------
-> 
-> First, rewinding head to replay your work on top of it...
-> Applying: test edit 2: a - b
-> error: patch failed: fluidsolver.cpp:28
-> error: fluidsolver.cpp: patch does not apply
-> Using index info to reconstruct a base tree...
-> Falling back to patching base and 3-way merge...
-> Auto-merging fluidsolver.cpp
-> CONFLICT (content): Merge conflict in fluidsolver.cpp
-> Failed to merge in the changes.
-> Patch failed at 0001 test edit 2: a - b
+Thanks, it was hard (at least for me) to provide a short and good
+commit message.
 
-What's happening here is that the first commit you're keeping adds an edit 
-to a version of the file which has the first edit as well, and that first 
-edit is right next to the second edit, and so it's reasonably likely that 
-the second edit has to be done differently in order to not require the 
-first edit.
+>
+>> diff --git a/git-pull.sh b/git-pull.sh
+>> index 4b78a0c..31d3945 100755
+>> --- a/git-pull.sh
+>> +++ b/git-pull.sh
+>> @@ -125,9 +125,14 @@ test true =3D "$rebase" && {
+>> =A0 =A0 =A0 die "refusing to pull with rebase: your working tree is =
+not up-to-date"
+>>
+>> =A0 =A0 =A0 . git-parse-remote &&
+>> - =A0 =A0 reflist=3D"$(get_remote_merge_branch "$@" 2>/dev/null)" &&
+>> - =A0 =A0 oldremoteref=3D"$(git rev-parse -q --verify \
+>> - =A0 =A0 =A0 =A0 =A0 =A0 "$reflist")"
+>> + =A0 =A0 remoteref=3D"$(get_remote_merge_branch "$@" 2>/dev/null)" =
+&&
+>> + =A0 =A0 num=3D0 &&
+>> + =A0 =A0 while oldremoteref=3D"$(git rev-parse -q --verify "$remote=
+ref@{$num}")"
+>> + =A0 =A0 do
+>
+> How about
+>
+> =A0 =A0 =A0 =A0oldremoteref=3D"$(git rev-list --boundary HEAD --not \
+> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0$(git rev-list -g $rem=
+oteref | sed 's/$/^@/') |
+> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0sed -e '/^[^-]/d' -e q)"
+>
+> Explanation: the "git rev-list -g $remoteref" lists the previous comm=
+its
+> the remote ref pointed to, and the ^@ appended to them means all thei=
+r
+> parents. =A0Now, the outer rev-list says to take everything in HEAD b=
+ut
+> _not_ in those parents, showing the boundary commits. =A0The "sed" ca=
+ll
+> lists the first such boundary commit (which must, by construction, be=
+ one
+> of the commits shown by the first rev-list).
 
-> When you have resolved this problem run "git rebase --continue".
-> If you would prefer to skip this patch, instead run "git rebase --skip".
-> To restore the original branch and stop rebasing run "git rebase --abort".
-> 
-> 
-> Conflicts:
-> ----------
-> FluidSolver::FluidSolver(int argc, char* argv[]) {
->     init(argc, argv);
-> <<<<<<< HEAD:fluidsolver.cpp
-> =======
->     // test edit 1: a + b
->     // test edit 2: a - b
-> >>>>>>> test edit 2: a - b:fluidsolver.cpp
-> }
+It almost works, thanks. In fact this is how I represent it in my
+head, but I couldn't find a working command (hint, hint, the
+--boundaries trick). Based on yours here it is the one I am using
+right now:
 
-This is the merge conflict output for the case where you're applying a 
-change which is based on a version with some of the final code already 
-there to a base that doesn't have that code. It's not a necessary 
-conflict, but it is a likely conflict (that is, there's a unique logical 
-guess as to the right resolution, but there's also a good change that the 
-resulting code doesn't work). Of course, if the edits actually overlap, it 
-becomes a necessary conflict.
+	oldremoteref=3D"$(git rev-list --boundary HEAD --not \
+		$(git rev-list -g $remoteref 2>/dev/null) |
+		sed -e '/^[^-]/d' -e 's/^-//;q' )"
 
-> After manually resolving the conflict and continuing the rebasing 
-> with git rebase --continue, we are finally finished.
-> 
-> Since we only had updates in branch 1, it is astonishing that we get a
-> conflict at all.
-> Same situation works like a charme in subversion.
+i.e. without the ^@ as you want the commits in the reflog as boundary
+commits, and also remove the - in front of the commit.
 
-Except when it generates broken code like a charm...
+Your version performs equally than mine for the normal case but much
+better if it has to walk many reflog entries. Also mine has the
+problem, at least currently, that it does not give up as "git
+rev-parse -q --verify $branch@{n}" does not return an error when n is
+too large:
 
-> We would be happy to get an explanation for this merge bahaviour, since 
-> many edits in large projects could as a matter of principle result a lot of
-> merge conflicts
-> which all have to be treated manually.
-> 
-> We believe that GIT's interface for range merges needs to get more user
-> friendly.
-> Since steps 1) - 3) use already developed components of GIT, there should be
-> a layer above 'em
-> which performs a range merge by internally calling 1) - 3).
-> 
-> Example: git cherry-pick $from_branch@startCommitHash
-> $to_branch@endCommitHash 
+  $ git rev-parse -q --verify origin/next@{18} ; echo $?
+warning: Log for 'origin/next' only has 17 entries.
+37eb784cfce07ba0048d64e352c5137454396d87
+0
 
-The main issue is the:
+even with "-q --verify"!
 
- git ??? --continue
+So, I'll take yours and will send an updated patch (saying that is is
+based on a command by you). With your Signed-off-by?
 
-that you use after you resolve any conflicts. The existing components need 
-to be reorganized in order to support doing the correct later steps when a 
-multi-step operation supplied by a higher layer was previously suspended 
-for user assistance in the middle.
-
-	-Daniel
-*This .sig left intentionally blank*
+Thanks,
+Santi
