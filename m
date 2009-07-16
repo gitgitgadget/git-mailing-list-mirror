@@ -1,81 +1,107 @@
-From: Mike Ralphson <mike.ralphson@gmail.com>
-Subject: Re: [ANNOUNCE] GIT 1.6.4.rc1
-Date: Thu, 16 Jul 2009 08:37:21 +0100
-Message-ID: <e2b179460907160037t17e276fas8a713eff55bba7f3@mail.gmail.com>
-References: <7vmy75bg2f.fsf@alter.siamese.dyndns.org>
-	 <057D2A1F-0383-4AE4-A431-54D6C1F90D85@comhem.se>
+From: Nicolas Sebrecht <nicolas.s.dev@gmx.fr>
+Subject: [PATCH v5] Re: git-am: allow e-mail file(s) as input
+Date: Thu, 16 Jul 2009 09:50:55 +0200
+Message-ID: <20090716075055.GI12971@vidovic>
+References: <7v7hy9bb8k.fsf@alter.siamese.dyndns.org> <eb6317e39369adc8d2594c35ee351b49aaadcc24.1247721562.git.nicolas.s.dev@gmx.fr> <4A5ED22B.6050101@gmail.com> <7v8wip9jjw.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Tommy Nordgren <tommy.nordgren@comhem.se>
-X-From: git-owner@vger.kernel.org Thu Jul 16 09:37:32 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Stephen Boyd <bebarino@gmail.com>,
+	Nicolas Sebrecht <nicolas.s.dev@gmx.fr>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jul 16 09:51:14 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MRLX1-00006d-BR
-	for gcvg-git-2@gmane.org; Thu, 16 Jul 2009 09:37:31 +0200
+	id 1MRLkF-0004zF-4s
+	for gcvg-git-2@gmane.org; Thu, 16 Jul 2009 09:51:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751911AbZGPHhX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 16 Jul 2009 03:37:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751562AbZGPHhX
-	(ORCPT <rfc822;git-outgoing>); Thu, 16 Jul 2009 03:37:23 -0400
-Received: from mail-bw0-f228.google.com ([209.85.218.228]:51404 "EHLO
-	mail-bw0-f228.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751323AbZGPHhW (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 16 Jul 2009 03:37:22 -0400
-Received: by bwz28 with SMTP id 28so1874199bwz.37
-        for <git@vger.kernel.org>; Thu, 16 Jul 2009 00:37:21 -0700 (PDT)
+	id S1752560AbZGPHvD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 16 Jul 2009 03:51:03 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751867AbZGPHvC
+	(ORCPT <rfc822;git-outgoing>); Thu, 16 Jul 2009 03:51:02 -0400
+Received: from mail-ew0-f226.google.com ([209.85.219.226]:50004 "EHLO
+	mail-ew0-f226.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751299AbZGPHvB (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 16 Jul 2009 03:51:01 -0400
+Received: by ewy26 with SMTP id 26so4614608ewy.37
+        for <git@vger.kernel.org>; Thu, 16 Jul 2009 00:50:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=EdwB3uC8IGbQaWddZdOUWy60fAE30YQCsFFty+poGzw=;
-        b=JLSm6Fs7v+7HLIsBInejxqDp3avf5/byb3/qnhTtltjUCnixn9l3NZTlIGnXA8ME6k
-         KDIupdt1egJYgcaCuFkSLCXcs4PyxZYrNgXAP2vzsyPqSpStLCXoMOp3hnQiNCnZgYHV
-         rB+icdIyZGlLzQN7siZKNRJfr43kYar2Af6L4=
+        h=domainkey-signature:received:received:sender:date:from:to:cc
+         :subject:message-id:references:mime-version:content-type
+         :content-disposition:in-reply-to:user-agent;
+        bh=63ed3E2X2Df2CejaX/vlZWvHkxdigiJuPJ1vkk6R4SQ=;
+        b=Q3plH4YiDYUb7APNmmuBngJIgtuWfEsamz0i02COuTQklIEGN0ATeKpMgAebiGWmNy
+         BrGwIrVmJsNcGb4YR0C6qm6xuIUt+LcfmiB8b1BQHI+f9TpiKbNyxJrAx6ESaCJ9xxIz
+         N2qb/Skpp+iR7uFxbHDNNjf0lGg5e2YG/0QZw=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=UvOsdjKIWVIIBWSKyAlwVK9+1CtbbXMAXPkiTyOk0K/rhSiBRe+uooZnXTTRrR3qDj
-         OWISZ5yNiS7ZwwMe8CWmA5GUweTWTMCpp9/cTR4nzIUnCohnXECtDMkfcONCf/3hbz9s
-         opvfaW5aP7MFk5P3UrOKZwDanmemy6V3W/3/4=
-Received: by 10.223.107.135 with SMTP id b7mr4310098fap.30.1247729841658; Thu, 
-	16 Jul 2009 00:37:21 -0700 (PDT)
-In-Reply-To: <057D2A1F-0383-4AE4-A431-54D6C1F90D85@comhem.se>
+        h=sender:date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=eGzMjgbgQNHjfM+ZdOwz77/YWcaXGzHWzw7SEfKcxEmuemVC1Riw0WPVnaCkPZGY/A
+         llKr6M9S48kd0Ndnay8/lREOWQcv1hxJ+8NfkwSAFe99AqrtUe7gf61aSCFby//EMmQM
+         zRErEYIDuYdWcwdeml5r6pdWf2OIThV5ynRVc=
+Received: by 10.210.131.6 with SMTP id e6mr10546573ebd.63.1247730658825;
+        Thu, 16 Jul 2009 00:50:58 -0700 (PDT)
+Received: from @ (88-121-124-61.rev.libertysurf.net [88.121.124.61])
+        by mx.google.com with ESMTPS id 28sm6395011eyg.32.2009.07.16.00.50.57
+        (version=SSLv3 cipher=RC4-MD5);
+        Thu, 16 Jul 2009 00:50:57 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <7v8wip9jjw.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123378>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123379>
 
-2009/7/16 Tommy Nordgren <tommy.nordgren@comhem.se>:
-> Testing a build of this version fails at a late stage, with an error that
-> aborts testing.
-> My system is Mac OS X 10.5.8
-> Fragment of output at failure:
-> *** t9200-git-cvsexportcommit.sh ***
-> ..snip
-> * FAIL 14: re-commit a removed filename which remains in CVS attic
+The 16/07/09, Junio C Hamano wrote:
+> Stephen Boyd <bebarino@gmail.com> writes:
+> > Nicolas Sebrecht wrote:
+> 
+> >> +	# Then, accept what really looks like (series of) email(s).
+> >> +	# the first sed select headers but the folded ones
+> >> +	sed -e '/^$/q' -e '/^[[:blank:]]/d' "$1" |
+> >> +	# this one is necessary for the next 'grep -v'
+> >> +	sed -e '/^$/d' |
+> >> +	grep -v -E -e '^[A-Za-z]+(-[A-Za-z]+)*:' ||
+> >> +	{
+> >> +		patch_format=mbox
+> >> +		return 0
+> >> +	}
+> >> +
+> >>  	# otherwise, check the first few lines of the first patch to try
+> >>  	# to detect its format
+> >>  	{
+> >
+> > This fails t4150-am.sh #10 (am -3 -q is quiet). You should redirect the
+> > output of the sed and grep to /dev/null like Junio did in his "how about
+> > this" patch.
 
-I posted a fix (well, a sticking plaster) for this yesterday. Could
-you confirm if this fixes it for you?
+Thank you.
 
-http://article.gmane.org/gmane.comp.version-control.git/123317
+> Honestly speaking, I do not understand why Nicolas changed my patch at
+> all.
+> 
+> This patch wastes an extra sed process
 
-The issue is intermittent on AIX (and Junio has seen it as such on
-Linux too) so you may need to run the t9200... script a few times to
-verify all is ok.
+Should we really worry about that in a script like git-am.sh? I mean,
+does it matter in a day to day work?
 
-Thanks also for testing the rc, and the detailed report, very much
-appreciated by all I'm sure.
+>                                         introduces [[:blank::]] where
+> space and tab inside [] is perfectly adequate, and we know the latter is
+> understood by everybody's sed.
 
-If you can regularly build git.git snapshots, there are some scripts
-at http://repo.or.cz/w/git/gitbuild.git in the platform branch, and
-tags get pushed there describing the state of the build and tests on a
-few 'non-core' platforms.
+But is harder to read in editors.
 
-Cheers, Mike
+> The worst part is that this check was moved before the most common case of
+> mbox file for which none of the overhead for this this extra processing is
+> necessary.
+
+Well, I did this move just because of the logical structure of the code.
+That said, you're right about the overhead.
+
+-- 
+Nicolas Sebrecht
