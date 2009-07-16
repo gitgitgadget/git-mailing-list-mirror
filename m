@@ -1,113 +1,157 @@
-From: Markus Heidelberg <markus.heidelberg@web.de>
-Subject: Re: [PATCH 2/2] Improve doc for format-patch threading options.
-Date: Fri, 17 Jul 2009 00:58:46 +0200
-Message-ID: <200907170058.46962.markus.heidelberg@web.de>
-References: <cover.1246834883.git.ydirson@altern.org> <200907061049.30084.markus.heidelberg@web.de> <20090716222356.GD5762@nan92-1-81-57-214-146.fbx.proxad.net>
-Reply-To: markus.heidelberg@web.de
+From: Greg Price <price@ksplice.com>
+Subject: [PATCH] Fix rebase -p --onto
+Date: Thu, 16 Jul 2009 19:00:32 -0400
+Message-ID: <20090716230031.GM7503@vinegar-pot.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Yann Dirson <ydirson@altern.org>
-X-From: git-owner@vger.kernel.org Fri Jul 17 00:58:37 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio Hamano <gitster@pobox.com>,
+	Stephen Haberman <stephen@exigencecorp.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jul 17 01:00:47 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MRZuO-0006rZ-PE
-	for gcvg-git-2@gmane.org; Fri, 17 Jul 2009 00:58:37 +0200
+	id 1MRZwS-0007ZH-Iu
+	for gcvg-git-2@gmane.org; Fri, 17 Jul 2009 01:00:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933510AbZGPW63 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 16 Jul 2009 18:58:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933507AbZGPW63
-	(ORCPT <rfc822;git-outgoing>); Thu, 16 Jul 2009 18:58:29 -0400
-Received: from fmmailgate03.web.de ([217.72.192.234]:39699 "EHLO
-	fmmailgate03.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933126AbZGPW63 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 16 Jul 2009 18:58:29 -0400
-Received: from smtp07.web.de (fmsmtp07.dlan.cinetic.de [172.20.5.215])
-	by fmmailgate03.web.de (Postfix) with ESMTP id 152F910626BAE;
-	Fri, 17 Jul 2009 00:58:28 +0200 (CEST)
-Received: from [89.59.69.209] (helo=pluto)
-	by smtp07.web.de with asmtp (TLSv1:AES256-SHA:256)
-	(WEB.DE 4.110 #277)
-	id 1MRZuF-0000vS-00; Fri, 17 Jul 2009 00:58:28 +0200
-User-Agent: KMail/1.9.9
-In-Reply-To: <20090716222356.GD5762@nan92-1-81-57-214-146.fbx.proxad.net>
-Jabber-ID: markus.heidelberg@web.de
+	id S933532AbZGPXAh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 16 Jul 2009 19:00:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933525AbZGPXAh
+	(ORCPT <rfc822;git-outgoing>); Thu, 16 Jul 2009 19:00:37 -0400
+Received: from BISCAYNE-ONE-STATION.MIT.EDU ([18.7.7.80]:54381 "EHLO
+	biscayne-one-station.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S933524AbZGPXAg (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 16 Jul 2009 19:00:36 -0400
+Received: from outgoing.mit.edu (OUTGOING-AUTH.MIT.EDU [18.7.22.103])
+	by biscayne-one-station.mit.edu (8.13.6/8.9.2) with ESMTP id n6GN0Wqu028704;
+	Thu, 16 Jul 2009 19:00:33 -0400 (EDT)
+Received: from localhost (VINEGAR-POT.MIT.EDU [18.181.0.51])
+	(authenticated bits=0)
+        (User authenticated as price@ATHENA.MIT.EDU)
+	by outgoing.mit.edu (8.13.6/8.12.4) with ESMTP id n6GN0WQE000505;
+	Thu, 16 Jul 2009 19:00:32 -0400 (EDT)
 Content-Disposition: inline
-X-Sender: markus.heidelberg@web.de
-X-Provags-ID: V01U2FsdGVkX19biBUIXXJLXBwZin8HBPzHc/QlWgE26qdAhL8Y
-	u7x0NBrU7K9KGYRslJ10deQVt9Qc0vSBoHMsdtDVj5+pvi/EM2
-	HjKbgTgKA3C0boP/Iueg==
+User-Agent: Mutt/1.5.18 (2008-05-17)
+X-Scanned-By: MIMEDefang 2.42
+X-Spam-Flag: NO
+X-Spam-Score: 0.00
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123433>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123434>
 
-Yann Dirson, 17.07.2009:
-> On Mon, Jul 06, 2009 at 10:49:29AM +0200, Markus Heidelberg wrote:
-> > Yann Dirson, 06.07.2009:
-> > > +++ b/Documentation/git-format-patch.txt
-> > > @@ -132,9 +133,15 @@ The optional <style> argument can be either `shallow` or `deep`.
-> > >  'shallow' threading makes every mail a reply to the head of the
-> > >  series, where the head is chosen from the cover letter, the
-> > >  `\--in-reply-to`, and the first patch mail, in this order.  'deep'
-> > > -threading makes every mail a reply to the previous one.  If not
-> > > -specified, defaults to the 'format.thread' configuration, or `shallow`
-> > > -if that is not set.
-> > > +threading makes every mail a reply to the previous one.
-> > > ++
-> > > +The default is --no-thread, unless the 'format.thread' configuration
-> > > +is set.  If --thread is specified without a style, it defaults to the
-> > > +style specified by 'format.thread' if any, or else `shallow`.
-> > > ++
-> > > +Beware that the default for 'git send-email' is to do deep threading
-> > > +if the emails to be sent have no Message-Id header, which is what
-> > > +happens when then are generated by 'git format-patch --no-thread'.
-> > 
-> > Oh, due to the typo I mentioned in my previous mail, I forgot to really
-> > comment.
-> > 
-> > The last paragraph is misleading. git-send-email always adds headers for
-> > deep threading by default, regardless of any existing Message-Id
-> > headers.
-> > The current wording makes one believe, git-send-email respects existing
-> > headers if the patches are created with 'git format-patch --thread'.
-> > But that it isn't aware of them is exactly what you want to explain
-> > here.
-> 
-> Indeed I realize that I did not grasp correctly how things are
-> supposed to fit together.  Reading the code and experimenting, I see
-> that:
-> 
-> - as you say, send-email completely ignores any pre-existing
-> In-Reply-To and References header (it does keep the Message-Id's,
-> though)
-> 
-> - send-email simply adds its own In-Reply-To and References headers.
-> That IMHO does not make any sense, and the behaviour of such a thing
-> is likely to vary among MUAs (if it even does not violate the
-> standards, which I did not check)
+In a rebase with --onto, the correct test for whether we can skip
+rewriting a commit is if it is already on top of $ONTO, not $UPSTREAM.
+Without --onto, this distinction does not exist and the behavior does
+not change.
 
-I don't know either, but funny things often cause trouble. send-email
-would have to parse the patch to avoid adding its own headers. The
-easiest solution/workaround is that the user should know, whether he
-does the threading with format-patch or send-email. This is error, of
-course.
 
-See also this recent thread about the same:
-http://thread.gmane.org/gmane.comp.version-control.git/122554/focus=122584
+In the situation
 
-> - even when --no-thread is specified, and format-patch was run with
-> --no-thread as well, it still adds In-Reply-To and References headers,
-> and I must say I do not see what in the code causes this behaviour.
+ X---o---o---o---M
+  \             /
+   x---x---x---x
 
-This is caused by a bug fixed in commit 5e9758e29 (send-email: fix
-non-threaded mails, 2009-06-12). Try using "git send-email --no-thread
---no-chain-reply" and it may work again. You should use an up-to-date
-git, when searching for bugs.
+ Y
 
-Markus
+if we try to move the branches merged at M from their base on X to be
+based on Y, so as to get
+
+ X
+
+ Y---o'--o'--o'--M'
+  \             /
+   x'--x'--x'--x'
+
+then we fail.  The command `git rebase -p --onto Y X M` moves only the
+first-parent chain, like so:
+
+ X
+  \
+   x---x---x---x
+                \
+ Y---o'--o'--o'--M'
+
+because it mistakenly drops the other branch(es) x---x---x---x from
+the TODO file.  This tests and fixes this behavior.
+
+Signed-off-by: Greg Price <price@ksplice.com>
+Cc: Stephen Haberman <stephen@exigencecorp.com>
+---
+
+ git-rebase--interactive.sh      |    2 +-
+ t/t3414-rebase-preserve-onto.sh |   48 +++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 49 insertions(+), 1 deletions(-)
+ create mode 100644 t/t3414-rebase-preserve-onto.sh
+
+diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
+index f96d887..23ded48 100755
+--- a/git-rebase--interactive.sh
++++ b/git-rebase--interactive.sh
+@@ -703,7 +703,7 @@ first and then run 'git rebase --continue' again."
+ 					preserve=t
+ 					for p in $(git rev-list --parents -1 $sha1 | cut -d' ' -s -f2-)
+ 					do
+-						if test -f "$REWRITTEN"/$p -a \( $p != $UPSTREAM -o $sha1 = $first_after_upstream \)
++						if test -f "$REWRITTEN"/$p -a \( $p != $ONTO -o $sha1 = $first_after_upstream \)
+ 						then
+ 							preserve=f
+ 						fi
+diff --git a/t/t3414-rebase-preserve-onto.sh b/t/t3414-rebase-preserve-onto.sh
+new file mode 100644
+index 0000000..ee29517
+--- /dev/null
++++ b/t/t3414-rebase-preserve-onto.sh
+@@ -0,0 +1,48 @@
++#!/bin/sh
++#
++# Copyright (c) 2009 Greg Price
++#
++
++test_description='git rebase -p should respect --onto
++
++In a rebase with --onto, we should rewrite all the commits that
++aren'"'"'t on top of $ONTO, even if they are on top of $UPSTREAM.
++'
++. ./test-lib.sh
++
++. ../lib-rebase.sh
++
++# Set up branches like this:
++# A1---B1---D1---E1
++#  \    \        /
++#   \    \--C1--/
++#    F1
++
++test_expect_success 'setup' '
++	test_commit A1 &&
++	test_commit B1 &&
++	test_commit C1 &&
++	git reset --hard B1 &&
++	test_commit D1 &&
++	test_merge E1 C1 &&
++	git reset --hard A1 &&
++	test_commit F1
++'
++
++# Now rebase E1 from B1 onto F1, expect to get this:
++# A1---B1---D1---E1
++#  \    \        /
++#   \    \--C1--/
++#    \
++#     F1---D2---E2
++#      \        /
++#       \--C2--/
++
++test_expect_success 'rebase from B1 onto F1' '
++	git checkout E1 &&
++	git rebase -p --onto F1 B1 &&
++	test "$(git rev-parse HEAD^1^1)" = "$(git rev-parse F1)" &&
++	test "$(git rev-parse HEAD^2^1)" = "$(git rev-parse F1)"
++'
++
++test_done
+-- 
+1.6.4.rc0.19.gbedf
