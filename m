@@ -1,57 +1,53 @@
-From: Henrik Austad <henrik@austad.us>
-Subject: (unknown)
-Date: Thu, 16 Jul 2009 21:22:57 +0200
-Message-ID: <200907162122.57643.henrik@austad.us>
+From: Jeff Garzik <jeff@garzik.org>
+Subject: Re: [ANNOUNCE] GIT 1.6.4.rc1
+Date: Thu, 16 Jul 2009 16:19:40 -0400
+Message-ID: <4A5F8B5C.3020902@garzik.org>
+References: <7vmy75bg2f.fsf@alter.siamese.dyndns.org> <4A5EA598.5050801@garzik.org> <7v3a8xb0lz.fsf@alter.siamese.dyndns.org> <4A5ECC09.3010405@garzik.org> <7vocrl9kwi.fsf@alter.siamese.dyndns.org> <4A5ED38F.5070708@garzik.org> <7v4otd9jg8.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="us-ascii"
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jul 16 21:23:16 2009
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@gmane.org
+Cc: git@vger.kernel.org, LKML <linux-kernel@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: linux-kernel-owner+glk-linux-kernel-3=40m.gmane.org-S933296AbZGPUVY@vger.kernel.org Thu Jul 16 22:21:47 2009
+Return-path: <linux-kernel-owner+glk-linux-kernel-3=40m.gmane.org-S933296AbZGPUVY@vger.kernel.org>
+Envelope-to: glk-linux-kernel-3@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MRWXz-00019X-Su
-	for gcvg-git-2@gmane.org; Thu, 16 Jul 2009 21:23:16 +0200
+	id 1MRXSc-0008UQ-DS
+	for glk-linux-kernel-3@gmane.org; Thu, 16 Jul 2009 22:21:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933085AbZGPTXJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 16 Jul 2009 15:23:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933083AbZGPTXJ
-	(ORCPT <rfc822;git-outgoing>); Thu, 16 Jul 2009 15:23:09 -0400
-Received: from cassarossa.samfundet.no ([129.241.93.19]:33796 "EHLO
-	cassarossa.samfundet.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933078AbZGPTXI (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 16 Jul 2009 15:23:08 -0400
-Received: from asterix.samfundet.no
-	([2001:700:300:1800::f] helo=asterix.frsk.net ident=Debian-exim)
-	by cassarossa.samfundet.no with esmtps (TLS1.0:RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.69)
-	(envelope-from <henrik@austad.us>)
-	id 1MRWXq-00036p-Tv
-	for git@vger.kernel.org; Thu, 16 Jul 2009 21:23:07 +0200
-Received: from 90.216.251.212.customer.cdi.no ([212.251.216.90] helo=[192.168.1.100])
-	by asterix.frsk.net with esmtpsa (TLS1.0:DHE_RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.69)
-	(envelope-from <henrik@austad.us>)
-	id 1MRWXq-00070t-Lo
-	for git@vger.kernel.org; Thu, 16 Jul 2009 21:23:06 +0200
-User-Agent: KMail/1.9.10
-Content-Disposition: inline
-X-SA-Exim-Connect-IP: 212.251.216.90
-X-SA-Exim-Mail-From: henrik@austad.us
-X-Spam-Checker-Version: SpamAssassin 3.2.5 (2008-06-10) on asterix.frsk.net
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.8 required=5.0 tests=ALL_TRUSTED,AWL,BAYES_00,
-	MISSING_SUBJECT,TVD_RCVD_IP autolearn=no version=3.2.5
-X-SA-Exim-Version: 4.2.1 (built Wed, 25 Jun 2008 17:20:07 +0000)
-X-SA-Exim-Scanned: Yes (on asterix.frsk.net)
-Sender: git-owner@vger.kernel.org
+	id S933296AbZGPUVY (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
+	Thu, 16 Jul 2009 16:21:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933275AbZGPUVY
+	(ORCPT <rfc822;linux-kernel-outgoing>);
+	Thu, 16 Jul 2009 16:21:24 -0400
+Received: from srv5.dvmed.net ([207.36.208.214]:58424 "EHLO mail.dvmed.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S933248AbZGPUVX (ORCPT <rfc822;linux-kernel@vger.kernel.org>);
+	Thu, 16 Jul 2009 16:21:23 -0400
+Received: from cpe-069-134-158-197.nc.res.rr.com ([69.134.158.197] helo=bd.yyz.us)
+	by mail.dvmed.net with esmtpsa (Exim 4.69 #1 (Red Hat Linux))
+	id 1MRXSD-00023R-Kn; Thu, 16 Jul 2009 20:21:22 +0000
+User-Agent: Thunderbird 2.0.0.21 (X11/20090320)
+In-Reply-To: <7v4otd9jg8.fsf@alter.siamese.dyndns.org>
+X-Spam-Score: -4.4 (----)
+X-Spam-Report: SpamAssassin version 3.2.5 on srv5.dvmed.net summary:
+	Content analysis details:   (-4.4 points, 5.0 required)
+Sender: linux-kernel-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123417>
+List-ID: <linux-kernel.vger.kernel.org>
+X-Mailing-List: linux-kernel@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123418>
 
-subscibe git
--- 
-     henrik
+Junio C Hamano wrote:
+> Jeff Garzik <jeff@garzik.org> writes:
+> 
+>> That direction doesn't work due to firewalls, hence the scp out /to/
+>> remote.example.com.
+> 
+> Ah, then the "git init --bare" at remote followed by pushing -all into it,
+> suggested in your other subthread, would be an appropriate way.
+
+Thanks!
+
+	Jeff
