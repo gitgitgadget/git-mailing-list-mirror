@@ -1,80 +1,112 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/2] pull: support rebased upstream + fetch + pull
- --rebase
-Date: Wed, 15 Jul 2009 17:26:17 -0700
-Message-ID: <7vab35cw2e.fsf@alter.siamese.dyndns.org>
-References: <1247702955-1559-1-git-send-email-santi@agolina.net>
- <1247702955-1559-2-git-send-email-santi@agolina.net>
+From: Nicolas Sebrecht <nicolas.s.dev@gmx.fr>
+Subject: [PATCH v3] Re: git-am: fix maildir support regression: accept
+	email file as patch
+Date: Thu, 16 Jul 2009 02:49:52 +0200
+Message-ID: <20090716004952.GB12971@vidovic>
+References: <1654b578a7e045b564c46df4abb6e2196422c2b2.1247696294.git.nicolas.s.dev@gmx.fr> <7v1voheevy.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Santi =?utf-8?Q?B=C3=A9jar?= <santi@agolina.net>
-X-From: git-owner@vger.kernel.org Thu Jul 16 02:26:30 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Nicolas Sebrecht <nicolas.s.dev@gmx.fr>, git@vger.kernel.org,
+	Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jul 16 02:50:06 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MREnt-0005Dv-Rd
-	for gcvg-git-2@gmane.org; Thu, 16 Jul 2009 02:26:30 +0200
+	id 1MRFAj-0002eQ-8m
+	for gcvg-git-2@gmane.org; Thu, 16 Jul 2009 02:50:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756677AbZGPA0W convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 15 Jul 2009 20:26:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756648AbZGPA0W
-	(ORCPT <rfc822;git-outgoing>); Wed, 15 Jul 2009 20:26:22 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:60181 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756646AbZGPA0V (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 15 Jul 2009 20:26:21 -0400
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 185DB4C39;
-	Wed, 15 Jul 2009 20:26:21 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 751D24C33; Wed,
- 15 Jul 2009 20:26:18 -0400 (EDT)
-In-Reply-To: <1247702955-1559-2-git-send-email-santi@agolina.net> ("Santi
- =?utf-8?Q?B=C3=A9jar=22's?= message of "Thu\, 16 Jul 2009 02\:09\:15 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 4947F376-719F-11DE-A53D-F699A5B33865-77302942!a-sasl-quonix.pobox.com
+	id S1754429AbZGPAt6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 15 Jul 2009 20:49:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753609AbZGPAt5
+	(ORCPT <rfc822;git-outgoing>); Wed, 15 Jul 2009 20:49:57 -0400
+Received: from mail-ew0-f226.google.com ([209.85.219.226]:37468 "EHLO
+	mail-ew0-f226.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752849AbZGPAt5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 15 Jul 2009 20:49:57 -0400
+Received: by ewy26 with SMTP id 26so4484204ewy.37
+        for <git@vger.kernel.org>; Wed, 15 Jul 2009 17:49:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:sender:date:from:to:cc
+         :subject:message-id:references:mime-version:content-type
+         :content-disposition:in-reply-to:user-agent;
+        bh=zoXm5P8YfwOZkBnr6Qd85iGoZXCei460UcCTT/x1Czc=;
+        b=WoPL+bj+otfUNHx/3eI9csc8CFsCH5cAgvnYqLEptsehc0XgGSCeJgLHWdFJzmnSob
+         wEqfIv7vUntw+DwP2+mdl6VQAZJ9G8/fQ+n0wWSbLvK7//XYBArpX79/vdTGVO1A2Rzy
+         0EdahYCMW5NkaogYPA8OA1+U5OpE2MX8+wSoE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=sender:date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=iuZdTt+mbO5ghuJCLRkGQAw7asaD5VvfJ42wQTjtHcMRJ8uDhUxe7xR2dCQ3etWheR
+         WJ14//nccG1ETEGMtWpACHKPXCQSGezro4Hw6qzNnOkAm1BmJAj5tbk8qhMWJG9mIvMF
+         FqRrTKcxtCtgd+dLhHQF5Ei/Kgzpt3X1h2np8=
+Received: by 10.210.35.10 with SMTP id i10mr10116895ebi.93.1247705395870;
+        Wed, 15 Jul 2009 17:49:55 -0700 (PDT)
+Received: from @ (91-164-136-30.rev.libertysurf.net [91.164.136.30])
+        by mx.google.com with ESMTPS id 5sm1503886eyf.58.2009.07.15.17.49.54
+        (version=SSLv3 cipher=RC4-MD5);
+        Wed, 15 Jul 2009 17:49:55 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <7v1voheevy.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123347>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123348>
 
-Santi B=C3=A9jar <santi@agolina.net> writes:
+The 15/07/09, Junio C Hamano wrote:
 
->  	reflist=3D"$(get_remote_merge_branch "$@" 2>/dev/null)" &&
-> -	oldremoteref=3D"$(git rev-parse -q --verify \
-> -		"$reflist")"
-> +	num=3D0 &&
-> +	while oldremoteref=3D"$(git rev-parse -q --verify "$reflist@{$num}"=
-)"
+> I think you did not understand the point of the three liner I sent you.
+> 
+> 	sed -e '/^$/q' -e '/^[ 	]/d' "$1" |
 
-Applying @{nth} reflog notation to something that identifies itself as =
-a
-"list" made me go "Huh?".  Why is this variable called refLIST?  Should=
-n't
-it be simply called something like "remoteref" or even "ref"?
+I'll change it to
 
-> +	do
-> +		test $oldremoteref =3D $(git merge-base $oldremoteref $curr_branch=
-) &&
-> +		break
-> +		num=3D$((num+1))
+ 	sed -e '/^$/q' -e '/^[[:blank:]]/d' "$1" |
 
-I think we always write "num=3D$(( $num + 1 ))" for portability; notice=
- the
-lack of $ in your version.
+to conform to reality (and the paragraph 3.4.2 of the RFC 822).
 
-> +	done
+>     The point of this is not to use the silly "we only look at the first
+>     three lines" rule.  Instead, it ignores these l1/l2/l3, but grabs all
+>     the header lines, but discards second and subsequent physical lines if
+>     a logical line was folded.  Which means that the effect of this is to
+>     pipe the whole header (again, without worrying about the indented
+>     remainder of folded lines) to downsream, which is the grep -v below
+> 
+>         grep -v -E -e '^[A-Za-z]+(-[A-Za-z]+)*:' >/dev/null ||
+>
+>     This checks if there is a line that does _NOT_ match the usual
+>     e-mail header pattern.  If there is such a line, it means that the
+>     file is not an e-mail message.  If there is no such line, we say...
 
-Does this loop ever give up?  Should it?
+I don't see the reason to have the option -v. It's only related to
+what's printed to output and doesn't change the exit status which
+tell us if an expression has matched.
 
-What happens in the subsequent code outside of the patch context, when
-this loop does not find any suitable "old" value?
+This gives:
 
-Other than that, looking good.
+   grep -E -e '^[A-Za-z]+(-[A-Za-z]+)*:' >/dev/null &&
+   patch_format=mbox
 
-Thanks.
+> One caveat is that the above logic alone won't catch a random file that
+> does not have _any_ e-mail headers in it.  So you might need to do
+> something like:
+> 
+> 	LF='
+>         '
+> 	case "$l1$LF$l2$LF$l3" in
+>         *"$LF$LF"*)
+>         	# has a completely empty line in there?
+>                 # that means the message has only two headers at most;
+>                 # that cannot be an email.
+> 		;;
+
+I think we can strip this part. The purpose is to accept what _may_ be a
+patch. Any wrong patch or random file will be rejected later.
+
+-- 
+Nicolas Sebrecht
