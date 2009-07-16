@@ -1,97 +1,66 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCHv2 2/2] pull: support rebased upstream + fetch + pull
- --rebase
-Date: Thu, 16 Jul 2009 10:51:46 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.0907161035060.3155@pacific.mpi-cbg.de>
-References: <adf1fd3d0907152329v7f49999u42b0d0fc4d39f5e9@mail.gmail.com> <1247731921-2290-1-git-send-email-santi@agolina.net>
+From: Graeme Geldenhuys <graemeg@gmail.com>
+Subject: Re: Make a non-bare repo bare.
+Date: Thu, 16 Jul 2009 10:51:00 +0200
+Message-ID: <h3mpls$9dt$1@ger.gmane.org>
+References: <c115fd3c0907151443h49aaac60r3462c69f55ed2d9f@mail.gmail.com> <7vbpnlbbln.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="8323328-1961027589-1247734307=:3155"
-Cc: git@vger.kernel.org
-To: =?ISO-8859-15?Q?Santi_B=E9jar?= <santi@agolina.net>
-X-From: git-owner@vger.kernel.org Thu Jul 16 10:51:47 2009
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jul 16 10:55:57 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MRMf4-0001wZ-5d
-	for gcvg-git-2@gmane.org; Thu, 16 Jul 2009 10:49:54 +0200
+	id 1MRMgh-0002rZ-35
+	for gcvg-git-2@gmane.org; Thu, 16 Jul 2009 10:51:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753808AbZGPIto (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 16 Jul 2009 04:49:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753733AbZGPIto
-	(ORCPT <rfc822;git-outgoing>); Thu, 16 Jul 2009 04:49:44 -0400
-Received: from mail.gmx.net ([213.165.64.20]:54628 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753049AbZGPItn (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 16 Jul 2009 04:49:43 -0400
-Received: (qmail invoked by alias); 16 Jul 2009 08:49:42 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp039) with SMTP; 16 Jul 2009 10:49:42 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/DjeEfPULDBUURVGsjq5t8xHWjSZByQ5a08lFJFz
-	8lvCr5sMwmCq+6
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <1247731921-2290-1-git-send-email-santi@agolina.net>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.49
+	id S1754035AbZGPIv3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 16 Jul 2009 04:51:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753899AbZGPIv2
+	(ORCPT <rfc822;git-outgoing>); Thu, 16 Jul 2009 04:51:28 -0400
+Received: from main.gmane.org ([80.91.229.2]:41384 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753620AbZGPIv1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 16 Jul 2009 04:51:27 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1MRMgY-0004Y7-2N
+	for git@vger.kernel.org; Thu, 16 Jul 2009 08:51:26 +0000
+Received: from 41.177.101.200 ([41.177.101.200])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 16 Jul 2009 08:51:26 +0000
+Received: from graemeg by 41.177.101.200 with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 16 Jul 2009 08:51:26 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: 41.177.101.200
+User-Agent: Thunderbird 2.0.0.22 (X11/20090608)
+In-Reply-To: <7vbpnlbbln.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123389>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123390>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Junio C Hamano wrote:
+> 
+> Funny.
+> 
+>     http://article.gmane.org/gmane.comp.version-control.git/123303
+> 
+> It is posed as a question but describes the correct (and officially
+> supported) procedure.
 
---8323328-1961027589-1247734307=:3155
-Content-Type: TEXT/PLAIN; charset=UTF-8
-Content-Transfer-Encoding: 8BIT
 
-Hi,
+Now it deserves to be in some Git FAQ. It seems the issue is more common 
+than I thought. :-)
 
-On Thu, 16 Jul 2009, Santi Béjar wrote:
 
-> Use the fork commit of the current branch (where
-> the tip of upstream branch used to be) as the upstream parameter of
-> "git rebase". Compute it walking the reflog to find the first commit
-> which is an ancestor of the current branch.
+Regards,
+   - Graeme -
 
-I finally understand what this patch is about.  Thanks.
-
-> diff --git a/git-pull.sh b/git-pull.sh
-> index 4b78a0c..31d3945 100755
-> --- a/git-pull.sh
-> +++ b/git-pull.sh
-> @@ -125,9 +125,14 @@ test true = "$rebase" && {
->  	die "refusing to pull with rebase: your working tree is not up-to-date"
->  
->  	. git-parse-remote &&
-> -	reflist="$(get_remote_merge_branch "$@" 2>/dev/null)" &&
-> -	oldremoteref="$(git rev-parse -q --verify \
-> -		"$reflist")"
-> +	remoteref="$(get_remote_merge_branch "$@" 2>/dev/null)" &&
-> +	num=0 &&
-> +	while oldremoteref="$(git rev-parse -q --verify "$remoteref@{$num}")"
-> +	do
-
-How about
-
-	oldremoteref="$(git rev-list --boundary HEAD --not \
-			$(git rev-list -g $remoteref | sed 's/$/^@/') |
-		sed -e '/^[^-]/d' -e q)"
-
-Explanation: the "git rev-list -g $remoteref" lists the previous commits 
-the remote ref pointed to, and the ^@ appended to them means all their 
-parents.  Now, the outer rev-list says to take everything in HEAD but 
-_not_ in those parents, showing the boundary commits.  The "sed" call 
-lists the first such boundary commit (which must, by construction, be one 
-of the commits shown by the first rev-list).
-
-But maybe this is trying to be too clever, and we should not bother with 
-it until git-pull is made a builtin?
-
-Ciao,
-Dscho
-
---8323328-1961027589-1247734307=:3155--
+-- 
+fpGUI Toolkit - a cross-platform GUI toolkit using Free Pascal
+http://opensoft.homeip.net/fpgui/
