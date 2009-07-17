@@ -1,115 +1,123 @@
-From: Graeme Geldenhuys <graemeg@gmail.com>
-Subject: pushing specific branches to a public mirror repos
-Date: Fri, 17 Jul 2009 10:30:26 +0200
-Message-ID: <h3pcrg$ekk$1@ger.gmane.org>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: [PATCH] Fix rebase -p --onto
+Date: Fri, 17 Jul 2009 10:40:08 +0200
+Message-ID: <4A6038E8.1090402@viscovery.net>
+References: <20090716230031.GM7503@vinegar-pot.mit.edu> <4A601C59.8040108@viscovery.net> <7vk52767el.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jul 17 10:31:04 2009
+Cc: Greg Price <price@ksplice.com>, git@vger.kernel.org,
+	Stephen Haberman <stephen@exigencecorp.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jul 17 10:40:27 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MRiqN-00032A-ME
-	for gcvg-git-2@gmane.org; Fri, 17 Jul 2009 10:31:04 +0200
+	id 1MRizQ-0006OM-Ei
+	for gcvg-git-2@gmane.org; Fri, 17 Jul 2009 10:40:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934230AbZGQIa4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 17 Jul 2009 04:30:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934219AbZGQIa4
-	(ORCPT <rfc822;git-outgoing>); Fri, 17 Jul 2009 04:30:56 -0400
-Received: from main.gmane.org ([80.91.229.2]:39005 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S934179AbZGQIaz (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 17 Jul 2009 04:30:55 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1MRiqE-0003HN-FE
-	for git@vger.kernel.org; Fri, 17 Jul 2009 08:30:54 +0000
-Received: from 41.177.101.200 ([41.177.101.200])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 17 Jul 2009 08:30:54 +0000
-Received: from graemeg by 41.177.101.200 with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 17 Jul 2009 08:30:54 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: 41.177.101.200
-User-Agent: Thunderbird 2.0.0.22 (X11/20090608)
+	id S934219AbZGQIkQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 17 Jul 2009 04:40:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934203AbZGQIkQ
+	(ORCPT <rfc822;git-outgoing>); Fri, 17 Jul 2009 04:40:16 -0400
+Received: from lilzmailso02.liwest.at ([212.33.55.13]:62192 "EHLO
+	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S934181AbZGQIkO (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 17 Jul 2009 04:40:14 -0400
+Received: from cpe228-254.liwest.at ([81.10.228.254] helo=linz.eudaptics.com)
+	by lilzmailso02.liwest.at with esmtpa (Exim 4.69)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1MRizB-0008C1-BU; Fri, 17 Jul 2009 10:40:09 +0200
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.96])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id 1FB2D6D9; Fri, 17 Jul 2009 10:40:09 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.21 (Windows/20090302)
+In-Reply-To: <7vk52767el.fsf@alter.siamese.dyndns.org>
+X-Enigmail-Version: 0.95.5
+X-Spam-Score: -1.4 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123449>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123450>
 
-Hi,
+Junio C Hamano schrieb:
+> Johannes Sixt <j.sixt@viscovery.net> writes:
+> 
+>> Greg Price schrieb:
+>>> In a rebase with --onto, the correct test for whether we can skip
+>>> rewriting a commit is if it is already on top of $ONTO, not $UPSTREAM.
+>>> Without --onto, this distinction does not exist and the behavior does
+>>> not change.
+>>>
+>>>
+>>> In the situation
+>>>
+>>>  X---o---o---o---M
+>>>   \             /
+>>>    x---x---x---x
+>>>
+>>>  Y
+>>> ...
+>>> The command `git rebase -p --onto Y X M` moves only the
+>>> first-parent chain, like so:
+>>>
+>>>  X
+>>>   \
+>>>    x---x---x---x
+>>>                 \
+>>>  Y---o'--o'--o'--M'
+>>>
+>>> because it mistakenly drops the other branch(es) x---x---x---x from
+>>> the TODO file.  This tests and fixes this behavior.
+>> I think the current behavior is by design. There is nothing to fix.
+>>
+>> The purpose of rebase -p is to leave non-first children alone and rebase
+>> only the first child parenthood chain. It is not the purpose to reseat an
+>> entire history DAG.
+> 
+> Hmm, if the original history were
+> 
+>  .---X---o---o---o---M
+>   \                 /
+>    x---x---x---x---x
+> 
+>      Y
+> 
+> and the rebase is about moving history leading to M since X on top of Y,
+> I would actually have agreed that this
+> 
+>  .---X---o---o---o---M
+>   \                 /
+>    x---x---x---x---x
+>                     \
+>      Y---o'--o'--o'--M'
+> 
+> would be the right thing to do (IOW, I would agree with you).
+> 
+> Can the current code distinguish the two cases?  More generally, can we
+> always tell these two cases apart, or is it fundamentally not possible to
+> differentiate the two cases and we should simplify the problem space by
+> limiting ourselves by treating the first parent in a special way?
 
-I cloned a SubVersion repository and am maintaining a Git mirror of it 
-on GitHub. Here is an example of some of the SubVersion branches that 
-got cloned.
+I have used rebase -i -p in the past to rewrite history that involves
+merges of topic branches like this:
 
-refs/remotes/cleanroom
-refs/remotes/fixes_2_0
-refs/remotes/fixes_2_2
-refs/remotes/fixes_2_2_0_dos
-refs/remotes/florian
-refs/remotes/fpc_2_3
-refs/remotes/generics
-refs/remotes/genfunc
-refs/remotes/trunk
-...
+  ---------Y--M--M--F     <-- master
+             /  /
+  ----a--a--a  /
+              /
+  --b--b--b--b
 
-By default 'git svn' created a "master" branch which tracks 
-"remotes/trunk". This is currently the only branch available on GitHub 
-mirror repository and I push it as follows:
+where F is a fixup that I want to insert between Y and M, and I thought
+rebase -i -p was intended for this use-case.
 
-On our server which manages the subversion -> local git repos -> github 
-sync process.
+With this in mind, I do not see why should we distinguish the cases. I
+would even go so far to say that this is OK:
 
-  $ cd /path/to/repository/
-  $ git svn fetch
-  $ git push github master
-
-This works fine. Now I don't have any other local branches or any local 
-modifications (I used to have, but reverted all of them) so now a 'git 
-svn fetch' does clean fast-forward merges without problems.
-
-I currently have the following git config setting for the remote github 
-repository:
-
-[remote "github"]
-	url = git@github.com:graemeg/freepascal.git
-	push = +refs/remotes/*:refs/heads/*
-
-As far as I understand, if I do 'git push github', it is going to push 
-all the SubVersion branches (as listed above) as heads to GitHub - but 
-this is not what I want. Many of those branches in SubVersion are old, 
-outdated or private development areas.
-
-I only want to push the "trunk" and "fixes_2_2" SubVersion branches to 
-GitHub as heads. How must I change by remote.github.push config setting, 
-or must I do a manual push as I do with the local tracking "master" branch.
-
-In summary:
-  * Can I change remote.github.push so that if I run 'git push github'
-    that it will ONLY push remotes/trunk and remotes/fixes_2_2 to
-    GitHub mirror
-
-  * or must I manually push those two to GitHub mirror as follows
-     once off create a tracking branch:
-       $ git branch --track fixes_2_2 remotes/fixes_2_2
-
-     then hourly do the following:
-       $ cd /path/to/repository/
-       $ git svn fetch
-       $ git push github master
-       $ git push github fixes_2_2
-
-
-
-Regards,
-   - Graeme -
-
--- 
-fpGUI Toolkit - a cross-platform GUI toolkit using Free Pascal
-http://opensoft.homeip.net/fpgui/
+  X---a---o---o---M            X---a
+       \         /    ===>          \
+        x---x---x                    x---x---x
+                                              \
+  Y                            Y---a'--o'--o'--M'
