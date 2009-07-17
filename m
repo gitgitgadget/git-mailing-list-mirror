@@ -1,64 +1,80 @@
-From: Mike Hommey <mh@glandium.org>
-Subject: Re: Is it possible to configure the color of git diff outpyut
-Date: Fri, 17 Jul 2009 19:45:29 +0200
-Message-ID: <20090717174529.GB2925@glandium.org>
-References: <3b9893450907170935k53baf50fue84fe619624a4489@mail.gmail.com>
- <7vbpnj5k2l.fsf@alter.siamese.dyndns.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Fix rebase -p --onto
+Date: Fri, 17 Jul 2009 20:32:20 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.0907172029230.4495@intel-tinevez-2-302>
+References: <20090716230031.GM7503@vinegar-pot.mit.edu> <4A601C59.8040108@viscovery.net> <7vk52767el.fsf@alter.siamese.dyndns.org> <4A6038E8.1090402@viscovery.net> <20090717164845.GL7878@vinegar-pot.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: n179911 <n179911@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jul 17 20:30:59 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Johannes Sixt <j.sixt@viscovery.net>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Stephen Haberman <stephen@exigencecorp.com>
+To: Greg Price <price@ksplice.com>
+X-From: git-owner@vger.kernel.org Fri Jul 17 20:32:32 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MRsCw-0001xr-59
-	for gcvg-git-2@gmane.org; Fri, 17 Jul 2009 20:30:58 +0200
+	id 1MRsER-0002gR-SC
+	for gcvg-git-2@gmane.org; Fri, 17 Jul 2009 20:32:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750840AbZGQSaq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 17 Jul 2009 14:30:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750779AbZGQSaq
-	(ORCPT <rfc822;git-outgoing>); Fri, 17 Jul 2009 14:30:46 -0400
-Received: from vuizook.err.no ([85.19.221.46]:54843 "EHLO vuizook.err.no"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750757AbZGQSap (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 17 Jul 2009 14:30:45 -0400
-X-Greylist: delayed 2736 seconds by postgrey-1.27 at vger.kernel.org; Fri, 17 Jul 2009 14:30:45 EDT
-Received: from cha92-13-88-165-248-19.fbx.proxad.net ([88.165.248.19] helo=jigen)
-	by vuizook.err.no with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.69)
-	(envelope-from <mh@glandium.org>)
-	id 1MRrUT-0006lj-6N; Fri, 17 Jul 2009 19:45:03 +0200
-Received: from mh by jigen with local (Exim 4.69)
-	(envelope-from <mh@jigen>)
-	id 1MRrUv-0000ni-HE; Fri, 17 Jul 2009 19:45:29 +0200
-Content-Disposition: inline
-In-Reply-To: <7vbpnj5k2l.fsf@alter.siamese.dyndns.org>
-X-GPG-Fingerprint: A479 A824 265C B2A5 FC54  8D1E DE4B DA2C 54FD 2A58
-User-Agent: Mutt/1.5.20 (2009-06-14)
-X-Spam-Status: (score 0.1): No, score=0.1 required=5.0 tests=RDNS_DYNAMIC autolearn=disabled version=3.2.4
+	id S1751043AbZGQScY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 17 Jul 2009 14:32:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750750AbZGQScY
+	(ORCPT <rfc822;git-outgoing>); Fri, 17 Jul 2009 14:32:24 -0400
+Received: from mail.gmx.net ([213.165.64.20]:43072 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750734AbZGQScX (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 17 Jul 2009 14:32:23 -0400
+Received: (qmail invoked by alias); 17 Jul 2009 18:32:22 -0000
+Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
+  by mail.gmx.net (mp008) with SMTP; 17 Jul 2009 20:32:22 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18GzYE5jS8G3S8ivcPsDRmFpczHV8JY7wCaKnDEgu
+	LhjzO1pF6MHx7T
+X-X-Sender: schindel@intel-tinevez-2-302
+In-Reply-To: <20090717164845.GL7878@vinegar-pot.mit.edu>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.62
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123480>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123481>
 
-On Fri, Jul 17, 2009 at 09:51:46AM -0700, Junio C Hamano wrote:
-> n179911 <n179911@gmail.com> writes:
+Hi,
+
+On Fri, 17 Jul 2009, Greg Price wrote:
+
+> On Fri, Jul 17, 2009 at 10:40:08AM +0200, Johannes Sixt wrote:
+> > I have used rebase -i -p in the past to rewrite history that involves
+> > merges of topic branches like this:
+> > 
+> >   ---------Y--M--M--F     <-- master
+> >              /  /
+> >   ----a--a--a  /
+> >               /
+> >   --b--b--b--b
+> > 
+> > where F is a fixup that I want to insert between Y and M, and I thought
+> > rebase -i -p was intended for this use-case.
 > 
-> > When I do git diff, for example, it has color output (red for "-" and
-> > green for "+").
-> > Can you please tell me how can I change the color used?
-> 
-> Can you please tell us what resources you consulted to figure this out
-> yourself before asking your question on this list?  I am not complaining;
-> I am trying to see how a "typical" user finds information on our software,
-> so that we can potentially optimize our documentation set to make it
-> easier to find answers to common questions.
+> I don't believe rebase -i -p has ever worked with reordering commits.
 
-I think it would make sense to have reference to configuration items
-that have a special impact on commands in their manual pages. Or at
-least a "See Also" section mentioning "git-config".
+It was not meant to.  Actually, it was never meant as "rebase -i -p", but 
+always as "rebase -p" (which, for technical reasons, would be implemented 
+in git-rebase--interactive.sh).
 
-Mike
+Having said that, I am working on a rebase-i-p series which _does_ allow 
+reordering commits, putting commits on newly-created topic branches, 
+redoing merges explicitely.
+
+Unfortunately, I seem to have less and less time for Git (which is not 
+helped by the frustrating experience of a first-slow then-failing GSoC 
+project), and when I finally decided to set aside some time to polish the 
+series and submit it, 1.6.4-rc0 came out.  And I do not want Junio to be 
+distracted from that very important (think push-to-current-branch) 
+release.
+
+Ciao,
+Dscho
