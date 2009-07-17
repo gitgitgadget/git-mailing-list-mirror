@@ -1,56 +1,56 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Is it possible to configure the color of git diff outpyut
-Date: Fri, 17 Jul 2009 09:51:46 -0700
-Message-ID: <7vbpnj5k2l.fsf@alter.siamese.dyndns.org>
-References: <3b9893450907170935k53baf50fue84fe619624a4489@mail.gmail.com>
+From: Unknown <borg@uu3.net>
+Subject: Re: [commit 4ecbc178704] Incosistency?
+Date: Fri, 17 Jul 2009 19:42:13 +0200 (CEST)
+Message-ID: <Pine.LNX.4.64.0907171939350.5833@cube>
+References: <Pine.LNX.4.64.0907142335210.31779@cube>
+ <20090714214852.GA2786@coredump.intra.peff.net> <Pine.LNX.4.64.0907151028050.10773@cube>
+ <20090715094252.GA26048@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
 Cc: git@vger.kernel.org
-To: n179911 <n179911@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jul 17 18:52:02 2009
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Jul 17 19:42:25 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MRqf9-0001b7-Gq
-	for gcvg-git-2@gmane.org; Fri, 17 Jul 2009 18:52:00 +0200
+	id 1MRrRw-0006dO-Vm
+	for gcvg-git-2@gmane.org; Fri, 17 Jul 2009 19:42:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934743AbZGQQvx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 17 Jul 2009 12:51:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964817AbZGQQvx
-	(ORCPT <rfc822;git-outgoing>); Fri, 17 Jul 2009 12:51:53 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:38934 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S934734AbZGQQvw (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 17 Jul 2009 12:51:52 -0400
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id C80267E6E;
-	Fri, 17 Jul 2009 12:51:51 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 966CC7E68; Fri, 17 Jul 2009
- 12:51:48 -0400 (EDT)
-In-Reply-To: <3b9893450907170935k53baf50fue84fe619624a4489@mail.gmail.com>
- (n179911@gmail.com's message of "Fri\, 17 Jul 2009 09\:35\:44 -0700")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 203E2172-72F2-11DE-8E29-AEF1826986A2-77302942!a-pb-sasl-sd.pobox.com
+	id S964875AbZGQRmR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 17 Jul 2009 13:42:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964849AbZGQRmR
+	(ORCPT <rfc822;git-outgoing>); Fri, 17 Jul 2009 13:42:17 -0400
+Received: from borg.uu3.net ([87.99.63.19]:35191 "EHLO borg.uu3.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S964806AbZGQRmQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 17 Jul 2009 13:42:16 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by borg.uu3.net (Postfix) with ESMTP
+	id E4BBB633F9; Fri, 17 Jul 2009 19:42:13 +0200 (CEST)
+X-X-Sender: borg@cube
+In-Reply-To: <20090715094252.GA26048@coredump.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123477>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123478>
 
-n179911 <n179911@gmail.com> writes:
+Sorry for long answer.. my CRT died.. and I had to get temp replacement.
 
-> When I do git diff, for example, it has color output (red for "-" and
-> green for "+").
-> Can you please tell me how can I change the color used?
+After resolving conflicts it should work clean on my old cygwin too.
+So no problem. I think its best to close this topic.
 
-Can you please tell us what resources you consulted to figure this out
-yourself before asking your question on this list?  I am not complaining;
-I am trying to see how a "typical" user finds information on our software,
-so that we can potentially optimize our documentation set to make it
-easier to find answers to common questions.
+Regards,
+Borg
 
-The answer to your question is found by looking for color.diff.<slot> in
-"git help config".
+On Wed, 15 Jul 2009, Jeff King wrote:
+> Sorry, I don't understand the significance. Is having 'git' in the
+> execdir causing some kind of problem?
+>
+> I agree that it shouldn't be necessary for most sane setups, but sadly
+> there are some insane ones, and I don't think this solution should be
+> hurting anyone else. Am I wrong?
+>
+> -Peff
+>
