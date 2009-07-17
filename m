@@ -1,89 +1,140 @@
-From: Andrey Smirnov <allter@gmail.com>
-Subject: Re: [PATCH/RFC 1/2] Add 'git subtree' command for tracking history of 
-	subtrees separately.
-Date: Fri, 17 Jul 2009 11:16:00 +0400
-Message-ID: <cdea6cd10907170016u11af7230hbbee92682604530f@mail.gmail.com>
-References: <1240784983-1477-1-git-send-email-apenwarr@gmail.com>
-	 <32541b130904291927m33908bacg2dbafcf64877b88f@mail.gmail.com>
-	 <20090430085853.GA21880@pvv.org>
-	 <32541b130904300732i691800f5kecc2f845584071c1@mail.gmail.com>
-	 <loom.20090716T160021-218@post.gmane.org>
-	 <32541b130907161134n51e070a1l93690d1b8a63bee8@mail.gmail.com>
-	 <cdea6cd10907161509g7771c72bl608b1924785b49fc@mail.gmail.com>
-	 <32541b130907161527l1955bf06pf54b5099a5988c65@mail.gmail.com>
+From: =?ISO-8859-1?Q?Santi_B=E9jar?= <santi@agolina.net>
+Subject: Re: [PATCHv2 2/2] pull: support rebased upstream + fetch + pull 
+	--rebase
+Date: Fri, 17 Jul 2009 09:51:38 +0200
+Message-ID: <adf1fd3d0907170051u7268d8f6kba7f2e529381d275@mail.gmail.com>
+References: <adf1fd3d0907152329v7f49999u42b0d0fc4d39f5e9@mail.gmail.com>
+	 <1247731921-2290-1-git-send-email-santi@agolina.net>
+	 <alpine.DEB.1.00.0907161035060.3155@pacific.mpi-cbg.de>
+	 <7vhbxc8inp.fsf@alter.siamese.dyndns.org>
+	 <adf1fd3d0907161618o61ee4b58of25659f8c36420f7@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Avery Pennarun <apenwarr@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jul 17 09:16:14 2009
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jul 17 09:51:53 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MRhfx-0001yx-FF
-	for gcvg-git-2@gmane.org; Fri, 17 Jul 2009 09:16:13 +0200
+	id 1MRiER-0005cR-6k
+	for gcvg-git-2@gmane.org; Fri, 17 Jul 2009 09:51:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934157AbZGQHQF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 17 Jul 2009 03:16:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934155AbZGQHQE
-	(ORCPT <rfc822;git-outgoing>); Fri, 17 Jul 2009 03:16:04 -0400
-Received: from mail-ew0-f226.google.com ([209.85.219.226]:48189 "EHLO
-	mail-ew0-f226.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S934153AbZGQHQD (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 17 Jul 2009 03:16:03 -0400
-Received: by ewy26 with SMTP id 26so653153ewy.37
-        for <git@vger.kernel.org>; Fri, 17 Jul 2009 00:16:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=xsaoHnpK3VaZb7jOdAr6xc3vfqF8fiOFZ4UE7wOM2BQ=;
-        b=tnIHCCotAzPUUTZcTsT2l++5eR/4lOJXANneBgxAsPMdiOvgzV39eXj2E+2DZ2KLWZ
-         mSOpWJGk6yAkrAg6Ku/ZsNRKH0KOEVYYetnLg+wpm/BcZQDI45lhHMtWeoVYWvjVv2CR
-         hMK+MXsZ+9mpAPsue1f3pValN1CGYyJVXaRdI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=Q0U3rBdnAAOhsQjx/T9Zy0IK0qvPfgH5ZrSomeLTlhcO3a/tPLaxjaq0K9N+6IGbXy
-         HcH+PFFz4Zo5SB8Cn1GjVTrJCDRSwme6LLkRsHi6SgFq/AdWhanfjesmZ2adznTWYVLH
-         ivdsh0VV3rfQsVQgatBlSSe2RHMna6d880vig=
-Received: by 10.216.36.79 with SMTP id v57mr226305wea.19.1247814960912; Fri, 
-	17 Jul 2009 00:16:00 -0700 (PDT)
-In-Reply-To: <32541b130907161527l1955bf06pf54b5099a5988c65@mail.gmail.com>
+	id S934178AbZGQHvm convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 17 Jul 2009 03:51:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934174AbZGQHvm
+	(ORCPT <rfc822;git-outgoing>); Fri, 17 Jul 2009 03:51:42 -0400
+Received: from mail-fx0-f218.google.com ([209.85.220.218]:61707 "EHLO
+	mail-fx0-f218.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S934173AbZGQHvl convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 17 Jul 2009 03:51:41 -0400
+Received: by fxm18 with SMTP id 18so568097fxm.37
+        for <git@vger.kernel.org>; Fri, 17 Jul 2009 00:51:40 -0700 (PDT)
+Received: by 10.204.78.142 with SMTP id l14mr653812bkk.33.1247817099044; Fri, 
+	17 Jul 2009 00:51:39 -0700 (PDT)
+In-Reply-To: <adf1fd3d0907161618o61ee4b58of25659f8c36420f7@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123445>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123446>
 
-On Fri, Jul 17, 2009 at 2:27 AM, Avery Pennarun<apenwarr> wrote:
+2009/7/17 Santi B=E9jar <santi@agolina.net>:
+> 2009/7/16 Junio C Hamano <gitster@pobox.com>:
+>> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+>>
+>>> How about
+>>>
+>>> =A0 =A0 =A0 oldremoteref=3D"$(git rev-list --boundary HEAD --not \
+>>> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 $(git rev-list -g $remo=
+teref | sed 's/$/^@/') |
+>>> =A0 =A0 =A0 =A0 =A0 =A0 =A0 sed -e '/^[^-]/d' -e q)"
+>>>
+>>> Explanation: the "git rev-list -g $remoteref" lists the previous co=
+mmits
+>>> the remote ref pointed to, and the ^@ appended to them means all th=
+eir
+>>> parents. =A0Now, the outer rev-list says to take everything in HEAD=
+ but
+>>> _not_ in those parents, showing the boundary commits. =A0The "sed" =
+call
+>>> lists the first such boundary commit (which must, by construction, =
+be one
+>>> of the commits shown by the first rev-list).
+>>
+>> Hmm, I am not sure about that "(which must..." part.
 
->> The only thing that links git-subtree with git-rebase is the fact, that
->> git-subtree "knows" the target commit for rebases dealing with subtrees.
-> rebase doesn't
-> have any parameters called a "target."  What does git-subtree know
-> that you don't know?
+Unfortunatly you are right with the "(which must..." part. Even
+without the ^@. Normally gives the right answer, but it is not
+sure that the first commit boundary is the correct one. For
+example:
 
-By "rebase target" I mean the mutual relation of git-rebase <newbase>
-and <upstream> paramaters
-that define where will be the rebased commits. git-subtree can infer
-that NewProj contains library up to
-test-split and that OldProj contains library upto test-split-old. The
-concept of the whole git-subtee workflow
-is still blurry to me though, so I will report when I gather more
-usage statistics.
+         o--C
+        /
+ A--x--y--B--o--z
+     \      /
+      o----o
 
-> I don't really understand what you're asking for here.
+A, B, C are upstream@{n}
 
-At most I need generic ability to shift merged and rebased
-repository's or ref's "left" (selecting some directory or file)
-and "right" (prepending some directory to all paths) before actual
-operation(s). I.e. the antonym of 'split'
-but without 'add' committree-joining semantics. This can be
-implemented with some chaining/plumbing presets.
+It involves a merge with a branch forked before the fork commit
+for the current branch, and it will not work neither with git
+pull --rebase. We could say that it is not supported, but
+nevertheless it gives the wrong answer.
 
---
-Sincerly yours, Andrey.
+The right answer is B, but:
+$ git rev-list --boundary z --not C B A
+z
+o
+o
+o
+-x
+-B
+
+in this case we could take the boundaries commits and filter the
+commits that are ancestor of some other boundary commit, and
+would get B (git show-branch --independent x B -> B).
+
+Here it is a test case to see the above.
+
+rm -rf test
+mkdir test
+cd test
+git init
+echo A > file
+git add .
+git commit -mA
+git tag A
+echo o > file
+git commit -a -mo
+git tag fork1
+echo z > file
+git commit -a -mz
+git tag fork2
+echo B > file
+git commit -a -mB
+git tag B
+git checkout -b topic fork1
+echo oo > filetopic
+git add .
+git commit -moo
+echo ooo > filetopic
+git commit -a -mooo
+git checkout master
+git merge topic
+echo c > file
+git commit -a -mc
+git checkout -b upstream fork2
+echo o > fileupstream
+git add .
+git commit -a -mo5
+echo C > fileupstream
+git commit -a -mo
+git tag C
+git rev-list --boundary master --not C B A
+echo answer: $(git rev-parse B^{})
+
+HTH,
+Santi
