@@ -1,96 +1,142 @@
-From: Sitaram Chamarty <sitaramc@gmail.com>
-Subject: Re: Make a non-bare repo bare.
-Date: Fri, 17 Jul 2009 06:50:34 +0530
-Message-ID: <2e24e5b90907161820o5ee24491j8744a8652e7dec26@mail.gmail.com>
-References: <c115fd3c0907151443h49aaac60r3462c69f55ed2d9f@mail.gmail.com>
-	 <7vbpnlbbln.fsf@alter.siamese.dyndns.org>
-	 <2e24e5b90907160439i29171e9fka3baf6bf871a6011@mail.gmail.com>
-	 <7v8wio8i73.fsf@alter.siamese.dyndns.org>
+From: Changsheng Jiang <jiangzuoyan@gmail.com>
+Subject: Re: how to fetch a new svn branch after clone?
+Date: Fri, 17 Jul 2009 10:00:22 +0800
+Message-ID: <eafc0afe0907161900k35b2dff1u5a2bfc574bb93231@mail.gmail.com>
+References: <eafc0afe0907160830m29e2f3d3jf5c0e9db29cace54@mail.gmail.com> 
+	<4A5F8CDA.5080202@xiplink.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Tim Visher <tim.visher@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jul 17 03:20:47 2009
+Cc: git@vger.kernel.org
+To: Marc Branchaud <marcnarc@xiplink.com>
+X-From: git-owner@vger.kernel.org Fri Jul 17 04:01:00 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MRc7x-0003SD-5c
-	for gcvg-git-2@gmane.org; Fri, 17 Jul 2009 03:20:45 +0200
+	id 1MRckt-000614-Ev
+	for gcvg-git-2@gmane.org; Fri, 17 Jul 2009 04:00:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933921AbZGQBUg convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 16 Jul 2009 21:20:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933917AbZGQBUg
-	(ORCPT <rfc822;git-outgoing>); Thu, 16 Jul 2009 21:20:36 -0400
-Received: from mail-gx0-f213.google.com ([209.85.217.213]:47290 "EHLO
-	mail-gx0-f213.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933916AbZGQBUf convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 16 Jul 2009 21:20:35 -0400
-Received: by gxk9 with SMTP id 9so957070gxk.13
-        for <git@vger.kernel.org>; Thu, 16 Jul 2009 18:20:34 -0700 (PDT)
+	id S933642AbZGQCAp convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 16 Jul 2009 22:00:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933610AbZGQCAo
+	(ORCPT <rfc822;git-outgoing>); Thu, 16 Jul 2009 22:00:44 -0400
+Received: from mail-vw0-f200.google.com ([209.85.212.200]:65208 "EHLO
+	mail-vw0-f200.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933234AbZGQCAn convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 16 Jul 2009 22:00:43 -0400
+Received: by vwj38 with SMTP id 38so565421vwj.33
+        for <git@vger.kernel.org>; Thu, 16 Jul 2009 19:00:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
+         :from:date:message-id:subject:to:cc:content-type
          :content-transfer-encoding;
-        bh=kPtbtZ6NdmtHYQpn3DFKivAZTycfNYRPiaVYkcEmue4=;
-        b=x7Kq35iupIz6/qnHIGW31epnq12W836V5lRatuNYBKhseFBKPIGtZ8aqveuK6r7Yg7
-         dFSfLHDwqkcXoyHTaFR81qK/GeYSGNglpx9rnbgCJjVN5IidSkyV3XeGzyy1YcbDXCdl
-         xOTJyV2M4vGWB0UCnPaZry2FZd4pNAu+LqlLU=
+        bh=0z6mT2aJWyU7akm4dBhxztfpZpUjBj0cHKj2BDrZySw=;
+        b=EonY1KxNneoVdK23enQqqmEpKsPInE7h/MkZIBtEV/zXkyrkwNKLOhTu15XnOfI1sW
+         /jNnVpvCQqInWxoms5zEW4Xdb/aXc7v2G24jwTTp8SGageojJ+MIit2SCglmOAh8C1kY
+         gUBimJI30D8vDPQvV+zwyzonTX2NGBNMcb9dc=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc:content-type:content-transfer-encoding;
-        b=hRJetN2dCBDToop441pXJhm+H6NwASI5SLwe1oQT8x5rQ59jM7rraEG66fgqCUHQ92
-         dCfYjCDsQw/SkcYRvPX7OZD28XaC3paJA09OiPh/cSDwjawGns3TtGbsEN4UiYtdfsVw
-         5152nu+/bZ9//PVkiAMUwLozZ8b1YzPMWcqU0=
-Received: by 10.90.88.16 with SMTP id l16mr329534agb.91.1247793634494; Thu, 16 
-	Jul 2009 18:20:34 -0700 (PDT)
-In-Reply-To: <7v8wio8i73.fsf@alter.siamese.dyndns.org>
+        b=UXJsKNV3YO09RG5m87PbVA6TF1wQdxYE3NHJt//TTlPBpCOhlFDKZBUZNeK3V2qMEQ
+         R+/W/0dhTU6IzaOOdwL4BTf8dxTnmnxM7JHglRjHCTWSBki9aPEwujkIvY8iEdeY+EHn
+         5TXdtP0E+jmQDHIt/KhOYB6chywFYWrRMAd1U=
+Received: by 10.220.45.84 with SMTP id d20mr726260vcf.90.1247796042157; Thu, 
+	16 Jul 2009 19:00:42 -0700 (PDT)
+In-Reply-To: <4A5F8CDA.5080202@xiplink.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123438>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123439>
 
-On Fri, Jul 17, 2009 at 2:21 AM, Junio C Hamano<gitster@pobox.com> wrot=
-e:
-> Sitaram Chamarty <sitaramc@gmail.com> writes:
+Thank Marc.
 
->> The linked procedure uses git clone --bare. =A0It is my belief (and
->> please correct me if I'm wrong) that only a git clone --mirror
->> actually does what you want here -- a mere "bare" clone would lose
->> your remotes and their tracking branches would it not?
+You are right, it should be the latter case with url
+http://www.example.com/project/branches/test
+
+But "git svn clone" has already added these lines to .git/config
+
+[svn-remote "svn"]
+	url =3D https://xxx.xxxx.com/svn/xxx
+	fetch =3D trunk:refs/remotes/trunk
+	branches =3D branches/*:refs/remotes/*
+	tags =3D tags/*:refs/remotes/tags/*
+
+And it still can not fetch new branch.
+
+                                                      Changsheng Jiang
+
+On Fri, Jul 17, 2009 at 04:26, Marc Branchaud<marcnarc@xiplink.com> wro=
+te:
+> The latest 1.6.4-rc1 contains patches to git-svn for it to support mo=
+re than one branch URL in an svn repository.
 >
-> Depends on "what you want here".
+> However, before I describe that, can you confirm whether your new bra=
+nch is in fact named
 >
-> I assumed that the request was to set up the most typical use of a ba=
-re
-> repository, that is to prepare a distribution point, separate from yo=
-ur
-> primary working repository with a work tree, from which you push your
-> updates into this new bare repository.
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0http://svn.example.com/project/test
 >
-> And in such a distribution point, you do not need nor want remotes. =A0=
-The
-> point of remote tracking branches is to let you peek what others are =
-doing
-> and merge with them, and that is done while you advance your history =
-in
-> your primary working area with the work tree. =A0It does not happen i=
-n your
-> distribution point.
-
-I agree, bares dont have remotes, normally.
-
-I was speaking purely from a technical point of view.  Contrast, if
-you will, with the other method seen in the thread and elsewhere (the
-mv repo/.git repo.git, rm -rf repo, git config core.bare in repo.git
-stuff), which does preserve all this.
-
-Anyway, you confirmed my _understanding_ of clone bare versus clone
-mirror, which is what I was looking for.  Thanks!
-
-Sitaram
+> or is it really
+>
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0http://svn.example.com/project/test/<branc=
+hname>
+>
+> Because if it's the former then I'm not sure if git-svn can handle yo=
+ur new branch. =C2=A0The problem is that even though the branch is name=
+d 'test' it's a sibling to the 'branches' 'tags' and 'trunk' paths in t=
+he repository. =C2=A0For git-svn to pick up branches, you point it at t=
+he path *containing* the branch names. =C2=A0In the former case, to pic=
+k up project/test as the 'test' branch you'd have to point git-svn at t=
+he project directory, and that would cause it to also pick up project/t=
+ags, project/branches, and project/trunk as other branches (named 'tags=
+', 'branches' and 'trunk').
+>
+> However, in the latter (test/<branchname>) case, with 1.6.4, I *think=
+* git-svn will pick up the new branches under test if you add a new 'br=
+anches' line to the svn-remote's section in your .git/config file. =C2=A0=
+Something like
+>
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0branches =3D test/*:refs/remotes/*
+>
+> might let you see the new branches. =C2=A0The reason I can't be more =
+certain is that if you've done a 'git svn fetch' since the branch was c=
+reated then git-svn might not pick up the branch-creation commits later=
+=2E =C2=A0Unfortunately I don't know git-svn well enough to say for cer=
+tain.
+>
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0M.
+>
+>
+> Changsheng Jiang wrote:
+>> Hi list,
+>>
+>> I know how to clone a svn repository with all branches and tags at t=
+he
+>> initial step, but I find no answers of how to fetch a new svn branch
+>> after clone.
+>>
+>> For example, this
+>>
+>> git svn clone http://svn.example.com/project -T trunk -b branches -t=
+ tags
+>>
+>> will clone all branches. but that clone, the svn repository has a ne=
+w
+>> branch test with url http://svn.example.com/project/test, how to clo=
+ne
+>> it as the initial step?
+>>
+>> Thanks.
+>>
+>> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0Changsheng Jiang
+>> --
+>> To unsubscribe from this list: send the line "unsubscribe git" in
+>> the body of a message to majordomo@vger.kernel.org
+>> More majordomo info at =C2=A0http://vger.kernel.org/majordomo-info.h=
+tml
+>
