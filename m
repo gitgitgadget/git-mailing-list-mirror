@@ -1,90 +1,64 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH 2/2] show: add space between tag body and tagged object
-Date: Fri, 17 Jul 2009 19:22:28 -0400
-Message-ID: <20090717232227.GB13624@coredump.intra.peff.net>
-References: <20090717231622.GA13511@coredump.intra.peff.net>
+From: Markus Heidelberg <markus.heidelberg@web.de>
+Subject: Re: [PATCH 2/2] Improve doc for format-patch threading options.
+Date: Sat, 18 Jul 2009 01:23:41 +0200
+Message-ID: <200907180123.41735.markus.heidelberg@web.de>
+References: <cover.1246834883.git.ydirson@altern.org> <200907170058.46962.markus.heidelberg@web.de> <20090717065236.GE5762@nan92-1-81-57-214-146.fbx.proxad.net>
+Reply-To: markus.heidelberg@web.de
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Jul 18 01:22:41 2009
+To: Yann Dirson <ydirson@altern.org>
+X-From: git-owner@vger.kernel.org Sat Jul 18 01:23:43 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MRwlE-0005Yr-1v
-	for gcvg-git-2@gmane.org; Sat, 18 Jul 2009 01:22:40 +0200
+	id 1MRwmE-0005qL-6C
+	for gcvg-git-2@gmane.org; Sat, 18 Jul 2009 01:23:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752835AbZGQXWd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 17 Jul 2009 19:22:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752089AbZGQXWd
-	(ORCPT <rfc822;git-outgoing>); Fri, 17 Jul 2009 19:22:33 -0400
-Received: from peff.net ([208.65.91.99]:43841 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1749667AbZGQXWc (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 17 Jul 2009 19:22:32 -0400
-Received: (qmail 29724 invoked by uid 107); 17 Jul 2009 23:24:32 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Fri, 17 Jul 2009 19:24:32 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Fri, 17 Jul 2009 19:22:28 -0400
+	id S1752089AbZGQXXU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 17 Jul 2009 19:23:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751801AbZGQXXU
+	(ORCPT <rfc822;git-outgoing>); Fri, 17 Jul 2009 19:23:20 -0400
+Received: from fmmailgate03.web.de ([217.72.192.234]:47424 "EHLO
+	fmmailgate03.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1749667AbZGQXXT (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 17 Jul 2009 19:23:19 -0400
+Received: from smtp05.web.de (fmsmtp05.dlan.cinetic.de [172.20.4.166])
+	by fmmailgate03.web.de (Postfix) with ESMTP id 07A4010659067;
+	Sat, 18 Jul 2009 01:23:17 +0200 (CEST)
+Received: from [89.59.107.28] (helo=pluto)
+	by smtp05.web.de with asmtp (TLSv1:AES256-SHA:256)
+	(WEB.DE 4.110 #277)
+	id 1MRwlo-0003Dd-00; Sat, 18 Jul 2009 01:23:16 +0200
+User-Agent: KMail/1.9.9
+In-Reply-To: <20090717065236.GE5762@nan92-1-81-57-214-146.fbx.proxad.net>
+Jabber-ID: markus.heidelberg@web.de
 Content-Disposition: inline
-In-Reply-To: <20090717231622.GA13511@coredump.intra.peff.net>
+X-Sender: markus.heidelberg@web.de
+X-Provags-ID: V01U2FsdGVkX18O/1F62oBx+fDFPiBnsbFANFRuW0pXjFm+4ltf
+	SBMNgBMzq8C4nPDCCytJDvjWc3RRu8SdVONXd7MF0C6gtbJzsI
+	oRdXwbkN4oENrMxVqGOQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123497>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123498>
 
-When showing an annotated tag, "git show" will always
-display the pointed-to object. However, it didn't separate
-the two with whitespace, making it more difficult to notice
-where the new object started. For example:
+Yann Dirson, 17.07.2009:
+> On Fri, Jul 17, 2009 at 12:58:46AM +0200, Markus Heidelberg wrote:
+> > > - even when --no-thread is specified, and format-patch was run with
+> > > --no-thread as well, it still adds In-Reply-To and References headers,
+> > > and I must say I do not see what in the code causes this behaviour.
+> > 
+> > This is caused by a bug fixed in commit 5e9758e29 (send-email: fix
+> > non-threaded mails, 2009-06-12). Try using "git send-email --no-thread
+> > --no-chain-reply" and it may work again. You should use an up-to-date
+> > git, when searching for bugs.
+> 
+> I had tried exactly this just in case it would help, with current
+> master (1.6.4rc1), and it still saw the same behaviour.
 
-  $ git tag -m 'my message' foo
-  $ git show foo
-  tag foo
-  Tagger: Jeff King <peff@peff.net>
-  Date:   Fri Jul 17 18:46:25 2009 -0400
-
-  my message
-  commit 41cabf8fed2694ba33e01d64f9094f2fc5e5805a
-  Author: Jeff King <peff@peff.net>
-  Date:   Thu Jul 16 17:31:34 2009 -0400
-  ...
-
-This patch adds a blank line between "my message" and
-"commit 41c...", making it easier to read.
-
-Signed-off-by: Jeff King <peff@peff.net>
----
-I was tempted to add logic for "put a blank line separator between each
-two items printed by git show", instead of just tags. But:
-
-  - commits already do that (e.g., "git show HEAD HEAD^" looks fine)
-
-  - blobs don't do it, but you probably don't want them to. I don't know
-    why you would really do "git show HEAD:foo HEAD:bar", but you could,
-    and I would expect it to concatenate them without extra data.
-
-Trees don't do it, so if you "git show HEAD^{tree} HEAD^{tree}" there is
-no separator. Maybe that is worth fixing separately, but I find it
-unlikely for somebody to do that. Annotated tags are the much more
-common case, because you always get two objects displayed.
-
- builtin-log.c |    1 +
- 1 files changed, 1 insertions(+), 0 deletions(-)
-
-diff --git a/builtin-log.c b/builtin-log.c
-index b05796d..d3e4d1a 100644
---- a/builtin-log.c
-+++ b/builtin-log.c
-@@ -342,6 +342,7 @@ int cmd_show(int argc, const char **argv, const char *prefix)
- 					    sha1_to_hex(t->tagged->sha1));
- 			objects[i].item = o;
- 			i--;
-+			putchar('\n');
- 			break;
- 		}
- 		case OBJ_TREE:
--- 
-1.6.4.rc1.174.g317bf.dirty
+Strange, I can't reproduce it.
