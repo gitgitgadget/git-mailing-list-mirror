@@ -1,90 +1,65 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: encrypted repositories?
-Date: Fri, 17 Jul 2009 18:06:00 +0200
-Message-ID: <4A60A168.2060105@drmicha.warpmail.net>
-References: <op.uw7wmbr41e62zd@balu.cs.uni-paderborn.de>
+From: Marc Branchaud <marcnarc@xiplink.com>
+Subject: Re: how to fetch a new svn branch after clone?
+Date: Fri, 17 Jul 2009 12:09:24 -0400
+Message-ID: <4A60A234.5020907@xiplink.com>
+References: <eafc0afe0907160830m29e2f3d3jf5c0e9db29cace54@mail.gmail.com> 	<4A5F8CDA.5080202@xiplink.com> <eafc0afe0907161900k35b2dff1u5a2bfc574bb93231@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Matthias Andree <matthias.andree@gmx.de>
-X-From: git-owner@vger.kernel.org Fri Jul 17 18:06:30 2009
+To: Changsheng Jiang <jiangzuoyan@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jul 17 18:11:19 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MRpx6-0007uC-M9
-	for gcvg-git-2@gmane.org; Fri, 17 Jul 2009 18:06:29 +0200
+	id 1MRq1m-0001PQ-QX
+	for gcvg-git-2@gmane.org; Fri, 17 Jul 2009 18:11:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964860AbZGQQGS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 17 Jul 2009 12:06:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964856AbZGQQGS
-	(ORCPT <rfc822;git-outgoing>); Fri, 17 Jul 2009 12:06:18 -0400
-Received: from out1.smtp.messagingengine.com ([66.111.4.25]:38149 "EHLO
-	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S964855AbZGQQGS (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 17 Jul 2009 12:06:18 -0400
-Received: from compute2.internal (compute2.internal [10.202.2.42])
-	by out1.messagingengine.com (Postfix) with ESMTP id 63D583BC2E9;
-	Fri, 17 Jul 2009 12:06:17 -0400 (EDT)
-Received: from heartbeat1.messagingengine.com ([10.202.2.160])
-  by compute2.internal (MEProxy); Fri, 17 Jul 2009 12:06:17 -0400
-X-Sasl-enc: rIMG8c/hkW4H1DQXype3A7GhD4OugPA/jfFHXb4Lv7jY 1247846777
-Received: from localhost.localdomain (heawood.math.tu-clausthal.de [139.174.44.4])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id C60194BF39;
-	Fri, 17 Jul 2009 12:06:16 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.1pre) Gecko/20090717 Lightning/1.0pre Shredder/3.0b3pre
-In-Reply-To: <op.uw7wmbr41e62zd@balu.cs.uni-paderborn.de>
+	id S964874AbZGQQLL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 17 Jul 2009 12:11:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964872AbZGQQLK
+	(ORCPT <rfc822;git-outgoing>); Fri, 17 Jul 2009 12:11:10 -0400
+Received: from smtp152.iad.emailsrvr.com ([207.97.245.152]:41811 "EHLO
+	smtp152.iad.emailsrvr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S964871AbZGQQLK (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 17 Jul 2009 12:11:10 -0400
+Received: from relay5.relay.iad.emailsrvr.com (localhost [127.0.0.1])
+	by relay5.relay.iad.emailsrvr.com (SMTP Server) with ESMTP id 0204F5C0329;
+	Fri, 17 Jul 2009 12:11:07 -0400 (EDT)
+Received: by relay5.relay.iad.emailsrvr.com (Authenticated sender: mbranchaud-AT-xiplink.com) with ESMTPSA id D0A635C01D7;
+	Fri, 17 Jul 2009 12:11:07 -0400 (EDT)
+User-Agent: Thunderbird 2.0.0.22 (X11/20090608)
+In-Reply-To: <eafc0afe0907161900k35b2dff1u5a2bfc574bb93231@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123470>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123471>
 
-Matthias Andree venit, vidit, dixit 17.07.2009 17:14:
-> Greetings,
+Changsheng Jiang wrote:
+> Thank Marc.
 > 
-> I have a rather special usage scenario.
-> 
-> Assume you have a repository where you want to work on embargoed  
-> information, so that not even system administrators of the server you're  
-> pushing to can get a hold of the cleartext data.
-> 
-> "Server" would be a central reference repository that I can push to.
-> "Client" would by my working computer that has a clone of the crypted  
-> repo, and an unencrypted checkout of it. Perhaps the client would also  
-> need an unencrypted copy of the repo (for performance reasons, I'm not  
-> sure about that) that gets encrypted on the fly when pushing and decrypted  
-> when fetching.
-> 
-> Examples of use might be press releases of upcoming products, written  
-> exams for students, whatever.
-> 
-> Requirements:
-> - "client" that is about to push must encrypt the data before pushing it  
-> to the server.
-> - all data (including file names, log messages,
-> 
-> Allowed restrictions:
-> - "server" limited to bare repositories
-> - initial version limited to symmetric encryption with pre-shared secret
-> 
-> In a later step, some key management and asymmetric crypto would be  
-> useful, but that's not crucial now. In my current scenario, those who are  
-> working on the embargoed material would trust one another.
-> 
-> 
-> How would one go about this from the user side? I sincerely doubt I have  
-> the resources (time!) to actually implement this in Git.
+> You are right, it should be the latter case with url
+> http://www.example.com/project/branches/test
 
-If the server can not decrypt anything then it can not serve anything,
-at least not as a git server. Note that if you're really fussy about
-security then you should not allow the server to see even the DAG (which
-would be the case if you encrypt blobs only), which makes it impossible
-to do any smart serving.
+Hmmm, that isn't a case I mentioned in my previous email.  Are you saying that the layout is actually
 
-So, why not share some form of remote storage on which you have an
-encrypted luks partition? That way you can even set up multiple access
-keys and revoke them when necessary.
+	http://www.example.com/project/branches/<some branches>
+	http://www.example.com/project/branches/test/<some other branches>
 
-Michael
+If that's the case I think you might be stuck.  I think git-svn can't handle that layout (with branch names under both branches/ and branches/test/).
+
+> But "git svn clone" has already added these lines to .git/config
+> 
+> [svn-remote "svn"]
+> 	url = https://xxx.xxxx.com/svn/xxx
+> 	fetch = trunk:refs/remotes/trunk
+> 	branches = branches/*:refs/remotes/*
+> 	tags = tags/*:refs/remotes/tags/*
+> 
+> And it still can not fetch new branch.
+
+Yes.  If you had a layout that git-svn supported, you would need to add a _second_ branches line.
+
+		M.
