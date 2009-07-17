@@ -1,161 +1,56 @@
-From: Greg Price <price@ksplice.com>
-Subject: Re: [PATCH] Fix rebase -p --onto
-Date: Fri, 17 Jul 2009 12:48:46 -0400
-Message-ID: <20090717164845.GL7878@vinegar-pot.mit.edu>
-References: <20090716230031.GM7503@vinegar-pot.mit.edu> <4A601C59.8040108@viscovery.net> <7vk52767el.fsf@alter.siamese.dyndns.org> <4A6038E8.1090402@viscovery.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Is it possible to configure the color of git diff outpyut
+Date: Fri, 17 Jul 2009 09:51:46 -0700
+Message-ID: <7vbpnj5k2l.fsf@alter.siamese.dyndns.org>
+References: <3b9893450907170935k53baf50fue84fe619624a4489@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Stephen Haberman <stephen@exigencecorp.com>
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Fri Jul 17 18:49:01 2009
+Cc: git@vger.kernel.org
+To: n179911 <n179911@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jul 17 18:52:02 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MRqcF-0000Fd-CK
-	for gcvg-git-2@gmane.org; Fri, 17 Jul 2009 18:48:59 +0200
+	id 1MRqf9-0001b7-Gq
+	for gcvg-git-2@gmane.org; Fri, 17 Jul 2009 18:52:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964958AbZGQQsv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 17 Jul 2009 12:48:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964952AbZGQQsu
-	(ORCPT <rfc822;git-outgoing>); Fri, 17 Jul 2009 12:48:50 -0400
-Received: from BISCAYNE-ONE-STATION.MIT.EDU ([18.7.7.80]:55773 "EHLO
-	biscayne-one-station.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S964950AbZGQQsu (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 17 Jul 2009 12:48:50 -0400
-Received: from outgoing.mit.edu (OUTGOING-AUTH.MIT.EDU [18.7.22.103])
-	by biscayne-one-station.mit.edu (8.13.6/8.9.2) with ESMTP id n6HGmls1019017;
-	Fri, 17 Jul 2009 12:48:47 -0400 (EDT)
-Received: from localhost (VINEGAR-POT.MIT.EDU [18.181.0.51])
-	(authenticated bits=0)
-        (User authenticated as price@ATHENA.MIT.EDU)
-	by outgoing.mit.edu (8.13.6/8.12.4) with ESMTP id n6HGmk65013063;
-	Fri, 17 Jul 2009 12:48:46 -0400 (EDT)
-Content-Disposition: inline
-In-Reply-To: <4A6038E8.1090402@viscovery.net>
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-Scanned-By: MIMEDefang 2.42
-X-Spam-Flag: NO
-X-Spam-Score: 0.00
+	id S934743AbZGQQvx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 17 Jul 2009 12:51:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964817AbZGQQvx
+	(ORCPT <rfc822;git-outgoing>); Fri, 17 Jul 2009 12:51:53 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:38934 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S934734AbZGQQvw (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 17 Jul 2009 12:51:52 -0400
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id C80267E6E;
+	Fri, 17 Jul 2009 12:51:51 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 966CC7E68; Fri, 17 Jul 2009
+ 12:51:48 -0400 (EDT)
+In-Reply-To: <3b9893450907170935k53baf50fue84fe619624a4489@mail.gmail.com>
+ (n179911@gmail.com's message of "Fri\, 17 Jul 2009 09\:35\:44 -0700")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 203E2172-72F2-11DE-8E29-AEF1826986A2-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123476>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123477>
 
-On Fri, Jul 17, 2009 at 10:40:08AM +0200, Johannes Sixt wrote:
-> I have used rebase -i -p in the past to rewrite history that involves
-> merges of topic branches like this:
-> 
->   ---------Y--M--M--F     <-- master
->              /  /
->   ----a--a--a  /
->               /
->   --b--b--b--b
-> 
-> where F is a fixup that I want to insert between Y and M, and I thought
-> rebase -i -p was intended for this use-case.
+n179911 <n179911@gmail.com> writes:
 
-I don't believe rebase -i -p has ever worked with reordering commits.
-It certainly doesn't now, as the tests below demonstrate both for your
-case and for the most trivial possible situation without even any merges.
+> When I do git diff, for example, it has color output (red for "-" and
+> green for "+").
+> Can you please tell me how can I change the color used?
 
-This is not a mere coding error, as in the general case with a hairy
-set of merges it's not clear what an arbitrary reordering of the
-commits would even mean.  To really fix it will require a richer TODO
-file format, as in the sequencer or the discussion Johannes Schindelin
-started in January about a rebase -i -p rework.
+Can you please tell us what resources you consulted to figure this out
+yourself before asking your question on this list?  I am not complaining;
+I am trying to see how a "typical" user finds information on our software,
+so that we can potentially optimize our documentation set to make it
+easier to find answers to common questions.
 
-
-In any case, this has nothing to do with my patch to fix -p --onto,
-which is a no-op when --onto is not used.  You want `git rebase -i -p Y`,
-and the generation of the TODO file correctly gives you M, M, F.
-It's the execution of the TODO file you give back, with F, M, M,
-that does not do what you want.
-
-Cheers,
-Greg
-
-
-
->From 185fa9da4caee5a0a96105e60269d02ec832e876 Mon Sep 17 00:00:00 2001
-From: Greg Price <price@ksplice.com>
-Date: Fri, 17 Jul 2009 11:55:11 -0400
-Subject: [PATCH] Add failing test for commit reordering in rebase -i -p
-
-Signed-off-by: Greg Price <price@ksplice.com>
----
- t/t3411-rebase-preserve-around-merges.sh |   59 ++++++++++++++++++++++++++++++
- 1 files changed, 59 insertions(+), 0 deletions(-)
-
-diff --git a/t/t3411-rebase-preserve-around-merges.sh b/t/t3411-rebase-preserve-around-merges.sh
-index 6533505..1759a98 100755
---- a/t/t3411-rebase-preserve-around-merges.sh
-+++ b/t/t3411-rebase-preserve-around-merges.sh
-@@ -71,4 +71,63 @@ test_expect_success 'rebase two levels of merge' '
- 	test "$(git rev-parse HEAD^2^1^1)" = "$(git rev-parse HEAD^2^2^1)"
- '
- 
-+# Reorder commits while using -p.  Basic prerequisite for the next test
-+# to have a hope of working.
-+#
-+# a---b---c
-+#
-+# want
-+#
-+# a---c---b
-+
-+test_expect_failure 'reorder with -p' '
-+	test_commit a &&
-+	test_commit b &&
-+	test_commit c &&
-+	FAKE_LINES="2 1" git rebase -i -p HEAD~2 &&
-+	test "$(git rev-parse HEAD~2)" = "$(git rev-parse a)" &&
-+	git log -n1 --pretty=format:%s HEAD | grep b &&
-+	git log -n1 --pretty=format:%s HEAD^ | grep c
-+'
-+
-+
-+# Reorder a commit to before a merge.  From
-+#
-+# R---x---Ma--Mb--F
-+#  \     /   /
-+#   a1--a2  /
-+#    \     /
-+#     b1--b2
-+#
-+# we get
-+#
-+# R---x---F*--Ma*--Mb*
-+#  \         /    /
-+#   a1--a2--/    /
-+#    \          /
-+#     b1--b2---/
-+
-+test_expect_failure 'rewrite to before merge' '
-+	test_commit R &&
-+	test_commit a1 &&
-+	test_commit b1 &&
-+	test_commit b2 &&
-+	git reset --hard a1 &&
-+	test_commit a2 &&
-+	git reset --hard R &&
-+	test_commit x &&
-+	test_merge Ma a2 &&
-+	test_merge Mb b2 &&
-+	test_commit F &&
-+
-+	FAKE_LINES="3 1 2" git rebase -i -p x &&
-+	git log --pretty=oneline HEAD && echo &&
-+	git log --pretty=oneline HEAD^2 && echo &&
-+	git log --pretty=oneline HEAD^^2 && echo &&
-+	git log --pretty=oneline HEAD^^ && echo &&
-+	test "$(git rev-parse HEAD^2)" = "$(git rev-parse b2)" &&
-+	test "$(git rev-parse HEAD^1^2)" = "$(git rev-parse a2)" &&
-+	test "$(git rev-parse HEAD~3)" = "$(git rev-parse x)"
-+'
-+
- test_done
--- 
-1.6.3.1.499.ge7b8da
+The answer to your question is found by looking for color.diff.<slot> in
+"git help config".
