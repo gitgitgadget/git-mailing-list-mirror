@@ -1,94 +1,88 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: encrypted repositories?
-Date: Fri, 17 Jul 2009 12:38:16 -0700 (PDT)
-Message-ID: <alpine.LFD.2.01.0907171226460.13838@localhost.localdomain>
-References: <op.uw7wmbr41e62zd@balu.cs.uni-paderborn.de>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v6] mailinfo: allow e-mail files as input
+Date: Fri, 17 Jul 2009 12:54:09 -0700
+Message-ID: <7vtz1b3x26.fsf@alter.siamese.dyndns.org>
+References: <7v8wip9jjw.fsf@alter.siamese.dyndns.org>
+ <f006bbb9c754c80c133798ff70db5b5291dae060.1247766192.git.nicolas.s.dev@gmx.fr> <20090717190601.6117@nanako3.lavabit.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Matthias Andree <matthias.andree@gmx.de>
-X-From: git-owner@vger.kernel.org Fri Jul 17 21:39:36 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Nicolas Sebrecht <nicolas.s.dev@gmx.fr>, <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Stephen Boyd <bebarino@gmail.com>,
+	Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+To: Nanako Shiraishi <nanako3@lavabit.com>
+X-From: git-owner@vger.kernel.org Fri Jul 17 21:54:32 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MRtHI-0005SC-98
-	for gcvg-git-2@gmane.org; Fri, 17 Jul 2009 21:39:32 +0200
+	id 1MRtVn-0002dM-9P
+	for gcvg-git-2@gmane.org; Fri, 17 Jul 2009 21:54:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751693AbZGQTit (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 17 Jul 2009 15:38:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751461AbZGQTit
-	(ORCPT <rfc822;git-outgoing>); Fri, 17 Jul 2009 15:38:49 -0400
-Received: from smtp1.linux-foundation.org ([140.211.169.13]:41619 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751397AbZGQTis (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 17 Jul 2009 15:38:48 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
-	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id n6HJcG1F028892
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Fri, 17 Jul 2009 12:38:17 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id n6HJcGhv008155;
-	Fri, 17 Jul 2009 12:38:16 -0700
-X-X-Sender: torvalds@localhost.localdomain
-In-Reply-To: <op.uw7wmbr41e62zd@balu.cs.uni-paderborn.de>
-User-Agent: Alpine 2.01 (LFD 1184 2008-12-16)
-X-Spam-Status: No, hits=-3.465 required=5 tests=AWL,BAYES_00
-X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
+	id S1752472AbZGQTyY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 17 Jul 2009 15:54:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752211AbZGQTyX
+	(ORCPT <rfc822;git-outgoing>); Fri, 17 Jul 2009 15:54:23 -0400
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:36434 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752053AbZGQTyX (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 17 Jul 2009 15:54:23 -0400
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 704D87EEA;
+	Fri, 17 Jul 2009 15:54:21 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 553E77EE7; Fri,
+ 17 Jul 2009 15:54:12 -0400 (EDT)
+In-Reply-To: <20090717190601.6117@nanako3.lavabit.com> (Nanako Shiraishi's
+ message of "Fri\, 17 Jul 2009 19\:06\:01 +0900")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 9ED80ED0-730B-11DE-BB8B-F699A5B33865-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123483>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123484>
 
+Nanako Shiraishi <nanako3@lavabit.com> writes:
 
-
-On Fri, 17 Jul 2009, Matthias Andree wrote:
+>>  OPTIONS
+>>  -------
+>> -<mbox>|<Maildir>...::
+>> -	The list of mailbox files to read patches from. If you do not
+>> +<mbox>|<Maildir>...|<email>...::
+>> +	The list of mailbox files or email to read patches from. If you do not
+>>  	supply this argument, the command reads from the standard input.
+>>  	If you supply directories, they will be treated as Maildirs.
+>>  
 >
-> Assume you have a repository where you want to work on embargoed information,
-> so that not even system administrators of the server you're pushing to can get
-> a hold of the cleartext data.
+> I wasn't following the discussion closely, and at first I didn't understand this change to the documentation, because it doesn't say how <mbox> and <email> are different. I'm afraid many readers of the documentation don't understand it either.
 
-If the server can't ever read it, you're basically limited to just one 
-story:
+I could tell _you_ that I prefer to see people go back to the list archive
+instead of saying "I wasn't following", but I cannot say that to readers
+of the documentation after this patch is applied.  After re-reading the
+above, you are right---it is unclear.
 
- - use rsync-like "stupid" transports to upload and download things.
+> Why does this description have ... in it? If I'm reading it correctly, the code in check_patch_format function checks only the first file.
 
- - a "smart" git server (eg the native git:// style protocol is not going 
-   to be possible)
+Good eyes.
 
-and you strictly speaking need no real git changes, because you might as 
-well just do it by uploading an encrypted tar-file of the .git directory. 
-And there is literally no upside in doing anything else - any native git 
-support is almost entirely pointless.
+This actually is an issue with the Guiseppe's multi-format support patch
+in that we assume that the command line input are of uniform type, check
+only $1 and assume $2 and subsequent are suitable to be fed to the same
+splitter.
 
-You could make it a _bit_ more useful perhaps by adding some helper 
-wrappers, probably by just implementing a new transport name (ie instead 
-of using "rsync://", you'd just use "crypt-tgz://" or something).
+I do not think it is necessary to allow mixed input.  We certainly could,
+but why bother?  It is not a sensible nor common thing to do.
 
-Now, that said, there are probably situations where maybe you'd allow the 
-server to decrypt things _temporarily_, but you don't want to be encrypted 
-on disk, and no persistent keys on the server, then that would open up a 
-lot more possibilities.
+Also the documentation said we take only one mbox or multiple Maildirs,
+but in reality we can take multiple mboxes just fine, so <mbox> should
+have had "..." at the end (we could lose the ellipses from all of them for
+brevity).  Oh, and it should list the other formats Giuseppe added.
 
-Of course, that still does require that you trust the server admin to 
-_some_ degree - anybody who has root would be able to get the keys by 
-running a debugger on the git upload/download sequence when you do a 
-upload or download.
+    <mbox>|<maildir>|<email>::
 
-Maybe that kind of security is still acceptable to you, though? 
-
-IF that is the case, then at least in theory we could add support for 
-"encryption key exchange" to the native git protocol, and then you could 
-have encryption over the network access (ssh obviously already does that, 
-but I'm including things like the anonymous git:// protocol too), and 
-you'd have encrypted data on disk, but git-upload-pack would be able to 
-decrypt things in order to do deltas etc.
-
-But see above: in order for that to work, you do have to allow the pack 
-upload and download processes on the server to decrypt things (in memory). 
-So it would not be "absolutely secure".
-
-			Linus
+	    One or more of the same type of mail source to read e-mails
+            from.  A directory is taken as a mailbox in the maildir
+            format.  A file is taken as UNIX mbox, StGit patch series
+            file, or a single piece of e-mail in RFC2822 format.
