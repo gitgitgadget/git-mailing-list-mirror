@@ -1,108 +1,200 @@
-From: Nicolas Sebrecht <nicolas.s.dev@gmx.fr>
-Subject: [PATCH v6] Re: mailinfo: allow e-mail files as input
-Date: Fri, 17 Jul 2009 04:20:48 +0200
-Message-ID: <20090717022048.GA12945@vidovic>
-References: <7v8wip9jjw.fsf@alter.siamese.dyndns.org> <f006bbb9c754c80c133798ff70db5b5291dae060.1247766192.git.nicolas.s.dev@gmx.fr> <7v1vog6rw9.fsf@alter.siamese.dyndns.org>
+From: Changsheng Jiang <jiangzuoyan@gmail.com>
+Subject: Re: how to fetch a new svn branch after clone?
+Date: Fri, 17 Jul 2009 10:25:38 +0800
+Message-ID: <eafc0afe0907161925j331ad90cx708bd3f1663c4c71@mail.gmail.com>
+References: <eafc0afe0907160830m29e2f3d3jf5c0e9db29cace54@mail.gmail.com> 
+	<4A5F8CDA.5080202@xiplink.com> <eafc0afe0907161900k35b2dff1u5a2bfc574bb93231@mail.gmail.com> 
+	<6786ed4f0907161918t5d4489a5uf1c315b07f850e2e@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Nicolas Sebrecht <nicolas.s.dev@gmx.fr>, git@vger.kernel.org,
-	Stephen Boyd <bebarino@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jul 17 04:21:07 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Allen Johnson <akjohnson78@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jul 17 04:26:11 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MRd4L-0002Sk-Gi
-	for gcvg-git-2@gmane.org; Fri, 17 Jul 2009 04:21:05 +0200
+	id 1MRd9F-0003bG-1P
+	for gcvg-git-2@gmane.org; Fri, 17 Jul 2009 04:26:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933971AbZGQCU5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 16 Jul 2009 22:20:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933969AbZGQCU5
-	(ORCPT <rfc822;git-outgoing>); Thu, 16 Jul 2009 22:20:57 -0400
-Received: from mail-ew0-f226.google.com ([209.85.219.226]:64083 "EHLO
-	mail-ew0-f226.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933942AbZGQCU4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 16 Jul 2009 22:20:56 -0400
-Received: by ewy26 with SMTP id 26so571584ewy.37
-        for <git@vger.kernel.org>; Thu, 16 Jul 2009 19:20:54 -0700 (PDT)
+	id S933989AbZGQC0C convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 16 Jul 2009 22:26:02 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933982AbZGQC0B
+	(ORCPT <rfc822;git-outgoing>); Thu, 16 Jul 2009 22:26:01 -0400
+Received: from mail-vw0-f200.google.com ([209.85.212.200]:46764 "EHLO
+	mail-vw0-f200.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933980AbZGQC0A convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 16 Jul 2009 22:26:00 -0400
+Received: by vwj38 with SMTP id 38so575613vwj.33
+        for <git@vger.kernel.org>; Thu, 16 Jul 2009 19:25:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:sender:date:from:to:cc
-         :subject:message-id:references:mime-version:content-type
-         :content-disposition:in-reply-to:user-agent;
-        bh=OP9H8NsO2db9uRptr2h5r3VOYPlMTA9hnTaoZvrk71U=;
-        b=AH9Itp9b/HEQWBTzDlZXq+lKW8osHgEdPmdM17j6uzft62OA1Y5NlNywgRzxEnXBv1
-         utS9ZKdjZH50AOnz4+t9O3HNh+TAmPqL4OyG9OaAyz4AC6bKQjjGLhMmXbaA2+99ea0H
-         IutIW6Uj5/s84C36QywVs0ySm6aznGZBsHRCk=
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=sqUKu0bI9SlAHLUKWITBa5rLea8Gu1F8I/P8JutFWAQ=;
+        b=u4WJzbt6vyQtyqDRzpkpaVWe14r1XwheAUwGJp9snWYGY0WqfCLuvWadvXjKuDgjqu
+         gx+Wn7NyfPRNUA8fgdI7rnpzo4AHgLN1VvRcnsav5IsnC9A1BCclU4mH6O/SHWl/WSCJ
+         5VUTatRkcsFIHVH7A6ZWyEyqY64YnLTRxD3L0=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=sender:date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=uaE93rSCTJCDiUmc78eMdSXSZkWdniI8N68bZnMN2LjLTwbh3wU4bcqD9Z3rpkU4Br
-         AZmOlhZ6bMKSwesZe1yEUZmhZRiLmrRz2bA77U4/w+EuRKO5J10MXnK3bE6paCGUkCCG
-         yc0+ggm+e7XKkquHwRdRU5be4xMm6Hi9Sdt7k=
-Received: by 10.210.110.5 with SMTP id i5mr655770ebc.3.1247797254358;
-        Thu, 16 Jul 2009 19:20:54 -0700 (PDT)
-Received: from @ (88-121-124-61.rev.libertysurf.net [88.121.124.61])
-        by mx.google.com with ESMTPS id 5sm857396eyh.40.2009.07.16.19.20.51
-        (version=SSLv3 cipher=RC4-MD5);
-        Thu, 16 Jul 2009 19:20:52 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <7v1vog6rw9.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=BMoCR1vS1Vt8X53VODvU9l9xeERT1UeJk9eFyw6mJde0BePrG+u44ga4fifisWpQpa
+         B3nIaXIboE0BYKcWX/J8ZXvcTvZtT7Ksrb0mg33dBP5nl64JtH/qh9LS2ngqk8kxZdgF
+         oDIxIn61uDbrwN6onMzbxsPbMGBuOfwC4SCks=
+Received: by 10.220.72.194 with SMTP id n2mr818105vcj.36.1247797558081; Thu, 
+	16 Jul 2009 19:25:58 -0700 (PDT)
+In-Reply-To: <6786ed4f0907161918t5d4489a5uf1c315b07f850e2e@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123440>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123441>
 
-The 16/07/09, Junio C Hamano wrote:
-> Nicolas Sebrecht <nicolas.s.dev@gmx.fr> writes:
-> 
-> > We traditionally allowed a mbox file or a directory name of a maildir to be
-> > ...
-> > Signed-off-by: Nicolas Sebrecht <nicolas.s.dev@gmx.fr>
-> 
-> Thanks.
+Thank Allen.
 
-Thank you in first place. I appreciate your patience and explanations.
+I deleted some branches in local git repository, since it's no need to
+track every one's branch.
 
-> I have one more comment on the test script, but it's something I can
-> locally fix (iow, there is no need to resend your patch if there is no
-> other issue pointed out by others, and if you agree to my suggested
-> improvements).
+And after that, ''git svn fetch'' report error like this:
 
-... and thank you for leting the door open to agreements.
+error: invalid object a0eb1d6f18d20c0b9f30062cd981e9b668aac75f
+fatal: git-write-tree: error building trees
+write-tree: command returned error: 128
 
-> > +cat >rfc2822_email <<EOF
-> > +Return-Path: <user@domain.name>
-> > +X-Flags: 0000
-> > +	999
-> 
-> The headers look a bit too excessive to my taste, but probably you wanted
-> to take a real-life example.
+Is it wrong to delete some svn branches in git by "git branch -r -d bra=
+nch_name"
 
-Yes.
+                                                      Changsheng Jiang
 
->                               If that is the case, I suspect the manually
-> added X-Flags: at the beginning defeats that purpose, though.
 
-I don't see what purpose it defeats. What am I missing?
 
->                                                                I'd suggest
-> either removing the hand-munging, or triming the Received: sequence to
-> make it a bit shorter.
-
-It's fine here.
-
-> These days we tend to write the last step
-> 
-> 	git diff --exit-code master^ HEAD
-> 
-> which allows "sh t4150-am.sh -i -v" to be more useful when debugging.
-
-I'll look at that closer.
-
--- 
-Nicolas Sebrecht
+On Fri, Jul 17, 2009 at 10:18, Allen Johnson<akjohnson78@gmail.com> wro=
+te:
+> This setup works for me:
+>
+> # create branch directly in svn
+> svn copy svn://hostname/project/trunk
+> svn://hostname/project/branches/test -m "test"
+>
+> # update your local git repository
+> git svn fetch
+>
+> # verify you have the branch by listing all remote branches
+> git branch -r
+>
+> # you should see "test" in the list, now checkout that branch and do =
+some work
+> git checkout -b local-test test
+>
+> # perform some commits on that branch then sync with svn
+> git commit ...
+> git svn rebase
+> git svn dcommit
+>
+> Hope that works for you.
+>
+> Allen
+>
+> On Thu, Jul 16, 2009 at 10:00 PM, Changsheng Jiang<jiangzuoyan@gmail.=
+com> wrote:
+>> Thank Marc.
+>>
+>> You are right, it should be the latter case with url
+>> http://www.example.com/project/branches/test
+>>
+>> But "git svn clone" has already added these lines to .git/config
+>>
+>> [svn-remote "svn"]
+>> =C2=A0 =C2=A0 =C2=A0 =C2=A0url =3D https://xxx.xxxx.com/svn/xxx
+>> =C2=A0 =C2=A0 =C2=A0 =C2=A0fetch =3D trunk:refs/remotes/trunk
+>> =C2=A0 =C2=A0 =C2=A0 =C2=A0branches =3D branches/*:refs/remotes/*
+>> =C2=A0 =C2=A0 =C2=A0 =C2=A0tags =3D tags/*:refs/remotes/tags/*
+>>
+>> And it still can not fetch new branch.
+>>
+>> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0Changsheng Jiang
+>>
+>> On Fri, Jul 17, 2009 at 04:26, Marc Branchaud<marcnarc@xiplink.com> =
+wrote:
+>>> The latest 1.6.4-rc1 contains patches to git-svn for it to support =
+more than one branch URL in an svn repository.
+>>>
+>>> However, before I describe that, can you confirm whether your new b=
+ranch is in fact named
+>>>
+>>> =C2=A0 =C2=A0 =C2=A0 =C2=A0http://svn.example.com/project/test
+>>>
+>>> or is it really
+>>>
+>>> =C2=A0 =C2=A0 =C2=A0 =C2=A0http://svn.example.com/project/test/<bra=
+nchname>
+>>>
+>>> Because if it's the former then I'm not sure if git-svn can handle =
+your new branch. =C2=A0The problem is that even though the branch is na=
+med 'test' it's a sibling to the 'branches' 'tags' and 'trunk' paths in=
+ the repository. =C2=A0For git-svn to pick up branches, you point it at=
+ the path *containing* the branch names. =C2=A0In the former case, to p=
+ick up project/test as the 'test' branch you'd have to point git-svn at=
+ the project directory, and that would cause it to also pick up project=
+/tags, project/branches, and project/trunk as other branches (named 'ta=
+gs', 'branches' and 'trunk').
+>>>
+>>> However, in the latter (test/<branchname>) case, with 1.6.4, I *thi=
+nk* git-svn will pick up the new branches under test if you add a new '=
+branches' line to the svn-remote's section in your .git/config file. =C2=
+=A0Something like
+>>>
+>>> =C2=A0 =C2=A0 =C2=A0 =C2=A0branches =3D test/*:refs/remotes/*
+>>>
+>>> might let you see the new branches. =C2=A0The reason I can't be mor=
+e certain is that if you've done a 'git svn fetch' since the branch was=
+ created then git-svn might not pick up the branch-creation commits lat=
+er. =C2=A0Unfortunately I don't know git-svn well enough to say for cer=
+tain.
+>>>
+>>> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0M.
+>>>
+>>>
+>>> Changsheng Jiang wrote:
+>>>> Hi list,
+>>>>
+>>>> I know how to clone a svn repository with all branches and tags at=
+ the
+>>>> initial step, but I find no answers of how to fetch a new svn bran=
+ch
+>>>> after clone.
+>>>>
+>>>> For example, this
+>>>>
+>>>> git svn clone http://svn.example.com/project -T trunk -b branches =
+-t tags
+>>>>
+>>>> will clone all branches. but that clone, the svn repository has a =
+new
+>>>> branch test with url http://svn.example.com/project/test, how to c=
+lone
+>>>> it as the initial step?
+>>>>
+>>>> Thanks.
+>>>>
+>>>> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0Changsheng Jiang
+>>>> --
+>>>> To unsubscribe from this list: send the line "unsubscribe git" in
+>>>> the body of a message to majordomo@vger.kernel.org
+>>>> More majordomo info at =C2=A0http://vger.kernel.org/majordomo-info=
+=2Ehtml
+>>>
+>> --
+>> To unsubscribe from this list: send the line "unsubscribe git" in
+>> the body of a message to majordomo@vger.kernel.org
+>> More majordomo info at =C2=A0http://vger.kernel.org/majordomo-info.h=
+tml
+>>
+>
