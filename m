@@ -1,86 +1,54 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH] Fix rebase -p --onto
-Date: Fri, 17 Jul 2009 08:38:17 +0200
-Message-ID: <4A601C59.8040108@viscovery.net>
-References: <20090716230031.GM7503@vinegar-pot.mit.edu>
+From: Yann Dirson <ydirson@altern.org>
+Subject: Re: [PATCH 2/2] Improve doc for format-patch threading options.
+Date: Fri, 17 Jul 2009 08:52:37 +0200
+Message-ID: <20090717065236.GE5762@nan92-1-81-57-214-146.fbx.proxad.net>
+References: <cover.1246834883.git.ydirson@altern.org> <200907061049.30084.markus.heidelberg@web.de> <20090716222356.GD5762@nan92-1-81-57-214-146.fbx.proxad.net> <200907170058.46962.markus.heidelberg@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Junio Hamano <gitster@pobox.com>,
-	Stephen Haberman <stephen@exigencecorp.com>
-To: Greg Price <price@ksplice.com>
-X-From: git-owner@vger.kernel.org Fri Jul 17 08:38:38 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Markus Heidelberg <markus.heidelberg@web.de>
+X-From: git-owner@vger.kernel.org Fri Jul 17 08:52:30 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MRh5Y-000786-Ot
-	for gcvg-git-2@gmane.org; Fri, 17 Jul 2009 08:38:37 +0200
+	id 1MRhJ0-00031R-28
+	for gcvg-git-2@gmane.org; Fri, 17 Jul 2009 08:52:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934149AbZGQGi2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 17 Jul 2009 02:38:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934147AbZGQGi2
-	(ORCPT <rfc822;git-outgoing>); Fri, 17 Jul 2009 02:38:28 -0400
-Received: from lilzmailso01.liwest.at ([212.33.55.23]:37752 "EHLO
-	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S934146AbZGQGi2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 17 Jul 2009 02:38:28 -0400
-Received: from cpe228-254.liwest.at ([81.10.228.254] helo=linz.eudaptics.com)
-	by lilzmailso01.liwest.at with esmtpa (Exim 4.69)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1MRh5G-00082K-D1; Fri, 17 Jul 2009 08:38:18 +0200
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.96])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id 18C3C6D9; Fri, 17 Jul 2009 08:38:18 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.21 (Windows/20090302)
-In-Reply-To: <20090716230031.GM7503@vinegar-pot.mit.edu>
-X-Spam-Score: -1.4 (-)
+	id S933462AbZGQGwW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 17 Jul 2009 02:52:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933352AbZGQGwW
+	(ORCPT <rfc822;git-outgoing>); Fri, 17 Jul 2009 02:52:22 -0400
+Received: from smtp1-g21.free.fr ([212.27.42.1]:58635 "EHLO smtp1-g21.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S933345AbZGQGwW (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 17 Jul 2009 02:52:22 -0400
+Received: from smtp1-g21.free.fr (localhost [127.0.0.1])
+	by smtp1-g21.free.fr (Postfix) with ESMTP id E296794010D;
+	Fri, 17 Jul 2009 08:52:15 +0200 (CEST)
+Received: from gandelf.nowhere.earth (nan92-1-81-57-214-146.fbx.proxad.net [81.57.214.146])
+	by smtp1-g21.free.fr (Postfix) with ESMTP id BFB1B94013D;
+	Fri, 17 Jul 2009 08:52:12 +0200 (CEST)
+Received: by gandelf.nowhere.earth (Postfix, from userid 1000)
+	id D9F6249001; Fri, 17 Jul 2009 08:52:37 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <200907170058.46962.markus.heidelberg@web.de>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123443>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123444>
 
-Greg Price schrieb:
-> In a rebase with --onto, the correct test for whether we can skip
-> rewriting a commit is if it is already on top of $ONTO, not $UPSTREAM.
-> Without --onto, this distinction does not exist and the behavior does
-> not change.
+On Fri, Jul 17, 2009 at 12:58:46AM +0200, Markus Heidelberg wrote:
+> > - even when --no-thread is specified, and format-patch was run with
+> > --no-thread as well, it still adds In-Reply-To and References headers,
+> > and I must say I do not see what in the code causes this behaviour.
 > 
-> 
-> In the situation
-> 
->  X---o---o---o---M
->   \             /
->    x---x---x---x
-> 
->  Y
-> 
-> if we try to move the branches merged at M from their base on X to be
-> based on Y, so as to get
-> 
->  X
-> 
->  Y---o'--o'--o'--M'
->   \             /
->    x'--x'--x'--x'
-> 
-> then we fail.  The command `git rebase -p --onto Y X M` moves only the
-> first-parent chain, like so:
-> 
->  X
->   \
->    x---x---x---x
->                 \
->  Y---o'--o'--o'--M'
-> 
-> because it mistakenly drops the other branch(es) x---x---x---x from
-> the TODO file.  This tests and fixes this behavior.
+> This is caused by a bug fixed in commit 5e9758e29 (send-email: fix
+> non-threaded mails, 2009-06-12). Try using "git send-email --no-thread
+> --no-chain-reply" and it may work again. You should use an up-to-date
+> git, when searching for bugs.
 
-I think the current behavior is by design. There is nothing to fix.
-
-The purpose of rebase -p is to leave non-first children alone and rebase
-only the first child parenthood chain. It is not the purpose to reseat an
-entire history DAG.
-
--- Hannes
+I had tried exactly this just in case it would help, with current
+master (1.6.4rc1), and it still saw the same behaviour.
