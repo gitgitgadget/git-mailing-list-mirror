@@ -1,94 +1,90 @@
 From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: git svn graft-branches
-Date: Fri, 17 Jul 2009 16:21:57 +0200
-Message-ID: <4A608905.8070705@drmicha.warpmail.net>
-References: <h3pn45$eam$1@ger.gmane.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Graeme Geldenhuys <graemeg@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jul 17 16:22:24 2009
+Subject: [PATCH] t4202-log.sh: Test git log --no-walk sort order
+Date: Fri, 17 Jul 2009 16:28:06 +0200
+Message-ID: <1247840886-14795-1-git-send-email-git@drmicha.warpmail.net>
+References: <alpine.DEB.1.00.0907141612350.4553@intel-tinevez-2-302>
+Cc: Johannes Sixt <j.sixt@viscovery.net>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Paolo Bonzini <bonzini@gnu.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jul 17 16:28:33 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MRoKN-00021Y-FM
-	for gcvg-git-2@gmane.org; Fri, 17 Jul 2009 16:22:23 +0200
+	id 1MRoQK-0004vi-R9
+	for gcvg-git-2@gmane.org; Fri, 17 Jul 2009 16:28:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934690AbZGQOWQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 17 Jul 2009 10:22:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934686AbZGQOWQ
-	(ORCPT <rfc822;git-outgoing>); Fri, 17 Jul 2009 10:22:16 -0400
-Received: from out1.smtp.messagingengine.com ([66.111.4.25]:58990 "EHLO
+	id S1751674AbZGQO2Y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 17 Jul 2009 10:28:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751609AbZGQO2Y
+	(ORCPT <rfc822;git-outgoing>); Fri, 17 Jul 2009 10:28:24 -0400
+Received: from out1.smtp.messagingengine.com ([66.111.4.25]:34146 "EHLO
 	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S934617AbZGQOWP (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 17 Jul 2009 10:22:15 -0400
+	by vger.kernel.org with ESMTP id S1751019AbZGQO2X (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 17 Jul 2009 10:28:23 -0400
 Received: from compute1.internal (compute1.internal [10.202.2.41])
-	by out1.messagingengine.com (Postfix) with ESMTP id ABE453BC23A;
-	Fri, 17 Jul 2009 10:22:14 -0400 (EDT)
+	by out1.messagingengine.com (Postfix) with ESMTP id 59B0F3BC2B9;
+	Fri, 17 Jul 2009 10:28:23 -0400 (EDT)
 Received: from heartbeat1.messagingengine.com ([10.202.2.160])
-  by compute1.internal (MEProxy); Fri, 17 Jul 2009 10:22:14 -0400
-X-Sasl-enc: +2jr+8zK3RbNlgh6rbF8eCkxDkVLq6GiW99DuN5uDERA 1247840534
-Received: from localhost.localdomain (heawood.math.tu-clausthal.de [139.174.44.4])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 226B24B1D5;
-	Fri, 17 Jul 2009 10:22:14 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.1pre) Gecko/20090717 Lightning/1.0pre Shredder/3.0b3pre
-In-Reply-To: <h3pn45$eam$1@ger.gmane.org>
+  by compute1.internal (MEProxy); Fri, 17 Jul 2009 10:28:23 -0400
+X-Sasl-enc: aBONeD3v2GG5jAPZQLFpd75JZL+AI3vF0iwaTm6GF6cb 1247840902
+Received: from localhost (heawood.math.tu-clausthal.de [139.174.44.4])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id B33EC4B2A8;
+	Fri, 17 Jul 2009 10:28:22 -0400 (EDT)
+X-Mailer: git-send-email 1.6.3.3.483.g4f5e
+In-Reply-To: <alpine.DEB.1.00.0907141612350.4553@intel-tinevez-2-302>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123463>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123464>
 
-Graeme Geldenhuys venit, vidit, dixit 17.07.2009 13:25:
-> Hi,
-> 
-> Looking at the history of a cloned SubVersion repository, I noticed that 
-> git does track svn merges between the subversion branches.
-> 
-> Apparently there was a command to help git detect this merge:
-> 
->    git-svn graft-branches
-> 
-> As documented in the URL below
-> 
-> http://www.kernel.org/pub/software/scm/git/docs/v1.5.0.7/git-svn.html
-> 
-> 
-> Now I have git version 1.6.3.3.363.g725cf7 but if I run the following, 
-> git simply shows the help, and graft-branches doesn't seem to be a 
-> command anymore. Was 'graft-branches' removed from Git?
-> 
->   $ git svn graft-branches
-> 
-> Above does not work anymore.
+'git log --no-walk' sorts commits by commit time whereas 'git show' does
+not (it leaves them as given on the command line). Document this by two
+tests so that we never forget why ba1d450 (Tentative built-in "git
+show", 2006-04-15) introduced it and 8e64006 (Teach revision machinery
+about --no-walk, 2007-07-24) exposed it as an option argument.
 
-$git log -Sgraft-branches
-commit a836a0e1729d1758b4085cd07fc79cb9acb64908
-Author: Eric Wong <normalperson@yhbt.net>
-Date:   Wed Feb 14 19:34:56 2007 -0800
+Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
+---
+ t/t4202-log.sh |   20 ++++++++++++++++++++
+ 1 files changed, 20 insertions(+), 0 deletions(-)
 
-    git-svn: documentation updates for new functionality
+v3: For completeness' sake, use git show -s.
 
-    Force the showing of the --minimize flag as an option in the
-    'migrate' help.
-
-    Also, fix the usage function to correctly filter out
-    the deprecated aliases.
-
-    Signed-off-by: Eric Wong <normalperson@yhbt.net>
-
-commit d05d72e07e49869fe988d4d99e6ac60711570db5
-Author: Eric Wong <normalperson@yhbt.net>
-Date:   Mon Jan 15 22:59:26 2007 -0800
-
-    git-svn: remove graft-branches command
-
-    It's becoming a maintenance burden.  I've never found it
-    particularly useful myself, nor have I heard much feedback about
-    it; so I'm assuming it's just as useless to everyone else.
-
-    Signed-off-by: Eric Wong <normalperson@yhbt.net>
-
-...
+diff --git a/t/t4202-log.sh b/t/t4202-log.sh
+index aad3894..48e0088 100755
+--- a/t/t4202-log.sh
++++ b/t/t4202-log.sh
+@@ -149,6 +149,26 @@ test_expect_success 'git log --follow' '
+ 
+ '
+ 
++cat > expect << EOF
++804a787 sixth
++394ef78 fifth
++5d31159 fourth
++EOF
++test_expect_success 'git log --no-walk <commits> sorts by commit time' '
++	git log --no-walk --oneline 5d31159 804a787 394ef78 > actual &&
++	test_cmp expect actual
++'
++
++cat > expect << EOF
++5d31159 fourth
++804a787 sixth
++394ef78 fifth
++EOF
++test_expect_success 'git show <commits> leaves list of commits as given' '
++	git show --oneline -s 5d31159 804a787 394ef78 > actual &&
++	test_cmp expect actual
++'
++
+ test_expect_success 'setup case sensitivity tests' '
+ 	echo case >one &&
+ 	test_tick &&
+-- 
+1.6.3.3.483.g4f5e
