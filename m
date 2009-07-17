@@ -1,90 +1,66 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: [PATCH] t4202-log.sh: Test git log --no-walk sort order
-Date: Fri, 17 Jul 2009 16:28:06 +0200
-Message-ID: <1247840886-14795-1-git-send-email-git@drmicha.warpmail.net>
-References: <alpine.DEB.1.00.0907141612350.4553@intel-tinevez-2-302>
-Cc: Johannes Sixt <j.sixt@viscovery.net>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] t4202-log.sh: Test git log --no-walk sort order
+Date: Fri, 17 Jul 2009 16:53:56 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.0907171653300.4495@intel-tinevez-2-302>
+References: <alpine.DEB.1.00.0907141612350.4553@intel-tinevez-2-302> <1247840886-14795-1-git-send-email-git@drmicha.warpmail.net>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org, Johannes Sixt <j.sixt@viscovery.net>,
 	Paolo Bonzini <bonzini@gnu.org>,
 	Linus Torvalds <torvalds@linux-foundation.org>,
 	Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jul 17 16:28:33 2009
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Fri Jul 17 16:54:12 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MRoQK-0004vi-R9
-	for gcvg-git-2@gmane.org; Fri, 17 Jul 2009 16:28:33 +0200
+	id 1MRop9-00085v-Gq
+	for gcvg-git-2@gmane.org; Fri, 17 Jul 2009 16:54:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751674AbZGQO2Y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 17 Jul 2009 10:28:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751609AbZGQO2Y
-	(ORCPT <rfc822;git-outgoing>); Fri, 17 Jul 2009 10:28:24 -0400
-Received: from out1.smtp.messagingengine.com ([66.111.4.25]:34146 "EHLO
-	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751019AbZGQO2X (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 17 Jul 2009 10:28:23 -0400
-Received: from compute1.internal (compute1.internal [10.202.2.41])
-	by out1.messagingengine.com (Postfix) with ESMTP id 59B0F3BC2B9;
-	Fri, 17 Jul 2009 10:28:23 -0400 (EDT)
-Received: from heartbeat1.messagingengine.com ([10.202.2.160])
-  by compute1.internal (MEProxy); Fri, 17 Jul 2009 10:28:23 -0400
-X-Sasl-enc: aBONeD3v2GG5jAPZQLFpd75JZL+AI3vF0iwaTm6GF6cb 1247840902
-Received: from localhost (heawood.math.tu-clausthal.de [139.174.44.4])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id B33EC4B2A8;
-	Fri, 17 Jul 2009 10:28:22 -0400 (EDT)
-X-Mailer: git-send-email 1.6.3.3.483.g4f5e
-In-Reply-To: <alpine.DEB.1.00.0907141612350.4553@intel-tinevez-2-302>
+	id S934131AbZGQOyC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 17 Jul 2009 10:54:02 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934090AbZGQOyB
+	(ORCPT <rfc822;git-outgoing>); Fri, 17 Jul 2009 10:54:01 -0400
+Received: from mail.gmx.net ([213.165.64.20]:46548 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S933913AbZGQOyA (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 17 Jul 2009 10:54:00 -0400
+Received: (qmail invoked by alias); 17 Jul 2009 14:53:58 -0000
+Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
+  by mail.gmx.net (mp012) with SMTP; 17 Jul 2009 16:53:58 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/azKRMnb7auDAPKg6z2fLAy37mB2xJPFZ9yxNeZk
+	PnyV2B2IC1rwB6
+X-X-Sender: schindel@intel-tinevez-2-302
+In-Reply-To: <1247840886-14795-1-git-send-email-git@drmicha.warpmail.net>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.61
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123464>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123465>
 
-'git log --no-walk' sorts commits by commit time whereas 'git show' does
-not (it leaves them as given on the command line). Document this by two
-tests so that we never forget why ba1d450 (Tentative built-in "git
-show", 2006-04-15) introduced it and 8e64006 (Teach revision machinery
-about --no-walk, 2007-07-24) exposed it as an option argument.
+Hi,
 
-Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
----
- t/t4202-log.sh |   20 ++++++++++++++++++++
- 1 files changed, 20 insertions(+), 0 deletions(-)
+On Fri, 17 Jul 2009, Michael J Gruber wrote:
 
-v3: For completeness' sake, use git show -s.
+> 'git log --no-walk' sorts commits by commit time whereas 'git show' does
+> not (it leaves them as given on the command line). Document this by two
+> tests so that we never forget why ba1d450 (Tentative built-in "git
+> show", 2006-04-15) introduced it and 8e64006 (Teach revision machinery
+> about --no-walk, 2007-07-24) exposed it as an option argument.
+> 
+> Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
+> ---
+>  t/t4202-log.sh |   20 ++++++++++++++++++++
+>  1 files changed, 20 insertions(+), 0 deletions(-)
+> 
+> v3: For completeness' sake, use git show -s.
 
-diff --git a/t/t4202-log.sh b/t/t4202-log.sh
-index aad3894..48e0088 100755
---- a/t/t4202-log.sh
-+++ b/t/t4202-log.sh
-@@ -149,6 +149,26 @@ test_expect_success 'git log --follow' '
- 
- '
- 
-+cat > expect << EOF
-+804a787 sixth
-+394ef78 fifth
-+5d31159 fourth
-+EOF
-+test_expect_success 'git log --no-walk <commits> sorts by commit time' '
-+	git log --no-walk --oneline 5d31159 804a787 394ef78 > actual &&
-+	test_cmp expect actual
-+'
-+
-+cat > expect << EOF
-+5d31159 fourth
-+804a787 sixth
-+394ef78 fifth
-+EOF
-+test_expect_success 'git show <commits> leaves list of commits as given' '
-+	git show --oneline -s 5d31159 804a787 394ef78 > actual &&
-+	test_cmp expect actual
-+'
-+
- test_expect_success 'setup case sensitivity tests' '
- 	echo case >one &&
- 	test_tick &&
--- 
-1.6.3.3.483.g4f5e
+Thanks!
+
+Ciao,
+Dscho
