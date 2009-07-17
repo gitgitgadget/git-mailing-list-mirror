@@ -1,150 +1,94 @@
-From: =?ISO-8859-1?Q?Santi_B=E9jar?= <santi@agolina.net>
-Subject: Re: [PATCHv2 2/2] pull: support rebased upstream + fetch + pull 
-	--rebase
-Date: Fri, 17 Jul 2009 15:24:21 +0200
-Message-ID: <adf1fd3d0907170624t7c2bf8f5w35c03788fdd82422@mail.gmail.com>
-References: <adf1fd3d0907152329v7f49999u42b0d0fc4d39f5e9@mail.gmail.com>
-	 <1247731921-2290-1-git-send-email-santi@agolina.net>
-	 <alpine.DEB.1.00.0907161035060.3155@pacific.mpi-cbg.de>
-	 <7vhbxc8inp.fsf@alter.siamese.dyndns.org>
-	 <adf1fd3d0907161618o61ee4b58of25659f8c36420f7@mail.gmail.com>
-	 <adf1fd3d0907170051u7268d8f6kba7f2e529381d275@mail.gmail.com>
-	 <7vr5wf67iz.fsf@alter.siamese.dyndns.org>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: git svn graft-branches
+Date: Fri, 17 Jul 2009 16:21:57 +0200
+Message-ID: <4A608905.8070705@drmicha.warpmail.net>
+References: <h3pn45$eam$1@ger.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jul 17 15:24:37 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Graeme Geldenhuys <graemeg@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jul 17 16:22:24 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MRnQR-0008EY-Aa
-	for gcvg-git-2@gmane.org; Fri, 17 Jul 2009 15:24:35 +0200
+	id 1MRoKN-00021Y-FM
+	for gcvg-git-2@gmane.org; Fri, 17 Jul 2009 16:22:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933941AbZGQNY0 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 17 Jul 2009 09:24:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933583AbZGQNYZ
-	(ORCPT <rfc822;git-outgoing>); Fri, 17 Jul 2009 09:24:25 -0400
-Received: from mail-bw0-f228.google.com ([209.85.218.228]:35273 "EHLO
-	mail-bw0-f228.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933635AbZGQNYZ convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 17 Jul 2009 09:24:25 -0400
-Received: by bwz28 with SMTP id 28so731338bwz.37
-        for <git@vger.kernel.org>; Fri, 17 Jul 2009 06:24:22 -0700 (PDT)
-Received: by 10.204.100.70 with SMTP id x6mr914539bkn.140.1247837061923; Fri, 
-	17 Jul 2009 06:24:21 -0700 (PDT)
-In-Reply-To: <7vr5wf67iz.fsf@alter.siamese.dyndns.org>
+	id S934690AbZGQOWQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 17 Jul 2009 10:22:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934686AbZGQOWQ
+	(ORCPT <rfc822;git-outgoing>); Fri, 17 Jul 2009 10:22:16 -0400
+Received: from out1.smtp.messagingengine.com ([66.111.4.25]:58990 "EHLO
+	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S934617AbZGQOWP (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 17 Jul 2009 10:22:15 -0400
+Received: from compute1.internal (compute1.internal [10.202.2.41])
+	by out1.messagingengine.com (Postfix) with ESMTP id ABE453BC23A;
+	Fri, 17 Jul 2009 10:22:14 -0400 (EDT)
+Received: from heartbeat1.messagingengine.com ([10.202.2.160])
+  by compute1.internal (MEProxy); Fri, 17 Jul 2009 10:22:14 -0400
+X-Sasl-enc: +2jr+8zK3RbNlgh6rbF8eCkxDkVLq6GiW99DuN5uDERA 1247840534
+Received: from localhost.localdomain (heawood.math.tu-clausthal.de [139.174.44.4])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 226B24B1D5;
+	Fri, 17 Jul 2009 10:22:14 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.1pre) Gecko/20090717 Lightning/1.0pre Shredder/3.0b3pre
+In-Reply-To: <h3pn45$eam$1@ger.gmane.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123462>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123463>
 
-2009/7/17 Junio C Hamano <gitster@pobox.com>:
-> Santi B=E9jar <santi@agolina.net> writes:
->
->> 2009/7/17 Santi B=E9jar <santi@agolina.net>:
->>> 2009/7/16 Junio C Hamano <gitster@pobox.com>:
->>>> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
->>>>
->>>>> How about
->>>>>
->>>>> =A0 =A0 =A0 oldremoteref=3D"$(git rev-list --boundary HEAD --not =
-\
->>>>> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 $(git rev-list -g $re=
-moteref | sed 's/$/^@/') |
->>>>> =A0 =A0 =A0 =A0 =A0 =A0 =A0 sed -e '/^[^-]/d' -e q)"
->>>>>
->>>>> Explanation: the "git rev-list -g $remoteref" lists the previous =
-commits
->>>>> the remote ref pointed to, and the ^@ appended to them means all =
-their
->>>>> parents. =A0Now, the outer rev-list says to take everything in HE=
-AD but
->>>>> _not_ in those parents, showing the boundary commits. =A0The "sed=
-" call
->>>>> lists the first such boundary commit (which must, by construction=
-, be one
->>>>> of the commits shown by the first rev-list).
->>>>
->>>> Hmm, I am not sure about that "(which must..." part.
->>
->> Unfortunatly you are right with the "(which must..." part. Even
->> without the ^@. Normally gives the right answer, but it is not
->> sure that the first commit boundary is the correct one. For
->> example:
->>
->> =A0 =A0 =A0 =A0 =A0o--C
->> =A0 =A0 =A0 =A0 /
->> =A0A--x--y--B--o--z
->> =A0 =A0 =A0\ =A0 =A0 =A0/
->> =A0 =A0 =A0 o----o
->>
->> A, B, C are upstream@{n}
->>
->> It involves a merge with a branch forked before the fork commit
->> for the current branch, and it will not work neither with git
->> pull --rebase. We could say that it is not supported, but
->> nevertheless it gives the wrong answer.
->>
->> The right answer is B, but:
->> $ git rev-list --boundary z --not C B A
->> z
->> o
->> o
->> o
->> -x
->> -B
->
-> Now a short question. =A0Does your original loop give a correct answe=
-r in
-> this case?
+Graeme Geldenhuys venit, vidit, dixit 17.07.2009 13:25:
+> Hi,
+> 
+> Looking at the history of a cloned SubVersion repository, I noticed that 
+> git does track svn merges between the subversion branches.
+> 
+> Apparently there was a command to help git detect this merge:
+> 
+>    git-svn graft-branches
+> 
+> As documented in the URL below
+> 
+> http://www.kernel.org/pub/software/scm/git/docs/v1.5.0.7/git-svn.html
+> 
+> 
+> Now I have git version 1.6.3.3.363.g725cf7 but if I run the following, 
+> git simply shows the help, and graft-branches doesn't seem to be a 
+> command anymore. Was 'graft-branches' removed from Git?
+> 
+>   $ git svn graft-branches
+> 
+> Above does not work anymore.
 
-Yes, it returns B. But there are other cases where there is not a singl=
-e right
-answer if you allow merges. For the moment the more sensible thing to d=
-o is to
-not allow merges in the local commits. I hope nobody relies on "git pul=
-l
---rebase" with local merges.
+$git log -Sgraft-branches
+commit a836a0e1729d1758b4085cd07fc79cb9acb64908
+Author: Eric Wong <normalperson@yhbt.net>
+Date:   Wed Feb 14 19:34:56 2007 -0800
 
-Just an example:
+    git-svn: documentation updates for new functionality
 
-        E
-       /
-=A0 =A0 =A0 D----a topic2
-     /      \
-=A0A--B--C--b--c--d--topic1
+    Force the showing of the --minimize flag as an option in the
+    'migrate' help.
 
-A, B, C, D, E are upstream@{n} (n =3D 4,3,2,1,0)
+    Also, fix the usage function to correctly filter out
+    the deprecated aliases.
 
-if you are on branch "topic1", and run "git pull --rebase" you would wa=
-nt to
-rebase only b, c and d (maybe "a" but you should not), but for sure not=
- D.
-And my algorithm returns C, but a more "correct" answer would be C and =
-D.
+    Signed-off-by: Eric Wong <normalperson@yhbt.net>
 
-Another possibility could be to check that there is only one boundary
-commit (only one fork point for all the local commits).
+commit d05d72e07e49869fe988d4d99e6ac60711570db5
+Author: Eric Wong <normalperson@yhbt.net>
+Date:   Mon Jan 15 22:59:26 2007 -0800
 
-Wait! Let's return to the original problem. The original problem is tha=
-t you
-cannot do a "git pull --rebase" with a rebased upstream if you have alr=
-eady
-done "git fetch" before. And the solution would be:
-Try to behaved as if the "git fetch" was not run.
+    git-svn: remove graft-branches command
 
-And this is exactly what my patch does.
+    It's becoming a maintenance burden.  I've never found it
+    particularly useful myself, nor have I heard much feedback about
+    it; so I'm assuming it's just as useless to everyone else.
 
-All the other "problems" happens already.
+    Signed-off-by: Eric Wong <normalperson@yhbt.net>
 
-Now I only have to solve the "git rev-parse -q --verify upstream@{large=
-_n}"
-problem or workaround it.
-
-Sometimes thinks aloud,
-Santi
+...
