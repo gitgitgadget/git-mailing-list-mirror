@@ -1,107 +1,71 @@
-From: Jakub Narebski <jnareb@gmail.com>
+From: John Tapsell <johnflux@gmail.com>
 Subject: Re: encrypted repositories?
-Date: Fri, 17 Jul 2009 13:22:15 -0700 (PDT)
-Message-ID: <m3skgvt5zi.fsf@localhost.localdomain>
+Date: Fri, 17 Jul 2009 21:22:47 +0100
+Message-ID: <43d8ce650907171322y60aaa0f3na335b7a4a2fe32c1@mail.gmail.com>
 References: <op.uw7wmbr41e62zd@balu.cs.uni-paderborn.de>
-	<4A60A168.2060105@drmicha.warpmail.net>
+	 <alpine.LFD.2.01.0907171226460.13838@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Cc: Matthias Andree <matthias.andree@gmx.de>, git@vger.kernel.org
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Fri Jul 17 22:22:53 2009
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Fri Jul 17 22:28:09 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MRtx5-0005Eg-Rp
-	for gcvg-git-2@gmane.org; Fri, 17 Jul 2009 22:22:44 +0200
+	id 1MRu2L-0007Sn-2S
+	for gcvg-git-2@gmane.org; Fri, 17 Jul 2009 22:28:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755535AbZGQUWW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 17 Jul 2009 16:22:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755072AbZGQUWV
-	(ORCPT <rfc822;git-outgoing>); Fri, 17 Jul 2009 16:22:21 -0400
-Received: from fg-out-1718.google.com ([72.14.220.156]:1050 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756282AbZGQUWT (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 17 Jul 2009 16:22:19 -0400
-Received: by fg-out-1718.google.com with SMTP id e21so323554fga.17
-        for <git@vger.kernel.org>; Fri, 17 Jul 2009 13:22:17 -0700 (PDT)
+	id S1754525AbZGQUWx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 17 Jul 2009 16:22:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756516AbZGQUWw
+	(ORCPT <rfc822;git-outgoing>); Fri, 17 Jul 2009 16:22:52 -0400
+Received: from mail-yx0-f184.google.com ([209.85.210.184]:41019 "EHLO
+	mail-yx0-f184.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756000AbZGQUWr (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 17 Jul 2009 16:22:47 -0400
+Received: by yxe14 with SMTP id 14so1893357yxe.33
+        for <git@vger.kernel.org>; Fri, 17 Jul 2009 13:22:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received
-         :x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        bh=sE8QpqlUHXF/Lsaj0GIztKlsJ8XhPEOeemy5PuKOV1o=;
-        b=dM8XFXh6pvhLbH59I4dKQqBCZySm3tJsv5HCiSf7skUaa0OaMP4sr2gawAkkm82SCT
-         RTAn0jrchpnWtAf7f/NBXe/OhYiODYQAen3Rvzv5+Ur9CftV/jEoWwH9ctHTWE5SvKkW
-         MRF0BbO+ZJ8ZLTemRD1Xw40bIeuraoqnLtOdw=
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=e6FV1Ii/4P1ZKrONWgEX46b2ki13fQ/1jkdBEjpGJgk=;
+        b=TwAMAFCO2mvfoExOztlUPXZ9glwz48NhjScXgMsw/9AGq5t3NVK/zv97T9fSeZNcws
+         fH7mK4TI3eC/7zCnq6reG5X1Um3fwiVli1BE4PDY2czp0x6dK4shn2fhGo6rn/DhsbbJ
+         NpRH/RMUC/cLGE1XBUJOREvL9iICONZWtTeY0=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        b=jgqxjmEsM673Ay9c0JHZUelF3F9lz3jyEfps9/FHJqkTBWdzZiYP8dE4ln4nYEQDom
-         gHo2DK81ztPidDd2TrYEiwIY7yYVehnhWu2EvtHP+8MYgVyQ8D4I9YT7IaNePZkXRtld
-         mOblfPzAa8OwNSbxYRTyL33J6yVhiQLgnmrZA=
-Received: by 10.86.96.17 with SMTP id t17mr1164572fgb.20.1247862137468;
-        Fri, 17 Jul 2009 13:22:17 -0700 (PDT)
-Received: from localhost.localdomain (abvs148.neoplus.adsl.tpnet.pl [83.8.216.148])
-        by mx.google.com with ESMTPS id e11sm1886309fga.21.2009.07.17.13.22.15
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 17 Jul 2009 13:22:15 -0700 (PDT)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id n6HKMFxv015472;
-	Fri, 17 Jul 2009 22:22:16 +0200
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id n6HKM97K015468;
-	Fri, 17 Jul 2009 22:22:09 +0200
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <4A60A168.2060105@drmicha.warpmail.net>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=qZX3LNFi6wPeX8phQv9Lymfz0n2JBBIj9bCopnXrXfA4WbwKW790GGagpcEPyBcNJS
+         VNJAhFdjPsW6Si/oTgvJ9LEVkzcDnrhAPsHz6lHH4LzKlV7MrRZ8QGFw8yopbFKABc3o
+         zl6u85lvDo4voOTjgJgphEFgqczRg8puVXkIM=
+Received: by 10.151.98.2 with SMTP id a2mr2616658ybm.191.1247862167095; Fri, 
+	17 Jul 2009 13:22:47 -0700 (PDT)
+In-Reply-To: <alpine.LFD.2.01.0907171226460.13838@localhost.localdomain>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123485>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123486>
 
-Michael J Gruber <git@drmicha.warpmail.net> writes:
-> Matthias Andree venit, vidit, dixit 17.07.2009 17:14:
-> > 
-> > I have a rather special usage scenario.
-> > 
-> > Assume you have a repository where you want to work on embargoed  
-> > information, so that not even system administrators of the server you're  
-> > pushing to can get a hold of the cleartext data.
-> > 
-> > "Server" would be a central reference repository that I can push to.
-> > "Client" would by my working computer that has a clone of the crypted  
-> > repo, and an unencrypted checkout of it. Perhaps the client would also  
-> > need an unencrypted copy of the repo (for performance reasons, I'm not  
-> > sure about that) that gets encrypted on the fly when pushing and decrypted  
-> > when fetching.
-> > 
-> > Examples of use might be press releases of upcoming products, written  
-> > exams for students, whatever.
- 
-> If the server can not decrypt anything then it can not serve anything,
-> at least not as a git server. Note that if you're really fussy about
-> security then you should not allow the server to see even the DAG (which
-> would be the case if you encrypt blobs only), which makes it impossible
-> to do any smart serving.
+2009/7/17 Linus Torvalds <torvalds@linux-foundation.org>:
+>
+>
+> On Fri, 17 Jul 2009, Matthias Andree wrote:
+>>
+>> Assume you have a repository where you want to work on embargoed information,
+>> so that not even system administrators of the server you're pushing to can get
+>> a hold of the cleartext data.
+>
+> If the server can't ever read it, you're basically limited to just one
+> story:
 
-There was shown here on git mailing list script which was meant to
-help in situation where you have repository with sensitive deta,
-discovered repository corruption or bug in git, and cannot be
-reproduced otherwise.  But I think it didn't encrypt repositry, but
-just emulate it's structure.
+Why couldn't you have the actual code encrypted, but have the server
+still know about the SHAs etc?  You would expose the actual commit
+structure, but that might be acceptable?
 
-As to encrypting repository: you can encrypt blobs (content of files),
-you can encrypt filenames (but the structure remains) or you can put
-files in a flat encrypted structure, and you can encrypt commit
-messages and comitter and author info, and encrypt / rename branch
-names.  Still some DAG structure will be visible, and need be visible
-for "smart" git server (access via ssh and git protocols) to work.
-
--- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+John
