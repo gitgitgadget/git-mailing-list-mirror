@@ -1,106 +1,137 @@
-From: Nanako Shiraishi <nanako3@lavabit.com>
-Subject: Re: [PATCH v6] mailinfo: allow e-mail files as input
-Date: Fri, 17 Jul 2009 19:06:01 +0900
-Message-ID: <20090717190601.6117@nanako3.lavabit.com>
-References: <7v8wip9jjw.fsf@alter.siamese.dyndns.org>
-    <f006bbb9c754c80c133798ff70db5b5291dae060.1247766192.git.nicolas.s.dev@gmx.fr>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCHv2 2/2] pull: support rebased upstream + fetch + pull 
+ --rebase
+Date: Fri, 17 Jul 2009 12:13:35 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.0907171211430.4495@intel-tinevez-2-302>
+References: <adf1fd3d0907152329v7f49999u42b0d0fc4d39f5e9@mail.gmail.com>  <1247731921-2290-1-git-send-email-santi@agolina.net>  <alpine.DEB.1.00.0907161035060.3155@pacific.mpi-cbg.de> <adf1fd3d0907160932r313de6e8lec23e4f3409b8c05@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Cc: <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-	Stephen Boyd <bebarino@gmail.com>,
-	Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-To: Nicolas Sebrecht <nicolas.s.dev@gmx.fr>
-X-From: git-owner@vger.kernel.org Fri Jul 17 12:06:50 2009
+Content-Type: MULTIPART/MIXED; BOUNDARY="8323329-1414350704-1247825617=:4495"
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: =?ISO-8859-15?Q?Santi_B=E9jar?= <santi@agolina.net>
+X-From: git-owner@vger.kernel.org Fri Jul 17 12:13:48 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MRkL1-0001mQ-UP
-	for gcvg-git-2@gmane.org; Fri, 17 Jul 2009 12:06:48 +0200
+	id 1MRkRn-0004O6-LE
+	for gcvg-git-2@gmane.org; Fri, 17 Jul 2009 12:13:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934360AbZGQKGl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 17 Jul 2009 06:06:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934354AbZGQKGk
-	(ORCPT <rfc822;git-outgoing>); Fri, 17 Jul 2009 06:06:40 -0400
-Received: from karen.lavabit.com ([72.249.41.33]:58731 "EHLO karen.lavabit.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S934314AbZGQKGj (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 17 Jul 2009 06:06:39 -0400
-Received: from b.earth.lavabit.com (b.earth.lavabit.com [192.168.111.11])
-	by karen.lavabit.com (Postfix) with ESMTP id ED73511B875;
-	Fri, 17 Jul 2009 05:06:38 -0500 (CDT)
-Received: from 3939.lavabit.com (212.62.97.20)
-	by lavabit.com with ESMTP id WOB0LNBBXVWP; Fri, 17 Jul 2009 05:06:38 -0500
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws; s=lavabit; d=lavabit.com;
-  b=fiAr/ELL220JUGmpyaMLhAWXKi4jE2bdxZYfggV6t2xDfAm8u6EiItaY6Cy7fPe6ClujwQlPbCFfHc0BGpryvbDJz5PvVovTCyPU9tPPeLm55TtnrMpRxWeaZg9U4SHZ/c67agUqm78JhWH5KJvOLHRygqVkSsWUIB8uCzv2UXI=;
-  h=From:To:Cc:Subject:References:In-Reply-To:Date:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id;
-In-Reply-To: <f006bbb9c754c80c133798ff70db5b5291dae060.1247766192.git.nicolas.s.dev@gmx.fr>
+	id S934362AbZGQKNl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 17 Jul 2009 06:13:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934360AbZGQKNk
+	(ORCPT <rfc822;git-outgoing>); Fri, 17 Jul 2009 06:13:40 -0400
+Received: from mail.gmx.net ([213.165.64.20]:33435 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S934348AbZGQKNk (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 17 Jul 2009 06:13:40 -0400
+Received: (qmail invoked by alias); 17 Jul 2009 10:13:38 -0000
+Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
+  by mail.gmx.net (mp070) with SMTP; 17 Jul 2009 12:13:38 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+IqxY3WRqIc+Y8trPS2KyPopi7jFDXCeWtn8johk
+	Q58WuJ3RaqYH6m
+X-X-Sender: schindel@intel-tinevez-2-302
+In-Reply-To: <adf1fd3d0907160932r313de6e8lec23e4f3409b8c05@mail.gmail.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.45
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123458>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123459>
 
-Quoting Nicolas Sebrecht <nicolas.s.dev@gmx.fr>:
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-> We traditionally allowed a mbox file or a directory name of a maildir to be
-> given to "git am".  Even though an individual file in a maildir (or more
-> generally, a piece of RFC2822 e-mail) is not a mbox file, it contains enough
-> information to create a commit out of it, so there is no reason to reject one.
-> It allows to run 'git am' with an email list argument, something like:
+--8323329-1414350704-1247825617=:4495
+Content-Type: TEXT/PLAIN; charset=ISO-8859-1
+Content-Transfer-Encoding: 8BIT
+
+Hi,
+
+On Thu, 16 Jul 2009, Santi Béjar wrote:
+
+> 2009/7/16 Johannes Schindelin <Johannes.Schindelin@gmx.de>:
 >
->  $ git am dir/*
->  $ git am email1 email2
->
-> This builds on top of a5a6755 (git-am foreign patch support: introduce
-> patch_format, 2009-05-27) that introduced mailbox format detection.  The
-> codepath to deal with a mbox requires it to begin with "From " line and
-> also allows it to begin with "From: ", but a random piece of e-mail can
-> and often do begin with any valid RFC2822 header lines.
->
-> Instead of checking the first line, we extract all the lines up to the
-> first empty line, and make sure they look like e-mail headers.
->
-> Signed-off-by: Nicolas Sebrecht <nicolas.s.dev@gmx.fr>
-> ---
+> > On Thu, 16 Jul 2009, Santi Béjar wrote:
+> >
+> >> Use the fork commit of the current branch (where
+> >> the tip of upstream branch used to be) as the upstream parameter of
+> >> "git rebase". Compute it walking the reflog to find the first commit
+> >> which is an ancestor of the current branch.
+> >
+> > I finally understand what this patch is about.  Thanks.
+> 
+> Thanks, it was hard (at least for me) to provide a short and good
+> commit message.
 
-Could you summarize the changes since v5 here?  Is the change the same as Junio's patch (if so shouldn't you credit him in the commit log message)? 
+It is the thing I found quite hard when I started contributing to Git, and 
+it is still not exactly easy for me.
 
->  Documentation/git-am.txt |    6 ++--
->  git-am.sh                |   14 ++++++++++++
->  t/t4150-am.sh            |   54 ++++++++++++++++++++++++++++++++++++++++++++++
->  3 files changed, 71 insertions(+), 3 deletions(-)
->
-> diff --git a/Documentation/git-am.txt b/Documentation/git-am.txt
-> index 32e689b..2a930a7 100644
-> --- a/Documentation/git-am.txt
-> +++ b/Documentation/git-am.txt
-> @@ -14,7 +14,7 @@ SYNOPSIS
->  	 [--ignore-date]
->  	 [--whitespace=<option>] [-C<n>] [-p<n>] [--directory=<dir>]
->  	 [--reject] [-q | --quiet]
-> -	 [<mbox> | <Maildir>...]
-> +	 [<mbox> | <Maildir>... | <email>... ]
->  'git am' (--skip | --resolved | --abort)
->  
->  DESCRIPTION
-> @@ -25,8 +25,8 @@ current branch.
->  
->  OPTIONS
->  -------
-> -<mbox>|<Maildir>...::
-> -	The list of mailbox files to read patches from. If you do not
-> +<mbox>|<Maildir>...|<email>...::
-> +	The list of mailbox files or email to read patches from. If you do not
->  	supply this argument, the command reads from the standard input.
->  	If you supply directories, they will be treated as Maildirs.
->  
+> >> diff --git a/git-pull.sh b/git-pull.sh
+> >> index 4b78a0c..31d3945 100755
+> >> --- a/git-pull.sh
+> >> +++ b/git-pull.sh
+> >> @@ -125,9 +125,14 @@ test true = "$rebase" && {
+> >>       die "refusing to pull with rebase: your working tree is not up-to-date"
+> >>
+> >>       . git-parse-remote &&
+> >> -     reflist="$(get_remote_merge_branch "$@" 2>/dev/null)" &&
+> >> -     oldremoteref="$(git rev-parse -q --verify \
+> >> -             "$reflist")"
+> >> +     remoteref="$(get_remote_merge_branch "$@" 2>/dev/null)" &&
+> >> +     num=0 &&
+> >> +     while oldremoteref="$(git rev-parse -q --verify "$remoteref@{$num}")"
+> >> +     do
+> >
+> > How about
+> >
+> >        oldremoteref="$(git rev-list --boundary HEAD --not \
+> >                        $(git rev-list -g $remoteref | sed 's/$/^@/') |
+> >                sed -e '/^[^-]/d' -e q)"
+> >
+> > Explanation: the "git rev-list -g $remoteref" lists the previous commits
+> > the remote ref pointed to, and the ^@ appended to them means all their
+> > parents.  Now, the outer rev-list says to take everything in HEAD but
+> > _not_ in those parents, showing the boundary commits.  The "sed" call
+> > lists the first such boundary commit (which must, by construction, be one
+> > of the commits shown by the first rev-list).
+> 
+> It almost works, thanks. In fact this is how I represent it in my
+> head, but I couldn't find a working command (hint, hint, the
+> --boundaries trick). Based on yours here it is the one I am using
+> right now:
+> 
+> 	oldremoteref="$(git rev-list --boundary HEAD --not \
+> 		$(git rev-list -g $remoteref 2>/dev/null) |
+> 		sed -e '/^[^-]/d' -e 's/^-//;q' )"
+> 
+> i.e. without the ^@ as you want the commits in the reflog as boundary
+> commits, and also remove the - in front of the commit.
 
-I wasn't following the discussion closely, and at first I didn't understand this change to the documentation, because it doesn't say how <mbox> and <email> are different. I'm afraid many readers of the documentation don't understand it either.
+Thanks for fixing it.  I should have mentioned that I did not test it (and 
+usually stuff I do not test has blatant bugs in it, such as was the case 
+here).
 
-Why does this description have ... in it? If I'm reading it correctly, the code in check_patch_format function checks only the first file.
+> Your version performs equally than mine for the normal case but much 
+> better if it has to walk many reflog entries. Also mine has the problem, 
+> at least currently, that it does not give up as "git rev-parse -q 
+> --verify $branch@{n}" does not return an error when n is too large:
+> 
+>   $ git rev-parse -q --verify origin/next@{18} ; echo $?
+> warning: Log for 'origin/next' only has 17 entries.
+> 37eb784cfce07ba0048d64e352c5137454396d87
+> 0
+> 
+> even with "-q --verify"!
+> 
+> So, I'll take yours and will send an updated patch (saying that is is
+> based on a command by you). With your Signed-off-by?
 
--- 
-Nanako Shiraishi
-http://ivory.ap.teacup.com/nanako3/
+Maybe an ACK instead?
+
+Thanks,
+Dscho
+
+--8323329-1414350704-1247825617=:4495--
