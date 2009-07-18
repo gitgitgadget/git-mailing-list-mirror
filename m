@@ -1,106 +1,150 @@
-From: demerphq <demerphq@gmail.com>
-Subject: Re: git silently ignores aliases of existing commands
-Date: Sat, 18 Jul 2009 11:30:25 +0200
-Message-ID: <9b18b3110907180230p7fb432cdq56bfee794afc669e@mail.gmail.com>
-References: <4A611CE1.3080709@pobox.com>
-	 <BLU0-SMTP9743008F68C14C8226D07BAE1F0@phx.gbl>
-	 <4A6176E6.4060708@pobox.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 0/2] Re: cosmetic improvements for "git show tag"
+Date: Sat, 18 Jul 2009 06:14:37 -0400
+Message-ID: <20090718101436.GA22535@coredump.intra.peff.net>
+References: <20090717231622.GA13511@coredump.intra.peff.net>
+ <20090718011006.GB12968@vidovic>
+ <20090718014743.GA16381@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Sean Estabrooks <seanlkml@sympatico.ca>, git@vger.kernel.org
-To: Michael G Schwern <schwern@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Jul 18 11:38:38 2009
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Nicolas Sebrecht <nicolas.s.dev@gmx.fr>
+X-From: git-owner@vger.kernel.org Sat Jul 18 12:14:58 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MS6NJ-00034f-CO
-	for gcvg-git-2@gmane.org; Sat, 18 Jul 2009 11:38:37 +0200
+	id 1MS6wT-0004ml-UN
+	for gcvg-git-2@gmane.org; Sat, 18 Jul 2009 12:14:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753620AbZGRJia convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 18 Jul 2009 05:38:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753507AbZGRJia
-	(ORCPT <rfc822;git-outgoing>); Sat, 18 Jul 2009 05:38:30 -0400
-Received: from mail-px0-f185.google.com ([209.85.216.185]:56064 "EHLO
-	mail-px0-f185.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752938AbZGRJi3 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 18 Jul 2009 05:38:29 -0400
-Received: by pxi15 with SMTP id 15so966037pxi.33
-        for <git@vger.kernel.org>; Sat, 18 Jul 2009 02:38:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=2WFai7Lq+wep4wHG3dWykyXxe0yptWvA+FzCeKAVilU=;
-        b=hjfAeT0iWZ2hSY2jTsL0C+Xdx0BnSrL/u85ZgYzcL20hi3x2C05hILVnuFiTzFvKlq
-         8cmurceoTCSKo5+ii4u2dAVVUgFVX8I/xp66o7kLogxQN+1vg3pMVEVDUioGlI8/zaai
-         7Lehl1BKy0cmlJ2dD4WVz8mHP3+TvXIz5kN10=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=uReH2jfMQZLjKaBwU5W0eAKJI+dCMGAvQvAoCOGXMIWw0P8XibgVMlxNJm50aka2fe
-         zv5hvA4HylfKn++lefkcKct5mrtWA0oSlIf8Ja1+b4dNBLs8g3+mLV3e86wZdy120j6E
-         B33JZXztgeXWQlane+YDA3dQFMElcpiSJxqHM=
-Received: by 10.142.230.3 with SMTP id c3mr446931wfh.166.1247909425361; Sat, 
-	18 Jul 2009 02:30:25 -0700 (PDT)
-In-Reply-To: <4A6176E6.4060708@pobox.com>
+	id S1757999AbZGRKOv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 18 Jul 2009 06:14:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757991AbZGRKOu
+	(ORCPT <rfc822;git-outgoing>); Sat, 18 Jul 2009 06:14:50 -0400
+Received: from peff.net ([208.65.91.99]:43167 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757985AbZGRKOt (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 18 Jul 2009 06:14:49 -0400
+Received: (qmail 31590 invoked by uid 107); 18 Jul 2009 10:16:43 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Sat, 18 Jul 2009 06:16:43 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sat, 18 Jul 2009 06:14:37 -0400
+Content-Disposition: inline
+In-Reply-To: <20090718014743.GA16381@coredump.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123512>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123513>
 
-2009/7/18 Michael G Schwern <schwern@pobox.com>:
-> Sean Estabrooks wrote:
->> On Fri, 17 Jul 2009 17:52:49 -0700
->> Michael G Schwern <schwern@pobox.com> wrote:
->>
->> [...]
->>> It would be nice if git used the alias *before* the installed comma=
-nd. =A0This
->>> lets me fix/change default behaviors without having to come up with=
- a new
->>> command. =A0(Another handy example: =A0blame =3D blame -w) =A0It do=
-esn't do anything
->>> useful right now anyway.
->>
->> This has been discussed a few times on the list already. =A0 Here is=
- one such
->> discussion:
->>
->> http://thread.gmane.org/gmane.comp.version-control.git/112487/focus=3D=
-112493
->>
->> You'll see that it was decided that Git would not allow commands to =
-be overridden
->> so that you could always be sure what a given command would do when =
-you sit
->> down at any installation. =A0This is especially important for script=
-ing but can
->> also be a problem for everyday usage. =A0 You'll just have to choose=
- a new command
->> name for the alternate default you want.
->
-> I'm in the "more than enough rope" camp myself, so count that as a -1=
- fwiw.
->
-> More importantly, what about the warning telling the user that what t=
-hey did
-> is not allowed and didn't work?
+On Fri, Jul 17, 2009 at 09:47:43PM -0400, Jeff King wrote:
 
-Yeah it seems reasonable that if its going to be ignored it should not
-be silently ignored.
+> So when you show two tags you get:
+> 
+>   tag foo
+> 
+>   message
+> 
+>   commit foo^{}
+> 
+>   message
+>   tag bar
+> 
+> 
+>   commit bar^{}
+> 
+> That is, the newline is actually stuck in the wrong place. So we
+> actually need to turn that newline off, which I'm not sure is possible.
+> I'll look into it more.
 
-Especially given that the silentness effectively means there cant be
-any new git tools added without possible breakage of installed setups.
+The code calls into log_tree_commit, which uses the "shown_one" member
+of rev_info to determine. So we should be able to just use that for our
+tags, and everything will work fine.
 
-cheers,
-Yves
+I think we can replace 2/2 with the patch below, which also covers the
+tree case neatly.
 
+-- >8 --
+Subject: [PATCH] show: add space between multiple items
 
+When showing an annotated tag, "git show" will always
+display the pointed-to object. However, it didn't separate
+the two with whitespace, making it more difficult to notice
+where the new object started. For example:
 
---=20
-perl -Mre=3Ddebug -e "/just|another|perl|hacker/"
+  $ git tag -m 'my message' foo
+  $ git show foo
+  tag foo
+  Tagger: Jeff King <peff@peff.net>
+  Date:   Fri Jul 17 18:46:25 2009 -0400
+
+  my message
+  commit 41cabf8fed2694ba33e01d64f9094f2fc5e5805a
+  Author: Jeff King <peff@peff.net>
+  Date:   Thu Jul 16 17:31:34 2009 -0400
+  ...
+
+This patch respects and sets the rev.shown_one member to
+prepend a blank line before showing a second item. We use
+this member of rev_info instead of a local flag, because the
+log_tree_commit we call into for showing commits already
+respects and sets that flag. Meaning that everything will be
+spaced properly if you intermix commits and tags, like:
+
+  $ git show v1.6.3 v1.6.2 HEAD
+
+In that case, a single blank line will separate the first
+tag, the commit it points to, the second tag, the commit
+that one points to, and the final commit.
+
+While we're at it, let's also support trees, so that even
+something as crazy as
+
+  $ git show HEAD^{tree} HEAD~1^{tree} HEAD
+
+will also be spaced in an easy-to-read way. However, we
+intentionally do _not_ insert blank lines for blobs, so
+that specifying multiple blobs gives a strict concatenation.
+
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ builtin-log.c |    6 ++++++
+ 1 files changed, 6 insertions(+), 0 deletions(-)
+
+diff --git a/builtin-log.c b/builtin-log.c
+index b05796d..3035816 100644
+--- a/builtin-log.c
++++ b/builtin-log.c
+@@ -329,11 +329,14 @@ int cmd_show(int argc, const char **argv, const char *prefix)
+ 		case OBJ_TAG: {
+ 			struct tag *t = (struct tag *)o;
+ 
++			if (rev.shown_one)
++				putchar('\n');
+ 			printf("%stag %s%s\n",
+ 					diff_get_color_opt(&rev.diffopt, DIFF_COMMIT),
+ 					t->tag,
+ 					diff_get_color_opt(&rev.diffopt, DIFF_RESET));
+ 			ret = show_object(o->sha1, 1, &rev);
++			rev.shown_one = 1;
+ 			if (ret)
+ 				break;
+ 			o = parse_object(t->tagged->sha1);
+@@ -345,12 +348,15 @@ int cmd_show(int argc, const char **argv, const char *prefix)
+ 			break;
+ 		}
+ 		case OBJ_TREE:
++			if (rev.shown_one)
++				putchar('\n');
+ 			printf("%stree %s%s\n\n",
+ 					diff_get_color_opt(&rev.diffopt, DIFF_COMMIT),
+ 					name,
+ 					diff_get_color_opt(&rev.diffopt, DIFF_RESET));
+ 			read_tree_recursive((struct tree *)o, "", 0, 0, NULL,
+ 					show_tree_object, NULL);
++			rev.shown_one = 1;
+ 			break;
+ 		case OBJ_COMMIT:
+ 			rev.pending.nr = rev.pending.alloc = 0;
+-- 
+1.6.4.rc1.177.g80fb1.dirty
