@@ -1,70 +1,73 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: libgit api & external integration
-Date: Fri, 17 Jul 2009 19:10:35 -0700
-Message-ID: <fabb9a1e0907171910t529f3d9oe4b6ce0ed55f4800@mail.gmail.com>
-References: <b086760e0907111409w602f4338u868729dcfa188908@mail.gmail.com> 
-	<b086760e0907111417o4b249676jc821e8733d340c9d@mail.gmail.com> 
-	<20090716100334.GB6742@coredump.intra.peff.net>
+From: Sean Estabrooks <seanlkml@sympatico.ca>
+Subject: Re: git silently ignores aliases of existing commands
+Date: Fri, 17 Jul 2009 19:01:31 -0700
+Message-ID: <BLU0-SMTP9743008F68C14C8226D07BAE1F0@phx.gbl>
+References: <4A611CE1.3080709@pobox.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
-Cc: Git List <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>, devzero2000 <pinto.elia@gmail.com>
+Cc: git@vger.kernel.org
+To: Michael G Schwern <schwern@pobox.com>
 X-From: git-owner@vger.kernel.org Sat Jul 18 04:11:20 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MRzOQ-0002gm-8A
+	id 1MRzOP-0002gm-Gw
 	for gcvg-git-2@gmane.org; Sat, 18 Jul 2009 04:11:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752107AbZGRCK6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 17 Jul 2009 22:10:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751936AbZGRCK5
-	(ORCPT <rfc822;git-outgoing>); Fri, 17 Jul 2009 22:10:57 -0400
-Received: from mail-ew0-f226.google.com ([209.85.219.226]:50914 "EHLO
-	mail-ew0-f226.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751809AbZGRCK4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 17 Jul 2009 22:10:56 -0400
-Received: by ewy26 with SMTP id 26so1262283ewy.37
-        for <git@vger.kernel.org>; Fri, 17 Jul 2009 19:10:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=bcfRuv0gn+gKPUjDpjlpaym2pseoY7ZH4SVh4rjdYrc=;
-        b=aZzeRe/8toNi+Bua43Ypj1OE6EBbLCtTng8APYjJ765LHfIpbT6zIywlALABby+IQ8
-         Rf/Tz3hbDi2QW0woq9Vu4+g0N20dEJK4M1HeLc2mwe4mMgaVMHaLJBOlAe6EmDC88ivO
-         4nzqAqY+m4Bjcw3DZBmYXwX6JWjYwqYHlVVcs=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=uRY+y149NKTA8d4mHU02TCfvirDl8YPH/rXhccrFaJhWyCE4nHcTtss4Uq3hag0kO1
-         g4uVsHnWGn4/gUUlQ0uavzZu4nTpz/coWrSEimLviilCrB/+adMEzRz2v/YStbvwKj6U
-         bl4PoUpZi7ZGunEbFUToLvhgLDxXJRXP7Gm20=
-Received: by 10.216.10.73 with SMTP id 51mr485329weu.167.1247883055112; Fri, 
-	17 Jul 2009 19:10:55 -0700 (PDT)
-In-Reply-To: <20090716100334.GB6742@coredump.intra.peff.net>
+	id S1754326AbZGRCBk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 17 Jul 2009 22:01:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752107AbZGRCBj
+	(ORCPT <rfc822;git-outgoing>); Fri, 17 Jul 2009 22:01:39 -0400
+Received: from blu0-omc3-s15.blu0.hotmail.com ([65.55.116.90]:21230 "EHLO
+	blu0-omc3-s15.blu0.hotmail.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752046AbZGRCBi (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 17 Jul 2009 22:01:38 -0400
+Received: from BLU0-SMTP97 ([65.55.116.72]) by blu0-omc3-s15.blu0.hotmail.com with Microsoft SMTPSVC(6.0.3790.3959);
+	 Fri, 17 Jul 2009 19:01:35 -0700
+X-Originating-IP: [96.49.109.68]
+X-Originating-Email: [seanlkml@sympatico.ca]
+Received: from hobo ([96.49.109.68]) by BLU0-SMTP97.blu0.hotmail.com over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
+	 Fri, 17 Jul 2009 19:01:34 -0700
+In-Reply-To: <4A611CE1.3080709@pobox.com>
+X-Mailer: Sylpheed 2.6.0 (GTK+ 2.16.2; i586-redhat-linux-gnu)
+X-OriginalArrivalTime: 18 Jul 2009 02:01:34.0529 (UTC) FILETIME=[AD528B10:01CA074B]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123503>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123504>
 
-Heya,
+On Fri, 17 Jul 2009 17:52:49 -0700
+Michael G Schwern <schwern@pobox.com> wrote:
 
-On Thu, Jul 16, 2009 at 03:03, Jeff King<peff@peff.net> wrote:
-> No, there is currently no linkable libgit. The official stable interface
-> for interacting with git is the set of plumbing commands.
+[...]
+> It would be nice if git used the alias *before* the installed command.  This
+> lets me fix/change default behaviors without having to come up with a new
+> command.  (Another handy example:  blame = blame -w)  It doesn't do anything
+> useful right now anyway.
 
-Since this might not be obvious, you can find which commands are
-plumbing in 'man git' [0].
+Hi Michael,
 
-[0] http://www.kernel.org/pub/software/scm/git/docs/#_low_level_commands_plumbing
+This has been discussed a few times on the list already.   Here is one such
+discussion:
 
--- 
+http://thread.gmane.org/gmane.comp.version-control.git/112487/focus=112493
+
+You'll see that it was decided that Git would not allow commands to be overridden
+so that you could always be sure what a given command would do when you sit
+down at any installation.  This is especially important for scripting but can
+also be a problem for everyday usage.   You'll just have to choose a new command
+name for the alternate default you want.
+
+[...]
+> PS  I couldn't find anything obvious about where to send bug reports / feature
+> requests in the git man page, just "general upbringing" pointing here.  It
+> would be helpful if it was a bit more clear.  None of "bug", "report" or
+> "issue" pointed at anything relevant.
+
+This list is the appropriate place for any of the issues you enumerate.
+
 Cheers,
-
-Sverre Rabbelier
+Sean
