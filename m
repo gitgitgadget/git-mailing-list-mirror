@@ -1,112 +1,73 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCHv3 2/2] pull: support rebased upstream + fetch + pull
- --rebase
-Date: Sat, 18 Jul 2009 10:55:35 -0700
-Message-ID: <7vk5253mg8.fsf@alter.siamese.dyndns.org>
-References: <adf1fd3d0907170624t7c2bf8f5w35c03788fdd82422@mail.gmail.com>
- <1247924785-31886-1-git-send-email-santi@agolina.net>
+From: Peter Harris <git@peter.is-a-geek.org>
+Subject: Re: git svn .git/svn/*/index files taking up huge amounts of disk 
+	space
+Date: Sat, 18 Jul 2009 14:10:17 -0400
+Message-ID: <eaa105840907181110q416a9dd0j989a63eedd9b15ca@mail.gmail.com>
+References: <CFF1FF99-9237-4C89-BB2D-66F82CF683B1@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Santi =?utf-8?Q?B=C3=A9jar?= <santi@agolina.net>
-X-From: git-owner@vger.kernel.org Sat Jul 18 19:55:51 2009
+Cc: git@vger.kernel.org
+To: Robert Zeh <robert.a.zeh@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Jul 18 20:10:28 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MSE8U-0001Ha-So
-	for gcvg-git-2@gmane.org; Sat, 18 Jul 2009 19:55:51 +0200
+	id 1MSEMd-0005py-K3
+	for gcvg-git-2@gmane.org; Sat, 18 Jul 2009 20:10:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751644AbZGRRzn convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 18 Jul 2009 13:55:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751613AbZGRRzm
-	(ORCPT <rfc822;git-outgoing>); Sat, 18 Jul 2009 13:55:42 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:35348 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751429AbZGRRzl (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 18 Jul 2009 13:55:41 -0400
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 0B469884D;
-	Sat, 18 Jul 2009 13:55:41 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 287CB8846; Sat,
- 18 Jul 2009 13:55:37 -0400 (EDT)
-In-Reply-To: <1247924785-31886-1-git-send-email-santi@agolina.net> ("Santi
- =?utf-8?Q?B=C3=A9jar=22's?= message of "Sat\, 18 Jul 2009 15\:46\:25 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 35231D18-73C4-11DE-8147-F699A5B33865-77302942!a-sasl-quonix.pobox.com
+	id S1751482AbZGRSKV convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 18 Jul 2009 14:10:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751620AbZGRSKU
+	(ORCPT <rfc822;git-outgoing>); Sat, 18 Jul 2009 14:10:20 -0400
+Received: from mail-ew0-f226.google.com ([209.85.219.226]:42403 "EHLO
+	mail-ew0-f226.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751385AbZGRSKT convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 18 Jul 2009 14:10:19 -0400
+Received: by ewy26 with SMTP id 26so1517622ewy.37
+        for <git@vger.kernel.org>; Sat, 18 Jul 2009 11:10:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:sender:received:in-reply-to
+         :references:date:x-google-sender-auth:message-id:subject:from:to:cc
+         :content-type:content-transfer-encoding;
+        bh=Jdgv5t8NOyEta6Nf6EsyAeIc7Q0lovYTwbH6byJzMTI=;
+        b=tVAogP9ZDNvlRHAuDjQg3OUMsYcDebcn5Qg7+tJkifpKsiO61p1z/fWeVnx+XVAd2h
+         c3e18BtAPkSvWS0Q6EkOtweSNysznnaLXfUhEYJPenO5KzA/m1txalqyKCEDthESiiGO
+         RZuTqnp9/SFW6HlOpaLGf0FOjjYzYlvzAlBb4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:sender:in-reply-to:references:date
+         :x-google-sender-auth:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        b=WWM/9SwGrBOCgf2BItkpHYQg9eSUk+SV+7fYu2HRC8GOmfZCN861PHf+TJpgEjtARN
+         OTg5I68mH3CT6eXtRgk6NQSRmFmzuKs1w+RDUiyM+n88SGYq9r4s6ISxZBRWykIaZ5VS
+         aIIQVrCrbAMSM8LxR8AG8M++uxzrw4zI+USTM=
+Received: by 10.210.86.1 with SMTP id j1mr1396413ebb.61.1247940617247; Sat, 18 
+	Jul 2009 11:10:17 -0700 (PDT)
+In-Reply-To: <CFF1FF99-9237-4C89-BB2D-66F82CF683B1@gmail.com>
+X-Google-Sender-Auth: 120c71d58c47ee24
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123528>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123529>
 
-Santi B=C3=A9jar <santi@agolina.net> writes:
+On Sat, Jul 18, 2009 at 10:58 AM, Robert Zeh wrote:
+> What are the index files under .git/svn used for? =A0Am I doing anyth=
+ing
+> wrong? =A0Can the index files under .git/svn be safely removed? =A0My=
+ brief look
+> at git-svn.perl makes me think that they are temporary, but I'm not s=
+ure.
 
-> Changes since v2:
->   - Hopefully enhance the commit log
->   - Use a 'for' loop for the reflog entries
->   - provide a default value in case there is no reflog
-> diff --git a/git-pull.sh b/git-pull.sh
-> index 4b78a0c..c8f1674 100755
-> --- a/git-pull.sh
-> +++ b/git-pull.sh
-> @@ -125,9 +125,16 @@ test true =3D "$rebase" && {
->  	die "refusing to pull with rebase: your working tree is not up-to-d=
-ate"
-> =20
->  	. git-parse-remote &&
-> -	reflist=3D"$(get_remote_merge_branch "$@" 2>/dev/null)" &&
-> +	remoteref=3D"$(get_remote_merge_branch "$@" 2>/dev/null)" &&
-> +	oldremoteref=3D &&
-> +	for reflog in $(git rev-list -g $remoteref 2>/dev/null)
-> +	do
-> +		test $reflog =3D $(git merge-base $reflog $curr_branch) &&
-> +		oldremoteref=3D$reflog && break
-> +	done
-> +	[ -z "$oldremoteref" ] &&
->  	oldremoteref=3D"$(git rev-parse -q --verify \
-> -		"$reflist")"
-> +		"$remoteref")"
->  }
+The index files are used to keep track of the commits that came from
+svn, so that git-svn rebase knows where to start from (either when
+committing or when doing a fetch from svn).
 
-Looks nicer.
+Unless you used the --no-metadata switch, the files under .git/svn can
+be safely removed (at the cost of performance when operating a branch
+that has had its index removed).
 
-I notice that you are breaking && chain with this patch.
-
-If get_remote_merge_branch fails, oldremoteref is not initialized to em=
-pty
-string, the for loop is skipped and then the last step (by the way, ple=
-ase
-write that as 'test -z "$oldremoteref"') may not kick in, using whateve=
-r
-random value the variable originally had in the environment.
-
-It probably makes more sense to do it in a slightly different order:
-
-        . git-parse-remote &&
-        oldremoteref=3D"$(get_remote_merge...)" &&
-	remoteref=3D$oldremoteref &&
-        for old in $(git rev-list -g "$remoteref" 2>/dev/null)
-        do
-        	if test "$old" =3D "$(git merge-base "$old" "$current_branch")
-		then
-			oldremoteref=3D"$old"
-			break
-                fi
-	done
-	# and you do not need 'if test -z "$oldremoteref"' anymore...
-
-But other than that, I agree that this is the most straightforward
-algorithm to express what you wanted to do.  I guess another possibilit=
-y
-is to instead look in the reflog of the _current_ branch to check how t=
-he
-previous rebase was done, iow, find out onto which commit the recent pa=
-rt
-of the current branch was rebased to, and rebase onto the current remot=
-e
-tip using that as the base.
+Peter Harris
