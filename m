@@ -1,94 +1,63 @@
-From: Nicolas Sebrecht <nicolas.s.dev@gmx.fr>
-Subject: [test failure] Re: t4114 binary file becomes symlink
-Date: Sun, 19 Jul 2009 00:51:35 +0200
-Message-ID: <20090718225135.GJ16708@vidovic>
-References: <20090718134551.GC16708@vidovic> <20090718135649.GA6759@sigill.intra.peff.net> <20090718141658.GE16708@vidovic> <200907182106.06776.j6t@kdbg.org> <20090718222947.GA31147@coredump.intra.peff.net>
+From: Nanako Shiraishi <nanako3@lavabit.com>
+Subject: Re: [ANNOUNCE] GIT 1.6.4.rc1
+Date: Sun, 19 Jul 2009 08:05:58 +0900
+Message-ID: <20090719080558.6117@nanako3.lavabit.com>
+References: <7vmy75bg2f.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Sixt <j6t@kdbg.org>,
-	Nicolas Sebrecht <nicolas.s.dev@gmx.fr>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sun Jul 19 00:51:53 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Cc: git@vger.kernel.org, Finn Arne Gangstad <finnag@pvv.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Jul 19 01:13:02 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MSIky-0007E6-Qj
-	for gcvg-git-2@gmane.org; Sun, 19 Jul 2009 00:51:53 +0200
+	id 1MSJ5R-0003tW-8N
+	for gcvg-git-2@gmane.org; Sun, 19 Jul 2009 01:13:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753830AbZGRWvm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 18 Jul 2009 18:51:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753777AbZGRWvl
-	(ORCPT <rfc822;git-outgoing>); Sat, 18 Jul 2009 18:51:41 -0400
-Received: from ey-out-2122.google.com ([74.125.78.26]:1240 "EHLO
-	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753697AbZGRWvk (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 18 Jul 2009 18:51:40 -0400
-Received: by ey-out-2122.google.com with SMTP id 9so384131eyd.37
-        for <git@vger.kernel.org>; Sat, 18 Jul 2009 15:51:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:sender:date:from:to:cc
-         :subject:message-id:references:mime-version:content-type
-         :content-disposition:in-reply-to:user-agent;
-        bh=gzOP4hX8VUi3kXAjNijgPAsCUC3SofEpEcnU2hfismI=;
-        b=NLd+Oek6ox1B+VYJOLyTUZu//qJuiH1lbFabiZGvvlPJM6vkMt/+UWcabUNXUQgNBH
-         BtYrJFkr0mhgBVHD+ta5HxrmFYw5Svn4kEKSGjeXflh1OPPjqR3+CI++gAmy5AltRnQr
-         083Zp6AJUkBybVSgcI0LrTv3ZGyMz1epnjMMU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=sender:date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=GsKH9E1bYLinkdV+ffy/cf6kUIBgOWChLFomvIkXagtVdt/cfpnQxZIRvsAP5SfxU5
-         rAjCTpAEv8BwqUICYyAap1idGRHB1v/KMnZ9wsqmpLs7CkZ3gOLcfvlZLDSNgUBvgk0r
-         nqLqoltNH+55lmbzknWdbS4kgtcR4uTTXvTP4=
-Received: by 10.210.70.14 with SMTP id s14mr1625066eba.67.1247957498892;
-        Sat, 18 Jul 2009 15:51:38 -0700 (PDT)
-Received: from @ (91-164-151-27.rev.libertysurf.net [91.164.151.27])
-        by mx.google.com with ESMTPS id 5sm2062065eyf.37.2009.07.18.15.51.37
-        (version=SSLv3 cipher=RC4-MD5);
-        Sat, 18 Jul 2009 15:51:38 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <20090718222947.GA31147@coredump.intra.peff.net>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+	id S1753947AbZGRXIm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 18 Jul 2009 19:08:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753915AbZGRXIl
+	(ORCPT <rfc822;git-outgoing>); Sat, 18 Jul 2009 19:08:41 -0400
+Received: from karen.lavabit.com ([72.249.41.33]:39496 "EHLO karen.lavabit.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753697AbZGRXIk (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 18 Jul 2009 19:08:40 -0400
+Received: from b.earth.lavabit.com (b.earth.lavabit.com [192.168.111.11])
+	by karen.lavabit.com (Postfix) with ESMTP id C039E11B8F3;
+	Sat, 18 Jul 2009 18:08:39 -0500 (CDT)
+Received: from 4878.lavabit.com (212.62.97.20)
+	by lavabit.com with ESMTP id JLQKCX5XXLLZ; Sat, 18 Jul 2009 18:08:39 -0500
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws; s=lavabit; d=lavabit.com;
+  b=M6Cv/63/RkRpFuTLGGZFHcFw35BLolkLcC4yK0GUYo7zXP0/ojkLu8i+rbySeElcAFHleJzpPitCbnlk+NQqCE1AMRRra0Dg25nEBGOdNVunAN+fphX4rYGit3gJhYJf3D9SYCMQpADL+kglMUruaE/sPqbNnIIH3mVIqVPM2RE=;
+  h=From:To:Cc:Subject:References:In-Reply-To:Date:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id;
+In-Reply-To: <7vmy75bg2f.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123540>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123541>
 
-The 18/07/09, Jeff King wrote:
-> On Sat, Jul 18, 2009 at 09:06:06PM +0200, Johannes Sixt wrote:
-> 
-> Ah, that's what I was missing. I can reproduce it by setting
-> SNPRINTF_RETURNS_BOGUS. I think the problem is in the git_vsnprintf
-> code, and it just by coincidence triggers in this test because of the
-> exact string we are trying to format.
-> 
-> Look at compat/snprintf.c. In git_vsnprintf, we are passed a "va_list
-> ap", which we then repeatedly call vsnprintf on, checking the return to
-> make sure we have enough space. But using a va_list repeatedly without a
-> va_end and va_start in the middle invokes undefined behavior. So we need
-> to va_copy it and use the copy.
-> 
-> A patch is below, which fixes the problem for me. However, va_copy is
-> C99, so we would generally try to avoid it. But I don't think there is a
-> portable way of writing this function without it. And most systems
-> shouldn't need to use our snprintf at all, so maybe it is portable
-> enough. I dunno.
+Quoting Junio C Hamano <gitster@pobox.com> writes:
 
-My investigations made me realize I was building a 64-bits git version
-in a 32-bits userland (gentoo flag multilib set) which is not the best
-thing to do. So, another possible fix is to export CFLAGS with '-m32'.
-Mixing 32 and 64-bits applications is bad. :-)
+> When the user does not tell "git push" what to push, it has always
+> pushed matching refs.  For some people it is unexpected, and a new
+> configuration variable push.default has been introduced to allow
+> changing a different default behaviour.  To advertise the new feature,
+> a big warning is issued if this is not configured and a git push without
+> arguments is attempted.
+>
+> 	Side note: we might want to tone this down, as it does not seem
+> 	likely for us to change the default behaviour when this option is
+> 	not set.
 
-I confirm this patch does fix the failure for the 64 bits version. Thank
-you all.
+I thought you applied this patch from Finn Arne:
 
-Now, I wonder if it is safe to run a 32-bits git version on repositories
-built with a 64-bits version. It should be safe but do you think it
-actually is?
+    http://article.gmane.org/gmane.comp.version-control.git/119173
+
+but apparently you didn't.
 
 -- 
-Nicolas Sebrecht
+Nanako Shiraishi
+http://ivory.ap.teacup.com/nanako3/
