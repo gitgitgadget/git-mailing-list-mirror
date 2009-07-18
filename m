@@ -1,151 +1,106 @@
-From: brizly vaan van Ulciputz <brizly@freenet.de>
-Subject: Re: setup gitosis on Fedora 11
-Date: Sat, 18 Jul 2009 09:40:35 +0200
-Message-ID: <1247902835.2384.86.camel@brizlyMobil>
-References: <1247867114.2384.15.camel@brizlyMobil>
-	 <2e24e5b90907171844o11eb6699m929e3c0df621ef67@mail.gmail.com>
+From: demerphq <demerphq@gmail.com>
+Subject: Re: git silently ignores aliases of existing commands
+Date: Sat, 18 Jul 2009 11:30:25 +0200
+Message-ID: <9b18b3110907180230p7fb432cdq56bfee794afc669e@mail.gmail.com>
+References: <4A611CE1.3080709@pobox.com>
+	 <BLU0-SMTP9743008F68C14C8226D07BAE1F0@phx.gbl>
+	 <4A6176E6.4060708@pobox.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Sitaram Chamarty <sitaramc@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Jul 18 10:46:48 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Sean Estabrooks <seanlkml@sympatico.ca>, git@vger.kernel.org
+To: Michael G Schwern <schwern@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Jul 18 11:38:38 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MS5Z8-0001Su-Ii
-	for gcvg-git-2@gmane.org; Sat, 18 Jul 2009 10:46:47 +0200
+	id 1MS6NJ-00034f-CO
+	for gcvg-git-2@gmane.org; Sat, 18 Jul 2009 11:38:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753822AbZGRIq2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 18 Jul 2009 04:46:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753760AbZGRIq1
-	(ORCPT <rfc822;git-outgoing>); Sat, 18 Jul 2009 04:46:27 -0400
-Received: from mout7.freenet.de ([195.4.92.97]:49900 "EHLO mout7.freenet.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753610AbZGRIq0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 18 Jul 2009 04:46:26 -0400
-X-Greylist: delayed 3947 seconds by postgrey-1.27 at vger.kernel.org; Sat, 18 Jul 2009 04:46:26 EDT
-Received: from [195.4.92.12] (helo=2.mx.freenet.de)
-	by mout7.freenet.de with esmtpa (ID brizly@freenet.de) (port 25) (Exim 4.69 #92)
-	id 1MS4X7-0001tl-13; Sat, 18 Jul 2009 09:40:37 +0200
-Received: from p4fc98e06.dip0.t-ipconnect.de ([79.201.142.6]:49328 helo=[192.168.23.106])
-	by 2.mx.freenet.de with esmtpsa (ID brizly@freenet.de) (TLSv1:AES256-SHA:256) (port 25) (Exim 4.69 #93)
-	id 1MS4X6-0002IG-Px; Sat, 18 Jul 2009 09:40:36 +0200
-In-Reply-To: <2e24e5b90907171844o11eb6699m929e3c0df621ef67@mail.gmail.com>
-X-Mailer: Evolution 2.26.2 (2.26.2-1.fc11) 
-X-purgate-ID: 149285::1247902836-000065DC-2CE5B306/0-0/0-0
+	id S1753620AbZGRJia convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 18 Jul 2009 05:38:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753507AbZGRJia
+	(ORCPT <rfc822;git-outgoing>); Sat, 18 Jul 2009 05:38:30 -0400
+Received: from mail-px0-f185.google.com ([209.85.216.185]:56064 "EHLO
+	mail-px0-f185.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752938AbZGRJi3 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 18 Jul 2009 05:38:29 -0400
+Received: by pxi15 with SMTP id 15so966037pxi.33
+        for <git@vger.kernel.org>; Sat, 18 Jul 2009 02:38:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=2WFai7Lq+wep4wHG3dWykyXxe0yptWvA+FzCeKAVilU=;
+        b=hjfAeT0iWZ2hSY2jTsL0C+Xdx0BnSrL/u85ZgYzcL20hi3x2C05hILVnuFiTzFvKlq
+         8cmurceoTCSKo5+ii4u2dAVVUgFVX8I/xp66o7kLogxQN+1vg3pMVEVDUioGlI8/zaai
+         7Lehl1BKy0cmlJ2dD4WVz8mHP3+TvXIz5kN10=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=uReH2jfMQZLjKaBwU5W0eAKJI+dCMGAvQvAoCOGXMIWw0P8XibgVMlxNJm50aka2fe
+         zv5hvA4HylfKn++lefkcKct5mrtWA0oSlIf8Ja1+b4dNBLs8g3+mLV3e86wZdy120j6E
+         B33JZXztgeXWQlane+YDA3dQFMElcpiSJxqHM=
+Received: by 10.142.230.3 with SMTP id c3mr446931wfh.166.1247909425361; Sat, 
+	18 Jul 2009 02:30:25 -0700 (PDT)
+In-Reply-To: <4A6176E6.4060708@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123511>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123512>
 
-i think it could be the think with post-update.
-But because i don't know for sure how to set it up,
-i will at first try to be sure the other mentioned points are correct.
+2009/7/18 Michael G Schwern <schwern@pobox.com>:
+> Sean Estabrooks wrote:
+>> On Fri, 17 Jul 2009 17:52:49 -0700
+>> Michael G Schwern <schwern@pobox.com> wrote:
+>>
+>> [...]
+>>> It would be nice if git used the alias *before* the installed comma=
+nd. =A0This
+>>> lets me fix/change default behaviors without having to come up with=
+ a new
+>>> command. =A0(Another handy example: =A0blame =3D blame -w) =A0It do=
+esn't do anything
+>>> useful right now anyway.
+>>
+>> This has been discussed a few times on the list already. =A0 Here is=
+ one such
+>> discussion:
+>>
+>> http://thread.gmane.org/gmane.comp.version-control.git/112487/focus=3D=
+112493
+>>
+>> You'll see that it was decided that Git would not allow commands to =
+be overridden
+>> so that you could always be sure what a given command would do when =
+you sit
+>> down at any installation. =A0This is especially important for script=
+ing but can
+>> also be a problem for everyday usage. =A0 You'll just have to choose=
+ a new command
+>> name for the alternate default you want.
+>
+> I'm in the "more than enough rope" camp myself, so count that as a -1=
+ fwiw.
+>
+> More importantly, what about the warning telling the user that what t=
+hey did
+> is not allowed and didn't work?
 
-brizly2 is my notebook
-s28 is the server with gitosis
+Yeah it seems reasonable that if its going to be ignored it should not
+be silently ignored.
 
-Sitaram Chamarty:
-> This error could mean one of the following:
-> 
-> (1) you're using the wrong key/repo pair.  Of course your key *is* in
-> gitosis.conf but the repo you're trying to push to isn't, or doesnot
-> list you as one of the valid users
+Especially given that the silentness effectively means there cant be
+any new git tools added without possible breakage of installed setups.
 
-to be sure i paste the md5 of the two keys:
-
-[brizly2@brizlyMobil ~]md5sum ~/.ssh/id_rsa.pub 
-ece497792a3cf840e55308f94b854efd  /home/brizly/.ssh/id_rsa.pub
-
-[root@s28 ~]# md5sum /home/brizly/.ssh/id_rsa.pub
-ece497792a3cf840e55308f94b854efd  /home/brizly/.ssh/id_rsa.pub
-
-comment: gitosis uses the same key as me as admin. isn't a problem, is
-it? The user brizly exists on notebook as on s2
-
-> (2) your gitosis.conf is all correct, but you forgot the "chmod" somewhere
-> above, and the post-update hook never ran, so the real gitosis.conf (which
-> gitosis uses -- this is ~git/.gitosis.conf) doesn't have the same data
-
-as mentioned above i don't know exactly where to set up the thing with
-the post-update. And i actually don't have a git-user on the server (i
-had one, but thought i didn't need one, so deleted it).
-
-> I also don't like that howto; it appears to be doing everything on one
-> machine, with the same userid, so people who don't grok ssh very well will
-> still have trouble even after all this is done to translate that knowledge to a
-> real deployment.
-
-Because my first run wasn't very successfull, i tried another tutorial
-where the developer-machine and the gitosis-server are 2 different ones.
-see http://www.shakthimaan.com/installs/gitosis.html
-
-> Bottom line: here's what should match for that error to go away:
-> 
->   - the public key corresponding to the private key your client-side ssh is
->     using
->   - must match *exactly* one of the public keys in the server-side
->     ~git/.ssh/authorized_keys
-
-see md5sums above, i think they are the same.
-
-> [this is probably OK in your case, but please check there is *exactly one*.  I
-> have a vague memory of seeing a case when someone adds a key twice with
-> different usernames in error.  Ssh picks up perhaps the first one, while your
-> gitosis.conf talks about the second one...]
-
-So it is a problem when by 'normal' user on the server uses the same key
-as gitosis does? The server is not only serving gitosis, an for other
-reasons the user "brizly" is, for perspective of ssh, the same on
-notebook and on server.
-
-> and
->   - the name after "gitosis-init" on the pubkey line that matched above
->   - must match a username in ~git/.gitosis.conf (which is a symlink to
->     something but never mind)
-
-How do i check that?
-
-> and
->   - this username must be mentioned in the members= line of some section in
->     gitosis.conf which also has "writable = my-first-repo"
-
-> You can check *all* of this by looking at ~git/.gitosis.conf and
-> ~git/.ssh/authorized_keys on the server and ~/.ssh/id_[rd]sa.pub on your
-> client
-
-by all my tries i know restarted end end up in again beeing prompted for
-gitosis-password:
-
-[root@s28 gitosis]# sudo -H -u gitosis gitosis-init
-< /home/brizly/.ssh/id_rsa.pub 
-Reinitialized existing Git repository
-in /var/lib/gitosis/repositories/gitosis-admin.git/
-Reinitialized existing Git repository
-in /var/lib/gitosis/repositories/gitosis-admin.git/
-[root@s28 gitosis]# su - gitosis
--sh-4.0$ pwd
-/var/lib/gitosis
--sh-4.0$ cat .gitosis.conf 
-[gitosis]
-
-[group gitosis-admin]
-writable = gitosis-admin
-members = gitosis@s28
-
-###
-and after that (same on notebook or s28)
-[brizly@s28 ~]$ git clone gitosis@192.168.23.27:gitosis-admin.git
-Initialized empty Git repository in /home/brizly/gitosis-admin/.git/
-gitosis@192.168.23.27's password:
+cheers,
+Yves
 
 
-so, at the moment i am again at the end of ideas, but the post-update.
-How to check that?
 
-_____
-luck up
-brizly
+--=20
+perl -Mre=3Ddebug -e "/just|another|perl|hacker/"
