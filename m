@@ -1,100 +1,84 @@
-From: Nicolas Sebrecht <nicolas.s.dev@gmx.fr>
-Subject: [PATCH 0/2] Re: cosmetic improvements for "git show tag"
-Date: Sat, 18 Jul 2009 03:10:06 +0200
-Message-ID: <20090718011006.GB12968@vidovic>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 0/2] Re: cosmetic improvements for "git show tag"
+Date: Fri, 17 Jul 2009 21:47:43 -0400
+Message-ID: <20090718014743.GA16381@coredump.intra.peff.net>
 References: <20090717231622.GA13511@coredump.intra.peff.net>
+ <20090718011006.GB12968@vidovic>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sat Jul 18 03:10:20 2009
+To: Nicolas Sebrecht <nicolas.s.dev@gmx.fr>
+X-From: git-owner@vger.kernel.org Sat Jul 18 03:49:16 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MRyRP-0005u1-QI
-	for gcvg-git-2@gmane.org; Sat, 18 Jul 2009 03:10:20 +0200
+	id 1MRz35-0006wV-Mk
+	for gcvg-git-2@gmane.org; Sat, 18 Jul 2009 03:49:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754312AbZGRBKN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 17 Jul 2009 21:10:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753709AbZGRBKM
-	(ORCPT <rfc822;git-outgoing>); Fri, 17 Jul 2009 21:10:12 -0400
-Received: from mail-ew0-f226.google.com ([209.85.219.226]:38897 "EHLO
-	mail-ew0-f226.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751299AbZGRBKL (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 17 Jul 2009 21:10:11 -0400
-Received: by ewy26 with SMTP id 26so1247145ewy.37
-        for <git@vger.kernel.org>; Fri, 17 Jul 2009 18:10:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:sender:date:from:to:cc
-         :subject:message-id:references:mime-version:content-type
-         :content-disposition:in-reply-to:user-agent;
-        bh=/XSSvV2nXbnHjBkY+YKMH411vVQs8BJKSFKUVlUuh/s=;
-        b=NETU+yzQ23jwQ8VN3NJ6t0AofTK7WqjXrGRSiytjV164wPQ4cYwVM/1fT08fpJwGFR
-         QrEjBlkDwi2q6gSsrQvMDeakY+T3XoUmYcAIPxeOchnq142xx+wIS2bw2DSu6AsEcECa
-         cCwq9at4LIrArEDqBF3iYhaeRUBGLn593oeO4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=sender:date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=XIqPIsaxJTPofFwNnO+yFYJT0r8BQlxiD99ncABd5akIqv+zMiBpZylSWEB8N8DRG0
-         /b3iWoEt5XvhZ0G+aMD9l054WIy/7wXygHlEy8B1VSYBC3SKsvpvBLM3oI1IXYqzXVmc
-         c5jBrWdWC2Gx0ZRDQ/UzK7OQmx2jtp7R5GnEQ=
-Received: by 10.210.63.2 with SMTP id l2mr2133465eba.20.1247879409943;
-        Fri, 17 Jul 2009 18:10:09 -0700 (PDT)
-Received: from @ (91-164-145-221.rev.libertysurf.net [91.164.145.221])
-        by mx.google.com with ESMTPS id 24sm4370441eyx.53.2009.07.17.18.10.08
-        (version=SSLv3 cipher=RC4-MD5);
-        Fri, 17 Jul 2009 18:10:09 -0700 (PDT)
+	id S1755264AbZGRBrt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 17 Jul 2009 21:47:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752283AbZGRBrt
+	(ORCPT <rfc822;git-outgoing>); Fri, 17 Jul 2009 21:47:49 -0400
+Received: from peff.net ([208.65.91.99]:35940 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752046AbZGRBrs (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 17 Jul 2009 21:47:48 -0400
+Received: (qmail 30098 invoked by uid 107); 18 Jul 2009 01:49:48 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Fri, 17 Jul 2009 21:49:48 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Fri, 17 Jul 2009 21:47:43 -0400
 Content-Disposition: inline
-In-Reply-To: <20090717231622.GA13511@coredump.intra.peff.net>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+In-Reply-To: <20090718011006.GB12968@vidovic>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123500>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123501>
 
-The 17/07/09, Jeff King wrote:
+On Sat, Jul 18, 2009 at 03:10:06AM +0200, Nicolas Sebrecht wrote:
 
->                                   These two one-liner patches improve
-> the output to:
+> Nice. What about adding an extra newline between tags?
 > 
->     tag foo
->     Tagger: Jeff King <peff@peff.net>
->     Date:   Fri Jul 17 19:10:54 2009 -0400
+>   $ git tag v1.6.1 v1.6.2
 > 
->     annotated tag message
+> 	<snip>
 > 
->     commit 88c17f18d7f3091508218b36a17cdf0dfd56ae65
->     Author: Jeff King <peff@peff.net>
->     Date:   Fri Jul 17 19:10:50 2009 -0400
+>   +  link:RelNotes-1.6.1.txt[1.6.1].
+>   +
+>    * link:v1.6.0.6/git.html[documentation for release 1.6.0.6]
+>    
+>    * release notes for
+>   tag v1.6.2
+>   Tagger: Junio C Hamano <gitster@pobox.com>
+>   Date:   Tue Mar 3 23:37:25 2009 -0800
 > 
->         commit message
+>   <snip>
 > 
->     diff ...
-> 
-> which I find much more readable. 
+> IOW, between " * release notes for" and "tag v1.6.2" here.
 
-Nice. What about adding an extra newline between tags?
+Hmph. I thought that should just work, because of the newline after the
+commit. But it seems that you only get that if the next thing is a
+commit. Hrm.. and it is even worse. The code to print that newline comes
+from printing the second commit, which says "oh, we've already printed a
+commit" and adds the newline.
 
-  $ git tag v1.6.1 v1.6.2
+So when you show two tags you get:
 
-	<snip>
+  tag foo
 
-  +  link:RelNotes-1.6.1.txt[1.6.1].
-  +
-   * link:v1.6.0.6/git.html[documentation for release 1.6.0.6]
-   
-   * release notes for
-  tag v1.6.2
-  Tagger: Junio C Hamano <gitster@pobox.com>
-  Date:   Tue Mar 3 23:37:25 2009 -0800
+  message
 
-  <snip>
+  commit foo^{}
 
-IOW, between " * release notes for" and "tag v1.6.2" here.
+  message
+  tag bar
 
--- 
-Nicolas Sebrecht
+
+  commit bar^{}
+
+That is, the newline is actually stuck in the wrong place. So we
+actually need to turn that newline off, which I'm not sure is possible.
+I'll look into it more.
+
+-Peff
