@@ -1,57 +1,53 @@
-From: Johannes Sixt <j6t@kdbg.org>
-Subject: Re: [test failure] Re: t4114 binary file becomes symlink
-Date: Sat, 18 Jul 2009 21:06:06 +0200
-Message-ID: <200907182106.06776.j6t@kdbg.org>
-References: <20090718134551.GC16708@vidovic> <20090718135649.GA6759@sigill.intra.peff.net> <20090718141658.GE16708@vidovic>
+From: Thomas Koch <thomas@koch.ro>
+Subject: Re: encrypted repositories? with git-torrent?
+Date: Sat, 18 Jul 2009 21:09:30 +0200
+Message-ID: <200907182109.31275.thomas@koch.ro>
+References: <op.uw7wmbr41e62zd@balu.cs.uni-paderborn.de> <alpine.LFD.2.01.0907171337320.13838@localhost.localdomain> <alpine.LFD.2.01.0907171341040.13838@localhost.localdomain>
+Reply-To: thomas@koch.ro
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
+Content-Type: Text/Plain;
+  charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>
-To: Nicolas Sebrecht <nicolas.s.dev@gmx.fr>
-X-From: git-owner@vger.kernel.org Sat Jul 18 21:07:19 2009
+Cc: John Tapsell <johnflux@gmail.com>,
+	Matthias Andree <matthias.andree@gmx.de>, git@vger.kernel.org
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Sat Jul 18 21:09:57 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MSFFd-0006Hj-Ca
-	for gcvg-git-2@gmane.org; Sat, 18 Jul 2009 21:07:17 +0200
+	id 1MSFIC-00072E-6i
+	for gcvg-git-2@gmane.org; Sat, 18 Jul 2009 21:09:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753439AbZGRTGN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 18 Jul 2009 15:06:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753308AbZGRTGM
-	(ORCPT <rfc822;git-outgoing>); Sat, 18 Jul 2009 15:06:12 -0400
-Received: from bsmtp.bon.at ([213.33.87.14]:56400 "EHLO bsmtp.bon.at"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752800AbZGRTGM (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 18 Jul 2009 15:06:12 -0400
-Received: from dx.sixt.local (unknown [93.83.142.38])
-	by bsmtp.bon.at (Postfix) with ESMTP id 9DFCFA7EAE;
-	Sat, 18 Jul 2009 21:06:08 +0200 (CEST)
-Received: from localhost (localhost [IPv6:::1])
-	by dx.sixt.local (Postfix) with ESMTP id 3F6F34277D;
-	Sat, 18 Jul 2009 21:06:07 +0200 (CEST)
-User-Agent: KMail/1.9.9
-In-Reply-To: <20090718141658.GE16708@vidovic>
+	id S1752272AbZGRTJq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 18 Jul 2009 15:09:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751397AbZGRTJp
+	(ORCPT <rfc822;git-outgoing>); Sat, 18 Jul 2009 15:09:45 -0400
+Received: from koch.ro ([93.90.184.107]:49484 "EHLO
+	ve825703057.providerbox.net" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1751371AbZGRTJp (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 18 Jul 2009 15:09:45 -0400
+Received: from 4-186.0-85.cust.bluewin.ch ([85.0.186.4] helo=jona.localnet)
+	by ve825703057.providerbox.net with esmtpsa (TLS1.0:DHE_RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.69)
+	(envelope-from <thomas@koch.ro>)
+	id 1MSFHt-0001SP-Co; Sat, 18 Jul 2009 21:09:37 +0200
+User-Agent: KMail/1.11.4 (Linux/2.6.29-1-amd64; KDE/4.2.4; x86_64; ; )
+In-Reply-To: <alpine.LFD.2.01.0907171341040.13838@localhost.localdomain>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123532>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123533>
 
-On Samstag, 18. Juli 2009, Nicolas Sebrecht wrote:
-> ==10807== Process terminating with default action of signal 11 (SIGSEGV)
-> ==10807==  Access not within mapped region at address 0x1
-> ==10807==    at 0x4C22349: strlen (in
-> /usr/lib64/valgrind/amd64-linux/vgpreload_memcheck.so) ==10807==    by
-> 0x5616ED6: vfprintf (in /lib64/libc-2.8.so)
-> ==10807==    by 0x563C159: vsnprintf (in /lib64/libc-2.8.so)
-> ==10807==    by 0x495E90: git_vsnprintf (snprintf.c:38)
-> ==10807==    by 0x48917B: strbuf_addf (strbuf.c:203)
+Wouldn't this be a use case for git-torrent?
+http://code.google.com/p/gittorrent/
+http://repo.or.cz/w/VCS-Git-Torrent.git
 
-amd64-linux, and you build with SNPRINTF_RETURNS_BOGUS? Why do you have this 
-option set?
+As I understand it, all data would be stored decentraliced and the (optional?) 
+central server only saves, who has which objects.
 
--- Hannes
+(Just hearing a podcast on bittorrent while reading GIT mailinglist :-)
+
+Thomas Koch, http://www.koch.ro
