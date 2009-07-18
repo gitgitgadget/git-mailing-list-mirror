@@ -1,72 +1,100 @@
-From: Michael G Schwern <schwern@pobox.com>
-Subject: git silently ignores aliases of existing commands
-Date: Fri, 17 Jul 2009 17:52:49 -0700
-Message-ID: <4A611CE1.3080709@pobox.com>
+From: Nicolas Sebrecht <nicolas.s.dev@gmx.fr>
+Subject: [PATCH 0/2] Re: cosmetic improvements for "git show tag"
+Date: Sat, 18 Jul 2009 03:10:06 +0200
+Message-ID: <20090718011006.GB12968@vidovic>
+References: <20090717231622.GA13511@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jul 18 03:06:18 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sat Jul 18 03:10:20 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MRyNW-0004i1-6A
-	for gcvg-git-2@gmane.org; Sat, 18 Jul 2009 03:06:18 +0200
+	id 1MRyRP-0005u1-QI
+	for gcvg-git-2@gmane.org; Sat, 18 Jul 2009 03:10:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758232AbZGRBGJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 17 Jul 2009 21:06:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758235AbZGRBGJ
-	(ORCPT <rfc822;git-outgoing>); Fri, 17 Jul 2009 21:06:09 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:63914 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758195AbZGRBGH (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 17 Jul 2009 21:06:07 -0400
-X-Greylist: delayed 793 seconds by postgrey-1.27 at vger.kernel.org; Fri, 17 Jul 2009 21:06:07 EDT
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 08F628F48
-	for <git@vger.kernel.org>; Fri, 17 Jul 2009 20:52:52 -0400 (EDT)
-Received: from [10.23.42.2] (unknown [69.64.236.3]) (using TLSv1 with cipher
- DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 899128F47 for
- <git@vger.kernel.org>; Fri, 17 Jul 2009 20:52:51 -0400 (EDT)
-User-Agent: Thunderbird 2.0.0.22 (Macintosh/20090605)
-X-Enigmail-Version: 0.95.7
-X-Pobox-Relay-ID: 525E030A-7335-11DE-8971-AEF1826986A2-02258300!a-pb-sasl-sd.pobox.com
+	id S1754312AbZGRBKN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 17 Jul 2009 21:10:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753709AbZGRBKM
+	(ORCPT <rfc822;git-outgoing>); Fri, 17 Jul 2009 21:10:12 -0400
+Received: from mail-ew0-f226.google.com ([209.85.219.226]:38897 "EHLO
+	mail-ew0-f226.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751299AbZGRBKL (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 17 Jul 2009 21:10:11 -0400
+Received: by ewy26 with SMTP id 26so1247145ewy.37
+        for <git@vger.kernel.org>; Fri, 17 Jul 2009 18:10:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:sender:date:from:to:cc
+         :subject:message-id:references:mime-version:content-type
+         :content-disposition:in-reply-to:user-agent;
+        bh=/XSSvV2nXbnHjBkY+YKMH411vVQs8BJKSFKUVlUuh/s=;
+        b=NETU+yzQ23jwQ8VN3NJ6t0AofTK7WqjXrGRSiytjV164wPQ4cYwVM/1fT08fpJwGFR
+         QrEjBlkDwi2q6gSsrQvMDeakY+T3XoUmYcAIPxeOchnq142xx+wIS2bw2DSu6AsEcECa
+         cCwq9at4LIrArEDqBF3iYhaeRUBGLn593oeO4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=sender:date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=XIqPIsaxJTPofFwNnO+yFYJT0r8BQlxiD99ncABd5akIqv+zMiBpZylSWEB8N8DRG0
+         /b3iWoEt5XvhZ0G+aMD9l054WIy/7wXygHlEy8B1VSYBC3SKsvpvBLM3oI1IXYqzXVmc
+         c5jBrWdWC2Gx0ZRDQ/UzK7OQmx2jtp7R5GnEQ=
+Received: by 10.210.63.2 with SMTP id l2mr2133465eba.20.1247879409943;
+        Fri, 17 Jul 2009 18:10:09 -0700 (PDT)
+Received: from @ (91-164-145-221.rev.libertysurf.net [91.164.145.221])
+        by mx.google.com with ESMTPS id 24sm4370441eyx.53.2009.07.17.18.10.08
+        (version=SSLv3 cipher=RC4-MD5);
+        Fri, 17 Jul 2009 18:10:09 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <20090717231622.GA13511@coredump.intra.peff.net>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123499>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123500>
 
-Everyone says "git tag" does the wrong thing by default and what you really
-want is an annotated tag with "git tag -a".  So I figured I'd fix the default
-and in my .gitconfig added:
+The 17/07/09, Jeff King wrote:
 
-[alias]
-    tag = tag -a
+>                                   These two one-liner patches improve
+> the output to:
+> 
+>     tag foo
+>     Tagger: Jeff King <peff@peff.net>
+>     Date:   Fri Jul 17 19:10:54 2009 -0400
+> 
+>     annotated tag message
+> 
+>     commit 88c17f18d7f3091508218b36a17cdf0dfd56ae65
+>     Author: Jeff King <peff@peff.net>
+>     Date:   Fri Jul 17 19:10:50 2009 -0400
+> 
+>         commit message
+> 
+>     diff ...
+> 
+> which I find much more readable. 
 
-and considered it done.  Weeks later I discovered git was ignoring that alias
-and I was still making lightweight tags.
+Nice. What about adding an extra newline between tags?
 
-It would be nice if git used the alias *before* the installed command.  This
-lets me fix/change default behaviors without having to come up with a new
-command.  (Another handy example:  blame = blame -w)  It doesn't do anything
-useful right now anyway.
+  $ git tag v1.6.1 v1.6.2
 
-Whether or not that changes, if an alias is being ignored git should warn me.
- This informs the user their perfectly sensible action has not done what they
-expected.  In addition, should git add a command in the future which conflicts
-with the name of an alias they'll know.
+	<snip>
 
+  +  link:RelNotes-1.6.1.txt[1.6.1].
+  +
+   * link:v1.6.0.6/git.html[documentation for release 1.6.0.6]
+   
+   * release notes for
+  tag v1.6.2
+  Tagger: Junio C Hamano <gitster@pobox.com>
+  Date:   Tue Mar 3 23:37:25 2009 -0800
 
-PS  I couldn't find anything obvious about where to send bug reports / feature
-requests in the git man page, just "general upbringing" pointing here.  It
-would be helpful if it was a bit more clear.  None of "bug", "report" or
-"issue" pointed at anything relevant.
+  <snip>
+
+IOW, between " * release notes for" and "tag v1.6.2" here.
 
 -- 
-184. When operating a military vehicle I may *not* attempt something
-     "I saw in a cartoon".
-    -- The 213 Things Skippy Is No Longer Allowed To Do In The U.S. Army
-           http://skippyslist.com/list/
+Nicolas Sebrecht
