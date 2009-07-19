@@ -1,159 +1,139 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [ANNOUNCE] GIT 1.6.4.rc1
-Date: Sat, 18 Jul 2009 17:19:34 -0700
-Message-ID: <7vskgt1q3t.fsf@alter.siamese.dyndns.org>
-References: <7vmy75bg2f.fsf@alter.siamese.dyndns.org>
- <20090719080558.6117@nanako3.lavabit.com>
+From: Sitaram Chamarty <sitaramc@gmail.com>
+Subject: Re: setup gitosis on Fedora 11
+Date: Sun, 19 Jul 2009 06:59:57 +0530
+Message-ID: <2e24e5b90907181829j1bf832a3k1812aba498ea09cf@mail.gmail.com>
+References: <1247867114.2384.15.camel@brizlyMobil>
+	 <2e24e5b90907171844o11eb6699m929e3c0df621ef67@mail.gmail.com>
+	 <1247902835.2384.86.camel@brizlyMobil>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Finn Arne Gangstad <finnag@pvv.org>
-To: Nanako Shiraishi <nanako3@lavabit.com>
-X-From: git-owner@vger.kernel.org Sun Jul 19 02:19:52 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: brizly vaan van Ulciputz <brizly@freenet.de>
+X-From: git-owner@vger.kernel.org Sun Jul 19 03:30:25 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MSK88-0001lt-27
-	for gcvg-git-2@gmane.org; Sun, 19 Jul 2009 02:19:52 +0200
+	id 1MSLEO-0007mg-Dy
+	for gcvg-git-2@gmane.org; Sun, 19 Jul 2009 03:30:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754074AbZGSATp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 18 Jul 2009 20:19:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754066AbZGSATo
-	(ORCPT <rfc822;git-outgoing>); Sat, 18 Jul 2009 20:19:44 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:63961 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753915AbZGSATn (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 18 Jul 2009 20:19:43 -0400
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 56CDD32BF;
-	Sat, 18 Jul 2009 20:19:43 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 6A31332BD; Sat, 18 Jul 2009
- 20:19:36 -0400 (EDT)
-In-Reply-To: <20090719080558.6117@nanako3.lavabit.com> (Nanako Shiraishi's
- message of "Sun\, 19 Jul 2009 08\:05\:58 +0900")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: DB6F21B4-73F9-11DE-BE9D-AEF1826986A2-77302942!a-pb-sasl-sd.pobox.com
+	id S1754086AbZGSBaA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 18 Jul 2009 21:30:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753984AbZGSB37
+	(ORCPT <rfc822;git-outgoing>); Sat, 18 Jul 2009 21:29:59 -0400
+Received: from mail-px0-f185.google.com ([209.85.216.185]:40426 "EHLO
+	mail-px0-f185.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751272AbZGSB36 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 18 Jul 2009 21:29:58 -0400
+Received: by pxi15 with SMTP id 15so1179072pxi.33
+        for <git@vger.kernel.org>; Sat, 18 Jul 2009 18:29:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=LEzy8pRu7JzdZeB3Y49jmDDCP4ROpmzaKJnQDTcj8qI=;
+        b=ARJaA8tymmSSXAx7N188I6Bxc7kkdRgGj18ourKx6MwtiyHzJ8vYYa8JHFcPJ5NRBY
+         fapQ5zvIeLehDU/fRTeUl+dtN5Prc9QZKI7GrYB4SbZdtcPXFFj27JEeRNSPj6sv2sL2
+         Nv+6jG8Wg/4N2/PcG449n8kqSHpkRzrcdP/4E=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=azrbXJj3ai/+TSv/wm8ip2I2UJCTnMrrEwFukzwII+iCRfDHKJwvOWuxy17sx1ZP5q
+         AioHxYoccPqsacwBdvEJ+v23etX6cnZXNSBdiFNC/erGD1iDhX0HwAGVNvXfnWWBaXRK
+         1oXnS+wS1ANTt6YkxXKeZzw2LjnWvuBbHXswQ=
+Received: by 10.114.133.1 with SMTP id g1mr4406517wad.162.1247966997776; Sat, 
+	18 Jul 2009 18:29:57 -0700 (PDT)
+In-Reply-To: <1247902835.2384.86.camel@brizlyMobil>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123543>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123544>
 
-Nanako Shiraishi <nanako3@lavabit.com> writes:
-
-> Quoting Junio C Hamano <gitster@pobox.com> writes:
+On Sat, Jul 18, 2009 at 1:10 PM, brizly vaan van Ulciputz
+<brizly@freenet.de> wrote:
 >
->> When the user does not tell "git push" what to push, it has always
->> pushed matching refs.  For some people it is unexpected, and a new
->> configuration variable push.default has been introduced to allow
->> changing a different default behaviour.  To advertise the new feature,
->> a big warning is issued if this is not configured and a git push without
->> arguments is attempted.
->>
->> 	Side note: we might want to tone this down, as it does not seem
->> 	likely for us to change the default behaviour when this option is
->> 	not set.
+> i think it could be the think with post-update.
+> But because i don't know for sure how to set it up,
+
+It was in the how to you mentioned.
+
+> comment: gitosis uses the same key as me as admin. isn't a problem, is
+> it? The user brizly exists on notebook as on s2
+
+By "gitosis uses..." I presume you mean "the userid on the server that is
+being used as the gitosis user".  Should not matter, normally, but see below
+
+> > (2) your gitosis.conf is all correct, but you forgot the "chmod" somewhere
+> > above, and the post-update hook never ran, so the real gitosis.conf (which
+> > gitosis uses -- this is ~git/.gitosis.conf) doesn't have the same data
 >
-> I thought you applied this patch from Finn Arne:
+> as mentioned above i don't know exactly where to set up the thing with
+> the post-update. And i actually don't have a git-user on the server (i
+> had one, but thought i didn't need one, so deleted it).
+
+you either follow howtos (good or bad) as closely as you can, or you
+understand enough about ssh to bypass it.  You are mixing these two
+approaches; sorry I can't really help you.
+
+Let me say this: gitosis requires far more ssh knowledge than git knowledge.
+I do not want use this list to teach ssh, more than bare minimum.  Anyway I
+have written quite a lot of stuff at
+http://sitaramc.github.com/0-installing/9-gitosis-server-install.html that
+might help you in understanding.
+
+> > I also don't like that howto; it appears to be doing everything on one
+> > machine, with the same userid, so people who don't grok ssh very well will
+> > still have trouble even after all this is done to translate that knowledge to a
+> > real deployment.
 >
->     http://article.gmane.org/gmane.comp.version-control.git/119173
+> Because my first run wasn't very successfull, i tried another tutorial
+> where the developer-machine and the gitosis-server are 2 different ones.
+> see http://www.shakthimaan.com/installs/gitosis.html
 >
-> but apparently you didn't.
+> > Bottom line: here's what should match for that error to go away:
+> >
+> >   - the public key corresponding to the private key your client-side ssh is
+> >     using
+> >   - must match *exactly* one of the public keys in the server-side
+> >     ~git/.ssh/authorized_keys
+>
+> see md5sums above, i think they are the same.
 
-I wrote that side note after googling around and found that many users
-outside git community wondering what a strange way to announce a new
-feature it was, and I think they are right.  I stupidly said that we
-should tone the message neutral, because we might want to change the
-default in the future but we are still not committed.  But the end result
-is just a confusing advertisement of an optional feature.
+You compared id_rsa.pub on both sides; you did not even compare the file I
+mentioned here (authorized_keys).  Sorry.
 
-I actually think that the right course of action at this point is this
-patch instead.  We keep the default, we do not annoy the users, and people
-who want to use a non-default configuration can use the feature.
+One mistake I made is I used the wrong emphasis above.  "*exactly* one" should
+be read "exactly *one*" meaning it should not match more than one entry in the
+authorized_keys file.
 
--- >8 --
-Subject: do not give big warning when push preference is unconfigured
+Oh the below para clarifies my intent anyway...
 
-If the message said "we will be changing the default in the future, so
-this is to warn people who want to keep the current default what to do",
-it would have made some sense, but as it stands, the message is merely an
-unsolicited advertisement for a new feature which it is not helpful at
-all.  Squelch it.
+> > [this is probably OK in your case, but please check there is *exactly one*.  I
+> > have a vague memory of seeing a case when someone adds a key twice with
+> > different usernames in error.  Ssh picks up perhaps the first one, while your
+> > gitosis.conf talks about the second one...]
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- builtin-push.c |   27 +--------------------------
- cache.h        |    1 -
- environment.c  |    2 +-
- 3 files changed, 2 insertions(+), 28 deletions(-)
+> So it is a problem when by 'normal' user on the server uses the same key
+> as gitosis does? The server is not only serving gitosis, an for other
+> reasons the user "brizly" is, for perspective of ssh, the same on
+> notebook and on server.
 
-diff --git a/builtin-push.c b/builtin-push.c
-index 0a0297f..1d92e22 100644
---- a/builtin-push.c
-+++ b/builtin-push.c
-@@ -64,36 +64,11 @@ static void setup_push_tracking(void)
- 	add_refspec(refspec.buf);
- }
- 
--static const char *warn_unconfigured_push_msg[] = {
--	"You did not specify any refspecs to push, and the current remote",
--	"has not configured any push refspecs. The default action in this",
--	"case is to push all matching refspecs, that is, all branches",
--	"that exist both locally and remotely will be updated.  This may",
--	"not necessarily be what you want to happen.",
--	"",
--	"You can specify what action you want to take in this case, and",
--	"avoid seeing this message again, by configuring 'push.default' to:",
--	"  'nothing'  : Do not push anything",
--	"  'matching' : Push all matching branches (default)",
--	"  'tracking' : Push the current branch to whatever it is tracking",
--	"  'current'  : Push the current branch"
--};
--
--static void warn_unconfigured_push(void)
--{
--	int i;
--	for (i = 0; i < ARRAY_SIZE(warn_unconfigured_push_msg); i++)
--		warning("%s", warn_unconfigured_push_msg[i]);
--}
--
- static void setup_default_push_refspecs(void)
- {
- 	git_config(git_default_config, NULL);
- 	switch (push_default) {
--	case PUSH_DEFAULT_UNSPECIFIED:
--		warn_unconfigured_push();
--		/* fallthrough */
--
-+	default:
- 	case PUSH_DEFAULT_MATCHING:
- 		add_refspec(":");
- 		break;
-diff --git a/cache.h b/cache.h
-index f1e5ede..c72f125 100644
---- a/cache.h
-+++ b/cache.h
-@@ -543,7 +543,6 @@ enum rebase_setup_type {
- };
- 
- enum push_default_type {
--	PUSH_DEFAULT_UNSPECIFIED = -1,
- 	PUSH_DEFAULT_NOTHING = 0,
- 	PUSH_DEFAULT_MATCHING,
- 	PUSH_DEFAULT_TRACKING,
-diff --git a/environment.c b/environment.c
-index 801a005..720f26b 100644
---- a/environment.c
-+++ b/environment.c
-@@ -42,7 +42,7 @@ enum safe_crlf safe_crlf = SAFE_CRLF_WARN;
- unsigned whitespace_rule_cfg = WS_DEFAULT_RULE;
- enum branch_track git_branch_track = BRANCH_TRACK_REMOTE;
- enum rebase_setup_type autorebase = AUTOREBASE_NEVER;
--enum push_default_type push_default = PUSH_DEFAULT_UNSPECIFIED;
-+enum push_default_type push_default = PUSH_DEFAULT_MATCHING;
- #ifndef OBJECT_CREATION_MODE
- #define OBJECT_CREATION_MODE OBJECT_CREATION_USES_HARDLINKS
- #endif
+Yes normally it is a problem.  I repeat: this is nothing to do with gitosis;
+it is ssh knowledge you need.
+
+> > and
+> >   - the name after "gitosis-init" on the pubkey line that matched above
+> >   - must match a username in ~git/.gitosis.conf (which is a symlink to
+> >     something but never mind)
+>
+> How do i check that?
+
+Since you did not even look in the file I asked you to look, I guess you would
+not find it...
+
+Summary: gitosis does require you to know a fair bit about unix and ssh.  I'm
+sorry that most howtos pretend to whitewash all that.
