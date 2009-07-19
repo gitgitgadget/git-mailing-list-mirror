@@ -1,64 +1,159 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: [test failure] Re: t4114 binary file becomes symlink
-Date: Sat, 18 Jul 2009 16:18:45 -0700 (PDT)
-Message-ID: <alpine.LFD.2.01.0907181612390.13838@localhost.localdomain>
-References: <20090718134551.GC16708@vidovic> <20090718135649.GA6759@sigill.intra.peff.net> <20090718141658.GE16708@vidovic> <20090718153148.GA9367@sigill.intra.peff.net> <7veisd3k31.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [ANNOUNCE] GIT 1.6.4.rc1
+Date: Sat, 18 Jul 2009 17:19:34 -0700
+Message-ID: <7vskgt1q3t.fsf@alter.siamese.dyndns.org>
+References: <7vmy75bg2f.fsf@alter.siamese.dyndns.org>
+ <20090719080558.6117@nanako3.lavabit.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Jeff King <peff@peff.net>, Nicolas Sebrecht <nicolas.s.dev@gmx.fr>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Jul 19 01:20:28 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Finn Arne Gangstad <finnag@pvv.org>
+To: Nanako Shiraishi <nanako3@lavabit.com>
+X-From: git-owner@vger.kernel.org Sun Jul 19 02:19:52 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MSJCd-0005Z6-RY
-	for gcvg-git-2@gmane.org; Sun, 19 Jul 2009 01:20:28 +0200
+	id 1MSK88-0001lt-27
+	for gcvg-git-2@gmane.org; Sun, 19 Jul 2009 02:19:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753965AbZGRXT2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 18 Jul 2009 19:19:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753938AbZGRXT1
-	(ORCPT <rfc822;git-outgoing>); Sat, 18 Jul 2009 19:19:27 -0400
-Received: from smtp1.linux-foundation.org ([140.211.169.13]:50765 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753915AbZGRXT0 (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 18 Jul 2009 19:19:26 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
-	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id n6INIkI7009209
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Sat, 18 Jul 2009 16:18:48 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id n6INIjTR020439;
-	Sat, 18 Jul 2009 16:18:46 -0700
-X-X-Sender: torvalds@localhost.localdomain
-In-Reply-To: <7veisd3k31.fsf@alter.siamese.dyndns.org>
-User-Agent: Alpine 2.01 (LFD 1184 2008-12-16)
-X-Spam-Status: No, hits=-3.964 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED
-X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
+	id S1754074AbZGSATp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 18 Jul 2009 20:19:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754066AbZGSATo
+	(ORCPT <rfc822;git-outgoing>); Sat, 18 Jul 2009 20:19:44 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:63961 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753915AbZGSATn (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 18 Jul 2009 20:19:43 -0400
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 56CDD32BF;
+	Sat, 18 Jul 2009 20:19:43 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 6A31332BD; Sat, 18 Jul 2009
+ 20:19:36 -0400 (EDT)
+In-Reply-To: <20090719080558.6117@nanako3.lavabit.com> (Nanako Shiraishi's
+ message of "Sun\, 19 Jul 2009 08\:05\:58 +0900")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: DB6F21B4-73F9-11DE-BE9D-AEF1826986A2-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123542>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123543>
 
+Nanako Shiraishi <nanako3@lavabit.com> writes:
 
+> Quoting Junio C Hamano <gitster@pobox.com> writes:
+>
+>> When the user does not tell "git push" what to push, it has always
+>> pushed matching refs.  For some people it is unexpected, and a new
+>> configuration variable push.default has been introduced to allow
+>> changing a different default behaviour.  To advertise the new feature,
+>> a big warning is issued if this is not configured and a git push without
+>> arguments is attempted.
+>>
+>> 	Side note: we might want to tone this down, as it does not seem
+>> 	likely for us to change the default behaviour when this option is
+>> 	not set.
+>
+> I thought you applied this patch from Finn Arne:
+>
+>     http://article.gmane.org/gmane.comp.version-control.git/119173
+>
+> but apparently you didn't.
 
-On Sat, 18 Jul 2009, Junio C Hamano wrote:
-> 
-> The unpack_trees() machinery places a special marker df_conflict_entry
-> to signal that no blob exists at "foo", but it will become a directory
-> that may have somthing underneath it, namely "foo/bar".
-> 
-> Passing that df_conflict_entry marker to merged_entry() happens to remove
-> the "foo" in the end because the df_conflict_entry does not have any name
-> (hence the "error" message) and its addition in add_index_entry() is
-> rejected, but it is wrong.
+I wrote that side note after googling around and found that many users
+outside git community wondering what a strange way to announce a new
+feature it was, and I think they are right.  I stupidly said that we
+should tone the message neutral, because we might want to change the
+default in the future but we are still not committed.  But the end result
+is just a confusing advertisement of an optional feature.
 
-Ack. This looks like a really old bug.
+I actually think that the right course of action at this point is this
+patch instead.  We keep the default, we do not annoy the users, and people
+who want to use a non-default configuration can use the feature.
 
-That whole 'df_conflict_entry' always confused me.
+-- >8 --
+Subject: do not give big warning when push preference is unconfigured
 
-		Linus
+If the message said "we will be changing the default in the future, so
+this is to warn people who want to keep the current default what to do",
+it would have made some sense, but as it stands, the message is merely an
+unsolicited advertisement for a new feature which it is not helpful at
+all.  Squelch it.
+
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ builtin-push.c |   27 +--------------------------
+ cache.h        |    1 -
+ environment.c  |    2 +-
+ 3 files changed, 2 insertions(+), 28 deletions(-)
+
+diff --git a/builtin-push.c b/builtin-push.c
+index 0a0297f..1d92e22 100644
+--- a/builtin-push.c
++++ b/builtin-push.c
+@@ -64,36 +64,11 @@ static void setup_push_tracking(void)
+ 	add_refspec(refspec.buf);
+ }
+ 
+-static const char *warn_unconfigured_push_msg[] = {
+-	"You did not specify any refspecs to push, and the current remote",
+-	"has not configured any push refspecs. The default action in this",
+-	"case is to push all matching refspecs, that is, all branches",
+-	"that exist both locally and remotely will be updated.  This may",
+-	"not necessarily be what you want to happen.",
+-	"",
+-	"You can specify what action you want to take in this case, and",
+-	"avoid seeing this message again, by configuring 'push.default' to:",
+-	"  'nothing'  : Do not push anything",
+-	"  'matching' : Push all matching branches (default)",
+-	"  'tracking' : Push the current branch to whatever it is tracking",
+-	"  'current'  : Push the current branch"
+-};
+-
+-static void warn_unconfigured_push(void)
+-{
+-	int i;
+-	for (i = 0; i < ARRAY_SIZE(warn_unconfigured_push_msg); i++)
+-		warning("%s", warn_unconfigured_push_msg[i]);
+-}
+-
+ static void setup_default_push_refspecs(void)
+ {
+ 	git_config(git_default_config, NULL);
+ 	switch (push_default) {
+-	case PUSH_DEFAULT_UNSPECIFIED:
+-		warn_unconfigured_push();
+-		/* fallthrough */
+-
++	default:
+ 	case PUSH_DEFAULT_MATCHING:
+ 		add_refspec(":");
+ 		break;
+diff --git a/cache.h b/cache.h
+index f1e5ede..c72f125 100644
+--- a/cache.h
++++ b/cache.h
+@@ -543,7 +543,6 @@ enum rebase_setup_type {
+ };
+ 
+ enum push_default_type {
+-	PUSH_DEFAULT_UNSPECIFIED = -1,
+ 	PUSH_DEFAULT_NOTHING = 0,
+ 	PUSH_DEFAULT_MATCHING,
+ 	PUSH_DEFAULT_TRACKING,
+diff --git a/environment.c b/environment.c
+index 801a005..720f26b 100644
+--- a/environment.c
++++ b/environment.c
+@@ -42,7 +42,7 @@ enum safe_crlf safe_crlf = SAFE_CRLF_WARN;
+ unsigned whitespace_rule_cfg = WS_DEFAULT_RULE;
+ enum branch_track git_branch_track = BRANCH_TRACK_REMOTE;
+ enum rebase_setup_type autorebase = AUTOREBASE_NEVER;
+-enum push_default_type push_default = PUSH_DEFAULT_UNSPECIFIED;
++enum push_default_type push_default = PUSH_DEFAULT_MATCHING;
+ #ifndef OBJECT_CREATION_MODE
+ #define OBJECT_CREATION_MODE OBJECT_CREATION_USES_HARDLINKS
+ #endif
