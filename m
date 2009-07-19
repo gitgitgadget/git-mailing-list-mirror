@@ -1,63 +1,74 @@
-From: Nanako Shiraishi <nanako3@lavabit.com>
-Subject: Re: [ANNOUNCE] GIT 1.6.4.rc1
-Date: Sun, 19 Jul 2009 23:45:00 +0900
-Message-ID: <20090719234500.6117@nanako3.lavabit.com>
-References: <7vmy75bg2f.fsf@alter.siamese.dyndns.org>
-	<20090719080558.6117@nanako3.lavabit.com>
-	<7vskgt1q3t.fsf@alter.siamese.dyndns.org>
+From: =?ISO-8859-1?Q?Dirk_S=FCsserott?= <newsletter@dirk.my1.cc>
+Subject: Re: how to start with non-master branch?
+Date: Sun, 19 Jul 2009 18:13:10 +0200
+Message-ID: <4A634616.9020302@dirk.my1.cc>
+References: <f46c52560907190553x4e21ffbdn6d55c43f2d6b08ad@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Cc: git@vger.kernel.org, Finn Arne Gangstad <finnag@pvv.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Jul 19 16:46:55 2009
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Rustom Mody <rustompmody@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Jul 19 18:13:59 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MSXfC-0002H2-GE
-	for gcvg-git-2@gmane.org; Sun, 19 Jul 2009 16:46:54 +0200
+	id 1MSZ1S-0003vP-IU
+	for gcvg-git-2@gmane.org; Sun, 19 Jul 2009 18:13:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754567AbZGSOpo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 19 Jul 2009 10:45:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754563AbZGSOpo
-	(ORCPT <rfc822;git-outgoing>); Sun, 19 Jul 2009 10:45:44 -0400
-Received: from karen.lavabit.com ([72.249.41.33]:51974 "EHLO karen.lavabit.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754562AbZGSOpn (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 19 Jul 2009 10:45:43 -0400
-Received: from b.earth.lavabit.com (b.earth.lavabit.com [192.168.111.11])
-	by karen.lavabit.com (Postfix) with ESMTP id 93E7211B91E;
-	Sun, 19 Jul 2009 09:45:40 -0500 (CDT)
-Received: from 9744.lavabit.com (212.62.97.20)
-	by lavabit.com with ESMTP id K2SVXEB2JVD1; Sun, 19 Jul 2009 09:45:40 -0500
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws; s=lavabit; d=lavabit.com;
-  b=l2pQ1Kn2giY1ArD/1AQ+bQ9HXWrNt1lLua60yEIRvd6mKtfRbpZxKzKwc5uCcCkXD94GcsayaD+XPAnTQRk4o09xwOpGsODRW7DAMoW8jiXLcMez4/wwEnx8AkcXg9eHzVARkHXe8+vqb5jrQG25ELQJ7GQXkF5gj+qAXFm0yIY=;
-  h=From:To:Cc:Subject:References:In-Reply-To:Date:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id;
-In-Reply-To: <7vskgt1q3t.fsf@alter.siamese.dyndns.org>
+	id S1754864AbZGSQNQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 19 Jul 2009 12:13:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754871AbZGSQNP
+	(ORCPT <rfc822;git-outgoing>); Sun, 19 Jul 2009 12:13:15 -0400
+Received: from smtprelay10.ispgateway.de ([80.67.29.24]:39236 "EHLO
+	smtprelay10.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754856AbZGSQNN (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 19 Jul 2009 12:13:13 -0400
+Received: from [84.176.111.111] (helo=[192.168.2.100])
+	by smtprelay10.ispgateway.de with esmtpa (Exim 4.68)
+	(envelope-from <newsletter@dirk.my1.cc>)
+	id 1MSZ0h-0008Hj-DS; Sun, 19 Jul 2009 18:13:11 +0200
+User-Agent: Thunderbird 2.0.0.22 (Windows/20090605)
+In-Reply-To: <f46c52560907190553x4e21ffbdn6d55c43f2d6b08ad@mail.gmail.com>
+X-Df-Sender: 757646
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123553>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123554>
 
-Quoting Junio C Hamano <gitster@pobox.com>:
+Am 19.07.2009 14:53 schrieb Rustom Mody:
+> I want my first commit to be on a non-master branch.
+> So after the git init I do
+> $ git checkout -b newbranch
+> 
+> I get
+> fatal: You are on a branch yet to be born
+> 
+> Of course I can get by with making the first commit on master and then
+> switching.
+> 
+> But wondering if I am missing something basic?
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+> 
 
-> I wrote that side note after googling around and found that many users
-> outside git community wondering what a strange way to announce a new
-> feature it was, and I think they are right.  I stupidly said that we
-> should tone the message neutral, because we might want to change the
-> default in the future but we are still not committed.  But the end result
-> is just a confusing advertisement of an optional feature.
->
-> I actually think that the right course of action at this point is this
-> patch instead.  We keep the default, we do not annoy the users, and people
-> who want to use a non-default configuration can use the feature.
+What about renaming the "initial master", i.e.:
+git init
+git add .
+git commit -m "intial checkin"
+git branch -m non-master-branch
 
-An alternative approach could be to rewrite the message to say that we will change the default to something other than 'matching' as the first step, and then apply Finn Arne's patch as the second step to really force people to choose, because I thought the plan was to switch the default to something other than the matching.
-But apparently I misremembered. I googled and found nobody explaining that this message is a preparatory step for such transition. The only reactions I found were the ones that said this is a strange way to advertize a new feature.
-I think you are correct, and I think your patch is the right way forward.
+and later adding a master just as any other branch, i.e.
+git checkout -b master
 
--- 
-Nanako Shiraishi
-http://ivory.ap.teacup.com/nanako3/
+Unfortunately renaming doesn't work before the first commit, I got an 
+error similar to yours.
+
+I think the name "master" is just a convention and there's nothing 
+special about that branch. Could've been called "main" or sth. as well 
+when Linus invented it.
+
+Dirk
