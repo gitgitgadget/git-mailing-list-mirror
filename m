@@ -1,77 +1,77 @@
-From: Sean Estabrooks <seanlkml@sympatico.ca>
+From: Charles Bailey <charles@hashpling.org>
 Subject: Re: how to start with non-master branch?
-Date: Sun, 19 Jul 2009 09:19:29 -0700
-Message-ID: <BLU0-SMTP89B66EA462C93B0D1943F6AE1C0@phx.gbl>
+Date: Sun, 19 Jul 2009 18:44:41 +0100
+Message-ID: <20090719174441.GA14556@hashpling.org>
 References: <f46c52560907190553x4e21ffbdn6d55c43f2d6b08ad@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
 To: Rustom Mody <rustompmody@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Jul 19 18:19:58 2009
+X-From: git-owner@vger.kernel.org Sun Jul 19 19:45:03 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MSZ7F-0005kd-LC
-	for gcvg-git-2@gmane.org; Sun, 19 Jul 2009 18:19:58 +0200
+	id 1MSaRa-0005OL-Km
+	for gcvg-git-2@gmane.org; Sun, 19 Jul 2009 19:45:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754642AbZGSQTe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 19 Jul 2009 12:19:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754610AbZGSQTd
-	(ORCPT <rfc822;git-outgoing>); Sun, 19 Jul 2009 12:19:33 -0400
-Received: from blu0-omc3-s28.blu0.hotmail.com ([65.55.116.103]:40457 "EHLO
-	blu0-omc3-s28.blu0.hotmail.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754597AbZGSQTd (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 19 Jul 2009 12:19:33 -0400
-Received: from BLU0-SMTP89 ([65.55.116.73]) by blu0-omc3-s28.blu0.hotmail.com with Microsoft SMTPSVC(6.0.3790.3959);
-	 Sun, 19 Jul 2009 09:19:33 -0700
-X-Originating-IP: [96.49.109.68]
-X-Originating-Email: [seanlkml@sympatico.ca]
-Received: from hobo ([96.49.109.68]) by BLU0-SMTP89.blu0.hotmail.com over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
-	 Sun, 19 Jul 2009 09:19:31 -0700
+	id S1754910AbZGSRor (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 19 Jul 2009 13:44:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754856AbZGSRoq
+	(ORCPT <rfc822;git-outgoing>); Sun, 19 Jul 2009 13:44:46 -0400
+Received: from relay.pcl-ipout02.plus.net ([212.159.7.100]:3299 "EHLO
+	relay.pcl-ipout02.plus.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754851AbZGSRop (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 19 Jul 2009 13:44:45 -0400
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: ApoEAMf3YkrUnw6S/2dsb2JhbADLFYQMBQ
+Received: from ptb-relay02.plus.net ([212.159.14.146])
+  by relay.pcl-ipout02.plus.net with ESMTP; 19 Jul 2009 18:44:44 +0100
+Received: from [212.159.69.125] (helo=hashpling.plus.com)
+	 by ptb-relay02.plus.net with esmtp (Exim) id 1MSaRI-0002IV-3x; Sun, 19 Jul 2009 18:44:44 +0100
+Received: from cayley.hashpling.org (cayley.hashpling.org [192.168.76.254])
+	by hashpling.plus.com (8.14.2/8.14.2) with ESMTP id n6JHih0l015189
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Sun, 19 Jul 2009 18:44:43 +0100
+Received: (from charles@localhost)
+	by cayley.hashpling.org (8.14.2/8.14.2/Submit) id n6JHifIJ015188;
+	Sun, 19 Jul 2009 18:44:41 +0100
+Content-Disposition: inline
 In-Reply-To: <f46c52560907190553x4e21ffbdn6d55c43f2d6b08ad@mail.gmail.com>
-X-Mailer: Sylpheed 2.6.0 (GTK+ 2.16.2; i586-redhat-linux-gnu)
-X-OriginalArrivalTime: 19 Jul 2009 16:19:31.0891 (UTC) FILETIME=[B2A26030:01CA088C]
+User-Agent: Mutt/1.5.18 (2008-05-17)
+X-Plusnet-Relay: fe185566a6813073b9e00afa8b6f44f2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123556>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123557>
 
-On Sun, 19 Jul 2009 18:23:32 +0530
-Rustom Mody <rustompmody@gmail.com> wrote:
-
-Hi Rustom,
-
+On Sun, Jul 19, 2009 at 06:23:32PM +0530, Rustom Mody wrote:
 > I want my first commit to be on a non-master branch.
 > So after the git init I do
 > $ git checkout -b newbranch
 > 
 > I get
 > fatal: You are on a branch yet to be born
-
-No branches exist in a new repository that you've just init'ed.  If you run
-"git branch" you'll see that no branches are listed.  You must make an
-initial commit before a branch will be "born".   Since "git checkout"
-needs you to supply a branch/commit to operate, you can't use it to create
-the first branch in a repo.
-
-When you make the initial commit in a repo the HEAD reference will
-determine which branch is created.   So the following ugly looking
-command will allow you to change the name to something other than 
-master before making your first commit:
-
-	$ git symbolic-ref HEAD refs/heads/newbranch
-
+> 
 > Of course I can get by with making the first commit on master and then
 > switching.
+> 
+> But wondering if I am missing something basic?
 
-That is probably the simplest thing to do, rename master after the initial
-commit:
+The problem with git checkout -b newbranch is that it tries to create
+a new branch based on your current HEAD. As you have no commits, your
+HEAD doesn't point at a commit ant this can't work. To change the name
+of your current branch before you've made any commits, you can use the
+symbolic-ref command to update your HEAD to point to a differently
+named branch (that also doesn't yet exist). Try this:
 
-	$ git commit -m "initial commit"
-	$ git branch -m newbranch
+git symbolic-ref HEAD refs/heads/non-master
 
-HTH,
-Sean
+and then carry on adding and committing as before.
+
+Charles.
+
+-- 
+Charles Bailey
+http://ccgi.hashpling.plus.com/blog/
