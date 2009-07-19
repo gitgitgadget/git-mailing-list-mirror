@@ -1,77 +1,57 @@
-From: Charles Bailey <charles@hashpling.org>
-Subject: Re: how to start with non-master branch?
-Date: Sun, 19 Jul 2009 18:44:41 +0100
-Message-ID: <20090719174441.GA14556@hashpling.org>
-References: <f46c52560907190553x4e21ffbdn6d55c43f2d6b08ad@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 0/2] Re: cosmetic improvements for "git show tag"
+Date: Sun, 19 Jul 2009 11:05:16 -0700
+Message-ID: <7v7hy4y2eb.fsf@alter.siamese.dyndns.org>
+References: <20090717231622.GA13511@coredump.intra.peff.net>
+ <20090718011006.GB12968@vidovic>
+ <20090718014743.GA16381@coredump.intra.peff.net>
+ <20090718101436.GA22535@coredump.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Rustom Mody <rustompmody@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Jul 19 19:45:03 2009
+Cc: Nicolas Sebrecht <nicolas.s.dev@gmx.fr>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sun Jul 19 20:05:35 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MSaRa-0005OL-Km
-	for gcvg-git-2@gmane.org; Sun, 19 Jul 2009 19:45:03 +0200
+	id 1MSalO-0003Y2-T5
+	for gcvg-git-2@gmane.org; Sun, 19 Jul 2009 20:05:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754910AbZGSRor (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 19 Jul 2009 13:44:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754856AbZGSRoq
-	(ORCPT <rfc822;git-outgoing>); Sun, 19 Jul 2009 13:44:46 -0400
-Received: from relay.pcl-ipout02.plus.net ([212.159.7.100]:3299 "EHLO
-	relay.pcl-ipout02.plus.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754851AbZGSRop (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 19 Jul 2009 13:44:45 -0400
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: ApoEAMf3YkrUnw6S/2dsb2JhbADLFYQMBQ
-Received: from ptb-relay02.plus.net ([212.159.14.146])
-  by relay.pcl-ipout02.plus.net with ESMTP; 19 Jul 2009 18:44:44 +0100
-Received: from [212.159.69.125] (helo=hashpling.plus.com)
-	 by ptb-relay02.plus.net with esmtp (Exim) id 1MSaRI-0002IV-3x; Sun, 19 Jul 2009 18:44:44 +0100
-Received: from cayley.hashpling.org (cayley.hashpling.org [192.168.76.254])
-	by hashpling.plus.com (8.14.2/8.14.2) with ESMTP id n6JHih0l015189
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Sun, 19 Jul 2009 18:44:43 +0100
-Received: (from charles@localhost)
-	by cayley.hashpling.org (8.14.2/8.14.2/Submit) id n6JHifIJ015188;
-	Sun, 19 Jul 2009 18:44:41 +0100
-Content-Disposition: inline
-In-Reply-To: <f46c52560907190553x4e21ffbdn6d55c43f2d6b08ad@mail.gmail.com>
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-Plusnet-Relay: fe185566a6813073b9e00afa8b6f44f2
+	id S1755048AbZGSSFZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 19 Jul 2009 14:05:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755000AbZGSSFX
+	(ORCPT <rfc822;git-outgoing>); Sun, 19 Jul 2009 14:05:23 -0400
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:51470 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754833AbZGSSFX (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 19 Jul 2009 14:05:23 -0400
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id BAE3F9A45;
+	Sun, 19 Jul 2009 14:05:21 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 09A029A42; Sun,
+ 19 Jul 2009 14:05:17 -0400 (EDT)
+In-Reply-To: <20090718101436.GA22535@coredump.intra.peff.net> (Jeff King's
+ message of "Sat\, 18 Jul 2009 06\:14\:37 -0400")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: B9B54B58-748E-11DE-A26F-F699A5B33865-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123557>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123558>
 
-On Sun, Jul 19, 2009 at 06:23:32PM +0530, Rustom Mody wrote:
-> I want my first commit to be on a non-master branch.
-> So after the git init I do
-> $ git checkout -b newbranch
-> 
-> I get
-> fatal: You are on a branch yet to be born
-> 
-> Of course I can get by with making the first commit on master and then
-> switching.
-> 
-> But wondering if I am missing something basic?
+Jeff King <peff@peff.net> writes:
 
-The problem with git checkout -b newbranch is that it tries to create
-a new branch based on your current HEAD. As you have no commits, your
-HEAD doesn't point at a commit ant this can't work. To change the name
-of your current branch before you've made any commits, you can use the
-symbolic-ref command to update your HEAD to point to a differently
-named branch (that also doesn't yet exist). Try this:
+> The code calls into log_tree_commit, which uses the "shown_one" member
+> of rev_info to determine. So we should be able to just use that for our
+> tags, and everything will work fine.
+>
+> I think we can replace 2/2 with the patch below, which also covers the
+> tree case neatly.
 
-git symbolic-ref HEAD refs/heads/non-master
+Ack.  Looks sane.
 
-and then carry on adding and committing as before.
-
-Charles.
-
--- 
-Charles Bailey
-http://ccgi.hashpling.plus.com/blog/
+Thanks.
