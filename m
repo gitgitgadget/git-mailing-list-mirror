@@ -1,76 +1,97 @@
-From: Tay Ray Chuan <rctay89@gmail.com>
-Subject: Re: [Patch] Prevent cloning over http from spewing
-Date: Mon, 20 Jul 2009 23:24:04 +0800
-Message-ID: <be6fef0d0907200824r68402229vac88e46a8e70603a@mail.gmail.com>
-References: <m3vdnda9f7.fsf@localhost.localdomain>
-	 <20090603191555.GL3355@spearce.org>
-	 <be6fef0d0906040545j7bd754e0j2c60af833e2ac4a4@mail.gmail.com>
-	 <20090604160152.GA13984@sigill.intra.peff.net>
-	 <be6fef0d0906070331y5fd596d1k67893a96a4d872ac@mail.gmail.com>
-	 <be6fef0d0906070421j7913b0d7w6f7bb97aa7fd6814@mail.gmail.com>
-	 <20090608122430.GD13775@coredump.intra.peff.net>
-	 <be6fef0d0906100703j57d109d5mb38e41330caa089b@mail.gmail.com>
-	 <20090611111141.GB4409@coredump.intra.peff.net>
-	 <be6fef0d0906220510r416d66aaoc2171bdcc61ec3a4@mail.gmail.com>
+From: Geoffrey Irving <irving@naml.us>
+Subject: Re: bug with .git file and aliases
+Date: Mon, 20 Jul 2009 11:25:33 -0400
+Message-ID: <7f9d599f0907200825j69ee3c9cj4aef26796c3917d6@mail.gmail.com>
+References: <7f9d599f0907200654q2e068e6aq3051c122f6596053@mail.gmail.com> 
+	<adf1fd3d0907200704sb097a99h1ab8f118be5854f9@mail.gmail.com> 
+	<7f9d599f0907200727v5b258a73n3fa664f134c0eead@mail.gmail.com> 
+	<adf1fd3d0907200818l429e701ds6a42ec49f02d5ba9@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Shawn O. Pearce" <spearce@spearce.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Jakub Narebski <jnareb@gmail.com>, sparse@infidigm.net,
-	git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Jul 20 17:24:15 2009
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Lars Hjemli <hjemli@gmail.com>
+To: =?ISO-8859-1?Q?Santi_B=E9jar?= <santi@agolina.net>
+X-From: git-owner@vger.kernel.org Mon Jul 20 17:26:08 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MSuis-0001eI-25
-	for gcvg-git-2@gmane.org; Mon, 20 Jul 2009 17:24:14 +0200
+	id 1MSukc-0002Lz-Nl
+	for gcvg-git-2@gmane.org; Mon, 20 Jul 2009 17:26:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752262AbZGTPYI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 20 Jul 2009 11:24:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751765AbZGTPYH
-	(ORCPT <rfc822;git-outgoing>); Mon, 20 Jul 2009 11:24:07 -0400
-Received: from wf-out-1314.google.com ([209.85.200.174]:55220 "EHLO
-	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752082AbZGTPYE (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 Jul 2009 11:24:04 -0400
-Received: by wf-out-1314.google.com with SMTP id 26so742597wfd.4
-        for <git@vger.kernel.org>; Mon, 20 Jul 2009 08:24:05 -0700 (PDT)
+	id S1751038AbZGTPZz convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 20 Jul 2009 11:25:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750986AbZGTPZy
+	(ORCPT <rfc822;git-outgoing>); Mon, 20 Jul 2009 11:25:54 -0400
+Received: from mail-vw0-f202.google.com ([209.85.212.202]:55784 "EHLO
+	mail-vw0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750904AbZGTPZx convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 20 Jul 2009 11:25:53 -0400
+Received: by vwj40 with SMTP id 40so191486vwj.33
+        for <git@vger.kernel.org>; Mon, 20 Jul 2009 08:25:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=3GPGaO/ruk7SUwemTLdQw6AXZJM6fXW0H/fLz5XhGsI=;
-        b=QUs06s2UiPr6KD+D+fqo80PECYXFn0y1GIAdxws2JKBBdkK4TMQiTQCf20k8nbivIF
-         N1/k3R5fSoPrNhZnqYN32nANd9t+LInLUcseuvzVLuVrmI0LYBeG0U+vjSmhbd681y2b
-         g4zHjdJ2z6sAw7NGfpUbkjqRf5AUxB6wX7tW8=
+        h=domainkey-signature:mime-version:sender:received:in-reply-to
+         :references:from:date:x-google-sender-auth:message-id:subject:to:cc
+         :content-type:content-transfer-encoding;
+        bh=wRltmozAXl1r9+ow2x0GAW4/qZtj4z7+9h+yGTsYGFg=;
+        b=FhKGXW/YZeblWW3TEcp5di0QGK4ty7Z508uNTpZMgyx9L+L421JdRiRi/5CiVl9E3W
+         0Z37DXiIvpJAe7PEaI4u2umjyHlw0DmKJXJMorUYP3/thSK47knk94q/NrgCo0fdSG9p
+         VZg5P1cV0ZTZ2gK/kAYtoNDOuMau8GzIar0aw=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=tD4SFdDTjw9VI2yYr+bCFYN9lzdo8X/3PFg2Zohqc9G5oWbJhuc+Ru5ZT+ZXXOGZhP
-         8fqTeNEd0OIXgnQwU/R6ozaSgGm8yphO5Ow+rAQcNBhxIIosnc5r0xPR6dcAesXNLwr0
-         V3KHCym5HjL/EpkFmxoIkMjDSOrHKGRuTbQ/0=
-Received: by 10.142.173.6 with SMTP id v6mr1366041wfe.40.1248103444998; Mon, 
-	20 Jul 2009 08:24:04 -0700 (PDT)
-In-Reply-To: <be6fef0d0906220510r416d66aaoc2171bdcc61ec3a4@mail.gmail.com>
+        h=mime-version:sender:in-reply-to:references:from:date
+         :x-google-sender-auth:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        b=X/J+b7Meqz7EWBgi2DRFdrV+yYXtc5hsez3DttXapcb6cn8eWoC/TC/eJsUY9d3kTi
+         NKzKxUJQR0hEnWc4Jj5255DC/DhlAYzvtAi/5X8SjE3Z4gVqpz7+G9HGwpt3jwhV2OPZ
+         w7J/dL/2HGiX2Nef+eu6NZJ9tbWYgJAvPBCrk=
+Received: by 10.220.76.73 with SMTP id b9mr4935000vck.85.1248103553082; Mon, 
+	20 Jul 2009 08:25:53 -0700 (PDT)
+In-Reply-To: <adf1fd3d0907200818l429e701ds6a42ec49f02d5ba9@mail.gmail.com>
+X-Google-Sender-Auth: 70eb7cfb42cb2de3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123612>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123613>
 
-Hi,
+On Mon, Jul 20, 2009 at 11:18 AM, Santi B=E9jar<santi@agolina.net> wrot=
+e:
+> 2009/7/20 Geoffrey Irving <irving@naml.us>:
+>> On Mon, Jul 20, 2009 at 10:04 AM, Santi B=E9jar<santi@agolina.net> w=
+rote:
+>>> I suspect that the $GIR_DIR and .git file works equally in this
+>>> aspect, so you should specify where is the workdir in .git/config w=
+ith
+>>> respect the repository:
+>>>
+>>> git config core.workdir `pwd`
+>>
+>> Nope, that has no effect.
+>
+> Here it has the desired effect. From where did you run the above
+> command? What is the output of:
+>
+> git config core.workdir
 
-On Mon, Jun 22, 2009 at 8:10 PM, Tay Ray Chuan<rctay89@gmail.com> wrote:
-> note: this time, I haven't anything to show for in my repo; sorry.
+top:a% git config core.workdir
+/Users/irving/tmp/tmp/repo
+top:a% git st
+# On branch master
+# Changed but not updated:
+#   (use "git add/rm <file>..." to update what will be committed)
+#   (use "git checkout -- <file>..." to discard changes in working dire=
+ctory)
+#
+#	deleted:    a/b
+#
+# Untracked files:
+#   (use "git add <file>..." to include in what will be committed)
+#
+#	b
 
-I've got some stuff, as per the last email, at my git repo (branch
-'http-progress-indicators' at git://github.com/rctay/git.git).
+It doesn't matter, though, since setting workdir should not be necessar=
+y.
 
--- 
-Cheers,
-Ray Chuan
+Geoffrey
