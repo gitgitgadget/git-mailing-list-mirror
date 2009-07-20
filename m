@@ -1,189 +1,131 @@
-From: Paolo Bonzini <bonzini@gnu.org>
-Subject: [PATCH RFC 6/8] clone: use setup_remote_config
-Date: Mon, 20 Jul 2009 19:49:53 +0200
-Message-ID: <1248112195-3761-7-git-send-email-bonzini@gnu.org>
-References: <1248112195-3761-1-git-send-email-bonzini@gnu.org>
-To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Jul 20 19:51:13 2009
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v3 0/3] add push --current and remote.*.pushHeadOnly
+Date: Mon, 20 Jul 2009 13:38:16 -0700
+Message-ID: <7vskgrum2v.fsf@alter.siamese.dyndns.org>
+References: <1248091094-31485-1-git-send-email-bonzini@gnu.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: <git@vger.kernel.org>, Finn Arne Gangstad <finnag@pvv.org>
+To: Paolo Bonzini <bonzini@gnu.org>
+X-From: git-owner@vger.kernel.org Mon Jul 20 22:38:37 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MSx0y-0005yL-Po
-	for gcvg-git-2@gmane.org; Mon, 20 Jul 2009 19:51:05 +0200
+	id 1MSzd3-0005J4-R3
+	for gcvg-git-2@gmane.org; Mon, 20 Jul 2009 22:38:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753432AbZGTRuU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 20 Jul 2009 13:50:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753340AbZGTRuT
-	(ORCPT <rfc822;git-outgoing>); Mon, 20 Jul 2009 13:50:19 -0400
-Received: from fencepost.gnu.org ([140.186.70.10]:56555 "EHLO
-	fencepost.gnu.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753415AbZGTRuP (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 Jul 2009 13:50:15 -0400
-Received: from bonzini by fencepost.gnu.org with local (Exim 4.67)
-	(envelope-from <bonzini@gnu.org>)
-	id 1MSx0B-00033W-IW
-	for git@vger.kernel.org; Mon, 20 Jul 2009 13:50:15 -0400
-X-Mailer: git-send-email 1.6.2.5
-In-Reply-To: <1248112195-3761-1-git-send-email-bonzini@gnu.org>
+	id S1752928AbZGTUi0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 20 Jul 2009 16:38:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752366AbZGTUiZ
+	(ORCPT <rfc822;git-outgoing>); Mon, 20 Jul 2009 16:38:25 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:45176 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750907AbZGTUiY (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Jul 2009 16:38:24 -0400
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id C799DCF5F;
+	Mon, 20 Jul 2009 16:38:23 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 3DFC9CF5D; Mon, 20 Jul 2009
+ 16:38:18 -0400 (EDT)
+In-Reply-To: <1248091094-31485-1-git-send-email-bonzini@gnu.org> (Paolo
+ Bonzini's message of "Mon\, 20 Jul 2009 13\:58\:11 +0200")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 4509D56E-756D-11DE-BAFF-AEF1826986A2-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123630>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123631>
 
-We can now use setup_remote_config in builtin-clone.c and remove
-duplicated computation of remote.*.fetch contents.
+Paolo Bonzini <bonzini@gnu.org> writes:
 
-The three cases to consider are:
+> This second series is gets rid of the most annoying part (IMHO) of
+> push.default = tracking, i.e. the fact that its behavior cannot be
+> achieved using git's ordinary tools.
 
-1) !option_bare.  This is the easy case when setup_remote_config just
-works and a normal refs/heads/*:refs/remotes/origin/* refspec is created.
-This only requires a small new feature in setup_remote_config to pass
-the refspec back to builtin-clone.c; setup_remote_config will simply store
-it in the util field of the stringlist items.
+Having to read this three times made me irritated enough to comment on
+this part of the cover letter.
 
-2) option_bare && option_mirror.  Again, setup_remote_config is used.
-Passing PUSH_DEFAULT_MIRROR to option_mirror will use +refs/*:refs/*
-for the refspec.  There is a change from before, in that a remote.*.push
-refspec will be setup as well.
+If some feature X cannot be achieved by combinations of other existing
+features, is it a bad thing?  Why should that be annoying?
 
-3) option_bare && !option_mirror.  In this case, no fetch refspec will
-be configured (just as before), and setup_remote_config is not used.
+Maybe it is just the matter of phrasing, but I do not think the above
+statement helps understanding of the issue.  I would certainly understand
+the justification if it were "This feature improved things somewhat, in
+that it now allows you to do X, but it did not go far enough.  It does not
+help satisfying wishes Y and Z are similar enough to X and are common
+enough.  Here is an attempt to extend the mechanism in a more generic way
+to do so".  But I do not get a clear sense of what these Y and Z are from
+the above description, therefore I personally find it hard to judge if Y
+and Z are so important to support with more code, compared to the support
+for X we already have.
 
-Signed-off-by: Paolo Bonzini <bonzini@gnu.org>
----
- builtin-clone.c  |   46 ++++++++++++++--------------------------------
- builtin-remote.c |    5 +++--
- remote.h         |    3 +++
- 3 files changed, 20 insertions(+), 34 deletions(-)
+Maybe Finn Arne Gangstad, who originally did push.default, can shed some
+light on this?  Do you agree that Paolo's "annoyance" is justified, and
+this series makes things saner?
 
-diff --git a/builtin-clone.c b/builtin-clone.c
-index 345101a..68d8a68 100644
---- a/builtin-clone.c
-+++ b/builtin-clone.c
-@@ -19,6 +19,7 @@
- #include "strbuf.h"
- #include "dir.h"
- #include "pack-refs.h"
-+#include "string-list.h"
- #include "sigchain.h"
- #include "branch.h"
- #include "remote.h"
-@@ -348,7 +349,6 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
- 	char *path, *dir;
- 	int dest_exists;
- 	const struct ref *refs, *head_points_at, *remote_head, *mapped_refs;
--	struct strbuf key = STRBUF_INIT, value = STRBUF_INIT;
- 	struct strbuf reflog_msg = STRBUF_INIT;
- 	struct transport *transport = NULL;
- 	int err = 0;
-@@ -449,40 +449,24 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
- 
- 	git_config(git_default_config, NULL);
- 
--	if (option_bare) {
--		if (option_mirror)
--			fetch_pattern = "+refs/*:refs/*";
--		else
--			fetch_pattern = "+refs/heads/*:refs/heads/*";
--
-+	if (option_bare)
- 		git_config_set("core.bare", "true");
--	} else {
--		strbuf_addf(&value, "+refs/heads/*:refs/remotes/%s/*:*",
--			    option_origin);
--		fetch_pattern = value.buf;
--	}
- 
- 	if (option_mirror || !option_bare) {
--		/* Configure the remote */
--		strbuf_addf(&key, "remote.%s.fetch", option_origin);
--		git_config_set_multivar(key.buf, fetch_pattern, "^$", 0);
--		strbuf_reset(&key);
--
--		if (option_mirror) {
--			strbuf_addf(&key, "remote.%s.mirror", option_origin);
--			git_config_set(key.buf, "true");
--			strbuf_reset(&key);
--		}
--
--		strbuf_addf(&key, "remote.%s.url", option_origin);
--		git_config_set(key.buf, repo);
--		strbuf_reset(&key);
-+		struct string_list track = { NULL, 0, 0 };
-+		setup_remote_config (option_origin, repo,
-+				     option_mirror
-+				     ? PUSH_DEFAULT_MIRROR
-+				     : PUSH_DEFAULT_NOTHING,
-+				     &track);
-+		fetch_pattern = track.items[0].util;
-+		refspec = parse_fetch_refspec(1, &fetch_pattern);
-+		string_list_clear(&track, 1);
-+	} else {
-+		fetch_pattern = "+refs/heads/*:refs/heads/*";
-+		refspec = parse_fetch_refspec(1, &fetch_pattern);
- 	}
- 
--	refspec = parse_fetch_refspec(1, &fetch_pattern);
--
--	strbuf_reset(&value);
--
- 	if (path && !is_bundle)
- 		refs = clone_local(path, git_dir);
- 	else {
-@@ -611,8 +595,6 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
- 	}
- 
- 	strbuf_release(&reflog_msg);
--	strbuf_release(&key);
--	strbuf_release(&value);
- 	junk_pid = 0;
- 	return err;
- }
-diff --git a/builtin-remote.c b/builtin-remote.c
-index 23ab24b..99c06bc 100644
---- a/builtin-remote.c
-+++ b/builtin-remote.c
-@@ -59,7 +59,7 @@ static void warn_unconfigured_push()
- }
- 
- 
--static int setup_default_remote_config(const char *name, const char *url, int push, struct string_list *track)
-+int setup_remote_config(const char *name, const char *url, int push, struct string_list *track)
- {
- 	struct strbuf buf = STRBUF_INIT, buf2 = STRBUF_INIT, buf3 = STRBUF_INIT;
- 	const char *refspec = NULL;
-@@ -154,6 +154,7 @@ static int setup_default_remote_config(const char *name, const char *url, int pu
- 		else
- 			strbuf_addf(&buf2, "+refs/heads/%s:refs/remotes/%s/%s",
- 					item->string, name, item->string);
-+		item->util = xstrdup (buf2.buf);
- 		if (git_config_set_multivar(buf.buf, buf2.buf, "^$", 0))
- 			return 1;
- 	}
-@@ -265,7 +266,7 @@ static int add(int argc, const char **argv)
- 
- 	strbuf_release(&buf);
- 	strbuf_release(&buf2);
--	string_list_clear(&track, 0);
-+	string_list_clear(&track, 1);
- 
- 	return 0;
- }
-diff --git a/remote.h b/remote.h
-index 86b18dc..64f4d58 100644
---- a/remote.h
-+++ b/remote.h
-@@ -115,6 +115,9 @@ struct ref *get_remote_ref(const struct ref *remote_refs, const char *name);
-  */
- int remote_find_tracking(struct remote *remote, struct refspec *refspec);
- 
-+struct string_list;
-+int setup_remote_config(const char *name, const char *url, int push, struct string_list *track);
-+
- struct branch {
- 	const char *name;
- 	const char *refname;
--- 
-1.6.2.5
+I actually do agree that it feels somewhat unbalanced that "git push" with
+no other arguments can do a "matching" push of _all_ branches without any
+funny configuration, while the same parameterless push needs many
+configured remote.*.push refspecs to do a "tracking" push of all branches.
+
+And as you say, branch.autosetuppush may make the remote.*.push
+configuration less painful to set up for the users.  So the inbalance may
+not hurt in practice from the end user's point of view.
+
+But more importantly, I think that inbalance is inherent to a certain
+extent, and it probably is _not_ a bad thing in the first place.
+
+If your workflow is to use local branches with the same name as the remote
+side as your own local integration branches, "matching" push that pushes
+all matching branches makes a good deal of sense.  You keep your local
+integration branches clean by never integrating premature topics into
+them, so it is always safe to push them out in one go.
+
+If on the other hand your workflow is to fork topics from the remote
+integration branch(es) (e.g. topicA and fixB both forked from master taken
+from the remote), both topics will be set to push back to the same master
+branch on the remote side if you use branch.autosetuppush.  In such a
+workflow, you work on these two topics, and when one of them is done, you
+want to push that one out, without having to push the other one that is
+not yet ready (beside, that one won't fast-forward).
+
+A "tracking" push that pushes all branches is actively a wrong thing to do
+in such a workflow.
+
+	Side note: in that sense, branch.autosetuppush might be a well
+	intentioned but ill conceived concept, and we may want to remove
+	it from 'next'.
+
+Of course, even if you are using "matching", you can (temporarily) have an
+experimental integration on one of the matching branches while the other
+one is truly ready, and in such a situation you do not want to push out
+all matching branches (hence you would occasionally need to be more
+explicit than usual, i.e. "git push origin master").  Also, even if you
+are forking your topics directly from the remote integration branches and
+pushing back to where they forked from, you can adopt a discipline not to
+push out when you have some topics that are not ready.
+
+But the point is that the discipline to keep branches that can be pushed
+out clean is much easier to follow in "matching push" workflow, because it
+is an integral part of the workflow.  If merging a topic to an integration
+branch is a declaration of doneness of the topic, by definition, your
+integration branches are all ready to be pushed out at any time.
+
+If you fork topics from remote's integration branch and push each of them
+back individually, "keeping branches that can be pushed out clean" is not
+even a discipline, but it is a hindrance, as the point of such a workflow
+is to push things out as they become cooked one-by-one.  In such a
+workflow, you do want "one-by-one, push only the current one I just
+tested".
+
+> ...set the refspecs correctly, push.tracking does not push _all_ tracked
+> branches, but only the current one (because it implicitly adds only one
+> refspec, while autosetuppush places them all in the configuration).
+
+In short, it is not necessarily bad that "push all matching" is much
+easier to set up and use than "push all tracking", and I think it is
+nothing to be annoyed about.
