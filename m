@@ -1,69 +1,101 @@
-From: Avery Pennarun <apenwarr@gmail.com>
-Subject: Re: git-archive and submodules
-Date: Mon, 20 Jul 2009 13:33:09 -0400
-Message-ID: <32541b130907201033r68da33f7tba3b0f0200212724@mail.gmail.com>
-References: <41ceb5540907200922r5decb047h75e723a1809b587e@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Woody Gilk <woody.gilk@kohanaphp.com>
-X-From: git-owner@vger.kernel.org Mon Jul 20 19:33:39 2009
+From: Paolo Bonzini <bonzini@gnu.org>
+Subject: [PATCH RFC 0/8] introduce 'git remote add --push' and 'git clone --push'
+Date: Mon, 20 Jul 2009 19:49:47 +0200
+Message-ID: <1248112195-3761-1-git-send-email-bonzini@gnu.org>
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Jul 20 19:50:13 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MSwk7-0005iw-CV
-	for gcvg-git-2@gmane.org; Mon, 20 Jul 2009 19:33:39 +0200
+	id 1MSx08-0005Xp-5t
+	for gcvg-git-2@gmane.org; Mon, 20 Jul 2009 19:50:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752694AbZGTRdb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 20 Jul 2009 13:33:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752284AbZGTRda
-	(ORCPT <rfc822;git-outgoing>); Mon, 20 Jul 2009 13:33:30 -0400
-Received: from mail-gx0-f213.google.com ([209.85.217.213]:45037 "EHLO
-	mail-gx0-f213.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752148AbZGTRd3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 Jul 2009 13:33:29 -0400
-Received: by gxk9 with SMTP id 9so4205620gxk.13
-        for <git@vger.kernel.org>; Mon, 20 Jul 2009 10:33:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=FNcrp4Yj7PK3qjdsqgKs6TVpDPdbqbJ5kRw0KtdETKM=;
-        b=sRw5DZW5lEqjRNYRg2jDcWr4JDzqyr7EqQYi7yAYqE58boRWlROQDeHj8VgW5mQPVW
-         Bmi4y0w/eCsfw3a3z5SD5cCbg/wXJBcX751fI2BUEWstPlinF4o+lCFGFVM/1LyVnhSO
-         twyc4vnbCLxGu/K0Gc35+WISjdMHOKDMfih7E=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=PtiH9fH0rKVRqgahTR66kZiFQzjekk8Bk2+Jn4BV05TwAjOfzvDNQMYAmp0rN3f9Nk
-         1fBlhVLrnJKBvo1amM7q/y3PZIwK1zxiua58OhA5mC4GEecLed2aRc26fS5BPf9XLwBe
-         NcagzSvIjMGDDVRVFIAifHwlOIj+0KYeEJmKs=
-Received: by 10.150.226.14 with SMTP id y14mr6106572ybg.3.1248111209089; Mon, 
-	20 Jul 2009 10:33:29 -0700 (PDT)
-In-Reply-To: <41ceb5540907200922r5decb047h75e723a1809b587e@mail.gmail.com>
+	id S1752956AbZGTRuB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 20 Jul 2009 13:50:01 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752719AbZGTRuA
+	(ORCPT <rfc822;git-outgoing>); Mon, 20 Jul 2009 13:50:00 -0400
+Received: from fencepost.gnu.org ([140.186.70.10]:56548 "EHLO
+	fencepost.gnu.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752595AbZGTRt7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Jul 2009 13:49:59 -0400
+Received: from bonzini by fencepost.gnu.org with local (Exim 4.67)
+	(envelope-from <bonzini@gnu.org>)
+	id 1MSwzu-00032X-8I
+	for git@vger.kernel.org; Mon, 20 Jul 2009 13:49:58 -0400
+X-Mailer: git-send-email 1.6.2.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123621>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123622>
 
-On Mon, Jul 20, 2009 at 12:22 PM, Woody Gilk<woody.gilk@kohanaphp.com> wrote:
-> I would find it hugely valuable if git-archive would support
-> submodules, rather than leaving empty files in the place of
-> submodules. Supporting submodules is critical to packaging releases
-> (combined with signed tags). With git-archive not support submodules,
-> it means that I have to manually package and sign each release, rather
-> than using git-tag.
+I post as an initial RFC the third series in the push.default saga.
+This is on top of origin/next and even then it requires the
+"push --current" patches to be fully functional.  Even without it,
+however, it will create correct configuration.
 
-<shameless-plug> This works already today if you use git-subtree[1]
-instead of submodules. </shameless-plug>
+The series adds --push options to "git remote add" and "git clone".
+These accept a push strategy of the same kind as "push.default",
+and will use it to create push configuration and refspecs.  These
+will then override push.default.
 
-Have fun,
+The argument is optional, in which case it will be taken from the
+"push.default" config key itself.  In this case, since the user explicitly
+requested something they did not configure, a warning is emitted similar
+to the one of 1.6.3.  If --push is used appropriately, in a non-specified
+future "git push" might not use push.default anymore and thus require
+a push refspec.  (Or more realistically, it would look at push.default,
+but only to suggest the user commands that do the transition).
 
-Avery
+This patch is a bit harder to justify than the others so far, since
+it may as well look like a feature in search of a use case.  To this,
+my reply is that this is just a step towards a more polished (IMO)
+implementation of the existing "push.default" feature.  Actually, the
+patch is big but it is mostly builtin-remote.c and tests.  And you
+will have to put up with this for only another series or two.
 
-[1] http://github.com/apenwarr/git-subtree
+Patch 1 is just taken from the push --current series.  Patch 2 adds
+a new value for `push.default', so that it's easier to map --mirror
+to a --push suboption.
+
+Patches 3 and 4 add the option to "git remote add" (refactoring
+first, adding the feature later).
+
+Patches 5 to 8 add the option to "git clone".  The first two share
+the code for the config setup between "git remote add" and "git clone".
+The third adds a new function to get just the global configuration
+(not the repository one), for usage in "git clone" before the repository
+is actually created.  The final one finally adds the new option,
+which is little more than tweaking the call into "git remote add".
+
+That's it for now.  I'll post the final version of this series when I
+get comments *and* once both autosetuppush and push --current have been
+committed to next.  In the meanwhile, opinions, reviews and flames are
+welcome as usual.
+
+
+Paolo Bonzini (8):
+      reintroduce PUSH_DEFAULT_UNSPECIFIED
+      push: add push.default = mirror
+      git remote add: refactor configuration
+      git remote add: add --push option
+      clone: refactoring of building the fetch refspec
+      clone: use setup_remote_config
+      config: add git_config_norepo
+      clone: add --push option
+
+ Documentation/config.txt     |    2 +
+ Documentation/git-clone.txt  |   13 +++-
+ Documentation/git-remote.txt |   13 ++--
+ builtin-clone.c              |  133 +++++++++++++++---------------
+ builtin-push.c               |   13 +++-
+ builtin-remote.c             |  188 ++++++++++++++++++++++++++++++++++--------
+ cache.h                      |    5 +
+ config.c                     |   74 +++++++++++-----
+ environment.c                |    2 +-
+ remote.h                     |    3 +
+ t/t5505-remote.sh            |   73 ++++++++++++++++
+ t/t5517-push-mirror.sh       |   22 +++++-
+ t/t5601-clone.sh             |   78 +++++++++++++++++
+ 13 files changed, 486 insertions(+), 133 deletions(-)
