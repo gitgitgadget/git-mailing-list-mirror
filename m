@@ -1,59 +1,62 @@
-From: Rustom Mody <rustompmody@gmail.com>
-Subject: how to reorder commits
-Date: Mon, 20 Jul 2009 20:37:50 +0530
-Message-ID: <f46c52560907200807heed4bbfkde15cccd2ae8151d@mail.gmail.com>
+From: =?ISO-8859-1?Q?Santi_B=E9jar?= <santi@agolina.net>
+Subject: Re: bug with .git file and aliases
+Date: Mon, 20 Jul 2009 17:18:28 +0200
+Message-ID: <adf1fd3d0907200818l429e701ds6a42ec49f02d5ba9@mail.gmail.com>
+References: <7f9d599f0907200654q2e068e6aq3051c122f6596053@mail.gmail.com>
+	 <adf1fd3d0907200704sb097a99h1ab8f118be5854f9@mail.gmail.com>
+	 <7f9d599f0907200727v5b258a73n3fa664f134c0eead@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jul 20 17:14:41 2009
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Lars Hjemli <hjemli@gmail.com>
+To: Geoffrey Irving <irving@naml.us>
+X-From: git-owner@vger.kernel.org Mon Jul 20 17:18:36 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MSuZc-0006NG-JG
-	for gcvg-git-2@gmane.org; Mon, 20 Jul 2009 17:14:41 +0200
+	id 1MSudQ-0007uN-2e
+	for gcvg-git-2@gmane.org; Mon, 20 Jul 2009 17:18:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751532AbZGTPOf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 20 Jul 2009 11:14:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751439AbZGTPOe
-	(ORCPT <rfc822;git-outgoing>); Mon, 20 Jul 2009 11:14:34 -0400
-Received: from mail-px0-f193.google.com ([209.85.216.193]:38787 "EHLO
-	mail-px0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751336AbZGTPOe (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 Jul 2009 11:14:34 -0400
-Received: by pxi31 with SMTP id 31so435500pxi.33
-        for <git@vger.kernel.org>; Mon, 20 Jul 2009 08:14:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:date:message-id:subject
-         :from:to:content-type:content-transfer-encoding;
-        bh=ZlYMxNbQT6yxLyHZ7W6w+sYgA4gwk+Uan7vn5MxLKgU=;
-        b=q4O7QrMw8IvYJgmeZEEy0n0j6Ys3zVoV7drudMoWHQNb2kG9cQ7AezypD+NFpxavtg
-         edSVjslaX15ncRYCXjnk/EdBi7nvG629y35WeADhwe8z2W/Pl5aUbQEON/UT3mgZhidY
-         WHYFVDNsckwb1Oiu+2QoXbS3hFBacW7L8JuJ8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type
-         :content-transfer-encoding;
-        b=lBSfcoTJhXYeiY3t0/NlZd5lE/W7K0LGFKrFR6Ar/993eDtzEKJvHpmMiVfSfj7vrt
-         6iqm5dsM9DxEXpiXXRGK2EPyfLeflTNVHbPfdI9Wba7Z+9k3C8+vWe2AGcWeAvU8ZtLY
-         1ePNJMTIEEm41AJRyDfVMnAsUnZxHtG0UHx48=
-Received: by 10.114.147.1 with SMTP id u1mr7335789wad.108.1248102471058; Mon, 
-	20 Jul 2009 08:07:51 -0700 (PDT)
+	id S1751092AbZGTPSa convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 20 Jul 2009 11:18:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751000AbZGTPS3
+	(ORCPT <rfc822;git-outgoing>); Mon, 20 Jul 2009 11:18:29 -0400
+Received: from an-out-0708.google.com ([209.85.132.240]:28770 "EHLO
+	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750850AbZGTPS2 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 20 Jul 2009 11:18:28 -0400
+Received: by an-out-0708.google.com with SMTP id d40so3695695and.1
+        for <git@vger.kernel.org>; Mon, 20 Jul 2009 08:18:28 -0700 (PDT)
+Received: by 10.100.249.5 with SMTP id w5mr6323141anh.28.1248103108464; Mon, 
+	20 Jul 2009 08:18:28 -0700 (PDT)
+In-Reply-To: <7f9d599f0907200727v5b258a73n3fa664f134c0eead@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123608>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123609>
 
-I have a sequence of commits. I tried to reorder the top two in this way.
-$ git rebase -i HEAD^^
+2009/7/20 Geoffrey Irving <irving@naml.us>:
+> On Mon, Jul 20, 2009 at 10:04 AM, Santi B=E9jar<santi@agolina.net> wr=
+ote:
+>> I suspect that the $GIR_DIR and .git file works equally in this
+>> aspect, so you should specify where is the workdir in .git/config wi=
+th
+>> respect the repository:
+>>
+>> git config core.workdir `pwd`
+>
+> Nope, that has no effect.
 
-flip the two pick lines and exit vi
+Here it has the desired effect. From where did you run the above
+command? What is the output of:
 
-I find my file full of conflict markers.
-So what is the way of doing:
-HEAD becomes current HEAD^
-HEAD^ becomes current HEAD
-without having to handle conflicts ??
+git config core.workdir
+
+?
+
+It should output the path of the repo, not of the "a" subdirectory.
+
+HTH,
+Santi
