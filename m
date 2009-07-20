@@ -1,80 +1,75 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: Re: [PATCH] help.c: don't blame an user's typo when the system is at fault
-Date: Mon, 20 Jul 2009 16:17:47 +0200
-Message-ID: <200907201617.48168.trast@student.ethz.ch>
-References: <alpine.DEB.2.00.0907201309150.5423@ds9.cixit.se> <200907201545.06030.barra_cuda@katamail.com>
+From: Geoffrey Irving <irving@naml.us>
+Subject: Re: bug with .git file and aliases
+Date: Mon, 20 Jul 2009 10:27:16 -0400
+Message-ID: <7f9d599f0907200727v5b258a73n3fa664f134c0eead@mail.gmail.com>
+References: <7f9d599f0907200654q2e068e6aq3051c122f6596053@mail.gmail.com> 
+	<adf1fd3d0907200704sb097a99h1ab8f118be5854f9@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: Text/Plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: Peter Krefting <peter@softwolves.pp.se>,
-	Git Mailing List <git@vger.kernel.org>
-To: Michele Ballabio <barra_cuda@katamail.com>
-X-From: git-owner@vger.kernel.org Mon Jul 20 16:18:10 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Lars Hjemli <hjemli@gmail.com>
+To: =?ISO-8859-1?Q?Santi_B=E9jar?= <santi@agolina.net>
+X-From: git-owner@vger.kernel.org Mon Jul 20 16:27:44 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MStgv-0008As-QB
-	for gcvg-git-2@gmane.org; Mon, 20 Jul 2009 16:18:10 +0200
+	id 1MStqA-0003cF-9G
+	for gcvg-git-2@gmane.org; Mon, 20 Jul 2009 16:27:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751054AbZGTORz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 20 Jul 2009 10:17:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750847AbZGTORy
-	(ORCPT <rfc822;git-outgoing>); Mon, 20 Jul 2009 10:17:54 -0400
-Received: from xsmtp1.ethz.ch ([82.130.70.13]:18363 "EHLO xsmtp1.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750779AbZGTORy (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 Jul 2009 10:17:54 -0400
-Received: from xfe0.d.ethz.ch ([82.130.124.40]) by xsmtp1.ethz.ch with Microsoft SMTPSVC(6.0.3790.3959);
-	 Mon, 20 Jul 2009 16:17:53 +0200
-Received: from thomas.localnet ([129.132.153.233]) by xfe0.d.ethz.ch over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
-	 Mon, 20 Jul 2009 16:17:52 +0200
-User-Agent: KMail/1.12.0 (Linux/2.6.27.23-0.1-default; KDE/4.2.96; x86_64; ; )
-In-Reply-To: <200907201545.06030.barra_cuda@katamail.com>
-X-OriginalArrivalTime: 20 Jul 2009 14:17:52.0848 (UTC) FILETIME=[DE7A8D00:01CA0944]
+	id S1752123AbZGTO1i convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 20 Jul 2009 10:27:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752099AbZGTO1h
+	(ORCPT <rfc822;git-outgoing>); Mon, 20 Jul 2009 10:27:37 -0400
+Received: from mail-vw0-f202.google.com ([209.85.212.202]:63207 "EHLO
+	mail-vw0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750780AbZGTO1h convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 20 Jul 2009 10:27:37 -0400
+Received: by vwj40 with SMTP id 40so142945vwj.33
+        for <git@vger.kernel.org>; Mon, 20 Jul 2009 07:27:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:sender:received:in-reply-to
+         :references:from:date:x-google-sender-auth:message-id:subject:to:cc
+         :content-type:content-transfer-encoding;
+        bh=q8DbaE2qlCqj5wJsiTnAN7/wEgqzVwpgO86AZwyHUdw=;
+        b=TGL0eEyjdS+zVoWVkkxsERYE029qnK6zb8F3toXkabCegJ8JTJH+jCs5ygwgKksfDF
+         u8cmLR2IowsuF55YAOYic0YZc0Ei+7eiAX0fzqF0OtwTaQfYpuD2gOz+W0K0QriznOYW
+         Ds1U0OLweXKAkLkekJCyUliuvBCtXs0tCeTkw=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:sender:in-reply-to:references:from:date
+         :x-google-sender-auth:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        b=sYKLqGtl3xz+si39kWAGwIYeMa9qm4vc0v+L3g1TEUZ6932r84recrMfXrFNWWW0Ib
+         djxtr9924QEj1/LJUTo9z3MMxmVKmdES7tZORwS6Q9KpxuB6ztyyMwbkWdlhYGn6eD46
+         LrLcDs5n3JNt4jVCfA2auhY15xEi+nvzH7MR8=
+Received: by 10.220.96.66 with SMTP id g2mr4839342vcn.119.1248100056093; Mon, 
+	20 Jul 2009 07:27:36 -0700 (PDT)
+In-Reply-To: <adf1fd3d0907200704sb097a99h1ab8f118be5854f9@mail.gmail.com>
+X-Google-Sender-Auth: a3a22a0b47175bf1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123603>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123604>
 
-Michele Ballabio wrote:
-> Is the call to strerror() useless anyway?
-[...]
-> +	if (!strcmp(cmd, main_cmds.names[0]->name))
-> +		die("Failed to run command '%s': %s\n",
-> +			cmd, strerror(errno));
+On Mon, Jul 20, 2009 at 10:04 AM, Santi B=E9jar<santi@agolina.net> wrot=
+e:
+> I suspect that the $GIR_DIR and .git file works equally in this
+> aspect, so you should specify where is the workdir in .git/config wit=
+h
+> respect the repository:
+>
+> git config core.workdir `pwd`
 
-The invocation of help_unknown_cmd comes from
+Nope, that has no effect.
 
-	while (1) {
-		// ...
-		was_alias = run_argv(&argc, &argv);
-		if (errno != ENOENT)
-			break;
-		// ... side branch with an exit() ...
-		if (!done_help) {
-			cmd = argv[0] = help_unknown_cmd(cmd);
+By the way, I can work around this problem by using
 
-so errno is always ENOENT when help_unknown_cmd() is called.
-(Furthermore, the function itself uses git_config() and
-load_command_list(), both of which _probably_ clobber errno, I don't
-really have the time for an in-depth check.)
+    git config alias.st "!git status"
 
-It also seems that the 'errno != ENOENT' check was intended to catch
-the case where the command failed for any reason other than that it
-does not exist, but this collides with the kernel reporting ENOENT if
-the _interpreter_ does not exist.  Perhaps run_argv should
-differentiate the case where a command executable exists but cannot be
-run?
+but unfortunately that has slightly different behavior (it ignores pwd)=
+=2E
 
-
-[I started writing a reply because I wanted to ask for a conversion to
-die_errno() in the spirit of d824cbb (Convert existing die(...,
-strerror(errno)) to die_errno(), 2009-06-27).  Please keep that in
-mind if you put in another die() that mentions errno.]
-
--- 
-Thomas Rast
-trast@{inf,student}.ethz.ch
+Geoffrey
