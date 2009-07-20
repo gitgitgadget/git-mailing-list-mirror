@@ -1,72 +1,77 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: [PATCH 2/2] git svn: fix reparenting when ugly http(s) URLs are
-	used
-Date: Sun, 19 Jul 2009 22:58:26 -0700
-Message-ID: <20090720055826.GB24393@dcvr.yhbt.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jul 20 07:58:35 2009
+From: Paolo Bonzini <bonzini@gnu.org>
+Subject: [PATCH 0/3] add push --current and remote.*.pushHeadOnly
+Date: Mon, 20 Jul 2009 08:36:57 +0200
+Message-ID: <1248071820-18289-1-git-send-email-bonzini@gnu.org>
+Cc: gitster@pobox.com
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Jul 20 08:37:42 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MSltS-0006p2-J0
-	for gcvg-git-2@gmane.org; Mon, 20 Jul 2009 07:58:35 +0200
+	id 1MSmVJ-0007ck-JB
+	for gcvg-git-2@gmane.org; Mon, 20 Jul 2009 08:37:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751657AbZGTF62 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 20 Jul 2009 01:58:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751766AbZGTF61
-	(ORCPT <rfc822;git-outgoing>); Mon, 20 Jul 2009 01:58:27 -0400
-Received: from dcvr.yhbt.net ([64.71.152.64]:48205 "EHLO dcvr.yhbt.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751020AbZGTF61 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 Jul 2009 01:58:27 -0400
-Received: from localhost (user-118bg0q.cable.mindspring.com [66.133.192.26])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by dcvr.yhbt.net (Postfix) with ESMTPSA id 7A7171F585;
-	Mon, 20 Jul 2009 05:58:27 +0000 (UTC)
-Content-Disposition: inline
-User-Agent: Mutt/1.5.18 (2008-05-17)
+	id S1751664AbZGTGhJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 20 Jul 2009 02:37:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751176AbZGTGhI
+	(ORCPT <rfc822;git-outgoing>); Mon, 20 Jul 2009 02:37:08 -0400
+Received: from fencepost.gnu.org ([140.186.70.10]:56004 "EHLO
+	fencepost.gnu.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751164AbZGTGhG (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Jul 2009 02:37:06 -0400
+Received: from bonzini by fencepost.gnu.org with local (Exim 4.67)
+	(envelope-from <bonzini@gnu.org>)
+	id 1MSmUk-0003ie-6s; Mon, 20 Jul 2009 02:37:06 -0400
+X-Mailer: git-send-email 1.6.2.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123571>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123572>
 
-Mishandling of http(s) in need of escaping was causing
-t9118-git-svn-funky-branch-names to fail when SVN_HTTPD_PORT
- was defined.
+This second series is gets rid of the most annoying part
+(IMHO) of push.default = tracking, i.e. the fact that its
+behavior cannot be achieved using git's ordinary tools.
+While autosetuppush is enough to set the refspecs correctly,
+push.tracking does not push _all_ tracked branches, but
+only the current one (because it implicitly adds only
+one refspec, while autosetuppush places them all in the
+configuration).
 
-This bug was exposed in (but not caused by)
-commit 0b2af457a49e3b00d47d556d5301934d27909db8
-(Fix branch detection when repository root is inaccessible)
+What I introduce here is "git push --current" and a companion
+remote.*.pushHeadOnly option to make it the default.  The
+difference between "git push HEAD" and "git push --current"
+is that the latter will still walk the remote.*.push refspecs,
+but honor only the one matching HEAD.
 
-Signed-off-by: Eric Wong <normalperson@yhbt.net>
----
- git-svn.perl |    6 ++++--
- 1 files changed, 4 insertions(+), 2 deletions(-)
+Together with autosetuppush, this more or less achieves the
+same result as push.tracking, at least for newly created
+remotes.  A subsequent series will handle the transition.
 
-diff --git a/git-svn.perl b/git-svn.perl
-index cfade63..43c86e8 100755
---- a/git-svn.perl
-+++ b/git-svn.perl
-@@ -4525,10 +4525,12 @@ sub gs_do_switch {
- 
- 	my $full_url = $self->{url};
- 	my $old_url = $full_url;
--	$full_url .= '/' . escape_uri_only($path) if length $path;
-+	$full_url .= '/' . $path if length $path;
- 	my ($ra, $reparented);
- 
--	if ($old_url =~ m#^svn(\+ssh)?://#) {
-+	if ($old_url =~ m#^svn(\+ssh)?://# ||
-+	    ($full_url =~ m#^https?://# &&
-+	     escape_url($full_url) ne $full_url)) {
- 		$_[0] = undef;
- 		$self = undef;
- 		$RA = undef;
--- 
-Eric Wong
+v2 integrates changes from Nanako's review.  Patch 1 is new
+and partially reverts bba0fd2 (push: do not give big warning
+when no preference is configured, 2009-07-18).  Patch 2 is the
+meat of the implementation.  Most of it actually touches the
+transport mechanism, not builtin-push.c (which covers only
+one detail about how to handle "git push --current" when
+the remote does not have a corresponding push refspec).
+Patch 3 adds remote.*.pushHeadOnly.
+
+Paolo Bonzini (3):
+      reintroduce PUSH_DEFAULT_UNSPECIFIED
+      push: add --current
+      push: add remote.*.pushHeadOnly configuration
+
+ Documentation/config.txt   |    6 ++++
+ Documentation/git-push.txt |   18 +++++++++++-
+ builtin-push.c             |   17 +++++++++--
+ cache.h                    |    1 +
+ environment.c              |    2 +-
+ http-push.c                |   27 ++++++++++++++----
+ remote.c                   |   42 ++++++++++++++++++++++++-----
+ remote.h                   |    3 ++
+ t/t5516-fetch-push.sh      |   64 ++++++++++++++++++++++++++++++++++++++++++++
+ transport.c                |   22 ++++++++++++++-
+ transport.h                |    1 +
+ 11 files changed, 183 insertions(+), 20 deletions(-)
