@@ -1,64 +1,66 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: cvs import and internal plumbing commands
-Date: Sun, 19 Jul 2009 19:43:28 -0700
-Message-ID: <7vprbwvzu7.fsf@alter.siamese.dyndns.org>
-References: <B9FEA72A-882C-4CF9-97A3-A353F282ACBB@gmail.com>
- <20090716100121.GA6742@coredump.intra.peff.net>
- <7590CBC0-25BA-41D4-9BB5-40550A6CDDF6@gmail.com>
- <20090717214523.GA29955@coredump.intra.peff.net>
+From: brizly vaan van Ulciputz <brizly@freenet.de>
+Subject: Re: setup gitosis on Fedora 11
+Date: Mon, 20 Jul 2009 07:10:34 +0200
+Message-ID: <1248066634.2384.97.camel@brizlyMobil>
+References: <1247867114.2384.15.camel@brizlyMobil>
+	 <2e24e5b90907171844o11eb6699m929e3c0df621ef67@mail.gmail.com>
+	 <1247902835.2384.86.camel@brizlyMobil>
+	 <2e24e5b90907181829j1bf832a3k1812aba498ea09cf@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Antony Stubbs <antony.stubbs@gmail.com>,
-	"git\@vger.kernel.org" <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Jul 20 04:43:47 2009
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Sitaram Chamarty <sitaramc@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jul 20 07:10:55 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MSiqu-00015t-D2
-	for gcvg-git-2@gmane.org; Mon, 20 Jul 2009 04:43:44 +0200
+	id 1MSl9J-00057n-Va
+	for gcvg-git-2@gmane.org; Mon, 20 Jul 2009 07:10:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750972AbZGTCnf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 19 Jul 2009 22:43:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750879AbZGTCne
-	(ORCPT <rfc822;git-outgoing>); Sun, 19 Jul 2009 22:43:34 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:42456 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750778AbZGTCne (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 19 Jul 2009 22:43:34 -0400
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id A8024AD76;
-	Sun, 19 Jul 2009 22:43:33 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 10FD8AD75; Sun,
- 19 Jul 2009 22:43:29 -0400 (EDT)
-In-Reply-To: <20090717214523.GA29955@coredump.intra.peff.net> (Jeff King's
- message of "Fri\, 17 Jul 2009 17\:45\:23 -0400")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 1DF03AF4-74D7-11DE-9D40-F699A5B33865-77302942!a-sasl-quonix.pobox.com
+	id S1750850AbZGTFKj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 20 Jul 2009 01:10:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750826AbZGTFKj
+	(ORCPT <rfc822;git-outgoing>); Mon, 20 Jul 2009 01:10:39 -0400
+Received: from mout4.freenet.de ([195.4.92.94]:40859 "EHLO mout4.freenet.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750770AbZGTFKi (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Jul 2009 01:10:38 -0400
+Received: from [195.4.92.22] (helo=12.mx.freenet.de)
+	by mout4.freenet.de with esmtpa (ID brizly@freenet.de) (port 25) (Exim 4.69 #92)
+	id 1MSl92-0005Oi-CM; Mon, 20 Jul 2009 07:10:36 +0200
+Received: from p4fc98dc1.dip0.t-ipconnect.de ([79.201.141.193]:59960 helo=[192.168.23.106])
+	by 12.mx.freenet.de with esmtpsa (ID brizly@freenet.de) (TLSv1:AES256-SHA:256) (port 25) (Exim 4.69 #93)
+	id 1MSl92-0005bE-5K; Mon, 20 Jul 2009 07:10:36 +0200
+In-Reply-To: <2e24e5b90907181829j1bf832a3k1812aba498ea09cf@mail.gmail.com>
+X-Mailer: Evolution 2.26.2 (2.26.2-1.fc11) 
+X-purgate-ID: 149285::1248066636-0000332D-0828723A/0-0/0-0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123566>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123567>
 
-Jeff King <peff@peff.net> writes:
+> you either follow howtos (good or bad) as closely as you can, or you
+> understand enough about ssh to bypass it.  You are mixing these two
+> approaches; sorry I can't really help you.
+> 
+> Let me say this: gitosis requires far more ssh knowledge than git knowledge.
+> I do not want use this list to teach ssh, more than bare minimum.  Anyway I
+> have written quite a lot of stuff at
+> http://sitaramc.github.com/0-installing/9-gitosis-server-install.html that
+> might help you in understanding.
 
-> Yes, I think it is reasonable to migrate it in any case, if only because
-> it serves as an example when people read it, and we are trying to
-> encourage the dashless form.
+To make this long story short i will go into me, rework through my
+ssh-setup i have in my little network and walk through your link
+mentioned above.
 
-Hmm, I am of two minds.
+Thank you so far.
+I thouht i had enough knowledge about ssh, but seems it's just dangerous
+smattering (in my neighborhood we call it "gefaehrliches
+Halbwissen") :-)
 
-We encourage script writers to just prepend "git --exec-path" at the
-beginning of their PATH and give guarantee that this simple procedure will
-keep their scripts working, so it might be a good idea to have an example
-for that as well.
-
-So the preferred fix might be just the matter of adding one line
-
-	$ENV{'PATH'} = `git --exec-path`. ":$ENV{'PATH'}";
-
-at the beginning of the script.
+_____
+luck up
+brizly
