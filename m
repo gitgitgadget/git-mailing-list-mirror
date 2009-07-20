@@ -1,73 +1,69 @@
-From: Johannes Sixt <j6t@kdbg.org>
-Subject: Re: [test failure] Re: t4114 binary file becomes symlink
-Date: Mon, 20 Jul 2009 22:51:21 +0200
-Message-ID: <200907202251.22490.j6t@kdbg.org>
-References: <20090718134551.GC16708@vidovic> <200907191301.15533.j6t@kdbg.org> <20090720090937.GA20412@sigill.intra.peff.net>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: Re: git-archive and submodules
+Date: Mon, 20 Jul 2009 22:56:25 +0200
+Message-ID: <200907202256.26669.trast@student.ethz.ch>
+References: <41ceb5540907200922r5decb047h75e723a1809b587e@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
+Content-Type: Text/Plain;
   charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Cc: Nicolas Sebrecht <nicolas.s.dev@gmx.fr>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Jul 20 22:51:47 2009
+Cc: git@vger.kernel.org, Lars Hjemli <hjemli@gmail.com>
+To: Woody Gilk <woody.gilk@kohanaphp.com>
+X-From: git-owner@vger.kernel.org Mon Jul 20 22:56:41 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MSzpq-0001n1-Br
-	for gcvg-git-2@gmane.org; Mon, 20 Jul 2009 22:51:46 +0200
+	id 1MSzub-0003qw-5F
+	for gcvg-git-2@gmane.org; Mon, 20 Jul 2009 22:56:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751415AbZGTUve (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 20 Jul 2009 16:51:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751219AbZGTUvc
-	(ORCPT <rfc822;git-outgoing>); Mon, 20 Jul 2009 16:51:32 -0400
-Received: from bsmtp.bon.at ([213.33.87.14]:13581 "EHLO bsmtp.bon.at"
+	id S1751805AbZGTU4f (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 20 Jul 2009 16:56:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751512AbZGTU4e
+	(ORCPT <rfc822;git-outgoing>); Mon, 20 Jul 2009 16:56:34 -0400
+Received: from xsmtp0.ethz.ch ([82.130.70.14]:13423 "EHLO XSMTP0.ethz.ch"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751193AbZGTUvb (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 Jul 2009 16:51:31 -0400
-Received: from dx.sixt.local (unknown [93.83.142.38])
-	by bsmtp.bon.at (Postfix) with ESMTP id E16B82C400B;
-	Mon, 20 Jul 2009 22:51:24 +0200 (CEST)
-Received: from localhost (localhost [IPv6:::1])
-	by dx.sixt.local (Postfix) with ESMTP id 6532C4260A;
-	Mon, 20 Jul 2009 22:51:24 +0200 (CEST)
-User-Agent: KMail/1.9.9
-In-Reply-To: <20090720090937.GA20412@sigill.intra.peff.net>
-Content-Disposition: inline
+	id S1751102AbZGTU4e (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Jul 2009 16:56:34 -0400
+Received: from xfe2.d.ethz.ch ([82.130.124.42]) by XSMTP0.ethz.ch with Microsoft SMTPSVC(6.0.3790.3959);
+	 Mon, 20 Jul 2009 22:56:32 +0200
+Received: from thomas.localnet ([84.74.103.245]) by xfe2.d.ethz.ch over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
+	 Mon, 20 Jul 2009 22:56:32 +0200
+User-Agent: KMail/1.12.0 (Linux/2.6.27.23-0.1-default; KDE/4.2.96; x86_64; ; )
+In-Reply-To: <41ceb5540907200922r5decb047h75e723a1809b587e@mail.gmail.com>
+X-OriginalArrivalTime: 20 Jul 2009 20:56:32.0294 (UTC) FILETIME=[8F945C60:01CA097C]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123633>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123634>
 
-On Montag, 20. Juli 2009, Jeff King wrote:
-> On Sun, Jul 19, 2009 at 01:01:15PM +0200, Johannes Sixt wrote:
-> > Problem is, snprintf was made for very old systems, which typically do
-> > not have va_copy. (E.g. Windows, but there the situation *might* have
-> > changed with the switch to gcc 4.)
-> >
-> > The rationale not to use va_copy is that this function is to be used
-> > *only* if necessary, i.e. portability is already lacking, and if it
-> > can be verified that this function works as is. Portability and
-> > correct-by-the-law C code are *not* a goal here. If the function does
-> > not work as is, don't use it.
->
-> OK, I guess I can buy the "don't use this unless you need it" rationale.
-> But two questions:
->
->   1. _Are_ we sure it works under Windows?  That is, do we know for a
->      fact that using a va_list twice is OK there, or are we just going
->      on the fact that nobody has reported the bug?
+Woody Gilk wrote:
+> I would find it hugely valuable if git-archive would support
+> submodules, rather than leaving empty files in the place of
+> submodules.
 
-We are sure (well, I am sure ;) that it worked on Windows with gcc 3. It 
-certainly is a reasonable workaround. It remains to confirm that the 
-workaround works as expected on the other systems that use it (IRIX, 
-HP/UX).  'git branch -v' is a test that calls the system provided vsnprintf 
-twice (as long as the branch head commits have moderatly long summary lines).
+Such support was already in the pipeline before 1.6.2, see this
+thread:
 
-On Windows, however, today everybody who compiles git is most likely using 
-msysgit's gcc 4.4. This version has C99 vsnprintf, and the workaround should 
-not be used anymore, although it does not hurt.
+  http://thread.gmane.org/gmane.comp.version-control.git/107030
 
--- Hannes
+Lars' series is still available from the repo mentioned in one of the
+messages
+
+  git://hjemli.net/pub/git/git lh/traverse-gitlinks
+
+but does not merge into master cleanly any more, because an earlier
+version of the first commit (of now three) made it into 1.6.2.  For
+your testing convenience, I rebased the other two commits on 'master'
+and pushed them to
+
+  git://repo.or.cz/git/trast.git lh/traverse-gitlinks-on-master
+
+All conflicts were trivial, but I made a minor change: there's already
+a t5001 from 8aece7f (archive test: attributes, 2009-04-18), so I
+renamed it to t5002 in the tip commit.
+
+-- 
+Thomas Rast
+trast@{inf,student}.ethz.ch
