@@ -1,97 +1,72 @@
-From: Geoffrey Irving <irving@naml.us>
-Subject: Re: bug with .git file and aliases
-Date: Mon, 20 Jul 2009 11:25:33 -0400
-Message-ID: <7f9d599f0907200825j69ee3c9cj4aef26796c3917d6@mail.gmail.com>
-References: <7f9d599f0907200654q2e068e6aq3051c122f6596053@mail.gmail.com> 
-	<adf1fd3d0907200704sb097a99h1ab8f118be5854f9@mail.gmail.com> 
-	<7f9d599f0907200727v5b258a73n3fa664f134c0eead@mail.gmail.com> 
-	<adf1fd3d0907200818l429e701ds6a42ec49f02d5ba9@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: encrypted repositories?
+Date: Mon, 20 Jul 2009 11:30:24 -0400
+Message-ID: <20090720153024.GD5347@coredump.intra.peff.net>
+References: <op.uw7wmbr41e62zd@balu.cs.uni-paderborn.de>
+ <alpine.LFD.2.01.0907171226460.13838@localhost.localdomain>
+ <op.uxc712eh1e62zd@balu.cs.uni-paderborn.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Lars Hjemli <hjemli@gmail.com>
-To: =?ISO-8859-1?Q?Santi_B=E9jar?= <santi@agolina.net>
-X-From: git-owner@vger.kernel.org Mon Jul 20 17:26:08 2009
+Content-Type: text/plain; charset=utf-8
+Cc: Linus Torvalds <torvalds@linux-foundation.org>, git@vger.kernel.org
+To: Matthias Andree <matthias.andree@gmx.de>
+X-From: git-owner@vger.kernel.org Mon Jul 20 17:30:28 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MSukc-0002Lz-Nl
-	for gcvg-git-2@gmane.org; Mon, 20 Jul 2009 17:26:03 +0200
+	id 1MSuot-0004Ah-JX
+	for gcvg-git-2@gmane.org; Mon, 20 Jul 2009 17:30:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751038AbZGTPZz convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 20 Jul 2009 11:25:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750986AbZGTPZy
-	(ORCPT <rfc822;git-outgoing>); Mon, 20 Jul 2009 11:25:54 -0400
-Received: from mail-vw0-f202.google.com ([209.85.212.202]:55784 "EHLO
-	mail-vw0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750904AbZGTPZx convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 20 Jul 2009 11:25:53 -0400
-Received: by vwj40 with SMTP id 40so191486vwj.33
-        for <git@vger.kernel.org>; Mon, 20 Jul 2009 08:25:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:sender:received:in-reply-to
-         :references:from:date:x-google-sender-auth:message-id:subject:to:cc
-         :content-type:content-transfer-encoding;
-        bh=wRltmozAXl1r9+ow2x0GAW4/qZtj4z7+9h+yGTsYGFg=;
-        b=FhKGXW/YZeblWW3TEcp5di0QGK4ty7Z508uNTpZMgyx9L+L421JdRiRi/5CiVl9E3W
-         0Z37DXiIvpJAe7PEaI4u2umjyHlw0DmKJXJMorUYP3/thSK47knk94q/NrgCo0fdSG9p
-         VZg5P1cV0ZTZ2gK/kAYtoNDOuMau8GzIar0aw=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:sender:in-reply-to:references:from:date
-         :x-google-sender-auth:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        b=X/J+b7Meqz7EWBgi2DRFdrV+yYXtc5hsez3DttXapcb6cn8eWoC/TC/eJsUY9d3kTi
-         NKzKxUJQR0hEnWc4Jj5255DC/DhlAYzvtAi/5X8SjE3Z4gVqpz7+G9HGwpt3jwhV2OPZ
-         w7J/dL/2HGiX2Nef+eu6NZJ9tbWYgJAvPBCrk=
-Received: by 10.220.76.73 with SMTP id b9mr4935000vck.85.1248103553082; Mon, 
-	20 Jul 2009 08:25:53 -0700 (PDT)
-In-Reply-To: <adf1fd3d0907200818l429e701ds6a42ec49f02d5ba9@mail.gmail.com>
-X-Google-Sender-Auth: 70eb7cfb42cb2de3
+	id S1751537AbZGTPaV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 20 Jul 2009 11:30:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750943AbZGTPaU
+	(ORCPT <rfc822;git-outgoing>); Mon, 20 Jul 2009 11:30:20 -0400
+Received: from peff.net ([208.65.91.99]:42483 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750780AbZGTPaU (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Jul 2009 11:30:20 -0400
+Received: (qmail 26763 invoked by uid 107); 20 Jul 2009 15:32:21 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Mon, 20 Jul 2009 11:32:21 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Mon, 20 Jul 2009 11:30:24 -0400
+Content-Disposition: inline
+In-Reply-To: <op.uxc712eh1e62zd@balu.cs.uni-paderborn.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123613>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123614>
 
-On Mon, Jul 20, 2009 at 11:18 AM, Santi B=E9jar<santi@agolina.net> wrot=
-e:
-> 2009/7/20 Geoffrey Irving <irving@naml.us>:
->> On Mon, Jul 20, 2009 at 10:04 AM, Santi B=E9jar<santi@agolina.net> w=
-rote:
->>> I suspect that the $GIR_DIR and .git file works equally in this
->>> aspect, so you should specify where is the workdir in .git/config w=
-ith
->>> respect the repository:
->>>
->>> git config core.workdir `pwd`
->>
->> Nope, that has no effect.
->
-> Here it has the desired effect. From where did you run the above
-> command? What is the output of:
->
-> git config core.workdir
+On Mon, Jul 20, 2009 at 02:09:28PM +0200, Matthias Andree wrote:
 
-top:a% git config core.workdir
-/Users/irving/tmp/tmp/repo
-top:a% git st
-# On branch master
-# Changed but not updated:
-#   (use "git add/rm <file>..." to update what will be committed)
-#   (use "git checkout -- <file>..." to discard changes in working dire=
-ctory)
-#
-#	deleted:    a/b
-#
-# Untracked files:
-#   (use "git add <file>..." to include in what will be committed)
-#
-#	b
+> No, the server can't be allowed access to the keys or decrypted data.
+> 
+> I'm not sure about the graph, and if I should be concerned. Exposing
+> the DAG might be in order.
+> 
+> It would be ok if the disk storage and the over-the-wire format
+> cannot use delta compression then. It would suffice to just send a
+> set of objects efficiently - and perhaps smaller revisions can be
+> delta-compressed by the clients when pushing.
 
-It doesn't matter, though, since setting workdir should not be necessar=
-y.
+The problem is that you need to expose not just the DAG, but also the
+hashes of trees and blobs. Because if I know you have master^, and I want
+to send you master, then I need to know which objects are referenced by
+master that are not referenced by master^.
 
-Geoffrey
+So now you have security implications, because I can do an offline
+guessing attack against your files (i.e., calculate git blob hashes for
+likely candidates and see if you have them). Whether that is a problem
+really depends on your data.
+
+Not to mention that it makes the protocol a lot more complex, as you
+would be encrypting _parts_ of objects, like the filenames of a tree,
+and the commit message of a commit object.
+
+I suppose in theory you could obfuscate the sha1's in a way that
+preserved the object relationships but revealed no information. That is,
+the server would have one "fake" set of sha1's, and the client would map
+its real sha1's to the fake ones when talking with the server. But that
+is again potentially getting complex.
+
+-Peff
