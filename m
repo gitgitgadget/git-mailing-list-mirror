@@ -1,88 +1,92 @@
-From: Michele Ballabio <barra_cuda@katamail.com>
-Subject: [PATCH] help.c: don't blame an user's typo when the system is at fault
-Date: Mon, 20 Jul 2009 15:45:05 +0200
-Message-ID: <200907201545.06030.barra_cuda@katamail.com>
-References: <alpine.DEB.2.00.0907201309150.5423@ds9.cixit.se>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: encrypted repositories?
+Date: Mon, 20 Jul 2009 06:48:03 -0700 (PDT)
+Message-ID: <m3zlazbh4e.fsf@localhost.localdomain>
+References: <op.uw7wmbr41e62zd@balu.cs.uni-paderborn.de>
+	<alpine.LFD.2.01.0907171226460.13838@localhost.localdomain>
+	<op.uxc712eh1e62zd@balu.cs.uni-paderborn.de>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Peter Krefting <peter@softwolves.pp.se>
-X-From: git-owner@vger.kernel.org Mon Jul 20 15:44:05 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: "Linus Torvalds" <torvalds@linux-foundation.org>,
+	git@vger.kernel.org
+To: "Matthias Andree" <matthias.andree@gmx.de>
+X-From: git-owner@vger.kernel.org Mon Jul 20 15:48:18 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MSt9w-0001bd-DI
-	for gcvg-git-2@gmane.org; Mon, 20 Jul 2009 15:44:04 +0200
+	id 1MStDz-0003EV-M9
+	for gcvg-git-2@gmane.org; Mon, 20 Jul 2009 15:48:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753645AbZGTNn5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 20 Jul 2009 09:43:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753088AbZGTNn4
-	(ORCPT <rfc822;git-outgoing>); Mon, 20 Jul 2009 09:43:56 -0400
-Received: from smtp.katamail.com ([62.149.157.154]:36910 "HELO smtp2.aruba.it"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with SMTP
-	id S1751526AbZGTNn4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 Jul 2009 09:43:56 -0400
-Received: (qmail 23594 invoked by uid 89); 20 Jul 2009 13:43:48 -0000
-X-Spam-Checker-Version: SpamAssassin 3.2.3 (2007-08-08) on smtp2-pc
-X-Spam-Level: 
-X-Spam-Status: No, score=-0.5 required=5.0 tests=BAYES_05 autolearn=ham
-	version=3.2.3
-Received: from unknown (HELO rfc-1918) (barra?cuda@katamail.com@78.134.82.131)
-  by smtp2-pc with SMTP; 20 Jul 2009 13:43:48 -0000
-User-Agent: KMail/1.9.10
-In-Reply-To: <alpine.DEB.2.00.0907201309150.5423@ds9.cixit.se>
-Content-Disposition: inline
+	id S1753801AbZGTNsI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 20 Jul 2009 09:48:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753797AbZGTNsH
+	(ORCPT <rfc822;git-outgoing>); Mon, 20 Jul 2009 09:48:07 -0400
+Received: from mail-fx0-f218.google.com ([209.85.220.218]:50150 "EHLO
+	mail-fx0-f218.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753726AbZGTNsG (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Jul 2009 09:48:06 -0400
+Received: by fxm18 with SMTP id 18so1975339fxm.37
+        for <git@vger.kernel.org>; Mon, 20 Jul 2009 06:48:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:received
+         :x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        bh=KheRG/bp/M5212jFrPzobUdFCS9nVMA0ka0bG7mrirg=;
+        b=f0q/uoUjAHaTUzEopaeSmlvHBu5+eYdjr6Ji4ZDuk8E/CMIGTFC6fMOh/0kgkwGuob
+         0c9dqHZFlu/TXWlE+Hxn7Cy99M1aAKINcXDjtlX/7ph5raJngGI8hnLumXN+x0Ii/tah
+         /2mBtFMwHfXCVY0HONilyxhH7Y5VIA83Rx9h4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        b=gsM1PwhBaZMr4B82vUtnEuhIO1Oli+09XPQwX0/hHprShy3eaNjPfMTm1S8UdNqe4i
+         RJNceC62GzwEGWv78SbGqBbt4KbVLXdR85QvDpXhv0ctLpC4PA8wnn2EoGaSVOiXTw3c
+         3mU9tO2aCq/AbxaeKahqYMnwHKFNJycpCkiN0=
+Received: by 10.86.25.17 with SMTP id 17mr3549051fgy.73.1248097684812;
+        Mon, 20 Jul 2009 06:48:04 -0700 (PDT)
+Received: from localhost.localdomain (abve48.neoplus.adsl.tpnet.pl [83.8.202.48])
+        by mx.google.com with ESMTPS id 4sm11207634fgg.2.2009.07.20.06.48.02
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 20 Jul 2009 06:48:03 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id n6KDm2bK024122;
+	Mon, 20 Jul 2009 15:48:02 +0200
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id n6KDm1pI024119;
+	Mon, 20 Jul 2009 15:48:01 +0200
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <op.uxc712eh1e62zd@balu.cs.uni-paderborn.de>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123599>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123600>
 
-As reported by Peter Krefting:
+"Matthias Andree" <matthias.andree@gmx.de> writes:
 
-  If git cannot start one of the external commands (at least some of them),
-  the DWIM engine is a bit flaky:
+> On a more general note, is someone looking into improving the http://
+> efficiency?  Perhaps there are synergies between my plan of (a)
+> encryption  and (b) more efficient "dumb" (http/rsync/...) protocol
+> use.
 
-     $ git citool
-     /usr/local/libexec/git-core/git-citool: line 10: exec: wish: not found
-     git: 'citool' is not a git-command. See 'git --help'.
+There was idea about improving http:// efficiency, but it was via
+crating git-over-HTTP aka. "smart" HTTP server, i.e. you would have to
+have DAG exposed, like for git:// and ssh://
 
-     Did you mean this?
-         citool
 
-Now we check whether the best bet found by levenshtein() differs from
-the command line or not before proceeding.
+On the other hand for http:// server need only "dumb" web server, and
+additional metadata generated by git-update-server-info.  It is client
+who does "walking" the DAG, so all data including server metadata can
+be encrypted, and decrypted on-the-fly by client.  
 
-The new error is:
+I don't know though what information leakage you would get from
+existence of loose objects and packfiles, and their sizes.  Probably
+negligible...
 
-$ git citool
-/usr/local/libexec/git-core/git-citool: line 10: exec: wish: not found
-fatal: Failed to run command 'citool': No such file or directory
-
-Signed-off-by: Michele Ballabio <barra_cuda@katamail.com>
----
-
-Is the call to strerror() useless anyway?
-
- help.c |    3 +++
- 1 files changed, 3 insertions(+), 0 deletions(-)
-
-diff --git a/help.c b/help.c
-index fd87bb5..eec62a3 100644
---- a/help.c
-+++ b/help.c
-@@ -325,6 +325,9 @@ const char *help_unknown_cmd(const char *cmd)
- 
- 	if (!main_cmds.cnt)
- 		die ("Uh oh. Your system reports no Git commands at all.");
-+	if (!strcmp(cmd, main_cmds.names[0]->name))
-+		die("Failed to run command '%s': %s\n",
-+			cmd, strerror(errno));
- 
- 	best_similarity = main_cmds.names[0]->len;
- 	n = 1;
 -- 
-1.6.3.1.17.g076c3
+Jakub Narebski
+Poland
+ShadeHawk on #git
