@@ -1,130 +1,79 @@
-From: Geoffrey Irving <irving@naml.us>
-Subject: bug with .git file and aliases
-Date: Mon, 20 Jul 2009 09:54:12 -0400
-Message-ID: <7f9d599f0907200654q2e068e6aq3051c122f6596053@mail.gmail.com>
+From: =?ISO-8859-1?Q?Santi_B=E9jar?= <santi@agolina.net>
+Subject: Re: bug with .git file and aliases
+Date: Mon, 20 Jul 2009 16:04:52 +0200
+Message-ID: <adf1fd3d0907200704sb097a99h1ab8f118be5854f9@mail.gmail.com>
+References: <7f9d599f0907200654q2e068e6aq3051c122f6596053@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org, Lars Hjemli <hjemli@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jul 20 15:54:46 2009
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Lars Hjemli <hjemli@gmail.com>
+To: Geoffrey Irving <irving@naml.us>
+X-From: git-owner@vger.kernel.org Mon Jul 20 16:05:22 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MStKH-0005vM-8I
-	for gcvg-git-2@gmane.org; Mon, 20 Jul 2009 15:54:45 +0200
+	id 1MStUY-0002Uw-98
+	for gcvg-git-2@gmane.org; Mon, 20 Jul 2009 16:05:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753729AbZGTNye (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 20 Jul 2009 09:54:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753708AbZGTNye
-	(ORCPT <rfc822;git-outgoing>); Mon, 20 Jul 2009 09:54:34 -0400
-Received: from mail-vw0-f202.google.com ([209.85.212.202]:61133 "EHLO
-	mail-vw0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751076AbZGTNyd (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 Jul 2009 09:54:33 -0400
-Received: by vwj40 with SMTP id 40so118546vwj.33
-        for <git@vger.kernel.org>; Mon, 20 Jul 2009 06:54:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:sender:received:from:date
-         :x-google-sender-auth:message-id:subject:to:content-type
-         :content-transfer-encoding;
-        bh=suo2B+vDWqVYjwg52fnMlm6oxQgnYpsEJokIViQajAY=;
-        b=hNGnNVAOKZsUucIiLspWARgSXpmuxb/eqsCylf5L41GnqHWoyxb0dULJM3vjUD54An
-         2HFyVvClrbOwO0mEpG3ZwQRc3VW27WqXZKiAptn4Nrdnt8vdW9O4effULmLTSEZaM94a
-         lLb6nK8tWphCjYnNbEdDSAVueA5R+x2gWlENc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:sender:from:date:x-google-sender-auth:message-id
-         :subject:to:content-type:content-transfer-encoding;
-        b=JZCcJ6hxeJSdFhsqxKZxgnUUwFhQLtIPaNRQ2v3DWretQ0DBsdPAs5Knc4B4xDlZLs
-         XZWkX+UsToUXQYE+cqzb2NvDzxN/779OVcWe5GMzFHpHs2DvKspvc5kVmzeb4QS24Gm7
-         mPx0gFv+OqaVbtVYlbXKqc+Nh1g2nwmszo5wU=
-Received: by 10.220.76.1 with SMTP id a1mr5885629vck.80.1248098072168; Mon, 20 
-	Jul 2009 06:54:32 -0700 (PDT)
-X-Google-Sender-Auth: 28660f0ed9a817cf
+	id S1751962AbZGTOEz convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 20 Jul 2009 10:04:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751305AbZGTOEy
+	(ORCPT <rfc822;git-outgoing>); Mon, 20 Jul 2009 10:04:54 -0400
+Received: from an-out-0708.google.com ([209.85.132.245]:44211 "EHLO
+	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751032AbZGTOEx convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 20 Jul 2009 10:04:53 -0400
+Received: by an-out-0708.google.com with SMTP id d40so3634462and.1
+        for <git@vger.kernel.org>; Mon, 20 Jul 2009 07:04:52 -0700 (PDT)
+Received: by 10.100.32.13 with SMTP id f13mr6195720anf.36.1248098692225; Mon, 
+	20 Jul 2009 07:04:52 -0700 (PDT)
+In-Reply-To: <7f9d599f0907200654q2e068e6aq3051c122f6596053@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123601>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123602>
 
-git 1.6.3.3 has a bug related to .git file support and aliases.
-Specifically, if you make an alias for status and call it from a
-subdirectory, git status chdirs into the true .git dir but then
-chdir's back to the wrong place in order to run the lstats for status.
- The result is that git status thinks all files have disappeared.
+2009/7/20 Geoffrey Irving <irving@naml.us>:
+> git 1.6.3.3 has a bug related to .git file support and aliases.
+> Specifically, if you make an alias for status and call it from a
+> subdirectory, git status chdirs into the true .git dir but then
+> chdir's back to the wrong place in order to run the lstats for status=
+=2E
+> =A0The result is that git status thinks all files have disappeared.
+>
+> Here's a self-contained test script:
+>
+> =A0 =A0#!/bin/bash
+> =A0 =A0set -x
+>
+> =A0 =A0# make a simple repository
+> =A0 =A0mkdir repo
+> =A0 =A0cd repo
+> =A0 =A0git init
+> =A0 =A0mkdir a
+> =A0 =A0echo content > a/b
+> =A0 =A0git add a/b
+> =A0 =A0git commit -m "a commit"
+>
+> =A0 =A0# replace the gitdir with a gitfile
+> =A0 =A0mv .git ../repo.git
+> =A0 =A0echo gitdir: `pwd`.git > .git
+>
+> =A0 =A0# normal git status works
+> =A0 =A0cd a
+> =A0 =A0git status
+>
+> =A0 =A0# an alias for git status fails
+> =A0 =A0git config alias.st status
+> =A0 =A0git st
 
-Here's a self-contained test script:
+I suspect that the $GIR_DIR and .git file works equally in this
+aspect, so you should specify where is the workdir in .git/config with
+respect the repository:
 
-    #!/bin/bash
-    set -x
+git config core.workdir `pwd`
 
-    # make a simple repository
-    mkdir repo
-    cd repo
-    git init
-    mkdir a
-    echo content > a/b
-    git add a/b
-    git commit -m "a commit"
-
-    # replace the gitdir with a gitfile
-    mv .git ../repo.git
-    echo gitdir: `pwd`.git > .git
-
-    # normal git status works
-    cd a
-    git status
-
-    # an alias for git status fails
-    git config alias.st status
-    git st
-
-which produces output
-
-top:tmp% ./bug
-++ mkdir repo
-++ cd repo
-++ git init
-Initialized empty Git repository in /Users/irving/tmp/tmp/repo/.git/
-++ mkdir a
-++ echo content
-++ git add a/b
-++ git commit -m 'a commit'
-[master (root-commit) 6b07ec4] a commit
- 1 files changed, 1 insertions(+), 0 deletions(-)
- create mode 100644 a/b
-++ mv .git ../repo.git
-+++ pwd
-++ echo gitdir: /Users/irving/tmp/tmp/repo.git
-++ cd a
-++ git status
-# On branch master
-nothing to commit (working directory clean)
-++ git config alias.st status
-++ git st
-# On branch master
-# Changed but not updated:
-#   (use "git add/rm <file>..." to update what will be committed)
-#   (use "git checkout -- <file>..." to discard changes in working directory)
-#
-#	deleted:    a/b
-#
-# Untracked files:
-#   (use "git add <file>..." to include in what will be committed)
-#
-#	b
-no changes added to commit (use "git add" and/or "git commit -a")
-
-.git file support also doesn't work on a repository with no commits
-(which is why the test script makes a commit normally before switching
-to a gitfile).  However, I care about this second problem much less,
-and didn't notice it until I made the test script.
-
-Finally, huge thanks to Lars for implementing this.  I'm storing git
-working directories inside vesta, and symlink support is currently
-disabled.  It's very pleasant to grep through the source and find that
-someone already fixed exactly my problem. :)
-
-Geoffrey
+HTH,
+Santi
