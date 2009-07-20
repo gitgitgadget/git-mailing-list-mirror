@@ -1,77 +1,88 @@
-From: demerphq <demerphq@gmail.com>
-Subject: Re: [PATCH] Add git svn gc command
-Date: Mon, 20 Jul 2009 14:18:48 +0200
-Message-ID: <9b18b3110907200518p57a8b3gdfb51004e274b2bc@mail.gmail.com>
-References: <8E0EFA3B-E8C0-4030-8BAE-E8EF65694031@gmail.com>
-	 <20090720083621.GA3237@dcvr.yhbt.net>
-	 <9b18b3110907200202kbb78c8dm43e0451900e4f2fb@mail.gmail.com>
-	 <200907201342.01912.trast@student.ethz.ch>
+From: Michele Ballabio <barra_cuda@katamail.com>
+Subject: [PATCH] help.c: don't blame an user's typo when the system is at fault
+Date: Mon, 20 Jul 2009 15:45:05 +0200
+Message-ID: <200907201545.06030.barra_cuda@katamail.com>
+References: <alpine.DEB.2.00.0907201309150.5423@ds9.cixit.se>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Eric Wong <normalperson@yhbt.net>,
-	Robert Zeh <robert.a.zeh@gmail.com>, git@vger.kernel.org
-To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Mon Jul 20 14:18:58 2009
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Peter Krefting <peter@softwolves.pp.se>
+X-From: git-owner@vger.kernel.org Mon Jul 20 15:44:05 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MSrpZ-0002In-HG
-	for gcvg-git-2@gmane.org; Mon, 20 Jul 2009 14:18:58 +0200
+	id 1MSt9w-0001bd-DI
+	for gcvg-git-2@gmane.org; Mon, 20 Jul 2009 15:44:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753514AbZGTMSv convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 20 Jul 2009 08:18:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753439AbZGTMSu
-	(ORCPT <rfc822;git-outgoing>); Mon, 20 Jul 2009 08:18:50 -0400
-Received: from mail-yx0-f184.google.com ([209.85.210.184]:38291 "EHLO
-	mail-yx0-f184.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753437AbZGTMSt convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 20 Jul 2009 08:18:49 -0400
-Received: by yxe14 with SMTP id 14so3553271yxe.33
-        for <git@vger.kernel.org>; Mon, 20 Jul 2009 05:18:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=8aijiJOP7rLPGqW4fphJnQaGrg+9u2YVZYpwaqIkBNc=;
-        b=ldVdonCNHqnBqc6ebVP38My3EUekQUdQyC9YK0BD+I83XhsaNTOq+RAV7eQWGkFQbg
-         6PwtbCJjWQfKuOOKuEbwZ4aYAEmKp5nGtXuP95+BHio8xdesMbuvsP5fFyKm5yWmAaZm
-         8vFvXO6HT8oqXNgXJigQIMUYMgs2bLL/SYA14=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=SqhhluCwhezfNdxpTm4p7H3kVCjolzNzSsOOg/Tuvz+VuLF0sBD+jDsp13BIpRkSDJ
-         dbvFauR9ZjH5QXAbZLy0mGKFfj2FLLzNRDz3A+b4+JXXSj9QnakMtVCoydqOeA//HV0M
-         E5KMMpWGwEc5iKV08Ac5xEbIr14734X2y3zAQ=
-Received: by 10.231.16.193 with SMTP id p1mr219125iba.19.1248092328423; Mon, 
-	20 Jul 2009 05:18:48 -0700 (PDT)
-In-Reply-To: <200907201342.01912.trast@student.ethz.ch>
+	id S1753645AbZGTNn5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 20 Jul 2009 09:43:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753088AbZGTNn4
+	(ORCPT <rfc822;git-outgoing>); Mon, 20 Jul 2009 09:43:56 -0400
+Received: from smtp.katamail.com ([62.149.157.154]:36910 "HELO smtp2.aruba.it"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with SMTP
+	id S1751526AbZGTNn4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Jul 2009 09:43:56 -0400
+Received: (qmail 23594 invoked by uid 89); 20 Jul 2009 13:43:48 -0000
+X-Spam-Checker-Version: SpamAssassin 3.2.3 (2007-08-08) on smtp2-pc
+X-Spam-Level: 
+X-Spam-Status: No, score=-0.5 required=5.0 tests=BAYES_05 autolearn=ham
+	version=3.2.3
+Received: from unknown (HELO rfc-1918) (barra?cuda@katamail.com@78.134.82.131)
+  by smtp2-pc with SMTP; 20 Jul 2009 13:43:48 -0000
+User-Agent: KMail/1.9.10
+In-Reply-To: <alpine.DEB.2.00.0907201309150.5423@ds9.cixit.se>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123598>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123599>
 
-2009/7/20 Thomas Rast <trast@student.ethz.ch>:
-> demerphq wrote:
->>
->> my $can_compress=3D eval "require Compress::Zlib; 1";
->
-> Wouldn't
->
-> =A0my $can_compress =3D eval { require Compress::Zlib; 1 };
->
-> be better on the grounds that this will catch compilation errors in
-> the eval'd statement at compilation (of the main program) time?
+As reported by Peter Krefting:
 
-Yeah, thats a good catch. In this case there is no need for the eval
-STRING usage.
+  If git cannot start one of the external commands (at least some of them),
+  the DWIM engine is a bit flaky:
 
-cheers,
-Yves
+     $ git citool
+     /usr/local/libexec/git-core/git-citool: line 10: exec: wish: not found
+     git: 'citool' is not a git-command. See 'git --help'.
 
---=20
-perl -Mre=3Ddebug -e "/just|another|perl|hacker/"
+     Did you mean this?
+         citool
+
+Now we check whether the best bet found by levenshtein() differs from
+the command line or not before proceeding.
+
+The new error is:
+
+$ git citool
+/usr/local/libexec/git-core/git-citool: line 10: exec: wish: not found
+fatal: Failed to run command 'citool': No such file or directory
+
+Signed-off-by: Michele Ballabio <barra_cuda@katamail.com>
+---
+
+Is the call to strerror() useless anyway?
+
+ help.c |    3 +++
+ 1 files changed, 3 insertions(+), 0 deletions(-)
+
+diff --git a/help.c b/help.c
+index fd87bb5..eec62a3 100644
+--- a/help.c
++++ b/help.c
+@@ -325,6 +325,9 @@ const char *help_unknown_cmd(const char *cmd)
+ 
+ 	if (!main_cmds.cnt)
+ 		die ("Uh oh. Your system reports no Git commands at all.");
++	if (!strcmp(cmd, main_cmds.names[0]->name))
++		die("Failed to run command '%s': %s\n",
++			cmd, strerror(errno));
+ 
+ 	best_similarity = main_cmds.names[0]->len;
+ 	n = 1;
+-- 
+1.6.3.1.17.g076c3
