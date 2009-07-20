@@ -1,89 +1,73 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH RFC 2/8] push: add push.default = mirror
-Date: Mon, 20 Jul 2009 13:46:05 -0700
-Message-ID: <7vocrfulpu.fsf@alter.siamese.dyndns.org>
-References: <1248112195-3761-1-git-send-email-bonzini@gnu.org>
- <1248112195-3761-3-git-send-email-bonzini@gnu.org>
+From: Johannes Sixt <j6t@kdbg.org>
+Subject: Re: [test failure] Re: t4114 binary file becomes symlink
+Date: Mon, 20 Jul 2009 22:51:21 +0200
+Message-ID: <200907202251.22490.j6t@kdbg.org>
+References: <20090718134551.GC16708@vidovic> <200907191301.15533.j6t@kdbg.org> <20090720090937.GA20412@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: <git@vger.kernel.org>
-To: Paolo Bonzini <bonzini@gnu.org>
-X-From: git-owner@vger.kernel.org Mon Jul 20 22:46:23 2009
+Content-Type: text/plain;
+  charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Cc: Nicolas Sebrecht <nicolas.s.dev@gmx.fr>, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Jul 20 22:51:47 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MSzkc-0008La-2g
-	for gcvg-git-2@gmane.org; Mon, 20 Jul 2009 22:46:22 +0200
+	id 1MSzpq-0001n1-Br
+	for gcvg-git-2@gmane.org; Mon, 20 Jul 2009 22:51:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751900AbZGTUqM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 20 Jul 2009 16:46:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751427AbZGTUqM
-	(ORCPT <rfc822;git-outgoing>); Mon, 20 Jul 2009 16:46:12 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:33412 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751102AbZGTUqL (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 Jul 2009 16:46:11 -0400
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id A6040B60F;
-	Mon, 20 Jul 2009 16:46:10 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id B4D46B60E; Mon,
- 20 Jul 2009 16:46:07 -0400 (EDT)
-In-Reply-To: <1248112195-3761-3-git-send-email-bonzini@gnu.org> (Paolo
- Bonzini's message of "Mon\, 20 Jul 2009 19\:49\:49 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 5B4AD7F0-756E-11DE-9D7E-F699A5B33865-77302942!a-sasl-quonix.pobox.com
+	id S1751415AbZGTUve (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 20 Jul 2009 16:51:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751219AbZGTUvc
+	(ORCPT <rfc822;git-outgoing>); Mon, 20 Jul 2009 16:51:32 -0400
+Received: from bsmtp.bon.at ([213.33.87.14]:13581 "EHLO bsmtp.bon.at"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751193AbZGTUvb (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Jul 2009 16:51:31 -0400
+Received: from dx.sixt.local (unknown [93.83.142.38])
+	by bsmtp.bon.at (Postfix) with ESMTP id E16B82C400B;
+	Mon, 20 Jul 2009 22:51:24 +0200 (CEST)
+Received: from localhost (localhost [IPv6:::1])
+	by dx.sixt.local (Postfix) with ESMTP id 6532C4260A;
+	Mon, 20 Jul 2009 22:51:24 +0200 (CEST)
+User-Agent: KMail/1.9.9
+In-Reply-To: <20090720090937.GA20412@sigill.intra.peff.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123632>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123633>
 
-Paolo Bonzini <bonzini@gnu.org> writes:
-
-> This patch adds a new value for push.default.  The aim of the series is
-> to support all push.default values as arguments to `--push' in git-clone
-> and git-remote, and if push.default=mirror works it is easy to make
-> `--mirror' a synonym for `--push=mirror' in those comments.
+On Montag, 20. Juli 2009, Jeff King wrote:
+> On Sun, Jul 19, 2009 at 01:01:15PM +0200, Johannes Sixt wrote:
+> > Problem is, snprintf was made for very old systems, which typically do
+> > not have va_copy. (E.g. Windows, but there the situation *might* have
+> > changed with the switch to gcc 4.)
+> >
+> > The rationale not to use va_copy is that this function is to be used
+> > *only* if necessary, i.e. portability is already lacking, and if it
+> > can be verified that this function works as is. Portability and
+> > correct-by-the-law C code are *not* a goal here. If the function does
+> > not work as is, don't use it.
 >
-> Signed-off-by: Paolo Bonzini <bonzini@gnu.org>
-> ---
->  Documentation/config.txt |    2 ++
->  builtin-push.c           |   12 ++++++++++--
->  cache.h                  |    1 +
->  config.c                 |    4 +++-
->  4 files changed, 16 insertions(+), 3 deletions(-)
+> OK, I guess I can buy the "don't use this unless you need it" rationale.
+> But two questions:
 >
-> diff --git a/Documentation/config.txt b/Documentation/config.txt
-> index 4c27e9d..fa5eb76 100644
-> --- a/Documentation/config.txt
-> +++ b/Documentation/config.txt
-> @@ -1290,6 +1290,8 @@ push.default::
->  * `matching` push all matching branches.
->    All branches having the same name in both ends are considered to be
->    matching. This is the default.
-> +* `mirror` pushes all branches forcing non fast-forward updates and
-> +  deletes branches that do not exist anymore locally.
->  * `tracking` push the current branch to its upstream branch.
->  * `current` push the current branch to a branch of the same name.
+>   1. _Are_ we sure it works under Windows?  That is, do we know for a
+>      fact that using a va_list twice is OK there, or are we just going
+>      on the fact that nobody has reported the bug?
 
-I think this patch alone (regardless of the rest which I haven't read)
-probably makes sense.
+We are sure (well, I am sure ;) that it worked on Windows with gcc 3. It 
+certainly is a reasonable workaround. It remains to confirm that the 
+workaround works as expected on the other systems that use it (IRIX, 
+HP/UX).  'git branch -v' is a test that calls the system provided vsnprintf 
+twice (as long as the branch head commits have moderatly long summary lines).
 
-Except that I think the part below contradicts with the --mirror push
-semantics (see remote.c::match_refs()).
+On Windows, however, today everybody who compiles git is most likely using 
+msysgit's gcc 4.4. This version has C99 vsnprintf, and the workaround should 
+not be used anymore, although it does not hurt.
 
-> diff --git a/builtin-push.c b/builtin-push.c
-> index e678a9d..8a312a3 100644
-> --- a/builtin-push.c
-> +++ b/builtin-push.c
-> @@ -74,6 +73,10 @@ static void setup_default_push_refspecs(void)
->  		add_refspec(":");
->  		break;
->  
-> +	case PUSH_DEFAULT_MIRROR:
-> +		add_refspec("+refs/*:refs/*");
-> +		break;
-> +
+-- Hannes
