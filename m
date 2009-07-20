@@ -1,92 +1,96 @@
-From: demerphq <demerphq@gmail.com>
-Subject: Re: [PATCH] Add git svn gc command
-Date: Mon, 20 Jul 2009 11:02:15 +0200
-Message-ID: <9b18b3110907200202kbb78c8dm43e0451900e4f2fb@mail.gmail.com>
-References: <8E0EFA3B-E8C0-4030-8BAE-E8EF65694031@gmail.com>
-	 <20090720075929.GA5591@dcvr.yhbt.net>
-	 <9b18b3110907200115p4c0c3b45nc6c7f31b34ceff0c@mail.gmail.com>
-	 <20090720083621.GA3237@dcvr.yhbt.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: [test failure] Re: t4114 binary file becomes symlink
+Date: Mon, 20 Jul 2009 05:09:38 -0400
+Message-ID: <20090720090937.GA20412@sigill.intra.peff.net>
+References: <20090718134551.GC16708@vidovic>
+ <200907182106.06776.j6t@kdbg.org>
+ <20090718222947.GA31147@coredump.intra.peff.net>
+ <200907191301.15533.j6t@kdbg.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Robert Zeh <robert.a.zeh@gmail.com>, git@vger.kernel.org
-To: Eric Wong <normalperson@yhbt.net>
-X-From: git-owner@vger.kernel.org Mon Jul 20 11:05:35 2009
+Content-Type: text/plain; charset=utf-8
+Cc: Nicolas Sebrecht <nicolas.s.dev@gmx.fr>, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>
+To: Johannes Sixt <j6t@kdbg.org>
+X-From: git-owner@vger.kernel.org Mon Jul 20 11:10:13 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MSooH-00084o-V1
-	for gcvg-git-2@gmane.org; Mon, 20 Jul 2009 11:05:26 +0200
+	id 1MSosV-0001gI-RW
+	for gcvg-git-2@gmane.org; Mon, 20 Jul 2009 11:09:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752930AbZGTJCR convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 20 Jul 2009 05:02:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752689AbZGTJCQ
-	(ORCPT <rfc822;git-outgoing>); Mon, 20 Jul 2009 05:02:16 -0400
-Received: from mail-yx0-f184.google.com ([209.85.210.184]:50556 "EHLO
-	mail-yx0-f184.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752657AbZGTJCQ convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 20 Jul 2009 05:02:16 -0400
-Received: by yxe14 with SMTP id 14so3419248yxe.33
-        for <git@vger.kernel.org>; Mon, 20 Jul 2009 02:02:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=KBp2i7Btp3tm7+6pgAyReC6Uqjt54DOxb+NAv6fCC1s=;
-        b=HdkrTrtO0QJEfa5QcKvtPEbPI1ZckRE6vBnx/Zoqjb6WIjsXq+WPFhtXO+b7uDNh0w
-         8DmyMsNsfMZbeo2hOQS15x8pOTd8xHXSFxZPvU0a5r5PIqar4qXtwYn71Yt6tS6l5/Nq
-         b6GU5+G35JdSfAJWG1HFVP7T4kLiGGTAlXxWo=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=uDkvLjCT0sz/eids254so/Vx4RsBMtWs6p0nni6Ad7xgPd2Ke/T8AuPuU/wpg20yt+
-         ZKEicZMZqsVNCOEX3qZgUlVsZ8iqq+IxCSHxMeMP6xft7TZqtEG1yor/AjO6MJbTYMhY
-         XgnZk5geLM1zp/ph8jsSFQi80zdrp9v0rdm/0=
-Received: by 10.231.36.68 with SMTP id s4mr175922ibd.47.1248080535271; Mon, 20 
-	Jul 2009 02:02:15 -0700 (PDT)
-In-Reply-To: <20090720083621.GA3237@dcvr.yhbt.net>
+	id S1753065AbZGTJJl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 20 Jul 2009 05:09:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753046AbZGTJJk
+	(ORCPT <rfc822;git-outgoing>); Mon, 20 Jul 2009 05:09:40 -0400
+Received: from peff.net ([208.65.91.99]:38544 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753044AbZGTJJj (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Jul 2009 05:09:39 -0400
+Received: (qmail 25187 invoked by uid 107); 20 Jul 2009 09:11:41 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.40) with ESMTPA; Mon, 20 Jul 2009 05:11:41 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 20 Jul 2009 05:09:38 -0400
+Content-Disposition: inline
+In-Reply-To: <200907191301.15533.j6t@kdbg.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123581>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123582>
 
-2009/7/20 Eric Wong <normalperson@yhbt.net>:
-> demerphq <demerphq@gmail.com> wrote:
->> 2009/7/20 Eric Wong <normalperson@yhbt.net>:
->> > Robert Zeh <robert.a.zeh@gmail.com> wrote:
->> >> --- a/git-svn.perl
->> >> +++ b/git-svn.perl
->> >> @@ -35,11 +35,14 @@ push @Git::SVN::Ra::ISA, 'SVN::Ra';
->> >> =A0push @SVN::Git::Editor::ISA, 'SVN::Delta::Editor';
->> >> =A0push @SVN::Git::Fetcher::ISA, 'SVN::Delta::Editor';
->> >> =A0use Carp qw/croak/;
->> >> +use Compress::Zlib;
->> >
->> > I'd "require" Compress::Zlib lazilly so it's not loaded at startup=
-=2E
->> > It's not a stock component of Perl and not needed for the majority=
- of
->> > commands.
->>
->> Actually, it has been a core component since 5.9.3
->
-> Ah thanks for pointing that out, I didn't notice my 5.10.x install ha=
-d
-> it. =A0Nevertheless, git svn needs to continue supporting 5.8.x for a
-> while longer.
+On Sun, Jul 19, 2009 at 01:01:15PM +0200, Johannes Sixt wrote:
 
-I guess something like:
+> Problem is, snprintf was made for very old systems, which typically do
+> not have va_copy. (E.g. Windows, but there the situation *might* have
+> changed with the switch to gcc 4.)
+> 
+> The rationale not to use va_copy is that this function is to be used
+> *only* if necessary, i.e. portability is already lacking, and if it
+> can be verified that this function works as is. Portability and
+> correct-by-the-law C code are *not* a goal here. If the function does
+> not work as is, don't use it.
 
-my $can_compress=3D eval "require Compress::Zlib; 1";
+OK, I guess I can buy the "don't use this unless you need it" rationale.
+But two questions:
 
-would be the right solution.
+  1. _Are_ we sure it works under Windows?  That is, do we know for a
+     fact that using a va_list twice is OK there, or are we just going
+     on the fact that nobody has reported the bug?
 
+     If we're not sure, then you might want to try running the recipe
+     below which consistently produces a segfault for me on Linux amd64
+     (but not i386, which seems to use a different representation for
+     va_lists).
 
+  2. In this case, using SNPRINTF_RETURNS_BOGUS was a mistake. But
+     unfortunately using it erroneously doesn't simply cause the
+     compilation to barf, or to use a slower implementation; instead it
+     introduces a very subtle and hard to diagnose bug on some
+     platforms. Is there anything simple we can do to protect people
+     from that?
 
+     I can't really think of anything simple, because such a mechanism
+     would basically involve compiling a test program and seeing if it
+     segfaults.
 
---=20
-perl -Mre=3Ddebug -e "/just|another|perl|hacker/"
+Anyway, bug-reproducing recipe is below.
+
+-- >8 --
+cat <<'EOF' >test-vsnprintf.c
+#define SNPRINTF_RETURNS_BOGUS
+#include "git-compat-util.h"
+int main() {
+        char buf[16];
+        /* this 8 may need to be tweaked depending on
+         * the system's vsnprintf return value; the goal
+         * is to get git_vsnprintf to have to look at
+         * it's va_list twice */
+        git_snprintf(buf, 8, "%s %s", "foo", "bar");
+        return 0;
+}
+EOF
+make test-vsnprintf.o compat/snprintf.o
+gcc -o test-vsnprintf test-vsnprintf.o compat/snprintf.o
+./test-vsnprintf ;# or valgrind test-vsnprintf
