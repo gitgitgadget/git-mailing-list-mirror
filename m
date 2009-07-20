@@ -1,68 +1,79 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: cvs import and internal plumbing commands
-Date: Mon, 20 Jul 2009 11:34:00 -0400
-Message-ID: <20090720153400.GE5347@coredump.intra.peff.net>
-References: <B9FEA72A-882C-4CF9-97A3-A353F282ACBB@gmail.com>
- <20090716100121.GA6742@coredump.intra.peff.net>
- <7590CBC0-25BA-41D4-9BB5-40550A6CDDF6@gmail.com>
- <20090717214523.GA29955@coredump.intra.peff.net>
- <7vprbwvzu7.fsf@alter.siamese.dyndns.org>
+Subject: Re: [PATCH] Added support for core.ignorecase when excluding
+ gitignore entries
+Date: Mon, 20 Jul 2009 11:37:37 -0400
+Message-ID: <20090720153737.GF5347@coredump.intra.peff.net>
+References: <4A5EB849.1000803@workspacewhiz.com>
+ <20090716094210.GC2800@coredump.intra.peff.net>
+ <4A5F27EE.3070101@workspacewhiz.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Antony Stubbs <antony.stubbs@gmail.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jul 20 17:34:04 2009
+Cc: git@vger.kernel.org
+To: Joshua Jensen <jjensen@workspacewhiz.com>
+X-From: git-owner@vger.kernel.org Mon Jul 20 17:37:41 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MSusO-0005Ym-5m
-	for gcvg-git-2@gmane.org; Mon, 20 Jul 2009 17:34:04 +0200
+	id 1MSuvs-00070Z-Nu
+	for gcvg-git-2@gmane.org; Mon, 20 Jul 2009 17:37:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751669AbZGTPd5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 20 Jul 2009 11:33:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751379AbZGTPd4
-	(ORCPT <rfc822;git-outgoing>); Mon, 20 Jul 2009 11:33:56 -0400
-Received: from peff.net ([208.65.91.99]:32875 "EHLO peff.net"
+	id S1751622AbZGTPhe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 20 Jul 2009 11:37:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751257AbZGTPhd
+	(ORCPT <rfc822;git-outgoing>); Mon, 20 Jul 2009 11:37:33 -0400
+Received: from peff.net ([208.65.91.99]:46968 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750780AbZGTPdz (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 Jul 2009 11:33:55 -0400
-Received: (qmail 26790 invoked by uid 107); 20 Jul 2009 15:35:57 -0000
+	id S1751119AbZGTPhc (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Jul 2009 11:37:32 -0400
+Received: (qmail 26825 invoked by uid 107); 20 Jul 2009 15:39:34 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Mon, 20 Jul 2009 11:35:57 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Mon, 20 Jul 2009 11:34:00 -0400
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Mon, 20 Jul 2009 11:39:34 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Mon, 20 Jul 2009 11:37:37 -0400
 Content-Disposition: inline
-In-Reply-To: <7vprbwvzu7.fsf@alter.siamese.dyndns.org>
+In-Reply-To: <4A5F27EE.3070101@workspacewhiz.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123615>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123616>
 
-On Sun, Jul 19, 2009 at 07:43:28PM -0700, Junio C Hamano wrote:
+On Thu, Jul 16, 2009 at 07:15:26AM -0600, Joshua Jensen wrote:
 
-> We encourage script writers to just prepend "git --exec-path" at the
-> beginning of their PATH and give guarantee that this simple procedure will
-> keep their scripts working, so it might be a good idea to have an example
-> for that as well.
+> >Should we actually be converting the filesystem names into a canonical
+> >format as they are read? IIRC, Linus posted some patches a few weeks ago
+> >about "git path" versus "filesystem path", but I didn't actually look
+> >too closely.
+> I'm game for whatever.  Git actually has a lot of places where it
+> doesn't pay attention to core.ignorecase, and having a standard and
+> correct method of comparing filenames would make it easier to handle
+> core.ignorecase=true in a more global fashion.
 
-I had it in my head that such a strategy was supposed to be a temporary
-step in the process of getting rid of dashed forms. That is, you can do
-that now to avoid having your scripts break, but in the long run, you
-should be converting to the space form.
+Like I said, I'm not sure what the status of that is, so probably
+something simple like your patch makes sense in the interim (unless we
+hear from somebody more clueful).
 
-But I guess the plan was softened, and we have no deprecation plan for
-dashed forms in exec-path. So maybe my thinking was outdated.
+> >If your patch is the right route, it might be nice to collapse the
+> >comparison into its own function. You end up cutting and pasting a lot
+> >of the related conditionals and returns (like above, where 2 lines
+> >become 9), so it might make sense to do something like:
+> >
+> >  int filename_cmp(const char *a, const char *b, int ignore_case)
+> >  {
+> >    return ignore_case ? strcasecmp(a, b) : strcmp(a, b);
+> >  }
+> >
+> >and then just s/strcmp/filename_cmp/ at the appropriate callsites.
+> I started off with this method, but it required two functions, one
+> with the strcmp() and one for strncmp().  In fact, in other places in
+> the code, Git uses memcmp() for comparison.  Is that, then, three
+> filename comparison functions, dependent upon intent?  At that point,
+> it felt like my change wasn't as self contained anymore, so I then
+> wrote what I posted to the list to get feedback.
 
-> So the preferred fix might be just the matter of adding one line
-> 
-> 	$ENV{'PATH'} = `git --exec-path`. ":$ENV{'PATH'}";
-> 
-> at the beginning of the script.
-
-I can see that for a totally third-party script which wanted to use git
-plumbing.  But why do that for a git-* script? The "git" wrapper sets up
-the environment like that already.
+IMHO, you are better off even with three wrapper functions, just because
+they are all very straightforward. Whereas with your patch, I felt like
+the innards of complex functions got harder to read because of big
+duplicate conditionals. But that's just my two cents.
 
 -Peff
