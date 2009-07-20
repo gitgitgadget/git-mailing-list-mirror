@@ -1,62 +1,66 @@
-From: Peter Krefting <peter@softwolves.pp.se>
-Subject: Bad DWIM response when git gui cannot start
-Date: Mon, 20 Jul 2009 13:11:21 +0100 (CET)
-Organization: /universe/earth/europe/norway/oslo
-Message-ID: <alpine.DEB.2.00.0907201309150.5423@ds9.cixit.se>
+From: "Matthias Andree" <matthias.andree@gmx.de>
+Subject: Re: encrypted repositories? with git-torrent?
+Date: Mon, 20 Jul 2009 14:13:31 +0200
+Message-ID: <op.uxc78tdp1e62zd@balu.cs.uni-paderborn.de>
+References: <op.uw7wmbr41e62zd@balu.cs.uni-paderborn.de>
+ <alpine.LFD.2.01.0907171337320.13838@localhost.localdomain>
+ <alpine.LFD.2.01.0907171341040.13838@localhost.localdomain>
+ <200907182109.31275.thomas@koch.ro>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; format=flowed; charset=US-ASCII
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Jul 20 14:11:33 2009
+Content-Type: text/plain; format=flowed; delsp=yes; charset=iso-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: "John Tapsell" <johnflux@gmail.com>, git@vger.kernel.org
+To: thomas@koch.ro, "Linus Torvalds" <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Mon Jul 20 14:13:44 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MSriN-0008CV-HG
-	for gcvg-git-2@gmane.org; Mon, 20 Jul 2009 14:11:32 +0200
+	id 1MSrkT-0000Uk-SO
+	for gcvg-git-2@gmane.org; Mon, 20 Jul 2009 14:13:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753236AbZGTMLY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 20 Jul 2009 08:11:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753003AbZGTMLY
-	(ORCPT <rfc822;git-outgoing>); Mon, 20 Jul 2009 08:11:24 -0400
-Received: from upper-gw.cixit.se ([92.43.32.133]:37692 "EHLO mail.cixit.se"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1751053AbZGTMLX (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 Jul 2009 08:11:23 -0400
-Received: from ds9.cixit.se (peter@localhost [127.0.0.1])
-	by mail.cixit.se (8.14.3/8.14.3/Debian-5) with ESMTP id n6KCBLWB030889
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Mon, 20 Jul 2009 14:11:21 +0200
-Received: from localhost (peter@localhost)
-	by ds9.cixit.se (8.14.3/8.14.3/Submit) with ESMTP id n6KCBL9P030883;
-	Mon, 20 Jul 2009 14:11:21 +0200
-X-Authentication-Warning: ds9.cixit.se: peter owned process doing -bs
-User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
-Accept: text/plain
-X-Warning: Junk / bulk email will be reported
-X-Rating: This message is not to be eaten by humans
-X-Greylist: Sender is SPF-compliant, not delayed by milter-greylist-3.0 (mail.cixit.se [127.0.0.1]); Mon, 20 Jul 2009 14:11:21 +0200 (CEST)
+	id S1753352AbZGTMNg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 20 Jul 2009 08:13:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752876AbZGTMNf
+	(ORCPT <rfc822;git-outgoing>); Mon, 20 Jul 2009 08:13:35 -0400
+Received: from mail.gmx.net ([213.165.64.20]:33747 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750780AbZGTMNe (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Jul 2009 08:13:34 -0400
+Received: (qmail invoked by alias); 20 Jul 2009 12:13:33 -0000
+Received: from balu.cs.uni-paderborn.de (EHLO balu.cs.uni-paderborn.de) [131.234.21.37]
+  by mail.gmx.net (mp044) with SMTP; 20 Jul 2009 14:13:33 +0200
+X-Authenticated: #428038
+X-Provags-ID: V01U2FsdGVkX19IouVR8KtIDtx/QDNVzl/7j6tQhzn/Tl6fevBhnb
+	eQMtLK3We8l0aj
+Received: from localhost ([127.0.0.1] helo=balu.cs.uni-paderborn.de)
+	by balu.cs.uni-paderborn.de with esmtp (Exim 4.69)
+	(envelope-from <matthias.andree@gmx.de>)
+	id KN2XYK-0004GO-5O; Mon, 20 Jul 2009 14:13:32 +0200
+In-Reply-To: <200907182109.31275.thomas@koch.ro>
+User-Agent: Opera Mail/9.64 (Win32)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.67
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123596>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123597>
 
-If git cannot start one of the external commands (at least some of them), 
-the DWIM engine is a bit flaky:
+Am 18.07.2009, 21:09 Uhr, schrieb Thomas Koch <thomas@koch.ro>:
 
-   $ git citool
-   /usr/local/libexec/git-core/git-citool: line 10: exec: wish: not found
-   git: 'citool' is not a git-command. See 'git --help'.
+> Wouldn't this be a use case for git-torrent?
+> http://code.google.com/p/gittorrent/
+> http://repo.or.cz/w/VCS-Git-Torrent.git
+>
+> As I understand it, all data would be stored decentraliced and the  
+> (optional?) central server only saves, who has which objects.
 
-   Did you mean this?
-       citool
-
-   $ git gui
-   /usr/local/libexec/git-core/git-gui: line 10: exec: wish: not found
-   git: 'gui' is not a git-command. See 'git --help'.
-
-   Did you mean this?
-       gui
+I wonder about latency and accessibility here if clients are disconnected.  
+Seems this is more for transferring repositories to large numbers of  
+customers as sort of content distribution network for high load, rather  
+than low connectivity - and the latter is my prime concern and also a  
+detail of my scenario.
 
 -- 
-\\// Peter - http://www.softwolves.pp.se/
+Matthias Andree
