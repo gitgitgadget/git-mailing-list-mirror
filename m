@@ -1,52 +1,62 @@
-From: Roald de Vries <rdv@roalddevries.nl>
-Subject: clone
-Date: Mon, 20 Jul 2009 16:33:51 +0200
-Message-ID: <D229D90E-0294-475D-B7AC-6C7B23CC169A@roalddevries.nl>
-Mime-Version: 1.0 (Apple Message framework v935.3)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
-Content-Transfer-Encoding: 7bit
+From: Peter Simons <simons@cryp.to>
+Subject: Re: [PATCH] post-update.sample referenced obsolete binary "git-update-server-info"
+Date: Mon, 20 Jul 2009 16:46:47 +0200
+Organization: private
+Message-ID: <87r5wb5s4o.fsf@write-only.cryp.to>
+References: <874otb724d.fsf@write-only.cryp.to> <4A60A2DC.90506@drmicha.warpmail.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jul 20 16:34:57 2009
+X-From: git-owner@vger.kernel.org Mon Jul 20 16:47:14 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MStx9-0006k4-1w
-	for gcvg-git-2@gmane.org; Mon, 20 Jul 2009 16:34:55 +0200
+	id 1MSu94-0003Br-1Z
+	for gcvg-git-2@gmane.org; Mon, 20 Jul 2009 16:47:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751542AbZGTOes (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 20 Jul 2009 10:34:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750893AbZGTOer
-	(ORCPT <rfc822;git-outgoing>); Mon, 20 Jul 2009 10:34:47 -0400
-Received: from platinum.liacs.nl ([132.229.131.22]:60601 "EHLO
-	platinum.liacs.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750780AbZGTOer (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 Jul 2009 10:34:47 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by platinum.liacs.nl (8.14.2/8.14.2/LIACS 1.5) with ESMTP id n6KEYc35022125
-	for <git@vger.kernel.org>; Mon, 20 Jul 2009 16:34:40 +0200
-X-Virus-Scanned: amavisd-new at liacs.nl
-Received: from platinum.liacs.nl ([127.0.0.1])
-	by localhost (platinum.liacs.nl [127.0.0.1]) (amavisd-new, port 10024)
-	with LMTP id m+o5LXdkWNZz for <git@vger.kernel.org>;
-	Mon, 20 Jul 2009 16:34:25 +0200 (CEST)
-Received: from prive147.liacs.nl (prive147.liacs.nl [132.229.16.147])
-	by platinum.liacs.nl (8.14.2/8.14.2/LIACS 1.5) with ESMTP id n6KEXvKP022003
-	for <git@vger.kernel.org>; Mon, 20 Jul 2009 16:33:58 +0200
-X-Mailer: Apple Mail (2.935.3)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0 (platinum.liacs.nl [132.229.131.22]); Mon, 20 Jul 2009 16:33:59 +0200 (CEST)
+	id S1751012AbZGTOrF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 20 Jul 2009 10:47:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751136AbZGTOrF
+	(ORCPT <rfc822;git-outgoing>); Mon, 20 Jul 2009 10:47:05 -0400
+Received: from main.gmane.org ([80.91.229.2]:55692 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751009AbZGTOrE (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Jul 2009 10:47:04 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1MSu8o-0005Av-QK
+	for git@vger.kernel.org; Mon, 20 Jul 2009 14:46:58 +0000
+Received: from p54bd1642.dip0.t-ipconnect.de ([84.189.22.66])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 20 Jul 2009 14:46:58 +0000
+Received: from simons by p54bd1642.dip0.t-ipconnect.de with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 20 Jul 2009 14:46:58 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: p54bd1642.dip0.t-ipconnect.de
+Cancel-Lock: sha1:kn4N0CzCm+AVGC8qozJ9KMFzjh8=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123605>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123606>
 
-Dear all,
+Hi Michael,
 
-If I clone a repository with multiple branches to 'newdir', and then  
-type 'git branch' in 'newdir', I see only 1 branch. 'git branch -r'  
-gives me all branches. Is that correct behaviour? If so, why? And  
-mainly: can I configure git to clone all original branches to non- 
-remote branches?
+ >> -exec git-update-server-info
+ >> +exec git update-server-info
+ >>
+ >
+ > t/t5540-http-push.sh should fail if this really needed a fix (libexec
+ > is in $PATH for hooks).
 
-Kind regards, Roald
+you are right, the call to git-update-server-info does succeed, so there
+is no need to make that change.
+
+Personally, I find it unfortunate, though, that those scripts rely on
+commands that won't exist when a normal user runs them.
+
+Just my 2 cents,
+Peter
