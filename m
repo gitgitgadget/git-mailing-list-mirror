@@ -1,70 +1,68 @@
-From: Johan Kiviniemi <johan@kiviniemi.name>
-Subject: [ANNOUNCE] update-base-branch: Track arbitrary external content in 
-	Git branch
-Date: Tue, 21 Jul 2009 17:29:02 +0300
-Message-ID: <bd9320b40907210729q32b3e031r54cc7474d1b5685d@mail.gmail.com>
+From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+Subject: Re: [JGIT PATCH v2] FindBugs: don't use new String(String) in RefDatabase
+Date: Tue, 21 Jul 2009 16:50:36 +0200
+Message-ID: <200907211650.36831.robin.rosenberg.lists@dewire.com>
+References: <49C20D4E.5020203@gmail.com> <551f769b0907130107j51d32e4er54e125f9dc61dd80@mail.gmail.com> <20090713145308.GI11191@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: Text/Plain; charset=iso-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git list <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Jul 21 16:29:50 2009
+Cc: Yann Simon <yann.simon.fr@gmail.com>, git <git@vger.kernel.org>
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Tue Jul 21 16:50:55 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MTGLl-0001LM-4z
-	for gcvg-git-2@gmane.org; Tue, 21 Jul 2009 16:29:49 +0200
+	id 1MTGgA-0002IH-F6
+	for gcvg-git-2@gmane.org; Tue, 21 Jul 2009 16:50:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754803AbZGUO3F convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 21 Jul 2009 10:29:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754590AbZGUO3F
-	(ORCPT <rfc822;git-outgoing>); Tue, 21 Jul 2009 10:29:05 -0400
-Received: from mail-bw0-f228.google.com ([209.85.218.228]:38994 "EHLO
-	mail-bw0-f228.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754542AbZGUO3D convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 21 Jul 2009 10:29:03 -0400
-Received: by bwz28 with SMTP id 28so2626464bwz.37
-        for <git@vger.kernel.org>; Tue, 21 Jul 2009 07:29:02 -0700 (PDT)
-Received: by 10.239.135.78 with SMTP id c14mr569550hbc.102.1248186542259; Tue, 
-	21 Jul 2009 07:29:02 -0700 (PDT)
+	id S1751693AbZGUOup convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 21 Jul 2009 10:50:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751650AbZGUOuo
+	(ORCPT <rfc822;git-outgoing>); Tue, 21 Jul 2009 10:50:44 -0400
+Received: from mail.dewire.com ([83.140.172.130]:2944 "EHLO dewire.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751600AbZGUOun convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 21 Jul 2009 10:50:43 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by dewire.com (Postfix) with ESMTP id 124EA1481DB3;
+	Tue, 21 Jul 2009 16:50:39 +0200 (CEST)
+X-Virus-Scanned: by amavisd-new at dewire.com
+Received: from dewire.com ([127.0.0.1])
+	by localhost (torino.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id po9M045Jo5t7; Tue, 21 Jul 2009 16:50:38 +0200 (CEST)
+Received: from sleipner.localnet (unknown [10.9.0.6])
+	by dewire.com (Postfix) with ESMTP id 7450F1481DB2;
+	Tue, 21 Jul 2009 16:50:38 +0200 (CEST)
+User-Agent: KMail/1.11.2 (Linux/2.6.28-11-generic; KDE/4.2.2; i686; ; )
+In-Reply-To: <20090713145308.GI11191@spearce.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123658>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123659>
 
-To reduce the pain with the merging of my config changes (for various
-software) with upstream=E2=80=99s new defaults, I came up with a small =
-program
-to track the default config files in a Git branch.
+m=E5ndag 13 juli 2009 16:53:08 skrev "Shawn O. Pearce" <spearce@spearce=
+=2Eorg>:
+>  Yann Simon <yann.simon.fr@gmail.com> wrote:
+>  > This method is quite clear.
+>  > One line javadoc would make it even clearer... :p (and maybe make =
+Robin happy)
+> =20
+>  Javadoc is overrated.  Private utility methods like this that are on=
+e
+>  line long don't need documentation.  The rationale for why this line
+>  does what it does is something that `git blame` can answer better.
 
-With things set up, the update and the merge become a matter of:
+Sorry Yann, I'm with Shawn here. A comment wouldn't add anything here s=
+ince
+the method is pretty simple. Besides javadocs are for API's so an inlin=
+e comment
+would be better, but I don't think it is necessary.
 
-% ./update-defaults (or whatever you=E2=80=99ll call your script)
-% git merge defaults (or whatever you=E2=80=99ll call the defaults bran=
-ch)
+Shawn, any references for the ability of JIT's abilities to stack alloc=
+ate in this context? For
+me learning, will commit anyway.
 
-The program is generic, of course =E2=80=93 I=E2=80=99ve already found =
-other uses for it[1].
-
-The README:
-http://github.com/ion1/update-base-branch#readme
-
-How I use the program in real life =E2=80=93 examples of what the
-update-defaults script mentioned above could look like:
-http://github.com/ion1/update-base-branch/tree/master/examples#browser
-
-Release tarball:
-http://johan.kiviniemi.name/software/update-base-branch/
-
-A demonstration: using the program to update the user config for the
-Awesome window manager:
-http://www.youtube.com/watch?v=3DRQ3CqJ4jM90&fmt=3D18
-
-[1] If there is no public VCS repository for a piece of software and
-you want to maintain/send patches, use update-base-branch to track the
-contents of the latest released tarball and merge that branch with
-your =E2=80=98master=E2=80=99.
-
---=20
-J=CE=BFhan Kiviniemi
+-- robina
