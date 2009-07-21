@@ -1,84 +1,64 @@
-From: Brandon Casey <casey@nrlssc.navy.mil>
-Subject: [PATCH] configure.ac: rework/fix the NEEDS_RESOLV and NEEDS_LIBGEN tests
-Date: Tue, 21 Jul 2009 15:23:06 -0500
-Message-ID: <N0R1rELOlDFDG8pOY2LYJHmWygM5WFD8q_fNZgfE1A2QOX1yg6OPCZW4RbX5i03hokq4Bx2zOjM@cipher.nrlssc.navy.mil>
-References: <qSl_KXgcJD_1H47Nrg3FwRdtL-WxwLP1_aueDE8gN-By3M0uJOpw1w@cipher.nrlssc.navy.mil>
-Cc: git@vger.kernel.org, j6t@kdbg.org, peff@peff.net, david@syzdek.net,
-	gitster@pobox.com, jnareb@gmail.com, bonzini@gnu.org,
-	Brandon Casey <drafnel@gmail.com>
-To: nicolas.s.dev@gmx.fr
-X-From: git-owner@vger.kernel.org Tue Jul 21 22:24:44 2009
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFE] allow git bisect to figure out in which revision a bug was
+ fixed
+Date: Tue, 21 Jul 2009 13:24:46 -0700
+Message-ID: <7vfxcpdbsh.fsf@alter.siamese.dyndns.org>
+References: <x49ocrdokp9.fsf@segfault.boston.devel.redhat.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Josef Bacik <josef@redhat.com>
+To: Jeff Moyer <jmoyer@redhat.com>
+X-From: git-owner@vger.kernel.org Tue Jul 21 22:25:42 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MTLtC-00036x-9u
-	for gcvg-git-2@gmane.org; Tue, 21 Jul 2009 22:24:42 +0200
+	id 1MTLu8-0003Vp-7o
+	for gcvg-git-2@gmane.org; Tue, 21 Jul 2009 22:25:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755158AbZGUUYd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 21 Jul 2009 16:24:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755145AbZGUUYd
-	(ORCPT <rfc822;git-outgoing>); Tue, 21 Jul 2009 16:24:33 -0400
-Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:54432 "EHLO
-	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755079AbZGUUYc (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 21 Jul 2009 16:24:32 -0400
-Received: by mail.nrlssc.navy.mil id n6LKNYkb003321; Tue, 21 Jul 2009 15:23:34 -0500
-In-Reply-To: <qSl_KXgcJD_1H47Nrg3FwRdtL-WxwLP1_aueDE8gN-By3M0uJOpw1w@cipher.nrlssc.navy.mil>
-X-OriginalArrivalTime: 21 Jul 2009 20:23:33.0603 (UTC) FILETIME=[1E99D330:01CA0A41]
+	id S1756196AbZGUUYw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 21 Jul 2009 16:24:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756194AbZGUUYw
+	(ORCPT <rfc822;git-outgoing>); Tue, 21 Jul 2009 16:24:52 -0400
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:34917 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756193AbZGUUYw (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 21 Jul 2009 16:24:52 -0400
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id A0968E0D8;
+	Tue, 21 Jul 2009 16:24:51 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 03012E0D2; Tue,
+ 21 Jul 2009 16:24:47 -0400 (EDT)
+In-Reply-To: <x49ocrdokp9.fsf@segfault.boston.devel.redhat.com> (Jeff Moyer's
+ message of "Tue\, 21 Jul 2009 16\:16\:50 -0400")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 8B612298-7634-11DE-B83C-F699A5B33865-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123706>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123707>
 
-From: Brandon Casey <drafnel@gmail.com>
+Jeff Moyer <jmoyer@redhat.com> writes:
 
-The "action" parameters for these two tests were supplied incorrectly for
-the way the tests were implemented.  The tests check whether a program
-which calls hstrerror() or basename() successfully links when -lresolv or
--lgen are used, respectively.  A successful linking would result in
-NEEDS_RESOLV or NEEDS_LIBGEN being unset, and failure would result in
-setting the respective variable.
+> As a distro kernel grunt, I sometimes find myself in the situation of
+> having to track down the commit that fixed a given problem so that I can
+> backport it to an older kernel.  Sometimes I'm smart enough to figure it
+> out myself, other times I'm not.  ;-)  It would be helpful if git bisect
+> could help figure out in what commit a bug was fixed as opposed to
+> introduced.  Is there any interest in implementing such a feature?
 
-Aside from that issue, the tests did not handle the case where neither
-library was necessary for accessing the functions in question.  So solve
-both of these issues by re-working the two tests so that their form is like
-the NEEDS_SOCKET test which attempts to link with just the c library, and
-if it fails then assumes that the additional library is necessary and sets
-the appropriate variable.
+Doesn't that already exist?
 
-Signed-off-by: Brandon Casey <drafnel@gmail.com>
----
+You are hunting for an existence of the bug, so any commit that is buggy
+(with respect to the bug you are interested in) is *GOOD*.  The tip of the
+upstream is *BAD* in that it does not have your favourite bug anymore.
 
+You bisect that history down, and will find the first *BAD* commit.
 
-Maybe this is the appropriate thing to do?
+Now, why is that commit the procedure finds is *BAD*, again?  Yup, because
+it does not have your favourite bug anymore.  And why is that so?
 
--brandon
-
-
- configure.ac |    4 ++--
- 1 files changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/configure.ac b/configure.ac
-index 74d0af5..ba44cf2 100644
---- a/configure.ac
-+++ b/configure.ac
-@@ -479,13 +479,13 @@ test -n "$NEEDS_SOCKET" && LIBS="$LIBS -lsocket"
- # Define NEEDS_RESOLV if linking with -lnsl and/or -lsocket is not enough.
- # Notably on Solaris hstrerror resides in libresolv and on Solaris 7
- # inet_ntop and inet_pton additionally reside there.
--AC_CHECK_LIB([resolv], [hstrerror],
-+AC_CHECK_LIB([c], [hstrerror],
- [NEEDS_RESOLV=],
- [NEEDS_RESOLV=YesPlease])
- AC_SUBST(NEEDS_RESOLV)
- test -n "$NEEDS_RESOLV" && LIBS="$LIBS -lresolv"
- 
--AC_CHECK_LIB([gen], [basename],
-+AC_CHECK_LIB([c], [basename],
- [NEEDS_LIBGEN=],
- [NEEDS_LIBGEN=YesPlease])
- AC_SUBST(NEEDS_LIBGEN)
--- 
-1.6.3.1.24.g152f4
+Because the commit fixed that bug.
