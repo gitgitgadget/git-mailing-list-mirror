@@ -1,56 +1,148 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [PATCH] Show the presence of untracked files in the bash
-	prompt.
-Date: Tue, 21 Jul 2009 10:19:52 -0700
-Message-ID: <20090721171952.GS11191@spearce.org>
-References: <20090721171445.GA25762@bug.science-computing.de>
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: [RFC/PATCH RESEND v2] git-gui: display summary when showing diff
+ of a submodule
+Date: Tue, 21 Jul 2009 19:32:31 +0200
+Message-ID: <4A65FBAF.9020603@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Daniel Trstenjak <Daniel.Trstenjak@online.de>
-To: Daniel Trstenjak <daniel.trstenjak@science-computing.de>
-X-From: git-owner@vger.kernel.org Tue Jul 21 19:20:01 2009
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: gitster@pobox.com, "Shawn O. Pearce" <spearce@spearce.org>,
+	Heiko Voigt <hvoigt@hvoigt.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jul 21 19:33:07 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MTJ0S-00083b-8i
-	for gcvg-git-2@gmane.org; Tue, 21 Jul 2009 19:20:00 +0200
+	id 1MTJD6-0005w2-Ki
+	for gcvg-git-2@gmane.org; Tue, 21 Jul 2009 19:33:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755808AbZGURTx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 21 Jul 2009 13:19:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755736AbZGURTw
-	(ORCPT <rfc822;git-outgoing>); Tue, 21 Jul 2009 13:19:52 -0400
-Received: from george.spearce.org ([209.20.77.23]:35492 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755646AbZGURTw (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 21 Jul 2009 13:19:52 -0400
-Received: by george.spearce.org (Postfix, from userid 1001)
-	id 9A4A4381FD; Tue, 21 Jul 2009 17:19:52 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <20090721171445.GA25762@bug.science-computing.de>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1755719AbZGURce (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 21 Jul 2009 13:32:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755105AbZGURcd
+	(ORCPT <rfc822;git-outgoing>); Tue, 21 Jul 2009 13:32:33 -0400
+Received: from fmmailgate03.web.de ([217.72.192.234]:43168 "EHLO
+	fmmailgate03.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752455AbZGURcc (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 21 Jul 2009 13:32:32 -0400
+Received: from smtp06.web.de (fmsmtp06.dlan.cinetic.de [172.20.5.172])
+	by fmmailgate03.web.de (Postfix) with ESMTP id BE615107134CF;
+	Tue, 21 Jul 2009 19:32:31 +0200 (CEST)
+Received: from [80.128.82.51] (helo=[192.168.178.26])
+	by smtp06.web.de with asmtp (WEB.DE 4.110 #277)
+	id 1MTJCZ-0000fF-00; Tue, 21 Jul 2009 19:32:31 +0200
+User-Agent: Thunderbird 2.0.0.22 (X11/20090605)
+X-Sender: Jens.Lehmann@web.de
+X-Provags-ID: V01U2FsdGVkX18kFFAfOVROX1izHs+0t2yiDOVOrOtn4kVkX8/3
+	wtZTXRBY8vchuFIdiwUMa3njZfZyK52NPDpMycJqftSZwmTRXj
+	m2Eyy+svCZCb0MdiWycw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123678>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123679>
 
-Daniel Trstenjak <daniel.trstenjak@science-computing.de> wrote:
-> Added the envvar GIT_PS1_SHOWUNTRACKEDFILES to 'git-completion.bash'.
-> When set to a nonempty value, then the char '%' will be shown next
-> to the branch name in the bash prompt.
-> @@ -156,12 +161,19 @@ __git_ps1 ()
->  			if [ -n "${GIT_PS1_SHOWSTASHSTATE-}" ]; then
->  			        git rev-parse --verify refs/stash >/dev/null 2>&1 && s="$"
->  			fi
-> +
-> +			if [ -n "${GIT_PS1_SHOWUNTRACKEDFILES-}" ]; then
-> +			   local num_untracked_files=$(git ls-files --others --exclude-standard | wc -l)
-> +			   if [ $num_untracked_files -gt "0" ]; then
+As it is hard to say what changed in a submodule by looking at the hashes,
+let's show the colored submodule summary instead.
 
-Wouldn't using -n be easier here?
+Signed-off-by: Jens Lehmann <Jens.Lehmann@web.de>
+---
 
-   if [ -n "$(git ls-files --others --exclude-standard)" ]; then
+I got only one response two weeks ago, so here is a resend.
 
+
+ git-gui/git-gui.sh   |    2 +-
+ git-gui/lib/diff.tcl |   30 ++++++++++++++++++++++++++++--
+ 2 files changed, 29 insertions(+), 3 deletions(-)
+
+diff --git a/git-gui/git-gui.sh b/git-gui/git-gui.sh
+index 14b92ba..3c0ce26 100755
+--- a/git-gui/git-gui.sh
++++ b/git-gui/git-gui.sh
+@@ -3212,7 +3212,7 @@ proc popup_diff_menu {ctxm ctxmmg x y X Y} {
+ 			set l [mc "Stage Hunk For Commit"]
+ 			set t [mc "Stage Line For Commit"]
+ 		}
+-		if {$::is_3way_diff
++		if {$::is_3way_diff || $::is_submodule_diff
+ 			|| $current_diff_path eq {}
+ 			|| {__} eq $state
+ 			|| {_O} eq $state
+diff --git a/git-gui/lib/diff.tcl b/git-gui/lib/diff.tcl
+index 925b3f5..ae1ea3a 100644
+--- a/git-gui/lib/diff.tcl
++++ b/git-gui/lib/diff.tcl
+@@ -255,7 +255,7 @@ proc show_other_diff {path w m cont_info} {
+
+ proc start_show_diff {cont_info {add_opts {}}} {
+ 	global file_states file_lists
+-	global is_3way_diff diff_active repo_config
++	global is_3way_diff is_submodule_diff diff_active repo_config
+ 	global ui_diff ui_index ui_workdir
+ 	global current_diff_path current_diff_side current_diff_header
+
+@@ -265,6 +265,7 @@ proc start_show_diff {cont_info {add_opts {}}} {
+ 	set s $file_states($path)
+ 	set m [lindex $s 0]
+ 	set is_3way_diff 0
++	set is_submodule_diff 0
+ 	set diff_active 1
+ 	set current_diff_header {}
+
+@@ -295,6 +296,11 @@ proc start_show_diff {cont_info {add_opts {}}} {
+ 		lappend cmd $path
+ 	}
+
++	if {[string match {160000 *} [lindex $s 2]]
++        || [string match {160000 *} [lindex $s 3]]} {
++		set cmd {submodule summary -- $current_diff_path}
++	}
++
+ 	if {[catch {set fd [eval git_read --nice $cmd]} err]} {
+ 		set diff_active 0
+ 		unlock_index
+@@ -312,7 +318,7 @@ proc start_show_diff {cont_info {add_opts {}}} {
+ }
+
+ proc read_diff {fd cont_info} {
+-	global ui_diff diff_active
++	global ui_diff diff_active is_submodule_diff
+ 	global is_3way_diff is_conflict_diff current_diff_header
+ 	global current_diff_queue
+ 	global diff_empty_count
+@@ -337,6 +343,9 @@ proc read_diff {fd cont_info} {
+ 		}
+ 		set ::current_diff_inheader 0
+
++		if {[regexp {^\* } $line]} {
++			set is_submodule_diff 1
++		}
+ 		# -- Automatically detect if this is a 3 way diff.
+ 		#
+ 		if {[string match {@@@ *} $line]} {set is_3way_diff 1}
+@@ -374,6 +383,23 @@ proc read_diff {fd cont_info} {
+ 				set tags {}
+ 			}
+ 			}
++		} elseif {$is_submodule_diff} {
++			if {$line == ""} continue
++			if {[regexp {^\* } $line]} {
++				set line [string replace $line 0 1 {Submodule }]
++				set tags d_@
++			} else {
++				set op [string range $line 0 2]
++				switch -- $op {
++				{  <} {set tags d_-}
++				{  >} {set tags d_+}
++				{  W} {set tags {}}
++				default {
++					puts "error: Unhandled submodule diff marker: {$op}"
++					set tags {}
++				}
++				}
++			}
+ 		} else {
+ 			set op [string index $line 0]
+ 			switch -- $op {
 -- 
-Shawn.
+1.6.3.3.386.g0f75a.dirty
