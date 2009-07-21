@@ -1,73 +1,64 @@
-From: Catalin Marinas <catalin.marinas@arm.com>
-Subject: [PATCH] Preserve the protection mode for the Git config files
-Date: Tue, 21 Jul 2009 16:24:36 +0100
-Message-ID: <20090721152435.16642.47207.stgit@pc1117.cambridge.arm.com>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: [JGIT PATCH 05/11] Don't advertise HEAD from ReceivePack
+Date: Tue, 21 Jul 2009 08:28:00 -0700
+Message-ID: <20090721152800.GQ11191@spearce.org>
+References: <1247343566-19025-1-git-send-email-spearce@spearce.org> <1247343566-19025-5-git-send-email-spearce@spearce.org> <1247343566-19025-6-git-send-email-spearce@spearce.org> <200907211722.09631.robin.rosenberg.lists@dewire.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jul 21 17:25:00 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+X-From: git-owner@vger.kernel.org Tue Jul 21 17:28:10 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MTHD3-0000yf-Q2
-	for gcvg-git-2@gmane.org; Tue, 21 Jul 2009 17:24:54 +0200
+	id 1MTHGE-0002YD-8U
+	for gcvg-git-2@gmane.org; Tue, 21 Jul 2009 17:28:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755338AbZGUPYi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 21 Jul 2009 11:24:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755293AbZGUPYi
-	(ORCPT <rfc822;git-outgoing>); Tue, 21 Jul 2009 11:24:38 -0400
-Received: from cam-admin0.cambridge.arm.com ([193.131.176.58]:51598 "EHLO
-	cam-admin0.cambridge.arm.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755246AbZGUPYh (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 21 Jul 2009 11:24:37 -0400
-Received: from cam-owa1.Emea.Arm.com (cam-owa1.emea.arm.com [10.1.255.62])
-	by cam-admin0.cambridge.arm.com (8.12.6/8.12.6) with ESMTP id n6LFKUZm017527
-	for <git@vger.kernel.org>; Tue, 21 Jul 2009 16:20:30 +0100 (BST)
-Received: from pc1117.cambridge.arm.com ([10.1.255.212]) by cam-owa1.Emea.Arm.com with Microsoft SMTPSVC(6.0.3790.0);
-	 Tue, 21 Jul 2009 16:24:36 +0100
-User-Agent: StGit/0.15-rc1-9-gd8846
-X-OriginalArrivalTime: 21 Jul 2009 15:24:36.0380 (UTC) FILETIME=[5B2ECDC0:01CA0A17]
+	id S1755389AbZGUP2B (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 21 Jul 2009 11:28:01 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755348AbZGUP2A
+	(ORCPT <rfc822;git-outgoing>); Tue, 21 Jul 2009 11:28:00 -0400
+Received: from george.spearce.org ([209.20.77.23]:35651 "EHLO
+	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753823AbZGUP2A (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 21 Jul 2009 11:28:00 -0400
+Received: by george.spearce.org (Postfix, from userid 1001)
+	id 643B7381FD; Tue, 21 Jul 2009 15:28:00 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <200907211722.09631.robin.rosenberg.lists@dewire.com>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123665>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123666>
 
-Every time an option is set, the config file protection mode is changed
-to 0666 & ~umask even if it was different before. This patch is useful
-if people store passwords (SMTP server in the StGit case) and do not
-want others to read the .gitconfig file.
+Robin Rosenberg <robin.rosenberg.lists@dewire.com> wrote:
+> l?rdag 11 juli 2009 22:19:20 skrev "Shawn O. Pearce" <spearce@spearce.org>:
+> > diff --git a/org.spearce.jgit/src/org/spearce/jgit/transport/ReceivePack.java b/org.spearce.jgit/src/org/spearce/jgit/transport/ReceivePack.java
+> > index fd8aa86..1c490af 100644
+> > --- a/org.spearce.jgit/src/org/spearce/jgit/transport/ReceivePack.java
+> > +++ b/org.spearce.jgit/src/org/spearce/jgit/transport/ReceivePack.java
+> > @@ -509,8 +509,11 @@ private void sendAdvertisedRefs() throws IOException {
+> >  		adv.advertiseCapability(CAPABILITY_REPORT_STATUS);
+> >  		if (allowOfsDelta)
+> >  			adv.advertiseCapability(CAPABILITY_OFS_DELTA);
+> > -		refs = db.getAllRefs();
+> > +		refs = new HashMap<String, Ref>(db.getAllRefs());
+> > +		final Ref head = refs.remove(Constants.HEAD);
+> >  		adv.send(refs.values());
+> > +		if (head != null && head.getName() == head.getOrigName())
+> > +			adv.advertiseHave(head.getObjectId());
+> 
+> This relies on an implicit guarantee that == works here. Would equals cost
+> too much? Or perhaps we should document this guarantee as part of the
+> interface.
 
-Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
----
- lockfile.c |    6 +++++-
- 1 files changed, 5 insertions(+), 1 deletions(-)
+Ouch, good point, .equals would be better here.  Can you amend?
+If its the only issue in the series just amend it to be .equals(),
+if there are other things for me to fix I'll be happy to send an
+updated patch.
 
-diff --git a/lockfile.c b/lockfile.c
-index eb931ed..87ee233 100644
---- a/lockfile.c
-+++ b/lockfile.c
-@@ -124,8 +124,12 @@ static char *resolve_symlink(char *p, size_t s)
- 
- static int lock_file(struct lock_file *lk, const char *path, int flags)
- {
-+	struct stat st;
-+
- 	if (strlen(path) >= sizeof(lk->filename))
- 		return -1;
-+	if (stat(path, &st) < 0)
-+		st.st_mode = 0666;
- 	strcpy(lk->filename, path);
- 	/*
- 	 * subtract 5 from size to make sure there's room for adding
-@@ -134,7 +138,7 @@ static int lock_file(struct lock_file *lk, const char *path, int flags)
- 	if (!(flags & LOCK_NODEREF))
- 		resolve_symlink(lk->filename, sizeof(lk->filename)-5);
- 	strcat(lk->filename, ".lock");
--	lk->fd = open(lk->filename, O_RDWR | O_CREAT | O_EXCL, 0666);
-+	lk->fd = open(lk->filename, O_RDWR | O_CREAT | O_EXCL, st.st_mode);
- 	if (0 <= lk->fd) {
- 		if (!lock_file_list) {
- 			sigchain_push_common(remove_lock_file_on_signal);
+-- 
+Shawn.
