@@ -1,82 +1,70 @@
-From: Martin Pirker <git.collector@gmail.com>
-Subject: synchronizing 2 heterogenous branches by cherry-pick
-Date: Tue, 21 Jul 2009 14:42:10 +0200
-Message-ID: <8d53e6220907210542p4c989f3av2b57202fdd2db1f5@mail.gmail.com>
+From: Johan Kiviniemi <johan@kiviniemi.name>
+Subject: [ANNOUNCE] update-base-branch: Track arbitrary external content in 
+	Git branch
+Date: Tue, 21 Jul 2009 17:29:02 +0300
+Message-ID: <bd9320b40907210729q32b3e031r54cc7474d1b5685d@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jul 21 14:42:20 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git list <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Jul 21 16:29:50 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MTEfj-0003X2-TT
-	for gcvg-git-2@gmane.org; Tue, 21 Jul 2009 14:42:20 +0200
+	id 1MTGLl-0001LM-4z
+	for gcvg-git-2@gmane.org; Tue, 21 Jul 2009 16:29:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754848AbZGUMmN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 21 Jul 2009 08:42:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752802AbZGUMmM
-	(ORCPT <rfc822;git-outgoing>); Tue, 21 Jul 2009 08:42:12 -0400
-Received: from rv-out-0506.google.com ([209.85.198.239]:15017 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751379AbZGUMmL (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 21 Jul 2009 08:42:11 -0400
-Received: by rv-out-0506.google.com with SMTP id f6so828595rvb.1
-        for <git@vger.kernel.org>; Tue, 21 Jul 2009 05:42:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:date:message-id:subject
-         :from:to:content-type:content-transfer-encoding;
-        bh=y6dbzmaze/SkxJ1L1CSjfCHwHSgzG3cs2pZbjHOfnn8=;
-        b=MwZWBbBka3Uokt7fmuVbrKisxhMpdzQg4VUEi6vf5gZyqgtitP+HReJRrfGtF4Hb8P
-         1SlM8Rl8eMjiDhkRy4KPY6zJwQV1qPRQ0nfa6Nh4F/ZCcBuLQ9+Kc6euxvfWJdxml0d/
-         Gp+aFUFd0ddqI1zHXsHBnT1UiTDfNw5eNnwAg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type
-         :content-transfer-encoding;
-        b=qjVgO00hKnIkKq5HKHMNIksv/Tk9JN95d0BdwtlobzsO7usnYW/1j6sl/Zj6oSDZb/
-         +jm9RhCsMwlKH0yzXCttK727RyxH6pV1NtihvdRlfcLK0HGvSPMvjJqOv2kuZE4E+1AJ
-         pGW69WoJiXvngDxXnUyHHfBZ/qlA2G8ap4bVU=
-Received: by 10.140.201.4 with SMTP id y4mr3397554rvf.205.1248180130808; Tue, 
-	21 Jul 2009 05:42:10 -0700 (PDT)
+	id S1754803AbZGUO3F convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 21 Jul 2009 10:29:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754590AbZGUO3F
+	(ORCPT <rfc822;git-outgoing>); Tue, 21 Jul 2009 10:29:05 -0400
+Received: from mail-bw0-f228.google.com ([209.85.218.228]:38994 "EHLO
+	mail-bw0-f228.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754542AbZGUO3D convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 21 Jul 2009 10:29:03 -0400
+Received: by bwz28 with SMTP id 28so2626464bwz.37
+        for <git@vger.kernel.org>; Tue, 21 Jul 2009 07:29:02 -0700 (PDT)
+Received: by 10.239.135.78 with SMTP id c14mr569550hbc.102.1248186542259; Tue, 
+	21 Jul 2009 07:29:02 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123657>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123658>
 
-One of those weird real-world situations, advice appreciated:
+To reduce the pain with the merging of my config changes (for various
+software) with upstream=E2=80=99s new defaults, I came up with a small =
+program
+to track the default config files in a Git branch.
 
-Given...
-one Git repository with
-one branch "left" and one branch "right"
-both branches have a different history (common ancestor is 0000000)
-both branches have different content
-_however_, at one specific commit in the "left" and "right"
-branch it can be said that the content of specific
-subdirectories is identical
-these commits are marked with a tag "equal"
+With things set up, the update and the merge become a matter of:
 
-Thus, patches which only modify the identical
-content can always be applied without conflicts on both branches.
-I commit a new patch on "left", I can cherry-pick it to
-"right" and both trees are identical again.
+% ./update-defaults (or whatever you=E2=80=99ll call your script)
+% git merge defaults (or whatever you=E2=80=99ll call the defaults bran=
+ch)
 
-Issues:
-Cheery-pick takes only one commit.
-I have to find commits by hand.
-Ideally, I want to specify equal..HEAD, if 10 commits are "left"
-and "right" are 7, well, then cherry pick the last 3 from "left"
-to "right".
-Note that the patch content is always identical, the
-commit text message (author/committer/timestamp/...) not
-always
-Note that ideally only one way synchronizing occurs. Bonus
-points if I can add on both sides and then start magic sync...
+The program is generic, of course =E2=80=93 I=E2=80=99ve already found =
+other uses for it[1].
 
+The README:
+http://github.com/ion1/update-base-branch#readme
 
-Any good idea on how to automagically script these cherry-picking?
+How I use the program in real life =E2=80=93 examples of what the
+update-defaults script mentioned above could look like:
+http://github.com/ion1/update-base-branch/tree/master/examples#browser
 
-Martin
+Release tarball:
+http://johan.kiviniemi.name/software/update-base-branch/
+
+A demonstration: using the program to update the user config for the
+Awesome window manager:
+http://www.youtube.com/watch?v=3DRQ3CqJ4jM90&fmt=3D18
+
+[1] If there is no public VCS repository for a piece of software and
+you want to maintain/send patches, use update-base-branch to track the
+contents of the latest released tarball and merge that branch with
+your =E2=80=98master=E2=80=99.
+
+--=20
+J=CE=BFhan Kiviniemi
