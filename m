@@ -1,103 +1,165 @@
-From: Jeff Moyer <jmoyer@redhat.com>
-Subject: Re: [RFE] allow git bisect to figure out in which revision a bug was fixed
-Date: Tue, 21 Jul 2009 16:45:10 -0400
-Message-ID: <x49fxcpoje1.fsf@segfault.boston.devel.redhat.com>
-References: <x49ocrdokp9.fsf@segfault.boston.devel.redhat.com>
-	<7vfxcpdbsh.fsf@alter.siamese.dyndns.org>
-	<20090721202848.GA3453@localhost.localdomain>
-	<7vprbtbwhu.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: three-way diff performance problem
+Date: Tue, 21 Jul 2009 13:46:33 -0700
+Message-ID: <7vd47tbw7q.fsf@alter.siamese.dyndns.org>
+References: <alpine.LFD.2.01.0907211038120.19335@localhost.localdomain>
+ <7v7hy1g7vg.fsf@alter.siamese.dyndns.org>
+ <7vd47tes2y.fsf@alter.siamese.dyndns.org>
+ <alpine.LFD.2.01.0907211324220.19335@localhost.localdomain>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Josef Bacik <josef@redhat.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jul 21 22:45:26 2009
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Tue Jul 21 22:46:48 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MTMDF-0002kL-E9
-	for gcvg-git-2@gmane.org; Tue, 21 Jul 2009 22:45:25 +0200
+	id 1MTMEZ-0003H2-Gs
+	for gcvg-git-2@gmane.org; Tue, 21 Jul 2009 22:46:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753787AbZGUUpP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 21 Jul 2009 16:45:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753161AbZGUUpP
-	(ORCPT <rfc822;git-outgoing>); Tue, 21 Jul 2009 16:45:15 -0400
-Received: from mx2.redhat.com ([66.187.237.31]:59723 "EHLO mx2.redhat.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752721AbZGUUpO (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 21 Jul 2009 16:45:14 -0400
-Received: from int-mx2.corp.redhat.com (int-mx2.corp.redhat.com [172.16.27.26])
-	by mx2.redhat.com (8.13.8/8.13.8) with ESMTP id n6LKjC3a003749;
-	Tue, 21 Jul 2009 16:45:12 -0400
-Received: from ns3.rdu.redhat.com (ns3.rdu.redhat.com [10.11.255.199])
-	by int-mx2.corp.redhat.com (8.13.1/8.13.1) with ESMTP id n6LKjBiH017932;
-	Tue, 21 Jul 2009 16:45:11 -0400
-Received: from segfault.boston.devel.redhat.com (segfault.boston.devel.redhat.com [10.16.60.26])
-	by ns3.rdu.redhat.com (8.13.8/8.13.8) with ESMTP id n6LKjAhY029230;
-	Tue, 21 Jul 2009 16:45:11 -0400
-X-PGP-KeyID: 1F78E1B4
-X-PGP-CertKey: F6FE 280D 8293 F72C 65FD  5A58 1FF8 A7CA 1F78 E1B4
-X-PCLoadLetter: What the f**k does that mean?
-In-Reply-To: <7vprbtbwhu.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
-	message of "Tue, 21 Jul 2009 13:40:29 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.0.60 (gnu/linux)
-X-Scanned-By: MIMEDefang 2.58 on 172.16.27.26
+	id S1755410AbZGUUqk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 21 Jul 2009 16:46:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755079AbZGUUqk
+	(ORCPT <rfc822;git-outgoing>); Tue, 21 Jul 2009 16:46:40 -0400
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:37339 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754943AbZGUUqj (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 21 Jul 2009 16:46:39 -0400
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id B912BE314;
+	Tue, 21 Jul 2009 16:46:39 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id C2ACAE313; Tue,
+ 21 Jul 2009 16:46:35 -0400 (EDT)
+In-Reply-To: <alpine.LFD.2.01.0907211324220.19335@localhost.localdomain>
+ (Linus Torvalds's message of "Tue\, 21 Jul 2009 13\:34\:07 -0700 \(PDT\)")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 97115C0E-7637-11DE-9AE9-F699A5B33865-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123713>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123714>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Linus Torvalds <torvalds@linux-foundation.org> writes:
 
-> Josef Bacik <josef@redhat.com> writes:
+> On Tue, 21 Jul 2009, Junio C Hamano wrote:
+>> 
+>> Here is a patch to do that.  I haven't tested it yet though.
 >
->> On Tue, Jul 21, 2009 at 01:24:46PM -0700, Junio C Hamano wrote:
->>> Jeff Moyer <jmoyer@redhat.com> writes:
->>> 
->>> > As a distro kernel grunt, I sometimes find myself in the situation of
->>> > having to track down the commit that fixed a given problem so that I can
->>> > backport it to an older kernel.  Sometimes I'm smart enough to figure it
->>> > out myself, other times I'm not.  ;-)  It would be helpful if git bisect
->>> > could help figure out in what commit a bug was fixed as opposed to
->>> > introduced.  Is there any interest in implementing such a feature?
->>> 
->>> Doesn't that already exist?
->>> 
->>> You are hunting for an existence of the bug, so any commit that is buggy
->>> (with respect to the bug you are interested in) is *GOOD*.  The tip of the
->>> upstream is *BAD* in that it does not have your favourite bug anymore.
->>> 
->>> You bisect that history down, and will find the first *BAD* commit.
->>> 
->>> Now, why is that commit the procedure finds is *BAD*, again?  Yup, because
->>> it does not have your favourite bug anymore.  And why is that so?
->>> 
->>> Because the commit fixed that bug.
->>
->> Sure, but as one who has used this procedure several times before, it is
->> very error prone, on my side because I'm a big goober.  I have a
->> tendancy to get my wires crossed and get dumped out at a commit that
->> doesnt make sense (my latest attempt put me out at a merge commit).
->> Sure its my fault for not being able to keep it straight, theres no
->> arguing that, it still would be nice for there to be a way to remove as
->> much human error from the process as possible.  Thanks,
+> Well, it seems to work.
 >
-> There indeed was discussions along the line of adding "fixed" and "broken"
-> as synonyms to "bad" and "good".
+> It turned the 85+ minute thing (which I eventually just killed) into 
+> something that took 1.4 _seconds_. Of course, I didn't check that the end 
+> result was identical, since I never had the patience to wait for the 
+> original case.
 >
-> I mildly suspect that it is a matter of opinion if such an addition would
-> make things better or more confusing, because the word "broken" feels more
-> strongly associated with "bad" than "good".
+> Now sadly, my fixed test (which took 45 seconds before) didn't much 
+> improve (it doesn't have nearly as many removed lines, since I checked in 
+> the _right_ file that is a much closer version to the parent files).
 >
-> Perhaps "wanted" and "unwanted" makes a better pair of more neutral words?
-> In bisect, we do not want to judge commits' in absolute goodness scale.
-> It is all relative to what _you_ as the person who runs bisect want, and
-> in that sense the original terminology "good/bad" was suboptimal.
+> But what is intriguing is that it it gets different results. So I suspect 
+> this one actually changed behavior some way:
+>
+> 	[torvalds@nehalem git-merge]$ time git show --color HEAD | wc
+> 	  22671   63302  672234
+> 	
+> 	real	0m44.024s
+> 	user	0m43.879s
+> 	sys	0m0.148s
+>
+> 	[torvalds@nehalem git-merge]$ time ~/git/git show --color HEAD | wc
+> 	  22596   63122  671076
+> 	
+> 	real	0m43.553s
+> 	user	0m43.435s
+> 	sys	0m0.128s
+>
+> and notice how the git version with your change gives different line 
+> numbers.
+>
+> Now, this is a diff, and different answers are possibly _both_ valid, so 
+> who knows. But I suspect that you _intended_ for the patch to be a 
+> semantic no-op, and it doesn't seem to be.
 
-I think good and bad are fine.  I like HPA's idea of just making a git
-bisect reverse.
-  http://thread.gmane.org/gmane.comp.version-control.git/120013/focus=120107
+I know why.  The conversion was wrong.  The original found the last_one
+that was from the parent we are looking at, and when there is such, it
+started the scan from the one _after that_.  Otherwise, if lost_head list
+had an entry
 
-Cheers,
-Jeff
+	@@ -l,k +m,n @@
+        -one
+         two
+         three
+
+and the diff with the parent we are currently looking at duplicates
+removal:
+
+	@@ -l,k +m1,n1 @@
+	-one
+        -one
+         two
+         three
+
+we will end up losing the second removal, which would be what is happening
+with the patch you tried.
+
+I actually was scratching my head wondering why it wasn't happening in the
+original code after I sent that faulty patch.
+
+Here is another attempt.
+
+ combine-diff.c |   13 +++++--------
+ 1 files changed, 5 insertions(+), 8 deletions(-)
+
+diff --git a/combine-diff.c b/combine-diff.c
+index bbf74fc..2438490 100644
+--- a/combine-diff.c
++++ b/combine-diff.c
+@@ -80,6 +80,7 @@ struct lline {
+ /* Lines surviving in the merge result */
+ struct sline {
+ 	struct lline *lost_head, **lost_tail;
++	struct lline *next_lost;
+ 	char *bol;
+ 	int len;
+ 	/* bit 0 up to (N-1) are on if the parent has this line (i.e.
+@@ -121,18 +122,12 @@ static void append_lost(struct sline *sline, int n, const char *line, int len)
+ 
+ 	/* Check to see if we can squash things */
+ 	if (sline->lost_head) {
+-		struct lline *last_one = NULL;
+-		/* We cannot squash it with earlier one */
+-		for (lline = sline->lost_head;
+-		     lline;
+-		     lline = lline->next)
+-			if (lline->parent_map & this_mask)
+-				last_one = lline;
+-		lline = last_one ? last_one->next : sline->lost_head;
++		lline = sline->next_lost;
+ 		while (lline) {
+ 			if (lline->len == len &&
+ 			    !memcmp(lline->line, line, len)) {
+ 				lline->parent_map |= this_mask;
++				sline->next_lost = lline->next;
+ 				return;
+ 			}
+ 			lline = lline->next;
+@@ -147,6 +142,7 @@ static void append_lost(struct sline *sline, int n, const char *line, int len)
+ 	lline->line[len] = 0;
+ 	*sline->lost_tail = lline;
+ 	sline->lost_tail = &lline->next;
++	sline->next_lost = NULL;
+ }
+ 
+ struct combine_diff_state {
+@@ -187,6 +183,7 @@ static void consume_line(void *state_, char *line, unsigned long len)
+ 				xcalloc(state->num_parent,
+ 					sizeof(unsigned long));
+ 		state->sline[state->nb-1].p_lno[state->n] = state->ob;
++		state->lost_bucket->next_lost = state->lost_bucket->lost_head;
+ 		return;
+ 	}
+ 	if (!state->lost_bucket)
