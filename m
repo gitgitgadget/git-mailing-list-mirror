@@ -1,180 +1,72 @@
-From: Constantine Plotnikov <constantine.plotnikov@gmail.com>
-Subject: Re: [JGIT PATCH 10/12] Match config subsection names using case 
-	sensitive search
-Date: Wed, 22 Jul 2009 15:11:07 +0400
-Message-ID: <85647ef50907220411w356000bcuda21e9318eab094@mail.gmail.com>
-References: <1248207570-13880-1-git-send-email-spearce@spearce.org>
-	 <1248207570-13880-3-git-send-email-spearce@spearce.org>
-	 <1248207570-13880-4-git-send-email-spearce@spearce.org>
-	 <1248207570-13880-5-git-send-email-spearce@spearce.org>
-	 <1248207570-13880-6-git-send-email-spearce@spearce.org>
-	 <1248207570-13880-7-git-send-email-spearce@spearce.org>
-	 <1248207570-13880-8-git-send-email-spearce@spearce.org>
-	 <1248207570-13880-9-git-send-email-spearce@spearce.org>
-	 <1248207570-13880-10-git-send-email-spearce@spearce.org>
-	 <1248207570-13880-11-git-send-email-spearce@spearce.org>
+From: Mark Blakeney <markb@berlios.de>
+Subject: Re: git rebase stops on empty commits
+Date: Wed, 22 Jul 2009 12:29:19 +0000 (UTC)
+Message-ID: <loom.20090722T120617-839@post.gmane.org>
+References: <33e2b2760907220022rbad30d7x255bcb63c5b8cc2f@mail.gmail.com> <loom.20090722T073645-17@post.gmane.org> <alpine.DEB.2.00.0907220907550.9220@ds9.cixit.se>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Robin Rosenberg <robin.rosenberg@dewire.com>, git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Wed Jul 22 13:11:26 2009
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jul 22 14:29:42 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MTZjK-0004VI-77
-	for gcvg-git-2@gmane.org; Wed, 22 Jul 2009 13:11:26 +0200
+	id 1MTax3-00039H-I8
+	for gcvg-git-2@gmane.org; Wed, 22 Jul 2009 14:29:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752034AbZGVLLL convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 22 Jul 2009 07:11:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751957AbZGVLLL
-	(ORCPT <rfc822;git-outgoing>); Wed, 22 Jul 2009 07:11:11 -0400
-Received: from ey-out-2122.google.com ([74.125.78.24]:22335 "EHLO
-	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751821AbZGVLLJ convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 22 Jul 2009 07:11:09 -0400
-Received: by ey-out-2122.google.com with SMTP id 9so90814eyd.37
-        for <git@vger.kernel.org>; Wed, 22 Jul 2009 04:11:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=UkKiPbtJkzAV6xBVI1EVi2xcAMXzd/YOMBomDOipb24=;
-        b=kxf96gFv5/frSlwSz2aWQjRePpCecjcWshhRi5/PlNnu0WuaQSWrP0GZ/HS1BJWf9Z
-         D7GoJBH6AWJUoqaoiubigmrvZUChGL8hvN1xwOvJ4nL6L82qkI/zZHgi8aUf9kmABRsl
-         LLZqgFNA1VFhsVcOqozeCN47+UHeC27UH3Bi4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=xRfdGQJEUayG4E82hvdg/Adz3bb8cW5hAF/lg3KAmw3cZ999wi6x7S784X/HFmpAZD
-         8koF0xB5Nzvyorb6GSYOokr4Hk0HX111wqnsRB3jtmCdB6Bxfn6VcQuqwBQdXea0fGcv
-         auiWtQbOepYavsnEMeTKk7OLNLvHdaUtLX11Q=
-Received: by 10.216.30.195 with SMTP id k45mr195777wea.197.1248261067969; Wed, 
-	22 Jul 2009 04:11:07 -0700 (PDT)
-In-Reply-To: <1248207570-13880-11-git-send-email-spearce@spearce.org>
+	id S1754234AbZGVM3d (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 22 Jul 2009 08:29:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754158AbZGVM3d
+	(ORCPT <rfc822;git-outgoing>); Wed, 22 Jul 2009 08:29:33 -0400
+Received: from main.gmane.org ([80.91.229.2]:42029 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754145AbZGVM3c (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 Jul 2009 08:29:32 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1MTaws-0006Ix-GQ
+	for git@vger.kernel.org; Wed, 22 Jul 2009 12:29:30 +0000
+Received: from 124-171-150-213.dyn.iinet.net.au ([124.171.150.213])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 22 Jul 2009 12:29:30 +0000
+Received: from markb by 124-171-150-213.dyn.iinet.net.au with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 22 Jul 2009 12:29:30 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: main.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 124.171.150.213 (Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.0.11) Gecko/2009060308 Ubuntu/9.04 (jaunty) Firefox/3.0.11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123747>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123748>
 
-This patch is incomplete. The method getRawEntry(...) and
-setStringList(...) should be fixed as part of this patch too. There is
-subsection is converted to lowercase. I was planning to submit it as
-separate patch.
+Peter Krefting <peter <at> softwolves.pp.se> writes:
+> If you edit the commit, you claim ownership of it. You should probably try 
+> using the -C option to commit, it should allow you to edit the message, 
+> while keeping the authorship and timestamp intact.
 
-Also I'm somewhat bothered by usage of toLowerCase() without locale
-specified and equalsIgnoreCase(). When turkish locale is default one
-there could be surprising results with the letter "I".  The program:
+Thanks Peter, that works well. E.g.
 
-import java.util.Locale;
-public class Test {
-	public static void main(String[] args) {
-		Locale tr_TR =3D new Locale("tr", "TR");
-		System.out.printf("i =3D U+%04x LC(I, tr_TR) =3D U+%04x\n", (int)'i',
-(int)"I".toLowerCase(tr_TR).charAt(0));
-		System.out.printf("I =3D U+%04x UC(i, tr_TR) =3D U+%04x\n", (int)'I',
-(int)"i".toUpperCase(tr_TR).charAt(0));
-	}
-}
+    % git rebase --continue
+    Finished one cherry-pick.
+    # Not currently on any branch.
+    nothing to commit (working directory clean)
+    Could not apply c33a375... Stop LNCC until OPC connection
+    % git commit --allow-empty -C c33a375
+    [detached HEAD e7d66f4] Stop LNCC until OPC connection
+    % git rebase --continue
+    ....
 
-Gives the following output:
+So rebase can actually do what I want but my fundamental issue remains. I said
+"pick" in the rebase for all of these commits but rebase is forcing me to do
+each one manually! And it requires some rather arcane git magic that could only
+be procured from a guru on a mailing list. :)
 
-i =3D U+0069 LC(I, tr_TR) =3D U+0131
-I =3D U+0049 UC(i, tr_TR) =3D U+0130
-
-So I suggest to explicitly use Locale.US for all toLowerCase()
-invocation in Config class just in case and to replace
-equalsIgnoreCase() with something else. But this possibly should be
-some other patch series. I do not know what C git doing in case
-turkish locale and whether it is a bug or "feature".
-
-Regards,
-Constantine
-
-On Wed, Jul 22, 2009 at 12:19 AM, Shawn O. Pearce<spearce@spearce.org> =
-wrote:
-> The subsection name is case sensitive, and should be matched as such.
->
-> Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
-> ---
-> =A0.../src/org/spearce/jgit/lib/Config.java =A0 =A0 =A0 =A0 =A0 | =A0=
- 19 ++++++++++++++-----
-> =A01 files changed, 14 insertions(+), 5 deletions(-)
->
-> diff --git a/org.spearce.jgit/src/org/spearce/jgit/lib/Config.java b/=
-org.spearce.jgit/src/org/spearce/jgit/lib/Config.java
-> index e379c37..974ffea 100644
-> --- a/org.spearce.jgit/src/org/spearce/jgit/lib/Config.java
-> +++ b/org.spearce.jgit/src/org/spearce/jgit/lib/Config.java
-> @@ -4,6 +4,7 @@
-> =A0* Copyright (C) 2008, Shawn O. Pearce <spearce@spearce.org>
-> =A0* Copyright (C) 2008, Thad Hughes <thadh@thad.corp.google.com>
-> =A0* Copyright (C) 2009, JetBrains s.r.o.
-> + * Copyright (C) 2009, Google, Inc.
-> =A0*
-> =A0* All rights reserved.
-> =A0*
-> @@ -1024,17 +1025,25 @@ private static String readValue(final Buffere=
-dReader r, boolean quote,
->
-> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0boolean match(final String aSection, f=
-inal String aSubsection,
-> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0final =
-String aKey) {
-> - =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 return eq(section, aSec=
-tion) && eq(subsection, aSubsection)
-> - =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0=
- =A0 =A0 && eq(name, aKey);
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 return eqIgnoreCase(sec=
-tion, aSection)
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0=
- =A0 =A0 && eqSameCase(subsection, aSubsection)
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0=
- =A0 =A0 && eqIgnoreCase(name, aKey);
-> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0}
->
-> - =A0 =A0 =A0 =A0 =A0 =A0 =A0 private static boolean eq(final String =
-a, final String b) {
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 private static boolean eqIgnoreCase(fin=
-al String a, final String b) {
-> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0if (a =3D=3D null && b=
- =3D=3D null)
-> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0return=
- true;
-> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0if (a =3D=3D null || b=
- =3D=3D null)
-> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0return=
- false;
-> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0return a.equalsIgnoreC=
-ase(b);
-> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0}
-> - =A0 =A0 =A0 }
->
-> -}
-> \ No newline at end of file
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 private static boolean eqSameCase(final=
- String a, final String b) {
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 if (a =3D=3D null && b =
-=3D=3D null)
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 return =
-true;
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 if (a =3D=3D null || b =
-=3D=3D null)
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 return =
-false;
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 return a.equals(b);
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 }
-> + =A0 =A0 =A0 }
-> +}
-> --
-> 1.6.4.rc1.186.g60aa0c
->
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at =A0http://vger.kernel.org/majordomo-info.html
->
+Surely something like an option --allow-empty on the rebase -i to skip over
+these no-brainer picks is trivial to implement - and makes sense? As a simple
+user, and knowing the original commits required --allow-empty, it was the first
+option I went looking for on the rebase -i when I encountered this problem.
