@@ -1,101 +1,55 @@
-From: Pierre Habouzit <madcoder@debian.org>
-Subject: [PATCH 4] janitor: useless checks before free
-Date: Wed, 22 Jul 2009 23:51:55 +0200
-Message-ID: <20090722215154.GD13823@artemis.corp>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: How has learning the advanced features of git helped you to
+ write  software more effectively?
+Date: Wed, 22 Jul 2009 14:55:22 -0700
+Message-ID: <7v1vo8e62d.fsf@alter.siamese.dyndns.org>
+References: <e1a5e9a00907221421m27f0f836t98d361dffc7bd87f@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="BI5RvnYi6R4T2M87"
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: unlisted-recipients:; (no To-header on input)
-X-From: git-owner@vger.kernel.org Wed Jul 22 23:52:16 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Dmitry Potapov <dpotapov@gmail.com>, git@vger.kernel.org
+To: Tim Harper <timcharper@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jul 22 23:55:35 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MTjjR-00080B-SD
-	for gcvg-git-2@gmane.org; Wed, 22 Jul 2009 23:52:14 +0200
+	id 1MTjmg-0001AD-Lh
+	for gcvg-git-2@gmane.org; Wed, 22 Jul 2009 23:55:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753795AbZGVVwB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 22 Jul 2009 17:52:01 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752373AbZGVVwB
-	(ORCPT <rfc822;git-outgoing>); Wed, 22 Jul 2009 17:52:01 -0400
-Received: from pan.madism.org ([88.191.52.104]:52742 "EHLO hermes.madism.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751909AbZGVVwA (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 22 Jul 2009 17:52:00 -0400
-Received: from madism.org (olympe.madism.org [82.243.245.108])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "artemis.madism.org", Issuer "madism.org" (verified OK))
-	by hermes.madism.org (Postfix) with ESMTPS id 2F8C24651F;
-	Wed, 22 Jul 2009 23:52:00 +0200 (CEST)
-Received: by madism.org (Postfix, from userid 1000)
-	id 82F5C2AEA0; Wed, 22 Jul 2009 23:51:55 +0200 (CEST)
-Content-Disposition: inline
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1753857AbZGVVz1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 22 Jul 2009 17:55:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753828AbZGVVz1
+	(ORCPT <rfc822;git-outgoing>); Wed, 22 Jul 2009 17:55:27 -0400
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:54569 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753049AbZGVVz1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 Jul 2009 17:55:27 -0400
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 41C031004A;
+	Wed, 22 Jul 2009 17:55:27 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 9F22510049; Wed,
+ 22 Jul 2009 17:55:23 -0400 (EDT)
+In-Reply-To: <e1a5e9a00907221421m27f0f836t98d361dffc7bd87f@mail.gmail.com>
+ (Tim Harper's message of "Wed\, 22 Jul 2009 15\:21\:26 -0600")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 5DAB6350-770A-11DE-B79F-F699A5B33865-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123791>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123792>
 
+Tim Harper <timcharper@gmail.com> writes:
 
---BI5RvnYi6R4T2M87
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> Out of the shoot, you get a lot of value learning the basic features
+> of git: easy branching, merging, etc.  How has learning the advanced
+> features of git (bisect, rebase, rebase -i, add -p, etc.) helped you
+> to write software more effectively?
 
-Signed-off-by: Pierre Habouzit <madcoder@debian.org>
----
-
-   On the same vein, a few simplifications wrt if (x) free(x)
-
- pack-revindex.c |    3 +--
- walker.c        |    2 +-
- 2 files changed, 2 insertions(+), 3 deletions(-)
-
-diff --git a/pack-revindex.c b/pack-revindex.c
-index 1de53c8..77a0465 100644
---- a/pack-revindex.c
-+++ b/pack-revindex.c
-@@ -149,8 +149,7 @@ void discard_revindex(void)
- 	if (pack_revindex_hashsz) {
- 		int i;
- 		for (i =3D 0; i < pack_revindex_hashsz; i++)
--			if (pack_revindex[i].revindex)
--				free(pack_revindex[i].revindex);
-+			free(pack_revindex[i].revindex);
- 		free(pack_revindex);
- 		pack_revindex_hashsz =3D 0;
- 	}
-diff --git a/walker.c b/walker.c
-index e57630e..11d9052 100644
---- a/walker.c
-+++ b/walker.c
-@@ -245,7 +245,7 @@ void walker_targets_free(int targets, char **target, co=
-nst char **write_ref)
- {
- 	while (targets--) {
- 		free(target[targets]);
--		if (write_ref && write_ref[targets])
-+		if (write_ref)
- 			free((char *) write_ref[targets]);
- 	}
- }
---=20
-1.6.4.rc1.193.g47c25d
-
-
---BI5RvnYi6R4T2M87
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
-
-iEYEARECAAYFAkpnifoACgkQvGr7W6HudhxgcwCfZPfWjo9q8u0aEz7zUyLkRXiQ
-4AMAnA8VtNaXenn6kxDp+0KSJlflMIPO
-=EFgb
------END PGP SIGNATURE-----
-
---BI5RvnYi6R4T2M87--
+Git does not have much if anything to do with writing software more
+effectively.  Crappy programmers can create (and have created I am sure)
+clean history that is easy to understand how tons of bugs have been
+carried forward, and you can side port the bugs with ease across branches
+in such a history.
