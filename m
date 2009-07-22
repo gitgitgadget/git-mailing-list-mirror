@@ -1,107 +1,60 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: How to prevent Git from compressing certain files?
-Date: Wed, 22 Jul 2009 13:46:07 -0700 (PDT)
-Message-ID: <m3r5w8bg69.fsf@localhost.localdomain>
-References: <4A676D4B.7040004@dirk.my1.cc>
+From: "Dr. Jennifer Nussbaum" <bg271828@yahoo.com>
+Subject: Newbie: Branch management
+Date: Wed, 22 Jul 2009 13:41:04 -0700 (PDT)
+Message-ID: <446739.83600.qm@web53410.mail.re2.yahoo.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-14
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <junio@pobox.com>
-To: =?iso-8859-14?q?Dirk_S=FCsserott?= <newsletter@dirk.my1.cc>
-X-From: git-owner@vger.kernel.org Wed Jul 22 22:47:08 2009
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jul 22 22:47:52 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MTiiQ-0003kS-4d
-	for gcvg-git-2@gmane.org; Wed, 22 Jul 2009 22:47:06 +0200
+	id 1MTij7-00046e-Rw
+	for gcvg-git-2@gmane.org; Wed, 22 Jul 2009 22:47:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753405AbZGVUqL convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 22 Jul 2009 16:46:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753041AbZGVUqL
-	(ORCPT <rfc822;git-outgoing>); Wed, 22 Jul 2009 16:46:11 -0400
-Received: from fg-out-1718.google.com ([72.14.220.159]:27074 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752544AbZGVUqJ convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 22 Jul 2009 16:46:09 -0400
-Received: by fg-out-1718.google.com with SMTP id e21so139014fga.17
-        for <git@vger.kernel.org>; Wed, 22 Jul 2009 13:46:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received
-         :x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type
-         :content-transfer-encoding;
-        bh=kKpathxsArhRZmNL4zs2P8GFdgUzP9Fp8R9q3qOWjZ0=;
-        b=Ubfs25qB1YOntkC6I7Sfw8tl4nSLJcxEhOkCHidFGGRYVe8hLhcdlwAs4UVUuf+I1K
-         bog7WgwAtX649zarx4pQFMAFB6zdjYdeFIsbT5nMYhwZGTqbDHH1wIqZRpKS9zPts2do
-         ssiDO7RyMLrl6PYWjwblvaK1G5aKXQk3lSWUc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type
-         :content-transfer-encoding;
-        b=j1nB0T9iop5TaOIQJXAqSkvT8QZrwW20o2fKkrmbFvhRsRq9Z9kE4xKJ/kk5/iZQOq
-         K/QjN+2p6UR81g5eElLOlTqhK9Qk9obu3k4sBcQ7jdVxbIMSGHZbtu+tuyKDZi/+jcOb
-         vZzdS5YGKn0cHHnIMLUsh7yZyhKy26ft2H3i4=
-Received: by 10.86.60.9 with SMTP id i9mr1173919fga.10.1248295568930;
-        Wed, 22 Jul 2009 13:46:08 -0700 (PDT)
-Received: from localhost.localdomain (abvd136.neoplus.adsl.tpnet.pl [83.8.201.136])
-        by mx.google.com with ESMTPS id 12sm17456917fgg.19.2009.07.22.13.46.07
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 22 Jul 2009 13:46:07 -0700 (PDT)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id n6MKjdQ2001970;
-	Wed, 22 Jul 2009 22:45:49 +0200
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id n6MKjJ8O001959;
-	Wed, 22 Jul 2009 22:45:19 +0200
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <4A676D4B.7040004@dirk.my1.cc>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+	id S1753618AbZGVUrq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 22 Jul 2009 16:47:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753582AbZGVUrq
+	(ORCPT <rfc822;git-outgoing>); Wed, 22 Jul 2009 16:47:46 -0400
+Received: from web53410.mail.re2.yahoo.com ([206.190.37.57]:39737 "HELO
+	web53410.mail.re2.yahoo.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with SMTP id S1751128AbZGVUrp (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 22 Jul 2009 16:47:45 -0400
+X-Greylist: delayed 401 seconds by postgrey-1.27 at vger.kernel.org; Wed, 22 Jul 2009 16:47:45 EDT
+Received: (qmail 83781 invoked by uid 60001); 22 Jul 2009 20:41:04 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s1024; t=1248295264; bh=5XXl12hmPUrC/vxRxOAWTS5QYQHpypc5/9vrjOpi6PU=; h=Message-ID:X-YMail-OSG:Received:X-Mailer:Date:From:Subject:To:MIME-Version:Content-Type; b=22lRnZH3e6OJSu9Maqh2uCnnRqaWg66vnj3KyR1krBqZfI8keBG5BMvSAGh548qXGdNYZdz10OTSZBbdiriCD4alufpxo01ZWGnsyJNB9HqGgIxBJIvSJVXOgmDu3J5wSCvsNYbH/IHaILU8aBNzKn889S527szP0aDPnbmJvsk=
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=s1024; d=yahoo.com;
+  h=Message-ID:X-YMail-OSG:Received:X-Mailer:Date:From:Subject:To:MIME-Version:Content-Type;
+  b=LQ/6feO8FZDBT0b7MRqAyXyj87hRCUfmzxgh/++Yezl1wb020nWX8kXcpxl7ZzihtvsePgn4X9Ax2YT5Tb+1rUaLi4NVwa68O5IXiIYf6k/g8ADyzTPx7XqlWhwKdTnZTOtecl938XFqcqaJKDFo2jX/q1+1Id6DB1vinsheSGk=;
+X-YMail-OSG: 4bKMmosVM1kiNBh8YQxqYVklFnYKgK0YioIvvxRQ_R1Mj1YUMNiN6MQgPR3yu7_yHmOiN9kEqwS.MTwiblq4WXSs83nyAWOlUuyJCc8q6rMLDi_ZwzGQoW8JEn__vTeQ8HySxA01dANP_bG_Sc7IJOI6CPBtfO6VykwkYyv0TPxwZNxQbEBHxzsQZlsIJT5kqnltCZudIhaS2clP5psEHeRc4AMstndJb1QpmxsWaMnzVD5S_zvc2lRwDvcrGugDs21m44SS2qCsat_cxMWEVJcHqySbtKEygel2jMyt7EjdEccIy0TF
+Received: from [12.182.77.130] by web53410.mail.re2.yahoo.com via HTTP; Wed, 22 Jul 2009 13:41:04 PDT
+X-Mailer: YahooMailClassic/5.4.17 YahooMailWebService/0.7.289.15
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123771>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123772>
 
-Dirk S=FCsserott <newsletter@dirk.my1.cc> writes:
 
-> I'm (ab)using Git to store my media files, i.e. digicam pictures (*.j=
-pg)
-> and the like. This way I can e.g. comment a series of pictures withou=
-t
-> installing and learning a special purpose "Photo Archiving" tool. Git=
-k
-> shows the roadmap!
->=20
-> Somewhere I read that Git isn't supposed to efficiently handle binary
-> files. Of course, I don't want to merge my files, just store them wit=
-h
-> their history and git-push them to some "safe place".
->=20
-> I figured that pushing and git gc'ing both try to compress those file=
-s
-> (or differences) really hard. Works great for "regular" files, but is
-> pointless with jpegs.
->=20
-> Question: Is there a way to prevent Git from trying to compress certa=
-in
-> files based on their extension?
+Hi,
 
-There is _undocumented_ "delta" gitattribute, introduced by Junio C Ham=
-ano
-in a74db82 (Teach "delta" attribute to pack-objects., 2007-05-19), whic=
-h
-you would have to unset.
+I hope its OK to ask basic questions on this list.
 
-Like this:
+Im a recent convert to git and having trouble with branches. I mostly work on projects by myself, and what I want is that all branches of everything Im doing are in sync everywhere.
 
-  =3D=3D .gitattributes =3D=3D
-  *.jpg   -delta
+I have a remote repository on my production server that serves as the "main" repository. Then i work on projects on a number of different computers--my main home computer, my main work machine, several non-main computers :-) ... 
 
---=20
-Jakub Narebski
-Poland
-ShadeHawk on #git
+I've found it very confusing dealing with branches in this environment. If I have my "master" branch, and decide that i want a "refactoring-templates" branch, what Id *like* to do is create that branch, work on it, commit it, and when I say "git push" I want everything that's new on that computer to be synced to the "main" repository. And then when I get to the next computer, I want to be able to say "git pull" and have everything on that computer by synced *from* the "main" repository.
+
+Instead I get confused by having to push branches separately, and it's confusing that when I do a pull it doesnt necessarily get other branches unless I specify them directly, and so on.
+
+I've looked at the docs on branches and there's something i guess Im missing because this still seems very difficult. Can someone giving me advice on the best way to keep this kind of thing organized?
+
+Thanks!
+
+Jen
+
+
+      
