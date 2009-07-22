@@ -1,129 +1,92 @@
-From: Allan Kelly <allankelly@gmail.com>
-Subject: Re: Newbie: Branch management
-Date: Wed, 22 Jul 2009 22:45:51 +0100
-Message-ID: <9586f3420907221445k2a8592d2ifacba57f3519f113@mail.gmail.com>
-References: <446739.83600.qm@web53410.mail.re2.yahoo.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: Why is it important to learn git?
+Date: Wed, 22 Jul 2009 14:47:05 -0700 (PDT)
+Message-ID: <m3iqhkbdb9.fsf@localhost.localdomain>
+References: <e1a5e9a00907212208t10a071d0oe59a39b357a1111a@mail.gmail.com>
+	<200907220952.27385.trast@student.ethz.ch>
+	<fabb9a1e0907221115x212c4b52q47cac29cf0336fc@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=iso-8859-15
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: "Dr. Jennifer Nussbaum" <bg271828@yahoo.com>
-X-From: git-owner@vger.kernel.org Wed Jul 22 23:46:27 2009
+Cc: Thomas Rast <trast@student.ethz.ch>,
+	Tim Harper <timcharper@gmail.com>, git@vger.kernel.org
+To: Sverre Rabbelier <srabbelier@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jul 22 23:47:24 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MTjdR-0004Xm-Tw
-	for gcvg-git-2@gmane.org; Wed, 22 Jul 2009 23:46:02 +0200
+	id 1MTjee-0005Qf-BO
+	for gcvg-git-2@gmane.org; Wed, 22 Jul 2009 23:47:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754117AbZGVVpz convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 22 Jul 2009 17:45:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753828AbZGVVpz
-	(ORCPT <rfc822;git-outgoing>); Wed, 22 Jul 2009 17:45:55 -0400
-Received: from mail-fx0-f218.google.com ([209.85.220.218]:55681 "EHLO
-	mail-fx0-f218.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753816AbZGVVpy convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 22 Jul 2009 17:45:54 -0400
-Received: by fxm18 with SMTP id 18so475954fxm.37
-        for <git@vger.kernel.org>; Wed, 22 Jul 2009 14:45:52 -0700 (PDT)
+	id S1753930AbZGVVrJ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 22 Jul 2009 17:47:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753024AbZGVVrI
+	(ORCPT <rfc822;git-outgoing>); Wed, 22 Jul 2009 17:47:08 -0400
+Received: from fg-out-1718.google.com ([72.14.220.157]:18659 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752817AbZGVVrH convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 22 Jul 2009 17:47:07 -0400
+Received: by fg-out-1718.google.com with SMTP id e21so147817fga.17
+        for <git@vger.kernel.org>; Wed, 22 Jul 2009 14:47:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
+        h=domainkey-signature:received:received:received:received
+         :x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type
          :content-transfer-encoding;
-        bh=L9HUu/FYx6TddLUWNHNM3RQ80IQZ9s+SB1ysv7oywcg=;
-        b=AAjizHY/pZ7H16Ci2FQ/Ead7kB/KGn9kwT9pzpU2hbZG0ZyP4NPqA+7OX188MwFZD+
-         muLnnxTg/3+JcbeQnws0q52cFo+hPyr4UMj2t19e3eE2vOysH9BFrV/u3CuDe0Mg4Z/5
-         UjQ1Rpiq5tJTr0mxqO6cuN54j7GEaAoOxhhq0=
+        bh=eRviXT8iZBFzvF8P7Z0KuS26E4WffvOkTDa9x39bC5k=;
+        b=POzTSekI2ju/3lBDbWuqgAemP6CugjzR+nvvxPfLkbk3z5OYCg9TV0tGbccgmebW/f
+         8Y1ukDFtzQ1RZD82STx2mUW6E3BiZWhfJDFeXomOG7jlCyE/vVBACKscdvm9EczLgpgi
+         U+nKCYyiupFlGcXZNrCFFjtDnqqIWKXY1hRh8=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=mzWeveOfzYylFTxxJ2H6+Iws+YjNaTWycV65xRrOSKnupetwTBbkwJQTwWPcOjgM0F
-         KCnP/kJXflSdWd/bfrG50WEvXO9em6C8hERJro/0JU69V1AeX1FkRD92yDLHcrsmi4jy
-         O+Uf5YeKzFcXBHKSl6rrA2iYRvSvSdc5alLFI=
-Received: by 10.204.97.140 with SMTP id l12mr1286716bkn.133.1248299151831; 
-	Wed, 22 Jul 2009 14:45:51 -0700 (PDT)
-In-Reply-To: <446739.83600.qm@web53410.mail.re2.yahoo.com>
+        h=x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type
+         :content-transfer-encoding;
+        b=MwbFAQQdQANp+9blHRrUwVUk/IWZLiWfhwoA9MiGrULLnvtHwn6j2/dZNIAlGgF9Vh
+         mcow04HNHVp4gpGxbmh8A+iRNKq9YK+PoX1OzqvOABn5H5z9+uJK2cEoWSwcj4qkn06G
+         AUdoIDysQpppU33rdlt4mDvgjMAVD+PD/oSGM=
+Received: by 10.86.97.18 with SMTP id u18mr1187105fgb.66.1248299226333;
+        Wed, 22 Jul 2009 14:47:06 -0700 (PDT)
+Received: from localhost.localdomain (abvd136.neoplus.adsl.tpnet.pl [83.8.201.136])
+        by mx.google.com with ESMTPS id 12sm17539542fgg.29.2009.07.22.14.47.04
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 22 Jul 2009 14:47:05 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id n6MLl7F2002817;
+	Wed, 22 Jul 2009 23:47:07 +0200
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id n6MLl61m002814;
+	Wed, 22 Jul 2009 23:47:06 +0200
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <fabb9a1e0907221115x212c4b52q47cac29cf0336fc@mail.gmail.com>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123785>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123786>
 
-Hi Jennifer,
+Sverre Rabbelier <srabbelier@gmail.com> writes:
+> On Wed, Jul 22, 2009 at 07:52, Thomas Rast<trast@student.ethz.ch> wro=
+te:
 
-Like you I'm quite a new git user so I doubt I can entirely solve your
-problem. However reading your mail, I recall my own initial confusion.
-Like you, I maintain a main server and various work desktops.
-Essentially I want my work status/environment replicated on-demand
-around these desktops, with the server as the synch-point. Sounds like
-you.
+> > =A0Learning to make nice, reviewable, working, one-change-per-revis=
+ion
+> > =A0commits.
+>=20
+> I very much agree with those values, but also
+>=20
+>   Commit early, commit often
+=20
+I also find commit message convention: "short one-line description,
+separated by empty line, then more detailed description" to be very
+useful (git tools assume and expect this convention).  It helps
+keeping changesets / commits small; if you can't write oneline summary
+of commit, it is probably too large :-)
 
-My observation is that the granularity of git which makes it very
-malleable, is a problem when you want to do "broad brush" things like
-this (and this is the typical Unix "feature-not-a-bug!"). So, I think
-you need to write a few wee scripts as I have done.
-
-I've set up very small scripts to execute a sequence of local and
-ssh-based remote commands to sync things as I expect. For example,
-'git add .;git commit -a -m "$MSG"; git push;' is fine but the files
-in the origin server directory are out of sync for subsequent
-processing & upload to the web site. This confused me a _lot_. So I
-need 'ssh server_name "cd $SERVER_DIR && git checkout -f"'. Now the
-server dir has the same content as my working dir.
-
-I always call this script 'publish' and have an appropriate version in
-the root of each of my working repos (the post-git compile/upload
-stage differs). Then in vim I routinely execute ':./publish <project>
-<commit msg> <upload Y/N>' from wherever I'm working.
-
-If you want my (very simple!) 'publish' code then drop me a line. It
-may give you a start.
-
-HTH!
-
-Cheers, al.
-
-2009/7/22 Dr. Jennifer Nussbaum <bg271828@yahoo.com>:
->
-> Hi,
->
-> I hope its OK to ask basic questions on this list.
->
-> Im a recent convert to git and having trouble with branches. I mostly=
- work on projects by myself, and what I want is that all branches of ev=
-erything Im doing are in sync everywhere.
->
-> I have a remote repository on my production server that serves as the=
- "main" repository. Then i work on projects on a number of different co=
-mputers--my main home computer, my main work machine, several non-main =
-computers :-) ...
->
-> I've found it very confusing dealing with branches in this environmen=
-t. If I have my "master" branch, and decide that i want a "refactoring-=
-templates" branch, what Id *like* to do is create that branch, work on =
-it, commit it, and when I say "git push" I want everything that's new o=
-n that computer to be synced to the "main" repository. And then when I =
-get to the next computer, I want to be able to say "git pull" and have =
-everything on that computer by synced *from* the "main" repository.
->
-> Instead I get confused by having to push branches separately, and it'=
-s confusing that when I do a pull it doesnt necessarily get other branc=
-hes unless I specify them directly, and so on.
->
-> I've looked at the docs on branches and there's something i guess Im =
-missing because this still seems very difficult. Can someone giving me =
-advice on the best way to keep this kind of thing organized?
->
-> Thanks!
->
-> Jen
->
->
->
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at =A0http://vger.kernel.org/majordomo-info.html
->
+--=20
+Jakub Narebski
+Poland
+ShadeHawk on #git
