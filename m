@@ -1,60 +1,82 @@
-From: "Dr. Jennifer Nussbaum" <bg271828@yahoo.com>
-Subject: Newbie: Branch management
-Date: Wed, 22 Jul 2009 13:41:04 -0700 (PDT)
-Message-ID: <446739.83600.qm@web53410.mail.re2.yahoo.com>
+From: "Aaron Gray" <aaronngray.lists@googlemail.com>
+Subject: git-svn and --bare repositories
+Date: Wed, 22 Jul 2009 21:48:12 +0100
+Message-ID: <F624E89E52304371B3CCFB737F9324DD@HPLAPTOP>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jul 22 22:47:52 2009
+Content-Type: text/plain;
+	format=flowed;
+	charset="iso-8859-1";
+	reply-type=original
+Content-Transfer-Encoding: 7bit
+To: "Git Mailing List" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Jul 22 22:48:50 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MTij7-00046e-Rw
-	for gcvg-git-2@gmane.org; Wed, 22 Jul 2009 22:47:50 +0200
+	id 1MTik5-0004Xa-DO
+	for gcvg-git-2@gmane.org; Wed, 22 Jul 2009 22:48:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753618AbZGVUrq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 22 Jul 2009 16:47:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753582AbZGVUrq
-	(ORCPT <rfc822;git-outgoing>); Wed, 22 Jul 2009 16:47:46 -0400
-Received: from web53410.mail.re2.yahoo.com ([206.190.37.57]:39737 "HELO
-	web53410.mail.re2.yahoo.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with SMTP id S1751128AbZGVUrp (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 22 Jul 2009 16:47:45 -0400
-X-Greylist: delayed 401 seconds by postgrey-1.27 at vger.kernel.org; Wed, 22 Jul 2009 16:47:45 EDT
-Received: (qmail 83781 invoked by uid 60001); 22 Jul 2009 20:41:04 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s1024; t=1248295264; bh=5XXl12hmPUrC/vxRxOAWTS5QYQHpypc5/9vrjOpi6PU=; h=Message-ID:X-YMail-OSG:Received:X-Mailer:Date:From:Subject:To:MIME-Version:Content-Type; b=22lRnZH3e6OJSu9Maqh2uCnnRqaWg66vnj3KyR1krBqZfI8keBG5BMvSAGh548qXGdNYZdz10OTSZBbdiriCD4alufpxo01ZWGnsyJNB9HqGgIxBJIvSJVXOgmDu3J5wSCvsNYbH/IHaILU8aBNzKn889S527szP0aDPnbmJvsk=
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=s1024; d=yahoo.com;
-  h=Message-ID:X-YMail-OSG:Received:X-Mailer:Date:From:Subject:To:MIME-Version:Content-Type;
-  b=LQ/6feO8FZDBT0b7MRqAyXyj87hRCUfmzxgh/++Yezl1wb020nWX8kXcpxl7ZzihtvsePgn4X9Ax2YT5Tb+1rUaLi4NVwa68O5IXiIYf6k/g8ADyzTPx7XqlWhwKdTnZTOtecl938XFqcqaJKDFo2jX/q1+1Id6DB1vinsheSGk=;
-X-YMail-OSG: 4bKMmosVM1kiNBh8YQxqYVklFnYKgK0YioIvvxRQ_R1Mj1YUMNiN6MQgPR3yu7_yHmOiN9kEqwS.MTwiblq4WXSs83nyAWOlUuyJCc8q6rMLDi_ZwzGQoW8JEn__vTeQ8HySxA01dANP_bG_Sc7IJOI6CPBtfO6VykwkYyv0TPxwZNxQbEBHxzsQZlsIJT5kqnltCZudIhaS2clP5psEHeRc4AMstndJb1QpmxsWaMnzVD5S_zvc2lRwDvcrGugDs21m44SS2qCsat_cxMWEVJcHqySbtKEygel2jMyt7EjdEccIy0TF
-Received: from [12.182.77.130] by web53410.mail.re2.yahoo.com via HTTP; Wed, 22 Jul 2009 13:41:04 PDT
-X-Mailer: YahooMailClassic/5.4.17 YahooMailWebService/0.7.289.15
+	id S1753032AbZGVUsS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 22 Jul 2009 16:48:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751128AbZGVUsS
+	(ORCPT <rfc822;git-outgoing>); Wed, 22 Jul 2009 16:48:18 -0400
+Received: from mail-ew0-f226.google.com ([209.85.219.226]:35199 "EHLO
+	mail-ew0-f226.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752801AbZGVUsR (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 Jul 2009 16:48:17 -0400
+Received: by ewy26 with SMTP id 26so534513ewy.37
+        for <git@vger.kernel.org>; Wed, 22 Jul 2009 13:48:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:from:to:subject
+         :date:mime-version:content-type:content-transfer-encoding:x-priority
+         :x-msmail-priority:x-mailer:x-mimeole;
+        bh=2ZoEmPKE5zZiNECJXHrot9yD9+iw4FbdLn+URtwG2QQ=;
+        b=HJUhcTuZVPy592CeIUEYG6EGh8bMfyGyWickMuUEzNK89/SkUu1eTEtV1Ij83p6Rwu
+         n62OUf/+y6p32Oh4PRIHOnwvq1V5BuownAxZnoP09aHYRkdTnp9o8aWHlYJ6hS3YmmVq
+         CUxWEClmUr1SKy/SuV39re2fO3iAGygwPfySs=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlemail.com; s=gamma;
+        h=message-id:from:to:subject:date:mime-version:content-type
+         :content-transfer-encoding:x-priority:x-msmail-priority:x-mailer
+         :x-mimeole;
+        b=Rfq6X9av+A3vjHvwDxckXJZQd5phdL03EESd2DWKal1PsnaIeN2HtuFU9KHA14E82z
+         1i+Lrmv21xSHauxvFmy/ZhfJ/Am6VOYka261jQ7gbHIMCbQiZer5jMU/EDwI8qIew0Jy
+         L5ddJAx+fwIdGQX4oUKUXxkeXFhXx7fJSy7I8=
+Received: by 10.210.144.8 with SMTP id r8mr5241046ebd.36.1248295696534;
+        Wed, 22 Jul 2009 13:48:16 -0700 (PDT)
+Received: from HPLAPTOP (mwgray.force9.co.uk [212.159.110.144])
+        by mx.google.com with ESMTPS id 5sm2125708eyf.38.2009.07.22.13.48.15
+        (version=SSLv3 cipher=RC4-MD5);
+        Wed, 22 Jul 2009 13:48:15 -0700 (PDT)
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5512
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.5579
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123772>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123773>
 
+How do I do a git svn fetch to a bare test.git repository created with :-
 
-Hi,
+    git --git-dir test.git --bare init --shared=true
 
-I hope its OK to ask basic questions on this list.
+I have tried :-
 
-Im a recent convert to git and having trouble with branches. I mostly work on projects by myself, and what I want is that all branches of everything Im doing are in sync everywhere.
+   git --git-dir test.git svn fetch http://test.org/git/test
 
-I have a remote repository on my production server that serves as the "main" repository. Then i work on projects on a number of different computers--my main home computer, my main work machine, several non-main computers :-) ... 
+and
 
-I've found it very confusing dealing with branches in this environment. If I have my "master" branch, and decide that i want a "refactoring-templates" branch, what Id *like* to do is create that branch, work on it, commit it, and when I say "git push" I want everything that's new on that computer to be synced to the "main" repository. And then when I get to the next computer, I want to be able to say "git pull" and have everything on that computer by synced *from* the "main" repository.
+   git --git-dir test.git/svn svn fetch http://test.org/git/test     /// 
+fictious address :)
 
-Instead I get confused by having to push branches separately, and it's confusing that when I do a pull it doesnt necessarily get other branches unless I specify them directly, and so on.
+but neither work.
 
-I've looked at the docs on branches and there's something i guess Im missing because this still seems very difficult. Can someone giving me advice on the best way to keep this kind of thing organized?
+As you may guess I am not really sure what I am doing here.
 
-Thanks!
+Many thanks in advance,
 
-Jen
-
-
-      
+Aaron
