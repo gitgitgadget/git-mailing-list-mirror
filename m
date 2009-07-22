@@ -1,53 +1,57 @@
-From: Mark Blakeney <markb@berlios.de>
-Subject: Re: git rebase stops on empty commits
-Date: Wed, 22 Jul 2009 07:44:26 +0000 (UTC)
-Message-ID: <loom.20090722T073645-17@post.gmane.org>
-References: <33e2b2760907220022rbad30d7x255bcb63c5b8cc2f@mail.gmail.com>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: Re: Why is it important to learn git?
+Date: Wed, 22 Jul 2009 09:52:26 +0200
+Message-ID: <200907220952.27385.trast@student.ethz.ch>
+References: <e1a5e9a00907212208t10a071d0oe59a39b357a1111a@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: Text/Plain;
+  charset="utf-8"
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jul 22 09:50:19 2009
+Cc: git@vger.kernel.org
+To: Tim Harper <timcharper@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jul 22 09:53:04 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MTWaf-0001vV-8W
-	for gcvg-git-2@gmane.org; Wed, 22 Jul 2009 09:50:17 +0200
+	id 1MTWdL-0002p8-0g
+	for gcvg-git-2@gmane.org; Wed, 22 Jul 2009 09:53:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754310AbZGVHuH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 22 Jul 2009 03:50:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753174AbZGVHuH
-	(ORCPT <rfc822;git-outgoing>); Wed, 22 Jul 2009 03:50:07 -0400
-Received: from main.gmane.org ([80.91.229.2]:35911 "EHLO ciao.gmane.org"
+	id S1754332AbZGVHwf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 22 Jul 2009 03:52:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753618AbZGVHwe
+	(ORCPT <rfc822;git-outgoing>); Wed, 22 Jul 2009 03:52:34 -0400
+Received: from xsmtp1.ethz.ch ([82.130.70.13]:24403 "EHLO xsmtp1.ethz.ch"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752812AbZGVHuF (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 22 Jul 2009 03:50:05 -0400
-Received: from root by ciao.gmane.org with local (Exim 4.43)
-	id 1MTWaR-0001Qy-7k
-	for git@vger.kernel.org; Wed, 22 Jul 2009 07:50:03 +0000
-Received: from 124-171-150-213.dyn.iinet.net.au ([124.171.150.213])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 22 Jul 2009 07:50:03 +0000
-Received: from markb by 124-171-150-213.dyn.iinet.net.au with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 22 Jul 2009 07:50:03 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: main.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 124.171.150.213 (Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.0.11) Gecko/2009060308 Ubuntu/9.04 (jaunty) Firefox/3.0.11)
+	id S1752802AbZGVHwe (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 Jul 2009 03:52:34 -0400
+Received: from xfe0.d.ethz.ch ([82.130.124.40]) by xsmtp1.ethz.ch with Microsoft SMTPSVC(6.0.3790.3959);
+	 Wed, 22 Jul 2009 09:52:32 +0200
+Received: from thomas.localnet ([129.132.153.233]) by xfe0.d.ethz.ch over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
+	 Wed, 22 Jul 2009 09:52:32 +0200
+User-Agent: KMail/1.12.0 (Linux/2.6.27.23-0.1-default; KDE/4.2.96; x86_64; ; )
+In-Reply-To: <e1a5e9a00907212208t10a071d0oe59a39b357a1111a@mail.gmail.com>
+X-OriginalArrivalTime: 22 Jul 2009 07:52:32.0600 (UTC) FILETIME=[5E902D80:01CA0AA1]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123743>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123744>
 
-Actually, further to this I have more justification why this can be considered a
-bug.
+Tim Harper wrote:
+> 
+> How has mastering the advanced features of git helped you to be a
+> better programmer?
 
-After performing the "git rebase -i" I find that all the "git commit --amend"
-edits are correctly committed with the original commit author and date+time etc
-but all the "git commit --allow-empty" commits are committed with my own name
-and current date+time.
+I came from SVN, and I guess the most important change for me was:
+
+  Learning to make nice, reviewable, working, one-change-per-revision
+  commits.
+
+This must be enforced by social pressure of course, but 'add --patch',
+'commit --amend', 'rebase --interactive' and some others make it very
+easy to actually do it even when working on a series of changes.
+
+-- 
+Thomas Rast
+trast@{inf,student}.ethz.ch
