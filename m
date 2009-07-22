@@ -1,82 +1,64 @@
-From: "Aaron Gray" <aaronngray.lists@googlemail.com>
-Subject: git-svn and --bare repositories
-Date: Wed, 22 Jul 2009 21:48:12 +0100
-Message-ID: <F624E89E52304371B3CCFB737F9324DD@HPLAPTOP>
+From: Yann Dirson <ydirson@altern.org>
+Subject: Re: [PATCH 2/2] Improve doc for format-patch threading options.
+Date: Wed, 22 Jul 2009 22:57:14 +0200
+Message-ID: <20090722205713.GA7901@nan92-1-81-57-214-146.fbx.proxad.net>
+References: <cover.1246834883.git.ydirson@altern.org> <200907170058.46962.markus.heidelberg@web.de> <20090717065236.GE5762@nan92-1-81-57-214-146.fbx.proxad.net> <200907180123.41735.markus.heidelberg@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	format=flowed;
-	charset="iso-8859-1";
-	reply-type=original
-Content-Transfer-Encoding: 7bit
-To: "Git Mailing List" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Jul 22 22:48:50 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Markus Heidelberg <markus.heidelberg@web.de>
+X-From: git-owner@vger.kernel.org Wed Jul 22 22:57:32 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MTik5-0004Xa-DO
-	for gcvg-git-2@gmane.org; Wed, 22 Jul 2009 22:48:49 +0200
+	id 1MTisO-0008I6-Hp
+	for gcvg-git-2@gmane.org; Wed, 22 Jul 2009 22:57:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753032AbZGVUsS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 22 Jul 2009 16:48:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751128AbZGVUsS
-	(ORCPT <rfc822;git-outgoing>); Wed, 22 Jul 2009 16:48:18 -0400
-Received: from mail-ew0-f226.google.com ([209.85.219.226]:35199 "EHLO
-	mail-ew0-f226.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752801AbZGVUsR (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 22 Jul 2009 16:48:17 -0400
-Received: by ewy26 with SMTP id 26so534513ewy.37
-        for <git@vger.kernel.org>; Wed, 22 Jul 2009 13:48:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:from:to:subject
-         :date:mime-version:content-type:content-transfer-encoding:x-priority
-         :x-msmail-priority:x-mailer:x-mimeole;
-        bh=2ZoEmPKE5zZiNECJXHrot9yD9+iw4FbdLn+URtwG2QQ=;
-        b=HJUhcTuZVPy592CeIUEYG6EGh8bMfyGyWickMuUEzNK89/SkUu1eTEtV1Ij83p6Rwu
-         n62OUf/+y6p32Oh4PRIHOnwvq1V5BuownAxZnoP09aHYRkdTnp9o8aWHlYJ6hS3YmmVq
-         CUxWEClmUr1SKy/SuV39re2fO3iAGygwPfySs=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=message-id:from:to:subject:date:mime-version:content-type
-         :content-transfer-encoding:x-priority:x-msmail-priority:x-mailer
-         :x-mimeole;
-        b=Rfq6X9av+A3vjHvwDxckXJZQd5phdL03EESd2DWKal1PsnaIeN2HtuFU9KHA14E82z
-         1i+Lrmv21xSHauxvFmy/ZhfJ/Am6VOYka261jQ7gbHIMCbQiZer5jMU/EDwI8qIew0Jy
-         L5ddJAx+fwIdGQX4oUKUXxkeXFhXx7fJSy7I8=
-Received: by 10.210.144.8 with SMTP id r8mr5241046ebd.36.1248295696534;
-        Wed, 22 Jul 2009 13:48:16 -0700 (PDT)
-Received: from HPLAPTOP (mwgray.force9.co.uk [212.159.110.144])
-        by mx.google.com with ESMTPS id 5sm2125708eyf.38.2009.07.22.13.48.15
-        (version=SSLv3 cipher=RC4-MD5);
-        Wed, 22 Jul 2009 13:48:15 -0700 (PDT)
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5512
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.5579
+	id S1752801AbZGVU5O (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 22 Jul 2009 16:57:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752421AbZGVU5O
+	(ORCPT <rfc822;git-outgoing>); Wed, 22 Jul 2009 16:57:14 -0400
+Received: from smtp1-g21.free.fr ([212.27.42.1]:36903 "EHLO smtp1-g21.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751929AbZGVU5N (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 Jul 2009 16:57:13 -0400
+Received: from smtp1-g21.free.fr (localhost [127.0.0.1])
+	by smtp1-g21.free.fr (Postfix) with ESMTP id 419DC94011C;
+	Wed, 22 Jul 2009 22:57:03 +0200 (CEST)
+Received: from gandelf.nowhere.earth (nan92-1-81-57-214-146.fbx.proxad.net [81.57.214.146])
+	by smtp1-g21.free.fr (Postfix) with ESMTP id 5FADE940147;
+	Wed, 22 Jul 2009 22:57:01 +0200 (CEST)
+Received: by gandelf.nowhere.earth (Postfix, from userid 1000)
+	id 695ABA003; Wed, 22 Jul 2009 22:57:15 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <200907180123.41735.markus.heidelberg@web.de>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123773>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123774>
 
-How do I do a git svn fetch to a bare test.git repository created with :-
+On Sat, Jul 18, 2009 at 01:23:41AM +0200, Markus Heidelberg wrote:
+> Yann Dirson, 17.07.2009:
+> > On Fri, Jul 17, 2009 at 12:58:46AM +0200, Markus Heidelberg wrote:
+> > > > - even when --no-thread is specified, and format-patch was run with
+> > > > --no-thread as well, it still adds In-Reply-To and References headers,
+> > > > and I must say I do not see what in the code causes this behaviour.
+> > > 
+> > > This is caused by a bug fixed in commit 5e9758e29 (send-email: fix
+> > > non-threaded mails, 2009-06-12). Try using "git send-email --no-thread
+> > > --no-chain-reply" and it may work again. You should use an up-to-date
+> > > git, when searching for bugs.
+> > 
+> > I had tried exactly this just in case it would help, with current
+> > master (1.6.4rc1), and it still saw the same behaviour.
+> 
+> Strange, I can't reproduce it.
 
-    git --git-dir test.git --bare init --shared=true
+You're right, I must have forgotten --exec-path=$PWD when doing my
+tests.  It also works with "git send-email --no-thread",
+--no-chain-reply is (as expected) not even necessary.
 
-I have tried :-
-
-   git --git-dir test.git svn fetch http://test.org/git/test
-
-and
-
-   git --git-dir test.git/svn svn fetch http://test.org/git/test     /// 
-fictious address :)
-
-but neither work.
-
-As you may guess I am not really sure what I am doing here.
-
-Many thanks in advance,
-
-Aaron
+Cool, I can get back to documenting that :)
