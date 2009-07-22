@@ -1,73 +1,65 @@
 From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: Why is it important to learn git?
-Date: Wed, 22 Jul 2009 18:15:10 +0000
-Message-ID: <fabb9a1e0907221115x212c4b52q47cac29cf0336fc@mail.gmail.com>
-References: <e1a5e9a00907212208t10a071d0oe59a39b357a1111a@mail.gmail.com> 
-	<200907220952.27385.trast@student.ethz.ch>
+Subject: Re: git-svn wowes
+Date: Wed, 22 Jul 2009 18:24:07 +0000
+Message-ID: <fabb9a1e0907221124u345bc572mfcead0468306b6e5@mail.gmail.com>
+References: <025FAAA7CA644D709E1635C497753444@HPLAPTOP>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Tim Harper <timcharper@gmail.com>, git@vger.kernel.org
-To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Wed Jul 22 20:15:43 2009
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Aaron Gray <aaronngray.lists@googlemail.com>
+X-From: git-owner@vger.kernel.org Wed Jul 22 20:24:36 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MTgLs-0002P6-W8
-	for gcvg-git-2@gmane.org; Wed, 22 Jul 2009 20:15:41 +0200
+	id 1MTgUV-0006Hr-NH
+	for gcvg-git-2@gmane.org; Wed, 22 Jul 2009 20:24:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752648AbZGVSPc convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 22 Jul 2009 14:15:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751476AbZGVSPc
-	(ORCPT <rfc822;git-outgoing>); Wed, 22 Jul 2009 14:15:32 -0400
-Received: from mail-ew0-f226.google.com ([209.85.219.226]:62707 "EHLO
+	id S1753516AbZGVSY2 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 22 Jul 2009 14:24:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753386AbZGVSY2
+	(ORCPT <rfc822;git-outgoing>); Wed, 22 Jul 2009 14:24:28 -0400
+Received: from mail-ew0-f226.google.com ([209.85.219.226]:57270 "EHLO
 	mail-ew0-f226.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751157AbZGVSPc convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 22 Jul 2009 14:15:32 -0400
-Received: by ewy26 with SMTP id 26so428163ewy.37
-        for <git@vger.kernel.org>; Wed, 22 Jul 2009 11:15:30 -0700 (PDT)
+	with ESMTP id S1753169AbZGVSY1 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 22 Jul 2009 14:24:27 -0400
+Received: by ewy26 with SMTP id 26so434575ewy.37
+        for <git@vger.kernel.org>; Wed, 22 Jul 2009 11:24:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:mime-version:received:in-reply-to:references
          :from:date:message-id:subject:to:cc:content-type
          :content-transfer-encoding;
-        bh=G4U6R9Zzv1NvLeFqkjGeT6D3sftjQEvhCw2rHIApy7s=;
-        b=lYSDXTK0ALrn6gZQx0G3MuTHxSG5xHTkBgdIhJ1adv0+RuLuLmfzaV3JbOAvYanSrH
-         i/F3m9golzXSVVsfvum8ItNLe3KS9Qi88t++jBAyVQQBjGBOmnE5cJxSbzwC0Ylv9tjz
-         2TLnged5Fmg+c81VwAhO86XODPJrXkXJhYMBI=
+        bh=BWJsVPM4pBR64ampMiVo6S1p7xILMKzc6Q7H9u/EXpI=;
+        b=KYUlVooFiW+zRJkrDklqZIs640ccqjdiDMoI/FhuYeiU0eu8FI3EfFaWLJ8or8LR8L
+         C5Gi8zZDxomWWtp8aLe1Mqo/G0FMk42SVcQpycblcddzcQdYQvXOouq+KUdrqUS+2Qvy
+         E13xTM02V/hiAc32TpXM9Cf0HaQ9X5/QVE+EA=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc:content-type:content-transfer-encoding;
-        b=TZCtxr1upJTagsaw3+GvvkNrPXXuZtvobHBd72E41fhaS/vWqKhzB3PVEvyG42aHCc
-         aKYD4tP+eaipBEAk1RS3aInERo89SFtQyqCiVf09YQIPtQWkTxJODY8ipv4FHFU9TTc8
-         yUy1mhEjUyBYFQBvaZDiJhTi1relgOSSYn4vg=
-Received: by 10.216.45.65 with SMTP id o43mr331026web.4.1248286530132; Wed, 22 
-	Jul 2009 11:15:30 -0700 (PDT)
-In-Reply-To: <200907220952.27385.trast@student.ethz.ch>
+        b=lSkg9Sxlc5Il0TUmTee2vvaYPheXKTx84lDUXYs877dJ7Pzli6zrJdKLst/HYkIOnT
+         tvQJsHjbQVPVdGHfb1967pIp/ALFaioTU9/YzQ/oDp0PHTn2/55Oq6KMcQmmWEzYPxCR
+         4CSwcij1ja3LdYEo+8imsZKHaY2t3EF7IKhIw=
+Received: by 10.216.18.195 with SMTP id l45mr347762wel.59.1248287067093; Wed, 
+	22 Jul 2009 11:24:27 -0700 (PDT)
+In-Reply-To: <025FAAA7CA644D709E1635C497753444@HPLAPTOP>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123765>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123766>
 
 Heya,
 
-On Wed, Jul 22, 2009 at 07:52, Thomas Rast<trast@student.ethz.ch> wrote=
-:
-> =A0Learning to make nice, reviewable, working, one-change-per-revisio=
-n
-> =A0commits.
+On Wed, Jul 22, 2009 at 13:55, Aaron
+Gray<aaronngray.lists@googlemail.com> wrote:
+> =A0 git svn rebase
 
-I very much agree with those values, but also
-
-  Commit early, commit often
-
-It's very convenient to be able to go back to/diff with a previous
-version later on, running 'git commit -am "got x half-working"' takes
-only a few seconds, but can save hours later on when you got x
-totally-not-working-at-all-anymore.
+Should be enough ('git svn rebase' runs 'git svn fetch' first),
+assuming you don't touch the working directory, which you probably
+don't considering that your script blasts away all changes every hour.
 
 --=20
 Cheers,
