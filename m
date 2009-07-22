@@ -1,49 +1,57 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] config.mak.in: continue fixing NEEDS_LIBGEN
- autoconfigure feature
-Date: Wed, 22 Jul 2009 15:35:39 -0700
-Message-ID: <7vprbsbb2c.fsf@alter.siamese.dyndns.org>
-References: <N0R1rELOlDFDG8pOY2LYJHmWygM5WFD8q_fNZgfE1A2QOX1yg6OPCZW4RbX5i03hokq4Bx2zOjM@cipher.nrlssc.navy.mil> <57XXtFYcpNU4ayC2onbxyZE72nxUH64HrjFA1KTX3lvwrSUaKMsqemp5CX0U7W460zAC_hc0GdA@cipher.nrlssc.navy.mil>
+From: Mark Blakeney <markb@berlios.de>
+Subject: Re: git rebase stops on empty commits
+Date: Wed, 22 Jul 2009 23:01:32 +0000 (UTC)
+Message-ID: <loom.20090722T224408-68@post.gmane.org>
+References: <33e2b2760907220022rbad30d7x255bcb63c5b8cc2f@mail.gmail.com> <loom.20090722T073645-17@post.gmane.org> <alpine.DEB.2.00.0907220907550.9220@ds9.cixit.se> <loom.20090722T120617-839@post.gmane.org> <20090723070812.6117@nanako3.lavabit.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, j6t@kdbg.org, peff@peff.net, david@syzdek.net,
-	jnareb@gmail.com, bonzini@gnu.org, nicolas.s.dev@gmx.fr,
-	Brandon Casey <drafnel@gmail.com>
-To: Brandon Casey <casey@nrlssc.navy.mil>
-X-From: git-owner@vger.kernel.org Thu Jul 23 00:36:06 2009
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jul 23 01:02:06 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MTkPt-0007pc-NB
-	for gcvg-git-2@gmane.org; Thu, 23 Jul 2009 00:36:06 +0200
+	id 1MTkp0-0008Kx-Kt
+	for gcvg-git-2@gmane.org; Thu, 23 Jul 2009 01:02:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755169AbZGVWfz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 22 Jul 2009 18:35:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755155AbZGVWfz
-	(ORCPT <rfc822;git-outgoing>); Wed, 22 Jul 2009 18:35:55 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:58695 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755149AbZGVWfy (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 22 Jul 2009 18:35:54 -0400
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id A62A4102FD;
-	Wed, 22 Jul 2009 18:35:54 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 4CE40102F1; Wed,
- 22 Jul 2009 18:35:41 -0400 (EDT)
-In-Reply-To: <57XXtFYcpNU4ayC2onbxyZE72nxUH64HrjFA1KTX3lvwrSUaKMsqemp5CX0U7W460zAC_hc0GdA@cipher.nrlssc.navy.mil> (Brandon Casey's message of "Wed\, 22 Jul 2009 17\:15\:18 -0500")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 04804812-7710-11DE-9570-F699A5B33865-77302942!a-sasl-quonix.pobox.com
+	id S1754672AbZGVXBu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 22 Jul 2009 19:01:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754485AbZGVXBt
+	(ORCPT <rfc822;git-outgoing>); Wed, 22 Jul 2009 19:01:49 -0400
+Received: from main.gmane.org ([80.91.229.2]:55203 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753557AbZGVXBt (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 Jul 2009 19:01:49 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1MTkoh-0008Kv-ME
+	for git@vger.kernel.org; Wed, 22 Jul 2009 23:01:43 +0000
+Received: from 124-171-150-213.dyn.iinet.net.au ([124.171.150.213])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 22 Jul 2009 23:01:43 +0000
+Received: from markb by 124-171-150-213.dyn.iinet.net.au with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 22 Jul 2009 23:01:43 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: main.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 124.171.150.213 (Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.0.12) Gecko/2009070811 Ubuntu/9.04 (jaunty) Firefox/3.0.12)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123810>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123811>
 
-Brandon Casey <casey@nrlssc.navy.mil> writes:
+Because these particular original commits were real commits ported from our
+previous archaic system which for technical reasons have lost the actual file
+changes (although they are trivial for each of these particular cases). But all
+our commit comments are very verbose and valuable, specifically in these cases,
+so it would be a shame to lose them from the linear change history.
 
-> You probably want to apply or squash this somewhere.
-
-Thanks.
+Anyway, the question of why anybody would want empty commits is beside the main
+point. The fact is that git provides this option so my bug sugestion here is
+that git rebase does not cater for this existing git commit option very well. My
+contention is that "git commit" supports --allow-empty so "git rebase" should as
+well.
