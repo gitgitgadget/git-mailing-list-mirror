@@ -1,63 +1,103 @@
-From: Pierre Habouzit <madcoder@debian.org>
-Subject: janitoring
-Date: Wed, 22 Jul 2009 23:34:32 +0200
-Message-ID: <1248298475-2990-1-git-send-email-madcoder@debian.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: Why is it important to learn git?
+Date: Wed, 22 Jul 2009 14:44:23 -0700 (PDT)
+Message-ID: <m3my6wbdfs.fsf@localhost.localdomain>
+References: <e1a5e9a00907212208t10a071d0oe59a39b357a1111a@mail.gmail.com>
+	<20090722210738.GA25324@dpotapov.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jul 22 23:42:10 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Tim Harper <timcharper@gmail.com>, git@vger.kernel.org
+To: Dmitry Potapov <dpotapov@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jul 22 23:45:08 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MTjZW-0001k8-Vs
-	for gcvg-git-2@gmane.org; Wed, 22 Jul 2009 23:41:59 +0200
+	id 1MTjc1-0003Ru-Vo
+	for gcvg-git-2@gmane.org; Wed, 22 Jul 2009 23:44:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754113AbZGVVlF convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 22 Jul 2009 17:41:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754085AbZGVVlE
-	(ORCPT <rfc822;git-outgoing>); Wed, 22 Jul 2009 17:41:04 -0400
-Received: from pan.madism.org ([88.191.52.104]:40950 "EHLO hermes.madism.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754006AbZGVVlB (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 22 Jul 2009 17:41:01 -0400
-Received: from madism.org (olympe.madism.org [82.243.245.108])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "artemis.madism.org", Issuer "madism.org" (verified OK))
-	by hermes.madism.org (Postfix) with ESMTPS id B8F7C464F7;
-	Wed, 22 Jul 2009 23:34:42 +0200 (CEST)
-Received: by madism.org (Postfix, from userid 1000)
-	id 0CF302AEA0; Wed, 22 Jul 2009 23:34:36 +0200 (CEST)
-X-Mailer: git-send-email 1.6.4.rc1.192.g631f9
+	id S1753982AbZGVVoZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 22 Jul 2009 17:44:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753816AbZGVVoZ
+	(ORCPT <rfc822;git-outgoing>); Wed, 22 Jul 2009 17:44:25 -0400
+Received: from fg-out-1718.google.com ([72.14.220.156]:7708 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753795AbZGVVoY (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 Jul 2009 17:44:24 -0400
+Received: by fg-out-1718.google.com with SMTP id e21so147452fga.17
+        for <git@vger.kernel.org>; Wed, 22 Jul 2009 14:44:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:received
+         :x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        bh=1zvqYrchzj7JRnjWEnXaOplB1lj6IAic0F5ctBCcoLI=;
+        b=A8P1DaBKHj6woarMF2iminEsJYWzcASzzRfAGNU1z53YVQiJbAL9Yt+bHinLvNC+19
+         WLDIYXZTmFPmqnMfwQK4wavLkA6eLqwb6mOTQTB8+gtpGDWA5qENYftCuNJSraftbwLN
+         yU6evlQuzvlFWXeIPwRjm5DA5mCLquzINN2ZE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        b=OKMYOL02YSPG4v2ckdy+gCdlID17IaLk8GCM6Htbl3m6CNcULLfINinInYQUh1M6Ke
+         Zdu4HPWdHMK73MKlBMURLrMWhgsIG7+aw2o/Ln7N6tEwicaWZCBvshaddtbnJFqv0Ec8
+         KMyt6RDUV9joiq0HPxKkke/wsVAG7Mx+gZ6Qs=
+Received: by 10.86.30.16 with SMTP id d16mr1247224fgd.2.1248299063996;
+        Wed, 22 Jul 2009 14:44:23 -0700 (PDT)
+Received: from localhost.localdomain (abvd136.neoplus.adsl.tpnet.pl [83.8.201.136])
+        by mx.google.com with ESMTPS id e11sm17462259fga.16.2009.07.22.14.44.22
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 22 Jul 2009 14:44:23 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id n6MLiP8i002778;
+	Wed, 22 Jul 2009 23:44:25 +0200
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id n6MLiOHx002775;
+	Wed, 22 Jul 2009 23:44:24 +0200
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <20090722210738.GA25324@dpotapov.dyndns.org>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123782>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123783>
 
-[PATCH 1/3] janitor: use NULL and not 0 for pointers.
+Dmitry Potapov <dpotapov@gmail.com> writes:
 
-  I really dislike the use of 0 when NULL is meant. This patch probably
-  fixes most of them. The biggest culprit is nedmalloc, but a few
-  remnants exist in plain git code.
+> On Tue, Jul 21, 2009 at 11:08:31PM -0600, Tim Harper wrote:
+> > 
+> > How has mastering the advanced features of git helped you to be a
+> > better programmer?
+> 
+> I don't think that features itself make as big difference as the fact
+> Git provides you much more flexibility in choosing a more appropriate
+> workflow than you have with any centralized VCS. (Yes, you will still
+> find many Git features handy even if you work with it as you did with
+> CVS, but you will miss most benefits of Git).
+> 
+> To really understand what benefits Git offers, you have to realize first
+> what is wrong CVS and CVS-like VCSes. Unfortunately, it is difficult to
+> explain just in a few words. Some implementation deficiency of CVS is
+> obvious (and it was addressed in some CVS clones like Subversion), but
+> more fundamental problems are far less obvious even for people who used
+> CVS for many years.
 
-[PATCH 2/3] refactor: use bitsizeof() instead of 8 * sizeof()
+See also my answer for "Difference between GIT and CVS" question
+at StackOverflow:
 
-  use a macro for CHAR_BIT * sizeof(...), I tend to find it more
-  readable than 8 * sizeof(...) in the code. YMMV.
+  http://stackoverflow.com/questions/802573/difference-between-git-and-cvs/824241#824241
+ 
+> To be fair to CVS, it is far from the worst VCS. There are some insane
+> lock-based VCS, which were so painful to use (mostly due to these
+> exclusive locks but often due to some other insanity too) that anyone
+> who worked with may think about CVS as a really nice system...
 
-[PATCH 3/3] janitor: add DIV_ROUND_UP and use it.
+By the way, even if CVS didn't implement support for file renames and
+copying, at least it provides support for file deletion (as opposed to
+*khem* SourceSafe).
 
-  Just use linux/kernel.h DIV_ROUND_UP(a, b), it's way easier to read
-  than (a + b - 1) / (b).
-
-PS: I don't mind if some patches don't meet large enthusiasm and are
-    dropped.
---=20
-=C2=B7O=C2=B7  Pierre Habouzit
-=C2=B7=C2=B7O                                                madcoder@d=
-ebian.org
-OOO                                                http://www.madism.or=
-g
+-- 
+Jakub Narebski
+Poland
+ShadeHawk on #git
