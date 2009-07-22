@@ -1,92 +1,142 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Why is it important to learn git?
-Date: Wed, 22 Jul 2009 14:47:05 -0700 (PDT)
-Message-ID: <m3iqhkbdb9.fsf@localhost.localdomain>
-References: <e1a5e9a00907212208t10a071d0oe59a39b357a1111a@mail.gmail.com>
-	<200907220952.27385.trast@student.ethz.ch>
-	<fabb9a1e0907221115x212c4b52q47cac29cf0336fc@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH 1/2] combine-diff.c: fix performance problem when folding
+ common deleted lines
+Date: Wed, 22 Jul 2009 14:48:28 -0700
+Message-ID: <1248299309-10579-2-git-send-email-gitster@pobox.com>
+References: <1248299309-10579-1-git-send-email-gitster@pobox.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-15
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Thomas Rast <trast@student.ethz.ch>,
-	Tim Harper <timcharper@gmail.com>, git@vger.kernel.org
-To: Sverre Rabbelier <srabbelier@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jul 22 23:47:24 2009
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jul 22 23:48:45 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MTjee-0005Qf-BO
-	for gcvg-git-2@gmane.org; Wed, 22 Jul 2009 23:47:16 +0200
+	id 1MTjg5-0006GE-8Q
+	for gcvg-git-2@gmane.org; Wed, 22 Jul 2009 23:48:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753930AbZGVVrJ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 22 Jul 2009 17:47:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753024AbZGVVrI
-	(ORCPT <rfc822;git-outgoing>); Wed, 22 Jul 2009 17:47:08 -0400
-Received: from fg-out-1718.google.com ([72.14.220.157]:18659 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752817AbZGVVrH convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 22 Jul 2009 17:47:07 -0400
-Received: by fg-out-1718.google.com with SMTP id e21so147817fga.17
-        for <git@vger.kernel.org>; Wed, 22 Jul 2009 14:47:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received
-         :x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type
-         :content-transfer-encoding;
-        bh=eRviXT8iZBFzvF8P7Z0KuS26E4WffvOkTDa9x39bC5k=;
-        b=POzTSekI2ju/3lBDbWuqgAemP6CugjzR+nvvxPfLkbk3z5OYCg9TV0tGbccgmebW/f
-         8Y1ukDFtzQ1RZD82STx2mUW6E3BiZWhfJDFeXomOG7jlCyE/vVBACKscdvm9EczLgpgi
-         U+nKCYyiupFlGcXZNrCFFjtDnqqIWKXY1hRh8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type
-         :content-transfer-encoding;
-        b=MwbFAQQdQANp+9blHRrUwVUk/IWZLiWfhwoA9MiGrULLnvtHwn6j2/dZNIAlGgF9Vh
-         mcow04HNHVp4gpGxbmh8A+iRNKq9YK+PoX1OzqvOABn5H5z9+uJK2cEoWSwcj4qkn06G
-         AUdoIDysQpppU33rdlt4mDvgjMAVD+PD/oSGM=
-Received: by 10.86.97.18 with SMTP id u18mr1187105fgb.66.1248299226333;
-        Wed, 22 Jul 2009 14:47:06 -0700 (PDT)
-Received: from localhost.localdomain (abvd136.neoplus.adsl.tpnet.pl [83.8.201.136])
-        by mx.google.com with ESMTPS id 12sm17539542fgg.29.2009.07.22.14.47.04
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 22 Jul 2009 14:47:05 -0700 (PDT)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id n6MLl7F2002817;
-	Wed, 22 Jul 2009 23:47:07 +0200
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id n6MLl61m002814;
-	Wed, 22 Jul 2009 23:47:06 +0200
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <fabb9a1e0907221115x212c4b52q47cac29cf0336fc@mail.gmail.com>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+	id S1754134AbZGVVsf convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 22 Jul 2009 17:48:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754034AbZGVVse
+	(ORCPT <rfc822;git-outgoing>); Wed, 22 Jul 2009 17:48:34 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:65113 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753049AbZGVVsd (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 Jul 2009 17:48:33 -0400
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 65064E18E
+	for <git@vger.kernel.org>; Wed, 22 Jul 2009 17:48:33 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id B7B82E18D for
+ <git@vger.kernel.org>; Wed, 22 Jul 2009 17:48:32 -0400 (EDT)
+X-Mailer: git-send-email 1.6.4.rc1.10.g2a679
+In-Reply-To: <1248299309-10579-1-git-send-email-gitster@pobox.com>
+X-Pobox-Relay-ID: 66FAC348-7709-11DE-B6EA-AEF1826986A2-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123786>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123787>
 
-Sverre Rabbelier <srabbelier@gmail.com> writes:
-> On Wed, Jul 22, 2009 at 07:52, Thomas Rast<trast@student.ethz.ch> wro=
-te:
+=46or a deleted line in a patch with the parent we are looking at, the
+append_lost() function finds the same line among a run of lines that we=
+re
+deleted from the same location by patches from parents we previously
+checked.  This is so that patches with two parents
 
-> > =A0Learning to make nice, reviewable, working, one-change-per-revis=
-ion
-> > =A0commits.
->=20
-> I very much agree with those values, but also
->=20
->   Commit early, commit often
+    @@ -1,4 +1,3 @@    @@ -1,4 +1,3 @@
+     one                   one
+    -two                  -two
+     three                 three
+    -quatro               -fyra
+    +four                 +four
+
+can be coalesced into this sequence, reusing one line that describes th=
+e
+removal of "two" for both parents.
+
+   @@@ -1,4 -1,4 +1,3 @@@
+     one
+   --two
+     three
+   - quatro
+    -frya
+   ++four
+
+While reading the second patch (that removes "two" and then "fyra"), af=
+ter
+finding where removal of the "two" matches, we need to find existing
+removal of "fyra" (if exists) in the removal list, but the match has to
+happen after all the existing matches (in this case "two").  The code u=
+sed
+a na=C3=AFve O(n^2) algorithm to compute this by scanning the whole rem=
+oval
+list over and over again.
+
+This patch remembers where the next scan should be started in the exist=
+ing
+removal list to avoid this.
+
+Noticed by Linus Torvalds.
+
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ combine-diff.c |   13 +++++--------
+ 1 files changed, 5 insertions(+), 8 deletions(-)
+
+diff --git a/combine-diff.c b/combine-diff.c
+index 60d0367..b82f46c 100644
+--- a/combine-diff.c
++++ b/combine-diff.c
+@@ -80,6 +80,7 @@ struct lline {
+ /* Lines surviving in the merge result */
+ struct sline {
+ 	struct lline *lost_head, **lost_tail;
++	struct lline *next_lost;
+ 	char *bol;
+ 	int len;
+ 	/* bit 0 up to (N-1) are on if the parent has this line (i.e.
+@@ -121,18 +122,12 @@ static void append_lost(struct sline *sline, int =
+n, const char *line, int len)
 =20
-I also find commit message convention: "short one-line description,
-separated by empty line, then more detailed description" to be very
-useful (git tools assume and expect this convention).  It helps
-keeping changesets / commits small; if you can't write oneline summary
-of commit, it is probably too large :-)
-
+ 	/* Check to see if we can squash things */
+ 	if (sline->lost_head) {
+-		struct lline *last_one =3D NULL;
+-		/* We cannot squash it with earlier one */
+-		for (lline =3D sline->lost_head;
+-		     lline;
+-		     lline =3D lline->next)
+-			if (lline->parent_map & this_mask)
+-				last_one =3D lline;
+-		lline =3D last_one ? last_one->next : sline->lost_head;
++		lline =3D sline->next_lost;
+ 		while (lline) {
+ 			if (lline->len =3D=3D len &&
+ 			    !memcmp(lline->line, line, len)) {
+ 				lline->parent_map |=3D this_mask;
++				sline->next_lost =3D lline->next;
+ 				return;
+ 			}
+ 			lline =3D lline->next;
+@@ -147,6 +142,7 @@ static void append_lost(struct sline *sline, int n,=
+ const char *line, int len)
+ 	lline->line[len] =3D 0;
+ 	*sline->lost_tail =3D lline;
+ 	sline->lost_tail =3D &lline->next;
++	sline->next_lost =3D NULL;
+ }
+=20
+ struct combine_diff_state {
+@@ -187,6 +183,7 @@ static void consume_line(void *state_, char *line, =
+unsigned long len)
+ 				xcalloc(state->num_parent,
+ 					sizeof(unsigned long));
+ 		state->sline[state->nb-1].p_lno[state->n] =3D state->ob;
++		state->lost_bucket->next_lost =3D state->lost_bucket->lost_head;
+ 		return;
+ 	}
+ 	if (!state->lost_bucket)
 --=20
-Jakub Narebski
-Poland
-ShadeHawk on #git
+1.6.4.rc1.10.g2a679
