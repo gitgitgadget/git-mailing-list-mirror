@@ -1,72 +1,149 @@
-From: Mark Blakeney <markb@berlios.de>
-Subject: Re: git rebase stops on empty commits
-Date: Wed, 22 Jul 2009 12:29:19 +0000 (UTC)
-Message-ID: <loom.20090722T120617-839@post.gmane.org>
-References: <33e2b2760907220022rbad30d7x255bcb63c5b8cc2f@mail.gmail.com> <loom.20090722T073645-17@post.gmane.org> <alpine.DEB.2.00.0907220907550.9220@ds9.cixit.se>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
+From: Constantine Plotnikov <constantine.plotnikov@gmail.com>
+Subject: [JGIT PATCH] Removed conversion of subsection to the lowecase when accessing subsection names in config files
+Date: Wed, 22 Jul 2009 16:53:41 +0400
+Message-ID: <1248267221-2312-1-git-send-email-constantine.plotnikov@gmail.com>
+Cc: Constantine Plotnikov <constantine.plotnikov@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jul 22 14:29:42 2009
+X-From: git-owner@vger.kernel.org Wed Jul 22 14:53:55 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MTax3-00039H-I8
-	for gcvg-git-2@gmane.org; Wed, 22 Jul 2009 14:29:42 +0200
+	id 1MTbKU-0005Hx-54
+	for gcvg-git-2@gmane.org; Wed, 22 Jul 2009 14:53:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754234AbZGVM3d (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 22 Jul 2009 08:29:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754158AbZGVM3d
-	(ORCPT <rfc822;git-outgoing>); Wed, 22 Jul 2009 08:29:33 -0400
-Received: from main.gmane.org ([80.91.229.2]:42029 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754145AbZGVM3c (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 22 Jul 2009 08:29:32 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1MTaws-0006Ix-GQ
-	for git@vger.kernel.org; Wed, 22 Jul 2009 12:29:30 +0000
-Received: from 124-171-150-213.dyn.iinet.net.au ([124.171.150.213])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 22 Jul 2009 12:29:30 +0000
-Received: from markb by 124-171-150-213.dyn.iinet.net.au with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 22 Jul 2009 12:29:30 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: main.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 124.171.150.213 (Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.0.11) Gecko/2009060308 Ubuntu/9.04 (jaunty) Firefox/3.0.11)
+	id S1754521AbZGVMxp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 22 Jul 2009 08:53:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754150AbZGVMxp
+	(ORCPT <rfc822;git-outgoing>); Wed, 22 Jul 2009 08:53:45 -0400
+Received: from mail.intellij.net ([213.182.181.98]:47206 "EHLO
+	mail.intellij.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752148AbZGVMxo (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 Jul 2009 08:53:44 -0400
+Received: (qmail 1151 invoked by uid 89); 22 Jul 2009 12:53:41 -0000
+Received: by simscan 1.1.0 ppid: 1101, pid: 1136, t: 0.0074s
+         scanners: regex: 1.1.0
+Received: from unknown (HELO localhost.localdomain) (Constantine.Plotnikov@jetbrains.com@172.26.240.76)
+  by mail.intellij.net with ESMTPA; 22 Jul 2009 12:53:41 -0000
+X-Mailer: git-send-email 1.6.1.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123748>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123749>
 
-Peter Krefting <peter <at> softwolves.pp.se> writes:
-> If you edit the commit, you claim ownership of it. You should probably try 
-> using the -C option to commit, it should allow you to edit the message, 
-> while keeping the authorship and timestamp intact.
+The entries are stored in Config.byName without coversion of
+the subsection name to the lowercase. But the methods
+setStringList(...) and getRawEntry(...) were converting subsection
+names to the lowercase, thus making it impossible to access
+values in subsection with names that contained upppercase characters.
+This patch removes conversion to the lowercase and introduce
+the methods that appropriately concatentates the key. This key
+is now used for all map accesses.
 
-Thanks Peter, that works well. E.g.
+Signed-off-by: Constantine Plotnikov <constantine.plotnikov@gmail.com>
+---
+The patch assumes the current head "FindBugs: don't use new String(String) in RefDatabase".
 
-    % git rebase --continue
-    Finished one cherry-pick.
-    # Not currently on any branch.
-    nothing to commit (working directory clean)
-    Could not apply c33a375... Stop LNCC until OPC connection
-    % git commit --allow-empty -C c33a375
-    [detached HEAD e7d66f4] Stop LNCC until OPC connection
-    % git rebase --continue
-    ....
+To apply above the series "[JGIT PATCH 00/12] Cleanup Config class" the
+field names in the method add(final Entry e) should be changed. Possibly 
+the patch should be merged into the patch 
 
-So rebase can actually do what I want but my fundamental issue remains. I said
-"pick" in the rebase for all of these commits but rebase is forcing me to do
-each one manually! And it requires some rather arcane git magic that could only
-be procured from a guru on a mailing list. :)
+ "[JGIT PATCH 10/12] Match config subsection names using case sensitive search".
+                                   
+ .../src/org/spearce/jgit/lib/Config.java           |   61 ++++++++++----------
+ 1 files changed, 31 insertions(+), 30 deletions(-)
 
-Surely something like an option --allow-empty on the rebase -i to skip over
-these no-brainer picks is trivial to implement - and makes sense? As a simple
-user, and knowing the original commits required --allow-empty, it was the first
-option I went looking for on the rebase -i when I encountered this problem.
+diff --git a/org.spearce.jgit/src/org/spearce/jgit/lib/Config.java b/org.spearce.jgit/src/org/spearce/jgit/lib/Config.java
+index c2d5c6e..a8639ff 100644
+--- a/org.spearce.jgit/src/org/spearce/jgit/lib/Config.java
++++ b/org.spearce.jgit/src/org/spearce/jgit/lib/Config.java
+@@ -419,15 +419,29 @@ private void ensureLoaded() {
+ 	private Object getRawEntry(final String section, final String subsection,
+ 			final String name) {
+ 		ensureLoaded();
++		return byName.get(concatenateKey(section, subsection, name));
++	}
+ 
++	/**
++	 * Create simple a key name from the key components
++	 *
++	 * @param section
++	 *            the section name
++	 * @param subsection
++	 *            the subsection name
++	 * @param name
++	 *            the key name
++	 * @return a simple key name that have all components concatenated and the
++	 *         case converted
++	 */
++	private static String concatenateKey(final String section,
++			final String subsection, final String name) {
+ 		String ss;
+ 		if (subsection != null)
+-			ss = "." + subsection.toLowerCase();
++			ss = "." + subsection;
+ 		else
+ 			ss = "";
+-		final Object o;
+-		o = byName.get(section.toLowerCase() + ss + "." + name.toLowerCase());
+-		return o;
++		return section.toLowerCase() + ss + "." + name.toLowerCase();
+ 	}
+ 
+ 	/**
+@@ -548,10 +562,7 @@ public void setStringList(final String section, final String subsection,
+ 			final String name, final List<String> values) {
+ 		// Update our parsed cache of values for future reference.
+ 		//
+-		String key = section.toLowerCase();
+-		if (subsection != null)
+-			key += "." + subsection.toLowerCase();
+-		key += "." + name.toLowerCase();
++		String key = concatenateKey(section, subsection, name);
+ 		if (values.size() == 0)
+ 			byName.remove(key);
+ 		else if (values.size() == 1) {
+@@ -787,28 +798,18 @@ protected void clear() {
+ 	@SuppressWarnings("unchecked")
+ 	private void add(final Entry e) {
+ 		entries.add(e);
+-		if (e.base != null) {
+-			final String b = e.base.toLowerCase();
+-			final String group;
+-			if (e.extendedBase != null) {
+-				group = b + "." + e.extendedBase;
+-			} else {
+-				group = b;
+-			}
+-			if (e.name != null) {
+-				final String n = e.name.toLowerCase();
+-				final String key = group + "." + n;
+-				final Object o = byName.get(key);
+-				if (o == null) {
+-					byName.put(key, e);
+-				} else if (o instanceof Entry) {
+-					final ArrayList<Object> l = new ArrayList<Object>();
+-					l.add(o);
+-					l.add(e);
+-					byName.put(key, l);
+-				} else if (o instanceof List) {
+-					((List<Entry>) o).add(e);
+-				}
++		if (e.base != null && e.name != null) {
++			final String key = concatenateKey(e.base, e.extendedBase, e.name);
++			final Object o = byName.get(key);
++			if (o == null) {
++				byName.put(key, e);
++			} else if (o instanceof Entry) {
++				final ArrayList<Object> l = new ArrayList<Object>();
++				l.add(o);
++				l.add(e);
++				byName.put(key, l);
++			} else if (o instanceof List) {
++				((List<Entry>) o).add(e);
+ 			}
+ 		}
+ 	}
+-- 
+1.6.1.2
