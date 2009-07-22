@@ -1,65 +1,77 @@
-From: Greg Price <price@ksplice.com>
-Subject: Re: [PATCH v2 0/1] Fix rebase -p --onto
-Date: Wed, 22 Jul 2009 13:36:36 -0400
-Message-ID: <20090722173635.GN7878@vinegar-pot.mit.edu>
-References: <20090722163738.GO7503@vinegar-pot.mit.edu> <alpine.DEB.1.00.0907221905360.7343@intel-tinevez-2-302>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: hg2git error
+Date: Wed, 22 Jul 2009 19:47:25 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.0907221946590.7343@intel-tinevez-2-302>
+References: <alpine.DEB.1.00.0905241932301.26154@pacific.mpi-cbg.de>  <fabb9a1e0905241038x7ea22622k930f50b9c7598c6e@mail.gmail.com>  <alpine.DEB.1.00.0905242013080.26154@pacific.mpi-cbg.de> <fabb9a1e0905241120v65adf9f9u7b8d212e99d7f6cd@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Sixt <j.sixt@viscovery.net>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Jul 22 19:36:51 2009
+Content-Type: MULTIPART/MIXED; BOUNDARY="8323329-1714512354-1248284845=:7343"
+Cc: Rocco Rutte <pdmef@gmx.net>,
+	Matthias Urlichs <smurf@smurf.noris.de>, git@vger.kernel.org
+To: Sverre Rabbelier <srabbelier@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jul 22 19:47:45 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MTfkI-0001Op-4P
-	for gcvg-git-2@gmane.org; Wed, 22 Jul 2009 19:36:50 +0200
+	id 1MTfuq-0006Yv-MX
+	for gcvg-git-2@gmane.org; Wed, 22 Jul 2009 19:47:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751958AbZGVRgl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 22 Jul 2009 13:36:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751779AbZGVRgl
-	(ORCPT <rfc822;git-outgoing>); Wed, 22 Jul 2009 13:36:41 -0400
-Received: from BISCAYNE-ONE-STATION.MIT.EDU ([18.7.7.80]:55235 "EHLO
-	biscayne-one-station.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750869AbZGVRgk (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 22 Jul 2009 13:36:40 -0400
-Received: from outgoing.mit.edu (OUTGOING-AUTH.MIT.EDU [18.7.22.103])
-	by biscayne-one-station.mit.edu (8.13.6/8.9.2) with ESMTP id n6MHab4s003382;
-	Wed, 22 Jul 2009 13:36:37 -0400 (EDT)
-Received: from localhost (VINEGAR-POT.MIT.EDU [18.181.0.51])
-	(authenticated bits=0)
-        (User authenticated as price@ATHENA.MIT.EDU)
-	by outgoing.mit.edu (8.13.6/8.12.4) with ESMTP id n6MHaaGm015424;
-	Wed, 22 Jul 2009 13:36:36 -0400 (EDT)
-Content-Disposition: inline
-In-Reply-To: <alpine.DEB.1.00.0907221905360.7343@intel-tinevez-2-302>
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-Scanned-By: MIMEDefang 2.42
-X-Spam-Flag: NO
-X-Spam-Score: 0.00
+	id S1754150AbZGVRr3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 22 Jul 2009 13:47:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754134AbZGVRr2
+	(ORCPT <rfc822;git-outgoing>); Wed, 22 Jul 2009 13:47:28 -0400
+Received: from mail.gmx.net ([213.165.64.20]:32831 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753111AbZGVRr1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 Jul 2009 13:47:27 -0400
+Received: (qmail invoked by alias); 22 Jul 2009 17:47:26 -0000
+Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
+  by mail.gmx.net (mp006) with SMTP; 22 Jul 2009 19:47:26 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19FgmNS5fpFhiPOFa03EEhXWPJNVog9D3n1jMfmh6
+	eLmr6IWiGVeqQU
+X-X-Sender: schindel@intel-tinevez-2-302
+In-Reply-To: <fabb9a1e0905241120v65adf9f9u7b8d212e99d7f6cd@mail.gmail.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.61
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123758>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123759>
 
-On Wed, Jul 22, 2009 at 07:07:17PM +0200, Johannes Schindelin wrote:
-> On Wed, 22 Jul 2009, Greg Price wrote:
-> > [...] when the great day comes that rebase -i -p can reorder commits 
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
+
+--8323329-1714512354-1248284845=:7343
+Content-Type: TEXT/PLAIN; charset=ISO-8859-1
+Content-Transfer-Encoding: 8BIT
+
+Hi,
+
+On Sun, 24 May 2009, Sverre Rabbelier wrote:
+
+> On Sun, May 24, 2009 at 20:16, Johannes Schindelin 
+> <Johannes.Schindelin@gmx.de> wrote:
+> > It says "Achtung! Alpha!".  How alpha is it?
 > 
-> If you want to help, I would be so thankful.  In that case, it might make 
-> more sense to hold off this patch and integrate it into the rebase-i-p 
-> patch series, rather than requiring a rebase of rebase-i-p on top of your 
-> patches, which will postpone said day only further.
+> I'm using it to work on Melange, the problems I've had with it so far 
+> have all been fixed :).
+> 
+> > Also, there is the issue that it is a Hg extension.  My experience 
+> > with such extensions and their dependency on certain Hg versions make 
+> > me ask: what version of Hg must I install before I can use Hg-git?
+> 
+> Right, you will need to have hg installed to bridge between git and hg, 
+> I think the current requirements are 'python 2.5' and 'hg 1.2' but 
+> that's mostly because that's what we're testing, not because we depend 
+> on specific features.
 
-Where is your patch series and what are the big things that need doing
-before it can be merged?  I can't promise a great deal of time up
-front, but I would be glad to look at it and may be able to pitch in.
+Could you give me a quick run-through how to install it and use it to 
+mirror, say, the netbeans repository?
 
-Because this patch is about --onto together with -p and doesn't really
-involve -i, I think it still makes sense to merge.  It's only one line
-plus tests, so I don't think it will create that much of a rebase burden.
+Thanks,
+Dscho
 
-Cheers,
-Greg
+--8323329-1714512354-1248284845=:7343--
