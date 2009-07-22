@@ -1,92 +1,58 @@
-From: Pierre Habouzit <madcoder@madism.org>
-Subject: Re: janitoring
-Date: Thu, 23 Jul 2009 00:02:09 +0200
-Message-ID: <20090722220209.GE13823@artemis.corp>
-References: <1248298475-2990-1-git-send-email-madcoder@debian.org>
- <7vws60cr9m.fsf@alter.siamese.dyndns.org>
+From: Nanako Shiraishi <nanako3@lavabit.com>
+Subject: Re: git rebase stops on empty commits
+Date: Thu, 23 Jul 2009 07:08:12 +0900
+Message-ID: <20090723070812.6117@nanako3.lavabit.com>
+References: <33e2b2760907220022rbad30d7x255bcb63c5b8cc2f@mail.gmail.com>
+	<loom.20090722T073645-17@post.gmane.org>
+	<alpine.DEB.2.00.0907220907550.9220@ds9.cixit.se>
+	<loom.20090722T120617-839@post.gmane.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="Qz2CZ664xQdCRdPu"
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jul 23 00:02:23 2009
+To: Mark Blakeney <markb@berlios.de>
+X-From: git-owner@vger.kernel.org Thu Jul 23 00:08:44 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MTjtG-0003vg-Tr
-	for gcvg-git-2@gmane.org; Thu, 23 Jul 2009 00:02:23 +0200
+	id 1MTjzP-0006Nl-EO
+	for gcvg-git-2@gmane.org; Thu, 23 Jul 2009 00:08:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754350AbZGVWCP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 22 Jul 2009 18:02:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754281AbZGVWCP
-	(ORCPT <rfc822;git-outgoing>); Wed, 22 Jul 2009 18:02:15 -0400
-Received: from pan.madism.org ([88.191.52.104]:56763 "EHLO hermes.madism.org"
+	id S1753400AbZGVWIe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 22 Jul 2009 18:08:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753299AbZGVWIe
+	(ORCPT <rfc822;git-outgoing>); Wed, 22 Jul 2009 18:08:34 -0400
+Received: from karen.lavabit.com ([72.249.41.33]:35430 "EHLO karen.lavabit.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754181AbZGVWCO (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 22 Jul 2009 18:02:14 -0400
-Received: from madism.org (olympe.madism.org [82.243.245.108])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "artemis.madism.org", Issuer "madism.org" (verified OK))
-	by hermes.madism.org (Postfix) with ESMTPS id 611824652A;
-	Thu, 23 Jul 2009 00:02:14 +0200 (CEST)
-Received: by madism.org (Postfix, from userid 1000)
-	id CF3812AEA0; Thu, 23 Jul 2009 00:02:09 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <7vws60cr9m.fsf@alter.siamese.dyndns.org>
-X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1753024AbZGVWId (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 Jul 2009 18:08:33 -0400
+Received: from b.earth.lavabit.com (b.earth.lavabit.com [192.168.111.11])
+	by karen.lavabit.com (Postfix) with ESMTP id 034F211B835;
+	Wed, 22 Jul 2009 17:08:34 -0500 (CDT)
+Received: from 2862.lavabit.com (212.62.97.20)
+	by lavabit.com with ESMTP id 65JUIXEEHHZ2; Wed, 22 Jul 2009 17:08:34 -0500
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws; s=lavabit; d=lavabit.com;
+  b=pXLPZwC8fYh5ZmEiDEtXXKL9MUO+efj99Zdk1e9CNmyPfwXR7Hhw5S5oZarcA3klLIs4YxdiiDpwvT8gqsqVCM05XKf5XFU37evYDcxUu+lQzuJqjyeZao1c4le6Rdvf9JPa6R39T2AhxKkPliAzUUOoGIP36Aeno4/awj5WIlc=;
+  h=From:To:Cc:Subject:References:In-Reply-To:Date:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id;
+In-Reply-To: <loom.20090722T120617-839@post.gmane.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123795>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123796>
 
+Quoting Mark Blakeney <markb@berlios.de>
 
---Qz2CZ664xQdCRdPu
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> Surely something like an option --allow-empty on the rebase -i to skip over
+> these no-brainer picks is trivial to implement - and makes sense? As a simple
+> user, and knowing the original commits required --allow-empty, it was the first
+> option I went looking for on the rebase -i when I encountered this problem.
 
-On Wed, Jul 22, 2009 at 03:00:21PM -0700, Junio C Hamano wrote:
-> Pierre Habouzit <madcoder@debian.org> writes:
->=20
-> > [PATCH 1/3] janitor: use NULL and not 0 for pointers.
-> >
-> >   I really dislike the use of 0 when NULL is meant. This patch probably
-> >   fixes most of them. The biggest culprit is nedmalloc, but a few
-> >   remnants exist in plain git code.
->=20
-> I am not enthused about "fixing" borrowed foreign code, unless we know
-> that we are committed to support our fork.  My impression was that this
-> ned stuff was borrowed by the MinGW folks with the understanding that we
-> will slurp it with minimum modification and turn a blind eye to its
-> sub-par coding styles, so that it can be more easily updated from the
-> upstream?
+I think an alternative is to use 'git rebase --skip'. I don't understand why you can't get rid of the commits that don't do anything and serve no purpose once and for all.
 
-Okay, maybe the 2-3 hunks that don't apply to nedmalloc stuff can be
-saved though, do you want me to send an updated patch ?
+In your first message you only said 'for various reasons' and it isn't clear why you need such empty commits. Often people say they want to add a comment about the state of the tree with empty commits, but tags are designed for that purpose. Unlike some other systems a tag can have a message of its own.
 
---=20
-Intersec <http://www.intersec.com>
-Pierre Habouzit <pierre.habouzit@intersec.com>
-T=C3=A9l : +33 (0)1 5570 3346
-Mob : +33 (0)6 1636 8131
-Fax : +33 (0)1 5570 3332
-37 Rue Pierre Lhomme
-92400 Courbevoie
-
---Qz2CZ664xQdCRdPu
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
-
-iEYEARECAAYFAkpnjGEACgkQvGr7W6HudhxH5wCgnib7wqLu3Ai110g9DOe4ZXya
-MCQAn01fKQWNV45WTdS077iWGKUvRNrX
-=o1Mv
------END PGP SIGNATURE-----
-
---Qz2CZ664xQdCRdPu--
+-- 
+Nanako Shiraishi
+http://ivory.ap.teacup.com/nanako3/
