@@ -1,97 +1,88 @@
-From: =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>
-Subject: [PATCH] Trailing whitespace and no newline fix
-Date: Wed, 22 Jul 2009 19:24:38 -0500
-Message-ID: <1248308678-23280-1-git-send-email-szeder@ira.uka.de>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: Performance issue of 'git branch'
+Date: Wed, 22 Jul 2009 17:51:38 -0700 (PDT)
+Message-ID: <alpine.LFD.2.01.0907221742010.3352@localhost.localdomain>
+References: <20090722235914.GA13150@Pilar.aei.mpg.de> <alpine.LFD.2.01.0907221714300.3352@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jul 23 02:24:57 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: "Carlos R. Mafra" <crmafra2@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jul 23 02:52:41 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MTm7E-0007eX-8O
-	for gcvg-git-2@gmane.org; Thu, 23 Jul 2009 02:24:56 +0200
+	id 1MTmY4-0007N5-4U
+	for gcvg-git-2@gmane.org; Thu, 23 Jul 2009 02:52:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751883AbZGWAYt convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 22 Jul 2009 20:24:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751821AbZGWAYt
-	(ORCPT <rfc822;git-outgoing>); Wed, 22 Jul 2009 20:24:49 -0400
-Received: from francis.fzi.de ([141.21.7.5]:1782 "EHLO exchange.fzi.de"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1751446AbZGWAYt (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 22 Jul 2009 20:24:49 -0400
-Received: from localhost.localdomain ([141.21.16.6]) by exchange.fzi.de over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
-	 Thu, 23 Jul 2009 02:24:48 +0200
-X-Mailer: git-send-email 1.6.4.rc1.73.ga0daf
-X-OriginalArrivalTime: 23 Jul 2009 00:24:48.0556 (UTC) FILETIME=[FCC21EC0:01CA0B2B]
+	id S1752193AbZGWAvl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 22 Jul 2009 20:51:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751919AbZGWAvl
+	(ORCPT <rfc822;git-outgoing>); Wed, 22 Jul 2009 20:51:41 -0400
+Received: from smtp1.linux-foundation.org ([140.211.169.13]:59263 "EHLO
+	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751153AbZGWAvk (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 22 Jul 2009 20:51:40 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
+	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id n6N0pc2O023782
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Wed, 22 Jul 2009 17:51:39 -0700
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id n6N0pc06027337;
+	Wed, 22 Jul 2009 17:51:38 -0700
+X-X-Sender: torvalds@localhost.localdomain
+In-Reply-To: <alpine.LFD.2.01.0907221714300.3352@localhost.localdomain>
+User-Agent: Alpine 2.01 (LFD 1184 2008-12-16)
+X-Spam-Status: No, hits=-3.461 required=5 tests=AWL,BAYES_00
+X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123815>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123816>
 
-If a patch adds a new line to the end of a file and this line ends with
-one trailing whitespace character and has no newline, then
-'--whitespace=3Dfix' currently does not remove that trailing whitespace=
-=2E
 
-This patch fixes this by removing the check for trailing whitespace at
-the end of the line at a hardcoded offset which does not take the
-eventual absence of newline into account.
 
-Signed-off-by: SZEDER G=C3=A1bor <szeder@ira.uka.de>
----
- t/t4124-apply-ws-rule.sh |   18 ++++++++++++++++++
- ws.c                     |    5 ++---
- 2 files changed, 20 insertions(+), 3 deletions(-)
+On Wed, 22 Jul 2009, Linus Torvalds wrote:
+> 
+> Try this:
+> 
+> 	git pack-refs --all
+> 
+> 	rmdir .git/refs/heads
+> 	rmdir .git/refs/tags
+> 
+> 	mkdir .git/refs/heads
+> 	mkdir .git/refs/tags
+> 
+> and see if it magically speeds up.
 
-diff --git a/t/t4124-apply-ws-rule.sh b/t/t4124-apply-ws-rule.sh
-index f83322e..5698a9a 100755
---- a/t/t4124-apply-ws-rule.sh
-+++ b/t/t4124-apply-ws-rule.sh
-@@ -148,4 +148,22 @@ do
- 	done
- done
-=20
-+create_patch () {
-+	sed -e "s/_/ /" <<-\EOF
-+		diff --git a/target b/target
-+		index e69de29..8bd6648 100644
-+		--- a/target
-+		+++ b/target
-+		@@ -0,0 +1 @@
-+		+A line with trailing whitespace and no newline_
-+		\ No newline at end of file
-+	EOF
-+}
-+
-+test_expect_success 'trailing whitespace & no newline at the end of fi=
-le' '
-+	>target &&
-+	create_patch | git apply --whitespace=3Dfix - &&
-+	grep "newline$" target
-+'
-+
- test_done
-diff --git a/ws.c b/ws.c
-index b1efcd9..9c20acd 100644
---- a/ws.c
-+++ b/ws.c
-@@ -259,9 +259,8 @@ int ws_fix_copy(char *dst, const char *src, int len=
-, unsigned ws_rule, int *erro
- 	/*
- 	 * Strip trailing whitespace
- 	 */
--	if ((ws_rule & WS_TRAILING_SPACE) &&
--	    (2 <=3D len && isspace(src[len-2]))) {
--		if (src[len - 1] =3D=3D '\n') {
-+	if (ws_rule & WS_TRAILING_SPACE) {
-+		if (1 < len && src[len - 1] =3D=3D '\n') {
- 			add_nl_to_tail =3D 1;
- 			len--;
- 			if (1 < len && src[len - 1] =3D=3D '\r') {
---=20
-1.6.4.rc1.73.ga0daf
+In fact, you could also just try
+
+	mv .git/refs .git/temp-refs &&
+	cp -a .git/temp-refs .git/refs &&
+	rm -rf .git/temp-refs
+
+which will re-create other subdirectories too (like .git/refs/remotes 
+etc).
+
+Of course, depending on your particular filesystem, a better fix might be 
+to enable filename hashing, which gets rid of the whole "look through all 
+the old empty stale directory entries to see if there's a filename there" 
+issue. That won't fix 'readdir()' performance, but it should fix your 
+insane 4-second lstat() thing.
+
+If you have ext3, you'd do something like
+
+	tune2fs -O dir_index /dev/<node-of-your-filesystem-goes-here>
+
+but as mentioned, even with directory indexing it can actually make sense 
+to recreate directories that at some point _used_ to be large, but got 
+shrunk down to something much smaller. It's a generic directory problem 
+(not just ext3, not just unix, it's a common issue across filesystems. 
+It's not _universal_ - some smarter filesystems really do shrink their 
+directories - but it's certainly not unusual).
+
+		Linus
