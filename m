@@ -1,60 +1,66 @@
-From: Tony Finch <dot@dotat.at>
-Subject: Re: [ANNOUNCE] GIT 1.6.4-rc2
-Date: Thu, 23 Jul 2009 17:32:01 +0100
-Message-ID: <alpine.LSU.2.00.0907231730130.30197@hermes-2.csi.cam.ac.uk>
-References: <7vd47r298e.fsf@alter.siamese.dyndns.org>
+From: Anders Kaseorg <andersk@MIT.EDU>
+Subject: Re: Performance issue of 'git branch'
+Date: Thu, 23 Jul 2009 12:48:20 -0400 (EDT)
+Message-ID: <alpine.DEB.1.10.0907231244020.10001@vinegar-pot.mit.edu>
+References: <20090722235914.GA13150@Pilar.aei.mpg.de>  <alpine.LFD.2.01.0907221714300.3352@localhost.localdomain>  <20090723012207.GA9368@Pilar.aei.mpg.de>  <alpine.LFD.2.01.0907221850000.3352@localhost.localdomain>
+ <alpine.LFD.2.01.0907221921570.3352@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jul 23 18:32:15 2009
+Content-Type: TEXT/PLAIN; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "Carlos R. Mafra" <crmafra2@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Thu Jul 23 18:51:38 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MU1DK-0006vS-L0
-	for gcvg-git-2@gmane.org; Thu, 23 Jul 2009 18:32:15 +0200
+	id 1MU1W5-0007VT-Oq
+	for gcvg-git-2@gmane.org; Thu, 23 Jul 2009 18:51:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753903AbZGWQcE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 23 Jul 2009 12:32:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752901AbZGWQcE
-	(ORCPT <rfc822;git-outgoing>); Thu, 23 Jul 2009 12:32:04 -0400
-Received: from ppsw-1.csi.cam.ac.uk ([131.111.8.131]:49521 "EHLO
-	ppsw-1.csi.cam.ac.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751128AbZGWQcD (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 23 Jul 2009 12:32:03 -0400
-X-Cam-AntiVirus: no malware found
-X-Cam-SpamDetails: not scanned
-X-Cam-ScannerInfo: http://www.cam.ac.uk/cs/email/scanner/
-Received: from hermes-2.csi.cam.ac.uk ([131.111.8.54]:48883)
-	by ppsw-1.csi.cam.ac.uk (smtp.hermes.cam.ac.uk [131.111.8.151]:25)
-	with esmtpa (EXTERNAL:fanf2) id 1MU1D7-0007B3-46 (Exim 4.70)
-	(return-path <fanf2@hermes.cam.ac.uk>); Thu, 23 Jul 2009 17:32:01 +0100
-Received: from fanf2 (helo=localhost) by hermes-2.csi.cam.ac.uk (hermes.cam.ac.uk)
-	with local-esmtp id 1MU1D7-00037X-8E (Exim 4.67)
-	(return-path <fanf2@hermes.cam.ac.uk>); Thu, 23 Jul 2009 17:32:01 +0100
-X-X-Sender: fanf2@hermes-2.csi.cam.ac.uk
-In-Reply-To: <7vd47r298e.fsf@alter.siamese.dyndns.org>
-User-Agent: Alpine 2.00 (LSU 1167 2008-08-23)
+	id S1752752AbZGWQse convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 23 Jul 2009 12:48:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752711AbZGWQse
+	(ORCPT <rfc822;git-outgoing>); Thu, 23 Jul 2009 12:48:34 -0400
+Received: from BISCAYNE-ONE-STATION.MIT.EDU ([18.7.7.80]:55177 "EHLO
+	biscayne-one-station.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752213AbZGWQsd convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 23 Jul 2009 12:48:33 -0400
+Received: from outgoing.mit.edu (OUTGOING-AUTH.MIT.EDU [18.7.22.103])
+	by biscayne-one-station.mit.edu (8.13.6/8.9.2) with ESMTP id n6NGmLU4013930;
+	Thu, 23 Jul 2009 12:48:21 -0400 (EDT)
+Received: from localhost (VINEGAR-POT.MIT.EDU [18.181.0.51])
+	(authenticated bits=0)
+        (User authenticated as andersk@ATHENA.MIT.EDU)
+	by outgoing.mit.edu (8.13.6/8.12.4) with ESMTP id n6NGmKPF017852;
+	Thu, 23 Jul 2009 12:48:20 -0400 (EDT)
+In-Reply-To: <alpine.LFD.2.01.0907221921570.3352@localhost.localdomain>
+User-Agent: Alpine 1.10 (DEB 962 2008-03-14)
+X-Scanned-By: MIMEDefang 2.42
+X-Spam-Flag: NO
+X-Spam-Score: 0.00
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123880>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123881>
 
-On Wed, 22 Jul 2009, Junio C Hamano wrote:
->
-> (portability)
->
->  * We feed iconv with "UTF-8" instead of "utf8"; the former is
->    understood more widely.  Similarly updated test scripts to use
->    encoding names more widely understood (e.g. use "ISO8850-1" instead
->    of "ISO-8859-1").
+On Wed, 22 Jul 2009, Linus Torvalds wrote:
+> It uses the "raw" version of 'for_each_ref()' (which doesn't verify t=
+hat=20
+> the ref is valid), and then does the "type verification" before it st=
+arts=20
+> doing any gentle commit lookup.
 
-Typo: ISO8859-1 not ISO8850-1 (9 not 0)
+I submitted essentially the same patch in May:
+  http://article.gmane.org/gmane.comp.version-control.git/120097
+with the additional optimization that we don=E2=80=99t need to lookup c=
+ommits at=20
+all unless we=E2=80=99re using -v, --merged, --no-merged, or --contains=
+=2E  In my=20
+tests, it makes `git branch` 5 times faster on an uncached linux-2.6=20
+repository.
 
-Tony.
--- 
-f.anthony.n.finch  <dot@dotat.at>  http://dotat.at/
-GERMAN BIGHT HUMBER: SOUTHWEST 5 TO 7. MODERATE OR ROUGH. SQUALLY SHOWERS.
-MODERATE OR GOOD.
+Anders
