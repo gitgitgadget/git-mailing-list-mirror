@@ -1,63 +1,92 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] git-add -p: be able to undo a given hunk
-Date: Thu, 23 Jul 2009 12:58:06 -0700
-Message-ID: <7veis7yxwx.fsf@alter.siamese.dyndns.org>
-References: <20090723074104.GI4750@laphroaig.corp>
+From: Tony Finch <dot@dotat.at>
+Subject: Newton-Raphson, was Re: Performance issue of 'git branch'
+Date: Thu, 23 Jul 2009 23:48:43 +0100
+Message-ID: <alpine.LSU.2.00.0907232310220.22113@hermes-2.csi.cam.ac.uk>
+References: <20090722235914.GA13150@Pilar.aei.mpg.de> <alpine.LFD.2.01.0907221714300.3352@localhost.localdomain> <20090723012207.GA9368@Pilar.aei.mpg.de> <alpine.LFD.2.01.0907221850000.3352@localhost.localdomain> <alpine.LFD.2.01.0907221921570.3352@localhost.localdomain>
+ <alpine.LFD.2.01.0907221959330.21520@localhost.localdomain> <alpine.LFD.2.01.0907222009340.21520@localhost.localdomain> <alpine.LSU.2.00.0907231846190.30197@hermes-2.csi.cam.ac.uk> <alpine.LFD.2.01.0907231153010.21520@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Thomas Rast <trast@student.ethz.ch>
-To: Pierre Habouzit <madcoder@debian.org>
-X-From: git-owner@vger.kernel.org Thu Jul 23 21:59:45 2009
+Content-Type: MULTIPART/MIXED; BOUNDARY="1870870024-608752897-1248389323=:22113"
+Cc: git@vger.kernel.org
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Fri Jul 24 00:48:53 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MU4Qr-0000sX-DP
-	for gcvg-git-2@gmane.org; Thu, 23 Jul 2009 21:58:25 +0200
+	id 1MU75o-0004Ck-Q9
+	for gcvg-git-2@gmane.org; Fri, 24 Jul 2009 00:48:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752897AbZGWT6S (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 23 Jul 2009 15:58:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752584AbZGWT6S
-	(ORCPT <rfc822;git-outgoing>); Thu, 23 Jul 2009 15:58:18 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:43751 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752411AbZGWT6R (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 23 Jul 2009 15:58:17 -0400
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 021FDF301;
-	Thu, 23 Jul 2009 15:58:16 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id D2BB9F2FE; Thu, 23 Jul 2009
- 15:58:08 -0400 (EDT)
-In-Reply-To: <20090723074104.GI4750@laphroaig.corp> (Pierre Habouzit's
- message of "Thu\, 23 Jul 2009 09\:41\:04 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 291C7C5A-77C3-11DE-B41F-AEF1826986A2-77302942!a-pb-sasl-sd.pobox.com
+	id S1754543AbZGWWsp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 23 Jul 2009 18:48:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754000AbZGWWsp
+	(ORCPT <rfc822;git-outgoing>); Thu, 23 Jul 2009 18:48:45 -0400
+Received: from ppsw-5.csi.cam.ac.uk ([131.111.8.135]:52374 "EHLO
+	ppsw-5.csi.cam.ac.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753940AbZGWWso (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 23 Jul 2009 18:48:44 -0400
+X-Cam-AntiVirus: no malware found
+X-Cam-SpamDetails: not scanned
+X-Cam-ScannerInfo: http://www.cam.ac.uk/cs/email/scanner/
+Received: from hermes-2.csi.cam.ac.uk ([131.111.8.54]:34708)
+	by ppsw-5.csi.cam.ac.uk (smtp.hermes.cam.ac.uk [131.111.8.155]:25)
+	with esmtpa (EXTERNAL:fanf2) id 1MU75f-0000N7-HE (Exim 4.70)
+	(return-path <fanf2@hermes.cam.ac.uk>); Thu, 23 Jul 2009 23:48:43 +0100
+Received: from fanf2 (helo=localhost) by hermes-2.csi.cam.ac.uk (hermes.cam.ac.uk)
+	with local-esmtp id 1MU75f-0000Ae-AS (Exim 4.67)
+	(return-path <fanf2@hermes.cam.ac.uk>); Thu, 23 Jul 2009 23:48:43 +0100
+X-X-Sender: fanf2@hermes-2.csi.cam.ac.uk
+In-Reply-To: <alpine.LFD.2.01.0907231153010.21520@localhost.localdomain>
+User-Agent: Alpine 2.00 (LSU 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123894>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123895>
 
-Pierre Habouzit <madcoder@debian.org> writes:
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-> One of my most frequent use case for git-add -p is when I had an intense
-> debug session with quite a lot of debug() traces added. I then want only
-> to select the hunks corresponding to the bugfixes and throw away the debug
-> ones.
+--1870870024-608752897-1248389323=:22113
+Content-Type: TEXT/PLAIN; charset=ISO-8859-15
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 
-I do not particularly like this change.  "add -i", "add -p" and "add" in
-general are about manipulating the index.  They are never meant to touch
-the work tree contents.  Which means that even if you make a mistake in
-saying y/n, you won't damange the state you have in your work tree, and
-also means that you can recover safely by simply restarting "add -p"
-session if you really botched splitting of the patch.
+On Thu, 23 Jul 2009, Linus Torvalds wrote:
+>
+> Some googling found this:
+> =09http://marc.info/?l=3Dgit&m=3D117537594112450&w=3D2
+> but what got merged (half a year later) was a much fancier thing by Junio=
+=2E
+> See sha1-lookup.c.
 
-I fear tempting a new user who sees "undo" to say "yeah, I added the
-change in this hunk to the index by mistake, please undo", which would
-lose the work.  The confusion is easier to avoid if "add" only manipulates
-the index without harming the work tree, and the user used a different
-command, namely "checkout from the index", to get rid of the remaining
-debug cruft, once s/he added all the necessary bits to the index perhaps
-after a multi-stage commit session.
+Thanks. Ed=E9sio Costa e Silva also gave me a useful pointer.
+
+> That original "single iteration of newton-raphson" patch was buggy, but
+> it's perhaps interesting as a concept patch.
+
+I think Newton-Raphson is a brilliant but misleading idea. (As Junio said,
+"egg of Columbus" - it certainly blew my mind!) However, Newton's method
+works with smooth curves, but a pack index is a straight line plus
+stochastic deviations. If you try to apply Newton's method then the more
+you zoom in the more the random variations will send you away from the
+place you want to be. So I think your first N-R patch was closer to being
+right than its successors.
+
+What you should do is ONE linear interpolation on the entire index. (i.e.
+If you have N objects in the pack and you want to find one with SHA-1 id
+S, take the top four bytes of S and multiply by N/2^32.) Note that if you
+do a level-1 256-way fan-out lookup first then the random variations will
+make you LESS likely to land near the right place.
+
+After doing the first-order linear interpolation, it's probably sensible
+to do a page-wise linear search (in case you don't land directly on
+the page containing the target SHA-1) then a binary search within the
+final page for efficiency with a hot cache.
+
+This should give you O(1) seeks in the index per object lookup.
+
+Tony.
+--=20
+f.anthony.n.finch  <dot@dotat.at>  http://dotat.at/
+GERMAN BIGHT HUMBER: SOUTHWEST 5 TO 7. MODERATE OR ROUGH. SQUALLY SHOWERS.
+MODERATE OR GOOD.
+--1870870024-608752897-1248389323=:22113--
