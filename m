@@ -1,67 +1,122 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Performance issue of 'git branch'
-Date: Wed, 22 Jul 2009 22:13:33 -0700
-Message-ID: <7vtz1456de.fsf@alter.siamese.dyndns.org>
-References: <20090722235914.GA13150@Pilar.aei.mpg.de>
- <alpine.LFD.2.01.0907221714300.3352@localhost.localdomain>
- <20090723012207.GA9368@Pilar.aei.mpg.de>
- <alpine.LFD.2.01.0907221850000.3352@localhost.localdomain>
- <alpine.LFD.2.01.0907221921570.3352@localhost.localdomain>
- <20090723031843.GA9152@Pilar.aei.mpg.de>
- <alpine.LFD.2.01.0907222041341.21520@localhost.localdomain>
- <alpine.LFD.2.01.0907222050500.21520@localhost.localdomain>
+From: Martin Koegler <mkoegler@auto.tuwien.ac.at>
+Subject: Re: [PATCH 2/2] Replace remaining git-* calls in git stash
+Date: Thu, 23 Jul 2009 07:13:40 +0200
+Message-ID: <20090723051340.GA28934@auto.tuwien.ac.at>
+References: <1248206777-6984-1-git-send-email-mkoegler@auto.tuwien.ac.at> <1248206777-6984-2-git-send-email-mkoegler@auto.tuwien.ac.at> <20090723070810.6117@nanako3.lavabit.com> <7vtz14bb3e.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Carlos R. Mafra" <crmafra2@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Linus Torvalds <torvalds@linux-foundation.org>
+Content-Type: multipart/mixed; boundary="wRRV7LY7NUeQGEoC"
+Cc: Nanako Shiraishi <nanako3@lavabit.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
 X-From: git-owner@vger.kernel.org Thu Jul 23 07:13:57 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MTqcu-0005HY-AP
-	for gcvg-git-2@gmane.org; Thu, 23 Jul 2009 07:13:56 +0200
+	id 1MTqcv-0005HY-4l
+	for gcvg-git-2@gmane.org; Thu, 23 Jul 2009 07:13:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752359AbZGWFNk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 23 Jul 2009 01:13:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752317AbZGWFNj
-	(ORCPT <rfc822;git-outgoing>); Thu, 23 Jul 2009 01:13:39 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:65149 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752014AbZGWFNj (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 23 Jul 2009 01:13:39 -0400
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 52EF4E760;
-	Thu, 23 Jul 2009 01:13:39 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id F249EE75E; Thu, 23 Jul 2009
- 01:13:34 -0400 (EDT)
-In-Reply-To: <alpine.LFD.2.01.0907222050500.21520@localhost.localdomain>
- (Linus Torvalds's message of "Wed\, 22 Jul 2009 21\:10\:49 -0700 \(PDT\)")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 94F0CC78-7747-11DE-B885-AEF1826986A2-77302942!a-pb-sasl-sd.pobox.com
+	id S1752391AbZGWFNn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 23 Jul 2009 01:13:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752376AbZGWFNn
+	(ORCPT <rfc822;git-outgoing>); Thu, 23 Jul 2009 01:13:43 -0400
+Received: from odin.auto.tuwien.ac.at ([128.130.60.3]:60909 "EHLO
+	mail.auto.tuwien.ac.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752366AbZGWFNm (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 23 Jul 2009 01:13:42 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by mail.auto.tuwien.ac.at (Postfix) with ESMTP id 45FA2130396F;
+	Thu, 23 Jul 2009 07:13:40 +0200 (CEST)
+X-Virus-Scanned: Debian amavisd-new at odin.auto.tuwien.ac.at
+Received: from mail.auto.tuwien.ac.at ([127.0.0.1])
+	by localhost (odin.auto.tuwien.ac.at [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id okB16jeSarhB; Thu, 23 Jul 2009 07:13:40 +0200 (CEST)
+Received: from thor.localdomain (thor.auto.tuwien.ac.at [128.130.60.15])
+	by mail.auto.tuwien.ac.at (Postfix) with ESMTP id 30BD0130396E;
+	Thu, 23 Jul 2009 07:13:40 +0200 (CEST)
+Received: by thor.localdomain (Postfix, from userid 3001)
+	id 262A96800645; Thu, 23 Jul 2009 07:13:40 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <7vtz14bb3e.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123838>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123839>
 
-Linus Torvalds <torvalds@linux-foundation.org> writes:
 
-> On Wed, 22 Jul 2009, Linus Torvalds wrote:
->> 
->> But I'll see if I can dig up my non-binary-search patch and see if I can 
->> make it go faster. My machine is fast, but not so fast that I can't 
->> measure it ;)
->
-> Oh. We actually merged a fixed version of it. I'd completely forgotten.
+--wRRV7LY7NUeQGEoC
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-As the commit message of 628522e (sha1-lookup: more memory efficient
-search in sorted list of SHA-1, 2007-12-29) shows, it didn't get any great
-performance improvements, even though it did make the probing quite a lot
-less memory intensive.
+On Wed, Jul 22, 2009 at 03:35:01PM -0700, Junio C Hamano wrote:
+> Nanako Shiraishi <nanako3@lavabit.com> writes:
+> 
+> > Quoting Martin Koegler <mkoegler@auto.tuwien.ac.at>:
+> >
+> >> Signed-off-by: Martin Koegler <mkoegler@auto.tuwien.ac.at>
+> >> ---
+> >
+> > Thank you. Even though 'git blame' says I am not responsible for these two (I AM responsible for the one in your other patch)...
+> >
+> > Acked-by: Nanako Shiraishi <nanako3@lavabit.com>
 
-Perhaps you can spot obvious inefficiency in the code that I failed to
-see, just like you recently did for "show --cc" codepath?
+I got an error from the mailing list for my reworked patch, so I sent
+it again as attachment.
+
+
+--wRRV7LY7NUeQGEoC
+Content-Type: text/x-diff; charset=us-ascii
+Content-Disposition: attachment; filename="0001-git-stash-replace-git-XXX-calls.patch"
+
+>From 03fa7d2f6c558b22747f21a76c21adad522e0a5d Mon Sep 17 00:00:00 2001
+From: Martin Koegler <mkoegler@auto.tuwien.ac.at>
+Date: Tue, 21 Jul 2009 21:57:27 +0200
+Subject: [PATCH] git stash: replace git-XXX calls
+Status: O
+Content-Length: 1056
+Lines: 40
+
+Replace remaining git-XXX calls with git XXX.
+
+Signed-off-by: Martin Koegler <mkoegler@auto.tuwien.ac.at>
+---
+ git-stash.sh |    6 +++---
+ 1 files changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/git-stash.sh b/git-stash.sh
+index 531c7c3..03e589f 100755
+--- a/git-stash.sh
++++ b/git-stash.sh
+@@ -203,7 +203,7 @@ apply_stash () {
+ 		git diff-tree --binary $s^2^..$s^2 | git apply --cached
+ 		test $? -ne 0 &&
+ 			die 'Conflicts in index. Try without --index.'
+-		unstashed_index_tree=$(git-write-tree) ||
++		unstashed_index_tree=$(git write-tree) ||
+ 			die 'Could not save index tree'
+ 		git reset
+ 	fi
+@@ -219,7 +219,7 @@ apply_stash () {
+ 	then
+ 		export GIT_MERGE_VERBOSITY=0
+ 	fi
+-	if git-merge-recursive $b_tree -- $c_tree $w_tree
++	if git merge-recursive $b_tree -- $c_tree $w_tree
+ 	then
+ 		# No conflict
+ 		if test -n "$unstashed_index_tree"
+@@ -297,7 +297,7 @@ apply_to_branch () {
+ 	fi
+ 	stash=$2
+ 
+-	git-checkout -b $branch $stash^ &&
++	git checkout -b $branch $stash^ &&
+ 	apply_stash --index $stash &&
+ 	drop_stash $stash
+ }
+-- 
+1.5.6.5
+
+
+--wRRV7LY7NUeQGEoC--
