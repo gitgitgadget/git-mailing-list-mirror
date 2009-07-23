@@ -1,74 +1,119 @@
-From: Martin Pirker <git.collector@gmail.com>
-Subject: Re: synchronizing 2 heterogenous branches by cherry-pick
-Date: Thu, 23 Jul 2009 10:41:37 +0200
-Message-ID: <8d53e6220907230141l62dd1830g15ca811d5b009f2f@mail.gmail.com>
-References: <8d53e6220907210542p4c989f3av2b57202fdd2db1f5@mail.gmail.com>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: Re: [PATCH] git-add -p: be able to undo a given hunk
+Date: Thu, 23 Jul 2009 10:41:31 +0200
+Message-ID: <200907231041.32567.trast@student.ethz.ch>
+References: <20090723074104.GI4750@laphroaig.corp>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: Text/Plain;
+  charset="utf-8"
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jul 23 10:42:26 2009
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Pierre Habouzit <madcoder@debian.org>
+X-From: git-owner@vger.kernel.org Thu Jul 23 10:42:27 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MTtsf-0006iY-HG
+	id 1MTtsg-0006iY-8K
 	for gcvg-git-2@gmane.org; Thu, 23 Jul 2009 10:42:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753416AbZGWIlj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 23 Jul 2009 04:41:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753344AbZGWIlj
-	(ORCPT <rfc822;git-outgoing>); Thu, 23 Jul 2009 04:41:39 -0400
-Received: from mail-pz0-f192.google.com ([209.85.222.192]:52784 "EHLO
-	mail-pz0-f192.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753315AbZGWIli (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 23 Jul 2009 04:41:38 -0400
-Received: by pzk30 with SMTP id 30so348813pzk.33
-        for <git@vger.kernel.org>; Thu, 23 Jul 2009 01:41:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:content-type
-         :content-transfer-encoding;
-        bh=NwLQfCHNbDJ0/qWu5kE4tjK0PHB7Zre6uIUKLojH18U=;
-        b=sbCKZKC5v6VW3/600HH5nIWpLi/JFY2m0RsqLOrgq4emiNr4b79fnNL6QdrCaJMUDQ
-         a4V8aQITene6Ad/2//nfs8pkiEiQKg0aw0jgsRXYe122FPA2lVh1d+YfDtUJPp3P5qOF
-         NjpyYtBPIjem3fbzu8P1RMD/PebCvZpMsB2MU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :content-type:content-transfer-encoding;
-        b=ZZqSCyNWwdsE5n0tZbolrlBudByr6NlYrP00zM4YSoCaSwg3soPFZ5EgdrR+CWl8JH
-         SBt3AI6MJN2xktHx9KGMgSA4gYSxSGIe01wI+Fx/9tjF6XEOiAOeJLP9RpQLnknw6NxZ
-         SdlS4ObDorJV8hV0NB92tG7YVfiP8BaT/jwQw=
-Received: by 10.140.187.11 with SMTP id k11mr1265988rvf.105.1248338497798; 
-	Thu, 23 Jul 2009 01:41:37 -0700 (PDT)
-In-Reply-To: <8d53e6220907210542p4c989f3av2b57202fdd2db1f5@mail.gmail.com>
+	id S1753428AbZGWIlm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 23 Jul 2009 04:41:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753344AbZGWIlm
+	(ORCPT <rfc822;git-outgoing>); Thu, 23 Jul 2009 04:41:42 -0400
+Received: from xsmtp0.ethz.ch ([82.130.70.14]:34844 "EHLO XSMTP0.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753424AbZGWIlk (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 23 Jul 2009 04:41:40 -0400
+Received: from xfe0.d.ethz.ch ([82.130.124.40]) by XSMTP0.ethz.ch with Microsoft SMTPSVC(6.0.3790.3959);
+	 Thu, 23 Jul 2009 10:41:38 +0200
+Received: from thomas.localnet ([129.132.153.233]) by xfe0.d.ethz.ch over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
+	 Thu, 23 Jul 2009 10:41:38 +0200
+User-Agent: KMail/1.12.0 (Linux/2.6.27.23-0.1-default; KDE/4.2.96; x86_64; ; )
+In-Reply-To: <20090723074104.GI4750@laphroaig.corp>
+X-OriginalArrivalTime: 23 Jul 2009 08:41:38.0420 (UTC) FILETIME=[64D26340:01CA0B71]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123858>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123859>
 
-I'm replying to myself.... for the archives :-)
+Pierre Habouzit wrote:
+> One of my most frequent use case for git-add -p is when I had an intense
+> debug session with quite a lot of debug() traces added. I then want only
+> to select the hunks corresponding to the bugfixes and throw away the debug
+> ones.
+> 
+> With this new operation, instead of not staging hunks I don't want and
+> will eventually undo, I can just undo them.
 
-On Tue, Jul 21, 2009 at 2:42 PM, Martin Pirker<git.collector@gmail.com> wrote:
-[....]
->Any good idea on how to automagically script these cherry-picking?
+This is what 'git checkout --interactive -- $file' or 'git reset
+--interactive --hard' would accomplish, if they existed.  I wonder if
+there would be a way to avoid yet more command letters, and instead
+have "modes" that affect what happens with hunks you said 'y' to.  For
+example:
 
-tag identical content point in different branches:
- git tag tag1 commitx
- git tag tag2 commity
+  add -p		apply --cached
+  undo -p		apply -R
+  unstage -p		apply -R --cached
+    [with hunks coming from diff --cached obviously]
 
-get list of newer commits:
- git rev-list tag1^..head1
- git rev-list tag2^..head2
+(I picked 'undo' and 'unstage' semi-randomly, but it's not, after all,
+an 'add' operation any more and the user doesn't need to know that the
+program doing this is in fact git-add--interactive.)
 
-compare content of commits via:
-git diff --exit-code commit1 commit2
+> +       u - do not stage this hunk and revert it
 
-...and cherry-pick resulting list from one side to the other
+you're overloading terminology a bit too much for my taste.  It has
+nothing to do with what git-revert does, and we shouldn't confuse
+people more about that.
 
+>  Documentation/git-add.txt |    1 +
+>  git-add--interactive.perl |   38 ++++++++++++++++++++++++++++++--------
 
-Git is an amazing toolbox :-)
-Martin
+Tests?
+
+> @@ -693,6 +693,7 @@ sub split_hunk {
+>  			ADDDEL => 0,
+>  			POSTCTX => 0,
+>  			USE => undef,
+> +			UNDO => undef,
+>  		};
+
+Why not fold this into a single field?  It could, say, take values 0,
+1, or '-R'.  It could probably be renamed to ACTION, but USE would be
+fine if you want to avoid the code churn.  Then you shouldn't need
+_completely_ separate handling during application.
+
+> @@ -1149,6 +1152,10 @@ sub patch_update_file {
+>  			elsif ($line =~ /^n/i) {
+>  				$hunk[$ix]{USE} = 0;
+
++				$hunk[$ix]{UNDO} = 0;
+
+and similarly for [yad] too, on the grounds that the user can go back
+and change his choices with [KJ].  Of course that is not necessary if
+you go the ACTION way outlined above.
+
+> +	if (@undo) {
+> +		my $fh;
+> +
+> +		open $fh, '| git apply -R';
+
+This probably needs a --recount to cope with the case where the hunk
+headers became stale/invalid through user [e]diting.
+
+> +		for (@{$head->{TEXT}}, @undo) {
+> +			print $fh $_;
+> +		}
+> +		if (!close $fh) {
+> +			for (@{$head->{TEXT}}, @undo) {
+> +				print STDERR $_;
+> +			}
+> +		}
+> +		refresh();
+> +	}
+
+-- 
+Thomas Rast
+trast@{inf,student}.ethz.ch
