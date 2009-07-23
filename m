@@ -1,59 +1,58 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
+From: Tony Finch <dot@dotat.at>
 Subject: Re: Performance issue of 'git branch'
-Date: Thu, 23 Jul 2009 10:19:29 -0700 (PDT)
-Message-ID: <alpine.LFD.2.01.0907231018300.21520@localhost.localdomain>
+Date: Thu, 23 Jul 2009 18:47:48 +0100
+Message-ID: <alpine.LSU.2.00.0907231846190.30197@hermes-2.csi.cam.ac.uk>
 References: <20090722235914.GA13150@Pilar.aei.mpg.de> <alpine.LFD.2.01.0907221714300.3352@localhost.localdomain> <20090723012207.GA9368@Pilar.aei.mpg.de> <alpine.LFD.2.01.0907221850000.3352@localhost.localdomain> <alpine.LFD.2.01.0907221921570.3352@localhost.localdomain>
- <7vtz146mgr.fsf@alter.siamese.dyndns.org> <alpine.LFD.2.01.0907222204310.21520@localhost.localdomain> <7veis83q0e.fsf@alter.siamese.dyndns.org> <7vy6qg2aus.fsf@alter.siamese.dyndns.org>
+ <alpine.LFD.2.01.0907221959330.21520@localhost.localdomain> <alpine.LFD.2.01.0907222009340.21520@localhost.localdomain>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: "Carlos R. Mafra" <crmafra2@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jul 23 19:19:48 2009
+Cc: git@vger.kernel.org
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Thu Jul 23 19:47:58 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MU1xK-0004MB-3F
-	for gcvg-git-2@gmane.org; Thu, 23 Jul 2009 19:19:46 +0200
+	id 1MU2Ob-0000x8-8Q
+	for gcvg-git-2@gmane.org; Thu, 23 Jul 2009 19:47:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752284AbZGWRTh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 23 Jul 2009 13:19:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752094AbZGWRTh
-	(ORCPT <rfc822;git-outgoing>); Thu, 23 Jul 2009 13:19:37 -0400
-Received: from smtp1.linux-foundation.org ([140.211.169.13]:34979 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751795AbZGWRTg (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 23 Jul 2009 13:19:36 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
-	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id n6NHJUMx013890
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Thu, 23 Jul 2009 10:19:31 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id n6NHJTCk024595;
-	Thu, 23 Jul 2009 10:19:29 -0700
-X-X-Sender: torvalds@localhost.localdomain
-In-Reply-To: <7vy6qg2aus.fsf@alter.siamese.dyndns.org>
-User-Agent: Alpine 2.01 (LFD 1184 2008-12-16)
-X-Spam-Status: No, hits=-3.46 required=5 tests=AWL,BAYES_00
-X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
+	id S1752714AbZGWRrt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 23 Jul 2009 13:47:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752431AbZGWRrt
+	(ORCPT <rfc822;git-outgoing>); Thu, 23 Jul 2009 13:47:49 -0400
+Received: from ppsw-1.csi.cam.ac.uk ([131.111.8.131]:37161 "EHLO
+	ppsw-1.csi.cam.ac.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751484AbZGWRrt (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 23 Jul 2009 13:47:49 -0400
+X-Cam-AntiVirus: no malware found
+X-Cam-SpamDetails: not scanned
+X-Cam-ScannerInfo: http://www.cam.ac.uk/cs/email/scanner/
+Received: from hermes-2.csi.cam.ac.uk ([131.111.8.54]:46882)
+	by ppsw-1.csi.cam.ac.uk (smtp.hermes.cam.ac.uk [131.111.8.151]:25)
+	with esmtpa (EXTERNAL:fanf2) id 1MU2OS-00035R-4f (Exim 4.70)
+	(return-path <fanf2@hermes.cam.ac.uk>); Thu, 23 Jul 2009 18:47:48 +0100
+Received: from fanf2 (helo=localhost) by hermes-2.csi.cam.ac.uk (hermes.cam.ac.uk)
+	with local-esmtp id 1MU2OS-00022B-Ds (Exim 4.67)
+	(return-path <fanf2@hermes.cam.ac.uk>); Thu, 23 Jul 2009 18:47:48 +0100
+X-X-Sender: fanf2@hermes-2.csi.cam.ac.uk
+In-Reply-To: <alpine.LFD.2.01.0907222009340.21520@localhost.localdomain>
+User-Agent: Alpine 2.00 (LSU 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123883>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123884>
 
-
-
-On Wed, 22 Jul 2009, Junio C Hamano wrote:
+On Wed, 22 Jul 2009, Linus Torvalds wrote:
 >
-> Subject: do_one_ref(): null_sha1 check is not about broken ref
+> I suspect the old newton-raphson patches we had (Discussions and patches
+> back in April 2007 on this list) could be resurrected pretty easily.
 
-Ack. If we want to make it conditional at some point, we'd want to use a 
-different flag. 
+That sounds interesting, but I can't find the thread you are referring to.
+Do you have a URL or a subject I can feed to Google?
 
-I do wonder if we should simply remove the code entirely?
-
-		Linus
+Tony.
+-- 
+f.anthony.n.finch  <dot@dotat.at>  http://dotat.at/
+GERMAN BIGHT HUMBER: SOUTHWEST 5 TO 7. MODERATE OR ROUGH. SQUALLY SHOWERS.
+MODERATE OR GOOD.
