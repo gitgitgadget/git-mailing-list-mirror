@@ -1,72 +1,69 @@
-From: Pierre Habouzit <madcoder@madism.org>
+From: Martin Pirker <git.collector@gmail.com>
 Subject: Re: synchronizing 2 heterogenous branches by cherry-pick
-Date: Thu, 23 Jul 2009 10:51:25 +0200
-Message-ID: <20090723085125.GL4750@laphroaig.corp>
+Date: Thu, 23 Jul 2009 11:24:33 +0200
+Message-ID: <8d53e6220907230224t1ceddf31ic69bfbed84c851f@mail.gmail.com>
 References: <8d53e6220907210542p4c989f3av2b57202fdd2db1f5@mail.gmail.com>
- <8d53e6220907230141l62dd1830g15ca811d5b009f2f@mail.gmail.com>
+	 <8d53e6220907230141l62dd1830g15ca811d5b009f2f@mail.gmail.com>
+	 <20090723085125.GL4750@laphroaig.corp>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Martin Pirker <git.collector@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jul 23 10:51:35 2009
+To: Pierre Habouzit <madcoder@madism.org>
+X-From: git-owner@vger.kernel.org Thu Jul 23 11:24:44 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MTu1X-0001ed-1T
-	for gcvg-git-2@gmane.org; Thu, 23 Jul 2009 10:51:35 +0200
+	id 1MTuXa-0000PD-OI
+	for gcvg-git-2@gmane.org; Thu, 23 Jul 2009 11:24:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753601AbZGWIv2 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 23 Jul 2009 04:51:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753494AbZGWIv2
-	(ORCPT <rfc822;git-outgoing>); Thu, 23 Jul 2009 04:51:28 -0400
-Received: from pan.madism.org ([88.191.52.104]:40950 "EHLO hermes.madism.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752549AbZGWIv1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 23 Jul 2009 04:51:27 -0400
-Received: from laphroaig.corp (def92-12-88-177-251-208.fbx.proxad.net [88.177.251.208])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(Client did not present a certificate)
-	by hermes.madism.org (Postfix) with ESMTPSA id 9C1B041D8F;
-	Thu, 23 Jul 2009 10:51:27 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <8d53e6220907230141l62dd1830g15ca811d5b009f2f@mail.gmail.com>
-X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1751334AbZGWJYf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 23 Jul 2009 05:24:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751269AbZGWJYe
+	(ORCPT <rfc822;git-outgoing>); Thu, 23 Jul 2009 05:24:34 -0400
+Received: from rv-out-0506.google.com ([209.85.198.237]:52089 "EHLO
+	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750927AbZGWJYe (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 23 Jul 2009 05:24:34 -0400
+Received: by rv-out-0506.google.com with SMTP id k40so1425879rvb.5
+        for <git@vger.kernel.org>; Thu, 23 Jul 2009 02:24:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=lc9yVCUmZPhUQF89io9lrgUcyGVOqzG78AdgBiLCmvg=;
+        b=IsBAUCplzjJxK2cbbe/BKqHL2l6yHqP/BMh/3P8HmEDH+d39jraWgLvW+926mjcCR3
+         SufIHhpUli6jB8IIkPk0x+kHJfj3Rpy34cqk0ahQ6mt/UPV1m//Q9qgdCnTEPqXGZMZN
+         UP1weDrmT9p5E5R135SjTk2eRH4gYND2P/G6g=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=uRgJ58OtnY6N0FfcGCCbnXYip7vxcTxi4/rCQUbPVdr/KAcJMG63wky6YRHOaAtP9W
+         okDqNM6saV2ht5+Ci5BNVHL56jpxOz4++QEPHAj9SjM7xXZ1Uah76SD6Z5dj9AJatN1L
+         cAiPkK+1mVf2GT0XOhu9iIvEVOW0lmp/yOZRQ=
+Received: by 10.140.255.19 with SMTP id c19mr1298313rvi.24.1248341073294; Thu, 
+	23 Jul 2009 02:24:33 -0700 (PDT)
+In-Reply-To: <20090723085125.GL4750@laphroaig.corp>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123861>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123862>
 
-On Thu, Jul 23, 2009 at 10:41:37AM +0200, Martin Pirker wrote:
-> I'm replying to myself.... for the archives :-)
->=20
-> On Tue, Jul 21, 2009 at 2:42 PM, Martin Pirker<git.collector@gmail.co=
-m> wrote:
-> [....]
-> >Any good idea on how to automagically script these cherry-picking?
->=20
-> tag identical content point in different branches:
->  git tag tag1 commitx
->  git tag tag2 commity
->=20
-> get list of newer commits:
->  git rev-list tag1^..head1
->  git rev-list tag2^..head2
->=20
-> compare content of commits via:
-> git diff --exit-code commit1 commit2
->=20
-> ....and cherry-pick resulting list from one side to the other
+On Thu, Jul 23, 2009 at 10:51 AM, Pierre Habouzit<madcoder@madism.org> wrote:
+> Or use git cherry
 
-Or use git cherry
---=20
-Intersec <http://www.intersec.com>
-Pierre Habouzit <pierre.habouzit@intersec.com>
-T=C3=A9l : +33 (0)1 5570 3346
-Mob : +33 (0)6 1636 8131
-=46ax : +33 (0)1 5570 3332
-37 Rue Pierre Lhomme
-92400 Courbevoie
+I tried, but I was under the impression git patch-id also hashes the commit
+message - or I got something else typed wrong 'cause it didn't seem to work
+:-/
+
+You are right, the solution is:
+ git cherry head1 head2 tag2
+ git cherry head2 head1 tag1
+and cherry-pick all lines prefixed with + to the other branch.
+
+Thanks,
+Martin
