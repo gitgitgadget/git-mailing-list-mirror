@@ -1,92 +1,75 @@
-From: Tony Finch <dot@dotat.at>
-Subject: Newton-Raphson, was Re: Performance issue of 'git branch'
-Date: Thu, 23 Jul 2009 23:48:43 +0100
-Message-ID: <alpine.LSU.2.00.0907232310220.22113@hermes-2.csi.cam.ac.uk>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Newton-Raphson, was Re: Performance issue of 'git branch'
+Date: Fri, 24 Jul 2009 01:24:21 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.0907240114410.8306@pacific.mpi-cbg.de>
 References: <20090722235914.GA13150@Pilar.aei.mpg.de> <alpine.LFD.2.01.0907221714300.3352@localhost.localdomain> <20090723012207.GA9368@Pilar.aei.mpg.de> <alpine.LFD.2.01.0907221850000.3352@localhost.localdomain> <alpine.LFD.2.01.0907221921570.3352@localhost.localdomain>
  <alpine.LFD.2.01.0907221959330.21520@localhost.localdomain> <alpine.LFD.2.01.0907222009340.21520@localhost.localdomain> <alpine.LSU.2.00.0907231846190.30197@hermes-2.csi.cam.ac.uk> <alpine.LFD.2.01.0907231153010.21520@localhost.localdomain>
+ <alpine.LSU.2.00.0907232310220.22113@hermes-2.csi.cam.ac.uk>
 Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="1870870024-608752897-1248389323=:22113"
-Cc: git@vger.kernel.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Fri Jul 24 00:48:53 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Linus Torvalds <torvalds@linux-foundation.org>, git@vger.kernel.org
+To: Tony Finch <dot@dotat.at>
+X-From: git-owner@vger.kernel.org Fri Jul 24 01:24:33 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MU75o-0004Ck-Q9
-	for gcvg-git-2@gmane.org; Fri, 24 Jul 2009 00:48:53 +0200
+	id 1MU7eL-0006uK-DC
+	for gcvg-git-2@gmane.org; Fri, 24 Jul 2009 01:24:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754543AbZGWWsp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 23 Jul 2009 18:48:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754000AbZGWWsp
-	(ORCPT <rfc822;git-outgoing>); Thu, 23 Jul 2009 18:48:45 -0400
-Received: from ppsw-5.csi.cam.ac.uk ([131.111.8.135]:52374 "EHLO
-	ppsw-5.csi.cam.ac.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753940AbZGWWso (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 23 Jul 2009 18:48:44 -0400
-X-Cam-AntiVirus: no malware found
-X-Cam-SpamDetails: not scanned
-X-Cam-ScannerInfo: http://www.cam.ac.uk/cs/email/scanner/
-Received: from hermes-2.csi.cam.ac.uk ([131.111.8.54]:34708)
-	by ppsw-5.csi.cam.ac.uk (smtp.hermes.cam.ac.uk [131.111.8.155]:25)
-	with esmtpa (EXTERNAL:fanf2) id 1MU75f-0000N7-HE (Exim 4.70)
-	(return-path <fanf2@hermes.cam.ac.uk>); Thu, 23 Jul 2009 23:48:43 +0100
-Received: from fanf2 (helo=localhost) by hermes-2.csi.cam.ac.uk (hermes.cam.ac.uk)
-	with local-esmtp id 1MU75f-0000Ae-AS (Exim 4.67)
-	(return-path <fanf2@hermes.cam.ac.uk>); Thu, 23 Jul 2009 23:48:43 +0100
-X-X-Sender: fanf2@hermes-2.csi.cam.ac.uk
-In-Reply-To: <alpine.LFD.2.01.0907231153010.21520@localhost.localdomain>
-User-Agent: Alpine 2.00 (LSU 1167 2008-08-23)
+	id S1754549AbZGWXYZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 23 Jul 2009 19:24:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754201AbZGWXYZ
+	(ORCPT <rfc822;git-outgoing>); Thu, 23 Jul 2009 19:24:25 -0400
+Received: from mail.gmx.net ([213.165.64.20]:49560 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1754037AbZGWXYY (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 23 Jul 2009 19:24:24 -0400
+Received: (qmail invoked by alias); 23 Jul 2009 23:24:22 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp003) with SMTP; 24 Jul 2009 01:24:22 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/cD8AYvY/cE2m7e7BgGQBImr/dLcRZ1irgLhB+YS
+	bDXVqrATobiZtK
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <alpine.LSU.2.00.0907232310220.22113@hermes-2.csi.cam.ac.uk>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.65
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123895>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123896>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Hi,
 
---1870870024-608752897-1248389323=:22113
-Content-Type: TEXT/PLAIN; charset=ISO-8859-15
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+On Thu, 23 Jul 2009, Tony Finch wrote:
 
-On Thu, 23 Jul 2009, Linus Torvalds wrote:
->
-> Some googling found this:
-> =09http://marc.info/?l=3Dgit&m=3D117537594112450&w=3D2
-> but what got merged (half a year later) was a much fancier thing by Junio=
-=2E
-> See sha1-lookup.c.
+> I think Newton-Raphson is a brilliant but misleading idea. (As Junio 
+> said, "egg of Columbus" - it certainly blew my mind!) However, Newton's 
+> method works with smooth curves, but a pack index is a straight line 
+> plus stochastic deviations. If you try to apply Newton's method then the 
+> more you zoom in the more the random variations will send you away from 
+> the place you want to be.
 
-Thanks. Ed=E9sio Costa e Silva also gave me a useful pointer.
+No.
 
-> That original "single iteration of newton-raphson" patch was buggy, but
-> it's perhaps interesting as a concept patch.
+Think about it, absent any further information than "it is a hash, i.e. 
+distributed pretty equally in _any_ byte", even subsets of a sorted list 
+will me more or less linear.  And assuming that they are linear is _still_ 
+your best bet.
 
-I think Newton-Raphson is a brilliant but misleading idea. (As Junio said,
-"egg of Columbus" - it certainly blew my mind!) However, Newton's method
-works with smooth curves, but a pack index is a straight line plus
-stochastic deviations. If you try to apply Newton's method then the more
-you zoom in the more the random variations will send you away from the
-place you want to be. So I think your first N-R patch was closer to being
-right than its successors.
+Assuming that subsets of said sorted list will _still_ minimize the 
+average number of steps to take until you find the correct entry.
 
-What you should do is ONE linear interpolation on the entire index. (i.e.
-If you have N objects in the pack and you want to find one with SHA-1 id
-S, take the top four bytes of S and multiply by N/2^32.) Note that if you
-do a level-1 256-way fan-out lookup first then the random variations will
-make you LESS likely to land near the right place.
+Unless you have more information about the nature of the hashes, of 
+course.
 
-After doing the first-order linear interpolation, it's probably sensible
-to do a page-wise linear search (in case you don't land directly on
-the page containing the target SHA-1) then a binary search within the
-final page for efficiency with a hot cache.
+> This should give you O(1) seeks in the index per object lookup.
 
-This should give you O(1) seeks in the index per object lookup.
+There is no way to achieve that, best thing you can hope for is _expected_ 
+O(1) (e.g. with a hashmap, with exponential worst case).
 
-Tony.
---=20
-f.anthony.n.finch  <dot@dotat.at>  http://dotat.at/
-GERMAN BIGHT HUMBER: SOUTHWEST 5 TO 7. MODERATE OR ROUGH. SQUALLY SHOWERS.
-MODERATE OR GOOD.
---1870870024-608752897-1248389323=:22113--
+Ciao,
+Dscho
