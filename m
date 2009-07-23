@@ -1,54 +1,59 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: [PATCH] git svn: fix shallow clone when upstream revision is
-	too new
-Date: Wed, 22 Jul 2009 23:56:28 -0700
-Message-ID: <20090723065628.GA31960@dcvr.yhbt.net>
-References: <1247771532.7382.115.camel@localhost> <20090720055514.GA3229@dcvr.yhbt.net> <20090723064357.GA19062@dcvr.yhbt.net> <20090723064759.GA2002@dcvr.yhbt.net>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: janitoring
+Date: Thu, 23 Jul 2009 09:27:42 +0200
+Message-ID: <4A6810EE.4030902@viscovery.net>
+References: <1248298475-2990-1-git-send-email-madcoder@debian.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Ka-Hing Cheung <kcheung@riverbed.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jul 23 08:56:39 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Pierre Habouzit <madcoder@debian.org>
+X-From: git-owner@vger.kernel.org Thu Jul 23 09:28:08 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MTsEJ-00018n-0O
-	for gcvg-git-2@gmane.org; Thu, 23 Jul 2009 08:56:39 +0200
+	id 1MTsib-00049m-NY
+	for gcvg-git-2@gmane.org; Thu, 23 Jul 2009 09:27:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753725AbZGWG4b (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 23 Jul 2009 02:56:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753624AbZGWG4b
-	(ORCPT <rfc822;git-outgoing>); Thu, 23 Jul 2009 02:56:31 -0400
-Received: from dcvr.yhbt.net ([64.71.152.64]:40667 "EHLO dcvr.yhbt.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752009AbZGWG4a (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 23 Jul 2009 02:56:30 -0400
-Received: from localhost (user-118bg0q.cable.mindspring.com [66.133.192.26])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by dcvr.yhbt.net (Postfix) with ESMTPSA id 6401D1F78E;
-	Thu, 23 Jul 2009 06:56:30 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <20090723064759.GA2002@dcvr.yhbt.net>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+	id S1753819AbZGWH1u (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 23 Jul 2009 03:27:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753821AbZGWH1t
+	(ORCPT <rfc822;git-outgoing>); Thu, 23 Jul 2009 03:27:49 -0400
+Received: from lilzmailso02.liwest.at ([212.33.55.13]:26341 "EHLO
+	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753614AbZGWH1t (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 23 Jul 2009 03:27:49 -0400
+Received: from cpe228-254.liwest.at ([81.10.228.254] helo=linz.eudaptics.com)
+	by lilzmailso02.liwest.at with esmtpa (Exim 4.69)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1MTsiM-0008Ri-T4; Thu, 23 Jul 2009 09:27:43 +0200
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.96])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id A5FB96D9; Thu, 23 Jul 2009 09:27:42 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.21 (Windows/20090302)
+In-Reply-To: <1248298475-2990-1-git-send-email-madcoder@debian.org>
+X-Spam-Score: -1.4 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123852>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123853>
 
-Eric Wong <normalperson@yhbt.net> wrote:
-> Eric Wong <normalperson@yhbt.net> wrote:
-> >  Junio: Pushed out to git://git.bogomips.org/git-svn several
-> >  days ago, I thought I had sent this email days ago but
-> >  I had to leave in a hurry and never sent it.
+Pierre Habouzit schrieb:
+> [PATCH 2/3] refactor: use bitsizeof() instead of 8 * sizeof()
 > 
-> Wait, that patch may be botched and that's why I didn't send
-> before leaving the other day... Oops.
+>   use a macro for CHAR_BIT * sizeof(...), I tend to find it more
+>   readable than 8 * sizeof(...) in the code. YMMV.
+> 
+> [PATCH 3/3] janitor: add DIV_ROUND_UP and use it.
+> 
+>   Just use linux/kernel.h DIV_ROUND_UP(a, b), it's way easier to read
+>   than (a + b - 1) / (b).
 
-Oops, false alarm, sorry about that.  All should be well with
-4aacaeb3dc82bb6479e70e120053dc27a399460e
+Quite frankly, using these two macros means that code readers have to
+learn their meaning although the original code pieces are (IMO) well-known
+paradigms. Moreover, DIV_ROUND_UP hides that b is evaluated twice. I am
+not enthused by these patches (though, I don't see a reason to object).
 
--- 
-Eric Wong
+-- Hannes
