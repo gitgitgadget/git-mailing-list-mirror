@@ -1,95 +1,89 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: Performance issue of 'git branch'
-Date: Wed, 22 Jul 2009 22:36:09 -0700 (PDT)
-Message-ID: <alpine.LFD.2.01.0907222204310.21520@localhost.localdomain>
-References: <20090722235914.GA13150@Pilar.aei.mpg.de> <alpine.LFD.2.01.0907221714300.3352@localhost.localdomain> <20090723012207.GA9368@Pilar.aei.mpg.de> <alpine.LFD.2.01.0907221850000.3352@localhost.localdomain> <alpine.LFD.2.01.0907221921570.3352@localhost.localdomain>
- <7vtz146mgr.fsf@alter.siamese.dyndns.org>
+From: Tim Harper <timcharper@gmail.com>
+Subject: Re: Newbie: Branch management
+Date: Wed, 22 Jul 2009 23:39:06 -0600
+Message-ID: <e1a5e9a00907222239o1d75c163ia007a3cc370e31a3@mail.gmail.com>
+References: <446739.83600.qm@web53410.mail.re2.yahoo.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: "Carlos R. Mafra" <crmafra2@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jul 23 07:36:23 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8BIT
+Cc: git@vger.kernel.org
+To: "Dr. Jennifer Nussbaum" <bg271828@yahoo.com>
+X-From: git-owner@vger.kernel.org Thu Jul 23 07:39:35 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MTqyd-0002Nd-3g
-	for gcvg-git-2@gmane.org; Thu, 23 Jul 2009 07:36:23 +0200
+	id 1MTr1i-00034l-S7
+	for gcvg-git-2@gmane.org; Thu, 23 Jul 2009 07:39:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751724AbZGWFgQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 23 Jul 2009 01:36:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751331AbZGWFgQ
-	(ORCPT <rfc822;git-outgoing>); Thu, 23 Jul 2009 01:36:16 -0400
-Received: from smtp1.linux-foundation.org ([140.211.169.13]:35468 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751203AbZGWFgP (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 23 Jul 2009 01:36:15 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
-	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id n6N5a9J8013123
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Wed, 22 Jul 2009 22:36:10 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id n6N5a9DI020247;
-	Wed, 22 Jul 2009 22:36:09 -0700
-X-X-Sender: torvalds@localhost.localdomain
-In-Reply-To: <7vtz146mgr.fsf@alter.siamese.dyndns.org>
-User-Agent: Alpine 2.01 (LFD 1184 2008-12-16)
-X-Spam-Status: No, hits=-3.46 required=5 tests=AWL,BAYES_00
-X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
+	id S1751210AbZGWFj0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 23 Jul 2009 01:39:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751195AbZGWFj0
+	(ORCPT <rfc822;git-outgoing>); Thu, 23 Jul 2009 01:39:26 -0400
+Received: from rv-out-0506.google.com ([209.85.198.226]:43618 "EHLO
+	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750888AbZGWFjZ convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 23 Jul 2009 01:39:25 -0400
+Received: by rv-out-0506.google.com with SMTP id k40so1391929rvb.5
+        for <git@vger.kernel.org>; Wed, 22 Jul 2009 22:39:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=Va4QN9jgE627G3AcYakl6ywHmtVsqwtl7C7G1wkrVGA=;
+        b=Iptpg9+0heoINiMaRyP0lS/8OANBXAqZH9yOmMAqPi0PKuVDXf9UpU2IE9CVulXSFl
+         etG7wwgWuonAuPRZE5wEr5LOlFJrxkM81EFmhto8V4+k8r30BSAqA8CwRa6Y0wRI4SSh
+         M/EiUFYx57Lzd9Q9jThUsPWZSINMO+UVk4rTM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=Rmi6tSrgcEldN3QU/rmP+qis9OWdA8cQsnw7s5Ti9y1wuDPT3iwqER7UyYykgXKkn+
+         swij0htG5UcqyEr/R0No13lkZFtcU+nmBL0Hn59GPPuXQr3P6NrtlezsMY/zHgrflfZK
+         pW2znLSNxCSOHqsUmuF3TJ67/JrCzN36X8ibc=
+Received: by 10.140.127.20 with SMTP id z20mr1170901rvc.186.1248327566049; 
+	Wed, 22 Jul 2009 22:39:26 -0700 (PDT)
+In-Reply-To: <446739.83600.qm@web53410.mail.re2.yahoo.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123843>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123844>
 
+On Wed, Jul 22, 2009 at 2:41 PM, Dr. Jennifer
+Nussbaum<bg271828@yahoo.com> wrote:
+>
+> Hi,
+>
+> I hope its OK to ask basic questions on this list.
+>
+> Im a recent convert to git and having trouble with branches. I mostly work on projects by myself, and what I want is that all branches of everything Im doing are in sync everywhere.
+>
+> I have a remote repository on my production server that serves as the "main" repository. Then i work on projects on a number of different computers--my main home computer, my main work machine, several non-main computers :-) ...
+>
+> I've found it very confusing dealing with branches in this environment. If I have my "master" branch, and decide that i want a "refactoring-templates" branch, what Id *like* to do is create that branch, work on it, commit it, and when I say "git push" I want everything that's new on that computer to be synced to the "main" repository. And then when I get to the next computer, I want to be able to say "git pull" and have everything on that computer by synced *from* the "main" repository.
+>
+> Instead I get confused by having to push branches separately, and it's confusing that when I do a pull it doesnt necessarily get other branches unless I specify them directly, and so on.
+>
+> I've looked at the docs on branches and there's something i guess Im missing because this still seems very difficult. Can someone giving me advice on the best way to keep this kind of thing organized?
+>
+> Thanks!
+>
+> Jen
 
+I was turned off about this at first when I used git - I was in SVN
+mode still and wanted all my local branches to be synchronized with
+the remote repository.  A year and a half later, I'm glad that the
+minds behind git didn't set out to make git like SVN!  I really think
+this was the right decision.  For instance... if you pulled ALL of
+your branches in one command... what if there were conflicts?  I doubt
+you'd want to resolve them right then and there.
 
-On Wed, 22 Jul 2009, Junio C Hamano wrote:
-> 
-> Hmm, we now have to remember what this patch did, if we ever wanted to
-> introduce negative refs later (see ef06b91 do_for_each_ref: perform the
-> same sanity check for leftovers., 2006-11-18).  Not exactly nice to spread
-> the codepaths that need to be updated.  Is the cold cache performance of
-> "git branch" to list your local branches that important?
+Anyways... 'git fetch' will download all the changes from the remote
+repository.  From there, you can simply merge any remote branch
+locally (ie, 'git merge origin/master' while in the master branch).
 
-Hmm. I do think that 7.5s is _way_ too long to wait for something as 
-simple as "what branches do I have?".
+Enjoy the journey!
 
-And yes, it's also an operation that I'd expect to be quite possibly the 
-first one you do when moving to a new repo, so cold-cache is realistic.
-
-And the 'rawref' thing is exactly the same as the 'ref' version, except it 
-doesn't do the null_sha1 check and the 'has_sha1-file()' check.
-
-And since git branch will do something _better_ than the 'has_sha1_file()' 
-check (by virtue of actually looking up the commit), I don't think that 
-part is an issue. So the only issue is the is_null_sha1() thing.
-
-And quite frankly, while the null-sha1 check may make sense, the way the 
-flag is named right now (DO_FOR_EACH_INCLUDE_BROKEN), I think we might be 
-better off re-thinking things later if we ever end up caring. That 
-'is_null_sha1()' check should possibly be under a separate flag.
-
-That said, while I think my patch was the simplest and most 
-the problem could certainly have been fixed differently.
-
-For example, instead of using 'for_each_ref()' and then splitting them by 
-kind with that "detect kind" loop, it could instead have done two loops, 
-ie
-
-	if (kinds & REF_LOCAL_BRANCH)
-		for_each_ref_in("refs/heads/", append_local, &ref_list);
-	if (kinds & REF_REMOTE_BRANCH)
-		for_each_ref_in("refs/remotes/", append_remote, &ref_list);
-
-and avoided the other refs we aren't interested in _that_ way instead.
-
-But it would be a bigger and involved patch. It gets really messy too (I 
-tried), because when you use 'for_each_ref_in()' it removes the prefix as 
-it goes along, but then the code in builtin-branch.c wants the prefix 
-after all.
-
-		Linus
+Tim
