@@ -1,73 +1,72 @@
-From: "Carlos R. Mafra" <crmafra2@gmail.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
 Subject: Re: Performance issue of 'git branch'
-Date: Thu, 23 Jul 2009 05:40:05 +0200
-Message-ID: <20090723034005.GA11463@Pilar.aei.mpg.de>
-References: <20090722235914.GA13150@Pilar.aei.mpg.de> <alpine.LFD.2.01.0907221714300.3352@localhost.localdomain> <20090723012207.GA9368@Pilar.aei.mpg.de> <alpine.LFD.2.01.0907221850000.3352@localhost.localdomain> <alpine.LFD.2.01.0907221921570.3352@localhost.localdomain> <20090723031843.GA9152@Pilar.aei.mpg.de>
+Date: Wed, 22 Jul 2009 20:47:10 -0700 (PDT)
+Message-ID: <alpine.LFD.2.01.0907222041341.21520@localhost.localdomain>
+References: <20090722235914.GA13150@Pilar.aei.mpg.de> <alpine.LFD.2.01.0907221714300.3352@localhost.localdomain> <20090723012207.GA9368@Pilar.aei.mpg.de> <alpine.LFD.2.01.0907221850000.3352@localhost.localdomain> <alpine.LFD.2.01.0907221921570.3352@localhost.localdomain>
+ <20090723031843.GA9152@Pilar.aei.mpg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: Git Mailing List <git@vger.kernel.org>,
 	Junio C Hamano <gitster@pobox.com>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Thu Jul 23 05:41:33 2009
+To: "Carlos R. Mafra" <crmafra2@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jul 23 05:47:23 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MTpBU-0000Yj-Ke
-	for gcvg-git-2@gmane.org; Thu, 23 Jul 2009 05:41:33 +0200
+	id 1MTpH9-0001qF-EF
+	for gcvg-git-2@gmane.org; Thu, 23 Jul 2009 05:47:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753206AbZGWDlY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 22 Jul 2009 23:41:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752988AbZGWDlY
-	(ORCPT <rfc822;git-outgoing>); Wed, 22 Jul 2009 23:41:24 -0400
-Received: from mail-fx0-f218.google.com ([209.85.220.218]:35652 "EHLO
-	mail-fx0-f218.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752689AbZGWDlX (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 22 Jul 2009 23:41:23 -0400
-Received: by fxm18 with SMTP id 18so574791fxm.37
-        for <git@vger.kernel.org>; Wed, 22 Jul 2009 20:41:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=R9WiSM1qhpv8qo5GqFQ+KgCZiSQ+rBh7N3M/sbIpJbc=;
-        b=d5lLW+r8bVxEQazoR+8TWQNUIfIVtVjetkeZZ/1TcbrTxy1TTxZk8d9NUdqNrLcy1w
-         oyg7L1DY/BHf9F4dOo85GEfxKyWlreEhSqAhAcDHsO0SLCXsrAkNpP+G7NjsYzkyWLug
-         7ZhU4wpWUBw4yv9+hCZeda3vQYQOIAkiXcTkw=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=b+IUIJC78ClEv+czbg0OaKddNlaJdf3IwXMRrZAZvmtUIL3/B9IK/vIR0oS0KrrpBN
-         5yGkc1H8laIPfNYWj8HuO3jdtZ6V5PLlB+8Fk+aMAJHA7M/w5jBdzSQZ0k66234c43f9
-         Ubd2Yr3r7/r9MU6QVqvTGbRwIsxT3Ahk2SE/g=
-Received: by 10.86.99.12 with SMTP id w12mr1390894fgb.77.1248320482768;
-        Wed, 22 Jul 2009 20:41:22 -0700 (PDT)
-Received: from Pilar.aei.mpg.de ([82.113.121.18])
-        by mx.google.com with ESMTPS id e20sm18212876fga.5.2009.07.22.20.41.18
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 22 Jul 2009 20:41:22 -0700 (PDT)
-Content-Disposition: inline
+	id S1753384AbZGWDrQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 22 Jul 2009 23:47:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753378AbZGWDrQ
+	(ORCPT <rfc822;git-outgoing>); Wed, 22 Jul 2009 23:47:16 -0400
+Received: from smtp1.linux-foundation.org ([140.211.169.13]:35055 "EHLO
+	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753291AbZGWDrP (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 22 Jul 2009 23:47:15 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
+	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id n6N3lBHB004878
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Wed, 22 Jul 2009 20:47:12 -0700
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id n6N3lApv011380;
+	Wed, 22 Jul 2009 20:47:10 -0700
+X-X-Sender: torvalds@localhost.localdomain
 In-Reply-To: <20090723031843.GA9152@Pilar.aei.mpg.de>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+User-Agent: Alpine 2.01 (LFD 1184 2008-12-16)
+X-Spam-Status: No, hits=-3.461 required=5 tests=AWL,BAYES_00
+X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123830>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123831>
 
-On Thu 23.Jul'09 at  5:18:44 +0200, Carlos R. Mafra wrote:
 
-> 0.00user 0.01system 0:01.50elapsed 1%CPU (0avgtext+0avgdata 0maxresident)k
-> 0inputs+0outputs (42major+757minor)pagefaults 0swaps
+
+On Thu, 23 Jul 2009, Carlos R. Mafra wrote:
 > 
-> 01.50 is not that good, but it doesn't "feel" terrible as 4 seconds.
-> [ It is incredible how 4 secs feels really bad while 2 is acceptable... ]
+> PS: Out of curiosity, how many femtoseconds does it take in your 
+> state-of-the-art machine? :-)
 
-I need to sleep, as the number 4 seconds got stuck in my head. In my original
-report it was much worse
+Cold cache? 0.15s before the patch. 0.03s after.
 
-0.00user 0.05system 0:05.73elapsed
+So we're not talking femto-seconds, but I've got Intel SSD's that do 
+random reads in well under a millisecond. Your pitiful 4200rpm drive 
+probably takes 20ms for each seek. You don't really need that many IO's 
+for it to take a second or two. Or four.
 
-So now it was a 75% improvement!
+The kernel will do IO in bigger chunks than a single page, and there is 
+_some_ locality to it all, so you won't see IO for each lookup. But with 
+2000+ lines of GIT_DEBUG_LOOKUP, you probably do end up having a 
+noticeable fraction of them being IO-causing, and another fraction causing 
+seeks.
+
+But I'll see if I can dig up my non-binary-search patch and see if I can 
+make it go faster. My machine is fast, but not so fast that I can't 
+measure it ;)
+
+		Linus
