@@ -1,122 +1,68 @@
-From: Martin Koegler <mkoegler@auto.tuwien.ac.at>
-Subject: Re: [PATCH 2/2] Replace remaining git-* calls in git stash
-Date: Thu, 23 Jul 2009 07:13:40 +0200
-Message-ID: <20090723051340.GA28934@auto.tuwien.ac.at>
-References: <1248206777-6984-1-git-send-email-mkoegler@auto.tuwien.ac.at> <1248206777-6984-2-git-send-email-mkoegler@auto.tuwien.ac.at> <20090723070810.6117@nanako3.lavabit.com> <7vtz14bb3e.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/3] refactor: use bitsizeof() instead of 8 * sizeof()
+Date: Wed, 22 Jul 2009 22:15:13 -0700
+Message-ID: <7vljmg56am.fsf@alter.siamese.dyndns.org>
+References: <1248298475-2990-1-git-send-email-madcoder@debian.org>
+ <1248298475-2990-2-git-send-email-madcoder@debian.org>
+ <1248298475-2990-3-git-send-email-madcoder@debian.org>
+ <20090723050711.GB9189@coredump.intra.peff.net>
+ <7v3a8o6l3v.fsf@alter.siamese.dyndns.org>
+ <20090723051112.GA9372@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; boundary="wRRV7LY7NUeQGEoC"
-Cc: Nanako Shiraishi <nanako3@lavabit.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jul 23 07:13:57 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Pierre Habouzit <madcoder@debian.org>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Jul 23 07:15:47 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MTqcv-0005HY-4l
-	for gcvg-git-2@gmane.org; Thu, 23 Jul 2009 07:13:57 +0200
+	id 1MTqef-0005ji-WC
+	for gcvg-git-2@gmane.org; Thu, 23 Jul 2009 07:15:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752391AbZGWFNn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 23 Jul 2009 01:13:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752376AbZGWFNn
-	(ORCPT <rfc822;git-outgoing>); Thu, 23 Jul 2009 01:13:43 -0400
-Received: from odin.auto.tuwien.ac.at ([128.130.60.3]:60909 "EHLO
-	mail.auto.tuwien.ac.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752366AbZGWFNm (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 23 Jul 2009 01:13:42 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by mail.auto.tuwien.ac.at (Postfix) with ESMTP id 45FA2130396F;
-	Thu, 23 Jul 2009 07:13:40 +0200 (CEST)
-X-Virus-Scanned: Debian amavisd-new at odin.auto.tuwien.ac.at
-Received: from mail.auto.tuwien.ac.at ([127.0.0.1])
-	by localhost (odin.auto.tuwien.ac.at [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id okB16jeSarhB; Thu, 23 Jul 2009 07:13:40 +0200 (CEST)
-Received: from thor.localdomain (thor.auto.tuwien.ac.at [128.130.60.15])
-	by mail.auto.tuwien.ac.at (Postfix) with ESMTP id 30BD0130396E;
-	Thu, 23 Jul 2009 07:13:40 +0200 (CEST)
-Received: by thor.localdomain (Postfix, from userid 3001)
-	id 262A96800645; Thu, 23 Jul 2009 07:13:40 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <7vtz14bb3e.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+	id S1752515AbZGWFPV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 23 Jul 2009 01:15:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752443AbZGWFPV
+	(ORCPT <rfc822;git-outgoing>); Thu, 23 Jul 2009 01:15:21 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:65456 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752036AbZGWFPU (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 23 Jul 2009 01:15:20 -0400
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 6A2BBE76D;
+	Thu, 23 Jul 2009 01:15:20 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id BFD39E76C; Thu, 23 Jul 2009
+ 01:15:14 -0400 (EDT)
+In-Reply-To: <20090723051112.GA9372@coredump.intra.peff.net> (Jeff King's
+ message of "Thu\, 23 Jul 2009 01\:11\:12 -0400")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: D1357012-7747-11DE-BFB5-AEF1826986A2-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123839>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123840>
 
+Jeff King <peff@peff.net> writes:
 
---wRRV7LY7NUeQGEoC
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+> On Wed, Jul 22, 2009 at 10:09:56PM -0700, Junio C Hamano wrote:
+>
+>> Jeff King <peff@peff.net> writes:
+>> 
+>> > On Wed, Jul 22, 2009 at 11:34:34PM +0200, Pierre Habouzit wrote:
+>> >
+>> >>  #define ARRAY_SIZE(x) (sizeof(x)/sizeof(x[0]))
+>> >> +#define bitsizeof(x)  (CHAR_BIT * sizeof(x))
+>> >
+>> > Isn't our style to use all-caps for macros? I.e., BITSIZEOF?
+>> 
+>> Perhaps but I'd say similarity between sizeof() and bitsizeof() calls for
+>> consistency in the lowercase in this particular case.
+>
+> Fair enough. I just wanted to point it out in case nobody thought of it.
 
-On Wed, Jul 22, 2009 at 03:35:01PM -0700, Junio C Hamano wrote:
-> Nanako Shiraishi <nanako3@lavabit.com> writes:
-> 
-> > Quoting Martin Koegler <mkoegler@auto.tuwien.ac.at>:
-> >
-> >> Signed-off-by: Martin Koegler <mkoegler@auto.tuwien.ac.at>
-> >> ---
-> >
-> > Thank you. Even though 'git blame' says I am not responsible for these two (I AM responsible for the one in your other patch)...
-> >
-> > Acked-by: Nanako Shiraishi <nanako3@lavabit.com>
-
-I got an error from the mailing list for my reworked patch, so I sent
-it again as attachment.
-
-
---wRRV7LY7NUeQGEoC
-Content-Type: text/x-diff; charset=us-ascii
-Content-Disposition: attachment; filename="0001-git-stash-replace-git-XXX-calls.patch"
-
->From 03fa7d2f6c558b22747f21a76c21adad522e0a5d Mon Sep 17 00:00:00 2001
-From: Martin Koegler <mkoegler@auto.tuwien.ac.at>
-Date: Tue, 21 Jul 2009 21:57:27 +0200
-Subject: [PATCH] git stash: replace git-XXX calls
-Status: O
-Content-Length: 1056
-Lines: 40
-
-Replace remaining git-XXX calls with git XXX.
-
-Signed-off-by: Martin Koegler <mkoegler@auto.tuwien.ac.at>
----
- git-stash.sh |    6 +++---
- 1 files changed, 3 insertions(+), 3 deletions(-)
-
-diff --git a/git-stash.sh b/git-stash.sh
-index 531c7c3..03e589f 100755
---- a/git-stash.sh
-+++ b/git-stash.sh
-@@ -203,7 +203,7 @@ apply_stash () {
- 		git diff-tree --binary $s^2^..$s^2 | git apply --cached
- 		test $? -ne 0 &&
- 			die 'Conflicts in index. Try without --index.'
--		unstashed_index_tree=$(git-write-tree) ||
-+		unstashed_index_tree=$(git write-tree) ||
- 			die 'Could not save index tree'
- 		git reset
- 	fi
-@@ -219,7 +219,7 @@ apply_stash () {
- 	then
- 		export GIT_MERGE_VERBOSITY=0
- 	fi
--	if git-merge-recursive $b_tree -- $c_tree $w_tree
-+	if git merge-recursive $b_tree -- $c_tree $w_tree
- 	then
- 		# No conflict
- 		if test -n "$unstashed_index_tree"
-@@ -297,7 +297,7 @@ apply_to_branch () {
- 	fi
- 	stash=$2
- 
--	git-checkout -b $branch $stash^ &&
-+	git checkout -b $branch $stash^ &&
- 	apply_stash --index $stash &&
- 	drop_stash $stash
- }
--- 
-1.5.6.5
-
-
---wRRV7LY7NUeQGEoC--
+I've actually thought of using elemof() to call what is known as
+ARRAY_SIZE() when we introduced it, but now it is way _too_ late ;-)
