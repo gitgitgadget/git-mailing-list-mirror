@@ -1,121 +1,71 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Performance issue of 'git branch'
-Date: Wed, 22 Jul 2009 23:04:59 -0700
-Message-ID: <7vy6qg2aus.fsf@alter.siamese.dyndns.org>
-References: <20090722235914.GA13150@Pilar.aei.mpg.de>
- <alpine.LFD.2.01.0907221714300.3352@localhost.localdomain>
- <20090723012207.GA9368@Pilar.aei.mpg.de>
- <alpine.LFD.2.01.0907221850000.3352@localhost.localdomain>
- <alpine.LFD.2.01.0907221921570.3352@localhost.localdomain>
- <7vtz146mgr.fsf@alter.siamese.dyndns.org>
- <alpine.LFD.2.01.0907222204310.21520@localhost.localdomain>
- <7veis83q0e.fsf@alter.siamese.dyndns.org>
+From: Stephen Boyd <bebarino@gmail.com>
+Subject: Re: [PATCH v4] grep: Add --max-depth option.
+Date: Wed, 22 Jul 2009 23:11:33 -0700
+Message-ID: <4A67FF15.7080703@gmail.com>
+References: <1248285135-9033-1-git-send-email-michal.kiedrowicz@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	"Carlos R. Mafra" <crmafra2@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jul 23 08:05:18 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: =?UTF-8?B?TWljaGHFgiBLaWVkcm93aWN6?= <michal.kiedrowicz@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jul 23 08:11:47 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MTrQb-0001xa-4d
-	for gcvg-git-2@gmane.org; Thu, 23 Jul 2009 08:05:17 +0200
+	id 1MTrWs-0003zw-UK
+	for gcvg-git-2@gmane.org; Thu, 23 Jul 2009 08:11:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751641AbZGWGFI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 23 Jul 2009 02:05:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751539AbZGWGFH
-	(ORCPT <rfc822;git-outgoing>); Thu, 23 Jul 2009 02:05:07 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:58150 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751509AbZGWGFG (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 23 Jul 2009 02:05:06 -0400
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 9B6AB10AFA;
-	Thu, 23 Jul 2009 02:05:05 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 91ACA10AF8; Thu,
- 23 Jul 2009 02:05:00 -0400 (EDT)
-In-Reply-To: <7veis83q0e.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
- message of "Wed\, 22 Jul 2009 22\:52\:17 -0700")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: C48A6550-774E-11DE-8E9A-F699A5B33865-77302942!a-sasl-quonix.pobox.com
+	id S1751539AbZGWGLi convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 23 Jul 2009 02:11:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751509AbZGWGLi
+	(ORCPT <rfc822;git-outgoing>); Thu, 23 Jul 2009 02:11:38 -0400
+Received: from rv-out-0506.google.com ([209.85.198.238]:40664 "EHLO
+	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750990AbZGWGLh (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 23 Jul 2009 02:11:37 -0400
+Received: by rv-out-0506.google.com with SMTP id f6so201959rvb.1
+        for <git@vger.kernel.org>; Wed, 22 Jul 2009 23:11:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from
+         :user-agent:mime-version:to:cc:subject:references:in-reply-to
+         :x-enigmail-version:content-type:content-transfer-encoding;
+        bh=3DwA+Eci/scOM6Ms1U+FkrxssyQI32thHlfeQ0A3IeA=;
+        b=tB+RD8B5eLs6vQc8Zzl6WG32W52tfZwG+UrsZfFRRgtJp1gOyNugfh0RcDZee/GIgI
+         riQjedVzem/6HD+Yd3Vfq3H6JRaCGXyzIMtsVT85A4P6sFvMK5tfMPkXiSO1bGLuMTZy
+         3MD0s9nEGM17GhCsY5U/4GZ7Bc7XCwyXHXh4I=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:x-enigmail-version:content-type
+         :content-transfer-encoding;
+        b=qaYnTHTjv1VeO0Jbpx1oz5KICpwXKjpvLM9CH9onSWLpOLa955r2sFRcBP9ZJKyb59
+         EGbDFOZhOQwaIDbF8lsxcEMy8yQuY7mHtCH8nqYqZ+H3LKDER76HPk+YtNW4bL5t/Ail
+         Ml3EGFZLaFgpOzdRCXICbQI9CPymiV4Y3UMrU=
+Received: by 10.140.133.7 with SMTP id g7mr1161964rvd.169.1248329497154;
+        Wed, 22 Jul 2009 23:11:37 -0700 (PDT)
+Received: from ?10.10.0.3? (cpe-66-75-25-79.san.res.rr.com [66.75.25.79])
+        by mx.google.com with ESMTPS id g22sm3885391rvb.58.2009.07.22.23.11.35
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 22 Jul 2009 23:11:36 -0700 (PDT)
+User-Agent: Thunderbird 2.0.0.22 (X11/20090629)
+In-Reply-To: <1248285135-9033-1-git-send-email-michal.kiedrowicz@gmail.com>
+X-Enigmail-Version: 0.95.7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123846>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123847>
 
-Junio C Hamano <gitster@pobox.com> writes:
+This looks good now. Just one minor point but I don't think it requires
+a resend.
 
-> Exactly.
+Micha=C5=82 Kiedrowicz wrote:
 >
-> That is_null_sha1() thing was a remnant of your idea to represent deleted
-> ref that has a packed counterpart by storing 0{40} in a loose ref, so that
-> we can implement deletion efficiently.
->
-> Since we currently implement deletion by repacking packed refs if the ref
-> has a packed (possibly stale) one, we do not use such a "negative ref",
-> and skipping 0{40} done by the normal (i.e. non-raw) for_each_ref() family
-> is not necessary.
->
-> I was inclined to say that, because I never saw anybody complained that
-> deleting refs was too slow, we declare that we would forever stick to the
-> current implementation of ref deletion, and remove the is_null_sha1()
-> check from the do_one_ref() function, even for include-broken case.
->
-> But after thinking about it again, I'd say "if null, then skip" should be
-> outside the DO_FOR_EACH_INCLUDE_BROKEN anyway, because the null check is
-> not about brokenness of the ref, but is about a possible future expansion
-> to represent deleted ref with such a "negative ref" entry.
->
-> If we remove is_null_sha1() from do_one_ref(), or if we move it out of the
-> "include broken" thing, my "Not exactly nice" comment can be rescinded, as
-> doing the former (i.e. removal of is_null_sha1() check) is a promise that
-> we will never have to worry about negative refs, and doing the latter will
-> still protect callers of do_for_each_rawref() from negative refs if we
-> ever introduce them in some future.
+> +		{ OPTION_INTEGER, 0, "max-depth", &opt.max_depth, "depth",
+> +			"descend at most <depth> levels", PARSE_OPT_NONEG,
+> +			NULL, 1 },
 
-That is, a patch like this (this should go to 'maint'), and my worries
-will go away.
-
--- >8 --
-Subject: do_one_ref(): null_sha1 check is not about broken ref
-
-f8948e2 (remote prune: warn dangling symrefs, 2009-02-08) introduced a
-more dangerous variant of for_each_ref() family that skips the check for
-dangling refs, but it also made another unrelated check optional by
-mistake.
-
-The check to see if a ref points at 0{40} is not about brokenness, but is
-about a possible future plan to represent a deleted ref by writing 40 "0"
-in a loose ref when there is a stale version of the same ref already in
-.git/packed-refs, so that we can implement deletion of a ref without
-having to rewrite the packed refs file excluding the ref being deleted.
-This check has to be outside of the conditional.
-
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- refs.c |    5 +++--
- 1 files changed, 3 insertions(+), 2 deletions(-)
-
-diff --git a/refs.c b/refs.c
-index bb0762e..3da3c8c 100644
---- a/refs.c
-+++ b/refs.c
-@@ -531,9 +531,10 @@ static int do_one_ref(const char *base, each_ref_fn fn, int trim,
- {
- 	if (strncmp(base, entry->name, trim))
- 		return 0;
-+	/* Is this a "negative ref" that represents a deleted ref? */
-+	if (is_null_sha1(entry->sha1))
-+		return 0;
- 	if (!(flags & DO_FOR_EACH_INCLUDE_BROKEN)) {
--		if (is_null_sha1(entry->sha1))
--			return 0;
- 		if (!has_sha1_file(entry->sha1)) {
- 			error("%s does not point to a valid object!", entry->name);
- 			return 0;
+This NULL and 1 are not needed unless you're using PARSE_OPT_OPTARG. I
+think this last line can be safely removed.
