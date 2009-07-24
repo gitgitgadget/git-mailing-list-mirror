@@ -1,57 +1,58 @@
-From: Nanako Shiraishi <nanako3@lavabit.com>
-Subject: Re: [PATCH] git-add -p: be able to undo a given hunk
-Date: Fri, 24 Jul 2009 19:32:07 +0900
-Message-ID: <20090724193207.6117@nanako3.lavabit.com>
-References: <20090723074104.GI4750@laphroaig.corp> <7veis7yxwx.fsf@alter.siamese.dyndns.org>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: Fast-forward-only merge
+Date: Fri, 24 Jul 2009 12:40:00 +0200
+Message-ID: <4A698F80.2020801@drmicha.warpmail.net>
+References: <82ws5y4dfs.fsf@mid.bfk.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Cc: Pierre Habouzit <madcoder@debian.org>,
-	Thomas Rast <trast@student.ethz.ch>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jul 24 12:33:09 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Florian Weimer <fweimer@bfk.de>
+X-From: git-owner@vger.kernel.org Fri Jul 24 12:40:41 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MUI5M-00083Q-Im
-	for gcvg-git-2@gmane.org; Fri, 24 Jul 2009 12:33:09 +0200
+	id 1MUICb-0002UE-6U
+	for gcvg-git-2@gmane.org; Fri, 24 Jul 2009 12:40:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752370AbZGXKcs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 24 Jul 2009 06:32:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752350AbZGXKcs
-	(ORCPT <rfc822;git-outgoing>); Fri, 24 Jul 2009 06:32:48 -0400
-Received: from karen.lavabit.com ([72.249.41.33]:43464 "EHLO karen.lavabit.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752284AbZGXKcr (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 24 Jul 2009 06:32:47 -0400
-Received: from b.earth.lavabit.com (b.earth.lavabit.com [192.168.111.11])
-	by karen.lavabit.com (Postfix) with ESMTP id 6236411B7E2;
-	Fri, 24 Jul 2009 05:32:47 -0500 (CDT)
-Received: from 4104.lavabit.com (212.62.97.20)
-	by lavabit.com with ESMTP id 12KI257A9OUF; Fri, 24 Jul 2009 05:32:47 -0500
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws; s=lavabit; d=lavabit.com;
-  b=0wnKfrPnsbi8knY7Y9mrXQD3OBqscJlmq8k58V0Nw0scwSyB9IG0YmLOnvHGWELPtGwajwVib87Zd0Qi5F8qDJ9Sl94tZ0A7SWnKteaVvkO1kUQk5q/yh1yn0BMLo0qSsxRvwPbqa7i9PzKf1L9MG3DlJDZhaYIPXob6BfX8Q0k=;
-  h=From:To:Cc:Subject:References:In-Reply-To:Date:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id;
-In-Reply-To: <7veis7yxwx.fsf@alter.siamese.dyndns.org>
+	id S1752497AbZGXKkS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 24 Jul 2009 06:40:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752473AbZGXKkS
+	(ORCPT <rfc822;git-outgoing>); Fri, 24 Jul 2009 06:40:18 -0400
+Received: from out1.smtp.messagingengine.com ([66.111.4.25]:60049 "EHLO
+	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752434AbZGXKkR (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 24 Jul 2009 06:40:17 -0400
+Received: from compute1.internal (compute1.internal [10.202.2.41])
+	by out1.messagingengine.com (Postfix) with ESMTP id F24B53B2E59;
+	Fri, 24 Jul 2009 06:40:16 -0400 (EDT)
+Received: from heartbeat1.messagingengine.com ([10.202.2.160])
+  by compute1.internal (MEProxy); Fri, 24 Jul 2009 06:40:17 -0400
+X-Sasl-enc: rYwDDF2oqaqG1Xw/hAmTvTOBYCZWmX013EoVG9dGuKI9 1248432016
+Received: from localhost.localdomain (heawood.math.tu-clausthal.de [139.174.44.4])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 4562A3215E;
+	Fri, 24 Jul 2009 06:40:16 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.1pre) Gecko/20090718 Lightning/1.0pre Shredder/3.0b4pre
+In-Reply-To: <82ws5y4dfs.fsf@mid.bfk.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123915>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123916>
 
-Quoting Junio C Hamano <gitster@pobox.com>
+Florian Weimer venit, vidit, dixit 24.07.2009 11:50:
+> Is there an easy way to require that "git merge" succeeds only if the
+> merge is fast-forward?
+> 
 
-> I fear tempting a new user who sees "undo" to say "yeah, I added the
-> change in this hunk to the index by mistake, please undo", which would
-> lose the work.  The confusion is easier to avoid if "add" only manipulates
-> the index without harming the work tree, and the user used a different
-> command, namely "checkout from the index", to get rid of the remaining
-> debug cruft, once s/he added all the necessary bits to the index perhaps
-> after a multi-stage commit session.
+There's an easy way to test before the merge (git merge-base), but an
+option for git merge is still missing:
 
-I can see your argument that this might introduce more danger for newbies. As you said yourself number of times, nobody will stay being a newbie forever, and I don't think it is wise to reject a feature that is very handy for experts based solely on such a fear.
+http://article.gmane.org/gmane.comp.version-control.git/76787
+http://article.gmane.org/gmane.comp.version-control.git/80284
+http://article.gmane.org/gmane.comp.version-control.git/107768
+http://article.gmane.org/gmane.comp.version-control.git/118529
 
--- 
-Nanako Shiraishi
-http://ivory.ap.teacup.com/nanako3/
+Cheers,
+Michael
