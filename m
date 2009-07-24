@@ -1,97 +1,76 @@
-From: Pierre Habouzit <madcoder@madism.org>
-Subject: Re: [PATCH] git-add -p: be able to undo a given hunk
-Date: Fri, 24 Jul 2009 16:58:51 +0200
-Message-ID: <20090724145851.GH4903@laphroaig.corp>
-References: <20090723074104.GI4750@laphroaig.corp>
- <7veis7yxwx.fsf@alter.siamese.dyndns.org>
+From: "Timothy Schaeffer" <tschaeffer@dramail.com>
+Subject: git-svn error: RA layer request failed: PROPFIND request failed on '/svn/stf/branches/dev/sw%2Fdpemu%2Finclude%2FNetCnxn.h':
+Date: Fri, 24 Jul 2009 10:45:06 -0400
+Message-ID: <138905EB75AB0D44B6A0ECD251A92EA7011BA99E@sdra00198.intranet.dra-inc.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Pierre Habouzit <madcoder@debian.org>, git@vger.kernel.org,
-	Thomas Rast <trast@student.ethz.ch>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jul 24 16:59:33 2009
+Content-Type: multipart/mixed;
+	boundary="----_=_NextPart_001_01CA0C6D.55AF7832"
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Jul 24 17:00:38 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MUMF7-0005id-Nx
-	for gcvg-git-2@gmane.org; Fri, 24 Jul 2009 16:59:30 +0200
+	id 1MUMGA-0006HP-6u
+	for gcvg-git-2@gmane.org; Fri, 24 Jul 2009 17:00:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752255AbZGXO6z convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 24 Jul 2009 10:58:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752027AbZGXO6z
-	(ORCPT <rfc822;git-outgoing>); Fri, 24 Jul 2009 10:58:55 -0400
-Received: from pan.madism.org ([88.191.52.104]:34361 "EHLO hermes.madism.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751919AbZGXO6z (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 24 Jul 2009 10:58:55 -0400
-Received: from laphroaig.corp (def92-12-88-177-251-208.fbx.proxad.net [88.177.251.208])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(Client did not present a certificate)
-	by hermes.madism.org (Postfix) with ESMTPSA id AD32F40804;
-	Fri, 24 Jul 2009 16:58:53 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <7veis7yxwx.fsf@alter.siamese.dyndns.org>
-X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1753041AbZGXPA0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 24 Jul 2009 11:00:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753016AbZGXPAZ
+	(ORCPT <rfc822;git-outgoing>); Fri, 24 Jul 2009 11:00:25 -0400
+Received: from dramail.com ([66.195.237.160]:1365 "EHLO
+	sdra00198.intranet.dra-inc.net" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1752771AbZGXPAU (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 24 Jul 2009 11:00:20 -0400
+X-Greylist: delayed 913 seconds by postgrey-1.27 at vger.kernel.org; Fri, 24 Jul 2009 11:00:20 EDT
+X-MimeOLE: Produced By Microsoft Exchange V6.5
+Content-class: urn:content-classes:message
+X-MS-Has-Attach: yes
+X-MS-TNEF-Correlator: 
+Thread-Topic: git-svn error: RA layer request failed: PROPFIND request failed on '/svn/stf/branches/dev/sw%2Fdpemu%2Finclude%2FNetCnxn.h':
+Thread-Index: AcoMbhdvJte50xVDQ1itpFS/uVO0rw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123918>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123919>
 
-On Thu, Jul 23, 2009 at 12:58:06PM -0700, Junio C Hamano wrote:
-> Pierre Habouzit <madcoder@debian.org> writes:
->=20
-> > One of my most frequent use case for git-add -p is when I had an in=
-tense
-> > debug session with quite a lot of debug() traces added. I then want=
- only
-> > to select the hunks corresponding to the bugfixes and throw away th=
-e debug
-> > ones.
->=20
-> I do not particularly like this change.  "add -i", "add -p" and "add"=
- in
-> general are about manipulating the index.  They are never meant to to=
-uch
-> the work tree contents.  Which means that even if you make a mistake =
-in
-> saying y/n, you won't damange the state you have in your work tree, a=
-nd
-> also means that you can recover safely by simply restarting "add -p"
-> session if you really botched splitting of the patch.
+This is a multi-part message in MIME format.
 
-Okay, fair enough, this is kind of mixing stuff together, I reckon. OTO=
-H
-this fills out a real need: sorting out the debug code from the non
-debug one, it's particularily handy, and many people at work here have
-applied my patch and it saves them lots of time.
+------_=_NextPart_001_01CA0C6D.55AF7832
+Content-Type: text/plain;
+	charset="UTF-8"
+Content-Transfer-Encoding: base64
 
-So maybe we should see how to have a new command like git hunk-sort or
-git hunk-triage or whatever, I don't really mind.
+R2l0LXN2biBoYXMgYmVlbiBnaXZpbmcgbWUgdGhlIGZvbGxvd2luZyBlcnJvciBmb3Igc29tZSB0
+aW1lIHdoZW4gY2FsbGluZyAiZ2l0IHN2biBkY29tbWl0IjoNCg0KUkEgbGF5ZXIgcmVxdWVzdCBm
+YWlsZWQ6IFBST1BGSU5EIHJlcXVlc3QgZmFpbGVkIG9uICcvc3ZuL3N0Zi9icmFuY2hlcy9kZXYv
+c3clMkZkcGVtdSUyRmluY2x1ZGUlMkZOZXRDbnhuLmgnOiANClBST1BGSU5EIG9mICcvc3ZuL3N0
+Zi9icmFuY2hlcy9kZXYvc3clMkZkcGVtdSUyRmluY2x1ZGUlMkZOZXRDbnhuLmgnOiANCjMwMiBG
+b3VuZCAoaHR0cHM6Ly9vdXJzdm5yZXBvLm5ldCkgYXQgL3Vzci9sb2NhbC9saWJleGVjL2dpdC1j
+b3JlL2dpdC1zdm4gbGluZSA1MDgNCg0KVGhpcyBvbmx5IG9jY3VycmVkIHdoZW4gZ2l0IGRldGVj
+dGVkIGEgcmVuYW1lIG9yIGNvcHkuDQoNCkZvbGxvd2luZyB0aGUgbGVhZCBpbnRvIGdpdC1zdm4u
+cGVybCwgDQphbmQgbm90aWNpbmcgdGhhdCBzb21lIG9mIHRoZSAnLydzIGluIHRoZSBwYXRoIHdl
+cmUgaGV4LWVuY29kZWQgDQphbmQgc29tZSB3ZXJlIG5vdCwgDQpJIGNoYW5nZWQgdGhlIHJlZ2V4
+IHVzZWQgdG8gZmluZCBjaGFycyANCnRvIGhleC1lbmNvZGUgaW4gdGhlIHJlbGF0aXZlIHBhcnQg
+b2YgdGhlIHBhdGggDQp0byBleGNsdWRlICcvJy4gIA0KSXQgd29ya3MsIHNvIGZhci4gIA0KSSBo
+YXZlIGluY2x1ZGVkIGEgcGF0Y2guDQoNClRpbSBTLg0K
 
-Another way, that is non destructive is to _not_ apply the reverting
-patch, but only to generate it, and let the user apply it himself. E.g.
-something along the lines of:
+------_=_NextPart_001_01CA0C6D.55AF7832
+Content-Type: application/octet-stream;
+	name="git-svn-path-fix-2009-07-24.patch"
+Content-Transfer-Encoding: base64
+Content-Description: git-svn-path-fix-2009-07-24.patch
+Content-Disposition: attachment;
+	filename="git-svn-path-fix-2009-07-24.patch"
 
-$ git add -p
-=2E.. select your patches ...
-info: you have selected hunks for removal from you tree
-info: run the following command to make them go away:
-  git apply -R --recount git-add-undo-12asWED.patch
-$
+ZGlmZiAtLWdpdCBhL2dpdC1zdm4ucGVybCBiL2dpdC1zdm4ucGVybAppbmRleCA0M2M4NmU4Li44
+NjRiNzUyIDEwMDc1NQotLS0gYS9naXQtc3ZuLnBlcmwKKysrIGIvZ2l0LXN2bi5wZXJsCkBAIC0z
+OTUzLDcgKzM5NTMsNyBAQCBzdWIgcmVwb19wYXRoIHsKIHN1YiB1cmxfcGF0aCB7CiAJbXkgKCRz
+ZWxmLCAkcGF0aCkgPSBAXzsKIAlpZiAoJHNlbGYtPnt1cmx9ID1+IG0jXmh0dHBzPzovLyMpIHsK
+LQkJJHBhdGggPX4gcy8oW15+YS16QS1aMC05Xy4tXSkvdWMgc3ByaW50ZigiJSUlMDJ4IixvcmQo
+JDEpKS9lZzsKKwkJJHBhdGggPX4gcy8oW15+YS16QS1aMC05Xy4tXC9dKS91YyBzcHJpbnRmKCIl
+JSUwMngiLG9yZCgkMSkpL2VnOwogCX0KIAkkc2VsZi0+e3VybH0gLiAnLycgLiAkc2VsZi0+cmVw
+b19wYXRoKCRwYXRoKTsKIH0K
 
-And let the user cut & paste the command.
-
-_I_ could live with that, and you lose the dangerous factor.
-
---=20
-Intersec <http://www.intersec.com>
-Pierre Habouzit <pierre.habouzit@intersec.com>
-T=C3=A9l : +33 (0)1 5570 3346
-Mob : +33 (0)6 1636 8131
-=46ax : +33 (0)1 5570 3332
-37 Rue Pierre Lhomme
-92400 Courbevoie
+------_=_NextPart_001_01CA0C6D.55AF7832--
