@@ -1,85 +1,44 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: [ANNOUNCE] GIT 1.6.4-rc2
-Date: Fri, 24 Jul 2009 02:38:48 -0700
-Message-ID: <20090724093847.GA20338@dcvr.yhbt.net>
-References: <7vd47r298e.fsf@alter.siamese.dyndns.org>
+From: Florian Weimer <fweimer@bfk.de>
+Subject: Fast-forward-only merge
+Date: Fri, 24 Jul 2009 09:50:47 +0000
+Message-ID: <82ws5y4dfs.fsf@mid.bfk.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Mattias Nissler <mattias.nissler@gmx.de>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jul 24 11:38:58 2009
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jul 24 11:51:29 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MUHEv-0002Vc-Os
-	for gcvg-git-2@gmane.org; Fri, 24 Jul 2009 11:38:58 +0200
+	id 1MUHR2-0007PR-W4
+	for gcvg-git-2@gmane.org; Fri, 24 Jul 2009 11:51:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752128AbZGXJiu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 24 Jul 2009 05:38:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752100AbZGXJiu
-	(ORCPT <rfc822;git-outgoing>); Fri, 24 Jul 2009 05:38:50 -0400
-Received: from dcvr.yhbt.net ([64.71.152.64]:42356 "EHLO dcvr.yhbt.net"
+	id S1752457AbZGXJus convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 24 Jul 2009 05:50:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752456AbZGXJus
+	(ORCPT <rfc822;git-outgoing>); Fri, 24 Jul 2009 05:50:48 -0400
+Received: from mx01.bfk.de ([193.227.124.2]:52653 "EHLO mx01.bfk.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752002AbZGXJit (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 24 Jul 2009 05:38:49 -0400
-Received: from localhost (user-118bg0q.cable.mindspring.com [66.133.192.26])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by dcvr.yhbt.net (Postfix) with ESMTPSA id D44E81F78F;
-	Fri, 24 Jul 2009 09:38:48 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <7vd47r298e.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+	id S1752409AbZGXJur convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 24 Jul 2009 05:50:47 -0400
+Received: from mx00.int.bfk.de ([10.119.110.2])
+	by mx01.bfk.de with esmtps (TLS1.0:RSA_AES_256_CBC_SHA1:32)
+	id 1MUHUt-0002Kk-Jl
+	for git@vger.kernel.org; Fri, 24 Jul 2009 11:55:27 +0200
+Received: by bfk.de with local id 1MUHQN-0007oY-2B
+	for git@vger.kernel.org; Fri, 24 Jul 2009 09:50:47 +0000
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123912>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123913>
 
-Junio C Hamano <gitster@pobox.com> wrote:
->  * git-svn updates, including a new --authors-prog option to map author
->    names by invoking an external program, 'git svn reset' to unwind
->    'git svn fetch', support for more than one branches, etc.
+Is there an easy way to require that "git merge" succeeds only if the
+merge is fast-forward?
 
-I completely forgot the implications of a change made in commit
-0b2af457a49e3b00d47d556d5301934d27909db8.  This change probably doesn't
-affect a lot of repos out there, but --minimize-url is no longer the
-default for new imports.
-
-
-The good thing is that access-limited repositories are easier to setup
-and import.  So if you only had access for a sub_project under the
-repository root in svn://example.com/big_project/sub_project,
-you won't need read permissions to / or /big_project, just
-/big_project/sub_project and everything under it.
-
-
-Unfortunately, this default breaks the case where a project is moved to
-a lower-level within the repository:
-
-svn://example.com/foo => svn://example.com/big_project/sub_project
-
-Without --minimize-url enabled, your clone would register
-"/big_project/sub_project" to track and not be able to find the history
-of "/foo".  With --minimize-url (the old behavior), you would've
-registered "/" to be able to track all subdirectories underneath the
-repository root (assuming the SVN repo is world-readable).
-
-
-While both cases are fairly rare, I've personally encountered the latter
-(and now broken-by-default) case more.  This is because I mainly use
-git/git svn to work on free software without read restrictions.
-However, with more and more free projects switching entirely to git,
-maybe leaving the default to be more friendly to people on restrictive
-setups will be more helpful than harmful.
-
-This change only affects the creation of new clones, existing repos
-are unaffected.
-
-
-Let me know if the above made sense, it's late and I nodded off
-several times while writing this.
-
--- 
-Eric Wong
+--=20
+=46lorian Weimer                <fweimer@bfk.de>
+BFK edv-consulting GmbH       http://www.bfk.de/
+Kriegsstra=DFe 100              tel: +49-721-96201-1
+D-76133 Karlsruhe             fax: +49-721-96201-99
