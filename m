@@ -1,55 +1,100 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/2] git repack: keep commits hidden by a graft
-Date: Fri, 24 Jul 2009 08:24:40 -0700
-Message-ID: <7vmy6uqf2f.fsf@alter.siamese.dyndns.org>
-References: <cover.1248362827u.git.johannes.schindelin@gmx.de>
- <34dfd22bb99c7c466b6131876e8b52ac46f388aa.1248362827u.git.johannes.schindelin@gmx.de> <7v8wievf20.fsf@alter.siamese.dyndns.org> <20090724053506.GB12855@atjola.homenet> <alpine.DEB.1.00.0907241136081.19988@intel-tinevez-2-302>
+From: Brandon Casey <brandon.casey.ctr@nrlssc.navy.mil>
+Subject: Re: [PATCH/RFC] SunOS grep does not understand -C<n>
+Date: Fri, 24 Jul 2009 10:43:22 -0500
+Message-ID: <bkmAA5IX0ZzfCv66mQCX1GFfM5XwTCDPMQk5LjxMd37QH7PwYK29XA@cipher.nrlssc.navy.mil>
+References: <7vr5w6tzq8.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: =?utf-8?Q?Bj=C3=B6rn?= Steinbrink <B.Steinbrink@gmx.de>,
-	git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Fri Jul 24 17:24:58 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jul 24 17:44:23 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MUMdm-0000cs-9F
-	for gcvg-git-2@gmane.org; Fri, 24 Jul 2009 17:24:58 +0200
+	id 1MUMwY-0001eM-3P
+	for gcvg-git-2@gmane.org; Fri, 24 Jul 2009 17:44:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752943AbZGXPYs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 24 Jul 2009 11:24:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752715AbZGXPYs
-	(ORCPT <rfc822;git-outgoing>); Fri, 24 Jul 2009 11:24:48 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:62914 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752598AbZGXPYr (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 24 Jul 2009 11:24:47 -0400
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 84C6912319;
-	Fri, 24 Jul 2009 11:24:45 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id D9A9A12316; Fri,
- 24 Jul 2009 11:24:41 -0400 (EDT)
-In-Reply-To: <alpine.DEB.1.00.0907241136081.19988@intel-tinevez-2-302>
- (Johannes Schindelin's message of "Fri\, 24 Jul 2009 11\:37\:38 +0200
- \(CEST\)")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 1E236072-7866-11DE-ADB8-F699A5B33865-77302942!a-sasl-quonix.pobox.com
+	id S1753216AbZGXPnu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 24 Jul 2009 11:43:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753212AbZGXPnu
+	(ORCPT <rfc822;git-outgoing>); Fri, 24 Jul 2009 11:43:50 -0400
+Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:49003 "EHLO
+	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753177AbZGXPnu (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 24 Jul 2009 11:43:50 -0400
+Received: by mail.nrlssc.navy.mil id n6OFhNsg021201; Fri, 24 Jul 2009 10:43:25 -0500
+In-Reply-To: <7vr5w6tzq8.fsf@alter.siamese.dyndns.org>
+X-OriginalArrivalTime: 24 Jul 2009 15:43:23.0616 (UTC) FILETIME=[7A4E9E00:01CA0C75]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123921>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123922>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Junio C Hamano wrote:
+> I noticed that the first "grep -C1" test in t7002 does not pass on my 
+> SunOS-5.11-i86pc, and that is not because our way to spawn external
+> grep is broken, but because the native grep does not understand -C<n>.
+> 
+> Is it just me and my installation (i.e. I might have failed to install
+> saner grep from the distribution that everybody uses), or everybody on
+> SunOS is using this option himself because our Makefile doesn't do that
+> automatically for them?
 
-> Right.  How about a comment above the if():
->
-> 		/*
-> 		 * If nr_parent is negative, the commit is shallow, and
-> 		 * we must not traverse its real parents.
-> 		 */
+Hmm.  I have _not_ been setting NO_EXTERNAL_GREP and the tests have _not_
+been failing.
 
-That's much better.
+The system grep does not seem to have the -C option:
+
+   # /usr/xpg4/bin/grep -C1 include ws.c
+   /usr/xpg4/bin/grep: illegal option -- C
+   Usage:  grep [-E|-F] [-c|-l|-q] [-bhinsvwx] [file ...]
+   grep [-E|-F] [-c|-l|-q] [-bhinsvwx] -e pattern... [-f pattern_file]...[file...]
+   grep [-E|-F] [-c|-l|-q] [-bhinsvwx] [-e pattern]... -f pattern_file [file...]
+
+but git grep -C1 works fine
+
+   # git grep -C1 include ws.c
+   ws.c-
+   ws.c:#include "cache.h"
+   ws.c:#include "attr.h"
+   ws.c-
+
+I have been compiling with the SUNWspro compiler suite though, and I see these
+statements in builtin-grep.c:
+
+   #ifndef NO_EXTERNAL_GREP
+   #ifdef __unix__
+   #define NO_EXTERNAL_GREP 0
+   #else
+   #define NO_EXTERNAL_GREP 1
+   #endif
+   #endif
+
+So possibly, the SUNWspro compiler does not set the __unix__ macro.  A quick
+compile of a test program confirms it.
+
+   #include <stdio.h>
+
+   int main (int argc, char* argv[])
+   {
+   #ifdef __unix__
+   	puts("__unix__ is set");
+   #else
+   	puts("__unix__ is not set");
+   #endif
+   	return 0;
+   }
+
+   # /opt/SUNWspro/bin/cc -o test.out test.c
+   ./test.out
+   __unix__ is not set
+
+   # gcc -o test.out test.c
+   __unix__ is set
+
+So, I have been getting NO_EXTERNAL_GREP all along without knowing it.
+
+-brandon
