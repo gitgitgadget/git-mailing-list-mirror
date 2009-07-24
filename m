@@ -1,65 +1,72 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH/RFC] SunOS grep does not understand -C<n>
-Date: Thu, 23 Jul 2009 22:30:07 -0700
-Message-ID: <7vr5w6tzq8.fsf@alter.siamese.dyndns.org>
+From: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
+Subject: Re: [PATCH 2/2] git repack: keep commits hidden by a graft
+Date: Fri, 24 Jul 2009 07:35:06 +0200
+Message-ID: <20090724053506.GB12855@atjola.homenet>
+References: <cover.1248362827u.git.johannes.schindelin@gmx.de>
+ <34dfd22bb99c7c466b6131876e8b52ac46f388aa.1248362827u.git.johannes.schindelin@gmx.de>
+ <7v8wievf20.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jul 24 07:30:27 2009
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jul 24 07:35:27 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MUDMN-0000Ba-Pv
-	for gcvg-git-2@gmane.org; Fri, 24 Jul 2009 07:30:24 +0200
+	id 1MUDRF-0001iy-Ip
+	for gcvg-git-2@gmane.org; Fri, 24 Jul 2009 07:35:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751393AbZGXFaN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 24 Jul 2009 01:30:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751334AbZGXFaN
-	(ORCPT <rfc822;git-outgoing>); Fri, 24 Jul 2009 01:30:13 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:48992 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751257AbZGXFaM (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 24 Jul 2009 01:30:12 -0400
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 401B8F3E2;
-	Fri, 24 Jul 2009 01:30:11 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 85FFFF3E0; Fri, 24 Jul 2009
- 01:30:09 -0400 (EDT)
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 0E98EB16-7813-11DE-9193-AEF1826986A2-77302942!a-pb-sasl-sd.pobox.com
+	id S1751214AbZGXFfL convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 24 Jul 2009 01:35:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750988AbZGXFfL
+	(ORCPT <rfc822;git-outgoing>); Fri, 24 Jul 2009 01:35:11 -0400
+Received: from mail.gmx.net ([213.165.64.20]:49892 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750779AbZGXFfK (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 24 Jul 2009 01:35:10 -0400
+Received: (qmail invoked by alias); 24 Jul 2009 05:35:08 -0000
+Received: from i59F549ED.versanet.de (EHLO atjola.homenet) [89.245.73.237]
+  by mail.gmx.net (mp022) with SMTP; 24 Jul 2009 07:35:08 +0200
+X-Authenticated: #5039886
+X-Provags-ID: V01U2FsdGVkX1845vcAW+g4wngTtn/xsnKeMmjRk7P0DB5daJV6+4
+	fN3OwLd1b+/b83
+Content-Disposition: inline
+In-Reply-To: <7v8wievf20.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.20 (2009-06-14)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.55
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123901>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123902>
 
-I noticed that the first "grep -C1" test in t7002 does not pass on my 
-SunOS-5.11-i86pc, and that is not because our way to spawn external
-grep is broken, but because the native grep does not understand -C<n>.
+On 2009.07.23 22:13:43 -0700, Junio C Hamano wrote:
+> Johannes Schindelin <johannes.schindelin@gmx.de> writes:
+>=20
+> > diff --git a/commit.c b/commit.c
+> > index a47fb4d..ef8e911 100644
+> > --- a/commit.c
+> > +++ b/commit.c
+> > @@ -262,7 +262,7 @@ int parse_commit_buffer(struct commit *item, vo=
+id *buffer, unsigned long size)
+> >  		    bufptr[47] !=3D '\n')
+> >  			return error("bad parents in commit %s", sha1_to_hex(item->obje=
+ct.sha1));
+> >  		bufptr +=3D 48;
+> > -		if (graft)
+> > +		if (graft && (graft->nr_parent < 0 || grafts_replace_parents))
+> >  			continue;
+>=20
+> Hmm, what is this "if it is negative" check for?  I did not see it
+> mentioned in the proposed commit log message.
 
-Is it just me and my installation (i.e. I might have failed to install
-saner grep from the distribution that everybody uses), or everybody on
-SunOS is using this option himself because our Makefile doesn't do that
-automatically for them?
+That's for the special grafts for shallow clones. They override the
+other grafts, and are identified by the negative nr_parent value. Those
+have to stay in effect as the original parents aren't present in the
+repo.
 
-Just in case it is the latter, here is a proposed patch.
-
----
- Makefile |    1 +
- 1 files changed, 1 insertions(+), 0 deletions(-)
-
-diff --git a/Makefile b/Makefile
-index bde27ed..daf4296 100644
---- a/Makefile
-+++ b/Makefile
-@@ -728,6 +728,7 @@ ifeq ($(uname_S),SunOS)
- 	NO_MKDTEMP = YesPlease
- 	NO_MKSTEMPS = YesPlease
- 	NO_REGEX = YesPlease
-+	NO_EXTERNAL_GREP = YesPlease
- 	ifeq ($(uname_R),5.7)
- 		NEEDS_RESOLV = YesPlease
- 		NO_IPV6 = YesPlease
+Bj=F6rn
