@@ -1,86 +1,76 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Newton-Raphson, was Re: Performance issue of 'git branch'
-Date: Fri, 24 Jul 2009 02:43:59 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.0907240241430.8306@pacific.mpi-cbg.de>
-References: <20090722235914.GA13150@Pilar.aei.mpg.de> <alpine.LFD.2.01.0907221714300.3352@localhost.localdomain> <20090723012207.GA9368@Pilar.aei.mpg.de> <alpine.LFD.2.01.0907221850000.3352@localhost.localdomain> <alpine.LFD.2.01.0907221921570.3352@localhost.localdomain>
- <alpine.LFD.2.01.0907221959330.21520@localhost.localdomain> <alpine.LFD.2.01.0907222009340.21520@localhost.localdomain> <alpine.LSU.2.00.0907231846190.30197@hermes-2.csi.cam.ac.uk> <alpine.LFD.2.01.0907231153010.21520@localhost.localdomain>
- <alpine.LSU.2.00.0907232310220.22113@hermes-2.csi.cam.ac.uk> <alpine.DEB.1.00.0907240114410.8306@pacific.mpi-cbg.de> <alpine.LSU.2.00.0907240031470.12180@hermes-2.csi.cam.ac.uk>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/2] git repack: keep commits hidden by a graft
+Date: Thu, 23 Jul 2009 22:04:38 -0700
+Message-ID: <7veis6vfh5.fsf@alter.siamese.dyndns.org>
+References: <cover.1248362827u.git.johannes.schindelin@gmx.de>
+ <34dfd22bb99c7c466b6131876e8b52ac46f388aa.1248362827u.git.johannes.schindelin@gmx.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Linus Torvalds <torvalds@linux-foundation.org>, git@vger.kernel.org
-To: Tony Finch <dot@dotat.at>
-X-From: git-owner@vger.kernel.org Fri Jul 24 02:44:10 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org,
+	=?utf-8?Q?Bj=C3=B6rn?= Steinbrink <B.Steinbrink@gmx.de>
+To: Johannes Schindelin <johannes.schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Fri Jul 24 07:07:30 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MU8tO-0004Ia-7B
-	for gcvg-git-2@gmane.org; Fri, 24 Jul 2009 02:44:10 +0200
+	id 1MUD0A-0002OD-Sb
+	for gcvg-git-2@gmane.org; Fri, 24 Jul 2009 07:07:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751293AbZGXAoA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 23 Jul 2009 20:44:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751088AbZGXAoA
-	(ORCPT <rfc822;git-outgoing>); Thu, 23 Jul 2009 20:44:00 -0400
-Received: from mail.gmx.net ([213.165.64.20]:41448 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751002AbZGXAn7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 23 Jul 2009 20:43:59 -0400
-Received: (qmail invoked by alias); 24 Jul 2009 00:43:58 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp061) with SMTP; 24 Jul 2009 02:43:58 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+lUTZThSClPUHQR1DU6rJbJ9f7iKrmVbHWrweSfK
-	nYLW+3GMzeoXsJ
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <alpine.LSU.2.00.0907240031470.12180@hermes-2.csi.cam.ac.uk>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.61
+	id S1751539AbZGXFEw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 24 Jul 2009 01:04:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751334AbZGXFEw
+	(ORCPT <rfc822;git-outgoing>); Fri, 24 Jul 2009 01:04:52 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:43050 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751197AbZGXFEv (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 24 Jul 2009 01:04:51 -0400
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id C3277F2E4;
+	Fri, 24 Jul 2009 01:04:48 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 6CBDFF2E2; Fri, 24 Jul 2009
+ 01:04:39 -0400 (EDT)
+In-Reply-To: <34dfd22bb99c7c466b6131876e8b52ac46f388aa.1248362827u.git.johannes.schindelin@gmx.de> (Johannes Schindelin's message of "Thu\, 23 Jul 2009 17\:33\:49 +0200 \(CEST\)")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 832354D4-780F-11DE-9193-AEF1826986A2-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123898>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123899>
 
-Hi,
+Johannes Schindelin <johannes.schindelin@gmx.de> writes:
 
-On Fri, 24 Jul 2009, Tony Finch wrote:
+> When you have grafts that pretend that a given commit has different
+> parents than the ones recorded in the commit object, it is dangerous
+> to let 'git repack' remove those hidden parents, as you can easily
+> remove the graft and end up with a broken repository.
+>
+> So let's play it safe and keep those parent objects and everything
+> that is reachable by them.
+>
+> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> ---
+>
+> 	Maybe we should not even bother documenting this option?
 
-> On Fri, 24 Jul 2009, Johannes Schindelin wrote:
-> >
-> > Think about it, absent any further information than "it is a hash, i.e.
-> > distributed pretty equally in _any_ byte", even subsets of a sorted list
-> > will me more or less linear.  And assuming that they are linear is _still_
-> > your best bet.
-> 
-> The even distribution of the lower-order bytes is irrelevant.
+Why isn't it "--[no-]grafts-replace-parents"?
 
-I was not talking about lower-order bytes.  All bytes are pretty much 
-evenly distributed.  That's why SHA-1 is a good hash.
+"--grafts-replace-parents=no" tempts users to say =never or =false, and
+also suggests we might add settings with other semantics later, but I do
+not think of any offhand.
 
-> We're looking at the top 20-ish bits for a pack with a million-ish 
-> objects. The more you zoom in the less linear a sorted list of hashes 
-> will be, so assuming linearity at all scales is wrong. It's a bit like 
-> fractal mountains.
+As far as I can tell, what the updated code does when this option is in
+effect is not "do not replace parents", but is "use both real parents and
+grafted parents", which is the right thing to do (if we said "use only
+the true parents", then parents reachable only through grafts will be lost
+after repacking, which is not what we want).
 
-If you really find irregularities like that, then SHA-1 is really a lousy 
-hash.  Irregularities like this are typically exploitable.
+It would probably make more sense to call it "--keep-real-parents"
+or something.
 
-If you know of such an irregularity, you might want to write a paper that 
-SHA-1 is broken and get famous.
-
-> > There is no way to achieve [O(1) seeks], best thing you can hope for 
-> > is _expected_ O(1) (e.g. with a hashmap, with exponential worst case).
-> 
-> Of course it's expected. However the worst case is nowhere near
-> exponential: it's linear because the second-order search is a linear
-> pagewise scan. But I think in practice, the larger the pack the more that
-> the randomization of the hash function will smooth out performance
-> oddities. (Sorry, I don't know enough statistics to be able to say what
-> the expected error of the linear interpolation is, though I expect it's a
-> fairly simple formula.) For small packs the number of seeks is 1 anyway.
-
-I will believe it when I see it.
-
-Ciao,
-Dscho
+Do we want to cull duplicated parents?  I do not think it matters in this
+particular context of checking the reachability, but I am just double
+checking if you thought about the issue.
