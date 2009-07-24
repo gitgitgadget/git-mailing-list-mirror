@@ -1,89 +1,85 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 2/2] git repack: keep commits hidden by a graft
-Date: Fri, 24 Jul 2009 11:37:38 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.0907241136081.19988@intel-tinevez-2-302>
-References: <cover.1248362827u.git.johannes.schindelin@gmx.de> <34dfd22bb99c7c466b6131876e8b52ac46f388aa.1248362827u.git.johannes.schindelin@gmx.de> <7v8wievf20.fsf@alter.siamese.dyndns.org> <20090724053506.GB12855@atjola.homenet>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: [ANNOUNCE] GIT 1.6.4-rc2
+Date: Fri, 24 Jul 2009 02:38:48 -0700
+Message-ID: <20090724093847.GA20338@dcvr.yhbt.net>
+References: <7vd47r298e.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="8323329-853889181-1248428259=:19988"
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: =?ISO-8859-15?Q?Bj=F6rn_Steinbrink?= <B.Steinbrink@gmx.de>
-X-From: git-owner@vger.kernel.org Fri Jul 24 11:37:52 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Mattias Nissler <mattias.nissler@gmx.de>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jul 24 11:38:58 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MUHDp-00024x-AV
-	for gcvg-git-2@gmane.org; Fri, 24 Jul 2009 11:37:49 +0200
+	id 1MUHEv-0002Vc-Os
+	for gcvg-git-2@gmane.org; Fri, 24 Jul 2009 11:38:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752079AbZGXJhm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 24 Jul 2009 05:37:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751544AbZGXJhm
-	(ORCPT <rfc822;git-outgoing>); Fri, 24 Jul 2009 05:37:42 -0400
-Received: from mail.gmx.net ([213.165.64.20]:50995 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751962AbZGXJhl (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 24 Jul 2009 05:37:41 -0400
-Received: (qmail invoked by alias); 24 Jul 2009 09:37:40 -0000
-Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
-  by mail.gmx.net (mp039) with SMTP; 24 Jul 2009 11:37:40 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+XzZMIE7mXrcGxZy4DqTIvQ86J1nphX7aUoIoK++
-	ZoYRq6EIdZDaRs
-X-X-Sender: schindel@intel-tinevez-2-302
-In-Reply-To: <20090724053506.GB12855@atjola.homenet>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.55
+	id S1752128AbZGXJiu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 24 Jul 2009 05:38:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752100AbZGXJiu
+	(ORCPT <rfc822;git-outgoing>); Fri, 24 Jul 2009 05:38:50 -0400
+Received: from dcvr.yhbt.net ([64.71.152.64]:42356 "EHLO dcvr.yhbt.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752002AbZGXJit (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 24 Jul 2009 05:38:49 -0400
+Received: from localhost (user-118bg0q.cable.mindspring.com [66.133.192.26])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by dcvr.yhbt.net (Postfix) with ESMTPSA id D44E81F78F;
+	Fri, 24 Jul 2009 09:38:48 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <7vd47r298e.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123911>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123912>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Junio C Hamano <gitster@pobox.com> wrote:
+>  * git-svn updates, including a new --authors-prog option to map author
+>    names by invoking an external program, 'git svn reset' to unwind
+>    'git svn fetch', support for more than one branches, etc.
 
---8323329-853889181-1248428259=:19988
-Content-Type: TEXT/PLAIN; charset=iso-8859-1
-Content-Transfer-Encoding: 8BIT
+I completely forgot the implications of a change made in commit
+0b2af457a49e3b00d47d556d5301934d27909db8.  This change probably doesn't
+affect a lot of repos out there, but --minimize-url is no longer the
+default for new imports.
 
-Hi,
 
-On Fri, 24 Jul 2009, Björn Steinbrink wrote:
+The good thing is that access-limited repositories are easier to setup
+and import.  So if you only had access for a sub_project under the
+repository root in svn://example.com/big_project/sub_project,
+you won't need read permissions to / or /big_project, just
+/big_project/sub_project and everything under it.
 
-> On 2009.07.23 22:13:43 -0700, Junio C Hamano wrote:
-> > Johannes Schindelin <johannes.schindelin@gmx.de> writes:
-> > 
-> > > diff --git a/commit.c b/commit.c
-> > > index a47fb4d..ef8e911 100644
-> > > --- a/commit.c
-> > > +++ b/commit.c
-> > > @@ -262,7 +262,7 @@ int parse_commit_buffer(struct commit *item, void *buffer, unsigned long size)
-> > >  		    bufptr[47] != '\n')
-> > >  			return error("bad parents in commit %s", sha1_to_hex(item->object.sha1));
-> > >  		bufptr += 48;
-> > > -		if (graft)
-> > > +		if (graft && (graft->nr_parent < 0 || grafts_replace_parents))
-> > >  			continue;
-> > 
-> > Hmm, what is this "if it is negative" check for?  I did not see it
-> > mentioned in the proposed commit log message.
-> 
-> That's for the special grafts for shallow clones. They override the 
-> other grafts, and are identified by the negative nr_parent value. Those 
-> have to stay in effect as the original parents aren't present in the 
-> repo.
 
-Right.  How about a comment above the if():
+Unfortunately, this default breaks the case where a project is moved to
+a lower-level within the repository:
 
-		/*
-		 * If nr_parent is negative, the commit is shallow, and
-		 * we must not traverse its real parents.
-		 */
+svn://example.com/foo => svn://example.com/big_project/sub_project
 
-Hmm?
+Without --minimize-url enabled, your clone would register
+"/big_project/sub_project" to track and not be able to find the history
+of "/foo".  With --minimize-url (the old behavior), you would've
+registered "/" to be able to track all subdirectories underneath the
+repository root (assuming the SVN repo is world-readable).
 
-Ciao,
-Dscho
 
---8323329-853889181-1248428259=:19988--
+While both cases are fairly rare, I've personally encountered the latter
+(and now broken-by-default) case more.  This is because I mainly use
+git/git svn to work on free software without read restrictions.
+However, with more and more free projects switching entirely to git,
+maybe leaving the default to be more friendly to people on restrictive
+setups will be more helpful than harmful.
+
+This change only affects the creation of new clones, existing repos
+are unaffected.
+
+
+Let me know if the above made sense, it's late and I nodded off
+several times while writing this.
+
+-- 
+Eric Wong
