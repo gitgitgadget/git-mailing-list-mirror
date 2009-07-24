@@ -1,76 +1,126 @@
-From: "Timothy Schaeffer" <tschaeffer@dramail.com>
-Subject: git-svn error: RA layer request failed: PROPFIND request failed on '/svn/stf/branches/dev/sw%2Fdpemu%2Finclude%2FNetCnxn.h':
-Date: Fri, 24 Jul 2009 10:45:06 -0400
-Message-ID: <138905EB75AB0D44B6A0ECD251A92EA7011BA99E@sdra00198.intranet.dra-inc.net>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: [PATCH] Show the presence of untracked files in the bash
+	prompt.
+Date: Fri, 24 Jul 2009 08:03:17 -0700
+Message-ID: <20090724150317.GW11191@spearce.org>
+References: <20090721171445.GA25762@bug.science-computing.de> <20090721171952.GS11191@spearce.org> <20090722083134.GK24439@bug.science-computing.de>
 Mime-Version: 1.0
-Content-Type: multipart/mixed;
-	boundary="----_=_NextPart_001_01CA0C6D.55AF7832"
-To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Jul 24 17:00:38 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Daniel Trstenjak <Daniel.Trstenjak@online.de>
+To: Daniel Trstenjak <trsten@science-computing.de>,
+	Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jul 24 17:03:42 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MUMGA-0006HP-6u
-	for gcvg-git-2@gmane.org; Fri, 24 Jul 2009 17:00:34 +0200
+	id 1MUMJA-0007iL-FN
+	for gcvg-git-2@gmane.org; Fri, 24 Jul 2009 17:03:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753041AbZGXPA0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 24 Jul 2009 11:00:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753016AbZGXPAZ
-	(ORCPT <rfc822;git-outgoing>); Fri, 24 Jul 2009 11:00:25 -0400
-Received: from dramail.com ([66.195.237.160]:1365 "EHLO
-	sdra00198.intranet.dra-inc.net" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1752771AbZGXPAU (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 24 Jul 2009 11:00:20 -0400
-X-Greylist: delayed 913 seconds by postgrey-1.27 at vger.kernel.org; Fri, 24 Jul 2009 11:00:20 EDT
-X-MimeOLE: Produced By Microsoft Exchange V6.5
-Content-class: urn:content-classes:message
-X-MS-Has-Attach: yes
-X-MS-TNEF-Correlator: 
-Thread-Topic: git-svn error: RA layer request failed: PROPFIND request failed on '/svn/stf/branches/dev/sw%2Fdpemu%2Finclude%2FNetCnxn.h':
-Thread-Index: AcoMbhdvJte50xVDQ1itpFS/uVO0rw==
+	id S1753084AbZGXPDS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 24 Jul 2009 11:03:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752813AbZGXPDS
+	(ORCPT <rfc822;git-outgoing>); Fri, 24 Jul 2009 11:03:18 -0400
+Received: from george.spearce.org ([209.20.77.23]:34707 "EHLO
+	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751026AbZGXPDR (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 24 Jul 2009 11:03:17 -0400
+Received: by george.spearce.org (Postfix, from userid 1001)
+	id EA286381FD; Fri, 24 Jul 2009 15:03:17 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <20090722083134.GK24439@bug.science-computing.de>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123919>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123920>
 
-This is a multi-part message in MIME format.
+Daniel Trstenjak <trsten@science-computing.de> wrote:
+> 
+> Added the envvar GIT_PS1_SHOWUNTRACKEDFILES to 'git-completion.bash'.
+> When set to a nonempty value, then the char '%' will be shown next
+> to the branch name in the bash prompt.
+> 
+> Signed-off-by: Daniel Trstenjak <daniel.trstenjak@science-computing.de>
 
-------_=_NextPart_001_01CA0C6D.55AF7832
-Content-Type: text/plain;
-	charset="UTF-8"
-Content-Transfer-Encoding: base64
+Acked-by: Shawn O. Pearce <spearce@spearce.org>
 
-R2l0LXN2biBoYXMgYmVlbiBnaXZpbmcgbWUgdGhlIGZvbGxvd2luZyBlcnJvciBmb3Igc29tZSB0
-aW1lIHdoZW4gY2FsbGluZyAiZ2l0IHN2biBkY29tbWl0IjoNCg0KUkEgbGF5ZXIgcmVxdWVzdCBm
-YWlsZWQ6IFBST1BGSU5EIHJlcXVlc3QgZmFpbGVkIG9uICcvc3ZuL3N0Zi9icmFuY2hlcy9kZXYv
-c3clMkZkcGVtdSUyRmluY2x1ZGUlMkZOZXRDbnhuLmgnOiANClBST1BGSU5EIG9mICcvc3ZuL3N0
-Zi9icmFuY2hlcy9kZXYvc3clMkZkcGVtdSUyRmluY2x1ZGUlMkZOZXRDbnhuLmgnOiANCjMwMiBG
-b3VuZCAoaHR0cHM6Ly9vdXJzdm5yZXBvLm5ldCkgYXQgL3Vzci9sb2NhbC9saWJleGVjL2dpdC1j
-b3JlL2dpdC1zdm4gbGluZSA1MDgNCg0KVGhpcyBvbmx5IG9jY3VycmVkIHdoZW4gZ2l0IGRldGVj
-dGVkIGEgcmVuYW1lIG9yIGNvcHkuDQoNCkZvbGxvd2luZyB0aGUgbGVhZCBpbnRvIGdpdC1zdm4u
-cGVybCwgDQphbmQgbm90aWNpbmcgdGhhdCBzb21lIG9mIHRoZSAnLydzIGluIHRoZSBwYXRoIHdl
-cmUgaGV4LWVuY29kZWQgDQphbmQgc29tZSB3ZXJlIG5vdCwgDQpJIGNoYW5nZWQgdGhlIHJlZ2V4
-IHVzZWQgdG8gZmluZCBjaGFycyANCnRvIGhleC1lbmNvZGUgaW4gdGhlIHJlbGF0aXZlIHBhcnQg
-b2YgdGhlIHBhdGggDQp0byBleGNsdWRlICcvJy4gIA0KSXQgd29ya3MsIHNvIGZhci4gIA0KSSBo
-YXZlIGluY2x1ZGVkIGEgcGF0Y2guDQoNClRpbSBTLg0K
 
-------_=_NextPart_001_01CA0C6D.55AF7832
-Content-Type: application/octet-stream;
-	name="git-svn-path-fix-2009-07-24.patch"
-Content-Transfer-Encoding: base64
-Content-Description: git-svn-path-fix-2009-07-24.patch
-Content-Disposition: attachment;
-	filename="git-svn-path-fix-2009-07-24.patch"
+> ---
+>  contrib/completion/git-completion.bash |   15 +++++++++++++--
+>  1 files changed, 13 insertions(+), 2 deletions(-)
+> 
+> diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+> index 887731e..745b5fb 100755
+> --- a/contrib/completion/git-completion.bash
+> +++ b/contrib/completion/git-completion.bash
+> @@ -44,6 +44,10 @@
+>  #       GIT_PS1_SHOWSTASHSTATE to a nonempty value. If something is stashed,
+>  #       then a '$' will be shown next to the branch name.
+>  #
+> +#       If you would like to see if there're untracked files, then you can
+> +#       set GIT_PS1_SHOWUNTRACKEDFILES to a nonempty value. If there're
+> +#       untracked files, then a '%' will be shown next to the branch name.
+> +#
+>  # To submit patches:
+>  #
+>  #    *) Read Documentation/SubmittingPatches
+> @@ -132,6 +136,7 @@ __git_ps1 ()
+>  		local w
+>  		local i
+>  		local s
+> +		local u
+>  		local c
+>  
+>  		if [ "true" = "$(git rev-parse --is-inside-git-dir 2>/dev/null)" ]; then
+> @@ -156,12 +161,18 @@ __git_ps1 ()
+>  			if [ -n "${GIT_PS1_SHOWSTASHSTATE-}" ]; then
+>  			        git rev-parse --verify refs/stash >/dev/null 2>&1 && s="$"
+>  			fi
+> +
+> +			if [ -n "${GIT_PS1_SHOWUNTRACKEDFILES-}" ]; then
+> +			   if [ -n "$(git ls-files --others --exclude-standard)" ]; then
+> +			      u="%"
+> +			   fi
+> +			fi
+>  		fi
+>  
+>  		if [ -n "${1-}" ]; then
+> -			printf "$1" "$c${b##refs/heads/}$w$i$s$r"
+> +			printf "$1" "$c${b##refs/heads/}$w$i$s$u$r"
+>  		else
+> -			printf " (%s)" "$c${b##refs/heads/}$w$i$s$r"
+> +			printf " (%s)" "$c${b##refs/heads/}$w$i$s$u$r"
+>  		fi
+>  	fi
+>  }
+> -- 
+> 1.6.2
+> 
+> 
+> -- 
+>                                                                                                                                            
+>  Daniel Trstenjak         Tel   : +49 (0)7071-9457-264
+>  science + computing ag   FAX   : +49 (0)7071-9457-511
+>  Hagellocher Weg 73       mailto: Daniel.Trstenjak@science-computing.de
+>  D-72070 T?bingen         WWW   : http://www.science-computing.de/                                                                      
+> -- 
+> Vorstand/Board of Management:
+> Dr. Bernd Finkbeiner, Dr. Roland Niemeier, 
+> Dr. Arno Steitz, Dr. Ingrid Zech
+> Vorsitzender des Aufsichtsrats/
+> Chairman of the Supervisory Board:
+> Michel Lepert
+> Sitz/Registered Office: Tuebingen
+> Registergericht/Registration Court: Stuttgart
+> Registernummer/Commercial Register No.: HRB 382196 
+> 
+> 
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
 
-ZGlmZiAtLWdpdCBhL2dpdC1zdm4ucGVybCBiL2dpdC1zdm4ucGVybAppbmRleCA0M2M4NmU4Li44
-NjRiNzUyIDEwMDc1NQotLS0gYS9naXQtc3ZuLnBlcmwKKysrIGIvZ2l0LXN2bi5wZXJsCkBAIC0z
-OTUzLDcgKzM5NTMsNyBAQCBzdWIgcmVwb19wYXRoIHsKIHN1YiB1cmxfcGF0aCB7CiAJbXkgKCRz
-ZWxmLCAkcGF0aCkgPSBAXzsKIAlpZiAoJHNlbGYtPnt1cmx9ID1+IG0jXmh0dHBzPzovLyMpIHsK
-LQkJJHBhdGggPX4gcy8oW15+YS16QS1aMC05Xy4tXSkvdWMgc3ByaW50ZigiJSUlMDJ4IixvcmQo
-JDEpKS9lZzsKKwkJJHBhdGggPX4gcy8oW15+YS16QS1aMC05Xy4tXC9dKS91YyBzcHJpbnRmKCIl
-JSUwMngiLG9yZCgkMSkpL2VnOwogCX0KIAkkc2VsZi0+e3VybH0gLiAnLycgLiAkc2VsZi0+cmVw
-b19wYXRoKCRwYXRoKTsKIH0K
-
-------_=_NextPart_001_01CA0C6D.55AF7832--
+-- 
+Shawn.
