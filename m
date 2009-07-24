@@ -1,55 +1,73 @@
-From: Theodore Tso <tytso@mit.edu>
-Subject: Re: Performance issue of 'git branch'
-Date: Fri, 24 Jul 2009 18:54:15 -0400
-Message-ID: <20090724225415.GC6832@mit.edu>
-References: <7vtz146mgr.fsf@alter.siamese.dyndns.org> <20090723160740.GA5736@Pilar.aei.mpg.de> <alpine.LFD.2.01.0907230913230.21520@localhost.localdomain> <20090723165335.GA15598@Pilar.aei.mpg.de> <alpine.LFD.2.01.0907231158280.21520@localhost.localdomain> <alpine.LFD.2.01.0907231212180.21520@localhost.localdomain> <20090723195548.GA28494@Pilar.aei.mpg.de> <alpine.LFD.2.01.0907241327410.3960@localhost.localdomain> <alpine.LFD.2.01.0907241346450.3960@localhost.localdomain> <alpine.LFD.2.01.0907241349390.3960@localhost.localdomain>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Carlos R. Mafra" <crmafra2@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Sat Jul 25 00:55:36 2009
+From: Alex Vandiver <alex@chmrr.net>
+Subject: Re: [PATCH 2/2] After renaming a section, print any trailing variable definitions
+Date: Fri, 24 Jul 2009 18:26:55 -0400
+Message-ID: <1248474081-sup-2762@utwig>
+References: <1248470504-16326-1-git-send-email-alex@chmrr.net> <1248470504-16326-2-git-send-email-alex@chmrr.net> <1248470504-16326-3-git-send-email-alex@chmrr.net> <20090725071105.6117@nanako3.lavabit.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Cc: git <git@vger.kernel.org>
+To: Nanako Shiraishi <nanako3@lavabit.com>
+X-From: git-owner@vger.kernel.org Sat Jul 25 00:59:17 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MUTfq-0002Ns-DG
-	for gcvg-git-2@gmane.org; Sat, 25 Jul 2009 00:55:34 +0200
+	id 1MUTjQ-0003mr-Q4
+	for gcvg-git-2@gmane.org; Sat, 25 Jul 2009 00:59:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755127AbZGXWza (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 24 Jul 2009 18:55:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755122AbZGXWza
-	(ORCPT <rfc822;git-outgoing>); Fri, 24 Jul 2009 18:55:30 -0400
-Received: from thunk.org ([69.25.196.29]:44599 "EHLO thunker.thunk.org"
+	id S1755144AbZGXW7K (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 24 Jul 2009 18:59:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755142AbZGXW7J
+	(ORCPT <rfc822;git-outgoing>); Fri, 24 Jul 2009 18:59:09 -0400
+Received: from chmrr.net ([209.67.253.66]:56525 "EHLO utwig.chmrr.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755119AbZGXWz3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 24 Jul 2009 18:55:29 -0400
-Received: from root (helo=closure.thunk.org)
-	by thunker.thunk.org with local-esmtp   (Exim 4.50 #1 (Debian))
-	id 1MUTfe-00058J-Lp; Fri, 24 Jul 2009 18:55:23 -0400
-Received: from tytso by closure.thunk.org with local (Exim 4.69)
-	(envelope-from <tytso@mit.edu>)
-	id 1MUTeZ-0004Gu-Iw; Fri, 24 Jul 2009 18:54:15 -0400
-Content-Disposition: inline
-In-Reply-To: <alpine.LFD.2.01.0907241349390.3960@localhost.localdomain>
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-SA-Exim-Connect-IP: <locally generated>
-X-SA-Exim-Mail-From: tytso@mit.edu
-X-SA-Exim-Scanned: No (on thunker.thunk.org); SAEximRunCond expanded to false
+	id S1754999AbZGXW7J (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 24 Jul 2009 18:59:09 -0400
+X-Greylist: delayed 1933 seconds by postgrey-1.27 at vger.kernel.org; Fri, 24 Jul 2009 18:59:08 EDT
+Received: from chmrr by utwig.chmrr.net with local (Exim 4.69)
+	(envelope-from <chmrr@chmrr.net>)
+	id 1MUTE7-0001jR-F4; Fri, 24 Jul 2009 18:26:55 -0400
+In-reply-to: <20090725071105.6117@nanako3.lavabit.com>
+User-Agent: Sup/git
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123971>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123972>
 
-On Fri, Jul 24, 2009 at 02:21:20PM -0700, Linus Torvalds wrote:
+At Fri Jul 24 18:11:05 -0400 2009, Nanako Shiraishi wrote:
+> Quoting Alex Vandiver <alex@chmrr.net>
+> > diff --git a/t/t1300-repo-config.sh b/t/t1300-repo-config.sh
+> > index 43ea283..8c43dcd 100755
+> > --- a/t/t1300-repo-config.sh
+> > +++ b/t/t1300-repo-config.sh
+> > @@ -460,6 +460,28 @@ EOF
+> >  test_expect_success "rename succeeded" "test_cmp expect .git/config"
+> >  
+> >  cat >> .git/config << EOF
+> > +[branch "vier"] z = 1
+> > +EOF
 > 
-> I wonder if there is some way to only load the crazy curl stuff when we 
-> actually want open a http: connection.
+> Isn't this a syntax error?
 
-Well, we could use dlopen(), but I'm not sure that qualifies as a
-_sane_ solution --- especially given that there are approximately 15
-interfaces used by git, that we'd have to resolve using dlsym().
+Nope -- at least, not according to both the code, and the tests
+(search or noNewline in t/t1300-repo-config.sh).
 
-	   	   	     	       - Ted
+Though I also note that the documentation disagrees with the code in
+the following case:
+
+    Each variable must belong to some section, which means that there
+    must be a section header before the first setting of a variable.
+
+  $ cat >bogus
+  foo = 42
+
+  $ git config --file bogus --list
+  foo=42
+
+  $ git config --file bogus --get foo
+  42
+
+ - Alex
+-- 
+Networking -- only one letter away from not working
