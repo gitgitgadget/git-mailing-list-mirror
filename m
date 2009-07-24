@@ -1,56 +1,55 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: [JGIT] Re: blinking test WindowCacheGetTest.testCache_TooSmallLimit
-Date: Fri, 24 Jul 2009 15:51:18 -0700
-Message-ID: <20090724225118.GZ11191@spearce.org>
-References: <85647ef50907220623i2b7e50dal67650a638921ec0f@mail.gmail.com>
+From: Theodore Tso <tytso@mit.edu>
+Subject: Re: Performance issue of 'git branch'
+Date: Fri, 24 Jul 2009 18:54:15 -0400
+Message-ID: <20090724225415.GC6832@mit.edu>
+References: <7vtz146mgr.fsf@alter.siamese.dyndns.org> <20090723160740.GA5736@Pilar.aei.mpg.de> <alpine.LFD.2.01.0907230913230.21520@localhost.localdomain> <20090723165335.GA15598@Pilar.aei.mpg.de> <alpine.LFD.2.01.0907231158280.21520@localhost.localdomain> <alpine.LFD.2.01.0907231212180.21520@localhost.localdomain> <20090723195548.GA28494@Pilar.aei.mpg.de> <alpine.LFD.2.01.0907241327410.3960@localhost.localdomain> <alpine.LFD.2.01.0907241346450.3960@localhost.localdomain> <alpine.LFD.2.01.0907241349390.3960@localhost.localdomain>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Constantine Plotnikov <constantine.plotnikov@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Jul 25 00:51:27 2009
+Cc: "Carlos R. Mafra" <crmafra2@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Sat Jul 25 00:55:36 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MUTbq-0001Cx-2D
-	for gcvg-git-2@gmane.org; Sat, 25 Jul 2009 00:51:26 +0200
+	id 1MUTfq-0002Ns-DG
+	for gcvg-git-2@gmane.org; Sat, 25 Jul 2009 00:55:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754993AbZGXWvT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 24 Jul 2009 18:51:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754965AbZGXWvS
-	(ORCPT <rfc822;git-outgoing>); Fri, 24 Jul 2009 18:51:18 -0400
-Received: from george.spearce.org ([209.20.77.23]:60919 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754919AbZGXWvS (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 24 Jul 2009 18:51:18 -0400
-Received: by george.spearce.org (Postfix, from userid 1001)
-	id D80F9381FD; Fri, 24 Jul 2009 22:51:18 +0000 (UTC)
+	id S1755127AbZGXWza (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 24 Jul 2009 18:55:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755122AbZGXWza
+	(ORCPT <rfc822;git-outgoing>); Fri, 24 Jul 2009 18:55:30 -0400
+Received: from thunk.org ([69.25.196.29]:44599 "EHLO thunker.thunk.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755119AbZGXWz3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 24 Jul 2009 18:55:29 -0400
+Received: from root (helo=closure.thunk.org)
+	by thunker.thunk.org with local-esmtp   (Exim 4.50 #1 (Debian))
+	id 1MUTfe-00058J-Lp; Fri, 24 Jul 2009 18:55:23 -0400
+Received: from tytso by closure.thunk.org with local (Exim 4.69)
+	(envelope-from <tytso@mit.edu>)
+	id 1MUTeZ-0004Gu-Iw; Fri, 24 Jul 2009 18:54:15 -0400
 Content-Disposition: inline
-In-Reply-To: <85647ef50907220623i2b7e50dal67650a638921ec0f@mail.gmail.com>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+In-Reply-To: <alpine.LFD.2.01.0907241349390.3960@localhost.localdomain>
+User-Agent: Mutt/1.5.18 (2008-05-17)
+X-SA-Exim-Connect-IP: <locally generated>
+X-SA-Exim-Mail-From: tytso@mit.edu
+X-SA-Exim-Scanned: No (on thunker.thunk.org); SAEximRunCond expanded to false
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123970>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123971>
 
-Constantine Plotnikov <constantine.plotnikov@gmail.com> wrote:
-> The test WindowCacheGetTest.testCache_TooSmallLimit sometimes fails
-> (on less than third of runs on Windows) with the following stacktrace:
+On Fri, Jul 24, 2009 at 02:21:20PM -0700, Linus Torvalds wrote:
 > 
-> junit.framework.AssertionFailedError
-> at junit.framework.Assert.fail(Assert.java:47)
-> at junit.framework.Assert.assertTrue(Assert.java:20)
-> at junit.framework.Assert.assertTrue(Assert.java:27)
-> at org.spearce.jgit.lib.WindowCacheGetTest.checkLimits(WindowCacheGetTest.java:112)
-> at org.spearce.jgit.lib.WindowCacheGetTest.testCache_TooSmallLimit(WindowCacheGetTest.java:106)
-> 
-> This happens on Windows and Linux, but I do not know about
-> frequency on Linux.
+> I wonder if there is some way to only load the crazy curl stuff when we 
+> actually want open a http: connection.
 
-I'd say the frequency on Linux is about 1/6 for me.  I have yet to
-be bothered enough to track it down, but its starting to get there.
-Maybe I'll try to look at it tomorrow.
+Well, we could use dlopen(), but I'm not sure that qualifies as a
+_sane_ solution --- especially given that there are approximately 15
+interfaces used by git, that we'd have to resolve using dlsym().
 
--- 
-Shawn.
+	   	   	     	       - Ted
