@@ -1,197 +1,79 @@
 From: Nanako Shiraishi <nanako3@lavabit.com>
-Subject: [PATCH] git init: optionally allow a directory argument
-Date: Sat, 25 Jul 2009 06:59:28 +0900
-Message-ID: <20090725065928.6117@nanako3.lavabit.com>
+Subject: Re: [PATCH 2/2] After renaming a section, print any trailing variable definitions
+Date: Sat, 25 Jul 2009 07:11:05 +0900
+Message-ID: <20090725071105.6117@nanako3.lavabit.com>
+References: <1248470504-16326-1-git-send-email-alex@chmrr.net>
+	<1248470504-16326-2-git-send-email-alex@chmrr.net>
+	<1248470504-16326-3-git-send-email-alex@chmrr.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jul 24 23:59:40 2009
+Cc: git@vger.kernel.org
+To: Alex Vandiver <alex@chmrr.net>
+X-From: git-owner@vger.kernel.org Sat Jul 25 00:12:56 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MUSnj-0000wc-Dv
-	for gcvg-git-2@gmane.org; Fri, 24 Jul 2009 23:59:39 +0200
+	id 1MUT0X-0005TY-AO
+	for gcvg-git-2@gmane.org; Sat, 25 Jul 2009 00:12:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754790AbZGXV7a (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 24 Jul 2009 17:59:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754770AbZGXV7a
-	(ORCPT <rfc822;git-outgoing>); Fri, 24 Jul 2009 17:59:30 -0400
-Received: from karen.lavabit.com ([72.249.41.33]:58445 "EHLO karen.lavabit.com"
+	id S1754770AbZGXWMn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 24 Jul 2009 18:12:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754746AbZGXWMn
+	(ORCPT <rfc822;git-outgoing>); Fri, 24 Jul 2009 18:12:43 -0400
+Received: from karen.lavabit.com ([72.249.41.33]:58873 "EHLO karen.lavabit.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754763AbZGXV73 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 24 Jul 2009 17:59:29 -0400
+	id S1754731AbZGXWMm (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 24 Jul 2009 18:12:42 -0400
 Received: from b.earth.lavabit.com (b.earth.lavabit.com [192.168.111.11])
-	by karen.lavabit.com (Postfix) with ESMTP id 2259F11B7ED
-	for <git@vger.kernel.org>; Fri, 24 Jul 2009 16:59:30 -0500 (CDT)
-Received: from 8926.lavabit.com (212.62.97.20)
-	by lavabit.com with ESMTP id UU28O4IZR0WP
-	for <git@vger.kernel.org>; Fri, 24 Jul 2009 16:59:30 -0500
+	by karen.lavabit.com (Postfix) with ESMTP id 1621311B7F2;
+	Fri, 24 Jul 2009 17:12:43 -0500 (CDT)
+Received: from 5389.lavabit.com (212.62.97.20)
+	by lavabit.com with ESMTP id IQHG6ENHTXAF; Fri, 24 Jul 2009 17:12:43 -0500
 DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws; s=lavabit; d=lavabit.com;
-  b=cXjoMXxkuAkaHMcolnstS4SiNPyto4tsbpMNW44dL5NTDg0+xRbMairaWUZxoeMyLZd0d57YC9zajcxF0c+lFjxYch0omsIoZQrHU9LlR2/s2ix3R9+QByk70aW1pdN3A9Ni8xeC8kOtsTrJlDnl7PlfB0u3ZGaZ3s/8/NMSwPo=;
-  h=From:To:Subject:Date:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id;
+  b=MYAo/vmUNQnZHrH/gFyIiGN7yEXcqTlglDrHgUEfWevAsil4g1S/4xpKO9r0lGU7SXZrSdrTdID1oE8nXvWb7fEGmq+uIKoVlnyB9NrzNgd2NZPVxrMEKsvmpnym7P5O7c5GBZJMSjPbOfMA10uPp6Ewq2hE7ozisvUubfnKK1g=;
+  h=From:To:Cc:Subject:References:In-Reply-To:Date:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id;
+In-Reply-To: <1248470504-16326-3-git-send-email-alex@chmrr.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123953>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123954>
 
-When starting a new repository, I see my students often say
+Quoting Alex Vandiver <alex@chmrr.net>
 
-    % git init newrepo
+> diff --git a/t/t1300-repo-config.sh b/t/t1300-repo-config.sh
+> index 43ea283..8c43dcd 100755
+> --- a/t/t1300-repo-config.sh
+> +++ b/t/t1300-repo-config.sh
+> @@ -460,6 +460,28 @@ EOF
+>  test_expect_success "rename succeeded" "test_cmp expect .git/config"
+>  
+>  cat >> .git/config << EOF
+> +[branch "vier"] z = 1
+> +EOF
 
-and curse git.  They could say
+Isn't this a syntax error?
 
-    % mkdir newrepo; cd newrepo; git init
+Documentation/config.txt says this.
 
-but allowing it as an obvious short-cut may be nicer.
+    Subsection names are case sensitive and can contain any characters
+    except newline (doublequote `"` and backslash have to be escaped as
+    `\"` and `\\`, respectively).  Section headers cannot span multiple
+    lines.  Variables may belong directly to a section or to a given
+    subsection.  You can have `[section]` if you have `[section
+    "subsection"]`, but you don't need to.
 
-Signed-off-by: Nanako Shiraishi <nanako3@lavabit.com>
----
+    There is also a case insensitive alternative `[section.subsection]`
+    syntax.  In this syntax, subsection names follow the same restrictions
+    as for section names.
 
- Please be gentle; I don't write C very well.
+    All the other lines are recognized as setting variables, in the form
+    'name = value'.  If there is no equal sign on the line, the entire
+    line ...
 
- Documentation/git-init.txt |    5 ++++-
- builtin-init-db.c          |   37 +++++++++++++++++++++++++++++--------
- t/t0001-init.sh            |   34 ++++++++++++++++++++++++++++++++++
- 3 files changed, 67 insertions(+), 9 deletions(-)
-
-diff --git a/Documentation/git-init.txt b/Documentation/git-init.txt
-index 7151d12..f081b24 100644
---- a/Documentation/git-init.txt
-+++ b/Documentation/git-init.txt
-@@ -8,7 +8,7 @@ git-init - Create an empty git repository or reinitialize an existing one
- 
- SYNOPSIS
- --------
--'git init' [-q | --quiet] [--bare] [--template=<template_directory>] [--shared[=<permissions>]]
-+'git init' [-q | --quiet] [--bare] [--template=<template_directory>] [--shared[=<permissions>]] [directory]
- 
- 
- OPTIONS
-@@ -74,6 +74,9 @@ By default, the configuration flag receive.denyNonFastForwards is enabled
- in shared repositories, so that you cannot force a non fast-forwarding push
- into it.
- 
-+If you name a (possibly non-existent) directory at the end of the command
-+line, the command is run inside the directory (possibly after creating it).
-+
- --
- 
- 
-diff --git a/builtin-init-db.c b/builtin-init-db.c
-index 4a56006..100db73 100644
---- a/builtin-init-db.c
-+++ b/builtin-init-db.c
-@@ -371,7 +371,7 @@ static int guess_repository_type(const char *git_dir)
- }
- 
- static const char init_db_usage[] =
--"git init [-q | --quiet] [--bare] [--template=<template-directory>] [--shared[=<permissions>]]";
-+"git init [-q | --quiet] [--bare] [--template=<template-directory>] [--shared[=<permissions>]] [directory]";
- 
- /*
-  * If you want to, you can share the DB area with any number of branches.
-@@ -384,27 +384,48 @@ int cmd_init_db(int argc, const char **argv, const char *prefix)
- 	const char *git_dir;
- 	const char *template_dir = NULL;
- 	unsigned int flags = 0;
-+	int bare_given = 0;
- 	int i;
- 
- 	for (i = 1; i < argc; i++, argv++) {
- 		const char *arg = argv[1];
- 		if (!prefixcmp(arg, "--template="))
- 			template_dir = arg+11;
--		else if (!strcmp(arg, "--bare")) {
--			static char git_dir[PATH_MAX+1];
--			is_bare_repository_cfg = 1;
--			setenv(GIT_DIR_ENVIRONMENT, getcwd(git_dir,
--						sizeof(git_dir)), 0);
--		} else if (!strcmp(arg, "--shared"))
-+		else if (!strcmp(arg, "--bare"))
-+			bare_given = is_bare_repository_cfg = 1;
-+		else if (!strcmp(arg, "--shared"))
- 			init_shared_repository = PERM_GROUP;
- 		else if (!prefixcmp(arg, "--shared="))
- 			init_shared_repository = git_config_perm("arg", arg+9);
- 		else if (!strcmp(arg, "-q") || !strcmp(arg, "--quiet"))
- 			flags |= INIT_DB_QUIET;
--		else
-+		else if (arg[0] == '-')
- 			usage(init_db_usage);
-+		else
-+			break;
- 	}
- 
-+	if (i == argc - 1) {
-+		int mkdir_tried = 0;
-+	retry:
-+		if (chdir(argv[1]) < 0) {
-+			if (!mkdir_tried) {
-+				if (mkdir(argv[1], 0777) < 0)
-+					die_errno("cannot mkdir %s", argv[1]);
-+				mkdir_tried = 1;
-+				goto retry;
-+			}
-+			die_errno("cannot chdir to %s", argv[1]);
-+		}
-+	} else if (i < argc - 1) {
-+		usage(init_db_usage);
-+	}
-+	if (bare_given == 1) {
-+		static char git_dir[PATH_MAX+1];
-+
-+		setenv(GIT_DIR_ENVIRONMENT,
-+			getcwd(git_dir, sizeof(git_dir)), 0);
-+	}
- 	if (init_shared_repository != -1)
- 		shared_repository = init_shared_repository;
- 
-diff --git a/t/t0001-init.sh b/t/t0001-init.sh
-index e3d8464..0ded031 100755
---- a/t/t0001-init.sh
-+++ b/t/t0001-init.sh
-@@ -208,4 +208,38 @@ test_expect_success 'init rejects insanely long --template' '
- 	)
- '
- 
-+test_expect_success 'init creates a new directory' '
-+	rm -fr newdir &&
-+	(
-+		git init newdir &&
-+		test -d newdir/.git/refs
-+	)
-+'
-+
-+test_expect_success 'init creates a new bare directory' '
-+	rm -fr newdir &&
-+	(
-+		git init --bare newdir &&
-+		test -d newdir/refs
-+	)
-+'
-+
-+test_expect_success 'init recreates a directory' '
-+	rm -fr newdir &&
-+	(
-+		mkdir newdir &&
-+		git init newdir &&
-+		test -d newdir/.git/refs
-+	)
-+'
-+
-+test_expect_success 'init recreates a new bare directory' '
-+	rm -fr newdir &&
-+	(
-+		mkdir newdir &&
-+		git init --bare newdir &&
-+		test -d newdir/refs
-+	)
-+'
-+
- test_done
+I read "All the other lines" to mean that the section headers and variable definitions are supposed to be on different lines.
 
 -- 
 Nanako Shiraishi
