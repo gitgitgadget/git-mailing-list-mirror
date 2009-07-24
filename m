@@ -1,95 +1,64 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [ANNOUNCE] GIT 1.6.4-rc2
-Date: Fri, 24 Jul 2009 10:49:01 -0700
-Message-ID: <7vk51ykm42.fsf@alter.siamese.dyndns.org>
-References: <7vd47r298e.fsf@alter.siamese.dyndns.org>
- <20090724093847.GA20338@dcvr.yhbt.net>
+From: Bert Wesarg <bert.wesarg@googlemail.com>
+Subject: Re: [RFC PATCH v2 1/3] Introduce git-unstage
+Date: Fri, 24 Jul 2009 19:59:34 +0200
+Message-ID: <36ca99e90907241059l1d06681v1490a89fbbcaaf8@mail.gmail.com>
+References: <2d756f643fc7d1b50cf590c95467fa029b49ff46.1248426652.git.trast@student.ethz.ch>
+	 <683ed99f389d643d21bda6750bd2ee9caf287625.1248452530.git.trast@student.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Mattias Nissler <mattias.nissler@gmx.de>
-To: Eric Wong <normalperson@yhbt.net>
-X-From: git-owner@vger.kernel.org Fri Jul 24 19:49:26 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Pierre Habouzit <madcoder@debian.org>
+To: Thomas Rast <trast@student.ethz.ch>
+X-From: git-owner@vger.kernel.org Fri Jul 24 19:59:48 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MUOtY-000115-Ir
-	for gcvg-git-2@gmane.org; Fri, 24 Jul 2009 19:49:25 +0200
+	id 1MUP3b-0005ec-Iq
+	for gcvg-git-2@gmane.org; Fri, 24 Jul 2009 19:59:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753372AbZGXRtO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 24 Jul 2009 13:49:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753397AbZGXRtO
-	(ORCPT <rfc822;git-outgoing>); Fri, 24 Jul 2009 13:49:14 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:53419 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752245AbZGXRtN (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 24 Jul 2009 13:49:13 -0400
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id C488E104FC;
-	Fri, 24 Jul 2009 13:49:11 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 535CA104FB; Fri, 24 Jul 2009
- 13:49:06 -0400 (EDT)
-In-Reply-To: <20090724093847.GA20338@dcvr.yhbt.net> (Eric Wong's message of
- "Fri\, 24 Jul 2009 02\:38\:48 -0700")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 4B9EC712-787A-11DE-8954-AEF1826986A2-77302942!a-pb-sasl-sd.pobox.com
+	id S1753533AbZGXR7g convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 24 Jul 2009 13:59:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753522AbZGXR7g
+	(ORCPT <rfc822;git-outgoing>); Fri, 24 Jul 2009 13:59:36 -0400
+Received: from mail-bw0-f228.google.com ([209.85.218.228]:40746 "EHLO
+	mail-bw0-f228.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753440AbZGXR7f convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 24 Jul 2009 13:59:35 -0400
+Received: by bwz28 with SMTP id 28so1569783bwz.37
+        for <git@vger.kernel.org>; Fri, 24 Jul 2009 10:59:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=QOGNiuKpW1kaDNCaKfzc4n+tY6tKI8DaVzP5Bw/I6gk=;
+        b=Be1x8AIpryDMkiRGh9AXS63vdPE0mFJ+BA2AWFJlv5dMeUBZyb72QFJAvUCS4HPo3a
+         RqntGh1ThbBnVa5i3zSbpLVp165DlSEl89FwMZphu52sevv4YOXkVTshxuRhBO1BgQE4
+         hyeMNObmoI19wZCGnIoJAn6NNn2f/SPtaZU5w=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlemail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=Otq3nbVQvC+9hPJslEbltYUY5Y//SF7nKbwO2cYgC8Sh6Rmp6t9AxXU8kaqCxFq8PP
+         KRvCskl2mm6ukmwYwWPdXRK+knmmbg5E+tKu3uC3f+Sv+AZRlPGjdQK7BE1TurumkHpj
+         PybG5tExmzIosvQ+y5WAWAwIyYD7LhQtgZiC4=
+Received: by 10.223.119.198 with SMTP id a6mr1882274far.42.1248458374649; Fri, 
+	24 Jul 2009 10:59:34 -0700 (PDT)
+In-Reply-To: <683ed99f389d643d21bda6750bd2ee9caf287625.1248452530.git.trast@student.ethz.ch>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123933>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123934>
 
-Eric Wong <normalperson@yhbt.net> writes:
+On Fri, Jul 24, 2009 at 18:24, Thomas Rast<trast@student.ethz.ch> wrote=
+:
+> As such, it is the same as 'git reset --' ...
+Nope!
 
-> Junio C Hamano <gitster@pobox.com> wrote:
->>  * git-svn updates, including a new --authors-prog option to map author
->>    names by invoking an external program, 'git svn reset' to unwind
->>    'git svn fetch', support for more than one branches, etc.
->
-> I completely forgot the implications of a change made in commit
-> 0b2af457a49e3b00d47d556d5301934d27909db8.  This change probably doesn't
-> affect a lot of repos out there, but --minimize-url is no longer the
-> default for new imports.
->
->
-> The good thing is that access-limited repositories are easier to setup
-> and import.  So if you only had access for a sub_project under the
-> repository root in svn://example.com/big_project/sub_project,
-> you won't need read permissions to / or /big_project, just
-> /big_project/sub_project and everything under it.
->
->
-> Unfortunately, this default breaks the case where a project is moved to
-> a lower-level within the repository:
->
-> svn://example.com/foo => svn://example.com/big_project/sub_project
->
-> Without --minimize-url enabled, your clone would register
-> "/big_project/sub_project" to track and not be able to find the history
-> of "/foo".  With --minimize-url (the old behavior), you would've
-> registered "/" to be able to track all subdirectories underneath the
-> repository root (assuming the SVN repo is world-readable).
->
->
-> While both cases are fairly rare, I've personally encountered the latter
-> (and now broken-by-default) case more.  This is because I mainly use
-> git/git svn to work on free software without read restrictions.
-> However, with more and more free projects switching entirely to git,
-> maybe leaving the default to be more friendly to people on restrictive
-> setups will be more helpful than harmful.
->
-> This change only affects the creation of new clones, existing repos
-> are unaffected.
->
-> Let me know if the above made sense, it's late and I nodded off
-> several times while writing this.
+> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 exec git reset "$@"
+See!
 
-Your description makes sense, and I suspect that the old default may be
-easier to work with.
-
-Minimally, a patch to git-svn.txt and RelNotes-1.6.4.txt in Documentation/
-to describe the situation with a recipe (in the former) to allow people
-the older behaviour would be in order.  It appears minimize-url is not
-even documented as far as I can see in the current documentation set.
+Bert
