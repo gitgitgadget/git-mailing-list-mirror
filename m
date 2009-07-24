@@ -1,126 +1,69 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: [PATCH 02/10] gitweb: Mark boundary commits in 'blame' view
-Date: Sat, 25 Jul 2009 00:44:02 +0200
-Message-ID: <1248475450-5668-3-git-send-email-jnareb@gmail.com>
-References: <1248475450-5668-1-git-send-email-jnareb@gmail.com>
-Cc: Petr Baudis <pasky@suse.cz>, Fredrik Kuivinen <frekui@gmail.com>,
-	Giuseppe Bilotta <giuseppe.bilotta@gmail.com>,
-	Luben Tuikov <ltuikov@yahoo.com>,
-	Martin Koegler <mkoegler@auto.tuwien.ac.at>,
-	Jakub Narebski <jnareb@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jul 25 00:41:46 2009
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: Performance issue of 'git branch'
+Date: Fri, 24 Jul 2009 15:42:24 -0700 (PDT)
+Message-ID: <alpine.LFD.2.01.0907241529420.3960@localhost.localdomain>
+References: <alpine.LFD.2.01.0907221714300.3352@localhost.localdomain> <20090723012207.GA9368@Pilar.aei.mpg.de> <alpine.LFD.2.01.0907221850000.3352@localhost.localdomain> <alpine.LFD.2.01.0907221921570.3352@localhost.localdomain> <7vtz146mgr.fsf@alter.siamese.dyndns.org>
+ <20090723160740.GA5736@Pilar.aei.mpg.de> <alpine.LFD.2.01.0907230913230.21520@localhost.localdomain> <20090723165335.GA15598@Pilar.aei.mpg.de> <alpine.LFD.2.01.0907231158280.21520@localhost.localdomain> <alpine.LFD.2.01.0907231212180.21520@localhost.localdomain>
+ <20090723195548.GA28494@Pilar.aei.mpg.de> <alpine.LFD.2.01.0907241327410.3960@localhost.localdomain> <alpine.LFD.2.01.0907241346450.3960@localhost.localdomain> <alpine.LFD.2.01.0907241349390.3960@localhost.localdomain> <alpine.LFD.2.01.0907241505400.3960@localhost.localdomain>
+ <alpine.DEB.1.10.0907241518120.28013@asgard.lang.hm>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	"Carlos R. Mafra" <crmafra2@gmail.com>,
+	Daniel Barkalow <barkalow@iabervon.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: david@lang.hm
+X-From: git-owner@vger.kernel.org Sat Jul 25 00:42:45 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MUTST-0006Z0-If
-	for gcvg-git-2@gmane.org; Sat, 25 Jul 2009 00:41:46 +0200
+	id 1MUTTQ-00070k-7e
+	for gcvg-git-2@gmane.org; Sat, 25 Jul 2009 00:42:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754882AbZGXWli (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 24 Jul 2009 18:41:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754877AbZGXWli
-	(ORCPT <rfc822;git-outgoing>); Fri, 24 Jul 2009 18:41:38 -0400
-Received: from mail-fx0-f218.google.com ([209.85.220.218]:33890 "EHLO
-	mail-fx0-f218.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754876AbZGXWlh (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 24 Jul 2009 18:41:37 -0400
-Received: by mail-fx0-f218.google.com with SMTP id 18so1687100fxm.37
-        for <git@vger.kernel.org>; Fri, 24 Jul 2009 15:41:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received:from:to:cc
-         :subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=ZE2rJHUIzwfibPe2I7E48kiYnx0zNHm7q9V3zMNX0iY=;
-        b=i4/HbtOwW9y1MEDfTidnO8KHdtB+RUl6anPqbJ28ITI1SfFXkw3gDGLDqxUzUBrY/s
-         +XbwT41F8mwqr2pf6qals5FoklISvSOyXDwHjp3jBoPpqp9GyFFi2hXq5MzgYw7NGfx5
-         cYSY9YzmndHgrgN3OTQ1cP4xwwobcl6sW8YCg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=JsHxfIW4ptyKVMrbbyrVrrCo1y+6QPVKz78w1zMylBU7iKMmFX5nQv9o/LVsbvYY6y
-         qPhthplqiYas0UIMZ0gahKxfr16WW2VPWHf0SgJrPc25ExEjNONzb1t9H7kRNsZhWBTk
-         pCEnI2SqoR6HweNtJ7dQ0U3gnAPdxLnTcbbwU=
-Received: by 10.103.242.1 with SMTP id u1mr1984988mur.113.1248475297074;
-        Fri, 24 Jul 2009 15:41:37 -0700 (PDT)
-Received: from localhost.localdomain (abwq33.neoplus.adsl.tpnet.pl [83.8.240.33])
-        by mx.google.com with ESMTPS id 7sm14812880mup.54.2009.07.24.15.41.35
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 24 Jul 2009 15:41:36 -0700 (PDT)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id n6OMl3YR005739;
-	Sat, 25 Jul 2009 00:47:08 +0200
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id n6OMkWqu005736;
-	Sat, 25 Jul 2009 00:46:32 +0200
-X-Mailer: git-send-email 1.6.3.3
-In-Reply-To: <1248475450-5668-1-git-send-email-jnareb@gmail.com>
+	id S1754892AbZGXWmi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 24 Jul 2009 18:42:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754890AbZGXWmi
+	(ORCPT <rfc822;git-outgoing>); Fri, 24 Jul 2009 18:42:38 -0400
+Received: from smtp1.linux-foundation.org ([140.211.169.13]:39975 "EHLO
+	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754885AbZGXWmi (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 24 Jul 2009 18:42:38 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
+	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id n6OMgPIY010144
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Fri, 24 Jul 2009 15:42:26 -0700
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id n6OMgOUD011438;
+	Fri, 24 Jul 2009 15:42:24 -0700
+X-X-Sender: torvalds@localhost.localdomain
+In-Reply-To: <alpine.DEB.1.10.0907241518120.28013@asgard.lang.hm>
+User-Agent: Alpine 2.01 (LFD 1184 2008-12-16)
+X-Spam-Status: No, hits=-3.46 required=5 tests=AWL,BAYES_00
+X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123959>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123960>
 
-Use "boundary" class to mark boundary commits, which currently results
-in using bold weight font for SHA-1 of a commit (to be more exact for
-all text in the first cell in row, that contains SHA-1 of a commit).
 
-Detecting boundary commits is done by watching for "boundary" header
-in "git blame -p" output.  Because this header doesn't carry
-additional data the regular expression for blame header fields
-had to be slightly adjusted.
 
-With current gitweb API only root (parentless) commits can be boundary
-commits.
+On Fri, 24 Jul 2009, david@lang.hm wrote:
+> 
+> what does the performance look like if you just do a static compile instead?
 
-Signed-off-by: Jakub Narebski <jnareb@gmail.com>
----
-Formatting (styling) of boundary commits is currently very minimal.
+I don't even know - I don't have a static version of curl. I could install 
+one, of course, but since I don't think that's the solution anyway, I'm 
+not going to bother.
 
-This is just resend of previous version of patch.
+The real solution really is to not have curl support in the main binary.
 
- gitweb/gitweb.css  |    4 ++++
- gitweb/gitweb.perl |    6 ++++--
- 2 files changed, 8 insertions(+), 2 deletions(-)
+One option might be to make _all_ the transport code be outside of the 
+core binary, or course.  That's a fairly simple but somewhat sad solution 
+(ie make all of push/pull/fetch/clone/ls-remote/etc be external binaries)
 
-diff --git a/gitweb/gitweb.css b/gitweb/gitweb.css
-index 70b7c2f..f47709b 100644
---- a/gitweb/gitweb.css
-+++ b/gitweb/gitweb.css
-@@ -242,6 +242,10 @@ tr.dark:hover {
- 	background-color: #edece6;
- }
- 
-+tr.boundary td.sha1 {
-+	font-weight: bold;
-+}
-+
- td {
- 	padding: 2px 5px;
- 	font-size: 100%;
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index 7fbd5ff..3078b92 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -4826,7 +4826,7 @@ HTML
- 		while ($data = <$fd>) {
- 			chomp $data;
- 			last if ($data =~ s/^\t//); # contents of line
--			if ($data =~ /^(\S+) (.*)$/) {
-+			if ($data =~ /^(\S+)(?: (.*))?$/) {
- 				$meta->{$1} = $2;
- 			}
- 		}
-@@ -4838,7 +4838,9 @@ HTML
- 		if ($group_size) {
- 			$current_color = ($current_color + 1) % $num_colors;
- 		}
--		print "<tr id=\"l$lineno\" class=\"$rev_color[$current_color]\">\n";
-+		my $tr_class = $rev_color[$current_color];
-+		$tr_class .= ' boundary' if (exists $meta->{'boundary'});
-+		print "<tr id=\"l$lineno\" class=\"$tr_class\">\n";
- 		if ($group_size) {
- 			print "<td class=\"sha1\"";
- 			print " title=\"". esc_html($author) . ", $date\"";
--- 
-1.6.3.3
+		Linus
