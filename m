@@ -1,56 +1,94 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH/RFC] SunOS grep does not understand -C<n>
-Date: Fri, 24 Jul 2009 03:09:25 -0400
-Message-ID: <20090724070925.GA2353@sigill.intra.peff.net>
-References: <7vr5w6tzq8.fsf@alter.siamese.dyndns.org>
- <20090724054144.GC6563@sigill.intra.peff.net>
- <7vbpnasiiz.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jul 24 09:10:35 2009
+From: Matthias Andree <matthias.andree@gmx.de>
+Subject: [PATCH] Fix export_marks() error handling.
+Date: Fri, 24 Jul 2009 10:17:13 +0200
+Message-ID: <1248423433-25407-1-git-send-email-matthias.andree@gmx.de>
+References: <7v7hxyyfcg.fsf@alter.siamese.dyndns.org>
+Cc: Matthias Andree <matthias.andree@gmx.de>
+To: git@vger.kernel.org, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Fri Jul 24 10:17:32 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MUEuQ-0002xp-Jr
-	for gcvg-git-2@gmane.org; Fri, 24 Jul 2009 09:09:39 +0200
+	id 1MUFy6-0006AH-Bm
+	for gcvg-git-2@gmane.org; Fri, 24 Jul 2009 10:17:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751915AbZGXHJ1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 24 Jul 2009 03:09:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751827AbZGXHJ1
-	(ORCPT <rfc822;git-outgoing>); Fri, 24 Jul 2009 03:09:27 -0400
-Received: from peff.net ([208.65.91.99]:55323 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751812AbZGXHJ0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 24 Jul 2009 03:09:26 -0400
-Received: (qmail 14383 invoked by uid 107); 24 Jul 2009 07:11:30 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.40) with ESMTPA; Fri, 24 Jul 2009 03:11:30 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 24 Jul 2009 03:09:25 -0400
-Content-Disposition: inline
-In-Reply-To: <7vbpnasiiz.fsf@alter.siamese.dyndns.org>
+	id S1751334AbZGXIRV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 24 Jul 2009 04:17:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750870AbZGXIRU
+	(ORCPT <rfc822;git-outgoing>); Fri, 24 Jul 2009 04:17:20 -0400
+Received: from mail.gmx.net ([213.165.64.20]:54665 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750796AbZGXIRT (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 24 Jul 2009 04:17:19 -0400
+Received: (qmail invoked by alias); 24 Jul 2009 08:17:18 -0000
+Received: from g227137127.adsl.alicedsl.de (EHLO mandree.no-ip.org) [92.227.137.127]
+  by mail.gmx.net (mp055) with SMTP; 24 Jul 2009 10:17:18 +0200
+X-Authenticated: #428038
+X-Provags-ID: V01U2FsdGVkX183qQg0xT83bchDo+WtFOnJO0Up81tCYTFTR3qPkA
+	7FdIn3rd1locYf
+Received: by merlin.emma.line.org (Postfix, from userid 1000)
+	id 0434294C41; Fri, 24 Jul 2009 10:17:16 +0200 (CEST)
+X-Mailer: git-send-email 1.6.3.3.413.g91e7
+In-Reply-To: <7v7hxyyfcg.fsf@alter.siamese.dyndns.org>
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.53
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123907>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123908>
 
-On Thu, Jul 23, 2009 at 11:27:00PM -0700, Junio C Hamano wrote:
+- Don't leak one FILE * on error per export_marks() call. Found with
+  cppcheck and reported by Martin Ettl.
 
-> > Yes, I've been building with NO_EXTERNAL_GREP for my test box. The grep
-> > from Solaris 8, at least, doesn't understand '-e' either, which causes
-> > it to fail many other tests.
-> 
-> Thanks.
-> 
-> Just to double check, do we have "grep -e" (not "git grep -e") that makes
-> Solaris fail?  I didn't notice.  Or do you mean "git grep -e" fails
-> without NO_EXTERNAL_GREP?
+- Abort the potentially long for(;idnums.size;) loop on write errors.
 
-I meant the latter; t7002 tests "git grep -e", which fails without
-NO_EXTERNAL_GREP.
+- Record error if fprintf() fails for reasons not required to set the
+  stream error indicator, such as ENOMEM.
 
--Peff
+- Add a trailing full-stop to error message when fopen() fails.
+
+Signed-off-by: Matthias Andree <matthias.andree@gmx.de>
+---
+ builtin-fast-export.c |   14 ++++++++++----
+ 1 files changed, 10 insertions(+), 4 deletions(-)
+
+diff --git a/builtin-fast-export.c b/builtin-fast-export.c
+index 9a8a6fc..ca19825 100644
+--- a/builtin-fast-export.c
++++ b/builtin-fast-export.c
+@@ -428,21 +428,27 @@ static void export_marks(char *file)
+ 	uint32_t mark;
+ 	struct object_decoration *deco = idnums.hash;
+ 	FILE *f;
++	int e = 0;
+ 
+ 	f = fopen(file, "w");
+ 	if (!f)
+-		error("Unable to open marks file %s for writing", file);
++		error("Unable to open marks file %s for writing.", file);
+ 
+ 	for (i = 0; i < idnums.size; i++) {
+ 		if (deco->base && deco->base->type == 1) {
+ 			mark = ptr_to_mark(deco->decoration);
+-			fprintf(f, ":%"PRIu32" %s\n", mark,
+-				sha1_to_hex(deco->base->sha1));
++			if (fprintf(f, ":%"PRIu32" %s\n", mark,
++				sha1_to_hex(deco->base->sha1)) < 0) {
++			    e = 1;
++			    break;
++			}
+ 		}
+ 		deco++;
+ 	}
+ 
+-	if (ferror(f) || fclose(f))
++	e |= ferror(f);
++	e |= fclose(f);
++	if (e)
+ 		error("Unable to write marks file %s.", file);
+ }
+ 
+-- 
+1.6.3.3.413.g91e7
