@@ -1,79 +1,75 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: [PATCH resend] Disable asciidoc 8.4.1+ semantics for `{plus}` and friends
-Date: Sat, 25 Jul 2009 14:06:50 +0200
-Message-ID: <8e1edb4fb24a009e8eee419df31d0ae17a63a866.1248523345.git.trast@student.ethz.ch>
-References: <8e1edb4fb24a009e8eee419df31d0ae17a63a866.1247752162.git.trast@student.ethz.ch>
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Jul 25 14:07:33 2009
+From: Mattias Nissler <mattias.nissler@gmx.de>
+Subject: Re: [ANNOUNCE] GIT 1.6.4-rc2
+Date: Sat, 25 Jul 2009 15:39:24 +0200
+Message-ID: <1248529164.4593.8.camel@kea>
+References: <7vd47r298e.fsf@alter.siamese.dyndns.org>
+	 <20090724093847.GA20338@dcvr.yhbt.net>
+	 <7vk51ykm42.fsf@alter.siamese.dyndns.org>
+	 <20090725103821.GA13534@dcvr.yhbt.net>
+Mime-Version: 1.0
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Eric Wong <normalperson@yhbt.net>
+X-From: git-owner@vger.kernel.org Sat Jul 25 15:39:41 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MUg2F-0006NF-RZ
-	for gcvg-git-2@gmane.org; Sat, 25 Jul 2009 14:07:32 +0200
+	id 1MUhTN-0005cT-8f
+	for gcvg-git-2@gmane.org; Sat, 25 Jul 2009 15:39:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752615AbZGYMHB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 25 Jul 2009 08:07:01 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752599AbZGYMHA
-	(ORCPT <rfc822;git-outgoing>); Sat, 25 Jul 2009 08:07:00 -0400
-Received: from xsmtp0.ethz.ch ([82.130.70.14]:6879 "EHLO XSMTP0.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752535AbZGYMHA (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 25 Jul 2009 08:07:00 -0400
-Received: from xfe2.d.ethz.ch ([82.130.124.42]) by XSMTP0.ethz.ch with Microsoft SMTPSVC(6.0.3790.3959);
-	 Sat, 25 Jul 2009 14:06:59 +0200
-Received: from localhost.localdomain ([77.56.221.170]) by xfe2.d.ethz.ch over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
-	 Sat, 25 Jul 2009 14:06:58 +0200
-X-Mailer: git-send-email 1.6.4.rc2.216.g3239.dirty
-In-Reply-To: <8e1edb4fb24a009e8eee419df31d0ae17a63a866.1247752162.git.trast@student.ethz.ch>
-X-OriginalArrivalTime: 25 Jul 2009 12:06:58.0919 (UTC) FILETIME=[693CD770:01CA0D20]
+	id S1752926AbZGYNj2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 25 Jul 2009 09:39:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752911AbZGYNj2
+	(ORCPT <rfc822;git-outgoing>); Sat, 25 Jul 2009 09:39:28 -0400
+Received: from mail.gmx.net ([213.165.64.20]:58858 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752877AbZGYNj1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 25 Jul 2009 09:39:27 -0400
+Received: (qmail invoked by alias); 25 Jul 2009 13:39:26 -0000
+Received: from d187074.adsl.hansenet.de (EHLO [192.168.1.50]) [80.171.187.74]
+  by mail.gmx.net (mp054) with SMTP; 25 Jul 2009 15:39:26 +0200
+X-Authenticated: #429267
+X-Provags-ID: V01U2FsdGVkX1+nGmV8xUCnRi58x5Cgdp716Bc0LKFD5QCJwRvOwO
+	wq+aUxy/vdLo12
+In-Reply-To: <20090725103821.GA13534@dcvr.yhbt.net>
+X-Mailer: Evolution 2.26.2 
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.58
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124004>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124005>
 
-asciidoc 8.4.1 changed the semantics of inline backtick quoting so
-that they disable parsing of inline constructs, i.e.,
+On Sat, 2009-07-25 at 03:38 -0700, Eric Wong wrote:
+> Junio C Hamano <gitster@pobox.com> wrote:
+> > Eric Wong <normalperson@yhbt.net> writes:
+> > > Junio C Hamano <gitster@pobox.com> wrote:
+> > >>  * git-svn updates, including a new --authors-prog option to map author
+> > >>    names by invoking an external program, 'git svn reset' to unwind
+> > >>    'git svn fetch', support for more than one branches, etc.
+> > >
+> > > I completely forgot the implications of a change made in commit
+> > > 0b2af457a49e3b00d47d556d5301934d27909db8.  This change probably doesn't
+> > > affect a lot of repos out there, but --minimize-url is no longer the
+> > > default for new imports.
+> 
+> > > Let me know if the above made sense, it's late and I nodded off
+> > > several times while writing this.
+> > 
+> > Your description makes sense, and I suspect that the old default may be
+> > easier to work with.
+> 
+> Yes.  I think the old default makes more sense, so I'll be reverting
+> back to it.  However, I'll make it possible to override from the
+> command-line.
 
-  Input:	`{plus}`
-  Pre 8.4.1:	+
-  Post 8.4.1:	{plus}
+Maybe we should rather try to detect whether we have read access to the
+repository root and adjust behaviour accordingly? Or at least print a
+warning when cloning restricted multi-branch repos, since this just
+fails silently (doesn't pick up any branches) when you have minimize_url
+enabled.
 
-Fix this by defining the asciidoc attribute 'no-inline-literal'
-(which, per the 8.4.1 changelog, is the toggle to return to the old
-behaviour) when under ASCIIDOC8.
-
-Signed-off-by: Thomas Rast <trast@student.ethz.ch>
----
-
-I wrote:
-> I checked the output of 8.4.4 with ASCIIDOC8 and ASCIIDOC_NO_ROFF set.
-> I unfortunately cannot test if the extra attribute affects pre-8.4.1
-> versions.  (If it conflicts, we will have to introduce yet another
-> ASCIIDOC_* option, but I'm trying to avoid it.)
-
-Junio, can this go in before 1.6.4?  Otherwise the docs will not be
-rendered right with asciidoc 8.4.1 and newer.  I got hold of a machine
-with asciidoc 8.2.7 and it does not affect the output there.
-
-
- Documentation/Makefile |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
-
-diff --git a/Documentation/Makefile b/Documentation/Makefile
-index 7a8037f..06b0c57 100644
---- a/Documentation/Makefile
-+++ b/Documentation/Makefile
-@@ -84,7 +84,7 @@ endif
- #
- 
- ifdef ASCIIDOC8
--ASCIIDOC_EXTRA += -a asciidoc7compatible
-+ASCIIDOC_EXTRA += -a asciidoc7compatible -a no-inline-literal
- endif
- ifdef DOCBOOK_XSL_172
- ASCIIDOC_EXTRA += -a git-asciidoc-no-roff
--- 
-1.6.4.rc2.216.g3239.dirty
+Mattias
