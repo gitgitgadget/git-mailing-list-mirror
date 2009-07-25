@@ -1,43 +1,54 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH resend] Disable asciidoc 8.4.1+ semantics for `{plus}`
- and friends
-Date: Sat, 25 Jul 2009 09:56:45 -0700
-Message-ID: <7vprbou2eq.fsf@alter.siamese.dyndns.org>
-References: <8e1edb4fb24a009e8eee419df31d0ae17a63a866.1247752162.git.trast@student.ethz.ch> <8e1edb4fb24a009e8eee419df31d0ae17a63a866.1248523345.git.trast@student.ethz.ch>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Sat Jul 25 18:57:06 2009
+From: Alex Vandiver <alex@chmrr.net>
+Subject: Re: [PATCH 1/2] Make section_name_match start on '[', and return the length on success
+Date: Sat, 25 Jul 2009 13:18:52 -0400
+Message-ID: <1248542170-sup-4264@utwig>
+References: <1248470504-16326-1-git-send-email-alex@chmrr.net> <1248470504-16326-2-git-send-email-alex@chmrr.net> <alpine.DEB.1.00.0907251605240.8306@pacific.mpi-cbg.de>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Cc: git <git@vger.kernel.org>
+To: Johannes Schindelin <johannes.schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Sat Jul 25 19:24:55 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MUkYT-0004Pp-3Z
-	for gcvg-git-2@gmane.org; Sat, 25 Jul 2009 18:57:05 +0200
+	id 1MUkzO-0005rF-OB
+	for gcvg-git-2@gmane.org; Sat, 25 Jul 2009 19:24:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752091AbZGYQ45 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 25 Jul 2009 12:56:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752089AbZGYQ45
-	(ORCPT <rfc822;git-outgoing>); Sat, 25 Jul 2009 12:56:57 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:61828 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750986AbZGYQ45 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 25 Jul 2009 12:56:57 -0400
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 1084513AAE;
-	Sat, 25 Jul 2009 12:56:56 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 768B713AAD; Sat,
- 25 Jul 2009 12:56:50 -0400 (EDT)
-In-Reply-To: <8e1edb4fb24a009e8eee419df31d0ae17a63a866.1248523345.git.trast@student.ethz.ch> (Thomas Rast's message of "Sat\, 25 Jul 2009 14\:06\:50 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 2900302A-793C-11DE-9C03-F699A5B33865-77302942!a-sasl-quonix.pobox.com
+	id S1750945AbZGYRSx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 25 Jul 2009 13:18:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750893AbZGYRSx
+	(ORCPT <rfc822;git-outgoing>); Sat, 25 Jul 2009 13:18:53 -0400
+Received: from chmrr.net ([209.67.253.66]:43215 "EHLO utwig.chmrr.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750865AbZGYRSw (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 25 Jul 2009 13:18:52 -0400
+Received: from chmrr by utwig.chmrr.net with local (Exim 4.69)
+	(envelope-from <chmrr@chmrr.net>)
+	id 1MUktY-00032V-Co; Sat, 25 Jul 2009 13:18:52 -0400
+In-reply-to: <alpine.DEB.1.00.0907251605240.8306@pacific.mpi-cbg.de>
+User-Agent: Sup/git
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124021>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124022>
 
-Thanks.  Will queue.
+At Sat Jul 25 10:09:56 -0400 2009, Johannes Schindelin wrote:
+> Is this not unnecessary, given that we  only call that function when we 
+> know that buf[0] == '[':
+
+Yes.  However, given that I had changed the calling convention for the
+code, (it used to be passed the string starting just _inside_ the
+'['), I wanted to make the new calling convention clearer, and catch
+any places that were using the old convention.
+
+I'm happy to submit a new version without it, if you wish.
+
+> I was a bit surprised that "offset" is not used further in your patch, but 
+> I saw that 2/2 uses it.
+
+Yeah, this hunk should probably have gone in 2/2 instead.
+ - Alex
+-- 
+Networking -- only one letter away from not working
