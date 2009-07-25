@@ -1,90 +1,100 @@
-From: Michael Bergin <michaeljbergin@gmail.com>
-Subject: Re: Git Option/Subcommand Processing Library?
-Date: Sat, 25 Jul 2009 15:51:39 -0400
-Message-ID: <D30CE3A7-176D-4132-88A6-23C46A4EA185@gmail.com>
-References: <231BD892-07B1-452C-A224-047829E21991@gmail.com> <alpine.DEB.1.00.0907251830420.8306@pacific.mpi-cbg.de>
-Mime-Version: 1.0 (Apple Message framework v935.3)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Sat Jul 25 21:52:24 2009
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: [JGIT PATCH] Fix WindowCacheGetTest.testCache_TooSmallLimit
+	failures
+Date: Sat, 25 Jul 2009 13:00:56 -0700
+Message-ID: <20090725200056.GD11191@spearce.org>
+References: <85647ef50907220623i2b7e50dal67650a638921ec0f@mail.gmail.com> <20090724225118.GZ11191@spearce.org> <200907251934.37145.robin.rosenberg.lists@dewire.com> <20090725194254.GC11191@spearce.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Constantine Plotnikov <constantine.plotnikov@gmail.com>,
+	git@vger.kernel.org
+To: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+X-From: git-owner@vger.kernel.org Sat Jul 25 22:01:12 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MUnI8-0005Xa-3A
-	for gcvg-git-2@gmane.org; Sat, 25 Jul 2009 21:52:24 +0200
+	id 1MUnQd-0008MD-1c
+	for gcvg-git-2@gmane.org; Sat, 25 Jul 2009 22:01:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752433AbZGYTvz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 25 Jul 2009 15:51:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752252AbZGYTvz
-	(ORCPT <rfc822;git-outgoing>); Sat, 25 Jul 2009 15:51:55 -0400
-Received: from qw-out-2122.google.com ([74.125.92.27]:22554 "EHLO
-	qw-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752124AbZGYTvz (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 25 Jul 2009 15:51:55 -0400
-Received: by qw-out-2122.google.com with SMTP id 8so1253740qwh.37
-        for <git@vger.kernel.org>; Sat, 25 Jul 2009 12:51:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:cc:message-id:from:to
-         :in-reply-to:content-type:content-transfer-encoding:mime-version
-         :subject:date:references:x-mailer;
-        bh=Y4P5wEDKFVFDbOpid6RwYXj3B6eWzh/joT+8wsxg8pw=;
-        b=hFpq54yBfOZZp5O2Ci5wHu/8Wig5VbyE/wHJUtY8oqpF9ejFVxKRSMD2Jcyg+3xt9A
-         9kcEy8MmVQshuAmZfTsIdVMLzMg3P8/V8N8VFF4C6CxzZYb/mW/+dIt8bV6M2n4hPhoZ
-         cqlJHNimW5foBiI+pZf1ynBYu9q3HoaPGVbp4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=cc:message-id:from:to:in-reply-to:content-type
-         :content-transfer-encoding:mime-version:subject:date:references
-         :x-mailer;
-        b=tbUaJ9tVJSdqnhKmE1kGbj7DNGvM9ZmtCgiFXPwcA0yNNIUebePSjilAvoPF3n0H0O
-         cvVs1TuWzW9xAPPq94cOMsVNqPo4WRnTKyy7E4WEHvFpiFqWSAnXJdf6cvY7lYPz0+L5
-         qT+ig29R8gJbuwha5STnkv2I0/L+sB0MdicyY=
-Received: by 10.224.73.193 with SMTP id r1mr4582673qaj.136.1248551514439;
-        Sat, 25 Jul 2009 12:51:54 -0700 (PDT)
-Received: from ?166.203.39.195? ([166.203.39.195])
-        by mx.google.com with ESMTPS id 5sm7347302qwg.55.2009.07.25.12.51.52
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sat, 25 Jul 2009 12:51:53 -0700 (PDT)
-In-Reply-To: <alpine.DEB.1.00.0907251830420.8306@pacific.mpi-cbg.de>
-X-Mailer: Apple Mail (2.935.3)
+	id S1752494AbZGYUA5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 25 Jul 2009 16:00:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752443AbZGYUA5
+	(ORCPT <rfc822;git-outgoing>); Sat, 25 Jul 2009 16:00:57 -0400
+Received: from george.spearce.org ([209.20.77.23]:49196 "EHLO
+	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752436AbZGYUA4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 25 Jul 2009 16:00:56 -0400
+Received: by george.spearce.org (Postfix, from userid 1001)
+	id B015C381FD; Sat, 25 Jul 2009 20:00:56 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <20090725194254.GC11191@spearce.org>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124062>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124063>
 
-Thanks for the pointers.  I also want to create a generic library for  
-command facades like git.  For that I will probably use git.c as a  
-guide but to make it generic I would need to add/rearrange code.   
-GPLv2 works fine for my purposes.  I hope this isn't an offensive  
-question or anything but would releasing just the library under LGPL  
-be considered?
+Ever since 2d77d30b5f when I rewrote WindowCache we have been seeing
+random failures inside of the TooSmallLimit test case.
 
-On Jul 25, 2009, at 12:32 PM, Johannes Schindelin wrote:
+These test failures have been occurring because the cache contained
+more open bytes than it was configured to permit.
 
-> Hi,
->
-> On Sat, 25 Jul 2009, Michael Bergin wrote:
->
->> Is there a library containing just the option and subcommand  
->> processing
->> code from git?  I saw a post about gitopt but can't find a project  
->> with
->> that name.
->
-> The "library" is contained in the files parse-options.[ch] in  
-> git.git.  I
-> am unsure if you need strbuf.c, too, or not.
->
->> If not is there any problem with me doing this?
->
-> Not if you abide by the license of git.git, which is GPLv2.
->
-> Ciao,
-> Dscho
->
->
+The cache was permitted to open more bytes than its configured limit
+because the eviction routine was always skipping the last bucket
+under some conditions.  If the cache table was sized the same as its
+evictBatch, which happens for any fairly small table, the eviction
+routine broke too early if it started at a non-zero position in the
+table and wrapped around during its search.  By breaking too early
+the routine did not actually perform an eviction, leaving windows
+open it should have closed.
+
+Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
+---
+  > Robin Rosenberg <robin.rosenberg.lists@dewire.com> wrote:
+  > > > Constantine Plotnikov <constantine.plotnikov@gmail.com> wrote:
+  > > > > The test WindowCacheGetTest.testCache_TooSmallLimit sometimes fails
+  > > > > (on less than third of runs on Windows) with the following stacktrace:
+  > > 
+  > > Could it be threading-related (cache). I've never seen it on the machine where I build for
+  > > the update site and it is a single core machine, but I "this" machine that has two cores it happens, not
+  > > as offen as 1/6, but enough to annoy me a bit, perhaps 1/20. If it is related to bad synchronization
+  > > it should happen more often the more cores you have.
+  
+  I think this fixes it.
+
+ .../src/org/spearce/jgit/lib/OffsetCache.java      |    7 ++-----
+ 1 files changed, 2 insertions(+), 5 deletions(-)
+
+diff --git a/org.spearce.jgit/src/org/spearce/jgit/lib/OffsetCache.java b/org.spearce.jgit/src/org/spearce/jgit/lib/OffsetCache.java
+index b81c7e0..7ac532d 100644
+--- a/org.spearce.jgit/src/org/spearce/jgit/lib/OffsetCache.java
++++ b/org.spearce.jgit/src/org/spearce/jgit/lib/OffsetCache.java
+@@ -253,12 +253,11 @@ private void hit(final Ref<V> r) {
+ 	}
+ 
+ 	private void evict() {
+-		final int start = rng.nextInt(tableSize);
+-		int ptr = start;
+ 		while (isFull()) {
++			int ptr = rng.nextInt(tableSize);
+ 			Entry<V> old = null;
+ 			int slot = 0;
+-			for (int b = evictBatch - 1; b >= 0; b--) {
++			for (int b = evictBatch - 1; b >= 0; b--, ptr++) {
+ 				if (tableSize <= ptr)
+ 					ptr = 0;
+ 				for (Entry<V> e = table.get(ptr); e != null; e = e.next) {
+@@ -269,8 +268,6 @@ private void evict() {
+ 						slot = ptr;
+ 					}
+ 				}
+-				if (++ptr == start)
+-					return;
+ 			}
+ 			if (old != null) {
+ 				old.kill();
+-- 
+1.6.4.rc2.216.g769fa
