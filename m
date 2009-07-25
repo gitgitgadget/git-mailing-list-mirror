@@ -1,89 +1,172 @@
-From: Daniel Pittman <daniel@rimspace.net>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: [PATCH] git init: optionally allow a directory argument
-Date: Sat, 25 Jul 2009 13:13:09 +1000
-Organization: How about yours?  http://rimspace.net/resume/
-Message-ID: <87r5w5h2uy.fsf@rimspace.net>
+Date: Fri, 24 Jul 2009 23:41:18 -0700
+Message-ID: <7v7hxxz2lt.fsf@alter.siamese.dyndns.org>
 References: <20090725065928.6117@nanako3.lavabit.com>
-	<7vab2t64cg.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jul 25 05:18:21 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Nanako Shiraishi <nanako3@lavabit.com>
+X-From: git-owner@vger.kernel.org Sat Jul 25 08:42:12 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MUXm8-00042B-Ht
-	for gcvg-git-2@gmane.org; Sat, 25 Jul 2009 05:18:21 +0200
+	id 1MUaxP-0001jB-Ej
+	for gcvg-git-2@gmane.org; Sat, 25 Jul 2009 08:42:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752012AbZGYDSK convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 24 Jul 2009 23:18:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751996AbZGYDSJ
-	(ORCPT <rfc822;git-outgoing>); Fri, 24 Jul 2009 23:18:09 -0400
-Received: from main.gmane.org ([80.91.229.2]:44208 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751015AbZGYDSJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 24 Jul 2009 23:18:09 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1MUXls-0006wh-Sz
-	for git@vger.kernel.org; Sat, 25 Jul 2009 03:18:04 +0000
-Received: from ppp59-167-189-244.static.internode.on.net ([59.167.189.244])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 25 Jul 2009 03:18:04 +0000
-Received: from daniel by ppp59-167-189-244.static.internode.on.net with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 25 Jul 2009 03:18:04 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: ppp59-167-189-244.static.internode.on.net
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.0.96 (gnu/linux)
-Cancel-Lock: sha1:aD90macbTTupHF0cIhoB7ctt6iM=
+	id S1755146AbZGYGlZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 25 Jul 2009 02:41:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755131AbZGYGlZ
+	(ORCPT <rfc822;git-outgoing>); Sat, 25 Jul 2009 02:41:25 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:36103 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755086AbZGYGlY (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 25 Jul 2009 02:41:24 -0400
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 9E94910AB2;
+	Sat, 25 Jul 2009 02:41:23 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 3CC1310AB1; Sat, 25 Jul 2009
+ 02:41:19 -0400 (EDT)
+In-Reply-To: <20090725065928.6117@nanako3.lavabit.com> (Nanako Shiraishi's
+ message of "Sat\, 25 Jul 2009 06\:59\:28 +0900")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 2B8CF928-78E6-11DE-A307-AEF1826986A2-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123991>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123992>
 
-Junio C Hamano <gitster@pobox.com> writes:
-> Nanako Shiraishi <nanako3@lavabit.com> writes:
+Nanako Shiraishi <nanako3@lavabit.com> writes:
+
+> When starting a new repository, I see my students often say
 >
->> When starting a new repository, I see my students often say
->>     % git init newrepo
->> and curse git.  They could say
->>     % mkdir newrepo; cd newrepo; git init
->> but allowing it as an obvious short-cut may be nicer.
->>
->> Signed-off-by: Nanako Shiraishi <nanako3@lavabit.com>
+>     % git init newrepo
 >
-> Hmm, I didn't realize this is so common a wish among new people.  The=
- patch
-> seems clean.  Anybody has comments, both on code and the use case?
+> and curse git.  They could say
+>
+>     % mkdir newrepo; cd newrepo; git init
+>
+> but allowing it as an obvious short-cut may be nicer.
+>
+> Signed-off-by: Nanako Shiraishi <nanako3@lavabit.com>
+> ---
+>
+>  Please be gentle; I don't write C very well.
 
-It still surprises me that git doesn't do this, since it is at odds wit=
-h
-almost every other version control system I have on hand or experience =
-with,
-other than CVS; Subversion, svk, Bazaar and Mercurial all take a traili=
-ng
-target argument.
+As I already said, the patch looked reasonable.
 
-CVS and monotone take an option to specify where; only darcs is like gi=
-t and
-uses the current directory as the target.
+> +	if (i == argc - 1) {
+> +		int mkdir_tried = 0;
+> +	retry:
+> +		if (chdir(argv[1]) < 0) {
+> +			if (!mkdir_tried) {
+> +				if (mkdir(argv[1], 0777) < 0)
+> +					die_errno("cannot mkdir %s", argv[1]);
+> +				mkdir_tried = 1;
+> +				goto retry;
+> +			}
+> +			die_errno("cannot chdir to %s", argv[1]);
+> +		}
 
-So, from where I sit it makes sense to have 'git init foo' create a 'fo=
-o'
-directory and repository below the current location.
+But I have to wonder if we would also want to allow
 
-Regards,
-        Daniel
+	$ git init --bare project/repo-000.git
 
-=2E..and, yeah, I still get caught every now and then when I create a n=
-ew
-repository by hand.
---=20
-=E2=9C=A3 Daniel Pittman            =E2=9C=89 daniel@rimspace.net      =
-      =E2=98=8E +61 401 155 707
-               =E2=99=BD made with 100 percent post-consumer electrons
+when you do not even have "project" directory.  After all, we are talking
+about people who do not bother "mkdir repo-000.git", so instead of doing
+equivalent of "mkdir project/repo-000.git", it would make more sense to do
+an equivalent of "mkdir -p project/repo-000.git" instead.
+
+Here is a patch to do so on top of yours, possibly you may want to squash
+in.
+
+ builtin-init-db.c |   19 +++++++++++++++++++
+ t/t0001-init.sh   |   43 +++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 62 insertions(+), 0 deletions(-)
+
+diff --git a/builtin-init-db.c b/builtin-init-db.c
+index 100db73..b7f708d 100644
+--- a/builtin-init-db.c
++++ b/builtin-init-db.c
+@@ -410,6 +410,25 @@ int cmd_init_db(int argc, const char **argv, const char *prefix)
+ 	retry:
+ 		if (chdir(argv[1]) < 0) {
+ 			if (!mkdir_tried) {
++				int saved;
++				/*
++				 * At this point we haven't read any configuration,
++				 * and we know shared_repository should always be 0;
++				 * but just in case we play safe.
++				 */
++				saved = shared_repository;
++				shared_repository = 0;
++				switch (safe_create_leading_directories_const(argv[1])) {
++				case -3:
++					errno = EEXIST;
++					/* fallthru */
++				case -1:
++					die_errno("cannot mkdir %s", argv[1]);
++					break;
++				default:
++					break;
++				}
++				shared_repository = saved;
+ 				if (mkdir(argv[1], 0777) < 0)
+ 					die_errno("cannot mkdir %s", argv[1]);
+ 				mkdir_tried = 1;
+diff --git a/t/t0001-init.sh b/t/t0001-init.sh
+index 0ded031..8c55404 100755
+--- a/t/t0001-init.sh
++++ b/t/t0001-init.sh
+@@ -242,4 +242,47 @@ test_expect_success 'init recreates a new bare directory' '
+ 	)
+ '
+ 
++test_expect_success 'init creates a new deep directory' '
++	rm -fr newdir &&
++	(
++		# Leading directories should honor umask while
++		# the repository itself should follow "shared"
++		umask 002 &&
++		git init --bare --shared=0660 newdir/a/b/c &&
++		test -d newdir/a/b/c/refs &&
++		ls -ld newdir/a newdir/a/b > lsab.out &&
++		! grep -v "^drwxrw[sx]r-x" ls.out &&
++		ls -ld newdir/a/b/c > lsc.out &&
++		! grep -v "^drwxrw[sx]---" lsc.out
++	)
++'
++
++test_expect_success 'init notices EEXIST (1)' '
++	rm -fr newdir &&
++	(
++		>newdir &&
++		test_must_fail git init newdir &&
++		test -f newdir
++	)
++'
++
++test_expect_success 'init notices EEXIST (2)' '
++	rm -fr newdir &&
++	(
++		mkdir newdir &&
++		>newdir/a
++		test_must_fail git init newdir/a/b &&
++		test -f newdir/a
++	)
++'
++
++test_expect_success 'init notices EPERM' '
++	rm -fr newdir &&
++	(
++		mkdir newdir &&
++		chmod -w newdir &&
++		test_must_fail git init newdir/a/b
++	)
++'
++
+ test_done
