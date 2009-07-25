@@ -1,313 +1,250 @@
 From: Thomas Rast <trast@student.ethz.ch>
-Subject: [RFC PATCH v3 5/5] Implement 'git stash save --patch'
-Date: Sat, 25 Jul 2009 23:29:34 +0200
-Message-ID: <e5ef2e602347914a7a14d769ca2297223cde8042.1248557241.git.trast@student.ethz.ch>
+Subject: [RFC PATCH v3 4/5] Implement 'git checkout --patch'
+Date: Sat, 25 Jul 2009 23:29:33 +0200
+Message-ID: <93da49abd5fc514906bac73553d6802eb7fb69fd.1248557241.git.trast@student.ethz.ch>
 References: <7vzlat64u1.fsf@alter.siamese.dyndns.org> <cover.1248557241.git.trast@student.ethz.ch>
 Cc: Junio C Hamano <gitster@pobox.com>,
 	Pierre Habouzit <madcoder@debian.org>,
 	Nanako Shiraishi <nanako3@lavabit.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jul 25 23:30:10 2009
+X-From: git-owner@vger.kernel.org Sat Jul 25 23:30:11 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MUooj-00037K-1H
-	for gcvg-git-2@gmane.org; Sat, 25 Jul 2009 23:30:09 +0200
+	id 1MUooi-00037K-A4
+	for gcvg-git-2@gmane.org; Sat, 25 Jul 2009 23:30:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753080AbZGYVaD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 25 Jul 2009 17:30:03 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753074AbZGYVaB
-	(ORCPT <rfc822;git-outgoing>); Sat, 25 Jul 2009 17:30:01 -0400
-Received: from xsmtp1.ethz.ch ([82.130.70.13]:7772 "EHLO xsmtp1.ethz.ch"
+	id S1753073AbZGYVaB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 25 Jul 2009 17:30:01 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752856AbZGYVaA
+	(ORCPT <rfc822;git-outgoing>); Sat, 25 Jul 2009 17:30:00 -0400
+Received: from xsmtp0.ethz.ch ([82.130.70.14]:9118 "EHLO XSMTP0.ethz.ch"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752920AbZGYV3s (ORCPT <rfc822;git@vger.kernel.org>);
+	id S1752946AbZGYV3s (ORCPT <rfc822;git@vger.kernel.org>);
 	Sat, 25 Jul 2009 17:29:48 -0400
-Received: from xfe2.d.ethz.ch ([82.130.124.42]) by xsmtp1.ethz.ch with Microsoft SMTPSVC(6.0.3790.3959);
+Received: from xfe2.d.ethz.ch ([82.130.124.42]) by XSMTP0.ethz.ch with Microsoft SMTPSVC(6.0.3790.3959);
 	 Sat, 25 Jul 2009 23:29:45 +0200
 Received: from localhost.localdomain ([77.56.221.170]) by xfe2.d.ethz.ch over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
 	 Sat, 25 Jul 2009 23:29:44 +0200
 X-Mailer: git-send-email 1.6.4.rc2.227.gf5e17
 In-Reply-To: <cover.1248557241.git.trast@student.ethz.ch>
-X-OriginalArrivalTime: 25 Jul 2009 21:29:44.0998 (UTC) FILETIME=[07639C60:01CA0D6F]
+X-OriginalArrivalTime: 25 Jul 2009 21:29:44.0842 (UTC) FILETIME=[074BCEA0:01CA0D6F]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124079>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124080>
 
-This adds a hunk-based mode to git-stash.  You can select hunks from
-the index and the worktree, and git-stash will attempt to build a
-stash that reflects these changes.
+This introduces a --patch mode for git-checkout.  In the index usage
 
-Internally, we have the problem that we're trying to offer hunks from
-one index (the one the user sees) for inclusion in another index (used
-to build the stash).  We solve this by letting git-add--interactive
-write out the hunks to a patch file, and then using git-apply with a
-different GIT_INDEX_FILE.
+  git checkout --patch -- [files...]
+
+it lets the user discard edits from the <files> at the granularity of
+hunks (by selecting hunks from 'git diff' and then reverse applying
+them to the worktree).
+
+We also accept a revision argument
+
+  git checkout --patch <revision> -- [files...]
+
+which offers hunks from the difference between the <revision> and the
+worktree.  The chosen hunks are then reverse applied to both index and
+worktree, discarding them completely.  This application is done
+"atomically" in the sense that we first check if the patch applies to
+the index (it should always apply to the worktree).  If it does not,
+we give the user a choice to either abort or apply to the worktree
+anyway.
 
 Signed-off-by: Thomas Rast <trast@student.ethz.ch>
 ---
- Documentation/git-stash.txt |   10 +++-
- git-add--interactive.perl   |   30 ++++++++++-
- git-stash.sh                |  120 +++++++++++++++++++++++++++++++++++--------
- 3 files changed, 134 insertions(+), 26 deletions(-)
+ Documentation/git-checkout.txt |   13 ++++++++++-
+ builtin-checkout.c             |   19 +++++++++++++++
+ git-add--interactive.perl      |   48 ++++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 79 insertions(+), 1 deletions(-)
 
-diff --git a/Documentation/git-stash.txt b/Documentation/git-stash.txt
-index 1c64a02..e6f310a 100644
---- a/Documentation/git-stash.txt
-+++ b/Documentation/git-stash.txt
-@@ -13,7 +13,7 @@ SYNOPSIS
- 'git stash' drop [-q|--quiet] [<stash>]
- 'git stash' ( pop | apply ) [--index] [-q|--quiet] [<stash>]
- 'git stash' branch <branchname> [<stash>]
--'git stash' [save [--keep-index] [-q|--quiet] [<message>]]
-+'git stash' [save [--patch] [--keep-index] [-q|--quiet] [<message>]]
- 'git stash' clear
- 'git stash' create
+diff --git a/Documentation/git-checkout.txt b/Documentation/git-checkout.txt
+index ad4b31e..26a5447 100644
+--- a/Documentation/git-checkout.txt
++++ b/Documentation/git-checkout.txt
+@@ -11,6 +11,7 @@ SYNOPSIS
+ 'git checkout' [-q] [-f] [-m] [<branch>]
+ 'git checkout' [-q] [-f] [-m] [-b <new_branch>] [<start_point>]
+ 'git checkout' [-f|--ours|--theirs|-m|--conflict=<style>] [<tree-ish>] [--] <paths>...
++'git checkout' --patch [<tree-ish>] [--] [<paths>...]
  
-@@ -42,7 +42,7 @@ is also possible).
- OPTIONS
- -------
+ DESCRIPTION
+ -----------
+@@ -25,7 +26,7 @@ use the --track or --no-track options, which will be passed to `git
+ branch`.  As a convenience, --track without `-b` implies branch
+ creation; see the description of --track below.
  
--save [--keep-index] [-q|--quiet] [<message>]::
-+save [--patch] [--keep-index] [-q|--quiet] [<message>]::
+-When <paths> are given, this command does *not* switch
++When <paths> or --patch are given, this command does *not* switch
+ branches.  It updates the named paths in the working tree from
+ the index file, or from a named <tree-ish> (most often a commit).  In
+ this case, the `-b` and `--track` options are meaningless and giving
+@@ -113,6 +114,16 @@ the conflicted merge in the specified paths.
+ 	"merge" (default) and "diff3" (in addition to what is shown by
+ 	"merge" style, shows the original contents).
  
- 	Save your local modifications to a new 'stash', and run `git reset
- 	--hard` to revert them.  This is the default action when no
-@@ -51,6 +51,12 @@ save [--keep-index] [-q|--quiet] [<message>]::
- +
- If the `--keep-index` option is used, all changes already added to the
- index are left intact.
++-p::
++--patch::
++	Interactively select hunks in the difference between the
++	<tree-ish> (or the index, if unspecified) and the working
++	tree.  The chosen hunks are then applied in reverse to the
++	working tree (and if a <tree-ish> was specified, the index).
 ++
-+With --patch, interactively select hunks of changes to be stashed.
-+This first asks for the hunks to be taken from the HEAD..index
-+difference, and afterwards for hunks from the index..worktree
-+difference.  Then, a stash is constructed that contains these changes,
-+and the changes are removed from the index and worktree, respectively.
++This means that you can use `git checkout -p` to selectively discard
++edits from your current working tree.
++
+ <branch>::
+ 	Branch to checkout; if it refers to a branch (i.e., a name that,
+ 	when prepended with "refs/heads/", is a valid ref), then that
+diff --git a/builtin-checkout.c b/builtin-checkout.c
+index 446cac7..7d57741 100644
+--- a/builtin-checkout.c
++++ b/builtin-checkout.c
+@@ -572,6 +572,13 @@ static int git_checkout_config(const char *var, const char *value, void *cb)
+ 	return git_xmerge_config(var, value, cb);
+ }
  
- list [<options>]::
++static int interactive_checkout(const char *revision, const char **pathspec,
++				struct checkout_opts *opts)
++{
++	return run_add_interactive(revision, "--patch=checkout", pathspec);
++}
++
++
+ int cmd_checkout(int argc, const char **argv, const char *prefix)
+ {
+ 	struct checkout_opts opts;
+@@ -580,6 +587,7 @@ int cmd_checkout(int argc, const char **argv, const char *prefix)
+ 	struct branch_info new;
+ 	struct tree *source_tree = NULL;
+ 	char *conflict_style = NULL;
++	int patch_mode = 0;
+ 	struct option options[] = {
+ 		OPT__QUIET(&opts.quiet),
+ 		OPT_STRING('b', NULL, &opts.new_branch, "new branch", "branch"),
+@@ -594,6 +602,7 @@ int cmd_checkout(int argc, const char **argv, const char *prefix)
+ 		OPT_BOOLEAN('m', "merge", &opts.merge, "merge"),
+ 		OPT_STRING(0, "conflict", &conflict_style, "style",
+ 			   "conflict style (merge or diff3)"),
++		OPT_BOOLEAN('p', "patch", &patch_mode, "select hunks interactively"),
+ 		OPT_END(),
+ 	};
+ 	int has_dash_dash;
+@@ -608,6 +617,10 @@ int cmd_checkout(int argc, const char **argv, const char *prefix)
+ 	argc = parse_options(argc, argv, prefix, options, checkout_usage,
+ 			     PARSE_OPT_KEEP_DASHDASH);
  
++	if (patch_mode && (opts.track > 0 || opts.new_branch
++			   || opts.new_branch_log || opts.merge || opts.force))
++		die ("--patch is incompatible with all other options");
++
+ 	/* --track without -b should DWIM */
+ 	if (0 < opts.track && !opts.new_branch) {
+ 		const char *argv0 = argv[0];
+@@ -714,6 +727,9 @@ int cmd_checkout(int argc, const char **argv, const char *prefix)
+ 		if (!pathspec)
+ 			die("invalid path specification");
+ 
++		if (patch_mode)
++			return interactive_checkout(NULL, pathspec, &opts);
++
+ 		/* Checkout paths */
+ 		if (opts.new_branch) {
+ 			if (argc == 1) {
+@@ -729,6 +745,9 @@ int cmd_checkout(int argc, const char **argv, const char *prefix)
+ 		return checkout_paths(source_tree, pathspec, &opts);
+ 	}
+ 
++	if (patch_mode)
++		return interactive_checkout(new.name, NULL, &opts);
++
+ 	if (opts.new_branch) {
+ 		struct strbuf buf = STRBUF_INIT;
+ 		if (strbuf_check_branch_ref(&buf, opts.new_branch))
 diff --git a/git-add--interactive.perl b/git-add--interactive.perl
-index 5005a8d..17100d3 100755
+index b1aa846..5005a8d 100755
 --- a/git-add--interactive.perl
 +++ b/git-add--interactive.perl
-@@ -76,6 +76,7 @@
+@@ -75,6 +75,7 @@
+ my $patch_mode_revision;
  
  sub apply_patch;
- sub apply_patch_for_checkout_commit;
-+sub apply_patch_for_stash;
++sub apply_patch_for_checkout_commit;
  
  my %patch_modes = (
  	'stage' => {
-@@ -86,6 +87,22 @@
- 		PARTICIPLE => 'staging',
- 		FILTER => 'file-only',
+@@ -93,6 +94,22 @@
+ 		PARTICIPLE => 'resetting',
+ 		FILTER => 'index-only',
  	},
-+	'stash_index' => {
-+		DIFF => 'diff-index -p --cached HEAD',
-+		APPLY => \&apply_patch_for_stash,
-+		APPLY_CHECK => 'apply --cached',
-+		VERB => 'Stash',
-+		PARTICIPLE => 'stashing',
-+		FILTER => 'index-only',
-+	},
-+	'stash_worktree' => {
++	'checkout_index' => {
 +		DIFF => 'diff-files -p',
-+		APPLY => \&apply_patch_for_stash,
-+		APPLY_CHECK => 'apply --cached',
-+		VERB => 'Stash',
-+		PARTICIPLE => 'stashing',
++		APPLY => sub { apply_patch 'apply -R', @_; },
++		APPLY_CHECK => 'apply -R',
++		VERB => 'Check out',
++		PARTICIPLE => 'checking out',
 +		FILTER => 'file-only',
 +	},
- 	'reset' => {
- 		DIFF => 'diff-index -p --cached',
- 		APPLY => sub { apply_patch 'apply -R --cached', @_; },
-@@ -1067,6 +1084,14 @@
++	'checkout_commit' => {
++		DIFF => 'diff-files -p',
++		APPLY => \&apply_patch_for_checkout_commit,
++		APPLY_CHECK => 'apply -R',
++		VERB => 'Check out',
++		PARTICIPLE => 'checking out',
++		FILTER => undef,
++	},
+ );
+ 
+ my %patch_mode_flavour = %{$patch_modes{stage}};
+@@ -1050,6 +1067,28 @@
  	return $ret;
  }
  
-+sub apply_patch_for_stash {
-+	my $fh;
-+	open $fh, '>>', $ENV{GIT_STASH_TEMP_PATCH}
-+		or die "cannot open temporary patch file: $!";
-+	print $fh @_;
-+	return close $fh;
++sub apply_patch_for_checkout_commit {
++	my $applies_index = run_git_apply 'apply -R --cached --recount --check', @_;
++	my $applies_worktree = run_git_apply 'apply -R --recount --check', @_;
++
++	if ($applies_worktree && $applies_index) {
++		run_git_apply 'apply -R --cached --recount', @_;
++		run_git_apply 'apply -R --recount', @_;
++		return 1;
++	} elsif (!$applies_index) {
++		print colored $error_color, "The selected hunks do not apply to the index tree!\n";
++		if (prompt_yesno "Apply them to the worktree anyway? ") {
++			return run_git_apply 'apply -R --recount', @_;
++		} else {
++			print colored $error_color, "Nothing was applied.\n";
++			return 0;
++		}
++	} else {
++		print STDERR @_;
++		return 0;
++	}
 +}
 +
- sub apply_patch_for_checkout_commit {
- 	my $applies_index = run_git_apply 'apply -R --cached --recount --check', @_;
- 	my $applies_worktree = run_git_apply 'apply -R --recount --check', @_;
-@@ -1458,8 +1483,9 @@
+ sub patch_update_cmd {
+ 	my @all_mods = list_modified($patch_mode_flavour{FILTER});
+ 	my @mods = grep { !($_->{BINARY}) } @all_mods;
+@@ -1410,6 +1449,15 @@
  					$patch_mode_revision = $arg;
  					$arg = shift @ARGV or die "missing --";
  				}
--			} elsif ($1 eq 'stage') {
--				$patch_mode = 'stage';
-+			} elsif ($1 eq 'stage' or $1 eq 'stash_index'
-+				 or $1 eq 'stash_worktree') {
-+				$patch_mode = $1;
++			} elsif ($1 eq 'checkout') {
++				$arg = shift @ARGV or die "missing --";
++				if ($arg eq '--') {
++					$patch_mode = 'checkout_index';
++				} else {
++					$patch_mode = 'checkout_commit';
++					$patch_mode_revision = $arg;
++					$arg = shift @ARGV or die "missing --";
++				}
+ 			} elsif ($1 eq 'stage') {
+ 				$patch_mode = 'stage';
  				$arg = shift @ARGV or die "missing --";
- 			} else {
- 				die "unknown --patch mode: $1";
-diff --git a/git-stash.sh b/git-stash.sh
-index 03e589f..04c49e8 100755
---- a/git-stash.sh
-+++ b/git-stash.sh
-@@ -21,6 +21,14 @@ trap 'rm -f "$TMP-*"' 0
- 
- ref_stash=refs/stash
- 
-+if git config --get-colorbool color.interactive; then
-+       help_color="$(git config --get-color color.interactive.help 'red bold')"
-+       reset_color="$(git config --get-color '' reset)"
-+else
-+       help_color=
-+       reset_color=
-+fi
-+
- no_changes () {
- 	git diff-index --quiet --cached HEAD --ignore-submodules -- &&
- 	git diff-files --quiet --ignore-submodules
-@@ -62,24 +70,73 @@ create_stash () {
- 	fi
- 	msg=$(printf '%s: %s' "$branch" "$head")
- 
--	# state of the index
--	i_tree=$(git write-tree) &&
--	i_commit=$(printf 'index on %s\n' "$msg" |
--		git commit-tree $i_tree -p $b_commit) ||
--		die "Cannot save the current index state"
--
--	# state of the working tree
--	w_tree=$( (
--		rm -f "$TMP-index" &&
--		cp -p ${GIT_INDEX_FILE-"$GIT_DIR/index"} "$TMP-index" &&
--		GIT_INDEX_FILE="$TMP-index" &&
--		export GIT_INDEX_FILE &&
--		git read-tree -m $i_tree &&
--		git add -u &&
--		git write-tree &&
--		rm -f "$TMP-index"
--	) ) ||
--		die "Cannot save the current worktree state"
-+	if test -z "$patch_mode"
-+	then
-+
-+		# state of the index
-+		i_tree=$(git write-tree) &&
-+		i_commit=$(printf 'index on %s\n' "$msg" |
-+			git commit-tree $i_tree -p $b_commit) ||
-+			die "Cannot save the current index state"
-+
-+		# state of the working tree
-+		w_tree=$( (
-+			rm -f "$TMP-index" &&
-+			cp -p ${GIT_INDEX_FILE-"$GIT_DIR/index"} "$TMP-index" &&
-+			GIT_INDEX_FILE="$TMP-index" &&
-+			export GIT_INDEX_FILE &&
-+			git read-tree -m $i_tree &&
-+			git add -u &&
-+			git write-tree &&
-+			rm -f "$TMP-index"
-+		) ) ||
-+			die "Cannot save the current worktree state"
-+
-+	else
-+
-+		# find out what the user wants
-+		echo
-+		echo "${help_color}stash --patch: index changes${reset_color}"
-+		echo
-+		: > "$TMP-patch-i"
-+		GIT_STASH_TEMP_PATCH="$TMP-patch-i" \
-+			git add--interactive --patch=stash_index --
-+		echo "${help_color}stash --patch: worktree changes${reset_color}"
-+		echo
-+		: > "$TMP-patch-w"
-+		GIT_STASH_TEMP_PATCH="$TMP-patch-w" \
-+			git add--interactive --patch=stash_worktree --
-+
-+		test -s "$TMP-patch-i" -o -s "$TMP-patch-w" ||
-+		die "Neither index nor worktree changes selected."
-+
-+		# state of the index
-+		i_tree=$( (
-+			rm -f "$TMP-index" &&
-+			GIT_INDEX_FILE="$TMP-index" &&
-+			export GIT_INDEX_FILE &&
-+			git read-tree --reset HEAD &&
-+			( test ! -s "$TMP-patch-i" || \
-+				git apply --cached < "$TMP-patch-i" ) &&
-+			git write-tree
-+			# keep $TMP-index for $w_tree construction
-+		) ) &&
-+		i_commit=$(printf 'index on %s\n' "$msg" |
-+			git commit-tree $i_tree -p $b_commit) ||
-+			( cat "$TMP-patch-i"; die "Cannot save the current index state" )
-+
-+		# state of the working tree
-+		w_tree=$( (
-+			GIT_INDEX_FILE="$TMP-index" &&
-+			export GIT_INDEX_FILE &&
-+			( test ! -s "$TMP-patch-w" || \
-+				git apply --cached < "$TMP-patch-w" ) &&
-+			git write-tree &&
-+			rm -f "$TMP-index"
-+		) ) ||
-+			die "Cannot save the current worktree state"
-+
-+	fi
- 
- 	# create the stash
- 	if test -z "$stash_msg"
-@@ -95,12 +152,16 @@ create_stash () {
- 
- save_stash () {
- 	keep_index=
-+	patch_mode=
- 	while test $# != 0
- 	do
- 		case "$1" in
- 		--keep-index)
- 			keep_index=t
- 			;;
-+		-p|--patch)
-+			patch_mode=t
-+			;;
- 		-q|--quiet)
- 			GIT_QUIET=t
- 			;;
-@@ -131,11 +192,26 @@ save_stash () {
- 		die "Cannot save the current status"
- 	say Saved working directory and index state "$stash_msg"
- 
--	git reset --hard ${GIT_QUIET:+-q}
--
--	if test -n "$keep_index" && test -n $i_tree
-+	if test -z "$patch_mode"
- 	then
--		git read-tree --reset -u $i_tree
-+		git reset --hard ${GIT_QUIET:+-q}
-+
-+		if test -n "$keep_index" && test -n $i_tree
-+		then
-+			git read-tree --reset -u $i_tree
-+		fi
-+	else
-+		if test -s "$TMP-patch-w"
-+		then
-+			git apply -R < "$TMP-patch-w" ||
-+			die "Cannot remove worktree changes"
-+		fi
-+
-+		if test -z "$keep_index" -a -s "$TMP-patch-i"
-+		then
-+			git apply -R --cached < "$TMP-patch-i" ||
-+			die "Cannot remove index changes"
-+		fi
- 	fi
- }
- 
 -- 
 1.6.4.rc2.227.gf5e17
