@@ -1,89 +1,115 @@
-From: Nanako Shiraishi <nanako3@lavabit.com>
-Subject: (unknown)
-Date: Sat, 25 Jul 2009 09:28:50 +0900
-Message-ID: <20090725092850.6117@nanako3.lavabit.com>
-References: <1248470504-16326-1-git-send-email-alex@chmrr.net>
-	<1248470504-16326-2-git-send-email-alex@chmrr.net>
-	<1248470504-16326-3-git-send-email-alex@chmrr.net>
-	<20090725071105.6117@nanako3.lavabit.com>
-	<7v1vo5647j.fsf@alter.siamese.dyndns.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH 02/10] gitweb: Mark boundary commits in 'blame' view
+Date: Sat, 25 Jul 2009 02:32:27 +0200
+Message-ID: <200907250232.28561.jnareb@gmail.com>
+References: <1248475450-5668-1-git-send-email-jnareb@gmail.com> <1248475450-5668-3-git-send-email-jnareb@gmail.com> <7vocr94o2t.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Cc: Alex Vandiver <alex@chmrr.net>, git@vger.kernel.org,
-	Johannes Schindelin <johannes.schindelin@gmx.de>
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Petr Baudis <pasky@suse.cz>,
+	Fredrik Kuivinen <frekui@gmail.com>,
+	Giuseppe Bilotta <giuseppe.bilotta@gmail.com>,
+	Luben Tuikov <ltuikov@yahoo.com>,
+	Martin Koegler <mkoegler@auto.tuwien.ac.at>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Jul 25 02:29:05 2009
+X-From: git-owner@vger.kernel.org Sat Jul 25 02:32:48 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MUV8K-0004gB-Nz
-	for gcvg-git-2@gmane.org; Sat, 25 Jul 2009 02:29:05 +0200
+	id 1MUVBw-0005g8-8l
+	for gcvg-git-2@gmane.org; Sat, 25 Jul 2009 02:32:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754618AbZGYA24 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 24 Jul 2009 20:28:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751589AbZGYA24
-	(ORCPT <rfc822;git-outgoing>); Fri, 24 Jul 2009 20:28:56 -0400
-Received: from karen.lavabit.com ([72.249.41.33]:32864 "EHLO karen.lavabit.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751324AbZGYA2z (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 24 Jul 2009 20:28:55 -0400
-Received: from c.earth.lavabit.com (c.earth.lavabit.com [192.168.111.12])
-	by karen.lavabit.com (Postfix) with ESMTP id 78BD011B7E0;
-	Fri, 24 Jul 2009 19:28:55 -0500 (CDT)
-Received: from 6848.lavabit.com (190-14-246-42.ip.mediacommerce.com.co [190.14.246.42])
-	by lavabit.com with ESMTP id NRLQCZBUF3H3; Fri, 24 Jul 2009 19:28:55 -0500
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws; s=lavabit; d=lavabit.com;
-  b=ri3ecWUVYThREXeqQMGjIc3hUT8lcYr9MftzVABCD0JXikldsdYa4MUqNQQ4Xq/OAxnO7/ytjS3u5dblTbx85hD0vhzSOTvWwzdWGIwVGPaxb2jWvQ58/nw/ZdeNu1VpfIifLkdHXJScQWiqyZRkXPkY2FvN1fnVWImsc5iXqeY=;
-  h=From:To:Cc:Subject:References:In-Reply-To:Date:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id;
-Subject: 
-In-Reply-To: <7v1vo5647j.fsf@alter.siamese.dyndns.org>
+	id S1754758AbZGYAcl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 24 Jul 2009 20:32:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751714AbZGYAck
+	(ORCPT <rfc822;git-outgoing>); Fri, 24 Jul 2009 20:32:40 -0400
+Received: from mail-bw0-f228.google.com ([209.85.218.228]:43722 "EHLO
+	mail-bw0-f228.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751256AbZGYAck (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 24 Jul 2009 20:32:40 -0400
+Received: by bwz28 with SMTP id 28so1702722bwz.37
+        for <git@vger.kernel.org>; Fri, 24 Jul 2009 17:32:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=VyQi6bgFoCog7oUYqPWA/ampiF73HmcDrifhW/crtCg=;
+        b=QlYbMUunCetK9NNL2Z1vnYgFGilVw/pNulTy56A9khEaZc/UwtHRZhktNOiTI/Yqcc
+         e4wWoWOlTXjbf1xkH2cHPbpe9Y7uLBzbNDll3Pr0iRyjugkArIJqvmoEjWItsOBlpMZ9
+         2a39ztwmyJJOqekyy66389TPy5O/QrnCo6epU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=Lhc6OJeQ2e/Q6sm1Y8+uEAQ40qjgARk74z9uEFVCY3aBv4+aQyK7lGZow6zherHwob
+         WaG87qhoGRMbMIPOilf+j6evosREe+vFEZ0+S3QzGmKGouE5t90kkwBN1WA8I1NKygyD
+         dawqbPj97aHW48AnMeAwG0Opsu09SUyqZngmg=
+Received: by 10.103.238.19 with SMTP id p19mr2045176mur.32.1248481957995;
+        Fri, 24 Jul 2009 17:32:37 -0700 (PDT)
+Received: from ?192.168.1.13? (abwq33.neoplus.adsl.tpnet.pl [83.8.240.33])
+        by mx.google.com with ESMTPS id 12sm15038386muq.23.2009.07.24.17.32.36
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 24 Jul 2009 17:32:37 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <7vocr94o2t.fsf@alter.siamese.dyndns.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123984>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/123985>
 
-Subject: [PATCH] Documentation/config.txt: a variable can be defined on the section header line
+On Sat, 25 July 2009, Junio C Hamano wrote:
+> Jakub Narebski <jnareb@gmail.com> writes:
+> 
+> > Use "boundary" class to mark boundary commits, which currently results
+> > in using bold weight font for SHA-1 of a commit (to be more exact for
+> > all text in the first cell in row, that contains SHA-1 of a commit).
+> > ...
+> > diff --git a/gitweb/gitweb.css b/gitweb/gitweb.css
+> > index 70b7c2f..f47709b 100644
+> > --- a/gitweb/gitweb.css
+> > +++ b/gitweb/gitweb.css
+> > @@ -242,6 +242,10 @@ tr.dark:hover {
+> >  	background-color: #edece6;
+> >  }
+> >  
+> > +tr.boundary td.sha1 {
+> > +	font-weight: bold;
+> > +}
+> > +
+> 
+> "boundary" means that "blame low..hight file" attributed the line to the
+> "low" commit, not because the commit introduced the line, but because the
+> user said not to bother digging further.
 
-Signed-off-by: Nanako Shiraishi <nanako3@lavabit.com>
----
+Well, currently 'blame' view in gitweb doesn't allow to limit revision
+range from below, i.e. to state "low" commit; it doesn't use 'hpb' 
+(hash_parent_base) parameter.  So boundary commit means root commit.
 
- Quoting Junio C Hamano <gitster@pobox.com>:
+> 
+> I had an assumption that in such a bounded blame, lines attributed to the
+> boundary commit are not very interesting (they belong to a distant stable
+> past that the user does not care much about, as opposed to more recent
+> breakages), and that is exactly the same reasoning behind the -b option of
+> "git blame" command.
+> 
+> I would have expected the boundary to be shown in weaker decoration
+> (e.g. gray letters as opposed to black), not in stronger annotation.
 
- > Nanako Shiraishi <nanako3@lavabit.com> writes:
- >
- >> Isn't this a syntax error?
- >>
- >> Documentation/config.txt says this.
- >
- > Even if it were, I think it would be nice to allow it.  I'll have to
- > re-read Alex's patch, but I thought it was sane.  Perhaps we can update
- > the documentation, mildly hinting that it is allowed without encouraging
- > it too strongly, as I think it is a good style to have these on separate
- > lines.
- 
- How about this small update to the documentation, then?
+Well, weaker decoration is, I think, actually harder to do in CSS...
 
- Documentation/config.txt |    3 ++-
- 1 files changed, 2 insertions(+), 1 deletions(-)
+> Perhaps you are talking about something different?  I am a bit puzzled.
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 6857d2f..c6f09f8 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -49,7 +49,8 @@ There is also a case insensitive alternative `[section.subsection]` syntax.
- In this syntax, subsection names follow the same restrictions as for section
- names.
- 
--All the other lines are recognized as setting variables, in the form
-+All the other lines (and the remainder of the line after the section
-+header) are recognized as setting variables, in the form
- 'name = value'.  If there is no equal sign on the line, the entire line
- is taken as 'name' and the variable is recognized as boolean "true".
- The variable names are case-insensitive and only alphanumeric
+Well, I have thought that only boundary commits can be without previous
+[blame] commit, but I noticed that it is not the case: see 04/10.  But
+some of that remains of my mistaken belief can resonate in commit 
+message... ;-)
 
 -- 
-Nanako Shiraishi
-http://ivory.ap.teacup.com/nanako3/
+Jakub Narebski
+Poland
