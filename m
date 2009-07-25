@@ -1,76 +1,67 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/2] Make section_name_match start on '[', and return the
- length on success
-Date: Sat, 25 Jul 2009 10:39:04 -0700
-Message-ID: <7vbpn8u0g7.fsf@alter.siamese.dyndns.org>
-References: <1248470504-16326-1-git-send-email-alex@chmrr.net>
- <1248470504-16326-2-git-send-email-alex@chmrr.net>
- <alpine.DEB.1.00.0907251605240.8306@pacific.mpi-cbg.de>
- <1248542170-sup-4264@utwig>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 1/2] Make section_name_match start on '[', and return
+ the length on success
+Date: Sat, 25 Jul 2009 19:41:27 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.0907251941100.8306@pacific.mpi-cbg.de>
+References: <1248470504-16326-1-git-send-email-alex@chmrr.net> <1248470504-16326-2-git-send-email-alex@chmrr.net> <alpine.DEB.1.00.0907251605240.8306@pacific.mpi-cbg.de> <1248542170-sup-4264@utwig>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
-	git <git@vger.kernel.org>
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git <git@vger.kernel.org>
 To: Alex Vandiver <alex@chmrr.net>
-X-From: git-owner@vger.kernel.org Sat Jul 25 19:39:34 2009
+X-From: git-owner@vger.kernel.org Sat Jul 25 19:41:32 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MUlDY-0002gh-QB
-	for gcvg-git-2@gmane.org; Sat, 25 Jul 2009 19:39:33 +0200
+	id 1MUlFT-0003MP-Rh
+	for gcvg-git-2@gmane.org; Sat, 25 Jul 2009 19:41:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751756AbZGYRjZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 25 Jul 2009 13:39:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751707AbZGYRjZ
-	(ORCPT <rfc822;git-outgoing>); Sat, 25 Jul 2009 13:39:25 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:63636 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751666AbZGYRjY (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 25 Jul 2009 13:39:24 -0400
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 666A811136;
-	Sat, 25 Jul 2009 13:39:24 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id E861B11133; Sat, 25 Jul 2009
- 13:39:16 -0400 (EDT)
-In-Reply-To: <1248542170-sup-4264@utwig> (Alex Vandiver's message of "Sat\,
- 25 Jul 2009 13\:18\:52 -0400")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 17EC7108-7942-11DE-B22C-AEF1826986A2-77302942!a-pb-sasl-sd.pobox.com
+	id S1751881AbZGYRlZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 25 Jul 2009 13:41:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751868AbZGYRlZ
+	(ORCPT <rfc822;git-outgoing>); Sat, 25 Jul 2009 13:41:25 -0400
+Received: from mail.gmx.net ([213.165.64.20]:57996 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751851AbZGYRlY (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 25 Jul 2009 13:41:24 -0400
+Received: (qmail invoked by alias); 25 Jul 2009 17:41:23 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp064) with SMTP; 25 Jul 2009 19:41:23 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/VEDAivkTVoIojlwLCtwOZKumrH67XsOAQ+O98Vd
+	ghKQLyBRaEDmWz
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <1248542170-sup-4264@utwig>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.65
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124025>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124026>
 
-Alex Vandiver <alex@chmrr.net> writes:
+Hi,
+
+On Sat, 25 Jul 2009, Alex Vandiver wrote:
 
 > At Sat Jul 25 10:09:56 -0400 2009, Johannes Schindelin wrote:
->> Is this not unnecessary, given that we  only call that function when we 
->> know that buf[0] == '[':
->
+> > Is this not unnecessary, given that we  only call that function when we 
+> > know that buf[0] == '[':
+> 
 > Yes.  However, given that I had changed the calling convention for the
 > code, (it used to be passed the string starting just _inside_ the
 > '['), I wanted to make the new calling convention clearer, and catch
 > any places that were using the old convention.
-
-It's Ok.  I do not think this is performance critical part of the system,
-and I'd feel safer with a bit of defensive programming like this,
-especially because "git config" that writes (reader is Ok) has
-traditionally been one of the most fragile part of the system.
-
+> 
 > I'm happy to submit a new version without it, if you wish.
->
->> I was a bit surprised that "offset" is not used further in your patch, but 
->> I saw that 2/2 uses it.
->
+> 
+> > I was a bit surprised that "offset" is not used further in your patch, but 
+> > I saw that 2/2 uses it.
+> 
 > Yeah, this hunk should probably have gone in 2/2 instead.
 
-I actually thought about suggesting to squash these two patches into one,
-as the change in [1/2] only makes sense in the context of the [2/2], but
-decided against it.
+No need to change anything, Junio already applied your patches.
 
-I haven't applied (actually, I didn't even notice until this morning) the
-small documentation update from Nana.  Have any comments on that one?
+Ciao,
+Dscho
