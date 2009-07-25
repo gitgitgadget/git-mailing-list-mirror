@@ -1,54 +1,61 @@
-From: Alex Vandiver <alex@chmrr.net>
-Subject: Re: [PATCH 1/2] Make section_name_match start on '[', and return the length on success
-Date: Sat, 25 Jul 2009 13:18:52 -0400
-Message-ID: <1248542170-sup-4264@utwig>
-References: <1248470504-16326-1-git-send-email-alex@chmrr.net> <1248470504-16326-2-git-send-email-alex@chmrr.net> <alpine.DEB.1.00.0907251605240.8306@pacific.mpi-cbg.de>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Cc: git <git@vger.kernel.org>
-To: Johannes Schindelin <johannes.schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Sat Jul 25 19:24:55 2009
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] git fast-export: add --no-data option
+Date: Sat, 25 Jul 2009 10:25:05 -0700
+Message-ID: <7vfxcku13i.fsf@alter.siamese.dyndns.org>
+References: <7f9d599f0907250645s6e6f9b81w3cf20f07eff088eb@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Geoffrey Irving <irving@naml.us>
+X-From: git-owner@vger.kernel.org Sat Jul 25 19:25:32 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MUkzO-0005rF-OB
-	for gcvg-git-2@gmane.org; Sat, 25 Jul 2009 19:24:55 +0200
+	id 1MUkzw-00068M-C7
+	for gcvg-git-2@gmane.org; Sat, 25 Jul 2009 19:25:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750945AbZGYRSx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 25 Jul 2009 13:18:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750893AbZGYRSx
-	(ORCPT <rfc822;git-outgoing>); Sat, 25 Jul 2009 13:18:53 -0400
-Received: from chmrr.net ([209.67.253.66]:43215 "EHLO utwig.chmrr.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750865AbZGYRSw (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 25 Jul 2009 13:18:52 -0400
-Received: from chmrr by utwig.chmrr.net with local (Exim 4.69)
-	(envelope-from <chmrr@chmrr.net>)
-	id 1MUktY-00032V-Co; Sat, 25 Jul 2009 13:18:52 -0400
-In-reply-to: <alpine.DEB.1.00.0907251605240.8306@pacific.mpi-cbg.de>
-User-Agent: Sup/git
+	id S1751300AbZGYRZQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 25 Jul 2009 13:25:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751236AbZGYRZQ
+	(ORCPT <rfc822;git-outgoing>); Sat, 25 Jul 2009 13:25:16 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:62672 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751210AbZGYRZP (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 25 Jul 2009 13:25:15 -0400
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 05DA8110C0;
+	Sat, 25 Jul 2009 13:25:15 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id AE46A110BD; Sat, 25 Jul 2009
+ 13:25:07 -0400 (EDT)
+In-Reply-To: <7f9d599f0907250645s6e6f9b81w3cf20f07eff088eb@mail.gmail.com>
+ (Geoffrey Irving's message of "Sat\, 25 Jul 2009 09\:45\:19 -0400")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 1DA50E2C-7940-11DE-A60E-AEF1826986A2-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124022>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124023>
 
-At Sat Jul 25 10:09:56 -0400 2009, Johannes Schindelin wrote:
-> Is this not unnecessary, given that we  only call that function when we 
-> know that buf[0] == '[':
+Geoffrey Irving <irving@naml.us> writes:
 
-Yes.  However, given that I had changed the calling convention for the
-code, (it used to be passed the string starting just _inside_ the
-'['), I wanted to make the new calling convention clearer, and catch
-any places that were using the old convention.
+> @@ -504,6 +508,8 @@ int cmd_fast_export(int argc, const char **argv,
+> const char *prefix)
+>  			     "Import marks from this file"),
+>  		OPT_BOOLEAN(0, "fake-missing-tagger", &fake_missing_tagger,
+>  			     "Fake a tagger when tags lack one"),
+> +		OPT_BOOLEAN(0, "no-data", &no_data,
+> +			     "Skip output of blob data"),
 
-I'm happy to submit a new version without it, if you wish.
+Shouldn't this be --[no-]data option that defaults to true?  Otherwise you
+would accept --no-no-data that looks silly.
 
-> I was a bit surprised that "offset" is not used further in your patch, but 
-> I saw that 2/2 uses it.
-
-Yeah, this hunk should probably have gone in 2/2 instead.
- - Alex
--- 
-Networking -- only one letter away from not working
+>  		OPT_END()
+>  	};
+>
+> -- 
+> 1.6.3.1
