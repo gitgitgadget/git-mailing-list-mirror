@@ -1,82 +1,90 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [JGIT] Re: blinking test
-	WindowCacheGetTest.testCache_TooSmallLimit
-Date: Sat, 25 Jul 2009 12:42:54 -0700
-Message-ID: <20090725194254.GC11191@spearce.org>
-References: <85647ef50907220623i2b7e50dal67650a638921ec0f@mail.gmail.com> <20090724225118.GZ11191@spearce.org> <200907251934.37145.robin.rosenberg.lists@dewire.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Constantine Plotnikov <constantine.plotnikov@gmail.com>,
-	git@vger.kernel.org
-To: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
-X-From: git-owner@vger.kernel.org Sat Jul 25 21:43:05 2009
+From: Michael Bergin <michaeljbergin@gmail.com>
+Subject: Re: Git Option/Subcommand Processing Library?
+Date: Sat, 25 Jul 2009 15:51:39 -0400
+Message-ID: <D30CE3A7-176D-4132-88A6-23C46A4EA185@gmail.com>
+References: <231BD892-07B1-452C-A224-047829E21991@gmail.com> <alpine.DEB.1.00.0907251830420.8306@pacific.mpi-cbg.de>
+Mime-Version: 1.0 (Apple Message framework v935.3)
+Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Sat Jul 25 21:52:24 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MUn95-00021e-SJ
-	for gcvg-git-2@gmane.org; Sat, 25 Jul 2009 21:43:04 +0200
+	id 1MUnI8-0005Xa-3A
+	for gcvg-git-2@gmane.org; Sat, 25 Jul 2009 21:52:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752233AbZGYTmy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 25 Jul 2009 15:42:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752124AbZGYTmy
-	(ORCPT <rfc822;git-outgoing>); Sat, 25 Jul 2009 15:42:54 -0400
-Received: from george.spearce.org ([209.20.77.23]:56240 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751898AbZGYTmy (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 25 Jul 2009 15:42:54 -0400
-Received: by george.spearce.org (Postfix, from userid 1001)
-	id 8C15B381FD; Sat, 25 Jul 2009 19:42:54 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <200907251934.37145.robin.rosenberg.lists@dewire.com>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1752433AbZGYTvz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 25 Jul 2009 15:51:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752252AbZGYTvz
+	(ORCPT <rfc822;git-outgoing>); Sat, 25 Jul 2009 15:51:55 -0400
+Received: from qw-out-2122.google.com ([74.125.92.27]:22554 "EHLO
+	qw-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752124AbZGYTvz (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 25 Jul 2009 15:51:55 -0400
+Received: by qw-out-2122.google.com with SMTP id 8so1253740qwh.37
+        for <git@vger.kernel.org>; Sat, 25 Jul 2009 12:51:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:cc:message-id:from:to
+         :in-reply-to:content-type:content-transfer-encoding:mime-version
+         :subject:date:references:x-mailer;
+        bh=Y4P5wEDKFVFDbOpid6RwYXj3B6eWzh/joT+8wsxg8pw=;
+        b=hFpq54yBfOZZp5O2Ci5wHu/8Wig5VbyE/wHJUtY8oqpF9ejFVxKRSMD2Jcyg+3xt9A
+         9kcEy8MmVQshuAmZfTsIdVMLzMg3P8/V8N8VFF4C6CxzZYb/mW/+dIt8bV6M2n4hPhoZ
+         cqlJHNimW5foBiI+pZf1ynBYu9q3HoaPGVbp4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=cc:message-id:from:to:in-reply-to:content-type
+         :content-transfer-encoding:mime-version:subject:date:references
+         :x-mailer;
+        b=tbUaJ9tVJSdqnhKmE1kGbj7DNGvM9ZmtCgiFXPwcA0yNNIUebePSjilAvoPF3n0H0O
+         cvVs1TuWzW9xAPPq94cOMsVNqPo4WRnTKyy7E4WEHvFpiFqWSAnXJdf6cvY7lYPz0+L5
+         qT+ig29R8gJbuwha5STnkv2I0/L+sB0MdicyY=
+Received: by 10.224.73.193 with SMTP id r1mr4582673qaj.136.1248551514439;
+        Sat, 25 Jul 2009 12:51:54 -0700 (PDT)
+Received: from ?166.203.39.195? ([166.203.39.195])
+        by mx.google.com with ESMTPS id 5sm7347302qwg.55.2009.07.25.12.51.52
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sat, 25 Jul 2009 12:51:53 -0700 (PDT)
+In-Reply-To: <alpine.DEB.1.00.0907251830420.8306@pacific.mpi-cbg.de>
+X-Mailer: Apple Mail (2.935.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124061>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124062>
 
-Robin Rosenberg <robin.rosenberg.lists@dewire.com> wrote:
-> > Constantine Plotnikov <constantine.plotnikov@gmail.com> wrote:
-> > > The test WindowCacheGetTest.testCache_TooSmallLimit sometimes fails
-> > > (on less than third of runs on Windows) with the following stacktrace:
-> 
-> Could it be threading-related (cache). I've never seen it on the machine where I build for
-> the update site and it is a single core machine, but I "this" machine that has two cores it happens, not
-> as offen as 1/6, but enough to annoy me a bit, perhaps 1/20. If it is related to bad synchronization
-> it should happen more often the more cores you have.
+Thanks for the pointers.  I also want to create a generic library for  
+command facades like git.  For that I will probably use git.c as a  
+guide but to make it generic I would need to add/rearrange code.   
+GPLv2 works fine for my purposes.  I hope this isn't an offensive  
+question or anything but would releasing just the library under LGPL  
+be considered?
 
-No, its not threading related.  I think I at least partially
-understand what is going on.
+On Jul 25, 2009, at 12:32 PM, Johannes Schindelin wrote:
 
-WindowCache's base class, OffsetCache, does evictions by randomly
-selecting a starting point in the table, and then scanning at most
-evictBatch segments of the table before giving up.
-
-When testCache_TooSmallLimit needs to access another window it must
-first evict the current window, as the cache size is set to exactly
-1 window in this test.
-
-If the RNG selects the starting point at an empty segment, and
-evictBatch is smaller than the total table size, we may not scan
-the segment which contains an open window.  The eviction stops
-before it actually expires an entry, and the cache is permitted to
-allocate more than it was supposed to.
-
-The test failure is random due to two different things going on:
-
- - The starting point for eviction is determined by an RNG, whose
-   seed is initialized randomly at the start of the tests.
-
- - The position of a given entry in the segment table is partially
-   determined by the System.identityHashCode of the PackFile instance
-   it is being loaded for.  Since that differs as the JVM allocs
-   and reclaims objects, there is some randomness caused by the
-   order tests are run in.
-
-However, in this test I'm still not quite sure why its failing,
-because evictBatch is equal to the table size (both 2), so any
-eviction here should have scanned the full table.
-
--- 
-Shawn.
+> Hi,
+>
+> On Sat, 25 Jul 2009, Michael Bergin wrote:
+>
+>> Is there a library containing just the option and subcommand  
+>> processing
+>> code from git?  I saw a post about gitopt but can't find a project  
+>> with
+>> that name.
+>
+> The "library" is contained in the files parse-options.[ch] in  
+> git.git.  I
+> am unsure if you need strbuf.c, too, or not.
+>
+>> If not is there any problem with me doing this?
+>
+> Not if you abide by the license of git.git, which is GPLv2.
+>
+> Ciao,
+> Dscho
+>
+>
