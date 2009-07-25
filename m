@@ -1,54 +1,58 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 2/2] After renaming a section, print any trailing variable
- definitions
-Date: Sat, 25 Jul 2009 16:10:32 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.0907251610020.8306@pacific.mpi-cbg.de>
-References: <1248470504-16326-1-git-send-email-alex@chmrr.net> <1248470504-16326-2-git-send-email-alex@chmrr.net> <1248470504-16326-3-git-send-email-alex@chmrr.net> <20090725071105.6117@nanako3.lavabit.com> <7v1vo5647j.fsf@alter.siamese.dyndns.org>
+Subject: Re: [PATCH] git fast-export: add --no-data option
+Date: Sat, 25 Jul 2009 16:28:48 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.0907251628220.8306@pacific.mpi-cbg.de>
+References: <7f9d599f0907250645s6e6f9b81w3cf20f07eff088eb@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Nanako Shiraishi <nanako3@lavabit.com>,
-	Alex Vandiver <alex@chmrr.net>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Jul 25 16:10:38 2009
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Geoffrey Irving <irving@naml.us>
+X-From: git-owner@vger.kernel.org Sat Jul 25 16:28:55 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MUhxN-00084V-Sr
-	for gcvg-git-2@gmane.org; Sat, 25 Jul 2009 16:10:38 +0200
+	id 1MUiF4-0005eK-SU
+	for gcvg-git-2@gmane.org; Sat, 25 Jul 2009 16:28:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751191AbZGYOKa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 25 Jul 2009 10:10:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751162AbZGYOKa
-	(ORCPT <rfc822;git-outgoing>); Sat, 25 Jul 2009 10:10:30 -0400
-Received: from mail.gmx.net ([213.165.64.20]:41467 "HELO mail.gmx.net"
+	id S1751673AbZGYO2q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 25 Jul 2009 10:28:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751667AbZGYO2q
+	(ORCPT <rfc822;git-outgoing>); Sat, 25 Jul 2009 10:28:46 -0400
+Received: from mail.gmx.net ([213.165.64.20]:57105 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750990AbZGYOK3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 25 Jul 2009 10:10:29 -0400
-Received: (qmail invoked by alias); 25 Jul 2009 14:10:28 -0000
+	id S1751579AbZGYO2q (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 25 Jul 2009 10:28:46 -0400
+Received: (qmail invoked by alias); 25 Jul 2009 14:28:44 -0000
 Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp057) with SMTP; 25 Jul 2009 16:10:28 +0200
+  by mail.gmx.net (mp058) with SMTP; 25 Jul 2009 16:28:44 +0200
 X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18x1U8CQ80x2VQ/iAmPn8yvu5wNfQf+iNd2r1MRXT
-	K6ld2FiDgS4Vry
+X-Provags-ID: V01U2FsdGVkX1+Ba0ASK7SB88cC1dUyboB/B+gh5GQ1BLD4EUAvh9
+	8Xpp4uVymLVUtH
 X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <7v1vo5647j.fsf@alter.siamese.dyndns.org>
+In-Reply-To: <7f9d599f0907250645s6e6f9b81w3cf20f07eff088eb@mail.gmail.com>
 User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
 X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.76
+X-FuHaFi: 0.7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124008>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124009>
 
 Hi,
 
-On Fri, 24 Jul 2009, Junio C Hamano wrote:
+On Sat, 25 Jul 2009, Geoffrey Irving wrote:
 
-> Dscho?  Have any suggestions/comments on the patch?
+> When using git fast-export and git fast-import to rewrite the history
+> of a repository with large binary files, almost all of the time is
+> spent dealing with blobs.  This is extremely inefficient if all we want
+> to do is rewrite the commits and tree structure.  --no-data skips the
+> output of blobs and writes SHA-1s instead of marks, which provides a
+> massive speedup.
 
-Thanks for making me aware of the patches.  I just sent out a reply.
+ACK.  I was looking for such an option recently, and was disappointed that 
+it was not there yet.
 
 Ciao,
 Dscho
