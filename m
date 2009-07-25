@@ -1,78 +1,76 @@
-From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
-Subject: Re: [JGIT] Re: blinking test WindowCacheGetTest.testCache_TooSmallLimit
-Date: Sat, 25 Jul 2009 19:34:36 +0200
-Message-ID: <200907251934.37145.robin.rosenberg.lists@dewire.com>
-References: <85647ef50907220623i2b7e50dal67650a638921ec0f@mail.gmail.com> <20090724225118.GZ11191@spearce.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/2] Make section_name_match start on '[', and return the
+ length on success
+Date: Sat, 25 Jul 2009 10:39:04 -0700
+Message-ID: <7vbpn8u0g7.fsf@alter.siamese.dyndns.org>
+References: <1248470504-16326-1-git-send-email-alex@chmrr.net>
+ <1248470504-16326-2-git-send-email-alex@chmrr.net>
+ <alpine.DEB.1.00.0907251605240.8306@pacific.mpi-cbg.de>
+ <1248542170-sup-4264@utwig>
 Mime-Version: 1.0
-Content-Type: Text/Plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Constantine Plotnikov <constantine.plotnikov@gmail.com>,
-	git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Sat Jul 25 19:34:57 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
+	git <git@vger.kernel.org>
+To: Alex Vandiver <alex@chmrr.net>
+X-From: git-owner@vger.kernel.org Sat Jul 25 19:39:34 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MUl96-0000zu-Pl
-	for gcvg-git-2@gmane.org; Sat, 25 Jul 2009 19:34:57 +0200
+	id 1MUlDY-0002gh-QB
+	for gcvg-git-2@gmane.org; Sat, 25 Jul 2009 19:39:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751342AbZGYReq convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 25 Jul 2009 13:34:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751290AbZGYReq
-	(ORCPT <rfc822;git-outgoing>); Sat, 25 Jul 2009 13:34:46 -0400
-Received: from mail.dewire.com ([83.140.172.130]:21666 "EHLO dewire.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751107AbZGYRep convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 25 Jul 2009 13:34:45 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by dewire.com (Postfix) with ESMTP id B6D481481DBD;
-	Sat, 25 Jul 2009 19:34:40 +0200 (CEST)
-X-Virus-Scanned: by amavisd-new at dewire.com
-Received: from dewire.com ([127.0.0.1])
-	by localhost (torino.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id eg5Wk5Oca0J3; Sat, 25 Jul 2009 19:34:40 +0200 (CEST)
-Received: from sleipner.localnet (unknown [10.9.0.4])
-	by dewire.com (Postfix) with ESMTP id 183241481DB2;
-	Sat, 25 Jul 2009 19:34:40 +0200 (CEST)
-User-Agent: KMail/1.11.2 (Linux/2.6.28-11-generic; KDE/4.2.2; i686; ; )
-In-Reply-To: <20090724225118.GZ11191@spearce.org>
-Content-Disposition: inline
+	id S1751756AbZGYRjZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 25 Jul 2009 13:39:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751707AbZGYRjZ
+	(ORCPT <rfc822;git-outgoing>); Sat, 25 Jul 2009 13:39:25 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:63636 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751666AbZGYRjY (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 25 Jul 2009 13:39:24 -0400
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 666A811136;
+	Sat, 25 Jul 2009 13:39:24 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id E861B11133; Sat, 25 Jul 2009
+ 13:39:16 -0400 (EDT)
+In-Reply-To: <1248542170-sup-4264@utwig> (Alex Vandiver's message of "Sat\,
+ 25 Jul 2009 13\:18\:52 -0400")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 17EC7108-7942-11DE-B22C-AEF1826986A2-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124024>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124025>
 
-l=F6rdag 25 juli 2009 00:51:18 skrev "Shawn O. Pearce" <spearce@spearce=
-=2Eorg>:
-> Constantine Plotnikov <constantine.plotnikov@gmail.com> wrote:
-> > The test WindowCacheGetTest.testCache_TooSmallLimit sometimes fails
-> > (on less than third of runs on Windows) with the following stacktra=
-ce:
-> >=20
-> > junit.framework.AssertionFailedError
-> > at junit.framework.Assert.fail(Assert.java:47)
-> > at junit.framework.Assert.assertTrue(Assert.java:20)
-> > at junit.framework.Assert.assertTrue(Assert.java:27)
-> > at org.spearce.jgit.lib.WindowCacheGetTest.checkLimits(WindowCacheG=
-etTest.java:112)
-> > at org.spearce.jgit.lib.WindowCacheGetTest.testCache_TooSmallLimit(=
-WindowCacheGetTest.java:106)
-> >=20
-> > This happens on Windows and Linux, but I do not know about
-> > frequency on Linux.
->=20
-> I'd say the frequency on Linux is about 1/6 for me.  I have yet to
-> be bothered enough to track it down, but its starting to get there.
-> Maybe I'll try to look at it tomorrow.
+Alex Vandiver <alex@chmrr.net> writes:
 
-Could it be threading-related (cache). I've never seen it on the machin=
-e where I build for
-the update site and it is a single core machine, but I "this" machine t=
-hat has two cores it happens, not
-as offen as 1/6, but enough to annoy me a bit, perhaps 1/20. If it is r=
-elated to bad synchronization
-it should happen more often the more cores you have.
+> At Sat Jul 25 10:09:56 -0400 2009, Johannes Schindelin wrote:
+>> Is this not unnecessary, given that we  only call that function when we 
+>> know that buf[0] == '[':
+>
+> Yes.  However, given that I had changed the calling convention for the
+> code, (it used to be passed the string starting just _inside_ the
+> '['), I wanted to make the new calling convention clearer, and catch
+> any places that were using the old convention.
 
--- robin
+It's Ok.  I do not think this is performance critical part of the system,
+and I'd feel safer with a bit of defensive programming like this,
+especially because "git config" that writes (reader is Ok) has
+traditionally been one of the most fragile part of the system.
+
+> I'm happy to submit a new version without it, if you wish.
+>
+>> I was a bit surprised that "offset" is not used further in your patch, but 
+>> I saw that 2/2 uses it.
+>
+> Yeah, this hunk should probably have gone in 2/2 instead.
+
+I actually thought about suggesting to squash these two patches into one,
+as the change in [1/2] only makes sense in the context of the [2/2], but
+decided against it.
+
+I haven't applied (actually, I didn't even notice until this morning) the
+small documentation update from Nana.  Have any comments on that one?
